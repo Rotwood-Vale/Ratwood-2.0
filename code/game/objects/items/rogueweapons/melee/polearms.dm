@@ -1051,7 +1051,7 @@
 	gripped_intents = list(SPEAR_THRUST, PARTIZAN_REND, PARTIZAN_PEEL, SPEAR_BASH)
 	icon_state = "partizan"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	minstr = 10
+	minstr = 12//Easily hit by knights and other dedicated combat roles
 	max_blade_int = 200
 	wdefense = 6
 	wdefense_wbonus = 3	//9 when wielded. Identical to glaive.
