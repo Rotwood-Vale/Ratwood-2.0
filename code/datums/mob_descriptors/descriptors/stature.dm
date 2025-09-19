@@ -156,3 +156,33 @@
 
 /datum/mob_descriptor/stature/dignitary
 	name = "Dignitary"
+
+/datum/mob_descriptor/stature/degenerate
+	name = "Degenerate"
+
+/datum/mob_descriptor/stature/zealot
+	name = "Zealot"
+
+/datum/mob_descriptor/stature/churl
+	name = "Churl"
+
+/datum/mob_descriptor/stature/archon
+	name = "Archon"
+
+/datum/mob_descriptor/stature/vizier
+	name = "Vizier"
+
+/datum/mob_descriptor/stature/blaggard
+	name = "Blaggard"
+
+/datum/mob_descriptor/stature/creep
+	name = "Creep"
+
+/datum/mob_descriptor/stature/freek
+	name = "Freek"
+
+/datum/mob_descriptor/stature/weerdoe
+	name = "Weerdoe"
+
+/datum/mob_descriptor/stature/plump
+	name = "Plump figure"
