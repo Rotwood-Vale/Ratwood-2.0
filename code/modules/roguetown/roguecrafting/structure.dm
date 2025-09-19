@@ -38,7 +38,7 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/structure/psycrss
-	name = "wooden cross (3 stakes, 1 small log)"
+	name = "cross (3 stakes, 1 small log)"
 	result = /obj/structure/fluff/psycross/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/grown/log/tree/stake = 3)
@@ -46,7 +46,7 @@
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/psycruci
-	name = "wooden psydonic cross (3 stakes, 1 small log)"
+	name = "psydonic cross (3 stakes, 1 small log)"
 	result = /obj/structure/fluff/psycross/psycrucifix
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/grown/log/tree/stake = 3)
@@ -54,7 +54,7 @@
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/stonepsycruci
-	name = "stone psydonic cross (3 stone)"
+	name = "psydonic cross (3 stone)"
 	result = /obj/structure/fluff/psycross/psycrucifix/stone
 	reqs =	list(/obj/item/natural/stone = 3)
 	verbage_simple = "construct"
@@ -71,7 +71,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/structure/stonepsycrss
-	name = "stone cross (2 stone)"
+	name = "cross (2 stone)"
 	result = /obj/structure/fluff/psycross
 	reqs = list(/obj/item/natural/stone = 2)
 	verbage_simple = "construct"
@@ -96,7 +96,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/door
-	name = "wooden door (2 small logs)"
+	name = "door (2 small logs)"
 	result = /obj/structure/mineral_door/wood
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	verbage_simple = "construct"
@@ -104,7 +104,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/stonedoor
-	name = "stone door (2 stone)"
+	name = "door (2 stone)"
 	result = /obj/structure/mineral_door/wood/donjon/stone
 	reqs = list(/obj/item/natural/stone = 2)
 	verbage_simple = "build"
@@ -112,7 +112,7 @@
 	skillcraft = /datum/skill/craft/masonry
 
 /datum/crafting_recipe/roguetown/structure/doorbolt
-	name = "wooden door (deadbolt) (2 small logs, 1 stick)"
+	name = "door (deadbolt) (2 small logs, 1 stick)"
 	result = /obj/structure/mineral_door/wood/deadbolt
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/grown/log/tree/stick = 1)
@@ -131,7 +131,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/structure/barrel
-	name = "wooden barrel (1 small log)"
+	name = "barrel (1 small log)"
 	result = /obj/structure/fermentation_keg/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "make"
@@ -179,7 +179,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/roguebin
-	name = "wooden bin (2 small logs)"
+	name = "bin (2 small logs)"
 	result = /obj/item/roguebin
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	verbage_simple = "make"
@@ -188,7 +188,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/chair
-	name = "wooden chair (1 small log)"
+	name = "chair (1 small log)"
 	result = /obj/item/chair/rogue/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "construct"
@@ -236,7 +236,7 @@
 	sellprice = 12
 
 /datum/crafting_recipe/roguetown/structure/stool
-	name = "wooden stool (1 small log)"
+	name = "stool (1 small log)"
 	result = /obj/item/chair/stool/bar/rogue/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	skillcraft = /datum/skill/craft/carpentry
@@ -381,7 +381,7 @@
 	return TRUE
 */
 /datum/crafting_recipe/roguetown/structure/stairsd
-	name = "wooden stairs (down) (2 small logs)"
+	name = "stairs (down) (2 small logs)"
 	result = /obj/structure/stairs/d
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	skillcraft = /datum/skill/craft/carpentry
@@ -411,7 +411,7 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/structure/stonestairsd
-	name = "stone stairs (down) (2 stone)"
+	name = "stairs (down) (2 stone)"
 	result = /obj/structure/stairs/stone/d
 	reqs = list(/obj/item/natural/stone = 2)
 	skillcraft = /datum/skill/craft/masonry
@@ -533,7 +533,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/coffin
-	name = "wooden coffin (2 small logs)"
+	name = "coffin (2 small logs)"
 	result = /obj/structure/closet/crate/coffin
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	verbage_simple = "construct"
@@ -667,7 +667,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/table
-	name = "wooden table (1 small log)"
+	name = "table (1 small log)"
 	result = /obj/structure/table/wood/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "construct"
@@ -684,7 +684,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/stonetable
-	name = "stone table (1 stone)"
+	name = "table (1 stone)"
 	result = /obj/structure/table/church
 	reqs = list(/obj/item/natural/stone = 1)
 	verbage_simple = "build"
@@ -768,7 +768,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/stonelantern
-	name = "stone lantern on ground (2 stone)"
+	name = "lantern on ground (2 stone)"
 	result = /obj/machinery/light/rogue/torchholder/hotspring
 	reqs = list(/obj/item/natural/stone = 2)
 	verbage_simple = "build"
@@ -777,7 +777,7 @@
 	skillcraft = /datum/skill/craft/masonry
 
 /datum/crafting_recipe/roguetown/structure/stonelanternstanding
-	name = "stone lantern standing (2 stone)"
+	name = "lantern standing (2 stone)"
 	result = /obj/machinery/light/rogue/torchholder/hotspring/standing
 	reqs = list(/obj/item/natural/stone = 2)
 	verbage_simple = "build"
@@ -806,7 +806,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/stonewalldeco
-	name = "stone wall decoration (1 stone)"
+	name = "wall decoration (1 stone)"
 	result = /obj/structure/fluff/walldeco/stone
 	reqs = list(/obj/item/natural/stone = 1)
 	verbage_simple = "build"
