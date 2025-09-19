@@ -1,20 +1,24 @@
 /datum/advclass/mercenary/atgervi
-	name = "Atgervi"
+	name = "Atgervi Varangian"
 	tutorial = "You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Raneshen Empire will be forever remembered by historians."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/atgervi
+	traits_applied = list(TRAIT_MEDIUMARMOR)
 	category_tags = list(CTAG_MERCENARY)
-	traits_applied = list(TRAIT_OUTLANDER)
-	classes = list("Varangian" = "You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Raneshen Empire will be forever remembered by historians.",
-					"Shaman" = "You are a Shaman of the Fjall, The Northern Empty. Savage combatants who commune with the Ecclesical Beast gods through ritualistic violence, rather than idle prayer.")
-
+	subclass_stats = list(
+		STATKEY_WIL = 3,
+		STATKEY_CON = 3,
+		STATKEY_STR = 2,
+		STATKEY_PER = 1,
+		STATKEY_SPD = -1
+	)
+	
 /datum/outfit/job/roguetown/mercenary/atgervi
 	allowed_patrons = ALL_INHUMEN_PATRONS
 
 /datum/outfit/job/roguetown/mercenary/atgervi/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Raneshen Empire will be forever remembered by historians."))
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
@@ -46,7 +50,7 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_2)	//Capped to T1 miracles.
+	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T1 miracles.
 	H.cmode_music = 'sound/music/combat_vagarian.ogg'
 	H.grant_language(/datum/language/gronnic)
 	backpack_contents = list(
