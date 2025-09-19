@@ -88,6 +88,7 @@
 
 /datum/intent/sword/peel/big
 	name = "big sword armor peel"
+	attack_verb = list("<font color ='#e7e7e7'>weakly peels</font>")
 	reach = 2
 	peel_divisor = 5
 
