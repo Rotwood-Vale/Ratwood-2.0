@@ -648,3 +648,13 @@
 	slices_num = 1
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/eggplantcarved
 	slice_sound = TRUE
+
+// Zizo Bane shroom produce - add seed drop
+/obj/item/reagent_containers/food/snacks/grown/zizo_bane
+	seed = /obj/item/seeds/zizo_bane
+	name = "zizo bane shroom"
+	desc = "A dangerous-looking mushroom, infamous for its effects."
+	icon_state = "zshroom"
+	filling_color = "#6e2e6e"
+	foodtype = VEGETABLES
+	rotprocess = 30 MINUTES

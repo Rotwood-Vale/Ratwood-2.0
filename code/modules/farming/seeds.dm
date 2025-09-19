@@ -158,6 +158,10 @@
     seed_identity = "fyritius seeds"
     plant_def_type = /datum/plant_def/fyritiusflower
 
+/obj/item/seeds/zizo_bane
+	seed_identity = "zizo bane seeds"
+	plant_def_type = /datum/plant_def/zizo_bane
+
 /obj/item/seeds/poppy
 	seed_identity = "poppy seeds"
 	plant_def_type = /datum/plant_def/poppy

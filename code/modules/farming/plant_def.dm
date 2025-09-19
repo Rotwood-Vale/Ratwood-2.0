@@ -245,6 +245,15 @@
 	produce_amount_max = 3 // Let's keep the production rate low because it is an anti-antag item
 	maturation_time = FAST_GROWING
 
+/datum/plant_def/zizo_bane
+	name = "zizo's bane"
+	icon = 'icons/roguetown/misc/crops.dmi'
+	icon_state = "zshroom"
+	produce_type = /obj/item/reagent_containers/food/snacks/zizo_bane
+	produce_amount_min = 2
+	produce_amount_max = 4
+	maturation_time = FAST_GROWING
+
 /datum/plant_def/manabloom
 	name = "manabloom"
 	icon_state = "manabloom"
