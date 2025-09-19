@@ -12,43 +12,39 @@
 	current_cycle++
 	. = ..()
 
-/datum/reagent/medicine/salglu_solution
-	name = "Saline-Glucose Solution"
-	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a temporary blood substitute."
+/datum/reagent/medicine/antihol
+	name = "Antihol"
+	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
+	color = "#00B4C8"
+	taste_description = "raw egg"
+
+/datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M)
+	M.dizziness = 0
+	M.drowsyness = 0
+	M.slurring = 0
+	M.confused = 0
+	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3*REM, 0, 1)
+	M.adjustToxLoss(-0.2*REM, 0)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.drunkenness = max(H.drunkenness - 10, 0)
+	..()
+	. = 1
+
+
+/datum/reagent/medicine/pen_acid
+	name = "Pentetic Acid"
+	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body."
 	reagent_state = LIQUID
-	color = "#DCDCDC"
+	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 60
-	taste_description = "sweetness and salt"
-	var/last_added = 0
-	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
 
-/datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
-	if(last_added)
-		M.blood_volume -= last_added
-		last_added = 0
-	if(M.blood_volume < maximum_reachable)	//Can only up to double my effective blood level.
-		var/amount_to_add = min(M.blood_volume, volume*5)
-		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
-		last_added = new_blood_level - M.blood_volume
-		M.blood_volume = new_blood_level
-	if(prob(33))
-		M.adjustBruteLoss(-0.5*REM, 0)
-		M.adjustFireLoss(-0.5*REM, 0)
-		. = TRUE
+/datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M)
+	M.adjustToxLoss(-2*REM, 0)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R != src)
+			M.reagents.remove_reagent(R.type,2)
 	..()
+	. = 1
 
-/datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
-	if(prob(3))
-		to_chat(M, "<span class='warning'>I feel salty.</span>")
-		holder.add_reagent(/datum/reagent/consumable/sodiumchloride, 1)
-		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
-	else if(prob(3))
-		to_chat(M, "<span class='warning'>I feel sweet.</span>")
-		holder.add_reagent(/datum/reagent/consumable/sugar, 1)
-		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
-	if(prob(33))
-		M.adjustBruteLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
-		M.adjustFireLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
-		. = TRUE
-	..()
+

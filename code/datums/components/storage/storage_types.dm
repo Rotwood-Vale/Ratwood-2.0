@@ -181,6 +181,13 @@
 		/obj/item/alch/rosa
 		))
 
+
+/datum/component/storage/concrete/grid/zigbox
+	max_w_class = WEIGHT_CLASS_TINY
+	screen_max_rows = 2
+	screen_max_columns = 3
+	max_items = 6
+
 /datum/component/storage/concrete/roguetown/saddle
 	screen_max_rows = 4
 	screen_max_columns = 4

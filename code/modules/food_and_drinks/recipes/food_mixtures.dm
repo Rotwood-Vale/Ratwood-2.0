@@ -66,9 +66,3 @@
 	id = /datum/reagent/consumable/hell_ramen
 	results = list(/datum/reagent/consumable/hell_ramen = 6)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/hot_ramen = 6)
-
-/datum/chemical_reaction/bbqsauce
-	name = "BBQ Sauce"
-	id = /datum/reagent/consumable/bbqsauce
-	results = list(/datum/reagent/consumable/bbqsauce = 5)
-	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/medicine/salglu_solution = 3, /datum/reagent/consumable/blackpepper = 1)

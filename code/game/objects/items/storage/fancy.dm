@@ -25,6 +25,9 @@
 	var/fancy_open = FALSE
 
 /obj/item/storage/fancy/PopulateContents()
+	. = ..()
+	if(!spawn_type)
+		return
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_FILL_TYPE, spawn_type)
 
 /obj/item/storage/fancy/update_icon()
@@ -56,137 +59,191 @@
 	fancy_open = TRUE
 	update_icon()
 
-/*
- * Egg Box
- */
 
-/obj/item/storage/fancy/egg_box
-	icon = 'icons/obj/food/containers.dmi'
-	item_state = "eggbox"
-	icon_state = "eggbox"
-	icon_type = "egg"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	name = "egg box"
-	desc = ""
-	spawn_type = /obj/item/reagent_containers/food/snacks/egg
 
-/obj/item/storage/fancy/egg_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 12
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/egg))
-
-/*
- * Candle Box
- */
-
-/obj/item/storage/fancy/candle_box
-	name = "candle pack"
-	desc = ""
-	icon = 'icons/obj/candle.dmi'
-	icon_state = "candlebox5"
-	icon_type = "candle"
-	item_state = "candlebox5"
-	throwforce = 2
-	slot_flags = ITEM_SLOT_BELT
-	spawn_type = /obj/item/candle
-	fancy_open = TRUE
-
-/obj/item/storage/fancy/candle_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
-
-/obj/item/storage/fancy/candle_box/attack_self(mob_user)
-	return
-
-////////////
-//CIG PACK//
-////////////
-/obj/item/storage/fancy/cigarettes
-	name = "\improper Space Cigarettes packet"
-	desc = ""
-	icon = 'icons/obj/cigarettes.dmi'
-	icon_state = "cig"
-	item_state = "cigpacket"
+/obj/item/storage/fancy/pilltin
+	name = "pill tin"
+	desc = "A tin for all your pill needs."
+	icon = 'icons/roguetown/items/surgery.dmi'
+	icon_state = "pilltin"
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
-	slot_flags = ITEM_SLOT_BELT
-	icon_type = "cigarette"
-	spawn_type = /obj/item/clothing/mask/cigarette/rollie/nicotine
-	var/candy = FALSE //for cigarette overlay
+	throwforce = 1
+	slot_flags = null
+	populate_contents = list(
+		/obj/item/reagent_containers/pill/caffpill,
+		/obj/item/reagent_containers/pill/caffpill,
+		/obj/item/reagent_containers/pill/caffpill
+	)
 
-/obj/item/storage/fancy/cigarettes/ComponentInitialize()
+/obj/item/storage/fancy/pilltin/update_icon()
+	if(fancy_open)
+		if(contents.len == 0)
+			icon_state = "pilltin_empty"
+		else if(istype(contents[1], /obj/item/reagent_containers/pill/caffpill))
+			icon_state = "pilltinwake_open"
+		else if(istype(contents[1], /obj/item/reagent_containers/pill/pnkpill))
+			icon_state = "pilltinpink_open"
+		else
+			icon_state = "pilltincustom_open"
+	else
+		icon_state = "pilltin"
+
+/obj/item/storage/fancy/pilltin/MiddleClick(mob/user, params)
+	fancy_open = !fancy_open
+	update_icon()
+	to_chat(user, span_notice("[src] is now [fancy_open ? "open" : "closed"]."))
+
+/obj/item/storage/fancy/pilltin/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	if(STR)
+		STR.max_combined_w_class = 42
+		STR.max_w_class = WEIGHT_CLASS_NORMAL
+		STR.max_items = 12
+		STR.set_holdable(list(/obj/item/reagent_containers/pill))
 
-/obj/item/storage/fancy/cigarettes/examine(mob/user)
+/obj/item/storage/fancy/pilltin/wake
+	name = "pill tin (wake)"
+
+/obj/item/storage/fancy/skit
+	name = "surgery kit"
+	desc = "portable and compact"
+	icon = 'icons/roguetown/items/surgery.dmi'
+	icon_state = "skit"
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_HIP
+	throwforce = 1
+	populate_contents = list(
+		/obj/item/rogueweapon/surgery/scalpel,
+		/obj/item/rogueweapon/surgery/saw,
+		/obj/item/rogueweapon/surgery/hemostat,
+		/obj/item/rogueweapon/surgery/hemostat,
+		/obj/item/rogueweapon/surgery/retractor,
+		/obj/item/rogueweapon/surgery/bonesetter,
+		/obj/item/rogueweapon/surgery/cautery,
+		/obj/item/natural/worms/leech,
+		/obj/item/needle
+	)
+
+/obj/item/storage/fancy/skit/update_icon()
+	if(fancy_open)
+		if(contents.len == 0)
+			icon_state = "skit_empty"
+		else
+			icon_state = "skit_open"
+	else
+		icon_state = "skit"
+
+/obj/item/storage/fancy/skit/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to extract contents.</span>"
-
-/obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
-	if(W && contents.len > 0)
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
-		user.put_in_hands(W)
-		contents -= W
-		to_chat(user, "<span class='notice'>I take \a [W] out of the pack.</span>")
-	else
-		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
-
-/obj/item/storage/fancy/cigarettes/update_icon()
-	if(fancy_open || !contents.len)
-		cut_overlays()
-		if(!contents.len)
-			icon_state = "[initial(icon_state)]_empty"
+	if(fancy_open)
+		if(length(contents) == 1)
+			. += "There is one item left."
 		else
-			icon_state = initial(icon_state)
-			add_overlay("[icon_state]_open")
-			var/cig_position = 1
-			for(var/C in contents)
-				var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
+			. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] items left."
 
-				if(istype(C, /obj/item/lighter/greyscale))
-					inserted_overlay.icon_state = "lighter_in"
-				else if(istype(C, /obj/item/lighter))
-					inserted_overlay.icon_state = "zippo_in"
-				else if(candy)
-					inserted_overlay.icon_state = "candy"
-				else
-					inserted_overlay.icon_state = "cigarette"
+/obj/item/storage/fancy/skit/attack_self(mob/user)
+	fancy_open = !fancy_open
+	update_icon()
+	. = ..()
 
-				inserted_overlay.icon_state = "[inserted_overlay.icon_state]_[cig_position]"
-				add_overlay(inserted_overlay)
-				cig_position++
-	else
-		cut_overlays()
-
-/obj/item/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!ismob(M))
+/obj/item/storage/fancy/skit/Entered(mob/user)
+	if(!fancy_open)
+		to_chat(user, span_notice("[src] needs to be opened first."))
 		return
-	var/obj/item/clothing/mask/cigarette/cig = locate(/obj/item/clothing/mask/cigarette) in contents
-	if(cig)
-		if(M == user && contents.len > 0 && !user.wear_mask)
-			var/obj/item/clothing/mask/cigarette/W = cig
-			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, M)
-			M.equip_to_slot_if_possible(W, SLOT_WEAR_MASK)
-			contents -= W
-			to_chat(user, "<span class='notice'>I take \a [W] out of the pack.</span>")
+	fancy_open = TRUE
+	update_icon()
+	. = ..()
+
+/obj/item/storage/fancy/skit/Exited(mob/user)
+	fancy_open = FALSE
+	update_icon()
+	. = ..()
+
+/obj/item/storage/fancy/skit/MiddleClick(mob/user, params)
+	fancy_open = !fancy_open
+	update_icon()
+	to_chat(user, span_notice("[src] is now [fancy_open ? "open" : "closed"]."))
+
+/obj/item/storage/fancy/skit/ComponentInitialize()
+	..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 10
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 42
+	STR.set_holdable(list(
+		/obj/item/rogueweapon/surgery/,
+		/obj/item/natural/worms/leech/,
+		/obj/item/needle/,
+	))
+
+/obj/item/storage/fancy/ifak
+	name = "personal patch kit"
+	desc = "Personal treatment pouch; has all you need to stop you or someone else from meeting Necra. It even comes with a little guide scroll for the slow minded."
+	icon = 'icons/roguetown/items/surgery.dmi'
+	icon_state = "ifak"
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 1
+	slot_flags = null
+	populate_contents = list(
+		/obj/item/reagent_containers/hypospray/medipen/sealbottle/reju,
+		/obj/item/natural/bundle/cloth/bandage/full,
+		/obj/item/reagent_containers/hypospray/medipen/sty/detox,
+		/obj/item/reagent_containers/pill/pnkpill,
+		/obj/item/candle/yellow,
+		/obj/item/needle,
+	)
+
+/obj/item/storage/fancy/ifak/update_icon()
+	if(fancy_open)
+		if(contents.len == 0)
+			icon_state = "ifak_empty"
 		else
-			..()
+			icon_state = "ifak_open"
 	else
-		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
+		icon_state = "ifak"
 
-/obj/item/storage/fancy/cigarettes/zig
-	name = "zigbox"
-	desc = ""
-	icon_state = "zig"
-	spawn_type = /obj/item/clothing/mask/cigarette/rollie/nicotine
+/obj/item/storage/fancy/ifak/examine(mob/user)
+	. = ..()
+	if(fancy_open)
+		if(length(contents) == 1)
+			. += "There is one item left."
+		else
+			. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] items left."
 
-/obj/item/storage/fancy/cigarettes/zig/empty
-	spawn_type = null
+/obj/item/storage/fancy/ifak/attack_self(mob/user)
+	fancy_open = !fancy_open
+	update_icon()
+	. = ..()
+
+/obj/item/storage/fancy/ifak/Entered(mob/user)
+	if(!fancy_open)
+		to_chat(user, span_notice("[src] needs to be opened first."))
+		return
+	fancy_open = TRUE
+	update_icon()
+	. = ..()
+
+/obj/item/storage/fancy/ifak/Exited(mob/user)
+	fancy_open = FALSE
+	update_icon()
+	. = ..()
+
+/obj/item/storage/fancy/ifak/MiddleClick(mob/user, params)
+	fancy_open = !fancy_open
+	update_icon()
+	to_chat(user, span_notice("[src] is now [fancy_open ? "open" : "closed"]."))
+
+/obj/item/storage/fancy/ifak/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 7
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 42
+	STR.set_holdable(list(
+		/obj/item/natural/cloth,
+		/obj/item/natural/bundle/cloth,
+		/obj/item/reagent_containers,
+		/obj/item/candle,
+		/obj/item/needle,
+	))
