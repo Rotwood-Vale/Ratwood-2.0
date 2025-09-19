@@ -1913,3 +1913,13 @@
 /obj/item/clothing/cloak/captain/Destroy()
 	GLOB.lordcolor -= src
 	return ..()
+
+//----------------- INFAREDBARON/CLOAKS.DM ---------------------
+
+/obj/item/clothing/cloak/citywatch
+	name = "citywatch cape"
+	desc = ""
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/cloaks.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/cloaks.dmi'
+	icon_state = "citywatch_cape"
+	item_state = "citywatch_cape"

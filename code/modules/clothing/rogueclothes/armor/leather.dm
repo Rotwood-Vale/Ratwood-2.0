@@ -260,3 +260,109 @@
 	color = null
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = NON_DWARVEN_RACE_TYPES
+
+//----------------- INFAREDBARON SPRITEWORK/ARMOR.DM ---------------------
+
+/obj/item/clothing/suit/roguetown/armor/leather/duchess
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_ARMOR //ugly hack to make it render over the head
+	name = "duchess dress"
+	desc = ""
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|VITALS
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon_state = "duchess"
+	item_state = "duchess"
+
+/obj/item/clothing/suit/roguetown/armor/leather/duke
+	name = "ducal uniform"
+	desc = ""
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon_state = "duke"
+	item_state = "duke"
+	armor = list("blunt" = 30, "slash" = 35, "stab" = 10, "bullet" = 10, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
+	blocksound = SOFTHIT
+	// This doesnt let you wear a belt because the sprite has a cloak and it would appear over the cloak. I cant bother to fix it.
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT|ITEM_SLOT_BELT
+	blade_dulling = DULLING_BASHCHOP
+	body_parts_covered = CHEST|VITALS|ARMS
+	break_sound = 'sound/foley/cloth_rip.ogg'
+	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
+	sewrepair = TRUE
+	sleevetype = null
+	sleeved = null
+	armor_class = ARMOR_CLASS_LIGHT
+	salvage_result = /obj/item/natural/hide/cured
+
+/obj/item/clothing/suit/roguetown/armor/leather/hand
+	name = "Hand's dress"
+	desc = "A soft vest of finest fabric."
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon_state = "hand"
+	item_state = "hand"
+	allowed_sex = list(MALE, FEMALE)
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_ARMOR //ugly hack to make it render over the head
+
+/obj/item/clothing/suit/roguetown/armor/leather/heir
+	name = "Heir's uniform"
+	desc = ""
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon_state = "heir"
+	item_state = "heir"
+	body_parts_covered = CHEST|GROIN|VITALS|LEGS|ARMS
+	allowed_sex = list(MALE, FEMALE)
+	slot_flags = ITEM_SLOT_ARMOR
+
+/obj/item/clothing/suit/roguetown/armor/leather/heiress
+	name = "Heiress's uniform"
+	desc = ""
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon_state = "heiress"
+	item_state = "heiress"
+	body_parts_covered = CHEST|GROIN|VITALS|LEGS|ARMS
+	allowed_sex = list(MALE, FEMALE)
+	slot_flags = ITEM_SLOT_ARMOR
+
+/obj/item/clothing/suit/roguetown/armor/councillor
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
+	name = "councillorial uniform"
+	desc = ""
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon_state = "councillor"
+	item_state = "councillor"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|VITALS
+	armor = list("blunt" = 60, "slash" = 40, "stab" = 50, "bullet" = 25, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
+	blocksound = SOFTUNDERHIT
+	blade_dulling = DULLING_BASHCHOP
+	break_sound = 'sound/foley/cloth_rip.ogg'
+	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
+	sewrepair = TRUE
+	r_sleeve_status = SLEEVE_NORMAL
+	l_sleeve_status = SLEEVE_NORMAL
+	armor_class = ARMOR_CLASS_LIGHT
+
+/obj/item/clothing/suit/roguetown/armor/leather/magos
+	name = "Magos' Robes"
+	desc = ""
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon_state = "magos"
+	item_state = "magos"
+	allowed_sex = list(MALE, FEMALE)
+	slot_flags = ITEM_SLOT_ARMOR
+
+/obj/item/clothing/suit/roguetown/armor/leather/steward
+	name = "Steward's Vest"
+	desc = ""
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon_state = "steward"
+	item_state = "steward"
+	allowed_sex = list(MALE, FEMALE)
+	slot_flags = ITEM_SLOT_ARMOR

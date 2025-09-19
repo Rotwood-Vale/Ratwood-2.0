@@ -90,11 +90,12 @@ GLOBAL_LIST_EMPTY(lord_titles)
 		cloak = /obj/item/clothing/cloak/lordcloak/ladycloak
 		wrists = /obj/item/clothing/wrists/roguetown/royalsleeves
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
+		backl = /obj/item/clothing/suit/roguetown/armor/leather/duchess
 	else if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights/black
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
-		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
-		shoes = /obj/item/clothing/shoes/roguetown/boots
+		armor = /obj/item/clothing/suit/roguetown/armor/leather/duke
+		shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	if(H.wear_mask)
 		if(istype(H.wear_mask, /obj/item/clothing/mask/rogue/eyepatch))
 			qdel(H.wear_mask)
