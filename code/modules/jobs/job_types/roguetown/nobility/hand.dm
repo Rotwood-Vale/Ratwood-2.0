@@ -152,7 +152,7 @@
 	outfit = /datum/outfit/job/roguetown/hand/advisor
 
 	category_tags = list(CTAG_HAND)
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_SEEPRICES, TRAIT_INTELLECTUAL)
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 3,
@@ -183,15 +183,15 @@
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 	if(H.mind)
-		H.mind.adjust_spellpoints(15)
+		H.mind.adjust_spellpoints(21)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	if(H.age == AGE_OLD)
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_STR, -1)
-		H.change_stat(STATKEY_INT, 1)
+		H.change_stat(STATKEY_INT, 2)
 		H.change_stat(STATKEY_PER, 1)
-		H.mind?.adjust_spellpoints(3)
+		H.mind?.adjust_spellpoints(6)
 
 
