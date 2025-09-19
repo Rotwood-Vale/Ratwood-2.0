@@ -1379,6 +1379,7 @@
 #include "code\modules\clothing\outfits\vv_outfit.dm"
 #include "code\modules\clothing\rogueclothes\cloaks.dm"
 #include "code\modules\clothing\rogueclothes\feet.dm"
+#include "code\modules\clothing\rogueclothes\mage.dm"
 #include "code\modules\clothing\rogueclothes\mask.dm"
 #include "code\modules\clothing\rogueclothes\mouth.dm"
 #include "code\modules\clothing\rogueclothes\neck.dm"
