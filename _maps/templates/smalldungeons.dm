@@ -171,19 +171,45 @@
 	icon_state = "clothing"
 	loot = list(
 		// Clothing
-		/obj/item/clothing/cloak/stabard = 3,
+		/obj/item/clothing/cloak/stabard/black = 3,
+		/obj/item/clothing/cloak/stabard/guardhood = 2,
 		/obj/item/storage/backpack/rogue/satchel = 3,
 		/obj/item/clothing/shoes/roguetown/simpleshoes = 4,
 		/obj/item/clothing/suit/roguetown/shirt/undershirt/random = 5,
 		/obj/item/storage/belt/rogue/leather/cloth = 4,
 		/obj/item/clothing/cloak/raincloak/mortus = 3,
+		/obj/item/clothing/cloak/raincloak/green = 2,
+		/obj/item/clothing/cloak/raincloak/brown = 2,
+		/obj/item/clothing/cloak/half = 1,
 		/obj/item/clothing/head/roguetown/armingcap = 4,
 		/obj/item/clothing/cloak/apron/waist = 3,
+		/obj/item/clothing/cloak/apron/cook = 3,
 		/obj/item/storage/belt/rogue/leather/rope = 3,
 		/obj/item/clothing/under/roguetown/tights/vagrant = 4,
 		/obj/item/clothing/gloves/roguetown/leather = 4,
 		/obj/item/clothing/shoes/roguetown/boots = 4,
-		/obj/item/clothing/shoes/roguetown/boots/leather = 4
+		/obj/item/clothing/shoes/roguetown/boots/leather = 4,
+		/obj/item/clothing/suit/roguetown/shirt/tunic/random = 4,
+		/obj/item/clothing/suit/roguetown/shirt/dress/gen/random = 5,
+		/obj/item/clothing/head/roguetown/roguehood/random = 4,
+		/obj/item/clothing/under/roguetown/skirt/random = 4,
+		/obj/item/clothing/suit/roguetown/shirt/dress/gen/sexy/random = 2,
+		/obj/item/clothing/suit/roguetown/shirt/dress/silkydress/random = 1,
+		/obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat = 1,
+		/obj/item/clothing/suit/roguetown/shirt/robe = 4,
+		/obj/item/clothing/suit/roguetown/shirt/rags = 2,
+		/obj/item/clothing/gloves/roguetown/fingerless = 2,
+		/obj/item/clothing/under/roguetown/trou = 2,
+		/obj/item/clothing/suit/roguetown/shirt/undershirt/lowcut = 4,
+		/obj/item/clothing/head/roguetown/cookhat = 1,
+		/obj/item/clothing/head/roguetown/brimmed = 2,
+		/obj/item/clothing/head/roguetown/bardhat = 1,
+		/obj/item/clothing/head/roguetown/fedora = 1,
+		/obj/item/clothing/head/roguetown/fisherhat = 1,
+		/obj/item/clothing/head/roguetown/hatfur = 1,
+		/obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood = 1,
+		/obj/item/clothing/head/roguetown/strawhat = 1,
+		/obj/item/clothing/head/roguetown/shawl = 1,
 	)
 	lootcount = 1
 
@@ -239,11 +265,12 @@
 	icon_state = "medical"
 	loot = list(
 		//medical
-		/obj/item/needle = 4,
-		/obj/item/natural/cloth = 5,
-		/obj/item/natural/bundle/cloth = 3
-	)
-	lootcount = 2
+		/obj/item/needle = 6,
+		/obj/item/natural/cloth = 6,
+		/obj/item/natural/bundle/cloth = 3,
+		/obj/item/reagent_containers/powder/ozium = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1)
+	lootcount = 1
 
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons
 	icon_state = "weapon"
@@ -287,11 +314,16 @@
 		/obj/item/rogueweapon/shovel = 3,
 		/obj/item/rogueweapon/thresher = 3,
 		/obj/item/flint = 4,
-		/obj/item/rogueweapon/stoneaxe/woodcut = 3,
-		/obj/item/rogueweapon/stoneaxe = 3,
+		/obj/item/rogueweapon/stoneaxe/woodcut = 2,
+		/obj/item/rogueweapon/stoneaxe = 2,
 		/obj/item/rogueweapon/hammer/stone = 3,
 		/obj/item/rogueweapon/tongs = 3,
-		/obj/item/rogueweapon/pick = 3
+		/obj/item/rogueweapon/pick = 3,
+		/obj/item/rogueweapon/sickle = 3,
+		/obj/item/rogueweapon/huntingknife = 2,
+		/obj/item/rogueweapon/huntingknife/scissors = 3,
+		/obj/item/rogueweapon/hoe = 3,
+		/obj/item/cooking/pan = 2
 	)
 	lootcount = 1
 
@@ -332,12 +364,26 @@
 	icon_state = "food"
 	loot = list(
 		//food
-		/obj/item/reagent_containers/food/snacks/rogue/crackerscooked = 3,
-		/obj/item/reagent_containers/food/snacks/butterslice = 3,
+		/obj/item/reagent_containers/food/snacks/rogue/crackerscooked = 8,
+		/obj/item/reagent_containers/food/snacks/rogue/bread = 5,
+		/obj/item/reagent_containers/food/snacks/butterslice = 4,
 		/obj/item/reagent_containers/powder/salt = 3,
-		/obj/item/reagent_containers/food/snacks/egg = 3
+		/obj/item/reagent_containers/food/snacks/egg = 4,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/poultry = 2,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/sausage = 1,
+		/obj/item/reagent_containers/food/snacks/grown/potato/rogue = 2,
+		/obj/item/reagent_containers/food/snacks/grown/onion/rogue = 2,
+		/obj/item/reagent_containers/food/snacks/grown/cabbage/rogue = 2,
+		/obj/item/reagent_containers/food/snacks/rogue/honey = 1,
+		/obj/item/reagent_containers/food/snacks/rogue/cheddar = 1,
+		/obj/item/reagent_containers/food/snacks/rogue/cheddarwedge = 4,
+		/obj/item/reagent_containers/food/snacks/grown/apple = 2,
+		
 	)
 	lootcount = 2
+
+	
 
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells
 	icon_state = "spells"

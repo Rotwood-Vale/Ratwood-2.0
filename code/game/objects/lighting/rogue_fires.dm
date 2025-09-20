@@ -96,6 +96,13 @@
 	bulb_colour = "#7b60f3"
 	desc = "Soft and blue like the moon's light."
 
+/obj/machinery/light/rogue/firebowl/standing/green
+	icon_state = "standingg1"
+	base_state = "standingg"
+	bulb_colour = "#8ee2a7"
+	desc = "Soft and green like... well, nothing you can really think of right now."
+
+
 /obj/machinery/light/rogue/firebowl/standing/proc/knock_over() //use this later for jump impacts and shit
 	icon_state = "[base_state]over"
 

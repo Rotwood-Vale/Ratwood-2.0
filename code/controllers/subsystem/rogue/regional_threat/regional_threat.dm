@@ -12,6 +12,12 @@
 #define THREAT_REGION_NORTH_AZUREAN_COAST "North Rotwood Coast"
 #define THREAT_REGION_MOUNT_DECAP "Mount Decapitation"
 #define THREAT_REGION_TERRORBOG "Terrorbog"
+//Rockhill versions
+#define THREAT_REGION_ROCKHILL_BASIN "Rockhill Basin"
+#define THREAT_REGION_ROCKHILL_BOG_NORTH "Rockhill Terrorbog North"
+#define THREAT_REGION_ROCKHILL_BOG_EAST "Rockhill Terrorbog East"
+#define THREAT_REGION_ROCKHILL_BOG_WEST "Rockhill Terrorbog West"
+#define THREAT_REGION_ROCKHILL_BOG_SOUTH "Rockhill Terrorbog South"
 
 #define LOWPOP_THRESHOLD 30 // When do we give highpop tick?
 // Subsystem meant to handle regional threat level
@@ -86,7 +92,49 @@ SUBSYSTEM_DEF(regionthreat)
 			_fixed_ambush = FALSE,
 			_lowpop_tick = 1,
 			_highpop_tick = 2
-		)
+		),
+		//ROCKHILL VERSIONS! VERSIONS FOR ROCKHILL!!
+		new /datum/threat_region(
+			_region_name = THREAT_REGION_ROCKHILL_BASIN,
+			_latent_ambush = DANGER_MODERATE_FLOOR,
+			_min_ambush = DANGER_SAFE_FLOOR,
+			_max_ambush = DANGER_DANGEROUS_LIMIT, // Let's not go DIRE no matter what, in the future
+			_fixed_ambush = FALSE,
+			_lowpop_tick = 1,
+			_highpop_tick = 1,),
+
+		new /datum/threat_region(
+			_region_name = THREAT_REGION_ROCKHILL_BOG_NORTH,
+			_latent_ambush = DANGER_DANGEROUS_LIMIT,
+			_min_ambush = DANGER_SAFE_FLOOR, //since there are four different bog areas it should be fine if parts of it can be tamed.
+			_max_ambush = DANGER_DIRE_LIMIT,
+			_fixed_ambush = FALSE,
+			_lowpop_tick = 1,
+			_highpop_tick = 2),
+		new /datum/threat_region(
+			_region_name = THREAT_REGION_ROCKHILL_BOG_EAST,
+			_latent_ambush = DANGER_DANGEROUS_LIMIT,
+			_min_ambush = DANGER_SAFE_FLOOR, 
+			_max_ambush = DANGER_DIRE_LIMIT,
+			_fixed_ambush = FALSE,
+			_lowpop_tick = 1,
+			_highpop_tick = 2),
+		new /datum/threat_region(
+			_region_name = THREAT_REGION_ROCKHILL_BOG_WEST,
+			_latent_ambush = DANGER_DANGEROUS_LIMIT,
+			_min_ambush = DANGER_SAFE_FLOOR, 
+			_max_ambush = DANGER_DIRE_LIMIT,
+			_fixed_ambush = FALSE,
+			_lowpop_tick = 1,
+			_highpop_tick = 2),
+		new /datum/threat_region(
+			_region_name = THREAT_REGION_ROCKHILL_BOG_SOUTH,
+			_latent_ambush = DANGER_DANGEROUS_LIMIT,
+			_min_ambush = DANGER_SAFE_FLOOR, 
+			_max_ambush = DANGER_DIRE_LIMIT,
+			_fixed_ambush = FALSE,
+			_lowpop_tick = 1,
+			_highpop_tick = 2),
 	)
 
 /datum/controller/subsystem/regionthreat/fire(resumed)

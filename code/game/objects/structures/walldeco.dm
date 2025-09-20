@@ -237,6 +237,9 @@
 	M.color = secondary
 	add_overlay(M)
 
+/obj/structure/fluff/walldeco/customflag/rockhill
+	name = "Rockhill flag"
+
 /obj/structure/fluff/walldeco/moon
 	name = "banner"
 	icon_state = "moon"

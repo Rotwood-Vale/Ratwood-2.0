@@ -16,6 +16,9 @@
 
 /obj/item/reagent_containers/glass/bottle/mercury
 	list_reagents = list(/datum/reagent/mercury = 48)
+	
+/obj/item/reagent_containers/glass/bottle/sleep
+	list_reagents = list(/datum/reagent/sleep_powder = 48)
 
 //vanderlin potion stuff//
 /obj/item/reagent_containers/glass/bottle/rogue/strongmanapot

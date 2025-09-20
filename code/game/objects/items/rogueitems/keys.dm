@@ -503,6 +503,12 @@
 	icon_state = "greenkey"
 	lockid = "physician"
 
+/obj/item/roguekey/courtphysician
+	name = "court physician key"
+	desc = "The key smells of herbs, feeling soothing to the touch. This one is especially prestigious"
+	icon_state = "greenkey"
+	lockid = "cphysician"
+
 /obj/item/roguekey/puritan
 	name = "puritan's key"
 	desc = "This is an intricate key." // i have no idea what is this key about

@@ -59,6 +59,13 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_dusk = 'sound/music/area/banditcamp.ogg'
 	droning_sound_night = 'sound/music/area/banditcamp.ogg'
 
+/area/rogue/indoors/vampiremanor
+	name = "vampire manor"
+	droning_sound = 'sound/music/area/underdark.ogg'
+	droning_sound_dusk = 'sound/music/area/underdark.ogg'
+	droning_sound_night = 'sound/music/area/underdark.ogg'
+	first_time_text = "The House of Blood"
+
 
 /area/rogue/indoors/ravoxarena
 	name = "ravox arena"
@@ -98,6 +105,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound = 'sound/music/area/banditcamp.ogg'
 	droning_sound_dusk = 'sound/music/area/banditcamp.ogg'
 	droning_sound_night = 'sound/music/area/banditcamp.ogg'
+	first_time_text = "A Gathering of Thieves"
 
 /area/rogue/outdoors/banditcamp/exterior // Only use these around traveltiles - Constantine
 	name = "bandit camp outdoors"
@@ -127,9 +135,9 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 
 /area/rogue/indoors/shelter/mountains
 	icon_state = "mountains"
-	droning_sound = 'sound/music/area/townstreets.ogg'
-	droning_sound_dusk = 'sound/music/area/septimus.ogg'
-	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	droning_sound = 'sound/music/area/caves.ogg'
+	droning_sound_dusk = 'sound/music/area/caves.ogg'
+	droning_sound_night = 'sound/music/area/caves.ogg'
 
 /area/rogue/outdoors/mountains/deception
 	name = "deception"
@@ -157,6 +165,10 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	deathsight_message = "somewhere in the wilds, next to towering walls"
 	warden_area = TRUE
 	threat_region = THREAT_REGION_AZURE_BASIN
+
+/area/rogue/outdoors/rtfield/rockhill
+	first_time_text = "Rockhill Basin"
+	threat_region = THREAT_REGION_ROCKHILL_BASIN
 
 /area/rogue/indoors/shelter/rtfield
 	icon_state = "rtfield"
@@ -468,6 +480,9 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	first_time_text = "THE KEEP OF ROTWOOD VALE"
 	keep_area = TRUE
 
+/area/rogue/indoors/town/manor/rockhill
+	first_time_text = "Rockhill Keep"
+
 /area/rogue/outdoors/exposed/manorgarri
 	icon_state = "manorgarri"
 	droning_sound = 'sound/music/area/manorgarri.ogg'
@@ -507,7 +522,14 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/indoors/town/physician
 	name = "Physician"
 	icon_state = "physician"
-	droning_sound = 'sound/music/area/shop.ogg'
+	droning_sound = 'sound/music/area/academy.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+
+/area/rogue/indoors/town/Academy
+	name = "Academy"
+	icon_state = "academy"
+	droning_sound = 'sound/music/area/academy.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 
@@ -621,6 +643,9 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	name = "The Inquisition's Basement"
 	icon_state = "chapel"
 	ceiling_protected = TRUE
+	droning_sound = 'sound/music/area/catacombs.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
 
 /area/rogue/indoors/town/warehouse/can_craft_here()
 	return FALSE
@@ -650,6 +675,9 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	first_time_text = "VALE GUILD OF CRAFT"
 	converted_type = /area/rogue/outdoors/exposed/dwarf
 
+/area/rogue/indoors/town/dwarfin/rockhill
+	first_time_text = "Rockhill Guild of Crafts"
+
 /area/rogue/outdoors/exposed/dwarf
 	icon_state = "dwarf"
 	droning_sound = 'sound/music/area/dwarf.ogg'
@@ -678,6 +706,10 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	converted_type = /area/rogue/indoors/shelter/town
 	first_time_text = "THE CITY OF ROTWOOD VALE"
 	town_area = TRUE
+
+/area/rogue/outdoors/town/rockhill
+	name = "outdoors rockhill"
+	first_time_text = "The Town of Rockhill"
 
 /area/rogue/indoors/shelter/town
 	icon_state = "town"
