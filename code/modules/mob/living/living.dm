@@ -507,11 +507,17 @@
 		O.update_hands(src)
 		update_grab_intents()
 
+//Free resists ahead.
+//This is STUPID strong.
+//We're stuck with it for economy reasons.
+//As of now, you get a free resist if either is met:
+// - Grabbed character skill at master or higher(5).
+// - Grabbing character skill at journeymen or lower(3).
 	if(isliving(AM))
 		var/mob/living/M = AM
 		if(M.mind)
 			if(M.cmode && M.stat == CONSCIOUS && !M.restrained(ignore_grab = TRUE))
-				if(M.get_skill_level(/datum/skill/combat/wrestling) > 4 || src.get_skill_level(/datum/skill/combat/wrestling) < 5) //Grabber skill less than Master OR grabbed skill at Master or above.
+				if(M.get_skill_level(/datum/skill/combat/wrestling) >= 5 || src.get_skill_level(/datum/skill/combat/wrestling) <= 3)
 					M.resist_grab(freeresist = TRUE) //Automatically attempt to break a passive grab if defender's combat mode is on. Anti-grabspam measure.
 
 /mob/living/proc/is_limb_covered(obj/item/bodypart/limb)
@@ -1054,13 +1060,14 @@
 	if(!can_resist() || surrendering)
 		return
 
+	changeNext_move(CLICK_CD_RESIST)
+
 	if(atkswinging)
 		stop_attack(FALSE)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	if(pulledby)
-		changeNext_move(8)
 		var/mob/living/P
 		if(isliving(pulledby))
 			P = pulledby
@@ -1075,13 +1082,11 @@
 
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
-		changeNext_move(CLICK_CD_RESIST)
 		resist_buckle()
 		return
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	if(isobj(loc))
-		changeNext_move(CLICK_CD_RESIST)
 		var/obj/C = loc
 		C.container_resist(src)
 		return
@@ -1089,23 +1094,19 @@
 	if(mobility_flags & MOBILITY_MOVE)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
-			changeNext_move(CLICK_CD_RESIST)
 			return
 		if(has_status_effect(/datum/status_effect/leash_pet))
 			if(istype(src, /mob/living/carbon))
 				src:resist_leash()
-				changeNext_move(CLICK_CD_RESIST)
 				return
 		if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
 			if(restrained() && !prob(5))
-				changeNext_move(CLICK_CD_RESIST)
 				return
 			var/datum/component/riding/human/riding_datum = GetComponent(/datum/component/riding/human)
 			if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) && riding_datum)
 				for(var/mob/M in buckled_mobs)
 					riding_datum.force_dismount(M)
-			changeNext_move(CLICK_CD_RESIST)
 			return
 
 /mob/living/proc/submit(var/instant = FALSE)
