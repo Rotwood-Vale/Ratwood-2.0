@@ -879,3 +879,20 @@
 	sellprice = 20
 	messagereceivedsound = 'sound/misc/garrisonscom.ogg'
 	hearrange = 0
+
+
+/obj/structure/roguemachine/scomm/byos
+	name = "SCOM"
+	desc = "The Supernatural Communication Optical Machine is a wonder of magic and technology. There's a button in the middle with 'JABBER' etched on it."
+	icon = 'icons/roguetown/misc/machines.dmi'
+	icon_state = "scomm1"
+	density = FALSE
+	blade_dulling = DULLING_BASH
+	max_integrity = 0
+	flags_1 = HEAR_1
+	anchored = TRUE
+	next_decree = 0
+	listening = TRUE
+	speaking = TRUE
+	dictating = FALSE
+	scom_number = 0

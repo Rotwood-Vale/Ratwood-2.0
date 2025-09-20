@@ -239,11 +239,12 @@
 	icon_state = "medical"
 	loot = list(
 		//medical
-		/obj/item/needle = 4,
-		/obj/item/natural/cloth = 5,
-		/obj/item/natural/bundle/cloth = 3
-	)
-	lootcount = 2
+		/obj/item/needle = 6,
+		/obj/item/natural/cloth = 6,
+		/obj/item/natural/bundle/cloth = 3,
+		/obj/item/reagent_containers/powder/ozium = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1)
+	lootcount = 1
 
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons
 	icon_state = "weapon"
@@ -287,11 +288,16 @@
 		/obj/item/rogueweapon/shovel = 3,
 		/obj/item/rogueweapon/thresher = 3,
 		/obj/item/flint = 4,
-		/obj/item/rogueweapon/stoneaxe/woodcut = 3,
-		/obj/item/rogueweapon/stoneaxe = 3,
+		/obj/item/rogueweapon/stoneaxe/woodcut = 2,
+		/obj/item/rogueweapon/stoneaxe = 2,
 		/obj/item/rogueweapon/hammer/stone = 3,
 		/obj/item/rogueweapon/tongs = 3,
-		/obj/item/rogueweapon/pick = 3
+		/obj/item/rogueweapon/pick = 3,
+		/obj/item/rogueweapon/sickle = 3,
+		/obj/item/rogueweapon/huntingknife = 2,
+		/obj/item/rogueweapon/huntingknife/scissors = 3,
+		/obj/item/rogueweapon/hoe = 3,
+		/obj/item/cooking/pan = 2
 	)
 	lootcount = 1
 

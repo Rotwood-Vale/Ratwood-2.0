@@ -79,3 +79,35 @@ GLOBAL_VAR(king_throne)
 	M = mutable_appearance(icon, "throne_secondary", -(layer+0.1))
 	M.color = secondary
 	add_overlay(M)
+
+/obj/item/steward/throne_placer
+	name = "Portable Throne"
+	desc = "A mysterious artifact that conjures a throne."
+	icon = 'icons/roguetown/items/gems.dmi'
+	icon_state = "diamond_cut" // Use the diamond_cut icon
+	w_class = WEIGHT_CLASS_SMALL
+	color = "#03f8fc"
+
+/obj/item/steward/throne_placer/attack_self(mob/user)
+    if(!HAS_TRAIT(user, TRAIT_NOBLE))
+        to_chat(user, span_warning("Only the nobility may wield the power to place a throne!"))
+        return
+
+    var/turf/target = get_step(user.loc, user.dir)
+    if(!isturf(target))
+        to_chat(user, span_warning("You can't place a throne there!"))
+        return
+    if(locate(/obj/structure/roguethrone) in target)
+        to_chat(user, span_warning("There is already a throne there!"))
+        return
+
+    // Long use time (5 seconds)
+    var/time = 150 // tenths of a second = 5 seconds
+    if(!do_after(user, time, target))
+        return
+
+    new /obj/structure/roguethrone(target)
+    new /obj/structure/roguemachine/titan(target)
+    to_chat(user, span_notice("You conjure a throne before you!"))
+    playsound(user.loc, 'sound/magic/crystal.ogg', 100, TRUE)
+    qdel(src)

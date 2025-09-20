@@ -437,6 +437,98 @@
 	else if(advj)
 		return advj
 
+
+
+/obj/item/steward/carpet_bundle
+    name = "Vault Carpet"
+    desc = "A tightly wrapped bundle of priceless red carpet. It marks where this settlement will keep its most valuable possessions."
+    icon = 'icons/roguetown/items/natural.dmi'
+    icon_state = "clothroll2"
+    w_class = 3
+    force = 2
+    var/uses = 16
+    color = "#f02011"
+
+    examine(mob/user)
+        . = ..()
+        if(uses > 1)
+            . += "<br>There are [uses] uses left in the bundle."
+        else
+            . += "<br>There is [uses] use left in the bundle."
+        return .
+
+    attack_self(mob/user, params)
+        if(src.uses <= 0)
+            to_chat(user, "<span class='warning'>The bundle is empty.</span>")
+            return
+        var/turf/T = get_turf(user)
+        if(!isfloorturf(T))
+            to_chat(user, "<span class='warning'>I need ground to lay this on!</span>")
+            return
+        for(var/obj/A in T)
+            if(istype(A, /obj/structure))
+                to_chat(user, "<span class='warning'>I need some free space to lay a carpet here!</span>")
+                return
+            if(A.density && !(A.flags_1 & ON_BORDER_1))
+                to_chat(user, "<span class='warning'>There is already something here!</span>")
+                return
+        user.visible_message("<span class='notice'>[user] begins unrolling a velvet carpet bundle.</span>")
+        if(do_after(user, 15 SECONDS, TRUE, src))
+            new /turf/open/floor/carpet/inn(T)
+            if(!istype(T.loc, /area/rogue/indoors/town/vault))
+                new /area/rogue/indoors/town/vault(T)
+            src.uses--
+            to_chat(user, "<span class='notice'>You finish unrolling the carpet, revealing a plush red floor!</span>")
+            if(src.uses <= 0)
+                to_chat(user, "<span class='warning'>You used the last of the carpet.</span>")
+                del(src)
+
+/obj/item/steward/nervemaster_kit
+    name = "Nerve Master Kit"
+    desc = "A heavy crate containing the parts to assemble a Nerve Master with ease. How handy! (Right-Click to disassemble.)"
+    icon = 'icons/roguetown/misc/structure.dmi'
+    icon_state = "woodchest"
+    w_class = 4
+    color = "#5e0808"
+
+    attack_self(mob/user)
+        var/turf/target = get_step(get_turf(user), user.dir)
+        if(!isturf(target))
+            to_chat(user, span_warning("You can't place a Nerve Master there!"))
+            return
+        if(!isfloorturf(target))
+            to_chat(user, span_warning("You can't place a Nerve Master there!"))
+            return
+        if(locate(/obj/structure/roguemachine/steward) in target)
+            to_chat(user, span_warning("There is already a Nerve Master here!"))
+            return
+        user.visible_message(span_notice("[user] begins assembling a Nerve Master."))
+        if(do_after(user, 20 SECONDS, TRUE, src))
+            var/obj/structure/roguemachine/steward/S = new /obj/structure/roguemachine/steward(target)
+            S.created_by_kit = TRUE
+            to_chat(user, span_notice("You finish assembling the Nerve Master!"))
+            del(src)
+
+/obj/structure/roguemachine/steward/attack_right(mob/user)
+    if(!created_by_kit)
+        return
+    user.visible_message("<span class='notice'>[user] begins packing up the Nerve Master into a kit.</span>")
+    if(do_after(user, 50 SECONDS, TRUE, src))
+        new /obj/item/steward/nervemaster_kit(get_turf(src))
+        to_chat(user, "<span class='notice'>You finish packing up the Nerve Master!</span>")
+        del(src)
+
+/datum/crafting_recipe/roguetown/structure/scomm/byos
+	name = "SCOMM - (rat, iron ingot, cog; EXPERT)"
+	result = /obj/structure/roguemachine/scomm/byos
+	reqs = list(/obj/item/reagent_containers/food/snacks/smallrat = 1,
+				/obj/item/ingot/iron = 1,
+				/obj/item/roguegear/bronze = 1)
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	wallcraft = TRUE
+	craftdiff = 4
+
 #undef TAB_MAIN
 #undef TAB_BANK
 #undef TAB_STOCK
