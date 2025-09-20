@@ -33,6 +33,11 @@
 	droning_sound_dusk = null
 	droning_sound_night = null
 
+
+/area/rogue/outdoors/bog/spookcourtyard
+	name = "Grand Courtyard"
+	first_time_text = "The Grand Courtyard"
+
 /area/rogue/outdoors/bog/north
 	name = "Northern Terrorbog"
 
