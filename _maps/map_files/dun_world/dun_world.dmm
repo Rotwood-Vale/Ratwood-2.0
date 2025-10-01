@@ -5809,13 +5809,6 @@
 /obj/structure/table/wood/poor/alt_alt,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/underdark/north)
-"byu" = (
-/obj/structure/fluff/railing/corner/south_west,
-/obj/machinery/light/rogue/torchholder/c{
-	pixel_y = -32
-	},
-/turf/open/floor/rogue/cobblerock,
-/area/rogue/outdoors/town)
 "byw" = (
 /obj/structure/lever{
 	pixel_x = -6;
@@ -7806,7 +7799,9 @@
 	dir = 1;
 	icon_state = "borderfall"
 	},
-/obj/structure/pillory,
+/obj/structure/pillory{
+	lockid = list("warden", "walls", "garrison", "dungeon")
+	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/town)
 "bYj" = (
@@ -20596,10 +20591,10 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield)
 "fbt" = (
-/obj/structure/pillory{
-	lockid = list("church")
-	},
 /obj/effect/decal/cleanable/blood,
+/obj/structure/pillory{
+	lockid = list("warden", "walls", "garrison", "dungeon")
+	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
 "fbv" = (
@@ -36979,9 +36974,7 @@
 /turf/open/water/swamp,
 /area/rogue/outdoors/bog/south)
 "jeL" = (
-/obj/structure/pillory{
-	lockid = list("church")
-	},
+/obj/structure/pillory,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/sewer)
@@ -39131,9 +39124,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/his_vault)
 "jGK" = (
-/obj/structure/pillory{
-	lockid = list("church")
-	},
+/obj/structure/pillory,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/goblinfort)
 "jGL" = (
@@ -54282,8 +54273,10 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
 "nnD" = (
-/obj/structure/pillory,
 /obj/effect/decal/cleanable/blood,
+/obj/structure/pillory{
+	lockid = list("church", "warden", "walls", "garrison", "dungeon")
+	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town)
 "nnE" = (
@@ -58054,9 +58047,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town)
 "olz" = (
-/obj/structure/pillory{
-	lockid = list("church")
-	},
+/obj/structure/pillory,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/orcdungeon)
 "olF" = (
@@ -74964,7 +74955,9 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/shelter)
 "sve" = (
-/obj/structure/pillory,
+/obj/structure/pillory{
+	lockid = list("warden", "walls", "garrison", "dungeon")
+	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/exposed/town/keep)
 "svg" = (
@@ -75717,8 +75710,11 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/south)
 "sFn" = (
-/obj/structure/pillory,
 /obj/effect/decal/cleanable/blood,
+/obj/structure/pillory{
+	lockid = list("church");
+	name = "Church Pillory"
+	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town)
 "sFs" = (
@@ -86059,12 +86055,6 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/shelter/mountains/decap)
-"vhJ" = (
-/obj/machinery/light/rogue/torchholder/c{
-	pixel_y = -32
-	},
-/turf/open/floor/rogue/cobblerock,
-/area/rogue/outdoors/town)
 "vhR" = (
 /obj/machinery/light/rogue/wallfire/candle/blue{
 	pixel_y = -32
@@ -94158,7 +94148,8 @@
 	pixel_y = 1
 	},
 /obj/structure/well/fountain{
-	pixel_y = 5
+	pixel_y = 5;
+	pixel_x = 0
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/town)
@@ -272885,7 +272876,7 @@ exD
 exD
 rcz
 xpk
-nlW
+eKH
 eKH
 eKH
 qyR
@@ -282374,7 +282365,7 @@ lRd
 exD
 exD
 exD
-vhJ
+xPx
 cDX
 cDX
 uBc
@@ -285086,7 +285077,7 @@ fpx
 fpx
 exD
 exD
-byu
+eiM
 cDX
 cDX
 uBc
@@ -287798,7 +287789,7 @@ lAO
 exD
 exD
 exD
-vhJ
+xPx
 cDX
 cDX
 uBc
