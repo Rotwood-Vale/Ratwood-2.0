@@ -14,6 +14,7 @@
 	var/prob2fail = 5
 	grid_width = 32
 	grid_height = 64
+	ignores_shield_block = TRUE//Blocking these had been funny for about five minutes.
 
 /obj/item/bomb/Initialize()
 	. = ..()
@@ -273,6 +274,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 1
+	ignores_shield_block = TRUE//Blocking these had been funny for about five minutes.
 	/// An extra string describing the grenade type.
 	var/additional_desc
 

@@ -66,6 +66,8 @@
 			return FALSE
 		if(obj_broken) // No blocking with a broken shield you fool
 			return FALSE
+		if(I.ignores_shield_block) //You're not blocking impacts. Zezuz Pyst.
+			return FALSE
 		if((owner.client?.chargedprog == 100 && owner.used_intent?.tranged) || prob(coverage))
 			owner.visible_message(span_danger("[owner] expertly blocks [hitby] with [src]!"))
 			src.take_damage(floor(damage / 4))
