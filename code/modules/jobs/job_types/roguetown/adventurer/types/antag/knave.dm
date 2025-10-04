@@ -6,7 +6,7 @@
 	outfit = /datum/outfit/job/roguetown/bandit/knave
 	category_tags = list(CTAG_BANDIT)
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
-	traits_applied = list(TRAIT_DODGEEXPERT)//gets dodge expert but no medium armor training - gotta stay light
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_DEATHBYSNUSNU)//gets dodge expert but no medium armor training - gotta stay light
 	subclass_stats = list(
 		STATKEY_SPD = 3,//It's all about speed and perception
 		STATKEY_PER = 2,

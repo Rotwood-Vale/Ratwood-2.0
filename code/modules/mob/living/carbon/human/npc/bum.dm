@@ -45,7 +45,23 @@ GLOBAL_LIST_INIT(bum_aggro, world.file2list("strings/rt/bumaggrolines.txt"))
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_INFINITE_ENERGY, TRAIT_GENERIC)
-	equipOutfit(new /datum/outfit/job/roguetown/vagrant)
+	equipOutfit(new /datum/outfit/job/roguetown/vagrantnpc)
+
+/datum/outfit/job/roguetown/vagrantnpc/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(should_wear_femme_clothes(H))
+		armor = /obj/item/clothing/suit/roguetown/shirt/rags
+	else if(should_wear_masc_clothes(H))
+		pants = /obj/item/clothing/under/roguetown/tights/vagrant
+		if(prob(50))
+			pants = /obj/item/clothing/under/roguetown/tights/vagrant/l
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant
+		if(prob(50))
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/l
+
+	if(prob(33))
+		cloak = /obj/item/clothing/cloak/raincloak/brown
+		gloves = /obj/item/clothing/gloves/roguetown/fingerless
 
 /mob/living/carbon/human/species/human/northern/bum/npc_idle()
 	if(m_intent == MOVE_INTENT_SNEAK)

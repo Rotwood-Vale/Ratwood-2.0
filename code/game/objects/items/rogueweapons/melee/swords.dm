@@ -88,6 +88,7 @@
 
 /datum/intent/sword/peel/big
 	name = "big sword armor peel"
+	attack_verb = list("<font color ='#e7e7e7'>weakly peels</font>")
 	reach = 2
 	peel_divisor = 5
 
@@ -530,28 +531,33 @@
 			if("onbelt")
 				return list("shrink" = 0.5,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-//Slightly more expensive than a longsword by 1 iron, so gets to be slightly better.
+//Incredibly heavy. Focused on two-handing.
 /obj/item/rogueweapon/sword/long/exe
 	name = "executioners sword"
-	desc = "A longsword with extra heft to its blade, reinforced."
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
-	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/exe, /datum/intent/rend, /datum/intent/axe/chop)
+	desc = "A longsword with extra heft to its blade, reinforced. Unwieldy for one unaccustomed to its use."
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/exe, /datum/intent/rend, /datum/intent/sword/peel)
 	icon_state = "exe"
+	force = 20//-5 compared to longsword. -2 with standard. Wield it!
 	minstr = 12
+	wbalance = WBALANCE_HEAVY//This thing is MASSIVE.
 	slot_flags = ITEM_SLOT_BACK //Too big for hip
+//Longer to equip/unequip. I guess. If it has to have a back slot.
+	equip_delay_self = 2 SECONDS
+	unequip_delay_self = 2 SECONDS
 
 /datum/intent/sword/thrust/exe
 	swingdelay = 4	//Slight delay to stab; big and heavy.
-	penfactor = BLUNT_DEFAULT_PENFACTOR //Flat tip? I don't know, man. This intent is won't penetrate anything but it damages armor more.
+	penfactor = BLUNT_DEFAULT_PENFACTOR //Flat tip? I don't know, man. This intent won't penetrate anything but it damages armor more.
 	intent_intdamage_factor = 1.3 //This is basically like getting hit by a mace.
 
 /obj/item/rogueweapon/sword/long/exe/astrata
 	name = "\"Solar Judge\""
-	desc = "An incredibly unusual executioner's sword clad in gold and brass. Two separate blades protude outwards and join near its intricately decorated crossguard. This weapon calls for order."
+	desc = "An incredibly unusual executioner's sword, clad in gold and brass. Two separate blades protude outwards and join near its intricately decorated crossguard. This weapon calls for order."
 	icon_state = "astratasword"
-	max_integrity = 200
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike)
-	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/axe/chop)
+	max_integrity = 200//+50
+	force = 23//Typical +3, for a Templar weapon.
+	force_wielded = 33//As above.
 
 /obj/item/rogueweapon/sword/long/exe/getonmobprop(tag)
 	. = ..()

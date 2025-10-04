@@ -8,7 +8,7 @@
 	Sissean are hardy, reptilian people that share a unique bond among their kind due to being the target \
 	of oppression and enslavement by other races, particularly by Humans and Drakians. They take pride in \
 	their resilience and adaptability, and they can be found all over the world for one reason or another.<br>\
-	(+1 Constitution, +1 Endurance, Wild Eater Trait)"
+	(+1 Constitution, +1 Willpower, Wild Eater Trait)"
 	expanded_desc = "Sissean are hardy, reptilian people that share a unique bond among their kind due to being the target of oppression \
 	and enslavement by other races, particularly by Humans and Drakians. They take pride in their resilience and adaptability,\
 	and they can be found all over the world for one reason or another. Once a nomadic, tribal people, Sissean are often forced \

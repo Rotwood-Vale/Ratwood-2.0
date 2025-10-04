@@ -51,8 +51,8 @@
 	rotprocess = SHELFLIFE_DECENT
 
 /obj/item/reagent_containers/food/snacks/rogue/hcake
-	name = "ranesheni cake"
-	desc = "Cake glazed with honey in the famous Ranesheni fashion for a delicious sweet treat."
+	name = "zybantine cake"
+	desc = "Cake glazed with honey in the famous Zybantium fashion for a delicious sweet treat."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_cakes.dmi'
 	icon_state = "honeycake"
 	slices_num = 8
@@ -69,7 +69,7 @@
 	bitesize = 16
 
 /obj/item/reagent_containers/food/snacks/rogue/hcakeslice
-	name = "ranesheni cake slice"
+	name = "zybantine cake slice"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_cakes.dmi'
 	icon_state = "honeycakeslice"
 	slices_num = 0

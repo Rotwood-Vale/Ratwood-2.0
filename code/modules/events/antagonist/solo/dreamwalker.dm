@@ -14,6 +14,7 @@
 
 	base_antags = 1
 	maximum_antags = 2
+	min_players = 40
 
 	weight = 18
 	max_occurrences = 2

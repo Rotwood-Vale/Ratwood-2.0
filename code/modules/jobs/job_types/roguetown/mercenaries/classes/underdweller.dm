@@ -35,14 +35,15 @@
 	belt = /obj/item/storage/belt/rogue/leather/black		//Should give these guys a unique miners belt at some point..
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/pick
-	beltr = /obj/item/rogueweapon/huntingknife
+	beltr = /obj/item/tntstick
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/shield/wood
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
 		/obj/item/bomb = 2,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/huntingknife
 		)
 	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mining, 4, TRUE)

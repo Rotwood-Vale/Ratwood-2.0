@@ -19,9 +19,9 @@
 
 /datum/patron/inhumen/zizo
 	name = "Zizo"
-	domain = "Progress, Undeath, Hubris, Left Hand Magicks"
-	desc = "A once-mortal snow elf turned god. Her hubris in thinking she could harvest lux from the planet itself led to the elimination of her entire race. Her works are still used to this dae in some cases."
-	worshippers = "Necromancers, Researchers, Warlocks, and the Undead"
+	domain = "Necromancy, Progress, The Rot, Left-Handed Magicks"
+	desc = "The God-Head was the mortal snow elf Zinoviya, abandoned by Her Divine Father PSYDON. When She found out She was denied godhood, She struck PSYDON down and took it Herself, plunging the world into the Second Coming of the Rot. Burn the world to ash, and build it anew."
+	worshippers = "Necromancers, Maddened Mages, The Undead"
 	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT, TRAIT_ZOMBIE_IMMUNE)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,
@@ -41,9 +41,9 @@
 
 /datum/patron/inhumen/graggar
 	name = "Graggar"
-	domain = "God of Conquest, War, Strategy, Bind-Breaking"
-	desc = "Slave orc turned deity, said by the Holy Ecclesial to have been blessed by Ravox himself. He took his blessings to wage a bloody war against his once-captors, and then continued his conquest in his own name. Some Graggarites might care for honor, however many do not- what matters are results, and victory at a reasonable cost."
-	worshippers = "Prisoners, Slaves, Militants, and the Cruel"
+	domain = "Conquest, Cruelty, Kinslaying, Slaughter, Cannibalism, Rape"
+	desc = "The Gorebound Star was a half-orc warlord who sought to strike Ravox down in rage at the cruel fate of His lover. He was decapitated, and His head revived as a mutilated abberation of blue flesh and sickening tendrils. Gazing upon the Star will drive anyone mad."
+	worshippers = "Fallen Warriors, Cannibals, Serial Killers, The Cruel"
 	mob_traits = list(TRAIT_HORDE, TRAIT_ORGAN_EATER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/graggar_bloodrage				= CLERIC_T0,
@@ -63,9 +63,9 @@
 
 /datum/patron/inhumen/matthios
 	name = "Matthios"
-	domain = "God of Exchange, Alchemy, Theft, and Greed"
-	desc = "The Man who stole fire from the sun and used it in his pursuit of immortality; exchanging the knowledge of how to make fire with the lessers for safety in doing so. He guides those who live in the dark, away from the flame of civilization; and those who believe in his cause bring the wealth of the undeserving in the light to the deserving in the dark."
-	worshippers = "Highwaymen, Alchemists, Downtrodden Peasants, and Merchants"
+	domain = "Greed, Theft, Dragons, True Freedom"
+	desc = "The Manyfaced Matthios has no true form. Some see Him as a merry highwayman, some as a god of beggars, and others the father of all dragons. One thing is certain: His followers despise Astrata's nobility."
+	worshippers = "Highwaymen, Downtrodden Peasants, Merchants, Slaves, Kobolds"
 	crafting_recipes = list(/datum/crafting_recipe/roguetown/sewing/bandithood)
 	mob_traits = list(TRAIT_COMMIE, TRAIT_MATTHIOS_EYES, TRAIT_SEEPRICES_SHITTY)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
@@ -87,9 +87,9 @@
 
 /datum/patron/inhumen/baotha
 	name = "Baotha"
-	domain = "Goddess of Hedonism, Addiction, Anguish, and Heartbreak"
-	desc = "The twin sister of Eora, fallen to disgrace. She brings comfort to those who can't find it elsewhere but the bottom of a bottle; and she tempts those who have lost much into her fold through offers of relief and pleasure, yet they soon find themselves unable to escape her grasp. Seen as a scorned lover by many, and followed by such."
-	worshippers = "Widows, Gamblers, Addicts, and Scorned Lovers"
+	domain = "Hedonism, Debauchery, Addiction, Heartbreak"
+	desc = "The Lady of Debauchery was the only snow elf to have survived Zizo's massacre, having been kept by the Naledi as a concubine. Until one dae, She was consumed by Her depravity and addiction, stealing a shard of SYON from Her captors and ascending to godhood. Her followers desire only to experience mind-rotting pleasures."
+	worshippers = "Widows, Gamblers, Addicts, Scorned Lovers, Far-Gone Prostitutes"
 	mob_traits = list(TRAIT_DEPRAVED, TRAIT_CRACKHEAD)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/baothavice					= CLERIC_T0,

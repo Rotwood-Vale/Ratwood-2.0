@@ -26,18 +26,6 @@
 	icon_state = "pillory_reinforced"
 	base_icon = "pillory_reinforced"
 
-/obj/structure/pillory/town_square
-	lockid = list("keep_dungeon", "keep_barracks", "town_dungeon", "town_barracks", "bog_dungeon", "bog_barracks", "church")
-
-/obj/structure/pillory/reinforced/keep_dungeon
-	lockid = list("keep_dungeon")
-
-/obj/structure/pillory/reinforced/town_dungeon
-	lockid = list("town_dungeon")
-
-/obj/structure/pillory/reinforced/bog_dungeon
-	lockid = list("bog_dungeon")
-
 
 /obj/structure/pillory/Initialize()
 	LAZYINITLIST(buckled_mobs)

@@ -134,7 +134,7 @@
 /datum/intent/partizan/peel
 	name = "armor peel"
 	icon_state = "inpeel"
-	attack_verb = list("snags")
+	attack_verb = list("<font color ='#e7e7e7'>strongly peels</font>")
 	animname = "cut"
 	blade_class = BCLASS_PEEL
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
@@ -148,6 +148,7 @@
 
 //Old partizan peel, for the naginata.
 /datum/intent/partizan/peel/nag
+	attack_verb = list("<font color ='#e7e7e7'>peels</font>")
 	swingdelay = 5
 	peel_divisor = 4
 
@@ -1051,7 +1052,7 @@
 	gripped_intents = list(SPEAR_THRUST, PARTIZAN_REND, PARTIZAN_PEEL, SPEAR_BASH)
 	icon_state = "partizan"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	minstr = 10
+	minstr = 12//Easily hit by knights and other dedicated combat roles
 	max_blade_int = 200
 	wdefense = 6
 	wdefense_wbonus = 3	//9 when wielded. Identical to glaive.
@@ -1082,6 +1083,11 @@
 	name = "Aavnic lándzsa"
 	desc = "A regional earspoon lance with a carved handle, adorned with the colours of the Freifechters. These are smithed by the legendary armourers of Vyšvou and given to distinguished lancers upon their graduation."
 	icon_state = "praguespear"
+
+/obj/item/rogueweapon/spear/boar/aav
+	name = "Aavnic lándzsa"//I'm creatively bankrupt.
+	desc = "A regional earspoon lance with a carved handle, adorned with the colours of a Steppesman's banner."
+	icon_state = "avspear"
 
 /obj/item/rogueweapon/spear/lance
 	name = "lance"

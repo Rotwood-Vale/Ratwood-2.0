@@ -365,3 +365,8 @@
 	name = "Heresiarch"
 	desc = "The 'Holy' See has their blood-stained grounds, and so do we. Underneath their noses, we pray to the true gods - I know the location of the local heretic conclave. Secrecy is paramount. If found out, I will surely be killed."
 	added_traits = list(TRAIT_HERESIARCH)
+
+/datum/virtue/utility/mountable
+	name = "Mountable"
+	desc = "You have trained or been trained into a suitable mount. People may ride you as they would a saiga."
+	added_traits = list(TRAIT_PONYGIRL_RIDEABLE)

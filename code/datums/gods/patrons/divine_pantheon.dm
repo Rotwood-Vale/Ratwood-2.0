@@ -33,9 +33,9 @@
 
 /datum/patron/divine/astrata
 	name = "Astrata"
-	domain = "Twinned Goddess of the Sun, Day, and Order"
-	desc = "The she-form of the Twinned Gods, the combined amalgam of single-bodied Astrata and Noc that opens her eyes at glorious Dae. Men bask under the gift of the Sun. A single form begets two Gods that shift at Dusk and Dawn but always endures, even at night."
-	worshippers = "The Noble Hearted, Zealots and Farmers"
+	domain = "The Day, The Sun, Order"
+	desc = "The Absolute Order is the glorious sunlight that permeates our lands and drives back evil. By Her Light is the world given Order, and by her Blessing is Nobility deigned to rule. Ravox stands at Her side to ensure Her Order does not become Tyranny."
+	worshippers = "Nobility, The Righteous, The Zealous"
 	mob_traits = list(TRAIT_APRICITY)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/ignition				= CLERIC_T0,
@@ -57,9 +57,9 @@
 
 /datum/patron/divine/noc
 	name = "Noc"
-	domain = "Twinned God of the Moon, Night, and Knowledge"
-	desc = "The he-form of the Twinned Gods, the combined amalgam of single-bodied Noc and Astrata that opens his eyes during pondorous Night. He gifted man knowledge of divinity and magicks. A single form begets two Gods that shift at Dusk and Dawn but always endures, even at dae."
-	worshippers = "Wizards and Scholars"
+	domain = "The Night, The Moon, Knowledge, Magic, Secrets"
+	desc = "The Father of Secrets is the glorious moonlight that grants us power through knowledge. We are granted visions of His vault of secrets, and given the ability to wield the Arcyne through His benevolence."
+	worshippers = "Wizards, Scholars, Night Owls"
 	mob_traits = list(TRAIT_NIGHT_OWL)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/noc_sight				= CLERIC_T0,
@@ -82,9 +82,9 @@
 
 /datum/patron/divine/dendor
 	name = "Dendor"
-	domain = "God of the Earth and Nature"
-	desc = "The God of Wilds, born from Abyssor's feverish dreams. Spilt forth life from the oceans to land in a wild craze. The Father of Ground-Lyfe. Treefather."
-	worshippers = "Druids, Beasts, Madmen"
+	domain = "Plants, Animals, Nature, Agriculture"
+	desc = "The Treefather was the First Druid, driven mad by the abuse of His realm. Even still, He stands vigil over the woods and the plains, blessing our harvests and our livelihoods. His beasts show us no quarter, but we can learn to avoid their jaws."
+	worshippers = "Druids, Beasts, Madmen, Farmers, Elves, Wildkin"
 	mob_traits = list(TRAIT_KNEESTINGER_IMMUNITY, TRAIT_LEECHIMMUNE)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/spiderspeak 			= CLERIC_T0,
@@ -107,9 +107,9 @@
 
 /datum/patron/divine/abyssor
 	name = "Abyssor"
-	domain = "The great dreamer, primordial father of the tides. The ancient one, the most warped and potent of the ten."
-	desc = "The strongest of the Ten; when awakened, the world flooded for a thousand daes and a thousand nights before he was put to slumber. Resting fitfully did Dendor split from his skull like a gaping wound. Communes rarely with his followers, only offering glimpses in dreams. Gifted primordial Man water. "
-	worshippers = "Men of the Sea, Primitive Aquatics"
+	domain = "The Seas, Dreams, Purity, Cleansing"
+	desc = "The Pure Tide disappeared into a slumber, without considering that His dreams would inspire followers of His Divine Absence. The twisted minds and bodies of the Dreamers have corrupted His realm, though through His waters may we be cleansed. If He awakens, the world will be cleansed in full."
+	worshippers = "Fishermen, Axians, Lamia, Dreamers, Madmen"
 	mob_traits = list(TRAIT_ABYSSOR_SWIM, TRAIT_SEA_DRINKER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/aquatic_compulsion	= CLERIC_T0,
@@ -135,9 +135,9 @@
 
 /datum/patron/divine/ravox
 	name = "Ravox"
-	domain = "God of Justice, Glory, Battle"
-	desc = "Stalwart warrior, glorious justicier; legends say he came down to the Basin to repel the vile hordes of demons with his own hands, and that he seeks warriors for his divine army among mortals."
-	worshippers = "Warriors, Sellswords & those who seek Justice"
+	domain = "Justice, Battle, Glory, Righteous Fury"
+	desc = "The Glorious Justice plays as foil to Astrata's Order, preventing the world from being ruled by the Sun's Tyranny. He is an impartial God who exists solely to enforce Divine Justice. His followers are often misguided in their pursuit of such."
+	worshippers = "Warriors, Mercenaries, Knights, Seekers of Justice"
 	mob_traits = list(TRAIT_SHARPER_BLADES, TRAIT_JUSTICARSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/tug_of_war			= CLERIC_T0,
@@ -159,9 +159,9 @@
 
 /datum/patron/divine/necra
 	name = "Necra"
-	domain = "Goddess of Death and the Afterlife"
-	desc = "Veiled Lady of the underworld, equally feared and respected by mortals. She taught mortals the inevitability of death and cares for them as they reach the afterlife."
-	worshippers = "The Dead, Mourners, Gravekeepers"
+	domain = "Death, The Afterlife, Rebirth"
+	desc = "The Undermaiden is the custodian of the Afterlife, where all souls must eventually go. She tasks the lost with the Trials of the Forgotten, where they must ruminate on their lyfe to be reborn. Her followers find resurrection to be abhorrent, choosing to isolate themselves to their graveyards."
+	worshippers = "Gravediggers, Morticians, Disgraced Physicians, Loners"
 	mob_traits = list(TRAIT_SOUL_EXAMINE, TRAIT_NOSTINK)	//No stink is generic but they deal with dead bodies so.. makes sense, I suppose?
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/necras_sight			= CLERIC_T0,
@@ -184,9 +184,9 @@
 
 /datum/patron/divine/xylix
 	name = "Xylix"
-	domain = "God of Trickery, Freedom and Inspiration"
-	desc = "The Laughing God, both famous and infamous for his sway over the forces of luck. Xylix is known for the inspiration of many a bards lyric. Speaks through his gift to man; the Tarot deck."
-	worshippers = "Gamblers, Bards, Artists, and the Silver-Tongued"
+	domain = "Trickery, Freedom, Inspiration, Fate, Fluvians"
+	desc = "The Trickster is an unknown amongst the Pantheon. They created the Fluvian race with the gift of Fate, and serve the sole purpose of pulling pranks on Gods and Mortals alike. Their followers see freedom as an absolute, and despise slavery."
+	worshippers = "Gamblers, Bards, Artists, The Silver-Tongued, Fluvians"
 	mob_traits = list(TRAIT_XYLIX)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/xylixslip				= CLERIC_T0,
@@ -220,9 +220,9 @@
 
 /datum/patron/divine/pestra
 	name = "Pestra"
-	domain = "Goddess of Decay, Disease and Medicine"
-	desc = "Goddess that blessed many a saint with healing hands, Pestra taught man the arts of medicine and its benefits."
-	worshippers = "The Sick, Phyicians, Apothecaries"
+	domain = "Medicine, Pestilence, Decay"
+	desc = "The Panacea is the only of the Ten to be born to a wildkin, She taught us the arts of medicine and surgery. Her followers are obsessed with rot and decay to a concerning degree to the other Tennites."
+	worshippers = "The Sick, Chirurgeons, Apothecaries"
 	mob_traits = list(TRAIT_EMPATH, TRAIT_ROT_EATER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/diagnose				= CLERIC_ORI,
@@ -245,9 +245,9 @@
 
 /datum/patron/divine/malum
 	name = "Malum"
-	domain = "God of Fire, Destruction and Rebirth"
-	desc = "Opinionless god of the crafts. He teaches that great works for killing or saving are great works, either way. The well-oiled guillotine and the well-sharpened axe are tools, and there is no good and evil to their craft."
-	worshippers = "Smiths, Miners, Engineers"
+	domain = "Craft, Fire, Destruction, Ingenuity"
+	desc = "The Opinionless God teaches that tools for killing or saving are tools, either way. The well-oiled guillotine and the well-sharpened axe are merely tools, and there is no good and evil to their craft."
+	worshippers = "Smiths, Miners, Engineers, Dwarves"
 	mob_traits = list(TRAIT_FORGEBLESSED, TRAIT_BETTER_SLEEP)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/malum_flame_rogue 	= CLERIC_T0,
@@ -272,9 +272,9 @@
 
 /datum/patron/divine/eora
 	name = "Eora"
-	domain = "Goddess of Love, Life and Beauty"
-	desc = "Baotha's fairer half, made from blind, unconditional love. She is without a shred of hate in her heart and taught mankind that true love that even transcends Necra's grasp."
-	worshippers = "Lovers, the romantically inclined, and Doting Grandparents"
+	domain = "Love, Family, Beauty"
+	desc = "The Lady of the Hearth blesses our Love, unconditional of for whom it is for. Marriage is Astrata's Tyranny encroaching on Eora's domain. Her followers are oft promiscuous, bards especially so."
+	worshippers = "Lovers, Doting Parents, Bards, Hopeless Romantics"
 	mob_traits = list(TRAIT_EMPATH, TRAIT_EXTEROCEPTION)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/eora_blessing			= CLERIC_T0,

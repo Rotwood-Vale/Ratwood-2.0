@@ -30,6 +30,9 @@
 	playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
 	do_thrust_animate(user, target)
 
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
+		user.sexcon.try_pelvis_crush(target)
+
 	if(target.sexcon.considered_limp())
 		user.sexcon.perform_sex_action(target, 1.2, 4, TRUE)
 	else

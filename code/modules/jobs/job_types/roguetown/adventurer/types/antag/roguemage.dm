@@ -6,16 +6,16 @@
 	outfit = /datum/outfit/job/roguetown/bandit/roguemage
 	category_tags = list(CTAG_BANDIT)
 	cmode_music = 'sound/music/combat_bandit_mage.ogg'
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_DODGEEXPERT)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_DODGEEXPERT, TRAIT_DEATHBYSNUSNU)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
-		STATKEY_PER = 2, // Adv mage get 2 perception so whatever. It is useful for aiming body parts but have no direct synergy with spells. 
+		STATKEY_PER = 2, // Adv mage get 2 perception so whatever. It is useful for aiming body parts but have no direct synergy with spells.
 		STATKEY_LCK = 2,
 		STATKEY_SPD = 1,
 		STATKEY_CON = 1,
 	)
-	
+
 
 /datum/outfit/job/roguetown/bandit/roguemage/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -38,7 +38,7 @@
 	id = /obj/item/mattcoin
 
 	r_hand = /obj/item/rogueweapon/woodstaff/diamond
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE) // Jman Polearms, for better parrying without making them bandit level 
+	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE) // Jman Polearms, for better parrying without making them bandit level
 	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE) // They get apprentice in a wide spread of weapons for synergy with conjuration, especially if they take virtues
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)

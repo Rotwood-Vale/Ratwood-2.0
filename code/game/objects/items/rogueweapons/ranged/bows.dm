@@ -77,9 +77,9 @@
 //bow objs ฅ^•ﻌ•^ฅ
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow
-	name = "crude selfbow"
-	desc = "This roughly hewn selfbow is just a bit too little of everything. Too little length, \
-	too little poundage, too slow a shot."
+	name = "simple shortbow"
+	desc = "This simply hewn shortbow is functional enough. Not the greatest length, \
+	or poundage, nor the quickest shot, but it works"
 	icon = 'icons/roguetown/weapons/32.dmi'
 	icon_state = "bow"
 	item_state = "bow"

@@ -314,7 +314,6 @@
 	extinguishable = FALSE
 	weather_resistant = TRUE
 	metalizer_result = null
-	smeltresult = /obj/item/ingot/iron
 
 /obj/item/flashlight/flare/torch/lantern/afterattack(atom/movable/A, mob/user, proximity)
 	. = ..()

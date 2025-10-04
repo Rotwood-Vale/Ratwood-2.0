@@ -1,8 +1,8 @@
 /datum/patron/old_god
 	name = "Psydon"
-	domain = "God of Ontological Reality"
-	desc = "The true God of everything, Psydon is maximally good - He created humen in his image to live in Psydonia, and defended the vale by sending the COMET SYON to defeat the rampaging archdemon."
-	worshippers = "Fanatics and Nostalgists"
+	domain = "Life, Creation, Compassion and Perseverance"
+	desc = "The One arrived to PSYDONIA on the COMET SYON, reshaping the barren world in His image. He was struck down by the Necromantress Zizo; some believe Him dead, others slumbering. May we ENDURE in His name."
+	worshippers = "Ancient Dwarves and Elves, Zybantines, Otavans, Those Who Dream of Peace"
 	associated_faith = /datum/faith/old_god
 	mob_traits = list(TRAIT_PSYDONIAN_GRIT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,

@@ -305,7 +305,7 @@
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/holysee
 	name = "eclipsum dagger"
-	desc = "A blade forged from the Holy metals of the twinned gods Noc and Astrata, Silver and Gold fused under an Eclipse and blessed, these daggers are very grudgingly given out by the Grenzelhoftian See to ordained Priests of the Ten."
+	desc = "A blade forged from the Holy metals of the Equilibrium of the Eclipse, Silver and Gold fused under an Eclipse and blessed, these daggers are very grudgingly given out by the Grenzelhoftian See to ordained Priests of the Ten."
 	force = 25
 	max_integrity = 200
 	icon_state = "gsdagger"
@@ -730,9 +730,6 @@
 								user.visible_message(span_notice("[user] finishes styling [H]'s hair."), span_notice("You finish styling [H == user ? "your" : "[H]'s"] hair."))
 				
 				if("facial hairstyle")
-					if(H.gender != MALE)
-						to_chat(user, span_warning("They don't have facial hair to style!"))
-						return
 					var/datum/customizer_choice/bodypart_feature/hair/facial/humanoid/facial_choice = CUSTOMIZER_CHOICE(/datum/customizer_choice/bodypart_feature/hair/facial/humanoid)
 					var/list/valid_facial_hairstyles = list()
 					for(var/facial_type in facial_choice.sprite_accessories)
@@ -823,9 +820,6 @@
 								user.visible_message(span_notice("[user] finishes styling [H]'s hair."), span_notice("You finish styling [H == user ? "your" : "[H]'s"] hair."))
 				
 				if("facial hairstyle")
-					if(H.gender != MALE)
-						to_chat(user, span_warning("They don't have facial hair to style!"))
-						return
 					var/datum/customizer_choice/bodypart_feature/hair/facial/humanoid/facial_choice = CUSTOMIZER_CHOICE(/datum/customizer_choice/bodypart_feature/hair/facial/humanoid)
 					var/list/valid_facial_hairstyles = list()
 					for(var/facial_type in facial_choice.sprite_accessories)

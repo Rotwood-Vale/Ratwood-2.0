@@ -39,6 +39,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
 		var/booze_power = boozepwr
 		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
+		if(boozepwr >= 25)//It has to be REAL BOOZE.
+			if(HAS_TRAIT(C, TRAIT_DRUNK_HEALING))
+				if(prob(2))
+					to_chat(C, "<span class='notice'>A fine drink!</span>")
+					C.emote("hum")
+				C.adjustBruteLoss(-0.2)
+				C.adjustBruteLoss(-0.2)
 //		if(boozepwr > 0)
 //			var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 //			if (istype(L))

@@ -4,7 +4,7 @@
 
 //Master wood crafting - standardizes all wood crafting.
 /datum/crafting_recipe/roguetown/turfs/wood
-	name = "wooden floor (crude wood) (1 small log)"
+	name = "floor (crude wood) (1 small log)"
 	result = /turf/open/floor/rogue/ruinedwood
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	skillcraft = /datum/skill/craft/carpentry
@@ -223,7 +223,7 @@
 /// WINDOWS
 
 /datum/crafting_recipe/roguetown/turfs/roguewindow
-	name = "wooden window (2 small logs)"
+	name = "window (wooden) (2 small logs)"
 	result = /obj/structure/roguewindow
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	skillcraft = /datum/skill/craft/carpentry
@@ -233,7 +233,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/fancywindow/openclose
-	name = "fancy window (2 small logs, 1 stone, 1 glass, 1 dirtclod)"
+	name = "window (fancy) (2 small logs, 1 stone, 1 glass, 1 dirtclod)"
 	result = /obj/structure/roguewindow/openclose
 	reqs = list(
 	  /obj/item/grown/log/tree/small = 2,
@@ -248,7 +248,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/reinforcedwindow/openclose
-	name = "reinforced window (2 small logs, 1 iron, 1 glass, 1 dirtclod)"
+	name = "window (reinforced) (2 small logs, 1 iron, 1 glass, 1 dirtclod)"
 	result = /obj/structure/roguewindow/openclose/reinforced
 	reqs = list(
 		/obj/item/grown/log/tree/small = 2,

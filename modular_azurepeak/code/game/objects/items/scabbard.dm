@@ -479,8 +479,10 @@
 	sewrepair = TRUE
 
 	valid_blade = /obj/item/rogueweapon/sword
+//You'd think think it'd look for subtypes, but no.
 	invalid_blades = list(
-		/obj/item/rogueweapon/sword/long/exe
+		/obj/item/rogueweapon/sword/long/exe,
+		/obj/item/rogueweapon/sword/long/exe/astrata
 	)
 
 	force = 7

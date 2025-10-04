@@ -17,6 +17,7 @@
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/vulp,
+		/datum/sprite_accessory/ears/fennec,
 		/datum/sprite_accessory/ears/big/sandfox_large,
 		/datum/sprite_accessory/ears/bigwolf,
 		/datum/sprite_accessory/ears/bigwolf_inner,
@@ -98,7 +99,7 @@
 		/datum/sprite_accessory/ears/goblin_small,
 		/datum/sprite_accessory/ears/halforc)
 
-/datum/customizer/organ/ears/goblin 
+/datum/customizer/organ/ears/goblin
 	customizer_choices = list(/datum/customizer_choice/organ/ears/goblin)
 	allows_disabling = FALSE
 
@@ -148,6 +149,7 @@
 		/datum/sprite_accessory/ears/fish,
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/vulp,
+		/datum/sprite_accessory/ears/fennec,
 		/datum/sprite_accessory/ears/husky,
 		/datum/sprite_accessory/ears/jellyfish,
 		/datum/sprite_accessory/ears/kangaroo,
@@ -208,6 +210,7 @@
 		/datum/sprite_accessory/ears/fish,
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/vulp,
+		/datum/sprite_accessory/ears/fennec,
 		/datum/sprite_accessory/ears/husky,
 		/datum/sprite_accessory/ears/jellyfish,
 		/datum/sprite_accessory/ears/kangaroo,
@@ -303,6 +306,7 @@
 		/datum/sprite_accessory/ears/fish,
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/vulp,
+		/datum/sprite_accessory/ears/fennec,
 		/datum/sprite_accessory/ears/husky,
 		/datum/sprite_accessory/ears/jellyfish,
 		/datum/sprite_accessory/ears/kangaroo,

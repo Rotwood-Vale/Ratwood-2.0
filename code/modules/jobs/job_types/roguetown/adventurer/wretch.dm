@@ -12,7 +12,7 @@
 	outfit_female = null
 	display_order = JDO_WRETCH
 	show_in_credits = FALSE
-	min_pq = 20
+	min_pq = 60//Three slots. Intended for round progression. Lunatic at 100, Martyr at 10.
 	max_pq = null
 
 	obsfuscated_job = TRUE
@@ -25,7 +25,7 @@
 	wanderer_examine = TRUE
 	advjob_examine = TRUE
 	always_show_on_latechoices = TRUE
-	job_reopens_slots_on_death = TRUE
+	job_reopens_slots_on_death = FALSE//Haha! No. Stop. No endless waves of better adventurers, thanks.
 	same_job_respawn_delay = 1 MINUTES
 	virtue_restrictions = list(/datum/virtue/heretic/zchurch_keyholder) //all wretch classes automatically get this
 	carebox_table = /datum/carebox_table/wretch

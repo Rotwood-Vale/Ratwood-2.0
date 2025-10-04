@@ -170,6 +170,20 @@
 	passive_generation = 1
 	category = "Foodstuffs"
 
+/datum/roguestock/stockpile/honey
+	name = "Honey"
+	desc = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
+	item_type = /obj/item/reagent_containers/food/snacks/rogue/honey
+	held_items = list(0, 0)
+	payout_price = 6
+	withdraw_price = 6
+	transport_fee = 3
+	export_price = 9
+	importexport_amt = 5
+	stockpile_limit = 25
+	passive_generation = 1
+	category = "Foodstuffs"
+
 /datum/roguestock/stockpile/cheese
 	name = "Cheese"
 	desc = "The product of milk and salt."

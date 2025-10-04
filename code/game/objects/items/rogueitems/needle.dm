@@ -105,7 +105,7 @@
 			var/const/SEW_REPAIR_PER_LEVEL = 10
 			/// How many seconds does unskilled sewing take?
 			var/const/BASE_SEW_TIME = 6 SECONDS
-			/// At what (combined) level do we 
+			/// At what (combined) level do we
 			var/const/SKILL_FASTEST_SEW = SKILL_LEVEL_LEGENDARY
 			/// The reduction in sewing time for each (combined) level in sewing/tanning.
 			var/const/SEW_TIME_REDUCTION_PER_LEVEL = 1 SECONDS
@@ -126,7 +126,7 @@
 			// The more knowlegeable we are the less chance we damage the object
 			var/failed = prob(BASE_FAIL_CHANCE - (skill * FAIL_REDUCTION_PER_LEVEL))
 			var/sewtime = max(SEW_MIN_TIME, BASE_SEW_TIME - (SEW_TIME_REDUCTION_PER_LEVEL * skill))
-			if(HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR))
+			if(HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_DWARF_REPAIR))
 				failed = FALSE // Make sure they can't fail but let them suffer sewtime
 			if(!do_after(user, sewtime, target = I))
 				return

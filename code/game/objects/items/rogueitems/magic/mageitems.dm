@@ -50,6 +50,29 @@
 		/obj/item/reagent_containers/food/snacks/grown/manabloom
 	)
 
+/obj/item/storage/magebag/alchemist
+	name = "alchemist's pouch"
+	desc = "A pouch for carrying handfuls of alchemical ingredients."
+	color = "#dddebf"
+	populate_contents = list(
+		/obj/item/reagent_containers/food/snacks/grown/manabloom,
+		/obj/item/reagent_containers/food/snacks/grown/manabloom,
+		/obj/item/magic/manacrystal,
+		/obj/item/magic/obsidian,
+		/obj/item/alch/viscera,
+		/obj/item/alch/viscera,
+		/obj/item/alch/urtica,
+		/obj/item/alch/taraxacum,
+		/obj/item/alch/puresalt,
+		/obj/item/alch/paris,
+		/obj/item/alch/mentha,
+		/obj/item/alch/hypericum,
+		/obj/item/alch/salvia,
+		/obj/item/alch/calendula,
+		/obj/item/seeds/swampweed = 1,
+		/obj/item/seeds/pipeweed = 1,
+	)
+
 
 /obj/item/chalk
 	name = "stick of chalk"

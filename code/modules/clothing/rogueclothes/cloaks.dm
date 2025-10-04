@@ -849,6 +849,7 @@
 	color = null
 	icon_state = "apron"
 	item_state = "apron"
+	color = "#c9c3bd"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
 	boobed = TRUE
@@ -876,7 +877,7 @@
 /obj/item/clothing/cloak/apron/waist
 	name = "apron"
 	desc = "An apron used by many workshop workers."
-	color = null
+	color = "#c9c3bd" //default spawns are less eye-searingly white
 	icon_state = "waistpron"
 	item_state = "waistpron"
 	body_parts_covered = GROIN

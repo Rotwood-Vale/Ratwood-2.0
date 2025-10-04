@@ -42,10 +42,10 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			dat += "<div align='center'><b>OOC notes</b></div>"
 			dat += "<div align='left'>[ooc_notes_display]</div>"
 		if(ooc_extra)
-			dat += "[ooc_extra]"
+			dat += "<div align='center'>[ooc_extra]</div>"
 		if(nsfw_headshot_link)
 			dat += "<br><div align='center'><b>NSFW</b></div>"
-		if(nsfw_headshot_link && !wear_armor && !wear_shirt)
+		if(nsfw_headshot_link && (observer_privilege || (!wear_armor && !wear_shirt)))
 			dat += ("<br><div align='center'><img src='[nsfw_headshot_link]' width='600px'></div>")
 		else if(nsfw_headshot_link && (wear_armor || wear_shirt))
 			dat += "<br><center><i><font color = '#9d0080'; font size = 5>There is more to see but they are not naked...</font></i></center>"

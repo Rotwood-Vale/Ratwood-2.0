@@ -146,5 +146,15 @@
 				used = 'sound/vo/male/gen/strain.ogg'
 			if("yip")
 				used = list('sound/vo/yip.ogg', 'sound/vo/yip2.ogg', 'sound/vo/yip3.ogg')
-
+			if("salute")
+				used = 'sound/vo/salute.ogg'
+			if("crack")
+				used = 'sound/vo/knuckles.ogg'
+			if("gulp")
+				used = list('sound/vo/gulp.ogg', 'sound/vo/gulp2.ogg')
+			if("sniff")
+				used = 'sound/vo/sniff.ogg'
+			if("sneeze")
+				used = 'sound/vo/male/male_sneeze.ogg'
+			
 	return used

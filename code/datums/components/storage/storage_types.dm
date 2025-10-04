@@ -162,23 +162,14 @@
 		/obj/item/magic/leyline,
 		/obj/item/reagent_containers/food/snacks/grown/manabloom,
 		/obj/item/magic/manacrystal,
-		/obj/item/ash,
 		/obj/item/magic/artifact,
-		/obj/item/alch/atropa,
-		/obj/item/alch/matricaria,
-		/obj/item/alch/symphitum,
-		/obj/item/alch/taraxacum,
-		/obj/item/alch/euphrasia,
-		/obj/item/alch/paris,
-		/obj/item/alch/calendula,
-		/obj/item/alch/mentha,
-		/obj/item/alch/urtica,
-		/obj/item/alch/salvia,
-		/obj/item/alch/hypericum,
-		/obj/item/alch/benedictus,
-		/obj/item/alch/valeriana,
-		/obj/item/alch/artemisia,
-		/obj/item/alch/rosa
+		/obj/item/alch,
+		/obj/item/reagent_containers/glass/bottle/alchemical,
+		/obj/item/herbseed,
+		/obj/item/reagent_containers/food/snacks/zizo_bane,
+		/obj/item/reagent_containers/powder,
+		/obj/item/ash,
+		/obj/item/seeds
 		))
 
 /datum/component/storage/concrete/roguetown/saddle
@@ -212,3 +203,15 @@
 /datum/component/storage/concrete/grid/headhook/bronze
 	screen_max_rows = 8
 	screen_max_columns = 6
+
+/datum/component/storage/concrete/grid/zigbox
+	max_w_class = WEIGHT_CLASS_TINY
+	screen_max_rows = 2
+	screen_max_columns = 3
+	max_items = 6
+
+/datum/component/storage/concrete/grid/zigbox/New(datum/P, ...)
+	. = ..()
+	can_hold = typecacheof(list(
+	/obj/item/clothing/mask/cigarette/rollie
+	))

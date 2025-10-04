@@ -714,6 +714,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
 	soundenv = 17
 	converted_type = /area/rogue/indoors/shelter/town/roofs
+	first_time_text = null
 
 /area/rogue/outdoors/town/roofs/keep
 	name = "Keep Rooftops"

@@ -71,3 +71,12 @@
 	converted_type = /area/rogue/outdoors/dungeon1
 	ceiling_protected = TRUE
 	deathsight_message = "root-bound caverns"
+
+/area/rogue/under/cavewet/wizarddungeon
+	name = "Abandoned Wizard Tower"
+	first_time_text = "Crumbling Tower"
+	spookysounds = SPOOKY_MYSTICAL
+	spookynight = SPOOKY_MYSTICAL
+	droning_sound = 'sound/music/area/magiciantower.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null

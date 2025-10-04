@@ -35,7 +35,7 @@
 	switch(riteselection) // rite selection goes in this section, try to do something fluffy. Presentation is most important here, truthfully.
 		if("Guiding Light") // User selects Guiding Light, begins the stuff for it
 			if(do_after(user, 50)) // just flavor stuff before activation
-				user.say("I beseech the she-form of the Twinned God!!")
+				user.say("I beseech the Absolute Order, the Sun and Dae!!")
 				if(do_after(user, 50))
 					user.say("To bring Order to a world of naught!!")
 					if(do_after(user, 50))
@@ -83,12 +83,12 @@
 	switch(riteselection) // put ur rite selection here
 		if("Moonlight Dance")
 			if(do_after(user, 50))
-				user.say("I beseech the he-form of the Twinned God!!")
+				user.say("I beseech the Father of Secrets, the Moon and Night!!")
 				if(do_after(user, 50))
 					user.say("To bring Wisdom to a world of naught!!")
 					if(do_after(user, 50))
 						user.say("Place your gaze upon me, oh wise one!!")
-						to_chat(user,span_cultsmall("The waning half of the Twin-God carries but one eye. With some effort, it can be drawn upon supplicants."))
+						to_chat(user,span_cultsmall("The Moon God's gaze falls upon you. With some effort, it can be drawn upon supplicants."))
 						playsound(loc, 'sound/magic/holyshield.ogg', 80, FALSE, -1)
 						moonlightdance(src)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)

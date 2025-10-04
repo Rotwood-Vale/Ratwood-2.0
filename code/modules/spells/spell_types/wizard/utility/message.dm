@@ -6,7 +6,7 @@
 	releasedrain = 30
 	recharge_time = 60 SECONDS
 	warnie = "spellwarning"
-	spell_tier = 2
+	spell_tier = 1
 	associated_skill = /datum/skill/magic/arcane
 	overlay_state = "message"
 	var/identify_difficulty = 15 //the stat threshold needed to pass the identify check

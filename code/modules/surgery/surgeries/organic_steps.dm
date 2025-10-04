@@ -81,8 +81,8 @@
 
 /datum/surgery_step/retract/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	display_results(user, target, span_notice("I retract [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] retract [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] retract [target]'s [parse_zone(target_zone)]."))
+		span_notice("[user] retracts [target]'s [parse_zone(target_zone)]."),
+		span_notice("[user] retracts [target]'s [parse_zone(target_zone)]."))
 	var/obj/item/bodypart/bodypart = target.get_bodypart(check_zone(target_zone))
 	bodypart?.add_embedded_object(tool, crit_message = FALSE)
 	return TRUE

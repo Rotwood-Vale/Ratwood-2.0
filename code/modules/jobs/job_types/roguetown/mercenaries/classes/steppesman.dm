@@ -39,7 +39,7 @@
 
 	// CLASS ARCHETYPES
 	H.adjust_blindness(-3)
-	var/classes = list("Szabrista - Saber Veteran", "Árkász - Elite Sapper", "Druzhina - Light Archer","Kozak - Light Infantry")
+	var/classes = list("Szabrista - Saber Veteran", "Árkász - Elite Sapper", "Árkász - Pálya Sapper", "Druzhina - Light Archer", "Kozak - Light Infantry")
 	var/classchoice = input("Choose your archetypes", "Available archetypes") as anything in classes
 
 	switch(classchoice)
@@ -118,6 +118,68 @@
 			if(maskchoice != "None")
 				mask = masks[maskchoice]
 
+		if("Árkász - Pálya Sapper")	//Tl;dr - these guys fucking EXPLODE. No whip. No dagger. Less skills. Three TNT sticks. Impact of choice. Godspeed.
+			H.set_blindness(0)
+			to_chat(H, span_warning("The Árkászi are frontline sappers specialized in sowing chaos and confusion. You, however, are charged with carrying the company's explosives. Slow. Steady. Prepared."))
+			shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+			head = /obj/item/clothing/head/roguetown/papakha
+			gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+			if(should_wear_femme_clothes(H))
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/bikini
+			else
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe
+			wrists = /obj/item/clothing/wrists/roguetown/bracers
+			backl = /obj/item/rogueweapon/shield/iron/steppesman
+			beltl = /obj/item/tntstick
+			beltr = /obj/item/tntstick
+			l_hand = /obj/item/rogueweapon/stoneaxe/battle/steppesman
+			neck = /obj/item/clothing/neck/roguetown/chaincoif
+			//No whip, dagger, etc. Only the explosives and some basic stuff.
+			backpack_contents = list(
+				/obj/item/roguekey/mercenary,
+				/obj/item/storage/belt/rogue/pouch/coins/poor,
+				/obj/item/tntstick
+				)
+			H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)//One less axe skill.
+			H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)//One less shield skill.
+			H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 2, TRUE)		//To avoid virtue cheese
+			H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 2, TRUE)		//Ditto
+			H.adjust_skillrank_up_to(/datum/skill/labor/mining, 3, TRUE)		//Ditto
+			H.adjust_skillrank_up_to(/datum/skill/craft/traps, 3, TRUE)			//Ditto
+			H.change_stat(STATKEY_WIL, 3)		//Two less speed, no con, compared to 'elite' sappers. 7 spread.
+			H.change_stat(STATKEY_STR, 2)
+			H.change_stat(STATKEY_PER, 2)
+			H.change_stat(STATKEY_SPD, -4)
+			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)//No armour skill. They get BOMBS.
+			H.dna.species.soundpack_m = new /datum/voicepack/male/evil()
+			var/masks = list(
+			"Humen" 	= /obj/item/clothing/mask/rogue/facemask/steel/steppesman,
+			"Beast"		= /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro,
+			"None"
+	)
+			var/maskchoice = input("What fits your face?", "MASK SELECTION") as anything in masks
+			if(maskchoice != "None")
+				mask = masks[maskchoice]
+
+			var/special_grenade = list(
+			"EXPLOSIVE"			= /obj/item/impact_grenade/explosion,
+			"DUST"				= /obj/item/impact_grenade/smoke,
+			"POISON"			= /obj/item/impact_grenade/smoke/poison_gas,
+			"CONFLAGRATION"		= /obj/item/impact_grenade/smoke/fire_gas,
+			"BLINDING"			= /obj/item/impact_grenade/smoke/blind_gas,
+			"None"
+	)
+			var/grenade_choice = input("What impact grenade do you carry?", "IMPACT SELECTION") as anything in special_grenade
+			if(grenade_choice != "None")
+				r_hand = special_grenade[grenade_choice]
+			else//Do they not take a grenade? Engineering skill and alchemy. They're a bomb factory.
+				H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 2, TRUE)	//Eeyup.
+				H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 2, TRUE)	//This ain't a pie factory.
+
 		if("Druzhina - Light Archer")	//Tl;dr - light armor class for Tatar-style archery. Has 'Druzhina' as a name cus czech/polish influence, couldn't think of better one.
 			H.set_blindness(0)
 			to_chat(H, span_warning("A Druzhina, a commoner of the Aavnic steppes made into a professional soldier. Hunters, herders, and various nomads from all walks of life. Equal in service, equal behind their bow, and ready to fight."))
@@ -146,7 +208,8 @@
 			H.change_stat(STATKEY_SPD, 2)
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-		if("Kozak - Light Infantry")		//Tl;dr - Old Steppesman whip build, light armor, be the glass canon you always wanted to be. Live your life, king.
+
+		if("Kozak - Light Infantry")		//Tl;dr - Old Steppesman, with whip or banner, be the glass canon you always wanted to be. Live your life, king.
 			H.set_blindness(0)
 			to_chat(H, span_warning("Being a Kozak is not a title one earns, nor is born with. It's a way of life. Known to be eccentric, living life on the edge - but living as free as possible. Skilled with whips, these madmen are the bane of civilized warriors."))
 			shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
@@ -159,9 +222,8 @@
 			cloak = /obj/item/clothing/cloak/volfmantle			//Crazed man, gives the look.
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 			beltr = /obj/item/rogueweapon/shield/buckler //Doesn't get good shield skill + no armor, so they get this to compensate for no parry on whip.
-			beltl = /obj/item/rogueweapon/flail //iron weapon since they get a whip already on the satchel
 			neck = /obj/item/clothing/neck/roguetown/chaincoif	//Better neckpiece for slightly less skill variety. Based it off a cool piece of art...// a minimun of defense against a critical hit is needed on combat roles, unless is specific gear made for them
-			H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/whipsflails, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)		//Bit high but he doesn't get huge strength boons so makes up for it. Same as a guard.
 			H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
@@ -177,6 +239,15 @@
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_OUTDOORSMAN, TRAIT_GENERIC)
 			H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()		//Semi-crazed warrior vibe.
+			var/weapons = list("Lándzsa", "Flail")
+			var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+			switch(weapon_choice)
+				if("Lándzsa")//Funny banner weapon & whip.
+					r_hand = /obj/item/rogueweapon/spear/boar/aav
+					H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)		//Use of the weapon.
+				if("Flail")//Or boring flail and whip.
+					beltl = /obj/item/rogueweapon/flail
+					H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)	//Old whip skill.
 
 	H.grant_language(/datum/language/aavnic)
 	H.merctype = 11

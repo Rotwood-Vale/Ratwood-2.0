@@ -1,7 +1,7 @@
 /datum/advclass/carpenter
-	name = "Carpenter"
-	tutorial = "A skilled carpenter, able to manipulate wood to suit their needs \
-	building forts and stores, carpenting floors, putting up crosses. You can do it all with enough logs"
+	name = "Builder"
+	tutorial = "A skilled carpenter and mason, able to manipulate wood and stone to suit their needs \
+	building forts and stores, carpenting floors, putting up crosses. You can do it all with enough logs or rocks"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/carpenter
@@ -28,11 +28,12 @@
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE) // They work at great heights.
 	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/carpentry, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/masonry, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/masonry, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/mining, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 	head = /obj/item/clothing/head/roguetown/hatfur
 	if(prob(50))
@@ -44,14 +45,17 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	beltl = /obj/item/rogueweapon/hammer/steel
+	r_hand = /obj/item/grown/log/tree/small
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
 						/obj/item/flint = 1,
 						/obj/item/rogueweapon/huntingknife = 1,
 						/obj/item/flashlight/flare/torch = 1,
 						/obj/item/rogueweapon/handsaw = 1,
+						/obj/item/rogueweapon/chisel,
 						/obj/item/dye_brush = 1,
 						/obj/item/recipe_book/builder = 1,
 						/obj/item/recipe_book/survival = 1,
-						/obj/item/rogueweapon/scabbard/sheath = 1
+						/obj/item/rogueweapon/scabbard/sheath = 1,
+						/obj/item/natural/stone = 4
 						)

@@ -152,7 +152,7 @@
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.voice_color)
-				if(H.name != "Unknown")
+				if(H.name == H.real_name)
 					mousecolor = "#[H.voice_color]"
 		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:[mousecolor];text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
 		p.client.mouseovertext.movethis(PM)
@@ -207,6 +207,11 @@
 	else
 		maptext_y = 28
 		maptext_x = -32
+
+	if(text2num(screen_loc_X[1]) <= 0)
+		screen_loc_X[1] = 1
+	if(text2num(screen_loc_Y[1]) <= 0)
+		screen_loc_Y[1] = 1
 
 	screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
 

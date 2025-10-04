@@ -9,12 +9,13 @@
 	traits_applied = list(
 		TRAIT_HEAVYARMOR,// We are going to be the lord's first heavy armor unarmed class
 		TRAIT_CIVILIZEDBARBARIAN,// To be up to date with other unarmed classes.
-		TRAIT_RITUALIST
+		TRAIT_RITUALIST,
+		TRAIT_DEATHBYSNUSNU
 		)
 	subclass_stats = list(
 		STATKEY_STR = 3,// LETS WRASSLE
 		STATKEY_WIL = 3,// This is our Go Big stat, we want lots of stamina for miracles and WRASSLIN.
-		STATKEY_LCK = 2,//We have a total of +12 in stats. 
+		STATKEY_LCK = 2,//We have a total of +12 in stats.
 		STATKEY_CON = 1
 	)
 	cmode_music = 'sound/music/Iconoclast.ogg'

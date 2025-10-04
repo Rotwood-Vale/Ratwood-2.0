@@ -34,7 +34,7 @@
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 
 /datum/crafting_recipe/roguetown/survival/woodbucket
-	name = "wooden bucket (1 small log)"
+	name = "bucket (1 small log)"
 	category = "Houseware"
 	result = /obj/item/reagent_containers/glass/bucket
 	reqs = list(/obj/item/grown/log/tree/small = 1)

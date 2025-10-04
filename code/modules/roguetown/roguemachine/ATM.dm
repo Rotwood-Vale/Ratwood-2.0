@@ -1,5 +1,5 @@
 /obj/structure/roguemachine/atm
-	name = "MEISTER"
+	name = "nervelock"
 	desc = "Stores and withdraws currency for accounts managed by the Grand Duchy of the vale."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "atm"
@@ -24,7 +24,7 @@
 /*
 	if(HAS_TRAIT(user, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_NOBLE) && !HAS_TRAIT(user, TRAIT_INQUISITION))
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		loc.visible_message(span_warning("The meister turns its nose up at [user]'s hand."))
+		loc.visible_message(span_warning("The nervelock turns its nose up at [user]'s hand."))
 		to_chat(user, span_danger("The machine spits on your ignoble foreign blood."))
 		return
 */
@@ -33,8 +33,8 @@
 			if(!HAS_TRAIT(H, TRAIT_COMMIE))
 				var/def_zone = "[(H.active_hand_index == 2) ? "r" : "l" ]_arm"
 				playsound(src, 'sound/items/beartrap.ogg', 100, TRUE)
-				to_chat(user, "<font color='red'>The meister craves my Noble blood!</font>")
-				loc.visible_message(span_warning("The meister snaps onto [H]'s arm!"))
+				to_chat(user, "<font color='red'>The nervelock craves my Noble blood!</font>")
+				loc.visible_message(span_warning("The nervelock locks onto [H]'s arm!"))
 				H.Stun(80)
 				H.apply_damage(50, BRUTE, def_zone)
 				H.emote("agony")
@@ -144,16 +144,16 @@
 				to_chat(user, "<font color='red'>This one has already been siphoned dry...</font>")
 				return
 			else
-				user.visible_message(span_warning("[user] is mounting the Crown onto the meister!"))
+				user.visible_message(span_warning("[user] is mounting the Crown onto the Nervelock!"))
 				if(do_after(user, 50))
 					if(!drilling)
-						user.visible_message(span_warning("[user] mounts the Crown atop the meister!"))
-						icon_state = "crown_meister"
+						user.visible_message(span_warning("[user] mounts the Crown atop the Nervelock!"))
+						icon_state = "atm_crown"
 						has_reported = FALSE
 						drilling = TRUE
 						drill(src)
 						qdel(P)
-						message_admins("[usr.key] has applied the Crustacean to a MEISTER.")
+						message_admins("[usr.key] has applied the Crustacean to a Nervelock.")
 						return
 		else
 			say("No account found. Submit your fingers for inspection.")
@@ -169,7 +169,7 @@
 		return
 	if(SStreasury.treasury_value <50)
 		new /obj/item/coveter(loc)
-		loc.visible_message(span_warning("The Crown grinds to a halt as the last of the treasury spills from the meister!"))
+		loc.visible_message(span_warning("The Crown grinds to a halt as the last of the treasury spills from the Nervelock!"))
 		playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
 		icon_state = "atm"
 		drilling = FALSE
@@ -177,9 +177,9 @@
 		return
 	if(mammonsiphoned >199) // The cap variable for siphoning.
 		new /obj/item/coveter(loc)
-		loc.visible_message(span_warning("Maximum withdrawal reached! The meister weeps."))
+		loc.visible_message(span_warning("Maximum withdrawal reached! The Nervelock weeps."))
 		playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
-		icon_state = "meister_broken"
+		icon_state = "atm_broken"
 		drilled = TRUE
 		drilling = FALSE
 		has_reported = FALSE
@@ -187,11 +187,11 @@
 	else
 		loc.visible_message(span_warning("A horrible scraping sound emanates from the Crown as it does its work..."))
 		if(!has_reported)
-			send_ooc_note("A parasite of the Freefolk is draining a Meister! Location: [location_tag ? location_tag : "Unknown"]", job = list("Grand Duke", "Steward", "Clerk"))
+			send_ooc_note("A parasite of the Freefolk is draining a Nervelock! Location: [location_tag ? location_tag : "Unknown"]", job = list("Grand Duke", "Steward", "Clerk"))
 			has_reported = TRUE
 		playsound(src, 'sound/misc/TheDrill.ogg', 70, TRUE)
 		spawn(100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
-			loc.visible_message(span_warning("The meister spills its bounty!"))
+			loc.visible_message(span_warning("The Nervelock spills its bounty!"))
 			SStreasury.treasury_value -= 20 // Takes from the treasury
 			mammonsiphoned += 20
 			budget2change(20, null, "SILVER")
@@ -201,7 +201,7 @@
 
 /obj/structure/roguemachine/atm/attack_right(mob/living/carbon/human/user)
 	if(drilling)
-		to_chat(user,"<font color='yellow'>I begin dismounting the Crown from the meister...</font>" )
+		to_chat(user,"<font color='yellow'>I begin dismounting the Crown from the Nervelock...</font>" )
 		if(do_after(user, 30, src))
 			if(!drilling)
 				return

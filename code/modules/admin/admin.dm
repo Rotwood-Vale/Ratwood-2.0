@@ -618,6 +618,7 @@
 			var/atom/A = new chosen(T)
 			A.flags_1 |= ADMIN_SPAWNED_1
 
+	message_admins("[key_name(usr)][ADMIN_LOOKUPFLW(usr)] spawned [amount] x [chosen] at [AREACOORD(usr)]")
 	log_admin("[key_name(usr)] spawned [amount] x [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

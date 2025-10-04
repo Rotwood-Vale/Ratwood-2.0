@@ -32,3 +32,19 @@
 	droning_sound = 'sound/music/area/underdark.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
+
+/area/rogue/under/underdark/rockhill
+	name = "The Underdark"
+	first_time_text = "The Deep"
+	spookysounds = SPOOKY_MYSTICAL
+	spookynight = SPOOKY_MYSTICAL
+	droning_sound = 'sound/music/area/underdark.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null	
+	ambush_mobs = list(
+		/mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated = 20,
+		/mob/living/simple_animal/hostile/retaliate/rogue/spider = 15,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mole = 15,
+		/mob/living/simple_animal/hostile/retaliate/rogue/minotaur = 15,
+		/mob/living/carbon/human/species/goblin/npc/ambush/moon = 40,
+		/mob/living/simple_animal/hostile/retaliate/rogue/troll = 15)

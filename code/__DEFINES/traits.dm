@@ -73,9 +73,14 @@
 #define TRAIT_EXCOMMUNICATED "Excommunicated"
 #define TRAIT_HERESIARCH "Forbidden Knowledge" //allows entry to ascendant church
 #define TRAIT_DREAMWALKER "Dreamwalker"
-#define TRAIT_JACKOFALLTRADES "Jack of All Trades"	//Reduces skill up cost
-#define TRAIT_PONYGIRL_RIDEABLE "Slave" //riding
+#define TRAIT_PONYGIRL_RIDEABLE "Mount" //riding
 #define TRAIT_BLACKLEG	"Blackleg" //Rig coin flips and dice. Fluvian exclusive.
+#define TRAIT_DEATHBYSNUSNU "Bed Breaker" //What do you think? Pelvis crushing and increased pain.
+#define TRAIT_HUMEN_INGENUITY "Humen Ingenuity"//25% cheaper sleep levels.
+#define TRAIT_HELLSPAWN "Hellspawn"//15% chance to avoid ignition.
+#define TRAIT_WING_BOUND "Wing Bound"//Welcome back, OldAcrobat. Offbalance (12s) and stun(2s) from falling 1Z, but no damage.
+#define TRAIT_DWARF_REPAIR "Dwarvish Knowledge"//Squire Repair, but very slightly worse. Only for needle / hammer.
+#define TRAIT_DRUNK_HEALING "Drunk Healing"//Having anything with booze power of 25 or more in your system slowly heals you.
 
 //Hearthstone port (Tracking)
 #define TRAIT_PERFECT_TRACKER "Perfect Tracker" //Will always find any tracks and analyzes them perfectly.
@@ -375,7 +380,6 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_CURSE_GRAGGAR = span_warning("I am forsaken by the Warlord. Bloodlust is only thing I know for real."),
 	TRAIT_CURSE_MATTHIOS = span_warning("I am forsaken by the Dragon. Greed will be my only salvation."),
 	TRAIT_CURSE_BAOTHA = span_warning("I am forsaken by the Heartbreaker. I am drowning in her promises."),
-	TRAIT_JACKOFALLTRADES = span_notice("Skills cost half as much for me to raise."),
 	TRAIT_BLOODLOSS_IMMUNE = span_notice("While I may bleed, I will feel nothing from it."),
 	TRAIT_ADRENALINE_RUSH = span_notice("I'm invigorated in the midst of battle! I don't feel my wounds!"),
 	TRAIT_MEDICINE_EXPERT = span_greentext("I've deep, intricate knowledge of my craft. I can learn to become a Master or above."),
@@ -383,12 +387,18 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_RACISMISBAD = span_warning("The Black Oaks can spot ANY Foreigners and Outsiders, no matter how long they've lived in the vale. This is an easy skill to master, as it is simply identifying who isn't an elf."),
 	TRAIT_HERESIARCH = span_warning("I know of sacred sites of worship where followers of the Ascendants convene, and the path to the nearest conclave is etched into my memory."),
 	TRAIT_GOODWRITER = span_notice("I'm proficient at writing. Any skillbooks made by me will allow the reader to learn the subject more quickly."),
-	TRAIT_PONYGIRL_RIDEABLE = span_notice("They stripped me of pride and gave me reins; I exist now only to carry anothers weight."),
+	TRAIT_PONYGIRL_RIDEABLE = span_notice("Willing or not, I've been trained to carry other people's burdens."),
 	TRAIT_VENOMOUS = span_necrosis("I am venomous. When chewing someone I've bitten, I will inject venom."),
 	TRAIT_COMBAT_AWARE = span_notice("My honed senses and intuition allow me to spot notable things in the midst of battle with ease."),
 	TRAIT_DREAMWALKER = span_warning("I walk the dream and reality at the same time. My mind frays, but my vision shall be reality."),
 	TRAIT_BLACKLEG = span_warning("My people have an inherent connection to Xylix. This grants me the ability to rig coin flips and dice rolls in my favour."),
-	TRAIT_OVERTHERETIC = span_bloody("I've played my cards. Hallowed ground is now my bane.")
+	TRAIT_OVERTHERETIC = span_bloody("I've played my cards. Hallowed ground is now my bane."),
+	TRAIT_DEATHBYSNUSNU = "With strong intent, I am a violent partner in bed. Breaking pelvis and spirit alike.",
+	TRAIT_HUMEN_INGENUITY = span_notice("Like most of my people, I am blessed with knowledge. Learning comes easier."),
+	TRAIT_HELLSPAWN = span_warning("My bloodline affords me an inherent resistance to catching ablaze."),
+	TRAIT_WING_BOUND = span_info("The wings upon my back allow me to glide. Poorly. Falls will be less painful, but still not ideal."),
+	TRAIT_DWARF_REPAIR = span_info("Never again will there be a people like ours. Repairs come easy to me."),
+	TRAIT_DRUNK_HEALING = span_info("A little drinking never hurt!")
 ))
 
 // trait accessor defines
@@ -566,7 +576,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FINGERLESS "fingerless" //The limb has no fingies
 
 //item traits
-#define TRAIT_NODROP            "nodrop"
+#define TRAIT_NODROP			"nodrop"
 #define TRAIT_NOEMBED			"noembed"
 #define TRAIT_T_RAY_VISIBLE     "t-ray-visible" // Visible on t-ray scanners if the atom/var/level == 1
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
@@ -586,7 +596,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
-#define TRAIT_DRUNK_HEALING		"drunk_healing"
 #define TRAIT_TAGGER			"tagger"
 #define TRAIT_PHOTOGRAPHER		"photographer"
 #define TRAIT_MUSICIAN			"musician"

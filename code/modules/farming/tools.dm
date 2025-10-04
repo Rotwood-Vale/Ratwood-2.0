@@ -82,6 +82,8 @@
 	slot_flags = ITEM_SLOT_HIP
 	max_blade_int = 300
 	smeltresult = /obj/item/ingot/iron
+	grid_height = 64
+	grid_width = 32
 
 /obj/item/rogueweapon/sickle/examine(mob/user)
 	. = ..()

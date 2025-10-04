@@ -74,6 +74,29 @@
 	smeltresult = /obj/item/rogueore/coal
 	sellprice = 1
 
+//Dolls/Constructs eating coal for fuel.
+/obj/item/rogueore/coal/attack(mob/living/M, mob/user)
+	testing("attack")
+	if(!user.cmode)
+
+		if(M.construct)//This is slop. Why do we use this?
+			if(M == user)
+				user.visible_message(span_notice("[user] puts [src] against [user.p_their()] frame and absorbs it."), span_notice("I absorb [src], feeling my energy return."))
+			else
+				user.visible_message(span_notice("[user] attempts to press [src] to [M]."), span_notice("I attempt to press [src] to [M]."))
+				if(!do_mob(user, M, 30))
+					return
+				user.visible_message(span_notice("[user] presses [src] against [M]."), span_notice("I press [src] against [M]."))
+				to_chat(M, span_notice("I absorb [src], feeling my energy return."))
+			M.energy_add(250)
+			playsound(M.loc,'sound/items/flint.ogg', rand(30,60), TRUE)
+			qdel(src)
+
+		else
+			return ..()
+	else
+		return ..()
+
 /obj/item/rogueore/coal/Initialize()
 	icon_state = "orecoal[rand(1,3)]"
 	..()

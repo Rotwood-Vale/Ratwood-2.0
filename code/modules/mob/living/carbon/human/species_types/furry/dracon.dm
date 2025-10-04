@@ -9,7 +9,7 @@
 	They are highly protective of their bloodline and do everything in their power to make sure it does not spread beyond their own, \
 	as they believe themselves to be guardians of tradition and that it is their ultimate duty to maintain their prestige as a race. \
 	After all, a single drop of draconic blood in one's bloodline means that they will experience all of the benefits of having draconic ancestors such as agelessness.<br>\
-	(+1 Strength, Dark Vision Trait)"
+	(+1 Strength, Wing Bound Trait)"
 	expanded_desc = "Drakians are a proud and ancient race that trace their heritage to dragons of old. \
 	They are highly protective of their bloodline and do everything in their power to make sure it does not spread beyond their own, \
 	as they believe themselves to be guardians of tradition and that it is their ultimate duty to maintain their prestige as a race. \
@@ -49,7 +49,7 @@
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
 		)
-	inherent_traits = list(TRAIT_DARKVISION)
+	inherent_traits = list(TRAIT_WING_BOUND)
 	race_bonus = list(STAT_STRENGTH = 1)
 	enflamed_icon = "widefire"
 	attack_verb = "slash"

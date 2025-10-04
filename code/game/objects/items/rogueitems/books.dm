@@ -169,7 +169,7 @@
 
 /obj/item/book/rogue/bibble
 	name = "The Verses and Acts of the Ten"
-	desc = "The collected verses and acts of the DIVINE PANTHEON. Split into three parts.</br>VISAGE - The OLD, THE FIRST ACTS OF THE TEN UPON PSYDONIA, BEFORE THE COMET SYON </br>DECANOMICON - THE ERA OF GLEAM, THE HOLY CELESTIAL EMPIRE - </br>NEW DAWN - Modern Era, the foundation of the HOLY SEE and ONWARDS."
+	desc = "The collected verses and acts of the DIVINE PANTHEON. Split into three parts.</br>The Unsundered - The Era before the Fall, The Exploits of the Diecian Council </br>The Ruin - The Rise of the Enemy, The Death of the One </br> The Dawn - The Foundation of the Ten, The New Hope"
 	icon_state = "bibble_0"
 	base_icon_state = "bibble"
 	title = "The Verses and Acts of the Ten"
@@ -187,15 +187,15 @@
 		return
 	if(in_range(user, src) || isobserver(user))
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/list/choices = list("Visage", "Decanomicon", "New Dawn")
+		var/list/choices = list("The Unsundered", "The Ruin", "The Dawn")
 		var/section_choice = input(user,"Which section shall I read from?", "DIVINE ENLIGHTENMENT") as anything in choices
 		var/chosentxt
 		switch(section_choice)
-			if("Visage")
+			if("The Unsundered")
 				chosentxt = 'strings/visage.txt'
-			if("Decanomicon")
+			if("The Ruin")
 				chosentxt = 'strings/decanomicon.txt'
-			if("New Dawn")
+			if("The Dawn")
 				chosentxt = 'strings/newdawn.txt'
 		var/m
 		var/list/verses = world.file2list(chosentxt)
@@ -318,13 +318,6 @@
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "thefireisgone.json"
-
-/obj/item/book/rogue/blackoak
-	name = "The Noblest Struggle"
-	desc = "A small black book. All Black Oaks carry this close."
-	icon_state ="book_0"
-	base_icon_state = "book"
-	bookfile = "blackoak.json"
 
 //player made books
 /obj/item/book/rogue/tales1

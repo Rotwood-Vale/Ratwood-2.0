@@ -433,7 +433,7 @@
 	icon_state = "floorgrille"
 	density = FALSE
 	layer = TABLE_LAYER
-	plane = GAME_PLANE
+	plane = GAME_PLANE_LOWER
 	damage_deflection = 5
 	blade_dulling = DULLING_BASHCHOP
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
@@ -476,7 +476,7 @@
 	icon_state = "pipe"
 	density = FALSE
 	layer = TABLE_LAYER
-	plane = GAME_PLANE
+	plane = GAME_PLANE_LOWER
 	damage_deflection = 5
 	blade_dulling = DULLING_BASHCHOP
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP

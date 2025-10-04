@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(peasant_positions, list(
 	"Prisoner",
 	"Beggar",
 	"Adventurer",
-	"Pilgrim",
+	"Refugee",
 	"Bandit",
 	"Court Agent",
 	"Wretch",
@@ -160,7 +160,7 @@ GLOBAL_LIST_INIT(youngfolk_positions, list(
 
 GLOBAL_LIST_INIT(allmig_positions, list(
 	"Adventurer",
-	"Pilgrim",
+	"Refugee",
 ))
 
 GLOBAL_LIST_INIT(roguewar_positions, list(
