@@ -713,8 +713,6 @@
 	. = ..()							//+3 force, +100 blade int, +50 int, +1 def, make silver
 	add_psyblessed_component(is_preblessed = FALSE, bonus_force = 3, bonus_sharpness = 100, bonus_integrity = 50, bonus_wdef = 1, make_silver = TRUE)
 
-/obj/item/rogueweapon/sword/short/psy/preblessed
-
 /obj/item/rogueweapon/sword/short/psy/preblessed/ComponentInitialize()
 	// PREBLESS IT +3 force, +100 blade int, +50 int, +1 def, make silver
 	add_psyblessed_component(is_preblessed = TRUE, bonus_force = 3, bonus_sharpness = 100, bonus_integrity = 50, bonus_wdef = 1, make_silver = TRUE)

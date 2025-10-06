@@ -2158,6 +2158,59 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //FLIGHT SHIT//
 ///////////////
 
+////////////////
+//Wing Opening//
+////////////////
+
+/datum/species/proc/can_toggle_wings(mob/living/carbon/human/H)
+	if(!H)
+		return FALSE
+	var/obj/item/organ/wings/W = H.getorganslot(ORGAN_SLOT_WINGS)
+	if(!W)
+		return FALSE
+	if(W.can_open)
+		return TRUE
+	return FALSE
+
+/datum/species/proc/are_wings_open(mob/living/carbon/human/H)
+	if(!H)
+		return FALSE
+	var/obj/item/organ/wings/W = H.getorganslot(ORGAN_SLOT_WINGS)
+	if(!W)
+		return FALSE
+	return W.is_open
+
+/datum/species/proc/open_wings(mob/living/carbon/human/H)
+	if(!H)
+		return
+	var/obj/item/organ/wings/W = H.getorganslot(ORGAN_SLOT_WINGS)
+	if(!W || !W.can_open)
+		return
+	if(W.is_open)
+		return
+	W.is_open = TRUE
+	H.update_body_parts(TRUE)
+
+/datum/species/proc/close_wings(mob/living/carbon/human/H)
+	if(!H)
+		return
+	var/obj/item/organ/wings/W = H.getorganslot(ORGAN_SLOT_WINGS)
+	if(!W || !W.can_open)
+		return
+	if(!W.is_open)
+		return
+	W.is_open = FALSE
+	H.update_body_parts(TRUE)
+
+/datum/species/proc/toggle_wings(mob/living/carbon/human/H)
+	if(!can_toggle_wings(H))
+		return FALSE
+	if(are_wings_open(H))
+		close_wings(H)
+		return FALSE // returning FALSE means now closed
+	open_wings(H)
+	return TRUE // TRUE means now open
+
 /datum/species/proc/GiveSpeciesFlight(mob/living/carbon/human/H)
 	if(flying_species) //species that already have flying traits should not work with this proc
 		return

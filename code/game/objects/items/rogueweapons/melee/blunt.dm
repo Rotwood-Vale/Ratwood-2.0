@@ -210,10 +210,8 @@
 /obj/item/rogueweapon/mace/cudgel/psy/ComponentInitialize()
 	add_psyblessed_component(is_preblessed = FALSE, bonus_force = 3, bonus_sharpness = 100, bonus_integrity = 50, bonus_wdef = 1, make_silver = TRUE)
 
-/obj/item/rogueweapon/mace/cudgel/psy/preblessed
-
 /obj/item/rogueweapon/mace/cudgel/psy/preblessed/ComponentInitialize()
-	add_psyblessed_component(is_preblessed = TRUE, bonus_force = 3, bonus_sharpness = 100, bonus_integrity = 50, bonus_wdef = 1, make_silver = TRUE)	
+	add_psyblessed_component(is_preblessed = TRUE, bonus_force = 3, bonus_sharpness = 100, bonus_integrity = 50, bonus_wdef = 1, make_silver = TRUE)
 
 /obj/item/rogueweapon/mace/cudgel/psy/old
 	name = "old psydonian handmace"
@@ -223,7 +221,7 @@
 	icon_state = "opsyflangedmace"
 
 /obj/item/rogueweapon/mace/cudgel/psy/old/ComponentInitialize()
-	return	
+	return
 
 /obj/item/rogueweapon/mace/cudgel/copper
 	name = "copper bludgeon"

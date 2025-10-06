@@ -1,7 +1,8 @@
-// Meant for cave-races, less boons than other mercs but unique weapon + mining skill and helmet-torch combo. ALSO gets alchemy now for bomb-making.
+//The guild. /The/ guild. Underdark explorers. Not as packed as other merc groups, but get explosives, the skills to make more off the bat and a funny hat.
 /datum/advclass/mercenary/underdweller
 	name = "Underdweller"
-	tutorial = "A member of the Underdwellers, you've taken many of the deadliest contracts known to man in literal underground circles. Drow or Dwarf, you've put your differences aside for coin and adventure."
+	tutorial = "A member of the Underdwellers, you've taken many of the deadliest contracts known to man in literal underground circles. \
+	Drow or Dwarf, you've put your differences aside for coin and adventure."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/dwarf/mountain,
@@ -32,18 +33,18 @@
 	mask = /obj/item/clothing/mask/rogue/ragmask
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather/black		//Should give these guys a unique miners belt at some point..
+	belt = /obj/item/storage/belt/rogue/leather/black
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/pick
-	beltr = /obj/item/tntstick
+	beltr = /obj/item/storage/magebag/detpack
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/shield/wood
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
-		/obj/item/bomb = 2,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/rogueweapon/huntingknife
+		/obj/item/flint,
+		/obj/item/rogueweapon/huntingknife,
+		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mining, 4, TRUE)
@@ -55,11 +56,12 @@
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)	//Gets this for bomb making.
-	H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/engineering, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)	//Accompanies mining; they know how to smelt, not make armor though.
+	H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)//One is enough for traps and crafting. Higher can be obtained from virtues, if you want that for some reason.
 	H.merctype = 12
 
 
@@ -98,3 +100,26 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon(force = TRUE)
 	..()
+
+//Detpack. I'm sure you can imagine use cases, outside of carrying it.
+//Needs some sprites.
+/obj/item/storage/magebag/detpack
+	name = "detpack"
+	desc = "A pouch to carry sticks of blasting powder. What sort of lunatic would do that?"
+	component_type = /datum/component/storage/concrete/grid/detpack
+	populate_contents = list(
+		/obj/item/tntstick,
+		/obj/item/tntstick
+	)
+
+/datum/component/storage/concrete/grid/detpack
+	max_w_class = WEIGHT_CLASS_BULKY//Can carry a satchel. As a treat.
+	screen_max_rows = 4//4 sticks of TNT...
+	screen_max_columns = 4//... or a satchel.
+
+/datum/component/storage/concrete/grid/detpack/New(datum/P, ...)
+	. = ..()
+	set_holdable(list(
+		/obj/item/tntstick,
+		/obj/item/satchel_bomb
+		))

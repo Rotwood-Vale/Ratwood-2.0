@@ -99,3 +99,13 @@
 	desc = "Weird pants typically worn by the destitute in Kazengun. Or, those looking to make a fashion statement."
 	icon_state = "eastpants2"
 	allowed_race = NON_DWARVEN_RACE_TYPES
+
+//Gronn
+/obj/item/clothing/under/roguetown/trou/nomadpants
+	name = "nomad pants"
+	desc = "Tight fitting leather pants worn under clothing of the steppes."
+	icon_state = "nomadpants"
+	max_integrity = ARMOR_INT_LEG_HARDLEATHER
+	armor = ARMOR_PANTS_LEATHER
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
+	salvage_result = /obj/item/natural/hide/cured

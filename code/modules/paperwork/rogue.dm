@@ -273,6 +273,9 @@
 /obj/item/paper/inqslip/arrival/ortho
 	marquevalue = 4
 
+/obj/item/paper/inqslip/arrival/adju
+	marquevalue = 5
+
 /obj/item/paper/inqslip/arrival/inq
 	marquevalue = 10
 

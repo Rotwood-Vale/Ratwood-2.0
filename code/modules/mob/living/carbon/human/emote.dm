@@ -153,11 +153,51 @@
 	key_third_person = "wings"
 	message = "flaps their wings."
 
+/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(!..())
+		return FALSE
+	if(!ishuman(user))
+		return FALSE
+	// Allow even if they can't toggle (they'll just flap)
+	return TRUE
+
+/datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	var/datum/species/S = H.dna?.species
+	if(!S)
+		return ..()
+	if(S.can_toggle_wings(H))
+		var/now_open = S.toggle_wings(H)
+		if(now_open)
+			message = "spreads their wings wide."
+		else
+			message = "folds their wings closed."
+		return ..()
+
+	if(!H.wings_force_open)
+		H.wings_force_open = TRUE
+		message = "spreads their wings wide."
+	else
+		H.wings_force_open = FALSE
+		message = "folds their wings closed."
+	H.update_body_parts(TRUE)
+	return ..()
+
+/mob/living/carbon/human/var/tmp/wings_force_open
+
 /mob/living/carbon/human/proc/OpenWings()
-	return
+    var/obj/item/organ/wings/W = getorganslot(ORGAN_SLOT_WINGS)
+    if(W && W.can_open && !W.is_open)
+        W.is_open = TRUE
+        update_body_parts(TRUE)
 
 /mob/living/carbon/human/proc/CloseWings()
-	return
+    var/obj/item/organ/wings/W = getorganslot(ORGAN_SLOT_WINGS)
+    if(W && W.can_open && W.is_open)
+        W.is_open = FALSE
+        update_body_parts(TRUE)
 
 // FEEL EMOTE VERB
 /mob/living/carbon/human/verb/emote_feel()

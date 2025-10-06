@@ -130,6 +130,12 @@
 	icon_state = "freiplug"
 	slot_flags = ITEM_SLOT_RING
 
+/obj/item/rogueweapon/katar/punchdagger/aav
+	name = "vývrtka"//I'm creatively bankrupt.
+	desc = "A type of punch dagger of Aavnic make initially designed to level the playing field with an orc in fisticuffs, its serrated edges and longer, thinner point are designed to maximize pain for the recipient. It's aptly given the name of \"corkscrew\", and this specific one has the colours of a Steppesman's banner. Can be worn on your ring slot."
+	icon_state = "avplug"
+	slot_flags = ITEM_SLOT_RING
+
 //TODO: Add caestus, for an unarmed option with defence.
 /obj/item/rogueweapon/knuckles
 	name = "steel knuckles"

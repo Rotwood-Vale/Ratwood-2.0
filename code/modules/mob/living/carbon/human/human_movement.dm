@@ -106,6 +106,15 @@
 				visible_message(span_warning("[src] spits out [mouth]."))
 				dropItemToGround(mouth, silent = FALSE)
 
+		// Auto-close opened wings after moving to avoid making your sprite bigger or other janky stuff
+		if(wings_force_open)
+			wings_force_open = FALSE
+			update_body_parts(TRUE)
+		else
+			var/obj/item/organ/wings/W = getorganslot(ORGAN_SLOT_WINGS)
+			if(W && W.is_open)
+				CloseWings()
+
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(dna.species.space_move(src))
 		return TRUE

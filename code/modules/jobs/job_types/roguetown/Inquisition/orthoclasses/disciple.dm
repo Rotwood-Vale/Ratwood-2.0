@@ -11,9 +11,9 @@
 		TRAIT_NOPAINSTUN,
 	)
 	subclass_stats = list(
-		STATKEY_STR = 3,
 		STATKEY_WIL = 3,
 		STATKEY_CON = 3,
+		STATKEY_STR = 2,
 		STATKEY_INT = -2,
 		STATKEY_SPD = -1
 	)

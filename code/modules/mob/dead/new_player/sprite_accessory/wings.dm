@@ -13,9 +13,14 @@
 	if(!owner || !can_open)
 		return ..()
 	var/obj/item/organ/wings/wings_organ = owner.getorganslot(ORGAN_SLOT_WINGS)
-	if(!wings_organ || !wings_organ.is_open)
-		return ..()
-	return "[icon_state]_open"
+	if(wings_organ && wings_organ.is_open)
+		return "[icon_state]_open"
+	// Cosmetic fallback: mob variable set by emote if no open-capable organ
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.wings_force_open)
+			return "[icon_state]_open"
+	return ..()
 
 #ifdef UNIT_TESTS
 
@@ -222,6 +227,8 @@
 /datum/sprite_accessory/wings/huge/dragon
 	name = "Dragon"
 	icon_state = "dragon"
+	color_keys = 2
+	color_key_names = list("Primary", "Membrane")
 
 /datum/sprite_accessory/wings/huge/megamoth
 	name = "Megamoth"

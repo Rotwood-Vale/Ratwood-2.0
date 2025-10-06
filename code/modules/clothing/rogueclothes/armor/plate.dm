@@ -502,7 +502,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
 	name = "steel heavy lamellar"
-	desc = "A chestpiece of Aavnic make composed of easily-replaced small rectangular plates of layered steel laced together in rows with wire. Malleable and protective, perfect for cavalrymen."
+	desc = "A chestpiece composed of easily-replaced small rectangular plates of layered steel laced together in rows with wire. Malleable and protective, perfect for cavalrymen that lurk in the steppes of Avar and Gronn."
 	icon_state = "hudesutu"
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
 

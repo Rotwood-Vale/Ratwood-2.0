@@ -35,6 +35,8 @@
 		/datum/sprite_accessory/wings/wide/low_wings_top,
 		/datum/sprite_accessory/wings/wide/spider,
 		/datum/sprite_accessory/wings/huge/dragon,
+		/datum/sprite_accessory/wings/huge/angel,
+		/datum/sprite_accessory/wings/huge/skeleton,
 		/datum/sprite_accessory/wings/large/harpyswept,
 		/datum/sprite_accessory/wings/large/harpyswept_alt,
 		/datum/sprite_accessory/wings/large/harpyfluff,
@@ -106,4 +108,6 @@
 		/datum/sprite_accessory/wings/wide/low_wings_top,
 		/datum/sprite_accessory/wings/wide/spider,
 		/datum/sprite_accessory/wings/large/harpyswept,
+		/datum/sprite_accessory/wings/huge/angel,
+		/datum/sprite_accessory/wings/huge/skeleton,
 	)

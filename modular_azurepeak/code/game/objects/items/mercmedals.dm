@@ -112,7 +112,7 @@
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/steppesman
 	name = "steppesman's ungent"
-	desc = "A tightly sealed vial of dirt. These are taken from the town of a steppesman's birth and given to them as they leave. When they return- if they return- they can be dumped out, and the vial crushed; the end, it says."
+	desc = "A tightly sealed vial of dirt. These are taken from the land of the Steppesman’s Kozak, and given to them as they leave by their closest Kin. When their service ends, if they should see its end, the vial may be emptied, and the glass crushed; the end, it says."
 	icon_state = "steppe_ungent"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/vaquero
@@ -122,5 +122,9 @@
 	icon_state = "vaquero_ring"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/warscholar
-// NOT CURRENTLY IMPLEMENTED
+	name = "naledian cross"
+	desc = "'Carve Naledi as the wind does always - whisper to one white stone, and the others will remember where to stand,' \
+	so said PSYDON. <br>Within the splitting arms of the psycross, a marble-white shard is embedded within aurum. \
+	A fracture of the Great City Naledi which fell; a memory of a thousand wailing generations in their fading, dying breaths as a reminder for who you are."
+	icon_state = "naledian_psycross"//Temp sprite. Just the Astratan Psyscross, with lower limbs removed.
 
