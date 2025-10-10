@@ -5,9 +5,14 @@
 #define QUEST_RETRIEVAL "Retrieval"
 #define QUEST_COURIER "Courier"
 #define QUEST_KILL "Kill"
+#define QUEST_BEAST "Beast"
+#define QUEST_NEST "Nest"
+#define QUEST_MONSTER "Monster"
+#define QUEST_COLOSSUS "Colossus"
 #define QUEST_CLEAR_OUT "Clear Out"
 #define QUEST_OUTLAW "Outlaw"
 #define QUEST_BEACON "Beacon"
+
 
 #define QUEST_REWARD_EASY_LOW 15
 #define QUEST_REWARD_EASY_HIGH 25

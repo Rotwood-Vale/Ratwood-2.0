@@ -3,17 +3,55 @@
 	icon = 'code/modules/roguetown/roguemachine/questing/questing.dmi'
 	icon_state = "quest_marker"
 	var/quest_difficulty = list(QUEST_DIFFICULTY_EASY, QUEST_DIFFICULTY_MEDIUM, QUEST_DIFFICULTY_HARD)
-	var/quest_type = list(QUEST_RETRIEVAL, QUEST_COURIER, QUEST_CLEAR_OUT, QUEST_KILL, QUEST_BEACON, QUEST_OUTLAW)
+	var/quest_type = list(QUEST_RETRIEVAL, QUEST_BEAST, QUEST_NEST, QUEST_MONSTER, QUEST_COLOSSUS, QUEST_COURIER, QUEST_CLEAR_OUT, QUEST_KILL, QUEST_BEACON, QUEST_OUTLAW)
 	var/list/fetch_items = list(
-		/obj/item/rogueweapon/huntingknife/throwingknife/steel,
 		/obj/item/rogueweapon/huntingknife,
+		/obj/item/clothing/ring/band,
+		/obj/item/clothing/shoes/roguetown/boots,
+		/obj/item/clothing/under/roguetown/trou/nomadpants,
+		/obj/item/storage/belt/rogue/leather/exoticsilkbelt,
+		/obj/item/clothing/head/roguetown/helmet/tricorn/lucky,
+		/obj/item/clothing/neck/roguetown/luckcharm,
+		/obj/item/reagent_containers/glass/bottle/rogue/redwine,
+		/obj/item/book/rogue/bibble,
+		/obj/item/book/rogue/law,
+		/obj/item/book/rogue/sword,
+		/obj/item/roguegem/amethyst,
+		/obj/item/ration,
+		/obj/item/skull,
+		/obj/item/perfume/random,
+		/obj/item/soap/bath,
+		/obj/item/flashlight/flare/torch/lantern,
 		/obj/item/reagent_containers/glass/bottle/rogue/whitewine
 	)
 	var/list/kill_mobs = list(
 		/mob/living/carbon/human/species/goblin/npc/ambush/sea,
 		/mob/living/carbon/human/species/skeleton/npc/medium,
+		/mob/living/carbon/human/species/skeleton/npc/pirate,
+		/mob/living/carbon/human/species/human/northern/highwayman/ambush,
 		/mob/living/carbon/human/species/human/northern/searaider/ambush
 	)
+	var/list/beast_mobs = list(
+		/mob/living/simple_animal/hostile/rogue/deepone/quest,
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/quest,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mole/quest,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mossback/quest,
+		/mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated/quest
+	)
+	var/list/monster_mobs = list(
+	/mob/living/simple_animal/hostile/retaliate/rogue/troll/cave/quest,
+	/mob/living/simple_animal/hostile/retaliate/rogue/minotaur/axe/quest,
+	/mob/living/simple_animal/hostile/retaliate/rogue/lamia/quest,
+	/mob/living/simple_animal/hostile/retaliate/rogue/direbear/quest
+	)
+
+	var/list/colossus_mobs = list(
+	/mob/living/simple_animal/hostile/retaliate/rogue/elemental/questbehemoth,
+	/mob/living/simple_animal/hostile/retaliate/rogue/fae/questdryad,
+	/mob/living/simple_animal/hostile/retaliate/rogue/infernal/questwatcher,
+	/mob/living/simple_animal/hostile/retaliate/rogue/dragon/quest
+	)
+
 	var/miniboss_mobs = list(
 		/mob/living/carbon/human/species/human/northern/deranged_knight
 	)
@@ -50,10 +88,30 @@
 			new_quest.target_mob_type = pick(kill_mobs)
 			new_quest.target_amount = rand(1, 3)
 			spawn_kill_mob(new_quest.target_mob_type, new_quest)
+		if(QUEST_BEAST)
+			new_quest.title = "Slay [pick("a dangerous", "a fearsome", "a troublesome", "an elusive")] [pick("animal", "critter", "vermin", "creature")]"
+			new_quest.target_mob_type = pick(beast_mobs)
+			new_quest.target_amount = rand(2, 4)
+			spawn_kill_mob(new_quest.target_mob_type, new_quest)
+		if(QUEST_NEST)
+			new_quest.title = "Clear out [pick("a nest of", "a den of", "a group of", "a pack of")] [pick("animals", "critters", "vermins", "creatures")]"
+			new_quest.target_mob_type = pick(beast_mobs)
+			new_quest.target_amount = rand(5, 7)
+			spawn_kill_mob(new_quest.target_mob_type, new_quest)
+		if(QUEST_MONSTER)
+			new_quest.title = "Slay [pick("a dangerous", "a fearsome", "a troublesome", "an elusive")] [pick("beast", "monster", "creatures")]"
+			new_quest.target_mob_type = pick(monster_mobs)
+			new_quest.target_amount = rand(2, 3)
+			spawn_kill_mob(new_quest.target_mob_type, new_quest)
+		if(QUEST_COLOSSUS)
+			new_quest.title = "Defeat [pick("the terrible", "the dreadful", "the monstrous", "the infamous")] [pick("horror", "beast", "monster", "abomination")]"
+			new_quest.target_mob_type = pick(colossus_mobs)
+			new_quest.target_amount = 1
+			spawn_kill_mob(new_quest.target_mob_type, new_quest)
 		if(QUEST_CLEAR_OUT)
 			new_quest.title = "Clear out [pick("a nest of", "a den of", "a group of", "a pack of")] [pick("monsters", "bandits", "creatures", "vermin")]"
 			new_quest.target_mob_type = pick(kill_mobs)
-			new_quest.target_amount = rand(3, 6)
+			new_quest.target_amount = rand(4, 7)
 			spawn_clear_out_mobs(new_quest.target_mob_type, new_quest.target_amount, new_quest)
 		if(QUEST_COURIER)
 			new_quest.title = "Deliver [pick("an important", "a sealed", "a confidential", "a valuable")] [pick("package", "parcel", "letter", "delivery")]"
@@ -116,7 +174,7 @@
 
 	if(!length(possible_landmarks))
 		possible_landmarks += src
-	
+
 	var/obj/effect/landmark/quest_spawner/selected_landmark = pick(possible_landmarks)
 	var/list/possible_turfs = list()
 
@@ -211,7 +269,7 @@
 		var/turf/spawn_turf = get_safe_spawn_turf()
 		if(!spawn_turf)
 			return
-		
+
 		var/mob/living/new_mob = new mob_type(spawn_turf)
 		new_mob.faction |= "quest"
 		new_mob.AddComponent(/datum/component/quest_object, quest)
@@ -223,7 +281,7 @@
 	var/turf/spawn_turf = get_safe_spawn_turf()
 	if(!spawn_turf)
 		return
-	
+
 	var/mob/living/new_mob = new boss_type(spawn_turf)
 	new_mob.faction |= "quest"
 	new_mob.AddComponent(/datum/component/quest_object, quest)
@@ -236,13 +294,13 @@
 	name = "easy quest landmark"
 	icon_state = "quest_marker_low"
 	quest_difficulty = "Easy"
-	quest_type = list(QUEST_RETRIEVAL, QUEST_COURIER, QUEST_KILL, QUEST_BEACON)
+	quest_type = list(QUEST_RETRIEVAL, QUEST_COURIER, QUEST_KILL, QUEST_BEAST, QUEST_BEACON)
 
 /obj/effect/landmark/quest_spawner/medium
 	name = "medium quest landmark"
 	icon_state = "quest_marker_mid"
 	quest_difficulty = "Medium"
-	quest_type = list(QUEST_KILL, QUEST_CLEAR_OUT, QUEST_BEACON)
+	quest_type = list(QUEST_KILL, QUEST_CLEAR_OUT, QUEST_BEAST, QUEST_BEACON)
 
 /obj/effect/landmark/quest_spawner/hard
 	name = "hard quest landmark"

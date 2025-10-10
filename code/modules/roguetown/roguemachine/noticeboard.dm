@@ -358,9 +358,9 @@
 		return
 
 	var/list/type_choices = list(
-		QUEST_DIFFICULTY_EASY = list(QUEST_RETRIEVAL, QUEST_COURIER, QUEST_KILL),
-		QUEST_DIFFICULTY_MEDIUM = list(QUEST_CLEAR_OUT),
-		QUEST_DIFFICULTY_HARD = list(QUEST_OUTLAW)
+		QUEST_DIFFICULTY_EASY = list(QUEST_RETRIEVAL, QUEST_BEAST, QUEST_COURIER, QUEST_KILL),
+		QUEST_DIFFICULTY_MEDIUM = list(QUEST_CLEAR_OUT, QUEST_NEST, QUEST_MONSTER),
+		QUEST_DIFFICULTY_HARD = list(QUEST_OUTLAW, QUEST_COLOSSUS)
 	)
 
 	var/type_selection = input(user, "Select contract type", src) as null|anything in type_choices[actual_difficulty] // Changed from selection to actual_difficulty

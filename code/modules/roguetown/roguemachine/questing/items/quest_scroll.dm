@@ -161,10 +161,10 @@
 		if(QUEST_RETRIEVAL)
 			scroll_text += "<b>Objective:</b> Retrieve [assigned_quest.target_amount] [initial(assigned_quest.target_item_type.name)].<br>"
 			scroll_text += "<b>Last Seen Location:</b> Reported sighting in [assigned_quest.target_spawn_area] region.<br>"
-		if(QUEST_KILL, QUEST_OUTLAW)
+		if(QUEST_KILL, QUEST_OUTLAW, QUEST_BEAST, QUEST_MONSTER, QUEST_COLOSSUS)
 			scroll_text += "<b>Objective:</b> Slay [assigned_quest.target_amount] [initial(assigned_quest.target_mob_type.name)].<br>"
 			scroll_text += "<b>Last Seen Location:</b> [assigned_quest.target_spawn_area ? "Reported sighting in [assigned_quest.target_spawn_area] region." : "Reported sighting in Rotwood region."]<br>"
-		if(QUEST_CLEAR_OUT)
+		if(QUEST_CLEAR_OUT, QUEST_NEST)
 			scroll_text += "<b>Objective:</b> Eliminate [assigned_quest.target_amount] [initial(assigned_quest.target_mob_type.name)].<br>"
 			scroll_text += "<b>Infestation Location:</b> [assigned_quest.target_spawn_area ? "Reported sighting in [assigned_quest.target_spawn_area] region." : "Reported infestations in Rotwood region."]<br>"
 		if(QUEST_COURIER)

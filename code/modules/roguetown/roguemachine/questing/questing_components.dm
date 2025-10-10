@@ -8,10 +8,10 @@ GLOBAL_LIST_EMPTY(quest_components)
 /datum/component/quest_object/Initialize(datum/quest/target_quest)
 	if(!isitem(parent) && !ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	quest_ref = WEAKREF(target_quest)
 	is_mob = ismob(parent)
-	
+
 	if(is_mob)
 		var/mob/M = parent
 		M.add_filter(outline_filter_id, 2, list("type" = "outline", "color" = "#ff0000", "size" = 0.5))
@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(quest_components)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_item_dropped))
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_item_dropped))
-	
+
 	RegisterSignal(target_quest, COMSIG_PARENT_QDELETING, PROC_REF(on_quest_deleted))
 	GLOB.quest_components += src
 
@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(quest_components)
 	GLOB.quest_components -= src
 	if(QDELETED(parent))
 		return ..()
-		
+
 	var/datum/quest/Q = quest_ref?.resolve()
 	if(Q && !Q.complete && isitem(parent))
 		var/obj/item/I = parent
@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(quest_components)
 		if(Q.quest_type == QUEST_COURIER && (Q.target_delivery_item && istype(I, Q.target_delivery_item)) && !QDELETED(I))
 			Q.target_delivery_item = null
 			qdel(I)
-	
+
 	return ..()
 
 /datum/component/quest_object/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(quest_components)
 	var/datum/quest/Q = quest_ref.resolve()
 	if(!Q || Q.complete)
 		return
-	
+
 	var/list/user_scrolls = find_quest_scrolls(user)
 	for(var/obj/item/paper/scroll/quest/scroll in user_scrolls)
 		var/datum/quest/user_quest = scroll.assigned_quest
@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(quest_components)
 	var/list/user_scrolls = find_quest_scrolls(user)
 	for(var/obj/item/paper/scroll/quest/scroll in user_scrolls)
 		var/datum/quest/user_quest = scroll.assigned_quest
-		if(user_quest && (user_quest.quest_type in list(QUEST_KILL, QUEST_CLEAR_OUT, QUEST_OUTLAW)) && istype(parent, user_quest.target_mob_type))
+		if(user_quest && (user_quest.quest_type in list(QUEST_KILL, QUEST_BEAST, QUEST_NEST, QUEST_BEAST, QUEST_MONSTER, QUEST_COLOSSUS, QUEST_CLEAR_OUT, QUEST_OUTLAW)) && istype(parent, user_quest.target_mob_type))
 			examine_list += span_notice("This looks like the target of your quest: [user_quest.title]!")
 			if(Q.target_spawn_area != get_area(get_turf(src)))
 				examine_list += span_notice("It was last reported in the [Q.target_spawn_area] area, however.")
@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(quest_components)
 
 /datum/component/quest_object/proc/on_target_death(mob/living/dead_mob, gibbed)
 	SIGNAL_HANDLER
-	
+
 	var/datum/quest/Q = quest_ref.resolve()
 	if(!Q || Q.complete || !istype(dead_mob, Q.target_mob_type))
 		return
@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(quest_components)
 		return
 
 	var/turf/drop_turf = get_turf(dropped_item)
-	
+
 	// Handle fetch quests (dropping item on quest machine input)
 	if(Q.quest_type == QUEST_RETRIEVAL)
 		for(var/obj/structure/roguemachine/noticeboard/quest_machine in SSroguemachine.noticeboards)
@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(quest_components)
 					do_sparks(3, TRUE, get_turf(dropped_item))
 					qdel(dropped_item)
 					return
-	
+
 	// Handle courier quests (dropping in target area)
 	if(Q.quest_type == QUEST_COURIER)
 		var/area/drop_area = get_area(drop_turf)
@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(quest_components)
 					if(scroll)
 						scroll.update_quest_text()
 				return
-		
+
 		// Handle direct item delivery
 		else if(istype(dropped_item, Q.target_delivery_item))
 			Q.target_amount--
@@ -159,9 +159,9 @@ GLOBAL_LIST_EMPTY(quest_components)
 
 	if(QDELETED(parent))
 		return
-	
+
 	var/datum/quest/Q = quest_ref?.resolve()
-	
+
 	if(ismob(parent))
 		var/mob/M = parent
 		M.remove_filter(outline_filter_id)
