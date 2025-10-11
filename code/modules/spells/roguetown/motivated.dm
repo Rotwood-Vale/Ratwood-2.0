@@ -40,35 +40,37 @@
 	duration = 1 SECONDS
 	layer = MASSIVE_OBJ_LAYER
 
+
 /obj/effect/proc_holder/spell/invoked/motivated_slash/cast(list/targets, mob/user)
-	var/turf/T = get_turf(targets[1])
-
 	var/turf/source_turf = get_turf(user)
-	if(T.z > user.z)
-		source_turf = get_step_multiz(source_turf, UP)
-	if(T.z < user.z)
-		source_turf = get_step_multiz(source_turf, DOWN)
-
-	var/dir_vector = get_dir_vector(source_turf, T)
-
+	var/turf/T = get_turf(targets[1])
+	var/dir = get_dir(source_turf, T)
+	var/turf/current_turf = source_turf
+	var/list/slash_turfs = list()
 	for(var/i = 0; i < area_of_effect; i++)
-		var/turf/affected_turf = locate(source_turf.x + dir_vector.x * (i + 1), source_turf.y + dir_vector.y * (i + 1), source_turf.z)
-		if(!affected_turf || !(affected_turf in view(source_turf)))
-			continue
-		new /obj/effect/temp_visual/trap(affected_turf)
+		current_turf = get_step(current_turf, dir)
+		if(!current_turf)
+			break
+		if(current_turf.density)
+			break
+		new /obj/effect/temp_visual/trap(current_turf)
+		slash_turfs += current_turf
 	playsound(T, 'sound/motivation/swordswing.ogg', 75, TRUE, soundping = TRUE)
 
-	sleep(delay)
+	// Immediately apply effects to all valid turfs
+	for(var/turf/target_turf in slash_turfs)
+		do_motivated_slash_effect(target_turf, damage)
 
-	for(var/turf/affected_turf in view(area_of_effect, T))
-		new /obj/effect/temp_visual/blade_burst(affected_turf)
-		if(!(affected_turf in view(source_turf)))
-			continue
-		for(var/mob/living/L in affected_turf.contents)
-			play_cleave = TRUE
-			L.adjustBruteLoss(damage)
-			playsound(affected_turf, "genslash", 80, TRUE)
-			to_chat(L, "<span class='userdanger'>You're cut by the sword!</span>")
+// Handles damage logic for motivated slash
+/obj/effect/proc_holder/spell/invoked/motivated_slash/proc/do_motivated_slash_effect(turf/target_turf, damage)
+	if(!target_turf || target_turf.density)
+		return
+	new /obj/effect/temp_visual/motivated_slash(target_turf)
+	for(var/mob/living/L in target_turf.contents)
+		play_cleave = TRUE
+		L.adjustBruteLoss(damage)
+		playsound(target_turf, "genslash", 80, TRUE)
+		to_chat(L, "<span class='userdanger'>You're cut by the sword!</span>")
 
 /obj/effect/proc_holder/spell/invoked/motivated_omnislash
 	name = "Motivated Omni Slash"
@@ -90,20 +92,22 @@
 	ignore_los = FALSE
 	sound = 'sound/motivation/pathetic.ogg'
 	var/delay = 2
+	var/slashing = FALSE
 	var/damage = 100 // Moderate damage for a multi-target attack
 	var/area_of_effect = 1
 
 /obj/effect/proc_holder/spell/invoked/motivated_omnislash/cast(list/targets, mob/user)
 	var/turf/T = get_turf(targets[1])
-
 	var/turf/source_turf = get_turf(user)
 	if(T.z > user.z)
 		source_turf = get_step_multiz(source_turf, UP)
 	if(T.z < user.z)
 		source_turf = get_step_multiz(source_turf, DOWN)
 
+
+	src.slashing = TRUE
+	var/list/all_turfs = list()
 	for(var/radius = 1; radius <= 3; radius++)
-		// Play a random grunt sound for each slash
 		var/grunt_sound
 		if(radius == 1 || radius == 2)
 			grunt_sound = pick('sound/motivation/grunt1.ogg', 'sound/motivation/grunt2.ogg')
@@ -112,34 +116,43 @@
 		playsound(user, grunt_sound, 75, TRUE)
 
 		for(var/turf/affected_turf in circle(radius, source_turf))
-			if(!affected_turf || !(affected_turf in view(source_turf)))
+			if(!affected_turf)
+				continue
+			if(affected_turf.density)
 				continue
 			new /obj/effect/temp_visual/trap(affected_turf)
+			all_turfs += affected_turf
 		playsound(T, 'sound/motivation/swordswing.ogg', 55, TRUE, soundping = TRUE)
 
-		sleep(delay)
+	// Block movement for the total duration
+	var/total_delay = delay * all_turfs.len
+	user.do_after(total_delay, CALLBACK(src, PROC_REF(end_omnislash), user))
 
-		for(var/turf/affected_turf in circle(radius, source_turf))
-			new /obj/effect/temp_visual/blade_burst(affected_turf)
-			if(!(affected_turf in view(source_turf)))
-				continue
-			for(var/mob/living/L in affected_turf.contents)
-				play_cleave = TRUE
-				// Apply damage to the target
-				L.adjustBruteLoss(damage)
-				// Play slash sound effect
-				playsound(affected_turf, "genslash", 80, TRUE)
-				// Notify the target they were hit
-				to_chat(L, "<span class='userdanger'>You're cut by the sword!</span>")
+	// Schedule each slash effect
+	for(var/i = 1, i <= all_turfs.len, i++)
+		var/turf/current_turf = all_turfs[i]
+		addtimer(CALLBACK(src, PROC_REF(do_omnislash_effect), current_turf, user, damage), delay * (i - 1))
 
-				// Knockback logic: move the target away from the caster
-				// Get the direction from the caster to the target
-				var/knock_dir = get_dir(user, L)
-				// Move the target one tile in that direction
-				if(knock_dir)
-					step(L, knock_dir)
-					// Notify the target of knockback
-					to_chat(L, "<span class='userdanger'>You're knocked back by the force of the slash!</span>")
+/obj/effect/proc_holder/spell/invoked/motivated_omnislash/proc/do_omnislash_effect(turf/affected_turf, mob/user, damage, initial_loc)
+	if(!src.slashing)
+		return
+	if(!affected_turf || affected_turf.density)
+		return
+	new /obj/effect/temp_visual/blade_burst(affected_turf)
+	for(var/mob/living/L in affected_turf.contents)
+		play_cleave = TRUE
+		L.adjustBruteLoss(damage)
+		playsound(affected_turf, "genslash", 80, TRUE)
+		to_chat(L, "<span class='userdanger'>You're cut by the sword!</span>")
+		var/knock_dir = get_dir(user, L)
+		if(knock_dir)
+			step(L, knock_dir)
+			to_chat(L, "<span class='userdanger'>You're knocked back by the force of the slash!</span>")
+
+/obj/effect/proc_holder/spell/invoked/motivated_omnislash/proc/end_omnislash(mob/user)
+	src.slashing = FALSE
+	if(!isnull(user.do_after))
+		user.do_after = FALSE
 
 
 /obj/effect/proc_holder/spell/self/motivated_power
