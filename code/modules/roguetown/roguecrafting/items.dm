@@ -104,6 +104,19 @@
 		)
 	craftdiff = 0
 
+/datum/crafting_recipe/roguetown/breakdowntorch
+	name = "uncraft torch"
+	result = list(
+		/obj/item/natural/fibers = 1,
+		/obj/item/grown/log/tree/stick = 1,
+		)
+	reqs = list(
+		/obj/item/flashlight/flare/torch = 1
+		)
+	skillcraft = null
+	verbage_simple = "pick apart"
+	verbage = "picks apart"
+	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/survival/mortar
 	name = "alchemical mortar"

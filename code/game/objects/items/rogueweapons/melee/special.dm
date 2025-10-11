@@ -42,6 +42,7 @@
 	smeltresult = /obj/item/ingot/iron
 	swingsound = BLUNTWOOSH_MED
 	minstr = 5
+	COOLDOWN_DECLARE(scepter)
 
 	grid_height = 96
 	grid_width = 32
@@ -81,6 +82,10 @@
 			if(H == HU)
 				return
 
+			if(!COOLDOWN_FINISHED(src, scepter))
+				to_chat(user, span_danger("The [src] is not ready yet! [round(COOLDOWN_TIMELEFT(src, scepter) / 10, 1)] seconds left!"))
+				return
+
 			if(H.anti_magic_check())
 				to_chat(user, span_danger("Something is disrupting the rod's power!"))
 				return
@@ -93,12 +98,14 @@
 				HU.visible_message(span_warning("[HU] electrocutes [H] with the [src]."))
 				user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 				H.electrocute_act(5, src)
+				COOLDOWN_START(src, scepter, 20 SECONDS)
 				to_chat(H, span_danger("I'm electrocuted by the scepter!"))
 				return
 
 			if(istype(user.used_intent, /datum/intent/lord_silence))
 				HU.visible_message("<span class='warning'>[HU] silences [H] with \the [src].</span>")
 				H.set_silence(20 SECONDS)
+				COOLDOWN_START(src, scepter, 10 SECONDS)
 				to_chat(H, "<span class='danger'>I'm silenced by the scepter!</span>")
 				return
 

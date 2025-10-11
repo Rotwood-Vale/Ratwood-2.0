@@ -605,7 +605,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		Alcohol consumed: [GLOB.azure_round_stats[STATS_ALCOHOL_CONSUMED]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_ALCOHOL_CONSUMED))])<br>\
 		Number of alcoholics: [GLOB.azure_round_stats[STATS_ALCOHOLICS]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_ALCOHOLICS))])<br>\
 		Number of junkies: [GLOB.azure_round_stats[STATS_JUNKIES]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_JUNKIES))])<br>\
-		Number of knottings: [GLOB.azure_round_stats[STATS_KNOTTED]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_KNOTTED))])", baotha_storyteller)
+		Non-Lupian knottings: [GLOB.azure_round_stats[STATS_KNOTTED_NOT_LUPIANS]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_KNOTTED_NOT_LUPIANS))])", baotha_storyteller)
 
 	// Matthios
 	data += god_ui_block("MATTHIOS", "#3d1301", "#ddbb99", "\

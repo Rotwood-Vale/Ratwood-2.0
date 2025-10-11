@@ -131,8 +131,18 @@
 
 	var/atom/movable/pullingg = L.pulling
 
+	// handle unknotting
+	if(ishuman(L))
+		var/mob/living/carbon/human/knot_haver = L
+		if(knot_haver.sexcon.knotted_status)
+			knot_haver.sexcon.knot_remove()
+
 	L.recent_travel = world.time
 	if(pullingg)
+		if(ishuman(pullingg)) // also check if pulled mob is knotted
+			var/mob/living/carbon/human/H = pullingg
+			if(H.sexcon.knotted_status)
+				H.sexcon.knot_remove()
 		pullingg.recent_travel = world.time
 		pullingg.forceMove(T.loc)
 

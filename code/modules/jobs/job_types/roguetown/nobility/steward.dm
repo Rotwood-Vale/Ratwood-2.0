@@ -19,6 +19,7 @@
 	cmode_music = 'sound/music/combat_noble.ogg'
 
 	advclass_cat_rolls = list(CTAG_STEWARD = 2)
+	virtue_restrictions = list(/datum/virtue/utility/blacksmith)
 
 	job_traits = list(TRAIT_NOBLE, TRAIT_SEEPRICES)
 	job_subclasses = list(

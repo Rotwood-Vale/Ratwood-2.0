@@ -175,8 +175,8 @@
 	/// The current client inhabiting this mob. Managed by login/logout
 	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed
 	/// We need to do this because the mob on logout never actually has a reference to client
-	/// We also need to clear this var/do other cleanup in client/Destroy, since that happens before logout 
-	var/client/canon_client 
+	/// We also need to clear this var/do other cleanup in client/Destroy, since that happens before logout
+	var/client/canon_client
 
 	/// Can this mob enter shuttles
 	var/move_on_shuttle = 1
@@ -279,6 +279,7 @@
 
 	var/last_dodge = 0
 	var/last_parry = 0
+	var/last_used_double_attack = 0 //Used for Dual Wielder virtue, holds the timer since the double attack was last used
 	var/next_emote = 0
 	var/next_me_emote = 0
 	var/lastpoint = 0

@@ -111,29 +111,36 @@
 
 		// Knotted effect message
 		if(has_status_effect(/datum/status_effect/knot_tied))
-			. += span_warning("A knot is locked inside them. They're being pulled around like a pet.")
+			. += span_warning("A knot is locked inside [p_them()]. [m1] being pulled around like a pet.")
 
 		// Facial/Creampie effect message
-		var/facial = has_status_effect(/datum/status_effect/facial)
-		var/creampie = has_status_effect(/datum/status_effect/facial/internal) && (observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+		var/datum/status_effect/facial/facial = has_status_effect(/datum/status_effect/facial)
+		var/datum/status_effect/facial/internal/creampie = null
+		if(observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+			creampie = has_status_effect(/datum/status_effect/facial/internal)
 		if(facial && creampie)
+			var/facial_wet_or_dry = !facial?.has_dried_up ? "glazed" : "plastered"
+			var/creampie_wet_or_dry = !creampie?.has_dried_up ? "dripping out" : "stained with"
+			var/we_wet_or_dry = facial?.has_dried_up && creampie?.has_dried_up ? "dried cum" : "cum" // only show dried if both status are set to dry
 			if(user != src && isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed and dripping out cum!") : span_warning("[m1] covered in something glossy!")
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] [facial_wet_or_dry] and [creampie_wet_or_dry] [we_wet_or_dry]!") : span_warning("[m1] covered in something glossy!")
 			else
-				. += span_aiprivradio("[m1] glazed and dripping out cum!")
+				. += span_aiprivradio("[m1] [facial_wet_or_dry] and [creampie_wet_or_dry] [we_wet_or_dry]!")
 		else if(facial)
+			var/wet_or_dry = !facial?.has_dried_up ? "glazed with cum" : "plastered with dried cum"
 			if(user != src && isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed with cum!") : span_warning("[m1] smeared with something glossy!")
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] [wet_or_dry]!") : span_warning("[m1] smeared with something glossy!")
 			else
-				. += span_aiprivradio("[m1] glazed with cum!")
+				. += span_aiprivradio("[m1] [wet_or_dry]!")
 		else if(creampie)
+			var/wet_or_dry = !creampie?.has_dried_up ? "dripping out cum" : "stained with dried cum"
 			if(user != src && isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] dripping out cum!") : span_warning("[m1] letting out some glossy stuff!")
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] [wet_or_dry]!") : span_warning("[m1] letting out some glossy stuff!")
 			else
-				. += span_aiprivradio("[m1] dripping out cum!")
+				. += span_aiprivradio("[m1] [wet_or_dry]!")
 
 		if((HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) || (HAS_TRAIT(user, TRAIT_RACISMISBAD) && !(src.dna.species.name == "Elf" || src.dna.species.name == "Dark Elf" || src.dna.species.name == "Half Elf")))
 			. += span_phobia("A foreigner...")
@@ -776,6 +783,19 @@
 			for(var/obj/item/stuck_thing in part.embedded_objects)
 				if (stuck_thing.w_class >= WEIGHT_CLASS_SMALL)
 					. += span_bloody("<b>[m3] \a [stuck_thing] stuck in [m2] [part.name]!</b>")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/stress = H.get_stress_amount()//stress check for racism
+		if(H.has_flaw(/datum/charflaw/paranoid) || stress >= 4)//Paranoid or stressed, for basic examine.
+			if(H.dna.species.name != dna.species.name)
+				if(dna.species.stress_examine)//some species don't have a stress desc
+					. += dna.species.stress_desc
+				if(!HAS_TRAIT(user, TRAIT_TOLERANT))//They're given the stress event if they qualify for racism and aren't tolerant.
+					var/stress_type = /datum/stressevent/shunned_race
+					if(HAS_TRAIT(user, TRAIT_XENOPHOBIC))//Xenophobic are hit worse. By a bit.
+						stress_type = /datum/stressevent/shunned_race_xenophobic
+					user.add_stress(stress_type)
 
 	if((user != src) && isliving(user))
 		var/mob/living/L = user

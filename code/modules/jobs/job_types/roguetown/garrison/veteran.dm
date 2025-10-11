@@ -191,7 +191,7 @@
 
 /datum/outfit/job/roguetown/vet/calvaryman/pre_equip(mob/living/carbon/human/H)
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/	// Former knights should have knightly armour. 
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/	// Former knights should have knightly armour.
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/knight
 	pants = /obj/item/clothing/under/roguetown/chainlegs
@@ -319,14 +319,15 @@
 	H.set_blindness(0)
 	switch(weapon_choice)
 		if("Zweihander")
-			r_hand = /obj/item/rogueweapon/greatsword/grenz
+			H.put_in_hands(new /obj/item/rogueweapon/greatsword/grenz)
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
-			backl = /obj/item/rogueweapon/scabbard/gwstrap
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L)
 		if("Halberd")
-			r_hand = /obj/item/rogueweapon/halberd
+			H.put_in_hands(new /obj/item/rogueweapon/halberd)
 			H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE) // SO, fun fact. The description of the grenzel halbardier says they specialize in axes, but they get no axe skill. Maybe this guy is where that rumor came from.
 			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L)
 
 /datum/advclass/veteran/scout
 	name = "Former Scout"
@@ -345,7 +346,7 @@
 	)
 
 // Originally was meant to be a horse archer. I decided that was a bad idea.
-// Former Bogmaster maybe? I feel like that'd be cooler than just an archer guy. 
+// Former Bogmaster maybe? I feel like that'd be cooler than just an archer guy.
 
 /datum/outfit/job/roguetown/vet/scout/pre_equip(mob/living/carbon/human/H)
 	neck = /obj/item/clothing/neck/roguetown/gorget

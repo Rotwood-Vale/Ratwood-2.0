@@ -172,6 +172,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 
 	var/remains_type
 	var/binded = FALSE // Whether it is bound to a summoning circle or not
+	var/can_mine = FALSE //if the mob can break rock walls
 
 	var/botched_butcher_results
 	var/perfect_butcher_results

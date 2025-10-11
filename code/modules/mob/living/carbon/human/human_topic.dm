@@ -45,7 +45,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			dat += "<div align='center'>[ooc_extra]</div>"
 		if(nsfw_headshot_link)
 			dat += "<br><div align='center'><b>NSFW</b></div>"
-		if(nsfw_headshot_link && (observer_privilege || (!wear_armor && !wear_shirt)))
+		if(nsfw_headshot_link && !wear_armor && !wear_shirt)
 			dat += ("<br><div align='center'><img src='[nsfw_headshot_link]' width='600px'></div>")
 		else if(nsfw_headshot_link && (wear_armor || wear_shirt))
 			dat += "<br><center><i><font color = '#9d0080'; font size = 5>There is more to see but they are not naked...</font></i></center>"
@@ -193,14 +193,14 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		if(!ishuman(src))
 			return
 		var/success = FALSE
-		var/obscured_name = FALSE 
+		var/obscured_name = FALSE
 
 		var/static/list/unknown_names = list(
 		"Unknown",
 		"Unknown Man",
 		"Unknown Woman",
 		)
-		
+
 		var/mob/living/carbon/human/H = src
 		var/mob/living/carbon/human/user = usr
 		var/intellectual = HAS_TRAIT(user, TRAIT_INTELLECTUAL)
@@ -214,7 +214,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			to_chat(user, span_info("They've moved too far away!"))
 			return
 		user.visible_message("[user] begins assessing [src].")
-		
+
 		if(do_mob(user, src, ((intellectual ? 20 : 40)) - (user.STAINT - 10) - (user.STAPER - 10) - user.get_skill_level(/datum/skill/misc/reading), uninterruptible = intellectual, double_progress = (intellectual ? FALSE : TRUE)))
 			var/is_guarded = HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS)	//Will scramble Stats and prevent skills from being shown
 			var/is_smart = FALSE	//Maximum info (all skills, gear and stats) either Intellectual virtue or having high enough PER / INT / Reading
@@ -222,7 +222,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			var/is_normal = FALSE	//High amount of info -- most gear slots, combat skills. No stats.
 			//If you don't get any of these, you'll still get to see 3 gear slots and shown weapon skills in Assess.
 			if(intellectual || ((user.STAINT - 10) + (user.STAPER - 10) + user.get_skill_level(/datum/skill/misc/reading)) >= 10)
-				is_smart = TRUE	
+				is_smart = TRUE
 			if(user.STAINT < 10 && !is_smart)
 				is_stupid = TRUE
 			if(!is_smart && !is_stupid && ((user.STAINT - 10) + (user.STAPER - 10) + user?.get_skill_level(/datum/skill/misc/reading)) >= 5)
@@ -261,7 +261,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			var/list/coverage_exposed = list(READABLE_ZONE_HEAD, READABLE_ZONE_CHEST, READABLE_ZONE_ARMS, READABLE_ZONE_L_ARM, READABLE_ZONE_R_ARM, READABLE_ZONE_LEGS, READABLE_ZONE_L_LEG, READABLE_ZONE_R_LEG, READABLE_ZONE_NOSE, READABLE_ZONE_MOUTH, READABLE_ZONE_EYES, READABLE_ZONE_NECK, READABLE_ZONE_VITALS, READABLE_ZONE_GROIN, READABLE_ZONE_HANDS, READABLE_ZONE_L_HAND, READABLE_ZONE_R_HAND, READABLE_ZONE_FEET, READABLE_ZONE_L_FOOT, READABLE_ZONE_R_FOOT)
 			var/list/coverage = list()	//All of the covered areas
 			var/list/blunt_max = list()	//Highest armor prot values
-			var/list/slash_max = list()	
+			var/list/slash_max = list()
 			var/list/stab_max = list()
 			var/list/piercing_max = list()
 			var/list/crit_weakness = list()	//The critical damage type the zone will be weak to
@@ -285,7 +285,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 							continue
 					if(C.body_parts_covered_dynamic)
 						readable_coverage = body_parts_covered2organ_names(C.body_parts_covered_dynamic, verbose = TRUE)
-					
+
 					if(length(C.prevent_crits) && (is_normal || is_smart))
 						for(var/critzone in C.prevent_crits)
 							for(var/crit in critclasses)
@@ -319,7 +319,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 								coverage_exposed.Remove(READABLE_ZONE_ARMS, READABLE_ZONE_R_ARM)	//Since individual limbs can be exposed, this is needed for the accuracy / granularity of the printout.
 							if(READABLE_ZONE_L_LEG)
 								coverage_exposed.Remove(READABLE_ZONE_LEGS, READABLE_ZONE_L_LEG)	//However it do be ugly.
-							if(READABLE_ZONE_R_LEG)	
+							if(READABLE_ZONE_R_LEG)
 								coverage_exposed.Remove(READABLE_ZONE_LEGS, READABLE_ZONE_R_LEG)
 							if(READABLE_ZONE_L_HAND)
 								coverage_exposed.Remove(READABLE_ZONE_HANDS, READABLE_ZONE_L_HAND)
@@ -364,7 +364,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 							else
 								coverage.Remove(READABLE_ZONE_FEET)
 						else
-							coverage.Remove(READABLE_ZONE_FEET)		
+							coverage.Remove(READABLE_ZONE_FEET)
 			for(var/exposedzone in coverage_exposed)	//We also filter out redundancies from the exposed remainder. Mostly L / Rs if there's a combined flag that slipped through.
 				switch(exposedzone)
 					if(READABLE_ZONE_HANDS)
@@ -444,7 +444,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 									dat += "-----------------------<br>"
 								else
 									continue
-					
+
 			dat += "</td>"
 			dat += "</tr>"
 			var/datum/browser/popup = new(user, "assess", ntitle = "[src] Assesment", nwidth = 1000, nheight = 600)
@@ -550,7 +550,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 		str += crits
 	str += "<br>---------------------------<br>"
-	
+
 	return str*/
 
 /proc/skilldiff_report(var/input)

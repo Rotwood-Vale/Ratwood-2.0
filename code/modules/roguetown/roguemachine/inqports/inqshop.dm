@@ -28,7 +28,7 @@
 /obj/structure/closet/crate/chest/inqcrate/wardrobe/
 	name = "otava's finest wardrobe crate"
 
-/// ✤ SUPPLIES ✤ START HERE! WOW!	
+/// ✤ SUPPLIES ✤ START HERE! WOW!
 
 /datum/inqports/supplies/extrafunding
 	name = "(80 Silvers) Extra Funding"
@@ -138,10 +138,10 @@
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/smokes/Initialize()
 	. = ..()
-	new /obj/item/smokebomb(src)
-	new /obj/item/smokebomb(src)
-	new /obj/item/smokebomb(src)
-	new /obj/item/smokebomb(src)
+	new /obj/item/bomb/smoke(src)
+	new /obj/item/bomb/smoke(src)
+	new /obj/item/bomb/smoke(src)
+	new /obj/item/bomb/smoke(src)
 
 /datum/inqports/supplies/psybuns
 	name = "The Otavan Bakery Special"
@@ -195,7 +195,7 @@
 	new /obj/item/ingot/silverblessed/bullion(src)
 	new /obj/item/ingot/silverblessed/bullion(src)
 	new /obj/item/ingot/silverblessed/bullion(src)
-	
+
 
 // ✤ ARTICLES ✤ RIGHT HERE! THAT'S RIGHT!
 
@@ -327,13 +327,13 @@
 /obj/structure/closet/crate/chest/inqcrate/equipment/inqcordage/Initialize()
 	. = ..()
 	new /obj/item/rope/inqarticles/inquirycord(src)
-	new /obj/item/rope/inqarticles/inquirycord(src)	
+	new /obj/item/rope/inqarticles/inquirycord(src)
 
 /datum/inqports/equipment/blackbags
 	name = "3 Black Bags"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/equipment/blackbags
 	marquescost = 8
-	
+
 /obj/structure/closet/crate/chest/inqcrate/equipment/blackbags/Initialize()
 	. = ..()
 	new /obj/item/clothing/head/inqarticles/blackbag(src)
@@ -346,7 +346,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/equipment/psydonhelms
 	marquescost = 12
 	maximum = 1
-	
+
 /obj/structure/closet/crate/chest/inqcrate/equipment/psydonhelms/Initialize()
 	. = ..()
 	new /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute(src)

@@ -26,4 +26,4 @@
 #define QUEST_DEPOSIT_HARD 30
 
 
-#define QUEST_HANDLER_REWARD_MULTIPLIER 2
+#define QUEST_HANDLER_REWARD_MULTIPLIER 2 // Steward and Merchant get rewarded more to do Quest

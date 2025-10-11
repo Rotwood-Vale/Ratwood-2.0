@@ -97,7 +97,7 @@
 		return FALSE
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user, src)
 	if(item_flags & NOBLUDGEON)
-		return FALSE	
+		return FALSE
 
 	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("I don't want to harm other living beings!"))
@@ -130,7 +130,7 @@
 		return
 	if(!user.CanReach(M,src))
 		return
-	if(user.get_active_held_item() != src)
+	if(user.get_active_held_item() != src && !HAS_TRAIT(user, TRAIT_DUALWIELDER))
 		return
 	if(user.incapacitated())
 		return
@@ -156,7 +156,7 @@
 	if(M.has_status_effect(/datum/status_effect/buff/clash) && M.get_active_held_item() && ishuman(M) && !bad_guard)
 		var/mob/living/carbon/human/HM = M
 		var/obj/item/IM = M.get_active_held_item()
-		var/obj/item/IU 
+		var/obj/item/IU
 		if(user.used_intent.masteritem)
 			IU = user.used_intent.masteritem
 		HM.process_clash(user, IM, IU)
@@ -215,7 +215,6 @@
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
-
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
@@ -244,7 +243,7 @@
 	testing("startforce [newforce]")
 	if(!istype(user))
 		return newforce
-	
+
 	var/dullness_ratio
 	if(I.max_blade_int && I.sharpness != IS_BLUNT)
 		dullness_ratio = I.blade_int / I.max_blade_int
@@ -517,7 +516,7 @@
 
 	if(multiplier)
 		newforce = newforce * multiplier
-	
+
 	take_damage(newforce, I.damtype, I.d_type, 1)
 	if(newforce > 1)
 		I.take_damage(1, BRUTE, I.d_type)

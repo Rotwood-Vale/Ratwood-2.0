@@ -1,6 +1,9 @@
 /datum/sex_action/blowjob
 	name = "Suck them off"
 	check_same_tile = FALSE
+	category = SEX_CATEGORY_PENETRATE
+	user_sex_part = SEX_PART_JAWS
+	target_sex_part = SEX_PART_COCK
 
 /datum/sex_action/blowjob/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -26,7 +29,7 @@
 /datum/sex_action/blowjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] sucks [target]'s cock..."))
 	user.make_sucking_noise()
-	do_thrust_animate(user, target)
+	user.sexcon.do_thrust_animate(target)
 
 	user.sexcon.perform_sex_action(target, 2, 0, TRUE)
 	if(!target.sexcon.considered_limp())

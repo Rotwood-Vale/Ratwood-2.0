@@ -261,9 +261,9 @@
 	name = "smokebomb(s) (3x) (+1 Coal)"
 	required_item = /obj/item/ingot/iron
 	additional_items = list(/obj/item/rogueore/coal = 1)
-	created_item = list(/obj/item/smokebomb,
-						/obj/item/smokebomb,
-						/obj/item/smokebomb,)
+	created_item = list(/obj/item/bomb/smoke,
+						/obj/item/bomb/smoke,
+						/obj/item/bomb/smoke)
 	hammers_per_item = 12
 	skill_level = 3
 

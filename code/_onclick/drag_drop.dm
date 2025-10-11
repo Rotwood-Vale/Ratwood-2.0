@@ -272,20 +272,20 @@
 	STOP_PROCESSING(SSmousecharge, src)
 	return ..()
 
-/client/process()
+/client/process(seconds_per_tick)
 	if(!isliving(mob))
 		return PROCESS_KILL
 	var/mob/living/L = mob
-	if(!L?.client || !update_to_mob(L))
+	if(!L?.client || !update_to_mob(L, seconds_per_tick))
 		if(L.curplaying)
 			L.curplaying.on_mouse_up()
 		L.update_charging_movespeed()
 		return PROCESS_KILL
 
-/client/proc/update_to_mob(mob/living/L)
+/client/proc/update_to_mob(mob/living/L, seconds_per_tick)
 	if(charging)
 		if(progress < goal)
-			progress++
+			progress += 1 * seconds_per_tick //Tickspeed independent. Should always be 1, isn't always 1 when under strain.
 			chargedprog = text2num("[((progress / goal) * 100)]")
 // Here we start changing the mouse_pointer_icon
 			if(!(mob.used_intent.charge_pointer & mob.used_intent.charged_pointer))

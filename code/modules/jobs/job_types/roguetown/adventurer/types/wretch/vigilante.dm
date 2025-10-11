@@ -6,11 +6,11 @@
 	outfit = /datum/outfit/job/roguetown/wretch/vigilante
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_PERFECT_TRACKER)
-	maximum_possible_slots = 1 // There can only be one. 
+	maximum_possible_slots = 1 // There can only be one.
 	extra_context = "This class is best experienced without preparation."
 
 /datum/outfit/job/roguetown/wretch/vigilante/pre_equip(mob/living/carbon/human/H)
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/ //So your skull isn't caved in if you decide to wear a cool hat. 
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ //So your skull isn't caved in if you decide to wear a cool hat.
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -32,25 +32,25 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE) //To make your own costumes.
-	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE) //You WILL be getting neckstabbed A LOT. 
+	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE) //You WILL be getting neckstabbed A LOT.
 	H.adjust_skillrank(/datum/skill/misc/tracking, 4, TRUE) //SNIFF OUT JUSTICE.
 	H.cmode_music = 'sound/music/combatmaniac.ogg'
 	var/classes = list("The Watchman", "The Gadgeteer", "I AM JUSTICE INCARNATE!!!")
 	var/classchoice = input("Choose your archetypes", "Available archetypes") as anything in classes
 	switch(classchoice)
-		if("The Watchman") //Face-to-face CQC. No crit resist. Pure aura. Rorschach. 
+		if("The Watchman") //Face-to-face CQC. No crit resist. Pure aura. Rorschach.
 			H.set_blindness(0)
 			watchman_equip(H)
-		if("The Gadgeteer") //Make gadgets, be precise and smart. Think ahead before you start swinging. Nite Owl. 
+		if("The Gadgeteer") //Make gadgets, be precise and smart. Think ahead before you start swinging. Nite Owl.
 			H.set_blindness(0)
 			owl_equip(H)
-		if("I AM JUSTICE INCARNATE!!!") //THROW SHIT AT PEOPLE. RANDOM BULLSHIT GO!!!! MOON KNIGHT. 
+		if("I AM JUSTICE INCARNATE!!!") //THROW SHIT AT PEOPLE. RANDOM BULLSHIT GO!!!! MOON KNIGHT.
 			H.set_blindness(0)
 			bullshit_equip(H)
 
 /datum/outfit/job/roguetown/wretch/vigilante/proc/watchman_equip(mob/living/carbon/human/H)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE) //No civilized barbarian. Sorry chud. Go play Berserker if you want that. 
-	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE) //I can do this all day. 
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE) //No civilized barbarian. Sorry chud. Go play Berserker if you want that.
+	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE) //I can do this all day.
 	backl = /obj/item/storage/backpack/rogue/backpack/bagpack
 	beltl = /obj/item/rogueweapon/knuckles
 	beltr = /obj/item/rogueweapon/stoneaxe/hurlbat
@@ -67,8 +67,8 @@
 	backl = /obj/item/rogueweapon/woodstaff/quarterstaff/steel //nonlethal takedowns
 	beltr = /obj/item/quiver/sling/iron
 	l_hand = /obj/item/grapplinghook
-	r_hand = /obj/item/smokebomb
-	beltl = /obj/item/smokebomb
+	r_hand = /obj/item/bomb/smoke
+	beltl = /obj/item/bomb/smoke
 	cloak = /obj/item/clothing/cloak/cape/puritan
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
 	mask = /obj/item/clothing/mask/rogue/duelmask
@@ -80,14 +80,14 @@
 		/obj/item/rope/chain = 1,
 		)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 4, TRUE) //Investigations
-	H.adjust_skillrank(/datum/skill/combat/slings, 4, TRUE) // Funny as shit to use. 
+	H.adjust_skillrank(/datum/skill/combat/slings, 4, TRUE) // Funny as shit to use.
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE) //Last resort CQC. Enough def on a quarterstaff to fight defensively, not enough to be truly offensive.
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE) //I lurk in the shadows...
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE) //Crafty
 	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE) // Escape routes
 	H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE) //Make your own tinkering tools and smokebombs
 	H.adjust_skillrank(/datum/skill/craft/smelting, 3, TRUE) //Just so your smelted ingots aren't ruined
-	H.change_stat(STATKEY_INT, 3) 
+	H.change_stat(STATKEY_INT, 3)
 	H.change_stat(STATKEY_WIL, 3)
 	H.change_stat(STATKEY_PER, 3)
 	wretch_select_bounty(H)
@@ -104,9 +104,9 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick) //Trust the plan. 
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick) //Trust the plan.
 	ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC) // You LITERALLY get no weapon skills. You're throwing shit at enemies. 
+	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC) // You LITERALLY get no weapon skills. You're throwing shit at enemies.
 	H.change_stat(STATKEY_SPD, 2)
 	H.change_stat(STATKEY_WIL, 1)
 	H.change_stat(STATKEY_INT, 4) //Hilarious

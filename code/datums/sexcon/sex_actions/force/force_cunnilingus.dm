@@ -2,6 +2,8 @@
 	name = "Force them to suck"
 	require_grab = TRUE
 	stamina_cost = 1.0
+	user_sex_part = SEX_PART_CUNT
+	target_sex_part = SEX_PART_JAWS
 
 /datum/sex_action/force_cunnilingus/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -37,7 +39,7 @@
 /datum/sex_action/force_cunnilingus/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to suck [user.p_their()] cunt."))
 	target.make_sucking_noise()
-	do_thrust_animate(target, user)
+	target.sexcon.do_thrust_animate(user)
 
 	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
 	user.sexcon.handle_passive_ejaculation()

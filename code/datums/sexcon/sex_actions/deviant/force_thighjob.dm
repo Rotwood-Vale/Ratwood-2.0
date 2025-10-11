@@ -1,5 +1,6 @@
 /datum/sex_action/force_thighjob
 	name = "Jerk them off with thighs"
+	target_sex_part = SEX_PART_COCK
 
 /datum/sex_action/force_thighjob/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -23,7 +24,7 @@
 /datum/sex_action/force_thighjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] jerks [target]'s cock with [user.p_their()] thighs..."))
 	playsound(user, 'sound/misc/mat/fingering.ogg', 30, TRUE, -2, ignore_walls = FALSE)
-	do_thrust_animate(user, target)
+	user.sexcon.do_thrust_animate(target)
 
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)
 
