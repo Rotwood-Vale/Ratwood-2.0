@@ -2297,6 +2297,7 @@
 #include "code\modules\spells\roguetown\evilkatar.dm"
 #include "code\modules\spells\roguetown\helper.dm"
 #include "code\modules\spells\roguetown\jester.dm"
+#include "code\modules\spells\roguetown\motivated.dm"
 #include "code\modules\spells\roguetown\necromancer.dm"
 #include "code\modules\spells\roguetown\oldgod.dm"
 #include "code\modules\spells\roguetown\priest.dm"

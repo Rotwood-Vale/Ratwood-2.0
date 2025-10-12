@@ -1,4 +1,15 @@
 
+/// Returns a list of turfs in a circle of given radius around center turf. i need this bruh.
+/proc/circle(radius, turf/center)
+	var/list/turfs = list()
+	for(var/x = -radius to radius)
+		for(var/y = -radius to radius)
+			if(x*x + y*y <= radius*radius)
+				var/turf/T = locate(center.x + x, center.y + y, center.z)
+				if(isturf(T))
+					turfs += T
+	return turfs
+
 /obj/effect/proc_holder/spell/invoked/motivated_slash
 	name = "Motivated Slash"
 	desc = "A powerful line slash. Is three tiles long and is unblockable."
@@ -11,16 +22,12 @@
 	charging_slowdown = 1
 	chargedloop = /datum/looping_sound/invokegen
 	invocations = list("Hmph!")
-	spell_type = SPELL_TYPE_INVOKED
 	invocation_type = "shout"
-	glow_color = GLOW_COLOR_RED
-	glow_intensity = GLOW_INTENSITY_HIGH
 	gesture_required = FALSE
-	ignore_los = FALSE
 	sound = 'sound/motivation/hm1.ogg'
 	var/delay = 2
-	var/damage = 150 // High damage for a single target attack
-	var/area_of_effect = 3 // 3 tiles in a line
+	var/damage = 150 
+	var/area_of_effect = 3 
 
 
 /obj/effect/temp_visual/trap
@@ -57,17 +64,20 @@
 		slash_turfs += current_turf
 	playsound(T, 'sound/motivation/swordswing.ogg', 75, TRUE, soundping = TRUE)
 
-	// Immediately apply effects to all valid turfs
-	for(var/turf/target_turf in slash_turfs)
-		do_motivated_slash_effect(target_turf, damage)
+	// i love callbacks they're so nice
+	for(var/i = 1, i <= slash_turfs.len; i++)
+		var/turf/target_turf = slash_turfs[i]
+		addtimer(CALLBACK(src, PROC_REF(do_motivated_slash_effect), target_turf, damage), 0)
+		addtimer(CALLBACK(src, PROC_REF(play_swordswing), target_turf), 0)
+/obj/effect/proc_holder/spell/invoked/motivated_slash/proc/play_swordswing(turf/affected_turf)
+	playsound(affected_turf, 'sound/motivation/swordswing.ogg', 80, TRUE)
 
-// Handles damage logic for motivated slash
+// ok so i think this works
 /obj/effect/proc_holder/spell/invoked/motivated_slash/proc/do_motivated_slash_effect(turf/target_turf, damage)
 	if(!target_turf || target_turf.density)
 		return
 	new /obj/effect/temp_visual/motivated_slash(target_turf)
 	for(var/mob/living/L in target_turf.contents)
-		play_cleave = TRUE
 		L.adjustBruteLoss(damage)
 		playsound(target_turf, "genslash", 80, TRUE)
 		to_chat(L, "<span class='userdanger'>You're cut by the sword!</span>")
@@ -84,16 +94,11 @@
 	charging_slowdown = 1
 	chargedloop = /datum/looping_sound/invokegen
 	invocations = list("Pathetic.")
-	spell_type = SPELL_TYPE_INVOKED
 	invocation_type = "shout"
-	glow_color = GLOW_COLOR_RED
-	glow_intensity = GLOW_INTENSITY_HIGH
-	gesture_required = FALSE
-	ignore_los = FALSE
 	sound = 'sound/motivation/pathetic.ogg'
 	var/delay = 2
 	var/slashing = FALSE
-	var/damage = 100 // Moderate damage for a multi-target attack
+	var/damage = 100
 	var/area_of_effect = 1
 
 /obj/effect/proc_holder/spell/invoked/motivated_omnislash/cast(list/targets, mob/user)
@@ -124,14 +129,16 @@
 			all_turfs += affected_turf
 		playsound(T, 'sound/motivation/swordswing.ogg', 55, TRUE, soundping = TRUE)
 
-	// Block movement for the total duration
 	var/total_delay = delay * all_turfs.len
-	user.do_after(total_delay, CALLBACK(src, PROC_REF(end_omnislash), user))
+	// user.do_after(total_delay, CALLBACK(src, PROC_REF(end_omnislash), user)) // Commented out for movement blocking logic
 
-	// Schedule each slash effect
 	for(var/i = 1, i <= all_turfs.len, i++)
 		var/turf/current_turf = all_turfs[i]
-		addtimer(CALLBACK(src, PROC_REF(do_omnislash_effect), current_turf, user, damage), delay * (i - 1))
+		var/swing_delay = delay * (i - 1)
+		addtimer(CALLBACK(src, PROC_REF(do_omnislash_effect), current_turf, user, damage), swing_delay)
+		playsound(current_turf, 'sound/motivation/swordswing.ogg', 80, TRUE)
+/obj/effect/proc_holder/spell/invoked/motivated_omnislash/proc/play_swordswing(turf/affected_turf)
+	playsound(affected_turf, 'sound/motivation/swordswing.ogg', 80, TRUE)
 
 /obj/effect/proc_holder/spell/invoked/motivated_omnislash/proc/do_omnislash_effect(turf/affected_turf, mob/user, damage, initial_loc)
 	if(!src.slashing)
@@ -140,7 +147,6 @@
 		return
 	new /obj/effect/temp_visual/blade_burst(affected_turf)
 	for(var/mob/living/L in affected_turf.contents)
-		play_cleave = TRUE
 		L.adjustBruteLoss(damage)
 		playsound(affected_turf, "genslash", 80, TRUE)
 		to_chat(L, "<span class='userdanger'>You're cut by the sword!</span>")
@@ -155,60 +161,164 @@
 		user.do_after = FALSE
 
 
-/obj/effect/proc_holder/spell/self/motivated_power
-	name = "Power Surge"
-	desc = "I need MORE POWER!"
+/obj/effect/proc_holder/spell/invoked/motivated_xslash
+	name = "Motivated X Slash"
+	desc = "A powerful X slash, slashes in an X shape at the target location. Is unblockable."
+	warnie = "spellwarning"
+	cost = 2
+	range = 3
 	chargetime = 0
 	no_early_release = FALSE
 	movement_interrupt = FALSE
 	charging_slowdown = 1
-	invocations = list("I need MORE POWER!")
-	spell_type = SPELL_TYPE_SELF
+	chargedloop = /datum/looping_sound/invokegen
+	invocations = list("Cut off!")
 	invocation_type = "shout"
-	sound = "sound/motivation/ineedpower.ogg"
+	sound = 'sound/motivation/cutoff.ogg'
+	var/delay = 2
+	var/slashing = FALSE
+	var/damage = 120
+	var/area_of_effect = 1 
 
-/obj/effect/proc_holder/spell/self/motivated_power/cast(mob/user)
+/obj/effect/proc_holder/spell/invoked/motivated_xslash/cast(list/targets, mob/user)
+	var/turf/T = get_turf(targets[1])
+	src.slashing = TRUE
+	var/list/x_turfs = list()
+	var/dirs = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+	for(var/dir in dirs)
+		var/turf/current_turf = T
+		for(var/i = 1; i <= area_of_effect; i++)
+			current_turf = get_step(current_turf, dir)
+			if(!current_turf)
+				break
+			if(current_turf.density)
+				break
+			new /obj/effect/temp_visual/trap(current_turf)
+			x_turfs += current_turf
+	playsound(T, 'sound/motivation/swordswing.ogg', 75, TRUE, soundping = TRUE)
 
-	to_chat(user, "<span class='userdanger'>You feel a surge of power coursing through your body!</span>")
-	// Apply the healing buff to the user
-	user.add_status_effect(/datum/status_effect/buff/healing, user, 5)
+	// no walkies.
+	var/total_delay = delay * x_turfs.len
+	// user.do_after(total_delay, CALLBACK(src, PROC_REF(end_xslash), user)) // Commented out for movement blocking logic
 
-/datum/status_effect/buff/healing
-	id = "healing"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/healing
-	duration = 10 SECONDS
-	examine_text = "SUBJECTPRONOUN is bathed in a MOTIVATED aura!"
-	var/healing_on_tick = 5
-	var/outline_colour = "#c42424"
+	// i fucking hate this shit bruh.
+	for(var/i = 1, i <= x_turfs.len, i++)
+		var/turf/current_turf = x_turfs[i]
+		var/swing_delay = delay * (i - 1)
+		addtimer(CALLBACK(src, PROC_REF(do_xslash_effect), current_turf, user, damage), swing_delay)
+		playsound(current_turf, 'sound/motivation/swordswing.ogg', 80, TRUE)
+/obj/effect/proc_holder/spell/invoked/motivated_xslash/proc/play_swordswing(turf/affected_turf)
+	playsound(affected_turf, 'sound/motivation/swordswing.ogg', 80, TRUE)
 
-/datum/status_effect/buff/healing/on_creation(mob/living/new_owner, new_healing_on_tick)
-	healing_on_tick = new_healing_on_tick
-	return ..()
+/obj/effect/proc_holder/spell/invoked/motivated_xslash/proc/do_xslash_effect(turf/affected_turf, mob/user, damage)
+	if(!src.slashing)
+		return
+	if(!affected_turf || affected_turf.density)
+		return
+	new /obj/effect/temp_visual/blade_burst(affected_turf)
+	for(var/mob/living/L in affected_turf.contents)
+		L.adjustBruteLoss(damage)
+		playsound(affected_turf, "genslash", 80, TRUE)
+		to_chat(L, "<span class='userdanger'>You're cut by the sword!")
+		var/knock_dir = get_dir(user, L)
+		if(knock_dir)
+			step(L, knock_dir)
+			to_chat(L, "<span class='userdanger'>You're knocked back by the force of the slash!")
 
-/datum/status_effect/buff/healing/on_apply()
-	SEND_SIGNAL(owner, COMSIG_LIVING_MIRACLE_HEAL_APPLY, healing_on_tick, src)
-	var/filter = owner.get_filter(MIRACLE_HEALING_FILTER)
-	if (!filter)
-		owner.add_filter(MIRACLE_HEALING_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
-	return TRUE
+/obj/effect/proc_holder/spell/invoked/motivated_xslash/proc/end_xslash(mob/user)
+	src.slashing = FALSE
 
-	/datum/status_effect/buff/healing/tick()
-	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
-	H.color = "#FF0000"
-	var/list/wCount = owner.get_wounds()
-	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume+healing_on_tick, BLOOD_VOLUME_NORMAL)
-		if(wCount.len > 0)
-			owner.heal_wounds(healing_on_tick)
-			owner.update_damage_overlays()
-		owner.adjustBruteLoss(-healing_on_tick, 0)
-		owner.adjustFireLoss(-healing_on_tick, 0)
-		owner.adjustOxyLoss(-healing_on_tick, 0)
-		owner.adjustToxLoss(-healing_on_tick, 0)
-		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
-		owner.adjustCloneLoss(-healing_on_tick, 0)
+/obj/effect/proc_holder/spell/invoked/motivated_finale
+	name = "Motivated Final Slash"
+	desc = "A devastating finale slash that hits around you in a very large radius."
+	cost = 3
+	range = 1
+	chargetime = 0
+	no_early_release = FALSE
+	movement_interrupt = FALSE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokegen
+	invocations = list("You shall die.") // https://youtu.be/GEZON93hV-s?si=KkcoxDQxGcyd0kfY&t=25
+	invocation_type = "shout"
+	gesture_required = FALSE
+	ignore_los = FALSE
+	sound = 'sound/motivation/youshalldie.ogg'
+	var/delay = 2
+	var/slashing = FALSE
+	var/damage = 200 
+	var/area_of_effect = 9 
 
-// yes i shamelessly stole this from the miracle heal spell thingy..
+/obj/effect/proc_holder/spell/invoked/motivated_finale/cast(list/targets, mob/user)
+	var/turf/source_turf = get_turf(user)
+	src.slashing = TRUE
+	var/list/finale_turfs = list()
+	for(var/turf/affected_turf in circle(area_of_effect, source_turf))
+		if(!affected_turf)
+			continue
+		if(affected_turf == source_turf)
+			continue // Exclude the center tile
+		if(affected_turf.density)
+			continue
+		new /obj/effect/temp_visual/trap(affected_turf)
+		finale_turfs += affected_turf
+	playsound(source_turf, 'sound/motivation/swordswing.ogg', 80, TRUE, soundping = TRUE)
+
+	// Block movement for the total duration
+	var/total_delay = delay * finale_turfs.len
+	user.do_after(total_delay, CALLBACK(src, PROC_REF(end_finale), user))
+
+
+	// Schedule each slash effect
+	for(var/i = 1; i <= finale_turfs.len; i++)
+		var/turf/current_turf = finale_turfs[i]
+		var/swing_delay = delay * (i - 1)
+		addtimer(CALLBACK(src, PROC_REF(do_finale_effect), current_turf, user, damage), swing_delay)
+		addtimer(CALLBACK(src, PROC_REF(play_swordswing), current_turf), swing_delay)
+
+	// Play swordswing sound for each swing
+	// After all circle slashes, cast four X slashes around the user, two tiles away
+	var/xslash_start_delay = delay * finale_turfs.len
+	var/list/xslash_centers = list()
+	var/dirs = list(NORTH, SOUTH, EAST, WEST)
+	for(var/dir in dirs)
+		var/turf/xcenter = get_step(get_step(get_turf(user), dir), dir) // two tiles away
+		if(xcenter && !xcenter.density)
+			xslash_centers += xcenter
+	for(var/turf/xcenter in xslash_centers)
+		// X pattern: NE, NW, SE, SW from center
+		var/xslash_area = 1 // one tile out from center
+		var/xslash_damage = damage // use same damage as finale
+		var/xslash_delay = 0 // instant
+		var/xslash_dirs = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+		for(var/xdir in xslash_dirs)
+			var/turf/current_turf = xcenter
+			for(var/j = 1; j <= xslash_area; j++)
+				current_turf = get_step(current_turf, xdir)
+				if(!current_turf || current_turf.density)
+					break
+				new /obj/effect/temp_visual/trap(current_turf)
+				addtimer(CALLBACK(src, PROC_REF(do_finale_effect), current_turf, user, xslash_damage), xslash_start_delay)
+
+/obj/effect/proc_holder/spell/invoked/motivated_finale/proc/do_finale_effect(turf/affected_turf, mob/user, damage)
+	if(!src.slashing)
+		return
+	if(!affected_turf || affected_turf.density)
+		return
+	new /obj/effect/temp_visual/motivated_slash(affected_turf)
+	for(var/mob/living/L in affected_turf.contents)
+		L.adjustBruteLoss(damage)
+		playsound(affected_turf, "genslash", 80, TRUE)
+		to_chat(L, "<span class='userdanger'>You're cut by the sword! (Finale)")
+		var/knock_dir = get_dir(user, L)
+		if(knock_dir)
+			step(L, knock_dir)
+			to_chat(L, "<span class='userdanger'>You're knocked back by the force of the finale!")
+
+/obj/effect/proc_holder/spell/invoked/motivated_finale/proc/end_finale(mob/user)
+	src.slashing = FALSE
+
+
+
+
 
 
