@@ -1,5 +1,5 @@
 /datum/crafting_recipe/roguetown/survival/net
-    name = "net (2 ropes, 3 stones)"
+    name = "net"
     category = "Ranged"
     result = /obj/item/net
     craftdiff = 2
@@ -11,7 +11,7 @@
     verbage = "braids"
 
 /datum/crafting_recipe/roguetown/survival/bowstring
-    name = "fiber bowstring (2 fibers)"
+    name = "fiber bowstring"
     category = "Ranged"
     result = /obj/item/natural/bowstring
     reqs = list(/obj/item/natural/fibers = 2)
@@ -19,7 +19,7 @@
     verbage = "twists"
 
 /datum/crafting_recipe/roguetown/survival/bowpartial
-    name = "unstrung bow (1 small log)"
+    name = "unstrung bow"
     category = "Ranged"
     result = /obj/item/grown/log/tree/bowpartial
     reqs = list(/obj/item/grown/log/tree/small = 1)
@@ -28,7 +28,7 @@
     verbage = "carves"
 
 /datum/crafting_recipe/roguetown/survival/bow
-    name = "wooden bow (1 bowstring, 1 bowstave)"
+    name = "wooden bow"
     category = "Ranged"
     result = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
     reqs = list(
@@ -40,7 +40,7 @@
     craftdiff = 2
 
 /datum/crafting_recipe/roguetown/survival/recurvepartial
-    name = "unstrung recurve bow (1 log, 2 bones, 1 tallow, 2 fibers)"
+    name = "unstrung recurve bow"
     category = "Ranged"
     result = /obj/item/grown/log/tree/bowpartial/recurve
     reqs = list(
@@ -55,7 +55,7 @@
     craftdiff = 3
 
 /datum/crafting_recipe/roguetown/survival/recurvebow
-    name = "recurve bow (1 bowstring, 1 recurve bowstave)"
+    name = "recurve bow"
     category = "Ranged"
     result = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
     reqs = list(
@@ -67,7 +67,7 @@
     craftdiff = 3
 
 /datum/crafting_recipe/roguetown/survival/longbowpartial
-    name = "unstrung long bow (1 log, 1 cloth, 1 tallow, 2 fibers)"
+    name = "unstrung long bow"
     category = "Ranged"
     result = /obj/item/grown/log/tree/bowpartial/longbow
     reqs = list(
@@ -82,7 +82,7 @@
     craftdiff = 4
 
 /datum/crafting_recipe/roguetown/survival/longbow
-    name = "long bow (1 bowstring, 1 long bowstave)"
+    name = "long bow"
     category = "Ranged"
     result = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
     reqs = list(
@@ -94,7 +94,7 @@
     craftdiff = 4
 
 /datum/crafting_recipe/roguetown/survival/longbow_warden
-	name = "blackhorn longbow (1 yew longbow, 1 blackhorn bow)"
+	name = "blackhorn longbow"
 	category = "Ranged"
 	result = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden
 	reqs = list(
@@ -106,7 +106,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/survival/stonearrow
-    name = "stone arrow (1 stick, 1 stone)"
+    name = "stone arrow"
     category = "Ranged"
     result = /obj/item/ammo_casing/caseless/rogue/arrow/stone
     reqs = list(
@@ -116,7 +116,7 @@
     req_table = TRUE
 
 /datum/crafting_recipe/roguetown/survival/stonearrow_five
-    name = "stone arrow (x5) (5 sticks, 5 stones)"
+    name = "stone arrow (x5)"
     category = "Ranged"
     result = list(
         /obj/item/ammo_casing/caseless/rogue/arrow/stone,
@@ -132,7 +132,7 @@
     req_table = TRUE
 
 /datum/crafting_recipe/roguetown/survival/poisonarrow
-    name = "poisoned arrow (1 iron arrow, 5 stamina poison)"
+    name = "poisoned arrow"
     category = "Ranged"
     result = /obj/item/ammo_casing/caseless/rogue/arrow/poison
     reqs = list(
@@ -142,7 +142,7 @@
     req_table = TRUE
 
 /datum/crafting_recipe/roguetown/survival/poisonarrow_stone
-    name = "poisoned stone arrow (1 stone arrow, 5 stamina poison)"
+    name = "poisoned stone arrow"
     category = "Ranged"
     result = /obj/item/ammo_casing/caseless/rogue/arrow/stone/poison
     reqs = list(
@@ -152,7 +152,7 @@
     req_table = TRUE
 
 /datum/crafting_recipe/roguetown/survival/poisonarrow_five //Arrows and bolts can be smithed in batches of five. Makes sense for them to be dipped in batches of five, too
-    name = "poisoned arrow (x5) (5 iron arrows, 25 stamina poison)"
+    name = "poisoned arrow (x5)"
     category = "Ranged"
     result = list(
         /obj/item/ammo_casing/caseless/rogue/arrow/poison,
@@ -169,7 +169,7 @@
     req_table = TRUE
 
 /datum/crafting_recipe/roguetown/survival/poisonarrow_five_stone
-    name = "poisoned stone arrow (x5) (5 stone arrows, 25 stamina poison)"
+    name = "poisoned stone arrow (x5)"
     category = "Ranged"
     result = list(
         /obj/item/ammo_casing/caseless/rogue/arrow/stone/poison,
@@ -187,7 +187,7 @@
 
 
 /datum/crafting_recipe/roguetown/survival/waterbolt_ten
-    name = "water bolt (x10) (10 sticks, 1 glass shard)"
+    name = "water bolt (x10)"
     category = "Ranged"
     result = list(
         /obj/item/ammo_casing/caseless/rogue/bolt/water,
@@ -210,7 +210,7 @@
     skillcraft = /datum/skill/craft/engineering
 
 /datum/crafting_recipe/roguetown/survival/waterbolt_twenty
-    name = "water bolt (x20) (20 sticks, 2 glass shards)"
+    name = "water bolt (x20)"
     category = "Ranged"
     result = list(
         /obj/item/ammo_casing/caseless/rogue/bolt/water,
@@ -244,7 +244,7 @@
     skillcraft = /datum/skill/craft/engineering
 
 /datum/crafting_recipe/roguetown/survival/waterarrow_ten
-    name = "water arrow (x10) (10 sticks, 1 glass shard)"
+    name = "water arrow (x10)"
     category = "Ranged"
     result = list(
         /obj/item/ammo_casing/caseless/rogue/arrow/water,
@@ -267,7 +267,7 @@
     skillcraft = /datum/skill/craft/engineering
 
 /datum/crafting_recipe/roguetown/survival/waterarrow_twenty
-    name = "water arrow (x20) (20 sticks, 2 glass shards)"
+    name = "water arrow (x20)"
     category = "Ranged"
     result = list(
         /obj/item/ammo_casing/caseless/rogue/arrow/water,
@@ -300,16 +300,16 @@
     skillcraft = /datum/skill/craft/engineering
 
 /datum/crafting_recipe/roguetown/survival/slingcraft
-	name = "sling (6 fibers)"
+	name = "sling"
 	category = "Ranged"
 	result = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 	reqs = list(/obj/item/natural/fibers = 6)
 	verbage_simple = "twist"
 	verbage = "twists"
 	craftdiff = 1 //you should make some ammo first!
-	
+
 /datum/crafting_recipe/roguetown/survival/slingpouchcraft
-	name = "sling bullet pouch (1 cloth, 1 fiber)"
+	name = "sling bullet pouch"
 	category = "Ranged"
 	result = /obj/item/quiver/sling/
 	reqs = list(
@@ -321,7 +321,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/survival/stonebullets
-	name = "sling bullets - stone (x2) (2 stones)"
+	name = "sling bullets - stone (x2)"
 	category = "Ranged"
 	result = list(
 		/obj/item/ammo_casing/caseless/rogue/sling_bullet/stone,
@@ -331,9 +331,9 @@
 	verbage_simple = "smooth"
 	verbage = "smooths"
 	craftdiff = 0
-	
+
 /datum/crafting_recipe/roguetown/survival/stonebullets10x
-	name = "sling bullets - stone (x10) (10 stones)"
+	name = "sling bullets - stone (x10)"
 	category = "Ranged"
 	result = list(
 		/obj/item/ammo_casing/caseless/rogue/sling_bullet/stone,

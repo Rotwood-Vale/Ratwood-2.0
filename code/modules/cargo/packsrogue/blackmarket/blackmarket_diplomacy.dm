@@ -6,7 +6,7 @@
 /datum/supply_pack/rogue/blackmarket_diplomacy/smokebomb
 	name = "Smoke Bomb"
 	cost =	15
-	contains = list(/obj/item/smokebomb)
+	contains = list(/obj/item/bomb/smoke)
 
 /datum/supply_pack/rogue/blackmarket_diplomacy/bow
 	name = "Self Bow"

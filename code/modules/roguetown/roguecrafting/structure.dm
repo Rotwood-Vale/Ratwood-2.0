@@ -12,7 +12,7 @@
 	return ..()
 
 /datum/crafting_recipe/roguetown/structure/handcart
-	name = "handcart (3 small logs, 1 rope)"
+	name = "handcart"
 	result = /obj/structure/handcart
 	reqs = list(/obj/item/grown/log/tree/small = 3,
 				/obj/item/rope = 1)
@@ -20,7 +20,7 @@
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/noose
-	name = "noose (1 rope)"
+	name = "noose"
 	result = /obj/structure/noose
 	reqs = list(/obj/item/rope = 1)
 	verbage = "tie"
@@ -38,7 +38,7 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/structure/psycrss
-	name = "cross (3 stakes, 1 small log)"
+	name = "wooden cross"
 	result = /obj/structure/fluff/psycross/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/grown/log/tree/stake = 3)
@@ -46,7 +46,7 @@
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/psycruci
-	name = "psydonic cross (3 stakes, 1 small log)"
+	name = "wooden psydonic cross"
 	result = /obj/structure/fluff/psycross/psycrucifix
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/grown/log/tree/stake = 3)
@@ -54,14 +54,14 @@
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/stonepsycruci
-	name = "psydonic cross (3 stone)"
+	name = "stone psydonic cross"
 	result = /obj/structure/fluff/psycross/psycrucifix/stone
 	reqs =	list(/obj/item/natural/stone = 3)
 	verbage_simple = "construct"
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/silverpsycruci
-	name = "silver psydonic cross (1 blessed silver, 2 steel)"
+	name = "silver psydonic cross"
 	result = /obj/structure/fluff/psycross/psycrucifix/silver
 	reqs = list(/obj/item/ingot/silverblessed = 1,
 				/obj/item/ingot/steel = 2)
@@ -71,14 +71,15 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/structure/stonepsycrss
-	name = "cross (2 stone)"
+	name = "stone cross"
 	result = /obj/structure/fluff/psycross
 	reqs = list(/obj/item/natural/stone = 2)
 	verbage_simple = "construct"
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/zizo_shrine
-	name = "Profane Shrine (2 stone, 1 small log, 2 stakes)"
+	name = "Profane Shrine"
+	always_availible = FALSE	//Has unique assign for certain roles.
 	reqs = list(
 		/obj/item/grown/log/tree/small = 1,
 		/obj/item/natural/stone = 2,
@@ -87,7 +88,7 @@
 	result = /obj/structure/fluff/psycross/zizocross
 
 /datum/crafting_recipe/roguetown/structure/swing_door
-	name = "swing door (2 small logs)"
+	name = "swing door"
 	result = /obj/structure/mineral_door/swing_door
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	verbage_simple = "construct"
@@ -95,7 +96,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/door
-	name = "door (2 small logs)"
+	name = "wooden door"
 	result = /obj/structure/mineral_door/wood
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	verbage_simple = "construct"
@@ -103,7 +104,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/stonedoor
-	name = "door (2 stone)"
+	name = "stone door"
 	result = /obj/structure/mineral_door/wood/donjon/stone
 	reqs = list(/obj/item/natural/stone = 2)
 	verbage_simple = "build"
@@ -111,7 +112,7 @@
 	skillcraft = /datum/skill/craft/masonry
 
 /datum/crafting_recipe/roguetown/structure/doorbolt
-	name = "door (deadbolt) (2 small logs, 1 stick)"
+	name = "wooden door (deadbolt)"
 	result = /obj/structure/mineral_door/wood/deadbolt
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/grown/log/tree/stick = 1)
@@ -121,7 +122,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/fancydoor
-	name = "fancy door (2 small logs))"
+	name = "fancy door"
 	result = /obj/structure/mineral_door/wood/fancywood
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	verbage_simple = "construct"
@@ -130,7 +131,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/structure/barrel
-	name = "barrel (1 small log)"
+	name = "wooden barrel"
 	result = /obj/structure/fermentation_keg/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "make"
@@ -138,7 +139,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/display_stand
-	name = "display stand (2 small logs, 2 sticks)"
+	name = "display stand"
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/grown/log/tree/stick = 2)
 	result = /obj/structure/mannequin
 	verbage_simple = "construct"
@@ -147,7 +148,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/mannequin_female
-	name = "mannequin (female) (2 small logs, 2 sticks)"
+	name = "mannequin (female)"
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/grown/log/tree/stick = 2)
 	result = /obj/structure/mannequin/male/female
 	verbage_simple = "construct"
@@ -156,7 +157,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/mannequin_male
-	name = "mannequin (male) (2 small logs, 2 sticks)"
+	name = "mannequin (male)"
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/grown/log/tree/stick = 2)
 	result = /obj/structure/mannequin/male
 	verbage_simple = "construct"
@@ -168,7 +169,7 @@
 	sellprice = 6
 
 /datum/crafting_recipe/roguetown/structure/meathook
-	name = "meat hook (2 logs, 1 rope)"
+	name = "meat hook"
 	result = /obj/structure/meathook
 	reqs = list(/obj/item/grown/log/tree = 2,
 				/obj/item/rope = 1)
@@ -178,7 +179,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/roguebin
-	name = "bin (2 small logs)"
+	name = "wooden bin"
 	result = /obj/item/roguebin
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	verbage_simple = "make"
@@ -187,7 +188,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/chair
-	name = "chair (1 small log)"
+	name = "wooden chair"
 	result = /obj/item/chair/rogue/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "construct"
@@ -199,7 +200,7 @@
 	sellprice = 6
 
 /datum/crafting_recipe/roguetown/structure/parkbenchleft
-	name = "park bench (left) (1 small log)"
+	name = "park bench (left)"
 	result = /obj/structure/chair/hotspring_bench/left
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "construct"
@@ -207,7 +208,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/parkbenchmiddle
-	name = "park bench (middle) (1 small log)"
+	name = "park bench (middle)"
 	result = /obj/structure/chair/hotspring_bench
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "construct"
@@ -215,7 +216,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/parkbenchright
-	name = "park bench (right) (1 small log)"
+	name = "park bench (right)"
 	result = /obj/structure/chair/hotspring_bench/right
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "construct"
@@ -223,7 +224,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/fancychair
-	name = "fancy wooden chair (1 small log, 1 silk)"
+	name = "fancy wooden chair"
 	result = /obj/item/chair/rogue/fancy/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/silk = 1)
@@ -235,7 +236,7 @@
 	sellprice = 12
 
 /datum/crafting_recipe/roguetown/structure/stool
-	name = "stool (1 small log)"
+	name = "wooden stool"
 	result = /obj/item/chair/stool/bar/rogue/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	skillcraft = /datum/skill/craft/carpentry
@@ -246,7 +247,7 @@
 	sellprice = 6
 
 /datum/crafting_recipe/roguetown/structure/anvil
-	name = "anvil (1 iron)"
+	name = "anvil"
 	result = /obj/machinery/anvil
 	reqs = list(/obj/item/ingot/iron = 1)
 	skillcraft = /datum/skill/craft/blacksmithing
@@ -254,7 +255,7 @@
 	verbage = "forges"
 
 /datum/crafting_recipe/roguetown/structure/smelter
-	name = "ore furnace (4 stone, 1 coal)"
+	name = "ore furnace"
 	result = /obj/machinery/light/rogue/smelter
 	reqs = list(/obj/item/natural/stone = 4,
 			/obj/item/rogueore/coal = 1)
@@ -263,7 +264,7 @@
 	craftsound = null
 
 /datum/crafting_recipe/roguetown/structure/smelterhiron
-	name = "iron bloomery (7 stone, 2 coal, 1 iron)"
+	name = "iron bloomery"
 	result = /obj/machinery/light/rogue/smelter/hiron
 	reqs = list(/obj/item/natural/stone = 7,
 			/obj/item/rogueore/coal = 2,
@@ -273,7 +274,7 @@
 	craftsound = null
 
 /datum/crafting_recipe/roguetown/structure/smelterbronze
-	name = "bronze melter (6 stone, 1 coal, 1 iron, 6 stone)"
+	name = "bronze melter"
 	result = /obj/machinery/light/rogue/smelter/bronze
 	reqs = list(/obj/item/natural/stone = 6,
 			/obj/item/rogueore/coal = 1,
@@ -283,7 +284,7 @@
 	craftsound = null
 
 /datum/crafting_recipe/roguetown/structure/greatsmelter
-	name = "great furnace (2 iron, 1 riddle of steel, 1 coal)"
+	name = "great furnace"
 	result = /obj/machinery/light/rogue/smelter/great
 	reqs = list(/obj/item/ingot/iron = 2,
 				/obj/item/riddleofsteel = 1,
@@ -294,7 +295,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/forge
-	name = "forge (4 stone, 1 coal)"
+	name = "forge"
 	result = /obj/machinery/light/rogue/forge
 	reqs = list(/obj/item/natural/stone = 4,
 				/obj/item/rogueore/coal = 1)
@@ -303,7 +304,7 @@
 	craftsound = null
 
 /datum/crafting_recipe/roguetown/structure/sharpwheel
-	name = "sharpening wheel (1 iron, 1 stone)"
+	name = "sharpening wheel"
 	result = /obj/structure/fluff/grindwheel
 	reqs = list(/obj/item/ingot/iron = 1,
 				/obj/item/natural/stone = 1)
@@ -322,7 +323,7 @@
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/loom
-	name = "loom (2 small logs, 2 sticks, 2 fibers)"
+	name = "loom"
 	result = /obj/machinery/loom
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/grown/log/tree/stick = 2,
@@ -332,7 +333,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/alch
-	name = "alchemy station (2 cloth, 4 stone, 1 small log)"
+	name = "alchemy station"
 	result = /obj/structure/fluff/alch
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/stone = 4,
@@ -343,7 +344,7 @@
 	verbage = "assembles"
 
 /datum/crafting_recipe/roguetown/structure/dyestation
-	name = "dye station (2 stone)"
+	name = "dye station"
 	result = /obj/machinery/gear_painter
 	reqs = list(/obj/item/natural/stone = 2)
 	verbage_simple = "make"
@@ -380,7 +381,7 @@
 	return TRUE
 */
 /datum/crafting_recipe/roguetown/structure/stairsd
-	name = "stairs (down) (2 small logs)"
+	name = "wooden stairs (down)"
 	result = /obj/structure/stairs/d
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	skillcraft = /datum/skill/craft/carpentry
@@ -410,7 +411,7 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/structure/stonestairsd
-	name = "stairs (down) (2 stone)"
+	name = "stone stairs (down)"
 	result = /obj/structure/stairs/stone/d
 	reqs = list(/obj/item/natural/stone = 2)
 	skillcraft = /datum/skill/craft/masonry
@@ -440,7 +441,7 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/structure/bordercorner
-	name = "border corner (1 small log)"
+	name = "border corner"
 	result = /obj/structure/fluff/railing/corner
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	ontile = TRUE
@@ -452,7 +453,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/structure/border
-	name = "border (1 small log)"
+	name = "border"
 	result = /obj/structure/fluff/railing/border
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	ontile = TRUE
@@ -463,7 +464,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/structure/railing
-	name = "railing (1 small log)"
+	name = "railing"
 	result = /obj/structure/fluff/railing/wood
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	ontile = TRUE
@@ -473,7 +474,7 @@
 	buildsame = TRUE
 
 /datum/crafting_recipe/roguetown/structure/fence
-	name = "palisade (stake x2)"
+	name = "palisade"
 	result = /obj/structure/fluff/railing/fence
 	reqs = list(/obj/item/grown/log/tree/stake = 2)
 	ontile = TRUE
@@ -482,7 +483,7 @@
 	buildsame = TRUE
 
 /datum/crafting_recipe/roguetown/structure/headstake
-	name = "head stake (1 stake, 1 head)"
+	name = "head stake"
 	result = /obj/structure/fluff/headstake
 	reqs = list(/obj/item/grown/log/tree/stake = 1,
 				/obj/item/bodypart/head = 1)
@@ -494,7 +495,7 @@
 
 
 /datum/crafting_recipe/roguetown/structure/fencealt
-	name = "palisade (1 small log)"
+	name = "palisade"
 	result = /obj/structure/fluff/railing/fence
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	ontile = TRUE
@@ -503,7 +504,7 @@
 	buildsame = TRUE
 
 /datum/crafting_recipe/roguetown/structure/rack
-	name = "rack (3 sticks)"
+	name = "rack"
 	result = /obj/structure/rack/rogue
 	reqs = list(/obj/item/grown/log/tree/stick = 3)
 	verbage_simple = "construct"
@@ -511,7 +512,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/chest
-	name = "chest (1 small log)"
+	name = "chest"
 	result = /obj/structure/closet/crate/chest/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "construct"
@@ -524,7 +525,7 @@
 	sellprice = 6
 
 /datum/crafting_recipe/roguetown/structure/closet
-	name = "closet (2 small logs)"
+	name = "closet"
 	result = /obj/structure/closet/crate/roguecloset
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	verbage_simple = "construct"
@@ -532,7 +533,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/coffin
-	name = "coffin (2 small logs)"
+	name = "wooden coffin"
 	result = /obj/structure/closet/crate/coffin
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	verbage_simple = "construct"
@@ -544,7 +545,7 @@
 	sellprice = 6
 
 /datum/crafting_recipe/roguetown/structure/campfire
-	name = "campfire (2 sticks)"
+	name = "campfire"
 	result = /obj/machinery/light/rogue/campfire
 	reqs = list(/obj/item/grown/log/tree/stick = 2)
 	verbage_simple = "build"
@@ -552,7 +553,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/densefire
-	name = "greater campfire (2 sticks, 2 stone)"
+	name = "greater campfire"
 	result = /obj/machinery/light/rogue/campfire/densefire
 	reqs = list(/obj/item/grown/log/tree/stick = 2,
 				/obj/item/natural/stone = 2)
@@ -560,7 +561,7 @@
 	verbage = "builds"
 
 /datum/crafting_recipe/roguetown/structure/cookpit
-	name = "hearth (1 stick, 3 stone)"
+	name = "hearth"
 	result = /obj/machinery/light/rogue/hearth
 	reqs = list(/obj/item/grown/log/tree/stick = 1,
 				/obj/item/natural/stone = 3)
@@ -568,7 +569,7 @@
 	verbage = "builds"
 
 /datum/crafting_recipe/roguetown/structure/brazier
-	name = "brazier (1 small log, 1 coal)"
+	name = "brazier"
 	result = /obj/machinery/light/rogue/firebowl/stump
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/rogueore/coal = 1)
@@ -576,7 +577,7 @@
 	verbage = "assembles"
 
 /datum/crafting_recipe/roguetown/structure/standing
-	name = "standing fire (1 stone, 1 coal)"
+	name = "standing fire"
 	result = /obj/machinery/light/rogue/firebowl/standing
 	reqs = list(/obj/item/natural/stone = 1,
 				/obj/item/rogueore/coal = 1)
@@ -584,7 +585,7 @@
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/standingblue
-	name = "standing blue fire (1 stone, 1 coal, 1 ash)"
+	name = "standing blue fire"
 	result = /obj/machinery/light/rogue/firebowl/standing/blue
 	reqs = list(/obj/item/natural/stone = 1,
 				/obj/item/rogueore/coal = 1,
@@ -593,7 +594,7 @@
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/oven
-	name = "oven (1 small log, 3 stone)"
+	name = "oven"
 	result = /obj/machinery/light/rogue/oven
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/stone = 3)
@@ -603,7 +604,7 @@
 	wallcraft = TRUE
 
 /datum/crafting_recipe/roguetown/structure/tanningrack
-	name = "drying rack (3 sticks)"
+	name = "drying rack"
 	result = /obj/machinery/tanningrack
 	reqs = list(/obj/item/grown/log/tree/stick = 3)
 	verbage_simple = "construct"
@@ -611,7 +612,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/strawbed
-	name = "bed, straw (1 small log, 1 fiber)"
+	name = "bed, straw"
 	result = /obj/structure/bed/rogue/shit
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/fibers = 1)
@@ -621,7 +622,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/bed
-	name = "bed, nice (2 small logs, 2 cloth)"
+	name = "bed, nice"
 	result = /obj/structure/bed/rogue/inn
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/natural/cloth = 2)
@@ -632,7 +633,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/structure/woolbed
-	name = "bed, wood (2 small logs, 1 cloth)"
+	name = "bed, wood"
 	result = /obj/structure/bed/rogue/inn/wool
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/natural/cloth = 1)
@@ -643,7 +644,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/structure/doublebed
-	name = "bed, double (3 small logs, 4 cloth)"
+	name = "bed, double"
 	result = /obj/structure/bed/rogue/inn/double
 	reqs = list(/obj/item/grown/log/tree/small = 3,
 				/obj/item/natural/cloth = 4)
@@ -655,7 +656,7 @@
 
 
 /datum/crafting_recipe/roguetown/structure/wooldoublebed
-	name = "bed, double wool (3 small logs, 3 cloth)"
+	name = "bed, double wool"
 	result = /obj/structure/bed/rogue/inn/wooldouble
 	reqs = list(/obj/item/grown/log/tree/small = 3,
 				/obj/item/natural/cloth = 3)
@@ -666,7 +667,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/table
-	name = "table (1 small log)"
+	name = "wooden table"
 	result = /obj/structure/table/wood/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "construct"
@@ -674,7 +675,7 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/operatingtable
-	name = "operating table (2 small logs)"
+	name = "operating table"
 	result = /obj/structure/table/optable
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	verbage_simple = "construct"
@@ -683,7 +684,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/stonetable
-	name = "table (1 stone)"
+	name = "stone table"
 	result = /obj/structure/table/church
 	reqs = list(/obj/item/natural/stone = 1)
 	verbage_simple = "build"
@@ -691,7 +692,7 @@
 	skillcraft = /datum/skill/craft/masonry
 
 /datum/crafting_recipe/roguetown/structure/millstone
-	name = "millstone (3 stone)"
+	name = "millstone"
 	result = /obj/item/millstone
 	reqs = list(/obj/item/natural/stone = 3)
 	verbage = "assembles"
@@ -725,7 +726,7 @@
 
 
 /datum/crafting_recipe/roguetown/structure/sign
-	name = "custom sign (1 small log)"
+	name = "custom sign"
 	result = /obj/structure/fluff/customsign
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "construct"
@@ -734,7 +735,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/structure/dummy
-	name = "training dummy (1 small log, 1 stick, 1 fiber)"
+	name = "training dummy"
 	result = /obj/structure/fluff/statue/tdummy
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/grown/log/tree/stick = 1,
@@ -747,7 +748,7 @@
 
 
 /datum/crafting_recipe/roguetown/structure/wallladder
-	name = "wall ladder (1 small log)"
+	name = "wall ladder"
 	result = /obj/structure/wallladder
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "construct"
@@ -757,7 +758,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/torchholder
-	name = "sconce (2 stone)"
+	name = "sconce"
 	result = /obj/machinery/light/rogue/torchholder
 	reqs = list(/obj/item/natural/stone = 2)
 	verbage_simple = "build"
@@ -767,7 +768,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/stonelantern
-	name = "lantern on ground (2 stone)"
+	name = "stone lantern on ground"
 	result = /obj/machinery/light/rogue/torchholder/hotspring
 	reqs = list(/obj/item/natural/stone = 2)
 	verbage_simple = "build"
@@ -776,7 +777,7 @@
 	skillcraft = /datum/skill/craft/masonry
 
 /datum/crafting_recipe/roguetown/structure/stonelanternstanding
-	name = "lantern standing (2 stone)"
+	name = "stone lantern standing"
 	result = /obj/machinery/light/rogue/torchholder/hotspring/standing
 	reqs = list(/obj/item/natural/stone = 2)
 	verbage_simple = "build"
@@ -785,7 +786,7 @@
 	skillcraft = /datum/skill/craft/masonry
 
 /datum/crafting_recipe/roguetown/structure/wallcandle
-	name = "wall candles (1 stone, 1 yellow candle)"
+	name = "wall candles"
 	result = /obj/machinery/light/rogue/wallfire/candle
 	reqs = list(/obj/item/natural/stone = 1, /obj/item/candle/yellow = 1)
 	verbage_simple = "build"
@@ -795,7 +796,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/wallcandleblue
-	name = "wall candles blue (1 stone, 1 yellow candle, 1 ash)"
+	name = "wall candles blue"
 	result = /obj/machinery/light/rogue/wallfire/candle/blue
 	reqs = list(/obj/item/natural/stone = 1, /obj/item/candle/yellow = 1, /obj/item/ash = 1)
 	verbage_simple = "build"
@@ -805,7 +806,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/stonewalldeco
-	name = "wall decoration (1 stone)"
+	name = "stone wall decoration"
 	result = /obj/structure/fluff/walldeco/stone
 	reqs = list(/obj/item/natural/stone = 1)
 	verbage_simple = "build"
@@ -815,7 +816,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/statue
-	name = "statue (3 stone)"
+	name = "statue"
 	result = /obj/structure/fluff/statue/femalestatue //TODO: Add sculpting
 	reqs = list(/obj/item/natural/stone = 3)
 	verbage_simple = "build"
@@ -824,7 +825,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/structure/scom
-	name = "SCOM (1 iron, 1 rat)"
+	name = "SCOM"
 	result = /obj/structure/roguemachine/scomm
 	reqs = list(/obj/item/ingot/iron = 1,
 					/obj/item/reagent_containers/food/snacks/smallrat = 1)
@@ -836,7 +837,7 @@
 	ontile = TRUE
 
 /datum/crafting_recipe/roguetown/structure/cauldronalchemy
-	name = "alchemy cauldron (1 iron)"
+	name = "alchemy cauldron"
 	result = /obj/machinery/light/rogue/cauldron
 	reqs = list(/obj/item/ingot/iron = 1)
 	verbage_simple = "assemble"
@@ -845,7 +846,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/structure/ceramicswheel
-	name = "potter's wheel (2 stone, 2 small logs, 1 cog)"
+	name = "potter's wheel"
 	result = /obj/structure/fluff/ceramicswheel
 	reqs = list(/obj/item/natural/stone = 2, /obj/item/grown/log/tree/small = 2, /obj/item/roguegear/bronze = 1)
 	verbage_simple = "construct"
@@ -853,31 +854,31 @@
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/bearrug
-	name = "bearpelt rug (1 direbear fur, 1 direbear head)"
+	name = "bearpelt rug"
 	result = /obj/structure/bearpelt
 	reqs = list(/obj/item/natural/fur/direbear = 2, /obj/item/natural/head/direbear = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/foxrug
-	name = "foxpelt rug (2 fox fur, 1 fox head)"
+	name = "foxpelt rug"
 	result = /obj/structure/foxpelt
 	reqs = list(/obj/item/natural/fur/fox = 2, /obj/item/natural/head/fox = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/bobcatrug
-	name = "lynxpelt rug (2 lynx fur)"
+	name = "lynxpelt rug"
 	result = /obj/structure/bobcatpelt
 	reqs = list(/obj/item/natural/fur/bobcat = 2)	//Gives no head for lynx, plus it's the smallest rug anyway.
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/curtain
-	name = "curtain (2 cloth)"
+	name = "curtain"
 	result = /obj/structure/curtain
 	reqs = list(/obj/item/natural/cloth = 2)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/apiary
-	name = "apiary (2 small logs, 4 sticks)"
+	name = "apiary"
 	result = /obj/structure/apiary
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/grown/log/tree/stick = 4)
 	verbage_simple = "build"
@@ -887,7 +888,7 @@
 
 // Here for now until we get a new file for anything trap related.
 /datum/crafting_recipe/roguetown/structure/spike_pit
-	name = "spike pit (3 stakes)"
+	name = "spike pit"
 	result = list(/obj/structure/spike_pit)
 	tools = list(/obj/item/rogueweapon/shovel = 1)
 	reqs = list(/obj/item/grown/log/tree/stake = 3)
@@ -906,7 +907,7 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/structure/wicker
-	name = "wicker basket (4 sticks, 3 fibers)"
+	name = "wicker basket"
 	result = /obj/structure/closet/crate/chest/wicker
 	reqs = list(/obj/item/grown/log/tree/stick = 4,
 				/obj/item/natural/fibers = 3)
@@ -915,7 +916,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/noose
-	name = "noose (1 rope)"
+	name = "noose"
 	result = /obj/structure/noose
 	reqs = list(/obj/item/rope = 1)
 	craftdiff = 1
@@ -934,7 +935,7 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/structure/gallows
-	name = "gallows (1 rope, 2 small logs)"
+	name = "gallows"
 	result = /obj/structure/noose/gallows
 	reqs = list(/obj/item/rope = 1, /obj/item/grown/log/tree/small = 2)
 	craftdiff = 2

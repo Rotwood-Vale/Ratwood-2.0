@@ -114,6 +114,7 @@
 #define TRAIT_PSYDONIAN_GRIT "Psydonian Grit" // Pain Tolerance. Through faith, ENDURE.
 #define TRAIT_PSYDONITE "Psydonite's Devotion" // Anti-Miracles on a selective basis, anastasis / cure rot still apply. Slow passive wound healing while you have blood.
 #define TRAIT_BLACKBAGGER "Apprehension Techniques" // Capable of using Garrotes and Blackbags. Apprehension techniques.
+#define TRAIT_RESONANCE "Resonance Caster"//Casting miracles will buff nearby miraclists. Or, would, had I finished it. Instead it applies fortify in an AoE. - Carl
 
 // PATRON GOD CURSES
 
@@ -324,7 +325,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_COUNTERCOUNTERSPELL = span_info("I automatically know when to counter Counterspells, and can do so without even thinking about it."),
 	TRAIT_UNSEEMLY = span_info("My face is ugly and makes everyone who looks at me miserable."),
 	TRAIT_HERETIC_SEER = span_info("I can tell other Ascendant followers without sharing their faith."),
-	TRAIT_DUALWIELDER = span_info("If I wield two identical weapons, I  roll twice for my attacks, and so will the enemy against me. I do not suffer penalties from using my off-hand in combat."),
+	TRAIT_DUALWIELDER = span_info("If I wield two weapons of the same type, I roll a 50% chance to attack with them both simultaneously. I suffer a disadvantage when attempting to parry. I do not suffer penalties from using my off-hand in combat."),
 	TRAIT_SENTINELOFWITS = span_info("My Intelligence aids in my defense. Every 2 points above 10 INT become an additional 10% chance to dodge or parry. Does not count positive buffs from potions or substances."),
 	TRAIT_KEENEARS = span_info("I've a good pair of ears, and can tell who is speaking, even when they're out of sight. I can also hear whispers from further away."),
 	TRAIT_SCREENSHAKE = span_suicide("I don't feel very steady anymore..."),
@@ -398,7 +399,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_HELLSPAWN = span_warning("My bloodline affords me an inherent resistance to catching ablaze."),
 	TRAIT_WING_BOUND = span_info("The wings upon my back allow me to glide. Poorly. Falls will be less painful, but still not ideal."),
 	TRAIT_DWARF_REPAIR = span_info("Never again will there be a people like ours. Repairs come easy to me."),
-	TRAIT_DRUNK_HEALING = span_info("A little drinking never hurt!")
+	TRAIT_DRUNK_HEALING = span_info("A little drinking never hurt!"),
+	TRAIT_RESONANCE = span_suppradio("My miracles will <b><u>fortify</u></b> others nearby.")
 ))
 
 // trait accessor defines

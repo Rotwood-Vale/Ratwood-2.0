@@ -41,7 +41,7 @@
 							/obj/effect/decal/remains/bear = 1,
 							/obj/effect/decal/remains/human = 1,
 							/obj/structure/zizo_bane = 3,
-							/obj/structure/flora/roguegrass/maneater/real = 2)
+							/obj/structure/flora/roguegrass/maneater/real/juvenile = 2)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=5,
 						/turf/open/water/swamp=5,
 						/turf/open/floor/rogue/grass = 20)
@@ -63,7 +63,7 @@
 							/obj/structure/flora/roguegrass/bush = 20,
 							/obj/structure/flora/roguegrass = 180,
 							/obj/structure/flora/roguegrass/maneater = 15,
-							/obj/structure/flora/roguegrass/maneater/real = 5,
+							/obj/structure/flora/roguegrass/maneater/real/juvenile = 5,
 							/obj/item/natural/stone = 12,
 							/obj/item/natural/rock = 5,
 							/obj/item/grown/log/tree/stick = 6,

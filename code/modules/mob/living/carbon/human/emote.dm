@@ -121,8 +121,6 @@
 
 /datum/emote/living/carbon/human/wag
 	key = "wag"
-	key_third_person = "wags"
-	message = "wags their tail."
 
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -130,11 +128,11 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(!H.dna.species.is_wagging_tail(H))
+		H.visible_message(span_biginfo("<span style='color:#[H.voice_color];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>[H]</b></span><span style='color: #c9c1ba;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> wags [H.p_their()] tail.</span>"), runechat_message = "wags [H.p_their()] tail")
 		H.dna.species.start_wagging_tail(H)
-		message = "stops wagging [H.p_their()] tail"
 	else
+		H.visible_message(span_biginfo("<span style='color:#[H.voice_color];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>[H]</b></span></span><span style='color: #c9c1ba;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> stops wagging [H.p_their()] tail.</span>"), runechat_message = "stops wagging [H.p_their()] tail")
 		H.dna.species.stop_wagging_tail(H)
-		message = "wags [H.p_their()] tail."
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE , intentional)
 	if(!..())

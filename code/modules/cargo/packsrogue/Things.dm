@@ -108,4 +108,4 @@
 /datum/supply_pack/rogue/Things/smokebomb
 	name = "Smoke Bomb"
 	cost = 30
-	contains = list(/obj/item/smokebomb)
+	contains = list(/obj/item/bomb/smoke)

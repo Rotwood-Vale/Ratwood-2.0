@@ -1,4 +1,4 @@
-// Deleted the flavorful desc from Vanderlin until I can think of a better desc. 
+// Deleted the flavorful desc from Vanderlin until I can think of a better desc.
 /obj/item/recipe_book/leatherworking
 	name = "The Tanned Hide Tome: Mastery of Leather and Craft"
 	icon_state = "book8_0"
@@ -6,7 +6,7 @@
 
 	types = list(
 	/datum/crafting_recipe/roguetown/tallow,
-	/datum/crafting_recipe/roguetown/leather, 		
+	/datum/crafting_recipe/roguetown/leather,
 	)
 
 /obj/item/recipe_book/sewing
@@ -16,7 +16,6 @@
 
 	types = list(
 		/datum/crafting_recipe/roguetown/survival/cloth, // Screw it just in case
-		/datum/crafting_recipe/roguetown/survival/cloth5x,
 		/datum/crafting_recipe/roguetown/sewing,
 		)
 
@@ -35,9 +34,9 @@
 	types = list(/datum/crafting_recipe/roguetown/engineering)
 
 // I gave up I will make better names later lol
-// Was gonna do a carpenter + masonry handbook but 
+// Was gonna do a carpenter + masonry handbook but
 // Both are under structures so I will just make them one and add categories
-// Later 
+// Later
 /obj/item/recipe_book/builder
 	name = "The Builder's Handbook - For Carpenters and Masons"
 	icon_state = "book5_0"
@@ -84,7 +83,7 @@
 		/datum/alch_grind_recipe,
 		/datum/alch_cauldron_recipe
 		)
- 
+
 /obj/item/recipe_book/cooking
 	name = "The Culinary Codex"
 	desc = "A book full of recipes and tips for cooking. This version looks very incomplete, and only contain brewing recipes. Perhaps it will be filled in later?"

@@ -605,7 +605,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		Alcohol consumed: [GLOB.azure_round_stats[STATS_ALCOHOL_CONSUMED]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_ALCOHOL_CONSUMED))])<br>\
 		Number of alcoholics: [GLOB.azure_round_stats[STATS_ALCOHOLICS]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_ALCOHOLICS))])<br>\
 		Number of junkies: [GLOB.azure_round_stats[STATS_JUNKIES]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_JUNKIES))])<br>\
-		Number of knottings: [GLOB.azure_round_stats[STATS_KNOTTED]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_KNOTTED))])", baotha_storyteller)
+		Non-Lupian knottings: [GLOB.azure_round_stats[STATS_KNOTTED_NOT_LUPIANS]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_KNOTTED_NOT_LUPIANS))])", baotha_storyteller)
 
 	// Matthios
 	data += god_ui_block("MATTHIOS", "#3d1301", "#ddbb99", "\
@@ -1456,6 +1456,25 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		verbs += /client/proc/self_notes
 	if(CONFIG_GET(flag/use_exp_tracking))
 		verbs += /client/proc/self_playtime
+
+/**
+ * Ensures the OOC verb is only present for lobby (new_player) mobs or admins.
+ * Call this whenever the client's mob changes (e.g. after Login(), late-join, ghostize, etc.).
+ */
+/client/proc/update_ooc_verb_visibility()
+	// If admin (holder) always keep OOC for moderation.
+	if(holder)
+		if(!( /client/verb/ooc in verbs))
+			verbs += /client/verb/ooc
+		return
+
+	// Non-admins: only lobby new_player retains OOC verb.
+	if(istype(mob, /mob/dead/new_player))
+		if(!( /client/verb/ooc in verbs))
+			verbs += /client/verb/ooc
+	else
+		if(/client/verb/ooc in verbs)
+			verbs -= /client/verb/ooc
 
 
 #undef UPLOAD_LIMIT

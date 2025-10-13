@@ -156,6 +156,12 @@
 /turf/closed/mineral/attack_animal(mob/living/simple_animal/user)
 	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		gets_drilled(user)
+	if(user.can_mine && do_after(user, CLICK_CD_MELEE))
+		playsound(src,'sound/combat/hits/onstone/wallhit.ogg', 600, TRUE, 10)
+		visible_message(span_warning("[user] smashes [src]!"))
+		turf_integrity -= 500
+		if(turf_integrity <= 0)
+			gets_drilled(user)
 	..()
 
 /turf/closed/mineral/acid_melt()

@@ -367,7 +367,7 @@
 
 /datum/reagent/starsugar/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
 	L.playsound_local(L, 'sound/ravein/small/hello_my_friend.ogg', 100, FALSE)
 	L.flash_fullscreen("whiteflash")
 	animate(L.client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)

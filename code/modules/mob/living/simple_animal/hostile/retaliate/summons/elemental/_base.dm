@@ -1,5 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental
 	obj_damage = 75
+	can_mine = TRUE
+	speak_emote = list("crackles")
 
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/Initialize()
 	. = ..()

@@ -46,6 +46,11 @@
 		to_chat(src, span_danger("I cannot use LOOC while dead."))
 		return
 
+	// Lobby restriction: disable LOOC for normal players still in the lobby (new_player)
+	if(!holder && istype(mob, /mob/dead/new_player))
+		to_chat(src, span_danger("I cannot use LOOC while in the lobby. Join the round or observe first."))
+		return
+
 	if(!mob)
 		return
 
@@ -96,4 +101,4 @@
 			else if(speakturf in get_hear(7, sourceturf))
 				to_chat(C, "<font color='["#6699CC"]'><b><span class='prefix'>[prefix]:</span> <EM>[src.mob.name][added_text]:</EM> <span class='message'>[msg]</span></b></font>")
 			else if(is_admin == 1)
-				to_chat(C, "<font color='["#6699CC"]'><b>(R) <span class='prefix'>[prefix]:</span> <EM>[src.mob.name][added_text]:</EM> <span class='message'>[msg]</span></b></font>")
+				to_chat(C, "<font color='["#003458"]'><b>(R) <span class='prefix'>[prefix]:</span> <EM>[src.mob.name][added_text]:</EM> <span class='message'>[msg]</span></b></font>")

@@ -233,7 +233,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		log_seen(src, null, hearers, (log_seen_msg ? log_seen_msg : message), log_seen)
 
 /**
- * Show a message to all mobs in a vertical plane around the source atom. 
+ * Show a message to all mobs in a vertical plane around the source atom.
  * Only use this for cases where the action being done is important enough to ignore z level / LOS.
  * vars:
  * * message is the message output. Keep in mind that its end will be appended with "Far Above / Above / Below / Far Below" & "North / East / West / South" etc
@@ -258,7 +258,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		if(!is_in_zweb(src.z,M.z))
 			continue
 		listening |= M
-	
+
 	for(var/mob/living/L in listening)
 		var/strz
 		var/strdir
@@ -815,27 +815,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 		if(7)
 			days = "SUN'S DAE"
 
-	if(client && client.holder)
-		if(statpanel("Status"))
-			if (client)
-				stat(null, "PING: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-			stat(null, "MAP: [SSmapping.config?.map_name || "Loading..."]")
-			var/datum/map_config/cached = SSmapping.next_map_config
-			if(cached)
-				stat(null, "Next Map: [cached.map_name]")
-			stat(null, "ROUND ID: [GLOB.rogue_round_id ? GLOB.rogue_round_id : "NULL"]")
-//			stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-			stat(null, "ROUND TIME: [time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0)] [world.time - SSticker.round_start_time]")
-			if(SSgamemode.roundvoteend)
-				stat("ROUND END: [DisplayTimeText(time_left)]")
-			stat(null, "ROUND TrueTime: [worldtime2text()] [world.time]")
-			stat(null, "TIMEOFDAY: [days] ᛉ [uppertext(GLOB.tod)] ᛉ [station_time_timestamp("hh:mm")]")
-			stat(null, "IC Time: [station_time_timestamp()] [station_time()]")
-			stat(null, "TIME DILATION: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
-			if(check_rights(R_ADMIN,0))
-				stat(null, SSmigrants.get_status_line())
-				stat(null, "Player count: [GLOB.clients.len]")
-
 	if(client)
 		if(statpanel("RoundInfo"))
 			stat("ROUND ID: [GLOB.rogue_round_id]")
@@ -843,7 +822,19 @@ GLOBAL_VAR_INIT(mobids, 1)
 			if(SSgamemode.roundvoteend)
 				stat("ROUND END: [DisplayTimeText(time_left)]")
 			stat("DAY OF WEEK: [days]" )
-			stat("TIME OF DAY: [uppertext(GLOB.tod)] ᛉ [station_time_timestamp("hh")]")
+			if(client?.holder)
+				stat("Round TrueTime: [worldtime2text()] [world.time]")
+			stat("Map: [SSmapping.config?.map_name || "Loading..."]")
+			var/datum/map_config/cached = SSmapping.next_map_config
+			if(cached)
+				stat("Next Map: [cached.map_name]")
+			stat("Time of Day: [GLOB.tod]")
+			if(client?.holder)
+				stat("Real Time: [station_time_timestamp()] [station_time()]")
+			stat("Ping: [round(client?.lastping, 1)]ms (Average: [round(client?.avgping, 1)]ms)")
+			stat("Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG: ([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
+			if(client?.holder)
+				stat(null, "Player count: [GLOB.clients.len]")
 
 	if(client && client.holder && check_rights(R_DEBUG,0))
 		if(statpanel("MC"))

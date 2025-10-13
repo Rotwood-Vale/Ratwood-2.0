@@ -43,7 +43,6 @@
 			beltr = /obj/item/rogueweapon/scabbard/sword
 			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
 			l_hand = /obj/item/rogueweapon/shield/buckler
-	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/clothing/neck/roguetown/gorget
@@ -83,7 +82,7 @@
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)//Now you actually get your fabled axe skill
+	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)	//Now you actually get your fabled axe skill
 	H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
@@ -102,7 +101,6 @@
 			r_hand = /obj/item/rogueweapon/halberd
 		if("Partizan")
 			r_hand = /obj/item/rogueweapon/spear/partizan
-	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/clothing/neck/roguetown/gorget
@@ -128,7 +126,7 @@
 	name = "Armbrustschutze"
 	tutorial = "You're a proved marksman with a crossbow, and learned how to set up camp and defenses in the wild. The guild needs you."
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_crossbowman
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_STEELHEARTED)	//THANK YOU AP FOR GIVING THEM DODGE EXPERT AND IGNORING THE FIRST LINE WHERE IT SAYS NO DODGE EXPERT
 	subclass_stats = list(
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 2,
@@ -151,11 +149,12 @@
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)		// Make your energy count, little silly individual
-	H.adjust_skillrank(/datum/skill/labor/butchering, 2, TRUE)		// meant to live off the land and set up camp.
+	H.adjust_skillrank(/datum/skill/labor/butchering, 3, TRUE)		// meant to live off the land and set up camp.
 	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)		// learn 2 maintain your uniform.
-	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)		// Just so you don't suck at cooking
+	H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)		// Just so you don't suck at cooking. Fuck it. You get 2. Be a souschef.
 	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 2, TRUE)	
+	H.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)	// crafting for pallisades, lumberjacking for not fucking up wood
 	beltr = /obj/item/quiver/bolts
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel
@@ -167,7 +166,6 @@
 			armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light	// find a smithy to fix it
 		if("Studded Leather Vest")
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/studded		// or maintain it yourself!
-	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/clothing/neck/roguetown/gorget
@@ -176,13 +174,14 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
 	shoes = /obj/item/clothing/shoes/roguetown/grenzelhoft
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
-	backr = /obj/item/storage/backpack/rogue/satchel/black
+	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/bedroll = 1
 		)
 
 	H.grant_language(/datum/language/grenzelhoftian)

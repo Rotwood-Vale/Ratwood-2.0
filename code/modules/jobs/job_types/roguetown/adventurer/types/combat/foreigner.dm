@@ -27,7 +27,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backr = /obj/item/storage/backpack/rogue/satchel
 	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)		//to encourage use of the scabbard as a shield	
+	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)		//to encourage use of the scabbard as a shield
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
@@ -65,7 +65,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/satchel
-	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)		
+	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
@@ -107,7 +107,7 @@
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/recipe_book/survival = 1,
-		/obj/item/smokebomb = 3,
+		/obj/item/bomb/smoke = 3,
 		)
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/kazengun
 	gloves = /obj/item/clothing/gloves/roguetown/eastgloves1

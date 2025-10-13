@@ -702,11 +702,6 @@
 	owner.remove_filter(PSYDON_REVIVED_FILTER)
 	owner.update_damage_hud()
 
-/atom/movable/screen/alert/status_effect/buff/fortify
-	name = "Fortifying Miracle"
-	desc = "Divine intervention bolsters me and aids my recovery."
-	icon_state = "buff"
-
 /atom/movable/screen/alert/status_effect/buff/convergence
 	name = "Convergence Miracle"
 	desc = "My body converges to whence it found strength and health."
@@ -722,10 +717,29 @@
 	desc = "The shard of the great comet had inspired me to ENDURE."
 	icon_state = "censerbuff"
 
+#define FORTIFY_FILTER "fortify_glow"
 /datum/status_effect/buff/fortify //Increases all healing while it lasts.
 	id = "fortify"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/fortify
 	duration = 1 MINUTES
+	examine_text = "SUBJECTPRONOUN stands alight with divine energy!"
+	var/outline_colour = "#fbe59d"
+
+/atom/movable/screen/alert/status_effect/buff/fortify
+	name = "Fortifying Miracle"
+	desc = "Divine intervention bolsters me and aids my recovery."
+	icon_state = "buff"
+
+/datum/status_effect/buff/fortify/on_apply()
+	. = ..()
+	var/filter = owner.get_filter(FORTIFY_FILTER)
+	if (!filter)
+		owner.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
+
+/datum/status_effect/buff/fortify/on_remove()
+	. = ..()
+	owner.remove_filter(FORTIFY_FILTER)
+#undef FORTIFY_FILTER
 
 /datum/status_effect/buff/censerbuff
 	id = "censer"
@@ -748,6 +762,7 @@
 	name = "Magick Distorted"
 	desc = "The wailing box is disrupting magicks around me!"
 	icon_state = "buff"
+
 /atom/movable/screen/alert/status_effect/buff/churnernegative
 	name = "Magick Distorted"
 	desc = "That infernal contraption is sapping my very arcyne essence!"

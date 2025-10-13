@@ -26,7 +26,7 @@
 /mob/living/proc/handle_blood()
 	if((bodytemperature <= TCRYO) || HAS_TRAIT(src, TRAIT_HUSK)) //cryosleep or husked people do not pump the blood.
 		return
-	
+
 	blood_volume = min(blood_volume, BLOOD_VOLUME_MAXIMUM)
 	//Effects of bloodloss
 	if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
@@ -75,7 +75,7 @@
 /mob/living/carbon/handle_blood()
 	if((bodytemperature <= TCRYO) || HAS_TRAIT(src, TRAIT_HUSK)) //cryosleep or husked people do not pump the blood.
 		return
-	
+
 	blood_volume = min(blood_volume, BLOOD_VOLUME_MAXIMUM)
 	if(dna?.species)
 		if(NOBLOOD in dna.species.species_traits)
@@ -186,6 +186,8 @@
 			amt = amt / 2
 		if(HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS))
 			amt = amt * 2
+	if(surrendering)
+		amt = amt / 4 // Helps yield condition not be a bloodloss failure state. Approx to grabbing all of your bodyparts at once
 	blood_volume = max(blood_volume - amt, 0)
 	GLOB.azure_round_stats[STATS_BLOOD_SPILT] += amt
 	if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean

@@ -372,7 +372,7 @@
 		STATS_ALCOHOL_CONSUMED = list("points" = 0.05, "capacity" = 90),
 		STATS_ALCOHOLICS = list("points" = 4, "capacity" = 60),
 		STATS_JUNKIES = list("points" = 5, "capacity" = 90),
-		STATS_KNOTTED = list("points" = 5, "capacity" = 50),	//We nerf this cus not uncommon to see a fair amount of knotting.
+		STATS_KNOTTED_NOT_LUPIANS = list("points" = 2.5, "capacity" = 50),	//We nerf this cus not uncommon to see a fair amount of knotting.
 	)
 
 /datum/storyteller/graggar

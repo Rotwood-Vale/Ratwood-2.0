@@ -86,11 +86,14 @@
 	var/obj/item/organ/vagina/vag = wife.getorganslot(ORGAN_SLOT_VAGINA)
 	if(!vag)
 		return
-	if(prob(vag.impregnation_probability) && wife.is_fertile() && is_virile())
+	var/prob_for_impreg = vag.impregnation_probability
+	if(wife.sexcon.knotted_status) // if they're knotted, increased by two factor for dramatic impact
+		prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX)
+	if(prob(prob_for_impreg) && wife.is_fertile() && is_virile())
 		vag.be_impregnated(src)
 		vag.impregnation_probability = IMPREG_PROB_DEFAULT // Reset on success
 	else
-		vag.impregnation_probability = min(vag.impregnation_probability + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
+		vag.impregnation_probability = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
 
 /mob/living/carbon/human/proc/get_highest_grab_state_on(mob/living/carbon/human/victim)
 	var/grabstate = null

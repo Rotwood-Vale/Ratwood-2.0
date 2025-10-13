@@ -1,20 +1,21 @@
 /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue
-	name = "Sacred Flame"
+	name = "Fire Lance"
 	desc = "Deals damage and ignites target, Deals extra damage to undead."
 	overlay_state = "sacredflame"
 	sound = 'sound/magic/bless.ogg'
+	invocations = list("By fire, be cleansed!")//Not so sacred.
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
 	recharge_time = 15 SECONDS
 	miracle = TRUE
-	devotion_cost = 100
+	devotion_cost = 75
 	projectile_type = /obj/projectile/magic/astratablast
 
 
 /obj/projectile/magic/astratablast
-	damage = 10
-	name = "ray of holy fire"
+	damage = 25
+	name = "lance of holy fire"
 	nodamage = FALSE
 	damage_type = BURN
 	speed = 0.3
@@ -25,7 +26,7 @@
 	light_color = "#a98107"
 	light_outer_range = 7
 	tracer_type = /obj/effect/projectile/tracer/solar_beam
-	var/fuck_that_guy_multiplier = 2.5
+	var/fuck_that_guy_multiplier = 1.6//On par with divine blast against undead, more-or-less.
 	var/biotype_we_look_for = MOB_UNDEAD
 
 /obj/projectile/magic/astratablast/on_hit(target)
@@ -39,11 +40,11 @@
 			return BULLET_ACT_BLOCK
 		if(M.mob_biotypes & biotype_we_look_for || istype(M, /mob/living/simple_animal/hostile/rogue/skeleton))
 			damage *= fuck_that_guy_multiplier
-			M.adjust_fire_stacks(10) //4 pats to put it out
+			M.adjust_fire_stacks(10)
 			visible_message(span_warning("[target] erupts in flame upon being struck by [src]!"))
 			M.IgniteMob()
 		else
-			M.adjust_fire_stacks(4) //2 pats to put it out
+			M.adjust_fire_stacks(4)
 			visible_message(span_warning("[src] ignites [target]!"))
 			M.IgniteMob()
 	return FALSE
@@ -389,7 +390,7 @@
 			COMSIG_LIVING_MIRACLE_HEAL_APPLY,
 			COMSIG_PARENT_QDELETING
 		))
-	
+
 	if(partner)
 		partner.remove_status_effect(/datum/status_effect/immolation)
 		var/datum/component/immolation/other = partner.GetComponent(/datum/component/immolation)
@@ -502,3 +503,129 @@
 			owner.remove_overlay(FIRE_LAYER)
 
 #undef IMMOLATION_FILTER
+
+//Choosing between Lance/Spear
+/obj/effect/proc_holder/spell/self/astratan_path
+	name = "Path of Order"
+	overlay_state = "order"//Temp.
+	desc = "Astrata blesses your mind, allowing you to choose <b>Her</b> method of bringing order."
+	miracle = TRUE
+	devotion_cost = 100
+	recharge_time = 10 MINUTES
+	chargetime = 0
+	chargedrain = 0
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	associated_skill = /datum/skill/magic/holy
+
+/obj/effect/proc_holder/spell/self/astratan_path/cast(list/targets, mob/user)
+	. = ..()
+	var/choice = alert(user, "YOUR MARTIAL ARM, M'LORD?", "TAKE UP STRENGTH", "Lance", "Spear")
+	switch(choice)
+		if("Lance")
+			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue))//No stacking.
+				revert_cast()
+			else
+				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue)
+				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No, thanks.
+					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/self/astratan_spear)
+		if("Spear")
+			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No stacking. Again. As funny as a dozen of these were.
+				revert_cast()
+			else
+				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/astratan_spear)
+				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue))//Nope.
+					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue)
+		else
+			revert_cast()
+
+//Summoning the spear.
+/obj/effect/proc_holder/spell/self/astratan_spear
+	name = "Summon Spear"
+	overlay_state = "astra_spear"//Temp.
+	desc = "An ancient miracle, honed by those who'd served as Astrata's martial arm in the second era. \
+	With such, you may beseech Astrata for a mote of Her power."
+	clothes_req = FALSE
+	sound = 'sound/magic/blade_burst.ogg'
+	invocations = list("Lady of Order, guide my hand!")
+	invocation_type = "shout"
+	recharge_time = 30 SECONDS
+	chargedrain = 0
+	chargetime = 0
+	releasedrain = 5
+	miracle = TRUE
+	devotion_cost = 100//See below as to why. Slowdown and funny damage.
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	associated_skill = /datum/skill/magic/holy
+	var/obj/item/rogueweapon/conjured_spear = null
+
+/obj/effect/proc_holder/spell/self/astratan_spear/cast(list/targets, mob/living/user = usr)
+	if(src.conjured_spear)
+		qdel(conjured_spear)
+	var/obj/item/rogueweapon/R = new /obj/item/rogueweapon/light_spear(user.drop_location())
+	R.AddComponent(/datum/component/conjured_item)
+	user.put_in_hands(R)
+	src.conjured_spear = R
+	return TRUE
+
+//The spear itself. A summoned weapon you charge(throw for now) for an AoE effect.
+/obj/item/rogueweapon/light_spear
+	name = "lightning spear"
+	desc = "A spear of light, pulled from Her domain. Throw far. Strike true."
+	icon_state = "astratan_spear"//Martyr sword without the hilt, for now. Temp.
+	icon = 'icons/roguetown/weapons/64.dmi'
+	w_class = WEIGHT_CLASS_GIGANTIC
+	item_flags = SLOWS_WHILE_IN_HAND
+	slowdown = 2
+	possible_item_intents = list(INTENT_GENERIC)
+	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
+	mob_throw_hit_sound = 'sound/magic/lightning.ogg'
+	throwforce = 15//The damage does not typically come from the impact. This is here as a fallback.
+	thrown_bclass = BCLASS_PIERCE//As above.
+	thrown_damage_flag = "piercing"//Let it have some fun against boots, gloves, clothing, etc. C'mon...
+	throw_speed = 2
+	bigboy = 1
+	var/step_delay = 10//Delay for the strike. Adjust sleep in the damage proc if changing.
+	var/strike_damage = 25//Target damage. 25 on center, 19 on outer.
+
+/obj/item/rogueweapon/light_spear/attack_self()
+	qdel(src)
+
+/obj/item/rogueweapon/light_spear/afterattack()
+	qdel(src)
+
+/obj/item/rogueweapon/light_spear/attack_hand()
+	qdel(src)
+
+/obj/item/rogueweapon/light_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	..()
+	//Make it look worse than it is, initially. For show. As long as they don't stick around...
+	if(iscarbon(hit_atom))
+		var/mob/living/carbon/human/H = hit_atom
+		H.electrocute_act(1, src, 1, SHOCK_NOSTUN)
+
+	var/turf/centerpoint = get_turf(hit_atom)
+	src.alpha = 0//Hide it on impact. Hee hoo.
+
+	new /obj/effect/temp_visual/trap/thunderstrike(centerpoint)
+	addtimer(CALLBACK(src, PROC_REF(astratan_spear_damage), centerpoint, 1), wait = step_delay)
+
+	for(var/turf/effect_layer_one in range(1, centerpoint))
+		if(!(effect_layer_one in view(centerpoint)))
+			continue
+		if(get_dist(centerpoint, effect_layer_one) != 1)
+			continue
+		new /obj/effect/temp_visual/trap/thunderstrike/layer_one(effect_layer_one)
+		addtimer(CALLBACK(src, PROC_REF(astratan_spear_damage), effect_layer_one, 0.75), wait = step_delay)
+
+	return TRUE
+
+/obj/item/rogueweapon/light_spear/proc/astratan_spear_damage(var/turf/effect_layer, damage_mod)
+	new /obj/effect/temp_visual/thunderstrike_actual(effect_layer)
+	playsound(effect_layer, 'sound/magic/lightning.ogg', 50)
+	for(var/mob/living/L in effect_layer.contents)
+		if(L.mob_biotypes & MOB_UNDEAD)
+			strike_damage += 15
+		L.electrocute_act(strike_damage * damage_mod, src, 1, SHOCK_NOSTUN)
+		L.apply_status_effect(/datum/status_effect/buff/lightningstruck, 3 SECONDS)
+	sleep(10)
+	qdel(src)

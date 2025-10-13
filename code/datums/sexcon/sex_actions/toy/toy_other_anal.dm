@@ -1,5 +1,7 @@
 /datum/sex_action/toy_other_anal
 	name = "Use toy on their butt"
+	category = SEX_CATEGORY_PENETRATE
+	target_sex_part = SEX_PART_ANUS
 
 /datum/sex_action/toy_other_anal/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)

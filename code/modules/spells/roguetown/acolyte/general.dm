@@ -39,6 +39,15 @@
 		var/situational_bonus = 1
 		var/message_out
 		var/message_self
+
+		if(HAS_TRAIT(user, TRAIT_RESONANCE))//If the caster has the special funny Astratan trait...
+			for(var/mob/living/carbon/fortified in view(2, get_turf(user)))
+				if(user.patron?.undead_hater && (fortified.mob_biotypes & MOB_UNDEAD))//Resonance allows one to bypass the check above via an AoE. Slight damage to undead as a result.
+					fortified.adjustFireLoss(5)
+				else if(iscarbon(fortified))
+					var/mob/living/carbon/C = fortified
+					C.apply_status_effect(/datum/status_effect/buff/fortify)
+
 		//this if chain is stupid, replace with variables on /datum/patron when possible?
 		switch(user.patron.type)
 			if(/datum/patron/divine/undivided)
@@ -366,7 +375,7 @@
 		play_indicator(target,'icons/mob/overhead_effects.dmi', "timestop", 100, OBJ_LAYER)
 		addtimer(CALLBACK(src, PROC_REF(remove_buff), target), wait = 10 SECONDS)
 		return TRUE
-	
+
 
 /obj/effect/proc_holder/spell/invoked/stasis/proc/remove_buff(mob/living/carbon/target)
 	do_teleport(target, origin, no_effects=TRUE)
@@ -453,7 +462,7 @@
 
 /obj/effect/proc_holder/spell/invoked/wound_heal/cast(list/targets, mob/user = usr)
 	if(ishuman(targets[1]))
-	
+
 		var/mob/living/carbon/human/target = targets[1]
 		var/mob/living/carbon/human/HU = user
 		var/def_zone = check_zone(user.zone_selected)
@@ -540,7 +549,7 @@
 			to_chat(UH, span_warning("Their lyfeblood is at capacity. There is no need."))
 			revert_cast()
 			return FALSE
-			
+
 		if(HAS_TRAIT(target, TRAIT_PSYDONITE))
 			target.visible_message(span_info("[target] stirs for a moment, the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)

@@ -4,6 +4,8 @@
 	icon_state = "imp"
 	icon_living = "imp"
 	icon_dead = "vvd"
+	summon_primer = "You are an imp, a small creature spending it's time in the infernal plane amusing itself and eating meat. Now you've been pulled from your home into a new world, that is decidedly lacking in fire. How you react to these events, only time can tell."
+	summon_tier = 1
 	gender = MALE
 	emote_hear = null
 	emote_see = null

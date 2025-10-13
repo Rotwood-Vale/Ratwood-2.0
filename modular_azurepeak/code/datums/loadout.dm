@@ -560,7 +560,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/cotehardie
 	name = "Fitted Coat"
 	path = /obj/item/clothing/cloak/cotehardie
-	
+
 /datum/loadout_item/zcross_iron
 	name = "Zizo Cross"
 	path = /obj/item/clothing/neck/roguetown/zcross/iron
@@ -627,3 +627,44 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/chain_leash
 	name = "Chain Leash"
 	path = /obj/item/leash/chain
+
+
+/datum/loadout_item/magic_recipes
+	name = "Guide to Arcyne"
+	path = /obj/item/recipe_book/magic
+
+/datum/loadout_item/alch_recipes
+	name = "Guide to Alchemy"
+	path = /obj/item/recipe_book/alchemy
+
+/datum/loadout_item/leather_recipes
+	name = "Guide to Leatherworking"
+	path = /obj/item/recipe_book/leatherworking
+
+/datum/loadout_item/sewing_recipes
+	name = "Guide to Tailoring"
+	path = /obj/item/recipe_book/sewing
+
+/datum/loadout_item/smith_recipes
+	name = "Guide to Smithing"
+	path = /obj/item/recipe_book/blacksmithing
+
+/datum/loadout_item/engi_recipes
+	name = "Guide to Engineering"
+	path = /obj/item/recipe_book/engineering
+
+/datum/loadout_item/build_recipes
+	name = "Guide to Building"
+	path = /obj/item/recipe_book/builder
+
+/datum/loadout_item/potter_recipes
+	name = "Guide to Pottery"
+	path = /obj/item/recipe_book/ceramics
+
+/datum/loadout_item/survival_recipes
+	name = "Guide to Survival"
+	path = /obj/item/recipe_book/survival
+
+/datum/loadout_item/cooking_recipes
+	name = "Guide to Cooking"
+	path = /obj/item/recipe_book/cooking
