@@ -660,7 +660,7 @@
 	// Total time until final slash drop (buildup + telegraph padding). Re-tuned for 13.5s total.
 	var/finale_delay = 14.5 SECONDS
 	var/finale_damage = 1000
-	var/finale_area_of_effect = 50
+	var/finale_area_of_effect = 25
 	// Song audio to play during buildup; set by adding a valid file path later.
 	var/song = 'sound/motivation/finale.ogg'
 	var/beat_interval = 0.6 SECONDS // interval between buildup slashes (cardinals)
