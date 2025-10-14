@@ -5,6 +5,15 @@
 	duration = 8
 	layer = MASSIVE_OBJ_LAYER
 
+// Allow callers to override duration (and optionally color) at construction time.
+// This ensures QDEL_IN uses the intended lifetime instead of the default.
+/obj/effect/temp_visual/trap/Initialize(mapload, set_duration, set_color)
+    if(isnum(set_duration))
+        duration = set_duration
+    . = ..()
+    if(set_color)
+        color = set_color
+
 /obj/effect/temp_visual/motivated_slash
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cut"
@@ -746,9 +755,8 @@
 		// Telegraph indicators for the randomized delay, then detonate this micro-strike
 		if(strike_turfs.len)
 			for(var/turf/T in strike_turfs)
-				var/obj/effect/temp_visual/trap/V1 = new /obj/effect/temp_visual/trap(T)
-				V1.color = "#ff2a2a"
-				V1.duration = delay_ds
+				// Pass duration and color at construction so lifetime is honored
+				new /obj/effect/temp_visual/trap(T, delay_ds, "#ff2a2a")
 			// After delay, execute the slashes and play swing sound
 			spawn(delay_ds)
 				playsound(user, 'sound/motivation/swordswing.ogg', 70, TRUE)
@@ -792,9 +800,8 @@
 
 	// Start indicator visuals for indicator_duration using tinted traps
 	for(var/turf/T in finale_turfs)
-		var/obj/effect/temp_visual/trap/V2 = new /obj/effect/temp_visual/trap(T)
-		V2.color = "#ff2a2a"
-		V2.duration = indicator_duration
+		// Pass desired indicator duration and color at construction
+		new /obj/effect/temp_visual/trap(T, indicator_duration, "#ff2a2a")
 
 	// Play the drop now as indicators appear
 	if(finale_slash_sound)
