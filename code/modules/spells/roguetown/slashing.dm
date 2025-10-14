@@ -15,20 +15,6 @@
 	duration = 1 SECONDS
 	layer = MASSIVE_OBJ_LAYER
 
-// Finale indicator visual that can be created with a specific lifetime
-/obj/effect/temp_visual/finale_indicator
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "trap"
-	light_outer_range = 2
-	layer = MASSIVE_OBJ_LAYER
-	// Allow passing a custom lifetime in seconds via New(loc, lifetime)
-	New(loc, lifetime)
-		// Make indicators red for high-visibility warning
-		color = "#ff2a2a"
-		if(lifetime)
-			duration = lifetime
-		..()
-
 /datum/slash_stage
 	var/delay = 0
 	var/list/turf/slash_turfs = list()
@@ -760,7 +746,9 @@
 		// Telegraph indicators for the randomized delay, then detonate this micro-strike
 		if(strike_turfs.len)
 			for(var/turf/T in strike_turfs)
-				new /obj/effect/temp_visual/finale_indicator(T, delay_ds)
+				var/obj/effect/temp_visual/trap/V1 = new /obj/effect/temp_visual/trap(T)
+				V1.color = "#ff2a2a"
+				V1.duration = delay_ds
 			// After delay, execute the slashes and play swing sound
 			spawn(delay_ds)
 				playsound(user, 'sound/motivation/swordswing.ogg', 70, TRUE)
@@ -802,9 +790,11 @@
 		seen[NT] = TRUE
 		finale_turfs += NT
 
-	// Start indicator visuals for indicator_duration using a dedicated indicator effect
+	// Start indicator visuals for indicator_duration using tinted traps
 	for(var/turf/T in finale_turfs)
-		new /obj/effect/temp_visual/finale_indicator(T, indicator_duration)
+		var/obj/effect/temp_visual/trap/V2 = new /obj/effect/temp_visual/trap(T)
+		V2.color = "#ff2a2a"
+		V2.duration = indicator_duration
 
 	// Play the drop now as indicators appear
 	if(finale_slash_sound)
