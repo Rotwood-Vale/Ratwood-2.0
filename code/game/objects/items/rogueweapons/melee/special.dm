@@ -275,7 +275,7 @@
 	force_wielded = 25
 	minstr = 10
 	max_blade_int = 130
-	anvilrepair = /datum/skill/craft/carpentry
+	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/rogueore/coal
 	wdefense = 4
 	wbalance = WBALANCE_HEAVY
@@ -292,7 +292,7 @@
 	minstr = 8
 	max_blade_int = 120
 	max_integrity = 200
-	anvilrepair = /datum/skill/craft/carpentry
+	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/rogueore/coal
 	resistance_flags = FIRE_PROOF
 	light_system = MOVABLE_LIGHT
@@ -438,9 +438,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	minstr = 8
 	max_blade_int = 120
-	anvilrepair = /datum/skill/craft/carpentry
+	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/rogueore/coal
-	associated_skill = /datum/skill/labor/farming
+	associated_skill = /datum/skill/combat/polearms
 	walking_stick = TRUE
 	wdefense = 6
 	thrown_bclass = BCLASS_BLUNT
@@ -471,8 +471,8 @@
 	max_blade_int = 120
 	max_integrity = 400
 	slot_flags = ITEM_SLOT_HIP
-	associated_skill = /datum/skill/labor/mining
-	anvilrepair = /datum/skill/craft/carpentry
+	associated_skill = /datum/skill/combat/maces
+	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 1
 	wbalance = WBALANCE_NORMAL
@@ -485,7 +485,7 @@
 	icon_state = "milsteelpick"
 	max_blade_int = 150
 	max_integrity = 600
-	associated_skill = /datum/skill/combat/axes
+	associated_skill = /datum/skill/combat/maces
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
 	wdefense = 5
@@ -499,7 +499,7 @@
 	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/peel, /datum/intent/sword/strike)
 	force = 18
 	force_wielded = 25
-	anvilrepair = /datum/skill/craft/carpentry
+	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 3
 	wbalance = WBALANCE_HEAVY

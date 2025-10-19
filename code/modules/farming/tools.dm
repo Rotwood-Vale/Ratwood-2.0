@@ -17,6 +17,7 @@
 	gripsprite = TRUE
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
+	associated_skill = /datum/skill/combat/whipsflails
 
 /datum/intent/flailthresh
 	name = "thresh"
@@ -84,6 +85,7 @@
 	smeltresult = /obj/item/ingot/iron
 	grid_height = 64
 	grid_width = 32
+	associated_skill = /datum/skill/combat/knives
 
 /obj/item/rogueweapon/sickle/examine(mob/user)
 	. = ..()

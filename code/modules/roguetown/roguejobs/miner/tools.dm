@@ -13,7 +13,7 @@
 	max_integrity = 400
 	slot_flags = ITEM_SLOT_HIP
 	toolspeed = 1
-	associated_skill = /datum/skill/labor/mining
+	associated_skill = /datum/skill/combat/maces
 	smeltresult = /obj/item/ingot/iron
 	grid_width = 64
 	grid_height = 64

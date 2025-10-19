@@ -167,7 +167,7 @@
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/polearms
-	anvilrepair = /datum/skill/craft/carpentry
+	anvilrepair = /datum/skill/craft/weaponsmithing
 	dropshrink = 0.9
 	wdefense = 4
 	resistance_flags = FLAMMABLE

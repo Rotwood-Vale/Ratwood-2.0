@@ -47,7 +47,7 @@
 			var/option_choice = input("Choose your means.", "TAKE UP ARMS") as anything in options
 			switch(option_choice)
 				if("Frypan")
-					H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE) // expert cook; expert pan-handler
+					H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE) // expert cook; expert pan-handler//Switched frypans to use maces but they get maces 3 anyway so no harm in getting bonus cooking skill to make bootleg liquour with
 					r_hand = /obj/item/cooking/pan
 				if("Knuckles")
 					H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
