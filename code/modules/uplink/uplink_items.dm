@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(uplink_items)       // registry of item typepaths (unused in M
 GLOBAL_LIST_EMPTY(uplink_categories)  // registry of category names
 
 // Build a small, safe default catalog for MVP/debug. Extend or override as needed.
-/proc/get_uplink_items(datum/game_mode/gamemode, allow_sales = TRUE, allow_restricted = TRUE, other_filter = list())
+/proc/get_uplink_items(gamemode, allow_sales = TRUE, allow_restricted = TRUE, other_filter = list())
 	var/list/catalog = list()
 
 	// Weapons category
