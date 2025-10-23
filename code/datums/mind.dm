@@ -412,7 +412,41 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	remove_traitor()
 
 /datum/mind/proc/equip_traitor(employer = "The Syndicate", silent = FALSE, datum/antagonist/uplink_owner)
-	return
+	if(!current)
+		return
+	var/mob/living/carbon/human/traitor_mob = current
+	if(!istype(traitor_mob))
+		return
+
+	// Try to find a suitable container item; fall back to creating a generic item
+	var/list/all_contents = traitor_mob.GetAllContents()
+	var/obj/item/uplink_loc = locate() in all_contents
+	if(!uplink_loc)
+		if(istype(traitor_mob.back, /obj/item/storage))
+			uplink_loc = new /obj/item(traitor_mob.back)
+		else
+			uplink_loc = new /obj/item(traitor_mob.loc)
+			traitor_mob.put_in_hands(uplink_loc)
+
+	if(!uplink_loc)
+		if(!silent)
+			to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
+		return 0
+
+	// Attach an unlocked uplink component so it can be opened via attack_self
+	var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key, FALSE, TRUE)
+	if(!U)
+		CRASH("Uplink creation failed.")
+	U.setup_unlock_code()
+	if(!silent)
+		to_chat(traitor_mob, "[employer] has provided a clandestine uplink on your [uplink_loc.name]. Use it in-hand to access its features.")
+
+	if(uplink_owner)
+		uplink_owner.antag_memory += (U.unlock_note ? (U.unlock_note + "<br>") : "")
+	else
+		if(U.unlock_note)
+			traitor_mob.mind.store_memory(U.unlock_note)
+	return uplink_loc
 
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.

@@ -20,6 +20,7 @@
 #define ROLE_WRETCH				"Wretch"
 #define ROLE_UNBOUND_DEATHKNIGHT "Unbound Death Knight"
 #define ROLE_DARK_ITINERANT "Dark Itinerant"
+#define ROLE_CRIMSON_AGENT		"Crimson Agent"
 
 #define ROLE_SYNDICATE			"Syndicate"
 #define ROLE_TRAITOR			"Traitor"
@@ -63,7 +64,8 @@ GLOBAL_LIST_INIT(special_roles_rogue, list(
 	ROLE_NBEAST = /datum/antagonist/vampirelord,
 	ROLE_LICH = /datum/antagonist/lich,
 	ROLE_THIEVESGUILD = /datum/antagonist/thievesguild,
-	ROLE_DREAMWALKER = /datum/antagonist/dreamwalker
+	ROLE_DREAMWALKER = /datum/antagonist/dreamwalker,
+	ROLE_CRIMSON_AGENT = /datum/antagonist/crimson
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection
