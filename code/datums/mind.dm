@@ -433,8 +433,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 			to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		return 0
 
-	// Attach an unlocked uplink component so it can be opened via attack_self
-	var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key, FALSE, TRUE)
+	// Attach an unlocked uplink component so it can be opened via attack_self, with 999 TC for testing
+	var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key, FALSE, TRUE, null, 999)
 	if(!U)
 		CRASH("Uplink creation failed.")
 	U.setup_unlock_code()

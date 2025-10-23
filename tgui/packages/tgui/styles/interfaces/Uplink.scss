@@ -101,3 +101,25 @@ $_rep_map: (
   border-top: none;
   padding: var(--space-m) 0 var(--space-l);
 }
+
+// Background styling for the Uplink window
+.UplinkBackground {
+  // Deep crimson backdrop
+  background-color: #4f0909;
+  position: relative;
+
+  // Render insignia as an overlay we can recolor safely
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('../assets/uplinkstuff/insignia.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 65% auto;
+    // Recolor to black while respecting transparency
+    filter: brightness(0) saturate(100%);
+    opacity: 0.22; // subtle but visible
+    pointer-events: none; // don't block UI interactions
+  }
+}

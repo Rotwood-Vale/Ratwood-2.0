@@ -481,6 +481,13 @@
 		else
 			str += wear_mask.integrity_check()
 		. += str
+		// Special hint for non-Crimson observers when this specific mask is worn
+		if(user != src && istype(wear_mask, /obj/item/clothing/mask/rogue/facemask/goldmask/crimson_order))
+			var/is_crimson = FALSE
+			if(user?.mind && user.mind.has_antag_datum(/datum/antagonist/crimson))
+				is_crimson = TRUE
+			if(!is_crimson)
+				. += span_warning("Wait...what is that mask...?")
 
 	//mouth
 	if(mouth && !(SLOT_MOUTH in obscured))

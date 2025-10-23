@@ -415,6 +415,25 @@
 	sellprice = 100
 	smeltresult = /obj/item/ingot/gold
 
+/obj/item/clothing/mask/rogue/facemask/goldmask/crimson_order
+	name = "Mask of the Crimson Order"
+	desc = "A gilded mask, burnished with the crimson of forbidden vows. Wearing it sharpens every sense and steels every limb—but your life hangs by a thread."
+	// Reuse the gold mask sprite; tint to a deep crimson
+	color = CLOTHING_RED
+
+/obj/item/clothing/mask/rogue/facemask/goldmask/crimson_order/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_WEAR_MASK)
+		// Bestow the Order's boon and its price
+		user.apply_status_effect(/datum/status_effect/buff/crimson_mask)
+		ADD_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, "crimson_mask")
+
+/obj/item/clothing/mask/rogue/facemask/goldmask/crimson_order/dropped(mob/living/user)
+	. = ..()
+	if(user)
+		user.remove_status_effect(/datum/status_effect/buff/crimson_mask)
+		REMOVE_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, "crimson_mask")
+
 /obj/item/clothing/mask/rogue/facemask/yoruku_oni
 	name = "oni mask"
 	desc = "A wood mask carved in the visage of demons said to stalk the mountains of Kazengun."

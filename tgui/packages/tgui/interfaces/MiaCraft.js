@@ -6,6 +6,7 @@ import {
   LabeledList,
   Stack,
 } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -101,7 +102,7 @@ const CraftingCategory = ({ crafties, key3, onlyCraftable, craftability, key, ac
             </LabeledList>
           </Collapsible>
         </Stack.Item>
-      </Stack>
+        </Stack>
     );
   };
 

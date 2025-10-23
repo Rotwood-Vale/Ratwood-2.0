@@ -118,6 +118,20 @@
 /datum/status_effect/buff/moondust/nextmove_modifier()
 	return 0.8
 
+/datum/status_effect/buff/crimson_mask
+	id = "crimson_mask"
+	alert_type = null
+	duration = -1
+	effectedstats = list(
+		STATKEY_STR = 2,
+		STATKEY_PER = 2,
+		STATKEY_INT = 2,
+		STATKEY_CON = 2,
+		STATKEY_WIL = 2,
+		STATKEY_SPD = 2,
+		STATKEY_LCK = 2,
+	)
+
 /datum/status_effect/buff/moondust/on_apply()
 	. = ..()
 	owner.add_stress(/datum/stressevent/moondust)

@@ -20,10 +20,12 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/unlock_note
 	var/unlock_code
 	var/failsafe_code
-	var/compact_mode = FALSE
 	var/debug = FALSE
 	var/saved_player_population = 0
 	var/list/filters = list()
+	var/challenge_mode = FALSE
+	var/challenge_sound_channel = 83
+	var/challenge_accepted = FALSE
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, _gamemode, starting_tc = 20, traitor_class)
 	if(!isitem(parent))
@@ -66,8 +68,16 @@ GLOBAL_LIST_EMPTY(uplinks)
 	return
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
+	// Only Crimson Agents may operate this uplink
+	if(user && !(user.mind?.has_antag_datum(/datum/antagonist/crimson)))
+		to_chat(user, "I....don't know how to use this.")
+		return COMPONENT_NO_INTERACT
 	if(locked)
-		return
+		// Never hard-lock non-lockable uplinks; auto-unlock as a safety valve
+		if(!lockable)
+			locked = FALSE
+		else
+			return
 	active = TRUE
 	if(user)
 		var/previous_player_population = saved_player_population
@@ -77,6 +87,11 @@ GLOBAL_LIST_EMPTY(uplinks)
 			uplink_items = get_uplink_items(gamemode, FALSE, allow_restricted, filters)
 			if(old_discounts)
 				uplink_items["Discounted Gear"] = old_discounts
+		// Default to first category if none selected yet
+		if(!selected_cat)
+			for(var/category in uplink_items)
+				selected_cat = category
+				break
 		ui_interact(user)
 	return COMPONENT_NO_INTERACT
 
@@ -87,8 +102,10 @@ GLOBAL_LIST_EMPTY(uplinks)
 	active = TRUE
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Uplink", name)
-		ui.set_autoupdate(FALSE)
+		// Provide a larger default window size so the client uses it on first open.
+		// Note: Client may remember geometry per window_key; this sets a good default.
+		ui = new(user, src, "Uplink", "The Crimson Relinquary", 900, 640)
+		ui.set_autoupdate(TRUE)
 		ui.open()
 
 /datum/component/uplink/ui_data(mob/user)
@@ -97,16 +114,21 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
-	data["compactMode"] = compact_mode
-	return data
-
-/datum/component/uplink/ui_static_data(mob/user)
-	var/list/data = list()
-	data["categories"] = list()
-	for(var/category in uplink_items)
-		var/list/cat = list("name" = category, "items" = (category == selected_cat ? list() : null))
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/I = uplink_items[category][item]
+	data["selectedCat"] = selected_cat
+	data["challengeAccepted"] = challenge_accepted
+	// Provide items for the selected category so the UI can render them
+	var/list/items = list()
+	// Treat category name case-insensitively for Challenge special tab
+	if(selected_cat && lowertext(selected_cat) == "challenge")
+		data["challenge"] = TRUE
+		// No faux items; UI handles the Challenge accept control directly
+		data["items"] = items
+		return data
+	else
+		data["challenge"] = FALSE
+	if(selected_cat && uplink_items && uplink_items[selected_cat])
+		for(var/item_name in uplink_items[selected_cat])
+			var/datum/uplink_item/I = uplink_items[selected_cat][item_name]
 			if(I.limited_stock == 0)
 				continue
 			if(I.restricted_roles?.len)
@@ -116,8 +138,18 @@ GLOBAL_LIST_EMPTY(uplinks)
 						is_inaccessible = FALSE
 				if(is_inaccessible)
 					continue
-			cat["items"] += list(list("name" = I.name, "cost" = I.cost, "desc" = I.desc))
-		data["categories"] += list(cat)
+			items += list(list("name" = I.name, "cost" = I.cost, "desc" = I.desc))
+	data["items"] = items
+	return data
+
+/datum/component/uplink/ui_static_data(mob/user)
+	var/list/data = list()
+	// List just category names; item list provided dynamically in ui_data
+	data["categories"] = list()
+	for(var/category in uplink_items)
+		data["categories"] += list(list("name" = category))
+	// Always include a special Challenge category
+	data["categories"] += list(list("name" = "Challenge"))
 	return data
 
 /datum/component/uplink/ui_act(action, params)
@@ -129,24 +161,70 @@ GLOBAL_LIST_EMPTY(uplinks)
 	switch(action)
 		if("buy")
 			var/item_name = params["name"]
+			// Build a lookup table of item name -> uplink_item
 			var/list/buyable_items = list()
 			for(var/category in uplink_items)
-				buyable_items += uplink_items[category]
-			if(item_name in buyable_items)
-				var/datum/uplink_item/I = buyable_items[item_name]
+				for(var/item_key in uplink_items[category])
+					buyable_items[item_key] = uplink_items[category][item_key]
+			var/datum/uplink_item/I = buyable_items[item_name]
+			if(I)
 				MakePurchase(usr, I)
 				return TRUE
-		if("lock")
-			active = FALSE
-			locked = TRUE
-			telecrystals += hidden_crystals
-			hidden_crystals = 0
-			SStgui.close_uis(src)
-		if("select")
-			selected_cat = params["category"]
+		if("accept_challenge")
+			if(challenge_accepted)
+				return TRUE
+			challenge_mode = TRUE
+			challenge_accepted = TRUE
+			if(usr)
+				usr << span_bigbold(span_red("I ACCEPT! The challenge is on."))
+				// Stop any ongoing challenge preview sound, then play a confirmation cue on the same channel
+				usr << sound(null, channel = challenge_sound_channel)
+				var/sound/Sa = sound('sound/villain/crimson_accepted.ogg')
+				Sa.channel = challenge_sound_channel
+				Sa.volume = 60
+				usr << Sa
+				var/player_name = "[usr]"
+				if(ishuman(usr))
+					var/mob/living/carbon/human/H = usr
+					player_name = H.real_name
+					// Auto-equip the Mask of the Crimson Order and lock it during Challenge Mode
+					var/obj/item/clothing/mask/old_mask = H.get_item_by_slot(SLOT_WEAR_MASK)
+					if(old_mask)
+						H.dropItemToGround(old_mask, TRUE)
+					var/obj/item/clothing/mask/rogue/facemask/goldmask/crimson_order/newmask = new(get_turf(H))
+					if(H.equip_to_slot_or_del(newmask, SLOT_WEAR_MASK, TRUE))
+						// Prevent removal while the challenge is active
+						ADD_TRAIT(newmask, TRAIT_NODROP, "crimson_challenge")
+						to_chat(H, span_warning("The Mask of the Crimson Order seals to your face!"))
+				message_admins("[ADMIN_LOOKUPFLW(usr)] ([player_name]) has accepted The Crimson Order Challenge Mode.")
+				log_game("Challenge Mode: [key_name(usr)] ([player_name]) accepted Crimson Agent Challenge Mode.")
+			SStgui.update_uis(src)
 			return TRUE
-		if("compact_toggle")
-			compact_mode = !compact_mode
+		if("lock")
+			// Treat legacy 'lock' as a simple close
+			active = FALSE
+			SStgui.close_uis(src)
+			return TRUE
+		if("close")
+			active = FALSE
+			// Stop challenge sound if it is playing
+			if(usr)
+				usr << sound(null, channel = challenge_sound_channel)
+			SStgui.close_uis(src)
+			return TRUE
+		if("select")
+			var/new_cat = params["category"]
+			// If leaving Challenge tab, stop its preview sound
+			if(selected_cat && lowertext(selected_cat) == "challenge" && new_cat && lowertext(new_cat) != "challenge" && usr)
+				usr << sound(null, channel = challenge_sound_channel)
+			selected_cat = new_cat
+			// If entering Challenge tab, play its preview sound on a dedicated channel (only if not yet accepted)
+			if(selected_cat && lowertext(selected_cat) == "challenge" && usr && !challenge_accepted)
+				var/sound/S = sound('sound/villain/crimson_challenge.ogg')
+				S.channel = challenge_sound_channel
+				S.volume = 60
+				usr << S
+			SStgui.update_uis(src)
 			return TRUE
 
 /datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
@@ -160,6 +238,11 @@ GLOBAL_LIST_EMPTY(uplinks)
 	U.purchase(user, src)
 	if(U.limited_stock > 0)
 		U.limited_stock -= 1
+	// Play a confirmation sound for normal shop purchases (local to buyer)
+	if(user)
+		var/sound/Sb = sound('sound/villain/crimson_buy.ogg')
+		Sb.volume = 60
+		user << Sb
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.cost]"))
 	return TRUE
 
