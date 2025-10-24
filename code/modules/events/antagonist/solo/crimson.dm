@@ -9,6 +9,16 @@
     shared_occurence_type = SHARED_MINOR_THREAT
 
 
+    restricted_roles = list(
+        "Grand Duke",
+        "Grand Duchess",
+        "Knight Captain",
+        "Bishop",
+        "Inquisitor",
+        "Marshal",
+        "Templar",
+    )
+
     base_antags = 1
     maximum_antags = 6
     denominator = 30
@@ -21,10 +31,6 @@
 
     typepath = /datum/round_event/antagonist/solo/crimson_agents
     antag_datum = /datum/antagonist/crimson
-
- 
-restricted_roles = list("Grand Duke", "Grand Duchess", "Knight Captain", "Bishop", "Inquisitor", "Marshal", "Templar")
-
 
 /datum/round_event/antagonist/solo/crimson_agents
 

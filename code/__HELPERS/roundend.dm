@@ -137,6 +137,7 @@
 	var/list/key_list = list()
 	var/has_challenge_champion = FALSE
 	var/has_challenge_almost = FALSE
+	var/has_crimson_alive = FALSE
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!istype(A, /datum/antagonist/crimson))
 			continue
@@ -146,9 +147,12 @@
 				has_challenge_champion = TRUE
 			else
 				has_challenge_almost = TRUE
+		if(!has_crimson_alive && considered_alive(CA.owner))
+			has_crimson_alive = TRUE
 
 #define CHALLENGE_ROUNDEND_SONG "sound/villain/crimson_champion.ogg"
 #define CHALLENGE_ALMOST_SONG "sound/villain/crimson_almost.ogg"
+#define CRIMSON_THEME_ROUNDEND_SONG "sound/villain/crimson_theme.ogg"
 
 	for(var/client/C in GLOB.clients)
 		if(C.mob)
@@ -157,6 +161,8 @@
 				C.mob.playsound_local(C.mob, CHALLENGE_ROUNDEND_SONG, 100, FALSE)
 			else if(has_challenge_almost && length(CHALLENGE_ALMOST_SONG))
 				C.mob.playsound_local(C.mob, CHALLENGE_ALMOST_SONG, 100, FALSE)
+			else if(has_crimson_alive && length(CRIMSON_THEME_ROUNDEND_SONG))
+				C.mob.playsound_local(C.mob, CRIMSON_THEME_ROUNDEND_SONG, 100, FALSE)
 			else
 				C.mob.playsound_local(C.mob, 'sound/music/roundend.ogg', 100, FALSE)
 		if(isliving(C.mob) && C.ckey)
