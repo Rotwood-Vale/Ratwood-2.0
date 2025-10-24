@@ -1246,6 +1246,7 @@
 #include "code\modules\antagonists\roguetown\villain\maniac\maniac_items.dm"
 #include "code\modules\antagonists\roguetown\villain\maniac\maniac_life.dm"
 #include "code\modules\antagonists\roguetown\villain\maniac\maniac_wonders.dm"
+#include "code\modules\events\antagonist\solo\crimson.dm"
 #include "code\modules\uplink\uplink_purchase_log.dm"
 #include "code\modules\uplink\uplink_items.dm"
 #include "code\modules\antagonists\roguetown\villain\werewolf\werewolf.dm"
