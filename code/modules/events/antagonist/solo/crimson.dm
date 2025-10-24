@@ -17,6 +17,7 @@
         "Inquisitor",
         "Marshal",
         "Templar",
+        "Knight"
     )
 
     base_antags = 1
