@@ -1229,6 +1229,7 @@
 #include "code\modules\antagonists\roguetown\villain\bandit.dm"
 #include "code\modules\antagonists\roguetown\villain\choosename.dm"
 #include "code\modules\antagonists\roguetown\villain\chosen.dm"
+#include "code\modules\antagonists\roguetown\villain\crimson_objectives.dm"
 #include "code\modules\antagonists\roguetown\villain\dark_itinerant.dm"
 #include "code\modules\antagonists\roguetown\villain\dreamwalker.dm"
 #include "code\modules\antagonists\roguetown\villain\lich.dm"

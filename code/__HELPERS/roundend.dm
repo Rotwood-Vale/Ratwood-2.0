@@ -135,10 +135,30 @@
 	get_end_reason()
 
 	var/list/key_list = list()
+	var/has_challenge_champion = FALSE
+	var/has_challenge_almost = FALSE
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(!istype(A, /datum/antagonist/crimson))
+			continue
+		var/datum/antagonist/crimson/CA = A
+		if(CA.challenge_accepted && CA.all_non_escape_objectives_completed())
+			if(considered_alive(CA.owner))
+				has_challenge_champion = TRUE
+			else
+				has_challenge_almost = TRUE
+
+#define CHALLENGE_ROUNDEND_SONG "sound/villain/crimson_champion.ogg"
+#define CHALLENGE_ALMOST_SONG "sound/villain/crimson_almost.ogg"
+
 	for(var/client/C in GLOB.clients)
 		if(C.mob)
 			SSdroning.kill_droning(C)
-			C.mob.playsound_local(C.mob, 'sound/music/roundend.ogg', 100, FALSE)
+			if(has_challenge_champion && length(CHALLENGE_ROUNDEND_SONG))
+				C.mob.playsound_local(C.mob, CHALLENGE_ROUNDEND_SONG, 100, FALSE)
+			else if(has_challenge_almost && length(CHALLENGE_ALMOST_SONG))
+				C.mob.playsound_local(C.mob, CHALLENGE_ALMOST_SONG, 100, FALSE)
+			else
+				C.mob.playsound_local(C.mob, 'sound/music/roundend.ogg', 100, FALSE)
 		if(isliving(C.mob) && C.ckey)
 			key_list += C.ckey
 //	if(key_list.len)
@@ -169,9 +189,13 @@
 
 	sleep(5 SECONDS)
 
+	finalize_crimson_awards_and_announcements()
+
 	gamemode_report()
 
 	to_chat(world, personal_objectives_report())
+
+	to_chat(world, crimson_court_report())
 
 	sleep(10 SECONDS)
 
@@ -316,6 +340,9 @@
 	//Personal objectives
 	parts += personal_objectives_report()
 
+	// Crimson Court
+	parts += crimson_court_report()
+
 	CHECK_TICK
 	//Medals
 	parts += medal_report()
@@ -323,6 +350,108 @@
 	listclearnulls(parts)
 
 	return parts.Join()
+
+// Compute and award triumphs for Crimson Agents, and announce results
+/datum/controller/subsystem/ticker/proc/finalize_crimson_awards_and_announcements()
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(!istype(A, /datum/antagonist/crimson))
+			continue
+		var/datum/antagonist/crimson/C = A
+		var/mob/living/carbon/human/H = C.owner?.current
+		if(!H)
+			continue
+		var/all_completed = C.all_non_escape_objectives_completed()
+		var/is_alive = considered_alive(C.owner)
+
+		// Challenge-specific outcomes take precedence
+		if(C.challenge_accepted)
+			if(all_completed && is_alive)
+				// Champion greentext broadcast; +20 triumphs for conquering the Challenge
+				to_chat(world, span_bigbold(span_greentext("[H.real_name] is the Champion of the Crimson Challenge!")))
+				H.adjust_triumphs(20)
+				// Also award the general +5 for completing all objectives
+				H.adjust_triumphs(5)
+				continue
+			else if(all_completed && !is_alive)
+				// ALMOST case: completed everything but died at the end; tease and give no triumphs
+				to_chat(world, span_bigbold(span_notice("The Champion ALMOST succeeded, but died right at the final stretch.")))
+				continue
+			else
+				// Failed the Challenge; shunned
+				to_chat(world, span_bigbold(span_redtext("[H.real_name] has failed the Crimson Challenge and is shunned.")))
+				// Still allow the general +5 if they somehow completed all (shouldn't reach here), guarded above
+				if(all_completed)
+					H.adjust_triumphs(5)
+				continue
+
+		// Non-challenge Crimson: grant +5 for completing all non-escape objectives
+		if(all_completed)
+			H.adjust_triumphs(5)
+
+// Crimson Court: list Crimson Agents, their objectives, and their purchases
+/datum/controller/subsystem/ticker/proc/crimson_court_report()
+	var/list/parts = list()
+	var/list/crimson_antags = list()
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(!A.owner)
+			continue
+		if(istype(A, /datum/antagonist/crimson))
+			crimson_antags += A
+
+	parts += "<div class='panel stationborder'>"
+	if(crimson_antags.len)
+		parts += "<div style='text-align: center; font-size: 1.2em;'>CRIMSON COURT:</div>"
+		parts += "<hr class='paneldivider'>"
+		var/idx = 0
+		for(var/datum/antagonist/crimson/C in crimson_antags)
+			idx++
+			// Agent identity line
+			var/agent_name = C.owner?.name || "Unknown Agent"
+			var/agent_role = C.owner?.assigned_role || "Unknown"
+			parts += "<b>[agent_name]</b> the <b>[agent_role]</b>"
+
+			// Objectives (show all, with results)
+			if(C.objectives?.len)
+				var/obj_output = printobjectives(C.objectives)
+				if(obj_output)
+					parts += obj_output
+
+			// Challenge outcome line if relevant
+			if(C.challenge_accepted)
+				var/is_alive = considered_alive(C.owner)
+				if(C.all_non_escape_objectives_completed() && is_alive)
+					parts += "<br><span class='greentext'><b>THE CRIMSON COURT HAS A NEW TRIUMPHANT CHALLENGER! THE IMPOSSIBLE HAS BEEN DONE!</b></span>"
+				else if(C.all_non_escape_objectives_completed() && !is_alive)
+					parts += "<br><span class='notice'><b>The Champion ALMOST succeeded, but died right at the final stretch.</b></span>"
+				else
+					parts += "<br><span class='redtext'><b>Shunned for failing the Challenge.</b></span>"
+
+			// Purchases from The Crimson Relinquary
+			var/list/purchases_lines = list()
+			var/ck = C.owner?.key
+			if(ck && GLOB.uplink_purchase_logs_by_key && GLOB.uplink_purchase_logs_by_key[ck])
+				var/datum/uplink_purchase_log/L = GLOB.uplink_purchase_logs_by_key[ck]
+				if(L && L.entries && L.entries.len)
+					for(var/E in L.entries)
+						var/name = E["name"]
+						var/cost = E["cost"]
+						purchases_lines += "[name] ([cost] CR)"
+				else
+					purchases_lines += "They didn't need nothing from the Relinquary."
+			else
+				purchases_lines += "They didn't need nothing from the Relinquary."
+
+			parts += "<br><i>Relinquary purchases:</i> [purchases_lines.Join(", ")]"
+
+			if(idx < crimson_antags.len)
+				parts += "<br>"
+			CHECK_TICK
+	else
+		// No Crimson Agents this round
+		parts += "<div style='text-align: center;'>No Crimson Agents were initiated this round.</div>"
+
+	parts += "</div>"
+	return parts.Join("<br>")
 
 /datum/controller/subsystem/ticker/proc/survivor_report(client/C, popcount)
 	var/list/parts = list()
@@ -605,7 +734,15 @@
 		if(objective.check_completion())
 			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else
-			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			var/reason
+			if(istype(objective, /datum/objective/steal/crimson))
+				// Ask the Crimson theft objective for a human-friendly failure reason
+				var/datum/objective/steal/crimson/CO = objective
+				reason = CO.failure_reason()
+			if(reason)
+				objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span> <i>([reason])</i>"
+			else
+				objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 		count++
 	return objective_parts.Join("<br>")
 

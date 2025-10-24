@@ -11,6 +11,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/locked = TRUE
 	var/allow_restricted = TRUE
 	var/telecrystals = 0
+	/// Records the initial amount of telecrystals granted when the uplink is initialized
+	var/initial_telecrystals = 0
 	var/selected_cat
 	var/owner = null
 	var/gamemode
@@ -51,6 +53,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	active = _enabled
 	gamemode = _gamemode
 	telecrystals = starting_tc
+	initial_telecrystals = starting_tc
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
@@ -116,6 +119,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	data["lockable"] = lockable
 	data["selectedCat"] = selected_cat
 	data["challengeAccepted"] = challenge_accepted
+	// If the player has spent any crystal rosas, disable the Challenge tab client-side
+	data["challengeDisabled"] = (telecrystals < initial_telecrystals)
 	// Provide items for the selected category so the UI can render them
 	var/list/items = list()
 	// Treat category name case-insensitively for Challenge special tab
@@ -173,8 +178,20 @@ GLOBAL_LIST_EMPTY(uplinks)
 		if("accept_challenge")
 			if(challenge_accepted)
 				return TRUE
+			// Must not have spent any crystals to accept the challenge
+			if(telecrystals < initial_telecrystals)
+				if(usr)
+					to_chat(usr, span_warning("You have already spent some of your crystal rosas. You cannot accept the Challenge."))
+				return TRUE
 			challenge_mode = TRUE
 			challenge_accepted = TRUE
+			// Remove all remaining crystal rosas upon accepting
+			telecrystals = 0
+			// Notify the crimson antagonist datum so it can assign additional objectives
+			if(usr?.mind)
+				var/datum/antagonist/crimson/C = usr.mind.has_antag_datum(/datum/antagonist/crimson)
+				if(C)
+					C.on_challenge_accepted()
 			if(usr)
 				usr << span_bigbold(span_red("I ACCEPT! The challenge is on."))
 				// Stop any ongoing challenge preview sound, then play a confirmation cue on the same channel
@@ -214,6 +231,11 @@ GLOBAL_LIST_EMPTY(uplinks)
 			return TRUE
 		if("select")
 			var/new_cat = params["category"]
+			// Prevent selecting Challenge if any crystal rosas have been spent already
+			if(new_cat && lowertext(new_cat) == "challenge" && telecrystals < initial_telecrystals)
+				if(usr)
+					to_chat(usr, span_warning("The Challenge is only open to those who have not spent any of their crystal rosas."))
+				return TRUE
 			// If leaving Challenge tab, stop its preview sound
 			if(selected_cat && lowertext(selected_cat) == "challenge" && new_cat && lowertext(new_cat) != "challenge" && usr)
 				usr << sound(null, channel = challenge_sound_channel)

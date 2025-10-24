@@ -55,6 +55,20 @@
 
 //^ ditto as above. imagine stealing someone's mask off they face.
 
+// For the Solar Visage (Bishop's mask), require the item be bagged inside a sack to count.
+/datum/objective_item/steal/rogue/priestmask/check_special_completion(obj/item/I)
+	// Walk up the containment chain to see if this item resides inside a sack container
+	// Only counts as complete if the mask is inside a /obj/item/storage/roguebag (the sack)
+	var/atom/A = I
+	while(A)
+		if(istype(A, /obj/item/storage/roguebag))
+			return TRUE
+		// Stop if we've reached a mob inventory; not inside a sack
+		if(ismob(A))
+			break
+		A = A.loc
+	return FALSE
+
 /datum/objective_item/steal/rogue/heirloom_sword
 	name = "the heirloom sword."
 	targetitem = /obj/item/rogueweapon/sword/long/heirloom

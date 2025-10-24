@@ -60,21 +60,25 @@
 		var/datum/objective/picked_obj
 		switch(choice)
 			if("Assassination (Random)")
+				selected_primary_choice = CRIMSON_PRIMARY_ASSASSINATE_RANDOM
 				picked_obj = assign_crimson_assassination(random_target = TRUE)
 				if(owner?.current)
 					message_admins("[ADMIN_LOOKUPFLW(owner.current)] selected 'Assassination (Random)' as Crimson objective.")
 					log_game("[key_name(owner.current)] selected 'Assassination (Random)' as Crimson objective.")
 			if("Assassination (High Value)")
+				selected_primary_choice = CRIMSON_PRIMARY_ASSASSINATE_HV
 				picked_obj = assign_crimson_assassination(random_target = FALSE)
 				if(owner?.current)
 					message_admins("[ADMIN_LOOKUPFLW(owner.current)] selected 'Assassination (High Value)' as Crimson objective.")
 					log_game("[key_name(owner.current)] selected 'Assassination (High Value)' as Crimson objective.")
 			if("Theft (High Value)")
+				selected_primary_choice = CRIMSON_PRIMARY_THEFT_HV
 				picked_obj = assign_crimson_theft_high_value()
 				if(owner?.current)
 					message_admins("[ADMIN_LOOKUPFLW(owner.current)] selected 'Theft (High Value)' as Crimson objective.")
 					log_game("[key_name(owner.current)] selected 'Theft (High Value)' as Crimson objective.")
 			if("Theft (Low Value)")
+				selected_primary_choice = CRIMSON_PRIMARY_THEFT_LV
 				picked_obj = assign_crimson_theft_low_value()
 				if(owner?.current)
 					message_admins("[ADMIN_LOOKUPFLW(owner.current)] selected 'Theft (Low Value)' as Crimson objective.")
@@ -84,6 +88,7 @@
 		if(!picked_obj)
 			// Universal fallback: assign a random assassination objective
 			picked_obj = assign_crimson_assassination(TRUE)
+			selected_primary_choice = CRIMSON_PRIMARY_ASSASSINATE_RANDOM
 
 		if(picked_obj && owner?.current)
 			picked_obj.update_explanation_text()
@@ -104,7 +109,7 @@
 
 // Assign an assassination objective. If random_target is FALSE, prefer high-value roles; otherwise pick any valid target.
 /datum/antagonist/crimson/proc/assign_crimson_assassination(random_target = TRUE)
-	var/datum/objective/assassinate/A = new
+	var/datum/objective/assassinate/crimson/A = new
 	A.owner = owner
 	if(random_target)
 		A.find_target()
@@ -140,7 +145,7 @@
 
 // Assign a high-value theft objective (e.g., crown, master key, merchant ledger). Falls back to random steal if none available.
 /datum/antagonist/crimson/proc/assign_crimson_theft_high_value()
-	var/datum/objective/steal/S = new
+	var/datum/objective/steal/crimson/S = new
 	S.owner = owner
 	// Ensure possible items are populated (steal.New handles this)
 	var/list/high_value_item_types = list(
@@ -173,7 +178,7 @@
 
 
 /datum/antagonist/crimson/proc/assign_crimson_theft_low_value()
-	var/datum/objective/steal/S = new
+	var/datum/objective/steal/crimson/S = new
 	S.owner = owner
 	var/list/low_value_item_types = list(
 		/datum/objective_item/steal/rogue/heirloom_sword,
@@ -206,6 +211,53 @@
 	if(M)
 		add_antag_hud(antag_hud_type, antag_hud_name, M)
 	return ..()
+
+// Track the player's primary choice so Challenge can assign the rest later
+var/const/CRIMSON_PRIMARY_ASSASSINATE_RANDOM = "Assassination (Random)"
+var/const/CRIMSON_PRIMARY_ASSASSINATE_HV = "Assassination (High Value)"
+var/const/CRIMSON_PRIMARY_THEFT_HV = "Theft (High Value)"
+var/const/CRIMSON_PRIMARY_THEFT_LV = "Theft (Low Value)"
+
+/datum/antagonist/crimson
+	var/selected_primary_choice = null
+	var/challenge_accepted = FALSE
+	var/challenge_objectives_assigned = FALSE
+
+// Called by the uplink when the player accepts the Challenge
+/datum/antagonist/crimson/proc/on_challenge_accepted()
+	challenge_accepted = TRUE
+	if(!challenge_objectives_assigned)
+		// Assign every other primary objective except the one the player picked
+		var/list/all_choices = list(
+			CRIMSON_PRIMARY_ASSASSINATE_RANDOM,
+			CRIMSON_PRIMARY_ASSASSINATE_HV,
+			CRIMSON_PRIMARY_THEFT_HV,
+			CRIMSON_PRIMARY_THEFT_LV
+		)
+		for(var/choice in all_choices)
+			if(choice == selected_primary_choice)
+				continue
+			if(choice == CRIMSON_PRIMARY_ASSASSINATE_RANDOM)
+				assign_crimson_assassination(TRUE)
+			else if(choice == CRIMSON_PRIMARY_ASSASSINATE_HV)
+				assign_crimson_assassination(FALSE)
+			else if(choice == CRIMSON_PRIMARY_THEFT_HV)
+				assign_crimson_theft_high_value()
+			else if(choice == CRIMSON_PRIMARY_THEFT_LV)
+				assign_crimson_theft_low_value()
+		challenge_objectives_assigned = TRUE
+	return
+
+// Helper: Are all non-escape antag objectives complete?
+/datum/antagonist/crimson/proc/all_non_escape_objectives_completed()
+	if(!objectives?.len)
+		return FALSE
+	for(var/datum/objective/O in objectives)
+		if(istype(O, /datum/objective/escape))
+			continue
+		if(!O.check_completion())
+			return FALSE
+	return TRUE
 
 /datum/antagonist/crimson/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || (owner ? owner.current : null)

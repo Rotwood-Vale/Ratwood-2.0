@@ -21,13 +21,14 @@ interface Data {
   items: Item[];
   challenge?: boolean;
   challengeAccepted?: boolean;
+  challengeDisabled?: boolean;
 }
 
 const UI_VERSION = 'v-challenge-compact-5b';
 
 export const Uplink = () => {
   const { data, act } = useBackend<Data>();
-  const { telecrystals, categories = [], items = [], selectedCat, challenge, challengeAccepted } = data;
+  const { telecrystals, categories = [], items = [], selectedCat, challenge, challengeAccepted, challengeDisabled } = data;
   const isChallenge = ((selectedCat || '').toLocaleLowerCase().trim() === 'challenge') || !!challenge;
   // Split out Challenge from normal categories so we can render it on the right side
   const leftCategories = categories.filter((c) => c.name.toLocaleLowerCase().trim() !== 'challenge');
@@ -84,7 +85,10 @@ export const Uplink = () => {
                           <Tabs.Tab
                             key="challenge"
                             selected={isChallenge}
-                            onClick={() => act('select', { category: 'Challenge' })}
+                            onClick={() => {
+                              if (!challengeDisabled) act('select', { category: 'Challenge' });
+                            }}
+                            style={{ opacity: challengeDisabled ? 0.5 : 1, cursor: challengeDisabled ? 'not-allowed' : 'pointer' }}
                           >
                             Challenge
                           </Tabs.Tab>
@@ -122,9 +126,12 @@ export const Uplink = () => {
                       Completing this Challenge will reward you with 20 Triumphs, and a special title.
                     </span>
                   </div>
+                  {(() => {
+                    const canAccept = !challengeAccepted && !challengeDisabled;
+                    return (
                   <div
                     onClick={() => {
-                      if (!challengeAccepted) act('accept_challenge');
+                      if (canAccept) act('accept_challenge');
                     }}
                     style={{
                       display: 'inline-block',
@@ -134,18 +141,20 @@ export const Uplink = () => {
                       textAlign: 'center',
                       fontSize: 12,
                       color: '#fff',
-                      background: challengeAccepted ? '#666' : '#a00',
+                      background: (challengeAccepted || !canAccept) ? '#666' : '#a00',
                       border: '1px solid #000',
                       borderRadius: 2,
-                      cursor: challengeAccepted ? 'default' : 'pointer',
+                      cursor: (challengeAccepted || !canAccept) ? 'default' : 'pointer',
                       userSelect: 'none',
                       minWidth: 0,
                       minHeight: 0,
                       padding: 0,
                     }}
                   >
-                    {challengeAccepted ? 'Accepted' : 'I ACCEPT'}
+                    {challengeAccepted ? 'Accepted' : (canAccept ? 'I ACCEPT' : 'Unavailable')}
                   </div>
+                    );
+                  })()}
                 </div>
               ) : items.length === 0 ? (
                 <NoticeBox>Nothing to buy here.</NoticeBox>
