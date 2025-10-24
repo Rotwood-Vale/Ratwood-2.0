@@ -347,6 +347,24 @@ GLOBAL_LIST_EMPTY(uplink_categories)  // registry of category names
 	crimson_mask.cost = 15
 	catalog[category_uniques][crimson_mask.name] = crimson_mask
 
+	var/datum/uplink_item/secret_revealer = new
+	secret_revealer.name = "Secret Revealer"
+	secret_revealer.category = category_uniques
+	secret_revealer.desc = "A crimson-tinted pick that reveals any secret. Instantly unlocks a lock once every 10 minutes."
+	secret_revealer.item = /obj/item/secret_revealer
+	secret_revealer.cost = 15
+	catalog[category_uniques][secret_revealer.name] = secret_revealer
+
+	// The Crimson Serum: one-time emergency heal stronger than strong red
+	var/datum/uplink_item/crimson_serum = new
+	crimson_serum.name = "The Crimson Serum"
+	crimson_serum.category = category_uniques
+	crimson_serum.desc = "A unique vial containing a distillation stronger than strong red. One per agent. For dire emergencies."
+	crimson_serum.item = /obj/item/reagent_containers/glass/bottle/alchemical/crimsonserum
+	crimson_serum.cost = 8
+	crimson_serum.per_buyer_limit = 1
+	catalog[category_uniques][crimson_serum.name] = crimson_serum
+
 
 
 
@@ -368,6 +386,8 @@ GLOBAL_LIST_EMPTY(uplink_categories)  // registry of category names
 	var/surplus = 100
 	var/cant_discount = FALSE
 	var/limited_stock = -1
+	/// Optional: per-buyer purchase limit; -1 for unlimited
+	var/per_buyer_limit = -1
 	var/list/include_modes = list()
 	var/list/exclude_modes = list()
 	var/list/restricted_roles = list()

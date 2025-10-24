@@ -54,6 +54,32 @@
 	..()
 	. = 1
 
+// Crimson unique: an emergency-grade version of strong red
+/datum/reagent/medicine/crimsonserum
+	name = "Crimson Serum"
+	description = "A secret distillation of stronger red. For dire emergencies."
+	color = "#DC143C"
+	taste_description = "searing lifeblood"
+	metabolization_rate = REAGENTS_METABOLISM * 4
+
+/datum/reagent/medicine/crimsonserum/on_mob_life(mob/living/carbon/M)
+	// Prevent overhealing beyond sensible thresholds by purging slowly when extremely saturated
+	if(volume >= 60)
+		M.reagents.remove_reagent(/datum/reagent/medicine/crimsonserum, 2)
+	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+		M.blood_volume = min(M.blood_volume + 30, BLOOD_VOLUME_NORMAL)
+	var/list/wCount = M.get_wounds()
+	if(wCount.len > 0)
+		M.heal_wounds(10)
+	if(volume > 0.99)
+		M.adjustBruteLoss(-12*REM, 0)
+		M.adjustFireLoss(-12*REM, 0)
+		M.adjustOxyLoss(-8, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -7*REM)
+		M.adjustCloneLoss(-12*REM, 0)
+	..()
+	. = 1
+
 /datum/reagent/medicine/manapot
 	name = "Mana Potion"
 	description = "Gradually regenerates energy."

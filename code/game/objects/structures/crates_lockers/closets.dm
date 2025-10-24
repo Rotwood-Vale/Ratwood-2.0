@@ -269,6 +269,10 @@
 	if(istype(W, /obj/item/lockpick))
 		trypicklock(W, user)
 		return
+	if(istype(W, /obj/item/secret_revealer))
+		var/obj/item/secret_revealer/SR = W
+		SR.attempt_unlock(src, user)
+		return
 	if(istype(W, /obj/item/melee/touch_attack/lesserknock))
 		trypicklock(W, user)
 		return

@@ -136,6 +136,14 @@ GLOBAL_LIST_EMPTY(uplinks)
 			var/datum/uplink_item/I = uplink_items[selected_cat][item_name]
 			if(I.limited_stock == 0)
 				continue
+			// Hide items the buyer has already purchased up to their personal limit
+			if(I.per_buyer_limit > 0 && purchase_log?.entries)
+				var/buys = 0
+				for(var/E in purchase_log.entries)
+					if(E["name"] == initial(I.name))
+						buys++
+				if(buys >= I.per_buyer_limit)
+					continue
 			if(I.restricted_roles?.len)
 				var/is_inaccessible = TRUE
 				for(var/R in I.restricted_roles)
@@ -254,6 +262,16 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return
 	if(!user || user.incapacitated())
 		return
+	// Enforce per-buyer purchase limits if configured on the item
+	if(U.per_buyer_limit > 0 && purchase_log?.entries)
+		var/buys = 0
+		for(var/E in purchase_log.entries)
+			if(E["name"] == initial(U.name))
+				buys++
+		if(buys >= U.per_buyer_limit)
+			if(user)
+				to_chat(user, span_warning("You may only purchase [initial(U.name)] once."))
+			return
 	if(telecrystals < U.cost || U.limited_stock == 0)
 		return
 	telecrystals -= U.cost

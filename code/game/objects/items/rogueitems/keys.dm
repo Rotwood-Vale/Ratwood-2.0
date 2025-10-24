@@ -139,6 +139,93 @@
 	else
 		SSroguemachine.key = src
 
+// Crimson unique: Secret Revealer
+/obj/item/secret_revealer
+	name = "Secret Revealer"
+	desc = "A crimson-tinted pick said to reveal any secret. Instantly unlocks one lock, then cools down for 10 minutes."
+	icon = 'icons/roguetown/items/keys.dmi'
+	icon_state = "lockpick"
+	color = "#DC143C"
+	w_class = WEIGHT_CLASS_TINY
+	dropshrink = 0.75
+	throwforce = 0
+	resistance_flags = FIRE_PROOF
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH|ITEM_SLOT_NECK
+	var/next_ready_time = 0
+	var/cooldown_time = 10 MINUTES
+
+/obj/item/secret_revealer/examine(mob/user)
+	. = ..()
+	var/time_left = max(0, next_ready_time - world.time)
+	if(time_left > 0)
+		var/mins = round(time_left / (1 MINUTES))
+		if(mins <= 0)
+			. += span_notice("It's nearly ready.")
+		else
+			. += span_notice("It hums faintly. About [mins] minute[(mins != 1)? "s":""] left.")
+	else
+		. += span_notice("It is ready.")
+
+/obj/item/secret_revealer/proc/_cooldown_remaining_text()
+	var/time_left = max(0, next_ready_time - world.time)
+	if(time_left <= 0)
+		return null
+	var/mins = round(ceil(time_left / (1 MINUTES)))
+	return "[mins] minute[(mins != 1)? "s":""]"
+
+/obj/item/secret_revealer/proc/can_use(mob/user)
+	if(world.time < next_ready_time)
+		var/T = _cooldown_remaining_text()
+		if(T)
+			to_chat(user, span_warning("The Revealer needs time. About [T] left."))
+		else
+			to_chat(user, span_warning("The Revealer is not ready yet."))
+		return FALSE
+	return TRUE
+
+/obj/item/secret_revealer/proc/mark_used()
+	next_ready_time = world.time + cooldown_time
+
+/obj/item/secret_revealer/proc/attempt_unlock(atom/target, mob/living/user)
+	if(!can_use(user))
+		return TRUE
+	if(istype(target, /obj/structure/mineral_door))
+		var/obj/structure/mineral_door/D = target
+		if(D.door_opened)
+			to_chat(user, span_warning("It cannot be used while the door is open."))
+			return TRUE
+		if(!D.keylock)
+			to_chat(user, span_warning("This door has no lock."))
+			return TRUE
+		if(!D.locked)
+			to_chat(user, span_notice("Already unlocked."))
+			return TRUE
+		var/was_locked = D.locked
+		D.tryskeletonlock(user)
+		if(D.locked != was_locked)
+			playsound(user, 'sound/items/skeleton_key.ogg', 60)
+			mark_used()
+		return TRUE
+	if(istype(target, /obj/structure/closet))
+		var/obj/structure/closet/C = target
+		if(C.opened)
+			to_chat(user, span_warning("It cannot be used while it's open."))
+			return TRUE
+		if(!C.keylock)
+			to_chat(user, span_warning("There's no lock on this."))
+			return TRUE
+		if(!C.locked)
+			to_chat(user, span_notice("Already unlocked."))
+			return TRUE
+		var/was_locked_c = C.locked
+		C.tryskeletonlock(user)
+		if(C.locked != was_locked_c)
+			playsound(user, 'sound/items/skeleton_key.ogg', 100)
+			mark_used()
+		return TRUE
+	to_chat(user, span_warning("It doesn't fit this kind of lock."))
+	return TRUE
+
 /obj/item/roguekey/lord/proc/anti_stall()
 	src.visible_message(span_warning("The Key of the vale crumbles to dust, the ashes spiriting away in the direction of the Keep."))
 	SSroguemachine.key = null //Do not harddel.

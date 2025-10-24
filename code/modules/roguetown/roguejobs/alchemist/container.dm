@@ -75,6 +75,12 @@
 /obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew
 	list_reagents = list(/datum/reagent/medicine/stronghealth = 27)
 
+// Crimson unique vial (small) prefilled with Crimson Serum
+/obj/item/reagent_containers/glass/bottle/alchemical/crimsonserum
+	name = "The Crimson Serum"
+	desc = "A small vial containing a distillation even stronger than strong red. Meant for dire emergencies."
+	list_reagents = list(/datum/reagent/medicine/crimsonserum = 18)
+
 /obj/item/reagent_containers/glass/bottle/alchemical/blessedwater
 	list_reagents = list(/datum/reagent/water/blessed = 27)	
 

@@ -245,8 +245,3 @@
             else
                 return null
 
-    var/hint = "Target item not on your person."
-    if(steal_target)
-        hint += " (expected [steal_target])"
-    return hint
-
