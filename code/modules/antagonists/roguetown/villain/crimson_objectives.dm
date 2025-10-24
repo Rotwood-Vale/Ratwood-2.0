@@ -250,4 +250,3 @@
         hint += " (expected [steal_target])"
     return hint
 
-    return null
