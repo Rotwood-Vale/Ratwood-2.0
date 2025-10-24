@@ -5,6 +5,32 @@
 /datum/objective/assassinate/crimson
     name = "assassinate (Crimson)"
 
+// In Roguetown, GLOB.data_core may not be populated; override to select from active minds.
+/datum/objective/assassinate/crimson/find_target(dupe_search_range, blacklist)
+    var/list/datum/mind/owners = get_owners()
+    if(!dupe_search_range)
+        dupe_search_range = get_owners()
+    var/list/possible_targets = list()
+    // Prefer live, human players from the active mind list
+    for(var/datum/mind/possible_target in SSticker.minds)
+        if(!possible_target)
+            continue
+        if(possible_target in owners)
+            continue
+        if(!ishuman(possible_target.current))
+            continue
+        if(possible_target.current.stat == DEAD)
+            continue
+        if(blacklist && (possible_target in blacklist))
+            continue
+        if(!is_unique_objective(possible_target, dupe_search_range))
+            continue
+        possible_targets += possible_target
+    if(length(possible_targets))
+        target = pick(possible_targets)
+    update_explanation_text()
+    return target
+
 /datum/objective/assassinate/crimson/check_completion()
     // Success if: already flagged completed, or the target is currently not considered alive,
     // or the target has been revived at least once (implies they died earlier this round).
@@ -155,12 +181,12 @@
 /datum/objective/steal/crimson/update_explanation_text()
     // Clarify stricter completion text for Crimson theft
     if(targetinfo)
-        explanation_text = "Steal [targetinfo.name] and keep it on your person until the end of the week. You must be alive at round end. Keeping it on the ground beneath you still counts."
+        explanation_text = "Steal [targetinfo.name] and keep it on your person until the end of the round. You must be alive at round end. Keeping it on the ground beneath you still counts."
         // Special hint for Solar Visage: it must be bagged in a sack
         if(istype(targetinfo, /datum/objective_item/steal/rogue/priestmask))
             explanation_text += " Bag it in a sack." // the mask only counts if placed inside a sack
     else if(steal_target)
-        explanation_text = "Steal the target and keep it on your person until the end of the week. You must be alive at round end. Keeping it on the ground beneath you still counts."
+        explanation_text = "Steal the target and keep it on your person until the end of the round. You must be alive at round end. Keeping it on the ground beneath you still counts."
     else
         explanation_text = "Free objective"
 
@@ -182,11 +208,9 @@
     var/list/graph = _collect_inventory_graph(L)
     var/list/objs = graph["objects"]
     var/list/parents = graph["parents"]
-    var/found_exact = FALSE
     var/found_but_failed_special = FALSE
     for(var/obj/I in objs)
         if(istype(I, steal_target))
-            found_exact = TRUE
             if(targetinfo && istype(targetinfo, /datum/objective_item/steal/rogue/priestmask))
                 if(!_is_inside_roguebag(I, parents))
                     found_but_failed_special = TRUE
@@ -203,7 +227,27 @@
         if(istype(targetinfo, /datum/objective_item/steal/rogue/priestmask))
             return "The Solar Visage must be bagged in a sack."
         return "Special requirement not met."
+    // Check turf beneath as a fallback
+    var/list/turf_graph = _collect_turf_graph(L)
+    var/list/tobjs = turf_graph["objects"]
+    var/list/tparents = turf_graph["parents"]
+    for(var/obj/J in tobjs)
+        if(istype(J, steal_target))
+            if(targetinfo && istype(targetinfo, /datum/objective_item/steal/rogue/priestmask))
+                if(!_is_inside_roguebag(J, tparents))
+                    return "The Solar Visage must be bagged in a sack."
+                else
+                    return null
+            else if(!targetinfo)
+                return null
+            else if(!targetinfo.check_special_completion(J))
+                return "Special requirement not met."
+            else
+                return null
 
-
+    var/hint = "Target item not on your person."
+    if(steal_target)
+        hint += " (expected [steal_target])"
+    return hint
 
     return null
