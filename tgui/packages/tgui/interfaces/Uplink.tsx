@@ -121,9 +121,9 @@ export const Uplink = () => {
                       You musn&#39;t have used any of your crystal rosas yet.
                       <br /><br />
 
-                      Accepting the Challenge will give you Critical Fragility, apply the Mask of the Crimson Order to your face, and remove all your crystal rosas.
+                      Accepting the Challenge will give you Critical Fragility, apply the Mask of the Crimson Order to your face, grant you ALL POSSIBLE OBJECTIVES, and remove all your crystal rosas.
                       <br /><br />
-                      Completing this Challenge will reward you with 20 Triumphs, and a special title.
+                      Completing this Challenge will reward you with 20 Triumphs, and a special title at the end.
                     </span>
                   </div>
                   {(() => {
