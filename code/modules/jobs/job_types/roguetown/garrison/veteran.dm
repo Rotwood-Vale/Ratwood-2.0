@@ -52,6 +52,7 @@
 	name = "Veteran Battlemaster"
 	tutorial = "You have served under a hundred masters, some good, some bad. You were a general once. A marshal, a captain. To some a hero, others a monster. Something of the sorts. You made strategies, tactics, new innovations of war. A thousand new ways for one man to kill another. It still keeps you up at night."
 	outfit = /datum/outfit/job/roguetown/vet/battlemaster
+	cmode_music = 'sound/music/cmode/towner/combat_retired.ogg'
 
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
@@ -105,7 +106,6 @@
 		H.change_stat(STATKEY_WIL, 1)
 
 	H.verbs |= /mob/proc/haltyell
-	H.cmode_music = 'sound/music/cmode/towner/combat_retired.ogg'
 
 /datum/advclass/veteran/footman
 	name = "Retired Footman"
@@ -257,6 +257,7 @@
 	name = "Retired Mercenary"
 	tutorial = "You were a sell-sword, a warrior of coin. Your pockets were never light, you always had a warm place to stay and food in your belly, but you knew that every battle could be your last. You're the last of your unit, and you can't help but regret it. You specialize in swords and polearms, or axes and polearms."
 	outfit = /datum/outfit/job/roguetown/vet/merc
+	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
@@ -311,7 +312,6 @@
 		H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE) // two handed weapons require a LOT of stamina.
 	H.verbs |= /mob/proc/haltyell
 	H.grant_language(/datum/language/grenzelhoftian)
-	H.cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 
 	H.adjust_blindness(-3)
 	var/weapons = list("Zweihander","Halberd")

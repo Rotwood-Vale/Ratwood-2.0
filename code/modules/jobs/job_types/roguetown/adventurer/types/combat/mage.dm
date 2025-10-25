@@ -12,7 +12,7 @@
 		STATKEY_PER = 2,
 		STATKEY_SPD = 1,
 	)
-
+	subclass_spellpoints = 18
 /datum/outfit/job/roguetown/adventurer/mage/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You are a learned mage and a scholar, having spent your life studying the arcane and its ways."))
@@ -49,8 +49,6 @@
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 		H.mind?.adjust_spellpoints(6)
-	H.mind?.adjust_spellpoints(18)
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander4.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
@@ -67,7 +65,7 @@
 		STATKEY_CON = 1,
 		STATKEY_WIL = 1,
 	)
-
+	subclass_spellpoints = 12
 /datum/outfit/job/roguetown/adventurer/spellblade/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You are skilled in both the arcyne art and the art of the blade. But you are not a master of either nor could you channel your magick in armor."))
@@ -83,11 +81,9 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	backpack_contents = list(/obj/item/flashlight/flare/torch = 1, /obj/item/recipe_book/survival = 1)
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
-		H.mind.adjust_spellpoints(12)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
@@ -135,6 +131,7 @@
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 1,
 	)
+	subclass_spellpoints = 12
 /datum/outfit/job/roguetown/adventurer/spellsinger/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You belong to a school of bards renowned for their study of both the arcane and the arts."))
@@ -153,11 +150,9 @@
 	r_hand = /obj/item/rogueweapon/sword/sabre
 	backpack_contents = list(/obj/item/flashlight/flare/torch = 1, /obj/item/recipe_book/survival = 1)
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
-		H.mind.adjust_spellpoints(12)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/music, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)

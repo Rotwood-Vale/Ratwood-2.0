@@ -86,7 +86,7 @@
 		shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 		mask = /obj/item/clothing/mask/rogue/spectacles
 		neck = /obj/item/storage/belt/rogue/pouch/coins/rich
-	
+
 	// Give 2 in every weapon skill regardless of equipment choice
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
@@ -100,7 +100,7 @@
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/slings, 2, TRUE)
-		
+
 	// Keep original non-weapon skills
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
@@ -121,6 +121,7 @@
 		STATKEY_CON = -1,
 		STATKEY_LCK = 1,
 	)
+	subclass_spellpoints = 9
 
 /datum/outfit/job/roguetown/heir/bookworm/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -144,9 +145,6 @@
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		H.mind.adjust_spellpoints(9)
 
 /datum/advclass/heir/aristocrat
 	name = "Sheltered Aristocrat"
@@ -275,7 +273,7 @@
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/lockpickring/mundane = 1,
 	)
-					
+
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)

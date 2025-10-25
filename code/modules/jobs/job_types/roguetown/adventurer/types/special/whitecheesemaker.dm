@@ -8,6 +8,8 @@
 	// this looks kinda op so imma just leave it at patreon level 1 until someone puts this behind a different lock
 	maximum_possible_slots = 1
 
+	subclass_spellpoints = 9
+
 	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled
 	category_tags = list(CTAG_DISABLED)
 
@@ -55,6 +57,5 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
-		H.mind.adjust_spellpoints(9)
 
 	H.ambushable = FALSE

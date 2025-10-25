@@ -6,7 +6,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/hunter
 	traits_applied = list(TRAIT_OUTDOORSMAN)
 	cmode_music = 'sound/music/cmode/towner/combat_towner2.ogg'
-	
+
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	subclass_stats = list(
 		STATKEY_PER = 3,
@@ -66,12 +66,13 @@
 	name = "Spear-Hunter"
 	tutorial = "You are a hunter. With your bow you hunt the fauna of the glade, skinning what you kill and cooking any meat left over. The job is dangerous but important in the circulation of clothing and light armor."
 	outfit = /datum/outfit/job/roguetown/adventurer/hunter_spear
+	cmode_music = 'sound/music/cmode/towner/combat_towner2.ogg'
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_CON = 1,
 		STATKEY_WIL = 1
 	)
-	
+
 /datum/outfit/job/roguetown/adventurer/hunter_spear/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You are a hunter who specializes in spears, excelling in strength and endurance."))
@@ -113,5 +114,4 @@
 	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.cmode_music = 'sound/music/cmode/towner/combat_towner2.ogg'
 	return

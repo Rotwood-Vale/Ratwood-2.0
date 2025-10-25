@@ -58,6 +58,7 @@
 		STATKEY_PER = 2,
 		STATKEY_SPD = 1
 	)
+	subclass_spellpoints = 21
 
 /datum/outfit/job/roguetown/wapprentice/associate/pre_equip(mob/living/carbon/human/H)
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/mage
@@ -88,7 +89,6 @@
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
 		H.mind?.adjust_spellpoints(6)
-	H.mind?.adjust_spellpoints(21)
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
@@ -105,6 +105,7 @@
 		STATKEY_PER = 3,
 		STATKEY_WIL = 1
 	)
+	subclass_spellpoints = 18
 
 /datum/outfit/job/roguetown/wapprentice/alchemist/pre_equip(mob/living/carbon/human/H)
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/magegreen
@@ -136,7 +137,6 @@
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 		H.change_stat(STATKEY_PER, -1)
 		H.change_stat(STATKEY_INT, 1)
-	H.mind?.adjust_spellpoints(18)
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
@@ -153,7 +153,7 @@
 		STATKEY_SPD = 1,
 		STATKEY_LCK = 1 // this is just a carrot for the folk who are mad enough to take this role...
 	)
-
+	subclass_spellpoints = 18
 
 /datum/outfit/job/roguetown/wapprentice/apprentice/pre_equip(mob/living/carbon/human/H)
 	beltl = /obj/item/storage/magebag/associate
@@ -169,7 +169,6 @@
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
-	H.mind?.adjust_spellpoints(18)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)

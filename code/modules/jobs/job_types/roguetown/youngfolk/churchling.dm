@@ -35,6 +35,7 @@
 	name = "Churchling"
 	tutorial = "Your family were zealots. They scolded you with a studded belt and prayed like sinners every waking hour of the day they weren't toiling in the fields. You escaped them by becoming a churchling--and a guaranteed education isn't so bad."
 	outfit = /datum/outfit/job/roguetown/churchling/basic
+	cmode_music = 'sound/music/combat_holy.ogg'
 	category_tags = list(CTAG_CHURCHLING)
 	subclass_stats = list(
 		STATKEY_SPD = 2,
@@ -52,7 +53,6 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
-	H.cmode_music = 'sound/music/combat_holy.ogg'
 	neck = /obj/item/clothing/neck/roguetown/psicross
 	if(should_wear_femme_clothes(H))
 		head = /obj/item/clothing/head/roguetown/armingcap

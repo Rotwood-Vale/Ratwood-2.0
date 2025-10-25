@@ -164,6 +164,7 @@
 		STATKEY_INT = 2,
 		STATKEY_PER = -1
 	)
+	subclass_spellpoints = 15
 
 /datum/outfit/job/roguetown/mercenary/desert_rider_almah/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -182,11 +183,9 @@
 	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/repulse)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
-		H.mind.adjust_spellpoints(15)
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/raneshen
 	neck = /obj/item/clothing/neck/roguetown/gorget/copper
 	mask = /obj/item/clothing/mask/rogue/facemask/copper

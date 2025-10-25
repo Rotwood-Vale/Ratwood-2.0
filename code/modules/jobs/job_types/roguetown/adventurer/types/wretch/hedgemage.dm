@@ -5,6 +5,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/hedgemage
+	cmode_music = 'sound/music/combat_bandit_mage.ogg'
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3)
 	// Same stat spread as necromancer, same reasoning
@@ -14,6 +15,7 @@
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1
 	)
+	subclass_spellpoints = 21 // Unlike Rogue Mage, who gets 6 but DExpert, this one don't have DExpert but have more spell points than anyone but the CM.
 
 // Hedge Mage on purpose has nearly the same fit as a Adv Mage / Mage Associate who cast conjure armor roundstart. Call it meta disguise.
 /datum/outfit/job/roguetown/wretch/hedgemage/pre_equip(mob/living/carbon/human/H)
@@ -33,9 +35,9 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/woodstaff/ruby
 	backpack_contents = list(
-		/obj/item/spellbook_unfinished/pre_arcyne = 1, 
+		/obj/item/spellbook_unfinished/pre_arcyne = 1,
 		/obj/item/roguegem/amethyst = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/chalk = 1,
@@ -62,8 +64,7 @@
 	var/classchoice = input("Choose your archetypes", "Available archetypes") as anything in classes
 	switch(classchoice)
 		if("Hedge Mage")
-			H?.mind.adjust_spellpoints(27)
+			H?.mind.adjust_spellpoints(6)
 		if("Rogue Mage")
-			H?.mind.adjust_spellpoints(21)
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	wretch_select_bounty(H)

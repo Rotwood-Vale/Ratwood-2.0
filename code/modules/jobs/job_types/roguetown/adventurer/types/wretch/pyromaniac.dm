@@ -4,6 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/pyromaniac
+	cmode_music = 'sound/music/Iconoclast.ogg'
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
@@ -49,7 +50,6 @@
 	H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
 	wretch_select_bounty(H)
-	H.cmode_music = 'sound/music/Iconoclast.ogg'
 	var/weapons = list("Archery", "Crossbows", "LET THERE BE FLAME!!!")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)

@@ -476,6 +476,8 @@
 					for(var/stat in adv_ref.adv_stat_ceiling)
 						dat += "["[capitalize(stat)]: <b>\Roman[adv_ref.adv_stat_ceiling[stat]]</b>"] | "
 					dat += "<i><br>Regardless of your statpacks or race choice, you will not be able to exceed these stats on spawn.</i></font>"
+				if(adv_ref.subclass_spellpoints > 0)
+					dat += "<font color = '#a3a7e0'>Starting Spellpoints: <b>[adv_ref.subclass_spellpoints]</b></font>"
 				if(length(adv_ref.subclass_languages))
 					dat += "<details><summary><i>Known Languages</i></summary>"
 					for(var/i in 1 to length(adv_ref.subclass_languages))
@@ -489,11 +491,11 @@
 					var/list/traitlist
 					if(length(adv_ref.traits_applied))
 						traitlist = adv_ref.traits_applied
-						dat += "<font color ='#ccbb82'><font color ='#d6d6d6'>Sub</font>class traits:</font> "
+						dat += "<font color ='#7a4d0a'><b>Sub</b>class Traits:</font> "
 					else if(!length(adv_ref.traits_applied) && length(job_traits))
 						traitlist = job_traits
 						show_job_traits = FALSE
-						dat += "<font color ='#ccbb82'><font color ='#d6d6d6'>Class</font> traits:</font> "
+						dat += "<font color ='#7a4d0a'><b>Class</b> Traits:</font> "
 					for(var/trait in traitlist)
 						dat += "<details><summary><i><font color ='#ccbb82'>[trait]</font></i></summary>"
 						dat += "<i><font color = '#a3ffe0'>[GLOB.roguetraits[trait]]</font></i></details>"
@@ -523,9 +525,8 @@
 				dat += "</td></tr></table>"//Skill table end
 				if(adv_ref.extra_context)
 					dat += "<font color ='#a06c1e'>[adv_ref.extra_context]"
-					dat += "</font></details>"
-				else
-					dat += "</details>"
+					dat += "</font>"
+				dat += "</details>"
 		dat += "<hr>"
 		if(length(job_stats))
 			dat += "Starting Stats:<font color ='#d4b164'>"
@@ -540,7 +541,7 @@
 				dat += "<br><i>Regardless of your statpacks or race choice, you will not be able to exceed these stats on spawn.</i></font>"
 				dat += "</font>"	//Ends the stat limit colors
 		if(length(job_traits) && (show_job_traits || sclass_count > 1))
-			dat += "<font color ='#ccbb82'>This <font color ='#d6d6d6'>class</font> gains the following traits:</font> "
+			dat += "<font color ='#7a4d0a'><b>Class</b></font> Traits:</font> "
 			for(var/trait in job_traits)
 				dat += "<details><summary><i><font color ='#ccbb82'>[trait]</font></i></summary>"
 				dat += "<i><font color = '#a3ffe0'>[GLOB.roguetraits[trait]]</font></i></details>"

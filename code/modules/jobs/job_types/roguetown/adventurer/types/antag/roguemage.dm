@@ -6,6 +6,7 @@
 	outfit = /datum/outfit/job/roguetown/bandit/roguemage
 	category_tags = list(CTAG_BANDIT)
 	cmode_music = 'sound/music/combat_bandit_mage.ogg'
+	subclass_spellpoints = 21
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_DODGEEXPERT, TRAIT_DEATHBYSNUSNU)
 	subclass_stats = list(
 		STATKEY_INT = 3,
@@ -71,8 +72,6 @@
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
 		H.mind?.adjust_spellpoints(6)
-	H.mind?.adjust_spellpoints(21) // On par with Mage Associate
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 
 	if(!istype(H.patron, /datum/patron/inhumen/matthios))
 		var/inputty = input(H, "Would you like to change your patron to Matthios?", "The Transactor calls", "No") as anything in list("Yes", "No")

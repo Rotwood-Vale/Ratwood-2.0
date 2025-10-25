@@ -3,9 +3,10 @@
 	tutorial = "A disgraced physician forced into exile and years of hardship, you have turned to a private practice surrounding the only things you've ever known - poisons and plague. Revel in the spreading of blight, and unleash craven pestilence."
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/plaguebearer
+	cmode_music = 'sound/music/combat_physician.ogg'
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list( TRAIT_CICERONE, TRAIT_NOSTINK, TRAIT_MEDICINE_EXPERT)
-	maximum_possible_slots = 1 //They spawn with killer's ice lol I'm limiting this shit 
+	maximum_possible_slots = 1 //They spawn with killer's ice lol I'm limiting this shit
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 3,
@@ -15,7 +16,7 @@
 /datum/outfit/job/roguetown/wretch/plaguebearer/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/physician
 	mask = /obj/item/clothing/mask/rogue/physician
-	neck = /obj/item/clothing/neck/roguetown/chaincoif 
+	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	pants = /obj/item/clothing/under/roguetown/trou/leather/mourning
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
@@ -27,7 +28,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	backpack_contents = list(
-		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1, // You get one epic poison. As a treat because you're valid. Don't waste it. 
+		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1, // You get one epic poison. As a treat because you're valid. Don't waste it.
 		/obj/item/reagent_containers/glass/bottle/rogue/stampoison = 1,
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
@@ -42,14 +43,13 @@
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/carpentry, 3, TRUE) //Build your gooncave 
+	H.adjust_skillrank(/datum/skill/craft/carpentry, 3, TRUE) //Build your gooncave
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE) //Disgraced medicine man. 
+	H.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE) //Disgraced medicine man.
 	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 5, TRUE) // This is literally their whole thing
 	H.adjust_skillrank(/datum/skill/labor/farming, 3, TRUE) // Farm ingredients so you have something to do that isn't grinding skills
-	H.cmode_music = 'sound/music/combat_physician.ogg'
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	var/weapons = list("Archery", "LET THERE BE PLAGUE!!!")

@@ -4,6 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/outlaw
+	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_DODGEEXPERT)
 	subclass_stats = list(
@@ -56,7 +57,6 @@
 	H.adjust_skillrank(/datum/skill/misc/stealing, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/traps, 5, TRUE)
-	H.cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 	var/weapons = list("Rapier","Dagger", "Whip")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
@@ -79,6 +79,7 @@
 	name = "Marauder"
 	tutorial = "You are a brigand and a pillager - you prefer to get your coins with direct means from unfortunate victims."
 	outfit = /datum/outfit/job/roguetown/wretch/marauder
+	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
 	//Still the speed class
 	subclass_stats = list(
 		STATKEY_CON = 2,
@@ -124,7 +125,6 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
-	H.cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
 	var/weapons = list("Just An Iron Shield","Dagger + Crossbow", "Militia Warpick + Heater Shield", "Militia Spear + Heater Shield")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)

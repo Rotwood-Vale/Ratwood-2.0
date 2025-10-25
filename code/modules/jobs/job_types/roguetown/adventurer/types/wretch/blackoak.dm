@@ -21,6 +21,7 @@
 		STATKEY_CON = -1
 	)
 	extra_context = "This subclass is race-limited to: Half-Elves, Elves, Dark Elves."
+	subclass_spellpoints = 10
 
 /datum/outfit/job/roguetown/wretch/blackoak/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -61,9 +62,7 @@
 				)
 
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
-		H.mind.adjust_spellpoints(10)
 

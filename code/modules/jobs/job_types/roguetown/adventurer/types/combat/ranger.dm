@@ -159,6 +159,7 @@
 	name = "Biome Wanderer"
 	tutorial = "The dangers of the wilds vary upon the plains they rest upon, You happen to be experienced in many."
 	outfit = /datum/outfit/job/roguetown/adventurer/bwanderer
+	cmode_music = 'sound/music/cmode/adventurer/combat_outlander4.ogg'
 	traits_applied = list(TRAIT_OUTDOORSMAN)
 	subclass_stats = list(
 		STATKEY_PER = 2,
@@ -198,7 +199,6 @@
 	H.adjust_skillrank(/datum/skill/labor/butchering, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE) // Won't really equate to much.
 	H.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)
-	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander4.ogg'
 	var/weapons = list("Recurve Bow","Billhook","Sling","Crossbow")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	switch(weapon_choice)

@@ -145,6 +145,7 @@
 	name = "Harlequin"
 	tutorial = "You are a travelling entertainer - a jester by trade. Where you go, chaos follows - and mischief is made."
 	outfit = /datum/outfit/job/roguetown/refugee/harlequin
+	cmode_music = 'sound/music/combat_jester.ogg'
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_NUTCRACKER)
 	subclass_stats = list(
 		STATKEY_SPD = 2,
@@ -165,7 +166,6 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	head = /obj/item/clothing/head/roguetown/jester
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid
-	H.cmode_music = 'sound/music/combat_jester.ogg'
 	backpack_contents = list(
 		/obj/item/bomb/smoke = 3,
 		/obj/item/storage/pill_bottle/dice = 1,
