@@ -47,10 +47,10 @@ However, if you want finer control over the installation or build process, you
 will need these:
 
 - [Node v22.11+](https://nodejs.org/en/download/)
-  - **LTS** release is recommended instead of latest
-  - **DO NOT install Chocolatey if Node installer asks you to!**
+    - **LTS** release is recommended instead of latest
+    - **DO NOT install Chocolatey if Node installer asks you to!**
 - [Yarn v4.8.1+](https://yarnpkg.com/getting-started/install)
-  - Yarn is normally installed with corepack.
+    - Yarn is normally installed with corepack.
 
 ## Usage
 
@@ -59,8 +59,8 @@ will need these:
 - `bin/tgui-build` - Build tgui in production mode and run a full suite of code
   checks.
 - `bin/tgui-dev` - Launch a development server.
-  - `bin/tgui-dev --reload` - Reload byond cache once.
-  - `bin/tgui-dev --debug` - Run server with debug logging enabled.
+    - `bin/tgui-dev --reload` - Reload byond cache once.
+    - `bin/tgui-dev --debug` - Run server with debug logging enabled.
 
 > To open a CMD or PowerShell window in any open folder, right click **while
 > holding Shift** on any free space in the folder, then click on either
@@ -70,9 +70,9 @@ will need these:
 
 - `tools/build/build.sh tgui` - Build tgui in production mode.
 - `tools/build/build.sh tgui-dev` - Build tgui in production mode.
-  - `tools/build/build.sh tgui-dev --reload` - Reload byond cache once.
-  - `tools/build/build.sh tgui-dev --debug` - Run server with debug logging
-    enabled.
+    - `tools/build/build.sh tgui-dev --reload` - Reload byond cache once.
+    - `tools/build/build.sh tgui-dev --debug` - Run server with debug logging
+      enabled.
 - `tools/build/build.sh tgui-lint` - Show (and auto-fix) problems with the code.
 - `tools/build/build.sh tgui-test` - Run unit and integration tests.
 - `tools/build/build.sh tgui-analyze` - Run a bundle analyzer.
@@ -89,10 +89,10 @@ will need these:
 Run `bun install` once to install tgui dependencies.
 
 - `bun tgui:build` - Build tgui in production mode.
-  - `bun tgui:build [options]` - Build tgui with custom webpack options.
+    - `bun tgui:build [options]` - Build tgui with custom webpack options.
 - `bun tgui:dev` - Launch a development server.
-  - `bun tgui:dev --reload` - Reload byond cache once.
-  - `bun tgui:dev --debug` - Run server with debug logging enabled.
+    - `bun tgui:dev --reload` - Reload byond cache once.
+    - `bun tgui:dev --debug` - Run server with debug logging enabled.
 - `bun tgui:lint` - Show (and auto-fix) problems with the code.
 - `bun tgui:tsc` - Check code with TypeScript compiler.
 - `bun tgui:test` - Run unit and integration tests.

@@ -231,3 +231,7 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 !/config/title_screens/images/exclude
 
 *.test.dme
+
+# tgui
+node_modules/
+package-lock.json

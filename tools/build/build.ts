@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 /**
  * Build script for /tg/station 13 codebase.
  *
@@ -6,10 +7,10 @@
  * https://github.com/stylemistake/juke-build
  */
 
-import Bun from "bun";
 import fs from "node:fs";
+import Bun from "bun";
 import Juke from "./juke/index.js";
-import { bun, bun_tgfont } from "./lib/bun";
+import { bun, bunRoot } from "./lib/bun";
 import { DreamDaemon, DreamMaker, NamedVersionFile } from "./lib/byond";
 import { downloadFile } from "./lib/download";
 import { formatDeps } from "./lib/helpers";
@@ -26,7 +27,7 @@ const dependencies: Record<string, any> = await Bun.file("dependencies.sh")
   .then(formatDeps)
   .catch((err) => {
     Juke.logger.error(
-      "Failed to read dependencies.sh, please ensure it exists and is formatted correctly.",
+      "Failed to read dependencies.sh, please ensure it exists and is formatted correctly."
     );
     Juke.logger.error(err);
     throw new Juke.ExitCode(1);
@@ -144,7 +145,7 @@ export const DmTestTarget = new Juke.Target({
       "-trusted",
       "-verbose",
       "-params",
-      "log-directory=ci",
+      "log-directory=ci"
     );
     Juke.rm("*.test.*");
     try {
@@ -176,15 +177,15 @@ export const TgFontTarget = new Juke.Target({
     "tgui/packages/tgfont/dist/tgfont.woff2",
   ],
   executes: async () => {
-    await bun_tgfont("tgfont:build");
+    await bun("tgfont:build");
     fs.mkdirSync("tgui/packages/tgfont/static", { recursive: true });
     fs.copyFileSync(
       "tgui/packages/tgfont/dist/tgfont.css",
-      "tgui/packages/tgfont/static/tgfont.css",
+      "tgui/packages/tgfont/static/tgfont.css"
     );
     fs.copyFileSync(
       "tgui/packages/tgfont/dist/tgfont.woff2",
-      "tgui/packages/tgfont/static/tgfont.woff2",
+      "tgui/packages/tgfont/static/tgfont.woff2"
     );
   },
 });
@@ -192,7 +193,7 @@ export const TgFontTarget = new Juke.Target({
 export const TguiTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
-    "tgui/rspack.config.mjs",
+    "tgui/rspack.config.ts",
     "tgui/**/package.json",
     "tgui/packages/**/*.+(js|cjs|ts|tsx|jsx|scss)",
   ],
@@ -216,11 +217,6 @@ export const TguiEslintTarget = new Juke.Target({
 export const TguiPrettierTarget = new Juke.Target({
   dependsOn: [BunTarget],
   executes: () => bun("tgui:prettier"),
-});
-
-export const TguiSonarTarget = new Juke.Target({
-  dependsOn: [BunTarget],
-  executes: () => bun("tgui:sonar"),
 });
 
 export const TguiTscTarget = new Juke.Target({
@@ -248,9 +244,18 @@ export const TguiAnalyzeTarget = new Juke.Target({
   executes: () => bun("tgui:analyze"),
 });
 
-export const TguiBenchTarget = new Juke.Target({
+export const TguiPrettierFix = new Juke.Target({
   dependsOn: [BunTarget],
-  executes: () => bun("tgui:bench"),
+  executes: () => bun("tgui:prettier-fix"),
+});
+
+export const TguiEslintFix = new Juke.Target({
+  dependsOn: [BunTarget],
+  executes: () => bun("tgui:eslint-fix"),
+});
+
+export const TguiFix = new Juke.Target({
+  dependsOn: [TguiPrettierFix, TguiEslintFix],
 });
 
 export const TestTarget = new Juke.Target({

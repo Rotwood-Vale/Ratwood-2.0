@@ -19,7 +19,6 @@ export function createStats(verbose: boolean): StatsOptions {
     version: verbose,
   };
 }
-
 const dirname = path.resolve();
 
 export default defineConfig({
@@ -72,7 +71,15 @@ export default defineConfig({
       },
       {
         test: /\.(png|jpg)$/,
-        type: 'asset/resource',
+        oneOf: [
+          {
+            issuer: /\.(s)?css$/,
+            type: 'asset/inline',
+          },
+          {
+            type: 'asset/resource',
+          },
+        ],
         generator: {
           filename: '[name][ext]',
         },
@@ -125,8 +132,11 @@ export default defineConfig({
       'tgui-panel': path.resolve(dirname, './packages/tgui-panel'),
       'tgui-say': path.resolve(dirname, './packages/tgui-say'),
       'tgui-dev-server': path.resolve(dirname, './packages/tgui-dev-server'),
-      'roguefont/languages': path.resolve(dirname, "../interface/fonts/languages"),
-      'roguefont': path.resolve(dirname, "../interface/fonts"),
+      'roguefont/languages': path.resolve(
+        dirname,
+        '../interface/fonts/languages',
+      ),
+      roguefont: path.resolve(dirname, '../interface/fonts'),
     },
   },
   stats: createStats(true),
