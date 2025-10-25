@@ -564,4 +564,30 @@
 		popup.open(FALSE)
 		if(winexists(usr, "classhelp"))
 			winset(usr, "classhelp", "focus=true")
+	. = ..()	if(href_list["jobsubclassinfo"])
+		var/list/dat = list()
+		for(var/adv in job_subclasses)
+			var/datum/advclass/advpath = adv
+			var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
+			if(subclass.maximum_possible_slots != -1)
+				dat += "[subclass.name] — <b>"
+				if(subclass.total_slots_occupied >= subclass.maximum_possible_slots)
+					dat += "FULL!"
+				else
+					dat += "[subclass.total_slots_occupied] / [subclass.maximum_possible_slots]"
+				dat += "</b><br>"
+		var/datum/browser/popup = new(usr, "subclassslots", "<div style='text-align: center'>[title]</div>", nwidth = 200, nheight = 300)
+		popup.set_content(dat.Join())
+		popup.open(FALSE)
+		if(winexists(usr, "subclassslots"))
+			winset(usr, "subclassslots", "focus=true")
 	. = ..()
+
+/datum/job/proc/has_limited_subclasses()
+	if(length(job_subclasses) <= 0)
+		return FALSE
+	for(var/adv in job_subclasses)
+		var/datum/advclass/subclass = adv
+		if(initial(subclass.maximum_possible_slots) != -1)
+			return TRUE
+	return FALSE
