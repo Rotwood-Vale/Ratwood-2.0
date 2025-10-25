@@ -564,7 +564,7 @@
 		popup.open(FALSE)
 		if(winexists(usr, "classhelp"))
 			winset(usr, "classhelp", "focus=true")
-	. = ..()	if(href_list["jobsubclassinfo"])
+	if(href_list["jobsubclassinfo"])
 		var/list/dat = list()
 		for(var/adv in job_subclasses)
 			var/datum/advclass/advpath = adv
