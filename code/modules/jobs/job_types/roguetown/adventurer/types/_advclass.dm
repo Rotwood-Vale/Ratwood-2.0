@@ -12,6 +12,7 @@
 	var/maximum_possible_slots = -1
 	var/total_slots_occupied = 0
 	var/min_pq = -100
+	var/class_select_category
 
 	var/horse = FALSE
 	var/vampcompat = TRUE
@@ -34,6 +35,12 @@
 
 	/// Subclass stat bonuses.
 	var/list/subclass_stats
+
+	/// Subclass skills. Levelled UP TO.
+	var/list/subclass_skills
+
+	/// Subclass languages.
+	var/list/subclass_languages
 
 	/// Extra fluff added to the role explanation in class selection.
 	var/extra_context
@@ -65,10 +72,17 @@
 	if(adaptive_name)
 		H.adaptive_name = TRUE
 
+	if(length(subclass_languages))
+		for(var/lang in subclass_languages)
+			H.grant_language(lang)
+
 	if(length(subclass_stats))
 		for(var/stat in subclass_stats)
 			H.change_stat(stat, subclass_stats[stat])
 
+	if(length(subclass_skills))
+		for(var/skill in subclass_skills)
+			H.adjust_skillrank_up_to(skill, subclass_skills[skill], TRUE)
 
 	// After the end of adv class equipping, apply a SPECIAL trait if able
 
@@ -131,4 +145,3 @@
 
 //Final proc in the set for really silly shit
 ///datum/advclass/proc/extra_slop_proc_ending(mob/living/carbon/human/H)
-
