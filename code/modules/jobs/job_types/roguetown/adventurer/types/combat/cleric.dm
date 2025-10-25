@@ -5,6 +5,7 @@
 	allowed_races = RACES_ALL_KINDS
 	vampcompat = FALSE
 	outfit = /datum/outfit/job/roguetown/adventurer/cleric
+	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
 	subclass_stats = list(

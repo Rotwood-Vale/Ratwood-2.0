@@ -4,6 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/desert_rider
+	class_select_category = CLASS_CAT_RANESHENI
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_desertrider.ogg' //GREATEST COMBAT TRACK IN THE GAME SO FAR BESIDES MAYBE MANIAC2.OGG
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
@@ -76,7 +77,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-	
+
 	H.merctype = 4
 
 /datum/advclass/mercenary/desert_rider/zeybek
@@ -93,7 +94,7 @@
 /datum/outfit/job/roguetown/mercenary/desert_rider_zeybek/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("Ranesheni 'Blade Dancers' are famed and feared the world over. Their expertise in blades both long and short is well known."))
-	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE) 
+	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/whipsflails, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
@@ -149,7 +150,7 @@
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	beltr = /obj/item/rogueweapon/scabbard/sword
 	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-	
+
 	H.merctype = 4
 
 /datum/advclass/mercenary/desert_rider/almah
@@ -211,7 +212,7 @@
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	beltr = /obj/item/rogueweapon/scabbard/sword
 	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-	
+
 	H.merctype = 4
 
 

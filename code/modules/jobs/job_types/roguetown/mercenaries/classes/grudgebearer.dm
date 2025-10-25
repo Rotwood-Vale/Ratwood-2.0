@@ -8,6 +8,7 @@
 		/datum/species/dwarf/mountain
 	)
 	outfit = /datum/outfit/job/roguetown/mercenary/grudgebearer
+	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_dwarf.ogg'
 	extra_context = "This subclass is race-limited to: Dwarves."

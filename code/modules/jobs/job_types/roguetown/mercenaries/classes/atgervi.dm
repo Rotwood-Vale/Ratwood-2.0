@@ -4,6 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/atgervi
+	class_select_category = CLASS_CAT_GRONN
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SEEPRICES_SHITTY)
 	category_tags = list(CTAG_MERCENARY)
 	subclass_stats = list(
@@ -12,7 +13,7 @@
 		STATKEY_STR = 2,
 		STATKEY_SPD = -1
 	)
-	
+
 /datum/outfit/job/roguetown/mercenary/atgervi
 	allowed_patrons = ALL_INHUMEN_PATRONS
 
@@ -26,7 +27,7 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)	
+	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
@@ -46,7 +47,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle //They didn't have neck protection before.
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
-	
+
 	H.cmode_music = 'sound/music/combat_vagarian.ogg'
 	H.grant_language(/datum/language/gronnic)
 	backpack_contents = list(
@@ -132,7 +133,7 @@
 	icon_state = "atgervi_pants"
 	item_state = "atgervi_pants"
 	flags_inv = HIDECROTCH|HIDEBOOB
-	
+
 /obj/item/clothing/gloves/roguetown/angle/atgervi
 	name = "fur-lined leather gloves"
 	desc = "Thick, padded gloves made for the harshest of climates, and wildest of beasts encountered in the untamed lands."

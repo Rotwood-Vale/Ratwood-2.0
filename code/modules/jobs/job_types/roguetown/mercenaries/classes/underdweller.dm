@@ -12,6 +12,7 @@
 		/datum/species/anthromorphsmall,	//Basically all under-ground races. Perfect for cave-clearing.
 	)
 	outfit = /datum/outfit/job/roguetown/mercenary/underdweller
+	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_MERCENARY)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK, TRAIT_STEELHEARTED)
 	subclass_stats = list(

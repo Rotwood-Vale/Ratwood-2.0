@@ -3,11 +3,12 @@
 	tutorial = "The Order of the Forlorn Hope, a holy order founded in the name of Noc and the banishment of the rot. Now it is riddled with the wounded, the veterans and the landless of the Vakran civil war. Take up the banner and fight again in the name of the Ten, or use the pretense of faith and zealotry to make ends meet by any means necessary."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
-		/datum/species/lupian, 
-		/datum/species/anthromorph, 
+		/datum/species/lupian,
+		/datum/species/anthromorph,
 		/datum/species/vulpkanin
 	)
 	outfit = /datum/outfit/job/roguetown/mercenary/forlorn
+	class_select_category = CLASS_CAT_RANESHENI
 	min_pq = 2
 	cmode_music = 'sound/music/combat_blackstar.ogg'
 	category_tags = list(CTAG_MERCENARY)
@@ -39,7 +40,7 @@
 		/obj/item/roguekey/mercenary,
 		/obj/item/rogueweapon/scabbard/sheath
 	)
-	
+
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)

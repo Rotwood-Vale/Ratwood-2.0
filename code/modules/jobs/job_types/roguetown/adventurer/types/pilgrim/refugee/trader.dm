@@ -4,6 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/refugee/trader
+	class_select_category = CLASS_CAT_TRADER
 	category_tags = list(CTAG_PILGRIM, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_OUTLANDER, TRAIT_SEEPRICES)
 	subclass_stats = list(

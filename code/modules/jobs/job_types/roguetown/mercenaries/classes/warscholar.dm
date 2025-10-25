@@ -5,6 +5,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/warscholar
 	category_tags = list(CTAG_MERCENARY)
+	class_select_category = CLASS_CAT_NALEDI
 	cmode_music = 'sound/music/warscholar.ogg'
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3)
 	subclass_stats = list(
@@ -239,7 +240,7 @@
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
-	
+
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 	if(H.mind)
@@ -249,7 +250,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stasis)
-	
+
 	H.merctype = 14
 
 

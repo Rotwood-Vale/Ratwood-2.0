@@ -6,6 +6,7 @@
 	allowed_races = RACES_NO_CONSTRUCT
 	cmode_music = 'sound/music/combat_knight.ogg'
 	outfit = /datum/outfit/job/roguetown/adventurer/knighte
+	class_select_category = CLASS_CAT_NOBLE
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR)
 	subclass_stats = list(
 		STATKEY_STR = 2,

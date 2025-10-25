@@ -9,6 +9,7 @@
 		/datum/species/elf/dark,
 	)
 	outfit = /datum/outfit/job/roguetown/mercenary/blackoak
+	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_blackoak.ogg'
 	extra_context = "This subclass is race-restricted to: Half-Elves, Elves, Dark Elves."

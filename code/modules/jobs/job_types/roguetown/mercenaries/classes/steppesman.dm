@@ -6,6 +6,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/steppesman
+	class_select_category = CLASS_CAT_AAVNR
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_league.ogg'
 	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled

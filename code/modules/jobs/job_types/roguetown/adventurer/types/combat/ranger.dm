@@ -4,6 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/ranger
+	class_select_category = CLASS_CAT_RANGER
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_OUTDOORSMAN)
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	subclass_stats = list(

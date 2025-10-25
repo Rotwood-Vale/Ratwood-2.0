@@ -4,6 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft
+	class_select_category = CLASS_CAT_GRENZELHOFT
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
@@ -71,9 +72,9 @@
 	subclass_stats = list(
 		STATKEY_STR = 2,//same str, worse end, more speed - actually a good tradeoff, now.
 		STATKEY_CON = 2,
-		STATKEY_WIL = 2, 
+		STATKEY_WIL = 2,
 		STATKEY_SPD = 1,
-		STATKEY_PER = -1 
+		STATKEY_PER = -1
 	)
 
 /datum/outfit/job/roguetown/mercenary/grenzelhoft_halberdier/pre_equip(mob/living/carbon/human/H)
@@ -130,9 +131,9 @@
 	subclass_stats = list(
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 2,
-		STATKEY_PER = 2, 
+		STATKEY_PER = 2,
 		STATKEY_STR = 1,// 1 STR for the axe and crossbow reload. END for chopping trees, a bit of SPD for running, PER for shooting. -1 CON bc you aint a frontliner
-		STATKEY_CON = -1 
+		STATKEY_CON = -1
 	)
 
 /datum/outfit/job/roguetown/mercenary/grenzelhoft_crossbowman/pre_equip(mob/living/carbon/human/H)
@@ -153,7 +154,7 @@
 	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)		// learn 2 maintain your uniform.
 	H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)		// Just so you don't suck at cooking. Fuck it. You get 2. Be a souschef.
 	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 2, TRUE)	
+	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)	// crafting for pallisades, lumberjacking for not fucking up wood
 	beltr = /obj/item/quiver/bolts

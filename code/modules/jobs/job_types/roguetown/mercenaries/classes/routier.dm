@@ -4,6 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = NON_DWARVEN_RACE_TYPES
 	outfit = /datum/outfit/job/roguetown/mercenary/routier
+	class_select_category = CLASS_CAT_OTAVA
 	category_tags = list(CTAG_MERCENARY)
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_NOBLE, TRAIT_STEELHEARTED)
 	cmode_music = 'sound/music/combat_routier.ogg'
@@ -38,7 +39,7 @@
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)   
+	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	switch(classchoice)
 		if("Swordsman")
 			H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
@@ -71,5 +72,5 @@
 		)
 
 	H.grant_language(/datum/language/otavan)
-	
+
 	H.merctype = 10
