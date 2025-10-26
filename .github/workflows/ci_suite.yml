@@ -51,6 +51,8 @@ jobs:
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+      - name: Run TGUI Checks
+        run: tools/build/build.sh --ci lint tgui-test
       - name: Annotate Lints
         uses: yogstation13/DreamAnnotate@v2
         if: always()
@@ -61,13 +63,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Restore BYOND cache
         uses: actions/cache@v4
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-BYOND-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
-      
+
       - name: Install BYOND
         run: |
           sudo apt-get update -qq
