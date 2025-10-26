@@ -1,5 +1,5 @@
-#define ULTRA_PRECISE_ZONE 1 
-#define PRECISE_ZONE 2 
+#define ULTRA_PRECISE_ZONE 1
+#define PRECISE_ZONE 2
 #define NO_PENALTY_ZONE 3
 #define RANGED_MAX_ULTRA_PRECISE_HIT_CHANCE 50 // No matter what max 50% chance to hit
 #define RANGED_ULTRA_PRECISE_HIT_PENALTY -25 // -25 for you - THEN we clamp.
@@ -35,11 +35,11 @@
 	if(used_intent)
 		if(used_intent.blade_class == BCLASS_STAB)
 			chance2hit += 10
-		if(used_intent.blade_class == BCLASS_PEEL)
-			chance2hit += 25
 		if(used_intent.blade_class == BCLASS_CUT)
 			chance2hit += 6
 		if((used_intent.blade_class == BCLASS_BLUNT || used_intent.blade_class == BCLASS_SMASH) && check_zone(zone) != zone)	//A mace can't hit the eyes very well
+			chance2hit -= 10
+		if(used_intent.blade_class == BCLASS_PEEL)
 			chance2hit -= 10
 
 	if(I)
@@ -56,7 +56,7 @@
 		chance2hit += 20
 	if(istype(user.rmb_intent, /datum/rmb_intent/swift))
 		chance2hit -= 20
-	
+
 	if(HAS_TRAIT(user, TRAIT_CURSE_RAVOX))
 		chance2hit -= 40
 
