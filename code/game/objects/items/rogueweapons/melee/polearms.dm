@@ -96,7 +96,7 @@
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	damfactor = 1.3
 	item_d_type = "blunt"
-
+	intent_intdamage_factor = 1.25
 
 /datum/intent/rend
 	name = "rend"
@@ -766,7 +766,7 @@
 	force = 12
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/sword/chop,/datum/intent/sword/strike) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop, /datum/intent/sword/thrust/zwei, /datum/intent/sword/peel/big)
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop, /datum/intent/sword/thrust/zwei)
 	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
 	name = "greatsword"
 	desc = "Might be able to chop anything in half!"
@@ -861,7 +861,7 @@
 	desc = "In the Otavan mosaics, Saint Ravox - bare in all but a beaked helmet and loincloth - is often depicted wielding such an imposing greatweapon against the Dark Star, Graggar. Regardless of whether this relic was actually wielded by divinity-or-not, its unparallel strength will nevertheless command even the greatest foes to fall."
 	force = 25
 	icon_state = "psygsword"
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/exe, /datum/intent/rend, /datum/intent/axe/chop)
 
 /obj/item/rogueweapon/greatsword/psygsword/relic/ComponentInitialize()		//Pre-blessed, +100 Blade int, +100 int, +2 def, make it silver
@@ -1039,17 +1039,16 @@
 	icon_state = "quarterstaff_steel"
 	max_integrity = 225//-25.
 
-//The partizan is a peeling weapon, intended for rending.
+//The partizan is a massive weapon, intended for rending.
 //It's horrible for one-handed use, has heavy balance and a higher strength requirement.
-//In turn, it gets 80% to damage via rend(20% less than standard reach rend), a better peel divisor(by 1) and glaive level defence.
-//Retains spear thrusting. Can remove that if it's too much, but it SHOULD be fine. Compared to other stuff floating around.
+//In turn, it gets 80% to damage via rend(20% less than standard reach rend) and glaive level defence.
 /obj/item/rogueweapon/spear/partizan
 	name = "partizan"
 	desc = "A heavy, reinforced spear-like polearm of disputed origin. It's fitted with a studded shaft, a steel spearhead and protrusions to aid in parrying."
 	force = 8	//Not a possible one-handed weapon. Also too heavy!
 	force_wielded = 30
 	possible_item_intents = list(SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(SPEAR_THRUST, PARTIZAN_REND, PARTIZAN_PEEL, SPEAR_BASH)
+	gripped_intents = list(SPEAR_THRUST, PARTIZAN_REND, SPEAR_BASH)
 	icon_state = "partizan"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 12//Easily hit by knights and other dedicated combat roles
@@ -1110,7 +1109,7 @@
 	force = 16
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/spear/cut/naginata, SPEAR_BASH) // no stab for you little chuddy, it's a slashing weapon
-	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL_BAD, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, SPEAR_BASH)
 	icon_state = "naginata"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 7

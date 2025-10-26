@@ -61,7 +61,7 @@
 	owner.current.STACON = src.STACON
 	owner.current.STALUC = src.STALUC
 	//Dreamfiends fear them up close.
-	var/mob/living/carbon/human/body = owner.current 
+	var/mob/living/carbon/human/body = owner.current
 	body.faction |= "dream"
 	for (var/trait in traits_dreamwalker)
 		ADD_TRAIT(body, trait, "[type]")
@@ -294,14 +294,14 @@
 	mark_component.set_marked_target(marked_target)
 
 	if(marked_target != user)
-		to_chat(user, span_warning("[user] traces a glowing symbol in the air marking [marked_target]."), 
+		to_chat(user, span_warning("[user] traces a glowing symbol in the air marking [marked_target]."),
 							 span_notice("You mark [marked_target] for pursuit."))
 
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/mark_target/proc/get_valid_targets(mob/user)
 	var/list/valid_targets = list()
-	
+
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
 		if(player == user || player.stat == DEAD || !player.mind || !player.client)
 			continue
@@ -436,7 +436,7 @@
 		return
 
 	var/turf/destination = pick(safe_turfs)
-	
+
 	// Create portal at origin
 	var/obj/structure/portal_jaunt/portal = new(original_turf)
 	portal.linked_turf = destination
@@ -857,7 +857,7 @@
 	item_flags = DREAM_ITEM
 	wbalance = WBALANCE_HEAVY
 	wdefense = 4
-	possible_item_intents = list(/datum/intent/sword/cut,/datum/intent/sword/chop,/datum/intent/stab, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut,/datum/intent/sword/chop,/datum/intent/stab)
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop, /datum/intent/sword/lunge, /datum/intent/sword/thrust/estoc)
 	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
 
