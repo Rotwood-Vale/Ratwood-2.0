@@ -39,6 +39,7 @@
 		)
 	H.adjust_skillrank(/datum/skill/misc/tracking, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/slings, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
