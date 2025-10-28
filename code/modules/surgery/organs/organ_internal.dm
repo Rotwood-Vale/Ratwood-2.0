@@ -54,6 +54,7 @@
 	grid_height = 32
 
 	sellprice = 10
+	grind_results = list(/datum/reagent/organpoison = 6)
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -185,7 +186,6 @@
 
 /obj/item/reagent_containers/food/snacks/organ/heart
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/organpoison = 2)
-	grind_results = list(/datum/reagent/organpoison = 6)
 
 /obj/item/reagent_containers/food/snacks/organ/heart/check_culling(mob/living/eater)
 	. = ..()

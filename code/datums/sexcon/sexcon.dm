@@ -329,6 +329,16 @@
 	add_cum_floor(get_turf(user))
 	after_ejaculation()
 
+/datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
+	log_combat(user, user, "Ejaculated into a container")
+	user.visible_message(span_love("[user] spills into [C]!"))
+	playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
+	if(user.getorganslot(ORGAN_SLOT_PENIS))
+		C.reagents.add_reagent(/datum/reagent/erpjuice/cum, 3)
+	else
+		C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
+	after_ejaculation()
+
 /datum/sex_controller/proc/after_ejaculation()
 	set_arousal(40)
 	adjust_charge(-CHARGE_FOR_CLIMAX)
@@ -576,6 +586,24 @@
 			splashed_user.apply_status_effect(/datum/status_effect/facial)
 		else
 			facial.refresh_cum()
+
+/datum/sex_controller/proc/handle_container_ejaculation()
+	if(arousal < PASSIVE_EJAC_THRESHOLD)
+		return
+	if(is_spent())
+		return
+	if(!can_ejaculate())
+		return FALSE
+	ejaculate_container(user.get_active_held_item())
+
+/datum/sex_controller/proc/handle_cock_milking(mob/living/carbon/human/milker)
+	if(arousal < ACTIVE_EJAC_THRESHOLD)
+		return
+	if(is_spent())
+		return
+	if(!can_ejaculate())
+		return FALSE
+	ejaculate_container(milker.get_active_held_item())
 
 /datum/sex_controller/proc/can_use_penis()
 	if(HAS_TRAIT(user, TRAIT_LIMPDICK))

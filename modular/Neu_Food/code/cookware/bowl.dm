@@ -57,7 +57,7 @@
 				filling.color = mix_color_from_reagents(reagents.reagent_list)
 				add_overlay(filling)
 		if(reagents.total_volume > 22)
-			if(reagents.has_reagent(/datum/reagent/consumable/soup/porridge/oatmeal, 10))
+			if(reagents.has_reagent(/datum/reagent/consumable/soup/porridge/oatmeal, 10) || reagents.has_reagent(/datum/reagent/consumable/soup/poo, 5))
 				var/mutable_appearance/filling = mutable_appearance(icon, "bowl_oatmeal")
 				filling.color = mix_color_from_reagents(reagents.reagent_list)
 				add_overlay(filling)

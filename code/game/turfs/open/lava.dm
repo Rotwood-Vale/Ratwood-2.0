@@ -249,6 +249,22 @@
 			L.adjustFireLoss(100)
 			to_chat(L, span_userdanger("THE ACID BURNS!"))
 
+
+
+/turf/open/lava/acid/attackby(obj/item/C, mob/user, params)
+	if(user.used_intent.type == /datum/intent/fill)
+		if(C.reagents)
+			if(C.reagents.holder_full())
+				to_chat(user, span_warning("[C] is full."))
+				return
+			playsound(user, 'sound/foley/drawwater.ogg', 100, FALSE)
+			if(do_after(user, 8, target = src))
+				user.changeNext_move(CLICK_CD_MELEE)
+				C.reagents.add_reagent(/datum/reagent/rogueacid, 200)
+				to_chat(user, span_notice("I fill [C] from [src]."))
+			return
+	. = ..()
+
 /turf/open/lava/acid/onbite(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user

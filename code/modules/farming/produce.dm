@@ -541,7 +541,8 @@
 	slices_num = 2
 	tastes = list("spicy sweetness" = 1)
 	bitesize = 2
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/tearjuice = 3)
+	grind_results = list(/datum/reagent/consumable/tearjuice = 6)
 	rotprocess = null
 	seed = /obj/item/seeds/onion
 

@@ -506,3 +506,67 @@
 		to_chat(awakener, span_warning("Your summon did not select a valid name! Please wait as they try again.")) // more verbose than what sanitize_name might pass in it's error message
 		return custom_name(awakener, iteration++)
 	return chosen_name
+
+//alchemy jug
+/obj/item/reagent_containers/glass/bottle/alchemyjug
+	name = "alchemy jug"
+	desc = "An enchanted jug that fills itself with liquids. I can change what it fills if I touch it just right..."
+	var/fill_per_minute = 15
+	var/reagent = /datum/reagent/water
+	var/wait = 0
+	
+/obj/item/reagent_containers/glass/bottle/alchemyjug/Initialize()
+	START_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/reagent_containers/glass/bottle/alchemyjug/process()
+	wait++
+	if(wait >= 30) //SSobj processes once ever 2 seconds so after a minute
+		wait = 0 //reset timer
+		if(src.reagents.holder_full())
+			return
+		playsound(src, 'sound/foley/drawwater.ogg', 100, FALSE)
+		var/list/L = list()
+		L[reagent] = fill_per_minute
+		src.reagents.add_reagent_list(L)
+/obj/item/reagent_containers/glass/bottle/alchemyjug/attack_self(mob/user)
+	var/list/options = list(
+		/datum/reagent/water, //fresh water
+		/datum/reagent/water/salty, //salt water
+		/datum/reagent/consumable/ethanol/beer, //beer
+		/datum/reagent/consumable/ethanol/jackberrywine, //wine
+		/datum/reagent/consumable/ethanol/cider, //cider
+		/datum/reagent/consumable/honey, //honey
+		/datum/reagent/consumable/lemonade, //lemonade
+		/datum/reagent/consumable/mayonnaise, // mayonaise
+		// /datum/reagent/fuel/oil, //oil
+		/datum/reagent/consumable/soup/stew/berry, //basic poison
+		/datum/reagent/rogueacid //acid
+		)
+	var/reagent_change = input("Choose Contents", "Available Liquids") as anything in options
+	reagent = reagent_change
+	wait = 15
+	reagents.total_volume = 0
+	switch(reagent_change)
+		if(/datum/reagent/water)
+			fill_per_minute = 45
+		if(/datum/reagent/water/salty)
+			fill_per_minute = 45
+		if(/datum/reagent/consumable/ethanol/beer)
+			fill_per_minute = 15
+		if(/datum/reagent/consumable/ethanol/jackberrywine) 
+			fill_per_minute = 7.5
+		if(/datum/reagent/consumable/ethanol/cider)
+			fill_per_minute = 7.5
+		if(/datum/reagent/consumable/honey)
+			fill_per_minute = 3.25
+		if(/datum/reagent/consumable/lemonade)
+			fill_per_minute = 15
+		if(/datum/reagent/consumable/mayonnaise)
+			fill_per_minute = 7.5
+		//if(/datum/reagent/fuel/oil)
+			//fill_per_minute = 3.25
+		if(/datum/reagent/consumable/soup/stew/berry)
+			fill_per_minute = 3.25
+		if(/datum/reagent/rogueacid)
+			fill_per_minute = 1

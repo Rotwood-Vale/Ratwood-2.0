@@ -22,6 +22,11 @@
 	output = /datum/reagent/consumable/soup/porridge/congee
 	cooktime = STEW_COOKING_TIME / 2 
 
+/datum/stew_recipe/poo
+	inputs = list(/obj/item/natural/poo, /obj/item/natural/poo/cow, /obj/item/natural/poo/horse)
+	output = /datum/reagent/consumable/soup/poo
+	cooktime = STEW_COOKING_TIME / 2 
+
 /datum/stew_recipe/potato
 	inputs = list(/obj/item/reagent_containers/food/snacks/rogue/veg/potato_sliced)
 	output = /datum/reagent/consumable/soup/veggie/potato

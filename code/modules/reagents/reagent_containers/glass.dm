@@ -288,3 +288,5 @@
 		slot_equipment_priority.Insert(index, SLOT_HEAD)
 		return
 	return ..()
+
+

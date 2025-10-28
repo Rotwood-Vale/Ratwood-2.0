@@ -31,6 +31,17 @@
 	description = "Rice boiled in water until it is softened. Eaten by the poor and sick in the east. Here, it is considered a medicinal food."
 	color = "#F8F0E3"
 
+/datum/reagent/consumable/soup/poo
+	name = "shit"
+	description = "Lumpy nightsoil boiled in water. Unsuitable for consumption by any living being."
+	reagent_state = LIQUID
+	color = "#5E3534"
+	nutriment_factor = 0
+	metabolization_rate = 0.5
+	taste_description = "foul feces"
+	taste_mult = 8
+	hydration = 0
+
 /datum/reagent/consumable/soup/veggie
 	name = "vegetable soup"
 	description = ""
@@ -167,4 +178,12 @@
 		else
 			M.add_nausea(3) // so one berry or one dose (one clunk of extracted poison, 5u) will make you really sick and a hair away from crit.
 			M.adjustToxLoss(2)
+	return ..()
+
+//Like murky water but two times as strong, stew metabolizes much faster so it is not deadly
+/datum/reagent/consumable/soup/poo/on_mob_life(mob/living/carbon/M)
+	if(HAS_TRAIT(M, TRAIT_NASTY_EATER)) // lets orcs and goblins drink bogwater
+		return
+	M.adjustToxLoss(0.5)
+	M.add_nausea(24)
 	return ..()
