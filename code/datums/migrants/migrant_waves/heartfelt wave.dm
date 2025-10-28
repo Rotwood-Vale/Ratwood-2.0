@@ -41,7 +41,6 @@
 	)
 	greet_text = "Fleeing disaster, you have come together as a court, united in a final effort to restore the former glory and promise of Heartfelt. Stay close and watch out for each other, for all of your sakes! Some of you already did not make it on the way here..."
 
-
 /datum/migrant_wave/heartfelt_down_three
 	name = "The Court of Heartfelt"
 	shared_wave_type = /datum/migrant_wave/heartfelt

@@ -59,6 +59,13 @@
 /datum/intent/sword/thrust/krieg
 	damfactor = 0.9
 
+/datum/intent/sword/thrust/blunt
+	blade_class = BCLASS_BLUNT
+	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
+	attack_verb = list("prods", "pokes")
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	item_d_type = "blunt"
+
 /datum/intent/sword/strike
 	name = "pommel strike"
 	icon_state = "instrike"
@@ -91,6 +98,11 @@
 	attack_verb = list("<font color ='#e7e7e7'>weakly peels</font>")
 	reach = 2
 	peel_divisor = 5
+
+/datum/intent/sword/peel/weak
+	name = "weak armor peel"
+	attack_verb = list("<font color ='#e7e7e7'>lightly peels</font>")
+	peel_divisor = 8
 
 /datum/intent/sword/chop
 	name = "chop"
@@ -269,21 +281,33 @@
 	dropshrink = 0.75
 	smeltresult = /obj/item/ingot/steel
 
+/obj/item/rogueweapon/sword/long/training
+	name = "training sword"
+	desc = "Swords like these, with blunted tips and dull edges, are often used for practice without much risk of injury."
+	force = 5
+	force_wielded = 8
+	sharpness = IS_BLUNT
+	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/sword/thrust/blunt, /datum/intent/sword/peel/weak)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/sword/thrust/blunt, /datum/intent/sword/peel/weak)
+	icon_state = "feder"
+	throwforce = 5
+	thrown_bclass = BCLASS_BLUNT
 
 /obj/item/rogueweapon/sword/long/church
 	name = "see longsword"
 	desc = "The workhorse of the Holy See. Blades like this have drawn blood against the  old Infidels and the modern Inhumen heretics alike for centuries."
 	icon_state = "churchsword"
 
-/obj/item/rogueweapon/sword/long/undivided
-	name = "decablade"
+/obj/item/rogueweapon/sword/long/holysee_lesser
+	name = "eclipsum longsword"//Is the name similar to the 'eclipsum sword'? Yeah. Almost identical. Still better than decablade.
 	desc = "With a drop of holy Eclipsum, doth the blade rise. Gilded, gleaming, radiant heat, warm my soul, immolate my enemies."
 	icon_state = "eclipsum"
 	sheathe_icon = "eclipsum"
 	force = 28
 	force_wielded = 33
+	max_integrity = 200
 
-/obj/item/rogueweapon/sword/long/undivided/getonmobprop(tag)
+/obj/item/rogueweapon/sword/long/holysee_lesser/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -703,7 +727,7 @@
 
 /obj/item/rogueweapon/sword/short/psy
 	name = "psydonian shortsword"
-	desc = "Otavan smiths worked with Grenzelhoftian artificers, and an esoteric blade was born: a blade with an unique design, dismissing a crossguard in favor of a hollow beak to hook and draw harm away from its user. Short in length, yet lethally light in weight."
+	desc = "Despite its shattered blade, this former-longsword finds new purpose and renewed lethality as something shorter and quicker and no less deadly. Like He, it perseveres, no matter what."
 	force = 19
 	icon_state = "psyswordshort"
 	sheathe_icon = "psyswordshort"
@@ -1309,6 +1333,11 @@
 	smeltresult = /obj/item/ingot/silver
 	smelt_bar_num = 2
 	max_integrity = 999
+
+/obj/item/rogueweapon/sword/long/holysee/master
+	name = "ancient eclipsum sword"
+	desc = "An ancient relic of the See. Perhaps not all is lost."
+	icon_state = "seemasterblade"
 
 /obj/item/rogueweapon/sword/long/kriegmesser
 	name = "kriegsmesser"

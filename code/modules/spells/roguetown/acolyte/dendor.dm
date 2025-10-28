@@ -71,9 +71,12 @@
 	name = "Fungal Illumination"
 	desc = "Summons glowing mushrooms that shock people that try moving into them. Dendorites are immune."
 	range = 1
+	action_icon_state = "glowshroom"
+	action_icon = 'icons/mob/actions/genericmiracles.dmi'
 	overlay_state = "blesscrop"
 	releasedrain = 30
 	recharge_time = 30 SECONDS
+	chargetime = 1 SECONDS
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	max_targets = 0
 	cast_without_targets = TRUE
@@ -112,7 +115,7 @@
 	if (!user.has_language(/datum/language/beast))
 		user.grant_language(/datum/language/beast)
 		to_chat(user, span_boldnotice("The vestige of the hidden moon high above reveals His truth: the knowledge of beast-tongue was in me all along."))
-	
+
 	if (!first_cast)
 		to_chat(user, span_boldwarning("So it is murmured in the Earth and Air: the Call of the Moon is sacred, and to share knowledge gleaned from it with those not of Him is a SIN."))
 		to_chat(user, span_boldwarning("Ware thee well, child of Dendor."))

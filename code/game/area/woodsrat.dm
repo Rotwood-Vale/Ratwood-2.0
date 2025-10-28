@@ -67,9 +67,19 @@
 	ambientnight = AMB_MOUNTAIN
 	soundenv = 17
 	first_time_text = null
+	ambush_times = null
+	ambush_mobs = null
 
 /area/rogue/outdoors/woodsrat/safe
 	name = "Woods safe"
 	first_time_text = null
 	ambush_times = null
 	ambush_mobs = null
+
+/area/rogue/outdoors/woodsrat/river
+	name = "river"
+	icon_state = "river"
+	ambientsounds = AMB_RIVERDAY
+	ambientnight = AMB_RIVERNIGHT
+	spookysounds = SPOOKY_FROG
+	spookynight = SPOOKY_FOREST

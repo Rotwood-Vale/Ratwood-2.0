@@ -48,7 +48,7 @@
 		H.become_blind("advsetup")
 
 /datum/advclass/wapprentice/associate
-	name = "Magician's Associate"
+	name = "Magician Associate"
 	tutorial = "You were once an apprentice, though through your studies and practice you've mastered the basics of the arcyne. You now spend your days working under your master, honing your skills so that you might one day be considered a true master yourself."
 	outfit = /datum/outfit/job/roguetown/wapprentice/associate
 
@@ -142,7 +142,7 @@
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
 
 /datum/advclass/wapprentice/apprentice
-	name = "Magician's Apprentice"
+	name = "Magician Apprentice"
 	tutorial = "Your master once saw potential in you, although you are uncertain if they still do, given how rigorous and difficult your studies have been. The path to using magic is a treacherous and untamed one, and you are still decades away from calling yourself even a journeyman in the field. Listen and serve, and someday you will earn your hat."
 	outfit = /datum/outfit/job/roguetown/wapprentice/apprentice
 

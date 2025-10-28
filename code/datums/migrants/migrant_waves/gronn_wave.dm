@@ -2,7 +2,7 @@
 	name = "Gronn Raiding Party"
 	max_spawns = 1
 	shared_wave_type = /datum/migrant_wave/gronn
-	weight = 50		// lets make it happen more often maybe? 10 less than slavers
+	weight = 40
 	downgrade_wave = /datum/migrant_wave/gronn_down_one
 	roles = list(
 		/datum/migrant_role/gronn/chieftain = 1,

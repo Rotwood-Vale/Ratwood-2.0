@@ -297,6 +297,9 @@
 	smeltresult = /obj/item/ingot/purifiedaalloy
 	sellprice = 111
 
+/obj/item/ingot/purifiedaalloy/eahasir
+	name = "EA-Hasir high-quality gold ingot"
+	desc = "Solid wealth in your hand- Hey wait a minute, this isn't gold."
 
 /obj/item/ingot/aaslag
 	name = "glimmering slag"

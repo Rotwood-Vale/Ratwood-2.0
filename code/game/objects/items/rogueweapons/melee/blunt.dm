@@ -8,6 +8,7 @@
 	chargetime = 0
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	damfactor = 1.1
+	intent_intdamage_factor = 1.15
 	swingdelay = 0
 	icon_state = "instrike"
 	item_d_type = "blunt"
@@ -18,7 +19,7 @@
 	attack_verb = list("smashes")
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	damfactor = 1.5
+	damfactor = 1.7
 	swingdelay = 10
 	clickcd = 14
 	icon_state = "insmash"

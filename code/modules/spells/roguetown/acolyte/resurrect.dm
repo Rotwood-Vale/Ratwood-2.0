@@ -134,7 +134,7 @@
 	for(var/item_type in required_items)
 		var/needed = required_items[item_type]
 		var/have = available_items[item_type] || 0
-		
+
 		if(have < needed) {
 			var/obj/item/I = item_type
 			var/amount_needed = needed - have
@@ -144,7 +144,7 @@
 	if(length(missing_items))
 		var/string = ""
 		for(var/item in missing_items)
-			string += item 
+			string += item
 		return "Missing components: [string]."
 	return ""
 
@@ -239,7 +239,7 @@
 	var/timed_cooldown
 
 /obj/effect/proc_holder/spell/invoked/summon_dreamfiend_curse/cast(list/targets, mob/living/user)
-	if (world.time < timed_cooldown) 
+	if (world.time < timed_cooldown)
 		to_chat(user, span_warning("You must gather your strength before you are ready to confront your terror!"))
 		to_chat(user, span_warning("Time remaining: [max(0, timed_cooldown - world.time)/10] seconds."))
 		revert_cast()
@@ -554,13 +554,3 @@
 	debuff_type = /datum/status_effect/debuff/noc_revival
 	overlay_state = "noc_revive"
 	sound = 'sound/magic/owlhoot.ogg'
-
-
-/obj/effect/proc_holder/spell/invoked/resurrect/undivided
-	name = "Decagram Revival"
-	desc = "Revive the target at a cost, cast on yourself to check."
-	required_items = list(
-		/obj/item/rogueore/gold = 1 // Was thinking Eclipsum combo of gold/silver but that'd probably be *too* expensive. Probably the costliest revival, while having a anastasis equal debuff.
-	)
-	debuff_type = /datum/status_effect/debuff/revived
-	sound = 'sound/magic/revive.ogg'

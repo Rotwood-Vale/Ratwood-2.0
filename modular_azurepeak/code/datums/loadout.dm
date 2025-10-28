@@ -521,10 +521,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Amulet of Eora"
 	path = /obj/item/clothing/neck/roguetown/psicross/eora
 
-/datum/loadout_item/psicross/undivided
-	name = "Amulet of Ten"
-	path = /obj/item/clothing/neck/roguetown/psicross/undivided
-
 /datum/loadout_item/psicross/zizo
 	name = "Decrepit Zcross"
 	path = /obj/item/clothing/neck/roguetown/zcross/aalloy

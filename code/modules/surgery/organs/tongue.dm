@@ -19,13 +19,15 @@
 		/datum/language/orcish,
 		/datum/language/draconic,
 		/datum/language/thievescant,
+		/datum/language/canilunzt,
 		/datum/language/grenzelhoftian,
 		/datum/language/kazengunese,
 		/datum/language/otavan,
 		/datum/language/etruscan,
 		/datum/language/gronnic,
 		/datum/language/aavnic,
-		/datum/language/abyssal
+		/datum/language/abyssal,
+		/datum/language/merar
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)

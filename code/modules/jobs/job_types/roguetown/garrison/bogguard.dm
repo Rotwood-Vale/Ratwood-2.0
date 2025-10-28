@@ -51,7 +51,7 @@
 
 /datum/advclass/bogguardsman/ranger
 	name = "Ranger"
-	tutorial = "You are a ranger, a hunter who volunteered to become a part of the wardens. You have experience using bows and daggers."
+	tutorial = "You are a ranger, a hunter who volunteered to become a part of the wardens. You have great experience using bows."
 	outfit = /datum/outfit/job/roguetown/bogguardsman/ranger
 	category_tags = list(CTAG_WARDEN)
 	traits_applied = list(TRAIT_DODGEEXPERT)
@@ -84,6 +84,8 @@
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)
@@ -106,7 +108,7 @@
 		"Path of the Bear"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear,
 		"None"
 	)
-	var/helmchoice = input("Choose your Path.", "HELMET SELECTION") as anything in helmets
+	var/helmchoice = input("Choose your Helmet.", "HELMET SELECTION") as anything in helmets
 	if(helmchoice != "None")
 		head = helmets[helmchoice]
 
@@ -121,7 +123,7 @@
 
 /datum/advclass/bogguardsman/forester
 	name = "Forester"
-	tutorial = "You are a forester, a woodsman who volunteered to become a part of the wardens. You have experience using axes and polearms."
+	tutorial = "You are a forester, a woodsman who volunteered to become a part of the wardens. You have servicable training in melee weapons."
 	outfit = /datum/outfit/job/roguetown/bogguardsman/forester
 	category_tags = list(CTAG_WARDEN)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
@@ -150,6 +152,7 @@
 		)
 	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/slings, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
@@ -179,7 +182,7 @@
 		"Path of the Bear"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear,
 		"None"
 	)
-	var/helmchoice = input("Choose your Path.", "HELMET SELECTION") as anything in helmets
+	var/helmchoice = input("Choose your Helmet.", "HELMET SELECTION") as anything in helmets
 	if(helmchoice != "None")
 		head = helmets[helmchoice]
 

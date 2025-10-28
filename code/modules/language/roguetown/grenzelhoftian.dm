@@ -9,7 +9,7 @@
 	space_chance = 66
 	default_priority = 90
 	icon_state = "asse"
-	spans = list(SPAN_GRENZELHOFTIAN)
+	spans = list(SPAN_CANILUNZT)
 	syllables = list(
 		"auf", "aum", "ach", "an", "auch", "ans", "bech", "bus", "baum", "bauf", "bom",
 		"ch", "cau", "com", "duch", "die", "das", "der", "den", "doch", "dich", "dem",

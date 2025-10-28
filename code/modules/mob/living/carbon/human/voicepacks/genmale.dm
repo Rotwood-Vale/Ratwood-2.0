@@ -144,6 +144,8 @@
 				used = 'sound/vo/moth/mothchitter.ogg'
 			if("strain")
 				used = 'sound/vo/male/gen/strain.ogg'
+			if("moan")
+				used = list('sound/vo/male/gen/sound_vo_male_gen_moan (1).ogg','sound/vo/male/gen/sound_vo_male_gen_moan (2).ogg','sound/vo/male/gen/sound_vo_male_gen_moan (3).ogg')
 			if("yip")
 				used = list('sound/vo/yip.ogg', 'sound/vo/yip2.ogg', 'sound/vo/yip3.ogg')
 			if("salute")

@@ -165,12 +165,16 @@
 			if(L.m_intent == MOVE_INTENT_RUN)
 				L.toggle_rogmove_intent(MOVE_INTENT_WALK)
 	else
-		if(L.dir != target_dir)
-			if(abs(dir2angle(L.dir) - dir2angle(target_dir)) == 180)	//If we do a 180 turn, we cancel our run
-				if(L.m_intent == MOVE_INTENT_RUN)
+		if(prefs.runmode)
+			if(L.dir != target_dir)
+				if(L.m_intent == MOVE_INTENT_RUN && L.sprinted_tiles > 0) //If any turn is done, we cancel our run
 					L.toggle_rogmove_intent(MOVE_INTENT_WALK)
-			// Reset our sprint counter if we change direction
-			L.sprinted_tiles = 0
+					// Classic run-cancelling when turning
+		else if(abs(dir2angle(L.dir) - dir2angle(target_dir)) == 180)	//If we do a 180 turn, we cancel our run
+			if(L.m_intent == MOVE_INTENT_RUN)
+				L.toggle_rogmove_intent(MOVE_INTENT_WALK)
+				// Reset our sprint counter if we change direction
+				L.sprinted_tiles = 0
 
 	. = ..()
 

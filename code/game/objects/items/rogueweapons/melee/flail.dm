@@ -31,6 +31,7 @@
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	icon_state = "instrike"
 	item_d_type = "blunt"
+	intent_intdamage_factor = 1.15
 
 /datum/intent/flail/strike/matthiosflail
 	reach = 2
@@ -54,7 +55,7 @@
 	no_early_release = TRUE
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	recovery = 10
-	damfactor = 1.6
+	damfactor = 1.9
 	chargedloop = /datum/looping_sound/flailswing
 	keep_looping = TRUE
 	icon_state = "insmash"
@@ -67,7 +68,7 @@
 	reach = 2
 
 /datum/intent/flail/strike/smash/militia
-	damfactor = 1.35
+	damfactor = 1.4
 
 /datum/intent/flail/strike/smash/golgotha
 	hitsound = list('sound/items/beartrap2.ogg')

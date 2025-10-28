@@ -26,7 +26,7 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 	var/obscure_name = FALSE
-	var/race_name = dna.species.name
+	var/race_name = "<a href='?src=[REF(src)];species_lore=1'><u>[dna.species.name]</u></A>"
 	var/datum/antagonist/maniac/maniac = user.mind?.has_antag_datum(/datum/antagonist/maniac)
 	var/datum/antagonist/skeleton/skeleton = user.mind?.has_antag_datum(/datum/antagonist/skeleton)
 	if(maniac && (user != src))
@@ -161,6 +161,19 @@
 				var/datum/patron/their_god = (mob_side == "astrata") ? S.astrata_god.resolve() : S.challenger_god.resolve()
 				if(their_god)
 					. += (user_side == mob_side) ? span_notice("Fellow [their_god.name] supporter!") : span_userdanger("Vile [their_god.name] supporter!")
+
+		if(dna.species.use_skintones)
+			var/skin_tone_wording = dna.species.skin_tone_wording ? lowertext(dna.species.skin_tone_wording) : "skin tone"
+			var/list/skin_tones = dna.species.get_skin_list()
+			var/skin_tone_seen = "incomprehensible"
+			if(!HAS_TRAIT(src, TRAIT_ROTMAN) && skin_tone)
+				//AGGHHHHH this is stupid
+				for(var/tone in skin_tones)
+					if(src.skin_tone == skin_tones[tone])
+						skin_tone_seen = lowertext(tone)
+						break
+			var/slop_lore_string = "."
+			. += span_info("[capitalize(m2)] [skin_tone_wording] is [skin_tone_seen][slop_lore_string]")
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user

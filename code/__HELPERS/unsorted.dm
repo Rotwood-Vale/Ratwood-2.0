@@ -1626,7 +1626,9 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	/area/rogue/outdoors/woods, \
 	/area/rogue/outdoors/bog, \
 	/area/rogue/outdoors/mountains, \
-	/area/rogue/outdoors/rtfield \
+	/area/rogue/outdoors/rtfield, \
+	/area/rogue/outdoors/woodsrat, \
+	/area/rogue/outdoors/bograt, \
 )
 
 /proc/is_valid_hunting_area(area/A)

@@ -36,7 +36,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/pick
-	beltr = /obj/item/storage/magebag/detpack
+	beltr = /obj/item/storage/detpack
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/shield/wood
 	backpack_contents = list(
@@ -102,10 +102,16 @@
 	..()
 
 //Detpack. I'm sure you can imagine use cases, outside of carrying it.
-//Needs some sprites.
-/obj/item/storage/magebag/detpack
+/obj/item/storage/detpack
 	name = "detpack"
 	desc = "A pouch to carry sticks of blasting powder. What sort of lunatic would do that?"
+	icon_state = "strapbag"
+	item_state = "strapbag"
+	icon = 'icons/roguetown/clothing/storage.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_HIP
+	resistance_flags = NONE
+	max_integrity = 300
 	component_type = /datum/component/storage/concrete/grid/detpack
 	populate_contents = list(
 		/obj/item/tntstick,
@@ -123,3 +129,13 @@
 		/obj/item/tntstick,
 		/obj/item/satchel_bomb
 		))
+
+/obj/item/storage/detpack/update_icon()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/list/things = STR.contents()
+	if(things.len)
+		icon_state = "strapbag"
+		w_class = WEIGHT_CLASS_NORMAL
+	else
+		icon_state = "strapbag"
+		w_class = WEIGHT_CLASS_NORMAL

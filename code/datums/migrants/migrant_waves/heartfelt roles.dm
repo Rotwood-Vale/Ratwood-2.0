@@ -294,9 +294,9 @@
 
 /datum/outfit/job/roguetown/heartfelt/prior/pre_equip(mob/living/carbon/human/H)
 	..()
-	if (!(istype(H.patron, /datum/patron/divine/undivided)))	//Gotta be a goody two shoes! I don't know why this never CHECKED for evil patrons.
-		to_chat(H, span_warning("I've been blessed by the Ten - they guide my way, as I guide Their flock."))
-		H.set_patron(/datum/patron/divine/undivided)
+	if (!(istype(H.patron, /datum/patron/divine/astrata)))
+		to_chat(H, span_warning("I've been blessed by Astrata - She guides my way, as I guide Her flock."))
+		H.set_patron(/datum/patron/divine/astrata)
 	neck = /obj/item/clothing/neck/roguetown/psicross/undivided
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
 	pants = /obj/item/clothing/under/roguetown/tights/black

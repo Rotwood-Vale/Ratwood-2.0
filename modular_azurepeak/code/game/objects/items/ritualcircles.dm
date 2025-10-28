@@ -917,11 +917,6 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.visible_message(span_green("I feel the burdens of my heart lifting. Something feels very wrong... I don't mind at all..."))
 		target.apply_status_effect(/datum/status_effect/buff/pacify)
 
-/obj/structure/ritualcircle/undivided
-	name = "Rune of Deca Divinity"
-	desc = "A Holy Rune of The Undivided Pantheon"
-	//icon_state = "undivided_chalky"
-
 
 
 // TIME FOR THE ASCENDANT. These can be stronger. As they are pretty much antag exclusive - Iconoclast for Matthios, Lich for ZIZO. ZIZO!
@@ -1231,7 +1226,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	name = "Rune of Transaction"
 	desc = "A Holy Rune of Matthios. All has a price."
 	icon_state = "matthios_chalky"
-	var/matthiosrites = list("Rite of Armaments", "Defenestration")
+	var/matthiosrites = list("Rite of Armaments", "Defenestration", "Conversion")
 
 
 /obj/structure/ritualcircle/matthios/attack_hand(mob/living/user)
@@ -1289,6 +1284,36 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			else
 				to_chat(user, span_cultsmall("The ritual fails. A noble must be in the center of the circle!"))
+			spawn(120)
+				icon_state = "matthios_chalky"
+		if("Conversion")
+			if(!Adjacent(user))
+				to_chat(user, "You must stand close to the rune to receive Matthios' blessing.")
+				return
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				if(HAS_TRAIT(peep, TRAIT_COMMIE))
+					continue
+				valids_on_rune += peep
+			if(!valids_on_rune.len)
+				to_chat(user, "No valid targets on the rune!")
+				return
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
+			if(!target || QDELETED(target) || target.loc != loc)
+				return
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Hear my call, maw of Avarice!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Once a slave, now of your cause!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Break this fool's bonds!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			icon_state = "matthios_active"
+			matthiosconversion(target)
 			spawn(120)
 				icon_state = "matthios_chalky"
 
@@ -1450,7 +1475,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	name = "Rune of Violence"
 	desc = "A Holy Rune of Graggar. Fate broken once, His gift is true freedom for all."
 	icon_state = "graggar_chalky"
-	var/graggarrites = list("Rite of Armaments", "War Ritual")
+	var/graggarrites = list("Rite of Armaments", "War Ritual", "Conversion")
 
 /obj/structure/ritualcircle/graggar/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/inhumen/graggar)
@@ -1507,6 +1532,36 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_heavy)
 			else
 				to_chat(user, span_smallred("The ritual fails. A noble, member of the inquisition or a tennite churchling body must be in the center of the circle!"))
+			spawn(120)
+				icon_state = "graggar_chalky"
+		if("Conversion")
+			if(!Adjacent(user))
+				to_chat(user, "You must stand close to the rune to receive Graggar's blessing.")
+				return
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				if(HAS_TRAIT(peep, TRAIT_HORDE))
+					continue
+				valids_on_rune += peep
+			if(!valids_on_rune.len)
+				to_chat(user, "No valid targets on the rune!")
+				return
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
+			if(!target || QDELETED(target) || target.loc != loc)
+				return
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("GLORIOUS SLAUGHTER!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("FIELD OF CRIMSON!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("ANOTHER CONQUEST, IN YOUR VISION!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			icon_state = "graggar_active"
+			graggarconversion(target)
 			spawn(120)
 				icon_state = "graggar_chalky"
 

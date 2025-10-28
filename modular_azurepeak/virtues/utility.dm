@@ -127,12 +127,14 @@
 		/datum/language/draconic,
 		/datum/language/celestial,
 		/datum/language/grenzelhoftian,
+		/datum/language/canilunzt,
 		/datum/language/kazengunese,
 		/datum/language/otavan,
 		/datum/language/etruscan,
 		/datum/language/gronnic,
 		/datum/language/aavnic,
-		/datum/language/abyssal
+		/datum/language/abyssal,
+		/datum/language/merar
 	)
 
 	var/list/choices = list()

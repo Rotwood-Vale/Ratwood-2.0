@@ -141,6 +141,7 @@
 	)
 	languages = list(
 		/datum/language/common,
+		/datum/language/canilunzt
 	)
 
 /datum/species/lupian/check_roundstart_eligible()

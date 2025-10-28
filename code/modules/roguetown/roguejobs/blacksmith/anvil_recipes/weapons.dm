@@ -406,6 +406,13 @@
 	createditem_num = 2
 	craftdiff = 1
 
+/datum/anvil_recipe/weapons/iron/claws
+	name = "Handclaws, Iron (+1 Iron)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/handclaw
+	craftdiff = 2
+
 /// STEEL WEAPONS
 
 /datum/anvil_recipe/weapons/steel/dagger
@@ -498,6 +505,13 @@
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/sword/long
+	craftdiff = 3
+
+/datum/anvil_recipe/weapons/steel/trainingsword
+	name = "Training Sword, Steel (+1 Steel)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/sword/long/training
 	craftdiff = 3
 
 /datum/anvil_recipe/weapons/steel/kriegmesser
@@ -675,6 +689,13 @@
 	req_bar = /obj/item/ingot/steel
 	created_item = /obj/item/rogueweapon/sword/falx
 	craftdiff = 2
+
+/datum/anvil_recipe/weapons/steel/claws
+	name = "Handclaws, Steel (+1 Steel)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/handclaw/steel
+	craftdiff = 3
 /// UPGRADED WEAPONS
 
 //GOLD
@@ -867,6 +888,14 @@
 	createditem_num = 10
 	i_type = "Ammo"
 	craftdiff = 1
+
+/datum/anvil_recipe/weapons/iron/bluntbolts
+	name = "Bolts, Blunt (+2 Stick) (x10)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
+	created_item = /obj/item/ammo_casing/caseless/rogue/bolt/blunt
+	createditem_num = 10
+	i_type = "Ammo"
 
 /// BOWS
 /datum/anvil_recipe/weapons/iron/arrows

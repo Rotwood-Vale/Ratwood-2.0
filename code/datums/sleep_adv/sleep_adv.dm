@@ -98,6 +98,8 @@
 		amt = 0
 
 	adjust_sleep_xp(skill, amt)
+	add_cross_training_experience(skill, amt)
+
 	var/can_advance_post = enough_sleep_xp_to_advance(skill, 1)
 	var/capped_post = enough_sleep_xp_to_advance(skill, 2)
 
@@ -129,6 +131,75 @@
 		if(amt && show_xp && (L.client?.prefs.floating_text_toggles & XP_TEXT))
 			L.balloon_alert(L, "[amt] XP")
 			COOLDOWN_START(src, xp_show, XP_SHOW_COOLDOWN)
+
+/datum/sleep_adv/proc/add_cross_training_experience(primary_skill, amt)
+	if(!amt || !(primary_skill in CROSS_TRAINING_MAP))
+		return
+
+	var/mob/living/L = mind.current
+	if(!L) return
+
+	for(var/secondary_skill in CROSS_TRAINING_MAP[primary_skill])
+		var/multiplier = CROSS_TRAINING_MAP[primary_skill][secondary_skill]
+		if(!multiplier || multiplier <= 0)
+			continue
+
+		var/sec_amt = round(amt * multiplier)
+		if(sec_amt <= 0)
+			continue
+
+		adjust_sleep_xp(secondary_skill, sec_amt)
+
+var/global/list/CROSS_TRAINING_MAP = list(
+	//skill name then list cross trained skills at their multiplier
+	"lumberjacking" = list("axes" = 0.25, "athletics" = 0.05),
+	"crafting" = list("carpentry" = 0.1, "masonry" = 0.1),
+	"weaponsmithing" = list("armorsmithing" = 0.25, "blacksmithing" = 0.25),
+	"armorsmithing" = list("weaponsmithing" = 0.25, "blacksmithing" = 0.25),
+	"blacksmithing" = list("armorsmithing" = 0.25, "weaponsmithing" = 0.25, "smelting" = 0.1),
+	//"smelting" = (),
+	"carpentry" = list("crafting" = 0.25, "masonry" = 0.1),
+	"masonry" = list("crafting" = 0.25, "carpentry" = 0.1),
+	"traps" = list("tracking" = 0.25, "engineering" = 0.25),
+	//"cooking" = list("alchemy" = 0.1),
+	"engineering" = list("traps" = 0.5, "crafting" = 0.1),
+	"tanning" = list("sewing" = 0.5, "butchering" = 0.1),
+	"alchemy" = list("cooking" = 0.1),
+
+	"knives" = list("swords" = 0.25, "unarmed" = 0.1),
+	"swords" = list("knives" = 0.25),
+	"polearms" = list("axes" = 0.25),
+	"maces" = list("whipsflails" = 0.25),
+	"axes" = list("lumberjacking" = 0.5, "polearms" = 0.25),
+	"whipsflails" = list("maces" = 0.25),
+	"bows" = list("crossbows" = 0.25),
+	"crossbows" = list("bows" = 0.25),
+	"wrestling" = list("unarmed" = 0.25),
+	"unarmed" = list("wrestling" = 0.25),
+	//"shields" = (),
+	//"slings" = (),
+
+	//"farming" = (),
+	"mining" = list("axes" = 0.1, "maces" = 0.1, "athletics" = 0.1),
+	//"fishing" = (),
+	"butchering" = list("tanning" = 0.25, "medicine" = 0.25, "knives" = 0.25),
+	"lumberjacking" = list("axes" = 0.25, "unarmed" = 0.05, "athletics" = 0.1),
+
+	"athletics" = list("swimming" = 1, "climbing" = 1),
+	"climbing" = list("athletics" = 0.25, "swimming" = 0.25),
+	//"reading" = (),
+	"swimming" = list("athletics" = 0.1, "climbing" = 0.1),
+	//"stealing" = (),
+	//"sneaking" = (),
+	//"lockpicking" = (),
+	//"riding" = (),
+	//"music" = (),
+	"medicine" = list("sewing" = 0.25, "butchering" = 0.1),
+	"sewing" = list("sewing" = 0.5, "medicine" = 0.1),
+	"tracking" = list("traps" = 0.25, "sneaking" = 0.25),
+	//"ceramics" = (),
+)
+
 
 /datum/sleep_adv/proc/advance_cycle()
 	// Stuff

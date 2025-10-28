@@ -7,3 +7,4 @@
 	tools = list(
 		/obj/item/rogueweapon/huntingknife,
 		)
+	craftdiff = 0

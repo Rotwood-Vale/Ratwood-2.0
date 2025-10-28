@@ -73,3 +73,14 @@
 	name = "Etruscan Longsword"
 	cost = 409 // 409 because the Flos Duellatorum was written between 1400-1409 & Fiore is part of the reason frei gets an etruscan class
 	contains = list(/obj/item/rogueweapon/sword/long/etruscan)
+
+/datum/supply_pack/rogue/merc_weapons/handclawsiron
+	name = "Iron Claws"
+	cost = 120
+	contains = list(/obj/item/rogueweapon/handclaw)
+
+/datum/supply_pack/rogue/merc_weapons/handclawssteel
+	name = "Steel Claws"
+	cost = 180
+	contains = list(/obj/item/rogueweapon/handclaw/steel)
+

@@ -581,6 +581,17 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			S.cmode_music_override_name = combat_music.name
 	return
 
+/client/verb/runm()
+	set name = "Run Mode"
+	set desc = "Changes if you run continually or if you stop running when you turn"
+	set category = "Options"
+	prefs.runmode = !prefs.runmode
+	if(prefs.runmode)
+		to_chat(usr, "Running changed (no turning)")
+	else
+		to_chat(usr, "Running changed (turning)")
+	prefs.save_preferences()
+
 /client/verb/policy()
 	set name = "Show Policy"
 	set desc = ""

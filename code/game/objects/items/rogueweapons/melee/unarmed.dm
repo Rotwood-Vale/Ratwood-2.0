@@ -34,6 +34,7 @@
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	clickcd = CLICK_CD_FAST
 	damfactor = 1.1
+	intent_intdamage_factor = 1.15
 	swingdelay = 0
 	icon_state = "inpunch"
 	item_d_type = "blunt"
@@ -44,10 +45,9 @@
 	attack_verb = list("smashes")
 	hitsound = list('sound/combat/hits/punch/punch_hard (1).ogg', 'sound/combat/hits/punch/punch_hard (2).ogg', 'sound/combat/hits/punch/punch_hard (3).ogg')
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	damfactor = 1.1
+	damfactor = 1.5
 	clickcd = CLICK_CD_MELEE
 	swingdelay = 8
-	intent_intdamage_factor = 1.35
 	icon_state = "insmash"
 	item_d_type = "blunt"
 
@@ -125,13 +125,13 @@
 	icon_state = "plug"
 
 /obj/item/rogueweapon/katar/punchdagger/frei
-	name = "vývrtka"
-	desc = "A type of punch dagger of Aavnic make initially designed to level the playing field with an orc in fisticuffs, its serrated edges and longer, thinner point are designed to maximize pain for the recipient. It's aptly given the name of \"corkscrew\", and this specific one has the colours of Szöréndnížina. Can be worn on your ring slot."
+	name = "vÃ½vrtka"
+	desc = "A type of punch dagger of Aavnic make initially designed to level the playing field with an orc in fisticuffs, its serrated edges and longer, thinner point are designed to maximize pain for the recipient. It's aptly given the name of \"corkscrew\", and this specific one has the colours of SzÃ¶rÃ©ndnÃ­Å¾ina. Can be worn on your ring slot."
 	icon_state = "freiplug"
 	slot_flags = ITEM_SLOT_RING
 
 /obj/item/rogueweapon/katar/punchdagger/aav
-	name = "vývrtka"//I'm creatively bankrupt.
+	name = "vÃ½vrtka"//I'm creatively bankrupt.
 	desc = "A type of punch dagger of Aavnic make initially designed to level the playing field with an orc in fisticuffs, its serrated edges and longer, thinner point are designed to maximize pain for the recipient. It's aptly given the name of \"corkscrew\", and this specific one has the colours of a Steppesman's banner. Can be worn on your ring slot."
 	icon_state = "avplug"
 	slot_flags = ITEM_SLOT_RING
@@ -155,6 +155,7 @@
 	associated_skill = /datum/skill/combat/unarmed
 	throwforce = 12
 	wdefense = 4	//Meant to be used with bracers. Temp for now.
+	intdamage_factor = 1.15
 	wbalance = WBALANCE_NORMAL
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
@@ -226,3 +227,161 @@
 		user.Stun(40)
 		playsound(get_turf(user), 'sound/misc/drink_blood.ogg', 100)
 	..()
+
+/obj/item/rogueweapon/handclaw
+	slot_flags = ITEM_SLOT_HIP
+	name = "iron Hound Claws"
+	desc = "A pair of heavily curved claws, styled after beasts of the wilds for rending bare flesh, \
+			A show of the continual worship and veneration of beasts of strength in Gronn."
+	icon_state = "ironclaws"
+	icon = 'icons/roguetown/weapons/32.dmi'
+	wdefense = 0
+	force = 18 //alternative to katar
+	possible_item_intents = list(/datum/intent/claw/cut/iron)
+	wbalance = WBALANCE_NORMAL
+	max_blade_int = 200
+	max_integrity = 120
+	gripsprite = FALSE
+	parrysound = list('sound/combat/parry/bladed/bladedthin (1).ogg', 'sound/combat/parry/bladed/bladedthin (2).ogg', 'sound/combat/parry/bladed/bladedthin (3).ogg')
+	swingsound = list('sound/combat/wooshes/bladed/wooshmed (1).ogg','sound/combat/wooshes/bladed/wooshmed (2).ogg','sound/combat/wooshes/bladed/wooshmed (3).ogg')
+	swingsound = BLADEWOOSH_SMALL
+	wlength = WLENGTH_NORMAL
+	w_class = WEIGHT_CLASS_NORMAL
+	associated_skill = /datum/skill/combat/unarmed
+	pickup_sound = 'sound/foley/equip/swordsmall2.ogg'
+	throwforce = 10
+	thrown_bclass = BCLASS_CUT
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/iron
+	grid_height = 96
+	grid_width = 32
+
+/obj/item/rogueweapon/handclaw/steel
+	name = "steel Mantis Claws"
+	desc = "A pair of steel claws, An uncommon sight in Gronn as they do not forge their own steel, \
+			Their longer blades offer superior offense. Tear them apart."
+	icon_state = "steelclaws"
+	icon = 'icons/roguetown/weapons/32.dmi'
+	force = 20 //2 more dmg because steel
+	possible_item_intents = list(/datum/intent/claw/cut/steel)
+	max_blade_int = 220 //10% more blade integrity . Wow!
+	smeltresult = /obj/item/ingot/steel
+	sharpness_mod = 2
+
+/obj/item/rogueweapon/handclaw/gronn
+	name = "Gronn Beast Claws"
+	desc = "A pair of uniquely reinforced iron claws forged with the addition of bone by the Iskarn shamans of the Northern Empty. \
+			Their unique design aids them in slipping between the plates in armor and their light weight supports rapid aggressive slashes. \
+			'To see the claws of the four, Is to see the true danger of the north. Not man, Not land but beast. We are all prey in their eyes.'"
+	icon_state = "gronnclaws"
+	icon = 'icons/roguetown/weapons/32.dmi'
+	force = 22 //+4dmg compared to iron + swift balance for the random chance you're a Speed Freak
+	max_blade_int = 220
+	possible_item_intents = list(/datum/intent/claw/cut/gronn, /datum/intent/claw/disarm)
+	wbalance = WBALANCE_SWIFT
+
+
+/obj/item/rogueweapon/handclaw/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.4,"sx" = -7,"sy" = -4,"nx" = 7,"ny" = -4,"wx" = -3,"wy" = -4,"ex" = 1,"ey" = -4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 110,"sturn" = -110,"wturn" = -110,"eturn" = 110,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/datum/intent/claw/cut
+	name = "cut"
+	icon_state = "incut"
+	attack_verb = list("cuts", "slashes", "lacerates")
+	animname = "cut"
+	blade_class = BCLASS_CUT
+	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
+	item_d_type = "slash"
+
+/datum/intent/claw/cut/iron
+	penfactor = 15
+	swingdelay = 0
+	clickcd = CLICK_CD_MELEE	//make it a bit worse since they're the worst handclaws
+
+/datum/intent/claw/cut/steel
+	penfactor = 20
+	swingdelay = 0
+	clickcd = CLICK_CD_FAST
+
+/datum/intent/claw/cut/gronn
+	penfactor = 25
+	swingdelay = 0
+	damfactor = 1.1
+	clickcd = CLICK_CD_FAST
+
+//YOU CLAW THEIR HANDS TO TAKE THEIR WEAPONS. FUCK'EM UP!!
+/datum/intent/claw/disarm
+	name = "disarm"
+	icon_state = "intake"
+	animname = "strike"
+	blade_class = null	//We don't use a blade class because it has on damage.
+	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	swingdelay = 10	//Equal in delay to a SMASH intent. Previously 2. Let's try balancing it
+	damfactor = 0.1	//No real damage
+	clickcd = 30	//Can't spam this; long delay. Previously 20. Let's try balancing it!
+	item_d_type = "blunt"
+
+/obj/item/rogueweapon/handclaw/attack(mob/living/M, mob/living/user, bodyzone_hit)
+	. = ..()
+	var/skill_diff = 0
+	if(istype(user.used_intent, /datum/intent/claw/disarm))
+		var/obj/item/I
+		if(user.zone_selected == BODY_ZONE_PRECISE_L_HAND && M.active_hand_index == 1)
+			I = M.get_active_held_item()
+		else
+			if(user.zone_selected == BODY_ZONE_PRECISE_R_HAND && M.active_hand_index == 2)
+				I = M.get_active_held_item()
+			else
+				I = M.get_inactive_held_item()
+		if(user.mind)
+			skill_diff += (user.get_skill_level(/datum/skill/combat/unarmed))	//You check your unarmed skill
+		if(M.mind)
+			skill_diff -= (M.get_skill_level(/datum/skill/combat/wrestling))	//They check their wrestling skill to stop the weapon from being pulled.
+		user.stamina_add(rand(3,8))
+		var/probby = clamp((((2 + (((user.STASTR - M.STASTR)/4) + skill_diff)) * 8)), 5, 95)	//nerfing further. Previously 3 and times 10
+		if(I)
+			if(M.mind)
+				if(I.associated_skill)
+					probby -= M.get_skill_level(I.associated_skill) * 4	//let's nerf this var a little bit. Expert unarmed means you get 16% more. Master means 20% more. Previously 5
+			var/obj/item/mainhand = user.get_active_held_item()
+			var/obj/item/offhand = user.get_inactive_held_item()
+			if(HAS_TRAIT(src, TRAIT_DUALWIELDER) && istype(offhand, mainhand))
+				probby += 20	//If you're mad enough to use TWO claws, may as well! You're depending on your bracers
+			if(prob(probby))
+				M.dropItemToGround(I, force = FALSE, silent = FALSE)
+				user.stop_pulling()
+				user.put_in_inactive_hand(I)
+				M.visible_message(span_danger("[user] takes [I] from [M]'s hand!"), \
+				span_userdanger("[user] takes [I] from my hand!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
+				user.changeNext_move(12)//avoids instantly attacking with the new weapon
+				playsound(src.loc, 'sound/combat/weaponr1.ogg', 100, FALSE, -1) //sound queue to let them know that they got disarmed
+				if(!M.mind)	//If you hit an NPC - they pick up weapons instantly. So, we do more stuff.
+					M.Stun(12)
+			else
+				//probby += 20 		we take it out of equation to not make disarm That Good
+				if(prob(probby))
+					M.dropItemToGround(I, force = FALSE, silent = FALSE)
+					M.visible_message(span_danger("[user] disarms [M] of [I]!"), \
+					span_userdanger("[user] disarms me of [I]!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
+					if(!M.mind)
+						M.Stun(20)	//high delay to pick up weapon
+					else
+						M.Stun(6)	//slight delay to pick up the weapon
+				else
+					user.Immobilize(10)
+					M.Immobilize(10)
+					M.visible_message(span_notice("[user.name] struggles to disarm [M.name]!"))
+					playsound(src.loc, 'sound/foley/struggle.ogg', 100, FALSE, -1)
+		if(!isliving(M))
+			to_chat(user, span_warning("You cannot disarm this enemy!"))
+			return
+		else
+			to_chat(user, span_warning("They aren't holding anything on that hand!"))
+			return

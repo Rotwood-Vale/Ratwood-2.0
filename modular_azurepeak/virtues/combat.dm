@@ -118,7 +118,7 @@
 	name = "Brawler's Apprentice"
 	desc = "I have trained under a skilled brawler, and have some experience fighting with my fists."
 	custom_text = "+1 to Unarmed and Wrestling, Up to Journeyman, Minimum Apprentice."
-	added_stashed_items = list("Katar" = /obj/item/rogueweapon/katar)
+	added_stashed_items = list("Knuckles" = /obj/item/rogueweapon/knuckles, "More Knuckles" = /obj/item/rogueweapon/knuckles)
 	
 /datum/virtue/combat/brawler/apply_to_human(mob/living/carbon/human/recipient)
 	if(recipient.get_skill_level(/datum/skill/combat/unarmed) < SKILL_LEVEL_APPRENTICE)

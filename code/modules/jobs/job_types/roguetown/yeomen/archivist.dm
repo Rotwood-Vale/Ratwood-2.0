@@ -86,13 +86,15 @@
 	H.grant_language(/datum/language/celestial)
 	H.grant_language(/datum/language/hellspeak)
 	H.grant_language(/datum/language/orcish)
+	H.grant_language(/datum/language/canilunzt)
 	H.grant_language(/datum/language/grenzelhoftian)
 	H.grant_language(/datum/language/otavan)
 	H.grant_language(/datum/language/etruscan)
 	H.grant_language(/datum/language/gronnic)
 	H.grant_language(/datum/language/kazengunese)
 	H.grant_language(/datum/language/draconic)
-	H.grant_language(/datum/language/aavnic) // All but beast, which is associated with werewolves.
+	H.grant_language(/datum/language/aavnic)
+	H.grant_language(/datum/language/merar) // All but beast, which is associated with werewolves.
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/teach)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/learn)

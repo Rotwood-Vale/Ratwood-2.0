@@ -105,7 +105,7 @@
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/tracking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()	
+	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	H.verbs |= /mob/proc/haltyell
 
 	H.adjust_blindness(-3)
@@ -163,8 +163,8 @@
 	armor = armors[armorchoice]
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, 
-		/obj/item/rope/chain = 1, 
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 	)
 
@@ -185,9 +185,9 @@
 	..()
 	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 4, TRUE) 
+	H.adjust_skillrank(/datum/skill/combat/maces, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)	
+	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
@@ -210,11 +210,11 @@
 		if("Flail")
 			beltr = /obj/item/rogueweapon/flail/sflail
 		if ("Warhammer")
-			beltr = /obj/item/rogueweapon/mace/warhammer //Iron warhammer. This is one-handed and pairs well with shields. They can upgrade to steel in-round.
+			beltr = /obj/item/rogueweapon/mace/warhammer/steel
 		if("Sabre")
 			beltl = /obj/item/rogueweapon/scabbard/sword
 			l_hand = /obj/item/rogueweapon/sword/sabre
-	
+
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	backl = /obj/item/rogueweapon/shield/tower/metal
@@ -246,8 +246,8 @@
 	armor = armors[armorchoice]
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, 
-		/obj/item/rope/chain = 1, 
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 	)
 
@@ -291,7 +291,7 @@
 	var/weapons = list(
 		"Longsword + Crossbow",
 		"Billhook + Recurve Bow",
-		"Grand Mace + Longbow", 
+		"Grand Mace + Longbow",
 		"Sabre + Recurve Bow",
 		"Lance + Kite Shield"
 	)
@@ -352,8 +352,8 @@
 	armor = armors[armorchoice]
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, 
-		/obj/item/rope/chain = 1, 
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 	)
 
@@ -373,15 +373,15 @@
 
 
 /datum/outfit/job/roguetown/knight/irregularknight/pre_equip(mob/living/carbon/human/H)
-	..()	
+	..()
 	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE) //Swords and knives class.
-	H.adjust_skillrank(/datum/skill/combat/knives, 4, TRUE)	
-	H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE) //Whips can work as a light class weapon.	
-	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)	
-	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)	
+	H.adjust_skillrank(/datum/skill/combat/knives, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE) //Whips can work as a light class weapon.
+	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/crossbows, 4, TRUE) //Bows fit a light/speedy class pretty well, gave them ranged options.
 	H.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)		
+	H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
@@ -393,8 +393,8 @@
 	H.verbs |= /mob/proc/haltyell
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Rapier + Longbow","Estoc + Recurve Bow","Sabre + Buckler","Whip + Crossbow","Greataxe + Sling")
-	var/armor_options = list("Light Armor", "Medium Armor", "Medium Cuirass")
+	var/weapons = list("Rapier + Longbow","Estoc + Recurve Bow","Sabre + Buckler","Whip + Crossbow")
+	var/armor_options = list("Light Coat", "Light Brigandine", "Medium Cuirass")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	var/armor_choice = input("Choose your armor.", "TAKE UP ARMS") as anything in armor_options
 	H.set_blindness(0)
@@ -410,7 +410,7 @@
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
 			beltr = /obj/item/quiver/arrows
 			beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-		
+
 		if("Sabre + Buckler")
 			beltl = /obj/item/rogueweapon/scabbard/sword
 			r_hand = /obj/item/rogueweapon/sword/sabre
@@ -420,23 +420,15 @@
 			beltl = /obj/item/rogueweapon/whip
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 			beltr = /obj/item/quiver/bolts
-		
-		if("Greataxe + Sling")
-			H.adjust_skillrank(/datum/skill/combat/slings, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-			r_hand = /obj/item/rogueweapon/greataxe/steel
-			backl = /obj/item/rogueweapon/scabbard/gwstrap
-			beltr = /obj/item/quiver/sling/iron
-			beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
-	
+
 	switch(armor_choice)
-		if("Light Armor")
+		if("Light Coat")
 			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 			pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-		if("Medium Armor")
-			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
-			pants = /obj/item/clothing/under/roguetown/chainlegs
+		if("Light Brigandine")
+			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+			pants = /obj/item/clothing/under/roguetown/splintlegs
 			armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
 		if("Medium Cuirass")
 			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
@@ -456,12 +448,12 @@
 		"Slitted Kettle" = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
 		"None"
 	)
-	
+
 	var/helmchoice = input("Choose your Helm.", "TAKE UP HELMS") as anything in helmets
 	if(helmchoice != "None")
 		head = helmets[helmchoice]
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, 
-		/obj/item/rope/chain = 1, 
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 	)

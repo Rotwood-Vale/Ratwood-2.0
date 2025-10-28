@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/species/pref_species = new /datum/species/human/northern()	//Mutant race
 	var/static/datum/species/default_species = new /datum/species/human/northern()
 	var/datum/patron/selected_patron
-	var/static/datum/patron/default_patron = /datum/patron/divine/undivided
+	var/static/datum/patron/default_patron = /datum/patron/divine/astrata
 	var/list/features = MANDATORY_FEATURE_LIST
 	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = FALSE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
 	var/list/friendlyGenders = list("male" = "masculine", "female" = "feminine")
@@ -135,6 +135,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/masked_examine = FALSE
 	var/mute_animal_emotes = FALSE
 	var/autoconsume = FALSE
+	var/runmode = FALSE
 
 	var/lastclass
 
@@ -1620,6 +1621,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/datum/patron/patron = GLOB.patronlist[path]
 						if(!patron.name)
 							continue
+						if(patron.disabled_patron)
+							continue
 						patrons_named[patron.name] = patron
 					var/datum/faith/current_faith = GLOB.faithlist[selected_patron?.associated_faith] || GLOB.faithlist[initial(default_patron.associated_faith)]
 					var/god_input = input(user, "Choose your character's patron god", "[current_faith.name]") as null|anything in patrons_named
@@ -1668,12 +1671,14 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						/datum/language/hellspeak,
 						/datum/language/draconic,
 						/datum/language/celestial,
+						/datum/language/canilunzt,
 						/datum/language/grenzelhoftian,
 						/datum/language/kazengunese,
 						/datum/language/etruscan,
 						/datum/language/gronnic,
 						/datum/language/otavan,
-						/datum/language/aavnic
+						/datum/language/aavnic,
+						/datum/language/merar
 					)
 					var/list/choices = list("None")
 					for(var/language in selectable_languages)
