@@ -107,10 +107,10 @@ export const Uplink = () => {
               {isChallenge ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 12 }}>
                   <div style={{ maxWidth: 640, textAlign: 'center', fontSize: 14, opacity: 0.95 }}>
-                    <strong>The Crimson Rosa Challenge Mode</strong>
+                    <strong>The Golden Rosa Challenge Mode</strong>
                     <br />
                     <span>
-                      The Crimson Rosa values the brave, and the valiant. The great, and the cunning. The bold.
+                      The Golden Rosa values the brave, and the valiant. The great, and the cunning. The bold.
                       <br /><br />
                       Do you believe you got what it takes to become truly one of us?
                       <br /><br />
@@ -121,7 +121,7 @@ export const Uplink = () => {
                       You musn&#39;t have used any of your crystal rosas yet.
                       <br /><br />
 
-                      Accepting the Challenge will give you Critical Fragility, apply the Mask of the Crimson Order to your face, grant you ALL POSSIBLE OBJECTIVES, and remove all your crystal rosas.
+                      Accepting the Challenge will give you Critical Fragility, apply the Mask of the Golden Rosa to your face, affirm your sacred Oath, and remove all your crystal rosas.
                       <br /><br />
                       Completing this Challenge will reward you with 20 Triumphs, and a special title at the end.
                     </span>

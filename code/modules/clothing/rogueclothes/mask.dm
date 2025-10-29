@@ -416,8 +416,8 @@
 	smeltresult = /obj/item/ingot/gold
 
 /obj/item/clothing/mask/rogue/facemask/goldmask/crimson_order
-	name = "Mask of the Crimson Order"
-	desc = "A gilded mask, burnished with the crimson of forbidden vows. Wearing it sharpens every sense and steels every limb—but your life hangs by a thread."
+	name = "Mask of the Golden Rosa"
+	desc = "A gilded mask, bearing the sigil of the Golden Rosa. Wearing it sharpens every sense and steels every limb—but your life hangs by a thread."
 	// Reuse the gold mask sprite; tint to a deep crimson
 	color = CLOTHING_RED
 

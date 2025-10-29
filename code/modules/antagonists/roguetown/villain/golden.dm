@@ -5,8 +5,9 @@
 	job_rank = ROLE_CRIMSON_AGENT
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "crimson agent"
+	show_in_roundend = FALSE
 	confess_lines = list(
-		"THE CRIMSON ORDER DOES NOT EXIST!",
+		"THE GOLDEN ROSA DOES NOT EXIST!",
 		"BLOOD IS MY ART FORM!",
 		"I KNOW TRUE ART!",
 )
@@ -15,7 +16,7 @@
 
 /datum/antagonist/crimson/examine_friendorfoe(datum/antagonist/examined_datum, mob/examiner, mob/examined)
 	if(istype(examined_datum, /datum/antagonist/crimson))
-		return span_boldnotice("Another agent of the Crimson Order.")
+		return span_boldnotice("Another agent of the Golden Rosa.")
 
 /datum/antagonist/crimson/on_gain()
 	. = ..()
@@ -25,8 +26,8 @@
 		owner.current.playsound_local(get_turf(owner.current), 'sound/villain/crimson_intro.ogg', 60, FALSE, pressure_affected = FALSE)
 		ADD_TRAIT(H, TRAIT_STEELHEARTED, "[type]")
 		ADD_TRAIT(H, TRAIT_SHARPER_BLADES, "[type]")
-	to_chat(H, span_bigbold(span_red("I am an agent of the CRIMSON ORDER!")))
-	to_chat(H, span_boldwarning("I have passed my initiation and I am now needed to carry out the will of the Order. Shadows are my friends - I must not be caught, I must blend in with the populace, and I must complete my objective at all costs, otherwise, I might meet my doom."))
+	to_chat(H, span_bigbold(span_red("I am a member of the GOLDEN ROSA!")))
+	to_chat(H, span_boldwarning("I have been tasked by the Queen of Ferentia Herself, Queen Alexia the Righteous, with this extremely ambitious task. I must work together with my peers to harness Runes and Vitae from people to finally awaken PSYDON from his slumber!"))
 	// Provide a clandestine signet that serves as an uplink trigger
 	var/obj/item/clothing/ring/signet/crimson/signet = new(get_turf(H))
 	if(H && !QDELETED(signet))
@@ -44,55 +45,6 @@
 	// Always include the baseline escape/survive objective
 	forge_crimson_objectives()
 
-	// Prompt the agent to choose a primary objective set
-	if(H && H.client)
-		var/list/options = list(
-			"Assassination (Random)",
-			"Assassination (High Value)",
-			"Theft (High Value)",
-			"Theft (Low Value)"
-		)
-		var/choice = input(H, "Select your contract from the Crimson Order:", "Crimson Objective") as null|anything in options
-		// If the user closes the prompt, pick a random option (equal weight) and note it
-		if(!choice)
-			choice = pick(options)
-			to_chat(H, span_boldnotice("The Order decides for me... [choice]."))
-		var/datum/objective/picked_obj
-		switch(choice)
-			if("Assassination (Random)")
-				selected_primary_choice = CRIMSON_PRIMARY_ASSASSINATE_RANDOM
-				picked_obj = assign_crimson_assassination(random_target = TRUE)
-				if(owner?.current)
-					message_admins("[ADMIN_LOOKUPFLW(owner.current)] selected 'Assassination (Random)' as Crimson objective.")
-					log_game("[key_name(owner.current)] selected 'Assassination (Random)' as Crimson objective.")
-			if("Assassination (High Value)")
-				selected_primary_choice = CRIMSON_PRIMARY_ASSASSINATE_HV
-				picked_obj = assign_crimson_assassination(random_target = FALSE)
-				if(owner?.current)
-					message_admins("[ADMIN_LOOKUPFLW(owner.current)] selected 'Assassination (High Value)' as Crimson objective.")
-					log_game("[key_name(owner.current)] selected 'Assassination (High Value)' as Crimson objective.")
-			if("Theft (High Value)")
-				selected_primary_choice = CRIMSON_PRIMARY_THEFT_HV
-				picked_obj = assign_crimson_theft_high_value()
-				if(owner?.current)
-					message_admins("[ADMIN_LOOKUPFLW(owner.current)] selected 'Theft (High Value)' as Crimson objective.")
-					log_game("[key_name(owner.current)] selected 'Theft (High Value)' as Crimson objective.")
-			if("Theft (Low Value)")
-				selected_primary_choice = CRIMSON_PRIMARY_THEFT_LV
-				picked_obj = assign_crimson_theft_low_value()
-				if(owner?.current)
-					message_admins("[ADMIN_LOOKUPFLW(owner.current)] selected 'Theft (Low Value)' as Crimson objective.")
-					log_game("[key_name(owner.current)] selected 'Theft (Low Value)' as Crimson objective.")
-
-		// Announce the chosen objective in bold red; provide a robust fallback if selection failed somehow
-		if(!picked_obj)
-			// Universal fallback: assign a random assassination objective
-			picked_obj = assign_crimson_assassination(TRUE)
-			selected_primary_choice = CRIMSON_PRIMARY_ASSASSINATE_RANDOM
-
-		if(picked_obj && owner?.current)
-			picked_obj.update_explanation_text()
-			to_chat(owner.current, span_bigbold(span_red("Objective: [picked_obj.explanation_text]")))
 
 
 /datum/antagonist/crimson/greet()
@@ -101,11 +53,13 @@
 	..()
 
 /datum/antagonist/crimson/proc/forge_crimson_objectives()
-	if(!(locate(/datum/objective/escape) in objectives))
-		var/datum/objective/escape/escape_objective = new
-		escape_objective.owner = owner
-		objectives += escape_objective
-		return
+	// Replace any and all default objectives with a single Golden Rosa objective
+	objectives = list()
+	var/datum/objective/golden_psydon/O = new
+	O.owner = owner
+	O.update_explanation_text()
+	objectives += O
+	return
 
 // Assign an assassination objective. If random_target is FALSE, prefer high-value roles; otherwise pick any valid target.
 /datum/antagonist/crimson/proc/assign_crimson_assassination(random_target = TRUE)
@@ -226,26 +180,8 @@ var/const/CRIMSON_PRIMARY_THEFT_LV = "Theft (Low Value)"
 // Called by the uplink when the player accepts the Challenge
 /datum/antagonist/crimson/proc/on_challenge_accepted()
 	challenge_accepted = TRUE
-	if(!challenge_objectives_assigned)
-		// Assign every other primary objective except the one the player picked
-		var/list/all_choices = list(
-			CRIMSON_PRIMARY_ASSASSINATE_RANDOM,
-			CRIMSON_PRIMARY_ASSASSINATE_HV,
-			CRIMSON_PRIMARY_THEFT_HV,
-			CRIMSON_PRIMARY_THEFT_LV
-		)
-		for(var/choice in all_choices)
-			if(choice == selected_primary_choice)
-				continue
-			if(choice == CRIMSON_PRIMARY_ASSASSINATE_RANDOM)
-				assign_crimson_assassination(TRUE)
-			else if(choice == CRIMSON_PRIMARY_ASSASSINATE_HV)
-				assign_crimson_assassination(FALSE)
-			else if(choice == CRIMSON_PRIMARY_THEFT_HV)
-				assign_crimson_theft_high_value()
-			else if(choice == CRIMSON_PRIMARY_THEFT_LV)
-				assign_crimson_theft_low_value()
-		challenge_objectives_assigned = TRUE
+	// No longer assign additional objectives on Challenge; the Golden Rosa has but one purpose
+	challenge_objectives_assigned = TRUE
 	return
 
 // Helper: Are all non-escape antag objectives complete?
@@ -277,10 +213,20 @@ var/const/CRIMSON_PRIMARY_THEFT_LV = "Theft (Low Value)"
 
 
 
-// A subtle signet ring used by Crimson agents; it conceals a clandestine uplink
+// A subtle signet ring used by Rosa agents; it conceals a clandestine uplink
 /obj/item/clothing/ring/signet/crimson
-	name = "crimson signet"
+	name = "golden signet"
 	desc = "A heavy signet ring engraved with a thorny rose. Its weight hints at hidden purpose."
 	icon_state = "ring_g"
+
+
+// Singular Golden Rosa objective: an oath rather than a checklist
+/datum/objective/golden_psydon
+	name = "Awaken PSYDON"
+	explanation_text = "I must awaken PSYDON, and usher in a new Golden Era for Humenity!"
+
+/datum/objective/golden_psydon/check_completion()
+	// This is a narrative objective; it is not auto-completable by the game logic
+	return FALSE
 
 

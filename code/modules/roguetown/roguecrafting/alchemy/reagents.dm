@@ -56,9 +56,9 @@
 
 // Crimson unique: an emergency-grade version of strong red
 /datum/reagent/medicine/crimsonserum
-	name = "Crimson Serum"
-	description = "A secret distillation of stronger red. For dire emergencies."
-	color = "#DC143C"
+	name = "Golden Serum"
+	description = "A secret distillation stronger than strong red. For dire emergencies."
+	color = "#ffe600"
 	taste_description = "searing lifeblood"
 	metabolization_rate = REAGENTS_METABOLISM * 4
 

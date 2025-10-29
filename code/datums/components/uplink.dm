@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(!ui)
 		// Provide a larger default window size so the client uses it on first open.
 		// Note: Client may remember geometry per window_key; this sets a good default.
-		ui = new(user, src, "Uplink", "The Crimson Relinquary", 900, 640)
+		ui = new(user, src, "Uplink", "The Golden Relinquary", 900, 640)
 		ui.set_autoupdate(TRUE)
 		ui.open()
 
@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 				if(ishuman(usr))
 					var/mob/living/carbon/human/H = usr
 					player_name = H.real_name
-					// Auto-equip the Mask of the Crimson Order and lock it during Challenge Mode
+					// Auto-equip the Mask of the Golden Rosa and lock it during Challenge Mode
 					var/obj/item/clothing/mask/old_mask = H.get_item_by_slot(SLOT_WEAR_MASK)
 					if(old_mask)
 						H.dropItemToGround(old_mask, TRUE)
@@ -220,9 +220,9 @@ GLOBAL_LIST_EMPTY(uplinks)
 					if(H.equip_to_slot_or_del(newmask, SLOT_WEAR_MASK, TRUE))
 						// Prevent removal while the challenge is active
 						ADD_TRAIT(newmask, TRAIT_NODROP, "crimson_challenge")
-						to_chat(H, span_warning("The Mask of the Crimson Order seals to your face!"))
-				message_admins("[ADMIN_LOOKUPFLW(usr)] ([player_name]) has accepted The Crimson Order Challenge Mode.")
-				log_game("Challenge Mode: [key_name(usr)] ([player_name]) accepted Crimson Agent Challenge Mode.")
+						to_chat(H, span_warning("The Mask of the Golden Rosa seals to your face!"))
+				message_admins("[ADMIN_LOOKUPFLW(usr)] ([player_name]) has accepted The Golden Rosa Challenge Mode.")
+				log_game("Challenge Mode: [key_name(usr)] ([player_name]) accepted Golden Rosa Challenge Mode.")
 			SStgui.update_uis(src)
 			return TRUE
 		if("lock")

@@ -129,10 +129,14 @@
 		log_storyteller("Picked antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 		candidates |= picked_mob
 
+	// If we couldn't gather enough candidates to meet antag_count, cap it gracefully
+	if(length(candidates) < antag_count)
+		message_admins("A roleset event requested [antag_count] but only [length(candidates)] candidates were available; capping to available.")
+		antag_count = length(candidates)
+
 	var/list/picked_mobs = list()
 	for(var/i in 1 to antag_count)
 		if(!length(candidates))
-			message_admins("A roleset event got fewer antags then its antag_count and may not function correctly.")
 			break
 
 		var/mob/candidate = pick_n_take(candidates)

@@ -201,7 +201,9 @@
 
 	to_chat(world, personal_objectives_report())
 
-	to_chat(world, crimson_court_report())
+	var/court = crimson_court_report()
+	if(length(court))
+		to_chat(world, court)
 
 	sleep(10 SECONDS)
 
@@ -346,8 +348,10 @@
 	//Personal objectives
 	parts += personal_objectives_report()
 
-	// Crimson Court
-	parts += crimson_court_report()
+	// Golden Rosa Court (only if present)
+	var/court2 = crimson_court_report()
+	if(length(court2))
+		parts += court2
 
 	CHECK_TICK
 	//Medals
@@ -373,7 +377,7 @@
 		if(C.challenge_accepted)
 			if(all_completed && is_alive)
 				// Champion greentext broadcast; +20 triumphs for conquering the Challenge
-				to_chat(world, span_bigbold(span_greentext("[H.real_name] is the Champion of the Crimson Challenge!")))
+				to_chat(world, span_bigbold(span_greentext("[H.real_name] is the Champion of the Golden Rosa Challenge!")))
 				H.adjust_triumphs(20)
 				// Also award the general +5 for completing all objectives
 				H.adjust_triumphs(5)
@@ -384,7 +388,7 @@
 				continue
 			else
 				// Failed the Challenge; shunned
-				to_chat(world, span_bigbold(span_redtext("[H.real_name] has failed the Crimson Challenge and is shunned.")))
+				to_chat(world, span_bigbold(span_redtext("[H.real_name] has failed the Golden Rosa Challenge and is shunned.")))
 				// Still allow the general +5 if they somehow completed all (shouldn't reach here), guarded above
 				if(all_completed)
 					H.adjust_triumphs(5)
@@ -394,9 +398,8 @@
 		if(all_completed)
 			H.adjust_triumphs(5)
 
-// Crimson Court: list Crimson Agents, their objectives, and their purchases
+// Golden Rosa Court: list Crimson Agents, their objectives, and their purchases
 /datum/controller/subsystem/ticker/proc/crimson_court_report()
-	var/list/parts = list()
 	var/list/crimson_antags = list()
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
@@ -404,57 +407,58 @@
 		if(istype(A, /datum/antagonist/crimson))
 			crimson_antags += A
 
+	// If none present, do not display anything to avoid clutter
+	if(!crimson_antags.len)
+		return ""
+
+	var/list/parts = list()
 	parts += "<div class='panel stationborder'>"
-	if(crimson_antags.len)
-		parts += "<div style='text-align: center; font-size: 1.2em;'>CRIMSON COURT:</div>"
-		parts += "<hr class='paneldivider'>"
-		var/idx = 0
-		for(var/datum/antagonist/crimson/C in crimson_antags)
-			idx++
-			// Agent identity line
-			var/agent_name = C.owner?.name || "Unknown Agent"
-			var/agent_role = C.owner?.assigned_role || "Unknown"
-			parts += "<b>[agent_name]</b> the <b>[agent_role]</b>"
+	parts += "<div style='text-align: center; font-size: 1.2em;'>GOLDEN ROSA COURT:</div>"
+	parts += "<hr class='paneldivider'>"
+	var/idx = 0
+	for(var/datum/antagonist/crimson/C in crimson_antags)
+		idx++
+		// Agent identity line
+		var/agent_name = C.owner?.name || "Unknown Agent"
+		var/agent_role = C.owner?.assigned_role || "Unknown"
+		parts += "<b>[agent_name]</b> the <b>[agent_role]</b>"
 
-			// Objectives (show all, with results)
-			if(C.objectives?.len)
-				var/obj_output = printobjectives(C.objectives)
-				if(obj_output)
-					parts += obj_output
+		// Objectives (show all, with results)
+		if(C.objectives?.len)
+			var/obj_output = printobjectives(C.objectives)
+			if(obj_output)
+				parts += obj_output
 
-			// Challenge outcome line if relevant
-			if(C.challenge_accepted)
-				var/is_alive = considered_alive(C.owner)
-				if(C.all_non_escape_objectives_completed() && is_alive)
-					parts += "<br><span class='greentext'><b>THE CRIMSON COURT HAS A NEW TRIUMPHANT CHALLENGER! THE IMPOSSIBLE HAS BEEN DONE!</b></span>"
-				else if(C.all_non_escape_objectives_completed() && !is_alive)
-					parts += "<br><span class='notice'><b>The Champion ALMOST succeeded, but died right at the final stretch.</b></span>"
-				else
-					parts += "<br><span class='redtext'><b>Shunned for failing the Challenge.</b></span>"
+		// Challenge outcome line if relevant
+		if(C.challenge_accepted)
+			var/is_alive = considered_alive(C.owner)
+			if(C.all_non_escape_objectives_completed() && is_alive)
+				parts += "<br><span class='greentext'><b>THE GOLDEN ROSA COURT HAS A NEW TRIUMPHANT CHALLENGER! THE IMPOSSIBLE HAS BEEN DONE!</b></span>"
+			else if(C.all_non_escape_objectives_completed() && !is_alive)
+				parts += "<br><span class='notice'><b>The Champion ALMOST succeeded, but died right at the final stretch.</b></span>"
+			else
+				parts += "<br><span class='redtext'><b>Shunned for failing the Challenge.</b></span>"
 
-			// Purchases from The Crimson Relinquary
-			var/list/purchases_lines = list()
-			var/ck = C.owner?.key
-			if(ck && GLOB.uplink_purchase_logs_by_key && GLOB.uplink_purchase_logs_by_key[ck])
-				var/datum/uplink_purchase_log/L = GLOB.uplink_purchase_logs_by_key[ck]
-				if(L && L.entries && L.entries.len)
-					for(var/E in L.entries)
-						var/name = E["name"]
-						var/cost = E["cost"]
-						purchases_lines += "[name] ([cost] CR)"
-				else
-					purchases_lines += "They didn't need nothing from the Relinquary."
+		// Purchases from The Golden Relinquary
+		var/list/purchases_lines = list()
+		var/ck = C.owner?.key
+		if(ck && GLOB.uplink_purchase_logs_by_key && GLOB.uplink_purchase_logs_by_key[ck])
+			var/datum/uplink_purchase_log/L = GLOB.uplink_purchase_logs_by_key[ck]
+			if(L && L.entries && L.entries.len)
+				for(var/E in L.entries)
+					var/name = E["name"]
+					var/cost = E["cost"]
+					purchases_lines += "[name] ([cost] CR)"
 			else
 				purchases_lines += "They didn't need nothing from the Relinquary."
+		else
+			purchases_lines += "They didn't need nothing from the Relinquary."
 
-			parts += "<br><i>Relinquary purchases:</i> [purchases_lines.Join(", ")]"
+		parts += "<br><i>Relinquary purchases:</i> [purchases_lines.Join(", ")]"
 
-			if(idx < crimson_antags.len)
-				parts += "<br>"
-			CHECK_TICK
-	else
-		// No Crimson Agents this round
-		parts += "<div style='text-align: center;'>No Crimson Agents were initiated this round.</div>"
+		if(idx < crimson_antags.len)
+			parts += "<br>"
+		CHECK_TICK
 
 	parts += "</div>"
 	return parts.Join("<br>")

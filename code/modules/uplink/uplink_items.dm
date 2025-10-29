@@ -340,9 +340,9 @@ GLOBAL_LIST_EMPTY(uplink_categories)  // registry of category names
 	catalog[category_uniques] = list()
 
 	var/datum/uplink_item/crimson_mask = new
-	crimson_mask.name = "Mask of the Crimson Order"
+	crimson_mask.name = "Mask of the Golden Rosa"
 	crimson_mask.category = category_uniques
-	crimson_mask.desc = "A crimson-gilded gold mask. Grants +2 to all stats, but marks you with Critical Weakness. In Challenge Mode, it seals to your face."
+	crimson_mask.desc = "A gilded mask bearing the Golden Rosa. Grants +2 to all stats, but marks you with Critical Weakness. In Challenge Mode, it seals to your face."
 	crimson_mask.item = /obj/item/clothing/mask/rogue/facemask/goldmask/crimson_order
 	crimson_mask.cost = 15
 	catalog[category_uniques][crimson_mask.name] = crimson_mask
@@ -350,14 +350,14 @@ GLOBAL_LIST_EMPTY(uplink_categories)  // registry of category names
 	var/datum/uplink_item/secret_revealer = new
 	secret_revealer.name = "Secret Revealer"
 	secret_revealer.category = category_uniques
-	secret_revealer.desc = "A crimson-tinted pick that reveals any secret. Instantly unlocks a lock once every 10 minutes."
+	secret_revealer.desc = "A golden-tinted pick that reveals any secret. Instantly unlocks a lock once every 10 minutes."
 	secret_revealer.item = /obj/item/secret_revealer
 	secret_revealer.cost = 15
 	catalog[category_uniques][secret_revealer.name] = secret_revealer
 
-	// The Crimson Serum: one-time emergency heal stronger than strong red
+	// The Golden Serum: one-time emergency heal stronger than strong red
 	var/datum/uplink_item/crimson_serum = new
-	crimson_serum.name = "The Crimson Serum"
+	crimson_serum.name = "The Golden Serum"
 	crimson_serum.category = category_uniques
 	crimson_serum.desc = "A unique vial containing a distillation stronger than strong red. One per agent. For dire emergencies."
 	crimson_serum.item = /obj/item/reagent_containers/glass/bottle/alchemical/crimsonserum
