@@ -85,12 +85,6 @@ There are several things that need to be remembered:
 	START_PROCESSING(SSdamoverlays,src)
 
 /mob/living/carbon/human/proc/update_damage_overlays_real()
-	if(!(dna && dna.species))
-		// No species info to render from; clear and bail safely
-		remove_overlay(DAMAGE_LAYER)
-		remove_overlay(LEG_DAMAGE_LAYER)
-		remove_overlay(ARM_DAMAGE_LAYER)
-		return
 	if(dna.species.update_damage_overlays(src))
 		return
 	remove_overlay(DAMAGE_LAYER)

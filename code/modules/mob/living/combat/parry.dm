@@ -303,27 +303,6 @@
 				src.visible_message(span_boldwarning("<b>[src]</b> ripostes [user] with [W]!"))
 			else
 				src.visible_message(span_boldwarning("<b>[src]</b> parries [user] with [W]!"))
-			// Special: jitterskull heavily degrades parrying items instead of being hard-countered by parries
-			if(istype(user, /mob/living/simple_animal/hostile/rogue/jitterskull))
-				if(W)
-					if(istype(W, /obj/item/rogueweapon/shield))
-						var/obj/item/rogueweapon/shield/S = W
-						if(!S.obj_broken)
-							// Hit shields much harder on parry: ~60% integrity loss minimum 90
-							var/amt = max(round(S.max_integrity * 0.60), 90)
-							S.obj_integrity = max(0, S.obj_integrity - amt)
-							if(S.obj_integrity <= 0)
-								S.obj_broken = TRUE
-								src.visible_message(span_danger("[user]'s bite wrecks [src]'s [S]!"), span_userdanger("My [S] is destroyed by the [user]!"))
-							else
-								src.visible_message(span_warning("[user]'s bite badly dents [src]'s [S]!"), span_warning("My [S] strains under the [user]!"))
-							S.update_icon()
-							playsound(get_turf(src), 'sound/combat/parry/shield/metalshield (1).ogg', 100, FALSE)
-					else
-						// Non-shield parrying item: take even heavier integrity and sharpness damage
-						W.take_damage(INTEG_PARRY_DECAY * 10, BRUTE, "slash")
-						if(W.max_blade_int)
-							W.remove_bintegrity(SHARPNESS_ONHIT_DECAY * 5, user)
 			if(!iscarbon(user))	//Non-carbon mobs never make it to the proper parry proc where the other calculations are done.
 				if(W.max_blade_int)
 					W.remove_bintegrity(SHARPNESS_ONHIT_DECAY, user)
@@ -342,13 +321,6 @@
 /mob/proc/do_unarmed_parry(parrydrain as num, mob/living/user)
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(istype(user, /mob/living/simple_animal/hostile/rogue/jitterskull))
-			// Jitterskull bypasses unarmed parries and mangles an arm instead
-			var/zone = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-			H.apply_damage(35, BRUTE, zone)
-			to_chat(H, span_userdanger("My [zone == BODY_ZONE_L_ARM ? "left" : "right"] arm is mangled by the skull's bite!"))
-			// Fail the parry so the attack continues
-			return FALSE
 		if(H.stamina_add(parrydrain))
 			playsound(get_turf(src), pick(parry_sound), 100, FALSE)
 			src.visible_message(span_warning("<b>[src]</b> parries [user]!"))

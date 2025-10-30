@@ -60,7 +60,7 @@
     retreat_health = null
     can_have_ai = FALSE // disable native simple_animal AI; we use an ai_controller
     AIStatus = AI_OFF
-    ai_controller = /datum/ai_controller/haunt
+    ai_controller = /datum/ai_controller/jitterskull
 
     // Behavior control
     var/next_attack_time = 0       // world.time until which we will refrain from attacking
@@ -88,7 +88,7 @@
     var/is_stalking = FALSE        // briefly TRUE when we blink away and "stare" before re-engaging
     var/angry_until = 0            // during this window, skip whiffs and any artificial waiting
     // Vendetta focus: keep attention on whoever last hurt us for a while
-    var/mob/living/vendetta_target = null
+    var/datum/weakref/vendetta_ref = null
     var/vendetta_until = 0
     // Tether throttle to avoid spam teleports
     var/next_tether_allowed = 0
@@ -115,28 +115,10 @@
     ADD_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
     ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
     original_alpha = alpha
+    adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
     // Run our custom bite logic whenever a melee attack succeeds (works with ai_controller ClickOn flow)
     RegisterSignal(src, COMSIG_MOB_AFTERATTACK_SUCCESS, PROC_REF(on_after_attack_success))
-    // Make the AI controller move snappier for this pawn
-    if(istype(ai_controller))
-        var/datum/ai_controller/C = ai_controller
-        // Make pathing more responsive so it closes distance quicker
-        C.movement_delay = 0.2 SECONDS
-    // Start idle chatter loop
-    spawn(0)
-        idle_chatter_loop()
-    // Play spawn cinematic and then resume regular behavior
-    spawn(0)
-        spawn_cinematic()
-    // Periodically reacquire humanoid targets if we "forget" them
-    spawn(0)
-        search_for_humanoids_loop()
-    // Anti-stuck: if we're not making progress toward the target, blink closer and continue stalking
-    spawn(0)
-        anti_stuck_stalker_loop()
-    // Persistent pursuit tether: if the target runs far, re-tether near them periodically
-    spawn(0)
-        pursuit_tether_loop()
+    // Behavior loops and spawn cinematic are now handled by the AI controller to comply with Initialize() constraints
 
 /mob/living/simple_animal/hostile/rogue/jitterskull/Destroy()
     set_light(0)
@@ -182,7 +164,11 @@
                 continue
             new /obj/effect/temp_visual/small_smoke(cur)
 
-// Periodic search: if we lack a target, look specifically for humanoids and set the AI's target
+// Periodic search helper for the ai_controller only:
+// - Adds light "searching" visuals and narration when we lack a target
+// - Re-applies vendetta targets to the controller to avoid flicker/drop
+// - Mildly biases toward humanoids in view. We keep the base controller/pathing; this does not
+//   replace normal simple_animal AI (which is disabled for this mob), it complements targeting.
 /mob/living/simple_animal/hostile/rogue/jitterskull/proc/search_for_humanoids_loop()
     while(src && !QDELETED(src))
         if(stat != DEAD && !is_feasting && !is_dying)
@@ -211,8 +197,11 @@
                     no_target_since = 0
                 else
                     // No current target: try vendetta first to avoid search flicker
-                    if(vendetta_target && world.time < vendetta_until && !QDELETED(vendetta_target) && (!isliving(vendetta_target) || vendetta_target:stat != DEAD))
-                        C.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, vendetta_target)
+                    var/mob/vt = null
+                    if(vendetta_ref)
+                        vt = vendetta_ref.resolve()
+                    if(vt && world.time < vendetta_until && !QDELETED(vt) && (!isliving(vt) || vt:stat != DEAD))
+                        C.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, vt)
                         if(is_searching)
                             is_searching = FALSE
                             alpha = original_alpha
@@ -406,7 +395,7 @@
     if(isliving(target))
         var/mob/living/L = target
         // Refresh vendetta focus on successful hit so we keep chasing this victim
-        vendetta_target = L
+        vendetta_ref = WEAKREF(L)
         vendetta_until = world.time + 600
         L.apply_damage(125, BRUTE)
         L.visible_message(span_danger("[src] viciously bites [L]!"), span_danger("[src] viciously bites me!"))
@@ -965,7 +954,7 @@
             var/mob/attg = get_mob_by_ckey(lastattackerckey)
             if(attg)
                 reengage_target = attg
-                vendetta_target = attg
+                vendetta_ref = WEAKREF(attg)
                 vendetta_until = world.time + 600
             angry_until = world.time + 50
             next_attack_time = world.time
@@ -980,7 +969,7 @@
             var/mob/att = get_mob_by_ckey(lastattackerckey)
             if(att)
                 reengage_target = att
-                vendetta_target = att
+                vendetta_ref = WEAKREF(att)
                 vendetta_until = world.time + 600 // ~60s vendetta focus
             else if(isliving(target))
                 reengage_target = target
@@ -1008,7 +997,7 @@
             var/mob/attacker = get_mob_by_ckey(lastattackerckey)
             if(attacker)
                 reengage_target = attacker
-                vendetta_target = attacker
+                vendetta_ref = WEAKREF(attacker)
                 vendetta_until = world.time + 600
             else if(isliving(target))
                 reengage_target = target
