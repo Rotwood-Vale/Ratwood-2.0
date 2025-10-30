@@ -1309,8 +1309,7 @@
     if(!T)
         return
     // Spawn multiple decorative flames along all 8 directions, a few tiles out
-    var/list/all_dirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
-    for(var/d in all_dirs)
+    for(var/d in GLOB.alldirs)
         // For each ray, project 2-4 tiles
         var/len = rand(2, 4)
         var/turf/cur = T
