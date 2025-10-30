@@ -14,16 +14,6 @@
 	if(vt && world.time < J.vendetta_until && !QDELETED(vt) && (!isliving(vt) || vt:stat != DEAD))
 		controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, vt)
 		return
-	if(!istype(J))
-		return
-	if(J.is_stalking || J.is_guarding || J.is_feasting)
-		return
-	var/mob/vt = null
-	if(J.vendetta_ref)
-		vt = J.vendetta_ref.resolve()
-	if(vt && world.time < J.vendetta_until && !QDELETED(vt) && (!isliving(vt) || vt:stat != DEAD))
-		controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, vt)
-		return
 
 /datum/ai_planning_subtree/jitterskull/guard_helpless
 /datum/ai_planning_subtree/jitterskull/guard_helpless/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
