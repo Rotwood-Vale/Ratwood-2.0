@@ -26,14 +26,14 @@
     stat_attack = UNCONSCIOUS
     robust_searching = 1
     // Faster than average
-    speed = -0.9
+    speed = -1
     move_to_delay = 1
     harm_intent_damage = 1
     obj_damage = 1
     // Use custom bite attack; keep minimal base damage so base attack flow (hit/miss/defense) still runs
     // We'll apply the heavy damage ourselves in AttackingTarget()
-    melee_damage_lower = 1
-    melee_damage_upper = 1
+    melee_damage_lower = 25
+    melee_damage_upper = 90
     d_type = "blunt"
     attack_verb_simple = "bites"
     attack_verb_continuous = "bites"
@@ -111,7 +111,7 @@
 
 /mob/living/simple_animal/hostile/rogue/jitterskull/Initialize()
     . = ..()
-    set_light(1.5, 1.5, 2, l_color = "#e6dfbb")
+    set_light(1.5, 1.5, 2, l_color = "#f74242")
     ADD_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
     ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
     original_alpha = alpha
