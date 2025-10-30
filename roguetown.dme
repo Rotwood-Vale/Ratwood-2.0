@@ -2080,6 +2080,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\summons\void\voiddragon.dm"
 #include "code\modules\mob\living\simple_animal\hostile\roguetown\crow.dm"
 #include "code\modules\mob\living\simple_animal\hostile\roguetown\haunt.dm"
+#include "code\modules\mob\living\simple_animal\hostile\roguetown\jitterskull.dm"
 #include "code\modules\mob\living\simple_animal\hostile\roguetown\smallrat.dm"
 #include "code\modules\mob\living\simple_animal\hostile\roguetown\werewolf\update_icons.dm"
 #include "code\modules\mob\living\simple_animal\hostile\roguetown\werewolf\werewolf.dm"
@@ -2662,4 +2663,5 @@
 #include "modular_hearthstone\code\modules\reagents\reagent_containers\lux.dm"
 #include "modular_helmsguard\code\modules\mobs\farm\horse.dm"
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
+#include "code\modules\mob\living\simple_animal\hostile\roguetown\jitterskull.dm"
 // END_INCLUDE

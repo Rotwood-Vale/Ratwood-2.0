@@ -546,6 +546,39 @@
 	canparry = TRUE
 	item_d_type = "blunt"
 
+// Generic blunt "strike" for creatures that shouldn't cut or stab
+/datum/intent/simple/strike
+	name = "strike"
+	icon_state = "instrike"
+	attack_verb = list("strikes", "slams")
+	animname = "blank22"
+	blade_class = BCLASS_BLUNT
+	hitsound = "punch_hard"
+	chargetime = 0
+	penfactor = 10
+	swingdelay = 0
+	candodge = TRUE
+	canparry = TRUE
+	item_d_type = "blunt"
+
+// Jitterskull-specific blunt crush: very high armor penetration and heavy integrity damage
+/datum/intent/simple/jitterskull_crush
+	name = "strike"
+	icon_state = "instrike"
+	attack_verb = list("strikes", "slams")
+	animname = "blank22"
+	blade_class = BCLASS_BLUNT
+	hitsound = "punch_hard"
+	chargetime = 0
+	// Extremely high penetration to rip through armor mitigations
+	penfactor = 200
+	// Greatly increase integrity damage dealt to equipment via standard flow
+	intent_intdamage_factor = 8
+	swingdelay = 0
+	candodge = TRUE
+	canparry = TRUE
+	item_d_type = "blunt"
+
 /datum/intent/simple/claw
 	name = "claw"
 	icon_state = "instrike"

@@ -65,14 +65,17 @@ There are several things that need to be remembered:
 	return
 
 /mob/living/carbon/human/update_body(redraw = FALSE)
-	dna.species.handle_body(src)
+	if(dna && dna.species)
+		dna.species.handle_body(src)
 	..()
 
 /mob/living/carbon/human/update_fire()
 	if(fire_stacks + divine_fire_stacks < 10)
 		return ..("Generic_mob_burning")
 	else
-		var/burning = dna.species.enflamed_icon
+		var/burning = null
+		if(dna && dna.species)
+			burning = dna.species.enflamed_icon
 		if(!burning)
 			return ..("widefire")
 		return ..(burning)
@@ -82,9 +85,14 @@ There are several things that need to be remembered:
 	START_PROCESSING(SSdamoverlays,src)
 
 /mob/living/carbon/human/proc/update_damage_overlays_real()
-	if(dna.species)
-		if(dna.species.update_damage_overlays(src))
-			return
+	if(!(dna && dna.species))
+		// No species info to render from; clear and bail safely
+		remove_overlay(DAMAGE_LAYER)
+		remove_overlay(LEG_DAMAGE_LAYER)
+		remove_overlay(ARM_DAMAGE_LAYER)
+		return
+	if(dna.species.update_damage_overlays(src))
+		return
 	remove_overlay(DAMAGE_LAYER)
 	remove_overlay(LEG_DAMAGE_LAYER)
 	remove_overlay(ARM_DAMAGE_LAYER)

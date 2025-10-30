@@ -117,3 +117,18 @@
 		)
 	text_faction = "Cursed souls"	
 	objfaction = list("undead")
+
+// Dedicated jitterskull spawner for testing or mapping (not used unless placed)
+/obj/effect/mobspawner/ghosts_jitterskull
+	name = "jitterskull spawner"
+	desc = ""
+	anchored = TRUE
+	density = FALSE
+	restart_time = 10 MINUTES
+	min_mobs = 1
+	max_mobs = 2
+	mob_types = list(
+		/mob/living/simple_animal/hostile/rogue/jitterskull = 1
+	)
+	text_faction = "Wraiths"
+	objfaction = list("undead")
