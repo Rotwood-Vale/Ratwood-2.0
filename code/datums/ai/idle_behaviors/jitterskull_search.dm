@@ -36,6 +36,6 @@
 			if(J.alpha != 25)
 				J.alpha = 25
 		if(world.time >= J.next_search_announce_time)
-			J.visible_message(span_notice("The Jitterskull searches for it's next prey."))
+			J.visible_message(span_notice("The Jitterskull searches for its next prey."))
 			J.next_search_announce_time = world.time + announce_cooldown
 	return
