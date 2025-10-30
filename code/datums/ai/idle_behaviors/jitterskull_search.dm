@@ -2,9 +2,9 @@
 
 /datum/idle_behavior/jitterskull_search
 	/// Minimum time without a target before enabling search visuals
-	var/search_debounce = 30
+	var/search_debounce = 3 SECONDS
 	/// Cooldown for announcing search text
-	var/announce_cooldown = 50
+	var/announce_cooldown = 5 SECONDS
 
 /datum/idle_behavior/jitterskull_search/perform_idle_behavior(delta_time, datum/ai_controller/controller)
 	. = ..()
