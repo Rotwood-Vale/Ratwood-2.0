@@ -13,6 +13,7 @@
 /mob/living/carbon/human/on_cmode()
 	if(!cmode)	//We just toggled it off.
 		addtimer(CALLBACK(src, PROC_REF(purge_bait)), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(expire_peel)), 60 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	if(!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 		filtered_balloon_alert(TRAIT_COMBAT_AWARE, (cmode ? ("<i><font color = '#831414'>Tense</font></i>") : ("<i><font color = '#c7c6c6'>Relaxed</font></i>")), y_offset = 32)
 
@@ -37,7 +38,7 @@
 		return
 	if(user == target)
 		return
-	
+
 	var/mob/living/carbon/human/HT = target
 	var/mob/living/carbon/human/HU = user
 	var/target_zone = HT.zone_selected
@@ -81,7 +82,7 @@
 		HU.changeNext_move(0.1 SECONDS, override = TRUE)
 		to_chat(HU, span_notice("[HT] fell for my bait <b>perfectly</b>! One more!"))
 		to_chat(HT, span_danger("I fall for [HU]'s bait <b>perfectly</b>! I'm losing my footing! <b>I can't let this happen again!</b>"))
-	
+
 	if(HU.has_duelist_ring() && HT.has_duelist_ring() || HT.bait_stacks >= 2)	//We're explicitly (hopefully non-lethally) dueling. Flavor.
 		HT.emote("gasp")
 		HT.OffBalance(2 SECONDS)
@@ -187,7 +188,7 @@
 /datum/rmb_intent/riposte/special_attack(mob/living/user, atom/target)	//Wish we could breakline these somehow.
 	if(!user.has_status_effect(/datum/status_effect/buff/clash) && !user.has_status_effect(/datum/status_effect/debuff/clashcd))
 		if(!user.get_active_held_item()) //Nothing in our hand to Guard with.
-			return 
+			return
 		if(user.r_grab || user.l_grab || length(user.grabbedby)) //Not usable while grabs are in play.
 			return
 		if(!(user.mobility_flags & MOBILITY_STAND) || user.IsImmobilized() || user.IsOffBalanced()) //Not usable while we're offbalanced, immobilized or on the ground.

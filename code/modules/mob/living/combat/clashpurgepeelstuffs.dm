@@ -34,7 +34,7 @@
 		playsound(src, 'sound/combat/clash_struck.ogg', 100)
 		var/staminadef = (stamina * 100) / max_stamina
 		var/staminaatt = (H.stamina * 100) / H.max_stamina
-		if(staminadef > staminaatt) 
+		if(staminadef > staminaatt)
 			H.apply_status_effect(/datum/status_effect/debuff/exposed, 2 SECONDS)
 			H.apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
 			H.Slowdown(3)
@@ -72,7 +72,7 @@
 		skilldiff = skilldiff - HU.get_skill_level(IU.associated_skill)
 	else
 		instantwin = TRUE	//THEY are Guarding with a book or something -- no chance for them.
-	
+
 	//Weapon checks.
 	var/lengthdiff = IM.wlength - IU.wlength //The longer the weapon the better.
 	var/wieldeddiff = IM.wielded - IU.wielded //If ours is wielded but theirs is not.
@@ -90,7 +90,7 @@
 			prob_us += 10
 		else if(statdiff <= -2)
 			prob_opp += 10
-	
+
 	for(var/wepdiff in wepdiffs)
 		if(wepdiff > 0)
 			prob_us += 10
@@ -102,7 +102,7 @@
 		prob_us += 10
 	else if(wildcard < 0 )
 		prob_opp += 10
-	
+
 	//Small bonus to the first one to strike in a Clash.
 	var/initiator_bonus = rand(5, 10)
 	prob_us += initiator_bonus
@@ -141,13 +141,13 @@
 			disarmed(IM)
 		if(instantwin)
 			HU.disarmed(IU)
-	
+
 	remove_status_effect(/datum/status_effect/buff/clash)
 	HU.remove_status_effect(/datum/status_effect/buff/clash)
 
 
 /mob/living/carbon/human/proc/disarmed(obj/item/I)
-	visible_message(span_suicide("[src] is disarmed!"), 
+	visible_message(span_suicide("[src] is disarmed!"),
 					span_boldwarning("I'm disarmed!"))
 	var/turnangle = (prob(50) ? 270 : 90)
 	var/turndir = turn(dir, turnangle)
@@ -184,6 +184,10 @@
 			bait_stacks = 0
 			to_chat(src, span_info("My focus and balance returns. I won't lose my footing if I am baited again."))
 
+/mob/living/carbon/human/proc/expire_peel()
+	if(!cmode)
+		purge_peel(99)
+
 /mob/living/carbon/human/proc/measured_statcheck(mob/living/carbon/human/HT)
 	var/finalprob = 40
 
@@ -192,12 +196,12 @@
 	var/min_target = min(HT.STASTR, HT.STACON, HT.STAWIL, HT.STAINT, HT.STAPER, HT.STASPD)
 	var/max_user = min(max(STASTR, STACON, STAWIL, STAINT, STAPER, STASPD), 14)
 	var/min_user = min(STASTR, STACON, STAWIL, STAINT, STAPER, STASPD)
-	
+
 	if(max_target > max_user)
 		finalprob -= max_target
 	if(min_target > min_user)
 		finalprob -= 3 * min_target
-	
+
 	if(max_target < max_user)
 		finalprob += max_user
 	if(min_target < min_user)
@@ -223,7 +227,7 @@
 	for(var/slot in slots)
 		if(isnull(slot) || !istype(slot, /obj/item/clothing))
 			slots.Remove(slot)
-	
+
 	var/highest_ac = ARMOR_CLASS_NONE
 
 	for(var/obj/item/clothing/C in slots)
@@ -238,11 +242,11 @@
 		if(mainh && istype(mainh, /obj/item/clothing))
 			var/obj/item/clothing/CMH = mainh
 			if(CMH.armor_class > highest_ac)
-				highest_ac = CMH.armor_class 
+				highest_ac = CMH.armor_class
 		if(offh && istype(offh, /obj/item/clothing))
 			var/obj/item/clothing/COH = offh
 			if(COH.armor_class > highest_ac)
-				highest_ac = COH.armor_class 
-	
+				highest_ac = COH.armor_class
+
 	return highest_ac
 

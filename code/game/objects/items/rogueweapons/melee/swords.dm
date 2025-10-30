@@ -85,6 +85,7 @@
 	attack_verb = list("<font color ='#e7e7e7'>peels</font>")
 	animname = "cut"
 	blade_class = BCLASS_PEEL
+	clickcd = CLICK_CD_HEAVY
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	chargetime = 0
 	penfactor = BLUNT_DEFAULT_PENFACTOR
