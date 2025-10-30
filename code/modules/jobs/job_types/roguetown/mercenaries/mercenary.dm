@@ -18,6 +18,8 @@
 	advclass_cat_rolls = list(CTAG_MERCENARY = 20)
 	job_traits = list(TRAIT_OUTLANDER, TRAIT_STEELHEARTED)
 	always_show_on_latechoices = TRUE
+	job_reopens_slots_on_death = TRUE
+	same_job_respawn_delay = 1 MINUTES
 	job_subclasses = list(
 		/datum/advclass/mercenary/atgervi,
 		/datum/advclass/mercenary/atgervi/shaman,
