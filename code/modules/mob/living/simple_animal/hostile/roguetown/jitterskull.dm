@@ -104,10 +104,32 @@
     var/primed_attack_until = 0
     // Track last time we processed post-attack flow to avoid double-handling when mixing signals and fallbacks
     var/last_attack_flow_at = 0
+    // After a panic blink, suppress immediate post-hit teleport/stalk to avoid double-bounce
+    var/avoid_posthit_until = 0
 
 
 /mob/living/simple_animal/hostile/rogue/jitterskull/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
     return FALSE
+
+// Take 25% extra damage from arrows and bolts
+/mob/living/simple_animal/hostile/rogue/jitterskull/bullet_act(obj/projectile/P)
+    // Run base handling first (aggro, pathing, core damage application)
+    var/result = ..(P)
+    if(QDELETED(src) || stat == DEAD || !P)
+        return result
+    // Consider both reusable and non-reusable arrows/bolts
+    var/is_arrow_or_bolt = FALSE
+    if(istype(P, /obj/projectile/bullet/reusable/arrow) || istype(P, /obj/projectile/bullet/arrow))
+        is_arrow_or_bolt = TRUE
+    else if(istype(P, /obj/projectile/bullet/reusable/bolt) || istype(P, /obj/projectile/bullet/bolt))
+        is_arrow_or_bolt = TRUE
+
+    if(is_arrow_or_bolt)
+        var/extra = round(P.damage * 0.50)
+        if(extra > 0)
+            // Apply a small true-damage kicker to make arrows slightly more effective
+            apply_damage(extra, P.damage_type)
+    return result
 
 /mob/living/simple_animal/hostile/rogue/jitterskull/Initialize()
     . = ..()
@@ -119,6 +141,49 @@
     // Run our custom bite logic whenever a melee attack succeeds (works with ai_controller ClickOn flow)
     RegisterSignal(src, COMSIG_MOB_AFTERATTACK_SUCCESS, PROC_REF(on_after_attack_success))
     // Behavior loops and spawn cinematic are now handled by the AI controller to comply with Initialize() constraints
+
+// Reduce tell while stalking by dimming the light, and restore when done
+/mob/living/simple_animal/hostile/rogue/jitterskull/proc/set_stalk_visibility(enabled)
+    if(enabled)
+        alpha = 20
+        set_light(0.6, 0.6, 1, l_color = "#f74242")
+    else
+        alpha = original_alpha
+        set_light(1.5, 1.5, 2, l_color = "#f74242")
+
+// Ensure we are free to move/act when visible and not in a deliberate pause
+/mob/living/simple_animal/hostile/rogue/jitterskull/proc/ensure_mobile()
+    if(is_dying)
+        return
+    if(!is_stalking && !is_guarding && !is_feasting)
+        anchored = FALSE
+        SetImmobilized(0)
+        if(ai_controller)
+            var/datum/ai_controller/Cm = ai_controller
+            Cm.CancelActions()
+            // Ensure any prior pause is cleared
+            Cm.PauseAi(0)
+            // Force controller back to active processing
+            Cm.set_ai_status(AI_STATUS_ON)
+            // Reassert target if we have one to kick pathing
+            var/mob/living/vt = null
+            if(vendetta_ref)
+                vt = vendetta_ref.resolve()
+            if(!vt)
+                vt = reengage_target
+            if(vt && !QDELETED(vt))
+                Cm.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, vt)
+
+// Strongly reassert focus on a target: set vendetta, remember reengage_target, and push into AI blackboard
+/mob/living/simple_animal/hostile/rogue/jitterskull/proc/ensure_focus_on(mob/living/L, vend_dur = 600)
+    if(!L || QDELETED(L))
+        return
+    reengage_target = L
+    vendetta_ref = WEAKREF(L)
+    vendetta_until = world.time + vend_dur
+    if(ai_controller)
+        var/datum/ai_controller/Cf = ai_controller
+        Cf.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, L)
 
 /mob/living/simple_animal/hostile/rogue/jitterskull/Destroy()
     set_light(0)
@@ -394,9 +459,8 @@
     // Heavy custom damage on top of default light hit
     if(isliving(target))
         var/mob/living/L = target
-        // Refresh vendetta focus on successful hit so we keep chasing this victim
-        vendetta_ref = WEAKREF(L)
-        vendetta_until = world.time + 600
+        // Refresh vendetta focus on successful hit so we keep chasing this victim and reassert blackboard
+        ensure_focus_on(L, 600)
         L.apply_damage(125, BRUTE)
         L.visible_message(span_danger("[src] viciously bites [L]!"), span_danger("[src] viciously bites me!"))
         // Shred armor: the bite mangles worn equipment severely so two bites will break most pieces
@@ -424,23 +488,32 @@
     if(prob(12) && iscarbon(target))
         var/mob/living/carbon/C = target
         C.Immobilize(30)
-        C.visible_message(span_danger("The [src] startles the [C], freezing them in terror!"), \
-            span_danger("The [src] startles me!"))
+        C.visible_message(span_danger("[src] startles [C], freezing them in terror!"), \
+            span_danger("[src] startles me!"))
     // Taunt if they’re down
     if(isliving(target))
         var/mob/living/LL = target
         if(LL.stat && world.time >= taunt_cooldown_until)
             taunt_cooldown_until = world.time + 50
             playsound(src, 'sound/mobs/jitter_taunt.ogg', 70, FALSE)
-    // Hit-and-run: blink away, then stalk low-alpha and stare for a moment
-    if(target && !QDELETED(target))
+    // If we recently panic-blinked, skip the hit-and-run stalk to avoid double teleport bounce
+    if(world.time < avoid_posthit_until)
+        // Keep pressure instead of blinking away again
+        primed_attack_until = world.time + 30
+        next_attack_time = min(next_attack_time, world.time)
+        if(guard_after_stalk && guard_after_stalk_target && !QDELETED(guard_after_stalk_target))
+            if(get_dist(src, guard_after_stalk_target) > 2)
+                teleport_near_atom(guard_after_stalk_target, 1, 2)
+            begin_guarding(guard_after_stalk_target)
+    // Otherwise: Hit-and-run: blink away, then stalk low-alpha and stare for a moment
+    else if(target && !QDELETED(target))
         var/wait_ticks = rand(50, 150)
         if(world.time < angry_until)
             visible_message(span_warning("Because the jitterskull is angry, it begins the chase early!"))
             wait_ticks = max(0, wait_ticks - rand(40, 80))
         // Keep some space but within reliable reacquire range; slightly closer, LOS not required
         teleport_near_atom(target, 6, 9, FALSE)
-        alpha = 20
+        set_stalk_visibility(TRUE)
         // Briefly pause and face the target to build tension
         var/dirface = get_dir(src, target)
         if(dirface)
@@ -449,57 +522,79 @@
         anchored = TRUE
         // Keep the AI target; anchoring enforces the pause without dropping aggro
         // Local narrate while stalking
-        visible_message(span_notice("The jitterskull watches intently from a distance."))
+        visible_message(span_notice("[src] watches intently from a distance."))
+        // Pause AI planning and clear any in-flight behaviors so we don't trail during stalk pause
+        var/datum/ai_controller/Cp = ai_controller
+        if(Cp)
+            Cp.CancelActions()
+            Cp.PauseAi(wait_ticks)
         Immobilize(wait_ticks)
         next_attack_time = max(next_attack_time, world.time + wait_ticks)
         spawn(wait_ticks)
-            if(!QDELETED(src))
-                is_stalking = FALSE
-                anchored = FALSE
-                alpha = original_alpha
-                // Safety: ensure we still have the target and are within engagement distance after the pause
-                if(ai_controller && reengage_target && !QDELETED(reengage_target))
-                    var/d2 = get_dist(src, reengage_target)
-                    if(d2 >= 12)
-                        teleport_near_atom(reengage_target, 6, 9, FALSE)
-                    // Restore the AI's target so normal chase can resume
-                    var/datum/ai_controller/Cr = ai_controller
-                    if(Cr)
-                        Cr.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, reengage_target)
-                // Prime an immediate swing and suppress trailing
-                primed_attack_until = world.time + 30
-                next_attack_time = min(next_attack_time, world.time)
-                // If the bite downed the victim, start guarding now (after the stalk pause)
-                if(guard_after_stalk && guard_after_stalk_target && !QDELETED(guard_after_stalk_target))
-                    if(get_dist(src, guard_after_stalk_target) > 2)
-                        teleport_near_atom(guard_after_stalk_target, 1, 2)
-                    begin_guarding(guard_after_stalk_target)
+            if(QDELETED(src) || stat == DEAD || is_dying)
+                return
+            is_stalking = FALSE
+            anchored = FALSE
+            set_stalk_visibility(FALSE)
+            if(QDELETED(src) || stat == DEAD || is_dying)
+                return
+            ensure_mobile()
+            // Safety: ensure we still have the target and are within engagement distance after the pause
+            if(QDELETED(src) || stat == DEAD || is_dying)
+                return
+            if(ai_controller && reengage_target && !QDELETED(reengage_target))
+                var/d2 = get_dist(src, reengage_target)
+                if(d2 >= 12)
+                    teleport_near_atom(reengage_target, 6, 9, FALSE)
+                // Restore the AI's target so normal chase can resume
+                var/datum/ai_controller/Cr = ai_controller
+                if(Cr)
+                    Cr.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, reengage_target)
+            // Prime an immediate swing and suppress trailing
+            primed_attack_until = world.time + 30
+            next_attack_time = min(next_attack_time, world.time)
+            // If the bite downed the victim, start guarding now (after the stalk pause)
+            if(guard_after_stalk && guard_after_stalk_target && !QDELETED(guard_after_stalk_target))
+                if(get_dist(src, guard_after_stalk_target) > 2)
+                    teleport_near_atom(guard_after_stalk_target, 1, 2)
+                begin_guarding(guard_after_stalk_target)
     else
         var/w2 = rand(50, 150)
         if(world.time < angry_until)
             visible_message(span_warning("Because the jitterskull is angry, it begins the chase early!"))
             w2 = max(0, w2 - rand(40, 80))
         teleport_away(8, 12)
-        alpha = 20
+        set_stalk_visibility(TRUE)
         is_stalking = TRUE
         anchored = TRUE
         // Keep the AI target; anchoring enforces the pause without dropping aggro
         // Local narrate while stalking
-        visible_message(span_notice("The jitterskull watches intently from a distance."))
+        visible_message(span_notice("[src] watches intently from a distance."))
         // Fully immobilize during the stalk pause and delay next attack accordingly
+        // Pause AI planning and clear behaviors to avoid trailing
+        var/datum/ai_controller/Cp2 = ai_controller
+        if(Cp2)
+            Cp2.CancelActions()
+            Cp2.PauseAi(w2)
         Immobilize(w2)
         next_attack_time = max(next_attack_time, world.time + w2)
         spawn(w2)
-            if(!QDELETED(src))
-                is_stalking = FALSE
-                anchored = FALSE
-                alpha = original_alpha
-                if(ai_controller && reengage_target && !QDELETED(reengage_target))
-                    var/datum/ai_controller/Cr2 = ai_controller
-                    if(Cr2)
-                        Cr2.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, reengage_target)
-                primed_attack_until = world.time + 30
-                next_attack_time = min(next_attack_time, world.time)
+            if(QDELETED(src) || stat == DEAD || is_dying)
+                return
+            is_stalking = FALSE
+            anchored = FALSE
+            set_stalk_visibility(FALSE)
+            if(QDELETED(src) || stat == DEAD || is_dying)
+                return
+            ensure_mobile()
+            if(QDELETED(src) || stat == DEAD || is_dying)
+                return
+            if(ai_controller && reengage_target && !QDELETED(reengage_target))
+                var/datum/ai_controller/Cr2 = ai_controller
+                if(Cr2)
+                    Cr2.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, reengage_target)
+            primed_attack_until = world.time + 30
+            next_attack_time = min(next_attack_time, world.time)
     // Swing finished; clear ignore flag
     ignore_hits_this_swing = FALSE
 
@@ -638,7 +733,7 @@
         // Keep within stalking range; if we drift too far, blink back near
         if(get_dist(src, C) > 16)
             teleport_near_atom(C, 12, 16)
-            alpha = 20
+            set_stalk_visibility(TRUE)
         if(!announced_guard)
             visible_message(span_notice("The jitterskull guards its kill."))
             announced_guard = TRUE
@@ -662,6 +757,9 @@
 /mob/living/simple_animal/hostile/rogue/jitterskull/AttackingTarget()
     if(is_dying)
         return FALSE
+    // Safety: never remain anchored while deciding to attack
+    anchored = FALSE
+    SetImmobilized(0)
     // Wait windows create tension: if we're still "waiting", don't attack yet
     if(is_feasting)
         return FALSE
@@ -689,6 +787,12 @@
     if(isliving(target))
         var/mob/living/TL = target
         reengage_target = TL
+        // Snap tether if we've drifted far and cooldown allows
+        if(world.time >= next_tether_allowed)
+            var/dt = get_dist(src, TL)
+            if(dt >= 14)
+                teleport_near_atom(TL, 8, 12, FALSE)
+                next_tether_allowed = world.time + 20
         // While vendetta is active, ensure the AI also sticks to this target
         if(world.time < vendetta_until && ai_controller)
             var/datum/ai_controller/Cvend = ai_controller
@@ -918,6 +1022,9 @@
 // React to taking damage by blinking away by default
 /mob/living/simple_animal/hostile/rogue/jitterskull/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
     var/ret = ..()
+    // If lethal damage killed us, or we entered death(), bail out immediately
+    if(QDELETED(src) || stat == DEAD || is_dying)
+        return ret
     if(amount > 0)
         // If dying, ignore further reactions
         if(is_dying)
@@ -935,7 +1042,7 @@
         if(is_stalking)
             is_stalking = FALSE
             anchored = FALSE
-            alpha = original_alpha
+            set_stalk_visibility(FALSE)
             SetImmobilized(0)
             angry_until = world.time + 50
             next_attack_time = world.time
@@ -944,18 +1051,16 @@
             visible_message(span_warning("The jitterskull gets upset as they're interrupted from stalking their prey."))
             var/mob/att2 = get_mob_by_ckey(lastattackerckey)
             if(att2)
-                reengage_target = att2
+                ensure_focus_on(att2, 600)
             return ret
         // If we're guarding a downed target, break off and become angry
         if(is_guarding)
             is_guarding = FALSE
             guarding_target = null
-            alpha = original_alpha
+            set_stalk_visibility(FALSE)
             var/mob/attg = get_mob_by_ckey(lastattackerckey)
             if(attg)
-                reengage_target = attg
-                vendetta_ref = WEAKREF(attg)
-                vendetta_until = world.time + 600
+                ensure_focus_on(attg, 600)
             angry_until = world.time + 50
             next_attack_time = world.time
             return ret
@@ -965,14 +1070,12 @@
                 return ret
             is_feasting = FALSE
             SetImmobilized(0)
-            alpha = original_alpha
+            set_stalk_visibility(FALSE)
             var/mob/att = get_mob_by_ckey(lastattackerckey)
             if(att)
-                reengage_target = att
-                vendetta_ref = WEAKREF(att)
-                vendetta_until = world.time + 600 // ~60s vendetta focus
+                ensure_focus_on(att, 600) // ~60s vendetta focus
             else if(isliving(target))
-                reengage_target = target
+                ensure_focus_on(target, 600)
             teleport_cooldown_until = 0
             panic_blink_and_stalk()
             return ret
@@ -996,17 +1099,15 @@
             teleport_cooldown_until = world.time + 30
             var/mob/attacker = get_mob_by_ckey(lastattackerckey)
             if(attacker)
-                reengage_target = attacker
-                vendetta_ref = WEAKREF(attacker)
-                vendetta_until = world.time + 600
+                ensure_focus_on(attacker, 600)
             else if(isliving(target))
-                reengage_target = target
+                ensure_focus_on(target, 600)
             panic_blink_and_stalk()
     return ret
 
 // Retreat helper: teleport away then set a short random wait before we’ll attack again
 /mob/living/simple_animal/hostile/rogue/jitterskull/proc/retreat_and_wait()
-    if(is_dying)
+    if(stat == DEAD)
         return
     teleport_away(4, 7)
     // Random pause window (2–5.5s) before we’re willing to attack again
@@ -1014,25 +1115,31 @@
 
 // Panic reaction: blink far away, fade and freeze for 5–20s, then reappear near target ~10 tiles away
 /mob/living/simple_animal/hostile/rogue/jitterskull/proc/panic_blink_and_stalk()
-    if(is_dying)
+    if(stat == DEAD)
         return
     // Blink further away than usual
     teleport_away(12, 18)
+    // Suppress post-hit teleport shortly after a panic blink to avoid double bounce
+    avoid_posthit_until = world.time + 60
     // Fade more and freeze
-    alpha = 20
+    set_stalk_visibility(TRUE)
     // Shorter vanish so it stays engaged
     var/wait_time = rand(25, 60) // vanish duration (2.5–6 seconds)
     next_attack_time = world.time + wait_time
     Immobilize(wait_time)
     var/mob/living/T = reengage_target
     spawn(wait_time)
+        if(QDELETED(src) || stat == DEAD || is_dying)
+            return
         // Reappear at full opacity and stalk back near the target
-        alpha = original_alpha
+        set_stalk_visibility(FALSE)
         if(T && !QDELETED(T))
             // Keep re-entry at a distance that's still within reacquire range
             teleport_near_atom(T, 6, 9, FALSE)
+            if(QDELETED(src) || stat == DEAD || is_dying)
+                return
             // Reappear, then briefly stalk at low alpha while facing target
-            alpha = 20
+            set_stalk_visibility(TRUE)
             var/df = get_dir(src, T)
             if(df)
                 dir = df
@@ -1044,39 +1151,48 @@
             anchored = TRUE
             // Keep the AI target; anchoring enforces the pause without dropping aggro
             // Local narrate while stalking
-            visible_message(span_notice("The jitterskull watches intently from a distance."))
+            visible_message(span_notice("[src] watches intently from a distance."))
+            // Pause AI planning to prevent trailing during the re-stalk window
+            var/datum/ai_controller/Cps = ai_controller
+            if(Cps)
+                Cps.CancelActions()
+                Cps.PauseAi(wt)
             Immobilize(wt)
             next_attack_time = max(next_attack_time, world.time + wt)
             // If the victim flees during our stare, cancel early and re-tether
             spawn(1)
                 var/t_end = world.time + wt
-                while(world.time < t_end && is_stalking && !QDELETED(src) && T && !QDELETED(T))
+                while(world.time < t_end && is_stalking && !QDELETED(src) && !is_dying && T && !QDELETED(T))
                     if(get_dist(src, T) >= 10)
                         anchored = FALSE
                         SetImmobilized(0)
                         is_stalking = FALSE
                         teleport_near_atom(T, 10, 14)
-                        alpha = 20
+                        set_stalk_visibility(TRUE)
                         if(ai_controller && T && !QDELETED(T))
                             var/datum/ai_controller/Cpbret = ai_controller
                             Cpbret.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, T)
                         break
                     sleep(3)
             spawn(max(20, wt))
-                if(!QDELETED(src))
-                    is_stalking = FALSE
-                    anchored = FALSE
-                    alpha = original_alpha
-                    // Target persisted; anchoring prevented chase
-                    primed_attack_until = world.time + 30
-                    next_attack_time = min(next_attack_time, world.time)
+                if(QDELETED(src) || stat == DEAD || is_dying)
+                    return
+                is_stalking = FALSE
+                anchored = FALSE
+                set_stalk_visibility(FALSE)
+                if(QDELETED(src) || stat == DEAD || is_dying)
+                    return
+                ensure_mobile()
+                // Target persisted; anchoring prevented chase
+                primed_attack_until = world.time + 30
+                next_attack_time = min(next_attack_time, world.time)
         else
             // No valid target, reappear nearby instead
             teleport_away(4, 8)
 
 // Teleport to a random nearby open turf at least min_range away
 /mob/living/simple_animal/hostile/rogue/jitterskull/proc/teleport_away(min_range = 4, max_range = 7)
-    if(is_dying || QDELETED(src))
+    if(stat == DEAD || QDELETED(src) || is_dying)
         return
     var/turf/center = get_turf(src)
     if(!center)
@@ -1104,7 +1220,7 @@
         if(rt)
             var/list/los_opts = list()
             for(var/turf/opt in options)
-                if(has_line_of_sight(opt, rt))
+                if(is_in_sight(opt, rt))
                     los_opts += opt
             if(length(los_opts))
                 choice = pick(los_opts)
@@ -1112,7 +1228,7 @@
         choice = pick(options)
     // Minimal flicker-style vanish/appear messaging
     visible_message(span_notice("[src] flickers out of sight."))
-    if(QDELETED(src) || is_dying || QDELETED(choice))
+    if(QDELETED(src) || stat == DEAD || QDELETED(choice))
         return
     forceMove(choice)
     visible_message(span_notice("[src] flickers back into sight."))
@@ -1124,7 +1240,7 @@
 
 // Teleport near an atom at roughly a ring between min and max distance
 /mob/living/simple_animal/hostile/rogue/jitterskull/proc/teleport_near_atom(atom/A, min_range = 9, max_range = 11, require_los = TRUE)
-    if(is_dying || QDELETED(src) || QDELETED(A) || !A.loc)
+    if(stat == DEAD || is_dying || QDELETED(src) || QDELETED(A) || !A.loc)
         return
     var/turf/center = get_turf(A)
     if(!center)
@@ -1142,71 +1258,15 @@
         if(T.density || !isopenturf(T))
             continue
         // Optionally restrict to spots with approximate clear LOS to the target turf
-        if(!require_los || has_line_of_sight(T, center))
+        if(!require_los || is_in_sight(T, center))
             candidates += T
     if(!length(candidates))
         return
     var/turf/spot = pick(candidates)
-    if(QDELETED(src) || is_dying || QDELETED(spot))
+    if(QDELETED(src) || stat == DEAD || QDELETED(spot))
         return
     forceMove(spot)
 
-// Simple LOS: step from A to B along approximate straight path; fail on opaque/dense turfs
-/mob/living/simple_animal/hostile/rogue/jitterskull/proc/has_line_of_sight(turf/from_turf, turf/to_turf)
-    if(!from_turf || !to_turf)
-        return FALSE
-    if(from_turf.z != to_turf.z)
-        return FALSE
-    var/turf/cur = from_turf
-    var/safety = 0
-    while(cur && cur != to_turf && safety < 256)
-        safety++
-        var/dir_to = get_dir(cur, to_turf)
-        var/turf/next = get_step(cur, dir_to)
-        if(!next)
-            return FALSE
-        if(next.opacity || next.density)
-            return FALSE
-        cur = next
-    return TRUE
-
-// If we're not making progress toward our target for a while, blink closer and continue stalking
-/mob/living/simple_animal/hostile/rogue/jitterskull/proc/anti_stuck_stalker_loop()
-    while(src && !QDELETED(src))
-        if(stat != DEAD && !is_dying && !is_feasting && !is_guarding && !is_stalking)
-            var/datum/ai_controller/C = ai_controller
-            var/mob/living/T = null
-            if(C)
-                T = C.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-            if(!T || QDELETED(T))
-                // reset stuck tracking when target is missing
-                last_stuck_x = x; last_stuck_y = y; stuck_ticks = 0
-            else
-                // If we're far and not moving for a bit, blink nearer and stalk
-                var/moved = (x != last_stuck_x || y != last_stuck_y)
-                if(moved)
-                    stuck_ticks = 0
-                else
-                    stuck_ticks++
-                last_stuck_x = x; last_stuck_y = y
-                if(get_dist(src, T) > 2 && stuck_ticks >= 20)
-                    // Snap tether near target without entering a stalking pause
-                    teleport_near_atom(T, 8, 12)
-                    var/df = get_dir(src, T)
-                    if(df)
-                        dir = df
-                    stuck_ticks = 0
-                // Distance-based pursuit tether even if we're not stuck, with a short cooldown
-                var/dd = get_dist(src, T)
-                // Tether a bit sooner so we don't lose interest after a post-hit blink
-                if(dd >= 12 && world.time >= next_tether_allowed)
-                    next_tether_allowed = world.time + 20
-                    // Snap tether near target without entering a stalking pause
-                    teleport_near_atom(T, 8, 12)
-                    var/df2 = get_dir(src, T)
-                    if(df2)
-                        dir = df2
-        sleep(10)
 
 // Loop that triggers idle chatter at random intervals to build tension
 /mob/living/simple_animal/hostile/rogue/jitterskull/proc/idle_chatter_loop()
@@ -1219,52 +1279,49 @@
             next_idle_chatter_time = world.time + rand(30, 80)
         sleep(rand(20, 40)) // check again in 2–4 seconds
 
-// Periodic leash separate from anti-stuck, to gently keep the skull near its current target when they flee far away
-/mob/living/simple_animal/hostile/rogue/jitterskull/proc/pursuit_tether_loop()
-    while(src && !QDELETED(src))
-        if(stat != DEAD && !is_dying && !is_feasting && !is_guarding && !is_stalking && ai_controller)
-            var/datum/ai_controller/C = ai_controller
-            var/mob/living/T = C.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-            if(T && !QDELETED(T) && world.time >= next_tether_allowed)
-                var/d = get_dist(src, T)
-                // Engage tether at a closer gap so we keep pressure without dropping aggro
-                if(d >= 16)
-                    next_tether_allowed = world.time + 25
-                    // Snap tether without entering stalking
-                    teleport_near_atom(T, 10, 14)
-                    var/df = get_dir(src, T)
-                    if(df)
-                        dir = df
-        sleep(12)
+
 
 // Custom death sequence: shake, flames, death sound, then burst into gibs
+// Custom death sequence: shake, fire trails, death sound, reliquary, then base cleanup
 /mob/living/simple_animal/hostile/rogue/jitterskull/death(gibbed)
-    if(is_dying)
-        return
+    // Enter dying state immediately to block further attacks/AI
     is_dying = TRUE
     // Cache turf for loot drop before we potentially delete ourselves
     var/turf/death_turf = get_turf(src)
-    // Halt AI to avoid any further actions during death
+    // Halt AI and freeze the body during the effect window
     toggle_ai(AI_OFF)
-    // Ensure we won't move/teleport during death
+    // Cancel any planned actions and fully anchor to stop residual walking
+    var/datum/ai_controller/Cd = ai_controller
+    if(Cd)
+        Cd.CancelActions()
+        // Clear AI target to avoid any residual references
+        Cd.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, null)
+    anchored = TRUE
     SetImmobilized(0)
     Immobilize(50)
-    // Spectral flames in cardinal directions (visual only)
-    spawn_flames()
+    // Stop any residual walking and snap to the exact death turf for correct effect placement
+    walk(src, 0)
+    if(death_turf)
+        forceMove(death_turf)
+    // Ensure we won't try to swing during death effects
+    next_attack_time = world.time + 99999
+    // Spectral fire trails in cardinal directions (visual only)
+    spawn_fire_trails_cardinals()
+    // And diagonals for a more dramatic burst
+    spawn_fire_trails_diagonals()
     // Play death sound
     playsound(src, 'sound/mobs/jitter_death.ogg', 80, FALSE)
     // Shake violently for ~2.5 seconds while the audio plays
     shake_violently(25)
-    // Small spectral burst and gibs
+    // Small spectral burst
     visible_message(span_warning("[src] bursts apart in a spectral blast!"))
-    gib_animation()
-    gib()
-    // Spawn golden reliquary loot chest with special drops
+    // Gibbing sound for impact
+    playsound(src.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 200, FALSE)
+    // Spawn golden reliquary loot chest with special drops before deletion
     if(death_turf)
         var/obj/structure/closet/crate/chest/inqreliquary/C = new(death_turf)
         if(C)
             C.name = "Jitterskull Loot"
-            // Make it look golden
             C.icon_state = "chest3"
             C.base_icon_state = "chest3"
             C.keylock = FALSE
@@ -1288,9 +1345,18 @@
             new choice(C)
             // A pile of coins (gold)
             new /obj/item/roguecoin/gold/pile(C)
-    // Ensure cleanup if gib() didn't delete us
-    if(!QDELETED(src))
-        qdel(src)
+    // Add a burst of physical gibs for visual impact (does not affect loot)
+    new /obj/effect/gibspawner/generic/animal(death_turf)
+    // Clear any vendetta and re-engagement data so no further retargeting can occur
+    vendetta_ref = null
+    vendetta_until = 0
+    reengage_target = null
+    if(ai_controller)
+        var/datum/ai_controller/Cx = ai_controller
+        Cx.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, null)
+    // Hand off to base death to mark DEAD and delete
+    return ..()
+
 
 // Jitter the sprite in place for the specified number of ticks
 /mob/living/simple_animal/hostile/rogue/jitterskull/proc/shake_violently(ticks = 20)
@@ -1303,36 +1369,52 @@
     pixel_x = orig_px
     pixel_y = orig_py
 
-// Spawn short-lived flame visuals in the four cardinal directions
-/mob/living/simple_animal/hostile/rogue/jitterskull/proc/spawn_flames()
+// Animate fire sprites floating outward from our turf in the four cardinal directions
+/mob/living/simple_animal/hostile/rogue/jitterskull/proc/spawn_fire_trails_cardinals()
     var/turf/T = get_turf(src)
     if(!T)
         return
-    // Spawn multiple decorative flames along all 8 directions, a few tiles out
-    var/list/all_dirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
-    for(var/d in all_dirs)
-        // For each ray, project 2-4 tiles
-        var/len = rand(2, 4)
-        var/turf/cur = T
-        for(var/i in 1 to len)
-            cur = get_step(cur, d)
-            if(!cur)
-                break
-            var/obj/effect/temp_visual/jitterskull_flame/F = new /obj/effect/temp_visual/jitterskull_flame(cur)
-            F.lifetime = rand(8, 14)
+    // Spawn animated trails in four directions only
+    for(var/d in list(NORTH, SOUTH, EAST, WEST))
+        new /obj/effect/temp_visual/jitterskull_firetrail(T, d, rand(3, 5), 3)
 
-// Simple temp visual for jitterskull death flames (no gameplay effect)
-/obj/effect/temp_visual/jitterskull_flame
-    icon = 'icons/effects/particles/bonfire.dmi'
-    icon_state = "bonfire"
+// Animate fire sprites floating outward from our turf in the four diagonal directions
+/mob/living/simple_animal/hostile/rogue/jitterskull/proc/spawn_fire_trails_diagonals()
+    var/turf/T = get_turf(src)
+    if(!T)
+        return
+    for(var/d in list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+        new /obj/effect/temp_visual/jitterskull_firetrail(T, d, rand(4, 6), 3)
+
+
+/obj/effect/temp_visual/jitterskull_firetrail
+    icon = 'icons/effects/fire.dmi'
+    icon_state = "3"
     anchored = TRUE
     mouse_opacity = 0
     layer = EFFECTS_LAYER
-    var/lifetime = 10
+    light_outer_range = LIGHT_RANGE_FIRE
+    light_color = LIGHT_COLOR_FIRE
+    duration = 40
+    var/dir_to_move = NORTH
+    var/steps = 4
+    var/step_delay = 3
 
-/obj/effect/temp_visual/jitterskull_flame/Initialize()
+/obj/effect/temp_visual/jitterskull_firetrail/Initialize(mapload, move_dir, step_count = 4, delay = 3)
+    if(isnum(move_dir))
+        dir_to_move = move_dir
+    steps = step_count
+    step_delay = delay
     . = ..()
-    // Auto-delete shortly after
-    spawn(lifetime)
-        if(!QDELETED(src))
-            qdel(src)
+    // Drift outward over time
+    spawn(0)
+        var/turf/T = get_turf(src)
+        for(var/i in 1 to steps)
+            sleep(step_delay)
+            if(QDELETED(src) || !T)
+                break
+            var/turf/N = get_step(T, dir_to_move)
+            if(!N || N.density)
+                break
+            forceMove(N)
+            T = N

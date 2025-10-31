@@ -12,8 +12,8 @@
 	if(J.vendetta_ref)
 		vt = J.vendetta_ref.resolve()
 	if(vt && world.time < J.vendetta_until && !QDELETED(vt) && (!isliving(vt) || vt:stat != DEAD))
+		// Reassert vendetta target, but DO NOT stop planning; allow attack and pathing subtrees to run
 		controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, vt)
-		return
 
 /datum/ai_planning_subtree/jitterskull/guard_helpless
 /datum/ai_planning_subtree/jitterskull/guard_helpless/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -35,11 +35,11 @@
 
 /datum/ai_planning_subtree/jitterskull/anti_stuck_and_tether
 	/// Minimum distance to snap-tether near the target
-	var/tether_distance = 16
+	var/tether_distance = 12
 	/// Cooldown between tethers (in deciseconds)
-	var/tether_cooldown = 25
+	var/tether_cooldown = 20
 	/// If stuck for this many ticks, snap-tether near target even if closer
-	var/stuck_ticks_threshold = 20
+	var/stuck_ticks_threshold = 12
 
 /datum/ai_planning_subtree/jitterskull/anti_stuck_and_tether/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()

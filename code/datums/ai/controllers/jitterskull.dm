@@ -1,7 +1,7 @@
 // Jitterskull-specific AI controller: moves all mob Initialize() loops into proper AI planning/idle behavior
 
 /datum/ai_controller/jitterskull
-	movement_delay = 0.2 SECONDS
+	movement_delay = 0.15 SECONDS
 	ai_movement = /datum/ai_movement/hybrid_pathing
 
 	blackboard = list(
