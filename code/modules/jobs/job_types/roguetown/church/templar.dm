@@ -71,7 +71,6 @@
 
 /datum/outfit/job/roguetown/templar/crusader/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket
 	wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
 	cloak = /obj/item/clothing/cloak/tabard/crusader/tief
 	backr = /obj/item/rogueweapon/shield/tower/metal
@@ -86,7 +85,6 @@
 	switch(H.patron?.type)
 		if(/datum/patron/divine/astrata)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
 			cloak = /obj/item/clothing/cloak/templar/astratan
 		if(/datum/patron/divine/abyssor)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/abyssor
@@ -104,7 +102,6 @@
 			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg'
 		if(/datum/patron/divine/necra)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/necra
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/necran
 			cloak = /obj/item/clothing/cloak/templar/necran
 		if(/datum/patron/divine/pestra)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/pestra
@@ -112,7 +109,6 @@
 			cloak = /obj/item/clothing/cloak/templar/pestran
 		if(/datum/patron/divine/eora) //Eora content from stonekeep
 			wrists = /obj/item/clothing/neck/roguetown/psicross/eora
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/eoran
 			cloak = /obj/item/clothing/cloak/templar/eoran
 		if(/datum/patron/divine/noc)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/noc
@@ -120,7 +116,6 @@
 			cloak = /obj/item/clothing/cloak/tabard/crusader/noc
 		if(/datum/patron/divine/ravox)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/ravox
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/ravoxhelm
 			cloak = /obj/item/clothing/cloak/templar/ravox
 			mask = /obj/item/clothing/head/roguetown/roguehood/ravoxgorget
 			backpack_contents = list(/obj/item/ritechalk, /obj/item/book/rogue/law, /obj/item/rogueweapon/scabbard/sheath, /obj/item/storage/belt/rogue/pouch/coins/mid)
@@ -293,3 +288,29 @@
 			H.put_in_hands(new /obj/item/rogueweapon/katar/abyssor(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
+
+//Helmets. This BLOWS with how it checks, but I'm lazy and it works.
+	if(H.patron.name == "Astrata" || H.patron.name == "Necra" || H.patron.name == "Eora" || H.patron.name == "Ravox")
+		var/helmets = list("Visored / Sallet", "Helmet")
+		var/selected_helmet = input(H, "Choose a helmet...", "Helmet") as anything in helmets
+		switch(H.patron?.type)
+			if(/datum/patron/divine/astrata)
+				if(selected_helmet == "Visored / Sallet")
+					H.equip_to_slot(new /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor(H), SLOT_HEAD)
+				else
+					H.equip_to_slot(new /obj/item/clothing/head/roguetown/helmet/heavy/astratan(H), SLOT_HEAD)
+			if(/datum/patron/divine/necra)
+				if(selected_helmet == "Visored / Sallet")
+					H.equip_to_slot(new /obj/item/clothing/head/roguetown/helmet/heavy/necrahelm/hooded(H), SLOT_HEAD)
+				else
+					H.equip_to_slot(new /obj/item/clothing/head/roguetown/helmet/heavy/necran(H), SLOT_HEAD)
+			if(/datum/patron/divine/eora)
+				if(selected_helmet == "Visored / Sallet")
+					H.equip_to_slot(new /obj/item/clothing/head/roguetown/helmet/sallet/eoran(H), SLOT_HEAD)
+				else
+					H.equip_to_slot(new /obj/item/clothing/head/roguetown/helmet/heavy/eoran(H), SLOT_HEAD)
+			if(/datum/patron/divine/ravox)
+				if(selected_helmet == "Visored / Sallet")
+					H.equip_to_slot(new /obj/item/clothing/head/roguetown/helmet/heavy/ravox_visor(H), SLOT_HEAD)
+				else
+					H.equip_to_slot(new /obj/item/clothing/head/roguetown/helmet/heavy/ravoxhelm(H), SLOT_HEAD)
