@@ -424,7 +424,7 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -707,7 +707,7 @@
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -738,7 +738,7 @@
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -770,7 +770,7 @@
 "bI" = (
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -945,7 +945,7 @@
 "cm" = (
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1024,7 +1024,7 @@
 	},
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1402,7 +1402,7 @@
 "dP" = (
 /turf/open/water/river/flow/east,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1480,7 +1480,7 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1490,22 +1490,45 @@
 /area/rogue/outdoors/banditcamp)
 "ep" = (
 /obj/structure/table/wood{
-	dir = 4;
-	icon_state = "largetable"
+	icon_state = "tablewood1";
+	pixel_y = -4
 	},
-/turf/open/floor/rogue/concrete,
+/obj/item/reagent_containers/glass/bowl{
+	pixel_x = -8
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen)
 "es" = (
 /turf/open/floor/rogue/shroud,
 /area/rogue/indoors/eventarea)
+"et" = (
+/obj/structure/stairs/stone/d{
+	dir = 8
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
 "ey" = (
 /obj/structure/mineral_door/wood/donjon/stone{
 	name = "Forgotten Chapel"
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inhumen)
+"eA" = (
+/obj/effect/wisp/prestidigitation{
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/water/pond,
+/area/rogue/indoors/ravoxarena)
 "eJ" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/l,
+/obj/structure/bed/rogue/inn/wool{
+	dir = 1
+	},
+/obj/item/bedsheet/rogue/cloth{
+	dir = 1
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
 "eO" = (
@@ -1531,13 +1554,21 @@
 	},
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "fd" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/rogue/concrete,
+/obj/structure/fluff/railing/corner{
+	dir = 10
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
+"fh" = (
+/obj/structure/fluff/statue/gargoyle,
+/obj/structure/fluff/psycross/zizocross,
+/turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "fi" = (
 /obj/structure/table/wood{
@@ -1552,6 +1583,26 @@
 "fk" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
+"fm" = (
+/obj/effect/decal/carpet/kover_purple{
+	dir = 4;
+	pixel_x = 20;
+	pixel_y = 2
+	},
+/obj/structure/chair/stool/rogue,
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 8
+	},
+/turf/open/floor/rogue/tile/harem2,
+/area/rogue/under/cave/inhumen)
+"fs" = (
+/obj/structure/fluff/walldeco/stone{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/debris/stony,
+/turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "ft" = (
 /obj/effect/wisp/prestidigitation{
@@ -1568,15 +1619,20 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "fH" = (
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-n";
+	pixel_x = -8;
+	pixel_y = 1
+	},
 /obj/machinery/light/rogue/firebowl{
 	light_color = "#b30202"
 	},
-/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "fI" = (
@@ -1586,7 +1642,7 @@
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1594,32 +1650,39 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/banditcamp)
 "fN" = (
-/obj/structure/table/wood{
-	icon_state = "tablewood1"
+/obj/structure/table/church{
+	icon_state = "churchtable_alt"
 	},
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
-/turf/open/floor/rogue/blocks,
+/obj/item/reagent_containers/glass/cup/tin/small{
+	pixel_x = -2
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/emberwine{
+	pixel_y = 0;
+	pixel_x = 7
+	},
+/obj/machinery/light/rogue/firebowl/standing/blue{
+	pixel_y = 26
+	},
+/turf/open/floor/rogue/tile/harem2,
 /area/rogue/under/cave/inhumen)
 "fP" = (
 /obj/structure/flora/roguetree/pine,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "fQ" = (
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/eventarea)
+"fR" = (
+/obj/structure/fluff/traveltile/wretch{
+	aportalgoesto = "wretchout2";
+	aportalid = "wretchin2"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/cave/inhumen)
 "fY" = (
 /obj/item/roguecoin/gold/pile,
 /turf/open/water/cleanshallow,
@@ -1638,7 +1701,7 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1648,13 +1711,17 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "gm" = (
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/indoors/eventarea)
+"gq" = (
+/obj/item/chair/rogue,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/under/cave/inhumen)
 "gs" = (
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/tile{
@@ -1688,15 +1755,24 @@
 	},
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "gN" = (
-/obj/structure/mineral_door/bars{
-	lockid = "inhumen"
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/obj/structure/bars/passage{
+	density = 0;
+	icon_state = "passage1"
 	},
 /turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
+"gQ" = (
+/obj/item/natural/rock,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
 "gR" = (
 /obj/machinery/light/rogue/smelter/hiron,
@@ -1722,6 +1798,13 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/vampiremanor)
+"hb" = (
+/obj/item/candle/skull/lit{
+	pixel_y = -4;
+	pixel_x = 10
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
 "he" = (
 /obj/structure/chair/bench/couchablack/r,
 /obj/structure/bookcase/random{
@@ -1740,7 +1823,7 @@
 "hr" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1749,12 +1832,20 @@
 	dir = 8;
 	icon_state = "border"
 	},
+/obj/effect/decal/cobbleedge{
+	dir = 10;
+	icon_state = "cobbleedge-w";
+	pixel_y = -7
+	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "hB" = (
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
+"hH" = (
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave/inhumen)
 "hK" = (
 /obj/effect/solid_invisible_barrier,
 /turf/open/floor/rogue/underworld/space/quiet,
@@ -1763,7 +1854,7 @@
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1775,12 +1866,21 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue)
 "hS" = (
-/obj/item/chair/rogue,
-/turf/open/floor/rogue/concrete,
+/turf/open/floor/rogue/grasspurple,
 /area/rogue/under/cave/inhumen)
 "hX" = (
 /turf/open/floor/rogue/sand,
 /area/rogue/indoors/eventarea)
+"id" = (
+/obj/machinery/light/rogue/firebowl{
+	light_color = "#b30202"
+	},
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 4
+	},
+/turf/open/floor/rogue/greenstone,
+/area/rogue/under/cave/inhumen)
 "ie" = (
 /obj/structure/far_travel,
 /turf/open/floor/rogue/dirt/road,
@@ -1789,7 +1889,7 @@
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1800,7 +1900,7 @@
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1821,6 +1921,12 @@
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampiremanor)
+"iv" = (
+/obj/effect/decal/edge{
+	color = "#3f3f3f"
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/under/cave/inhumen)
 "iy" = (
 /obj/effect/landmark/start/bandit{
 	dir = 8;
@@ -1833,14 +1939,13 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
 "iz" = (
-/obj/structure/table/wood{
-	dir = 5;
-	icon_state = "largetable"
+/obj/structure/bed/rogue/inn/wool{
+	dir = 1
 	},
-/obj/item/reagent_containers/glass/bowl{
-	pixel_x = -8
+/obj/item/bedsheet/rogue/cloth{
+	dir = 1
 	},
-/turf/open/floor/rogue/concrete,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
 "iB" = (
 /obj/structure/mineral_door/wood/deadbolt{
@@ -1863,6 +1968,11 @@
 /obj/effect/landmark/start/wretch,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
+"ja" = (
+/obj/structure/closet/crate/chest,
+/obj/item/rope/chain,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "jc" = (
 /turf/open/floor/rogue/tile/checker,
 /area/rogue/indoors/eventarea)
@@ -1880,10 +1990,8 @@
 /turf/open/floor/rogue/rooftop/north,
 /area/rogue/indoors/eventarea)
 "jo" = (
-/obj/structure/pillory{
-	lockid = "inhumen"
-	},
-/turf/open/floor/rogue/concrete,
+/obj/machinery/light/rogue/wallfire/candle/l,
+/turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "jr" = (
 /turf/open/floor/rogue/herringbone,
@@ -1892,7 +2000,7 @@
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -1990,7 +2098,7 @@
 	},
 /obj/item/bedsheet/rogue/cloth,
 /obj/structure/bed/rogue/inn/wool,
-/turf/open/floor/rogue/hexstone,
+/turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/inhumen)
 "kx" = (
 /turf/open/water/cleanshallow,
@@ -2098,9 +2206,17 @@
 "lL" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/vampiremanor)
+"lO" = (
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "lQ" = (
-/obj/machinery/light/rogue/wallfire/candle/blue,
-/turf/open/floor/rogue/hexstone,
+/obj/structure/table/church{
+	dir = 1;
+	icon_state = "churchtable_mid_alt"
+	},
+/obj/structure/ritualcircle/baotha,
+/turf/open/floor/rogue/tile/harem2,
 /area/rogue/under/cave/inhumen)
 "mc" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
@@ -2148,14 +2264,11 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/eventarea)
 "mv" = (
-/obj/effect/decal/cobbleedge{
-	dir = 1;
-	icon_state = "borderfall"
+/obj/structure/bars{
+	color = "#755f48";
+	name = "rusted bars"
 	},
-/obj/machinery/light/rogue/firebowl/church{
-	light_color = "#b30202"
-	},
-/turf/open/floor/rogue/hexstone,
+/turf/open/water/bloody,
 /area/rogue/under/cave/inhumen)
 "mw" = (
 /turf/open/floor/rogue/metal,
@@ -2163,6 +2276,14 @@
 "mD" = (
 /obj/structure/handcart,
 /turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave/inhumen)
+"mE" = (
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "mG" = (
 /obj/structure/fluff/railing/border{
@@ -2181,7 +2302,7 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2195,7 +2316,7 @@
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2210,6 +2331,16 @@
 /obj/structure/table/wood{
 	dir = 10;
 	icon_state = "tablewood2"
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
+"mW" = (
+/obj/structure/bars/passage{
+	density = 0;
+	icon_state = "passage1"
+	},
+/obj/structure/stairs/stone{
+	dir = 1
 	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
@@ -2229,6 +2360,16 @@
 	},
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/vampiremanor)
+"nj" = (
+/obj/structure/pillory{
+	lockid = "inhumen"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/under/cave/inhumen)
+"no" = (
+/obj/structure/bookcase/random/archive,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave/inhumen)
 "nA" = (
 /obj/structure/fluff/psycross/zizocross,
 /turf/open/floor/rogue/dirt,
@@ -2252,17 +2393,12 @@
 /area/rogue/indoors/banditcamp)
 "nS" = (
 /obj/item/rogueweapon/pick,
-/turf/open/floor/rogue/naturalstone,
+/turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave/inhumen)
 "nW" = (
-/obj/structure/table/wood{
-	dir = 10;
-	icon_state = "largetable"
-	},
-/obj/item/reagent_containers/glass/cup/wooden{
-	pixel_y = 12
-	},
-/turf/open/floor/rogue/concrete,
+/obj/structure/rack/rogue,
+/obj/item/rogueweapon/whip,
+/turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave/inhumen)
 "nZ" = (
 /obj/structure/mineral_door/wood{
@@ -2284,9 +2420,7 @@
 "oc" = (
 /obj/effect/decal/cleanable/dirt/cobweb,
 /obj/machinery/light/rogue/wallfire/candle/l,
-/obj/structure/fluff/walldeco/stone{
-	pixel_y = 32
-	},
+/obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "oj" = (
@@ -2311,7 +2445,7 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2324,7 +2458,9 @@
 	pixel_y = 0
 	},
 /obj/effect/decal/cobbleedge,
-/obj/item/roguebin/water/gross,
+/obj/machinery/light/rogue/firebowl{
+	light_color = "#b30202"
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
 "oy" = (
@@ -2346,7 +2482,7 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2357,7 +2493,7 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2366,9 +2502,24 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/banditcamp)
 "oX" = (
-/obj/item/bedsheet/rogue/cloth,
 /obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/rogue/bedroll,
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/cave/inhumen)
+"oZ" = (
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-n";
+	pixel_x = -8;
+	pixel_y = 1
+	},
 /turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
+"pa" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains3"
+	},
+/obj/structure/bed/rogue/shit,
+/turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/inhumen)
 "pb" = (
 /obj/structure/far_travel,
@@ -2391,7 +2542,7 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2419,10 +2570,15 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"pv" = (
+/obj/structure/flora/roguegrass/water/reeds,
+/obj/structure/zizo_bane,
+/turf/open/water/cleanshallow,
+/area/rogue/under/cave/inhumen)
 "pA" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/l,
 /turf/open/water/cleanshallow,
@@ -2438,6 +2594,12 @@
 /obj/item/rogueweapon/shovel,
 /turf/open/floor/rogue/cobble,
 /area/rogue)
+"pI" = (
+/obj/structure/bed/rogue/bedroll{
+	dir = 1
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave/inhumen)
 "pN" = (
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/eventarea)
@@ -2463,7 +2625,7 @@
 "qh" = (
 /turf/open/water/river/flow,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2477,23 +2639,25 @@
 	},
 /area/rogue/indoors/vampiremanor)
 "qo" = (
-/obj/structure/table/wood{
-	dir = 6;
-	icon_state = "largetable"
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 8
 	},
-/obj/item/reagent_containers/glass/bowl{
-	pixel_x = -8
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 8
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inhumen)
+"qu" = (
+/turf/closed/wall/mineral/rogue/stone/window/unbreakable,
+/area/rogue/indoors/ravoxarena)
 "qx" = (
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/eventarea)
 "qA" = (
-/obj/structure/rack/rogue,
-/obj/item/rogueweapon/thresher,
-/obj/machinery/light/rogue/wallfire/candle,
-/turf/open/floor/rogue/hexstone,
+/obj/structure/vine,
+/turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/inhumen)
 "qC" = (
 /turf/open/floor/rogue/carpet,
@@ -2521,12 +2685,27 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/inhumen)
 "qP" = (
-/obj/structure/table/wood{
-	dir = 4;
-	icon_state = "largetable"
-	},
 /obj/item/rogueweapon/huntingknife/cleaver,
-/turf/open/floor/rogue/concrete,
+/obj/structure/table/wood{
+	icon_state = "tablewood1";
+	pixel_y = -4
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/under/cave/inhumen)
+"ra" = (
+/obj/structure/fluff/walldeco/stone{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/debris/stony,
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 8
+	},
+/turf/open/floor/rogue/tile/harem2,
+/area/rogue/under/cave/inhumen)
+"rc" = (
+/obj/structure/vine,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
 "rm" = (
 /obj/structure/fluff/wallclock,
@@ -2550,16 +2729,14 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/ravoxarena)
 "rB" = (
-/obj/structure/closet/crate/chest/old_crate,
-/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
-/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
 /obj/item/reagent_containers/food/snacks/rogue/friedrat,
 /obj/item/reagent_containers/food/snacks/rogue/friedrat,
-/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
-/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
 /obj/structure/fluff/railing/border{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
+/obj/structure/closet/crate/chest/old_crate,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "rH" = (
@@ -2591,6 +2768,10 @@
 "rZ" = (
 /turf/open/floor/rogue/dark_ice,
 /area/rogue/underworld/dream)
+"sb" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
 "sc" = (
 /obj/structure/well,
 /turf/open/floor/rogue/dirt/road,
@@ -2601,6 +2782,14 @@
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
+"se" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/item/reagent_containers/glass/mortar,
+/obj/item/pestle,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
 "sj" = (
 /obj/structure/bed/rogue{
 	dir = 1
@@ -2617,6 +2806,14 @@
 "sp" = (
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/eventarea)
+"sq" = (
+/obj/structure/composter,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
+"ss" = (
+/obj/item/natural/bone,
+/turf/open/water/bloody,
+/area/rogue/under/cave/inhumen)
 "su" = (
 /obj/structure/fluff/statue/knight/r,
 /turf/closed/wall/mineral/rogue/stone,
@@ -2648,15 +2845,24 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"sI" = (
+/obj/effect/landmark/start/wretch,
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/cave/inhumen)
 "sK" = (
 /obj/structure/fluff/statue/femalestatue/zizo{
 	desc = "An ancient statue depicting an elven woman.";
 	name = "Ancient Statue";
 	pixel_y = 0
+	},
+/obj/structure/fluff/psycross/zizocross,
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 1
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inhumen)
@@ -2701,7 +2907,7 @@
 /obj/structure/chair/wood/rogue/fancy{
 	dir = 8
 	},
-/turf/open/floor/rogue/hexstone,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
 "sZ" = (
 /obj/structure/table/wood{
@@ -2717,7 +2923,7 @@
 /obj/structure/chair/wood/rogue{
 	dir = 8
 	},
-/turf/open/floor/rogue/concrete,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen)
 "th" = (
 /turf/open/floor/rogue/woodturned,
@@ -2736,7 +2942,7 @@
 /area/rogue/indoors/banditcamp)
 "tr" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/rogue/naturalstone,
+/turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/inhumen)
 "tx" = (
 /obj/structure/table/wood{
@@ -2748,13 +2954,36 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors)
+"tA" = (
+/obj/structure/flora/roguegrass/herb/urtica,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "tB" = (
 /obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
-/turf/open/floor/rogue/blocks,
+/obj/item/skull,
+/obj/item/skull{
+	pixel_y = -2;
+	pixel_x = -14
+	},
+/obj/item/skull{
+	pixel_y = -11
+	},
+/obj/effect/wisp/prestidigitation{
+	color = "#ff0d00";
+	name = "Infernal Wisp";
+	light_color = "#ff0d00";
+	desc = "An ominous manifestation of latent ambient magick";
+	pixel_y = 2;
+	pixel_x = -1
+	},
+/turf/open/water/bloody,
 /area/rogue/under/cave/inhumen)
 "tE" = (
+/obj/machinery/light/rogue/forge,
 /obj/effect/decal/cobbleedge{
-	dir = 6
+	dir = 10;
+	icon_state = "cobbleedge-n";
+	pixel_y = 1
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
@@ -2767,16 +2996,20 @@
 /obj/item/paper/scroll,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
+"tH" = (
+/obj/machinery/light/rogue/firebowl/off,
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-sread";
+	pixel_y = -6
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
 "tI" = (
 /obj/structure/roguewindow/stained/zizo,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/cave/inhumen)
 "tK" = (
-/obj/structure/table/wood{
-	dir = 6;
-	icon_state = "largetable"
-	},
-/turf/open/floor/rogue/concrete,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen)
 "tN" = (
 /turf/closed,
@@ -2785,7 +3018,7 @@
 /obj/structure/flora/roguetree/pine,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2793,7 +3026,7 @@
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2803,8 +3036,20 @@
 "tX" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/cand,
 /area/rogue/under/cave/inhumen)
+"ue" = (
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-sread";
+	pixel_y = -6
+	},
+/obj/structure/fermentation_keg/random/water,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
 "uf" = (
-/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-sread";
+	pixel_y = -6
+	},
+/obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "uj" = (
@@ -2814,7 +3059,7 @@
 /obj/structure/flora/roguetree/pine,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2910,6 +3155,14 @@
 	icon_state = "vertw"
 	},
 /area/rogue/indoors/banditcamp)
+"vy" = (
+/obj/machinery/light/rogue/cauldron,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
+"vz" = (
+/obj/structure/flora/roguegrass/herb/salvia,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "vE" = (
 /obj/structure/flora/roguegrass/bush/wall/tall,
 /turf/open/floor/rogue/dirt/road,
@@ -2925,6 +3178,10 @@
 /obj/item/mattcoin,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/banditcamp)
+"vG" = (
+/turf/open/floor/rogue/dirt,
+/turf/closed/wall/mineral/rogue/stonebrick,
+/area/rogue/under/cave/inhumen)
 "vI" = (
 /obj/structure/stairs{
 	dir = 1
@@ -2934,6 +3191,16 @@
 	icon_state = "vertw"
 	},
 /area/rogue/indoors/banditcamp)
+"vN" = (
+/obj/structure/table/church{
+	dir = 1;
+	icon_state = "churchtable_end_alt"
+	},
+/obj/machinery/light/rogue/firebowl/standing/green{
+	pixel_x = 2
+	},
+/turf/open/floor/rogue/greenstone,
+/area/rogue/under/cave/inhumen)
 "vP" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue)
@@ -2941,12 +3208,13 @@
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "vS" = (
 /obj/item/reagent_containers/food/snacks/smallrat,
+/obj/structure/table/optable,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inhumen)
 "vU" = (
@@ -2955,6 +3223,12 @@
 /obj/item/rogue/instrument/guitar,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
+"vZ" = (
+/obj/structure/chair/wood/rogue{
+	dir = 4
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/under/cave/inhumen)
 "wd" = (
 /obj/structure/stairs{
 	dir = 1
@@ -2962,7 +3236,7 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -2971,7 +3245,6 @@
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/banditcamp)
 "wr" = (
-/obj/structure/fermentation_keg/random/beer,
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
@@ -2979,13 +3252,29 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "wt" = (
-/obj/machinery/light/rogue/cauldron,
+/obj/effect/decal/cleanable/debris/stony,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "wu" = (
 /obj/structure/stairs/d,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
+"wv" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/under/cave/inhumen)
 "ww" = (
 /obj/structure/flora/roguetree{
 	pixel_x = -9
@@ -3006,6 +3295,10 @@
 "wB" = (
 /obj/effect/landmark/start/new_player,
 /area/start)
+"wK" = (
+/obj/structure/flora/roguegrass/herb/euphrasia,
+/turf/open/floor/rogue/grasspurple,
+/area/rogue/under/cave/inhumen)
 "wN" = (
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/cave/inhumen)
@@ -3016,6 +3309,16 @@
 /obj/structure/fluff/statue/knight,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/banditcamp)
+"wR" = (
+/obj/structure/bars/passage{
+	density = 0;
+	icon_state = "passage1"
+	},
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/under/cave/inhumen)
 "wS" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -3070,7 +3373,7 @@
 	},
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3081,7 +3384,7 @@
 	},
 /obj/item/storage/belt/rogue/surgery_bag/full,
 /obj/effect/decal/cleanable/dirt/cobweb,
-/turf/open/floor/rogue/hexstone,
+/turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "xm" = (
 /turf/open/floor/rogue/dirt,
@@ -3095,7 +3398,9 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
 "xA" = (
-/obj/machinery/light/rogue/forge,
+/obj/item/rogueweapon/tongs,
+/obj/item/rogueweapon/hammer/iron,
+/obj/structure/rack/rogue/shelf/biggest,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/inhumen)
 "xC" = (
@@ -3144,6 +3449,15 @@
 /obj/item/natural/feather,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/banditcamp)
+"xR" = (
+/obj/structure/bed/rogue/shit,
+/obj/item/storage/roguebag{
+	pixel_y = 0;
+	pixel_x = 8
+	},
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/cave/inhumen)
 "xS" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/banditcamp)
@@ -3166,20 +3480,20 @@
 /obj/structure/handcart,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "yk" = (
 /obj/structure/table/wood{
-	dir = 8;
-	icon_state = "largetable"
+	icon_state = "tablewood1";
+	pixel_y = -4
 	},
 /obj/item/paper/scroll,
 /obj/item/natural/feather{
 	pixel_x = 5
 	},
-/turf/open/floor/rogue/concrete,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen)
 "yu" = (
 /obj/structure/stairs{
@@ -3188,7 +3502,7 @@
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3207,7 +3521,7 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3271,7 +3585,7 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3301,6 +3615,16 @@
 /obj/machinery/light/rogue/oven/south,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
+"zv" = (
+/obj/effect/decal/edge{
+	color = "#3f3f3f"
+	},
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 8
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/under/cave/inhumen)
 "zy" = (
 /obj/structure/chair/wood/rogue{
 	dir = 8;
@@ -3316,11 +3640,26 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/banditcamp)
+"zI" = (
+/obj/item/skull{
+	pixel_y = -11
+	},
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 1
+	},
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/rogue/concrete,
+/area/rogue/under/cave/inhumen)
 "zK" = (
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3352,6 +3691,17 @@
 	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/vampiremanor)
+"Ar" = (
+/obj/effect/wisp/prestidigitation{
+	color = "#ff0d00";
+	name = "Infernal Wisp";
+	light_color = "#ff0d00";
+	desc = "An ominous manifestation of latent ambient magick";
+	pixel_y = 2;
+	pixel_x = -1
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/under/cave/inhumen)
 "As" = (
 /obj/item/rogueore/coal,
 /obj/item/rogueore/coal,
@@ -3387,6 +3737,19 @@
 /obj/structure/noose,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/banditcamp)
+"AB" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/wisp/prestidigitation{
+	color = "#ff0d00";
+	name = "Infernal Wisp";
+	light_color = "#ff0d00";
+	desc = "An ominous manifestation of latent ambient magick";
+	pixel_y = 2;
+	pixel_x = -1
+	},
+/obj/structure/fluff/statue/gargoyle,
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
 "AE" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -3425,7 +3788,7 @@
 /obj/structure/flora/roguetree/pine,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3434,7 +3797,14 @@
 /turf/open/floor/rogue/underworld/space/quiet,
 /area/rogue/underworld/dream)
 "Bd" = (
-/obj/structure/roguemachine/scomm,
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-n";
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/obj/structure/roguemachine/mail{
+	mailtag = "Forgotten Chapel"
+	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "Bi" = (
@@ -3451,11 +3821,8 @@
 /turf/open/floor/rogue/tile/bfloorz,
 /area/rogue/indoors/eventarea)
 "BB" = (
-/obj/structure/chair/wood/rogue{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/rogue/concrete,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen)
 "BC" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/end{
@@ -3490,11 +3857,8 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
 "Ch" = (
-/obj/structure/table/wood{
-	dir = 10;
-	icon_state = "largetable"
-	},
-/turf/open/floor/rogue/concrete,
+/obj/structure/roguewindow/stained/zizo,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
 "Cj" = (
 /obj/item/candle/skull,
@@ -3529,6 +3893,17 @@
 /obj/structure/fluff/grindwheel,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue)
+"CE" = (
+/obj/effect/decal/cobbleedge{
+	dir = 1;
+	icon_state = "borderfall"
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
+"CI" = (
+/obj/structure/roguerock,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "CJ" = (
 /obj/machinery/light/rogue/wallfire/candle/l,
 /obj/structure/fermentation_keg/random/beer,
@@ -3543,7 +3918,7 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3566,10 +3941,14 @@
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"Da" = (
+/obj/machinery/light/rogue/campfire/densefire,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "Dh" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
@@ -3627,11 +4006,16 @@
 	dir = 10;
 	icon_state = "border"
 	},
+/obj/effect/decal/cobbleedge{
+	dir = 10;
+	icon_state = "cobbleedge-w";
+	pixel_y = -7
+	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "DG" = (
 /obj/effect/landmark/start/wretch,
-/turf/open/floor/rogue/naturalstone,
+/turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/inhumen)
 "DL" = (
 /turf/open/floor/rogue/snow,
@@ -3647,7 +4031,7 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3681,10 +4065,14 @@
 	},
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"Eb" = (
+/obj/structure/closet/dirthole/grave,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "Ed" = (
 /obj/structure/bed/rogue/inn/wool,
 /obj/structure/fluff/walldeco/med5{
@@ -3711,6 +4099,10 @@
 /obj/item/rogueweapon/huntingknife/idagger/silver,
 /turf/open/floor/rogue/cobble,
 /area/rogue)
+"Er" = (
+/obj/machinery/light/rogue/wallfire/candle/r,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
 "Es" = (
 /obj/machinery/light/rogue/wallfire/candle/l,
 /turf/open/floor/rogue/blocks,
@@ -3738,12 +4130,31 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
 "Ez" = (
-/obj/structure/roguemachine/bounty,
+/obj/effect/decal/cobbleedge{
+	dir = 10;
+	icon_state = "cobbleedge-e";
+	pixel_y = -7
+	},
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-n";
+	pixel_x = -8;
+	pixel_y = 1
+	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "EC" = (
 /obj/effect/decal/cleanable/blood,
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 4
+	},
 /turf/open/floor/rogue/concrete,
+/area/rogue/under/cave/inhumen)
+"ED" = (
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/inhumen)
 "EF" = (
 /obj/structure/flora/roguetree/pine{
@@ -3780,7 +4191,7 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3793,21 +4204,39 @@
 "Fd" = (
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/eventarea)
-"Fn" = (
-/obj/structure/table/wood{
-	dir = 5;
-	icon_state = "largetable"
+"Fh" = (
+/obj/structure/table/church{
+	dir = 1;
+	icon_state = "churchtable_mid_alt"
 	},
-/turf/open/floor/rogue/concrete,
+/obj/structure/ritualcircle/graggar,
+/obj/item/organ/heart,
+/obj/item/organ/liver{
+	pixel_y = 16
+	},
+/obj/item/rogueweapon/huntingknife/stoneknife,
+/obj/item/maneaterseed,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/under/cave/inhumen)
+"Fn" = (
+/obj/effect/decal/cleanable/debris/stony,
+/turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/inhumen)
 "Fs" = (
-/obj/machinery/light/rogue/wallfire/candle,
-/turf/closed/wall/mineral/rogue/decostone,
-/area/rogue/indoors/ravoxarena)
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/under/cave/inhumen)
 "Fu" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/banditcamp)
+"Fy" = (
+/obj/effect/decal/cobbleedge{
+	dir = 10;
+	icon_state = "cobbleedge-e";
+	pixel_y = -7
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
 "FD" = (
 /obj/structure/closet/crate/chest/gold,
 /turf/open/floor/rogue/naturalstone,
@@ -3816,13 +4245,24 @@
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "FG" = (
-/obj/structure/bed/rogue/shit,
-/turf/open/floor/rogue/hexstone,
+/obj/effect/decal/remains/human,
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains5"
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
+"FH" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 4
+	},
+/turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/inhumen)
 "FI" = (
 /obj/structure/stairs/stone{
@@ -3830,14 +4270,14 @@
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "FO" = (
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3864,8 +4304,8 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/inhumen)
 "Gq" = (
-/obj/structure/spider/stickyweb,
-/turf/open/floor/rogue/naturalstone,
+/obj/machinery/light/rogue/wallfire/candle,
+/turf/open/water/bloody,
 /area/rogue/under/cave/inhumen)
 "Gs" = (
 /obj/structure/vampire/necromanticbook{
@@ -3907,7 +4347,7 @@
 "GC" = (
 /turf/open/water/cleanshallow,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -3917,16 +4357,13 @@
 	},
 /turf/open/water/river/flow,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "GI" = (
-/obj/structure/closet/crate/chest/neu_iron,
-/obj/item/rogueweapon/thresher,
-/obj/item/rogueweapon/hoe,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inhumen)
+/turf/open/floor/rogue/underworld/space/sparkle_quiet,
+/area/rogue)
 "GK" = (
 /obj/structure/fluff/pillow/magenta{
 	dir = 1;
@@ -3947,6 +4384,14 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
+"GS" = (
+/obj/structure/flora/rogueshroom/happy,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
+"Hb" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/under/cave/inhumen)
 "Hc" = (
 /obj/effect/landmark/start/bandit{
 	dir = 4;
@@ -3960,22 +4405,55 @@
 /area/rogue/indoors/eventarea)
 "Hg" = (
 /obj/structure/table/church/m,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/money,
+/obj/item/reagent_containers/glass/cup/silver{
+	name = "pewter goblet";
+	pixel_x = -11;
+	pixel_y = 13
+	},
 /turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
+"Hh" = (
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-sread";
+	pixel_y = -6
+	},
+/obj/structure/fermentation_keg/random/beer,
+/turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "Hi" = (
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
+"Hl" = (
+/obj/effect/decal/cobbleedge{
+	dir = 6
+	},
+/obj/effect/decal/cobbleedge{
+	dir = 10;
+	icon_state = "cobbleedge-n";
+	pixel_y = 1
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave/inhumen)
+"Hq" = (
+/obj/structure/fluff/walldeco/med6,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red/end{
+	dir = 1
+	},
+/area/rogue/under/cave/inhumen)
 "Ht" = (
 /obj/structure/roguerock,
-/obj/effect/decal/cobbleedge,
+/obj/effect/decal/cobbleedge{
+	dir = 6
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
 "Hy" = (
 /turf/open/floor/rogue/tile/masonic/spiral,
 /area/rogue/indoors/eventarea)
 "HA" = (
-/obj/effect/landmark/start/wretch,
-/turf/open/floor/rogue/concrete,
+/obj/effect/decal/cleanable/debris/stony,
+/turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "HB" = (
 /obj/structure/fluff/wallclock/r,
@@ -4019,12 +4497,8 @@
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/indoors/banditcamp)
 "HK" = (
-/obj/structure/table/wood{
-	dir = 9;
-	icon_state = "largetable"
-	},
-/obj/item/reagent_containers/food/snacks/butter,
-/turf/open/floor/rogue/concrete,
+/obj/structure/bed/rogue/shit,
+/turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/inhumen)
 "HL" = (
 /obj/structure/flora/roguegrass/bush,
@@ -4040,8 +4514,12 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/eventarea)
 "HV" = (
-/obj/structure/rack/rogue,
-/turf/open/floor/rogue/hexstone,
+/obj/structure/soil,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
+"Ia" = (
+/obj/item/natural/rock,
+/turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/inhumen)
 "Ie" = (
 /obj/structure/table/wood{
@@ -4072,13 +4550,31 @@
 "It" = (
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"Iu" = (
+/obj/structure/flora/rogueshroom/happy{
+	icon_state = "happymush2"
+	},
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "Iz" = (
 /obj/structure/roguerock,
 /turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave/inhumen)
+"IB" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood1";
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/snacks/butter,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/under/cave/inhumen)
+"IC" = (
+/obj/item/skull,
+/turf/open/water/bloody,
 /area/rogue/under/cave/inhumen)
 "ID" = (
 /obj/effect/decal/cleanable/dirt/cobweb,
@@ -4097,7 +4593,7 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4107,6 +4603,15 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
+"IN" = (
+/obj/machinery/anvil,
+/obj/effect/decal/cobbleedge{
+	dir = 10;
+	icon_state = "cobbleedge-n";
+	pixel_y = 6
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave/inhumen)
 "IO" = (
 /obj/structure/stairs{
 	dir = 1
@@ -4116,7 +4621,7 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4134,14 +4639,14 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue)
 "IZ" = (
-/obj/structure/table/wood{
-	dir = 9;
-	icon_state = "largetable"
-	},
-/turf/open/floor/rogue/concrete,
+/turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/inhumen)
 "Jc" = (
 /turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave/inhumen)
+"Jo" = (
+/obj/structure/closet/dirthole/closed,
+/turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/inhumen)
 "Jp" = (
 /obj/structure/table/wood{
@@ -4155,6 +4660,10 @@
 /obj/item/rogueweapon/sword/falx,
 /turf/open/floor/rogue/cobble,
 /area/rogue)
+"Jv" = (
+/obj/structure/roguemachine/bounty,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "Jx" = (
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/eventarea)
@@ -4205,6 +4714,11 @@
 "JQ" = (
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/indoors/eventarea)
+"Kb" = (
+/obj/structure/roguemachine/scomm,
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "Kd" = (
 /obj/structure/flora/rogueshroom/happy/random,
 /turf/open/floor/rogue/grasspurple,
@@ -4213,9 +4727,7 @@
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/long,
 /area/rogue/under/cave/inhumen)
 "Kw" = (
-/obj/machinery/light/rogue/firebowl{
-	light_color = "#b30202"
-	},
+/obj/machinery/light/rogue/firebowl/off,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "KD" = (
@@ -4227,7 +4739,8 @@
 	icon_state = "longtable"
 	},
 /obj/item/paper/scroll,
-/turf/open/floor/rogue/hexstone,
+/obj/structure/fluff/wallclock/vampire,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
 "KG" = (
 /obj/structure/chair/bench/church/r,
@@ -4240,10 +4753,19 @@
 	},
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/vampiremanor)
+"KQ" = (
+/obj/machinery/light/rogue/firebowl/standing/blue,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "KV" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/banditcamp)
+"KY" = (
+/obj/item/chair/rogue,
+/obj/effect/landmark/start/wretch,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/under/cave/inhumen)
 "KZ" = (
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/rogue/hexstone,
@@ -4263,10 +4785,8 @@
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/banditcamp)
 "Lp" = (
-/obj/machinery/light/rogue/firebowl{
-	light_color = "#b30202"
-	},
-/turf/open/floor/rogue/hexstone,
+/obj/machinery/light/rogue/firebowl/off,
+/turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/inhumen)
 "Lv" = (
 /obj/item/rogueweapon/shield/wood,
@@ -4280,10 +4800,10 @@
 /obj/structure/table/church{
 	icon_state = "churchtable_end"
 	},
-/obj/item/reagent_containers/glass/cup/silver{
-	name = "pewter goblet";
-	pixel_x = -11
+/obj/item/candle/skull/lit{
+	pixel_y = 13
 	},
+/obj/machinery/light/rogue/wallfire/candle/floorcandle,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "Ly" = (
@@ -4292,7 +4812,7 @@
 /area/rogue/outdoors/banditcamp)
 "LA" = (
 /obj/structure/closet/crate/drawer,
-/turf/open/floor/rogue/hexstone,
+/turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/inhumen)
 "LE" = (
 /obj/structure/table/wood{
@@ -4313,7 +4833,7 @@
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4335,8 +4855,8 @@
 	})
 "LP" = (
 /obj/machinery/light/rogue/wallfire/candle/l,
-/obj/structure/table/optable,
-/turf/open/floor/rogue/hexstone,
+/obj/structure/bed/rogue/shit,
+/turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "LQ" = (
 /obj/structure/table/wood{
@@ -4366,6 +4886,22 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
+"Md" = (
+/obj/effect/decal/carpet/square{
+	dir = 4;
+	pixel_x = -11;
+	pixel_y = 2
+	},
+/obj/structure/chair/stool/rogue,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 4
+	},
+/turf/open/floor/rogue/greenstone,
+/area/rogue/under/cave/inhumen)
 "Mi" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
@@ -4392,7 +4928,7 @@
 /obj/structure/flora/roguetree/pine,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4402,16 +4938,32 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampiremanor)
+"MS" = (
+/obj/structure/closet/crate/chest/old_crate,
+/obj/item/natural/worms/leech,
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
 "MV" = (
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "MX" = (
-/obj/structure/closet/crate/chest/old_crate,
+/obj/structure/mineral_door/bars{
+	lockid = "inhumen"
+	},
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
+"MY" = (
+/obj/machinery/light/rogue/wallfire/candle,
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-n";
+	pixel_x = -8;
+	pixel_y = 1
+	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "Nf" = (
@@ -4420,6 +4972,13 @@
 	icon_state = "chess"
 	},
 /area/rogue/indoors/banditcamp)
+"Ng" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/cave/inhumen)
 "Nh" = (
 /turf/open/floor/rogue/hay,
 /area/rogue/indoors/eventarea)
@@ -4427,6 +4986,26 @@
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/banditcamp)
+"No" = (
+/obj/machinery/light/rogue/firebowl{
+	light_color = "#b30202"
+	},
+/obj/effect/decal/cleanable/debris/stony,
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-n";
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
+"Nr" = (
+/obj/effect/decal/cobbleedge{
+	dir = 10;
+	icon_state = "cobbleedge-w";
+	pixel_y = -7
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
 "Nv" = (
 /obj/structure/chair/freedomchair{
 	color = "#F75D59"
@@ -4468,8 +5047,8 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
 "NQ" = (
-/obj/structure/fluff/alch,
-/turf/open/floor/rogue/blocks,
+/obj/machinery/light/rogue/hearth,
+/turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/inhumen)
 "NT" = (
 /obj/item/needle/thorn,
@@ -4492,10 +5071,34 @@
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/inhumen)
+"Oo" = (
+/obj/item/skull,
+/obj/item/skull{
+	pixel_y = -2;
+	pixel_x = -14
+	},
+/obj/item/natural/bone,
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 1
+	},
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 8
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/under/cave/inhumen)
 "Op" = (
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
 	},
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-sread";
+	pixel_y = -6
+	},
+/obj/structure/closet/crate/chest/old_crate,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "Ov" = (
@@ -4517,10 +5120,8 @@
 /turf/open/floor/rogue/rooftop/green/west,
 /area/rogue/indoors/eventarea)
 "ON" = (
-/obj/structure/chair/wood/rogue{
-	dir = 4
-	},
-/turf/open/floor/rogue/concrete,
+/obj/effect/decal/cleanable/debris/woody,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen)
 "OQ" = (
 /obj/machinery/light/rogue/wallfire/candle/floorcandle/alt,
@@ -4531,6 +5132,12 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampiremanor)
+"OS" = (
+/obj/structure/fluff/walldeco/med4,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red/long{
+	dir = 1
+	},
+/area/rogue/under/cave/inhumen)
 "OV" = (
 /obj/structure/closet/crate/roguecloset,
 /obj/item/clothing/mask/cigarette/rollie/nicotine,
@@ -4561,7 +5168,7 @@
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4575,6 +5182,21 @@
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/vampiremanor)
+"PB" = (
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-sread";
+	pixel_y = -6
+	},
+/obj/structure/table/wood{
+	icon_state = "tablewood1";
+	pixel_y = -4
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
+"PL" = (
+/obj/structure/roguewindow/stained/zizo,
+/turf/closed,
+/area/rogue/under/cave/inhumen)
 "PP" = (
 /turf/open/floor/rogue/greenstone/glyph2,
 /area/rogue/indoors/eventarea)
@@ -4592,7 +5214,7 @@
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4609,14 +5231,19 @@
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "Qg" = (
-/obj/structure/composter,
-/obj/structure/composter,
-/turf/open/floor/rogue/naturalstone,
+/obj/effect/decal/edge{
+	color = "#3f3f3f"
+	},
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 4
+	},
+/turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inhumen)
 "Qi" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/r,
@@ -4629,7 +5256,7 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4664,6 +5291,10 @@
 	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/eventarea)
+"Qz" = (
+/obj/structure/bars,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "QA" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/herringbone,
@@ -4706,6 +5337,12 @@
 /obj/item/clothing/mask/rogue/sack,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
+"QR" = (
+/obj/structure/closet/crate/chest/neu_iron,
+/obj/item/rogueweapon/sickle/copper,
+/obj/item/rogueweapon/hoe/copper,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave/inhumen)
 "QS" = (
 /obj/structure/table/wood{
 	icon_state = "longtable"
@@ -4730,10 +5367,14 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
 "QW" = (
-/obj/structure/rack/rogue,
-/obj/item/rogueweapon/whip,
 /obj/machinery/light/rogue/wallfire/candle,
-/turf/open/floor/rogue/hexstone,
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle,
+/obj/item/reagent_containers/glass/bottle,
+/obj/item/reagent_containers/glass/bottle,
+/obj/item/reagent_containers/glass/bottle,
+/obj/item/reagent_containers/glass/bottle,
+/turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "QX" = (
 /obj/machinery/light/rogue/wallfire/candle,
@@ -4748,6 +5389,11 @@
 "Rb" = (
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/eventarea)
+"Rh" = (
+/obj/item/bedsheet/rogue/cloth,
+/obj/structure/bed/rogue/inn/wool,
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/cave/inhumen)
 "Ro" = (
 /turf/open/floor/rogue/rooftop/west,
 /area/rogue/indoors/eventarea)
@@ -4755,20 +5401,44 @@
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampiremanor)
+"Rv" = (
+/obj/structure/flora/roguegrass/herb/symphitum,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "Rw" = (
 /obj/structure/fluff/railing/wood/east{
 	pixel_x = 8
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"Rx" = (
+/obj/item/candle/skull/lit{
+	pixel_y = -4;
+	pixel_x = -9
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
 "RC" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampiremanor)
+"RE" = (
+/obj/effect/wisp/prestidigitation{
+	color = "#ff0d00";
+	name = "Infernal Wisp";
+	light_color = "#ff0d00";
+	desc = "An ominous manifestation of latent ambient magick";
+	pixel_y = 2;
+	pixel_x = -1
+	},
+/obj/structure/fluff/statue/gargoyle,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "RH" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors)
@@ -4789,7 +5459,7 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4800,12 +5470,31 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inhumen)
 "Sj" = (
-/obj/machinery/light/rogue/wallfire/candle/r,
-/turf/open/floor/rogue/blocks,
+/obj/structure/table/church{
+	dir = 1;
+	icon_state = "churchtable_end_alt"
+	},
+/obj/machinery/light/rogue/firebowl/standing/blue{
+	pixel_y = 0;
+	pixel_x = 2
+	},
+/turf/open/floor/rogue/tile/harem2,
 /area/rogue/under/cave/inhumen)
 "Sn" = (
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/eventarea)
+"Sp" = (
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-sread";
+	pixel_y = -6
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
+"St" = (
+/obj/machinery/light/rogue/wallfire/candle/r,
+/obj/effect/decal/cleanable/debris/stony,
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
 "Sv" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/eventarea)
@@ -4834,15 +5523,26 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"SN" = (
+/obj/structure/chair/wood/rogue{
+	dir = 4
+	},
+/obj/effect/landmark/start/wretch,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/under/cave/inhumen)
+"SR" = (
+/obj/item/natural/rock,
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/cave/inhumen)
 "SU" = (
 /obj/item/natural/bundle/stick,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4859,7 +5559,7 @@
 	},
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4867,7 +5567,7 @@
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4879,8 +5579,17 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampiremanor)
 "Tg" = (
-/obj/effect/decal/remains/human,
+/obj/structure/table/optable,
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains4"
+	},
 /turf/open/floor/rogue/concrete,
+/area/rogue/under/cave/inhumen)
+"Tk" = (
+/obj/structure/fluff/railing/corner{
+	dir = 6
+	},
+/turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "Tm" = (
 /obj/item/reagent_containers/glass/bowl,
@@ -4913,21 +5622,19 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "TD" = (
-/obj/machinery/anvil,
-/obj/item/rogueweapon/hammer/iron,
-/obj/item/rogueweapon/tongs,
+/obj/structure/rack/rogue/shelf/biggest,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/inhumen)
 "TI" = (
 /obj/machinery/light/rogue/campfire,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -4945,12 +5652,28 @@
 	},
 /area/rogue/under/cave/inhumen)
 "TT" = (
-/obj/machinery/light/rogue/wallfire/candle,
-/turf/closed,
+/obj/effect/wisp/prestidigitation{
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/floor/rogue/underworld/space/sparkle_quiet,
 /area/rogue)
 "TU" = (
 /turf/open/floor/rogue/grassyel,
 /area/rogue/indoors/eventarea)
+"TX" = (
+/obj/item/natural/bone,
+/obj/effect/wisp/prestidigitation{
+	color = "#ff0d00";
+	name = "Infernal Wisp";
+	light_color = "#ff0d00";
+	desc = "An ominous manifestation of latent ambient magick";
+	pixel_y = 2;
+	pixel_x = -1
+	},
+/turf/open/water/bloody,
+/area/rogue/under/cave/inhumen)
 "TY" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/end{
 	dir = 1
@@ -4975,6 +5698,13 @@
 /obj/item/reagent_containers/powder/salt,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/banditcamp)
+"Ud" = (
+/obj/structure/ritualcircle/zizo,
+/obj/effect/decal/carpet/kover_darkred{
+	pixel_y = -47
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/under/cave/inhumen)
 "Ue" = (
 /turf/open/floor/rogue/tile{
 	icon_state = "chess"
@@ -5005,7 +5735,7 @@
 "Uy" = (
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -5021,6 +5751,9 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampiremanor)
+"UJ" = (
+/turf/closed/wall/mineral/rogue/stonebrick,
+/area/rogue/under/cave/inhumen)
 "UK" = (
 /turf/open/floor/rogue/grasscold,
 /area/rogue/indoors/eventarea)
@@ -5028,13 +5761,18 @@
 /obj/structure/fluff/railing/border{
 	dir = 9
 	},
+/obj/effect/decal/cobbleedge{
+	dir = 10;
+	icon_state = "cobbleedge-w";
+	pixel_y = -7
+	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "UN" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -5042,6 +5780,13 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/banditcamp)
+"US" = (
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 1
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
 "UW" = (
 /turf/open/water/cleanshallow,
 /area/rogue/outdoors/woods{
@@ -5049,10 +5794,13 @@
 	})
 "UZ" = (
 /obj/structure/table/wood{
-	dir = 8;
-	icon_state = "largetable"
+	icon_state = "tablewood1";
+	pixel_y = -4
 	},
-/turf/open/floor/rogue/concrete,
+/obj/item/reagent_containers/glass/cup/wooden{
+	pixel_y = 12
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen)
 "Vb" = (
 /obj/structure/table/wood{
@@ -5070,7 +5818,7 @@
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -5109,7 +5857,7 @@
 /obj/structure/far_travel,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -5177,7 +5925,7 @@
 "Wp" = (
 /turf/open/water/river/flow/west,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -5216,12 +5964,21 @@
 /area/rogue/indoors/vampiremanor)
 "WC" = (
 /obj/structure/table/church,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/money,
+/obj/item/candle/skull/lit{
+	pixel_y = 13
+	},
+/obj/machinery/light/rogue/wallfire/candle/floorcandle,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "WE" = (
 /obj/effect/landmark/start/wretch,
 /turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
+"WG" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains5"
+	},
+/turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/inhumen)
 "WH" = (
 /obj/structure/fluff/railing/wood/north{
@@ -5231,19 +5988,23 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
 "WJ" = (
 /obj/machinery/gear_painter,
-/turf/open/floor/rogue/hexstone,
+/turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/inhumen)
 "WO" = (
 /obj/structure/fluff/walldeco/stone{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
+"WT" = (
+/obj/item/roguebin/water/gross,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/inhumen)
 "WW" = (
 /obj/structure/rack/rogue,
@@ -5269,11 +6030,20 @@
 /obj/item/candle/candlestick/gold/lit,
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/banditcamp)
+"Xy" = (
+/obj/structure/table/wood{
+	dir = 10;
+	icon_state = "tablewood2"
+	},
+/obj/item/rogueweapon/shovel,
+/obj/item/rogueweapon/thresher,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "XC" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -5330,7 +6100,7 @@
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -5371,12 +6141,12 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
 "XM" = (
-/obj/structure/table/wood{
-	dir = 8;
-	icon_state = "largetable"
-	},
 /obj/item/candle/skull,
-/turf/open/floor/rogue/concrete,
+/obj/structure/table/wood{
+	icon_state = "tablewood1";
+	pixel_y = -4
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen)
 "XR" = (
 /turf/open/floor/rogue/dirt,
@@ -5393,9 +6163,10 @@
 /turf/open/water/pond,
 /area/rogue/indoors/ravoxarena)
 "Yc" = (
-/obj/machinery/light/rogue/wallfire/candle,
-/turf/open/floor/rogue/blocks,
-/area/rogue/indoors/ravoxarena)
+/obj/structure/rack/rogue,
+/obj/item/rogueweapon/thresher,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cave/inhumen)
 "Yg" = (
 /obj/machinery/light/rogue/torchholder/l,
 /turf/open/floor/rogue/grasscold,
@@ -5436,6 +6207,13 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampiremanor)
+"Yu" = (
+/obj/structure/fluff/walldeco/stone{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/rogue/blocks,
+/area/rogue/under/cave/inhumen)
 "Yv" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -5443,12 +6221,11 @@
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/banditcamp)
 "YE" = (
-/obj/structure/table/wood{
-	dir = 10;
-	icon_state = "tablewood2"
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 8
 	},
-/obj/item/rogueweapon/shovel,
-/turf/open/floor/rogue/naturalstone,
+/turf/open/floor/rogue/tile/harem2,
 /area/rogue/under/cave/inhumen)
 "YH" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
@@ -5464,14 +6241,24 @@
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"YK" = (
+/obj/machinery/light/rogue/firebowl/standing/blue,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/under/cave/inhumen)
 "YM" = (
-/obj/machinery/light/rogue/wallfire/candle/l,
 /obj/effect/decal/cleanable/dirt/cobweb,
-/turf/open/floor/rogue/blocks,
+/obj/structure/table/church{
+	icon_state = "churchtable_alt"
+	},
+/obj/machinery/light/rogue/firebowl/standing/green{
+	pixel_x = 2;
+	pixel_y = 21
+	},
+/turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/inhumen)
 "YO" = (
 /obj/structure/table/vtable{
@@ -5492,28 +6279,48 @@
 /obj/structure/handcart,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"YT" = (
+/obj/structure/fluff/walldeco/stone{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor6"
+	},
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 4
+	},
+/turf/open/floor/rogue/greenstone,
+/area/rogue/under/cave/inhumen)
 "YU" = (
 /obj/structure/flora/roguetree,
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/outdoors/banditcamp)
 "Za" = (
-/obj/structure/table/wood{
-	dir = 4;
-	icon_state = "largetable"
-	},
 /obj/item/reagent_containers/glass/cup/wooden{
 	pixel_y = 12
 	},
-/turf/open/floor/rogue/concrete,
+/obj/structure/table/wood{
+	icon_state = "tablewood1";
+	pixel_y = -4
+	},
+/obj/item/dice,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen)
 "Zf" = (
-/obj/structure/roguemachine/mail{
-	mailtag = "Forgotten Chapel"
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-n";
+	pixel_x = -8;
+	pixel_y = 1
 	},
+/obj/structure/roguemachine/scomm,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/inhumen)
 "Zk" = (
@@ -5542,7 +6349,7 @@
 "Zx" = (
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods{
-	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN (2).ogg');
+	droning_sound = list('sound/ambience/MOUNTAIN (1).ogg','sound/ambience/MOUNTAIN(2).ogg');
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
@@ -5553,8 +6360,21 @@
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/vampiremanor)
 "ZC" = (
-/obj/structure/fermentation_keg/random/water,
+/obj/effect/decal/cobbleedge{
+	dir = 10;
+	icon_state = "cobbleedge-w";
+	pixel_y = -7
+	},
+/obj/effect/decal/cobbleedge{
+	icon_state = "cobbleedge-n";
+	pixel_x = -8;
+	pixel_y = 1
+	},
 /turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
+"ZE" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inhumen)
 "ZF" = (
 /obj/item/roguecoin/gold/pile,
@@ -5566,6 +6386,10 @@
 /area/rogue/outdoors/woods{
 	first_time_text = "The Murderwood"
 	})
+"ZI" = (
+/obj/structure/fluff/alch,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave/inhumen)
 "ZK" = (
 /turf/open/floor/rogue/tile/masonic,
 /area/rogue/indoors/eventarea)
@@ -5578,10 +6402,16 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inhumen)
 "ZQ" = (
-/obj/structure/fluff/walldeco/stone{
-	pixel_y = 32
-	},
 /obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
+/obj/effect/wisp/prestidigitation{
+	color = "#ff0d00";
+	name = "Infernal Wisp";
+	light_color = "#ff0d00";
+	desc = "An ominous manifestation of latent ambient magick";
+	pixel_y = 2;
+	pixel_x = -1
+	},
+/obj/structure/fluff/statue/gargoyle,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen)
 "ZS" = (
@@ -15965,7 +16795,7 @@ wN
 wN
 wN
 Ld
-Jc
+qO
 Jc
 wN
 wN
@@ -15974,14 +16804,14 @@ Kv
 Kv
 Kv
 xL
+tX
+Kv
+Kv
+tX
 Kv
 Kv
 Kv
-Kv
-Kv
-Kv
-Kv
-Kv
+tX
 xL
 wN
 XV
@@ -16095,8 +16925,8 @@ wN
 wN
 wN
 wN
-Jc
-Jc
+IZ
+qO
 wN
 wN
 TS
@@ -16105,13 +16935,13 @@ Io
 tX
 TS
 ID
-ws
+qO
 WJ
 eJ
-ws
-Iz
-DQ
-Jc
+zh
+iz
+gQ
+pI
 TS
 wN
 XV
@@ -16222,26 +17052,26 @@ SX
 Jc
 Jc
 Jc
-wN
-wN
+Jc
+Jc
 Iz
 Jc
+IZ
 Jc
-wN
 Ld
-TS
+tX
 oc
 Bi
 Es
 If
 tF
-ws
-ws
-ws
-zh
-XV
-XV
-Gq
+qO
+qO
+qO
+qO
+qO
+qO
+Jc
 TS
 wN
 XV
@@ -16348,30 +17178,30 @@ rQ
 rQ
 rQ
 wN
-SX
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
+fR
+qO
+hH
+hH
+IZ
+qO
+hH
+qO
+qO
+hH
+qO
+Ch
+qO
+qO
+qO
 tX
-KZ
-ws
-ws
-tX
-lQ
-ws
+kN
+qO
 Jc
-ws
-zh
-zh
-XV
-DQ
+qO
+qO
+qO
+qO
+SR
 TS
 wN
 XV
@@ -16481,26 +17311,26 @@ wN
 SX
 Jc
 Jc
+qO
+qO
+hH
+IZ
 Jc
-Jc
-Jc
-Jc
-Jc
-Jc
+hH
 tr
 tr
 ey
-ws
-WE
-ws
+qO
+sI
+qO
 Cv
-ws
-ws
-ws
-ws
+qO
 Jc
-Jc
-Iz
+zh
+zh
+no
+no
+no
 Jc
 TS
 wN
@@ -16610,28 +17440,28 @@ rQ
 wN
 wN
 Jc
-xm
-xm
-xm
 Jc
 Jc
 Jc
 Jc
 Jc
 Jc
+Jc
+Jc
+Jc
+Ch
+qO
+qO
+qO
 tX
-KZ
-ws
-ws
-tX
-lQ
-ws
-ws
-ws
-ws
+kN
+qO
 Jc
 Jc
-ws
+qO
+Jc
+Jc
+qO
 TS
 wN
 XV
@@ -16739,29 +17569,29 @@ rQ
 rQ
 wN
 wN
-xm
-xm
-nA
-xm
-xm
-wN
-wN
+qA
 Jc
+xm
+xm
+xm
 wN
 wN
-TS
-WO
+rc
+wN
+wN
+tX
+km
 Bi
 Bi
 BC
 LQ
-ws
-ws
-ws
-ws
-ws
-ws
-ws
+qO
+qO
+qO
+qO
+qO
+qO
+qO
 TS
 wN
 XV
@@ -16870,9 +17700,9 @@ rQ
 wN
 wN
 wN
+qA
 xm
-xm
-xm
+nA
 wN
 wN
 wN
@@ -16886,10 +17716,10 @@ SJ
 TS
 KF
 sY
-ws
+Jc
 kv
 LA
-oX
+Rh
 LA
 oX
 TS
@@ -17001,7 +17831,7 @@ wN
 BC
 Kv
 Kv
-TY
+Hq
 Kv
 Kv
 Kv
@@ -17014,14 +17844,14 @@ lq
 lq
 lq
 xL
+tX
+Kv
+Kv
+tX
 Kv
 Kv
 Kv
-Kv
-Kv
-Kv
-Kv
-Kv
+tX
 xL
 wN
 XV
@@ -17030,7 +17860,7 @@ XV
 XV
 XV
 XV
-XV
+Jc
 XV
 XV
 XV
@@ -17133,25 +17963,25 @@ xl
 LP
 mT
 xL
-Kw
+No
 wr
 Sd
 YQ
 rB
-Kw
+tH
 If
 WO
 Bi
+wt
+Bi
+Bi
+CE
+Bi
+wt
 Bi
 Bi
 Bi
-QT
-ws
-ws
-ws
-ws
-ws
-Lp
+Kw
 tX
 wN
 XV
@@ -17160,7 +17990,7 @@ XV
 XV
 XV
 XV
-XV
+Jc
 XV
 XV
 XV
@@ -17258,7 +18088,7 @@ rQ
 rQ
 rQ
 wN
-TS
+OS
 ws
 Qn
 Dz
@@ -17268,20 +18098,20 @@ DD
 hy
 hy
 UL
-ws
-lq
-ws
-ws
-ws
-ws
-ws
+Nr
+wR
+qO
+qO
+qO
+qO
+qO
 ol
-ws
-ws
-WE
-ws
-ws
-ws
+qO
+qO
+sI
+qO
+qO
+qO
 DM
 wN
 XV
@@ -17289,8 +18119,8 @@ XV
 XV
 XV
 XV
-xm
-Jc
+qA
+Fs
 Jc
 XV
 XV
@@ -17393,24 +18223,24 @@ ph
 vS
 ws
 Xr
+oZ
+ws
+qO
+qO
 ws
 ws
-ws
-ws
-ws
-ws
-lq
-ws
-ws
-ws
-ws
-ws
+wR
+qO
+qO
+qO
+qO
+qO
 ol
-ws
-ws
-ws
-ws
-ws
+qO
+qO
+qO
+qO
+qO
 Lp
 tX
 wN
@@ -17419,8 +18249,8 @@ XV
 XV
 XV
 uJ
-xm
-xm
+hO
+Jo
 nS
 Jc
 XV
@@ -17522,18 +18352,18 @@ TS
 ws
 Tg
 ws
-gN
-ws
-ws
-Qn
-HA
-ws
-ws
+mW
+oZ
+qO
+tK
+tK
+qO
+Sp
 BC
-WO
-Bi
-Bi
-Kw
+ra
+fm
+YE
+YE
 DM
 Kv
 Kv
@@ -17551,8 +18381,8 @@ uJ
 uJ
 xm
 xm
-Jc
-Jc
+Fs
+Fs
 mD
 XV
 XV
@@ -17653,36 +18483,36 @@ Dz
 Qn
 ws
 Xr
-ws
-Qn
-Qn
-Qn
-Qn
-ws
+oZ
+tK
+tK
+tK
+ON
+uf
 TS
-Sj
-Bi
+fN
+lQ
 Sj
 xL
-xL
-WO
+tX
+AB
 QT
 ws
 ws
 ws
-Lp
-xL
+ws
+tX
 xL
 wN
 XV
 XV
 uJ
 uJ
-uJ
-xm
 nA
+Jo
 xm
-Jc
+Fs
+Fs
 Jc
 XV
 XV
@@ -17755,9 +18585,9 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
-rQ
+GI
+GI
+GI
 rQ
 rQ
 rQ
@@ -17780,18 +18610,18 @@ rQ
 wN
 TS
 FG
-ws
-FG
+Bi
+MS
 If
-ws
-ON
-ON
-Qn
-hS
-ws
+oZ
+tK
+SN
+gq
+tK
+PB
 TS
 tX
-Io
+fh
 tX
 xL
 oB
@@ -17799,21 +18629,21 @@ Bi
 ol
 ws
 ws
+HA
 ws
-ws
-ws
-xL
+jo
+tX
 BC
 wN
 XV
 uJ
-uJ
 xm
 xm
 xm
-Jc
-Jc
-Jc
+Fs
+xm
+Fs
+Fs
 Iz
 XV
 wN
@@ -17884,11 +18714,11 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
-rQ
-rQ
-rQ
+GI
+GI
+TT
+GI
+GI
 rQ
 rQ
 rQ
@@ -17913,37 +18743,37 @@ DM
 Xr
 TY
 xL
-KZ
-HK
+MY
+tK
+IB
 UZ
-UZ
-nW
-ws
+tK
+uf
 TS
 DM
-Kv
-Kv
-Kw
+tX
+IC
+mE
 Bi
-Bi
+wt
 ol
 ws
 DT
 DT
 tj
 ws
-ws
+jo
 If
 wN
-XV
+RE
+Eb
 xm
-xm
-xm
+Jo
 Jc
 Jc
 Jc
 Jc
-Jc
+Fs
 Jc
 XV
 wN
@@ -18014,13 +18844,13 @@ rQ
 rQ
 rQ
 iE
-Fs
 iE
 iE
-Fs
+qu
 iE
 iE
-TT
+iE
+rQ
 rQ
 rQ
 rQ
@@ -18040,22 +18870,22 @@ rQ
 wN
 TS
 QW
-ws
+Bi
 HV
 BC
 Zf
-Fn
+tK
 qP
 ep
-qo
-ws
+tK
+Sp
 tI
+TX
+kX
+kX
+US
 Bi
-Bi
-Bi
-Bi
-Bi
-Bi
+hb
 QT
 ws
 ZN
@@ -18064,7 +18894,7 @@ ZN
 ws
 ws
 tI
-Ld
+Jc
 Jc
 Jc
 Jc
@@ -18142,7 +18972,7 @@ rQ
 rQ
 rQ
 rQ
-rQ
+GI
 iE
 rz
 va
@@ -18150,7 +18980,7 @@ va
 va
 va
 iE
-rQ
+GI
 rQ
 rQ
 rQ
@@ -18168,22 +18998,22 @@ rQ
 rQ
 rQ
 wN
-TS
-Qn
+PL
+ZI
 Qn
 fd
 Xr
-ws
+oZ
+tK
 tb
-Qn
 tb
-Qn
-ws
+tK
+ue
 If
-Bi
-Qn
-Qn
-Qn
+IC
+kX
+Oo
+ZE
 Bi
 WC
 QT
@@ -18194,18 +19024,18 @@ KG
 ws
 ws
 xL
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
+qO
+qO
+hH
+qO
+IZ
+qO
+IZ
+qO
+IZ
+qO
+hH
+qO
 yL
 wN
 "}
@@ -18271,8 +19101,8 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
+GI
+GI
 iE
 va
 iE
@@ -18280,8 +19110,8 @@ va
 iE
 va
 iE
-rQ
-rQ
+GI
+GI
 rQ
 rQ
 rQ
@@ -18298,44 +19128,44 @@ rQ
 rQ
 rQ
 wN
-TS
+PL
+vy
 Qn
-jo
-Qn
-gN
 ws
-Qn
-Qn
-Qn
-Qn
+mW
+oZ
+tK
+tK
+tK
+tK
 Op
 tX
-km
-Qn
+Gq
+Ar
 sK
-Qn
+Ud
 iH
 Hg
-mv
+QT
 ws
 ws
 ws
 ws
-ws
+HA
 ws
 oj
 tr
 tr
-Jc
-Jc
+qO
+IZ
 DG
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
+hH
+qO
+IZ
+hH
+IZ
+IZ
+hH
 yL
 wN
 "}
@@ -18401,8 +19231,8 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
+GI
+GI
 iE
 va
 rH
@@ -18410,8 +19240,8 @@ XX
 rH
 va
 iE
-rQ
-rQ
+GI
+GI
 rQ
 rQ
 rQ
@@ -18428,21 +19258,21 @@ rQ
 rQ
 rQ
 wN
-TS
+PL
+se
 Qn
-Qn
-Qn
+Tk
 Xr
-ws
+oZ
 ON
-Qn
-ON
+vZ
+vZ
 BB
-ws
+Hh
 BC
-Bi
-Qn
-Qn
+kX
+IC
+zI
 Qn
 Bi
 Lx
@@ -18454,18 +19284,18 @@ tj
 ws
 ws
 xL
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
+qO
+hH
+IZ
+hH
+qO
+IZ
+qO
+qO
+qO
+qO
+qO
+qO
 yL
 wN
 "}
@@ -18531,17 +19361,17 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
-iE
-Yc
+GI
+TT
+qu
+va
 XX
-XX
+eA
 XX
 va
-iE
+qu
 TT
-rQ
+GI
 rQ
 rQ
 rQ
@@ -18559,23 +19389,23 @@ rQ
 rQ
 wN
 TS
-qA
-uf
+XG
+Bi
 HV
 If
 Bd
-IZ
+tK
 XM
 yk
-Ch
-ws
+tK
+Sp
 tI
 tB
+ss
+kX
+US
 Bi
-Bi
-Bi
-Bi
-Bi
+Rx
 QT
 ws
 ZN
@@ -18584,7 +19414,6 @@ ZN
 ws
 ws
 tI
-Ld
 Jc
 Jc
 Jc
@@ -18592,7 +19421,8 @@ Jc
 Jc
 Jc
 Jc
-xm
+Jc
+Fs
 xm
 xm
 Ld
@@ -18661,8 +19491,8 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
+GI
+GI
 iE
 va
 gX
@@ -18670,8 +19500,8 @@ XX
 gX
 va
 iE
-rQ
-rQ
+GI
+GI
 rQ
 rQ
 rQ
@@ -18693,18 +19523,18 @@ DM
 Xr
 TY
 xL
-KZ
-iz
+MY
+tK
 Za
 ep
 tK
-ws
+uf
 TS
 DM
-Kv
-Kv
-Kw
-Bi
+tX
+IC
+US
+wt
 Bi
 ol
 ws
@@ -18712,20 +19542,20 @@ KG
 KG
 KG
 ws
-ws
+Er
 BC
 wN
-XV
+RE
 Jc
-DQ
 Jc
+Jc
+Jc
+Jc
+Hb
 xm
-xm
-xm
-xm
-Of
-xm
-xm
+nj
+Fs
+qA
 wN
 wN
 "}
@@ -18791,8 +19621,8 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
+GI
+GI
 iE
 va
 iE
@@ -18800,8 +19630,8 @@ va
 iE
 va
 iE
-rQ
-rQ
+GI
+GI
 rQ
 rQ
 rQ
@@ -18821,41 +19651,41 @@ wN
 TS
 pV
 ws
-MX
+ws
 BC
-ws
-hS
-Qn
+oZ
+tK
+KY
 tb
-tb
-ws
+tK
+PB
 TS
 tX
-Io
+fh
 tX
 xL
-WO
+Yu
 Bi
 ol
 ws
+HA
 ws
 ws
-ws
-ws
-xL
+Er
+tX
 If
 wN
-XV
-XV
-XV
 xm
+Jv
+Ia
+Fs
+Jc
+Jc
 xm
-Go
+nj
+Fs
 xm
-xm
-xm
-xm
-XV
+wN
 wN
 wN
 "}
@@ -18922,7 +19752,7 @@ rQ
 rQ
 rQ
 rQ
-rQ
+GI
 iE
 va
 va
@@ -18930,7 +19760,7 @@ va
 va
 lo
 iE
-rQ
+GI
 rQ
 rQ
 rQ
@@ -18949,43 +19779,43 @@ rQ
 rQ
 wN
 TS
-Qn
-Qn
-Qn
+qo
+zv
+ws
 Xr
-ws
-Qn
-Qn
-Qn
-Qn
-ws
+oZ
+tK
+tK
+tK
+tK
+uf
 TS
 YM
-Bi
-Es
+Fh
+vN
 xL
-xL
+tX
 ZQ
 QT
 ws
 ws
 ws
-Lp
-xL
+ws
+tX
 xL
 wN
+UJ
+Qz
+Qz
+vG
+YK
+Jc
+Jc
+Fs
+Fs
+xm
 wN
-XV
-XV
-XV
-XV
-xm
-xm
-xm
-xm
-xm
-XV
-XV
+wN
 wN
 wN
 "}
@@ -19054,13 +19884,13 @@ rQ
 rQ
 rQ
 iE
-Fs
 iE
 iE
-Fs
+qu
 iE
 iE
-TT
+iE
+rQ
 rQ
 rQ
 rQ
@@ -19079,21 +19909,21 @@ rQ
 rQ
 wN
 TS
-Qn
 wy
-Qn
+iv
+ws
 gN
-ws
-ws
-Qn
-HA
-ws
-ws
+oZ
+qO
+tK
+tK
+qO
+Sp
 If
-WO
-Bi
-Bi
-Kw
+YT
+Md
+FH
+id
 DM
 Kv
 Kv
@@ -19104,17 +19934,17 @@ Kv
 Kv
 xL
 wN
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
+pa
+xm
+xm
+Qz
+Jc
+Jc
+Jc
+Fs
+Fs
+wN
+wN
 XV
 wN
 wN
@@ -19184,11 +20014,11 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
-rQ
-rQ
-rQ
+GI
+GI
+TT
+GI
+GI
 rQ
 rQ
 rQ
@@ -19210,39 +20040,39 @@ rQ
 wN
 TS
 EC
-Qn
-Qn
+Qg
+ws
 Xr
+oZ
+ws
+qO
+qO
 ws
 ws
-ws
-ws
-ws
-ws
-lq
-ws
-ws
-ws
-ws
-ws
-ol
-ws
-ws
-ws
-ws
-ws
+wR
+qO
+Ng
+qO
+qO
+qO
+ED
+qO
+qO
+qO
+qO
+qO
 Lp
 tX
 wN
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
+xm
+xm
+xm
+MX
+Jc
+Jc
+Jc
+xm
+ja
 XV
 XV
 XV
@@ -19315,9 +20145,9 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
-rQ
+GI
+GI
+GI
 rQ
 rQ
 rQ
@@ -19344,35 +20174,35 @@ ws
 ws
 If
 Ez
-ws
-ws
-ws
-ws
-ws
-lq
-ws
-ws
-ws
-ws
-ws
-ol
-ws
-ws
-WE
-ws
-ws
-ws
+Fy
+Fy
+Fy
+Fy
+Fy
+wR
+qO
+qO
+qO
+qO
+qO
+ED
+qO
+qO
+sI
+qO
+qO
+xR
 DM
 wN
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
+WG
+HK
+xm
+Qz
+xm
+Jc
+Jc
+Fs
+KQ
 XV
 XV
 XV
@@ -19474,10 +20304,10 @@ Vp
 fk
 xL
 fH
-fN
-NQ
+Bi
+Bi
 wt
-XG
+Bi
 Kw
 BC
 WO
@@ -19485,24 +20315,24 @@ Bi
 Bi
 Bi
 Bi
-QT
-ws
-ws
-ws
-ws
-ws
-Lp
+CE
+Bi
+Bi
+Bi
+Bi
+sb
+Kw
 tX
 wN
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
+UJ
+Qz
+Qz
+vG
+Kb
+Jc
+Jc
+Jc
+wv
 XV
 XV
 XV
@@ -19603,9 +20433,9 @@ Kv
 Kv
 TY
 Kv
-Kv
-Kv
-Kv
+xL
+lq
+lq
 Kv
 Kv
 Kv
@@ -19624,15 +20454,15 @@ Kv
 Kv
 xL
 wN
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
+wN
+Of
+xm
+Qz
+Qz
+Jc
+Jc
+Jc
+nW
 XV
 XV
 XV
@@ -19734,8 +20564,8 @@ wN
 wN
 wN
 wN
-wN
-wN
+et
+et
 wN
 wN
 wN
@@ -19747,22 +20577,22 @@ TS
 gR
 sM
 Qq
-qO
+Fn
 qO
 gw
 TS
 wN
 wN
 wN
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
+wN
+HK
+xm
+xm
+MX
+Jc
+Jc
+Jc
+Yc
 XV
 XV
 XV
@@ -19859,40 +20689,40 @@ rQ
 rQ
 wN
 wN
+Iu
+wK
+hS
+KQ
 xm
 xm
-xm
-xm
-xm
-xm
-wN
-wN
+Jc
+Jc
 wN
 wN
 TS
-WO
+fs
 Bi
 Bi
 If
 qO
-qO
+Fn
 qO
 qO
 Ht
 kX
 TS
 wN
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
+wN
+wN
+wN
+xm
+xm
+xm
+Qz
+Jc
+Jc
+Jc
+KQ
 XV
 XV
 XV
@@ -19988,17 +20818,17 @@ rQ
 rQ
 rQ
 wN
-uJ
+pv
+vz
 xm
-hO
+hS
+hS
+xm
+hS
 xm
 xm
 xm
-Jc
-Jc
-wN
-wN
-Jc
+rc
 tX
 KZ
 ws
@@ -20007,22 +20837,22 @@ tX
 kN
 qO
 qO
-qO
-tE
+Hl
+WT
 kX
-kX
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
+xL
+wN
+wN
+wN
+wN
+WG
+HK
+xm
+Qz
+Jc
+Fs
+Fs
+qA
 XV
 XV
 XV
@@ -20121,37 +20951,37 @@ wN
 uJ
 uJ
 xm
+hS
+hS
+hS
+hS
+hS
+hS
+hS
 xm
-xm
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
 Cv
 ws
 WE
 ws
-Cv
+lq
 qO
+NQ
 qO
-qO
-qO
+IN
 kX
 kX
+mv
 kX
-kX
 XV
 XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
+wN
+wN
+UJ
+Qz
+Qz
+xm
+lO
+xm
 XV
 XV
 XV
@@ -20252,13 +21082,13 @@ uJ
 uJ
 uJ
 xm
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
-Jc
+hS
+hS
+xm
+hS
+hS
+hS
+hS
 tX
 KZ
 ws
@@ -20270,18 +21100,18 @@ qO
 tE
 kX
 kX
+xL
 kX
 kX
 kX
 XV
 XV
 XV
-XV
-XV
-XV
-XV
-XV
-XV
+GS
+KQ
+xm
+Da
+lO
 XV
 XV
 XV
@@ -20378,21 +21208,21 @@ rQ
 rQ
 rQ
 wN
+pv
 uJ
-uJ
+tA
+xm
+hS
 xm
 xm
-Jc
-wN
-Jc
-Jc
-Jc
-Jc
-Ld
+xm
+hS
+xm
+KQ
 TS
 mc
 Bi
-Sj
+St
 TS
 qO
 qO
@@ -20400,18 +21230,18 @@ eh
 kX
 kX
 kX
+TS
+XV
+XV
 kX
 XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
-XV
+kX
+kX
+kX
+qA
+xm
+xm
+xm
 XV
 XV
 XV
@@ -20510,14 +21340,14 @@ rQ
 wN
 wN
 uJ
+Jc
+Rv
 xm
-Ld
-wN
-wN
-wN
-Qg
-YE
-GI
+xm
+xm
+xm
+xm
+Jc
 wN
 TS
 tX
@@ -20533,15 +21363,15 @@ kX
 TS
 XV
 XV
+kX
+kX
+kX
 XV
 XV
 XV
-XV
-XV
-XV
-XV
-XV
-XV
+Go
+xm
+CI
 XV
 XV
 XV
@@ -20641,12 +21471,12 @@ wN
 wN
 wN
 wN
-wN
-wN
-wN
-wN
-wN
-wN
+Ld
+Jc
+sq
+Xy
+sq
+QR
 wN
 wN
 xL
@@ -20669,13 +21499,13 @@ XV
 XV
 XV
 XV
+wN
+wN
+wN
 XV
 XV
 XV
-XV
-XV
-XV
-XV
+wN
 wN
 wN
 "}
