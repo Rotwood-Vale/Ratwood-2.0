@@ -290,6 +290,7 @@
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 
 //Helmets. This BLOWS with how it checks, but I'm lazy and it works.
+//TODO: Remove this for a universal helmet select, once we have sprites for the others.
 	if(H.patron.name == "Astrata" || H.patron.name == "Necra" || H.patron.name == "Eora" || H.patron.name == "Ravox")
 		var/helmets = list("Visored / Sallet", "Helmet")
 		var/selected_helmet = input(H, "Choose a helmet...", "Helmet") as anything in helmets
