@@ -75,7 +75,7 @@
 /datum/intent/sword/thrust/estoc
 	name = "thrust"
 	penfactor = 57	//At 57 pen + 25 base (82 total), you will always pen 80 stab armor, but you can't do it at range unlike a spear.
-	swingdelay = 8
+	clickcd = CLICK_CD_CHARGED
 
 /datum/intent/sword/lunge
 	name = "lunge"
@@ -87,6 +87,12 @@
 	reach = 2
 	damfactor = 1.3	//Zwei will still deal ~7-10 more damage at the same range, depending on user's STR.
 	swingdelay = 8
+
+/datum/intent/sword/lunge/estoc
+	damfactor = 1.2
+	penfactor = 37//25 base, +5, at 67. More for applying bleed through armour, since it's a needle.
+	swingdelay = 0
+	clickcd = CLICK_CD_CHARGED
 
 /datum/intent/sword/bash
 	name = "pommel bash"
@@ -917,13 +923,13 @@
 	force = 12
 	force_wielded = 25
 	possible_item_intents = list(
-		/datum/intent/sword/chop,
+		/datum/intent/sword/thrust,
 		/datum/intent/sword/strike,
 	)
 	gripped_intents = list(
 		/datum/intent/sword/thrust/estoc,
-		/datum/intent/sword/lunge,
-		/datum/intent/sword/chop,
+		/datum/intent/sword/lunge/estoc,
+		/datum/intent/sword/peel/big,
 		/datum/intent/sword/strike,
 	)
 	bigboy = TRUE

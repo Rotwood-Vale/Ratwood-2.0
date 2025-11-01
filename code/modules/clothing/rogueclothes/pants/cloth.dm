@@ -53,7 +53,7 @@
 	l_sleeve_status = SLEEVE_NOMOD
 
 /obj/item/clothing/under/roguetown/loincloth
-	name = "loincloth"
+	name = "large loincloth"
 	desc = ""
 	icon_state = "loincloth"
 	item_state = "loincloth"

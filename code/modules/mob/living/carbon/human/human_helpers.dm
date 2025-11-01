@@ -131,7 +131,23 @@
 		used_str = get_str_arms(used_hand)
 
 	if(used_str >= 11)
-		damage = max(damage + (damage * ((used_str - 10) * 0.3)), 1)
+		var/bonus = 0
+
+		if(used_str <= 14)
+			// Normal scaling: +20% per point over 10
+			bonus = (used_str - 10) * 0.2
+		else
+			// Diminishing returns after 14
+			// Start with the full +0.8 from 14 STR
+			bonus = 0.8
+			var/extra = used_str - 14
+			// Each point beyond 14 gives a smaller bonus than the last:
+			// e.g., +0.1, +0.075, +0.05625, etc.
+			var/next_bonus = 0.1
+			for(var/i = 1, i <= extra, i++)
+				bonus += next_bonus
+				next_bonus *= 0.75 // reduces 25% each time
+		damage = max(damage + (damage * bonus), 1)
 
 	if(used_str <= 9)
 		damage = max(damage - (damage * ((10 - used_str) * 0.1)), 1)

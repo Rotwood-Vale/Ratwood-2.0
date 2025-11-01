@@ -1142,8 +1142,8 @@
 	nodismemsleeves = TRUE
 
 /obj/item/clothing/cloak/undivided
-	name = "undivided cloak"
-	desc = "The refuge of the TEN upon my back. A Undivided House, standing eternal against the encroaching darkness."
+	name = "see cloak"
+	desc = "A symbol of the See. The last daes are upon us, lamb. Do you yet cling to hope?"
 	icon_state = "seecloak"
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	alternate_worn_layer = CLOAK_BEHIND_LAYER

@@ -44,17 +44,16 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/loincloth
-	name = "loincloth"
+	name = "large loincloth (1 cloth)"
 	result = list(/obj/item/clothing/under/roguetown/loincloth)
 	reqs = list(/obj/item/natural/cloth = 1)
 	craftdiff = 0
 
-/datum/crafting_recipe/roguetown/sewing/brownloincloth
-	name = "brown loincloth"
-	result = list(/obj/item/clothing/under/roguetown/loincloth/brown)
-	reqs = list(/obj/item/natural/cloth = 1)
+/datum/crafting_recipe/roguetown/sewing/loinclothadjust
+	name = "Adjust large loincloth to be tighter (underwear)"
+	result = list(/obj/item/undies/loinclothunder)
+	reqs = list(/obj/item/clothing/under/roguetown/loincloth = 1)
 	craftdiff = 0
-
 
 /datum/crafting_recipe/roguetown/sewing/linedanklet
 	name = "cloth lined anklet"

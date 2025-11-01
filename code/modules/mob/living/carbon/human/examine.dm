@@ -22,7 +22,7 @@
 	var/observer_privilege = isobserver(user)
 	var/t_He = p_they(TRUE)
 	var/t_his = p_their()
-//	var/t_him = p_them()
+	var/t_him = p_them()
 	var/t_has = p_have()
 	var/t_is = p_are()
 	var/obscure_name = FALSE
@@ -903,6 +903,29 @@
 
 	for(var/line in lines)
 		. += span_info(line)
+
+	// for underwears that don't cover from the rear, genital descriptions are still shown
+	if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN) && src.underwear)
+		//separate these conditions to not throw an error when no underwear is worn at all
+		if(user.InCone(src, turn(src.dir, 180)) && !src.underwear.covers_rear)
+			var/list/descriptors = list()
+			//only populate the descriptors for genitals you have
+			if(src.getorganslot(ORGAN_SLOT_PENIS))
+				descriptors += /datum/mob_descriptor/penis
+			if(src.getorganslot(ORGAN_SLOT_VAGINA))
+				descriptors += /datum/mob_descriptor/vagina
+			if(src.getorganslot(ORGAN_SLOT_TESTICLES))
+				descriptors += /datum/mob_descriptor/testicles
+			. += span_info("[t_his] underwear doesn't cover [t_him] from behind.")
+			//male genitalia line
+			var/malegen = build_coalesce_description(descriptors, src, list(MOB_DESCRIPTOR_SLOT_PENIS, MOB_DESCRIPTOR_SLOT_TESTICLES), "%THEY% %DESC1%, and %DESC2%.")
+			if(malegen)
+				. += span_info(malegen)
+			//female genitalia line
+			var/femgen = build_coalesce_description(descriptors, src, list(MOB_DESCRIPTOR_SLOT_VAGINA), "%THEY% %DESC1%.")
+			if(femgen)
+				. += span_info(femgen)
+
 
 	var/trait_exam = common_trait_examine()
 	if(!isnull(trait_exam))

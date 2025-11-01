@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/species/pref_species = new /datum/species/human/northern()	//Mutant race
 	var/static/datum/species/default_species = new /datum/species/human/northern()
 	var/datum/patron/selected_patron
-	var/static/datum/patron/default_patron = /datum/patron/divine/undivided
+	var/static/datum/patron/default_patron = /datum/patron/divine/astrata
 	var/list/features = MANDATORY_FEATURE_LIST
 	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = FALSE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
 	var/list/friendlyGenders = list("male" = "masculine", "female" = "feminine")
@@ -135,6 +135,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/masked_examine = FALSE
 	var/mute_animal_emotes = FALSE
 	var/autoconsume = FALSE
+	var/runmode = FALSE
 
 	var/lastclass
 
@@ -193,6 +194,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/loadout_item/loadout
 	var/datum/loadout_item/loadout2
 	var/datum/loadout_item/loadout3
+
+	var/loadout_1_hex
+	var/loadout_2_hex
+	var/loadout_3_hex
 
 	var/flavortext
 	var/flavortext_display
@@ -523,11 +528,23 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<br><b>OOC Extra:</b> <a href='?_src_=prefs;preference=ooc_extra;task=input'>Change</a>"
 			dat += "<br><a href='?_src_=prefs;preference=ooc_preview;task=input'><b>Preview Examine</b></a>"
 
-			dat += "<br><b>Loadout Item I:</b> <a href='?_src_=prefs;preference=loadout_item;task=input'>[loadout ? loadout.name : "None"]</a>"
-
-			dat += "<br><b>Loadout Item II:</b> <a href='?_src_=prefs;preference=loadout_item2;task=input'>[loadout2 ? loadout2.name : "None"]</a>"
+			dat += "<br><b>Loadout Item I:</b> <a href='?_src_=prefs;preference=loadout_item;task=input'>[loadout ? loadout.name : "None"] </a>"
+			if (loadout_1_hex)
+				dat += "<a href='?_src_=prefs;preference=loadout1hex;task=input'> <span style='border: 1px solid #161616; background-color: [loadout_1_hex ? loadout_1_hex : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>"
+			else
+				dat += "<a href='?_src_=prefs;preference=loadout1hex;task=input'>(C)</a>"
+				
+			dat += "<br><b>Loadout Item II:</b> <a href='?_src_=prefs;preference=loadout_item2;task=input'>[loadout2 ? loadout2.name : "None"] </a>"
+			if (loadout_2_hex)
+				dat += "<a href='?_src_=prefs;preference=loadout2hex;task=input'> <span style='border: 1px solid #161616; background-color: [loadout_2_hex ? loadout_2_hex : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>"
+			else
+				dat += "<a href='?_src_=prefs;preference=loadout2hex;task=input'>(C)</a>"
 
 			dat += "<br><b>Loadout Item III:</b> <a href='?_src_=prefs;preference=loadout_item3;task=input'>[loadout3 ? loadout3.name : "None"]</a>"
+			if (loadout_3_hex)
+				dat += "<a href='?_src_=prefs;preference=loadout3hex;task=input'><span style='border: 1px solid #161616; background-color: [loadout_3_hex ? loadout_3_hex : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>"
+			else
+				dat += "<a href='?_src_=prefs;preference=loadout3hex;task=input'>(C)</a>"
 			dat += "</td>"
 
 			dat += "</tr></table>"
@@ -1621,6 +1638,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/datum/patron/patron = GLOB.patronlist[path]
 						if(!patron.name)
 							continue
+						if(patron.disabled_patron)
+							continue
 						patrons_named[patron.name] = patron
 					var/datum/faith/current_faith = GLOB.faithlist[selected_patron?.associated_faith] || GLOB.faithlist[initial(default_patron.associated_faith)]
 					var/god_input = input(user, "Choose your character's patron god", "[current_faith.name]") as null|anything in patrons_named
@@ -2021,6 +2040,34 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							to_chat(user, "<font color='yellow'><b>[loadout3.name]</b></font>")
 							if(loadout3.desc)
 								to_chat(user, "[loadout3.desc]")
+				if("loadout1hex")
+					var/choice = input(user, "Choose a color.", "Loadout Item One Colour") as null|anything in colorlist
+					if (choice && colorlist[choice])
+						loadout_1_hex = colorlist[choice]
+						if (loadout)
+							to_chat(user, "The colour for your [loadout::name] has been set to <b>[choice]</b>.")
+					else
+						loadout_1_hex = null
+						to_chat(user, "The colour for your <b>first</b> loadout item has been cleared.")
+				if("loadout2hex")
+					var/choice = input(user, "Choose a color.", "Loadout Item Two Colour") as null|anything in colorlist
+					if (choice && colorlist[choice])
+						loadout_2_hex = colorlist[choice]
+						if (loadout2)
+							to_chat(user, "The colour for your [loadout2::name] has been set to <b>[choice]</b>.")
+					else
+						loadout_2_hex = null
+						to_chat(user, "The colour for your <b>second</b> loadout item has been cleared.")
+				if("loadout3hex")
+					var/choice = input(user, "Choose a color.", "Loadout Item Three Colour") as null|anything in colorlist
+					if (choice && colorlist[choice])
+						loadout_3_hex = colorlist[choice]
+						if (loadout3)
+							to_chat(user, "The colour for your [loadout3::name] has been set to <b>[choice]</b>.")
+					else
+						loadout_3_hex = null
+						to_chat(user, "The colour for your <b>third</b> loadout item has been cleared.")
+								
 				if("species")
 					var/list/species = list()
 					for(var/A in GLOB.roundstart_races)
@@ -2536,6 +2583,16 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	ShowChoices(user)
 	return 1
+	
+/datum/preferences/proc/resolve_loadout_to_color(item_path)
+	if (loadout && (item_path == loadout.path) && loadout_1_hex)
+		return loadout_1_hex
+	if (loadout2 && (item_path == loadout2.path) && loadout_2_hex)
+		return loadout_2_hex
+	if (loadout3 && (item_path == loadout3.path) && loadout_3_hex)
+		return loadout_3_hex
+
+	return FALSE
 
 
 

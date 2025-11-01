@@ -2,35 +2,28 @@
 	name = null
 	associated_faith = /datum/faith/divine
 
+//What're you? A lunatic. That's all you've ever been.
+//No miracles. No care. Suffer, as the Ten do.
 /datum/patron/divine/undivided
 	name = "Undivided"
-	domain = "The Sun, the Moon, Earth, Justice, Freedom, the Seas, Creation, Inspiration, Death, Decay, Love, Healing, and Life."
-	desc = "A United Pantheon, Stalwart against the Darkness. The Ten grant lessons and boons to mortals. The primary form of worship being a generalist approach to worshipping all Ten, and taking lessons from all. This is the primary theology of the Grenzelhoft Holy See."
-	worshippers = "Holy See Clergymen. Pragmatists of the Ten."
-	mob_traits = list(TRAIT_UNDIVIDED)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI, // ONLY Lower miracles of other lists. A much more varied utility miracle list, and a much wider selection. Also, our generic miracles(Lesser heal + Divine blast for acolytes) are better. But no specialization makes a lower level list. We're going to exclude Abyssor.
-					/obj/effect/proc_holder/spell/self/astrata_gaze				= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/darkvision/miracle	= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/bless_food            = CLERIC_T1,
-					/obj/effect/proc_holder/spell/self/divine_strike			= CLERIC_T2,
-					/obj/effect/proc_holder/spell/targeted/blesscrop			= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/avert					= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/infestation			= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/mockery				= CLERIC_T3, // you'll have to be a real xylix templar to get this pretty decent combat debuff, sorry.
-					/obj/effect/proc_holder/spell/invoked/conjure_tool			= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/wound_heal			= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/resurrect/undivided	= CLERIC_T4
-	)
+	domain = "Absolutely nothing."
+	desc = "A misguided attempt, of aeons past, to worship all Ten of the Pantheon. The council did not care for this. To split one's faith is to split their mind. \
+	As such, those who'd adhered to this doctrine have long since gone mad. Or, perhaps, have faith in a world that has since left them behind."
+	worshippers = "Lunatics."
 	confess_lines = list(
-		"THE HOLY DECAGRAM SHALL SHIELD MY SOUL!",
-		"I SERVE THE PANTHEON RESPLENDENT!",
-		"THE TEN ETERNAL, FOREVERMORE!",
+		"THE TEN SHALL SAVE ME, I KNOW IT!",
+		"I DREAM OF A BETTER WORLD!",
+		"FORGIVE ME!",
 	)
-	storyteller = /datum/storyteller/astrata // no unique storyteller for this one, since its so broad. No real reason to have a unique storyteller - Undivided contributes to ecah of the Ten's follower count.
+	storyteller = null
+	disabled_patron = TRUE//Another selection, m'lord.
 
+//Under no circumstance do we care.
+/datum/patron/divine/undivided/hear_prayer(mob/living/follower)
+	to_chat(follower, span_danger("The Ten have no pity for once such as you."))
+	return FALSE//Borderline apostasy.
 
+//End of absurdity. Start of normalcy.
 /datum/patron/divine/astrata
 	name = "Astrata"
 	domain = "The Day, The Sun, Order"
@@ -299,21 +292,6 @@
 /////////////////////////////////
 // Does God Hear Your Prayer ? //
 /////////////////////////////////
-
-/datum/patron/divine/undivided/can_pray(mob/living/follower)
-	. = ..()
-	// Undivided - More restricted, needs to be within range of a pantheon cross or the church itself.
-	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
-		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("That defiled cross interupts my prayers!"))
-			return FALSE
-		return TRUE
-	// Allows prayer in the church
-	if(istype(get_area(follower), /area/rogue/indoors/town/church))
-		return TRUE
-
-
-
 // Astrata - In daylight, church, cross, or ritual chalk.
 /datum/patron/divine/astrata/can_pray(mob/living/follower)
 	. = ..()

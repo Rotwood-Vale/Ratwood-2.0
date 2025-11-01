@@ -24,9 +24,9 @@
 	beltr = /obj/item/rogueweapon/scabbard/sword/kazengun/steel
 	neck = /obj/item/clothing/neck/roguetown/leather //minimal defense
 	beltl = /obj/item/rogueweapon/sword/sabre/mulyeog/rumahench
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
+	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
 	cloak = /obj/item/clothing/cloak/eastcloak1
-	armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
+	armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
 	shoes = /obj/item/clothing/shoes/roguetown/armor/rumaclan
 	gloves = /obj/item/clothing/gloves/roguetown/eastgloves2
@@ -34,6 +34,8 @@
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary,
 		/obj/item/flashlight/flare/torch/lantern,
+		/obj/item/rogueweapon/huntingknife/idagger/navaja,
+		/obj/item/storage/belt/rogue/pouch/coins/poor,
 		)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
@@ -47,8 +49,6 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 	H.grant_language(/datum/language/kazengunese)
 	H.merctype = 9
-	if(should_wear_masc_clothes(H))
-		armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
 
 /datum/advclass/mercenary/rumaclan/sasu
 	name = "Ruma Clan Sasu"

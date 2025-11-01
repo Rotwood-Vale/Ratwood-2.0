@@ -298,15 +298,16 @@
 	desc = "The workhorse of the Holy See. Blades like this have drawn blood against the  old Infidels and the modern Inhumen heretics alike for centuries."
 	icon_state = "churchsword"
 
-/obj/item/rogueweapon/sword/long/undivided
-	name = "decablade"
+/obj/item/rogueweapon/sword/long/holysee_lesser
+	name = "eclipsum longsword"//Is the name similar to the 'eclipsum sword'? Yeah. Almost identical. Still better than decablade.
 	desc = "With a drop of holy Eclipsum, doth the blade rise. Gilded, gleaming, radiant heat, warm my soul, immolate my enemies."
 	icon_state = "eclipsum"
 	sheathe_icon = "eclipsum"
 	force = 28
 	force_wielded = 33
+	max_integrity = 200
 
-/obj/item/rogueweapon/sword/long/undivided/getonmobprop(tag)
+/obj/item/rogueweapon/sword/long/holysee_lesser/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -726,7 +727,7 @@
 
 /obj/item/rogueweapon/sword/short/psy
 	name = "psydonian shortsword"
-	desc = "Otavan smiths worked with Grenzelhoftian artificers, and an esoteric blade was born: a blade with an unique design, dismissing a crossguard in favor of a hollow beak to hook and draw harm away from its user. Short in length, yet lethally light in weight."
+	desc = "Despite its shattered blade, this former-longsword finds new purpose and renewed lethality as something shorter and quicker and no less deadly. Like He, it perseveres, no matter what."
 	force = 19
 	icon_state = "psyswordshort"
 	sheathe_icon = "psyswordshort"
@@ -1332,6 +1333,11 @@
 	smeltresult = /obj/item/ingot/silver
 	smelt_bar_num = 2
 	max_integrity = 999
+
+/obj/item/rogueweapon/sword/long/holysee/master
+	name = "ancient eclipsum sword"
+	desc = "An ancient relic of the See. Perhaps not all is lost."
+	icon_state = "seemasterblade"
 
 /obj/item/rogueweapon/sword/long/kriegmesser
 	name = "kriegsmesser"

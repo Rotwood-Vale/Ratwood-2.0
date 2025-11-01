@@ -328,10 +328,10 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
-		
+
 /obj/item/clothing/neck/roguetown/fencerguard/Initialize()
-	. = ..()		
-	update_icon()		
+	. = ..()
+	update_icon()
 
 /obj/item/clothing/neck/roguetown/gorget/forlorncollar
 	name = "vreccale"
@@ -424,8 +424,9 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/special/magicarc)
 
 /obj/item/clothing/neck/roguetown/psicross/undivided
-	name = "amulet of Ten"
-	desc = "The Ten eternal, strength in unity. Stalwart for centuries against the darkness."
+	name = "see amulet"
+	desc = "An amulet, typically worn by the Holy See's own influential figures. Stalwart for centuries against the darkness. \
+	Both a mark of station and grace."
 	icon_state = "undivided"
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
 
@@ -442,6 +443,11 @@
 /obj/item/clothing/neck/roguetown/psicross/astrata
 	name = "amulet of Astrata"
 	desc = "As sure as the sun rises, tomorrow will come."
+	icon_state = "astrata"
+
+/obj/item/clothing/neck/roguetown/psicross/silver/astrata
+	name = "imbued amulet of Astrata"
+	desc = "Similar to a normal amulet of Astrata. This one is blessed and made of silver. A queen does not bargain; she does not relent. Neither shall her followers - least of all the members of her clergy - for with PSYDON gone, Astrata bears the burden of His lineage. All of creation is within her scope, and so too is all of the realm within yours. Stay the course, lest she turn her gaze and everything falls to the scourge of heresy."
 	icon_state = "astrata"
 
 /obj/item/clothing/neck/roguetown/psicross/noc

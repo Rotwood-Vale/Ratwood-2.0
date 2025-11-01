@@ -105,6 +105,11 @@
 		return "braies_f"
 	return "braies"
 
+/datum/sprite_accessory/underwear/loinclothunder
+	name = "Small Loincloth"
+	icon_state = "loinclothunder"
+	underwear_type = /obj/item/undies/loinclothunder
+
 /datum/sprite_accessory/legwear
 	abstract_type = /datum/sprite_accessory/legwear
 	icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/stockings.dmi'

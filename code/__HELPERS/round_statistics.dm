@@ -52,6 +52,12 @@
 #define STATS_LUX_REVIVALS "lux_revivals"
 #define STATS_DODGES "dodges_made"
 
+// Economic Statistics
+#define STATS_MAMMONS_HELD "mammons_held"
+#define STATS_MAMMONS_DEPOSITED "mammons_deposited"
+#define STATS_MAMMONS_WITHDRAWN "mammons_withdrawn"
+#define STATS_STARTING_TREASURY "starting_treasury"
+
 // Influence related statistics
 
 //Psydon
@@ -370,6 +376,15 @@ GLOBAL_LIST_INIT(featured_stats, list(
 		"entries" = list()
 	),
 ))
+
+/// Increment a round statistic by a given amount
+/proc/record_round_statistic(name, amount = 1)
+	if(SSticker.current_state == GAME_STATE_FINISHED)
+		return
+	if(!name || isnull(GLOB.azure_round_stats[name]))
+		return
+
+	GLOB.azure_round_stats[name] += amount
 
 /proc/format_top_ten(stat_category)
 	var/list/stat_data = GLOB.featured_stats[stat_category]

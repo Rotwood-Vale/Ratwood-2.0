@@ -106,6 +106,16 @@
 	speak_emote = list("chitters")
 	emote_hear = list("chitters")
 
+/mob/living/simple_animal/pet/cat/rogue/rat
+	name = "Boris"
+	desc = "Sated on lifetimes of the Keep's grain, there is simply no longer any point in slaying this beast. For it has already won."
+	icon = 'icons/roguetown/mob/monster/bigrat.dmi'
+	icon_state = "rat"
+	icon_living = "rat"
+	icon_dead = "rat1"
+	speak_emote = list("squeaks")
+	emote_hear = list("squeaks")
+
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = ""

@@ -531,17 +531,7 @@
 	..()
 
 /obj/structure/fluff/clock/attack_right(mob/user)
-	if(user.mind && isliving(user))
-		if(user.mind.special_items && user.mind.special_items.len)
-			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
-			if(item)
-				if(user.Adjacent(src))
-					if(user.mind.special_items[item])
-						var/path2item = user.mind.special_items[item]
-						user.mind.special_items -= item
-						var/obj/item/I = new path2item(user.loc)
-						user.put_in_hands(I)
-			return
+	handle_special_items_retrieval(user, src)
 
 /obj/structure/fluff/clock/examine(mob/user)
 	. = ..()
@@ -798,17 +788,7 @@
 	. = ..()
 
 /obj/structure/fluff/statue/attack_right(mob/user)
-	if(user.mind && isliving(user))
-		if(user.mind.special_items && user.mind.special_items.len)
-			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
-			if(item)
-				if(user.Adjacent(src))
-					if(user.mind.special_items[item])
-						var/path2item = user.mind.special_items[item]
-						user.mind.special_items -= item
-						var/obj/item/I = new path2item(user.loc)
-						user.put_in_hands(I)
-			return
+	handle_special_items_retrieval(user, src)
 
 
 /obj/structure/fluff/statue/CanPass(atom/movable/mover, turf/target)
@@ -1088,7 +1068,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	layer = BELOW_MOB_LAYER
 	max_integrity = 100
-	sellprice = 40
 	var/chance2hear = 30
 	buckleverb = "crucifie"
 	can_buckle = 1
@@ -1219,9 +1198,6 @@
 							var/surname = input(user, "Enter a surname for the couple:", "Marriage Ceremony") as text|null
 							if(!surname || !length(trim(surname)))
 								surname = thegroom.dna.species.random_surname()
-							// Ensure leading space for surname
-							if(!findtext(surname, " "))
-								surname = " [surname]"
 							// Assign surname to groom
 							var/list/groom_name_parts = splittext(thegroom.real_name, " ")
 							var/groom_first_name = groom_name_parts[1]

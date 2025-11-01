@@ -31,6 +31,14 @@
 	droning_sound_night = 'sound/music/area/forestnight.ogg'
 	threat_region = THREAT_REGION_OUTER_GROVE
 
+/area/rogue/indoors/shelter/druidgrove
+	name = "Druid's Grove"
+	icon_state = "druidgrove"
+	droning_sound = 'sound/music/area/druid.ogg'
+	droning_sound_dusk = null
+	threat_region = THREAT_REGION_OUTER_GROVE
+	ambush_times = null
+
 
 /area/rogue/outdoors/woods/north
 	name = "Rotwood Vale - North"

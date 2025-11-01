@@ -134,16 +134,18 @@
 	traits_applied = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_GRENZEL_PRIEST)
 	subclass_stats = list(
-		STATKEY_STR = -1,
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
 		STATKEY_SPD = -1,
+		STATKEY_STR = -1,
 	)
 
 /datum/outfit/job/roguetown/grenzel/priest/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.set_patron(/datum/patron/divine/undivided)
-	neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+	if (!(istype(H.patron, /datum/patron/divine/astrata)))
+		to_chat(H, span_warning("I've been blessed by Astrata - She guides my way, as I guide Her flock."))
+		H.set_patron(/datum/patron/divine/astrata)
+	neck = /obj/item/clothing/neck/roguetown/psicross/undivided
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
 	pants = /obj/item/clothing/under/roguetown/tights/black
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
@@ -155,18 +157,19 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/needle/pestra = 1,
+		/obj/item/natural/worms/leech/cheele = 1,
+		/obj/item/ritechalk = 1,
 	)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/farming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/magic/holy, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/magic/holy, 4, TRUE)
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)

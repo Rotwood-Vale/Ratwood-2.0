@@ -45,7 +45,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					to_chat(C, "<span class='notice'>A fine drink!</span>")
 					C.emote("hum")
 				C.adjustBruteLoss(-0.2)
-				C.adjustBruteLoss(-0.2)
+				C.adjustFireLoss(-0.2)
 //		if(boozepwr > 0)
 //			var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 //			if (istype(L))

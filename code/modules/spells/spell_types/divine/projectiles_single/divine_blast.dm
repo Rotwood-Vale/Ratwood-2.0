@@ -99,8 +99,6 @@
 		if (ishuman(firer))
 			caster = firer
 			switch(caster.patron.type)
-				if(/datum/patron/divine/undivided)
-					damage += 15 // just more raw damage. As mentioned in UNDIVIDED. Our generics are better as a trade off of not having higher tier uniques.
 				if(/datum/patron/divine/astrata)
 					H.adjust_fire_stacks(2)
 					H.IgniteMob()
@@ -124,7 +122,7 @@
 					H.blur_eyes(10)
 				if(/datum/patron/divine/noc)
 					H.visible_message(span_warning("Moonlight engulfs [H]"), span_warning("Moonlight engulfs me!"))
-					for(var/obj/O in range(0, H))	
+					for(var/obj/O in range(0, H))
 						O.extinguish()
 					for(var/mob/M in range(0, H)) // extinguish lights of target(zizo snuff pretty much but range 0 always)
 						for(var/obj/O in M.contents)
