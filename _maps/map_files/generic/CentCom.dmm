@@ -2399,7 +2399,7 @@
 /area/rogue/indoors/banditcamp)
 "nS" = (
 /obj/item/rogueweapon/pick,
-/turf/open/floor/rogue/naturalstone,
+/turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave/inhumen)
 "nW" = (
 /obj/structure/vine,
@@ -3733,7 +3733,7 @@
 /obj/structure/pillory{
 	lockid = "inhumen"
 	},
-/turf/open/floor/rogue/dirt,
+/turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave/inhumen)
 "zQ" = (
 /turf/closed/wall/mineral/rogue/tent{
@@ -4329,8 +4329,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inhumen)
 "Fs" = (
-/obj/machinery/light/rogue/wallfire/candle,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/mineral/rogue/stone/window/unbreakable,
 /area/rogue/indoors/ravoxarena)
 "Fu" = (
 /obj/structure/bed/rogue/shit,
@@ -5156,6 +5155,14 @@
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/inhumen)
+"Oj" = (
+/obj/effect/wisp/prestidigitation{
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/water/pond,
+/area/rogue/indoors/ravoxarena)
 "Op" = (
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
@@ -5663,8 +5670,12 @@
 	},
 /area/rogue/under/cave/inhumen)
 "TT" = (
-/obj/machinery/light/rogue/wallfire/candle,
-/turf/closed,
+/obj/effect/wisp/prestidigitation{
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/floor/rogue/underworld/space/sparkle_quiet,
 /area/rogue)
 "TU" = (
 /turf/open/floor/rogue/grassyel,
@@ -6159,9 +6170,8 @@
 /turf/open/water/pond,
 /area/rogue/indoors/ravoxarena)
 "Yc" = (
-/obj/machinery/light/rogue/wallfire/candle,
-/turf/open/floor/rogue/blocks,
-/area/rogue/indoors/ravoxarena)
+/turf/open/floor/rogue/underworld/space/sparkle_quiet,
+/area/rogue)
 "Yg" = (
 /obj/machinery/light/rogue/torchholder/l,
 /turf/open/floor/rogue/grasscold,
@@ -6369,6 +6379,10 @@
 /obj/item/roguecoin/gold/pile,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/banditcamp)
+"ZG" = (
+/obj/machinery/light/rogue/hearth,
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/cave/inhumen)
 "ZH" = (
 /obj/structure/healingfountain,
 /turf/open/floor/rogue/blocks/stonered,
@@ -18105,7 +18119,7 @@ XV
 XV
 XV
 nW
-Jc
+Ch
 Jc
 XV
 XV
@@ -18366,8 +18380,8 @@ uJ
 uJ
 xm
 xm
-Jc
-Jc
+Ch
+Ch
 mD
 XV
 XV
@@ -18493,11 +18507,11 @@ XV
 XV
 uJ
 uJ
-uJ
+nA
 uf
 xm
 Ch
-Jc
+Ch
 Jc
 XV
 XV
@@ -18570,9 +18584,9 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
-rQ
+Yc
+Yc
+Yc
 rQ
 rQ
 rQ
@@ -18622,13 +18636,13 @@ BC
 wN
 XV
 uJ
-uJ
+xm
 xm
 xm
 Ch
-Jc
-Jc
-Jc
+xm
+Ch
+Ch
 Iz
 XV
 wN
@@ -18699,11 +18713,11 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
-rQ
-rQ
-rQ
+Yc
+Yc
+TT
+Yc
+Yc
 rQ
 rQ
 rQ
@@ -18758,7 +18772,7 @@ Jc
 Jc
 Jc
 Jc
-Jc
+Ch
 Jc
 XV
 wN
@@ -18829,13 +18843,13 @@ rQ
 rQ
 rQ
 iE
-Fs
 iE
 iE
 Fs
 iE
 iE
-TT
+iE
+rQ
 rQ
 rQ
 rQ
@@ -18957,7 +18971,7 @@ rQ
 rQ
 rQ
 rQ
-rQ
+Yc
 iE
 rz
 va
@@ -18965,7 +18979,7 @@ va
 va
 va
 iE
-rQ
+Yc
 rQ
 rQ
 rQ
@@ -19086,8 +19100,8 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
+Yc
+Yc
 iE
 va
 iE
@@ -19095,8 +19109,8 @@ va
 iE
 va
 iE
-rQ
-rQ
+Yc
+Yc
 rQ
 rQ
 rQ
@@ -19216,8 +19230,8 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
+Yc
+Yc
 iE
 va
 rH
@@ -19225,8 +19239,8 @@ XX
 rH
 va
 iE
-rQ
-rQ
+Yc
+Yc
 rQ
 rQ
 rQ
@@ -19346,17 +19360,17 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
-iE
 Yc
+TT
+Fs
+va
 XX
-XX
+Oj
 XX
 va
-iE
+Fs
 TT
-rQ
+Yc
 rQ
 rQ
 rQ
@@ -19476,8 +19490,8 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
+Yc
+Yc
 iE
 va
 gX
@@ -19485,8 +19499,8 @@ XX
 gX
 va
 iE
-rQ
-rQ
+Yc
+Yc
 rQ
 rQ
 rQ
@@ -19539,7 +19553,7 @@ Jc
 om
 xm
 zN
-xm
+Ch
 nW
 wN
 wN
@@ -19606,8 +19620,8 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
+Yc
+Yc
 iE
 va
 iE
@@ -19615,8 +19629,8 @@ va
 iE
 va
 iE
-rQ
-rQ
+Yc
+Yc
 rQ
 rQ
 rQ
@@ -19668,7 +19682,7 @@ Jc
 Jc
 xm
 zN
-xm
+Ch
 xm
 wN
 wN
@@ -19737,7 +19751,7 @@ rQ
 rQ
 rQ
 rQ
-rQ
+Yc
 iE
 va
 va
@@ -19745,7 +19759,7 @@ va
 va
 lo
 iE
-rQ
+Yc
 rQ
 rQ
 rQ
@@ -19796,8 +19810,8 @@ FH
 lE
 Jc
 Jc
-xm
-xm
+Ch
+Ch
 xm
 wN
 wN
@@ -19869,13 +19883,13 @@ rQ
 rQ
 rQ
 iE
-Fs
 iE
 iE
 Fs
 iE
 iE
-TT
+iE
+rQ
 rQ
 rQ
 rQ
@@ -19926,8 +19940,8 @@ tK
 Jc
 Jc
 Jc
-xm
-xm
+Ch
+Ch
 wN
 wN
 XV
@@ -19999,11 +20013,11 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
-rQ
-rQ
-rQ
+Yc
+Yc
+TT
+Yc
+Yc
 rQ
 rQ
 rQ
@@ -20130,9 +20144,9 @@ rQ
 rQ
 rQ
 rQ
-rQ
-rQ
-rQ
+Yc
+Yc
+Yc
 rQ
 rQ
 rQ
@@ -20950,7 +20964,7 @@ WE
 ws
 lq
 qO
-qO
+ZG
 qO
 qr
 kX
