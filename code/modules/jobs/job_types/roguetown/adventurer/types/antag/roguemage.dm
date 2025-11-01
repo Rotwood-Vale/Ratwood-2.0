@@ -17,6 +17,11 @@
 		STATKEY_CON = 1,
 	)
 
+/datum/outfit/job/roguetown/bandit/roguemage/pre_equip(mob/living/carbon/human/H)
+	..()
+	if (!(istype(H.patron, /datum/patron/inhumen/zizo) || istype(H.patron, /datum/patron/inhumen/matthios) || istype(H.patron, /datum/patron/inhumen/graggar) || istype(H.patron, /datum/patron/inhumen/baotha)))
+		to_chat(H, span_warning("My former deity has abandoned me.. Matthios is my new master."))
+		H.set_patron(/datum/patron/inhumen/matthios)
 
 /datum/outfit/job/roguetown/bandit/roguemage/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -72,9 +77,3 @@
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
 		H.mind?.adjust_spellpoints(6)
-
-	if(!istype(H.patron, /datum/patron/inhumen/matthios))
-		var/inputty = input(H, "Would you like to change your patron to Matthios?", "The Transactor calls", "No") as anything in list("Yes", "No")
-		if(inputty == "Yes")
-			to_chat(H, span_warning("My former deity has abandoned me.. Matthios is my new master."))
-			H.set_patron(/datum/patron/inhumen/matthios)
