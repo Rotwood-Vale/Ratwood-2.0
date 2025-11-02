@@ -64,15 +64,12 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
 		/datum/customizer/organ/vagina/human_anthro,
+		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/ears/demihuman,
 		/datum/customizer/organ/horns/demihuman,
 		/datum/customizer/organ/tail/demihuman,
 		/datum/customizer/organ/snout/anthro,
 		/datum/customizer/organ/wings/anthro,
-		/datum/customizer/organ/penis/anthro,
-		/datum/customizer/organ/breasts/human,
-		/datum/customizer/organ/vagina/human_anthro,
-		/datum/customizer/organ/testicles/anthro,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,
@@ -118,7 +115,8 @@
 		"Rust" = CONSTRUCT_RUST,
 		"Obsidian" = CONSTRUCT_OBSIDIAN,
 		"Lapis" = CONSTRUCT_LAPIS,
-		"Basalt" = CONSTRUCT_BASALT
+		"Basalt" = CONSTRUCT_BASALT,
+		"Marble" = CONSTRUCT_MARBLE
 	)
 
 /datum/species/construct/metal/get_hairc_list()
