@@ -7,7 +7,7 @@
 	category_tags = list(CTAG_BANDIT)
 	maximum_possible_slots = 2 //Too many plate armoured fellas is scawy ...
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg' // big chungus gets the wall too
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_HEAVYARMOR, TRAIT_NOBLE, TRAIT_DEATHBYSNUSNU)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_DISGRACED_NOBLE, TRAIT_DEATHBYSNUSNU)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
@@ -56,13 +56,4 @@
 	H.adjust_skillrank(/datum/skill/misc/riding, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/butchering, 1, TRUE)
-	H.change_stat("strength", 2)
-	H.change_stat("willpower", 2)
-	H.change_stat("constitution", 3) //dark souls 3 dual greatshield moment
-	H.change_stat("intelligence", 1)
-	H.change_stat("speed", 1)
-	H.change_stat("fortune", 2)
-	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_DISGRACED_NOBLE, TRAIT_GENERIC) //hey buddy you hear about roleplaying
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
