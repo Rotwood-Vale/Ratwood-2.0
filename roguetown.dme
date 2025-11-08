@@ -2622,6 +2622,7 @@
 #include "modular_azurepeak\code\game\objects\items\spellbooks.dm"
 #include "modular_azurepeak\code\game\objects\items\surgery_bag.dm"
 #include "modular_azurepeak\code\game\objects\items\twstrap.dm"
+#include "modular_azurepeak\code\game\objects\items\bmbstrap.dm"
 #include "modular_azurepeak\code\game\objects\structures\fartravel.dm"
 #include "modular_azurepeak\code\game\objects\weapons\axes.dm"
 #include "modular_azurepeak\code\modules\clothing\rogueclothes\cloaks.dm"
