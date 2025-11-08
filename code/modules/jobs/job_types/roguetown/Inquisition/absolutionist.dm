@@ -26,7 +26,8 @@
 		TRAIT_SILVER_BLESSED,
 		TRAIT_STEELHEARTED,
 		TRAIT_INQUISITION,
-		TRAIT_OUTLANDER
+		TRAIT_OUTLANDER,
+		TRAIT_RITUALIST//Handles conversions, too, now.
 	)
 
 	job_stats = list(
@@ -86,6 +87,7 @@
 		/obj/item/needle = 1,
 		/obj/item/natural/worms/leech/cheele = 1,
 		/obj/item/roguekey/inquisition = 1,
+		/obj/item/ritechalk = 1,
 		)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_ABSOLVER, start_maxed = TRUE) // PSYDONIAN MIRACLE-WORKER. LUX-MERGING FREEK.
