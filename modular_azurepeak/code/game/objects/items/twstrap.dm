@@ -1,5 +1,5 @@
 /obj/item/twstrap
-	name = "bandolier"
+	name = "knife bandolier"
 	desc = ""
 	icon_state = "twstrap0"
 	item_state = "twstrap"
