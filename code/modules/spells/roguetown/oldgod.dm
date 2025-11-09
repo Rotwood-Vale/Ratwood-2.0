@@ -327,41 +327,65 @@
 		revert_cast()
 		return FALSE
 	
+	var/attempting_rez = TRUE
 	// Special case for dead targets
 	if(H.stat >= DEAD)
-		if(!H.check_revive(user))
-			revert_cast()
+		// Check if the target has a head, brain, and heart
+		var/obj/item/bodypart/head = H.get_bodypart("head")
+		var/obj/item/organ/brain/brain = H.getorganslot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/heart/heart = H.getorganslot(ORGAN_SLOT_HEART)
+		
+		if(head && brain && heart)
+			if(!H.mind)
+				to_chat(user, span_warning("You sense not the spark of PSYDON's gift left in this one..."))
+				attempting_rez = FALSE
+
+			if(HAS_TRAIT(H, TRAIT_NECRAS_VOW))
+				to_chat(user, "This one has pledged themselves whole. There's nothing to ABSOLVE.")
+				attempting_rez = FALSE
+
+			if(attempting_rez)
+				if (alert(user, "REACH OUT AND PULL?", "THERE'S NO LUX IN THERE", "YES", "NO") != "YES")	
+					attempting_rez = FALSE
+			
+			if (attempting_rez)
+				to_chat(user, span_warning("You attempt to revive [H] by ABSOLVING them!"))
+				// Dramatic effect
+				user.visible_message(span_danger("[user] grabs [H] by the wrists, attempting to ABSOLVE them!"))
+				if(alert(H, "They want to ABSOLVE you. Will you let them?", "ABSOLUTION", "I'll allow it", "I refuse") != "I'll allow it")
+					H.visible_message(span_notice("Nothing happens."))
+					return FALSE
+				// Create visual effects
+				H.apply_status_effect(/datum/status_effect/buff/psyvived)
+				// kill us if we're already devitalized, otherwise apply our special devitalization
+				if (user.has_status_effect(/datum/status_effect/debuff/psydon_devitalized))
+					user.say("MY LYFE FOR YOURS! LYVE, AS DOES HE!", forced = TRUE)
+					user.death()
+					user.visible_message(span_warning("A single silvery tear beads at the edge of [user]'s lifeless eyes as they slump to the ground."))
+				else
+					user.apply_status_effect(/datum/status_effect/debuff/psydon_devitalized)
+					user.visible_message(span_warning("Winding strands of silvery lux snake from [user]'s touch along [H]'s arm, sinking and writhing beneath their skin in fitful bursts!"))
+					to_chat(user, span_boldwarning("A whisper of emptiness settles beneath your heart as your overtaxed lux wanes concerningly low..."))
+				// Revive the target
+				H.revive(admin_revive = FALSE)
+				H.adjustOxyLoss(-H.getOxyLoss())
+				H.grab_ghost(force = TRUE) // even suicides
+				H.emote("breathgasp")
+				H.Jitter(100)
+				H.update_body()
+				record_round_statistic(STATS_LUX_REVIVALS)
+				ADD_TRAIT(H, TRAIT_IWASREVIVED, "[type]")
+				H.apply_status_effect(/datum/status_effect/buff/psyvived)
+				user.apply_status_effect(/datum/status_effect/buff/psyvived)
+				H.visible_message(span_notice("[H] is ABSOLVED!"), span_green("I awake from the void."))		
+				H.mind.remove_antag_datum(/datum/antagonist/zombie)
+				H.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
+				H.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
+				return TRUE
+		else
+			to_chat(user, span_warning("[H] is missing vital organs and cannot be revived!"))
+			revert_cast(user)
 			return FALSE
-		if(alert(user, "REACH OUT AND PULL?", "THERE'S NO LUX IN THERE", "YES", "NO") != "YES")	
-			revert_cast()
-			return FALSE
-		to_chat(user, span_warning("You attempt to revive [H] by ABSOLVING them!"))
-		// Dramatic effect
-		user.visible_message(span_danger("[user] grabs [H] by the wrists, attempting to ABSOLVE them!"))
-		if(alert(H, "They want to ABSOLVE you. Will you let them?", "ABSOLUTION", "I'll allow it", "I refuse") != "I'll allow it")
-			H.visible_message(span_notice("Nothing happens."))
-			return FALSE
-		// Create visual effects
-		H.apply_status_effect(/datum/status_effect/buff/psyvived)
-		// Kill the caster
-		user.say("MY LYFE FOR YOURS! LYVE, AS DOES HE!", forced = TRUE)
-		user.death()
-		// Revive the target
-		H.revive(full_heal = TRUE, admin_revive = FALSE)
-		H.adjustOxyLoss(-H.getOxyLoss())
-		H.grab_ghost(force = TRUE) // even suicides
-		H.emote("breathgasp")
-		H.Jitter(100)
-		H.update_body()
-		record_round_statistic(STATS_LUX_REVIVALS)
-		ADD_TRAIT(H, TRAIT_IWASREVIVED, "[type]")
-		H.apply_status_effect(/datum/status_effect/buff/psyvived)
-		user.apply_status_effect(/datum/status_effect/buff/psyvived)
-		H.visible_message(span_notice("[H] is ABSOLVED!"), span_green("I awake from the void."))		
-		H.mind.remove_antag_datum(/datum/antagonist/zombie)
-		H.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
-		H.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
-		return TRUE
 
 	// Transfer afflictions from the target to the caster
 
@@ -371,6 +395,11 @@
 	var/tox_transfer = H.getToxLoss()
 	var/oxy_transfer = H.getOxyLoss()
 	var/clone_transfer = H.getCloneLoss()
+
+	if (oxy_transfer >= 150)
+		if (alert(user, "THEY ARE ASHEN WITH STILLED BREATH. ABSOLUTION MAY INSTANTLY KILL YOU, LAMB. PROCEED?", "SELF-PRESERVATION", "YES", "NO") != "YES")
+			revert_cast()
+			return
 	
 	// Heal the target
 	H.adjustBruteLoss(-brute_transfer)
@@ -401,3 +430,14 @@
 	to_chat(H, span_notice("[user] absolves you of your injuries!"))
 	
 	return TRUE
+
+/datum/status_effect/debuff/psydon_devitalized
+	id = "revived"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/psydon_devitalized
+	effectedstats = list("constitution" = -5)
+	duration = 10 MINUTES 
+
+/atom/movable/screen/alert/status_effect/debuff/psydon_devitalized
+	name = "ABSOLUTION'S TOLL"
+	desc = "A cold chill settles by your heart. Taxing your lux further before you recover is sure to be your end..."
+	icon_state = "revived"
