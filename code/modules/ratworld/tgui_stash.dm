@@ -6,6 +6,7 @@
     var/last_refresh = 0
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 /// Try to choose the correct inventory icon sheet based on the item's type path
 /datum/ratworld/stash_session/proc/inventory_sheet_for_path(path_text)
     if(!istext(path_text))
@@ -40,6 +41,8 @@
         return 'icons/roguetown/items/valuable.dmi'
     return 'icons/roguetown/items/produce.dmi'
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 /datum/ratworld/stash_session/proc/refresh()
@@ -95,8 +98,12 @@
         // 2. Fallback instantiated type icon
         // For state: prefer explicit icon_state var; then item_state; then initial()
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         // Prefer a deterministic inventory sheet based on type path to avoid on-mob overlays
         var/final_icon = inventory_sheet_for_path(rec["path"]) || (istext(icon_file) ? icon_file : null)
+=======
+        var/final_icon = istext(icon_file) ? icon_file : null
+>>>>>>> Stashed changes
 =======
         var/final_icon = istext(icon_file) ? icon_file : null
 >>>>>>> Stashed changes
@@ -115,6 +122,7 @@
                     final_icon_state = tmp2.icon_state
                 qdel(tmp2)
         var/path_text = rec["path"]
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         // Dedicated preview fields: choose the best inventory icon + state (prefer item_state, then icon_state)
         var/preview_state = item_state || final_icon_state || "default"
@@ -135,14 +143,19 @@
             preview_scale = 3
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         out += list(list(
             "uid" = item_uid,
             "path" = "[path_text]",
             "icon" = final_icon,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             "preview_icon" = final_icon,
             "preview_state" = preview_state,
             "preview_scale" = preview_scale,
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
             "mob_overlay_icon" = mob_overlay_icon,
