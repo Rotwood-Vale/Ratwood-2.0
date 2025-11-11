@@ -42,6 +42,13 @@
 /obj/item/clothing/under/roguetown/tights/sailor
 	name = "sailor's pants"
 	icon_state = "sailorpants"
+	salvage_amount = 1
+
+/obj/item/clothing/under/roguetown/tights/puritan
+	name = "formal breeches"
+	icon_state = "monkpants"
+	item_state = "monkpants"
+	color = CLOTHING_BLACK
 
 /obj/item/clothing/under/roguetown/webs
 	name = "webbing"
@@ -51,6 +58,8 @@
 	item_state = "webs"
 	r_sleeve_status = SLEEVE_NOMOD
 	l_sleeve_status = SLEEVE_NOMOD
+	salvage_result = /obj/item/natural/silk
+	salvage_amount = 1
 
 /obj/item/clothing/under/roguetown/loincloth
 	name = "large loincloth"

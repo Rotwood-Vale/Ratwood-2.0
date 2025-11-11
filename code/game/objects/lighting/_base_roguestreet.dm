@@ -140,3 +140,9 @@
 	GLOB.streetlamp_list += src
 	update_icon()
 	. = ..()
+
+/obj/machinery/light/roguestreet/update_icon()
+	if(on)
+		icon_state = "[base_state]1"
+	else
+		icon_state = "[base_state]0"

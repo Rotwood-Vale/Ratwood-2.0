@@ -245,12 +245,12 @@
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/music, 3, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/sewing, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/farming, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/fishing, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/tanning, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)		// would make sense they probably know how to either stitch themselves or their masters - makes them more valuable, too. 
+		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)		// would make sense they probably know how to either stitch themselves or their masters - makes them more valuable, too.
 		H.change_stat("strength", -3)
 		H.change_stat("constitution", -2)
 		H.change_stat("willpower", 3) // they get whipped, they can endure some pain

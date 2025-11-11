@@ -79,11 +79,9 @@
 				if(prob(hardness))
 					dismantle_wall(0,1)
 		return
-
 	if(target == src)
 		dismantle_wall(1, 1)
 		return
-
 	var/ddist = max(0, devastation_range)
 	var/hdist = max(0, heavy_impact_range)
 	var/ldist = max(0, light_impact_range)
@@ -139,7 +137,7 @@
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	to_chat(user, span_notice("I push the wall but nothing happens!"))
+	feel_turf(user)
 	playsound(src, 'sound/blank.ogg', 25, TRUE)
 	add_fingerprint(user)
 

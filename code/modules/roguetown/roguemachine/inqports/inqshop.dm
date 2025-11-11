@@ -61,6 +61,7 @@
 	. = ..()
 	icon_state = "clothroll2"
 	amount = 10
+	grid_width = 64
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/medical/Initialize()
 	. = ..()
@@ -79,6 +80,11 @@
 	name = "2 Lengths of Chain"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/chains
 	marquescost = 6
+
+/datum/inqports/supplies/blessedbolts
+	name = "1 Quiver of Holy Water Bolts"
+	item_type = /obj/item/quiver/holybolts
+	marquescost = 2
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/chains/Initialize()
 	. = ..()
@@ -99,7 +105,7 @@
 /datum/inqports/supplies/lifebloodvials
 	name = "3 Vials of Strong Red"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/sredvials
-	maximum = 4
+	maximum = 1
 	marquescost = 10
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/sredvials/Initialize()
@@ -122,7 +128,7 @@
 /datum/inqports/supplies/strongbluevials
 	name = "3 Vials of Strong Blue"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials
-	maximum = 4
+	maximum = 1
 	marquescost = 16
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials/Initialize()

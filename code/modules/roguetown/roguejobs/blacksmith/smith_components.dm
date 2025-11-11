@@ -76,7 +76,7 @@
 
 	if(success)
 		if(needed_item)
-			to_chat(user, span_notice("The [parent] needs a [needed_item_text] to continue."))
+			to_chat(user, span_notice("\The [parent] needs a [needed_item_text] to continue."))
 
 		// Check if recipe is complete
 		if(progress >= current_recipe.max_progress && !needed_item)
@@ -91,7 +91,7 @@
 	needed_item_text = null
 	progress = 0 // Reset progress for next stage
 
-	to_chat(user, span_notice("You add [added_item] to [parent]."))
+	to_chat(user, span_notice("You add \the [added_item] to \the [parent]."))
 	qdel(added_item) // Consume the added item
 
 	return TRUE
@@ -227,6 +227,7 @@
 			modifier = 1.2
 		if(BLACKSMITH_LEVEL_LEGENDARY to BLACKSMITH_LEVEL_MAX)
 			modifier = 1.3
+			record_round_statistic(STATS_MASTERWORKS_FORGED)
 
 	if(!modifier)
 		return

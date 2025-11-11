@@ -25,7 +25,7 @@
 		AddSpell(new /obj/effect/proc_holder/spell/self/spiderfangs)
 		AddSpell(new /obj/effect/proc_holder/spell/self/createhoney)
 		AddSpell(new /obj/effect/proc_holder/spell/self/weaveweb)
-		real_name = "Beespider ([stored_mob.real_name])"
+		real_name = "beespider"
 		faction += "spiders" // It IS a spider
 
 // CAT SPECIES DATUM //
@@ -44,6 +44,7 @@
 		TRAIT_BREADY, //Ambusher
 		TRAIT_ORGAN_EATER,
 		TRAIT_PIERCEIMMUNE, //Prevents weapon dusting and caltrop effects when killed/stepping on shards, also 8 legs.
+		TRAIT_DODGEEXPERT,
 		TRAIT_LONGSTRIDER
 	)
 	inherent_biotypes = MOB_HUMANOID
@@ -121,7 +122,7 @@
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
-	icon = 'icons/roguetown/weapons/32.dmi'
+	icon = 'icons/roguetown/weapons/unarmed32.dmi'
 	max_blade_int = 400
 	max_integrity = 400
 	force = 25 //More than the volf, more fragile, hits slower

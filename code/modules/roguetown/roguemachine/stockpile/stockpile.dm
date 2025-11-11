@@ -105,6 +105,41 @@
 	popup.open()
 
 /obj/structure/roguemachine/stockpile/proc/attemptsell(obj/item/I, mob/H, message = TRUE, sound = TRUE)
+	if(istype(I, /obj/structure/handcart)) // Handle carts specially - sell their contents, leave the empty cart
+		var/obj/structure/handcart/cart = I
+		var/turf/cart_location = get_turf(cart)
+		var/list/cart_contents = cart.stuff_shit.Copy()
+		for(var/atom/movable/cart_content in cart_contents) // Process all items inside the cart first
+			if(isitem(cart_content))
+				attemptsell(cart_content, H, message, FALSE)
+
+		for(var/atom/movable/remaining_item in cart_contents) // Any items that weren't sold (still exist) go to the ground
+			if(!QDELETED(remaining_item))
+				remaining_item.forceMove(cart_location)
+		// Setting cart back to square 1
+		cart.stuff_shit = list()
+		cart.current_capacity = 0
+		cart.update_icon()
+		if(sound == TRUE)
+			playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+		return
+
+	if(istype(I, /obj/item/roguebin)) // Handle roguebins specially - sell their contents, leave the empty bin
+		var/obj/item/roguebin/bin = I
+		var/turf/bin_location = get_turf(bin)
+		var/datum/component/storage/STR = bin.GetComponent(/datum/component/storage)
+		if(STR)
+			var/list/bin_contents = STR.contents()
+			for(var/obj/item/bin_item in bin_contents) // Process all items inside the bin first
+				attemptsell(bin_item, H, message, FALSE)
+
+			for(var/obj/item/remaining_item in bin_contents) // Any items that weren't sold (still exist) go to the ground
+				if(!QDELETED(remaining_item))
+					STR.remove_from_storage(remaining_item, bin_location)
+		if(sound == TRUE)
+			playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+		return
+
 	for(var/datum/roguestock/R in SStreasury.stockpile_datums)
 		if(istype(I, /obj/item/natural/bundle))
 			var/obj/item/natural/bundle/B = I
@@ -123,7 +158,9 @@
 					var/amt = R.payout_price * B.amount
 					SStreasury.economic_output += R.export_price * B.amount
 					if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty") && message == TRUE)
-						say("No account found. Submit your fingers to a Nervelock for inspection.")
+						say("No account found. Submit your fingers to a Meister for inspection.")
+					else
+						record_round_statistic(STATS_STOCKPILE_EXPANSES, amt)
 			continue
 		// Bloc to replace old vault mechanics
 		else if(istype(I,R.item_type))
@@ -153,7 +190,9 @@
 			else if(amt)
 				SStreasury.economic_output += true_value
 				if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty") && message == TRUE)
-					say("No account found. Submit your fingers to a Nervelock for inspection.")
+					say("No account found. Submit your fingers to a Meister for inspection.")
+			record_round_statistic(STATS_STOCKPILE_EXPANSES, amt) // Unlike deposit, a treasure minting is equal to both expending and profiting at the same time
+			record_round_statistic(STATS_STOCKPILE_REVENUE, true_value)
 			return
 
 /obj/structure/roguemachine/stockpile/attackby(obj/item/P, mob/user, params)

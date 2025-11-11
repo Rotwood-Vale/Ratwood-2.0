@@ -156,6 +156,10 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
+/obj/item/roguegem/amethyst/naledi
+	name = "naledic amythortz"
+	desc = "A deep lavender crystal, crackling with magical energy. To a Disciple, it might simply be a keepsake from pilgrimages abroad: but to a Sojourner, it is the leyline to their arcyne-enchanted form of martial combat. </br>This gemstone can be applied to a yet-unfinished spelltome by those with arcyne potential, in order to recall more spells."
+
 /obj/item/roguegem/random
 	name = "random gem"
 	desc = "You shouldn't be seeing this."
@@ -215,7 +219,7 @@
 					M.adjust_fire_stacks(100)//You will burn. Horribly.
 					M.adjustFireLoss(250)//If you somehow put it out immediately, you still contend with this.
 					M.Paralyze(12 SECONDS, ignore_canstun = TRUE)//You lost the coin toss. Suffer the loss.
-					M.IgniteMob()
+					M.ignite_mob()
 					M.visible_message(span_deadsay("[src] explodes in a shower of arcyne fire and energy, violently engulfing [M]!"))
 					M.add_stress(/datum/stressevent/riddle_munch)//You still get the stress, even if you don't get the heal.
 				else//You won the toss, but you still lose. Because this is a waste of a riddle.

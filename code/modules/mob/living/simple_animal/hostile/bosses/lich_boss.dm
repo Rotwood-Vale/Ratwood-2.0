@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/boss/lich
-	name = "Lich"
-	desc = ""
+	name = "Archlich"
+	desc = "An incomprehensibly powerful necromancer, dressed in the papal garbs of a Rockhillian priest - a glimpse into what once was. The air around you crackles with unholy energy."
 	mob_biotypes = MOB_HUMANOID|MOB_UNDEAD
 	boss_abilities = list(/datum/action/boss/lich_summon_minions)
 	faction = list("lich")
@@ -24,8 +24,8 @@
 	base_intents = list(/datum/intent/simple/lich)
 	melee_damage_lower = 60
 	melee_damage_upper = 80
-	health = 5000
-	maxHealth = 5000
+	health = 6666
+	maxHealth = 6666 //Increased from 5000, to account for the new vulnerabilities to silver. Revert if it's too hard.
 	STASTR = 12
 	STAPER = 20
 	STAINT = 18
@@ -35,7 +35,11 @@
 	STALUC = 15
 	loot = list(/obj/effect/temp_visual/lich_dying)
 	projectiletype = /obj/projectile/magic
-	var/allowed_projectile_types = list(/obj/projectile/magic/lightning, /obj/projectile/magic/sickness, /obj/projectile/magic/arcane_barrage, /obj/projectile/magic/acidsplash)
+	var/allowed_projectile_types = list(/obj/projectile/magic/lightning,
+	/obj/projectile/magic/sickness,
+	/obj/projectile/magic/arcane_barrage,
+	/obj/projectile/magic/acidsplash,
+	/obj/projectile/magic/aoe/fireball/spitfire)
 	patron = /datum/patron/inhumen/zizo
 	footstep_type = FOOTSTEP_MOB_SHOE
 	stat_attack = UNCONSCIOUS
@@ -44,17 +48,15 @@
 	var/next_cast = 0
 	var/next_blink = 0
 	var/list/taunt = list("Witness my power!", "Die!", "Suffer!")
-	var/minions_to_spawn = 10
+	var/minions_to_spawn = 6
 	var/next_summon = 0
 	var/next_blaststrong = 0
 	var/mob_type
 	var/mob/new_mob
 	var/spawned_mobs = 0
 	var/list/minions = list(
-		/mob/living/simple_animal/hostile/rogue/skeleton/guard/shield/lich = 40,
-		/mob/living/simple_animal/hostile/rogue/skeleton/guard/xbow/lich = 30,
-		/mob/living/simple_animal/hostile/rogue/skeleton/guard/crypt_guard/lich = 20,
-		/mob/living/simple_animal/hostile/rogue/skeleton/guard/crypt_guard_spear/lich = 20)
+		/mob/living/carbon/human/species/skeleton/npc/mediumspread/lich = 60,
+	)
 
 /mob/living/simple_animal/hostile/boss/lich/Initialize()
 	projectiletype = /obj/projectile/bullet/reusable/deepone
@@ -68,7 +70,9 @@
 	blink.invocations += pick(taunt)
 	blink.invocation_type = "shout"
 	AddSpell(blink)
-	REMOVE_TRAIT(src, TRAIT_SIMPLE_WOUNDS, TRAIT_GENERIC)
+	//ADD_TRAIT(src, TRAIT_NOFIRE, TRAIT_GENERIC) //Testing vulnerability to the new silver changes. Un-// these if it becomes too easy.
+	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
+	//REMOVE_TRAIT(src, TRAIT_SIMPLE_WOUNDS, TRAIT_GENERIC) //Ditto.
 
 /mob/living/simple_animal/hostile/boss/lich/Shoot()
 	projectiletype = pick(allowed_projectile_types)
@@ -125,7 +129,6 @@
 
 /mob/living/simple_animal/hostile/boss/lich/proc/blast(set_angle)
 	var/turf/target_turf = get_turf(target)
-	newtonian_move(get_dir(target_turf, src))
 	var/angle_to_target = Get_Angle(src, target_turf)
 	if(isnum(set_angle))
 		angle_to_target = set_angle
@@ -146,7 +149,6 @@
 
 /mob/living/simple_animal/hostile/boss/lich/proc/blaststrong(set_angle)
 	var/turf/target_turf = get_turf(target)
-	newtonian_move(get_dir(target_turf, src))
 	var/angle_to_target = Get_Angle(src, target_turf)
 	if(isnum(set_angle))
 		angle_to_target = set_angle
@@ -243,7 +245,7 @@
 
 /obj/effect/temp_visual/lich_dying/Initialize()
 	. = ..()
-	visible_message(span_boldannounce("The Lich collapses into a pile of dust and bone, unholy energy dispersing into the air!"))
+	visible_message(span_boldannounce("The Archlich collapses into a pile of dust and bone, unholy energy dispersing into the air!"))
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Impossible!", null, list("colossus", "yell"))
 
 /obj/effect/temp_visual/lich_dying/Destroy()
@@ -362,7 +364,7 @@
 	H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 1, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 1, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 1, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/misc/sewing, 1, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 1, TRUE)
 
 	H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/maces, 3, TRUE)
@@ -422,8 +424,8 @@
 
 //Loot
 /obj/item/roguekey/mage/lich
-	name = "lich's key"
-	desc = "A strange key the Lich dropped."
+	name = "archlich's key"
+	desc = "A strange key the Archlich dropped."
 	icon_state = "eyekey"
 	lockid = "lich"
 

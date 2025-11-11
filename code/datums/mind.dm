@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 	var/memory
 
-	var/assigned_role
+	var/datum/job/assigned_role
 	var/special_role
 	var/list/restricted_roles = list()
 
@@ -58,6 +58,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/bolstertext = "Hold the line!!"
 	var/brotherhoodtext = "Stand proud, for the Brotherhood!!"
 	var/chargetext = "Chaaaaaarge!!"
+
+	var/mob/living/carbon/champion = null
+	var/mob/living/carbon/ward = null
+
 
 	var/linglink
 	var/datum/martial_art/martial_art
@@ -89,6 +93,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/list/known_people = list() //contains person, their job, and their voice color
 
 	var/list/notes = list() //RTD add notes button
+
+	var/active_quest = 0 //if you dont take any quest its 0. Max 2 quests for one player
 
 	var/lastrecipe
 
@@ -162,7 +168,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		if(H.dna && H.dna.species)
 			known_people[H.real_name]["FSPECIES"] = H.dna.species.name
 		known_people[H.real_name]["FAGE"] = H.age
-		if (ishuman(current))
+		if(ishuman(current))
 			var/mob/living/carbon/human/C = current
 			var/heretic_text = H.get_heretic_symbol(C)
 			if (heretic_text)
@@ -329,6 +335,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 // adjusts the amount of available spellpoints
 /datum/mind/proc/adjust_spellpoints(points)
 	spell_points += points
+	if(!has_spell(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation))
+		AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	check_learnspell() //check if we need to add or remove the learning spell
 
 /datum/mind/proc/set_death_time()
@@ -458,6 +466,20 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		recipient << browse(output,"window=memory")
 	else if(all_objectives.len || memory || personal_objectives.len)
 		to_chat(recipient, "<i>[output]</i>")
+
+/// output current targets to the player
+/datum/mind/proc/recall_targets(mob/recipient, window=1)
+	var/output = "<B>[recipient.real_name]'s Hitlist:</B><br>"
+	for(var/mob/living/carbon in GLOB.mob_living_list) // Iterate through all mobs in the world
+		if((carbon.real_name != recipient.real_name) && ((carbon.has_flaw(/datum/charflaw/hunted)) && (!istype(carbon, /mob/living/carbon/human/dummy))))//To be on the list they must be hunted, not be the user and not be a dummy (There is a dummy that has all vices for some reason)
+			output += "<br>[carbon.real_name]"
+			output += "<br>[carbon.real_name]"
+			if (carbon.job)
+				output += " - [carbon.job]"
+	output += "<br>Your creed is blood, your faith is steel. You will not rest until these souls are yours. Use the profane dagger to trap their souls for Graggar."
+
+	if(window)
+		recipient << browse(output,"window=memory")
 
 // Graggar culling event - tells people where the other is.
 /datum/mind/proc/recall_culling(mob/recipient, window=1)
@@ -705,11 +727,13 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		add_antag_datum(/datum/antagonist/traitor)
 
 
-/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
+/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S, mob/living/user)
 	if(!S)
 		return
 	spell_list += S
 	S.action.Grant(current)
+	if(user)
+		S.on_gain(user)
 
 /datum/mind/proc/check_learnspell()
 	if(!has_spell(/obj/effect/proc_holder/spell/self/learnspell)) //are we missing the learning spell?
@@ -731,6 +755,18 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 			return TRUE
 	return FALSE
 
+/datum/mind/proc/get_spell(spell_type, specific = FALSE)
+	var/spell_path = spell_type
+	if(istype(spell_type, /obj/effect/proc_holder))
+		var/obj/effect/proc_holder/instanced_spell = spell_type
+		spell_path = instanced_spell.type
+	for(var/obj/effect/proc_holder/spell as anything in spell_list)
+		if(specific && (spell.type == spell_path))
+			return spell
+		else if(!specific && istype(spell, spell_path))
+			return spell
+	return FALSE
+
 /datum/mind/proc/owns_soul()
 	return soulOwner == src
 
@@ -741,10 +777,11 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		return FALSE
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
-		if(istype(S, spell))
+		if(S.name == spell.name && S.type == spell.type) //match by name and type to avoid issues with multiple instances of the same spell
 			spell_list -= S
 			qdel(S)
-			success = TRUE // won't return here because of possibility of duplicate spells in spell_list
+			success = TRUE
+			return TRUE // We're deleting only one spell
 	return success
 
 /datum/mind/proc/RemoveAllSpells()

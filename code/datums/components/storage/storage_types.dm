@@ -146,17 +146,12 @@
 /datum/component/storage/concrete/grid/magebag/New(datum/P, ...)
 	. = ..()
 	set_holdable(list(
-		/obj/item/reagent_containers/food/snacks/grown/manabloom,
-		/obj/item/alch,
-		/obj/item/reagent_containers/glass/bottle/alchemical,
-		/obj/item/herbseed,
-		/obj/item/reagent_containers/food/snacks/zizo_bane,
-		/obj/item/reagent_containers/powder,
 		/obj/item/magic,
-		/obj/item/ash,
-		/obj/item/natural/stone,
+		/obj/item/alch,
+		/obj/item/herbseed,
+		/obj/item/reagent_containers/food/snacks/grown/manabloom,
 		/obj/item/reagent_containers/food/snacks/grown/berries/rogue,
-		/obj/item/seeds
+		/obj/item/ash
 		))
 
 /datum/component/storage/concrete/roguetown/saddle
@@ -164,9 +159,20 @@
 	screen_max_columns = 4
 	max_w_class = WEIGHT_CLASS_NORMAL
 
-/datum/component/storage/tray
+/datum/component/storage/concrete/tray
 	insert_preposition = "on"
 	max_w_class = WEIGHT_CLASS_NORMAL
+	screen_max_rows = 3
+	screen_max_columns = 4
+	allow_quick_gather = TRUE
+	allow_quick_empty = TRUE
+	allow_dump_out = TRUE
+	dump_time = 40
+	collection_mode = COLLECT_SAME
+
+/datum/component/storage/concrete/tray/New(datum/P, ...)
+	. = ..()
+	can_hold = typecacheof(list(/obj/item/cooking, /obj/item/reagent_containers/glass/bowl, /obj/item/reagent_containers/glass/cup, /obj/item/kitchen, /obj/item/reagent_containers/food, /obj/item/reagent_containers/glass/bottle))
 
 /datum/component/storage/concrete/grid/headhook
 	max_w_class = WEIGHT_CLASS_NORMAL
@@ -202,3 +208,67 @@
 	can_hold = typecacheof(list(
 	/obj/item/clothing/mask/cigarette/rollie
 	))
+/datum/component/storage/concrete/grid/orestore
+	max_w_class = WEIGHT_CLASS_NORMAL
+	screen_max_rows = 10
+	screen_max_columns = 8
+	click_gather = TRUE
+	collection_mode = COLLECT_EVERYTHING
+	dump_time = 0
+	allow_quick_gather = TRUE
+	allow_quick_empty = TRUE
+	allow_dump_out = TRUE
+	insert_preposition = "in"
+
+/datum/component/storage/concrete/grid/orestore/New(datum/P, ...)
+	. = ..()
+	set_holdable(
+		typecacheof(list(/obj/item/rogueore,
+						 /obj/item/rogueore/gold,
+						 /obj/item/rogueore/silver,
+						 /obj/item/rogueore/iron,
+						 /obj/item/rogueore/copper,
+						 /obj/item/rogueore/tin,
+						 /obj/item/rogueore/coal,
+						 /obj/item/rogueore/coal/charcoal,
+						 /obj/item/rogueore/cinnabar,
+						 /obj/item/ingot,
+						 /obj/item/ingot/gold,
+						 /obj/item/ingot/iron,
+						 /obj/item/ingot/copper,
+						 /obj/item/ingot/tin,
+						 /obj/item/ingot/bronze,
+						 /obj/item/ingot/silver,
+						 /obj/item/ingot/steel,
+						 /obj/item/ingot/blacksteel,
+						 /obj/item/ingot/steelholy,
+						 /obj/item/ingot/silverblessed,
+						 /obj/item/ingot/aalloy,
+						 /obj/item/ingot/purifiedaalloy,
+						 /obj/item/ingot/aaslag,
+						 /obj/item/roguegem,
+						 /obj/item/roguegem/green,
+						 /obj/item/roguegem/blue,
+						 /obj/item/roguegem/yellow,
+						 /obj/item/roguegem/violet,
+						 /obj/item/roguegem/ruby,
+						 /obj/item/roguegem/diamond,
+						 /obj/item/roguegem/amethyst,
+						 /obj/item/riddleofsteel,
+						 /obj/item/pearl,
+						 /obj/item/pearl/blue)
+	))
+
+/datum/component/storage/concrete/grid/orestore/bronze
+	screen_max_rows = 10
+	screen_max_columns = 8
+
+/datum/component/storage/concrete/roguetown/dice_pouch
+	screen_max_rows = 4
+	screen_max_columns = 2
+	max_w_class = WEIGHT_CLASS_TINY
+	not_while_equipped = FALSE
+
+/datum/component/storage/concrete/roguetown/dice_pouch/New(datum/P, ...)
+	. = ..()
+	can_hold = typecacheof(list(/obj/item/dice))

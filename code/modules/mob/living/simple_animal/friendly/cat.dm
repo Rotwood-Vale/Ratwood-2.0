@@ -293,7 +293,6 @@
 				emote("me", 1, "purrs!")
 				if(flags_1 & HOLOGRAM_1)
 					return
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		else
 			if(M && stat != DEAD)
 				emote("me", 1, "hisses!")
@@ -310,7 +309,7 @@
 		step(src, dir)
 		personal_space()
 
-	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/vampirelord))
+	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/vampire))
 		visible_message("<span class='notice'>The cat hisses at [M] and recoils in disgust.</span>")
 		icon_state = "[icon_living]"
 		set_resting(FALSE)

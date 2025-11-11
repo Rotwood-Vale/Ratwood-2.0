@@ -19,7 +19,7 @@
 	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve)
 
 /datum/supply_pack/rogue/blackmarket_diplomacy/crossbow
-	name = "Crossed Bow"
+	name = "Crossbow"
 	cost =	75
 	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow)
 
@@ -32,45 +32,46 @@
 	name = "Broadhead Arrows, Bundle of V"
 	cost =	8
 	contains = list(
-	/obj/item/ammo_casing/caseless/rogue/arrow/iron,
-	/obj/item/ammo_casing/caseless/rogue/arrow/iron,
-	/obj/item/ammo_casing/caseless/rogue/arrow/iron,
-	/obj/item/ammo_casing/caseless/rogue/arrow/iron,
-	/obj/item/ammo_casing/caseless/rogue/arrow/iron
+		/obj/item/ammo_casing/caseless/rogue/arrow/iron,
+		/obj/item/ammo_casing/caseless/rogue/arrow/iron,
+		/obj/item/ammo_casing/caseless/rogue/arrow/iron,
+		/obj/item/ammo_casing/caseless/rogue/arrow/iron,
+		/obj/item/ammo_casing/caseless/rogue/arrow/iron
 	)
 
 /datum/supply_pack/rogue/blackmarket_diplomacy/waterarrows
 	name = "Water Arrows, Bundle of V"
 	cost =	5
 	contains = list(
-	/obj/item/ammo_casing/caseless/rogue/arrow/water,
-	/obj/item/ammo_casing/caseless/rogue/arrow/water,
-	/obj/item/ammo_casing/caseless/rogue/arrow/water,
-	/obj/item/ammo_casing/caseless/rogue/arrow/water,
-	/obj/item/ammo_casing/caseless/rogue/arrow/water
+		/obj/item/ammo_casing/caseless/rogue/arrow/water,
+		/obj/item/ammo_casing/caseless/rogue/arrow/water,
+		/obj/item/ammo_casing/caseless/rogue/arrow/water,
+		/obj/item/ammo_casing/caseless/rogue/arrow/water,
+		/obj/item/ammo_casing/caseless/rogue/arrow/water
 	)
 
 /datum/supply_pack/rogue/blackmarket_diplomacy/bolts
 	name = "Bolts, Bundle of V"
 	cost =	10
 	contains = list(
-	/obj/item/ammo_casing/caseless/rogue/bolt,
-	/obj/item/ammo_casing/caseless/rogue/bolt,
-	/obj/item/ammo_casing/caseless/rogue/bolt,
-	/obj/item/ammo_casing/caseless/rogue/bolt,
-	/obj/item/ammo_casing/caseless/rogue/bolt
+		/obj/item/ammo_casing/caseless/rogue/bolt,
+		/obj/item/ammo_casing/caseless/rogue/bolt,
+		/obj/item/ammo_casing/caseless/rogue/bolt,
+		/obj/item/ammo_casing/caseless/rogue/bolt,
+		/obj/item/ammo_casing/caseless/rogue/bolt
 	)
 
 /datum/supply_pack/rogue/blackmarket_diplomacy/waterbolts
 	name = "Water Bolts, Bundle of V"
 	cost =	5
 	contains = list(
-	/obj/item/ammo_casing/caseless/rogue/bolt/water,
-	/obj/item/ammo_casing/caseless/rogue/bolt/water,
-	/obj/item/ammo_casing/caseless/rogue/bolt/water,
-	/obj/item/ammo_casing/caseless/rogue/bolt/water,
-	/obj/item/ammo_casing/caseless/rogue/bolt/water
+		/obj/item/ammo_casing/caseless/rogue/bolt/water,
+		/obj/item/ammo_casing/caseless/rogue/bolt/water,
+		/obj/item/ammo_casing/caseless/rogue/bolt/water,
+		/obj/item/ammo_casing/caseless/rogue/bolt/water,
+		/obj/item/ammo_casing/caseless/rogue/bolt/water
 	)
+
 
 /datum/supply_pack/rogue/blackmarket_diplomacy/leathercollar
 	name = "Leather Collar"

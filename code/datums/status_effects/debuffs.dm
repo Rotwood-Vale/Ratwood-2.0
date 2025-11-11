@@ -472,6 +472,7 @@
 
 	msg_stage++
 
+
 /datum/status_effect/debuff/baited
 	id = "bait"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/baited
@@ -850,7 +851,6 @@
 /datum/status_effect/debuff/mishap_confused/on_remove()
 	owner.confused = max(owner.confused - confusion_amount, 0)
 	..()
-
 /datum/status_effect/debuff/crit_resistance_cd
 	id = "crit_resist_cd"
 	duration = CRIT_RESISTANCE_TIMER_CD
@@ -879,3 +879,12 @@
 	desc = "My body is temporarily resisting critical wounds."
 	icon_state = "debuff"
 
+/datum/status_effect/debuff/yeetcd
+	id = "yeetcd"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/yeetcd
+	duration = 5 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/yeetcd
+	name = "Knockback Cooldown"
+	desc = "I have been knocked back recently by an attack and cannot be knocked back again"
+	icon_state = "debuff" // Placeholder

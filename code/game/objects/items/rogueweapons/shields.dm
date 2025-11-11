@@ -2,15 +2,15 @@
 #define SHIELD_BLOCK		/datum/intent/shield/block
 #define SHIELD_BASH_METAL 	/datum/intent/shield/bash/metal
 #define SHIELD_BLOCK_METAL 	/datum/intent/shield/block/metal
-#define SHIELD_SMASH 		/datum/intent/shield/smash
-#define SHIELD_SMASH_METAL 	/datum/intent/shield/smash/metal
+#define SHIELD_SMASH 		/datum/intent/mace/smash/shield
+#define SHIELD_SMASH_METAL 	/datum/intent/mace/smash/shield/metal
 #define SHIELD_BANG_COOLDOWN (3 SECONDS)
 
 /obj/item/rogueweapon/shield
 	name = ""
 	desc = ""
 	icon_state = ""
-	icon = 'icons/roguetown/weapons/32.dmi'
+	icon = 'icons/roguetown/weapons/shields32.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	flags_1 = null
 	force = 10
@@ -79,6 +79,7 @@
 	chargetime = 0
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
 /datum/intent/shield/bash/metal
 	hitsound = list('sound/combat/parry/shield/metalshield (1).ogg')
@@ -98,17 +99,10 @@
 /datum/intent/shield/block/metal
 	hitsound = list('sound/combat/parry/shield/metalshield (1).ogg')
 
-/datum/intent/shield/smash
-	name = "smash"
-	blade_class = BCLASS_SMASH
-	attack_verb = list("smashes")
-	icon_state = "insmash"
+/datum/intent/mace/smash/shield
 	hitsound = list('sound/combat/shieldbash_wood.ogg')
-	penfactor = BLUNT_DEFAULT_PENFACTOR
-	damfactor = 1.5
-	swingdelay = 10
 
-/datum/intent/shield/smash/metal
+/datum/intent/mace/smash/shield/metal
 	hitsound = list('sound/combat/parry/shield/metalshield (1).ogg')
 
 /obj/item/rogueweapon/shield/wood
@@ -248,23 +242,32 @@
 	name = "Covenant"
 	desc = "A Psydonian endures. A Psydonian preserves themselves. A Psydonian preserves His flock."
 	icon_state = "psyshield"
-	force = 20
-	throwforce = 10
+	force = 15
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 3
 	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK, SHIELD_SMASH_METAL)
 	wlength = WLENGTH_NORMAL
 	resistance_flags = null
 	flags_1 = CONDUCT_1
-	wdefense = 11
+	wdefense = 14
 	coverage = 50
 	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	max_integrity = 350
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
 
 /obj/item/rogueweapon/shield/tower/metal/psy/ComponentInitialize()
-	. = ..()
-	add_psyblessed_component(is_preblessed = TRUE, bonus_force = 0, bonus_sharpness = 0, bonus_integrity = 100, bonus_wdef = 1, make_silver = TRUE)
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = -3,\
+		added_blade_int = 0,\
+		added_int = 100,\
+		added_def = 1,\
+	)
 
 /obj/item/rogueweapon/shield/tower/metal/alloy
 	name = "decrepit shield"
@@ -302,6 +305,12 @@
 				return list("shrink" = 0.6,"sx" = -5,"sy" = -1,"nx" = 6,"ny" = -1,"wx" = 0,"wy" = -2,"ex" = 0,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 1,"eflip" = 0)
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
+
+/obj/item/rogueweapon/shield/tower/spidershield
+	name = "spider shield"
+	desc = "A bulky shield of spike-like lengths molten together. The motifs evoke anything but safety and protection."
+	icon_state = "spidershield"
+	coverage = 55
 
 /obj/item/rogueweapon/shield/buckler
 	name = "buckler shield"
@@ -475,7 +484,7 @@
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 
-/obj/item/rogueweapon/shield/artificer
+/obj/item/rogueweapon/shield/steam
 	name = "steam shield"
 	desc = "A sturdy wood shield thats been highly modified by an artificer. It seems to have several pipes and gears built into it."
 	icon_state = "artificershield"
@@ -490,7 +499,7 @@
 	var/cooldowny
 	var/cdtime = 30 SECONDS
 
-/obj/item/rogueweapon/shield/artificer/attack_self(mob/user)
+/obj/item/rogueweapon/shield/steam/attack_self(mob/user)
 	if(cooldowny)
 		if(world.time < cooldowny + cdtime)
 			to_chat(user, span_warning("[src] hisses weakly, It's still building up steam!"))
@@ -532,11 +541,10 @@
 				to_chat(M, span_danger( "You're thrown back by [user]!"))
 			AM.safe_throw_at(throwtarget, 4, 2, user, TRUE, force = MOVE_FORCE_OVERPOWERING)
 
-/obj/item/rogueweapon/shield/artificer/proc/steamready(mob/user)
+/obj/item/rogueweapon/shield/steam/proc/steamready(mob/user)
 	playsound(user, 'sound/items/steamcreation.ogg', 100, FALSE, -1)
 	to_chat(user, span_warning("[src] is ready to be used again!"))
-
-/obj/item/rogueweapon/shield/artificer/getonmobprop(tag)
+/obj/item/rogueweapon/shield/steam/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)

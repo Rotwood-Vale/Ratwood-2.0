@@ -47,13 +47,13 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/sheriff/Initialize()
+/obj/item/clothing/suit/roguetown/armor/brigandine/retinue/Initialize()
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
 	GLOB.lordcolor += src
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/sheriff/lordcolor(primary,secondary)
+/obj/item/clothing/suit/roguetown/armor/brigandine/retinue/lordcolor(primary,secondary)
 	detail_tag = "_det"
 	detail_color = primary
 	update_icon()
@@ -61,7 +61,7 @@
 		var/mob/L = loc
 		L.update_inv_armor()
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/sheriff/Destroy()
+/obj/item/clothing/suit/roguetown/armor/brigandine/retinue/Destroy()
 	GLOB.lordcolor -= src
 	return ..()
 
@@ -74,7 +74,7 @@
 	armor_class = ARMOR_CLASS_HEAVY
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/sheriff/coat
+/obj/item/clothing/suit/roguetown/armor/brigandine/retinue/coat
 	name = "coat of the commander"
 	desc = "A thick boiled leather surcoat with enough plates concealed within the folds to offer superior protection. It weighs a ton and takes a great man to wear."
 	icon_state = "leathercoat"
@@ -83,7 +83,7 @@
 	sleeved_detail = TRUE
 	boobed_detail = TRUE
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/sheriff/coat/attack_right(mob/user)
+/obj/item/clothing/suit/roguetown/armor/brigandine/retinue/coat/attack_right(mob/user)
 	if(picked)
 		return
 	var/the_time = world.time
@@ -113,7 +113,7 @@
 	body_parts_covered = COVERAGE_TORSO
 	armor = ARMOR_LEATHER_STUDDED
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
-	smeltresult = /obj/item/ingot/steel
+	smeltresult = /obj/item/ingot/iron
 	equip_delay_self = 40
 	armor_class = ARMOR_CLASS_LIGHT//steel version of the studded leather armor now
 	w_class = WEIGHT_CLASS_BULKY
@@ -143,6 +143,24 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue/Initialize()
+	. = ..()
+	if(GLOB.lordprimary)
+		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
+	GLOB.lordcolor += src
+
+/obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue/lordcolor(primary,secondary)
+	detail_tag = "_detail"
+	detail_color = primary
+	update_icon()
+	if(ismob(loc))
+		var/mob/L = loc
+		L.update_inv_armor()
+
+/obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue/Destroy()
+	GLOB.lordcolor -= src
+	return ..()
+
 /obj/item/clothing/suit/roguetown/armor/brigandine/captain
 	name = "captain's brigandine"
 	desc = "A coat with plates specifically tailored and forged for the captain of the vale."
@@ -159,3 +177,37 @@
 	sellprice = 363 // On par w/ judgement and ichor fang cuz why not
 	smelt_bar_num = 2
 	armor_class = ARMOR_CLASS_HEAVY
+
+/obj/item/clothing/suit/roguetown/armor/brigandine/haraate
+	name = "hansimhae cuirass"
+	desc = "A more common form of Kazengunite armor, consisting of several interlocking plates of blacksteel-coated steel. Much cheaper than a full set of armor, these are commonly seen on militia forces and standing armies alike."
+	icon_state = "kazengunmedium"
+	boobed = FALSE
+	item_state = "kazengunmedium"
+	detail_tag = "_detail"
+	color = "#FFFFFF"
+	detail_color = "#FFFFFF"
+	var/picked = FALSE
+
+/obj/item/clothing/suit/roguetown/armor/brigandine/haraate/attack_right(mob/user)
+	..()
+	if(!picked)
+		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in colorlist
+		var/playerchoice = colorlist[choice]
+		picked = TRUE
+		detail_color = playerchoice
+		detail_tag = "_detail"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_armor()
+			H.update_icon()
+
+/obj/item/clothing/suit/roguetown/armor/brigandine/haraate/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)

@@ -41,13 +41,15 @@
 //#define UNIT_TESTS			//Enables unit tests via TEST_RUN_PARAMETERF
 
 #ifndef PRELOAD_RSC					//set to:
-#define PRELOAD_RSC		2			//	0 to allow using external resources or on-demand behaviour;
+#define PRELOAD_RSC		0			//	0 to allow using external resources or on-demand behaviour;
 #endif								//	1 to use the default behaviour;
 									//	2 for preloading absolutely everything;
 
 #ifdef LOWMEMORYMODE
 #define FORCE_MAP "_maps/roguetest.json"
 #endif
+
+// #define NO_DUNGEON //comment this to load dungeons.
 
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 514
@@ -80,3 +82,9 @@
 // A reasonable number of maximum overlays an object needs
 // If you think you need more, rethink it
 #define MAX_ATOM_OVERLAYS 100
+
+// Comment this to remove the PQ system
+#define USES_PQ
+// Comment this to remove traits based skill gating (The traits exist, but it will not have any effect)
+#define USES_TRAIT_SKILL_GATING
+

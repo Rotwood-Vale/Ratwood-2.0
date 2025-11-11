@@ -255,7 +255,7 @@
 
 	var/obj/item/blade/new_blade = new blade_path(get_turf(src))
 	new_blade.forceMove(get_turf(src))
-
+	
 	if(attached_sprue)
 		attached_sprue.forceMove(get_turf(src))
 		attached_sprue = null

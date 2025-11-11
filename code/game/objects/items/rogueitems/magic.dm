@@ -65,7 +65,7 @@
 			to_chat(user, span_warning("The orb doesn't seem ready. Maybe I should wait..."))
 
 	var/time_to_use
-	if (arcane_skill >= 1)
+	if(arcane_skill >= 1)
 		time_to_use = 60 / arcane_skill
 	else
 		time_to_use = 100
@@ -73,8 +73,9 @@
 	if(!do_after(user, time_to_use, target = user))
 		to_chat(user, span_warning("I need to focus..."))
 		return
-
+	
 	var/success_chance = 0
+
 	var/break_on_fail = FALSE
 	var/failure_severity = 6 - arcane_skill
 
@@ -100,18 +101,17 @@
 			if(SKILL_LEVEL_NOVICE)
 				break_on_fail = TRUE
 				success_chance = 50
-			if(SKILL_LEVEL_APPRENTICE) //Apprentices have this
+			if(SKILL_LEVEL_APPRENTICE)
 				success_chance = 65
-			if(SKILL_LEVEL_JOURNEYMAN) // refugee mages have this
+			if(SKILL_LEVEL_JOURNEYMAN)
 				success_chance = 80
 			if(SKILL_LEVEL_EXPERT)
 				success_chance = 90
-			if(SKILL_LEVEL_MASTER) // Magus has this
-				success_chance = 94
+			if(SKILL_LEVEL_MASTER)
+				success_chance = 95
 			if(SKILL_LEVEL_LEGENDARY)
 				success_chance = 100
-
-		// Only a true master of the arcane can reliably use the orb when it's REALLY been pushed
+	// Only a true master of the arcane can reliably use the orb when it's REALLY been pushed
 		if (on_extended_cooldown && arcane_skill < SKILL_LEVEL_LEGENDARY)
 			success_chance /= 2
 	else
@@ -145,10 +145,10 @@
 
 	if(!prob(success_chance))
 		on_failure(user, target, failure_severity)
-		if (break_on_fail)
+		if(break_on_fail)
 			failure_break(user)
 		return
-
+	
 	playsound(src, 'sound/magic/whiteflame.ogg', 100, TRUE)
 	scry(user, target)
 
@@ -194,8 +194,9 @@
 				if(target.mind.do_i_know(name=user.real_name))
 					to_chat(target, span_warning("I can clearly see the face of [user.real_name] staring at me!."))
 					return
-			to_chat(target, span_warning("I can clearly see the face of an unknown [user.gender == FEMALE ? "woman" : "man"] staring at me!"))
-			return
+				to_chat(target, span_warning("I can clearly see the face of an unknown [user.gender == FEMALE ? "woman" : "man"] staring at me!"))
+				return
+
 		if(target.STAPER >= 11)
 			to_chat(target, span_warning("I feel a pair of unknown eyes on me."))
 	return
@@ -203,7 +204,7 @@
 /obj/item/scrying/proc/failure_break(mob/living/user)
 	visible_message("\The [src] shatters!")
 	user.flash_fullscreen("redflash1")
-	new /obj/item/natural/glass_shard(get_turf(src))
+	new /obj/item/magic/obsidian(get_turf(src))
 	playsound(src, "shatter", 70, TRUE)
 	qdel(src)
 

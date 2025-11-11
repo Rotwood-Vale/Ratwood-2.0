@@ -18,8 +18,8 @@
 	butcher_results = list()
 	faction = list("infernal")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	health = 250
-	maxHealth = 250
+	health = 270
+	maxHealth = 270
 	melee_damage_lower = 15
 	melee_damage_upper = 17
 	vision_range = 7
@@ -48,6 +48,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound/death(gibbed)
 	..()
@@ -77,7 +78,7 @@
 		if(!isliving(target))
 			return
 		targetted.adjust_fire_stacks(5)
-		targetted.IgniteMob()
+		targetted.ignite_mob()
 		targetted.visible_message(span_danger("[src] sets [target] on fire!"))
 		src.flame_cd = world.time
 	if(!QDELETED(target))

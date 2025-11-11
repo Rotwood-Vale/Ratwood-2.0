@@ -431,8 +431,8 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "beartrap"
 	name = "mantrap"
-	time_between_triggers = 50 //feel free to add more than 1 use
-	max_integrity = 350 //pioneers kept accidentally 1 shotting their mines, have to raise it
+	time_between_triggers = 100 //feel free to add more than 1 use
+	max_integrity = 100
 	trap_damage = 60
 	alpha = 60
 	charges = 2 //feel free to add more than 1 use
@@ -473,6 +473,9 @@
 	if(special == "lich" || special == "vampire lord")
 		return TRUE
 
+	if(assigned == "bogguard")
+		return TRUE
+
 	return FALSE
 
 /obj/structure/trap/bogtrap/proc/has_required_trigger_trait(mob/living/H)
@@ -481,7 +484,6 @@
 	if(HAS_TRAIT(H, TRAIT_HEAVYARMOR))  return TRUE
 	if(HAS_TRAIT(H, TRAIT_DODGEEXPERT)) return TRUE
 	if(HAS_TRAIT(H, TRAIT_CRITICAL_RESISTANCE)) return TRUE
-	if(HAS_TRAIT(H, TRAIT_STEELHEARTED)) return TRUE
 	return FALSE
 
 /obj/structure/trap/bogtrap/proc/is_trap_exception(mob/living/H)
@@ -498,7 +500,9 @@
 	var/assigned = lowertext("[H.mind.assigned_role]")
 	var/special  = lowertext("[H.mind.special_role]")
 
-	return (assigned == "bandit" || special == "bandit" )
+	return (assigned == "bandit" || special == "bandit" \
+		|| assigned == "bogguard" \
+		|| assigned == "warden" || special == "warden")
 
 /obj/structure/trap/bogtrap/proc/show_personal_reveal(mob/user)
 	if(!user || !user.client)

@@ -4,9 +4,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 //client/verb/ooc(msg as text)
 
 /client/verb/ooc(msg as text)
-	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
+	set name = "OOC"
 	set category = "OOC"
-
+	set desc = "Talk with other players in the lobby."
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -26,7 +26,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(get_playerquality(ckey) <= -5)
 		to_chat(src, span_danger("I can't use that."))
 		return
-
 
 	if(!holder)
 		if(SSticker.current_state < GAME_STATE_FINISHED && !istype(mob, /mob/dead/new_player))

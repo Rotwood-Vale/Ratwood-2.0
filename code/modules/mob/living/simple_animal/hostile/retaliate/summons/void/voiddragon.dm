@@ -11,8 +11,8 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_GUIDANCE, TRAIT_GENERIC)	//The dragon rends
-	src.adjust_skillrank(/datum/skill/combat/unarmed, 6, TRUE)	//Parrying the void dragon should be VERY difficult.
+	ADD_TRAIT(src, TRAIT_GUIDANCE, TRAIT_GENERIC)	//The voiddragon rends
+	src.adjust_skillrank(/datum/skill/combat/unarmed, 6, TRUE)	//parrying the voiddragon should be hard
 
 /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)	//no wounding the void dragon
 	return
@@ -168,7 +168,6 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	chargetime = 0
 	range = 15
 	antimagic_allowed = TRUE
-
 /obj/effect/proc_holder/spell/invoked/dragon_lightning/cast(list/targets, mob/living/user = usr)
 	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/dragon = user
@@ -264,7 +263,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	if(prob(15 + anger_modifier))
 		lava_swoop()
 	if(world.time >= cl_cd)
-		src.visible_message(span_colossus("[src] opens his maw, and lightning crackles beyond it's teeth."))
+		src.visible_message(span_colossus("[src] opens its maw, and lightning crackles beyond its teeth."))
 		chain_lightning(target, src)
 		return
 	if(health <= 0.75 * maxHealth && world.time >= summon_cd)
@@ -598,7 +597,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 		return FALSE
 	if(do_after(user, 2 SECONDS, target = src))
 		user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
-		src.visible_message(span_colossus("[src] unleashes a storm of lightning from it's maw."))
+		src.visible_message(span_colossus("[src] unleashes a storm of lightning from it's maw!"))
 		cl_cd = world.time + 500
 		Bolt(user,target,30,5,user)
 		src.move_resist = initial(src.move_resist)
@@ -658,6 +657,18 @@ It will also call down lightning strikes from the sky, and fling people with it'
 		playsound(C.loc, 'sound/combat/hits/punch/punch_hard (3).ogg', 80, TRUE, TRUE)
 		C.spin(6, 1)
 	..(targets, user, 3)
+
+/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/death()
+	..()
+	var/turf/deathspot = get_turf(src)
+	new /obj/item/clothing/ring/dragon_ring(deathspot)
+	new /obj/item/clothing/ring/dragon_ring(deathspot)
+	new /obj/item/clothing/ring/dragon_ring(deathspot)
+	new /obj/item/book/granter/spell_points/voiddragon
+	new /obj/item/book/granter/spell_points/voiddragon
+	new /obj/item/book/granter/spell_points/voiddragon
+	update_icon()
+	spill_embedded_objects()
 
 #undef DRAKE_SWOOP_HEIGHT
 #undef DRAKE_SWOOP_DIRECTION_CHANGE_RANGE

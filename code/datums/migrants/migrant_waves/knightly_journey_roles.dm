@@ -7,7 +7,7 @@
 
 /datum/advclass/kj_knight
 	name = "Knight"
-	tutorial = "You are a knight from a distant land, a scion of a noble house visiting Azuria for one reason or another."
+	tutorial = "You are a knight from a distant land, a scion of a noble house visiting Rockwood Vale for one reason or another."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/adventurer/knighte_expert
@@ -20,7 +20,21 @@
 		STATKEY_WIL = 1,
 		STATKEY_PER = 2,
 	)
-
+	subclass_skills = list(
+		/datum/skill/misc/riding= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/polearms= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/swords= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/shields= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/whipsflails= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics= SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading= SKILL_LEVEL_JOURNEYMAN,
+	)
 	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled
 
 /datum/outfit/job/roguetown/adventurer/knighte_expert/pre_equip(mob/living/carbon/human/H)
@@ -64,21 +78,6 @@
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/recipe_book/survival = 1,
 		)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	H.set_blindness(0)
 	var/weapons = list("Longsword","Mace + Shield","Flail + Shield","Billhook","Battle Axe","Greataxe")
@@ -126,6 +125,21 @@
 		STATKEY_CON = 1,
 		STATKEY_INT = 1,
 		STATKEY_WIL = 1,
+	)
+	subclass_skills = list(
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/shields = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 	)
 #undef CTAG_KJ_KNIGHT
 #undef CTAG_KG_SQUIRE

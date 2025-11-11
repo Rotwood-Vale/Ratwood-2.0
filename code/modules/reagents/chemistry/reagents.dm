@@ -73,9 +73,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 			record_featured_object_stat(FEATURED_STATS_DRINKS, name, adjusted_metabolization_rate)
 			if(istype(src, /datum/reagent/consumable/ethanol))
 				record_featured_stat(FEATURED_STATS_ALCOHOLICS, M, adjusted_metabolization_rate)
-				GLOB.azure_round_stats[STATS_ALCOHOL_CONSUMED] += metabolization_rate
+				record_round_statistic(STATS_ALCOHOL_CONSUMED, metabolization_rate)
 			if(istype(src, /datum/reagent/water))
-				GLOB.azure_round_stats[STATS_WATER_CONSUMED] += metabolization_rate
+				record_round_statistic(STATS_WATER_CONSUMED, metabolization_rate)
 		if(istype(src, /datum/reagent/consumable/ethanol) && has_world_trait(/datum/world_trait/baotha_revelry))
 			adjusted_metabolization_rate = adjusted_metabolization_rate * 0.5
 		holder.remove_reagent(type, adjusted_metabolization_rate) //By default it slowly disappears.
@@ -128,29 +128,24 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, span_danger("I feel like I took too much of [name]!"))
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_light, name)
 	if(prob(30))
 		to_chat(M, span_notice("I feel like having some [name] right about now."))
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_medium, name)
 	if(prob(30))
 		to_chat(M, span_notice("I feel like you need [name]. You just can't get enough."))
 	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_severe, name)
 	if(prob(30))
 		to_chat(M, span_danger("I have an intense craving for [name]."))
 	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_critical, name)
 	if(prob(30))
 		to_chat(M, span_boldannounce("You're not feeling good at all! You really need some [name]."))
 	return

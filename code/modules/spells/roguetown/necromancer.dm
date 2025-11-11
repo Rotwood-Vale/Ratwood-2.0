@@ -1,6 +1,8 @@
 /obj/effect/proc_holder/spell/invoked/bonechill
 	name = "Bone Chill"
-	overlay_state = "raiseskele"
+	desc = "Chill the target with necrotic energy. Severely reduces speed and weakens physical prowess."
+	cost = 3
+	overlay_state = "profane"
 	releasedrain = 30
 	chargetime = 5
 	range = 7
@@ -8,11 +10,14 @@
 	movement_interrupt = FALSE
 	chargedloop = null
 	sound = 'sound/magic/whiteflame.ogg'
+	spell_tier = 2
+	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	gesture_required = TRUE // Potential offensive use, need a target
 	antimagic_allowed = TRUE
 	recharge_time = 15 SECONDS
 	miracle = FALSE
+	zizo_spell = TRUE
 
 /obj/effect/proc_holder/spell/invoked/bonechill/cast(list/targets, mob/living/user)
 	..()
@@ -133,15 +138,16 @@
 	recharge_time = 35 SECONDS
 	to_spawn = 3
 
-/obj/effect/proc_holder/spell/invoked/raise_lesser_undead
+
+/obj/effect/proc_holder/spell/invoked/raise_undead_guard
 	name = "Conjure Undead"
-	desc = "Raises an undead guard in your servitude. Requires 4 bones to raise."
+	desc = "Raises an undead guard in your servitude."
 	clothes_req = FALSE
 	overlay_state = "animate"
 	range = 7
 	sound = list('sound/magic/magnet.ogg')
 	releasedrain = 40
-	chargetime = 60
+	chargetime = 3 SECONDS
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	charging_slowdown = 1
@@ -153,8 +159,9 @@
 	var/cabal_affine = FALSE
 	var/is_summoned = FALSE
 
-/obj/effect/proc_holder/spell/invoked/raise_lesser_undead/cast(list/targets, mob/living/user)
-	. = ..()
+/obj/effect/proc_holder/spell/invoked/raise_undead_guard/cast(list/targets, mob/living/user)
+	..()
+
 	var/turf/T = get_turf(targets[1])
 	if(!isopenturf(T))
 		to_chat(user, span_warning("The targeted location is blocked. The summon fails to come forth."))
@@ -202,10 +209,6 @@
 	S.receive_command_text("rises and bows to its master.")
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/raise_lesser_undead/necromancer
-	cabal_affine = TRUE
-	is_summoned = TRUE
-	recharge_time = 45 SECONDS
 
 /obj/effect/proc_holder/spell/invoked/tame_undead
 	name = "Tame Undead"

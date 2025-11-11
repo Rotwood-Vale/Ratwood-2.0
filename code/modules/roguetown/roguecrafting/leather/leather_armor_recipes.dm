@@ -18,15 +18,14 @@
 
 /datum/crafting_recipe/roguetown/leather/armor/bracers
 	name = "leather bracers"
-	result = list(/obj/item/clothing/wrists/roguetown/bracers/leather,
-			/obj/item/clothing/wrists/roguetown/bracers/leather)
+	result = /obj/item/clothing/wrists/roguetown/bracers/leather
 	reqs = list(/obj/item/natural/hide/cured = 1)
 	sellprice = 10
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/leather/armor/pants
 	name = "leather pants"
-	result = list(/obj/item/clothing/under/roguetown/trou/leather)
+	result = /obj/item/clothing/under/roguetown/trou/leather
 	reqs = list(/obj/item/natural/hide/cured = 2)
 	sellprice = 10
 	craftdiff = 2
@@ -116,7 +115,8 @@
 	reqs = list(
 		/obj/item/natural/hide/cured = 4,
 		/obj/item/reagent_containers/food/snacks/tallow = 2,
-		/obj/item/natural/fibers = 4)
+		/obj/item/natural/fibers = 4
+	)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/leather/armor/heavy_leather_armor/coat

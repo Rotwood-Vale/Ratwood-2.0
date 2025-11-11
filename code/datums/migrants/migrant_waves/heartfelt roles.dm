@@ -82,7 +82,6 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
 	H.change_stat(STATKEY_INT, 3)
 	H.change_stat(STATKEY_WIL, 3)
 	H.change_stat(STATKEY_SPD, 2)
@@ -96,7 +95,7 @@
 	name = "Hand of Heartfelt"
 	greet_text = "You are the Hand of Heartfelt, burdened by the perception of failure in protecting your Lord's domain. Despite doubts from others, your loyalty remains steadfast as you journey to the vale, determined to fulfill your duties."
 	outfit = /datum/outfit/job/roguetown/heartfelt/hand
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = ACCEPTED_RACES
 	grant_lit_torch = TRUE
 	show_wanderer_examine = FALSE
 
@@ -297,7 +296,7 @@
 	if (!(istype(H.patron, /datum/patron/divine/astrata)))
 		to_chat(H, span_warning("I've been blessed by Astrata - She guides my way, as I guide Her flock."))
 		H.set_patron(/datum/patron/divine/astrata)
-	neck = /obj/item/clothing/neck/roguetown/psicross/undivided
+	neck = /obj/item/clothing/neck/roguetown/psicross/astrata
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
 	pants = /obj/item/clothing/under/roguetown/tights/black
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
@@ -322,7 +321,7 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/holy, 4, TRUE)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)

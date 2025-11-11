@@ -187,7 +187,7 @@
 	desc = "A wooden mallet is an artificers second best friend! But it may also come in handy to a smith..."
 	icon_state = "hammer_w"
 	force = 16
-	metalizer_result = /obj/item/rogueweapon/hammer
+	metalizer_result = /obj/item/rogueweapon/hammer/iron
 
 /obj/item/rogueweapon/hammer/stone	// stone hammer
 	name = "stone hammer"
@@ -331,6 +331,7 @@
 /obj/item/rogueweapon/tongs/proc/make_unhot(input)
 	if(hott == input)
 		hott = FALSE
+		update_icon()
 
 /obj/item/rogueweapon/tongs/attack_self(mob/user)
 	if(hingot)

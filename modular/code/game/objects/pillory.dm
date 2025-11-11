@@ -160,7 +160,7 @@
 				latched = FALSE
 				return ..()
 			return null
-		if(locked)//can't be locked without also being latched anyway
+		if(locked)	//can't be locked without also being latched anyway
 			to_chat(user, span_warning("It's locked! I can't free myself!"))
 			return
 		else if(latched)
@@ -171,7 +171,7 @@
 				return ..()
 			else
 				return null
-	if(locked)//if user isn't the one in the pillory and it's also locked
+	if(locked)	//if user isn't the one in the pillory and it's also locked
 		to_chat(user, span_warning("[src] is locked! I'll need a key to unlatch it."))
 		return null
 	latched = FALSE //we pull them free, which implies unlatching

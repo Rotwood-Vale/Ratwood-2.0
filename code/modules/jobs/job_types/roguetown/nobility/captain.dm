@@ -24,6 +24,7 @@
 	max_pq = null
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_knight.ogg'
+	social_rank = SOCIAL_RANK_NOBLE
 	job_traits = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_GUARDSMAN)
 	job_subclasses = list(
 		/datum/advclass/captain/infantry
@@ -47,14 +48,14 @@
 	. = ..()
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(istype(H.cloak, /obj/item/clothing/cloak/stabard))
+		if(istype(H.cloak, /obj/item/clothing/cloak/tabard/knight/guard)  || (istype(H.cloak, /obj/item/clothing/cloak/captain)))
 			var/obj/item/clothing/S = H.cloak
 			var/index = findtext(H.real_name, " ")
 			if(index)
 				index = copytext(H.real_name, 1,index)
 			if(!index)
 				index = H.real_name
-			S.name = "Captain Tabard ([index])"
+			S.name = "Captain Tabard ([index])" //This doesn't even actually work but you know.
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
 		var/honorary = "Ser"
@@ -68,10 +69,6 @@
 				if(MF.known_people)
 					MF.known_people -= prev_real_name
 					H.mind.person_knows_me(MF)
-
-		H.advsetup = 1
-		H.invisibility = INVISIBILITY_MAXIMUM
-		H.become_blind("advsetup")
 
 /datum/advclass/captain/infantry
 	name = "Knight Captain"
@@ -89,6 +86,23 @@
 		STATKEY_PER = 1,
 		STATKEY_LCK = 1
 	)
+	subclass_skills = list(
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+	)
+	extra_context = "This class gains Master skill in their weapon of choice."
 
 /datum/outfit/job/roguetown/captain/infantry/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -99,20 +113,6 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
-	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 4, TRUE)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/movemovemove)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/takeaim)
@@ -126,22 +126,69 @@
 		/mob/living/carbon/human/mind/proc/setorders
 	)
 	H.adjust_blindness(-3)
-	var/weapons = list(
-		"Glaive",
-		"Sabre and Buckler",
+	if(H.mind)
+		var/weapons = list(
+			"Sabre",
+			"Glaive",
+			)
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		H.set_blindness(0)
+		switch(weapon_choice)
+			if("Sabre")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
+				r_hand = /obj/item/rogueweapon/sword/capsabre
+				l_hand = /obj/item/rogueweapon/shield/capbuckler
+				beltr = /obj/item/rogueweapon/scabbard/sword
+			if("Glaive")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
+				r_hand = /obj/item/rogueweapon/halberd/capglaive
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+
+		var/armors = list(
+			"Brigandine",
+			"Coat of Plates",
+			"Steel Cuirass",
+			"Captain's armor"
 		)
-	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-	H.set_blindness(0)
-	switch(weapon_choice)
-		if("Glaive")
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
-			r_hand = /obj/item/rogueweapon/halberd/capglaive
-			backl = /obj/item/rogueweapon/scabbard/gwstrap
-		if("Sabre and Buckler")
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
-			r_hand = /obj/item/rogueweapon/sword/capsabre
-			l_hand = /obj/item/rogueweapon/shield/capbuckler
-			beltr = /obj/item/rogueweapon/scabbard/sword
+		var/armorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
+		switch(armorchoice)
+			if("Brigandine")
+				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/retinue
+				pants = /obj/item/clothing/under/roguetown/chainlegs
+				cloak = /obj/item/clothing/cloak/tabard/retinue/captain
+			if("Coat of Plates")
+				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/coatplates
+				pants = /obj/item/clothing/under/roguetown/chainlegs
+				cloak = /obj/item/clothing/cloak/tabard/retinue/captain
+			if("Fluted Cuirass")
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
+				pants = /obj/item/clothing/under/roguetown/chainlegs
+				cloak = /obj/item/clothing/cloak/tabard/retinue/captain
+			if("Captain's armor")
+				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/captain
+				pants = /obj/item/clothing/under/roguetown/chainlegs/captain
+				head = /obj/item/clothing/head/roguetown/helmet/heavy/captain
+				cloak = /obj/item/clothing/cloak/captain
+
+		if(armorchoice == "Captain's armor")
+			return // Get helmet from armor selection
+
+		var/helmets = list(
+			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
+			"Guard Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
+			"Barred Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff,
+			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
+			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
+			"Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
+			"Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
+			"Hounskull Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
+			"Etruscan Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
+			"Slitted Kettle"	= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
+			"None"
+		)
+		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
+		if(helmchoice != "None")
+			head = helmets[helmchoice]
 
 /obj/effect/proc_holder/spell/self/convertrole
 	name = "Recruit Beggar"
@@ -193,8 +240,7 @@
 	//only migrants and peasants
 	if(!(recruit.job in GLOB.peasant_positions) && \
 		!(recruit.job in GLOB.yeoman_positions) && \
-		!(recruit.job in GLOB.allmig_positions) && \
-		!(recruit.job in GLOB.mercenary_positions))
+		!(recruit.job in GLOB.wanderer_positions))
 		return FALSE
 	//need to see their damn face
 	if(!recruit.get_face_name(null))

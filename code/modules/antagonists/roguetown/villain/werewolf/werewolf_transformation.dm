@@ -1,6 +1,3 @@
-/mob/living/carbon/human
-	var/mob/stored_mob = null
-
 /datum/antagonist/werewolf/on_life(mob/user)
 	if(!user) return
 	var/mob/living/carbon/human/H = user
@@ -76,7 +73,7 @@
 		SSdroning.play_area_sound(get_area(src), client)
 //	stop_cmusic()
 
-	src.fully_heal(FALSE)
+	fully_heal(FALSE)
 
 	var/ww_path
 	if(gender == MALE)
@@ -186,6 +183,7 @@
 	W.forceMove(get_turf(src))
 
 	REMOVE_TRAIT(W, TRAIT_NOMOOD, TRAIT_GENERIC)
+	REMOVE_TRAIT(W, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
 	mind.transfer_to(W)
 

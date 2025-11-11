@@ -98,7 +98,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 			var/datum/species/dullahan/dullahan = human.dna.species
 			if(dullahan.headless)
 				tocheck = dullahan.my_head
-
 		var/turf/speakturf = get_turf(speaker)
 		var/turf/sourceturf = get_turf(tocheck)
 		if(istype(speakturf) && istype(sourceturf) && !(speakturf in get_hear(7, sourceturf)))

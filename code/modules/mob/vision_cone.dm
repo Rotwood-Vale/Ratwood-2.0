@@ -7,9 +7,6 @@
 /mob
 	var/fovangle
 
-/mob/living/carbon/human
-	fovangle = FOV_DEFAULT
-
 //Procs
 /atom/proc/InCone(atom/center = usr, dir = NORTH)
 	if(get_dist(center, src) == 0 || src == center) return 0
@@ -294,7 +291,7 @@
 			var/datum/species/dullahan/dullahan = H.dna.species
 			head = dullahan.my_head
 
-		var/cyclops_left = HAS_TRAIT(src, TRAIT_CYCLOPS_LEFT)
+		var/cyclops_left = HAS_TRAIT(src, TRAIT_CYCLOPS_LEFT) 
 		var/cyclops_right = HAS_TRAIT(src, TRAIT_CYCLOPS_RIGHT)
 
 		if(head)

@@ -46,7 +46,7 @@
 	var/accessory = "None"
 	var/detail = "None"
 	var/marking = "None"
-	
+
 	var/shavelevel = 0
 	var/breathe_tick = 0 // Used for gas mask delays.
 	var/socks = "Nude" //Which socks the player wants
@@ -108,16 +108,20 @@
 	var/funeral = FALSE // Whether the body has received rites or not.
 
 	var/datum/devotion/devotion = null // Used for cleric_holder for priests
+	var/datum/inspiration/inspiration = null
 
 	var/headshot_link = null
 	var/flavortext = null
-	var/flavortext_display = null
 	var/ooc_notes = null
-	var/ooc_notes_display = null
-	var/ooc_extra_link
 	var/ooc_extra
-	var/is_legacy = FALSE
+	var/song_title
+	var/song_artist
 	var/received_resident_key = FALSE
+	var/nsfwflavortext = null
+	var/erpprefs = null
+
+	var/list/img_gallery = list()
+	var/list/nsfw_img_gallery = list()
 
 	var/nsfw_headshot_link = null
 
@@ -140,7 +144,37 @@
 
 	/// Whether our job title is adaptive to our skills.
 	var/adaptive_name
-	
+
+	/// Ref to orison-like sunder object
+	var/sunder_light_obj = null
+
+	/// Assoc list of culinary preferences of the mob
+	var/list/culinary_preferences = list()
+
+	var/datum/charflaw/charflaw
+
+	// curse list and cooldown
+	var/list/curses = list()
+	COOLDOWN_DECLARE(priest_announcement)
+	COOLDOWN_DECLARE(guildmaster_announcement) //This is not for priest but if you are looking for GUILDMASTER announcements it's here, more so convinence than anything.
+	COOLDOWN_DECLARE(crier_announcement)
+	COOLDOWN_DECLARE(priest_sermon)
+	COOLDOWN_DECLARE(priest_apostasy)
+	COOLDOWN_DECLARE(priest_excommunicate)
+	COOLDOWN_DECLARE(priest_curse)
+	COOLDOWN_DECLARE(priest_change_miracles)
+
+	// bait stacks for aimed intent
+	var/bait_stacks
+
+	// werewolf mob storage (this is bad and probably causes hard dels)
+	var/mob/stored_mob = null
+
+	var/mob/living/carbon/human/hostagetaker //Stores the person that took us hostage in a var, allows us to force them to attack the mob and such
+	var/mob/living/carbon/human/hostage //What hostage we have
+
+	fovangle = FOV_DEFAULT
+
 	// adds a flag that if we were skeletonized not because we are super dead and rotted, our face can be shown
 	var/ritual_skeletonization = FALSE // ritualcircles.dm path of rituos, prevents the ritual target's name always being unknown ingame. used in human_helpers.dm if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || !real_name || (O.skeletonized && !ritual_skeletonization && !mind?.has_antag_datum(/datum/antagonist/lich)))
 

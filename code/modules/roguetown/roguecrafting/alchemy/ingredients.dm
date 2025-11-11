@@ -124,7 +124,7 @@
 	icon_state = "fire_runedust"
 	major_pot = /datum/alch_cauldron_recipe/str_potion
 	med_pot = /datum/alch_cauldron_recipe/con_potion
-	minor_pot = /datum/alch_cauldron_recipe/spd_potion
+	minor_pot = /datum/alch_cauldron_recipe/fire_potion
 
 /obj/item/alch/sinew
 	name = "sinew"
@@ -270,6 +270,24 @@
 	med_pot = /datum/alch_cauldron_recipe/big_mana_potion
 	minor_pot = /datum/alch_cauldron_recipe/big_stam_poison
 
+/obj/item/alch/infernaldust
+	name = "infernal dust"
+	desc = "The remains of an abyssal tether to this plane, banished or slain. Best handled with gloves."
+	icon_state = "infernaldust"
+
+	major_pot = /datum/alch_cauldron_recipe/fire_potion
+	med_pot = /datum/alch_cauldron_recipe/big_stam_poison
+	minor_pot = /datum/alch_cauldron_recipe/int_potion
+
+/obj/item/alch/solardust
+	name = "solar dust"
+	desc = "A pinch of Astrata worked into radiant matter. Looking at it hurts your eyes."
+	icon_state = "solardust"
+
+	major_pot = /datum/alch_cauldron_recipe/fire_potion
+	med_pot = /datum/alch_cauldron_recipe/int_potion
+	minor_pot = /datum/alch_cauldron_recipe/per_potion
+
 /obj/item/alch/berrypowder
 	name = "berry powder"
 	desc = "Berries ground and dried into a soft fragrant powder."
@@ -397,6 +415,14 @@
 	major_pot = /datum/alch_cauldron_recipe/lck_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
 	minor_pot = /datum/alch_cauldron_recipe/aphrodisiac
+
+/obj/item/alch/manabloompowder
+	name = "manabloom powder"
+	icon_state = "bluepowder"
+
+	major_pot = /datum/alch_cauldron_recipe/mana_potion
+	med_pot = /datum/alch_cauldron_recipe/int_potion
+	minor_pot = /datum/alch_cauldron_recipe/big_mana_potion
 
 /obj/item/alch/manabloompowder
 	name = "manabloom powder"

@@ -267,6 +267,14 @@
 	hammers_per_item = 12
 	skill_level = 3
 
+/datum/artificer_recipe/contraptions/orestore
+	name = "Mechanized Ore Bag, Bronze (+1 sac, +1 cog)"
+	required_item = /obj/item/ingot/bronze
+	created_item = /obj/item/storage/hip/orestore/bronze
+	hammers_per_item = 12
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/storage/roguebag)
+	skill_level = 3
+
 /datum/artificer_recipe/contraptions/artificerarmor
 	name = "Artificer armor (+3 ancient alloy ingot)(+2 Bronze gear)"
 	required_item = /obj/item/ingot/purifiedaalloy
@@ -333,7 +341,7 @@
 /datum/artificer_recipe/wood/weapons/steamshield
 	name = "Steam Shield (+1 wood plank)(+2 Bronze gear)(+2 bronze ingot)"
 	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze,/obj/item/natural/wood/plank, /obj/item/ingot/bronze,/obj/item/ingot/bronze)
-	created_item = /obj/item/rogueweapon/shield/artificer
+	created_item = /obj/item/rogueweapon/shield/steam
 	hammers_per_item = 12
 	skill_level = 3
 

@@ -15,8 +15,6 @@
 	if(client)
 		SSdroning.play_area_sound(get_area(src), client)
 
-	fully_heal(FALSE) //If we don't do this, even a single cut will mean the player's real body will die in the void while they run around wildshaped
-	
 	var/mob/living/carbon/human/species/wildshape/W = new shapepath(loc) //We crate a new mob for the wildshaping player to inhabit
 
 	W.set_patron(src.patron)
@@ -37,6 +35,34 @@
 	W.voice_color = voice_color
 	W.cmode_music_override = cmode_music_override
 	W.cmode_music_override_name = cmode_music_override_name
+
+	for(var/datum/wound/old_wound in W.get_wounds())
+		var/obj/item/bodypart/bp = W.get_bodypart(old_wound.bodypart_owner.body_zone)
+		bp?.remove_wound(old_wound.type)
+
+	var/list/datum/wound/woundlist = get_wounds()
+	if(woundlist.len)
+		for(var/datum/wound/wound in woundlist)
+			var/obj/item/bodypart/c_BP = get_bodypart(wound.bodypart_owner.body_zone)
+			var/obj/item/bodypart/w_BP = W.get_bodypart(wound.bodypart_owner.body_zone)
+			w_BP.add_wound(wound.type)
+			c_BP.remove_wound(wound.type)
+
+	W.adjustBruteLoss(getBruteLoss())
+	W.adjustFireLoss(getFireLoss())
+	W.adjustOxyLoss(getOxyLoss())
+
+	src.adjustBruteLoss(-src.getBruteLoss())
+	src.adjustFireLoss(-src.getFireLoss())
+	src.adjustOxyLoss(-src.getOxyLoss())
+
+	W.blood_volume = blood_volume
+	W.bleed_rate = bleed_rate
+	W.bleedsuppress = bleedsuppress
+
+	bleed_rate = 0
+	bleedsuppress = TRUE
+
 	mind.transfer_to(W)
 	skills?.known_skills = list()
 	skills?.skill_experience = list()
@@ -69,8 +95,31 @@
 	if(dead)
 		W.death()
 
-	W.forceMove(get_turf(src))
+	for(var/datum/wound/old_wound in W.get_wounds())
+		var/obj/item/bodypart/bp = W.get_bodypart(old_wound.bodypart_owner.body_zone)
+		bp?.remove_wound(old_wound.type)
 
+	var/list/datum/wound/woundlist = get_wounds()
+	if(woundlist.len)
+		for(var/datum/wound/wound in woundlist)
+			var/obj/item/bodypart/c_BP = get_bodypart(wound.bodypart_owner.body_zone)
+			var/obj/item/bodypart/w_BP = W.get_bodypart(wound.bodypart_owner.body_zone)
+			w_BP.add_wound(wound.type)
+			c_BP.remove_wound(wound.type)
+
+	W.adjustBruteLoss(getBruteLoss())
+	W.adjustFireLoss(getFireLoss())
+	W.adjustOxyLoss(getOxyLoss())
+
+	src.adjustBruteLoss(-src.getBruteLoss())
+	src.adjustFireLoss(-src.getFireLoss())
+	src.adjustOxyLoss(-src.getOxyLoss())
+
+	W.blood_volume = blood_volume
+	W.bleed_rate = bleed_rate
+	W.bleedsuppress = bleedsuppress
+
+	W.forceMove(get_turf(src))
 	mind.transfer_to(W)
 
 	var/mob/living/carbon/human/species/wildshape/WA = src
@@ -85,7 +134,6 @@
 				W.RemoveSpell(wildspell)
 
 	W.regenerate_icons()
-
 	to_chat(W, span_userdanger("I return to my old form."))
 
 	qdel(src)

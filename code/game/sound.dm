@@ -44,9 +44,9 @@
 	if(soundping)
 		ping_sound(source)
 
-	var/list/muffled_listeners = list() //this is very rudimentary list of muffled listeners above and below to mimic sound muffling (this is done through modifying the playsounds for them)
+	//var/list/muffled_listeners = list() //this is very rudimentary list of muffled listeners above and below to mimic sound muffling (this is done through modifying the playsounds for them) <-- no it ain't you forgot to use this var
 	if(!ignore_walls) //these sounds don't carry through walls or vertically
-		listeners = listeners & hearers(maxdistance,turf_source)
+		listeners = listeners & get_hearers_in_view(maxdistance,turf_source)
 	else
 		if(above_turf)
 			listeners += SSmobs.clients_by_zlevel[above_turf.z]
@@ -60,28 +60,28 @@
 	. = list()
 
 	for(var/mob/M as anything in listeners)
-		var/turf/tocheck = get_turf(M)
+		var/turf/turf_check = get_turf(M)
 		// Check relay instead.
 		if(isdullahan(M))
 			var/mob/living/carbon/human = M
 			var/datum/species/dullahan/dullahan = human.dna.species
 			if(dullahan.headless)
-				tocheck = get_turf(dullahan.my_head)
+				turf_check = get_turf(dullahan.my_head)
 
-		if(get_dist(tocheck, turf_source) <= maxdistance)
+		if(get_dist(turf_check, turf_source) <= maxdistance)
 			if(animal_pref)
 				if(M.client?.prefs?.mute_animal_emotes)
 					continue
 			if(M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, repeat))
 				. += M
-
-	for(var/mob/M as anything in muffled_listeners)
+	//This never runs because muffled listeners will always be empty and instead muffling runs on playsound_local
+	/*for(var/mob/M as anything in muffled_listeners)
 		if(get_dist(M, turf_source) <= maxdistance)
 			if(animal_pref)
 				if(M.client?.prefs?.mute_animal_emotes)
 					continue
 			if(M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, repeat, muffled = TRUE))
-				. += M
+				. += M*/ 
 
 
 /proc/ping_sound(atom/A)
@@ -129,7 +129,6 @@
 		if(dullahan.headless)
 			user_head = dullahan.my_head
 			muffled = istype(user_head.loc, /obj/structure/closet) || istype(user_head.loc, /obj/item/storage/)
-	
 	if(muffled)
 		S.environment = 11
 		if(falloff)
@@ -145,7 +144,7 @@
 
 	S.volume = vol2use
 
-	var/area/A = get_area(src)
+	var/area/A = get_area(get_turf(src))
 	if(A)
 		if(A.soundenv != -1)
 			S.environment = A.soundenv
@@ -163,7 +162,6 @@
 
 		//sound volume falloff with distance
 		var/distance = get_dist(T, turf_source)
-
 		S.volume -= (distance * (0.10 * S.volume)) //10% each step
 /*
 		if(pressure_affected)
@@ -188,19 +186,19 @@
 
 		if(S.volume <= 0)
 			return FALSE //No sound
-
-		var/dx = turf_source.x - T.x
+		var/atom/our_turf = get_turf(src)
+		var/dx = turf_source.x - our_turf.x
 		if(dx <= 1 && dx >= -1)
 			S.x = 0
 		else
 			S.x = dx
-		var/dz = turf_source.y - T.y
+		var/dz = turf_source.y - our_turf.y
 		if(dz <= 1 && dz >= -1)
 			S.z = 0
 		else
 			S.z = dz
 
-		var/dy = turf_source.z - T.z
+		var/dy = turf_source.z - our_turf.z
 		S.y = dy
 
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)

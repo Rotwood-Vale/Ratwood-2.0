@@ -42,11 +42,11 @@
 			damage *= fuck_that_guy_multiplier
 			M.adjust_fire_stacks(10)
 			visible_message(span_warning("[target] erupts in flame upon being struck by [src]!"))
-			M.IgniteMob()
+			M.ignite_mob()
 		else
 			M.adjust_fire_stacks(4)
 			visible_message(span_warning("[src] ignites [target]!"))
-			M.IgniteMob()
+			M.ignite_mob()
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/ignition
@@ -103,6 +103,13 @@
 	/// Amount of PQ gained for reviving people
 	var/revive_pq = PQ_GAIN_REVIVE
 
+/obj/effect/proc_holder/spell/invoked/revive/start_recharge()
+	// Because the cooldown for anastasis is so incredibly low, not having tech impacts them more heavily than other faiths
+	var/tech_resurrection_modifier = SSchimeric_tech.get_resurrection_multiplier()
+	if(tech_resurrection_modifier > 1)
+		recharge_time = initial(recharge_time) * (tech_resurrection_modifier * 2.5)
+	. = ..()
+
 /obj/effect/proc_holder/spell/invoked/revive/cast(list/targets, mob/living/user)
 	..()
 
@@ -111,22 +118,7 @@
 		return FALSE
 	testing("revived1")
 	var/mob/living/target = targets[1]
-	if(!target.mind)
-		revert_cast()
-		return FALSE
-	if(HAS_TRAIT(target, TRAIT_NECRAS_VOW))
-		to_chat(user, "This one has pledged themselves whole to Necra. They are Hers.")
-		revert_cast()
-		return FALSE
-	if(!target.mind.active)
-		to_chat(user, "Astrata is not done with [target], yet.")
-		revert_cast()
-		return FALSE
-	if(target == user)
-		revert_cast()
-		return FALSE
-	if(target.stat < DEAD)
-		to_chat(user, span_warning("Nothing happens."))
+	if(!target.check_revive(user))
 		revert_cast()
 		return FALSE
 	if(GLOB.tod == "night")
@@ -134,7 +126,10 @@
 	for(var/obj/structure/fluff/psycross/S in oview(5, user))
 		S.AOE_flash(user, range = 8)
 	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-		target.visible_message(span_danger("[target] is unmade by holy light!"), span_userdanger("I'm unmade by holy light!"))
+		target.visible_message(
+			span_danger("[target] is unmade by holy light!"),
+			span_userdanger("I'm unmade by holy light!")
+		)
 		target.gib()
 		return TRUE
 	if(alert(target, "They are calling for you. Are you ready?", "Revival", "I need to wake up", "Don't let me go") != "I need to wake up")
@@ -155,7 +150,7 @@
 	target.grab_ghost(force = TRUE) // even suicides
 	target.emote("breathgasp")
 	target.Jitter(100)
-	GLOB.azure_round_stats[STATS_ASTRATA_REVIVALS]++
+	record_round_statistic(STATS_ASTRATA_REVIVALS)
 	target.update_body()
 	target.visible_message(span_notice("[target] is revived by holy light!"), span_green("I awake from the void."))
 	if(revive_pq && !HAS_TRAIT(target, TRAIT_IWASREVIVED) && user?.ckey)

@@ -48,7 +48,6 @@
 	var/vine_cd
 	inherent_spells = list(/obj/effect/proc_holder/spell/self/create_vines)
 
-
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/Initialize()
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 	. = ..()
@@ -84,9 +83,6 @@
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
-		if(!Process_Spacemove()) //Drifting
-			walk(src,0)
-			return 1
 		if(world.time >= src.vine_cd + 10 SECONDS && !mind)
 			vine()
 			src.vine_cd = world.time
@@ -114,12 +110,11 @@
 		return 1
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/proc/vine()
-	target.visible_message(span_boldwarning("Vines spread out from [src]!"))
+	visible_message(span_boldwarning("Vines spread out from [src]!"))
 	for(var/turf/turf as anything in RANGE_TURFS(2,src.loc))
 		if(!locate(/obj/structure/vine) in turf)
 			new /obj/structure/vine(turf)
 	src.vine_cd = world.time
-
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/death(gibbed)
 	..()
 	for(var/obj/structure/vine/V in view(src))

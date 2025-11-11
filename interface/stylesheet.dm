@@ -129,8 +129,9 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
+
 .orator					{font-family: "Project Sans", Pterra; font-size: 100%;}
-.sandwauk				{font-family: "Persian", Pterra; font-size: 100%;}
+.sandwauk				{font-family: "Almalik", Pterra; font-size: 100%;}
 .human					{font-family: "Honoka Mincho", Pterra;}
 .elf					{font-family: "Dauphin", cursive, Pterra;}
 .dwarf					{font-family: "MasonAlternate", Pterra;}
@@ -149,6 +150,7 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .gronnic				{font-family: "Jorvik Informal", "Pterra"; font-size: 100%;}
 .aavnic					{font-family: "Romeodn", "Pterra"; font-size: 100%;}
 .felid					{font-family: "Rasyideen", Pterra; font-size: 120%;}
+.abyssal				{font-family: "Achilles", "Pterra"; font-size: 110%;}
 
 .torture				{color: #42ff20}
 
