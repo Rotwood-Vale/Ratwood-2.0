@@ -1,5 +1,6 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Button, DmIcon, LabeledList, Section, Stack, Tooltip } from 'tgui-core/components';
 import { useBackend } from '../backend';
@@ -9,6 +10,8 @@ import { Window } from '../layouts';
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 import React from 'react';
 import { Box, Button, DmIcon, LabeledList, Section, Stack, Tooltip } from 'tgui-core/components';
 
@@ -16,6 +19,9 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -23,6 +29,7 @@ type StashItem = {
   uid: number;
   path: string;
   name: string;
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
   icon?: string;
@@ -35,11 +42,16 @@ type StashItem = {
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   icon_state: string;
   icon?: string | null; // serialized icon file path
   mob_overlay_icon?: string | null; // optional on-mob sheet
   item_state?: string | null; // DM item_state for fallback
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -54,6 +66,7 @@ type Data = {
   items: StashItem[];
   grid_w: number;
   grid_h: number;
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
   rev: number;
@@ -202,6 +215,8 @@ export const RatworldStash = (props) => {
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   rev: number; // simple versioning counter
 };
 
@@ -219,6 +234,9 @@ export const RatworldStash = () => {
   return (
     <Window width={500} height={500} title="Ratworld Reliquary">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -242,7 +260,10 @@ export const RatworldStash = () => {
           </Stack.Item>
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -260,7 +281,12 @@ export const RatworldStash = () => {
                 onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                   const rect = e.currentTarget.getBoundingClientRect();
+=======
+                  // Deposit item at clicked cell if any
+                  const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+>>>>>>> Stashed changes
 =======
                   // Deposit item at clicked cell if any
                   const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
@@ -275,6 +301,10 @@ export const RatworldStash = () => {
                     if (e.button === 0) {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+                      // Left click deposits
+>>>>>>> Stashed changes
 =======
                       // Left click deposits
 >>>>>>> Stashed changes
@@ -289,6 +319,7 @@ export const RatworldStash = () => {
                 {/* Grid background */}
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 {Array.from({ length: grid_h }).map((_, ry) => (
                   <React.Fragment key={ry}>
                     {Array.from({ length: grid_w }).map((_, rx) => (
@@ -301,6 +332,8 @@ export const RatworldStash = () => {
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                 {[...Array(grid_h)].map((_, gy) => (
                   <React.Fragment key={gy}>
                     {[...Array(grid_w)].map((_, gx) => (
@@ -311,6 +344,9 @@ export const RatworldStash = () => {
                           left: gx * CELL,
                           top: gy * CELL,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -320,10 +356,13 @@ export const RatworldStash = () => {
                           border: '1px solid #222',
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                           background:
                             (rx + ry) % 2 === 0
                               ? 'rgba(255,255,255,0.02)'
                               : 'rgba(0,0,0,0.02)',
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -335,9 +374,14 @@ export const RatworldStash = () => {
                 ))}
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
                 {/* Items */}
                 {items.map(item => (
+=======
+                {/* Items */}
+                {items.map((item) => (
+>>>>>>> Stashed changes
 =======
                 {/* Items */}
                 {items.map((item) => (
@@ -367,7 +411,12 @@ export const RatworldStash = () => {
                       onClick={() => act('withdraw', { uid: item.uid })}
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                       onContextMenu={e => {
+=======
+                      onContextMenu={(e) => {
+                        // Right-click to move item to top-left as simple demo
+>>>>>>> Stashed changes
 =======
                       onContextMenu={(e) => {
                         // Right-click to move item to top-left as simple demo
@@ -382,8 +431,11 @@ export const RatworldStash = () => {
                     >
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                       <AutoScaledIcon item={item} />
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
                       <DmIcon
@@ -393,6 +445,9 @@ export const RatworldStash = () => {
                         height={CELL}
                       />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -409,7 +464,10 @@ export const RatworldStash = () => {
 };
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -464,6 +522,9 @@ function resolveIconState(item: StashItem): string {
   return 'default';
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

@@ -215,6 +215,7 @@ SUBSYSTEM_DEF(mapping)
 	#endif
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 	#ifndef NO_DUNGEON
 	otherZ += load_map_config("_maps/map_files/otherz/dungeon.json")
@@ -222,6 +223,11 @@ SUBSYSTEM_DEF(mapping)
 
 	// Ratworld support: load Ratworld-specific z-levels when selected
 	if(lowertext(config?.map_name) == "ratworld")
+=======
+	// Ratworld support: if the selected map is Ratworld, load its extra z-levels as well
+	if(lowertext(config?.map_name) == "ratworld")
+		// Reuse Rogueworld's otherz for now; can be swapped to ratworld.json when authored
+>>>>>>> Stashed changes
 =======
 	// Ratworld support: if the selected map is Ratworld, load its extra z-levels as well
 	if(lowertext(config?.map_name) == "ratworld")
