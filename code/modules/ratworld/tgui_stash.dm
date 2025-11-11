@@ -5,9 +5,6 @@
     var/datum/ratworld/stash/stash
     var/last_refresh = 0
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 /// Try to choose the correct inventory icon sheet based on the item's type path
 /datum/ratworld/stash_session/proc/inventory_sheet_for_path(path_text)
     if(!istext(path_text))
@@ -42,12 +39,7 @@
         return 'icons/roguetown/items/valuable.dmi'
     return 'icons/roguetown/items/produce.dmi'
 
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
 /datum/ratworld/stash_session/proc/refresh()
     if(user?.client?.ckey)
         // Re-fetch latest persisted stash so UI reflects changes after deposits
@@ -97,23 +89,11 @@
                     item_state = tmpi.item_state
                 qdel(tmpi)
         // Determine final icon and state preference order:
-        // 1. Serialized inventory icon sheet (rec["icon"])
-        // 2. Fallback instantiated type icon
-        // For state: prefer explicit icon_state var; then item_state; then initial()
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         // Prefer a deterministic inventory sheet based on type path to avoid on-mob overlays
-        var/final_icon = inventory_sheet_for_path(rec["path"]) || (istext(icon_file) ? icon_file : null)
-=======
-        var/final_icon = istext(icon_file) ? icon_file : null
->>>>>>> Stashed changes
-=======
-        var/final_icon = istext(icon_file) ? icon_file : null
->>>>>>> Stashed changes
-=======
-        var/final_icon = istext(icon_file) ? icon_file : null
->>>>>>> Stashed changes
+        var/final_icon = inventory_sheet_for_path(rec["path"])
+        if(!final_icon && istext(icon_file))
+            final_icon = icon_file
+
         var/list/vars_block = (islist(rec["vars"])) ? rec["vars"] : null
         var/final_icon_state = null
         if(vars_block)
@@ -129,9 +109,7 @@
                     final_icon_state = tmp2.icon_state
                 qdel(tmp2)
         var/path_text = rec["path"]
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
         // Dedicated preview fields: choose the best inventory icon + state (prefer item_state, then icon_state)
         var/preview_state = item_state || final_icon_state || "default"
         // Heuristic: some states (e.g. lbracers) are microscopic; prefer a more solid fallback if available
@@ -145,35 +123,33 @@
         if(preview_state in list("lbracers", "wrappings", "nocwrappings"))
             preview_scale = 2
         if(preview_state in list("bracers", "ironbracers", "albracers", "ibracers"))
-            preview_scale = 2
+            preview_scale = max(preview_scale, 2)
         // Extremely minimal textile wraps get extra boost
         if(preview_state in list("cloth", "rag", "string"))
-            preview_scale = 3
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+            preview_scale = max(preview_scale, 3)
+        // Coin-like items get a small boost too
+        if(findtext(lowertext(path_text), "coin"))
+            preview_scale = max(preview_scale, 2)
+
+        // Determine display name
+        var/name_val = null
+        if(vars_block && vars_block["name"]) name_val = vars_block["name"]
+        if(!name_val)
+            var/Tn = text2path(rec["path"]) 
+            if(ispath(Tn))
+                name_val = initial(Tn:name)
+
         out += list(list(
             "uid" = item_uid,
             "path" = "[path_text]",
             "icon" = final_icon,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
             "preview_icon" = final_icon,
             "preview_state" = preview_state,
             "preview_scale" = preview_scale,
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
             "mob_overlay_icon" = mob_overlay_icon,
             "item_state" = item_state,
-            "name" = (vars_block && vars_block["name"]) || initial(text2path(rec["path"]).name),
+            "name" = name_val,
             "icon_state" = final_icon_state,
             "x" = rec["x"],
             "y" = rec["y"],
