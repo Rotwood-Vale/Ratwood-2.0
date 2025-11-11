@@ -8,6 +8,7 @@
 // END_PREFERENCES
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\ratworld.dm"
 #include "_maps\map_files\generic\CentCom.dmm"
 #include "_maps\templates\arcyne_fortress.dm"
 #include "_maps\templates\bog_shack_small.dm"
@@ -213,6 +214,13 @@
 #include "code\__HELPERS\mobs.dm"
 #include "code\__HELPERS\mouse_control.dm"
 #include "code\__HELPERS\names.dm"
+#include "code\controllers\subsystem\ratworld.dm"
+#include "code\modules\ratworld\item_serialization.dm"
+#include "code\modules\ratworld\rarity.dm"
+#include "code\modules\ratworld\socketing.dm"
+#include "code\modules\ratworld\stash.dm"
+#include "code\modules\ratworld\tgui_stash.dm"
+#include "code\modules\ratworld\roles.dm"
 #include "code\__HELPERS\player_helpers.dm"
 #include "code\__HELPERS\priority_announce.dm"
 #include "code\__HELPERS\pronouns.dm"
@@ -366,6 +374,7 @@
 #include "code\controllers\subsystem\ping.dm"
 #include "code\controllers\subsystem\pollution.dm"
 #include "code\controllers\subsystem\radio.dm"
+#include "code\controllers\subsystem\ratworld.dm"
 #include "code\controllers\subsystem\rogueroundsplayed.dm"
 #include "code\controllers\subsystem\runechat.dm"
 #include "code\controllers\subsystem\server_maint.dm"
@@ -2262,6 +2271,8 @@
 #include "code\modules\projectiles\projectile\bullets.dm"
 #include "code\modules\projectiles\projectile\magic.dm"
 #include "code\modules\projectiles\projectile\reusable\_reusable.dm"
+#include "code\modules\ratworld\tgui_stash.dm"
+#define __RATWORLD_DUP_GUARD__
 #include "code\modules\reagents\chem_splash.dm"
 #include "code\modules\reagents\reagent_containers.dm"
 #include "code\modules\reagents\roguespill.dm"

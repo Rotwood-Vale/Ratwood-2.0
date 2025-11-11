@@ -10,7 +10,8 @@
 	if(!used)
 		switch(soundin)
 			if("meow")
-				used = list('sound/vo/female/tabaxi/tabaxi_meow1.ogg', 'sound/vo/female/tabaxi/tabaxi_meow2.ogg')
+				// Removed second missing file (tabaxi_meow2.ogg) to avoid resource error
+				used = list('sound/vo/female/tabaxi/tabaxi_meow1.ogg')
 			if("purr")
 				used = list('sound/vo/female/tabaxi/tabaxi_purr.ogg')
 			if("trill")

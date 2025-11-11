@@ -218,6 +218,9 @@ SUBSYSTEM_DEF(mapping)
 	otherZ += load_map_config("_maps/map_files/otherz/dungeon.json")
 	#endif
 
+	// Ratworld support: load Ratworld-specific z-levels when selected
+	if(lowertext(config?.map_name) == "ratworld")
+		otherZ += load_map_config("_maps/map_files/otherz/ratworld.json")
 	if(otherZ.len)
 		for(var/datum/map_config/OtherZ in otherZ)
 			LoadGroup(FailedZs, OtherZ.map_name, OtherZ.map_path, OtherZ.map_file, OtherZ.map_folder, OtherZ.traits, ZTRAITS_STATION)

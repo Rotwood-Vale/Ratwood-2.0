@@ -53,3 +53,17 @@ The TGS DMAPI is licensed as a subproject under the MIT license.
 See the footer of [code/__DEFINES/tgs.dm](./code/__DEFINES/tgs.dm) and [code/modules/tgs/LICENSE](./code/modules/tgs/LICENSE) for the MIT license.
 
 All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+
+## Ratworld (Experimental Persistent Mode)
+
+Ratworld is an early scaffold aiming for a persistent world built atop the unused Rogueworld concept.
+
+Included so far:
+
+- Map config: `_maps/ratworld.json` (reuses Rogueworld map files).
+- Extra z-level loading hook in `mapping.dm`.
+- Modules: `code/modules/ratworld/` providing rarity definitions, gem socketing component, vault (mammon stash), and role persistence, among other things.
+- Admin verbs to assign core roles (Duke/Duchess, Priest) and view current role state.
+- Unit tests for rarity + socketing.
+
+Enable locally by uncommenting `#define RATWORLD` in `code/rt.dm` and rebuilding. See `docs/ratworld.md` for details and next steps.

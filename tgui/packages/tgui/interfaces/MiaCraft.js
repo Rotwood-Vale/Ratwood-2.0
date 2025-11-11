@@ -101,7 +101,7 @@ const CraftingCategory = ({ crafties, key3, onlyCraftable, craftability, key, ac
             </LabeledList>
           </Collapsible>
         </Stack.Item>
-      </Stack>
+        </Stack>
     );
   };
 
