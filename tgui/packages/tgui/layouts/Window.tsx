@@ -110,8 +110,12 @@ export const Window = (props: Props) => {
     (config.user.observer
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE);
+
   return suspended ? null : (
-    <Layout className="Window" theme={config.window?.theme || theme}>
+    <Layout className="Window" theme={theme}>
+      <div className="SideBar">
+        <div className="SideBarDecoration" />
+      </div>
       <TitleBar
         title={title || decodeHtmlEntities(config.title)}
         status={config.status}
@@ -165,7 +169,6 @@ const WindowContent = (props: ContentProps) => {
     <Layout.Content
       className={classes(['Window__content', className])}
       {...rest}
-      
     >
       {(fitted && children) || (
         <div className="Window__contentPadding">{children}</div>
