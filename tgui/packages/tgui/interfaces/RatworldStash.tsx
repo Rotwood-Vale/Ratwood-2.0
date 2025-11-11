@@ -1,13 +1,23 @@
+<<<<<<< Updated upstream
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Button, DmIcon, LabeledList, Section, Stack, Tooltip } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 // Backend-provided item record
+=======
+import React from 'react';
+import { Box, Button, DmIcon, LabeledList, Section, Stack, Tooltip } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
+
+>>>>>>> Stashed changes
 type StashItem = {
   uid: number;
   path: string;
   name: string;
+<<<<<<< Updated upstream
   icon?: string;
   icon_state?: string;
   item_state?: string;
@@ -15,6 +25,12 @@ type StashItem = {
   preview_state?: string;
   preview_scale?: number;
   mob_overlay_icon?: string;
+=======
+  icon_state: string;
+  icon?: string | null; // serialized icon file path
+  mob_overlay_icon?: string | null; // optional on-mob sheet
+  item_state?: string | null; // DM item_state for fallback
+>>>>>>> Stashed changes
   x: number;
   y: number;
   w: number;
@@ -26,6 +42,7 @@ type Data = {
   items: StashItem[];
   grid_w: number;
   grid_h: number;
+<<<<<<< Updated upstream
   rev: number;
 };
 
@@ -169,6 +186,24 @@ export const RatworldStash = (props) => {
       height={Math.max(360, grid_h * CELL + 160)}
       title="Ratworld Reliquary"
     >
+=======
+  rev: number; // simple versioning counter
+};
+
+// Rough Diablo 2 style: grid of item squares. We don't have size yet, treat each as 1x1.
+// Future: add width/height, rarity border colors, socket render, etc.
+
+const CELL = 48; // size of a single grid cell in px (crisper for clothing icons)
+
+export const RatworldStash = () => {
+  const { data, act } = useBackend<Data>();
+  const { currency, items, grid_w, grid_h } = data;
+
+  // Fill grid cells with items; if more than grid size, scroll area will handle overflow.
+  // For now unlimited rows; each row has GRID_COLS.
+  return (
+    <Window width={500} height={500} title="Ratworld Reliquary">
+>>>>>>> Stashed changes
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -187,7 +222,10 @@ export const RatworldStash = (props) => {
               </LabeledList>
             </Section>
           </Stack.Item>
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
           <Stack.Item grow>
             <Section title="Stash" fill>
               <Box
@@ -199,17 +237,27 @@ export const RatworldStash = (props) => {
                   border: '2px solid #333',
                 }}
                 onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => {
+<<<<<<< Updated upstream
                   const rect = e.currentTarget.getBoundingClientRect();
+=======
+                  // Deposit item at clicked cell if any
+                  const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+>>>>>>> Stashed changes
                   const gx = Math.floor((e.clientX - rect.left) / CELL) + 1;
                   const gy = Math.floor((e.clientY - rect.top) / CELL) + 1;
                   if (gx >= 1 && gx <= grid_w && gy >= 1 && gy <= grid_h) {
                     if (e.button === 0) {
+<<<<<<< Updated upstream
+=======
+                      // Left click deposits
+>>>>>>> Stashed changes
                       act('deposit_at', { x: gx, y: gy });
                     }
                   }
                 }}
               >
                 {/* Grid background */}
+<<<<<<< Updated upstream
                 {Array.from({ length: grid_h }).map((_, ry) => (
                   <React.Fragment key={ry}>
                     {Array.from({ length: grid_w }).map((_, rx) => (
@@ -219,22 +267,41 @@ export const RatworldStash = (props) => {
                           position: 'absolute',
                           left: rx * CELL,
                           top: ry * CELL,
+=======
+                {[...Array(grid_h)].map((_, gy) => (
+                  <React.Fragment key={gy}>
+                    {[...Array(grid_w)].map((_, gx) => (
+                      <Box
+                        key={`${gx}-${gy}`}
+                        style={{
+                          position: 'absolute',
+                          left: gx * CELL,
+                          top: gy * CELL,
+>>>>>>> Stashed changes
                           width: CELL,
                           height: CELL,
                           boxSizing: 'border-box',
                           border: '1px solid #222',
+<<<<<<< Updated upstream
                           background:
                             (rx + ry) % 2 === 0
                               ? 'rgba(255,255,255,0.02)'
                               : 'rgba(0,0,0,0.02)',
+=======
+>>>>>>> Stashed changes
                         }}
                       />
                     ))}
                   </React.Fragment>
                 ))}
+<<<<<<< Updated upstream
 
                 {/* Items */}
                 {items.map(item => (
+=======
+                {/* Items */}
+                {items.map((item) => (
+>>>>>>> Stashed changes
                   <Tooltip key={item.uid} content={<ItemTooltip item={item} />} position="right">
                     <Box
                       style={{
@@ -254,12 +321,26 @@ export const RatworldStash = (props) => {
                         cursor: 'pointer',
                       }}
                       onClick={() => act('withdraw', { uid: item.uid })}
+<<<<<<< Updated upstream
                       onContextMenu={e => {
+=======
+                      onContextMenu={(e) => {
+                        // Right-click to move item to top-left as simple demo
+>>>>>>> Stashed changes
                         e.preventDefault();
                         act('move', { uid: item.uid, x: 1, y: 1 });
                       }}
                     >
+<<<<<<< Updated upstream
                       <AutoScaledIcon item={item} />
+=======
+                      <DmIcon
+                        icon={resolveIconSheet(item)}
+                        icon_state={resolveIconState(item)}
+                        width={CELL}
+                        height={CELL}
+                      />
+>>>>>>> Stashed changes
                     </Box>
                   </Tooltip>
                 ))}
@@ -271,3 +352,57 @@ export const RatworldStash = (props) => {
     </Window>
   );
 };
+<<<<<<< Updated upstream
+=======
+
+interface ItemTooltipProps { item: StashItem }
+const ItemTooltip = ({ item }: ItemTooltipProps) => {
+  return (
+    <Stack vertical>
+      <Stack.Item bold>{item.name}</Stack.Item>
+      <Stack.Item italic>UID #{item.uid}</Stack.Item>
+      <Stack.Item>icon: {String((item as any).icon || '')}</Stack.Item>
+      <Stack.Item>icon_state: {String(item.icon_state || '')}</Stack.Item>
+      <Stack.Item>item_state: {String((item as any).item_state || '')}</Stack.Item>
+      {/* Future: rarity color, sockets, stats, etc. */}
+    </Stack>
+  );
+};
+
+// Utility to chunk an array.
+function chunk<T>(arr: T[], size: number): T[][] {
+  const out: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    out.push(arr.slice(i, i + size));
+  }
+  return out;
+}
+
+// Minimal fallback if backend lacks icon info; use a known small sheet
+function inferIcon(dmPath: string): string {
+  return 'icons/roguetown/items/produce.dmi';
+}
+
+function resolveIconSheet(item: StashItem): string {
+  // Prefer explicit icon from backend
+  if (item.icon) return item.icon;
+  // Try on-mob overlay sheet if present, but prefer inventory counterpart (strip /onmob/)
+  const moi = (item as any).mob_overlay_icon as string | undefined;
+  if (moi) {
+    if (moi.includes('/onmob/')) {
+      return moi.replace('/onmob/', '/');
+    }
+    return moi;
+  }
+  // Fallback by path
+  return inferIcon(item.path);
+}
+
+function resolveIconState(item: StashItem): string {
+  // Prefer DM item_state for inventory icons when available
+  if ((item as any).item_state && (item as any).item_state !== '') return (item as any).item_state as string;
+  // Fallback to icon_state
+  if (item.icon_state && item.icon_state !== '') return item.icon_state;
+  return 'default';
+}
+>>>>>>> Stashed changes
