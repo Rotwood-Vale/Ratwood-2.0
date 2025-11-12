@@ -219,6 +219,8 @@
 #include "code\modules\ratworld\rarity.dm"
 #include "code\modules\ratworld\socketing.dm"
 #include "code\modules\ratworld\stash.dm"
+#include "code\modules\ratworld\stash_sfx.dm"
+#include "code\modules\ratworld\stash_sfx_config.dm"
 #include "code\modules\ratworld\tgui_stash.dm"
 #include "code\modules\ratworld\roles.dm"
 #include "code\__HELPERS\player_helpers.dm"

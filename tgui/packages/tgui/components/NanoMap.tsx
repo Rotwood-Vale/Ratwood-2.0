@@ -59,8 +59,11 @@ export class NanoMap extends Component<Props, State> {
   }
 
   getWxH = (zoom: number) => {
+    // Safely access map dimensions; provide defaults if missing
     const { config } = useBackend();
-    return [config.mapInfo.maxx * 2 * zoom, config.mapInfo.maxy * 2 * zoom];
+    const maxx = (config as any)?.mapInfo?.maxx || 256;
+    const maxy = (config as any)?.mapInfo?.maxy || 256;
+    return [maxx * 2 * zoom, maxy * 2 * zoom];
   };
 
   setZoom(zoom: number, mouseX: number, mouseY: number) {
@@ -192,7 +195,8 @@ export class NanoMap extends Component<Props, State> {
 
     const WxH = this.getWxH(zoom);
 
-    const mapUrl = resolveAsset(`minimap_${config.mapZLevel}.png`);
+  const mapZ = (config as any)?.mapZLevel || 1;
+  const mapUrl = resolveAsset(`minimap_${mapZ}.png`);
     const newStyle: CSSProperties = {
       width: `${WxH[0]}px`,
       height: `${WxH[1]}px`,
@@ -264,9 +268,11 @@ const NanoMapMarker = (props: NanoMapMarkerProps) => {
 
 NanoMap.Marker = NanoMapMarker;
 
-type Data = {
+// Backend data shape (subset used here)
+interface NanoMapData {
   map_levels: number[];
-};
+  config?: any; // fallback if provided differently
+}
 
 type NanoMapZoomerProps = {
   zoom: number;
@@ -274,13 +280,13 @@ type NanoMapZoomerProps = {
 };
 
 const NanoMapZoomer = (props: NanoMapZoomerProps) => {
-  const { act, config, data } = useBackend<Data>();
+  // Provide generic typing to avoid strict property assumptions
+  const { act, config, data } = useBackend<NanoMapData>();
   return (
     <Box className="NanoMap__zoomer">
       <LabeledList>
         <LabeledList.Item label="Zoom">
           <Slider
-            tickWhileDragging
             minValue={1}
             maxValue={8}
             stepPixelSize={10}
@@ -290,12 +296,12 @@ const NanoMapZoomer = (props: NanoMapZoomerProps) => {
           />
         </LabeledList.Item>
         <LabeledList.Item label="Z-Level">
-          {data.map_levels
+          {(Array.isArray(data.map_levels) ? data.map_levels : [])
             .sort((a, b) => Number(a) - Number(b))
             .map((level) => (
               <Button
                 key={level}
-                selected={~~level === ~~config.mapZLevel}
+                selected={~~level === ~~((config as any)?.mapZLevel || 0)}
                 onClick={() => {
                   act('setZLevel', { mapZLevel: level });
                 }}

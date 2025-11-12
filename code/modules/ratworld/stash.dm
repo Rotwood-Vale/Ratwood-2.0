@@ -129,9 +129,32 @@ GLOBAL_LIST_INIT(ratworld_stashes, list())
 		log_admin("RATWORLD: serializer duplicate UID [uid] [I.type] ckey=[user.client.ckey]")
 		to_chat(user, span_warning("Serializer produced duplicate UID; aborting."))
 		return FALSE
-	// Assign size (future: derive from item type, for now all 1x1)
+	// Determine slot size using heuristic mapping of item type paths (tetris-style sizing)
 	var/w = 1
 	var/h = 1
+	var/lpath = lowertext("[I.type]")
+	// Weapons (long objects) take more vertical space
+	if(findtext(lpath, "/weapon/") || findtext(lpath, "/sword/") || findtext(lpath, "/spear/") || findtext(lpath, "/polearm/"))
+		w = 2; h = 3
+	// Shields slightly larger square
+	if(findtext(lpath, "/shield/"))
+		w = 2; h = 2
+	// Clothing categories
+	if(findtext(lpath, "/clothing/cloaks/"))
+		w = 2; h = 3
+	else if(findtext(lpath, "/clothing/shirts") || findtext(lpath, "/clothing/shirt/"))
+		w = 2; h = 2
+	else if(findtext(lpath, "/clothing/pants/"))
+		w = 2; h = 2
+	else if(findtext(lpath, "/clothing/gloves/"))
+		w = 1; h = 1
+	else if(findtext(lpath, "/clothing/feet/"))
+		w = 1; h = 2
+	// Belts horizontally longer
+	if(findtext(lpath, "/clothing/belts/"))
+		w = 2; h = 1
+	// Rings tiny (keep 1x1), coin/valuable stacks maybe 1x1
+	// Future: provide explicit vars on item prototype for stash_w/stash_h and consult those here.
 	var/list/slot
 	if(isnum(new_x) && isnum(new_y))
 		if(S.rect_collides(new_x, new_y, w, h, null))
@@ -160,6 +183,8 @@ GLOBAL_LIST_INIT(ratworld_stashes, list())
 	I.ratworld_stored = TRUE
 	to_chat(user, span_notice("DEBUG: qdel incoming for [I] (uid=[uid])."))
 	qdel(I)
+	// SFX: routed through helper for category-specific audio
+	ratworld_play_stash_sfx(user, I, "deposit")
 	S.Save()
 	to_chat(user, span_notice("Stored [rec["path"]] uid=[uid] at ([rec["x"]],[rec["y"]]) total_items=[S.items.len]."))
 	return TRUE
@@ -171,6 +196,7 @@ GLOBAL_LIST_INIT(ratworld_stashes, list())
 	var/uid_key = "[uid]"
 	if(uid && !(uid_key in S.items))
 		to_chat(user, span_warning("No such item in vault."))
+		ratworld_play_stash_error(user)
 		return FALSE
 	var/list/rec
 	if(uid)
@@ -185,11 +211,14 @@ GLOBAL_LIST_INIT(ratworld_stashes, list())
 	if(rec["uid"] != uid)
 		message_admins("RATWORLD STASH RECORD CORRUPTION: UID mismatch (key=[uid] record=[rec["uid"]]) for [key_name_admin(user)]")
 		log_admin("RATWORLD: stash record corruption key=[uid] != rec=[rec["uid"]] ckey=[user.client.ckey]")
+		ratworld_play_stash_error(user)
 		return FALSE
 	var/obj/item/I = ratworld_deserialize_item(rec, user)
 	if(!I)
 		to_chat(user, span_warning("Failed to reconstruct item."))
 		return FALSE
+	// SFX
+	ratworld_play_stash_sfx(user, I, "withdraw")
 	// Prefer placing directly into any free hand; fallback to floor if none free
 	if(ismob(user))
 		var/mob/living/L = user
@@ -220,10 +249,13 @@ GLOBAL_LIST_INIT(ratworld_stashes, list())
 	var/h = R["h"] || 1
 	if(S.rect_collides(new_x, new_y, w, h, uid))
 		to_chat(user, span_warning("That spot is occupied."))
+		ratworld_play_stash_error(user)
 		return FALSE
 	R["x"] = new_x
 	R["y"] = new_y
 	S.Save()
+	// SFX
+	ratworld_play_stash_sfx(user, null, "move")
 	return TRUE
 
 /proc/ratworld_deposit_mammon(mob/living/user, amount)
@@ -239,6 +271,8 @@ GLOBAL_LIST_INIT(ratworld_stashes, list())
 	var/datum/ratworld/stash/S = ratworld_get_stash(user.client.ckey)
 	SStreasury.bank_accounts[user] -= amount
 	S.currency += amount
+	// Coin deposit SFX
+	ratworld_play_stash_sfx(user, null, "coin_deposit")
 	S.Save()
 	to_chat(user, span_notice("I deposit [amount] mammon to my vault. New balance: [S.currency]."))
 	return TRUE

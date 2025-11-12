@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Box, Button, DmIcon, LabeledList, Section, Stack, Tooltip } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -65,103 +65,54 @@ function resolvePreviewState(item: StashItem): string {
   return 'default';
 }
 
-// Generic content-aware scaling: measure non-transparent pixel bounds if possible,
-// otherwise fall back to a sheet-based guess. Apply scaling via CSS transform for robustness.
-const AutoScaledIcon = ({ item }: { item: StashItem }) => {
-  const hostRef = useRef<HTMLDivElement | null>(null);
-  // Fallback guess based on common sheet sizes (valuable/produce ~16px, clothing ~32px)
-  const guessBase = (() => {
-    const icon = resolvePreviewIcon(item) || '';
-    const low = icon.toLowerCase();
-    if (low.includes('valuable.dmi') || low.includes('produce.dmi')) return 16;
-    return 32;
-  })();
-  const target = CELL - ICON_PAD;
-  const guessed = Math.min(3, Math.max(1, target / guessBase));
-  const [scale, setScale] = useState<number>(Math.max((item.preview_scale || 1), guessed));
-
-  useEffect(() => {
-    const host = hostRef.current;
-    if (!host) return;
-    const img: HTMLImageElement | null = host.querySelector('img');
-    const measure = () => {
-      if (!img || !img.naturalWidth || !img.naturalHeight) return;
-      try {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-        ctx.drawImage(img, 0, 0);
-        const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0, count = 0;
-        for (let y = 0; y < canvas.height; y++) {
-          for (let x = 0; x < canvas.width; x++) {
-            const i = (y * canvas.width + x) * 4;
-            const a = data[i + 3];
-            if (a > 32) {
-              count++;
-              if (x < minX) minX = x;
-              if (y < minY) minY = y;
-              if (x > maxX) maxX = x;
-              if (y > maxY) maxY = y;
-            }
-          }
-        }
-        if (!count) return;
-        const bw = maxX - minX + 1;
-        const bh = maxY - minY + 1;
-        const factor = Math.min(3, Math.max(1, target / Math.max(bw, bh)));
-        setScale((prev) => (prev < factor ? factor : prev));
-      } catch {
-        // ignore measurement failures
-      }
-    };
-    if (img) {
-      if (img.complete) measure(); else img.onload = measure;
-    }
-  }, [item.uid, target]);
-
-  const base = target; // render logical base size, then scale via transform
-
+// Stretch icon to fill the allotted multi-cell box (disable overflow cropping)
+const FitIcon = ({ item }: { item: StashItem }) => {
   return (
-    <div
-      ref={hostRef}
-      style={{
-        width: base,
-        height: base,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-      }}
-    >
-      <div
-        style={{
-          width: base,
-          height: base,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          imageRendering: 'pixelated',
-          transform: `scale(${scale})`,
-          transformOrigin: 'center center',
-        }}
-      >
-        <DmIcon
-          icon={resolvePreviewIcon(item)}
-          icon_state={resolvePreviewState(item)}
-          width={base}
-          height={base}
-        />
-      </div>
-    </div>
+    <DmIcon
+      icon={resolvePreviewIcon(item)}
+      icon_state={resolvePreviewState(item)}
+      width={item.w * CELL - ICON_PAD}
+      height={item.h * CELL - ICON_PAD}
+      style={{ imageRendering: 'pixelated' }}
+    />
   );
 };
 
 export const RatworldStash = () => {
   const { data, act } = useBackend<Data>();
   const { currency, items, grid_w, grid_h } = data;
+  const [draggingUid, setDraggingUid] = useState<number | null>(null);
+  const [dragOrigin, setDragOrigin] = useState<{x: number; y: number} | null>(null);
+  const [hoverCell, setHoverCell] = useState<{x: number; y: number} | null>(null);
+  const gridRef = useRef<HTMLDivElement | null>(null);
+
+  const findItem = (uid: number | null) => items.find(i => i.uid === uid);
+  // Pulse keyframes injected once
+  const PULSE_STYLE = `@keyframes pulseValid {0% {box-shadow:0 0 4px 1px rgba(242,217,76,0.35);}50% {box-shadow:0 0 10px 3px rgba(242,217,76,0.85);}100% {box-shadow:0 0 4px 1px rgba(242,217,76,0.35);}}@keyframes pulseInvalid {0% {box-shadow:0 0 4px 1px rgba(204,51,51,0.35);}50% {box-shadow:0 0 10px 3px rgba(204,51,51,0.85);}100% {box-shadow:0 0 4px 1px rgba(204,51,51,0.35);}}`;
+
+  // Determine if current drag target placement collides with another item.
+  const placementBlocked = (() => {
+    if (!draggingUid || !hoverCell) return false;
+    const item = findItem(draggingUid);
+    if (!item) return false;
+    const tx = hoverCell.x;
+    const ty = hoverCell.y;
+    // Bounds check
+    if (tx < 1 || ty < 1 || tx + item.w - 1 > grid_w || ty + item.h - 1 > grid_h) return true;
+    // Collision with other items
+    for (const other of items) {
+      if (other.uid === item.uid) continue;
+      const ox1 = other.x;
+      const oy1 = other.y;
+      const ox2 = other.x + other.w - 1;
+      const oy2 = other.y + other.h - 1;
+      const tx2 = tx + item.w - 1;
+      const ty2 = ty + item.h - 1;
+      const separated = (tx2 < ox1) || (ox2 < tx) || (ty2 < oy1) || (oy2 < ty);
+      if (!separated) return true;
+    }
+    return false;
+  })();
 
   return (
     <Window
@@ -190,20 +141,47 @@ export const RatworldStash = () => {
 
           <Stack.Item grow>
             <Section title="Stash" fill>
-              <Box
-                position="relative"
+              <div
+                ref={gridRef}
                 style={{
+                  position: 'relative',
                   width: grid_w * CELL,
                   height: grid_h * CELL,
                   background: '#111',
                   border: '2px solid #333',
+                  userSelect: 'none',
                 }}
-                onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => {
+                onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   const gx = Math.floor((e.clientX - rect.left) / CELL) + 1;
                   const gy = Math.floor((e.clientY - rect.top) / CELL) + 1;
                   if (gx >= 1 && gx <= grid_w && gy >= 1 && gy <= grid_h) {
-                    if (e.button === 0) {
+                    setHoverCell({ x: gx, y: gy });
+                  } else {
+                    setHoverCell(null);
+                  }
+                }}
+                onMouseUp={(e: React.MouseEvent<HTMLDivElement>) => {
+                  if (draggingUid) {
+                    const item = findItem(draggingUid);
+                    const drop = hoverCell;
+                    if (item && drop) {
+                      // If dropped on different cell, attempt move; else treat as withdraw
+                      if (drop.x !== item.x || drop.y !== item.y) {
+                        act('move', { uid: item.uid, x: drop.x, y: drop.y });
+                      } else {
+                        act('withdraw', { uid: item.uid });
+                      }
+                    }
+                    setDraggingUid(null);
+                    setDragOrigin(null);
+                    setHoverCell(null);
+                  } else if (!draggingUid && e.button === 0) {
+                    // Background left-click deposit (only if not dragging)
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const gx = Math.floor((e.clientX - rect.left) / CELL) + 1;
+                    const gy = Math.floor((e.clientY - rect.top) / CELL) + 1;
+                    if (gx >= 1 && gx <= grid_w && gy >= 1 && gy <= grid_h) {
                       act('deposit_at', { x: gx, y: gy });
                     }
                   }
@@ -232,7 +210,7 @@ export const RatworldStash = () => {
                   </React.Fragment>
                 ))}
 
-                {/* Items */}
+                {/* Items (stretch-to-fit) */}
                 {items.map((item) => (
                   <Tooltip key={item.uid} content={<ItemTooltip item={item} />} position="right">
                     <Box
@@ -245,24 +223,68 @@ export const RatworldStash = () => {
                         padding: 2,
                         background: '#222',
                         border: '1px solid #555',
-                        overflow: 'hidden',
                         imageRendering: 'pixelated',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        cursor: 'pointer',
+                        cursor: draggingUid === item.uid ? 'grabbing' : 'pointer',
+                        opacity: draggingUid === item.uid ? 0.35 : 1,
                       }}
-                      onClick={() => act('withdraw', { uid: item.uid })}
+                      onMouseDown={(e) => {
+                        if (e.button === 0) {
+                          // Immediate client-side pickup SFX request
+                          act('sfx_pickup', { uid: item.uid });
+                          setDraggingUid(item.uid);
+                          setDragOrigin({ x: item.x, y: item.y });
+                          setHoverCell({ x: item.x, y: item.y });
+                          e.stopPropagation();
+                        }
+                      }}
                       onContextMenu={(e) => {
                         e.preventDefault();
                         act('move', { uid: item.uid, x: 1, y: 1 });
                       }}
                     >
-                      <AutoScaledIcon item={item} />
+                      <FitIcon item={item} />
                     </Box>
                   </Tooltip>
                 ))}
-              </Box>
+                {draggingUid && hoverCell && (() => {
+                  const item = findItem(draggingUid);
+                  if (!item) return null;
+                  return (
+                    <Box
+                      style={{
+                        position: 'absolute',
+                        left: (hoverCell.x - 1) * CELL,
+                        top: (hoverCell.y - 1) * CELL,
+                        width: item.w * CELL,
+                        height: item.h * CELL,
+                        pointerEvents: 'none',
+                        border: placementBlocked ? '2px solid #cc3333' : '2px solid #f2d94c',
+                        background: placementBlocked ? 'rgba(204,51,51,0.18)' : 'rgba(242,217,76,0.16)',
+                        animation: placementBlocked ? 'pulseInvalid 1s infinite' : 'pulseValid 1.15s infinite',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <DmIcon
+                        icon={resolvePreviewIcon(item)}
+                        icon_state={resolvePreviewState(item)}
+                        width={item.w * CELL - ICON_PAD}
+                        height={item.h * CELL - ICON_PAD}
+                        style={{
+                          opacity: 0.18,
+                          imageRendering: 'pixelated',
+                        }}
+                      />
+                    </Box>
+                  );
+                })()}
+                {/* Inject animation stylesheet */}
+                <style>{PULSE_STYLE}</style>
+              </div>
             </Section>
           </Stack.Item>
         </Stack>

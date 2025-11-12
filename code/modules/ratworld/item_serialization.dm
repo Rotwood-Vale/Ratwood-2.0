@@ -21,6 +21,16 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 1)
 /proc/ratworld_can_stash(obj/item/I)
     if(!I) return FALSE
     if(I.ratworld_stored) return FALSE
+    // Block obvious container/storage classes (backpacks, satchels, pouches, boxes, generic storage)
+    // We don't want nested inventories inside the stash to avoid persistence complexity & duping exploits.
+    if(istype(I, /obj/item/storage)) return FALSE
+    // Path substring heuristics for custom modular storage types that may not inherit directly (fallback defense)
+    var/lpath = lowertext("[I.type]")
+    if(findtext(lpath, "/storage/") || findtext(lpath, "/backpack/") || findtext(lpath, "/satchel/") || findtext(lpath, "/pouch/") || findtext(lpath, "/quiver/") || findtext(lpath, "/scabbard/"))
+        return FALSE
+    // If it contains other items already (non-empty contents) treat as a container for now
+    if(I.contents && I.contents.len)
+        return FALSE
     return TRUE
 
 /// Produce a serialized representation of an item suitable to store in JSON

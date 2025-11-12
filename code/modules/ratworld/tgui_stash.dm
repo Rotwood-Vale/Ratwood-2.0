@@ -188,6 +188,22 @@
             ratworld_withdraw_item(user, uid)
             refresh()
             return TRUE
+        if("sfx_pickup")
+            // Client-side immediate pickup feedback (drag start)
+            var/uid = text2num(params["uid"])
+            if(uid)
+                var/datum/ratworld/stash/S = ratworld_get_stash(user.client.ckey)
+                var/uid_key = "[uid]"
+                if(uid_key in S.items)
+                    // Peek item for sound category, but do not modify
+                    var/list/rec = S.items[uid_key]
+                    if(islist(rec))
+                        var/path_text = rec["path"]
+                        if(istext(path_text))
+                            var/obj/item/tmp = new (text2path(path_text))
+                            ratworld_play_stash_sfx(user, tmp, "pickup")
+                            qdel(tmp)
+            return TRUE
         if("deposit_hand")
             var/obj/item/I = user.get_active_held_item()
             if(I)

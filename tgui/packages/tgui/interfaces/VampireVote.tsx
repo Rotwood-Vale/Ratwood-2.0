@@ -1,5 +1,5 @@
 /* eslint-disable unused-imports/no-unused-imports */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+// Disabled unused-vars rule reference removed (rule not present in config)
 import {
   Button,
   LabeledList,
@@ -12,25 +12,28 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-enum PrefToColorEnum {
-  null = 'red',
-  'low' = 'orange',
-  'medium' = 'green',
-  'high' = 'red',
-}
+// Use simple maps instead of enums to avoid parser issues
+type Priority = 'null' | 'low' | 'medium' | 'high';
 
-enum PrefToTextEnum {
-  null = 'NEVER',
-  'low' = '+',
-  'medium' = '++',
-  'high' = '+++',
-}
+const PrefToColor: Record<Priority, string> = {
+  null: 'red',
+  low: 'orange',
+  medium: 'green',
+  high: 'red',
+};
+
+const PrefToText: Record<Priority, string> = {
+  null: 'NEVER',
+  low: '+',
+  medium: '++',
+  high: '+++',
+};
 
 interface Clan {
   clanName: string;
   description: string;
   type: string;
-  priority: number;
+  priority: Priority;
   icon: string;
 }
 
@@ -72,12 +75,12 @@ export const VampireVote = (props: any, context: any) => {
                     minWidth="6em"
                     maxWidth="6em"
                     textAlign="Center"
-                    color={PrefToColorEnum[clan.priority]}
+                    color={PrefToColor[clan.priority]}
                     onClick={() => {
                       act('select_priority', { selected_clan: clan.type });
                     }}
                   >
-                    {PrefToTextEnum[clan.priority]}
+                    {PrefToText[clan.priority]}
                   </Button>
                 }
               >
