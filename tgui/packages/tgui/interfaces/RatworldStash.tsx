@@ -9,6 +9,9 @@ type StashItem = {
   uid: string; // prefixed vault_uid (A/D/S/U + number)
   path: string;
   name: string;
+  rarity?: number | null;
+  rarity_color?: string | null;
+  ench_texts?: string[] | null;
   display_uid?: string | null;
   icon?: string | null;
   icon_state?: string | null;
@@ -38,19 +41,38 @@ type Data = {
 const DEFAULT_CELL = 32; // fallback slot size (px)
 const ICON_PAD = 2; // breathing room inside slot
 
-// Tooltip with diagnostics for debugging scaling/icon metadata
-const ItemTooltip = ({ item }: { item: StashItem }) => (
-  <Stack vertical>
-    <Stack.Item bold>{item.name}</Stack.Item>
-  <Stack.Item italic>UID {displayUid(item)}</Stack.Item>
-    <Stack.Item>icon: {String(item.icon || '')}</Stack.Item>
-    <Stack.Item>icon_state: {String(item.icon_state || '')}</Stack.Item>
-    <Stack.Item>item_state: {String(item.item_state || '')}</Stack.Item>
-    <Stack.Item>preview_icon: {String(item.preview_icon || '')}</Stack.Item>
-    <Stack.Item>preview_state: {String(item.preview_state || '')}</Stack.Item>
-    <Stack.Item>preview_scale: {String(item.preview_scale || '')}</Stack.Item>
-  </Stack>
-);
+// Tooltip content: normal mode shows name + enchantments; debug shows diagnostics
+const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
+  if (debug) {
+    return (
+      <Stack vertical>
+        <Stack.Item bold>{item.name}</Stack.Item>
+        <Stack.Item italic>UID {displayUid(item)}</Stack.Item>
+        <Stack.Item>icon: {String(item.icon || '')}</Stack.Item>
+        <Stack.Item>icon_state: {String(item.icon_state || '')}</Stack.Item>
+        <Stack.Item>item_state: {String(item.item_state || '')}</Stack.Item>
+        <Stack.Item>preview_icon: {String(item.preview_icon || '')}</Stack.Item>
+        <Stack.Item>preview_state: {String(item.preview_state || '')}</Stack.Item>
+        <Stack.Item>preview_scale: {String(item.preview_scale || '')}</Stack.Item>
+      </Stack>
+    );
+  }
+  const lines = item.ench_texts || [];
+  return (
+    <Box style={{ minWidth: 180, textAlign: 'center' }}>
+      <Box bold style={{ color: item.rarity_color || undefined, marginBottom: 4 }}>{item.name}</Box>
+      {lines.length > 0 ? (
+        <Stack vertical>
+          {lines.map((t, i) => (
+            <Stack.Item key={i}>{t}</Stack.Item>
+          ))}
+        </Stack>
+      ) : (
+        <Box color="label">No enchantments</Box>
+      )}
+    </Box>
+  );
+};
 function resolvePreviewIcon(item: StashItem): string {
   if (item.preview_icon) return item.preview_icon;
   if (item.icon) return item.icon;
@@ -316,12 +338,10 @@ export const RatworldStash = () => {
                       </div>
                     </Box>
                   );
-                  return showDebug ? (
-                    <Tooltip key={item.uid} content={<ItemTooltip item={item} />} position="right">
+                  return (
+                    <Tooltip key={item.uid} content={<ItemTooltip item={item} debug={showDebug} />} position="right">
                       {box}
                     </Tooltip>
-                  ) : (
-                    <React.Fragment key={item.uid}>{box}</React.Fragment>
                   );
                 })}
                 {draggingUid && hoverCell && (() => {

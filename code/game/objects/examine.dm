@@ -26,6 +26,12 @@
 	for(var/datum/examine_effect/E in examine_effects)
 		E.trigger(user)
 
+	// Ratworld: append rarity and enchantment lines if present
+	var/list/rw_lines = ratworld_build_examine_for_item(src)
+	if(islist(rw_lines) && rw_lines.len)
+		for(var/L in rw_lines)
+			. += L
+
 /obj/item/proc/integrity_check()
 	if(!max_integrity)
 		return

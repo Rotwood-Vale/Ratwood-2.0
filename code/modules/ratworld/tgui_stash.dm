@@ -230,6 +230,35 @@
             if(ispath(Tn))
                 name_val = initial(Tn:name)
 
+        // Rarity and enchantments (for tooltip display)
+        var/rarity_val = rec["rarity"]
+        var/rarity_color = isnum(rarity_val) ? get_ratworld_rarity_color(rarity_val) : null
+        var/list/ench_ids = rec["ench"]
+        var/list/ench_vals = rec["ench_vals"]
+        var/list/ench_texts = list()
+        if(islist(ench_ids) && ench_ids.len)
+            // infer slot key for percent suffixes
+            var/slot_key_hint = null
+            var/Tsk = text2path(path_text)
+            if(ispath(Tsk))
+                var/obj/item/tmp_sk = new Tsk()
+                slot_key_hint = ratworld_slot_key_for_item(tmp_sk)
+                qdel(tmp_sk)
+            for(var/eid in ench_ids)
+                if(!istext(eid)) continue
+                var/list/defe = ratworld_get_enchant_def(eid)
+                var/ename = defe?defe["name"] : "[eid]"
+                var/val = (islist(ench_vals) && isnum(ench_vals[eid])) ? ench_vals[eid] : null
+                var/suf = ""
+                if(istext(slot_key_hint))
+                    var/list/rr = ratworld_get_enchant_slot_range(eid, slot_key_hint)
+                    if(islist(rr) && rr["percent"]) suf = "%"
+                if(!isnull(val))
+                    var/sign = (val >= 0) ? "+" : ""
+                    ench_texts += "- [ename] [sign][val][suf]"
+                else
+                    ench_texts += "- [ename]"
+
         // Use preview_state as the final icon_state sent to UI, since it already
         // accounts for whether we're using an inventory sheet or the original icon.
         var/final_icon_state = preview_state
@@ -255,6 +284,9 @@
             "mob_overlay_icon" = mob_overlay_icon,
             "item_state" = item_state,
             "name" = name_val,
+            "rarity" = rarity_val,
+            "rarity_color" = rarity_color,
+            "ench_texts" = ench_texts,
             "display_uid" = display_uid,
             "icon_state" = final_icon_state,
             "x" = rec["x"],

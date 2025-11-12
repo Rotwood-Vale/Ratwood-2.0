@@ -55,6 +55,19 @@ GLOBAL_LIST_INIT(rw_rarity_weights, list())
 	var/list/info = get_ratworld_rarity_info(rarity)
 	return info?info["attr_slots"]:0
 
+// UI color mapping for rarity text
+/proc/get_ratworld_rarity_color(rarity)
+	switch(rarity)
+		if(RW_RARITY_COMMON) return "#bfbfbf" // gray
+		if(RW_RARITY_MAGIC) return "#6ec1ff" // light blue
+		if(RW_RARITY_RARE) return "#d4b000" // darker yellow
+		if(RW_RARITY_EPIC) return "#9b59b6" // purple
+		if(RW_RARITY_LEGENDARY) return "#f39c12" // orange
+		if(RW_RARITY_UNIQUE) return "#b8860b" // golden brown
+		if(RW_RARITY_ARTIFACT) return "#e74c3c" // red
+		if(RW_RARITY_ASCENDANT) return "#6c2bd9" // void purple
+	return "#bfbfbf"
+
 // Roll a rarity given weights (overrideable with custom list)
 
 /proc/ratworld_roll_rarity(var/list/custom_weights)

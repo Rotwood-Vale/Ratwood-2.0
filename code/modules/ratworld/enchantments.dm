@@ -124,6 +124,11 @@ var/global/list/GLOB_rw_enchants
 	for(var/id in ids)
 		var/datum/ratworld/enchantment/E = ratworld_get_enchant(id)
 		if(E) E.apply_to_item(I)
+	// After successful application, if item has a rarity and at least one enchant, tint to rarity color
+	if(isnum(I.vars?["rw_rarity"]) && islist(ids) && ids.len)
+		var/rc = get_ratworld_rarity_color(I.vars["rw_rarity"]) 
+		if(istext(rc))
+			I.color = rc
 
 // Roll eligible enchant ids for a given slot key using basic weights
 /proc/ratworld_roll_enchant_ids_for_slot(count = 1, slot_key)
