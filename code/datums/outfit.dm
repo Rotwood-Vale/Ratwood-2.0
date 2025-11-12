@@ -176,9 +176,10 @@
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	pre_equip(H, visualsOnly)
 
+
+
 	//Start with uniform,suit,backpack for additional slots
-	if(uniform)
-		H.equip_to_slot_or_del(new pants(H),SLOT_PANTS, TRUE)
+
 	if(suit)
 		H.equip_to_slot_or_del(new suit(H),SLOT_ARMOR, TRUE)
 	if(back)
@@ -232,10 +233,11 @@
 
 	if(!visualsOnly)
 		if(l_hand)
-			H.put_in_hands(new l_hand(get_turf(H)), FALSE, forced = TRUE)
+			var/obj/item/_lh = new l_hand(get_turf(H))
+			H.put_in_hands(_lh, FALSE, forced = TRUE)
 		if(r_hand)
-			testing("PIH")
-			H.put_in_hands(new r_hand(get_turf(H)), FALSE, forced = TRUE)
+			var/obj/item/_rh = new r_hand(get_turf(H))
+			H.put_in_hands(_rh, FALSE, forced = TRUE)
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 		if(l_pocket)

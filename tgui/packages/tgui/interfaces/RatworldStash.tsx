@@ -1,13 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Box, Button, DmIcon, LabeledList, Section, Stack, Tooltip } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 // Types for backend data
 type StashItem = {
-  uid: number;
+  uid: string; // prefixed vault_uid (A/D/S/U + number)
   path: string;
   name: string;
+  display_uid?: string | null;
   icon?: string | null;
   icon_state?: string | null;
   item_state?: string | null;
@@ -27,17 +29,20 @@ type Data = {
   grid_w: number;
   grid_h: number;
   rev: number;
+  cell_px?: number;
+  debug_enabled?: boolean;
+  is_admin?: boolean;
 };
 
 // Grid sizing
-const CELL = 48; // one logical slot size (px)
-const ICON_PAD = 6; // breathing room inside slot
+const DEFAULT_CELL = 32; // fallback slot size (px)
+const ICON_PAD = 2; // breathing room inside slot
 
 // Tooltip with diagnostics for debugging scaling/icon metadata
 const ItemTooltip = ({ item }: { item: StashItem }) => (
   <Stack vertical>
     <Stack.Item bold>{item.name}</Stack.Item>
-    <Stack.Item italic>UID #{item.uid}</Stack.Item>
+  <Stack.Item italic>UID {displayUid(item)}</Stack.Item>
     <Stack.Item>icon: {String(item.icon || '')}</Stack.Item>
     <Stack.Item>icon_state: {String(item.icon_state || '')}</Stack.Item>
     <Stack.Item>item_state: {String(item.item_state || '')}</Stack.Item>
@@ -46,7 +51,6 @@ const ItemTooltip = ({ item }: { item: StashItem }) => (
     <Stack.Item>preview_scale: {String(item.preview_scale || '')}</Stack.Item>
   </Stack>
 );
-
 function resolvePreviewIcon(item: StashItem): string {
   if (item.preview_icon) return item.preview_icon;
   if (item.icon) return item.icon;
@@ -65,28 +69,52 @@ function resolvePreviewState(item: StashItem): string {
   return 'default';
 }
 
-// Stretch icon to fill the allotted multi-cell box (disable overflow cropping)
-const FitIcon = ({ item }: { item: StashItem }) => {
-  return (
-    <DmIcon
-      icon={resolvePreviewIcon(item)}
-      icon_state={resolvePreviewState(item)}
-      width={item.w * CELL - ICON_PAD}
-      height={item.h * CELL - ICON_PAD}
-      style={{ imageRendering: 'pixelated' }}
-    />
-  );
-};
+function displayUid(item: StashItem): string {
+  const raw = item.display_uid || item.uid;
+  const text = String(raw || '');
+  if (/^\d+$/.test(text)) return `U${text}`;
+  return text;
+}
 
 export const RatworldStash = () => {
   const { data, act } = useBackend<Data>();
   const { currency, items, grid_w, grid_h } = data;
-  const [draggingUid, setDraggingUid] = useState<number | null>(null);
+  const CELL = data.cell_px || DEFAULT_CELL;
+  const showDebug = !!data.debug_enabled;
+  // Icon component sized to grid cells, fill footprint proportionally via CSS (no explicit px sizing)
+  const FitIcon = ({ item }: { item: StashItem }) => {
+    // Stretch preview to fully fill its grid footprint, even if that distorts aspect ratio.
+    return (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          overflow: 'hidden',
+          pointerEvents: 'none',
+          userSelect: 'none',
+        }}
+      >
+        <DmIcon
+          icon={resolvePreviewIcon(item)}
+          icon_state={resolvePreviewState(item)}
+          style={{
+            imageRendering: 'pixelated',
+            width: '100%',
+            height: '100%',
+            objectFit: 'fill',
+            pointerEvents: 'none',
+            userSelect: 'none',
+          }}
+        />
+      </div>
+    );
+  };
+  const [draggingUid, setDraggingUid] = useState<string | null>(null);
   const [dragOrigin, setDragOrigin] = useState<{x: number; y: number} | null>(null);
   const [hoverCell, setHoverCell] = useState<{x: number; y: number} | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
 
-  const findItem = (uid: number | null) => items.find(i => i.uid === uid);
+  const findItem = (uid: string | null) => items.find(i => i.uid === uid);
   // Pulse keyframes injected once
   const PULSE_STYLE = `@keyframes pulseValid {0% {box-shadow:0 0 4px 1px rgba(242,217,76,0.35);}50% {box-shadow:0 0 10px 3px rgba(242,217,76,0.85);}100% {box-shadow:0 0 4px 1px rgba(242,217,76,0.35);}}@keyframes pulseInvalid {0% {box-shadow:0 0 4px 1px rgba(204,51,51,0.35);}50% {box-shadow:0 0 10px 3px rgba(204,51,51,0.85);}100% {box-shadow:0 0 4px 1px rgba(204,51,51,0.35);}}`;
 
@@ -127,13 +155,17 @@ export const RatworldStash = () => {
               <LabeledList>
                 <LabeledList.Item label="Mammon">{currency}</LabeledList.Item>
                 <LabeledList.Item label="Actions">
-                  <Button
-                    icon="arrow-up"
-                    onClick={() => act('deposit_hand')}
-                    tooltip="Deposit item in your active hand"
-                  >
-                    Deposit Hand
-                  </Button>
+                  {data.is_admin && (
+                    <Button
+                      icon={data.debug_enabled ? 'bug' : 'bug'}
+                      selected={!!data.debug_enabled}
+                      ml={1}
+                      onClick={() => act('toggle_debug')}
+                      tooltip={data.debug_enabled ? 'Disable stash debug spam' : 'Enable stash debug spam (admins/devs only)'}
+                    >
+                      Debug
+                    </Button>
+                  )}
                 </LabeledList.Item>
               </LabeledList>
             </Section>
@@ -186,6 +218,9 @@ export const RatworldStash = () => {
                     }
                   }
                 }}
+                onDoubleClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                  // Double-click empty space: attempt to withdraw first item? No, keep empty for now.
+                }}
               >
                 {/* Grid background */}
                 {Array.from({ length: grid_h }).map((_, ry) => (
@@ -211,8 +246,8 @@ export const RatworldStash = () => {
                 ))}
 
                 {/* Items (stretch-to-fit) */}
-                {items.map((item) => (
-                  <Tooltip key={item.uid} content={<ItemTooltip item={item} />} position="right">
+                {items.map((item) => {
+                  const box = (
                     <Box
                       style={{
                         position: 'absolute',
@@ -220,7 +255,7 @@ export const RatworldStash = () => {
                         top: (item.y - 1) * CELL,
                         width: item.w * CELL,
                         height: item.h * CELL,
-                        padding: 2,
+                        padding: 0,
                         background: '#222',
                         border: '1px solid #555',
                         imageRendering: 'pixelated',
@@ -230,6 +265,7 @@ export const RatworldStash = () => {
                         cursor: draggingUid === item.uid ? 'grabbing' : 'pointer',
                         opacity: draggingUid === item.uid ? 0.35 : 1,
                       }}
+                      // No native drag props on Box; native ghost suppressed by inner wrapper's pointerEvents and draggable=false
                       onMouseDown={(e) => {
                         if (e.button === 0) {
                           // Immediate client-side pickup SFX request
@@ -242,13 +278,52 @@ export const RatworldStash = () => {
                       }}
                       onContextMenu={(e) => {
                         e.preventDefault();
-                        act('move', { uid: item.uid, x: 1, y: 1 });
+                        // Right-click quick withdraw
+                        act('withdraw', { uid: item.uid });
+                      }}
+                      onDoubleClick={(e) => {
+                        // Quick withdraw on double click
+                        act('withdraw', { uid: item.uid });
+                        e.stopPropagation();
                       }}
                     >
-                      <FitIcon item={item} />
+                      {/* UID badge overlay (debug only) */}
+                      {showDebug && (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: 1,
+                            top: 1,
+                            background: 'rgba(0,0,0,0.55)',
+                            color: '#f2d94c',
+                            fontSize: 10,
+                            lineHeight: '12px',
+                            padding: '0 3px',
+                            borderRadius: 2,
+                            pointerEvents: 'none',
+                            userSelect: 'none',
+                          }}
+                        >
+                          {displayUid(item)}
+                        </div>
+                      )}
+                      <div
+                        style={{ pointerEvents: 'none', userSelect: 'none' }}
+                        draggable={false}
+                        onDragStart={(e) => e.preventDefault()}
+                      >
+                        <FitIcon item={item} />
+                      </div>
                     </Box>
-                  </Tooltip>
-                ))}
+                  );
+                  return showDebug ? (
+                    <Tooltip key={item.uid} content={<ItemTooltip item={item} />} position="right">
+                      {box}
+                    </Tooltip>
+                  ) : (
+                    <React.Fragment key={item.uid}>{box}</React.Fragment>
+                  );
+                })}
                 {draggingUid && hoverCell && (() => {
                   const item = findItem(draggingUid);
                   if (!item) return null;
@@ -272,11 +347,13 @@ export const RatworldStash = () => {
                       <DmIcon
                         icon={resolvePreviewIcon(item)}
                         icon_state={resolvePreviewState(item)}
-                        width={item.w * CELL - ICON_PAD}
-                        height={item.h * CELL - ICON_PAD}
                         style={{
                           opacity: 0.18,
                           imageRendering: 'pixelated',
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'fill',
+                          pointerEvents: 'none',
                         }}
                       />
                     </Box>

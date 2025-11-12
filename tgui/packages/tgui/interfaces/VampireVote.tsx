@@ -1,12 +1,12 @@
 /* eslint-disable unused-imports/no-unused-imports */
 // Disabled unused-vars rule reference removed (rule not present in config)
 import {
+  Box,
   Button,
   LabeledList,
   Section,
-  TimeDisplay,
-  Box,
   Stack,
+  TimeDisplay,
 } from 'tgui-core/components';
 
 import { useBackend } from '../backend';

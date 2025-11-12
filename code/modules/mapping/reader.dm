@@ -911,6 +911,10 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list
 	index = members.len
+	// Bandaid: guard against malformed keys with missing entries
+	if(index < 1)
+		// Nothing to do on this coordinate
+		return
 	if(members[index] != /area/template_noop)
 		if(members_attributes[index] != default_list)
 			world.preloader_setup(members_attributes[index], members[index])//preloader for assigning  set variables on atom creation
@@ -939,6 +943,9 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 	// Index right before /area is /turf
 	index--
+	if(index < 1)
+		// Malformed key without turf; skip remaining objects
+		return
 	var/atom/instance
 	//then instance the /turf
 	//NOTE: this used to place any turfs before the last "underneath" it using .appearance and underlays

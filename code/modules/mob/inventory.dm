@@ -223,6 +223,8 @@
 	if(!I)
 		return FALSE
 
+	// Reverted: do not mark items as starting equipment here.
+
 	if(put_in_active_hand(I, forced))
 		return TRUE
 
