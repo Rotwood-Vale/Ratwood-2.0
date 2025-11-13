@@ -233,10 +233,12 @@
         // Rarity and enchantments (for tooltip display)
         var/rarity_val = rec["rarity"]
         var/rarity_color = isnum(rarity_val) ? get_ratworld_rarity_color(rarity_val) : null
+        var/is_undiscovered = FALSE
+        if(rec["undiscovered"]) is_undiscovered = TRUE
         var/list/ench_ids = rec["ench"]
         var/list/ench_vals = rec["ench_vals"]
         var/list/ench_texts = list()
-        if(islist(ench_ids) && ench_ids.len)
+        if(!is_undiscovered && islist(ench_ids) && ench_ids.len)
             // infer slot key for percent suffixes
             var/slot_key_hint = null
             var/Tsk = text2path(path_text)
@@ -255,9 +257,21 @@
                     if(islist(rr) && rr["percent"]) suf = "%"
                 if(!isnull(val))
                     var/sign = (val >= 0) ? "+" : ""
-                    ench_texts += "- [ename] [sign][val][suf]"
+                    // Inverted order: "+5% Phys Power Bonus"
+                    ench_texts += "[sign][val][suf] [ename]"
                 else
-                    ench_texts += "- [ename]"
+                    ench_texts += "[ename]"
+        // Failsafe: if rarity missing or too low for number of enchants, derive a minimal tier by attr slots
+        if(!isnum(rarity_val))
+            if(islist(ench_ids) && ench_ids.len)
+                var/ech = ench_ids.len
+                rarity_val = ratworld_min_rarity_for_enchants(ech)
+                rarity_color = get_ratworld_rarity_color(rarity_val)
+        else if(islist(ench_ids) && ench_ids.len)
+            var/minr = ratworld_min_rarity_for_enchants(ench_ids.len)
+            if(rarity_val < minr)
+                rarity_val = minr
+                rarity_color = get_ratworld_rarity_color(minr)
 
         // Use preview_state as the final icon_state sent to UI, since it already
         // accounts for whether we're using an inventory sheet or the original icon.
@@ -273,6 +287,21 @@
         else
             display_uid = "D#?"
 
+        // Weapon damage preview (simple): if the type has a numeric force, treat as brute damage for now
+        var/prev_damage = null
+        var/prev_dmg_type = null
+        var/Td = text2path(path_text)
+        if(ispath(Td))
+            var/obj/item/tmpd = new Td()
+            if(isnum(tmpd.force) && tmpd.force > 0)
+                prev_damage = tmpd.force
+                prev_dmg_type = "brute"
+            // Prefer wielded damage if available and higher
+            if(isnum(tmpd:force_wielded) && tmpd:force_wielded > (prev_damage || 0))
+                prev_damage = tmpd:force_wielded
+                prev_dmg_type = "brute"
+            qdel(tmpd)
+
         out += list(list(
             "uid" = "[item_uid]",
             "path" = "[path_text]",
@@ -287,8 +316,11 @@
             "rarity" = rarity_val,
             "rarity_color" = rarity_color,
             "ench_texts" = ench_texts,
+            "undiscovered" = is_undiscovered,
             "display_uid" = display_uid,
             "icon_state" = final_icon_state,
+            "damage" = prev_damage,
+            "damage_type" = prev_dmg_type,
             "x" = rec["x"],
             "y" = rec["y"],
             "w" = rec["w"],
@@ -337,6 +369,8 @@ GLOBAL_DATUM_INIT(rw_reliquary_adjacent_state, /datum/ui_state/rw_reliquary_adja
     data["cell_px"] = 36
     // Expose debug state to UI for toggling
     data["debug_enabled"] = ratworld_is_debug(src.user)
+    // Last stash status/error message for this user
+    data["last_error"] = ratworld_get_last_stash_message(user)
     // Only admins should see the Debug toggle
     data["is_admin"] = (user?.client?.holder) ? TRUE : FALSE
     // simple versioning for reactive refresh
@@ -388,7 +422,11 @@ GLOBAL_DATUM_INIT(rw_reliquary_adjacent_state, /datum/ui_state/rw_reliquary_adja
                     return TRUE
                 else
                     refresh()
-                    to_chat(user, span_warning("Targeted deposit failed."))
+                    var/err = ratworld_get_last_stash_message(user)
+                    if(istext(err) && length(err))
+                        to_chat(user, span_warning("Targeted deposit failed: [err]"))
+                    else
+                        to_chat(user, span_warning("Targeted deposit failed."))
                     return TRUE
         if("move")
             var/uid = params["uid"] 

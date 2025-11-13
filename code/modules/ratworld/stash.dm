@@ -146,6 +146,22 @@ GLOBAL_LIST_INIT(ratworld_stash_debug_ckeys, list())
 	if(!ratworld_is_debug(user)) return
 	to_chat(user, span_notice(msg))
 
+// Track the last stash error/info message per user for UI and chat surfacing
+GLOBAL_LIST_INIT(ratworld_stash_last_error, list())
+
+/proc/ratworld_set_last_stash_message(mob/living/user, txt)
+	if(!user?.client?.ckey) return
+	var/ck = lowertext(user.client.ckey)
+	if(istext(txt) && length(txt))
+		GLOB.ratworld_stash_last_error[ck] = txt
+	else
+		GLOB.ratworld_stash_last_error -= ck
+
+/proc/ratworld_get_last_stash_message(mob/living/user)
+	if(!user?.client?.ckey) return null
+	var/ck = lowertext(user.client.ckey)
+	return GLOB.ratworld_stash_last_error[ck]
+
 /proc/ratworld_get_stash(ck)
 	var/lck = lowertext(ck)
 	if(!lck) return null
@@ -204,89 +220,126 @@ GLOBAL_LIST_INIT(ratworld_stash_debug_ckeys, list())
 /proc/ratworld_deposit_item(mob/living/user, obj/item/I, new_x = null, new_y = null)
 	if(!user?.client?.ckey) return FALSE
 	if(!I) return FALSE
-	// Block coin/mammon-like items from being deposited; instruct to use nervelock
-	if(ratworld_is_coin_like(I))
-		to_chat(user, span_warning("You can't deposit mammon here. Use your nervelock to manage coin."))
+	// Entry debug
+	ratworld_dbg(user, "DEBUG: deposit start item=[I] type=[I.type] coords=([new_x],[new_y]).")
+	ratworld_set_last_stash_message(user, "")
+	try
+		// Block coin/mammon-like items from being deposited; instruct to use nervelock
+		if(ratworld_is_coin_like(I))
+			to_chat(user, span_warning("You can't deposit mammon here. Use your nervelock to manage coin."))
+			ratworld_dbg(user, "DEBUG: deposit blocked (coin-like) type=[I.type].")
+			ratworld_set_last_stash_message(user, "Coin-like items cannot be stored. Use your nervelock.")
+			ratworld_play_stash_error(user)
+			return FALSE
+		if(!ratworld_can_stash(I))
+			to_chat(user, span_warning("[I] cannot be stashed right now."))
+			ratworld_dbg(user, "DEBUG: deposit blocked (cannot stash) type=[I.type] contents_len=[I.contents?.len].")
+			ratworld_set_last_stash_message(user, "This item cannot be stashed now (container or has contents).")
+			return FALSE
+		var/datum/ratworld/stash/S = ratworld_get_stash(user.client.ckey)
+		// Ensure uid and a prefixed vault_uid on the item
+		ratworld_assign_uid(I)
+		ratworld_assign_vault_uid(user, I)
+		// Serialize the item to capture path, uid, icon/state, and rw_* fields (rarity/enchants)
+		var/list/rec = ratworld_serialize_item(I)
+		// Normalize mandatory fields expected by stash UI
+		rec["typepath"] = istext(rec["path"]) ? rec["path"] : "[I.type]"
+		// Ensure we use the exact vault_uid determined by assign_vault_uid
+		if(istext(I.vault_uid) && length(I.vault_uid))
+			rec["vault_uid"] = I.vault_uid
+		// Compute size
+		var/list/size = ratworld_compute_item_size(I)
+		var/w = islist(size) ? size[1] : 1
+		var/h = islist(size) ? size[2] : 1
+		// Find slot
+		var/list/slot
+		if(isnum(new_x) && isnum(new_y))
+			if(S.rect_collides(new_x, new_y, w, h, null))
+				to_chat(user, span_warning("That spot is occupied."))
+				// Identify the first colliding record to aid debugging
+				var/coll_key = null
+				var/list/coll_rec = null
+				for(var/kcol in S.items)
+					var/list/Rcol = S.items[kcol]
+					if(!islist(Rcol)) continue
+					var/rx = Rcol["x"]
+					var/ry = Rcol["y"]
+					var/rw = Rcol["w"] || 1
+					var/rh = Rcol["h"] || 1
+					if(!(new_x + w - 1 < rx || rx + rw - 1 < new_x || new_y + h - 1 < ry || ry + rh - 1 < new_y))
+						coll_key = kcol
+						coll_rec = Rcol
+						break
+				if(coll_rec)
+					var/cx = coll_rec["x"]
+					var/cy = coll_rec["y"]
+					var/cw = coll_rec["w"] || 1
+					var/ch = coll_rec["h"] || 1
+					ratworld_dbg(user, "DEBUG: deposit collision at ([new_x],[new_y]) size=([w]x[h]) with [coll_key]@([cx],[cy]) size=([cw]x[ch]).")
+					ratworld_set_last_stash_message(user, "Cell occupied by [coll_key] at ([cx],[cy]) size [cw]x[ch].")
+				else
+					ratworld_dbg(user, "DEBUG: deposit failed at ([new_x],[new_y]) size=([w]x[h]) due to collision (no record identified).")
+					ratworld_set_last_stash_message(user, "Cell appears occupied (no record identified).")
+				return FALSE
+			slot = list(new_x, new_y)
+			ratworld_dbg(user, "DEBUG: deposit placement accepted at ([new_x],[new_y]) size=([w]x[h]).")
+		else
+			slot = S.find_free_slot(w, h)
+			if(!slot)
+				to_chat(user, span_warning("No space left in the vault."))
+				ratworld_dbg(user, "DEBUG: deposit auto-place failed (no space) for type=[I.type] size=([w]x[h]).")
+				ratworld_set_last_stash_message(user, "No empty space large enough for [w]x[h].")
+				return FALSE
+		// Ensure unique key
+		var/key_id = rec["vault_uid"]
+		if(!islist(S.items)) S.items = list()
+		if(key_id in S.items)
+			var/tries = 0
+			while(key_id in S.items && tries < 6)
+				var/tmp = ratworld_generate_vault_uid(user, I)
+				if(isnum(tmp))
+					var/pfx2 = ratworld_classify_item_origin(user, I)
+					tmp = "[pfx2][tmp]"
+				rec["vault_uid"] = tmp
+				key_id = tmp
+				tries++
+			if(key_id in S.items)
+				to_chat(user, span_warning("Couldn't assign a unique vault UID."))
+				ratworld_dbg(user, "DEBUG: deposit aborted (vault_uid collision) after [tries] tries.")
+				ratworld_set_last_stash_message(user, "Could not assign unique vault ID after [tries] tries.")
+				return FALSE
+		// Finalize and store
+		rec["x"] = slot[1]
+		rec["y"] = slot[2]
+		rec["w"] = w
+		rec["h"] = h
+		S.items[key_id] = rec
+		var/_dp_tp = rec["typepath"]
+		var/_dp_x = rec["x"]
+		var/_dp_y = rec["y"]
+		ratworld_dbg(user, "DEBUG: deposit record stored key=[key_id] path=[_dp_tp] at ([_dp_x],[_dp_y]).")
+		// Prepare summary values prior to qdel to avoid string indexing issues
+		var/_tpath = rec["typepath"]
+		var/_rx = rec["x"]
+		var/_ry = rec["y"]
+		// SFX, delete, save
+		ratworld_dbg(user, "DEBUG: deposit pre-sfx; calling stash_sfx.")
+		ratworld_play_stash_sfx(user, I, "deposit")
+		I.ratworld_stored = TRUE
+		qdel(I)
+		ratworld_dbg(user, "DEBUG: deposit post-sfx; deleting live item and saving stash.")
+		S.Save()
+		ratworld_dbg(user, "DEBUG: deposit success; saved stash.")
+		ratworld_set_last_stash_message(user, "Stored [_tpath] at ([_rx],[_ry]) as [key_id].")
+		to_chat(user, span_notice("Stored [_tpath] at ([_rx],[_ry]) as [key_id]."))
+		return TRUE
+	catch(var/exception/e)
+		// Surface runtime error context
+		var/msg = "Internal error during deposit: [e]"
+		ratworld_dbg(user, "DEBUG: deposit exception: [e]")
+		ratworld_set_last_stash_message(user, msg)
 		ratworld_play_stash_error(user)
 		return FALSE
-	if(!ratworld_can_stash(I))
-		to_chat(user, span_warning("[I] cannot be stashed right now."))
-		return FALSE
-	var/datum/ratworld/stash/S = ratworld_get_stash(user.client.ckey)
-	// Ensure uid and a prefixed vault_uid on the item
-	ratworld_assign_uid(I)
-	ratworld_assign_vault_uid(user, I)
-	// Build minimal record
-	var/list/rec = list()
-	rec["typepath"] = "[I.type]"
-	rec["path"] = "[I.type]"
-	rec["uid"] = isnum(I.ratworld_uid) ? I.ratworld_uid : 0
-	var/vuid = istext(I.vault_uid) ? I.vault_uid : null
-	if(!istext(vuid) || !length(vuid))
-		vuid = ratworld_generate_vault_uid(user, I)
-		if(isnum(vuid))
-			var/pfx = ratworld_classify_item_origin(user, I)
-			vuid = "[pfx][vuid]"
-	rec["vault_uid"] = vuid
-	// Coerce icon resource to a string path for TGUI
-	var/icon_text = "[I.icon]"
-	if(istext(icon_text) && length(icon_text))
-		rec["icon"] = icon_text
-	else
-		rec["icon"] = "icons/roguetown/clothing/wrists.dmi"
-	if(istext(I.icon_state))
-		rec["icon_state"] = I.icon_state
-	else
-		rec["icon_state"] = "default"
-	// Compute size
-	var/list/size = ratworld_compute_item_size(I)
-	var/w = islist(size) ? size[1] : 1
-	var/h = islist(size) ? size[2] : 1
-	// Find slot
-	var/list/slot
-	if(isnum(new_x) && isnum(new_y))
-		if(S.rect_collides(new_x, new_y, w, h, null))
-			to_chat(user, span_warning("That spot is occupied."))
-			return FALSE
-		slot = list(new_x, new_y)
-	else
-		slot = S.find_free_slot(w, h)
-		if(!slot)
-			to_chat(user, span_warning("No space left in the vault."))
-			return FALSE
-	// Ensure unique key
-	var/key_id = rec["vault_uid"]
-	if(!islist(S.items)) S.items = list()
-	if(key_id in S.items)
-		var/tries = 0
-		while(key_id in S.items && tries < 6)
-			var/tmp = ratworld_generate_vault_uid(user, I)
-			if(isnum(tmp))
-				var/pfx2 = ratworld_classify_item_origin(user, I)
-				tmp = "[pfx2][tmp]"
-			rec["vault_uid"] = tmp
-			key_id = tmp
-			tries++
-		if(key_id in S.items)
-			to_chat(user, span_warning("Couldn't assign a unique vault UID."))
-			return FALSE
-	// Finalize and store
-	rec["x"] = slot[1]
-	rec["y"] = slot[2]
-	rec["w"] = w
-	rec["h"] = h
-	S.items[key_id] = rec
-	// Prepare summary values prior to qdel to avoid string indexing issues
-	var/_tpath = rec["typepath"]
-	var/_rx = rec["x"]
-	var/_ry = rec["y"]
-	// SFX, delete, save
-	ratworld_play_stash_sfx(user, I, "deposit")
-	I.ratworld_stored = TRUE
-	qdel(I)
-	S.Save()
-	to_chat(user, span_notice("Stored [_tpath] at ([_rx],[_ry]) as [key_id]."))
-	return TRUE
 
 /// Withdraw an item by UID (or the first available) and spawn near the user
 /proc/ratworld_withdraw_item(mob/living/user, uid)
@@ -338,6 +391,9 @@ GLOBAL_LIST_INIT(ratworld_stash_debug_ckeys, list())
 		var/firstc = copytext(rec["vault_uid"],1,2)
 		if((firstc == "A" || firstc == "D" || firstc == "S") && ("vault_origin" in I.vars))
 			I.vars["vault_origin"] = firstc
+		// Failsafe: set admin-spawn flag if prefix is A
+		if(firstc == "A" && ("flags_1" in I.vars))
+			I.flags_1 |= ADMIN_SPAWNED_1
 	// Temporarily skip applying rec["vars"] to avoid type/readonly runtime crashes
 	var/list/diff = rec["vars"]
 	if(islist(diff))
@@ -433,6 +489,35 @@ GLOBAL_LIST_INIT(ratworld_stash_debug_ckeys, list())
 		if(!isturf(A.loc) || A.loc != loc_turf)
 			A.forceMove(loc_turf)
 		ratworld_dbg(user, "DEBUG: spawn(forceMove->turf): ref=[A] type=[A.type] loc=([A.x],[A.y],[A.z]).")
+		// If this is an item, restore its ratworld rarity/enchant fields and apply effects
+		if(istype(A, /obj/item))
+			var/obj/item/I = A
+			if(isnum(rec["rarity"]))
+				I.vars["rw_rarity"] = rec["rarity"]
+			var/list/ench_ids = rec["ench"]
+			if(islist(ench_ids) && ench_ids.len)
+				I.vars["rw_enchants"] = list()
+				for(var/id in ench_ids)
+					if(istext(id)) I.vars["rw_enchants"] += id
+			var/list/ench_vals = rec["ench_vals"]
+			if(islist(ench_vals) && ench_vals.len)
+				I.vars["rw_enchant_vals"] = list()
+				for(var/k in ench_vals)
+					if(istext(k) && isnum(ench_vals[k])) I.vars["rw_enchant_vals"][k] = ench_vals[k]
+			// Apply any enchant hooks after restoring ids/vals
+			ratworld_apply_enchantments(I)
+			// Restore safe cosmetic vars from record if present
+			var/list/dv = rec["vars"]
+			if(islist(dv))
+				if(istext(dv["name"])) I.name = dv["name"]
+				if(istext(dv["desc"])) I.desc = dv["desc"]
+				if(istext(dv["color"])) I.color = dv["color"]
+				if("mob_overlay_icon" in I.vars)
+					var/mo_in2 = dv["mob_overlay_icon"]
+					if(istext(mo_in2)) I.vars["mob_overlay_icon"] = mo_in2
+				if("item_state" in I.vars)
+					var/its_in2 = dv["item_state"]
+					if(istext(its_in2)) I.vars["item_state"] = its_in2
 		return A
 	return null
 
@@ -644,3 +729,18 @@ GLOBAL_LIST_INIT(ratworld_stash_debug_ckeys, list())
 		if(ratworld_deposit_item(user, W))
 			return TRUE
 	return ..()
+
+// -----------------------------------------------------------------------------
+// Ratworld verbs for debugging and utilities
+
+/client/verb/ratworld_toggle_stash_debug()
+	set name = "Toggle Stash Debug"
+	set category = "Ratworld"
+	if(!usr || !usr.client)
+		return
+	var/enabled = !ratworld_is_debug(usr)
+	ratworld_set_debug(usr, enabled)
+	if(enabled)
+		to_chat(usr, span_notice("Ratworld stash debug: ON"))
+	else
+		to_chat(usr, span_notice("Ratworld stash debug: OFF"))

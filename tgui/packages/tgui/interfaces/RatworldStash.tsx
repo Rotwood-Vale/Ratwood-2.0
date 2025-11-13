@@ -20,6 +20,8 @@ type StashItem = {
   preview_state?: string | null;
   preview_scale?: number | null;
   mob_overlay_icon?: string | null;
+  damage?: number | null;
+  damage_type?: string | null;
   x: number;
   y: number;
   w: number;
@@ -41,7 +43,48 @@ type Data = {
 const DEFAULT_CELL = 32; // fallback slot size (px)
 const ICON_PAD = 2; // breathing room inside slot
 
-// Tooltip content: normal mode shows name + enchantments; debug shows diagnostics
+// Map numeric rarity to human-readable label (mirrors DM constants in code/modules/ratworld/rarity.dm)
+const RARITY_LABEL: Record<number, string> = {
+  1: 'Common',
+  2: 'Magic',
+  3: 'Rare',
+  4: 'Epic',
+  5: 'Legendary',
+  6: 'Unique',
+  7: 'Artifact',
+  8: 'Ascendant',
+};
+
+const RARITY_COLOR: Record<number, string> = {
+  1: '#bfbfbf',
+  2: '#6ec1ff',
+  3: '#d4b000',
+  4: '#9b59b6',
+  5: '#f39c12',
+  6: '#b8860b',
+  7: '#e74c3c',
+  8: '#6c2bd9',
+};
+
+// Derive a display rarity if missing: if enchants exist but rarity absent, treat as Magic
+function getDisplayRarity(item: StashItem): number | null {
+  const hasEnchants = Array.isArray(item.ench_texts) && item.ench_texts.length > 0;
+  if (typeof item.rarity === 'number' && item.rarity >= 1 && item.rarity <= 8) {
+    // If enchants exist but rarity says Common, treat as at least Magic for display
+    if (item.rarity === 1 && hasEnchants) return 2;
+    return item.rarity;
+  }
+  if (hasEnchants) return 2; // Magic fallback for legacy records without rarity
+  return null;
+}
+
+function getRarityColor(item: StashItem): string | null {
+  const r = getDisplayRarity(item);
+  if (r && RARITY_COLOR[r]) return RARITY_COLOR[r];
+  return item.rarity_color || null;
+}
+
+// Tooltip content: normal mode shows rarity name + enchantments; debug shows diagnostics
 const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
   if (debug) {
     return (
@@ -58,18 +101,43 @@ const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
     );
   }
   const lines = item.ench_texts || [];
+  const dispRarity = getDisplayRarity(item);
+  const rarityLabel = (dispRarity && RARITY_LABEL[dispRarity]) || 'Unknown';
+  const rarityColor = getRarityColor(item) || undefined;
+  const dmg = item.damage ?? null;
+  const dmgType = (item.damage_type || '').toLowerCase();
+  const dmgColor = dmgType === 'brute' ? '#e74c3c' : dmgType === 'burn' ? '#e67e22' : '#ddd';
   return (
-    <Box style={{ minWidth: 180, textAlign: 'center' }}>
-      <Box bold style={{ color: item.rarity_color || undefined, marginBottom: 4 }}>{item.name}</Box>
-      {lines.length > 0 ? (
-        <Stack vertical>
-          {lines.map((t, i) => (
-            <Stack.Item key={i}>{t}</Stack.Item>
-          ))}
-        </Stack>
-      ) : (
-        <Box color="label">No enchantments</Box>
-      )}
+    <Box style={{ minWidth: 240, textAlign: 'center', position: 'relative' }}>
+      <Box
+        style={{
+          position: 'relative',
+          padding: 10,
+          border: `1px solid ${rarityColor || '#444'}`,
+          background: 'rgba(0,0,0,0.70)',
+          borderRadius: 6,
+          boxShadow: rarityColor
+            ? `0 0 12px 3px ${rarityColor}55, inset 0 0 0 1px ${rarityColor}33`
+            : '0 0 8px rgba(0,0,0,0.4)',
+        }}
+      >
+        <Box bold style={{ color: rarityColor || '#e0e0e0', marginBottom: 4 }}>{item.name || ''}</Box>
+        <Box style={{ color: rarityColor || '#c0c0c0', opacity: 0.95, marginBottom: 6 }}>{dispRarity ? rarityLabel : ''}</Box>
+        {!!dmg && (
+          <Box bold style={{ color: dmgColor, marginBottom: 6 }}>
+            Damage {dmg}
+          </Box>
+        )}
+        {lines.length > 0 ? (
+          <Stack vertical>
+            {lines.map((t, i) => (
+              <Stack.Item key={i}>{t}</Stack.Item>
+            ))}
+          </Stack>
+        ) : (
+          <Box color="label">No enchantments</Box>
+        )}
+      </Box>
     </Box>
   );
 };
@@ -139,6 +207,13 @@ export const RatworldStash = () => {
   const findItem = (uid: string | null) => items.find(i => i.uid === uid);
   // Pulse keyframes injected once
   const PULSE_STYLE = `@keyframes pulseValid {0% {box-shadow:0 0 4px 1px rgba(242,217,76,0.35);}50% {box-shadow:0 0 10px 3px rgba(242,217,76,0.85);}100% {box-shadow:0 0 4px 1px rgba(242,217,76,0.35);}}@keyframes pulseInvalid {0% {box-shadow:0 0 4px 1px rgba(204,51,51,0.35);}50% {box-shadow:0 0 10px 3px rgba(204,51,51,0.85);}100% {box-shadow:0 0 4px 1px rgba(204,51,51,0.35);}}`;
+  const EFFECTS_STYLE = `
+    @keyframes stashPulse {0% { box-shadow: 0 0 8px 2px rgba(255,255,255,0.25); } 50% { box-shadow: 0 0 14px 6px rgba(255,255,255,0.45); } 100% { box-shadow: 0 0 8px 2px rgba(255,255,255,0.25); }}
+    @keyframes textPulse {0% { text-shadow: 0 0 2px rgba(255,255,255,0.2); } 50% { text-shadow: 0 0 6px rgba(255,255,255,0.6); } 100% { text-shadow: 0 0 2px rgba(255,255,255,0.2); }}
+    @keyframes sparkleFloat {0% { transform: translateY(0px) scale(1); opacity: 0.8; } 50% { transform: translateY(-3px) scale(1.08); opacity: 1; } 100% { transform: translateY(0px) scale(1); opacity: 0.8; }}
+    @keyframes fireFlicker {0%, 100% { transform: translateY(0px); opacity: 0.75; } 50% { transform: translateY(-1px); opacity: 1; }}
+    @keyframes emberRise {0% { transform: translateY(0px) scale(0.9); opacity: 0.85; } 50% { transform: translateY(-3px) scale(1); opacity: 1; } 100% { transform: translateY(0px) scale(0.9); opacity: 0.85; }}
+  `;
 
   // Determine if current drag target placement collides with another item.
   const placementBlocked = (() => {
@@ -269,6 +344,8 @@ export const RatworldStash = () => {
 
                 {/* Items (stretch-to-fit) */}
                 {items.map((item) => {
+                  const dispRarity = getDisplayRarity(item);
+                  const rarityColor = getRarityColor(item) || undefined;
                   const box = (
                     <Box
                       style={{
@@ -279,13 +356,16 @@ export const RatworldStash = () => {
                         height: item.h * CELL,
                         padding: 0,
                         background: '#222',
-                        border: '1px solid #555',
+                        border: '1px solid #444',
                         imageRendering: 'pixelated',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: draggingUid === item.uid ? 'grabbing' : 'pointer',
                         opacity: draggingUid === item.uid ? 0.35 : 1,
+                        // Subtle rarity glow; animate for Epic+
+                        boxShadow: rarityColor ? `0 0 8px 2px ${rarityColor}40, inset 0 0 0 1px ${rarityColor}33` : undefined,
+                        animation: dispRarity && dispRarity >= 4 ? 'rwStashPulse 2.6s ease-in-out infinite' : undefined,
                       }}
                       // No native drag props on Box; native ghost suppressed by inner wrapper's pointerEvents and draggable=false
                       onMouseDown={(e) => {
@@ -309,6 +389,16 @@ export const RatworldStash = () => {
                         e.stopPropagation();
                       }}
                     >
+                      {/* Inner rim, lightly colored by rarity */}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          border: `1px solid ${rarityColor ? rarityColor : '#333'}`,
+                          opacity: rarityColor ? 0.5 : 1,
+                          pointerEvents: 'none',
+                        }}
+                      />
                       {/* UID badge overlay (debug only) */}
                       {showDebug && (
                         <div
@@ -335,6 +425,35 @@ export const RatworldStash = () => {
                         onDragStart={(e) => e.preventDefault()}
                       >
                         <FitIcon item={item} />
+                      </div>
+                      {/* Name and rarity overlay (keep neutral text color here) */}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          left: 1,
+                          right: 1,
+                          bottom: 1,
+                          background: 'rgba(0,0,0,0.45)',
+                          borderRadius: 2,
+                          padding: '1px 2px',
+                          pointerEvents: 'none',
+                        }}
+                      >
+                        <div style={{
+                          fontSize: 10,
+                          lineHeight: '11px',
+                          color: '#ddd',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}>{item.name || ''}</div>
+                        <div style={{
+                          fontSize: 9,
+                          lineHeight: '10px',
+                          color: '#bbb',
+                          opacity: 0.9,
+                          textAlign: 'center',
+                        }}>{dispRarity ? RARITY_LABEL[dispRarity] : ''}</div>
                       </div>
                     </Box>
                   );
@@ -379,8 +498,12 @@ export const RatworldStash = () => {
                     </Box>
                   );
                 })()}
-                {/* Inject animation stylesheet */}
+                {/* Inject only placement pulse animations */}
                 <style>{PULSE_STYLE}</style>
+                {/* Gentle overall item pulse (no flames) */}
+                <style>
+                  {`@keyframes rwStashPulse {0%{filter: brightness(1)} 50%{filter: brightness(1.12)} 100%{filter: brightness(1)}}`}
+                </style>
               </div>
             </Section>
           </Stack.Item>

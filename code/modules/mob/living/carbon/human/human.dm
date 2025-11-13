@@ -856,6 +856,8 @@
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()
 	. *= physiology.do_after_speed
+	// Ratworld: reduce do_after delays by action speed multiplier from enchants
+	. /= ratworld_get_action_speed_mult(src)
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()

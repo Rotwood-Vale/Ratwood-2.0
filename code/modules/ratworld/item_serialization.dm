@@ -9,6 +9,12 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
     var/ratworld_uid // legacy numeric id (unused for collisions; retained for debug/back-compat)
     var/ratworld_stored = FALSE // item currently removed from world and represented only by stash record
     var/vault_uid // canonical string key with origin prefix (A/D/S/U)
+    // Ratworld metadata fields (declare on base item so dynamic access is always safe)
+    var/rw_rarity // numeric rarity tier (see RW_RARITY_* defines)
+    var/list/rw_enchants // list of enchant id strings
+    var/list/rw_enchant_vals // map id -> numeric value
+    var/rw_discovered = TRUE // default discovered; only special items will be undiscovered
+    var/rw_roll_on_discover = FALSE // roll enchants when identified if set
 
 /// Assigns a UID to an item if it does not have one yet
 /proc/ratworld_assign_uid(obj/item/I)
@@ -89,6 +95,11 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
     // Optional: rarity and enchantment ids (skeleton fields)
     if("rw_rarity" in I.vars && isnum(I.vars["rw_rarity"]))
         data["rarity"] = I.vars["rw_rarity"]
+    // Identification state
+    if("rw_discovered" in I.vars)
+        data["undiscovered"] = !I.vars["rw_discovered"]
+    if("rw_roll_on_discover" in I.vars && I.vars["rw_roll_on_discover"]) 
+        data["roll_on_discover"] = TRUE
     var/list/ench_ids = I.vars?["rw_enchants"]
     if(islist(ench_ids) && ench_ids.len)
         var/list/serialized_ench = list()
@@ -104,6 +115,33 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
                 vals_out[k] = ench_vals[k]
         if(vals_out.len)
             data["ench_vals"] = vals_out
+    // Minimal safe vars block: persist cosmetic fields and common icon hints used by UI
+    var/list/vout = list()
+    if(istext(I.name) && length(I.name)) vout["name"] = I.name
+    if(istext(I.desc) && length(I.desc)) vout["desc"] = I.desc
+    if(istext(I.color) && length(I.color)) vout["color"] = I.color
+    if("mob_overlay_icon" in I.vars)
+        var/mo = I.vars["mob_overlay_icon"]
+        if(istext(mo) && length(mo)) vout["mob_overlay_icon"] = mo
+    if("item_state" in I.vars)
+        var/itst = I.vars["item_state"]
+        if(istext(itst) && length(itst)) vout["item_state"] = itst
+    if(vout.len)
+        data["vars"] = vout
+    // Failsafe: if rarity missing or too low for the number of enchants, derive from enchant count
+    if(!isnum(data["rarity"]))
+        if(islist(ench_ids))
+            var/ech = ench_ids.len
+            if(ech > 0)
+                data["rarity"] = ratworld_min_rarity_for_enchants(ech)
+    else
+        // If rarity exists but is below the minimum implied by enchant count, bump it
+        if(islist(ench_ids))
+            var/ech2 = ench_ids.len
+            if(ech2 > 0)
+                var/minr = ratworld_min_rarity_for_enchants(ech2)
+                if(data["rarity"] < minr)
+                    data["rarity"] = minr
     return data
 
 /// Reconstruct an item from serialized data and place near a mob or a target turf
@@ -174,13 +212,28 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
         var/firstc = copytext(I.vault_uid, 1, 2)
         if(firstc == "A" || firstc == "D" || firstc == "S")
             I.vars["vault_origin"] = firstc
+        // Failsafe: reflect admin-spawn flag based on A-prefix
+        if(firstc == "A" && ("flags_1" in I.vars))
+            I.flags_1 |= ADMIN_SPAWNED_1
     var/list/diff = data["vars"]
     if(islist(diff))
-        for(var/k in diff)
-            I.vars[k] = diff[k]
+        // Apply only a safe subset explicitly to avoid read-only/type runtime errors
+        if(istext(diff["name"])) I.name = diff["name"]
+        if(istext(diff["desc"])) I.desc = diff["desc"]
+        if(istext(diff["color"])) I.color = diff["color"]
+        if("mob_overlay_icon" in I.vars)
+            var/mo_in = diff["mob_overlay_icon"]
+            if(istext(mo_in)) I.vars["mob_overlay_icon"] = mo_in
+        if("item_state" in I.vars)
+            var/its_in = diff["item_state"]
+            if(istext(its_in)) I.vars["item_state"] = its_in
     // Restore rarity and enchantments if present
+    // Restore identification flags first
     if(isnum(data["rarity"]))
         I.vars["rw_rarity"] = data["rarity"]
+    if(data["undiscovered"]) I.vars["rw_discovered"] = FALSE
+    else if(!("rw_discovered" in I.vars)) I.vars["rw_discovered"] = TRUE
+    if(data["roll_on_discover"]) I.vars["rw_roll_on_discover"] = TRUE
     var/list/ench = data["ench"]
     if(islist(ench) && ench.len)
         I.vars["rw_enchants"] = list()
@@ -188,6 +241,16 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
             if(istext(id)) I.vars["rw_enchants"] += id
         // Apply hooks so stats/effects take hold post-spawn
         ratworld_apply_enchantments(I)
+    // Failsafe: derive rarity from enchant count if missing or too low
+    if(!isnum(data["rarity"]))
+        if(islist(ench) && ench.len)
+            var/ech = ench.len
+            I.vars["rw_rarity"] = ratworld_min_rarity_for_enchants(ech)
+    else
+        if(islist(ench) && ench.len)
+            var/minr = ratworld_min_rarity_for_enchants(ench.len)
+            if(I.vars?["rw_rarity"] && I.vars["rw_rarity"] < minr)
+                I.vars["rw_rarity"] = minr
     var/list/vals_in = data["ench_vals"]
     if(islist(vals_in) && vals_in.len)
         I.vars["rw_enchant_vals"] = list()

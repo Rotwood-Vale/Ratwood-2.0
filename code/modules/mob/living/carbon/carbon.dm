@@ -594,6 +594,44 @@
 		stat("SPD: \Roman [STASPD]")
 		stat("FOR: \Roman [STALUC]")
 		stat("PATRON: [patron]")
+		// Ratworld: Applied Effects menu right under stats
+		if(!rw_applied_effects_click)
+			rw_applied_effects_click = new /obj/effect/statclick/applied_effects(null, src)
+		// Pass the object as the clickable ref (3rd param) so Click() fires
+		statpanel("Applied Effects:", null, rw_applied_effects_click)
+
+		// Ensure wearer effects are up-to-date before computing totals (lightweight, idempotent)
+		ratworld_refresh_wearer_effects()
+		// Ratworld: concise bonuses summary (vertical list, only non-zero, using aggregated totals)
+		var/as_pct = isnum(vars?["rw_action_speed_pct_total"]) ? vars["rw_action_speed_pct_total"] : 0
+		var/cs_pct = isnum(vars?["rw_cast_speed_pct_total"]) ? vars["rw_cast_speed_pct_total"] : 0
+		var/cdr_pct = isnum(vars?["rw_cdr_pct_total"]) ? vars["rw_cdr_pct_total"] : 0
+		var/mdef_pct = isnum(vars?["rw_magic_def_pct_total"]) ? vars["rw_magic_def_pct_total"] : 0
+		var/luck_pct = isnum(vars?["rw_luck_pct_total"]) ? vars["rw_luck_pct_total"] : 0
+		var/heal_add = isnum(vars?["rw_outgoing_heal_add_total"]) ? vars["rw_outgoing_heal_add_total"] : 0
+		var/printed_any = FALSE
+		if(as_pct || cs_pct || cdr_pct || mdef_pct || luck_pct || heal_add)
+			stat("Bonuses:")
+			printed_any = TRUE
+			if(as_pct)
+				var/s1 = (as_pct >= 0) ? "+" : ""
+				stat("- Action Speed", "[s1][round(as_pct, 0.1)]%")
+			if(cs_pct)
+				var/s2 = (cs_pct >= 0) ? "+" : ""
+				stat("- Cast Speed", "[s2][round(cs_pct, 0.1)]%")
+			if(cdr_pct)
+				var/s3 = (cdr_pct >= 0) ? "+" : ""
+				stat("- Cooldown Reduction", "[s3][round(cdr_pct, 0.1)]%")
+			if(mdef_pct)
+				var/s4 = (mdef_pct >= 0) ? "+" : ""
+				stat("- Magical Defense", "[s4][round(mdef_pct, 0.1)]%")
+			if(luck_pct)
+				var/s5 = (luck_pct >= 0) ? "+" : ""
+				stat("- Luck", "[s5][round(luck_pct, 0.1)]%")
+			if(heal_add)
+				var/s6 = (heal_add >= 0) ? "+" : ""
+				stat("- Outgoing Heal", "[s6][round(heal_add, 0.1)]")
+
 
 /mob/living/carbon/Stat()
 	..()

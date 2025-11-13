@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(rw_rarity_info, list(
 	RW_RARITY_LEGENDARY = list("name" = "Legendary", "attr_slots" = 4, "special" = FALSE),
 	RW_RARITY_UNIQUE = list("name" = "Unique", "attr_slots" = 5, "special" = FALSE),
 	RW_RARITY_ARTIFACT = list("name" = "Artifact", "attr_slots" = 6, "special" = TRUE),
-	RW_RARITY_ASCENDANT = list("name" = "Ascendant", "attr_slots" = 6, "special" = TRUE, "ascendant" = TRUE)
+	RW_RARITY_ASCENDANT = list("name" = "Ascendant", "attr_slots" = 7, "special" = TRUE, "ascendant" = TRUE)
 ))
 
 // Weight table placeholder (tunable; Artifact+ extremely rare, Ascendant effectively disabled until enabled)
@@ -93,9 +93,8 @@ GLOBAL_LIST_INIT(rw_rarity_weights, list())
 // Basic examine string builder for an item having a stored rarity var/rarity_tier
 /proc/ratworld_format_rarity_examine(var/rarity_tier)
 	var/name = get_ratworld_rarity_name(rarity_tier)
-	var/slots = get_ratworld_rarity_slot_count(rarity_tier)
 	var/list/info = get_ratworld_rarity_info(rarity_tier)
-	var/text = "<span class='italics'>Rarity:</span> [name] ([slots] attribute slot[slots == 1 ? "" : "s"])"
+	var/text = "<span class='italics'>Rarity:</span> [name]"
 	if(info && info["ascendant"]) text += " - <span class='danger'>ASCENDANT</span>"
 	else if(info && info["special"]) text += " - <span class='notice'>Special</span>"
 	return text
@@ -109,3 +108,12 @@ GLOBAL_LIST_INIT(rw_rarity_weights, list())
 			if(E["rarity"])
 				E["attr_slots"] = get_ratworld_rarity_slot_count(E["rarity"]) // sync
 	return item_data
+
+// Compute the minimal rarity tier that can accommodate a given number of enchantments
+/proc/ratworld_min_rarity_for_enchants(var/count)
+	if(!isnum(count) || count <= 0)
+		return RW_RARITY_COMMON
+	for(var/r in list(RW_RARITY_COMMON, RW_RARITY_MAGIC, RW_RARITY_RARE, RW_RARITY_EPIC, RW_RARITY_LEGENDARY, RW_RARITY_UNIQUE, RW_RARITY_ARTIFACT, RW_RARITY_ASCENDANT))
+		if(get_ratworld_rarity_slot_count(r) >= count)
+			return r
+	return RW_RARITY_ASCENDANT

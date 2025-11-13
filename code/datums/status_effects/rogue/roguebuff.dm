@@ -473,6 +473,9 @@
 		// The penalty/benefit of healing tech is halved for inhumen followers
 		tech_healing_modifier = 1 + ((tech_healing_modifier - 1) * 0.5)
 	healing_on_tick *= tech_healing_modifier
+	// Ratworld: outgoing heal add directly increases healing_on_tick
+	if(isliving(new_owner))
+		healing_on_tick += ratworld_get_outgoing_heal_add(new_owner)
 	return ..()
 
 /datum/status_effect/buff/healing/on_apply()
@@ -536,6 +539,9 @@
 	healing_on_tick = BLOODHEAL_RESTORE_DEFAULT + ((associated_skill > SKILL_LEVEL_NOVICE) ? (BLOODHEAL_RESTORE_SCALE_PER_LEVEL * associated_skill) : 0)
 	skill_level = associated_skill
 	duration = BLOODHEAL_DUR_DEFAULT + ((associated_skill > SKILL_LEVEL_NOVICE) ? (BLOODHEAL_DUR_SCALE_PER_LEVEL * associated_skill) : 0)
+	// Ratworld: outgoing heal add directly increases healing_on_tick
+	if(isliving(new_owner))
+		healing_on_tick += ratworld_get_outgoing_heal_add(new_owner)
 	return ..()
 
 /datum/status_effect/buff/bloodheal/on_apply()
@@ -574,6 +580,8 @@
 
 /datum/status_effect/buff/healing/necras_vow/on_apply()
 	healing_on_tick = max(owner.get_skill_level(/datum/skill/magic/holy), 3)
+	// Ratworld: outgoing heal add directly increases healing_on_tick
+	healing_on_tick += ratworld_get_outgoing_heal_add(owner)
 	return TRUE
 
 /datum/status_effect/buff/healing/necras_vow/tick()
@@ -616,6 +624,9 @@
 
 /datum/status_effect/buff/psyhealing/on_creation(mob/living/new_owner, new_healing_on_tick)
 	healing_on_tick = new_healing_on_tick
+	// Ratworld: outgoing heal add directly increases healing_on_tick
+	if(isliving(new_owner))
+		healing_on_tick += ratworld_get_outgoing_heal_add(new_owner)
 	return ..()
 
 /datum/status_effect/buff/psyhealing/on_apply()

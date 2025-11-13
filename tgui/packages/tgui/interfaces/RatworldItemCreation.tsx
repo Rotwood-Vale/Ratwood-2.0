@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Dropdown, Input, LabeledList, NumberInput, Section, Stack, Tabs, DmIcon } from 'tgui-core/components';
+import { Box, Button, DmIcon, Dropdown, Input, LabeledList, NumberInput, Section, Stack, Tabs } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -25,6 +25,7 @@ interface Data {
   name: string;
   desc: string;
   color: string;
+  undiscovered?: boolean;
 }
 
 const RarityTag = ({ r }: { r: RarityEntry }) => (
@@ -43,6 +44,7 @@ const RarityTag = ({ r }: { r: RarityEntry }) => (
   </Box>
 );
 
+// eslint-disable-next-line complexity
 export const RatworldItemCreation = () => {
   const { data, act } = useBackend<Data>();
   const d: Partial<Data> = (data as any) || {};
@@ -78,10 +80,12 @@ export const RatworldItemCreation = () => {
   const selectedName = d && d.selected && d.selected.name ? d.selected.name : undefined;
   const slotKey = d && d.slot_key ? d.slot_key : '';
   const showSearch = !!(d && d.show_search);
+  const currentRarity = raritiesSafe.find((r) => r.id === d?.rarity);
+  const undiscovered = !!d?.undiscovered;
 
   return (
-    <Window width={880} height={640}>
-      <Window.Content scrollable>
+    <Window width={1280} height={900}>
+      <Window.Content>
         <Stack vertical fill>
           {showSearch && (
           <Section title="Search">
@@ -95,65 +99,86 @@ export const RatworldItemCreation = () => {
               <Button ml={1} onClick={() => act('search', { q })} content="Search" />
               <Button ml={1} onClick={() => act('toggle_search')} content="Close" />
             </Stack>
-            <Stack wrap>
-              {results.map((r) => (
-                <Box key={r.path} mr={2} mb={2} p={1} style={{ border: '1px solid rgba(255,255,255,0.15)', borderRadius: 2, width: 128 }}>
-                  <Stack vertical align="center">
-                    <Box width={12} height={12} m={1}>
-                      <DmIcon
-                        icon={r.icon || 'icons/roguetown/items/produce.dmi'}
-                        icon_state={r.icon_state || 'default'}
-                        style={{ width: '100%', height: '100%', imageRendering: 'pixelated' }}
+            {/* Scrollable results list */}
+            <Box style={{ maxHeight: 520, overflowY: 'auto', paddingRight: 4 }}>
+              <Stack wrap>
+                {results.map((r) => (
+                  <Box key={r.path} mr={2} mb={2} p={1} style={{ border: '1px solid rgba(255,255,255,0.15)', borderRadius: 2, width: 128 }}>
+                    <Stack vertical align="center">
+                      <Box m={1}>
+                        <DmIcon
+                          icon={r.icon || 'icons/roguetown/items/produce.dmi'}
+                          icon_state={r.icon_state || 'default'}
+                          width={12}
+                          height={12}
+                        />
+                      </Box>
+                      <Box color="label" textAlign="center" style={{ maxWidth: 200, wordBreak: 'break-word' }}>
+                        {r.name || r.path}
+                      </Box>
+                      <Button
+                        mt={1}
+                        color="good"
+                        content="Select item"
+                        onClick={() => {
+                          act('select_type', { path: r.path });
+                          setQ('');
+                        }}
                       />
-                    </Box>
-                    <Box color="label" textAlign="center" style={{ maxWidth: 200, wordBreak: 'break-word' }}>
-                      {r.name || r.path}
-                    </Box>
-                    <Button
-                      mt={1}
-                      color="good"
-                      content="Select item"
-                      onClick={() => {
-                        act('select_type', { path: r.path });
-                        setQ('');
-                      }}
-                    />
-                  </Stack>
-                </Box>
-              ))}
-            </Stack>
+                    </Stack>
+                  </Box>
+                ))}
+              </Stack>
+            </Box>
           </Section>
           )}
 
           {
           <Section title="Preview & Customize" fill>
-            <Stack align="flex-start">
-              {/* 64x64 fixed preview in a small card */}
-              <Stack.Item>
-                <Box
-                  width={72}
-                  height={72}
-                  mr={2}
-                  p={1}
+            <Stack vertical align="center">
+              {/* 64x64 fixed preview centered in a small card */}
+              <Box mb={2}>
+                <div
                   style={{
-                    border: '1px solid rgba(255,255,255,0.25)',
-                    background: 'rgba(0,0,0,0.25)',
-                    display: 'flex',
+                    position: 'relative',
+                    width: 72,
+                    height: 72,
+                    display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    boxSizing: 'border-box',
+                    background: 'rgba(0,0,0,0.25)',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    overflow: 'hidden',
+                    borderRadius: 4,
                   }}
                 >
-                  <Box width={64} height={64} style={{ overflow: 'hidden' }}>
-                    <DmIcon
-                      icon={selectedIcon}
-                      icon_state={selectedState}
-                      style={{ imageRendering: 'pixelated', width: '100%', height: '100%', objectFit: 'contain', pointerEvents: 'none', userSelect: 'none' }}
+                  {/* Subtle rarity glow (no flames) */}
+                  {currentRarity && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: -2,
+                        borderRadius: 6,
+                        pointerEvents: 'none',
+                        boxShadow: `0 0 8px 2px ${currentRarity.color}55, 0 0 12px 4px ${currentRarity.color}33`,
+                        animation: currentRarity.id >= 4 ? 'rwPulse 2.6s ease-in-out infinite' : undefined,
+                      }}
                     />
-                  </Box>
-                </Box>
-              </Stack.Item>
-              <Stack.Item grow>
-                <Box style={{ maxHeight: 520, overflowY: 'auto' }}>
+                  )}
+                  <DmIcon
+                    icon={selectedIcon}
+                    icon_state={selectedState}
+                    style={{ width: 64, height: 64, imageRendering: 'pixelated' }}
+                  />
+                  {/* Local keyframes for gentle pulse */}
+                  <style>
+                    {`@keyframes rwPulse {0%{opacity:0.55}50%{opacity:1}100%{opacity:0.55}}`}
+                  </style>
+                </div>
+              </Box>
+              <Box style={{ maxWidth: 760, width: '100%' }}>
+                <Box style={{ maxHeight: 640, overflowY: 'auto' }}>
                   <Stack vertical>
                   <Stack align="baseline" justify="space-between">
                     <Box bold>Rarity</Box>
@@ -161,6 +186,16 @@ export const RatworldItemCreation = () => {
                   </Stack>
                   {rarityTabs}
                   <LabeledList>
+                    <LabeledList.Item label="Undiscovered">
+                      <Button
+                        content={undiscovered ? 'Undiscovered: ON' : 'Undiscovered: OFF'}
+                        color={undiscovered ? 'average' : 'default'}
+                        onClick={() => act('toggle_undiscovered')}
+                      />
+                      <Box mt={1} color="label">
+                        {undiscovered ? 'Enchants will be hidden and rolled when identified' : 'Enchants are set now and immediately active'}
+                      </Box>
+                    </LabeledList.Item>
                     <LabeledList.Item label="Item slot">
                       <Dropdown
                         selected={slotKey}
@@ -178,7 +213,7 @@ export const RatworldItemCreation = () => {
                       <Input value={(d && d.color) || ''} onChange={(v: string) => act('set_color', { color: v })} placeholder="#RRGGBB" />
                     </LabeledList.Item>
                        <LabeledList.Item label={`Enchantments (${attrSlots})`} />
-                       {Array.from({ length: attrSlots }).map((_, i) => {
+                       {!undiscovered && Array.from({ length: attrSlots }).map((_, i) => {
                       const idx = i + 1;
                          const currentId = (d && d.ench_ids && d.ench_ids[i]) ? d.ench_ids[i] : null;
                          const current = enchOptions.find((o) => o.id === currentId);
@@ -192,9 +227,10 @@ export const RatworldItemCreation = () => {
                               onSelected={(v) => act('set_ench', { index: idx, id: v })}
                               placeholder="Pick enchantment"
                             />
-                            <Box width={40} ml={1} mr={1} color="label" textAlign="center">
-                              {hint}
-                            </Box>
+                            {/* Min/Max inline to keep the slider area compact */}
+                            {current && (
+                              <Box ml={1} color="label">min {current.min}{current.percent ? '%' : ''}</Box>
+                            )}
                             <NumberInput
                               disabled={!currentId}
                                  value={(d && d.ench_vals && (d.ench_vals[i] as any)) ? (d.ench_vals[i] as any) : 0}
@@ -204,15 +240,24 @@ export const RatworldItemCreation = () => {
                               onChange={(val: number) => currentId && act('set_ench_val', { id: currentId, val })}
                               style={{ width: 120, marginLeft: 4 }}
                             />
-                            <Box ml={1}>{current?.percent ? '%' : ''}</Box>
+                            {current && (
+                              <Box ml={1} color="label">max {current.max}{current.percent ? '%' : ''}</Box>
+                            )}
                           </Stack>
                         </LabeledList.Item>
                       );
                     })}
+                    {undiscovered && (
+                      <LabeledList.Item label="Randomization">
+                        <Box color="label">
+                          Enchantments and their values will be rolled when you identify this item.
+                        </Box>
+                      </LabeledList.Item>
+                    )}
                   </LabeledList>
                     <Box width="100%" textAlign="center" mt={2}>
                       <Button
-                        disabled={!(d && d.selected && d.selected.path)}
+                        disabled={false}
                         content="Create Item"
                         onClick={() => act('create')}
                         color="good"
@@ -221,7 +266,7 @@ export const RatworldItemCreation = () => {
                     </Box>
                   </Stack>
                 </Box>
-              </Stack.Item>
+              </Box>
             </Stack>
           </Section>
           }

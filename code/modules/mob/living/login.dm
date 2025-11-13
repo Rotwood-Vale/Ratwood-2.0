@@ -30,6 +30,9 @@
 	
 	set_ssd_indicator(FALSE)
 
+	// Ratworld: ensure any equipped/held enchanted items apply their wearer effects on login
+	ratworld_refresh_wearer_effects()
+
 /mob/living/proc/login_fade()
 	set waitfor = FALSE
 	if(!client)

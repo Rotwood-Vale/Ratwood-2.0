@@ -7,6 +7,10 @@
 	if(isnum(r))
 		// Use existing rarity formatter
 		lines += ratworld_format_rarity_examine(r)
+	// If undiscovered, hide enchant details until identified
+	if(I.vars && ("rw_discovered" in I.vars) && !I.vars["rw_discovered"])
+		lines += span_warning("Unidentified item — its properties are unknown. Use a Book of Identification.")
+		return lines
 	var/list/ids = I.vars?["rw_enchants"]
 	if(islist(ids) && ids.len)
 		lines += span_info("Enchantments:")
@@ -16,7 +20,8 @@
 		for(var/id in ids)
 			if(!istext(id)) continue
 			var/list/def = ratworld_get_enchant_def(id)
-			var/name = def?def["name"] : id
+			var/name = id
+			if(islist(def) && def["name"]) name = def["name"]
 			var/val = vals && isnum(vals[id]) ? vals[id] : null
 			var/suffix = ""
 			if(istext(slot_key))

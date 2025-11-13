@@ -101,6 +101,8 @@
 /obj/item/melee/touch_attack/orison/proc/cast_light(atom/thing, mob/living/carbon/human/user)
 	var/holy_skill = user.get_skill_level(attached_spell.associated_skill)
 	var/cast_time = 35 - (holy_skill * 3)
+	// Ratworld: apply cast speed multiplier from enchants
+	cast_time = cast_time / ratworld_get_cast_speed_mult(user)
 	if (!thing.Adjacent(user))
 		to_chat(user, span_info("I need to be next to [thing] to channel a blessing of light!"))
 		return
@@ -150,6 +152,8 @@
 	if (thing == user)
 		// give us a buff that makes our next spoken thing really loud and also cause any linked, un-muted scom to shriek out the phrase at a 15% chance
 		var/cast_time = 50 - (holy_skill * 5)
+		// Ratworld: apply cast speed multiplier from enchants
+		cast_time = cast_time / ratworld_get_cast_speed_mult(user)
 		user.visible_message(span_notice("[user] lowers [user.p_their()] head solemnly, whispered prayers spilling from [user.p_their()] lips..."), span_notice("O holy [user.patron.name], share unto me a sliver of your power..."))
 		
 		if (!user.has_status_effect(/datum/status_effect/thaumaturgy))

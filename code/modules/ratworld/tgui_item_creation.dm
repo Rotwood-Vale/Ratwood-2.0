@@ -1,10 +1,10 @@
 // Ratworld admin item creation TGUI
 
 /datum/ui_state/rw_admin_holder
-    can_use_topic(src_object, mob/user)
-        if(user?.client?.holder)
-            return UI_INTERACTIVE
-        return UI_CLOSE
+/datum/ui_state/rw_admin_holder/can_use_topic(src_object, mob/user)
+    if(user?.client?.holder)
+        return UI_INTERACTIVE
+    return UI_CLOSE
 
 GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
 
@@ -25,6 +25,7 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
     var/custom_name = ""
     var/custom_desc = ""
     var/custom_color = "" // hex
+    var/undiscovered = FALSE // if TRUE, skip setting enchants now; roll on discovery
 
 /datum/ratworld/item_creation_session/New(mob/living/U)
     ..()
@@ -187,15 +188,12 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
     data["results"] = search_results
     data["show_search"] = show_search
     var/list/sel = list("path" = selected_path, "icon" = selected_icon, "icon_state" = selected_icon_state, "name" = selected_name)
-    // Ensure we always have a visible, stable preview:
-    // - If a selection exists but icon/state are missing, recompute from the type (do NOT drop the preview on rarity changes)
-    // - If no selection, use the diamond ('dorpel') placeholder
+    // Always recompute preview from the selected type to guarantee a valid icon/state
     if(istext(selected_path))
-        if(!istext(sel["icon"]) || !istext(sel["icon_state"]))
-            var/list/prev = _rw_type_preview(selected_path)
-            if(istext(prev["icon"])) sel["icon"] = prev["icon"]
-            if(istext(prev["icon_state"])) sel["icon_state"] = prev["icon_state"]
-            if(istext(prev["name"])) sel["name"] = prev["name"]
+        var/list/prev = _rw_type_preview(selected_path)
+        if(istext(prev["icon"])) sel["icon"] = prev["icon"]
+        if(istext(prev["icon_state"])) sel["icon_state"] = prev["icon_state"]
+        if(istext(prev["name"])) sel["name"] = prev["name"]
     else
         if(!istext(sel["icon"]) || !istext(sel["icon_state"]))
             var/defT = /obj/item/roguegem/diamond
@@ -223,6 +221,7 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
     data["rarities"] = rarities
     data["rarity"] = rarity
     data["attr_slots"] = attr_slots
+    data["undiscovered"] = undiscovered
     // Slot keys list
     data["slot_key"] = slot_key
     data["slot_keys"] = list(RW_SLOT_1H, RW_SLOT_1H_SHIELD, RW_SLOT_2H_PHYS, RW_SLOT_2H_MAGICAL, RW_SLOT_CHEST, RW_SLOT_LEGS, RW_SLOT_FOOT, RW_SLOT_HEAD, RW_SLOT_HANDS, RW_SLOT_CLOAK, RW_SLOT_NECKLACE, RW_SLOT_RING, RW_SLOT_ARMS, RW_SLOT_MASK, RW_SLOT_SHIRT)
@@ -287,6 +286,13 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
             if(index && istext(id))
                 while(ench_ids.len < index) ench_ids += null
                 ench_ids[index] = id
+                // Initialize a default value for this enchant using slot min to avoid blocking Create
+                var/list/rng2 = ratworld_get_enchant_slot_range(id, slot_key)
+                if(islist(rng2))
+                    var/minv2 = rng2["min"]
+                    if(isnum(minv2))
+                        if(!islist(ench_vals)) ench_vals = list()
+                        ench_vals[id] = minv2
             return TRUE
         if("set_ench_val")
             var/id2 = params["id"]
@@ -304,8 +310,14 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
         if("set_color")
             custom_color = copytext_char("[params["color"]]", 1, 16)
             return TRUE
+        if("toggle_undiscovered")
+            undiscovered = !undiscovered
+            return TRUE
         if("create")
-            if(!check_rights(R_ADMIN)) return TRUE
+            // Allow any admin holder, consistent with UI gating
+            if(!(user?.client?.holder))
+                to_chat(user, span_warning("You lack permission to create items."))
+                return TRUE
             if(!istext(selected_path))
                 to_chat(user, span_warning("Pick an item type first."))
                 return TRUE
@@ -313,6 +325,7 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
             if(!ispath(T3))
                 to_chat(user, span_warning("Invalid item type."))
                 return TRUE
+            to_chat(user, span_notice("Creating [selected_path] at rarity [rarity]."))
             var/slots_needed = get_ratworld_rarity_slot_count(rarity)
             // Validate enchants & values
             var/list/final_ids = list()
@@ -344,10 +357,22 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
             if(custom_name && length(custom_name)) I.name = custom_name
             if(custom_desc && length(custom_desc)) I.desc = custom_desc
             if(custom_color && length(custom_color)) I.color = custom_color
+            // Mark as admin spawned so downstream systems (vault origin, logs) classify correctly
+            if("flags_1" in I.vars)
+                I.flags_1 |= ADMIN_SPAWNED_1
             I.vars["rw_rarity"] = rarity
-            I.vars["rw_enchants"] = final_ids.Copy()
-            I.vars["rw_enchant_vals"] = final_vals.Copy()
-            ratworld_apply_enchantments(I)
+            if(undiscovered)
+                // Flag for identification gameplay: hide/unused enchants until discovered; roll later
+                I.vars["rw_discovered"] = FALSE
+                I.vars["rw_roll_on_discover"] = TRUE
+                I.vars["rw_enchants"] = null
+                I.vars["rw_enchant_vals"] = null
+            else
+                I.vars["rw_enchants"] = final_ids.Copy()
+                I.vars["rw_enchant_vals"] = final_vals.Copy()
+                ratworld_apply_enchantments(I)
+            // Ensure examine name-line shows correct rarity color even for items without enchants
+            I.AddComponent(/datum/component/ratworld_rarity_namecolor)
             // Try to give to hand
             if(L && I)
                 var/hand_ok = FALSE
@@ -360,6 +385,9 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
                         hand_ok = L.put_in_active_hand(I, TRUE)
                     if(!hand_ok && !L.get_inactive_held_item())
                         hand_ok = L.put_in_inactive_hand(I, TRUE)
+                // Immediately apply wearer-side effects so bonuses are visible right away
+                if(hand_ok)
+                    ratworld_apply_wearer_effects(I, L)
                 if(hand_ok)
                     to_chat(user, span_notice("Created [I] in your hands."))
                 else
