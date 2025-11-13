@@ -63,6 +63,11 @@
 	cost = 10
 	contains = list(/obj/item/clothing/gloves/roguetown/angle)
 
+/datum/supply_pack/rogue/Pioneer/bmbstrap
+	name = "Bombdolier"
+	cost = 70
+	contains = list(/obj/item/bmbstrap)
+
 /datum/supply_pack/rogue/Pioneer/leather/flgloves
 	name = "Fingerless Leather Gloves"
 	cost = 10
