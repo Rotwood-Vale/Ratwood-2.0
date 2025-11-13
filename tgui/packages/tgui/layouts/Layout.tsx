@@ -21,7 +21,7 @@ export function Layout(props: Props) {
   const { className, theme = 'azure_default', children, ...rest } = props;
 
   const themeClass = `theme-${theme}`;
-  
+
   useEffect(() => {
     document.documentElement.className = themeClass;
   }, [themeClass]);
@@ -66,7 +66,6 @@ function LayoutContent(props: ContentProps) {
         'Layout__content',
         scrollable && 'Layout__content--scrollable',
         className,
-
         computeBoxClassName(rest),
       ])}
       ref={node}
