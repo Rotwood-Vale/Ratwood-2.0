@@ -597,8 +597,8 @@
 		// Ratworld: Applied Effects menu right under stats
 		if(!rw_applied_effects_click)
 			rw_applied_effects_click = new /obj/effect/statclick/applied_effects(null, src)
-		// Pass the object as the clickable ref (3rd param) so Click() fires
-		statpanel("Applied Effects:", null, rw_applied_effects_click)
+		// Pass the object as the clickable ref (3rd param) so Click() fires inside the existing Stats panel
+		statpanel("Stats", "Applied Effects", rw_applied_effects_click)
 
 		// Ensure wearer effects are up-to-date before computing totals (lightweight, idempotent)
 		ratworld_refresh_wearer_effects()
