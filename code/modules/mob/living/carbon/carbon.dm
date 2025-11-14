@@ -594,14 +594,45 @@
 		stat("SPD: \Roman [STASPD]")
 		stat("FOR: \Roman [STALUC]")
 		stat("PATRON: [patron]")
-		// Ratworld: Applied Effects menu right under stats
-		if(!rw_applied_effects_click)
-			rw_applied_effects_click = new /obj/effect/statclick/applied_effects(null, src)
-		// Pass the object as the clickable ref (3rd param) so Click() fires inside the existing Stats panel
-		statpanel("Stats", "Applied Effects", rw_applied_effects_click)
+		// Ratworld: Show Applied Effects directly in the Stats panel
+		stat("Applied Effects:")
+		var/effects_count = 0
+		for(var/obj/item/I as anything in contents)
+			if(!I) continue
+			if(I.vars && ("rw_discovered" in I.vars) && !I.vars["rw_discovered"]) continue
+			if(!islist(I.rw_enchants)) continue
+			// Only include items whose effects are currently applied to this mob
+			if(I.rw_effects_owner && I.rw_effects_owner != src)
+				continue
+			var/list/ids = I.rw_enchants
+			var/list/vals = islist(I.rw_enchant_vals) ? I.rw_enchant_vals : null
+			var/slot_key = ratworld_slot_key_for_item(I)
+			var/list/parts = list()
+			for(var/id in ids)
+				if(!istext(id)) continue
+				var/list/def = ratworld_get_enchant_def(id)
+				var/ename = islist(def) && def["name"] ? def["name"] : "[id]"
+				var/value = (vals && !isnull(vals[id])) ? vals[id] : null
+				var/textpart
+				if(!isnull(value))
+					var/is_percent = FALSE
+					if(istext(slot_key))
+						var/list/rng = ratworld_get_enchant_slot_range(id, slot_key)
+						if(islist(rng) && rng["percent"]) is_percent = TRUE
+					var/sign = (isnum(value) && value >= 0) ? "+" : ""
+					var/suffix = is_percent ? "%" : ""
+					textpart = "[ename] [sign][value][suffix]"
+				else
+					textpart = ename
+				parts += textpart
+			if(parts.len)
+				var/joined = jointext(parts, ", ")
+				var/line = "- [I.name]: [joined]"
+				stat(line)
+				effects_count++
+		if(!effects_count)
+			stat("- None")
 
-		// Ensure wearer effects are up-to-date before computing totals (lightweight, idempotent)
-		ratworld_refresh_wearer_effects()
 		// Ratworld: concise bonuses summary (vertical list, only non-zero, using aggregated totals)
 		var/as_pct = isnum(vars?["rw_action_speed_pct_total"]) ? vars["rw_action_speed_pct_total"] : 0
 		var/cs_pct = isnum(vars?["rw_cast_speed_pct_total"]) ? vars["rw_cast_speed_pct_total"] : 0
@@ -609,10 +640,8 @@
 		var/mdef_pct = isnum(vars?["rw_magic_def_pct_total"]) ? vars["rw_magic_def_pct_total"] : 0
 		var/luck_pct = isnum(vars?["rw_luck_pct_total"]) ? vars["rw_luck_pct_total"] : 0
 		var/heal_add = isnum(vars?["rw_outgoing_heal_add_total"]) ? vars["rw_outgoing_heal_add_total"] : 0
-		var/printed_any = FALSE
 		if(as_pct || cs_pct || cdr_pct || mdef_pct || luck_pct || heal_add)
 			stat("Bonuses:")
-			printed_any = TRUE
 			if(as_pct)
 				var/s1 = (as_pct >= 0) ? "+" : ""
 				stat("- Action Speed", "[s1][round(as_pct, 0.1)]%")

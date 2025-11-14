@@ -9,7 +9,7 @@
     name = "Applied Effects"
     var/mob/living/owner
 
-/obj/effect/statclick/applied_effects/Initialize(mapload, mob/living/owner)
+/obj/effect/statclick/applied_effects/Initialize(mapload, text, mob/living/owner)
     . = ..()
     src.owner = owner
     if(isdatum(owner))

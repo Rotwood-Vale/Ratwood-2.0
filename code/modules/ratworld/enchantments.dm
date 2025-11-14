@@ -22,6 +22,7 @@ var/global/list/GLOB_rw_enchants
 
 // Per-item temporary bookkeeping for wearer-applied effects
 /obj/item
+	// Temporary bookkeeping for wearer-applied effects
 	var/tmp/mob/living/rw_effects_owner = null
 	var/tmp/rw_speed_mod_id = null
 	var/tmp/rw_as_applied = null
