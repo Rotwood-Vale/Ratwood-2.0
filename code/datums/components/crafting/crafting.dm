@@ -326,6 +326,10 @@
 								var/obj/item/OI = I
 								if("rw_rarity" in OI.vars && (istype(OI, /obj/item/rogueweapon) || istype(OI, /obj/item/gun/ballistic/revolver/grenadelauncher/bow) || istype(OI, /obj/item/clothing)))
 									OI.vars["rw_rarity"] = ratworld_roll_crafted_rarity(LU, OI)
+									// Ensure socketable if magic+
+									ratworld_ensure_socketable(OI)
+										// Semi-rare +STAT bonus
+										ratworld_maybe_roll_item_stat_bonus(OI)
 					user.visible_message(span_notice("[user] [R.verbage] \a [result_name]!"), \
 										span_notice("I [R.verbage_simple] \a [result_name]!"))
 					if(user.mind && R.skillcraft)

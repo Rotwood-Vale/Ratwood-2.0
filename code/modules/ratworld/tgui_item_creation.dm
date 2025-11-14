@@ -361,6 +361,10 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
             if("flags_1" in I.vars)
                 I.flags_1 |= ADMIN_SPAWNED_1
             I.vars["rw_rarity"] = rarity
+            // Ensure socketable for magic+ gear
+            ratworld_ensure_socketable(I)
+            // Semi-rare +STAT bonus
+            ratworld_maybe_roll_item_stat_bonus(I)
             if(undiscovered)
                 // Flag for identification gameplay: hide/unused enchants until discovered; roll later
                 I.vars["rw_discovered"] = FALSE

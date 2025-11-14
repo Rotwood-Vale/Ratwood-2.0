@@ -264,6 +264,10 @@
 		// Ratworld: roll a crafted rarity for the finished item
 		if("rw_rarity" in I.vars)
 			I.vars["rw_rarity"] = ratworld_roll_crafted_rarity(user, I)
+			// Ensure socketable if magic+
+			ratworld_ensure_socketable(I)
+			// Semi-rare +STAT bonus
+			ratworld_maybe_roll_item_stat_bonus(I)
 
 	// Clean up the original workpiece
 	qdel(parent)

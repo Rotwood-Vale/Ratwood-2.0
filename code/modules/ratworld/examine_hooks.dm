@@ -32,4 +32,10 @@
 				lines += "- [name] [sign][val][suffix]"
 			else
 				lines += "- [name]"
+	// Show +stat bonus if present
+	var/sid = I.vars?["rw_stat_bonus_id"]
+	var/sv = I.vars?["rw_stat_bonus_value"]
+	if(istext(sid) && isnum(sv) && sv)
+		var/sdisp = (sid == "STR") ? "Strength" : (sid == "SPD") ? "Speed" : (sid == "INT") ? "Intelligence" : (sid == "WIL") ? "Willpower" : (sid == "CON") ? "Constitution" : sid
+		lines += "+[sv] [sdisp]"
 	return lines

@@ -9,9 +9,10 @@ GLOBAL_LIST_INIT(rw_item_categories, list(
 
     list(id = "dagger", patterns = list("/rogueweapon/huntingknife", "/rogueweapon/dagger", " dagger", " knife"), size = list(1,1), icon = 'icons/roguetown/weapons/daggers32.dmi', priority = 60),
     list(id = "sword_large", patterns = list("zweihander", "/rogueweapon/greatsword", " greatsword"), size = list(2,3), icon = 'icons/roguetown/weapons/swords64.dmi', priority = 55),
-    list(id = "sword", patterns = list("/rogueweapon/sword", " longsword", " broadsword", " shortsword", " sword"), size = list(1,3), icon = 'icons/roguetown/weapons/swords32.dmi', priority = 50),
+    list(id = "sword", patterns = list("/rogueweapon/sword", " longsword", " broadsword", " shortsword", " sword"), size = list(2,3), icon = 'icons/roguetown/weapons/swords32.dmi', priority = 50),
     list(id = "polearm", patterns = list(" spear", "/rogueweapon/spear", " halberd", " glaive", " polearm"), size = list(2,3), icon = 'icons/roguetown/weapons/polearms64.dmi', priority = 55),
     list(id = "mace", patterns = list(" warhammer", " hammer", " mace", " club"), size = list(1,2), icon = 'icons/roguetown/weapons/blunt32.dmi', priority = 45),
+    list(id = "maul", patterns = list("/rogueweapon/mace/maul", " maul"), size = list(4,3), icon = 'icons/roguetown/weapons/blunt32.dmi', priority = 65),
     list(id = "axe", patterns = list("/rogueweapon/axe", " axe"), size = list(1,2), icon = 'icons/roguetown/weapons/axes32.dmi', priority = 45),
     list(id = "shield", patterns = list("/rogueweapon/shield", " shield"), size = list(2,2), icon = 'icons/roguetown/weapons/shields32.dmi', priority = 50),
     list(id = "whip", patterns = list("/rogueweapon/whip", " whip"), size = list(1,2), icon = 'icons/roguetown/weapons/whips32.dmi', priority = 40),

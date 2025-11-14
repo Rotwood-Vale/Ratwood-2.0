@@ -41,11 +41,33 @@
 	// (Temporarily disabled trait-based safe socketing pending compile investigation)
 	return FALSE
 
+// Determine if an item is eligible for socketing (magic+ and correct families)
+/proc/ratworld_is_socket_eligible(obj/item/I)
+	if(!I) return FALSE
+	var/rar = I.vars?["rw_rarity"]
+	if(!isnum(rar) || rar < RW_RARITY_MAGIC) return FALSE
+	if(istype(I, /obj/item/rogueweapon)) return TRUE
+	if(istype(I, /obj/item/gun/ballistic/revolver/grenadelauncher/bow)) return TRUE
+	if(istype(I, /obj/item/clothing)) return TRUE
+	return FALSE
+
+// Ensure a socketable component is present on eligible items. Defaults to 1 socket.
+/proc/ratworld_ensure_socketable(obj/item/I)
+	if(!I) return
+	if(!ratworld_is_socket_eligible(I)) return
+	var/datum/component/ratworld_socketable/S = I.GetComponent(/datum/component/ratworld_socketable)
+	if(!S)
+		I.AddComponent(/datum/component/ratworld_socketable, 1)
+
 // Core flow: using a gem on a socketable item will attempt to insert it
 /datum/component/ratworld_socketable/proc/on_attackby(obj/item/with, mob/living/user, params)
 	if(!istype(with, /obj/item/roguegem))
 		return FALSE
 	var/obj/item/I = parent
+	// Enforce item eligibility: only magical (Magic+) items can be socketed
+	if(!ratworld_is_socket_eligible(I))
+		to_chat(user, span_warning("Only magical items (Magic+) can be socketed."))
+		return COMPONENT_NO_AFTERATTACK
 	if(!has_free_socket())
 		to_chat(user, span_warning("There are no empty sockets on [I]."))
 		return COMPONENT_NO_AFTERATTACK
@@ -81,3 +103,15 @@
 		examine_list += span_notice("[free] socket(s) free.")
 
 #undef RW_SOCKET_BRICK_CHANCE
+
+// Fallback: Allow using a gem on an eligible item even if it doesn't yet have the socketable component
+/obj/item/roguegem/afterattack(atom/target, mob/user, proximity, clickparams)
+	..()
+	if(!proximity) return
+	if(!istype(target, /obj/item)) return
+	var/obj/item/I = target
+	if(!ratworld_is_socket_eligible(I)) return
+	// Ensure component then forward the interaction
+	ratworld_ensure_socketable(I)
+	// Attackby triggers the component's flow; if no free sockets, it will message
+	I.attackby(src, user)

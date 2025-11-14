@@ -20,8 +20,11 @@ type StashItem = {
   preview_state?: string | null;
   preview_scale?: number | null;
   mob_overlay_icon?: string | null;
-  damage?: number | null;
+  min_damage?: number | null;
+  max_damage?: number | null;
   damage_type?: string | null;
+  socket_gem?: string | null;
+  socket_gem_color?: string | null;
   x: number;
   y: number;
   w: number;
@@ -104,9 +107,12 @@ const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
   const dispRarity = getDisplayRarity(item);
   const rarityLabel = (dispRarity && RARITY_LABEL[dispRarity]) || 'Unknown';
   const rarityColor = getRarityColor(item) || undefined;
-  const dmg = item.damage ?? null;
+  const minD = typeof item.min_damage === 'number' ? item.min_damage : null;
+  const maxD = typeof item.max_damage === 'number' ? item.max_damage : null;
   const dmgType = (item.damage_type || '').toLowerCase();
   const dmgColor = dmgType === 'brute' ? '#e74c3c' : dmgType === 'burn' ? '#e67e22' : '#ddd';
+  const gem = item.socket_gem || null;
+  const gemColor = item.socket_gem_color || '#cccccc';
   return (
     <Box style={{ minWidth: 240, textAlign: 'center', position: 'relative' }}>
       <Box
@@ -121,11 +127,17 @@ const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
             : '0 0 8px rgba(0,0,0,0.4)',
         }}
       >
-        <Box bold style={{ color: rarityColor || '#e0e0e0', marginBottom: 4 }}>{item.name || ''}</Box>
+        <Box bold style={{ color: rarityColor || '#e0e0e0', marginBottom: 4 }}>
+          {item.name || ''}
+          {!!gem && (
+            <span style={{ color: gemColor, fontWeight: 700 }}> (★-{gem})</span>
+          )}
+        </Box>
         <Box style={{ color: rarityColor || '#c0c0c0', opacity: 0.95, marginBottom: 6 }}>{dispRarity ? rarityLabel : ''}</Box>
-        {!!dmg && (
+        {(minD !== null || maxD !== null) && (
           <Box bold style={{ color: dmgColor, marginBottom: 6 }}>
-            Damage {dmg}
+            {dmgType === 'brute' ? 'Brute' : 'Damage'}{' '}
+            {minD !== null && maxD !== null ? `${minD}–${maxD}` : (minD ?? maxD)}
           </Box>
         )}
         {lines.length > 0 ? (
@@ -450,6 +462,9 @@ export const RatworldStash = () => {
                           }}
                         >
                           {item.name || ''}
+                          {!!item.socket_gem && (
+                            <span style={{ color: item.socket_gem_color || '#cccccc', fontWeight: 700 }}> (★-{item.socket_gem})</span>
+                          )}
                         </div>
                         <div
                           style={{

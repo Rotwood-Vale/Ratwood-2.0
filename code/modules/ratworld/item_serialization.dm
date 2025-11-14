@@ -15,6 +15,9 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
     var/list/rw_enchant_vals // map id -> numeric value
     var/rw_discovered = TRUE // default discovered; only special items will be undiscovered
     var/rw_roll_on_discover = FALSE // roll enchants when identified if set
+    // Socket metadata for UI cues
+    var/rw_socket_gem
+    var/rw_socket_gem_color
 
 /// Assigns a UID to an item if it does not have one yet
 /proc/ratworld_assign_uid(obj/item/I)
@@ -115,6 +118,13 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
                 vals_out[k] = ench_vals[k]
         if(vals_out.len)
             data["ench_vals"] = vals_out
+    // Socket gem display fields
+    if("rw_socket_gem" in I.vars)
+        var/sg = I.vars["rw_socket_gem"]
+        if(istext(sg) && length(sg)) data["socket_gem"] = sg
+    if("rw_socket_gem_color" in I.vars)
+        var/sgc = I.vars["rw_socket_gem_color"]
+        if(istext(sgc) && length(sgc)) data["socket_gem_color"] = sgc
     // Minimal safe vars block: persist cosmetic fields and common icon hints used by UI
     var/list/vout = list()
     if(istext(I.name) && length(I.name)) vout["name"] = I.name
@@ -231,9 +241,14 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
     // Restore identification flags first
     if(isnum(data["rarity"]))
         I.vars["rw_rarity"] = data["rarity"]
+        // Ensure socketable for magic+ items restored from stash
+        ratworld_ensure_socketable(I)
     if(data["undiscovered"]) I.vars["rw_discovered"] = FALSE
     else if(!("rw_discovered" in I.vars)) I.vars["rw_discovered"] = TRUE
     if(data["roll_on_discover"]) I.vars["rw_roll_on_discover"] = TRUE
+    // Restore socket gem display fields
+    if(istext(data["socket_gem"])) I.vars["rw_socket_gem"] = data["socket_gem"]
+    if(istext(data["socket_gem_color"])) I.vars["rw_socket_gem_color"] = data["socket_gem_color"]
     var/list/ench = data["ench"]
     if(islist(ench) && ench.len)
         I.vars["rw_enchants"] = list()

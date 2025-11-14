@@ -45,6 +45,8 @@ var/global/list/GLOB_rw_enchants
 	var/tmp/rw_buff_duration_pct_applied = null
 	var/tmp/rw_debuff_duration_pct_applied = null
 	var/tmp/rw_projectile_defense_pct_applied = null
+	var/tmp/rw_stat_bonus_key = null
+	var/tmp/rw_stat_bonus_applied = null
 
 // Aggregate Ratworld enchant totals stored on living mobs
 /mob/living
@@ -214,7 +216,7 @@ var/global/list/GLOB_rw_enchants
 // Static, item-owned effects that should persist regardless of equip (idempotent)
 /proc/ratworld_apply_item_static_effects(obj/item/I)
 	if(!I) return
-	if(I.vars && ("rw_discovered" in I.vars) && !I.vars["rw_discovered"]) return
+	// Do not gate static item effects behind discovery; stats should always apply
 	if(!islist(I.vars?["rw_enchants"])) return
 	if(!islist(I.vars?["rw_enchant_vals"])) return
 	if(!islist(I.vars?["rw_item_static_applied"])) I.vars["rw_item_static_applied"] = list()
@@ -372,6 +374,17 @@ var/global/list/GLOB_rw_enchants
 	if(debuffdur_add) { L.vars["rw_debuff_duration_pct_total"] += debuffdur_add; I.rw_debuff_duration_pct_applied = debuffdur_add; applied_any = TRUE }
 	if(projdef_add) { L.vars["rw_projectile_defense_pct_total"] += projdef_add; I.rw_projectile_defense_pct_applied = projdef_add; applied_any = TRUE }
 
+	// Flat +stat bonus (semi-rare) applied directly to base stats; excluded: LUC
+	var/sid = I.vars?["rw_stat_bonus_id"]
+	var/sv = I.vars?["rw_stat_bonus_value"]
+	if(istext(sid) && isnum(sv) && sv)
+		switch(sid)
+			if("STR") { L.STASTR += sv; I.rw_stat_bonus_key = "STASTR"; I.rw_stat_bonus_applied = sv; applied_any = TRUE }
+			if("SPD") { L.STASPD += sv; I.rw_stat_bonus_key = "STASPD"; I.rw_stat_bonus_applied = sv; applied_any = TRUE }
+			if("INT") { L.STAINT += sv; I.rw_stat_bonus_key = "STAINT"; I.rw_stat_bonus_applied = sv; applied_any = TRUE }
+			if("WIL") { L.STAWIL += sv; I.rw_stat_bonus_key = "STAWIL"; I.rw_stat_bonus_applied = sv; applied_any = TRUE }
+			if("CON") { L.STACON += sv; I.rw_stat_bonus_key = "STACON"; I.rw_stat_bonus_applied = sv; applied_any = TRUE }
+
 	// Clamp totals to design max_total where applicable
 	var/list/design_ids = list(
 		"action_speed" = "rw_action_speed_pct_total",
@@ -452,6 +465,16 @@ var/global/list/GLOB_rw_enchants
 	if(isnum(I.rw_luck_applied)) { L.vars["rw_luck_pct_total"] -= I.rw_luck_applied; I.rw_luck_applied = null }
 	if(isnum(I.rw_heal_applied)) { L.vars["rw_outgoing_heal_add_total"] -= I.rw_heal_applied; I.rw_heal_applied = null }
 
+	// Revert +stat bonus if applied
+	if(istext(I.rw_stat_bonus_key) && isnum(I.rw_stat_bonus_applied))
+		if(I.rw_stat_bonus_key == "STASTR") L.STASTR -= I.rw_stat_bonus_applied
+		else if(I.rw_stat_bonus_key == "STASPD") L.STASPD -= I.rw_stat_bonus_applied
+		else if(I.rw_stat_bonus_key == "STAINT") L.STAINT -= I.rw_stat_bonus_applied
+		else if(I.rw_stat_bonus_key == "STAWIL") L.STAWIL -= I.rw_stat_bonus_applied
+		else if(I.rw_stat_bonus_key == "STACON") L.STACON -= I.rw_stat_bonus_applied
+		I.rw_stat_bonus_key = null
+		I.rw_stat_bonus_applied = null
+
 	if(I.rw_effects_owner == L)
 		I.rw_effects_owner = null
 
@@ -474,6 +497,23 @@ var/global/list/GLOB_rw_enchants
 		picked += p
 		candidates -= p
 	return picked
+
+// Semi-rare: roll an item +STAT bonus (excluded: Fortune/Luck). Any gear can roll. Not socketable.
+/proc/ratworld_maybe_roll_item_stat_bonus(obj/item/I)
+	if(!I) return
+	// Eligible gear types
+	if(!(istype(I, /obj/item/rogueweapon) || istype(I, /obj/item/gun/ballistic/revolver/grenadelauncher/bow) || istype(I, /obj/item/clothing)))
+		return
+	// Do not re-roll if already has a bonus
+	if(istext(I.vars?["rw_stat_bonus_id"])) return
+	// ~12% overall chance to gain +stat; 5% of those are +2, otherwise +1
+	if(!prob(12)) return
+	var/val = prob(5) ? 2 : 1
+	// Choose among STR, SPD, INT, WIL, CON (exclude LUC)
+	var/list/cands = list("STR", "SPD", "INT", "WIL", "CON")
+	var/sid = pick(cands)
+	I.vars["rw_stat_bonus_id"] = sid
+	I.vars["rw_stat_bonus_value"] = val
 
 // Helper accessors for systems to consume aggregated wearer bonuses safely
 /proc/ratworld_get_action_speed_mult(mob/living/L)

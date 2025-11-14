@@ -36,6 +36,23 @@
                     var/prev_w = R["w"]
                     var/prev_h = R["h"]
                     ratworld_migrate_record(R)
+                    // Re-evaluate footprint against current classifier to reflect updated rules (e.g., mauls/swords sizing)
+                    var/path_text = R["typepath"]
+                    if(!istext(path_text)) path_text = R["path"]
+                    if(istext(path_text))
+                        var/list/C = ratworld_classify_item_for_stash(path_text)
+                        if(islist(C))
+                            var/exp_w = C["w"]
+                            var/exp_h = C["h"]
+                            if(isnum(exp_w) && isnum(exp_h))
+                                if(R["w"] != exp_w || R["h"] != exp_h)
+                                    // Only resize if it won't collide with other items in the grid
+                                    var/curx = R["x"] || 1
+                                    var/cury = R["y"] || 1
+                                    if(!stash.rect_collides(curx, cury, exp_w, exp_h, k))
+                                        R["w"] = exp_w
+                                        R["h"] = exp_h
+                                        changed = TRUE
                     if(R["icon"] != prev_icon || R["icon_state"] != prev_state || R["w"] != prev_w || R["h"] != prev_h)
                         changed = TRUE
             if(changed)
@@ -273,6 +290,14 @@
                 rarity_val = minr
                 rarity_color = get_ratworld_rarity_color(minr)
 
+        // Socket gem display fields
+        var/socket_gem = rec["socket_gem"]
+        var/socket_gem_color = rec["socket_gem_color"]
+        if(!istext(socket_gem) && islist(vars_block) && istext(vars_block["rw_socket_gem"]))
+            socket_gem = vars_block["rw_socket_gem"]
+        if(!istext(socket_gem_color) && islist(vars_block) && istext(vars_block["rw_socket_gem_color"]))
+            socket_gem_color = vars_block["rw_socket_gem_color"]
+
         // Use preview_state as the final icon_state sent to UI, since it already
         // accounts for whether we're using an inventory sheet or the original icon.
         var/final_icon_state = preview_state
@@ -287,19 +312,21 @@
         else
             display_uid = "D#?"
 
-        // Weapon damage preview (simple): if the type has a numeric force, treat as brute damage for now
-        var/prev_damage = null
+        // Weapon damage preview (min-max): use base force and wielded force when available
+        var/min_damage = null
+        var/max_damage = null
         var/prev_dmg_type = null
         var/Td = text2path(path_text)
         if(ispath(Td))
             var/obj/item/tmpd = new Td()
             if(isnum(tmpd.force) && tmpd.force > 0)
-                prev_damage = tmpd.force
+                min_damage = tmpd.force
                 prev_dmg_type = "brute"
-            // Prefer wielded damage if available and higher
-            if(isnum(tmpd:force_wielded) && tmpd:force_wielded > (prev_damage || 0))
-                prev_damage = tmpd:force_wielded
+            if(isnum(tmpd:force_wielded) && tmpd:force_wielded > 0)
+                max_damage = tmpd:force_wielded
                 prev_dmg_type = "brute"
+            if(isnull(max_damage) && isnum(min_damage))
+                max_damage = min_damage
             qdel(tmpd)
 
         out += list(list(
@@ -319,8 +346,11 @@
             "undiscovered" = is_undiscovered,
             "display_uid" = display_uid,
             "icon_state" = final_icon_state,
-            "damage" = prev_damage,
+            "min_damage" = min_damage,
+            "max_damage" = max_damage,
             "damage_type" = prev_dmg_type,
+            "socket_gem" = socket_gem,
+            "socket_gem_color" = socket_gem_color,
             "x" = rec["x"],
             "y" = rec["y"],
             "w" = rec["w"],
@@ -363,6 +393,8 @@ GLOBAL_DATUM_INIT(rw_reliquary_adjacent_state, /datum/ui_state/rw_reliquary_adja
     bal = SStreasury.bank_accounts[user]
     data["currency"] = bal
     data["items"] = build_item_array()
+    // Slightly larger cells so sprites aren't tiny
+    data["cell_px"] = 48
     data["grid_w"] = stash.grid_w
     data["grid_h"] = stash.grid_h
     // Pixel size for one logical grid cell (used by UI for consistent scaling); slightly larger
