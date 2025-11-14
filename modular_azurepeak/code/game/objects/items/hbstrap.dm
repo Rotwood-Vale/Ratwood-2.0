@@ -3,7 +3,7 @@
 	desc = ""
 	icon_state = "hbstrap0"
 	item_state = "hurlstrap"
-	icon = 'modular_azurepeak/icons/obj/items/hurlstrap.dmi'
+	icon = 'modular_azurepeak/icons/obj/items/Hurlstrap.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
