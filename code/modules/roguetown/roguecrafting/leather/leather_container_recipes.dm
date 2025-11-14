@@ -82,7 +82,7 @@
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/rope = 1)
 
-/datum/crafting_recipe/roguetown/leather/container/hbstrap
+/datum/crafting_recipe/roguetown/leather/container/hurlstrap
 	name = "hurlbat bandolier"
 	result = /obj/item/hurlstrap
 	reqs = list(/obj/item/natural/hide/cured = 2,

@@ -2,7 +2,7 @@
 	name = "hurlbat bandolier"
 	desc = ""
 	icon_state = "hbstrap0"
-	item_state = "hbstrap"
+	item_state = "hurlstrap"
 	icon = 'modular_azurepeak/icons/obj/items/hbstrap.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
