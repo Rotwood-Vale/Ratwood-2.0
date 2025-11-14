@@ -320,6 +320,12 @@
 							else
 								I.OnCrafted(user.dir, user)
 							I.add_fingerprint(user)
+							// Ratworld: roll crafted rarity for qualifying gear
+							if(isliving(user) && istype(I, /obj/item))
+								var/mob/living/LU = user
+								var/obj/item/OI = I
+								if("rw_rarity" in OI.vars && (istype(OI, /obj/item/rogueweapon) || istype(OI, /obj/item/gun/ballistic/revolver/grenadelauncher/bow) || istype(OI, /obj/item/clothing)))
+									OI.vars["rw_rarity"] = ratworld_roll_crafted_rarity(LU, OI)
 					user.visible_message(span_notice("[user] [R.verbage] \a [result_name]!"), \
 										span_notice("I [R.verbage_simple] \a [result_name]!"))
 					if(user.mind && R.skillcraft)

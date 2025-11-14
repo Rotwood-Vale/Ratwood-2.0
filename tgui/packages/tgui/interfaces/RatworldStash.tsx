@@ -439,21 +439,29 @@ export const RatworldStash = () => {
                           pointerEvents: 'none',
                         }}
                       >
-                        <div style={{
-                          fontSize: 10,
-                          lineHeight: '11px',
-                          color: '#ddd',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                        }}>{item.name || ''}</div>
-                        <div style={{
-                          fontSize: 9,
-                          lineHeight: '10px',
-                          color: '#bbb',
-                          opacity: 0.9,
-                          textAlign: 'center',
-                        }}>{dispRarity ? RARITY_LABEL[dispRarity] : ''}</div>
+                        <div
+                          style={{
+                            fontSize: 10,
+                            lineHeight: '11px',
+                            color: '#ddd',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {item.name || ''}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: 9,
+                            lineHeight: '10px',
+                            color: '#bbb',
+                            opacity: 0.9,
+                            textAlign: 'center',
+                          }}
+                        >
+                          {dispRarity ? RARITY_LABEL[dispRarity] : ''}
+                        </div>
                       </div>
                     </Box>
                   );

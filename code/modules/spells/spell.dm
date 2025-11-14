@@ -362,6 +362,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	record_featured_stat(FEATURED_STATS_MAGES, user)
 	return TRUE
 
+// Ratworld: helper to compute final magic damage (normal + true) for a spell hit
+// Ratworld: spell damage helper is currently unused; spells directly
+// use existing damage pipelines plus magic defense / penetration.
+
 /obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
 	switch(charge_type)
 		if("recharge")

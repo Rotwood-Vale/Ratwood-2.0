@@ -31,7 +31,8 @@
 		I.vars["rw_enchant_vals"] = list()
 		for(var/id in ids)
 			if(!istext(id)) continue
-			var/list/rv = ratworld_roll_enchant_value_for_slot(id, slot_key)
+			// Use the identifier's luck (if any) when rolling enchant values
+			var/list/rv = ratworld_roll_enchant_value_for_slot(id, slot_key, user)
 			if(islist(rv)) I.vars["rw_enchant_vals"][id] = rv["value"]
 		// Clear the flag now that we've rolled
 		if(I.vars?["rw_roll_on_discover"]) I.vars["rw_roll_on_discover"] = FALSE

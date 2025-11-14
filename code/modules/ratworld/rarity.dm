@@ -3,6 +3,8 @@
 // Rarities (in order): Common, Magic, Rare, Epic, Legendary, Unique, Artifact, Ascendant (placeholder)
 
 // Numeric constants (stable; never reorder without migration!)
+#ifndef RW_RARITY_MACROS_DEFINED
+#define RW_RARITY_MACROS_DEFINED
 #define RW_RARITY_COMMON 1
 #define RW_RARITY_MAGIC 2
 #define RW_RARITY_RARE 3
@@ -11,6 +13,7 @@
 #define RW_RARITY_UNIQUE 6
 #define RW_RARITY_ARTIFACT 7
 #define RW_RARITY_ASCENDANT 8 // ??? endgame / chapter defining
+#endif
 
 // Attribute slot counts per design (Common has 0, Magic 1, Rare 2, Epic 3, Legendary 4, Unique 5, Artifact 6, Ascendant TBD -> 6 + special)
 GLOBAL_LIST_INIT(rw_rarity_info, list(

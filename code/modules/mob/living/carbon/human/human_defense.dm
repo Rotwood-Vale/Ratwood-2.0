@@ -249,8 +249,25 @@
 	if(I.force)
 		retaliate(user)
 
-	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I, user, affecting, used_intent, src, useder)
+	// The attacked_by code varies among species; allow species handler to compute damage first
+	var/result = dna.species.spec_attacked_by(I, user, affecting, used_intent, src, useder)
+	if(!result && I.force > 0)
+		// Fallback: apply Ratworld melee enchant math on top of base force when species handler does not fully consume the attack
+		var/mob/living/attacker = user
+		var/mob/living/target = src
+		var/base_brute = I.force
+		var/list/dmg = ratworld_compute_melee_damage(attacker, target, base_brute, I)
+		var/normal_brute = dmg["normal"]
+		var/true_brute = dmg["true"]
+		// Apply brute components; armor durability bonus is handled elsewhere
+		if(normal_brute > 0)
+			apply_damage(round(normal_brute), BRUTE, affecting.body_zone)
+		if(true_brute > 0)
+			apply_damage(round(true_brute), BRUTE, affecting.body_zone)
+
+		return 1
+
+	return result
 
 /mob/living/carbon/human/attack_hand(mob/user)
 	if(..())	//to allow surgery to return properly.

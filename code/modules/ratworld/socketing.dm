@@ -6,7 +6,7 @@
 // Contract:
 // - Items may AddComponent(/datum/component/ratworld_socketable, max_sockets)
 // - Gems are represented by /obj/item/roguegem subtypes
-// - Socketing applies reroll attributes (stubbed) and consumes the gem; gems cannot be removed.
+// - Socketing applies reroll attributes and consumes the gem; gems cannot be removed.
 
 #define RW_SOCKET_BRICK_CHANCE 70
 
@@ -57,11 +57,13 @@
 			I.flags_1 |= CONDUCT_1 // mark unusable as a placeholder; real implementation should set a broken state
 			qdel(with)
 			return COMPONENT_NO_AFTERATTACK
-	// Safe socket: record the gem type and reroll attributes (stub)
+	// Safe socket: record the gem type and apply attribute swap reroll
 	socketed += with.type
+	if(istype(with, /obj/item/roguegem))
+		var/obj/item/roguegem/G = with
+		ratworld_socket_apply_reroll(G, I, user)
 	qdel(with)
 	I.visible_message(span_notice("[user] sockets a gem into [I]."))
-	// TODO: Apply actual attribute reroll with rarity scaling
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/ratworld_socketable/proc/on_examine(mob/user, list/examine_list)

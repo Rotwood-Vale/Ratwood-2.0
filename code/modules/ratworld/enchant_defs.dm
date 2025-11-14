@@ -347,51 +347,33 @@ GLOBAL_LIST_INIT(rw_enchant_defs, list(
         "notes" = "+1 to +4 move speed; +4 is very rare"
     ),
 
-    // HEALTH
-    "max_health_add" = list(
-        "name" = "Max Health Add",
-        "category" = "HEALTH",
+
+    // Replaced by Physical Damage Reduction
+    "physical_damage_reduction" = list(
+        "name" = "Physical Damage Reduction",
+        "category" = "REDUCTIONS",
         "slots" = list(
-            RW_SLOT_1H = _rw_slot(1, 10, FALSE),
-            RW_SLOT_1H_SHIELD = _rw_slot(1, 10, FALSE),
-            RW_SLOT_2H_PHYS = _rw_slot(1, 10, FALSE),
-            RW_SLOT_2H_MAGICAL = _rw_slot(1, 10, FALSE),
-            RW_SLOT_CHEST = _rw_slot(1, 10, FALSE),
-            RW_SLOT_LEGS = _rw_slot(1, 10, FALSE),
-            RW_SLOT_FOOT = _rw_slot(1, 10, FALSE),
-            RW_SLOT_HEAD = _rw_slot(1, 10, FALSE),
-            RW_SLOT_HANDS = _rw_slot(1, 10, FALSE),
-            RW_SLOT_CLOAK = _rw_slot(1, 10, FALSE),
-            RW_SLOT_NECKLACE = _rw_slot(1, 10, FALSE),
-            RW_SLOT_RING = _rw_slot(1, 10, FALSE),
-            RW_SLOT_ARMS = _rw_slot(1, 10, FALSE),
-            RW_SLOT_MASK = _rw_slot(1, 10, FALSE),
-            RW_SLOT_SHIRT = _rw_slot(1, 10, FALSE)
-        ),
-        "max_total" = list("value" = 100, "percent" = FALSE),
-        "notes" = "Adds flat HP"
-    ),
-    "max_health_bonus" = list(
-        "name" = "Max Health Bonus",
-        "category" = "HEALTH",
-        "slots" = list(
+            // Weapons (including shields) small amounts
             RW_SLOT_1H = _rw_slot(0.5, 1, TRUE),
             RW_SLOT_1H_SHIELD = _rw_slot(0.5, 1, TRUE),
             RW_SLOT_2H_PHYS = _rw_slot(0.5, 1, TRUE),
             RW_SLOT_2H_MAGICAL = _rw_slot(0.5, 1, TRUE),
+            // Armor pieces slightly higher ceiling
             RW_SLOT_CHEST = _rw_slot(0.5, 1.5, TRUE),
             RW_SLOT_LEGS = _rw_slot(0.5, 1.5, TRUE),
             RW_SLOT_FOOT = _rw_slot(0.5, 1.5, TRUE),
             RW_SLOT_HEAD = _rw_slot(0.5, 1.5, TRUE),
             RW_SLOT_HANDS = _rw_slot(0.5, 1.5, TRUE),
-            RW_SLOT_CLOAK = _rw_slot(0.5, 3, TRUE),
-            RW_SLOT_NECKLACE = _rw_slot(0.5, 3, TRUE),
-            RW_SLOT_RING = _rw_slot(0.5, 3, TRUE),
             RW_SLOT_ARMS = _rw_slot(0.5, 1.5, TRUE),
             RW_SLOT_MASK = _rw_slot(0.5, 1.5, TRUE),
-            RW_SLOT_SHIRT = _rw_slot(0.5, 1.5, TRUE)
+            RW_SLOT_SHIRT = _rw_slot(0.5, 1.5, TRUE),
+            // Jewelry highest ceiling
+            RW_SLOT_NECKLACE = _rw_slot(0.5, 3, TRUE),
+            RW_SLOT_RING = _rw_slot(0.5, 3, TRUE),
+            RW_SLOT_CLOAK = _rw_slot(0.5, 3, TRUE)
         ),
-        "max_total" = list("value" = 16, "percent" = TRUE)
+        "max_total" = list("value" = 16, "percent" = TRUE),
+        "notes" = "Reduces incoming BRUTE damage; hard cap 16%."
     ),
 
     // HEALING
@@ -468,7 +450,7 @@ GLOBAL_LIST_INIT(rw_enchant_defs, list(
     return slots[slot_key]
 
 // Roll a value for a specific enchant and slot_key (returns number, is_percent)
-/proc/ratworld_roll_enchant_value_for_slot(id, slot_key)
+/proc/ratworld_roll_enchant_value_for_slot(id, slot_key, mob/living/roller)
     var/list/r = ratworld_get_enchant_slot_range(id, slot_key)
     if(!islist(r)) return null
     var/minv = r["min"]
@@ -477,5 +459,15 @@ GLOBAL_LIST_INIT(rw_enchant_defs, list(
     if(isnull(minv) || isnull(maxv)) return null
     // Support fractional steps: roll in tenths if needed
     var/scale = (round(minv) != minv || round(maxv) != maxv) ? 10 : 1
-    var/ival = rand(round(minv*scale), round(maxv*scale)) / scale
+    var/min_scaled = round(minv * scale)
+    var/max_scaled = round(maxv * scale)
+    var/raw_roll = rand(min_scaled, max_scaled)
+    // If we know who is rolling, bias toward high rolls using their luck
+    if(roller)
+        var/luck = roller.ratworld_get_luck_total()
+        if(luck > 0 && max_scaled > min_scaled)
+            var/base = (raw_roll - min_scaled) / (max_scaled - min_scaled)
+            var/biased = ratworld_bias_roll_with_luck(luck, base)
+            raw_roll = round(min_scaled + (max_scaled - min_scaled) * biased)
+    var/ival = raw_roll / scale
     return list("value" = ival, "percent" = is_percent)

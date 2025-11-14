@@ -261,5 +261,9 @@
 			var/obj/item/lockpick/L = I
 			L.picklvl = modifier
 
+		// Ratworld: roll a crafted rarity for the finished item
+		if("rw_rarity" in I.vars)
+			I.vars["rw_rarity"] = ratworld_roll_crafted_rarity(user, I)
+
 	// Clean up the original workpiece
 	qdel(parent)

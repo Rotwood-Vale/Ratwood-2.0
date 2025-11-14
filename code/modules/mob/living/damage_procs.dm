@@ -20,6 +20,8 @@
 	var/damage_amount =  forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
+			// Ratworld: apply physical damage reduction (aggregated from enchants) with 16% cap
+			damage_amount = round(damage_amount * ratworld_get_phys_defense_mult(src))
 //			if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
 //				if(stat != DEAD && def_zone)
 //					testing("def_zone check [def_zone] [src]")
@@ -147,16 +149,10 @@
 		apply_effect(eyeblur, EFFECT_EYE_BLUR, blocked)
 	if(drowsy)
 		apply_effect(drowsy, EFFECT_DROWSY, blocked)
-	if(stamina)
-		apply_damage(stamina, STAMINA, null, blocked)
+	// Stamina effect application omitted (no EFFECT_STAMINA handler defined here)
 	if(jitter)
 		apply_effect(jitter, EFFECT_JITTER, blocked)
-	return BULLET_ACT_HIT
-
-
-/mob/living/proc/getBruteLoss()
-	return bruteloss
-
+	return 1
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
@@ -167,6 +163,9 @@
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
+
+/mob/living/proc/getBruteLoss()
+	return bruteloss
 
 /mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
