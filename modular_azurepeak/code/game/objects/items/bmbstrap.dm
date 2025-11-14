@@ -58,5 +58,5 @@
 		else
 			icon_state = "bombdolier1"
 
-/obj/item/twstrap/Initialize()
+/obj/item/bmbstrap/Initialize()
 	. = ..()

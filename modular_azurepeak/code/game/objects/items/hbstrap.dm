@@ -26,7 +26,7 @@
 	var/list/tweps = list()
 	sewrepair = TRUE
 
-/obj/item/twstrap/attackby(obj/A, mob/living/carbon/user, params)
+/obj/item/hurlstrap/attackby(obj/A, mob/living/carbon/user, params)
 	if(istype(A, /obj/item/rogueweapon/stoneaxe/hurlbat) || istype(A, /obj/item/rogueweapon/stoneaxe/handaxe))
 		if(tweps.len < max_storage)
 			user.transferItemToLoc(A, tweps)
@@ -37,7 +37,7 @@
 		return
 	..()
 
-/obj/item/twstrap/attack_right(mob/user)
+/obj/item/hurlstrap/attack_right(mob/user)
 	if(tweps.len)
 		if(user.get_skill_level(/datum/skill/combat/axes)<2)
 			if(do_after(user, 20, target = user)) //Limits those not skilled in axes from using it properly
@@ -53,12 +53,12 @@
 			update_icon()
 		return TRUE
 
-/obj/item/twstrap/examine(mob/user)
+/obj/item/hurlstrap/examine(mob/user)
 	. = ..()
 	if(tweps.len)
 		. += span_notice("[tweps.len] inside.")
 
-/obj/item/twstrap/update_icon()
+/obj/item/hurlstrap/update_icon()
 	switch(tweps.len)
 		if(1)
 			icon_state = "hbstrap1"
@@ -71,5 +71,5 @@
 		else
 			icon_state = "hbstrap0"
 
-/obj/item/twstrap/Initialize()
+/obj/item/hurlstrap/Initialize()
 	. = ..()
