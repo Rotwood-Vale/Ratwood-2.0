@@ -771,6 +771,7 @@
 #include "code\datums\mob_descriptors\descriptors\prominent.dm"
 #include "code\datums\mob_descriptors\descriptors\skin.dm"
 #include "code\datums\mob_descriptors\descriptors\stature.dm"
+#include "code\datums\mob_descriptors\descriptors\trait.dm"
 #include "code\datums\mob_descriptors\descriptors\voice.dm"
 #include "code\datums\particle_weathers\_base.dm"
 #include "code\datums\particle_weathers\datum_types\blood_rain.dm"
