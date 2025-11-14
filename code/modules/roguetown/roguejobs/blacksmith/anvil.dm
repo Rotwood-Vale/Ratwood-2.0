@@ -100,7 +100,6 @@
 		advance_multiplier = 1
 		user.doing = FALSE
 		spawn(1)
-			while(current_workpiece && forging_comp?.forging_stage == FORGING_STAGE_ACTIVE)
 				// Blades don't need to be hot, only check for ingots
 				if(!hott && istype(current_workpiece, /obj/item/ingot))
 					to_chat(user, span_warning("It's too cold."))
