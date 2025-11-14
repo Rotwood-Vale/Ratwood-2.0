@@ -1,9 +1,9 @@
 /obj/item/hurlstrap
 	name = "hurlbat bandolier"
 	desc = ""
-	icon_state = "twstrap0"
-	item_state = "twstrap"
-	icon = 'modular_azurepeak/icons/obj/items/twstrap.dmi'
+	icon_state = "hbstrap0"
+	item_state = "hbstrap"
+	icon = 'modular_azurepeak/icons/obj/items/hbstrap.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -27,7 +27,7 @@
 	sewrepair = TRUE
 
 /obj/item/twstrap/attackby(obj/A, mob/living/carbon/user, params)
-	if(istype(A, /obj/item/throwing_star) || istype(A, /obj/item/rogueweapon/huntingknife))
+	if(istype(A, /obj/item/rogueweapon/stoneaxe/hurlbat) || istype(A, /obj/item/rogueweapon/stoneaxe/handaxe))
 		if(tweps.len < max_storage)
 			user.transferItemToLoc(A, tweps)
 			tweps += A
@@ -61,17 +61,15 @@
 /obj/item/twstrap/update_icon()
 	switch(tweps.len)
 		if(1)
-			icon_state = "twstrap1"
+			icon_state = "hbstrap1"
 		if(2)
-			icon_state = "twstrap2"
+			icon_state = "hbstrap2"
 		if(3)
-			icon_state = "twstrap3"
+			icon_state = "hbstrap3"
 		if(4)
-			icon_state = "twstrap4"
-		if(5)
-			icon_state = "twstrap5"
+			icon_state = "hbstrap4"
 		else
-			icon_state = "twstrap0"
+			icon_state = "hbstrap0"
 
 /obj/item/twstrap/Initialize()
 	. = ..()
