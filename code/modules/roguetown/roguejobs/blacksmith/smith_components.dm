@@ -8,6 +8,7 @@
 /datum/component/forging
 	var/datum/anvil_recipe/current_recipe
 	var/progress = 0
+	var/forging_stage = FORGING_STAGE_READY
 	var/skill_quality = 0
 	var/material_quality = 0
 	var/bar_health = 100
@@ -54,17 +55,21 @@
 			current_recipe.using_blade = FALSE
 		material_quality = current_recipe.material_quality
 		progress = 0
+		forging_stage = FORGING_STAGE_ACTIVE
 
 /datum/component/forging/proc/on_placed_on_anvil(datum/source, obj/machinery/anvil/anvil)
 	SIGNAL_HANDLER
+	forging_stage = FORGING_STAGE_ACTIVE
 	to_chat(usr, span_notice("You place [parent] on the anvil, ready for forging."))
 
 /datum/component/forging/proc/on_removed_from_anvil(datum/source, obj/machinery/anvil/anvil)
 	SIGNAL_HANDLER
+	forging_stage = FORGING_STAGE_READY
 	to_chat(usr, span_notice("You remove [parent] from the anvil."))
 
 /datum/component/forging/proc/on_hammered_on_anvil(datum/source, obj/machinery/anvil/anvil, mob/user, obj/item/hammer, breakthrough = FALSE)
 	SIGNAL_HANDLER
+	if(forging_stage != FORGING_STAGE_ACTIVE || !current_recipe)
 		return
 
 	var/success = advance_recipe(user, breakthrough)
@@ -179,6 +184,7 @@
 		return TRUE
 
 /datum/component/forging/proc/complete_forging(mob/living/user, obj/machinery/anvil/anvil)
+	forging_stage = FORGING_STAGE_COMPLETE
 	var/if_created = FALSE
 
 	if(current_recipe.using_blade)
