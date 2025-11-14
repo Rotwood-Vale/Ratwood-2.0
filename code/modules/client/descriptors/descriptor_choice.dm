@@ -277,48 +277,6 @@
 		/datum/mob_descriptor/height/tiny,
 		/datum/mob_descriptor/height/giant,
 	)
-/datum/descriptor_choice/trait
-	name = "Physical Descriptor"
-	default_descriptor = /datum/mob_descriptor/trait/moderate
-	descriptors = list(
-		/datum/mob_descriptor/trait/moderate,
-		/datum/mob_descriptor/trait/mundane,
-		/datum/mob_descriptor/trait/middling,
-		/datum/mob_descriptor/trait/tall,
-		/datum/mob_descriptor/trait/short,
-		/datum/mob_descriptor/trait/dainty,
-		/datum/mob_descriptor/trait/towering,
-		/datum/mob_descriptor/trait/giant,
-		/datum/mob_descriptor/trait/tiny,
-		/datum/mob_descriptor/trait/stout,
-		/datum/mob_descriptor/trait/cadaverous,
-		/datum/mob_descriptor/trait/lanky,
-		/datum/mob_descriptor/trait/wide,
-		/datum/mob_descriptor/trait/thin,
-		/datum/mob_descriptor/trait/zardish,
-		/datum/mob_descriptor/trait/lupian,
-		/datum/mob_descriptor/trait/venardic,
-		/datum/mob_descriptor/trait/feline,
-		/datum/mob_descriptor/trait/elven,
-		/datum/mob_descriptor/trait/rousley,
-		/datum/mob_descriptor/trait/blessed,
-		/datum/mob_descriptor/trait/accursed,
-		/datum/mob_descriptor/trait/aquatic,
-		/datum/mob_descriptor/trait/horned,
-		/datum/mob_descriptor/trait/snoutly,
-		/datum/mob_descriptor/trait/tailed,
-		/datum/mob_descriptor/trait/fanged,
-		/datum/mob_descriptor/trait/clawed,
-		/datum/mob_descriptor/trait/tusked,
-		/datum/mob_descriptor/trait/furred,
-		/datum/mob_descriptor/trait/feathered,
-		/datum/mob_descriptor/trait/scaly,
-		/datum/mob_descriptor/trait/crimson,
-		/datum/mob_descriptor/trait/cerulean,
-		/datum/mob_descriptor/trait/emerald,
-		/datum/mob_descriptor/trait/amber,
-
-	)
 
 /datum/descriptor_choice/skin_all
 	name = "Skin/Fur/Scales"
