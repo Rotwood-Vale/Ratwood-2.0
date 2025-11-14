@@ -84,7 +84,7 @@
 
 /datum/crafting_recipe/roguetown/leather/container/hbstrap
 	name = "hurlbat bandolier"
-	result = /obj/item/hbstrap
+	result = /obj/item/hurlstrap
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/rope = 1)
 
