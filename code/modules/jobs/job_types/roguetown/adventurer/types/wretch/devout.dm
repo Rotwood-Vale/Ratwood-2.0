@@ -7,8 +7,7 @@
 	// category_tags = list(CTAG_WRETCH) or (CTAG_DISABLED) to disable
 	category_tags = list(CTAG_WRETCH)
 
-
-/datum/outfit/job/roguetown/wretch/wretch/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/wretch/devout/pre_equip(mob/living/carbon/human/H)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR)
 
@@ -19,6 +18,7 @@
 	ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC) //I forgot what this does but it seems like a good choice for inhumen. :3
 	ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC) // They will be some of the only roles on the wretch team that can make advanced potions as of AP update.
 
+/datum/outfit/job/roguetown/wretch/wretch/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/roguehood/black
 	mask = /obj/item/clothing/mask/rogue/facemask
 	gloves = /obj/item/clothing/gloves/roguetown/bandages
