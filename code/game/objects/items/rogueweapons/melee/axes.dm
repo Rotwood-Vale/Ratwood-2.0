@@ -8,7 +8,6 @@
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
 	animname = "cut"
 	penfactor = 20
-	damfactor = 1
 	chargetime = 0
 	item_d_type = "slash"
 
@@ -262,8 +261,6 @@
 	name = "Pulaski axe"
 	desc = "An odd mix of a pickaxe front and a hatchet blade back, capable of being switched between."
 	icon_state = "paxe"
-	force = 21
-	force_wielded = 29
 	possible_item_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop, /datum/intent/mace/warhammer/pick, /datum/intent/axe/bash)
 	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop, /datum/intent/mace/warhammer/pick, /datum/intent/axe/bash)
 	smeltresult = /obj/item/ingot/steel
@@ -278,8 +275,8 @@
 	icon_state = "wardenpax"
 	force = 22
 	force_wielded = 28
-	possible_item_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop, /datum/intent/mace/warhammer/stab, /datum/intent/axe/bash)
-	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop, /datum/intent/mace/warhammer/stab, /datum/intent/axe/bash)
+	possible_item_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop, /datum/intent/mace/warhammer/pick, /datum/intent/axe/bash)
+	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop, /datum/intent/mace/warhammer/pick, /datum/intent/axe/bash)
 	smeltresult = /obj/item/ingot/steel
 	wlength = WLENGTH_NORMAL
 	toolspeed = 2
