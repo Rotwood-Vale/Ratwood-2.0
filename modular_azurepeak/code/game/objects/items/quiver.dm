@@ -398,7 +398,6 @@
 /obj/item/quiver/zigs/attack_right(mob/user)
 			to_chat(loc, span_warning("Full!"))
 		return
-
 /obj/item/quiver/sling/bullet/attack_right(mob/user)
 	if(arrows.len)
 		var/obj/O = arrows[arrows.len]
