@@ -1,4 +1,3 @@
-
 /obj/item/quiver
 	name = "quiver"
 	desc = ""
