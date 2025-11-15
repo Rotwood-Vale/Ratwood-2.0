@@ -1,3 +1,4 @@
+
 /datum/supply_pack/rogue/Pioneer
 	group = "Pioneer"
 	crate_name = "Gifts of Engineering"
@@ -62,11 +63,6 @@
 	name = "Heavy Leather Gloves"
 	cost = 10
 	contains = list(/obj/item/clothing/gloves/roguetown/angle)
-
-/datum/supply_pack/rogue/Pioneer/bmbstrap
-	name = "Bombdolier"
-	cost = 70
-	contains = list(/obj/item/bmbstrap)
 
 /datum/supply_pack/rogue/Pioneer/leather/flgloves
 	name = "Fingerless Leather Gloves"
@@ -207,12 +203,12 @@
 /datum/supply_pack/rogue/Pioneer/tongs
 	name = "Smith tongs"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/tongs)
+	contains = list(/obj/item/rogueweapon/tongs)	
 
 /datum/supply_pack/rogue/Pioneer/cogs
 	name = "Cogs"
 	cost = 20
-	contains = list(/obj/item/roguegear/bronze = 2)
+	contains = list(/obj/item/roguegear = 2)	
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_explosion
     name = "Impact grenade (explosion)"
@@ -232,29 +228,34 @@
 /datum/supply_pack/rogue/Pioneer/impactgrenade_poison
     name = "Impact grenade (poison)"
     cost = 20
-    contains = list(/obj/item/impact_grenade/smoke/poison_gas)
+    contains = list(/obj/item/impact_grenade/poison_gas)
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_healing
     name = "Impact grenade (healing)"
     cost = 20
-    contains = list(/obj/item/impact_grenade/smoke/healing_gas)
+    contains = list(/obj/item/impact_grenade/healing_gas)
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_fire
     name = "Impact grenade (fire)"
     cost = 20
-    contains = list(/obj/item/impact_grenade/smoke/fire_gas)
+    contains = list(/obj/item/impact_grenade/fire_gas)
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_blind
     name = "Impact grenade (blind)"
     cost = 20
-    contains = list(/obj/item/impact_grenade/smoke/blind_gas)
+    contains = list(/obj/item/impact_grenade/blind_gas)
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_mute
     name = "Impact grenade (mute)"
     cost = 20
-    contains = list(/obj/item/impact_grenade/smoke/mute_gas)
+    contains = list(/obj/item/impact_grenade/mute_gas)
 
 /datum/supply_pack/rogue/Pioneer/blackpowder_stick
     name = "Blackpowder stick"
-    cost = 35
+    cost = 50
     contains = list(/obj/item/tntstick)
+
+/datum/supply_pack/rogue/Pioneer/bomb_satchel
+    name = "Bomb satchel"
+    cost = 100
+    contains = list(/obj/item/satchel_bomb)
