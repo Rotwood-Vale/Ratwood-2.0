@@ -3,6 +3,7 @@
 	tutorial = "You have forsaken society and even the mainstream gospel of the masses in the pursuit of your gods divine path. This path has left you bare and purified; shedding what had once held you back - and forsaking you from them forevermore. You are hunted for the truths only you have been fit to see. Will you guide them, or make them see?"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
+	maximum_possible_slots = 3
 	outfit = /datum/outfit/job/roguetown/wretch/lunacyembracer
 	// category_tags = list(CTAG_WRETCH) or (CTAG_DISABLED) to disable
 	category_tags = list(CTAG_WRETCH)
@@ -46,8 +47,8 @@
 		H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_NOVICE, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_NOVICE, TRUE)
 	if(H.patron?.type == /datum/patron/inhumen/zizo)
-		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_EXPERT, TRUE) 
-		H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_NOVICE, TRUE) //tempted to remove literacy for zizoid LE, it's funny for noc but w/e 
+		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_EXPERT, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_NOVICE, TRUE) //tempted to remove literacy for zizoid LE, it's funny for noc but w/e
 		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
@@ -64,7 +65,7 @@
 		H.grant_language(/datum/language/beast) //dendor antags can talk to WWs and druids
 	if(H.patron?.type == /datum/patron/divine/noc)
 		H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN, TRUE) // Really good at reading... almost actually useful for LE.
-		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_EXPERT, TRUE) 
+		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_EXPERT, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_NOVICE, TRUE)
 	if(H.patron?.type == /datum/patron/divine/abyssor)
 		H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_MASTER, TRUE)
@@ -101,5 +102,5 @@
 	H.change_stat("intelligence", -2)
 	H.change_stat("perception", -2)
 	H.cmode_music = 'sound/music/combat_berserker.ogg'
-	to_chat(H, span_danger("You have abandoned your humanity to run wild under the moon. The call of nature fills your soul!"))
+	to_chat(H, span_danger("You have abandoned your humanity to run wild and unfettered-- to spread the TRUTH OF YOUR CHOSEN!"))
 	wretch_select_bounty(H)
