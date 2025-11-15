@@ -1130,6 +1130,8 @@
 #include "code\game\objects\items\rogueweapons\ranged\bows.dm"
 #include "code\game\objects\items\rogueweapons\ranged\crossbows.dm"
 #include "code\game\objects\items\rogueweapons\ranged\slings.dm"
+#include "code\game\objects\items\rogueweapons\ranged\gunpowder\firearm.dm"
+#include "code\game\objects\items\rogueweapons\ranged\gunpowder\ammo.dm"
 #include "code\game\objects\items\storage\backpack.dm"
 #include "code\game\objects\items\storage\bags.dm"
 #include "code\game\objects\items\storage\belt.dm"

@@ -444,6 +444,18 @@
 	hammers_per_item = 6
 	skill_level = 2
 
+// ------------ GUNS AND AMMO. LEADBALLS. MUSKETBALLS. ETCETERA.----------
+/datum/artificer_recipe/ammunition/musketball
+	name = "iron sphere x2 (+1 iron)"
+	required_item = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = list(
+				/obj/item/ammo_casing/caseless/rogue/lead,
+				/obj/item/ammo_casing/caseless/rogue/lead
+				)
+	hammers_per_item = 10	//HAMMER TIME.
+	skill_level = 5	//this is NOT meant to be easy to make. NOR cheap to make.
+
 // --------- PROSTHETICS -----------
 
 /datum/artificer_recipe/prosthetics

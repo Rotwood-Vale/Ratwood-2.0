@@ -234,3 +234,13 @@
 	name = "Scissors, Iron"
 	cost = 30
 	contains = list(/obj/item/rogueweapon/huntingknife/scissors)
+// gun stuff. They HAVE to stay expensive.
+/datum/supply_pack/rogue/tools/powderflask
+	name = "Powderflask (Exported from Avar)"
+	cost = 150		//if you lose this, it's ON YOU.
+	contains = list(/obj/item/powderflask)
+	
+/datum/supply_pack/rogue/tools/ramrod
+	name = "Ramrod (Exported from Avar)"
+	cost = 100 //as above. Lose it? It's on you, freak. Shit's EXPORTED
+	contains = list(/obj/item/ramrod)

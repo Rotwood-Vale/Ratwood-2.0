@@ -61,13 +61,34 @@
 	..()
 	H.adjust_blindness(-3)
 	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/navaja)
+	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/firearms, 3, TRUE) //pray that it doesn't blow up on your face if you use it
+	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/stealing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
+	backpack_contents = list(
+		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
+		/obj/item/storage/keyring/merchant = 1,
+		/obj/item/powderflask = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
+		)
 	neck = /obj/item/clothing/neck/roguetown/horus
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	belt = /obj/item/storage/belt/rogue/leather/rope
-	beltl = /obj/item/storage/keyring/merchant
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
+	beltl = /obj/item/gun/ballistic/firearm/arquebus_pistol
+	beltr = /obj/item/quiver/sling/bullet/lead
 	id = /obj/item/clothing/ring/gold
 	backr = /obj/item/storage/backpack/rogue/satchel
 	if(should_wear_masc_clothes(H))

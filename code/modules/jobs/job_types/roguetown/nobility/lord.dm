@@ -69,10 +69,10 @@ GLOBAL_LIST_EMPTY(lord_titles)
 
 /datum/outfit/job/roguetown/lord
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
+	backr = /obj/item/storage/backpack/rogue/satchel/black
 	cloak = /obj/item/clothing/cloak/lordcloak
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
 	beltl = /obj/item/storage/keyring/lord
-	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1)
 	id = /obj/item/scomstone/garrison
 
 /datum/outfit/job/roguetown/lord/pre_equip(mob/living/carbon/human/H)
@@ -141,7 +141,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	l_hand = /obj/item/rogueweapon/lordscepter
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
-
+	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1)
 /**
 	Merchant Lord subclass. Consider this an evolution from Sheltered Aristocrat.
 	Gets the same weighted 12 statspread + 5 fortune, but no strength. +2 Int, trade 2 End for 2 Perception. Keep speed. Deals gotta be quick.
@@ -182,9 +182,28 @@ GLOBAL_LIST_EMPTY(lord_titles)
 /datum/outfit/job/roguetown/lord/merchant/pre_equip(mob/living/carbon/human/H)
 	..()
 	l_hand = /obj/item/rogueweapon/lordscepter
+
+	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/crossbows, 4, TRUE) // Weapons suitable for defending yourself as a merchant.
+	H.adjust_skillrank(/datum/skill/combat/firearms, 4, TRUE)	// ditto as above. Start w/one because you got the #Connections
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
-
+	beltr = /obj/item/gun/ballistic/firearm/arquebus_pistol
+	backpack_contents = list(
+		/obj/item/powderflask = 1,
+		/obj/item/quiver/sling/bullet/lead = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		)
 /**
 	Mage Lord subclass. Prince mage is a thing.
 	Light on skills, has some combat skills mage normally doesn't have. 18 pts so people don't complain they are better.
@@ -247,7 +266,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	..()
 	l_hand = /obj/item/rogueweapon/lordscepter
 	r_hand = /obj/item/book/spellbook
-
+	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
@@ -301,6 +320,11 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	H.adjust_skillrank(/datum/skill/combat/crossbows, pick(0,1), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, pick(0,0,1), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, pick(0,1), TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
+	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1)
 
 /datum/outfit/job/roguetown/lord/visuals/pre_equip(mob/living/carbon/human/H)
 	..()

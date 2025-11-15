@@ -362,6 +362,28 @@
 
 /obj/item/quiver/zigs/attackby(obj/A, loc, params)
 	if(A.type in subtypesof(/obj/item/clothing/mask/cigarette/rollie))
+/obj/item/quiver/sling/bullet
+	name = "iron sphere pouch"
+	icon_state = "slingpouch"
+	item_state = "slingpouch"
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK
+	max_storage = 12
+	grid_width = 64
+	grid_height = 64
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/quiver/sling/bullet/attack_turf(turf/T, mob/living/user)
+	if(arrows.len >= max_storage)
+		to_chat(user, span_warning("My [src.name] is full!"))
+		return
+	to_chat(user, span_notice("I begin to gather the ammunition..."))
+	for(var/obj/item/ammo_casing/caseless/rogue/lead in T.contents)	//exclusively leadballs
+		if(do_after(user, 5))
+			if(!eatarrow(lead))
+				break
+
+/obj/item/quiver/sling/bullet/attackby(obj/A, loc, params)
+	if(A.type in subtypesof(/obj/item/ammo_casing/caseless/rogue/lead))
 		if(arrows.len < max_storage)
 			if(ismob(loc))
 				var/mob/M = loc
@@ -375,6 +397,11 @@
 	..()
 
 /obj/item/quiver/zigs/attack_right(mob/user)
+			to_chat(loc, span_warning("Full!"))
+		return
+	..()
+
+/obj/item/quiver/sling/bullet/attack_right(mob/user)
 	if(arrows.len)
 		var/obj/O = arrows[arrows.len]
 		arrows -= O
@@ -404,5 +431,65 @@
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/clothing/mask/cigarette/rollie/cannabis/A = new()
+/obj/item/quiver/sling/bullet/update_icon()
+	return
+/obj/item/quiver/sling/bullet/lead/Initialize()
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/lead/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/sling/bullet/grapeshot
+	name = "grapeshot pouch"
+	icon_state = "slingpouch"
+	item_state = "slingpouch"
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK
+	max_storage = 12
+	grid_width = 64
+	grid_height = 64
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/quiver/sling/bullet/grapeshot/attack_turf(turf/T, mob/living/user)
+	if(arrows.len >= max_storage)
+		to_chat(user, span_warning("My [src.name] is full!"))
+		return
+	to_chat(user, span_notice("I begin to gather the ammunition..."))
+	for(var/obj/item/ammo_casing/caseless/rogue/grapeshot in T.contents)	//exclusively grapeshot
+		if(do_after(user, 5))
+			if(!eatarrow(grapeshot))
+				break
+
+/obj/item/quiver/sling/bullet/grapeshot/attackby(obj/A, loc, params)
+	if(A.type in subtypesof(/obj/item/ammo_casing/caseless/rogue/grapeshot))
+		if(arrows.len < max_storage)
+			if(ismob(loc))
+				var/mob/M = loc
+				M.doUnEquip(A, TRUE, src, TRUE, silent = TRUE)
+			else
+				A.forceMove(src)
+			arrows += A
+			update_icon()
+		else
+			to_chat(loc, span_warning("Full!"))
+		return
+	..()
+
+/obj/item/quiver/sling/bullet/grapeshot/attack_right(mob/user)
+	if(arrows.len)
+		var/obj/O = arrows[arrows.len]
+		arrows -= O
+		O.forceMove(user.loc)
+		user.put_in_hands(O)
+		update_icon()
+		return TRUE
+
+/obj/item/quiver/sling/bullet/grapeshot/update_icon()
+	return
+
+/obj/item/quiver/sling/bullet/grapeshot/full/Initialize()
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/grapeshot/A = new()
 		arrows += A
 	update_icon()
