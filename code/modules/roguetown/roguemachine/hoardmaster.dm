@@ -96,6 +96,8 @@
 
 	var/list/unlocked_cats = list("Things")
 	switch(usr.advjob)
+		if("Pioneer")
+			unlocked_cats+="Pioneer"	
 		if("Brigand")
 			unlocked_cats+="Brigand"
 		if("Sellsword")
