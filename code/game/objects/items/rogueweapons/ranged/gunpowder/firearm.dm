@@ -1,7 +1,7 @@
 /obj/item/ramrod
 	name = "ramrod"
 	icon = 'icons/obj/arquebus_items.dmi'
-	desc = "A ramrod used for reloading a firearm."
+	desc = "A ramrod used for reloading a firearm, one size fits all!"
 	icon_state = "ramrod"
 	item_state = "ramrod"
 	slot_flags = SLOT_BELT_L | SLOT_BELT_R | ITEM_SLOT_HIP
@@ -12,7 +12,7 @@
 /obj/item/powderflask
 	name = "powderflask"
 	icon = 'icons/obj/arquebus_items.dmi'
-	desc = "A flask of gunpowder used for reloading a firearm."
+	desc = "A flask of gunpowder used for reloading a firearm. You can probably suck on it too but your survival instincts won't let you."
 	icon_state = "powderflask"
 	item_state = "powderflask"
 	slot_flags = SLOT_BELT_L | SLOT_BELT_R | ITEM_SLOT_NECK | ITEM_SLOT_HIP
@@ -26,8 +26,8 @@
 	icon = 'icons/roguetown/weapons/guns.dmi'
 	icon_state = "arquebus"
 	item_state = "arquebus"
-	force = 10
-	force_wielded = 15
+	force = 19 // Have you ever been hit with a rifle stock? I'd be happy to show you.
+	force_wielded = 23
 	possible_item_intents = list(/datum/intent/mace/strike/wood)
 	gripped_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, INTENT_GENERIC)
 	internal_magazine = TRUE
@@ -59,7 +59,7 @@
 	var/spread_num = 10
 	var/damfactor = 2
 	var/reloaded = FALSE
-	var/load_time = 50
+	var/load_time = 35
 	var/gunpowder = FALSE
 	var/obj/item/ramrod/myrod = null
 	var/gunchannel
@@ -224,12 +224,12 @@
 	var/turf/knockback = get_ranged_target_turf(user, turn(user.dir, 180), rand(1,2))
 	spread = (spread_num - firearm_skill)
 	if(firearm_skill < 1)
-		accident_chance =80
+		accident_chance =60
 
 	if(firearm_skill < 2)
-		accident_chance =50
+		accident_chance =30
 	if(firearm_skill >= 2 && firearm_skill <= 5)
-		accident_chance =10
+		accident_chance =5
 	if(firearm_skill >= 5)
 		accident_chance =0
 	if(user.client)
@@ -310,7 +310,7 @@
 	icon = 'icons/roguetown/weapons/pistols_blunderbuss.dmi'
 	icon_state = "pistol"
 	item_state = "pistol"
-	force = 10
+	force = 14 //pistol whipping someone to knock them out is sick
 	possible_item_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, /datum/intent/mace/strike/wood)
 	gripped_intents = null
 	wlength = WLENGTH_SHORT
@@ -322,7 +322,7 @@
 	cartridge_wording = "lead ball"
 	grid_height = 32
 	grid_width = 96
-	sellprice = 140 //it IS rare.
+	sellprice = 160 //it IS one of a kind.
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/getonmobprop(tag)
 	. = ..()

@@ -4,17 +4,17 @@
 
 /obj/projectile/bullet/lead
 	name = "lead sphere"
-	damage = 80	//higher damage than crossbow, previously 75
+	damage = 85	//higher damage than crossbow, previously 75
 	damage_type = BRUTE
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/lead
-	range = 25		//Higher than arrow, but not halfway through the entire town.
+	range = 40		//It's a fucking gun, it shoots PRETTY far. As for accuracy, that's up for debate
 	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
 	embedchance = 100
 	woundclass = BCLASS_STAB
 	flag = "piercing"
-	armor_penetration = 90	//fuck ya armor . previously 75
+	armor_penetration = 100	//fuck ya armor GAMBESONS SHOULND'T BLOCK THIS
 	speed = 0.1
 	npc_simple_damage_mult = 2	//annihilate simplemobs
 
@@ -36,17 +36,17 @@
 
 /obj/projectile/bullet/grapeshot
 	name = "grapeshot"
-	damage = 15
+	damage = 35
 	damage_type = BRUTE
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/grapeshot
-	range = 15
+	range = 15 // big spread small range, you're shooting big up close but shit past 4 tiles
 	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
 	embedchance = 100
 	woundclass = BCLASS_STAB
 	flag = "piercing"
-	armor_penetration = 75
+	armor_penetration = 65 // good pen but not THAT good. 
 	speed = 0.1
 	npc_simple_damage_mult = 2
 
@@ -81,7 +81,7 @@
 
 /obj/item/ammo_casing/caseless/rogue/lead
 	name = "iron sphere"
-	desc = "A small iron sphere. This should go well with gunpowder."
+	desc = "A small iron sphere. This should go well with gunpowder and a good ramrod to jam it in afterwards."
 	projectile_type = /obj/projectile/bullet/lead
 	caliber = "lead_sphere"
 	icon = 'icons/roguetown/weapons/ammo.dmi'
@@ -91,7 +91,7 @@
 
 /obj/item/ammo_casing/caseless/rogue/grapeshot
 	name = "grapeshot"
-	desc = "A collection of tiny metal beads. This should go well with gunpowder."
+	desc = "A collection of 6 tiny metal beads. This looks like it could do a LOT of damage up close, but the packing makes you doubtful of the accuracy."
 	projectile_type = /obj/projectile/bullet/grapeshot
 	caliber = "grapeshot"
 	icon = 'icons/roguetown/weapons/ammo.dmi'
