@@ -427,17 +427,17 @@
 	var/saved_level = CLERIC_T0
 	var/saved_max_progression = CLERIC_T1
 	var/saved_devotion_gain = CLERIC_REGEN_MINOR
-	
+
 	if(target.devotion)
 		saved_level = target.devotion.level
 		saved_devotion_gain = target.devotion.passive_devotion_gain
 		saved_max_progression = target.devotion.max_progression
-		
+
 		// Remove all granted spells
 		if(target.patron != user.patron)
 			for(var/obj/effect/proc_holder/spell/S in target.devotion.granted_spells)
 				target.mind.RemoveSpell(S)
-		
+
 		target.devotion.Destroy()
 
 	// Change patron
@@ -455,7 +455,7 @@
 	ADD_TRAIT(target, TRAIT_ZURCH, TRAIT_GENERIC)
 	to_chat(user, span_danger("You've converted [target.name] to [user.patron.name]!"))
 	to_chat(target, span_danger("You feel ancient powers lifting divine burdens from your soul..."))
-	
+
 	return TRUE
 
 /mob/living/carbon/human/proc/revelations()
@@ -481,7 +481,7 @@
 	for(var/obj/structure/fluff/psycross/zizocross/N in oview(5, src))
 		found = N
 	if(!found)
-		to_chat(src, span_warning("I need a large profane shrine structure nearby to extract this divination!"))	
+		to_chat(src, span_warning("I need a large profane shrine structure nearby to extract this divination!"))
 		return
 	if(!H.stat)
 		var/static/list/faith_lines = list(
