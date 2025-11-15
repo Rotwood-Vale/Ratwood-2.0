@@ -136,8 +136,12 @@ export const SampleInterface = (props, context) => {
 			<Window.Content scrollable>
 				<Section title="Health status">
 					<LabeledList>
-						<LabeledList.Item label="Health">{health}</LabeledList.Item>
-						<LabeledList.Item label="Color">{color}</LabeledList.Item>
+						<LabeledList.Item label="Health">
+							{health}
+						</LabeledList.Item>
+						<LabeledList.Item label="Color">
+							{color}
+						</LabeledList.Item>
 						<LabeledList.Item label="Button">
 							<Button
 								content="Dispatch a 'test' action"
@@ -160,13 +164,13 @@ Here are the key variables you get from a `useBackend(context)` function:
   advantage when doing complex UIs.
 - `data` is the data returned from `ui_data` and `ui_static_data` procs in
   your DM code. Pretty straight forward.
-  - Note, that javascript doesn't have associative arrays, so when you
-    return an associative list from DM, it will be available in `data` as a
-    javascript object instead of an array. You can use it normally
-    like so: `object.key`, so it's not a problem if it's representing a
-    data structure, but common `Array` methods, such as `array.map(item => ...)`,
-    are not available on it. Always prefer returning clean arrays from your
-    code, since arrays are easier to work with in javascript!
+    - Note, that javascript doesn't have associative arrays, so when you
+      return an associative list from DM, it will be available in `data` as a
+      javascript object instead of an array. You can use it normally
+      like so: `object.key`, so it's not a problem if it's representing a
+      data structure, but common `Array` methods, such as `array.map(item => ...)`,
+      are not available on it. Always prefer returning clean arrays from your
+      code, since arrays are easier to work with in javascript!
 - `act(name, params)` is a function, which you can call to dispatch an action
   to your DM code. It will be processed in `ui_act` proc. Action name will be
   available in `params["action"]`, mixed together with the rest of parameters
@@ -320,8 +324,12 @@ export const SampleInterface = (props, context) => {
 			<Window.Content scrollable>
 				<Section title="Health status">
 					<LabeledList>
-						<LabeledList.Item label="Health">{health}</LabeledList.Item>
-						<LabeledList.Item label="Color">{color}</LabeledList.Item>
+						<LabeledList.Item label="Health">
+							{health}
+						</LabeledList.Item>
+						<LabeledList.Item label="Color">
+							{color}
+						</LabeledList.Item>
 						<LabeledList.Item label="Button">
 							<Button
 								content="Dispatch a 'test' action"

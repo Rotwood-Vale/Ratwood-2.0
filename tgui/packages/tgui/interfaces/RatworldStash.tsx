@@ -1,6 +1,14 @@
 /* eslint-disable complexity */
 import React, { useRef, useState } from 'react';
-import { Box, Button, DmIcon, LabeledList, Section, Stack, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  DmIcon,
+  LabeledList,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -78,7 +86,8 @@ const RARITY_COLOR: Record<number, string> = {
 
 // Derive a display rarity if missing: if enchants exist but rarity absent, treat as Magic
 function getDisplayRarity(item: StashItem): number | null {
-  const hasEnchants = Array.isArray(item.ench_texts) && item.ench_texts.length > 0;
+  const hasEnchants =
+    Array.isArray(item.ench_texts) && item.ench_texts.length > 0;
   if (typeof item.rarity === 'number' && item.rarity >= 1 && item.rarity <= 8) {
     // If enchants exist but rarity says Common, treat as at least Magic for display
     if (item.rarity === 1 && hasEnchants) return 2;
@@ -117,8 +126,12 @@ const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
         <Stack.Item>icon_state: {String(item.icon_state || '')}</Stack.Item>
         <Stack.Item>item_state: {String(item.item_state || '')}</Stack.Item>
         <Stack.Item>preview_icon: {String(item.preview_icon || '')}</Stack.Item>
-        <Stack.Item>preview_state: {String(item.preview_state || '')}</Stack.Item>
-        <Stack.Item>preview_scale: {String(item.preview_scale || '')}</Stack.Item>
+        <Stack.Item>
+          preview_state: {String(item.preview_state || '')}
+        </Stack.Item>
+        <Stack.Item>
+          preview_scale: {String(item.preview_scale || '')}
+        </Stack.Item>
       </Stack>
     );
   }
@@ -129,13 +142,16 @@ const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
   const minD = typeof item.min_damage === 'number' ? item.min_damage : null;
   const maxD = typeof item.max_damage === 'number' ? item.max_damage : null;
   const dmgType = (item.damage_type || '').toLowerCase();
-  const dmgColor = dmgType === 'brute' ? '#e74c3c' : dmgType === 'burn' ? '#e67e22' : '#ddd';
+  const dmgColor =
+    dmgType === 'brute' ? '#e74c3c' : dmgType === 'burn' ? '#e67e22' : '#ddd';
   const gem = item.socket_gem || null;
   const gemColor = item.socket_gem_color || '#cccccc';
   const statBonuses = item.stat_bonuses || null;
   const specialId = item.special_id || null;
-  const specialChance = typeof item.special_chance === 'number' ? item.special_chance : null;
-  const specialValue = typeof item.special_value === 'number' ? item.special_value : null;
+  const specialChance =
+    typeof item.special_chance === 'number' ? item.special_chance : null;
+  const specialValue =
+    typeof item.special_value === 'number' ? item.special_value : null;
 
   // Build +STAT line: show combined bonuses joined, e.g. ★ +1 STR +1 SPD
   let statLine: string | null = null;
@@ -151,10 +167,14 @@ const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
   // Build special attribute line always beneath stat line if exists
   let specialLine: string | null = null;
   if (specialId) {
-    const baseName = SPECIAL_LABEL[specialId] || specialId.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    const baseName =
+      SPECIAL_LABEL[specialId] ||
+      specialId.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
     let extra = '';
-    if (specialChance && specialChance > 0) extra += ` (${specialChance}% chance)`;
-    if (specialValue && specialValue > 0) extra += extra ? ` [${specialValue}]` : ` (${specialValue})`;
+    if (specialChance && specialChance > 0)
+      extra += ` (${specialChance}% chance)`;
+    if (specialValue && specialValue > 0)
+      extra += extra ? ` [${specialValue}]` : ` (${specialValue})`;
     specialLine = `★ ${baseName}${extra}`;
   }
 
@@ -178,17 +198,38 @@ const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
             <span style={{ color: gemColor, fontWeight: 700 }}> (★-{gem})</span>
           )}
         </Box>
+        <Box
+          style={{
+            color: rarityColor || '#c0c0c0',
+            opacity: 0.95,
+            marginBottom: 6,
+          }}
+        >
+          {dispRarity ? rarityLabel : ''}
+        </Box>
+        {(minD !== null || maxD !== null) && (
+          <Box bold style={{ color: dmgColor, marginBottom: 6 }}>
+            {dmgType === 'brute' ? 'Brute' : 'Damage'}{' '}
+            {minD !== null && maxD !== null
+              ? `${minD}–${maxD}`
+              : (minD ?? maxD)}
+          </Box>
+        )}
+        {/* Moved stat & special lines below rarity & damage */}
         {statLine && (
           <Box
             style={{
               color: '#4da6ff',
               fontWeight: 600,
-              marginBottom: 4,
+              marginBottom: specialLine ? 4 : 8,
+              position: 'relative',
               textShadow: '0 0 6px rgba(77,166,255,0.6)',
               animation: 'rwBluePulse 2.4s ease-in-out infinite',
+              overflow: 'visible',
             }}
           >
             {statLine}
+            {/* No stars for stat line */}
           </Box>
         )}
         {specialLine && (
@@ -196,40 +237,49 @@ const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
             style={{
               color: '#f2d94c',
               fontWeight: 600,
-              marginBottom: 6,
+              marginBottom: 8,
               position: 'relative',
-              textShadow: '0 0 6px rgba(242,217,76,0.8)',
+              textShadow:
+                '0 0 6px rgba(242,217,76,0.85), 0 0 12px rgba(242,217,76,0.5)',
               animation: 'goldPulse 2.1s ease-in-out infinite',
               overflow: 'visible',
             }}
           >
             {specialLine}
-            {/* Particle stars */}
-            <span className="rw-star-field">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <span
-                  key={i}
-                  style={{
-                    position: 'absolute',
-                    left: `${8 + i * 12}px`,
-                    top: '-4px',
-                    fontSize: 6,
-                    color: '#f2d94c',
-                    opacity: 0.0,
-                    animation: `starDrift 3.4s ease-in-out ${i * 0.55}s infinite`,
-                  }}
-                >
-                  ★
-                </span>
-              ))}
+            <span
+              className="rw-star-field"
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+              }}
+            >
+              {Array.from({ length: 9 }).map((_, i) => {
+                const pct = (i / 8) * 100;
+                const delay = (i * 0.33).toFixed(2);
+                const scale = 0.6 + (i % 3) * 0.15;
+                return (
+                  <span
+                    key={i}
+                    style={{
+                      position: 'absolute',
+                      left: pct + '%',
+                      bottom: '-2px',
+                      fontSize: 6,
+                      transform: `translateX(-50%) scale(${scale})`,
+                      color: '#f2d94c',
+                      opacity: 0,
+                      animation: `starDrift 3.8s ease-in-out ${delay}s infinite`,
+                    }}
+                  >
+                    ★
+                  </span>
+                );
+              })}
             </span>
-          </Box>
-        )}
-        <Box style={{ color: rarityColor || '#c0c0c0', opacity: 0.95, marginBottom: 6 }}>{dispRarity ? rarityLabel : ''}</Box>
-        {(minD !== null || maxD !== null) && (
-          <Box bold style={{ color: dmgColor, marginBottom: 6 }}>
-            {dmgType === 'brute' ? 'Brute' : 'Damage'}{' '}
-            {minD !== null && maxD !== null ? `${minD}–${maxD}` : (minD ?? maxD)}
           </Box>
         )}
         {lines.length > 0 ? (
@@ -257,7 +307,8 @@ function resolvePreviewIcon(item: StashItem): string {
 }
 
 function resolvePreviewState(item: StashItem): string {
-  if (item.preview_state && item.preview_state !== '') return item.preview_state;
+  if (item.preview_state && item.preview_state !== '')
+    return item.preview_state;
   if (item.item_state && item.item_state !== '') return item.item_state;
   if (item.icon_state && item.icon_state !== '') return item.icon_state;
   return 'default';
@@ -304,11 +355,15 @@ export const RatworldStash = () => {
     );
   };
   const [draggingUid, setDraggingUid] = useState<string | null>(null);
-  const [dragOrigin, setDragOrigin] = useState<{x: number; y: number} | null>(null);
-  const [hoverCell, setHoverCell] = useState<{x: number; y: number} | null>(null);
+  const [dragOrigin, setDragOrigin] = useState<{ x: number; y: number } | null>(
+    null,
+  );
+  const [hoverCell, setHoverCell] = useState<{ x: number; y: number } | null>(
+    null,
+  );
   const gridRef = useRef<HTMLDivElement | null>(null);
 
-  const findItem = (uid: string | null) => items.find(i => i.uid === uid);
+  const findItem = (uid: string | null) => items.find((i) => i.uid === uid);
   // Pulse keyframes injected once
   const PULSE_STYLE = `@keyframes pulseValid {0% {box-shadow:0 0 4px 1px rgba(242,217,76,0.35);}50% {box-shadow:0 0 10px 3px rgba(242,217,76,0.85);}100% {box-shadow:0 0 4px 1px rgba(242,217,76,0.35);}}@keyframes pulseInvalid {0% {box-shadow:0 0 4px 1px rgba(204,51,51,0.35);}50% {box-shadow:0 0 10px 3px rgba(204,51,51,0.85);}100% {box-shadow:0 0 4px 1px rgba(204,51,51,0.35);}}`;
   const EFFECTS_STYLE = `
@@ -328,7 +383,13 @@ export const RatworldStash = () => {
     const tx = hoverCell.x;
     const ty = hoverCell.y;
     // Bounds check
-    if (tx < 1 || ty < 1 || tx + item.w - 1 > grid_w || ty + item.h - 1 > grid_h) return true;
+    if (
+      tx < 1 ||
+      ty < 1 ||
+      tx + item.w - 1 > grid_w ||
+      ty + item.h - 1 > grid_h
+    )
+      return true;
     // Collision with other items
     for (const other of items) {
       if (other.uid === item.uid) continue;
@@ -338,7 +399,7 @@ export const RatworldStash = () => {
       const oy2 = other.y + other.h - 1;
       const tx2 = tx + item.w - 1;
       const ty2 = ty + item.h - 1;
-      const separated = (tx2 < ox1) || (ox2 < tx) || (ty2 < oy1) || (oy2 < ty);
+      const separated = tx2 < ox1 || ox2 < tx || ty2 < oy1 || oy2 < ty;
       if (!separated) return true;
     }
     return false;
@@ -363,7 +424,11 @@ export const RatworldStash = () => {
                       selected={!!data.debug_enabled}
                       ml={1}
                       onClick={() => act('toggle_debug')}
-                      tooltip={data.debug_enabled ? 'Disable stash debug spam' : 'Enable stash debug spam (admins/devs only)'}
+                      tooltip={
+                        data.debug_enabled
+                          ? 'Disable stash debug spam'
+                          : 'Enable stash debug spam (admins/devs only)'
+                      }
                     >
                       Debug
                     </Button>
@@ -438,9 +503,10 @@ export const RatworldStash = () => {
                           height: CELL,
                           boxSizing: 'border-box',
                           border: '1px solid #222',
-                          background: (rx + ry) % 2 === 0
-                            ? 'rgba(255,255,255,0.02)'
-                            : 'rgba(0,0,0,0.02)',
+                          background:
+                            (rx + ry) % 2 === 0
+                              ? 'rgba(255,255,255,0.02)'
+                              : 'rgba(0,0,0,0.02)',
                         }}
                       />
                     ))}
@@ -451,7 +517,9 @@ export const RatworldStash = () => {
                 {items.map((item) => {
                   const dispRarity = getDisplayRarity(item);
                   const rarityColor = getRarityColor(item) || undefined;
-                  const isSpecial = typeof item.special_id === 'string' && item.special_id.length > 0;
+                  const isSpecial =
+                    typeof item.special_id === 'string' &&
+                    item.special_id.length > 0;
                   const hasStatBonus = !!item.has_stat_bonus;
                   const box = (
                     <Box
@@ -468,15 +536,20 @@ export const RatworldStash = () => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        cursor: draggingUid === item.uid ? 'grabbing' : 'pointer',
+                        cursor:
+                          draggingUid === item.uid ? 'grabbing' : 'pointer',
                         opacity: draggingUid === item.uid ? 0.35 : 1,
                         // Subtle rarity glow; soft blue pulse for +STATS; no golden border for specials (tooltip handles glow)
                         boxShadow: hasStatBonus
                           ? '0 0 10px 3px rgba(77,166,255,0.75), inset 0 0 0 1px rgba(77,166,255,0.5)'
-                          : (rarityColor ? `0 0 8px 2px ${rarityColor}40, inset 0 0 0 1px ${rarityColor}33` : undefined),
+                          : rarityColor
+                            ? `0 0 8px 2px ${rarityColor}40, inset 0 0 0 1px ${rarityColor}33`
+                            : undefined,
                         animation: hasStatBonus
                           ? 'rwBluePulse 2.4s ease-in-out infinite'
-                          : (dispRarity && dispRarity >= 4 ? 'rwStashPulse 2.6s ease-in-out infinite' : undefined),
+                          : dispRarity && dispRarity >= 4
+                            ? 'rwStashPulse 2.6s ease-in-out infinite'
+                            : undefined,
                       }}
                       // No native drag props on Box; native ghost suppressed by inner wrapper's pointerEvents and draggable=false
                       onMouseDown={(e) => {
@@ -562,7 +635,15 @@ export const RatworldStash = () => {
                         >
                           {item.name || ''}
                           {!!item.socket_gem && (
-                            <span style={{ color: item.socket_gem_color || '#cccccc', fontWeight: 700 }}> (★-{item.socket_gem})</span>
+                            <span
+                              style={{
+                                color: item.socket_gem_color || '#cccccc',
+                                fontWeight: 700,
+                              }}
+                            >
+                              {' '}
+                              (★-{item.socket_gem})
+                            </span>
                           )}
                         </div>
                         <div
@@ -580,46 +661,58 @@ export const RatworldStash = () => {
                     </Box>
                   );
                   return (
-                    <Tooltip key={item.uid} content={<ItemTooltip item={item} debug={showDebug} />} position="right">
+                    <Tooltip
+                      key={item.uid}
+                      content={<ItemTooltip item={item} debug={showDebug} />}
+                      position="right"
+                    >
                       {box}
                     </Tooltip>
                   );
                 })}
-                {draggingUid && hoverCell && (() => {
-                  const item = findItem(draggingUid);
-                  if (!item) return null;
-                  return (
-                    <Box
-                      style={{
-                        position: 'absolute',
-                        left: (hoverCell.x - 1) * CELL,
-                        top: (hoverCell.y - 1) * CELL,
-                        width: item.w * CELL,
-                        height: item.h * CELL,
-                        pointerEvents: 'none',
-                        border: placementBlocked ? '2px solid #cc3333' : '2px solid #f2d94c',
-                        background: placementBlocked ? 'rgba(204,51,51,0.18)' : 'rgba(242,217,76,0.16)',
-                        animation: placementBlocked ? 'pulseInvalid 1s infinite' : 'pulseValid 1.15s infinite',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <DmIcon
-                        icon={resolvePreviewIcon(item)}
-                        icon_state={resolvePreviewState(item)}
+                {draggingUid &&
+                  hoverCell &&
+                  (() => {
+                    const item = findItem(draggingUid);
+                    if (!item) return null;
+                    return (
+                      <Box
                         style={{
-                          opacity: 0.18,
-                          imageRendering: 'pixelated',
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'fill',
+                          position: 'absolute',
+                          left: (hoverCell.x - 1) * CELL,
+                          top: (hoverCell.y - 1) * CELL,
+                          width: item.w * CELL,
+                          height: item.h * CELL,
                           pointerEvents: 'none',
+                          border: placementBlocked
+                            ? '2px solid #cc3333'
+                            : '2px solid #f2d94c',
+                          background: placementBlocked
+                            ? 'rgba(204,51,51,0.18)'
+                            : 'rgba(242,217,76,0.16)',
+                          animation: placementBlocked
+                            ? 'pulseInvalid 1s infinite'
+                            : 'pulseValid 1.15s infinite',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}
-                      />
-                    </Box>
-                  );
-                })()}
+                      >
+                        <DmIcon
+                          icon={resolvePreviewIcon(item)}
+                          icon_state={resolvePreviewState(item)}
+                          style={{
+                            opacity: 0.18,
+                            imageRendering: 'pixelated',
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'fill',
+                            pointerEvents: 'none',
+                          }}
+                        />
+                      </Box>
+                    );
+                  })()}
                 {/* Inject only placement pulse animations */}
                 <style>{PULSE_STYLE}</style>
                 {/* Gentle overall item pulse (no flames) */}
@@ -631,7 +724,7 @@ export const RatworldStash = () => {
                   {`@keyframes goldPulse {0%{filter: brightness(1); box-shadow: 0 0 6px 2px rgba(242,217,76,0.35)} 50%{filter: brightness(1.18); box-shadow: 0 0 16px 7px rgba(242,217,76,0.95)} 100%{filter: brightness(1); box-shadow: 0 0 6px 2px rgba(242,217,76,0.35)}}`}
                 </style>
                 <style>
-                  {`@keyframes starDrift {0%{transform:translateY(0px) scale(0.8); opacity:0} 20%{opacity:0.9} 60%{transform:translateY(-10px) scale(1); opacity:0.9} 100%{transform:translateY(-18px) scale(0.75); opacity:0}}`}
+                  {`@keyframes starDrift {0%{transform:translateY(0px) scale(0.7); opacity:0} 15%{opacity:0.95} 55%{transform:translateY(-10px) scale(1); opacity:1} 80%{opacity:0.9} 100%{transform:translateY(-18px) scale(0.6); opacity:0}}`}
                 </style>
               </div>
             </Section>

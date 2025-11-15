@@ -31,15 +31,8 @@ function statusToColor(status: number): string {
 }
 
 export function TitleBar(props: TitleBarProps) {
-  const {
-    className,
-    title,
-    canClose,
-    fancy,
-    onDragStart,
-    onClose,
-    children,
-  } = props;
+  const { className, title, canClose, fancy, onDragStart, onClose, children } =
+    props;
   const dispatch = globalStore.dispatch;
 
   const finalTitle =

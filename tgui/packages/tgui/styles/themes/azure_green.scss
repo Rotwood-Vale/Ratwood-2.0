@@ -13,14 +13,12 @@
   --color-text: #d0d4cc;
   --line-height: 170%;
 
-  /* Semantic colors */ 
+  /* Semantic colors */
   --color-label: #d0d4cc;
-
 
   // Basics
   .Layout__content {
     background-image: none;
-
   }
 
   .TitleBar {
@@ -34,7 +32,7 @@
   .TitleBar__title {
     padding-left: 12px;
     font-size: 15px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-weight: bolder;
   }
 
@@ -44,12 +42,13 @@
   .Button {
     transition: all 0.5s;
     --color-text: #897472;
-  --button-background-default: #343f35;
-  --button-background-selected: #447544;
+    --button-background-default: #343f35;
+    --button-background-selected: #447544;
   }
 
   .input-button {
-    &__submit, &__cancel {
+    &__submit,
+    &__cancel {
       color: #ae3636;
       font-weight: 600;
     }
@@ -75,29 +74,27 @@
     border-color: #619940;
   }
 
-   a:link {
+  a:link {
     color: #892a2b;
     background-color: transparent;
     text-decoration: underline;
   }
-  
+
   a:visited {
     color: #e19d9e;
     background-color: transparent;
     text-decoration: underline;
   }
-  
+
   a:hover {
     color: #c94f51;
     background-color: transparent;
     text-decoration: underline;
   }
-  
+
   a:active {
     color: #c94f51;
     background-color: transparent;
     text-decoration: underline;
   }
-
 }
-

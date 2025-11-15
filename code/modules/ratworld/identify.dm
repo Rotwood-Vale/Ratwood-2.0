@@ -60,10 +60,18 @@
 		if(I.vars?["rw_roll_on_discover"]) I.vars["rw_roll_on_discover"] = FALSE
 	// Apply item-side effects and components
 	ratworld_apply_enchantments(I)
-	// If held/equipped by a living mob, apply wearer-side effects now
-	var/mob/living/owner = null
-	if(isliving(I.loc)) owner = I.loc
-	if(owner) ratworld_apply_wearer_effects(I, owner)
+	// If held/equipped by a living mob, apply wearer-side effects now.
+	// Be robust: apply for the current location owner, and for the identifier
+	// if they are actually holding the item.
+	var/list/owners = list()
+	if(isliving(I.loc)) owners += I.loc
+	if(isliving(user))
+		// Only consider the identifier if they truly hold the item
+		if(I in user.contents)
+			owners += user
+	// De-duplicate and apply
+	for(var/mob/living/L as anything in owners)
+		ratworld_apply_wearer_effects(I, L)
 	if(user)
 		to_chat(user, span_notice("You identify [I]. Its properties are now revealed."))
 	return TRUE

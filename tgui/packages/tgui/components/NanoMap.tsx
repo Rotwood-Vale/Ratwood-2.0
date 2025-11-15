@@ -195,8 +195,8 @@ export class NanoMap extends Component<Props, State> {
 
     const WxH = this.getWxH(zoom);
 
-  const mapZ = (config as any)?.mapZLevel || 1;
-  const mapUrl = resolveAsset(`minimap_${mapZ}.png`);
+    const mapZ = (config as any)?.mapZLevel || 1;
+    const mapUrl = resolveAsset(`minimap_${mapZ}.png`);
     const newStyle: CSSProperties = {
       width: `${WxH[0]}px`,
       height: `${WxH[1]}px`,

@@ -155,7 +155,9 @@ var/global/list/GLOB_rw_enchants
 /proc/ratworld_detach_enchantments(obj/item/I)
 	if(!I) return
 	var/list/ids = I.vars?["rw_enchants"]
-	if(!islist(ids)) return
+	// Allow stat-only or special-only items to still proceed with handler logic; just skip loop
+	if(!islist(ids))
+		ids = list()
 	for(var/id in ids)
 		var/datum/ratworld/enchantment/E = ratworld_get_enchant(id)
 		if(E) E.remove_from_item(I)
@@ -173,10 +175,12 @@ var/global/list/GLOB_rw_enchants
 /proc/ratworld_apply_enchantments(obj/item/I)
 	if(!I) return
 	var/list/ids = I.vars?["rw_enchants"]
-	if(!islist(ids) || !ids.len) return
-	for(var/id in ids)
-		var/datum/ratworld/enchantment/E = ratworld_get_enchant(id)
-		if(E) E.apply_to_item(I)
+	if(!islist(ids)) ids = list()
+	// Apply each enchant if present; stat-only items will simply skip this loop but still get handlers
+	if(ids.len)
+		for(var/id in ids)
+			var/datum/ratworld/enchantment/E = ratworld_get_enchant(id)
+			if(E) E.apply_to_item(I)
 	// Install handlers and static effects (idempotent)
 	ratworld_register_item_enchant_handlers(I)
 	ratworld_apply_item_static_effects(I)
@@ -606,6 +610,11 @@ var/global/list/GLOB_rw_enchants
 
 	if(I.rw_effects_owner == L)
 		I.rw_effects_owner = null
+
+	// As a safety, refresh remaining wearer effects on this mob so the stat panel
+	// reflects current contents accurately after removing this item's effects.
+	if(isliving(L))
+		L.ratworld_refresh_wearer_effects()
 
 // Roll eligible enchant ids for a given slot key using basic weights
 /proc/ratworld_roll_enchant_ids_for_slot(count = 1, slot_key)

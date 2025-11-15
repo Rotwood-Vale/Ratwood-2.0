@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Window } from 'tgui/layouts';
-import { Autofocus, Button, Divider, Input, Section, Stack } from 'tgui-core/components';
+import {
+  Autofocus,
+  Button,
+  Divider,
+  Input,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 import { isAlphabetic, isNumeric, KEY } from 'tgui-core/keys';
 
 import { InputButtons } from './common/InputButtons';

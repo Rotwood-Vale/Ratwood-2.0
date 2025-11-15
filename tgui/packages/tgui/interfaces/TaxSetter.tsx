@@ -15,11 +15,11 @@ type TaxCategory = {
   categoryName: string;
   taxAmount: number;
   fineExemption: BooleanLike;
-}
+};
 
 type Data = {
   taxCategories: TaxCategory[];
-}
+};
 
 export const TaxSetter = (props: any, context: any) => {
   const { act, data } = useBackend<Data>();
@@ -131,7 +131,9 @@ export const TaxBlock = (props: TaxBlockProps) => {
         <LabeledList.Item label={<b>Fine exemption</b>}>
           <Button
             color="transparent"
-            className={fineExempt ? "input-button__submit" : "input-button__cancel"}
+            className={
+              fineExempt ? 'input-button__submit' : 'input-button__cancel'
+            }
             content={fineExempt ? 'by my mercy' : 'they shall pay'}
             onClick={() => onFineChange(title, taxAmount, !fineExempt)}
           />

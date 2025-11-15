@@ -16,11 +16,9 @@
   /* Semantic colors */
   --color-label: #7284a8;
 
-
   // Basics
   .Layout__content {
     background-image: none;
-
   }
 
   .TitleBar {
@@ -34,7 +32,7 @@
   .TitleBar__title {
     padding-left: 12px;
     font-size: 15px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-weight: bolder;
   }
 
@@ -49,7 +47,8 @@
   }
 
   .input-button {
-    &__submit, &__cancel {
+    &__submit,
+    &__cancel {
       color: #ae3636;
       font-weight: 600;
     }
@@ -75,28 +74,27 @@
     border-color: #4a7ba7;
   }
 
-   a:link {
+  a:link {
     color: #892a2b;
     background-color: transparent;
     text-decoration: underline;
   }
-  
+
   a:visited {
     color: #e19d9e;
     background-color: transparent;
     text-decoration: underline;
   }
-  
+
   a:hover {
     color: #c94f51;
     background-color: transparent;
     text-decoration: underline;
   }
-  
+
   a:active {
     color: #c94f51;
     background-color: transparent;
     text-decoration: underline;
   }
-
 }
