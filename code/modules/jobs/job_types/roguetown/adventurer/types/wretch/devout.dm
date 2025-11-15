@@ -11,7 +11,7 @@
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR)
 
-	ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC), TRAIT_GENERIC) //Rituals! Huzzah!
+	ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC) //Rituals! Huzzah!
 	ADD_TRAIT(H, TRAIT_MEDICINE_EXPERT, TRAIT_GENERIC) //This should allow them to heal as a standalone, given wretches often do not work together.
 	ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC) //So they can tell if somebody needs reviving basically; which is good for an antag or minor antag to have!
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC) //Same as clerics
