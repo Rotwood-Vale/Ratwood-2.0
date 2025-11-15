@@ -47,6 +47,10 @@ var/global/list/GLOB_rw_enchants
 	var/tmp/rw_projectile_defense_pct_applied = null
 	var/tmp/rw_stat_bonus_key = null
 	var/tmp/rw_stat_bonus_applied = null
+	// Tracking for +STAT change_stat application to avoid stacking and enable exact revert
+	var/tmp/list/rw_stat_applied_map = null
+	var/tmp/rw_stat_applied = null
+	var/tmp/rw_stat_applied_guard = FALSE
 
 // Aggregate Ratworld enchant totals stored on living mobs
 /mob/living
@@ -70,6 +74,7 @@ var/global/list/GLOB_rw_enchants
 	var/rw_buff_duration_pct_total = 0
 	var/rw_debuff_duration_pct_total = 0
 	var/rw_projectile_defense_pct_total = 0
+	var/rw_magic_find_pct_total = 0
 
 // (No max-health aggregation anymore; replaced by physical damage reduction aggregation)
 
@@ -110,10 +115,14 @@ var/global/list/GLOB_rw_enchants
 	for(var/id in GLOB_rw_enchants)
 		var/datum/ratworld/enchantment/E = GLOB_rw_enchants[id]
 		weights[id] = max(1, E.weight)
+	// Allow at most two copies of the same enchant id; duplicates stack via value roller
+	var/list/counts = list()
 	while(ids.len < count && weights.len)
 		var/picked = pickweight(weights)
 		ids += picked
-		weights -= picked
+		counts[picked] = (isnum(counts[picked]) ? counts[picked] + 1 : 1)
+		if(counts[picked] >= 2)
+			weights -= picked
 	return ids
 
 // Attach enchantments to an item by id and call apply hooks. Ids are strings.
@@ -192,36 +201,119 @@ var/global/list/GLOB_rw_enchants
 	// Apply wearer effects when picked up into hands too (weapons/jewelry held but not slotted)
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+	// Combat hooks for specials
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(on_attack_zone))
+	RegisterSignal(parent, COMSIG_ITEM_HIT_RESPONSE, PROC_REF(on_hit_response))
 
 /datum/component/ratworld_enchant_handler/Destroy()
 	if(parent)
-		UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
+		UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED, COMSIG_ITEM_ATTACK_ZONE, COMSIG_ITEM_HIT_RESPONSE))
 	return ..()
 
 /datum/component/ratworld_enchant_handler/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 	if(isitem(source) && isliving(equipper))
 		ratworld_apply_wearer_effects(source, equipper)
+		// Register kill-listener for Midas Touch if present on this item
+		var/obj/item/I = source
+		if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "midas_touch")
+			if(!I.vars?["rw_midas_registered"]) { RegisterSignal(equipper, COMSIG_MOB_AFTERATTACK_SUCCESS, PROC_REF(on_afterattack_success)); I.vars["rw_midas_registered"] = TRUE }
 
 /datum/component/ratworld_enchant_handler/proc/on_pickup(datum/source, mob/user)
 	SIGNAL_HANDLER
 	if(isitem(source) && isliving(user))
 		ratworld_apply_wearer_effects(source, user)
+		// Register kill-listener for Midas Touch if present on this item
+		var/obj/item/I = source
+		if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "midas_touch")
+			if(!I.vars?["rw_midas_registered"]) { RegisterSignal(user, COMSIG_MOB_AFTERATTACK_SUCCESS, PROC_REF(on_afterattack_success)); I.vars["rw_midas_registered"] = TRUE }
 
 /datum/component/ratworld_enchant_handler/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 	if(isitem(source) && isliving(user))
 		ratworld_revert_wearer_effects(source, user)
+		// Unregister kill-listener for Midas Touch
+		var/obj/item/I = source
+		if(I.vars?["rw_midas_registered"]) { UnregisterSignal(user, COMSIG_MOB_AFTERATTACK_SUCCESS); I.vars["rw_midas_registered"] = null }
+
+// Weapon hit hook: implement Crushing Blow, Deadly Strike, Slows Target, Astrata's Light
+/datum/component/ratworld_enchant_handler/proc/on_attack_zone(datum/source, mob/living/carbon/target, mob/living/user, obj/item/bodypart/hit_zone)
+	SIGNAL_HANDLER
+	if(!isitem(parent)) return
+	if(!isliving(target) || !isliving(user)) return
+	var/obj/item/I = parent
+	var/id = I.vars?["rw_special_id"]
+	if(!istext(id) || !(istype(I, /obj/item/rogueweapon) || istype(I, /obj/item/gun/ballistic/revolver/grenadelauncher/bow))) return
+	var/ch = I.vars?["rw_special_chance"]; if(!isnum(ch)) ch = 0
+	if(id == "deadly_strike")
+		if(prob(ch))
+			var/extra = isnum(I.force) ? I.force : 0
+			if(extra > 0)
+				target.apply_damage(round(extra), BRUTE, hit_zone?.body_zone)
+				to_chat(user, span_danger("Deadly strike!"))
+	else if(id == "crushing_blow")
+		if(prob(ch))
+			var/mx = isnum(target.maxHealth) ? target.maxHealth : (isnum(target.maxHealth) ? target.maxHealth : 0)
+			if(mx <= 0 && isnum(target.maxHealth)) mx = target.maxHealth
+			var/amt = round(max(1, mx * 0.15))
+			target.apply_damage(amt, BRUTE, hit_zone?.body_zone)
+			to_chat(user, span_danger("Crushing blow!"))
+	else if(id == "slows_target")
+		if(prob(ch))
+			// Apply a non-stacking status effect that reduces SPD by 4 for 5s
+			// Status effect refreshes duration if reapplied
+			target.apply_status_effect(/datum/status_effect/debuff/rw_slowed)
+			to_chat(user, span_warning("You slow your target!"))
+	else if(id == "astratas_light")
+		if(prob(ch))
+			if(isliving(target))
+				target.adjust_fire_stacks(2)
+				target.adjustFireLoss(5)
+				to_chat(user, span_notice("Astrata's light sears your foe."))
+
+// Armor hit-response: implement Thorns reflect
+/datum/component/ratworld_enchant_handler/proc/on_hit_response(datum/source, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)
+	SIGNAL_HANDLER
+	if(!isitem(parent) || !isliving(owner) || !isliving(attacker)) return
+	var/obj/item/I = parent
+	if(I.vars?["rw_special_id"] != "thorns") return
+	var/ch = I.vars?["rw_special_chance"]; if(!isnum(ch)) ch = 0
+	if(!prob(ch)) return
+	var/amt = 8
+	attacker.apply_damage(amt, BRUTE, BODY_ZONE_CHEST)
+	to_chat(owner, span_warning("Thorns lash back at [attacker]!"))
+
+// Wearer attack success: implement Midas Touch
+/datum/component/ratworld_enchant_handler/proc/on_afterattack_success(datum/source, mob/living/target)
+	SIGNAL_HANDLER
+	if(!isitem(parent) || !isliving(source)) return
+	var/obj/item/I = parent
+	if(I.vars?["rw_special_id"] != "midas_touch") return
+	if(!isliving(target)) return
+	// Only simple animals and similar fodder count
+	if(!istype(target, /mob/living/simple_animal)) return
+	if(target.stat != DEAD && target.health > 0) return
+	var/turf/T = get_turf(target)
+	if(T)
+		new /obj/item/roguecoin/gold/pile(T)
+		to_chat(source, span_notice("Midas Touch: a pile of gold spills out."))
 
 // Static, item-owned effects that should persist regardless of equip (idempotent)
 /proc/ratworld_apply_item_static_effects(obj/item/I)
 	if(!I) return
-	// Do not gate static item effects behind discovery; stats should always apply
-	if(!islist(I.vars?["rw_enchants"])) return
-	if(!islist(I.vars?["rw_enchant_vals"])) return
+	// Prepare applied registry list
 	if(!islist(I.vars?["rw_item_static_applied"])) I.vars["rw_item_static_applied"] = list()
-
 	var/list/applied = I.vars["rw_item_static_applied"]
+
+	// Special static effects should apply regardless of having enchants
+	if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "indestructible")
+		if(!applied?["indestructible"]) // apply once
+			if(isnum(I.max_integrity)) I.max_integrity = max(9999, I.max_integrity)
+			if(isnum(I.obj_integrity)) I.obj_integrity = I.max_integrity
+			applied["indestructible"] = TRUE
+
+	// Enchant-driven static effects require enchant values map
+	if(!islist(I.vars?["rw_enchant_vals"])) return
 	// Armor rating add: attach a bonus armor datum to the item's armor, once
 	if(("armor_rating_add" in I.vars["rw_enchant_vals"]))
 		if(!applied?["armor_rating_add"])
@@ -248,6 +340,8 @@ var/global/list/GLOB_rw_enchants
 					I.obj_integrity = clamp(round(I.max_integrity * ratio), 0, I.max_integrity)
 				applied["durability_add"] = TRUE
 
+	// (Special handled above)
+
 // Equip handler: apply wearer-side effects
 /proc/ratworld_ench_on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
@@ -269,7 +363,8 @@ var/global/list/GLOB_rw_enchants
 	if(I.vars && ("rw_discovered" in I.vars) && !I.vars["rw_discovered"]) return
 	var/list/ids = I.vars?["rw_enchants"]
 	var/list/vals = I.vars?["rw_enchant_vals"]
-	if(!islist(ids) || !islist(vals)) return
+	// Allow +STAT bonuses and specials to apply even if the item has no enchant lists
+	var/has_enchants = islist(ids) && islist(vals)
 
 	// Prevent double-application: if already applied to this same wearer, skip
 	if(I.rw_effects_owner && I.rw_effects_owner == L)
@@ -285,8 +380,8 @@ var/global/list/GLOB_rw_enchants
 	// Track whether we applied any non-HP wearer effects to ensure owner marker is set
 	var/applied_any = FALSE
 
-	// Movement speed (speed_flat): apply a movespeed modifier tied to this item
-	if(isnum(vals?["speed_flat"]))
+	// Movement speed (speed_flat): apply a movespeed modifier tied to this item (only if enchants present)
+	if(has_enchants && isnum(vals?["speed_flat"]))
 		var/sv = vals["speed_flat"]
 		if(sv)
 			var/ms_id = "RW_SPEED:[REF(I)]"
@@ -319,26 +414,26 @@ var/global/list/GLOB_rw_enchants
 	if(!("rw_projectile_defense_pct_total" in L.vars) || !isnum(L.vars["rw_projectile_defense_pct_total"])) L.vars["rw_projectile_defense_pct_total"] = 0
 
 	// Percent-based and additive bonuses aggregated on wearer
-	var/as_add = isnum(vals?["action_speed"]) ? vals["action_speed"] : 0
-	var/cs_add = isnum(vals?["spell_casting_speed"]) ? vals["spell_casting_speed"] : 0
-	var/cdr_add = isnum(vals?["cooldown_reduction_bonus"]) ? vals["cooldown_reduction_bonus"] : 0
-	var/mdef_add = isnum(vals?["magical_defense"]) ? vals["magical_defense"] : 0
-	var/pdr_add = isnum(vals?["physical_damage_reduction"]) ? vals["physical_damage_reduction"] : 0
-	var/luck_add = isnum(vals?["luck"]) ? vals["luck"] : 0
-	var/heal_add = isnum(vals?["outgoing_healing_add"]) ? vals["outgoing_healing_add"] : 0
-	var/ppct_add = isnum(vals?["phys_power_bonus"]) ? vals["phys_power_bonus"] : 0
-	var/pflat_add = isnum(vals?["phys_power"]) ? vals["phys_power"] : 0
-	var/tphys_add = isnum(vals?["true_phys_damage"]) ? vals["true_phys_damage"] : 0
-	var/admg_add = isnum(vals?["armor_damage_bonus"]) ? vals["armor_damage_bonus"] : 0
-	var/mpow_add = isnum(vals?["magic_power_bonus"]) ? vals["magic_power_bonus"] : 0
-	var/tmag_add = isnum(vals?["true_magical_damage"]) ? vals["true_magical_damage"] : 0
-	var/mpen_add = isnum(vals?["magic_penetration"]) ? vals["magic_penetration"] : 0
-	var/undead_add = isnum(vals?["undead_race_damage_bonus"]) ? vals["undead_race_damage_bonus"] : 0
-	var/demon_add = isnum(vals?["demon_race_damage_bonus"]) ? vals["demon_race_damage_bonus"] : 0
-	var/goblin_add = isnum(vals?["goblin_race_damage_bonus"]) ? vals["goblin_race_damage_bonus"] : 0
-	var/buffdur_add = isnum(vals?["buff_duration_bonus"]) ? vals["buff_duration_bonus"] : 0
-	var/debuffdur_add = isnum(vals?["debuff_duration_bonus"]) ? vals["debuff_duration_bonus"] : 0
-	var/projdef_add = isnum(vals?["projectile_damage_defense"]) ? vals["projectile_damage_defense"] : 0
+	var/as_add = has_enchants && isnum(vals?["action_speed"]) ? vals["action_speed"] : 0
+	var/cs_add = has_enchants && isnum(vals?["spell_casting_speed"]) ? vals["spell_casting_speed"] : 0
+	var/cdr_add = has_enchants && isnum(vals?["cooldown_reduction_bonus"]) ? vals["cooldown_reduction_bonus"] : 0
+	var/mdef_add = has_enchants && isnum(vals?["magical_defense"]) ? vals["magical_defense"] : 0
+	var/pdr_add = has_enchants && isnum(vals?["physical_damage_reduction"]) ? vals["physical_damage_reduction"] : 0
+	var/luck_add = has_enchants && isnum(vals?["luck"]) ? vals["luck"] : 0
+	var/heal_add = has_enchants && isnum(vals?["outgoing_healing_add"]) ? vals["outgoing_healing_add"] : 0
+	var/ppct_add = has_enchants && isnum(vals?["phys_power_bonus"]) ? vals["phys_power_bonus"] : 0
+	var/pflat_add = has_enchants && isnum(vals?["phys_power"]) ? vals["phys_power"] : 0
+	var/tphys_add = has_enchants && isnum(vals?["true_phys_damage"]) ? vals["true_phys_damage"] : 0
+	var/admg_add = has_enchants && isnum(vals?["armor_damage_bonus"]) ? vals["armor_damage_bonus"] : 0
+	var/mpow_add = has_enchants && isnum(vals?["magic_power_bonus"]) ? vals["magic_power_bonus"] : 0
+	var/tmag_add = has_enchants && isnum(vals?["true_magical_damage"]) ? vals["true_magical_damage"] : 0
+	var/mpen_add = has_enchants && isnum(vals?["magic_penetration"]) ? vals["magic_penetration"] : 0
+	var/undead_add = has_enchants && isnum(vals?["undead_race_damage_bonus"]) ? vals["undead_race_damage_bonus"] : 0
+	var/demon_add = has_enchants && isnum(vals?["demon_race_damage_bonus"]) ? vals["demon_race_damage_bonus"] : 0
+	var/goblin_add = has_enchants && isnum(vals?["goblin_race_damage_bonus"]) ? vals["goblin_race_damage_bonus"] : 0
+	var/buffdur_add = has_enchants && isnum(vals?["buff_duration_bonus"]) ? vals["buff_duration_bonus"] : 0
+	var/debuffdur_add = has_enchants && isnum(vals?["debuff_duration_bonus"]) ? vals["debuff_duration_bonus"] : 0
+	var/projdef_add = has_enchants && isnum(vals?["projectile_damage_defense"]) ? vals["projectile_damage_defense"] : 0
 
 	if(as_add)
 		L.vars["rw_action_speed_pct_total"] += as_add
@@ -374,16 +469,37 @@ var/global/list/GLOB_rw_enchants
 	if(debuffdur_add) { L.vars["rw_debuff_duration_pct_total"] += debuffdur_add; I.rw_debuff_duration_pct_applied = debuffdur_add; applied_any = TRUE }
 	if(projdef_add) { L.vars["rw_projectile_defense_pct_total"] += projdef_add; I.rw_projectile_defense_pct_applied = projdef_add; applied_any = TRUE }
 
-	// Flat +stat bonus (semi-rare) applied directly to base stats; excluded: LUC
-	var/sid = I.vars?["rw_stat_bonus_id"]
-	var/sv = I.vars?["rw_stat_bonus_value"]
-	if(istext(sid) && isnum(sv) && sv)
-		switch(sid)
-			if("STR") { L.STASTR += sv; I.rw_stat_bonus_key = "STASTR"; I.rw_stat_bonus_applied = sv; applied_any = TRUE }
-			if("SPD") { L.STASPD += sv; I.rw_stat_bonus_key = "STASPD"; I.rw_stat_bonus_applied = sv; applied_any = TRUE }
-			if("INT") { L.STAINT += sv; I.rw_stat_bonus_key = "STAINT"; I.rw_stat_bonus_applied = sv; applied_any = TRUE }
-			if("WIL") { L.STAWIL += sv; I.rw_stat_bonus_key = "STAWIL"; I.rw_stat_bonus_applied = sv; applied_any = TRUE }
-			if("CON") { L.STACON += sv; I.rw_stat_bonus_key = "STACON"; I.rw_stat_bonus_applied = sv; applied_any = TRUE }
+	// Special: cannot be slowed (by damage)
+	if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "cannot_be_slowed")
+		ADD_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, "RW_SPECIAL")
+		applied_any = TRUE
+
+	// Special: magic find bonus on jewelry
+	if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "magic_find")
+		var/mf = I.vars?["rw_special_value"]
+		if(isnum(mf) && mf)
+			L.vars["rw_magic_find_pct_total"] += mf
+			I.vars["rw_magic_find_applied"] = mf
+			applied_any = TRUE
+
+	// Flat +STAT bonuses (semi-rare) applied directly to base stats; excluded: LUC
+	if(islist(I.vars?["rw_stat_bonuses"]))
+		// Avoid double-applying if already applied and owner check missed for some edge case
+		if(!islist(I.rw_stat_applied_map))
+			I.rw_stat_applied_map = list()
+		if(!I.rw_stat_applied_guard)
+			var/list/bon2 = I.vars["rw_stat_bonuses"]
+			for(var/sid in bon2)
+				var/sv = bon2[sid]
+				if(!isnum(sv) || !sv) continue
+				if(sid == "STR") { L.change_stat(STATKEY_STR, sv); I.rw_stat_applied_map["STR"] = (I.rw_stat_applied_map["STR"] || 0) + sv; applied_any = TRUE }
+				else if(sid == "SPD") { L.change_stat(STATKEY_SPD, sv); I.rw_stat_applied_map["SPD"] = (I.rw_stat_applied_map["SPD"] || 0) + sv; applied_any = TRUE }
+				else if(sid == "INT") { L.change_stat(STATKEY_INT, sv); I.rw_stat_applied_map["INT"] = (I.rw_stat_applied_map["INT"] || 0) + sv; applied_any = TRUE }
+				else if(sid == "WIL") { L.change_stat(STATKEY_WIL, sv); I.rw_stat_applied_map["WIL"] = (I.rw_stat_applied_map["WIL"] || 0) + sv; applied_any = TRUE }
+				else if(sid == "CON") { L.change_stat(STATKEY_CON, sv); I.rw_stat_applied_map["CON"] = (I.rw_stat_applied_map["CON"] || 0) + sv; applied_any = TRUE }
+			I.rw_stat_bonus_key = "MULTI"
+			I.rw_stat_bonus_applied = 1
+			I.rw_stat_applied_guard = TRUE
 
 	// Clamp totals to design max_total where applicable
 	var/list/design_ids = list(
@@ -465,15 +581,28 @@ var/global/list/GLOB_rw_enchants
 	if(isnum(I.rw_luck_applied)) { L.vars["rw_luck_pct_total"] -= I.rw_luck_applied; I.rw_luck_applied = null }
 	if(isnum(I.rw_heal_applied)) { L.vars["rw_outgoing_heal_add_total"] -= I.rw_heal_applied; I.rw_heal_applied = null }
 
-	// Revert +stat bonus if applied
-	if(istext(I.rw_stat_bonus_key) && isnum(I.rw_stat_bonus_applied))
-		if(I.rw_stat_bonus_key == "STASTR") L.STASTR -= I.rw_stat_bonus_applied
-		else if(I.rw_stat_bonus_key == "STASPD") L.STASPD -= I.rw_stat_bonus_applied
-		else if(I.rw_stat_bonus_key == "STAINT") L.STAINT -= I.rw_stat_bonus_applied
-		else if(I.rw_stat_bonus_key == "STAWIL") L.STAWIL -= I.rw_stat_bonus_applied
-		else if(I.rw_stat_bonus_key == "STACON") L.STACON -= I.rw_stat_bonus_applied
-		I.rw_stat_bonus_key = null
-		I.rw_stat_bonus_applied = null
+	// Revert specials
+	if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "cannot_be_slowed")
+		REMOVE_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, "RW_SPECIAL")
+	if(isnum(I.vars?["rw_magic_find_applied"]))
+		L.vars["rw_magic_find_pct_total"] -= I.vars["rw_magic_find_applied"]
+		I.vars["rw_magic_find_applied"] = null
+
+	// Revert +STAT bonuses if applied (use applied_map to exactly undo)
+	if(islist(I.rw_stat_applied_map) && I.rw_stat_applied_map.len)
+		for(var/sid_r in I.rw_stat_applied_map)
+			var/sv_r = I.rw_stat_applied_map[sid_r]
+			if(!isnum(sv_r) || !sv_r) continue
+			if(sid_r == "STR") L.change_stat(STATKEY_STR, -sv_r)
+			else if(sid_r == "SPD") L.change_stat(STATKEY_SPD, -sv_r)
+			else if(sid_r == "INT") L.change_stat(STATKEY_INT, -sv_r)
+			else if(sid_r == "WIL") L.change_stat(STATKEY_WIL, -sv_r)
+			else if(sid_r == "CON") L.change_stat(STATKEY_CON, -sv_r)
+	I.rw_stat_applied_map = null
+	I.rw_stat_applied = null
+	I.rw_stat_applied_guard = FALSE
+	I.rw_stat_bonus_key = null
+	I.rw_stat_bonus_applied = null
 
 	if(I.rw_effects_owner == L)
 		I.rw_effects_owner = null
@@ -491,29 +620,55 @@ var/global/list/GLOB_rw_enchants
 			var/datum/ratworld/enchantment/E = GLOB_rw_enchants[id]
 			candidates[id] = max(1, E.weight)
 	var/list/picked = list()
+	var/list/counts = list()
 	count = max(0, round(count))
 	while(picked.len < count && candidates.len)
 		var/p = pickweight(candidates)
 		picked += p
-		candidates -= p
+		counts[p] = (isnum(counts[p]) ? counts[p] + 1 : 1)
+		if(counts[p] >= 2)
+			candidates -= p
 	return picked
 
-// Semi-rare: roll an item +STAT bonus (excluded: Fortune/Luck). Any gear can roll. Not socketable.
+// Semi-rare: roll item +STAT bonuses (excluded: Fortune/Luck). Any gear can roll. Not socketable.
+// Design: up to total +2 across all stats per item (e.g. +1 STR +1 SPD, or +2 SPD),
+// and up to two rolls; duplicate rolls on the same attribute stack.
 /proc/ratworld_maybe_roll_item_stat_bonus(obj/item/I)
 	if(!I) return
 	// Eligible gear types
 	if(!(istype(I, /obj/item/rogueweapon) || istype(I, /obj/item/gun/ballistic/revolver/grenadelauncher/bow) || istype(I, /obj/item/clothing)))
 		return
-	// Do not re-roll if already has a bonus
-	if(istext(I.vars?["rw_stat_bonus_id"])) return
-	// ~12% overall chance to gain +stat; 5% of those are +2, otherwise +1
-	if(!prob(12)) return
+	// Initialize containers
+	if(!islist(I.vars?["rw_stat_bonuses"]))
+		I.vars["rw_stat_bonuses"] = list()
+	var/list/bon = I.vars["rw_stat_bonuses"]
+	// Compute current total magnitude (sum of all bonuses)
+	var/total = 0
+	for(var/k in bon)
+		var/v = bon[k]
+		if(isnum(v)) total += v
+	// Hard cap: max total +2
+	if(total >= 2) return
+	// First roll gate: ~12% chance overall; second roll is rarer (~40% of first's chance)
+	if(!bon.len)
+		if(!prob(12)) return
+	else
+		if(!prob(5)) return
+	// Decide value; clamp so we never exceed +2 total
 	var/val = prob(5) ? 2 : 1
+	var/room = max(0, 2 - total)
+	if(room <= 0) return
+	if(val > room) val = room
+	if(val <= 0) return
 	// Choose among STR, SPD, INT, WIL, CON (exclude LUC)
 	var/list/cands = list("STR", "SPD", "INT", "WIL", "CON")
 	var/sid = pick(cands)
-	I.vars["rw_stat_bonus_id"] = sid
-	I.vars["rw_stat_bonus_value"] = val
+	// Stack if same attribute rolled again
+	if(isnum(bon[sid]))
+		bon[sid] += val
+	else
+		bon[sid] = val
+	I.vars["rw_stat_bonuses"] = bon
 
 // Helper accessors for systems to consume aggregated wearer bonuses safely
 /proc/ratworld_get_action_speed_mult(mob/living/L)

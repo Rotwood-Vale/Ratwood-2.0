@@ -252,9 +252,32 @@
         var/rarity_color = isnum(rarity_val) ? get_ratworld_rarity_color(rarity_val) : null
         var/is_undiscovered = FALSE
         if(rec["undiscovered"]) is_undiscovered = TRUE
+        // Special attribute flag for UI highlighting
+        var/special_id = rec["special_id"]
+        if(!istext(special_id) && islist(vars_block) && istext(vars_block["rw_special_id"]))
+            special_id = vars_block["rw_special_id"]
+        // Surface special chance/value if present for tooltip context
+        var/special_chance = rec["special_chance"]
+        if(!isnum(special_chance) && islist(vars_block) && isnum(vars_block["rw_special_chance"]))
+            special_chance = vars_block["rw_special_chance"]
+        var/special_value = rec["special_value"]
+        if(!isnum(special_value) && islist(vars_block) && isnum(vars_block["rw_special_value"]))
+            special_value = vars_block["rw_special_value"]
+        // +STAT rarity flag for UI (soft blue glow)
+        var/has_stat_bonus = FALSE
+        if(islist(vars_block) && islist(vars_block["rw_stat_bonuses"]))
+            var/list/bon_sb = vars_block["rw_stat_bonuses"]
+            for(var/k_sb in bon_sb)
+                var/v_sb = bon_sb[k_sb]
+                if(isnum(v_sb) && v_sb)
+                    has_stat_bonus = TRUE
+                    break
         var/list/ench_ids = rec["ench"]
         var/list/ench_vals = rec["ench_vals"]
         var/list/ench_texts = list()
+        // record stat bonus presence for UI (blue glow)
+        if(has_stat_bonus)
+            rec["has_stat_bonus"] = TRUE
         if(!is_undiscovered && islist(ench_ids) && ench_ids.len)
             // infer slot key for percent suffixes
             var/slot_key_hint = null
@@ -263,8 +286,10 @@
                 var/obj/item/tmp_sk = new Tsk()
                 slot_key_hint = ratworld_slot_key_for_item(tmp_sk)
                 qdel(tmp_sk)
+            var/list/seen_ids = list()
             for(var/eid in ench_ids)
                 if(!istext(eid)) continue
+                if(seen_ids && seen_ids[eid]) continue
                 var/list/defe = ratworld_get_enchant_def(eid)
                 var/ename = defe?defe["name"] : "[eid]"
                 var/val = (islist(ench_vals) && isnum(ench_vals[eid])) ? ench_vals[eid] : null
@@ -278,6 +303,7 @@
                     ench_texts += "[sign][val][suf] [ename]"
                 else
                     ench_texts += "[ename]"
+                seen_ids[eid] = TRUE
         // Failsafe: if rarity missing or too low for number of enchants, derive a minimal tier by attr slots
         if(!isnum(rarity_val))
             if(islist(ench_ids) && ench_ids.len)
@@ -342,6 +368,9 @@
             "name" = name_val,
             "rarity" = rarity_val,
             "rarity_color" = rarity_color,
+            "special_id" = special_id,
+            "special_chance" = special_chance,
+            "special_value" = special_value,
             "ench_texts" = ench_texts,
             "undiscovered" = is_undiscovered,
             "display_uid" = display_uid,
@@ -351,6 +380,7 @@
             "damage_type" = prev_dmg_type,
             "socket_gem" = socket_gem,
             "socket_gem_color" = socket_gem_color,
+            "stat_bonuses" = (islist(vars_block) && islist(vars_block["rw_stat_bonuses"])) ? vars_block["rw_stat_bonuses"] : null,
             "x" = rec["x"],
             "y" = rec["y"],
             "w" = rec["w"],

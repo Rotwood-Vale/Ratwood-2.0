@@ -77,6 +77,40 @@ GLOBAL_LIST_INIT(rw_rarity_weights, list())
 	var/list/w = custom_weights ? custom_weights : GLOB.rw_rarity_weights
 	return pickweight(w)
 
+// Magic Find-aware rarity roll: biases weights toward higher tiers based on wearer's Magic Find
+// MF is aggregated on the wearer as rw_magic_find_pct_total. Effect is modest and capped.
+/proc/ratworld_roll_rarity_with_mf(mob/living/roller, var/list/custom_weights)
+	var/list/base = custom_weights ? custom_weights : GLOB.rw_rarity_weights
+	if(!islist(base) || !base.len)
+		return ratworld_roll_rarity(custom_weights)
+	var/mf = 0
+	if(isliving(roller))
+		mf = roller.vars?["rw_magic_find_pct_total"]
+		if(!isnum(mf)) mf = 0
+	// Clamp MF influence to a sane range
+	var/bias = clamp(mf / 100, 0, 1)
+	var/list/w = list()
+	// Apply tier-specific multipliers; reduce Common slightly, boost higher tiers progressively
+	for(var/tier in base)
+		var/mult = 1.0
+		switch(tier)
+			if(RW_RARITY_COMMON)     mult = 1 - (0.5 * bias)
+			if(RW_RARITY_MAGIC)      mult = 1 + (0.10 * bias)
+			if(RW_RARITY_RARE)       mult = 1 + (0.20 * bias)
+			if(RW_RARITY_EPIC)       mult = 1 + (0.40 * bias)
+			if(RW_RARITY_LEGENDARY)  mult = 1 + (0.60 * bias)
+			if(RW_RARITY_UNIQUE)     mult = 1 + (0.80 * bias)
+			if(RW_RARITY_ARTIFACT)   mult = 1 + (1.00 * bias)
+			if(RW_RARITY_ASCENDANT)  mult = 1 + (1.20 * bias)
+		var/val = base[tier]
+		if(!isnum(val)) continue
+		// Keep zero-weight tiers zero
+		if(val <= 0)
+			w[tier] = val
+		else
+			w[tier] = max(1, round(val * mult))
+	return pickweight(w)
+
 // Whether rarity has special effect field
 /proc/ratworld_rarity_has_special(rarity)
 	var/list/info = get_ratworld_rarity_info(rarity)

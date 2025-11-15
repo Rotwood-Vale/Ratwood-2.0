@@ -312,24 +312,14 @@
 								X.add_fingerprint(user)
 								if(R.loud)
 									X.loud_message("Construction sounds can be heard")
-						else
-							var/atom/movable/I = new R.result (T)
-							I.CheckParts(parts, R)
-							if(R.diagonal)
-								I.OnCrafted(I.SelectDiagDirection(), user)
-							else
-								I.OnCrafted(user.dir, user)
-							I.add_fingerprint(user)
-							// Ratworld: roll crafted rarity for qualifying gear
-							if(isliving(user) && istype(I, /obj/item))
-								var/mob/living/LU = user
-								var/obj/item/OI = I
-								if("rw_rarity" in OI.vars && (istype(OI, /obj/item/rogueweapon) || istype(OI, /obj/item/gun/ballistic/revolver/grenadelauncher/bow) || istype(OI, /obj/item/clothing)))
-									OI.vars["rw_rarity"] = ratworld_roll_crafted_rarity(LU, OI)
-									// Ensure socketable if magic+
-									ratworld_ensure_socketable(OI)
-										// Semi-rare +STAT bonus
-										ratworld_maybe_roll_item_stat_bonus(OI)
+								else
+									var/atom/movable/I = new R.result (T)
+									I.CheckParts(parts, R)
+									if(R.diagonal)
+										I.OnCrafted(I.SelectDiagDirection(), user)
+									else
+										I.OnCrafted(user.dir, user)
+									I.add_fingerprint(user)
 					user.visible_message(span_notice("[user] [R.verbage] \a [result_name]!"), \
 										span_notice("I [R.verbage_simple] \a [result_name]!"))
 					if(user.mind && R.skillcraft)

@@ -15,6 +15,12 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
     var/list/rw_enchant_vals // map id -> numeric value
     var/rw_discovered = TRUE // default discovered; only special items will be undiscovered
     var/rw_roll_on_discover = FALSE // roll enchants when identified if set
+    // Special attribute fields declared on base item to avoid undefined-var runtimes in legacy paths
+    var/rw_special_id // text id of special attribute (e.g., "crushing_blow")
+    var/rw_special_chance = 0 // numeric chance where applicable
+    var/rw_special_value = 0 // numeric value where applicable
+    // +STAT bonuses map (e.g., list("STR"=1, "SPD"=1)); stored for UI and equip effects
+    var/list/rw_stat_bonuses
     // Socket metadata for UI cues
     var/rw_socket_gem
     var/rw_socket_gem_color
@@ -125,11 +131,24 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
     if("rw_socket_gem_color" in I.vars)
         var/sgc = I.vars["rw_socket_gem_color"]
         if(istext(sgc) && length(sgc)) data["socket_gem_color"] = sgc
+    // Special attribute fields for UI highlighting and restoration
+    if(istext(I.vars?["rw_special_id"])) data["special_id"] = I.vars["rw_special_id"]
+    if(isnum(I.vars?["rw_special_chance"])) data["special_chance"] = I.vars["rw_special_chance"]
+    if(isnum(I.vars?["rw_special_value"])) data["special_value"] = I.vars["rw_special_value"]
     // Minimal safe vars block: persist cosmetic fields and common icon hints used by UI
     var/list/vout = list()
     if(istext(I.name) && length(I.name)) vout["name"] = I.name
     if(istext(I.desc) && length(I.desc)) vout["desc"] = I.desc
     if(istext(I.color) && length(I.color)) vout["color"] = I.color
+    // Persist +STAT bonuses so the stash UI can show the blue glow without reconstructing the item
+    var/list/sb = I.vars?["rw_stat_bonuses"]
+    if(islist(sb) && sb.len)
+        var/list/sb_out = list()
+        for(var/k in sb)
+            if(istext(k) && isnum(sb[k]) && sb[k] > 0)
+                sb_out[k] = sb[k]
+        if(sb_out.len)
+            vout["rw_stat_bonuses"] = sb_out
     if("mob_overlay_icon" in I.vars)
         var/mo = I.vars["mob_overlay_icon"]
         if(istext(mo) && length(mo)) vout["mob_overlay_icon"] = mo
@@ -249,6 +268,10 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
     // Restore socket gem display fields
     if(istext(data["socket_gem"])) I.vars["rw_socket_gem"] = data["socket_gem"]
     if(istext(data["socket_gem_color"])) I.vars["rw_socket_gem_color"] = data["socket_gem_color"]
+    // Restore special attribute fields
+    if(istext(data["special_id"])) I.vars["rw_special_id"] = data["special_id"]
+    if(isnum(data["special_chance"])) I.vars["rw_special_chance"] = data["special_chance"]
+    if(isnum(data["special_value"])) I.vars["rw_special_value"] = data["special_value"]
     var/list/ench = data["ench"]
     if(islist(ench) && ench.len)
         I.vars["rw_enchants"] = list()
@@ -256,6 +279,10 @@ GLOBAL_VAR_INIT(ratworld_next_item_uid, 100000) // start higher to avoid tiny ea
             if(istext(id)) I.vars["rw_enchants"] += id
         // Apply hooks so stats/effects take hold post-spawn
         ratworld_apply_enchantments(I)
+    else
+        // Ensure static effects and handlers apply for specials even without enchants
+        ratworld_register_item_enchant_handlers(I)
+        ratworld_apply_item_static_effects(I)
     // Failsafe: derive rarity from enchant count if missing or too low
     if(!isnum(data["rarity"]))
         if(islist(ench) && ench.len)

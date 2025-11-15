@@ -266,8 +266,13 @@
 			I.vars["rw_rarity"] = ratworld_roll_crafted_rarity(user, I)
 			// Ensure socketable if magic+
 			ratworld_ensure_socketable(I)
-			// Semi-rare +STAT bonus
-			ratworld_maybe_roll_item_stat_bonus(I)
+			// For Magic+ crafted gear: mark undiscovered so attributes roll on identification
+			var/r = I.vars?["rw_rarity"]
+			if(isnum(r) && r >= RW_RARITY_MAGIC)
+				I.vars["rw_discovered"] = FALSE
+				I.vars["rw_roll_on_discover"] = TRUE
+				I.vars["rw_enchants"] = null
+				I.vars["rw_enchant_vals"] = null
 
 	// Clean up the original workpiece
 	qdel(parent)

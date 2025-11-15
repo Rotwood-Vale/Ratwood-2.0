@@ -29,11 +29,33 @@
 			ids = ratworld_roll_enchant_ids(count)
 		I.vars["rw_enchants"] = ids
 		I.vars["rw_enchant_vals"] = list()
+		var/list/counts = list()
 		for(var/id in ids)
 			if(!istext(id)) continue
 			// Use the identifier's luck (if any) when rolling enchant values
 			var/list/rv = ratworld_roll_enchant_value_for_slot(id, slot_key, user)
-			if(islist(rv)) I.vars["rw_enchant_vals"][id] = rv["value"]
+			if(!islist(rv)) continue
+			var/val = rv["value"]
+			if(!isnum(val)) continue
+			// Sum duplicate rolls into a single entry
+			if(isnum(I.vars["rw_enchant_vals"][id]))
+				I.vars["rw_enchant_vals"][id] += val
+			else
+				I.vars["rw_enchant_vals"][id] = val
+			counts[id] = (isnum(counts[id]) ? counts[id] + 1 : 1)
+		// Roll semi-rare +STAT on discovery too
+		ratworld_maybe_roll_item_stat_bonus(I)
+		// Assign special attributes and unique naming for high rarities
+		if(r >= RW_RARITY_ARTIFACT || r == RW_RARITY_ASCENDANT)
+			// Guaranteed special
+			ratworld_assign_special_attribute(I)
+			// Unique-style name
+			var/n = ratworld_generate_unique_name(I)
+			if(istext(n)) I.name = n
+		else if(r == RW_RARITY_UNIQUE)
+			if(prob(20)) ratworld_assign_special_attribute(I)
+			var/n2 = ratworld_generate_unique_name(I)
+			if(istext(n2)) I.name = n2
 		// Clear the flag now that we've rolled
 		if(I.vars?["rw_roll_on_discover"]) I.vars["rw_roll_on_discover"] = FALSE
 	// Apply item-side effects and components

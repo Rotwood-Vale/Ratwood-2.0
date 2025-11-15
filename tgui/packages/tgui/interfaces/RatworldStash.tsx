@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { useRef, useState } from 'react';
 import { Box, Button, DmIcon, LabeledList, Section, Stack, Tooltip } from 'tgui-core/components';
 
@@ -11,6 +12,10 @@ type StashItem = {
   name: string;
   rarity?: number | null;
   rarity_color?: string | null;
+  special_id?: string | null;
+  special_chance?: number | null;
+  special_value?: number | null;
+  has_stat_bonus?: boolean | null;
   ench_texts?: string[] | null;
   display_uid?: string | null;
   icon?: string | null;
@@ -25,6 +30,8 @@ type StashItem = {
   damage_type?: string | null;
   socket_gem?: string | null;
   socket_gem_color?: string | null;
+  // Raw stat bonuses map (backend list -> object) e.g. { STR: 1, SPD: 1 }
+  stat_bonuses?: Record<string, number> | null;
   x: number;
   y: number;
   w: number;
@@ -88,6 +95,18 @@ function getRarityColor(item: StashItem): string | null {
 }
 
 // Tooltip content: normal mode shows rarity name + enchantments; debug shows diagnostics
+const SPECIAL_LABEL: Record<string, string> = {
+  crushing_blow: 'Crushing Blow',
+  deadly_strike: 'Deadly Strike',
+  slows_target: 'Slows Target',
+  astratas_light: "Astrata's Light",
+  thorns: 'Thorns',
+  indestructible: 'Indestructible',
+  cannot_be_slowed: 'Cannot Be Slowed',
+  midas_touch: 'Midas Touch',
+  magic_find: 'Magic Find',
+};
+
 const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
   if (debug) {
     return (
@@ -113,6 +132,32 @@ const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
   const dmgColor = dmgType === 'brute' ? '#e74c3c' : dmgType === 'burn' ? '#e67e22' : '#ddd';
   const gem = item.socket_gem || null;
   const gemColor = item.socket_gem_color || '#cccccc';
+  const statBonuses = item.stat_bonuses || null;
+  const specialId = item.special_id || null;
+  const specialChance = typeof item.special_chance === 'number' ? item.special_chance : null;
+  const specialValue = typeof item.special_value === 'number' ? item.special_value : null;
+
+  // Build +STAT line: show combined bonuses joined, e.g. ★ +1 STR +1 SPD
+  let statLine: string | null = null;
+  if (statBonuses && Object.keys(statBonuses).length) {
+    const parts: string[] = [];
+    for (const k of Object.keys(statBonuses)) {
+      const v = statBonuses[k];
+      if (typeof v === 'number' && v > 0) parts.push(`+${v} ${k}`);
+    }
+    if (parts.length) statLine = `★ ${parts.join(' ')}`;
+  }
+
+  // Build special attribute line always beneath stat line if exists
+  let specialLine: string | null = null;
+  if (specialId) {
+    const baseName = SPECIAL_LABEL[specialId] || specialId.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    let extra = '';
+    if (specialChance && specialChance > 0) extra += ` (${specialChance}% chance)`;
+    if (specialValue && specialValue > 0) extra += extra ? ` [${specialValue}]` : ` (${specialValue})`;
+    specialLine = `★ ${baseName}${extra}`;
+  }
+
   return (
     <Box style={{ minWidth: 240, textAlign: 'center', position: 'relative' }}>
       <Box
@@ -133,6 +178,53 @@ const ItemTooltip = ({ item, debug }: { item: StashItem; debug: boolean }) => {
             <span style={{ color: gemColor, fontWeight: 700 }}> (★-{gem})</span>
           )}
         </Box>
+        {statLine && (
+          <Box
+            style={{
+              color: '#4da6ff',
+              fontWeight: 600,
+              marginBottom: 4,
+              textShadow: '0 0 6px rgba(77,166,255,0.6)',
+              animation: 'rwBluePulse 2.4s ease-in-out infinite',
+            }}
+          >
+            {statLine}
+          </Box>
+        )}
+        {specialLine && (
+          <Box
+            style={{
+              color: '#f2d94c',
+              fontWeight: 600,
+              marginBottom: 6,
+              position: 'relative',
+              textShadow: '0 0 6px rgba(242,217,76,0.8)',
+              animation: 'goldPulse 2.1s ease-in-out infinite',
+              overflow: 'visible',
+            }}
+          >
+            {specialLine}
+            {/* Particle stars */}
+            <span className="rw-star-field">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <span
+                  key={i}
+                  style={{
+                    position: 'absolute',
+                    left: `${8 + i * 12}px`,
+                    top: '-4px',
+                    fontSize: 6,
+                    color: '#f2d94c',
+                    opacity: 0.0,
+                    animation: `starDrift 3.4s ease-in-out ${i * 0.55}s infinite`,
+                  }}
+                >
+                  ★
+                </span>
+              ))}
+            </span>
+          </Box>
+        )}
         <Box style={{ color: rarityColor || '#c0c0c0', opacity: 0.95, marginBottom: 6 }}>{dispRarity ? rarityLabel : ''}</Box>
         {(minD !== null || maxD !== null) && (
           <Box bold style={{ color: dmgColor, marginBottom: 6 }}>
@@ -221,6 +313,7 @@ export const RatworldStash = () => {
   const PULSE_STYLE = `@keyframes pulseValid {0% {box-shadow:0 0 4px 1px rgba(242,217,76,0.35);}50% {box-shadow:0 0 10px 3px rgba(242,217,76,0.85);}100% {box-shadow:0 0 4px 1px rgba(242,217,76,0.35);}}@keyframes pulseInvalid {0% {box-shadow:0 0 4px 1px rgba(204,51,51,0.35);}50% {box-shadow:0 0 10px 3px rgba(204,51,51,0.85);}100% {box-shadow:0 0 4px 1px rgba(204,51,51,0.35);}}`;
   const EFFECTS_STYLE = `
     @keyframes stashPulse {0% { box-shadow: 0 0 8px 2px rgba(255,255,255,0.25); } 50% { box-shadow: 0 0 14px 6px rgba(255,255,255,0.45); } 100% { box-shadow: 0 0 8px 2px rgba(255,255,255,0.25); }}
+    @keyframes rwBluePulse {0% { box-shadow: 0 0 6px 2px rgba(77,166,255,0.45); } 50% { box-shadow: 0 0 12px 5px rgba(77,166,255,0.9); } 100% { box-shadow: 0 0 6px 2px rgba(77,166,255,0.45); }}
     @keyframes textPulse {0% { text-shadow: 0 0 2px rgba(255,255,255,0.2); } 50% { text-shadow: 0 0 6px rgba(255,255,255,0.6); } 100% { text-shadow: 0 0 2px rgba(255,255,255,0.2); }}
     @keyframes sparkleFloat {0% { transform: translateY(0px) scale(1); opacity: 0.8; } 50% { transform: translateY(-3px) scale(1.08); opacity: 1; } 100% { transform: translateY(0px) scale(1); opacity: 0.8; }}
     @keyframes fireFlicker {0%, 100% { transform: translateY(0px); opacity: 0.75; } 50% { transform: translateY(-1px); opacity: 1; }}
@@ -358,6 +451,8 @@ export const RatworldStash = () => {
                 {items.map((item) => {
                   const dispRarity = getDisplayRarity(item);
                   const rarityColor = getRarityColor(item) || undefined;
+                  const isSpecial = typeof item.special_id === 'string' && item.special_id.length > 0;
+                  const hasStatBonus = !!item.has_stat_bonus;
                   const box = (
                     <Box
                       style={{
@@ -375,9 +470,13 @@ export const RatworldStash = () => {
                         justifyContent: 'center',
                         cursor: draggingUid === item.uid ? 'grabbing' : 'pointer',
                         opacity: draggingUid === item.uid ? 0.35 : 1,
-                        // Subtle rarity glow; animate for Epic+
-                        boxShadow: rarityColor ? `0 0 8px 2px ${rarityColor}40, inset 0 0 0 1px ${rarityColor}33` : undefined,
-                        animation: dispRarity && dispRarity >= 4 ? 'rwStashPulse 2.6s ease-in-out infinite' : undefined,
+                        // Subtle rarity glow; soft blue pulse for +STATS; no golden border for specials (tooltip handles glow)
+                        boxShadow: hasStatBonus
+                          ? '0 0 10px 3px rgba(77,166,255,0.75), inset 0 0 0 1px rgba(77,166,255,0.5)'
+                          : (rarityColor ? `0 0 8px 2px ${rarityColor}40, inset 0 0 0 1px ${rarityColor}33` : undefined),
+                        animation: hasStatBonus
+                          ? 'rwBluePulse 2.4s ease-in-out infinite'
+                          : (dispRarity && dispRarity >= 4 ? 'rwStashPulse 2.6s ease-in-out infinite' : undefined),
                       }}
                       // No native drag props on Box; native ghost suppressed by inner wrapper's pointerEvents and draggable=false
                       onMouseDown={(e) => {
@@ -526,6 +625,13 @@ export const RatworldStash = () => {
                 {/* Gentle overall item pulse (no flames) */}
                 <style>
                   {`@keyframes rwStashPulse {0%{filter: brightness(1)} 50%{filter: brightness(1.12)} 100%{filter: brightness(1)}}`}
+                </style>
+                {/* Golden pulse for special-attribute items + drifting stars */}
+                <style>
+                  {`@keyframes goldPulse {0%{filter: brightness(1); box-shadow: 0 0 6px 2px rgba(242,217,76,0.35)} 50%{filter: brightness(1.18); box-shadow: 0 0 16px 7px rgba(242,217,76,0.95)} 100%{filter: brightness(1); box-shadow: 0 0 6px 2px rgba(242,217,76,0.35)}}`}
+                </style>
+                <style>
+                  {`@keyframes starDrift {0%{transform:translateY(0px) scale(0.8); opacity:0} 20%{opacity:0.9} 60%{transform:translateY(-10px) scale(1); opacity:0.9} 100%{transform:translateY(-18px) scale(0.75); opacity:0}}`}
                 </style>
               </div>
             </Section>

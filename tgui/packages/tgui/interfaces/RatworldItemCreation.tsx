@@ -9,6 +9,9 @@ interface SearchResult { path: string; name?: string; icon?: string; icon_state?
 interface RarityEntry { id: number; name: string; color: string; slots: number; special?: boolean; ascendant?: boolean }
 interface EnchantOption { id: string; name: string; min: number; max: number; percent?: boolean }
 
+// +STAT selection for admins
+type StatKey = 'STR' | 'SPD' | 'INT' | 'WIL' | 'CON';
+
 interface Data {
   search: string;
   results: SearchResult[];
@@ -26,6 +29,13 @@ interface Data {
   desc: string;
   color: string;
   undiscovered?: boolean;
+  // Special attribute selection
+  special_options?: Array<{ id: string; name: string; needs_chance?: boolean; needs_value?: boolean }>;
+  special_id?: string | null;
+  special_chance?: number | null;
+  special_value?: number | null;
+  // +STAT bonuses (admin-visible)
+  stat_bonuses?: Partial<Record<StatKey, number>>;
 }
 
 const RarityTag = ({ r }: { r: RarityEntry }) => (
@@ -82,6 +92,15 @@ export const RatworldItemCreation = () => {
   const showSearch = !!(d && d.show_search);
   const currentRarity = raritiesSafe.find((r) => r.id === d?.rarity);
   const undiscovered = !!d?.undiscovered;
+  const specialOptions: Array<{ id: string; name: string; needs_chance?: boolean; needs_value?: boolean }> =
+    Array.isArray((d as any)?.special_options) ? (d as any).special_options : [];
+  const selectedSpecialId: string | undefined = (d as any)?.special_id || undefined;
+  const selectedSpecial = specialOptions.find((o) => o.id === selectedSpecialId);
+  const specialChance = typeof (d as any)?.special_chance === 'number' ? (d as any).special_chance : undefined;
+  const specialValue = typeof (d as any)?.special_value === 'number' ? (d as any).special_value : undefined;
+  const statBonuses: Partial<Record<StatKey, number>> = ((d as any)?.stat_bonuses || {}) as any;
+  const totalStatBonus = (['STR', 'SPD', 'INT', 'WIL', 'CON'] as StatKey[])
+    .reduce((acc, k) => acc + (typeof statBonuses[k] === 'number' ? (statBonuses[k] as number) : 0), 0);
 
   return (
     <Window width={1280} height={900}>
@@ -212,6 +231,79 @@ export const RatworldItemCreation = () => {
                     <LabeledList.Item label="Color (hex)">
                       <Input value={(d && d.color) || ''} onChange={(v: string) => act('set_color', { color: v })} placeholder="#RRGGBB" />
                     </LabeledList.Item>
+                    {/* +STATS: Admin-selectable flat stat bonuses, hard-capped to +2 total */}
+                    {!undiscovered && (
+                      <LabeledList.Item label="+Stats (max +2 total)">
+                        <Stack vertical>
+                          <Box color="label">
+                            Distribute up to +2 across STR / SPD / INT / WIL / CON.
+                          </Box>
+                          <Stack wrap>
+                            {(['STR', 'SPD', 'INT', 'WIL', 'CON'] as StatKey[]).map((k) => {
+                              const current = statBonuses[k] || 0;
+                              return (
+                                <Box key={k} mr={2} mb={1}>
+                                  <Box mb={0.5}>{k}</Box>
+                                  <NumberInput
+                                    minValue={0}
+                                    maxValue={2}
+                                    step={1}
+                                    value={current}
+                                    onChange={(val: number) => act('set_stat_bonus', { stat: k, val })}
+                                    style={{ width: 80 }}
+                                  />
+                                </Box>
+                              );
+                            })}
+                          </Stack>
+                          <Box mt={1} color={totalStatBonus > 2 ? 'bad' : 'label'}>
+                            Current total: {totalStatBonus} / 2
+                          </Box>
+                        </Stack>
+                      </LabeledList.Item>
+                    )}
+                    {/* Special attribute selection for discovered high-rarity items */}
+                    {!undiscovered && specialOptions.length > 0 && (
+                      <LabeledList.Item label="Special Attribute">
+                        <Stack align="center">
+                          <Dropdown
+                            selected={selectedSpecialId}
+                            options={specialOptions.map((o) => ({ value: o.id, displayText: o.name }))}
+                            onSelected={(v) => act('set_special', { id: v })}
+                            placeholder="Pick a special attribute (optional)"
+                          />
+                          {selectedSpecial?.needs_chance && (
+                            <>
+                              <Box ml={1} color="label">chance%</Box>
+                              <NumberInput
+                                minValue={0}
+                                maxValue={100}
+                                value={specialChance ?? 10}
+                                onChange={(val: number) => act('set_special_chance', { val })}
+                                step={1}
+                                style={{ width: 100, marginLeft: 4 }}
+                              />
+                            </>
+                          )}
+                          {selectedSpecial?.needs_value && (
+                            <>
+                              <Box ml={1} color="label">value</Box>
+                              <NumberInput
+                                minValue={1}
+                                maxValue={100}
+                                value={specialValue ?? 1}
+                                onChange={(val: number) => act('set_special_value', { val })}
+                                step={1}
+                                style={{ width: 100, marginLeft: 4 }}
+                              />
+                            </>
+                          )}
+                        </Stack>
+                        <Box mt={1} color="label">
+                          Leave empty to roll special by rarity rules.
+                        </Box>
+                      </LabeledList.Item>
+                    )}
                        <LabeledList.Item label={`Enchantments (${attrSlots})`} />
                        {!undiscovered && Array.from({ length: attrSlots }).map((_, i) => {
                       const idx = i + 1;

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Dispatch, SetStateAction, useState } from 'react';
 import {
   Box,
@@ -10,17 +11,17 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type Carving = {
+type CarvingEntry = {
   name: string;
   ref: string;
   icon: string;
 };
 
 type Data = {
-  carvings: Carving[];
+  carvings: CarvingEntry[];
 };
 
-export const Carving = (props) => {
+export const CarvingInterface = (props) => {
   const { data } = useBackend<Data>();
 
   if (!data.carvings) {
@@ -41,6 +42,8 @@ export const Carving = (props) => {
     </Window>
   );
 };
+// Preserve named export for interface routing
+export { CarvingInterface as Carving };
 
 export const Carveless = (props) => {
   return (
@@ -48,7 +51,7 @@ export const Carveless = (props) => {
       <Stack.Item>
         <Stack vertical align="center" justify="center">
           <Stack.Item fontSize={2}>Woe is you, there is nothing to carve.</Stack.Item>
-          <Stack.Item fontSize={1}>You shouldn't be seeing this!</Stack.Item>
+          <Stack.Item fontSize={1}>You shouldn&apos;t be seeing this!</Stack.Item>
         </Stack>
       </Stack.Item>
     </Stack>

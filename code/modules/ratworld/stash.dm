@@ -494,6 +494,10 @@ GLOBAL_LIST_INIT(ratworld_stash_last_error, list())
 			var/obj/item/I = A
 			if(isnum(rec["rarity"]))
 				I.vars["rw_rarity"] = rec["rarity"]
+			// Restore special attribute fields prior to applying effects
+			if(istext(rec["special_id"])) I.vars["rw_special_id"] = rec["special_id"]
+			if(isnum(rec["special_chance"])) I.vars["rw_special_chance"] = rec["special_chance"]
+			if(isnum(rec["special_value"])) I.vars["rw_special_value"] = rec["special_value"]
 			var/list/ench_ids = rec["ench"]
 			if(islist(ench_ids) && ench_ids.len)
 				I.vars["rw_enchants"] = list()
@@ -506,6 +510,9 @@ GLOBAL_LIST_INIT(ratworld_stash_last_error, list())
 					if(istext(k) && isnum(ench_vals[k])) I.vars["rw_enchant_vals"][k] = ench_vals[k]
 			// Apply any enchant hooks after restoring ids/vals
 			ratworld_apply_enchantments(I)
+			// Ensure static effects/handlers for specials even if no enchants present
+			ratworld_register_item_enchant_handlers(I)
+			ratworld_apply_item_static_effects(I)
 			// Restore safe cosmetic vars from record if present
 			var/list/dv = rec["vars"]
 			if(islist(dv))

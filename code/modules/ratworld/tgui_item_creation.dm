@@ -26,6 +26,12 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
     var/custom_desc = ""
     var/custom_color = "" // hex
     var/undiscovered = FALSE // if TRUE, skip setting enchants now; roll on discovery
+    // Optional special attribute selection when undiscovered is OFF
+    var/selected_special_id = null
+    var/selected_special_chance = null
+    var/selected_special_value = null
+    // Optional explicit +STAT bonuses (admin-chosen)
+    var/list/selected_stat_bonuses = list() // keys: "STR","SPD","INT","WIL","CON" -> value
 
 /datum/ratworld/item_creation_session/New(mob/living/U)
     ..()
@@ -240,6 +246,50 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
         var/val = (istext(id) && ench_vals && isnum(ench_vals[id])) ? ench_vals[id] : null
         show_vals += val
     data["ench_vals"] = show_vals
+    // +STAT bonuses for UI (mirror selected_stat_bonuses)
+    var/list/stat_payload = list()
+    if(islist(selected_stat_bonuses))
+        for(var/k in selected_stat_bonuses)
+            stat_payload[k] = selected_stat_bonuses[k]
+    data["stat_bonuses"] = stat_payload
+    // Special attribute options for Unique/Artifact/Ascendant when undiscovered is OFF
+    var/list/special_opts = list()
+    if(!undiscovered && istext(selected_path) && (rarity >= RW_RARITY_UNIQUE))
+        var/cat = null
+        // Prefer explicit slot selection to infer category
+        if(slot_key == RW_SLOT_NECKLACE || slot_key == RW_SLOT_RING)
+            cat = "jewelry"
+        else if(slot_key == RW_SLOT_1H || slot_key == RW_SLOT_1H_SHIELD || slot_key == RW_SLOT_2H_PHYS || slot_key == RW_SLOT_2H_MAGICAL)
+            cat = "weapon"
+        else if(slot_key)
+            cat = "armor"
+        // Fallback to type-based detection if slot is unknown
+        if(!cat)
+            var/Tcat = text2path(selected_path)
+            cat = "armor"
+            if(ispath(Tcat))
+                var/obj/item/tmpi = new Tcat()
+                if(tmpi)
+                    if(istype(tmpi, /obj/item/rogueweapon) || istype(tmpi, /obj/item/gun/ballistic/revolver/grenadelauncher/bow)) cat = "weapon"
+                    else if(istype(tmpi, /obj/item/clothing/neck)) cat = "jewelry"
+                    else if(istype(tmpi, /obj/item/clothing)) cat = "armor"
+                    qdel(tmpi)
+        if(cat == "weapon")
+            special_opts += list(list("id"="crushing_blow","name"="Crushing Blow","needs_chance"=TRUE))
+            special_opts += list(list("id"="deadly_strike","name"="Deadly Strike","needs_chance"=TRUE))
+            special_opts += list(list("id"="slows_target","name"="Slows Target","needs_chance"=TRUE))
+            special_opts += list(list("id"="astratas_light","name"="Astrata's Light","needs_chance"=TRUE))
+        else if(cat == "armor")
+            special_opts += list(list("id"="thorns","name"="Thorns","needs_chance"=TRUE))
+            special_opts += list(list("id"="indestructible","name"="Indestructible","needs_chance"=FALSE))
+            special_opts += list(list("id"="cannot_be_slowed","name"="Cannot be Slowed","needs_chance"=FALSE))
+        else // jewelry
+            special_opts += list(list("id"="midas_touch","name"="Midas Touch","needs_chance"=TRUE))
+            special_opts += list(list("id"="magic_find","name"="Magic Find","needs_chance"=FALSE,"needs_value"=TRUE))
+    data["special_options"] = special_opts
+    data["special_id"] = selected_special_id
+    data["special_chance"] = selected_special_chance
+    data["special_value"] = selected_special_value
     // Custom fields
     data["name"] = custom_name
     data["desc"] = custom_desc
@@ -275,6 +325,7 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
             if(isnum(r) && r >= RW_RARITY_COMMON && r <= RW_RARITY_ASCENDANT)
                 rarity = r
                 recalc_slots()
+                // Do not auto-toggle undiscovered; leave admin choice intact
             return TRUE
         if("set_slot_key")
             var/sk = params["slot_key"]
@@ -310,6 +361,40 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
         if("set_color")
             custom_color = copytext_char("[params["color"]]", 1, 16)
             return TRUE
+        if("set_stat_bonus")
+            var/stat = params["stat"]
+            var/val = text2num(params["val"])
+            if(!istext(stat) || !isnum(val)) return TRUE
+            // Clamp per-stat to 0..2
+            val = clamp(round(val), 0, 2)
+            if(!islist(selected_stat_bonuses)) selected_stat_bonuses = list()
+            selected_stat_bonuses[stat] = val
+            // Enforce global cap of +2 across all stats
+            var/total = 0
+            for(var/k in selected_stat_bonuses)
+                var/v = selected_stat_bonuses[k]
+                if(isnum(v)) total += v
+            if(total > 2)
+                // Scale back this stat so total is exactly 2
+                var/excess = total - 2
+                selected_stat_bonuses[stat] = max(0, val - excess)
+            return TRUE
+        if("set_special")
+            var/sp = params["id"]
+            if(istext(sp)) selected_special_id = sp
+            return TRUE
+        if("set_special_chance")
+            var/sc = text2num(params["val"]) 
+            if(isnum(sc))
+                // Hard cap special chance at 50%
+                selected_special_chance = clamp(round(sc), 0, 50)
+            return TRUE
+        if("set_special_value")
+            var/sv = text2num(params["val"]) 
+            if(isnum(sv))
+                // Hard cap special value (e.g., Magic Find) at 5
+                selected_special_value = clamp(round(sv), 1, 5)
+            return TRUE
         if("toggle_undiscovered")
             undiscovered = !undiscovered
             return TRUE
@@ -344,8 +429,12 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
                 if(val < minv || val > maxv)
                     to_chat(user, span_warning("[eid] value [val] outside [minv]-[maxv]."))
                     return TRUE
+                // Allow duplicates in ids for slot bookkeeping, but sum values per id
                 final_ids += eid
-                final_vals[eid] = val
+                if(isnum(final_vals[eid]))
+                    final_vals[eid] += val
+                else
+                    final_vals[eid] = val
             // Spawn item
             var/mob/living/L = user
             var/turf/Tloc = get_turf(L)
@@ -363,8 +452,48 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
             I.vars["rw_rarity"] = rarity
             // Ensure socketable for magic+ gear
             ratworld_ensure_socketable(I)
-            // Semi-rare +STAT bonus
-            ratworld_maybe_roll_item_stat_bonus(I)
+            // Semi-rare +STAT bonus (random) only if admin did not choose explicit stats
+            if(!islist(selected_stat_bonuses) || !length(selected_stat_bonuses))
+                ratworld_maybe_roll_item_stat_bonus(I)
+            // If creating as discovered, assign special attributes and unique naming per rarity rules
+            if(!undiscovered)
+                // If admin selected a special explicitly, apply that
+                if(istext(selected_special_id))
+                    // Validate selection against current slot category to prevent mismatches
+                    var/cat_sel = null
+                    if(slot_key == RW_SLOT_NECKLACE || slot_key == RW_SLOT_RING)
+                        cat_sel = "jewelry"
+                    else if(slot_key == RW_SLOT_1H || slot_key == RW_SLOT_1H_SHIELD || slot_key == RW_SLOT_2H_PHYS || slot_key == RW_SLOT_2H_MAGICAL)
+                        cat_sel = "weapon"
+                    else if(slot_key)
+                        cat_sel = "armor"
+                    var/list/allowed = list()
+                    if(cat_sel == "weapon")
+                        allowed = list("crushing_blow"=TRUE,"deadly_strike"=TRUE,"slows_target"=TRUE,"astratas_light"=TRUE)
+                    else if(cat_sel == "armor")
+                        allowed = list("thorns"=TRUE,"indestructible"=TRUE,"cannot_be_slowed"=TRUE)
+                    else if(cat_sel == "jewelry")
+                        allowed = list("midas_touch"=TRUE,"magic_find"=TRUE)
+                    if(!length(allowed) || allowed[selected_special_id])
+                        I.vars["rw_special_id"] = selected_special_id
+                        if(isnum(selected_special_chance)) I.vars["rw_special_chance"] = selected_special_chance
+                        if(isnum(selected_special_value)) I.vars["rw_special_value"] = selected_special_value
+                        // Unique-style naming for high rarities remains desirable
+                        if(rarity >= RW_RARITY_UNIQUE)
+                            var/nm_sel = ratworld_generate_unique_name(I)
+                            if(istext(nm_sel)) I.name = nm_sel
+                else
+                    // Fallback: apply default rarity rules for specials/naming
+                    if(rarity >= RW_RARITY_ARTIFACT || rarity == RW_RARITY_ASCENDANT)
+                        // Guaranteed special + unique-style name
+                        ratworld_assign_special_attribute(I)
+                        var/nm = ratworld_generate_unique_name(I)
+                        if(istext(nm)) I.name = nm
+                    else if(rarity == RW_RARITY_UNIQUE)
+                        // 20% chance to add a special; always unique-style name
+                        if(prob(20)) ratworld_assign_special_attribute(I)
+                        var/nm2 = ratworld_generate_unique_name(I)
+                        if(istext(nm2)) I.name = nm2
             if(undiscovered)
                 // Flag for identification gameplay: hide/unused enchants until discovered; roll later
                 I.vars["rw_discovered"] = FALSE
@@ -375,6 +504,26 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
                 I.vars["rw_enchants"] = final_ids.Copy()
                 I.vars["rw_enchant_vals"] = final_vals.Copy()
                 ratworld_apply_enchantments(I)
+            // If admin specified +STAT bonuses explicitly, store them onto the item with the same caps as the roller
+            if(islist(selected_stat_bonuses) && length(selected_stat_bonuses))
+                var/list/bon = list()
+                var/total_bonus = 0
+                for(var/k in selected_stat_bonuses)
+                    if(!(k in list("STR"=TRUE,"SPD"=TRUE,"INT"=TRUE,"WIL"=TRUE,"CON"=TRUE))) continue
+                    var/v = selected_stat_bonuses[k]
+                    if(!isnum(v) || v <= 0) continue
+                    // Respect the global +2 cap
+                    var/room = max(0, 2 - total_bonus)
+                    if(room <= 0) break
+                    if(v > room) v = room
+                    if(v <= 0) continue
+                    bon[k] = v
+                    total_bonus += v
+                if(length(bon))
+                    I.vars["rw_stat_bonuses"] = bon
+            // Ensure handlers and static effects are present for specials even if there are no enchants
+            ratworld_register_item_enchant_handlers(I)
+            ratworld_apply_item_static_effects(I)
             // Ensure examine name-line shows correct rarity color even for items without enchants
             I.AddComponent(/datum/component/ratworld_rarity_namecolor)
             // Try to give to hand

@@ -274,6 +274,17 @@
 	desc = "I can barely feel my limbs!"
 	icon_state = "chilled"
 
+// Ratworld: Slowed debuff used by "Slows Target" special
+/datum/status_effect/debuff/rw_slowed
+	id = "rw_slowed"
+	// Non-stacking: refreshes duration when reapplied
+	status_type = STATUS_EFFECT_REFRESH
+	effectedstats = list(STATKEY_SPD = -4)
+	duration = 5 SECONDS
+
+// Optional: reuse a simple alert for slowed; omit icon for minimal footprint
+// If a bespoke icon is desired later, define an alert subtype and set alert_type here.
+
 
 /datum/status_effect/debuff/ritesexpended
 	id = "ritesexpended"

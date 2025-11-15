@@ -203,7 +203,11 @@
 		if(!(chosen_id in enchant_ids))
 			enchant_ids += chosen_id
 
-	I.vars["rw_enchant_vals"][chosen_id] = value
+	// Sum into existing value so duplicate enchants combine cleanly
+	if(isnum(I.vars["rw_enchant_vals"][chosen_id]))
+		I.vars["rw_enchant_vals"][chosen_id] += value
+	else
+		I.vars["rw_enchant_vals"][chosen_id] = value
 
 	// Record gem label/color for examine and stash UI
 	var/glabel = ratworld_socket_gem_label_for(G)
