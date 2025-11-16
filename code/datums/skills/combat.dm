@@ -125,7 +125,7 @@
 	"...your arm tires from the toils of practice. Swinging rapidly has left your arm numb. With weary eyes, you glance aside to witness a hunter practice their craft with a brief overhand toss. Absorbing the technique, you mimic it, and effortlessly cast a powerful stone square onto the target..."
 	)
 	expert_name = "Slinger"
-
+/*
 /datum/skill/combat/staves
 	name = "Staves"
 	desc = "Increases your chance to successfully parry and bypass your opponent's parry by 20% with staves, and your chance to bypass dodge by 10%."
@@ -137,3 +137,4 @@
 	"...cattle thieves descend upon the homestead. You have no sword, only a sturdy branch. One by one they fall, the staff cracking through bone and flesh alike. Violence, you realize, is a language spoken in every tongue..."
 	)
 	expert_name = "Quarterstaffer"
+*/
