@@ -85,7 +85,6 @@ GLOBAL_LIST_EMPTY(all_flesh_quirks)
 		/datum/flesh_quirk/mimic,
 		/datum/flesh_quirk/stubborn,
 		/datum/flesh_quirk/patient,
-		/datum/flesh_quirk/hoarder,
 	)
 
 	for(var/qtype in quirk_types)

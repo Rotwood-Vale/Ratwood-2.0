@@ -72,7 +72,6 @@
 	possible_quirks = list(
 		/datum/flesh_quirk/impatient,
 		/datum/flesh_quirk/territorial,
-		/datum/flesh_quirk/hoarder,
 		/datum/flesh_quirk/stubborn,
 		/datum/flesh_quirk/royal,
 		/datum/flesh_quirk/ambitious,
@@ -107,7 +106,6 @@
 		/datum/flesh_quirk/affectionate,
 		/datum/flesh_quirk/territorial,
 		/datum/flesh_quirk/mimic,
-		/datum/flesh_quirk/hoarder,
 		/datum/flesh_quirk/stubborn,
 		/datum/flesh_quirk/patient
 	)
@@ -132,7 +130,6 @@
 	possible_quirks = list(
 		/datum/flesh_quirk/curious,
 		/datum/flesh_quirk/repetitive,
-		/datum/flesh_quirk/hoarder,
 		/datum/flesh_quirk/patient,
 		/datum/flesh_quirk/affectionate,
 		/datum/flesh_quirk/timid,
