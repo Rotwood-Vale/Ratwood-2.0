@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	var/holy_area = FALSE
 	var/cell_area = FALSE
 	var/ceiling_protected = FALSE //Prevents tunneling into these from above
+	var/hoardmaster_protected = FALSE//If a player enters, it ashes them. Your greed will consume you.
 
 /area/rogue/Entered(mob/living/carbon/human/guy)
 	. = ..()
@@ -36,6 +37,12 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 		guy.add_stress(/datum/stressevent/seeblessed)
 	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_OVERTHERETIC))//Heretics are punished for walking in the Church with rites buffs.
 		guy.apply_status_effect(/datum/status_effect/debuff/overt_punishment)
+	if((src.hoardmaster_protected == TRUE))//Your greed consumes you.
+		message_admins("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster, at [ADMIN_JMP(src)]")
+		log_admin("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster")
+		playsound(src, 'sound/misc/lava_death.ogg', 100, FALSE)
+		guy.dust()
+		GLOB.azure_round_stats[STATS_GREED_DUSTED]++
 
 /area/rogue/indoors
 	name = "indoors rt"
@@ -57,6 +64,13 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound = 'sound/music/area/banditcamp.ogg'
 	droning_sound_dusk = 'sound/music/area/banditcamp.ogg'
 	droning_sound_night = 'sound/music/area/banditcamp.ogg'
+
+/area/rogue/indoors/banditcamp/hoardmaster
+	name = "The Hoard"
+	icon_state = "rogue"
+	first_time_text = "A MISTAKE"
+	deathsight_message = "a place of greed and excess"
+	hoardmaster_protected = TRUE
 
 /area/rogue/indoors/vampire_manor
 	name = "Vampire Manor"
@@ -104,7 +118,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = 'sound/music/area/banditcamp.ogg'
 	first_time_text = "A Gathering of Thieves"
 	deathsight_message = "somewhere in the wilds"
-	
+
 /area/rogue/outdoors/banditcamp/exterior // Only use these around traveltiles - Constantine
 	name = "bandit camp outdoors"
 
@@ -141,7 +155,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
 	deathsight_message = "a twisted tangle of soaring peaks"
-	
+
 /area/rogue/outdoors/mountains/deception
 	name = "deception"
 	icon_state = "deception"

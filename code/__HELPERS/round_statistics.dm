@@ -51,6 +51,7 @@
 #define STATS_DEADITES_ALIVE "deadites_alive"
 #define STATS_LUX_REVIVALS "lux_revivals"
 #define STATS_DODGES "dodges_made"
+#define STATS_GREED_DUSTED "consumed_by_greed"
 
 // Economic Statistics
 #define STATS_BATHMATRON_VAULT_INCOME "bath_vault_regular"
@@ -327,6 +328,7 @@ GLOBAL_LIST_INIT(azure_round_stats, list(
 	STATS_MAMMONS_DEPOSITED = 0,
 	STATS_MAMMONS_WITHDRAWN = 0,
 	STATS_STARTING_TREASURY = 0,
+	STATS_GREED_DUSTED = 0,
 ))
 
 GLOBAL_LIST_EMPTY(patron_follower_counts)

@@ -1486,7 +1486,7 @@
 /obj/item/roguecoin/gold/pile,
 /obj/item/candle/candlestick/gold/lit,
 /turf/open/water/cleanshallow,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "lA" = (
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/vampire_manor)
@@ -2292,7 +2292,7 @@
 	name = "Wall of Greed"
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "tt" = (
 /turf/closed/wall/mineral/rogue/tent{
 	dir = 8
@@ -2773,7 +2773,7 @@
 "yp" = (
 /obj/item/roguecoin/gold/pile,
 /turf/open/water/cleanshallow,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "yq" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grass,
@@ -3246,7 +3246,7 @@
 /obj/item/roguecoin/gold/pile,
 /obj/item/roguegem/green,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "CO" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/concrete,
@@ -3625,7 +3625,7 @@
 "Gk" = (
 /obj/structure/closet/crate/chest/gold,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "Gl" = (
 /turf/open/floor/rogue/metal/barograte/open,
 /area/rogue/indoors/eventarea)
@@ -3916,7 +3916,7 @@
 	name = "Wall of Greed"
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "Jx" = (
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/eventarea)
@@ -4300,7 +4300,7 @@
 /obj/item/reagent_containers/glass/bowl/gold,
 /obj/item/roguecoin/gold/pile,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "MA" = (
 /obj/structure/closet/crate/roguecloset,
 /obj/item/flashlight/flare/torch/metal,
@@ -4315,7 +4315,7 @@
 "MH" = (
 /obj/item/roguecoin/gold/pile,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "MJ" = (
 /obj/machinery/light/rogue/firebowl,
 /obj/structure/arcyne_wall{
@@ -4324,7 +4324,7 @@
 	name = "Wall of Greed"
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "MS" = (
 /obj/machinery/light/rogue/smelter/hiron,
 /turf/open/floor/rogue/cobble,
@@ -4552,9 +4552,8 @@
 "Pv" = (
 /obj/item/roguecoin/gold/pile,
 /obj/item/roguestatue/gold,
-/obj/item/roguegem,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "Px" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/reagent_containers/glass/bottle/alchemical{
@@ -4739,7 +4738,7 @@
 /obj/item/rogueweapon/sword/decorated,
 /obj/item/roguecoin/gold/pile,
 /turf/open/water/cleanshallow,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "QJ" = (
 /obj/structure/roguewindow,
 /turf/open/floor/rogue/twig,
@@ -4842,7 +4841,7 @@
 /obj/item/ingot/gold,
 /obj/item/roguecoin/gold/pile,
 /turf/open/water/cleanshallow,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "RH" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors)
@@ -5285,7 +5284,7 @@
 	name = "Wall of Greed"
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/indoors/banditcamp)
+/area/rogue/indoors/banditcamp/hoardmaster)
 "Wr" = (
 /turf/open/floor/rogue/tile/bath,
 /area/rogue/indoors/eventarea)

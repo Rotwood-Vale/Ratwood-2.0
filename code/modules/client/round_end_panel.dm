@@ -109,7 +109,7 @@
 	// Centered container with left-aligned content
 	data += "<div style='text-align: center;'>"
 	data += "<div style='display: inline-block; text-align: left; margin-left: auto; margin-right: auto;'>"
-	
+
 	var/stat_is_object = GLOB.featured_stats[current_featured]["object_stat"]
 	var/stat_is_admin_only = GLOB.featured_stats[current_featured]["admin_only"]
 	var/has_entries = length(GLOB.featured_stats[current_featured]["entries"])
@@ -150,6 +150,7 @@
 	data += "<font color='#c24bc2'><span class='bold'>Drugs Snorted:</span></font> [GLOB.azure_round_stats[STATS_DRUGS_SNORTED]]<br>"
 	data += "<font color='#90a037'><span class='bold'>Laughs Had:</span></font> [GLOB.azure_round_stats[STATS_LAUGHS_MADE]]<br>"
 	data += "<font color='#f5c02e'><span class='bold'>Taxes Collected:</span></font> [GLOB.azure_round_stats[STATS_TAXES_COLLECTED]]<br>"
+	data += "<font color='#f37746'><span class='bold'>Consumed by Greed:</span></font> [GLOB.azure_round_stats[STATS_GREED_DUSTED]]<br>"
 	data += "</div>"
 
 	// Right column
@@ -256,7 +257,7 @@
 	data += "<div style='margin: 35px;'>"
 	switch(tab)
 		if("Gods")
-		
+
 			// Gods' Interventions Section
 			data += "<div>"
 			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 10px;'>GODS' INTERVENTIONS</div>"
@@ -352,7 +353,7 @@
 
 				data += "</div>"
 
-		
+
 		if("Messages")
 			data += "<div style='display: table; width: 100%; table-layout: fixed;'>"
 			data += "<div style='display: table-row;'>"

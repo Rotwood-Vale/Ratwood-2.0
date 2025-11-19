@@ -112,7 +112,10 @@
 			unlocked_cats+="Iconoclast"
 		if("Pioneer")
 			unlocked_cats+="Pioneer"
-   
+
+	if(!(current_cat in unlocked_cats))
+		current_cat = "1"
+
 	if(current_cat == "1")
 		contents += "<center>"
 		for(var/X in unlocked_cats)

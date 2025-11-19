@@ -471,3 +471,14 @@
 		)
 	skillcraft = /datum/skill/misc/medicine
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/survival/purify_lux_compress
+	name = "purifiy lux (compression)"
+	result = list(
+		/obj/item/reagent_containers/lux,
+		)
+	reqs = list(
+		/obj/item/reagent_containers/lux_impure = 2,
+		)
+	skillcraft = /datum/skill/misc/medicine
+	craftdiff = 4
