@@ -5,7 +5,6 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	title = "Grand Duke"
 	f_title = "Grand Duchess"
 	flag = LORD
-	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = NOBLEMEN
 	faction = "Station"
 	total_positions = 1

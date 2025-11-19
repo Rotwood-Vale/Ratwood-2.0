@@ -4,6 +4,7 @@
 	desc = "Those cursed with crimson blood are neither fully vampire nor fully mortal."
 	selectable_by_vampires = FALSE
 	covens_to_select = 1
+	leader = /datum/clan_leader/crimson // Custom leader without bat form
 	clane_traits = list(
 		TRAIT_VAMPBITE,
 		TRAIT_NOBREATH,
@@ -14,6 +15,23 @@
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_SILVER_WEAK,
 	)
+
+// Custom vampire abilities for Crimson-Blooded - journeyman blood sorcery, no bat form
+/datum/clan/crimson_blood/setup_vampire_abilities(mob/living/carbon/human/H)
+	..() // Call parent to get transfix and disguise verb
+	// Override blood sorcery to journeyman level (3)
+	H.adjust_skillrank_up_to(/datum/skill/magic/blood, 3, TRUE)
+
+// Custom clan leader for Crimson-Blooded - no bat transformation
+/datum/clan_leader/crimson
+	lord_spells = list(
+		// No bat form for Crimson-Blooded
+	)
+	lord_verbs = list(
+		/mob/living/carbon/human/proc/punish_spawn
+	)
+	lord_title = NONE
+	ascended = FALSE
 
 // Global lore primer verb accessible to everyone in lobby
 /mob/dead/new_player/verb/read_crimson_lore_primer()
