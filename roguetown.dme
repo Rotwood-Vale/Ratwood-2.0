@@ -2891,6 +2891,7 @@
 #include "modular_azurepeak\statpacks\mental.dm"
 #include "modular_azurepeak\statpacks\physical.dm"
 #include "modular_azurepeak\statpacks\wildcard.dm"
+#include "modular_azurepeak\statpacks\wildcard_vampyrism.dm"
 #include "modular_azurepeak\virtues\combat.dm"
 #include "modular_azurepeak\virtues\crafter.dm"
 #include "modular_azurepeak\virtues\items.dm"
