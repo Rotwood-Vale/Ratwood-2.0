@@ -4,6 +4,7 @@
 	antagpanel_category = "Vampire"
 	job_rank = ROLE_VAMPIRE
 	generation = GENERATION_METHUSELAH
+	rogue_enabled = TRUE
 	show_in_antagpanel = TRUE
 	antag_hud_type = ANTAG_HUD_VAMPIRE
 	antag_hud_name = "vamplord"
