@@ -37,12 +37,6 @@
 	H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/fishing, 3, TRUE)
 
-// You see, the idea of a Demiurge Vampire Godchosen noble is FAR too Baldurs gate 3 and Divinity 2: Original sin for this world. It must be contained.
-	virtue_restrictions = list(
-        /datum/virtue/utility/noble,
-        /datum/virtue/combat/vampire,
-    )
-
 	// -- Start of section for god specific bonuses --
 	if(H.patron?.type == /datum/patron/inhumen/graggar)
 		ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
