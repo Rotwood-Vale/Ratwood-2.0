@@ -388,6 +388,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 				var/player_pq = get_playerquality(usr?.ckey)
 				return "You exceed the Player Quality requirement for [jobtitle]. (Maximum: [job.max_pq], Your PQ: [player_pq])"
 			return "You do not meet the Player Quality requirement for [jobtitle]."
+		if(JOB_UNAVAILABLE_STATPACK)
+			return "[jobtitle] is restricted by your selected Statpack."
 	return "Error: Unknown job availability."
 
 //used for latejoining
@@ -476,6 +478,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	if(length(job.vice_restrictions) || length(job.virtue_restrictions))
 		if((client.prefs.virtue?.type in job.virtue_restrictions) || (client.prefs.virtuetwo?.type in job.virtue_restrictions) || (client.prefs.charflaw?.type in job.vice_restrictions))
 			return JOB_UNAVAILABLE_VIRTUESVICE
+	if(length(job.statpack_restrictions) && (client.prefs.statpack?.type in job.statpack_restrictions))
+		return JOB_UNAVAILABLE_STATPACK
 //	if(job.title == "Adventurer" && latejoin)
 //		for(var/datum/job/J in SSjob.occupations)
 //			if(J && J.total_positions && J.current_positions < 1 && J.title != job.title && (IsJobUnavailable(J.title))

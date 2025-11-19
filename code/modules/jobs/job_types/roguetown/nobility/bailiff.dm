@@ -1,6 +1,7 @@
 /datum/job/roguetown/marshal // A somewhat ham-fisted merge between bailiff and the old town sheriff role. The latter was built like a modern day officer, but we medieval in this bitch!
 	title = "Marshal"
 	flag = MARSHAL
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = NOBLEMEN
 	faction = "Station"
 	total_positions = 1

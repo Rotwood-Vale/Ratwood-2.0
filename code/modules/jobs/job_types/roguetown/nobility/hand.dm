@@ -1,6 +1,7 @@
 /datum/job/roguetown/hand
 	title = "Hand"
 	flag = HAND
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = NOBLEMEN
 	faction = "Station"
 	total_positions = 1

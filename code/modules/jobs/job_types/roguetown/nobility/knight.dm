@@ -1,6 +1,7 @@
 /datum/job/roguetown/knight
 	title = "Knight" //Back to proper knights.
 	flag = KNIGHT
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = NOBLEMEN
 	faction = "Station"
 	total_positions = 3

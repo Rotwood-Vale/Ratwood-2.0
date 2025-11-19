@@ -17,7 +17,7 @@
 	confess_lines = list(
 		"I WANT YOUR BLOOD!",
 		"DRINK THE BLOOD!",
-		"CHILD OF KAIN!",
+		"BEARER OF THE SANGUINE NOCTIS!",
 	)
 	rogue_enabled = TRUE
 	var/disguised = TRUE
@@ -31,7 +31,7 @@
 
 /datum/antagonist/vampire/examine_friendorfoe(datum/antagonist/examined_datum,mob/examiner,mob/examined)
 	if(istype(examined_datum, /datum/antagonist/vampire/lesser))
-		return span_boldnotice("A child of Kain.")
+		return span_boldnotice("A bearer of the Sanguine Noctis.")
 	if(istype(examined_datum, /datum/antagonist/vampire))
 		return span_boldnotice("An elder Kin.")
 	if(examiner.Adjacent(examined))

@@ -110,7 +110,7 @@
 			return
 
 	if(!victim.clan && victim.mind && ishuman(victim) && VDrinker.generation > GENERATION_THINBLOOD && victim.blood_volume <= BLOOD_VOLUME_BAD)
-		if(alert(src, "Would you like to sire a new spawn?", "THE CURSE OF KAIN", "MAKE IT SO", "I RESCIND") != "MAKE IT SO")
+		if(alert(src, "Would you like to sire a new spawn?", "THE SANGUINE CURSE", "MAKE IT SO", "I RESCIND") != "MAKE IT SO")
 			to_chat(src, span_warning("I decide [victim] is unworthy."))
 		else
 			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob/living/carbon/human, vampire_conversion_prompt), src)
@@ -125,7 +125,7 @@
 
 	var/datum/mind/original_mind = mind
 
-	if(alert(src, "Would you like to rise as a vampire spawn? Warning: refusal may or may not mortally wound you.", "THE CURSE OF KAIN", "MAKE IT SO", "I RESCIND") != "MAKE IT SO")
+	if(alert(src, "Would you like to rise as a vampire spawn? Warning: refusal may or may not mortally wound you.", "THE SANGUINE CURSE", "MAKE IT SO", "I RESCIND") != "MAKE IT SO")
 		to_chat(sire, span_danger("Your victim twitches, yet the curse fails to take over. As if something otherworldly intervenes..."))
 		if(HAS_TRAIT_FROM(src, TRAIT_REFUSED_VAMP_CONVERT, REF(sire)))
 			return

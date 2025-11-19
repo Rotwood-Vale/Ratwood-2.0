@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	confess_lines = list(
 		"I AM ANCIENT",
 		"I AM THE LAND",
-		"CHILD OF KAIN!",
+		"ONE OF THE FIRST SIRES!",
 	)
 	rogue_enabled = TRUE
 	var/isspawn = FALSE
@@ -230,7 +230,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/vampire
 	name = "ancient ceremonial helm"
-	desc = "A terrible casque with the visage of Kaine upon the visor, plated with impossibly strong metals mortal minds cannot comprehend."
+	desc = "A terrible casque bearing the visage of Archmagister Valerius upon the visor, plated with impossibly strong metals infused with the Sanguine Noctis."
 	icon_state = "vhelmet"
 	armor = ARMOR_VAMP
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT

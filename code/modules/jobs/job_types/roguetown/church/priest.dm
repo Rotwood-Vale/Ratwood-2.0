@@ -12,6 +12,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 /datum/job/roguetown/priest
 	title = "Bishop"
 	flag = PRIEST
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = CHURCHMEN
 	faction = "Station"
 	total_positions = 1

@@ -1,6 +1,7 @@
 /datum/job/roguetown/captain
 	title = "Knight Captain" //The Knight Captain is clearly not drawn from the ranks of guardsmen, or sergeants. They're drawn from the Knightly ranks and should be treated as such.
 	flag = GUARD_CAPTAIN
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = NOBLEMEN
 	faction = "Station"
 	total_positions = 1

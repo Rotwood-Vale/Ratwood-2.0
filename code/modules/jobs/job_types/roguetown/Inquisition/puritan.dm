@@ -1,6 +1,7 @@
 /datum/job/roguetown/puritan
 	title = "Inquisitor"
 	flag = PURITAN
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = INQUISITION
 	faction = "Station"
 	total_positions = 1

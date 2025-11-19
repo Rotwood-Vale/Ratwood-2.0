@@ -23,3 +23,62 @@
 	name = "Virtuous"
 	desc = "The breadth of my being is one of many, distinguished talents. \n (Allows access to 'virtues', special traits/quirks that replace the bonus normally given by a statpack.)"
 
+
+
+//------------------------------------------------------------------
+/datum/statpack/wildcard/crimson_blooded
+	name = "Crimson-Blooded"
+	min_pq = 30
+	desc = "<span style='color: #8B0000;'><b>⚠ Requires 30 PQ ⚠</b></span><br>\
+	<span style='color: #DAA520;'>When <span style='color: #FFD700;'><b>Psydon</b></span> fell to Zizo's spear, His divine lifeblood—the <span style='color: #C0C0C0;'><b>Argentum</b></span>—spilled across the world. \
+	A portion, corrupted by Zizo's necrotic touch and the All-Father's despair, became the <span style='color: #DC143C;'><b>Sanguine Noctis</b></span>. \
+	The Naledi war-scholars sought to harness this power in the <span style='color: #4B0082;'><b>Umbra Chasm</b></span>, but birthed the first Vampyrs instead—creatures of paradox, \
+	forever cursed to walk between life and death. <b>Click 'Read Lore Primer' to learn more.</b></span><br><br>\
+	<span style='color: #00FF00;'><b>✦ DARK GIFTS ✦</b></span><br>\
+	<span style='color: #90EE90;'>• <b>Vampiric Bite:</b> Drain the living Argentum from mortal blood to fuel your cursed existence</span><br>\
+	<span style='color: #98FB98;'>• <b>Eyes of Night:</b> Pierce the deepest darkness as creatures born of god-killing night</span><br>\
+	<span style='color: #8FBC8F;'>• <b>Deathless Vigil:</b> Transcend breath, poison, and sleep—yet slumber in a coffin heals</span><br>\
+	<span style='color: #7CFC00;'>• <b>Unholy Regeneration:</b> Reattach severed limbs; vitae accelerates unnatural healing</span><br>\
+	<span style='color: #32CD32;'>• <b>Blood Sorcery:</b> Master one forbidden coven with 7 research points</span><br>\
+	<span style='color: #00FA9A;'>• <b>Sire's Curse:</b> Create new vampyrs by draining mortals to near-death (requires consent)</span><br><br>\
+	<span style='color: #FF0000;'><b>☠ TERRIBLE PRICE ☠</b></span><br>\
+	<span style='color: #FF6347;'>• <b>Astrata's Scorn:</b> Sunlight burns as retribution for your arcane hubris</span><br>\
+	<span style='color: #FF4500;'>• <b>Silver Bane:</b> Sacred silver causes agony and instinctual panic</span><br>\
+	<span style='color: #DC143C;'>• <b>Divine Deficit:</b> Must consume living blood to fuel the corrupted Argentum within</span><br>\
+	<span style='color: #B22222;'>• <b>Mortal Frailty:</b> Pain and emotion still torment you—you are no true vampyr</span><br>\
+	<span style='color: #8B0000;'>• <b>Necra's Ire:</b> Trapped outside the cycle of rebirth, hunted by Morticians and vampyr alike.</span><br><br>\
+	<span style='color: #9370DB;'><i>Traits: Vampire Bite • Breathless • Toxin Immune • Sleepless • Darkvision • Limb Attachment • Silver Weakness • Vampiric Dreams</i></span>"
+
+
+
+// Apply immediately and schedule vampire setup until mind exists
+/datum/statpack/wildcard/crimson_blooded/apply_to_human(mob/living/carbon/human/recipient)
+	if(!recipient)
+		return FALSE
+	// Check PQ requirement first
+	if(!isnull(min_pq) && recipient.client)
+		var/player_pq = get_playerquality(recipient.client.ckey)
+		if(player_pq < min_pq)
+			to_chat(recipient, span_warning("You do not meet the Player Quality requirement ([min_pq] PQ) for this statpack."))
+			return FALSE
+	// Defer antag creation until mind exists, in case roll_stats runs before mind attach
+	ensure_crimson_vampire(recipient)
+	recipient.update_health_hud()
+	record_featured_object_stat(FEATURED_STATS_STATPACKS, name)
+	return TRUE
+
+/datum/statpack/wildcard/crimson_blooded/proc/ensure_crimson_vampire(mob/living/carbon/human/H, tries = 40)
+	if(!H || QDELETED(H))
+		return FALSE
+	if(H.mind)
+		// If already has a vampire antag, do nothing
+		if(locate(/datum/antagonist/vampire) in H.mind.antag_datums)
+			return TRUE
+		var/datum/antagonist/vampire/crimson/new_antag = new /datum/antagonist/vampire/crimson()
+		H.mind.add_antag_datum(new_antag)
+		return TRUE
+	if(tries <= 0)
+		to_chat(H, span_warning("Could not finalize Crimson-Blooded setup. Please notify admins."))
+		return FALSE
+	addtimer(CALLBACK(src, PROC_REF(ensure_crimson_vampire), H, tries - 1), 2 SECONDS)
+	return TRUE

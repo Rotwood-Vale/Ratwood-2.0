@@ -144,6 +144,11 @@ SUBSYSTEM_DEF(job)
 		if(length(job.vice_restrictions) && (player.client.prefs.charflaw.type in job.vice_restrictions))
 			JobDebug("FOC incompatible with vices, Player: [player], Job: [job.title], Vice: [player.client.prefs.charflaw.name]")
 			continue
+		if(length(job.statpack_restrictions))
+			var/datum/statpack/blocked_statpack = player.client.prefs.statpack
+			if(blocked_statpack && (blocked_statpack.type in job.statpack_restrictions))
+				JobDebug("FOC incompatible with statpack, Player: [player], Job: [job.title], Statpack: [blocked_statpack?.name]")
+				continue
 		if(job.plevel_req > player.client.patreonlevel())
 			JobDebug("FOC incompatible with PATREON LEVEL, Player: [player], Job: [job.title], Race: [player.client.prefs.pref_species.name]")
 			continue
@@ -227,6 +232,12 @@ SUBSYSTEM_DEF(job)
 		if(length(job.vice_restrictions) && (player.client.prefs.charflaw.type in job.vice_restrictions))
 			JobDebug("GRJ incompatible with vices, Player: [player], Job: [job.title], Vice: [player.client.prefs.charflaw.name]")
 			continue
+
+		if(length(job.statpack_restrictions))
+			var/datum/statpack/blocked_statpack = player.client.prefs.statpack
+			if(blocked_statpack && (blocked_statpack.type in job.statpack_restrictions))
+				JobDebug("GRJ incompatible with statpack, Player: [player], Job: [job.title], Statpack: [blocked_statpack?.name]")
+				continue
 
 		if(job.plevel_req > player.client.patreonlevel())
 			JobDebug("GRJ incompatible with PATREON LEVEL, Player: [player], Job: [job.title], Race: [player.client.prefs.pref_species.name]")
@@ -472,6 +483,12 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO incompatible with vices, Player: [player], Job: [job.title], Vice: [player.client.prefs.charflaw.name]")
 					continue
 
+				if(length(job.statpack_restrictions))
+					var/datum/statpack/blocked_statpack = player.client.prefs.statpack
+					if(blocked_statpack && (blocked_statpack.type in job.statpack_restrictions))
+						JobDebug("DO incompatible with statpack, Player: [player], Job: [job.title], Statpack: [blocked_statpack?.name]")
+						continue
+
 				if(job.plevel_req > player.client.patreonlevel())
 					JobDebug("DO incompatible with PATREON LEVEL, Player: [player], Job: [job.title], Race: [player.client.prefs.pref_species.name]")
 					continue
@@ -574,6 +591,11 @@ SUBSYSTEM_DEF(job)
 
 				if(length(job.vice_restrictions) && (player.client.prefs.charflaw.type in job.vice_restrictions))
 					continue
+
+				if(length(job.statpack_restrictions))
+					var/datum/statpack/blocked_statpack = player.client.prefs.statpack
+					if(blocked_statpack && (blocked_statpack.type in job.statpack_restrictions))
+						continue
 
 				if(job.plevel_req > player.client.patreonlevel())
 					continue

@@ -10,7 +10,7 @@
 	confess_lines = list(
 		"I AM ANCIENT!",
 		"I AM THE LAND!",
-		"FIRSTBORNE CHILD OF KAIN!",
+		"ONE OF THE FIRST SIRES!",
 	)
 	show_in_roundend = TRUE
 	var/ascended = FALSE
@@ -133,7 +133,7 @@
 ////////Outfits////////
 /obj/item/clothing/under/roguetown/platelegs/vampire
 	name = "ancient plate greaves"
-	desc = ""
+	desc = "Ornate greaves forged in the age of the Naledi war-scholars. The metal bears an unnatural sheen, as if the Sanguine Noctis itself flows through its surface."
 	gender = PLURAL
 	icon_state = "vpants"
 	item_state = "vpants"
@@ -149,7 +149,7 @@
 /obj/item/clothing/suit/roguetown/shirt/vampire
 	slot_flags = ITEM_SLOT_SHIRT
 	name = "regal silks"
-	desc = "A set of ornate robes with a sash coming across the breast."
+	desc = "A set of ornate robes with a sash coming across the breast. The fabric appears impossibly preserved, woven with threads that seem to drink in the light—relics from an age when Naledi scholars walked the world."
 	body_parts_covered = COVERAGE_ALL_BUT_ARMS
 	icon_state = "vrobe"
 	item_state = "vrobe"
@@ -157,6 +157,7 @@
 
 /obj/item/clothing/head/roguetown/vampire
 	name = "crown of darkness"
+	desc = "A crown of blackened metal that seems to absorb light itself. Worn by those who bear the curse of the Sanguine Noctis, it symbolizes dominion over death and the eternal night."
 	icon_state = "vcrown"
 	body_parts_covered = null
 	slot_flags = ITEM_SLOT_HEAD
@@ -169,7 +170,7 @@
 	icon = 'icons/roguetown/clothing/shirts.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
 	name = "ancient chain shirt"
-	desc = ""
+	desc = "A chain shirt of impossible craftsmanship, each link cold to the touch. The chains seem to whisper of the ritual within the Umbra Chasm, where Archmagister Valerius first shed the blood of the god Psydon."
 	body_parts_covered = COVERAGE_TORSO
 	body_parts_inherent = FULL_BODY
 	armor_class = ARMOR_CLASS_HEAVY
@@ -181,7 +182,7 @@
 /obj/item/clothing/suit/roguetown/armor/plate/vampire
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "ancient ceremonial plate"
-	desc = ""
+	desc = "Ceremonial armor worn during the profane rites of the First Sires. The metal is infused with the Sanguine Noctis, granting it strength beyond mortal understanding. Etched runes tell of the fall of the Naledi and the birth of eternal hunger."
 	body_parts_covered = COVERAGE_FULL
 	body_parts_inherent = FULL_BODY
 	icon_state = "vplate"
@@ -199,7 +200,7 @@
 
 /obj/item/clothing/shoes/roguetown/boots/armor/vampire
 	name = "ancient ceremonial plated boots"
-	desc = ""
+	desc = "Heavy boots worn by the First Sires during their transformation. The metal plates are stained with an ancient darkness, forever marked by the corrupted Argentum that birthed the curse."
 	body_parts_covered = FEET
 	body_parts_inherent = FULL_BODY
 	icon_state = "vboots"
@@ -213,6 +214,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/vampire
 	name = "ancient ceremonial helm"
+	desc = "A fearsome helm bearing the visage of Archmagister Valerius upon the visor. Forged from metals infused with the Sanguine Noctis, it grants the wearer a presence of terrible majesty—the face of one who defied divinity itself."
 	icon_state = "vhelmet"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
 	body_parts_inherent = FULL_BODY
@@ -238,6 +240,7 @@
 
 /obj/item/clothing/gloves/roguetown/chain/vampire
 	name = "ancient ceremonial gloves"
+	desc = "Gauntlets worn by the Naledi war-scholars who partook in the forbidden ritual. Each finger is encased in chains of unnatural cold, forever bound to the curse they embraced."
 	icon_state = "vgloves"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = ARMOR_VAMP
@@ -247,6 +250,7 @@
 
 /obj/structure/vampire/necromanticbook // Used to summon undead to attack town/defend manor.
 	name = "Tome of Souls"
+	desc = "An ancient grimoire bound in leather of unknown origin. Its pages contain the secrets of the Sanguine Noctis—the knowledge to bind souls, command the dead, and bend reality to the will of those who bear the curse."
 	icon_state = "tome"
 	var/list/useoptions = list("Create Death Knight", "Steal the Sun")
 	var/sunstolen = FALSE

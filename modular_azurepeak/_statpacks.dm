@@ -7,9 +7,17 @@ GLOBAL_LIST_EMPTY(statpacks)
 	var/desc
 	/// An associative list of only the stats we're altering. The value can also be a list to signify a range of values - maximum length of 2 for these.
 	var/stat_array = list()
+	/// Minimum PQ required to select this statpack (null = no requirement)
+	var/min_pq = null
 
 /datum/statpack/proc/apply_to_human(mob/living/carbon/human/recipient)
 	if (recipient && recipient.mind)
+		// Check PQ requirement
+		if(!isnull(min_pq) && recipient.client)
+			var/player_pq = get_playerquality(recipient.client.ckey)
+			if(player_pq < min_pq)
+				to_chat(recipient, span_warning("You do not meet the Player Quality requirement ([min_pq] PQ) for this statpack."))
+				return FALSE
 		for (var/stat in stat_array)
 			if (!islist(stat_array[stat]))
 				var/value = stat_array[stat]

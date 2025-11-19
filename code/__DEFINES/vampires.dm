@@ -12,14 +12,16 @@
 #define BLOOD_PREFERENCE_FANCY (1<<5)
 #define BLOOD_PREFERENCE_RATS (1<<6)
 
-#define GENERATION_METHUSELAH 4
-#define GENERATION_ANCILLAE 3
-#define GENERATION_NEONATE 2
+#define GENERATION_METHUSELAH 5
+#define GENERATION_ANCILLAE 4
+#define GENERATION_NEONATE 3
+#define GENERATION_CRIMSONBLOOD 2
 #define GENERATION_THINBLOOD 1
 
 #define GENERATION_MODIFIER 1
 
 #define COVENS_PER_CLAN 3
+#define COVENS_PER_CRIMSONBLOOD 1
 #define COVENS_PER_WRETCH_CLAN 2
 
 /// Mandatory mofe_after() before a vampire can batform. (SHAPESHIFT_MOVEAFTER - vampire.generation) SECONDS 
@@ -32,6 +34,7 @@
 
 GLOBAL_LIST_INIT(vamp_generation_to_text, list(
 	"Thin Blood",
+	"Crimson Blood",
 	"Neonate",
 	"Ancillae",
 	"Methuselah",

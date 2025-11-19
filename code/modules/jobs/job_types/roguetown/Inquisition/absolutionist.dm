@@ -1,6 +1,7 @@
 /datum/job/roguetown/absolver
 	title = "Absolver"
 	flag = ABSOLVER
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = INQUISITION
 	faction = "Station"
 	total_positions = 1 // THE ONE.

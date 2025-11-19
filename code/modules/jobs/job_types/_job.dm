@@ -151,6 +151,7 @@
 
 	var/list/virtue_restrictions
 	var/list/vice_restrictions
+	var/list/statpack_restrictions // List of statpack types that cannot select this job
 
 	///The job's stats
 	var/list/job_stats

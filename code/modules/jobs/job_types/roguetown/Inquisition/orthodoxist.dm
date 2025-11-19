@@ -1,6 +1,7 @@
 /datum/job/roguetown/orthodoxist
 	title = "Orthodoxist"
 	flag = ORTHODOXIST
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = INQUISITION
 	faction = "Station"
 	total_positions = 3

@@ -2,6 +2,7 @@
 	title = "Prince"
 	f_title = "Princess"
 	flag = PRINCE
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = YOUNGFOLK
 	faction = "Station"
 	total_positions = 2

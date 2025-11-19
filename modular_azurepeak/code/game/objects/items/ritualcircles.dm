@@ -1243,7 +1243,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		loc.visible_message(span_cult("YOU HAVE NO MORE LYFE TO GIVE, FOR YOUR HEART DOES NOT BEAT!"))
 		return
 	if (target.mind?.has_antag_datum(/datum/antagonist/vampire))
-		loc.visible_message(span_cult("YOU HAVE NO MORE LYFE TO GIVE, FOR YOUR HEART DOES NOT BEAT, CHILDE OF KAIN!"))
+		loc.visible_message(span_cult("YOU HAVE NO MORE LYFE TO GIVE, FOR YOUR HEART DOES NOT BEAT, BEARER OF THE SANGUINE NOCTIS!"))
 		return
 	if (target.mind?.has_antag_datum(/datum/antagonist/werewolf/lesser))
 		loc.visible_message(span_cult("YOU ARE CURSED BY DENDOR, UNDESERVING OF UNLYFE!"))

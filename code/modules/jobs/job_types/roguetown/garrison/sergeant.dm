@@ -1,6 +1,7 @@
 /datum/job/roguetown/sergeant
 	title = "Sergeant"
 	flag = SERGEANT
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = GARRISON
 	faction = "Station"
 	total_positions = 1

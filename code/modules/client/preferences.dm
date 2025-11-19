@@ -1005,6 +1005,11 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				if(charflaw.type in job.vice_restrictions)
 					HTML += "<font color='#a56161'>[used_name] (Disallowed by Vice: [charflaw.name])</font></td> <td> </td></tr>"
 					continue
+			if(length(job.statpack_restrictions))
+				var/datum/statpack/selected_statpack = user.client.prefs.statpack
+				if(selected_statpack && (selected_statpack.type in job.statpack_restrictions))
+					HTML += "<font color='#a56161'>[used_name] (Disallowed by Statpack: [selected_statpack.name])</font></td> <td> </td></tr>"
+					continue
 			var/job_unavailable = JOB_AVAILABLE
 			if(isnewplayer(parent?.mob))
 				var/mob/dead/new_player/new_player = parent.mob
@@ -1631,13 +1636,18 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				if ("statpack")
 					var/list/statpacks_available = list()
 					for (var/path as anything in GLOB.statpacks)
-						var/datum/statpack/statpack = GLOB.statpacks[path]
-						if (!statpack.name)
+						var/datum/statpack/statpack_check = GLOB.statpacks[path]
+						if (!statpack_check.name)
 							continue
-						var/index = statpack.name
-						if(length(statpack.stat_array))
-							index += " \n[statpack.generate_modifier_string()]"
-						statpacks_available[index] = statpack
+						// Check PQ requirement
+						if(!isnull(statpack_check.min_pq))
+							var/player_pq = get_playerquality(user.ckey)
+							if(player_pq < statpack_check.min_pq)
+								continue // Skip this statpack if player doesn't meet PQ requirement
+						var/index = statpack_check.name
+						if(length(statpack_check.stat_array))
+							index += " \n[statpack_check.generate_modifier_string()]"
+						statpacks_available[index] = statpack_check
 
 					statpacks_available = sort_list(statpacks_available)
 

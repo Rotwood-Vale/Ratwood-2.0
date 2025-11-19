@@ -2,6 +2,7 @@
 /datum/job/roguetown/wretch
 	title = "Wretch"
 	flag = WRETCH
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	department_flag = PEASANTS
 	faction = "Station"
 	total_positions = 5

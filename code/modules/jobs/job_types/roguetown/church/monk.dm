@@ -5,7 +5,7 @@
 	faction = "Station"
 	total_positions = 6
 	spawn_positions = 6
-
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	allowed_races = ACCEPTED_RACES
 	allowed_patrons = ALL_DIVINE_PATRONS
 	allowed_sexes = list(MALE, FEMALE)

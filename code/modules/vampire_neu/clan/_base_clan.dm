@@ -473,8 +473,12 @@ And it also helps for the character set panel
 	var/list/eyecache = to_insert.cache_eye_color()
 	var/obj/item/organ/eyes/eyes = to_insert.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
+		// Temporarily unregister the signal to prevent infinite recursion
+		UnregisterSignal(to_insert, COMSIG_MOB_ORGAN_REMOVED)
 		eyes.Remove(to_insert, TRUE)
 		QDEL_NULL(eyes)
+		// Re-register the signal
+		RegisterSignal(to_insert, COMSIG_MOB_ORGAN_REMOVED, PROC_REF(on_organ_loss))
 	eyes = new /obj/item/organ/eyes/night_vision/vampire
 	eyes.Insert(to_insert)
 	to_insert.set_eye_color(
