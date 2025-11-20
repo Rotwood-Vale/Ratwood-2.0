@@ -71,8 +71,11 @@
 	if(!H || QDELETED(H))
 		return FALSE
 	if(H.mind)
-		// If already has a vampire antag, do nothing
+		// If already has a vampire antag, do nothing (includes Vampire Lord)
 		if(locate(/datum/antagonist/vampire) in H.mind.antag_datums)
+			return TRUE
+		// Don't override if they're assigned to be a vampire antagonist (Vampire Lord/Servant)
+		if(H.mind.special_role == ROLE_NBEAST || H.mind.special_role == ROLE_VAMPIRE)
 			return TRUE
 		var/datum/antagonist/vampire/crimson/new_antag = new /datum/antagonist/vampire/crimson()
 		H.mind.add_antag_datum(new_antag)

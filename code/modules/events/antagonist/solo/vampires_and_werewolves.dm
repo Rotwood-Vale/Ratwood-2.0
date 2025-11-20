@@ -22,6 +22,16 @@
 
 	restricted_roles = DEFAULT_ANTAG_BLACKLISTED_ROLES
 
+// Override to exclude Crimson-Blooded statpack users (they're already vampires)
+/datum/round_event_control/antagonist/solo/vampires_and_werewolves/get_candidates()
+	var/list/candidates = ..()
+	// Filter out Crimson-Blooded players
+	for(var/mob/candidate in candidates)
+		if(candidate.client?.prefs?.statpack)
+			if(istype(candidate.client.prefs.statpack, /datum/statpack/wildcard/crimson_blooded))
+				candidates -= candidate
+	return candidates
+
 /datum/round_event/antagonist/solo/vampires_and_werewolves
 	var/leader = FALSE
 
