@@ -81,6 +81,9 @@
 		// Don't override if they're assigned to be a vampire antagonist (Vampire Lord/Servant)
 		if(H.mind.special_role == ROLE_NBEAST || H.mind.special_role == ROLE_VAMPIRE)
 			return TRUE
+		// Don't override if they're assigned to be a vampire antagonist (Vampire Lord/Servant)
+		if(H.mind.special_role == ROLE_NBEAST || H.mind.special_role == ROLE_VAMPIRE)
+			return TRUE
 		var/datum/antagonist/vampire/crimson/new_antag = new /datum/antagonist/vampire/crimson()
 		H.mind.add_antag_datum(new_antag)
 		// Ensure bloodpool HUD is initialized after antag is added
