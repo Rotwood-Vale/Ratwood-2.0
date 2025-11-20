@@ -103,14 +103,14 @@
 			if(J.title == "Druid")
 				is_druid = TRUE
 		var/displayed_headshot
-		var/datum/antagonist/vampire/vampireplayer = mind.has_antag_datum(/datum/antagonist/vampire)
-		var/datum/antagonist/lich/lichplayer = mind.has_antag_datum(/datum/antagonist/lich)
-		if(vampireplayer && (!SEND_SIGNAL(user, COMSIG_DISGUISE_STATUS))&& !isnull(vampire_headshot_link)) //vampire with their disguise down and a valid headshot
-			displayed_headshot = vampire_headshot_link
-		else if (lichplayer && !isnull(lich_headshot_link))//Lich with a valid headshot
-			displayed_headshot = lich_headshot_link
+		var/datum/antagonist/vampire/vampireplayer = src.mind?.has_antag_datum(/datum/antagonist/vampire)
+		var/datum/antagonist/lich/lichplayer = src.mind?.has_antag_datum(/datum/antagonist/lich)
+		if(vampireplayer && (!SEND_SIGNAL(src, COMSIG_DISGUISE_STATUS))&& !isnull(vampire_headshot_link)) //vampire with their disguise down and a valid headshot
+			displayed_headshot = src.vampire_headshot_link
+		else if (lichplayer && !isnull(src.lich_headshot_link))//Lich with a valid headshot
+			displayed_headshot = src.lich_headshot_link
 		else
-			displayed_headshot = headshot_link
+			displayed_headshot = src.headshot_link
 
 		if ((valid_headshot_link(src, displayed_headshot, TRUE)) && (user.client?.prefs.chatheadshot))
 			if(display_as_wanderer)
@@ -340,8 +340,8 @@
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_redtext("[m1] repulsive!")
 		
-		var/datum/antagonist/vampire/vamp_inspect = mind.has_antag_datum(/datum/antagonist/vampire)
-		if(vamp_inspect && (!SEND_SIGNAL(user, COMSIG_DISGUISE_STATUS)))
+		var/datum/antagonist/vampire/vamp_inspect = src.mind?.has_antag_datum(/datum/antagonist/vampire)
+		if(vamp_inspect && (!SEND_SIGNAL(src, COMSIG_DISGUISE_STATUS)))
 			. += span_redtext("[m3] strange glowying eyes and fangs!")
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
