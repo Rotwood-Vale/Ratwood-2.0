@@ -352,13 +352,12 @@
 		if(isliving(src))
 			var/mob/living/L = src
 			var/obj/item/offh = L.get_inactive_held_item()
-			if(offh && istype(offh, /obj/item/rogueweapon)) //Check if theres even a weapon in the second hand
-				if(HAS_TRAIT(L, TRAIT_DUALWIELDER) && prob(50)) // make it so it has a prob of 55%
-					if((istype(W, offh) || istype(offh, W)) && W != offh && !(L.check_arm_grabbed(L.get_inactive_hand_index())) && (L.last_used_double_attack <= world.time))
-						if(L.stamina_add(2))
-							L.last_used_double_attack = world.time + 3 SECONDS
-							L.visible_message(span_warning("There's an opening! I strike with my off-hand weapon!"))
-							offh.melee_attack_chain(src, A, params)
+			if(offh && HAS_TRAIT(L, TRAIT_DUALWIELDER) && istype(offh, /obj/item/rogueweapon))//Check if theres even a weapon in the second hand
+				if((istype(W, offh) || istype(offh, W)) && W != offh && !(L.check_arm_grabbed(L.get_inactive_hand_index())) && (L.last_used_double_attack <= world.time))
+					if(L.stamina_add(2))
+						L.last_used_double_attack = world.time + 3 SECONDS
+						L.visible_message(span_warning("[L] seizes an opening and strikes with [L.p_their()] off-hand weapon!"), span_green("There's an opening! I strike with my off-hand weapon!"))
+						offh.melee_attack_chain(src, A, params)
 	else
 		if(ismob(A))
 			var/adf = used_intent.clickcd
@@ -926,9 +925,6 @@
 
 	rmb_intent.special_attack(src, ismob(A) ? A : get_foe_from_turf(get_turf(A)))
 	return TRUE
-
-/mob/living/carbon/human/species/skeleton/try_special_attack(atom/A, list/modifiers)
-	return FALSE
 
 /// Used for "directional" style rmb attacks on a turf, prioritizing standing targets
 /mob/living/proc/get_foe_from_turf(turf/T)

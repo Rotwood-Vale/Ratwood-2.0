@@ -77,8 +77,6 @@
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
-	/// can this mob move freely in space (should be a trait)
-	var/spacewalk = FALSE
 
 	/**
 	  * back up of the real name during admin possession
@@ -168,6 +166,9 @@
 	var/job = null//Living
 	var/migrant_type = null
 	var/advjob = null
+
+	/// What social rank does this mob have
+	var/social_rank
 
 	/// A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
 	var/list/faction = list("neutral")

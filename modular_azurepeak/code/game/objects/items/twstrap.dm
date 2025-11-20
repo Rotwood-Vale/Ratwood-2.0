@@ -1,5 +1,5 @@
 /obj/item/twstrap
-	name = "bandolier"
+	name = "knife bandolier"
 	desc = ""
 	icon_state = "twstrap0"
 	item_state = "twstrap"
@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP
 	resistance_flags = FIRE_PROOF
 	equip_delay_self = 5 SECONDS
 	unequip_delay_self = 5 SECONDS

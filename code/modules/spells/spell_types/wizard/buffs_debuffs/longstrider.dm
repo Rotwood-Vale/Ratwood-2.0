@@ -8,6 +8,7 @@
 	chargedrain = 0
 	chargetime = 1 SECONDS
 	recharge_time = 1.5 MINUTES
+	human_req = TRUE
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	spell_tier = 1 // Not direct combat useful but still good, replicated by polearm

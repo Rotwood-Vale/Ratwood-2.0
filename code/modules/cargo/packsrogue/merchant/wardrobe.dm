@@ -6,26 +6,23 @@
 
 
 /datum/supply_pack/rogue/wardrobe/hat/witchhat
-	name = "Witch-Hunter's Hats"
+	name = "Witch-Hunter's Hat"
 	cost = 10
 	contains = list(
-					/obj/item/clothing/head/roguetown/puritan,
 					/obj/item/clothing/head/roguetown/puritan,
 				)
 
 /datum/supply_pack/rogue/wardrobe/hat/physicianhat
-	name = "Physician's Hats"
+	name = "Physician's Hat"
 	cost = 10
 	contains = list(
-					/obj/item/clothing/head/roguetown/physician,
 					/obj/item/clothing/head/roguetown/physician,
 				)
 
 /datum/supply_pack/rogue/wardrobe/hat/nightmanhat
-	name = "Teller's Hats"
+	name = "Teller's Hat"
 	cost = 10
 	contains = list(
-					/obj/item/clothing/head/roguetown/nightman,
 					/obj/item/clothing/head/roguetown/nightman,
 				)
 
@@ -33,7 +30,6 @@
 	name = "Minstrel's Hat"
 	cost = 10
 	contains = list(
-					/obj/item/clothing/head/roguetown/bardhat,
 					/obj/item/clothing/head/roguetown/bardhat,
 				)
 
@@ -52,76 +48,37 @@
 				)
 
 /datum/supply_pack/rogue/wardrobe/cloaks/bhalfcloaks
-	name = "Half-Cloaks"
+	name = "Half-Cloak"
 	cost = 20
 	contains = list(
 					/obj/item/clothing/cloak/half,
-					/obj/item/clothing/cloak/half,
 				)
 
-/datum/supply_pack/rogue/wardrobe/cloaks/bcloaks
-	name = "Blue Cloaks"
+/datum/supply_pack/rogue/wardrobe/cloaks/raincloak
+	name = "Raincloak"
 	cost = 20
 	contains = list(
 					/obj/item/clothing/cloak/raincloak/blue,
-					/obj/item/clothing/cloak/raincloak/blue,
 				)
 
-/datum/supply_pack/rogue/wardrobe/cloaks/rcloaks
-	name = "Red Cloaks"
+/datum/supply_pack/rogue/wardrobe/suits/dressgen
+	name = "Dress"
 	cost = 20
 	contains = list(
-					/obj/item/clothing/cloak/raincloak/red,
-					/obj/item/clothing/cloak/raincloak/red,
+					/obj/item/clothing/suit/roguetown/shirt/dress/gen,
 				)
 
-/datum/supply_pack/rogue/wardrobe/cloaks/gcloaks
-	name = "Green Cloaks"
-	cost = 20
-	contains = list(
-					/obj/item/clothing/cloak/raincloak/green,
-					/obj/item/clothing/cloak/raincloak/green,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/blackdress
-	name = "Black Dresses"
-	cost = 20
-	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/black,
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/black,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/bluedress
-	name = "Blue Dresses"
-	cost = 20
-	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/blue,
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/blue,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/whiterobes
-	name = "White Robes"
+/datum/supply_pack/rogue/wardrobe/suits/robes
+	name = "Robes"
 	cost = 30
 	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/robe/white,
-					/obj/item/clothing/suit/roguetown/shirt/robe/white,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/magerobes
-	name = "Mage Robes"
-	cost = 30
-	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/robe/mageblue,
-					/obj/item/clothing/suit/roguetown/shirt/robe/magegreen,
-					/obj/item/clothing/suit/roguetown/shirt/robe/mageorange,
-					/obj/item/clothing/suit/roguetown/shirt/robe/mageyellow,
+					/obj/item/clothing/suit/roguetown/shirt/robe,
 				)
 
 /datum/supply_pack/rogue/wardrobe/suits/formal
 	name = "Formal Silks"
 	cost = 20
 	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/undershirt/puritan,
 					/obj/item/clothing/suit/roguetown/shirt/undershirt/puritan,
 				)
 
@@ -130,14 +87,12 @@
 	cost = 5
 	contains = list(
 					/obj/item/clothing/gloves/roguetown/fingerless,
-					/obj/item/clothing/gloves/roguetown/fingerless,
 				)
 
 /datum/supply_pack/rogue/wardrobe/pants/formal
 	name = "Formal Pants"
 	cost = 20
 	contains = list(
-					/obj/item/clothing/under/roguetown/tights/black,
 					/obj/item/clothing/under/roguetown/tights/black,
 				)
 
@@ -146,7 +101,6 @@
 	cost = 30
 	contains = list(
 					/obj/item/clothing/shoes/roguetown/boots/nobleboot,
-					/obj/item/clothing/shoes/roguetown/boots/nobleboot,
 				)
 
 /datum/supply_pack/rogue/wardrobe/shoes/shalal
@@ -154,14 +108,12 @@
 	cost = 10
 	contains = list(
 					/obj/item/clothing/shoes/roguetown/shalal,
-					/obj/item/clothing/shoes/roguetown/shalal,
 				)
 
 /datum/supply_pack/rogue/wardrobe/shoes/sandals
 	name = "Sandals"
 	cost = 5
 	contains = list(
-					/obj/item/clothing/shoes/roguetown/gladiator,
 					/obj/item/clothing/shoes/roguetown/gladiator,
 				)
 

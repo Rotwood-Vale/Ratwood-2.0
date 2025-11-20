@@ -5,18 +5,17 @@
 		"do": "du",
 		"don't": "dun't",
 		"am": "ahm", 
-        "and": "eend",
+        "and": "et",
 		"with": "weeth",
 		"it": "eet",
 		"captain": "capitaine", 
-		"cook": "cuisinier", 
+		"chef": "cuisinier", 
 		"dad": "papa",
 		"father": "père",
 		"mom": "maman",
 		"mother": "mère",
         "hello": "'allo",
 		"hi": "salut",
-        "thanks": "merci",   
         "who's": "vho's",
 		"wine": "vin",
 		"eggcheese": "omelette du fromage",
@@ -33,7 +32,6 @@
 		"lord": "seigneur",
 		"mister": "monsieur",
 		"sir": "monsieur",
-		"miss": "mademoiselle",
 		"ma'am": "madame",
 		"seneschal": "sénéchal",
 		"veteran": "vétéran",
@@ -49,7 +47,6 @@
 		"idiot": "imbécile",
 		"idiots": "imbécile",
 		"enter": "entrer",
-		"for": "pour",
 		"shit": "merde",
 		"my": "mon",
 		"please": "s’il vous plaît",
@@ -60,7 +57,14 @@
 		"threesome": "ménage à trois",
 		"one": "un",
 		"two": "deux",
-		"three": "trois"
+		"three": "trois",
+		"Astrata": "Astrateux",
+		"Necra": "Necroix",
+		"Malum": "Malúm",
+		"Dendor": "Dendeux",
+		"Xylix": "Xyliques",
+		"Graggar": "Graggeur",
+		"Zizo": "Zizeux"
     },
     "start": {
 		"ga": "ge",
@@ -69,13 +73,15 @@
 
     },
     "end": {
-		"er": "eur"
+		"er": "eur",
+		"ing": "eeng"
 
     },
 	"multiword": {
 		"cheese omelette": "omelette du fromage",
 		"good morning": "bonjour",
 		"good evening": "bonsoir",
+		"good night": "bonuit",
 		"oh my, my": "oo là là",
 		"good enough": "suffisant",
 		"my love": "mon amour",
@@ -84,7 +90,7 @@
 		"my friend": "mon ami",
 		"my friends": "mes amis",
 		"holy shit": "sacre bleu",
-		"oh my god": "saperlipopette",
+		"oh my god": "mon Dieu",
 		"thank you": "merci",
 		"many thanks": "merci beaucoup",
 		"thanks a lot": "merci beaucoup",

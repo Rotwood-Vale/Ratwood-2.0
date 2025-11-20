@@ -91,9 +91,11 @@
 		"and": "und"
     },
     "start": {
+		"w": "v"
 
     },
     "end": {
+		"d": "dt"
 
     },
 	"multiword": {

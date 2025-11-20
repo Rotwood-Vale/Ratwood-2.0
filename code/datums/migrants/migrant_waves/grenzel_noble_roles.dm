@@ -1,5 +1,5 @@
 #define CTAG_GRENZEL_ENVOY "grenzel_envoy"
-#define CTAG_GRENZEL_DOPPEL "grenzel_doppel"
+#define CTAG_GRENZEL_GUARD "grenzel_guard"
 #define CTAG_GRENZEL_PRIEST "grenzel_priest"
 
 /datum/migrant_role/grenzel/envoy
@@ -22,7 +22,21 @@
 		STATKEY_PER = 1,
 		STATKEY_SPD = 1,
 	)
-
+	subclass_skills = list(
+		/datum/skill/combat/swords= SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/maces= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/shields= SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/medicine= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/stealing= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding= SKILL_LEVEL_JOURNEYMAN,
+	)
 
 /datum/outfit/job/roguetown/grenzel/envoy/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -50,38 +64,41 @@
 		)
 	H.cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	H.grant_language(/datum/language/grenzelhoftian)
-	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/stealing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
 
 /datum/migrant_role/grenzel/bodyguard
-	name = "Doppelsoldner Bodyguard"
-	greet_text = "You are a dilligent soldier in employ of the Envoy for protection and to assure that their mission goes as planned."
+	name = "Leibwachter"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
-	advclass_cat_rolls = list(CTAG_GRENZEL_DOPPEL = 20)
+	advclass_cat_rolls = list(CTAG_GRENZEL_GUARD = 20)
 
-/datum/advclass/grenzel_doppel
-	name = "Doppelsoldner Bodyguard"
+/datum/advclass/grenzel_guard
+	name = "Leibwachter"
+	tutorial = "You are a dilligent soldier in employ of the Envoy for protection and to assure that their mission goes as planned."
 	outfit = /datum/outfit/job/roguetown/grenzel/doppel
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
-	category_tags = list(CTAG_GRENZEL_DOPPEL)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
+	category_tags = list(CTAG_GRENZEL_GUARD)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
 		STATKEY_CON = 3,
 		STATKEY_PER = 1,
 		STATKEY_SPD = 1,
+	)
+	subclass_skills = list(
+		/datum/skill/misc/swimming= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/sneaking= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/swords= SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/shields= SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/polearms= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/whipsflails= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives= SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading= SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics= SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/grenzel/doppel/pre_equip(mob/living/carbon/human/H)
@@ -106,38 +123,33 @@
 		)
 	H.cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	H.grant_language(/datum/language/grenzelhoftian)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/whipsflails, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 
 /datum/migrant_role/grenzel/priest
-	name = "Grenzelhoftian Priest"
+	name = "Envoy Priest"
 	greet_text = "Nominally the envoy's spiritual advisor, your real power extends beyond religious matters. Protect interests of the Holy See of the Ten."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_GRENZEL_PRIEST = 20)
 
 /datum/advclass/grenzel_priest
-	name = "Grenzelhoftian Priest"
+	name = "Envoy Priest"
 	outfit = /datum/outfit/job/roguetown/grenzel/doppel
-	traits_applied = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_GRAVEROBBER)
 	category_tags = list(CTAG_GRENZEL_PRIEST)
 	subclass_stats = list(
+		STATKEY_STR = -1,
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
 		STATKEY_SPD = -1,
-		STATKEY_STR = -1,
+	)
+	subclass_stats = list(
+		/datum/skill/combat/wrestling= SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/polearms= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/craft/alchemy= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine= SKILL_LEVEL_EXPERT,
+		/datum/skill/magic/holy= SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/grenzel/priest/pre_equip(mob/living/carbon/human/H)
@@ -145,7 +157,7 @@
 	if (!(istype(H.patron, /datum/patron/divine/astrata)))
 		to_chat(H, span_warning("I've been blessed by Astrata - She guides my way, as I guide Her flock."))
 		H.set_patron(/datum/patron/divine/astrata)
-	neck = /obj/item/clothing/neck/roguetown/psicross/undivided
+	neck = /obj/item/clothing/neck/roguetown/psicross/astrata
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
 	pants = /obj/item/clothing/under/roguetown/tights/black
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
@@ -157,23 +169,10 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/needle/pestra = 1,
-		/obj/item/natural/worms/leech/cheele = 1,
-		/obj/item/ritechalk = 1,
 	)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/magic/holy, 4, TRUE)
-	if(H.age == AGE_OLD)
-		H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
-
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
 
 #undef CTAG_GRENZEL_ENVOY
-#undef CTAG_GRENZEL_DOPPEL
+#undef CTAG_GRENZEL_GUARD
 #undef CTAG_GRENZEL_PRIEST

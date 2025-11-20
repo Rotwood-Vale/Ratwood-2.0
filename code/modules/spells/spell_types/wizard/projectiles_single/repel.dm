@@ -11,6 +11,7 @@
 	chargedrain = 0
 	chargetime = 0
 	recharge_time = 15 SECONDS
+	human_req = TRUE
 	warnie = "spellwarning"
 	overlay_state = "fetch"
 	no_early_release = TRUE

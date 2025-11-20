@@ -112,6 +112,10 @@
 	inputs = list(/obj/item/reagent_containers/food/snacks/grown/fruit/tangerine)
 	output = /datum/reagent/consumable/soup/stew/tangerine_marmalade
 
+/datum/stew_recipe/pumpkin_soup
+	inputs = list(/obj/item/reagent_containers/food/snacks/rogue/fruit/pumpkin_sliced)
+	output = /datum/reagent/consumable/soup/stew/pumpkin_soup
+
 // DRINKS
 /datum/stew_recipe/rose_tea
 	inputs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals_dried)

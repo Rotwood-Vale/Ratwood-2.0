@@ -55,7 +55,6 @@
 	if(!iscarbon(eater))
 		return FALSE
 	var/mob/living/carbon/C = eater
-	
 	var/obj/item/bodypart/head/dullahan/eaterrelay
 	if(ishuman(src))
 		var/mob/living/carbon/human = src

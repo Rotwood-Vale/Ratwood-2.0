@@ -655,17 +655,6 @@
 /obj/item/reagent_containers/glass/bottle/rogue/manapot,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/spidercave)
-"in" = (
-/obj/structure/table/wood{
-	icon_state = "tablewood1"
-	},
-/obj/item/cooking/pan,
-/obj/item/reagent_containers/powder/flour,
-/obj/item/reagent_containers/powder/flour,
-/obj/item/rogueweapon/huntingknife/cleaver,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
-/turf/open/floor/rogue/tile,
-/area/rogue/outdoors/mountains/decap/stepbelow)
 "ip" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/glass/bottle/rogue/beer/voddena,
@@ -2032,13 +2021,6 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap/stepbelow)
-"Af" = (
-/obj/structure/closet/crate/chest/lootbox,
-/obj/item/scomstone,
-/obj/item/rogueweapon/sword/long/blackflamb,
-/obj/effect/spawner/lootdrop/potion_stats,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/dragonden)
 "Ah" = (
 /obj/machinery/light/rogue/firebowl/standing/blue,
 /turf/open/floor/rogue/churchbrick,
@@ -2268,6 +2250,12 @@
 "CP" = (
 /obj/structure/fluff/psycross/crafted,
 /turf/open/floor/rogue/churchmarble,
+/area/rogue/outdoors/mountains/decap/stepbelow)
+"CQ" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "CV" = (
 /obj/structure/fluff/statue/gargoyle/moss/candles,
@@ -2679,12 +2667,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/rogue/under/cave/undeadmanor)
-"Ib" = (
-/obj/structure/table/wood{
-	icon_state = "tablewood1"
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/outdoors/mountains/decap/stepbelow)
 "Ie" = (
 /obj/structure/roguewindow/stained/zizo,
 /turf/open/floor/rogue/blocks,
@@ -2699,6 +2681,13 @@
 /obj/structure/roguetent,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/mountains/decap)
+"Iy" = (
+/obj/structure/closet/crate/chest/lootbox,
+/obj/item/scomstone,
+/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel,
+/obj/effect/spawner/lootdrop/potion_stats,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave/dragonden)
 "IA" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/dirt/road,
@@ -3530,6 +3519,17 @@
 /turf/open/floor/rogue/tile{
 	icon_state = "bfloorz"
 	},
+/area/rogue/outdoors/mountains/decap/stepbelow)
+"TV" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/item/cooking/pan,
+/obj/item/reagent_containers/powder/flour,
+/obj/item/reagent_containers/powder/flour,
+/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/turf/open/floor/rogue/tile,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "TW" = (
 /turf/open/floor/rogue/dirt,
@@ -5066,7 +5066,7 @@ bX
 bX
 Ki
 RQ
-in
+TV
 Ug
 TT
 RQ
@@ -5200,7 +5200,7 @@ co
 Ug
 Ug
 RQ
-Ib
+CQ
 CF
 CF
 Ki
@@ -13872,7 +13872,7 @@ wu
 wu
 wu
 ta
-Af
+Iy
 lK
 wu
 wu

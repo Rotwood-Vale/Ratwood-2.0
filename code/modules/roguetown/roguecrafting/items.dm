@@ -25,7 +25,7 @@
 	result = /obj/item/natural/cloth
 	reqs = list(/obj/item/natural/fibers = 2)
 	tools = list(/obj/item/needle)
-	skillcraft = /datum/skill/misc/sewing
+	skillcraft = /datum/skill/craft/sewing
 	verbage_simple = "sew"
 	verbage = "sews"
 	craftdiff = 0
@@ -138,12 +138,10 @@
 		/obj/item/natural/cloth = 1,
 		)
 	tools = list(/obj/item/needle)
-	skillcraft = /datum/skill/misc/sewing
-
+	skillcraft = /datum/skill/craft/sewing
 
 /obj/item/storage/roguebag/crafted
 	sellprice = 4
-
 
 /datum/crafting_recipe/roguetown/survival/bait
 	name = "bait"
@@ -368,26 +366,13 @@
 	reqs = list(/obj/item/storage/roguebag/crafted = 1,
 				/obj/item/rope = 1)
 
-/datum/crafting_recipe/roguetown/survival/woodshaft
-	name = "wood shaft (x2)"
-	result = list(
-		/obj/item/shaft/wood,
-		/obj/item/shaft/wood
-	)
-	tools = list(/obj/item/rogueweapon/huntingknife)
-	reqs = list(/obj/item/grown/log/tree/small = 1)
-	skillcraft = /datum/skill/craft/carpentry
-	craftdiff = 0
-
-/datum/crafting_recipe/roguetown/survival/reinforcedshaft
-	name = "reinforced shaft"
-	result = /obj/item/shaft/reinforced
-	tools = list(/obj/item/rogueweapon/hammer)
+/datum/crafting_recipe/roguetown/survival/handmirror
+	name = "hand mirror"
+	result = /obj/item/handmirror
 	reqs = list(
-		/obj/item/shaft/wood = 1,
-		/obj/item/natural/whetstone = 2,
+		/obj/item/natural/glass = 1,
+		/obj/item/grown/log/tree/stick = 1,
 		)
-	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/survival/handmirror
@@ -458,3 +443,42 @@
 		)
 	skillcraft = /datum/skill/misc/medicine
 	craftdiff = SKILL_LEVEL_EXPERT
+
+/datum/crafting_recipe/roguetown/survival/purify_lux
+	name = "purifiy lux"
+	result = list(
+		/obj/item/heart_blood_canister,
+		/obj/item/reagent_containers/lux,
+		)
+	reqs = list(
+		/obj/item/reagent_containers/lux_impure = 1,
+		/obj/item/heart_blood_canister/filled = 1,
+		)
+	skillcraft = /datum/skill/misc/medicine
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/survival/purify_lux_vials
+	name = "purifiy lux (vials)"
+	result = list(
+		/obj/item/reagent_containers/lux,
+		/obj/item/heart_blood_vial,
+		/obj/item/heart_blood_vial,
+		/obj/item/heart_blood_vial,
+		)
+	reqs = list(
+		/obj/item/reagent_containers/lux_impure = 1,
+		/obj/item/heart_blood_vial/filled = 3,
+		)
+	skillcraft = /datum/skill/misc/medicine
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/survival/purify_lux_compress
+	name = "purifiy lux (compression)"
+	result = list(
+		/obj/item/reagent_containers/lux,
+		)
+	reqs = list(
+		/obj/item/reagent_containers/lux_impure = 2,
+		)
+	skillcraft = /datum/skill/misc/medicine
+	craftdiff = 4

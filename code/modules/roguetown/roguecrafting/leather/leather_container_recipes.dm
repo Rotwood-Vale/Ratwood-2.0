@@ -77,10 +77,22 @@
 				/obj/item/rope = 1)
 
 /datum/crafting_recipe/roguetown/leather/container/twstrap
-	name = "bandolier"
+	name = "knife bandolier"
 	result = /obj/item/twstrap
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/rope = 1)
+
+/datum/crafting_recipe/roguetown/leather/container/hurlstrap
+	name = "hurlbat bandolier"
+	result = /obj/item/hurlstrap
+	reqs = list(/obj/item/natural/hide/cured = 3,
+				/obj/item/rope = 1)
+
+/datum/crafting_recipe/roguetown/leather/container/bmbstrap
+	name = "bombdolier"
+	result = /obj/item/bmbstrap
+	reqs = list(/obj/item/natural/hide/cured = 5,
+				/obj/item/rope = 2)
 
 /datum/crafting_recipe/roguetown/leather/container/belt
 	name = "leather belt"

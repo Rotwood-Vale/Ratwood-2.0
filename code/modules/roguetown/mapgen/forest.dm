@@ -8,7 +8,7 @@
 
 
 /datum/mapGenerator/forest
-	modules = list(/datum/mapGeneratorModule/ambushing,/datum/mapGeneratorModule/forestgrassturf,/datum/mapGeneratorModule/forest,/datum/mapGeneratorModule/forestroad,/datum/mapGeneratorModule/forestgrass)
+	modules = list(/datum/mapGeneratorModule/forestgrassturf,/datum/mapGeneratorModule/forest,/datum/mapGeneratorModule/forestroad,/datum/mapGeneratorModule/forestgrass)
 
 
 /datum/mapGeneratorModule/forest
@@ -54,6 +54,7 @@
 							/obj/structure/flora/roguetree/wise=1,
 							/obj/structure/flora/roguegrass/bush = 25,
 							/obj/structure/flora/roguegrass = 200,
+							/obj/structure/flora/roguegrass/pumpkin = 4,
 							/obj/structure/flora/roguegrass/herb/random = 7,
 							/obj/structure/flora/roguegrass/bush/westleach = 7,
 							/obj/structure/flora/roguegrass/maneater = 13,

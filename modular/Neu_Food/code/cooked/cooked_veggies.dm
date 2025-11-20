@@ -185,7 +185,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/eggplantmeat
 	name = "unfinished stuffed aubergine"
-	desc = "An eggplant stuffed with raw meat, ready to be topped with...apple!?"
+	desc = "An eggplant stuffed with raw meat, ready to be topped with tomato."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_veggies.dmi'
 	icon_state = "eggplantraw"
 	rotprocess = SHELFLIFE_LONG
@@ -193,7 +193,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/eggplantmeat/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
 	update_cooktime(user)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/apple))
+	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/tomato))
 		if(isturf(loc)&& (found_table))
 			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
 			to_chat(user, "Topping tomatos onto the aubergine...")
@@ -207,7 +207,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/eggplantstuffedraw
 	name = "raw stuffed aubergine"
-	desc = "A stuffed aubergine with raw meat and tomato (apple), ready to be cooked."
+	desc = "A stuffed aubergine with raw meat and tomato, ready to be cooked."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_veggies.dmi'
 	icon_state = "eggplantrawtom"
 	rotprocess = SHELFLIFE_LONG
@@ -216,10 +216,10 @@
 /obj/item/reagent_containers/food/snacks/rogue/preserved/eggplantstuffed
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
 	name = "stuffed aubergine"
-	desc = "Eggplant stuffed with raw meat and apple. Delicious!"
+	desc = "Eggplant stuffed with raw meat and tomato. Delicious!"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_veggies.dmi'
 	icon_state = "stuffedeggplant"
-	tastes = list("meat" = 1, "apple" = 1, "aubergine" = 1)
+	tastes = list("meat" = 1, "tomato" = 1, "aubergine" = 1)
 	faretype = FARE_FINE
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/foodbuff
@@ -252,7 +252,7 @@
 
 /obj/item/reagent_containers/food/snacks/roastseeds
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
-	tastes = list("toasted sunflower seeds" = 1)
+	tastes = list("toasted seeds" = 1)
 	name = "roasted seeds"
 	desc = "Food for birds, treats for humens."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_veggies.dmi'
@@ -261,3 +261,11 @@
 	color = "#e5b175"
 	foodtype = VEGETABLES
 	rotprocess = null
+
+/obj/item/reagent_containers/food/snacks/roastseeds/sunflower
+	name = "roasted sunflower seeds"
+	tastes = list("toasted sunflower seeds" = 1)
+
+/obj/item/reagent_containers/food/snacks/roastseeds/pumpkin
+	name = "roasted pumpkin seeds"
+	tastes = list("toasted pumpkin seeds" = 1)

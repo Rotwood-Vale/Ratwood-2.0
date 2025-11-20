@@ -115,45 +115,51 @@
 /obj/item/legwears/fishnet/purple
 	color = "#664357"
 
+/obj/item/legwears/thigh_high
+	name = "thigh-high stockings"
+	desc = "A legwear popular among those who plan to venture into colder climates."
+	icon_state = "thigh"
+
+/obj/item/legwears/thigh_high/random/Initialize()
+	. = ..()
+	color = pick("#e6e5e5", CLOTHING_BLACK, CLOTHING_BLUE, "#6F0000", "#664357")
+
+/obj/item/legwears/thigh_high/white
+	color = "#e6e5e5"
+
+/obj/item/legwears/knee_high
+	name = "knee-high stockings"
+	desc = "A legwear popular among those who enjoy taller boots."
+	icon_state = "knee"
+
+/obj/item/legwears/knee_high/random/Initialize()
+	. = ..()
+	color = pick("#e6e5e5", CLOTHING_BLACK, CLOTHING_BLUE, "#6F0000", "#664357")
+
+/obj/item/legwears/knee_high/white
+	color = "#e6e5e5"
+
 // Supply
 
-/datum/supply_pack/rogue/wardrobe/suits/stockings_white
+/datum/supply_pack/rogue/wardrobe/suits/stockings_white //just paint them yourself ffs
 	name = "White Stockings"
 	cost = 10
 	contains = list(
 					/obj/item/legwears/white,
-					/obj/item/legwears/white,
 				)
 
-/datum/supply_pack/rogue/wardrobe/suits/stockings_black
-	name = "Black Stockings"
+/datum/supply_pack/rogue/wardrobe/suits/stockings_thigh_white
+	name = "White Thigh-High Stockings"
 	cost = 10
 	contains = list(
-					/obj/item/legwears/black,
-					/obj/item/legwears/black,
+					/obj/item/legwears/thigh_high/white,
 				)
 
-/datum/supply_pack/rogue/wardrobe/suits/stockings_blue
-	name = "Blue Stockings"
+/datum/supply_pack/rogue/wardrobe/suits/stockings_knee_white
+	name = "White Knee-High Stockings"
 	cost = 10
 	contains = list(
-					/obj/item/legwears/blue,
-					/obj/item/legwears/blue,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/stockings_red
-	name = "Red Stockings"
-	cost = 10
-	contains = list(
-					/obj/item/legwears/red,
-					/obj/item/legwears/red,
-				)
-/datum/supply_pack/rogue/wardrobe/suits/stockings_purple
-	name = "Purple Stockings"
-	cost = 10
-	contains = list(
-					/obj/item/legwears/purple,
-					/obj/item/legwears/purple,
+					/obj/item/legwears/knee_high/white,
 				)
 
 //Silk
@@ -163,38 +169,6 @@
 	cost = 30
 	contains = list(
 					/obj/item/legwears/silk/white,
-					/obj/item/legwears/silk/white,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/stockings_black_silk
-	name = "Black Silk Stockings"
-	cost = 30
-	contains = list(
-					/obj/item/legwears/silk/black,
-					/obj/item/legwears/silk/black,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/stockings_blue_silk
-	name = "Blue Silk Stockings"
-	cost = 30
-	contains = list(
-					/obj/item/legwears/silk/blue,
-					/obj/item/legwears/silk/blue,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/stockings_red_silk
-	name = "Red Silk Stockings"
-	cost = 30
-	contains = list(
-					/obj/item/legwears/silk/red,
-					/obj/item/legwears/silk/red,
-				)
-/datum/supply_pack/rogue/wardrobe/suits/stockings_purple_silk
-	name = "Purple Silk Stockings"
-	cost = 30
-	contains = list(
-					/obj/item/legwears/silk/purple,
-					/obj/item/legwears/silk/purple,
 				)
 
 //Fishnets
@@ -204,38 +178,6 @@
 	cost = 5
 	contains = list(
 					/obj/item/legwears/fishnet/white,
-					/obj/item/legwears/fishnet/white,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/stockings_black_fishnet
-	name = "Black Fishnet Stockings"
-	cost = 5
-	contains = list(
-					/obj/item/legwears/fishnet/black,
-					/obj/item/legwears/fishnet/black,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/stockings_blue_fishnet
-	name = "Blue Fishnet Stockings"
-	cost = 5
-	contains = list(
-					/obj/item/legwears/fishnet/blue,
-					/obj/item/legwears/fishnet/blue,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/stockings_red_fishnet
-	name = "Red Fishnet Stockings"
-	cost = 5
-	contains = list(
-					/obj/item/legwears/fishnet/red,
-					/obj/item/legwears/fishnet/red,
-				)
-/datum/supply_pack/rogue/wardrobe/suits/stockings_purple_fishnet
-	name = "Purple Fishnet Stockings"
-	cost = 5
-	contains = list(
-					/obj/item/legwears/fishnet/purple,
-					/obj/item/legwears/fishnet/purple,
 				)
 
 // Craft
@@ -243,6 +185,20 @@
 /datum/crafting_recipe/roguetown/sewing/stockings_white
 	name = "stockings (1 fibers, 1 cloth)"
 	result = list(/obj/item/legwears/white)
+	reqs = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/sewing/stockings_thigh_white
+	name = "stockings - thigh (1 fibers, 1 cloth)"
+	result = list(/obj/item/legwears/thigh_high/white)
+	reqs = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/sewing/stockings_knee_white
+	name = "stockings - knee (1 fibers, 1 cloth)"
+	result = list(/obj/item/legwears/knee_high)
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3

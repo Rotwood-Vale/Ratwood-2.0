@@ -67,16 +67,16 @@
 	blacklisted = FALSE
 	required_atoms = list(/obj/item/reagent_containers/food/snacks/grown/manabloom = 1, /obj/item/magic/infernal/ash = 2)
 
-/datum/runeritual/buff/endurance
-	name = "vitalized endurance"
-	buff = /datum/status_effect/buff/magicendurance
+/datum/runeritual/buff/willpower
+	name = "vitalized willpower"
+	buff = /datum/status_effect/buff/magicwillpower
 	tier = 2
 	blacklisted = FALSE
 	required_atoms = list(/obj/item/magic/obsidian = 2, /obj/item/magic/fae/scale = 1)
 
-/datum/runeritual/buff/lesserendurance
-	name = "lesser vitalized endurance"
-	buff = /datum/status_effect/buff/magicendurance/lesser
+/datum/runeritual/buff/lesserwillpower
+	name = "lesser vitalized willpower"
+	buff = /datum/status_effect/buff/magicwillpower/lesser
 	blacklisted = FALSE
 	required_atoms = list(/obj/item/magic/obsidian = 2, /obj/item/magic/fae/dust = 2)
 

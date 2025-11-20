@@ -27,6 +27,7 @@
 	advjob_examine = TRUE
 	always_show_on_latechoices = TRUE
 	job_reopens_slots_on_death = FALSE //no endless stream of bandits, unless the migration waves deem it so
+	job_traits = list(TRAIT_SELF_SUSTENANCE)
 	same_job_respawn_delay = 1 MINUTES
 	cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg'
 	job_subclasses = list(
@@ -45,25 +46,27 @@
 		var/mob/living/carbon/human/H = L
 		if(!H.mind)
 			return
-		H.advsetup = 1
-		H.invisibility = INVISIBILITY_MAXIMUM
-		H.become_blind("advsetup")
 		H.ambushable = FALSE
+
+/datum/outfit/job/roguetown/bandit/pre_equip(mob/living/carbon/human/H)
+	. = ..()
+	H.verbs |= /mob/proc/haltyell_exhausting
 
 /datum/outfit/job/roguetown/bandit/post_equip(mob/living/carbon/human/H)
 	..()
-	var/datum/antagonist/new_antag = new /datum/antagonist/bandit()
-	H.mind.add_antag_datum(new_antag)
-	H.grant_language(/datum/language/thievescant)
-	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "BANDIT"), 5 SECONDS)
-	var/wanted = list("I am a notorious criminal", "I am a nobody")
-	var/wanted_choice = input("Are you a known criminal?") as anything in wanted
-	switch(wanted_choice)
-		if("I am a notorious criminal") //Extra challenge for those who want it
-			bandit_select_bounty(H)
-			ADD_TRAIT(H, TRAIT_KNOWNCRIMINAL, TRAIT_GENERIC)
-		if("I am a nobody") //Nothing ever happens
-			return
+	if(H.mind)
+		var/datum/antagonist/new_antag = new /datum/antagonist/bandit()
+		H.mind.add_antag_datum(new_antag)
+		H.grant_language(/datum/language/thievescant)
+		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "BANDIT"), 5 SECONDS)
+		var/wanted = list("I am a notorious criminal", "I am a nobody")
+		var/wanted_choice = input("Are you a known criminal?") as anything in wanted
+		switch(wanted_choice)
+			if("I am a notorious criminal") //Extra challenge for those who want it
+				bandit_select_bounty(H)
+				ADD_TRAIT(H, TRAIT_KNOWNCRIMINAL, TRAIT_GENERIC)
+			if("I am a nobody") //Nothing ever happens
+				return
 
 // Changed up proc from Wretch to suit bandits bit more
 /proc/bandit_select_bounty(mob/living/carbon/human/H)

@@ -71,7 +71,7 @@
 /obj/structure/roguemachine/vendor/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/roguecoin/aalloy))
 		return
-	if(istype(P, /obj/item/roguecoin/inqcoin))	
+	if(istype(P, /obj/item/roguecoin/inqcoin))
 		return
 	if(istype(P, /obj/item/roguecoin))
 		budget += P.get_real_price()
@@ -89,7 +89,7 @@
 		else
 			if(!locked)
 				insert(P, user)
-			else	
+			else
 				to_chat(user, span_warning("Wrong key."))
 				return
 	if(istype(P, /obj/item/storage/keyring))
@@ -134,7 +134,8 @@
 				say("NO MONEY NO HONEY!")
 				return
 
-
+		record_round_statistic(STATS_PEDDLER_REVENUE, held_items[O]["PRICE"])
+		// remove one instance and deliver it
 		held_items -= O
 		if(!usr.put_in_hands(O))
 			O.forceMove(get_turf(src))
@@ -398,23 +399,23 @@
 	keycontrol = "tavern"
 
 /obj/structure/roguemachine/vendor/innrockhill/Initialize()
-    . = ..()
-    
-    // Add room keys with a price of 20
-    for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi))
-        var/obj/P = new X(src)
-        held_items[P] = list()
-        held_items[P]["NAME"] = P.name
-        held_items[P]["PRICE"] = 20
+	. = ..()
 
-    // Add fancy keys with a price of 100
-    for (var/Y in list(/obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomiii))
-        var/obj/Q = new Y(src)
-        held_items[Q] = list()
-        held_items[Q]["NAME"] = Q.name
-        held_items[Q]["PRICE"] = 100
+	// Add room keys with a price of 20
+	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi))
+		var/obj/P = new X(src)
+		held_items[P] = list()
+		held_items[P]["NAME"] = P.name
+		held_items[P]["PRICE"] = 20
 
-    update_icon()
+	// Add fancy keys with a price of 100
+	for (var/Y in list(/obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomiii))
+		var/obj/Q = new Y(src)
+		held_items[Q] = list()
+		held_items[Q]["NAME"] = Q.name
+		held_items[Q]["PRICE"] = 100
+
+	update_icon()
 
 
 
@@ -428,4 +429,16 @@
 		held_items[P] = list()
 		held_items[P]["NAME"] = P.name
 		held_items[P]["PRICE"] = 10
+	update_icon()
+
+/obj/structure/roguemachine/vendor/stablemaster
+	keycontrol = "stablemaster"
+
+/obj/structure/roguemachine/vendor/stablemaster/Initialize()
+	. = ..()
+	for(var/X in list(/obj/item/roguekey/apartments/stablemaster_1,/obj/item/roguekey/apartments/stablemaster_2,/obj/item/roguekey/apartments/stablemaster_3,/obj/item/roguekey/apartments/stablemaster_4,/obj/item/roguekey/apartments/stablemaster_5))
+		var/obj/P = new X(src)
+		held_items[P] = list()
+		held_items[P]["NAME"] = P.name
+		held_items[P]["PRICE"] = 30
 	update_icon()

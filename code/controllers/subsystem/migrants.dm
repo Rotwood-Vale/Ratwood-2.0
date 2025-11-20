@@ -57,6 +57,7 @@ SUBSYSTEM_DEF(migrants)
 		if(parent_wave)
 			reset_wave_contributions(MIGRANT_WAVE(parent_wave))
 	set_current_wave(null, 0)
+
 	if(success)
 		time_until_next_wave = time_between_waves
 		current_parent_wave = null
@@ -195,7 +196,6 @@ SUBSYSTEM_DEF(migrants)
 		waves += wave_type
 	return waves
 
-
 /datum/controller/subsystem/migrants/proc/get_status_line()
 	var/string = ""
 	if(current_wave)
@@ -256,8 +256,7 @@ SUBSYSTEM_DEF(migrants)
 
 	SSticker.minds += character.mind
 	GLOB.joined_player_list += character.ckey
-	update_wretch_slots() // Wretch slot code
-
+	update_wretch_slots()
 	if(character.client)
 		character.client.update_ooc_verb_visibility()
 
@@ -343,6 +342,7 @@ SUBSYSTEM_DEF(migrants)
 
 	return priority
 
+
 /datum/controller/subsystem/migrants/proc/can_be_role(client/player, role_type)
 	var/datum/migrant_role/role = MIGRANT_ROLE(role_type)
 	if(!player)
@@ -373,7 +373,6 @@ SUBSYSTEM_DEF(migrants)
 
 /datum/controller/subsystem/migrants/proc/roll_wave()
 	var/list/available_weighted_waves = list()
-
 	var/active_migrants = get_active_migrant_amount()
 	var/active_players = get_round_active_players()
 

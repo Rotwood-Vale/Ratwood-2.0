@@ -53,7 +53,7 @@
 	sellprice = 30
 
 /datum/crafting_recipe/roguetown/leather/unique/fencingbreeches
-	name = "frencing breeches"
+	name = "fencing breeches"
 	result = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic)
 	reqs = list(/obj/item/natural/fibers = 1,
 				/obj/item/natural/hide/cured = 2,
@@ -123,8 +123,8 @@
 	sellprice = 20
 
 /datum/crafting_recipe/roguetown/leather/unique/monkrobes
-	name = "monk vestments"
-	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/monk)
+	name = "holy monk vestments"
+	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/monk/holy)
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/reagent_containers/food/snacks/tallow = 1,
 				/obj/item/natural/fibers = 2)

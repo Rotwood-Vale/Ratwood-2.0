@@ -42,6 +42,10 @@
 	var/delay = 5 SECONDS
 	var/sprite_changes = 10
 	var/datum/beam/current_beam = null
+	var/active = FALSE
+	var/cooldowny
+
+
 
 /obj/item/clothing/gloves/roguetown/contraption/voltic/attackby(obj/item/I, mob/user, params)
 	if(istype(I, accepted_power_source))
@@ -54,6 +58,31 @@
 			qdel(I)
 		return
 	..()
+
+
+/obj/item/clothing/gloves/roguetown/contraption/voltic/attack_right(mob/user)
+	if(loc != user)
+		return
+	if(cooldowny)
+		if(world.time < cooldowny + cdtime)
+			to_chat(user, span_warning("Nothing happens."))
+			return
+	user.visible_message(span_warning("[user] primes the [src]!"))
+	if(activate_sound)
+		playsound(user, activate_sound, 100, FALSE, -1)
+	cooldowny = world.time
+	addtimer(CALLBACK(src, PROC_REF(demagicify)), activetime)
+	active = TRUE
+	update_icon()
+	activate(user)
+
+/obj/item/clothing/gloves/roguetown/contraption/voltic/proc/demagicify()
+	active = FALSE
+	update_icon()
+	if(ismob(loc))
+		var/mob/user = loc
+		user.visible_message(span_warning("[src] settles down."))
+		user.update_inv_wear_id()
 
     // === VOLTIC ZAP ===
 /obj/item/clothing/gloves/roguetown/contraption/voltic/proc/activate(mob/living/user)

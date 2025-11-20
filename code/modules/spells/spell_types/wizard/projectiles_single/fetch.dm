@@ -6,6 +6,7 @@
 	projectile_type = /obj/projectile/magic/fetch
 	sound = list('sound/magic/magnet.ogg')
 	active = FALSE
+	human_req = TRUE
 	releasedrain = 5
 	chargedrain = 0
 	chargetime = 0

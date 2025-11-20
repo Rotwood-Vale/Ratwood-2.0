@@ -41,7 +41,6 @@
 	set_active(FALSE, TRUE)
 	hide_ui()
 
-
 /datum/migrant_pref/proc/show_ui()
 	var/client/client = prefs.parent
 	if(!client)

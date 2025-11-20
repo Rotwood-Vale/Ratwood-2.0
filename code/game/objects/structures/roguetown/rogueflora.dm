@@ -12,7 +12,6 @@
 	blade_dulling = DULLING_CUT
 	pixel_x = -16
 	layer = 4.81
-	plane = GAME_PLANE_UPPER
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	destroy_sound = 'sound/misc/woodhit.ogg'
 	debris = list(/obj/item/grown/log/tree/stick = 2)
@@ -31,7 +30,7 @@
 	if(.)
 		if(!was_destroyed && obj_destroyed)
 			record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
-			GLOB.azure_round_stats[STATS_TREES_CUT]++
+			record_round_statistic(STATS_TREES_CUT)
 
 /obj/structure/flora/roguetree/spark_act()
 	fire_act()
@@ -418,13 +417,6 @@
 		return 0
 	return 1
 
-/obj/structure/flora/roguegrass/bush/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return 1
-	if(get_dir(mover.loc, target) == dir)
-		return 0
-	return 1
-
 /obj/structure/flora/roguegrass/bush/westleach
 	name = "westleach bush"
 	desc = "Large, red leaves peek out of it with an alluring aroma."
@@ -446,7 +438,7 @@
 	name = "great bush"
 	desc = "A bush. This one’s roots are thick enough to block the way."
 	opacity = TRUE
-	density = 1
+	density = TRUE
 	climbable = FALSE
 	icon_state = "bushwall1"
 	max_integrity = 150
@@ -459,23 +451,6 @@
 
 /obj/structure/flora/roguegrass/bush/wall/update_icon()
 	return
-
-/obj/structure/flora/roguegrass/bush/wall/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return 1
-	return 0
-
-/obj/structure/flora/roguegrass/bush/wall/CanAStarPass(ID, travel_dir, caller)
-	if(ismovableatom(caller))
-		var/atom/movable/mover = caller
-		if(mover.pass_flags & PASSGRILLE)
-			return TRUE
-	return climbable || !density
-
-/obj/structure/flora/roguegrass/bush/wall/CheckExit(atom/movable/O, turf/target)
-	if(istype(O) && (O.pass_flags & PASSGRILLE))
-		return 1
-	return 0
 
 /obj/structure/flora/roguegrass/bush/wall/tall
 	icon = 'icons/roguetown/misc/foliagetall.dmi'
@@ -518,6 +493,8 @@
 	if(icon_state == "mush5")
 		static_debris = list(/obj/item/natural/thorn=1, /obj/item/grown/log/tree/small = 1)
 	pixel_x += rand(8,-8)
+	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/flora/rogueshroom/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
@@ -535,12 +512,11 @@
 		return FALSE // just don't even try, not even if you can climb it
 	return ..()
 
-/obj/structure/flora/rogueshroom/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return 1
-	if(get_dir(mover.loc, target) == dir)
-		return 0
-	return 1
+/obj/structure/flora/rogueshroom/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+	if(get_dir(leaving.loc, new_location) == dir)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/flora/rogueshroom/fire_act(added, maxstacks)
 	if(added <= 5)
@@ -723,6 +699,48 @@
 			user.visible_message("<span class='warning'>[user] searches through [src].</span>")
 			if(!looty.len)
 				to_chat(user, "<span class='warning'>Picked clean... I should try later.</span>")
+
+/obj/structure/flora/roguegrass/pumpkin
+	name = "bunch of wild pumpkins"
+	desc = "Wild pumpkins overgrown with vines."
+	icon_state = "pumpkin1"
+	max_integrity = 1
+	climbable = FALSE
+	dir = SOUTH
+	debris = list(/obj/item/natural/fibers = 2)
+	var/list/looty = list(/obj/item/natural/shellplant/pumpkin, /obj/item/natural/fibers)
+
+/obj/structure/flora/roguegrass/pumpkin/Initialize()
+	. = ..()
+	icon_state = "pumpkin[rand(1,2)]"
+	if(prob(78))
+		looty += /obj/item/natural/shellplant/pumpkin
+	if(prob(32))
+		looty += /obj/item/natural/shellplant/pumpkin
+	if(prob(24))
+		looty += /obj/item/natural/fibers
+	if(prob(7))
+		looty += /obj/item/natural/shellplant/pumpkin
+	pixel_x += rand(-3,3)
+	pixel_y += rand(0,6)
+
+/obj/structure/flora/roguegrass/pumpkin/attack_hand(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		user.changeNext_move(CLICK_CD_INTENTCAP)
+		playsound(src.loc, "plantcross", 80, FALSE, -1)
+		if(do_after(L, SEARCHTIME, target = src))
+			if(looty.len && prob(75))
+				var/obj/item/B = pick_n_take(looty)
+				if(B)
+					B = new B(user.loc)
+					user.put_in_hands(B)
+					user.visible_message("<span class='notice'>[user] finds [B] in [src].</span>")
+					if(!looty.len)
+						to_chat(user, "<span class='warning'>There is nothing else to find.</span>")
+						qdel(src)
+					return
+			user.visible_message("<span class='warning'>[user] searches through [src].</span>")
 
 // cute underdark mushrooms from dreamkeep
 

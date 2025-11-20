@@ -6,10 +6,8 @@
 #define DANGER_LEVEL_BLEAK "Bleak"
 
 #define THREAT_REGION_AZURE_BASIN "Rotwood Basin"
-#define THREAT_REGION_NORTHERN_GROVE "Northern Grove"
-#define THREAT_REGION_OUTER_GROVE "Outer Grove" // Grove west of the road
-#define THREAT_REGION_SOUTH_AZUREAN_COAST "South Rotwood Coast"
-#define THREAT_REGION_NORTH_AZUREAN_COAST "North Rotwood Coast"
+#define THREAT_REGION_AZURE_GROVE "Rotwood Grove"
+#define THREAT_REGION_AZUREAN_COAST "Rotwood Coast"
 #define THREAT_REGION_MOUNT_DECAP "Mount Decapitation"
 #define THREAT_REGION_TERRORBOG "Terrorbog"
 //Rockhill versions
@@ -20,7 +18,7 @@
 #define THREAT_REGION_ROCKHILL_BOG_SUNKMIRE "Rockhill Terrorbog Sunken Mire"
 #define THREAT_REGION_ROCKHILL_WOODS_NORTH "Rockhill Murderwood North"
 #define THREAT_REGION_ROCKHILL_WOODS_SOUTH "Rockhill Murderwood South"
-
+#define THREAT_REGION_ROCKHILL_OUTER_GROVE "Rockhill Outer Grove"
 #define LOWPOP_THRESHOLD 30 // When do we give highpop tick?
 // Subsystem meant to handle regional threat level
 
@@ -41,22 +39,13 @@ SUBSYSTEM_DEF(regionthreat)
 			_highpop_tick = 1,
 		),
 		new /datum/threat_region(
-			_region_name = THREAT_REGION_NORTHERN_GROVE,
+			_region_name = THREAT_REGION_AZURE_GROVE,
 			_latent_ambush = DANGER_MODERATE_FLOOR,
 			_min_ambush = DANGER_SAFE_FLOOR,
 			_max_ambush = DANGER_DANGEROUS_LIMIT,
 			_fixed_ambush = FALSE,
 			_lowpop_tick = 1,
-			_highpop_tick = 1
-		),
-		new /datum/threat_region(
-			_region_name = THREAT_REGION_SOUTH_AZUREAN_COAST,
-			_latent_ambush = DANGER_DANGEROUS_FLOOR,
-			_min_ambush = DANGER_SAFE_FLOOR,
-			_max_ambush = DANGER_DIRE_LIMIT,
-			_fixed_ambush = FALSE,
-			_lowpop_tick = 1,
-			_highpop_tick = 1
+			_highpop_tick = 2
 		),
 		new /datum/threat_region(
 			_region_name = THREAT_REGION_TERRORBOG,
@@ -69,16 +58,7 @@ SUBSYSTEM_DEF(regionthreat)
 		),
 		// All regions after are meant to stay somewhat dangerous no matter what
 		new /datum/threat_region(
-			_region_name = THREAT_REGION_OUTER_GROVE,
-			_latent_ambush = DANGER_MODERATE_LIMIT,
-			_min_ambush = DANGER_MODERATE_FLOOR,
-			_max_ambush = DANGER_DIRE_LIMIT,
-			_fixed_ambush = FALSE,
-			_lowpop_tick = 1,
-			_highpop_tick = 2
-		),
-		new /datum/threat_region(
-			_region_name = THREAT_REGION_NORTH_AZUREAN_COAST,
+			_region_name = THREAT_REGION_AZUREAN_COAST,
 			_latent_ambush = DANGER_DANGEROUS_FLOOR,
 			_min_ambush = DANGER_MODERATE_FLOOR,
 			_max_ambush = DANGER_DIRE_LIMIT,
@@ -116,7 +96,7 @@ SUBSYSTEM_DEF(regionthreat)
 		new /datum/threat_region(
 			_region_name = THREAT_REGION_ROCKHILL_BOG_WEST,
 			_latent_ambush = DANGER_MODERATE_LIMIT,
-			_min_ambush = DANGER_SAFE_FLOOR, 
+			_min_ambush = DANGER_SAFE_FLOOR,
 			_max_ambush = DANGER_DIRE_LIMIT,
 			_fixed_ambush = FALSE,
 			_lowpop_tick = 1,
@@ -124,7 +104,7 @@ SUBSYSTEM_DEF(regionthreat)
 		new /datum/threat_region(
 			_region_name = THREAT_REGION_ROCKHILL_BOG_SOUTH,
 			_latent_ambush = DANGER_MODERATE_LIMIT,
-			_min_ambush = DANGER_SAFE_FLOOR, 
+			_min_ambush = DANGER_SAFE_FLOOR,
 			_max_ambush = DANGER_DIRE_LIMIT,
 			_fixed_ambush = FALSE,
 			_lowpop_tick = 1,
@@ -132,7 +112,7 @@ SUBSYSTEM_DEF(regionthreat)
 		new /datum/threat_region(
 			_region_name = THREAT_REGION_ROCKHILL_BOG_SUNKMIRE,
 			_latent_ambush = DANGER_DIRE_LIMIT,
-			_min_ambush = DANGER_SAFE_FLOOR, 
+			_min_ambush = DANGER_SAFE_FLOOR,
 			_max_ambush = DANGER_DIRE_LIMIT,
 			_fixed_ambush = FALSE,
 			_lowpop_tick = 1,
@@ -153,8 +133,8 @@ SUBSYSTEM_DEF(regionthreat)
 			_fixed_ambush = FALSE,
 			_lowpop_tick = 1,
 			_highpop_tick = 1),
-		
-		
+
+
 	)
 
 /datum/controller/subsystem/regionthreat/fire(resumed)

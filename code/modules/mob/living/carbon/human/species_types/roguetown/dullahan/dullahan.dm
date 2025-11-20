@@ -5,18 +5,18 @@
 	race = /datum/species/dullahan
 
 /datum/species/dullahan
-	name = "Dullahan"
-	id = "dullahan"
-	desc = "<b>Dullahan</b><br>\
-	The origins of Dullahans are widely unknown. Rumored to be humen accursed with a powerful arcyne energy binding mind to soul, until that connection is forcefully snuffed out. \
-	Such power affects some more than others, altering complexion and even their touch with magic. Their soul burns bright, yet their unknown origins makes them frightening to most."
+	name = "Revenant"
+	id = "revenant"
+	desc = "<b>Revenant</b><br>\
+	Revenants are those that have died, returning from death to continue 'living' in a manner to speak. Their origins are not entirely known, yet many strongly believe them to have originated from the rot and decay of Psydonia. \
+	Unable to truly rest, yet entirely sane of mind. Capable of detaching their heads through unknown arcyne means, they are oft wanderers due to their unknown origins and being ostracized by both the Church and many of the common masses around the lands."
 	// Stat balancing. Per-server decision. Preferably keep neutral until analysis post testmerges.
 	//race_bonus = list(STAT_INTELLIGENCE = 1, STAT_CONSTITUTION = 1)
 	skin_tone_wording = "Catalyst"
 
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY,MUTCOLORS_PARTSONLY)
 	default_features = MANDATORY_FEATURE_LIST
-	inherent_traits = list(TRAIT_EASYDECAPITATION)
+	inherent_traits = list(TRAIT_EASYDECAPITATION, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_ZOMBIE_IMMUNE) //Given the deathless traits inherently as part of their nature as pseudo-undead.
 	use_skintones = 1
 	disliked_food = NONE
 	liked_food = NONE
@@ -69,6 +69,7 @@
 		/datum/customizer/bodypart_feature/accessory,
 		/datum/customizer/bodypart_feature/face_detail,
 		/datum/customizer/bodypart_feature/underwear,
+		/datum/customizer/organ/snout/anthro/dullahan,
 		/datum/customizer/organ/horns/demihuman,
 		/datum/customizer/organ/wings/anthro,
 		/datum/customizer/organ/horns/tusks,
@@ -100,9 +101,10 @@
 		/datum/body_marking/plain,
 	)
 	descriptor_choices = list(
+		/datum/descriptor_choice/trait,
+		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/height,
 		/datum/descriptor_choice/body,
-		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/face,
 		/datum/descriptor_choice/face_exp,
 		/datum/descriptor_choice/skin,
@@ -115,6 +117,8 @@
 	languages = list(
 		/datum/language/common,
 	)
+
+	restricted_virtues = list(/datum/virtue/utility/noble, /datum/virtue/utility/deathless, /datum/virtue/utility/resident)
 
 	stress_examine = TRUE
 	stress_desc = span_red("Accursed. I should keep my distance...")
@@ -174,10 +178,7 @@
 		"Sshanntynlan" = SKIN_COLOR_SSHANNTYNLAN,
 		"Llurth Dreir" = SKIN_COLOR_LLURTH_DREIR,
 		"Tafravma" = SKIN_COLOR_TAFRAVMA,
-		"Yuethindrynn" = SKIN_COLOR_YUETHINDRYNN,
-		"Koredynn" = SKIN_COLOR_KOREDYNN,
-		"Aiseedrynn" = SKIN_COLOR_AISEEDRYNN,
-		"Grenduskra" = SKIN_COLOR_GRENDUSKRA
+		"Yuethindrynn" = SKIN_COLOR_YUETHINDRYNN
 	)
 
 /datum/species/dullahan/get_hairc_list()

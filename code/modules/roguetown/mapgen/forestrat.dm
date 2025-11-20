@@ -8,7 +8,7 @@
 
 
 /datum/mapGenerator/forestrat
-	modules = list(/datum/mapGeneratorModule/ambushing,/datum/mapGeneratorModule/forestrat,/datum/mapGeneratorModule/forestratroad,/datum/mapGeneratorModule/forestratgrass)
+	modules = list(/datum/mapGeneratorModule/forestrat,/datum/mapGeneratorModule/forestratroad,/datum/mapGeneratorModule/forestratgrass)
 
 
 /datum/mapGeneratorModule/forestrat

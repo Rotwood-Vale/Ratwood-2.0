@@ -99,6 +99,11 @@ body {
 }
 
 @font-face {
+	font-family: "Project Sans";
+	src: url('orator.ttf');
+  }
+
+@font-face {
 	font-family: "MasonAlternate";
 	src: url("dwarf.ttf");
 }
@@ -158,6 +163,15 @@ body {
 	src: url("aavnic.ttf");
 }
 
+@font-face { 
+  font-family: "Achilles"; 
+  src: url('abyssal.ttf'); 
+}
+
+@font-face { 
+  font-family: "Rasyideen"; 
+  src: url('merar.ttf'); 
+}
 /* */
 
 em {
@@ -931,7 +945,14 @@ h2.alert {
 	font-family: "Romeodn", "Pterra";
 	font-size: 100%;
 }
-
+.abyssal {
+	font-family: "Achilles", "Pterra";
+	font-size: 110%;
+}
+.merar { 
+  font-family: "Rasyideen", "Pterra";
+	font-size: 110%; 
+}
 .torture {
 	color: #42ff20;
 }
@@ -948,7 +969,7 @@ h2.alert {
 .orc					{font-family: "Thief by The Riddler", Pterra;}
 .beast					{font-family: "Thief by The Riddler", Pterra;}
 .reptile				{font-family: "Kingthings Petrock", Pterra; font-size: 120%;}
-.canilunzt					{font-family: "Emperialisme", "Pterra"; font-size: 120%;}
+.canilunzt				{font-family: "Emperialisme", "Pterra"; font-size: 120%;}
 .kazengunese			{font-family: "Yuji Boku", Pterra;}
 .kazenaccent			{font-family: "Geishta", "Pterra"; font-size: 200%;}
 .orc					{font-family: "Thief by The Riddler", "Pterra";}
@@ -958,6 +979,8 @@ h2.alert {
 .etruscan				{font-family: "Feronia", "Pterra"; font-size: 100%;}
 .gronnic				{font-family: "Jorvik Informal", "Pterra"; font-size: 100%;}
 .aavnic					{font-family: "Romeodn", "Pterra"; font-size: 100%;}
+.abyssal				{font-family: "Achilles", "Pterra"; font-size: 110%;}
+.felid					{font-family: "Rasyideen", "Pterra"; font-size: 120%;}
 
 .command_headset {
 	font-weight: bold;

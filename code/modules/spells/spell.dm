@@ -178,6 +178,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/gesture_required = FALSE // Can it be cast while cuffed? Rule of thumb: Offensive spells + Mobility cannot be cast
 	var/spell_tier = 1 // Tier of the spell, used to determine whether you can learn it based on your spell. Starts at 1.
 	var/refundable = FALSE // If true, the spell can be refunded. This is modified at the point it is added to the user's mind by learnspell.
+	var/zizo_spell = FALSE // If this spell is fucked up & evil and can only be learned by heretics.
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
@@ -384,7 +385,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			else
 				user.whisper(chosen_invocation)
 		if("emote")
-			user.visible_message(chosen_invocation, invocation_emote_self) //same style as in mob/living/emote.dm
+			var/emote_incantation = "<b>[usr.real_name]</b> [chosen_invocation]"
+			user.visible_message(emote_incantation, emote_incantation) //this is stupid, but it works.
 
 /obj/effect/proc_holder/spell/proc/playMagSound()
 	var/ss = sound
@@ -498,6 +500,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		QDEL_IN(spell, overlay_lifespan)
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets, mob/user = usr)
+	record_featured_object_stat(FEATURED_STATS_SPELLS, name)
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets, mob/user = usr)

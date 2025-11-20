@@ -347,6 +347,7 @@
 		/datum/sprite_accessory/hair/head/morning,
 		/datum/sprite_accessory/hair/head/kobeni_1,
 		/datum/sprite_accessory/hair/head/kobeni_2,
+		/datum/sprite_accessory/hair/head/kobeni_tail,
 		/datum/sprite_accessory/hair/head/gloomy_short,
 		/datum/sprite_accessory/hair/head/gloomy_medium,
 		/datum/sprite_accessory/hair/head/gloomy_long,

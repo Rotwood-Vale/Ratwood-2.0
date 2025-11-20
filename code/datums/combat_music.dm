@@ -124,13 +124,6 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = "T-87 SULFURHEAD - Cutpurse (https://www.youtube.com/@T87-Sulfurhead)"
 	musicpath = list('sound/music/cmode/antag/combat_cutpurse.ogg')
 
-/datum/combat_music/bandit_mage
-	name = "Bandit Mage (Hedge Mage)"
-	desc = ""
-	shortname = "Bandit Mage"
-	credits = "Timestopper Tactics - corru.works"
-	musicpath = list('sound/music/combat_bandit_mage.ogg')
-
 /datum/combat_music/barbarian
 	name = "Barbarian"
 	desc = "Grit as if you had teeth to grit with left."
@@ -446,15 +439,6 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = "Heilung - Elddansurin"
 	musicpath = list('sound/music/combat_shaman2.ogg')
 
-/* Unused
-/datum/combat_music/shaman_old
-	name = "Shaman, Atgervi (Old)"
-	desc = ""
-	shortname = "Shaman Old"
-	credits = "Heilung - Hakkerskaldyr"
-	musicpath = list('sound/music/combat_shaman.ogg')
-*/
-
 /datum/combat_music/spymaster
 	name = "Spymaster"
 	desc = ""
@@ -513,7 +497,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 
 /datum/combat_music/town_leaders
 	name = "Town Leaders"
-	desc = "Butcher, Innkeeper, Guildmaster, Village Chief, Normal Veteran."
+	desc = "Innkeeper, Guildmaster, Village Chief, Normal Veteran."
 	shortname = "Town Leads"
 	credits = "T-87 SULFURHEAD - How Sausage is Made (https://www.youtube.com/@T87-Sulfurhead)"
 	musicpath = list('sound/music/cmode/towner/combat_retired.ogg')

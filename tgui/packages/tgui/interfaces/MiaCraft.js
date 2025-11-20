@@ -6,11 +6,11 @@ import {
   LabeledList,
   Stack,
 } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-
- // Keep these function outside to prevent re-render
+// Keep these function outside to prevent re-render
 const CraftingCategory = ({ crafties, key3, onlyCraftable, craftability, key, actfunc, searchText }) => {
     const visibleElements = useMemo(() => {
       return Object.entries(crafties).filter(([key2, item2]) => !onlyCraftable || 
@@ -31,7 +31,7 @@ const CraftingCategory = ({ crafties, key3, onlyCraftable, craftability, key, ac
 
   const CraftingRecipe = ({ recipe, key, craftability, actfunc }) => {
     return(
-        <Stack>
+      <Stack>
         <Stack.Item>
           <Button content="🛠" onClick={() => {
             actfunc('craft', {
@@ -49,7 +49,7 @@ const CraftingCategory = ({ crafties, key3, onlyCraftable, craftability, key, ac
               <LabeledList.Item label="Difficulty" style={{ 'margin-left': '20px' }}>
                 {recipe.craftingdifficulty}
               </LabeledList.Item>
-               { recipe.tool_text &&
+              { recipe.tool_text &&
                 <LabeledList.Item label="Tool" style={{ 'margin-left': '20px' }}>
                   {recipe.tool_text}
                 </LabeledList.Item>
@@ -126,7 +126,7 @@ export const MiaCraft = (props, context) => {
   const renderColumn = () => {
     return (
       <Stack vertical>
-          <Stack.Item style={{ 'position': 'sticky', 'paddingLeft': '10px' }}>
+          <Stack.Item style={{ 'position': 'sticky' }}>
               <Stack>
                 <Stack.Item>
                   <Input placeholder="Search..." autoFocus value={searchText} onInput={(e) => SearchTextModify(e.target.value.toLowerCase())} />
@@ -146,10 +146,10 @@ export const MiaCraft = (props, context) => {
           </Stack.Item>
       </Stack>
     );
- };
-
+  };
+  
   return(
-    <Window title='Crafting' width={425} height={600} resizeable>
+    <Window title='Crafting' width={340} height={600} resizeable>
       <Window.Content scrollable>
         <Stack horizontal>
           {renderColumn()}

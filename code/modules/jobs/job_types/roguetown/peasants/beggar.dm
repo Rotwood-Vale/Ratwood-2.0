@@ -6,9 +6,10 @@
 	total_positions = 0
 	spawn_positions = 0
 
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = ACCEPTED_RACES
 	allowed_ages = ALL_AGES_LIST
 	outfit = /datum/outfit/job/roguetown/vagrant
+	job_traits = list(TRAIT_HOMESTEAD_EXPERT)
 	bypass_lastclass = TRUE
 	bypass_jobban = FALSE
 	min_pq = -30
@@ -18,9 +19,9 @@
 	display_order = JDO_VAGRANT
 	show_in_credits = FALSE
 	can_random = FALSE
-	
+
 	cmode_music = 'sound/music/combat_bum.ogg'
-	
+	social_rank = SOCIAL_RANK_PEASANT
 	/// Chance to become a wise beggar, if we still have space for more wise beggars
 	var/wise_chance = 10
 	/// Amount of wise beggars spawned as of now

@@ -43,27 +43,31 @@
 		if(user.voicecolor_override)
 			usedcolor = user.voicecolor_override
 		user.whisper(input_text)
-		var/list/tspans = list()
-		if(user.client.patreonlevel() >= GLOB.patreonsaylevel)
-			tspans |= SPAN_PATREON_SAY
 		if(length(input_text) > 100)
 			input_text = "<small>[input_text]</small>"
 		if(!garrisonline)
 			for(var/obj/structure/roguemachine/scomm/S in SSroguemachine.scomm_machines)
-				S.repeat_message(input_text, src, usedcolor, tspans = tspans)
+				S.repeat_message(input_text, src, usedcolor)
 			for(var/obj/item/scomstone/S in SSroguemachine.scomm_machines)
-				S.repeat_message(input_text, src, usedcolor, tspans = tspans)
+				S.repeat_message(input_text, src, usedcolor)
 			for(var/obj/item/listenstone/S in SSroguemachine.scomm_machines)
-				S.repeat_message(input_text, src, usedcolor, tspans = tspans)
+				S.repeat_message(input_text, src, usedcolor)
+
+			GLOB.broadcast_list += list(list(
+			"message"   = input_text,
+			"tag"		= "The Crown of the Vale",
+			"timestamp" = station_time_timestamp("hh:mm:ss")
+			))
+
 		if(garrisonline)
 			input_text = "<big><span style='color: [GARRISON_CROWN_COLOR]'>[input_text]</span></big>" // Prettying up for Garrison line
 			for(var/obj/item/scomstone/bad/garrison/S in SSroguemachine.scomm_machines)
-				S.repeat_message(input_text, src, usedcolor, tspans = tspans)
+				S.repeat_message(input_text, src, usedcolor)
 			for(var/obj/item/scomstone/garrison/S in SSroguemachine.scomm_machines)
-				S.repeat_message(input_text, src, usedcolor, tspans = tspans)
+				S.repeat_message(input_text, src, usedcolor)
 			for(var/obj/structure/roguemachine/scomm/S in SSroguemachine.scomm_machines)
 				if(S.garrisonline)
-					S.repeat_message(input_text, src, usedcolor, tspans = tspans)
+					S.repeat_message(input_text, src, usedcolor)
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/attack_self(mob/living/user)
 	if(.)

@@ -7,13 +7,8 @@
 	a_intent = INTENT_HELP
 	m_intent = MOVE_INTENT_SNEAK
 	d_intent = INTENT_DODGE
-	possible_rmb_intents = list()
-	wander = FALSE
-
-/mob/living/carbon/human/species/human/northern/thief/ambush
-	aggressive = 1
-	mode = NPC_AI_IDLE
-	wander = FALSE
+	aggressive= TRUE
+	wander = TRUE
 
 /mob/living/carbon/human/species/human/northern/thief/retaliate(mob/living/L)
 	.=..()
@@ -40,7 +35,7 @@
 	ADD_TRAIT(src, TRAIT_LIGHT_STEP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_INFINITE_ENERGY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/human/species/human/northern/thief)
 	gender = pick(MALE, FEMALE)
 	regenerate_icons()
@@ -92,6 +87,7 @@
 		real_name = pick(world.file2list("strings/names/first_male.txt"))
 	update_hair()
 	update_body()
+	head.sellprice = 30
 
 /mob/living/carbon/human/species/human/northern/thief/npc_idle()
 	if(m_intent == MOVE_INTENT_WALK)

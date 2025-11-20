@@ -5,11 +5,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Colorblind"=/datum/charflaw/colorblind,
 	"Smoker"=/datum/charflaw/addiction/smoker,
 	"Junkie"=/datum/charflaw/addiction/junkie,
+	"Unintelligible"=/datum/charflaw/unintelligible,
 	"Greedy"=/datum/charflaw/greedy,
 	"Narcoleptic"=/datum/charflaw/narcoleptic,
 	"Nymphomaniac"=/datum/charflaw/addiction/lovefiend,
 	"Sadist"=/datum/charflaw/addiction/sadist,
-	"Masochist"=/datum/charflaw/masochist,
+	"Masochist"=/datum/charflaw/addiction/masochist,
 	"Paranoid"=/datum/charflaw/paranoid,
 	"Clingy"=/datum/charflaw/clingy,
 	"Isolationist"=/datum/charflaw/isolationist,
@@ -21,6 +22,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Sleepless"=/datum/charflaw/sleepless,
 	"Mute"=/datum/charflaw/mute,
 	"Critical Weakness"=/datum/charflaw/critweakness,
+	"Silver Weakness"=/datum/charflaw/silverweakness,
+	"Hunted"=/datum/charflaw/hunted,
 	"Random or No Flaw"=/datum/charflaw/randflaw,
 	"No Flaw (3 TRIUMPHS)"=/datum/charflaw/noflaw,
 	))
@@ -282,6 +285,37 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	..()
 	user.add_client_colour(/datum/client_colour/monochrome)
 
+/datum/charflaw/hunted
+	name = "Hunted"
+	desc = "Something in my past has made me a target. I'm always looking over my shoulder.	\
+	\nTHIS IS A DIFFICULT FLAW, YOU WILL BE HUNTED BY ASSASSINS AND HAVE ASSASINATION ATTEMPTS MADE AGAINST YOU WITHOUT ANY ESCALATION. \
+	EXPECT A MORE DIFFICULT EXPERIENCE. PLAY AT YOUR OWN RISK."
+	var/logged = FALSE
+
+/datum/charflaw/hunted/flaw_on_life(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(logged == FALSE)
+		if(H.name) // If you don't check this, the log entry wont have a name as flaw_on_life is checked at least once before the name is set.
+			log_hunted("[H.ckey] playing as [H.name] had the hunted flaw by vice.")
+			logged = TRUE
+
+/datum/charflaw/unintelligible
+	name = "Unintelligible"
+	desc = "I cannot speak the common tongue!"
+
+/datum/charflaw/unintelligible/on_mob_creation(mob/user)
+	var/mob/living/carbon/human/recipient = user
+	addtimer(CALLBACK(src, .proc/unintelligible_apply, recipient), 5 SECONDS)
+
+/datum/charflaw/unintelligible/proc/unintelligible_apply(mob/living/carbon/human/user)
+	if(user.advsetup)
+		addtimer(CALLBACK(src, .proc/unintelligible_apply, user), 5 SECONDS)
+		return
+	user.remove_language(/datum/language/common)
+	user.adjust_skillrank(/datum/skill/misc/reading, -6, TRUE)
+
 /datum/charflaw/greedy
 	name = "Greedy"
 	desc = "I can't get enough of mammons, I need more and more! I've also become good at knowing how much things are worth"
@@ -414,64 +448,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	narco.drugged_up = TRUE
 
-#define MASO_THRESHOLD_ONE 1
-#define MASO_THRESHOLD_TWO 2
-#define MASO_THRESHOLD_THREE 3
-#define MASO_THRESHOLD_FOUR 4
-
-/datum/charflaw/masochist
-	name = "Masochist"
-	desc = "I love the feeling of pain, so much I can't get enough of it."
-	var/next_paincrave = 0
-	var/last_pain_threshold = NONE
-
-/datum/charflaw/masochist/on_mob_creation(mob/living/carbon/human/user)
-	next_paincrave = world.time + rand(15 MINUTES, 25 MINUTES)
-
-/datum/charflaw/masochist/flaw_on_life(mob/living/carbon/human/user)
-	if(next_paincrave > world.time)
-		last_pain_threshold = NONE
-		return
-	user.add_stress(/datum/stressevent/vice)
-	user.apply_status_effect(/datum/status_effect/debuff/addiction)
-	var/current_pain = user.get_complex_pain()
-	// Bloodloss makes the pain count as extra large to allow people to bloodlet themselves with cutting weapons to satisfy vice
-	var/bloodloss_factor = clamp(1.0 - (user.blood_volume / BLOOD_VOLUME_NORMAL), 0.0, 0.5)
-	var/new_pain_threshold = get_pain_threshold(current_pain * (1.0 + (bloodloss_factor * 1.4))) // Bloodloss factor goes up to 50%, and then counts at 140% value of that
-	if(last_pain_threshold == NONE)
-		to_chat(user, span_boldwarning("I could really use some pain right now..."))
-	else if (new_pain_threshold != last_pain_threshold)
-		var/ascending = (new_pain_threshold > last_pain_threshold)
-		switch(new_pain_threshold)
-			if(MASO_THRESHOLD_ONE)
-				to_chat(user, span_warning("The pain is gone..."))
-			if(MASO_THRESHOLD_TWO)
-				if(ascending)
-					to_chat(user, span_blue("Yes, more pain!"))
-				else
-					to_chat(user, span_warning("No, my pain!"))
-			if(MASO_THRESHOLD_THREE)
-				to_chat(user, span_blue("More, I love it!"))
-
-	last_pain_threshold = new_pain_threshold
-	if(new_pain_threshold == MASO_THRESHOLD_FOUR)
-		to_chat(user, span_blue("<b>That's more like it...</b>"))
-		next_paincrave = world.time + rand(35 MINUTES, 45 MINUTES)
-		user.remove_stress(/datum/stressevent/vice)
-		user.remove_status_effect(/datum/status_effect/debuff/addiction)
-
-
-/datum/charflaw/masochist/proc/get_pain_threshold(pain_amt)
-	switch(pain_amt)
-		if(-INFINITY to 50)
-			return MASO_THRESHOLD_ONE
-		if(50 to 95)
-			return MASO_THRESHOLD_TWO
-		if(95 to 140)
-			return MASO_THRESHOLD_THREE
-		if(140 to INFINITY)
-			return MASO_THRESHOLD_FOUR
-
 /proc/get_mammons_in_atom(atom/movable/movable)
 	var/static/list/coins_types = typecacheof(/obj/item/roguecoin)
 	var/mammons = 0
@@ -502,3 +478,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/critweakness/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+
+/datum/charflaw/silverweakness
+	name = "Silver Weakness"
+	desc = "I'm sensitive to silver — it burns and injures me more than it should."
+/datum/charflaw/silverweakness/on_mob_creation(mob/user)
+	ADD_TRAIT(user, TRAIT_SILVER_WEAK, TRAIT_GENERIC)

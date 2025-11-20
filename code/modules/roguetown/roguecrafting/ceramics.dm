@@ -1,6 +1,6 @@
 /datum/crafting_recipe/roguetown/ceramics
 	abstract_type = /datum/crafting_recipe/roguetown/ceramics
-	skillcraft = /datum/skill/misc/ceramics
+	skillcraft = /datum/skill/craft/ceramics
 
 /datum/crafting_recipe/roguetown/ceramics/clay
 	structurecraft = /obj/structure/fluff/ceramicswheel
@@ -84,12 +84,6 @@
 	reqs = list(/obj/item/natural/clay = 2, /obj/item/ash = 2, /obj/item/natural/stone = 1)
 	craftdiff = 4 // Knowing how to mix glass is not a trivial knowledge.
 
-/datum/crafting_recipe/roguetown/ceramics/glass/bottles3
-	name = "glass bottles(3x)"
-	result = list(/obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/bottle)
-	reqs = list(/obj/item/natural/glass = 1)
-	craftdiff = 4
-
 /datum/crafting_recipe/roguetown/ceramics/clay/claystatue
 	name = "clay statue"
 	result = list(/obj/item/natural/clay/claystatue)
@@ -98,8 +92,8 @@
 
 /* 5 diff */ // High-end glass containers. Should be a direct upgrade to clay in every possible way.
 
-/datum/crafting_recipe/roguetown/ceramics/glass/statue
-	name = "glass statue (2 glass)"
+/datum/crafting_recipe/roguetown/ceramics/glass/statue 
+	name = "glass statue"
 	result = list(/obj/item/roguestatue/glass)
 	reqs = list(/obj/item/natural/glass = 2)
 	craftdiff = 5

@@ -177,7 +177,7 @@
 	var/adjective
 	switch(breasts.breast_size)
 		if(0)
-			adjective = "a flat"
+			adjective = "a flat chest"
 		if(1)
 			adjective = "a slight"
 		if(2)
@@ -202,4 +202,6 @@
 			adjective = "a stomach-hiding"
 		if(12)
 			adjective = "a torso-sized"
+	if(breasts.breast_size == 0)
+		return "[adjective]" 
 	return "[adjective] pair of breasts"

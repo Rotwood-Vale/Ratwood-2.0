@@ -6,7 +6,7 @@
 	startTurfY = 1
 
 /datum/mapGenerator/underdarkrat
-	modules = list(/datum/mapGeneratorModule/ambushing, /datum/mapGeneratorModule/underdarkratstone, /datum/mapGeneratorModule/underdarkratmud)
+	modules = list(/datum/mapGeneratorModule/underdarkratstone, /datum/mapGeneratorModule/underdarkratmud)
 
 
 /datum/mapGeneratorModule/underdarkratstone

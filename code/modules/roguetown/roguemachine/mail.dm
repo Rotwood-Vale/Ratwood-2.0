@@ -1,6 +1,6 @@
 /obj/structure/roguemachine/mail
 	name = "HERMES"
-	desc = "Carrier zads have fallen severely out of fashion ever since the advent of this hydropneumatic mail system."
+	desc = "Carrier zads have fallen severely out of fashion ever since the advent of this hydropneumatic mail system. A coin slot activates the mechanism for dispensing parchment(a zenny) and quills(a ziliqua)."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "mail"
 	density = FALSE
@@ -213,6 +213,8 @@
 						new /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/vaquero(src.loc)
 					if(14)
 						new /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/warscholar(src.loc)
+					if(15)
+						new /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/anthrax(src.loc)
 			if(C.signed == 0)
 				to_chat(H, "<span class='warning'>I cannot send an unsigned token.</span>")
 				return
@@ -247,7 +249,7 @@
 				visible_message(span_warning("[user] sends something."))
 				budget2change(2, user, "MARQUE")
 				qdel(I)
-				GLOB.azure_round_stats[STATS_MARQUES_MADE] += 2
+				record_round_statistic(STATS_MARQUES_MADE, 2)
 				playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
 				playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 			else
@@ -334,12 +336,12 @@
 							if(I.waxed)
 								bonuses += 2
 							budget2change(bonuses, user, "MARQUE")
-							GLOB.azure_round_stats[STATS_MARQUES_MADE] += bonuses
+							record_round_statistic(STATS_MARQUES_MADE, bonuses)
 						if(I.paired && !indexed && !correct && !cursedblood)
 							if(I.waxed)
 								bonuses += 2
 						budget2change(bonuses, user, "MARQUE")
-						GLOB.azure_round_stats[STATS_MARQUES_MADE] += bonuses
+						record_round_statistic(STATS_MARQUES_MADE, bonuses)
 					else
 						if(I.paired && !indexed && !cursedblood)
 							I.marquevalue += bonuses
@@ -349,9 +351,9 @@
 						if(accused)
 							I.marquevalue -= 4
 						budget2change(I.marquevalue, user, "MARQUE")
-						GLOB.azure_round_stats[STATS_MARQUES_MADE] += I.marquevalue
-					if(I.paired)
-						qdel(I.paired)
+						record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
+					if(I.paired)	
+						qdel(I.paired)	
 					qdel(I)
 					visible_message(span_warning("[user] sends something."))
 					playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
@@ -370,7 +372,7 @@
 				message_admins("INQ ARRIVAL: [user.real_name] ([user.ckey]) has just arrived as a [user.job], earning [I.marquevalue] Marques.")
 				log_game("INQ ARRIVAL: [user.real_name] ([user.ckey]) has just arrived as a [user.job], earning [I.marquevalue] Marques.")
 				budget2change(I.marquevalue, user, "MARQUE")
-				GLOB.azure_round_stats[STATS_MARQUES_MADE] += I.marquevalue
+				record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
 				qdel(I)
 				visible_message(span_warning("[user] sends something."))
 				playsound(loc, 'sound/misc/otavasent.ogg', 100, FALSE, -1)
@@ -433,8 +435,8 @@
 						if(I.waxed)
 							bonuses += 2
 						budget2change(bonuses, user, "MARQUE")
-						GLOB.azure_round_stats[STATS_MARQUES_MADE] += bonuses
-					if(no || selfreport || stopfarming)
+						record_round_statistic(STATS_MARQUES_MADE, bonuses)
+					if(no || selfreport || stopfarming)		
 						qdel(I.paired)
 						qdel(I)
 						visible_message(span_warning("[user] sends something."))
@@ -456,12 +458,12 @@
 						if(!indexed && !correct && !cursedblood)
 							(I.marquevalue -= 4) += bonuses
 							budget2change(I.marquevalue, user, "MARQUE")
-							GLOB.azure_round_stats[STATS_MARQUES_MADE] += I.marquevalue
+							record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
 						if(correct)
 							if(!indexed)
 								I.marquevalue += bonuses
 							budget2change(I.marquevalue, user, "MARQUE")
-							GLOB.azure_round_stats[STATS_MARQUES_MADE] += I.marquevalue
+							record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
 						qdel(I.paired)
 						qdel(I)
 						visible_message(span_warning("[user] sends something."))
@@ -515,7 +517,6 @@
 				for(var/mob/living/carbon/human/H in GLOB.human_list)
 					if(H.real_name == send2place)
 						mailrecipient = H
-						break
 				if(!mailrecipient && (alert("Could not find recipient [send2place]. Still send the letter?", "", "YES", "NO") == "NO")) // ask player if they still want to send a letter to a non-found character
 					return
 				var/findmaster
@@ -560,15 +561,20 @@
 			return
 
 	if(istype(P, /obj/item/roguecoin))
-		if(coin_loaded)
-			return
 		var/obj/item/roguecoin/C = P
-		if(C.quantity > 1)
-			return
-		coin_loaded = C.get_real_price()
-		qdel(C)
+		switch(C.get_real_price())
+			if(1)
+				qdel(C)
+				var/obj/item/paper/papier = new
+				user.put_in_hands(papier)
+			if(5)
+				qdel(C)
+				var/obj/item/natural/feather/quill = new
+				user.put_in_hands(quill)
+			else
+				to_chat(user, span_warning("Not a valid denomination! Insert 1 mammon for paper, 5 mammon for a quill."))
+				return
 		playsound(src, 'sound/misc/coininsert.ogg', 100, FALSE, -1)
-		update_icon()
 		return
 	..()
 

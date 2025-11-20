@@ -3,15 +3,12 @@
 	category = "Footwear"
 
 /datum/crafting_recipe/roguetown/leather/footwear/shoes
-	name = "shoes x3"
-	result = list(/obj/item/clothing/shoes/roguetown/simpleshoes,
-				/obj/item/clothing/shoes/roguetown/simpleshoes,
-				/obj/item/clothing/shoes/roguetown/simpleshoes)
+	name = "shoes"
+	result = /obj/item/clothing/shoes/roguetown/simpleshoes
 	reqs = list(/obj/item/natural/hide/cured = 1)
-	sellprice = 10
 
 /datum/crafting_recipe/roguetown/leather/footwear/boots
-	name = "leather boots "
+	name = "leather boots"
 	result = /obj/item/clothing/shoes/roguetown/boots/leather
 	reqs = list(/obj/item/natural/hide/cured = 1)
 	sellprice = 27

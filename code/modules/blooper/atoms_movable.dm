@@ -3,7 +3,7 @@
 */
 
 /atom/movable
-	
+
 	// Text-to-bark sounds
 	var/sound/vocal_bark
 	var/vocal_bark_id
@@ -36,14 +36,6 @@
 		return
 
 	return ..()
-
-/atom/movable/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_BARK, PROC_REF(handle_special_bark))
-
-/atom/movable/Destroy()
-	UnregisterSignal(src, COMSIG_MOVABLE_BARK)
-	. = ..()
 
 /atom/movable/proc/handle_special_bark(atom/movable/source, list/hearers, distance, volume, pitch)
 	SIGNAL_HANDLER
@@ -79,7 +71,7 @@
 	volume = min(volume, 100)
 	var/turf/T = get_turf(src)
 	for(var/mob/M in hearers)
-		// Uncomment if you ever modernize the playsound procs 
+		// Uncomment if you ever modernize the playsound procs
 		// M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), S = vocal_bark, distance_multiplier = 1)
 		M.playsound_local(
 						turf_source = T,
@@ -87,5 +79,5 @@
 						vary = TRUE,
 						frequency = pitch,
 						falloff = 1,
-						S = vocal_bark, 
+						S = vocal_bark,
 		)
