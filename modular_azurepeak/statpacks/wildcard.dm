@@ -73,15 +73,29 @@
 	if(H.mind)
 		// If already has a vampire antag, do nothing (includes Vampire Lord)
 		if(locate(/datum/antagonist/vampire) in H.mind.antag_datums)
+			// Make sure bloodpool HUD is initialized if it wasn't during on_gain()
+			if(H.hud_used && !H.hud_used.bloodpool)
+				H.hud_used.initialize_bloodpool()
+				H.hud_used.bloodpool?.set_fill_color("#510000")
 			return TRUE
 		// Don't override if they're assigned to be a vampire antagonist (Vampire Lord/Servant)
 		if(H.mind.special_role == ROLE_NBEAST || H.mind.special_role == ROLE_VAMPIRE)
 			return TRUE
 		var/datum/antagonist/vampire/crimson/new_antag = new /datum/antagonist/vampire/crimson()
 		H.mind.add_antag_datum(new_antag)
+		// Ensure bloodpool HUD is initialized after antag is added
+		if(H.hud_used && !H.hud_used.bloodpool)
+			addtimer(CALLBACK(src, PROC_REF(init_bloodpool_hud), H), 1 SECONDS)
 		return TRUE
 	if(tries <= 0)
 		to_chat(H, span_warning("Could not finalize Crimson-Blooded setup. Please notify admins."))
 		return FALSE
 	addtimer(CALLBACK(src, PROC_REF(ensure_crimson_vampire), H, tries - 1), 2 SECONDS)
 	return TRUE
+
+/datum/statpack/wildcard/crimson_blooded/proc/init_bloodpool_hud(mob/living/carbon/human/H)
+	if(!H || QDELETED(H) || !H.hud_used)
+		return
+	if(!H.hud_used.bloodpool)
+		H.hud_used.initialize_bloodpool()
+		H.hud_used.bloodpool?.set_fill_color("#510000")
