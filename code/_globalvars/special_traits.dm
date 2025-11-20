@@ -113,6 +113,9 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 /proc/apply_dnr_trait(mob/living/carbon/human/character, client/player)
 	ADD_TRAIT(player.mob, TRAIT_DNR, TRAIT_GENERIC)
 
+/proc/apply_qsr_trait(mob/living/carbon/human/character, client/player)
+	ADD_TRAIT(player.mob, TRAIT_QUICKSILVERRESISTANT, TRAIT_GENERIC)
+
 /proc/apply_prefs_special(mob/living/carbon/human/character, client/player)
 	if(!player)
 		player = character.client
