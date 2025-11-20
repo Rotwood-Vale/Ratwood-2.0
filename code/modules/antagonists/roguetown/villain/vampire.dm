@@ -159,7 +159,7 @@
 				H.vampire_undisguise(src)
 		vitae -= 1
 	else
-		to_chat(H, "<span class='userdanger'>I RAN OUT OF VITAE!</span>")
+		to_chat(H, "<span class='userdanger'>I RAN OUT OF ARGENTUM!</span>")
 		var/obj/shapeshift_holder/SS = locate() in H
 		if(SS)
 			SS.shape.dust()
@@ -182,7 +182,7 @@
 		vampire_undisguise(VD)
 	else
 		if(VD.vitae < 100)
-			to_chat(src, span_warning("I don't have enough Vitae!"))
+			to_chat(src, span_warning("I don't have enough Argentum!"))
 			return
 		VD.last_transform = world.time
 		vampire_disguise(VD)
@@ -311,7 +311,7 @@
 		to_chat(src, span_warning("My curse is hidden."))
 		return
 	if(VD.vitae < 100)
-		to_chat(src, span_warning("Not enough vitae blood."))
+		to_chat(src, span_warning("Not enough argentum."))
 		return
 	if(has_status_effect(/datum/status_effect/buff/blood_fortitude))
 		to_chat(src, span_warning("Already active."))

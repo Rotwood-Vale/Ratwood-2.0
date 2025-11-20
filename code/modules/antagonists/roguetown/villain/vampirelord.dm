@@ -705,7 +705,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	if(user.mind.special_role != "Vampire Lord")
 		return
 	if(!lord.mypool.check_withdraw(-1000))
-		to_chat(user, "This costs 1000 vitae, I lack that.")
+		to_chat(user, "This costs 1000 argentum, I lack that.")
 		return
 	if(!unlocked)
 		to_chat(user, "I've yet to regain this aspect of my power!")
@@ -969,7 +969,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 /datum/objective/vampirelord/stock
 	name = "stock"
-	explanation_text = "Have a crimson crucible with 30000 vitae."
+	explanation_text = "Have a crimson crucible with 30000 argentum."
 	triumph_count = 1
 
 /datum/objective/vlordsurvive
