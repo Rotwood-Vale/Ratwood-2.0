@@ -20,10 +20,10 @@
 		return
 
 	if(user.bloodpool < 500)
-		to_chat(user, span_warning("You need 500 vitae to summon your sword."))
+		to_chat(user, span_warning("You need 500 sanguinae to summon your sword."))
 		return
 
-	var/choice = alert(user, "Would you like to summon your Ichor Fang for 500 vitae?", "CRIMSON STONE", "MAKE IT SO", "I RESCIND")
+	var/choice = alert(user, "Would you like to summon your Ichor Fang for 500 sanguinae?", "CRIMSON STONE", "MAKE IT SO", "I RESCIND")
 	if(choice != "MAKE IT SO")
 		return
 

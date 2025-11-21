@@ -529,7 +529,7 @@ And it also helps for the character set panel
 	status_type = STATUS_EFFECT_REFRESH
 
 /atom/movable/screen/alert/status_effect/debuff/blood_disgust
-	name = "Sanguine Curse"
+	name = "Sanguinae Curse"
 	desc = "<span class='warning'>This type of blood does not go down well.</span>\n"
 	icon_state = "hunger2"
 

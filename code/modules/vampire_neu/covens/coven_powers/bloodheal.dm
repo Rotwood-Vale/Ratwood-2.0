@@ -1,7 +1,7 @@
 #define HEAL_MULTIPLIER 3.8
 /datum/coven/bloodheal
 	name = "Bloodheal"
-	desc = "Use the power of your Vitae to slowly regenerate your flesh."
+	desc = "Use the power of your Sanguinae to slowly regenerate your flesh."
 	icon_state = "bloodheal"
 	power_type = /datum/coven_power/bloodheal
 	max_level = 5
@@ -52,7 +52,7 @@
 //BLOODHEAL 1
 /datum/coven_power/bloodheal/one
 	name = "Minor Bloodheal"
-	desc = "Slowly regenerate minor wounds using your vitae."
+	desc = "Slowly regenerate minor wounds using your sanguinae."
 
 	level = 1
 	research_cost = 0

@@ -89,7 +89,7 @@
 //POTENCE 4
 /datum/coven_power/potence/four
 	name = "Potence 4"
-	desc = "Become an unyielding machine for as long as your Vitae lasts."
+	desc = "Become an unyielding machine for as long as your Sanguinae lasts."
 
 	level = 4
 	research_cost = 3

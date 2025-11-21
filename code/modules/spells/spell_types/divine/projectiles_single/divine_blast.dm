@@ -73,7 +73,7 @@
 			damage += 20
 		if(HAS_TRAIT(H, TRAIT_SILVER_WEAK) && !H.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
 			H.visible_message("<font color='white'>The unholy strike weakens the curse temporarily!</font>")
-			to_chat(H, span_userdanger("Silver rebukes my presence! My vitae smolders, and my powers wane!"))
+			to_chat(H, span_userdanger("Silver rebukes my presence! My sanguinae smolders, and my powers wane!"))
 			H.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder)
 		var/mob/living/carbon/human/caster
 		if (ishuman(firer))

@@ -159,7 +159,7 @@
 				H.vampire_undisguise(src)
 		vitae -= 1
 	else
-		to_chat(H, "<span class='userdanger'>I RAN OUT OF ARGENTUM!</span>")
+		to_chat(H, "<span class='userdanger'>I RAN OUT OF SANGUINE!</span>")
 		var/obj/shapeshift_holder/SS = locate() in H
 		if(SS)
 			SS.shape.dust()
@@ -182,7 +182,7 @@
 		vampire_undisguise(VD)
 	else
 		if(VD.vitae < 100)
-			to_chat(src, span_warning("I don't have enough Argentum!"))
+			to_chat(src, span_warning("I don't have enough Sanguinae!"))
 			return
 		VD.last_transform = world.time
 		vampire_disguise(VD)
@@ -243,7 +243,7 @@
 		to_chat(src, span_warning("My curse is hidden."))
 		return
 	if(VD.vitae < 100)
-		to_chat(src, span_warning("Not enough vitae."))
+		to_chat(src, span_warning("Not enough sanguinae."))
 		return
 	if(has_status_effect(/datum/status_effect/buff/bloodstrength))
 		to_chat(src, span_warning("Already active."))
@@ -275,7 +275,7 @@
 		to_chat(src, span_warning("My curse is hidden."))
 		return
 	if(VD.vitae < 100)
-		to_chat(src, span_warning("Not enough vitae."))
+		to_chat(src, span_warning("Not enough sanguinae."))
 		return
 	if(has_status_effect(/datum/status_effect/buff/celerity))
 		to_chat(src, span_warning("Already active."))
@@ -311,7 +311,7 @@
 		to_chat(src, span_warning("My curse is hidden."))
 		return
 	if(VD.vitae < 100)
-		to_chat(src, span_warning("Not enough argentum."))
+		to_chat(src, span_warning("Not enough sanguinae."))
 		return
 	if(has_status_effect(/datum/status_effect/buff/blood_fortitude))
 		to_chat(src, span_warning("Already active."))
@@ -378,7 +378,7 @@
 		to_chat(src, span_warning("My BANE is not letting me REGEN!."))
 		return
 	if(VD.vitae < 300)
-		to_chat(src, span_warning("Not enough vitae."))
+		to_chat(src, span_warning("Not enough sanguinae."))
 		return
 	to_chat(src, span_greentext("! REGENERATE !"))
 	src.playsound_local(get_turf(src), 'sound/misc/vampirespell.ogg', 100, FALSE, pressure_affected = FALSE)

@@ -105,7 +105,7 @@
 	name = "Wine, Lux"
 	category = "Other"
 	bottle_name = "luxintebere" // knockoff divine whip wine (magical penis wine)
-	bottle_desc = "A potentially heretickal brew, Lux, when fermented, breaks down into Vitae, which can further ferment into a delectable wine."
+	bottle_desc = "A potentially heretickal brew, Lux, when fermented, breaks down into Sanguinae, which can further ferment into a delectable wine."
 	reagent_to_brew = /datum/reagent/consumable/ethanol/luxwine
 	needed_reagents = list(/datum/reagent/water = 198) // standard
 	needed_items = list(/obj/item/reagent_containers/lux_impure = 1, /obj/item/reagent_containers/food/snacks/sugar = 2,

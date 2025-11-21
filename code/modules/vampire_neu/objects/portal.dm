@@ -10,7 +10,7 @@
 
 
 	if(!user.has_bloodpool_cost(1000))
-		to_chat(user, span_warning("This costs 1000 vitae, I lack that."))
+		to_chat(user, span_warning("This costs 1000 sanguinae, I lack that."))
 		return
 	var/list/choices = list("RETURN", "SENDING", "I RESCIND")
 	switch(input(user, "Which type of portal?", "Portal Type") as null|anything in choices)

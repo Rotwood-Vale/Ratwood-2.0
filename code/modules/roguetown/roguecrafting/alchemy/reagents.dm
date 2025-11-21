@@ -295,7 +295,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	return ..()
 
 /datum/reagent/bloodacid // Quietus Poison for Vampires
-	name = "Vitae Acid"
+	name = "Sanguinae Acid"
 	description = ""
 	reagent_state = LIQUID
 	color = "#ff3300"
@@ -413,7 +413,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	mix_message = "The cauldron glows for a moment."
 
 /datum/chemical_reaction/alch/vitae_essence
-	name = "Vitae Decoction"
+	name = "Sanguinae Decoction"
 	id = /datum/reagent/medicine/vitae_essence
 	results = list(/datum/reagent/medicine/vitae_essence = 1)
 	required_reagents = list(/datum/reagent/vitae = 1, /datum/reagent/toxin/fyritiusnectar = 5)
@@ -491,7 +491,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	
 
 /datum/reagent/medicine/vitae_essence
-	name = "Vitae Decoction"
+	name = "Sanguinae Decoction"
 	description = "Decoction of essence of lyfe, used to restore one's lux humours."
 	color = "#67c7ff" // rgb: 96, 165, 132
 	overdose_threshold = 10

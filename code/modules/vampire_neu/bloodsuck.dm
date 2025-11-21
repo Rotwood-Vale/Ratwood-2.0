@@ -81,7 +81,7 @@
 	if(victim.bloodpool > 0)
 		var/used_vitae = 150
 		victim.blood_volume = max(victim.blood_volume - 45, 0)
-		if(victim.bloodpool < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
+		if(victim.bloodpool < used_vitae)  // We assume they're left with 250 sanguinae or less, so we take it all
 			used_vitae = victim.bloodpool
 			to_chat(src, span_warning("...But alas, only leftovers..."))
 		victim.adjust_bloodpool(-used_vitae)
@@ -130,7 +130,7 @@
 		if(HAS_TRAIT_FROM(src, TRAIT_REFUSED_VAMP_CONVERT, REF(sire)))
 			return
 
-		to_chat(sire, span_danger("The curse fails to take hold of [src], yet you still manage to squeeze the last drop of vitae out of them."))
+		to_chat(sire, span_danger("The curse fails to take hold of [src], yet you still manage to squeeze the last drop of sanguinae out of them."))
 		sire.adjust_bloodpool(VITAE_PER_UNIQUE_CONVERSION_REJECT)
 		ADD_TRAIT(src, TRAIT_REFUSED_VAMP_CONVERT, REF(sire))
 		return

@@ -111,7 +111,7 @@
 
 	active_projects[project_type] = project
 
-	to_chat(user, span_greentext("Started project: [project.display_name]. Begin contributing vitae to progress."))
+	to_chat(user, span_greentext("Started project: [project.display_name]. Begin contributing sanguinae to progress."))
 
 /obj/structure/vampire/bloodpool/proc/handle_project_contribution(mob/living/user)
 	if(!active_projects.len)
@@ -157,7 +157,7 @@
 		if("View Details")
 			project.show_details(user)
 		if("Cancel Project")
-			if(alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", list("Yes", "No")) == "Yes")
+			if(alert(user, "Cancel [project.display_name]?<BR>All invested sanguinae will be refunded.", "CANCELLATION", list("Yes", "No")) == "Yes")
 				cancel_project(project_type)
 
 /obj/structure/vampire/bloodpool/proc/complete_project(project_type)
@@ -212,7 +212,7 @@
 	return TRUE
 
 /datum/vampire_project/proc/confirm_start(mob/living/user)
-	return alert(user, "Begin [display_name]? [description]. Total Cost: [total_cost].You can contribute vitae over time.", "PROJECT START", "MAKE IT SO", "I RESCIND") == "MAKE IT SO"
+	return alert(user, "Begin [display_name]? [description]. Total Cost: [total_cost].You can contribute sanguinae over time.", "PROJECT START", "MAKE IT SO", "I RESCIND") == "MAKE IT SO"
 
 /datum/vampire_project/proc/on_start(mob/living/user)
 	return
@@ -224,7 +224,7 @@
 		if(display_name != "Wicked Plate" || display_name != "World Anchor")
 			max_contribution = min(user.bloodpool, (total_cost - paid_amount) - 100)
 
-	var/contribution = input(user, "How much vitae to contribute? (Max: [max_contribution])", "CONTRIBUTION") as num|null
+	var/contribution = input(user, "How much sanguinae to contribute? (Max: [max_contribution])", "CONTRIBUTION") as num|null
 
 	if(!contribution || contribution <= 0)
 		return
@@ -232,7 +232,7 @@
 	contribution = clamp(contribution, 1, max_contribution)
 
 	if(user.bloodpool < contribution)
-		to_chat(user, span_warning("I do not have enough vitae."))
+		to_chat(user, span_warning("I do not have enough sanguinae."))
 		return
 
 	user.adjust_bloodpool(-contribution)
@@ -241,7 +241,7 @@
 	if(!(user in contributors))
 		contributors += user
 
-	to_chat(user, span_greentext("Contributed [contribution] vitae to [display_name]. ([paid_amount]/[total_cost])"))
+	to_chat(user, span_greentext("Contributed [contribution] sanguinae to [display_name]. ([paid_amount]/[total_cost])"))
 	make_tracker_effects(user.loc, bloodpool, 1, "soul", 3, /obj/effect/tracker/drain, 1)
 
 	if(paid_amount >= total_cost)
@@ -257,14 +257,14 @@
 	return
 
 /datum/vampire_project/proc/on_cancel()
-	// Refund vitae to contributors proportionally
+	// Refund sanguinae to contributors proportionally
 	var/total_refund = paid_amount
 	for(var/mob/living/contributor in contributors)
 		// For simplicity, equal refund to all contributors
 		// You could track individual contributions if needed
 		var/refund_amount = total_refund / contributors.len
 		contributor.adjust_bloodpool(refund_amount)
-		to_chat(contributor, span_notice("Received [refund_amount] vitae refund from cancelled project: [display_name]"))
+		to_chat(contributor, span_notice("Received [refund_amount] sanguinae refund from cancelled project: [display_name]"))
 
 // Specific project types
 /datum/vampire_project/power_growth

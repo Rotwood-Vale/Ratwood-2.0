@@ -554,7 +554,7 @@
 
 /datum/reagent/consumable/ethanol/luxwine // oh no.
 	name = "Luxintenebre" // lux left w/ sugar in a darkened place for quite some time... U could say... Light in Darkness.....
-	description = "A fermented form of vitae, highly alcoholic, and with a particularly grim taste. Often sought out by the daring, foolhardy, and heretical..."
+	description = "A fermented form of sanguinae, highly alcoholic, and with a particularly grim taste. Often sought out by the daring, foolhardy, and heretical..."
 	boozepwr = 80 // THE END OF THE FUCKING WORLD.
 	taste_description = "a green numbness, then a burning vigor in the heart" // heartburn (healing)
 	color = "#86cca3"
