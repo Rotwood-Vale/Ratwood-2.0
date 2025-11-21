@@ -47,8 +47,8 @@
 	var/has_song = FALSE
 	var/is_vet = FALSE
 	var/is_naked = FALSE
-	var/datum/antagonist/vampire/vampireplayer = user.mind.has_antag_datum(/datum/antagonist/vampire)
-	var/datum/antagonist/lich/lichplayer = user.mind.has_antag_datum(/datum/antagonist/lich)
+	var/datum/antagonist/vampire/vampireplayer = user.mind?.has_antag_datum(/datum/antagonist/vampire)
+	var/datum/antagonist/lich/lichplayer = user.mind?.has_antag_datum(/datum/antagonist/lich)
 
 	if(ishuman(holder))
 		var/mob/living/carbon/human/holder_human = holder
@@ -81,8 +81,6 @@
 		flavor_text_nsfw = pref.nsfwflavortext
 		ooc_notes = pref.ooc_notes
 		ooc_notes_nsfw = pref.erpprefs
-		//var/datum/antagonist/vampire/vampireplayer = pref.mind.has_antag_datum(/datum/antagonist/vampire)
-		//var/datum/antagonist/lich/lichplayer = pref.mind.has_antag_datum(/datum/antagonist/lich)
 		if(vampireplayer && (!SEND_SIGNAL(pref, COMSIG_DISGUISE_STATUS))&& !isnull(pref.vampire_headshot_link)) //vampire with their disguise down and a valid headshot
 			headshot = pref.vampire_headshot_link
 		else if (lichplayer && !isnull(pref.lich_headshot_link))//Lich with a valid headshot
