@@ -101,7 +101,7 @@
 			new /obj/structure/glowshroom/dendorite(TT)
 	return TRUE
 
-/obj/effect/proc_holder/spell/self/howl/call_of_the_moon
+/* /obj/effect/proc_holder/spell/self/howl/call_of_the_moon
 	name = "Call of the Moon"
 	desc = "Draw upon the the secrets of the hidden firmament to converse with the mooncursed."
 	overlay_state = "howl"
@@ -126,7 +126,7 @@
 		to_chat(user, span_boldwarning("So it is murmured in the Earth and Air: the Call of the Moon is sacred, and to share knowledge gleaned from it with those not of Him is a SIN."))
 		to_chat(user, span_boldwarning("Ware thee well, child of Dendor."))
 		first_cast = TRUE
-	. = ..()
+	. = ..() */
 
 /obj/effect/proc_holder/spell/invoked/spiderspeak
 	name = "Spider Speak"
