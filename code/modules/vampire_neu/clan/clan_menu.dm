@@ -9,6 +9,10 @@
 	var/datum/coven/coven_one_preliminary
 	var/datum/coven/coven_two_preliminary
 	var/datum/coven/coven_three_preliminary
+	
+	// Dual coven selection system - one vampiric, one divine/inhumen
+	var/datum/coven/vampiric_coven_preliminary
+	var/datum/coven/divine_coven_preliminary
 
 /datum/clan_menu_interface/New(mob/living/carbon/human/target_user)
 	user = target_user
@@ -98,6 +102,32 @@
 				window.location.href = '?src=[REF(src)];action=select_covens';
 			}
 		}
+		function previewVampiricCoven() {
+			window.location.href = '?src=[REF(src)];action=load_coven_preview_vampiric_tree;';
+		}
+		function previewDivineCoven() {
+			window.location.href = '?src=[REF(src)];action=load_coven_preview_divine_tree;';
+		}
+		function selectVampiricCoven() {
+			const form = document.getElementById('vampiric-coven-selection');
+			const formData = new FormData(form);
+
+			let params = '?src=[REF(src)];action=select_vampiric_coven';
+			for(let \[key, value\] of formData.entries()) {
+				params += ';' + key + '=' + encodeURIComponent(value);
+			}
+			window.location.href = params;
+		}
+		function selectDivineCoven() {
+			const form = document.getElementById('divine-coven-selection');
+			const formData = new FormData(form);
+
+			let params = '?src=[REF(src)];action=select_divine_coven';
+			for(let \[key, value\] of formData.entries()) {
+				params += ';' + key + '=' + encodeURIComponent(value);
+			}
+			window.location.href = params;
+		}
 		function previewCovenOne() {
 			window.location.href = '?src=[REF(src)];action=load_coven_preview_one_tree;';
 		}
@@ -176,53 +206,47 @@
 /datum/clan_menu_interface/proc/generate_coven_selection()
 	if(user_clan.covens_to_select < 1 || user != user_clan?.clan_leader)
 		return ""
+	
+	// New dual selection system: one vampiric coven + one divine/inhumen coven
 	return {"
 	<div class="coven-selection">
-		<div class ='coven-form'>
-			<form id='coven-selection1'>
+		<h3 style='color: #CC0000; text-align: center; margin-bottom: 20px;'>Choose Your Covens</h3>
+		<p style='text-align: center; color: #DDD; margin-bottom: 30px;'>
+			Select one Vampiric Coven and one Divine/Inhumen Coven to master.<br>
+			The Sanguine Noctis curse grants you power from both traditional vampirism and the divine realms.
+		</p>
+		
+		<div class='coven-form'>
+			<h4 style='color: #CC0000; margin-bottom: 10px;'>Vampiric Coven</h4>
+			<p style='color: #AAA; font-size: 12px; margin-bottom: 10px;'>Traditional vampiric disciplines - blood, shadow, and predation.</p>
+			<form id='vampiric-coven-selection'>
 				<div class='form-group' style='margin-right: 15px;'>
-					<label for='coven-select' style='display: block; margin-left: 5px; margin-right: 5px;margin-bottom: 5px; color: #CC0000;'></label>
-					<select id='coven-select' onchange='selectCovenOne()' name='coven-type' required style='padding: 8px; background: #1a0000; color: #CC0000; border: 1px solid #8B0000; border-radius: 3px;'>
-						<option value=''>[ispath(coven_one_preliminary) ? initial(coven_one_preliminary.name) : "-- EMPTY --"]</option>
-						[coven_choice()]
+					<select id='vampiric-coven-select' onchange='selectVampiricCoven()' name='coven-type' required style='padding: 8px; background: #1a0000; color: #CC0000; border: 1px solid #8B0000; border-radius: 3px; width: 100%;'>
+						<option value=''>[ispath(vampiric_coven_preliminary) ? initial(vampiric_coven_preliminary.name) : "-- SELECT VAMPIRIC COVEN --"]</option>
+						[coven_choice_vampiric()]
 					</select>
 				</div>
 			</form>
-			[ispath(coven_one_preliminary) ? initial(coven_one_preliminary.desc) : ""]
-			<button type='button' onclick='previewCovenOne()' class='btn-secondary' style='padding: 8px 16px; background: #8B0000; color: #CC0000; border: 1px solid #CC0000; cursor: pointer; border-radius: 4px;'>(?)</button>
+			[ispath(vampiric_coven_preliminary) ? initial(vampiric_coven_preliminary.desc) : ""]
+			<button type='button' onclick='previewVampiricCoven()' class='btn-secondary' style='padding: 8px 16px; background: #4a0000; color: #9a6b6b; border: 1px solid #6a3030; cursor: pointer; border-radius: 4px; margin-top: 10px;'>Preview Powers (?)</button>
 		</div>
-		[user_clan?.covens_to_select >= 2 ? "\
-		<div class ='coven-form'>\
-			<form id='coven-selection2'>\
-				<div class='form-group' style='margin-right: 15px;'>\
-					<label for='coven-select' style='display: block; margin-bottom: 5px; color: #CC0000;'></label>\
-					<select id='coven-select' onchange='selectCovenTwo()' name='coven-type' required style='padding: 8px; background: #1a0000; color: #CC0000; border: 1px solid #8B0000; border-radius: 3px;'>\
-						<option value=''>[ispath(coven_two_preliminary) ? initial(coven_two_preliminary.name) : "-- EMPTY --"]</option>\
-						[coven_choice()]\
-					</select>\
-				</div>\
-			</form>\
-			[ispath(coven_two_preliminary) ? initial(coven_two_preliminary.desc) : ""]\
-			<button type='button' onclick='previewCovenTwo()' class='btn-secondary' style='padding: 8px 16px; background: #8B0000; color: #CC0000; border: 1px solid #CC0000; cursor: pointer; border-radius: 4px;'>(?)</button>\
-		</div>\
-		":""]
-		[user_clan?.covens_to_select >= 3 ? "\
-		<div class ='coven-form'>\
-			<form id='coven-selection3'>\
-				<div class='form-group' style='margin-right: 15px;'>\
-					<label for='coven-select' style='display: block; margin-bottom: 5px; color: #CC0000;'></label>\
-					<select id='coven-select' onchange='selectCovenThree()' name='coven-type' required style='padding: 8px; background: #1a0000; color: #CC0000; border: 1px solid #8B0000; border-radius: 3px;'>\
-						<option value=''>[ispath(coven_three_preliminary) ? initial(coven_three_preliminary.name) : "-- EMPTY --"]</option>\
-						[coven_choice()]\
-					</select>\
-				</div>\
-			</form>\
-			[ispath(coven_three_preliminary) ? initial(coven_three_preliminary.desc) : ""]\
-			<button type='button' onclick='previewCovenThree()' class='btn-secondary' style='padding: 8px 16px; background: #8B0000; color: #CC0000; border: 1px solid #CC0000; cursor: pointer; border-radius: 4px;'>(?)</button>\
-		</div>\
-		":""]
+		
+		<div class='coven-form' style='margin-top: 30px;'>
+			<h4 style='color: #CC0000; margin-bottom: 10px;'>Divine/Inhumen Coven</h4>
+			<p style='color: #AAA; font-size: 12px; margin-bottom: 10px;'>God-aligned powers - wield the gifts of the divine or inhumen.</p>
+			<form id='divine-coven-selection'>
+				<div class='form-group' style='margin-right: 15px;'>
+					<select id='divine-coven-select' onchange='selectDivineCoven()' name='coven-type' required style='padding: 8px; background: #1a0000; color: #CC0000; border: 1px solid #8B0000; border-radius: 3px; width: 100%;'>
+						<option value=''>[ispath(divine_coven_preliminary) ? initial(divine_coven_preliminary.name) : "-- SELECT DIVINE COVEN --"]</option>
+						[coven_choice_divine()]
+					</select>
+				</div>
+			</form>
+			[ispath(divine_coven_preliminary) ? initial(divine_coven_preliminary.desc) : ""]
+			<button type='button' onclick='previewDivineCoven()' class='btn-secondary' style='padding: 8px 16px; background: #4a0000; color: #9a6b6b; border: 1px solid #6a3030; cursor: pointer; border-radius: 4px; margin-top: 10px;'>Preview Powers (?)</button>
+		</div>
 	</div>
-	<button type='button' onclick='submitCovens()' class='btn-primary' style='padding: 10px 20px; background: #8B0000; color: #CC0000; border: 2px solid #CC0000; border-radius: 4px; cursor: pointer; margin-right: 10px; box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);'>Select Covens</button>
+	<button type='button' onclick='submitCovens()' class='btn-primary' style='padding: 10px 20px; background: #5a0000; color: #b88888; border: 2px solid #7a3030; border-radius: 4px; cursor: pointer; margin-top: 30px; margin-right: 10px; box-shadow: 0 0 8px rgba(90, 0, 0, 0.4);'>Confirm Coven Selection</button>
 	"}
 
 /datum/clan_menu_interface/proc/coven_choice()
@@ -230,6 +254,42 @@
 	for(var/coven_path in subtypesof(/datum/coven))
 		var/datum/coven/typecasted = coven_path
 		if(initial(typecasted.clan_restricted))
+			continue
+
+		if(coven_path == coven_one_preliminary || coven_path == coven_two_preliminary || coven_path == coven_three_preliminary)
+			continue
+
+		html += "<option value='[coven_path]'>[initial(typecasted.name)]</option>"
+
+	return html
+
+/datum/clan_menu_interface/proc/coven_choice_vampiric()
+	var/html = ""
+	for(var/coven_path in subtypesof(/datum/coven))
+		var/datum/coven/typecasted = coven_path
+		if(initial(typecasted.clan_restricted))
+			continue
+		
+		// Skip god covens - only show vampiric covens
+		if(initial(typecasted.is_god_coven))
+			continue
+
+		if(coven_path == coven_one_preliminary || coven_path == coven_two_preliminary || coven_path == coven_three_preliminary)
+			continue
+
+		html += "<option value='[coven_path]'>[initial(typecasted.name)]</option>"
+
+	return html
+
+/datum/clan_menu_interface/proc/coven_choice_divine()
+	var/html = ""
+	for(var/coven_path in subtypesof(/datum/coven))
+		var/datum/coven/typecasted = coven_path
+		if(initial(typecasted.clan_restricted))
+			continue
+		
+		// Only show god covens (divine/inhumen)
+		if(!initial(typecasted.is_god_coven))
 			continue
 
 		if(coven_path == coven_one_preliminary || coven_path == coven_two_preliminary || coven_path == coven_three_preliminary)
@@ -1453,6 +1513,12 @@
 		if("load_coven_preview_three_tree")
 			load_coven_research_tree(coven_three_preliminary, preview = TRUE)
 
+		if("load_coven_preview_vampiric_tree")
+			load_coven_research_tree(vampiric_coven_preliminary, preview = TRUE)
+
+		if("load_coven_preview_divine_tree")
+			load_coven_research_tree(divine_coven_preliminary, preview = TRUE)
+
 		if("show_hierarchy")
 			show_hierarchy()
 
@@ -1489,14 +1555,40 @@
 				coven_three_preliminary = typecasted
 			generate_interface()
 
+		if("select_vampiric_coven")
+			var/datum/coven/typecasted = text2path(href_list["coven-type"])
+			if(!initial(typecasted.clan_restricted) && !initial(typecasted.is_god_coven))
+				vampiric_coven_preliminary = typecasted
+			generate_interface()
+
+		if("select_divine_coven")
+			var/datum/coven/typecasted = text2path(href_list["coven-type"])
+			if(!initial(typecasted.clan_restricted) && initial(typecasted.is_god_coven))
+				divine_coven_preliminary = typecasted
+			generate_interface()
+
 		if("select_covens")
+			// Dual coven selection: add one vampiric coven and one divine coven
 			if(user_clan.covens_to_select >= 1)
-				if(user_clan?.add_coven_to_clan(coven_one_preliminary, TRUE))
+				// Add vampiric coven
+				if(vampiric_coven_preliminary && user_clan?.add_coven_to_clan(vampiric_coven_preliminary, TRUE))
 					user_clan.covens_to_select--
-				if(user_clan?.add_coven_to_clan(coven_two_preliminary, TRUE))
+				
+				// Add divine/inhumen coven
+				if(divine_coven_preliminary && user_clan?.add_coven_to_clan(divine_coven_preliminary, TRUE))
 					user_clan.covens_to_select--
-				if(user_clan?.add_coven_to_clan(coven_three_preliminary, TRUE))
-					user_clan.covens_to_select--
+				
+				// Legacy support for old three-coven selection (in case some clans still use it)
+				if(user_clan.covens_to_select >= 1 && coven_one_preliminary)
+					if(user_clan?.add_coven_to_clan(coven_one_preliminary, TRUE))
+						user_clan.covens_to_select--
+				if(user_clan.covens_to_select >= 1 && coven_two_preliminary)
+					if(user_clan?.add_coven_to_clan(coven_two_preliminary, TRUE))
+						user_clan.covens_to_select--
+				if(user_clan.covens_to_select >= 1 && coven_three_preliminary)
+					if(user_clan?.add_coven_to_clan(coven_three_preliminary, TRUE))
+						user_clan.covens_to_select--
+				
 				generate_interface()
 
 		if("edit_position", "submit_edit_position", "select_position", "create_position", "submit_create_position", "assign_member", "submit_assign_member", "remove_position")

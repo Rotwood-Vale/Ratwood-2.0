@@ -7,6 +7,8 @@
 	var/icon_state
 	///If this Coven is unique to a certain Clan.
 	var/clan_restricted = FALSE
+	///If this Coven is aligned to a god (divine or inhumen).
+	var/is_god_coven = FALSE
 	///The root type of the powers this Coven uses.
 	var/power_type = /datum/coven_power
 
