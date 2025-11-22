@@ -19,7 +19,7 @@
 		src.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 
 		src.STASTR = 15 //Might be too high, but then again you're a bear, and you gotta wrestle
-		src.STACON = 6 
+		src.STACON = 12 
 		src.STAWIL = 6
 		src.STAPER = 12
 		src.STASPD = 5 // You are a hulking mass of muscle, and this is for balance reasons
