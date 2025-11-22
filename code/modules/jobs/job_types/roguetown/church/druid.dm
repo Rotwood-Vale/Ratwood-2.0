@@ -82,10 +82,12 @@
 	beltl = /obj/item/rogueweapon/whip //The whip itself is not often associated to many jobs. Druids feel like a thematic choice to have a self-defense whip
 	backl = /obj/item/storage/backpack/rogue/satchel
 	head = /obj/item/clothing/head/roguetown/padded/briarthorns
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/darkgreen
 	wrists = /obj/item/clothing/neck/roguetown/psicross/dendor
 	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
 	pants = /obj/item/clothing/under/roguetown/loincloth/brown
-	backpack_contents = list(/obj/item/ritechalk, /obj/item/storage/keyring/churchie, /obj/item/clothing/head/roguetown/dendormask)
+	shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedanklets
+	backpack_contents = list(/obj/item/ritechalk, /obj/item/storage/keyring/churchie, /obj/item/natural/stone)
 	H.mind?.special_items["Ritual Robes"] = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
 	H.mind?.special_items["Ritual Mask"] = /obj/item/clothing/head/roguetown/dendormask
 	if(H.age == AGE_OLD)
