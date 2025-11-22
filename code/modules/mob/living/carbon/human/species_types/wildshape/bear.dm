@@ -13,16 +13,17 @@
 /mob/living/carbon/human/species/wildshape/bear/gain_inherent_skills()
 	. = ..()
 	if(src.mind)
-		src.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
-		src.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
+		src.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
+		src.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
 		src.adjust_skillrank(/datum/skill/misc/swimming, 4, TRUE) //Bears are good swimmers
 		src.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 
-		src.STASTR = 15 //Might be too high, but then again you're a bear, and you gotta wrestle
-		src.STACON = 12 
-		src.STAWIL = 6
+		src.STASTR = 16 //Strong enough to break out of cuffs instantly
+		src.STACON = 16 
+		src.STAWIL = 2 //Easy to feint, it's a beast
 		src.STAPER = 12
-		src.STASPD = 5 // You are a hulking mass of muscle, and this is for balance reasons
+		src.STAINT = 2 //Lower intelligence, easily tricked
+		src.STASPD = 1 //Slow, not meant for chasing
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/bearclaws)
 		real_name = "Direbear" //So we don't get a random name
@@ -47,6 +48,12 @@
 		TRAIT_NOPAINSTUN,
 		TRAIT_CIVILIZEDBARBARIAN, //They can't punch, more like to kick people.
 		TRAIT_BIGGUY,
+		TRAIT_NUTCRACKER,
+		TRAIT_STRONGKICK,
+		TRAIT_PERFECT_TRACKER,
+		TRAIT_KEENEARS, //Universal shapeform traits
+		TRAIT_DUALWIELDER,
+		TRAIT_SILVER_BLESSED, //Prevents werewolf infection bugs
 	)
 	inherent_biotypes = MOB_HUMANOID
 	armor = 5
@@ -140,7 +147,7 @@
 	sharpness = IS_SHARP
 	parrysound = "bladedmedium"
 	swingsound = list('sound/vo/mobs/direbear/direbear_attack1.ogg','sound/vo/mobs/direbear/direbear_attack2.ogg','sound/vo/mobs/direbear/direbear_attack3.ogg')
-	possible_item_intents = list(/datum/intent/simple/bear, /datum/intent/claw/lunge/iron, /datum/intent/claw/rend, /datum/intent/mace/smash)
+	possible_item_intents = list(/datum/intent/katar/cut, /datum/intent/claw/lunge/iron, /datum/intent/claw/rend, /datum/intent/mace/smash)
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
 	item_flags = DROPDEL
