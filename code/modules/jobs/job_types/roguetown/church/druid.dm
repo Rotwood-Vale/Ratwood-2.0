@@ -34,7 +34,8 @@
 	name = "Druid"
 	tutorial = "You have always been drawn to the wild, and the wild drawn to you. When your calling came, it was from Dendor. \
 	Your patron claims dominion over all nature--promising bounties to those who act in his name to bring balance to His domain. \
-	The forest is the most comfortable place for you, toiling alongside soilsons and soilbrides...although sometimes what lies beyond the gates fills your soul with a feral yearning."
+	The forest is the most comfortable place for you, your duty to roam the wilds in vigil against the rot; keeping the woodland realm serene, despite the endtimes looming.\
+	This is no simple task alone; your grove working alongside the church and warden rangers to overcome the deadites that threaten the balance."
 	outfit = /datum/outfit/job/roguetown/druid/basic
 	category_tags = list(CTAG_DRUID)
 	subclass_languages = list(/datum/language/beast)
@@ -80,10 +81,13 @@
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	beltl = /obj/item/rogueweapon/whip //The whip itself is not often associated to many jobs. Druids feel like a thematic choice to have a self-defense whip
 	backl = /obj/item/storage/backpack/rogue/satchel
-	head = /obj/item/clothing/head/roguetown/dendormask
+	head = /obj/item/clothing/head/roguetown/padded/briarthorns
 	wrists = /obj/item/clothing/neck/roguetown/psicross/dendor
 	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
-	backpack_contents = list(/obj/item/ritechalk, /obj/item/storage/keyring/churchie)
+	pants = /obj/item/clothing/under/roguetown/loincloth/brown
+	backpack_contents = list(/obj/item/ritechalk, /obj/item/storage/keyring/churchie, /obj/item/clothing/head/roguetown/dendormask)
+	H.mind?.special_items["Ritual Robes"] = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
+	H.mind?.special_items["Ritual Mask"] = /obj/item/clothing/head/roguetown/dendormask
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/magic/druidic, 5, TRUE)
