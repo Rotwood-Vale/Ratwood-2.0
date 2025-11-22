@@ -181,48 +181,48 @@
 		<div class ='coven-form'>
 			<form id='coven-selection1'>
 				<div class='form-group' style='margin-right: 15px;'>
-					<label for='coven-select' style='display: block; margin-left: 5px; margin-right: 5px;margin-bottom: 5px; color: #fff;'></label>
-					<select id='coven-select' onchange='selectCovenOne()' name='coven-type' required style='padding: 8px; background: #444; color: #fff; border: 1px solid #666; border-radius: 3px;'>
+					<label for='coven-select' style='display: block; margin-left: 5px; margin-right: 5px;margin-bottom: 5px; color: #CC0000;'></label>
+					<select id='coven-select' onchange='selectCovenOne()' name='coven-type' required style='padding: 8px; background: #1a0000; color: #CC0000; border: 1px solid #8B0000; border-radius: 3px;'>
 						<option value=''>[ispath(coven_one_preliminary) ? initial(coven_one_preliminary.name) : "-- EMPTY --"]</option>
 						[coven_choice()]
 					</select>
 				</div>
 			</form>
 			[ispath(coven_one_preliminary) ? initial(coven_one_preliminary.desc) : ""]
-			<button type='button' onclick='previewCovenOne()' class='btn-secondary' style='padding: 8px 16px; background: #0066cc; color: white; border: none; cursor: pointer;'>(?)</button>
+			<button type='button' onclick='previewCovenOne()' class='btn-secondary' style='padding: 8px 16px; background: #8B0000; color: #CC0000; border: 1px solid #CC0000; cursor: pointer; border-radius: 4px;'>(?)</button>
 		</div>
 		[user_clan?.covens_to_select >= 2 ? "\
 		<div class ='coven-form'>\
 			<form id='coven-selection2'>\
 				<div class='form-group' style='margin-right: 15px;'>\
-					<label for='coven-select' style='display: block; margin-bottom: 5px; color: #fff;'></label>\
-					<select id='coven-select' onchange='selectCovenTwo()' name='coven-type' required style='padding: 8px; background: #444; color: #fff; border: 1px solid #666; border-radius: 3px;'>\
+					<label for='coven-select' style='display: block; margin-bottom: 5px; color: #CC0000;'></label>\
+					<select id='coven-select' onchange='selectCovenTwo()' name='coven-type' required style='padding: 8px; background: #1a0000; color: #CC0000; border: 1px solid #8B0000; border-radius: 3px;'>\
 						<option value=''>[ispath(coven_two_preliminary) ? initial(coven_two_preliminary.name) : "-- EMPTY --"]</option>\
 						[coven_choice()]\
 					</select>\
 				</div>\
 			</form>\
 			[ispath(coven_two_preliminary) ? initial(coven_two_preliminary.desc) : ""]\
-			<button type='button' onclick='previewCovenTwo()' class='btn-secondary' style='padding: 8px 16px; background: #0066cc; color: white; border: none; cursor: pointer;'>(?)</button>\
+			<button type='button' onclick='previewCovenTwo()' class='btn-secondary' style='padding: 8px 16px; background: #8B0000; color: #CC0000; border: 1px solid #CC0000; cursor: pointer; border-radius: 4px;'>(?)</button>\
 		</div>\
 		":""]
 		[user_clan?.covens_to_select >= 3 ? "\
 		<div class ='coven-form'>\
 			<form id='coven-selection3'>\
 				<div class='form-group' style='margin-right: 15px;'>\
-					<label for='coven-select' style='display: block; margin-bottom: 5px; color: #fff;'></label>\
-					<select id='coven-select' onchange='selectCovenThree()' name='coven-type' required style='padding: 8px; background: #444; color: #fff; border: 1px solid #666; border-radius: 3px;'>\
+					<label for='coven-select' style='display: block; margin-bottom: 5px; color: #CC0000;'></label>\
+					<select id='coven-select' onchange='selectCovenThree()' name='coven-type' required style='padding: 8px; background: #1a0000; color: #CC0000; border: 1px solid #8B0000; border-radius: 3px;'>\
 						<option value=''>[ispath(coven_three_preliminary) ? initial(coven_three_preliminary.name) : "-- EMPTY --"]</option>\
 						[coven_choice()]\
 					</select>\
 				</div>\
 			</form>\
 			[ispath(coven_three_preliminary) ? initial(coven_three_preliminary.desc) : ""]\
-			<button type='button' onclick='previewCovenThree()' class='btn-secondary' style='padding: 8px 16px; background: #0066cc; color: white; border: none; cursor: pointer;'>(?)</button>\
+			<button type='button' onclick='previewCovenThree()' class='btn-secondary' style='padding: 8px 16px; background: #8B0000; color: #CC0000; border: 1px solid #CC0000; cursor: pointer; border-radius: 4px;'>(?)</button>\
 		</div>\
 		":""]
 	</div>
-	<button type='button' onclick='submitCovens()' class='btn-primary' style='padding: 8px 16px; background: #0066cc; color: white; border: none; border-radius: 3px; cursor: pointer; margin-right: 10px;'>Select Covens</button>
+	<button type='button' onclick='submitCovens()' class='btn-primary' style='padding: 10px 20px; background: #8B0000; color: #CC0000; border: 2px solid #CC0000; border-radius: 4px; cursor: pointer; margin-right: 10px; box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);'>Select Covens</button>
 	"}
 
 /datum/clan_menu_interface/proc/coven_choice()
@@ -282,15 +282,15 @@
 				flex: 1;
 				position: relative;
 				overflow: auto;
-				background: #1a1a1a;
+				background: #0a0000;
 				height: calc(100% - 40px);
 				margin-bottom: 20px;
 			}
 
 			.hierarchy-sidebar {
 				width: 280px;
-				background: #2a2a2a;
-				border-left: 1px solid #444;
+				background: rgba(20, 0, 0, 0.9);
+				border-left: 2px solid #8B0000;
 				padding: 10px;
 				overflow-y: auto;
 				position: fixed;
@@ -298,17 +298,19 @@
 				top: 80px;
 				height: calc(100vh - 100px);
 				z-index: 1000;
+				box-shadow: -5px 0 15px rgba(139, 0, 0, 0.4);
 			}
 
 			.sidebar-header {
 				margin-bottom: 20px;
-				border-bottom: 1px solid #444;
+				border-bottom: 1px solid #8B0000;
 				padding-bottom: 10px;
 			}
 
 			.sidebar-header h3 {
-				color: #fff;
+				color: #CC0000;
 				margin: 0 0 10px 0;
+				text-shadow: 0 0 8px rgba(204, 0, 0, 0.5);
 			}
 
 			.sidebar-content {
@@ -317,8 +319,9 @@
 			}
 
 			.position-details h4 {
-				color: #fff;
+				color: #CC0000;
 				margin-bottom: 15px;
+				text-shadow: 0 0 6px rgba(204, 0, 0, 0.4);
 			}
 
 			.position-details p {
@@ -340,30 +343,36 @@
 			}
 
 			.btn-primary {
-				background: #007bff;
-				color: white;
+				background: #8B0000;
+				color: #CC0000;
+				border: 1px solid #CC0000;
 			}
 
 			.btn-secondary {
-				background: #6c757d;
-				color: white;
+				background: #4a0000;
+				color: #999;
+				border: 1px solid #6a0000;
 			}
 
 			.btn-danger {
-				background: #dc3545;
-				color: white;
+				background: #a00000;
+				color: #ff0000;
+				border: 1px solid #ff0000;
 			}
 
 			.btn-primary:hover {
-				background: #0056b3;
+				background: #640000;
+				box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
 			}
 
 			.btn-secondary:hover {
-				background: #545b62;
+				background: #6a0000;
+				box-shadow: 0 0 8px rgba(139, 0, 0, 0.4);
 			}
 
 			.btn-danger:hover {
-				background: #c82333;
+				background: #c80000;
+				box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
 			}
 
 			/* Adjust main content to account for sidebar */
@@ -388,9 +397,10 @@
 			.hierarchy-connection {
 				position: absolute;
 				height: 3px;
-				background: linear-gradient(90deg, #666, #888, #666);
+				background: linear-gradient(90deg, rgba(100, 0, 0, 0.6), rgba(139, 0, 0, 0.8), rgba(100, 0, 0, 0.6));
 				border-radius: 1px;
-				opacity: 0.8;
+				opacity: 0.9;
+				box-shadow: 0 0 4px rgba(139, 0, 0, 0.5);
 			}
 
 			/* Node selection styles */
@@ -463,13 +473,15 @@
 
 			.modal-content {
 				position: relative;
-				background: #2a2a2a;
+				background: rgba(20, 0, 0, 0.95);
 				margin: 10% auto;
 				padding: 20px;
 				width: 500px;
 				border-radius: 8px;
-				color: #fff;
+				color: #DDD;
 				overflow-y: auto;
+				border: 2px solid #8B0000;
+				box-shadow: 0 0 30px rgba(139, 0, 0, 0.7);
 			}
 
 			.close {
@@ -478,11 +490,12 @@
 				right: 15px;
 				font-size: 24px;
 				cursor: pointer;
-				color: #ccc;
+				color: #999;
 			}
 
 			.close:hover {
-				color: #fff;
+				color: #CC0000;
+				text-shadow: 0 0 10px rgba(204, 0, 0, 0.7);
 			}
 
 			.form-group {
@@ -492,15 +505,15 @@
 			.form-group label {
 				display: block;
 				margin-bottom: 5px;
-				color: #ccc;
+				color: #CC0000;
 			}
 
 			.form-group input, .form-group textarea, .form-group select {
 				width: 100%;
 				padding: 6px;
-				border: 1px solid #555;
-				background: #1a1a1a;
-				color: #fff;
+				border: 1px solid #8B0000;
+				background: #0a0000;
+				color: #DDD;
 				border-radius: 4px;
 			}
 
@@ -511,7 +524,7 @@
 			body {
 				margin: 0;
 				padding: 0;
-				background: #000;
+				background: linear-gradient(180deg, #000000 0%, #1a0000 50%, #000000 100%);
 				color: #eee;
 				font-family: Arial, sans-serif;
 				overflow: hidden;
@@ -523,13 +536,13 @@
 				left: 0;
 				right: 0;
 				height: 80px;
-				background: linear-gradient(135deg, rgba(139, 69, 19, 0.95), rgba(160, 82, 45, 0.95));
-				border-bottom: 3px solid #8B4513;
+				background: linear-gradient(135deg, rgba(60, 0, 0, 0.95), rgba(100, 0, 0, 0.95), rgba(40, 0, 0, 0.95));
+				border-bottom: 3px solid #8B0000;
 				z-index: 1001;
 				display: flex;
 				align-items: center;
 				padding: 0 30px;
-				box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+				box-shadow: 0 4px 15px rgba(139, 0, 0, 0.8);
 			}
 
 			.clan-info {
@@ -542,8 +555,8 @@
 			.clan-name {
 				font-size: 28px;
 				font-weight: bold;
-				color: #FFD700;
-				text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+				color: #FF0000;
+				text-shadow: 2px 2px 8px rgba(139, 0, 0, 0.9), 0 0 20px rgba(255, 0, 0, 0.5);
 			}
 
 			.clan-desc {
@@ -559,19 +572,21 @@
 			}
 
 			.header-btn {
-				background: rgba(0,0,0,0.4);
-				border: 2px solid #8B4513;
-				color: #FFD700;
+				background: rgba(40, 0, 0, 0.6);
+				border: 2px solid #8B0000;
+				color: #CC0000;
 				padding: 10px 20px;
 				border-radius: 8px;
 				cursor: pointer;
 				font-weight: bold;
 				transition: all 0.3s ease;
+				box-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
 			}
 
 			.header-btn:hover {
-				background: rgba(160, 82, 45, 0.6);
+				background: rgba(100, 0, 0, 0.8);
 				transform: translateY(-2px);
+				box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
 			}
 
 			.main-container {
@@ -582,18 +597,20 @@
 
 			.sidebar {
 				width: 300px;
-				background: linear-gradient(180deg, rgba(139, 69, 19, 0.3), rgba(0, 0, 0, 0.8));
-				border-right: 2px solid #8B4513;
+				background: linear-gradient(180deg, rgba(60, 0, 0, 0.5), rgba(20, 0, 0, 0.9));
+				border-right: 2px solid #8B0000;
 				padding: 20px;
 				overflow-y: auto;
 				z-index: 100;
+				box-shadow: inset -5px 0 15px rgba(139, 0, 0, 0.3);
 			}
 
 			.sidebar h3 {
-				color: #FFD700;
-				border-bottom: 2px solid #8B4513;
+				color: #CC0000;
+				border-bottom: 2px solid #8B0000;
 				padding-bottom: 8px;
 				margin-bottom: 15px;
+				text-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
 			}
 
 			.coven-list {
@@ -603,30 +620,35 @@
 			}
 
 			.coven-item {
-				background: rgba(0,0,0,0.4);
+				background: rgba(20, 0, 0, 0.6);
 				margin-bottom: 10px;
 				padding: 15px;
 				cursor: pointer;
 				transition: all 0.3s ease;
 				position: relative;
+				border: 1px solid rgba(139, 0, 0, 0.3);
+				border-radius: 4px;
 			}
 
 			.coven-item:hover {
-				background: rgba(139, 69, 19, 0.4);
+				background: rgba(60, 0, 0, 0.6);
 				transform: translateX(5px);
+				border-color: rgba(255, 0, 0, 0.5);
+				box-shadow: 0 0 10px rgba(139, 0, 0, 0.4);
 			}
 
 			.coven-item.selected {
-				background: rgba(160, 82, 45, 0.5);
-				border-color: #FFD700;
-				box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+				background: rgba(100, 0, 0, 0.7);
+				border-color: #CC0000;
+				box-shadow: 0 0 15px rgba(204, 0, 0, 0.6), inset 0 0 20px rgba(139, 0, 0, 0.3);
 			}
 
 			.coven-item .coven-name {
 				font-weight: bold;
-				color: #FFD700;
+				color: #CC0000;
 				font-size: 16px;
 				margin-bottom: 5px;
+				text-shadow: 0 0 8px rgba(204, 0, 0, 0.5);
 			}
 
 			.coven-stats {
@@ -648,18 +670,21 @@
 
 			.coven-progress-fill {
 				height: 100%;
-				background: linear-gradient(90deg, #FF6B35, #F7931E);
+				background: linear-gradient(90deg, #8B0000, #CC0000, #FF0000);
 				border-radius: 3px;
 				transition: width 0.3s ease;
+				box-shadow: 0 0 8px rgba(204, 0, 0, 0.6);
 			}
 
 			.research-points {
-				background: rgba(106, 90, 205, 0.3);
-				color: #ADD8E6;
+				background: rgba(100, 0, 0, 0.5);
+				color: #FF6666;
 				padding: 4px 8px;
 				border-radius: 4px;
 				font-size: 11px;
 				display: inline-block;
+				border: 1px solid rgba(204, 0, 0, 0.4);
+				box-shadow: 0 0 6px rgba(204, 0, 0, 0.3);
 			}
 
 			.content-area {
@@ -713,22 +738,23 @@
 
 			.parallax-stars-1 {
 				background: radial-gradient(ellipse at center,
-					rgba(139, 69, 19, 0.3) 0%,
-					rgba(160, 82, 45, 0.2) 40%,
+					rgba(80, 0, 0, 0.4) 0%,
+					rgba(139, 0, 0, 0.3) 40%,
 					transparent 70%),
-					radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.8) 1px, transparent 2px),
-					radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.6) 1px, transparent 2px),
-					radial-gradient(circle at 60% 80%, rgba(160, 82, 45, 0.4) 2px, transparent 4px);
+					radial-gradient(circle at 20% 30%, rgba(204, 0, 0, 0.9) 1px, transparent 2px),
+					radial-gradient(circle at 80% 20%, rgba(139, 0, 0, 0.7) 1px, transparent 2px),
+					radial-gradient(circle at 60% 80%, rgba(255, 0, 0, 0.5) 2px, transparent 4px);
 				background-size: 800px 600px, 200px 150px, 300px 200px, 250px 180px;
-				opacity: 0.8;
+				opacity: 0.9;
 			}
 
 			.gif-showcase {
 				margin: 12px 0;
 				text-align: center;
-				border-top: 1px solid rgba(139, 0, 0, 0.3);
-				border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+				border-top: 1px solid rgba(139, 0, 0, 0.5);
+				border-bottom: 1px solid rgba(139, 0, 0, 0.5);
 				padding: 12px 0;
+				background: rgba(20, 0, 0, 0.2);
 			}
 
 			.gif-container {
@@ -737,7 +763,7 @@
 				border-radius: 8px;
 				overflow: hidden;
 				background: #000;
-				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+				box-shadow: 0 4px 15px rgba(139, 0, 0, 0.7), 0 0 20px rgba(204, 0, 0, 0.3);
 				border: 2px solid #8b0000;
 			}
 
@@ -746,7 +772,7 @@
 				bottom: 0;
 				left: 0;
 				right: 0;
-				background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+				background: linear-gradient(transparent, rgba(20, 0, 0, 0.95));
 				padding: 6px;
 				transform: translateY(100%);
 				transition: transform 0.3s ease;
@@ -757,12 +783,12 @@
 			}
 
 			.gif-label {
-				color: #ff6b6b;
+				color: #CC0000;
 				font-size: 11px;
 				font-weight: bold;
 				text-transform: uppercase;
 				letter-spacing: 1px;
-				text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+				text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9), 0 0 8px rgba(204, 0, 0, 0.6);
 			}
 
 			.parallax-neb {
@@ -794,21 +820,21 @@
 				position: absolute;
 				height: 3px;
 				background: linear-gradient(90deg,
-					rgba(139, 69, 19, 0.8) 0%,
-					rgba(160, 82, 45, 0.6) 50%,
-					rgba(139, 69, 19, 0.4) 100%);
+					rgba(60, 0, 0, 0.8) 0%,
+					rgba(100, 0, 0, 0.7) 50%,
+					rgba(60, 0, 0, 0.5) 100%);
 				transform-origin: left center;
 				z-index: 5;
 				border-radius: 1px;
-				box-shadow: 0 0 4px rgba(139, 69, 19, 0.3);
+				box-shadow: 0 0 6px rgba(139, 0, 0, 0.4);
 			}
 
 			.connection-line.unlocked {
 				background: linear-gradient(90deg,
-					rgba(255, 215, 0, 0.8) 0%,
-					rgba(255, 140, 0, 0.6) 50%,
-					rgba(255, 215, 0, 0.4) 100%);
-				box-shadow: 0 0 4px rgba(255, 215, 0, 0.3);
+					rgba(204, 0, 0, 0.9) 0%,
+					rgba(255, 0, 0, 0.8) 50%,
+					rgba(204, 0, 0, 0.6) 100%);
+				box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
 			}
 
 			.research-node {
@@ -835,14 +861,14 @@
 			}
 
 			.research-node.unlocked img {
-				filter: hue-rotate(45deg) brightness(1.3) drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+				filter: brightness(1.2) drop-shadow(0 0 8px rgba(204, 0, 0, 0.9)) drop-shadow(0 0 12px rgba(255, 0, 0, 0.6));
 			}
 
 			.research-node.available {
 			}
 
 			.research-node.available img {
-				filter: hue-rotate(90deg) brightness(1.1) drop-shadow(0 0 4px rgba(50, 205, 50, 0.6));
+				filter: brightness(1.15) drop-shadow(0 0 6px rgba(139, 0, 0, 0.7)) drop-shadow(0 0 10px rgba(204, 0, 0, 0.4));
 			}
 
 			.research-node.locked img {
@@ -865,8 +891,8 @@
 				position: absolute;
 				top: -5px;
 				right: -5px;
-				background: #8B4513;
-				color: #FFD700;
+				background: #8B0000;
+				color: #FF0000;
 				border-radius: 50%;
 				width: 16px;
 				height: 16px;
@@ -875,26 +901,27 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				border: 1px solid #FFD700;
+				border: 1px solid #CC0000;
+				box-shadow: 0 0 8px rgba(204, 0, 0, 0.7);
 			}
 
 			.tooltip {
 				position: absolute;
-				background: rgba(139, 69, 19, 0.95);
-				border: 2px solid #8B4513;
+				background: rgba(20, 0, 0, 0.97);
+				border: 2px solid #8B0000;
 				border-radius: 12px;
 				padding: 15px;
 				max-width: 350px;
 				z-index: 1000;
 				pointer-events: none;
-				box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+				box-shadow: 0 8px 24px rgba(139, 0, 0, 0.9), 0 0 20px rgba(204, 0, 0, 0.4);
 				backdrop-filter: blur(5px);
 			}
 
 			.tooltip h3 {
 				margin: 0 0 10px 0;
-				color: #FFD700;
-				text-shadow: 0 0 4px rgba(255,215,0,0.5);
+				color: #CC0000;
+				text-shadow: 0 0 8px rgba(204, 0, 0, 0.7), 0 0 12px rgba(255, 0, 0, 0.3);
 			}
 
 			.tooltip p {
@@ -927,20 +954,22 @@
 				position: fixed;
 				bottom: 30px;
 				right: 30px;
-				background: rgba(139, 69, 19, 0.9);
-				border: 2px solid #8B4513;
-				color: #FFD700;
+				background: rgba(60, 0, 0, 0.9);
+				border: 2px solid #8B0000;
+				color: #CC0000;
 				padding: 15px 25px;
 				border-radius: 8px;
 				cursor: pointer;
 				font-weight: bold;
 				z-index: 1000;
 				transition: all 0.3s ease;
+				box-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
 			}
 
 			.close-btn:hover {
-				background: rgba(160, 82, 45, 0.9);
+				background: rgba(100, 0, 0, 0.95);
 				transform: translateY(-3px);
+				box-shadow: 0 0 20px rgba(204, 0, 0, 0.7);
 			}
 
 			.welcome-screen {
@@ -954,10 +983,10 @@
 			}
 
 			.welcome-screen h2 {
-				color: #FFD700;
+				color: #CC0000;
 				font-size: 36px;
 				margin-bottom: 20px;
-				text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+				text-shadow: 2px 2px 6px rgba(0,0,0,0.9), 0 0 20px rgba(204, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.3);
 			}
 
 			.welcome-screen p {
@@ -971,15 +1000,87 @@
 			.clan-emblem {
 				width: 120px;
 				height: 120px;
-				background: rgba(139, 69, 19, 0.3);
-				border: 3px solid #8B4513;
+				background: rgba(60, 0, 0, 0.5);
+				border: 3px solid #8B0000;
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				font-size: 48px;
-				color: #FFD700;
+				color: #CC0000;
 				margin-bottom: 30px;
+				box-shadow: 0 0 20px rgba(139, 0, 0, 0.6), inset 0 0 30px rgba(204, 0, 0, 0.2);
+			}
+
+			.vampire-mechanics {
+				background: rgba(20, 0, 0, 0.4);
+				border: 1px solid #8B0000;
+				border-radius: 8px;
+				padding: 20px;
+				margin: 20px 0;
+				box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
+			}
+
+			.vampire-mechanics h3 {
+				color: #CC0000;
+				margin-top: 0;
+				margin-bottom: 15px;
+				text-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
+			}
+
+			.mechanic-item {
+				margin: 12px 0;
+				padding: 10px;
+				background: rgba(0, 0, 0, 0.3);
+				border-left: 3px solid #8B0000;
+				border-radius: 4px;
+			}
+
+			.blood-type {
+				color: #FF4444;
+				font-weight: bold;
+				text-shadow: 0 0 6px rgba(255, 68, 68, 0.4);
+			}
+
+			.weakness {
+				color: #CC0000;
+				font-weight: bold;
+				text-shadow: 0 0 6px rgba(204, 0, 0, 0.5);
+			}
+
+			.gameplay-tips {
+				background: rgba(20, 0, 0, 0.3);
+				border: 1px solid rgba(139, 0, 0, 0.5);
+				border-radius: 8px;
+				padding: 20px;
+				margin: 20px 0;
+			}
+
+			.gameplay-tips h3 {
+				color: #CC0000;
+				margin-top: 0;
+				margin-bottom: 15px;
+				text-shadow: 0 0 8px rgba(204, 0, 0, 0.4);
+			}
+
+			.tip-item {
+				margin: 10px 0;
+				padding: 8px;
+				background: rgba(0, 0, 0, 0.2);
+				border-left: 2px solid rgba(204, 0, 0, 0.5);
+				border-radius: 3px;
+			}
+
+			.intro-section {
+				background: rgba(20, 0, 0, 0.2);
+				border: 1px solid rgba(139, 0, 0, 0.3);
+				border-radius: 6px;
+				padding: 15px;
+				margin: 15px 0;
+			}
+
+			.intro-section p {
+				color: #DDD;
 			}
 		</style>
 	</head>
