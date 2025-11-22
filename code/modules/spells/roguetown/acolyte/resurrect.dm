@@ -557,12 +557,12 @@
 	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets speed and constitution will be sapped for a time."
 	//Herbs that have to do with intelligence mostly. Easier to remember.
 	required_items = list(
-		/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 3,
+		/obj/item/reagent_containers/food/snacks/grown/manabloom = 3,
 		/obj/item/alch/mentha = 3,
 		/obj/item/reagent_containers/food/snacks/grown/rogue/swampweed = 3
 	)
 	alt_required_items = list(
-		/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 3,
+		/obj/item/reagent_containers/food/snacks/grown/manabloom = 3,
 		/obj/item/reagent_containers/food/snacks/grown/rogue/swampweed = 1
 	)
 	debuff_type = /datum/status_effect/debuff/dendor_revival
