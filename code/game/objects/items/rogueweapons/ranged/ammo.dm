@@ -1,6 +1,6 @@
 #define ARROW_DAMAGE		50
 #define BOLT_DAMAGE			70
-#define BULLET_DAMAGE		80
+#define BULLET_DAMAGE		85
 #define ARROW_PENETRATION	40
 #define BOLT_PENETRATION	50
 #define BULLET_PENETRATION	100
@@ -445,12 +445,12 @@
 
 /obj/projectile/bullet/reusable/bullet
 	name = "lead ball"
-	damage = 50
+	damage = 85 //top list says 85 so it's 85
 	damage_type = BRUTE
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/bullet
-	range = 30
+	range = 42 //it's a god damn MUSKETBALL, of course it's gonna go further than a bolt or an arrow, it's a gun!
 	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
 	embedchance = 100
 	woundclass = BCLASS_STAB

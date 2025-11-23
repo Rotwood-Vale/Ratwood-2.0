@@ -1051,7 +1051,15 @@
 	i_type = "Ammo"
 
 
-// SLING
+// SLING & GUN BULLETS
+
+/datum/anvil_recipe/weapons/tin/bullet
+	name = "musketballs, lead (x4)"
+	req_bar = /obj/item/ingot/tin
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/ammo_casing/caseless/rogue/bullet
+	createditem_num = 4
+	i_type = "Ammo"
 
 /datum/anvil_recipe/weapons/iron/slingbullets
 	name = "Sling Bullets, Iron (x10)"
