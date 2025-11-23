@@ -13,13 +13,13 @@
 /mob/living/carbon/human/species/wildshape/bear/gain_inherent_skills()
 	. = ..()
 	if(src.mind)
-		src.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
-		src.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
+		src.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
+		src.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 		src.adjust_skillrank(/datum/skill/misc/swimming, 4, TRUE) //Bears are good swimmers
 		src.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 
 		src.STASTR = 16 //Strong enough to break out of cuffs instantly
-		src.STACON = 16 
+		src.STACON = 10 
 		src.STAWIL = 2 //Easy to feint, it's a beast
 		src.STAPER = 12
 		src.STAINT = 2 //Lower intelligence, easily tricked
@@ -47,13 +47,7 @@
 		TRAIT_CRITICAL_RESISTANCE, // They have this due to low constitution. So they are not freakish tanky by default.
 		TRAIT_NOPAINSTUN,
 		TRAIT_CIVILIZEDBARBARIAN, //They can't punch, more like to kick people.
-		TRAIT_BIGGUY,
-		TRAIT_NUTCRACKER,
-		TRAIT_STRONGKICK,
-		TRAIT_PERFECT_TRACKER,
-		TRAIT_KEENEARS, //Universal shapeform traits
-		TRAIT_DUALWIELDER,
-		TRAIT_SILVER_BLESSED, //Prevents werewolf infection bugs
+		TRAIT_BIGGUY
 	)
 	inherent_biotypes = MOB_HUMANOID
 	armor = 5
@@ -147,7 +141,7 @@
 	sharpness = IS_SHARP
 	parrysound = "bladedmedium"
 	swingsound = list('sound/vo/mobs/direbear/direbear_attack1.ogg','sound/vo/mobs/direbear/direbear_attack2.ogg','sound/vo/mobs/direbear/direbear_attack3.ogg')
-	possible_item_intents = list(/datum/intent/katar/cut, /datum/intent/claw/lunge/iron, /datum/intent/claw/rend, /datum/intent/mace/smash)
+	possible_item_intents = list(/datum/intent/claw/cut/iron, /datum/intent/claw/lunge/iron, /datum/intent/claw/rend, /datum/intent/mace/smash)
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
 	item_flags = DROPDEL
