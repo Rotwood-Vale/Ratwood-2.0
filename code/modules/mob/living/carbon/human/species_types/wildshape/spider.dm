@@ -40,7 +40,8 @@
 		TRAIT_WILD_EATER,
 		TRAIT_HARDDISMEMBER, //Decapping wildshapes causes them to bug out, badly, and need admin intervention to fix. Bandaid fix.
 		TRAIT_LEAPER,
-		TRAIT_WEBWALK, //This IS a spider
+		TRAIT_WEBWALK, //This IS a spider.
+		TRAIT_VENOMOUS, //This IS a spider. 
 		TRAIT_BREADY, //Ambusher
 		TRAIT_ORGAN_EATER,
 		TRAIT_PIERCEIMMUNE, //Prevents weapon dusting and caltrop effects when killed/stepping on shards, also 8 legs.

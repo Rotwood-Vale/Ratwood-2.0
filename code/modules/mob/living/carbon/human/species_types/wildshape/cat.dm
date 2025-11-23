@@ -40,6 +40,7 @@
 		TRAIT_HARDDISMEMBER, //Decapping wildshapes causes them to bug out, badly, and need admin intervention to fix. Bandaid fix.
 		TRAIT_DODGEEXPERT,
 		TRAIT_BRITTLE,
+		TRAIT_LIGHT_STEP, //Padded Pawbs for doin' crime sneakily
 		TRAIT_LEAPER,
 		TRAIT_ZJUMP //its a CAT. Cats can jump so high!
 	)

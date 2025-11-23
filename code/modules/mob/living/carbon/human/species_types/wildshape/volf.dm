@@ -21,9 +21,10 @@
 		src.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE) //Stalking
 
 		src.STASTR = 10
-		src.STACON = 7
+		src.STACON = 10 // Buffed due to Direbear and Fox Form giving it a better defined role
 		src.STAPER = 12
 		src.STASPD = 13
+		src.STAWIL = 7 // May as well do all of them at this point to prevent any inconsistency
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/wolfclaws)
 		real_name = "volf" //So we don't get a random name

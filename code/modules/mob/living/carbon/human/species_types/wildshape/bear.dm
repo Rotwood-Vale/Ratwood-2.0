@@ -18,10 +18,10 @@
 		src.adjust_skillrank(/datum/skill/misc/swimming, 4, TRUE) //Bears are good swimmers
 		src.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 
-		src.STASTR = 16 //Strong enough to break out of cuffs instantly
-		src.STACON = 10 
-		src.STAWIL = 2 //Easy to feint, it's a beast
-		src.STAPER = 12
+		src.STASTR = 13 //Strong enough to break out of cuffs instantly
+		src.STACON = 16 // TANKY enough to withstand bleeding as its final call; but that's the counter.  
+		src.STAWIL = 6 //Willpower or Stamina Represents Endurance; and they need this to actually fight 
+		src.STAPER = 10 // 
 		src.STAINT = 2 //Lower intelligence, easily tricked
 		src.STASPD = 1 //Slow, not meant for chasing
 

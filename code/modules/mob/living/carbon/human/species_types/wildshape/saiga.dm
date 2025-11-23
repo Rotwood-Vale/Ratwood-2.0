@@ -18,7 +18,7 @@
 		src.adjust_skillrank(/datum/skill/misc/swimming, 4, TRUE)
 		src.adjust_skillrank(/datum/skill/misc/athletics, 5, TRUE)
 
-		src.STASTR = 10
+		src.STASTR = 12
 		src.STACON = 13
 		src.STAWIL = 18 //Because I don't want to give it TRAIT_INFINITE_STAMINA
 		src.STASPD = 15

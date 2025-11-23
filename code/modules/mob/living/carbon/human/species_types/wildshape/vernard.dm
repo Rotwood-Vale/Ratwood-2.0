@@ -17,8 +17,10 @@
 
 		src.STASTR = 8
 		src.STACON = 6
-		src.STAPER = 10
+		src.STAPER = 16
 		src.STASPD = 16
+		src.STALUC = 13
+		src.STAWIL = 7
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/foxclaws)
 		real_name = "Vernard" //So we don't get a random name
@@ -33,6 +35,8 @@
 		TRAIT_KNEESTINGER_IMMUNITY, //All of these are dendorite transformations, they are ALL blessed by dendor
 		TRAIT_DODGEEXPERT,
 		TRAIT_STEELHEARTED,
+		TRAIT_NOFALLDAMAGE1, // Somewhere between the cat and wolf is the fox! therefore only halved damage and no jumping up!
+		TRAIT_LIGHT_STEP, // The sleuth role, they get they padded pawb trait
 		TRAIT_BREADY, //Ambusher
 		TRAIT_ORGAN_EATER,
 		TRAIT_WILD_EATER,
