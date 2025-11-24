@@ -496,7 +496,7 @@
 	req_blade = /obj/item/blade/steel_axe
 	created_item = /obj/item/rogueweapon/stoneaxe/hurlbat
 
-/datum/anvil_recipe/weapons/silver/sword
+/datum/anvil_recipe/weapons/steel/rapier
 	name = "Rapier, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
@@ -818,7 +818,7 @@
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver)
 	created_item = /obj/item/rogueweapon/sword/silver
 
-/datum/anvil_recipe/weapons/silver/rapier
+/datum/anvil_recipe/weapons/silver/sword
 	name = "Rapier, Silver (+2 Silver)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver)
