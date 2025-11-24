@@ -12,6 +12,8 @@
 		TRAIT_DARKVISION,
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_SILVER_WEAK,
+		TRAIT_ZOMBIE_IMMUNE,
+		TRAIT_WILD_EATER,
 	)
 
 // Custom vampire abilities for Crimson-Blooded - journeyman blood sorcery, no bat form

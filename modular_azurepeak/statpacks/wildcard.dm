@@ -46,7 +46,7 @@
 	<span style='color: #DC143C;'>• <b>Blood Hunger:</b> Must consume living blood to survive.</span><br>\
 	<span style='color: #B22222;'>• <b>Mortal Emotions:</b> Unlike true vampyrs, you still feel pain and emotion fully, and die to mortal wounds as any living being.</span><br>\
 	<span style='color: #8B0000;'>• <b>Necra's Ire:</b> Trapped outside rebirth, hunted by Morticians and vampyr purists alike</span><br><br>\
-	<span style='color: #9370DB;'><i>Traits: Vampire Bite • No Sleep • Darkvision • Limb Attachment • Silver Weakness • Vampiric Dreams</i></span>"
+	<span style='color: #9370DB;'><i>Traits: Vampire Bite • No Sleep • Darkvision • Limb Attachment • Silver Weakness • Vampiric Dreams • Wild Eater • Deadite Infection Immunity </i></span>"
 
 
 
