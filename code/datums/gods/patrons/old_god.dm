@@ -165,7 +165,14 @@
 		var/pp = 0
 		var/damtotal = brute + burn
 		var/zcross_trigger = FALSE
-		if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD)) // YOU ARE NO LONGER MORTAL. NO LONGER OF HIM. PSYDON WEEPS.
+		// Check if target is undead - but allow disguised vampires to be healed
+		var/is_disguised = FALSE
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/datum/component/vampire_disguise/disguise_comp = H.GetComponent(/datum/component/vampire_disguise)
+			if(disguise_comp && disguise_comp.disguised)
+				is_disguised = TRUE
+		if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD) && !is_disguised) // YOU ARE NO LONGER MORTAL. NO LONGER OF HIM. PSYDON WEEPS.
 			target.visible_message(span_danger("[target] shudders with a strange stirring feeling!"), span_userdanger("It hurts. You feel like weeping."))
 			target.adjustBruteLoss(40)
 			return TRUE

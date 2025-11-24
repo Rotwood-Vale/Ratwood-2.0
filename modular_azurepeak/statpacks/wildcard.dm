@@ -27,7 +27,7 @@
 
 //------------------------------------------------------------------
 /datum/statpack/wildcard/crimson_blooded
-	name = "Crimson-Blooded"
+	name = "Sanguine Noctis"
 	min_pq = 30
 	desc = "<span style='color: #8B0000;'><b>⚠ Requires 30 PQ ⚠</b></span><br>\
 	<span style='color: #DAA520;'>When <span style='color: #FFD700;'><b>Psydon</b></span> fell to Zizo's spear, His divine lifeblood—the <span style='color: #C0C0C0;'><b>Argentum</b></span>—spilled across the world. \
@@ -36,18 +36,17 @@
 	forever cursed to walk between life and death. <b>Click 'Read Lore Primer' to learn more.</b></span><br><br>\
 	<span style='color: #00FF00;'><b>✦ DARK GIFTS ✦</b></span><br>\
 	<span style='color: #90EE90;'>• <b>Vampiric Bite:</b> Drain the living Argentum from mortal blood to fuel your cursed existence</span><br>\
-	<span style='color: #98FB98;'>• <b>Eyes of Night:</b> Pierce the deepest darkness as creatures born of god-killing night</span><br>\
-	<span style='color: #8FBC8F;'>• <b>Deathless Vigil:</b> Transcend breath, poison, and sleep—yet slumber in a coffin heals</span><br>\
-	<span style='color: #7CFC00;'>• <b>Unholy Regeneration:</b> Reattach severed limbs; vitae accelerates unnatural healing</span><br>\
-	<span style='color: #32CD32;'>• <b>Blood Sorcery:</b> Master one forbidden coven with 7 research points</span><br>\
-	<span style='color: #00FA9A;'>• <b>Sire's Curse:</b> Create new vampyrs by draining mortals to near-death (requires consent)</span><br><br>\
+	<span style='color: #98FB98;'>• <b>Eyes of Night:</b> Pierce the deepest darkness with darkvision</span><br>\
+	<span style='color: #32CD32;'>• <b>Dual Covenant:</b> Master one vampiric coven AND one god-aligned coven (11 research points total)</span><br>\
+	<span style='color: #00FA9A;'>• <b>Sire's Curse:</b> Create new vampyrs by draining mortals to near-death (requires consent)</span><br>\
+	<span style='color: #20B2AA;'>• <b>Torpor Regeneration:</b> Rest in coffins to enter deathless slumber and heal wounds</span><br><br>\
 	<span style='color: #FF0000;'><b>☠ TERRIBLE PRICE ☠</b></span><br>\
-	<span style='color: #FF6347;'>• <b>Astrata's Scorn:</b> Sunlight burns as retribution for your arcane hubris</span><br>\
-	<span style='color: #FF4500;'>• <b>Silver Bane:</b> Sacred silver causes agony and instinctual panic</span><br>\
-	<span style='color: #DC143C;'>• <b>Divine Deficit:</b> Must consume living blood to fuel the corrupted Argentum within</span><br>\
-	<span style='color: #B22222;'>• <b>Mortal Frailty:</b> Pain and emotion still torment you—you are no true vampyr</span><br>\
-	<span style='color: #8B0000;'>• <b>Necra's Ire:</b> Trapped outside the cycle of rebirth, hunted by Morticians and vampyr alike.</span><br><br>\
-	<span style='color: #9370DB;'><i>Traits: Vampire Bite • Breathless • Toxin Immune • Sleepless • Darkvision • Limb Attachment • Silver Weakness • Vampiric Dreams</i></span>"
+	<span style='color: #FF6347;'>• <b>Astrata's Scorn:</b> Sunlight burns you horribly—remain in shadow or perish</span><br>\
+	<span style='color: #FF4500;'>• <b>Silver Bane:</b> Sacred silver triggers blood frenzy and causes severe pain</span><br>\
+	<span style='color: #DC143C;'>• <b>Blood Hunger:</b> Must consume living blood to survive.</span><br>\
+	<span style='color: #B22222;'>• <b>Mortal Emotions:</b> Unlike true vampyrs, you still feel pain and emotion fully, and die to mortal wounds as any living being.</span><br>\
+	<span style='color: #8B0000;'>• <b>Necra's Ire:</b> Trapped outside rebirth, hunted by Morticians and vampyr purists alike</span><br><br>\
+	<span style='color: #9370DB;'><i>Traits: Vampire Bite • No Sleep • Darkvision • Limb Attachment • Silver Weakness • Vampiric Dreams</i></span>"
 
 
 

@@ -2272,20 +2272,26 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					var/new_vampirehair = input(user, "Choose your character's vampire hair color:", "Character Preference","#"+vampire_hair) as color|null
 					if(new_vampirehair)
 						vampire_hair = new_vampirehair
+						SetAntag(user)
 				if("vampire_eyes")
 					var/new_vampireeyes = input(user, "Choose your character's vampire eye color:", "Character Preference","#"+vampire_eyes) as color|null
 					if(new_vampireeyes)
 						vampire_eyes = new_vampireeyes
+						SetAntag(user)
 				if("vampire_skin")
 					var/new_vampireskin = input(user, "Choose your character's vampire skin color:", "Character Preference","#"+vampire_skin) as color|null
 					if(new_vampireskin)
 						vampire_skin = new_vampireskin
+						SetAntag(user)
 				if("vampire_hair_clear")
 					vampire_hair = null
+					SetAntag(user)
 				if("vampire_eyes_clear")
 					vampire_eyes = null
+					SetAntag(user)
 				if("vampire_skin_clear")
 					vampire_skin = null
+					SetAntag(user)
 				if("species")
 					var/list/species = list()
 					for(var/A in GLOB.roundstart_races)
@@ -2312,6 +2318,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					dnr_pref = !dnr_pref
 				if("qsr")
 					qsr_pref = !qsr_pref
+					SetAntag(user)
 				if("virtue")
 					var/list/virtue_choices = list()
 					for (var/path as anything in GLOB.virtues)

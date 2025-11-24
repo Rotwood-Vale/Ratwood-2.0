@@ -34,7 +34,7 @@
 
 GLOBAL_LIST_INIT(vamp_generation_to_text, list(
 	"Thin Blood",
-	"Crimson Blood",
+	"Sanguine Noctis",
 	"Neonate",
 	"Ancillae",
 	"Methuselah",

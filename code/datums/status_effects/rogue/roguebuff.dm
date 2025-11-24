@@ -473,6 +473,41 @@
 		// The penalty/benefit of healing tech is halved for inhumen followers
 		tech_healing_modifier = 1 + ((tech_healing_modifier - 1) * 0.5)
 	healing_on_tick *= tech_healing_modifier
+	
+	if(ishuman(new_owner))
+		var/mob/living/carbon/human/H = new_owner
+		if(H.patron)
+			switch(H.patron.type)
+				if(/datum/patron/divine/astrata)
+					outline_colour = "#FFD700"
+				if(/datum/patron/divine/noc)
+					outline_colour = "#191970"
+				if(/datum/patron/divine/dendor)
+					outline_colour = "#228B22"
+				if(/datum/patron/divine/abyssor)
+					outline_colour = "#000080"
+				if(/datum/patron/divine/ravox)
+					outline_colour = "#8B0000"
+				if(/datum/patron/divine/necra)
+					outline_colour = "#C0C0C0"
+				if(/datum/patron/divine/xylix)
+					outline_colour = "#9400D3"
+				if(/datum/patron/divine/pestra)
+					outline_colour = "#00FF00"
+				if(/datum/patron/divine/malum)
+					outline_colour = "#FF4500"
+				if(/datum/patron/divine/eora)
+					outline_colour = "#FF69B4"
+				if(/datum/patron/inhumen/zizo)
+					outline_colour = "#4B0082"
+				if(/datum/patron/inhumen/graggar)
+					outline_colour = "#FF0000"
+				if(/datum/patron/inhumen/matthios)
+					outline_colour = "#FFFF00"
+				if(/datum/patron/inhumen/baotha)
+					outline_colour = "#FF1493"
+				if(/datum/patron/old_god)
+					outline_colour = "#FFFFFF"
 	return ..()
 
 /datum/status_effect/buff/healing/on_apply()
@@ -484,7 +519,7 @@
 
 /datum/status_effect/buff/healing/tick()
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
-	H.color = "#FF0000"
+	H.color = outline_colour
 	var/list/wCount = owner.get_wounds()
 	if(!owner.construct)
 		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)

@@ -40,7 +40,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		if(GENERATION_ANCILLAE)
 			research_points = 17
 		if(GENERATION_NEONATE)
-			research_points = 9
+			research_points = 15
 		if(GENERATION_CRIMSONBLOOD)
 			research_points = 11 // This might be idiotic, but considering they only have one coven to choose from, they should get a bit more
 		if(GENERATION_THINBLOOD)
@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		if(GENERATION_NEONATE)
 			return 0.75 // Licker Wretch
 		if(GENERATION_CRIMSONBLOOD)
-			return 0.5 // Crimson blood - between thinblood and neonate
+			return 0.5 // Sanguine Noctis - between thinblood and neonate
 		if(GENERATION_THINBLOOD)
 			return 0.25 // You are not even an antagonist
 		else
@@ -248,7 +248,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	. = ..(incoming_clan, forced_clan, generation)
 
 /datum/antagonist/vampire/crimson
-	name = "Crimson Blood"
+	name = "Sanguine Noctis"
 	show_in_antagpanel = TRUE
 	show_in_roundend = FALSE
 	antag_hud_type = ANTAG_HUD_TRAITOR
@@ -276,19 +276,19 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 /datum/antagonist/vampire/crimson/create_custom_clan(mob/living/carbon/human/vampdude)
 	// Get custom clan name via input with fallback
-	to_chat(vampdude, span_notice("<b>Customize your Crimson Blood clan...</b>"))
+	to_chat(vampdude, span_notice("<b>Customize your Sanguine Noctis clan...</b>"))
 	
-	var/custom_clan_name = tgui_input_text(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Crimson Clan", encode = FALSE, timeout = 60 SECONDS)
+	var/custom_clan_name = tgui_input_text(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Sanguine Clan", encode = FALSE, timeout = 60 SECONDS)
 	if(!custom_clan_name)
-		custom_clan_name = input(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Crimson Clan") as text|null
+		custom_clan_name = input(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Sanguine Clan") as text|null
 	if(!custom_clan_name)
-		custom_clan_name = "Custom Crimson Clan"
+		custom_clan_name = "Custom Sanguine Clan"
 	
-	var/custom_clan_desc = tgui_input_text(vampdude, "Describe your clan:", "Clan Description", "A custom vampire clan with crimson blood traits.", encode = FALSE, timeout = 60 SECONDS)
+	var/custom_clan_desc = tgui_input_text(vampdude, "Describe your clan:", "Clan Description", "A custom vampire clan with Sanguine Noctis traits.", encode = FALSE, timeout = 60 SECONDS)
 	if(!custom_clan_desc)
-		custom_clan_desc = input(vampdude, "Describe your clan:", "Clan Description", "A custom vampire clan with crimson blood traits.") as text|null
+		custom_clan_desc = input(vampdude, "Describe your clan:", "Clan Description", "A custom vampire clan with Sanguine Noctis traits.") as text|null
 	if(!custom_clan_desc)
-		custom_clan_desc = "A custom vampire clan with crimson blood traits."
+		custom_clan_desc = "A custom vampire clan with Sanguine Noctis traits."
 
 	var/datum/clan/crimson_blood/new_clan = new /datum/clan/crimson_blood()
 	new_clan.name = custom_clan_name
@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	set category = "VAMPIRE"
 	
 	if(!clan || !istype(clan, /datum/clan/crimson_blood))
-		to_chat(src, span_warning("You don't have a crimson blood clan to customize!"))
+		to_chat(src, span_warning("You don't have a Sanguine Noctis clan to customize!"))
 		verbs -= /mob/living/carbon/human/proc/recustomize_crimson_clan
 		return
 	

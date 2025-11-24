@@ -53,7 +53,7 @@
 
 	// Apply fire damage
 	H.fire_act(1, burn_damage)
-
-	// Freak out if on fire
+	
+	// Make vampire panic when on fire (even when disguised)
 	if(H.on_fire)
 		H.freak_out()

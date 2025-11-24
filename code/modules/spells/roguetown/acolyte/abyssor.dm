@@ -213,7 +213,14 @@
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
-		if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD))
+		// Check if target is undead - but allow disguised vampires to be healed
+		var/is_disguised = FALSE
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/datum/component/vampire_disguise/disguise_comp = H.GetComponent(/datum/component/vampire_disguise)
+			if(disguise_comp && disguise_comp.disguised)
+				is_disguised = TRUE
+		if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD) && !is_disguised)
 			target.visible_message(span_danger("[target] is crushed by divine pressure!"), span_userdanger("I'm crushed by divine pressure!"))
 			target.adjustBruteLoss(30)			
 			return TRUE

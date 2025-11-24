@@ -385,10 +385,10 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 							H.fire_act(1,5)
 							handle_vitae(-10)
 	if(H.on_fire)
+		H.freak_out()
 		if(disguised)
 			last_transform = world.time
 			H.vampire_undisguise(src)
-		H.freak_out()
 
 	if(H.stat)
 		if(istype(H.loc, /obj/structure/closet/crate/coffin))

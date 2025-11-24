@@ -1,14 +1,12 @@
 // Custom clan base for Crimson-Blooded statpack
 /datum/clan/crimson_blood
-	name = "Crimson Blood"
-	desc = "Those cursed with crimson blood are neither fully vampire nor fully mortal."
+	name = "Sanguine Noctis"
+	desc = "Those cursed with Sanguine Noctis - the corrupted blood of PSYDON - are neither fully vampire nor fully mortal."
 	selectable_by_vampires = FALSE
 	covens_to_select = 1
 	leader = /datum/clan_leader/crimson // Custom leader without bat form
 	clane_traits = list(
 		TRAIT_VAMPBITE,
-		TRAIT_NOBREATH,
-		TRAIT_TOXIMMUNE,
 		TRAIT_NOSLEEP,
 		TRAIT_VAMP_DREAMS,
 		TRAIT_DARKVISION,
