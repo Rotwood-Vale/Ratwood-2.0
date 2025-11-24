@@ -13,7 +13,7 @@
 	name = "Ancient Touch"
 	desc = "Channel Psydon's ancient power to heal yourself, but suffer exhaustion as payment."
 	level = 1
-	research_cost = 2
+	research_cost = 0
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = NONE
 	range = 0
@@ -28,21 +28,21 @@
 		return FALSE
 	
 	// Apply self-heal miracle AND buff
-	owner.apply_status_effect(/datum/status_effect/buff/healing, 2, FALSE)
+	owner.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 2, FALSE)
 	owner.apply_status_effect(/datum/status_effect/buff/ancient_touch)
 	
 	owner.visible_message(span_notice("[owner] channels ancient power..."))
 	to_chat(owner, span_warning("The weight of aeons bears down on me!"))
 	owner.stamina_add(75)
 	
-	playsound(get_turf(owner), 'sound/magic/churn.ogg', 50, TRUE)
+	playsound(get_turf(owner), 'sound/magic/ENDVRE.ogg', 50, TRUE)
 	return TRUE
 
 /datum/coven_power/old_god/ancient_blessing
 	name = "Ancient Blessing"
 	desc = "Bestow Psydon's ancient power upon an ally, suffering greater exhaustion yourself."
 	level = 2
-	research_cost = 3
+	research_cost = 1
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = TARGET_HUMAN
 	range = 5
@@ -63,7 +63,7 @@
 	var/mob/living/carbon/human/ally = target
 	
 	// Apply healing to ally AND buff
-	ally.apply_status_effect(/datum/status_effect/buff/healing, 3, FALSE)
+	ally.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 3, FALSE)
 	ally.apply_status_effect(/datum/status_effect/buff/ancient_blessing)
 	
 	owner.visible_message(span_notice("[owner] channels ancient power into [ally]!"))
@@ -71,14 +71,14 @@
 	to_chat(owner, span_userdanger("The burden of ages crushes me!"))
 	owner.stamina_add(75)
 	
-	playsound(get_turf(ally), 'sound/magic/churn.ogg', 50, TRUE)
+	playsound(get_turf(ally), 'sound/magic/ENDVRE.ogg', 50, TRUE)
 	return TRUE
 
 /datum/coven_power/old_god/ancient_wrath
 	name = "Ancient Wrath"
 	desc = "Call upon Psydon's ancient power to empower Psydonian allies. Psydon cares not for the feuds of newer gods."
 	level = 3
-	research_cost = 4
+	research_cost = 2
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = TARGET_TURF
 	range = 7
@@ -109,7 +109,7 @@
 	name = "Ancient Avatar"
 	desc = "Temporarily embody Psydon's ancient essence, gaining his enduring power."
 	level = 4
-	research_cost = 5
+	research_cost = 3
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = NONE
 	range = 0

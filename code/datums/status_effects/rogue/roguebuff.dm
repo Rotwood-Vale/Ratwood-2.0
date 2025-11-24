@@ -535,6 +535,11 @@
 		owner.adjustCloneLoss(-healing_on_tick, 0)
 // Lesser miracle effect end
 
+/datum/status_effect/buff/healing/long_healing
+	id = "long_healing"
+	duration = 240 SECONDS
+	healing_on_tick = 0.1
+
 /atom/movable/screen/alert/status_effect/buff/healing/campfire
 	name = "Warming Respite"
 	desc = "The warmth of a fire soothes my ails."

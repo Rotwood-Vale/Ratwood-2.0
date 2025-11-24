@@ -2,7 +2,7 @@
 	id = "ancient_touch"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/ancient_touch
 	effectedstats = list("endurance" = 1, "constitution" = 1)
-	duration = 30 SECONDS
+	duration = 240 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/ancient_touch
 	name = "Ancient Touch"
@@ -13,7 +13,7 @@
 	id = "ancient_blessing"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/ancient_blessing
 	effectedstats = list("endurance" = 2, "constitution" = 1)
-	duration = 45 SECONDS
+	duration = 140 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/ancient_blessing
 	name = "Ancient Blessing"

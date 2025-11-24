@@ -1,7 +1,7 @@
 /datum/coven/inhumen_coven
 	name = "Inhumen Pacts"
 	desc = "When PSYDON fell, four mortals seized comet shards and ascended through profane means. Zizo the God-Head - architect of PSYDON's murder and first to weaponize the Sanguine Noctis, creating the Hollowed vampires as tools of the Rot. Graggar, Baotha, and Matthios followed, each offering their own dark gifts to those vampires - Purist or Hollowed - who swear fealty. The Inhumen see vampirism not as curse, but as evolution."
-	icon_state = "daimonion"
+	icon_state = "daimonion_z"
 	power_type = /datum/coven_power/inhumen
 	is_god_coven = TRUE
 
@@ -13,7 +13,7 @@
 	name = "Inhumen Touch"
 	desc = "Channel your patron's dark blessing to heal yourself, but suffer a thematic affliction as tribute."
 	level = 1
-	research_cost = 2
+	research_cost = 0
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = NONE
 	range = 0
@@ -30,7 +30,7 @@
 	var/patron_type = owner.patron?.type
 	
 	// Apply self-heal miracle AND buff
-	owner.apply_status_effect(/datum/status_effect/buff/healing, 2, FALSE)
+	owner.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 2, FALSE)
 	owner.apply_status_effect(/datum/status_effect/buff/inhumen_touch)
 	
 	// Apply patron-specific debuff
@@ -55,14 +55,14 @@
 			to_chat(owner, span_warning("Desire exhausts me!"))
 			owner.stamina_add(75)
 	
-	playsound(get_turf(owner), 'sound/magic/churn.ogg', 50, TRUE)
+	playsound(get_turf(owner), 'sound/magic/ENDVRE.ogg', 50, TRUE)
 	return TRUE
 
 /datum/coven_power/inhumen/inhumen_blessing
 	name = "Inhumen Blessing"
 	desc = "Bestow your patron's dark blessing upon an ally, suffering greater affliction yourself."
 	level = 2
-	research_cost = 3
+	research_cost = 1
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = TARGET_HUMAN
 	range = 5
@@ -84,7 +84,7 @@
 	var/patron_type = owner.patron?.type
 	
 	// Apply healing to ally AND buff
-	ally.apply_status_effect(/datum/status_effect/buff/healing, 3, FALSE)
+	ally.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 3, FALSE)
 	ally.apply_status_effect(/datum/status_effect/buff/inhumen_blessing)
 	
 	// Apply stronger patron-specific debuff to owner
@@ -113,14 +113,14 @@
 			to_chat(owner, span_userdanger("Overwhelming passion weakens me!"))
 			owner.stamina_add(75)
 	
-	playsound(get_turf(ally), 'sound/magic/churn.ogg', 50, TRUE)
+	playsound(get_turf(ally), 'sound/magic/ENDVRE.ogg', 50, TRUE)
 	return TRUE
 
 /datum/coven_power/inhumen/inhumen_wrath
 	name = "Inhumen Wrath"
-	desc = "Call upon your patron's power to empower Inhumen allies and weaken Divine enemies. No healing."
+	desc = "Call upon your patron's power to empower Inhumen allies and weaken Divine enemies."
 	level = 3
-	research_cost = 4
+	research_cost = 2
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = TARGET_TURF
 	range = 7
@@ -158,7 +158,7 @@
 	name = "Inhumen Avatar"
 	desc = "Temporarily embody your patron's essence, gaining their power."
 	level = 4
-	research_cost = 5
+	research_cost = 3
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = NONE
 	range = 0

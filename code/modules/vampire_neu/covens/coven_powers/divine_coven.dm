@@ -13,7 +13,7 @@
 	name = "Divine Touch"
 	desc = "Channel your patron's blessing to heal yourself, but suffer a thematic affliction as penance."
 	level = 1
-	research_cost = 2
+	research_cost = 0
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = NONE
 	range = 0
@@ -30,7 +30,7 @@
 	var/patron_type = owner.patron?.type
 	
 	// Apply self-heal miracle AND buff
-	owner.apply_status_effect(/datum/status_effect/buff/healing, 2, FALSE)
+	owner.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 2, FALSE)
 	owner.apply_status_effect(/datum/status_effect/buff/divine_touch)
 	
 	owner.visible_message(span_notice("[owner] channels divine power..."))
@@ -83,14 +83,14 @@
 			to_chat(owner, span_warning("Divine power demands a toll..."))
 			owner.stamina_add(75)
 	
-	playsound(get_turf(owner), 'sound/magic/churn.ogg', 50, TRUE)
+	playsound(get_turf(owner), 'sound/magic/ENDVRE.ogg', 50, TRUE)
 	return TRUE
 
 /datum/coven_power/divine/divine_blessing
 	name = "Divine Blessing"
 	desc = "Bestow your patron's blessing upon an ally, suffering greater affliction yourself."
 	level = 2
-	research_cost = 3
+	research_cost = 1
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = TARGET_HUMAN
 	range = 5
@@ -112,7 +112,7 @@
 	var/patron_type = owner.patron?.type
 	
 	// Apply healing to ally AND buff
-	ally.apply_status_effect(/datum/status_effect/buff/healing, 3, FALSE)
+	ally.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 3, FALSE)
 	ally.apply_status_effect(/datum/status_effect/buff/divine_blessing)
 	
 	// Apply stronger patron-specific debuff to owner
@@ -179,14 +179,14 @@
 			owner.adjust_fire_stacks(4)
 			owner.ignite_mob()
 	
-	playsound(get_turf(ally), 'sound/magic/churn.ogg', 50, TRUE)
+	playsound(get_turf(ally), 'sound/magic/ENDVRE.ogg', 50, TRUE)
 	return TRUE
 
 /datum/coven_power/divine/divine_wrath
 	name = "Divine Wrath"
 	desc = "Call upon your patron's power to empower Divine allies and weaken Inhumen enemies."
 	level = 3
-	research_cost = 4
+	research_cost = 2
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = TARGET_TURF
 	range = 7
@@ -222,7 +222,7 @@
 	name = "Divine Avatar"
 	desc = "Temporarily embody your patron's essence, gaining their power."
 	level = 4
-	research_cost = 5
+	research_cost = 3
 	check_flags = COVEN_CHECK_CAPABLE
 	target_type = NONE
 	range = 0

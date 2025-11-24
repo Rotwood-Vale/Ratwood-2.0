@@ -1,7 +1,7 @@
 /datum/coven/quietus
 	name = "Quietus"
 	desc = "Live in the shadows striking only when needed. Poisons, mass-confusion and fire."
-	icon_state = "daimonion"
+	icon_state = "daimonion_z"
 	power_type = /datum/coven_power/quietus
 	clan_restricted = FALSE
 

@@ -2,7 +2,7 @@
 	id = "inhumen_touch"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/inhumen_touch
 	effectedstats = list("strength" = 1)
-	duration = 30 SECONDS
+	duration = 240 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/inhumen_touch
 	name = "Inhumen Touch"
@@ -13,7 +13,7 @@
 	id = "inhumen_blessing"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/inhumen_blessing
 	effectedstats = list("strength" = 1, "speed" = 1)
-	duration = 45 SECONDS
+	duration = 140 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/inhumen_blessing
 	name = "Inhumen Blessing"

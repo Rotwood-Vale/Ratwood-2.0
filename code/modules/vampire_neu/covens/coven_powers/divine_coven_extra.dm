@@ -2,7 +2,7 @@
 	id = "divine_touch"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/divine_touch
 	effectedstats = list("endurance" = 1)
-	duration = 30 SECONDS
+	duration = 240 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/divine_touch
 	name = "Divine Touch"
@@ -13,7 +13,7 @@
 	id = "divine_blessing"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/divine_blessing
 	effectedstats = list("endurance" = 1, "constitution" = 1)
-	duration = 45 SECONDS
+	duration = 140 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/divine_blessing
 	name = "Divine Blessing"
