@@ -140,6 +140,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/autoconsume = FALSE
 	var/runmode = FALSE
 	var/no_examine_blocks = FALSE
+	var/no_autopunctuate = FALSE
+	var/no_language_fonts = FALSE
+	var/no_language_icon = FALSE
 
 	var/lastclass
 

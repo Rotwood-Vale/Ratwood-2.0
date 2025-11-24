@@ -126,6 +126,9 @@
 	//Just need to clear it to snapshot. May get things we don't want to get.
 	for(var/status_effect in zombie.status_effects)
 		zombie.remove_status_effect(status_effect)
+	zombie.grant_language(/datum/language/undead)
+	var/datum/language_holder/language_holder = zombie.get_language_holder()
+	language_holder.selected_default_language = /datum/language/undead
 
 	src.STASTR = zombie.STASTR
 	src.STASPD = zombie.STASPD
@@ -184,6 +187,9 @@
 		for(var/trait in traits_zombie)
 			REMOVE_TRAIT(zombie, trait, "[type]")
 		zombie.remove_client_colour(/datum/client_colour/monochrome)
+		zombie.remove_language(/datum/language/undead)
+		var/datum/language_holder/language_holder = zombie.get_language_holder()
+		language_holder.selected_default_language = null
 
 		if(has_turned && become_rotman)
 			zombie.STACON = max(zombie.STACON - 2, 1) //ur rotting bro

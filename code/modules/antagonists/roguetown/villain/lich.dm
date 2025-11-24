@@ -134,6 +134,8 @@
 	H.change_stat(STATKEY_PER, 3)
 	H.change_stat(STATKEY_SPD, 1)
 
+	H.grant_language(/datum/language/undead)
+
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead)
