@@ -270,6 +270,16 @@
 	if(!clan)
 		return
 
+	// Handle vampire panic from fire and silver
+	if(on_fire)
+		freak_out()
+	
+	// Check for silver in hands
+	for(var/obj/item/held_item in held_items)
+		if(held_item?.is_silver || held_item?.GetComponent(/datum/component/silverbless))
+			freak_out()
+			break
+
 	// Handle low bloodpool effects
 	handle_bloodpool_effects()
 	if(!istype(clan, /datum/clan/crimson_blood))
