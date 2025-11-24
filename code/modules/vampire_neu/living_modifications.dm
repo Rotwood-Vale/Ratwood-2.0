@@ -276,7 +276,7 @@
 	
 	// Check for silver in hands
 	for(var/obj/item/held_item in held_items)
-		if(held_item?.is_silver || held_item?.GetComponent(/datum/component/silverbless))
+		if(held_item?.is_silver)
 			freak_out()
 			break
 
