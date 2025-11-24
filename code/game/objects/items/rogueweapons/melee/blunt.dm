@@ -29,7 +29,7 @@
 	desc = "A powerful, charged up strike that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 14 (1 - 4 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance. Not fully charging the attack limits knockback to 1 tile."
 
 /datum/intent/mace/smash/spec_on_apply_effect(mob/living/H, mob/living/user, params)
-	var/chungus_khan_str = user.STASTR 
+	var/chungus_khan_str = user.STASTR
 	if(H.has_status_effect(/datum/status_effect/debuff/yeetcd))
 		return // Recently knocked back, cannot be knocked back again yet
 	if(chungus_khan_str < 10)
@@ -291,8 +291,13 @@
 	name = "enduring handmace"
 	desc = "A shorthanded mace and convenient sleeping aid, its grown harder to swing with age, though it hasn't lost reliability."
 	force = 20
+	force_wielded = 25
 	wbalance = WBALANCE_NORMAL
 	icon_state = "opsyflangedmace"
+	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/mace/cudgel/psy/old/ComponentInitialize()
+	return
 
 /obj/item/rogueweapon/mace/cudgel/copper
 	name = "copper bludgeon"

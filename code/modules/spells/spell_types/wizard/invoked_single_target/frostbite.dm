@@ -1,15 +1,16 @@
 // Spell is disabled because of snap freeze + frost bolt existing at the same time
+//Or, was. Now used by Sojourners as an invoked single target spell.
 /obj/effect/proc_holder/spell/invoked/frostbite
 	name = "Frostbite"
 	desc = "Freeze your enemy with an icy blast that does low damage, but reduces the target's Speed for a considerable length of time."
-	overlay_state = "null"
+	overlay_state = "frostbite"
 	releasedrain = 50
 	chargetime = 8
 	recharge_time = 25 SECONDS
 	range = 7
 	warnie = "spellwarning"
 	movement_interrupt = FALSE
-	no_early_release = FALSE
+	no_early_release = TRUE
 	chargedloop = null
 	sound = 'sound/magic/whiteflame.ogg'
 	chargedloop = /datum/looping_sound/invokegen

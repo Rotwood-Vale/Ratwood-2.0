@@ -18,7 +18,7 @@
 	display_order = JDO_PURITAN
 	advclass_cat_rolls = list(CTAG_PURITAN = 20)
 	give_bank_account = 30
-	min_pq = 10
+	min_pq = 30
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_NOBLE
@@ -53,12 +53,11 @@
 		TRAIT_OUTLANDER
 		)
 	subclass_stats = list(
-		STATKEY_CON = 1,
-		STATKEY_PER = 3,
-		STATKEY_INT = 3,
-		STATKEY_STR = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
+		STATKEY_CON = 3,
+		STATKEY_WIL = 3,
+		STATKEY_SPD = 2,
+		STATKEY_PER = 1,
+		STATKEY_INT = 1
 	)
 	subclass_skills = list(
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
@@ -149,7 +148,6 @@
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_HEAVYARMOR,
-		TRAIT_BLACKBAGGER,
 		TRAIT_SILVER_BLESSED,
 		TRAIT_INQUISITION,
 		TRAIT_PURITAN,
@@ -158,10 +156,9 @@
 	subclass_stats = list(
 		STATKEY_CON = 3,
 		STATKEY_WIL = 3,
-		STATKEY_INT = 1,
-		STATKEY_STR = 3,
+		STATKEY_STR = 2,
 		STATKEY_PER = 1,
-		STATKEY_SPD = -3
+		STATKEY_INT = 1
 	)
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
