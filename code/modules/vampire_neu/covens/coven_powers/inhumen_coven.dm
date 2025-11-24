@@ -30,7 +30,7 @@
 	var/patron_type = owner.patron?.type
 	
 	// Apply self-heal miracle AND buff
-	owner.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 2, FALSE, owner)
+	owner.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 0.1, FALSE, owner)
 	owner.apply_status_effect(/datum/status_effect/buff/inhumen_touch)
 	
 	// Apply patron-specific debuff
