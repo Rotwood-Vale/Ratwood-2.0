@@ -496,7 +496,7 @@
 	req_blade = /obj/item/blade/steel_axe
 	created_item = /obj/item/rogueweapon/stoneaxe/hurlbat
 
-/datum/anvil_recipe/weapons/steel/rapier
+/datum/anvil_recipe/weapons/silver/sword
 	name = "Rapier, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
