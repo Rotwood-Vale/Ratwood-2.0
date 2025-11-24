@@ -235,6 +235,7 @@
 #define TRAIT_DUSTABLE "Dustable"
 #define TRAIT_SECONDLIFE "Second Life"
 #define TRAIT_QUICKSILVERRESISTANT "Quicksilver Resistance"
+#define TRAIT_SPELL_DISPERSION "Barrier Dispersion"
 #define TRAIT_CONVICTION "Conviction" //Can hear Tennite prayers. Praying heals and provides nutrition.
 #define TRAIT_BAOTHA_FERTILITY_BOON "Marked and shaped by Baotha"
 
@@ -472,6 +473,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_DUSTABLE = span_warning("If I die that is for the end for me, I will turn to dust."),
 	TRAIT_SECONDLIFE = span_warning("I may be granted another chance upon death, but who knows where I'll end up..."),
 	TRAIT_QUICKSILVERRESISTANT = span_warning("Quick silver won't work to cure me..."),
+	TRAIT_SPELL_DISPERSION = span_necrosis("Spells are useless against me, so long as I maintain my arcyne barrier."),
 	TRAIT_CONVICTION = span_suppradio("My connection to the Ten is unwavering. Prayer alone keeps me alive, for I am a conduit of faith."),
 ))
 

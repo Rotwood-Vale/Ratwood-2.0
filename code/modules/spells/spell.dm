@@ -279,7 +279,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	if(!antimagic_allowed)
 		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
-		if(antimagic)
+		if(antimagic && !HAS_TRAIT(user, TRAIT_SPELL_DISPERSION))
 			if(isatom(antimagic))
 				to_chat(user, span_notice("[antimagic] is interfering with my magic."))
 			else
@@ -705,7 +705,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return FALSE
 
 	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
-		return FALSE
+		if(!HAS_TRAIT(user, TRAIT_SPELL_DISPERSION))
+			return FALSE
 
 	if(!ishuman(user))
 		if(clothes_req || human_req)

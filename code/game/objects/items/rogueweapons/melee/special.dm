@@ -403,7 +403,7 @@
 	name = "psydonic knuckles"
 	desc = "A simple piece of harm molded in a holy mixture of steel and silver, finished with three stumps - Psydon's crown - to crush the heretics' garments and armor into smithereens."
 	icon_state = "psyknuckle"
-	force = 17
+	force = 22
 	wdefense = 5
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
@@ -423,8 +423,7 @@
 	name = "enduring knuckles"
 	desc = "A simple piece of harm molded in a holy mixture of steel and silver, its holy blessing long since faded. You are HIS weapon, you needn't fear Aeon."
 	icon_state = "psyknuckle"
-	force = 22
-	wdefense = 6
+	force = 17
 	is_silver = FALSE
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
