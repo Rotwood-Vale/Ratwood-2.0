@@ -48,12 +48,12 @@
 		if(/datum/patron/inhumen/matthios)
 			owner.visible_message(span_notice("[owner] fades into shadow..."))
 			to_chat(owner, span_warning("Shadows drain my strength!"))
-			owner.stamina_add(30)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/inhumen/baotha)
 			owner.visible_message(span_notice("[owner] radiates alluring energy..."))
 			to_chat(owner, span_warning("Desire exhausts me!"))
-			owner.stamina_add(40)
+			owner.stamina_add(75)
 	
 	playsound(get_turf(owner), 'sound/magic/churn.ogg', 50, TRUE)
 	return TRUE
@@ -105,13 +105,13 @@
 			owner.visible_message(span_notice("[owner] channels shadow into [ally]!"))
 			to_chat(ally, span_notice("Darkness empowers me!"))
 			to_chat(owner, span_userdanger("Shadows sap my vitality!"))
-			owner.stamina_add(60)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/inhumen/baotha)
 			owner.visible_message(span_notice("[owner] channels passion into [ally]!"))
 			to_chat(ally, span_notice("Desire empowers me!"))
 			to_chat(owner, span_userdanger("Overwhelming passion weakens me!"))
-			owner.stamina_add(80)
+			owner.stamina_add(75)
 	
 	playsound(get_turf(ally), 'sound/magic/churn.ogg', 50, TRUE)
 	return TRUE

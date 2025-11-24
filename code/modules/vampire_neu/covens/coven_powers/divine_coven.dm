@@ -45,19 +45,19 @@
 			
 		if(/datum/patron/divine/noc)
 			to_chat(owner, span_warning("Lunar madness clouds my mind!"))
-			owner.stamina_add(35)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/dendor)
 			to_chat(owner, span_warning("Wild fury exhausts me!"))
-			owner.stamina_add(40)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/eora)
 			to_chat(owner, span_warning("Comforting warmth makes me drowsy..."))
-			owner.stamina_add(30)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/abyssor)
 			to_chat(owner, span_warning("The ocean's pressure bears down on me!"))
-			owner.stamina_add(35)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/ravox)
 			to_chat(owner, span_warning("Battle madness drains my vitality!"))
@@ -65,11 +65,11 @@
 			
 		if(/datum/patron/divine/necra)
 			to_chat(owner, span_warning("Death's touch weakens me!"))
-			owner.stamina_add(35)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/xylix)
 			to_chat(owner, span_warning("Chaos scrambles my thoughts!"))
-			owner.stamina_add(30)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/pestra)
 			to_chat(owner, span_warning("Plague toxins course through me!"))
@@ -81,7 +81,7 @@
 			owner.ignite_mob()
 		else
 			to_chat(owner, span_warning("Divine power demands a toll..."))
-			owner.stamina_add(30)
+			owner.stamina_add(75)
 	
 	playsound(get_turf(owner), 'sound/magic/churn.ogg', 50, TRUE)
 	return TRUE
@@ -128,25 +128,25 @@
 			owner.visible_message(span_notice("[owner] channels lunar grace into [ally]!"))
 			to_chat(ally, span_notice("Moonlight empowers me!"))
 			to_chat(owner, span_userdanger("Madness overtakes my thoughts!"))
-			owner.stamina_add(70)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/dendor)
 			owner.visible_message(span_notice("[owner] channels primal vitality into [ally]!"))
 			to_chat(ally, span_notice("Wild power surges through me!"))
 			to_chat(owner, span_userdanger("Savage exhaustion overwhelms me!"))
-			owner.stamina_add(80)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/eora)
 			owner.visible_message(span_notice("[owner] channels hearth warmth into [ally]!"))
 			to_chat(ally, span_notice("I feel wrapped in warmth and love!"))
 			to_chat(owner, span_userdanger("Deep weariness washes over me!"))
-			owner.stamina_add(60)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/abyssor)
 			owner.visible_message(span_notice("[owner] channels the depths into [ally]!"))
 			to_chat(ally, span_notice("Ocean power flows through me!"))
 			to_chat(owner, span_userdanger("The abyss crushes me!"))
-			owner.stamina_add(70)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/ravox)
 			owner.visible_message(span_notice("[owner] channels battle fury into [ally]!"))
@@ -158,13 +158,13 @@
 			owner.visible_message(span_notice("[owner] channels death's blessing into [ally]!"))
 			to_chat(ally, span_notice("Death's power fills me!"))
 			to_chat(owner, span_userdanger("Life drains from me!"))
-			owner.stamina_add(70)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/xylix)
 			owner.visible_message(span_notice("[owner] channels chaos into [ally]!"))
 			to_chat(ally, span_notice("Chaotic power surges through me!"))
 			to_chat(owner, span_userdanger("Madness consumes me!"))
-			owner.stamina_add(60)
+			owner.stamina_add(75)
 			
 		if(/datum/patron/divine/pestra)
 			owner.visible_message(span_notice("[owner] channels pestilence into [ally]!"))

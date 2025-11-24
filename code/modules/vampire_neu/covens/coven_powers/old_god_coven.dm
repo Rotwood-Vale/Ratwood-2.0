@@ -33,7 +33,7 @@
 	
 	owner.visible_message(span_notice("[owner] channels ancient power..."))
 	to_chat(owner, span_warning("The weight of aeons bears down on me!"))
-	owner.stamina_add(35)
+	owner.stamina_add(75)
 	
 	playsound(get_turf(owner), 'sound/magic/churn.ogg', 50, TRUE)
 	return TRUE
@@ -69,7 +69,7 @@
 	owner.visible_message(span_notice("[owner] channels ancient power into [ally]!"))
 	to_chat(ally, span_notice("Ancient power flows through me!"))
 	to_chat(owner, span_userdanger("The burden of ages crushes me!"))
-	owner.stamina_add(70)
+	owner.stamina_add(75)
 	
 	playsound(get_turf(ally), 'sound/magic/churn.ogg', 50, TRUE)
 	return TRUE
