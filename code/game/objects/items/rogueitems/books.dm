@@ -208,7 +208,7 @@
 			user.say(m)
 
 /obj/item/book/rogue/bibble/attack(atom/M, mob/user)
-	if((user.mind?.assigned_role in GLOB.church_positions) && isitem(target) && user.used_intent?.type == /datum/intent/bless)
+	if((user.mind?.assigned_role in GLOB.church_positions) && ismob(M) && user.used_intent?.type == /datum/intent/bless)
 		if(!user.can_read(src))
 			to_chat(user, span_warning("I don't understand these scribbly black lines."))
 			return
