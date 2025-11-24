@@ -1,8 +1,8 @@
 /datum/patron/divine/xylix
 	name = "Xylix"
-	domain = "God of Trickery, Freedom and Inspiration"
-	desc = "The Laughing God, both famous and infamous for his sway over the forces of luck. Xylix is known for the inspiration of many a bards lyric. Speaks through his gift to man; the Tarot deck."
-	worshippers = "Gamblers, Bards, Artists, and the Silver-Tongued"
+	domain = "Trickery, Freedom, Inspiration, Fate, Fluvians"
+	desc = "The Trickster is an unknown amongst the Pantheon. They created the Fluvian race with the gift of Fate, and serve the sole purpose of pulling pranks on Gods and Mortals alike. Their followers see freedom as an absolute, and despise slavery."
+	worshippers = "Gamblers, Bards, Artists, The Silver-Tongued, Fluvians"
 	mob_traits = list(TRAIT_XYLIX)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/xylixslip				= CLERIC_T0,

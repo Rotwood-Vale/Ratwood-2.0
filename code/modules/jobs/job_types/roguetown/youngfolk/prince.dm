@@ -149,6 +149,7 @@
 	beltl = /obj/item/storage/keyring/heir
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backr = /obj/item/storage/backpack/rogue/satchel
+	id = /obj/item/clothing/ring/signet
 	if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
@@ -182,6 +183,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/heir/inbred/pre_equip(mob/living/carbon/human/H)
@@ -190,6 +192,13 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/keyring/heir
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
+	backr = /obj/item/storage/backpack/rogue/satchel
+	id = /obj/item/clothing/ring/aalloy
+	backpack_contents = list(
+		/obj/item/reagent_containers/glass/bottle/rogue/berrypoison = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/strongstampoison = 1,
+		/obj/item/reagent_containers/glass/mortar = 1,
+		/obj/item/pestle = 1)
 	if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
@@ -201,6 +210,7 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/silkcoat
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
+
 
 /datum/advclass/heir/scamp
 	name = "Nettlesome Scamp"
@@ -247,11 +257,9 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor/nightman
 	cloak = /obj/item/clothing/cloak/half/shadowcloak
-
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
-		/obj/item/lockpickring/mundane = 1,
-	)
+		/obj/item/lockpickring/mundane = 1)
 
 
 

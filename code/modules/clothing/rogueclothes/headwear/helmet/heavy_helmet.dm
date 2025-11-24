@@ -319,6 +319,16 @@
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
 
+/obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor
+	name = "plumed astrata helmet"
+	desc = "A helmet with a great, black plume. Order shall guide your hand. Strike sure. Strike true. For none may question your intent."
+	icon_state = "astratahelm_plume"
+	item_state = "astratahelm_plume"
+	adjustable = CAN_CADJUST
+
+/obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
 /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute
 	name = "psydonic barbute"
 	desc = "A ceremonial barbute, masterfully forged to represent Psydon's divine authority. The Order of Saint Malum's artisans have chiseled this pronged visage into more statues than you could possibly imagine."
@@ -496,6 +506,16 @@
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
 
+/obj/item/clothing/head/roguetown/helmet/heavy/necrahelm/hooded
+	name = "hooded necra helmet"
+	desc = "Grim as the faces who wear it. For their duty is sacred, as they know the one truth of this lyfe. They're to perish, just as you are."
+	icon_state = "necrahelm_hooded"
+	item_state = "necrahelm_hooded"
+	adjustable = CAN_CADJUST
+
+/obj/item/clothing/head/roguetown/helmet/heavy/necrahelm/hooded/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
 /obj/item/clothing/head/roguetown/helmet/heavy/dendorhelm
 	name = "dendor helmet"
 	desc = "Headwear commonly worn by Templars in service to Dendor. Its protrusions almost resemble branches. Take root in the earth, and you will never be moved."
@@ -541,6 +561,21 @@
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/heavy/ravox_visor
+	name = "plumed ravox helmet"
+	desc = "A helmet with a great, red plume. They will know, in time, that you are the true justiciar of the Vale."
+	icon_state = "ravoxhelm"
+	item_state = "ravoxhelm"
+	emote_environment = 3
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	block2add = FOV_BEHIND
+	smeltresult = /obj/item/ingot/steel
+	smelt_bar_num = 2
+	adjustable = CAN_CADJUST
+
+/obj/item/clothing/head/roguetown/helmet/heavy/ravox_visor/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
 	name = "volf-face helm"

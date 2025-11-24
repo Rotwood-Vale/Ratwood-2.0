@@ -82,6 +82,7 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor/nightman
 		H.dna.species.soundpack_m = new /datum/voicepack/male/zeth()
 	else if(should_wear_femme_clothes(H))
+		cloak = /obj/item/clothing/cloak/matron
 		armor = /obj/item/clothing/suit/roguetown/armor/armordress/alt
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/massage)

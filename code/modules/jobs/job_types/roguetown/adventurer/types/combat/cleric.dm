@@ -392,7 +392,7 @@
 
 /datum/outfit/job/roguetown/adventurer/cantor/pre_equip(mob/living/carbon/human/H)
 	to_chat(H, span_warning("You were a bard once - but you've found a new calling. Your eyes have been opened to the divine, now you wander from city to city singing songs and telling tales of your patron's greatness."))
-	H.mind.current.faction += "[H.name]_faction"
+	H.mind?.current?.faction += "[H.name]_faction"
 	head = /obj/item/clothing/head/roguetown/bardhat
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
 	backl = /obj/item/storage/backpack/rogue/satchel

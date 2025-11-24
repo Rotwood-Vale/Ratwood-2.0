@@ -331,16 +331,6 @@
 	max_blade_int = 300
 	max_integrity = 180
 
-/obj/item/rogueweapon/sword/long/undivided
-	name = "decablade"
-	desc = "A blessed longsword, held by the Holy See's templars in their stalwart defense against evil. The golden crossguard bares the winged motif of an angel, and psalms from the Pantheon's holy tome have been meticulously carved along the blade's edge. </br>'With a drop of holy Eclipsum, doth the blade rise..' </br>'..gilded, gleaming, radiant heat, warm my soul, immolate my enemies..' </br>'..and let me vanquish all those who would dare to Divide us, once more.'"
-	icon_state = "eclipsum"
-	sheathe_icon = "eclipsum"
-	max_blade_int = 300
-	max_integrity = 180
-	force = 28
-	force_wielded = 33
-
 /obj/item/rogueweapon/sword/long/undivided/getonmobprop(tag)
 	. = ..()
 	if(tag)
@@ -452,11 +442,10 @@
 	desc = "With a drop of holy Eclipsum, doth the blade rise. Gilded, gleaming, radiant heat, warm my soul, immolate my enemies."
 	icon_state = "eclipsum"
 	sheathe_icon = "eclipsum"
-	max_blade_int = 250
+	max_blade_int = 300
 	max_integrity = 180
 	force = 28
 	force_wielded = 33
-	max_integrity = 200
 
 /obj/item/rogueweapon/sword/long/holysee_lesser/getonmobprop(tag)
 	. = ..()

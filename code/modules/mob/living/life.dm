@@ -34,11 +34,15 @@
 	if(!loc)
 		return
 
+	//Breathing, if applicable - CURRENTLY NOT IMPLEMENTED
+	//handle_breathing(times_fired)
+
 	if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
 		handle_wounds()
 		handle_embedded_objects()
 		handle_blood()
 		//passively heal even wounds with no passive healing
+		heal_wounds(1)
 	var/list/wounds = get_wounds()
 	if (islist(wounds))
 		for (var/entry in wounds)
@@ -65,13 +69,13 @@
 						W2?.heal_wound(0.6)
 				else
 					var/datum/wound/W2 = entry
-					W2?.heal_wound(0.6)	
+					W2?.heal_wound(0.6)
 
 	if(QDELETED(src)) // diseases can qdel the mob via transformations
 		return
 
 	handle_environment()
-	
+
 	//Random events (vomiting etc)
 	handle_random_events()
 
@@ -102,7 +106,7 @@
 				return
 			if(istype(drownrelay.loc, /turf/open/water))
 				handle_inwater(drownrelay.loc, extinguish = FALSE, force_drown = TRUE)
-			if(istype(loc, /turf/open/water)) // Extinguish ourselves if our body is in water.	
+			if(istype(loc, /turf/open/water)) // Extinguish ourselves if our body is in water.
 				extinguish_mob()
 			return
 	. =..()
@@ -143,14 +147,13 @@
 	return
 
 /mob/living/proc/handle_wounds()
-	if(stat >= DEAD)
-		for(var/datum/wound/wound in get_wounds())
-			wound.on_death()
+	for(var/datum/wound/wound as anything in get_wounds())
+		if(istype(wound, /datum/wound))
+			if (stat != DEAD)
+				wound.on_life()
+			else
+				wound.on_death()
 
-		return
-
-	for(var/datum/wound/wound in get_wounds())
-		wound.on_life()
 
 /obj/item/proc/on_embed_life(mob/living/user, obj/item/bodypart/bodypart)
 	return

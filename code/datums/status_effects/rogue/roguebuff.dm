@@ -546,6 +546,32 @@
 	examine_text = null
 	duration = 10 SECONDS
 
+//Self healing for Martyr.
+/datum/status_effect/buff/healing/prayer
+	id = "healing_prayers"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/prayer
+	examine_text = "SUBJECTPRONOUN is burning with divine radiance!"
+	outline_colour = "#b280df"
+	duration = 12 SECONDS
+
+/atom/movable/screen/alert/status_effect/buff/healing/prayer
+	name = "Conviction"
+	desc = "By faith alone, I will mend."
+	icon_state = "buff"
+
+//BY FAITH ALONE. When Martyr heals via another Tennite praying.
+/datum/status_effect/buff/healing/prayer_power
+	id = "healing_prayers"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/prayer_power
+	examine_text = "SUBJECTPRONOUN is lit by divine radiance!"
+	outline_colour = "#b280df"
+	duration = 2 SECONDS
+
+/atom/movable/screen/alert/status_effect/buff/healing/prayer_power
+	name = "Blessed Respite"
+	desc = "By faith, I lyve."
+	icon_state = "buff"
+
 #define BLOODHEAL_DUR_SCALE_PER_LEVEL 3 SECONDS
 #define BLOODHEAL_RESTORE_DEFAULT 5
 #define BLOODHEAL_RESTORE_SCALE_PER_LEVEL 2

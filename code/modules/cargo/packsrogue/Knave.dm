@@ -157,11 +157,6 @@
 	cost = 20
 	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow)
 
-/datum/supply_pack/rogue/Knave/slurbow
-	name = "Slurbow"
-	cost = 20
-	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow)
-
 /datum/supply_pack/rogue/Knave/recurvebow
 	name = "Recurve Bow"
 	cost = 20
@@ -171,6 +166,11 @@
 	name = "Longbow"
 	cost = 40
 	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow)
+
+/datum/supply_pack/rogue/Knave/slurbow
+	name = "Slurbow"
+	cost = 40
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow)
 
 /datum/supply_pack/rogue/Knave/steeltossblades
 	name = "Steel Tossblade Belt"

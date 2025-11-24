@@ -1859,12 +1859,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	name = "Rune of Hedonism"
 	desc = "A Holy Rune of Baotha. Relief for the broken hearted."
 	icon_state = "baotha_chalky"
-	var/baotharites = list("Conversion")
-
-/obj/structure/ritualcircle/psydon // done as a joke, but it is good for Psydonites to decorate with.
-	name = "Rune of Enduring"
-	desc = "A Holy Rune of Psydon. It depicts His holy symbol, yet nothing stirs within you."
-	icon_state = "psydon_chalky"
+	var/baotharites = list("Conversion", "Unholy Boon of Fertility")
 
 /obj/structure/ritualcircle/baotha/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/inhumen/baotha)
@@ -1876,12 +1871,12 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
 		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
 		return
+	if(!Adjacent(user))
+		to_chat(user, "You must stand close to the rune to receive Baotha's blessing.")
+		return
 	var/riteselection = input(user, "Rituals of Desire", src) as null|anything in baotharites
 	switch(riteselection) // put ur rite selection here
 		if("Conversion")
-			if(!Adjacent(user))
-				to_chat(user, "You must stand close to the rune to receive Baotha's blessing.")
-				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
 				if(HAS_TRAIT(peep, TRAIT_DEPRAVED))
@@ -1900,10 +1895,31 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 					if(do_after(user, 50))
 						user.say("#The world's momentary pleasures have left us wanting...") // can someone else write this instead of me
 						if(do_after(user, 50))
-							icon_state = "eora_active" // hello mister placeholder
+							icon_state = "baotha_active"
 							baothaconversion(target) // removed CD bc it's gonna be coal to sit there and wait for it to go off rite cooldown, this one is purely social in its nature
 							spawn(120)
-								icon_state = "eora_chalky" // hello mister placeholder
+								icon_state = "baotha_chalky"
+		if("Unholy Boon of Fertility")
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				valids_on_rune += peep
+			if(!valids_on_rune.len)
+				to_chat(user, "No valid targets on the rune!")
+				return
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
+			if(!target || QDELETED(target) || target.loc != loc)
+				return
+			if(do_after(user, 50))
+				user.say("Purple flame, awaken desire!")
+				if(do_after(user, 50))
+					user.say("Claim this body, shape it to your will!")
+					if(do_after(user, 50))
+						user.say("Let them burn for thee alone!")
+						if(do_after(user, 50))
+							icon_state = "baotha_active" 
+							baothablessing(target)
+							spawn(120)
+								icon_state = "baotha_chalky"
 
 /obj/structure/ritualcircle/baotha/proc/baothaconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -1959,3 +1975,289 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.emote("Agony")
 		target.apply_damage(100, BURN, BODY_ZONE_HEAD)
 		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))
+
+/obj/structure/ritualcircle/baotha/proc/baothablessing(mob/living/carbon/human/target)
+	if(!target || QDELETED(target) || target.loc != loc)
+		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Baotha's blessing.")
+		return
+	if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON))
+		loc.visible_message(span_cult("They have already been blessed!"))
+		return
+	var/prompt = alert(target, "The Goddess of corrupted affection is about to give you the boon of fertility; to bear children!",, "Let it happen...", "Resist!")
+	if(prompt == "Let it happen...")
+		to_chat(target, span_warning("A strange feeling of warmth spreads inside your abdomen, growing hotter and hotter untill it almost feels like you are on fire, but pain actually never comes..."))
+		target.Stun(60)
+		target.Knockdown(60)
+		target.sexcon.set_arousal(100)
+		loc.visible_message(span_cult("[target] moans and shivers on top of the rune. Lashes of purple flame dance across their lower abdomen as a new marking appears against their form."))
+		spawn(20)
+			var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+			target.add_overlay(marking_overlay)
+			target.update_body_parts()
+			playsound(target, 'sound/health/fastbeat.ogg', 60)
+			spawn(40)
+				to_chat(target, span_purple("Enjoy the new you!"))
+				ADD_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
+				var/obj/item/organ/vagina/vagina = target.getorganslot(ORGAN_SLOT_VAGINA)
+				if(vagina && !vagina.fertility)
+					vagina.fertility = TRUE
+	if(prompt == "Resist!")
+		to_chat(target, span_warning("I sincerely proposed you my greatest blessing, and you rejected me? How foolish!"))
+		target.Stun(60)
+		target.Knockdown(60)
+		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+		target.emote("Agony")
+		target.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
+		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))
+
+//TIME FOR THE ONE. Exclusive to ABSOLVERS. Allowing conversion, deconversion and removal of rite armour.
+//'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.
+
+
+/obj/structure/ritualcircle/psydon//No longer just a decoration.
+	name = "Rune of Enduring"
+	desc = "A Holy Rune of Psydon. It depicts His holy symbol, yet nothing stirs within you."
+	icon_state = "psydon_chalky"
+	var/psydonrites = list("Conversion", "Admonishment", "Freedom")
+
+/obj/structure/ritualcircle/psydon/attack_hand(mob/living/user)
+	if((user.patron?.type) != /datum/patron/old_god)
+		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		return
+	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
+		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		return
+	if(!HAS_TRAIT(user, TRAIT_INQUISITION))//Just in case someone OUTSIDE of the Inquisition has this combination. A converted ritualist, for example.
+		to_chat(user,span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
+		return
+	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended_lesser))//We only use lesser cooldown for this, given it's just the Absolver.
+		to_chat(user,span_smallred("I have done enough for the moment. I should take a brief rest."))
+		return
+	var/riteselection = input(user, "Rites of the Lost", src) as null|anything in psydonrites
+	switch(riteselection)
+		if("Conversion")//Convert non-Psydonites to Psydon.
+			if(!Adjacent(user))
+				to_chat(user, "You must stand close to the rune to understand the One's will.")
+				return
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				if(HAS_TRAIT(peep, TRAIT_PSYDONIAN_GRIT))
+					continue
+				valids_on_rune += peep
+			if(!valids_on_rune.len)
+				to_chat(user, "No valid targets on the rune!")
+				return
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
+			if(!target || QDELETED(target) || target.loc != loc)
+				return
+			if(do_after(user, 5 SECONDS))
+				user.say("Your silence, a test.")
+				if(do_after(user, 5 SECONDS))
+					user.say("Your will, a gift.")
+					if(do_after(user, 5 SECONDS))
+						user.say("I beg of you, accept this wayward soul.")//WEEP FOR THEM, LASZLO.
+						user.emote("cry")
+						loc.visible_message(span_cult("[user] weeps."))
+						if(do_after(user, 5 SECONDS))
+							psydonconversion(target)
+		if("Admonishment")//Deconvert WWs/Vampires.
+			if(!Adjacent(user))
+				return
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				if(HAS_TRAIT(peep, TRAIT_SILVER_BLESSED))
+					continue
+				valids_on_rune += peep
+			if(!valids_on_rune.len)
+				to_chat(user, "No valid targets on the rune!")
+				return
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
+			if(!target || QDELETED(target) || target.loc != loc)
+				return
+			if(do_after(user, 5 SECONDS))
+				to_chat(user, span_warning("You reach out, a hold upon [user.p_their()] lux..."))
+				if(do_after(user, 5 SECONDS))
+					to_chat(user, span_warning("You begin rooting around, searching for traces of the taint..."))
+					if(do_after(user, 5 SECONDS))
+						to_chat(user, span_warning("A blind leap, as you call upon the One to rebuke the Inhumen..."))
+						user.emote("cry")
+						loc.visible_message(span_cult("[user] weeps."))
+						if(do_after(user, 5 SECONDS))
+							psydonadmonishment(target)
+							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
+		if("Freedom")//Strip folks in rite armour.
+			if(!Adjacent(user))
+				return
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				if(!HAS_TRAIT(peep, TRAIT_OVERTHERETIC))
+					continue
+				valids_on_rune += peep
+			if(!valids_on_rune.len)
+				to_chat(user, "No valid targets on the rune!")
+				return
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
+			if(!target || QDELETED(target) || target.loc != loc)
+				return
+			if(do_after(user, 5 SECONDS))
+				to_chat(user, span_warning("You reach out, a hold upon [user.p_their()] lux..."))
+				if(do_after(user, 5 SECONDS))
+					to_chat(user, span_warning("You tug at the vice..."))
+					if(do_after(user, 5 SECONDS))
+						to_chat(user, span_warning("A measured strike, as you attempt to sever the cords..."))
+						user.emote("cry")
+						loc.visible_message(span_cult("[user] weeps."))
+						if(do_after(user, 5 SECONDS))
+							psydonstrip(target)
+							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
+
+/obj/structure/ritualcircle/psydon/proc/psydonconversion(mob/living/carbon/human/target)
+	if(!target || QDELETED(target) || target.loc != loc)
+		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive the One's will.")
+		return
+	if(HAS_TRAIT(target, TRAIT_PSYDONIAN_GRIT))
+		loc.visible_message(span_cult("Anguish already plagues this one's heart."))
+		return
+	var/prompt = alert(target, "DO YOU ACCEPT THE ONE'S WILL?",, "VERILY", "NAE")
+	if(prompt == "VERILY")
+		to_chat(target, span_warning("A blunt pang of guilt surges through your thoughts. The One's gaze is upon you. He weeps."))
+		target.emote("cry")
+		loc.visible_message(span_cult("[target] weeps."))
+		target.Stun(80)//Keep them in place, for a bit. Until we're done.
+		spawn(20)
+			playsound(target, 'sound/magic/PSYDONE.ogg', 60)
+			to_chat(target, span_mind_control("..."))
+			spawn(20)
+				to_chat(target, span_warning("Has it always been this quiet? It's all so dim..."))
+				to_chat(target, span_mind_control("..."))
+				spawn(40)
+					to_chat(target, span_mind_control("..."))
+					if(target.devotion == null)
+						target.set_patron(new /datum/patron/old_god)
+						return
+					else
+						var/previous_level = target.devotion.level //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+						target.set_patron(new /datum/patron/old_god)
+						var/datum/devotion/C = new /datum/devotion(target, target.patron)
+						if(previous_level == 4)
+							target.mind?.RemoveAllMiracles()
+							C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+						if(previous_level == 3)
+							target.mind?.RemoveAllMiracles()
+							C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+						if(previous_level == 2)
+							target.mind?.RemoveAllMiracles()
+							C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+						if(previous_level == 1)
+							target.mind?.RemoveAllMiracles()
+							C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+
+	if(prompt == "NAE")
+		to_chat(target, span_warning("You brace. Why do you brace? Nothing comes."))
+		loc.visible_message(span_cult("[target] stands untouched. They reject His will."))
+
+/obj/structure/ritualcircle/psydon/proc/psydonadmonishment(mob/living/carbon/human/target)
+	if(!target || QDELETED(target) || target.loc != loc)
+		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive the One's admonishment.")
+		return
+
+	if(!target.mind) //Stopping null lookup runtimes
+		loc.visible_message(span_warning("[target] does not have the mind to benefit from the One's guidance."))
+		return
+
+	if(HAS_TRAIT(target, TRAIT_SILVER_BLESSED))
+		loc.visible_message(span_warning("[target] has already been saved by the One's admonishment."))
+		return
+
+	if(target.stat == DEAD)
+		loc.visible_message(span_warning("With their heart stilled, the ritual will have no purchase upon [target]. It would be a waste."))
+		return
+
+	var/datum/antagonist/werewolf/Were = target.mind.has_antag_datum(/datum/antagonist/werewolf/)
+	var/datum/antagonist/werewolf/lesser/Wereless = target.mind.has_antag_datum(/datum/antagonist/werewolf/lesser/)
+	var/datum/antagonist/vampire/Vamp = target.mind.has_antag_datum(/datum/antagonist/vampire)
+
+	//Werewolf deconversion
+	if(Were && !Wereless) //The roundstart elder/alpha werewolf, it cannot be saved
+		to_chat(target, span_userdanger("This wretched rite weighs heavy on my soul. Dendor's blessing shall not be quit of me so easily"))
+		loc.visible_message(span_danger("[target] viscerally rejects the One's admonishment. They cannot be saved."))
+		target.Stun(30)
+		target.Knockdown(30)
+		return
+
+	else if(Wereless) //A lesser werewolf can be deconverted
+		if(Wereless.transformed == TRUE)
+			var/mob/living/carbon/human/I = target.stored_mob
+			to_chat(target, span_userdanger("THIS FOUL RITE! MY BODY RENDS ITSELF ASUNDER!"))
+			target.werewolf_untransform()
+			Wereless.on_removal()
+			ADD_TRAIT(I, TRAIT_SILVER_BLESSED, POULTICE_TRAIT)
+			ADD_TRAIT(I, TRAIT_PACIFISM, POULTICE_TRAIT)
+			I.emote("agony", forced = TRUE)
+			I.Stun(30)
+			I.Knockdown(30)
+			I.Jitter(30)
+			return
+		else
+			target.flash_fullscreen("redflash3")
+			target.emote("agony", forced = TRUE)
+			to_chat(target, span_userdanger("THIS FOUL RITE! IT BURNS ME TO MY CORE!"))
+			Were.on_removal()
+			ADD_TRAIT(target, TRAIT_SILVER_BLESSED, POULTICE_TRAIT)
+			target.poultice_pacify()
+			target.Stun(30)
+			target.Knockdown(30)
+			target.Jitter(30)
+			return
+
+	else if(Vamp)
+		if(Vamp.generation >= GENERATION_METHUSELAH || HAS_TRAIT(target, TRAIT_BLOODPOOL_BORN)) //Vampire Lords + their bloodpool summons cannot be deconverted.
+			to_chat(target, span_userdanger("This wretched rite weighs heavy on my soul. An insult I shall never forget, for as long as I die."))
+			loc.visible_message(span_danger("[target] viscerally rejects the One's admonishment. They cannot be saved."))
+			target.Stun(30)
+			target.Knockdown(30)
+			return
+
+		if(alert(target, "The rite is burning my nature from my veins! Do I resist the anointment?", "Rite of Admonishment", "YIELD", "RESIST") == "RESIST") //Opt in convert, opt in deconvert
+			to_chat(target, span_userdanger("This wretched rite weighs heavy on my soul. But I am consigned to my reverie, and my heart remains still."))
+			loc.visible_message(span_danger("[target] viscerally rejects the One's admonishment. They refuse to be saved."))
+			target.Stun(30)
+			target.Knockdown(30)
+			return
+		else
+			target.flash_fullscreen("redflash3")
+			target.emote("agony", forced = TRUE)
+			to_chat(target, span_userdanger("THIS FOUL RITE! MY STILL HEART QUICKENS ONCE MORE!"))
+			Vamp.on_removal()
+			ADD_TRAIT(target, TRAIT_SILVER_BLESSED, POULTICE_TRAIT)
+			target.poultice_pacify()
+			target.Stun(30)
+			target.Knockdown(30)
+			target.Jitter(30)
+			return
+
+
+/obj/structure/ritualcircle/psydon/proc/psydonstrip(mob/living/carbon/human/target)
+	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))//A fallback. You should never see this.
+		loc.visible_message(span_cult("This one is not bound by chains upon their lux. I can do nothing more with this rite."))
+		return
+	target.Stun(20)
+	target.Knockdown(20)
+	to_chat(target, span_userdanger("IT'S INSIDE MY HEAD!"))
+	target.emote("Agony")
+	playsound(loc, 'sound/misc/pressurepad_up.ogg', 50)
+	loc.visible_message(span_cult("[target]'s flesh briefly warps, as some unseen force tears the equipment from their frame!"))
+	spawn(20)
+		playsound(loc, 'sound/misc/pressurepad_down.ogg', 50)
+		target.equipOutfit(/datum/outfit/job/roguetown/rite_strip)
+		if(HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+			REMOVE_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+
+//Dropping rite armour. Or, well, basically everything.
+/datum/outfit/job/roguetown/rite_strip/pre_equip(mob/living/carbon/human/H)
+	..()
+	var/list/items = list()
+	items |= H.get_equipped_items(TRUE)
+	for(var/I in items)
+		H.dropItemToGround(I, TRUE)
+	H.drop_all_held_items()

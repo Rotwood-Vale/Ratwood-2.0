@@ -36,18 +36,18 @@
 /datum/outfit/job/roguetown/mercenary/grenzelhoft/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You are a Doppelsoldner - \"Double-pay Mercenary\" - an experienced frontline swordsman trained by the Zenitstadt fencing guild."))
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate
 	if(H.mind)
 		var/weapons = list("Zweihander", "Kriegmesser & Buckler")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Zweihander")
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/greatsword/grenz
 			if("Kriegmesser & Buckler") // Buckler cuz they have no shield skill.
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
-				l_hand = /obj/item/rogueweapon/shield/buckler
+				backl = /obj/item/rogueweapon/shield/buckler
 	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather

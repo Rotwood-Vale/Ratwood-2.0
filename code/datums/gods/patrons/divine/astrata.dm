@@ -1,8 +1,8 @@
 /datum/patron/divine/astrata
 	name = "Astrata"
-	domain = "Goddess of the Sun, Day, and Order"
-	desc = "The Tyrant of the Ten, sister and rival to Noc - and the eldest of them all. Her radiance keeps the evils at bay during the dae'. Nite', however, is a different tale."
-	worshippers = "The Noble Hearted, Zealots and Farmers"
+	domain = "The Day, The Sun, Order"
+	desc = "The Absolute Order is the glorious sunlight that permeates our lands and drives back evil. By Her Light is the world given Order, and by her Blessing is Nobility deigned to rule. Ravox stands at Her side to ensure Her Order does not become Tyranny."
+	worshippers = "Nobility, The Righteous, The Zealous"
 	mob_traits = list(TRAIT_APRICITY)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/ignition				= CLERIC_T0,

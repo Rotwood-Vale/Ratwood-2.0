@@ -1,8 +1,8 @@
 /datum/patron/divine/pestra
 	name = "Pestra"
-	domain = "Goddess of Decay, Disease and Medicine"
-	desc = "Goddess that blessed many a saint with healing hands, Pestra taught man the arts of medicine and its benefits."
-	worshippers = "The Sick, Phyicians, Apothecaries"
+	domain = "Medicine, Pestilence, Decay"
+	desc = "The Panacea is the only of the Ten to be born to a wildkin, She taught us the arts of medicine and surgery. Her followers are obsessed with rot and decay to a concerning degree to the other Tennites."
+	worshippers = "The Sick, Chirurgeons, Apothecaries"
 	mob_traits = list(TRAIT_EMPATH, TRAIT_ROT_EATER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/diagnose				= CLERIC_ORI,

@@ -1,8 +1,8 @@
 /datum/patron/inhumen/zizo
 	name = "Zizo"
-	domain = "Progress, Undeath, Hubris, Left Hand Magicks"
-	desc = "A once-mortal snow elf turned god. Her hubris in thinking she could harvest lux from the planet itself led to the elimination of her entire race. Her works are still used to this dae in some cases."
-	worshippers = "Necromancers, Researchers, Warlocks, and the Undead"
+	domain = "Necromancy, Progress, The Rot, Left-Handed Magicks"
+	desc = "The God-Head was the mortal snow elf Zinoviya, abandoned by Her Divine Father PSYDON. When She found out She was denied godhood, She struck PSYDON down and took it Herself, plunging the world into the Second Coming of the Rot. Burn the world to ash, and build it anew."
+	worshippers = "Necromancers, Maddened Mages, The Undead"
 	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,

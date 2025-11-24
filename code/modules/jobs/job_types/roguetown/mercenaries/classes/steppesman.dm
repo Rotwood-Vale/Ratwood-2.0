@@ -97,7 +97,7 @@
 				gloves = /obj/item/clothing/gloves/roguetown/chain
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
 				wrists = /obj/item/clothing/wrists/roguetown/bracers
-				backl = /obj/item/storage/backpack/rogue/backpack/bagpack
+				backl = /obj/item/rogueweapon/shield/iron/steppesman // rucksack aka /bagpack eats whatever goes to backpack_contents so replaced with shield
 				l_hand = /obj/item/rogueweapon/stoneaxe/battle/steppesman
 				neck = /obj/item/clothing/neck/roguetown/chaincoif
 				backpack_contents = list(

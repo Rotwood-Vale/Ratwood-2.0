@@ -104,7 +104,7 @@
 			continue
 		target.apply_status_effect(/datum/status_effect/buff/call_to_arms)
 	return TRUE
-	
+
 //Persistence - Harms the shit out of an undead mob/player while causing bleeding/pain wounds to clot at higher rate for living ones. Basically a 'shittier' yet still good greater heal effect.
 /obj/effect/proc_holder/spell/invoked/persistence
 	name = "Persistence"
@@ -155,13 +155,13 @@
 					bleeder.woundpain = max(bleeder.sewn_woundpain, bleeder.woundpain * 0.25)
 					if(!isnull(bleeder.clotting_threshold) && bleeder.bleed_rate > bleeder.clotting_threshold)
 						var/difference = bleeder.bleed_rate - bleeder.clotting_threshold
-						bleeder.bleed_rate = max(bleeder.clotting_threshold, bleeder.bleed_rate - difference * situational_bonus)
+						bleeder.set_bleed_rate(max(bleeder.clotting_threshold, bleeder.bleed_rate - difference * situational_bonus))
 		else if(HAS_TRAIT(target, TRAIT_SIMPLE_WOUNDS))
 			for(var/datum/wound/bleeder in target.simple_wounds)
 				bleeder.woundpain = max(bleeder.sewn_woundpain, bleeder.woundpain * 0.25)
 				if(!isnull(bleeder.clotting_threshold) && bleeder.bleed_rate > bleeder.clotting_threshold)
 					var/difference = bleeder.bleed_rate - bleeder.clotting_threshold
-					bleeder.bleed_rate = max(bleeder.clotting_threshold, bleeder.bleed_rate - difference * situational_bonus)
+					bleeder.set_bleed_rate(max(bleeder.clotting_threshold, bleeder.bleed_rate - difference * situational_bonus))
 		return TRUE
 	return FALSE
 
@@ -259,7 +259,7 @@
 	miracle = TRUE
 	devotion_cost = 100
 
-GLOBAL_LIST_EMPTY(arenafolks) // we're just going to use a list and add to it. Since /entered doesnt work on teleported mobs. 
+GLOBAL_LIST_EMPTY(arenafolks) // we're just going to use a list and add to it. Since /entered doesnt work on teleported mobs.
 
 /obj/effect/proc_holder/spell/invoked/challenge/cast(list/targets, mob/living/user)
 	var/area/rogue/indoors/ravoxarena/thearena = GLOB.areas_by_type[/area/rogue/indoors/ravoxarena]
@@ -288,7 +288,7 @@ GLOBAL_LIST_EMPTY(arenafolks) // we're just going to use a list and add to it. S
 			challengerspawnpoint = get_turf(aflag)
 		for(var/obj/structure/fluff/ravox/challenged/bflag in thearena)
 			challengedspawnpoint = get_turf(bflag)
-		
+
 		do_teleport(user, challengerspawnpoint)
 		do_teleport(target, challengedspawnpoint)
 		GLOB.arenafolks += user

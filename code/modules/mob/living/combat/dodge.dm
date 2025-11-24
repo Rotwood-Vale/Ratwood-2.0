@@ -115,7 +115,8 @@
 		H = src
 	if(ishuman(user))
 		UH = user
-		I = UH.used_intent.masteritem
+		if (UH.used_intent)
+			I = UH.used_intent.masteritem
 	var/prob2defend = U.defprob
 	if(L.stamina >= L.max_stamina)
 		return FALSE
@@ -152,7 +153,7 @@
 
 		if(HAS_TRAIT(U, TRAIT_GUIDANCE))
 			prob2defend -= 20
-		
+
 		if(HAS_TRAIT(user, TRAIT_CURSE_RAVOX))
 			prob2defend -= 40
 
@@ -189,7 +190,7 @@
 				attacker_dualw = TRUE
 		//----------Dual Wielding check end---------
 
-		var/attacker_feedback 
+		var/attacker_feedback
 		if(user.client?.prefs.showrolls && (attacker_dualw || defender_dualw))
 			attacker_feedback = "Attacking with advantage. ([100 - ((prob2defend / 100) * (prob2defend / 100) * 100)]%)"
 

@@ -217,7 +217,7 @@
 	var/mob/living/M = leaving
 	if(!(M.mobility_flags & MOBILITY_STAND))
 		return
-	if(get_dir(leaving.loc, new_location) == REVERSE_DIR(dir))
+	if(item_chair && get_dir(leaving.loc, new_location) == REVERSE_DIR(dir))
 		playsound(loc, 'sound/foley/chairfall.ogg', 100, FALSE)
 		var/obj/item/I = new item_chair(loc)
 		item_chair = null

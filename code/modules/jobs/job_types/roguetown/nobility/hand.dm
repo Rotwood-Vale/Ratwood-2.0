@@ -27,6 +27,7 @@
 		/datum/advclass/hand/spymaster,
 		/datum/advclass/hand/advisor
 	)
+	spells = list(/obj/effect/proc_holder/spell/self/convertrole/agent)//Hiring court agents
 
 /datum/outfit/job/roguetown/hand
 	backr = /obj/item/storage/backpack/rogue/satchel/short
@@ -36,7 +37,6 @@
 	job_bitflag = BITFLAG_ROYALTY
 
 /datum/outfit/job/roguetown/hand/pre_equip(mob/living/carbon/human/H)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/agent)
 	H.verbs |= /datum/job/roguetown/hand/proc/remember_agents
 
 /datum/job/roguetown/hand/after_spawn(mob/living/L, mob/M, latejoin = TRUE)

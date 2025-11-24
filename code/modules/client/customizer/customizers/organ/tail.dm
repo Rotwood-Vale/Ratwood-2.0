@@ -119,7 +119,9 @@
 		/datum/sprite_accessory/tail/sabresune,
 		/datum/sprite_accessory/tail/rattlesnake,
 		/datum/sprite_accessory/tail/lynx,
-		/datum/sprite_accessory/tail/pinecone
+		/datum/sprite_accessory/tail/pinecone,
+		/datum/sprite_accessory/tail/large_snake,
+		/datum/sprite_accessory/tail/large_snake_plain
 	)
 
 /datum/customizer/organ/tail/axian

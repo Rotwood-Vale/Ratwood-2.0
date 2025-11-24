@@ -1,8 +1,8 @@
 /datum/patron/divine/necra
 	name = "Necra"
-	domain = "Goddess of Death and the Afterlife"
-	desc = "Veiled Lady of the underworld, equally feared and respected by mortals. She taught mortals the inevitability of death and cares for them as they reach the afterlife."
-	worshippers = "The Dead, Mourners, Gravekeepers"
+	domain = "Death, The Afterlife, Rebirth"
+	desc = "The Undermaiden is the custodian of the Afterlife, where all souls must eventually go. She tasks the lost with the Trials of the Forgotten, where they must ruminate on their lyfe to be reborn. Her followers find resurrection to be abhorrent, choosing to isolate themselves to their graveyards."
+	worshippers = "Gravediggers, Morticians, Disgraced Physicians, Loners"
 	mob_traits = list(TRAIT_SOUL_EXAMINE, TRAIT_NOSTINK)	//No stink is generic but they deal with dead bodies so.. makes sense, I suppose?
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/necras_sight			= CLERIC_T0,

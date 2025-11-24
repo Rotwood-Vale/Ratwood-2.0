@@ -125,7 +125,7 @@
 	id = "bleedingt1"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	effectedstats = list(STATKEY_SPD = -1)
-	duration = 100
+	duration = -1
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	name = "Dizzy"
@@ -136,7 +136,7 @@
 	id = "bleedingt2"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	effectedstats = list(STATKEY_STR = -1, STATKEY_SPD = -2)
-	duration = 100
+	duration = -1
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	name = "Faint"
@@ -147,7 +147,7 @@
 	id = "bleedingt3"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt3
 	effectedstats = list(STATKEY_STR = -3, STATKEY_SPD = -4)
-	duration = 100
+	duration = -1
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt3
 	name = "Drained"
@@ -293,6 +293,16 @@
 /atom/movable/screen/alert/status_effect/debuff/ritesexpended_heavy
 	name = "Rites Complete"
 	desc = "It will take a lot of time before I can perform a next rite. I am drained."
+	icon_state = "ritesexpended"
+
+/datum/status_effect/debuff/ritesexpended_lesser
+	id = "ritesexpended_lesser"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/ritesexpended_lesser
+	duration = 5 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/ritesexpended_lesser
+	name = "Rites Complete"
+	desc = "It will be a short period before I can perform another rite."
 	icon_state = "ritesexpended"
 
 /datum/status_effect/debuff/call_to_arms
@@ -735,7 +745,7 @@
 			PM.backdrop(owner)
 			PM = locate(/atom/movable/screen/plane_master/game_world_above) in owner.client.screen
 			PM.backdrop(owner)
-	
+
 /datum/status_effect/debuff/vampbite/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_DRUQK, id)

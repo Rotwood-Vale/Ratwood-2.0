@@ -260,7 +260,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/nightman
-	name = "Nightmaster"
+	name = "Bathmaster"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/nightmaiden

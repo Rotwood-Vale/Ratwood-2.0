@@ -40,7 +40,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	job_subclasses = list(
 		/datum/advclass/lord/warrior,
 		/datum/advclass/lord/merchant,
-		/datum/advclass/lord/mage,
+		/datum/advclass/lord/wizard,
 		/datum/advclass/lord/inbred
 	)
 
@@ -186,46 +186,6 @@ GLOBAL_LIST_EMPTY(lord_titles)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 
 /**
-	Mage Lord subclass. Prince mage is a thing.
-	Light on skills, has some combat skills mage normally doesn't have. 18 pts so people don't complain they are better.
-	Stats is better than mage associate and magic heir. +12 total.
-	Mage armor and no armor training.
-
-
-	King's addition: Porting this to Azure after a long time. May adjust later to compromise with other vision for the role. Also gave them a fucking satchel.
-*/
-/datum/advclass/lord/mage
-	name = "Mage Lord"
-	tutorial = "Despite spending your younger years focused on reading and the wonders of the arcyne, it came the time for you to take the throne. Now you rule not only by crown and steel, but by spell and wit, show those who doubted your time buried in books was well spent how wrong they were."
-	outfit = /datum/outfit/job/roguetown/lord/mage
-	category_tags = list(CTAG_LORD)
-	traits_applied = list(TRAIT_NOBLE, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3,TRAIT_INTELLECTUAL)
-	subclass_stats = list(
-		STATKEY_LCK = 5,
-		STATKEY_INT = 4,
-		STATKEY_PER = 2,
-		STATKEY_WIL = 1,
-	)
-	subclass_spellpoints = 18
-	subclass_skills = list(
-		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
-		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
-	)
-
-/datum/outfit/job/roguetown/lord/mage/pre_equip(mob/living/carbon/human/H)
-	..()
-	backr = /obj/item/storage/backpack/rogue/satchel
-	l_hand = /obj/item/rogueweapon/lordscepter
-	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, /obj/item/roguegem/amethyst = 1, /obj/item/spellbook_unfinished/pre_arcyne = 1)
-
-/**
 	Wizard duke! We still want the court mage to be the most powerful wizard,
 	but if a warrior duke can be about as strong as a Knight, then a wizard duke could probably afford to be as strong as a mage's associate. They'll get T3, no armor prof.
 */
@@ -242,29 +202,24 @@ GLOBAL_LIST_EMPTY(lord_titles)
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 1,
 	)
+	subclass_spellpoints = 27
+	subclass_skills = list(
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+	)
 
 /datum/outfit/job/roguetown/lord/wizard/pre_equip(mob/living/carbon/human/H)
 	..()
+	backr = /obj/item/storage/backpack/rogue/satchel
 	l_hand = /obj/item/rogueweapon/lordscepter
-	r_hand = /obj/item/book/spellbook
-
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
-
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		H.mind?.adjust_spellpoints(27) //More than an Associate actually gets- but much like how the Warrior Duke gets a set of full blacksteel plate, I think we can give the mage duke a little something extra.
-
+	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, /obj/item/roguegem/amethyst = 1, /obj/item/spellbook_unfinished/pre_arcyne = 1)
 
 /**
 	Inbred Lord subclass. A joke class, evolution of the Inbred Wastrel.

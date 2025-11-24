@@ -1,8 +1,8 @@
 /datum/patron/inhumen/baotha
 	name = "Baotha"
-	domain = "Goddess of Hedonism, Addiction, Anguish, and Heartbreak"
-	desc = "The twin sister of Eora, fallen to disgrace. She brings comfort to those who can't find it elsewhere but the bottom of a bottle; and she tempts those who have lost much into her fold through offers of relief and pleasure, yet they soon find themselves unable to escape her grasp. Seen as a scorned lover by many, and followed by such."
-	worshippers = "Widows, Gamblers, Addicts, and Scorned Lovers"
+	domain = "Hedonism, Debauchery, Addiction, Heartbreak"
+	desc = "The Lady of Debauchery was the only snow elf to have survived Zizo's massacre, having been kept by the Naledi as a concubine. Until one dae, She was consumed by Her depravity and addiction, stealing a shard of SYON from Her captors and ascending to godhood. Her followers desire only to experience mind-rotting pleasures."
+	worshippers = "Widows, Gamblers, Addicts, Scorned Lovers, Far-Gone Prostitutes"
 	mob_traits = list(TRAIT_DEPRAVED, TRAIT_CRACKHEAD)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/baothavice					= CLERIC_T0,

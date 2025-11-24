@@ -541,6 +541,18 @@
 	max_blade_int = 250
 	smeltresult = /obj/item/ingot/steel
 
+/obj/item/rogueweapon/greataxe/steel/necran
+	name = "Respite"
+	desc = "An axe, anointed in censer soot and wrapped with linens. The tool of a headsman, for a purpose far greater than mere servitude. \
+	Fit with a well-honed head, coupled to a well balanced shaft. It bears the blessing of respite."
+	icon_state = "necroberd"
+	force = 18//+3, typical of Templar weapons.
+	force_wielded = 33//As above. No peel, unlike Tidecleaver.
+	max_blade_int = 300//+50
+	max_integrity = 300//+50 - Tidecleaver is +150. This gets blade int AND integrity, by comparison.
+	walking_stick = TRUE
+	vorpal = TRUE // snicker snack this shit cuts heads off effortlessly (DO NOT PUT THIS ON ANYTHING ELSE UNLESS IT'S SUPER FUCKING RARE!!!)
+
 /obj/item/rogueweapon/greataxe/silver
 	force = 15
 	force_wielded = 25

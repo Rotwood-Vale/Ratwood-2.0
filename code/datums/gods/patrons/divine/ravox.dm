@@ -1,8 +1,8 @@
 /datum/patron/divine/ravox
 	name = "Ravox"
-	domain = "God of Justice, Glory, Battle"
-	desc = "Stalwart warrior, glorious justicier; legends say he came down to the Basin to repel the vile hordes of demons with his own hands, and that he seeks warriors for his divine army among mortals."
-	worshippers = "Warriors, Sellswords & those who seek Justice"
+	domain = "Justice, Battle, Glory, Righteous Fury"
+	desc = "The Glorious Justice plays as foil to Astrata's Order, preventing the world from being ruled by the Sun's Tyranny. He is an impartial God who exists solely to enforce Divine Justice. His followers are often misguided in their pursuit of such."
+	worshippers = "Warriors, Mercenaries, Knights, Seekers of Justice"
 	mob_traits = list(TRAIT_SHARPER_BLADES, TRAIT_JUSTICARSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/tug_of_war			= CLERIC_T0,
@@ -55,10 +55,10 @@
 
 	if(istype(target.rmb_intent, /datum/rmb_intent/strong))
 		bonus++
-	
+
 	if(istype(target.get_active_held_item(), /obj/item/rogueweapon))
 		bonus += 0.5
-	
+
 	if(target == user && target.blood_volume <= BLOOD_VOLUME_OKAY && COOLDOWN_FINISHED(src, lesser_heal_buff_cooldown))
 		user.emote("warcry")
 		user.blood_volume += BLOOD_VOLUME_SURVIVE / 3

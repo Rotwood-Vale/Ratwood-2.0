@@ -53,7 +53,11 @@
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 
-	backpack_contents = list(/obj/item/roguekey/mercenary)	
+	backpack_contents = list(
+		/obj/item/roguekey/mercenary,
+		/obj/item/storage/belt/rogue/pouch/coins/poor,
+		/obj/item/rogueweapon/scabbard/sheath
+		)	
 	H.merctype = 6
 
 /datum/advclass/mercenary/freelancer/lancer
@@ -106,5 +110,8 @@
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 
-	backpack_contents = list(/obj/item/roguekey/mercenary)
+	backpack_contents = list(
+		/obj/item/roguekey/mercenary,
+		/obj/item/storage/belt/rogue/pouch/coins/poor
+	)
 	H.merctype = 6

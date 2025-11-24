@@ -98,6 +98,9 @@
 	/// Whether the bodypart has unlimited bleeding.
 	var/unlimited_bleeding = FALSE
 
+	/// Cached variable that reflects how much bleeding our wounds are applying to the limb. Handled inside each individual wound.
+	var/bleeding = 0
+
 	/// Is the limb flagged for two-stage death handling? (aka, decaps will instantly kill first, THEN remove the head on second apply)
 	var/two_stage_death = FALSE
 	/// Has the limb been marked as having suffered a two-stage death flag?

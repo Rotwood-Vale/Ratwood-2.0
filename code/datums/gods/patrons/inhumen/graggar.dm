@@ -1,8 +1,8 @@
 /datum/patron/inhumen/graggar
 	name = "Graggar"
-	domain = "God of Conquest, War, Strategy, Bind-Breaking"
-	desc = "Slave orc turned deity, said by the Holy Ecclesial to have been blessed by Ravox himself. He took his blessings to wage a bloody war against his once-captors, and then continued his conquest in his own name. Some Graggarites might care for honor, however many do not- what matters are results, and victory at a reasonable cost."
-	worshippers = "Prisoners, Slaves, Militants, and the Cruel"
+	domain = "Conquest, Cruelty, Kinslaying, Slaughter, Cannibalism, Rape"
+	desc = "The Gorebound Star was a half-orc warlord who sought to strike Ravox down in rage at the cruel fate of His lover. He was decapitated, and His head revived as a mutilated abberation of blue flesh and sickening tendrils. Gazing upon the Star will drive anyone mad."
+	worshippers = "Fallen Warriors, Cannibals, Serial Killers, The Cruel"
 	mob_traits = list(TRAIT_HORDE, TRAIT_ORGAN_EATER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/graggar_bloodrage				= CLERIC_T0,
@@ -36,16 +36,16 @@
 
 	for(var/obj/effect/decal/cleanable/blood/blood in oview(5, target))
 		bonus = min(bonus + 0.1, 2.5)
-	
+
 	if(!bonus)
 		return
-		
+
 	*situational_bonus = bonus
 	*conditional_buff = TRUE
 
 /datum/patron/inhumen/graggar/on_gain(mob/living/living)
 	. = ..()
-	
+
 	RegisterSignal(living, COMSIG_LIVING_DRINKED_LIMB_BLOOD, PROC_REF(on_drink_blood))
 
 /datum/patron/inhumen/graggar/proc/on_drink_blood(mob/living/drinker, mob/living/target)
@@ -55,7 +55,7 @@
 
 /datum/patron/inhumen/graggar/on_loss(mob/living/living)
 	. = ..()
-	
+
 	UnregisterSignal(living, COMSIG_LIVING_DRINKED_LIMB_BLOOD)
 
 // When bleeding, near blood on ground, zchurch, bad-cross, or ritual chalk

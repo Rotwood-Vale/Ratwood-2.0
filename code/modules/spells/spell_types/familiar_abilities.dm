@@ -99,9 +99,9 @@
 	anchored = TRUE
 	mouse_opacity = 0
 
-	light_outer_range = 2 
-	light_power = 1 
-	light_color = rgb(255, 120, 255) 
+	light_outer_range = 2
+	light_power = 1
+	light_color = rgb(255, 120, 255)
 	light_on = TRUE
 
 /obj/effect/proc_holder/spell/self/scent_of_the_grave
@@ -130,7 +130,7 @@
 		return FALSE
 	if(QDELETED(selected_corpse))
 		to_chat(user, span_notice("the scent dissipated."))
-		return FALSE	
+		return FALSE
 	var/direction_text = dir2text(get_dir(user.loc, selected_corpse.loc))
 
 	user.visible_message(
@@ -145,7 +145,6 @@
 	releasedrain = 0
 	chargedrain = 0
 	xp_gain = FALSE
-	
 
 /obj/effect/proc_holder/spell/self/inscription_cache
 	name = "Inscription Cache"
