@@ -524,7 +524,9 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_MIRACLE_HEAL_APPLY, healing_on_tick, src)
 	var/filter = owner.get_filter(MIRACLE_HEALING_FILTER)
 	if (!filter)
-		owner.add_filter(MIRACLE_HEALING_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
+		// Keep the outline a static red for all miracle outlines; the floating/heal visual
+		// will still be tinted by the caster's patron via the temp visual's color.
+		owner.add_filter(MIRACLE_HEALING_FILTER, 2, list("type" = "outline", "color" = "#c42424", "alpha" = 60, "size" = 1))
 	return TRUE
 
 /datum/status_effect/buff/healing/tick()

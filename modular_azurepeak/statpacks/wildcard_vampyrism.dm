@@ -23,8 +23,8 @@
 // Custom clan leader for Crimson-Blooded - no bat transformation
 /datum/clan_leader/crimson
 	lord_spells = list(
-		/obj/effect/proc_holder/spell/targeted/vampire_float, //They can float :)
-	)
+//nope
+)
 	lord_verbs = list(
 		/mob/living/carbon/human/proc/punish_spawn
 	)

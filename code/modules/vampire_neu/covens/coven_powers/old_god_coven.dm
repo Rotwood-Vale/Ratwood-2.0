@@ -128,3 +128,4 @@
 	owner.apply_status_effect(/datum/status_effect/buff/old_god_avatar)
 	
 	return TRUE
+
