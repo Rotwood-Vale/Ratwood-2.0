@@ -4997,7 +4997,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "bFU" = (
 /turf/open/floor/rogue/tile/masonic,
 /area/rogue/indoors/town/manor/rockhill)
@@ -18239,7 +18239,7 @@
 /obj/item/storage/roguebag,
 /obj/item/storage/roguebag,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "fJX" = (
 /turf/closed/wall/mineral/rogue/stone/blue_moss,
 /area/rogue/indoors/town/bath)
@@ -18429,6 +18429,10 @@
 	icon_state = "bathtileratwood"
 	},
 /area/rogue/under/town/basement/keep)
+"fMq" = (
+/obj/structure/closet/crate/chest/old_crate,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors/town/tavern)
 "fMt" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/quiver/javelin/steel,
@@ -23501,6 +23505,10 @@
 "hpj" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/garrison)
+"hpl" = (
+/obj/structure/fermentation_keg,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors/town/tavern)
 "hpn" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/rock,
 /turf/open/floor/rogue/cobble/mossy,
@@ -25181,6 +25189,9 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woodsrat/south)
+"hSs" = (
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors/town/tavern)
 "hSt" = (
 /obj/structure/chair/bench,
 /turf/open/floor/rogue/dirt/road,
@@ -26361,7 +26372,7 @@
 "ilq" = (
 /obj/machinery/light/rogue/torchholder/l,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "ilt" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -42532,7 +42543,7 @@
 "nAq" = (
 /obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "nAr" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/twig,
@@ -48170,7 +48181,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "pqH" = (
 /obj/structure/rack/rogue,
 /obj/item/needle,
@@ -53917,7 +53928,7 @@
 	},
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/cobblerock,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "rpr" = (
 /turf/open/floor/rogue/rooftop/green/corner1{
 	dir = 6
@@ -54482,7 +54493,7 @@
 	name = "Tavern Cellar"
 	},
 /turf/open/floor/rogue/cobblerock,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "rwT" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle{
 	dir = 1
@@ -62819,7 +62830,7 @@
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "ujy" = (
 /obj/structure/roguemachine/scomm/r,
 /turf/open/floor/carpet/royalblack,
@@ -70014,7 +70025,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "wDj" = (
 /obj/structure/roguewindow/openclose{
 	dir = 8
@@ -73494,7 +73505,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobblerock,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "xKd" = (
 /obj/structure/table/wood/large_table/south_west,
 /obj/item/reagent_containers/glass/cup/wooden,
@@ -74574,7 +74585,7 @@
 /obj/effect/decal/cleanable/dirt/cobweb,
 /obj/structure/fermentation_keg,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/town/basement)
+/area/rogue/indoors/town/tavern)
 "ycG" = (
 /mob/living/simple_animal/pet/cat/rogue/black{
 	name = "Vishar"
@@ -131402,11 +131413,11 @@ whb
 whb
 whb
 whb
-cTA
-cTA
-cTA
-cTA
-cTA
+csO
+csO
+csO
+csO
+csO
 whb
 whb
 whb
@@ -131833,13 +131844,13 @@ whb
 whb
 whb
 whb
-cTA
-cTA
+csO
+csO
 nAq
-aKH
-cEK
-cTA
-cTA
+hpl
+hSs
+csO
+csO
 whb
 whb
 whb
@@ -132265,13 +132276,13 @@ whb
 whb
 whb
 whb
-cTA
+csO
 ycv
-cEK
-cEK
-cEK
-aKH
-cTA
+hSs
+hSs
+hSs
+hpl
+csO
 lke
 lke
 lke
@@ -132697,13 +132708,13 @@ whb
 whb
 whb
 whb
-cTA
-cEK
-cEK
-cEK
-cEK
+csO
+hSs
+hSs
+hSs
+hSs
 fJP
-cTA
+csO
 lke
 pRC
 oMw
@@ -133129,13 +133140,13 @@ whb
 whb
 whb
 whb
-cTA
-aKH
-cEK
-jMl
-cEK
-aKH
-cTA
+csO
+hpl
+hSs
+fHB
+hSs
+hpl
+csO
 vhJ
 rSw
 rSw
@@ -133561,13 +133572,13 @@ whb
 whb
 whb
 whb
-cTA
+csO
 ujs
-cEK
+hSs
 ilq
-cEK
-cEK
-cTA
+hSs
+hSs
+csO
 lke
 mzQ
 pnx
@@ -133993,13 +134004,13 @@ whb
 whb
 whb
 whb
-cTA
+csO
 pqD
-cEK
-cEK
-cEK
-aOx
-cTA
+hSs
+hSs
+hSs
+fMq
+csO
 lke
 lke
 lke
@@ -134425,13 +134436,13 @@ whb
 whb
 whb
 whb
-cTA
-cTA
+csO
+csO
 wDf
-cEK
-cEK
-cTA
-cTA
+hSs
+hSs
+csO
+csO
 whb
 nvH
 nvH
@@ -134858,11 +134869,11 @@ whb
 whb
 whb
 whb
-cTA
-cTA
+csO
+csO
 bFT
-cTA
-cTA
+csO
+csO
 whb
 nvH
 nvH
@@ -135290,10 +135301,10 @@ whb
 whb
 whb
 whb
-txa
-txa
+lyG
+lyG
 rwR
-cTA
+csO
 whb
 whb
 scK
@@ -135722,10 +135733,10 @@ whb
 whb
 whb
 whb
-txa
+lyG
 xJX
 rpp
-cTA
+csO
 whb
 whb
 scK
@@ -136154,10 +136165,10 @@ whb
 whb
 whb
 whb
-txa
-txa
-txa
-txa
+lyG
+lyG
+lyG
+lyG
 whb
 whb
 nvH
