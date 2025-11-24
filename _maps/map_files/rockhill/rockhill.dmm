@@ -2038,7 +2038,7 @@
 "aGV" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/roguegrass/bush/wall,
-/turf/closed,
+/turf/open/transparent/openspace,
 /area/rogue/indoors/shelter/druidgrove)
 "aHf" = (
 /obj/structure/fluff/railing/border,
@@ -4660,7 +4660,7 @@
 /obj/structure/mineral_door/wood/donjon/stone{
 	locked = 1;
 	lockid = "priest";
-	name = "Priest's Quarters"
+	name = "Bishop's Quarters"
 	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church/chapel)
@@ -18429,10 +18429,6 @@
 	icon_state = "bathtileratwood"
 	},
 /area/rogue/under/town/basement/keep)
-"fMq" = (
-/obj/structure/flora/roguegrass/bush/wall,
-/turf/closed,
-/area/rogue/indoors/shelter/druidgrove)
 "fMt" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/quiver/javelin/steel,
@@ -23505,9 +23501,6 @@
 "hpj" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/garrison)
-"hpl" = (
-/turf/closed,
-/area/rogue/outdoors/woodsrat/south)
 "hpn" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/rock,
 /turf/open/floor/rogue/cobble/mossy,
@@ -25188,10 +25181,6 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woodsrat/south)
-"hSs" = (
-/obj/structure/flora/newleaf,
-/turf/closed,
-/area/rogue/indoors/shelter/druidgrove)
 "hSt" = (
 /obj/structure/chair/bench,
 /turf/open/floor/rogue/dirt/road,
@@ -34018,7 +34007,7 @@
 	lockid = "church";
 	name = "Church Cells"
 	},
-/turf/closed,
+/turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/church/basement)
 "kIS" = (
 /turf/open/floor/rogue/blocks/stonered/tiny,
@@ -35073,13 +35062,6 @@
 	icon_state = "bathtileratwood"
 	},
 /area/rogue/indoors/town/bath)
-"laE" = (
-/obj/structure/flora/newleaf,
-/obj/structure/flora/newbranch/connector{
-	dir = 1
-	},
-/turf/closed,
-/area/rogue/indoors/shelter/druidgrove)
 "laN" = (
 /obj/structure/chair/wood/rogue{
 	dir = 4
@@ -49207,9 +49189,6 @@
 	},
 /obj/item/flashlight/flare/torch/lantern{
 	pixel_y = 12
-	},
-/obj/item/clothing/suit/roguetown/shirt/robe/white{
-	pixel_y = 6
 	},
 /turf/open/floor/rogue/ruinedwood{
 	dir = 1;
@@ -169360,7 +169339,7 @@ fyc
 fyc
 "}
 (219,1,1) = {"
-xRS
+xKo
 xRS
 xRS
 xRS
@@ -399049,7 +399028,7 @@ rKu
 rKu
 pUK
 lOT
-hpl
+lOT
 osh
 rKu
 mEu
@@ -399481,7 +399460,7 @@ rKu
 osh
 pUK
 osh
-hpl
+lOT
 pUK
 osh
 osh
@@ -399913,7 +399892,7 @@ pUK
 rKu
 rKu
 osh
-hpl
+rKu
 pUK
 rKu
 kqc
@@ -501457,7 +501436,7 @@ mBL
 rKu
 mBL
 mBL
-hpl
+mBL
 mBL
 ldE
 rKu
@@ -612739,7 +612718,7 @@ nhR
 cAj
 ijs
 pmM
-fMq
+cAj
 cAj
 bgS
 rvN
@@ -614902,7 +614881,7 @@ saO
 eeU
 dIL
 dIL
-laE
+dIL
 hVg
 eZP
 lAl
@@ -615338,7 +615317,7 @@ swU
 swU
 cAj
 cAj
-hSs
+swU
 swU
 iHa
 swU
