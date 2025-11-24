@@ -10,7 +10,7 @@
 					/obj/effect/proc_holder/spell/invoked/psydonendure			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/psydonrespite			= CLERIC_T2,
 	)
-	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T1)
+	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T0)
 	confess_lines = list(
 		"THERE IS ONLY ONE TRUE GOD!",
 		"PSYDON YET LYVES! PSYDON YET ENDURES!",
