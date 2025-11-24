@@ -318,6 +318,17 @@
 	throw_speed = 6
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 33, "embedded_fall_chance" = 2)
 
+/obj/item/rogueweapon/stoneaxe/woodcut/bronze/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 25,\
+		added_def = 2,\
+	)
+
 /obj/item/rogueweapon/stoneaxe/woodcut/steel
 	name = "steel axe"
 	icon_state = "saxe"

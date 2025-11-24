@@ -350,6 +350,17 @@
 	max_integrity = 80
 	smeltresult = /obj/item/ingot/bronze
 
+/obj/item/rogueweapon/katar/bronze/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 25,\
+		added_def = 2,\
+	)
+
 /obj/item/rogueweapon/katar/punchdagger
 	name = "punch dagger"
 	desc = "A weapon that combines the ergonomics of the Ranesheni katar with the capabilities of the Western Psydonian \"knight-killers\". It can be tied around the wrist."
@@ -474,6 +485,17 @@
 	wdefense = 6
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/bronze
+
+/obj/item/rogueweapon/knuckles/bronzeknuckles/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 25,\
+		added_def = 2,\
+	)
 
 /obj/item/rogueweapon/knuckles/aknuckles
 	name = "decrepit knuckles"

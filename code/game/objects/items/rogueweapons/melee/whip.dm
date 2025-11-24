@@ -199,3 +199,14 @@
 	wdefense = 0
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish) //Able to dismember at range. 'Holy' is a catchall term, in this case.
 	smeltresult = /obj/item/ingot/bronze
+
+/obj/item/rogueweapon/whip/bronze/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 25,\
+		added_def = 2,\
+	)

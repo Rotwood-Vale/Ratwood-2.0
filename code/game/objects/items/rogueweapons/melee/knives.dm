@@ -185,6 +185,17 @@
 	max_integrity = 175 
 	smeltresult = /obj/item/ingot/bronze
 
+/obj/item/rogueweapon/huntingknife/bronze/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 25,\
+		added_def = 2,\
+	)
+
 /datum/intent/dagger/thrust/bronze
 	name = "piercing thrust"
 	icon_state = "inpick"

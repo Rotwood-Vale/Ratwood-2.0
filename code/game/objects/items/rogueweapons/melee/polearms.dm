@@ -925,6 +925,17 @@
 	max_blade_int = 225
 	max_integrity = 155
 
+/obj/item/rogueweapon/spear/bronze/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 25,\
+		added_def = 2,\
+	)
+
 /obj/item/rogueweapon/greatsword
 	force = 12
 	force_wielded = 30

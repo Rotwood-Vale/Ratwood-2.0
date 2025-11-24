@@ -219,6 +219,17 @@
 	max_integrity = 125
 	sheathe_icon = "decsword1" //Placeholder. Close enough.
 
+/obj/item/rogueweapon/sword/bronze/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 25,\
+		added_def = 2,\
+	)
+
 /obj/item/rogueweapon/sword/falx
 	name = "falx"
 	desc = "An unusual type of curved sword that evolved from the farmer's sickle. It has an inwards edge, making it useful for cutting and chopping."
@@ -945,6 +956,17 @@
 	max_integrity = 200
 	smeltresult = /obj/item/ingot/bronze
 	wdefense = 3
+
+/obj/item/rogueweapon/sword/short/gladius/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 25,\
+		added_def = 2,\
+	)
 
 /obj/item/rogueweapon/sword/short/gladius/agladius
 	name = "decrepit gladius"
