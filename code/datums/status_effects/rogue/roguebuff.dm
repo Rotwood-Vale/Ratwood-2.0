@@ -465,8 +465,9 @@
 	var/healing_on_tick = 1
 	var/outline_colour = "#c42424"
 	var/tech_healing_modifier = 1
+	var/mob/living/caster // The person who cast the healing miracle
 
-/datum/status_effect/buff/healing/on_creation(mob/living/new_owner, new_healing_on_tick, is_inhumen = FALSE)
+/datum/status_effect/buff/healing/on_creation(mob/living/new_owner, new_healing_on_tick, is_inhumen = FALSE, mob/living/miracle_caster)
 	healing_on_tick = new_healing_on_tick
 	tech_healing_modifier = SSchimeric_tech.get_healing_multiplier()
 	if(is_inhumen)
@@ -474,40 +475,49 @@
 		tech_healing_modifier = 1 + ((tech_healing_modifier - 1) * 0.5)
 	healing_on_tick *= tech_healing_modifier
 	
-	if(ishuman(new_owner))
-		var/mob/living/carbon/human/H = new_owner
-		if(H.patron)
-			switch(H.patron.type)
-				if(/datum/patron/divine/astrata)
-					outline_colour = "#FFD700"
-				if(/datum/patron/divine/noc)
-					outline_colour = "#191970"
-				if(/datum/patron/divine/dendor)
-					outline_colour = "#228B22"
-				if(/datum/patron/divine/abyssor)
-					outline_colour = "#000080"
-				if(/datum/patron/divine/ravox)
-					outline_colour = "#8B0000"
-				if(/datum/patron/divine/necra)
-					outline_colour = "#C0C0C0"
-				if(/datum/patron/divine/xylix)
-					outline_colour = "#9400D3"
-				if(/datum/patron/divine/pestra)
-					outline_colour = "#00FF00"
-				if(/datum/patron/divine/malum)
-					outline_colour = "#FF4500"
-				if(/datum/patron/divine/eora)
-					outline_colour = "#FF69B4"
-				if(/datum/patron/inhumen/zizo)
-					outline_colour = "#4B0082"
-				if(/datum/patron/inhumen/graggar)
-					outline_colour = "#FF0000"
-				if(/datum/patron/inhumen/matthios)
-					outline_colour = "#FFFF00"
-				if(/datum/patron/inhumen/baotha)
-					outline_colour = "#FF1493"
-				if(/datum/patron/old_god)
-					outline_colour = "#FFFFFF"
+	// Store the caster for reference
+	if(miracle_caster)
+		caster = miracle_caster
+	
+	// Use caster's patron if available, otherwise fall back to receiver's patron
+	var/mob/living/carbon/human/H
+	if(ishuman(caster))
+		H = caster
+	else if(ishuman(new_owner))
+		H = new_owner
+	
+	if(H?.patron)
+		switch(H.patron.type)
+			if(/datum/patron/divine/astrata)
+				outline_colour = "#FFD700"
+			if(/datum/patron/divine/noc)
+				outline_colour = "#191970"
+			if(/datum/patron/divine/dendor)
+				outline_colour = "#228B22"
+			if(/datum/patron/divine/abyssor)
+				outline_colour = "#000080"
+			if(/datum/patron/divine/ravox)
+				outline_colour = "#8B0000"
+			if(/datum/patron/divine/necra)
+				outline_colour = "#C0C0C0"
+			if(/datum/patron/divine/xylix)
+				outline_colour = "#9400D3"
+			if(/datum/patron/divine/pestra)
+				outline_colour = "#00FF00"
+			if(/datum/patron/divine/malum)
+				outline_colour = "#FF4500"
+			if(/datum/patron/divine/eora)
+				outline_colour = "#FF69B4"
+			if(/datum/patron/inhumen/zizo)
+				outline_colour = "#4B0082"
+			if(/datum/patron/inhumen/graggar)
+				outline_colour = "#FF0000"
+			if(/datum/patron/inhumen/matthios)
+				outline_colour = "#FFFF00"
+			if(/datum/patron/inhumen/baotha)
+				outline_colour = "#FF1493"
+			if(/datum/patron/old_god)
+				outline_colour = "#FFFFFF"
 	return ..()
 
 /datum/status_effect/buff/healing/on_apply()

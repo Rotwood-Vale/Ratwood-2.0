@@ -7,6 +7,7 @@
 	title = "Martyr"
 	department_flag = CHURCHMEN
 	faction = "Station"
+	statpack_restrictions = list(/datum/statpack/wildcard/crimson_blooded)
 	tutorial = "Prayer. Conviction. Intent. \
 	Words they'd drilled into your skull, from the moment of induction, up until your assignment as the Prelate's ward. \
 	A crimson gild upon your soul, a taint that can't be cleared. For you are a weapon of the Holy See. No more. No less. \

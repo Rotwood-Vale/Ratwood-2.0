@@ -31,21 +31,14 @@
 
 	user << browse(generate_combined_html(hierarchy_html), "window=clan_menu")
 
-/datum/clan_menu_interface/proc/generate_interface()
-	//probably should make this an asset instead
-	user << browse_rsc('html/research_hover.png')
-	user << browse_rsc('html/research_base.png')
-	user << browse_rsc('html/research_known.png')
-	user << browse_rsc('html/research_selected.png')
-	user << browse_rsc('html/KettleParallaxBG.png')
-	user << browse_rsc('html/KettleParallaxNeb.png')
+/datum/clan_menu_interface/proc/show_clan_info()
+	current_coven = null
 
-	user << browse_rsc('html/gifs/Awe.gif')
+	var/clan_info_html = generate_clan_info_html()
 
-	var/html = generate_combined_html(generate_setup_html())
-	user << browse(html, "window=clan_menu;size=1400x900;can_resize=1")
+	user << browse(generate_combined_html(clan_info_html), "window=clan_menu")
 
-/datum/clan_menu_interface/proc/generate_welcome_screen_html()
+/datum/clan_menu_interface/proc/generate_clan_info_html()
 	var/clan_downside = "burn in sunlight"
 	var/blood_preference = "any blood"
 
@@ -58,8 +51,8 @@
 		<h2>Welcome to your Clan</h2>
 
 		<div class="intro-section">
-			<p>Select a coven from the sidebar to view its research tree and manage your powers.
-			Each coven represents a different aspect of your vampiric abilities.</p>
+			<p>This guide contains important information about vampiric mechanics and gameplay.
+			Select a coven from the sidebar to view its research tree and manage your powers.</p>
 		</div>
 
 		<div class="vampire-mechanics" style='padding: 8px;'>
@@ -102,14 +95,34 @@
 	</div>
 	"}
 
+/datum/clan_menu_interface/proc/generate_interface()
+	//probably should make this an asset instead
+	user << browse_rsc('html/research_hover.png')
+	user << browse_rsc('html/research_base.png')
+	user << browse_rsc('html/research_known.png')
+	user << browse_rsc('html/research_selected.png')
+	user << browse_rsc('html/KettleParallaxBG.png')
+	user << browse_rsc('html/KettleParallaxNeb.png')
+
+	user << browse_rsc('html/gifs/Awe.gif')
+
+	var/html = generate_combined_html(generate_setup_html())
+	user << browse(html, "window=clan_menu;size=1400x900;can_resize=1")
+
+/datum/clan_menu_interface/proc/generate_welcome_screen_html()
+	return {"
+	<div class="welcome-screen" style='max-height: 85vh; overflow-y: auto; padding: 12px;'>
+		<h2>Coven Selection</h2>
+
+		<div class="intro-section">
+			<p>Select your covens to begin your journey as a vampire.
+		Each coven represents a different aspect of your vampiric abilities.</p>
+			<p style='color: #AAA; font-size: 8px; margin-top: 8px;'>For more information about vampiric mechanics and gameplay tips, select "Clan Information" from the sidebar.</p>
+		</div>
+	</div>
+	"}
+
 /datum/clan_menu_interface/proc/generate_setup_html()
-	var/clan_downside = "burn in sunlight"
-	var/blood_preference = "any blood"
-
-	if(user_clan)
-		clan_downside = user_clan.get_downside_string()
-		blood_preference = user_clan.get_blood_preference_string()
-
 	return {"
 	<script>
 		function submitCovens() {
@@ -184,52 +197,16 @@
 		}
 	</script>
 	<div class="welcome-screen" style='max-height: 85vh; overflow-y: auto; padding: 12px;'>
-		<h2>Welcome to your Clan</h2>
+		<h2>Coven Selection</h2>
 
 		<div class="intro-section">
-			<p>Select up to three covens (two if you are a wretch)
-			Each coven represents a different aspect of your vampiric abilities.
-			Select a coven from the sidebar to view its research tree and manage your powers.
+			<p>Select your covens to begin your journey as a vampire.
+		Each coven represents a different aspect of your vampiric abilities.
+		Select a coven from the sidebar to view its research tree and manage your powers.
 			</p>
+			<p style='color: #AAA; font-size: 8px; margin-top: 8px;'>For more information about vampiric mechanics and gameplay tips, select "Clan Information" from the sidebar.</p>
 		</div>
 		[generate_coven_selection()]
-		<div class="vampire-mechanics" style='padding: 8px; margin-top: 12px;'>
-			<h3 style='font-size: 10px; margin-bottom: 6px;'>Vampiric Nature</h3>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Blood Hunger:</strong> Vampires must drink blood to survive. Bloodpool regenerates slowly or faster via feeding. You prefer <span class="blood-type">[blood_preference]</span>.
-			</div>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Clan Weakness:</strong> Your clan's curse means you <span class="weakness">[clan_downside]</span>.
-			</div>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Undead Resilience:</strong> Vampires feel no pain and are immune to bleeding out. Blood volume auto-refills each tick to prevent death from bloodloss.
-			</div>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Silver Vulnerability:</strong> Silver weaponry causes pain and may trigger a blood frenzy, causing you to lose control and attack indiscriminately.
-			</div>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Disguise:</strong> Use vampire disguise to appear mortal and avoid detection. Miracles work on disguised vampires but burn undisguised ones.
-			</div>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Torpor:</strong> Rest in a coffin to enter deathless slumber (Torpor) and regenerate from wounds, consuming bloodpool to heal.
-			</div>
-		</div>
-
-		<div class="gameplay-tips" style='padding: 8px;'>
-			<h3 style='font-size: 10px; margin-bottom: 6px;'>Gameplay Tips</h3>
-			<div class="tip-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Coven Abilities:</strong> Right-click on any coven ability to switch between different powers from that coven.
-			</div>
-			<div class="tip-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Creating Progeny:</strong> Drain someone's blood to critical levels to gain the option to embrace them as a new vampire.
-			</div>
-			<div class="tip-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>God Powers:</strong> God coven abilities adapt to your patron deity. Worship one of The Ten for Divine powers, The Four for Inhumen powers, or Psydon for Old God powers.
-			</div>
-			<div class="tip-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Coven Selection:</strong> Choose one vampiric coven (bloodheal, obfuscate, etc.) and one god-aligned coven (divine/inhumen/old god) based on your patron.
-			</div>
-		</div>
 	</div>
 	"}
 
@@ -1224,6 +1201,15 @@
 
 		<div class="main-container">
 			<div class="sidebar">
+				<h3>Clan Information</h3>
+				<ul class="coven-list">
+					<li class="coven-item hierarchy-button" onclick="window.location.href='?src=[REF(src)];action=show_clan_info'">
+					<div class="coven-name">Clan Guide</div>
+					<div class="coven-stats">
+						<span>Mechanics</span>
+						<span>& Tips</span>
+					</div>
+				</ul>
 				<h3>Clan Hierarchy</h3>
 				<ul class="coven-list">
 					<li class="coven-item hierarchy-button" onclick="window.location.href='?src=[REF(src)];action=show_hierarchy'">
@@ -1587,6 +1573,9 @@
 
 		if("show_hierarchy")
 			show_hierarchy()
+
+		if("show_clan_info")
+			show_clan_info()
 
 		if("refresh_clan_menu")
 			generate_interface()
