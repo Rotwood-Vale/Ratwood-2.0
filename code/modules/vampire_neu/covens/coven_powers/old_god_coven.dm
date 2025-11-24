@@ -28,7 +28,7 @@
 		return FALSE
 	
 	// Apply self-heal miracle AND buff
-	owner.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 0.1, FALSE, owner)
+	owner.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 0.4, FALSE, owner)
 	owner.apply_status_effect(/datum/status_effect/buff/ancient_touch)
 	
 	owner.visible_message(span_notice("[owner] channels ancient power..."))
@@ -63,7 +63,7 @@
 	var/mob/living/carbon/human/ally = target
 	
 	// Apply healing to ally AND buff
-	ally.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 0.1, FALSE, owner)
+	ally.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 0.4, FALSE, owner)
 	ally.apply_status_effect(/datum/status_effect/buff/ancient_blessing)
 	
 	owner.visible_message(span_notice("[owner] channels ancient power into [ally]!"))

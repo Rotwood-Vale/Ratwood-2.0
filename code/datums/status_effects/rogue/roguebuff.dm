@@ -549,7 +549,7 @@
 
 /datum/status_effect/buff/healing/long_healing
 	id = "long_healing"
-	duration = 240 SECONDS
+	duration = 60 SECONDS
 	healing_on_tick = 0.1
 
 /atom/movable/screen/alert/status_effect/buff/healing/campfire

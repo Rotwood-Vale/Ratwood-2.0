@@ -30,7 +30,7 @@
 	var/patron_type = owner.patron?.type
 	
 	// Apply self-heal miracle AND buff
-	owner.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 0.1, FALSE, owner)
+	owner.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 0.4, FALSE, owner)
 	owner.apply_status_effect(/datum/status_effect/buff/divine_touch)
 	
 	owner.visible_message(span_notice("[owner] channels divine power..."))
@@ -112,7 +112,7 @@
 	var/patron_type = owner.patron?.type
 	
 	// Apply healing to ally AND buff
-	ally.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 0.1, FALSE, owner)
+	ally.apply_status_effect(/datum/status_effect/buff/healing/long_healing, 0.4, FALSE, owner)
 	ally.apply_status_effect(/datum/status_effect/buff/divine_blessing)
 	
 	// Apply stronger patron-specific debuff to owner
