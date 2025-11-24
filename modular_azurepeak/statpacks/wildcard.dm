@@ -72,10 +72,11 @@
 	if(H.mind)
 		// If already has a vampire antag, do nothing (includes Vampire Lord)
 		if(locate(/datum/antagonist/vampire) in H.mind.antag_datums)
-			// Make sure bloodpool HUD is initialized if it wasn't during on_gain()
-			if(H.hud_used && !H.hud_used.bloodpool)
-				H.hud_used.initialize_bloodpool()
-				H.hud_used.bloodpool?.set_fill_color("#510000")
+			// Ensure the player's HUD exists (create if client attached), then set bloodpool color
+			if(H.client && !H.hud_used)
+				H.create_mob_hud()
+			if(H.hud_used && H.hud_used.bloodpool)
+				H.hud_used.bloodpool.set_fill_color("#510000")
 			return TRUE
 		// Don't override if they're assigned to be a vampire antagonist (Vampire Lord/Servant)
 		if(H.mind.special_role == ROLE_NBEAST || H.mind.special_role == ROLE_VAMPIRE)
@@ -95,9 +96,13 @@
 	addtimer(CALLBACK(src, PROC_REF(ensure_crimson_vampire), H, tries - 1), 2 SECONDS)
 	return TRUE
 
+
 /datum/statpack/wildcard/crimson_blooded/proc/init_bloodpool_hud(mob/living/carbon/human/H)
-	if(!H || QDELETED(H) || !H.hud_used)
+	if(!H || QDELETED(H))
 		return
-	if(!H.hud_used.bloodpool)
-		H.hud_used.initialize_bloodpool()
-		H.hud_used.bloodpool?.set_fill_color("#510000")
+	// If the client is attached but HUD wasn't created, create it now
+	if(H.client && !H.hud_used)
+		H.create_mob_hud()
+	// If HUD exists and has a bloodpool, set its color
+	if(H.hud_used && H.hud_used.bloodpool)
+		H.hud_used.bloodpool.set_fill_color("#510000")
