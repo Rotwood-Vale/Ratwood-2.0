@@ -296,7 +296,7 @@
 		adjust_bloodpool(10)
 	if(HAS_TRAIT(src, TRAIT_DEATHCOMA) && (total_damage <= 0 || (!istype(coffin) || !(src in coffin.contents))))
 		REMOVE_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)	
-		to_chat(src, span_warning("You have reVAMPIRE_TRAITcovered from Torpor."))
+		to_chat(src, span_warning("You have recovered from Torpor."))
 
 /mob/living/carbon/human/proc/handle_bloodpool_effects()
 	// Apply thirst effects based on bloodpool levels
