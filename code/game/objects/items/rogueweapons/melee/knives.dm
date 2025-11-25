@@ -175,7 +175,7 @@
 
 /obj/item/rogueweapon/huntingknife/bronze
 	name = "bronze dagger"
-	desc = "A wide blade of bronze, fitted to a wooden handle. Ancient laborers and priests coveted this tool above all else: both as a means to handle the dae's labors, and to indulge in the rituos of sacrifice."
+	desc = "A wide blade of bronze, fitted to a wooden handle. Ancient laborers and priests coveted this tool above all else: both as a means to handle the dae's labors, and to indulge in the rituals of sacrifice. In Psydonia bronze was often cast in temple furnaces and inscribed with psydonic sigils; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed its subtle resonance disrupts the undead."
 	icon_state = "bronzedagger"
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/bronze, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/thrust/bronze)
 	force = 18

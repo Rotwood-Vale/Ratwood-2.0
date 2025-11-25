@@ -233,6 +233,13 @@ And it also helps for the character set panel
 	H.AddComponent(/datum/component/sunlight_vulnerability)
 	H.AddComponent(/datum/component/vampire_disguise)
 
+	// If possible, auto-enable disguise on join so vampires don't spawn undisguised and burn.
+	var/datum/component/vampire_disguise/disguise_comp = H.GetComponent(/datum/component/vampire_disguise)
+	if(disguise_comp)
+		// Only attempt to disguise if they have enough blood to maintain it immediately.
+		if(H.bloodpool >= disguise_comp.min_bloodpool)
+			disguise_comp.apply_disguise(H)
+
 /datum/clan/proc/disable_covens(mob/living/carbon/human/vampire)
 	for(var/coven as anything in vampire.covens)
 		var/datum/coven/real_coven = vampire.covens[coven]

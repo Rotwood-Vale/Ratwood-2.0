@@ -344,7 +344,7 @@
 
 /obj/item/rogueweapon/katar/bronze
 	name = "bronze katar"
-	desc = "A bronze blade that sits above the user's fist. Commonly used by those proficient at unarmed fighting."
+	desc = "A bronze blade that sits above the user's fist. Commonly used by those proficient at unarmed fighting. In Psydonic tradition bronze was cast into ritual form and bound with wards; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed its woven resonance harms the un-dead more readily."
 	icon_state = "bronzekatar"
 	force = 21 //-3 damage malus, same as the knuckles.
 	max_integrity = 80
@@ -466,7 +466,7 @@
 
 /obj/item/rogueweapon/knuckles/bronzeknuckles
 	name = "bronze knuckles"
-	desc = "A mean looking pair of bronze knuckles. Mildly heavier than it's steel counterpart, making it a solid defensive option, if less wieldy."
+	desc = "A mean looking pair of bronze knuckles. Mildly heavier than it's steel counterpart, making it a solid defensive option, if less wieldy. In Psydonia bronze was often prepared in temple rites and inscribed with psydonic marks; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed even blunt bronze implements strike the un-dead with disruptive force."
 	force = 22
 	possible_item_intents = list(/datum/intent/knuckles/strike, /datum/intent/knuckles/smash, /datum/intent/knuckles/strike/wallop)
 	icon = 'icons/roguetown/weapons/unarmed32.dmi'

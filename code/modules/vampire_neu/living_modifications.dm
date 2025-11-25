@@ -291,15 +291,11 @@
 	if(istype(coffin) && total_damage && (src in coffin.contents))
 		if(!HAS_TRAIT(src, TRAIT_DEATHCOMA))
 			to_chat(src, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
-			// Mark both generic death-coma and the vampiric Torpor trait so all systems agree
-			ADD_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
-			ADD_TRAIT(src, TRAIT_TORPOR, VAMPIRE_TRAIT)
-		heal_overall_damage(15, 15)
-		adjust_bloodpool(-10)
-	if((HAS_TRAIT(src, TRAIT_DEATHCOMA) || HAS_TRAIT(src, TRAIT_TORPOR)) && (total_damage <= 0 || (!istype(coffin) || !(src in coffin.contents))))
-		// Clear both traits when recovered so no systems mistakenly think we're still in Torpor
-		REMOVE_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
-		REMOVE_TRAIT(src, TRAIT_TORPOR, VAMPIRE_TRAIT)
+			ADD_TRAIT(src, TRAIT_DEATHCOMA, TRAIT_VAMPIRE)
+		heal_overall_damage(5, 5)
+		adjust_bloodpool(10)
+	if(HAS_TRAIT(src, TRAIT_DEATHCOMA) && (total_damage <= 0 || (!istype(coffin) || !(src in coffin.contents))))
+		REMOVE_TRAIT(src, TRAIT_DEATHCOMA, TRAIT_VAMPIRE)
 		to_chat(src, span_warning("You have recovered from Torpor."))
 
 /mob/living/carbon/human/proc/handle_bloodpool_effects()

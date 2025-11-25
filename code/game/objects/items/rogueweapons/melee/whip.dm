@@ -191,7 +191,7 @@
 
 /obj/item/rogueweapon/whip/bronze
 	name = "bronze whip"
-	desc = "A heavy whip, corded from thick leather and adorned with a razor-sharp bronzehead. In ancient tymes, this shepherd's weapon once repelled the gnashing teeth of bloodthirsty nitebeasts: now, it seperates limb-from-trunk with thunderous claps. </br>Holding this whip imbues you with determination.. and a rather odd hankering for turkey dinners."
+	desc = "A heavy whip, corded from thick leather and adorned with a razor-sharp bronzehead. In ancient tymes, this shepherd's weapon once repelled the gnashing teeth of bloodthirsty nitebeasts: now, it seperates limb-from-trunk with thunderous claps. In Psydonia bronze was formed in temple fires and blessed with psydonic glyphs; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed its tuned resonance can rend the un-dead as readily as steel. </br>Holding this whip imbues you with determination.. and a rather odd hankering for turkey dinners."
 	icon_state = "bronzewhip"
 	force = 21 //Same damage as the leathers.
 	minstr = 11

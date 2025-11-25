@@ -674,7 +674,7 @@
 
 /obj/item/ammo_casing/caseless/rogue/sling_bullet/bronze
 	name = "bronze sling bullet"
-	desc = "A small bronze sphere. It feels deceptively heavy in the palm of your hand."
+	desc = "A small bronze sphere. It feels deceptively heavy in the palm of your hand. In Psydonian rites bronze shot was sometimes cast in temple molds and charged with psydonic runes; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed these pellets carry a sanctified resonance that tears at the un-dead."
 	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/bronze
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "ancient_sling_bullet"

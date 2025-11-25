@@ -13,8 +13,7 @@
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
 	sound = 'sound/magic/ENDVRE.ogg'
-	invocations = list("ENDURE!","GET UP!","COME ON!") //Kept intentionally vague as to whether it's genuine magic or just a very inspiring attempt to rally the target, like with 'PRAYER'. Invigorate the wounded; give them the motivation to thug it out.
-	invocation_type = "shout"
+	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
 	recharge_time = 30 SECONDS
@@ -399,8 +398,7 @@
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
 	sound = null
-	invocations = list("#..our father above, hallowed be thy name..","#..thy kingdom come, thy will be done..","#..I fear no evil, for thou art with me..") //Like with 'ENDURE', it's kept vague as to whether this is an acutal miracle or not. Fluffs it as a proper prayer, incantations and all!
-	invocation_type = "shout"
+	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
 	recharge_time = 5 SECONDS
@@ -505,8 +503,7 @@
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
 	sound = null
-	invocations = list("#..with every broken bone, I swore I lyved..","#..thou shalt ward me within the valleys o' evil..","#..the fires of Syon, everburning with thine vigor..") //General rule of thumb, with these prayers; the more powerful they are, the more zealous the incantations should be.
-	invocation_type = "shout"
+	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
 	recharge_time = 5 SECONDS
@@ -610,8 +607,7 @@
 	range = 2
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
-	invocations = list("#..in Psydon's glory, all malaises shall melt away..","#..thine holy spirit lies within all our hearts, weeping forevermore..","#..thou shalt know all, for enduring begets enlightenment..") //Highest tier of self-healing, and - in turn - the most devoutly-phrased.
-	invocation_type = "shout"
+	invocation_type = "none"
 	sound = null
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE

@@ -8,9 +8,7 @@
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/check_boot				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/psydonendure			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/self/psydonprayer				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/psydonrespite			= CLERIC_T2,
-					/obj/effect/proc_holder/spell/self/psydonpersist			= CLERIC_T3,
 	)
 	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T0)
 	confess_lines = list(

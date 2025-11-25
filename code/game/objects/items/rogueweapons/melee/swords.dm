@@ -208,7 +208,7 @@
 
 /obj/item/rogueweapon/sword/bronze
 	name = "bronze arming sword"
-	desc = "A long bronze blade attached to a hilt, separated by a crossguard. The arming sword has been Psydonia's implement of war by excellence for generations - and this implement is the grandfather of them all. Though it lacks the gladii's girth, this arming sword still feels well-balanced for one-handed use."
+	desc = "A long bronze blade attached to a hilt, separated by a crossguard. The arming sword has been Psydonia's implement of war by excellence for generations - and this implement is the grandfather of them all. Though it lacks the gladii's girth, this arming sword still feels well-balanced for one-handed use. In Psydonia bronze was often cast for temple rites and marked with psydonic sigils; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed its subtle resonance wounds the undead more readily."
 	icon_state = "bronzesword"
 	force = 23 //Iron- and steel arming swords have the same force. +2 to mimic the one-handed nature of bronze swords.
 	force_wielded = 25
@@ -938,7 +938,7 @@
 
 /obj/item/rogueweapon/sword/short/gladius
 	name = "gladius"
-	desc = "A bronze short sword with a slightly wider end, and no guard. Best used together with a shield, thrusted directly into your enemy's guts."
+	desc = "A bronze short sword with a slightly wider end, and no guard. Best used together with a shield, thrusted directly into your enemy's guts. In Psydonia bronze was commonly prepared for ritual blades and etched with psydonic marks; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed these short blades bite truer against the un-dead."
 	icon_state = "gladius"
 	sheathe_icon = "gladius"
 	max_integrity = 200

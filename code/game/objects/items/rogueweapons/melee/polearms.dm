@@ -912,7 +912,7 @@
 
 /obj/item/rogueweapon/spear/bronze
 	name = "bronze spear"
-	desc = "An antiquital staff, adorned with a bronze spearhead. Ancient in both design and purpose, its lighter weight once complimented the towering shields of precivilizational legionnaires. While rarely seen beyond the Deadlands, nowadaes, its lightweight balance makes it perfect for one-handed thrusts and throws."
+	desc = "An antiquital staff, adorned with a bronze spearhead. Ancient in both design and purpose, its lighter weight once complimented the towering shields of precivilizational legionnaires. While rarely seen beyond the Deadlands, nowadaes, its lightweight balance makes it perfect for one-handed thrusts and throws. In Psydonia bronze was commonly cast for ritual implements and bound with psydonic etchings; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed these spearheads drive sanctified force into the un-dead."
 	force = 25
 	force_wielded = 28
 	throwforce = 30
