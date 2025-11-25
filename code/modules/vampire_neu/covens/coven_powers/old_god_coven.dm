@@ -100,8 +100,8 @@
 		if(L == owner)
 			continue
 			
-		// Psydon only buffs his own followers
-		if(istype(L.patron, /datum/patron/old_god))
+		// Psydon buffs his own followers and divine worshipers
+		if(istype(L.patron, /datum/patron/old_god) || istype(L.patron, /datum/patron/divine))
 			to_chat(L, span_notice("Ancient power empowers me!"))
 			L.apply_status_effect(/datum/status_effect/buff/old_god_wrath)
 	
