@@ -559,3 +559,16 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
     if(!M) return
     var/datum/ratworld/item_creation_session/S = new(M)
     S.ui_interact(M)
+
+// Admin-only: show Ratworld enchant debug for a chosen living mob in the Ratworld tab
+/client/verb/ratworld_debug_target_enchants(mob/living/target as mob in world)
+    set name = "RW Debug Enchants"
+    set category = "Ratworld"
+    if(!(usr?.client?.holder))
+        to_chat(usr, span_warning("You lack permission to use Ratworld debug tools."))
+        return
+    if(!istype(target))
+        to_chat(usr, span_warning("Target must be a living mob."))
+        return
+    var/mob/living/L = target
+    L.ratworld_debug_enchants(usr)

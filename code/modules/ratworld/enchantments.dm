@@ -368,28 +368,27 @@ var/global/list/GLOB_rw_enchants
 // Compute and apply wearer-side aggregate effects for this item
 
 /proc/ratworld_apply_wearer_effects(obj/item/I, mob/living/L)
-	if(!I || !L) return
+	if(!I || !isliving(L))
+		return
+	var/mob/living/M = L
 	// Undiscovered items act like normal gear: no special bonuses until identified
 	if(I.vars && ("rw_discovered" in I.vars) && !I.vars["rw_discovered"]) return
 	// Qualification: non-weapons must be equipped in their slot; weapons must be held (loc == mob) or equipped (flag)
 	var/is_weapon = (istype(I, /obj/item/rogueweapon) || istype(I, /obj/item/gun/ballistic/revolver/grenadelauncher/bow))
 	if(!is_weapon && !I.rw_equipped_slot) return
 	if(is_weapon)
-		if(!(I.loc == L || I.rw_equipped_slot)) return
+		if(!(I.loc == M || I.rw_equipped_slot)) return
 	var/list/vals = I.vars?["rw_enchant_vals"]
 	// Allow +STAT bonuses and specials to apply even if the item has no explicit id list but does have values
 	var/has_enchants = islist(vals) && vals.len
 
 	// Prevent double-application: if already applied to this same wearer, skip
-	if(I.rw_effects_owner && I.rw_effects_owner == L)
+	if(I.rw_effects_owner && I.rw_effects_owner == M)
 		return
 	// If applied to a different wearer, revert first
-	if(I.rw_effects_owner && I.rw_effects_owner != L)
-		var/mob/living/prev = I.rw_effects_owner
-		if(prev)
-			ratworld_revert_wearer_effects(I, prev)
-
-	I.rw_effects_owner = L
+	if(I.rw_effects_owner && I.rw_effects_owner != M)
+		ratworld_revert_wearer_effects(I, I.rw_effects_owner)
+	I.rw_effects_owner = M
 
 	// Track whether we applied any non-HP wearer effects to ensure owner marker is set
 	var/applied_any = FALSE
@@ -406,27 +405,27 @@ var/global/list/GLOB_rw_enchants
 			applied_any = TRUE
 
 	// Initialize aggregate totals on the wearer if missing
-	if(!("rw_action_speed_pct_total" in L.vars) || !isnum(L.vars["rw_action_speed_pct_total"])) L.vars["rw_action_speed_pct_total"] = 0
-	if(!("rw_cast_speed_pct_total" in L.vars) || !isnum(L.vars["rw_cast_speed_pct_total"])) L.vars["rw_cast_speed_pct_total"] = 0
-	if(!("rw_cdr_pct_total" in L.vars) || !isnum(L.vars["rw_cdr_pct_total"])) L.vars["rw_cdr_pct_total"] = 0
-	if(!("rw_magic_def_pct_total" in L.vars) || !isnum(L.vars["rw_magic_def_pct_total"])) L.vars["rw_magic_def_pct_total"] = 0
-	if(!("rw_luck_pct_total" in L.vars) || !isnum(L.vars["rw_luck_pct_total"])) L.vars["rw_luck_pct_total"] = 0
-	if(!("rw_outgoing_heal_add_total" in L.vars) || !isnum(L.vars["rw_outgoing_heal_add_total"])) L.vars["rw_outgoing_heal_add_total"] = 0
-	if(!("rw_phys_dmg_reduction_pct_total" in L.vars) || !isnum(L.vars["rw_phys_dmg_reduction_pct_total"])) L.vars["rw_phys_dmg_reduction_pct_total"] = 0
-	if(!("rw_phys_power_pct_total" in L.vars) || !isnum(L.vars["rw_phys_power_pct_total"])) L.vars["rw_phys_power_pct_total"] = 0
-	if(!("rw_phys_power_flat_total" in L.vars) || !isnum(L.vars["rw_phys_power_flat_total"])) L.vars["rw_phys_power_flat_total"] = 0
-	if(!("rw_true_phys_dmg_pct_total" in L.vars) || !isnum(L.vars["rw_true_phys_dmg_pct_total"])) L.vars["rw_true_phys_dmg_pct_total"] = 0
-	if(!("rw_armor_dmg_bonus_pct_total" in L.vars) || !isnum(L.vars["rw_armor_dmg_bonus_pct_total"])) L.vars["rw_armor_dmg_bonus_pct_total"] = 0
-	if(!("rw_magic_power_pct_total" in L.vars) || !isnum(L.vars["rw_magic_power_pct_total"])) L.vars["rw_magic_power_pct_total"] = 0
-	if(!("rw_true_magic_dmg_pct_total" in L.vars) || !isnum(L.vars["rw_true_magic_dmg_pct_total"])) L.vars["rw_true_magic_dmg_pct_total"] = 0
-	if(!("rw_magic_penetration_pct_total" in L.vars) || !isnum(L.vars["rw_magic_penetration_pct_total"])) L.vars["rw_magic_penetration_pct_total"] = 0
-	if(!("rw_undead_dmg_pct_total" in L.vars) || !isnum(L.vars["rw_undead_dmg_pct_total"])) L.vars["rw_undead_dmg_pct_total"] = 0
-	if(!("rw_demon_dmg_pct_total" in L.vars) || !isnum(L.vars["rw_demon_dmg_pct_total"])) L.vars["rw_demon_dmg_pct_total"] = 0
-	if(!("rw_goblin_dmg_pct_total" in L.vars) || !isnum(L.vars["rw_goblin_dmg_pct_total"])) L.vars["rw_goblin_dmg_pct_total"] = 0
-	if(!("rw_buff_duration_pct_total" in L.vars) || !isnum(L.vars["rw_buff_duration_pct_total"])) L.vars["rw_buff_duration_pct_total"] = 0
-	if(!("rw_debuff_duration_pct_total" in L.vars) || !isnum(L.vars["rw_debuff_duration_pct_total"])) L.vars["rw_debuff_duration_pct_total"] = 0
-	if(!("rw_projectile_defense_pct_total" in L.vars) || !isnum(L.vars["rw_projectile_defense_pct_total"])) L.vars["rw_projectile_defense_pct_total"] = 0
-	if(!("rw_magic_find_pct_total" in L.vars) || !isnum(L.vars["rw_magic_find_pct_total"])) L.vars["rw_magic_find_pct_total"] = 0
+	if(!("rw_action_speed_pct_total" in M.vars) || !isnum(M.vars["rw_action_speed_pct_total"])) M.vars["rw_action_speed_pct_total"] = 0
+	if(!("rw_cast_speed_pct_total" in M.vars) || !isnum(M.vars["rw_cast_speed_pct_total"])) M.vars["rw_cast_speed_pct_total"] = 0
+	if(!("rw_cdr_pct_total" in M.vars) || !isnum(M.vars["rw_cdr_pct_total"])) M.vars["rw_cdr_pct_total"] = 0
+	if(!("rw_magic_def_pct_total" in M.vars) || !isnum(M.vars["rw_magic_def_pct_total"])) M.vars["rw_magic_def_pct_total"] = 0
+	if(!("rw_luck_pct_total" in M.vars) || !isnum(M.vars["rw_luck_pct_total"])) M.vars["rw_luck_pct_total"] = 0
+	if(!("rw_outgoing_heal_add_total" in M.vars) || !isnum(M.vars["rw_outgoing_heal_add_total"])) M.vars["rw_outgoing_heal_add_total"] = 0
+	if(!("rw_phys_dmg_reduction_pct_total" in M.vars) || !isnum(M.vars["rw_phys_dmg_reduction_pct_total"])) M.vars["rw_phys_dmg_reduction_pct_total"] = 0
+	if(!("rw_phys_power_pct_total" in M.vars) || !isnum(M.vars["rw_phys_power_pct_total"])) M.vars["rw_phys_power_pct_total"] = 0
+	if(!("rw_phys_power_flat_total" in M.vars) || !isnum(M.vars["rw_phys_power_flat_total"])) M.vars["rw_phys_power_flat_total"] = 0
+	if(!("rw_true_phys_dmg_pct_total" in M.vars) || !isnum(M.vars["rw_true_phys_dmg_pct_total"])) M.vars["rw_true_phys_dmg_pct_total"] = 0
+	if(!("rw_armor_dmg_bonus_pct_total" in M.vars) || !isnum(M.vars["rw_armor_dmg_bonus_pct_total"])) M.vars["rw_armor_dmg_bonus_pct_total"] = 0
+	if(!("rw_magic_power_pct_total" in M.vars) || !isnum(M.vars["rw_magic_power_pct_total"])) M.vars["rw_magic_power_pct_total"] = 0
+	if(!("rw_true_magic_dmg_pct_total" in M.vars) || !isnum(M.vars["rw_true_magic_dmg_pct_total"])) M.vars["rw_true_magic_dmg_pct_total"] = 0
+	if(!("rw_magic_penetration_pct_total" in M.vars) || !isnum(M.vars["rw_magic_penetration_pct_total"])) M.vars["rw_magic_penetration_pct_total"] = 0
+	if(!("rw_undead_dmg_pct_total" in M.vars) || !isnum(M.vars["rw_undead_dmg_pct_total"])) M.vars["rw_undead_dmg_pct_total"] = 0
+	if(!("rw_demon_dmg_pct_total" in M.vars) || !isnum(M.vars["rw_demon_dmg_pct_total"])) M.vars["rw_demon_dmg_pct_total"] = 0
+	if(!("rw_goblin_dmg_pct_total" in M.vars) || !isnum(M.vars["rw_goblin_dmg_pct_total"])) M.vars["rw_goblin_dmg_pct_total"] = 0
+	if(!("rw_buff_duration_pct_total" in M.vars) || !isnum(M.vars["rw_buff_duration_pct_total"])) M.vars["rw_buff_duration_pct_total"] = 0
+	if(!("rw_debuff_duration_pct_total" in M.vars) || !isnum(M.vars["rw_debuff_duration_pct_total"])) M.vars["rw_debuff_duration_pct_total"] = 0
+	if(!("rw_projectile_defense_pct_total" in M.vars) || !isnum(M.vars["rw_projectile_defense_pct_total"])) M.vars["rw_projectile_defense_pct_total"] = 0
+	if(!("rw_magic_find_pct_total" in M.vars) || !isnum(M.vars["rw_magic_find_pct_total"])) M.vars["rw_magic_find_pct_total"] = 0
 
 	var/list/aggregate_map = list(
 		"rw_action_speed_pct_total" = "rw_as_applied",
@@ -453,7 +452,7 @@ var/global/list/GLOB_rw_enchants
 	)
 	var/list/original_totals = list()
 	for(var/field in aggregate_map)
-		var/current_val = L.vars[field]
+		var/current_val = M.vars[field]
 		if(!isnum(current_val)) current_val = 0
 		original_totals[field] = current_val
 
@@ -480,45 +479,45 @@ var/global/list/GLOB_rw_enchants
 	var/projdef_add = has_enchants && isnum(vals?["projectile_damage_defense"]) ? vals["projectile_damage_defense"] : 0
 
 	if(as_add)
-		L.vars["rw_action_speed_pct_total"] += as_add
+		M.vars["rw_action_speed_pct_total"] += as_add
 	if(cs_add)
-		L.vars["rw_cast_speed_pct_total"] += cs_add
+		M.vars["rw_cast_speed_pct_total"] += cs_add
 	if(cdr_add)
-		L.vars["rw_cdr_pct_total"] += cdr_add
+		M.vars["rw_cdr_pct_total"] += cdr_add
 	if(mdef_add)
-		L.vars["rw_magic_def_pct_total"] += mdef_add
+		M.vars["rw_magic_def_pct_total"] += mdef_add
 	if(pdr_add)
-		L.vars["rw_phys_dmg_reduction_pct_total"] += pdr_add
+		M.vars["rw_phys_dmg_reduction_pct_total"] += pdr_add
 	if(ppct_add)
-		L.vars["rw_phys_power_pct_total"] += ppct_add
+		M.vars["rw_phys_power_pct_total"] += ppct_add
 	if(pflat_add)
-		L.vars["rw_phys_power_flat_total"] += pflat_add
+		M.vars["rw_phys_power_flat_total"] += pflat_add
 	if(tphys_add)
-		L.vars["rw_true_phys_dmg_pct_total"] += tphys_add
+		M.vars["rw_true_phys_dmg_pct_total"] += tphys_add
 	if(admg_add)
-		L.vars["rw_armor_dmg_bonus_pct_total"] += admg_add
+		M.vars["rw_armor_dmg_bonus_pct_total"] += admg_add
 	if(mpow_add)
-		L.vars["rw_magic_power_pct_total"] += mpow_add
+		M.vars["rw_magic_power_pct_total"] += mpow_add
 	if(tmag_add)
-		L.vars["rw_true_magic_dmg_pct_total"] += tmag_add
+		M.vars["rw_true_magic_dmg_pct_total"] += tmag_add
 	if(mpen_add)
-		L.vars["rw_magic_penetration_pct_total"] += mpen_add
+		M.vars["rw_magic_penetration_pct_total"] += mpen_add
 	if(undead_add)
-		L.vars["rw_undead_dmg_pct_total"] += undead_add
+		M.vars["rw_undead_dmg_pct_total"] += undead_add
 	if(demon_add)
-		L.vars["rw_demon_dmg_pct_total"] += demon_add
+		M.vars["rw_demon_dmg_pct_total"] += demon_add
 	if(goblin_add)
-		L.vars["rw_goblin_dmg_pct_total"] += goblin_add
+		M.vars["rw_goblin_dmg_pct_total"] += goblin_add
 	if(buffdur_add)
-		L.vars["rw_buff_duration_pct_total"] += buffdur_add
+		M.vars["rw_buff_duration_pct_total"] += buffdur_add
 	if(debuffdur_add)
-		L.vars["rw_debuff_duration_pct_total"] += debuffdur_add
+		M.vars["rw_debuff_duration_pct_total"] += debuffdur_add
 	if(projdef_add)
-		L.vars["rw_projectile_defense_pct_total"] += projdef_add
+		M.vars["rw_projectile_defense_pct_total"] += projdef_add
 	if(luck_add)
-		L.vars["rw_luck_pct_total"] += luck_add
+		M.vars["rw_luck_pct_total"] += luck_add
 	if(heal_add)
-		L.vars["rw_outgoing_heal_add_total"] += heal_add
+		M.vars["rw_outgoing_heal_add_total"] += heal_add
 
 	// Special: cannot be slowed (by damage)
 	if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "cannot_be_slowed")
@@ -529,7 +528,7 @@ var/global/list/GLOB_rw_enchants
 	if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "magic_find")
 		var/mf = I.vars?["rw_special_value"]
 		if(isnum(mf) && mf)
-			L.vars["rw_magic_find_pct_total"] += mf
+			M.vars["rw_magic_find_pct_total"] += mf
 
 	// Flat +STAT bonuses (semi-rare) applied directly to base stats; excluded: LUC
 	if(islist(I.vars?["rw_stat_bonuses"]))
@@ -593,12 +592,12 @@ var/global/list/GLOB_rw_enchants
 		var/limit = mx["value"]
 		if(!isnum(limit)) continue
 		var/varname = design_ids[id]
-		if(!(varname in L.vars)) continue
-		var/current = L.vars[varname]
+		if(!(varname in M.vars)) continue
+		var/current = M.vars[varname]
 		if(isnum(current) && current > limit)
-			L.vars[varname] = limit
+			M.vars[varname] = limit
 	for(var/field in aggregate_map)
-		var/new_total = L.vars[field]
+		var/new_total = M.vars[field]
 		if(!isnum(new_total)) new_total = 0
 		var/old_total = original_totals[field]
 		if(!isnum(old_total)) old_total = 0
@@ -611,8 +610,10 @@ var/global/list/GLOB_rw_enchants
 			I.vars[item_field] = null
 
 	// Ensure we set the owner marker if we applied any effects even without HP changes
-	if(applied_any && (!I.rw_effects_owner || I.rw_effects_owner != L))
-		I.rw_effects_owner = L
+	if(applied_any && (!I.rw_effects_owner || I.rw_effects_owner != M))
+		I.rw_effects_owner = M
+	if(applied_any)
+		M.update_stat()
 	if(applied_any)
 		// Force a Stat() refresh so the Stats panel picks up new totals
 		if(isliving(L))
@@ -621,41 +622,43 @@ var/global/list/GLOB_rw_enchants
 // Revert wearer-side effects applied by this item
 
 /proc/ratworld_revert_wearer_effects(obj/item/I, mob/living/L)
-	if(!I || !L) return
+	if(!I || !isliving(L))
+		return
+	var/mob/living/M = L
 
 	// Remove movespeed modifier if present
 	var/ms_id = I.rw_speed_mod_id
 	if(istext(ms_id))
-		L.remove_movespeed_modifier(ms_id)
+		M.remove_movespeed_modifier(ms_id)
 		I.rw_speed_mod_id = null
 
 	// Revert aggregate totals applied from this item
-	if(isnum(I.rw_as_applied)) { L.vars["rw_action_speed_pct_total"] -= I.rw_as_applied; I.rw_as_applied = null }
-	if(isnum(I.rw_cs_applied)) { L.vars["rw_cast_speed_pct_total"] -= I.rw_cs_applied; I.rw_cs_applied = null }
-	if(isnum(I.rw_cdr_applied)) { L.vars["rw_cdr_pct_total"] -= I.rw_cdr_applied; I.rw_cdr_applied = null }
-	if(isnum(I.rw_mdef_applied)) { L.vars["rw_magic_def_pct_total"] -= I.rw_mdef_applied; I.rw_mdef_applied = null }
-	if(isnum(I.rw_pdr_applied)) { L.vars["rw_phys_dmg_reduction_pct_total"] -= I.rw_pdr_applied; I.rw_pdr_applied = null }
-	if(isnum(I.rw_phys_power_pct_applied)) { L.vars["rw_phys_power_pct_total"] -= I.rw_phys_power_pct_applied; I.rw_phys_power_pct_applied = null }
-	if(isnum(I.rw_phys_power_flat_applied)) { L.vars["rw_phys_power_flat_total"] -= I.rw_phys_power_flat_applied; I.rw_phys_power_flat_applied = null }
-	if(isnum(I.rw_true_phys_dmg_pct_applied)) { L.vars["rw_true_phys_dmg_pct_total"] -= I.rw_true_phys_dmg_pct_applied; I.rw_true_phys_dmg_pct_applied = null }
-	if(isnum(I.rw_armor_dmg_bonus_pct_applied)) { L.vars["rw_armor_dmg_bonus_pct_total"] -= I.rw_armor_dmg_bonus_pct_applied; I.rw_armor_dmg_bonus_pct_applied = null }
-	if(isnum(I.rw_magic_power_pct_applied)) { L.vars["rw_magic_power_pct_total"] -= I.rw_magic_power_pct_applied; I.rw_magic_power_pct_applied = null }
-	if(isnum(I.rw_true_magic_dmg_pct_applied)) { L.vars["rw_true_magic_dmg_pct_total"] -= I.rw_true_magic_dmg_pct_applied; I.rw_true_magic_dmg_pct_applied = null }
-	if(isnum(I.rw_magic_penetration_pct_applied)) { L.vars["rw_magic_penetration_pct_total"] -= I.rw_magic_penetration_pct_applied; I.rw_magic_penetration_pct_applied = null }
-	if(isnum(I.rw_undead_dmg_pct_applied)) { L.vars["rw_undead_dmg_pct_total"] -= I.rw_undead_dmg_pct_applied; I.rw_undead_dmg_pct_applied = null }
-	if(isnum(I.rw_demon_dmg_pct_applied)) { L.vars["rw_demon_dmg_pct_total"] -= I.rw_demon_dmg_pct_applied; I.rw_demon_dmg_pct_applied = null }
-	if(isnum(I.rw_goblin_dmg_pct_applied)) { L.vars["rw_goblin_dmg_pct_total"] -= I.rw_goblin_dmg_pct_applied; I.rw_goblin_dmg_pct_applied = null }
-	if(isnum(I.rw_buff_duration_pct_applied)) { L.vars["rw_buff_duration_pct_total"] -= I.rw_buff_duration_pct_applied; I.rw_buff_duration_pct_applied = null }
-	if(isnum(I.rw_debuff_duration_pct_applied)) { L.vars["rw_debuff_duration_pct_total"] -= I.rw_debuff_duration_pct_applied; I.rw_debuff_duration_pct_applied = null }
-	if(isnum(I.rw_projectile_defense_pct_applied)) { L.vars["rw_projectile_defense_pct_total"] -= I.rw_projectile_defense_pct_applied; I.rw_projectile_defense_pct_applied = null }
-	if(isnum(I.rw_luck_applied)) { L.vars["rw_luck_pct_total"] -= I.rw_luck_applied; I.rw_luck_applied = null }
-	if(isnum(I.rw_heal_applied)) { L.vars["rw_outgoing_heal_add_total"] -= I.rw_heal_applied; I.rw_heal_applied = null }
+	if(isnum(I.rw_as_applied)) { M.vars["rw_action_speed_pct_total"] -= I.rw_as_applied; I.rw_as_applied = null }
+	if(isnum(I.rw_cs_applied)) { M.vars["rw_cast_speed_pct_total"] -= I.rw_cs_applied; I.rw_cs_applied = null }
+	if(isnum(I.rw_cdr_applied)) { M.vars["rw_cdr_pct_total"] -= I.rw_cdr_applied; I.rw_cdr_applied = null }
+	if(isnum(I.rw_mdef_applied)) { M.vars["rw_magic_def_pct_total"] -= I.rw_mdef_applied; I.rw_mdef_applied = null }
+	if(isnum(I.rw_pdr_applied)) { M.vars["rw_phys_dmg_reduction_pct_total"] -= I.rw_pdr_applied; I.rw_pdr_applied = null }
+	if(isnum(I.rw_phys_power_pct_applied)) { M.vars["rw_phys_power_pct_total"] -= I.rw_phys_power_pct_applied; I.rw_phys_power_pct_applied = null }
+	if(isnum(I.rw_phys_power_flat_applied)) { M.vars["rw_phys_power_flat_total"] -= I.rw_phys_power_flat_applied; I.rw_phys_power_flat_applied = null }
+	if(isnum(I.rw_true_phys_dmg_pct_applied)) { M.vars["rw_true_phys_dmg_pct_total"] -= I.rw_true_phys_dmg_pct_applied; I.rw_true_phys_dmg_pct_applied = null }
+	if(isnum(I.rw_armor_dmg_bonus_pct_applied)) { M.vars["rw_armor_dmg_bonus_pct_total"] -= I.rw_armor_dmg_bonus_pct_applied; I.rw_armor_dmg_bonus_pct_applied = null }
+	if(isnum(I.rw_magic_power_pct_applied)) { M.vars["rw_magic_power_pct_total"] -= I.rw_magic_power_pct_applied; I.rw_magic_power_pct_applied = null }
+	if(isnum(I.rw_true_magic_dmg_pct_applied)) { M.vars["rw_true_magic_dmg_pct_total"] -= I.rw_true_magic_dmg_pct_applied; I.rw_true_magic_dmg_pct_applied = null }
+	if(isnum(I.rw_magic_penetration_pct_applied)) { M.vars["rw_magic_penetration_pct_total"] -= I.rw_magic_penetration_pct_applied; I.rw_magic_penetration_pct_applied = null }
+	if(isnum(I.rw_undead_dmg_pct_applied)) { M.vars["rw_undead_dmg_pct_total"] -= I.rw_undead_dmg_pct_applied; I.rw_undead_dmg_pct_applied = null }
+	if(isnum(I.rw_demon_dmg_pct_applied)) { M.vars["rw_demon_dmg_pct_total"] -= I.rw_demon_dmg_pct_applied; I.rw_demon_dmg_pct_applied = null }
+	if(isnum(I.rw_goblin_dmg_pct_applied)) { M.vars["rw_goblin_dmg_pct_total"] -= I.rw_goblin_dmg_pct_applied; I.rw_goblin_dmg_pct_applied = null }
+	if(isnum(I.rw_buff_duration_pct_applied)) { M.vars["rw_buff_duration_pct_total"] -= I.rw_buff_duration_pct_applied; I.rw_buff_duration_pct_applied = null }
+	if(isnum(I.rw_debuff_duration_pct_applied)) { M.vars["rw_debuff_duration_pct_total"] -= I.rw_debuff_duration_pct_applied; I.rw_debuff_duration_pct_applied = null }
+	if(isnum(I.rw_projectile_defense_pct_applied)) { M.vars["rw_projectile_defense_pct_total"] -= I.rw_projectile_defense_pct_applied; I.rw_projectile_defense_pct_applied = null }
+	if(isnum(I.rw_luck_applied)) { M.vars["rw_luck_pct_total"] -= I.rw_luck_applied; I.rw_luck_applied = null }
+	if(isnum(I.rw_heal_applied)) { M.vars["rw_outgoing_heal_add_total"] -= I.rw_heal_applied; I.rw_heal_applied = null }
 
 	// Revert specials
 	if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "cannot_be_slowed")
-		REMOVE_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, "RW_SPECIAL")
+		REMOVE_TRAIT(M, TRAIT_IGNOREDAMAGESLOWDOWN, "RW_SPECIAL")
 	if(isnum(I.vars?["rw_magic_find_applied"]))
-		L.vars["rw_magic_find_pct_total"] -= I.vars["rw_magic_find_applied"]
+		M.vars["rw_magic_find_pct_total"] -= I.vars["rw_magic_find_applied"]
 		I.vars["rw_magic_find_applied"] = null
 
 	// Revert +STAT bonuses if applied (use applied_map to exactly undo)
@@ -663,24 +666,24 @@ var/global/list/GLOB_rw_enchants
 		for(var/sid_r in I.rw_stat_applied_map)
 			var/sv_r = I.rw_stat_applied_map[sid_r]
 			if(!isnum(sv_r) || !sv_r) continue
-			if(sid_r == "STR") L.change_stat(STATKEY_STR, -sv_r)
-			else if(sid_r == "SPD") L.change_stat(STATKEY_SPD, -sv_r)
-			else if(sid_r == "INT") L.change_stat(STATKEY_INT, -sv_r)
-			else if(sid_r == "WIL") L.change_stat(STATKEY_WIL, -sv_r)
-			else if(sid_r == "CON") L.change_stat(STATKEY_CON, -sv_r)
+			if(sid_r == "STR") M.change_stat(STATKEY_STR, -sv_r)
+			else if(sid_r == "SPD") M.change_stat(STATKEY_SPD, -sv_r)
+			else if(sid_r == "INT") M.change_stat(STATKEY_INT, -sv_r)
+			else if(sid_r == "WIL") M.change_stat(STATKEY_WIL, -sv_r)
+			else if(sid_r == "CON") M.change_stat(STATKEY_CON, -sv_r)
 	I.rw_stat_applied_map = null
 	I.rw_stat_applied = null
 	I.rw_stat_applied_guard = FALSE
 	I.rw_stat_bonus_key = null
 	I.rw_stat_bonus_applied = null
 
-	if(I.rw_effects_owner == L)
+	if(I.rw_effects_owner == M)
 		I.rw_effects_owner = null
 
 	// As a safety, refresh remaining wearer effects on this mob so the stat panel
 	// reflects current contents accurately after removing this item's effects.
-	if(isliving(L))
-		L.ratworld_refresh_wearer_effects()
+	if(isliving(M))
+		M.ratworld_refresh_wearer_effects()
 
 // Roll eligible enchant ids for a given slot key using basic weights
 /proc/ratworld_roll_enchant_ids_for_slot(count = 1, slot_key)
@@ -844,6 +847,34 @@ var/global/list/GLOB_rw_enchants
 		any = TRUE
 	if(!any)
 		stat("- None")
+
+// Admin-only debug: dump Ratworld enchantment totals for this mob
+/mob/living/proc/ratworld_debug_enchants(mob/admin)
+	if(!admin || !admin.client || !admin.client.holder)
+		return
+	var/list/lines = list()
+	lines += "[src]: Ratworld enchant debug"
+	lines += "  Action Speed: [rw_action_speed_pct_total]%"
+	lines += "  Cast Speed: [rw_cast_speed_pct_total]%"
+	lines += "  Cooldown Reduction: [rw_cdr_pct_total]%"
+	lines += "  Magical Defense: [rw_magic_def_pct_total]%"
+	lines += "  Phys Dmg Reduction: [rw_phys_dmg_reduction_pct_total]%"
+	lines += "  Phys Power Flat: [rw_phys_power_flat_total]"
+	lines += "  Phys Power Bonus: [rw_phys_power_pct_total]%"
+	lines += "  True Phys Damage: [rw_true_phys_dmg_pct_total]%"
+	lines += "  Magic Power Bonus: [rw_magic_power_pct_total]%"
+	lines += "  True Magical Damage: [rw_true_magic_dmg_pct_total]%"
+	lines += "  Magic Penetration: [rw_magic_penetration_pct_total]%"
+	lines += "  Undead Damage Bonus: [rw_undead_dmg_pct_total]%"
+	lines += "  Demon Damage Bonus: [rw_demon_dmg_pct_total]%"
+	lines += "  Goblin Damage Bonus: [rw_goblin_dmg_pct_total]%"
+	lines += "  Buff Duration Bonus: [rw_buff_duration_pct_total]%"
+	lines += "  Debuff Duration Bonus: [rw_debuff_duration_pct_total]%"
+	lines += "  Projectile Defense: [rw_projectile_defense_pct_total]%"
+	lines += "  Luck: [rw_luck_pct_total]%"
+	lines += "  Outgoing Heal Add: [rw_outgoing_heal_add_total]"
+	lines += "  Magic Find: [rw_magic_find_pct_total]%"
+	to_chat(admin, span_notice(jointext(lines, "\n")))
 
 // Helpers to compute outgoing damage contributions per clarified design
 // Physical: final_base = (base + phys_power_flat*5) * (1 + phys_power_pct/100)
