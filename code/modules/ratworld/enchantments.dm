@@ -51,8 +51,11 @@ var/global/list/GLOB_rw_enchants
 	var/tmp/list/rw_stat_applied_map = null
 	var/tmp/rw_stat_applied = null
 	var/tmp/rw_stat_applied_guard = FALSE
+	// Equipped-slot flag for non-weapons (set on equip signal, cleared on drop)
+	var/tmp/rw_equipped_slot = FALSE
 
 // Aggregate Ratworld enchant totals stored on living mobs
+
 /mob/living
 	var/rw_action_speed_pct_total = 0
 	var/rw_cast_speed_pct_total = 0
@@ -217,27 +220,29 @@ var/global/list/GLOB_rw_enchants
 /datum/component/ratworld_enchant_handler/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 	if(isitem(source) && isliving(equipper))
-		ratworld_apply_wearer_effects(source, equipper)
-		// Register kill-listener for Midas Touch if present on this item
 		var/obj/item/I = source
+		I.rw_equipped_slot = TRUE
+		ratworld_apply_wearer_effects(I, equipper)
+		// Register kill-listener for Midas Touch if present on this item
 		if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "midas_touch")
 			if(!I.vars?["rw_midas_registered"]) { RegisterSignal(equipper, COMSIG_MOB_AFTERATTACK_SUCCESS, PROC_REF(on_afterattack_success)); I.vars["rw_midas_registered"] = TRUE }
 
 /datum/component/ratworld_enchant_handler/proc/on_pickup(datum/source, mob/user)
 	SIGNAL_HANDLER
-	if(isitem(source) && isliving(user))
-		ratworld_apply_wearer_effects(source, user)
-		// Register kill-listener for Midas Touch if present on this item
-		var/obj/item/I = source
+	if(!isitem(source) || !isliving(user)) return
+	var/obj/item/I = source
+	// Only weapons/guns apply on pickup (hand-held bonuses)
+	if(istype(I, /obj/item/rogueweapon) || istype(I, /obj/item/gun/ballistic/revolver/grenadelauncher/bow))
+		ratworld_apply_wearer_effects(I, user)
 		if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "midas_touch")
 			if(!I.vars?["rw_midas_registered"]) { RegisterSignal(user, COMSIG_MOB_AFTERATTACK_SUCCESS, PROC_REF(on_afterattack_success)); I.vars["rw_midas_registered"] = TRUE }
 
 /datum/component/ratworld_enchant_handler/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 	if(isitem(source) && isliving(user))
-		ratworld_revert_wearer_effects(source, user)
-		// Unregister kill-listener for Midas Touch
 		var/obj/item/I = source
+		I.rw_equipped_slot = FALSE
+		ratworld_revert_wearer_effects(I, user)
 		if(I.vars?["rw_midas_registered"]) { UnregisterSignal(user, COMSIG_MOB_AFTERATTACK_SUCCESS); I.vars["rw_midas_registered"] = null }
 
 // Weapon hit hook: implement Crushing Blow, Deadly Strike, Slows Target, Astrata's Light
@@ -364,11 +369,16 @@ var/global/list/GLOB_rw_enchants
 
 /proc/ratworld_apply_wearer_effects(obj/item/I, mob/living/L)
 	if(!I || !L) return
+	// Undiscovered items act like normal gear: no special bonuses until identified
 	if(I.vars && ("rw_discovered" in I.vars) && !I.vars["rw_discovered"]) return
-	var/list/ids = I.vars?["rw_enchants"]
+	// Qualification: non-weapons must be equipped in their slot; weapons must be held (loc == mob) or equipped (flag)
+	var/is_weapon = (istype(I, /obj/item/rogueweapon) || istype(I, /obj/item/gun/ballistic/revolver/grenadelauncher/bow))
+	if(!is_weapon && !I.rw_equipped_slot) return
+	if(is_weapon)
+		if(!(I.loc == L || I.rw_equipped_slot)) return
 	var/list/vals = I.vars?["rw_enchant_vals"]
-	// Allow +STAT bonuses and specials to apply even if the item has no enchant lists
-	var/has_enchants = islist(ids) && islist(vals)
+	// Allow +STAT bonuses and specials to apply even if the item has no explicit id list but does have values
+	var/has_enchants = islist(vals) && vals.len
 
 	// Prevent double-application: if already applied to this same wearer, skip
 	if(I.rw_effects_owner && I.rw_effects_owner == L)
@@ -416,6 +426,36 @@ var/global/list/GLOB_rw_enchants
 	if(!("rw_buff_duration_pct_total" in L.vars) || !isnum(L.vars["rw_buff_duration_pct_total"])) L.vars["rw_buff_duration_pct_total"] = 0
 	if(!("rw_debuff_duration_pct_total" in L.vars) || !isnum(L.vars["rw_debuff_duration_pct_total"])) L.vars["rw_debuff_duration_pct_total"] = 0
 	if(!("rw_projectile_defense_pct_total" in L.vars) || !isnum(L.vars["rw_projectile_defense_pct_total"])) L.vars["rw_projectile_defense_pct_total"] = 0
+	if(!("rw_magic_find_pct_total" in L.vars) || !isnum(L.vars["rw_magic_find_pct_total"])) L.vars["rw_magic_find_pct_total"] = 0
+
+	var/list/aggregate_map = list(
+		"rw_action_speed_pct_total" = "rw_as_applied",
+		"rw_cast_speed_pct_total" = "rw_cs_applied",
+		"rw_cdr_pct_total" = "rw_cdr_applied",
+		"rw_magic_def_pct_total" = "rw_mdef_applied",
+		"rw_phys_dmg_reduction_pct_total" = "rw_pdr_applied",
+		"rw_phys_power_pct_total" = "rw_phys_power_pct_applied",
+		"rw_phys_power_flat_total" = "rw_phys_power_flat_applied",
+		"rw_true_phys_dmg_pct_total" = "rw_true_phys_dmg_pct_applied",
+		"rw_armor_dmg_bonus_pct_total" = "rw_armor_dmg_bonus_pct_applied",
+		"rw_magic_power_pct_total" = "rw_magic_power_pct_applied",
+		"rw_true_magic_dmg_pct_total" = "rw_true_magic_dmg_pct_applied",
+		"rw_magic_penetration_pct_total" = "rw_magic_penetration_pct_applied",
+		"rw_undead_dmg_pct_total" = "rw_undead_dmg_pct_applied",
+		"rw_demon_dmg_pct_total" = "rw_demon_dmg_pct_applied",
+		"rw_goblin_dmg_pct_total" = "rw_goblin_dmg_pct_applied",
+		"rw_buff_duration_pct_total" = "rw_buff_duration_pct_applied",
+		"rw_debuff_duration_pct_total" = "rw_debuff_duration_pct_applied",
+		"rw_projectile_defense_pct_total" = "rw_projectile_defense_pct_applied",
+		"rw_luck_pct_total" = "rw_luck_applied",
+		"rw_outgoing_heal_add_total" = "rw_heal_applied",
+		"rw_magic_find_pct_total" = "rw_magic_find_applied"
+	)
+	var/list/original_totals = list()
+	for(var/field in aggregate_map)
+		var/current_val = L.vars[field]
+		if(!isnum(current_val)) current_val = 0
+		original_totals[field] = current_val
 
 	// Percent-based and additive bonuses aggregated on wearer
 	var/as_add = has_enchants && isnum(vals?["action_speed"]) ? vals["action_speed"] : 0
@@ -441,37 +481,44 @@ var/global/list/GLOB_rw_enchants
 
 	if(as_add)
 		L.vars["rw_action_speed_pct_total"] += as_add
-		I.rw_as_applied = as_add
-		applied_any = TRUE
 	if(cs_add)
 		L.vars["rw_cast_speed_pct_total"] += cs_add
-		I.rw_cs_applied = cs_add
-		applied_any = TRUE
 	if(cdr_add)
 		L.vars["rw_cdr_pct_total"] += cdr_add
-		I.rw_cdr_applied = cdr_add
-		applied_any = TRUE
 	if(mdef_add)
 		L.vars["rw_magic_def_pct_total"] += mdef_add
-		I.rw_mdef_applied = mdef_add
-		applied_any = TRUE
 	if(pdr_add)
 		L.vars["rw_phys_dmg_reduction_pct_total"] += pdr_add
-		I.rw_pdr_applied = pdr_add
-		applied_any = TRUE
-	if(ppct_add) { L.vars["rw_phys_power_pct_total"] += ppct_add; I.rw_phys_power_pct_applied = ppct_add; applied_any = TRUE }
-	if(pflat_add) { L.vars["rw_phys_power_flat_total"] += pflat_add; I.rw_phys_power_flat_applied = pflat_add; applied_any = TRUE }
-	if(tphys_add) { L.vars["rw_true_phys_dmg_pct_total"] += tphys_add; I.rw_true_phys_dmg_pct_applied = tphys_add; applied_any = TRUE }
-	if(admg_add) { L.vars["rw_armor_dmg_bonus_pct_total"] += admg_add; I.rw_armor_dmg_bonus_pct_applied = admg_add; applied_any = TRUE }
-	if(mpow_add) { L.vars["rw_magic_power_pct_total"] += mpow_add; I.rw_magic_power_pct_applied = mpow_add; applied_any = TRUE }
-	if(tmag_add) { L.vars["rw_true_magic_dmg_pct_total"] += tmag_add; I.rw_true_magic_dmg_pct_applied = tmag_add; applied_any = TRUE }
-	if(mpen_add) { L.vars["rw_magic_penetration_pct_total"] += mpen_add; I.rw_magic_penetration_pct_applied = mpen_add; applied_any = TRUE }
-	if(undead_add) { L.vars["rw_undead_dmg_pct_total"] += undead_add; I.rw_undead_dmg_pct_applied = undead_add; applied_any = TRUE }
-	if(demon_add) { L.vars["rw_demon_dmg_pct_total"] += demon_add; I.rw_demon_dmg_pct_applied = demon_add; applied_any = TRUE }
-	if(goblin_add) { L.vars["rw_goblin_dmg_pct_total"] += goblin_add; I.rw_goblin_dmg_pct_applied = goblin_add; applied_any = TRUE }
-	if(buffdur_add) { L.vars["rw_buff_duration_pct_total"] += buffdur_add; I.rw_buff_duration_pct_applied = buffdur_add; applied_any = TRUE }
-	if(debuffdur_add) { L.vars["rw_debuff_duration_pct_total"] += debuffdur_add; I.rw_debuff_duration_pct_applied = debuffdur_add; applied_any = TRUE }
-	if(projdef_add) { L.vars["rw_projectile_defense_pct_total"] += projdef_add; I.rw_projectile_defense_pct_applied = projdef_add; applied_any = TRUE }
+	if(ppct_add)
+		L.vars["rw_phys_power_pct_total"] += ppct_add
+	if(pflat_add)
+		L.vars["rw_phys_power_flat_total"] += pflat_add
+	if(tphys_add)
+		L.vars["rw_true_phys_dmg_pct_total"] += tphys_add
+	if(admg_add)
+		L.vars["rw_armor_dmg_bonus_pct_total"] += admg_add
+	if(mpow_add)
+		L.vars["rw_magic_power_pct_total"] += mpow_add
+	if(tmag_add)
+		L.vars["rw_true_magic_dmg_pct_total"] += tmag_add
+	if(mpen_add)
+		L.vars["rw_magic_penetration_pct_total"] += mpen_add
+	if(undead_add)
+		L.vars["rw_undead_dmg_pct_total"] += undead_add
+	if(demon_add)
+		L.vars["rw_demon_dmg_pct_total"] += demon_add
+	if(goblin_add)
+		L.vars["rw_goblin_dmg_pct_total"] += goblin_add
+	if(buffdur_add)
+		L.vars["rw_buff_duration_pct_total"] += buffdur_add
+	if(debuffdur_add)
+		L.vars["rw_debuff_duration_pct_total"] += debuffdur_add
+	if(projdef_add)
+		L.vars["rw_projectile_defense_pct_total"] += projdef_add
+	if(luck_add)
+		L.vars["rw_luck_pct_total"] += luck_add
+	if(heal_add)
+		L.vars["rw_outgoing_heal_add_total"] += heal_add
 
 	// Special: cannot be slowed (by damage)
 	if(istext(I.vars?["rw_special_id"]) && I.vars["rw_special_id"] == "cannot_be_slowed")
@@ -483,27 +530,38 @@ var/global/list/GLOB_rw_enchants
 		var/mf = I.vars?["rw_special_value"]
 		if(isnum(mf) && mf)
 			L.vars["rw_magic_find_pct_total"] += mf
-			I.vars["rw_magic_find_applied"] = mf
-			applied_any = TRUE
 
 	// Flat +STAT bonuses (semi-rare) applied directly to base stats; excluded: LUC
 	if(islist(I.vars?["rw_stat_bonuses"]))
-		// Avoid double-applying if already applied and owner check missed for some edge case
-		if(!islist(I.rw_stat_applied_map))
-			I.rw_stat_applied_map = list()
+		if(!islist(I.rw_stat_applied_map)) I.rw_stat_applied_map = list()
 		if(!I.rw_stat_applied_guard)
-			var/list/bon2 = I.vars["rw_stat_bonuses"]
-			for(var/sid in bon2)
-				var/sv = bon2[sid]
-				if(!isnum(sv) || !sv) continue
-				if(sid == "STR") { L.change_stat(STATKEY_STR, sv); I.rw_stat_applied_map["STR"] = (I.rw_stat_applied_map["STR"] || 0) + sv; applied_any = TRUE }
-				else if(sid == "SPD") { L.change_stat(STATKEY_SPD, sv); I.rw_stat_applied_map["SPD"] = (I.rw_stat_applied_map["SPD"] || 0) + sv; applied_any = TRUE }
-				else if(sid == "INT") { L.change_stat(STATKEY_INT, sv); I.rw_stat_applied_map["INT"] = (I.rw_stat_applied_map["INT"] || 0) + sv; applied_any = TRUE }
-				else if(sid == "WIL") { L.change_stat(STATKEY_WIL, sv); I.rw_stat_applied_map["WIL"] = (I.rw_stat_applied_map["WIL"] || 0) + sv; applied_any = TRUE }
-				else if(sid == "CON") { L.change_stat(STATKEY_CON, sv); I.rw_stat_applied_map["CON"] = (I.rw_stat_applied_map["CON"] || 0) + sv; applied_any = TRUE }
-			I.rw_stat_bonus_key = "MULTI"
-			I.rw_stat_bonus_applied = 1
-			I.rw_stat_applied_guard = TRUE
+			// Compute how many item stat points are already applied across all items on this mob
+			var/current_total = 0
+			for(var/obj/item/J as anything in L.contents)
+				if(!islist(J.rw_stat_applied_map)) continue
+				for(var/_sid in J.rw_stat_applied_map)
+					var/_sv = J.rw_stat_applied_map[_sid]
+					if(isnum(_sv) && _sv > 0) current_total += _sv
+			var/room = max(0, 5 - current_total)
+			if(room > 0)
+				var/list/bon2 = I.vars["rw_stat_bonuses"]
+				for(var/sid in bon2)
+					if(room <= 0) break
+					var/sv = bon2[sid]; if(!isnum(sv) || sv <= 0) continue
+					var/apply_amt = min(sv, room)
+					if(apply_amt <= 0) continue
+					if(sid == "STR") L.change_stat(STATKEY_STR, apply_amt)
+					else if(sid == "SPD") L.change_stat(STATKEY_SPD, apply_amt)
+					else if(sid == "INT") L.change_stat(STATKEY_INT, apply_amt)
+					else if(sid == "WIL") L.change_stat(STATKEY_WIL, apply_amt)
+					else if(sid == "CON") L.change_stat(STATKEY_CON, apply_amt)
+					else continue
+					I.rw_stat_applied_map[sid] = (I.rw_stat_applied_map[sid] || 0) + apply_amt
+					room -= apply_amt
+					applied_any = TRUE
+				I.rw_stat_bonus_key = "MULTI"
+				I.rw_stat_bonus_applied = 1
+				I.rw_stat_applied_guard = TRUE
 
 	// Clamp totals to design max_total where applicable
 	var/list/design_ids = list(
@@ -539,14 +597,18 @@ var/global/list/GLOB_rw_enchants
 		var/current = L.vars[varname]
 		if(isnum(current) && current > limit)
 			L.vars[varname] = limit
-	if(luck_add)
-		L.vars["rw_luck_pct_total"] += luck_add
-		I.rw_luck_applied = luck_add
-		applied_any = TRUE
-	if(heal_add)
-		L.vars["rw_outgoing_heal_add_total"] += heal_add
-		I.rw_heal_applied = heal_add
-		applied_any = TRUE
+	for(var/field in aggregate_map)
+		var/new_total = L.vars[field]
+		if(!isnum(new_total)) new_total = 0
+		var/old_total = original_totals[field]
+		if(!isnum(old_total)) old_total = 0
+		var/delta = new_total - old_total
+		var/item_field = aggregate_map[field]
+		if(delta)
+			I.vars[item_field] = delta
+			applied_any = TRUE
+		else
+			I.vars[item_field] = null
 
 	// Ensure we set the owner marker if we applied any effects even without HP changes
 	if(applied_any && (!I.rw_effects_owner || I.rw_effects_owner != L))
@@ -647,6 +709,10 @@ var/global/list/GLOB_rw_enchants
 	// Eligible gear types
 	if(!(istype(I, /obj/item/rogueweapon) || istype(I, /obj/item/gun/ballistic/revolver/grenadelauncher/bow) || istype(I, /obj/item/clothing)))
 		return
+	// Disallow +STAT rolls on common rarity items
+	var/r = I.vars?["rw_rarity"]
+	if(!isnum(r)) r = 1
+	if(r <= RW_RARITY_COMMON) return
 	// Initialize containers
 	if(!islist(I.vars?["rw_stat_bonuses"]))
 		I.vars["rw_stat_bonuses"] = list()

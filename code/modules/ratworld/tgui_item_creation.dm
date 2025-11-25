@@ -538,9 +538,6 @@ GLOBAL_DATUM_INIT(rw_admin_holder_state, /datum/ui_state/rw_admin_holder, new)
                         hand_ok = L.put_in_active_hand(I, TRUE)
                     if(!hand_ok && !L.get_inactive_held_item())
                         hand_ok = L.put_in_inactive_hand(I, TRUE)
-                // Ensure wearer-side effects (including +STATs) are applied when the item lands in hands
-                if(hand_ok && isliving(L))
-                    ratworld_apply_wearer_effects(I, L)
                 // Immediately apply wearer-side effects so bonuses are visible right away
                 if(hand_ok)
                     ratworld_apply_wearer_effects(I, L)
