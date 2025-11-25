@@ -93,35 +93,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			vampdude.set_clan_direct(forcing_clan)
 			forcing_clan = null
 
-	// The clan system now handles most of the setup, but we can still do antagonist-specific things
-	// Grant a patron-appropriate coven to vampire antagonists in addition to clan covens.
-	// Divine worshippers -> divine coven, Inhumen worshippers -> inhumen coven, Old God worshippers -> old_god coven.
-	var/mob/living/carbon/human/H = owner.current
-	if(ishuman(H) && istype(src, /datum/antagonist/vampire))
-		var/datum/patron/p = H.patron
-		if(p)
-			if(istype(p, /datum/patron/divine))
-				if(!H.get_coven(/datum/coven/divine_coven))
-					H.give_coven(/datum/coven/divine_coven)
-			else if(istype(p, /datum/patron/inhumen))
-				if(!H.get_coven(/datum/coven/inhumen_coven))
-					H.give_coven(/datum/coven/inhumen_coven)
-			else if(istype(p, /datum/patron/old_god))
-				if(!H.get_coven(/datum/coven/old_god_coven))
-					H.give_coven(/datum/coven/old_god_coven)
-			else
-				// Unknown patron type: fall back to divine coven to preserve previous behaviour
-				if(!H.get_coven(/datum/coven/divine_coven))
-					H.give_coven(/datum/coven/divine_coven)
-		else
-			// No patron selected: keep legacy behaviour and grant the divine coven
-			if(!H.get_coven(/datum/coven/divine_coven))
-				H.give_coven(/datum/coven/divine_coven)
-
-	after_gain()
-	. = ..()
-	equip()
-
 /datum/antagonist/vampire/proc/show_clan_selection(mob/living/carbon/human/vampdude)
 	var/list/clan_options = list()
 	var/list/available_clans = list()

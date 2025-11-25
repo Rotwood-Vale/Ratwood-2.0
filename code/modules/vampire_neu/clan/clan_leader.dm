@@ -53,6 +53,17 @@
 		vamp_datum.name = "[lord_title]"
 		vamp_datum.antag_hud_name = "Vlord"
 
+	// Give patron-specific coven based on deity
+	if(istype(H.patron, /datum/patron/divine))
+		if(!H.get_coven(/datum/coven/divine_coven))
+			H.give_coven(/datum/coven/divine_coven)
+	else if(istype(H.patron, /datum/patron/inhumen))
+		if(!H.get_coven(/datum/coven/inhumen_coven))
+			H.give_coven(/datum/coven/inhumen_coven)
+	else if(istype(H.patron, /datum/patron/old_god))
+		if(!H.get_coven(/datum/coven/old_god_coven))
+			H.give_coven(/datum/coven/old_god_coven)
+
 		// Give the leader levitation: create a small temporary coven instance
 		// that contains only the levitation power and give it to the leader.
 		var/datum/coven/temp = new /datum/coven(1)

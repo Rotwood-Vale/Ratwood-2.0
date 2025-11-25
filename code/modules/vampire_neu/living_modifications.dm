@@ -288,15 +288,11 @@
 	// Coffin regeneration
 	var/total_damage = getBruteLoss() + getFireLoss()
 	var/obj/structure/closet/crate/coffin/coffin = loc
+	var/was_damaged = total_damage > 0 // Check if we WERE damaged at start of proc
+
 	if(istype(coffin) && total_damage && (src in coffin.contents))
-		if(!HAS_TRAIT(src, TRAIT_DEATHCOMA))
-			to_chat(src, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
-			ADD_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
 		heal_overall_damage(5, 5)
 		adjust_bloodpool(10)
-	if(HAS_TRAIT(src, TRAIT_DEATHCOMA) && (total_damage <= 0 || (!istype(coffin) || !(src in coffin.contents))))
-		REMOVE_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)	
-		to_chat(src, span_warning("You have recovered from Torpor."))
 
 /mob/living/carbon/human/proc/handle_bloodpool_effects()
 	// Apply thirst effects based on bloodpool levels
