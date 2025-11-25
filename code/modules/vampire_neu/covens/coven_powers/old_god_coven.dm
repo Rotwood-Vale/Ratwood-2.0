@@ -78,7 +78,7 @@
 
 /datum/coven_power/old_god/ancient_wrath
 	name = "Ancient Wrath"
-	desc = "Call upon Psydon's ancient power to empower Psydonian allies. Psydon cares not for the feuds of newer gods."
+	desc = "Call upon Psydon's ancient power to empower allies. Psydon cares not for the feuds of newer gods."
 	level = 3
 	research_cost = 2
 	check_flags = COVEN_CHECK_CAPABLE
