@@ -38398,7 +38398,6 @@
 /area/rogue/outdoors/mountains)
 "joo" = (
 /obj/structure/chair/stool/rogue,
-/obj/effect/landmark/start/prisonerr,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/warden)
 "joq" = (
@@ -53431,6 +53430,7 @@
 "mOe" = (
 /obj/structure/bed/rogue/shit,
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/landmark/start/prisonerr,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/cell)
 "mOr" = (
@@ -77782,6 +77782,7 @@
 /area/rogue/outdoors/beach/forest/hamlet)
 "sKJ" = (
 /obj/structure/bed/rogue/shit,
+/obj/effect/landmark/start/prisonerr,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/cell)
 "sKK" = (
