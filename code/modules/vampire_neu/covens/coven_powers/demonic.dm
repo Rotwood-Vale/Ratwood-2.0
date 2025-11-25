@@ -1,9 +1,10 @@
 /datum/coven/demonic
-	name = "Demonic"
-	desc = "Get a help from the Hell creatures, resist THE FIRE, transform into an imp. Violates Masquerade."
+	name = "The Wildfire's Wrath"
+	desc = "Tap into the maddened, untamed fury of the Treefather, Dendor. Become a force of nature with claw, flame, and feral speed. Violates the Masquerade."
 	icon_state = "daimonion"
 	clan_restricted = FALSE
 	power_type = /datum/coven_power/demonic
+	experience_needed = 40
 
 /datum/coven_power/demonic
 	name = "Demonic power name"
@@ -67,7 +68,7 @@
 	violates_masquerade = TRUE
 
 	cancelable = TRUE
-	duration_length = 40 SECONDS
+	duration_length = 2 MINUTES
 	cooldown_length = 1 MINUTES
 
 /datum/coven_power/demonic/conflagration/activate()
@@ -156,8 +157,8 @@
 	icon_state = "claws"
 	max_blade_int = 900
 	max_integrity = 900
-	force = 11
-	wdefense = 9
+	force = 20
+	wdefense = 10
 	armor_penetration = 100
 	block_chance = 20
 	associated_skill = /datum/skill/combat/unarmed

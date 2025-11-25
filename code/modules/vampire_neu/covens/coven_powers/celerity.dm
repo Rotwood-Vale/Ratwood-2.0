@@ -1,6 +1,6 @@
 /datum/coven/celerity
-	name = "Celerity"
-	desc = "Boosts your speed. Violates Masquerade."
+	name = "The Forge-Fire's Haste"
+	desc = "Harness the explosive ingenuity of Malum's forge, moving with the speed of a striking hammer and the relentless progress of a masterwork. Violates the Masquerade."
 	icon_state = "melpominee"
 	power_type = /datum/coven_power/celerity
 

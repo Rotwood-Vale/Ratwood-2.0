@@ -1,6 +1,6 @@
 /datum/coven/eora
-	name = "Eoran Embrace"
-	desc = "Blessed by the Goddess of Love, Family, and Art, these vampires have developed powers that strengthen bonds, inspire beauty, and heal emotional wounds."
+	name = "The Hearth's Bond"
+	desc = "Channel the boundless love of Eora to mend wounds, inspire artistry, and forge unbreakable bonds of family and fellowship."
 	icon_state = "eora"
 	power_type = /datum/coven_power/eora
 	max_level = 4

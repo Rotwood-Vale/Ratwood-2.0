@@ -1,7 +1,7 @@
 #define HEAL_MULTIPLIER 3.8
 /datum/coven/bloodheal
-	name = "Bloodheal"
-	desc = "Use the power of your Sanguinae to slowly regenerate your flesh."
+	name = "Sanguine Rebirth"
+	desc = "A dark perversion of Pestra's art, using the power of your cursed blood to knit flesh and bone, slowly regenerating the wounds of the undying."
 	icon_state = "bloodheal"
 	power_type = /datum/coven_power/bloodheal
 	max_level = 5

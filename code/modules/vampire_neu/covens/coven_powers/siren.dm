@@ -1,6 +1,6 @@
 /datum/coven/siren
-	name = "Siren Blessing"
-	desc = "Typically found in vampires who frequent the seas of Enigma, they've developed the ability to adapt much like sirens."
+	name = "Abyssor's Lure"
+	desc = "Echo the call of the dreaming sea-god, Abyssor, to throw your voice, project whispers across distances, and sing songs that stun and shatter."
 	icon_state = "melpominee"
 	power_type = /datum/coven_power/siren
 

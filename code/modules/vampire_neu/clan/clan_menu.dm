@@ -9,10 +9,6 @@
 	var/datum/coven/coven_one_preliminary
 	var/datum/coven/coven_two_preliminary
 	var/datum/coven/coven_three_preliminary
-	
-	// Dual coven selection system - one vampiric, one divine/inhumen
-	var/datum/coven/vampiric_coven_preliminary
-	var/datum/coven/divine_coven_preliminary
 
 /datum/clan_menu_interface/New(mob/living/carbon/human/target_user)
 	user = target_user
@@ -31,70 +27,6 @@
 
 	user << browse(generate_combined_html(hierarchy_html), "window=clan_menu")
 
-/datum/clan_menu_interface/proc/show_clan_info()
-	current_coven = null
-
-	var/clan_info_html = generate_clan_info_html()
-
-	user << browse(generate_combined_html(clan_info_html), "window=clan_menu")
-
-/datum/clan_menu_interface/proc/generate_clan_info_html()
-	var/clan_downside = "burn in sunlight"
-	var/blood_preference = "any blood"
-
-	if(user_clan)
-		clan_downside = user_clan.get_downside_string()
-		blood_preference = user_clan.get_blood_preference_string()
-
-	return {"
-	<div class="welcome-screen" style='max-height: 85vh; overflow-y: auto; padding: 12px;'>
-		<h2>Welcome to your Clan</h2>
-
-		<div class="intro-section">
-			<p>This guide contains important information about vampiric mechanics and gameplay.
-			Select a coven from the sidebar to view its research tree and manage your powers.</p>
-		</div>
-
-		<div class="vampire-mechanics" style='padding: 8px;'>
-			<h3 style='font-size: 10px; margin-bottom: 6px;'>Vampiric Nature</h3>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Blood Hunger:</strong> Vampires must drink blood to survive. Bloodpool regenerates slowly or faster via feeding. You prefer <span class="blood-type">[blood_preference]</span>.
-			</div>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Clan Weakness:</strong> Your clan's curse means you <span class="weakness">[clan_downside]</span>.
-			</div>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Undead Resilience:</strong> Vampires feel no pain and are immune to bleeding out. Blood volume auto-refills each tick to prevent death from bloodloss.
-			</div>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Silver Vulnerability:</strong> Silver weaponry causes pain and may trigger a blood frenzy, causing you to lose control and attack indiscriminately.
-			</div>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Disguise:</strong> Use vampire disguise to appear mortal and avoid detection. Miracles work on disguised vampires but burn undisguised ones.
-			</div>
-			<div class="mechanic-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Torpor:</strong> Rest in a coffin to enter deathless slumber (Torpor) and regenerate from wounds, consuming bloodpool to heal.
-			</div>
-		</div>
-
-		<div class="gameplay-tips" style='padding: 8px;'>
-			<h3 style='font-size: 10px; margin-bottom: 6px;'>Gameplay Tips</h3>
-			<div class="tip-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Coven Abilities:</strong> Right-click on any coven ability to switch between different powers from that coven.
-			</div>
-			<div class="tip-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Creating Progeny:</strong> Drain someone's blood to critical levels to gain the option to embrace them as a new vampire.
-			</div>
-			<div class="tip-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>God Powers:</strong> God coven abilities adapt to your patron deity. Worship one of The Ten for Divine powers, The Four for Inhumen powers, or Psydon for Old God powers.
-			</div>
-			<div class="tip-item" style='font-size: 7px; margin-bottom: 4px; line-height: 1.3;'>
-				<strong>Coven Selection:</strong> Choose one vampiric coven (bloodheal, obfuscate, etc.) and one god-aligned coven (divine/inhumen/old god) based on your patron.
-			</div>
-		</div>
-	</div>
-	"}
-
 /datum/clan_menu_interface/proc/generate_interface()
 	//probably should make this an asset instead
 	user << browse_rsc('html/research_hover.png')
@@ -110,51 +42,61 @@
 	user << browse(html, "window=clan_menu;size=1400x900;can_resize=1")
 
 /datum/clan_menu_interface/proc/generate_welcome_screen_html()
+	var/clan_downside = "burn in sunlight"
+	var/blood_preference = "any blood"
+
+	if(user_clan)
+		clan_downside = user_clan.get_downside_string()
+		blood_preference = user_clan.get_blood_preference_string()
+
 	return {"
-	<div class="welcome-screen" style='max-height: 85vh; overflow-y: auto; padding: 12px;'>
-		<h2>Coven Selection</h2>
+	<div class="welcome-screen">
+		<h2>Welcome to your Clan</h2>
 
 		<div class="intro-section">
-			<p>Select your covens to begin your journey as a vampire.
-		Each coven represents a different aspect of your vampiric abilities.</p>
-			<p style='color: #AAA; font-size: 8px; margin-top: 8px;'>For more information about vampiric mechanics and gameplay tips, select "Clan Information" from the sidebar.</p>
+			<p>Select a coven from the sidebar to view its research tree and manage your powers.
+			Each coven represents a different aspect of your vampiric abilities.</p>
+		</div>
+
+		<div class="vampire-mechanics">
+			<h3>Vampiric Nature</h3>
+			<div class="mechanic-item">
+				<strong>Blood Hunger:</strong> You must drink blood to survive. You prefer <span class="blood-type">[blood_preference]</span>.
+			</div>
+			<div class="mechanic-item">
+				<strong>Clan Weakness:</strong> Your clan's curse means you <span class="weakness">[clan_downside]</span>.
+			</div>
+			<div class="mechanic-item">
+				<strong>Silver Vulnerability:</strong> Silver weaponry may trigger a blood frenzy, causing you to lose control and attack indiscriminately.
+			</div>
+		</div>
+
+		<div class="gameplay-tips">
+			<h3>Gameplay Tips</h3>
+			<div class="tip-item">
+				<strong>Coven Abilities:</strong> Right-click on any coven ability to switch between different powers from that coven.
+			</div>
+			<div class="tip-item">
+				<strong>Creating Progeny:</strong> Drain someone's blood to critical levels to gain the option to embrace them as a new vampire.
+			</div>
 		</div>
 	</div>
 	"}
 
 /datum/clan_menu_interface/proc/generate_setup_html()
+	var/clan_downside = "burn in sunlight"
+	var/blood_preference = "any blood"
+
+	if(user_clan)
+		clan_downside = user_clan.get_downside_string()
+		blood_preference = user_clan.get_blood_preference_string()
+
 	return {"
 	<script>
 		function submitCovens() {
 			if(confirm('This choice is final, you will not be able to change covens later. Are you sure??')) {
 				window.location.href = '?src=[REF(src)];action=select_covens';
 			}
-		}
-		function previewVampiricCoven() {
-			window.location.href = '?src=[REF(src)];action=load_coven_preview_vampiric_tree;';
-		}
-		function previewDivineCoven() {
-			window.location.href = '?src=[REF(src)];action=load_coven_preview_divine_tree;';
-		}
-		function selectVampiricCoven() {
-			const form = document.getElementById('vampiric-coven-selection');
-			const formData = new FormData(form);
-
-			let params = '?src=[REF(src)];action=select_vampiric_coven';
-			for(let \[key, value\] of formData.entries()) {
-				params += ';' + key + '=' + encodeURIComponent(value);
-			}
-			window.location.href = params;
-		}
-		function selectDivineCoven() {
-			const form = document.getElementById('divine-coven-selection');
-			const formData = new FormData(form);
-
-			let params = '?src=[REF(src)];action=select_divine_coven';
-			for(let \[key, value\] of formData.entries()) {
-				params += ';' + key + '=' + encodeURIComponent(value);
-			}
-			window.location.href = params;
 		}
 		function previewCovenOne() {
 			window.location.href = '?src=[REF(src)];action=load_coven_preview_one_tree;';
@@ -196,64 +138,91 @@
 			window.location.href = params;
 		}
 	</script>
-	<div class="welcome-screen" style='max-height: 85vh; overflow-y: auto; padding: 12px;'>
-		<h2>Coven Selection</h2>
+	<div class="welcome-screen">
+		<h2>Welcome to your Clan</h2>
 
 		<div class="intro-section">
-			<p>Select your covens to begin your journey as a vampire.
-		Each coven represents a different aspect of your vampiric abilities.
-		Select a coven from the sidebar to view its research tree and manage your powers.
+			<p>Select up to three covens (two if you are a wretch)
+			Each coven represents a different aspect of your vampiric abilities.
+			Select a coven from the sidebar to view its research tree and manage your powers.
 			</p>
-			<p style='color: #AAA; font-size: 8px; margin-top: 8px;'>For more information about vampiric mechanics and gameplay tips, select "Clan Information" from the sidebar.</p>
 		</div>
 		[generate_coven_selection()]
+		<div class="vampire-mechanics">
+			<h3>Vampiric Nature</h3>
+			<div class="mechanic-item">
+				<strong>Blood Hunger:</strong> You must drink blood to survive. You prefer <span class="blood-type">[blood_preference]</span>.
+			</div>
+			<div class="mechanic-item">
+				<strong>Clan Weakness:</strong> Your clan's curse means you <span class="weakness">[clan_downside]</span>.
+			</div>
+			<div class="mechanic-item">
+				<strong>Silver Vulnerability:</strong> Silver weaponry may trigger a blood frenzy, causing you to lose control and attack indiscriminately.
+			</div>
+		</div>
+
+		<div class="gameplay-tips">
+			<h3>Gameplay Tips</h3>
+			<div class="tip-item">
+				<strong>Coven Abilities:</strong> Right-click on any coven ability to switch between different powers from that coven.
+			</div>
+			<div class="tip-item">
+				<strong>Creating Progeny:</strong> Drain someone's blood to critical levels to gain the option to embrace them as a new vampire.
+			</div>
+		</div>
 	</div>
 	"}
 
 /datum/clan_menu_interface/proc/generate_coven_selection()
 	if(user_clan.covens_to_select < 1 || user != user_clan?.clan_leader)
 		return ""
-	
-	// New dual selection system: one vampiric coven + one divine/inhumen coven
 	return {"
-	<div class="coven-selection" style='max-height: 70vh; overflow-y: auto; padding: 10px;'>
-		<h3 style='color: #CC0000; text-align: center; margin-bottom: 8px; font-size: 11px;'>Choose Your Covens</h3>
-		<p style='text-align: center; color: #DDD; margin-bottom: 12px; font-size: 8px; line-height: 1.2;'>
-			Select one Vampiric Coven and one Divine/Inhumen Coven.<br>
-			Sanguine Noctis grants power from both vampirism and the divine.
-		</p>
-		
-		<div class='coven-form' style='margin-bottom: 15px;'>
-			<h4 style='color: #CC0000; margin-bottom: 4px; font-size: 9px;'>Vampiric Coven</h4>
-			<p style='color: #AAA; font-size: 7px; margin-bottom: 6px;'>Blood, shadow, and predation.</p>
-			<form id='vampiric-coven-selection'>
-				<div class='form-group'>
-					<select id='vampiric-coven-select' onchange='selectVampiricCoven()' name='coven-type' required style='padding: 4px; background: #1a0000; color: #CC0000; border: 1px solid #8B0000; border-radius: 3px; width: 100%; font-size: 8px;'>
-						<option value=''>[ispath(vampiric_coven_preliminary) ? initial(vampiric_coven_preliminary.name) : "-- SELECT VAMPIRIC COVEN --"]</option>
-						[coven_choice_vampiric()]
+	<div class="coven-selection">
+		<div class ='coven-form'>
+			<form id='coven-selection1'>
+				<div class='form-group' style='margin-right: 15px;'>
+					<label for='coven-select' style='display: block; margin-left: 5px; margin-right: 5px;margin-bottom: 5px; color: #fff;'></label>
+					<select id='coven-select' onchange='selectCovenOne()' name='coven-type' required style='padding: 8px; background: #444; color: #fff; border: 1px solid #666; border-radius: 3px;'>
+						<option value=''>[ispath(coven_one_preliminary) ? initial(coven_one_preliminary.name) : "-- EMPTY --"]</option>
+						[coven_choice()]
 					</select>
 				</div>
 			</form>
-			<p style='font-size: 7px; color: #999; margin-top: 4px;'>[ispath(vampiric_coven_preliminary) ? initial(vampiric_coven_preliminary.desc) : ""]</p>
-			<button type='button' onclick='previewVampiricCoven()' class='btn-secondary' style='padding: 4px 8px; background: #4a0000; color: #9a6b6b; border: 1px solid #6a3030; cursor: pointer; border-radius: 3px; margin-top: 4px; font-size: 7px;'>Preview Powers</button>
+			[ispath(coven_one_preliminary) ? initial(coven_one_preliminary.desc) : ""]
+			<button type='button' onclick='previewCovenOne()' class='btn-secondary' style='padding: 8px 16px; background: #0066cc; color: white; border: none; cursor: pointer;'>(?)</button>
 		</div>
-		
-		<div class='coven-form'>
-			<h4 style='color: #CC0000; margin-bottom: 4px; font-size: 9px;'>Divine/Inhumen Coven</h4>
-			<p style='color: #AAA; font-size: 7px; margin-bottom: 6px;'>God-aligned powers.</p>
-			<form id='divine-coven-selection'>
-				<div class='form-group'>
-					<select id='divine-coven-select' onchange='selectDivineCoven()' name='coven-type' required style='padding: 4px; background: #1a0000; color: #CC0000; border: 1px solid #8B0000; border-radius: 3px; width: 100%; font-size: 8px;'>
-						<option value=''>[ispath(divine_coven_preliminary) ? initial(divine_coven_preliminary.name) : "-- SELECT DIVINE COVEN --"]</option>
-						[coven_choice_divine()]
-					</select>
-				</div>
-			</form>
-			<p style='font-size: 7px; color: #999; margin-top: 4px;'>[ispath(divine_coven_preliminary) ? initial(divine_coven_preliminary.desc) : ""]</p>
-			<button type='button' onclick='previewDivineCoven()' class='btn-secondary' style='padding: 4px 8px; background: #4a0000; color: #9a6b6b; border: 1px solid #6a3030; cursor: pointer; border-radius: 3px; margin-top: 4px; font-size: 7px;'>Preview Powers</button>
-		</div>
+		[user_clan?.covens_to_select >= 2 ? "\
+		<div class ='coven-form'>\
+			<form id='coven-selection2'>\
+				<div class='form-group' style='margin-right: 15px;'>\
+					<label for='coven-select' style='display: block; margin-bottom: 5px; color: #fff;'></label>\
+					<select id='coven-select' onchange='selectCovenTwo()' name='coven-type' required style='padding: 8px; background: #444; color: #fff; border: 1px solid #666; border-radius: 3px;'>\
+						<option value=''>[ispath(coven_two_preliminary) ? initial(coven_two_preliminary.name) : "-- EMPTY --"]</option>\
+						[coven_choice()]\
+					</select>\
+				</div>\
+			</form>\
+			[ispath(coven_two_preliminary) ? initial(coven_two_preliminary.desc) : ""]\
+			<button type='button' onclick='previewCovenTwo()' class='btn-secondary' style='padding: 8px 16px; background: #0066cc; color: white; border: none; cursor: pointer;'>(?)</button>\
+		</div>\
+		":""]
+		[user_clan?.covens_to_select >= 3 ? "\
+		<div class ='coven-form'>\
+			<form id='coven-selection3'>\
+				<div class='form-group' style='margin-right: 15px;'>\
+					<label for='coven-select' style='display: block; margin-bottom: 5px; color: #fff;'></label>\
+					<select id='coven-select' onchange='selectCovenThree()' name='coven-type' required style='padding: 8px; background: #444; color: #fff; border: 1px solid #666; border-radius: 3px;'>\
+						<option value=''>[ispath(coven_three_preliminary) ? initial(coven_three_preliminary.name) : "-- EMPTY --"]</option>\
+						[coven_choice()]\
+					</select>\
+				</div>\
+			</form>\
+			[ispath(coven_three_preliminary) ? initial(coven_three_preliminary.desc) : ""]\
+			<button type='button' onclick='previewCovenThree()' class='btn-secondary' style='padding: 8px 16px; background: #0066cc; color: white; border: none; cursor: pointer;'>(?)</button>\
+		</div>\
+		":""]
 	</div>
-	<button type='button' onclick='submitCovens()' class='btn-primary' style='padding: 6px 12px; background: #5a0000; color: #b88888; border: 2px solid #7a3030; border-radius: 4px; cursor: pointer; margin-top: 12px; font-size: 8px; box-shadow: 0 0 8px rgba(90, 0, 0, 0.4);'>Confirm Selection</button>
+	<button type='button' onclick='submitCovens()' class='btn-primary' style='padding: 8px 16px; background: #0066cc; color: white; border: none; border-radius: 3px; cursor: pointer; margin-right: 10px;'>Select Covens</button>
 	"}
 
 /datum/clan_menu_interface/proc/coven_choice()
@@ -265,70 +234,6 @@
 
 		if(coven_path == coven_one_preliminary || coven_path == coven_two_preliminary || coven_path == coven_three_preliminary)
 			continue
-
-		html += "<option value='[coven_path]'>[initial(typecasted.name)]</option>"
-
-	return html
-
-/datum/clan_menu_interface/proc/coven_choice_vampiric()
-	var/html = ""
-	for(var/coven_path in subtypesof(/datum/coven))
-		var/datum/coven/typecasted = coven_path
-		if(initial(typecasted.clan_restricted))
-			continue
-		
-		// Skip god covens - only show vampiric covens
-		if(initial(typecasted.is_god_coven))
-			continue
-
-		if(coven_path == coven_one_preliminary || coven_path == coven_two_preliminary || coven_path == coven_three_preliminary)
-			continue
-
-		html += "<option value='[coven_path]'>[initial(typecasted.name)]</option>"
-
-	return html
-
-/datum/clan_menu_interface/proc/coven_choice_divine()
-	var/html = ""
-	
-	// Get user's patron to filter appropriate covens
-	var/mob/living/carbon/human/H = user
-	var/datum/patron/user_patron = H?.patron
-	var/is_divine_worshipper = FALSE
-	var/is_inhumen_worshipper = FALSE
-	var/is_psydon_worshipper = FALSE
-	
-	// Check patron type
-	if(user_patron)
-		if(user_patron.type in ALL_DIVINE_PATRONS)
-			is_divine_worshipper = TRUE
-		else if(user_patron.type in ALL_INHUMEN_PATRONS)
-			is_inhumen_worshipper = TRUE
-		else if(istype(user_patron, /datum/patron/old_god))
-			is_psydon_worshipper = TRUE
-	
-	for(var/coven_path in subtypesof(/datum/coven))
-		var/datum/coven/typecasted = coven_path
-		if(initial(typecasted.clan_restricted))
-			continue
-		
-		// Only show god covens (divine/inhumen)
-		if(!initial(typecasted.is_god_coven))
-			continue
-
-		if(coven_path == coven_one_preliminary || coven_path == coven_two_preliminary || coven_path == coven_three_preliminary)
-			continue
-		
-		// Filter based on patron alignment
-		if(coven_path == /datum/coven/divine_coven)
-			if(!is_divine_worshipper)
-				continue // Only show Divine Coven to worshippers of The Ten
-		else if(coven_path == /datum/coven/inhumen_coven)
-			if(!is_inhumen_worshipper)
-				continue // Only show Inhumen Coven to worshippers of The Four
-		else if(coven_path == /datum/coven/old_god_coven)
-			if(!is_psydon_worshipper)
-				continue // Only show Old God Coven to Psydon worshippers
 
 		html += "<option value='[coven_path]'>[initial(typecasted.name)]</option>"
 
@@ -369,124 +274,111 @@
 			.hierarchy-container {
 				display: flex;
 				width: 100%;
-				height: calc(100vh - 60px);
+				height: calc(100vh - 100px);
 				position: relative;
-				margin-top: 10px;
+				margin-top: 20px;
 			}
 			.research-container {
 				flex: 1;
 				position: relative;
-				overflow-y: auto;
-				overflow-x: hidden;
-				background: #0a0000;
-				height: calc(100vh - 80px);
-				margin-bottom: 10px;
+				overflow: auto;
+				background: #1a1a1a;
+				height: calc(100% - 40px);
+				margin-bottom: 20px;
 			}
 
 			.hierarchy-sidebar {
-				width: 160px;
-				background: rgba(20, 0, 0, 0.9);
-				border-left: 2px solid #8B0000;
-				padding: 6px;
+				width: 280px;
+				background: #2a2a2a;
+				border-left: 1px solid #444;
+				padding: 10px;
 				overflow-y: auto;
 				position: fixed;
 				right: 0;
-				top: 35px;
-				height: calc(100vh - 60px);
+				top: 80px;
+				height: calc(100vh - 100px);
 				z-index: 1000;
-				box-shadow: -5px 0 15px rgba(139, 0, 0, 0.4);
 			}
 
 			.sidebar-header {
-				margin-bottom: 8px;
-				border-bottom: 1px solid #8B0000;
-				padding-bottom: 4px;
+				margin-bottom: 20px;
+				border-bottom: 1px solid #444;
+				padding-bottom: 10px;
 			}
 
 			.sidebar-header h3 {
-				color: #CC0000;
-				margin: 0 0 4px 0;
-				font-size: 9px;
-				text-shadow: 0 0 8px rgba(204, 0, 0, 0.5);
+				color: #fff;
+				margin: 0 0 10px 0;
 			}
 
 			.sidebar-content {
-				max-height: calc(100% - 30px);
+				max-height: calc(100% - 50px);
 				overflow-y: auto;
 			}
 
 			.position-details h4 {
-				color: #CC0000;
-				margin-bottom: 6px;
-				font-size: 8px;
-				text-shadow: 0 0 6px rgba(204, 0, 0, 0.4);
+				color: #fff;
+				margin-bottom: 15px;
 			}
 
 			.position-details p {
-				margin: 4px 0;
-				line-height: 1.2;
-				font-size: 7px;
+				margin: 8px 0;
+				line-height: 1.4;
 			}
 
 			.position-actions {
-				margin-top: 8px;
+				margin-top: 15px;
 			}
 
 			.btn-primary, .btn-secondary, .btn-danger {
-				padding: 3px 6px;
-				margin: 2px 2px 2px 0;
+				padding: 8px 16px;
+				margin: 5px 5px 5px 0;
 				border: none;
-				border-radius: 3px;
+				border-radius: 4px;
 				cursor: pointer;
-				font-size: 7px;
+				font-size: 14px;
 			}
 
 			.btn-primary {
-				background: #8B0000;
-				color: #CC0000;
-				border: 1px solid #CC0000;
+				background: #007bff;
+				color: white;
 			}
 
 			.btn-secondary {
-				background: #4a0000;
-				color: #999;
-				border: 1px solid #6a0000;
+				background: #6c757d;
+				color: white;
 			}
 
 			.btn-danger {
-				background: #a00000;
-				color: #ff0000;
-				border: 1px solid #ff0000;
+				background: #dc3545;
+				color: white;
 			}
 
 			.btn-primary:hover {
-				background: #640000;
-				box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
+				background: #0056b3;
 			}
 
 			.btn-secondary:hover {
-				background: #6a0000;
-				box-shadow: 0 0 8px rgba(139, 0, 0, 0.4);
+				background: #545b62;
 			}
 
 			.btn-danger:hover {
-				background: #c80000;
-				box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+				background: #c82333;
 			}
 
 			/* Adjust main content to account for sidebar */
 			.research-canvas {
-				margin-right: 180px; /* Account for sidebar width */
+				margin-right: 320px; /* Account for sidebar width */
 				min-height: 600px;
 				position: relative;
 			}
 
 			.member-name {
-				font-size: 7px;
+				font-size: 9px;
 				color: #ccc;
 				text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-				margin-top: 1px;
-				line-height: 1.0;
+				margin-top: 2px;
+				line-height: 1.1;
 				word-wrap: break-word;
 				max-width: 100%;
 				overflow: hidden;
@@ -496,20 +388,19 @@
 			.hierarchy-connection {
 				position: absolute;
 				height: 3px;
-				background: linear-gradient(90deg, rgba(100, 0, 0, 0.6), rgba(139, 0, 0, 0.8), rgba(100, 0, 0, 0.6));
+				background: linear-gradient(90deg, #666, #888, #666);
 				border-radius: 1px;
-				opacity: 0.9;
-				box-shadow: 0 0 4px rgba(139, 0, 0, 0.5);
+				opacity: 0.8;
 			}
 
 			/* Node selection styles */
 			.hierarchy-node {
 				position: absolute;
-				width: 80px;
-				height: 50px;
+				width: 110px
+				height: 70px;
 				background: rgba(40, 40, 50, 0.9);
 				border: 2px solid #666;
-				border-radius: 6px;
+				border-radius: 8px;
 				cursor: pointer;
 				transition: all 0.3s ease;
 				display: flex;
@@ -517,7 +408,7 @@
 				align-items: center;
 				justify-content: center;
 				text-align: center;
-				padding: 3px;
+				padding: 5px;
 				box-sizing: border-box;
 			}
 
@@ -549,14 +440,14 @@
 
 			/* Icon container within the node */
 			.hierarchy-node .icon-container {
-				width: 24px;
-				height: 24px;
-				margin-bottom: 2px;
+				width: 32px;
+				height: 32px;
+				margin-bottom: 5px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				background: rgba(0, 0, 0, 0.3);
-				border-radius: 3px;
+				border-radius: 4px;
 			}
 
 			/* Modal styles */
@@ -572,60 +463,55 @@
 
 			.modal-content {
 				position: relative;
-				background: rgba(20, 0, 0, 0.95);
+				background: #2a2a2a;
 				margin: 10% auto;
-				padding: 12px;
-				width: 350px;
-				border-radius: 6px;
-				color: #DDD;
+				padding: 20px;
+				width: 500px;
+				border-radius: 8px;
+				color: #fff;
 				overflow-y: auto;
-				border: 2px solid #8B0000;
-				box-shadow: 0 0 30px rgba(139, 0, 0, 0.7);
 			}
 
 			.close {
 				position: absolute;
-				top: 5px;
-				right: 8px;
-				font-size: 16px;
+				top: 10px;
+				right: 15px;
+				font-size: 24px;
 				cursor: pointer;
-				color: #999;
+				color: #ccc;
 			}
 
 			.close:hover {
-				color: #CC0000;
-				text-shadow: 0 0 10px rgba(204, 0, 0, 0.7);
+				color: #fff;
 			}
 
 			.form-group {
-				margin-bottom: 3px;
+				margin-bottom: 5px;
 			}
 
 			.form-group label {
 				display: block;
-				margin-bottom: 2px;
-				color: #CC0000;
-				font-size: 9px;
+				margin-bottom: 5px;
+				color: #ccc;
 			}
 
 			.form-group input, .form-group textarea, .form-group select {
 				width: 100%;
-				padding: 3px;
-				border: 1px solid #8B0000;
-				background: #0a0000;
-				color: #DDD;
-				border-radius: 3px;
-				font-size: 9px;
+				padding: 6px;
+				border: 1px solid #555;
+				background: #1a1a1a;
+				color: #fff;
+				border-radius: 4px;
 			}
 
 			.form-actions {
-				margin-top: 10px;
+				margin-top: 20px;
 				text-align: right;
 			}
 			body {
 				margin: 0;
 				padding: 0;
-				background: linear-gradient(180deg, #000000 0%, #1a0000 50%, #000000 100%);
+				background: #000;
 				color: #eee;
 				font-family: Arial, sans-serif;
 				overflow: hidden;
@@ -636,84 +522,78 @@
 				top: 0;
 				left: 0;
 				right: 0;
-				height: 35px;
-				background: linear-gradient(135deg, rgba(60, 0, 0, 0.95), rgba(100, 0, 0, 0.95), rgba(40, 0, 0, 0.95));
-				border-bottom: 2px solid #8B0000;
+				height: 80px;
+				background: linear-gradient(135deg, rgba(139, 69, 19, 0.95), rgba(160, 82, 45, 0.95));
+				border-bottom: 3px solid #8B4513;
 				z-index: 1001;
 				display: flex;
 				align-items: center;
-				padding: 0 8px;
-				box-shadow: 0 2px 10px rgba(139, 0, 0, 0.8);
+				padding: 0 30px;
+				box-shadow: 0 4px 15px rgba(0,0,0,0.6);
 			}
 
 			.clan-info {
 				display: flex;
 				align-items: center;
-				gap: 8px;
+				gap: 30px;
 				flex-grow: 1;
 			}
 
 			.clan-name {
-				font-size: 14px;
+				font-size: 28px;
 				font-weight: bold;
-				color: #FF0000;
-				text-shadow: 1px 1px 4px rgba(139, 0, 0, 0.9), 0 0 10px rgba(255, 0, 0, 0.5);
+				color: #FFD700;
+				text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
 			}
 
 			.clan-desc {
-				font-size: 9px;
+				font-size: 14px;
 				color: #DDD;
-				max-width: 250px;
+				max-width: 400px;
 				font-style: italic;
 			}
 
 			.header-controls {
 				display: flex;
-				gap: 4px;
+				gap: 15px;
 			}
 
 			.header-btn {
-				background: rgba(40, 0, 0, 0.6);
-				border: 1px solid #8B0000;
-				color: #CC0000;
-				padding: 3px 8px;
-				border-radius: 3px;
+				background: rgba(0,0,0,0.4);
+				border: 2px solid #8B4513;
+				color: #FFD700;
+				padding: 10px 20px;
+				border-radius: 8px;
 				cursor: pointer;
 				font-weight: bold;
-				font-size: 9px;
 				transition: all 0.3s ease;
-				box-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
 			}
 
 			.header-btn:hover {
-				background: rgba(100, 0, 0, 0.8);
+				background: rgba(160, 82, 45, 0.6);
 				transform: translateY(-2px);
-				box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
 			}
 
 			.main-container {
 				display: flex;
-				margin-top: 50px;
-				height: calc(100vh - 50px);
+				margin-top: 80px;
+				height: calc(100vh - 80px);
 			}
 
 			.sidebar {
-				width: 220px;
-				background: linear-gradient(180deg, rgba(60, 0, 0, 0.5), rgba(20, 0, 0, 0.9));
-				border-right: 2px solid #8B0000;
-				padding: 10px;
+				width: 300px;
+				background: linear-gradient(180deg, rgba(139, 69, 19, 0.3), rgba(0, 0, 0, 0.8));
+				border-right: 2px solid #8B4513;
+				padding: 20px;
 				overflow-y: auto;
 				z-index: 100;
-				box-shadow: inset -5px 0 15px rgba(139, 0, 0, 0.3);
 			}
 
 			.sidebar h3 {
-				color: #CC0000;
-				border-bottom: 1px solid #8B0000;
-				padding-bottom: 4px;
-				margin-bottom: 8px;
-				font-size: 11px;
-				text-shadow: 0 0 8px rgba(204, 0, 0, 0.5);
+				color: #FFD700;
+				border-bottom: 2px solid #8B4513;
+				padding-bottom: 8px;
+				margin-bottom: 15px;
 			}
 
 			.coven-list {
@@ -723,71 +603,63 @@
 			}
 
 			.coven-item {
-				background: rgba(20, 0, 0, 0.6);
-				margin-bottom: 6px;
-				padding: 8px;
+				background: rgba(0,0,0,0.4);
+				margin-bottom: 10px;
+				padding: 15px;
 				cursor: pointer;
 				transition: all 0.3s ease;
 				position: relative;
-				border: 1px solid rgba(139, 0, 0, 0.3);
-				border-radius: 3px;
 			}
 
 			.coven-item:hover {
-				background: rgba(60, 0, 0, 0.6);
+				background: rgba(139, 69, 19, 0.4);
 				transform: translateX(5px);
-				border-color: rgba(255, 0, 0, 0.5);
-				box-shadow: 0 0 10px rgba(139, 0, 0, 0.4);
 			}
 
 			.coven-item.selected {
-				background: rgba(100, 0, 0, 0.7);
-				border-color: #CC0000;
-				box-shadow: 0 0 15px rgba(204, 0, 0, 0.6), inset 0 0 20px rgba(139, 0, 0, 0.3);
+				background: rgba(160, 82, 45, 0.5);
+				border-color: #FFD700;
+				box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 			}
 
 			.coven-item .coven-name {
 				font-weight: bold;
-				color: #CC0000;
-				font-size: 8px;
-				margin-bottom: 2px;
-				text-shadow: 0 0 6px rgba(204, 0, 0, 0.5);
+				color: #FFD700;
+				font-size: 16px;
+				margin-bottom: 5px;
 			}
 
 			.coven-stats {
-				font-size: 7px;
+				font-size: 12px;
 				color: #CCC;
 				display: flex;
 				justify-content: space-between;
-				margin-bottom: 2px;
+				margin-bottom: 8px;
 			}
 
 			.coven-progress {
 				width: 100%;
-				height: 3px;
+				height: 6px;
 				background: rgba(0,0,0,0.5);
-				border-radius: 2px;
+				border-radius: 3px;
 				overflow: hidden;
-				margin-bottom: 2px;
+				margin-bottom: 5px;
 			}
 
 			.coven-progress-fill {
 				height: 100%;
-				background: linear-gradient(90deg, #8B0000, #CC0000, #FF0000);
-				border-radius: 2px;
+				background: linear-gradient(90deg, #FF6B35, #F7931E);
+				border-radius: 3px;
 				transition: width 0.3s ease;
-				box-shadow: 0 0 8px rgba(204, 0, 0, 0.6);
 			}
 
 			.research-points {
-				background: rgba(100, 0, 0, 0.5);
-				color: #FF6666;
-				padding: 2px 4px;
-				border-radius: 3px;
-				font-size: 9px;
+				background: rgba(106, 90, 205, 0.3);
+				color: #ADD8E6;
+				padding: 4px 8px;
+				border-radius: 4px;
+				font-size: 11px;
 				display: inline-block;
-				border: 1px solid rgba(204, 0, 0, 0.4);
-				box-shadow: 0 0 6px rgba(204, 0, 0, 0.3);
 			}
 
 			.content-area {
@@ -841,23 +713,22 @@
 
 			.parallax-stars-1 {
 				background: radial-gradient(ellipse at center,
-					rgba(80, 0, 0, 0.4) 0%,
-					rgba(139, 0, 0, 0.3) 40%,
+					rgba(139, 69, 19, 0.3) 0%,
+					rgba(160, 82, 45, 0.2) 40%,
 					transparent 70%),
-					radial-gradient(circle at 20% 30%, rgba(204, 0, 0, 0.9) 1px, transparent 2px),
-					radial-gradient(circle at 80% 20%, rgba(139, 0, 0, 0.7) 1px, transparent 2px),
-					radial-gradient(circle at 60% 80%, rgba(255, 0, 0, 0.5) 2px, transparent 4px);
+					radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.8) 1px, transparent 2px),
+					radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.6) 1px, transparent 2px),
+					radial-gradient(circle at 60% 80%, rgba(160, 82, 45, 0.4) 2px, transparent 4px);
 				background-size: 800px 600px, 200px 150px, 300px 200px, 250px 180px;
-				opacity: 0.9;
+				opacity: 0.8;
 			}
 
 			.gif-showcase {
 				margin: 12px 0;
 				text-align: center;
-				border-top: 1px solid rgba(139, 0, 0, 0.5);
-				border-bottom: 1px solid rgba(139, 0, 0, 0.5);
+				border-top: 1px solid rgba(139, 0, 0, 0.3);
+				border-bottom: 1px solid rgba(139, 0, 0, 0.3);
 				padding: 12px 0;
-				background: rgba(20, 0, 0, 0.2);
 			}
 
 			.gif-container {
@@ -866,7 +737,7 @@
 				border-radius: 8px;
 				overflow: hidden;
 				background: #000;
-				box-shadow: 0 4px 15px rgba(139, 0, 0, 0.7), 0 0 20px rgba(204, 0, 0, 0.3);
+				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 				border: 2px solid #8b0000;
 			}
 
@@ -875,7 +746,7 @@
 				bottom: 0;
 				left: 0;
 				right: 0;
-				background: linear-gradient(transparent, rgba(20, 0, 0, 0.95));
+				background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
 				padding: 6px;
 				transform: translateY(100%);
 				transition: transform 0.3s ease;
@@ -886,12 +757,12 @@
 			}
 
 			.gif-label {
-				color: #CC0000;
+				color: #ff6b6b;
 				font-size: 11px;
 				font-weight: bold;
 				text-transform: uppercase;
 				letter-spacing: 1px;
-				text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9), 0 0 8px rgba(204, 0, 0, 0.6);
+				text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 			}
 
 			.parallax-neb {
@@ -923,21 +794,21 @@
 				position: absolute;
 				height: 3px;
 				background: linear-gradient(90deg,
-					rgba(60, 0, 0, 0.8) 0%,
-					rgba(100, 0, 0, 0.7) 50%,
-					rgba(60, 0, 0, 0.5) 100%);
+					rgba(139, 69, 19, 0.8) 0%,
+					rgba(160, 82, 45, 0.6) 50%,
+					rgba(139, 69, 19, 0.4) 100%);
 				transform-origin: left center;
 				z-index: 5;
 				border-radius: 1px;
-				box-shadow: 0 0 6px rgba(139, 0, 0, 0.4);
+				box-shadow: 0 0 4px rgba(139, 69, 19, 0.3);
 			}
 
 			.connection-line.unlocked {
 				background: linear-gradient(90deg,
-					rgba(204, 0, 0, 0.9) 0%,
-					rgba(255, 0, 0, 0.8) 50%,
-					rgba(204, 0, 0, 0.6) 100%);
-				box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+					rgba(255, 215, 0, 0.8) 0%,
+					rgba(255, 140, 0, 0.6) 50%,
+					rgba(255, 215, 0, 0.4) 100%);
+				box-shadow: 0 0 4px rgba(255, 215, 0, 0.3);
 			}
 
 			.research-node {
@@ -964,14 +835,14 @@
 			}
 
 			.research-node.unlocked img {
-				filter: brightness(1.2) drop-shadow(0 0 8px rgba(204, 0, 0, 0.9)) drop-shadow(0 0 12px rgba(255, 0, 0, 0.6));
+				filter: hue-rotate(45deg) brightness(1.3) drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
 			}
 
 			.research-node.available {
 			}
 
 			.research-node.available img {
-				filter: brightness(1.15) drop-shadow(0 0 6px rgba(139, 0, 0, 0.7)) drop-shadow(0 0 10px rgba(204, 0, 0, 0.4));
+				filter: hue-rotate(90deg) brightness(1.1) drop-shadow(0 0 4px rgba(50, 205, 50, 0.6));
 			}
 
 			.research-node.locked img {
@@ -994,8 +865,8 @@
 				position: absolute;
 				top: -5px;
 				right: -5px;
-				background: #8B0000;
-				color: #FF0000;
+				background: #8B4513;
+				color: #FFD700;
 				border-radius: 50%;
 				width: 16px;
 				height: 16px;
@@ -1004,33 +875,32 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				border: 1px solid #CC0000;
-				box-shadow: 0 0 8px rgba(204, 0, 0, 0.7);
+				border: 1px solid #FFD700;
 			}
 
 			.tooltip {
 				position: absolute;
-				background: rgba(20, 0, 0, 0.97);
-				border: 2px solid #8B0000;
+				background: rgba(139, 69, 19, 0.95);
+				border: 2px solid #8B4513;
 				border-radius: 12px;
 				padding: 15px;
 				max-width: 350px;
 				z-index: 1000;
 				pointer-events: none;
-				box-shadow: 0 8px 24px rgba(139, 0, 0, 0.9), 0 0 20px rgba(204, 0, 0, 0.4);
+				box-shadow: 0 8px 24px rgba(0,0,0,0.7);
 				backdrop-filter: blur(5px);
 			}
 
 			.tooltip h3 {
 				margin: 0 0 10px 0;
-				color: #CC0000;
-				text-shadow: 0 0 8px rgba(204, 0, 0, 0.7), 0 0 12px rgba(255, 0, 0, 0.3);
+				color: #FFD700;
+				text-shadow: 0 0 4px rgba(255,215,0,0.5);
 			}
 
 			.tooltip p {
 				margin: 8px 0;
-				font-size: 10px;
-				line-height: 1.3;
+				font-size: 13px;
+				line-height: 1.4;
 			}
 
 			.tooltip .power-stats {
@@ -1057,22 +927,20 @@
 				position: fixed;
 				bottom: 30px;
 				right: 30px;
-				background: rgba(60, 0, 0, 0.9);
-				border: 2px solid #8B0000;
-				color: #CC0000;
+				background: rgba(139, 69, 19, 0.9);
+				border: 2px solid #8B4513;
+				color: #FFD700;
 				padding: 15px 25px;
 				border-radius: 8px;
 				cursor: pointer;
 				font-weight: bold;
 				z-index: 1000;
 				transition: all 0.3s ease;
-				box-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
 			}
 
 			.close-btn:hover {
-				background: rgba(100, 0, 0, 0.95);
+				background: rgba(160, 82, 45, 0.9);
 				transform: translateY(-3px);
-				box-shadow: 0 0 20px rgba(204, 0, 0, 0.7);
 			}
 
 			.welcome-screen {
@@ -1086,10 +954,10 @@
 			}
 
 			.welcome-screen h2 {
-				color: #CC0000;
+				color: #FFD700;
 				font-size: 36px;
 				margin-bottom: 20px;
-				text-shadow: 2px 2px 6px rgba(0,0,0,0.9), 0 0 20px rgba(204, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.3);
+				text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
 			}
 
 			.welcome-screen p {
@@ -1103,87 +971,15 @@
 			.clan-emblem {
 				width: 120px;
 				height: 120px;
-				background: rgba(60, 0, 0, 0.5);
-				border: 3px solid #8B0000;
+				background: rgba(139, 69, 19, 0.3);
+				border: 3px solid #8B4513;
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				font-size: 48px;
-				color: #CC0000;
+				color: #FFD700;
 				margin-bottom: 30px;
-				box-shadow: 0 0 20px rgba(139, 0, 0, 0.6), inset 0 0 30px rgba(204, 0, 0, 0.2);
-			}
-
-			.vampire-mechanics {
-				background: rgba(20, 0, 0, 0.4);
-				border: 1px solid #8B0000;
-				border-radius: 8px;
-				padding: 20px;
-				margin: 20px 0;
-				box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
-			}
-
-			.vampire-mechanics h3 {
-				color: #CC0000;
-				margin-top: 0;
-				margin-bottom: 15px;
-				text-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
-			}
-
-			.mechanic-item {
-				margin: 12px 0;
-				padding: 10px;
-				background: rgba(0, 0, 0, 0.3);
-				border-left: 3px solid #8B0000;
-				border-radius: 4px;
-			}
-
-			.blood-type {
-				color: #FF4444;
-				font-weight: bold;
-				text-shadow: 0 0 6px rgba(255, 68, 68, 0.4);
-			}
-
-			.weakness {
-				color: #CC0000;
-				font-weight: bold;
-				text-shadow: 0 0 6px rgba(204, 0, 0, 0.5);
-			}
-
-			.gameplay-tips {
-				background: rgba(20, 0, 0, 0.3);
-				border: 1px solid rgba(139, 0, 0, 0.5);
-				border-radius: 8px;
-				padding: 20px;
-				margin: 20px 0;
-			}
-
-			.gameplay-tips h3 {
-				color: #CC0000;
-				margin-top: 0;
-				margin-bottom: 15px;
-				text-shadow: 0 0 8px rgba(204, 0, 0, 0.4);
-			}
-
-			.tip-item {
-				margin: 10px 0;
-				padding: 8px;
-				background: rgba(0, 0, 0, 0.2);
-				border-left: 2px solid rgba(204, 0, 0, 0.5);
-				border-radius: 3px;
-			}
-
-			.intro-section {
-				background: rgba(20, 0, 0, 0.2);
-				border: 1px solid rgba(139, 0, 0, 0.3);
-				border-radius: 6px;
-				padding: 15px;
-				margin: 15px 0;
-			}
-
-			.intro-section p {
-				color: #DDD;
 			}
 		</style>
 	</head>
@@ -1201,15 +997,6 @@
 
 		<div class="main-container">
 			<div class="sidebar">
-				<h3>Clan Information</h3>
-				<ul class="coven-list">
-					<li class="coven-item hierarchy-button" onclick="window.location.href='?src=[REF(src)];action=show_clan_info'">
-					<div class="coven-name">Clan Guide</div>
-					<div class="coven-stats">
-						<span>Mechanics</span>
-						<span>& Tips</span>
-					</div>
-				</ul>
 				<h3>Clan Hierarchy</h3>
 				<ul class="coven-list">
 					<li class="coven-item hierarchy-button" onclick="window.location.href='?src=[REF(src)];action=show_hierarchy'">
@@ -1565,17 +1352,8 @@
 		if("load_coven_preview_three_tree")
 			load_coven_research_tree(coven_three_preliminary, preview = TRUE)
 
-		if("load_coven_preview_vampiric_tree")
-			load_coven_research_tree(vampiric_coven_preliminary, preview = TRUE)
-
-		if("load_coven_preview_divine_tree")
-			load_coven_research_tree(divine_coven_preliminary, preview = TRUE)
-
 		if("show_hierarchy")
 			show_hierarchy()
-
-		if("show_clan_info")
-			show_clan_info()
 
 		if("refresh_clan_menu")
 			generate_interface()
@@ -1610,49 +1388,14 @@
 				coven_three_preliminary = typecasted
 			generate_interface()
 
-		if("select_vampiric_coven")
-			var/datum/coven/typecasted = text2path(href_list["coven-type"])
-			if(!initial(typecasted.clan_restricted) && !initial(typecasted.is_god_coven))
-				vampiric_coven_preliminary = typecasted
-			generate_interface()
-
-		if("select_divine_coven")
-			var/datum/coven/typecasted = text2path(href_list["coven-type"])
-			
-			// Check if user is a Vampire Lord - they can only select Inhumen covens
-			var/datum/antagonist/vampire/vampire = user?.mind?.has_antag_datum(/datum/antagonist/vampire)
-			var/is_vampire_lord = istype(vampire, /datum/antagonist/vampire/lord)
-			
-			if(!initial(typecasted.clan_restricted) && initial(typecasted.is_god_coven))
-				// Vampire Lords restricted to Inhumen pantheon only
-				if(is_vampire_lord && typecasted != /datum/coven/inhumen_coven)
-					to_chat(user, span_warning("As an ancient servant of Zizo, I can only channel the power of the Inhumen pantheon."))
-					return
-				divine_coven_preliminary = typecasted
-			generate_interface()
-
 		if("select_covens")
-			// Dual coven selection: add one vampiric coven and one divine coven
 			if(user_clan.covens_to_select >= 1)
-				// Add vampiric coven
-				if(vampiric_coven_preliminary && user_clan?.add_coven_to_clan(vampiric_coven_preliminary, TRUE))
+				if(user_clan?.add_coven_to_clan(coven_one_preliminary, TRUE))
 					user_clan.covens_to_select--
-				
-				// Add divine/inhumen coven
-				if(divine_coven_preliminary && user_clan?.add_coven_to_clan(divine_coven_preliminary, TRUE))
+				if(user_clan?.add_coven_to_clan(coven_two_preliminary, TRUE))
 					user_clan.covens_to_select--
-				
-				// Legacy support for old three-coven selection (in case some clans still use it)
-				if(user_clan.covens_to_select >= 1 && coven_one_preliminary)
-					if(user_clan?.add_coven_to_clan(coven_one_preliminary, TRUE))
-						user_clan.covens_to_select--
-				if(user_clan.covens_to_select >= 1 && coven_two_preliminary)
-					if(user_clan?.add_coven_to_clan(coven_two_preliminary, TRUE))
-						user_clan.covens_to_select--
-				if(user_clan.covens_to_select >= 1 && coven_three_preliminary)
-					if(user_clan?.add_coven_to_clan(coven_three_preliminary, TRUE))
-						user_clan.covens_to_select--
-				
+				if(user_clan?.add_coven_to_clan(coven_three_preliminary, TRUE))
+					user_clan.covens_to_select--
 				generate_interface()
 
 		if("edit_position", "submit_edit_position", "select_position", "create_position", "submit_create_position", "assign_member", "submit_assign_member", "remove_position")

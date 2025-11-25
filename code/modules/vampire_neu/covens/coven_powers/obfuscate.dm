@@ -3,8 +3,8 @@
 #define MASK_DURATION 5 MINUTES
 
 /datum/coven/obfuscate
-	name = "Obfuscate"
-	desc = "Makes you less noticable for living and un-living beings."
+	name = "Noc's Veil"
+	desc = "Wield the secrets of the night father, Noc, to cloud the minds of the living and un-living, making you a ghost in their perception."
 	icon_state = "obfuscate"
 	power_type = /datum/coven_power/obfuscate
 

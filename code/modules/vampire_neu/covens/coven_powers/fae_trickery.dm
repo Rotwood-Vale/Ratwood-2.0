@@ -1,6 +1,6 @@
 /datum/coven/fae_trickery
-	name = "Fae Trickery"
-	desc = "This coven typically develops in vampires born near the swamps of Daftmarsh surrounded by the Fae."
+	name = "Xylix's Gambit"
+	desc = "Master the chaotic arts of the Trickster, Xylix, to disarm, confound, and ensnare your foes with riddles and mischievous gifts from the Fae-touched swamps."
 	icon_state = "mytherceria"
 	power_type = /datum/coven_power/fae_trickery
 

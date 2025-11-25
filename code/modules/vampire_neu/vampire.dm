@@ -94,6 +94,30 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			forcing_clan = null
 
 	// The clan system now handles most of the setup, but we can still do antagonist-specific things
+	// Grant a patron-appropriate coven to vampire antagonists in addition to clan covens.
+	// Divine worshippers -> divine coven, Inhumen worshippers -> inhumen coven, Old God worshippers -> old_god coven.
+	var/mob/living/carbon/human/H = owner.current
+	if(ishuman(H) && istype(src, /datum/antagonist/vampire))
+		var/datum/patron/p = H.patron
+		if(p)
+			if(istype(p, /datum/patron/divine))
+				if(!H.get_coven(/datum/coven/divine_coven))
+					H.give_coven(/datum/coven/divine_coven)
+			else if(istype(p, /datum/patron/inhumen))
+				if(!H.get_coven(/datum/coven/inhumen_coven))
+					H.give_coven(/datum/coven/inhumen_coven)
+			else if(istype(p, /datum/patron/old_god))
+				if(!H.get_coven(/datum/coven/old_god_coven))
+					H.give_coven(/datum/coven/old_god_coven)
+			else
+				// Unknown patron type: fall back to divine coven to preserve previous behaviour
+				if(!H.get_coven(/datum/coven/divine_coven))
+					H.give_coven(/datum/coven/divine_coven)
+		else
+			// No patron selected: keep legacy behaviour and grant the divine coven
+			if(!H.get_coven(/datum/coven/divine_coven))
+				H.give_coven(/datum/coven/divine_coven)
+
 	after_gain()
 	. = ..()
 	equip()
@@ -140,9 +164,10 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	var/datum/clan/custom/new_clan = new /datum/clan/custom()
 	new_clan.name = custom_clan_name
 	new_clan.desc = custom_clan_desc
-	switch(vampdude.get_vampire_generation())
-		if(GENERATION_NEONATE, GENERATION_CRIMSONBLOOD, GENERATION_THINBLOOD)
-			new_clan.covens_to_select = COVENS_PER_WRETCH_CLAN
+	// Wretches get a smaller, custom clan allotment. Use the player's job
+	// to determine the coven allotment so generation-based checks don't
+	if(vampdude.job == "Wretch")
+		new_clan.covens_to_select = COVENS_PER_WRETCH_CLAN
 
 	// Apply the custom clan
 	vampdude.set_clan_direct(new_clan)

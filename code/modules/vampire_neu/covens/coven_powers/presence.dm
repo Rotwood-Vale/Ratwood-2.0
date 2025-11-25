@@ -1,6 +1,6 @@
 /datum/coven/presence
-	name = "Presence"
-	desc = "Makes targets in radius more vulnerable to damages."
+	name = "Astrata's Mandate"
+	desc = "Project an aura of absolute order and majesty, compelling awe, fear, and utter obedience as if you were a scion of the sun herself."
 	icon_state = "presence"
 	power_type = /datum/coven_power/presence
 

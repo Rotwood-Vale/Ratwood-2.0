@@ -1,6 +1,6 @@
 /datum/coven/quietus
-	name = "Quietus"
-	desc = "Live in the shadows striking only when needed. Poisons, mass-confusion and fire."
+	name = "The Rot's Caress"
+	desc = "Wield the entropic arts of Zizo's Rot, specializing in silence, corrosive poisons, and flame to strike from the shadows."
 	icon_state = "daimonion_z"
 	power_type = /datum/coven_power/quietus
 	clan_restricted = FALSE

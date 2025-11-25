@@ -1,6 +1,6 @@
 /datum/coven/potence
-	name = "Potence"
-	desc = "Boosts melee and unarmed damage."
+	name = "Ravox's Fist"
+	desc = "Channel the glorious and righteous fury of the warrior god, Ravox, to deliver overwhelming force in battle, breaking both bodies and the unbreakable."
 	icon_state = "potence"
 	power_type = /datum/coven_power/potence
 

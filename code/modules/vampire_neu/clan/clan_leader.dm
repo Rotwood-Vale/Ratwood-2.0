@@ -53,9 +53,14 @@
 		vamp_datum.name = "[lord_title]"
 		vamp_datum.antag_hud_name = "Vlord"
 
-		// Give the leader levitation if they don't already have it
-		if(!H.get_coven(/datum/coven_power/levitation))
-			H.give_coven(/datum/coven_power/levitation)
+		// Give the leader levitation: create a small temporary coven instance
+		// that contains only the levitation power and give it to the leader.
+		var/datum/coven/temp = new /datum/coven(1)
+		// Make it explicitly contain only the levitation power
+		temp.name = "Leader Levitation"
+		temp.all_powers = list(/datum/coven_power/levitation)
+		temp.initialize_powers_for_level(1)
+		H.give_coven(temp)
 
 /datum/clan_leader/proc/remove_leader(mob/living/carbon/human/H)
 	REMOVE_TRAIT(H, TRAIT_CLAN_LEADER, "clan")
