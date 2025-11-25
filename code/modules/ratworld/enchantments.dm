@@ -613,6 +613,10 @@ var/global/list/GLOB_rw_enchants
 	// Ensure we set the owner marker if we applied any effects even without HP changes
 	if(applied_any && (!I.rw_effects_owner || I.rw_effects_owner != L))
 		I.rw_effects_owner = L
+	if(applied_any)
+		// Force a Stat() refresh so the Stats panel picks up new totals
+		if(isliving(L))
+			L.update_stat()
 
 // Revert wearer-side effects applied by this item
 
