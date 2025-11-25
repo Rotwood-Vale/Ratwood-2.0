@@ -4,6 +4,8 @@
 	icon_state = "daimonion"
 	power_type = /datum/coven_power/old_god
 	is_god_coven = TRUE
+	experience_needed = 20
+
 
 /datum/coven_power/old_god
 	name = "Old God Coven"

@@ -4,6 +4,7 @@
 	icon_state = "daimonion_z"
 	power_type = /datum/coven_power/inhumen
 	is_god_coven = TRUE
+	experience_needed = 20
 
 /datum/coven_power/inhumen
 	name = "Inhumen Coven"
