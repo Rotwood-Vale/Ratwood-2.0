@@ -3,7 +3,6 @@
 	desc = "When PSYDON fell, four mortals seized comet shards and ascended through profane means. Zizo the God-Head - architect of PSYDON's murder and first to weaponize the Sanguine Noctis, creating the Hollowed vampires as tools of the Rot. Graggar, Baotha, and Matthios followed, each offering their own dark gifts to those vampires - Purist or Hollowed - who swear fealty. The Inhumen see vampirism not as curse, but as evolution."
 	icon_state = "daimonion_z"
 	power_type = /datum/coven_power/inhumen
-	is_god_coven = TRUE
 	experience_needed = 20
 
 /datum/coven_power/inhumen

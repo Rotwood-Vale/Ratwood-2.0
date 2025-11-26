@@ -2,8 +2,6 @@
 	name = "Divine Miracles"
 	desc = "The ancient pacts between vampire and god were forged in the chaos after PSYDON's fall. The Diecian Council of Saints - the Ten children of PSYDON - saw in the Naledi vampires a tragic reflection: cursed beings sustained by corrupted divine essence, forever mourning the light their hubris defiled. Some among the Ten offered redemption through service. Channel your patron deity's power through the Sanguine Noctis flowing in your veins."
 	icon_state = "daimonion"
-	power_type = /datum/coven_power/divine
-	is_god_coven = TRUE
 	experience_needed = 20
 
 /datum/coven_power/divine

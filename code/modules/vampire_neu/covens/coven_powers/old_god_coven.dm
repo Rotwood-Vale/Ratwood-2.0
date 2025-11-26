@@ -3,7 +3,6 @@
 	desc = "The Purist vampires carry PSYDON's corrupted Argentum in their veins - the dying god's essence transformed into Sanguine Noctis. Some Purists reject the Ten's pity and the Inhumen's promises, seeking instead to commune with the source: the slumbering All-Father Himself. Through the divine blood that sustains them, these vampires tap into PSYDON's original creative power, unburdened by pantheon politics."
 	icon_state = "daimonion"
 	power_type = /datum/coven_power/old_god
-	is_god_coven = TRUE
 	experience_needed = 20
 
 
