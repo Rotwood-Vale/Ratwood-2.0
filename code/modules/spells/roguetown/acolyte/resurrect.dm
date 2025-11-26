@@ -72,8 +72,11 @@
 		if(!target.check_revive(user))
 			revert_cast()
 			return FALSE
-		if(target.mob_biotypes & MOB_UNDEAD && harms_undead) //positive energy harms the undead
-			target.visible_message(
+	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+		// Check if they're a Crimson vampire who should be revived normally
+		if(target.mind?.has_antag_datum(/datum/antagonist/vampire)) // VL already dusts. More for thralls or thin-blooded
+			return FALSE
+					target.visible_message(
 				span_danger("[target] is unmade by divine magic!"),
 				span_userdanger("I'm unmade by divine magic!")
 			)

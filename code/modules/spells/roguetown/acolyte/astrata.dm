@@ -126,6 +126,10 @@
 	for(var/obj/structure/fluff/psycross/S in oview(5, user))
 		S.AOE_flash(user, range = 8)
 	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+		// Check if they're a Crimson vampire who should be revived normally
+		if(target.mind?.has_antag_datum(/datum/antagonist/vampire)) // VL already dusts. More for thralls or thin-blooded
+			return FALSE
+		
 		target.visible_message(
 			span_danger("[target] is unmade by holy light!"),
 			span_userdanger("I'm unmade by holy light!")

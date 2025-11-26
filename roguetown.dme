@@ -2762,6 +2762,7 @@
 #include "code\modules\vampire_neu\clan\real_clans\eoran.dm"
 #include "code\modules\vampire_neu\clan\real_clans\nosferatu.dm"
 #include "code\modules\vampire_neu\clan\real_clans\thronleer.dm"
+#include "code\modules\vampire_neu\covens\coven_powers\siren.dm"
 #include "code\modules\vampire_neu\objects\bloodpool.dm"
 #include "code\modules\vampire_neu\objects\ichor_fang_stone.dm"
 #include "code\modules\vampire_neu\objects\portal.dm"
