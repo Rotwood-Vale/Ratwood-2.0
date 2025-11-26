@@ -259,6 +259,7 @@ And it also helps for the character set panel
 	SHOULD_CALL_PARENT(TRUE)
 
 	UnregisterSignal(vampire, COMSIG_HUMAN_LIFE)
+	UnregisterSignal(vampire, COMSIG_MOB_ORGAN_REMOVED)
 
 	var/datum/action/clan_menu/clan_action = locate(/datum/action/clan_menu) in vampire.actions
 	QDEL_NULL(clan_action)
@@ -279,6 +280,23 @@ And it also helps for the character set panel
 		qdel(disguise_comp)
 
 	vampire.verbs -= /mob/living/carbon/human/proc/disguise_verb
+
+
+	// Restore normal eyes
+	var/obj/item/organ/eyes/eyes = vampire.getorganslot(ORGAN_SLOT_EYES)
+	if(istype(eyes, /obj/item/organ/eyes/night_vision/vampire))
+		var/list/eyecache = vampire.cache_eye_color()
+		eyes.Remove(vampire, TRUE)
+		QDEL_NULL(eyes)
+		eyes = new /obj/item/organ/eyes()
+		eyes.Insert(vampire)
+		vampire.set_eye_color(eyecache["eye_color"], eyecache["second_color"], TRUE)
+
+	// Reset mob biotype to non-undead
+	vampire.mob_biotypes = initial(vampire.mob_biotypes)
+
+	// Deactivate all active coven powers before removal
+	disable_covens(vampire)
 
 	clan_members -= vampire
 
@@ -361,7 +379,12 @@ And it also helps for the character set panel
 /// Applies clan-specific vampire look.
 /datum/clan/proc/apply_vampire_look(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(FALSE)
+	H.skin_tone = "c9d3de"
+	H.set_hair_color("#181a1d", null, null, null, null, FALSE)
+	H.set_facial_hair_color("#181a1d", null, null, null, null, FALSE)
+	H.set_eye_color("#FF0000", "#FF0000", TRUE)
 	var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
+	ears?.accessory_colors = "#c9d3de"
 	var/obj/item/organ/breasts/breasts = H.getorganslot(ORGAN_SLOT_BREASTS)
 	//if the character has their vampire skin color set, use that
 	if(!isnull(H.vampire_skin))
@@ -552,7 +575,7 @@ And it also helps for the character set panel
 	status_type = STATUS_EFFECT_REFRESH
 
 /atom/movable/screen/alert/status_effect/debuff/blood_disgust
-	name = "Sanguinae Curse"
+	name = "Sanguine Curse"
 	desc = "<span class='warning'>This type of blood does not go down well.</span>\n"
 	icon_state = "hunger2"
 

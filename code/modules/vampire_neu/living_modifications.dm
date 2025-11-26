@@ -250,17 +250,10 @@
 /mob/living/carbon/human/proc/get_coven(datum/coven/coven_type)
 	if(!length(covens))
 		return null
-	// `covens` is stored as an associative list keyed by coven name -> coven datum
-	// iterate keys and index into the map to get the actual coven datum to avoid
-	// accidentally treating the key (a string) as a coven datum (which caused
-	// errors like "Cannot read 'Sanguine Rebirth'.type").
-	for(var/coven_name in covens)
-		var/datum/coven/stored_coven = covens[coven_name]
-		if(!stored_coven || !stored_coven.type)
+	for(var/datum/coven/coven as anything in covens)
+		if(coven.type != coven_type)
 			continue
-		if(stored_coven.type != coven_type)
-			continue
-		return stored_coven
+		return coven
 	return null
 
 /**

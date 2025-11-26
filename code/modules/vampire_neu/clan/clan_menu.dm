@@ -1300,33 +1300,17 @@
 	if(isnull(coven_name))
 		return
 
-	// Allow passing either the user_covens key (coven name) or a coven typepath/string.
+	if(!(coven_name in user_covens) && !preview)
+		return
+
 	var/datum/coven/selected_coven
 
 	if(preview)
-		// preview may pass a typepath (datum/coven type) — instantiate for preview
 		selected_coven = new coven_name()
 		current_coven = selected_coven.name
 	else
-		// Normal flow: try direct lookup by key first
-		if(coven_name in user_covens)
-			selected_coven = user_covens[coven_name]
-			current_coven = coven_name
-		else
-			// Fallback: maybe a typepath or different key was supplied. Try matching by stored coven.type
-			var/matched = FALSE
-			var/typepath = text2path(coven_name)
-			for(var/key in user_covens)
-				var/datum/coven/uc = user_covens[key]
-				if(!uc) continue
-				if(ispath(typepath) && uc.type == typepath)
-					selected_coven = uc
-					current_coven = key
-					matched = TRUE
-					break
-			if(!matched)
-				// nothing we can do
-				return
+		selected_coven = user_covens[coven_name]
+		current_coven = coven_name
 
 	if(!selected_coven.research_interface)
 		selected_coven.initialize_research_tree()
