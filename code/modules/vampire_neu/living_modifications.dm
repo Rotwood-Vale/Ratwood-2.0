@@ -141,8 +141,18 @@
  */
 /mob/living/carbon/human/proc/give_coven(datum/coven/coven)
 	if(ispath(coven))
-		var/datum/coven/new_coven = new coven(1)
-		coven = new_coven
+		// If caller accidentally passed a coven power typepath (e.g. /datum/coven_power/levitation)
+		// create a tiny ephemeral coven containing that single power so the coven
+		// system behaves correctly instead of trying to call coven-type constructors
+		if(coven in subtypesof(/datum/coven_power))
+			var/datum/coven/new_coven = new /datum/coven(1)
+			new_coven.name = coven.name // give it a readable name from the power
+			new_coven.all_powers = list(coven)
+			new_coven.initialize_powers_for_level(1)
+			coven = new_coven
+		else
+			var/datum/coven/new_coven = new coven(1)
+			coven = new_coven
 
 	// Store the coven on the mob
 	if(!length(covens))
@@ -241,6 +251,8 @@
 	if(!length(covens))
 		return null
 	for(var/datum/coven/coven as anything in covens)
+		if(!coven || !coven.type)
+			continue
 		if(coven.type != coven_type)
 			continue
 		return coven
@@ -288,7 +300,6 @@
 	// Coffin regeneration
 	var/total_damage = getBruteLoss() + getFireLoss()
 	var/obj/structure/closet/crate/coffin/coffin = loc
-	var/was_damaged = total_damage > 0 // Check if we WERE damaged at start of proc
 
 	if(istype(coffin) && total_damage && (src in coffin.contents))
 		heal_overall_damage(5, 5)

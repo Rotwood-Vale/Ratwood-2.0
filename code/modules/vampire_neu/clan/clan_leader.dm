@@ -32,6 +32,16 @@
 	ascended = FALSE
 
 /datum/clan_leader/proc/make_new_leader(mob/living/carbon/human/H)
+	// Grant a levitation discipline to leaders. Create a small coven instance
+	// containing only the levitation power so we use the coven system properly.
+	var/datum/coven/newc = new /datum/coven(1)
+	newc.name = "Leader Levitation"
+	// Explicitly set available powers to only the levitation power
+	newc.all_powers = list(/datum/coven_power/levitation)
+	// Initialize known_powers for level 1
+	newc.initialize_powers_for_level(1)
+	H.give_coven(newc)
+
 	ADD_TRAIT(H, TRAIT_CLAN_LEADER, "clan")
 
 	// Add lord spells
@@ -64,14 +74,6 @@
 		if(!H.get_coven(/datum/coven/old_god_coven))
 			H.give_coven(/datum/coven/old_god_coven)
 
-		// Give the leader levitation: create a small temporary coven instance
-		// that contains only the levitation power and give it to the leader.
-		var/datum/coven/temp = new /datum/coven(1)
-		// Make it explicitly contain only the levitation power
-		temp.name = "Leader Levitation"
-		temp.all_powers = list(/datum/coven_power/levitation)
-		temp.initialize_powers_for_level(1)
-		H.give_coven(temp)
 
 /datum/clan_leader/proc/remove_leader(mob/living/carbon/human/H)
 	REMOVE_TRAIT(H, TRAIT_CLAN_LEADER, "clan")
