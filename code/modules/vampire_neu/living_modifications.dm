@@ -247,15 +247,20 @@
 /mob/living/carbon/human/proc/pre_coven_removal(datum/coven/coven)
 	return
 
-/mob/living/carbon/human/proc/get_coven(datum/coven/coven_type)
+ /mob/living/carbon/human/proc/get_coven(datum/coven/coven_type)
 	if(!length(covens))
 		return null
-	for(var/datum/coven/coven as anything in covens)
-		if(!coven || !coven.type)
+	// `covens` is stored as an associative list keyed by coven name -> coven datum
+	// iterate keys and index into the map to get the actual coven datum to avoid
+	// accidentally treating the key (a string) as a coven datum (which caused
+	// errors like "Cannot read 'Sanguine Rebirth'.type").
+	for(var/coven_name in covens)
+		var/datum/coven/stored_coven = covens[coven_name]
+		if(!stored_coven || !stored_coven.type)
 			continue
-		if(coven.type != coven_type)
+		if(stored_coven.type != coven_type)
 			continue
-		return coven
+		return stored_coven
 	return null
 
 /**
