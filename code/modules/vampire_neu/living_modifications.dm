@@ -247,7 +247,7 @@
 /mob/living/carbon/human/proc/pre_coven_removal(datum/coven/coven)
 	return
 
- /mob/living/carbon/human/proc/get_coven(datum/coven/coven_type)
+/mob/living/carbon/human/proc/get_coven(datum/coven/coven_type)
 	if(!length(covens))
 		return null
 	// `covens` is stored as an associative list keyed by coven name -> coven datum
