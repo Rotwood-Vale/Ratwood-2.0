@@ -912,7 +912,7 @@
 
 /obj/item/rogueweapon/spear/bronze
 	name = "bronze spear"
-	desc = "An antiquital staff, adorned with a bronze spearhead. Ancient in both design and purpose, its lighter weight once complimented the towering shields of precivilizational legionnaires. While rarely seen beyond the Deadlands, nowadaes, its lightweight balance makes it perfect for one-handed thrusts and throws. In Psydonia bronze was commonly cast for ritual implements and bound with psydonic etchings; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed these spearheads drive sanctified force into the un-dead."
+	desc = "An antiquital staff, adorned with a bronze spearhead. Ancient in both design and purpose, its lighter weight once complimented the towering shields of precivilizational legionnaires. While rarely seen beyond the Deadlands, nowadaes, its lightweight balance makes it perfect for one-handed thrusts and throws. In Psydonia bronze was commonly cast for ritual implements and bound with psydonic etchings."
 	force = 25
 	force_wielded = 28
 	throwforce = 30
@@ -923,16 +923,6 @@
 	max_blade_int = 225
 	max_integrity = 155
 
-/obj/item/rogueweapon/spear/bronze/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_NONE,\
-		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
-		added_force = 0,\
-		added_blade_int = 0,\
-		added_int = 25,\
-		added_def = 2,\
-	)
 
 /obj/item/rogueweapon/greatsword
 	force = 12

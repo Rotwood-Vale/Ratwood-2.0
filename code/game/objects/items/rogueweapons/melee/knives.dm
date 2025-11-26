@@ -175,7 +175,7 @@
 
 /obj/item/rogueweapon/huntingknife/bronze
 	name = "bronze dagger"
-	desc = "A wide blade of bronze, fitted to a wooden handle. Ancient laborers and priests coveted this tool above all else: both as a means to handle the dae's labors, and to indulge in the rituals of sacrifice. In Psydonia bronze was often cast in temple furnaces and inscribed with psydonic sigils; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed its subtle resonance disrupts the undead."
+	desc = "A wide blade of bronze, fitted to a wooden handle. Ancient laborers and priests coveted this tool above all else: both as a means to handle the dae's labors, and to indulge in the rituals of sacrifice. In Psydonia bronze was often cast in temple furnaces and inscribed with psydonic sigils."
 	icon_state = "bronzedagger"
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/bronze, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/thrust/bronze)
 	force = 18
@@ -184,16 +184,6 @@
 	max_integrity = 175
 	smeltresult = /obj/item/ingot/bronze
 
-/obj/item/rogueweapon/huntingknife/bronze/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_NONE,\
-		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
-		added_force = 0,\
-		added_blade_int = 0,\
-		added_int = 25,\
-		added_def = 2,\
-	)
 
 /datum/intent/dagger/thrust/bronze
 	name = "piercing thrust"

@@ -191,21 +191,10 @@
 
 /obj/item/rogueweapon/whip/bronze
 	name = "bronze whip"
-	desc = "A heavy whip, corded from thick leather and adorned with a razor-sharp bronzehead. In ancient tymes, this shepherd's weapon once repelled the gnashing teeth of bloodthirsty nitebeasts: now, it seperates limb-from-trunk with thunderous claps. In Psydonia bronze was formed in temple fires and blessed with psydonic glyphs; Tennite Clergy and the Otavan Absolver can consecrate such bronze, and when blessed its tuned resonance can rend the un-dead as readily as steel. </br>Holding this whip imbues you with determination.. and a rather odd hankering for turkey dinners."
+	desc = "A heavy whip, corded from thick leather and adorned with a razor-sharp bronzehead. In ancient tymes, this shepherd's weapon once repelled the gnashing teeth of bloodthirsty nitebeasts: now, it seperates limb-from-trunk with thunderous claps. In Psydonia bronze was formed in temple fires and blessed with psydonic glyphs. </br>Holding this whip imbues you with determination.. and a rather odd hankering for turkey dinners."
 	icon_state = "bronzewhip"
 	force = 21 //Same damage as the leathers.
 	minstr = 11
 	wdefense = 0
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish) //Able to dismember at range. 'Holy' is a catchall term, in this case.
 	smeltresult = /obj/item/ingot/bronze
-
-/obj/item/rogueweapon/whip/bronze/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_NONE,\
-		silver_type = SILVER_PSYDONIAN | SILVER_TENNITE,\
-		added_force = 0,\
-		added_blade_int = 0,\
-		added_int = 25,\
-		added_def = 2,\
-	)
