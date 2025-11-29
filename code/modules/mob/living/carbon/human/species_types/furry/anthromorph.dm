@@ -62,7 +62,6 @@
 	custom_selection = list(
 		"+1 CON +1 PER (Physical Origin)" = STATKEY_CON, STATKEY_PER,
 		"+1 WIL +1 FOR (Spiritual Origin)" = STATKEY_WIL,STATKEY_LCK
-		"+1 PER" = STATKEY_PER,
 		"Aquatic Origin (Waterbreathing)" = TRAIT_WATERBREATHING
 		"Mamallian Origin (Keen Ears)" = TRAIT_KEENEARS
 		"Avian Origin (Wings)" = TRAIT_WING_BOUND
