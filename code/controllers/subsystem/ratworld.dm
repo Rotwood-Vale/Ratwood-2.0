@@ -1,4 +1,5 @@
-
+// licensing is the same as any other license used by ratwood.
+// if you're not sure which i'm talking about, please see ratwood's main page under the LICENSE category.
 
 /datum/controller/subsystem/ratworld
 	name         = "Ratworld"
