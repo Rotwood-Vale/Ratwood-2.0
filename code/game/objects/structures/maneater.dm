@@ -107,7 +107,7 @@
 		victim.flash_fullscreen("redflash3")
 		playsound(loc, list('sound/vo/mobs/plant/attack (1).ogg','sound/vo/mobs/plant/attack (2).ogg','sound/vo/mobs/plant/attack (3).ogg','sound/vo/mobs/plant/attack (4).ogg'), 100, FALSE, -1)
 		if(prob(chew_factor * 15))
-			victim.adjustBruteLoss(50)
+			victim.adjustBruteLoss(20)
 			limb.add_wound(/datum/wound/fracture)
 			seednutrition += 25
 			if(!victim.mind)
