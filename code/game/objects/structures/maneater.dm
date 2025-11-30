@@ -107,14 +107,14 @@
 		victim.flash_fullscreen("redflash3")
 		playsound(loc, list('sound/vo/mobs/plant/attack (1).ogg','sound/vo/mobs/plant/attack (2).ogg','sound/vo/mobs/plant/attack (3).ogg','sound/vo/mobs/plant/attack (4).ogg'), 100, FALSE, -1)
 		if(prob(chew_factor * 15))
-			if(limb.dismember(damage = 20))
-				limb.forceMove(src)
+			victim.adjustBruteLoss(50)
+			limb.add_wound(/datum/wound/fracture)
+			seednutrition += 25
+			if(!victim.mind)
+				victim.gib()
 				seednutrition += 25
-				if(!victim.mind)
-					victim.gib()
-					seednutrition += 25
-					return
-				maneater_spit_out(victim)
+				return
+			maneater_spit_out(victim)
 		else
 			victim.run_armor_check(zone, BCLASS_CUT, damage = 20)
 
