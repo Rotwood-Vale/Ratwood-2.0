@@ -33,7 +33,7 @@
 		TRAIT_ASSASSIN,
 		TRAIT_DODGEEXPERT,
 		TRAIT_STEELHEARTED,
-		TRAIT_HERESIARCH,	//Just so they can use the Zurch.
+		TRAIT_ZURCH,	//Just so they can use the Zurch.
 		TRAIT_ANTISCRYING,
 	)
 	cmode_music = 'sound/music/cmode/antag/combat_assassin.ogg'

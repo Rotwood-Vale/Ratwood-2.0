@@ -24924,8 +24924,9 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/outdoors/town/rockhill)
 "hAM" = (
-/turf/closed/wall/mineral/rogue/stone,
-/area/rogue/outdoors/bograt/north)
+/obj/structure/mineral_door/wood/towner/anyone,
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/indoors)
 "hAP" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/dirt,
@@ -44290,7 +44291,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/bograt/above)
 "nFK" = (
-/obj/structure/mineral_door/wood/towner/generic/two_keys,
+/obj/structure/mineral_door/wood/towner/anyone,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors)
 "nFR" = (
@@ -44505,7 +44506,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "nJG" = (
-/obj/structure/mineral_door/wood/towner/generic/two_keys,
+/obj/structure/mineral_door/wood/towner/anyone,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "nJH" = (
@@ -51192,8 +51193,13 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/bath)
 "pLW" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle,
-/area/rogue/outdoors/bograt/north)
+/obj/structure/fluff/railing/border{
+	dir = 6
+	},
+/obj/structure/table/wood/poor,
+/obj/structure/mineral_door/wood/towner/anyone,
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/indoors)
 "pMf" = (
 /obj/structure/bars/grille{
 	dir = 8
@@ -52388,11 +52394,6 @@
 	},
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/manor/rockhill)
-"qet" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
-	dir = 4
-	},
-/area/rogue/outdoors/bograt/north)
 "qew" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -68437,11 +68438,6 @@
 "vnz" = (
 /turf/closed/wall/mineral/rogue/roofwall/outercorner,
 /area/rogue/indoors/town/manor/rockhill)
-"vnC" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
-	dir = 8
-	},
-/area/rogue/outdoors/bograt/north)
 "vnU" = (
 /obj/structure/stairs{
 	dir = 1
@@ -254974,7 +254970,7 @@ nqU
 aGh
 nqR
 pAV
-qet
+tmu
 fPd
 cuM
 sYx
@@ -255406,7 +255402,7 @@ xbD
 ryI
 miW
 faB
-pLW
+hmC
 sYx
 sYx
 sYx
@@ -255838,7 +255834,7 @@ xbD
 xou
 xou
 xou
-pLW
+hmC
 fcx
 sYx
 cuM
@@ -256267,10 +256263,10 @@ fPd
 ove
 jqY
 nmb
-teA
+pLW
 uxU
 tuq
-pLW
+hmC
 sYx
 fPd
 sYx
@@ -256702,7 +256698,7 @@ yfm
 nqU
 cpS
 miG
-hAM
+pAV
 sYx
 sYx
 fcx
@@ -257134,7 +257130,7 @@ rDD
 rDD
 rDD
 rDD
-vnC
+bhg
 fPd
 fPd
 fcx
@@ -257984,7 +257980,7 @@ sYx
 fPd
 mCM
 aGh
-jgv
+hAM
 aGh
 pAV
 pAV
@@ -264055,7 +264051,7 @@ whb
 whb
 whb
 whb
-whb
+dcq
 whb
 whb
 whb

@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
 
 	//Let's not curse heretical antags.
-	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
+	if(HAS_TRAIT(H, TRAIT_ZURCH))
 		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
 		return FALSE
 
@@ -555,7 +555,7 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 		revert_cast()
 		return FALSE
 
-	if(!HAS_TRAIT(target, TRAIT_HERESIARCH))
+	if(!HAS_TRAIT(target, TRAIT_ZURCH))
 		to_chat(user, span_warning("[target] wasn't marked by the enemy as a heretic!"))
 		revert_cast()
 		return FALSE
@@ -570,7 +570,7 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 		GLOB.excommunicated_players -= target.real_name
 
 	// Remove heretic traits
-	REMOVE_TRAIT(target, TRAIT_HERESIARCH, TRAIT_GENERIC)
+	REMOVE_TRAIT(target, TRAIT_ZURCH, TRAIT_GENERIC)
 	REMOVE_TRAIT(target, TRAIT_EXCOMMUNICATED, TRAIT_GENERIC)
 
 	// Remove divine punishments

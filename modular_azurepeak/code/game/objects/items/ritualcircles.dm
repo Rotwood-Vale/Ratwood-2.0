@@ -495,7 +495,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		visible_message(span_warning("[src] shatters on impact!"))
 		playsound(src, 'sound/magic/lightning.ogg', 50, TRUE)
 		var/mob/thrower = throwingdatum?.thrower
-		if(thrower && HAS_TRAIT(thrower, TRAIT_HERESIARCH) && upgraded_rune_type)
+		if(thrower && HAS_TRAIT(thrower, TRAIT_ZURCH) && upgraded_rune_type)
 			rune_type = upgraded_rune_type
 		new rune_type(T)
 		qdel(src)
@@ -516,7 +516,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 			to_chat(user, span_warning("My connection to Abyssor's dream is too weak to invoke his power with this crystal."))
 			return ..()
 		//Heretics get FAR stronger spires!
-		if(HAS_TRAIT(user, TRAIT_HERESIARCH) && upgraded_rune_type)
+		if(HAS_TRAIT(user, TRAIT_ZURCH) && upgraded_rune_type)
 			rune_type = upgraded_rune_type
 	if(do_after(user, 2 SECONDS) && !marked_location)
 		marked_location = get_turf(user)

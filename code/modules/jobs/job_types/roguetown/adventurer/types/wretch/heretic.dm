@@ -371,7 +371,7 @@
 	overlay_state = "convert_heretic"
 
 /obj/effect/proc_holder/spell/invoked/convert_heretic/cast(list/targets, mob/living/carbon/human/user)
-	if(!HAS_TRAIT(user, TRAIT_HERESIARCH))
+	if(!HAS_TRAIT(user, TRAIT_ZURCH))
 		to_chat(user, span_warning("You lack the knowledge for this ritual."))
 		return FALSE
 
@@ -382,7 +382,7 @@
 		return FALSE
 
 	//This SHOULD stop most heretics from being convertible and self-curing should they somehow get cursed in the future.
-	if(HAS_TRAIT(target, TRAIT_HERESIARCH))
+	if(HAS_TRAIT(target, TRAIT_ZURCH))
 		to_chat(user, span_warning("[target] is already serving the greater good."))
 		revert_cast()
 		return FALSE
@@ -450,7 +450,7 @@
 	new_devotion.grant_miracles(target, saved_level, saved_devotion_gain, saved_max_progression)
 
 	// Final conversion
-	ADD_TRAIT(target, TRAIT_HERESIARCH, TRAIT_GENERIC)
+	ADD_TRAIT(target, TRAIT_ZURCH, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_EXCOMMUNICATED, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_ZURCH, TRAIT_GENERIC)
 	to_chat(user, span_danger("You've converted [target.name] to [user.patron.name]!"))

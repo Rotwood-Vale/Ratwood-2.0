@@ -3006,7 +3006,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town)
 "aLk" = (
-/obj/structure/mineral_door/wood/towner/witch,
+/obj/structure/mineral_door/wood/towner,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/woods)
 "aLm" = (
@@ -17271,7 +17271,7 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/beach/forest/south)
 "ejU" = (
-/obj/structure/mineral_door/wood/towner/seamstress,
+/obj/structure/mineral_door/wood/towner,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town)
 "ekk" = (
@@ -24404,8 +24404,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/beach/north)
 "fWD" = (
-/obj/structure/mineral_door/wood/towner/witch,
-/obj/structure/trap/water,
+/obj/structure/mineral_door/wood/towner/anyone,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/shelter/woods)
 "fWG" = (
@@ -29212,10 +29211,6 @@
 	},
 /turf/open/floor/rogue/carpet,
 /area/rogue/outdoors/mountains/decap/gunduzirak/bossarena)
-"hce" = (
-/obj/structure/mineral_door/wood/towner/blacksmith,
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town)
 "hcf" = (
 /turf/closed/wall/mineral/rogue/stone/red_moss,
 /area/rogue/under/cave/orcdungeon)
@@ -48704,10 +48699,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/shelter)
-"lGu" = (
-/obj/structure/mineral_door/wood/towner/cheesemaker,
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town)
 "lGv" = (
 /obj/effect/spawner/roguemap/stump,
 /turf/open/floor/rogue/grassyel,
@@ -57406,7 +57397,7 @@
 /turf/open/floor/rogue/rooftop/green/north,
 /area/rogue/outdoors/town/roofs)
 "nMh" = (
-/obj/structure/mineral_door/wood/towner/miner,
+/obj/structure/mineral_door/wood/towner,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "nMi" = (
@@ -66731,7 +66722,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/shelter/woods)
 "pXm" = (
-/obj/structure/mineral_door/wood/towner/generic/two_keys,
+/obj/structure/mineral_door/wood/towner/anyone,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors)
 "pXv" = (
@@ -71359,7 +71350,7 @@
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/bath)
 "rds" = (
-/obj/structure/mineral_door/wood/towner/woodworker,
+/obj/structure/mineral_door/wood/towner,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town)
 "rdv" = (
@@ -79706,7 +79697,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/bog/south)
 "tfv" = (
-/obj/structure/mineral_door/wood/towner/witch,
+/obj/structure/mineral_door/wood/towner,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town)
 "tfw" = (
@@ -91774,7 +91765,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/cave/licharena)
 "vWW" = (
-/obj/structure/mineral_door/wood/towner/hunter,
+/obj/structure/mineral_door/wood/towner,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
@@ -100410,9 +100401,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet/bogcaves/central)
 "yaf" = (
-/obj/structure/mineral_door/wood/towner/fisher{
-	locked = 0
-	},
+/obj/structure/mineral_door/wood/towner,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors)
 "yai" = (
@@ -277147,7 +277136,7 @@ fpx
 exD
 exD
 exD
-lGu
+nMh
 dra
 dra
 dra
@@ -283025,7 +283014,7 @@ exD
 exD
 exD
 exD
-hce
+nMh
 dra
 hUA
 cDX
