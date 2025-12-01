@@ -1220,6 +1220,14 @@
 	resident_advclass = list(/datum/advclass/witch)
 	lockid = "towner_witch"
 
+/obj/structure/mineral_door/wood/towner/anyone
+	locked = TRUE
+	keylock = TRUE
+	grant_resident_key = TRUE
+	resident_key_type = /obj/item/roguekey/townie
+	resident_role = null // anyone can claim it
+	lockid = null //Will be randomized
+
 /obj/structure/mineral_door/wood/bath
 	locked = TRUE
 	keylock = TRUE
