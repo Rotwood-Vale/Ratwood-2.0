@@ -483,17 +483,30 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(isliving(src) && src.m_intent != MOVE_INTENT_SNEAK && src.stat != DEAD)
 		var/message = "[src] looks at"
 		var/target = "\the [A]"
+		var/zone_text = parse_zone(zone_selected)
+		var/mob/living/T = A
 		if(!isturf(A))
 			if(A == src)
 				message = "[src] looks over"
 				target = "themselves"
+			else if (isliving(A) && iscarbon(T) && T != src && zone_selected == BODY_ZONE_PRECISE_GROIN && abs(src.loc.x - T.loc.x) <= 1 && abs(src.loc.y - T.loc.y) <= 1)
+				var/atom/front_turf = get_step(T, T.dir)
+				var/atom/behind_turf = get_step(T, turn(T.dir, 180))
+				var/atom/side_left = get_step(T, turn(T.dir, 90))
+				var/atom/side_right = get_step(T, turn(T.dir, 270))
+				if(behind_turf && src.loc && behind_turf.z == src.loc.z && abs(behind_turf.x - src.loc.x) <= 1 && abs(behind_turf.y - src.loc.y) == 0)
+					zone_text = "ass"
+				else if((side_left && src.loc && side_left.z == src.loc.z && abs(side_left.x - src.loc.x) == 0 && abs(side_left.y - src.loc.y) == 0) || (side_right && src.loc && side_right.z == src.loc.z && abs(side_right.x - src.loc.x) == 0 && abs(side_right.y - src.loc.y) == 0))
+					zone_text = "hips"
+				else if(front_turf && src.loc && front_turf.z == src.loc.z && abs(front_turf.x - src.loc.x) <= 1 && abs(front_turf.y - src.loc.y) == 0)
+					zone_text = "crotch"
+				target = "[T]'s [zone_text]"
 			else if(A.loc == src)
 				target = "[src.p_their()] [A.name]"
 			else if(A.loc.loc == src)
 				message = "[src] looks into"
 				target = "[src.p_their()] [A.loc.name]"
 			else if(isliving(A) && src.cmode)
-				var/mob/living/T = A
 				if(!iscarbon(T))
 					target = "\the [T.name]'s [T.simple_limb_hit(zone_selected)]"
 				if(iscarbon(T) && T != src)

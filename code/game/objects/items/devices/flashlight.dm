@@ -422,7 +422,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	light_color = "#ffb272ff"
 	on = FALSE
-	slot_flags = null
+	slot_flags = ITEM_SLOT_HIP
 	force = 1
 	on_damage = 3
 	wdefense = 1 //The pumpkin has a chance of getting in the way of strikes.

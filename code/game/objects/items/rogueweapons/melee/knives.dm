@@ -664,6 +664,7 @@
 	if(extended)
 		force = 20
 		wdefense = 6
+		wdefense_dynamic = 6
 		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = 23
 		icon_state = "navaja_o"
@@ -681,6 +682,7 @@
 		attack_verb = list("stubbed", "poked")
 		sharpness = IS_BLUNT
 		wdefense = 2
+		wdefense_dynamic = 2
 		equip_delay_self = 0 SECONDS
 		unequip_delay_self = 0 SECONDS
 		inv_storage_delay = 0 SECONDS

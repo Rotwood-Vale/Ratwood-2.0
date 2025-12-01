@@ -14,7 +14,8 @@
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(
 		TRAIT_MAGEARMOR,
-		TRAIT_ALCHEMY_EXPERT
+		TRAIT_ALCHEMY_EXPERT,
+		TRAIT_ARCYNE_T3,
 	)
 	subclass_stats = list(//This does not follow the typical 8 stat setup.
 		STATKEY_INT = 3,
