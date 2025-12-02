@@ -61,14 +61,14 @@
 	var/newcolor = rgb(136, 191, 255)
 
 /datum/status_effect/buff/frost/one
-	id = "frost1"
+	id = "chilly"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/frost/one
 	duration = 20 SECONDS
 	effectedstats = list("speed" = -1)
 	shiver_prob = 10
 
 /datum/status_effect/buff/frost/two
-	id = "frost2"
+	id = "shivering"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/frost/two
 	duration = 10 SECONDS
 	effectedstats = list("speed" = -2)
@@ -80,7 +80,7 @@
 	sound = 'sound/combat/fracture/fracturedry (2).ogg'
 
 /datum/status_effect/buff/frost/three
-	id = "frost3"
+	id = "frostbitten"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/frost/three
 	duration = 5 SECONDS
 	effectedstats = list("speed" = -3)
@@ -92,7 +92,7 @@
 	sound = 'sound/combat/fracture/fracturedry (3).ogg'
 
 /datum/status_effect/buff/frost/four
-	id = "frost4"
+	id = "frozen"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/frost/four
 	duration = 2 SECONDS
 	effectedstats = list("speed" = -4)
