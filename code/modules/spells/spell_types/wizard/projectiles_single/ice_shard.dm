@@ -69,14 +69,6 @@
 			return BULLET_ACT_BLOCK
 		if(isliving(target))
 			var/mob/living/L = target
-			if(L.has_status_effect(/datum/status_effect/buff/frostbite))
-				return
-			else
-				if(L.has_status_effect(/datum/status_effect/buff/frost))
-					playsound(get_turf(target), 'sound/combat/fracture/fracturedry (1).ogg', 80, TRUE, soundping = TRUE)
-					L.remove_status_effect(/datum/status_effect/buff/frost)
-					L.apply_status_effect(/datum/status_effect/buff/frostbite)
-				else
-					L.apply_status_effect(/datum/status_effect/buff/frost)
+			add_frost_stacks(L)
 			new /obj/effect/temp_visual/snap_freeze(get_turf(L))
 	qdel(src)
