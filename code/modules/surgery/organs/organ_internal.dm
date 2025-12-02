@@ -54,7 +54,8 @@
 	grid_height = 32
 
 	sellprice = 10
-
+	grind_results = list(/datum/reagent/organpoison = 6)
+	
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return

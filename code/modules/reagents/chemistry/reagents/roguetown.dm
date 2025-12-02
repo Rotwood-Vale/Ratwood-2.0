@@ -22,7 +22,7 @@
 	return istype(H.wear_mask, /obj/item/clothing/mask/rogue/physician)
 
 /datum/reagent/rogueacid
-	name = "rogueacid"
+	name = "acid"
 	description = "."
 	reagent_state = LIQUID
 	color = "#5eff00"

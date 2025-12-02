@@ -220,3 +220,51 @@
 	nutriment_factor = 20
 	color = "#A6987B" // rgb: 48, 32, 0
 	taste_description = "rendered fat"
+
+/datum/reagent/consumable/mayonnaise
+	name = "Mayonnaise"
+	description = "An white and oily mixture of mixed egg yolks."
+	color = "#DFDFDF"
+	taste_description = "mayonnaise"
+
+/datum/reagent/consumable/tearjuice
+	name = "Tear Juice"
+	description = "A blinding substance extracted from certain onions."
+	color = "#c0c9a0"
+	taste_description = "bitterness"
+
+/datum/reagent/consumable/lemonade
+	name = "Lemonade"
+	description = "Sweet, tangy lemonade. Good for the soul."
+	color = "#FFE978"
+	taste_description = "sweet summertime"
+
+/datum/reagent/consumable/tearjuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M))
+		return
+	var/unprotected = FALSE
+	switch(method)
+		if(INGEST)
+			unprotected = TRUE
+		if(INJECT)
+			unprotected = FALSE
+		else	//Touch or vapor
+			if(!M.is_mouth_covered() && !M.is_eyes_covered())
+				unprotected = TRUE
+	if(unprotected)
+		if(!M.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
+			to_chat(M, span_notice("My eye sockets feel wet."))
+		else
+			if(!M.eye_blurry)
+				to_chat(M, span_warning("Tears well up in my eyes!"))
+			M.blind_eyes(2)
+			M.blur_eyes(5)
+	..()
+
+/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M)
+	..()
+	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
+		M.blur_eyes(4)
+		if(prob(10))
+			to_chat(M, span_warning("My eyes sting!"))
+			M.blind_eyes(2)
