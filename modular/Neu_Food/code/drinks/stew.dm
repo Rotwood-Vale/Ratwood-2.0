@@ -37,7 +37,7 @@
 	reagent_state = LIQUID
 	color = "#5E3534"
 	nutriment_factor = 0
-	metabolization_rate = 0.5
+	metabolization_rate = 1.5
 	taste_description = "foul feces"
 	taste_mult = 8
 	hydration = 0
