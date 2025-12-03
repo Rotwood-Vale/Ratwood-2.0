@@ -2,9 +2,9 @@
 // Template-based reagents that copy properties from herbs
 
 // Constants for KCD alchemy
-#define KCD_MIN_BASE_REAGENT_AMOUNT 90 // Minimum amount of base reagent needed for primary processing
+#define KCD_MIN_BASE_REAGENT_AMOUNT 30 // Minimum amount of base reagent needed for processing
 #define KCD_MIN_SECONDARY_REAGENT_AMOUNT 30 // Minimum amount needed for secondary processing
-#define KCD_PROCESSING_EFFICIENCY 0.9 // Volume multiplier after processing (10% loss)
+#define KCD_REAGENT_OUTPUT_RATIO 0.33 // Output ratio: 30u input -> 10u output (33%)
 #define ALCHEMY_MIN_VOLUME_THRESHOLD 0.99 // Minimum volume for reagent effects to trigger
 
 // Base template reagent for all KCD-style alchemical products

@@ -13,56 +13,37 @@
 	var/major_pot = null
 	var/med_pot = null
 	var/minor_pot = null
-	//Dont worry, these 3 are just to cache the 'smell' of their pot on initialization to not have to re-look every examine.
-	//No need to set them.
-	var/major_smell
-	var/med_smell
-	var/minor_smell
-	///Same as the smells, just caching what the potion name is
-	var/major_name
-	var/med_name
-	var/minor_name
 
 /obj/item/alch/Initialize()
 	. = ..()
-	if(!isnull(major_pot))
-		var/datum/alch_cauldron_recipe/rec = locate(major_pot) in GLOB.alch_cauldron_recipes
-		major_smell = rec.smells_like
-		major_name = rec.name
-	if(!isnull(med_pot))
-		var/datum/alch_cauldron_recipe/rec = locate(med_pot) in GLOB.alch_cauldron_recipes
-		med_smell = rec.smells_like
-		med_name = rec.name
-	if(!isnull(minor_pot))
-		var/datum/alch_cauldron_recipe/rec = locate(minor_pot) in GLOB.alch_cauldron_recipes
-		minor_smell = rec.smells_like
-		minor_name = rec.name
+	// Create alchemy component with the potion data
+	alchemy_component = new /datum/alchemy_component(name, null, null, null, major_pot, med_pot, minor_pot)
 
 /obj/item/alch/examine(mob/user)
 	. = ..()
-	if(user.mind)
+	if(user.mind && alchemy_component)
 		var/alch_skill = user.get_skill_level(/datum/skill/craft/alchemy)
 		var/perint = 0
 		if(isliving(user))
 			var/mob/living/lmob = user
 			perint = FLOOR((lmob.STAPER + lmob.STAINT)/2,1)
 		if(HAS_TRAIT(user,TRAIT_LEGENDARY_ALCHEMIST))
-			if(!isnull(major_name))
-				. += span_notice(" Strongly attuned to making [major_name].")
-			if(!isnull(med_name))
-				. += span_notice(" Moderately attuned to making [med_name].")
-			if(!isnull(minor_name))
-				. += span_notice(" Minorly attuned to making [minor_name].")
+			if(!isnull(alchemy_component.major_name))
+				. += span_notice(" Strongly attuned to making [alchemy_component.major_name].")
+			if(!isnull(alchemy_component.med_name))
+				. += span_notice(" Moderately attuned to making [alchemy_component.med_name].")
+			if(!isnull(alchemy_component.minor_name))
+				. += span_notice(" Minorly attuned to making [alchemy_component.minor_name].")
 		else
-			if(!isnull(major_smell))
+			if(!isnull(alchemy_component.major_smell))
 				if(alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6)
-					. += span_notice(" Smells strongly of [major_smell].")
-			if(!isnull(med_smell))
+					. += span_notice(" Smells strongly of [alchemy_component.major_smell].")
+			if(!isnull(alchemy_component.med_smell))
 				if(alch_skill >= SKILL_LEVEL_APPRENTICE || perint >= 10)
-					. += span_notice(" Smells slightly of [med_smell].")
-			if(!isnull(minor_smell))
+					. += span_notice(" Smells slightly of [alchemy_component.med_smell].")
+			if(!isnull(alchemy_component.minor_smell))
 				if(alch_skill >= SKILL_LEVEL_EXPERT || perint >= 16)
-					. += span_notice(" Smells weakly of [minor_smell].")
+					. += span_notice(" Smells weakly of [alchemy_component.minor_smell].")
 /obj/item/alch/viscera
 	name = "viscera"
 	icon_state = "viscera"
