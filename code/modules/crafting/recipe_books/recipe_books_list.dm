@@ -113,21 +113,8 @@
 		/datum/crafting_recipe/roguetown/tallow,
 		)
 
-// TBD - Cauldron Recipes
-/obj/item/recipe_book/alchemy
-	name = "Secrets of Alchemy"
-	icon_state = "book3_0"
-	base_icon_state = "book3"
-
-	types = list(
-		/datum/crafting_recipe/roguetown/structure/alch,
-		/datum/crafting_recipe/roguetown/structure/cauldronalchemy,
-		/datum/crafting_recipe/roguetown/survival/mortar,
-		/datum/crafting_recipe/roguetown/survival/pestle,
-		/datum/crafting_recipe/roguetown/alchemy,
-		/datum/alch_grind_recipe,
-		/datum/alch_cauldron_recipe
-		)
+// Alchemy book now defined in alchemy_book.dm
+// (Rewritten to display ingredients with their alchemy_effects in a table)
 
 /obj/item/recipe_book/cooking
 	name = "The Culinary Codex"
