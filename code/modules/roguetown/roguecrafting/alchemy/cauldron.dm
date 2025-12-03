@@ -357,11 +357,17 @@
 						R.source_herb_name = source_extract.source_herb_name
 						R.source_herb_type = source_extract.source_herb_type
 						R.name = "[source_extract.source_herb_name] [initial(R.name)]"
+					// Transfer properties from source extract
+					R.color = source_extract.color
+					R.smell_description = source_extract.smell_description
+					R.taste_description = source_extract.taste_description
+					if(isnum(source_extract.alpha))
+						R.alpha = source_extract.alpha
 					break
 		
 		src.visible_message("<span class='info'>The cauldron finishes boiling, creating a more concentrated extract.</span>")
 	else
-		// Primary processing - copy alchemy effects from herb to the extract
+		// Primary processing - copy alchemy effects and properties from herb to the extract
 		if(herb && herb.alchemy_effects && herb.alchemy_effects.len)
 			for(var/datum/reagent/herb_extract/R in src.reagents.reagent_list)
 				if(R.type == extract_type)
@@ -369,6 +375,20 @@
 					R.source_herb_name = herb.name
 					R.source_herb_type = herb.type
 					R.name = "[herb.name] [initial(R.name)]"
+					
+					// Generate smell from herb's effects
+					var/list/smell_parts = list()
+					for(var/effect in herb.alchemy_effects)
+						var/smell = get_effect_smell(effect)
+						if(smell && !(smell in smell_parts))
+							smell_parts += smell
+					R.smell_description = smell_parts.Join(", ")
+					
+					// Set taste based on herb name
+					R.taste_description = "[herb.name] and [initial(R.taste_description)]"
+					
+					// Transfer color if herb has one (use herb's icon color or a default based on herb type)
+					// For now, keep the default extract color but slightly tint it
 					break
 		
 		src.visible_message("<span class='info'>The cauldron finishes boiling, creating [herb.name] [extract_name].</span>")

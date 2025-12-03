@@ -49,13 +49,82 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 	EFFECT_DAMAGE_ENERGY = "draining cold"
 ))
 
+// Global associative list mapping effects to human-readable names for potions
+GLOBAL_LIST_INIT(alchemy_effect_names, list(
+	EFFECT_HEAL_BRUTE = "healing",
+	EFFECT_HEAL_BURN = "burn healing",
+	EFFECT_HEAL_TOX = "detoxification",
+	EFFECT_RESTORE_STAMINA = "stamina restoration",
+	EFFECT_RESTORE_ENERGY = "energy restoration",
+	EFFECT_RESTORE_BLOOD = "blood restoration",
+	EFFECT_FORTIFY_STRENGTH = "strength",
+	EFFECT_FORTIFY_PERCEPTION = "perception",
+	EFFECT_FORTIFY_INTELLIGENCE = "intelligence",
+	EFFECT_FORTIFY_CONSTITUTION = "constitution",
+	EFFECT_FORTIFY_ENDURANCE = "endurance",
+	EFFECT_FORTIFY_SPEED = "speed",
+	EFFECT_FORTIFY_LUCK = "luck",
+	EFFECT_PARALYZE = "paralysis",
+	EFFECT_BLINDNESS = "blindness",
+	EFFECT_SILENCE = "silence",
+	EFFECT_SLOW = "slowness",
+	EFFECT_WEAKNESS = "weakness",
+	EFFECT_POISON = "poison",
+	EFFECT_DAMAGE_STAMINA = "fatigue",
+	EFFECT_DAMAGE_ENERGY = "exhaustion"
+))
+
 // Helper proc to get smell description for an effect
 /proc/get_effect_smell(effect)
 	return GLOB.alchemy_effect_smells[effect] || "strange essence"
 
+// Helper proc to get human-readable name for an effect
+/proc/get_effect_name(effect)
+	return GLOB.alchemy_effect_names[effect] || "unknown"
+
+// Helper proc to generate potion name from effects list
+/proc/generate_potion_name(list/effects)
+	if(!effects || !effects.len)
+		return "alchemical potion"
+	
+	var/list/effect_names = list()
+	for(var/effect in effects)
+		effect_names += get_effect_name(effect)
+	
+	// Generate name based on number of effects
+	switch(effect_names.len)
+		if(1)
+			return "potion of [effect_names[1]]"
+		if(2)
+			return "potion of [effect_names[1]]-[effect_names[2]]"
+		if(3)
+			return "potion of [effect_names[1]]-[effect_names[2]]-[effect_names[3]]"
+		else  // 4 or more
+			return "potion of [effect_names[1]]-[effect_names[2]]-[effect_names[3]]-[effect_names[4]]"
+
+// Helper proc to blend colors
+/proc/blend_colors(color1, color2, ratio = 0.5)
+	if(!color1 || !color2)
+		return color1 || color2 || "#FFFFFF"
+	
+	var/r1 = hex2num(copytext(color1, 2, 4))
+	var/g1 = hex2num(copytext(color1, 4, 6))
+	var/b1 = hex2num(copytext(color1, 6, 8))
+	
+	var/r2 = hex2num(copytext(color2, 2, 4))
+	var/g2 = hex2num(copytext(color2, 4, 6))
+	var/b2 = hex2num(copytext(color2, 6, 8))
+	
+	var/r = round(r1 * (1 - ratio) + r2 * ratio)
+	var/g = round(g1 * (1 - ratio) + g2 * ratio)
+	var/b = round(b1 * (1 - ratio) + b2 * ratio)
+	
+	return rgb(r, g, b)
+
 // Add alchemy effects variable to all reagents (simple list, no datum wrapper)
 /datum/reagent
 	var/list/alchemy_effects = null
+	var/smell_description = null  // For alchemy smells
 
 // Helper proc to set alchemy effects on a reagent
 /datum/reagent/proc/set_alchemy_effects(list/effect_list)
@@ -129,12 +198,36 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 			// Create a new tonic with combined effects (2 reagents → 1 mixed extract)
 			var/datum/reagent/herb_extract/tonic/mixed = new()
 			mixed.alchemy_effects = common.Copy()
+			
 			// Combine herb names to prevent re-mixing
 			var/datum/reagent/herb_extract/E1 = R1
 			var/datum/reagent/herb_extract/E2 = R2
 			mixed.source_herb_name = "[E1.source_herb_name]-[E2.source_herb_name]"
-			mixed.name = "alchemical potion"
+			
+			// Generate name based on effects
+			mixed.name = generate_potion_name(common)
 			mixed.description = "A potion created by mixing reagents with common alchemical properties."
+			
+			// Blend colors (50/50 mix)
+			mixed.color = blend_colors(R1.color, R2.color, 0.5)
+			
+			// Combine smells from effects
+			var/list/smell_parts = list()
+			for(var/effect in common)
+				var/smell = get_effect_smell(effect)
+				if(smell && !(smell in smell_parts))
+					smell_parts += smell
+			mixed.smell_description = smell_parts.Join(", ")
+			
+			// Combine tastes
+			if(R1.taste_description && R2.taste_description)
+				mixed.taste_description = "[R1.taste_description] and [R2.taste_description]"
+			else
+				mixed.taste_description = R1.taste_description || R2.taste_description || "alchemical essence"
+			
+			// Blend alpha (transparency)
+			if(isnum(R1.alpha) && isnum(R2.alpha))
+				mixed.alpha = round((R1.alpha + R2.alpha) / 2)
 			
 			// Add the mixed extract (2 reagents → 1 potion, so half the amount)
 			add_reagent_data(mixed, convert_amount * 0.5)
