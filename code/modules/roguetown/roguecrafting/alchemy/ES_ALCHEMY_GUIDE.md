@@ -90,6 +90,54 @@ When two reagents with **common effects** are mixed in a container, they automat
 - EFFECT_RESTORE_BLOOD
 - EFFECT_FORTIFY_CONSTITUTION
 
+## Herb Alchemy Effects Reference
+
+### Healing Herbs
+- **Symphitum**: heal brute, heal burn, restore blood
+- **Calendula**: heal brute, fortify endurance, restore blood
+- **Taraxacum**: heal brute, damage stamina, heal toxin
+- **Urtica**: heal brute, fortify speed, restore energy
+- **Valeriana**: heal brute, fortify speed, damage stamina
+
+### Enhancement Herbs
+- **Mentha**: fortify perception, fortify intelligence, restore stamina
+- **Salvia**: fortify constitution, fortify strength, fortify endurance
+- **Euphrasia**: fortify speed, fortify intelligence, restore energy
+- **Benedictus**: restore stamina, fortify intelligence, fortify endurance
+- **Artemisia**: fortify luck, fortify speed, restore energy
+
+### Restorative Herbs
+- **Hypericum**: restore stamina, restore energy, heal toxin
+- **Rosa**: heal burn, restore blood, fortify constitution
+
+### Poisonous Herbs
+- **Atropa**: poison, damage stamina, weakness
+- **Matricaria**: fortify perception, poison, slow
+- **Paris**: damage stamina, poison, paralyze
+
+## Effect Smells
+
+Each effect has a distinct smell that skilled alchemists can detect:
+
+- **Heal Brute**: wet moss
+- **Heal Burn**: soothing balm
+- **Heal Toxin**: purity
+- **Restore Stamina**: fresh air
+- **Restore Energy**: clean air
+- **Restore Blood**: iron and life
+- **Fortify Strength**: power
+- **Fortify Perception**: sharp clarity
+- **Fortify Intelligence**: arcane essence
+- **Fortify Constitution**: mountain air
+- **Fortify Endurance**: earth
+- **Fortify Speed**: a swift breeze
+- **Fortify Luck**: fortune
+- **Paralyze**: stagnant air
+- **Poison**: death
+- **Damage Stamina**: exhaustion
+- **Weakness**: decay
+- **Slow**: thick molasses
+
 ## Complete Workflow Example
 
 1. **Gather ingredients**

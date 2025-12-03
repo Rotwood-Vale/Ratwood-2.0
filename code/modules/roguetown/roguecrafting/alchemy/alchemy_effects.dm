@@ -24,6 +24,35 @@
 #define EFFECT_DAMAGE_STAMINA "damage_stamina"
 #define EFFECT_DAMAGE_ENERGY "damage_energy"
 
+// Global associative list mapping effects to their smells
+GLOBAL_LIST_INIT(alchemy_effect_smells, list(
+	EFFECT_HEAL_BRUTE = "wet moss",
+	EFFECT_HEAL_BURN = "soothing balm",
+	EFFECT_HEAL_TOX = "purity",
+	EFFECT_RESTORE_STAMINA = "fresh air",
+	EFFECT_RESTORE_ENERGY = "clean air",
+	EFFECT_RESTORE_BLOOD = "iron and life",
+	EFFECT_FORTIFY_STRENGTH = "power",
+	EFFECT_FORTIFY_PERCEPTION = "sharp clarity",
+	EFFECT_FORTIFY_INTELLIGENCE = "arcane essence",
+	EFFECT_FORTIFY_CONSTITUTION = "mountain air",
+	EFFECT_FORTIFY_ENDURANCE = "earth",
+	EFFECT_FORTIFY_SPEED = "a swift breeze",
+	EFFECT_FORTIFY_LUCK = "fortune",
+	EFFECT_PARALYZE = "stagnant air",
+	EFFECT_BLINDNESS = "darkness",
+	EFFECT_SILENCE = "muffled void",
+	EFFECT_SLOW = "thick molasses",
+	EFFECT_WEAKNESS = "decay",
+	EFFECT_POISON = "death",
+	EFFECT_DAMAGE_STAMINA = "exhaustion",
+	EFFECT_DAMAGE_ENERGY = "draining cold"
+))
+
+// Helper proc to get smell description for an effect
+/proc/get_effect_smell(effect)
+	return GLOB.alchemy_effect_smells[effect] || "strange essence"
+
 // Add alchemy effects variable to all reagents (simple list, no datum wrapper)
 /datum/reagent
 	var/list/alchemy_effects = null
