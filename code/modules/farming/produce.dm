@@ -187,7 +187,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/pear
 	name = "pear"
-		alchemy_effects = list(EFFECT_RESTORE_ENERGY, EFFECT_HEAL_BURN, EFFECT_FORTIFY_ENDURANCE, EFFECT_SLOW)
+	alchemy_effects = list(EFFECT_RESTORE_ENERGY, EFFECT_HEAL_BURN, EFFECT_FORTIFY_ENDURANCE, EFFECT_SLOW)
 	seed = /obj/item/seeds/pear
 	desc = "A juicy, bell-shaped fruit with a delicate sweetness and soft, grainy flesh."
 	icon_state = "pear"

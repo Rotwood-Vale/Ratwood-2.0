@@ -515,7 +515,6 @@
 	while(reaction_occurred)
 	update_total()
 	
-	// Elder Scrolls-style alchemy mixing (after normal reactions)
 	try_alchemy_mixing()
 	
 	return 0
