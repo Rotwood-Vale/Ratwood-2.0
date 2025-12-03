@@ -339,6 +339,7 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 
 // Global associative list mapping effects to paired words [adjective, noun] for potion naming
 GLOBAL_LIST_INIT(alchemy_effect_words, list(
+	// Original 21 effects
 	EFFECT_HEAL_BRUTE = list("mending", "heal"),
 	EFFECT_HEAL_BURN = list("soothing", "balm"),
 	EFFECT_HEAL_TOX = list("curing", "antidote"),
@@ -360,6 +361,7 @@ GLOBAL_LIST_INIT(alchemy_effect_words, list(
 	EFFECT_POISON = list("toxic", "venom"),
 	EFFECT_DAMAGE_STAMINA = list("draining", "fatigue"),
 	EFFECT_DAMAGE_ENERGY = list("exhausting", "drain"),
+	// Fire/Frost/Elemental (12)
 	EFFECT_FIRE_STACKS = list("blazing", "inferno"),
 	EFFECT_FROST_SLOW = list("freezing", "frost"),
 	EFFECT_SHOCK_DAMAGE = list("crackling", "lightning"),
@@ -368,17 +370,53 @@ GLOBAL_LIST_INIT(alchemy_effect_words, list(
 	EFFECT_COLD_RESISTANCE = list("cooling", "ward"),
 	EFFECT_FIRE_IMMUNITY = list("fireproof", "protection"),
 	EFFECT_FROST_IMMUNITY = list("frostproof", "guard"),
+	EFFECT_ELECTRIC_RESISTANCE = list("insulated", "barrier"),
+	EFFECT_ACID_RESISTANCE = list("neutralizing", "coating"),
+	EFFECT_MAGIC_RESISTANCE = list("warding", "aegis"),
+	EFFECT_PHYSICAL_RESISTANCE = list("armored", "skin"),
+	// Trait-Based Buffs (15)
+	EFFECT_IRON_STOMACH = list("digestive", "stomach"),
+	EFFECT_KEEN_SENSES = list("perceptive", "awareness"),
+	EFFECT_SILENT_STEP = list("stealthy", "tread"),
+	EFFECT_SURE_FOOTED = list("balanced", "stance"),
+	EFFECT_QUICK_HANDS = list("nimble", "fingers"),
+	EFFECT_THICK_SKIN = list("hardened", "hide"),
+	EFFECT_REGENERATE_ALL = list("renewing", "vitality"),
+	EFFECT_BLOOD_REGENERATION = list("rejuvenating", "blood"),
+	EFFECT_STAMINA_REGENERATION = list("tireless", "breath"),
+	EFFECT_CLARITY = list("focused", "clarity"),
+	EFFECT_NIGHT_VISION = list("nocturnal", "eyes"),
+	EFFECT_WATER_BREATHING = list("aquatic", "lungs"),
+	EFFECT_FEATHER_FALL = list("floating", "descent"),
+	EFFECT_POISON_IMMUNITY = list("antitoxic", "constitution"),
+	EFFECT_DISEASE_IMMUNITY = list("healthy", "immunity"),
+	// Combat Effects (10)
 	EFFECT_BATTLE_FURY = list("raging", "fury"),
 	EFFECT_CRITICAL_STRIKE = list("deadly", "strike"),
 	EFFECT_ARMOR_PENETRATION = list("piercing", "edge"),
 	EFFECT_RIPOSTE = list("counter", "parry"),
+	EFFECT_LAST_STAND = list("desperate", "resolve"),
 	EFFECT_BERSERK = list("frenzied", "rage"),
-	EFFECT_INVISIBILITY = list("unseen", "cloak"),
-	EFFECT_HASTE = list("quickened", "speed"),
+	EFFECT_ADRENALINE = list("surging", "rush"),
+	EFFECT_WEAPON_DAMAGE = list("sharpened", "blade"),
+	EFFECT_SPELL_POWER = list("empowered", "magic"),
+	EFFECT_DODGE_CHANCE = list("evasive", "grace"),
+	// Debuffs (8)
 	EFFECT_CONFUSION = list("muddled", "confusion"),
 	EFFECT_FEAR = list("terrifying", "dread"),
+	EFFECT_DISEASE = list("sickly", "plague"),
+	EFFECT_CURSE = list("hexed", "curse"),
 	EFFECT_NAUSEA = list("sickening", "nausea"),
-	EFFECT_BLEEDING = list("hemorrhaging", "blood")
+	EFFECT_BLEEDING = list("hemorrhaging", "blood"),
+	EFFECT_CRIPPLE = list("crippling", "lameness"),
+	EFFECT_VULNERABILITY = list("weakening", "exposure"),
+	// Special Effects (6)
+	EFFECT_INVISIBILITY = list("unseen", "cloak"),
+	EFFECT_LEVITATE = list("floating", "levitation"),
+	EFFECT_HASTE = list("quickened", "speed"),
+	EFFECT_DETECT_MAGIC = list("revealing", "vision"),
+	EFFECT_TRANSMUTE = list("transforming", "change"),
+	EFFECT_SUMMON_FAMILIAR = list("conjuring", "familiar")
 ))
 
 // Helper proc to get smell description for an effect
