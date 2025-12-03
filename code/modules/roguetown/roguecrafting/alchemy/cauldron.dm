@@ -57,9 +57,13 @@
 	..()
 	update_icon()
 	if(on)
-		if(ingredients.len)
+		// Check if we can brew - either with ingredients OR with extract reagents for secondary processing
+		var/can_brew = ingredients.len > 0 || src.reagents.has_reagent(/datum/reagent/herb_extract, 30)
+		
+		if(can_brew)
 			if(brewing < 20)
 				// Check for base reagents (water, oil, wine, acid) - need 90u minimum
+				// OR check for extract reagents for secondary processing - need 30u minimum
 				if(src.reagents.has_reagent(/datum/reagent/water,90) ||
 				   src.reagents.has_reagent(/datum/reagent/cooking_oil,90) ||
 				   src.reagents.has_reagent(/datum/reagent/consumable/ethanol,90) ||
@@ -69,7 +73,7 @@
 					if(prob(10))
 						playsound(src, "bubbles", 100, FALSE)
 			else if(brewing == 20)
-				// First, try KCD-style alchemy (herb + base reagent → extract)
+				// First, try KCD-style alchemy (herb + base reagent → extract OR extract → concentrate)
 				if(try_kcd_herb_extraction())
 					return
 				
@@ -202,7 +206,7 @@
 
 // KCD-Style Herb Extraction: Process single herb with base reagent
 /obj/machinery/light/rogue/cauldron/proc/try_kcd_herb_extraction()
-	// Check if we have exactly one herb
+	// Check if we're doing secondary processing (no herb needed) or primary (herb needed)
 	var/obj/item/alch/herb = null
 	var/herb_count = 0
 	
@@ -210,10 +214,6 @@
 		if(istype(ing, /obj/item/alch))
 			herb = ing
 			herb_count++
-	
-	// KCD alchemy requires exactly one herb
-	if(herb_count != 1)
-		return FALSE
 	
 	if(!lastuser)
 		brewing = 0
@@ -229,44 +229,17 @@
 	var/base_amount = 0
 	var/skill_required = SKILL_LEVEL_NOVICE
 	var/extract_name = ""
+	var/is_secondary_processing = FALSE
 	
-	// NOVICE LEVEL - Primary extraction (90u base → extract)
-	if(src.reagents.has_reagent(/datum/reagent/water, 90))
-		extract_type = /datum/reagent/herb_extract/tonic
-		base_reagent_type = /datum/reagent/water
-		base_amount = src.reagents.get_reagent_amount(/datum/reagent/water)
-		skill_required = SKILL_LEVEL_NOVICE
-		extract_name = "tonic"
-		
-	else if(src.reagents.has_reagent(/datum/reagent/cooking_oil, 90))
-		extract_type = /datum/reagent/herb_extract/oil
-		base_reagent_type = /datum/reagent/cooking_oil
-		base_amount = src.reagents.get_reagent_amount(/datum/reagent/cooking_oil)
-		skill_required = SKILL_LEVEL_NOVICE
-		extract_name = "oil"
-		
-	else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/wine, 90))
-		extract_type = /datum/reagent/herb_extract/elixir
-		base_reagent_type = /datum/reagent/consumable/ethanol/wine
-		base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/wine)
-		skill_required = SKILL_LEVEL_NOVICE
-		extract_name = "elixir"
-	
-	// AMATEUR LEVEL
-	else if(src.reagents.has_reagent(/datum/reagent/rogueacid, 90))
-		extract_type = /datum/reagent/herb_extract/vitriol
-		base_reagent_type = /datum/reagent/rogueacid
-		base_amount = src.reagents.get_reagent_amount(/datum/reagent/rogueacid)
-		skill_required = SKILL_LEVEL_APPRENTICE
-		extract_name = "vitriol"
-	
+	// Check for secondary processing first (no herb needed)
 	// AMATEUR - Secondary processing: Tonic → Concentrate
-	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/tonic, 30))
+	if(src.reagents.has_reagent(/datum/reagent/herb_extract/tonic, 30))
 		extract_type = /datum/reagent/herb_extract/concentrate
 		base_reagent_type = /datum/reagent/herb_extract/tonic
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/tonic)
 		skill_required = SKILL_LEVEL_APPRENTICE
 		extract_name = "concentrate"
+		is_secondary_processing = TRUE
 	
 	// JOURNEYMAN - Tertiary processing
 	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/oil, 30))
@@ -275,6 +248,7 @@
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/oil)
 		skill_required = SKILL_LEVEL_JOURNEYMAN
 		extract_name = "paste"
+		is_secondary_processing = TRUE
 		
 	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/elixir, 30))
 		extract_type = /datum/reagent/herb_extract/syrup
@@ -282,6 +256,7 @@
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/elixir)
 		skill_required = SKILL_LEVEL_JOURNEYMAN
 		extract_name = "syrup"
+		is_secondary_processing = TRUE
 	
 	// EXPERT - Quaternary processing
 	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/vitriol, 30))
@@ -290,9 +265,46 @@
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/vitriol)
 		skill_required = SKILL_LEVEL_EXPERT
 		extract_name = "salt"
+		is_secondary_processing = TRUE
 	
-	else
-		return FALSE
+	// If not secondary processing, check for primary extraction (requires herb)
+	if(!is_secondary_processing)
+		// Primary extraction requires exactly one herb
+		if(herb_count != 1)
+			return FALSE
+		
+		// NOVICE LEVEL - Primary extraction (90u base → extract)
+		if(src.reagents.has_reagent(/datum/reagent/water, 90))
+			extract_type = /datum/reagent/herb_extract/tonic
+			base_reagent_type = /datum/reagent/water
+			base_amount = src.reagents.get_reagent_amount(/datum/reagent/water)
+			skill_required = SKILL_LEVEL_NOVICE
+			extract_name = "tonic"
+			
+		else if(src.reagents.has_reagent(/datum/reagent/cooking_oil, 90))
+			extract_type = /datum/reagent/herb_extract/oil
+			base_reagent_type = /datum/reagent/cooking_oil
+			base_amount = src.reagents.get_reagent_amount(/datum/reagent/cooking_oil)
+			skill_required = SKILL_LEVEL_NOVICE
+			extract_name = "oil"
+			
+		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/wine, 90))
+			extract_type = /datum/reagent/herb_extract/elixir
+			base_reagent_type = /datum/reagent/consumable/ethanol/wine
+			base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/wine)
+			skill_required = SKILL_LEVEL_NOVICE
+			extract_name = "elixir"
+		
+		// AMATEUR LEVEL
+		else if(src.reagents.has_reagent(/datum/reagent/rogueacid, 90))
+			extract_type = /datum/reagent/herb_extract/vitriol
+			base_reagent_type = /datum/reagent/rogueacid
+			base_amount = src.reagents.get_reagent_amount(/datum/reagent/rogueacid)
+			skill_required = SKILL_LEVEL_APPRENTICE
+			extract_name = "vitriol"
+		
+		else
+			return FALSE
 	
 	if(!extract_type)
 		return FALSE
@@ -314,7 +326,7 @@
 	// Success! Create the herb extract
 	var/output_amount = base_amount  // 1:1 conversion
 	
-	// Remove base reagent and herb
+	// Remove base reagent and any herbs
 	if(reagents)
 		src.reagents.remove_reagent(base_reagent_type, base_amount)
 	for(var/obj/item/ing in src.ingredients)
@@ -323,17 +335,40 @@
 	// Add the extract reagent
 	src.reagents.add_reagent(extract_type, output_amount)
 	
-	// Copy alchemy effects from herb to the extract
-	if(herb.alchemy_effects && herb.alchemy_effects.len)
-		for(var/datum/reagent/herb_extract/R in src.reagents.reagent_list)
-			if(R.type == extract_type)
-				R.set_alchemy_effects(herb.alchemy_effects)
-				R.source_herb_name = herb.name
-				R.source_herb_type = herb.type
-				R.name = "[herb.name] [initial(R.name)]"
+	// For secondary processing, copy effects from the base extract
+	if(is_secondary_processing)
+		// Find the source extract and copy its effects to the new concentrated version
+		var/datum/reagent/herb_extract/source_extract = null
+		for(var/datum/reagent/R in src.reagents.reagent_list)
+			if(istype(R, /datum/reagent/herb_extract))
+				source_extract = R
 				break
+		
+		if(source_extract)
+			for(var/datum/reagent/herb_extract/R in src.reagents.reagent_list)
+				if(R.type == extract_type)
+					if(source_extract.alchemy_effects)
+						R.set_alchemy_effects(source_extract.alchemy_effects.effects)
+					if(source_extract.source_herb_name)
+						R.source_herb_name = source_extract.source_herb_name
+						R.source_herb_type = source_extract.source_herb_type
+						R.name = "[source_extract.source_herb_name] [initial(R.name)]"
+					break
+		
+		src.visible_message("<span class='info'>The cauldron finishes boiling, creating a more concentrated extract.</span>")
+	else
+		// Primary processing - copy alchemy effects from herb to the extract
+		if(herb && herb.alchemy_effects && herb.alchemy_effects.len)
+			for(var/datum/reagent/herb_extract/R in src.reagents.reagent_list)
+				if(R.type == extract_type)
+					R.set_alchemy_effects(herb.alchemy_effects)
+					R.source_herb_name = herb.name
+					R.source_herb_type = herb.type
+					R.name = "[herb.name] [initial(R.name)]"
+					break
+		
+		src.visible_message("<span class='info'>The cauldron finishes boiling, creating [herb.name] [extract_name].</span>")
 	
-	src.visible_message("<span class='info'>The cauldron finishes boiling, creating [herb.name] [extract_name].</span>")
 	lastuser.adjust_experience(/datum/skill/craft/alchemy, amt2raise, FALSE)
 	
 	playsound(src, "bubbles", 100, TRUE)
