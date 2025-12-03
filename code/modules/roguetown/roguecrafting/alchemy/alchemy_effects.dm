@@ -96,12 +96,21 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 			if(!R2.alchemy_effects || !R2.alchemy_effects.len)
 				continue
 			
-			// Check if both reagents are from the same source herb - if so, skip
+			// Check if both reagents share any common source herbs - if so, skip
 			if(istype(R1, /datum/reagent/herb_extract) && istype(R2, /datum/reagent/herb_extract))
 				var/datum/reagent/herb_extract/E1 = R1
 				var/datum/reagent/herb_extract/E2 = R2
-				if(E1.source_herb_name && E2.source_herb_name && E1.source_herb_name == E2.source_herb_name)
-					continue  // Same herb source, don't mix
+				if(E1.source_herb_name && E2.source_herb_name)
+					// Split by hyphen to get all source herbs
+					var/list/herbs1 = splittext(E1.source_herb_name, "-")
+					var/list/herbs2 = splittext(E2.source_herb_name, "-")
+					var/has_common_herb = FALSE
+					for(var/herb1 in herbs1)
+						if(herb1 in herbs2)
+							has_common_herb = TRUE
+							break
+					if(has_common_herb)
+						continue  // Share a common herb source, don't mix
 			
 			// Get common effects
 			var/list/common = get_common_alchemy_effects(R1, R2)
@@ -120,7 +129,10 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 			// Create a new tonic with combined effects (2 reagents → 1 mixed extract)
 			var/datum/reagent/herb_extract/tonic/mixed = new()
 			mixed.alchemy_effects = common.Copy()
-			mixed.source_herb_name = "mixed"  // Mark as mixed so it can't be mixed with itself
+			// Combine herb names to prevent re-mixing
+			var/datum/reagent/herb_extract/E1 = R1
+			var/datum/reagent/herb_extract/E2 = R2
+			mixed.source_herb_name = "[E1.source_herb_name]-[E2.source_herb_name]"
 			mixed.name = "alchemical potion"
 			mixed.description = "A potion created by mixing reagents with common alchemical properties."
 			
