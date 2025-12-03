@@ -6,16 +6,27 @@ This system implements Elder Scrolls-style alchemy where reagents have effects t
 ## How It Works
 
 ### 1. Boiling Herbs in Cauldron (Part 1)
-Add exactly ONE herb to a cauldron with a base reagent (minimum 30 units):
+Add exactly ONE herb to a cauldron with a base reagent:
 
-**Base Reagents:**
-- Water → Creates "Herb Tonic"
-- Cooking Oil → Creates "Oil of Herb"
-- Wine → Creates "Herb Elixir"  
-- Acid → Creates "Vitriol of Herb"
+**NOVICE LEVEL (Skill 1) - Primary Extraction (90u minimum):**
+- Water (90u+) + Herb → "Herb Tonic"
+- Cooking Oil (90u+) + Herb → "Oil of Herb"
+- Wine (90u+) + Herb → "Herb Elixir"
+
+**AMATEUR LEVEL (Skill 2):**
+- Acid (90u+) + Herb → "Vitriol of Herb"
+- Herb Tonic (30u+) + Herb → "Herb Concentrate" (boil again)
+
+**JOURNEYMAN LEVEL (Skill 3) - Tertiary Processing (30u minimum):**
+- Oil of Herb (30u+) + Herb → "Herb Paste" (boil again)
+- Herb Elixir (30u+) + Herb → "Herb Syrup" (boil again)
+
+**EXPERT LEVEL (Skill 4) - Quaternary Processing (30u minimum):**
+- Vitriol of Herb (30u+) + Herb → "Herb Salt" (boil again)
 
 **Example:**
 - Water (90u) + Rosa → Creates "rosa tonic" (90u) with Rosa's effects
+- Rosa tonic (30u) + Rosa → Creates "rosa concentrate" (30u) with Rosa's effects
 
 ### 2. Grinding in Mortar (Part 2)
 Grind ingredients in a mortar & pestle to extract reagents with effects.

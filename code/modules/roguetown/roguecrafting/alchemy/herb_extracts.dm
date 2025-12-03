@@ -47,6 +47,44 @@
 	taste_description = "caustic herbs"
 	alpha = 160
 
+// AMATEUR LEVEL - Secondary processing (boiling extracts again)
+
+// Herb Concentrate (from Herb Tonic)
+/datum/reagent/herb_extract/concentrate
+	name = "herbal concentrate"
+	color = "#4a6a6d"
+	taste_description = "concentrated herbs"
+	alpha = 200
+	description = "A concentrated extract made by repeatedly boiling an herbal tonic."
+
+// JOURNEYMAN LEVEL - Tertiary processing
+
+// Herb Paste (from Oil of Herb)
+/datum/reagent/herb_extract/paste
+	name = "herbal paste"
+	color = "#8b7355"
+	taste_description = "thick herbs"
+	alpha = 220
+	description = "A thick paste made by reducing herbal oil."
+
+// Herb Syrup (from Herb Elixir)
+/datum/reagent/herb_extract/syrup
+	name = "herbal syrup"
+	color = "#6a0808"
+	taste_description = "thick sweet herbs"
+	alpha = 210
+	description = "A thick syrup made by reducing herbal elixir."
+
+// EXPERT LEVEL - Quaternary processing
+
+// Herb Salt (from Vitriol of Herb)
+/datum/reagent/herb_extract/salt
+	name = "herbal salt"
+	color = "#3fff00"
+	taste_description = "caustic herbal crystals"
+	alpha = 240
+	description = "Crystallized salts infused with herbal essence."
+
 // Cooking oil reagent for alchemy
 /datum/reagent/cooking_oil
 	name = "Cooking Oil"
