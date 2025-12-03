@@ -76,54 +76,6 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 	
 	return common
 
-// Proc to create a potion based on common effects
-/proc/create_potion_from_effects(list/effects)
-	if(!effects || !effects.len)
-		return null
-	
-	// Sort effects to ensure consistent potion type
-	sortTim(effects, /proc/cmp_text_asc)
-	
-	// Determine potion type based on primary effect
-	var/primary_effect = effects[1]
-	
-	switch(primary_effect)
-		if(EFFECT_HEAL_BRUTE)
-			return /datum/reagent/medicine/healthpot
-		if(EFFECT_HEAL_BURN)
-			return /datum/reagent/medicine/healthpot
-		if(EFFECT_HEAL_TOX)
-			return /datum/reagent/medicine/antidote
-		if(EFFECT_RESTORE_STAMINA)
-			return /datum/reagent/medicine/stampot
-		if(EFFECT_RESTORE_ENERGY)
-			return /datum/reagent/medicine/manapot
-		if(EFFECT_RESTORE_BLOOD)
-			return /datum/reagent/medicine/healthpot
-		if(EFFECT_FORTIFY_STRENGTH)
-			return /datum/reagent/buff/strength
-		if(EFFECT_FORTIFY_PERCEPTION)
-			return /datum/reagent/buff/perception
-		if(EFFECT_FORTIFY_INTELLIGENCE)
-			return /datum/reagent/buff/intelligence
-		if(EFFECT_FORTIFY_CONSTITUTION)
-			return /datum/reagent/buff/constitution
-		if(EFFECT_FORTIFY_ENDURANCE)
-			return /datum/reagent/buff/endurance
-		if(EFFECT_FORTIFY_SPEED)
-			return /datum/reagent/buff/speed
-		if(EFFECT_FORTIFY_LUCK)
-			return /datum/reagent/buff/fortune
-		if(EFFECT_PARALYZE)
-			return /datum/reagent/toxin/zombiepowder  // Placeholder
-		if(EFFECT_POISON)
-			return /datum/reagent/berrypoison
-		if(EFFECT_DAMAGE_STAMINA)
-			return /datum/reagent/stampoison
-	
-	// Default to a basic health potion if no specific match
-	return /datum/reagent/medicine/healthpot
-
 // Check if mixing should occur and perform it
 /datum/reagents/proc/try_alchemy_mixing()
 	if(!my_atom)
@@ -156,11 +108,7 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 			if(!common || !common.len)
 				continue
 			
-			// Found a match! Create potion
-			var/potion_type = create_potion_from_effects(common)
-			if(!potion_type)
-				continue
-			
+			// Found a match! Create combined extract with all common effects
 			// Calculate amount to convert (minimum of the two reagents)
 			var/convert_amount = min(R1.volume, R2.volume)
 			convert_amount = min(convert_amount, 30)  // Max 30 units per mix
@@ -169,8 +117,15 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 			remove_reagent(R1.type, convert_amount)
 			remove_reagent(R2.type, convert_amount)
 			
-			// Add potion (2 reagents → 1 potion, so half the amount)
-			add_reagent(potion_type, convert_amount * 0.5)
+			// Create a new tonic with combined effects (2 reagents → 1 mixed extract)
+			var/datum/reagent/herb_extract/tonic/mixed = new()
+			mixed.alchemy_effects = common.Copy()
+			mixed.source_herb_name = "mixed"  // Mark as mixed so it can't be mixed with itself
+			mixed.name = "alchemical potion"
+			mixed.description = "A potion created by mixing reagents with common alchemical properties."
+			
+			// Add the mixed extract (2 reagents → 1 potion, so half the amount)
+			add_reagent_data(mixed, convert_amount * 0.5)
 			
 			// Notify
 			if(istype(my_atom, /obj/item/reagent_containers))
@@ -179,3 +134,32 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 			return TRUE
 	
 	return FALSE
+
+// Helper to add a reagent with custom data (used for dynamic alchemy mixing)
+/datum/reagents/proc/add_reagent_data(datum/reagent/R, amount)
+	if(!R || amount <= 0)
+		return
+	
+	// Check if we already have this reagent type
+	var/datum/reagent/existing = has_reagent(R.type)
+	if(existing)
+		existing.volume += amount
+		if(R.alchemy_effects && R.alchemy_effects.len)
+			// Merge effects if they're not already present
+			if(!existing.alchemy_effects)
+				existing.alchemy_effects = list()
+			for(var/effect in R.alchemy_effects)
+				if(!(effect in existing.alchemy_effects))
+					existing.alchemy_effects += effect
+	else
+		// Add new reagent
+		R.volume = amount
+		R.holder = src
+		reagent_list += R
+		if(R.alchemy_effects && R.alchemy_effects.len)
+			R.alchemy_effects = R.alchemy_effects.Copy()
+	
+	update_total()
+	my_atom?.on_reagent_change(ADD_REAGENT)
+	handle_reactions()
+	return TRUE
