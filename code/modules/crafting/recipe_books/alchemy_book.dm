@@ -18,7 +18,7 @@
 /datum/book_entry/alchemy/introduction/inner_book_html(mob/user)
 	return {"
 		<h2>🜏 Greetings, Aspiring Alchemist! 🜏</h2>
-		<p>Within these sacred pages lie the mysteries of the alchemical arts, a fusion of ancient wisdom from the kingdoms of Deliverance and the Scrolls of Elder knowledge, refined through generations of careful study.</p>
+		<p>Within these sacred pages lie the mysteries of the alchemical arts—a fusion of ancient wisdom from the kingdoms of Deliverance and the Scrolls of Elder knowledge, refined through generations of careful study.</p>
 		<p>Each ingredient of this world carries within it <strong style="color: #8b4513;">four fundamental essences</strong>, invisible to the untrained eye but revealed through the sacred art of extraction. The first three essences grant power and restoration, while the <span style="color: #c62828; font-weight: bold;">fourth essence always harbors corruption</span>—a reminder that all power comes with a price.</p>
 		<p>Through the proper application of base reagents in the sacred cauldron, you may extract these essences selectively. Mix wisely, for when two reagents share an essence, they create powerful elixirs beyond the sum of their parts!</p>
 	"}

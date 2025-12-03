@@ -73,49 +73,42 @@
 	..()
 	. = 1
 
-// Water-based extract
+// Water-based extracts (Herb Tonic)
 /datum/reagent/herb_extract/tonic
 	name = "herbal tonic"
 	color = "#6a9295"
 	taste_description = "watery herbs"
 	alpha = 150
 
-// Oil-based extract
+// Oil-based extracts (Oil of Herb)
 /datum/reagent/herb_extract/oil
 	name = "herbal oil"
 	color = "#d4af37"
 	taste_description = "oily herbs"
 	alpha = 180
 
-// Wine-based extract
+// Wine-based extracts (Herb Bitters)
 /datum/reagent/herb_extract/bitters
 	name = "herbal bitters"
 	color = "#8a0b0b"
 	taste_description = "bitter herbs and wine"
 	alpha = 170
 
-// Acid-based extract
-/datum/reagent/herb_extract/vitriol
-	name = "herbal vitriol"
-	color = "#5eff00"
-	taste_description = "caustic herbs"
-	alpha = 160
-
-// Syrup extract (water)
+// Syrup extracts (Herb Syrup - concentrated from tonic)
 /datum/reagent/herb_extract/syrup
 	name = "herbal syrup"
 	color = "#4a7a7d"
 	taste_description = "sweet herbal syrup"
 	alpha = 200
 
-// Paste extract (oil)
+// Paste extracts (Herb Paste)
 /datum/reagent/herb_extract/paste
 	name = "herbal paste"
 	color = "#a38728"
 	taste_description = "thick herbal paste"
 	alpha = 220
 
-// Powder extract (wine)
+// Powder extracts (Herb Powder)
 /datum/reagent/herb_extract/powder
 	name = "herbal powder"
 	color = "#6a3a1a"
@@ -123,13 +116,28 @@
 	alpha = 240
 	reagent_state = SOLID
 
-// Salt extract (acid)
+// Salt extracts (Herb Salt)
 /datum/reagent/herb_extract/salt
 	name = "herbal salt"
 	color = "#e0e0e0"
 	taste_description = "crystalline herbal salt"
 	alpha = 250
 	reagent_state = SOLID
+// Acid-based extracts (Vitriol of Herb)
+/datum/reagent/herb_extract/vitriol
+	name = "herbal vitriol"
+	color = "#5eff00"
+	taste_description = "caustic herbs"
+	alpha = 160
+
+// Cooking oil reagent for alchemy
+/datum/reagent/cooking_oil
+	name = "Cooking Oil"
+	description = "An oil extracted from plants, useful for cooking and alchemy."
+	reagent_state = LIQUID
+	color = "#d4af37"
+	taste_description = "oil"
+	alpha = 200
 
 // Helper proc to create herb extract with copied effects
 /proc/create_herb_extract(extract_type, herb_item, base_amount = 30)
