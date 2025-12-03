@@ -1,6 +1,7 @@
 /obj/item
 	var/list/alchemy_effects = list()
-
+	var/filling_color = "#d4c5a9"
+	var/list/tastes
 /obj/item/alch
 	name = "dust"
 	desc = ""
@@ -11,18 +12,6 @@
 
 /obj/item/alch/Initialize()
 	. = ..()
-	if(!isnull(major_pot))
-		var/datum/alch_cauldron_recipe/rec = locate(major_pot) in GLOB.alch_cauldron_recipes
-		major_smell = rec.smells_like
-		major_name = rec.name
-	if(!isnull(med_pot))
-		var/datum/alch_cauldron_recipe/rec = locate(med_pot) in GLOB.alch_cauldron_recipes
-		med_smell = rec.smells_like
-		med_name = rec.name
-	if(!isnull(minor_pot))
-		var/datum/alch_cauldron_recipe/rec = locate(minor_pot) in GLOB.alch_cauldron_recipes
-		minor_smell = rec.smells_like
-		minor_name = rec.name
 
 /obj/item/alch/examine(mob/user)
 	. = ..()
@@ -32,29 +21,6 @@
 		if(isliving(user))
 			var/mob/living/lmob = user
 			perint = FLOOR((lmob.STAPER + lmob.STAINT)/2,1)
-		if(HAS_TRAIT(user,TRAIT_LEGENDARY_ALCHEMIST))
-			if(!isnull(major_name))
-				. += span_notice(" Strongly attuned to making [major_name].")
-			if(!isnull(med_name))
-				. += span_notice(" Moderately attuned to making [med_name].")
-			if(!isnull(minor_name))
-				. += span_notice(" Minorly attuned to making [minor_name].")
-			// Show alchemy effects for legendary alchemists
-			if(alchemy_effects && alchemy_effects.len)
-				. += span_notice(" Alchemy Effects:")
-				for(var/effect in alchemy_effects)
-					var/smell = get_effect_smell(effect)
-					. += span_notice("  - [smell]")
-		else
-			if(!isnull(major_smell))
-				if(alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6)
-					. += span_notice(" Smells strongly of [major_smell].")
-			if(!isnull(med_smell))
-				if(alch_skill >= SKILL_LEVEL_APPRENTICE || perint >= 10)
-					. += span_notice(" Smells slightly of [med_smell].")
-			if(!isnull(minor_smell))
-				if(alch_skill >= SKILL_LEVEL_EXPERT || perint >= 16)
-					. += span_notice(" Smells weakly of [minor_smell].")
 			// Show alchemy effect smells based on skill level
 			if(alchemy_effects && alchemy_effects.len)
 				if(alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6)
@@ -64,11 +30,13 @@
 						var/smell = get_effect_smell(effect)
 						// Show effects based on skill - higher skill reveals more
 						if(effect_count == 1 && (alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6))
-							. += span_notice(" Smells of [smell].")
+							. += span_notice(" Smells strongly of [smell].")
 						else if(effect_count == 2 && (alch_skill >= SKILL_LEVEL_APPRENTICE || perint >= 10))
 							. += span_notice(" Also smells of [smell].")
-						else if(effect_count >= 3 && (alch_skill >= SKILL_LEVEL_EXPERT || perint >= 16))
+						else if(effect_count >= 3 && (alch_skill >= SKILL_LEVEL_JOURNEYMAN || perint >= 13))
 							. += span_notice(" Faintly smells of [smell].")
+						else if(effect_count >= 4 && (alch_skill >= SKILL_LEVEL_MASTER || perint >= 17))
+							. += span_notice(" Subtley smells of [smell].")
 /obj/item/alch/viscera
 	name = "viscera"
 	icon_state = "viscera"
@@ -223,12 +191,12 @@
 /obj/item/alch/atropa
 	name = "atropa"
 	icon_state = "atropa"
-	alchemy_effects = list(EFFECT_POISON, EFFECT_DAMAGE_STAMINA, EFFECT_WEAKNESS, EFFECT_PARALYZE)
+	alchemy_effects = list(EFFECT_DAMAGE_TOX, EFFECT_DRAIN_STAMINA, EFFECT_WEAKNESS, EFFECT_PARALYZE)
 
 /obj/item/alch/matricaria
 	name = "matricaria"
 	icon_state = "matricaria"
-	alchemy_effects = list(EFFECT_POISON, EFFECT_SLOW, EFFECT_WEAKNESS, EFFECT_NAUSEA)
+	alchemy_effects = list(EFFECT_DAMAGE_TOX, EFFECT_WEAKEN_SPEED, EFFECT_WEAKNESS, EFFECT_NAUSEA)
 
 /obj/item/alch/symphitum
 	name = "symphitum"
@@ -248,22 +216,22 @@
 /obj/item/alch/paris
 	name = "paris"
 	icon_state = "paris"
-	alchemy_effects = list(EFFECT_DAMAGE_STAMINA, EFFECT_POISON, EFFECT_PARALYZE, EFFECT_SILENCE)
+	alchemy_effects = list(EFFECT_DRAIN_STAMINA, EFFECT_DAMAGE_TOX, EFFECT_PARALYZE, EFFECT_SILENCE)
 
 /obj/item/alch/calendula
 	name = "calendula"
 	icon_state = "calendula"
-	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_FORTIFY_ENDURANCE, EFFECT_RESTORE_BLOOD, EFFECT_DAMAGE_STAMINA)
+	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_FORTIFY_ENDURANCE, EFFECT_RESTORE_BLOOD, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/mentha
 	name = "mentha"
 	icon_state = "mentha"
-	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_RESTORE_STAMINA, EFFECT_SLOW)
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_RESTORE_STAMINA, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/urtica
 	name = "urtica"
 	icon_state = "urtica"
-	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_ENDURANCE, EFFECT_POISON)
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_MANA, EFFECT_FORTIFY_ENDURANCE, EFFECT_DAMAGE_TOX)
 
 /obj/item/alch/salvia
 	name = "salvia"
@@ -273,7 +241,7 @@
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_TINY
 	alternate_worn_layer  = 8.9 //On top of helmet
-	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_STAMINA, EFFECT_HEAL_BRUTE, EFFECT_DAMAGE_STAMINA)
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_STAMINA, EFFECT_HEAL_BRUTE, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/hypericum
 	name = "hypericum"
@@ -283,7 +251,7 @@
 /obj/item/alch/benedictus
 	name = "benedictus"
 	icon_state = "benedictus"
-	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_CONSTITUTION, EFFECT_SLOW)
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_RESTORE_MANA, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/valeriana
 	name = "valeriana"
@@ -293,7 +261,7 @@
 /obj/item/alch/artemisia
 	name = "artemisia"
 	icon_state = "artemisia"
-	alchemy_effects = list(EFFECT_FORTIFY_INTELLIGENCE, EFFECT_FORTIFY_SPEED, EFFECT_RESTORE_ENERGY, EFFECT_DAMAGE_ENERGY)
+	alchemy_effects = list(EFFECT_FORTIFY_INTELLIGENCE, EFFECT_FORTIFY_SPEED, EFFECT_RESTORE_MANA, EFFECT_DRAIN_MANA)
 
 /obj/item/alch/manabloompowder
 	name = "manabloom powder"

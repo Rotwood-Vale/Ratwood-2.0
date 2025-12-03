@@ -41,6 +41,7 @@
 #define EFFECT_NO_PAIN "no_pain"
 #define EFFECT_WEAKNESS "weakness"
 #define EFFECT_INVISIBILITY "invisibility"
+#define EFFECT_NAUSEA "nausea"
 
 // Resistance
 #define EFFECT_MAGIC_RESIST "magic_resist"
@@ -98,6 +99,7 @@
 #define EFFECT_GREATER_NO_PAIN "greater_no_pain"
 #define EFFECT_GREATER_WEAKNESS "greater_weakness"
 #define EFFECT_GREATER_INVISIBILITY "greater_invisibility"
+#define EFFECT_GREATER_NAUSEA "greater_nausea"
 
 //Greater Resistance
 #define EFFECT_GREATER_MAGIC_RESIST "greater_magic_resist"
@@ -149,6 +151,7 @@ GLOBAL_LIST_INIT(alchemy_effect_greater_versions, list(
 	EFFECT_NO_PAIN = EFFECT_GREATER_NO_PAIN,
 	EFFECT_WEAKNESS = EFFECT_GREATER_WEAKNESS,
 	EFFECT_INVISIBILITY = EFFECT_GREATER_INVISIBILITY,
+	EFFECT_NAUSEA = EFFECT_GREATER_NAUSEA,
 	EFFECT_MAGIC_RESIST = EFFECT_GREATER_MAGIC_RESIST,
 	EFFECT_CRIT_RESIST = EFFECT_GREATER_CRIT_RESIST,
 	EFFECT_FEATHER_FALL = EFFECT_GREATER_FEATHER_FALL,
@@ -209,6 +212,7 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 	EFFECT_NO_PAIN = "soothing aloe",
 	EFFECT_WEAKNESS = "faint musk",
 	EFFECT_INVISIBILITY = "foggy dew",
+	EFFECT_NAUSEA = "vile bile",
 	EFFECT_MAGIC_RESIST = "crackling ozone",
 	EFFECT_CRIT_RESIST = "hardened bark",
 	EFFECT_FEATHER_FALL = "light dandelion",
@@ -251,6 +255,7 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 	EFFECT_GREATER_NO_PAIN = "powerful aloe",
 	EFFECT_GREATER_WEAKNESS = "strong musk",
 	EFFECT_GREATER_INVISIBILITY = "thick fog",
+	EFFECT_GREATER_NAUSEA = "disgusting bile",
 	EFFECT_GREATER_MAGIC_RESIST = "intense ozone",
 	EFFECT_GREATER_CRIT_RESIST = "solid bark",
 	EFFECT_GREATER_FEATHER_FALL = "fluffy dandelion",
@@ -268,7 +273,7 @@ GLOBAL_LIST_INIT(alchemy_effect_words, list(
 	EFFECT_HEAL_TOX = list("curing", "antidote"),
 	EFFECT_RESTORE_STAMINA = list("energizing", "vigor"),
 	EFFECT_RESTORE_MANA = list("invigorating", "essence"),
-	EFFECT_RESTORE_BLOOD = list("vital", "fluid"),
+	EFFECT_RESTORE_BLOOD = list("engorging", "fluid"),
 	EFFECT_RESTORE_DEVOTION = list("sacred", "elixir"),
 	EFFECT_DAMAGE_BRUTE = list("wounding", "bane"),
 	EFFECT_DAMAGE_BURN = list("scorching", "blight"),
@@ -297,6 +302,7 @@ GLOBAL_LIST_INIT(alchemy_effect_words, list(
 	EFFECT_NO_PAIN = list("numbing", "ease"),
 	EFFECT_WEAKNESS = list("feeble", "frailty"),
 	EFFECT_INVISIBILITY = list("unseen", "cloak"),
+	EFFECT_NAUSEA = list("nauseating", "retch"),
 	EFFECT_MAGIC_RESIST = list("warding", "aegis"),
 	EFFECT_CRIT_RESIST = list("fortified", "guard"),
 	EFFECT_FEATHER_FALL = list("floating", "descent"),
@@ -341,6 +347,7 @@ GLOBAL_LIST_INIT(alchemy_effect_words, list(
 	EFFECT_GREATER_NO_PAIN = list("numbing", "greater ease"),
 	EFFECT_GREATER_WEAKNESS = list("feeble", "greater frailty"),
 	EFFECT_GREATER_INVISIBILITY = list("unseen", "greater cloak"),
+	EFFECT_GREATER_NAUSEA = list("nauseating", "greater retch"),
 	EFFECT_GREATER_MAGIC_RESIST = list("warding", "greater aegis"),
 	EFFECT_GREATER_CRIT_RESIST = list("fortified", "greater guard"),
 	EFFECT_GREATER_FEATHER_FALL = list("floating", "greater descent"),

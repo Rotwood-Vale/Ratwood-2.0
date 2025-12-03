@@ -18,57 +18,18 @@
 	
 	// Apply each effect
 	for(var/effect in alchemy_effects)
-		switch(effect)
-			if(EFFECT_HEAL_BRUTE)
-				M.adjustBruteLoss(-0.5*REM, 0)
-			if(EFFECT_HEAL_BURN)
-				M.adjustFireLoss(-0.5*REM, 0)
-			if(EFFECT_HEAL_TOX)
-				M.adjustToxLoss(-0.5*REM, 0)
-			if(EFFECT_RESTORE_STAMINA)
-				if(volume > 0.99)
+		if(volume > 0.99)
+			switch(effect)
+				if(EFFECT_HEAL_BRUTE)
+					M.adjustBruteLoss(-0.5*REM, 0)
+				if(EFFECT_HEAL_BURN)
+					M.adjustFireLoss(-0.5*REM, 0)
+				if(EFFECT_HEAL_TOX)
+					M.adjustToxLoss(-0.5*REM, 0)
+				if(EFFECT_RESTORE_STAMINA)
 					M.stamina_add(-5)
-			if(EFFECT_RESTORE_ENERGY)
-				if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
+				if(EFFECT_RESTORE_MANA)
 					M.energy_add(5)
-			if(EFFECT_RESTORE_BLOOD)
-				if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-					M.blood_volume = min(M.blood_volume+3, BLOOD_VOLUME_NORMAL)
-			if(EFFECT_FORTIFY_STRENGTH)
-				M.add_stress(/datum/stressevent/buff_strength)
-			if(EFFECT_FORTIFY_PERCEPTION)
-				M.add_stress(/datum/stressevent/buff_perception)
-			if(EFFECT_FORTIFY_INTELLIGENCE)
-				M.add_stress(/datum/stressevent/buff_intelligence)
-			if(EFFECT_FORTIFY_CONSTITUTION)
-				M.add_stress(/datum/stressevent/buff_constitution)
-			if(EFFECT_FORTIFY_ENDURANCE)
-				M.add_stress(/datum/stressevent/buff_endurance)
-			if(EFFECT_FORTIFY_SPEED)
-				M.add_stress(/datum/stressevent/buff_speed)
-			if(EFFECT_FORTIFY_LUCK)
-				M.add_stress(/datum/stressevent/buff_fortune)
-			if(EFFECT_PARALYZE)
-				if(prob(5))
-					M.Paralyze(20)
-			if(EFFECT_POISON)
-				M.adjustToxLoss(0.5*REM, 0)
-			if(EFFECT_DAMAGE_STAMINA)
-				if(volume > 0.99)
-					M.stamina_add(5)
-			if(EFFECT_DAMAGE_ENERGY)
-				if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
-					M.energy_add(-5)
-			if(EFFECT_WEAKNESS)
-				M.add_stress(/datum/stressevent/debuff_weakness)
-			if(EFFECT_SLOW)
-				M.add_movespeed_modifier(MOVESPEED_ID_REAGENT, TRUE, 100, override = TRUE, multiplicative_slowdown = 0.5)
-			if(EFFECT_BLINDNESS)
-				if(prob(5))
-					M.blind_eyes(2)
-			if(EFFECT_SILENCE)
-				if(prob(5))
-					M.silent = max(M.silent, 20)
 	
 	..()
 	. = 1
@@ -132,16 +93,13 @@
 	reagent_state = SOLID
 
 // Helper proc to create herb extract with copied effects
-/proc/create_herb_extract(extract_type, herb_item, base_amount = 30)
+/proc/create_herb_extract(extract_type, obj/item/ingr, base_amount = 30)
 	var/datum/reagent/herb_extract/extract = new extract_type()
 	
 	// Copy herb name
-	if(istype(herb_item, /obj/item/alch))
-		extract.source_herb_type = herb_item.type
-		extract.source_herb_name = herb_item.name
-		extract.name = "[herb_item.name] [initial(extract.name)]"
-		
-		// Copy alchemy effects from herb if it has them
-		// This will be set up when herbs are initialized with their effects
+	if(istype(ingr, /obj/item))
+		extract.source_herb_type = ingr.type
+		extract.source_herb_name = ingr.name
+		extract.name = "[ingr.name] [initial(extract.name)]"
 	
 	return extract

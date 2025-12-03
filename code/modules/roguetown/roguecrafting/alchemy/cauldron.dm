@@ -52,98 +52,38 @@
 		ENABLE_BITFIELD(reagents.flags, AMOUNT_VISIBLE)
 	. = ..()
 */
+/datum/reagents/proc/has_reagent_type(/datum/reagent/reagent_type, amount)
+	var/total = 0
+	for (var/datum/reagent/R in reagent_list)
+		if (istype(R, reagent_type))
+			total += R.volume
+			if (total >= amount)
+				return TRUE
+	return FALSE
 
 /obj/machinery/light/rogue/cauldron/process()
 	..()
 	update_icon()
 	if(on)
-		// Check if we can brew - either with ingredients OR with extract reagents for secondary processing
-		var/can_brew = ingredients.len > 0 || src.reagents.has_reagent(/datum/reagent/herb_extract, 60)
-		
+		var/can_brew = (length(ingredients) > 0) || (src.reagents && src.reagents.has_reagent_type(/datum/reagent/herb_extract, 60))
+
 		if(can_brew)
 			if(brewing < 20)
-				// Check for base reagents (water, oil, wine, acid) - need 90u minimum
-				// OR check for extract reagents for secondary processing - need 60u minimum
-				if(src.reagents.has_reagent(/datum/reagent/water,90) ||
-					src.reagents.has_reagent(/datum/reagent/cooking_oil,90) ||
-					src.reagents.has_reagent(/datum/reagent/consumable/ethanol,90) ||
-					src.reagents.has_reagent(/datum/reagent/rogueacid,90) ||
-					src.reagents.has_reagent(/datum/reagent/herb_extract,60))  // Secondary processing needs 60u
+				if(src.reagents && (src.reagents.has_reagent_type(/datum/reagent/water, 90) || src.reagents.has_reagent_type(/datum/reagent/consumable/oil/tallow, 90) || src.reagents.has_reagent_type(/datum/reagent/consumable/ethanol, 90) || src.reagents.has_reagent_type(/datum/reagent/rogueacid, 90) || src.reagents.has_reagent_type(/datum/reagent/herb_extract, 60)))
 					brewing++
 					if(prob(10))
 						playsound(src, "bubbles", 100, FALSE)
+
 			else if(brewing == 20)
-				// First, try KCD-style alchemy (herb + base reagent → extract OR extract → concentrate)
 				if(try_kcd_herb_extraction())
+					// probably also reset brewing on success so it doesn't re-fire every tick:
+					brewing = 0
 					return
-				
-				// Fall back to traditional potion system
-				var/list/outcomes = list()
-				for(var/obj/item/ing in src.ingredients)
-					if(!istype(ing,/obj/item/alch))
-						continue
-					var/obj/item/alch/alching = ing
-					if(alching.major_pot != null)
-						if(outcomes[alching.major_pot] != null)
-							outcomes[alching.major_pot] += 3
-						else
-							outcomes[alching.major_pot] = 3
-					if(alching.med_pot != null)
-						if(outcomes[alching.med_pot] != null)
-							outcomes[alching.med_pot] += 2
-						else
-							outcomes[alching.med_pot] = 2
-					if(alching.minor_pot != null)
-						if(outcomes[alching.minor_pot] != null)
-							outcomes[alching.minor_pot] += 1
-						else
-							outcomes[alching.minor_pot] = 1
-				sortTim(outcomes,cmp=/proc/cmp_numeric_dsc,associative = 1)
-				if(outcomes[outcomes[1]] >= 5)
-					var/result_path = outcomes[1]
-					var/datum/alch_cauldron_recipe/found_recipe = new result_path
-					var/amt2raise = lastuser?.STAINT*2
-					var/in_cauldron = src?.reagents?.get_reagent_amount(/datum/reagent/water)
-					// Handle skillgating
-					if(!lastuser)
-						brewing = 0
-						src.visible_message(span_info("The cauldron can't brew anything without an alchemist to guide it."))
-						return
-					if(found_recipe.skill_required > lastuser?.get_skill_level(/datum/skill/craft/alchemy))
-						brewing = 0
-						src.visible_message(span_warning("The ingredients in the cauldron melds together into a disgusting mess! Perhaps a more skilled alchemist is needed for this recipe."))
-						if(reagents)
-							src.reagents.remove_reagent(/datum/reagent/water, in_cauldron)
-						for(var/obj/item/ing in src.ingredients)
-							qdel(ing)
-						src.reagents.add_reagent(/datum/reagent/yuck, in_cauldron) // 1 to 1 transmutation of yuck
-						// Learn from your failure (Yeah you can technically still grind this way you just blow through a lot of ingredients)
-						lastuser?.adjust_experience(/datum/skill/craft/alchemy, amt2raise, FALSE) 
-						return
-					for(var/obj/item/ing in src.ingredients)
-						qdel(ing)
-					if(reagents)
-						src.reagents.remove_reagent(/datum/reagent/water, in_cauldron)
-					if(found_recipe.output_reagents.len)
-						src.reagents.add_reagent_list(found_recipe.output_reagents)
-					if(found_recipe.output_items.len)
-						for(var/itempath in found_recipe.output_items)
-							new itempath(get_turf(src))
-					//handle player perception and reset for next time
-					src.visible_message("<span class='info'>The cauldron finishes boiling with a faint [found_recipe.smells_like] smell.</span>")
-					record_featured_stat(FEATURED_STATS_ALCHEMISTS, lastuser)
-					record_round_statistic(STATS_POTIONS_BREWED)
-					//give xp for /datum/skill/craft/alchemy
-					lastuser?.adjust_experience(/datum/skill/craft/alchemy, amt2raise, FALSE)
-					playsound(src, "bubbles", 100, TRUE)
-					playsound(src,'sound/misc/smelter_fin.ogg', 30, FALSE)
-					ingredients = list()
-					brewing = 21
-					qdel(found_recipe)
 				else
 					brewing = 0
 					src.visible_message("<span class='info'>The ingredients in the [src] fail to meld together at all...</span>")
 					playsound(src,'sound/misc/smelter_fin.ogg', 30, FALSE)
+
 
 /obj/machinery/light/rogue/cauldron/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/alch))
@@ -280,10 +220,10 @@
 			skill_required = SKILL_LEVEL_NOVICE
 			extract_name = "tonic"
 			
-		else if(src.reagents.has_reagent(/datum/reagent/cooking_oil, 90))
+		else if(src.reagents.has_reagent(/datum/reagent/consumable/oil/tallow, 90))
 			extract_type = /datum/reagent/herb_extract/oil
-			base_reagent_type = /datum/reagent/cooking_oil
-			base_amount = src.reagents.get_reagent_amount(/datum/reagent/cooking_oil)
+			base_reagent_type = /datum/reagent/consumable/oil/tallow
+			base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/oil/tallow)
 			skill_required = SKILL_LEVEL_NOVICE
 			extract_name = "oil"
 		
@@ -340,9 +280,6 @@
 	
 	// For secondary processing, UPGRADE effects to GREATER versions
 	if(is_secondary_processing)
-		// Find the source extract
-		var/datum/reagent/herb_extract/source_extract = null
-		// Store source effects before removing
 		var/list/source_effects = null
 		var/source_herb = null
 		var/source_type = null
