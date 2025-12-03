@@ -144,6 +144,13 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 			if(!R2.alchemy_effects || !R2.alchemy_effects.len)
 				continue
 			
+			// Check if both reagents are from the same source herb - if so, skip
+			if(istype(R1, /datum/reagent/herb_extract) && istype(R2, /datum/reagent/herb_extract))
+				var/datum/reagent/herb_extract/E1 = R1
+				var/datum/reagent/herb_extract/E2 = R2
+				if(E1.source_herb_name && E2.source_herb_name && E1.source_herb_name == E2.source_herb_name)
+					continue  // Same herb source, don't mix
+			
 			// Get common effects
 			var/list/common = get_common_alchemy_effects(R1, R2)
 			if(!common || !common.len)
