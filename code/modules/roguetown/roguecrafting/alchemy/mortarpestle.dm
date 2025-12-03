@@ -54,13 +54,20 @@
 		to_chat(user, "<span class='warning'>There's nothing to grind.</span>")
 		return
 	
-	// Check if this is produce without grind_results - create dynamic powder
+	// Check if this is produce with alchemy_effects but no grind_results - create dynamic powder
 	if(istype(to_grind, /obj/item/reagent_containers/food/snacks/grown))
 		var/obj/item/reagent_containers/food/snacks/grown/produce = to_grind
-		if(!produce.grind_results || !produce.grind_results.len)
-			// Check if it has alchemy_effects
-			if(produce.alchemy_effects && produce.alchemy_effects.len)
-				// Create a powder container dynamically
+		// If it has alchemy_effects, handle powder creation
+		if(produce.alchemy_effects && produce.alchemy_effects.len)
+			// If it has grind_results, do normal grinding
+			if(produce.grind_results && produce.grind_results.len)
+				to_grind.on_grind()
+				reagents.add_reagent_list(to_grind.grind_results)
+				to_chat(user, span_notice("I break [to_grind] into powder."))
+				QDEL_NULL(to_grind)
+				return
+			// Otherwise create dynamic powder
+			else
 				var/obj/item/reagent_containers/powder/P = new /obj/item/reagent_containers/powder(get_turf(src))
 				P.name = "powdered [produce.name]"
 				P.desc = "A fine powder ground from [produce.name]."

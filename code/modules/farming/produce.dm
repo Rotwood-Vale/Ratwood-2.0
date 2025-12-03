@@ -191,6 +191,7 @@
 	seed = /obj/item/seeds/pear
 	desc = "A juicy, bell-shaped fruit with a delicate sweetness and soft, grainy flesh."
 	icon_state = "pear"
+	filling_color = "#D2B48C"
 	tastes = list("pear" = 1)
 	splat_color = "#D2B48C"
 
@@ -200,6 +201,7 @@
 	seed = /obj/item/seeds/lemon
 	desc = "A bright yellow citrus fruit, prized for its tart, refreshing juice and fragrant zest."
 	icon_state = "lemon"
+	filling_color = "#FFFF00"
 	tastes = list("lemon" = 1)
 	splat_color = "#FFFF00"
 
@@ -209,6 +211,7 @@
 	seed = /obj/item/seeds/lime
 	desc = "A small, green citrus fruit with a sharp, tangy flavor, often used to add zest to dishes and drinks."
 	icon_state = "lemon" // Need a real icon
+	filling_color = "#00FF00"
 	tastes = list("lime" = 1)
 	splat_color = "#00FF00"
 
@@ -218,6 +221,7 @@
 	seed = /obj/item/seeds/tangerine
 	desc = "A small, easy-to-peel citrus fruit with a vibrant orange color and sweet, juicy segments."
 	icon_state = "tangerine"
+	filling_color = "#FFA500"
 	tastes = list("tangerine" = 1)
 	splat_color = "#FFA500"
 
@@ -227,6 +231,7 @@
 	seed = /obj/item/seeds/plum
 	desc = "A smooth-skinned fruit with juicy, sweet-tart flesh and a deep purple or red hue."
 	icon_state = "plum"
+	filling_color = "#8B008B"
 	tastes = list("plum" = 1)
 	splat_color = "#8B008B"
 
@@ -236,6 +241,7 @@
 	seed = /obj/item/seeds/strawberry
 	desc = "A small, red fruit with a sweet taste. It is often used in desserts."
 	icon_state = "strawberry"
+	filling_color = "#9A1B00"
 	tastes = list("strawberry" = 1)
 	splat_color = "#9A1B00"
 
@@ -245,6 +251,7 @@
 	seed = /obj/item/seeds/blackberry
 	desc = "A small, dark fruit with a sweet and slightly tart taste. It is often used in desserts."
 	icon_state = "blackberry"
+	filling_color = "#272C3F"
 	tastes = list("blackberry" = 1)
 	splat_color = "#272C3F"
 
@@ -254,6 +261,7 @@
 	seed = /obj/item/seeds/raspberry
 	desc = "A small, red fruit with a sweet and slightly tart taste. It is often used in desserts."
 	icon_state = "raspberry"
+	filling_color = "#A01600"
 	tastes = list("raspberry" = 1)
 	splat_color = "#A01600"
 
@@ -263,6 +271,7 @@
 	seed = /obj/item/seeds/tomato
 	desc = "A plump, red fruit with juicy flesh and a balanced sweet-tart flavor, essential in salads and sauces."
 	icon_state = "tomato"
+	filling_color = "#CD5320"
 	tastes = list("tomato" = 1)
 	splat_color = "#CD5320"
 
@@ -361,6 +370,7 @@
 	desc = "A shield against hunger, naught else."
 	seed = /obj/item/seeds/turnip
 	icon_state = "turnip"
+	filling_color = "#E6D8C3"
 	tastes = list("dirt" = 1)
 	bitesize = 1
 	slices_num = 1
@@ -377,6 +387,7 @@
 	alchemy_effects = list(EFFECT_FORTIFY_LUCK, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_PERCEPTION)
 	desc = "A large, bright yellow flower. Can be worn on the head."
 	icon_state = "sunflower"
+	filling_color = "#FFD700"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
 	seed = /obj/item/seeds/sunflower
 	slot_flags = ITEM_SLOT_HEAD
@@ -549,6 +560,7 @@
 	chopping_sound = TRUE
 	dropshrink = 0.8
 	icon_state = "onion"
+	filling_color = "#C8A2C8"
 	slices_num = 2
 	tastes = list("spicy sweetness" = 1)
 	bitesize = 2
@@ -561,6 +573,7 @@
 	alchemy_effects = list(EFFECT_FORTIFY_ENDURANCE, EFFECT_HEAL_BRUTE, EFFECT_RESTORE_ENERGY)
 	desc = "A dense leafed vegetable, crunchy and ripe. A symbol of prosperity for elves."
 	icon_state = "cabbage"
+	filling_color = "#90EE90"
 	tastes = list("blandness" = 1)
 	bitesize = 10
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
@@ -575,6 +588,7 @@
 	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_ENDURANCE)
 	desc = "A spud, dwarven icon of growth. Can be eaten raw."
 	icon_state = "potato"
+	filling_color = "#D2B48C"
 	eat_effect = null
 	tastes = list("potato" = 1)
 	bitesize = 2
