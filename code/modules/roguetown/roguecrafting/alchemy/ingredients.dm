@@ -2,6 +2,7 @@
 	var/list/alchemy_effects = list()
 	var/filling_color = "#d4c5a9"
 	var/list/tastes
+	
 /obj/item/alch
 	name = "dust"
 	desc = ""

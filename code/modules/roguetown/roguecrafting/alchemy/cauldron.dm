@@ -52,7 +52,7 @@
 		ENABLE_BITFIELD(reagents.flags, AMOUNT_VISIBLE)
 	. = ..()
 */
-/datum/reagents/proc/has_reagent_type(/datum/reagent/reagent_type, amount)
+/datum/reagents/proc/has_reagent_type(datum/reagent/reagent_type, amount)
 	var/total = 0
 	for (var/datum/reagent/R in reagent_list)
 		if (istype(R, reagent_type))
