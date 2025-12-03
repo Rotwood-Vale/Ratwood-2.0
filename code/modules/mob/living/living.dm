@@ -1675,6 +1675,8 @@
 		if(HAS_TRAIT(src, TRAIT_NO_EXTINGUISH)) //You can't reduce fire stacks of the everlasting flames
 			return
 		stacks = max(-fire_stacks, stacks)
+	else
+		remove_frost_stacks(src)
 	apply_status_effect(fire_type, stacks)
 
 /**

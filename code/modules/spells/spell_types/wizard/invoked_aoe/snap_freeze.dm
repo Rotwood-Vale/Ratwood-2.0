@@ -76,15 +76,7 @@
 				L.adjustFireLoss(damage)
 			else
 				L.adjustFireLoss(damage + 30)
-			if(L.has_status_effect(/datum/status_effect/buff/frostbite))
-				return
-			else
-				if(L.has_status_effect(/datum/status_effect/buff/frost))
-					playsound(T, 'sound/combat/fracture/fracturedry (1).ogg', 80, TRUE, soundping = TRUE)
-					L.remove_status_effect(/datum/status_effect/buff/frost)
-					L.apply_status_effect(/datum/status_effect/buff/frostbite)
-				else
-					L.apply_status_effect(/datum/status_effect/buff/frost)
+			add_frost_stacks(L)
 			playsound(affected_turf, "genslash", 80, TRUE)
 			to_chat(L, "<span class='userdanger'>The air chills your bones!</span>")
 

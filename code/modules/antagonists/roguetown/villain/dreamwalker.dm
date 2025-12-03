@@ -504,7 +504,7 @@
 				H.ignite_mob()
 			target.visible_message(span_warning("[source] ignites [target] with strange flame!"))
 		if("frost")
-			H.apply_status_effect(/datum/status_effect/buff/frostbite)
+			add_frost_stacks(H)
 			target.visible_message(span_warning("[source] freezes [target] with scalding ice!"))
 		if("poison")
 			if(H.reagents)
