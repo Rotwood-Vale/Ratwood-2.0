@@ -1,7 +1,9 @@
 // Elder Scrolls-style Alchemy Effect System
 // Each reagent has a list of effects that can be discovered through combination
 
-// Alchemy effect types
+// Alchemy effect types - MASSIVELY EXPANDED (72 base effects + 72 GREATER variants = 144 total)
+
+// Original 21 Effects
 #define EFFECT_HEAL_BRUTE "heal_brute"
 #define EFFECT_HEAL_BURN "heal_burn"
 #define EFFECT_HEAL_TOX "heal_toxin"
@@ -23,6 +25,152 @@
 #define EFFECT_POISON "poison"
 #define EFFECT_DAMAGE_STAMINA "damage_stamina"
 #define EFFECT_DAMAGE_ENERGY "damage_energy"
+
+// Fire/Frost/Elemental Effects (12 new)
+#define EFFECT_FIRE_STACKS "fire_stacks"
+#define EFFECT_FROST_SLOW "frost_slow"
+#define EFFECT_SHOCK_DAMAGE "shock_damage"
+#define EFFECT_ACID_BURN "acid_burn"
+#define EFFECT_HEAT_RESISTANCE "heat_resistance"
+#define EFFECT_COLD_RESISTANCE "cold_resistance"
+#define EFFECT_FIRE_IMMUNITY "fire_immunity"
+#define EFFECT_FROST_IMMUNITY "frost_immunity"
+#define EFFECT_ELECTRIC_RESISTANCE "electric_resistance"
+#define EFFECT_ACID_RESISTANCE "acid_resistance"
+#define EFFECT_MAGIC_RESISTANCE "magic_resistance"
+#define EFFECT_PHYSICAL_RESISTANCE "physical_resistance"
+
+// Trait-Based Buffs (15 new)
+#define EFFECT_IRON_STOMACH "iron_stomach"
+#define EFFECT_KEEN_SENSES "keen_senses"
+#define EFFECT_SILENT_STEP "silent_step"
+#define EFFECT_SURE_FOOTED "sure_footed"
+#define EFFECT_QUICK_HANDS "quick_hands"
+#define EFFECT_THICK_SKIN "thick_skin"
+#define EFFECT_REGENERATE_ALL "regenerate_all"
+#define EFFECT_BLOOD_REGENERATION "blood_regeneration"
+#define EFFECT_STAMINA_REGENERATION "stamina_regeneration"
+#define EFFECT_CLARITY "clarity"
+#define EFFECT_NIGHT_VISION "night_vision"
+#define EFFECT_WATER_BREATHING "water_breathing"
+#define EFFECT_FEATHER_FALL "feather_fall"
+#define EFFECT_POISON_IMMUNITY "poison_immunity"
+#define EFFECT_DISEASE_IMMUNITY "disease_immunity"
+
+// Combat Effects (10 new)
+#define EFFECT_BATTLE_FURY "battle_fury"
+#define EFFECT_CRITICAL_STRIKE "critical_strike"
+#define EFFECT_ARMOR_PENETRATION "armor_penetration"
+#define EFFECT_RIPOSTE "riposte"
+#define EFFECT_LAST_STAND "last_stand"
+#define EFFECT_BERSERK "berserk"
+#define EFFECT_ADRENALINE "adrenaline"
+#define EFFECT_WEAPON_DAMAGE "weapon_damage"
+#define EFFECT_SPELL_POWER "spell_power"
+#define EFFECT_DODGE_CHANCE "dodge_chance"
+
+// Debuffs (8 new)
+#define EFFECT_CONFUSION "confusion"
+#define EFFECT_FEAR "fear"
+#define EFFECT_DISEASE "disease"
+#define EFFECT_CURSE "curse"
+#define EFFECT_NAUSEA "nausea"
+#define EFFECT_BLEEDING "bleeding"
+#define EFFECT_CRIPPLE "cripple"
+#define EFFECT_VULNERABILITY "vulnerability"
+
+// Special Effects (6 new)
+#define EFFECT_INVISIBILITY "invisibility"
+#define EFFECT_LEVITATE "levitate"
+#define EFFECT_HASTE "haste"
+#define EFFECT_DETECT_MAGIC "detect_magic"
+#define EFFECT_TRANSMUTE "transmute"
+#define EFFECT_SUMMON_FAMILIAR "summon_familiar"
+
+// GREATER Effect Variants (for concentrated/advanced extracts)
+// Original 21
+#define EFFECT_GREATER_HEAL_BRUTE "greater_heal_brute"
+#define EFFECT_GREATER_HEAL_BURN "greater_heal_burn"
+#define EFFECT_GREATER_HEAL_TOX "greater_heal_toxin"
+#define EFFECT_GREATER_RESTORE_STAMINA "greater_restore_stamina"
+#define EFFECT_GREATER_RESTORE_ENERGY "greater_restore_energy"
+#define EFFECT_GREATER_RESTORE_BLOOD "greater_restore_blood"
+#define EFFECT_GREATER_FORTIFY_STRENGTH "greater_fortify_strength"
+#define EFFECT_GREATER_FORTIFY_PERCEPTION "greater_fortify_perception"
+#define EFFECT_GREATER_FORTIFY_INTELLIGENCE "greater_fortify_intelligence"
+#define EFFECT_GREATER_FORTIFY_CONSTITUTION "greater_fortify_constitution"
+#define EFFECT_GREATER_FORTIFY_ENDURANCE "greater_fortify_endurance"
+#define EFFECT_GREATER_FORTIFY_SPEED "greater_fortify_speed"
+#define EFFECT_GREATER_FORTIFY_LUCK "greater_fortify_luck"
+#define EFFECT_GREATER_PARALYZE "greater_paralyze"
+#define EFFECT_GREATER_BLINDNESS "greater_blindness"
+#define EFFECT_GREATER_SILENCE "greater_silence"
+#define EFFECT_GREATER_SLOW "greater_slow"
+#define EFFECT_GREATER_WEAKNESS "greater_weakness"
+#define EFFECT_GREATER_POISON "greater_poison"
+#define EFFECT_GREATER_DAMAGE_STAMINA "greater_damage_stamina"
+#define EFFECT_GREATER_DAMAGE_ENERGY "greater_damage_energy"
+
+// Fire/Frost/Elemental GREATER
+#define EFFECT_GREATER_FIRE_STACKS "greater_fire_stacks"
+#define EFFECT_GREATER_FROST_SLOW "greater_frost_slow"
+#define EFFECT_GREATER_SHOCK_DAMAGE "greater_shock_damage"
+#define EFFECT_GREATER_ACID_BURN "greater_acid_burn"
+#define EFFECT_GREATER_HEAT_RESISTANCE "greater_heat_resistance"
+#define EFFECT_GREATER_COLD_RESISTANCE "greater_cold_resistance"
+#define EFFECT_GREATER_FIRE_IMMUNITY "greater_fire_immunity"
+#define EFFECT_GREATER_FROST_IMMUNITY "greater_frost_immunity"
+#define EFFECT_GREATER_ELECTRIC_RESISTANCE "greater_electric_resistance"
+#define EFFECT_GREATER_ACID_RESISTANCE "greater_acid_resistance"
+#define EFFECT_GREATER_MAGIC_RESISTANCE "greater_magic_resistance"
+#define EFFECT_GREATER_PHYSICAL_RESISTANCE "greater_physical_resistance"
+
+// Trait-Based Buffs GREATER
+#define EFFECT_GREATER_IRON_STOMACH "greater_iron_stomach"
+#define EFFECT_GREATER_KEEN_SENSES "greater_keen_senses"
+#define EFFECT_GREATER_SILENT_STEP "greater_silent_step"
+#define EFFECT_GREATER_SURE_FOOTED "greater_sure_footed"
+#define EFFECT_GREATER_QUICK_HANDS "greater_quick_hands"
+#define EFFECT_GREATER_THICK_SKIN "greater_thick_skin"
+#define EFFECT_GREATER_REGENERATE_ALL "greater_regenerate_all"
+#define EFFECT_GREATER_BLOOD_REGENERATION "greater_blood_regeneration"
+#define EFFECT_GREATER_STAMINA_REGENERATION "greater_stamina_regeneration"
+#define EFFECT_GREATER_CLARITY "greater_clarity"
+#define EFFECT_GREATER_NIGHT_VISION "greater_night_vision"
+#define EFFECT_GREATER_WATER_BREATHING "greater_water_breathing"
+#define EFFECT_GREATER_FEATHER_FALL "greater_feather_fall"
+#define EFFECT_GREATER_POISON_IMMUNITY "greater_poison_immunity"
+#define EFFECT_GREATER_DISEASE_IMMUNITY "greater_disease_immunity"
+
+// Combat Effects GREATER
+#define EFFECT_GREATER_BATTLE_FURY "greater_battle_fury"
+#define EFFECT_GREATER_CRITICAL_STRIKE "greater_critical_strike"
+#define EFFECT_GREATER_ARMOR_PENETRATION "greater_armor_penetration"
+#define EFFECT_GREATER_RIPOSTE "greater_riposte"
+#define EFFECT_GREATER_LAST_STAND "greater_last_stand"
+#define EFFECT_GREATER_BERSERK "greater_berserk"
+#define EFFECT_GREATER_ADRENALINE "greater_adrenaline"
+#define EFFECT_GREATER_WEAPON_DAMAGE "greater_weapon_damage"
+#define EFFECT_GREATER_SPELL_POWER "greater_spell_power"
+#define EFFECT_GREATER_DODGE_CHANCE "greater_dodge_chance"
+
+// Debuffs GREATER
+#define EFFECT_GREATER_CONFUSION "greater_confusion"
+#define EFFECT_GREATER_FEAR "greater_fear"
+#define EFFECT_GREATER_DISEASE "greater_disease"
+#define EFFECT_GREATER_CURSE "greater_curse"
+#define EFFECT_GREATER_NAUSEA "greater_nausea"
+#define EFFECT_GREATER_BLEEDING "greater_bleeding"
+#define EFFECT_GREATER_CRIPPLE "greater_cripple"
+#define EFFECT_GREATER_VULNERABILITY "greater_vulnerability"
+
+// Special Effects GREATER
+#define EFFECT_GREATER_INVISIBILITY "greater_invisibility"
+#define EFFECT_GREATER_LEVITATE "greater_levitate"
+#define EFFECT_GREATER_HASTE "greater_haste"
+#define EFFECT_GREATER_DETECT_MAGIC "greater_detect_magic"
+#define EFFECT_GREATER_TRANSMUTE "greater_transmute"
+#define EFFECT_GREATER_SUMMON_FAMILIAR "greater_summon_familiar"
 
 // Global associative list mapping effects to their smells
 GLOBAL_LIST_INIT(alchemy_effect_smells, list(
