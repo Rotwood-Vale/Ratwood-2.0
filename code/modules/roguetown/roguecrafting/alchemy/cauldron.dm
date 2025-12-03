@@ -63,7 +63,7 @@
 				if(src.reagents.has_reagent(/datum/reagent/water,90) || 
 				   src.reagents.has_reagent(/datum/reagent/cooking_oil,90) ||
 				   src.reagents.has_reagent(/datum/reagent/consumable/ethanol/wine,90) ||
-				   src.reagents.has_reagent(/datum/reagent/consumable/ethanol/beer,90) ||
+				   src.reagents.has_reagent(/datum/reagent/consumable/ethanol/aqua_vitae,90) ||
 				   src.reagents.has_reagent(/datum/reagent/rogueacid,90) ||
 				   src.reagents.has_reagent(/datum/reagent/alch_template,30))
 					brewing++
@@ -253,11 +253,11 @@
 		smell = "sweet herbs"
 		
 	// Check for AMATEUR recipes
-	else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/beer, 90))
-		// Using beer as "spirits" 
+	else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/aqua_vitae, 90))
+		// Using aqua vitae as "spirits" 
 		output_type = /datum/reagent/alch_template/bitters
-		base_reagent_type = /datum/reagent/consumable/ethanol/beer
-		base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/beer)
+		base_reagent_type = /datum/reagent/consumable/ethanol/aqua_vitae
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/aqua_vitae)
 		skill_required = SKILL_LEVEL_APPRENTICE
 		smell = "bitter herbs"
 		
