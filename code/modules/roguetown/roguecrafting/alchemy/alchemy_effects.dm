@@ -91,10 +91,10 @@ GLOBAL_LIST_INIT(alchemy_effect_words, list(
 	if(effects.len >= 3)
 		return "strange brew"
 	
-	// 1 effect: use adjective + noun from that effect
+	// 1 effect: use ONLY first word (adjective) from that effect
 	if(effects.len == 1)
 		var/list/words = get_effect_words(effects[1])
-		return "[words[1]] [words[2]]"
+		return "[words[1]]"
 	
 	// 2 effects: mix adjective from first with noun from second
 	if(effects.len == 2)
