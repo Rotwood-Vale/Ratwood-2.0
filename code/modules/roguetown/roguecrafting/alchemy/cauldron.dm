@@ -60,10 +60,15 @@
 		if(ingredients.len)
 			if(brewing < 20)
 				// Check for various base reagents for KCD-style alchemy
+				var/has_ethanol = FALSE
+				for(var/datum/reagent/R in src.reagents.reagent_list)
+					if(istype(R, /datum/reagent/consumable/ethanol) && src.reagents.get_reagent_amount(R.type) >= 90)
+						has_ethanol = TRUE
+						break
+				
 				if(src.reagents.has_reagent(/datum/reagent/water,90) || 
 				   src.reagents.has_reagent(/datum/reagent/cooking_oil,90) ||
-				   src.reagents.has_reagent(/datum/reagent/consumable/ethanol/wine,90) ||
-				   src.reagents.has_reagent(/datum/reagent/consumable/ethanol/aqua_vitae,90) ||
+				   has_ethanol ||
 				   src.reagents.has_reagent(/datum/reagent/rogueacid,90) ||
 				   src.reagents.has_reagent(/datum/reagent/alch_template,30))
 					brewing++
@@ -230,6 +235,16 @@
 	var/skill_required = SKILL_LEVEL_NOVICE
 	var/smell = "herbs"
 	
+	// Helper to find any ethanol reagent in cauldron
+	var/datum/reagent/found_ethanol = null
+	var/ethanol_amount = 0
+	for(var/datum/reagent/R in src.reagents.reagent_list)
+		if(istype(R, /datum/reagent/consumable/ethanol))
+			if(src.reagents.get_reagent_amount(R.type) >= 90)
+				found_ethanol = R
+				ethanol_amount = src.reagents.get_reagent_amount(R.type)
+				break
+	
 	// Check for NOVICE recipes (base reagent + herb)
 	if(src.reagents.has_reagent(/datum/reagent/water, 90))
 		output_type = /datum/reagent/alch_template/tonic
@@ -245,19 +260,20 @@
 		skill_required = SKILL_LEVEL_NOVICE
 		smell = "oily herbs"
 		
-	else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/wine, 90))
+	else if(found_ethanol && istype(found_ethanol, /datum/reagent/consumable/ethanol/wine))
+		// Wine specifically makes elixir (NOVICE)
 		output_type = /datum/reagent/alch_template/elixir
-		base_reagent_type = /datum/reagent/consumable/ethanol/wine
-		base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/wine)
+		base_reagent_type = found_ethanol.type
+		base_amount = ethanol_amount
 		skill_required = SKILL_LEVEL_NOVICE
 		smell = "sweet herbs"
 		
 	// Check for AMATEUR recipes
-	else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/aqua_vitae, 90))
-		// Using aqua vitae as "spirits" 
+	else if(found_ethanol && !istype(found_ethanol, /datum/reagent/consumable/ethanol/wine))
+		// Any other ethanol (spirits) makes bitters (AMATEUR)
 		output_type = /datum/reagent/alch_template/bitters
-		base_reagent_type = /datum/reagent/consumable/ethanol/aqua_vitae
-		base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/aqua_vitae)
+		base_reagent_type = found_ethanol.type
+		base_amount = ethanol_amount
 		skill_required = SKILL_LEVEL_APPRENTICE
 		smell = "bitter herbs"
 		
