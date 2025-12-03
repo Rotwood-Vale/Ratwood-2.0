@@ -22,6 +22,8 @@
 	var/major_name
 	var/med_name
 	var/minor_name
+	// Elder Scrolls-style alchemy effects
+	var/list/alchemy_effects = list()
 
 /obj/item/alch/Initialize()
 	. = ..()
@@ -53,6 +55,12 @@
 				. += span_notice(" Moderately attuned to making [med_name].")
 			if(!isnull(minor_name))
 				. += span_notice(" Minorly attuned to making [minor_name].")
+			// Show alchemy effects for legendary alchemists
+			if(alchemy_effects && alchemy_effects.len)
+				. += span_notice(" Alchemy Effects:")
+				for(var/effect in alchemy_effects)
+					var/smell = get_effect_smell(effect)
+					. += span_notice("  - [smell]")
 		else
 			if(!isnull(major_smell))
 				if(alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6)
@@ -63,6 +71,20 @@
 			if(!isnull(minor_smell))
 				if(alch_skill >= SKILL_LEVEL_EXPERT || perint >= 16)
 					. += span_notice(" Smells weakly of [minor_smell].")
+			// Show alchemy effect smells based on skill level
+			if(alchemy_effects && alchemy_effects.len)
+				if(alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6)
+					var/effect_count = 0
+					for(var/effect in alchemy_effects)
+						effect_count++
+						var/smell = get_effect_smell(effect)
+						// Show effects based on skill - higher skill reveals more
+						if(effect_count == 1 && (alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6))
+							. += span_notice(" Smells of [smell].")
+						else if(effect_count == 2 && (alch_skill >= SKILL_LEVEL_APPRENTICE || perint >= 10))
+							. += span_notice(" Also smells of [smell].")
+						else if(effect_count >= 3 && (alch_skill >= SKILL_LEVEL_EXPERT || perint >= 16))
+							. += span_notice(" Faintly smells of [smell].")
 /obj/item/alch/viscera
 	name = "viscera"
 	icon_state = "viscera"
@@ -303,6 +325,7 @@
 /obj/item/alch/atropa
 	name = "atropa"
 	icon_state = "atropa"
+	alchemy_effects = list(EFFECT_POISON, EFFECT_DAMAGE_STAMINA, EFFECT_WEAKNESS, EFFECT_PARALYZE)
 
 	major_pot = /datum/alch_cauldron_recipe/doompoison
 	med_pot = /datum/alch_cauldron_recipe/berrypoison
@@ -311,6 +334,7 @@
 /obj/item/alch/matricaria
 	name = "matricaria"
 	icon_state = "matricaria"
+	alchemy_effects = list(EFFECT_POISON, EFFECT_SLOW, EFFECT_WEAKNESS, EFFECT_NAUSEA)
 
 	major_pot = /datum/alch_cauldron_recipe/berrypoison
 	med_pot = /datum/alch_cauldron_recipe/per_potion
@@ -319,6 +343,7 @@
 /obj/item/alch/symphitum
 	name = "symphitum"
 	icon_state = "symphitum"
+	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_HEAL_BURN, EFFECT_RESTORE_BLOOD, EFFECT_WEAKNESS)
 
 	major_pot = /datum/alch_cauldron_recipe/health_potion
 	med_pot = /datum/alch_cauldron_recipe/stam_poison
@@ -327,6 +352,7 @@
 /obj/item/alch/taraxacum
 	name = "taraxacum"
 	icon_state = "taraxacum"
+	alchemy_effects = list(EFFECT_HEAL_TOX, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKNESS)
 
 	major_pot = /datum/alch_cauldron_recipe/stam_poison
 	med_pot = /datum/alch_cauldron_recipe/health_potion
@@ -335,6 +361,7 @@
 /obj/item/alch/euphrasia
 	name = "euphrasia"
 	icon_state = "euphrasia"
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_HEAL_TOX, EFFECT_FORTIFY_LUCK, EFFECT_BLINDNESS)
 
 	major_pot = /datum/alch_cauldron_recipe/spd_potion
 	med_pot = /datum/alch_cauldron_recipe/aphrodisiac
@@ -343,6 +370,7 @@
 /obj/item/alch/paris
 	name = "paris"
 	icon_state = "paris"
+	alchemy_effects = list(EFFECT_DAMAGE_STAMINA, EFFECT_POISON, EFFECT_PARALYZE, EFFECT_SILENCE)
 
 	major_pot = /datum/alch_cauldron_recipe/big_stam_poison
 	med_pot = /datum/alch_cauldron_recipe/berrypoison
@@ -351,6 +379,7 @@
 /obj/item/alch/calendula
 	name = "calendula"
 	icon_state = "calendula"
+	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_FORTIFY_ENDURANCE, EFFECT_RESTORE_BLOOD, EFFECT_DAMAGE_STAMINA)
 
 	major_pot = /datum/alch_cauldron_recipe/big_health_potion
 	med_pot = /datum/alch_cauldron_recipe/end_potion
@@ -359,6 +388,7 @@
 /obj/item/alch/mentha
 	name = "mentha"
 	icon_state = "mentha"
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_RESTORE_STAMINA, EFFECT_SLOW)
 
 	major_pot = /datum/alch_cauldron_recipe/per_potion
 	med_pot = /datum/alch_cauldron_recipe/int_potion
@@ -367,6 +397,7 @@
 /obj/item/alch/urtica
 	name = "urtica"
 	icon_state = "urtica"
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_ENDURANCE, EFFECT_POISON)
 
 	major_pot = /datum/alch_cauldron_recipe/health_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
@@ -380,6 +411,7 @@
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_TINY
 	alternate_worn_layer  = 8.9 //On top of helmet
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_STAMINA, EFFECT_HEAL_BRUTE, EFFECT_DAMAGE_STAMINA)
 
 	major_pot = /datum/alch_cauldron_recipe/con_potion
 	med_pot = /datum/alch_cauldron_recipe/str_potion
@@ -388,6 +420,7 @@
 /obj/item/alch/hypericum
 	name = "hypericum"
 	icon_state = "hypericum"
+	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_BLOOD, EFFECT_WEAKNESS)
 
 	major_pot = /datum/alch_cauldron_recipe/stamina_potion
 	med_pot = /datum/alch_cauldron_recipe/big_mana_potion
@@ -396,6 +429,7 @@
 /obj/item/alch/benedictus
 	name = "benedictus"
 	icon_state = "benedictus"
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_CONSTITUTION, EFFECT_SLOW)
 
 	major_pot = /datum/alch_cauldron_recipe/big_stamina_potion
 	med_pot = /datum/alch_cauldron_recipe/stamina_potion
@@ -404,6 +438,7 @@
 /obj/item/alch/valeriana
 	name = "valeriana"
 	icon_state = "valeriana"
+	alchemy_effects = list(EFFECT_FORTIFY_LUCK, EFFECT_FORTIFY_ENDURANCE, EFFECT_HEAL_TOX, EFFECT_NAUSEA)
 
 	major_pot = /datum/alch_cauldron_recipe/health_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
@@ -412,6 +447,7 @@
 /obj/item/alch/artemisia
 	name = "artemisia"
 	icon_state = "artemisia"
+	alchemy_effects = list(EFFECT_FORTIFY_INTELLIGENCE, EFFECT_FORTIFY_SPEED, EFFECT_RESTORE_ENERGY, EFFECT_DAMAGE_ENERGY)
 
 	major_pot = /datum/alch_cauldron_recipe/lck_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
@@ -447,6 +483,7 @@
 	muteinmouth = FALSE
 	alternate_worn_layer  = 8.9 //On top of helmet
 	mill_result = /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_BLOOD, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKNESS)
 
 /obj/item/alch/rosa/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
