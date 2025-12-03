@@ -12,7 +12,6 @@ Add exactly ONE herb to a cauldron with a base reagent (minimum 30 units):
 - Water → Creates "Herb Tonic"
 - Cooking Oil → Creates "Oil of Herb"
 - Wine → Creates "Herb Elixir"  
-- Spirits (beer, rum, aqua vitae, etc.) → Creates "Herb Bitters"
 - Acid → Creates "Vitriol of Herb"
 
 **Example:**

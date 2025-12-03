@@ -231,14 +231,6 @@
 		extract_type = /datum/reagent/herb_extract/elixir
 		base_reagent_type = /datum/reagent/consumable/ethanol/wine
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/wine)
-	else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol, 30))
-		// Any other ethanol (spirits)
-		extract_type = /datum/reagent/herb_extract/bitters
-		for(var/datum/reagent/R in src.reagents.reagent_list)
-			if(istype(R, /datum/reagent/consumable/ethanol))
-				base_reagent_type = R.type
-				base_amount = src.reagents.get_reagent_amount(R.type)
-				break
 	else if(src.reagents.has_reagent(/datum/reagent/rogueacid, 30))
 		extract_type = /datum/reagent/herb_extract/vitriol
 		base_reagent_type = /datum/reagent/rogueacid

@@ -31,12 +31,14 @@
 	taste_description = "sweet herbs and wine"
 	alpha = 170
 
-// Spirits-based extracts (Herb Bitters)
+// Spirits-based extracts (Herb Bitters) - Currently disabled, wine is used for all alcohols
+/*
 /datum/reagent/herb_extract/bitters
 	name = "herbal bitters"
 	color = "#5f3b23"
 	taste_description = "bitter herbs and alcohol"
 	alpha = 180
+*/
 
 // Acid-based extracts (Vitriol of Herb)
 /datum/reagent/herb_extract/vitriol
