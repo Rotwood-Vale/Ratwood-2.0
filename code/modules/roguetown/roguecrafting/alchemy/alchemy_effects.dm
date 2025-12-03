@@ -49,58 +49,60 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 	EFFECT_DAMAGE_ENERGY = "draining cold"
 ))
 
-// Global associative list mapping effects to human-readable names for potions
-GLOBAL_LIST_INIT(alchemy_effect_names, list(
-	EFFECT_HEAL_BRUTE = "healing",
-	EFFECT_HEAL_BURN = "burn healing",
-	EFFECT_HEAL_TOX = "detoxification",
-	EFFECT_RESTORE_STAMINA = "stamina restoration",
-	EFFECT_RESTORE_ENERGY = "energy restoration",
-	EFFECT_RESTORE_BLOOD = "blood restoration",
-	EFFECT_FORTIFY_STRENGTH = "strength",
-	EFFECT_FORTIFY_PERCEPTION = "perception",
-	EFFECT_FORTIFY_INTELLIGENCE = "intelligence",
-	EFFECT_FORTIFY_CONSTITUTION = "constitution",
-	EFFECT_FORTIFY_ENDURANCE = "endurance",
-	EFFECT_FORTIFY_SPEED = "speed",
-	EFFECT_FORTIFY_LUCK = "luck",
-	EFFECT_PARALYZE = "paralysis",
-	EFFECT_BLINDNESS = "blindness",
-	EFFECT_SILENCE = "silence",
-	EFFECT_SLOW = "slowness",
-	EFFECT_WEAKNESS = "weakness",
-	EFFECT_POISON = "poison",
-	EFFECT_DAMAGE_STAMINA = "fatigue",
-	EFFECT_DAMAGE_ENERGY = "exhaustion"
+// Global associative list mapping effects to paired words [adjective, noun] for potion naming
+GLOBAL_LIST_INIT(alchemy_effect_words, list(
+	EFFECT_HEAL_BRUTE = list("mending", "heal"),
+	EFFECT_HEAL_BURN = list("soothing", "balm"),
+	EFFECT_HEAL_TOX = list("curing", "antidote"),
+	EFFECT_RESTORE_STAMINA = list("energizing", "vigor"),
+	EFFECT_RESTORE_ENERGY = list("invigorating", "essence"),
+	EFFECT_RESTORE_BLOOD = list("vital", "fluid"),
+	EFFECT_FORTIFY_STRENGTH = list("mighty", "power"),
+	EFFECT_FORTIFY_PERCEPTION = list("keen", "sight"),
+	EFFECT_FORTIFY_INTELLIGENCE = list("brilliant", "mind"),
+	EFFECT_FORTIFY_CONSTITUTION = list("hardy", "body"),
+	EFFECT_FORTIFY_ENDURANCE = list("enduring", "fortitude"),
+	EFFECT_FORTIFY_SPEED = list("swift", "motion"),
+	EFFECT_FORTIFY_LUCK = list("fortunate", "blessing"),
+	EFFECT_PARALYZE = list("binding", "lock"),
+	EFFECT_BLINDNESS = list("darkening", "shadow"),
+	EFFECT_SILENCE = list("muting", "silence"),
+	EFFECT_SLOW = list("sluggish", "draught"),
+	EFFECT_WEAKNESS = list("enfeebling", "curse"),
+	EFFECT_POISON = list("toxic", "venom"),
+	EFFECT_DAMAGE_STAMINA = list("draining", "fatigue"),
+	EFFECT_DAMAGE_ENERGY = list("exhausting", "drain")
 ))
 
 // Helper proc to get smell description for an effect
 /proc/get_effect_smell(effect)
 	return GLOB.alchemy_effect_smells[effect] || "strange essence"
 
-// Helper proc to get human-readable name for an effect
-/proc/get_effect_name(effect)
-	return GLOB.alchemy_effect_names[effect] || "unknown"
+// Helper proc to get word pair for an effect [adjective, noun]
+/proc/get_effect_words(effect)
+	return GLOB.alchemy_effect_words[effect] || list("strange", "brew")
 
 // Helper proc to generate potion name from effects list
 /proc/generate_potion_name(list/effects)
 	if(!effects || !effects.len)
 		return "alchemical potion"
 	
-	var/list/effect_names = list()
-	for(var/effect in effects)
-		effect_names += get_effect_name(effect)
+	// 3 or more effects = "strange brew"
+	if(effects.len >= 3)
+		return "strange brew"
 	
-	// Generate name based on number of effects
-	switch(effect_names.len)
-		if(1)
-			return "potion of [effect_names[1]]"
-		if(2)
-			return "potion of [effect_names[1]]-[effect_names[2]]"
-		if(3)
-			return "potion of [effect_names[1]]-[effect_names[2]]-[effect_names[3]]"
-		else  // 4 or more
-			return "potion of [effect_names[1]]-[effect_names[2]]-[effect_names[3]]-[effect_names[4]]"
+	// 1 effect: use adjective + noun from that effect
+	if(effects.len == 1)
+		var/list/words = get_effect_words(effects[1])
+		return "[words[1]] [words[2]]"
+	
+	// 2 effects: mix adjective from first with noun from second
+	if(effects.len == 2)
+		var/list/words1 = get_effect_words(effects[1])
+		var/list/words2 = get_effect_words(effects[2])
+		return "[words1[1]] [words2[2]]"
+	
+	return "alchemical potion"
 
 // Helper proc to blend colors
 /proc/blend_colors(color1, color2, ratio = 0.5)
