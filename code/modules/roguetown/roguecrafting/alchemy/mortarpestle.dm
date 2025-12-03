@@ -50,11 +50,9 @@
 	if(!istype(pestle, /obj/item/pestle))
 		to_chat(user, "<span class='warning'>You need a pestle to grind!</span>")
 		return
-
 	if(!to_grind)
 		to_chat(user, "<span class='warning'>There's nothing to grind.</span>")
 		return
-<<<<<<< Updated upstream
 	
 	// Check if this is produce with alchemy_effects but no grind_results - create dynamic powder
 	if(istype(to_grind, /obj/item/reagent_containers/food/snacks/grown))
@@ -63,12 +61,6 @@
 		if(produce.alchemy_effects && produce.alchemy_effects.len)
 			// If it has grind_results, do normal grinding
 			if(produce.grind_results && produce.grind_results.len)
-=======
-
-	if(to_grind.alchemy_effects && to_grind.alchemy_effects.len)
-			// If it has grind_results, do normal grinding
-			if(to_grind.grind_results && to_grind.grind_results.len)
->>>>>>> Stashed changes
 				to_grind.on_grind()
 				reagents.add_reagent_list(to_grind.grind_results)
 				to_chat(user, span_notice("I break [to_grind] into powder."))
@@ -77,7 +69,6 @@
 			// Otherwise create dynamic powder
 			else
 				var/obj/item/reagent_containers/powder/P = new /obj/item/reagent_containers/powder(get_turf(src))
-<<<<<<< Updated upstream
 				P.name = "powdered [produce.name]"
 				P.desc = "A fine powder ground from [produce.name]."
 				P.color = produce.filling_color ? produce.filling_color : "#d4c5a9"
@@ -85,21 +76,11 @@
 				
 				// Add reagent with alchemy effects
 				P.reagents.add_reagent(/datum/reagent/herb_extract/powder, 4)
-=======
-				P.name = "powdered [to_grind.name]"
-				P.desc = "A fine powder ground from [to_grind.name]."
-				P.color = to_grind.filling_color ? to_grind.filling_color : "#d4c5a9"
-				P.volume = 3
-				
-				// Add reagent with alchemy effects
-				P.reagents.add_reagent(/datum/reagent/herb_extract/powder, 3)
->>>>>>> Stashed changes
 				
 				// Store alchemy effects and properties on the powder's reagent
 				if(P.reagents && P.reagents.reagent_list.len)
 					var/datum/reagent/R = P.reagents.reagent_list[1]
 					if(R)
-<<<<<<< Updated upstream
 						R.alchemy_effects = produce.alchemy_effects.Copy()
 						R.name = "powdered [produce.name]"
 						R.description = "A fine powder ground from [produce.name]."
@@ -107,26 +88,13 @@
 						// Copy taste from produce
 						if(produce.tastes && produce.tastes.len)
 							for(var/taste in produce.tastes)
-=======
-						R.alchemy_effects = to_grind.alchemy_effects.Copy()
-						R.name = "powdered [to_grind.name]"
-						R.description = "A fine powder ground from [to_grind.name]."
-						R.color = to_grind.filling_color ? to_grind.filling_color : "#d4c5a9"
-						// Copy taste from produce
-						if(to_grind.tastes && to_grind.tastes.len)
-							for(var/taste in to_grind.tastes)
->>>>>>> Stashed changes
 								R.taste_description = taste
 								break
 				
 				to_chat(user, span_notice("I grind [to_grind] into a fine powder."))
 				QDEL_NULL(to_grind)
 				return
-<<<<<<< Updated upstream
 	
-=======
-
->>>>>>> Stashed changes
 	if((!to_grind.juice_results && !to_grind?.grind_results?.len)) // A lot of reagents are grindable but empty
 		to_chat(user, "<span class='warning'>You don't think that will work!</span>")
 		return

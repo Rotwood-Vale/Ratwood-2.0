@@ -1,9 +1,6 @@
 /obj/item
 	var/list/alchemy_effects = list()
 
-/obj/item
-	var/list/alchemy_effects = list()
-
 /obj/item/alch
 	name = "dust"
 	desc = ""
@@ -26,8 +23,6 @@
 		var/datum/alch_cauldron_recipe/rec = locate(minor_pot) in GLOB.alch_cauldron_recipes
 		minor_smell = rec.smells_like
 		minor_name = rec.name
-=======
->>>>>>> Stashed changes
 
 /obj/item/alch/examine(mob/user)
 	. = ..()
@@ -230,55 +225,46 @@
 	name = "atropa"
 	icon_state = "atropa"
 	alchemy_effects = list(EFFECT_POISON, EFFECT_DAMAGE_STAMINA, EFFECT_WEAKNESS, EFFECT_PARALYZE)
-<<<<<<< Updated upstream
 
 /obj/item/alch/matricaria
 	name = "matricaria"
 	icon_state = "matricaria"
 	alchemy_effects = list(EFFECT_POISON, EFFECT_SLOW, EFFECT_WEAKNESS, EFFECT_NAUSEA)
-<<<<<<< Updated upstream
 
 /obj/item/alch/symphitum
 	name = "symphitum"
 	icon_state = "symphitum"
 	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_HEAL_BURN, EFFECT_RESTORE_BLOOD, EFFECT_WEAKNESS)
-<<<<<<< Updated upstream
 
 /obj/item/alch/taraxacum
 	name = "taraxacum"
 	icon_state = "taraxacum"
 	alchemy_effects = list(EFFECT_HEAL_TOX, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKNESS)
-<<<<<<< Updated upstream
 
 /obj/item/alch/euphrasia
 	name = "euphrasia"
 	icon_state = "euphrasia"
 	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_HEAL_TOX, EFFECT_FORTIFY_LUCK, EFFECT_BLINDNESS)
-<<<<<<< Updated upstream
 
 /obj/item/alch/paris
 	name = "paris"
 	icon_state = "paris"
 	alchemy_effects = list(EFFECT_DAMAGE_STAMINA, EFFECT_POISON, EFFECT_PARALYZE, EFFECT_SILENCE)
-<<<<<<< Updated upstream
 
 /obj/item/alch/calendula
 	name = "calendula"
 	icon_state = "calendula"
 	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_FORTIFY_ENDURANCE, EFFECT_RESTORE_BLOOD, EFFECT_DAMAGE_STAMINA)
-<<<<<<< Updated upstream
 
 /obj/item/alch/mentha
 	name = "mentha"
 	icon_state = "mentha"
 	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_RESTORE_STAMINA, EFFECT_SLOW)
-<<<<<<< Updated upstream
 
 /obj/item/alch/urtica
 	name = "urtica"
 	icon_state = "urtica"
 	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_ENDURANCE, EFFECT_POISON)
-<<<<<<< Updated upstream
 
 /obj/item/alch/salvia
 	name = "salvia"
@@ -289,31 +275,26 @@
 	w_class = WEIGHT_CLASS_TINY
 	alternate_worn_layer  = 8.9 //On top of helmet
 	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_STAMINA, EFFECT_HEAL_BRUTE, EFFECT_DAMAGE_STAMINA)
-<<<<<<< Updated upstream
 
 /obj/item/alch/hypericum
 	name = "hypericum"
 	icon_state = "hypericum"
 	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_BLOOD, EFFECT_WEAKNESS)
-<<<<<<< Updated upstream
 
 /obj/item/alch/benedictus
 	name = "benedictus"
 	icon_state = "benedictus"
 	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_CONSTITUTION, EFFECT_SLOW)
-<<<<<<< Updated upstream
 
 /obj/item/alch/valeriana
 	name = "valeriana"
 	icon_state = "valeriana"
 	alchemy_effects = list(EFFECT_FORTIFY_LUCK, EFFECT_FORTIFY_ENDURANCE, EFFECT_HEAL_TOX, EFFECT_NAUSEA)
-<<<<<<< Updated upstream
 
 /obj/item/alch/artemisia
 	name = "artemisia"
 	icon_state = "artemisia"
 	alchemy_effects = list(EFFECT_FORTIFY_INTELLIGENCE, EFFECT_FORTIFY_SPEED, EFFECT_RESTORE_ENERGY, EFFECT_DAMAGE_ENERGY)
-<<<<<<< Updated upstream
 
 /obj/item/alch/manabloompowder
 	name = "manabloom powder"
