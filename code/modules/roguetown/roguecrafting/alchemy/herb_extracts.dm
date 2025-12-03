@@ -94,11 +94,11 @@
 	taste_description = "bitter herbs and wine"
 	alpha = 170
 
-// Concentrated extracts (Herb Concentrate)
-/datum/reagent/herb_extract/concentrate
-	name = "herbal concentrate"
+// Syrup extracts (Herb Syrup - concentrated from tonic)
+/datum/reagent/herb_extract/syrup
+	name = "herbal syrup"
 	color = "#4a7a7d"
-	taste_description = "concentrated herbs"
+	taste_description = "sweet herbal syrup"
 	alpha = 200
 
 // Paste extracts (Herb Paste)

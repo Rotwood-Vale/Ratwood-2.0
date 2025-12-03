@@ -232,13 +232,13 @@
 	var/is_secondary_processing = FALSE
 	
 	// Check for secondary processing first (no herb needed)
-	// JOURNEYMAN - Secondary processing: Tonic → Concentrate, Oil → Paste
+	// JOURNEYMAN - Secondary processing: Tonic → Syrup, Oil → Paste
 	if(src.reagents.has_reagent(/datum/reagent/herb_extract/tonic, 60))
-		extract_type = /datum/reagent/herb_extract/concentrate
+		extract_type = /datum/reagent/herb_extract/syrup
 		base_reagent_type = /datum/reagent/herb_extract/tonic
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/tonic)
 		skill_required = SKILL_LEVEL_JOURNEYMAN
-		extract_name = "concentrate"
+		extract_name = "syrup"
 		is_secondary_processing = TRUE
 	
 	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/oil, 60))
@@ -249,7 +249,7 @@
 		extract_name = "paste"
 		is_secondary_processing = TRUE
 	
-	// EXPERT - Quaternary processing: Bitters → Powder, Vitriol → Salt
+	// EXPERT - Tertiary processing: Bitters → Powder, Vitriol → Salt
 	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/bitters, 60))
 		extract_type = /datum/reagent/herb_extract/powder
 		base_reagent_type = /datum/reagent/herb_extract/bitters
@@ -338,46 +338,94 @@
 	// Add the extract reagent
 	src.reagents.add_reagent(extract_type, output_amount)
 	
-	// For secondary processing, copy effects from the base extract
+	// For secondary processing, UPGRADE effects to GREATER versions
 	if(is_secondary_processing)
-		// Find the source extract and copy its effects to the new concentrated version
+		// Find the source extract
 		var/datum/reagent/herb_extract/source_extract = null
+		// Store source effects before removing
+		var/list/source_effects = null
+		var/source_herb = null
+		var/source_type = null
+		var/source_color = null
+		var/source_smell = null
+		var/source_taste = null
+		var/source_alpha = null
+		
 		for(var/datum/reagent/R in src.reagents.reagent_list)
-			if(istype(R, /datum/reagent/herb_extract))
-				source_extract = R
+			if(istype(R, base_reagent_type))
+				if(istype(R, /datum/reagent/herb_extract))
+					var/datum/reagent/herb_extract/HE = R
+					if(HE.alchemy_effects && HE.alchemy_effects.len)
+						source_effects = HE.alchemy_effects.Copy()
+					source_herb = HE.source_herb_name
+					source_type = HE.source_herb_type
+					source_color = HE.color
+					source_smell = HE.smell_description
+					source_taste = HE.taste_description
+					source_alpha = HE.alpha
 				break
 		
-		if(source_extract)
+		// Apply upgraded GREATER effects to the new concentrated extract
+		if(source_effects && source_effects.len)
 			for(var/datum/reagent/herb_extract/R in src.reagents.reagent_list)
 				if(R.type == extract_type)
-					if(source_extract.alchemy_effects && source_extract.alchemy_effects.len)
-						R.set_alchemy_effects(source_extract.alchemy_effects)
-					if(source_extract.source_herb_name)
-						R.source_herb_name = source_extract.source_herb_name
-						R.source_herb_type = source_extract.source_herb_type
-						R.name = "[source_extract.source_herb_name] [initial(R.name)]"
-					// Transfer properties from source extract
-					R.color = source_extract.color
-					R.smell_description = source_extract.smell_description
-					R.taste_description = source_extract.taste_description
-					if(isnum(source_extract.alpha))
-						R.alpha = source_extract.alpha
+					// Upgrade to GREATER versions
+					var/list/greater_effects = upgrade_effects_to_greater(source_effects)
+					R.set_alchemy_effects(greater_effects)
+					
+					if(source_herb)
+						R.source_herb_name = source_herb
+						R.source_herb_type = source_type
+						R.name = "[source_herb] [initial(R.name)]"
+					
+					// Transfer properties
+					if(source_color)
+						R.color = source_color
+					if(source_smell)
+						R.smell_description = source_smell
+					if(source_taste)
+						R.taste_description = source_taste
+					if(isnum(source_alpha))
+						R.alpha = source_alpha
 					break
 		
-		src.visible_message("<span class='info'>The cauldron finishes boiling, creating a more concentrated extract.</span>")
+		src.visible_message("<span class='info'>The cauldron finishes boiling, creating a GREATER concentrated extract!</span>")
 	else
-		// Primary processing - copy alchemy effects and properties from herb to the extract
+		// Primary processing - select SPECIFIC effects based on extract type
 		if(herb && herb.alchemy_effects && herb.alchemy_effects.len)
 			for(var/datum/reagent/herb_extract/R in src.reagents.reagent_list)
 				if(R.type == extract_type)
-					R.set_alchemy_effects(herb.alchemy_effects)
+					var/list/selected_effects = list()
+					
+					// Select effects based on extract type:
+					// Tonic (water) = effect #1
+					// Oil = effect #2
+					// Bitters (wine) = ALL effects
+					// Vitriol (acid) = effect #3
+					if(extract_type == /datum/reagent/herb_extract/tonic)
+						// Take effect #1
+						if(herb.alchemy_effects.len >= 1)
+							selected_effects += herb.alchemy_effects[1]
+					else if(extract_type == /datum/reagent/herb_extract/oil)
+						// Take effect #2
+						if(herb.alchemy_effects.len >= 2)
+							selected_effects += herb.alchemy_effects[2]
+					else if(extract_type == /datum/reagent/herb_extract/bitters)
+						// Take ALL effects
+						selected_effects = herb.alchemy_effects.Copy()
+					else if(extract_type == /datum/reagent/herb_extract/vitriol)
+						// Take effect #3
+						if(herb.alchemy_effects.len >= 3)
+							selected_effects += herb.alchemy_effects[3]
+					
+					R.set_alchemy_effects(selected_effects)
 					R.source_herb_name = herb.name
 					R.source_herb_type = herb.type
 					R.name = "[herb.name] [initial(R.name)]"
 					
-					// Generate smell from herb's effects
+					// Generate smell from selected effects
 					var/list/smell_parts = list()
-					for(var/effect in herb.alchemy_effects)
+					for(var/effect in selected_effects)
 						var/smell = get_effect_smell(effect)
 						if(smell && !(smell in smell_parts))
 							smell_parts += smell
@@ -385,9 +433,6 @@
 					
 					// Set taste based on herb name
 					R.taste_description = "[herb.name] and [initial(R.taste_description)]"
-					
-					// Transfer color if herb has one (use herb's icon color or a default based on herb type)
-					// For now, keep the default extract color but slightly tint it
 					break
 		
 		src.visible_message("<span class='info'>The cauldron finishes boiling, creating [herb.name] [extract_name].</span>")
