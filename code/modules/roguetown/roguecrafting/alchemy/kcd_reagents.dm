@@ -1,6 +1,12 @@
 // KCD-Style Alchemy Reagents
 // Template-based reagents that copy properties from herbs
 
+// Constants for KCD alchemy
+#define KCD_MIN_BASE_REAGENT_AMOUNT 90 // Minimum amount of base reagent needed for primary processing
+#define KCD_MIN_SECONDARY_REAGENT_AMOUNT 30 // Minimum amount needed for secondary processing
+#define KCD_PROCESSING_EFFICIENCY 0.9 // Volume multiplier after processing (10% loss)
+#define ALCHEMY_MIN_VOLUME_THRESHOLD 0.99 // Minimum volume for reagent effects to trigger
+
 // Base template reagent for all KCD-style alchemical products
 /datum/reagent/alch_template
 	description = "An alchemical preparation."
@@ -22,7 +28,7 @@
 
 /datum/reagent/alch_template/tonic/on_mob_life(mob/living/carbon/M)
 	// Mild healing effect
-	if(volume > 0.99)
+	if(volume > ALCHEMY_MIN_VOLUME_THRESHOLD)
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
 	..()
@@ -45,7 +51,7 @@
 
 /datum/reagent/alch_template/oil_extract/on_mob_life(mob/living/carbon/M)
 	// Mild stamina restoration
-	if(volume > 0.99)
+	if(volume > ALCHEMY_MIN_VOLUME_THRESHOLD)
 		M.stamina_add(-5)
 	..()
 
@@ -75,7 +81,7 @@
 
 /datum/reagent/alch_template/bitters/on_mob_life(mob/living/carbon/M)
 	// Moderate healing
-	if(volume > 0.99)
+	if(volume > ALCHEMY_MIN_VOLUME_THRESHOLD)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
 	..()
@@ -90,7 +96,7 @@
 
 /datum/reagent/alch_template/vitriol/on_mob_life(mob/living/carbon/M)
 	// Potent but risky - heals but also damages
-	if(volume > 0.99)
+	if(volume > ALCHEMY_MIN_VOLUME_THRESHOLD)
 		M.adjustBruteLoss(-2*REM, 0)
 		M.adjustToxLoss(0.5*REM, 0)
 	..()
@@ -105,7 +111,7 @@
 
 /datum/reagent/alch_template/concentrate/on_mob_life(mob/living/carbon/M)
 	// Stronger healing than tonic
-	if(volume > 0.99)
+	if(volume > ALCHEMY_MIN_VOLUME_THRESHOLD)
 		M.adjustBruteLoss(-1.5*REM, 0)
 		M.adjustFireLoss(-1.5*REM, 0)
 		M.adjustOxyLoss(-1*REM, 0)
@@ -123,7 +129,7 @@
 
 /datum/reagent/alch_template/paste/on_mob_life(mob/living/carbon/M)
 	// Strong stamina restoration
-	if(volume > 0.99)
+	if(volume > ALCHEMY_MIN_VOLUME_THRESHOLD)
 		M.stamina_add(-15)
 	..()
 
@@ -151,7 +157,7 @@
 
 /datum/reagent/alch_template/powder_extract/on_mob_life(mob/living/carbon/M)
 	// Very strong healing
-	if(volume > 0.99)
+	if(volume > ALCHEMY_MIN_VOLUME_THRESHOLD)
 		M.adjustBruteLoss(-2.5*REM, 0)
 		M.adjustFireLoss(-2.5*REM, 0)
 		M.adjustOxyLoss(-1.5*REM, 0)
@@ -169,7 +175,7 @@
 
 /datum/reagent/alch_template/salt_extract/on_mob_life(mob/living/carbon/M)
 	// Most potent but most risky
-	if(volume > 0.99)
+	if(volume > ALCHEMY_MIN_VOLUME_THRESHOLD)
 		M.adjustBruteLoss(-3.5*REM, 0)
 		M.adjustFireLoss(-3.5*REM, 0)
 		M.adjustOxyLoss(-2*REM, 0)

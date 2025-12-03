@@ -62,15 +62,15 @@
 				// Check for various base reagents for KCD-style alchemy
 				var/has_ethanol = FALSE
 				for(var/datum/reagent/R in src.reagents.reagent_list)
-					if(istype(R, /datum/reagent/consumable/ethanol) && src.reagents.get_reagent_amount(R.type) >= 90)
+					if(istype(R, /datum/reagent/consumable/ethanol) && src.reagents.get_reagent_amount(R.type) >= KCD_MIN_BASE_REAGENT_AMOUNT)
 						has_ethanol = TRUE
 						break
 				
-				if(src.reagents.has_reagent(/datum/reagent/water,90) || 
-				   src.reagents.has_reagent(/datum/reagent/cooking_oil,90) ||
+				if(src.reagents.has_reagent(/datum/reagent/water, KCD_MIN_BASE_REAGENT_AMOUNT) || 
+				   src.reagents.has_reagent(/datum/reagent/cooking_oil, KCD_MIN_BASE_REAGENT_AMOUNT) ||
 				   has_ethanol ||
-				   src.reagents.has_reagent(/datum/reagent/rogueacid,90) ||
-				   src.reagents.has_reagent(/datum/reagent/alch_template,30))
+				   src.reagents.has_reagent(/datum/reagent/rogueacid, KCD_MIN_BASE_REAGENT_AMOUNT) ||
+				   src.reagents.has_reagent(/datum/reagent/alch_template, KCD_MIN_SECONDARY_REAGENT_AMOUNT))
 					brewing++
 					if(prob(10))
 						playsound(src, "bubbles", 100, FALSE)
@@ -240,20 +240,20 @@
 	var/ethanol_amount = 0
 	for(var/datum/reagent/R in src.reagents.reagent_list)
 		if(istype(R, /datum/reagent/consumable/ethanol))
-			if(src.reagents.get_reagent_amount(R.type) >= 90)
+			if(src.reagents.get_reagent_amount(R.type) >= KCD_MIN_BASE_REAGENT_AMOUNT)
 				found_ethanol = R
 				ethanol_amount = src.reagents.get_reagent_amount(R.type)
 				break
 	
 	// Check for NOVICE recipes (base reagent + herb)
-	if(src.reagents.has_reagent(/datum/reagent/water, 90))
+	if(src.reagents.has_reagent(/datum/reagent/water, KCD_MIN_BASE_REAGENT_AMOUNT))
 		output_type = /datum/reagent/alch_template/tonic
 		base_reagent_type = /datum/reagent/water
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/water)
 		skill_required = SKILL_LEVEL_NOVICE
 		smell = "watery herbs"
 		
-	else if(src.reagents.has_reagent(/datum/reagent/cooking_oil, 90))
+	else if(src.reagents.has_reagent(/datum/reagent/cooking_oil, KCD_MIN_BASE_REAGENT_AMOUNT))
 		output_type = /datum/reagent/alch_template/oil_extract
 		base_reagent_type = /datum/reagent/cooking_oil
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/cooking_oil)
@@ -277,7 +277,7 @@
 		skill_required = SKILL_LEVEL_APPRENTICE
 		smell = "bitter herbs"
 		
-	else if(src.reagents.has_reagent(/datum/reagent/rogueacid, 90))
+	else if(src.reagents.has_reagent(/datum/reagent/rogueacid, KCD_MIN_BASE_REAGENT_AMOUNT))
 		output_type = /datum/reagent/alch_template/vitriol
 		base_reagent_type = /datum/reagent/rogueacid
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/rogueacid)
@@ -285,35 +285,35 @@
 		smell = "caustic herbs"
 		
 	// Check for secondary processing (boiling products again)
-	else if(src.reagents.has_reagent(/datum/reagent/alch_template/tonic, 30))
+	else if(src.reagents.has_reagent(/datum/reagent/alch_template/tonic, KCD_MIN_SECONDARY_REAGENT_AMOUNT))
 		output_type = /datum/reagent/alch_template/concentrate
 		base_reagent_type = /datum/reagent/alch_template/tonic
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/alch_template/tonic)
 		skill_required = SKILL_LEVEL_APPRENTICE
 		smell = "concentrated herbs"
 		
-	else if(src.reagents.has_reagent(/datum/reagent/alch_template/oil_extract, 30))
+	else if(src.reagents.has_reagent(/datum/reagent/alch_template/oil_extract, KCD_MIN_SECONDARY_REAGENT_AMOUNT))
 		output_type = /datum/reagent/alch_template/paste
 		base_reagent_type = /datum/reagent/alch_template/oil_extract
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/alch_template/oil_extract)
 		skill_required = SKILL_LEVEL_JOURNEYMAN
 		smell = "thick herbs"
 		
-	else if(src.reagents.has_reagent(/datum/reagent/alch_template/elixir, 30))
+	else if(src.reagents.has_reagent(/datum/reagent/alch_template/elixir, KCD_MIN_SECONDARY_REAGENT_AMOUNT))
 		output_type = /datum/reagent/alch_template/syrup
 		base_reagent_type = /datum/reagent/alch_template/elixir
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/alch_template/elixir)
 		skill_required = SKILL_LEVEL_JOURNEYMAN
 		smell = "thick sweet herbs"
 		
-	else if(src.reagents.has_reagent(/datum/reagent/alch_template/bitters, 30))
+	else if(src.reagents.has_reagent(/datum/reagent/alch_template/bitters, KCD_MIN_SECONDARY_REAGENT_AMOUNT))
 		output_type = /datum/reagent/alch_template/powder_extract
 		base_reagent_type = /datum/reagent/alch_template/bitters
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/alch_template/bitters)
 		skill_required = SKILL_LEVEL_JOURNEYMAN
 		smell = "intensely bitter herbs"
 		
-	else if(src.reagents.has_reagent(/datum/reagent/alch_template/vitriol, 30))
+	else if(src.reagents.has_reagent(/datum/reagent/alch_template/vitriol, KCD_MIN_SECONDARY_REAGENT_AMOUNT))
 		output_type = /datum/reagent/alch_template/salt_extract
 		base_reagent_type = /datum/reagent/alch_template/vitriol
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/alch_template/vitriol)
@@ -344,7 +344,7 @@
 		src.reagents.remove_reagent(base_reagent_type, base_amount)
 	
 	// Create the output reagent
-	var/output_amount = base_amount * 0.9 // Slight loss during processing
+	var/output_amount = base_amount * KCD_PROCESSING_EFFICIENCY // Slight loss during processing
 	var/herb_name = herb.name
 	
 	// Add the reagent
