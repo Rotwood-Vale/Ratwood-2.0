@@ -58,17 +58,17 @@
 	update_icon()
 	if(on)
 		// Check if we can brew - either with ingredients OR with extract reagents for secondary processing
-		var/can_brew = ingredients.len > 0 || src.reagents.has_reagent(/datum/reagent/herb_extract, 30)
+		var/can_brew = ingredients.len > 0 || src.reagents.has_reagent(/datum/reagent/herb_extract, 60)
 		
 		if(can_brew)
 			if(brewing < 20)
 				// Check for base reagents (water, oil, wine, acid) - need 90u minimum
-				// OR check for extract reagents for secondary processing - need 30u minimum
+				// OR check for extract reagents for secondary processing - need 60u minimum
 				if(src.reagents.has_reagent(/datum/reagent/water,90) ||
 				   src.reagents.has_reagent(/datum/reagent/cooking_oil,90) ||
 				   src.reagents.has_reagent(/datum/reagent/consumable/ethanol,90) ||
 				   src.reagents.has_reagent(/datum/reagent/rogueacid,90) ||
-				   src.reagents.has_reagent(/datum/reagent/herb_extract,30))  // Secondary processing needs only 30u
+				   src.reagents.has_reagent(/datum/reagent/herb_extract,60))  // Secondary processing needs 60u
 					brewing++
 					if(prob(10))
 						playsound(src, "bubbles", 100, FALSE)
@@ -233,7 +233,7 @@
 	
 	// Check for secondary processing first (no herb needed)
 	// AMATEUR - Secondary processing: Tonic → Concentrate
-	if(src.reagents.has_reagent(/datum/reagent/herb_extract/tonic, 30))
+	if(src.reagents.has_reagent(/datum/reagent/herb_extract/tonic, 60))
 		extract_type = /datum/reagent/herb_extract/concentrate
 		base_reagent_type = /datum/reagent/herb_extract/tonic
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/tonic)
@@ -242,7 +242,7 @@
 		is_secondary_processing = TRUE
 	
 	// JOURNEYMAN - Tertiary processing
-	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/oil, 30))
+	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/oil, 60))
 		extract_type = /datum/reagent/herb_extract/paste
 		base_reagent_type = /datum/reagent/herb_extract/oil
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/oil)
@@ -250,7 +250,7 @@
 		extract_name = "paste"
 		is_secondary_processing = TRUE
 		
-	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/elixir, 30))
+	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/elixir, 60))
 		extract_type = /datum/reagent/herb_extract/syrup
 		base_reagent_type = /datum/reagent/herb_extract/elixir
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/elixir)
@@ -259,7 +259,7 @@
 		is_secondary_processing = TRUE
 	
 	// EXPERT - Quaternary processing
-	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/vitriol, 30))
+	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/vitriol, 60))
 		extract_type = /datum/reagent/herb_extract/salt
 		base_reagent_type = /datum/reagent/herb_extract/vitriol
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/vitriol)
@@ -324,7 +324,11 @@
 		return TRUE
 	
 	// Success! Create the herb extract
-	var/output_amount = base_amount  // 1:1 conversion
+	var/output_amount = 0
+	if(is_secondary_processing)
+		output_amount = base_amount * 0.5  // 60u → 30u (1/2 conversion for secondary)
+	else
+		output_amount = base_amount * 0.667  // 90u → 60u (2/3 conversion for primary)
 	
 	// Remove base reagent and any herbs
 	if(reagents)
