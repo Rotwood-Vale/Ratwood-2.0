@@ -99,3 +99,52 @@
 	
 	// Default to a basic health potion if no specific match
 	return /datum/reagent/medicine/healthpot
+
+// Check if mixing should occur and perform it
+/datum/reagents/proc/try_alchemy_mixing()
+	if(!my_atom)
+		return FALSE
+	
+	// Need at least 2 reagents to mix
+	if(reagent_list.len < 2)
+		return FALSE
+	
+	// Find pairs of reagents with common effects
+	for(var/i = 1 to reagent_list.len)
+		var/datum/reagent/R1 = reagent_list[i]
+		if(!R1.alchemy_effects)
+			continue
+			
+		for(var/j = i+1 to reagent_list.len)
+			var/datum/reagent/R2 = reagent_list[j]
+			if(!R2.alchemy_effects)
+				continue
+			
+			// Get common effects
+			var/list/common = get_common_alchemy_effects(R1, R2)
+			if(!common || !common.len)
+				continue
+			
+			// Found a match! Create potion
+			var/potion_type = create_potion_from_effects(common)
+			if(!potion_type)
+				continue
+			
+			// Calculate amount to convert (minimum of the two reagents)
+			var/convert_amount = min(R1.volume, R2.volume)
+			convert_amount = min(convert_amount, 30)  // Max 30 units per mix
+			
+			// Remove source reagents
+			remove_reagent(R1.type, convert_amount)
+			remove_reagent(R2.type, convert_amount)
+			
+			// Add potion (2 reagents → 1 potion, so half the amount)
+			add_reagent(potion_type, convert_amount * 0.5)
+			
+			// Notify
+			if(istype(my_atom, /obj/item/reagent_containers))
+				my_atom.visible_message("<span class='notice'>[my_atom] bubbles as the reagents combine into a potion!</span>")
+			
+			return TRUE
+	
+	return FALSE

@@ -680,6 +680,7 @@
 			R.on_merge(data, amount)
 			if(!no_react)
 				handle_reactions()
+				try_alchemy_mixing()  // Check for ES-style alchemy mixing
 			return TRUE
 
 	//otherwise make a new one
@@ -698,6 +699,7 @@
 		my_atom.on_reagent_change(ADD_REAGENT)
 	if(!no_react)
 		handle_reactions()
+		try_alchemy_mixing()  // Check for ES-style alchemy mixing
 	return TRUE
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list(/datum/reagent/toxin = 10, "beer" = 15)
