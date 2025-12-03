@@ -138,7 +138,6 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/fruit/apple_sliced
 	slices_num = 3
 	chopping_sound = TRUE
-	grind_results = list(/datum/reagent/powdered_produce/apple = 4)
 	var/equippedloc = null
 	var/list/bitten_names = list()
 
@@ -185,7 +184,6 @@
 	faretype = FARE_POOR
 	rotprocess = SHELFLIFE_DECENT
 	splat_type = /obj/effect/decal/cleanable/food/plant_smudge
-	grind_results = list(/datum/reagent/powdered_produce/generic_fruit = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/pear
 	name = "pear"
@@ -195,7 +193,6 @@
 	icon_state = "pear"
 	tastes = list("pear" = 1)
 	splat_color = "#D2B48C"
-	grind_results = list(/datum/reagent/powdered_produce/pear = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/lemon
 	name = "lemon"
@@ -205,7 +202,6 @@
 	icon_state = "lemon"
 	tastes = list("lemon" = 1)
 	splat_color = "#FFFF00"
-	grind_results = list(/datum/reagent/powdered_produce/lemon = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/lime
 	name = "lime"
@@ -215,7 +211,6 @@
 	icon_state = "lemon" // Need a real icon
 	tastes = list("lime" = 1)
 	splat_color = "#00FF00"
-	grind_results = list(/datum/reagent/powdered_produce/lime = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/tangerine
 	name = "tangerine"
@@ -225,7 +220,6 @@
 	icon_state = "tangerine"
 	tastes = list("tangerine" = 1)
 	splat_color = "#FFA500"
-	grind_results = list(/datum/reagent/powdered_produce/tangerine = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/plum
 	name = "plum"
@@ -235,7 +229,6 @@
 	icon_state = "plum"
 	tastes = list("plum" = 1)
 	splat_color = "#8B008B"
-	grind_results = list(/datum/reagent/powdered_produce/plum = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/strawberry
 	name = "strawberry"
@@ -245,7 +238,6 @@
 	icon_state = "strawberry"
 	tastes = list("strawberry" = 1)
 	splat_color = "#9A1B00"
-	grind_results = list(/datum/reagent/powdered_produce/strawberry = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/blackberry
 	name = "blackberry"
@@ -255,7 +247,6 @@
 	icon_state = "blackberry"
 	tastes = list("blackberry" = 1)
 	splat_color = "#272C3F"
-	grind_results = list(/datum/reagent/powdered_produce/blackberry = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/raspberry
 	name = "raspberry"
@@ -265,7 +256,6 @@
 	icon_state = "raspberry"
 	tastes = list("raspberry" = 1)
 	splat_color = "#A01600"
-	grind_results = list(/datum/reagent/powdered_produce/raspberry = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/tomato
 	name = "tomato"
@@ -275,7 +265,6 @@
 	icon_state = "tomato"
 	tastes = list("tomato" = 1)
 	splat_color = "#CD5320"
-	grind_results = list(/datum/reagent/powdered_produce/tomato = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/berries/rogue
 	seed = /obj/item/seeds/berryrogue
@@ -381,7 +370,6 @@
 	chopping_sound = TRUE
 	dropshrink = 0.9
 	rotprocess = SHELFLIFE_EXTREME
-	grind_results = list(/datum/reagent/powdered_produce/turnip = 4)
 
 /*	..................   Sunflower   ................... */
 /obj/item/reagent_containers/food/snacks/grown/sunflower
@@ -399,7 +387,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 0)
 	dropshrink = 0.8
 	rotprocess = null
-	grind_results = list(/datum/reagent/powdered_produce/sunflower = 4)
 
 //pyroclastic flowers - stonekeep port
 /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius
@@ -473,7 +460,6 @@
 	bitesize = 1
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/fyritiusnectar = 5)
 	rotprocess = SHELFLIFE_SHORT
-	grind_results = list(/datum/reagent/powdered_produce/bloodied_fyritius_flower = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius/bloodied/become_rotten()
 	visible_message(span_danger("[src] burns into ash!"))
@@ -569,7 +555,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	rotprocess = null
 	seed = /obj/item/seeds/onion
-	grind_results = list(/datum/reagent/powdered_produce/onion = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/cabbage/rogue
 	name = "cabbage"
@@ -584,7 +569,6 @@
 	chopping_sound = TRUE
 	rotprocess = SHELFLIFE_LONG
 	seed = /obj/item/seeds/cabbage
-	grind_results = list(/datum/reagent/powdered_produce/cabbage = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/potato/rogue
 	name = "potato"
@@ -601,7 +585,6 @@
 	chopping_sound = TRUE
 	rotprocess = null
 	seed = /obj/item/seeds/potato
-	grind_results = list(/datum/reagent/powdered_produce/potato = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/garlick/rogue
 	name = "garlick bulb"
@@ -616,7 +599,6 @@
 	rotprocess = null
 	chopping_sound = TRUE
 	seed = /obj/item/seeds/garlick
-	grind_results = list(/datum/reagent/powdered_produce/garlick_bulb = 4)
 
 // poppies, from vanderlin
 /obj/item/reagent_containers/food/snacks/grown/rogue/poppy
@@ -631,7 +613,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 0)
 	dropshrink = 0.5
 	rotprocess = null
-	grind_results = list(/datum/reagent/powdered_produce/poppy = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/coffee
 	name = "coffee cherry"
@@ -643,7 +624,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	mill_result = /obj/item/reagent_containers/food/snacks/grown/coffeebeans
 	rotprocess = null
-	grind_results = list(/datum/reagent/powdered_produce/coffee_cherry = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/tea
 	name = "tea leaves"
@@ -654,7 +634,6 @@
 	bitesize = 1
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	rotprocess = null
-	grind_results = list(/datum/reagent/powdered_produce/tea_leaves = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/carrot
 	name = "carrot"
@@ -663,7 +642,6 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/preserved/carrot_baked
 	tastes = list("carrot" = 1)
 	dropshrink = 0.75
-	grind_results = list(/datum/reagent/powdered_produce/carrot = 4)
 
 /*	..................   Cucumber   ................... */
 /obj/item/reagent_containers/food/snacks/grown/cucumber
@@ -675,7 +653,6 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/veg/cucumber_sliced
 	tastes = list("cucumber" = 1)
 	chopping_sound = TRUE
-	grind_results = list(/datum/reagent/powdered_produce/cucumber = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/eggplant
 	name = "eggplant"
@@ -684,4 +661,3 @@
 	slices_num = 1
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/eggplantcarved
 	slice_sound = TRUE
-	grind_results = list(/datum/reagent/powdered_produce/eggplant = 4)
