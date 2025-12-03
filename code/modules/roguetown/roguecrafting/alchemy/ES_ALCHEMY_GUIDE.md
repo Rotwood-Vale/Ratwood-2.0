@@ -1,7 +1,12 @@
-# Elder Scrolls-Style Alchemy System
+# Hybrid Alchemy System (Kingdom Come Deliverance meets Elder Scrolls)
 
 ## Overview
-This system implements Elder Scrolls-style alchemy where reagents have effects that combine when mixed to create potions.
+This alchemy system combines the best of Kingdom Come: Deliverance's multi-stage extraction process with Elder Scrolls' effect-based discovery and mixing mechanics, creating a unique and deep crafting experience.
+
+**Inspired by:**
+- **Kingdom Come: Deliverance** - Progressive refinement through multiple boiling stages
+- **Elder Scrolls (Skyrim/Oblivion)** - Effect-based discovery and ingredient combination
+- **Our own spin** - Creative paired-word naming and smell-based effect revelation
 
 ## How It Works
 
@@ -33,40 +38,53 @@ Grind ingredients in a mortar & pestle to extract reagents with effects.
 *(To be implemented - will assign effects to ground reagents)*
 
 ### 3. Mixing Reagents (Part 3)
-When two reagents with **common effects** are mixed in a container, they automatically combine to create a potion!
+When two reagents with **common effects** from **DIFFERENT herb sources** are mixed in a container, they automatically combine to create a creatively named potion!
+
+**Creative Naming System:**
+- Each effect has two words: [adjective, noun] (e.g., heal_burn = "soothing", "balm")
+- **1 common effect**: Uses adjective only → "soothing"
+- **2 common effects**: Adjective from first + Noun from second → "soothing heal"
+- **3+ common effects**: Mysterious name → "strange brew"
 
 **Example:**
-- Rosa tonic (effects: heal burn, restore blood, fortify constitution)
-- Calendula oil (effects: heal brute, fortify endurance, restore blood)
-- **Common effect:** restore blood
-- **Result:** Automatically creates a health potion!
+- Rosa tonic (effects: heal burn, restore blood, fortify constitution) - source_herb_name = "rosa"
+- Symphitum oil (effects: heal brute, heal burn, restore blood) - source_herb_name = "symphitum"
+- **Common effects:** heal burn, restore blood (2 effects)
+- **Different herbs:** "rosa" ≠ "symphitum" ✅ mixing allowed
+- **Result:** Creates "soothing fluid" (heal_burn adjective + restore_blood noun) with blended color, combined smell, and mixed taste!
 
-## Alchemy Effects
+**Same-Herb Prevention:**
+- Rosa tonic + Rosa concentrate → ❌ NO REACTION (both contain "rosa")
+- This prevents trivial crafting and encourages diverse herb gathering
+
+## Alchemy Effects and Paired-Word Naming
+
+Each effect has a distinct smell AND two words [adjective, noun] for creative potion naming:
 
 ### Positive Effects
-- `EFFECT_HEAL_BRUTE` - Heals brute damage → Health Potion
-- `EFFECT_HEAL_BURN` - Heals burn damage → Health Potion
-- `EFFECT_HEAL_TOX` - Heals toxin damage → Antidote
-- `EFFECT_RESTORE_STAMINA` - Restores stamina → Stamina Potion
-- `EFFECT_RESTORE_ENERGY` - Restores energy → Mana Potion
-- `EFFECT_RESTORE_BLOOD` - Restores blood → Health Potion
-- `EFFECT_FORTIFY_STRENGTH` - Strength buff → Strength Potion
-- `EFFECT_FORTIFY_PERCEPTION` - Perception buff → Perception Potion
-- `EFFECT_FORTIFY_INTELLIGENCE` - Intelligence buff → Intelligence Potion
-- `EFFECT_FORTIFY_CONSTITUTION` - Constitution buff → Constitution Potion
-- `EFFECT_FORTIFY_ENDURANCE` - Endurance buff → Endurance Potion
-- `EFFECT_FORTIFY_SPEED` - Speed buff → Speed Potion
-- `EFFECT_FORTIFY_LUCK` - Luck buff → Luck Potion
+- `EFFECT_HEAL_BRUTE` - "mending", "heal" | Smell: wet moss
+- `EFFECT_HEAL_BURN` - "soothing", "balm" | Smell: soothing balm
+- `EFFECT_HEAL_TOX` - "curing", "antidote" | Smell: purity
+- `EFFECT_RESTORE_STAMINA` - "energizing", "vigor" | Smell: fresh air
+- `EFFECT_RESTORE_ENERGY` - "invigorating", "essence" | Smell: clean air
+- `EFFECT_RESTORE_BLOOD` - "vital", "fluid" | Smell: iron and life
+- `EFFECT_FORTIFY_STRENGTH` - "mighty", "power" | Smell: power
+- `EFFECT_FORTIFY_PERCEPTION` - "keen", "sight" | Smell: sharp clarity
+- `EFFECT_FORTIFY_INTELLIGENCE` - "brilliant", "mind" | Smell: arcane essence
+- `EFFECT_FORTIFY_CONSTITUTION` - "hardy", "body" | Smell: mountain air
+- `EFFECT_FORTIFY_ENDURANCE` - "enduring", "fortitude" | Smell: earth
+- `EFFECT_FORTIFY_SPEED` - "swift", "motion" | Smell: a swift breeze
+- `EFFECT_FORTIFY_LUCK` - "fortunate", "blessing" | Smell: fortune
 
 ### Negative Effects
-- `EFFECT_PARALYZE` - Paralyzes target
-- `EFFECT_POISON` - Poisons target → Berry Poison
-- `EFFECT_DAMAGE_STAMINA` - Damages stamina → Stamina Poison
-- `EFFECT_DAMAGE_ENERGY` - Damages energy
-- `EFFECT_BLINDNESS` - Blinds target
-- `EFFECT_SILENCE` - Silences target
-- `EFFECT_SLOW` - Slows target
-- `EFFECT_WEAKNESS` - Weakens target
+- `EFFECT_PARALYZE` - "binding", "lock" | Smell: stagnant air
+- `EFFECT_POISON` - "toxic", "venom" | Smell: death
+- `EFFECT_DAMAGE_STAMINA` - "draining", "fatigue" | Smell: exhaustion
+- `EFFECT_DAMAGE_ENERGY` - "exhausting", "drain" | Smell: draining cold
+- `EFFECT_BLINDNESS` - "darkening", "shadow" | Smell: darkness
+- `EFFECT_SILENCE` - "muting", "silence" | Smell: muffled void
+- `EFFECT_SLOW` - "sluggish", "draught" | Smell: thick molasses
+- `EFFECT_WEAKNESS` - "enfeebling", "curse" | Smell: decay
 
 ## Current Herb Effects
 
@@ -115,28 +133,21 @@ When two reagents with **common effects** are mixed in a container, they automat
 - **Matricaria**: fortify perception, poison, slow
 - **Paris**: damage stamina, poison, paralyze
 
-## Effect Smells
+## Skill-Based Effect Discovery
 
-Each effect has a distinct smell that skilled alchemists can detect:
+Examining herbs reveals their effects as smells based on your alchemy skill:
 
-- **Heal Brute**: wet moss
-- **Heal Burn**: soothing balm
-- **Heal Toxin**: purity
-- **Restore Stamina**: fresh air
-- **Restore Energy**: clean air
-- **Restore Blood**: iron and life
-- **Fortify Strength**: power
-- **Fortify Perception**: sharp clarity
-- **Fortify Intelligence**: arcane essence
-- **Fortify Constitution**: mountain air
-- **Fortify Endurance**: earth
-- **Fortify Speed**: a swift breeze
-- **Fortify Luck**: fortune
-- **Paralyze**: stagnant air
-- **Poison**: death
-- **Damage Stamina**: exhaustion
-- **Weakness**: decay
-- **Slow**: thick molasses
+- **NOVICE (Skill 1)**: Can smell the **first** effect
+- **APPRENTICE/AMATEUR (Skill 2)**: Can smell **first and second** effects
+- **JOURNEYMAN/EXPERT (Skill 3+)**: Can smell **all three** effects
+
+**Example:**
+```
+> You examine rosa...
+> You smell: soothing balm (heal burn revealed)
+```
+
+As your skill increases, you'll detect more effects, allowing you to discover which herbs share common effects for potion mixing!
 
 ## Complete Workflow Example
 
@@ -164,21 +175,47 @@ Each effect has a distinct smell that skilled alchemists can detect:
    - Result: 60u "symphitum oil" (effects: heal brute, heal burn, restore blood)
    - Symphitum herb is consumed
 
-5. **Mix to create potion**
+5. **Mix to create creatively named potion**
    - Pour rosa tonic into vial
    - Pour symphitum oil into same vial
    - **Automatic reaction:** Common effects detected (heal burn, restore blood)
-   - Result: Creates health potion!
+   - **Different herbs:** "rosa" ≠ "symphitum" ✅
+   - **2 common effects:** Uses paired-word naming
+   - Result: Creates "soothing fluid" with:
+     - Blended color (RGB average of both sources)
+     - Combined smell ("soothing balm, iron and life")
+     - Mixed taste ("rosa and symphitum and watery herbs and oily herbs")
+     - BOTH effects applied when consumed!
 
 ## Technical Details
 
-- Mixing occurs automatically when reagents are added to containers
+### Mixing Mechanics
+- Mixing occurs automatically when reagents with common effects are combined in containers
 - Maximum 30 units converted per mixing event
 - 2 reagents → 1 potion (50% conversion rate)
-- Effects are sorted alphabetically to ensure consistent potion types
-- Primary (first) common effect determines potion type
-- **Primary extraction**: 90u base reagent → 60u extract (2/3 conversion)
-- **Secondary extraction**: 60u extract → 30u concentrate (1/2 conversion)
+- **Same-herb prevention**: Reagents from the same source herb cannot mix (prevents trivial crafting)
+- Mixed potions track all source herbs (e.g., "rosa-symphitum") and cannot be re-mixed with those herbs
+
+### Extraction Ratios (KCD-Style Progressive Refinement)
+- **Primary extraction**: 90u base reagent → 60u extract (2/3 conversion, herb consumed)
+- **Secondary extraction**: 60u extract → 30u concentrate (1/2 conversion, NO herb needed)
+- Cauldron accepts only ONE item at a time for focused alchemy
+
+### Creative Naming (Our Unique Spin)
+- Each effect has [adjective, noun] word pair
+- 1 common effect: Uses adjective only (e.g., "soothing")
+- 2 common effects: Adjective₁ + Noun₂ (e.g., "soothing heal")
+- 3+ common effects: "strange brew" (mysterious!)
+
+### Property Blending
+- **Colors**: RGB values averaged (50/50 blend)
+- **Smells**: All effect smells combined (comma-separated)
+- **Tastes**: Source reagent tastes combined
+- **Effects**: ALL common effects apply dynamically via on_mob_life()
+
+### Skill-Based Discovery (Elder Scrolls-Style)
+- Higher alchemy skill reveals more effects when examining herbs
+- Creates discovery-based gameplay - experiment to find combinations!
 
 ## Adding New Herbs
 
