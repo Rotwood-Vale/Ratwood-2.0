@@ -24,23 +24,16 @@
 #define EFFECT_DAMAGE_STAMINA "damage_stamina"
 #define EFFECT_DAMAGE_ENERGY "damage_energy"
 
-// Datum to hold reagent alchemy effects
-/datum/reagent_alchemy_effects
-	var/list/effects = list()  // List of effect strings
-	
-/datum/reagent_alchemy_effects/New(list/effect_list)
-	. = ..()
-	if(effect_list)
-		effects = effect_list.Copy()
-
-// Add alchemy effects variable to all reagents
+// Add alchemy effects variable to all reagents (simple list, no datum wrapper)
 /datum/reagent
-	var/datum/reagent_alchemy_effects/alchemy_effects = null
+	var/list/alchemy_effects = null
 
-// Helper proc to add alchemy effects to a reagent
+// Helper proc to set alchemy effects on a reagent
 /datum/reagent/proc/set_alchemy_effects(list/effect_list)
-	alchemy_effects = new /datum/reagent_alchemy_effects(effect_list)
-	return alchemy_effects
+	if(!effect_list || !effect_list.len)
+		alchemy_effects = null
+		return
+	alchemy_effects = effect_list.Copy()
 
 // Proc to get common effects between two reagents
 /proc/get_common_alchemy_effects(datum/reagent/R1, datum/reagent/R2)
@@ -48,8 +41,8 @@
 		return list()
 	
 	var/list/common = list()
-	for(var/effect in R1.alchemy_effects.effects)
-		if(effect in R2.alchemy_effects.effects)
+	for(var/effect in R1.alchemy_effects)
+		if(effect in R2.alchemy_effects)
 			common += effect
 	
 	return common
@@ -76,6 +69,8 @@
 			return /datum/reagent/medicine/stampot
 		if(EFFECT_RESTORE_ENERGY)
 			return /datum/reagent/medicine/manapot
+		if(EFFECT_RESTORE_BLOOD)
+			return /datum/reagent/medicine/healthpot
 		if(EFFECT_FORTIFY_STRENGTH)
 			return /datum/reagent/buff/strength
 		if(EFFECT_FORTIFY_PERCEPTION)
@@ -112,12 +107,12 @@
 	// Find pairs of reagents with common effects
 	for(var/i = 1 to reagent_list.len)
 		var/datum/reagent/R1 = reagent_list[i]
-		if(!R1.alchemy_effects)
+		if(!R1.alchemy_effects || !R1.alchemy_effects.len)
 			continue
 			
 		for(var/j = i+1 to reagent_list.len)
 			var/datum/reagent/R2 = reagent_list[j]
-			if(!R2.alchemy_effects)
+			if(!R2.alchemy_effects || !R2.alchemy_effects.len)
 				continue
 			
 			// Get common effects

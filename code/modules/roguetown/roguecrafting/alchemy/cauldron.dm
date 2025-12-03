@@ -9,7 +9,7 @@
 	anchored = TRUE
 	max_integrity = 300
 	var/list/ingredients = list()
-	var/maxingredients = 4
+	var/maxingredients = 1  // Only one item can fit
 	var/brewing = 0
 	var/mob/living/carbon/human/lastuser
 	fueluse = 20 MINUTES
@@ -347,8 +347,8 @@
 		if(source_extract)
 			for(var/datum/reagent/herb_extract/R in src.reagents.reagent_list)
 				if(R.type == extract_type)
-					if(source_extract.alchemy_effects)
-						R.set_alchemy_effects(source_extract.alchemy_effects.effects)
+					if(source_extract.alchemy_effects && source_extract.alchemy_effects.len)
+						R.set_alchemy_effects(source_extract.alchemy_effects)
 					if(source_extract.source_herb_name)
 						R.source_herb_name = source_extract.source_herb_name
 						R.source_herb_type = source_extract.source_herb_type
