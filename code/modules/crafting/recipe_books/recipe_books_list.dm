@@ -113,22 +113,6 @@
 		/datum/crafting_recipe/roguetown/tallow,
 		)
 
-// TBD - Cauldron Recipes
-/obj/item/recipe_book/alchemy
-	name = "Secrets of Alchemy"
-	icon_state = "book3_0"
-	base_icon_state = "book3"
-
-	types = list(
-		/datum/crafting_recipe/roguetown/structure/alch,
-		/datum/crafting_recipe/roguetown/structure/cauldronalchemy,
-		/datum/crafting_recipe/roguetown/survival/mortar,
-		/datum/crafting_recipe/roguetown/survival/pestle,
-		/datum/crafting_recipe/roguetown/alchemy,
-		/datum/alch_grind_recipe,
-		/datum/alch_cauldron_recipe
-		)
-
 /obj/item/recipe_book/cooking
 	name = "The Culinary Codex"
 	desc = "A book full of recipes and tips for cooking. This version looks very incomplete, and only contain brewing recipes. Perhaps it will be filled in later?"
