@@ -187,7 +187,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/pear
 	name = "pear"
-	alchemy_effects = list(EFFECT_RESTORE_ENERGY, EFFECT_HEAL_BURN, EFFECT_FORTIFY_ENDURANCE)
+		alchemy_effects = list(EFFECT_RESTORE_ENERGY, EFFECT_HEAL_BURN, EFFECT_FORTIFY_ENDURANCE, EFFECT_SLOW)
 	seed = /obj/item/seeds/pear
 	desc = "A juicy, bell-shaped fruit with a delicate sweetness and soft, grainy flesh."
 	icon_state = "pear"
@@ -197,7 +197,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/lemon
 	name = "lemon"
-	alchemy_effects = list(EFFECT_HEAL_TOXIN, EFFECT_FORTIFY_PERCEPTION, EFFECT_RESTORE_STAMINA)
+	alchemy_effects = list(EFFECT_HEAL_TOX, EFFECT_FORTIFY_PERCEPTION, EFFECT_RESTORE_STAMINA, EFFECT_NAUSEA)
 	seed = /obj/item/seeds/lemon
 	desc = "A bright yellow citrus fruit, prized for its tart, refreshing juice and fragrant zest."
 	icon_state = "lemon"
@@ -207,7 +207,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/lime
 	name = "lime"
-	alchemy_effects = list(EFFECT_HEAL_TOXIN, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_LUCK)
+	alchemy_effects = list(EFFECT_HEAL_TOX, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_LUCK, EFFECT_NAUSEA)
 	seed = /obj/item/seeds/lime
 	desc = "A small, green citrus fruit with a sharp, tangy flavor, often used to add zest to dishes and drinks."
 	icon_state = "lemon" // Need a real icon
@@ -217,7 +217,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/tangerine
 	name = "tangerine"
-	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_PERCEPTION, EFFECT_HEAL_BRUTE)
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_PERCEPTION, EFFECT_HEAL_BRUTE, EFFECT_WEAKNESS)
 	seed = /obj/item/seeds/tangerine
 	desc = "A small, easy-to-peel citrus fruit with a vibrant orange color and sweet, juicy segments."
 	icon_state = "tangerine"
@@ -227,7 +227,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/plum
 	name = "plum"
-	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_HEAL_BURN, EFFECT_FORTIFY_CONSTITUTION)
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_HEAL_BURN, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKNESS)
 	seed = /obj/item/seeds/plum
 	desc = "A smooth-skinned fruit with juicy, sweet-tart flesh and a deep purple or red hue."
 	icon_state = "plum"
@@ -237,7 +237,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/strawberry
 	name = "strawberry"
-	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_PERCEPTION)
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_PERCEPTION, EFFECT_SLOW)
 	seed = /obj/item/seeds/strawberry
 	desc = "A small, red fruit with a sweet taste. It is often used in desserts."
 	icon_state = "strawberry"
@@ -247,7 +247,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/blackberry
 	name = "blackberry"
-	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_HEAL_TOXIN, EFFECT_FORTIFY_ENDURANCE)
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_HEAL_TOX, EFFECT_FORTIFY_ENDURANCE, EFFECT_WEAKNESS)
 	seed = /obj/item/seeds/blackberry
 	desc = "A small, dark fruit with a sweet and slightly tart taste. It is often used in desserts."
 	icon_state = "blackberry"
@@ -257,7 +257,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/raspberry
 	name = "raspberry"
-	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_LUCK)
+	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_LUCK, EFFECT_DAMAGE_STAMINA)
 	seed = /obj/item/seeds/raspberry
 	desc = "A small, red fruit with a sweet and slightly tart taste. It is often used in desserts."
 	icon_state = "raspberry"
@@ -267,7 +267,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/tomato
 	name = "tomato"
-	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_BLOOD, EFFECT_FORTIFY_ENDURANCE)
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_BLOOD, EFFECT_FORTIFY_ENDURANCE, EFFECT_SLOW)
 	seed = /obj/item/seeds/tomato
 	desc = "A plump, red fruit with juicy flesh and a balanced sweet-tart flavor, essential in salads and sauces."
 	icon_state = "tomato"
@@ -330,7 +330,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/nut
 	name = "rocknut"
-	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_ENDURANCE)
+	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_ENDURANCE, EFFECT_DAMAGE_STAMINA)
 	desc = "a nut with mild stimulant properties. In powderized form, it can be used to make a zig."
 	seed = /obj/item/seeds/nut
 	icon_state = "rocknut"
@@ -366,7 +366,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/vegetable/turnip
 	name = "turnip"
-	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_CONSTITUTION, EFFECT_HEAL_BRUTE)
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_CONSTITUTION, EFFECT_HEAL_BRUTE, EFFECT_SLOW)
 	desc = "A shield against hunger, naught else."
 	seed = /obj/item/seeds/turnip
 	icon_state = "turnip"
@@ -384,7 +384,7 @@
 /*	..................   Sunflower   ................... */
 /obj/item/reagent_containers/food/snacks/grown/sunflower
 	name = "sunflower"
-	alchemy_effects = list(EFFECT_FORTIFY_LUCK, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_PERCEPTION)
+	alchemy_effects = list(EFFECT_FORTIFY_LUCK, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_PERCEPTION, EFFECT_WEAKNESS)
 	desc = "A large, bright yellow flower. Can be worn on the head."
 	icon_state = "sunflower"
 	filling_color = "#FFD700"
@@ -554,7 +554,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/onion/rogue
 	name = "onion"
-	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_HEAL_TOXIN, EFFECT_RESTORE_BLOOD)
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_HEAL_TOX, EFFECT_RESTORE_BLOOD, EFFECT_NAUSEA)
 	desc = "A wonderful vegetable with many layers and broad flavor profile."
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced
 	chopping_sound = TRUE
@@ -570,7 +570,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/cabbage/rogue
 	name = "cabbage"
-	alchemy_effects = list(EFFECT_FORTIFY_ENDURANCE, EFFECT_HEAL_BRUTE, EFFECT_RESTORE_ENERGY)
+	alchemy_effects = list(EFFECT_FORTIFY_ENDURANCE, EFFECT_HEAL_BRUTE, EFFECT_RESTORE_ENERGY, EFFECT_SLOW)
 	desc = "A dense leafed vegetable, crunchy and ripe. A symbol of prosperity for elves."
 	icon_state = "cabbage"
 	filling_color = "#90EE90"
@@ -585,7 +585,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/potato/rogue
 	name = "potato"
-	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_ENDURANCE)
+	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_ENDURANCE, EFFECT_SLOW)
 	desc = "A spud, dwarven icon of growth. Can be eaten raw."
 	icon_state = "potato"
 	filling_color = "#D2B48C"

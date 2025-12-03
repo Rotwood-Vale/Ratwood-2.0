@@ -401,7 +401,7 @@
 					// Tonic (water) = effect #1
 					// Oil = effect #2
 					// Bitters (wine) = ALL effects
-					// Vitriol (acid) = effect #3
+					// Vitriol (acid) = effect #4
 					if(extract_type == /datum/reagent/herb_extract/tonic)
 						// Take effect #1
 						if(herb.alchemy_effects.len >= 1)
@@ -414,9 +414,9 @@
 						// Take ALL effects
 						selected_effects = herb.alchemy_effects.Copy()
 					else if(extract_type == /datum/reagent/herb_extract/vitriol)
-						// Take effect #3
-						if(herb.alchemy_effects.len >= 3)
-							selected_effects += herb.alchemy_effects[3]
+						// Take effect #4
+						if(herb.alchemy_effects.len >= 4)
+							selected_effects += herb.alchemy_effects[4]
 					
 					R.set_alchemy_effects(selected_effects)
 					R.source_herb_name = herb.name
