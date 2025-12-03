@@ -257,7 +257,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/raspberry
 	name = "raspberry"
-	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_LUCK, EFFECT_DAMAGE_STAMINA)
+	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_LUCK, EFFECT_DRAIN_STAMINA)
 	seed = /obj/item/seeds/raspberry
 	desc = "A small, red fruit with a sweet and slightly tart taste. It is often used in desserts."
 	icon_state = "raspberry"
@@ -330,7 +330,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/nut
 	name = "rocknut"
-	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_RESTORE_MANA, EFFECT_FORTIFY_ENDURANCE, EFFECT_DAMAGE_STAMINA)
+	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_RESTORE_MANA, EFFECT_FORTIFY_ENDURANCE, EFFECT_DRAIN_STAMINA)
 	desc = "a nut with mild stimulant properties. In powderized form, it can be used to make a zig."
 	seed = /obj/item/seeds/nut
 	icon_state = "rocknut"
