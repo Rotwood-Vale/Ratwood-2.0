@@ -16,17 +16,17 @@ Add exactly ONE herb to a cauldron with a base reagent:
 **NOVICE LEVEL (Skill 1) - Primary Extraction (90u minimum):**
 - Water (90u+) + Herb → "Herb Tonic" (60u) (herb consumed)
 - Cooking Oil (90u+) + Herb → "Oil of Herb" (60u) (herb consumed)
-- Wine (90u+) + Herb → "Herb Elixir" (60u) (herb consumed)
 
 **AMATEUR LEVEL (Skill 2):**
+- Wine (90u+) + Herb → "Herb Bitters" (60u) (herb consumed)
 - Acid (90u+) + Herb → "Vitriol of Herb" (60u) (herb consumed)
+
+**JOURNEYMAN LEVEL (Skill 3) - Secondary Processing (60u minimum):**
 - Herb Tonic (60u+) → "Herb Concentrate" (30u) (boil again, NO herb needed)
-
-**JOURNEYMAN LEVEL (Skill 3) - Tertiary Processing (60u minimum):**
 - Oil of Herb (60u+) → "Herb Paste" (30u) (boil again, NO herb needed)
-- Herb Elixir (60u+) → "Herb Syrup" (30u) (boil again, NO herb needed)
 
-**EXPERT LEVEL (Skill 4) - Quaternary Processing (60u minimum):**
+**EXPERT LEVEL (Skill 4) - Tertiary Processing (60u minimum):**
+- Herb Bitters (60u+) → "Herb Powder" (30u) (boil again, NO herb needed)
 - Vitriol of Herb (60u+) → "Herb Salt" (30u) (boil again, NO herb needed)
 
 **Example:**
@@ -35,7 +35,13 @@ Add exactly ONE herb to a cauldron with a base reagent:
 
 ### 2. Grinding in Mortar (Part 2)
 Grind ingredients in a mortar & pestle to extract reagents with effects.
-*(To be implemented - will assign effects to ground reagents)*
+
+**Herbs**: Create herb powders for traditional potions
+**Produce**: Create powdered produce (4u) with alchemy effects!
+- Grinding apples → "powdered apple" (4u, effects: restore_stamina, heal_brute, fortify_constitution)
+- Grinding potatoes → "powdered potato" (4u, effects: fortify_constitution, restore_stamina, fortify_endurance)
+- Grinding cabbage → "powdered cabbage" (4u, effects: fortify_endurance, heal_brute, restore_energy)
+- All produce can now participate in the alchemy system!
 
 ### 3. Mixing Reagents (Part 3)
 When two reagents with **common effects** from **DIFFERENT herb sources** are mixed in a container, they automatically combine to create a creatively named potion!

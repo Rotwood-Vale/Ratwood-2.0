@@ -87,66 +87,48 @@
 	taste_description = "oily herbs"
 	alpha = 180
 
-// Wine-based extracts (Herb Elixir)
-/datum/reagent/herb_extract/elixir
-	name = "herbal elixir"
-	color = "#8a0b0b"
-	taste_description = "sweet herbs and wine"
-	alpha = 170
-
-// Spirits-based extracts (Herb Bitters) - Currently disabled, wine is used for all alcohols
-/*
+// Wine-based extracts (Herb Bitters)
 /datum/reagent/herb_extract/bitters
 	name = "herbal bitters"
-	color = "#5f3b23"
-	taste_description = "bitter herbs and alcohol"
-	alpha = 180
-*/
+	color = "#8a0b0b"
+	taste_description = "bitter herbs and wine"
+	alpha = 170
 
+// Concentrated extracts (Herb Concentrate)
+/datum/reagent/herb_extract/concentrate
+	name = "herbal concentrate"
+	color = "#4a7a7d"
+	taste_description = "concentrated herbs"
+	alpha = 200
+
+// Paste extracts (Herb Paste)
+/datum/reagent/herb_extract/paste
+	name = "herbal paste"
+	color = "#a38728"
+	taste_description = "thick herbal paste"
+	alpha = 220
+
+// Powder extracts (Herb Powder)
+/datum/reagent/herb_extract/powder
+	name = "herbal powder"
+	color = "#6a3a1a"
+	taste_description = "powdered herbs"
+	alpha = 240
+	reagent_state = SOLID
+
+// Salt extracts (Herb Salt)
+/datum/reagent/herb_extract/salt
+	name = "herbal salt"
+	color = "#e0e0e0"
+	taste_description = "crystalline herbal salt"
+	alpha = 250
+	reagent_state = SOLID
 // Acid-based extracts (Vitriol of Herb)
 /datum/reagent/herb_extract/vitriol
 	name = "herbal vitriol"
 	color = "#5eff00"
 	taste_description = "caustic herbs"
 	alpha = 160
-
-// AMATEUR LEVEL - Secondary processing (boiling extracts again)
-
-// Herb Concentrate (from Herb Tonic)
-/datum/reagent/herb_extract/concentrate
-	name = "herbal concentrate"
-	color = "#4a6a6d"
-	taste_description = "concentrated herbs"
-	alpha = 200
-	description = "A concentrated extract made by repeatedly boiling an herbal tonic."
-
-// JOURNEYMAN LEVEL - Tertiary processing
-
-// Herb Paste (from Oil of Herb)
-/datum/reagent/herb_extract/paste
-	name = "herbal paste"
-	color = "#8b7355"
-	taste_description = "thick herbs"
-	alpha = 220
-	description = "A thick paste made by reducing herbal oil."
-
-// Herb Syrup (from Herb Elixir)
-/datum/reagent/herb_extract/syrup
-	name = "herbal syrup"
-	color = "#6a0808"
-	taste_description = "thick sweet herbs"
-	alpha = 210
-	description = "A thick syrup made by reducing herbal elixir."
-
-// EXPERT LEVEL - Quaternary processing
-
-// Herb Salt (from Vitriol of Herb)
-/datum/reagent/herb_extract/salt
-	name = "herbal salt"
-	color = "#3fff00"
-	taste_description = "caustic herbal crystals"
-	alpha = 240
-	description = "Crystallized salts infused with herbal essence."
 
 // Cooking oil reagent for alchemy
 /datum/reagent/cooking_oil

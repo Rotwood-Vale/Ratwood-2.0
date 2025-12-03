@@ -138,6 +138,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/fruit/apple_sliced
 	slices_num = 3
 	chopping_sound = TRUE
+	grind_results = list(/datum/reagent/powdered_produce/apple = 4)
 	var/equippedloc = null
 	var/list/bitten_names = list()
 
@@ -184,78 +185,97 @@
 	faretype = FARE_POOR
 	rotprocess = SHELFLIFE_DECENT
 	splat_type = /obj/effect/decal/cleanable/food/plant_smudge
+	grind_results = list(/datum/reagent/powdered_produce/generic_fruit = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/pear
 	name = "pear"
+	alchemy_effects = list(EFFECT_RESTORE_ENERGY, EFFECT_HEAL_BURN, EFFECT_FORTIFY_ENDURANCE)
 	seed = /obj/item/seeds/pear
 	desc = "A juicy, bell-shaped fruit with a delicate sweetness and soft, grainy flesh."
 	icon_state = "pear"
 	tastes = list("pear" = 1)
 	splat_color = "#D2B48C"
+	grind_results = list(/datum/reagent/powdered_produce/pear = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/lemon
 	name = "lemon"
+	alchemy_effects = list(EFFECT_HEAL_TOXIN, EFFECT_FORTIFY_PERCEPTION, EFFECT_RESTORE_STAMINA)
 	seed = /obj/item/seeds/lemon
 	desc = "A bright yellow citrus fruit, prized for its tart, refreshing juice and fragrant zest."
 	icon_state = "lemon"
 	tastes = list("lemon" = 1)
 	splat_color = "#FFFF00"
+	grind_results = list(/datum/reagent/powdered_produce/lemon = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/lime
 	name = "lime"
+	alchemy_effects = list(EFFECT_HEAL_TOXIN, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_LUCK)
 	seed = /obj/item/seeds/lime
 	desc = "A small, green citrus fruit with a sharp, tangy flavor, often used to add zest to dishes and drinks."
 	icon_state = "lemon" // Need a real icon
 	tastes = list("lime" = 1)
 	splat_color = "#00FF00"
+	grind_results = list(/datum/reagent/powdered_produce/lime = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/tangerine
 	name = "tangerine"
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_PERCEPTION, EFFECT_HEAL_BRUTE)
 	seed = /obj/item/seeds/tangerine
 	desc = "A small, easy-to-peel citrus fruit with a vibrant orange color and sweet, juicy segments."
 	icon_state = "tangerine"
 	tastes = list("tangerine" = 1)
 	splat_color = "#FFA500"
+	grind_results = list(/datum/reagent/powdered_produce/tangerine = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/plum
 	name = "plum"
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_HEAL_BURN, EFFECT_FORTIFY_CONSTITUTION)
 	seed = /obj/item/seeds/plum
 	desc = "A smooth-skinned fruit with juicy, sweet-tart flesh and a deep purple or red hue."
 	icon_state = "plum"
 	tastes = list("plum" = 1)
 	splat_color = "#8B008B"
+	grind_results = list(/datum/reagent/powdered_produce/plum = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/strawberry
 	name = "strawberry"
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_PERCEPTION)
 	seed = /obj/item/seeds/strawberry
 	desc = "A small, red fruit with a sweet taste. It is often used in desserts."
 	icon_state = "strawberry"
 	tastes = list("strawberry" = 1)
 	splat_color = "#9A1B00"
+	grind_results = list(/datum/reagent/powdered_produce/strawberry = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/blackberry
 	name = "blackberry"
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_HEAL_TOXIN, EFFECT_FORTIFY_ENDURANCE)
 	seed = /obj/item/seeds/blackberry
 	desc = "A small, dark fruit with a sweet and slightly tart taste. It is often used in desserts."
 	icon_state = "blackberry"
 	tastes = list("blackberry" = 1)
 	splat_color = "#272C3F"
+	grind_results = list(/datum/reagent/powdered_produce/blackberry = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/raspberry
 	name = "raspberry"
+	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_LUCK)
 	seed = /obj/item/seeds/raspberry
 	desc = "A small, red fruit with a sweet and slightly tart taste. It is often used in desserts."
 	icon_state = "raspberry"
 	tastes = list("raspberry" = 1)
 	splat_color = "#A01600"
+	grind_results = list(/datum/reagent/powdered_produce/raspberry = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/tomato
 	name = "tomato"
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_BLOOD, EFFECT_FORTIFY_ENDURANCE)
 	seed = /obj/item/seeds/tomato
 	desc = "A plump, red fruit with juicy flesh and a balanced sweet-tart flavor, essential in salads and sauces."
 	icon_state = "tomato"
 	tastes = list("tomato" = 1)
 	splat_color = "#CD5320"
+	grind_results = list(/datum/reagent/powdered_produce/tomato = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/berries/rogue
 	seed = /obj/item/seeds/berryrogue
@@ -312,6 +332,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/nut
 	name = "rocknut"
+	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_ENDURANCE)
 	desc = "a nut with mild stimulant properties. In powderized form, it can be used to make a zig."
 	seed = /obj/item/seeds/nut
 	icon_state = "rocknut"
@@ -347,6 +368,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/vegetable/turnip
 	name = "turnip"
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_CONSTITUTION, EFFECT_HEAL_BRUTE)
 	desc = "A shield against hunger, naught else."
 	seed = /obj/item/seeds/turnip
 	icon_state = "turnip"
@@ -359,10 +381,12 @@
 	chopping_sound = TRUE
 	dropshrink = 0.9
 	rotprocess = SHELFLIFE_EXTREME
+	grind_results = list(/datum/reagent/powdered_produce/turnip = 4)
 
 /*	..................   Sunflower   ................... */
 /obj/item/reagent_containers/food/snacks/grown/sunflower
 	name = "sunflower"
+	alchemy_effects = list(EFFECT_FORTIFY_LUCK, EFFECT_RESTORE_ENERGY, EFFECT_FORTIFY_PERCEPTION)
 	desc = "A large, bright yellow flower. Can be worn on the head."
 	icon_state = "sunflower"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
@@ -375,6 +399,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 0)
 	dropshrink = 0.8
 	rotprocess = null
+	grind_results = list(/datum/reagent/powdered_produce/sunflower = 4)
 
 //pyroclastic flowers - stonekeep port
 /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius
@@ -448,6 +473,7 @@
 	bitesize = 1
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/fyritiusnectar = 5)
 	rotprocess = SHELFLIFE_SHORT
+	grind_results = list(/datum/reagent/powdered_produce/bloodied_fyritius_flower = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius/bloodied/become_rotten()
 	visible_message(span_danger("[src] burns into ash!"))
@@ -531,6 +557,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/onion/rogue
 	name = "onion"
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_HEAL_TOXIN, EFFECT_RESTORE_BLOOD)
 	desc = "A wonderful vegetable with many layers and broad flavor profile."
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced
 	chopping_sound = TRUE
@@ -542,9 +569,11 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	rotprocess = null
 	seed = /obj/item/seeds/onion
+	grind_results = list(/datum/reagent/powdered_produce/onion = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/cabbage/rogue
 	name = "cabbage"
+	alchemy_effects = list(EFFECT_FORTIFY_ENDURANCE, EFFECT_HEAL_BRUTE, EFFECT_RESTORE_ENERGY)
 	desc = "A dense leafed vegetable, crunchy and ripe. A symbol of prosperity for elves."
 	icon_state = "cabbage"
 	tastes = list("blandness" = 1)
@@ -555,9 +584,11 @@
 	chopping_sound = TRUE
 	rotprocess = SHELFLIFE_LONG
 	seed = /obj/item/seeds/cabbage
+	grind_results = list(/datum/reagent/powdered_produce/cabbage = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/potato/rogue
 	name = "potato"
+	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_ENDURANCE)
 	desc = "A spud, dwarven icon of growth. Can be eaten raw."
 	icon_state = "potato"
 	eat_effect = null
@@ -570,6 +601,7 @@
 	chopping_sound = TRUE
 	rotprocess = null
 	seed = /obj/item/seeds/potato
+	grind_results = list(/datum/reagent/powdered_produce/potato = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/garlick/rogue
 	name = "garlick bulb"
@@ -584,6 +616,7 @@
 	rotprocess = null
 	chopping_sound = TRUE
 	seed = /obj/item/seeds/garlick
+	grind_results = list(/datum/reagent/powdered_produce/garlick_bulb = 4)
 
 // poppies, from vanderlin
 /obj/item/reagent_containers/food/snacks/grown/rogue/poppy
@@ -598,6 +631,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 0)
 	dropshrink = 0.5
 	rotprocess = null
+	grind_results = list(/datum/reagent/powdered_produce/poppy = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/coffee
 	name = "coffee cherry"
@@ -609,6 +643,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	mill_result = /obj/item/reagent_containers/food/snacks/grown/coffeebeans
 	rotprocess = null
+	grind_results = list(/datum/reagent/powdered_produce/coffee_cherry = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/tea
 	name = "tea leaves"
@@ -619,6 +654,7 @@
 	bitesize = 1
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	rotprocess = null
+	grind_results = list(/datum/reagent/powdered_produce/tea_leaves = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/carrot
 	name = "carrot"
@@ -627,6 +663,7 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/preserved/carrot_baked
 	tastes = list("carrot" = 1)
 	dropshrink = 0.75
+	grind_results = list(/datum/reagent/powdered_produce/carrot = 4)
 
 /*	..................   Cucumber   ................... */
 /obj/item/reagent_containers/food/snacks/grown/cucumber
@@ -638,6 +675,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/veg/cucumber_sliced
 	tastes = list("cucumber" = 1)
 	chopping_sound = TRUE
+	grind_results = list(/datum/reagent/powdered_produce/cucumber = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/eggplant
 	name = "eggplant"
@@ -646,3 +684,4 @@
 	slices_num = 1
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/eggplantcarved
 	slice_sound = TRUE
+	grind_results = list(/datum/reagent/powdered_produce/eggplant = 4)

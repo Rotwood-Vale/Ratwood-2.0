@@ -232,16 +232,15 @@
 	var/is_secondary_processing = FALSE
 	
 	// Check for secondary processing first (no herb needed)
-	// AMATEUR - Secondary processing: Tonic → Concentrate
+	// JOURNEYMAN - Secondary processing: Tonic → Concentrate, Oil → Paste
 	if(src.reagents.has_reagent(/datum/reagent/herb_extract/tonic, 60))
 		extract_type = /datum/reagent/herb_extract/concentrate
 		base_reagent_type = /datum/reagent/herb_extract/tonic
 		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/tonic)
-		skill_required = SKILL_LEVEL_APPRENTICE
+		skill_required = SKILL_LEVEL_JOURNEYMAN
 		extract_name = "concentrate"
 		is_secondary_processing = TRUE
 	
-	// JOURNEYMAN - Tertiary processing
 	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/oil, 60))
 		extract_type = /datum/reagent/herb_extract/paste
 		base_reagent_type = /datum/reagent/herb_extract/oil
@@ -249,16 +248,16 @@
 		skill_required = SKILL_LEVEL_JOURNEYMAN
 		extract_name = "paste"
 		is_secondary_processing = TRUE
-		
-	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/elixir, 60))
-		extract_type = /datum/reagent/herb_extract/syrup
-		base_reagent_type = /datum/reagent/herb_extract/elixir
-		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/elixir)
-		skill_required = SKILL_LEVEL_JOURNEYMAN
-		extract_name = "syrup"
-		is_secondary_processing = TRUE
 	
-	// EXPERT - Quaternary processing
+	// EXPERT - Quaternary processing: Bitters → Powder, Vitriol → Salt
+	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/bitters, 60))
+		extract_type = /datum/reagent/herb_extract/powder
+		base_reagent_type = /datum/reagent/herb_extract/bitters
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/herb_extract/bitters)
+		skill_required = SKILL_LEVEL_EXPERT
+		extract_name = "powder"
+		is_secondary_processing = TRUE
+		
 	else if(src.reagents.has_reagent(/datum/reagent/herb_extract/vitriol, 60))
 		extract_type = /datum/reagent/herb_extract/salt
 		base_reagent_type = /datum/reagent/herb_extract/vitriol
@@ -287,15 +286,15 @@
 			base_amount = src.reagents.get_reagent_amount(/datum/reagent/cooking_oil)
 			skill_required = SKILL_LEVEL_NOVICE
 			extract_name = "oil"
-			
+		
+		// AMATEUR LEVEL - Wine and Acid
 		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/wine, 90))
-			extract_type = /datum/reagent/herb_extract/elixir
+			extract_type = /datum/reagent/herb_extract/bitters
 			base_reagent_type = /datum/reagent/consumable/ethanol/wine
 			base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/wine)
-			skill_required = SKILL_LEVEL_NOVICE
-			extract_name = "elixir"
-		
-		// AMATEUR LEVEL
+			skill_required = SKILL_LEVEL_APPRENTICE
+			extract_name = "bitters"
+			
 		else if(src.reagents.has_reagent(/datum/reagent/rogueacid, 90))
 			extract_type = /datum/reagent/herb_extract/vitriol
 			base_reagent_type = /datum/reagent/rogueacid
