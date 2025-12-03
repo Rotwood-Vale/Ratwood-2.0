@@ -62,7 +62,11 @@
 		
 		if(can_brew)
 			if(brewing < 20)
+<<<<<<< Updated upstream
 				// Check for base reagents (water, oil, wine, acid) - need 90u minimum
+=======
+				// Check for base reagents (water, oil, ethanol, acid) - need 90u minimum
+>>>>>>> Stashed changes
 				// OR check for extract reagents for secondary processing - need 60u minimum
 				if(src.reagents.has_reagent(/datum/reagent/water,90) ||
 				   src.reagents.has_reagent(/datum/reagent/cooking_oil,90) ||
