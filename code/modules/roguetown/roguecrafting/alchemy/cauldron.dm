@@ -59,11 +59,21 @@
 	if(on)
 		if(ingredients.len)
 			if(brewing < 20)
-				if(src.reagents.has_reagent(/datum/reagent/water,90))
+				// Check for various base reagents for KCD-style alchemy
+				if(src.reagents.has_reagent(/datum/reagent/water,90) || 
+				   src.reagents.has_reagent(/datum/reagent/cooking_oil,90) ||
+				   src.reagents.has_reagent(/datum/reagent/consumable/ethanol/wine,90) ||
+				   src.reagents.has_reagent(/datum/reagent/consumable/ethanol/beer,90) ||
+				   src.reagents.has_reagent(/datum/reagent/rogueacid,90) ||
+				   src.reagents.has_reagent(/datum/reagent/alch_template,30))
 					brewing++
 					if(prob(10))
 						playsound(src, "bubbles", 100, FALSE)
 			else if(brewing == 20)
+				// Try KCD-style alchemy first (single herb + base reagent)
+				if(try_kcd_alchemy())
+					return
+				
 				var/list/outcomes = list()
 				for(var/obj/item/ing in src.ingredients)
 					if(!istype(ing,/obj/item/alch))
@@ -189,3 +199,157 @@
 			user.visible_message("<span class='info'>[user] kicks [src], spilling it's contents!</span>")
 	playsound(src, 'sound/items/beartrap2.ogg', 100, FALSE)
 	return ..()
+
+// KCD-Style Alchemy: Process single herb with base reagent
+/obj/machinery/light/rogue/cauldron/proc/try_kcd_alchemy()
+	// Check if we have exactly one herb
+	var/obj/item/alch/herb = null
+	var/herb_count = 0
+	
+	for(var/obj/item/ing in src.ingredients)
+		if(istype(ing, /obj/item/alch))
+			herb = ing
+			herb_count++
+	
+	// KCD alchemy requires exactly one herb
+	if(herb_count != 1)
+		return FALSE
+	
+	if(!lastuser)
+		brewing = 0
+		src.visible_message(span_info("The cauldron can't brew anything without an alchemist to guide it."))
+		return TRUE
+	
+	var/amt2raise = lastuser?.STAINT*2
+	var/user_skill = lastuser?.get_skill_level(/datum/skill/craft/alchemy)
+	
+	// Determine base reagent and resulting product
+	var/datum/reagent/output_type = null
+	var/base_reagent_type = null
+	var/base_amount = 0
+	var/skill_required = SKILL_LEVEL_NOVICE
+	var/smell = "herbs"
+	
+	// Check for NOVICE recipes (base reagent + herb)
+	if(src.reagents.has_reagent(/datum/reagent/water, 90))
+		output_type = /datum/reagent/alch_template/tonic
+		base_reagent_type = /datum/reagent/water
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/water)
+		skill_required = SKILL_LEVEL_NOVICE
+		smell = "watery herbs"
+		
+	else if(src.reagents.has_reagent(/datum/reagent/cooking_oil, 90))
+		output_type = /datum/reagent/alch_template/oil_extract
+		base_reagent_type = /datum/reagent/cooking_oil
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/cooking_oil)
+		skill_required = SKILL_LEVEL_NOVICE
+		smell = "oily herbs"
+		
+	else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/wine, 90))
+		output_type = /datum/reagent/alch_template/elixir
+		base_reagent_type = /datum/reagent/consumable/ethanol/wine
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/wine)
+		skill_required = SKILL_LEVEL_NOVICE
+		smell = "sweet herbs"
+		
+	// Check for AMATEUR recipes
+	else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/beer, 90))
+		// Using beer as "spirits" 
+		output_type = /datum/reagent/alch_template/bitters
+		base_reagent_type = /datum/reagent/consumable/ethanol/beer
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/beer)
+		skill_required = SKILL_LEVEL_APPRENTICE
+		smell = "bitter herbs"
+		
+	else if(src.reagents.has_reagent(/datum/reagent/rogueacid, 90))
+		output_type = /datum/reagent/alch_template/vitriol
+		base_reagent_type = /datum/reagent/rogueacid
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/rogueacid)
+		skill_required = SKILL_LEVEL_APPRENTICE
+		smell = "caustic herbs"
+		
+	// Check for secondary processing (boiling products again)
+	else if(src.reagents.has_reagent(/datum/reagent/alch_template/tonic, 30))
+		output_type = /datum/reagent/alch_template/concentrate
+		base_reagent_type = /datum/reagent/alch_template/tonic
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/alch_template/tonic)
+		skill_required = SKILL_LEVEL_APPRENTICE
+		smell = "concentrated herbs"
+		
+	else if(src.reagents.has_reagent(/datum/reagent/alch_template/oil_extract, 30))
+		output_type = /datum/reagent/alch_template/paste
+		base_reagent_type = /datum/reagent/alch_template/oil_extract
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/alch_template/oil_extract)
+		skill_required = SKILL_LEVEL_JOURNEYMAN
+		smell = "thick herbs"
+		
+	else if(src.reagents.has_reagent(/datum/reagent/alch_template/elixir, 30))
+		output_type = /datum/reagent/alch_template/syrup
+		base_reagent_type = /datum/reagent/alch_template/elixir
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/alch_template/elixir)
+		skill_required = SKILL_LEVEL_JOURNEYMAN
+		smell = "thick sweet herbs"
+		
+	else if(src.reagents.has_reagent(/datum/reagent/alch_template/bitters, 30))
+		output_type = /datum/reagent/alch_template/powder_extract
+		base_reagent_type = /datum/reagent/alch_template/bitters
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/alch_template/bitters)
+		skill_required = SKILL_LEVEL_JOURNEYMAN
+		smell = "intensely bitter herbs"
+		
+	else if(src.reagents.has_reagent(/datum/reagent/alch_template/vitriol, 30))
+		output_type = /datum/reagent/alch_template/salt_extract
+		base_reagent_type = /datum/reagent/alch_template/vitriol
+		base_amount = src.reagents.get_reagent_amount(/datum/reagent/alch_template/vitriol)
+		skill_required = SKILL_LEVEL_EXPERT
+		smell = "caustic crystals"
+	
+	// No matching base reagent found
+	if(!output_type)
+		return FALSE
+	
+	// Check skill requirement
+	if(skill_required > user_skill)
+		brewing = 0
+		src.visible_message(span_warning("The ingredients in the cauldron melds together into a disgusting mess! Perhaps a more skilled alchemist is needed for this recipe."))
+		if(reagents)
+			src.reagents.remove_reagent(base_reagent_type, base_amount)
+		for(var/obj/item/ing in src.ingredients)
+			qdel(ing)
+		src.reagents.add_reagent(/datum/reagent/yuck, base_amount)
+		lastuser?.adjust_experience(/datum/skill/craft/alchemy, amt2raise, FALSE)
+		return TRUE
+	
+	// Success! Create the product
+	for(var/obj/item/ing in src.ingredients)
+		qdel(ing)
+	
+	if(reagents)
+		src.reagents.remove_reagent(base_reagent_type, base_amount)
+	
+	// Create the output reagent
+	var/output_amount = base_amount * 0.9 // Slight loss during processing
+	var/herb_name = herb.name
+	
+	// Add the reagent
+	src.reagents.add_reagent(output_type, output_amount)
+	
+	// Customize the reagent name with the herb name
+	for(var/datum/reagent/alch_template/R in src.reagents.reagent_list)
+		if(R.type == output_type && !R.source_herb_name)
+			R.source_herb_type = herb.type
+			R.source_herb_name = herb_name
+			var/base_name = initial(R.name)
+			R.name = "[herb_name] [base_name]"
+			break
+	
+	src.visible_message("<span class='info'>The cauldron finishes boiling with a faint smell of [smell].</span>")
+	record_featured_stat(FEATURED_STATS_ALCHEMISTS, lastuser)
+	record_round_statistic(STATS_POTIONS_BREWED)
+	lastuser?.adjust_experience(/datum/skill/craft/alchemy, amt2raise, FALSE)
+	playsound(src, "bubbles", 100, TRUE)
+	playsound(src,'sound/misc/smelter_fin.ogg', 30, FALSE)
+	ingredients = list()
+	brewing = 21
+	
+	return TRUE
