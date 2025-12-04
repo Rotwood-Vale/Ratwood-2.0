@@ -1559,7 +1559,6 @@
 #include "code\modules\clothing\suits\toggles.dm"
 #include "code\modules\clothing\under\_under.dm"
 #include "code\modules\clothing\under\accessories.dm"
-#include "code\modules\crafting\recipe_books\alchemy_book.dm"
 #include "code\modules\crafting\recipe_books\recipe_book.dm"
 #include "code\modules\crafting\recipe_books\recipe_books_list.dm"
 #include "code\modules\crafting\recipe_books\book_entries\book_entry_base.dm"
