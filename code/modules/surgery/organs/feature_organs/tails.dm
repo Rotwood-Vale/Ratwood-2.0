@@ -7,6 +7,7 @@
 	slot = ORGAN_SLOT_TAIL
 	var/can_wag = TRUE
 	var/wagging = FALSE
+	alchemy_effects = list(EFFECT_FORTIFY_SPEED, EFFECT_FORTIFY_ENDURANCE, EFFECT_FORTIFY_LUCK, EFFECT_WEAKEN_CONSTITUTION)
 
 /obj/item/organ/tail/cat
 	name = "cat tail"

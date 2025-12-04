@@ -27,6 +27,7 @@
 
 
 	var/list/datum/brain_trauma/traumas = list()
+	alchemy_effects = list(EFFECT_FORTIFY_INTELLIGENCE, EFFECT_RESTORE_MANA, EFFECT_FORTIFY_PERCEPTION, EFFECT_WEAKEN_CONSTITUTION)
 
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = FALSE, drop_if_replaced = FALSE, no_id_transfer = FALSE)
 	. = ..()

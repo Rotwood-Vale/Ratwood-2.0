@@ -12,7 +12,8 @@
 
 	var/inflamed
 	sellprice = 5
-
+	alchemy_effects = list(EFFECT_HEAL_TOX, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_ENDURANCE, EFFECT_DAMAGE_TOX)
+	
 /obj/item/organ/appendix/update_icon()
 	if(inflamed)
 		icon_state = "appendixinflamed"

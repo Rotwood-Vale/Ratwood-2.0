@@ -29,6 +29,7 @@
 	var/bang_protect = 0
 	// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_RESTORE_STAMINA, EFFECT_CRIT_RESIST, EFFECT_DEAFEN)
 
 /obj/item/organ/ears/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()

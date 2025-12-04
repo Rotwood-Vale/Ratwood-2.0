@@ -17,6 +17,7 @@
 	low_threshold_cleared = span_info("The last bouts of pain in my stomach have died out.")
 
 	var/disgust_metabolism = 1
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_HEAL_TOX, EFFECT_FORTIFY_ENDURANCE, EFFECT_NAUSEA)
 
 /obj/item/organ/stomach/on_life()
 	var/mob/living/carbon/human/H = owner

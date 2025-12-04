@@ -5,6 +5,7 @@
 	visible_organ = TRUE
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_TAIL_FEATURE
+	alchemy_effects = list(EFFECT_FORTIFY_SPEED, EFFECT_FORTIFY_PERCEPTION, EFFECT_FEATHER_FALL, EFFECT_WEAKEN_STRENGTH)
 
 /obj/item/organ/tail_feature/lizard_spines
 	name = "spines"

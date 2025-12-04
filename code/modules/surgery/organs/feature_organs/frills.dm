@@ -5,5 +5,6 @@
 	visible_organ = TRUE
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_FRILLS
+	alchemy_effects = list(EFFECT_FORTIFY_LUCK, EFFECT_FIRE_IMMUNE, EFFECT_FORTIFY_PERCEPTION, EFFECT_WEAKEN_ENDURANCE)
 
 /obj/item/organ/frills/lizard

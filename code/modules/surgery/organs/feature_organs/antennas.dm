@@ -5,6 +5,7 @@
 	visible_organ = TRUE
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_ANTENNAS
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_FORTIFY_SPEED, EFFECT_RESTORE_STAMINA, EFFECT_WEAKEN_INTELLIGENCE)
 
 /obj/item/organ/antennas/moth
 	name = "fluvian antennas"

@@ -5,6 +5,7 @@
 	visible_organ = TRUE
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_HEAD_FEATURE
+	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_CRIT_RESIST, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKEN_SPEED)
 
 /obj/item/organ/head_feature/skrell_hair
 	name = "skrell hair"
