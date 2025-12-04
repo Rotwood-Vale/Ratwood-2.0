@@ -184,7 +184,7 @@
 	if(I)
 		if(I.associated_skill)
 			ourskill = user.get_skill_level(I.associated_skill)
-		if(L.mind)
+		if(L.skills)
 			I = L.get_active_held_item()
 			if(I?.associated_skill)
 				theirskill = L.get_skill_level(I.associated_skill)

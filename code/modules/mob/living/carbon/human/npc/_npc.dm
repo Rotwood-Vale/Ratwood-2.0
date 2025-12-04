@@ -888,14 +888,14 @@
 				apply_status_effect(/datum/status_effect/debuff/swapped_intent_npc) //45 seconds before we swap to a new weapon intent entirely.
 
 			if(special_attacker && prob(50) && !has_status_effect(/datum/status_effect/debuff/specialcd)) //Only if we use specials...
-				if(length(weapon_special_intents) > 1)
+				if(length(weapon_special_intents) >= 1)
 					if(possible_rmb_intents & /datum/rmb_intent/strong)
 						swap_rmb_intent(/datum/rmb_intent/strong)
 						try_special_attack(target)
 						return TRUE //We used our special intent on the target as soon as we could.
 
 			if(smart_combatant && prob(50)) // Only if we use rmb intents...
-				if(length(possible_rmb_intents) > 1)
+				if(length(possible_rmb_intents) >= 1)
 					if(!has_status_effect(/datum/status_effect/debuff/feintcd))
 						if(possible_rmb_intents & /datum/rmb_intent/feint && rmb_intent != /datum/rmb_intent/feint && prob(50))
 							swap_rmb_intent(/datum/rmb_intent/feint)
