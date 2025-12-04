@@ -42,6 +42,8 @@
 #define EFFECT_WEAKNESS "weakness"
 #define EFFECT_INVISIBILITY "invisibility"
 #define EFFECT_NAUSEA "nausea"
+#define EFFECT_HALLUCINOGENIC "hallucinogenic"
+#define EFFECT_SLEEP "sleep"
 
 // Resistance
 #define EFFECT_MAGIC_RESIST "magic_resist"
@@ -100,6 +102,8 @@
 #define EFFECT_GREATER_WEAKNESS "greater_weakness"
 #define EFFECT_GREATER_INVISIBILITY "greater_invisibility"
 #define EFFECT_GREATER_NAUSEA "greater_nausea"
+#define EFFECT_GREATER_HALLUCINOGENIC "greater_hallucinogenic"
+#define EFFECT_GREATER_SLEEP "greater_sleep"
 
 //Greater Resistance
 #define EFFECT_GREATER_MAGIC_RESIST "greater_magic_resist"
@@ -152,6 +156,8 @@ GLOBAL_LIST_INIT(alchemy_effect_greater_versions, list(
 	EFFECT_WEAKNESS = EFFECT_GREATER_WEAKNESS,
 	EFFECT_INVISIBILITY = EFFECT_GREATER_INVISIBILITY,
 	EFFECT_NAUSEA = EFFECT_GREATER_NAUSEA,
+	EFFECT_SLEEP = EFFECT_GREATER_SLEEP,
+	EFFECT_HALLUCINOGENIC = EFFECT_GREATER_HALLUCINOGENIC,
 	EFFECT_MAGIC_RESIST = EFFECT_GREATER_MAGIC_RESIST,
 	EFFECT_CRIT_RESIST = EFFECT_GREATER_CRIT_RESIST,
 	EFFECT_FEATHER_FALL = EFFECT_GREATER_FEATHER_FALL,
@@ -213,6 +219,8 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 	EFFECT_WEAKNESS = "faint",
 	EFFECT_INVISIBILITY = "airy",
 	EFFECT_NAUSEA = "fecal",
+	EFFECT_SLEEP = "wilted",
+	EFFECT_HALLUCINOGENIC = "strange",
 	EFFECT_MAGIC_RESIST = "ozone-like",
 	EFFECT_CRIT_RESIST = "musky",
 	EFFECT_FEATHER_FALL = "light",
@@ -256,6 +264,8 @@ GLOBAL_LIST_INIT(alchemy_effect_smells, list(
 	EFFECT_GREATER_WEAKNESS = "wan",
 	EFFECT_GREATER_INVISIBILITY = "ethereal",
 	EFFECT_GREATER_NAUSEA = "feculent",
+	EFFECT_GREATER_SLEEP = "sedative",
+	EFFECT_GREATER_HALLUCINOGENIC = "abstract",
 	EFFECT_GREATER_MAGIC_RESIST = "ozonic",
 	EFFECT_GREATER_CRIT_RESIST = "animalic",
 	EFFECT_GREATER_FEATHER_FALL = "weightless",
@@ -303,6 +313,8 @@ GLOBAL_LIST_INIT(alchemy_effect_words, list(
 	EFFECT_WEAKNESS = list("feeble", "frailty"),
 	EFFECT_INVISIBILITY = list("unseen", "cloak"),
 	EFFECT_NAUSEA = list("nauseating", "retch"),
+	EFFECT_SLEEP = list("tiring", "sleep"),
+	EFFECT_HALLUCINOGENIC = list("hallucinogenic", "visions"),
 	EFFECT_MAGIC_RESIST = list("warding", "aegis"),
 	EFFECT_CRIT_RESIST = list("fortified", "guard"),
 	EFFECT_FEATHER_FALL = list("floating", "descent"),
@@ -348,6 +360,8 @@ GLOBAL_LIST_INIT(alchemy_effect_words, list(
 	EFFECT_GREATER_WEAKNESS = list("feeble", "greater frailty"),
 	EFFECT_GREATER_INVISIBILITY = list("unseen", "greater cloak"),
 	EFFECT_GREATER_NAUSEA = list("nauseating", "greater retch"),
+	EFFECT_GREATER_HALLUCINOGENIC = list("hallucinogenic", "greater visions"),
+	EFFECT_GREATER_SLEEP = list("tiring", "greater sleep"),
 	EFFECT_GREATER_MAGIC_RESIST = list("warding", "greater aegis"),
 	EFFECT_GREATER_CRIT_RESIST = list("fortified", "greater guard"),
 	EFFECT_GREATER_FEATHER_FALL = list("floating", "greater descent"),

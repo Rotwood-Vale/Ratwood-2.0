@@ -41,64 +41,79 @@
 /obj/item/alch/viscera
 	name = "viscera"
 	icon_state = "viscera"
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_CONSTITUTION, EFFECT_DAMAGE_TOX)
 
 /obj/item/alch/waterdust
 	name = "water essentia"
 	icon_state = "water_runedust"
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FROST_IMMUNE, EFFECT_FEATHER_FALL, EFFECT_WEAKEN_STRENGTH)
 
 /obj/item/alch/bonemeal
 	name = "bone meal"
 	icon_state = "bonemeal"
+	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_CRIT_RESIST, EFFECT_RESTORE_BLOOD, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/seeddust
 	name = "seed dust"
 	icon_state = "seeddust"
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_SPEED, EFFECT_FORTIFY_LUCK, EFFECT_DRAIN_MANA)
 
 /obj/item/alch/runedust
 	name = "raw essentia"
 	icon_state = "runedust"
+	alchemy_effects = list(EFFECT_RESTORE_MANA, EFFECT_MAGIC_RESIST, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_DRAIN_DEVOTION)
 
 /obj/item/alch/coaldust
 	name = "coal dust"
 	icon_state = "coaldust"
+	alchemy_effects = list(EFFECT_FIRE_IMMUNE, EFFECT_FIRE_STACKS, EFFECT_FORTIFY_ENDURANCE, EFFECT_DAMAGE_BURN)
 
 /obj/item/alch/silverdust
 	name = "silver dust"
 	icon_state = "silverdust"
 	is_silver = TRUE
+	alchemy_effects = list(EFFECT_MAGIC_RESIST, EFFECT_FORTIFY_PERCEPTION, EFFECT_RESTORE_DEVOTION, EFFECT_WEAKEN_ENDURANCE)
 
 /obj/item/alch/magicdust
 	name = "pure essentia"
 	icon_state = "magic_runedust"
+	alchemy_effects = list(EFFECT_RESTORE_MANA, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_FORTIFY_LUCK, EFFECT_DRAIN_MANA)
 
 /obj/item/alch/firedust
 	name = "fire essentia"
 	icon_state = "fire_runedust"
+	alchemy_effects = list(EFFECT_FIRE_STACKS, EFFECT_FIRE_IMMUNE, EFFECT_FORTIFY_STRENGTH, EFFECT_DAMAGE_BURN)
 
 /obj/item/alch/sinew
 	name = "sinew"
 	icon_state = "sinew"
 	dropshrink = 0.9
+	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_FORTIFY_ENDURANCE, EFFECT_RESTORE_STAMINA, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/irondust
 	name = "iron dust"
 	icon_state = "irondust"
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_FORTIFY_CONSTITUTION, EFFECT_CRIT_RESIST, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/airdust
 	name = "air essentia"
 	icon_state = "air_runedust"
+	alchemy_effects = list(EFFECT_FEATHER_FALL, EFFECT_FORTIFY_SPEED, EFFECT_INVISIBILITY, EFFECT_WEAKEN_CONSTITUTION)
 
 /obj/item/alch/swampdust
 	name = "swampweed dust"
 	icon_state = "swampdust"
+	alchemy_effects = list(EFFECT_NAUSEA, EFFECT_DAMAGE_TOX, EFFECT_WEAKNESS, EFFECT_WEAKEN_INTELLIGENCE)
 
 /obj/item/alch/tobaccodust
 	name = "westleach dust"
 	icon_state = "tobaccodust"
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_ENDURANCE, EFFECT_FORTIFY_PERCEPTION, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/earthdust
 	name = "earth essentia"
 	icon_state = "earth_runedust"
+	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_FORTIFY_ENDURANCE, EFFECT_FROST_IMMUNE, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/bone
 	name = "tail bone"
@@ -109,6 +124,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	grid_width = 32
 	grid_height = 64
+	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_BLOOD, EFFECT_CRIT_RESIST, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/horn
 	name = "troll horn"
@@ -119,24 +135,28 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_width = 64
 	grid_height = 64
+	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_CRIT_RESIST, EFFECT_RESTORE_STAMINA, EFFECT_WEAKEN_INTELLIGENCE)
 
 /obj/item/alch/golddust
 	name = "gold dust"
 	icon_state = "golddust"
+	alchemy_effects = list(EFFECT_FORTIFY_LUCK, EFFECT_MAGIC_RESIST, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_DRAIN_DEVOTION)
+
 /obj/item/alch/feaudust
 	name = "feau dust"
 	icon_state = "feaudust"
+	alchemy_effects = list(EFFECT_FORTIFY_SPEED, EFFECT_FORTIFY_LUCK, EFFECT_INVISIBILITY, EFFECT_WEAKEN_CONSTITUTION)
 
 /obj/item/alch/ozium
 	name = "alchemical ozium"
 	desc = "Alchemical processing has left it unfit for consumption."
 	icon_state = "darkredpowder"
-
+	alchemy_effects = list(EFFECT_CRIT_RESIST, EFFECT_SLEEP, EFFECT_FORTIFY_CONSTITUTION, EFFECT_DRAIN_MANA)
 /obj/item/alch/transisdust
 	name = "sui dust"
 	desc = "A long mix of herbs resulting in a special dust. For you. Use it while held."
 	icon_state = "transisdust"
-
+	alchemy_effects = list(EFFECT_INVISIBILITY, EFFECT_FORTIFY_SPEED, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_WEAKEN_STRENGTH)
 /obj/item/alch/transisdust/attack_self(mob/living/user)
 	..()
 
@@ -166,73 +186,77 @@
 	name = "purified salts"
 	desc = "Salts that have been finely sifted to enchance their healing properties and to bolster its connection to the arcyne."
 	icon_state = "puresalt"
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_DEVOTION, EFFECT_MAGIC_RESIST, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/mineraldust
 	name = "mineral dusts"
 	desc = "Elements of gems ground and sifted of impurities to help draw out its useful alchemical minerals."
 	icon_state = "mineraldust"
+	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_ENDURANCE, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/infernaldust
 	name = "infernal dust"
 	desc = "The remains of an abyssal tether to this plane, banished or slain. Best handled with gloves."
 	icon_state = "infernaldust"
+	alchemy_effects = list(EFFECT_FIRE_STACKS, EFFECT_DAMAGE_BURN, EFFECT_FORTIFY_STRENGTH, EFFECT_DRAIN_DEVOTION)
 
 /obj/item/alch/solardust
 	name = "solar dust"
 	desc = "A pinch of Astrata worked into radiant matter. Looking at it hurts your eyes."
 	icon_state = "solardust"
+	alchemy_effects = list(EFFECT_RESTORE_DEVOTION, EFFECT_FIRE_IMMUNE, EFFECT_FORTIFY_LUCK, EFFECT_DAMAGE_BURN)
 
 /obj/item/alch/berrypowder
 	name = "berry powder"
 	desc = "Berries ground and dried into a soft fragrant powder."
 	icon_state = "berrypowder"
-
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_HEAL_TOX, EFFECT_FORTIFY_LUCK, EFFECT_DRAIN_BLOOD)
 //BEGIN THE HERBS
 
 /obj/item/alch/atropa
 	name = "atropa"
 	icon_state = "atropa"
-	alchemy_effects = list(EFFECT_DAMAGE_TOX, EFFECT_DRAIN_STAMINA, EFFECT_WEAKNESS, EFFECT_PARALYZE)
+	alchemy_effects = list(EFFECT_DAMAGE_TOX, EFFECT_NAUSEA, EFFECT_DEAFEN, EFFECT_HALLUCINOGENIC)
 
 /obj/item/alch/matricaria
 	name = "matricaria"
 	icon_state = "matricaria"
-	alchemy_effects = list(EFFECT_DAMAGE_TOX, EFFECT_WEAKEN_SPEED, EFFECT_WEAKNESS, EFFECT_NAUSEA)
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_STAMINA, EFFECT_NO_PAIN, EFFECT_WEAKEN_STRENGTH)
 
 /obj/item/alch/symphitum
 	name = "symphitum"
 	icon_state = "symphitum"
-	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_HEAL_BURN, EFFECT_RESTORE_BLOOD, EFFECT_WEAKNESS)
+	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_HEAL_TOX, EFFECT_FORTIFY_CONSTITUTION, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/taraxacum
 	name = "taraxacum"
 	icon_state = "taraxacum"
-	alchemy_effects = list(EFFECT_HEAL_TOX, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKNESS)
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_HEAL_TOX, EFFECT_FORTIFY_ENDURANCE, EFFECT_DRAIN_MANA)
 
 /obj/item/alch/euphrasia
 	name = "euphrasia"
 	icon_state = "euphrasia"
-	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_HEAL_TOX, EFFECT_FORTIFY_LUCK, EFFECT_BLINDNESS)
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_RESTORE_MANA, EFFECT_MAGIC_RESIST, EFFECT_BLINDNESS)
 
 /obj/item/alch/paris
 	name = "paris"
 	icon_state = "paris"
-	alchemy_effects = list(EFFECT_DRAIN_STAMINA, EFFECT_DAMAGE_TOX, EFFECT_PARALYZE, EFFECT_SILENCE)
+	alchemy_effects = list(EFFECT_DAMAGE_TOX, EFFECT_NAUSEA, EFFECT_WEAKNESS, EFFECT_DRAIN_BLOOD)
 
 /obj/item/alch/calendula
 	name = "calendula"
 	icon_state = "calendula"
-	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_FORTIFY_ENDURANCE, EFFECT_RESTORE_BLOOD, EFFECT_DRAIN_STAMINA)
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_HEAL_BRUTE, EFFECT_RESTORE_BLOOD, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/mentha
 	name = "mentha"
 	icon_state = "mentha"
-	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_RESTORE_STAMINA, EFFECT_WEAKEN_SPEED)
+	alchemy_effects = list(EFFECT_FROST_IMMUNE, EFFECT_FORTIFY_SPEED, EFFECT_RESTORE_STAMINA, EFFECT_FROST_STACKS)
 
 /obj/item/alch/urtica
 	name = "urtica"
 	icon_state = "urtica"
-	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_MANA, EFFECT_FORTIFY_ENDURANCE, EFFECT_DAMAGE_TOX)
+	alchemy_effects = list(EFFECT_DAMAGE_BRUTE, EFFECT_FIRE_STACKS, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKEN_LUCK)
 
 /obj/item/alch/salvia
 	name = "salvia"
@@ -242,36 +266,32 @@
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_TINY
 	alternate_worn_layer  = 8.9 //On top of helmet
-	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_STAMINA, EFFECT_HEAL_BRUTE, EFFECT_DRAIN_STAMINA)
+	alchemy_effects = list(EFFECT_RESTORE_MANA, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_HALLUCINOGENIC, EFFECT_DRAIN_DEVOTION)
 
 /obj/item/alch/hypericum
 	name = "hypericum"
 	icon_state = "hypericum"
-	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_BLOOD, EFFECT_WEAKNESS)
+	alchemy_effects = list(EFFECT_RESTORE_DEVOTION, EFFECT_HEAL_TOX, EFFECT_CRIT_RESIST, EFFECT_WEAKEN_ENDURANCE)
 
 /obj/item/alch/benedictus
 	name = "benedictus"
 	icon_state = "benedictus"
-	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_RESTORE_MANA, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKEN_SPEED)
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_DEVOTION, EFFECT_MAGIC_RESIST, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/valeriana
 	name = "valeriana"
 	icon_state = "valeriana"
-	alchemy_effects = list(EFFECT_FORTIFY_LUCK, EFFECT_FORTIFY_ENDURANCE, EFFECT_HEAL_TOX, EFFECT_NAUSEA)
+	alchemy_effects = list(EFFECT_NO_PAIN, EFFECT_RESTORE_STAMINA, EFFECT_WEAKNESS, EFFECT_SLEEP)
 
 /obj/item/alch/artemisia
 	name = "artemisia"
 	icon_state = "artemisia"
-	alchemy_effects = list(EFFECT_FORTIFY_INTELLIGENCE, EFFECT_FORTIFY_SPEED, EFFECT_RESTORE_MANA, EFFECT_DRAIN_MANA)
+	alchemy_effects = list(EFFECT_HEAL_TOX, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_HALLUCINOGENIC)
 
 /obj/item/alch/manabloompowder
 	name = "manabloom powder"
 	icon_state = "bluepowder"
-
-/obj/item/alch/manabloompowder
-	name = "manabloom powder"
-	icon_state = "bluepowder"
-
+	alchemy_effects = list(EFFECT_RESTORE_MANA, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_MAGIC_RESIST, EFFECT_DRAIN_MANA)
 /obj/item/alch/rosa
 	name = "rosa"
 	icon_state = "rosa"
@@ -286,7 +306,7 @@
 	muteinmouth = FALSE
 	alternate_worn_layer  = 8.9 //On top of helmet
 	mill_result = /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals
-	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_BLOOD, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKNESS)
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_FORTIFY_LUCK, EFFECT_HEAL_BRUTE, EFFECT_WEAKEN_CONSTITUTION)
 
 /obj/item/alch/rosa/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
