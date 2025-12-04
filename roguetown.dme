@@ -1563,6 +1563,7 @@
 #include "code\modules\crafting\recipe_books\recipe_book.dm"
 #include "code\modules\crafting\recipe_books\recipe_books_list.dm"
 #include "code\modules\crafting\recipe_books\book_entries\book_entry_base.dm"
+#include "code\modules\crafting\recipe_books\alchemy_book.dm"
 #include "code\modules\crafting\recipe_books\book_entries\cooking\book_entry_brewing.dm"
 #include "code\modules\crafting\recipe_books\book_entries\mage\mage_basic.dm"
 #include "code\modules\detectivework\detective_work.dm"
@@ -2336,6 +2337,7 @@
 #include "code\modules\roguetown\roguecrafting\alchemy\ingredients.dm"
 #include "code\modules\roguetown\roguecrafting\alchemy\mortarpestle.dm"
 #include "code\modules\roguetown\roguecrafting\alchemy\potionbuffs.dm"
+
 #include "code\modules\roguetown\roguecrafting\alchemy\reagents.dm"
 #include "code\modules\roguetown\roguecrafting\crafting\ammo_and_ranged.dm"
 #include "code\modules\roguetown\roguecrafting\crafting\clothes.dm"
