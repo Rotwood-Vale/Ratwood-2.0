@@ -5,6 +5,7 @@
 	visible_organ = TRUE
 	slot = ORGAN_SLOT_SOUL
 	organ_flags = ORGAN_SURGERY_HIDDEN | ORGAN_INTERNAL_ONLY
+	alchemy_effects = list(EFFECT_RESTORE_DEVOTION, EFFECT_MAGIC_RESIST, EFFECT_RESTORE_MANA, EFFECT_DRAIN_DEVOTION)
 
 /obj/item/organ/soul/fire
 	name = "soul fire"

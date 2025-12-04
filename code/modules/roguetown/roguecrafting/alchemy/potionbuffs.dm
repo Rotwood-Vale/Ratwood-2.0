@@ -5,7 +5,7 @@
 /datum/status_effect/buff/alch/strengthpot
 	id = "strpot"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/strengthpot
-	effectedstats = list(STATKEY_STR = 3)
+	effectedstats = list(STATKEY_STR = 2)
 	duration = 3 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/alch/strengthpot
@@ -15,7 +15,7 @@
 /datum/status_effect/buff/alch/perceptionpot
 	id = "perpot"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/perceptionpot
-	effectedstats = list(STATKEY_PER = 3)
+	effectedstats = list(STATKEY_PER = 2)
 	duration = 3 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/alch/perceptionpot
@@ -25,7 +25,7 @@
 /datum/status_effect/buff/alch/intelligencepot
 	id = "intpot"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/intelligencepot
-	effectedstats = list(STATKEY_INT = 3)
+	effectedstats = list(STATKEY_INT = 2)
 	duration = 3 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/alch/intelligencepot
@@ -35,7 +35,7 @@
 /datum/status_effect/buff/alch/constitutionpot
 	id = "conpot"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/constitutionpot
-	effectedstats = list(STATKEY_CON = 3)
+	effectedstats = list(STATKEY_CON = 2)
 	duration = 3 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/alch/constitutionpot
@@ -45,7 +45,7 @@
 /datum/status_effect/buff/alch/endurancepot
 	id = "endpot"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/endurancepot
-	effectedstats = list(STATKEY_WIL = 3)
+	effectedstats = list(STATKEY_WIL = 2)
 	duration = 3 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/alch/endurancepot
@@ -55,7 +55,7 @@
 /datum/status_effect/buff/alch/speedpot
 	id = "spdpot"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/speedpot
-	effectedstats = list(STATKEY_SPD = 3)
+	effectedstats = list(STATKEY_SPD = 2)
 	duration = 3 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/alch/speedpot
@@ -65,7 +65,7 @@
 /datum/status_effect/buff/alch/fortunepot
 	id = "forpot"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/fortunepot
-	effectedstats = list(STATKEY_LCK = 3)
+	effectedstats = list(STATKEY_LCK = 2)
 	duration = 3 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/alch/fortunepot
@@ -90,3 +90,49 @@
 	name = "Fire Resistance"
 	desc = "My hide toughens to fire."
 	icon_state = "buff"
+
+/datum/status_effect/buff/alch/strengthpot/negative
+	effectedstats = list(STATKEY_STR = 2)
+/datum/status_effect/buff/alch/perceptionpot/negative
+	effectedstats = list(STATKEY_PER = 2)
+/datum/status_effect/buff/alch/intelligencepot/negative
+	effectedstats = list(STATKEY_INT = 2)
+/datum/status_effect/buff/alch/constitutionpot/negative
+	effectedstats = list(STATKEY_CON = 2)
+/datum/status_effect/buff/alch/endurancepot/negative
+	effectedstats = list(STATKEY_WIL = 2)
+/datum/status_effect/buff/alch/speedpot/negative
+	effectedstats = list(STATKEY_SPD = 2)
+/datum/status_effect/buff/alch/fortunepot/negative
+	effectedstats = list(STATKEY_LCK = 2)
+
+/datum/status_effect/buff/alch/strengthpot/greater
+	effectedstats = list(STATKEY_STR = 4)
+/datum/status_effect/buff/alch/perceptionpot/greater
+	effectedstats = list(STATKEY_PER = 4)
+/datum/status_effect/buff/alch/intelligencepot/greater
+	effectedstats = list(STATKEY_INT = 4)
+/datum/status_effect/buff/alch/constitutionpot/greater
+	effectedstats = list(STATKEY_CON = 4)
+/datum/status_effect/buff/alch/endurancepot/greater
+	effectedstats = list(STATKEY_WIL = 4)
+/datum/status_effect/buff/alch/speedpot/greater
+	effectedstats = list(STATKEY_SPD = 4)
+/datum/status_effect/buff/alch/fortunepot/greater
+	effectedstats = list(STATKEY_LCK = 4)
+
+/datum/status_effect/buff/alch/strengthpot/greater/negative
+	effectedstats = list(STATKEY_STR = -4)
+/datum/status_effect/buff/alch/perceptionpot/greater/negative
+	effectedstats = list(STATKEY_PER = -4)
+/datum/status_effect/buff/alch/intelligencepot/greater/negative
+	effectedstats = list(STATKEY_INT = -4)
+/datum/status_effect/buff/alch/constitutionpot/greater/negative
+	effectedstats = list(STATKEY_CON = -4)
+/datum/status_effect/buff/alch/endurancepot/greater/negative
+	effectedstats = list(STATKEY_WIL = -4)
+/datum/status_effect/buff/alch/speedpot/greater/negative
+	effectedstats = list(STATKEY_SPD = -4)
+/datum/status_effect/buff/alch/fortunepot/greater/negative
+	effectedstats = list(STATKEY_LCK = -4)
+

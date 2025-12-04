@@ -5,6 +5,7 @@
 	visible_organ = TRUE
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_HORNS
+	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_DAMAGE_BRUTE, EFFECT_FORTIFY_ENDURANCE, EFFECT_WEAKEN_PERCEPTION)
 
 /obj/item/organ/horns/humanoid
 

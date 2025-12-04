@@ -28,6 +28,7 @@
 
 	food_type = /obj/item/reagent_containers/food/snacks/organ/heart
 	sellprice = 25
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_FORTIFY_ENDURANCE, EFFECT_FORTIFY_CONSTITUTION, EFFECT_DRAIN_BLOOD)
 
 /obj/item/organ/heart/Destroy()
 	for(var/datum/culling_duel/D in GLOB.graggar_cullings)

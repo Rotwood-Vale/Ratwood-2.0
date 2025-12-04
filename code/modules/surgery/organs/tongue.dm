@@ -29,6 +29,7 @@
 		/datum/language/abyssal,
 		/datum/language/merar
 	))
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_FORTIFY_LUCK, EFFECT_RESTORE_STAMINA, EFFECT_SILENCE)
 
 /obj/item/organ/tongue/Initialize(mapload)
 	. = ..()

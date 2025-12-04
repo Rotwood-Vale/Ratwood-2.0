@@ -37,6 +37,7 @@
 	var/eye_color = "#FFFFFF"
 	var/heterochromia = FALSE
 	var/second_color = "#FFFFFF"
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_INVISIBILITY, EFFECT_FORTIFY_SPEED, EFFECT_BLINDNESS)
 
 
 /obj/item/organ/eyes/update_overlays()

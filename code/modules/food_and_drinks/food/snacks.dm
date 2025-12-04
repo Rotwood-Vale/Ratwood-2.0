@@ -58,12 +58,10 @@ All foods are distributed among various categories. Use common sense.
 	var/portable = TRUE
 	var/fried_type = null	//instead of becoming
 	var/deep_fried_type = null
-	var/filling_color = "#FFFFFF" //color to use when added to custom food.
 	var/custom_food_type = null  //for food customizing. path of the custom food to create
 	var/junkiness = 0  //for junk food. used to lower human satiety.
 	var/list/bonus_reagents //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
-	var/list/tastes  // for example list("crisps" = 2, "salt" = 1)
 
 	var/cooking = 0
 	var/cooktime = 0

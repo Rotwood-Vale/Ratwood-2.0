@@ -5,6 +5,7 @@
 	visible_organ = TRUE
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_SNOUT
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_FORTIFY_STRENGTH, EFFECT_RESTORE_STAMINA, EFFECT_NAUSEA)
 
 /obj/item/organ/snout/beak
 	name = "beak"

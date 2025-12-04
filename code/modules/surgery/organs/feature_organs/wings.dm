@@ -14,6 +14,7 @@
 	var/is_open
 	///Whether the owner of wings has flight thanks to the wings
 	var/granted_flight
+	alchemy_effects = list(EFFECT_FEATHER_FALL, EFFECT_FORTIFY_SPEED, EFFECT_FORTIFY_ENDURANCE, EFFECT_WEAKEN_STRENGTH)
 
 //TODO: Well you know what this flight stuff is a bit complicated and hardcoded, this is enough for now
 

@@ -1,42 +1,18 @@
+/obj/item
+	var/list/alchemy_effects = list()
+	var/filling_color = "#d4c5a9"
+	var/list/tastes
+	
 /obj/item/alch
 	name = "dust"
 	desc = ""
 	icon = 'icons/roguetown/misc/alchemy.dmi'
 	icon_state = "irondust"
 	w_class = WEIGHT_CLASS_TINY
-	experimental_inhand = FALSE
-	/*
-		So, you're here about potions: TLDR - the cauldron takes up to 4 items, from this, makes 1 recipe. Major gives 3 points, med 2 points,minor 1 point.
-		If no recipe gets above 5 points, it makes nothing,otherwise It then makes the recipe with the HIGHEST POINTS.
-		all 3 of the below variables should be NULL or the type-path of the recipe to make.
-	*/
-	var/major_pot = null
-	var/med_pot = null
-	var/minor_pot = null
-	//Dont worry, these 3 are just to cache the 'smell' of their pot on initialization to not have to re-look every examine.
-	//No need to set them.
-	var/major_smell
-	var/med_smell
-	var/minor_smell
-	///Same as the smells, just caching what the potion name is
-	var/major_name
-	var/med_name
-	var/minor_name
+	experimental_inhand = FALSE	
 
 /obj/item/alch/Initialize()
 	. = ..()
-	if(!isnull(major_pot))
-		var/datum/alch_cauldron_recipe/rec = locate(major_pot) in GLOB.alch_cauldron_recipes
-		major_smell = rec.smells_like
-		major_name = rec.name
-	if(!isnull(med_pot))
-		var/datum/alch_cauldron_recipe/rec = locate(med_pot) in GLOB.alch_cauldron_recipes
-		med_smell = rec.smells_like
-		med_name = rec.name
-	if(!isnull(minor_pot))
-		var/datum/alch_cauldron_recipe/rec = locate(minor_pot) in GLOB.alch_cauldron_recipes
-		minor_smell = rec.smells_like
-		minor_name = rec.name
 
 /obj/item/alch/examine(mob/user)
 	. = ..()
@@ -46,129 +22,98 @@
 		if(isliving(user))
 			var/mob/living/lmob = user
 			perint = FLOOR((lmob.STAPER + lmob.STAINT)/2,1)
-		if(HAS_TRAIT(user,TRAIT_LEGENDARY_ALCHEMIST))
-			if(!isnull(major_name))
-				. += span_notice(" Strongly attuned to making [major_name].")
-			if(!isnull(med_name))
-				. += span_notice(" Moderately attuned to making [med_name].")
-			if(!isnull(minor_name))
-				. += span_notice(" Minorly attuned to making [minor_name].")
-		else
-			if(!isnull(major_smell))
+			// Show alchemy effect smells based on skill level
+			if(alchemy_effects && alchemy_effects.len)
 				if(alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6)
-					. += span_notice(" Smells strongly of [major_smell].")
-			if(!isnull(med_smell))
-				if(alch_skill >= SKILL_LEVEL_APPRENTICE || perint >= 10)
-					. += span_notice(" Smells slightly of [med_smell].")
-			if(!isnull(minor_smell))
-				if(alch_skill >= SKILL_LEVEL_EXPERT || perint >= 16)
-					. += span_notice(" Smells weakly of [minor_smell].")
+					var/effect_count = 0
+					for(var/effect in alchemy_effects)
+						effect_count++
+						var/smell = get_effect_smell(effect)
+						// Show effects based on skill - higher skill reveals more
+						if(effect_count == 1 && (alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6))
+							. += span_notice(" Smells strongly of [smell].")
+						else if(effect_count == 2 && (alch_skill >= SKILL_LEVEL_APPRENTICE || perint >= 10))
+							. += span_notice(" Also smells of [smell].")
+						else if(effect_count >= 3 && (alch_skill >= SKILL_LEVEL_JOURNEYMAN || perint >= 13))
+							. += span_notice(" Faintly smells of [smell].")
+						else if(effect_count >= 4 && (alch_skill >= SKILL_LEVEL_MASTER || perint >= 17))
+							. += span_notice(" Subtley smells of [smell].")
 /obj/item/alch/viscera
 	name = "viscera"
 	icon_state = "viscera"
-	major_pot = /datum/alch_cauldron_recipe/big_health_potion
-	med_pot = /datum/alch_cauldron_recipe/health_potion
-	minor_pot = /datum/alch_cauldron_recipe/antidote
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_CONSTITUTION, EFFECT_DAMAGE_TOX)
 
 /obj/item/alch/waterdust
 	name = "water essentia"
 	icon_state = "water_runedust"
-	major_pot = /datum/alch_cauldron_recipe/int_potion
-	med_pot = /datum/alch_cauldron_recipe/big_mana_potion
-	minor_pot = /datum/alch_cauldron_recipe/per_potion
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FROST_IMMUNE, EFFECT_FEATHER_FALL, EFFECT_WEAKEN_STRENGTH)
 
 /obj/item/alch/bonemeal
 	name = "bone meal"
 	icon_state = "bonemeal"
-	major_pot = /datum/alch_cauldron_recipe/mana_potion
-	med_pot = /datum/alch_cauldron_recipe/per_potion
-	minor_pot = /datum/alch_cauldron_recipe/antidote
+	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_CRIT_RESIST, EFFECT_RESTORE_BLOOD, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/seeddust
 	name = "seed dust"
 	icon_state = "seeddust"
-	major_pot = /datum/alch_cauldron_recipe/big_stamina_potion
-	med_pot = /datum/alch_cauldron_recipe/stamina_potion
-	minor_pot = /datum/alch_cauldron_recipe/strong_antidote
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_SPEED, EFFECT_FORTIFY_LUCK, EFFECT_DRAIN_MANA)
 
 /obj/item/alch/runedust
 	name = "raw essentia"
 	icon_state = "runedust"
-	major_pot = /datum/alch_cauldron_recipe/int_potion
-	med_pot = /datum/alch_cauldron_recipe/big_mana_potion
-	minor_pot = /datum/alch_cauldron_recipe/per_potion
+	alchemy_effects = list(EFFECT_RESTORE_MANA, EFFECT_MAGIC_RESIST, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_DRAIN_DEVOTION)
 
 /obj/item/alch/coaldust
 	name = "coal dust"
 	icon_state = "coaldust"
-	major_pot = /datum/alch_cauldron_recipe/antidote
-	med_pot = /datum/alch_cauldron_recipe/end_potion
-	minor_pot = /datum/alch_cauldron_recipe/str_potion
+	alchemy_effects = list(EFFECT_FIRE_IMMUNE, EFFECT_FIRE_STACKS, EFFECT_FORTIFY_ENDURANCE, EFFECT_DAMAGE_BURN)
 
 /obj/item/alch/silverdust
 	name = "silver dust"
 	icon_state = "silverdust"
-	major_pot = /datum/alch_cauldron_recipe/strong_antidote
-	med_pot = /datum/alch_cauldron_recipe/antidote
-	minor_pot = /datum/alch_cauldron_recipe/big_health_potion
 	is_silver = TRUE
+	alchemy_effects = list(EFFECT_MAGIC_RESIST, EFFECT_FORTIFY_PERCEPTION, EFFECT_RESTORE_DEVOTION, EFFECT_WEAKEN_ENDURANCE)
 
 /obj/item/alch/magicdust
 	name = "pure essentia"
 	icon_state = "magic_runedust"
-	major_pot = /datum/alch_cauldron_recipe/big_mana_potion
-	med_pot = /datum/alch_cauldron_recipe/end_potion
-	minor_pot = /datum/alch_cauldron_recipe/con_potion
+	alchemy_effects = list(EFFECT_RESTORE_MANA, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_FORTIFY_LUCK, EFFECT_DRAIN_MANA)
 
 /obj/item/alch/firedust
 	name = "fire essentia"
 	icon_state = "fire_runedust"
-	major_pot = /datum/alch_cauldron_recipe/str_potion
-	med_pot = /datum/alch_cauldron_recipe/con_potion
-	minor_pot = /datum/alch_cauldron_recipe/fire_potion
+	alchemy_effects = list(EFFECT_FIRE_STACKS, EFFECT_FIRE_IMMUNE, EFFECT_FORTIFY_STRENGTH, EFFECT_DAMAGE_BURN)
 
 /obj/item/alch/sinew
 	name = "sinew"
 	icon_state = "sinew"
 	dropshrink = 0.9
-	major_pot = /datum/alch_cauldron_recipe/aphrodisiac
-	med_pot = /datum/alch_cauldron_recipe/end_potion
-	minor_pot = /datum/alch_cauldron_recipe/health_potion
+	alchemy_effects = list(EFFECT_FORTIFY_STRENGTH, EFFECT_FORTIFY_ENDURANCE, EFFECT_RESTORE_STAMINA, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/irondust
 	name = "iron dust"
 	icon_state = "irondust"
-	major_pot = /datum/alch_cauldron_recipe/end_potion
-	med_pot = /datum/alch_cauldron_recipe/con_potion
-	minor_pot = /datum/alch_cauldron_recipe/str_potion
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_FORTIFY_CONSTITUTION, EFFECT_CRIT_RESIST, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/airdust
 	name = "air essentia"
 	icon_state = "air_runedust"
-	major_pot = /datum/alch_cauldron_recipe/spd_potion
-	med_pot = /datum/alch_cauldron_recipe/stamina_potion
-	minor_pot = /datum/alch_cauldron_recipe/int_potion
+	alchemy_effects = list(EFFECT_FEATHER_FALL, EFFECT_FORTIFY_SPEED, EFFECT_INVISIBILITY, EFFECT_WEAKEN_CONSTITUTION)
 
 /obj/item/alch/swampdust
 	name = "swampweed dust"
 	icon_state = "swampdust"
-	major_pot = /datum/alch_cauldron_recipe/berrypoison
-	med_pot = /datum/alch_cauldron_recipe/aphrodisiac
-	minor_pot = /datum/alch_cauldron_recipe/end_potion
+	alchemy_effects = list(EFFECT_NAUSEA, EFFECT_DAMAGE_TOX, EFFECT_WEAKNESS, EFFECT_WEAKEN_INTELLIGENCE)
 
 /obj/item/alch/tobaccodust
 	name = "westleach dust"
 	icon_state = "tobaccodust"
-	major_pot = /datum/alch_cauldron_recipe/per_potion
-	med_pot = /datum/alch_cauldron_recipe/stamina_potion
-	minor_pot = /datum/alch_cauldron_recipe/spd_potion
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_ENDURANCE, EFFECT_FORTIFY_PERCEPTION, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/earthdust
 	name = "earth essentia"
 	icon_state = "earth_runedust"
-	major_pot = /datum/alch_cauldron_recipe/con_potion
-	med_pot = /datum/alch_cauldron_recipe/end_potion
-	minor_pot = /datum/alch_cauldron_recipe/str_potion
+	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_FORTIFY_ENDURANCE, EFFECT_FROST_IMMUNE, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/bone
 	name = "tail bone"
@@ -179,10 +124,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	grid_width = 32
 	grid_height = 64
-
-	major_pot = /datum/alch_cauldron_recipe/strong_antidote
-	med_pot = /datum/alch_cauldron_recipe/health_potion
-	minor_pot = /datum/alch_cauldron_recipe/con_potion
+	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_BLOOD, EFFECT_CRIT_RESIST, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/horn
 	name = "troll horn"
@@ -193,41 +135,28 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_width = 64
 	grid_height = 64
-
-	major_pot = /datum/alch_cauldron_recipe/str_potion
-	med_pot = /datum/alch_cauldron_recipe/con_potion
-	minor_pot = /datum/alch_cauldron_recipe/end_potion
+	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_CRIT_RESIST, EFFECT_RESTORE_STAMINA, EFFECT_WEAKEN_INTELLIGENCE)
 
 /obj/item/alch/golddust
 	name = "gold dust"
 	icon_state = "golddust"
-
-	major_pot = /datum/alch_cauldron_recipe/big_mana_potion
-	med_pot = /datum/alch_cauldron_recipe/con_potion
-	minor_pot = /datum/alch_cauldron_recipe/per_potion
+	alchemy_effects = list(EFFECT_FORTIFY_LUCK, EFFECT_MAGIC_RESIST, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_DRAIN_DEVOTION)
 
 /obj/item/alch/feaudust
 	name = "feau dust"
 	icon_state = "feaudust"
-
-	major_pot = /datum/alch_cauldron_recipe/spd_potion
-	med_pot = /datum/alch_cauldron_recipe/big_mana_potion
-	minor_pot = /datum/alch_cauldron_recipe/strong_antidote
+	alchemy_effects = list(EFFECT_FORTIFY_SPEED, EFFECT_FORTIFY_LUCK, EFFECT_INVISIBILITY, EFFECT_WEAKEN_CONSTITUTION)
 
 /obj/item/alch/ozium
 	name = "alchemical ozium"
 	desc = "Alchemical processing has left it unfit for consumption."
 	icon_state = "darkredpowder"
-
-	major_pot = /datum/alch_cauldron_recipe/big_stamina_potion
-	med_pot = /datum/alch_cauldron_recipe/lck_potion
-	minor_pot = /datum/alch_cauldron_recipe/int_potion
-
+	alchemy_effects = list(EFFECT_CRIT_RESIST, EFFECT_SLEEP, EFFECT_FORTIFY_CONSTITUTION, EFFECT_DRAIN_MANA)
 /obj/item/alch/transisdust
 	name = "sui dust"
 	desc = "A long mix of herbs resulting in a special dust. For you. Use it while held."
 	icon_state = "transisdust"
-
+	alchemy_effects = list(EFFECT_INVISIBILITY, EFFECT_FORTIFY_SPEED, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_WEAKEN_STRENGTH)
 /obj/item/alch/transisdust/attack_self(mob/living/user)
 	..()
 
@@ -257,120 +186,77 @@
 	name = "purified salts"
 	desc = "Salts that have been finely sifted to enchance their healing properties and to bolster its connection to the arcyne."
 	icon_state = "puresalt"
-
-	major_pot = /datum/alch_cauldron_recipe/antidote
-	med_pot = /datum/alch_cauldron_recipe/strong_antidote
-	minor_pot = /datum/alch_cauldron_recipe/big_mana_potion
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_DEVOTION, EFFECT_MAGIC_RESIST, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/mineraldust
 	name = "mineral dusts"
 	desc = "Elements of gems ground and sifted of impurities to help draw out its useful alchemical minerals."
 	icon_state = "mineraldust"
-
-	major_pot = /datum/alch_cauldron_recipe/doompoison
-	med_pot = /datum/alch_cauldron_recipe/big_mana_potion
-	minor_pot = /datum/alch_cauldron_recipe/big_stam_poison
+	alchemy_effects = list(EFFECT_FORTIFY_CONSTITUTION, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_ENDURANCE, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/infernaldust
 	name = "infernal dust"
 	desc = "The remains of an abyssal tether to this plane, banished or slain. Best handled with gloves."
 	icon_state = "infernaldust"
-
-	major_pot = /datum/alch_cauldron_recipe/fire_potion
-	med_pot = /datum/alch_cauldron_recipe/big_stam_poison
-	minor_pot = /datum/alch_cauldron_recipe/int_potion
+	alchemy_effects = list(EFFECT_FIRE_STACKS, EFFECT_DAMAGE_BURN, EFFECT_FORTIFY_STRENGTH, EFFECT_DRAIN_DEVOTION)
 
 /obj/item/alch/solardust
 	name = "solar dust"
 	desc = "A pinch of Astrata worked into radiant matter. Looking at it hurts your eyes."
 	icon_state = "solardust"
-
-	major_pot = /datum/alch_cauldron_recipe/fire_potion
-	med_pot = /datum/alch_cauldron_recipe/int_potion
-	minor_pot = /datum/alch_cauldron_recipe/per_potion
+	alchemy_effects = list(EFFECT_RESTORE_DEVOTION, EFFECT_FIRE_IMMUNE, EFFECT_FORTIFY_LUCK, EFFECT_DAMAGE_BURN)
 
 /obj/item/alch/berrypowder
 	name = "berry powder"
 	desc = "Berries ground and dried into a soft fragrant powder."
 	icon_state = "berrypowder"
-
-	major_pot = /datum/alch_cauldron_recipe/berrypoison
-	med_pot = /datum/alch_cauldron_recipe/mana_potion
-	minor_pot = /datum/alch_cauldron_recipe/big_mana_potion
-
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_HEAL_TOX, EFFECT_FORTIFY_LUCK, EFFECT_DRAIN_BLOOD)
 //BEGIN THE HERBS
 
 /obj/item/alch/atropa
 	name = "atropa"
 	icon_state = "atropa"
-
-	major_pot = /datum/alch_cauldron_recipe/doompoison
-	med_pot = /datum/alch_cauldron_recipe/berrypoison
-	minor_pot = /datum/alch_cauldron_recipe/stam_poison
+	alchemy_effects = list(EFFECT_DAMAGE_TOX, EFFECT_NAUSEA, EFFECT_DEAFEN, EFFECT_HALLUCINOGENIC)
 
 /obj/item/alch/matricaria
 	name = "matricaria"
 	icon_state = "matricaria"
-
-	major_pot = /datum/alch_cauldron_recipe/berrypoison
-	med_pot = /datum/alch_cauldron_recipe/per_potion
-	minor_pot = /datum/alch_cauldron_recipe/doompoison
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_RESTORE_STAMINA, EFFECT_NO_PAIN, EFFECT_WEAKEN_STRENGTH)
 
 /obj/item/alch/symphitum
 	name = "symphitum"
 	icon_state = "symphitum"
-
-	major_pot = /datum/alch_cauldron_recipe/health_potion
-	med_pot = /datum/alch_cauldron_recipe/stam_poison
-	minor_pot = /datum/alch_cauldron_recipe/antidote
+	alchemy_effects = list(EFFECT_HEAL_BRUTE, EFFECT_HEAL_TOX, EFFECT_FORTIFY_CONSTITUTION, EFFECT_DRAIN_STAMINA)
 
 /obj/item/alch/taraxacum
 	name = "taraxacum"
 	icon_state = "taraxacum"
-
-	major_pot = /datum/alch_cauldron_recipe/stam_poison
-	med_pot = /datum/alch_cauldron_recipe/health_potion
-	minor_pot = /datum/alch_cauldron_recipe/antidote
+	alchemy_effects = list(EFFECT_RESTORE_STAMINA, EFFECT_HEAL_TOX, EFFECT_FORTIFY_ENDURANCE, EFFECT_DRAIN_MANA)
 
 /obj/item/alch/euphrasia
 	name = "euphrasia"
 	icon_state = "euphrasia"
-
-	major_pot = /datum/alch_cauldron_recipe/spd_potion
-	med_pot = /datum/alch_cauldron_recipe/aphrodisiac
-	minor_pot = /datum/alch_cauldron_recipe/int_potion
+	alchemy_effects = list(EFFECT_FORTIFY_PERCEPTION, EFFECT_RESTORE_MANA, EFFECT_MAGIC_RESIST, EFFECT_BLINDNESS)
 
 /obj/item/alch/paris
 	name = "paris"
 	icon_state = "paris"
-
-	major_pot = /datum/alch_cauldron_recipe/big_stam_poison
-	med_pot = /datum/alch_cauldron_recipe/berrypoison
-	minor_pot = /datum/alch_cauldron_recipe/stam_poison
+	alchemy_effects = list(EFFECT_DAMAGE_TOX, EFFECT_NAUSEA, EFFECT_WEAKNESS, EFFECT_DRAIN_BLOOD)
 
 /obj/item/alch/calendula
 	name = "calendula"
 	icon_state = "calendula"
-
-	major_pot = /datum/alch_cauldron_recipe/big_health_potion
-	med_pot = /datum/alch_cauldron_recipe/end_potion
-	minor_pot = /datum/alch_cauldron_recipe/health_potion
+	alchemy_effects = list(EFFECT_HEAL_BURN, EFFECT_HEAL_BRUTE, EFFECT_RESTORE_BLOOD, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/mentha
 	name = "mentha"
 	icon_state = "mentha"
-
-	major_pot = /datum/alch_cauldron_recipe/per_potion
-	med_pot = /datum/alch_cauldron_recipe/int_potion
-	minor_pot = /datum/alch_cauldron_recipe/stamina_potion
+	alchemy_effects = list(EFFECT_FROST_IMMUNE, EFFECT_FORTIFY_SPEED, EFFECT_RESTORE_STAMINA, EFFECT_FROST_STACKS)
 
 /obj/item/alch/urtica
 	name = "urtica"
 	icon_state = "urtica"
-
-	major_pot = /datum/alch_cauldron_recipe/health_potion
-	med_pot = /datum/alch_cauldron_recipe/spd_potion
-	minor_pot = /datum/alch_cauldron_recipe/aphrodisiac
+	alchemy_effects = list(EFFECT_DAMAGE_BRUTE, EFFECT_FIRE_STACKS, EFFECT_FORTIFY_CONSTITUTION, EFFECT_WEAKEN_LUCK)
 
 /obj/item/alch/salvia
 	name = "salvia"
@@ -380,59 +266,32 @@
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_TINY
 	alternate_worn_layer  = 8.9 //On top of helmet
-
-	major_pot = /datum/alch_cauldron_recipe/con_potion
-	med_pot = /datum/alch_cauldron_recipe/str_potion
-	minor_pot = /datum/alch_cauldron_recipe/end_potion
+	alchemy_effects = list(EFFECT_RESTORE_MANA, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_HALLUCINOGENIC, EFFECT_DRAIN_DEVOTION)
 
 /obj/item/alch/hypericum
 	name = "hypericum"
 	icon_state = "hypericum"
-
-	major_pot = /datum/alch_cauldron_recipe/stamina_potion
-	med_pot = /datum/alch_cauldron_recipe/big_mana_potion
-	minor_pot = /datum/alch_cauldron_recipe/antidote
+	alchemy_effects = list(EFFECT_RESTORE_DEVOTION, EFFECT_HEAL_TOX, EFFECT_CRIT_RESIST, EFFECT_WEAKEN_ENDURANCE)
 
 /obj/item/alch/benedictus
 	name = "benedictus"
 	icon_state = "benedictus"
-
-	major_pot = /datum/alch_cauldron_recipe/big_stamina_potion
-	med_pot = /datum/alch_cauldron_recipe/stamina_potion
-	minor_pot = /datum/alch_cauldron_recipe/int_potion
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_RESTORE_DEVOTION, EFFECT_MAGIC_RESIST, EFFECT_WEAKEN_SPEED)
 
 /obj/item/alch/valeriana
 	name = "valeriana"
 	icon_state = "valeriana"
-
-	major_pot = /datum/alch_cauldron_recipe/health_potion
-	med_pot = /datum/alch_cauldron_recipe/spd_potion
-	minor_pot = /datum/alch_cauldron_recipe/stam_poison
+	alchemy_effects = list(EFFECT_NO_PAIN, EFFECT_RESTORE_STAMINA, EFFECT_WEAKNESS, EFFECT_SLEEP)
 
 /obj/item/alch/artemisia
 	name = "artemisia"
 	icon_state = "artemisia"
-
-	major_pot = /datum/alch_cauldron_recipe/lck_potion
-	med_pot = /datum/alch_cauldron_recipe/spd_potion
-	minor_pot = /datum/alch_cauldron_recipe/aphrodisiac
+	alchemy_effects = list(EFFECT_HEAL_TOX, EFFECT_RESTORE_STAMINA, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_HALLUCINOGENIC)
 
 /obj/item/alch/manabloompowder
 	name = "manabloom powder"
 	icon_state = "bluepowder"
-
-	major_pot = /datum/alch_cauldron_recipe/mana_potion
-	med_pot = /datum/alch_cauldron_recipe/int_potion
-	minor_pot = /datum/alch_cauldron_recipe/big_mana_potion
-
-/obj/item/alch/manabloompowder
-	name = "manabloom powder"
-	icon_state = "bluepowder"
-
-	major_pot = /datum/alch_cauldron_recipe/mana_potion
-	med_pot = /datum/alch_cauldron_recipe/int_potion
-	minor_pot = /datum/alch_cauldron_recipe/big_mana_potion
-
+	alchemy_effects = list(EFFECT_RESTORE_MANA, EFFECT_FORTIFY_INTELLIGENCE, EFFECT_MAGIC_RESIST, EFFECT_DRAIN_MANA)
 /obj/item/alch/rosa
 	name = "rosa"
 	icon_state = "rosa"
@@ -447,6 +306,7 @@
 	muteinmouth = FALSE
 	alternate_worn_layer  = 8.9 //On top of helmet
 	mill_result = /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals
+	alchemy_effects = list(EFFECT_RESTORE_BLOOD, EFFECT_FORTIFY_LUCK, EFFECT_HEAL_BRUTE, EFFECT_WEAKEN_CONSTITUTION)
 
 /obj/item/alch/rosa/equipped(mob/living/carbon/human/user, slot)
 	. = ..()

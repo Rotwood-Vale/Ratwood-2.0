@@ -16,6 +16,7 @@
 	high_threshold_cleared = "<span class='info'>The constriction around my chest loosens as my breathing calms down.</span>"
 
 	sellprice = 20
+	alchemy_effects = list(EFFECT_FORTIFY_ENDURANCE, EFFECT_RESTORE_STAMINA, EFFECT_FEATHER_FALL, EFFECT_WEAKEN_SPEED)
 
 /obj/item/organ/lungs/on_life()
 	..()
