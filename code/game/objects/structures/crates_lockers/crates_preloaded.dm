@@ -43,3 +43,23 @@
 	new /obj/item/alch/berrypowder(src)
 	new /obj/item/alch/berrypowder(src)
 	new /obj/item/alch/berrypowder(src)
+
+/obj/structure/closet/crate/chest/old_crate/sojourner
+	name = "sojourner's alchemy crate"
+	desc = "Labeled: ´For the holy inquisition.´"
+
+/obj/structure/closet/crate/chest/old_crate/sojourner/Initialize()
+	. = ..()
+	new /obj/item/recipe_book/alchemy(src)
+	new /obj/item/storage/magebag/alchemist(src)
+	new /obj/item/reagent_containers/glass/bucket/pot/stone(src)
+	new /obj/item/pestle(src)
+	new /obj/item/rogueweapon/hoe/stone(src)
+	new /obj/item/rogueweapon/shovel(src)
+	new /obj/item/ingot/iron(src)
+	new /obj/item/grown/log/tree/small(src)
+	new /obj/item/reagent_containers/glass/bucket(src)
+	new /obj/item/reagent_containers/glass/bottle/rogue(src)
+	new /obj/item/reagent_containers/glass/bottle/rogue(src)
+	new /obj/item/reagent_containers/glass/bottle/rogue(src)
+	new /obj/item/reagent_containers/glass/bottle/rogue(src)

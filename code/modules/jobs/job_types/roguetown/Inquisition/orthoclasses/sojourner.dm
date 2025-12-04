@@ -11,32 +11,36 @@
 	outfit = /datum/outfit/job/roguetown/sojourner
 	subclass_languages = list(/datum/language/otavan, /datum/language/celestial)//You're still Naledi. A learned one, atop that.
 	category_tags = list(CTAG_INQUISITION)
+	maximum_possible_slots = 1
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(
 		TRAIT_MAGEARMOR,
 		TRAIT_ALCHEMY_EXPERT,
-		TRAIT_ARCYNE_T1,//They're not meant to get more spellpoints. If they do, via Arcyne virtue, for example, T1 only.
+		TRAIT_ARCYNE_T2,//They're not meant to get more spellpoints than 2 so they can't get 3 spell point spells. If they do, it have to be with Arcyne virtue.
 	)
-	subclass_stats = list(//This does not follow the typical 8 stat setup.
+	subclass_stats = list(//Low stat spread, 5 all in all in line with sorcerer.
 		STATKEY_INT = 3,
-		STATKEY_PER = 2,
-		STATKEY_STR = -1,
-		STATKEY_SPD = -1,
+		STATKEY_PER = 1,
+		STATKEY_WIL = 1,
+		STATKEY_SPD = 2,
 	)
+	subclass_spellpoints = 3 //Do not give them more, if they want anything else, they should take the virtue
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN, //the same as Naledi
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+		"Crate of Alchemy supplies" = /obj/structure/closet/crate/chest/old_crate/sojourner
 	)
 	extra_context = "This subclass has multiple unique spells, including one in the form of an 'arcyne barrier'. \
 	So long as it's active, the user is immune to magic, yet still capable of casting it."

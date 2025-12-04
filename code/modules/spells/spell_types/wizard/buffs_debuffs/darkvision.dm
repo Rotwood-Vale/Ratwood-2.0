@@ -23,6 +23,7 @@
 /obj/effect/proc_holder/spell/invoked/darkvision/miracle
 	cost = 0
 	spell_tier = 0
+	devotion_cost = 30
 	associated_skill = /datum/skill/magic/holy
 
 /obj/effect/proc_holder/spell/invoked/darkvision/cast(list/targets, mob/user = usr)

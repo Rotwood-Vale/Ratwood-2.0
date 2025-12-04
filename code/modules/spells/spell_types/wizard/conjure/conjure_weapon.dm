@@ -75,6 +75,9 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/conjure_weapon/miracle
+	cost = 0
+	spell_tier = 0
+	devotion_cost = 50
 	associated_skill = /datum/skill/magic/holy
 
 /obj/effect/proc_holder/spell/invoked/conjure_weapon/Destroy()

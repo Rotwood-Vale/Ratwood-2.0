@@ -21,6 +21,13 @@
 	associated_skill = /datum/skill/magic/arcane
 	range = 7
 
+
+/obj/effect/proc_holder/spell/invoked/longstrider/miracle
+	cost = 0
+	spell_tier = 0
+	devotion_cost = 30
+	associated_skill = /datum/skill/magic/holy
+
 /obj/effect/proc_holder/spell/invoked/longstrider/cast(list/targets, mob/user = usr)
 
 	user.visible_message("[user] mutters an incantation and a dim pulse of light radiates out from them.")

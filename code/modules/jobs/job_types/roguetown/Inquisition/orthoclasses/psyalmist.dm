@@ -1,6 +1,8 @@
 //Healer-bards. Boring, but it exists.
 //Not intended for proper combat.
 //Knives exist the same way it does on Arbalist, as a 'just in case'.
+//All spells cost devotion, the work best as a support.
+//Low devotion limit on purpose, with a slightly higher regen.
 /datum/advclass/psyaltrist
 	name = "Psyaltrist"
 	tutorial = "You spent some time with cathedral choirs and psyaltrists. Now you spend your days applying the musical arts to the practical on behalf of His most Holy of Inquisitions."
@@ -8,13 +10,21 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_EMPATH)
 	category_tags = list(CTAG_INQUISITION)
+	maximum_possible_slots = 1
 	subclass_languages = list(/datum/language/otavan)
-	subclass_stats = list(//This does not follow the typical 8 stat setup.
+	subclass_stats = list(//6 statline.
+		STATKEY_INT = 2,
 		STATKEY_LCK = 2,
 		STATKEY_WIL = 1,
 		STATKEY_CON = 1,
+		STATKEY_STR = 1,
 	)
 	subclass_skills = list(
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/music = SKILL_LEVEL_MASTER,
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
@@ -31,6 +41,7 @@
 	)
 
 /datum/outfit/job/roguetown/psyaltrist/pre_equip(mob/living/carbon/human/H)
+	head = /obj/item/clothing/head/roguetown/helmet/tricorn/lucky
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
 	cloak = /obj/item/clothing/cloak/psyaltrist
@@ -44,15 +55,22 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/mid
 	id = /obj/item/clothing/ring/signet/silver
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
+	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T3)
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/ortho = 1)
 
 	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
 	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade/miracle)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon/miracle)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon/miracle)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/longstrider/miracle)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/darkvision/miracle)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fortitude/miracle)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
 		var/weapons = list("Harp","Lute","Accordion","Guitar","Hurdy-Gurdy","Viola","Vocal Talisman", "Psyaltery", "Flute")
 		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
 		H.set_blindness(0)

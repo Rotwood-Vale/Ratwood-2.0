@@ -22,6 +22,12 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 
+/obj/effect/proc_holder/spell/invoked/fortitude/miracle
+	cost = 0
+	spell_tier = 0
+	devotion_cost = 50
+	associated_skill = /datum/skill/magic/holy
+
 /obj/effect/proc_holder/spell/invoked/fortitude/cast(list/targets, mob/user)
 	var/atom/A = targets[1]
 	if(!isliving(A))

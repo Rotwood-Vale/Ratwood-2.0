@@ -1266,16 +1266,16 @@
 			if("wielded")
 				return list("shrink" = 0.8,"sx" = 8,"sy" = 0,"nx" = -1,"ny" = 0,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
-//Only a 'woodenstaff' for the purpose of CDR on spells.
+//Unique sojourner spear for the purpose of CDR on spells.
 /obj/item/rogueweapon/woodstaff/sojourner
-	name = "sojourner staff"
-	desc = "What remains of an old psydonic spear. The tip is blunted, with both barbs and trident-like head removed. \
-	It serves a more noble purpose, now, as a sojourner's casting implement. Though, with enough force, one may still drive the tip forward."
+	name = "sojourner spear"
+	desc = "What remains of an old psydonic spear. Remade into a staff for the sojourner specialization. \
+	It serves a noble purpose, as a sojourner's casting implement. With enough force, one may drive the tip forward."
 	icon_state = "psystaff"//Temp
 	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)
-	gripped_intents = list(/datum/intent/spear/thrust/blunted, /datum/intent/mace/smash/wood/ranged, /datum/intent/special/magicarc)
-	force = 18
-	force_wielded = 20//Worse than just using a knife, really, despite the range.
+	gripped_intents = list(SPEAR_THRUST, /datum/intent/spear/cut/naginata, /datum/intent/spear/bash/ranged, /datum/intent/special/magicarc)
+	force = 15
+	force_wielded = 27// In line with the Naginata, 3 short. Completely unique. Not allowed in foreign import.
 	thrown_bclass = BCLASS_STAB
 	throwforce = 20
 	max_integrity = 150

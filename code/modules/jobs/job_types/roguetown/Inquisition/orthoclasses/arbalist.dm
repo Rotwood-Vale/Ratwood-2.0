@@ -12,6 +12,7 @@
 	outfit = /datum/outfit/job/roguetown/arbalist
 	subclass_languages = list(/datum/language/otavan)
 	category_tags = list(CTAG_INQUISITION)
+	maximum_possible_slots = 1
 	traits_applied = list(
 		TRAIT_PERFECT_TRACKER,
 	)

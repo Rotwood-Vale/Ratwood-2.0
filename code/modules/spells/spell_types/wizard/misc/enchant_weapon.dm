@@ -32,6 +32,12 @@
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_LOW
 
+/obj/effect/proc_holder/spell/invoked/enchant_weapon/miracle
+	cost = 0
+	spell_tier = 0
+	devotion_cost = 30
+	associated_skill = /datum/skill/magic/holy
+
 /obj/effect/proc_holder/spell/invoked/enchant_weapon/cast(list/targets, mob/user = usr)
 	var/target = targets[1]
 	var/obj/item/sacrifice

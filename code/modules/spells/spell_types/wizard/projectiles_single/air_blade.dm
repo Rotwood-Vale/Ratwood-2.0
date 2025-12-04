@@ -2,7 +2,7 @@
  Do not make this learnable by wizards in general. It is part of spellblade's identity.
  Design is that this is an Arcyne Bolt sidegrade that don't works well as a DPS spell
  And is meant to be weaved in between attacks in melee to keep pressure
- It can access all damage types and can crit, like Arcyne Bolt.  
+ It can access all damage types and can crit, like Arcyne Bolt.
 */
 
 /obj/effect/proc_holder/spell/invoked/projectile/airblade
@@ -32,6 +32,12 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	cost = 3 // Just in case
+
+/obj/effect/proc_holder/spell/invoked/projectile/airblade/miracle
+	cost = 0
+	spell_tier = 0
+	devotion_cost = 10
+	associated_skill = /datum/skill/magic/holy
 
 /obj/effect/proc_holder/spell/invoked/projectile/airblade/cast(list/targets, mob/user = user)
 	var/mob/living/carbon/human/H = user
