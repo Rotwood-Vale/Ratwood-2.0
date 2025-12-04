@@ -81,7 +81,7 @@
 				if(EFFECT_DRAIN_MANA)
 					if(!HAS_TRAIT(M, TRAIT_INFINITE_STAMINA))
 						if(prob(5))
-						M.energy_add(-5)
+							M.energy_add(-5)
 							to_chat(M, span_warning(pick("My arcane reserves dwindle!", "I feel my power fading!", "The wellspring runs dry!", "Magic slips from my grasp!", "My essence depletes!")))
 				if(EFFECT_DRAIN_DEVOTION)
 					if(ishuman(M))
@@ -163,8 +163,8 @@
 				// Resistance Effects
 				if(EFFECT_MAGIC_RESIST)
 					if(!HAS_TRAIT(M, TRAIT_ANTIMAGIC))
-							ADD_TRAIT(M, TRAIT_ANTIMAGIC, "alchemy_effect")
-							to_chat(M, span_notice(pick("I feel protected from magic!", "Arcane forces cannot touch me!", "Magic seems to falter around me!", "I resist mystical energies!", "Spellcraft has less effect on me!")))
+						ADD_TRAIT(M, TRAIT_ANTIMAGIC, "alchemy_effect")
+						to_chat(M, span_notice(pick("I feel protected from magic!", "Arcane forces cannot touch me!", "Magic seems to falter around me!", "I resist mystical energies!", "Spellcraft has less effect on me!")))
 				if(EFFECT_CRIT_RESIST)
 					if(!HAS_TRAIT(M, TRAIT_CRITICAL_RESISTANCE))
 						ADD_TRAIT(M, TRAIT_CRITICAL_RESISTANCE, "alchemy_effect")
@@ -195,7 +195,7 @@
 						M.visible_message(span_danger("[M] bursts into flames!"), span_danger(pick("I'm burning!", "Fire consumes me!", "Flames engulf my body!", "I'm on fire!", "The heat is unbearable!")))
 				if(EFFECT_FROST_STACKS)
 					if(prob(5))
-						apply_frost_stacks(M)
+						//apply_frost_stacks(M)
 						M.visible_message(span_warning("[M] shivers violently."), span_warning(pick("Cold seeps into my bones!", "I'm freezing!", "Frost crawls across my skin!", "The chill is unbearable!", "Ice forms on my flesh!")))
 				if(EFFECT_SHOCK_DAMAGE)
 					if(prob(10))
@@ -345,8 +345,8 @@
 				// Greater Resistance Effects
 				if(EFFECT_GREATER_MAGIC_RESIST)
 					if(!HAS_TRAIT(M, TRAIT_ANTIMAGIC))
-							ADD_TRAIT(M, TRAIT_ANTIMAGIC, "alchemy_effect")
-							to_chat(M, span_notice(pick("I am utterly protected from magic!", "Arcane forces cannot touch me at all!", "Magic fails completely around me!", "I resist all mystical energies!", "Spellcraft has no effect on me!")))	
+						ADD_TRAIT(M, TRAIT_ANTIMAGIC, "alchemy_effect")
+						to_chat(M, span_notice(pick("I am utterly protected from magic!", "Arcane forces cannot touch me at all!", "Magic fails completely around me!", "I resist all mystical energies!", "Spellcraft has no effect on me!")))	
 				if(EFFECT_GREATER_CRIT_RESIST)
 					if(!HAS_TRAIT(M, TRAIT_CRITICAL_RESISTANCE))
 						ADD_TRAIT(M, TRAIT_CRITICAL_RESISTANCE, "alchemy_effect")
@@ -376,7 +376,7 @@
 						M.visible_message(span_danger("[M] bursts into flames!"), span_danger(pick("I'm burning!", "Fire consumes me!", "Flames engulf my body!", "I'm on fire!", "The heat is unbearable!")))
 				if(EFFECT_GREATER_FROST_STACKS)
 					if(prob(10))
-						apply_frost_stacks(M)
+						//apply_frost_stacks(M)
 						M.visible_message(span_danger("[M] shivers uncontrollably."), span_danger(pick("Cold pierces my very soul!", "I'm freezing to death!", "Frost devours my flesh!", "The chill is unbearable!", "Ice overtakes me completely!")))	
 				if(EFFECT_GREATER_SHOCK_DAMAGE)
 					if(prob(15))
@@ -385,10 +385,6 @@
 
 	..()
 	. = 1
-
-// Clean up traits when reagent is removed
-/datum/reagent/herb_extract/on_mob_metabolize(mob/living/M)
-	. = ..()
 
 /datum/reagent/herb_extract/on_mob_end_metabolize(mob/living/M)
 	if(!alchemy_effects || !alchemy_effects.len)

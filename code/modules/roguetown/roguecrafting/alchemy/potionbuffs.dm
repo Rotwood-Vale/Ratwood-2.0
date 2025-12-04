@@ -132,7 +132,7 @@
 /datum/status_effect/buff/alch/endurancepot/greater/negative
 	effectedstats = list(STATKEY_WIL = -4)
 /datum/status_effect/buff/alch/speedpot/greater/negative
-	effectedstats = list(STATKEY_SPD = -)
+	effectedstats = list(STATKEY_SPD = -4)
 /datum/status_effect/buff/alch/fortunepot/greater/negative
 	effectedstats = list(STATKEY_LCK = -4)
 
