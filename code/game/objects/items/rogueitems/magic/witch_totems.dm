@@ -21,6 +21,7 @@
 	var/totem_tier = 1 // Material tier: 1=wood, 2=stone, 3=copper, 4=tin, 5=iron, 6=silver, 7=gold
 	var/current_energy = 0
 	var/max_energy = 100 // Base capacity for wooden totem
+	var/quality_bonus = 0 // Bonus capacity from material quality
 	var/last_regen_time = 0.1 // For passive regeneration
 	
 	// Bonding system - only one totem per witch
@@ -35,6 +36,8 @@
 /obj/item/witch_totem/examine(mob/user)
 	. = ..()
 	. += span_notice("Energy: [current_energy]/[max_energy]")
+	if(quality_bonus > 0)
+		. += span_green("Quality Bonus: +[quality_bonus] max energy")
 	. += span_info("Totem Tier: [get_tier_name()]")
 	if(bonded_witch)
 		. += span_purple("This totem is bonded to [bonded_witch.real_name].")
@@ -224,6 +227,9 @@
 		to_chat(user, span_warning("[src] cannot be upgraded further!"))
 		return FALSE
 	
+	// Calculate quality bonus before upgrade
+	var/quality_bonus_amount = calculate_quality_bonus(I)
+	
 	user.visible_message(span_notice("[user] begins infusing [src] with [I]..."), \
 						span_notice("I begin channeling the essence of [I] into [src]..."))
 	
@@ -239,6 +245,15 @@
 	new_totem.choicename = choicename // Transfer customization
 	new_totem.choicedesc = choicedesc
 	
+	// Apply quality bonus
+	new_totem.quality_bonus = quality_bonus_amount
+	new_totem.max_energy += quality_bonus_amount
+	
+	// Show quality result message
+	var/quality_msg = get_quality_message(quality_bonus_amount)
+	if(quality_msg)
+		to_chat(user, quality_msg)
+	
 	user.visible_message(span_green("[src] transforms, absorbing the power of [I]!"), \
 						span_green("[src] transforms into [new_totem]!"))
 	
@@ -248,6 +263,54 @@
 	qdel(src)
 	user.put_in_hands(new_totem)
 	return TRUE
+
+/obj/item/witch_totem/proc/calculate_quality_bonus(obj/item/I)
+	// For magical stones (tier 1 upgrade)
+	if(istype(I, /obj/item/natural/stone))
+		var/obj/item/natural/stone/S = I
+		// magic_power ranges from 1-15, give 5-75 bonus (5 per magic_power)
+		return S.magic_power * 5
+	
+	// For ingots (tier 2+ upgrades)
+	if(istype(I, /obj/item/ingot))
+		var/obj/item/ingot/ingot = I
+		var/base_bonus = 0
+		
+		// Quality-based bonuses
+		switch(ingot.quality)
+			if(SMELTERY_LEVEL_SPOIL)
+				base_bonus = -20 // Penalty for spoiled quality
+			if(SMELTERY_LEVEL_POOR)
+				base_bonus = 0 // No bonus
+			if(SMELTERY_LEVEL_NORMAL)
+				base_bonus = 10 // Small bonus
+			if(SMELTERY_LEVEL_GOOD)
+				base_bonus = 25 // Decent bonus
+			if(SMELTERY_LEVEL_GREAT)
+				base_bonus = 40 // Great bonus
+			if(SMELTERY_LEVEL_EXCELLENT)
+				base_bonus = 60 // Excellent bonus from master smiths
+		
+		return base_bonus
+	
+	return 0
+
+/obj/item/witch_totem/proc/get_quality_message(bonus_amount)
+	if(bonus_amount >= 60)
+		return span_green("The material's exceptional quality resonates powerfully with the totem!")
+	else if(bonus_amount >= 40)
+		return span_green("The material's great quality enhances the totem significantly!")
+	else if(bonus_amount >= 25)
+		return span_notice("The material's good quality improves the totem.")
+	else if(bonus_amount >= 10)
+		return span_notice("The material's decent quality provides a modest improvement.")
+	else if(bonus_amount > 0)
+		return span_notice("The material resonates with the totem.")
+	else if(bonus_amount == 0)
+		return span_warning("The material's poor quality provides no enhancement.")
+	else if(bonus_amount < 0)
+		return span_danger("The material's spoiled quality weakens the totem's potential!")
+	return null
 
 /obj/item/witch_totem/proc/try_charge_from_item(obj/item/I, mob/user)
 	var/charge_amount = get_charge_value(I, user)
