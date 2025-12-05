@@ -118,7 +118,7 @@
 		if(/datum/patron/divine/noc)
 			return span_blue("<i>Noc, Father of Secrets, craves forbidden knowledge.</i><br>Offer: Books (30), Silver (25), Swampweed (20), Paper (15), Psicross (20)")
 		if(/datum/patron/divine/pestra)
-			return span_red("<i>Pestra, the Panacea, accepts both decay and cure.</i><br>Offer: Rotten Meat (25), Viscera (20), Worms (15), Pills (10), Psicross (20)")
+			return span_red("<i>Pestra, the Panacea, accepts both decay and cure.</i><br>Offer: Rotten Meat (25), Viscera (20), Worms (15), Psicross (20)")
 		if(/datum/patron/divine/xylix)
 			return span_red("<i>Xylix, the Trickster, delights in games of chance and fate.</i><br>Offer: Tarot Deck (35), Dice (30), Cards (25), Bottles (15), Psicross (20)")
 		if(/datum/patron/divine/malum)
