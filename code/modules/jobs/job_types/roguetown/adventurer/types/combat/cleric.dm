@@ -649,3 +649,345 @@
 		if(/datum/patron/divine/xylix)
 			neck = /obj/item/clothing/neck/roguetown/luckcharm
 			H.cmode_music = 'sound/music/combat_jester.ogg'
+
+
+
+//-----------------------
+//-----------------------
+//-----------------------
+//-----------------------
+//-----------------------
+//-----------------------
+//-----------------------
+/datum/advclass/cleric/shaman
+	name = "Shaman"
+	tutorial = "You are a shaman, a spiritual guide who channels divine and arcane power through sacred totems. Ostracized by the church but revered by those who remember the old ways, you commune with spirits and gods alike through your bonded totem. \
+	\nYour power flows through your TOTEM - a sacred focus bonded to your soul that you MUST hold to cast spells or miracles. You can only ever bond with ONE totem. Feed it with offerings to maintain your power: alchemical reagents for arcane magic, sacred items for divine miracles. Upgrade your totem with materials (magical stone, copper bar, tin bar, iron bar, silver bar, gold bar) to increase its capacity. \
+	\nYou can customize your totem's name and description."
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_races = RACES_ALL_KINDS
+	vampcompat = FALSE
+	outfit = /datum/outfit/job/roguetown/adventurer/cleric/shaman
+	category_tags = list(CTAG_ADVENTURER)
+	class_select_category = CLASS_CAT_CLERIC
+	subclass_social_rank = SOCIAL_RANK_PEASANT
+	traits_applied = list(TRAIT_DEATHSIGHT, TRAIT_WITCH, TRAIT_ARCYNE_T1, TRAIT_ALCHEMY_EXPERT)
+	subclass_stats = list(
+		STATKEY_INT = 3,
+		STATKEY_WIL = 2,
+		STATKEY_SPD = 2,
+		STATKEY_LCK = 1
+	)
+
+	subclass_skills = list(
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
+	)
+
+/datum/outfit/job/roguetown/adventurer/cleric/shaman/pre_equip(mob/living/carbon/human/H)
+	// Don't call parent ..() to avoid monk weapon selection
+	cloak = /obj/item/clothing/cloak/tribal
+	armor = /obj/item/clothing/suit/roguetown/shirt/robe
+	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
+	gloves = /obj/item/clothing/gloves/roguetown/leather
+	belt = /obj/item/storage/belt/rogue/leather
+	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
+	pants = /obj/item/clothing/under/roguetown/trou
+	shoes = /obj/item/clothing/shoes/roguetown/sandals
+	backl = /obj/item/storage/backpack/rogue/backpack/bagpack
+	backpack_contents = list(
+						/obj/item/reagent_containers/glass/mortar = 1,
+						/obj/item/pestle = 1,
+						/obj/item/candle/yellow = 2,
+						/obj/item/chalk = 1
+						)
+
+	// Cosmetic title selection
+	H.adjust_blindness(-3)
+	
+	// Headgear selection
+	if(H.mind)
+		var/headgear = list("Volf Helm", "Saiga Helm")
+		var/headgear_choice = input(H, "Choose your headgear.", "SPIRITUAL VESTMENTS") as anything in headgear
+		switch(headgear_choice)
+			if("Volf Helm")
+				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
+			if("Saiga Helm")
+				head = /obj/item/clothing/head/roguetown/helmet/leather/saiga
+	
+	H.adjust_blindness(-3)
+	var/cosmetic_titles = list(
+		"Shaman", "Shamaness",
+		"Spirit-Walker",
+		"Totem-Bearer",
+		"Mystic",
+		"Medicine Man", "Medicine Woman",
+		"Wise One",
+		"Seer",
+		"Oracle",
+		"Spiritual Guide",
+		"Ritualist"
+	)
+	var/cosmetic_choice = input(H, "What title do you bear?", "Spiritual Paths") as anything in cosmetic_titles
+	if(cosmetic_choice)
+		H.mind.cosmetic_class_title = cosmetic_choice
+		to_chat(H, span_notice("You are known as a [cosmetic_choice]."))
+
+	var/classes = list("Spirit Magic", "Divine Communion", "Balanced Path")
+	var/classchoice = input("How do your powers manifest?", "SPIRITUAL PATHS") as anything in classes
+
+	switch (classchoice)
+		if("Spirit Magic")
+			// Arcane-focused shaman: arcyne 3 with arcane totem
+			ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
+			H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
+			H.mind?.adjust_spellpoints(14)
+			beltl = /obj/item/storage/magebag/associate
+			// Give arcane totem
+			var/obj/item/witch_totem/arcane_totem = new /obj/item/witch_totem(get_turf(H))
+			arcane_totem.totem_type = "arcane"
+			arcane_totem.current_energy = arcane_totem.max_energy // Start fully charged
+			arcane_totem.bond_to_witch(H)
+			H.put_in_hands(arcane_totem, forced = TRUE)
+
+
+
+		if("Divine Communion")
+			// Miracle-focused shaman: capped at t3 miracles with divine totem
+			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
+			H.adjust_skillrank(/datum/skill/magic/holy, 2, TRUE)
+			D.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_3)
+			D.max_devotion *= 0.35
+			//Can't pray, devotion cap is less than a witch's, but has access to T3 miracles.
+
+
+			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			H.mind?.adjust_spellpoints(6)
+			beltl = /obj/item/storage/magebag/alchemist
+
+			// Give divine/unholy blast based on patron
+			if(istype(H.patron, /datum/patron/divine))
+				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
+			if(istype(H.patron, /datum/patron/inhumen))
+				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
+
+			// Give divine totem
+			var/obj/item/witch_totem/divine_totem = new /obj/item/witch_totem(get_turf(H))
+			divine_totem.totem_type = "divine"
+			divine_totem.current_energy = divine_totem.max_energy // Start fully charged
+			divine_totem.bond_to_witch(H)
+			H.put_in_hands(divine_totem, forced = TRUE)
+
+
+
+		if("Balanced Path")
+			// Hybrid shaman with t2 arcane and t2 miracles
+			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
+			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
+			D.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+			D.max_devotion *= 0.5
+
+			ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
+			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			H.mind?.adjust_spellpoints(8)
+			beltl = /obj/item/storage/magebag/alchemist
+
+			// Give hybrid totem
+			var/obj/item/witch_totem/hybrid_totem = new /obj/item/witch_totem(get_turf(H))
+			hybrid_totem.totem_type = "hybrid"
+			hybrid_totem.current_energy = hybrid_totem.max_energy // Start fully charged
+			hybrid_totem.bond_to_witch(H)
+			H.put_in_hands(hybrid_totem, forced = TRUE)
+
+	if(H.mind)
+		switch (classchoice)
+			if("Spirit Magic")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize)
+
+	// SKILL SELECTION
+	if(H.mind)
+		var/misc_skills = list(
+			"Stealing" = /datum/skill/misc/stealing,
+			"Music" = /datum/skill/misc/music,
+			"Tracking" = /datum/skill/misc/tracking,
+			"Lockpicking" = /datum/skill/misc/lockpicking,
+			"Sneaking" = /datum/skill/misc/sneaking,
+			"Riding" = /datum/skill/misc/riding
+		)
+		var/labor_skills = list(
+			"Farming" = /datum/skill/labor/farming,
+			"Lumberjacking" = /datum/skill/labor/lumberjacking,
+			"Fishing" = /datum/skill/labor/fishing,
+			"Butchering" = /datum/skill/labor/butchering,
+			"Mining" = /datum/skill/labor/mining
+		)
+		var/craft_skills = list(
+			"Ceramics" = /datum/skill/craft/ceramics,
+			"Masonry" = /datum/skill/craft/masonry,
+			"Engineering" = /datum/skill/craft/engineering,
+			"Traps" = /datum/skill/craft/traps,
+			"Tanning" = /datum/skill/craft/tanning,
+		)
+		var/combat_skills = list(
+			"Axes" = /datum/skill/combat/axes,
+			"Unarmed" = /datum/skill/combat/unarmed,
+			"Knives" = /datum/skill/combat/knives,
+			"Wrestling" = /datum/skill/combat/wrestling,
+			"Staves" = /datum/skill/combat/staves,
+			"Whips & Flails" = /datum/skill/combat/whipsflails,
+			"Bows" = /datum/skill/combat/bows,
+			"Crossbows" = /datum/skill/combat/crossbows,
+			"Polearms" = /datum/skill/combat/polearms,
+			"Shields" = /datum/skill/combat/shields,
+			"Slings" = /datum/skill/combat/slings,
+			"Swords" = /datum/skill/combat/swords,
+			"Maces" = /datum/skill/combat/maces
+		)
+
+		// Select one skill to EXPERT
+		var/expert_skill_name = input(H, "Choose one skill to EXPERT. [1/1]", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills
+		if(expert_skill_name)
+			H.adjust_skillrank_up_to(misc_skills[expert_skill_name] || labor_skills[expert_skill_name] || craft_skills[expert_skill_name], SKILL_LEVEL_EXPERT, TRUE)
+			if(expert_skill_name in misc_skills)
+				misc_skills -= expert_skill_name
+			if(expert_skill_name in labor_skills)
+				labor_skills -= expert_skill_name
+			if(expert_skill_name in craft_skills)
+				craft_skills -= expert_skill_name 
+
+		// Select one MISC/LABOR/CRAFT skill to JOURNEYMAN
+		for(var/i in 1 to 1)
+			var/journeyman_name = input(H, "Choose one skill to JOURNEYMAN. [1/1]", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills
+			if(journeyman_name)
+				H.adjust_skillrank_up_to(misc_skills[journeyman_name] || labor_skills[journeyman_name] || craft_skills[journeyman_name], SKILL_LEVEL_JOURNEYMAN, TRUE)
+				if(journeyman_name in misc_skills)
+					misc_skills -= journeyman_name
+				if(journeyman_name in labor_skills)
+					labor_skills -= journeyman_name
+				if(journeyman_name in craft_skills)
+					craft_skills -= journeyman_name
+
+		// Select one COMBAT skill to JOURNEYMAN
+		var/journeyman_combat_name = input(H, "Choose a COMBAT skill to JOURNEYMAN. [1/1]", "Skill Selection") as anything in combat_skills
+		if(journeyman_combat_name)
+			H.adjust_skillrank_up_to(combat_skills[journeyman_combat_name], SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if(journeyman_combat_name in combat_skills)
+				combat_skills -= journeyman_combat_name
+
+		// Select three skills to APPRENTICE
+		for(var/i in 1 to 2)
+			var/apprentice_name = input(H, "Choose a skill to APPRENTICE. [i]/2", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills + combat_skills
+			if(apprentice_name)
+				H.adjust_skillrank_up_to(misc_skills[apprentice_name] || labor_skills[apprentice_name] || craft_skills[apprentice_name] || combat_skills[apprentice_name], SKILL_LEVEL_APPRENTICE, TRUE)
+				if(apprentice_name in misc_skills)
+					misc_skills -= apprentice_name
+				if(apprentice_name in labor_skills)
+					labor_skills -= apprentice_name
+				if(apprentice_name in craft_skills)
+					craft_skills -= apprentice_name
+				if(apprentice_name in combat_skills)
+					combat_skills -= apprentice_name
+
+		// Select two skills to NOVICE
+		for(var/i in 1 to 2)
+			var/novice_name = input(H, "Choose a skill to NOVICE. [i]/2", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills + combat_skills
+			if(novice_name)
+				H.adjust_skillrank_up_to(misc_skills[novice_name] || labor_skills[novice_name] || craft_skills[novice_name] || combat_skills[novice_name], SKILL_LEVEL_NOVICE, TRUE)
+				if(novice_name in misc_skills)
+					misc_skills -= novice_name
+				if(novice_name in labor_skills)
+					labor_skills -= novice_name
+				if(novice_name in craft_skills)
+					craft_skills -= novice_name
+				if(novice_name in combat_skills)
+					combat_skills -= novice_name
+
+	// TRAIT SELECTION
+	if(H.mind)
+		var/shaman_traits = list(
+			"Seedknow" = TRAIT_SEEDKNOW,
+			"Empath" = TRAIT_EMPATH,
+			"Keen Ears" = TRAIT_KEENEARS,
+			"Sleuth" = TRAIT_SLEUTH,
+			"Outdoorsman" = TRAIT_OUTDOORSMAN,
+			"Woodwalker" = TRAIT_WOODWALKER,
+			"Light Step" = TRAIT_LIGHT_STEP,
+			"Perfect Tracker" = TRAIT_PERFECT_TRACKER,
+			"Beautiful" = TRAIT_BEAUTIFUL,
+			"Good Lover" = TRAIT_GOODLOVER,
+			"Intellectual" = TRAIT_INTELLECTUAL,
+			"Sewing Expert" = TRAIT_SEWING_EXPERT,
+			"Dyes Master" = TRAIT_DYES,
+			"Survival Expert" = TRAIT_SURVIVAL_EXPERT
+		)
+
+		// Select four traits
+		for(var/i in 1 to 2)
+			var/trait_name = input(H, "Choose a trait [i]/2.", "Trait Selection") as anything in shaman_traits
+			if(trait_name)
+				ADD_TRAIT(H, shaman_traits[trait_name], TRAIT_GENERIC)
+				if(trait_name in shaman_traits)
+					shaman_traits -= trait_name
+
+	if(H.gender == FEMALE)
+		armor = /obj/item/clothing/suit/roguetown/shirt/robe
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/lowcut
+		pants = /obj/item/clothing/under/roguetown/skirt
+
+	if(H.age == AGE_OLD)
+		H.change_stat(STATKEY_SPD, -1)
+		H.change_stat(STATKEY_INT, 1)
+		H.change_stat(STATKEY_LCK, 1)
+		H.mind?.adjust_spellpoints(3)
+
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			H.cmode_music = 'sound/music/combat_heretic.ogg'
+			ADD_TRAIT(H, TRAIT_ZURCH, TRAIT_GENERIC)
+		if(/datum/patron/inhumen/matthios)
+			H.cmode_music = 'sound/music/combat_matthios.ogg'
+			ADD_TRAIT(H, TRAIT_ZURCH, TRAIT_GENERIC)
+		if(/datum/patron/inhumen/graggar)
+			H.cmode_music = 'sound/music/combat_graggar.ogg'
+			ADD_TRAIT(H, TRAIT_ZURCH, TRAIT_GENERIC)
+		if(/datum/patron/inhumen/baotha)
+			H.cmode_music = 'sound/music/combat_baotha.ogg'
+			ADD_TRAIT(H, TRAIT_ZURCH, TRAIT_GENERIC)
+
+	// Psycross loadout for Divine Communion shamans
+	if(classchoice == "Divine Communion")
+		switch(H.patron?.type)
+			if(/datum/patron/old_god)
+				neck = /obj/item/clothing/neck/roguetown/psicross
+			if(/datum/patron/divine/astrata)
+				neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+				H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
+			if(/datum/patron/divine/noc)
+				neck = /obj/item/clothing/neck/roguetown/psicross/noc
+			if(/datum/patron/divine/abyssor)
+				neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
+			if(/datum/patron/divine/dendor)
+				neck = /obj/item/clothing/neck/roguetown/psicross/dendor
+				H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg'
+			if(/datum/patron/divine/necra)
+				neck = /obj/item/clothing/neck/roguetown/psicross/necra
+				H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
+			if(/datum/patron/divine/pestra)
+				neck = /obj/item/clothing/neck/roguetown/psicross/pestra
+			if(/datum/patron/divine/ravox)
+				neck = /obj/item/clothing/neck/roguetown/psicross/ravox
+			if(/datum/patron/divine/malum)
+				neck = /obj/item/clothing/neck/roguetown/psicross/malum
+			if(/datum/patron/divine/eora)
+				neck = /obj/item/clothing/neck/roguetown/psicross/eora
+				H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
+			if(/datum/patron/divine/xylix)
+				neck = /obj/item/clothing/neck/roguetown/luckcharm
+				H.cmode_music = 'sound/music/combat_jester.ogg'

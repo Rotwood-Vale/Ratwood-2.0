@@ -13,15 +13,7 @@
 	if(!totem)
 		to_chat(user, span_warning("I need to hold my witch totem to channel this power!"))
 		return FALSE
-	
-	// Check totem compatibility with spell type
-	if(!miracle && (totem.totem_type == "divine"))
-		to_chat(user, span_warning("My divine totem cannot channel arcane energies!"))
-		return FALSE
-	
-	if(miracle && (totem.totem_type == "arcane"))
-		to_chat(user, span_warning("My arcane totem cannot channel divine miracles!"))
-		return FALSE
+
 	
 	// Calculate energy cost based on spell tier
 	var/energy_cost = 10 // Default T1
