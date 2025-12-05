@@ -33,18 +33,19 @@
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
+	beltl = /obj/item/storage/magebag/witch
 	pants = /obj/item/clothing/under/roguetown/trou
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-				/obj/item/reagent_containers/glass/mortar = 1,
-				/obj/item/pestle = 1,
-				/obj/item/candle/yellow = 2,
-				/obj/item/recipe_book/alchemy = 1,
-				/obj/item/recipe_book/survival = 1,
-				/obj/item/recipe_book/magic = 1,
-				/obj/item/chalk = 1
-			)
+						/obj/item/reagent_containers/glass/mortar = 1,
+						/obj/item/pestle = 1,
+						/obj/item/candle/yellow = 2,
+						/obj/item/recipe_book/alchemy = 1,
+						/obj/item/recipe_book/survival = 1,
+						/obj/item/recipe_book/magic = 1,
+						/obj/item/chalk = 1
+						)
 
 	var/classes = list("Old Magick", "Godsblood", "Mystagogue")
 	var/classchoice = input("How do your powers manifest?", "THE OLD WAYS") as anything in classes
@@ -58,7 +59,6 @@
 			ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.mind?.adjust_spellpoints(9) // twelve if you pick arcyne potential
-			beltl = /obj/item/storage/magebag/associate
 		if("Godsblood")
 			//miracle witch: capped at t2 miracles. cannot pray to regain devo, but has high innate regen because of it (2 instead of 1 from major)
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
@@ -75,7 +75,6 @@
 			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.mind?.adjust_spellpoints(6) // twelve if you pick arcyne potential
-			beltl = /obj/item/storage/magebag/associate
 			neck = /obj/item/clothing/neck/roguetown/psicross/wood
 
 	if(H.mind)
@@ -108,16 +107,16 @@
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
-			ADD_TRAIT(H, TRAIT_ZURCH, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
 		if(/datum/patron/inhumen/matthios)
 			H.cmode_music = 'sound/music/combat_matthios.ogg'
-			ADD_TRAIT(H, TRAIT_ZURCH, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
 		if(/datum/patron/inhumen/graggar)
 			H.cmode_music = 'sound/music/combat_graggar.ogg'
-			ADD_TRAIT(H, TRAIT_ZURCH, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
 		if(/datum/patron/inhumen/baotha)
 			H.cmode_music = 'sound/music/combat_baotha.ogg'
-			ADD_TRAIT(H, TRAIT_ZURCH, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/crow/witch
 	knockout_on_death = 15 SECONDS
