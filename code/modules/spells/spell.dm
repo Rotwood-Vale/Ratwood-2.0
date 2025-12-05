@@ -353,6 +353,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(action)
 		action.UpdateButtonIcon()
 	record_featured_stat(FEATURED_STATS_MAGES, user)
+	
+	// Witch totem check
+	if(!witch_totem_check(user))
+		return FALSE
+	
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
