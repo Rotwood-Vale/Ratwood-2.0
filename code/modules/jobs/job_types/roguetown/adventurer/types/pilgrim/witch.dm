@@ -65,7 +65,7 @@
 		"Ritualist",
 		"Potioneer",
 		"Shaman", "Shamaness",
-		"Crone"
+		"Crone", "Peasant", "Herbalist"
 	)
 	var/cosmetic_choice = input(H, "What title do you bear?", "The Old Ways") as anything in cosmetic_titles
 	if(cosmetic_choice)
@@ -104,6 +104,10 @@
 			D.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_4)
 			D.max_devotion *= 0.5
 			neck = /obj/item/clothing/neck/roguetown/psicross/wood
+
+
+			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			H.mind?.adjust_spellpoints(6)
 
 			// Give divine totem
 			var/obj/item/witch_totem/divine_totem = new /obj/item/witch_totem(get_turf(H))
@@ -195,9 +199,20 @@
 			"Maces" = /datum/skill/combat/maces
 		)
 
+		// Select one skill to EXPERT
+		var/expert_skill_name = input(H, "Choose one skill to EXPERT. [1/1]", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills
+		if(expert_skill_name)
+			H.adjust_skillrank_up_to(misc_skills[expert_skill_name] || labor_skills[expert_skill_name] || craft_skills[expert_skill_name], SKILL_LEVEL_EXPERT, TRUE)
+			if(expert_skill_name in misc_skills)
+				misc_skills -= expert_skill_name
+			if(expert_skill_name in labor_skills)
+				labor_skills -= expert_skill_name
+			if(expert_skill_name in craft_skills)
+				craft_skills -= expert_skill_name 
+
 		// Select one MISC/LABOR/CRAFT skill to JOURNEYMAN
-		for(var/i in 1 to 3)
-			var/journeyman_name = input(H, "Choose one skill to JOURNEYMAN. [3/3]", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills
+		for(var/i in 1 to 1)
+			var/journeyman_name = input(H, "Choose one skill to JOURNEYMAN. [1/1]", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills
 			if(journeyman_name)
 				H.adjust_skillrank_up_to(misc_skills[journeyman_name] || labor_skills[journeyman_name] || craft_skills[journeyman_name], SKILL_LEVEL_JOURNEYMAN, TRUE)
 				if(journeyman_name in misc_skills)
@@ -215,8 +230,8 @@
 				combat_skills -= journeyman_combat_name
 
 		// Select two skills to APPRENTICE
-		for(var/i in 1 to 2)
-			var/apprentice_name = input(H, "Choose a skill to APPRENTICE. [i]/2", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills + combat_skills
+		for(var/i in 1 to 3)
+			var/apprentice_name = input(H, "Choose a skill to APPRENTICE. [i]/3", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills + combat_skills
 			if(apprentice_name)
 				H.adjust_skillrank_up_to(misc_skills[apprentice_name] || labor_skills[apprentice_name] || craft_skills[apprentice_name] || combat_skills[apprentice_name], SKILL_LEVEL_APPRENTICE, TRUE)
 				if(apprentice_name in misc_skills)

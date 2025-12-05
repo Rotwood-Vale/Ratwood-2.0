@@ -81,6 +81,18 @@
 			desc = descchoice
 			choicedesc = TRUE
 
+/obj/item/witch_totem/attack_self(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(!bonded_witch)
+		bond_to_witch(H)
+	else if(bonded_witch == H)
+		to_chat(H, span_notice("This totem is already bonded to you."))
+	else
+		to_chat(H, span_warning("This totem is bonded to [bonded_witch.real_name]!"))
+
+
 /obj/item/witch_totem/proc/get_tier_name()
 	switch(totem_tier)
 		if(1) return "Wood"
