@@ -45,7 +45,7 @@
 	// Show charging method based on totem type
 	if(totem_type == TOTEM_TYPE_ARCANE)
 		. += span_notice("<b>Path of Old Magick:</b> This totem hungers for arcane power.")
-		. += span_info("Accepts: Manablooms (15), Mana Crystals (30), Obsidian (20), Alchemical ingredients (5)")
+		. += span_info("Accepts: Manablooms (15), Mana Crystals (5), Obsidian (5), Alchemical ingredients (5)")
 	else if(totem_type == TOTEM_TYPE_DIVINE)
 		. += span_notice("<b>Path of Godsblood:</b> This totem thirsts for divine offerings.")
 		if(ishuman(user))
@@ -345,9 +345,9 @@
 		if(istype(I, /obj/item/reagent_containers/food/snacks/grown/manabloom))
 			return 15
 		if(istype(I, /obj/item/magic/manacrystal))
-			return 30
+			return 5
 		if(istype(I, /obj/item/magic/obsidian))
-			return 20
+			return 5
 		// Alchemical ingredients provide smaller amounts
 		if(istype(I, /obj/item/alch))
 			return 5
