@@ -727,7 +727,7 @@
 		"Spirit-Walker",
 		"Totem-Bearer",
 		"Mystic",
-		"Medicine Man", "Medicine Woman",
+		"Herbalist",
 		"Wise One",
 		"Seer",
 		"Oracle",
