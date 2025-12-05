@@ -1,7 +1,7 @@
 /datum/advclass/witch
 	name = "Witch"
 	tutorial = "You are a witch, seen as wisefolk to some and a demon to many. Ostracized and sequestered for wrongthinks or outright heresy, your potions are what the commonfolk turn to when all else fails, and for this they tolerate you — at an arm's length. Take care not to end 'pon a pyre, for the church condemns your left handed arts. \
-	\nYour power flows through your TOTEM - a sacred focus bonded to your soul that you MUST hold to cast spells or miracles. You can only ever bond with ONE totem. Feed it with offerings to maintain your power: alchemical reagents for arcane magic, sacred items for divine miracles. Upgrade your totem with ores (stone, copper, tin, iron, silver, gold) to increase its capacity. \
+	\nYour power flows through your TOTEM - a sacred focus bonded to your soul that you MUST hold to cast spells or miracles. You can only ever bond with ONE totem. Feed it with offerings to maintain your power: alchemical reagents for arcane magic, sacred items for divine miracles. Upgrade your totem with materials (magical stone, copper bar, tin bar, iron bar, silver bar, gold bar) to increase its capacity. \
 	\nYou can customize your totem's name and description, and recall it to your hand at any time with your Recall Totem spell."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
@@ -84,24 +84,20 @@
 			// the original witch: arcyne 3 (buffed from t2) with arcane totem
 			ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
-			H.mind?.adjust_spellpoints(16) // less than sorcerer, but still more points than the origianl version
-
+			H.mind?.adjust_spellpoints(14)
 			// Give arcane totem
 			var/obj/item/witch_totem/arcane_totem = new /obj/item/witch_totem(get_turf(H))
 			arcane_totem.totem_type = "arcane"
 			arcane_totem.current_energy = arcane_totem.max_energy // Start fully charged
 			arcane_totem.bond_to_witch(H)
 			H.put_in_hands(arcane_totem, forced = TRUE)
-			// Give totem recall spell
 
-			if(H.mind)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/recall_totem)
 		if("Godsblood")
 
 			//miracle witch: capped at t4 miracles. cannot pray to regain devo, but has high innate regen because of it. And aswell need to use totems and crosses to cast at all.
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
-			H.adjust_skillrank(/datum/skill/magic/holy, 3, TRUE)
-			D.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_4)
+			H.adjust_skillrank(/datum/skill/magic/holy, 2, TRUE)
+			D.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_3)
 			D.max_devotion *= 0.5
 			neck = /obj/item/clothing/neck/roguetown/psicross/wood
 
@@ -115,21 +111,18 @@
 			divine_totem.current_energy = divine_totem.max_energy // Start fully charged
 			divine_totem.bond_to_witch(H)
 			H.put_in_hands(divine_totem, forced = TRUE)
-			// Give totem recall spell
-			if(H.mind)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/recall_totem)
 
 		if("Mystagogue")
 			// hybrid arcane/holy witch with t2 arcane and t2 miracles, but less spellpoints, lower max devotion and less regen (0.5). Still can't pray.
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
-			H.adjust_skillrank(/datum/skill/magic/holy, 2, TRUE)
+			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 			D.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
 			D.max_devotion *= 0.5
 
 
 			ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
-			H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
-			H.mind?.adjust_spellpoints(12)
+			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			H.mind?.adjust_spellpoints(8)
 			neck = /obj/item/clothing/neck/roguetown/psicross/wood
 
 			// Give hybrid totem
@@ -138,9 +131,6 @@
 			hybrid_totem.current_energy = hybrid_totem.max_energy // Start fully charged
 			hybrid_totem.bond_to_witch(H)
 			H.put_in_hands(hybrid_totem, forced = TRUE)
-			// Give totem recall spell
-			if(H.mind)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/recall_totem)
 
 	if(H.mind)
 		switch (shapeshiftchoice)

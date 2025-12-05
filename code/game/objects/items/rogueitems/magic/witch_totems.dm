@@ -28,8 +28,8 @@
 	var/choicename = FALSE
 	var/choicedesc = FALSE
 	
-	// Upgrade paths - which ore can upgrade this totem
-	var/upgrade_ore = /obj/item/natural/stone
+	// Upgrade paths - which material can upgrade this totem
+	var/upgrade_material = null // Base wooden totem requires magical stone (checked differently)
 	var/next_tier_path = /obj/item/witch_totem/stone
 
 /obj/item/witch_totem/examine(mob/user)
@@ -59,9 +59,12 @@
 			if(H.patron)
 				. += get_patron_lore(H.patron)
 	
-	if(upgrade_ore)
-		var/obj/item/upgrade_item = upgrade_ore
-		. += span_warning("Can be upgraded with [initial(upgrade_item.name)].")
+	if(next_tier_path)
+		if(totem_tier == 1)
+			. += span_warning("Can be upgraded with a magical stone (a stone imbued with magic power).")
+		else if(upgrade_material)
+			var/obj/item/upgrade_item = upgrade_material
+			. += span_warning("Can be upgraded with [initial(upgrade_item.name)].")
 
 /obj/item/witch_totem/attack_right(mob/user)
 	if(!bonded_witch || bonded_witch != user)
@@ -193,9 +196,22 @@
 // Charging system - interact with items to charge the totem
 /obj/item/witch_totem/attackby(obj/item/I, mob/user, params)
 	// Check for upgrade first
-	if(upgrade_ore && istype(I, upgrade_ore))
-		if(try_upgrade(I, user))
-			return
+	if(next_tier_path)
+		// Wooden totem upgrades with magical stones
+		if(totem_tier == 1 && istype(I, /obj/item/natural/stone))
+			var/obj/item/natural/stone/S = I
+			if(S.magic_power > 0)
+				if(try_upgrade(I, user))
+					return
+				else
+					return
+			else
+				to_chat(user, span_warning("This stone lacks magical power. I need a magical stone to upgrade [src]!"))
+				return
+		// Other tiers upgrade with bars
+		else if(upgrade_material && istype(I, upgrade_material))
+			if(try_upgrade(I, user))
+				return
 	
 	// Then check for charging
 	if(try_charge_from_item(I, user))
@@ -442,7 +458,7 @@
 	color = "#808080" // Grey stone
 	totem_tier = 2
 	max_energy = 150
-	upgrade_ore = /obj/item/rogueore/copper
+	upgrade_material = /obj/item/ingot/copper
 	next_tier_path = /obj/item/witch_totem/copper
 
 /obj/item/witch_totem/copper
@@ -452,7 +468,7 @@
 	color = "#B87333" // Copper
 	totem_tier = 3
 	max_energy = 200
-	upgrade_ore = /obj/item/rogueore/tin
+	upgrade_material = /obj/item/ingot/tin
 	next_tier_path = /obj/item/witch_totem/tin
 
 /obj/item/witch_totem/tin
@@ -462,7 +478,7 @@
 	color = "#A8A8A8" // Light grey tin
 	totem_tier = 4
 	max_energy = 250
-	upgrade_ore = /obj/item/rogueore/iron
+	upgrade_material = /obj/item/ingot/iron
 	next_tier_path = /obj/item/witch_totem/iron
 
 /obj/item/witch_totem/iron
@@ -472,7 +488,7 @@
 	color = "#4A4A4A" // Dark grey iron
 	totem_tier = 5
 	max_energy = 300
-	upgrade_ore = /obj/item/rogueore/silver
+	upgrade_material = /obj/item/ingot/silver
 	next_tier_path = /obj/item/witch_totem/silver
 
 /obj/item/witch_totem/silver
@@ -482,7 +498,7 @@
 	color = "#C0C0C0" // Silver
 	totem_tier = 6
 	max_energy = 400
-	upgrade_ore = /obj/item/rogueore/gold
+	upgrade_material = /obj/item/ingot/gold
 	next_tier_path = /obj/item/witch_totem/gold
 
 /obj/item/witch_totem/gold
@@ -492,7 +508,7 @@
 	color = "#FFD700" // Gold
 	totem_tier = 7
 	max_energy = 500
-	upgrade_ore = null
+	upgrade_material = null
 	next_tier_path = null
 
 // ============== TOTEM RECALL SPELL ==============
