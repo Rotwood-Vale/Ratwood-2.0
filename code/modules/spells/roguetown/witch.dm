@@ -7,15 +7,15 @@
 	
 	var/mob/living/carbon/human/H = user
 	
-	// Check if they have a totem in either hand
-	var/obj/item/witch_totem/totem = locate(/obj/item/witch_totem) in list(H.get_active_held_item(), H.get_inactive_held_item())
+	// Check if they have a totem equipped anywhere
+	var/obj/item/witch_totem/totem = locate(/obj/item/witch_totem) in H.get_equipped_items()
 	
 	if(!totem)
-		to_chat(user, span_warning("I need to hold my witch totem to channel this power!"))
+		to_chat(user, span_warning("I need to have my witch totem equipped to channel this power!"))
 		return FALSE
 
 	
-	// Calculate energy cost based on spell tier
+	// Calculate base energy cost based on spell tier
 	var/energy_cost = 10 // Default T1
 	
 	if(miracle)
@@ -37,6 +37,11 @@
 		else
 			energy_cost = 10
 	
+	// Apply 50% discount if totem is held in hands
+	var/held_totem = (H.get_active_held_item() == totem || H.get_inactive_held_item() == totem)
+	if(held_totem)
+		energy_cost = round(energy_cost * 0.5)
+	
 	// Check if totem has enough energy
 	if(totem.current_energy < energy_cost)
 		to_chat(user, span_warning("My totem lacks the energy to cast this! ([totem.current_energy]/[energy_cost] needed)"))
@@ -51,10 +56,10 @@
 	// Consume totem energy for witches
 	if(ishuman(user) && HAS_TRAIT(user, TRAIT_WITCH))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/witch_totem/totem = locate(/obj/item/witch_totem) in list(H.get_active_held_item(), H.get_inactive_held_item())
+		var/obj/item/witch_totem/totem = locate(/obj/item/witch_totem) in H.get_equipped_items()
 		
 		if(totem)
-			// Calculate energy cost based on spell tier
+			// Calculate base energy cost based on spell tier
 			var/energy_cost = 10 // Default T1
 			
 			if(miracle)
@@ -75,6 +80,12 @@
 					energy_cost = 25
 				else
 					energy_cost = 10
+			
+			// Apply 50% discount if totem is held in hands
+			var/held_totem = (H.get_active_held_item() == totem || H.get_inactive_held_item() == totem)
+			if(held_totem)
+				energy_cost = round(energy_cost * 0.5)
+				to_chat(user, span_green("Holding my totem reduces the energy cost!"))
 			
 			if(totem.consume_energy(energy_cost))
 				to_chat(user, span_purple("My totem's energy: [totem.current_energy]/[totem.max_energy]"))

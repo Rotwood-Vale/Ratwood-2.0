@@ -811,11 +811,13 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize)
 
-	// SKILL SELECTION
 	if(H.mind)
+		// Skill selection with readable names
 		var/misc_skills = list(
 			"Stealing" = /datum/skill/misc/stealing,
 			"Music" = /datum/skill/misc/music,
+			"Reading" = /datum/skill/misc/reading,
+			"Medicine" = /datum/skill/misc/medicine,
 			"Tracking" = /datum/skill/misc/tracking,
 			"Lockpicking" = /datum/skill/misc/lockpicking,
 			"Sneaking" = /datum/skill/misc/sneaking,
@@ -829,11 +831,19 @@
 			"Mining" = /datum/skill/labor/mining
 		)
 		var/craft_skills = list(
+			"Sewing" = /datum/skill/craft/sewing,
 			"Ceramics" = /datum/skill/craft/ceramics,
+			"Carpentry" = /datum/skill/craft/carpentry,
 			"Masonry" = /datum/skill/craft/masonry,
 			"Engineering" = /datum/skill/craft/engineering,
 			"Traps" = /datum/skill/craft/traps,
+			"Alchemy" = /datum/skill/craft/alchemy,
 			"Tanning" = /datum/skill/craft/tanning,
+			"Cooking" = /datum/skill/craft/cooking,
+			"Weaponsmithing" = /datum/skill/craft/weaponsmithing,
+			"Armorsmithing" = /datum/skill/craft/armorsmithing,
+			"Blacksmithing" = /datum/skill/craft/blacksmithing,
+			"Smelting" = /datum/skill/craft/smelting
 		)
 		var/combat_skills = list(
 			"Axes" = /datum/skill/combat/axes,
@@ -862,9 +872,16 @@
 			if(expert_skill_name in craft_skills)
 				craft_skills -= expert_skill_name 
 
-		// Select one MISC/LABOR/CRAFT skill to JOURNEYMAN
-		for(var/i in 1 to 1)
-			var/journeyman_name = input(H, "Choose one skill to JOURNEYMAN. [1/1]", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills
+		// Select one COMBAT skill to JOURNEYMAN
+		var/journeyman_combat_name = input(H, "Choose a COMBAT skill to JOURNEYMAN. [1/1]", "Skill Selection") as anything in combat_skills
+		if(journeyman_combat_name)
+			H.adjust_skillrank_up_to(combat_skills[journeyman_combat_name], SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if(journeyman_combat_name in combat_skills)
+				combat_skills -= journeyman_combat_name
+
+		// Select two MISC/LABOR/CRAFT skills to JOURNEYMAN
+		for(var/i in 1 to 2)
+			var/journeyman_name = input(H, "Choose a MISC/LABOR/CRAFT skill to JOURNEYMAN. [i]/2", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills
 			if(journeyman_name)
 				H.adjust_skillrank_up_to(misc_skills[journeyman_name] || labor_skills[journeyman_name] || craft_skills[journeyman_name], SKILL_LEVEL_JOURNEYMAN, TRUE)
 				if(journeyman_name in misc_skills)
@@ -874,16 +891,9 @@
 				if(journeyman_name in craft_skills)
 					craft_skills -= journeyman_name
 
-		// Select one COMBAT skill to JOURNEYMAN
-		var/journeyman_combat_name = input(H, "Choose a COMBAT skill to JOURNEYMAN. [1/1]", "Skill Selection") as anything in combat_skills
-		if(journeyman_combat_name)
-			H.adjust_skillrank_up_to(combat_skills[journeyman_combat_name], SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if(journeyman_combat_name in combat_skills)
-				combat_skills -= journeyman_combat_name
-
 		// Select three skills to APPRENTICE
-		for(var/i in 1 to 2)
-			var/apprentice_name = input(H, "Choose a skill to APPRENTICE. [i]/2", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills + combat_skills
+		for(var/i in 1 to 3)
+			var/apprentice_name = input(H, "Choose a skill to APPRENTICE. [i]/3", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills + combat_skills
 			if(apprentice_name)
 				H.adjust_skillrank_up_to(misc_skills[apprentice_name] || labor_skills[apprentice_name] || craft_skills[apprentice_name] || combat_skills[apprentice_name], SKILL_LEVEL_APPRENTICE, TRUE)
 				if(apprentice_name in misc_skills)
@@ -895,9 +905,9 @@
 				if(apprentice_name in combat_skills)
 					combat_skills -= apprentice_name
 
-		// Select two skills to NOVICE
-		for(var/i in 1 to 2)
-			var/novice_name = input(H, "Choose a skill to NOVICE. [i]/2", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills + combat_skills
+		// Select four skills to NOVICE
+		for(var/i in 1 to 4)
+			var/novice_name = input(H, "Choose a skill to NOVICE. [i]/4", "Skill Selection") as anything in misc_skills + labor_skills + craft_skills + combat_skills
 			if(novice_name)
 				H.adjust_skillrank_up_to(misc_skills[novice_name] || labor_skills[novice_name] || craft_skills[novice_name] || combat_skills[novice_name], SKILL_LEVEL_NOVICE, TRUE)
 				if(novice_name in misc_skills)
@@ -909,32 +919,45 @@
 				if(novice_name in combat_skills)
 					combat_skills -= novice_name
 
-	// TRAIT SELECTION
-	if(H.mind)
-		var/shaman_traits = list(
-			"Seedknow" = TRAIT_SEEDKNOW,
-			"Empath" = TRAIT_EMPATH,
-			"Keen Ears" = TRAIT_KEENEARS,
-			"Sleuth" = TRAIT_SLEUTH,
+		// TRAIT SELECTION
+		// Skill-unlocking traits
+		var/skill_unlock_traits = list(
+			"Homestead Expert" = TRAIT_HOMESTEAD_EXPERT,
+			"Survival Expert" = TRAIT_SURVIVAL_EXPERT,
+			"Sewing Expert" = TRAIT_SEWING_EXPERT
+			"Medical Expert" = TRAIT_MEDICINE_EXPERT,
+		)
+		
+		// Non-skill-locking traits
+		var/regular_traits = list( //Actual survival suff
 			"Outdoorsman" = TRAIT_OUTDOORSMAN,
 			"Woodwalker" = TRAIT_WOODWALKER,
+			"Sleuth" = TRAIT_SLEUTH,
+			"Native Of the Land" = TRAIT_AZURENATIVE,
 			"Light Step" = TRAIT_LIGHT_STEP,
 			"Perfect Tracker" = TRAIT_PERFECT_TRACKER,
-			"Beautiful" = TRAIT_BEAUTIFUL,
-			"Good Lover" = TRAIT_GOODLOVER,
+			"Woodsman" = TRAIT_WOODSMAN,
+			"Seed Knowledge" = TRAIT_SEEDKNOW,
 			"Intellectual" = TRAIT_INTELLECTUAL,
-			"Sewing Expert" = TRAIT_SEWING_EXPERT,
-			"Dyes Master" = TRAIT_DYES,
-			"Survival Expert" = TRAIT_SURVIVAL_EXPERT
+			"See Prices (Shitty)" = TRAIT_SEEPRICES_SHITTY,
+			"Keen Ears" = TRAIT_KEENEARS
 		)
 
-		// Select four traits
+		// Select two skill-unlocking traits
 		for(var/i in 1 to 2)
-			var/trait_name = input(H, "Choose a trait [i]/2.", "Trait Selection") as anything in shaman_traits
-			if(trait_name)
-				ADD_TRAIT(H, shaman_traits[trait_name], TRAIT_GENERIC)
-				if(trait_name in shaman_traits)
-					shaman_traits -= trait_name
+			var/skill_trait_name = input(H, "Choose a skill-unlocking trait [i]/2.", "Trait Selection") as anything in skill_unlock_traits
+			if(skill_trait_name)
+				ADD_TRAIT(H, skill_unlock_traits[skill_trait_name], TRAIT_GENERIC)
+				if(skill_trait_name in skill_unlock_traits)
+					skill_unlock_traits -= skill_trait_name
+
+		// Select four regular traits
+		for(var/i in 1 to 4)
+			var/regular_trait_name = input(H, "Choose a trait [i]/4.", "Trait Selection") as anything in regular_traits
+			if(regular_trait_name)
+				ADD_TRAIT(H, regular_traits[regular_trait_name], TRAIT_GENERIC)
+				if(regular_trait_name in regular_traits)
+					regular_traits -= regular_trait_name
 
 	if(H.gender == FEMALE)
 		armor = /obj/item/clothing/suit/roguetown/shirt/robe
