@@ -924,7 +924,7 @@
 		var/skill_unlock_traits = list(
 			"Homestead Expert" = TRAIT_HOMESTEAD_EXPERT,
 			"Survival Expert" = TRAIT_SURVIVAL_EXPERT,
-			"Sewing Expert" = TRAIT_SEWING_EXPERT
+			"Sewing Expert" = TRAIT_SEWING_EXPERT,
 			"Medical Expert" = TRAIT_MEDICINE_EXPERT,
 		)
 		
