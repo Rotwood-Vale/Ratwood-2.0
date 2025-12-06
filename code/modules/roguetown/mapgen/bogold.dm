@@ -8,12 +8,12 @@
 
 
 /datum/mapGenerator/bogold
-	modules = list(/datum/mapGeneratorModule/ambushing,/datum/mapGeneratorModule/bogoldgrassturf,/datum/mapGeneratorModule/bogold,/datum/mapGeneratorModule/bogoldroad,/datum/mapGeneratorModule/bogoldgrass)
+	modules = list(/datum/mapGeneratorModule/bogoldgrassturf,/datum/mapGeneratorModule/bogold,/datum/mapGeneratorModule/bogoldroad,/datum/mapGeneratorModule/bogoldgrass)
 
 
 /datum/mapGeneratorModule/bogold
 	clusterCheckFlags = CLUSTER_CHECK_DIFFERENT_ATOMS
-	allowed_turfs = list(/turf/open/floor/rogue/dirt/npoor)
+	allowed_turfs = list(/turf/open/floor/rogue/dirt)
 	excluded_turfs = list(/turf/open/floor/rogue/dirt/road)
 	spawnableAtoms = list(/obj/structure/flora/newtree = 30,
 							/obj/structure/flora/roguegrass/bush = 25,
@@ -22,17 +22,16 @@
 							/obj/structure/flora/roguegrass/pyroclasticflowers = 5,
 							/obj/item/natural/stone = 23,
 							/obj/item/natural/rock = 6,
-							/obj/item/natural/artifact = 4,
+							/obj/item/magic/artifact = 4,
 							/obj/structure/leyline = 1,
 							/obj/structure/voidstoneobelisk = 1,
 							/obj/structure/manaflower = 4,
-							/obj/item/natural/manacrystal = 1,
+							/obj/item/magic/manacrystal = 1,
 							/obj/item/grown/log/tree/stick = 16,
-							/obj/structure/table/roguetree/stump/log = 3,
-							/obj/structure/table/roguetree/stump = 4,
-							/obj/effect/mob_spawner =5,
+							/obj/structure/flora/roguetree/stump/log = 3,
+							/obj/structure/flora/roguetree/stump = 4,
 							/obj/structure/closet/dirthole/closed/loot=3,
-							/obj/structure/wild_swampweed = 5,
+							/obj/structure/flora/roguegrass/swampweed = 5,
 							/obj/structure/flora/roguegrass/maneater/real=3,
 							/obj/structure/flora/roguegrass/herb/random = 10,)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=2,
@@ -79,6 +78,4 @@
 							/obj/item/natural/stone = 6,
 							/obj/item/natural/rock = 1,
 							/obj/item/grown/log/tree/stick = 3,
-							/obj/structure/table/roguetree/stump/log = 3,
-							/obj/effect/spawner/roguemap/flowerspawn = 30,
-							/datum/spacevine_controller = 1)
+							/obj/structure/flora/roguetree/stump/log = 3,)
