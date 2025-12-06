@@ -36,6 +36,17 @@
 /obj/item/witch_totem/examine(mob/user)
 	. = ..()
 	. += span_notice("Energy: [current_energy]/[max_energy]")
+	// If held by a human, show their peril stack subtly for quick reference
+	var/mob/living/carbon/human/H
+	if(istype(loc, /mob/living/carbon/human))
+		H = loc
+	else if(istype(loc, /obj/item/storage))
+		var/obj/item/storage/S = loc
+		if(istype(S.loc, /mob/living/carbon/human))
+			H = S.loc
+	if(H && isnum(H.vars["witch_peril_stack"]))
+		var/peril = clamp(H.vars["witch_peril_stack"], 0, 10)
+		. += span_purple("Peril: [peril]/10")
 	if(quality_bonus > 0)
 		. += span_green("Quality Bonus: +[quality_bonus] max energy")
 	. += span_info("Totem Tier: [get_tier_name()]")
@@ -43,24 +54,12 @@
 		. += span_purple("This totem is bonded to [bonded_witch.real_name].")
 	
 	// Show charging method based on totem type
-	if(totem_type == TOTEM_TYPE_ARCANE)
-		. += span_notice("<b>Path of Old Magick:</b> This totem hungers for arcane power.")
-		. += span_info("Accepts: Manablooms (15), Mana Crystals (5), Obsidian (5), Alchemical ingredients (5)")
-	else if(totem_type == TOTEM_TYPE_DIVINE)
-		. += span_notice("<b>Path of Godsblood:</b> This totem thirsts for divine offerings.")
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.patron)
-				. += get_patron_lore(H.patron)
-		else
-			. += span_info("Accepts: Psicross (20) and patron-specific offerings")
-	else if(totem_type == TOTEM_TYPE_HYBRID)
-		. += span_notice("<b>Path of the Mystagogue:</b> This totem accepts both arcane and divine power.")
-		. += span_info("Accepts: Arcane reagents and sacred offerings")
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.patron)
-				. += get_patron_lore(H.patron)
+	// Unified offering guidance: 3 common + 2 patron specifics
+	. += span_notice("<b>Offerings:</b> Common — Bread, Herbs, Psicross. Patron — see below.")
+	if(ishuman(user))
+		var/mob/living/carbon/human/U = user
+		if(U.patron)
+			. += get_patron_lore(U.patron)
 	
 	if(next_tier_path)
 		if(totem_tier == 1)
@@ -95,8 +94,37 @@
 		bond_to_witch(H)
 	else if(bonded_witch == H)
 		to_chat(H, span_notice("This totem is already bonded to you."))
+		// Allow shamans to commune, draining blood to convert into energy
+		if(HAS_TRAIT(H, TRAIT_SHAMAN))
+			commune_blood(H)
 	else
 		to_chat(H, span_warning("This totem is bonded to [bonded_witch.real_name]!"))
+/obj/item/witch_totem/var/last_commune_time = 0
+
+/obj/item/witch_totem/proc/commune_blood(mob/living/carbon/human/H)
+	if(world.time - last_commune_time < (20 SECONDS))
+		to_chat(H, span_warning("I must catch my breath before another communion."))
+		return FALSE
+	if(current_energy >= max_energy)
+		to_chat(H, span_warning("[src] is already brimming with power."))
+		return FALSE
+
+	H.visible_message(span_purple("[H] presses [src] to [H.p_their()] skin, whispering an old prayer..."), \
+		span_purple("I offer my blood to the spirits — let it be made power."))
+	if(!do_after(H, 3 SECONDS, target = src))
+		return FALSE
+
+	// Convert a bit of blood into energy; scale by tier safely
+	var/gain = 20 + (totem_tier * 5)
+	var/added = add_energy(gain)
+	// Light blood drain: a nick and dizziness
+	H.adjustBruteLoss(2)
+	H.adjustToxLoss(1)
+	H.Dizzy(2)
+	to_chat(H, span_green("The totem drinks. Energy +[added] ([current_energy]/[max_energy])."))
+	playsound(get_turf(src), 'sound/magic/churn.ogg', 30, TRUE)
+	last_commune_time = world.time
+	return TRUE
 
 
 /obj/item/witch_totem/proc/get_tier_name()
@@ -150,8 +178,8 @@
 	if(bonded_witch)
 		to_chat(witch, span_warning("This totem is already bonded to [bonded_witch.real_name]!"))
 		return FALSE
-	if(!HAS_TRAIT(witch, TRAIT_WITCH))
-		to_chat(witch, span_warning("Only witches can bond with totems!"))
+	if(!HAS_TRAIT(witch, TRAIT_SHAMAN))
+		to_chat(witch, span_warning("Only shamans may bond with totems!"))
 		return FALSE
 	// Check if witch already has a bonded totem
 	for(var/obj/item/witch_totem/T in world)
@@ -340,6 +368,18 @@
 	
 	var/mob/living/carbon/human/H = user
 	
+	// Common offerings (accepted by all types): bread, herbs, psicross
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/bread) || istype(I, /obj/item/reagent_containers/food/snacks/rogue/breadslice))
+		return 10
+	if(istype(I, /obj/item/alch))
+		// Herb rarity scaling: base 8, rare 15
+		var/charge = 8
+		if(istype(I, /obj/item/alch/atropa) || istype(I, /obj/item/alch/artemisia) || istype(I, /obj/item/alch/rosa))
+			charge = 15
+		return charge
+	if(istype(I, /obj/item/clothing/neck/roguetown/psicross))
+		return 20
+
 	// Old Magick (Arcane) - charges from alchemical and magical items
 	if(totem_type == TOTEM_TYPE_ARCANE || totem_type == TOTEM_TYPE_HYBRID)
 		if(istype(I, /obj/item/reagent_containers/food/snacks/grown/manabloom))
@@ -364,147 +404,117 @@
 	if(!P)
 		return 0
 	
-	// All divine patrons accept psicross as a universal offering
-	if(istype(I, /obj/item/clothing/neck/roguetown/psicross))
-		return 20
+	// Universal divine offerings handled in common list above
 	
 	switch(P.type)
 		// Astrata - sun, day, light, order
 		if(/datum/patron/divine/astrata)
+			// Two specifics: torches and candles
 			if(istype(I, /obj/item/flashlight/flare/torch))
 				return 25
 			if(istype(I, /obj/item/candle))
 				return 15
-			if(istype(I, /obj/item/ingot/gold))
-				return 30
 		
 		// Dendor - nature, plants, animals
 		if(/datum/patron/divine/dendor)
-			if(istype(I, /obj/item/reagent_containers/food/snacks/grown))
-				return 20
+			// Two specifics: seeds and fibers
 			if(istype(I, /obj/item/seeds))
 				return 25
 			if(istype(I, /obj/item/natural/fibers))
 				return 15
-			if(istype(I, /obj/item/natural/bone))
-				return 10
 		
 		// Necra - death, rebirth, the underworld
 		if(/datum/patron/divine/necra)
+			// Two specifics: skulls and candles
 			if(istype(I, /obj/item/skull))
 				return 30
-			if(istype(I, /obj/item/natural/bone))
-				return 20
-			if(istype(I, /obj/item/ash))
-				return 15
 			if(istype(I, /obj/item/candle))
 				return 10
 		
 		// Noc - night, moon, knowledge, secrets
 		if(/datum/patron/divine/noc)
+			// Two specifics: books and silver
 			if(istype(I, /obj/item/book))
 				return 30
-			if(istype(I, /obj/item/paper))
-				return 15
 			if(istype(I, /obj/item/ingot/silver))
 				return 25
-			if(istype(I, /obj/item/reagent_containers/food/snacks/grown/rogue/swampweed))
-				return 20
 		
 		// Pestra - medicine, disease, decay
 		if(/datum/patron/divine/pestra)
+			// Two specifics: rotten meat and viscera
 			if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat_rotten))
 				return 25
 			if(istype(I, /obj/item/alch/viscera))
 				return 20
-			if(istype(I, /obj/item/natural/worms))
-				return 15
 		
 		// Xylix - trickery, freedom, fate
 		if(/datum/patron/divine/xylix)
+			// Two specifics: dice and tarot deck
 			if(istype(I, /obj/item/dice))
 				return 30
 			if(istype(I, /obj/item/toy/cards/deck/tarot))
 				return 35
-			if(istype(I, /obj/item/toy/cards))
-				return 25
-			if(istype(I, /obj/item/reagent_containers/glass/bottle))
-				var/obj/item/reagent_containers/glass/bottle/B = I
-				if(B.reagents && B.reagents.total_volume > 0)
-					return 15
 		
 		// Malum - fire, destruction, smithing, ingenuity
 		if(/datum/patron/divine/malum)
+			// Two specifics: ingots and torches
 			if(istype(I, /obj/item/ingot))
 				return 25
-			if(istype(I, /obj/item/rogueweapon))
-				return 30
-			if(istype(I, /obj/item/natural/stone))
-				return 20
 			if(istype(I, /obj/item/flashlight/flare/torch))
 				return 15
 		
 		// Ravox - justice, battle, glory
 		if(/datum/patron/divine/ravox)
+			// Two specifics: swords and armor
 			if(istype(I, /obj/item/rogueweapon/sword))
 				return 30
 			if(istype(I, /obj/item/clothing/suit/roguetown/armor))
 				return 25
-			if(istype(I, /obj/item/bodypart/l_arm) || istype(I, /obj/item/bodypart/r_arm))
-				return 20
 		
 		// Eora - love, family, beauty
 		if(/datum/patron/divine/eora)
-			if(istype(I, /obj/item/reagent_containers/food/snacks/grown/berries/rogue))
-				return 25
+			// Two specifics: rings and berries
 			if(istype(I, /obj/item/clothing/ring))
 				return 30
-			if(istype(I, /obj/item/natural/silk))
-				return 20
-			if(istype(I, /obj/item/reagent_containers/food/snacks/grown/apple))
-				return 15
+			if(istype(I, /obj/item/reagent_containers/food/snacks/grown/berries/rogue))
+				return 25
 		
 		// Abyssor - seas, purity, dreams
 		if(/datum/patron/divine/abyssor)
+			// Two specifics: fish and water
 			if(istype(I, /obj/item/reagent_containers/food/snacks/fish))
 				return 25
 			if(istype(I, /obj/item/reagent_containers/glass/bottle))
 				var/obj/item/reagent_containers/glass/bottle/B = I
 				if(B.reagents && B.reagents.has_reagent(/datum/reagent/water))
 					return 30
-			if(istype(I, /obj/item/natural/cloth))
-				return 15
 		
 		// Inhumen deities
 		if(/datum/patron/inhumen/zizo)
-			if(istype(I, /obj/item/natural/bone))
-				return 25
+			// Two specifics: skulls and bones
 			if(istype(I, /obj/item/skull))
 				return 30
-			if(istype(I, /obj/item/bodypart))
-				return 35
+			if(istype(I, /obj/item/natural/bone))
+				return 25
 		
 		if(/datum/patron/inhumen/graggar)
+			// Two specifics: bodyparts and meat
 			if(istype(I, /obj/item/bodypart))
 				return 30
 			if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat))
 				return 25
-			if(istype(I, /obj/item/rogueweapon))
-				return 20
 		
 		if(/datum/patron/inhumen/matthios)
-			if(istype(I, /obj/item/roguecoin/gold))
-				return 30
+			// Two specifics: gold ingots and gold coins
 			if(istype(I, /obj/item/ingot/gold))
 				return 40
 			if(istype(I, /obj/item/roguecoin))
-				return 15
+				return 30
 		
 		if(/datum/patron/inhumen/baotha)
+			// Two specifics: pipeweed and drug bottles
 			if(istype(I, /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed))
 				return 25
-			if(istype(I, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius))
-				return 20
 			if(istype(I, /obj/item/reagent_containers/glass/bottle))
 				var/obj/item/reagent_containers/glass/bottle/B = I
 				if(B.reagents && B.reagents.has_reagent(/datum/reagent/drug))
@@ -597,8 +607,8 @@
 	
 	var/mob/living/carbon/human/H = user
 	
-	if(!HAS_TRAIT(H, TRAIT_WITCH))
-		to_chat(user, span_warning("Only witches can recall their totems!"))
+	if(!HAS_TRAIT(H, TRAIT_SHAMAN))
+		to_chat(user, span_warning("Only shamans can recall their totems!"))
 		return FALSE
 	
 	// Find the witch's bonded totem
