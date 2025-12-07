@@ -8,35 +8,55 @@
 
 
 /datum/mapGenerator/bogold
-	modules = list(/datum/mapGeneratorModule/bogoldgrassturf,/datum/mapGeneratorModule/bogold,/datum/mapGeneratorModule/bogoldroad,/datum/mapGeneratorModule/bogoldgrass)
+	modules = list(/datum/mapGeneratorModule/bogoldgrassturf,/datum/mapGeneratorModule/bogold,/datum/mapGeneratorModule/bogold2,/datum/mapGeneratorModule/bogoldroad)
 
 
 /datum/mapGeneratorModule/bogold
-	clusterCheckFlags = CLUSTER_CHECK_ALL_ATOMS
-	allowed_turfs = list(/turf/open/floor/rogue/dirt)
+	clusterCheckFlags = CLUSTER_CHECK_ALL
+	allowed_turfs = list(/turf/open/floor/rogue/dirt, /turf/open/floor/rogue/grass)
 	excluded_turfs = list(/turf/open/floor/rogue/dirt/road)
-	spawnableAtoms = list(/obj/structure/flora/newtree = 20,
-							/obj/structure/flora/roguegrass/bush = 15,
-							/obj/structure/flora/roguegrass = 20,
-							/obj/structure/flora/roguegrass/maneater = 10,
-							/obj/structure/flora/roguegrass/pyroclasticflowers = 4,
-							/obj/item/natural/stone = 5,
+	spawnableAtoms = list(/obj/structure/flora/newtree = 10,
+							/obj/structure/flora/roguegrass/bush = 8,
+							/obj/structure/flora/roguegrass = 12,
+							/obj/structure/flora/roguegrass/maneater = 5,
+							/obj/structure/flora/roguegrass/maneater/real=2,
+							/obj/structure/flora/roguegrass/pyroclasticflowers = 1,
+							/obj/structure/flora/roguetree/wise=0.2,
+							/obj/item/natural/stone = 3,
 							/obj/item/natural/rock = 2,
-							/obj/item/magic/artifact = 2,
-							/obj/structure/leyline = 1,
-							/obj/structure/voidstoneobelisk = 1,
-							/obj/structure/manaflower = 2,
-							/obj/item/magic/manacrystal = 1,
-							/obj/item/grown/log/tree/stick = 16,
+							/obj/item/magic/artifact = 1,
+							/obj/structure/leyline = 0.5,
+							/obj/structure/voidstoneobelisk = 0.5,
+							/obj/structure/manaflower = 1,
+							/obj/item/magic/manacrystal = 0.5,
+							/obj/item/grown/log/tree/stick = 10,
 							/obj/structure/flora/roguetree/stump/log = 3,
 							/obj/structure/flora/roguetree/stump = 4,
-							/obj/structure/closet/dirthole/closed/loot=3,
-							/obj/structure/flora/roguegrass/swampweed = 5,
-							/obj/structure/flora/roguegrass/maneater/real=3,
-							/obj/structure/flora/roguegrass/herb/random = 7,)
+							/obj/structure/closet/dirthole/closed/loot=2,
+							/obj/structure/flora/roguegrass/swampweed = 2,
+							/obj/structure/flora/roguegrass/herb/random = 4,)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=2,
 						/turf/open/water/swamp=1)
-	allowed_areas = list(/area/rogue/outdoors/bog, /area/rogue/outdoors/rtfield)
+	allowed_areas = list(/area/rogue/outdoors/bograt)
+
+	/datum/mapGeneratorModule/bogold2
+	clusterCheckFlags = CLUSTER_CHECK_ALL
+	allowed_turfs = list(/turf/open/floor/rogue/dirt, /turf/open/floor/rogue/grass)
+	excluded_turfs = list(/turf/open/floor/rogue/dirt/road)
+	spawnableAtoms = list(/obj/structure/flora/newtree = 10,
+							/obj/structure/flora/roguegrass/bush = 5,
+							/obj/structure/flora/roguegrass = 20,
+							/obj/structure/flora/roguegrass/maneater = 5,
+							/obj/structure/flora/roguegrass/maneater/real=2,
+							/obj/item/natural/stone = 3,
+							/obj/item/natural/rock = 2,
+							/obj/item/grown/log/tree/stick = 2,
+							/obj/structure/flora/roguetree/stump/log = 3,
+							/obj/structure/flora/roguetree/stump = 4,
+							/obj/structure/flora/roguegrass/herb/random = 4,)
+	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=2,
+						/turf/open/water/swamp=1)
+	allowed_areas = list(/area/rogue/outdoors/bograt)
 
 /datum/mapGeneratorModule/bogoldroad
 	clusterCheckFlags = CLUSTER_CHECK_DIFFERENT_ATOMS
@@ -48,7 +68,7 @@
 	allowed_turfs = list(/turf/open/floor/rogue/dirt)
 	excluded_turfs = list(/turf/open/floor/rogue/dirt/road)
 	spawnableTurfs = list(/turf/open/floor/rogue/grass = 23)
-	allowed_areas = list(/area/rogue/outdoors/bog)
+	allowed_areas = list(/area/rogue/outdoors/bograt)
 
 /datum/mapGeneratorModule/bogratwater
 	clusterCheckFlags = CLUSTER_CHECK_ALL_ATOMS
@@ -62,21 +82,3 @@
 							/obj/structure/flora/ausbushes/reedbush = 12,
 							/obj/structure/flora/roguegrass/water/reeds = 12,
 							/obj/structure/zizo_bane = 3)
-
-/datum/mapGeneratorModule/bogoldgrass
-	clusterCheckFlags = CLUSTER_CHECK_ALL_ATOMS
-	allowed_turfs = list(/turf/open/floor/rogue/grass)
-	excluded_turfs = list()
-	allowed_areas = list(/area/rogue/outdoors/bog)
-	spawnableAtoms = list(/obj/structure/glowshroom = 3,
-							/obj/structure/flora/roguetree = 20,
-							/obj/structure/flora/roguetree/wise=1,
-							/obj/structure/flora/roguegrass/bush = 18,
-							/obj/structure/flora/roguegrass = 30,
-							/obj/structure/flora/roguegrass/maneater = 6,
-							/obj/structure/flora/roguegrass/maneater/real=2,
-							/obj/item/natural/stone = 4,
-							/obj/item/natural/rock = 1,
-							/obj/item/grown/log/tree/stick = 2,
-							/obj/structure/flora/roguetree/stump/log = 2,
-							/obj/structure/flora/roguegrass/herb/random = 6,)

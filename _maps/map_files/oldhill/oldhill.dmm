@@ -26204,7 +26204,10 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors)
 "sjv" = (
-/obj/effect/landmark/mapGenerator/rogue/roguetownfield,
+/obj/effect/landmark/mapGenerator/rogue/roguetownfield{
+	endTurfX = 255;
+	endTurfY = 400
+	},
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/cavewet/bogcaves)
 "sjA" = (
@@ -34590,7 +34593,7 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/manor)
 "xOw" = (
-/obj/effect/landmark/mapGenerator/rogue/bograt,
+/obj/effect/landmark/mapGenerator/rogue/bogold,
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/cavewet/bogcaves)
 "xOz" = (
