@@ -3328,6 +3328,13 @@
 /obj/item/rogueweapon/mace,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement)
+"csl" = (
+/obj/structure/fluff/traveltile/wretch{
+	aportalgoesto = "wretchin2";
+	aportalid = "wretchout2"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cavewet/bogcaves)
 "csA" = (
 /obj/structure/stairs{
 	dir = 8
@@ -18601,6 +18608,13 @@
 /obj/item/reagent_containers/food/snacks/grown/wheat,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/manor)
+"nct" = (
+/obj/structure/fluff/traveltile/wretch{
+	aportalgoesto = "wretchin1";
+	aportalid = "wretchout1"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cavewet/bogcaves)
 "ncF" = (
 /obj/structure/table/wood{
 	dir = 4;
@@ -22201,6 +22215,13 @@
 	icon_state = "weird1"
 	},
 /area/rogue/indoors/town)
+"pna" = (
+/obj/structure/fluff/traveltile/vampire{
+	aportalgoesto = "vampin";
+	aportalid = "vampexit"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cavewet/bogcaves)
 "pnl" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -344034,9 +344055,9 @@ gxt
 gxt
 gxt
 dVO
-dVO
-dVO
-dVO
+csl
+csl
+csl
 gxt
 gxt
 gxt
@@ -410780,7 +410801,7 @@ uuE
 uuE
 dVO
 dVO
-dVO
+pna
 fyc
 fyc
 "}
@@ -411182,7 +411203,7 @@ uuE
 uuE
 dVO
 dVO
-dVO
+pna
 fyc
 fyc
 "}
@@ -411584,7 +411605,7 @@ uuE
 gxt
 dVO
 dVO
-dVO
+pna
 fyc
 fyc
 "}
@@ -444140,7 +444161,7 @@ dVO
 dVO
 dVO
 dVO
-dVO
+nct
 gxt
 gxt
 gxt
@@ -444540,9 +444561,9 @@ gxt
 gxt
 dVO
 dVO
-dVO
-dVO
-dVO
+nct
+nct
+nct
 gxt
 gxt
 gxt
