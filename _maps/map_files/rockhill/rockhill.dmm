@@ -18386,7 +18386,7 @@
 	locked = 1;
 	lockid = "nightman"
 	},
-/turf/open/floor/rogue/churchrough,
+/turf/open/floor/rogue/churchbrick,
 /area/rogue/outdoors/exposed/bath/vault{
 	droning_sound_dusk = null;
 	droning_sound_night = null
@@ -39643,7 +39643,7 @@
 /obj/item/reagent_containers/powder/moondust,
 /obj/item/reagent_containers/glass/bottle/rogue/poison,
 /obj/item/reagent_containers/glass/bottle/rogue/emberwine,
-/turf/open/floor/carpet/purple,
+/turf/open/floor/rogue/churchbrick,
 /area/rogue/outdoors/exposed/bath/vault{
 	droning_sound_dusk = null;
 	droning_sound_night = null
@@ -46358,7 +46358,7 @@
 /obj/item/clothing/suit/roguetown/armor/plate/full/bikini,
 /obj/item/clothing/suit/roguetown/armor/leather/hide/bikini,
 /obj/item/clothing/suit/roguetown/armor/leather/studded/bikini,
-/turf/open/floor/carpet/purple,
+/turf/open/floor/rogue/churchbrick,
 /area/rogue/outdoors/exposed/bath/vault{
 	droning_sound_dusk = null;
 	droning_sound_night = null
@@ -47963,7 +47963,7 @@
 /obj/item/roguecoin/gold/pile,
 /obj/item/roguecoin/silver/pile,
 /obj/item/roguekey/nightman,
-/turf/open/floor/carpet/purple,
+/turf/open/floor/rogue/churchbrick,
 /area/rogue/outdoors/exposed/bath/vault{
 	droning_sound_dusk = null;
 	droning_sound_night = null
@@ -49208,9 +49208,6 @@
 /obj/item/flashlight/flare/torch/lantern{
 	pixel_y = 12
 	},
-/obj/item/clothing/suit/roguetown/shirt/robe/white{
-	pixel_y = 6
-	},
 /turf/open/floor/rogue/ruinedwood{
 	dir = 1;
 	icon_state = "wooden_floor2"
@@ -49865,7 +49862,7 @@
 /obj/item/clothing/neck/roguetown/cursed_collar,
 /obj/item/leash/chain,
 /obj/structure/rack/rogue/shelf/biggest,
-/turf/open/floor/carpet/purple,
+/turf/open/floor/rogue/churchbrick,
 /area/rogue/outdoors/exposed/bath/vault{
 	droning_sound_dusk = null;
 	droning_sound_night = null
@@ -55721,7 +55718,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/tavern)
 "rSw" = (
-/turf/open/floor/carpet/purple,
+/turf/open/floor/rogue/churchbrick,
 /area/rogue/outdoors/exposed/bath/vault{
 	droning_sound_dusk = null;
 	droning_sound_night = null
