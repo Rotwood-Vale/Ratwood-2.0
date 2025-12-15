@@ -7,8 +7,10 @@
 	xp_gain = TRUE
 	releasedrain = 10
 	chargedrain = 1
-	chargetime = 0
-	recharge_time = 5 SECONDS
+	chargetime = 5
+	charging_slowdown = 2
+	recharge_time = 6 SECONDS
+	human_req = TRUE
 	warnie = "spellwarning"
 	no_early_release = FALSE
 	movement_interrupt = FALSE
@@ -29,7 +31,7 @@
 		var/mob/living/carbon/target = targets[1]
 		target.adjustFireLoss(30) //damage
 		target.adjust_fire_stacks(4)
-		target.IgniteMob()
+		target.ignite_mob()
 		target.visible_message(span_warning("[user] makes a rude gesture at [target] and causes them to burst into flames!"), \
 		span_userdanger("[user] makes a rude gesture at you and causes you to burst into flames!"))
 		playsound(get_turf(target), 'sound/misc/explode/incendiary (1).ogg', 100, TRUE)

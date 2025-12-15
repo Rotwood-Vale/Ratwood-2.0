@@ -85,13 +85,34 @@
 
 /datum/supply_pack/rogue/Sellsword/lsword
 	name = "Longsword"
-	cost = 20
+	cost = 40
 	contains = list(/obj/item/rogueweapon/sword/long)
+
+/datum/supply_pack/rogue/Sellsword/sflail
+	name = "Steel Flail"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/flail/sflail)
 
 /datum/supply_pack/rogue/Sellsword/ebeak
 	name = "Eagle's Beak"
 	cost = 40
 	contains = list(/obj/item/rogueweapon/eaglebeak)
+
+/datum/supply_pack/rogue/Sellsword/bspear
+	name = "Boar Spear"
+	cost = 40
+	contains = list(/obj/item/rogueweapon/spear/boar)
+
+//Specialist swords.
+/datum/supply_pack/rogue/Sellsword/falx
+	name = "Falx"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/falx)
+
+/datum/supply_pack/rogue/Sellsword/rhomphaia
+	name = "Rhomphaia"
+	cost = 40
+	contains = list(/obj/item/rogueweapon/sword/long/rhomphaia)
 
 //////////////////////
 // WEAPONS - RANGED //
@@ -110,6 +131,20 @@
 	name = "Quiver of Bolts"
 	cost = 20
 	contains = list(/obj/item/quiver/bolts)
+
+/////////////
+// SHIELDS //
+/////////////
+
+/datum/supply_pack/rogue/Sellsword/buckler
+	name = "Buckler"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/shield/buckler)
+
+/datum/supply_pack/rogue/Sellsword/ironshield
+	name = "Iron Shield"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/shield/iron)
 
 /////////////
 // GRENZEL //
@@ -150,6 +185,11 @@
 	cost = 60
 	contains = list(/obj/item/rogueweapon/greatsword/grenz)
 
+/datum/supply_pack/rogue/Sellsword/SFlamberge
+	name = "Steel Flamberge"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/greatsword/grenz/flamberge)
+
 //////////////////////
 // RANESHEN - RIDER //
 //////////////////////
@@ -189,12 +229,12 @@
 ///////////////////////
 
 /datum/supply_pack/rogue/Sellsword/wolfhelm
-	name = "Forlon Volf Plate Helm"
+	name = "Forlorn Volf Plate Helm"
 	cost = 30
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/volfplate)
 
 /datum/supply_pack/rogue/Sellsword/forloncollar
-	name = "Forlon Collar"
+	name = "Forlorn Collar"
 	cost = 20
 	contains = list(/obj/item/clothing/neck/roguetown/gorget/forlorncollar)
 
@@ -220,5 +260,5 @@
 
 /datum/supply_pack/rogue/Sellsword/heatshield
 	name = "Heater Shield"
-	cost = 10
+	cost = 20
 	contains = list(/obj/item/rogueweapon/shield/heater)

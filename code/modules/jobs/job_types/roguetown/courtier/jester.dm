@@ -6,7 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = ACCEPTED_RACES
 
 	tutorial = "The Grenzelhofts were known for their Jesters, wisemen with a tongue just as sharp as their wit. \
 		You command a position of a fool, envious of the position your superiors have upon you. \
@@ -20,6 +20,7 @@
 	min_pq = -4 //silly jesters are funny so low PQ requirement
 	max_pq = null
 	round_contrib_points = 2
+	social_rank = SOCIAL_RANK_MINOR_NOBLE
 
 /datum/outfit/job/roguetown/jester/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -40,12 +41,17 @@
 	H.adjust_skillrank(/datum/skill/misc/music, rand(1,6), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, rand(1,3), TRUE)
-	H.STASTR = rand(1, 20)
-	H.STAINT = rand(1, 20)
-	H.STALUC = rand(1, 20)
+	var/datum/inspiration/I = new /datum/inspiration(H)
+	I.grant_inspiration(H, bard_tier = BARD_T3)
+	H.STASTR = rand(1, 21)
+	H.STAWIL = rand(1, 21)
+	H.STACON = rand(1, 21)
+	H.STAINT = rand(1, 21)
+	H.STAPER = rand(1, 21)
+	H.STALUC = rand(1, 21)
 	H.cmode_music = 'sound/music/combat_jester.ogg'
 	if(H.mind)
-		// Mime vs Jester. 
+		// Mime vs Jester.
 		// As a mute jester you cannot cast Tell Joke/Tragedy, so why even have them?
 		if(HAS_TRAIT(H, TRAIT_PERMAMUTE)) // I considered adding a check for Xylix patron but in the off chance there's a mute non-xylix jester I don't want to fuck them over.
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall)
@@ -58,6 +64,7 @@
 	if(!istype(H.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue))
 		H.internal_organs_slot[ORGAN_SLOT_TONGUE] = new /obj/item/organ/tongue/wild_tongue
 	ADD_TRAIT(H, TRAIT_ZJUMP, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_NOFALLDAMAGE1, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_LEAPER, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NUTCRACKER, TRAIT_GENERIC)
 	if(prob(50))

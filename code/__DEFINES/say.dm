@@ -58,13 +58,14 @@
 #define SPAN_SINGING "singing"
 
 #define SPAN_GEN "say"
+#define SPAN_ORATOR "orator"
 #define SPAN_DWARF "dwarf"
 #define SPAN_ELF "elf"
 #define SPAN_SAND "sandspeak"
 #define SPAN_SANDWAUK "sandwauk"
 #define SPAN_DELF "delf"
 #define SPAN_HELL "hellspeak"
-#define SPAN_GRENZELHOFTIAN "grenzelhoftian"
+#define SPAN_CANILUNZT "canilunzt"
 #define SPAN_OTAVAN "otavan"
 #define SPAN_ETRUSCAN "etruscan"
 #define SPAN_ABYSSAL "abyssal"
@@ -77,6 +78,7 @@
 #define SPAN_AAVNIC "aavnic"
 #define SPAN_UNDEAD "undead" //nyi but file found
 #define SPAN_CAT "cat"		 //nyi but file found
+#define SPAN_MERAR "merar"
 #define SPAN_PULSEDEATH "pulsedeath"
 
 #define SPAN_PATREON_SAY "patreontalk"

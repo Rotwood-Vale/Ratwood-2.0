@@ -58,6 +58,8 @@
 	var/mob/living/carbon/knotted_owner = null // whom has the knot
 	var/mob/living/carbon/knotted_recipient = null // whom took the knot
 
+	var/bottom_exposed = FALSE
+
 /datum/sex_controller/New(mob/living/carbon/human/owner)
 	user = owner
 
@@ -323,6 +325,7 @@
 		owner.remove_status_effect(src)
 
 /datum/sex_controller/proc/ejaculate()
+	SEND_SIGNAL(user, COMSIG_MOB_EJACULATED)
 	log_combat(user, user, "Ejaculated")
 	user.visible_message(span_love("[user] makes a mess!"))
 	playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
@@ -338,7 +341,7 @@
 	user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
 	last_ejaculation_time = world.time
-	GLOB.azure_round_stats[STATS_PLEASURES]++
+	record_round_statistic(STATS_PLEASURES)
 
 /datum/sex_controller/proc/after_intimate_climax()
 	if(user == target)
@@ -397,6 +400,9 @@
 
 	if(penis && hascall(penis, "update_erect_state"))
 		penis.update_erect_state()
+
+/datum/sex_controller/proc/update_exposure()
+	user.regenerate_icons()
 
 /datum/sex_controller/proc/adjust_arousal(amount)
 	if(aphrodisiac > 1 && amount > 0)
@@ -623,6 +629,8 @@
 	if(user.getorganslot(ORGAN_SLOT_PENIS))
 		dat += " ~|~ <a href='?src=[REF(src)];task=manual_arousal_down'>\<</a> [manual_arousal_name] <a href='?src=[REF(src)];task=manual_arousal_up'>\></a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
+	if(user.getorganslot(ORGAN_SLOT_PENIS))
+		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PINTLE EXPOSED" : "PINTLE CONCEALED"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
 		if(action.knot_on_finish && knot_penis_type())
@@ -699,6 +707,10 @@
 			adjust_arousal_manual(-1)
 		if("toggle_finished")
 			do_until_finished = !do_until_finished
+			update_exposure()
+		if("toggle_bottom_exposed")
+			bottom_exposed = !bottom_exposed
+			update_exposure()
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)

@@ -60,7 +60,6 @@
 	return me_verb(message)
 
 ///The me emote verb
-///The me emote verb
 /mob/verb/me_verb(message as text)
 	set name = "Me"
 	set category = "IC"
@@ -114,6 +113,48 @@
 	if(check_subtler(message, FALSE))
 		return
 	usr.emote("me",1,message,TRUE, custom_me = TRUE)
+
+///The subtle emote verb
+/mob/verb/subtle_verb()
+	set name = "Subtle"
+	set category = "IC"
+	set hidden = 1
+#ifndef MATURESERVER
+	return
+#endif
+	var/message = input(usr, "", "subtle") as text|null
+	// If they don't type anything just drop the message.
+	if(!length(message))
+		return
+	if(GLOB.say_disabled)
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		return
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
+	if(check_subtler(message, FALSE))
+		return
+	usr.emote("subtle", 1, message, TRUE, custom_me = TRUE)
+
+///The subtle emote verb
+/mob/verb/subtle_big_verb()
+	set name = "Subtle(big)"
+	set category = "IC"
+	set hidden = 1
+#ifndef MATURESERVER
+	return
+#endif
+	var/message = input(usr, "", "subtle") as message|null
+	// If they don't type anything just drop the message.
+	if(!length(message))
+		return
+	if(GLOB.say_disabled)
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		return
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
+	if(check_subtler(message, FALSE))
+		return
+	usr.emote("subtle", 1, message, TRUE, custom_me = TRUE)
 
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(message)

@@ -26,6 +26,8 @@
 	item_state = "rogueshorts"
 	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	body_parts_covered = GROIN
+	salvage_result = /obj/item/natural/hide/cured
+	salvage_amount = 1
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	name = "otavan leather trousers"
@@ -65,6 +67,8 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	color = "#262927"
 	detail_color = "#FFFFFF"
+	salvage_result = /obj/item/natural/hide/cured
+	salvage_amount = 1
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/attack_right(mob/user)
 	..()
@@ -101,11 +105,33 @@
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 //Gronn
-/obj/item/clothing/under/roguetown/trou/nomadpants
+/obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
 	name = "nomad pants"
 	desc = "Tight fitting leather pants worn under clothing of the steppes."
 	icon_state = "nomadpants"
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
-	armor = ARMOR_PANTS_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
-	salvage_result = /obj/item/natural/hide/cured
+	armor = ARMOR_LEATHER
+
+/obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun //no, not 'eastpants3', silly!
+	name = "gambeson trousers"
+	desc = "A form of Kazengunite peasant's trousers. The fabric used in their manufacture is strong, and could probably turn away a few blows."
+	icon_state = "baggypants"
+	item_state = "baggypants"
+
+/obj/item/clothing/under/roguetown/heavy_leather_pants/shadowpants
+	name = "silk tights"
+	desc = "Form-fitting legwear. Almost too form-fitting."
+	icon_state = "shadowpants"
+	allowed_race = NON_DWARVEN_RACE_TYPES
+
+/obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
+	name = "bronze chain skirt"
+	desc = "A knee-length maille skirt, made with hundreds of small bronze rings. It wards cuts against the thighs without slowing the feet."
+	icon_state = "chain_skirt"
+	item_state = "chain_skirt"
+	color = "#f9d690"
+	blocksound = CHAINHIT
+	resistance_flags = FIRE_PROOF
+	sewrepair = FALSE
+	anvilrepair = /datum/skill/craft/armorsmithing
+	smeltresult = /obj/item/ingot/bronze //Reskinned version of the Barbarian's heavy leather trousers. 1:1 functionality, but without the ability to sew-repair.

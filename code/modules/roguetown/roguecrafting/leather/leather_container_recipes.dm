@@ -34,6 +34,7 @@
 	result = /obj/item/storage/backpack/rogue/satchel
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/natural/fibers = 1)
+	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/leather/container/satchelshort
 	name = "short satchel"
@@ -41,18 +42,21 @@
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/natural/fibers = 1)
 	sellprice = 15
+	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/leather/container/backpack
 	name = "backpack"
 	result = /obj/item/storage/backpack/rogue/backpack
 	reqs = list(/obj/item/natural/hide/cured = 3,
 				/obj/item/natural/fibers = 1)
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/leather/container/waterskin
 	name = "waterskin"
 	result = /obj/item/reagent_containers/glass/bottle/waterskin
 	reqs = list(/obj/item/natural/hide/cured = 1,
 				/obj/item/natural/fibers = 2)
+	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/leather/container/quiver
 	name = "quiver"
@@ -73,22 +77,32 @@
 				/obj/item/rope = 1)
 
 /datum/crafting_recipe/roguetown/leather/container/twstrap
-	name = "bandolier"
+	name = "knife bandolier"
 	result = /obj/item/twstrap
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/rope = 1)
 
+/datum/crafting_recipe/roguetown/leather/container/hurlstrap
+	name = "hurlbat bandolier"
+	result = /obj/item/hurlstrap
+	reqs = list(/obj/item/natural/hide/cured = 3,
+				/obj/item/rope = 1)
+
+/datum/crafting_recipe/roguetown/leather/container/bmbstrap
+	name = "bombdolier"
+	result = /obj/item/bmbstrap
+	reqs = list(/obj/item/natural/hide/cured = 5,
+				/obj/item/rope = 2)
+
 /datum/crafting_recipe/roguetown/leather/container/belt
 	name = "leather belt"
 	result = /obj/item/storage/belt/rogue/leather
-	reqs = list(/obj/item/natural/hide/cured = 2,
-				/obj/item/natural/fibers = 2)
+	reqs = list(/obj/item/natural/hide/cured = 1)
 
 /datum/crafting_recipe/roguetown/leather/container/belt/black
 	name = "black leather belt"
 	result = /obj/item/storage/belt/rogue/leather/black
-	reqs = list(/obj/item/natural/hide/cured = 2,
-				/obj/item/natural/fibers = 2)
+	reqs = list(/obj/item/natural/hide/cured = 1)
 
 /datum/crafting_recipe/roguetown/leather/container/belt/knifebelt
 	name = "tossblade belt"
@@ -108,17 +122,12 @@
 	result = list(/obj/item/rogueweapon/scabbard/sword)
 	reqs = list(
 		/obj/item/natural/hide/cured = 2,
-		/obj/item/natural/fibers = 3,
-		/obj/item/grown/log/tree/small = 1,
-		/obj/item/rope = 1
-	)
+		/obj/item/natural/fibers = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/leather/container/scabbard/dagger
 	name = "dagger sheath"
 	result = list(/obj/item/rogueweapon/scabbard/sheath)
 	reqs = list(
-		/obj/item/natural/hide/cured = 2,
-		/obj/item/grown/log/tree/stick = 2,
-	)
+		/obj/item/natural/hide/cured = 1)
 	craftdiff = 2

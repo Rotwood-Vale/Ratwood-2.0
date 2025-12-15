@@ -20,7 +20,16 @@
 	skinned_type = /obj/item/ingot/steel
 	disliked_food = NONE
 	liked_food = NONE
-	inherent_traits = list(TRAIT_NOHUNGER, TRAIT_BLOODLOSS_IMMUNE, TRAIT_NOBREATH, TRAIT_NOSLEEP, TRAIT_ZOMBIE_IMMUNE, TRAIT_NOMETABOLISM, TRAIT_NOPAIN)
+	inherent_traits = list(
+		TRAIT_NOHUNGER,
+		TRAIT_BLOODLOSS_IMMUNE,
+		TRAIT_NOBREATH,
+		TRAIT_ZOMBIE_IMMUNE,
+		TRAIT_TOXIMMUNE,
+		TRAIT_NOSLEEP,
+		TRAIT_NOMETABOLISM,
+		TRAIT_NOPAIN,
+		)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mcom.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fcom.dmi'
@@ -34,11 +43,13 @@
 		OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
 		OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,0), \
 		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
+		OFFSET_BREASTS = list(0,1), \
 		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
 		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
 		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,0), OFFSET_BACK_F = list(0,-1), \
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		OFFSET_BREASTS_F = list(0,-1), \
 		)
 	race_bonus = list(STAT_WILLPOWER = 1, STAT_SPEED = -2)
 	enflamed_icon = "widefire"
@@ -94,6 +105,8 @@
 		/datum/body_marking/construct_visor_eyes,
 		/datum/body_marking/construct_psyclops_eye,
 	)
+
+	restricted_virtues = list(/datum/virtue/utility/noble, /datum/virtue/utility/deathless)
 
 /datum/species/construct/metal/check_roundstart_eligible()
 	return TRUE

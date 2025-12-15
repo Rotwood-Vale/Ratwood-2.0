@@ -22,7 +22,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 	/area/rogue/outdoors/woods,
 	/area/rogue/indoors/shelter/woods,
-	/area/rogue/outdoors/river,
 	/area/rogue/outdoors/bog,
 	/area/rogue/indoors/shelter/bog,
 	/area/rogue/outdoors/rtfield,
@@ -191,3 +190,8 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 #define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
 
 #define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
+
+GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom
+#define isimage(thing) (istype(thing, /image))
+#define isappearance(thing) (!isimage(thing) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
+#define isappearance_or_image(thing) (isimage(thing) || (!ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing)))

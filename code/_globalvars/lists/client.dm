@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(_kbMap, list(
 	"INSERT" = "Insert",
 	"HOME" = "Northwest",
 	"PAGEUP" = "Northeast",
-	"DEL" = "Delete",
+	"DELETE" = "Delete",
 	"END" = "Southwest",
 	"PAGEDOWN" = "Southeast",
 	" " = "Space",

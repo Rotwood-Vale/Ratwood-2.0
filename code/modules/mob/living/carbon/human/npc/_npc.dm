@@ -1,3 +1,5 @@
+#define ATTACKS_UNTIL_SWITCHING_UP 3 // How many attack a NPC will use on the same place before switching it up
+
 /mob/living/carbon/human
 	var/aggressive=0 //0= retaliate only
 	var/frustration=0
@@ -46,11 +48,22 @@
 	/// When above this amount of stamina (Stamina is stamina damage), the NPC will not attempt to jump.
 	var/npc_max_jump_stamina = 50
 
-	// RETREATING
-	/// Above this percentage of stamloss, retreat to regain stamina.
-	var/stamina_retreat_threshold = 0.8
-	/// Do not finish retreating until below this percentage of stamina loss.
-	var/stamina_finish_retreat_threshold = 0.6
+	/// Attack Selection
+	var/attack_on_zone = 1
+
+	///What distance should we be checking for interesting things when considering idling/deidling? Defaults to AI_DEFAULT_INTERESTING_DIST
+	var/interesting_dist = AI_DEFAULT_INTERESTING_DIST
+	///our current cell grid
+	var/datum/cell_tracker/our_cells
+
+/mob/living/carbon/human/Initialize()
+	. = ..()
+	our_cells = new(interesting_dist, interesting_dist, 1)
+	set_new_cells()
+
+/mob/living/carbon/human/Destroy()
+	our_cells = null
+	return ..()
 
 /mob/living/carbon/human/proc/IsStandingStill()
 	return doing || resisting || pickpocketing
@@ -87,17 +100,9 @@
 		if(!ai_when_client)
 			walk_to(src,0)
 			return TRUE //remove us from processing
-	cmode = TRUE
+	cmode = 1
 	update_cone_show()
 	steps_moved_this_turn = 0
-	// Manage mob state here, like mode/movement intent/etc.
-	if(stamina >= (max_stamina * stamina_retreat_threshold))
-		m_intent = MOVE_INTENT_WALK
-		cmode = FALSE // try to regen stamina!
-		// todo: switch_mode() that clears path, resets m_intent, clears autowalk?
-		mode = NPC_AI_RETREAT
-		walk_to(src,0)
-		clear_path()
 	if(resisting) // already busy from a prior turn! stop!
 		walk_to(src, 0)
 		NPC_THINK("Still resisting, passing turn!")
@@ -203,9 +208,6 @@
 
 /// Attempts to jump towards our next pathfinding step if it's far enough, or our target if we don't have a path planned.
 /mob/living/carbon/human/proc/npc_try_jump(force = FALSE)
-	if(throwing)
-		// Don't jump while ALREADY jumping!
-		return FALSE
 	if(!prob(npc_jump_chance))
 		return FALSE
 	if(next_move > world.time) // Jumped too recently!
@@ -271,12 +273,13 @@
 		QDEL_NULL(mmb_intent) // unset our intent after
 		m_intent = old_m_intent
 		if(.)
+			clear_path()
 			start_pathing_to(target) // regenerate path now that we've jumped
 		return
 	m_intent = old_m_intent
 	return FALSE
 
-/// Force the NPC to jump to a specific destination. Handles 
+/// Force the NPC to jump to a specific destination. Handles
 /mob/living/carbon/human/proc/npc_try_jump_to(atom/jump_destination)
 	if(!jump_destination)
 		return FALSE
@@ -322,7 +325,6 @@
 /// progress along an existing path or cancel it
 /// returns # of steps taken
 /mob/living/carbon/human/proc/move_along_path()
-	walk(src, 0) // cancel any other automated movement we're doing
 	if(!length(myPath))
 		// no path, quit early
 		NPC_THINK("Tried to move along a nonexistent path?!")
@@ -358,7 +360,7 @@
 			clear_path()
 			return
 		var/movespeed = cached_multiplicative_slowdown // this is recalculated on Moved() so we don't need to do it ourselves
-		if(!(mobility_flags & MOBILITY_MOVE) || IsDeadOrIncap() || IsStandingStill() || throwing || is_move_blocked_by_grab())
+		if(!(mobility_flags & MOBILITY_MOVE) || IsDeadOrIncap() || IsStandingStill() || is_move_blocked_by_grab())
 			NPC_THINK("MOVEMENT TURN [movement_turn]: Waiting to move!")
 			sleep(1) // wait 1ds to see if we're finished/recovered
 			continue
@@ -432,7 +434,6 @@
 			myPath -= myPath[1]
 			NPC_THINK("MOVEMENT TURN [movement_turn]: Movement on cooldown for [movespeed/10] seconds!")
 			sleep(movespeed) // wait until next move	
-		
 // blocks, but only while path is being calculated
 /mob/living/carbon/human/proc/start_pathing_to(new_target)
 	if(!new_target)
@@ -628,7 +629,7 @@
 			// Flee before trying to pick up a weapon.
 			if(flee_in_pain && target && (target.stat == CONSCIOUS))
 				var/paine = get_complex_pain()
-				if(paine >= ((STAWIL * 10)*0.9)) 
+				if(paine >= ((STAWIL * 10)*0.9))
 					NPC_THINK("Ouch! Entering flee mode!")
 					mode = NPC_AI_FLEE
 					m_intent = MOVE_INTENT_RUN
@@ -665,7 +666,7 @@
 			else if(should_frustrate) // not next to perp, and we didn't fail due to reaction time
 				frustration++
 
-		if(NPC_AI_FLEE, NPC_AI_RETREAT)
+		if(NPC_AI_FLEE)
 			var/const/NPC_FLEE_DISTANCE = 8
 			if(!target || get_dist(src, target) >= NPC_FLEE_DISTANCE)
 				// try to flee from any enemies who aren't incapacitated
@@ -683,16 +684,10 @@
 					// we assume if we want to hurt them they want to hurt us back
 					if(should_target(bystander))
 						target = bystander // We're trying to run from this person now
-			if(!target || (mode == NPC_AI_FLEE && get_dist(src, target) >= NPC_FLEE_DISTANCE))
+			if(!target || get_dist(src, target) >= NPC_FLEE_DISTANCE)
 				NPC_THINK("Done fleeing!")
 				back_to_idle()
-				return TRUE
-			else if(mode == NPC_AI_RETREAT && (stamina < (max_stamina * stamina_finish_retreat_threshold)))
-				NPC_THINK("Done retreating!")
-				mode = NPC_AI_HUNT // back into the fray!
-				walk_to(src, 0) // stop running off
-				return TRUE
-			else if(!throwing && !is_move_blocked_by_grab()) // try to run offscreen if we aren't being grabbed by someone else
+			else if(!is_move_blocked_by_grab()) // try to run offscreen if we aren't being grabbed by someone else
 				NPC_THINK("Fleeing from [target]!")
 				// todo: use A* to find the shortest path to the farthest tile away from the flee target?
 				walk_away(src, target, NPC_FLEE_DISTANCE, cached_multiplicative_slowdown)
@@ -816,7 +811,7 @@
 			return TRUE // and end turn
 	else if(!OffWeapon && prob(make_grab_chance)) // grab with our empty offhand instead of attack
 		if(npc_try_make_grab(victim)) // returns TRUE if we've finished our turn, not if we succeeded at the grab
-			return TRUE 
+			return TRUE
 
 	// attack with weapon if we have one
 	if(Weapon)
@@ -854,6 +849,11 @@
 		npc_choose_attack_zone(victim)
 
 /mob/living/carbon/human/proc/npc_choose_attack_zone(mob/living/victim)
+	if(attack_on_zone <= ATTACKS_UNTIL_SWITCHING_UP)
+		attack_on_zone++
+		return
+	else
+		attack_on_zone = 1
 	// My life for a better way to handle deadite AI.
 	if(mind?.has_antag_datum(/datum/antagonist/zombie))
 		aimheight_change(deadite_get_aimheight(victim))
@@ -947,3 +947,58 @@
 		return TRUE
 	else
 		return FALSE
+
+/mob/living/carbon/human/proc/on_client_enter(datum/source, atom/target)
+	SIGNAL_HANDLER
+	if(mode == NPC_AI_OFF)
+		return
+
+	if(mode == NPC_AI_SLEEP)
+		mode = NPC_AI_IDLE
+
+/mob/living/carbon/human/proc/on_client_exit(datum/source, datum/exited)
+	SIGNAL_HANDLER
+	if(mode == NPC_AI_OFF)
+		return
+
+	consider_wakeup()
+
+/mob/living/carbon/human/proc/set_new_cells()
+	if(QDELETED(src)) // Move to nullspace causes move and causes this.
+		return
+	var/turf/our_turf = get_turf(src)
+	if(isnull(our_turf))
+		return
+
+	var/list/cell_collections = our_cells?.recalculate_cells(our_turf)
+
+	for(var/datum/old_grid as anything in cell_collections[2])
+		UnregisterSignal(old_grid, list(SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)))
+
+	for(var/datum/spatial_grid_cell/new_grid as anything in cell_collections[1])
+		RegisterSignal(new_grid, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_enter))
+		RegisterSignal(new_grid, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_exit))
+	consider_wakeup()
+
+/mob/living/carbon/human/proc/update_grid()
+	SIGNAL_HANDLER
+	set_new_cells()
+
+/mob/living/carbon/human/proc/consider_wakeup()
+	if(mode == NPC_AI_OFF)
+		return
+
+	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
+		if(length(grid.client_contents))
+			if(mode != NPC_AI_SLEEP || mode != NPC_AI_IDLE)
+				return TRUE
+			mode = NPC_AI_IDLE
+			return TRUE
+
+	mode = NPC_AI_SLEEP
+	return FALSE
+
+/mob/living/carbon/human/Moved()
+	. = ..()
+	if(mode != NPC_AI_OFF)
+		update_grid()

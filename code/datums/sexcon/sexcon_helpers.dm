@@ -37,6 +37,8 @@
 /mob/living
 	var/can_do_sex = TRUE
 	var/virginity = FALSE
+	var/mpreg = FALSE
+	var/mpreg_chance = IMPREG_PROB_DEFAULT
 
 /**:
  * target/src is whomever the drag ends on. Inherited proc, needs to be a human.
@@ -84,16 +86,35 @@
 	if(!testes)
 		return
 	var/obj/item/organ/vagina/vag = wife.getorganslot(ORGAN_SLOT_VAGINA)
-	if(!vag)
+	if(!vag && !HAS_TRAIT(wife, TRAIT_BAOTHA_FERTILITY_BOON))
 		return
-	var/prob_for_impreg = vag.impregnation_probability
-	if(wife.sexcon.knotted_status) // if they're knotted, increased by two factor for dramatic impact
-		prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX)
-	if(prob(prob_for_impreg) && wife.is_fertile() && is_virile())
-		vag.be_impregnated(src)
-		vag.impregnation_probability = IMPREG_PROB_DEFAULT // Reset on success
+	if(!is_virile())
+		return
+	if(vag)
+		if(!wife.is_fertile())
+			return
+		var/prob_for_impreg = vag.impregnation_probability
+		if(wife.sexcon.knotted_status) // if they're knotted, increased by two factor for dramatic impact
+			prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX)
+		if(HAS_TRAIT(wife, TRAIT_BAOTHA_FERTILITY_BOON))
+			prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX) //if female has baotha boon increase chances
+		if(prob(prob_for_impreg))
+			vag.be_impregnated(src)
+			vag.impregnation_probability = IMPREG_PROB_DEFAULT // Reset on success
+		else
+			vag.impregnation_probability = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
 	else
-		vag.impregnation_probability = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
+		var/prob_for_impreg = wife.mpreg_chance
+		if(wife.sexcon.knotted_status)
+			prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX)
+		if(prob(prob_for_impreg))
+			if(wife.mpreg)
+				to_chat(wife, span_love("I feel a surge of warmth inside me again..."))
+				return
+			to_chat(wife, span_love("I feel a strange surge of warmth inside me... Am I pregnant?.."))
+			wife.mpreg = TRUE
+		else
+			wife.mpreg_chance = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
 
 /mob/living/carbon/human/proc/get_highest_grab_state_on(mob/living/carbon/human/victim)
 	var/grabstate = null

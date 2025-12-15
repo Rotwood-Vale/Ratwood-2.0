@@ -629,7 +629,6 @@ GLOBAL_LIST(teleport_runes)
 			to_chat(living_invoker,  span_italics("[src] saps your strength!"))
 	do_invoke_glow()
 
-
 /obj/effect/decal/cleanable/roguerune/arcyne/teleport
 	name = "planar convergence matrix"
 	desc = "A large spiraling sigil that seems to thrum with power."
@@ -736,7 +735,6 @@ GLOBAL_LIST(teleport_runes)
 				to_chat(living_invoker,  span_italics("[src] saps your strength!"))
 	else
 		fail_invoke()
-
 
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning	//32x32 rune t1(one tile)
 	name = "confinement matrix"

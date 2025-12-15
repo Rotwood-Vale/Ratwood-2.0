@@ -85,19 +85,27 @@
 				COOLDOWN_START(src, xp_show, XP_SHOW_COOLDOWN)
 		return
 	var/datum/skill/skillref = GetSkillRef(skill)
-	var/trait_capped_level = FALSE
-	if(length(skillref.trait_restrictions))
-		for(var/trait in skillref.trait_restrictions)
-			trait_capped_level = skillref.trait_restrictions[trait]
-			if(!HAS_TRAIT(mind.current, trait) && mind.current.get_skill_level(skill) >= skillref.trait_restrictions[trait])	//We don't have the trait & we're at the skill limit.
-				return
+	var/trait_capped_level = skillref.max_untraited_level
+
+	#ifdef USES_TRAIT_SKILL_GATING
+	for(var/trait in skillref.trait_uncap)
+		if(HAS_TRAIT(mind.current, trait) && (skillref.trait_uncap[trait] > trait_capped_level))
+			trait_capped_level = skillref.trait_uncap[trait]
+	#endif
+	#ifndef USES_TRAIT_SKILL_GATING
+		trait_capped_level = SKILL_LEVEL_LEGENDARY
+	#endif
+
+	// Using this prevent a bug where you can bank xp to go one beyond cap
+	if(trait_capped_level && enough_sleep_xp_to_advance(skill, trait_capped_level - mind.current.get_skill_level(skill)))
+		amt = 0
+
 	var/capped_pre = enough_sleep_xp_to_advance(skill, 2)
 	var/can_advance_pre = enough_sleep_xp_to_advance(skill, 1)
 
-	if(can_advance_pre && trait_capped_level && (trait_capped_level <= (mind.current.get_skill_level(skill) + 1)))
-		amt = 0
-
 	adjust_sleep_xp(skill, amt)
+	add_cross_training_experience(skill, amt)
+
 	var/can_advance_post = enough_sleep_xp_to_advance(skill, 1)
 	var/capped_post = enough_sleep_xp_to_advance(skill, 2)
 
@@ -129,6 +137,75 @@
 		if(amt && show_xp && (L.client?.prefs.floating_text_toggles & XP_TEXT))
 			L.balloon_alert(L, "[amt] XP")
 			COOLDOWN_START(src, xp_show, XP_SHOW_COOLDOWN)
+
+/datum/sleep_adv/proc/add_cross_training_experience(primary_skill, amt)
+	if(!amt || !(primary_skill in CROSS_TRAINING_MAP))
+		return
+
+	var/mob/living/L = mind.current
+	if(!L) return
+
+	for(var/secondary_skill in CROSS_TRAINING_MAP[primary_skill])
+		var/multiplier = CROSS_TRAINING_MAP[primary_skill][secondary_skill]
+		if(!multiplier || multiplier <= 0)
+			continue
+
+		var/sec_amt = round(amt * multiplier)
+		if(sec_amt <= 0)
+			continue
+
+		adjust_sleep_xp(secondary_skill, sec_amt)
+
+var/global/list/CROSS_TRAINING_MAP = list(
+	//skill name then list cross trained skills at their multiplier
+	"lumberjacking" = list("axes" = 0.25, "athletics" = 0.05),
+	"crafting" = list("carpentry" = 0.1, "masonry" = 0.1),
+	"weaponsmithing" = list("armorsmithing" = 0.25, "blacksmithing" = 0.25),
+	"armorsmithing" = list("weaponsmithing" = 0.25, "blacksmithing" = 0.25),
+	"blacksmithing" = list("armorsmithing" = 0.25, "weaponsmithing" = 0.25, "smelting" = 0.1),
+	//"smelting" = (),
+	"carpentry" = list("crafting" = 0.25, "masonry" = 0.1),
+	"masonry" = list("crafting" = 0.25, "carpentry" = 0.1),
+	"traps" = list("tracking" = 0.25, "engineering" = 0.25),
+	//"cooking" = list("alchemy" = 0.1),
+	"engineering" = list("traps" = 0.5, "crafting" = 0.1),
+	"tanning" = list("sewing" = 0.5, "butchering" = 0.1),
+	"alchemy" = list("cooking" = 0.1),
+
+	"knives" = list("swords" = 0.25, "unarmed" = 0.1),
+	"swords" = list("knives" = 0.25),
+	"polearms" = list("axes" = 0.25),
+	"maces" = list("whipsflails" = 0.25),
+	"axes" = list("lumberjacking" = 0.5, "polearms" = 0.25),
+	"whipsflails" = list("maces" = 0.25),
+	"bows" = list("crossbows" = 0.25),
+	"crossbows" = list("bows" = 0.25),
+	"wrestling" = list("unarmed" = 0.25),
+	"unarmed" = list("wrestling" = 0.25),
+	//"shields" = (),
+	//"slings" = (),
+
+	//"farming" = (),
+	"mining" = list("axes" = 0.1, "maces" = 0.1, "athletics" = 0.1),
+	//"fishing" = (),
+	"butchering" = list("tanning" = 0.25, "medicine" = 0.25, "knives" = 0.25),
+	"lumberjacking" = list("axes" = 0.25, "unarmed" = 0.05, "athletics" = 0.1),
+
+	"athletics" = list("swimming" = 1, "climbing" = 1),
+	"climbing" = list("athletics" = 0.25, "swimming" = 0.25),
+	//"reading" = (),
+	"swimming" = list("athletics" = 0.1, "climbing" = 0.1),
+	//"stealing" = (),
+	//"sneaking" = (),
+	//"lockpicking" = (),
+	//"riding" = (),
+	//"music" = (),
+	"medicine" = list("sewing" = 0.25, "butchering" = 0.1),
+	"sewing" = list("sewing" = 0.5, "medicine" = 0.1),
+	"tracking" = list("traps" = 0.25, "sneaking" = 0.25),
+	//"ceramics" = (),
+)
+
 
 /datum/sleep_adv/proc/advance_cycle()
 	// Stuff
@@ -257,7 +334,7 @@
 		to_chat(mind.current, span_notice(dream_text))
 
 	// Notify player if they're benefiting from Malum's blessing for craft skills or sewing
-	if(HAS_TRAIT(mind.current, TRAIT_FORGEBLESSED) && (istype(skill, /datum/skill/craft) || istype(skill, /datum/skill/misc/sewing)))
+	if(HAS_TRAIT(mind.current, TRAIT_FORGEBLESSED) && (istype(skill, /datum/skill/craft) || istype(skill, /datum/skill/craft/sewing)))
 		to_chat(mind.current, span_notice("Malum's blessing reduces the dream point cost of your crafting training."))
 	// Let them in on it being related to their trait.
 	if(HAS_TRAIT(mind.current, TRAIT_HUMEN_INGENUITY))
@@ -266,7 +343,7 @@
 	sleep_adv_points -= get_skill_cost(skill_type)
 	adjust_sleep_xp(skill_type, -get_requried_sleep_xp_for_skill(skill_type, 1))
 	mind.current.adjust_skillrank(skill_type, 1, FALSE)
-	GLOB.azure_round_stats[STATS_SKILLS_DREAMED]++
+	record_round_statistic(STATS_SKILLS_DREAMED)
 
 /datum/sleep_adv/proc/grant_inspiration_xp(skill_amt)
 	var/list/viable_skills = list()

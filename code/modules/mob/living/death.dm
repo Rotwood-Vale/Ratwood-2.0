@@ -1,10 +1,12 @@
+GLOBAL_LIST_EMPTY(last_words)
+
 /mob/living/gib(no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying
 	if(stat != DEAD)
 		death(TRUE)
 	if(client)
 		SSdroning.kill_droning(client)
-	playsound(src.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 200, FALSE, 3)
+	playsound(src.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 80, FALSE, 3)
 
 	if(!prev_lying)
 		gib_animation()
@@ -138,6 +140,8 @@
 //		addtimer(CALLBACK(client, PROC_REF(ghostize), 1, src), 150)
 		add_client_colour(/datum/client_colour/monochrome)
 		client.verbs.Add(GLOB.ghost_verbs)
+		if(last_words)
+			GLOB.last_words |= last_words
 
 	for(var/s in ownedSoullinks)
 		var/datum/soullink/S = s

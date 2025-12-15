@@ -1,36 +1,41 @@
 /datum/advclass/mercenary/desert_rider
 	name = "Desert Rider Janissary"
-	tutorial = "The Janissaries are the Empire's elite infantry units, wielding a variety of weapons and carrying shields. We do not break."
+	tutorial = "The Janissaries are the Empire's elite infantry units, wielding mace and shield. We do not break."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/desert_rider
+	class_select_category = CLASS_CAT_RANESHENI
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_desertrider.ogg' //GREATEST COMBAT TRACK IN THE GAME SO FAR BESIDES MAYBE MANIAC2.OGG
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
+	subclass_languages = list(/datum/language/celestial)
+	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
-		STATKEY_CON = 2,
-		STATKEY_PER = 1
+		STATKEY_SPD = 1,
+		STATKEY_CON = 1,
+	)
+	subclass_skills = list(
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 	)
 
 
 /datum/outfit/job/roguetown/mercenary/desert_rider/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("The Janissaries are the Empire's elite infantry units, wielding a variety of weapons and carrying shields. We do not break."))
-	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+	to_chat(H, span_warning("The Janissaries are the Empire's elite infantry units, wielding mace and shield. We do not break."))
+	head = /obj/item/clothing/head/roguetown/helmet/sallet/raneshen
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
@@ -38,40 +43,35 @@
 	gloves = /obj/item/clothing/gloves/roguetown/chain
 	pants = /obj/item/clothing/under/roguetown/splintlegs
 	backr = /obj/item/storage/backpack/rogue/satchel/black
+	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary,
 		/obj/item/rogueweapon/huntingknife/idagger/navaja,
-		/obj/item/clothing/neck/roguetown/shalal,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
-	H.grant_language(/datum/language/celestial)
-	var/weapons = list("Axe and Shield","Shamshir and Shield","Spear and Shield")
-	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-	H.set_blindness(0)
-	switch(weapon_choice)
-		if("Axe and Shield")
-			H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
-			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
-			backl = /obj/item/rogueweapon/shield/tower/raneshen
-		if("Shamshir and Shield")
-			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
-			r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-			backl = /obj/item/rogueweapon/shield/tower/raneshen
-			beltr = /obj/item/rogueweapon/scabbard/sword
-		if("Spear and Shield")
-			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
-			r_hand = /obj/item/rogueweapon/spear
-			backl = /obj/item/rogueweapon/shield/tower/raneshen
-	var/armors = list("Khulad Helmet","Padded Hijab and Mask")
-	var/armor_choice = input("Cover thine head.", "HIDE THE HAIR") as anything in armors
-	switch(armor_choice)
-		if("Khulad Helmet")
-			head = /obj/item/clothing/head/roguetown/helmet/sallet/raneshen
-		if("Padded Hijab and Mask")
-			head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/raneshen
-			mask = /obj/item/clothing/mask/rogue/facemask/steel/paalloy
+	var/weapons = list("Heavy Mace","Shamshir and Shield","Spear and Shield","Axe and Shield")
+	if(H.mind)
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		H.set_blindness(0)
+		switch(weapon_choice)
+			if("Heavy Mace")
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+				backl = /obj/item/rogueweapon/mace/goden
+			if("Shamshir and Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+				backl = /obj/item/rogueweapon/shield/tower/raneshen
+				beltr = /obj/item/rogueweapon/scabbard/sword
+			if("Spear and Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+				r_hand = /obj/item/rogueweapon/spear
+				backl = /obj/item/rogueweapon/shield/tower/raneshen
+			if("Axe and Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)	//lets see if people pick it!
+				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
+				backl = /obj/item/rogueweapon/shield/tower/raneshen
+
 	shoes = /obj/item/clothing/shoes/roguetown/shalal
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 	beltl = /obj/item/rogueweapon/scabbard/sword
@@ -81,33 +81,35 @@
 
 /datum/advclass/mercenary/desert_rider/zeybek
 	name = "Desert Rider Zeybek"
-	tutorial = "Ranesheni 'Blade Dancers' are famed and feared the world over. Their expertise in blades both long and short is well known."
+	tutorial = "Zybantine 'Blade Dancers' are famed and feared the world over. Their expertise in blades both long and short is well known."
 	outfit = /datum/outfit/job/roguetown/mercenary/desert_rider_zeybek
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_DODGEEXPERT,TRAIT_DUALWIELDER)
 	subclass_stats = list(
 		STATKEY_SPD = 3,
 		STATKEY_WIL = 2,
 		STATKEY_INT = 1,
 	)
+	subclass_skills = list(
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN, 
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/shields = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
+	)
 
 /datum/outfit/job/roguetown/mercenary/desert_rider_zeybek/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("Ranesheni 'Blade Dancers' are famed and feared the world over. Their expertise in blades both long and short is well known."))
-	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE) 
-	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/whipsflails, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
+	to_chat(H, span_warning("Zybantine 'Blade Dancers' are famed and feared the world over. Their expertise in blades both long and short is well known."))
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/raneshen
 	neck = /obj/item/clothing/neck/roguetown/leather
 	mask = /obj/item/clothing/mask/rogue/facemask/steel/paalloy
@@ -117,38 +119,40 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
 	backr = /obj/item/storage/backpack/rogue/satchel/black
+	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary,
 		/obj/item/rogueweapon/huntingknife/idagger/navaja,
 		/obj/item/rogueweapon/scabbard/sheath,
-		/obj/item/clothing/neck/roguetown/shalal,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
-	H.grant_language(/datum/language/celestial)
 	var/weapons = list("Shamshir and Javelin","Whips and Knives", "Recurve Bow")
-	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-	H.set_blindness(0)
-	switch(weapon_choice)
-		if("Shamshir and Javelin")
-			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
-			r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-			backl = /obj/item/quiver/javelin/iron
-		if("Whips and Knives")	///They DO enslave people after all
-			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
-			H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
-			r_hand = /obj/item/rogueweapon/whip
-			l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
-			backl = /obj/item/rogueweapon/scabbard/sheath
-		if("Recurve Bow")
-			H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
-			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-			backl = /obj/item/quiver/arrows
+	if(H.mind)
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		H.set_blindness(0)
+		switch(weapon_choice)
+			if("Shamshir and Javelin")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+				backl = /obj/item/quiver/javelin/iron
+				beltl = /obj/item/rogueweapon/scabbard/sword
+				beltr = /obj/item/rogueweapon/scabbard/sword
+			if("Whips and Knives")	///They DO enslave people after all
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
+				beltr = /obj/item/rogueweapon/whip
+				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
+				beltl = /obj/item/rogueweapon/scabbard/sword
+			if("Recurve Bow")
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
+				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+				beltl = /obj/item/quiver/arrows
+				beltr = /obj/item/rogueweapon/scabbard/sword
 	shoes = /obj/item/clothing/shoes/roguetown/shalal
 	belt = /obj/item/storage/belt/rogue/leather/shalal
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	beltr = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+
 	
 	H.merctype = 4
 
@@ -156,36 +160,37 @@
 	name = "Desert Rider Almah"
 	tutorial = "Almah are those skilled in both magyck and swordsmanship, but excelling in nothing."
 	outfit = /datum/outfit/job/roguetown/mercenary/desert_rider_almah
-	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_MAGEARMOR, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_MAGEARMOR)
 	subclass_stats = list(
 		STATKEY_SPD = 3,
 		STATKEY_WIL = 2,
 		STATKEY_INT = 2,
 		STATKEY_PER = -1
 	)
+	subclass_spellpoints = 15
+	subclass_skills = list(
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
+		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+	)
 
 /datum/outfit/job/roguetown/mercenary/desert_rider_almah/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("Almah are those skilled in both magyck and swordsmanship, but excelling in nothing."))
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/repulse)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
-		H.mind.adjust_spellpoints(15)
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/raneshen
 	neck = /obj/item/clothing/neck/roguetown/gorget/copper
 	mask = /obj/item/clothing/mask/rogue/facemask/copper
@@ -195,23 +200,21 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
 	backr = /obj/item/storage/backpack/rogue/satchel/black
+	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary,
 		/obj/item/rogueweapon/huntingknife/idagger/navaja,
 		/obj/item/rogueweapon/scabbard/sheath,
-		/obj/item/clothing/neck/roguetown/shalal,
 		/obj/item/spellbook_unfinished/pre_arcyne,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
-	H.grant_language(/datum/language/celestial)
 
 	shoes = /obj/item/clothing/shoes/roguetown/shalal
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 	beltl = /obj/item/rogueweapon/scabbard/sword
-	beltr = /obj/item/rogueweapon/scabbard/sword
 	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-	
+
 	H.merctype = 4
 
 

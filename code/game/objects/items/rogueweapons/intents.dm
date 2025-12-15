@@ -234,8 +234,11 @@
 	if(mob_charge_effect)
 		mastermob?.vis_contents -= mob_charge_effect
 
-
 /datum/intent/proc/on_mmb(atom/target, mob/living/user, params)
+	return
+
+// Do something special when this intent is applied to a living target, H being the receiver and user being the attacker
+/datum/intent/proc/spec_on_apply_effect(mob/living/H, mob/living/user, params)
 	return
 
 /datum/intent/use
@@ -332,6 +335,19 @@
 	clickcd = 14 // Just like knife pick!
 	swingdelay = 12
 
+/datum/intent/pick/bad	//One-handed intents
+	name = "sluggish pick"
+	icon_state = "inpick"
+	attack_verb = list("picks","impales")
+	hitsound = list('sound/combat/hits/pick/genpick (1).ogg', 'sound/combat/hits/pick/genpick (2).ogg')
+	penfactor = 60
+	animname = "strike"
+	item_d_type = "stab"
+	blade_class = BCLASS_PICK
+	chargetime = 0
+	clickcd = 16 // Just like knife pick!
+	swingdelay = 16
+
 /datum/intent/pick/ranged
 	name = "ranged pick"
 	icon_state = "inpick"
@@ -374,7 +390,7 @@
 	charging_slowdown = 3
 	warnoffset = 20
 	var/strength_check = FALSE //used when we fire HEAVY bows
-	
+
 /datum/intent/proc/arc_check()
 	return FALSE
 
@@ -457,7 +473,7 @@
 	miss_text = "claw at the air"
 	miss_sound = "punchwoosh"
 	item_d_type = "slash"
-	
+
 
 /datum/intent/unarmed/shove
 	name = "shove"
@@ -636,6 +652,7 @@
 	item_d_type = "blunt"
 	intent_effect = /datum/status_effect/debuff/dazed
 	target_parts = list(BODY_ZONE_HEAD)
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
 /*/datum/intent/effect/daze/shield
 	intent_effect = /datum/status_effect/debuff/dazed/shield

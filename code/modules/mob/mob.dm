@@ -481,25 +481,51 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return
 
 	if(isliving(src) && src.m_intent != MOVE_INTENT_SNEAK && src.stat != DEAD)
-		var/message = "[src] looks at"
 		var/target = "\the [A]"
+		var/message = "[src] looks at"
 		if(!isturf(A))
 			if(A == src)
 				message = "[src] looks over"
 				target = "themselves"
-			else if(A.loc == src)
+			if(A.loc == src)
 				target = "[src.p_their()] [A.name]"
-			else if(A.loc.loc == src)
+			if(A.loc.loc == src)
 				message = "[src] looks into"
 				target = "[src.p_their()] [A.loc.name]"
-			else if(isliving(A) && src.cmode)
+			if(isliving(A))
 				var/mob/living/T = A
-				if(!iscarbon(T))
-					target = "\the [T.name]'s [T.simple_limb_hit(zone_selected)]"
-				if(iscarbon(T) && T != src)
-					target = "[T]'s [parse_zone(zone_selected)]"
-			if(m_intent != MOVE_INTENT_SNEAK)
-				visible_message(span_emote("[message] [target]."))
+				var/hitzone = T.simple_limb_hit(zone_selected)
+				var/behind = FALSE
+				var/grabbing = FALSE
+				var/uncovered = get_location_accessible(T, zone_selected)
+				var/penised = FALSE
+				var/pussied = FALSE
+				var/strcheck = FALSE
+				if((src != T && src.dir == T.dir)  || (src == T && fixedeye))
+					behind = TRUE
+				if(ishuman(src))
+					var/obj/item/grabbing/G = get_active_held_item()
+					if(istype(G))
+						if(G.grabbed == T)
+							if(G.sublimb_grabbed == zone_selected)
+								grabbing = TRUE
+				if(!ishuman(T) && hitzone)
+					target = "\the [T.name]'s [hitzone]"
+				else if(ishuman(T))
+					var/mob/living/carbon/human/target_human = T
+					if(target_human.getorganslot(ORGAN_SLOT_PENIS))
+						penised = TRUE
+					if(target_human.getorganslot(ORGAN_SLOT_VAGINA))
+						pussied = TRUE
+					if(T.STASTR >= 12)
+						strcheck = TRUE
+					if(T == src)
+						var/parsed_zone = parse_zone_fancy(zone_selected, cmode, cmode, Adjacent(T), behind, T.resting, grabbing, fixedeye, uncovered, penised, pussied, strcheck, TRUE)
+						if(parsed_zone)
+							target = "[src.p_their()] [parsed_zone]"
+					else
+						target = "[T]'s [parse_zone_fancy(zone_selected, cmode, T.cmode, Adjacent(T), behind, T.resting, grabbing, fixedeye, uncovered, penised, pussied, strcheck)]"
+			visible_message(span_emote("[message] [target]."))
 
 	var/list/result = A.examine(src)
 	if(result)
@@ -796,8 +822,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/Stat()
 	..()
 	// && check_rights(R_ADMIN,0)
-	var/ticker_time = world.time - SSticker.round_start_time
-	var/time_left = SSgamemode.round_ends_at - ticker_time
+	var/time_left = SSgamemode.round_ends_at - world.time
 	var/days = "TWILIGHT"
 	switch(GLOB.dayspassed)
 		if(1)
@@ -817,24 +842,23 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 	if(client)
 		if(statpanel("RoundInfo"))
-			stat("ROUND ID: [GLOB.rogue_round_id]")
-			stat("ROUND TIME: [time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0)] [world.time - SSticker.round_start_time]")
-			if(SSgamemode.roundvoteend)
-				stat("ROUND END: [DisplayTimeText(time_left)]")
-			stat("DAY OF WEEK: [days]" )
-			if(client?.holder)
-				stat("Round TrueTime: [worldtime2text()] [world.time]")
-			stat("Map: [SSmapping.config?.map_name || "Loading..."]")
+			stat(null, "MAP: [SSmapping.config?.map_name || "Loading..."]")
 			var/datum/map_config/cached = SSmapping.next_map_config
 			if(cached)
-				stat("Next Map: [cached.map_name]")
-			stat("Time of Day: [GLOB.tod]")
+				stat(null, "Next Map: [cached.map_name]")
+			stat(null, "ROUND ID: [GLOB.rogue_round_id ? GLOB.rogue_round_id : "NULL"]")
+			stat(null, "ROUND TIME: [time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0)] [world.time - SSticker.round_start_time]")
+			if(SSgamemode.roundvoteend)
+				stat("ROUND END: [DisplayTimeText(time_left)]")
 			if(client?.holder)
-				stat("Real Time: [station_time_timestamp()] [station_time()]")
-			stat("Ping: [round(client?.lastping, 1)]ms (Average: [round(client?.avgping, 1)]ms)")
-			stat("Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG: ([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
-			if(client?.holder)
-				stat(null, "Player count: [GLOB.clients.len]")
+				stat(null, "ROUND TrueTime: [worldtime2text()] [world.time]")
+			stat(null, "TIMEOFDAY: [days] ᛉ [uppertext(GLOB.tod)] ᛉ [station_time_timestamp("hh:mm")]")
+			stat(null, "IC Time: [station_time_timestamp()] [station_time()]")
+			stat(null, "PING: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
+			stat(null, "TIME DILATION: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
+			if(check_rights(R_ADMIN,0))
+				stat(null, SSmigrants.get_status_line())
+				stat(null, "Player count: [GLOB.clients.len]") // If someone deletes this again I will slap your balls
 
 	if(client && client.holder && check_rights(R_DEBUG,0))
 		if(statpanel("MC"))

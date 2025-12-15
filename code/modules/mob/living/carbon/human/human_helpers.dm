@@ -45,9 +45,9 @@
 	if(id_name)
 		return id_name
 	var/list/d_list = get_mob_descriptors()
-	var/height_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_HEIGHT), "%DESC1%"))]"
+	var/trait_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
 	var/stature_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_STATURE), "%DESC1%"))]"
-	var/descriptor_name = "[height_desc] [stature_desc]"
+	var/descriptor_name = "[trait_desc] [stature_desc]"
 	if(descriptor_name != " ")
 		return descriptor_name
 	return "Unknown"
@@ -63,7 +63,7 @@
 	if( istype(src, /mob/living/carbon/human/species/skeleton)) //SPOOKY BONES
 		return real_name
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
-	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || !real_name || (O.skeletonized && !ritual_skeletonization && !mind?.has_antag_datum(/datum/antagonist/lich)))	//disfigured. use id-name if possible
+	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || !real_name || (O.skeletonized && !mind?.has_antag_datum(/datum/antagonist/lich)))	//disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -131,7 +131,23 @@
 		used_str = get_str_arms(used_hand)
 
 	if(used_str >= 11)
-		damage = max(damage + (damage * ((used_str - 10) * 0.3)), 1)
+		var/bonus = 0
+
+		if(used_str <= 14)
+			// Normal scaling: +20% per point over 10
+			bonus = (used_str - 10) * 0.2
+		else
+			// Diminishing returns after 14
+			// Start with the full +0.8 from 14 STR
+			bonus = 0.8
+			var/extra = used_str - 14
+			// Each point beyond 14 gives a smaller bonus than the last:
+			// e.g., +0.1, +0.075, +0.05625, etc.
+			var/next_bonus = 0.1
+			for(var/i = 1, i <= extra, i++)
+				bonus += next_bonus
+				next_bonus *= 0.75 // reduces 25% each time
+		damage = max(damage + (damage * bonus), 1)
 
 	if(used_str <= 9)
 		damage = max(damage - (damage * ((10 - used_str) * 0.1)), 1)
@@ -144,6 +160,7 @@
 		if(mind.has_antag_datum(/datum/antagonist/werewolf))
 			return 50
 
+	damage += dna.species.punch_damage
 	return damage
 
 /mob/living/carbon/human/is_floor_hazard_immune()
@@ -157,3 +174,58 @@
 	src.mob_timers[MT_INVISIBILITY] = world.time + timeinvis
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon/human, update_sneak_invis), TRUE), timeinvis)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[src] fades back into view."), span_notice("You become visible again.")), timeinvis)
+
+/mob/living/carbon/human/proc/create_walk_to(duration, mob/living/walk_to)
+	ADD_TRAIT(src, TRAIT_MOVEMENT_BLOCKED, VAMPIRE_TRAIT)
+	walk_to_target = walk_to
+	walk_to_duration = duration
+	walk_to_steps_taken = 0
+	walk_to_last_pos = get_turf(src)
+	walk_to_cached_path = null
+
+	// Start the walking process
+	walk_to_caster()
+	addtimer(CALLBACK(src, PROC_REF(remove_walk_to_trait)), 10 SECONDS)
+
+/mob/living/carbon/human/proc/walk_to_caster()
+	if(!walk_to_target || walk_to_steps_taken >= walk_to_duration)
+		remove_walk_to_trait()
+		return
+
+	if(can_frenzy_move())
+		var/turf/current_pos = get_turf(src)
+		var/turf/target_pos = get_turf(walk_to_target)
+
+		// Only regenerate path if we've moved to a different position or don't have a cached path
+		if(!walk_to_cached_path || walk_to_last_pos != current_pos)
+			walk_to_cached_path = get_path_to(src, target_pos, TYPE_PROC_REF(/turf, Heuristic_cardinal_3d), 33, 250, 1)
+			walk_to_last_pos = current_pos
+
+		var/moved = FALSE
+
+		if(length(walk_to_cached_path))
+			walk(src, 0) // Stop any existing walk
+			set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+			step_to(src, walk_to_cached_path[1], 0)
+			face_atom(walk_to_target)
+
+			walk_to_cached_path.Cut(1, 2)
+			moved = TRUE
+		else
+			walk_towards(src, walk_to_target, 0, total_multiplicative_slowdown())
+			moved = TRUE
+
+		if(moved)
+			walk_to_steps_taken++
+
+	addtimer(CALLBACK(src, PROC_REF(walk_to_caster)), total_multiplicative_slowdown())
+
+/mob/living/carbon/human/proc/remove_walk_to_trait()
+	REMOVE_TRAIT(src, TRAIT_MOVEMENT_BLOCKED, VAMPIRE_TRAIT)
+	walk(src, 0) // Stop any walking
+	walk_to_target = null
+	walk_to_duration = 0
+	walk_to_steps_taken = 0
+	walk_to_last_pos = null
+	walk_to_cached_path = null
+

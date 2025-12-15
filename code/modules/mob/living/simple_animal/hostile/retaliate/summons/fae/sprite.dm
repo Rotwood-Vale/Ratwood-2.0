@@ -29,7 +29,7 @@
 	retreat_distance = 3
 	minimum_distance = 0
 	food_type = list()
-	footstep_type = FOOTSTEP_MOB_BAREFOOT
+	movement_type = FLYING
 	pooptype = null
 	STAWIL = 6
 	STACON = 6
@@ -38,6 +38,7 @@
 	simple_detect_bonus = 20
 	deaggroprob = 0
 	defprob = 40
+	candodge = TRUE
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0

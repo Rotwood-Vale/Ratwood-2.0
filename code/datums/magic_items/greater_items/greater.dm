@@ -67,7 +67,7 @@
 	var/last_used
 
 /datum/magic_item/greater/frostveil/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < src.last_used + 10 SECONDS)
+	if(world.time < src.last_used + 20 SECONDS)
 		return
 	if(isliving(target))
 		var/mob/living/targeted = target
@@ -76,7 +76,7 @@
 		src.last_used = world.time
 
 /datum/magic_item/greater/frostveil/on_hit_response(var/obj/item/I, var/mob/living/carbon/human/owner, var/mob/living/carbon/human/attacker)
-	if(world.time < src.last_used + 10 SECONDS)
+	if(world.time < src.last_used + 20 SECONDS)
 		return
 	if(isliving(attacker) && attacker != owner)
 		attacker.apply_status_effect(/datum/status_effect/debuff/cold)
@@ -93,7 +93,7 @@
 		return
 	if(isliving(attacker) && attacker != owner)
 		attacker.adjust_fire_stacks(5)
-		attacker.IgniteMob()
+		attacker.ignite_mob()
 		attacker.visible_message(span_danger("[I] sets [attacker] on fire!"))
 		src.last_used = world.time
 

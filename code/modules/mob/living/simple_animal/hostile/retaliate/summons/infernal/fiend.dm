@@ -37,7 +37,8 @@
 	STASPD = 8
 	simple_detect_bonus = 20
 	deaggroprob = 0
-	defprob = 40
+	canparry = TRUE
+	defprob = 50
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
@@ -53,6 +54,10 @@
 	inherent_spells = list(/obj/effect/proc_holder/spell/self/call_infernals,
 	/obj/effect/proc_holder/spell/invoked/fiend_meteor)
 
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
+
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/death(gibbed)
 	..()
 	var/turf/deathspot = get_turf(src)
@@ -61,6 +66,8 @@
 	new /obj/item/magic/infernal/core(deathspot)
 	new /obj/item/magic/infernal/fang(deathspot)
 	new /obj/item/magic/infernal/fang(deathspot)
+	new /obj/item/magic/infernal/ash(deathspot)
+	new /obj/item/magic/infernal/ash(deathspot)
 	new /obj/item/magic/infernal/ash(deathspot)
 	new /obj/item/magic/infernal/ash(deathspot)
 	new /obj/item/magic/melded/t2(deathspot)

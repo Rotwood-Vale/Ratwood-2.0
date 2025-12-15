@@ -81,6 +81,10 @@
 	var/cached_mailedto
 	var/trapped
 
+/obj/item/paper/examine()
+	. = ..()
+	. += span_info("Use a feather to write on it. You can create a two-page manuscript that can be turned into a book by writing on it and applying it to another piece of paper that also have something written on it.")
+
 /obj/item/paper/get_real_price()
 	if(info)
 		return 0
@@ -233,7 +237,7 @@
 		to_chat(user, span_warning("This parchment is full of strange symbols that start to glow. How odd. Wait-"))
 		sleep(5)
 		victim.adjust_fire_stacks(15)
-		victim.IgniteMob()
+		victim.ignite_mob()
 		victim.visible_message(span_danger("[user] bursts into flames upon reading [src]!"))
 	read(user)
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
@@ -374,7 +378,7 @@
 			to_chat(usr, span_warning("This parchment is full of strange symbols that start to glow. How odd. Wait-"))
 			sleep(5)
 			victim.adjust_fire_stacks(15)
-			victim.IgniteMob()
+			victim.ignite_mob()
 			victim.visible_message(span_danger("[usr] bursts into flames upon reading [src]!"))
 		read(usr)
 

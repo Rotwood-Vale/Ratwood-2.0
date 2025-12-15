@@ -25,7 +25,7 @@
 
 /datum/supply_pack/rogue/ranged_weapons/hurlbat
 	name = "Hurlbat"
-	cost = 50 // 1 Steel Ingot, but a pretty strong weapon. 
+	cost = 50 // 1 Steel Ingot, but a pretty strong weapon.
 	contains = list(/obj/item/rogueweapon/stoneaxe/hurlbat)
 
 /datum/supply_pack/rogue/ranged_weapons/crossbow
@@ -33,13 +33,6 @@
 	cost = 30
 	contains = list(
 					/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-				)
-
-/datum/supply_pack/rogue/ranged_weapons/crossbow/slurbow
-	name = "Slurbow"
-	cost = 30
-	contains = list(
-					/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow,
 				)
 
 /datum/supply_pack/rogue/ranged_weapons/recurvebow
@@ -86,7 +79,7 @@
 
 /datum/supply_pack/rogue/ranged_weapons/quivers/poisonarrows
 	name = "Quiver of Poison Arrows"
-	cost = 100 
+	cost = 100
 	contains = list(
 					/obj/item/quiver/poisonarrows,
 				)

@@ -92,6 +92,8 @@
 		return Move_object(direct)
 	if(!isliving(mob))
 		return mob.Move(n, direct)
+	else if(HAS_TRAIT(mob, TRAIT_IN_FRENZY) || HAS_TRAIT(mob, TRAIT_MOVEMENT_BLOCKED))
+		return FALSE
 	if(mob.stat == DEAD)
 #ifdef TESTSERVER
 		mob.ghostize()
@@ -111,7 +113,7 @@
 		return FALSE
 	else if(mob.is_shifted)
 		mob.unpixel_shift()
-	
+
 	mob.last_client_interact = world.time
 
 	var/mob/living/L = mob  //Already checked for isliving earlier
@@ -135,8 +137,6 @@
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
 
-	if(!mob.Process_Spacemove(direct))
-		return FALSE
 	//We are now going to move
 	var/add_delay = mob.cached_multiplicative_slowdown
 	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
@@ -165,12 +165,16 @@
 			if(L.m_intent == MOVE_INTENT_RUN)
 				L.toggle_rogmove_intent(MOVE_INTENT_WALK)
 	else
-		if(L.dir != target_dir)
-			if(abs(dir2angle(L.dir) - dir2angle(target_dir)) == 180)	//If we do a 180 turn, we cancel our run
-				if(L.m_intent == MOVE_INTENT_RUN)
+		if(prefs.runmode)
+			if(L.dir != target_dir)
+				if(L.m_intent == MOVE_INTENT_RUN && L.sprinted_tiles > 0) //If any turn is done, we cancel our run
 					L.toggle_rogmove_intent(MOVE_INTENT_WALK)
-			// Reset our sprint counter if we change direction
-			L.sprinted_tiles = 0
+					// Classic run-cancelling when turning
+		else if(abs(dir2angle(L.dir) - dir2angle(target_dir)) == 180)	//If we do a 180 turn, we cancel our run
+			if(L.m_intent == MOVE_INTENT_RUN)
+				L.toggle_rogmove_intent(MOVE_INTENT_WALK)
+				// Reset our sprint counter if we change direction
+				L.sprinted_tiles = 0
 
 	. = ..()
 
@@ -251,7 +255,7 @@
 			return FALSE
 		move_delay = world.time + 10
 		to_chat(src, span_warning("[L] still has footing! I need a stronger grip!"))
-		return TRUE    
+		return TRUE
 
 	if(isanimal(mob.pulling))
 		var/mob/living/simple_animal/bound = mob.pulling
@@ -365,79 +369,9 @@
 			L.setDir(direct)
 	return TRUE
 
-
-/**
-  * Handles mob/living movement in space (or no gravity)
-  *
-  * Called by /client/Move()
-  *
-  * return TRUE for movement or FALSE for none
-  *
-  * You can move in space if you have a spacewalk ability
-  */
-/mob/Process_Spacemove(movement_dir = 0)
-	if(spacewalk || ..())
-		return TRUE
-	var/atom/movable/backup = get_spacemove_backup()
-	if(backup)
-		if(istype(backup) && movement_dir && !backup.anchored)
-			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-				to_chat(src, span_info("I push off of [backup] to propel myself."))
-		return TRUE
-	return FALSE
-
-/**
-  * Find movable atoms? near a mob that are viable for pushing off when moving
-  */
-/mob/get_spacemove_backup()
-	for(var/A in orange(1, get_turf(src)))
-		if(isarea(A))
-			continue
-		else if(isturf(A))
-			var/turf/turf = A
-			if(!turf.density && !mob_negates_gravity())
-				continue
-			return A
-		else
-			var/atom/movable/AM = A
-			if(AM == buckled)
-				continue
-			if(ismob(AM))
-				var/mob/M = AM
-				if(M.buckled)
-					continue
-			if(!AM.CanPass(src) || AM.density)
-				if(AM.anchored)
-					return AM
-				if(pulling == AM)
-					continue
-				. = AM
-
-/**
-  * Returns true if a mob has gravity
-  *
-  * I hate that this exists
-  */
-/mob/proc/mob_has_gravity()
-	return has_gravity()
-
-/**
-  * Does this mob ignore gravity
-  */
-/mob/proc/mob_negates_gravity()
-	return FALSE
-
 /// Called when this mob slips over, override as needed
 /mob/proc/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
 	return
-
-/// Update the gravity status of this mob
-/mob/proc/update_gravity(has_gravity, override=FALSE)
-	var/speed_change = max(0, has_gravity - STANDARD_GRAVITY)
-	if(!speed_change)
-		remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAVITY, update=TRUE)
-	else
-		add_movespeed_modifier(MOVESPEED_ID_MOB_GRAVITY, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=speed_change, blacklisted_movetypes=FLOATING)
 
 //bodypart selection verbs - Cyberboss
 //8:repeated presses toggles through head - eyes - mouth
@@ -644,22 +578,40 @@
 	if(!reset && world.time < mob_timers[MT_INVISIBILITY]) // Check if the mob is affected by the invisibility spell
 		rogue_sneaking = TRUE
 		return
+
+	if (stat == DEAD) // we're dead, so be visible if sneaking, and end it there. needed because DeadLife calls this constantly on every dead mob that exists
+		if (rogue_sneaking)
+			animate(src, alpha = initial(alpha), time = 25)
+			spawn(25) regenerate_icons()
+			rogue_sneaking = FALSE
+		return
+
 	var/turf/T = get_turf(src)
 
 	if(!T) //if the turf they're headed to is invalid
 		return
 
-	// This is hacky but it's the only runtime that fixing decap gives
-	// please forgive me...
-	var/light_amount = 0
-	if(T != null)
-		light_amount = T.get_lumcount()
+	var/light_amount = 0 // populated when needed below
+
 	var/used_time = 50
+	var/light_threshold = rogue_sneaking_light_threshhold
 	if(mind)
 		used_time = max(used_time - (get_skill_level(/datum/skill/misc/sneaking) * 8), 0)
+		light_threshold += (get_skill_level(/datum/skill/misc/sneaking) / 200)
 
 	if(rogue_sneaking || reset) //If sneaking, check if they should be revealed
-		if((stat > SOFT_CRIT) || IsSleeping() || (world.time < mob_timers[MT_FOUNDSNEAK] + 30 SECONDS) || !T || reset || (m_intent != MOVE_INTENT_SNEAK) || light_amount >= rogue_sneaking_light_threshhold + (get_skill_level(/datum/skill/misc/sneaking)/200) )
+		var/should_reveal = FALSE
+		// are we crit, sleeping, been recently discovered, have no turf, force-revealed or not in sneak intent? then we should be revealed, end of.
+		if((stat > SOFT_CRIT) || IsSleeping() || (world.time < mob_timers[MT_FOUNDSNEAK] + 30 SECONDS) || !T || reset || (m_intent != MOVE_INTENT_SNEAK))
+			should_reveal = TRUE
+
+		// are we in a area of light that should reveal us?
+		if (!should_reveal)
+			light_amount = T.get_lumcount() // this is moderately expensive, so only check it if we really need to
+			if (light_amount >= light_threshold)
+				should_reveal = TRUE
+
+		if (should_reveal)
 			used_time = round(clamp((50 - (used_time*1.75)), 5, 50),1)
 			animate(src, alpha = initial(alpha), time =	used_time) //sneak skill makes you reveal slower but not as drastic as disappearing speed
 			spawn(used_time) regenerate_icons()
@@ -667,10 +619,12 @@
 			return
 
 	else //not currently sneaking, check if we can sneak
-		if(light_amount < rogue_sneaking_light_threshhold + (get_skill_level(/datum/skill/misc/sneaking)/200) && m_intent == MOVE_INTENT_SNEAK)
-			animate(src, alpha = 0, time = used_time)
-			spawn(used_time + 5) regenerate_icons()
-			rogue_sneaking = TRUE
+		if (m_intent == MOVE_INTENT_SNEAK) // we were not sneaking and are now trying to.
+			light_amount = T.get_lumcount()  // as above, this is moderately expensive, so only check it if we need to.
+			if(light_amount < light_threshold)
+				animate(src, alpha = 0, time = used_time)
+				spawn(used_time + 5) regenerate_icons()
+				rogue_sneaking = TRUE
 	return
 
 ///Checked whenever a mob tries to change their movement intent
@@ -724,7 +678,7 @@
 	if(hud_used?.static_inventory) //Update UI
 		for(var/atom/movable/screen/rogmove/selector in hud_used.static_inventory)
 			selector.update_icon()
-			
+
 	if(!silent)
 		playsound_local(src, 'sound/misc/click.ogg', 100)
 
@@ -816,7 +770,7 @@
 		src.apply_status_effect(/datum/status_effect/buff/magearmor)
 		return TRUE
 
-	
+
 
 /mob/proc/toggle_eye_intent(mob/user) //clicking the fixeye button either makes you fixeye or clears your target
 	if(fixedeye)
@@ -860,7 +814,7 @@
 /mob/proc/canZMove(direction, turf/target)
 	return FALSE
 
-// Ageneral-purpose proc used to centralize checks to skip turf, movement, step, etc. effects 
+// Ageneral-purpose proc used to centralize checks to skip turf, movement, step, etc. effects
 // for mobs that are floating, flying, intangible, etc.
 /mob/proc/is_floor_hazard_immune()
 	return throwing || (movement_type & (FLYING|FLOATING))

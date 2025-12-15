@@ -50,6 +50,19 @@
 	GLOB.traveltiles -= src
 	. = ..()
 
+/obj/structure/fluff/traveltile/proc/return_connected_turfs()
+	if(!aportalgoesto)
+		return list()
+
+	var/list/travels = list()
+	for(var/obj/structure/fluff/traveltile/travel in shuffle(GLOB.traveltiles))
+		if(travel == src)
+			continue
+		if(travel.aportalid != aportalgoesto)
+			continue
+		travels |= get_turf(travel)
+	return travels
+
 /obj/structure/fluff/traveltile/attack_ghost(mob/dead/observer/user)
 	if(!aportalgoesto)
 		return
@@ -167,13 +180,12 @@
 		else
 			to_chat(L, "<b>It is a dead end.</b>")
 			return FALSE
-
 /obj/structure/fluff/traveltile/bandit
 	required_trait = TRAIT_BANDITCAMP
 /obj/structure/fluff/traveltile/vampire
 	required_trait = TRAIT_VAMPMANSION
 /obj/structure/fluff/traveltile/wretch
-	required_trait = TRAIT_HERESIARCH //I'd tie this to trait_outlaw but unfortunately the heresiarch virtue exists so we're making a new trait instead.
+	required_trait = TRAIT_ZURCH //I'd tie this to trait_outlaw but unfortunately the heresiarch virtue exists so we're making a new trait instead.
 /obj/structure/fluff/traveltile/dungeon
 	name = "gate"
 	desc = "This gate's enveloping darkness is so opressive you dread to step through it."
@@ -186,4 +198,16 @@
 	appearance_flags = NONE
 	opacity = FALSE
 
+/obj/structure/fluff/traveltile/magicportal
+	desc = "flickering, warping magick"
+	name = "mysterious portal"
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "shitportal"
+
+/obj/structure/fluff/traveltile/rockhillentrance
+	desc = "Awake from this dream. The road to Rockhill awaits."
+	name = "To Rockhill"
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "underworldportal"
+	
 /obj/structure/fluff/traveltile/eventarea

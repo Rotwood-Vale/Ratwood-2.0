@@ -1,6 +1,6 @@
 /obj/item/storage/magebag
-	name = "summoners pouch"
-	desc = "A pouch for carrying handfuls of summoning ingredients."
+	name = "scholar's pouch"
+	desc = "A pouch to carry handfuls of ingredients for summoning and alchemy."
 	icon_state = "summoning"
 	item_state = "summoning"
 	icon = 'icons/roguetown/clothing/storage.dmi'
@@ -73,6 +73,25 @@
 		/obj/item/seeds/pipeweed = 1,
 	)
 
+/obj/item/storage/magebag/witch
+	name = "witch pouch"
+	desc = "A pouch for carrying handfuls of alchemical ingredients."
+	color = "#210f0c"
+	populate_contents = list(
+		/obj/item/alch/viscera,
+		/obj/item/alch/viscera,
+		/obj/item/alch/viscera,
+		/obj/item/alch/urtica,
+		/obj/item/alch/taraxacum,
+		/obj/item/alch/puresalt,
+		/obj/item/alch/paris,
+		/obj/item/alch/mentha,
+		/obj/item/alch/hypericum,
+		/obj/item/alch/salvia,
+		/obj/item/alch/calendula,
+		/obj/item/seeds/swampweed = 1,
+		/obj/item/seeds/pipeweed = 1,
+		)
 
 /obj/item/chalk
 	name = "stick of chalk"

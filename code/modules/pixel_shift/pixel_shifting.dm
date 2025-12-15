@@ -80,6 +80,8 @@
 		passthroughable |= NORTH | EAST | SOUTH
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
+	if(!mover)	//On rare occasions, there isn't a mover present.
+		return ..()
 	// Make sure to not allow projectiles of any kind past where they normally wouldn't.
 	if(!istype(mover, /obj/projectile) && !mover.throwing && passthroughable & get_dir(src, mover))
 		return TRUE

@@ -167,8 +167,12 @@
 	bundletype = /obj/item/natural/bundle/cloth
 	sellprice = 4
 	var/wet = 0
-	/// Effectiveness when used as a bandage, how much bloodloss we can staunch
-	var/bandage_effectiveness = 0.9
+	/// Effectiveness when used as a bandage, how much it'll lower the bloodloss, bloodloss will get multiplied by this.
+	var/bandage_effectiveness = 0.5 
+	var/bandage_speed = 7 SECONDS
+	///How much you can bleed into the bandage until it needs to be changed
+	var/bandage_health = 150 //75 total blood stopped
+	//bandage_health * (1 - bandage_effectiveness) = total amount of blood saved from one bandage
 
 /obj/item/natural/cloth/Initialize()
 	. = ..()
@@ -264,6 +268,7 @@
 /obj/item/natural/cloth/wash_act()
 	. = ..()
 	wet = 10
+	bandage_health = initial(bandage_health)
 
 /obj/item/natural/cloth/proc/bandage(mob/living/M, mob/user)
 	if(!M.can_inject(user, TRUE))
@@ -277,8 +282,8 @@
 	if(affecting.bandage)
 		to_chat(user, span_warning("There is already a bandage."))
 		return
-	var/used_time = 70
-	used_time -= (H.get_skill_level(/datum/skill/misc/medicine) * 10)
+	var/used_time = bandage_speed
+	used_time -= ((user.get_skill_level(/datum/skill/misc/medicine) * 0.15) * bandage_speed) //15% time reduction per level
 	playsound(loc, 'sound/foley/bandage.ogg', 100, FALSE)
 	if(!do_mob(user, M, used_time))
 		return
@@ -366,6 +371,7 @@
 	icon_state = "fibersroll2"
 	amount = 6
 	firefuel = 30 MINUTES
+	grid_width = 64
 
 /obj/item/natural/bundle/silk
 	name = "silken weave"
@@ -409,7 +415,7 @@
 	icon2 = "clothroll2"
 	icon2step = 10
 	grid_width = 32
-	grid_height = 64
+	grid_height = 32
 
 /obj/item/natural/bundle/stick
 	name = "bundle of sticks"
@@ -488,13 +494,16 @@
 	stacktype = /obj/item/natural/bone
 	stackname = "bones"
 	icon1 = "bonestack1"
-	icon1step = 2
 	icon2 = "bonestack2"
-	icon2step = 4
 
 /obj/item/natural/bundle/bone/full
 	amount = 6
 
+/obj/item/natural/bundle/bone/rdm
+
+/obj/item/natural/bundle/bone/rdm/Initialize()
+	..()
+	amount = rand(2,6)
 /*/obj/item/natural/bone/attackby(obj/item/I, mob/living/user, params)
 	var/mob/living/carbon/human/H = user
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -551,9 +560,9 @@
 	maxamount = 12
 	icon_state = "worm2"
 	icon1 = "worm2"
-	icon1step = 4
+	icon1step = 6
 	icon2 = "worm4"
-	icon2step = 6
+	icon2step = 12
 	icon3 = "worm6"
 	stacktype = /obj/item/natural/worms
 	stackname = "worms"

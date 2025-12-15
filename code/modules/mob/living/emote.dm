@@ -40,6 +40,19 @@
 				return
 			else
 				follower.sate_addiction()
+		if(HAS_TRAIT(follower, TRAIT_CONVICTION))
+			follower.apply_status_effect(/datum/status_effect/buff/healing/prayer, 2)//Mend those wounds.
+			follower.reagents.add_reagent(/datum/reagent/consumable/nutriment, 3)//Just a small sum.
+
+		//Can the Martyr hear this?
+		if(!(patron in ALL_INHUMEN_PATRONS))
+			for (var/mob/living/player in GLOB.player_list)
+				if (player.stat == DEAD || isbrain(player))
+					continue
+				//Do they even have the boon/trait? If so, send it and heal them.
+				if (HAS_TRAIT(player, TRAIT_CONVICTION))
+					to_chat(player, span_dead("I hear the passing of whispers, knowledge forbidden to share: <br>[span_info(prayer)]"))
+					player.apply_status_effect(/datum/status_effect/buff/healing/prayer_power, 6)//GET IT?
 
 	/* admin stuff - tells you the followers name, key, and what patron they follow */
 	var/follower_ident = "[follower.key]/([follower.real_name]) (follower of [patron])"
@@ -51,9 +64,6 @@
 
 	if(SEND_SIGNAL(follower, COMSIG_CARBON_PRAY, prayer) & CARBON_PRAY_CANCEL)
 		return
-
-	for(var/mob/living/LICKMYBALLS in hearers(2,src))	// Lickmyballs = person in crit.
-		LICKMYBALLS.succumb_timer = world.time			//..succumb timer does nothing rn btw..
 
 /datum/emote/living/meditate
 	key = "meditate"
@@ -453,6 +463,7 @@
 	message = "blows a kiss."
 	message_param = "kisses %t."
 	emote_type = EMOTE_VISIBLE
+	use_params_for_runechat = TRUE
 
 /mob/living/carbon/human/verb/emote_kiss()
 	set name = "Kiss"
@@ -493,13 +504,62 @@
 				var/mob/living/carbon/human/L = target
 				if(isliving(L))
 					if(!L.cmode)
-						to_chat(target, span_love("It somewhat stimulating..."))
+						to_chat(target, span_love("It's somewhat stimulating..."))
 			else
 				message_param = "kisses %t on \the [parse_zone(H.zone_selected)]."
 	playsound(target.loc, pick('sound/vo/kiss (1).ogg','sound/vo/kiss (2).ogg'), 100, FALSE, -1)
 	if(user.mind)
-		GLOB.azure_round_stats[STATS_KISSES_MADE]++
+		record_round_statistic(STATS_KISSES_MADE)
+		if(target.mind)
+			SEND_SIGNAL(target, COMSIG_MOB_KISSED)
+		SEND_SIGNAL(user, COMSIG_MOB_KISS)
 
+/datum/emote/living/lick
+	key = "lick"
+	key_third_person = "licks"
+	message = "licking."
+	message_param = "licks %t."
+	emote_type = EMOTE_VISIBLE
+	use_params_for_runechat = TRUE
+
+/mob/living/carbon/human/verb/emote_lick()
+	set name = "Lick"
+	set category = "Emotes"
+	emote("lick", intentional = TRUE, targetted = TRUE)
+
+/datum/emote/living/lick/adjacentaction(mob/user, mob/target)
+	. = ..()
+	message_param = initial(message_param)
+	if(!user || !target)
+		return
+	if(ishuman(user) && ishuman(target))
+		var/mob/living/carbon/human/J = user
+		var/do_change
+		if(target.loc == user.loc)
+			do_change = TRUE
+		if(!do_change)
+			if(J.pulling == target)
+				do_change = TRUE
+		if(do_change)
+			if(J.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+				message_param = "licks %t lips."
+			else if(J.zone_selected == BODY_ZONE_PRECISE_EARS)
+				message_param = "licks the ear of %t."
+				var/mob/living/carbon/human/O = target
+				if(iself(O) || ishalfelf(O) || isdarkelf(O))
+					if(!O.cmode)
+						to_chat(target, span_love("It tickles..."))
+			else if(J.zone_selected == BODY_ZONE_PRECISE_GROIN)
+				message_param = "licks %t between the legs."
+				var/mob/living/carbon/human/M = target
+				if(isliving(M))
+					if(!M.cmode)
+						to_chat(target, span_love("It's somewhat stimulating..."))
+			else if(J.zone_selected == BODY_ZONE_HEAD)
+				message_param = "licks %t on the cheek."
+			else
+				message_param = "licks %t on \the [parse_zone(J.zone_selected)]."
+	playsound(target.loc, pick("sound/vo/lick.ogg"), 100, FALSE, -1)
 
 /datum/emote/living/spit
 	key = "spit"
@@ -557,39 +617,47 @@
 	if(ishuman(target))
 		playsound(target.loc, pick('sound/body/hug.ogg'), 100, FALSE, -1)
 		if(user.mind)
-			GLOB.azure_round_stats[STATS_HUGS_MADE]++
+			record_round_statistic(STATS_HUGS_MADE)
 			SEND_SIGNAL(user, COMSIG_MOB_HUGGED, target)
 
 /datum/emote/living/holdbreath
-	key = "hold"
-	key_third_person = "holds"
-	message = "begins to hold their breath."
-	stat_allowed = SOFT_CRIT
+    key = "hold"
+    key_third_person = "holds"
+    message = null
 
 /mob/living/carbon/human/verb/emote_hold()
-	set name = "Hold Breath"
-	set category = "Emotes"
-
-	emote("hold", intentional = TRUE)
+    set name = "Hold Breath"
+    set category = "Emotes"
+    emote("hold", intentional = TRUE)
 
 /datum/emote/living/holdbreath/can_run_emote(mob/living/user, status_check = TRUE, intentional)
-	. = ..()
-	if(. && intentional && !HAS_TRAIT(user, TRAIT_HOLDBREATH) && !HAS_TRAIT(user, TRAIT_PARALYSIS))
-		to_chat(user, span_warning("I'm not desperate enough to do that."))
-		return FALSE
+    . = ..()
+    if(!.)
+        return FALSE
+    return TRUE
 
 /datum/emote/living/holdbreath/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(.)
-		if(HAS_TRAIT(user, TRAIT_HOLDBREATH))
-			REMOVE_TRAIT(user, TRAIT_HOLDBREATH, "[type]")
-		else
-			ADD_TRAIT(user, TRAIT_HOLDBREATH, "[type]")
+    if(!ishuman(user))
+        return FALSE
 
-/datum/emote/living/holdbreath/select_message_type(mob/user, intentional)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_HOLDBREATH))
-		. = "stops holding their breath."
+    var/mob/living/carbon/human/H = user
+    var/is_holding = HAS_TRAIT(H, TRAIT_HOLDBREATH)
+
+    if(is_holding)
+        REMOVE_TRAIT(H, TRAIT_HOLDBREATH, "[type]")
+        H.visible_message(
+            span_notice("[H] stops holding [H.p_their()] breath."),
+            span_notice("You stop holding your breath.")
+        )
+    else
+        ADD_TRAIT(H, TRAIT_HOLDBREATH, "[type]")
+        H.visible_message(
+            span_notice("[H] begins to hold [H.p_their()] breath."),
+            span_notice("You begin to hold your breath.")
+        )
+
+    return TRUE
+
 
 /datum/emote/living/slap
 	key = "slap"
@@ -655,7 +723,7 @@
 /datum/emote/living/laugh/run_emote(mob/user, params, type_override, intentional, targetted)
 	. = ..()
 	if(. && user.mind)
-		GLOB.azure_round_stats[STATS_LAUGHS_MADE]++
+		record_round_statistic(STATS_LAUGHS_MADE)
 
 /datum/emote/living/laugh
 	key = "laugh"
@@ -776,6 +844,8 @@
 	if(.)
 		for(var/mob/living/carbon/human/L in viewers(7,user))
 			if(L == user)
+				if(L.has_flaw(/datum/charflaw/addiction/masochist))
+					L.sate_addiction()
 				continue
 			if(L.has_flaw(/datum/charflaw/addiction/sadist))
 				L.sate_addiction()
@@ -799,7 +869,9 @@
 	if(.)
 		for(var/mob/living/carbon/human/L in viewers(7,user))
 			if(L == user)
-				continue
+				if(L.has_flaw(/datum/charflaw/addiction/masochist))
+					L.sate_addiction()
+				continue // i hope this shit works.
 			if(L.has_flaw(/datum/charflaw/addiction/sadist))
 				L.sate_addiction()
 
@@ -815,7 +887,9 @@
 	if(.)
 		for(var/mob/living/carbon/human/L in viewers(7,user))
 			if(L == user)
-				continue
+				if(L.has_flaw(/datum/charflaw/addiction/masochist))
+					L.sate_addiction()
+				continue // i hope this shit works.
 			if(L.has_flaw(/datum/charflaw/addiction/sadist))
 				L.sate_addiction()
 
@@ -921,7 +995,7 @@
 /datum/emote/living/rage/run_emote(mob/user, params, type_override, intentional, targetted)
 	. = ..()
 	if(. && user.mind)
-		GLOB.azure_round_stats[STATS_WARCRIES]++
+		record_round_statistic(STATS_WARCRIES)
 
 /datum/emote/living/attnwhistle
 	key = "attnwhistle"
@@ -1602,6 +1676,19 @@
 
 	emote("blink", intentional = TRUE)
 
+/datum/emote/living/stomp
+	key = "stomp"
+	key_third_person = "stomps!"
+	message = "stomps!"
+	emote_type = EMOTE_VISIBLE
+	show_runechat = FALSE
+
+/mob/living/carbon/human/verb/emote_stomp()
+	set name = "Stomp"
+	set category = "Noises"
+
+	emote("stomp", intentional = TRUE)
+
 /datum/emote/living/snap2
 	key = "snap2"
 	key_third_person = "finger snaps twice!"
@@ -1811,6 +1898,19 @@
 	set category = "Noises"
 
 	emote("yip", intentional = TRUE)
+
+/datum/emote/living/yap
+	key = "yap"
+	key_third_person = "yaps"
+	message = "yaps!"
+	emote_type = EMOTE_AUDIBLE
+	message_muffled = "makes a muffled yap!"
+	is_animal = TRUE
+	show_runechat = FALSE
+/mob/living/carbon/human/verb/yap()
+	set name = "Yap"
+	set category = "Noises"
+	emote("yap", intentional = TRUE)
 
 /* Vomit emote */
 /mob/living/carbon/human/verb/emote_vomit()

@@ -84,6 +84,7 @@
 
 //Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	SEND_SIGNAL(owner, COMSIG_MOB_ORGAN_REMOVED, src, special, drop_if_replaced)
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -106,7 +107,6 @@
 		qdel(src)
 		return
 	..()
-	
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
@@ -164,7 +164,7 @@
 
 /obj/item/reagent_containers/food/snacks/organ/On_Consume(mob/living/eater)		//Graggarites looove eating organs, they loooove eating organs!
 	if(HAS_TRAIT(eater, TRAIT_ORGAN_EATER))
-		eat_effect = /datum/status_effect/buff/foodbuff
+		eat_effect = /datum/status_effect/buff/snackbuff
 		check_culling(eater)
 		foodtype = RAW | MEAT
 	else
@@ -172,7 +172,8 @@
 		foodtype = initial(foodtype)
 	if(bitecount >= bitesize)
 		record_featured_stat(FEATURED_STATS_CRIMINALS, eater)
-		GLOB.azure_round_stats[STATS_ORGANS_EATEN]++
+		record_round_statistic(STATS_ORGANS_EATEN)
+		check_culling(eater)
 		SEND_SIGNAL(eater, COMSIG_ORGAN_CONSUMED, src.type)
 	. = ..()
 

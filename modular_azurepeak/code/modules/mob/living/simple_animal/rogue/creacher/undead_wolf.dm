@@ -19,15 +19,15 @@
 	base_intents = list(/datum/intent/simple/bite/volf)
 	botched_butcher_results = list(/obj/item/alch/viscera = 1, /obj/item/alch/sinew = 1, /obj/item/natural/bone = 2)
 	butcher_results = list(/obj/item/natural/hide = 1,
-						/obj/item/alch/sinew = 1, 
-						/obj/item/alch/bone = 1, 
+						/obj/item/alch/sinew = 1,
+						/obj/item/alch/bone = 1,
 						/obj/item/alch/viscera = 1,
 						/obj/item/natural/bone = 3)
 	perfect_butcher_results = list(/obj/item/natural/hide = 1,
-						/obj/item/alch/sinew = 2, 
-						/obj/item/alch/bone = 1, 
+						/obj/item/alch/sinew = 2,
+						/obj/item/alch/bone = 1,
 						/obj/item/alch/viscera = 1,
-						/obj/item/natural/fur/wolf = 1, 
+						/obj/item/natural/fur/wolf = 1,
 						/obj/item/natural/bone = 4)
 
 	faction = list("zombie")
@@ -67,12 +67,13 @@
 
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
-	ai_controller = /datum/ai_controller/wolf_undead
+	ai_controller = /datum/ai_controller/undead/wolf
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead/Initialize()
 	. = ..()
 	REMOVE_TRAIT(src, TRAIT_SIMPLE_WOUNDS, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_RIGIDMOVEMENT, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 	src.AddComponent(/datum/component/infection_spreader)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead/death()

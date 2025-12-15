@@ -11,6 +11,12 @@
 	grid_width = 64
 	grid_height = 32
 	sellprice = 0
+	obj_flags = UNIQUE_RENAME
+
+
+/obj/item/cooking/platter/examine()
+	. = ..()
+	. += span_info("Can be renamed with a feather. Name will be overridden by plating or finishing food.")
 
 /*
 NEW SYSTEM
@@ -125,6 +131,7 @@ What it does:
 	desc = "A fancy silver plate often used by the nobility as a symbol of class."
 	icon_state = "platter_silver"
 	sellprice = 48
+	is_silver = TRUE
 
 /obj/item/cooking/platter/gold
 	name = "gold platter"

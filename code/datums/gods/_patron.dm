@@ -4,6 +4,7 @@
 GLOBAL_LIST_EMPTY(patronlist)
 GLOBAL_LIST_EMPTY(patrons_by_faith)
 GLOBAL_LIST_EMPTY(preference_patrons)
+GLOBAL_LIST_EMPTY(prayers)
 
 /datum/patron
 	/// Name of the god
@@ -18,6 +19,8 @@ GLOBAL_LIST_EMPTY(preference_patrons)
 	var/datum/faith/associated_faith = /datum/faith
 	/// Whether or not we are accessible in preferences
 	var/preference_accessible = TRUE
+	/// Is this disabled for most uses? Hides it from both list and sets patron to the default.
+	var/disabled_patron = FALSE
 	/// Whether or not this patron hates undead - Mostly so we know whether miracles should actually harm
 	var/undead_hater = TRUE
 	/// Some gods have related confessions, if they're evil and such
@@ -50,6 +53,17 @@ GLOBAL_LIST_EMPTY(preference_patrons)
 		pious.remove_language(/datum/language/thievescant)
 	for(var/trait in mob_traits)
 		REMOVE_TRAIT(pious, trait, "[type]")
+
+/datum/patron/proc/on_lesser_heal(
+	mob/living/user, 
+	mob/living/target, 
+	message_out, 
+	message_self, 
+	conditional_buff, 
+	situational_bonus,
+	is_inhumen
+	)
+	return
 
 /* -----PRAYERS----- */
 
@@ -91,16 +105,18 @@ GLOBAL_LIST_EMPTY(preference_patrons)
         follower.mob_timers[MT_PSYPRAY] = world.time
 
     . = TRUE //the prayer has succeeded by this point forward
+    GLOB.prayers |= prayer
+    record_round_statistic(STATS_PRAYERS_MADE)
 
-    var/regex/p_name = regex("([patron_name])", "im")
-    if(p_name.Find(prayer))
+    if(findtext(prayer, name))
         reward_prayer(follower)
 
 /// The follower has somehow offended the patron and is now being punished.
 /datum/patron/proc/punish_prayer(mob/living/follower)
-	follower.adjust_divine_fire_stacks(20)
-	follower.IgniteMob()
+	follower.adjust_fire_stacks(20, /datum/status_effect/fire_handler/fire_stacks/divine)
+	follower.ignite_mob()
 	follower.add_stress(/datum/stressevent/psycurse)
+	record_round_statistic(STATS_PEOPLE_SMITTEN)
 
 /// The follower has prayed in a special way to the patron and is being rewarded.
 /datum/patron/proc/reward_prayer(mob/living/follower)

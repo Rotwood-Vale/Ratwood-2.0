@@ -53,6 +53,13 @@
 					/obj/item/rogueweapon/stoneaxe/woodcut,
 				)
 
+/datum/supply_pack/rogue/iron_weapons/quarterstaff
+	name = "Reinforced Quarterstaff - Iron"
+	cost = 25 // 1 Iron Ingot
+	contains = list(
+					/obj/item/rogueweapon/woodstaff/quarterstaff/iron,
+				)
+
 /datum/supply_pack/rogue/iron_weapons/spear
 	name = "Spear"
 	cost = 25 // 1 Iron Ingot
@@ -74,8 +81,8 @@
 					/obj/item/rogueweapon/mace/warhammer,
 				)
 
-/datum/supply_pack/rogue/iron_weapons/zweihander
-	name = "Zweihander"
+/datum/supply_pack/rogue/iron_weapons/claymore
+	name = "Claymore"
 	cost = 40 // 2 Iron Ingot
 	contains = list(
 					/obj/item/rogueweapon/greatsword/zwei,

@@ -35,16 +35,89 @@
 	effectedstats = list(STATKEY_STR = 1, STATKEY_WIL = 1)
 	duration = 2 MINUTES
 
-/datum/status_effect/buff/foodbuff
-	id = "foodbuff"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/foodbuff
-	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
-	duration = 15 MINUTES
+/datum/status_effect/buff/snackbuff
+	id = "snack"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/snackbuff
+	effectedstats = list(STATKEY_WIL = 1)
+	duration = 8 MINUTES
 
-/atom/movable/screen/alert/status_effect/buff/foodbuff
-	name = "Great Meal"
-	desc = ""
+/atom/movable/screen/alert/status_effect/buff/snackbuff
+	name = "Good snack"
+	desc = "Better than plain bread. Tasty."
 	icon_state = "foodbuff"
+
+/datum/status_effect/buff/snackbuff/on_apply() //can't stack two snack buffs, it'll keep the highest one
+	. = ..()
+	owner.add_stress(/datum/stressevent/goodsnack)
+	if(owner.has_status_effect(/datum/status_effect/buff/greatsnackbuff))
+		owner.remove_status_effect(/datum/status_effect/buff/snackbuff)
+	
+
+/datum/status_effect/buff/greatsnackbuff
+	id = "greatsnack"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/greatsnackbuff
+	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
+	duration = 10 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/greatsnackbuff
+	name = "Great Snack!"
+	desc = "Nothing like a great and nutritious snack to help you on that final strech. I feel invigorated."
+	icon_state = "foodbuff"
+
+/datum/status_effect/buff/greatsnackbuff/on_apply()
+	. = ..()
+	owner.add_stress(/datum/stressevent/greatsnack)
+	if(owner.has_status_effect(/datum/status_effect/buff/snackbuff)) //most of the time you technically shouldn't need to check this, but otherwise you get runtimes, so keep it
+		owner.remove_status_effect(/datum/status_effect/buff/snackbuff)
+
+/datum/status_effect/buff/mealbuff
+	id = "meal"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/mealbuff
+	effectedstats = list(STATKEY_CON = 1)
+	duration = 30 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/mealbuff
+	name = "Good meal"
+	desc = "A meal a day keeps the barber away, or at least it makes it slighly easier." 
+	icon_state = "foodbuff"
+
+/datum/status_effect/buff/mealbuff/on_apply()
+	. = ..()
+	owner.add_stress(/datum/stressevent/goodmeal)
+	if(owner.has_status_effect(/datum/status_effect/buff/greatmealbuff))
+		owner.remove_status_effect(/datum/status_effect/buff/mealbuff)
+
+/datum/status_effect/buff/greatmealbuff
+	id = "greatmeal"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/greatmealbuff
+	effectedstats = list(STATKEY_CON = 1, STATKEY_WIL = 1)
+	duration = 30 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/greatmealbuff
+	name = "Great meal!"
+	desc = "That meal was something akin to a noble's feast! It's bound to keep me energized for an entire day."
+	icon_state = "foodbuff"
+
+/datum/status_effect/buff/greatmealbuff/on_apply()
+	. = ..()
+	owner.add_stress(/datum/stressevent/greatmeal)
+	if(owner.has_status_effect(/datum/status_effect/buff/mealbuff))
+		owner.remove_status_effect(/datum/status_effect/buff/mealbuff) //can't stack two meal buffs, it'll keep the highest one
+
+/datum/status_effect/buff/sweet
+	id = "sugar"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/sweet
+	effectedstats = list(STATKEY_LCK = 1)
+	duration = 8 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/sweet
+	name = "Sweet embrace"
+	desc = "Sweets are always a sign of good luck, everything goes well when you eat some of them."
+	icon_state = "foodbuff"
+
+/datum/status_effect/buff/sweet/on_apply()
+	. = ..()
+	owner.add_stress(/datum/stressevent/sweet)
 
 /datum/status_effect/buff/druqks
 	id = "druqks"
@@ -239,6 +312,41 @@
 
 	. = ..()
 
+/datum/status_effect/buff/fermented_crab
+	id = "fermented_crab"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/fermented_crab
+	effectedstats = list(STATKEY_WIL = 2, STATKEY_CON = -2)
+	duration = 5 MINUTES
+	/// TRUE if the user had TRAIT_LIMPDICK and we have to reapply if after the trait expires
+	var/had_limpdick = FALSE
+	/// TRUE if the user had disfunctional pintle and we have to make it disfunctional again on trait expiration
+	var/had_disfunctional_pintle = FALSE
+
+/datum/status_effect/buff/fermented_crab/on_apply()
+	. = ..()
+	if(HAS_TRAIT(owner, TRAIT_LIMPDICK))
+		REMOVE_TRAIT(owner, TRAIT_LIMPDICK, TRAIT_GENERIC)
+		had_limpdick = TRUE
+
+	var/obj/item/organ/penis/pintle = owner.getorganslot(ORGAN_SLOT_PENIS)
+	if(!pintle.functional)
+		pintle.functional = TRUE
+		had_disfunctional_pintle = TRUE
+
+	owner?.sexcon?.adjust_charge(SEX_MAX_CHARGE)
+
+/datum/status_effect/buff/fermented_crab/on_remove()
+	. = ..()
+	if(had_limpdick)
+		ADD_TRAIT(owner, TRAIT_LIMPDICK, TRAIT_GENERIC)
+	if(had_disfunctional_pintle)
+		var/obj/item/organ/penis/pintle = owner.getorganslot(ORGAN_SLOT_PENIS)
+		pintle.functional = FALSE
+
+/atom/movable/screen/alert/status_effect/buff/fermented_crab
+	name = "INVIGORATED"
+	desc = "Fermented crab tasted like shit. But I'm full of vigor now!"
+
 /atom/movable/screen/alert/status_effect/buff/vitae
 	name = "Invigorated"
 	desc = "I have supped on the finest of delicacies: life!"
@@ -429,9 +537,15 @@
 	examine_text = "SUBJECTPRONOUN is bathed in a restorative aura!"
 	var/healing_on_tick = 1
 	var/outline_colour = "#c42424"
+	var/tech_healing_modifier = 1
 
-/datum/status_effect/buff/healing/on_creation(mob/living/new_owner, new_healing_on_tick)
+/datum/status_effect/buff/healing/on_creation(mob/living/new_owner, new_healing_on_tick, is_inhumen = FALSE)
 	healing_on_tick = new_healing_on_tick
+	tech_healing_modifier = SSchimeric_tech.get_healing_multiplier()
+	if(is_inhumen)
+		// The penalty/benefit of healing tech is halved for inhumen followers
+		tech_healing_modifier = 1 + ((tech_healing_modifier - 1) * 0.5)
+	healing_on_tick *= tech_healing_modifier
 	return ..()
 
 /datum/status_effect/buff/healing/on_apply()
@@ -458,6 +572,43 @@
 		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
 		owner.adjustCloneLoss(-healing_on_tick, 0)
 // Lesser miracle effect end
+
+/atom/movable/screen/alert/status_effect/buff/healing/campfire
+	name = "Warming Respite"
+	desc = "The warmth of a fire soothes my ails."
+	icon_state = "buff"
+
+/datum/status_effect/buff/healing/campfire
+	id = "healing_campfire"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/campfire
+	examine_text = null
+	duration = 10 SECONDS
+
+//Self healing for Martyr.
+/datum/status_effect/buff/healing/prayer
+	id = "healing_prayers"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/prayer
+	examine_text = "SUBJECTPRONOUN is burning with divine radiance!"
+	outline_colour = "#b280df"
+	duration = 12 SECONDS
+
+/atom/movable/screen/alert/status_effect/buff/healing/prayer
+	name = "Conviction"
+	desc = "By faith alone, I will mend."
+	icon_state = "buff"
+
+//BY FAITH ALONE. When Martyr heals via another Tennite praying.
+/datum/status_effect/buff/healing/prayer_power
+	id = "healing_prayers"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/prayer_power
+	examine_text = "SUBJECTPRONOUN is lit by divine radiance!"
+	outline_colour = "#b280df"
+	duration = 2 SECONDS
+
+/atom/movable/screen/alert/status_effect/buff/healing/prayer_power
+	name = "Blessed Respite"
+	desc = "By faith, I lyve."
+	icon_state = "buff"
 
 #define BLOODHEAL_DUR_SCALE_PER_LEVEL 3 SECONDS
 #define BLOODHEAL_RESTORE_DEFAULT 5
@@ -1037,6 +1188,29 @@
 	to_chat(owner, span_warning("My mind is my own again, no longer awash with foggy peace!"))
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
 
+//A lesser variant of Eoran blessing meant for peacecake consumption.
+/atom/movable/screen/alert/status_effect/buff/peacecake
+	name = "Lesser blessing of Eora"
+	desc = "I feel my heart lighten. All my worries ease away."
+	icon_state = "buff"
+
+/datum/status_effect/buff/peacecake
+	id = "peacecake"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/peacecake
+	duration = 5 MINUTES
+
+/datum/status_effect/buff/peacecake/on_apply()
+	. = ..()
+	to_chat(owner, span_green("Everything feels better."))
+	owner.add_stress(/datum/stressevent/pacified)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
+	playsound(owner, 'sound/misc/peacefulwake.ogg', 100, FALSE, -1)
+
+/datum/status_effect/buff/peacecake/on_remove()
+	. = ..()
+	to_chat(owner, span_warning("My mind is clear again, no longer clouded with foggy peace!"))
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
+
 /datum/status_effect/buff/call_to_arms
 	id = "call_to_arms"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/call_to_arms
@@ -1315,25 +1489,25 @@
 	desc = "I am magically swift."
 	icon_state = "buff"
 
-/datum/status_effect/buff/magicendurance
-	id = "endurance"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/endurance
+/datum/status_effect/buff/magicwillpower
+	id = "willpower"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/willpower
 	effectedstats = list("willpower" = 3)
 	duration = 20 MINUTES
 
-/atom/movable/screen/alert/status_effect/buff/endurance
-	name = "arcane endurance"
+/atom/movable/screen/alert/status_effect/buff/willpower
+	name = "arcane willpower"
 	desc = "I am magically resilient."
 	icon_state = "buff"
 
-/datum/status_effect/buff/magicendurance/lesser
-	id = "lesser endurance"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/endurance/lesser
+/datum/status_effect/buff/magicwillpower/lesser
+	id = "lesser willpower"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/willpower/lesser
 	effectedstats = list("willpower" = 1)
 	duration = 20 MINUTES
 
-/atom/movable/screen/alert/status_effect/buff/endurance/lesser
-	name = "lesser arcane endurance"
+/atom/movable/screen/alert/status_effect/buff/willpower/lesser
+	name = "lesser arcane willpower"
 	desc = "I am magically resilient."
 	icon_state = "buff"
 
@@ -1402,3 +1576,65 @@
 	name = "Good Loving"
 	desc = "Some good loving has left me feeling very fortunate."
 	icon_state = "stressg"
+
+/datum/status_effect/buff/massage
+	id = "massage"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/massage
+	effectedstats = list(STATKEY_CON = 1)
+	duration = 30 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/massage
+	name = "Massage"
+	desc = "My muscles feel relaxed"
+	icon_state = "buff"
+
+/datum/status_effect/buff/goodmassage
+	id = "goodmassage"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/goodmassage
+	effectedstats = list(STATKEY_CON = 1, STATKEY_SPD = 1, STATKEY_STR = 1)
+	duration = 30 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/goodmassage
+	name = "Good Massage"
+	desc = "My muscles feel relaxed and better than before"
+	icon_state = "buff"
+
+/datum/status_effect/buff/greatmassage
+	id = "greatmassage"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/greatmassage
+	effectedstats = list(STATKEY_CON = 2, STATKEY_SPD = 1, STATKEY_STR = 1, STATKEY_LCK =1)
+	duration = 30 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/greatmassage
+	name = "Great Massage"
+	desc = "My body feels better than ever!"
+	icon_state = "buff"
+
+
+/datum/status_effect/buff/refocus
+	id = "refocus"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/refocus
+	effectedstats = list(STATKEY_INT = 2, STATKEY_WIL = -1)
+	duration = 15 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/refocus
+	name = "Refocus"
+	desc = "I've sacrificed some of my learning to help me learn something new"
+	icon_state = "buff"
+
+
+/datum/status_effect/buff/celerity
+	id = "celerity"
+	alert_type = /atom/movable/screen/alert/status_effect/buff
+	effectedstats = list(STATKEY_SPD = 1)
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/buff/celerity/New(list/arguments)
+	effectedstats[STATKEY_SPD] = arguments[2]
+	. = ..()
+
+/datum/status_effect/buff/fotv
+	id = "fotv"
+	alert_type = /atom/movable/screen/alert/status_effect/buff
+	effectedstats = list(STATKEY_SPD = 3, STATKEY_WIL = 1, STATKEY_CON = 1)
+	status_type = STATUS_EFFECT_REPLACE

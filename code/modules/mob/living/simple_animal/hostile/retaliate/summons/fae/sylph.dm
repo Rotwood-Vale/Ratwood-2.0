@@ -34,7 +34,8 @@
 	STASPD = 8
 	simple_detect_bonus = 20
 	deaggroprob = 0
-	defprob = 40
+	defprob = 50
+	candodge = TRUE
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
@@ -44,7 +45,7 @@
 	ranged = TRUE
 	rapid = 3
 	projectiletype = /obj/projectile/magic/frostbolt/greater
-	ranged_message = "throws icey magick"
+	ranged_message = "throws icy magick"
 	var/shroom_cd = 0
 	var/summon_cd = 0
 	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/create_shrooms)
@@ -81,6 +82,8 @@
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/proc/create_shroom(atom/target)
+	if(!target)
+		return
 	target.visible_message(span_boldwarning("Kneestingers pop out from the ground around [target]!"))
 	var/turf/target_turf = target // need to handle it this way so player sylphs can target turfs with this spell
 	if(isliving(target))
@@ -107,7 +110,6 @@
 	update_icon()
 	spill_embedded_objects()
 	qdel(src)
-
 
 /obj/effect/proc_holder/spell/invoked/create_shrooms
 	name = "Spread Kneestingers"

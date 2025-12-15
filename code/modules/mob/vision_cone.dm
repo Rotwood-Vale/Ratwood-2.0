@@ -7,9 +7,6 @@
 /mob
 	var/fovangle
 
-/mob/living/carbon/human
-	fovangle = FOV_DEFAULT
-
 //Procs
 /atom/proc/InCone(atom/center = usr, dir = NORTH)
 	if(get_dist(center, src) == 0 || src == center) return 0
@@ -212,7 +209,10 @@
 	if(!isliving(src) || !isliving(L))
 		return
 	if(!client)
-		return TRUE
+		// NPCs without clients use simple directional vision cone
+		if(L.InCone(src, src.dir))
+			return TRUE
+		return FALSE
 	if(hud_used && hud_used.fov)
 		if(hud_used.fov.alpha != 0)
 			var/list/mobs2hide = list()

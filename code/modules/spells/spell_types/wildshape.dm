@@ -20,8 +20,11 @@
 
 
 	var/list/possible_shapes = list(
+		/mob/living/carbon/human/species/wildshape/bear,
 		/mob/living/carbon/human/species/wildshape/volf,
+		/mob/living/carbon/human/species/wildshape/fox,
 		/mob/living/carbon/human/species/wildshape/cat,
+		/mob/living/carbon/human/species/wildshape/cabbit,
 		/mob/living/carbon/human/species/wildshape/saiga,
 		/mob/living/carbon/human/species/wildshape/spider
 	)
@@ -34,7 +37,7 @@
 			return FALSE
 		if(!istype(M, /mob/living/carbon/human/species/wildshape)) //If we aren't a wildshaped species, we can use this
 			var/list/animal_list = list()
-			
+
 			for(var/path in possible_shapes) //First pass for the names
 				var/mob/living/carbon/human/species/wildshape/A = path
 				animal_list[initial(A.name)] = path
@@ -44,8 +47,6 @@
 			for(var/crecher in possible_shapes) //Second pass to fetch the mob type itself and send it on wildshape_transformation
 				var/mob/living/carbon/human/species/wildshape/B = crecher
 				if(new_wildshape_type == B.name)
-					M.Stun(30)
-					M.Knockdown(30)
 					M.wildshape_transformation(B)
 
 		else //If we are a wildshaped species, we simply un-transform
@@ -73,3 +74,4 @@
 
 /mob/living/carbon/human/species/wildshape/update_inv_shoes() //Prevents weird blood overlays
 	remove_overlay(SHOES_LAYER)
+	remove_overlay(SHOESLEEVE_LAYER)

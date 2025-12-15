@@ -8,7 +8,7 @@
 
 
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = ACCEPTED_RACES
 	tutorial = "How does it feel to be the rat in the cage? You're alone and at the mercy of your captors, kept around as a hostage. You spend your days waiting for the oft chance someone comes to pay your ransom. Might as well start praying to whatever god you find solace in."
 
 	outfit = /datum/outfit/job/roguetown/prisonerr
@@ -20,7 +20,7 @@
 	can_random = FALSE
 
 	cmode_music = 'sound/music/combat_bum.ogg'
-
+	social_rank = SOCIAL_RANK_DIRT
 	advclass_cat_rolls = list(CTAG_PRISONER = 20)
 
 /datum/outfit/job/roguetown/prisonerr/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -57,7 +57,7 @@
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/farming, 5, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/masonry, 1, TRUE)
@@ -194,7 +194,7 @@
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/tanning, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/butchering, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
@@ -228,7 +228,7 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/music, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
@@ -288,7 +288,7 @@
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/butchering, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/farming, 2, TRUE)
@@ -306,7 +306,7 @@
 /datum/outfit/job/roguetown/prisoner_seamstress/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
 	..() // Call base prisoner outfit for collar/loincloth
-	H.adjust_skillrank(/datum/skill/misc/sewing, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
@@ -336,7 +336,7 @@
 	H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/masonry, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/ceramics, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/ceramics, 5, TRUE)
 	H.change_stat("willpower", 2)
 	H.change_stat("constitution", 1)
 	H.change_stat("perception", 2)
@@ -360,7 +360,7 @@
 	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 	H.change_stat("intelligence", 3)
 	H.change_stat("fortune", 1)
@@ -403,7 +403,7 @@
 		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
 		H.mind.adjust_spellpoints(6)
@@ -471,85 +471,23 @@
 	H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/masonry, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/butchering, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.change_stat("strength", 2)
-	H.change_stat("willpower", 1)
-	H.change_stat("constitution", 1)
-	H.change_stat("perception", 1)
-
-// Cleric Prisoner subclass
-/datum/advclass/prisonercleric
-	name = "Cleric Prisoner"
-	tutorial = "You cling to your religious symbols for comfort."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/prisoner/cleric
-	category_tags = list(CTAG_PRISONER)
-
-/datum/outfit/job/roguetown/prisoner/cleric/pre_equip(mob/living/carbon/human/H)
-	..()
-	// Add druidic skill for Dendor followers
-	if(istype(H.patron, /datum/patron/divine/dendor))
-		H.adjust_skillrank(/datum/skill/magic/druidic, 3, TRUE)
-		to_chat(H, span_notice("As a follower of Dendor, you have innate knowledge of druidic magic."))
-
-	// Missionary skills without equipment
-	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/magic/holy, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
-	H.cmode_music = 'sound/music/combat_holy.ogg'
-	H.change_stat("intelligence", 2)
-	H.change_stat("willpower", 1)
-	H.change_stat("perception", 2)
-	H.change_stat("speed", 1)
-
-	// Faith-specific cross on wrist instead of neck
-	switch(H.patron?.type)
-		if(/datum/patron/old_god)
-			wrists = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/astrata)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
-		if(/datum/patron/divine/noc)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/noc
-		if(/datum/patron/divine/abyssor)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/abyssor
-		if(/datum/patron/divine/dendor)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/dendor
-			H.cmode_music = 'sound/music/combat_druid.ogg'
-		if(/datum/patron/divine/necra)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/necra
-		if(/datum/patron/divine/pestra)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/pestra
-		if(/datum/patron/divine/ravox)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/ravox
-		if(/datum/patron/divine/malum)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/malum
-		if(/datum/patron/divine/eora)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/eora
-		if(/datum/patron/inhumen/zizo)
-			H.cmode_music = 'sound/music/combat_cult.ogg'
-			wrists = /obj/item/roguekey/inhumen
-		if (/datum/patron/inhumen/matthios)
-			H.cmode_music = 'sound/music/combat_cult.ogg'
-		if(/datum/patron/divine/xylix) // no longer random, rejoice my fellow xylixians!
-			wrists = /obj/item/clothing/neck/roguetown/psicross/xylix
-	// Grant miracles like missionary
-	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR)	//Minor regen, can level up to T4.
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
+	H.change_stat(STATKEY_INT, 1)
+	H.change_stat(STATKEY_LCK, 2)
+	if(H.mind)
+		var/datum/antagonist/new_antag = new /datum/antagonist/prisoner()
+		H.mind.add_antag_datum(new_antag)
+	ADD_TRAIT(H, TRAIT_BANDITCAMP, TRAIT_GENERIC)
+	if(should_wear_femme_clothes(H))
+		H.change_stat(STATKEY_STR, -1)
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
+	else if(should_wear_masc_clothes(H))
+		H.change_stat(STATKEY_STR, -1)
+		pants = /obj/item/clothing/under/roguetown/tights/random
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
+		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/random
 

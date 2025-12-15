@@ -32,6 +32,11 @@
 
 </div>
 
+<h1>
+	<a href="https://github.com/Rotwood-Vale/Ratwood-Keep/blob/main/CONTRIBUTING.md">
+		Contribution Guidelines
+	</a>
+</h1>
 
 ## LICENSE
 Original Fork Originates from [commit c28b351807bad950d2b323ada048190844bbda32](https://github.com/tgstation/tgstation/commit/c28b351807bad950d2b323ada048190844bbda32).

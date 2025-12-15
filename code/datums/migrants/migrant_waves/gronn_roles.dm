@@ -13,7 +13,7 @@
 	..()
 	head = /obj/item/clothing/head/roguetown/helmet/nomadhelmet
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-	pants = /obj/item/clothing/under/roguetown/trou/nomadpants
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	neck = /obj/item/clothing/neck/roguetown/gorget		//You're the big honcho, may as well
@@ -43,11 +43,11 @@
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/butchering, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/tanning, 2, TRUE)
-	H.change_stat(STATKEY_CON = 3)
-	H.change_stat(STATKEY_WIL = 3)
-	H.change_stat(STATKEY_STR = 3)
-	H.change_stat(STATKEY_INT = -1)
-	H.change_stat(STATKEY_LCK = 1)  //Graggar favors your little buttcheeks.
+	H.change_stat(STATKEY_CON, 3)
+	H.change_stat(STATKEY_WIL, 3)
+	H.change_stat(STATKEY_STR, 3)
+	H.change_stat(STATKEY_INT, -1)
+	H.change_stat(STATKEY_LCK, 1)  //Graggar favors your little buttcheeks.
 
 	H.cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
@@ -74,7 +74,7 @@
 	..()
 	head = /obj/item/clothing/head/roguetown/hatfur
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-	pants = /obj/item/clothing/under/roguetown/trou/nomadpants
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
 	neck = /obj/item/clothing/neck/roguetown/leather	//leather gorget just in case. Ur Da Second Big Honcho.
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron	//U Gon Punch Good.
@@ -90,15 +90,15 @@
 	H.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/holy, 3, TRUE)  //May be too much, may not be too much. Can be nerfed. Arcyne is gone in favor of something close to the shaman merc
-	H.change_stat(STATKEY_CON = 2)
-	H.change_stat(STATKEY_WIL = 2)
-	H.change_stat(STATKEY_STR = 1)
-	H.change_stat(STATKEY_INT = 2)
+	H.change_stat(STATKEY_CON, 2)
+	H.change_stat(STATKEY_WIL, 2)
+	H.change_stat(STATKEY_STR, 1)
+	H.change_stat(STATKEY_INT, 2)
 
 	H.cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
@@ -129,7 +129,7 @@
 	..()
 	head = /obj/item/clothing/head/roguetown/helmet/nomadhelmet
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-	pants = /obj/item/clothing/under/roguetown/trou/nomadpants
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	belt = /obj/item/storage/belt/rogue/leather
@@ -162,10 +162,10 @@
 	H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/butchering, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/tanning, 2, TRUE)
-	H.change_stat(STATKEY_CON = 3)
-	H.change_stat(STATKEY_WIL = 2)
-	H.change_stat(STATKEY_STR = 3)
-	H.change_stat(STATKEY_INT = -2)
+	H.change_stat(STATKEY_CON, 3)
+	H.change_stat(STATKEY_WIL, 2)
+	H.change_stat(STATKEY_STR, 3)
+	H.change_stat(STATKEY_INT, -2)
 
 	H.cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
@@ -192,7 +192,7 @@
 	..()
 	head = /obj/item/clothing/head/roguetown/hatfur
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-	pants = /obj/item/clothing/under/roguetown/trou/nomadpants
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	belt = /obj/item/storage/belt/rogue/leather
@@ -214,14 +214,14 @@
 	H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/butchering, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/tanning, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)   //Track That Prey.
-	H.change_stat(STATKEY_PER = 3)
-	H.change_stat(STATKEY_WIL = 1)
-	H.change_stat(STATKEY_STR = 2)
-	H.change_stat(STATKEY_INT = -2)
-	H.change_stat(STATKEY_SPD = 1)
+	H.change_stat(STATKEY_PER, 3)
+	H.change_stat(STATKEY_WIL, 1)
+	H.change_stat(STATKEY_STR, 2)
+	H.change_stat(STATKEY_INT, -2)
+	H.change_stat(STATKEY_SPD, 1)
 	H.cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 
@@ -246,7 +246,7 @@
 /datum/outfit/job/roguetown/gronn/slave/pre_equip(mob/living/carbon/human/H)
 	..()
 	neck = /obj/item/clothing/neck/roguetown/cursed_collar
-	pants = /obj/item/clothing/under/roguetown/trou/nomadpants
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/storage/belt/rogue/pouch
 	beltr = /obj/item/flint
@@ -257,17 +257,17 @@
 	H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/butchering, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/farming, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE) // can mend the wounded a bit.
-	H.change_stat(STATKEY_CON = -2)
-	H.change_stat(STATKEY_WIL = 1)
-	H.change_stat(STATKEY_STR = -2)
-	H.change_stat(STATKEY_INT = 3)
-	H.change_stat(STATKEY_SPD = 2)
+	H.change_stat(STATKEY_CON, -2)
+	H.change_stat(STATKEY_WIL, 1)
+	H.change_stat(STATKEY_STR, -2)
+	H.change_stat(STATKEY_INT, 3)
+	H.change_stat(STATKEY_SPD, 2)
 
 	H.cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 	ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)

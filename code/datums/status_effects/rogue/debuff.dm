@@ -36,22 +36,6 @@
 	desc = "My body can barely hold it!"
 	icon_state = "hunger3"
 
-//SILVER DAGGER EFFECT
-
-/datum/status_effect/debuff/silver_curse
-	id = "silver_curse"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/silver_curse
-	effectedstats = list(STATKEY_STR = -2,STATKEY_PER = -2,STATKEY_INT = -2, STATKEY_CON = -2, STATKEY_WIL = -2, STATKEY_SPD = -2)
-	duration = 45 SECONDS
-
-/atom/movable/screen/alert/status_effect/debuff/silver_curse
-	name = "Silver Curse"
-	desc = "My BANE!"
-	icon_state = "hunger3"
-
-////////////////////
-
-
 /datum/status_effect/debuff/thirstyt1
 	id = "thirsty1"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/thirstyt1
@@ -141,7 +125,7 @@
 	id = "bleedingt1"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	effectedstats = list(STATKEY_SPD = -1)
-	duration = 100
+	duration = -1
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	name = "Dizzy"
@@ -152,7 +136,7 @@
 	id = "bleedingt2"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	effectedstats = list(STATKEY_STR = -1, STATKEY_SPD = -2)
-	duration = 100
+	duration = -1
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	name = "Faint"
@@ -163,7 +147,7 @@
 	id = "bleedingt3"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt3
 	effectedstats = list(STATKEY_STR = -3, STATKEY_SPD = -4)
-	duration = 100
+	duration = -1
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt3
 	name = "Drained"
@@ -309,6 +293,16 @@
 /atom/movable/screen/alert/status_effect/debuff/ritesexpended_heavy
 	name = "Rites Complete"
 	desc = "It will take a lot of time before I can perform a next rite. I am drained."
+	icon_state = "ritesexpended"
+
+/datum/status_effect/debuff/ritesexpended_lesser
+	id = "ritesexpended_lesser"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/ritesexpended_lesser
+	duration = 5 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/ritesexpended_lesser
+	name = "Rites Complete"
+	desc = "It will be a short period before I can perform another rite."
 	icon_state = "ritesexpended"
 
 /datum/status_effect/debuff/call_to_arms
@@ -609,6 +603,186 @@
 		C.add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, multiplicative_slowdown = 1.5)
 
 /datum/status_effect/debuff/overt_punishment/on_remove()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+/datum/status_effect/debuff/lost_naledi_mask
+	id = "naledimask"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/naledimask
+	effectedstats = list(STATKEY_WIL = -3, STATKEY_LCK = -3)
+
+/atom/movable/screen/alert/status_effect/debuff/naledimask
+	name = "Lost Mask"
+	desc = "Djinns and daemons may claim me at any moment without the mask. It is not safe."
+	icon_state = "muscles"
+
+/datum/status_effect/debuff/lost_shaman_hood
+	id = "naledimask"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/shamanhood
+	effectedstats = list(STATKEY_WIL = -3, STATKEY_LCK = -3)
+
+/atom/movable/screen/alert/status_effect/debuff/shamanhood
+	name = "Lost Hood"
+	desc = "The sacred hood is lost. I feel frail and sapped without it."
+
+///////////////////////
+/// CLIMBING STUFF ///
+/////////////////////
+
+/// OPEN SPACE TURF BASED CLIMBING, MOB DRAG-DROP TILE
+/datum/status_effect/debuff/climbing_lfwb
+	id = "climbing_lfwb"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/climbing_lfwb
+	tick_interval = 10
+	var/stamcost = 30
+	var/stamcost_final = 30
+	var/mob/living/carbon/human/climber
+
+/datum/status_effect/debuff/climbing_lfwb/on_creation(mob/living/new_owner, new_stamcost)
+    stamcost = new_stamcost
+    return ..()
+
+/datum/status_effect/debuff/climbing_lfwb/on_apply()
+	. = ..()
+	climber = owner
+	climber.climbing = TRUE
+	climber.put_in_hands(new /obj/item/clothing/wall_grab, TRUE, FALSE, TRUE) // gotta have new before /obj/... , otherwise its gonna die
+
+/datum/status_effect/debuff/climbing_lfwb/tick() // do we wanna do this shit every single second? I guess we do boss
+	. = ..()
+	climber = owner
+	if((istype(climber.backr, /obj/item/clothing/climbing_gear)) || (istype(climber.backl, /obj/item/clothing/climbing_gear)))
+		stamcost_final = stamcost / 2
+		climber.stamina_add(stamcost_final) // every tick interval this much stamina is deducted
+	else
+		stamcost_final = stamcost
+		climber.stamina_add(stamcost_final) // every tick interval this much stamina is deducted
+//	to_chat(climber, span_warningbig("[stamcost_final] REMOVED!")) // debug msg
+	var/turf/tile_under_climber = climber.loc
+	var/list/random_shit_under_climber = list()
+	for(var/obj/structure/flora/newbranch/branch in climber.loc)
+		random_shit_under_climber += branch
+	for(var/obj/machinery/light/rogue/chand/chandelier in climber.loc)
+		random_shit_under_climber += chandelier
+	for(var/obj/structure/kybraxor/fucking_hatch in climber.loc)
+		random_shit_under_climber += fucking_hatch
+	if(!istype(tile_under_climber, /turf/open/transparent/openspace))// if we aren't on open space turf, remove debuff (aka our feet are on solid shi or water)
+		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
+	if(random_shit_under_climber.len) // branches dont remove open space turf, so we have to check for it separately
+		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
+	else if(climber.stamina >= climber.max_stamina) // if we run out of green bar stamina, we fall
+		to_chat(climber, span_dead("I can't hold onto the ledge for any longer!"))
+		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
+		tile_under_climber.zFall(climber)
+
+
+/datum/status_effect/debuff/climbing_lfwb/on_remove()
+	. = ..()
+	climber = owner
+	climber.climbing = FALSE
+	climber.reset_offsets("wall_press")
+	if(climber.is_holding_item_of_type(/obj/item/clothing/wall_grab)) // the slop slops itself holy shit
+		for(var/obj/item/clothing/wall_grab/I in climber.held_items)
+			if(istype(I, /obj/item/clothing/wall_grab))
+				qdel(I)
+				return
+
+/atom/movable/screen/alert/status_effect/debuff/climbing_lfwb
+	name = "Climbing..."
+	desc = "Guess what, you are climbing, buddy."
+	icon_state = "muscles"
+
+/datum/status_effect/debuff/mesmerised
+	id = "mesmerised"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/mesmerised
+	effectedstats = list(STATKEY_STR = -2, STATKEY_LCK = -2, STATKEY_PER = -2, STATKEY_SPD = -2)
+	duration = 30 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/mesmerised
+	name = "Mesmerised"
+	desc = span_warning("Their beauty is otherwordly..")
+	icon_state = "acid"
+
+/datum/status_effect/debuff/liver_failure
+	id = "liver_failure"
+	alert_type = null
+	tick_interval = -1
+	status_type = STATUS_EFFECT_UNIQUE
+
+/datum/status_effect/debuff/liver_failure/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+
+	RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	return ..()
+
+/datum/status_effect/debuff/liver_failure/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
+	return ..()
+
+/datum/status_effect/debuff/liver_failure/proc/on_life(mob/living/carbon/carbon, seconds, times_fired)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(carbon, TYPE_PROC_REF(/mob/living/carbon, liver_failure))
+
+/datum/status_effect/debuff/vampbite
+	id = "Vampire Bite"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/vampbite
+	duration = 30 SECONDS
+
+/datum/status_effect/debuff/vampbite/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_DRUQK, id)
+	owner.add_stress(/datum/stressevent/high)
+	to_chat(owner, span_love("Momentarily, you feel a sharp pain but it quickly shifts into a pleasant feeling washing over you..."))
+	owner.overlay_fullscreen("vampirebite", /atom/movable/screen/fullscreen/weedsm)
+	if(owner?.client)
+		if(owner.client.screen && owner.client.screen.len)
+			var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in owner.client.screen
+			PM.backdrop(owner)
+			PM = locate(/atom/movable/screen/plane_master/game_world_fov_hidden) in owner.client.screen
+			PM.backdrop(owner)
+			PM = locate(/atom/movable/screen/plane_master/game_world_above) in owner.client.screen
+			PM.backdrop(owner)
+
+/datum/status_effect/debuff/vampbite/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_DRUQK, id)
+	owner.remove_stress(/datum/stressevent/high)
+	owner.clear_fullscreen("vampirebite")
+	owner.visible_message("[owner]'s eyes appear to return to normal.")
+	if(owner?.client)
+		if(owner.client.screen && owner.client.screen.len)
+			var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in owner.client.screen
+			PM.backdrop(owner)
+			PM = locate(/atom/movable/screen/plane_master/game_world_fov_hidden) in owner.client.screen
+			PM.backdrop(owner)
+			PM = locate(/atom/movable/screen/plane_master/game_world_above) in owner.client.screen
+			PM.backdrop(owner)
+
+/atom/movable/screen/alert/status_effect/debuff/vampbite
+	name = "Vampire biten"
+	desc = "You are feeling something... Interesting.."
+	icon_state = "acid"
+
+/datum/status_effect/debuff/hobbled
+	id = "hobbled"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/hobbled
+	effectedstats = list(STATKEY_SPD = -2)
+	duration = 8 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/hobbled
+	name = "Hobbled"
+	desc = "You've been struck in the leg! The force has left you staggered!"
+	icon_state = "dazed"
+
+/datum/status_effect/debuff/hobbled/on_apply()
+		. = ..()
+		var/mob/living/carbon/C = owner
+		C.add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, multiplicative_slowdown = 1.5)
+
+/datum/status_effect/debuff/hobbled/on_remove()
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner

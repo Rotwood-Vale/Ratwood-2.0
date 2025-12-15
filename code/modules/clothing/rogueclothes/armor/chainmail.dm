@@ -1,5 +1,4 @@
-//MEDIUM ARMOR//
-
+//LIGHT ARMOR//
 /obj/item/clothing/suit/roguetown/armor/chainmail
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 	name = "haubergeon"
@@ -11,9 +10,11 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = CHAINHIT
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
+	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
+	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
-	armor_class = ARMOR_CLASS_MEDIUM
+	armor_class = ARMOR_CLASS_LIGHT //Experimental change; leave unlisted for now? Offers a weight-class advantage over the otherwise-superior hauberk. We'll see how it goes.
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 	icon_state = "ihaubergeon"
@@ -40,6 +41,8 @@
 	desc = "Polished gilbranze rings and silk, woven together to form a short maille-atekon. The death of a million brought forth the ascension of Zizo; and if a million more must perish to complete Her works, then let it be done."
 	icon_state = "ancientchain"
 	smeltresult = /obj/item/ingot/aaslag
+
+//MEDIUM ARMOR//
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -80,19 +83,20 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	armor_class = ARMOR_CLASS_HEAVY
 	armor = ARMOR_CUIRASS
-	name = "psydonian hauberk"
-	desc = "An ornate steel cuirass with tassets, worn atop thick chainmaille. While it falters against arrows and bolts, \
-			these interlinked layers are superb at warding off the blows of inhumen claws and axes."
+	name = "psydonic hauberk"
+	desc = "A beautiful steel cuirass, decorated with blessed silver fluting and worn atop thick chainmaille. While it falters against arrows and bolts, these interlinked layers are superb at warding off the blows of inhumen claws and axes. </br>'..the knowledge of evil, and the burden of carrying Psydonia's hope upon thine shoulders..' </br>... </br>With some blessed silver and a blacksmith's assistance, I can turn this hauberk into a set of full-plate armor."
 	icon_state = "ornatehauberk"
 	item_state = "ornatehauberk"
 	max_integrity = ARMOR_INT_CHEST_PLATE_PSYDON
+	smeltresult = /obj/item/ingot/silverblessed
+	is_silver = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
 	name = "chainmail corslet"	// corslet, from the old French 'cors' or bodice, with the diminutive 'let', used to describe lightweight military armor since 1500. Chosen here to replace 'bikini', an extreme anachronism.
 	desc = "For the daring, affording maille's protection with light weight."
 	icon_state = "chainkini"
 	item_state = "chainkini"
-	allowed_sex = list(FEMALE)
+	allowed_sex = list(MALE, FEMALE)
 	allowed_race = CLOTHED_RACES_TYPES
 	body_parts_covered = CHEST|GROIN
 	armor_class = ARMOR_CLASS_LIGHT //placed in the medium category to keep it with its parent obj

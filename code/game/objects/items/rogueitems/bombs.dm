@@ -82,7 +82,7 @@
 
 	if(!istype(I, /obj/item/natural/fibers))
 		return
-
+	
 	I.visible_message(
 		span_warning("[user] begins to prepare [src].."),
 		span_notice("I begin to set-up [src] with [I].")
@@ -97,7 +97,7 @@
 			to_chat(user, span_warningbig("Uh oh."))
 			light()
 		return
-
+	
 	var/obj/item/bomb/tripbomb/trip = new /obj/item/bomb/tripbomb(get_turf(src))
 	trip.b_type = type
 	trip.icon_state = icon_state
@@ -136,7 +136,7 @@
 
 /obj/item/bomb/tripbomb/Initialize()
 	..()
-
+	
 /obj/item/bomb/tripbomb/Destroy()
 	..()
 
@@ -153,7 +153,7 @@
 /obj/item/tripwire
 	name = "fibre tripwire"
 	desc = "You almost missed it - phew. Best cut it with a blade to disarm it."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/roguetown/items/misc.dmi'	
 	icon_state = "wire"
 	anchored = TRUE
 	var/obj/item/bomb/tripbomb/payload
@@ -175,7 +175,7 @@
 		new payload.b_type(payload.loc)
 		QDEL_NULL(payload)
 		return ..()
-
+	
 	if(istype(I, /obj/item/natural/fibers))
 		if(payload.wire_trigger.len == 2)
 			to_chat(span_warning("I can not extend [src] anymore."))
@@ -250,7 +250,7 @@
 
 /obj/item/bomb/smoke/explode()
 	var/turf/T = get_turf(src)
-	if(!T)
+	if(!T) 
 		return FALSE
 	playsound(loc, 'sound/items/smokebomb.ogg', 50)
 	var/datum/effect_system/smoke_spread/smoke = new /datum/effect_system/smoke_spread
@@ -258,6 +258,10 @@
 	smoke.start()
 	new /obj/item/ash(T)
 	qdel(src)
+
+/obj/item/grenade/smokebomb
+    parent_type = /obj/item/bomb/smoke
+
 
 /obj/item/tntstick
 	name = "blastpowder stick"
@@ -321,8 +325,8 @@
 			else
 				explosion(T, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 				loud_message("A muted explosion echos in the ears of those whom hear it", hearing_distance = 14)
-				qdel(src) //go into walls /turf/closed/wall/ and see /turf/closed/wall/ex_act. Its bounded with /proc/explosion
-		else
+				qdel(src) //IMPORTANT!! go into walls /turf/closed/wall/ and see /turf/closed/wall/ex_act. Its bounded with /proc/explosion. Same for /obj/structure and /obj/structure/ex_act because if you going to fuck intergity or whatever this shit called players will skin you alive for breaking their equipment and keys
+		else //also /turf/open/floor/ex_act for comment above
 			if(prob(prob2fail))
 				snuff()
 
@@ -405,22 +409,20 @@
 	if(fuze <= 0)
 		explode(TRUE)
 
-
 /obj/item/impact_grenade
 	name = "impact grenade"
-	desc = "Some substance, hidden under some paper and skin."
+	desc = "Some substance, hidden under paper"
+	dropshrink = 0.6
 	icon_state = "impact_grenade"
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 1
-	/// An extra string describing the grenade type.
-	var/additional_desc
+	grid_width = 32
+	grid_height = 32
 
 /obj/item/impact_grenade/Initialize()
 	. = ..()
-	if(additional_desc) // add our extra desc
-		desc = "[initial(desc)] [additional_desc]"
 
 // Define a base explodes() proc that subtypes can override because its now explodes proc
 /obj/item/impact_grenade/proc/explodes()
@@ -433,46 +435,77 @@
 
 /obj/item/impact_grenade/attack_self(mob/user)
 	..()
-	explodes()
+	explodes() 
 
 /obj/item/impact_grenade/explosion
-	additional_desc = "This one sparks..."
+	name = "Impact grenade"
+	desc = "Some substance, hidden under some paper and skin. This one sparks..."
 
 /obj/item/impact_grenade/explosion/explodes()
+	STOP_PROCESSING(SSfastprocess, src)
 	var/turf/T = get_turf(src)
 	if(T)
-		explosion(T, heavy_impact_range = 0, light_impact_range = 2, flame_range = 1, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
-	..() // stop processing and delete self
+		explosion(T, heavy_impact_range = 1, light_impact_range = 2, flame_range = 2, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+		qdel(src)
+
+/obj/item/smokeshell
+	name = "gas belcher shell"
+	desc = "a metal shell for spraying gas out"
+	dropshrink = 0.6
+	icon_state = "smokeshell_blank"
+	icon = 'icons/roguetown/items/misc.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 0
+	throw_speed = 1
+	grid_width = 32
+	grid_height = 32
 
 /obj/item/impact_grenade/smoke
-	additional_desc = "This one emits clouds of harmless smoke..."
-	/// The type of smoke system to use.
+	name = "gas belcher"
+	desc = "A gas belcher. This one emits clouds of harmless smoke..."
+	dropshrink = 0.6
+	icon_state = "smokeshell_blue"
 	var/datum/effect_system/smoke_spread/smoke_type = /datum/effect_system/smoke_spread
+	grid_width = 32
+	grid_height = 32
+
 
 /obj/item/impact_grenade/smoke/explodes()
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/misc/explode/incendiary (1).ogg', 100)
 	var/datum/effect_system/smoke_spread/smoke = new smoke_type
+	new /obj/item/smokeshell (get_turf(src.loc)) //leaving the empty case behind
 	smoke.set_up(2, T) // radius of 2 around T
 	smoke.start()
 	..() // stop processing and delete self
 
 /obj/item/impact_grenade/smoke/poison_gas
-	additional_desc = "Some substance, hidden under some paper and skin. The smell of this one makes you to gasp..."
+	name = "poison gas belcher"
+	desc = "A gas belcher. The smell of this one makes you to gasp..."
+	icon_state = "smokeshell_green"
 	smoke_type = /datum/effect_system/smoke_spread/poison_gas
 
 /obj/item/impact_grenade/smoke/healing_gas
-	additional_desc = "Some substance, hidden under some paper and skin. The smell of this one reminds you the taste of red..."
+	name = "healing gas belcher"
+	desc = "A gas belcher.  The smell of this one reminds you the taste of red..."
+	icon_state = "smokeshell_red"
 	smoke_type = /datum/effect_system/smoke_spread/healing_gas
 
+
 /obj/item/impact_grenade/smoke/fire_gas
-	additional_desc = "It smells like chicken and burns your hand..."
+	name = "burning gas belcher"
+	desc = "A gas belcher. It smells like chicken and burns your hand..."
+	icon_state = "smokeshell_orange"
 	smoke_type = /datum/effect_system/smoke_spread/fire_gas
 
 /obj/item/impact_grenade/smoke/blind_gas
-	additional_desc = "The smell from this makes your eyes water."
+	name = "blinding gas belcher"
+	desc = "A gas belcher. The smell from this makes your eyes water."
+	icon_state = "smokeshell_blue"
 	smoke_type = /datum/effect_system/smoke_spread/blind_gas
 
 /obj/item/impact_grenade/smoke/mute_gas
-	additional_desc = "The smell from this makes your mind blank and your tongue still."
-	smoke_type = /datum/effect_system/smoke_spread/mute_gas
+	name = "silent gas belcher"
+	desc = "A gas belcher. The smell from this makes your mind blank and your tongue still."
+	icon_state = "smokeshell_purple"
+	smoke_type = /datum/effect_system/smoke_spread/mute_gas	

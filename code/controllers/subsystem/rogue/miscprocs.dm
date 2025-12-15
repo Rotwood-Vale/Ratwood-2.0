@@ -16,6 +16,7 @@
 #define CLERIC_REGEN_WEAK 0.1 //Would be better to just do away with devotion entirely, but oh well.
 #define CLERIC_REGEN_MINOR 0.5
 #define CLERIC_REGEN_MAJOR 0.8
+#define CLERIC_REGEN_WITCH 1.5
 #define CLERIC_REGEN_ABSOLVER 5
 
 // Cleric Holder Datums
@@ -51,6 +52,8 @@
 	src.holder = holder
 	holder?.devotion = src
 	src.patron = patron
+	holder?.hud_used?.initialize_bloodpool()
+	holder?.hud_used?.bloodpool.set_fill_color("#3C41A4")
 	if (patron.type == /datum/patron/inhumen/zizo || patron.type == /datum/patron/divine/necra)
 		ADD_TRAIT(holder, TRAIT_DEATHSIGHT, "devotion")
 
@@ -58,6 +61,7 @@
 	. = ..()
 	if (patron.type == /datum/patron/inhumen/zizo || patron.type == /datum/patron/divine/necra)
 		REMOVE_TRAIT(holder, TRAIT_DEATHSIGHT, "devotion")
+	holder?.hud_used?.shutdown_bloodpool()
 	holder?.devotion = null
 	holder = null
 	patron = null
@@ -79,6 +83,12 @@
 
 /datum/devotion/proc/update_devotion(dev_amt, prog_amt, silent = FALSE)
 	devotion = clamp(devotion + dev_amt, 0, max_devotion)
+	holder?.hud_used?.bloodpool?.name = "Devotion: [devotion]"
+	holder?.hud_used?.bloodpool?.desc = "Devotion: [devotion]/[max_devotion]"
+	if(devotion <= 0)
+		holder?.hud_used?.bloodpool?.set_value(0, 1 SECONDS)
+	else
+		holder?.hud_used?.bloodpool?.set_value((100 / (max_devotion / devotion)) / 100, 1 SECONDS)
 	//Max devotion limit
 	if((devotion >= max_devotion) && !silent)
 		to_chat(holder, span_warning("I have reached the limit of my devotion..."))
@@ -120,7 +130,7 @@
 					var/obj/effect/proc_holder/spell/newspell = new spell_type
 					if(!silent)
 						to_chat(holder, span_boldnotice("I have unlocked a new spell: [newspell]"))
-					holder.mind.AddSpell(newspell)
+					holder.mind.AddSpell(newspell, holder)
 					LAZYADD(granted_spells, newspell)
 		if(length(patron.traits_tier))
 			for(var/trait in patron.traits_tier)
@@ -186,6 +196,10 @@
 	if(!devotion)
 		return FALSE
 
+	if (HAS_TRAIT(src, TRAIT_WITCH))
+		to_chat(src, span_warning("What need have I to pray? I draw my power from the old ways, whether my patron likes it or not."))
+		return FALSE
+
 	var/prayersesh = 0
 	visible_message("[src] kneels their head in prayer to the Gods.", "I kneel my head in prayer to [devotion.patron.name].")
 	for(var/i in 1 to 50)
@@ -246,7 +260,7 @@
 	set category = "Virtue"
 
 	if(HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
-		REMOVE_TRAIT(src, TRAIT_COMBAT_AWARE, TRAIT_VIRTUE) 
+		REMOVE_TRAIT(src, TRAIT_COMBAT_AWARE, TRAIT_VIRTUE)
 	else
 		ADD_TRAIT(src, TRAIT_COMBAT_AWARE, TRAIT_VIRTUE)
 	to_chat(src, "I will see [HAS_TRAIT(src, TRAIT_COMBAT_AWARE) ? "more" : "less"] combat information now.")

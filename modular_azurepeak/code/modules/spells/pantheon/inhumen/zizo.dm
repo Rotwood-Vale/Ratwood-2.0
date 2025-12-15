@@ -90,10 +90,17 @@
 
 // T2: just use lesser animate undead for now
 
-/obj/effect/proc_holder/spell/invoked/raise_lesser_undead/miracle
+/obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle
 	miracle = TRUE
 	devotion_cost = 75
 	cabal_affine = TRUE
+	to_spawn = 2
+
+// T3: tames bio_type = undead mobs
+
+/obj/effect/proc_holder/spell/invoked/tame_undead/miracle
+	miracle = TRUE
+	devotion_cost = 100
 
 // T3: Rituos (usable once per sleep cycle, allows you to choose any 1 arcane spell to use for the duration w/ an associated devotion cost. each time you change it, 1 of your limbs is skeletonized, if all of your limbs are skeletonized, you gain access to arcane magic. continuing to use rituos after being fully skeletonized gives you additional spellpoints). Gives you the MOB_UNDEAD flag (needed for skeletonize to work) on first use.
 
@@ -154,7 +161,7 @@
 		user.mind.rituos_spell = null
 
 	user.mind.has_rituos = TRUE
-	
+
 	var/post_rituos = check_ritual_progress(user) // need someone else to rewrite ritous with how it functions now im too inexperienced and drained to do this now (doing this not fun too)
 	if (post_rituos)
 	else
@@ -188,7 +195,7 @@
 		revert_cast()
 		return FALSE
 	var/checkrange = (range + user.get_skill_level(/datum/skill/magic/holy)) //+1 range per holy skill up to a potential of 8.
-	for(var/obj/O in range(checkrange, user))	
+	for(var/obj/O in range(checkrange, user))
 		O.extinguish()
 	for(var/mob/M in range(checkrange, user))
 		for(var/obj/O in M.contents)

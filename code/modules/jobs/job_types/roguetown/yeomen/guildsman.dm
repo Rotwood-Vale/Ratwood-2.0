@@ -8,11 +8,12 @@
 	total_positions = 4
 	spawn_positions = 4
 	advclass_cat_rolls = list(CTAG_GUILDSMEN = 20)
-
-	allowed_races = RACES_ALL_KINDS
+	social_rank = SOCIAL_RANK_YEOMAN
+	allowed_races = ACCEPTED_RACES
 
 	tutorial = "You are a member of the Rotwood Vale Guild of Crafts, a massive guild formed to represent the interests of all craftsmen in the township of Rotwood Vale.\
 	As a Guildsman, you hail from the three most important constituent guilds: The Smith's Guild, the Artificer's Guild, and the Architect's Guild. The Guildsmaster has sway over you, but it is not absolute."
+	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT)
 
 	outfit = /datum/outfit/job/roguetown/guildsman
 	selection_color = JCOLOR_YEOMAN
@@ -28,14 +29,7 @@
 		/datum/advclass/guildsman/blacksmith,
 		/datum/advclass/guildsman/architect
 	)
-
-/datum/job/roguetown/guildsman/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
-	. = ..()
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		H.advsetup = 1
-		H.invisibility = INVISIBILITY_MAXIMUM
-		H.become_blind("advsetup")
+	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
 
 /datum/advclass/guildsman/blacksmith
 	name = "Guild Blacksmith"
@@ -43,12 +37,24 @@
 	outfit = /datum/outfit/job/roguetown/guildsman/blacksmith
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_TRAINED_SMITH)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
 		STATKEY_CON = 2,
 		STATKEY_INT = 1
+	)
+	subclass_skills = list(
+		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_MASTER,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_MASTER,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_MASTER,
+		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/engineering = SKILL_LEVEL_NOVICE, // 1 Engineering to allow them to sub for Artificer role occaisonally
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/guildsman/blacksmith/pre_equip(mob/living/carbon/human/H)
@@ -57,17 +63,6 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	if(prob(50))
 		head = /obj/item/clothing/head/roguetown/hatblu
-	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/blacksmithing, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/armorsmithing, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/smelting, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE) // 1 Engineering to allow them to sub for Artificer role occaisonally
-	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
@@ -118,28 +113,29 @@
 		STATKEY_CON = 1,
 		STATKEY_PER = 1
 	)
+	subclass_skills = list(
+		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE, //reduced for tradeoff
+		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE, //they are builders, but not as good as craftsmen
+		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER, //raising so they don't need to early week grind to get items out, in parity to a smith's armor or weapon skill
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_APPRENTICE, // Artificer makes for a crappy substitute blacksmith but have the same spread
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,	//Just for basic pottery/glass stuff.
+	)
 
 /datum/outfit/job/roguetown/guildsman/artificer/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE) //reduced for tradeoff
-	H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE) //they are builders, but not as good as craftsmen
-	H.adjust_skillrank(/datum/skill/craft/masonry, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/engineering, 5, TRUE) //raising so they don't need to early week grind to get items out, in parity to a smith's armor or weapon skill
-	H.adjust_skillrank(/datum/skill/craft/blacksmithing, 2, TRUE) // Artificer makes for a crappy substitute blacksmith but have the same spread
-	H.adjust_skillrank(/datum/skill/craft/armorsmithing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/lockpicking, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/smelting, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/traps, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/ceramics, 3, TRUE)	//Just for basic pottery/glass stuff.
-
 	head = /obj/item/clothing/head/roguetown/articap
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
 	cloak = /obj/item/clothing/cloak/apron/waist/brown
@@ -159,8 +155,6 @@
 						/obj/item/recipe_book/ceramics = 1,
 						/obj/item/recipe_book/builder = 1,
 						/obj/item/recipe_book/survival = 1,
-						/obj/item/recipe_book/magic = 1,
-						/obj/item/chalk = 1,
 						/obj/item/clothing/mask/rogue/spectacles/golden = 1, //putting them in the bag because bad eye sight virtue strips these
 						/obj/item/contraption/linker = 1,
 						)
@@ -176,7 +170,7 @@
 	outfit = /datum/outfit/job/roguetown/guildsman/architect
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list()
+	traits_applied = list(TRAIT_HOMESTEAD_EXPERT) // They get extra virtue for dipping into lumberjacking
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_WIL = 2,
@@ -184,26 +178,27 @@
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
 	)
+	subclass_skills = list(
+		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/engineering = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/ceramics = SKILL_LEVEL_APPRENTICE,
+	)
 
 /datum/outfit/job/roguetown/guildsman/architect/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/mining, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/carpentry, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/masonry, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/engineering, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/traps, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/ceramics, 2, TRUE)
-
 	head = /obj/item/clothing/head/roguetown/hatblu
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
 	cloak = /obj/item/clothing/cloak/apron/waist/bar
@@ -230,4 +225,5 @@
 						/obj/item/recipe_book/survival = 1,
 						/obj/item/roguekey/crafterguild = 1
 						)
-
+	ADD_TRAIT(H, TRAIT_MASTER_CARPENTER, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MASTER_MASON, TRAIT_GENERIC)

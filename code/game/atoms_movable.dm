@@ -35,6 +35,8 @@
 	glide_size = 6
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+	///Holds information about any movement loops currently running/waiting to run on the movable. Lazy, will be null if nothing's going on (pulled in from Vanderlin)
+	var/datum/movement_packet/move_packet
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 	var/atom/movable/pulling
 	var/nodirchange = FALSE
@@ -70,7 +72,7 @@
 		target = get_step_multiz(source, direction)
 		if(!target)
 			return FALSE
-	return !(movement_type & FLYING) && has_gravity(source) && !throwing
+	return !(movement_type & FLYING) && !throwing
 
 /atom/movable/proc/onZImpact(turf/T, levels)
 	var/atom/highest = T
@@ -212,8 +214,6 @@
 	if(A == loc && pulling.density)
 		return FALSE
 	var/move_dir = get_dir(pulling.loc, A)
-	if(!Process_Spacemove(move_dir))
-		return FALSE
 	pulling.Move(get_step(pulling.loc, move_dir), move_dir, glide_size)
 	return TRUE
 
@@ -416,7 +416,6 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
-		newtonian_move(Dir)
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
 
@@ -440,7 +439,6 @@
 	return TRUE
 
 /atom/movable/Destroy(force)
-	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 
 	unbuckle_all_mobs(force=1)
@@ -480,16 +478,6 @@
 /atom/movable/Crossed(atom/movable/AM, oldloc)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
-/atom/movable/Uncross(atom/movable/AM, atom/newloc)
-	. = ..()
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSS, AM) & COMPONENT_MOVABLE_BLOCK_UNCROSS)
-		return FALSE
-	if(isturf(newloc) && !CheckExit(AM, newloc))
-		return FALSE
-
-/atom/movable/Uncrossed(atom/movable/AM)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
-
 /atom/movable/Bump(atom/A)
 	if(!A)
 		CRASH("Bump was called with no argument.")
@@ -506,7 +494,7 @@
 	var/mob/living/carbon/human/H = null
 	if(ishuman(src.loc))
 		H = src.loc
-	
+
 	. = FALSE
 	if(destination)
 		. = doMove(destination)
@@ -582,39 +570,6 @@
 /atom/movable/proc/setMovetype(newval)
 	movement_type = newval
 
-//Called whenever an object moves and by mobs when they attempt to move themselves through space
-//And when an object or action applies a force on src, see newtonian_move() below
-//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
-//movement_dir == 0 when stopping or any dir when trying to move
-/atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(has_gravity(src))
-		return 1
-
-	if(pulledby)
-		return 1
-
-	if(throwing)
-		return 1
-
-	if(!isturf(loc))
-		return 1
-
-	return 0
-
-
-/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
-	if(!loc || Process_Spacemove(0))
-		inertia_dir = 0
-		return 0
-
-	inertia_dir = direction
-	if(!direction)
-		return 1
-	inertia_last_loc = loc
-	SSspacedrift.processing[src] = src
-	return 1
-
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = 0
 	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
@@ -634,7 +589,7 @@
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, extra = FALSE) //If this returns FALSE then callback will not be called.
 	. = FALSE
-	if (!target || speed <= 0)
+	if (!target || speed <= 0 || move_resist == INFINITY)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
@@ -765,25 +720,6 @@
 // called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
 	return
-
-/atom/movable/proc/get_spacemove_backup()
-	var/atom/movable/dense_object_backup
-	for(var/A in orange(1, get_turf(src)))
-		if(isarea(A))
-			continue
-		else if(isturf(A))
-			var/turf/turf = A
-			if(!turf.density)
-				continue
-			return turf
-		else
-			var/atom/movable/AM = A
-			if(!AM.CanPass(src) || AM.density)
-				if(AM.anchored)
-					return AM
-				dense_object_backup = AM
-				break
-	. = dense_object_backup
 
 //called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
@@ -1116,7 +1052,7 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 /* End language procs */
 /atom/movable/proc/ConveyorMove(movedir)
 	set waitfor = FALSE
-	if(!anchored && has_gravity())
+	if(!anchored)
 		step(src, movedir)
 
 //Returns an atom's power cell, if it has one. Overload for individual items.

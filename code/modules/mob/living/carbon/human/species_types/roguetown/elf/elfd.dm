@@ -62,11 +62,13 @@
 		OFFSET_FACE = list(0,0), OFFSET_BELT_F = list(0,0), OFFSET_BACK = list(0,0), \
 		OFFSET_NECK = list(0,0), OFFSET_MOUTH = list(0,0), OFFSET_PANTS = list(0,0), \
 		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_UNDIES = list(0,1),\
+		OFFSET_BREASTS = list(0,0), \
 		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
 		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
 		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,-1), OFFSET_BACK_F = list(0,-1), \
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		OFFSET_BREASTS_F = list(0,-1), \
 		)
 	inherent_traits = list(TRAIT_WEBWALK)//Not nearly as useful as Woodwalker, but it's something.
 	race_bonus = list(STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1)
@@ -122,6 +124,9 @@
 	stress_examine = TRUE
 	stress_desc = span_red("A loathesome dark elf.")
 
+/datum/species/elf/dark/after_creation(mob/living/carbon/C)
+	C.faction += "spider_lowers"
+
 /datum/species/elf/dark/get_span_language(datum/language/message_language)
 	if(!message_language)
 		return
@@ -140,7 +145,8 @@
 		"Yuethindrynn" = SKIN_COLOR_YUETHINDRYNN,
 		"Koredynn" = SKIN_COLOR_KOREDYNN,
 		"Aiseedrynn" = SKIN_COLOR_AISEEDRYNN,
-		"Grenduskra" = SKIN_COLOR_GRENDUSKRA
+		"Grenduskra" = SKIN_COLOR_GRENDUSKRA,
+		"Hun'sek" = SKIN_COLOR_HUNSEK
 	)
 
 /datum/species/elf/dark/get_hairc_list()

@@ -17,8 +17,8 @@
 	butcher_results = list()
 	faction = list("fae")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	health = 250
-	maxHealth = 250
+	health = 270
+	maxHealth = 270
 	melee_damage_lower = 15
 	melee_damage_upper = 17
 	vision_range = 7
@@ -29,7 +29,7 @@
 	retreat_distance = 0
 	minimum_distance = 0
 	food_type = list()
-	footstep_type = FOOTSTEP_MOB_BAREFOOT
+	movement_type = FLYING
 	pooptype = null
 	STACON = 7
 	STASTR = 9
@@ -37,6 +37,7 @@
 	simple_detect_bonus = 20
 	deaggroprob = 0
 	defprob = 40
+	candodge = TRUE
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0

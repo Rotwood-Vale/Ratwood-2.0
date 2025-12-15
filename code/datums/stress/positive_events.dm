@@ -6,7 +6,7 @@
 /datum/stressevent/seeblessed
 	timer = 30 MINUTES
 	stressadd = -2
-	desc = span_green("Regular visits to Church center my spirit.")
+	desc = span_green("Hallowed ground eases my mind.")
 
 /datum/stressevent/viewsinpunish
 	timer = 5 MINUTES
@@ -63,6 +63,31 @@
 	stressadd = -1
 	desc = span_green("I'm stuffed! Feels good.")
 
+/datum/stressevent/goodsnack
+	timer = 8 MINUTES
+	stressadd = -1
+	desc = list(span_green("That snack tastes pretty good"), span_green("Tasty snack."))
+
+/datum/stressevent/greatsnack
+	timer = 10 MINUTES
+	stressadd = -2
+	desc = list(span_green("That snack was amazing! Can't wait for the next."), span_green("Great snack! I should get another one later."))
+
+/datum/stressevent/goodmeal
+	timer = 10 MINUTES
+	stressadd = -1
+	desc = list(span_green("That meal wasn't half bad"), span_green("A decent meal, finally"))
+
+/datum/stressevent/greatmeal
+	timer = 15 MINUTES
+	stressadd = -2
+	desc = list(span_green("That meal tasted great!"), span_green("I ate like a noble, it was great!"))
+
+/datum/stressevent/sweet
+	timer = 8 MINUTES
+	stressadd = -2
+	desc = list(span_green("Sweets always bring your spirits up"), span_green("Sweet embrace"))
+
 /datum/stressevent/hydrated
 	timer = 10 MINUTES
 	stressadd = -1
@@ -112,6 +137,12 @@
 	stressadd = -1
 	desc = span_blue("Relaxing.")
 	timer = 1 MINUTES
+
+/datum/stressevent/bathwater/on_apply(mob/living/user)
+	. = ..()
+	if(user.client)
+		record_round_statistic(STATS_BATHS_TAKEN)
+		// SEND_SIGNAL(user, COMSIG_BATH_TAKEN)
 
 /datum/stressevent/beautiful
 	stressadd = -2
@@ -188,6 +219,68 @@
 	desc = span_blue("An absolutely exquisite vintage. Indubitably.")
 	timer = 10 MINUTES
 
+/datum/stressevent/favourite_food
+	stressadd = -1
+	desc = span_green("I ate my favourite food!")
+	timer = 5 MINUTES
+
+/datum/stressevent/favourite_food/can_apply(mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(user.has_stress_event(/datum/stressevent/favourite_food))
+		return FALSE
+	else if(ishuman(user))
+		var/mob/living/carbon/human/human_eater = user
+		if(human_eater.culinary_preferences && human_eater.culinary_preferences[CULINARY_FAVOURITE_FOOD])
+			var/favorite_food_type = human_eater.culinary_preferences[CULINARY_FAVOURITE_FOOD]
+			var/obj/item/reagent_containers/food/snacks/favorite_food_instance = favorite_food_type
+			timer = timer * max(initial(favorite_food_instance.faretype), 1)
+			return TRUE
+
+/datum/stressevent/favourite_drink
+	stressadd = -1
+	desc = span_green("I had my favourite drink!")
+	timer = 5 MINUTES
+
+/datum/stressevent/favourite_drink/can_apply(mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(user.has_stress_event(/datum/stressevent/favourite_drink))
+		return FALSE
+	else if(ishuman(user))
+		var/mob/living/carbon/human/human_drinker = user
+		if(human_drinker.culinary_preferences && human_drinker.culinary_preferences[CULINARY_FAVOURITE_DRINK])
+			var/favorite_drink_type = human_drinker.culinary_preferences[CULINARY_FAVOURITE_DRINK]
+			var/datum/reagent/consumable/favorite_drink_instance = favorite_drink_type
+			timer = timer * max(1 + initial(favorite_drink_instance.quality), 1)
+			return TRUE
+
+/datum/stressevent/hated_food
+	stressadd = 1
+	desc = span_red("I had to eat my most hated food!")
+	timer = 10 MINUTES
+
+/datum/stressevent/hated_food/can_apply(mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(user.has_stress_event(/datum/stressevent/hated_food))
+		return FALSE
+
+/datum/stressevent/hated_drink
+	stressadd = 1
+	desc = span_red("I had to consume my most hated drink!")
+	timer = 10 MINUTES
+
+/datum/stressevent/hated_drink/can_apply(mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(user.has_stress_event(/datum/stressevent/hated_drink))
+		return FALSE
+
 /datum/stressevent/meditation
 	timer = 10 MINUTES
 	stressadd = -1
@@ -208,6 +301,11 @@
 	timer = 30 MINUTES
 	stressadd = -5
 	desc = span_green("All my problems have washed away!")
+
+/datum/stressevent/peacecake
+	timer = 5 MINUTES
+	stressadd = -3
+	desc = span_green("My problems ease away.")
 
 /datum/stressevent/noble_bowed_to
 	timer = 5 MINUTES
@@ -261,3 +359,45 @@
 	timer = 5 MINUTES
 	stressadd = -3
 	desc = "<span class='green'>I got some love, and it was wonderful!</span>"
+
+
+/datum/stressevent/dimwitted
+	timer = 10 MINUTES
+	stressadd = -4
+	desc = span_green("Everything is nice and simple...")
+
+/datum/stressevent/feebleminded
+	timer = 10 MINUTES
+	stressadd = -10
+	desc = span_green("Heeh...")
+
+
+/datum/stressevent/champion
+	stressadd = -3
+	desc = span_green("I am near my ward!")
+	timer = 1 MINUTES
+
+/datum/stressevent/ward
+	stressadd = -3
+	desc = span_green("I am near my Champion! Oh, oh, Champion!")
+	timer = 1 MINUTES
+
+/datum/stressevent/blessed_weapon
+	stressadd = -3
+	timer = 999 MINUTES
+	desc = span_green("I'm wielding a BLESSED weapon!")
+
+/datum/stressevent/hand_fed_fruit
+	stressadd = -1
+	timer = 5 MINUTES
+	desc = span_green("How decadent!")
+
+/datum/stressevent/fermented_crab_good
+	stressadd = -1
+	desc = span_green("That fermented crab was not the most pleasant dish ever, but youthful vigor in my body was worth the sacrifice!")
+	timer = 3 MINUTES
+
+/datum/stressevent/dragon_scale
+	stressadd = -6
+	desc = span_suppradio("The Hoardmaster's greed plays with my mind...")
+	timer = INFINITY

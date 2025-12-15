@@ -14,7 +14,7 @@
 /*	.................   Hardtack   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/crackerscooked
 	name = "hardtack"
-	desc = "Brittle and hard, like chewing on a rock."
+	desc = "Brittle and hard, like chewing on a rock. These salted biscuits will never expire, however: and for those who travel across Psydonia, that fact alone earns it a space in their packs."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "tack6"
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
@@ -41,10 +41,11 @@
 /*	.................   Bread   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/bread
 	name = "bread loaf"
-	desc = "One of the staple foods of the world. With the decline of magic, the loss of bread-duplication has led to mass famines around Grimoria."
+	desc = "One of Psydonia's staple foodstuffs, made from leavened dough. From the pauper to the papal, none can deny the simplistic beauty of a freshly-baked loaf."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "loaf6"
 	slices_num = 6
+	bitesize = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/breadslice
 	list_reagents = list(/datum/reagent/consumable/nutriment = DOUGH_NUTRITION)
 	faretype = FARE_POOR
@@ -63,21 +64,21 @@
 /obj/item/reagent_containers/food/snacks/rogue/bread/On_Consume(mob/living/eater)
 	..()
 	if(slices_num)
-		if(bitecount == 1)
-			slices_num = 5
-		if(bitecount == 2)
-			slices_num = 4
 		if(bitecount == 3)
-			slices_num = 3
+			slices_num = 5
 		if(bitecount == 4)
-			slices_num = 2
+			slices_num = 4
 		if(bitecount == 5)
+			slices_num = 3
+		if(bitecount == 6)
+			slices_num = 2
+		if(bitecount == 7)
 			changefood(slice_path, eater)
 
 /*	.................   Breadslice & Toast   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/breadslice
 	name = "sliced bread"
-	desc = "A bit of comfort to start your dae."
+	desc = "A bit of comfort to start your dae. The finest choice-of-vessel for a slice of saloumi, salo, cheese, or fried bacon."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "loaf_slice"
 	faretype = FARE_POOR
@@ -103,13 +104,6 @@
 			user.put_in_hands(sammich)
 			qdel(I)
 			qdel(src)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/friedegg))
-		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
-		if(do_after(user,short_cooktime, target = src))
-			var/obj/item/reagent_containers/food/snacks/rogue/sandwich/egg/sammich= new(get_turf(user))
-			user.put_in_hands(sammich)
-			qdel(I)
-			qdel(src)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/fat/salo/slice))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
 		if(do_after(user,short_cooktime, target = src))
@@ -131,13 +125,14 @@
 //this is a child so we can be used in sammies
 /obj/item/reagent_containers/food/snacks/rogue/breadslice/toast
 	name = "toast"
+	desc = "Crisp and crunchy, yet not burnt - truly, an alchemical wonder. Best enjoyed with a fried egg or knob of sliced butter."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "toast"
 	faretype = FARE_NEUTRAL
 	tastes = list("crispy bread" = 1)
 	mill_result = /obj/item/reagent_containers/food/snacks/rogue/toastcrumbs
 	cooked_type = null
-	bitesize = 2
+	bitesize = 3
 	rotprocess = null
 
 /obj/item/reagent_containers/food/snacks/rogue/breadslice/toast/attackby(obj/item/I, mob/user, params)
@@ -146,6 +141,13 @@
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
 		if(do_after(user,short_cooktime, target = src))
 			var/obj/item/reagent_containers/food/snacks/rogue/breadslice/toast/buttered/sammich= new(get_turf(user))
+			user.put_in_hands(sammich)
+			qdel(I)
+			qdel(src)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/friedegg)) //This actually creates a toast out of regular bread so we put it here.
+		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
+		if(do_after(user,short_cooktime, target = src))
+			var/obj/item/reagent_containers/food/snacks/rogue/sandwich/egg/sammich= new(get_turf(user))
 			user.put_in_hands(sammich)
 			qdel(I)
 			qdel(src)
@@ -172,16 +174,17 @@
 	cooked_type = null
 	foodtype = GRAIN
 	bitesize = 1
-	rotprocess = 30 MINUTES
+	rotprocess = SHELFLIFE_DECENT
 
 // -------------- BREAD WITH FOOD ON IT (not american sandwich) -----------------
 /obj/item/reagent_containers/food/snacks/rogue/sandwich
 	desc = "A delightful piece of heaven in every slice."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_NUTRITIOUS)
+	bitesize = 4
 	faretype = FARE_NEUTRAL
-	rotprocess = 30 MINUTES
-	eat_effect = /datum/status_effect/buff/foodbuff
+	rotprocess = SHELFLIFE_DECENT
+	eat_effect = /datum/status_effect/buff/snackbuff
 
 /obj/item/reagent_containers/food/snacks/rogue/sandwich/salami
 	tastes = list("salumoi" = 1,"bread" = 1)
@@ -229,11 +232,11 @@
 	desc = "Portable, quaint, and entirely consumable."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "bun"
-	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
+	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION)
 	faretype = FARE_POOR
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("bread" = 1)
-	bitesize = 2
+	bitesize = 3
 	rotprocess = SHELFLIFE_EXTREME
 
 /obj/item/reagent_containers/food/snacks/rogue/bun/attackby(obj/item/I, mob/living/user, params)
@@ -282,10 +285,11 @@
 	desc = "Traditionally eaten for breakfast."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "crossbun"
+	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION)
 	faretype = FARE_NEUTRAL // Having nobles vomit from eating holy buns is not a good idea
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("bread" = 1)
-	bitesize = 2
+	bitesize = 3
 	rotprocess = SHELFLIFE_EXTREME
 
 /obj/item/reagent_containers/food/snacks/rogue/psycrossbun
@@ -293,11 +297,11 @@
 	desc = "How long will you endure the temptation to eat it?"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "psycrossbun"
-	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
+	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION)
 	faretype = FARE_NEUTRAL // Having nobles vomit from eating holy buns is not a good idea
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("bread" = 1)
-	bitesize = 2
+	bitesize = 3
 	rotprocess = SHELFLIFE_EXTREME
 
 /*	.................   Cheese bun   ................... */
@@ -322,8 +326,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("crispy bread and cream cheese" = 1)
 	foodtype = GRAIN | DAIRY
-	bitesize = 2
+	bitesize = 3
 	rotprocess = SHELFLIFE_DECENT
+	eat_effect = /datum/status_effect/buff/greatsnackbuff
 
 /obj/item/reagent_containers/food/snacks/rogue/frybread
 	name = "frybread"
@@ -331,11 +336,11 @@
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "frybread"
 	faretype = FARE_FINE
-	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
+	list_reagents = list(/datum/reagent/consumable/nutriment = BUTTERDOUGHSLICE_NUTRITION)
 	tastes = list("crispy bread with a soft inside" = 1)
 	w_class = WEIGHT_CLASS_NORMAL
-	bitesize = 3
-	eat_effect = /datum/status_effect/buff/foodbuff
+	bitesize = 4
+	eat_effect = /datum/status_effect/buff/snackbuff
 
 /*	.................   Raisin bread   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/rbread_half
@@ -345,7 +350,7 @@
 	icon_state = "dough_raisin"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	w_class = WEIGHT_CLASS_NORMAL
-	rotprocess = 30 MINUTES
+	rotprocess = SHELFLIFE_DECENT
 
 /obj/item/reagent_containers/food/snacks/rogue/rbread_half/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -373,13 +378,14 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/raisinbread
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	w_class = WEIGHT_CLASS_NORMAL
-	rotprocess = 30 MINUTES
+	rotprocess = SHELFLIFE_DECENT
 
 /obj/item/reagent_containers/food/snacks/rogue/raisinbread
 	name = "raisin loaf"
-	desc = "Bread enhanced with sweet raisins for a perfect addition to any meal."
+	desc = "A popular dessert amongst the peasantry, this loaf of sweetbread's speckled with fruity surprises. In recent years, it has more palettes amongst the papacy: t'was Rockhill's abbey that christened a variant, glazed with a sugary veneer."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "raisinbread6"
+	bitesize = 8
 	slices_num = 6
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/raisinbreadslice
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
@@ -389,7 +395,6 @@
 	slice_batch = FALSE
 	slice_sound = TRUE
 	rotprocess = SHELFLIFE_EXTREME
-	eat_effect = /datum/status_effect/buff/foodbuff
 
 /obj/item/reagent_containers/food/snacks/rogue/raisinbread/update_icon()
 	if(slices_num)
@@ -400,15 +405,15 @@
 /obj/item/reagent_containers/food/snacks/rogue/raisinbread/On_Consume(mob/living/eater)
 	..()
 	if(slices_num)
-		if(bitecount == 1)
-			slices_num = 5
-		if(bitecount == 2)
-			slices_num = 4
 		if(bitecount == 3)
-			slices_num = 3
+			slices_num = 5
 		if(bitecount == 4)
-			slices_num = 2
+			slices_num = 4
 		if(bitecount == 5)
+			slices_num = 3
+		if(bitecount == 6)
+			slices_num = 2
+		if(bitecount == 7)
 			changefood(slice_path, eater)
 
 /obj/item/reagent_containers/food/snacks/rogue/raisinbreadslice
@@ -421,9 +426,8 @@
 	faretype = FARE_NEUTRAL
 	cooked_type = null
 	tastes = list("spelt" = 1,"dried fruit" = 1)
-	bitesize = 2
+	bitesize = 3
 	rotprocess = SHELFLIFE_LONG
-	eat_effect = /datum/status_effect/buff/foodbuff
 	dropshrink = 0.8
 
 /obj/item/reagent_containers/food/snacks/rogue/bun_grenz
@@ -437,7 +441,7 @@
 	faretype = FARE_NEUTRAL
 	warming = 5 MINUTES
 	rotprocess = SHELFLIFE_LONG
-	eat_effect = /datum/status_effect/buff/foodbuff
+	eat_effect = /datum/status_effect/buff/greatsnackbuff
 
 /*	.............   Raston   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/bun_raston
@@ -446,6 +450,7 @@
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "raston"
 	name = "raston"
+	faretype = FARE_NEUTRAL
 	desc = "A slice of cheese melted between two lightly-toasted buns."
 	rotprocess = SHELFLIFE_EXTREME
-	eat_effect = /datum/status_effect/buff/foodbuff
+	eat_effect = /datum/status_effect/buff/greatsnackbuff

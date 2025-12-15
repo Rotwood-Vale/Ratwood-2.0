@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(noble_positions, list(
 
 GLOBAL_LIST_INIT(courtier_positions, list(
 	"Court Magician",
-	"Court Physician",
+	"Head Physician",
 	"Jester",
 	"Seneschal",
 ))
@@ -93,6 +93,7 @@ GLOBAL_LIST_INIT(church_positions, list(
 	"Confessor",
 	"Acolyte",
 	"Mortician",
+	"Keeper",
 	"Templar",
 	"Druid",
 	"Martyr",
@@ -110,7 +111,7 @@ GLOBAL_LIST_INIT(yeoman_positions, list(
 	"Innkeeper",
 	"Archivist",
 	"Scribe",
-	"Town Elder",
+	"Town Crier",
 	"Bathmaster",
 	"Guildmaster",
 	"Guildsman",
@@ -126,25 +127,18 @@ GLOBAL_LIST_INIT(peasant_positions, list(
 	"Fisher",
 	"Lumberjack",
 	"Towner",
-	"Grabber",
 	"Nightmaster",
 	"Tapster",
 	"Bathhouse Attendant",
-	"Docker",
 	"Prisoner",
 	"Beggar",
-	"Adventurer",
 	"Refugee",
-	"Bandit",
-	"Court Agent",
-	"Wretch",
+	"Pilgrim",
 ))
 
 GLOBAL_LIST_INIT(mercenary_positions, list(
-	"Mercenary",
 	"Grenzelhoft Mercenary",
 	"Desert Rider Mercenary",
-	"Veteran",
 ))
 
 GLOBAL_LIST_INIT(youngfolk_positions, list(
@@ -158,9 +152,13 @@ GLOBAL_LIST_INIT(youngfolk_positions, list(
 	"Vagabond",
 ))
 
-GLOBAL_LIST_INIT(allmig_positions, list(
+GLOBAL_LIST_INIT(wanderer_positions, list(
+	"Veteran",
 	"Adventurer",
-	"Refugee",
+	"Mercenary",
+	"Bandit",
+	"Court Agent",
+	"Wretch",
 ))
 
 GLOBAL_LIST_INIT(roguewar_positions, list(
@@ -176,6 +174,18 @@ GLOBAL_LIST_INIT(roguefight_positions, list(
 	"Green Caster",
 	"Green Ranger",
 	"Green Fighter",
+))
+
+//This list is used to prevent the duke from stripping nobility from certain jobs that aren't intrinsically a part of the town.
+GLOBAL_LIST_INIT(foreign_positions, list(
+	"Adventurer",
+	"Mercenary",
+	"Bandit",
+	"Wretch",
+	"Inquisitor",
+	"Suitor",
+	"Orthodoxist",
+	"Migrant",
 ))
 
 GLOBAL_LIST_INIT(test_positions, list(

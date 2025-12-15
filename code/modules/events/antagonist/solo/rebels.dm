@@ -20,45 +20,8 @@
 	typepath = /datum/round_event/antagonist/solo/rebel
 	antag_datum = /datum/antagonist/prebel/head
 
-	weight = 10
+	weight = 1
 
-	restricted_roles = list(
-		"Grand Duke",
-		"Grand Duchess",
-		"Knight Captain",
-		"Consort",
-		"Sergeant",
-		"Men-at-Arms",
-		"Woman-at-Arms",
-		"Marshal",
-		"Merchant",
-		"Bishop",
-		"Acolyte",
-		"Martyr",
-		"Templar",
-		"Councillor",
-		"Bandit",
-		"Servant",
-		"Prince",
-		"Princess",
-		"Hand",
-		"Magos Thrall",
-		"Servant",
-		"Court Physician",
-		"Town Elder",
-		"Captain",
-		"Archivist",
-		"Knight",
-		"Dame",
-		"Knight Captain",
-		"Court Magician",
-		"Inquisitor",
-		"Orthodoxist",
-		"Absolver",
-		"Warden",
-		"Squire",
-		"Veteran",
-		"Apothecary"
-	)
+	restricted_roles = DEFAULT_ANTAG_BLACKLISTED_ROLES
 
 /datum/round_event/antagonist/solo/rebel

@@ -6,10 +6,10 @@
 	total_positions = 1
 	spawn_positions = 1
 
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = ACCEPTED_RACES
 	allowed_sexes = list(MALE, FEMALE)
 
-	job_traits = list(TRAIT_STEELHEARTED, TRAIT_DUNGEONMASTER, TRAIT_GUARDSMAN, TRAIT_DEATHBYSNUSNU)
+	job_traits = list(TRAIT_STEELHEARTED, TRAIT_DUNGEONMASTER, TRAIT_GUARDSMAN, TRAIT_DEATHBYSNUSNU, TRAIT_PURITAN_ADVENTURER) //'PURITAN_ADVENTURER' is the codename. Presents as 'INTERROGATOR', in-game. Doesn't provide any Inquisition-related boons, but gives instrucitons on how to use certain mechanics.
 	display_order = JDO_DUNGEONEER
 	advclass_cat_rolls = list(CTAG_DUNGEONEER = 2)
 
@@ -23,7 +23,7 @@
 	min_pq = 0
 	max_pq = null
 	round_contrib_points = 2
-
+	social_rank = SOCIAL_RANK_YEOMAN
 	cmode_music = 'sound/music/combat_dungeoneer.ogg'
 	job_subclasses = list(
 		/datum/advclass/dungeoneer
@@ -61,11 +61,26 @@
 		STATKEY_CON = 2,
 		STATKEY_WIL = 1
 	)
+	subclass_skills = list(
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER, //hilarious
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,//Enough for majority of surgeries without grinding.
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+	)
 	adv_stat_ceiling = list(STAT_STRENGTH = 16, STAT_CONSTITUTION = 16, STAT_WILLPOWER = 16)
 
 /datum/outfit/job/roguetown/dungeoneer/base/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
+	H.verbs |= /mob/living/carbon/human/proc/faith_test
+	H.verbs |= /mob/living/carbon/human/proc/torture_victim
 	pants = /obj/item/clothing/under/roguetown/trou/leather/mourning
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/councillor//Just so I don't have to make another subtype just for it to start black.
@@ -80,18 +95,8 @@
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
 		/obj/item/flashlight/flare/torch/lantern = 1,
+		/obj/item/clothing/neck/roguetown/psicross/silver = 1,
 		) //No armoury access
-	H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE) //hilarious
-	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)//Enough for majority of surgeries without grinding.
-	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/traps, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	//Torture victim is for inquisition - doesn't even work without a psicross anymore so maybe come up with a variant for him specifically?
 	switch(H.patron?.type)

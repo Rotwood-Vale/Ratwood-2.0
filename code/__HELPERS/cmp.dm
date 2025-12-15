@@ -117,7 +117,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 // Taken from modern TG.
 /proc/cmp_bodypart_by_body_part_asc(obj/item/bodypart/limb_one, obj/item/bodypart/limb_two)
 	return limb_one.body_part - limb_two.body_part
-	
 /proc/cmp_filter_priority_desc(list/A, list/B) // Compares two lists by their 'priority' key. Used for filters.
     return (A["priority"] || 0) - (B["priority"] || 0)
 

@@ -7,6 +7,7 @@
 	item_state = "candle1"
 	w_class = WEIGHT_CLASS_TINY
 	experimental_inhand = FALSE
+	possible_item_intents = list(/datum/intent/use) //If this affects candles lighting anything, remove this entire line to fix it.
 	light_color = LIGHT_COLOR_FIRE
 	heat = 1000
 	var/wax = 1000
@@ -124,11 +125,18 @@
 	start_lit = TRUE
 	icon_state = "skullcandle_lit"
 
-/obj/item/candle/candlestick/gold
-	name = "three-stick gold candlestick"
+/obj/item/candle/candlestick
+	name = "parent candlestick"
 	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "gcandelabra"
 	infinite = TRUE
+	desc = "The parent candlestick that gave all of the little, real candlesticks their traits. You should not be seeing this, report this."
+	possible_item_intents = list(/datum/intent/use, /datum/intent/hit) //so you can bash someone's head in with a candlestick
+	force = 12 //slightly higher than a silver goblet, good improvised weapon, it even has a handle!
+
+/obj/item/candle/candlestick/gold
+	name = "three-stick gold candlestick"
+	icon_state = "gcandelabra"
 	sellprice = 40
 
 /obj/item/candle/candlestick/gold/update_icon()
@@ -140,10 +148,9 @@
 
 /obj/item/candle/candlestick/silver
 	name = "three-stick silver candlestick"
-	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "scandelabra"
-	infinite = TRUE
 	sellprice = 60
+	is_silver = TRUE
 
 /obj/item/candle/candlestick/silver/update_icon()
 	icon_state = "scandelabra[lit ? "_lit" : ""]"
@@ -154,9 +161,7 @@
 
 /obj/item/candle/candlestick/gold/single
 	name = "one-stick gold candlestick"
-	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "singlegcandelabra"
-	infinite = TRUE
 	sellprice = 30
 
 /obj/item/candle/candlestick/gold/single/update_icon()
@@ -168,9 +173,7 @@
 
 /obj/item/candle/candlestick/silver/single
 	name = "one-stick silver candlestick"
-	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "singlescandelabra"
-	infinite = TRUE
 	sellprice = 50
 
 /obj/item/candle/candlestick/silver/single/update_icon()
@@ -182,9 +185,7 @@
 
 /obj/item/candle/gold
 	name = "gold candle"
-	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "gcandle"
-	infinite = TRUE
 	sellprice = 30
 
 /obj/item/candle/gold/update_icon()
@@ -200,6 +201,7 @@
 	icon_state = "scandle"
 	infinite = TRUE
 	sellprice = 50
+	is_silver = TRUE
 
 /obj/item/candle/silver/update_icon()
 	icon_state = "scandle[lit ? "_lit" : ""]"

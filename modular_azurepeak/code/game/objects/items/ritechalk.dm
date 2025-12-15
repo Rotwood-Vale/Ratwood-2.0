@@ -16,13 +16,11 @@
 		if(/datum/patron/inhumen/graggar)
 			ritechoices+="Rune of Violence"
 		if(/datum/patron/inhumen/zizo)
-			ritechoices+="Rune of ZIZO" 
+			ritechoices+="Rune of ZIZO"
 		if(/datum/patron/inhumen/matthios)
-			ritechoices+="Rune of Transaction" 
+			ritechoices+="Rune of Transaction"
 		if(/datum/patron/inhumen/baotha)
 			ritechoices+="Rune of Hedonism"
-		if(/datum/patron/divine/undivided)
-			ritechoices+= "Rune of Deca Divinity"
 		if(/datum/patron/divine/astrata)
 			ritechoices+="Rune of Sun"
 		if(/datum/patron/divine/noc)
@@ -133,8 +131,3 @@
 			if(do_after(user, 30, src))
 				playsound(src, 'sound/foley/scribble.ogg', 40, TRUE)
 				new /obj/structure/ritualcircle/psydon(step_turf)
-		if("Rune of Deca Divinity")
-			to_chat(user,span_cultsmall("I begin inscribing the rune of the Ten Undivided"))
-			if(do_after(user, 30, src))
-				playsound(src, 'sound/foley/scribble.ogg', 40, TRUE)
-				new /obj/structure/ritualcircle/undivided(step_turf)

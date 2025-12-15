@@ -23,7 +23,7 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_knight.ogg'
 	advclass_cat_rolls = list (CTAG_MARSHAL = 20)
-
+	social_rank = SOCIAL_RANK_NOBLE
 	job_traits = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_PERFECT_TRACKER)
 	job_subclasses = list(
 		/datum/advclass/marshal/classic,
@@ -44,31 +44,14 @@
 	id = /obj/item/scomstone/garrison
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/signal_horn = 1,
+		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/tracking, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	H.verbs |= /mob/proc/haltyell
 	H.verbs |= list(/mob/living/carbon/human/proc/request_outlaw, /mob/living/carbon/human/proc/request_law, /mob/living/carbon/human/proc/request_law_removal, /mob/living/carbon/human/proc/request_purge)
 
-/datum/job/roguetown/marshal/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
-	. = ..()
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		H.advsetup = 1
-		H.invisibility = INVISIBILITY_MAXIMUM
-		H.become_blind("advsetup")
-
 /datum/advclass/marshal/classic
-	name = "Marshal"
+	name = "Marshal"	//One focused on crossbows and maces. And knives. Just in case.
 	tutorial = "You've spent your daes in the courts and garrisons of the city. You've studied the law tome from back to front and enforce your word with the iron hand of justice, and the iron mace in your hands. More men have spent days rotting in the dungeon than that Knight Commander could ever have claimed, and every person in the realm respects your authority in matters of law and order."
 	outfit = /datum/outfit/job/roguetown/marshal/classic
 
@@ -82,19 +65,31 @@
 		STATKEY_SPD = 1,
 		STATKEY_STR = 1,
 	)
+	subclass_skills = list(
+		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+	)
 
 /datum/outfit/job/roguetown/marshal/classic/pre_equip(mob/living/carbon/human/H)
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/sheriff
+	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/retinue
 	cloak = /obj/item/clothing/cloak/stabard/surcoat/bailiff
 	backr = /obj/item/rogueweapon/mace/cudgel/justice
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 	beltl = /obj/item/storage/keyring/sheriff
 	head = /obj/item/clothing/head/roguetown/chaperon/noble/bailiff
-	H.adjust_skillrank(/datum/skill/combat/maces, 4, TRUE)
 
 /datum/advclass/marshal/kcommander
-	name = "Knight Commander"
+	name = "Knight Commander"	//One focused on swords and better riding. You get SOME knives skill too but swords are better in general.
 	tutorial = "You spent your daes as a dutiful knight in the service of the crown. Earning your accolades through military tactics and victories, you're reknown for your warfaring. Now retired from your days afield, you enforce the same iron law you once practiced at war in your home. You run the garrison, knights and the town's laws with a military strictness, and no-one can claim you are weaker on crime than any of those weak Marshals."
 	outfit = /datum/outfit/job/roguetown/marshal/kcommander
 
@@ -108,14 +103,26 @@
 		STATKEY_SPD = 1,
 		STATKEY_STR = 1,
 	)
+	subclass_skills = list(
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
+	)
 
 /datum/outfit/job/roguetown/marshal/kcommander/pre_equip(mob/living/carbon/human/H)
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/sheriff/coat
+	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/retinue/coat
 	backr = /obj/item/rogueweapon/sword/long/oathkeeper
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 	beltl = /obj/item/storage/keyring/sheriff
-	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 
 /mob/living/carbon/human/proc/request_law()
 	set name = "Request Law"
@@ -227,3 +234,10 @@
 	set name = "HALT!"
 	set category = "Noises"
 	emote("haltyell")
+
+/mob/proc/haltyell_exhausting()
+	set name = "HALT!"
+	set category = "Noises"
+
+	emote("haltyell")
+	stamina_add(rand(5,15))

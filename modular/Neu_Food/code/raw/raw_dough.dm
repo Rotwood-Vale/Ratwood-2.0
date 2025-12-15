@@ -242,7 +242,7 @@
 	else if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/crab))
 		prepare_handpie(I, user, /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/crab)
 	else if(istype(I, /obj/item/reagent_containers/food/snacks/grown/berries/rogue/poison))
-		prepare_handpie(I, user, /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/berry)
+		prepare_handpie(I, user, /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/poison)
 	else if(istype(I, /obj/item/reagent_containers/food/snacks/grown/berries/rogue))
 		prepare_handpie(I, user, /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/berry)
 	else if(istype(I, /obj/item/reagent_containers/food/snacks/grown/apple))
@@ -259,4 +259,3 @@
 		user.put_in_hands(handpie)
 		qdel(I)
 		qdel(src)
-	

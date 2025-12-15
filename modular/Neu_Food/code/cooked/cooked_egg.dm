@@ -28,7 +28,7 @@
 
 /*	.............   Twin fried eggs   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/two
-	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_NUTRITIOUS)
+	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_CHUNKY)
 	tastes = list("fried egg" = 1)
 	name = "twin fried egg"
 	faretype = FARE_NEUTRAL
@@ -36,6 +36,7 @@
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "seggs"
+	eat_effect = /datum/status_effect/buff/snackbuff
 
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/two/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -90,7 +91,7 @@
 
 /*	.................   Valerian Omelette   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/tiberian
-	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	tastes = list("fried egg" = 1, "cheese" = 1)
 	name = "valerian omelette"
 	desc = "Fried eggs on a bed of half-melted cheese. A dish from distant lands."
@@ -98,16 +99,16 @@
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "omelette"
-	eat_effect = /datum/status_effect/buff/foodbuff
+	eat_effect = /datum/status_effect/buff/mealbuff
 	rotprocess = SHELFLIFE_DECENT
 
 /*	.................   Bacon & Eggs   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/bacon
-	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	tastes = list("fried egg" = 1, "bacon" = 1)
 	name = "bacon and egg"
 	desc = "Fried eggs with bacon. The bacon's savory salty crunch is a perfect complement to the eggs' more mellow flavors."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "baconegg"
-	eat_effect = /datum/status_effect/buff/foodbuff
+	eat_effect = /datum/status_effect/buff/mealbuff
 	rotprocess = SHELFLIFE_DECENT

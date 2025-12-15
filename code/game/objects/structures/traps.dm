@@ -15,7 +15,7 @@
 	var/trap_damage = 50 // baseline trap damage, reduced by armor checks. Wear your PPE in dungeons
 	var/def_zone = BODY_ZONE_CHEST //
 	var/used_time = 14 // interaction time for disabling traps, scales down with trap skill
- 
+
 
 	var/list/static/ignore_typecache
 	var/list/mob/immune_minds = list() //unused and a bit weird, helpful for making mobs immune to the traps without TRAIT_LIGHT_STEP
@@ -225,7 +225,7 @@
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>You're frozen solid!</B>"))
 	L.Paralyze(20)
-	L.adjust_bodytemperature(-300)
+	L.adjust_bodytemperature(-400)
 	L.apply_status_effect(/datum/status_effect/freon)
 
 /obj/structure/trap/damage
@@ -423,3 +423,226 @@
 	timer = 10 MINUTES
 	stressadd = 2
 	desc = span_boldgreen("I've been made a fool of.")
+
+// BANDIT THING STARTS HERE //
+/obj/structure/trap/bogtrap
+	name = "trapbog"
+	desc = "A cleverly concealed device with a nasty surprise."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "beartrap"
+	name = "mantrap"
+	time_between_triggers = 100 //feel free to add more than 1 use
+	max_integrity = 100
+	trap_damage = 60
+	alpha = 60
+	charges = 2 //feel free to add more than 1 use
+	checks_antimagic = FALSE
+
+	var/tmp/list/personal_reveal_images = list()
+	var/bandit_reveal_alpha = 140
+	var/others_reveal_alpha = 35
+	var/retinue_planted = FALSE//Is this a retinue trap? Inverses the checks for who triggers.
+
+/obj/structure/trap/bogtrap/flare()
+	alpha = 200
+	last_trigger = world.time
+	charges--
+	animate(src, alpha = 0, time = 2)
+	QDEL_IN(src, 2)
+
+/obj/structure/trap/bogtrap/Destroy()
+	if(personal_reveal_images)
+		for(var/client/C in personal_reveal_images)
+			var/image/I = personal_reveal_images[C]
+			if(C && I)
+				C.images -= I
+	personal_reveal_images = null
+	. = ..()
+
+/obj/structure/trap/bogtrap/proc/has_exempt_role(mob/living/H)
+	if(!H || !H.mind)
+		return FALSE
+
+	var/assigned = lowertext("[H.mind.assigned_role]")
+	var/special  = lowertext("[H.mind.special_role]")
+
+//We don't care about anyone but the MAAs/Wardens.
+	if(retinue_planted)
+		if(assigned == "man at arms")
+			return TRUE
+
+		if(assigned == "bogguard")
+			return TRUE
+
+		if(assigned == "warden")
+			return TRUE
+//Otherwise...
+	else
+		if(assigned == "bandit" || special == "bandit")
+			return TRUE
+
+		if(assigned == "wretch")
+			return TRUE
+
+		if(special == "lich" || special == "vampire lord")
+			return TRUE
+
+		if(assigned == "bogguard")
+			return TRUE
+
+	return FALSE
+
+/obj/structure/trap/bogtrap/proc/has_required_trigger_trait(mob/living/H)
+	if(!H) return FALSE
+	if(HAS_TRAIT(H, TRAIT_MEDIUMARMOR)) return TRUE
+	if(HAS_TRAIT(H, TRAIT_HEAVYARMOR))  return TRUE
+	if(HAS_TRAIT(H, TRAIT_DODGEEXPERT)) return TRUE
+	if(HAS_TRAIT(H, TRAIT_CRITICAL_RESISTANCE)) return TRUE
+	return FALSE
+
+/obj/structure/trap/bogtrap/proc/is_trap_exception(mob/living/H)
+	if(!H) return FALSE
+	if(has_exempt_role(H))
+		return TRUE
+	if(!has_required_trigger_trait(H))
+		return TRUE
+	return FALSE
+
+/obj/structure/trap/bogtrap/proc/is_exempt_viewer(mob/living/H)
+	if(!H || !H.mind)
+		return FALSE
+	var/assigned = lowertext("[H.mind.assigned_role]")
+	var/special  = lowertext("[H.mind.special_role]")
+
+//Is this hacky? Yeah. Does it work? I guess.
+	if(retinue_planted)
+		return (assigned == "man at arms" \
+			|| assigned == "bogguard" \
+			|| assigned == "warden" || special == "warden")
+	else
+		return (assigned == "bandit" || special == "bandit" \
+			|| assigned == "bogguard" \
+			|| assigned == "warden" || special == "warden")
+
+/obj/structure/trap/bogtrap/proc/show_personal_reveal(mob/user)
+	if(!user || !user.client)
+		return
+	var/image/I = image(icon = src.icon, loc = src, icon_state = src.icon_state)
+	I.layer = src.layer
+	I.plane = src.plane
+	I.appearance_flags = src.appearance_flags
+	I.color = src.color
+	I.transform = src.transform
+	I.alpha = is_exempt_viewer(user) ? bandit_reveal_alpha : others_reveal_alpha
+	user.client.images += I
+	if(!personal_reveal_images)
+		personal_reveal_images = list()
+	personal_reveal_images[user.client] = I
+	addtimer(CALLBACK(src, PROC_REF(hide_personal_reveal), user), 3 SECONDS)
+
+/obj/structure/trap/bogtrap/proc/hide_personal_reveal(mob/user)
+	if(user && user.client && personal_reveal_images && personal_reveal_images[user.client])
+		var/image/I = personal_reveal_images[user.client]
+		user.client.images -= I
+		personal_reveal_images[user.client] = null
+
+/obj/structure/trap/bogtrap/examine(mob/user)
+	if(!isliving(user) || !armed)
+		return
+	var/mob/living/L = user
+	if(user.mind && (user.mind in immune_minds))
+		return
+	if(get_dist(user, src) <= FLOOR((L.STAPER-4)/4,1))
+		to_chat(user, span_notice("I spot the [src]."))
+		show_personal_reveal(user)
+
+
+/obj/structure/trap/bogtrap/Crossed(atom/movable/AM)
+	if(ismob(AM))
+		var/mob/living/H = AM
+		if(is_trap_exception(H))
+			return
+	. = ..()
+
+/obj/structure/trap/bogtrap/freeze
+	name = "trapbog (frost)"
+
+/obj/structure/trap/bogtrap/freeze/trap_effect(mob/living/L)
+	to_chat(L, span_danger("<B>You're frozen solid!</B>"))
+	L.Paralyze(50)
+	L.adjust_bodytemperature(-300)
+	playsound(src, 'sound/misc/explode/bottlebomb (1).ogg', 60, TRUE)
+
+
+/obj/structure/trap/bogtrap/bomb
+	name = "trapbog (blast)"
+
+/obj/structure/trap/bogtrap/bomb/trap_effect(mob/living/L)
+	to_chat(L, span_danger("<B>A buried charge detonates!</B>"))
+	explosion(src, light_impact_range = 1, flame_range = 3, smoke = TRUE)
+	playsound(src, 'sound/misc/explode/bottlebomb (1).ogg', 200, TRUE)
+
+//kneestingers
+
+/obj/structure/trap/bogtrap/kneestingers
+	name = "trapbog (kneestingers)"
+	desc = "A hidden charge that bursts into a patch of kneestingers."
+	charges = 1
+
+/obj/structure/trap/bogtrap/kneestingers/trap_effect(mob/living/L)
+	var/turf/center = get_turf(src)
+	to_chat(L, span_danger("<B>Something skitters out from the ground!</B>"))
+	playsound(src, 'sound/items/beartrap.ogg', 200, TRUE)
+
+	for(var/dx in -1 to 1)
+		for(var/dy in -1 to 1)
+			var/turf/T = locate(center.x + dx, center.y + dy, center.z)
+			if(!T || isclosedturf(T))
+				continue
+			new /obj/structure/glowshroom(T)
+
+//Poison tr*p
+
+/obj/structure/trap/bogtrap/poison
+	name = "trapbog (toxic)"
+	charges = 1
+
+/obj/structure/trap/bogtrap/poison/trap_effect(mob/living/L)
+	to_chat(L, span_danger("<B>A noxious cloud engulfs you!</B>"))
+	L.Paralyze(30)
+	new /obj/effect/particle_effect/smoke/poison_gas(get_turf(src))
+	playsound(src, 'sound/items/beartrap.ogg', 200, TRUE)
+
+//Rous nest. Spawns a rather large rous.
+
+/obj/structure/trap/bogtrap/rous
+	name = "trapbog (rous)"
+	charges = 1
+	retinue_planted = TRUE
+
+/obj/structure/trap/bogtrap/rous/trap_effect(mob/living/L)
+	to_chat(L, span_danger("<B>You step atop a hidden cage!</B>"))
+	playsound(src, 'sound/items/beartrap.ogg', 200, TRUE)
+
+	L.AdjustKnockdown(5)
+	new /mob/living/simple_animal/hostile/retaliate/rogue/bigrat(get_turf(src))
+
+//Flare. Flashbangs viewiers. Alerts folks. Alarm trap, basically.
+//A better, RP friendly blind gas.
+
+/obj/structure/trap/bogtrap/flare_trap
+	name = "trapbog (flare)"
+	charges = 1
+	retinue_planted = TRUE
+
+/obj/structure/trap/bogtrap/flare_trap/trap_effect(mob/living/L)
+	playsound(src, 'sound/effects/hood_ignite.ogg', 200, TRUE)
+
+//The poor fools in view.
+	if(L in oviewers(7, src))
+		L.adjust_blurriness(12)
+		L.adjust_blindness(3)
+		L.emote("scream")
+//Church bell range. A bit far? Sure. Don't step on it.
+	loud_message("A flare can be seen shooting into the air, followed by a sharp crack", hearing_distance = 150)
+//The entire town knows you're here, now, buddy.

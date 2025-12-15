@@ -3,7 +3,6 @@
 	roundend_category = "Werewolves"
 	antagpanel_category = "Werewolf"
 	job_rank = ROLE_WEREWOLF
-	var/list/inherent_traits = list(TRAIT_NOPAIN, TRAIT_NOPAINSTUN, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOFALLDAMAGE1, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_SHOCKIMMUNE) // this doesn't do anything. that's pretty funny.
 	confess_lines = list(
 		"THE BEAST INSIDE ME!",
 		"BEWARE THE BEAST!",
@@ -29,10 +28,7 @@
 	if(istype(examined_datum, /datum/antagonist/werewolf))
 		return span_boldnotice("An elder lupine kin.")
 	if(examiner.Adjacent(examined))
-		if(istype(examined_datum, /datum/antagonist/vampirelord/lesser))
-			if(transformed)
-				return span_boldwarning("A lesser Vampire.")
-		if(istype(examined_datum, /datum/antagonist/vampirelord))
+		if(istype(examined_datum, /datum/antagonist/vampire))
 			if(transformed)
 				return span_boldwarning("An Ancient Vampire. I must be careful!")
 
@@ -41,7 +37,7 @@
 	owner.special_role = name
 	if(increase_votepwr)
 		forge_werewolf_objectives()
-	
+
 	wolfname = "[pick(GLOB.wolf_prefixes)] [pick(GLOB.wolf_suffixes)]"
 	return ..()
 
@@ -75,7 +71,7 @@
 /mob/living/carbon/human/proc/can_werewolf()
 	if(!mind)
 		return FALSE
-	if(mind.has_antag_datum(/datum/antagonist/vampirelord))
+	if(mind.has_antag_datum(/datum/antagonist/vampire))
 		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/werewolf))
 		return FALSE
@@ -109,14 +105,14 @@
 /mob/living/carbon/human/proc/werewolf_feed(mob/living/carbon/human/target, healing_amount = 10)
 	if(!istype(target))
 		return
-	if(src.has_status_effect(/datum/status_effect/debuff/silver_curse))
+	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 		to_chat(src, span_notice("My power is weakened, I cannot heal!"))
 		return
 	if(target.mind)
 		if(target.mind.has_antag_datum(/datum/antagonist/zombie))
 			to_chat(src, span_warning("I should not feed on rotten flesh."))
 			return
-		if(target.mind.has_antag_datum(/datum/antagonist/vampirelord))
+		if(target.mind.has_antag_datum(/datum/antagonist/vampire))
 			to_chat(src, span_warning("I should not feed on corrupted flesh."))
 			return
 		if(target.mind.has_antag_datum(/datum/antagonist/werewolf))
@@ -161,7 +157,7 @@
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
-	icon = 'icons/roguetown/weapons/32.dmi'
+	icon = 'icons/roguetown/weapons/unarmed32.dmi'
 	max_blade_int = 900
 	max_integrity = 900
 	force = 25
@@ -189,5 +185,4 @@
 
 /obj/item/rogueweapon/werewolf_claw/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)

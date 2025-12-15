@@ -19,8 +19,6 @@ SUBSYSTEM_DEF(job)
 	SSmapping.HACK_LoadMapConfig()
 	if(!occupations.len)
 		SetupOccupations()
-	if(CONFIG_GET(flag/load_jobs_from_txt))
-		LoadJobs()
 	set_overflow_role(CONFIG_GET(string/overflow_job))
 	return ..()
 
@@ -55,13 +53,12 @@ SUBSYSTEM_DEF(job)
 			continue
 		if(!job.config_check())
 			continue
-		if(!job.map_check())	//Even though we initialize before mapping, this is fine because the config is loaded at new
-			testing("Removed [job.type] due to map config");
-			continue
 		occupations += job
 		name_occupations[job.title] = job
 		type_occupations[J] = job
 
+	if(SSmapping.map_adjustment)
+		SSmapping.map_adjustment.job_change()
 	return 1
 
 
@@ -150,10 +147,12 @@ SUBSYSTEM_DEF(job)
 		if(job.plevel_req > player.client.patreonlevel())
 			JobDebug("FOC incompatible with PATREON LEVEL, Player: [player], Job: [job.title], Race: [player.client.prefs.pref_species.name]")
 			continue
+		#ifdef USES_PQ
 		if(!isnull(job.min_pq) && (get_playerquality(player.ckey) < job.min_pq))
 			continue
 		if(!isnull(job.max_pq) && (get_playerquality(player.ckey) > job.max_pq))
 			continue
+		#endif
 		if(!(player.client.prefs.gender in job.allowed_sexes))
 			JobDebug("FOC incompatible with sex, Player: [player], Job: [job.title]")
 			continue
@@ -241,9 +240,11 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ incompatible with sex, Player: [player], Job: [job.title]")
 			continue
 
+		#ifdef USES_PQ
 		if(!isnull(job.min_pq) && (get_playerquality(player.ckey) < job.min_pq))
 			JobDebug("GRJ incompatible with minPQ, Player: [player], Job: [job.title]")
 			continue
+		#endif
 
 		if(!isnull(job.max_pq) && (get_playerquality(player.ckey) > job.max_pq))
 			JobDebug("GRJ incompatible with maxPQ, Player: [player], Job: [job.title]")
@@ -475,11 +476,15 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO incompatible with PATREON LEVEL, Player: [player], Job: [job.title], Race: [player.client.prefs.pref_species.name]")
 					continue
 
+				#ifdef USES_PQ
 				if(!isnull(job.min_pq) && (get_playerquality(player.ckey) < job.min_pq))
 					continue
+				#endif
 
+				#ifdef USES_PQ
 				if(!isnull(job.max_pq) && (get_playerquality(player.ckey) > job.max_pq))
 					continue
+				#endif
 
 				if((player.client.prefs.lastclass == job.title) && (!job.bypass_lastclass))
 					continue
@@ -572,9 +577,11 @@ SUBSYSTEM_DEF(job)
 
 				if(job.plevel_req > player.client.patreonlevel())
 					continue
-
+					
+				#ifdef USES_PQ
 				if(!isnull(job.min_pq) && (get_playerquality(player.ckey) < job.min_pq) && level != JP_LOW) //since its required people on low can roll for it
 					continue
+				#endif
 
 				if((player.client.prefs.lastclass == job.title) && (!job.bypass_lastclass))
 					continue
@@ -754,13 +761,6 @@ SUBSYSTEM_DEF(job)
 			J.total_positions = officer_positions
 			J.spawn_positions = officer_positions
 
-/datum/controller/subsystem/job/proc/LoadJobs()
-	var/jobstext = file2text("[global.config.directory]/jobs.txt")
-	for(var/datum/job/J in occupations)
-		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
-		jobs.Find(jobstext)
-		J.total_positions = text2num(jobs.group[1])
-		J.spawn_positions = text2num(jobs.group[2])
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)

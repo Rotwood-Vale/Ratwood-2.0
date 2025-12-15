@@ -86,6 +86,11 @@
 	cost = 40
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk)
 
+/datum/supply_pack/rogue/Knight/hgambeson
+	name = "Padded Gambeson"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy)
+
 /datum/supply_pack/rogue/Knight/Fullplate
 	name = "Steel Full plate"
 	cost = 60
@@ -176,7 +181,7 @@
 /datum/supply_pack/rogue/Knight/lsword
 	name = "Longsword"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/sword/long)
+	contains = list(/obj/item/rogueweapon/sword/long/death)
 
 /datum/supply_pack/rogue/Knight/Zweihandersword
 	name = "Zweihander"
@@ -188,6 +193,11 @@
 	cost = 60
 	contains = list(/obj/item/rogueweapon/greatsword/grenz)
 
+/datum/supply_pack/rogue/Knight/SFlamberge
+	name = "Steel Flamberge"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/greatsword/grenz/flamberge)
+
 /datum/supply_pack/rogue/Knight/greatsword
 	name = "Greatsword"
 	cost = 50
@@ -197,6 +207,41 @@
 	name = "Estoc"
 	cost = 50
 	contains = list(/obj/item/rogueweapon/estoc)
+
+/datum/supply_pack/rogue/Knight/steelspear
+	name = "Steel Spear"
+	cost = 55
+	contains = list(/obj/item/rogueweapon/spear/boar)
+
+/datum/supply_pack/rogue/Knight/partizan
+	name = "Partizan"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/spear/partizan)
+
+/datum/supply_pack/rogue/Knight/ebeak
+	name = "Eagle's Beak"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/eaglebeak)
+
+/datum/supply_pack/rogue/Knight/SGaxe
+	name = "Steel Greataxe"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/greataxe/steel)
+
+/datum/supply_pack/rogue/Knight/SDGaxe
+	name = "Steel Double-Headed Greataxe"
+	cost = 50
+	contains = list(/obj/item/rogueweapon/greataxe/steel/doublehead)
+
+/datum/supply_pack/rogue/Knight/grandmace
+	name = "Grand Mace"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/mace/goden/steel)
+
+/datum/supply_pack/rogue/Knight/silvermace
+	name = "Silver-plated mace"
+	cost = 100
+	contains = list(/obj/item/rogueweapon/mace/steel/silver)
 
 /////////////
 // SHIELDS //

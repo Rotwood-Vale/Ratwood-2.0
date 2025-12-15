@@ -35,38 +35,21 @@
 	flags_inv = HIDEBOOB|HIDECROTCH
 	icon_state = "strapless2"
 	icon = 'modular_hearthstone/icons/obj/items/clothes/dress.dmi'
-
+	salvage_result = /obj/item/natural/cloth
+	salvage_amount = 1
 
 //SUPPLY
 
-/datum/supply_pack/rogue/wardrobe/suits/strapless_dress_black
-	name = "Black Strapless Dresses"
+/datum/supply_pack/rogue/wardrobe/suits/strapless_dress //just paint them yourself ffs
+	name = "Strapless Dresses"
 	cost = 10
 	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/black,
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/black,
+					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless,
 				)
 
-/datum/supply_pack/rogue/wardrobe/suits/strapless_dress_blue
-	name = "Blue Strapless Dresses"
+/datum/supply_pack/rogue/wardrobe/suits/strapless_dress_alt
+	name = "Alternative Strapless Dresses"
 	cost = 10
 	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/blue,
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/blue,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/strapless_dress_red
-	name = "Red Strapless Dresses"
-	cost = 10
-	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/red,
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/red,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/strapless_dress_purple
-	name = "Purple Strapless Dresses"
-	cost = 10
-	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/purple,
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/purple,
+					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/alt,
 				)

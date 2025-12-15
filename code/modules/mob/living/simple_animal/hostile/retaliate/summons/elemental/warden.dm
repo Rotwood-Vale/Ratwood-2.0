@@ -33,7 +33,8 @@
 	pooptype = null
 	simple_detect_bonus = 20
 	deaggroprob = 0
-	defprob = 40
+	canparry = TRUE
+	defprob = 30
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
@@ -66,7 +67,7 @@
 	spill_embedded_objects()
 	qdel(src)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/AttackingTarget()
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/AttackingTarget(atom/movable/target)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_PREATTACK)
 		return FALSE //but more importantly return before attack_animal called
 	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)

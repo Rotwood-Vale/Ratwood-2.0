@@ -168,7 +168,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/physician
-	name = "Court Physician"
+	name = "Head Physician"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/guardsman
@@ -211,8 +211,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Towner"
 	icon_state = "arrow"
 
-/obj/effect/landmark/start/woodsman
-	name = "Town Elder"
+/obj/effect/landmark/start/crier
+	name = "Town Crier"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/keeper
+	name = "Keeper"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/priest
@@ -256,7 +260,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/nightman
-	name = "Nightmaster"
+	name = "Bathmaster"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/nightmaiden
@@ -387,6 +391,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/adventurer
 	name = "Adventurer"
 	icon_state = "arrow"
+
+//Remove this at some point. Vestigial.
+/obj/effect/landmark/start/trader
+	name = "Refugee"
+	icon_state = "arrow"
+//End of remove.
 
 /obj/effect/landmark/start/courtagent
 	name = "Court Agent"

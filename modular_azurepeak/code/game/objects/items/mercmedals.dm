@@ -128,3 +128,7 @@
 	A fracture of the Great City Naledi which fell; a memory of a thousand wailing generations in their fading, dying breaths as a reminder for who you are."
 	icon_state = "naledian_psycross"//Temp sprite. Just the Astratan Psyscross, with lower limbs removed.
 
+/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/anthrax
+	name = "petrified larvae charm"
+	desc = "The husk of a desiccated beespider larva, passed down within the ranks of those whose names have been struck from dark elven history. The old tyranny's uprooting would be their last act of true valor."
+	icon_state = "spider"

@@ -35,7 +35,8 @@
 	STASPD = 8
 	simple_detect_bonus = 20
 	deaggroprob = 0
-	defprob = 40
+	canparry = TRUE
+	defprob = 35
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
@@ -45,8 +46,12 @@
 //	stat_attack = UNCONSCIOUS
 	ranged = TRUE
 	ranged_cooldown = 40
-	projectiletype = /obj/projectile/magic/aoe/fireball
+	projectiletype = /obj/projectile/magic/aoe/fireball/rogue
 	ranged_message = "stares"
+
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)	//no wounding the watcher
 	return

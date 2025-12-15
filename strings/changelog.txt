@@ -1,8 +1,1 @@
-Vocal barks have been added, as a port from Splurt. They're disabled by default. In order to hear them, go to options and click 'Hear Vocal Barks'. Your own can be customised in character creation.
-Contracts now exist and areas have a set danger value. This is a port from Azure. Visit a bounty board in round to learn more.
-Healing springs have been reintroduced from OldRW, as a sub-feature of the Druid's grove. 
-Artificers are no longer part of the mage loop.
-Many, many summon changes and QoL improvements. Among them are improvements to Void Dragon loot, structure destruction, healing with their T1 planar realm equivalent and more. Summons, additionally, have skills applied to them, varying in level and dependent on origin.
-Many elements of mage gameplay restored from OldRW, including all the old enchantments. Meteor Storm and Sundering Lightning also make a return at T4, for 9 spellpoints.
-New enchantments, some ported from Vanderlin, some unique to us. This includes Lightning, Void Touched, Unbreaking and Chaos Storm.
-Mage Associate and Apprentices provided a satchel of equipment roundstart, appropriate to their role.
+Please refer to open TMs and the Discord's git-update channel for changes!

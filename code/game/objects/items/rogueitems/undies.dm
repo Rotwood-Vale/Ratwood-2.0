@@ -17,6 +17,7 @@
 	var/datum/bodypart_feature/underwear/undies_feature
 	var/covers_breasts = FALSE
 	sewrepair = TRUE
+	var/covers_rear = TRUE
 	grid_height = 32
 	grid_width = 32
 	throw_speed = 0.5
@@ -74,7 +75,25 @@
 	icon_state = "braies"
 	sprite_acc = /datum/sprite_accessory/underwear/braies
 
+/obj/item/undies/loinclothunder
+	name = "Small Loincloth"
+	desc = "A tight loincloth adjusted to fit like underwear, for those who like a breeze."
+	icon_state = "loinclothunder"
+	covers_rear = FALSE
+
 // Craft
+
+/datum/crafting_recipe/roguetown/sewing/loinclothunder
+	name = "Small Loincloth (1 cloth)"
+	result = list(/obj/item/undies/loinclothunder)
+	reqs = list(/obj/item/natural/cloth = 1)
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/sewing/loinclothadjusttwo
+	name = "Adjust Small Loincloth to be looser (trousers)"
+	result = list(/obj/item/clothing/under/roguetown/loincloth)
+	reqs = list(/obj/item/undies/loinclothunder = 1)
+	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/sewing/undies
 	name = "briefs (1 fibers, 1 cloth)"

@@ -5,6 +5,7 @@
 	layer = BELOW_OBJ_LAYER
 	plane = GAME_PLANE_LOWER
 	anchored = TRUE
+	plane = GAME_PLANE_LOWER
 	var/climb_time = 20
 	var/climb_stun = 0
 	var/climb_sound = 'sound/foley/woodclimb.ogg'
@@ -44,18 +45,18 @@
 					else
 						if(H.STASTR >= 13)	//STR adding role w/ Giant or half-orc, seems fair
 							take_damage((max_integrity / 3) * 2 + 1)
-						else 
+						else
 							take_damage(max_integrity / 3 + 1)
 					H.Immobilize(20)
-					//MESSES you up
-					H.apply_damage(200, BRUTE, "chest", H.run_armor_check("chest", "blunt", damage = 200))
+					//hurts you a little bit but doesn't immediately chestfrac  you lmao
+					H.apply_damage(20, BRUTE, "chest", H.run_armor_check("chest", "blunt", damage = 20))
 					audible_message(span_warning("\The [src] shakes under the force of a great impact!"))
 					playsound(src, "meteor", 100, TRUE)
 					addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, Knockdown), 10), 10)
 				else if(is_bigguy && obj_integrity <= max_integrity / 3)	//This charge will wreck it
 					take_damage(max_integrity)
 					H.Immobilize(5)
-					H.apply_damage(80, BRUTE, "chest", H.run_armor_check("chest", "blunt", damage = 80))
+					H.apply_damage(8, BRUTE, "chest", H.run_armor_check("chest", "blunt", damage = 8))
 				else	//Normal charge
 					H.Immobilize(10)
 					H.apply_damage(15, BRUTE, "head", H.run_armor_check("head", "blunt", damage = 15))
@@ -133,6 +134,114 @@
 		density = FALSE
 		. = step(A,get_dir(A,src.loc))
 		density = TRUE
+		
+/obj/structure/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
+	if(QDELETED(src))
+		return
+	var/fodist = 0
+	if(!isnull(epicenter))
+		fodist = get_dist(src, epicenter)
+	var/fdist = max(0, flame_range)
+	var/brute_loss = 0
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			var/ddist = max(0, devastation_range)
+			brute_loss = (1500 + 250 * ddist) - (250 * fodist)
+			if(fodist == 0)
+				brute_loss *= 2
+			brute_loss = max(0, brute_loss)
+
+		if(EXPLODE_HEAVY)
+			var/hdist = max(0, heavy_impact_range)
+			brute_loss = (20 + 8 * hdist) - (8 * fodist)
+			brute_loss = max(0, brute_loss)
+
+		if(EXPLODE_LIGHT)
+			var/ldist = max(0, light_impact_range)
+			brute_loss = (8 + 3 * ldist) - (3 * fodist)
+			brute_loss = max(0, brute_loss)
+		else
+			return
+
+	var/extra_integrity = 0
+	switch(severity)
+		if(EXPLODE_DEVASTATE) extra_integrity = 1500
+		if(EXPLODE_HEAVY)     extra_integrity = 0
+		if(EXPLODE_LIGHT)     extra_integrity = 0
+
+	var/hard_cap = max_integrity
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			hard_cap = max_integrity //still hits hard doors and windows hard yes yes
+		if(EXPLODE_HEAVY)
+			hard_cap = min(round(max_integrity * 0.25), 20) //some shit has 50 hps and some shit like doors 1500. I dont want one bomb to nuke 10000 windows around coz its annoying
+		if(EXPLODE_LIGHT)
+			hard_cap = min(round(max_integrity * 0.10), 10) 
+
+	var/total_damage = round(CLAMP(brute_loss + extra_integrity, 0, hard_cap)) 
+	if(total_damage > 0 && !QDELETED(src))
+		take_damage(total_damage, BRUTE, "blunt", 0)
+
+	if(fdist && !QDELETED(src))
+		var/stacks = max(0, (fdist - fodist) * 2)
+		if(stacks > 0)
+			fire_act(stacks)
+	if(!QDELETED(src) && !density)
+		..()
+
+/obj/structure/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
+	if(QDELETED(src))
+		return
+	var/fodist = 0
+	if(!isnull(epicenter))
+		fodist = get_dist(src, epicenter)
+	var/fdist = max(0, flame_range)
+	var/brute_loss = 0
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			var/ddist = max(0, devastation_range)
+			brute_loss = (1500 + 250 * ddist) - (250 * fodist)
+			if(fodist == 0)
+				brute_loss *= 2
+			brute_loss = max(0, brute_loss)
+
+		if(EXPLODE_HEAVY)
+			var/hdist = max(0, heavy_impact_range)
+			brute_loss = (20 + 8 * hdist) - (8 * fodist)
+			brute_loss = max(0, brute_loss)
+
+		if(EXPLODE_LIGHT)
+			var/ldist = max(0, light_impact_range)
+			brute_loss = (8 + 3 * ldist) - (3 * fodist)
+			brute_loss = max(0, brute_loss)
+		else
+			return
+
+	var/extra_integrity = 0
+	switch(severity)
+		if(EXPLODE_DEVASTATE) extra_integrity = 1500
+		if(EXPLODE_HEAVY)     extra_integrity = 0
+		if(EXPLODE_LIGHT)     extra_integrity = 0
+
+	var/hard_cap = max_integrity
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			hard_cap = max_integrity //still hits hard doors and windows hard yes yes
+		if(EXPLODE_HEAVY)
+			hard_cap = min(round(max_integrity * 0.25), 20) //some shit has 50 hps and some shit like doors 1500. I dont want one bomb to nuke 10000 windows around coz its annoying
+		if(EXPLODE_LIGHT)
+			hard_cap = min(round(max_integrity * 0.10), 10)
+
+	var/total_damage = round(CLAMP(brute_loss + extra_integrity, 0, hard_cap))
+	if(total_damage > 0 && !QDELETED(src))
+		take_damage(total_damage, BRUTE, "blunt", 0)
+
+	if(fdist && !QDELETED(src))
+		var/stacks = max(0, (fdist - fodist) * 2)
+		if(stacks > 0)
+			fire_act(stacks)
+	if(!QDELETED(src) && !density)
+		..()
 
 /obj/structure/proc/climb_structure(mob/living/user)
 	src.add_fingerprint(user)

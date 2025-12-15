@@ -6,20 +6,39 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/dwarf/mountain,
+		/datum/species/dwarf/gnome,
 		/datum/species/elf/dark,
 		/datum/species/kobold,
 		/datum/species/goblinp,				//Might be a little weird but goblins do reside in caves, and they could use a unique merc class type.
 		/datum/species/anthromorphsmall,	//Basically all under-ground races. Perfect for cave-clearing.
 	)
 	outfit = /datum/outfit/job/roguetown/mercenary/underdweller
+	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_MERCENARY)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK)
 	subclass_stats = list(
 		STATKEY_CON = 2,
 		STATKEY_WIL = 2,
 		STATKEY_SPD = 1,
 		STATKEY_STR = 1,
 		STATKEY_LCK = 1
+	)
+	subclass_skills = list(
+		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
+		/datum/skill/labor/mining = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,	//Gets this for bomb making.
+		/datum/skill/craft/engineering = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/smelting = SKILL_LEVEL_APPRENTICE,	//Accompanies mining; they know how to smelt, not make armor though.
 	)
 	extra_context = "This subclass is race-limited to: Dwarves, Dark Elves, Kobolds, Goblins & Verminvolk."
 
@@ -36,7 +55,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/pick
-	beltr = /obj/item/storage/magebag/detpack
+	beltr = /obj/item/storage/detpack
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/shield/wood
 	backpack_contents = list(
@@ -46,22 +65,6 @@
 		/obj/item/rogueweapon/huntingknife,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
-	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/mining, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)	//Gets this for bomb making.
-	H.adjust_skillrank(/datum/skill/craft/engineering, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)	//Accompanies mining; they know how to smelt, not make armor though.
-	H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)//One is enough for traps and crafting. Higher can be obtained from virtues, if you want that for some reason.
 	H.merctype = 12
 
 
@@ -102,10 +105,16 @@
 	..()
 
 //Detpack. I'm sure you can imagine use cases, outside of carrying it.
-//Needs some sprites.
-/obj/item/storage/magebag/detpack
+/obj/item/storage/detpack
 	name = "detpack"
 	desc = "A pouch to carry sticks of blasting powder. What sort of lunatic would do that?"
+	icon_state = "strapbag"
+	item_state = "strapbag"
+	icon = 'icons/roguetown/clothing/storage.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_HIP
+	resistance_flags = NONE
+	max_integrity = 300
 	component_type = /datum/component/storage/concrete/grid/detpack
 	populate_contents = list(
 		/obj/item/tntstick,
@@ -123,3 +132,13 @@
 		/obj/item/tntstick,
 		/obj/item/satchel_bomb
 		))
+
+/obj/item/storage/detpack/update_icon()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/list/things = STR.contents()
+	if(things.len)
+		icon_state = "strapbag"
+		w_class = WEIGHT_CLASS_NORMAL
+	else
+		icon_state = "strapbag"
+		w_class = WEIGHT_CLASS_NORMAL

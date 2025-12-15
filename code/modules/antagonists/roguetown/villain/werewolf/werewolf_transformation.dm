@@ -1,6 +1,3 @@
-/mob/living/carbon/human
-	var/mob/stored_mob = null
-
 /datum/antagonist/werewolf/on_life(mob/user)
 	if(!user) return
 	var/mob/living/carbon/human/H = user
@@ -76,7 +73,7 @@
 		SSdroning.play_area_sound(get_area(src), client)
 //	stop_cmusic()
 
-	src.fully_heal(FALSE)
+	fully_heal(FALSE)
 
 	var/ww_path
 	if(gender == MALE)
@@ -94,7 +91,7 @@
 	W.ambushable = FALSE
 	W.cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 	W.skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/werewolf_skin(W)
-	playsound(W.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 200, FALSE, 3)
+	playsound(W.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 80, FALSE, 3)
 	W.spawn_gibs(FALSE)
 	src.forceMove(W)
 
@@ -108,6 +105,7 @@
 	mind.transfer_to(W)
 	skills?.known_skills = list()
 	skills?.skill_experience = list()
+	W.remove_all_languages()
 	W.grant_language(/datum/language/beast)
 
 	W.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
@@ -185,10 +183,12 @@
 	W.forceMove(get_turf(src))
 
 	REMOVE_TRAIT(W, TRAIT_NOMOOD, TRAIT_GENERIC)
+	REMOVE_TRAIT(W, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
 	mind.transfer_to(W)
 
 	var/mob/living/carbon/human/species/werewolf/WA = src
+	W.remove_all_languages()
 	W.copy_known_languages_from(WA.stored_language)
 	skills?.known_skills = WA.stored_skills.Copy()
 	skills?.skill_experience = WA.stored_experience.Copy()

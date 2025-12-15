@@ -21,7 +21,7 @@
 	first_time_text = "The Murderwood"
 	converted_type = /area/rogue/indoors/shelter/woods
 	deathsight_message = "somewhere in the wilds"
-	threat_region = THREAT_REGION_OUTER_GROVE
+	threat_region = THREAT_REGION_ROCKHILL_OUTER_GROVE
 
 /area/rogue/indoors/shelter/woodsrat
 	name = "Murderwood Shelter"
@@ -29,7 +29,7 @@
 	droning_sound = 'sound/music/area/forest.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/forestnight.ogg'
-	threat_region = THREAT_REGION_OUTER_GROVE
+	threat_region = THREAT_REGION_ROCKHILL_OUTER_GROVE
 
 
 /area/rogue/outdoors/woodsrat/north
@@ -40,7 +40,10 @@
 		/mob/living/carbon/human/species/skeleton/npc/medium = 10,
 		/mob/living/carbon/human/species/goblin/npc/ambush = 30,
 		/mob/living/carbon/human/species/human/northern/highwayman/ambush = 30,
-		/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 20)
+		/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 20,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mole = 10,
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat = 15,
+		/mob/living/simple_animal/hostile/retaliate/rogue/direbear = 10,)
 	converted_type = /area/rogue/indoors/shelter/woods
 	deathsight_message = "somewhere in the wilds"
 	threat_region = THREAT_REGION_ROCKHILL_WOODS_NORTH
@@ -54,6 +57,9 @@
 		/mob/living/carbon/human/species/goblin/npc/ambush = 30,
 		/mob/living/carbon/human/species/human/northern/highwayman/ambush = 20,
 		/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 10,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mole = 10,
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat = 15,
+		/mob/living/simple_animal/hostile/retaliate/rogue/direbear = 15,
 		/mob/living/simple_animal/hostile/retaliate/rogue/troll/axe = 2)
 	converted_type = /area/rogue/indoors/shelter/woods
 	deathsight_message = "somewhere in the wilds"
@@ -67,9 +73,19 @@
 	ambientnight = AMB_MOUNTAIN
 	soundenv = 17
 	first_time_text = null
+	ambush_times = null
+	ambush_mobs = null
 
 /area/rogue/outdoors/woodsrat/safe
 	name = "Woods safe"
 	first_time_text = null
 	ambush_times = null
 	ambush_mobs = null
+
+/area/rogue/outdoors/woodsrat/river
+	name = "river"
+	icon_state = "river"
+	ambientsounds = AMB_RIVERDAY
+	ambientnight = AMB_RIVERNIGHT
+	spookysounds = SPOOKY_FROG
+	spookynight = SPOOKY_FOREST

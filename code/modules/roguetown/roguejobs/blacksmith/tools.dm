@@ -187,7 +187,7 @@
 	desc = "A wooden mallet is an artificers second best friend! But it may also come in handy to a smith..."
 	icon_state = "hammer_w"
 	force = 16
-	metalizer_result = /obj/item/rogueweapon/hammer
+	metalizer_result = /obj/item/rogueweapon/hammer/iron
 
 /obj/item/rogueweapon/hammer/stone	// stone hammer
 	name = "stone hammer"
@@ -244,6 +244,15 @@
 			return
 	..()
 */
+/obj/item/rogueweapon/hammer/blacksteel
+	force = 25
+	name = "blacksteel hammer"
+	desc = "A hammer made of blacksteel, to drive even the hardest metals into submission."
+	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon_state = "bs_masterhammer"
+	item_state = "bs_masterhammer"
+	quality = 2
+	smeltresult = /obj/item/ingot/blacksteel
 
 /obj/item/rogueweapon/hammer/getonmobprop(tag)
 	. = ..()
@@ -278,7 +287,7 @@
 	force = 10
 	possible_item_intents = list(/datum/intent/mace/strike)
 	name = "tongs"
-	desc = "A pair of iron jaws used to carry hot ingots."
+	desc = "A pair of blacksteel tongs that'll hold onto Psydonia's hottest metal without ever warping. 'Tis a symbol of prestige."
 	icon_state = "tongs"
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = IS_BLUNT
@@ -286,7 +295,7 @@
 	wlength = WLENGTH_SHORT
 	slot_flags = ITEM_SLOT_HIP
 	tool_behaviour = TOOL_IMPROVISED_HEMOSTAT
-	associated_skill = null
+	associated_skill = /datum/skill/craft/blacksmithing	//Tongs don't do a lot of damage and have 3 defense. This associated skill should be alright.
 	var/obj/item/ingot/hingot = null
 	var/hott = FALSE
 	smeltresult = /obj/item/ingot/iron
@@ -322,6 +331,7 @@
 /obj/item/rogueweapon/tongs/proc/make_unhot(input)
 	if(hott == input)
 		hott = FALSE
+		update_icon()
 
 /obj/item/rogueweapon/tongs/attack_self(mob/user)
 	if(hingot)
@@ -404,3 +414,21 @@
 			icon_state = "atongsi1"
 		else
 			icon_state = "atongsi0"
+
+/obj/item/rogueweapon/tongs/blacksteel
+	name = "blacksteel tongs"
+	desc = "A pair of blacksteel jaws almost certainly used as a sign of prestige."
+	icon_state = "bs_tongs"
+	wdefense = 6
+	icon = 'icons/roguetown/weapons/tools.dmi'
+	smeltresult = /obj/item/ingot/blacksteel
+
+/obj/item/rogueweapon/tongs/blacksteel/update_icon()
+	. = ..()
+	if(!hingot)
+		icon_state = "bs_tongs"
+	else
+		if(hott)
+			icon_state = "bs_tongsi1"
+		else
+			icon_state = "bs_tongsi0"

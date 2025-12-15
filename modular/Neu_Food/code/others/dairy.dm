@@ -97,6 +97,22 @@
 	foodtype = DAIRY
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
 
+/obj/item/reagent_containers/food/snacks/butterslice/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	update_cooktime(user)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/sugar))
+		if(isturf(loc)&& (found_table))
+			to_chat(user, span_notice("Mixing in sugar to make frosting..."))
+			if(do_after(user, long_cooktime, target = src))
+				playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
+				new /obj/item/reagent_containers/food/snacks/rogue/frosting(drop_location())
+				qdel(I)
+				qdel(src)
+			return
+		else
+			to_chat(user, span_warning("You need to put [src] on a table to work on it."))
+	return ..()
+
 
 /*	............   Making fresh cheese   ................ */
 /obj/item/reagent_containers/glass/bucket/attackby(obj/item/I, mob/living/user, params)
@@ -238,7 +254,7 @@
 	bitesize = 3
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
 	w_class = WEIGHT_CLASS_TINY
-	faretype = FARE_FINE
+	faretype = FARE_POOR
 	tastes = list("cheese" = 1)
 	eat_effect = null
 	rotprocess = SHELFLIFE_LONG
@@ -265,8 +281,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	tastes = list("cheese" = 1)
 	eat_effect = null
-	faretype = FARE_FINE
-	rotprocess = 20 MINUTES
+	faretype = FARE_POOR
+	rotprocess = SHELFLIFE_SHORT
 	slices_num = null
 	slice_path = null
 	become_rot_type = null
@@ -280,4 +296,16 @@
 	rotprocess = null
 
 
-
+// -------------- FROSTING -----------------
+/obj/item/reagent_containers/food/snacks/rogue/frosting
+	name = "frosting"
+	desc = "Butter mixed with sugar and whipped into a delicious frosting"
+	icon = 'modular/Neu_Food/icons/others/dairy.dmi'
+	icon_state = "frosting"
+	bitesize = 1
+	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)
+	w_class = WEIGHT_CLASS_TINY
+	tastes = list("sugary frosting"=1)
+	faretype = FARE_NEUTRAL
+	foodtype = DAIRY | SUGAR
+	eat_effect = /datum/status_effect/buff/sweet

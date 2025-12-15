@@ -106,6 +106,16 @@
 	speak_emote = list("chitters")
 	emote_hear = list("chitters")
 
+/mob/living/simple_animal/pet/cat/rogue/rat
+	name = "Boris"
+	desc = "Sated on lifetimes of the Keep's grain, there is simply no longer any point in slaying this beast. For it has already won."
+	icon = 'icons/roguetown/mob/monster/bigrat.dmi'
+	icon_state = "rat"
+	icon_living = "rat"
+	icon_dead = "rat1"
+	speak_emote = list("squeaks")
+	emote_hear = list("squeaks")
+
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = ""
@@ -283,7 +293,6 @@
 				emote("me", 1, "purrs!")
 				if(flags_1 & HOLOGRAM_1)
 					return
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		else
 			if(M && stat != DEAD)
 				emote("me", 1, "hisses!")
@@ -300,7 +309,7 @@
 		step(src, dir)
 		personal_space()
 
-	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/vampirelord))
+	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/vampire))
 		visible_message("<span class='notice'>The cat hisses at [M] and recoils in disgust.</span>")
 		icon_state = "[icon_living]"
 		set_resting(FALSE)

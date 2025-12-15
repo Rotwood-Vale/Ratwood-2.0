@@ -5,7 +5,6 @@
 
 /datum/supply_pack/rogue/blackmarket_tools/chain
 	name = "Length of Chain"
-	desc = "Chain test"
 	cost = 5
 	contains = list(/obj/item/rope/chain)
 

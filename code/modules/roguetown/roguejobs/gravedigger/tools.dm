@@ -12,6 +12,7 @@
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	tool_behaviour = TOOL_SHOVEL
+	associated_skill = /datum/skill/combat/maces
 	slot_flags = ITEM_SLOT_BACK
 	swingsound = list('sound/combat/wooshes/blunt/shovel_swing.ogg','sound/combat/wooshes/blunt/shovel_swing2.ogg')
 	drop_sound = 'sound/foley/dropsound/shovel_drop.ogg'
@@ -180,6 +181,37 @@
 	color = "#bb9696"
 	sellprice = 15
 
+/obj/item/rogueweapon/shovel/silver
+	force = 25
+	name = "silver shovel"
+	desc = "The only trait that distinguishes a man from a beast is their empathy. To mutilate the dead, regardless of what they've done in lyfe, is to invoke divine wrath. See them buried beneath crossed soil; ferry their spirit to the world beyond Psydonia, and towards their final judgement."
+	icon_state = "silvershovel"
+	icon = 'icons/roguetown/weapons/misc32.dmi'
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/shovel/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/shovel/silver/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_TENNITE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
 /obj/item/burial_shroud
 	name = "winding sheet"
 	desc = "A burial veil for the deceased. It makes transporting bodies slightly more tolerable."
@@ -345,3 +377,80 @@
 		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)
 		qdel(src)
+
+/obj/item/rogueweapon/shovel/saperka
+	name = "Saperka"
+	desc = "A compact, steel-headed spade favored by pioneers. \
+	Scarred by a hundred fieldworks, its socket is nicked from prying and the edge has been honed to bite through roots-or armor-in a pinch."
+	force = 12//It has a gripped state. USE IT!!!!!
+	force_wielded = 28//It's not just a better battleaxe, now. God I hate this thing.
+	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash, /datum/intent/shovelscoop)
+	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash)
+	icon_state = "saperka"//Temp sprite. Why was this just the shovel icon? I HATE YOU!!!!
+	icon = 'icons/roguetown/weapons/tools.dmi'
+	sharpness = 100
+	max_blade_int = 260
+	blade_dulling = DULLING_SHAFT_WOOD
+	wlength = WLENGTH_SHORT
+	gripped_intents = null
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_NORMAL
+	smeltresult = /obj/item/ingot/steel
+	minstr = 9
+	wdefense = 5
+	swingsound = BLADEWOOSH_MED
+	associated_skill = /datum/skill/combat/axes
+	demolition_mod = 2.5//Woodcutter axe level. A whole 1.0 lower than what it was before. I hate you. - Carl
+	resistance_flags = FLAMMABLE
+	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
+
+/obj/item/rogueweapon/shovel/saperka/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,
+"sx" = 0,
+"sy" = -10,
+"nx" = 2,
+"ny" = -8,
+"wx" = -9,
+"wy" = -8,
+"ex" = 5,
+"ey" = -11,
+"northabove" = 0,
+"southabove" = 1,
+"eastabove" = 1,
+"westabove" = 0,
+"nturn" = 105,
+"sturn" = -90,
+"wturn" = 0,
+"eturn" = 90,
+"nflip" = 0,
+"sflip" = 8,
+"wflip" = 8,
+"eflip" = 1)
+			if("wielded")
+				return list("shrink" = 0.8,
+"sx" = 3,
+"sy" = -5,
+"nx" = -8,
+"ny" = -5,
+"wx" = 0,
+"wy" = -5,
+"ex" = 5,
+"ey" = -5,
+"northabove" = 0,
+"southabove" = 1,
+"eastabove" = 1,
+"westabove" = 1,
+"nturn" = 135,
+"sturn" = -135,
+"wturn" = 240,
+"eturn" = 30,
+"nflip" = 0,
+"sflip" = 8,
+"wflip" = 8,
+"eflip" = 1)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)

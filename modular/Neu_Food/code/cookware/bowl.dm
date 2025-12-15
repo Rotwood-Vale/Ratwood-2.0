@@ -12,7 +12,7 @@
 	possible_transfer_amounts = list(7)
 	dropshrink = 1
 	w_class = WEIGHT_CLASS_NORMAL
-	volume = 33
+	volume = 30
 	obj_flags = CAN_BE_HIT
 	sellprice = 1
 	drinksounds = list('sound/items/drink_cup (1).ogg','sound/items/drink_cup (2).ogg','sound/items/drink_cup (3).ogg','sound/items/drink_cup (4).ogg','sound/items/drink_cup (5).ogg')
@@ -37,6 +37,7 @@
 	name = "silver bowl"
 	icon_state = "bowl_silver"
 	sellprice = 96
+	is_silver = TRUE
 
 /obj/item/reagent_containers/glass/bowl/tin
 	name = "tin bowl"

@@ -105,6 +105,11 @@
 		return "braies_f"
 	return "braies"
 
+/datum/sprite_accessory/underwear/loinclothunder
+	name = "Small Loincloth"
+	icon_state = "loinclothunder"
+	underwear_type = /obj/item/undies/loinclothunder
+
 /datum/sprite_accessory/legwear
 	abstract_type = /datum/sprite_accessory/legwear
 	icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/stockings.dmi'
@@ -148,3 +153,13 @@
 	name = "fishnet stockings"
 	icon_state = "fishnet"
 	legwear_type = /obj/item/legwears/fishnet
+
+/datum/sprite_accessory/legwear/stockings/thigh_high
+	name = "thigh-high stockings"
+	icon_state = "thigh"
+	legwear_type = /obj/item/legwears/thigh_high
+
+/datum/sprite_accessory/legwear/stockings/knee_high
+	name = "knee-high stockings"
+	icon_state = "knee"
+	legwear_type = /obj/item/legwears/knee_high

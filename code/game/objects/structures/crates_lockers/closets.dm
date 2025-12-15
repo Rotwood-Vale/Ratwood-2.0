@@ -369,8 +369,7 @@
 					picked = TRUE
 					to_chat(user, "<span class='deadsay'>The locking mechanism gives.</span>")
 					record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-					GLOB.azure_round_stats[STATS_LOCKS_PICKED]++
-					user.log_message("finished lockpicking closet \"[src.name]\" (now [locked ? "unlocked" : "locked"]).", LOG_ATTACK)
+					record_round_statistic(STATS_LOCKS_PICKED)
 					togglelock(user)
 					break
 				else

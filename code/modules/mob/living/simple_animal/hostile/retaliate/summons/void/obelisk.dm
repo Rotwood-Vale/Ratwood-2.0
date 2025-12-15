@@ -94,6 +94,7 @@
 	candodge = TRUE
 	canparry = TRUE
 	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/death(gibbed)
 	..()
@@ -119,9 +120,6 @@
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
-		if(!Process_Spacemove()) //Drifting
-			walk(src,0)
-			return 1
 		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
 				walk_away(src,target,retreat_distance,move_to_delay)
@@ -161,7 +159,6 @@
 	src.move_resist = MOVE_FORCE_VERY_STRONG
 	src.add_overlay(direction_overlay)
 	src.visible_message(span_notice("The air chills as [src] takes in energy..."))
-
 	var/fully_charged = do_after(src, delay = charge_duration, target = src)
 	src.cut_overlay(direction_overlay)
 	if (!fully_charged)

@@ -36,6 +36,14 @@
 	icon_state = "ancientbolt"
 	projectile_type = /obj/projectile/bullet/reusable/bolt/paalloy
 
+/obj/item/ammo_casing/caseless/rogue/bolt/blunt
+	name = "blunt bolt"
+	desc = "A crossbow bolt without the part that pierces skulls. That doesn't mean it won't kill you."
+	projectile_type = /obj/projectile/bullet/reusable/bolt/blunt
+	possible_item_intents = list(/datum/intent/mace/strike)
+	icon_state = "bolt_blunt"
+	force = 5
+
 /obj/projectile/bullet/reusable/bolt
 	name = "bolt"
 	damage = 70
@@ -55,16 +63,31 @@
 /obj/projectile/bullet/reusable/bolt/aalloy
 	damage = 40
 	armor_penetration = 30
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/aalloy
 
 /obj/projectile/bullet/reusable/bolt/paalloy
 	damage = 50
 	armor_penetration = 35
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/paalloy
+
+/obj/projectile/bullet/reusable/bolt/blunt
+	damage = 25
+	armor_penetration = 0
+	embedchance = 0
+	woundclass = BCLASS_BLUNT
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/blunt
+
+/obj/projectile/bullet/reusable/bolt/blunt
+	damage = 25
+	armor_penetration = 0
+	embedchance = 0
+	woundclass = BCLASS_BLUNT
 
 /obj/projectile/bullet/reusable/bolt/on_hit(atom/target)
 	. = ..()
 
 	var/mob/living/L = firer
-	if(!L || !L.mind) 
+	if(!L || !L.mind)
 		return
 
 	var/skill_multiplier = 0
@@ -93,6 +116,14 @@
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
 	max_integrity = 10
 
+/obj/item/ammo_casing/caseless/rogue/arrow/blunt
+	name = "blunt arrow"
+	desc = "For when you really need to kill a zad."
+	icon_state = "arrow_blunt"
+	projectile_type = /obj/projectile/bullet/reusable/arrow/blunt
+	force = 5
+	possible_item_intents = list(/datum/intent/mace/strike)
+
 /obj/item/ammo_casing/caseless/rogue/arrow/stone
 	name = "stone arrow"
 	desc = "A simple dowel sports lashed flint knapped and honed to a razor edge. Folk \
@@ -109,7 +140,7 @@
 	shooters will."
 	projectile_type = /obj/projectile/bullet/reusable/arrow/iron
 
-/obj/item/ammo_casing/caseless/rogue/arrow/iron/aalloy 
+/obj/item/ammo_casing/caseless/rogue/arrow/iron/aalloy
 	name = "decrepit broadhead arrow"
 	desc = "An arrow; one end, tipped with flattened and frayed bronze - the other, inlaid with decayed feathers. The alloy's decrepity forces it to burst into shrapnel upon impact, shredding flesh."
 	icon_state = "ancientarrow"
@@ -149,7 +180,7 @@
 	..()
 
 	var/mob/living/L = firer
-	if(!L || !L.mind) 
+	if(!L || !L.mind)
 		return
 
 	var/skill_multiplier = 0
@@ -161,6 +192,14 @@
 
 	if(skill_multiplier && can_train_combat_skill(L, /datum/skill/combat/bows, SKILL_LEVEL_EXPERT))
 		L.mind.add_sleep_experience(/datum/skill/combat/bows, L.STAINT * skill_multiplier)
+
+/obj/projectile/bullet/reusable/arrow/blunt
+	name = "blunt arrow"
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/arrow/blunt
+	damage = 15
+	armor_penetration = 0
+	embedchance = 0
+	woundclass = BCLASS_BLUNT
 
 /obj/projectile/bullet/reusable/arrow/stone
 	name = "stone arrow"
@@ -220,7 +259,7 @@
 
 /obj/projectile/bullet/reusable/arrow/poison
 	name = "poison iron arrow"
-	damage = 20	
+	damage = 20
 	damage_type = BRUTE
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "arrow_proj"
@@ -275,7 +314,7 @@
 	var/mob/living/M = target
 	M.adjust_fire_stacks(6)
 	M.adjustFireLoss(15)
-	M.IgniteMob()
+	M.ignite_mob()
 
 
 /obj/item/ammo_casing/caseless/rogue/bolt/water
@@ -357,7 +396,7 @@
 	var/mob/living/M = target
 	M.adjust_fire_stacks(4)
 	M.adjustFireLoss(10)
-	M.IgniteMob()
+	M.ignite_mob()
 
 /obj/item/ammo_casing/caseless/rogue/arrow/water
 	name = "water arrow"
@@ -533,17 +572,27 @@
 	wlength = WLENGTH_NORMAL
 	w_class = WEIGHT_CLASS_BULKY
 	armor_penetration = 40					//Redfined because.. it's not a weapon, it's an 'arrow' basically.
-	max_integrity = 50						//Breaks semi-easy, stops constant re-use. 
+	max_integrity = 50						//Breaks semi-easy, stops constant re-use.
 	wdefense = 3							//Worse than a spear
 	thrown_bclass = BCLASS_STAB				//Knives are slash, lets try out stab and see if it's too strong in terms of wounding.
 	throwforce = 25							//throwing knife is 22, slightly better for being bulkier.
 	possible_item_intents = list(/datum/intent/sword/thrust, /datum/intent/spear/bash, /datum/intent/spear/cut)	//Sword-thrust to avoid having 2 reach.
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 35, "embedded_fall_chance" = 10)	//Better than iron throwing knife by 10%
 	anvilrepair = /datum/skill/craft/weaponsmithing
-	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/polearms
 	heavy_metal = FALSE						//Stops spin animation, maybe.
 	thrown_damage_flag = "piercing"			//Checks peircing protection.
+
+/obj/item/ammo_casing/caseless/rogue/javelin/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -6,"sy" = -1,"nx" = 8,"ny" = 0,"wx" = -4,"wy" = 0,"ex" = 2,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 32,"eturn" = -23,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 4,"sy" = -2,"nx" = -3,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/ammo_casing/caseless/rogue/javelin/aalloy
 	name = "decrepit javelin"
@@ -571,7 +620,7 @@
 	name = "ancient javelin"
 	desc = "A missile of polished gilbranze. Old Syon had drowned beneath His tears, and Her ascension had brought forth this world's end - so that You, with the killing blow, could become God."
 	icon_state = "ajavelin"
-	smeltresult = null // 1 Ingots = 2 Javelin s
+	smeltresult = null // 1 Ingots = 2 Javelins
 
 /obj/item/ammo_casing/caseless/rogue/javelin/silver
 	name = "silver javelin"
@@ -581,47 +630,25 @@
 	throwforce = 25							//Less than steel because it's.. silver. Good at killing vampires/WW's still.
 	armor_penetration = 60
 	thrown_bclass = BCLASS_PICK				//Bypasses crit protection better than stabbing. Makes it better against heavy-targets.
-	smeltresult = /obj/item/ingot/silver
+	smeltresult = /obj/item/ingot/silver // 2 ingots = 2 javelins so this can smelt.
+
+/obj/item/ammo_casing/caseless/rogue/javelin/silver/ComponentInitialize()
+	. = ..()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = -3,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 3,\
+	)
 
 //Snowflake code to make sure the silver-bane is applied on hit to targeted mob. Thanks to Aurorablade for getting this code to work.
 /obj/item/ammo_casing/caseless/rogue/javelin/silver/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..() 
+	..()
 	if(!iscarbon(hit_atom))
 		return//abort
-	check_dmg(hit_atom)//apply effects and damages
-		
-/obj/item/ammo_casing/caseless/rogue/javelin/silver/proc/check_dmg(mob/living/hit_atom)
-	var/mob/living/carbon/human/H = hit_atom
-	if(H.mind)
-		var/datum/antagonist/werewolf/W = H.mind.has_antag_datum(/datum/antagonist/werewolf/)
-		var/datum/antagonist/vampirelord/lesser/V = H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser)
-		var/datum/antagonist/vampirelord/V_lord = H.mind.has_antag_datum(/datum/antagonist/vampirelord/)
-		if(V)
-			if(V.disguised)
-				H.visible_message("<font color='white'>The silver weapon weakens the curse temporarily!</font>")
-				to_chat(H, span_userdanger("I'm hit by my BANE!"))
-				H.apply_status_effect(/datum/status_effect/debuff/silver_curse)
-				src.last_used = world.time
-			else
-				H.visible_message("<font color='white'>The silver weapon weakens the curse temporarily!</font>")
-				to_chat(H, span_userdanger("I'm hit by my BANE!"))
-				H.apply_status_effect(/datum/status_effect/debuff/silver_curse)
-				src.last_used = world.time
-		if(V_lord)
-			if(V_lord.vamplevel < 4 && !V)
-				H.visible_message("<font color='white'>The silver weapon weakens the curse temporarily!</font>")
-				to_chat(H, span_userdanger("I'm hit by my BANE!"))
-				H.apply_status_effect(/datum/status_effect/debuff/silver_curse)
-				src.last_used = world.time
-			if(V_lord.vamplevel == 4 && !V)
-				to_chat(H, "<font color='red'> The silver weapon fails!</font>")
-				H.visible_message(H, span_userdanger("This feeble metal can't hurt me, I AM ANCIENT!"))
-		if(W && W.transformed == TRUE)
-			H.visible_message("<font color='white'>The silver weapon weakens the curse temporarily!</font>")
-			to_chat(H, span_userdanger("I'm hit by my BANE!"))
-			H.apply_status_effect(/datum/status_effect/debuff/silver_curse)
-			src.last_used = world.time
-	return
 
 //sling bullets
 
@@ -637,13 +664,21 @@
 	dropshrink = 0.6
 	possible_item_intents = list(INTENT_GENERIC) //not intended to attack with them
 	max_integrity = 20
-	
+
 /obj/item/ammo_casing/caseless/rogue/sling_bullet/stone //these should be seen
 	name = "stone sling bullet"
 	desc = "A stone refined for wrath."
 	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/stone
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "stone_sling_bullet"
+
+/obj/item/ammo_casing/caseless/rogue/sling_bullet/bronze
+	name = "bronze sling bullet"
+	desc = "A small bronze sphere. It feels deceptively heavy in the palm of your hand."
+	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/bronze
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "stone_sling_bullet"
+	color = "#f9d690"
 
 /obj/item/ammo_casing/caseless/rogue/sling_bullet/aalloy
 	name = "decrepit sling bullet"
@@ -698,7 +733,7 @@
 
 	if(skill_multiplier && can_train_combat_skill(L, /datum/skill/combat/slings, SKILL_LEVEL_LEGENDARY))
 		L.mind.add_sleep_experience(/datum/skill/combat/slings, L.STAINT * skill_multiplier)
-		
+
 /obj/projectile/bullet/reusable/sling_bullet //parent for proper reusable sling bullets
 	name = "sling bullet"
 	desc = "If you're reading this: duck."
@@ -713,7 +748,8 @@
 	embedchance = 0
 	woundclass = BCLASS_BLUNT
 	flag = "piercing"
-	speed = 0.4		
+	speed = 0.4
+	npc_simple_damage_mult = 2
 
 /obj/projectile/bullet/reusable/sling_bullet/on_hit(atom/target)
 	. = ..()
@@ -738,12 +774,20 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/stone
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
-	
+
 /obj/projectile/bullet/reusable/sling_bullet/aalloy
 	name = "decrepit sling bullet"
-	damage = 15 
+	damage = 15
 	armor_penetration = 0
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/aalloy
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "musketball_proj"
+
+/obj/projectile/bullet/reusable/sling_bullet/bronze
+	name = "bronze sling bullet"
+	damage = 35
+	armor_penetration = 20 //Slightly more damage, but with -33% AP.
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/bronze
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
 
@@ -762,6 +806,112 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/iron
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
+
+/obj/item/ammo_casing/caseless/rogue/bolt/holy
+	name = "sunderbolt"
+	desc = "A silver-tipped bolt, containing a small vial of holy water. Though it inflicts lesser wounds on living flesh, it exceeds when employed against the unholy; a snap and a crack, followed by a fiery surprise. </br>'One baptism for the remission of sins.'"
+	projectile_type = /obj/projectile/bullet/reusable/bolt/holy
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	caliber = "regbolt"
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "bolt_holywater"
+	dropshrink = 0.6
+	max_integrity = 10
+	force = 10
+
+/obj/projectile/bullet/reusable/bolt/holy
+	name = "sunderbolt"
+	damage = 35 //Halved damage, but same penetration.
+	damage_type = BRUTE
+	armor_penetration = 50
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "bolthwater_proj"
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/holy
+	range = 15
+	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
+	embedchance = 100
+	woundclass = BCLASS_PIERCE
+	flag = "piercing"
+	speed = 0.5
+	poisontype = /datum/reagent/water/blessed
+	poisonamount = 5
+	npc_simple_damage_mult = 5 //175, compared to the regular bolt's 140. Slightly more damage, as to imitate its anti-unholy properties on mobs who aren't affected by any form of poison.
+
+//Heavy bolts, for the funny heavy crossbow.
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt
+	name = "heavy bolt"
+	desc = "A durable steel bolt. It will pierce anything easily, perhaps by mass alone."
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	caliber = "heabolt"
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "heavy_bolt"//Temp sprite.
+	dropshrink = 0.8
+	max_integrity = 10
+	force = 12
+
+//+10 damage/pen from bolt.
+//Pen increase on heavy crossbow assures these will, effectively, ALWAYS go through.
+/obj/projectile/bullet/reusable/heavy_bolt
+	name = "heavy bolt"
+	damage = 80
+	damage_type = BRUTE
+	armor_penetration = 80
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "bolt_proj"
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt
+	range = 30
+	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
+	embedchance = 100
+	woundclass = BCLASS_PIERCE
+	flag = "piercing"
+	speed = 0.3
+	npc_simple_damage_mult = 2
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
+	name = "stake bolt"
+	desc = "A silver stake, affixed with fins. Drive back the darkness!"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/holy
+	icon_state = "heavy_stake"//Temp sprite.
+	max_integrity = 30
+	force = 12
+	is_silver = TRUE
+
+/obj/projectile/bullet/reusable/heavy_bolt/holy
+	name = "stake bolt"
+	damage = 50
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
+	hitsound = 'sound/combat/hits/hi_bolt (3).ogg'
+	speed = 0.5
+	poisontype = /datum/reagent/water/blessed
+	poisonamount = 5
+	npc_simple_damage_mult = 5//RAAAAAA
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest
+	name = "tempest bolt"
+	desc = "The warding around this feels <b>heavy</b>. A payload of some sort in the nose. \
+	What exactly is this meant for?"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/tempest
+	icon_state = "tempest_bolt"//Temp sprite.
+	max_integrity = 30
+	force = 12
+	is_silver = TRUE//This is ALSO warded. Just as with the silver bolt.
+
+//The super evil murderfuck bolt.
+/obj/projectile/bullet/reusable/heavy_bolt/tempest
+	name = "tempest bolt"
+	damage = 25
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest
+	hitsound = 'sound/combat/hits/hi_bolt (1).ogg'
+	speed = 0.5
+	npc_simple_damage_mult = 7
+
+/obj/projectile/bullet/reusable/heavy_bolt/tempest/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		M.apply_status_effect(/datum/status_effect/debuff/exposed)
+		M.blind_eyes(6)
 
 #undef ARROW_DAMAGE
 #undef BOLT_DAMAGE

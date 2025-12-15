@@ -10,39 +10,7 @@
 	max_occurrences = 0
 	shared_occurence_type = SHARED_MINOR_THREAT
 
-	restricted_roles = list(
-		"Grand Duke",
-		"Grand Duchess",
-		"Consort",
-		"Dungeoneer",
-		"Sergeant",
-		"Men-at-arms",
-		"Marshal",
-		"Merchant",
-		"Bishop",
-		"Acolyte",
-		"Martyr",
-		"Templar",
-		"Councillor",
-		"Prince",
-		"Princess",
-		"Hand",
-		"Steward",
-		"Court Physician",
-		"Town Elder",
-		"Captain",
-		"Archivist",
-		"Knight",
-		"Court Magician",
-		"Inquisitor",
-		"Orthodoxist",
-		"Absolver",
-		"Warden",
-		"Squire",
-		"Veteran",
-		"Apothecary"
-	)
-
+	restricted_roles = DEFAULT_ANTAG_BLACKLISTED_ROLES
 	base_antags = 5
 	maximum_antags = 10
 

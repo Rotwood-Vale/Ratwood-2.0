@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/chat = 100,
 	/datum/hallucination/message = 60,
 	/datum/hallucination/sounds = 50,
+	/datum/hallucination/voices = 40,
 	/datum/hallucination/battle = 20,
 	/datum/hallucination/dangerflash = 15,
 //	/datum/hallucination/hudscrew = 12,
@@ -838,11 +839,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					target.halitem.icon_state = "serpcrown"
 					target.halitem.name = "Crown of Rotwood Vale"
 				if(4) //clawl
-					target.halitem.icon = 'icons/roguetown/weapons/32.dmi'
+					target.halitem.icon = 'icons/roguetown/weapons/unarmed32.dmi'
 					target.halitem.icon_state = "claw_l"
 					target.halitem.name = "ravager claws"
 				if(5) //clawr
-					target.halitem.icon = 'icons/roguetown/weapons/32.dmi'
+					target.halitem.icon = 'icons/roguetown/weapons/unarmed32.dmi'
 					target.halitem.icon_state = "claw_r"
 					target.halitem.name = "ravager claws"
 			feedback_details += "Type: [target.halitem.name]"
@@ -985,7 +986,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/fire/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE
 	..()
-	target.fire_stacks = max(target.fire_stacks, 0.1) //Placebo flammability
 	fire_overlay = image('icons/mob/OnFire.dmi', target, "Standing", ABOVE_MOB_LAYER)
 	if(target.client)
 		target.client.images += fire_overlay
@@ -993,16 +993,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	target.throw_alert("fire", /atom/movable/screen/alert/fire, override = TRUE)
 	sleep(20)
 	for(var/i in 1 to 3)
-		if(target.fire_stacks <= 0)
-			clear_fire()
-			return
 		stage++
 		update_temp()
 		sleep(30)
 	for(var/i in 1 to rand(5, 10))
-		if(target.fire_stacks <= 0)
-			clear_fire()
-			return
 		target.adjustStaminaLoss(15)
 		sleep(20)
 	clear_fire()
@@ -1109,4 +1103,65 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			if(target.client)
 				target.client.images -= target.halbody
 			QDEL_NULL(target.halbody)
+	qdel(src)
+
+/datum/hallucination/voices
+	var/static/list/messages = list(
+		"YOUR FATE IS SEALED IN BLOOD AND ASHES!",
+		"SHE CALLS YOUR NAME, FOOL!",
+		"THE GODS SPIT ON YOUR WORTHLESS SOUL!",
+		"YOUR HEART BEATS FOR THEIR ASCENSION!",
+		"CLAWS TEAR AT YOUR MIND FROM WITHIN!",
+		"NO ONE WILL MOURN YOUR BROKEN CORPSE!",
+		"THEIR EYES WATCH FROM EVERY WOUND!",
+		"THE SWAMP WILL SWALLOW YOUR HOPE!",
+		"PAIN IS YOUR ONLY TRUE COMPANION!",
+		"THE CHAINS OF FATE BIND YOUR BONES!",
+		"THEY LAUGH AS YOUR MIND CRUMBLES!",
+		"THE STARS MOCK YOUR FUTILE STRUGGLE!",
+		"THE GROUND WEEPS BLOOD WHERE YOU TREAD!",
+		"THEIR WHISPERS CARVE YOUR FLESH TO DUST!",
+		"THE BEASTS SMELL YOUR FEAR AND HUNGER!",
+		"YOUR VEINS PULSE WITH THEIR MALICE!",
+		"DEATH IS TOO MERCIFUL FOR YOUR SINS!",
+		"THE BOG CLAIMS YOUR HOPELESS BONES!",
+		"THE GODS HAVE MARKED YOU FOR TORMENT!",
+		"YOUR CRIES ECHO IN AN EMPTY ABYSS!",
+		"THE SHADOWS BIND YOUR WRETCHED FATE!",
+		"YOUR MIND IS A PRISON OF THEIR DESIGN!",
+		"THE FLAMES OF YOUR GUILT CONSUME YOU!",
+		"YOUR HEART IS A TROPHY FOR HER GLORY!",
+		"THE STORM SINGS OF YOUR DOOMED PATH!",
+		"THEIR CLAWS SCRATCH YOUR NAME IN STONE!",
+		"YOUR BREATH FEEDS HIS ENDLESS HUNGER!",
+		"THE GODS LAUGH AT YOUR BROKEN DREAMS!",
+		"YOUR SHADOW BETRAYS YOU TO THE DARK!",
+		"THE SWAMP WHISPERS YOUR FINAL MOMENTS!",
+		"YOUR FLESH IS A CANVAS FOR HIS WRATH!",
+	)
+
+/datum/hallucination/voices/New(mob/living/carbon/carbon, forced = TRUE)
+	set waitfor = FALSE
+	..()
+
+	var/list/objs = list()
+
+	for(var/obj/obj in oview(3, carbon))
+		objs += obj
+	
+	var/obj/obj = safepick(objs)
+
+	if(!obj)
+		qdel(src)
+		return
+
+	var/lang = carbon.get_default_language()
+	var/picked_message = pick(messages)
+	var/composed = obj.compose_message(obj, carbon.get_default_language(), picked_message)
+
+	carbon.Hear(composed, obj, lang, picked_message)
+
+	if(prob(20))
+		carbon.emote("whimper")
+
 	qdel(src)

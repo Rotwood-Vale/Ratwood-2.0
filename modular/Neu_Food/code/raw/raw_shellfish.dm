@@ -144,7 +144,7 @@
 	name = "crab cake"
 	desc = "A variant of the handpie filled with buttery, savory shellfish meat and made with a buttered slice of dough."
 	icon_state = "crab_cake"
-	eat_effect = /datum/status_effect/buff/foodbuff
+	eat_effect = /datum/status_effect/buff/greatsnackbuff
 	bitesize = 4
 	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION + MEATSLAB_NUTRITION)
 	tastes = list("crispy butterdough and shellfish meat" = 1)

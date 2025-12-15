@@ -4,7 +4,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/seamstress
-	
+	subclass_social_rank = SOCIAL_RANK_YEOMAN
+	traits_applied = list(TRAIT_SEWING_EXPERT)
+
 	traits_applied = list(TRAIT_DYES)
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	subclass_stats = list(
@@ -13,17 +15,19 @@
 		STATKEY_PER = 1,
 		STATKEY_STR = -1
 	)
+	subclass_skills = list(
+		/datum/skill/craft/sewing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/tanning = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+	)
 
 /datum/outfit/job/roguetown/adventurer/seamstress/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.adjust_skillrank(/datum/skill/misc/sewing, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/tanning, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak
 	armor = /obj/item/clothing/suit/roguetown/armor/armordress
@@ -43,3 +47,5 @@
 						/obj/item/book/rogue/swatchbook = 1,
 						/obj/item/recipe_book/leatherworking = 1
 						)
+	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fittedclothing)

@@ -10,12 +10,13 @@
 	slot_flags = ITEM_SLOT_HEAD
 	dynamic_hair_suffix = ""
 	max_integrity = 80
-	armor = ARMOR_HEAD_CLOTHING
+	armor = ARMOR_CLOTHING
 	prevent_crits = list(BCLASS_TWIST)
 	anvilrepair = null
 	sewrepair = TRUE
 	blocksound = SOFTHIT
-
+	salvage_result = /obj/item/natural/hide
+	salvage_amount = 1
 
 
 /obj/item/clothing/head/roguetown/beekeeper
@@ -79,7 +80,7 @@
 	icon_state = "dendormask"
 	item_state = "dendormask"
 	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi' 
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
 	body_parts_covered = MOUTH
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT

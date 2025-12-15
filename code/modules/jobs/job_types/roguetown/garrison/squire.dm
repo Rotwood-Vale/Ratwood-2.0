@@ -5,7 +5,7 @@
 	faction = "Station"
 	total_positions = 4
 	spawn_positions = 4
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = ACCEPTED_RACES
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT)
 	advclass_cat_rolls = list(CTAG_SQUIRE = 20)
@@ -20,6 +20,7 @@
 	min_pq = -5 //squires aren't great but they can do some damage
 	max_pq = null
 	round_contrib_points = 2
+	social_rank = SOCIAL_RANK_PEASANT
 
 	cmode_music = 'sound/music/combat_squire.ogg'
 	job_subclasses = list(
@@ -41,9 +42,6 @@
 	. = ..()
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		H.advsetup = 1
-		H.invisibility = INVISIBILITY_MAXIMUM
-		H.become_blind("advsetup")
 		if(istype(H.cloak, /obj/item/clothing/cloak/stabard/surcoat/guard))
 			var/obj/item/clothing/S = H.cloak
 			var/index = findtext(H.real_name, " ")
@@ -58,7 +56,7 @@
 	tutorial = "A hopeful for the next generation of knightly mounted lancers and infantry pike specialists, \
 	your training with polearms sets you apart from other squires."
 	outfit = /datum/outfit/job/roguetown/squire/lancer
-		
+
 	category_tags = list(CTAG_SQUIRE)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
@@ -68,38 +66,43 @@
 		STATKEY_CON = 1,
 		STATKEY_INT = 1,
 	)
+	subclass_skills = list(
+		/datum/skill/combat/maces = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
+	)
 
 /datum/outfit/job/roguetown/squire/lancer/pre_equip(mob/living/carbon/human/H)
+	. = ..()
+	H.verbs |= /mob/proc/haltyell_exhausting
 	r_hand = /obj/item/rogueweapon/spear
 	armor = /obj/item/clothing/suit/roguetown/armor/chainmail
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 	backr = /obj/item/storage/backpack/rogue/satchel
+	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch,
 		/obj/item/clothing/neck/roguetown/chaincoif,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
 	)
-	H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
 
 /datum/advclass/squire/footman
 	name = "Footman Squire"
 	tutorial = "Your training has been singularly focused on the intricacies of sword, a weapon whose versatility \
 	belies the difficulty of its use."
 	outfit = /datum/outfit/job/roguetown/squire/footman
-		
+
 	category_tags = list(CTAG_SQUIRE)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
@@ -109,8 +112,22 @@
 		STATKEY_CON = 1,
 		STATKEY_INT = 1,
 	)
+	subclass_skills = list(
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+	)
 
 /datum/outfit/job/roguetown/squire/footman/pre_equip(mob/living/carbon/human/H)
+	. = ..()
+	H.verbs |= /mob/proc/haltyell_exhausting
 	armor = /obj/item/clothing/suit/roguetown/armor/chainmail
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
@@ -121,27 +138,17 @@
 		/obj/item/clothing/neck/roguetown/chaincoif,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot
 	)
-	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-
 	H.adjust_blindness(-3)
-	var/weapons = list("Iron Sword","Cudgel",)
-	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-	H.set_blindness(0)
-	switch(weapon_choice)
-		if("Iron Sword")
-			beltr = /obj/item/rogueweapon/scabbard/sword
-			r_hand = /obj/item/rogueweapon/sword/iron
-		if("Cudgel")	
-			beltr = /obj/item/rogueweapon/mace/cudgel
+	if(H.mind)
+		var/weapons = list("Iron Sword","Cudgel",)
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		H.set_blindness(0)
+		switch(weapon_choice)
+			if("Iron Sword")
+				beltr = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/rogueweapon/sword/iron
+			if("Cudgel")
+				beltr = /obj/item/rogueweapon/mace/cudgel
 
 /datum/advclass/squire/skirmisher
 	name = "Irregular Squire"
@@ -149,7 +156,7 @@
 	has become more apparent, and hopefuls such as yourself have been trained into the future of elite skirmisher \
 	troops."
 	outfit = /datum/outfit/job/roguetown/squire/skirmisher
-		
+
 	category_tags = list(CTAG_SQUIRE)
 	traits_applied = list(TRAIT_DODGEEXPERT)
 	subclass_stats = list(
@@ -158,8 +165,23 @@
 		STATKEY_CON = 1,
 		STATKEY_INT = 1,
 	)
+	subclass_skills = list(
+		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_NOVICE,
+	)
 
 /datum/outfit/job/roguetown/squire/skirmisher/pre_equip(mob/living/carbon/human/H)
+	. = ..()
+	H.verbs |= /mob/proc/haltyell_exhausting
 	beltr = /obj/item/quiver/arrows
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
 	pants = /obj/item/clothing/under/roguetown/trou/leather
@@ -174,14 +196,3 @@
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot
 		)
-	H.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)

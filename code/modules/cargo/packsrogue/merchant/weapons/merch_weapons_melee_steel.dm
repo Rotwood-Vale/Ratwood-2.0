@@ -33,7 +33,7 @@
 	contains = list(
 					/obj/item/rogueweapon/sword/rapier,
 				)
-				
+
 /datum/supply_pack/rogue/steel_weapons/cutlass
 	name = "Cutlass"
 	cost = 40 // 1 Steel Ingot
@@ -85,6 +85,13 @@
 					/obj/item/rogueweapon/mace/warhammer/steel,
 				)
 
+/datum/supply_pack/rogue/steel_weapons/quarterstaff
+	name = "Reinforced Quarterstaff - Steel"
+	cost = 40 // 1 Steel Ingot
+	contains = list(
+					/obj/item/rogueweapon/woodstaff/quarterstaff/steel,
+				)
+
 /datum/supply_pack/rogue/steel_weapons/longsword
 	name = "Longsword"
 	cost = 70 // 2 Steel Ingot
@@ -126,6 +133,13 @@
 	contains = list(
 					/obj/item/rogueweapon/greatsword/grenz,
 				)
+
+/datum/supply_pack/rogue/steel_weapons/flamberge
+	name = "Steel Flamberge"
+	cost = 105
+	contains = list(
+		/obj/item/rogueweapon/greatsword/grenz/flamberge
+	)
 
 /datum/supply_pack/rogue/steel_weapons/estoc
 	name = "Estoc"
@@ -199,7 +213,7 @@
 
 /datum/supply_pack/rogue/steel_weapons/fishingspear
 	name = "Fishing Spear"
-	cost = 75 // 2 Steel Ingot, 1 Small Log. 
+	cost = 75 // 2 Steel Ingot, 1 Small Log.
 	contains = list(
 					/obj/item/rogueweapon/fishspear,
 				)

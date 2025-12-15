@@ -1,7 +1,7 @@
 /obj/item/rogueweapon/pick
 	force = 17
 	force_wielded = 21
-	possible_item_intents = list(/datum/intent/pick)
+	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick)
 	name = "iron pick"
 	desc = "This tool is essential to mine in the dark depths."
@@ -53,10 +53,22 @@
 	force = 21
 	force_wielded = 28
 	icon_state = "steelpick"
-	possible_item_intents = list(/datum/intent/pick)
+	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick)
 	max_integrity = 600
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/pick/blacksteel
+	name = "blacksteel pick"
+	desc = "Glimmering with silver-y black, this is a pretigious tool for miners delving in the darkness."
+	force_wielded = 30
+	icon_state = "blacksteelpick1"
+	item_state = "blacksteelpick1"
+	possible_item_intents = list(/datum/intent/pick)
+	gripped_intents = list(/datum/intent/pick)
+	max_integrity = 800
+	smeltresult = /obj/item/ingot/blacksteel
+
 
 /obj/item/rogueweapon/pick/stone
 	name = "stone pick"
@@ -64,7 +76,7 @@
 	force = 12
 	force_wielded = 17
 	icon_state = "stonepick"
-	possible_item_intents = list(/datum/intent/pick)
+	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick)
 	max_integrity = 250
 	smeltresult = null
@@ -75,7 +87,7 @@
 	force = 12
 	force_wielded = 17
 	icon_state = "apick"
-	possible_item_intents = list(/datum/intent/pick)
+	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick)
 	max_integrity = 150
 	smeltresult = /obj/item/ingot/aaslag

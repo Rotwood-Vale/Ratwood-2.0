@@ -14,7 +14,6 @@
 				return FALSE
 		else
 			return FALSE
-
 	if(!user.getorganslot(ORGAN_SLOT_PENIS))
 		return FALSE
 	return TRUE

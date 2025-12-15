@@ -20,47 +20,7 @@
 
 	typepath = /datum/round_event/antagonist/solo/vampires_and_werewolves
 
-	restricted_roles = list(
-		"Grand Duke",
-		"Grand Duchess",
-		"Knight Captain",
-		"Consort",
-		"Dungeoneer",
-		"Sergeant",
-		"Men-at-Arms",
-		"Woman-at-Arms",
-		"Marshal",
-		"Merchant",
-		"Bishop",
-		"Acolyte",
-		"Martyr",
-		"Templar",
-		"Councillor",
-		"Bandit",
-		"Prince",
-		"Princess",
-		"Hand",
-		"Steward",
-		"Clerk",
-		"Magos Thrall",
-		"Jester",
-		"Servant",
-		"Seneschal",
-		"Court Physician",
-		"Town Elder",
-		"Captain",
-		"Archivist",
-		"Knight",
-		"Dame",
-		"Court Magician",
-		"Inquisitor",
-		"Orthodoxist",
-		"Absolver",
-		"Warden",
-		"Squire",
-		"Veteran",
-		"Apothecary"
-	)
+	restricted_roles = DEFAULT_ANTAG_BLACKLISTED_ROLES
 
 /datum/round_event/antagonist/solo/vampires_and_werewolves
 	var/leader = FALSE
@@ -82,13 +42,13 @@
 		var/datum/job/J = SSjob.GetJob(antag_mind.current?.job)
 		J?.current_positions = max(J?.current_positions-1, 0)
 		antag_mind.current.unequip_everything()
-		antag_mind.add_antag_datum(/datum/antagonist/vampirelord/lesser)
+		antag_mind.add_antag_datum(antag_datum)
 		leader = TRUE
 		return
 	else
-		if(!antag_mind.has_antag_datum(/datum/antagonist/vampirelord))
+		if(!antag_mind.has_antag_datum(/datum/antagonist/vampire))
 			var/datum/job/J = SSjob.GetJob(antag_mind.current?.job)
 			J?.current_positions = max(J?.current_positions-1, 0)
 			antag_mind.current.unequip_everything()
-			antag_mind.add_antag_datum(/datum/antagonist/vampirelord/lesser)
+			antag_mind.add_antag_datum(/datum/antagonist/vampire)
 		return

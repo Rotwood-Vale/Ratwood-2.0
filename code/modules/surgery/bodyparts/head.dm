@@ -45,12 +45,18 @@
 	//grabtargets for grabs
 	grabtargets = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)
 	resistance_flags = FLAMMABLE
-	
+
 	grid_width = 64
 	grid_height = 64
 
 	/// Brainkill means that this head is considered dead and revival is impossible
 	var/brainkill = FALSE
+	two_stage_death = TRUE // players won't be decapitated instantly (they'll still die immediately, though)
+
+/obj/item/bodypart/head/examine()
+	. = ..()
+	if(sellprice)
+		. += span_notice("This head seems to be wanted by the Judiciary of The Vale. It can be sold at the merchant or a HEADEATER.")
 
 /obj/item/bodypart/head/grabbedintents(mob/living/user, precise)
 	var/used_limb = precise
@@ -70,7 +76,10 @@
 		if(BODY_ZONE_PRECISE_MOUTH)
 			return list(/datum/intent/grab/move, /datum/intent/grab/twist, /datum/intent/grab/smash)
 		if(BODY_ZONE_PRECISE_NECK)
-			return list(/datum/intent/grab/move, /datum/intent/grab/choke, /datum/intent/grab/hostage)
+			if(istabaxi(owner) || islupian(owner))
+				return list(/datum/intent/grab/move, /datum/intent/grab/choke, /datum/intent/grab/hostage, /datum/intent/grab/scruff)
+			else
+				return list(/datum/intent/grab/move, /datum/intent/grab/choke, /datum/intent/grab/hostage)
 
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
@@ -220,6 +229,10 @@
 
 			if(eyes.eye_color)
 				eyes_overlay.color = "#" + eyes.eye_color
+
+/obj/item/bodypart/head/MiddleClick(mob/living/user, params)
+	to_chat(user, span_notice("You contemplate carving what little scraps of meat you can from \the [src], but then think better of it. Probably worth something to someone, somewhere..."))
+	return
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'

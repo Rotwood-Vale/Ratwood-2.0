@@ -75,6 +75,7 @@
 /obj/structure/closet/dirthole/closed/loot/open()
 	if(!looted)
 		looted = TRUE
+		new /obj/item/natural/bundle/bone/rdm(src)
 		switch(lootroll)
 			if(1)
 				new /mob/living/carbon/human/species/skeleton/npc(mastert)
@@ -101,6 +102,27 @@
 
 /obj/structure/closet/dirthole/toggle(mob/living/user)
 	return
+
+/obj/structure/closet/dirthole/attack_hand(mob/living/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		var/atom/movable/coffin = src
+		for(var/mob/living/corpse in coffin)
+			if(!corpse.stat == DEAD)
+				to_chat(user, "That one hasn't truly passed on yet?!")
+				return
+			if(corpse.burialrited)
+				to_chat(user, "This grave has already been consecrated...")
+				return
+			else
+				to_chat(user, "I begin my burial rites...")
+				if(do_after(user, 50))
+					user.say("#Rest thy soul for all aeon within Necra's embrace!")
+					to_chat(user, "I have extracted a strand of luxthread, proof of passing.")
+					playsound(user, 'sound/misc/bellold.ogg', 20)
+					new /obj/item/soulthread((get_turf(user)))
+					corpse.burialrited = TRUE
+
 
 /obj/structure/closet/dirthole/attackby(obj/item/attacking_item, mob/user, params)
 	if(!istype(attacking_item, /obj/item/rogueweapon/shovel))
@@ -178,7 +200,7 @@
 			open()
 			for(var/obj/structure/gravemarker/G in loc)
 				record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-				GLOB.azure_round_stats[STATS_GRAVES_ROBBED]++
+				record_round_statistic(STATS_GRAVES_ROBBED)
 				qdel(G)
 				if(isliving(user))
 					var/mob/living/L = user
@@ -306,25 +328,24 @@
 	if(istype(T))
 		mastert = T
 		T.holie = src
+		//Is the tile wet? A chance for bait and better clay odds
 		if(T.muddy)
-			if(!(locate(/obj/item/natural/worms) in T))
-				if(prob(55))
-					if(prob(20))
-						if(prob(5))
-							new /obj/item/natural/worms/grubs(T)
-						else
-							new /obj/item/natural/worms/leech(T)
+			if(prob(55))
+				if(prob(20))
+					if(prob(5))
+						new /obj/item/natural/worms/grubs(T)
 					else
-						new /obj/item/natural/worms(T)
-			if(!(locate(/obj/item/natural/clay) in T))
-				if(prob(25))
-					new /obj/item/natural/clay(T)
+						new /obj/item/natural/worms/leech(T)
+				else
+					new /obj/item/natural/worms(T)
+			if(prob(25))
+				new /obj/item/natural/clay(T)
+		//Otherwise, just stone and clay.
 		else
-			if(!(locate(/obj/item/natural/stone) in T) || !(locate(/obj/item/natural/clay) in T))
-				if(prob(23))
-					new /obj/item/natural/stone(T)
-				if(prob(18))	
-					new /obj/item/natural/clay(T)
+			if(prob(23))
+				new /obj/item/natural/stone(T)
+			if(prob(18))
+				new /obj/item/natural/clay(T)
 	return ..()
 
 /obj/structure/closet/dirthole/Destroy()

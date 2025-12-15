@@ -90,7 +90,7 @@
 		if(canconsume(C, silent = TRUE))
 			if(reagents.total_volume)
 				playsound(C, 'sound/items/sniff.ogg', 100, FALSE)
-				GLOB.azure_round_stats[STATS_DRUGS_SNORTED]++
+				record_round_statistic(STATS_DRUGS_SNORTED)
 				reagents.trans_to(C, 1, transfered_by = thrownthing.thrower, method = "swallow")
 	qdel(src)
 
@@ -117,13 +117,13 @@
 				return FALSE
 
 	playsound(M, 'sound/items/sniff.ogg', 100, FALSE)
-	GLOB.azure_round_stats[STATS_DRUGS_SNORTED]++
+	record_round_statistic(STATS_DRUGS_SNORTED)
 
 	if(reagents.total_volume)
 		reagents.trans_to(M, reagents.total_volume, transfered_by = user, method = "swallow")
 		SEND_SIGNAL(M, COMSIG_DRUG_SNIFFED, user)
 		record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-		GLOB.azure_round_stats[STATS_DRUGS_SNORTED]++
+		record_round_statistic(STATS_DRUGS_SNORTED)
 	qdel(src)
 	return TRUE
 
@@ -154,6 +154,17 @@
 	list_reagents = list(/datum/reagent/floure = 1)
 	grind_results = list(/datum/reagent/floure = 10)
 	volume = 1
+	sellprice = 0
+
+/obj/item/reagent_containers/powder/mana
+	name = "sparkling blue powder"
+	desc = ""
+	gender = PLURAL
+	icon_state = "flour"
+	color = "#00b7ff"
+	list_reagents = list(/datum/reagent/medicine/manapot = 12)
+	grind_results = list(/datum/reagent/medicine/manapot = 12)
+	volume = 12
 	sellprice = 0
 
 /obj/item/reagent_containers/powder/rocknut

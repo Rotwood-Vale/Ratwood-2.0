@@ -6,11 +6,12 @@
 	item_state = "barbute"
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	armor = ARMOR_HEAD_HELMET_VISOR
+	armor = ARMOR_PLATE
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
+	armor_class = ARMOR_CLASS_MEDIUM	//Heavy helmets require at least medium armor training. Stops no-armor training plate-headgear users.
 
 /obj/item/clothing/head/roguetown/helmet/heavy/aalloy
 	name = "decrepit barbute"
@@ -45,6 +46,13 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/head/roguetown/helmet/heavy/kabuto
+	name = "kabuto"
+	desc = "A Kazengunite helmet of steel plates, gilded in blacksteel and gold trim alike to evoke feelings of nobility and strength. Commonly worn with a mask or mouthguard."
+	flags_inv = HIDEEARS
+	flags_cover = null
+	icon_state = "kazengunheavyhelm"
+
 /obj/item/clothing/head/roguetown/helmet/heavy/paalloy
 	name = "ancient barbute"
 	desc = "Polished gilbranze plates, pounded to form a visored helmet. Zizo commands progress, and progress commands sacrifice; let these sundered legionnaires rise again, to spill the blood of unenlightened fools. A coiled pocket is perched atop the rim, awaiting to be plumed."
@@ -66,14 +74,19 @@
 
 
 /obj/item/clothing/head/roguetown/helmet/heavy/guard
-	name = "savoyard"
+	name = "steel savoyard"
 	desc = "A helmet with a menacing visage."
-	icon_state = "guardhelm"
+	icon_state = "steelsavoyard"
 	emote_environment = 3
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/bogman
+	name = "steel bogman's helmet"
+	desc = "A helmet featuring the face of a snarling goblin. Once worn by the Bogmen, now a relic of old Rotwood Vale."
+	icon_state = "guardhelm"
 
 /obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy
 	name = "decrepit savoyard"
@@ -141,6 +154,10 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/fluted
+	name = "fluted armet"
+	desc = "An ornate steel greathelm with a visor, which protects the entire head. While bulky, the fluted design excels at prolonging chivalrous bouts with fellow knights. Add a feather to show the colors of your family or allegiance."
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/iron
 	name = "iron knight's helmet"
@@ -302,12 +319,23 @@
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
 
+/obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor
+	name = "plumed astrata helmet"
+	desc = "A helmet with a great, black plume. Order shall guide your hand. Strike sure. Strike true. For none may question your intent."
+	icon_state = "astratahelm_plume"
+	item_state = "astratahelm_plume"
+	adjustable = CAN_CADJUST
+
+/obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
 /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute
-	name = "psydonian barbute"
+	name = "psydonic barbute"
 	desc = "A ceremonial barbute, masterfully forged to represent Psydon's divine authority. The Order of Saint Malum's artisans have chiseled this pronged visage into more statues than you could possibly imagine."
 	icon_state = "psydonbarbute"
 	item_state = "psydonbarbute"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	smeltresult = /obj/item/ingot/silver
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute/getonmobprop(tag)
 	if(tag)
@@ -318,13 +346,14 @@
 				return list("shrink" = 0.32,"sx" = -3,"sy" = -8,"nx" = 6,"ny" = -8,"wx" = -1,"wy" = -8,"ex" = 3,"ey" = -8,"nturn" = 180,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 1,"sflip" = 0,"wflip" = 0,"eflip" = 8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm
-	name = "psydonian armet"
+	name = "psydonic armet"
 	desc = "An ornate helmet, whose visor has been bound shut with blacksteel chains. The Order of Saint Eora often decorates these armets with flowers - not only as a lucky charm gifted to them by fair maidens and family, but also as a vibrant reminder that 'happiness has to be fought for.'"
 	icon_state = "psydonarmet"
 	item_state = "psydonarmet"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	adjustable = CAN_CADJUST
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
+	smeltresult = /obj/item/ingot/silver
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm/getonmobprop(tag)
 	if(tag)
@@ -417,9 +446,10 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/ordinatorhelm/plume/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/natural/feather))
 		return
+	..()
 
 /obj/item/clothing/head/roguetown/helmet/heavy/absolver
-	name = "psydonian conical helm"
+	name = "psydonic conical helm"
 	desc = "Based on the visage worn by Saint Pestra's order, this cryptic helmet provides its wearer with the satisfaction of reminding heretics that fear is not an emotion easily lost. Even the dead may learn to taste terror again."
 	icon_state = "absolutionisthelm"
 	item_state = "absolutionisthelm"
@@ -432,24 +462,27 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	smeltresult = /obj/item/ingot/silver
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
-	name = "psydonian bucket helmet"
+	name = "psydonic bucket helmet"
 	desc = "Worn by the blade-carrying arms of Saint Astrata and Saint Ravox, it is a true-and-tested design. Steel encapsulates your head, and His cross when facing enemies reminds them that you will endure until they meet oblivion. Only then may you rest."
 	icon_state = "psybucket"
 	item_state = "psybucket"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	adjustable = CAN_CADJUST
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
+	smeltresult = /obj/item/ingot/silver
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psysallet
-	name = "psydonian sallet"
+	name = "psydonic sallet"
 	desc = "A boiled leather cap, crowned with steel and veiled with His cross. Fear not - He will show you the way, and He will see your blows well-struck."
 	icon_state = "psysallet"
 	item_state = "psysallet"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	adjustable = CAN_CADJUST
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
+	smeltresult = /obj/item/ingot/silver
 
 /obj/item/clothing/head/roguetown/helmet/heavy/nochelm
 	name = "noc helmet"
@@ -473,6 +506,16 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+
+/obj/item/clothing/head/roguetown/helmet/heavy/necrahelm/hooded
+	name = "hooded necra helmet"
+	desc = "Grim as the faces who wear it. For their duty is sacred, as they know the one truth of this lyfe. They're to perish, just as you are."
+	icon_state = "necrahelm_hooded"
+	item_state = "necrahelm_hooded"
+	adjustable = CAN_CADJUST
+
+/obj/item/clothing/head/roguetown/helmet/heavy/necrahelm/hooded/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 
 /obj/item/clothing/head/roguetown/helmet/heavy/dendorhelm
 	name = "dendor helmet"
@@ -520,6 +563,21 @@
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
 
+/obj/item/clothing/head/roguetown/helmet/heavy/ravox_visor
+	name = "plumed ravox helmet"
+	desc = "A helmet with a great, red plume. They will know, in time, that you are the true justiciar of the Vale."
+	icon_state = "ravoxhelm"
+	item_state = "ravoxhelm"
+	emote_environment = 3
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	block2add = FOV_BEHIND
+	smeltresult = /obj/item/ingot/steel
+	smelt_bar_num = 2
+	adjustable = CAN_CADJUST
+
+/obj/item/clothing/head/roguetown/helmet/heavy/ravox_visor/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
 	name = "volf-face helm"
 	desc = "A steel bascinet helmet with a volfish visor protecting the head, ears, eyes, nose and mouth."
@@ -532,9 +590,36 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
+	armor_class = null	//Needs no armor class, snowflake merc gear.
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
+/obj/item/clothing/head/roguetown/helmet/heavy/volfplate/puritan
+	name = "volfskulle bascinet"
+	desc = "A steel bascinet helmet with a snarling visor that protects the entire head and face. It mimics the guise of a terrible nitebeast; intimidating to the levyman, inspiring to the hunter."
+
+/obj/item/clothing/head/roguetown/helmet/heavy/volfplate/berserker
+	name = "volfskulle bascinet"
+	desc = "A steel bascinet helmet with a snarling visor that protects the entire head and face. Just like the nitebeasts it mimics, so too does the helmet's teeth glisten with flesh-sundering sharpness."
+	armor_class = ARMOR_CLASS_LIGHT //Pseudoantagonist-exclusive. Gives them an edge over traditional pugilists and barbarians.
+	var/active_item = FALSE
+
+/obj/item/clothing/head/roguetown/helmet/heavy/volfplate/berserker/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_HEAD)
+		active_item = TRUE
+		ADD_TRAIT(user, TRAIT_BITERHELM, TRAIT_GENERIC)
+		to_chat(user, span_red("The bascinet's visor chitters, and your jaw tightens with symbiotic intent.."))
+	return
+
+/obj/item/clothing/head/roguetown/helmet/heavy/volfplate/berserker/dropped(mob/living/user)
+	..()
+	if(!active_item)
+		return
+	active_item = FALSE
+	REMOVE_TRAIT(user, TRAIT_BITERHELM, TRAIT_GENERIC)
+	to_chat(user, span_red("..and like that, the bascinet's visor goes dormant once more - a strange pressure, relieved from your jaw."))
 
 /obj/item/clothing/head/roguetown/helmet/heavy/elven_helm
 	name = "woad elven helm"
