@@ -56,7 +56,8 @@
 							playsound(loc, 'sound/combat/hits/burn (1).ogg', 100, FALSE, -1)
 							user.adjust_fire_stacks(10)
 							user.ignite_mob()
-							user.flash_fullscreen("redflash3")
+							if(user.show_redflash())
+								user.flash_fullscreen("redflash3")
 							user.emote("firescream")
 						guidinglight(src) // Actually starts the proc for applying the buff
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
@@ -233,7 +234,8 @@
 	var/ritualtargets = view(0, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		to_chat(target,span_userdanger("You feel them crawling into your wounds and pores. Their horrific hum rings through your ears as they do their work!"))
-		target.flash_fullscreen("redflash3")
+		if(target.show_redflash())
+			target.flash_fullscreen("redflash3")
 		target.emote("agony")
 		target.Stun(200)
 		target.Knockdown(200)
@@ -324,7 +326,8 @@
 			to_chat(target, span_warning("The ritual's power does not recognize me..."))
 			continue
 		to_chat(target, span_userdanger("Do you like hurting other people?"))
-		target.flash_fullscreen("redflash3")
+		if(target.show_redflash())
+			target.flash_fullscreen("redflash3")
 		target.emote("agony")
 		target.Unconscious(200)
 		target.Knockdown(200)
@@ -345,7 +348,8 @@
 			to_chat(target, span_warning("The ritual's power does not recognize me..."))
 			continue
 		to_chat(target, span_userdanger("The webs of madness and nature whisper to me. The webs are eternal. Long live the Nest!"))
-		target.flash_fullscreen("redflash3")
+		if(target.show_redflash())
+			target.flash_fullscreen("redflash3")
 		target.emote("agony")
 		target.Unconscious(100)
 		target.Knockdown(200)
@@ -2291,7 +2295,8 @@
 			I.Jitter(30)
 			return
 		else
-			target.flash_fullscreen("redflash3")
+			if(target.show_redflash())
+				target.flash_fullscreen("redflash3")
 			target.emote("agony", forced = TRUE)
 			to_chat(target, span_userdanger("THIS FOUL RITE! IT BURNS ME TO MY CORE!"))
 			Were.on_removal()
@@ -2317,7 +2322,8 @@
 			target.Knockdown(30)
 			return
 		else
-			target.flash_fullscreen("redflash3")
+			if(target.show_redflash())
+				target.flash_fullscreen("redflash3")
 			target.emote("agony", forced = TRUE)
 			to_chat(target, span_userdanger("THIS FOUL RITE! MY STILL HEART QUICKENS ONCE MORE!"))
 			Vamp.on_removal()

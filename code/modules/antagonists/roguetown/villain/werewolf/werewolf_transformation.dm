@@ -13,7 +13,8 @@
 				if(loc.can_see_sky())
 					to_chat(H, span_userdanger("The moonlight scorns me... It is too late."))
 					owner.current.playsound_local(get_turf(owner.current), 'sound/music/wolfintro.ogg', 80, FALSE, pressure_affected = FALSE)
-					H.flash_fullscreen("redflash3")
+					if(H.show_redflash())
+						H.flash_fullscreen("redflash3")
 					transforming = world.time // timer
 
 	// Begin transformation
@@ -24,7 +25,8 @@
 			transformed = TRUE // Mark as transformed
 
 		else if (world.time >= transforming + 25 SECONDS) // Stage 2
-			H.flash_fullscreen("redflash3")
+			if(H.show_redflash())
+				H.flash_fullscreen("redflash3")
 			H.emote("agony", forced = TRUE)
 			to_chat(H, span_userdanger("UNIMAGINABLE PAIN!"))
 			H.Stun(30)
@@ -51,7 +53,8 @@
 				untransforming = FALSE // Reset untransforming phase
 
 			else if (world.time >= untransforming) // Alert player
-				H.flash_fullscreen("redflash1")
+				if(H.show_redflash())
+					H.flash_fullscreen("redflash1")
 				to_chat(H, span_warning("Daylight shines around me... the curse begins to fade."))
 
 

@@ -211,6 +211,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/no_language_fonts = FALSE
 	var/no_language_icon = FALSE
 	var/ghost_protection = FALSE
+	var/no_redflash = FALSE
+
 	var/lastclass
 
 	var/uplink_spawn_loc = UPLINK_PDA

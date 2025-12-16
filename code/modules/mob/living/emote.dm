@@ -743,7 +743,8 @@
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.flash_fullscreen("redflash3")
+		if(H.show_redflash())
+			H.flash_fullscreen("redflash3")
 		H.AdjustSleeping(-50)
 		playsound(target.loc, 'sound/foley/slap.ogg', 100, TRUE, -1)
 
@@ -761,7 +762,8 @@
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.flash_fullscreen("redflash1")
+		if(H.show_redflash())
+			H.flash_fullscreen("redflash1")
 
 /mob/living/carbon/human/verb/emote_pinch()
 	set name = "Pinch"

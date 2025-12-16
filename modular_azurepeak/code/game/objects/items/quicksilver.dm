@@ -120,7 +120,8 @@
 			I.Jitter(30)
 			return
 		else
-			M.flash_fullscreen("redflash3")
+			if(M.show_redflash())
+				M.flash_fullscreen("redflash3")
 			M.emote("agony", forced = TRUE)
 			to_chat(M, span_userdanger("THE FOUL SILVER! IT BURNS ME TO MY CORE!"))
 			Were.on_removal()
@@ -146,7 +147,8 @@
 			M.Knockdown(30)
 			return
 		else
-			M.flash_fullscreen("redflash3")
+			if(M.show_redflash())
+				M.flash_fullscreen("redflash3")
 			M.emote("agony", forced = TRUE)
 			to_chat(M, span_userdanger("THE FOUL SILVER! MY STILL HEART QUICKENS ONCE MORE!"))
 			Vamp.on_removal()

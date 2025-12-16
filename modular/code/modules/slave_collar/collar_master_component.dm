@@ -346,7 +346,7 @@ GLOBAL_LIST_EMPTY(collar_masters)
 
 	// Visual effects
 	pet.visible_message(span_danger("[pet]'s collar crackles with electricity!"), \
-					   span_userdanger("Your collar sends searing pain through your body!"))
+	span_userdanger("Your collar sends searing pain through your body!"))
 
 	var/turf/T = get_turf(pet)
 	if(T)
@@ -355,7 +355,8 @@ GLOBAL_LIST_EMPTY(collar_masters)
 		do_sparks(2, FALSE, pet)
 
 	// Add a temporary overlay effect
-	pet.flash_fullscreen("redflash3")
+	if(pet.show_redflash())
+		pet.flash_fullscreen("redflash3")
 	addtimer(CALLBACK(pet, TYPE_PROC_REF(/mob/living, clear_fullscreen), "pain"), 2 SECONDS)
 	log_collar_command(pet, COLLAR_LOG_SHOCK, "intensity=[intensity] damage=[damage]")
 

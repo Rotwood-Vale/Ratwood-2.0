@@ -31,7 +31,8 @@
 		return
 	var/mob/living/L = owner
 
-	L.flash_fullscreen("redflash3", 1)
+	if(L.show_redflash())
+		L.flash_fullscreen("redflash3", 1)
 	L.adjustBruteLoss(15)
 
 	if(!limb_removed && iscarbon(L))

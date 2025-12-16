@@ -209,7 +209,8 @@
 
 /obj/item/scrying/proc/failure_break(mob/living/user)
 	visible_message("\The [src] shatters!")
-	user.flash_fullscreen("redflash1")
+	if(user.show_redflash())
+		user.flash_fullscreen("redflash1")
 	new /obj/item/magic/obsidian(get_turf(src))
 	playsound(src, "shatter", 70, TRUE)
 	qdel(src)
@@ -344,7 +345,8 @@
 		user.apply_damage(25, BURN, user.get_bodypart(BODY_ZONE_L_ARM))
 	else
 		user.apply_damage(25, BURN, user.get_bodypart(BODY_ZONE_R_ARM))
-	user.flash_fullscreen("redflash1")
+	if(user.show_redflash())
+		user.flash_fullscreen("redflash1")
 	user.emote("scream")
 
 /////////////////////////////////////////Crystal ball ghsot vision///////////////////
