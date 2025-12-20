@@ -3,14 +3,14 @@
 	flag = WANDERERS
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 8
-	spawn_positions = 8
+	total_positions = 3//Oh my Zizo WHY was this EIGHT? Why is it ALL MERCS?
+	spawn_positions = 3
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "Blood stains your hands and the coins you hold. You are a sell-sword, a mercenary, a contractor of war. Where you come from, what you are, who you serve.. none of it matters. What matters is that the mammon flows to your pocket."
 	display_order = JDO_MERCENARY
 	selection_color = JCOLOR_WANDERER
-	min_pq = 2		//Will be handled by classes if PQ limiting is needed. --But Until then, learn escalation, mercs.
+	min_pq = 12//Play something else first, champ.
 	max_pq = null
 	round_contrib_points = 1
 	outfit = null	//Handled by classes
@@ -20,6 +20,7 @@
 	always_show_on_latechoices = TRUE
 	class_categories = TRUE
 	social_rank = SOCIAL_RANK_PEASANT
+
 	job_subclasses = list(
 		/datum/advclass/mercenary/atgervi,
 		/datum/advclass/mercenary/atgervi/shaman,
@@ -48,3 +49,22 @@
 		/datum/advclass/mercenary/grudgebearer,
 		/datum/advclass/mercenary/grudgebearer/soldier
 	)
+
+/proc/update_merc_slots()
+	var/datum/job/merc_job = SSjob.GetJob("Mercenary")
+	if(!merc_job)
+		return
+
+	var/player_count = length(GLOB.joined_player_list)
+	var/slots = 3
+
+	//Add 1 slot for every 10 players over 20. Less than 20 players, 3 slots. 20 or more players, 4 slots. 30 or more players, 5 slots. Etc.
+	if(player_count > 20)
+		var/extra = floor((player_count - 20) / 10)
+		slots += extra
+
+	//3 slots minimum, 8 maximum.
+	slots = min(slots, 8)
+
+	merc_job.total_positions = slots
+	merc_job.spawn_positions = slots
