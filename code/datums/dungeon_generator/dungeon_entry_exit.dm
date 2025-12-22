@@ -106,6 +106,9 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 		return
 	if(!length(dungeon_exits))
 		return
+	if(user.job == "Bandit")
+		to_chat(user, "There is nothing for me to do.")
+		return
 	var/atom/exit = pick(dungeon_exits)
 
 	if(!is_ghost)
