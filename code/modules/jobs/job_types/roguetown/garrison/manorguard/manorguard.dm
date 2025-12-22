@@ -5,7 +5,7 @@
 	faction = "Station"
 	total_positions = 8
 	spawn_positions = 8
-
+	advjob_examine = TRUE
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED)
@@ -29,7 +29,8 @@
 		/datum/advclass/manorguard/footsman,
 		/datum/advclass/manorguard/skirmisher,
 		/datum/advclass/manorguard/cavalry,
-		/datum/advclass/manorguard/gormless
+		/datum/advclass/manorguard/gormless,
+		/datum/advclass/manorguard/levy
 	)
 
 /datum/outfit/job/roguetown/manorguard
