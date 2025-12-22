@@ -20,7 +20,7 @@
 	min_pq = -5 //squires aren't great but they can do some damage
 	max_pq = null
 	round_contrib_points = 2
-	social_rank = SOCIAL_RANK_PEASANT
+	social_rank = SOCIAL_RANK_YEOMAN //to be a knight some day
 
 	cmode_music = 'sound/music/combat_squire.ogg'
 	job_subclasses = list(

@@ -114,6 +114,7 @@
 #define MANATARMS	(1<<1)
 #define DUNGEONEER	(1<<2)
 #define SQUIRE		(1<<3)
+#define ROOKIE		(1<<3)
 #define BOGGUARD	(1<<4)
 #define SERGEANT	(1<<5)
 #define SHERIFF		(1<<6)
