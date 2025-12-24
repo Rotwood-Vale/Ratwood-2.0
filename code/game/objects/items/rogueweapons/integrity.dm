@@ -24,8 +24,8 @@
 	else	//If we're sending messages it should be sent to a mob
 		if(loc && ishuman(loc))
 			L = loc
-	
-	if(L && max_blade_int)	
+
+	if(L && max_blade_int)
 		var/ratio = blade_int / max_blade_int
 		var/newratio = (blade_int - amt) / max_blade_int
 		if(ratio > SHARPNESS_TIER1_THRESHOLD && newratio <= SHARPNESS_TIER1_THRESHOLD) //We are above the first threshold but are about to hit it.
@@ -38,7 +38,7 @@
 			if(L.STAINT > 9)
 				to_chat(L, span_userdanger("A chunk snapped off! \The [src]'s damage will decay much quicker now."))
 			playsound(L, 'sound/combat/sharpness_loss2.ogg', 100, TRUE)
-	
+
 	blade_int = blade_int - amt
 	if(blade_int <= 0)
 		blade_int = 0
@@ -110,7 +110,6 @@
 	playsound(src.loc, pick('sound/items/sharpen_long1.ogg','sound/items/sharpen_long2.ogg'), 100, TRUE)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("[user] sharpens [src]!"))
-	degrade_bintegrity(0.5)
 	add_bintegrity((ST.sharpening_factor * factor), user)
 
 	if(prob(ST.spark_chance))
