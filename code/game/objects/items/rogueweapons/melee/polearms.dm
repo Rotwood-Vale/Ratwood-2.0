@@ -246,14 +246,37 @@
 	force = 25
 	force_wielded = 28
 	icon_state = "aries"
-	icon = 'icons/roguetown/weapons/misc32.dmi'
-	pixel_y = 0
-	pixel_x = 0
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	pixel_y = -16
+	pixel_x = -16
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	bigboy = FALSE
-	gripsprite = FALSE
-	gripped_intents = null
+	bigboy = TRUE
+	gripsprite = TRUE
+	gripped_intents = list(/datum/intent/spear/bash/ranged, /datum/intent/mace/smash/wood)
+	cast_time_reduction = 0.4
+
+/obj/item/rogueweapon/woodstaff/aries/pickup(mob/living/user)
+	..()
+	if(HAS_TRAIT(user, TRAIT_ROTMAN) || user.mob_biotypes & MOB_UNDEAD)
+		to_chat(user, "<font color='yellow'>FOOL! YOU DARE TOUCH THE HOLY STAFF?</font>\n<font color = 'red'>[src] starts to heat up... Uh oh.</font>")
+		addtimer(CALLBACK(src, PROC_REF(smite), user, 1 SECONDS, 2 SECONDS, 25, 5, "SO BE IT!"), 3 SECONDS)
+		return
+	var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
+	if(J.title != "Priest" && J.title != "Martyr")
+		to_chat(user, "<font color='yellow'>UNWORTHY HANDS TOUCH THE HOLY STAFF, CEASE OR BE PUNISHED.</font>")
+		addtimer(CALLBACK(src, PROC_REF(smite), user, 1 SECONDS, 1 SECONDS, 0, 5, "FOOL, YOU DID NOT HEED MY WARNING!"), 5 SECONDS)
+
+/obj/item/rogueweapon/woodstaff/aries/proc/smite(mob/living/user, knockdown = 1 SECONDS, paralyze = 1 SECONDS, fireloss = 0, fire_stacks = 5, msg = "")
+	if(loc == user)
+		to_chat(user, "<font color='yellow'>[msg]</font>")
+		user.doUnEquip(src, TRUE, get_turf(user), silent = TRUE) // Forcibly unequips it.
+		user.Knockdown(knockdown)
+		user.Paralyze(paralyze)
+		user.adjustFireLoss(fireloss)
+		user.adjust_fire_stacks(fire_stacks)
+		user.emote("agony", forced = TRUE)
+		user.ignite_mob()
 
 /obj/item/rogueweapon/woodstaff/aries/getonmobprop(tag)
 	. = ..()
