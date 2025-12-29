@@ -228,7 +228,7 @@
 	grid_height = 64
 	grid_width = 32
 	force = 20
-	throwforce = 32 //You ever had an axe thrown at you?
+	throwforce = 35 // Buffed to not fall behind javelins
 	throw_speed = 6 //Batarangs, baby.
 	max_integrity = 50 //Brittle design, hits hard, breaks quickly.
 	armor_penetration = 40 //On-par with steel tossblades.

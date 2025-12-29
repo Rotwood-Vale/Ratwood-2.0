@@ -491,10 +491,11 @@
 	created_item = /obj/item/rogueweapon/knuckles
 
 /datum/anvil_recipe/weapons/steel/hurlbat
-	name = "Hurlbat"
+	name = "Hurlbats (x2)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_axe
 	created_item = /obj/item/rogueweapon/stoneaxe/hurlbat
+	createditem_num = 2
 
 /datum/anvil_recipe/weapons/steel/rapier
 	name = "Rapier, Steel"
