@@ -144,16 +144,16 @@
 	created_item = /obj/item/rogueweapon/mace/warhammer/steel/paalloy
 
 /datum/anvil_recipe/weapons/aalloy/tossblade
-	name = "Tossblades, Decrepit (x4)"
+	name = "Tossblades, Decrepit (x5)"
 	req_bar = /obj/item/ingot/aalloy
 	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/aalloy
-	createditem_num = 4
+	createditem_num = 5
 
 /datum/anvil_recipe/weapons/paalloy/tossblade
-	name = "Tossblades, Ancient (x4)"
+	name = "Tossblades, Ancient (x5)"
 	req_bar = /obj/item/ingot/purifiedaalloy
 	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/steel/palloy
-	createditem_num = 4
+	createditem_num = 5
 
 /datum/anvil_recipe/weapons/aalloy/gsw
 	name = "Greatsword, Decrepit (+2 Alloy)"
@@ -434,7 +434,7 @@
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_knife
 	created_item = /obj/item/rogueweapon/huntingknife/throwingknife
-	createditem_num = 4
+	createditem_num = 5
 
 /datum/anvil_recipe/weapons/iron/javelin
 	name = "Javelin, Iron (+1 Small Log) (x2)"
@@ -711,11 +711,11 @@
 	created_item = /obj/item/rogueweapon/spear/lance
 
 /datum/anvil_recipe/weapons/steel/tossblade
-	name = "Tossblade, Steel (x4)"
+	name = "Tossblades, Steel (x5)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_knife
 	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/steel
-	createditem_num = 4
+	createditem_num = 5
 
 /datum/anvil_recipe/weapons/steel/javelin
 	name = "Javelin, Steel (+1 Small Log) (x2)"
@@ -885,11 +885,10 @@
 	created_item = /obj/item/rogueweapon/whip/silver
 
 /datum/anvil_recipe/weapons/silver/tossblade
-	name = "Tossblades, Silver (+1 Silver)"
+	name = "Tossblades, Silver (x5)"
 	req_bar = /obj/item/ingot/silver
-	additional_items = list(/obj/item/ingot/silver)
 	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/silver
-	createditem_num = 4
+	createditem_num = 5
 
 /datum/anvil_recipe/weapons/silver/javelin
 	name = "Javelins, Silver (+1 Silver, Small Log)"
