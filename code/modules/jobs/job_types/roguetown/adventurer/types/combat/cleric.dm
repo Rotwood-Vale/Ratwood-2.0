@@ -8,12 +8,10 @@
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	class_select_category = CLASS_CAT_CLERIC
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
 	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_WIL = 2,
+		STATKEY_WIL = 3,
 		STATKEY_CON = 2,
-		STATKEY_SPD = 1, //Base of +9, over the standard +7. Special clemency given to the Monk, as their playstyle is exceedingly lethal - light-to-no armor, while specializing in a dangerous melee style.
 	)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -31,7 +29,9 @@
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
 	)
-	extra_context = "This subclass can choose from multiple disciplines. The further your chosen discipline strays from unarmed combat, however, the greater your skills in fistfighting and wrestling will atrophy. Taking a Quarterstaff provides a minor bonus to Perception, but removes the 'Dodge Expert' trait."
+	extra_context = "This subclass can choose from multiple disciplines. \
+	The further your chosen discipline strays from unarmed combat, however, the greater your skills in fistfighting and wrestling will atrophy. \
+	Your vow determines your overall speed, strength and provided trait for dodge expert or critical resistance."
 
 /datum/outfit/job/roguetown/adventurer/cleric
 	allowed_patrons = ALL_PATRONS
@@ -44,7 +44,9 @@
 		H.adjust_skillrank(/datum/skill/magic/druidic, 3, TRUE)
 		to_chat(H, span_notice("As a follower of Dendor, you have innate knowledge of druidic magic."))
 
-	to_chat(H, span_warning("You are a wandering acolyte, versed in both miracles and martial arts. You forego the hauberk that paladins wear in favor of humbling your foes through bloodless strikes. Your satchel hangs heavy, too, with ample provisions for the pilgrimage you're upon."))
+	to_chat(H, span_warning("You are a wandering acolyte, versed in both miracles and martial arts. \
+	You forego the hauberk that paladins wear in favor of humbling your foes through bloodless strikes. \
+	Your satchel hangs heavy, too, with ample provisions for the pilgrimage you're upon."))
 	head = /obj/item/clothing/head/roguetown/headband/monk
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
@@ -62,7 +64,8 @@
 		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1, //Plays into the classic stereotype of beer-loving monks and well-stocked pilgrims.
 		)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)	//Capped to T1 miracles. Better passive regeneration.
+	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+
 	if(H.mind)
 		var/weapons = list("Discipline - Unarmed","Katar","Knuckledusters","Quarterstaff")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
@@ -70,7 +73,7 @@
 			if("Discipline - Unarmed")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist//Just this and disciple, effectively.
 			if("Katar")
 				beltl = /obj/item/rogueweapon/katar/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
@@ -82,15 +85,26 @@
 					beltl = /obj/item/rogueweapon/knuckles/bronzeknuckles
 					gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Quarterstaff")
-				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE) //On par with the new Quarterstaff-centric virtue. A monk can take said-virtue if they want the best of both worlds.
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 2, TRUE) //Balance idea's pretty simple. A dedicated staff user can use polearms too - as both weapon types are fundamentally similar, but it'd always be a skill level lower than the staff.
-				H.change_stat(STATKEY_PER, 1) //Compliments the quarterstaff's precision-based mechanics.
-				REMOVE_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 2, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
-	H.cmode_music = 'sound/music/combat_holy.ogg' // left in bc i feel like monk players want their darktide TRAIT_DODGEEXPERT
+
+		//Wow, these sure are long!
+		var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance")
+		var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
+		switch(vow_choice)
+			if("Vow of Solace | +2SPD, Dodge Expert")
+				H.change_stat(STATKEY_SPD, 2)
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+			if("Vow of the Feat | +2STR, Critical Resistance")
+				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+				H.change_stat(STATKEY_STR, 2)
+
+	H.cmode_music = 'sound/music/combat_holy.ogg'
+
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			cloak = /obj/item/clothing/cloak/psydontabard
@@ -166,7 +180,9 @@
 
 /datum/advclass/cleric/paladin
 	name = "Paladin"
-	tutorial = "You are a holy knight, clad in maille and armed with steel. Where others of the clergy may have spent their free time studying scriptures, you devoted yourself towards fighting Psydonia's evils - a longsword in one hand, and a clenched psycross in the other."
+	tutorial = "You are a holy knight, clad in maille and armed with steel. \
+	Where others of the clergy may have spent their free time studying scriptures, you devoted yourself towards fighting Psydonia's evils \
+	- a longsword in one hand, and a clenched psycross in the other."
 	outfit = /datum/outfit/job/roguetown/adventurer/paladin
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
@@ -193,10 +209,13 @@
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
 	)
-	extra_context = "This subclass can choose to take one of two holy items to take along: a potion of lifeblood and Novice skills in Medicine, or a silver longsword that gives Journeyman skills in Swordsmanship."
+	extra_context = "This subclass can choose to take one of two holy items to take along: a potion of lifeblood and Novice skills in Medicine, \
+	or a silver longsword that gives Journeyman skills in Swordsmanship."
 
 /datum/outfit/job/roguetown/adventurer/paladin/pre_equip(mob/living/carbon/human/H)
-	to_chat(H, span_warning("You are a holy knight, clad in maille and armed with steel. Where others of the clergy may have spent their free time studying scriptures, you devoted yourself towards fighting Psydonia's evils - a longsword in one hand, and a clenched psycross in the other."))
+	to_chat(H, span_warning("You are a holy knight, clad in maille and armed with steel. \
+	Where others of the clergy may have spent their free time studying scriptures, you devoted yourself towards fighting Psydonia's evils \
+	- a longsword in one hand, and a clenched psycross in the other."))
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/shield/iron
@@ -388,7 +407,7 @@
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
 	)
-	extra_context = "This subclass has higher-tier miracles, but regenerates Devotion far slower."
+	extra_context = "This subclass has higher-tier miracles and access to bardic inspiration."
 
 /datum/outfit/job/roguetown/adventurer/cantor/pre_equip(mob/living/carbon/human/H)
 	to_chat(H, span_warning("You were a bard once - but you've found a new calling. Your eyes have been opened to the divine, now you wander from city to city singing songs and telling tales of your patron's greatness."))
@@ -405,7 +424,7 @@
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/special
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_2)	//Capped to T2 miracles.
+	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)//Capped to T2 miracles. Devotion at T2.
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T2)
 	backpack_contents = list(
@@ -526,7 +545,7 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/staves = SKILL_LEVEL_APPRENTICE, //If a potential staff-polearm user is at Apprentice-level or below, it's fine to match both combat skills.
+		/datum/skill/combat/staves = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
@@ -540,7 +559,7 @@
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
 	)
-	extra_context = "This subclass regenerates Devotion far quicker, but only has access to lesser miracles."
+	extra_context = "This subclass is given access to the strongest miracles in Ferentian lands, at the cost of suffering elsewhere."
 
 /datum/outfit/job/roguetown/adventurer/missionary/pre_equip(mob/living/carbon/human/H)
 	to_chat(H, span_warning("You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith."))
@@ -594,7 +613,7 @@
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe //placeholder, anyone who doesn't have cool patron drip sprites just gets generic robes
 			head = /obj/item/clothing/head/roguetown/roguehood
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_3)	//Minor regen, capped to T3, parity with other Holy and/or Arcyne caster - no others spend 15 minutes idling only to unlock their entire potencial.
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
 	if(H.mind)
 		var/weapons = list("Woodstaff", "Quarterstaff")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
@@ -604,11 +623,12 @@
 			if("Quarterstaff")
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+
 	if(istype(H.patron, /datum/patron/divine))
-		// For now, only Tennites get this. Heretics can have a special treat later
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
 	if(istype(H.patron, /datum/patron/inhumen))
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
+
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			neck = /obj/item/clothing/neck/roguetown/psicross

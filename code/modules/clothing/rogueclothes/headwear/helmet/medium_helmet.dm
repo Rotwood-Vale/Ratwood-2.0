@@ -596,9 +596,9 @@
 	desc = "An iron helmet with leather to help protect the neck."
 	icon_state = "nomadhelmet"
 	item_state = "nomadhelmet"
+	max_integrity = ARMOR_INT_HELMET_LEATHER
 	flags_inv = HIDEHAIR
 	body_parts_covered = HEAD|HAIR|EARS|NOSE|NECK
-	armor = ARMOR_INT_HELMET_LEATHER
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_STAB)
 	max_integrity = 250
 	anvilrepair = TRUE

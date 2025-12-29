@@ -58,7 +58,7 @@
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/smelting = SKILL_LEVEL_MASTER, // Goofy notion that you would be a master smith but not smelter
 		/datum/skill/craft/engineering = SKILL_LEVEL_JOURNEYMAN, // 2 Engineering, let them make more artificers stuffs
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE, // Worse than the real tailor, so can't steal their job right away
 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,

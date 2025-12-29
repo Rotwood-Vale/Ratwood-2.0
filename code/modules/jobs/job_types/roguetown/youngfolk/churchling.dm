@@ -20,6 +20,9 @@
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_PEASANT
 
+	//You've given up your life for the Church. Why would you be noble?
+	virtue_restrictions = list(/datum/virtue/utility/noble)
+
 	advclass_cat_rolls = list(CTAG_CHURCHLING = 2)
 	job_subclasses = list(
 		/datum/advclass/churchling

@@ -1,6 +1,12 @@
 /datum/job/roguetown/keeper
 	title = "Keeper"
-	tutorial = "Disfigured, shunned, or simply filled with purpose and dedication for Pestra. Some of you are horrifically mutated, disfigured, or diseased. No matter, even the pretty ones feel the toll as it leaves their strength atrophied. Someone has to harvest the holy blood required to purify lux and perpetuate Pestra's gift of medicine. Unfortunately, that's you. That's correct, I'm the one tasked with protecting the sacred Heart Beast of Pestra here. To study it and empower it so that Pestra's medicine may blossom even in the furthest reaches of Ferentia. Keep in mind you are NOT directly affiliated with the church of the see, the local bishop is not your boss. You answer to the sect of Pestra foremost."
+	tutorial = "Disfigured, shunned, or simply filled with purpose and dedication for Pestra. \
+	Some of you are horrifically mutated, disfigured, or diseased. \
+	No matter, even the pretty ones feel the toll as it leaves their strength atrophied. \
+	Someone has to harvest the holy blood required to purify lux and perpetuate Pestra's gift of medicine. \
+	Unfortunately, that's you. That's correct, I'm the one tasked with protecting the sacred Heart Beast of Pestra here. \
+	To study it and empower it so that Pestra's medicine may blossom even in the furthest reaches of Ferentia. \
+	Keep in mind you are NOT directly affiliated with the church of the see, the local bishop is not your boss. You answer to the sect of Pestra foremost."
 	flag = KEEPER
 	department_flag = CHURCHMEN
 	faction = "Station"
@@ -13,14 +19,17 @@
 	outfit = /datum/outfit/job/roguetown/keeper
 	display_order = JDO_KEEPER
 	give_bank_account = 1
-	min_pq = 1
+	min_pq = 10
 	max_pq = null
 	round_contrib_points = 3
 
 	job_traits = list(TRAIT_MEDICINE_EXPERT, TRAIT_HOMESTEAD_EXPERT,
 						  TRAIT_ALCHEMY_EXPERT, TRAIT_SEWING_EXPERT,
 						  TRAIT_SURVIVAL_EXPERT, TRAIT_NOSTINK,
-						  TRAIT_GRABIMMUNE, TRAIT_STEELHEARTED)
+						  TRAIT_STEELHEARTED)
+
+	//You're part of a Pestran sect. Not nobility.
+	virtue_restrictions = list(/datum/virtue/utility/noble)
 
 	advclass_cat_rolls = list(CTAG_KEEPER = 2)
 	job_subclasses = list(
@@ -29,7 +38,13 @@
 
 /datum/advclass/keeper
 	name = "Keeper"
-	tutorial = "Disfigured, shunned, or simply filled with purpose and dedication for Pestra. Some of you are horrifically mutated, disfigured, or diseased. No matter, even the pretty ones feel the toll as it leaves their strength atrophied. Someone has to harvest the holy blood required to purify lux and perpetuate Pestra's gift of medicine. Unfortunately, that's you. That's correct, I'm the one tasked with protecting the sacred Heart Beast of Pestra here. To study it and empower it so that Pestra's medicine may blossom even in the furthest reaches of Ferentia. Keep in mind you are NOT directly affiliated with the church of the see, the local bishop is not your boss. You answer to the followers of Pestra foremost."
+	tutorial = "Disfigured, shunned, or simply filled with purpose and dedication for Pestra. \
+	Some of you are horrifically mutated, disfigured, or diseased. \
+	No matter, even the pretty ones feel the toll as it leaves their strength atrophied. \
+	Someone has to harvest the holy blood required to purify lux and perpetuate Pestra's gift of medicine. \
+	Unfortunately, that's you. That's correct, I'm the one tasked with protecting the sacred Heart Beast of Pestra here. \
+	To study it and empower it so that Pestra's medicine may blossom even in the furthest reaches of Ferentia. \
+	Keep in mind you are NOT directly affiliated with the church of the see, the local bishop is not your boss. You answer to the sect of Pestra foremost."
 	outfit = /datum/outfit/job/roguetown/keeper/basic
 	category_tags = list(CTAG_KEEPER)
 	// No perception as to dissuade picking statpacks to negate the strength penalty.
@@ -42,20 +57,21 @@
 		STATKEY_PER = 2
 	)
 	subclass_skills = list(
-		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/masonry = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/tanning = SKILL_LEVEL_NOVICE,
-		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
 		/datum/skill/labor/butchering = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
 	)

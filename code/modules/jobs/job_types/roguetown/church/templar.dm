@@ -160,6 +160,9 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)	//Capped to T2 miracles.
+	//Funny spell time. Why do they get this? Knights get full plate and master weapons skill.
+	//Something for Templars. I had a rant here but you get the simple idea instead.
+	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
 
 /datum/outfit/job/roguetown/templar/crusader/choose_loadout(mob/living/carbon/human/H)
 	. = ..()

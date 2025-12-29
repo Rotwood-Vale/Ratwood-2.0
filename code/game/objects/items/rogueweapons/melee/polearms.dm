@@ -1503,6 +1503,20 @@
 	icon_state = "assegai_steel"
 	gripsprite = FALSE
 
+/obj/item/rogueweapon/spear/nomad
+	name = "nomad spear"
+	desc = "An odd sort of spear. No amount of further leverage will help, for you've all you need in one hand. \
+	Weighted poorly to a mind yet untrained in the use of it. \
+	All the same, it's a reinforcement for the fighting style of Dunewell's nomads. A shield over the arm, a spear in the hand."
+	icon_state = "nomadspear"//Temp sprite.
+	force = 25
+	minstr = 6//-2
+	max_blade_int = 230
+	max_integrity = 250
+	possible_item_intents = list(SPEAR_THRUST, SPEAR_CUT, SPEAR_BASH)
+	gripped_intents = null
+	gripsprite = FALSE
+	smeltresult = /obj/item/ingot/steel
 
 /////////////////////
 // Special Weapon! //
