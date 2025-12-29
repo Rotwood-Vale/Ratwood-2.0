@@ -891,9 +891,9 @@
 	createditem_num = 5
 
 /datum/anvil_recipe/weapons/silver/javelin
-	name = "Javelins, Silver (+1 Silver, Small Log)"
+	name = "Javelins, Silver (+1 Small Log) (x2)"
 	req_bar = /obj/item/ingot/silver
-	additional_items = list(/obj/item/ingot/silver, /obj/item/grown/log/tree/small)
+	additional_items = list(/obj/item/grown/log/tree/small)
 	created_item = /obj/item/ammo_casing/caseless/rogue/javelin/silver
 	createditem_num = 2
 
