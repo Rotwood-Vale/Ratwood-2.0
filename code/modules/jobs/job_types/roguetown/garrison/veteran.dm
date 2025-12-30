@@ -29,9 +29,7 @@
 		/datum/advclass/veteran/spy
 	)
 	job_traits = list(TRAIT_STEELHEARTED)
-
-/datum/outfit/job/roguetown/captain
-	job_bitflag = BITFLAG_ROYALTY | BITFLAG_GARRISON	//Not a noble per-say but not really garrison either. So both, you are a courtier of sorts afterall + combat
+	virtue_restrictions = list(/datum/virtue/combat/combat_aware)//given combat aware if old. Might hurt middle-aged vets, but middle aged vets don't suffer stat losses like old vets do
 
 /datum/job/roguetown/veteran/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
@@ -110,6 +108,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/maces, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 5, TRUE)
 		H.change_stat(STATKEY_WIL, 1)
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 
 	H.adjust_blindness(-3)
 	if(H.mind)
@@ -188,6 +187,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/maces, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/axes, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 5, TRUE)
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 	H.verbs |= /mob/proc/haltyell
 
 /datum/advclass/veteran/calvaryman
@@ -252,6 +252,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 5, TRUE)
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 	H.verbs |= /mob/proc/haltyell
 
 	H.adjust_blindness(-3)
@@ -342,6 +343,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/axes, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 4, TRUE) // two handed weapons require a LOT of stamina.
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 
 	H.adjust_blindness(-3)
 	if(H.mind)
@@ -426,6 +428,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/tracking, 6, TRUE)
 		H.change_stat(STATKEY_PER, 2)
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 	H.verbs |= /mob/proc/haltyell
 	H.cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg' // so apparently this works for veteran, but not for advents. i dont know why.
 
@@ -499,4 +502,5 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 6, TRUE)
 		H.change_stat(STATKEY_SPD, 1) // You get -2 speed from being old. You are still in the negative stat wise from picking old.
 		H.change_stat(STATKEY_PER, 2) // You get -2 perception from being old. I want you to at least have a positive perception, to represent that you're observant. The highest perception you can get with this is a 13, so I think we'll be okayed.
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 	H.verbs |= /mob/proc/haltyell

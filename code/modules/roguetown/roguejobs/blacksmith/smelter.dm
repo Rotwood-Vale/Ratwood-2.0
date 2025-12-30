@@ -247,15 +247,15 @@
 			blacksteelalloy = blacksteelalloy + 2
 
 	if(steelalloycoal == 1 && steelalloyiron == 3)
-		max_contained_items = 3
-		alloy = /obj/item/ingot/steel
+		max_contained_items = 4
+		alloy = /obj/item/ingot/steel // 3 bars is an awkward number to work with, considering most people order things that need 2 bars
 	else if(bronzealloy == 7)
 		alloy = /obj/item/ingot/bronze
 	else if(purifiedalloy == 11)
-		max_contained_items = 2
-		alloy = /obj/item/ingot/purifiedaalloy // 3 aaslag, 1 gold, makes 2 purified alloy.
+		max_contained_items = 4
+		alloy = /obj/item/ingot/purifiedaalloy // 3 aaslag, 1 gold, makes 4 purified alloy, 2 is too few to be worth doing anything with
 	else if(blacksteelalloy == 7)
-		max_contained_items = 1 // Blacksteel is supposed to be rare and inefficient. 3 steel and 1 silver into one.
+		max_contained_items = 2 // 1 ingot is too few to do anything meaningful with and makes prices too high to sell anything
 		alloy = /obj/item/ingot/blacksteel
 	else
 		alloy = null

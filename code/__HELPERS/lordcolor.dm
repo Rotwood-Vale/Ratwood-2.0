@@ -25,7 +25,6 @@ GLOBAL_VAR(lordsecondary)
 	var/choice = input(src, "Choose a Primary Color", "ROGUETOWN") as anything in colorlist
 	if(choice)
 		prim = colorlist[choice]
-		colorlist -= choice
 	choice = input(src, "Choose a Secondary Color", "ROGUETOWN") as anything in colorlist
 	if(choice)
 		sec = colorlist[choice]
@@ -36,10 +35,8 @@ GLOBAL_VAR(lordsecondary)
 	GLOB.lordsecondary = sec
 	for(var/obj/O in GLOB.lordcolor)
 		O.lordcolor(prim,sec)
-		GLOB.lordcolor -= O
 	for(var/turf/T in GLOB.lordcolor)
 		T.lordcolor(prim,sec)
-		GLOB.lordcolor -= T
 
 /proc/lord_color_default()
 	GLOB.lordprimary = "#264d26" //DARK GREEN
@@ -48,3 +45,15 @@ GLOBAL_VAR(lordsecondary)
 		O.lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
 	for(var/turf/T in GLOB.lordcolor)
 		T.lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
+
+// Ducal Scheme lordcolor implementation for dyed items
+/obj/item/lordcolor(primary, secondary)
+	// Check if this item uses any Ducal Scheme colors
+	if(ducal_primary)
+		add_atom_colour(primary, FIXED_COLOUR_PRIORITY)
+	if(ducal_detail)
+		detail_color = secondary
+		update_icon()
+	if(ducal_altdetail)
+		altdetail_color = secondary
+		update_icon()

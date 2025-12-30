@@ -71,6 +71,9 @@
 	var/boobed_detail = TRUE
 	var/sleeved_detail = TRUE
 	var/list/original_armor //For restoring broken armor
+	var/ducal_primary = FALSE // Uses duchy primary color for base color
+	var/ducal_detail = FALSE // Uses duchy secondary color for detail_color
+	var/ducal_altdetail = FALSE // Uses duchy secondary color for altdetail_color
 
 /obj/item/clothing/New()
 	..()

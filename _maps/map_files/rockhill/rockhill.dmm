@@ -32898,8 +32898,6 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/warden)
 "jWm" = (
-/obj/item/clothing/mask/rogue/facemask/prisoner,
-/obj/item/clothing/mask/rogue/facemask/prisoner,
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/grassred,
 /area/rogue/indoors/town/fire_chamber{
@@ -76509,12 +76507,12 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "xLR" = (
-/obj/item/clothing/cloak/tabard/knight/guard,
-/obj/item/clothing/cloak/tabard/knight/guard,
-/obj/item/clothing/cloak/tabard/knight/guard,
-/obj/item/clothing/cloak/tabard/knight/guard,
-/obj/item/clothing/cloak/tabard/knight/guard,
 /obj/structure/rack/rogue/shelf/biggest,
+/obj/item/clothing/cloak/tabard/retinue,
+/obj/item/clothing/cloak/tabard/retinue,
+/obj/item/clothing/cloak/tabard/retinue,
+/obj/item/clothing/cloak/tabard/retinue,
+/obj/item/clothing/cloak/tabard/retinue,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement/keep)
 "xLX" = (
