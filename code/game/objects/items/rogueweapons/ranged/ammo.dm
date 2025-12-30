@@ -563,7 +563,7 @@
 //Javelins - Basically spears, but to get them working as proper javelins and able to fit in a bag, they are 'ammo'. (Maybe make an atlatl later?)
 //Only ammo casing, no 'projectiles'. You throw the casing, as weird as it is.
 /obj/item/ammo_casing/caseless/rogue/javelin
-	force = 14
+	force = 20
 	throw_speed = 3		//1 lower than throwing knives, it hits harder + embeds more.
 	name = "iron javelin"
 	desc = "A tool used for centuries, as early as recorded history. This one is tipped with a iron head; standard among militiamen and irregulars alike."
@@ -574,8 +574,8 @@
 	armor_penetration = 40					//Redfined because.. it's not a weapon, it's an 'arrow' basically.
 	max_integrity = 50						//Breaks semi-easy, stops constant re-use.
 	wdefense = 3							//Worse than a spear
-	thrown_bclass = BCLASS_STAB				//Knives are slash, lets try out stab and see if it's too strong in terms of wounding.
-	throwforce = 25							//throwing knife is 22, slightly better for being bulkier.
+	thrown_bclass = BCLASS_PICK				//Javelins should have one shared damage type, and it should be anti-armor
+	throwforce = 35							//It needs to be more like this to be worth using, it's too weak at its old value
 	possible_item_intents = list(/datum/intent/sword/thrust, /datum/intent/spear/bash, /datum/intent/spear/cut)	//Sword-thrust to avoid having 2 reach.
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 35, "embedded_fall_chance" = 10)	//Better than iron throwing knife by 10%
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -598,20 +598,20 @@
 	name = "decrepit javelin"
 	desc = "A missile of frayed bronze. Before you is your weapon; that which rose Man out of the mud, and brought the Beasts of Old Syon to heel. When were you last aware of any other part of you? Do you recall seeing the world in any other way?"
 	icon_state = "ajavelin"
-	throwforce = 20
-	force = 9
+	throwforce = 25
+	force = 15
 	color = "#bb9696"
 	smeltresult = null // Override iron inherit
 	anvilrepair = null
 
 /obj/item/ammo_casing/caseless/rogue/javelin/steel
-	force = 16
+	force = 20
 	armor_penetration = 50
 	name = "steel javelin"
 	desc = "A tool used for centuries, as early as recorded history. This one is tipped with a steel head; perfect for piercing armor!"
 	icon_state = "javelin"
 	max_integrity = 100						//In-line with other stabbing weapons.
-	throwforce = 28							//Equal to steel knife BUT this has peircing damage type so..
+	throwforce = 40							//It's a fucking javelin, not a knife it needs more damage to compensate
 	thrown_bclass = BCLASS_PICK				//Bypasses crit protection better than stabbing. Makes it better against heavy-targets.
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 45, "embedded_fall_chance" = 10) //Better than steel throwing knife by 10%
 	smeltresult = null // 1 Ingot = 2 Javelins
@@ -627,7 +627,7 @@
 	desc = "A tool used for centuries, as early as recorded history. This one appears to be tipped with a silver head. Decorative, perhaps.. or for some sort of specialized hunter."
 	icon_state = "sjavelin"
 	is_silver = TRUE
-	throwforce = 25							//Less than steel because it's.. silver. Good at killing vampires/WW's still.
+	throwforce = 30							//Less than steel because it's.. silver. Good at killing vampires/WW's still.
 	armor_penetration = 60
 	thrown_bclass = BCLASS_PICK				//Bypasses crit protection better than stabbing. Makes it better against heavy-targets.
 	smeltresult = /obj/item/ingot/silver // 2 ingots = 2 javelins so this can smelt.

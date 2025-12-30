@@ -692,7 +692,7 @@
 	desc = "Paradoxical; why is it called a blade when it is meant for tossing? Or is it the act of cutting post-toss that makes it a blade? ...Are arrows tossblades, too? </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
 	item_state = "bone_dagger"
 	force = 10
-	throwforce = 22
+	throwforce = 25
 	throw_speed = 4
 	max_integrity = 50
 	armor_penetration = 30
@@ -724,15 +724,15 @@
 	desc = "Chunks of frayed bronze, crudely sharpened into throwing daggers. You might be better off chucking the silverware at them, at this rate. </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
 	icon_state = "throw_knifea"
 	color = "#bb9696"
-	force = 7
-	throwforce = 16
+	force = 10
+	throwforce = 20
 	randomize_blade_int_on_init = TRUE
 
 /obj/item/rogueweapon/huntingknife/throwingknife/steel
 	name = "steel tossblade"
 	desc = "There are rumors of some sea-marauders loading these into metal tubes with explosive powder to launch then fast and far. Probably won't catch on. </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
 	item_state = "bone_dagger"
-	throwforce = 28
+	throwforce = 30
 	max_integrity = 100
 	armor_penetration = 40
 	icon_state = "throw_knifes"
@@ -749,7 +749,7 @@
 	desc = "A relative to the silver dagger; thinner, flimsier, but capable of being thrown with exceptional accuracy. Seasoned pursuers of unholy creechers oft-keep one hidden on themselves, just in case. </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
 	item_state = "bone_dagger"
 	force = 10
-	throwforce = 20
+	throwforce = 25
 	armor_penetration = 50
 	max_integrity = 150
 	wdefense = 3
@@ -774,7 +774,7 @@
 	desc = "An unconventional method of delivering silver to a heretic; but one PSYDON smiles at, all the same. Doubles as an actual knife in a pinch, though obviously not as well. </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
 	item_state = "bone_dagger"
 	force = 10
-	throwforce = 20
+	throwforce = 25
 	armor_penetration = 50
 	max_integrity = 150
 	wdefense = 3
