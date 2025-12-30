@@ -189,6 +189,8 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron/aalloy
 	gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
+	if(prob(15))
+		beltl = /obj/item/repair_kit/bad
 	if(prob(30))
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		if(prob(50))
@@ -249,6 +251,8 @@
 		shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
 		neck = /obj/item/clothing/neck/roguetown/gorget/aalloy
 		gloves = /obj/item/clothing/gloves/roguetown/plate/aalloy
+		if(prob(15))
+			beltl = /obj/item/repair_kit/metal/bad
 		if(prob(50))
 			r_hand = /obj/item/rogueweapon/greatsword/aalloy
 		else

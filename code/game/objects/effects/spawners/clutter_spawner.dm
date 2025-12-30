@@ -25,6 +25,8 @@
 		/obj/item/roguestatue/steel = 1,
 		/obj/item/roguestatue/aalloy = 1,
 		/obj/item/roguestatue/iron = 1,
+		/obj/item/repair_kit/bad = 1,
+		/obj/item/repair_kit/metal/bad = 1,
 	)
 
 /obj/effect/spawner/lootdrop/valuable_clutter_spawner
@@ -40,6 +42,7 @@
 		/obj/item/tablecloth/silk = 1,
 		/obj/item/ingot/steel = 1,
 		/obj/item/ingot/silver = 1,
+		/obj/item/repair_kit = 1,
 	)
 
 /obj/effect/spawner/lootdrop/cheap_candle_spawner
@@ -152,6 +155,7 @@
 		/obj/item/clothing/ring/statrontz = 2,
 		/obj/item/clothing/neck/roguetown/psicross/malum/secret = 1,
 		/obj/item/clothing/neck/roguetown/psicross/weeping = 1,
+		/obj/item/repair_kit/metal = 1,
 	) //'Stat_' and 'Psicross_' rings at '2' or below provide statbuffs, and should be kept rare. Move to a seperate drop table if they become too common. Likeliest find is from high-end dungeons and mimics.
 
 

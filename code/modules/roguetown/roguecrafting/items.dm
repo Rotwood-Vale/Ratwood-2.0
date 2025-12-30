@@ -95,6 +95,64 @@
 	category = "General"
 	always_availible = TRUE
 
+/datum/crafting_recipe/roguetown/survival/repairkitclothbad
+	name = "fabric patch"
+	result = /obj/item/repair_kit/bad
+	reqs = list(
+		/obj/item/natural/cloth = 2,
+		/obj/item/natural/fibers = 2,
+		/obj/item/rope = 1,
+		)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/survival/repairkitmetal
+	name = "empty metal kit (iron bar)"
+	result = /obj/item/armorkit_empty
+	reqs = list(
+		/obj/item/ingot/iron = 1,
+		)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/survival/repairkitmetalscrap
+	name = "empty metal kit (scrap)"
+	result = /obj/item/armorkit_empty
+	reqs = list(
+		/obj/item/scrap = 3,
+		)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/survival/repairkitcloth
+	name = "sewing kit"
+	result = /obj/item/repair_kit
+	reqs = list(
+		/obj/item/natural/cloth = 3,
+		/obj/item/natural/hide = 2,
+		)
+	tools = list(/obj/item/needle)
+	skillcraft = /datum/skill/craft/sewing
+	verbage_simple = "sew"
+	verbage = "sews"
+	craftdiff = 4
+	subtype_reqs = TRUE
+
+/datum/crafting_recipe/roguetown/survival/repairkit
+	name = "armor plates"
+	result = list(
+		/obj/item/repair_kit/metal,
+		/obj/item/repair_kit/metal
+	)
+	reqs = list(
+		/obj/item/ingot/steel = 2,
+		/obj/item/ingot/iron = 1,
+		/obj/item/natural/hide = 1,
+	)
+	tools = list(/obj/item/rogueweapon/hammer)
+	skillcraft = /datum/skill/craft/blacksmithing
+	verbage_simple = "smith"
+	verbage = "smiths"
+	craftdiff = 4
+	subtype_reqs = TRUE
+
 /datum/crafting_recipe/roguetown/survival/caparison
 	name = "caparison"
 	result = /obj/item/natural/caparison
