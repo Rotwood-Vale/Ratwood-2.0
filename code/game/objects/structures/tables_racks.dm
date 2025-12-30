@@ -610,6 +610,7 @@
 	climbable = FALSE
 	dir = SOUTH
 	pixel_y = 16
+	density = TRUE // Restored density to large freestanding shelves
 
 /obj/structure/rack/rogue/shelf/biggest
 	icon_state = "shelf_biggest"
@@ -617,7 +618,7 @@
 
 /obj/structure/rack/rogue/shelf/notdense // makes the wall mounted one less weird in a way, got downside of offset when loaded again tho
 	density = FALSE
-	pixel_y = 24
+	pixel_y = 32 // Removed offset on wall-mounted shelves
 
 // Necessary to avoid a critical bug with disappearing weapons.
 /obj/structure/rack/rogue/attackby(obj/item/W, mob/user, params)

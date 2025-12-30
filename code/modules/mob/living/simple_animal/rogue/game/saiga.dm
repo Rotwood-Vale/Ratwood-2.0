@@ -72,6 +72,7 @@
 	can_saddle = TRUE
 	aggressive = 1
 	remains_type = /obj/effect/decal/remains/saiga
+	var/caparison_type = null // Type of caparison equipped
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigakid
 	name = "saiga calf"
@@ -186,6 +187,9 @@
 	cut_overlays()
 	..()
 	if(stat != DEAD)
+		if(caparison_type)
+			var/mutable_appearance/caparison = mutable_appearance(icon, "[gender == FEMALE ? "saiga" : "buck"]-caparison")
+			add_overlay(caparison)
 		if(ssaddle)
 			var/mutable_appearance/saddlet = mutable_appearance(icon, gender == FEMALE ? "saddle-f-above" : "saddle-above", 4.3)
 			add_overlay(saddlet)
@@ -195,9 +199,11 @@
 			var/mutable_appearance/mounted = mutable_appearance(icon, gender == FEMALE ? "saiga_mounted" : "buck_mounted", 4.3)
 			add_overlay(mounted)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/saiga/tamed()
+/mob/living/simple_animal/hostile/retaliate/rogue/saiga/tamed(mob/living/tamer)
 	..()
 	deaggroprob = 30
+	// Add tamer as friend
+	add_friend(tamer)
 	if(can_buckle)
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
@@ -322,3 +328,33 @@
 // Custom headbutt intent for saiga with proper attack speed
 /datum/intent/simple/headbutt/saiga
 	clickcd = SAIGA_ATTACK_SPEED
+
+// Caparison items
+/obj/item/natural/caparison
+	name = "saiga caparison"
+	desc = "A decorative blanket for a saiga. Craftable with fibers and cloth."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "caparison"
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = null
+	
+/obj/item/natural/caparison/attack(mob/living/target, mob/user)
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/rogue/saiga))
+		var/mob/living/simple_animal/hostile/retaliate/rogue/saiga/S = target
+		if(S.caparison_type)
+			to_chat(user, span_warning("[S] already has a caparison!"))
+			return
+		S.caparison_type = type
+		S.update_icon()
+		to_chat(user, span_notice("You place the caparison on [S]."))
+		qdel(src)
+		return
+	return ..()
+
+/obj/item/natural/caparison/female
+	name = "doe caparison"
+	desc = "A decorative blanket for a saiga doe."
+
+/obj/item/natural/caparison/male
+	name = "buck caparison"
+	desc = "A decorative blanket for a saiga buck."

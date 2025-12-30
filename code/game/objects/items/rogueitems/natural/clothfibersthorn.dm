@@ -273,31 +273,54 @@
 /obj/item/natural/cloth/proc/bandage(mob/living/M, mob/user)
 	if(!M.can_inject(user, TRUE))
 		return
-	if(!ishuman(M))
-		return
-	var/mob/living/carbon/human/H = M
-	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(!affecting)
-		return
-	if(affecting.bandage)
-		to_chat(user, span_warning("There is already a bandage."))
-		return
-	var/used_time = bandage_speed
-	used_time -= ((user.get_skill_level(/datum/skill/misc/medicine) * 0.15) * bandage_speed) //15% time reduction per level
-	playsound(loc, 'sound/foley/bandage.ogg', 100, FALSE)
-	if(!do_mob(user, M, used_time))
-		return
-	playsound(loc, 'sound/foley/bandage.ogg', 100, FALSE)
+	// Support both humans and simple animals
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
+		if(!affecting)
+			return
+		if(affecting.bandage)
+			to_chat(user, span_warning("There is already a bandage."))
+			return
+		var/used_time = bandage_speed
+		used_time -= ((user.get_skill_level(/datum/skill/misc/medicine) * 0.15) * bandage_speed) //15% time reduction per level
+		playsound(loc, 'sound/foley/bandage.ogg', 100, FALSE)
+		if(!do_mob(user, M, used_time))
+			return
+		playsound(loc, 'sound/foley/bandage.ogg', 100, FALSE)
 
-	user.dropItemToGround(src)
-	affecting.try_bandage(src)
-	H.update_damage_overlays()
+		user.dropItemToGround(src)
+		affecting.try_bandage(src)
+		H.update_damage_overlays()
 
-	if(M == user)
-		user.visible_message(span_notice("[user] bandages [user.p_their()] [affecting]."), span_notice("I bandage my [affecting]."))
-	else
-		user.visible_message(span_notice("[user] bandages [M]'s [affecting]."), span_notice("I bandage [M]'s [affecting]."))
-
+		if(M == user)
+			user.visible_message(span_notice("[user] bandages [user.p_their()] [affecting]."), span_notice("I bandage my [affecting]."))
+		else
+			user.visible_message(span_notice("[user] bandages [M]'s [affecting]."), span_notice("I bandage [M]'s [affecting]."))
+	else if(istype(M, /mob/living/simple_animal))
+		// Simple animal bandaging
+		var/used_time = bandage_speed
+		used_time -= ((user.get_skill_level(/datum/skill/misc/medicine) * 0.15) * bandage_speed)
+		playsound(loc, 'sound/foley/bandage.ogg', 100, FALSE)
+		if(!do_mob(user, M, used_time))
+			return
+		playsound(loc, 'sound/foley/bandage.ogg', 100, FALSE)
+		
+		// Heal the simple animal
+		M.adjustBruteLoss(-15) // Heal 15 brute damage
+		M.adjustFireLoss(-10) // Heal 10 fire damage
+		M.simple_bleeding = max(M.simple_bleeding - 2, 0) // Reduce bleeding
+		
+		qdel(src) // Consume the bandage
+		
+		if(M == user)
+			user.visible_message(span_notice("[user] bandages [user.p_them()]self."), span_notice("I bandage myself."))
+		else
+			user.visible_message(span_notice("[user] bandages [M]."), span_notice("I bandage [M]."))
+		
+		if(user.mind && isliving(user))
+			var/mob/living/L = user
+			user.mind.add_sleep_experience(/datum/skill/misc/medicine, L.STAINT * 1.5)
 /obj/item/natural/thorn
 	name = "thorn"
 	icon_state = "thorn"

@@ -8,6 +8,7 @@
 // END_PREFERENCES
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\roguetest.dm"
 #include "_maps\map_files\generic\CentCom.dmm"
 #include "_maps\templates\arcyne_fortress.dm"
 #include "_maps\templates\bog_shack_small.dm"
@@ -2330,6 +2331,7 @@
 #include "code\modules\roguetown\roguecrafting\alchemy.dm"
 #include "code\modules\roguetown\roguecrafting\carpentry.dm"
 #include "code\modules\roguetown\roguecrafting\ceramics.dm"
+#include "code\modules\roguetown\roguecrafting\craftingkits.dm"
 #include "code\modules\roguetown\roguecrafting\engineering.dm"
 #include "code\modules\roguetown\roguecrafting\farming.dm"
 #include "code\modules\roguetown\roguecrafting\fleshcrafting.dm"

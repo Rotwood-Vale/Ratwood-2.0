@@ -22,24 +22,51 @@
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/masonry = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/engineering = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
-		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/traps = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/adventurer/woodworker/pre_equip(mob/living/carbon/human/H)
 	..()
+	// Woodworker cosmetic title selection
+	if(H.mind)
+		H.adjust_blindness(-3)
+		var/cosmetic_titles = list(
+			"Woodworker",
+			"Lumberjack",
+			"Carpenter")
+		var/cosmetic_choice = input(H, "Select your woodworking specialty.", "Woodworking Specialties") as anything in cosmetic_titles
+		
+		switch(cosmetic_choice)
+			if("Woodworker")
+				to_chat(H, span_notice("You are a Woodworker, skilled in all aspects of wood."))
+				H.mind.cosmetic_class_title = "Woodworker"
+				H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
+			if("Lumberjack")
+				to_chat(H, span_notice("You are a Lumberjack, felling trees with your axe."))
+				H.mind.cosmetic_class_title = "Lumberjack"
+				H.adjust_skillrank(/datum/skill/labor/lumberjacking, 1, TRUE)
+			if("Carpenter")
+				to_chat(H, span_notice("You are a Carpenter, building structures from wood."))
+				H.mind.cosmetic_class_title = "Carpenter"
+				H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
+		H.set_blindness(0)
+	
 	belt = /obj/item/storage/belt/rogue/leather
 	head = /obj/item/clothing/head/roguetown/roguehood
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
@@ -51,11 +78,12 @@
 	beltl = /obj/item/rogueweapon/hammer/wood
 	backpack_contents = list(
 						/obj/item/flint = 1,
-						/obj/item/flashlight/flare/torch = 1,
+						/obj/item/flashlight/flare/torch = 2,
 						/obj/item/rogueweapon/huntingknife = 1,
 						/obj/item/recipe_book/builder = 1,
 						/obj/item/recipe_book/survival = 1,
-						/obj/item/rogueweapon/scabbard/sheath = 1
+						/obj/item/rogueweapon/scabbard/sheath = 1,
+						/obj/item/natural/cloth = 1
 						)
 	if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random

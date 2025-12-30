@@ -189,3 +189,18 @@
 			user.visible_message("<span class='info'>[user] kicks [src], spilling it's contents!</span>")
 	playsound(src, 'sound/items/beartrap2.ogg', 100, FALSE)
 	return ..()
+
+// Portable Cauldron (PR #4530)
+/obj/machinery/light/rogue/cauldron/portable
+	name = "portable cauldron"
+	desc = "A smaller, portable iron cauldron for brewing potions on the go. Holds less than a full cauldron."
+	icon_state = "cauldron_small1"
+	base_state = "cauldron_small"
+	max_integrity = 150
+	maxingredients = 3  // Smaller capacity
+	anchored = FALSE  // Can be moved
+	density = TRUE
+
+/obj/machinery/light/rogue/cauldron/portable/Initialize()
+	create_reagents(300, DRAINABLE | AMOUNT_VISIBLE | REFILLABLE)  // 60% of normal (300/500)
+	return ..()

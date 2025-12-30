@@ -4,6 +4,7 @@
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "cart-empty"
 	density = TRUE
+	animate_movement = SLIDE_STEPS // Animated sprites when moving
 	max_integrity = 600
 	anchored = FALSE
 	climbable = TRUE

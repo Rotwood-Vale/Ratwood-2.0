@@ -8,20 +8,24 @@
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	traits_applied = list(TRAIT_DEATHSIGHT, TRAIT_WITCH, TRAIT_ARCYNE_T1, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
-		STATKEY_INT = 3,
+		STATKEY_INT = 4,
 		STATKEY_SPD = 2,
+		STATKEY_PER = 1,
 		STATKEY_LCK = 1
 	)
 
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/adventurer/witch/pre_equip(mob/living/carbon/human/H)
@@ -40,11 +44,12 @@
 	backpack_contents = list(
 						/obj/item/reagent_containers/glass/mortar = 1,
 						/obj/item/pestle = 1,
-						/obj/item/candle/yellow = 2,
+						/obj/item/candle/yellow = 3,
 						/obj/item/recipe_book/alchemy = 1,
 						/obj/item/recipe_book/survival = 1,
 						/obj/item/recipe_book/magic = 1,
-						/obj/item/chalk = 1
+						/obj/item/chalk = 2,
+						/obj/item/flashlight/flare/torch = 2
 						)
 
 	var/classes = list("Old Magick", "Godsblood", "Mystagogue")
@@ -52,6 +57,45 @@
 
 	var/shapeshifts = list("Zad", "Cat", "Cat (Black)", "Bat")
 	var/shapeshiftchoice = input("What form does your second skin take?", "THE OLD WAYS") as anything in shapeshifts
+
+	// Witch cosmetic title selection
+	if(H.mind)
+		H.adjust_blindness(-3)
+		var/cosmetic_titles = list(
+			"Witch",
+			"Herbalist",
+			"Folk Healer",
+			"Warlock",
+			"Shamaness",
+			"Occultist")
+		var/cosmetic_choice = input(H, "Select your practice.", "Witchcraft Practices") as anything in cosmetic_titles
+		
+		switch(cosmetic_choice)
+			if("Witch")
+				to_chat(H, span_notice("You are a Witch, practicing the old ways."))
+				H.mind.cosmetic_class_title = "Witch"
+				H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
+			if("Herbalist")
+				to_chat(H, span_notice("You are an Herbalist, knowledgeable in plants and remedies."))
+				H.mind.cosmetic_class_title = "Herbalist"
+				H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
+			if("Folk Healer")
+				to_chat(H, span_notice("You are a Folk Healer, tending to the common folk."))
+				H.mind.cosmetic_class_title = "Folk Healer"
+				H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
+			if("Warlock")
+				to_chat(H, span_notice("You are a Warlock, wielding dark pacts and forbidden knowledge."))
+				H.mind.cosmetic_class_title = "Warlock"
+				H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+			if("Shamaness")
+				to_chat(H, span_notice("You are a Shamaness, communing with spirits and nature."))
+				H.mind.cosmetic_class_title = "Shamaness"
+				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+			if("Occultist")
+				to_chat(H, span_notice("You are an Occultist, delving into hidden mysteries."))
+				H.mind.cosmetic_class_title = "Occultist"
+				H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
+		H.set_blindness(0)
 
 	switch (classchoice)
 		if("Old Magick")

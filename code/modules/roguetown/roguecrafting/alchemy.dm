@@ -320,3 +320,17 @@
 		/obj/item/alch/bonemeal = 1,
 		)
 	craftdiff = 2
+
+// Portable Alchemy Kit (PR #4530)
+/obj/structure/fluff/alch/portable
+	name = "portable alchemy kit"
+	desc = "A portable alchemical workstation. Lighter and easier to transport than a full lab."
+	icon_state = "alch_portable"
+	max_integrity = 200
+	density = FALSE  // Can be carried
+	anchored = FALSE
+
+	if(istype(W, /obj/item/rogueweapon))
+		return ..()
+	// Allow alchemy crafting
+	return ..()

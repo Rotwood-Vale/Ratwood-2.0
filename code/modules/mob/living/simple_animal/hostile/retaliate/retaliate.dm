@@ -16,12 +16,23 @@
 /mob/living/simple_animal/hostile/retaliate/ListTargets()
 	if(!(AIStatus == NPC_AI_OFF))
 		if(aggressive)
-			return ..()
+			var/list/targets = ..()
+			// Remove friends from targeting
+			for(var/datum/weakref/friend_ref in friends)
+				var/mob/living/friend = friend_ref.resolve()
+				if(friend)
+					targets -= friend
+			return targets
 		else
 			if(!enemies.len)
 				return list()
 			var/list/see = ..()
 			see &= enemies // Remove all entries that aren't in enemies
+			// Remove friends from targeting
+			for(var/datum/weakref/friend_ref in friends)
+				var/mob/living/friend = friend_ref.resolve()
+				if(friend)
+					see -= friend
 			return see
 
 /mob/living/simple_animal/hostile/retaliate/proc/DismemberBody(mob/living/L)
@@ -70,6 +81,9 @@
 			continue
 		if(isliving(A))
 			var/mob/living/M = A
+			// Skip friends when retaliating
+			if(is_friend(M))
+				continue
 			if(faction_check_mob(M) && attack_same || !faction_check_mob(M))
 				enemies |= M
 
@@ -83,3 +97,19 @@
 	. = ..()
 	if(. > 0 && stat == CONSCIOUS)
 		Retaliate()
+
+// Friend system procs
+/mob/living/simple_animal/hostile/retaliate/proc/is_friend(mob/living/M)
+	if(!M)
+		return FALSE
+	for(var/datum/weakref/friend_ref in friends)
+		var/mob/living/friend = friend_ref.resolve()
+		if(friend == M)
+			return TRUE
+	return FALSE
+
+/mob/living/simple_animal/hostile/retaliate/proc/add_friend(mob/living/M)
+	if(!M || is_friend(M))
+		return
+	friends += WEAKREF(M)
+	enemies -= M  // Remove from enemies if they were there

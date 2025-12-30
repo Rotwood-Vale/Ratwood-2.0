@@ -275,18 +275,19 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 
 /// Setter for any adjustments we make to our bleed_rate, propagating them to the host bodypart.
 /datum/wound/proc/set_bleed_rate(amount)
-    if(!bodypart_owner || !owner)
-        return
+	if(!owner)
+		return
 
-    // do simple bleeding
-    if(owner.simple_wounds?.len)
-        owner.simple_bleeding -= bleed_rate
-        bleed_rate = amount
-        owner.simple_bleeding += bleed_rate
-    else
-        bodypart_owner.bleeding -= bleed_rate
-        bleed_rate = amount
-        bodypart_owner.bleeding += bleed_rate
+	// For simple animals without bodyparts, use simple_bleeding
+	if(!bodypart_owner && owner.simple_wounds?.len)
+		owner.simple_bleeding -= bleed_rate
+		bleed_rate = amount
+		owner.simple_bleeding += bleed_rate
+	// For carbon mobs with bodyparts
+	else if(bodypart_owner)
+		bodypart_owner.bleeding -= bleed_rate
+		bleed_rate = amount
+		bodypart_owner.bleeding += bleed_rate
 
 /// Heals this wound by the given amount, and deletes it if it's healed completely
 /datum/wound/proc/heal_wound(heal_amount)

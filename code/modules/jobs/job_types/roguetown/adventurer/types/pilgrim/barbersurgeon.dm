@@ -10,25 +10,64 @@
 	cmode_music = 'sound/music/combat_physician.ogg'
 	subclass_stats = list(
 		STATKEY_INT = 3,
+		STATKEY_PER = 2,
+		STATKEY_WIL = 1,
 		STATKEY_LCK = 1
 	)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/labor/lumberjacking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/sneaking = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/adventurer/doctor/pre_equip(mob/living/carbon/human/H)
 	..()
+	// Barber Surgeon cosmetic title selection
+	if(H.mind)
+		H.adjust_blindness(-3)
+		var/cosmetic_titles = list(
+			"Barber Surgeon",
+			"Surgeon",
+			"Barber",
+			"Chirurgeon",
+			"Nurse")
+		var/cosmetic_choice = input(H, "Select your medical profession.", "Medical Professions") as anything in cosmetic_titles
+		
+		switch(cosmetic_choice)
+			if("Barber Surgeon")
+				to_chat(H, span_notice("You are a Barber Surgeon, healing and cutting hair."))
+				H.mind.cosmetic_class_title = "Barber Surgeon"
+				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+			if("Surgeon")
+				to_chat(H, span_notice("You are a Surgeon, performing operations."))
+				H.mind.cosmetic_class_title = "Surgeon"
+				H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
+			if("Barber")
+				to_chat(H, span_notice("You are a Barber, trimming hair and beards."))
+				H.mind.cosmetic_class_title = "Barber"
+				H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE)
+			if("Chirurgeon")
+				to_chat(H, span_notice("You are a Chirurgeon, a skilled medical practitioner."))
+				H.mind.cosmetic_class_title = "Chirurgeon"
+				H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+			if("Nurse")
+				to_chat(H, span_notice("You are a Nurse, caring for the sick and wounded."))
+				H.mind.cosmetic_class_title = "Nurse"
+				H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
+		H.set_blindness(0)
+	
 	mask = /obj/item/clothing/mask/rogue/spectacles
 	head = /obj/item/clothing/head/roguetown/nightman
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid /// they are a fine dressed doctor. no one else gonna pay em. psycross removed since it was a hold over for secular
@@ -41,9 +80,9 @@
 	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
-						/obj/item/natural/worms/leech/cheele = 1,
-						/obj/item/natural/cloth = 2,
-						/obj/item/flashlight/flare/torch = 1,
+						/obj/item/natural/worms/leech/cheele = 2,
+						/obj/item/natural/cloth = 3,
+						/obj/item/flashlight/flare/torch = 2,
 						/obj/item/rogueweapon/huntingknife/scissors/steel = 1,
 						/obj/item/hair_dye_cream = 3,
 						/obj/item/heart_blood_canister/filled = 2,

@@ -95,6 +95,19 @@
 	category = "General"
 	always_availible = TRUE
 
+/datum/crafting_recipe/roguetown/survival/caparison
+	name = "caparison"
+	result = /obj/item/natural/caparison
+	reqs = list(
+		/obj/item/natural/hide = 3,
+		/obj/item/natural/cloth = 2,
+		)
+	tools = list(/obj/item/needle)
+	skillcraft = /datum/skill/craft/sewing
+	craftdiff = 2
+	verbage_simple = "sew"
+	verbage = "sews"
+
 /datum/crafting_recipe/roguetown/survival/torch
 	name = "torch"
 	result = /obj/item/flashlight/flare/torch

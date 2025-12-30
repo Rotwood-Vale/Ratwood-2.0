@@ -94,7 +94,8 @@ GLOBAL_LIST_EMPTY(soil_list)
 	yield_produce(modifier, is_legendary)
 
 /obj/structure/soil/proc/try_handle_harvest(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/rogueweapon/sickle))
+	// Instant harvest with sickles and scythes
+	if(istype(attacking_item, /obj/item/rogueweapon/sickle) || istype(attacking_item, /obj/item/rogueweapon/scythe))
 		if(!plant || !produce_ready)
 			to_chat(user, span_warning("There is nothing to harvest!"))
 			return TRUE

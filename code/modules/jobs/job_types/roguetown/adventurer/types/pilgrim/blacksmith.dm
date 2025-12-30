@@ -17,18 +17,22 @@
 		STATKEY_SPD = -1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/bows = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN, // The strongest fists in the land.
-		/datum/skill/combat/knives = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/engineering = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/mining = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_EXPERT,
@@ -37,6 +41,40 @@
 
 /datum/outfit/job/roguetown/adventurer/blacksmith/pre_equip(mob/living/carbon/human/H)
 	..()
+	// Blacksmith cosmetic title selection
+	if(H.mind)
+		H.adjust_blindness(-3)
+		var/cosmetic_titles = list(
+			"Blacksmith",
+			"Smith",
+			"Metalworker",
+			"Forgemaster",
+			"Ironworker")
+		var/cosmetic_choice = input(H, "Select your smithing profession.", "Smithing Professions") as anything in cosmetic_titles
+		
+		switch(cosmetic_choice)
+			if("Blacksmith")
+				to_chat(H, span_notice("You are a Blacksmith, forging metal at the anvil."))
+				H.mind.cosmetic_class_title = "Blacksmith"
+				H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
+			if("Smith")
+				to_chat(H, span_notice("You are a Smith, working metal into tools and weapons."))
+				H.mind.cosmetic_class_title = "Smith"
+				H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 1, TRUE)
+			if("Metalworker")
+				to_chat(H, span_notice("You are a Metalworker, shaping iron and steel."))
+				H.mind.cosmetic_class_title = "Metalworker"
+				H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
+			if("Forgemaster")
+				to_chat(H, span_notice("You are a Forgemaster, master of the forge."))
+				H.mind.cosmetic_class_title = "Forgemaster"
+				H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
+			if("Ironworker")
+				to_chat(H, span_notice("You are an Ironworker, crafting with iron."))
+				H.mind.cosmetic_class_title = "Ironworker"
+				H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
+		H.set_blindness(0)
+	
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/rogueweapon/hammer/iron
 	beltl = /obj/item/rogueweapon/tongs
@@ -49,9 +87,9 @@
 	backr = /obj/item/rogueweapon/scabbard/sheath
 	backpack_contents = list(
 		/obj/item/flint = 1,
-		/obj/item/rogueore/coal = 4,
-		/obj/item/rogueore/iron = 5,
-		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/rogueore/coal = 5,
+		/obj/item/rogueore/iron = 6,
+		/obj/item/flashlight/flare/torch = 2,
 		/obj/item/recipe_book/blacksmithing = 1,
 		/obj/item/recipe_book/survival = 1,
 		/obj/item/armor_brush = 1,

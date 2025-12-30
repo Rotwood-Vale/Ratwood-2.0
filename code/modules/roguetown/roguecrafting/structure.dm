@@ -978,6 +978,26 @@
 	skillcraft = /datum/skill/craft/alchemy
 	craftdiff = 1
 
+// Portable Alchemy Kit (PR #4530)
+/datum/crafting_recipe/roguetown/structure/portable_alch_kit
+	name = "portable alchemy kit"
+	result = /obj/structure/fluff/alch/portable
+	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/natural/stone = 2, /obj/item/reagent_containers/glass/mortar = 1)
+	verbage_simple = "assemble"
+	verbage = "assembles"
+	skillcraft = /datum/skill/craft/alchemy
+	craftdiff = 2
+
+// Portable Cauldron (PR #4530) 
+/datum/crafting_recipe/roguetown/structure/portable_cauldron
+	name = "portable cauldron"
+	result = /obj/machinery/light/rogue/cauldron/portable
+	reqs = list(/obj/item/grown/log/tree/stick = 1, /obj/item/natural/stone = 2, /obj/item/reagent_containers/glass/bucket/pot/stone = 1)
+	verbage_simple = "assemble"
+	verbage = "assembles"
+	skillcraft = /datum/skill/craft/alchemy
+	craftdiff = 2
+
 /datum/crafting_recipe/roguetown/structure/ceramicswheel
 	name = "potter's wheel"
 	result = /obj/structure/fluff/ceramicswheel
