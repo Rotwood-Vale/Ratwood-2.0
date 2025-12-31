@@ -24,7 +24,7 @@
 	social_rank = SOCIAL_RANK_NOBLE
 	give_bank_account = TRUE
 	
-/datum/job/roguetown/monk/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+/datum/job/roguetown/martyr/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	..()
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
