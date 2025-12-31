@@ -136,6 +136,10 @@
 	seed_identity = "apple seeds"
 	plant_def_type = /datum/plant_def/tree/apple
 
+/obj/item/seeds/carrot
+	seed_identity = "carrot seeds"
+	plant_def_type = /datum/plant_def/carrot
+
 /obj/item/seeds/pear
 	seed_identity = "pear seeds"
 	plant_def_type = /datum/plant_def/tree/pear
