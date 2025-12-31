@@ -55,6 +55,14 @@
 	produce_amount_max = 4
 	maturation_time = FAST_GROWING
 
+/datum/plant_def/carrot
+	name = "carrots"
+	icon_state = "carrot"
+	produce_type = /obj/item/reagent_containers/food/snacks/grown/carrot
+	produce_amount_min = 3
+	produce_amount_max = 4
+	maturation_time = FAST_GROWING
+
 /datum/plant_def/onion
 	name = "onion patch"
 	icon_state = "onion"
