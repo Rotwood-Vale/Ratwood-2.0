@@ -24,6 +24,29 @@
 	social_rank = SOCIAL_RANK_NOBLE
 	give_bank_account = TRUE
 	
+	cmode_music = 'sound/music/combat_martyrsafe.ogg'
+	job_traits = list(
+		TRAIT_HEAVYARMOR,
+		TRAIT_STEELHEARTED,
+		TRAIT_SILVER_BLESSED,
+		TRAIT_EMPATH,
+		TRAIT_MEDICINE_EXPERT,
+		TRAIT_DUALWIELDER,
+		TRAIT_VOTARY,
+		TRAIT_CONVICTION
+	)
+
+	//No undeath-adjacent virtues for a role that can sacrifice itself. The Ten like their sacrifices 'pure'.
+	//They get those traits during sword activation, anyway.
+	//Dual wielder is there to stand-in for ambidextrous in case they activate their sword in their off-hand.
+	virtue_restrictions = list(/datum/virtue/utility/noble, /datum/virtue/combat/rotcured, /datum/virtue/utility/deadened,
+	/datum/virtue/utility/deathless, /datum/virtue/combat/dualwielder, /datum/virtue/heretic/zchurch_keyholder)
+
+	advclass_cat_rolls = list(CTAG_MARTYR = 2)
+	job_subclasses = list(
+		/datum/advclass/martyr
+	)
+
 /datum/job/roguetown/martyr/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	..()
 	if(ishuman(L))
@@ -50,28 +73,6 @@
 		H.real_name = "[title] [prev_real_name]"
 		H.name = "[title] [prev_name]"
 
-	cmode_music = 'sound/music/combat_martyrsafe.ogg'
-	job_traits = list(
-		TRAIT_HEAVYARMOR,
-		TRAIT_STEELHEARTED,
-		TRAIT_SILVER_BLESSED,
-		TRAIT_EMPATH,
-		TRAIT_MEDICINE_EXPERT,
-		TRAIT_DUALWIELDER,
-		TRAIT_VOTARY,
-		TRAIT_CONVICTION
-	)
-
-	//No undeath-adjacent virtues for a role that can sacrifice itself. The Ten like their sacrifices 'pure'.
-	//They get those traits during sword activation, anyway.
-	//Dual wielder is there to stand-in for ambidextrous in case they activate their sword in their off-hand.
-	virtue_restrictions = list(/datum/virtue/utility/noble, /datum/virtue/combat/rotcured, /datum/virtue/utility/deadened,
-	/datum/virtue/utility/deathless, /datum/virtue/combat/dualwielder, /datum/virtue/heretic/zchurch_keyholder)
-
-	advclass_cat_rolls = list(CTAG_MARTYR = 2)
-	job_subclasses = list(
-		/datum/advclass/martyr
-	)
 
 /datum/advclass/martyr
 	name = "Martyr"
