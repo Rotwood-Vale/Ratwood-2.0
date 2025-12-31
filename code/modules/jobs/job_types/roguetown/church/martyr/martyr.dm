@@ -22,9 +22,10 @@
 	spawn_positions = 1
 	display_order = JDO_MARTYR
 	social_rank = SOCIAL_RANK_NOBLE
-	give_bank_account = TRUE/datum/job/roguetown/monk/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	give_bank_account = TRUE
+	
+/datum/job/roguetown/monk/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	..()
-
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.advsetup = 1
@@ -33,8 +34,18 @@
 //Title stuff. This is super sloppy.
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
-//Default fallback title, Saint is a gender neutral title.
+//Saint is gender neutral.
 		var/title = "Saint"
+//Actual titles now, based on pronouns.
+/*		switch(H.pronouns)
+			if(SHE_HER)
+				title = "Sister"
+			if(SHE_HER_M)
+				title = "Sister"
+			if(HE_HIM)
+				title = "Brother"
+			if(HE_HIM_F)
+				title = "Brother"*/
 //Now apply the actual title.
 		H.real_name = "[title] [prev_real_name]"
 		H.name = "[title] [prev_name]"
