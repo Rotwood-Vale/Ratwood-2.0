@@ -22,7 +22,22 @@
 	spawn_positions = 1
 	display_order = JDO_MARTYR
 	social_rank = SOCIAL_RANK_NOBLE
-	give_bank_account = TRUE
+	give_bank_account = TRUE/datum/job/roguetown/monk/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..()
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		H.advsetup = 1
+		H.invisibility = INVISIBILITY_MAXIMUM
+		H.become_blind("advsetup")
+//Title stuff. This is super sloppy.
+		var/prev_real_name = H.real_name
+		var/prev_name = H.name
+//Default fallback title, Saint is a gender neutral title.
+		var/title = "Saint"
+//Now apply the actual title.
+		H.real_name = "[title] [prev_real_name]"
+		H.name = "[title] [prev_name]"
 
 	cmode_music = 'sound/music/combat_martyrsafe.ogg'
 	job_traits = list(
