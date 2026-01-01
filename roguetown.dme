@@ -1785,7 +1785,7 @@
 #include "code\modules\jobs\job_types\roguetown\garrison\manorguard\footman.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\manorguard\gormless.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\manorguard\manorguard.dm"
-#include "code\modules\jobs\job_types\roguetown\garrison\manorguard\watchman_peasant.dm"
+#include "code\modules\jobs\job_types\roguetown\adventurer\types\pilgrim\watchman_peasant.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\manorguard\skirmisher.dm"
 #include "code\modules\jobs\job_types\roguetown\Inquisition\absolutionist.dm"
 #include "code\modules\jobs\job_types\roguetown\Inquisition\orthodoxist.dm"

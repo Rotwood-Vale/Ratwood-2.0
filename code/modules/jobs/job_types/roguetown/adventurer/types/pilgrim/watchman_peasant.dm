@@ -1,10 +1,12 @@
-/datum/advclass/manorguard/levy
-	name = "Watchman"
+/datum/advclass/pilgrim/levy
+	name = "Levy"
 	tutorial = "A peasant pressed into the Duchy's service as a temporary watchman. Given a padded coat, a simple weapon, and just enough training to stand in the line, you are expected to protect the town until you're sent home—or don't go home at all."
-	outfit = /datum/outfit/job/roguetown/manorguard/watchman_levy
-	category_tags = list(CTAG_MENATARMS)
+	outfit = /datum/outfit/job/roguetown/adventurer/levy
+	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	extra_context = "(Weaker stats and equipment than other Man-at-Arms, but gains a variety of skill selections through your former trade and choice of militia weaponry.)"
+	maximum_possible_slots = 2
+	cmode_music = 'sound/music/cmode/towner/combat_towner2.ogg'
+	extra_context = "Weaker stats and equipment, but gains a variety of skill selections through your former trade and choice of militia weaponry."
 	subclass_stats = list(
 		STATKEY_CON = 1,
 		STATKEY_STR = 1,
@@ -29,8 +31,8 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 	)
-/datum/outfit/job/roguetown/manorguard/watchman_levy
-	name = "Watchman"
+/datum/outfit/job/roguetown/adventurer/levy
+	name = "Levy"
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 	armor = /obj/item/clothing/suit/roguetown/armor/gambeson
 	pants = /obj/item/clothing/under/roguetown/tights/random
@@ -40,11 +42,11 @@
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/storage/keyring/guardcastle = 1,
+		/obj/item/storage/keyring/guard/levy = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 	)
 
-/datum/outfit/job/roguetown/manorguard/watchman_levy/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/adventurer/levy/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
 	if(H.mind)
@@ -61,7 +63,7 @@
 			head = helmets[helmchoice]
 
 		// Trade selection
-		var/trades = list("Healer","Farmhand","Clothworker","Craftsman","Townsman")
+		var/trades = list("Healer","Farmhand","Clothworker","Craftsman","Vagrant")
 		var/trade_choice = input(H, "Choose your former trade.", "WHO ARE YOU?") as anything in trades
 
 		switch(trade_choice)
@@ -92,7 +94,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/labor/mining, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_APPRENTICE, TRUE)
 
-			if("Townsman")
+			if("Vagrant")
 				H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_APPRENTICE, TRUE)
