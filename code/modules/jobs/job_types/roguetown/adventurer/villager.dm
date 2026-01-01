@@ -39,7 +39,8 @@
 		/datum/advclass/seamstress,
 		/datum/advclass/thug,
 		/datum/advclass/witch,
-		/datum/advclass/woodworker
+		/datum/advclass/woodworker,
+		/datum/advclass/pilgrim/levy
 	)
 
 /*
