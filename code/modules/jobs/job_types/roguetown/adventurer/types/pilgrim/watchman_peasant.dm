@@ -33,10 +33,14 @@
 	)
 /datum/outfit/job/roguetown/adventurer/levy
 	name = "Levy"
+	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+	beltl = /obj/item/rogueweapon/mace/cudgel
+	backr = /obj/item/storage/backpack/rogue/satchel
+	id = /obj/item/scomstone/bad/garrison
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 	armor = /obj/item/clothing/suit/roguetown/armor/gambeson
 	pants = /obj/item/clothing/under/roguetown/tights/random
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backpack_contents = list(
