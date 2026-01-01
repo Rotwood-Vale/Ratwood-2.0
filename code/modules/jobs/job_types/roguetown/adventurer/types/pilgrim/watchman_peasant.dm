@@ -2,7 +2,8 @@
 	name = "Levy"
 	tutorial = "A peasant pressed into the Duchy's service as a temporary watchman. Given a padded coat, a simple weapon, and just enough training to stand in the line, you are expected to protect the town until you're sent home—or don't go home at all."
 	outfit = /datum/outfit/job/roguetown/adventurer/levy
-	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
+	category_tags = list(CTAG_TOWNER)
+	traits_applied = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	maximum_possible_slots = 2
 	cmode_music = 'sound/music/cmode/towner/combat_towner2.ogg'
@@ -56,9 +57,9 @@
 	if(H.mind)
 		// Helmet selection
 		var/helmets = list(
-			"Leather Helmet" = /obj/item/clothing/head/roguetown/helmet/leather,
-			"Simple Helmet" = /obj/item/clothing/head/roguetown/helmet,
-			"Kettle Helmet" = /obj/item/clothing/head/roguetown/helmet/kettle,
+			"Iron Sallet" = /obj/item/clothing/head/roguetown/helmet/sallet/iron,
+			"Horned Cap" = /obj/item/clothing/head/roguetown/helmet/horned,
+			"Iron Kettle Helmet" = /obj/item/clothing/head/roguetown/helmet/kettle/iron,
 			"Skull Cap" = /obj/item/clothing/head/roguetown/helmet/skullcap,
 			"None"
 		)
@@ -76,6 +77,8 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_APPRENTICE, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_APPRENTICE, TRUE)
+				if(H.mind)
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 
 			if("Farmhand")
 				H.adjust_skillrank_up_to(/datum/skill/labor/farming, SKILL_LEVEL_JOURNEYMAN, TRUE)
