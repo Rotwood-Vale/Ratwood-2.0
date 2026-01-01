@@ -1,5 +1,6 @@
 /datum/advclass/vagabond_unraveled
     name = "The Unraveled"
+    examine_name = "Beggar"
     tutorial = "Once you sought to understand the mind’s decay — now you live within it, a wandering physician bound to his own affliction."
     allowed_sexes = list(MALE, FEMALE)
     allowed_races = RACES_NO_CONSTRUCT

@@ -12,6 +12,13 @@
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/black
 	belt = /obj/item/storage/belt/rogue/leather/black
+	if(prob(10))
+		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/manapot
+	if(prob(70))
+		beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
+	else
+		beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
 	H.STASTR = 20
 	H.STAPER = 20
 	H.STASPD = 10

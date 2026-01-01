@@ -655,6 +655,10 @@
 /turf/open/floor/rogue/dirt/road/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
+/turf/open/floor/rogue/dirt/nospawn
+
+/turf/open/floor/rogue/grass/nospawn
+
 /turf/open/floor/rogue/sand
 	name = "sand"
 	desc = "Fine grains shift and hiss softly beneath your step."

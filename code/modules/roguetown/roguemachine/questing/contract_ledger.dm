@@ -7,7 +7,6 @@
 	anchored = TRUE
 	max_integrity = 0
 	layer = ABOVE_MOB_LAYER
-	layer = GAME_PLANE_UPPER
 	var/input_point
 
 /obj/structure/roguemachine/contractledger/Initialize()

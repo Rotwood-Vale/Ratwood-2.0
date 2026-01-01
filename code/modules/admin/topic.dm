@@ -1350,26 +1350,149 @@
 
 	else if(href_list["cursemenu"])
 		var/the_key = href_list["cursemenu"]
-		var/popup_window_data = "<center>[the_key]</center>"
 
+		// load JSON
 		var/json_file = file("data/player_saves/[copytext(the_key,1,2)]/[the_key]/curses.json")
 		if(!fexists(json_file))
 			WRITE_FILE(json_file, "{}")
-		var/list/json = json_decode(file2text(json_file))
-		for(var/curse in CURSE_MASTER_LIST)
-			var/yes_cursed
-			for(var/X in json)
-				if(X == curse)
-					yes_cursed = TRUE
-					break
-			if(yes_cursed)
-				popup_window_data += "[curse] ENABLED<br>"
-			else
-				popup_window_data += "[curse] DISABLED<br>"
 
-		var/datum/browser/noclose/popup = new(usr, "cursecheck", "", 370, 220)
-		popup.set_content(popup_window_data)
-		popup.open()
+		var/list/json = json_decode(file2text(json_file))
+		if(!json)
+			json = list()
+
+		var/popup = "<center><b>Curses for [the_key]</b><br><br>"
+
+		// detect if any valid entries exist
+		var/has_any = FALSE
+		for(var/c in json)
+			if(json[c])
+				has_any = TRUE
+				break
+
+		if(!has_any)
+			popup += "<i>No curses found.</i><br>"
+		else
+			popup += "<b>Active Curses:</b><br>"
+			for(var/curse_name in json)
+				if(!json[curse_name])
+					continue
+
+				popup += "<a href='?_src_=holder;[HrefToken()];inspectcurse=[curse_name];key=[the_key]'>[curse_name]</a> "
+
+				popup += "<a href='?_src_=holder;[HrefToken()];removecurse=[curse_name];key=[the_key]'><font color='red'>X</font></a><br>"
+
+		popup += "<br><hr><br>"
+
+		popup += "<a href='?_src_=holder;[HrefToken()];addcurse=[the_key]'><b>Add New Curse</b></a><br><br>"
+
+		popup += "<a href='?_src_=holder;[HrefToken()];clearallcurses=[the_key]'><font color='red'>Clear ALL curses</font></a>"
+
+		popup += "</center>"
+
+		var/datum/browser/noclose/B = new(usr, "cursecheck", "Curses", 380, 350)
+		B.set_content(popup)
+		B.open()
+		return
+	else if(href_list["addcurse"])
+		var/key = href_list["addcurse"]
+
+		// Find mob by ckey
+		var/mob/M = null
+		for(var/client/C)
+			if(C && C.ckey == key)
+				M = C.mob
+				break
+
+		if(!M)
+			usr << "<span class='warning'>Player not online.</span>"
+			return
+
+		usr.client.curse_player_popup(M)
+		return
+
+
+	else if(href_list["removecurse"])
+		// UI sends:
+		// removecurse = curse_name
+		// key        = player ckey
+		var/curse_name = href_list["removecurse"]
+		var/key = href_list["key"]
+
+		if(!key || !curse_name)
+			usr << "<span class='warning'>Invalid removal request.</span>"
+			return
+
+		if(remove_player_curse(key, curse_name))
+			usr << "<span class='notice'>Removed curse <b>[curse_name]</b> from [key].</span>"
+		else
+			usr << "<span class='warning'>Failed to remove curse <b>[curse_name]</b> from [key].</span>"
+
+		src.player_panel_new()
+		return
+
+	else if(href_list["clearallcurses"])
+		var/key = href_list["clearallcurses"]
+
+		var/json_file = file("data/player_saves/[copytext(key,1,2)]/[key]/curses.json")
+		fdel(json_file)
+		WRITE_FILE(json_file, "{}")
+
+		// refresh live state if online
+		refresh_player_curses_for_key(key)
+
+		usr << "<span class='notice'>Cleared ALL curses from [key].</span>"
+
+		src.player_panel_new()
+		return
+
+
+	else if(href_list["inspectcurse"])
+		var/curse_name = href_list["inspectcurse"]
+		var/key = href_list["key"]
+
+		if(!key || !curse_name)
+			usr << "<span class='warning'>Invalid curse selection.</span>"
+			return
+
+		var/json_file = file("data/player_saves/[copytext(key,1,2)]/[key]/curses.json")
+		if(!fexists(json_file))
+			WRITE_FILE(json_file, "{}")
+
+		var/list/json = json_decode(file2text(json_file))
+		if(!json || !json[curse_name])
+			usr << "<span class='warning'>Curse not found.</span>"
+			return
+
+		var/list/C = json[curse_name]
+
+		var/text = "<b><u>Curse:</u></b> [curse_name]<br><hr>"
+
+		for(var/field in C)
+			var/value = C[field]
+
+			if(islist(value))
+				text += "<b>[field]:</b><br>"
+				for(var/subfield in value)
+					text += "&nbsp;&nbsp;<b>[subfield]:</b> [value[subfield]]<br>"
+			else
+				text += "<b>[field]:</b> [value]<br>"
+
+		if(C["expires"])
+			var/days_left = C["expires"] - now_days()
+			if(days_left < 0) days_left = 0
+			text += "<br><b>Days Remaining:</b> [days_left]<br>"
+
+		if(C["cooldown"])
+			text += "<b>Cooldown (seconds):</b> [C["cooldown"]]<br>"
+
+		if(C["last_trigger"])
+			text += "<b>Last Trigger Timestamp:</b> [C["last_trigger"]]<br>"
+
+		var/datum/browser/noclose/inspect = new(usr, "curseinfo", "Curse Details", 400, 360)
+		inspect.set_content("<center>[text]</center>")
+		inspect.open()
+		return
+
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

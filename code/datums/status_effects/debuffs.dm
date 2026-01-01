@@ -275,11 +275,6 @@
 /obj/effect/temp_visual/curse
 	icon_state = "curse"
 
-/obj/effect/temp_visual/curse/Initialize()
-	. = ..()
-	deltimer(timerid)
-
-
 /datum/status_effect/gonbolaPacify
 	id = "gonbolaPacify"
 	status_type = STATUS_EFFECT_MULTIPLE

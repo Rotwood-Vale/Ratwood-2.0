@@ -32,8 +32,26 @@
 	)
 
 	allowed_taur_types = list(
-		/obj/item/bodypart/taur/spider,
+		/obj/item/bodypart/taur/otie,
+		/obj/item/bodypart/taur/canine,
+		/obj/item/bodypart/taur/venard,
+		/obj/item/bodypart/taur/drake,
+		/obj/item/bodypart/taur/dragon,
+		/obj/item/bodypart/taur/noodle,
 		/obj/item/bodypart/taur/horse,
+		/obj/item/bodypart/taur/deer,
+		/obj/item/bodypart/taur/redpanda,
+		/obj/item/bodypart/taur/rat,
+		/obj/item/bodypart/taur/skunk,
+		/obj/item/bodypart/taur/kitsune,
+		/obj/item/bodypart/taur/feline,
+		/obj/item/bodypart/taur/snep,
+		/obj/item/bodypart/taur/tiger,
+		/obj/item/bodypart/taur/spider,
+		/obj/item/bodypart/taur/centipede,
+		/obj/item/bodypart/taur/sloog,
+		/obj/item/bodypart/taur/ant,
+		/obj/item/bodypart/taur/wasp
 	)
 
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -52,11 +70,13 @@
 		OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
 		OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,0), \
 		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
+		OFFSET_BREASTS = list(0,1), \
 		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
 		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
 		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,0), OFFSET_BACK_F = list(0,-1), \
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		OFFSET_BREASTS_F = list(0,-1), \
 		)
 	race_bonus = list(STAT_PERCEPTION = 1, STAT_CONSTITUTION = 1)
 	enflamed_icon = "widefire"

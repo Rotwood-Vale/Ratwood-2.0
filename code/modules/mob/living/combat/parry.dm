@@ -6,7 +6,7 @@
 	var/mob/living/U = user
 	if(H && U)
 		prob2defend = 0
-	
+
 	if(!can_see_cone(user))
 		if(d_intent == INTENT_PARRY)
 			return FALSE
@@ -110,7 +110,7 @@
 
 	if(HAS_TRAIT(user, TRAIT_GUIDANCE))
 		prob2defend -= 20
-	
+
 	if(HAS_TRAIT(user, TRAIT_CURSE_RAVOX))
 		prob2defend -= 40
 
@@ -165,6 +165,14 @@
 				H.magearmor = 1
 				H.apply_status_effect(/datum/status_effect/buff/magearmor)
 				to_chat(src, span_boldwarning("My mage armor absorbs the hit and dissipates!"))
+				return TRUE
+			else
+				return FALSE
+		if(HAS_TRAIT(src, TRAIT_SCALEARMOR))
+			if(H.scalearmor == 0)
+				H.scalearmor = 1
+				H.apply_status_effect(/datum/status_effect/buff/scalearmor)
+				to_chat(src, span_boldwarning("My scales absorb the hit and dissipate the force!"))
 				return TRUE
 			else
 				return FALSE

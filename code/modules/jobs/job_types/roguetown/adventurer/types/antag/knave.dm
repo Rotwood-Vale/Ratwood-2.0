@@ -7,11 +7,11 @@
 	category_tags = list(CTAG_BANDIT)
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_DEATHBYSNUSNU)//gets dodge expert but no medium armor training - gotta stay light
+	traits_applied = list(TRAIT_DODGEEXPERT)//gets dodge expert but no medium armor training - gotta stay light
 	subclass_stats = list(
-		STATKEY_SPD = 3,//It's all about speed and perception
-		STATKEY_PER = 2,
-		STATKEY_LCK = 2,
+		STATKEY_SPD = 3,	//It's all about speed and perception
+		STATKEY_PER = 3,	//-LCK +PER
+		STATKEY_LCK = 1,
 		STATKEY_STR = 1,
 		STATKEY_WIL = 1,
 		STATKEY_CON = 1
@@ -86,9 +86,3 @@
 							/obj/item/flashlight/flare/torch = 1,
 							) //poacher gets mantraps
 				H.adjust_skillrank(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
-
-	if(!istype(H.patron, /datum/patron/inhumen/matthios))
-		var/inputty = input(H, "Would you like to change your patron to Matthios?", "The Transactor calls", "No") as anything in list("Yes", "No")
-		if(inputty == "Yes")
-			to_chat(H, span_warning("My former deity has abandoned me.. Matthios is my new master."))
-			H.set_patron(/datum/patron/inhumen/matthios)

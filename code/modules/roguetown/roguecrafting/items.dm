@@ -482,3 +482,15 @@
 		)
 	skillcraft = /datum/skill/misc/medicine
 	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/survival/bandage
+	name = "bandages (medicine)"
+	result = list(
+		/obj/item/natural/cloth/bandage
+	)
+	reqs = list(
+		/obj/item/natural/cloth = 1,
+		/obj/item/natural/silk = 1,
+		/obj/item/ash = 1)
+	skillcraft = /datum/skill/misc/medicine
+	craftdiff = 2

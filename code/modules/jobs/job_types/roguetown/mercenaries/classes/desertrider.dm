@@ -4,7 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/desert_rider
-	class_select_category = CLASS_CAT_RANESHENI
+	class_select_category = CLASS_CAT_ZYBANTU
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_desertrider.ogg' //GREATEST COMBAT TRACK IN THE GAME SO FAR BESIDES MAYBE MANIAC2.OGG
 	subclass_languages = list(/datum/language/celestial)
@@ -12,8 +12,8 @@
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
-		STATKEY_PER = -1
+		STATKEY_SPD = 1,
+		STATKEY_CON = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
@@ -51,7 +51,7 @@
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
-	var/weapons = list("Heavy Mace","Shamshir and Shield","Spear and Shield")
+	var/weapons = list("Heavy Mace","Shamshir and Shield","Spear and Shield","Axe and Shield")
 	if(H.mind)
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
@@ -62,16 +62,21 @@
 			if("Shamshir and Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 				backl = /obj/item/rogueweapon/shield/tower/raneshen
+				beltr = /obj/item/rogueweapon/scabbard/sword
 			if("Spear and Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/spear
+				backl = /obj/item/rogueweapon/shield/tower/raneshen
+			if("Axe and Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)	//lets see if people pick it!
+				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
 				backl = /obj/item/rogueweapon/shield/tower/raneshen
 
 	shoes = /obj/item/clothing/shoes/roguetown/shalal
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-	
+
 	H.merctype = 4
 
 /datum/advclass/mercenary/desert_rider/zeybek
@@ -85,7 +90,7 @@
 		STATKEY_INT = 1,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN, 
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
@@ -148,7 +153,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/shalal
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 
-	
+
 	H.merctype = 4
 
 /datum/advclass/mercenary/desert_rider/almah

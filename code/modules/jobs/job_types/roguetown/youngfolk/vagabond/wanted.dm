@@ -1,5 +1,6 @@
 /datum/advclass/vagabond_wanted
 	name = "Wanted"
+	examine_name = "Beggar"
 	tutorial = "The long arm of the law reaches out for you - are you slippery enough to evade its grip this time, or is your head destined to end up in an Excidium's maw?"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS

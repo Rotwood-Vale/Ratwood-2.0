@@ -431,8 +431,8 @@
 	name = "psydonic war axe"
 	desc = "An ornate battle axe, plated in a ceremonial veneer of silver. The premiere instigator of conflict against elven attachees."
 	icon_state = "psyaxe"
-	force = 20
-	force_wielded = 25
+	force = 25
+	force_wielded = 30
 	minstr = 11
 	wdefense = 6
 	blade_dulling = DULLING_SHAFT_METAL
@@ -454,10 +454,8 @@
 	name = "enduring war axe"
 	desc = "An ornate battle axe, its silver tarnished by neglect. Even a dim light can pierce the dark."
 	icon_state = "psyaxe"
-	force = 25
-	force_wielded = 30
-	minstr = 9
-	wdefense = 4
+	force = 20
+	force_wielded = 25
 	is_silver = FALSE
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY

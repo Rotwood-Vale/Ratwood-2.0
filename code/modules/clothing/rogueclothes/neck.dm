@@ -876,3 +876,148 @@
 		REMOVE_TRAIT(user, TRAIT_STRENGTH_UNCAPPED, TRAIT_GENERIC)
 		active_item = FALSE
 	return
+
+/obj/item/clothing/neck/roguetown/collar/prisoner
+	name = "castifico collar"
+	icon_state = "castifico_collar"
+	item_state = "castifico_collar"
+	desc = "A metal collar that seals around the neck, making it impossible to remove. It seems to be enchanted with some kind of vile magic..."
+	var/active_item
+	var/bounty_amount
+	resistance_flags = FIRE_PROOF
+	slot_flags = ITEM_SLOT_NECK
+	body_parts_covered = NONE //it's not armor
+	leashable = TRUE
+
+/obj/item/clothing/neck/roguetown/collar/prisoner/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/neck/roguetown/collar/prisoner/dropped(mob/living/carbon/human/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_PACIFISM, "castificocollar")
+	REMOVE_TRAIT(user, TRAIT_SPELLCOCKBLOCK, "castificocollar")
+	if(QDELETED(src))
+		return
+	qdel(src)
+
+/obj/item/clothing/neck/roguetown/collar/prisoner/proc/timerup(mob/living/carbon/human/user)
+	REMOVE_TRAIT(user, TRAIT_PACIFISM, "castificocollar")
+	REMOVE_TRAIT(user, TRAIT_SPELLCOCKBLOCK, "castificocollar")
+	visible_message(span_warning("The castifico collar opens with a click, falling off of [user]'s neck and clambering apart on the ground, their penance complete."))
+	say("YOUR PENANCE IS COMPLETE.")
+	for(var/name in GLOB.outlawed_players)
+		if(user.real_name == name)
+			GLOB.outlawed_players -= user.real_name
+			priority_announce("[user.real_name] has completed their penance. Justice has been served in the eyes of Ravox.", "PENANCE", 'sound/misc/bell.ogg')
+	playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
+	if(QDELETED(src))
+		return
+	qdel(src)
+
+/obj/item/clothing/neck/roguetown/collar/prisoner/equipped(mob/living/user, slot)
+	. = ..()
+	if(active_item)
+		return
+	else if(slot == SLOT_NECK)
+		active_item = TRUE
+		to_chat(user, span_warning("This accursed collar pacifies me!"))
+		ADD_TRAIT(user, TRAIT_PACIFISM, "castificocollar")
+		ADD_TRAIT(user, TRAIT_SPELLCOCKBLOCK, "castificocollar")
+		if(HAS_TRAIT(user, TRAIT_RITUALIST))
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+		var/timer = 5 MINUTES //Base timer is 5 minutes, additional time added per bounty amount
+
+		if(bounty_amount >= 10)
+			var/additional_time = bounty_amount * 0.1 // 10 mammon = 1 minute
+			additional_time = round(additional_time)
+			timer += additional_time MINUTES
+
+		var/timer_minutes = timer / 600
+
+		addtimer(CALLBACK(src, PROC_REF(timerup), user), timer)
+		say("YOUR PENANCE WILL BE COMPLETE IN [timer_minutes] MINUTES.")
+	return
+
+//This is a super good neck slot item, granting +2LCK/Darkvision/HardDismember/NoDamageSlowdown.
+//Horrible compared to +2 in all stats and the 10k durability it used to have. But you can't have it all.
+//You can get these so easily that it's just dumb for them to be so absurd. Especially now with explosive bandits and the like.
+//Now it self repairs as a funny kind of protection. Provides negatives to those who can't wear it, too.
+/obj/item/clothing/neck/roguetown/dragon_scale
+	name = "dragonscale necklace"
+	desc = "A blacksteel chain, laced through a dozen of the Hoardmaster's golden teeth. \
+	Perhaps given as a gift to the wearer, or taken in a fit of mania. It matters not. \
+	Those who don this necklace are given a boon from the Hoardmaster, should they be deemed worthy. <br>\
+	If not, well..."
+	icon_state = "bktrinket"
+	max_integrity = 666
+	armor = ARMOR_DRAGONSCALE
+	//Provides the full array, since this isn't a +2 to literally everything stat wise now. Although armour does this anyways, I suppose.
+	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_STAB, BCLASS_PIERCE, BCLASS_PICK, BCLASS_BLUNT)
+	blocksound = PLATEHIT
+	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	//dropshrink = 0.75
+	resistance_flags = FIRE_PROOF
+	sellprice = 666
+	static_price = TRUE
+	smeltresult = /obj/item/riddleofsteel
+	anvilrepair = /datum/skill/craft/armorsmithing
+	var/active_item = FALSE
+	var/repair_amount = 40
+	var/repair_time = 2 MINUTES
+	var/last_repair
+
+/obj/item/clothing/neck/roguetown/dragon_scale/equipped(mob/living/user, slot)
+	. = ..()
+	if(active_item)
+		return
+	if(slot == SLOT_NECK)
+		active_item = TRUE
+		if(user.mind.special_role == "Bandit")
+			to_chat(user, span_suppradio("The Hoardmaster's wishes begin to mingle with my own. A sense of immense <b>greed</b> fills my mind."))
+			user.change_stat(STATKEY_LCK, 2)
+			user.add_stress(/datum/stressevent/dragon_scale)
+			ADD_TRAIT(user, TRAIT_DARKVISION, CULT_TRAIT)//Close enough to a cult. No duplicates beyond dreamer.
+			ADD_TRAIT(user, TRAIT_HARDDISMEMBER, CULT_TRAIT)//Too angry to lose a limb, or something.
+			ADD_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, CULT_TRAIT)//Can't tag 'em to slow 'em.
+			armor = getArmor("blunt" = 100, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 50, "acid" = 0)
+		else
+			to_chat(user, span_suicide("The necklace... I can hear a voice mocking me!"))
+			ADD_TRAIT(user, TRAIT_PSYCHOSIS, CULT_TRAIT)
+			user.hallucination = INFINITY
+			armor = getArmor("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/neck/roguetown/dragon_scale/dropped(mob/living/user)
+	..()
+	if(!active_item)
+		return
+	active_item = FALSE
+	if(user.mind.special_role == "Bandit")
+		to_chat(user, span_monkeyhive("The Hoardmaster's grip upon my mind lessens. Was I not enough? I can feel the disappointment."))
+		user.change_stat(STATKEY_LCK, -2)
+		user.remove_stress(/datum/stressevent/dragon_scale)
+		REMOVE_TRAIT(user, TRAIT_DARKVISION, CULT_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_HARDDISMEMBER, CULT_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, CULT_TRAIT)
+	else
+		to_chat(user, span_suicide("<b>GET IT AWAY FROM ME!!</b>"))
+		REMOVE_TRAIT(user, TRAIT_PSYCHOSIS, CULT_TRAIT)
+		user.hallucination = 0
+		armor = getArmor("blunt" = 100, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 50, "acid" = 0)
+
+/obj/item/clothing/neck/roguetown/dragon_scale/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		START_PROCESSING(SSobj, src)
+		return
+
+/obj/item/clothing/neck/roguetown/dragon_scale/process()
+	if(obj_integrity >= max_integrity)
+		STOP_PROCESSING(SSobj, src)
+		src.visible_message(span_notice("[src] warps and bends, as it mends under the Hoardmaster's influence."), vision_distance = 1)
+		return
+	else if(world.time > src.last_repair + src.repair_time)
+		src.last_repair = world.time
+		obj_integrity = min(obj_integrity + src.repair_amount, src.max_integrity)
+	..()

@@ -19,6 +19,8 @@ GLOBAL_LIST_INIT(character_accents, list("No accent",
 	"Saut al-Atash accent",
 	"Valley accent",
 	"Kazengun accent",
+	"Xinyi accent",
+	"Pui-Maen accent",
 	"Avar accent",
 	"Pirate accent"))
 

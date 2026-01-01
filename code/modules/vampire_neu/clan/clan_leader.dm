@@ -22,9 +22,7 @@
 	ascended = FALSE
 
 /datum/clan_leader/wretch
-	lord_spells = list(
-		/obj/effect/proc_holder/spell/targeted/shapeshift/vampire/bat,
-	)
+	lord_spells = list()//No bat / gas. Thanks. Xray vision. No issue Z-Movement. Unable to be countered via silver. Ignores miracles. Etc.
 	lord_verbs = list(
 		/mob/living/carbon/human/proc/punish_spawn
 	)

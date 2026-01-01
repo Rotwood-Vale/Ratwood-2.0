@@ -23,6 +23,7 @@
 	subclass_spellpoints = 10
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
@@ -55,16 +56,28 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/trophyfur
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/special
-	beltr = /obj/item/flashlight/flare/torch
+	beltr = /obj/item/rogueweapon/scabbard/sword
 	r_hand = /obj/item/rogueweapon/halberd/glaive
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	backpack_contents = list(
 				/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-				/obj/item/rogueweapon/scabbard/sheath = 1
+				/obj/item/rogueweapon/scabbard/sheath = 1,
+				/obj/item/flashlight/flare/torch
 				)
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
+		
+		var/weapons = list("Elven Swordspear and Longsword","Elven Curveblade and Shortsword",)
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		H.set_blindness(0)
+		switch(weapon_choice)
+			if("Elven Swordspear and Longsword")
+				r_hand = /obj/item/rogueweapon/spear/naginata/elf
+				l_hand = /obj/item/rogueweapon/sword/long/elf
+			if("Elven Curveblade and Shortsword")
+				r_hand = /obj/item/rogueweapon/greatsword/elf
+				l_hand = /obj/item/rogueweapon/sword/short/elf
 

@@ -119,7 +119,7 @@
 /turf/open/floor/rogue/metal/barograte/open,
 /area/rogue/under/tomb/sewer)
 "zc" = (
-/obj/item/roguegear,
+/obj/item/roguegear/bronze,
 /turf/open/floor/rogue/metal/barograte/open,
 /area/rogue/under/tomb/sewer)
 "Hv" = (

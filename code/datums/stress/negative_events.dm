@@ -339,7 +339,7 @@
 /datum/stressevent/uncanny
 	stressadd = 2
 	desc = span_red("Their face is.. wrong!")
-	timer = 3 MINUTES	
+	timer = 3 MINUTES
 
 /datum/stressevent/syoncalamity
 	stressadd = 15
@@ -440,3 +440,8 @@
 	timer = 10 MINUTES
 	stressadd = -2
 	desc = span_green("Since my magical accident, everything just seems so funny!")
+
+/datum/stressevent/oath_ring_lost
+	stressadd = 2
+	desc = span_boldred("The proof of my oath! It's been stolen!")
+	timer = INFINITY

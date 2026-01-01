@@ -326,5 +326,3 @@
 	desc = "Whether fostered through travel or care, you just don't see an issue with certain folks."
 	custom_text = "Prevents you from experiencing negative stress events when looking at select species."
 	added_traits = list(TRAIT_TOLERANT)
-
-

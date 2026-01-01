@@ -11,7 +11,6 @@
 	now_fixed = "<span class='info'>The pain in your abdomen has subsided.</span>"
 
 	var/inflamed
-	sellprice = 5
 
 /obj/item/organ/appendix/update_icon()
 	if(inflamed)

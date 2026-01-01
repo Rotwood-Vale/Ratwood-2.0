@@ -6,6 +6,9 @@
 		/obj/item/reagent_containers/powder/salt = 1)
 	result = /obj/item/reagent_containers/food/snacks/rogue/meat/salami
 	req_table = FALSE
+	skillcraft = /datum/skill/craft/cooking
+	verbage_simple = "dry"
+	verbage = "drys"
 	structurecraft = /obj/machinery/tanningrack
 	craftdiff = 0
 
@@ -16,6 +19,9 @@
 		/obj/item/reagent_containers/powder/salt = 1)
 	result = /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette
 	req_table = FALSE
+	skillcraft = /datum/skill/craft/cooking
+	verbage_simple = "dry"
+	verbage = "drys"
 	craftdiff = 0
 	structurecraft = /obj/machinery/tanningrack
 
@@ -26,6 +32,9 @@
 		/obj/item/reagent_containers/powder/salt = 1)
 	result = /obj/item/reagent_containers/food/snacks/fat/salo
 	craftdiff = 0
+	skillcraft = /datum/skill/craft/cooking
+	verbage_simple = "dry"
+	verbage = "drys"
 	structurecraft = /obj/machinery/tanningrack
 	req_table = FALSE
 
@@ -37,5 +46,8 @@
 	result = /obj/item/reagent_containers/food/snacks/rogue/raisins
 	structurecraft = /obj/machinery/tanningrack
 	req_table = FALSE
+	skillcraft = /datum/skill/craft/cooking
+	verbage_simple = "dry"
+	verbage = "drys"
 	craftdiff = 0
 	subtype_reqs = TRUE

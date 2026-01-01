@@ -1,4 +1,3 @@
-
 /obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet
 	name = "blacksteel armet"
 	desc = "An armet forged of durable blacksteel, utilizing a modern design."
@@ -15,6 +14,10 @@
 	max_integrity = ARMOR_INT_HELMET_BLACKSTEEL
 	smeltresult = /obj/item/ingot/blacksteel
 	smelt_bar_num = 2
+	adjustable = CAN_CADJUST
+
+/obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/bucket
 	name = "blacksteel bucket helm"
@@ -60,7 +63,7 @@
 			user.dropItemToGround(src)
 			user.put_in_hands(P)
 		P.obj_integrity = src.obj_integrity
-		user.adjustBruteLoss(25)	
+		user.adjustBruteLoss(25)
 		qdel(src)
 	else
 		user.visible_message(span_warning("[user] stops reshaping [src]."))

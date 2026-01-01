@@ -32,3 +32,4 @@
 	name = "silver fork"
 	icon_state = "fork_silver"
 	sellprice = 24
+	is_silver = TRUE

@@ -128,6 +128,7 @@
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>SM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a> - "
+	body += "<a href='?_src_=holder;[HrefToken()];cursemenu=[M.ckey]'>CRS</a> - "
 	//Default to client logs if available
 	var/source = LOGSRC_MOB
 	if(M.client)

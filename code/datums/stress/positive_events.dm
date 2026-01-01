@@ -63,6 +63,31 @@
 	stressadd = -1
 	desc = span_green("I'm stuffed! Feels good.")
 
+/datum/stressevent/goodsnack
+	timer = 8 MINUTES
+	stressadd = -1
+	desc = list(span_green("That snack tastes pretty good"), span_green("Tasty snack."))
+
+/datum/stressevent/greatsnack
+	timer = 10 MINUTES
+	stressadd = -2
+	desc = list(span_green("That snack was amazing! Can't wait for the next."), span_green("Great snack! I should get another one later."))
+
+/datum/stressevent/goodmeal
+	timer = 10 MINUTES
+	stressadd = -1
+	desc = list(span_green("That meal wasn't half bad"), span_green("A decent meal, finally"))
+
+/datum/stressevent/greatmeal
+	timer = 15 MINUTES
+	stressadd = -2
+	desc = list(span_green("That meal tasted great!"), span_green("I ate like a noble, it was great!"))
+
+/datum/stressevent/sweet
+	timer = 8 MINUTES
+	stressadd = -2
+	desc = list(span_green("Sweets always bring your spirits up"), span_green("Sweet embrace"))
+
 /datum/stressevent/hydrated
 	timer = 10 MINUTES
 	stressadd = -1
@@ -371,3 +396,13 @@
 	stressadd = -1
 	desc = span_green("That fermented crab was not the most pleasant dish ever, but youthful vigor in my body was worth the sacrifice!")
 	timer = 3 MINUTES
+
+/datum/stressevent/dragon_scale
+	stressadd = -6
+	desc = span_suppradio("The Hoardmaster's greed plays with my mind...")
+	timer = INFINITY
+
+/datum/stressevent/oath_ring
+	stressadd = 1
+	desc = span_aiprivradio("My oath keeps me going. One step at a time. How much longer can I continue? How long has it been?")
+	timer = INFINITY

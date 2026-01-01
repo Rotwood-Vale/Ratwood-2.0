@@ -17,7 +17,7 @@
 	display_order = JDO_PURITAN
 	advclass_cat_rolls = list(CTAG_PURITAN = 20)
 	give_bank_account = 30
-	min_pq = 10
+	min_pq = 30
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_NOBLE
@@ -52,12 +52,11 @@
 		TRAIT_OUTLANDER
 		)
 	subclass_stats = list(
-		STATKEY_CON = 1,
-		STATKEY_PER = 3,
-		STATKEY_INT = 3,
-		STATKEY_STR = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
+		STATKEY_CON = 3,
+		STATKEY_WIL = 3,
+		STATKEY_SPD = 2,
+		STATKEY_PER = 1,
+		STATKEY_INT = 1
 	)
 	subclass_skills = list(
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
@@ -148,7 +147,6 @@
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_HEAVYARMOR,
-		TRAIT_BLACKBAGGER,
 		TRAIT_SILVER_BLESSED,
 		TRAIT_INQUISITION,
 		TRAIT_PURITAN,
@@ -157,10 +155,9 @@
 	subclass_stats = list(
 		STATKEY_CON = 3,
 		STATKEY_WIL = 3,
-		STATKEY_INT = 1,
-		STATKEY_STR = 3,
+		STATKEY_STR = 2,
 		STATKEY_PER = 1,
-		STATKEY_SPD = -3
+		STATKEY_INT = 1
 	)
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
@@ -216,7 +213,7 @@
 		if("Psydonic Poleaxe + Dagger")
 			H.put_in_hands(new /obj/item/rogueweapon/greataxe/psy/preblessed(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BELT_L, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 5, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)

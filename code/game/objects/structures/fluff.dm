@@ -430,6 +430,20 @@
 	density = FALSE
 	opacity = FALSE
 
+/obj/structure/bars/passage/shutter/hidden/redstone_triggered()
+	if(obj_broken)
+		return
+	if(density)
+		icon_state = "shutter1"
+		density = FALSE
+		opacity = FALSE
+		alpha = 60
+	else
+		icon_state = "shutter0"
+		density = TRUE
+		opacity = TRUE
+		alpha = 255
+
 /obj/structure/bars/passage/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	var/obj/item = user.get_active_held_item()
@@ -531,13 +545,6 @@
 	attacked_sound = list('sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg')
 	var/togg = FALSE
 	smeltresult = /obj/item/ingot/bronze
-
-/obj/structure/bars/pipe/left
-	name = "bronze pipe"
-	desc = ""
-	icon_state = "pipe2"
-	dir = WEST
-	pixel_x = 19
 
 //===========================
 
@@ -1034,9 +1041,12 @@
 
 /obj/structure/fluff/statue/evil
 	name = "idol"
-	desc = "A statue built to the robber-god, Matthios, who stole the gift of fire from the underworld. It is said that he grants the wishes of those pagan bandits (free folk) who feed him money and valuable metals."
+	desc = "An idol, built to the many-faced Matthios. Though none can argue his hatred of the Tyrant's Order and nobility, \
+	they certainly can't imagine what he actually looks like. \
+	This is but one of many depictions to the many-faced god, and yet it appears ready to receive tribute all the same."
 	icon_state = "evilidol"
 	icon = 'icons/roguetown/misc/structure.dmi'
+	damage_deflection = INFINITY//We don't want this smashed normally. Prevents items from doing it damage, by mistake, too.
 // What items the idol will accept
 	var/treasuretypes = list(
 		/obj/item/roguecoin,
@@ -1053,7 +1063,7 @@
 		/obj/item/candle/candlestick/gold,
 		/obj/item/kitchen/fork/silver,
 		/obj/item/kitchen/fork/gold,
-        /obj/item/kitchen/spoon/silver,
+		/obj/item/kitchen/spoon/silver,
 		/obj/item/kitchen/spoon/gold,
 		/obj/item/roguestatue,
 		/obj/item/riddleofsteel,
@@ -1104,7 +1114,7 @@
 					if(player.mind)
 						if(player.mind.has_antag_datum(/datum/antagonist/bandit))
 							var/datum/antagonist/bandit/bandit_players = player.mind.has_antag_datum(/datum/antagonist/bandit)
-							record_round_statistic(STATS_SHRINE_VALUE, W.get_real_price()) 
+							record_round_statistic(STATS_SHRINE_VALUE, W.get_real_price())
 							bandit_players.favor += donatedamnt
 							bandit_players.totaldonated += donatedamnt
 							to_chat(player, ("<font color='yellow'>[user.name] donates [donatedamnt] to the shrine! You now have [bandit_players.favor] favor.</font>"))

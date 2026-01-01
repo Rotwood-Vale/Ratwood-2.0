@@ -1,3 +1,6 @@
+//All orthodoxists get miracles, as combination classes.
+//Only Adjudicators get decent regen, at 0.5, with the rest at 0.1.
+//Standard stat spread is 8 across the board. Broken up by classes that don't fit this.
 /datum/job/roguetown/orthodoxist
 	title = "Orthodoxist"
 	flag = ORTHODOXIST
@@ -12,7 +15,7 @@
 	outfit = null
 	outfit_female = null
 	display_order = JDO_ORTHODOXIST
-	min_pq = 5
+	min_pq = 20
 	max_pq = null
 	round_contrib_points = 2
 	advclass_cat_rolls = list(CTAG_INQUISITION = 20)
@@ -25,5 +28,7 @@
 		/datum/advclass/psydoniantemplar,
 		/datum/advclass/disciple,
 		/datum/advclass/confessor,
-		/datum/advclass/psyaltrist
+		/datum/advclass/psyaltrist,
+		/datum/advclass/arbalist,
+		/datum/advclass/sojourner
 	)

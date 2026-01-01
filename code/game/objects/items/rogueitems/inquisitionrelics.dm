@@ -283,6 +283,7 @@ Inquisitorial armory down here
 	force = 30
 	var/next_smoke
 	var/smoke_interval = 2 SECONDS
+	is_silver = TRUE //container uses the same color palette as blessed silver and it also contains part of the comet syon
 
 /obj/item/flashlight/flare/torch/lantern/psycenser/examine(mob/user)
 	. = ..()

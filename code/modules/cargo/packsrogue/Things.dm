@@ -112,8 +112,8 @@
 
 /datum/supply_pack/rogue/Things/Dragonscale
 	name = "Dragonscale Necklace"
-	cost = 1800
-	contains = list(/obj/item/clothing/neck/roguetown/blkknight)
+	cost = 1200
+	contains = list(/obj/item/clothing/neck/roguetown/dragon_scale)
 
 /datum/supply_pack/rogue/Things/smokebomb
 	name = "Smoke Bomb"
@@ -135,3 +135,45 @@
 	cost = 5
 	contains = list(/obj/item/storage/belt/rogue/leather)
 
+/datum/supply_pack/rogue/Things/pick	//Also a thing you can just kinda find, though moderately useful.
+	name = "Iron Pick"
+	cost = 12
+	contains = list(/obj/item/rogueweapon/pick)
+/datum/supply_pack/rogue/Things/pick/steel
+	name = "Steel Pick"
+	cost = 35
+	contains = list(/obj/item/rogueweapon/pick/steel)
+
+//////////////
+// COOKING  //		//Very basic ingredients. Nothing like meat or fruits, you can go and get those yourself. Buying components for everyone on your own will add up quickly. What are YOU bringing for the Matthios potluck?
+//////////////
+
+/datum/supply_pack/rogue/Things/cooking/flour
+	name = "Flour"
+	cost = 2	//Base component.
+	contains = list(/obj/item/reagent_containers/powder/flour)
+
+/datum/supply_pack/rogue/Things/cooking/rice
+	name = "Rice Grains"
+	cost = 2	//Base component.
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/rice)
+
+/datum/supply_pack/rogue/Things/cooking/butter
+	name = "Butter"
+	cost = 5	//Base component.
+	contains = list(/obj/item/reagent_containers/food/snacks/butter)
+
+/datum/supply_pack/rogue/Things/cooking/carrot
+	name = "Raw Carrot"
+	cost = 2	//Base component.
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/carrot)
+
+/datum/supply_pack/rogue/Things/cooking/cackleberry
+	name = "One Egg"
+	cost = 2	//Base component.
+	contains = list(/obj/item/reagent_containers/food/snacks/egg)
+
+/datum/supply_pack/rogue/Things/cooking/peppermill
+	name = "Pepper Mill"
+	cost = 35	//You're basically paying for an OK quantity of easy steak meals.
+	contains = list(/obj/item/reagent_containers/peppermill)

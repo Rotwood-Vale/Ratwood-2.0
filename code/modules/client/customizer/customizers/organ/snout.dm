@@ -13,6 +13,10 @@
 	default_disabled = FALSE
 	customizer_choices = list(/datum/customizer_choice/organ/snout/lizard)
 
+/datum/customizer/organ/snout/lizard/dracon
+	allows_disabling = FALSE//I HATE YOU!!!
+	default_disabled = FALSE
+
 /datum/customizer_choice/organ/snout/lizard
 	name = "Lizard Snout"
 	organ_type = /obj/item/organ/snout/lizard
@@ -166,6 +170,7 @@
 	allows_disabling = TRUE
 	default_disabled = TRUE
 	customizer_choices = list(/datum/customizer_choice/organ/snout/lamia)
+
 /datum/customizer/organ/snout/anthro/dullahan
 	allows_disabling = TRUE
 	default_disabled = TRUE

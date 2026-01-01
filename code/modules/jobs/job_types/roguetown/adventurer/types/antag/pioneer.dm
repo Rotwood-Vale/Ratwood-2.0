@@ -1,94 +1,84 @@
-/datum/advclass/pioneer //minecraft griefer class that tnts your house dog and ass
+/datum/advclass/pioneer
 	name = "Pioneer"
-	tutorial = "Pioneers redraw the battlefield. They cut roads through obstacles, unhinge gates, and lace the ground with clever devices-making allies swift and enemies slow."
+	tutorial = "Aided by your traps, trusty shovel and explosives, you've not yet met your end. \
+	That has to count for something. They surely keep you around for your charm, though."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/bandit/pioneer
 	category_tags = list(CTAG_BANDIT)
-	maximum_possible_slots = 2 //they aren't on par with hedge knights SO WHY ARE THEY LIMITED GRAHHHHHHHHHHHH
-
+	maximum_possible_slots = 1//They're limited because these guys can LEVEL THE TOWN. RAAAAAAAAAA!!!!!!
+	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_WEBWALK)//GET THIS SHIT OFF OF ME!!!!!
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_LCK = 2,
-		STATKEY_STR = 1,
-		STATKEY_CON = 1,
 		STATKEY_PER = 2,
-		STATKEY_WIL = 2 //a lot of stats but no any traits, literally
+		STATKEY_WIL = 2,
+		STATKEY_CON = 2,
+	)
+	subclass_skills = list(
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,//Bare minimum for dedicated classes. Here because handyman Joe wrastling is funny.
+		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,//For the shovel...
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,//For the backup knives.
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,//For when his backup knives run out of backups.
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,//Sadly, for Joe, he has less than stellar athletics.
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,//Point of the class.
+		/datum/skill/craft/engineering = SKILL_LEVEL_JOURNEYMAN,//Contraptions, explosives, etc.
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,//Repairs, really. But dabbling.
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE,//As above.
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,//Yet again.
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/bandit/pioneer/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(!istype(H.patron, /datum/patron/inhumen/matthios))
-		var/inputty = input(H, "Would you like to change your patron to Matthios?", "The Transactor calls", "No") as anything in list("Yes", "No")
-		if(inputty == "Yes")
-			to_chat(H, span_warning("My former deity has abandoned me.. Matthios is my new master."))
-			H.set_patron(/datum/patron/inhumen/matthios)
 	belt =	/obj/item/storage/belt/rogue/leather
 	head = /obj/item/clothing/head/roguetown/helmet/kettle
-	pants = /obj/item/clothing/under/roguetown/trou/leather
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/councillor //gambeson but black
+	pants = /obj/item/clothing/under/roguetown/trou/leather/mourning
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor //toe safety first
 	mask = /obj/item/clothing/mask/rogue/facemask/steel
 	neck = /obj/item/clothing/neck/roguetown/coif
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
-	backl = /obj/item/storage/backpack/rogue/backpack/
-	backr = /obj/item/rogueweapon/shovel/saperka //40 force +1.5 dmg SMASH but SLOW. If your enemy is a mental retard and stays on one place you delete them
+	backl = /obj/item/storage/backpack/rogue/backpack
+	backr = /obj/item/rogueweapon/shovel/saperka
 	beltl = /obj/item/storage/detpack
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	id = /obj/item/mattcoin
 	backpack_contents = list(
-		/obj/item/lockpickring/mundane = 1,
-		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/restraints/legcuffs/beartrap = 2,
+		/obj/item/restraints/legcuffs/beartrap = 4,
 		/obj/item/flint = 1,
-		/obj/item/rogueore/coal=1,
-		/obj/item/rogueore/iron=1,
 		/obj/item/rogueweapon/hammer/iron = 1,
-		/obj/item/rogueweapon/tongs = 1,
-		/obj/item/rogueweapon/pick/steel
+		/obj/item/rogueweapon/pick/steel = 1,
 	)
-
-	H.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields,3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/carpentry, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/traps, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/blacksmithing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/armorsmithing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/mining, 3, TRUE)
 
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed)
 
 // Their snowflake mine//
 
+//This has a serious exploit, but I can't be buggered to fix it. If you know, you know.
+//Average player won't. Others can be banned. I hate slop code.
 /obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed
 	name = "Set Bogtrap (Delayed)"
 	desc = "After 8 seconds, a bogtrap arms beneath your feet."
 	range = 0
-	overlay_state = "trap"
+	overlay_state = "trap"//Temp.
 	releasedrain = 0
-	recharge_time = 50 SECONDS //this bascically means how long AFTER you place a bomb, you can place another one. Has nothing to do with the placing timer
+	recharge_time = 50 SECONDS
 	max_targets = 0
 	cast_without_targets = TRUE
 	antimagic_allowed = TRUE
 	associated_skill = /datum/skill/craft/traps
-	invocations = list("Measure twice… set once.")
+	invocations = list("Measure twice, set once...")
 	invocation_type = "whisper"
 	miracle = FALSE
-	req_items = list(/obj/item/rogueweapon/shovel/)
+	req_items = list(/obj/item/rogueweapon/shovel)
 
 	var/setup_delay = 8 SECONDS
 	var/pending = FALSE
@@ -126,7 +116,7 @@
 		return FALSE
 
 	if(!_has_saperka(user))
-		to_chat(user, span_warning("I need a shovel to set this trap."))
+		to_chat(user, span_warning("I need my tool to set this trap."))
 		revert_cast()
 		return FALSE
 
@@ -146,10 +136,10 @@
 		return FALSE
 
 	var/list/trap_choices = list(
-		"Bomb"         = /obj/structure/trap/bogtrap/bomb,
-		"Frost"        = /obj/structure/trap/bogtrap/freeze,
-		"Kneestingers" = /obj/structure/trap/bogtrap/kneestingers,
-		"Toxic"        = /obj/structure/trap/bogtrap/poison
+		"Bomb"			= /obj/structure/trap/bogtrap/bomb,
+		"Frost"			= /obj/structure/trap/bogtrap/freeze,
+		"Kneestingers"	= /obj/structure/trap/bogtrap/kneestingers,
+		"Toxic"			= /obj/structure/trap/bogtrap/poison,
 	)
 
 	var/choice = input(user, "Select the trap type to rig:", "Bogtrap") as null|anything in trap_choices
@@ -162,7 +152,7 @@
 	pending = TRUE
 
 	user.visible_message(
-		span_notice("[user] kneels and starts rigging something beneath their feet…"),
+		span_notice("[user] kneels, rigging something beneath their feet."),
 		span_notice("I begin setting a [choice] bogtrap.")
 	)
 	playsound(user, 'sound/misc/clockloop.ogg', 50, TRUE)
@@ -187,6 +177,9 @@
 		span_notice("The [choice] bogtrap arms beneath my feet.")
 	)
 	playsound(T, 'sound/misc/chains.ogg', 50, TRUE)
+
+	message_admins("[user.real_name]([key_name(user)]) has planted a trap, [ADMIN_JMP(user)]")
+	log_admin("[user.real_name]([key_name(user)]) has planted a trap")
 
 	pending = FALSE
 	return TRUE

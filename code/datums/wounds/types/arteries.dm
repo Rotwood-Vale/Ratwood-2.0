@@ -17,7 +17,7 @@
 	can_sew = TRUE
 	can_cauterize = TRUE
 	critical = TRUE
-	sleep_healing = 0
+	sleep_healing = 0.5 //so breathless characters dont stuck near death forever
 	embed_chance = 75
 
 	werewolf_infection_probability = 100

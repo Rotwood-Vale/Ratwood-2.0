@@ -237,6 +237,7 @@
 
 // /mob signals
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
+#define COMSIG_MOB_DECAPPED "mob_decapped"							//from base of /obj/item/bodypart/proc/dismember
 
 #define COMSIG_MOB_CLICKON "mob_clickon"						//from base of mob/clickon(): (atom/A, params)
 #define COMSIG_MOB_MIDDLECLICKON "mob_middleclickon"			//from base of mob/MiddleClickOn(): (atom/A)
@@ -255,9 +256,20 @@
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"		//from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"	//from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proxiumity_flag, click_parameters)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"			//from base of mob/RangedAttack(): (atom/A, params)
+#define COMSIG_MOB_CAST_SPELL "mob_cast_spell"			//from base of /obj/effect/proc_holder/spell/proc/cast(list/targets, mob/user = usr)
 #define COMSIG_MOB_THROW "mob_throw"							//from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"					//from base of /mob/verb/examinate(): (atom/target)
 #define COMSIG_MOB_UPDATE_SIGHT "mob_update_sight"				//from base of /mob/update_sight(): ()
+
+#define COMSIG_MOB_KISS "comsig_mob_kiss"				//from base of /datum/emote/living/kiss/adjacentaction(mob/user, mob/target)
+#define COMSIG_MOB_KISSED "comsig_mob_kissed"				//from base of /datum/emote/living/kiss/adjacentaction(mob/user, mob/target)
+#define COMSIG_MOB_EJACULATED "comsig_mob_ejaculated"				//from base of /datum/sex_controller/proc/ejaculate()
+#define COMSIG_MOB_FELL_TREE "comsig_mob_fell_tree"				//from base of /obj/structure/flora/newtree/attacked_by(obj/item/I, mob/living/user
+#define COMSIG_MOB_DAWNED "comsig_mob_dawned"				///mob/living/carbon/human/update_tod(todd)
+#define COMSIG_MOB_DAYED "comsig_mob_dayed"				///mob/living/carbon/human/update_tod(todd)
+#define COMSIG_MOB_DUSKED "comsig_mob_dusked"				///mob/living/carbon/human/update_tod(todd)
+#define COMSIG_MOB_NIGHTED "comsig_mob_nighted"				///mob/living/carbon/human/update_tod(todd)
+
 #define COMSIG_MOB_SAY "mob_say" // from /mob/living/say(): ()
 #define COMSIG_MOB_SAY_POSTPROCESS "mob_say_postprocess"
 	#define COMPONENT_UPPERCASE_SPEECH 1
@@ -266,6 +278,8 @@
 	// #define SPEECH_BUBBLE_TYPE 2
 	#define SPEECH_SPANS 3
 	// #define SPEECH_SANITIZE 4
+	///from base of /mob/verb/pointed: (atom/A)
+	#define COMSIG_MOB_POINTED "mob_pointed"
 	#define SPEECH_LANGUAGE 5
 	/* #define SPEECH_IGNORE_SPAM 6
 	#define SPEECH_FORCED 7 */

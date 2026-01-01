@@ -555,7 +555,7 @@
 	verbage_simple = "construct"
 	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
-	craftdiff = 1
+	craftdiff = 0 // I don't like lickers or wretches. but they cannot make this by default to even level up. I guess fair is fair. changed to 0
 
 /obj/structure/closet/crate/roguecloset/crafted
 	sellprice = 6
@@ -972,7 +972,7 @@
 /datum/crafting_recipe/roguetown/structure/cauldronalchemy
 	name = "alchemy cauldron"
 	result = /obj/machinery/light/rogue/cauldron
-	reqs = list(/obj/item/ingot/iron = 1)
+	reqs = list(/obj/item/grown/log/tree/stick = 2, /obj/item/natural/stone = 3, /obj/item/reagent_containers/glass/bucket/pot/stone = 1) // changed to ore because this can be bought or mined. witches or even doctors who dont get a house get badly screwed over not having this.
 	verbage_simple = "assemble"
 	verbage = "assembles"
 	skillcraft = /datum/skill/craft/alchemy
@@ -981,7 +981,7 @@
 /datum/crafting_recipe/roguetown/structure/ceramicswheel
 	name = "potter's wheel"
 	result = /obj/structure/fluff/ceramicswheel
-	reqs = list(/obj/item/natural/stone = 2, /obj/item/grown/log/tree/small = 2, /obj/item/roguegear/bronze = 1)
+	reqs = list(/obj/item/natural/stone = 2, /obj/item/grown/log/tree/small = 2, /obj/item/cooking/platter = 1) // changed to platter. not always artificer to make cogs or anyone to even make bronze.
 	verbage_simple = "construct"
 	craftdiff = 2
 	verbage = "constructs"

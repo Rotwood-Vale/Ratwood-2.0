@@ -262,8 +262,6 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /datum/wound/proc/on_life()
 	if(!isnull(clotting_threshold) && clotting_rate && (bleed_rate > clotting_threshold))
 		set_bleed_rate(max(clotting_threshold, bleed_rate - clotting_rate))
-	if(HAS_TRAIT(owner, TRAIT_PSYDONITE) && !passive_healing)
-		heal_wound(0.6) // psydonites are supposed to apparently slightly heal wounds whether dead or alive
 	if(owner.stat != DEAD && passive_healing) // passive healing is only called if we're like, you know, alive
 		heal_wound(passive_healing)
 	return TRUE
@@ -273,10 +271,6 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	// for optimization's sake, only do dead wound healing if the mob has a client.
 	if (!owner.client)
 		return
-
-	if (HAS_TRAIT(owner, TRAIT_PSYDONITE) && !passive_healing)
-		heal_wound(0.6) // psydonites are supposed to apparently slightly heal wounds whether dead or alive
-
 	return TRUE
 
 /// Setter for any adjustments we make to our bleed_rate, propagating them to the host bodypart.
@@ -378,6 +372,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/oldname = name
 	if(length(severity_names))
 		for(var/sevname in severity_names)
+			if(!bleed_rate) //if it's a hematoma, use whp for naming
+				if(severity_names[sevname] <= whp)
+					newname = sevname
 			if(severity_names[sevname] <= bleed_rate)
 				newname = sevname
 	name = "[newname  ? "[newname] " : ""][initial(name)]"	//[adjective] [name], aka, "gnarly slash" or "slash"
@@ -405,7 +402,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 					is_armor_maxed = TRUE
 
 #define CLOT_THRESHOLD_INCREASE_PER_HIT 0.1	//This raises the MINIMUM bleed the wound can clot to.
-#define CLOT_DECREASE_PER_HIT 0.05	//This reduces the amount of clotting the wound has.
+#define CLOT_RATE_INCREASE_PER_HIT 0.005 //This raises the clotting rate per hit. Bigger wounds, faster clotting.
 #define CLOT_RATE_ARTERY 0	//Artery exceptions. Essentially overrides the clotting threshold.
 #define CLOT_THRESHOLD_ARTERY 2
 
@@ -421,11 +418,11 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 			clotting_rate = CLOT_RATE_ARTERY
 			clotting_threshold = CLOT_THRESHOLD_ARTERY
 	if(!is_maxed)
-		clotting_rate = max(0.01, (clotting_rate - CLOT_DECREASE_PER_HIT))
+		clotting_rate = max(0.01, (clotting_rate + CLOT_RATE_INCREASE_PER_HIT))
 		clotting_threshold += CLOT_THRESHOLD_INCREASE_PER_HIT
 	..()
 
 #undef CLOT_THRESHOLD_INCREASE_PER_HIT
-#undef CLOT_DECREASE_PER_HIT
+#undef CLOT_RATE_INCREASE_PER_HIT
 #undef CLOT_RATE_ARTERY
 #undef CLOT_THRESHOLD_ARTERY

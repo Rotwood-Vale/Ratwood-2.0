@@ -223,12 +223,9 @@
 		if(mob.pulledby == mob)
 			return FALSE
 		if(mob.pulledby == mob.pulling)			//Don't autoresist grabs if we're grabbing them too.
-			var/mob/living/L = mob.pulledby
-			var/mob/living/M = mob
-			if(L.grab_state > M.grab_state)	//Our grabber has a higher grab state than we do.
-				move_delay = world.time + 10
-				to_chat(src, span_warning("I can't move!"))
-				return TRUE
+			move_delay = world.time + 10
+			to_chat(src, span_warning("I can't move!"))
+			return TRUE
 		if(mob.incapacitated(ignore_restraints = 1))
 			move_delay = world.time + 10
 			to_chat(src, span_warning("I can't move!"))
@@ -237,10 +234,9 @@
 			move_delay = world.time + 10
 			to_chat(src, span_warning("I'm restrained! I can't move!"))
 			return TRUE
-		if(mob.pulledby.grab_state > GRAB_PASSIVE)
-			move_delay = world.time + 10
-			to_chat(src, span_warning("I'm restrained! I can't move!"))
-			return TRUE
+		move_delay = world.time + 10
+		to_chat(src, span_warning("I can't move!"))
+		return TRUE
 
 	if(mob.pulling && isliving(mob.pulling))
 		if (issimple(mob.pulling))
@@ -258,7 +254,7 @@
 		if (L.compliance)
 			return FALSE
 		move_delay = world.time + 10
-		to_chat(src, span_warning("I am clinging to [L]! I need a stronger grip to stop them!"))
+		to_chat(src, span_warning("[L] still has footing! I need a stronger grip!"))
 		return TRUE
 
 	if(isanimal(mob.pulling))
@@ -774,7 +770,16 @@
 		src.apply_status_effect(/datum/status_effect/buff/magearmor)
 		return TRUE
 
+/mob/living/proc/check_scale_armor()
+	return TRUE
 
+/mob/living/carbon/human/check_scale_armor()
+	if(!HAS_TRAIT(src, TRAIT_SCALEARMOR))
+		return FALSE
+	if(src.magearmor == 0)
+		src.magearmor = 1
+		src.apply_status_effect(/datum/status_effect/buff/magearmor)
+		return TRUE
 
 /mob/proc/toggle_eye_intent(mob/user) //clicking the fixeye button either makes you fixeye or clears your target
 	if(fixedeye)

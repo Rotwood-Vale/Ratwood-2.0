@@ -32,13 +32,14 @@
 	icon_state = "hiclutter"
 	lootcount = 1
 	loot = list(
-		/obj/item/reagent_containers/glass/bottle/clayfancyvase = 1,
+		/obj/item/reagent_containers/glass/bottle/clayfancyvase = 3,
 		/obj/item/roguestatue/glass = 1,
-		/obj/item/needle = 1,
 		/obj/item/roguestatue/gold/loot = 1,
 		/obj/item/roguestatue/silver = 1,
 		/obj/item/roguestatue/steel = 1,
-		/obj/item/rogueweapon/hammer/steel = 1,
+		/obj/item/tablecloth/silk = 1,
+		/obj/item/ingot/steel = 1,
+		/obj/item/ingot/silver = 1,
 	)
 
 /obj/effect/spawner/lootdrop/cheap_candle_spawner
@@ -152,3 +153,51 @@
 		/obj/item/clothing/neck/roguetown/psicross/malum/secret = 1,
 		/obj/item/clothing/neck/roguetown/psicross/weeping = 1,
 	) //'Stat_' and 'Psicross_' rings at '2' or below provide statbuffs, and should be kept rare. Move to a seperate drop table if they become too common. Likeliest find is from high-end dungeons and mimics.
+
+
+/obj/effect/spawner/lootdrop/mobtreasure
+	name = "mobtreasure spawner"
+	icon_state = "hiclutter"
+	lootcount = 1
+	loot = list(
+		/obj/item/reagent_containers/glass/bottle/clayfancyvase = 20,
+		/obj/item/roguestatue/glass = 15,
+		/obj/item/roguestatue/gold/loot = 1,
+		/obj/item/roguestatue/silver = 2,
+		/obj/item/roguestatue/steel = 5,
+		/obj/item/clothing/neck/roguetown/psicross/silver = 2,
+		/obj/item/clothing/neck/roguetown/psicross/g = 2,
+		/obj/item/clothing/neck/roguetown/psicross/bpearl = 2,
+		/obj/item/clothing/neck/roguetown/ornateamulet = 3,
+		/obj/item/clothing/neck/roguetown/skullamulet = 2,
+		/obj/item/clothing/ring/silver = 10,
+		/obj/item/clothing/ring/gold = 15,
+		/obj/item/clothing/ring/aalloy = 15,
+		/obj/item/clothing/ring/emerald = 1,
+		/obj/item/clothing/ring/aalloy = 15,
+		/obj/item/clothing/neck/roguetown/psicross = 2,
+		/obj/item/clothing/neck/roguetown/psicross/wood = 2,
+		/obj/item/clothing/neck/roguetown/psicross/shell = 6,
+		/obj/item/clothing/neck/roguetown/psicross/shell/bracelet = 6,
+		/obj/item/clothing/neck/roguetown/psicross/pearl = 3,
+		/obj/item/reagent_containers/glass/cup/silver/small = 3,
+		/obj/item/reagent_containers/glass/cup/golden/small = 5,
+		/obj/item/kitchen/spoon/gold = 5,
+		/obj/item/kitchen/spoon/silver = 5,
+		/obj/item/kitchen/fork/gold = 5,
+		/obj/item/kitchen/fork/silver = 5,
+		/obj/item/reagent_containers/glass/bowl/gold = 5,
+		/obj/item/reagent_containers/glass/bowl/silver = 3,
+		/obj/item/candle/gold/lit = 5,
+		/obj/item/candle/silver/lit = 5,
+		/obj/item/ingot/iron = 5,
+		/obj/item/ingot/steel = 5,
+		/obj/item/ingot/gold = 3,
+		/obj/item/reagent_containers/powder/spice = 3,
+		/obj/item/reagent_containers/powder/ozium = 3,
+		/obj/item/roguecoin/copper/pile = 30,
+		/obj/item/roguecoin/silver/pile = 15,
+		)
+
+/obj/effect/spawner/lootdrop/mobtreasure/lucky
+	lootcount = 2

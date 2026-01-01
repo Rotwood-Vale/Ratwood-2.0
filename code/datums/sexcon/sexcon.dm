@@ -58,6 +58,8 @@
 	var/mob/living/carbon/knotted_owner = null // whom has the knot
 	var/mob/living/carbon/knotted_recipient = null // whom took the knot
 
+	var/bottom_exposed = FALSE
+
 /datum/sex_controller/New(mob/living/carbon/human/owner)
 	user = owner
 
@@ -323,10 +325,21 @@
 		owner.remove_status_effect(src)
 
 /datum/sex_controller/proc/ejaculate()
+	SEND_SIGNAL(user, COMSIG_MOB_EJACULATED)
 	log_combat(user, user, "Ejaculated")
 	user.visible_message(span_love("[user] makes a mess!"))
 	playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	add_cum_floor(get_turf(user))
+	after_ejaculation()
+
+/datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
+	log_combat(user, user, "Ejaculated into a container")
+	user.visible_message(span_love("[user] spills into [C]!"))
+	playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
+	if(user.getorganslot(ORGAN_SLOT_PENIS))
+		C.reagents.add_reagent(/datum/reagent/erpjuice/cum, 3)
+	else
+		C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 	after_ejaculation()
 
 /datum/sex_controller/proc/after_ejaculation()
@@ -397,6 +410,9 @@
 
 	if(penis && hascall(penis, "update_erect_state"))
 		penis.update_erect_state()
+
+/datum/sex_controller/proc/update_exposure()
+	user.regenerate_icons()
 
 /datum/sex_controller/proc/adjust_arousal(amount)
 	if(aphrodisiac > 1 && amount > 0)
@@ -577,6 +593,24 @@
 		else
 			facial.refresh_cum()
 
+/datum/sex_controller/proc/handle_container_ejaculation()
+	if(arousal < PASSIVE_EJAC_THRESHOLD)
+		return
+	if(is_spent())
+		return
+	if(!can_ejaculate())
+		return FALSE
+	ejaculate_container(user.get_active_held_item())
+
+/datum/sex_controller/proc/handle_cock_milking(mob/living/carbon/human/milker)
+	if(arousal < ACTIVE_EJAC_THRESHOLD)
+		return
+	if(is_spent())
+		return
+	if(!can_ejaculate())
+		return FALSE
+	ejaculate_container(milker.get_active_held_item())
+
 /datum/sex_controller/proc/can_use_penis()
 	if(HAS_TRAIT(user, TRAIT_LIMPDICK))
 		return FALSE
@@ -623,6 +657,8 @@
 	if(user.getorganslot(ORGAN_SLOT_PENIS))
 		dat += " ~|~ <a href='?src=[REF(src)];task=manual_arousal_down'>\<</a> [manual_arousal_name] <a href='?src=[REF(src)];task=manual_arousal_up'>\></a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
+	if(user.getorganslot(ORGAN_SLOT_PENIS))
+		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PINTLE EXPOSED" : "PINTLE CONCEALED"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
 		if(action.knot_on_finish && knot_penis_type())
@@ -699,6 +735,10 @@
 			adjust_arousal_manual(-1)
 		if("toggle_finished")
 			do_until_finished = !do_until_finished
+			update_exposure()
+		if("toggle_bottom_exposed")
+			bottom_exposed = !bottom_exposed
+			update_exposure()
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)

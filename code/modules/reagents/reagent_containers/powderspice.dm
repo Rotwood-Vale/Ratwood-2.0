@@ -156,6 +156,17 @@
 	volume = 1
 	sellprice = 0
 
+/obj/item/reagent_containers/powder/mana
+	name = "sparkling blue powder"
+	desc = ""
+	gender = PLURAL
+	icon_state = "flour"
+	color = "#00b7ff"
+	list_reagents = list(/datum/reagent/medicine/manapot = 12)
+	grind_results = list(/datum/reagent/medicine/manapot = 12)
+	volume = 12
+	sellprice = 0
+
 /obj/item/reagent_containers/powder/rocknut
 	name = "rocknut powder"
 	desc = ""

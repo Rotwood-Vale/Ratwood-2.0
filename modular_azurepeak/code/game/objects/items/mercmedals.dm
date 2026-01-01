@@ -132,3 +132,15 @@
 	name = "petrified larvae charm"
 	desc = "The husk of a desiccated beespider larva, passed down within the ranks of those whose names have been struck from dark elven history. The old tyranny's uprooting would be their last act of true valor."
 	icon_state = "spider"
+
+/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/oathmarked
+	name = "writ of service"
+	desc = "An old, decaying scroll of some sort. Marked with odd stains and liable to tear if you're too rough."
+	icon_state = "oathmarked_writ"
+
+/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/oathmarked/examine(mob/user)
+	. = ..()
+	if(isdracon(user))
+		. += "<small>With the destruction of an old empire, came a great sadness. A profound longing for what was lost. \
+		No greater is this felt than by those who'd lyved it, such as the ones who carry this now. A relic of daes gone by. \
+		<br>Where were you, when it all came to an end? Are you not the <b>hero</b>?</small>"

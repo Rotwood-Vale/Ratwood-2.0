@@ -17,7 +17,7 @@
 	var/mob/living/carbon/grabbee
 	var/list/dependents = list()
 	var/handaction
-	var/bleed_suppressing = 0.25 //multiplier for how much we suppress bleeding, can accumulate so two grabs means 50% less bleeding; each grab being 25% basically.
+	var/bleed_suppressing = 0.75 //multiplier for how much we suppress bleeding, can accumulate so two grabs means 50% less bleeding; each grab being 25% basically.
 	var/chokehold = FALSE
 
 /atom/movable //reference to all obj/item/grabbing
@@ -207,7 +207,7 @@
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE
-			if(user.badluck(5))
+			if(user.badluck(2))
 				badluckmessage(user)
 				user.stop_pulling()
 				return FALSE
@@ -238,7 +238,7 @@
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE
-			if(user.badluck(10))
+			if(user.badluck(4))
 				badluckmessage(user)
 				user.stop_pulling()
 				return FALSE
@@ -285,7 +285,7 @@
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE
-			if(user.badluck(5))
+			if(user.badluck(2))
 				badluckmessage(user)
 				user.stop_pulling()
 				return FALSE
@@ -297,7 +297,7 @@
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE
-			if(user.badluck(10))
+			if(user.badluck(4))
 				badluckmessage(user)
 				user.stop_pulling()
 				return FALSE
@@ -309,7 +309,7 @@
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE
-			if(user.badluck(10))
+			if(user.badluck(4))
 				badluckmessage(user)
 				user.stop_pulling()
 				return FALSE
@@ -322,7 +322,7 @@
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE
-			if(user.badluck(10))
+			if(user.badluck(4))
 				badluckmessage(user)
 				user.stop_pulling()
 				return FALSE
@@ -359,7 +359,7 @@
 						M.visible_message(span_danger("[user] pins [M] to the ground!"), \
 							span_userdanger("[user] pins me to the ground!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
 			else
-				if(user.badluck(10))
+				if(user.badluck(4))
 					badluckmessage(user)
 					user.stop_pulling()
 					return FALSE
@@ -372,7 +372,7 @@
 					M.visible_message(span_warning("[user] tries to shove [M]!"), \
 									span_danger("[user] tries to shove me!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
 		if(/datum/intent/grab/disarm)
-			if(user.badluck(10))
+			if(user.badluck(4))
 				badluckmessage(user)
 				user.stop_pulling()
 				return FALSE
@@ -417,7 +417,7 @@
 				return
 
 /obj/item/grabbing/proc/twistlimb(mob/living/user) //implies limb_grabbed and sublimb are things
-	if(user.badluck(5))
+	if(user.badluck(2))
 		badluckmessage(user)
 		user.stop_pulling()
 		return
@@ -549,7 +549,7 @@
 /obj/item/grabbing/attack_turf(turf/T, mob/living/user)
 	if(!valid_check())
 		return
-	if(user.badluck(5))
+	if(user.badluck(2))
 		badluckmessage(user)
 		user.stop_pulling()
 		return
@@ -585,7 +585,7 @@
 /obj/item/grabbing/attack_obj(obj/O, mob/living/user)
 	if(!valid_check())
 		return
-	if(user.badluck(5))
+	if(user.badluck(2))
 		badluckmessage(user)
 		user.stop_pulling()
 		return
@@ -605,7 +605,7 @@
 
 
 /obj/item/grabbing/proc/smashlimb(atom/A, mob/living/user) //implies limb_grabbed and sublimb are things
-	if(user.badluck(10))
+	if(user.badluck(4))
 		badluckmessage(user)
 		user.stop_pulling()
 		return

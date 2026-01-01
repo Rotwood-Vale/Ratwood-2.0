@@ -53,8 +53,6 @@
 	grid_width = 32
 	grid_height = 32
 
-	sellprice = 10
-
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
@@ -164,7 +162,7 @@
 
 /obj/item/reagent_containers/food/snacks/organ/On_Consume(mob/living/eater)		//Graggarites looove eating organs, they loooove eating organs!
 	if(HAS_TRAIT(eater, TRAIT_ORGAN_EATER))
-		eat_effect = /datum/status_effect/buff/foodbuff
+		eat_effect = /datum/status_effect/buff/snackbuff
 		check_culling(eater)
 		foodtype = RAW | MEAT
 	else

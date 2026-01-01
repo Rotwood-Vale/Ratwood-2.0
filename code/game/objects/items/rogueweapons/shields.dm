@@ -422,6 +422,14 @@
 	icon_state = "ironsh_steppeman"
 	max_integrity = 250 //+30
 
+/obj/item/rogueweapon/shield/iron/nomad
+	name = "nomad shield"
+	desc = "A slim shield, likely wrought of gilbranze and iron alike. An unholy combination. \
+	The work is of another lyfe, not yet seen since the first era."
+	icon_state = "ironsh_nomad"//Temp, but it works.
+	coverage = 40//+10
+	max_integrity = 200//-20
+
 /*/obj/item/rogueweapon/shield/buckler/freelancer
 	name = "fencer's wrap"
 	desc = "A traditional Etruscan quilted cloth square with a woolen cover. It can be used to daze and distract people with its bright colours and hanging steel balls."

@@ -6,7 +6,7 @@
 	allowed_ages = list(AGE_OLD)
 	tutorial = "You are as venerable and ancient as the trees themselves, wise even for your years spent with the first Wardens. The people look up to you both as a teacher and a guide to solve lesser issues before violence is involved. Not everything must end in bloodshed, no matter how much the retinue wish it were the case. Lead your fellow townsfolk in these troubling times lest they incur wrath of the nobility with their ignorance."
 	outfit = /datum/outfit/job/roguetown/elder
-	subclass_social_rank = SOCIAL_RANK_NOBLE	//not a noble, but similar ranking
+	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE	//not a noble, but similar ranking
 	cmode_music = 'sound/music/cmode/towner/combat_retired.ogg'
 	category_tags = list(CTAG_TOWNER)
 	traits_applied = list(TRAIT_SEEPRICES_SHITTY, TRAIT_EMPATH, TRAIT_MEDICINE_EXPERT, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_SMITHING_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_SURVIVAL_EXPERT)

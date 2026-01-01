@@ -482,7 +482,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(href_list["explainsharpness"])
 		to_chat(usr, span_info("Bladed weapons have sharpness. At [SHARPNESS_TIER1_THRESHOLD * 100]%, damage factor and strength damage starts to fall off gradually. \n\
 		At [SHARPNESS_TIER1_FLOOR * 100]%, strength and damage factor no longer applies. Below [SHARPNESS_TIER2_THRESHOLD * 100]%, the base damage value also starts to decline\n\
-		Sharpness declines by [SHARPNESS_ONHIT_DECAY] on parry for bladed weapon."))
+		Sharpness declines by [SHARPNESS_ONHIT_DECAY] on parry for bladed weapon.\n\
+		A grindstone can restore max sharpness, whereas other sources will degrade 0.5 max integrity per sharpening."))
 
 	if(href_list["explaindurability"])
 		to_chat(usr, span_info("How durable your item is. On weapons, [INTEG_PARRY_DECAY] is lost on parry on a main hand bladed weapon. \n\
@@ -1431,7 +1432,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	. = ..()
 	if(twohands_required)
 		return
-	if(wielded) //Trying to unwield it. Ratwood edit. Original: (altgripped || wielded) 
+	if(wielded) //Trying to unwield it. Ratwood edit. Original: (altgripped || wielded)
 		ungrip(user)
 		return
 	if(alt_intents && !gripped_intents)

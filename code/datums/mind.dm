@@ -112,6 +112,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 	var/list/personal_objectives = list() // List of personal objectives not tied to the antag roles
 	var/list/special_people = list() // For characters whose text will display in a different colour when seen by this Mind
+	var/list/curses = list()
 
 /datum/mind/New(key)
 	src.key = key
@@ -205,6 +206,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 					else
 						referred_gender = "Androgynous"
 				M.known_people[H.real_name]["FGENDER"] = referred_gender
+				M.known_people[H.real_name]["FSPECIES"] = H.dna.species.name
 				M.known_people[H.real_name]["FAGE"] = H.age
 				if(ishuman(M.current))
 					var/mob/living/carbon/human/C = M.current
@@ -256,12 +258,13 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 			continue
 		var/fjob = known_people[P]["FJOB"]
 		var/fgender = known_people[P]["FGENDER"]
+		var/fspecies = known_people[P]["FSPECIES"]
 		var/fage = known_people[P]["FAGE"]
 		var/fheresy = known_people[P]["FHERESY"]
 		if(fcolor && fjob)
 			if (fheresy)
 				contents +="<B><font color=#f1d669>[fheresy]</font></B> "
-			contents += "<B><font color=#[fcolor];text-shadow:0 0 10px #8d5958, 0 0 20px #8d5958, 0 0 30px #8d5958, 0 0 40px #8d5958, 0 0 50px #e60073, 0 0 60px #8d5958, 0 0 70px #8d5958;>[P]</font></B><BR>[fjob], [capitalize(fgender)], [fage]"
+			contents += "<B><font color=#[fcolor];text-shadow:0 0 10px #8d5958, 0 0 20px #8d5958, 0 0 30px #8d5958, 0 0 40px #8d5958, 0 0 50px #e60073, 0 0 60px #8d5958, 0 0 70px #8d5958;>[P]</font></B><BR>[fjob], [fspecies], [capitalize(fgender)], [fage]"
 			contents += "<BR>"
 
 	var/datum/browser/popup = new(user, "PEOPLEIKNOW", "", 260, 400)
@@ -315,6 +318,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(current)
 		current.transfer_observers_to(new_character)	//transfer anyone observing the old character to the new one
 	current = new_character								//associate ourself with our new body
+	if(curses && curses.len)
+		apply_curses_to_mob(current, src)
 	new_character.mind = src							//and associate our new body with ourself
 	for(var/datum/antagonist/A in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		A.on_body_transfer(old_current, current)
@@ -881,6 +886,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src
+	mind.load_curses()
 
 /mob/living/carbon/mind_initialize()
 	..()
@@ -944,3 +950,19 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 							var/dye = user.client?.prefs.resolve_loadout_to_color(path2item)
 							if (dye)
 								I.add_atom_colour(dye, FIXED_COLOUR_PRIORITY)
+
+/datum/mind/proc/load_curses()
+	if(!key)
+		return
+	load_curses_into_mind(src, key)
+	if(current)
+		apply_curses_to_mob(current, src)
+
+/datum/mind/proc/check_curse_trigger(trigger_name)
+	if(!curses || !curses.len)
+		return
+
+	for(var/curse_name in curses)
+		var/datum/modular_curse/C = curses[curse_name]
+		if(C)
+			C.check_trigger(trigger_name)

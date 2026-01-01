@@ -53,7 +53,7 @@
 	domain = "The Night, The Moon, Knowledge, Magic, Secrets"
 	desc = "The Father of Secrets is the glorious moonlight that grants us power through knowledge. We are granted visions of His vault of secrets, and given the ability to wield the Arcyne through His benevolence."
 	worshippers = "Wizards, Scholars, Night Owls"
-	mob_traits = list(TRAIT_NIGHT_OWL)
+	mob_traits = list(TRAIT_NIGHT_OWL, TRAIT_NOCSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/noc_sight				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/darkvision/miracle	= CLERIC_T0,
@@ -70,7 +70,6 @@
 		"NOC SEES ALL!",
 		"I SEEK THE MYSTERIES OF THE MOON!",
 	)
-	traits_tier = list(TRAIT_DARKVISION = CLERIC_T1)
 	storyteller = /datum/storyteller/noc
 
 /datum/patron/divine/dendor

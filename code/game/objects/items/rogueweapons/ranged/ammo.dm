@@ -748,7 +748,7 @@
 	embedchance = 0
 	woundclass = BCLASS_BLUNT
 	flag = "piercing"
-	speed = 0.4		
+	speed = 0.4
 	npc_simple_damage_mult = 2
 
 /obj/projectile/bullet/reusable/sling_bullet/on_hit(atom/target)
@@ -836,6 +836,82 @@
 	poisontype = /datum/reagent/water/blessed
 	poisonamount = 5
 	npc_simple_damage_mult = 5 //175, compared to the regular bolt's 140. Slightly more damage, as to imitate its anti-unholy properties on mobs who aren't affected by any form of poison.
+
+//Heavy bolts, for the funny heavy crossbow.
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt
+	name = "heavy bolt"
+	desc = "A durable steel bolt. It will pierce anything easily, perhaps by mass alone."
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	caliber = "heabolt"
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "heavy_bolt"//Temp sprite.
+	dropshrink = 0.8
+	max_integrity = 10
+	force = 12
+
+//+10 damage/pen from bolt.
+//Pen increase on heavy crossbow assures these will, effectively, ALWAYS go through.
+/obj/projectile/bullet/reusable/heavy_bolt
+	name = "heavy bolt"
+	damage = 80
+	damage_type = BRUTE
+	armor_penetration = 80
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "bolt_proj"
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt
+	range = 30
+	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
+	embedchance = 100
+	woundclass = BCLASS_PIERCE
+	flag = "piercing"
+	speed = 0.3
+	npc_simple_damage_mult = 2
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
+	name = "stake bolt"
+	desc = "A silver stake, affixed with fins. Drive back the darkness!"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/holy
+	icon_state = "heavy_stake"//Temp sprite.
+	max_integrity = 30
+	force = 12
+	is_silver = TRUE
+
+/obj/projectile/bullet/reusable/heavy_bolt/holy
+	name = "stake bolt"
+	damage = 50
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
+	hitsound = 'sound/combat/hits/hi_bolt (3).ogg'
+	speed = 0.5
+	poisontype = /datum/reagent/water/blessed
+	poisonamount = 5
+	npc_simple_damage_mult = 5//RAAAAAA
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest
+	name = "tempest bolt"
+	desc = "The warding around this feels <b>heavy</b>. A payload of some sort in the nose. \
+	What exactly is this meant for?"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/tempest
+	icon_state = "tempest_bolt"//Temp sprite.
+	max_integrity = 30
+	force = 12
+	is_silver = TRUE//This is ALSO warded. Just as with the silver bolt.
+
+//The super evil murderfuck bolt.
+/obj/projectile/bullet/reusable/heavy_bolt/tempest
+	name = "tempest bolt"
+	damage = 25
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest
+	hitsound = 'sound/combat/hits/hi_bolt (1).ogg'
+	speed = 0.5
+	npc_simple_damage_mult = 7
+
+/obj/projectile/bullet/reusable/heavy_bolt/tempest/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		M.apply_status_effect(/datum/status_effect/debuff/exposed)
+		M.blind_eyes(6)
 
 #undef ARROW_DAMAGE
 #undef BOLT_DAMAGE

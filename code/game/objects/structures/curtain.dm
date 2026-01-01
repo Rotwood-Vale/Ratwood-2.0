@@ -69,12 +69,6 @@
 		if(BURN)
 			playsound(loc, 'sound/blank.ogg', 80, TRUE)
 
-/obj/structure/curtain/bounty
-	icon_type = "bounty"
-	icon_state = "bounty-open"
-	color = null
-	alpha = 255
-
 /obj/structure/curtain/red
 	color = "#a32121"
 

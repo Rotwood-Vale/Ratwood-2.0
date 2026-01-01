@@ -279,7 +279,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	if(!antimagic_allowed)
 		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
-		if(antimagic)
+		if(antimagic && !HAS_TRAIT(user, TRAIT_SPELL_DISPERSION))
 			if(isatom(antimagic))
 				to_chat(user, span_notice("[antimagic] is interfering with my magic."))
 			else
@@ -500,6 +500,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		QDEL_IN(spell, overlay_lifespan)
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets, mob/user = usr)
+	SEND_SIGNAL(user, COMSIG_MOB_CAST_SPELL)
 	record_featured_object_stat(FEATURED_STATS_SPELLS, name)
 	return TRUE
 
@@ -705,7 +706,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return FALSE
 
 	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
-		return FALSE
+		if(!HAS_TRAIT(user, TRAIT_SPELL_DISPERSION))
+			return FALSE
 
 	if(!ishuman(user))
 		if(clothes_req || human_req)

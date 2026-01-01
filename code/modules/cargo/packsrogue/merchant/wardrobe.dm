@@ -144,3 +144,5 @@
 	contains = list(
 					/obj/item/clothing/mask/rogue/exoticsilkmask,
 				)
+
+

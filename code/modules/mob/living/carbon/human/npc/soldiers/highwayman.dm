@@ -95,6 +95,18 @@ GLOBAL_LIST_INIT(highwayman_aggro, world.file2list("strings/rt/highwaymanaggroli
 	if(prob(70))
 		neck = /obj/item/clothing/neck/roguetown/coif
 	gloves = /obj/item/clothing/gloves/roguetown/leather
+	belt = /obj/item/storage/belt/rogue/leather
+	if(prob(5))
+		beltl = /obj/item/storage/belt/rogue/pouch/medicine
+	if(prob(50))
+		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+	else
+		if(prob(10))
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
+		else
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(10))
+		id = /obj/item/clothing/ring/gold
 	H.STASTR = rand(12,14) //GENDER EQUALITY!!
 	H.STASPD = 11
 	H.STACON = rand(10,12) //so their limbs no longer pop off like a skeleton
@@ -115,8 +127,6 @@ GLOBAL_LIST_INIT(highwayman_aggro, world.file2list("strings/rt/highwaymanaggroli
 		r_hand = /obj/item/rogueweapon/pick/militia
 	if(prob(25))	
 		l_hand = /obj/item/rogueweapon/shield/wood
-	if(prob(10))
-		l_hand = /obj/item/rogueweapon/shield/buckler/palloy
 	if(prob(10))
 		l_hand = /obj/item/rogueweapon/huntingknife/idagger
 		l_hand = /obj/item/rogueweapon/huntingknife/idagger

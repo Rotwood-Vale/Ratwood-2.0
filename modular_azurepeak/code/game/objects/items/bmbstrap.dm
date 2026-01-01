@@ -1,6 +1,6 @@
 /obj/item/bmbstrap
 	name = "Bombdolier"
-	desc = ""
+	desc = "A strap for carrying grenades. A lunatic's invention, surely."
 	icon_state = "bombdolier1"
 	item_state = "bombdolier"
 	icon = 'modular_azurepeak/icons/obj/items/bombdolier.dmi'
@@ -36,7 +36,6 @@
 			to_chat(loc, span_warning("Full!"))
 		return
 	..()
-
 
 /obj/item/bmbstrap/examine(mob/user)
 	. = ..()

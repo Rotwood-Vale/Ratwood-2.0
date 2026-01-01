@@ -198,6 +198,11 @@
 	if(!target.mind)
 		return
 
+	//Before everything else, we check immunity. Assuming they've a mind.
+	if(HAS_TRAIT(target, TRAIT_TOXIMMUNE))//For constructs, WWs, VL, DK, etc. Rotcured, too.
+		target.visible_message(span_userdanger("The blight harmlessly passes over [target]! They're immune!"))
+		return
+
 	var/skill_level = parent_mob.get_skill_level(/datum/skill/magic/holy)
 	var/chance = base_proc_chance + skill_level
 

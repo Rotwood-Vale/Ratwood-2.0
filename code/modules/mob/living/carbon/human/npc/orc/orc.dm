@@ -43,7 +43,7 @@
 	var/beard = pick(list(/datum/sprite_accessory/hair/facial/viking,
 						/datum/sprite_accessory/hair/facial/manly,
 						/datum/sprite_accessory/hair/facial/longbeard))
-	head.sellprice = 30
+	head.sellprice = 40
 
 	src.set_patron(/datum/patron/inhumen/graggar)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
@@ -97,6 +97,15 @@
 	shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	r_hand = /obj/item/rogueweapon/stoneaxe/boneaxe
 	l_hand = /obj/item/rogueweapon/shield/wood
+	belt = /obj/item/storage/belt/rogue/leather/rope
+	if(prob(5))
+		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
+	if(prob(50))
+		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+	else
+		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(5))
+		id = /obj/item/clothing/ring/gold
 
 	H.STASTR = 16
 	H.STASPD = 8

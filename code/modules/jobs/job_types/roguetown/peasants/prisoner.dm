@@ -20,7 +20,7 @@
 	can_random = FALSE
 
 	cmode_music = 'sound/music/combat_bum.ogg'
-	social_rank = SOCIAL_RANK_PEASANT
+	social_rank = SOCIAL_RANK_DIRT
 	advclass_cat_rolls = list(CTAG_PRISONER = 20)
 
 /datum/outfit/job/roguetown/prisonerr/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

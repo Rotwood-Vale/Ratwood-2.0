@@ -1,5 +1,6 @@
 /datum/advclass
 	var/name
+	var/examine_name			// Optional. Different name shown when examining (defaults to name if not set)
 	var/list/classes
 	var/outfit
 	var/tutorial = "Choose me!"

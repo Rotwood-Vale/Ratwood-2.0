@@ -62,6 +62,9 @@ var/global/list/pridelist = list(
 	var/activecolor = "#FFFFFF"
 	var/activecolor_detail = "#FFFFFF"
 	var/activecolor_altdetail = "#FFFFFF"
+	var/ducal_scheme = FALSE // Whether primary color is using Ducal Scheme
+	var/ducal_scheme_detail = FALSE // Whether detail color is using Ducal Scheme
+	var/ducal_scheme_altdetail = FALSE // Whether altdetail color is using Ducal Scheme
 	var/list/allowed_types = list(
 			/obj/item/clothing,
 			/obj/item/storage,
@@ -133,23 +136,19 @@ var/global/list/pridelist = list(
 	var/obj/item/inserted_item = inserted
 
 	dat += "Item inserted: [inserted]<HR>"
+	dat += "Color: <font color='[activecolor]'>&#10070;</font> "
 	dat += "<A href='?src=\ref[src];select=1'>Select new color.</A><BR>"
-	dat += "Color: <font color='[activecolor]'>&#10070;</font>"
-	dat += "<A href='?src=\ref[src];paint=1'>Apply new color</A> | "
-	dat += "<A href='?src=\ref[src];clear=1'>Remove paintjob</A><BR><BR>"
 
 	if(inserted_item.detail_color)
+		dat += "Detail Color: <font color='[activecolor_detail]'>&#10070;</font> "
 		dat += "<A href='?src=\ref[src];select_detail=1'>Select new detail color.</A><BR>"
-		dat += "Detail Color: <font color='[activecolor_detail]'>&#10070;</font>"
-		dat += "<A href='?src=\ref[src];paint_detail=1'>Apply new color</A> | "
-		dat += "<A href='?src=\ref[src];clear_detail=1'>Remove paintjob</A><BR><BR>"
 
 	if(inserted_item.altdetail_color)
+		dat += "Alt. Detail Color: <font color='[activecolor_altdetail]'>&#10070;</font> "
 		dat += "<A href='?src=\ref[src];select_altdetail=1'>Select new tertiary color.</A><BR>"
-		dat += "Alt. Detail Color: <font color='[activecolor_altdetail]'>&#10070;</font>"
-		dat += "<A href='?src=\ref[src];paint_altdetail=1'>Apply new color</A> | "
-		dat += "<A href='?src=\ref[src];clear_altdetail=1'>Remove paintjob</A><BR><BR>"
 
+	dat += "<BR><A href='?src=\ref[src];paint=1'>Apply new color</A> | "
+	dat += "<A href='?src=\ref[src];clear=1'>Remove paintjob</A><BR><BR>"
 	dat += "<A href='?src=\ref[src];eject=1'>Eject item.</A><BR><BR>"
 	menu.set_content("<html>[dat.Join("")]</html>")
 	menu.open()
@@ -166,9 +165,14 @@ var/global/list/pridelist = list(
 		return
 
 	if(href_list["select"])
+		ducal_scheme = FALSE
 		if(HAS_TRAIT(usr, TRAIT_DYES))
 			var/choice
-			if(alert(usr, "Input Choice", "Primary Dye", "Color Wheel", "Color Preset") != "Color Wheel")
+			var/input_type = alert(usr, "Input Choice", "Primary Dye", "Color Wheel", "Color Preset", "Ducal Scheme")
+			if(input_type == "Ducal Scheme")
+				ducal_scheme = TRUE
+				activecolor = GLOB.lordprimary ? GLOB.lordprimary : "#264d26"
+			else if(input_type != "Color Wheel")
 				choice = input(usr, "Choose your dye:", "Dyes", null) as null|anything in used_colors
 				if(!choice)
 					return
@@ -177,18 +181,29 @@ var/global/list/pridelist = list(
 				activecolor = sanitize_hexcolor(color_pick_sanitized(usr, "Choose your dye:", "Dyes", choice ? choice : activecolor, 0.2, 1), 6, TRUE)
 				if(activecolor == "#000000")
 					activecolor = "#FFFFFF"
-			updateUsrDialog()
+			interact(usr)
 		else
-			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in colorlist
+			var/choice_list = colorlist.Copy()
+			choice_list["Ducal Scheme"] = "#DUCAL"
+			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
 			if(!choice)
 				return
-			activecolor = colorlist[choice]
-			updateUsrDialog()
+			if(choice == "Ducal Scheme")
+				ducal_scheme = TRUE
+				activecolor = GLOB.lordprimary ? GLOB.lordprimary : "#264d26"
+			else
+				activecolor = colorlist[choice]
+			interact(usr)
 
 	if(href_list["select_detail"])
+		ducal_scheme_detail = FALSE
 		if(HAS_TRAIT(usr, TRAIT_DYES))
 			var/choice
-			if(alert(usr, "Input Choice", "Primary Dye", "Color Wheel", "Color Preset") != "Color Wheel")
+			var/input_type = alert(usr, "Input Choice", "Detail Dye", "Color Wheel", "Color Preset", "Ducal Scheme")
+			if(input_type == "Ducal Scheme")
+				ducal_scheme_detail = TRUE
+				activecolor_detail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
+			else if(input_type != "Color Wheel")
 				choice = input(usr, "Choose your dye:", "Dyes", null) as null|anything in used_colors
 				if(!choice)
 					return
@@ -197,18 +212,29 @@ var/global/list/pridelist = list(
 				activecolor_detail = sanitize_hexcolor(color_pick_sanitized(usr, "Choose your dye:", "Dyes", choice ? choice : activecolor_detail, 0.2, 1), 6, TRUE)
 				if(activecolor_detail == "#000000")
 					activecolor_detail = "#FFFFFF"
-			updateUsrDialog()
+			interact(usr)
 		else
-			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in colorlist
+			var/choice_list = colorlist.Copy()
+			choice_list["Ducal Scheme"] = "#DUCAL"
+			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
 			if(!choice)
 				return
-			activecolor_detail = colorlist[choice]
-			updateUsrDialog()
+			if(choice == "Ducal Scheme")
+				ducal_scheme_detail = TRUE
+				activecolor_detail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
+			else
+				activecolor_detail = colorlist[choice]
+			interact(usr)
 
 	if(href_list["select_altdetail"])
+		ducal_scheme_altdetail = FALSE
 		if(HAS_TRAIT(usr, TRAIT_DYES))
 			var/choice
-			if(alert(usr, "Input Choice", "Primary Dye", "Color Wheel", "Color Preset") != "Color Wheel")
+			var/input_type = alert(usr, "Input Choice", "Tertiary Dye", "Color Wheel", "Color Preset", "Ducal Scheme")
+			if(input_type == "Ducal Scheme")
+				ducal_scheme_altdetail = TRUE
+				activecolor_altdetail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
+			else if(input_type != "Color Wheel")
 				choice = input(usr, "Choose your dye:", "Dyes", null) as null|anything in used_colors
 				if(!choice)
 					return
@@ -217,74 +243,93 @@ var/global/list/pridelist = list(
 				activecolor_altdetail = sanitize_hexcolor(color_pick_sanitized(usr, "Choose your dye:", "Dyes", choice ? choice : activecolor_altdetail, 0.2, 1), 6, TRUE)
 				if(activecolor_altdetail == "#000000")
 					activecolor_altdetail = "#FFFFFF"
-			updateUsrDialog()
+			interact(usr)
 		else
-			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in colorlist
+			var/choice_list = colorlist.Copy()
+			choice_list["Ducal Scheme"] = "#DUCAL"
+			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
 			if(!choice)
 				return
-			activecolor_altdetail = colorlist[choice]
-			updateUsrDialog()
+			if(choice == "Ducal Scheme")
+				ducal_scheme_altdetail = TRUE
+				activecolor_altdetail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
+			else
+				activecolor_altdetail = colorlist[choice]
+			interact(usr)
 
 	if(href_list["paint"])
 		if(!inserted)
 			return
-		inserted.add_atom_colour(activecolor, FIXED_COLOUR_PRIORITY)
-		playsound(src, "bubbles", 50, 1)
-		updateUsrDialog()
-
-	if(href_list["paint_detail"])
-		if(!inserted)
-			return
 		var/obj/item/inserted_item = inserted
-		inserted_item.detail_color = activecolor_detail
+		
+		// Apply primary color
+		if(ducal_scheme)
+			inserted_item.ducal_primary = TRUE
+			inserted.add_atom_colour(activecolor, FIXED_COLOUR_PRIORITY)
+			if(!(inserted in GLOB.lordcolor))
+				GLOB.lordcolor += inserted
+		else
+			inserted_item.ducal_primary = FALSE
+			inserted.add_atom_colour(activecolor, FIXED_COLOUR_PRIORITY)
+			if(!inserted_item.ducal_detail && !inserted_item.ducal_altdetail && (inserted in GLOB.lordcolor))
+				GLOB.lordcolor -= inserted
+		
+		// Apply detail color if available
+		if(inserted_item.detail_color)
+			inserted_item.detail_color = activecolor_detail
+			if(ducal_scheme_detail)
+				inserted_item.ducal_detail = TRUE
+				if(!(inserted_item in GLOB.lordcolor))
+					GLOB.lordcolor += inserted_item
+			else
+				inserted_item.ducal_detail = FALSE
+				if(!inserted_item.ducal_primary && !inserted_item.ducal_altdetail && (inserted_item in GLOB.lordcolor))
+					GLOB.lordcolor -= inserted_item
+		
+		// Apply altdetail color if available
+		if(inserted_item.altdetail_color)
+			inserted_item.altdetail_color = activecolor_altdetail
+			if(ducal_scheme_altdetail)
+				inserted_item.ducal_altdetail = TRUE
+				if(!(inserted_item in GLOB.lordcolor))
+					GLOB.lordcolor += inserted_item
+			else
+				inserted_item.ducal_altdetail = FALSE
+				if(!inserted_item.ducal_primary && !inserted_item.ducal_detail && (inserted_item in GLOB.lordcolor))
+					GLOB.lordcolor -= inserted_item
+		
 		inserted_item.update_icon()
-		if(inserted_item in GLOB.lordcolor) //Prevent a latejoining duke from changing this color
-			GLOB.lordcolor -= inserted_item
 		playsound(src, "bubbles", 50, 1)
-		updateUsrDialog()
-
-	if(href_list["paint_altdetail"])
-		if(!inserted)
-			return
-		var/obj/item/inserted_item = inserted
-		inserted_item.altdetail_color = activecolor_altdetail
-		inserted_item.update_icon()
-		if(inserted_item in GLOB.lordcolor)
-			GLOB.lordcolor -= inserted_item
-		playsound(src, "bubbles", 50, 1)
-		updateUsrDialog()
+		// Always eject after applying colors
+		inserted.forceMove(drop_location())
+		inserted = null
+		interact(usr)
 
 	if(href_list["clear"])
 		if(!inserted)
 			return
+		var/obj/item/inserted_item = inserted
+		// Remove primary color
 		inserted.remove_atom_colour(FIXED_COLOUR_PRIORITY)
-		playsound(src, "bubbles", 50, 1)
-		updateUsrDialog()
-
-	if(href_list["clear_detail"])
-		if(!inserted)
-			return
-		var/obj/item/inserted_item = inserted
-		inserted_item.detail_color = "#FFFFFF" //We don't initial() this in case it goes null
+		// Clear detail color if available
+		if(inserted_item.detail_color)
+			inserted_item.detail_color = "#FFFFFF"
+		// Clear altdetail color if available
+		if(inserted_item.altdetail_color)
+			inserted_item.altdetail_color = "#FFFFFF"
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
-		updateUsrDialog()
-
-	if(href_list["clear_altdetail"])
-		if(!inserted)
-			return
-		var/obj/item/inserted_item = inserted
-		inserted_item.altdetail_color = "#FFFFFF"
-		inserted_item.update_icon()
-		playsound(src, "bubbles", 50, 1)
-		updateUsrDialog()
+		// Always eject after clearing
+		inserted.forceMove(drop_location())
+		inserted = null
+		interact(usr)
 
 	if(href_list["eject"])
 		if(!inserted)
 			return
 		inserted.forceMove(drop_location())
 		inserted = null
-		updateUsrDialog()
+		interact(usr)
 
 
 // PAINTBRUSH

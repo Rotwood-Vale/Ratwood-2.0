@@ -191,13 +191,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
 	soundenv = 17
-/area/rogue/druidsgrove
-	name = "Druids grove"
-	icon_state = "rtfield"
-	first_time_text = "Druids grove"
-	droning_sound = list('sound/ambience/riverday (1).ogg','sound/ambience/riverday (2).ogg','sound/ambience/riverday (3).ogg')
-	droning_sound_dusk = 'sound/music/area/septimus.ogg'
-	droning_sound_night = list ('sound/ambience/rivernight (1).ogg','sound/ambience/rivernight (2).ogg','sound/ambience/rivernight (3).ogg' )
 
 /area/rogue/indoors/shelter/rtfield
 	icon_state = "rtfield"
@@ -475,6 +468,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	converted_type = /area/rogue/outdoors/exposed/manorgarri
 	keep_area = TRUE
 	cell_area = TRUE
+	soundproof = TRUE
 
 /area/rogue/indoors/town/tavern
 	name = "tavern"
@@ -486,6 +480,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = null
 	converted_type = /area/rogue/outdoors/exposed/tavern
 	tavern_area = TRUE
+	
 /area/rogue/outdoors/exposed/tavern
 	icon_state = "tavern"
 	droning_sound = 'sound/silence.ogg'
@@ -594,13 +589,15 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 
 /area/rogue/indoors/town/grove
 	name = "grove"
-	icon_state = "outdoors"
+	icon_state = "druidgrove"
 	droning_sound = 'sound/music/area/druid.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 	droning_sound_dawn = 'sound/music/area/forest.ogg'
 	converted_type = /area/rogue/indoors/shelter/woods
 	deathsight_message = "A sacred place of dendor, beneath the tree of Aeons.."
+	warden_area = TRUE
+	town_area = FALSE
 
 ///// outside
 
@@ -677,6 +674,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	first_time_text = "The Dwarven Quarter"
 	soundenv = 16
 	converted_type = /area/rogue/indoors/shelter/town/dwarf
+
 /area/rogue/indoors/shelter/town/dwarf
 	icon_state = "dwarf"
 	droning_sound = 'sound/music/area/dwarf.ogg'
@@ -684,13 +682,16 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = null
 
 /area/rogue/outdoors/town/grove
-	icon_state = "outdoors"
+	icon_state = "druidgrove"
+	color = "#b8b5c9"
 	droning_sound = 'sound/music/area/druid.ogg'
 	droning_sound_dawn = 'sound/music/area/forest.ogg'
 	converted_type = /area/rogue/indoors/town/grove
 	deathsight_message = "A sacred place of dendor, near the tree of Aeons.."
 	droning_sound_dusk = null
 	droning_sound_night = null
+	warden_area = TRUE
+	town_area = FALSE
 
 /// under
 
@@ -765,6 +766,13 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	town_area = TRUE
 	ceiling_protected = TRUE
 
+/area/rogue/under/town/basement/tavern
+	name = "tavern basement"
+	icon_state = "basement"
+	tavern_area = TRUE
+	town_area = TRUE
+	ceiling_protected = TRUE
+
 /area/rogue/outdoors/exposed/under/basement
 	icon_state = "basement"
 	droning_sound = 'sound/music/area/catacombs.ogg'
@@ -784,3 +792,8 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	name = "dream realm"
 	icon_state = "dream"
 	first_time_text = "Abyssal Dream"
+
+/area/rogue/underworld/adventurespawn
+	name = "wayfarer's dream"
+	icon_state = "dream"
+	first_time_text = "A Wayfarer's Dream"

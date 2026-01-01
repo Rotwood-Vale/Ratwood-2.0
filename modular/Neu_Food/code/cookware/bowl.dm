@@ -37,6 +37,7 @@
 	name = "silver bowl"
 	icon_state = "bowl_silver"
 	sellprice = 96
+	is_silver = TRUE
 
 /obj/item/reagent_containers/glass/bowl/tin
 	name = "tin bowl"

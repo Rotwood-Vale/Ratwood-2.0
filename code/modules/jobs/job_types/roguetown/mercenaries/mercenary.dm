@@ -24,6 +24,8 @@
 		/datum/advclass/mercenary/atgervi,
 		/datum/advclass/mercenary/atgervi/shaman,
 		/datum/advclass/mercenary/condottiero,
+		/datum/advclass/mercenary/crocs,
+		/datum/advclass/mercenary/crocsass,
 		/datum/advclass/mercenary/desert_rider,
 		/datum/advclass/mercenary/desert_rider/zeybek,
 		/datum/advclass/mercenary/desert_rider/almah,
@@ -46,5 +48,8 @@
 		/datum/advclass/mercenary/blackoak/ranger,
 		/datum/advclass/mercenary/underdweller,
 		/datum/advclass/mercenary/grudgebearer,
-		/datum/advclass/mercenary/grudgebearer/soldier
+		/datum/advclass/mercenary/grudgebearer/soldier,
+		/datum/advclass/mercenary/oathmarked,
+		/datum/advclass/mercenary/oathmarked/executor,
+		/datum/advclass/mercenary/newmoon,
 	)

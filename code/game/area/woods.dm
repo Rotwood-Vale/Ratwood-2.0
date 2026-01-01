@@ -36,15 +36,6 @@
 	threat_region = THREAT_REGION_AZURE_GROVE
 	deathsight_message = "somewhere in the wilds"
 
-/area/rogue/indoors/shelter/druidgrove
-	name = "Druid's Grove"
-	icon_state = "druidgrove"
-	droning_sound = 'sound/music/area/druid.ogg'
-	droning_sound_dusk = null
-	threat_region = THREAT_REGION_ROCKHILL_OUTER_GROVE
-	ambush_times = null
-
-
 /area/rogue/outdoors/woods/north
 	name = "Rotwood Vale - North"
 	// This section shouldn't have any sea mobs, but is close to the old warden tower

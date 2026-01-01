@@ -91,6 +91,7 @@
 		if(src.amount < src.maxamount)
 			to_chat(user, "I add the [W] to the [src].")
 			src.amount++
+			update_bundle()
 			qdel(W)
 		else
 			to_chat(user, "There's not enough space in [src].")

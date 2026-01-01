@@ -328,25 +328,24 @@
 	if(istype(T))
 		mastert = T
 		T.holie = src
+		//Is the tile wet? A chance for bait and better clay odds
 		if(T.muddy)
-			if(!(locate(/obj/item/natural/worms) in T))
-				if(prob(55))
-					if(prob(20))
-						if(prob(5))
-							new /obj/item/natural/worms/grubs(T)
-						else
-							new /obj/item/natural/worms/leech(T)
+			if(prob(55))
+				if(prob(20))
+					if(prob(5))
+						new /obj/item/natural/worms/grubs(T)
 					else
-						new /obj/item/natural/worms(T)
-			if(!(locate(/obj/item/natural/clay) in T))
-				if(prob(25))
-					new /obj/item/natural/clay(T)
+						new /obj/item/natural/worms/leech(T)
+				else
+					new /obj/item/natural/worms(T)
+			if(prob(25))
+				new /obj/item/natural/clay(T)
+		//Otherwise, just stone and clay.
 		else
-			if(!(locate(/obj/item/natural/stone) in T) || !(locate(/obj/item/natural/clay) in T))
-				if(prob(23))
-					new /obj/item/natural/stone(T)
-				if(prob(18))
-					new /obj/item/natural/clay(T)
+			if(prob(23))
+				new /obj/item/natural/stone(T)
+			if(prob(18))
+				new /obj/item/natural/clay(T)
 	return ..()
 
 /obj/structure/closet/dirthole/Destroy()

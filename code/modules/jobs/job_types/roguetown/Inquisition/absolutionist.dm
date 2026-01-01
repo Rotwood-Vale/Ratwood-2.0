@@ -11,7 +11,7 @@
 	selection_color = JCOLOR_INQUISITION
 	outfit = /datum/outfit/job/roguetown/absolver
 	display_order = JDO_ABSOLVER
-	min_pq = 3
+	min_pq = 20
 	max_pq = null
 	round_contrib_points = 2
 	wanderer_examine = FALSE
@@ -98,7 +98,7 @@
 	id = /obj/item/clothing/ring/signet/silver
 	backpack_contents = list(
 		/obj/item/book/rogue/bibble/psy = 1,
-		/obj/item/natural/bundle/cloth/roll = 2,
+		/obj/item/natural/bundle/cloth/bandage/full = 2,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
 		/obj/item/paper/inqslip/arrival/abso = 1,
 		/obj/item/needle = 1,

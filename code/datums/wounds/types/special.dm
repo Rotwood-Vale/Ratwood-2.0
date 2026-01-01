@@ -425,3 +425,38 @@
 	to_chat(affected, span_userdanger(pick(goodbye)))
 	if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
 		affected.death()
+
+//Burn wounds. A sideclass of lashing, basically.
+//Does not disable limbs.
+//High pain. No bleed. All the time. Can sleep it off.
+/datum/wound/burn
+	name = "burns"
+	check_name = "<span class='userdanger'><B>CHARRED</B></span>"
+	severity = WOUND_SEVERITY_SEVERE
+	crit_message = list(
+		"The tissue is marred by a horrid burn!",
+		"The smell of burnt flesh surrounds the %BODYPART!",
+		"The %BODYPART is thoroughly burnt!",
+	)
+	sound_effect = 'sound/combat/sizzle1.ogg'
+	whp = 100
+	woundpain = 35
+	can_sew = FALSE
+	can_cauterize = FALSE
+	sleep_healing = 0.5//You can TRY sleeping this off. A PITA without miracles.
+
+/datum/wound/burn/strong
+	whp = 150
+	woundpain = 40
+	sound_effect = 'sound/combat/sizzle2.ogg'
+
+/datum/wound/burn/on_mob_gain(mob/living/affected)
+	. = ..()
+	affected.emote("agony", TRUE)
+	affected.Slowdown(40)
+	shake_camera(affected, 2, 2)
+
+/datum/wound/burn/can_stack_with(datum/wound/other)
+	if(istype(other, /datum/wound/burn))
+		return FALSE
+	return TRUE

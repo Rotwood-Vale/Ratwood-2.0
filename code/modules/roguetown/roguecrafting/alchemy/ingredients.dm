@@ -111,6 +111,7 @@
 	major_pot = /datum/alch_cauldron_recipe/strong_antidote
 	med_pot = /datum/alch_cauldron_recipe/antidote
 	minor_pot = /datum/alch_cauldron_recipe/big_health_potion
+	is_silver = TRUE
 
 /obj/item/alch/magicdust
 	name = "pure essentia"

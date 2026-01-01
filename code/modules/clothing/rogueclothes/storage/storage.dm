@@ -64,6 +64,7 @@
 	sellprice = 30
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
+	is_silver = TRUE
 
 /obj/item/storage/belt/rogue/leather/battleskirt
 	name = "cloth military skirt"

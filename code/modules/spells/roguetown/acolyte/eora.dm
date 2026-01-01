@@ -604,6 +604,7 @@
 					c.adjustFireLoss(100)
 					c.ignite_mob()
 					c.add_stress(/datum/stressevent/psycurse)
+			SEND_SIGNAL(user, COMSIG_MOB_FELL_TREE)
 			record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
 			record_round_statistic(STATS_TREES_CUT)
 

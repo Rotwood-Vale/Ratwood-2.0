@@ -231,7 +231,7 @@
 	// Ready up bonus
 	if(!H.islatejoin)
 		H.adjust_triumphs(1)
-		H.apply_status_effect(/datum/status_effect/buff/foodbuff)
+		H.apply_status_effect(/datum/status_effect/buff/mealbuff)
 		H.hydration = 1000 // Set higher hydration
 
 		if(H.mind)
@@ -243,7 +243,7 @@
 		var/used_title = display_title || title
 		if((H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F) && f_title)
 			used_title = f_title
-		scom_announce("[H.real_name] the [used_title] arrives to Rotwood Vale.")
+		scom_announce("[H.real_name] the [used_title] arrives from Kingsfield.")
 
 	if(give_bank_account)
 		if(give_bank_account > 1)

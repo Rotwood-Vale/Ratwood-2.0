@@ -84,6 +84,8 @@
 	icon_state = "manacrystal"
 	desc = "A crystal made of mana, woven into an artifical structure."
 	w_class = WEIGHT_CLASS_SMALL
+	grind_results = list(/datum/reagent/medicine/manapot = 20)
+	mill_result = /obj/item/reagent_containers/powder/mana
 
 /obj/item/magic/artifact
 	name = "runed artifact"

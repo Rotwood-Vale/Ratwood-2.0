@@ -90,4 +90,10 @@
 			qdel(H)
 
 /obj/item/storage/belt/rogue/pouch/food/PopulateContents()
-	new /obj/item/reagent_containers/food/snacks/rogue/crackerscooked(src)
+	new /obj/effect/spawner/lootdrop/roguetown/dungeon/food(src)
+
+/obj/item/storage/belt/rogue/pouch/treasure/PopulateContents()
+	new /obj/effect/spawner/lootdrop/mobtreasure(src)
+
+/obj/item/storage/belt/rogue/pouch/treasure/lucky/PopulateContents()
+	new /obj/effect/spawner/lootdrop/mobtreasure/lucky(src)

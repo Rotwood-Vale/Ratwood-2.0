@@ -70,11 +70,13 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		var/obj/item/I = L.bandage
 		if(!I)
 			return
+		var/time_to_unbandage = 5 SECONDS
+		time_to_unbandage *= (1 - (usr.get_skill_level(/datum/skill/misc/medicine) * 0.15))
 		if(usr == src)
 			usr.visible_message("<span class='warning'>[usr] starts unbandaging [usr.p_their()] [L.name].</span>","<span class='warning'>I start unbandaging [L.name]...</span>")
 		else
 			usr.visible_message("<span class='warning'>[usr] starts unbandaging [src]'s [L.name].</span>","<span class='warning'>I start unbandaging [src]'s [L.name]...</span>")
-		if(do_after(usr, 50, needhand = TRUE, target = src))
+		if(do_after(usr, time_to_unbandage, needhand = TRUE, target = src))
 			if(QDELETED(I) || QDELETED(L) || (L.bandage != I))
 				return
 			L.remove_bandage()
@@ -93,6 +95,51 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		popup.set_content(dna.species.desc)
 		popup.open()
 		return
+
+		//Social rank
+	if(href_list["social_strata"])
+		var/is_clergy = FALSE
+		var/is_jester = FALSE
+		var/is_druid = FALSE
+		if(job)
+			var/datum/job/J = SSjob.GetJob(job)
+			if(J.department_flag == CHURCHMEN) //There may be a better way to check who is clergy, but this will do for now
+				is_clergy = TRUE
+			if(J.title == "Jester")
+				is_jester = TRUE
+			if(J.title == "Druid")
+				is_druid = TRUE
+		if(social_rank && !HAS_TRAIT(src, TRAIT_OUTLANDER))
+			var/examiner_rank = usr.social_rank
+			var/rank_name
+			if(HAS_TRAIT(src, TRAIT_NOBLE) && social_rank < 4) //anyone with the noble trait that wasn't a noble is now at least a minor noble
+				social_rank = SOCIAL_RANK_MINOR_NOBLE
+			switch(social_rank)
+				if(SOCIAL_RANK_DIRT)
+					rank_name = "dirt"
+				if(SOCIAL_RANK_PEASANT)
+					rank_name = "a peasant"
+				if(SOCIAL_RANK_YEOMAN)
+					rank_name = "a yeoman"
+				if(SOCIAL_RANK_MINOR_NOBLE)
+					rank_name = is_clergy ? "low clergy" : "a minor noble"
+				if(SOCIAL_RANK_NOBLE)
+					rank_name = is_clergy ? "clergy" : "a noble"
+				if(SOCIAL_RANK_ROYAL)
+					rank_name = is_clergy ? "head of the clergy" : "royalty"
+			if(HAS_TRAIT(src, TRAIT_DISGRACED_NOBLE))
+				rank_name = "a disgraced noble"
+				social_rank = 3
+			if(is_jester)
+				rank_name = "the jester"
+			if(is_druid)
+				rank_name = "a druid"
+			if(social_rank > examiner_rank)
+				to_chat(usr, span_notice("This persons social standing is equivalent to <EM>[rank_name]</EM>, they are my better."))
+			if(social_rank == examiner_rank)
+				to_chat(usr, span_notice("This person social standing is equivalent to <EM>[rank_name]</EM>, they are my equal."))
+			if(social_rank < examiner_rank)
+				to_chat(usr, span_notice("This person social standing is equivalent to <EM>[rank_name]</EM>, they are my lesser."))
 
 	if(href_list["reveal_cosmetic"])
 		if(mind && mind.cosmetic_class_title)

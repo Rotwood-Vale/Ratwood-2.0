@@ -56,7 +56,7 @@
 		if(amt > 5)
 			choicez += "SILVER"
 		choicez += "BRONZE"
-		var/selection = input(user, "Make a Selection", src) as null|anything in choicez
+		var/selection = input(user, "You have [amt] mammon in your account. Choose which currency you'd like to withdraw.", src) as null|anything in choicez
 		if(!selection)
 			return
 		amt = SStreasury.bank_accounts[H]
@@ -65,7 +65,7 @@
 			mod = 10
 		if(selection == "SILVER")
 			mod = 5
-		var/coin_amt = input(user, "There is [SStreasury.treasury_value] mammon in the treasury. You may withdraw [floor(amt/mod)] [selection] COINS from your account.", src) as null|num
+		var/coin_amt = input(user, "There is [SStreasury.treasury_value] mammon in the treasury, and [amt] mammon in your account. You may withdraw [floor(amt/mod)] [selection] COINS from your account.", src) as null|num
 		coin_amt = round(coin_amt)
 		if(coin_amt < 1)
 			return

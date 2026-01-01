@@ -126,3 +126,12 @@
 		/obj/item/bomb,
 		/obj/item/bomb,
 	)
+
+//These are otherwise unobtanium outside of some very specific loot tables and the loadout.
+//Needed for heretic revelations for the antipope, too.
+/datum/carebox_loot/wretch/zizite_cross
+	name = "Zizite Cross (2)"
+	loot = list(
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy,
+	)

@@ -253,6 +253,15 @@
 	return dna.species.spec_attacked_by(I, user, affecting, used_intent, src, useder)
 
 /mob/living/carbon/human/attack_hand(mob/user)
+	// Check if this person is offering an item to the user
+	if(ishuman(user) && offered_item_ref)
+		var/mob/living/carbon/human/H = user
+		var/obj/offered_item = offered_item_ref.resolve()
+		if(offered_item && H.used_intent.type != INTENT_HARM)
+			var/stealthy = (m_intent == MOVE_INTENT_SNEAK)
+			if(H.try_accept_offered_item(src, offered_item, stealthy))
+				return TRUE
+	
 	if(..())	//to allow surgery to return properly.
 		return
 	retaliate(user)

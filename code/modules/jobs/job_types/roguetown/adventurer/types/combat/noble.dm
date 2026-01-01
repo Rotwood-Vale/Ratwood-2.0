@@ -175,6 +175,8 @@
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/shields = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
@@ -184,6 +186,8 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,
 	)
 	extra_context = "Chooses between Light Armor (Dodge Expert) and Medium Armor."
 
@@ -196,23 +200,40 @@
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	belt = /obj/item/storage/belt/rogue/leather
-	backr = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	backpack_contents = list(/obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/rogueweapon/hammer/iron = 1, /obj/item/rogueweapon/tongs = 1, /obj/item/recipe_book/survival = 1)
+	backr = /obj/item/storage/backpack/rogue/satchel
+	backpack_contents = list(/obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/armor_brush = 1, /obj/item/polishing_cream = 1, /obj/item/rogueweapon/hammer/iron = 1, /obj/item/recipe_book/survival = 1, /obj/item/rogueweapon/huntingknife = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
 	if(H.mind)
 		var/armors = list("Light Armor","Medium Armor")
-		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armors
+		var/armor_choice = input(H, "Choose your armor.", "HOW WILL YOU LOOK WHEN YOU DIE") as anything in armors
 		switch(armor_choice)
 			if("Light Armor")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
-				pants = /obj/item/clothing/under/roguetown/trou/leather
+				armor = /obj/item/clothing/suit/roguetown/armor/leather
+				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 				gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-				beltr = /obj/item/rogueweapon/huntingknife/idagger
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 			if("Medium Armor")
-				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
+				shirt = /obj/item/clothing/suit/roguetown/shirt/tunic
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
 				pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 				gloves = /obj/item/clothing/gloves/roguetown/chain/iron
-				beltr = /obj/item/rogueweapon/sword/iron
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+		var/weapons = list("Arming Sword","Shortsword + Shield","Bow & Arrow","Spear")
+		var/weapon_choice = input(H, "Choose your weapon.", "WHAT WILL YOU SWING BEFORE DEATH") as anything in weapons
+		switch(weapon_choice)
+			if("Arming Sword")
+				backl = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/rogueweapon/sword/iron
+			if("Shortsword + Shield")
+				beltr = /obj/item/rogueweapon/scabbard/sword
+				backl = /obj/item/rogueweapon/shield/wood
+				r_hand = /obj/item/rogueweapon/sword/short/iron
+			if("Bow & Arrow")
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+				beltr = /obj/item/quiver/arrows
+			if("Spear")
+				r_hand = /obj/item/rogueweapon/spear
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
 	H.set_blindness(0)

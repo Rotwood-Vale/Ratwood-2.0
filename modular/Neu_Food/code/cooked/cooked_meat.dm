@@ -154,7 +154,7 @@
 	portable = FALSE
 	color = "#ffc0c0"
 	tastes = list("spicy birdmeat" = 1)
-	eat_effect = /datum/status_effect/buff/foodbuff
+	eat_effect = /datum/status_effect/buff/mealbuff
 
 /*	.............   Frybird   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/cutlet/fried

@@ -267,8 +267,8 @@
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
 	user.Paralyze(60)
-	user.visible_message(span_warning("[AM] pushes [user] off of [AM.p_them()]!"), \
-						span_warning("[AM] pushes me off of [AM.p_them()]!"))
+	user.visible_message(span_warning("[user] is knocked off of [AM]!"), span_danger("I am knocked off of [AM]!"))
+	playsound(AM.loc, 'sound/combat/grabbreak.ogg', 50, TRUE, -1)
 
 /datum/component/riding/cyborg
 	del_on_unbuckle_all = TRUE

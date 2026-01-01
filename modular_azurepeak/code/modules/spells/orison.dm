@@ -208,21 +208,21 @@
 
 /datum/reagent/water/blessed
 	name = "blessed water"
-	description = "A gift of Devotion. Very slightly heals wounds."
+	description = "A gift of Devotion. Heals the body from within, but not physical wounds."
 
 /datum/reagent/water/blessed/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if (M.mob_biotypes & MOB_UNDEAD)
-		M.adjustFireLoss(0.5*REM)
+		M.adjustFireLoss(1.5*REM)
 	else
-		M.adjustBruteLoss(-0.1*REM)
-		M.adjustFireLoss(-0.1*REM)
-		M.adjustOxyLoss(-0.1, 0)
-		var/list/our_wounds = M.get_wounds()
-		if (LAZYLEN(our_wounds))
-			var/upd = M.heal_wounds(1)
-			if (upd)
-				M.update_damage_overlays()
+		// Heals internal damage very well like potions
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = min(M.blood_volume+10, BLOOD_VOLUME_NORMAL)
+		M.adjustToxLoss(-3*REM, 0)
+		M.adjustOxyLoss(-3*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
+		M.adjustCloneLoss(-3*REM, 0)
+		// Does NOT heal brute or fire damage
 
 /datum/reagent/water/blessed/on_mob_metabolize(mob/living/L)
 	..()
@@ -246,7 +246,7 @@
 
 /datum/reagent/water/cursed
 	name = "cursed water"
-	description = "A gift of Devotion. Very slightly heals wounds of the dead and the enlightened."
+	description = "A gift of Devotion. Heals the body from within, but not physical wounds."
 
 /datum/reagent/water/cursed/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -254,24 +254,24 @@
 	if(istype(M,/mob/living/carbon/human/))
 		M_hum = M
 	if((M.mob_biotypes & MOB_UNDEAD) || (M_hum.patron.undead_hater == FALSE))
-		M.adjustBruteLoss(-0.1*REM)
-		M.adjustFireLoss(-0.1*REM)
-		M.adjustOxyLoss(-0.1, 0)
-		var/list/our_wounds = M.get_wounds()
-		if (LAZYLEN(our_wounds))
-			var/upd = M.heal_wounds(1)
-			if (upd)
-				M.update_damage_overlays()
+		// Heals internal damage very well like potions for undead/dark patrons
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = min(M.blood_volume+10, BLOOD_VOLUME_NORMAL)
+		M.adjustToxLoss(-3*REM, 0)
+		M.adjustOxyLoss(-3*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
+		M.adjustCloneLoss(-3*REM, 0)
+		// Does NOT heal brute or fire damage
 	else
-		M.adjustBruteLoss(-0.1*REM)
-		M.adjustFireLoss(-0.1*REM)
-		M.adjustOxyLoss(-0.1, 0)
-		var/list/our_wounds = M.get_wounds()
-		if (LAZYLEN(our_wounds))
-			var/upd = M.heal_wounds(1)
-			if (upd)
-				M.update_damage_overlays()
-		M.stamina_add(0.5*REM)
+		// Heals less for divine worshippers, but still internal damage only
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = min(M.blood_volume+5, BLOOD_VOLUME_NORMAL)
+		M.adjustToxLoss(-1.5*REM, 0)
+		M.adjustOxyLoss(-1.5*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5*REM)
+		M.adjustCloneLoss(-1.5*REM, 0)
+		// Does NOT heal brute or fire damage
+		M.stamina_add(1*REM)
 
 /obj/item/melee/touch_attack/orison/proc/create_water(atom/thing, mob/living/carbon/human/user)
 	// normally we wouldn't use fatigue here to keep in line w/ other holy magic, but we have to since water is a persistent resource

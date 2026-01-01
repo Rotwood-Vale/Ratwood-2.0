@@ -277,6 +277,7 @@
 	var/setparrytime = 12
 	var/dodgetime = 12
 	var/magearmor = 0
+	var/scalearmor = 0
 
 	var/last_dodge = 0
 	var/last_parry = 0
@@ -315,3 +316,8 @@
 	// The last tick where we manually moved, or clicked on something in-world. Useful for preventing abuse of mobs with AFK players.
 	var/last_client_interact = 0
 	var/hanged = FALSE
+
+	var/datum/weakref/offered_item_ref
+
+	/// cooldown for the next time this person can offer
+	COOLDOWN_DECLARE(offer_cooldown)

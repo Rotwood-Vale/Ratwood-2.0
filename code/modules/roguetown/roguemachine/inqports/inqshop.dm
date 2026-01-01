@@ -70,11 +70,10 @@
 	new /obj/item/needle(src)
 	new /obj/item/needle(src)
 	new /obj/item/needle(src)
-	new /obj/item/natural/bundle/cloth/roll(src)
-	new /obj/item/natural/bundle/cloth/roll(src)
-	new /obj/item/natural/bundle/cloth/roll(src)
-	new /obj/item/natural/bundle/cloth/roll(src)
-	new /obj/item/natural/bundle/cloth/roll(src)
+	new /obj/item/natural/bundle/cloth/bandage/full(src)
+	new /obj/item/natural/bundle/cloth/bandage/full(src)
+	new /obj/item/natural/bundle/cloth/bandage/full(src)
+	new /obj/item/natural/bundle/cloth/bandage/full(src)
 
 /datum/inqports/supplies/chains
 	name = "2 Lengths of Chain"

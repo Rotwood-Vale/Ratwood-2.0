@@ -289,7 +289,6 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_ABSOLVER		"CAT_ABSOLVER"		// For Absolver (sub)class
 #define CTAG_COURTAGENT		"CAT_COURTAGENT"	// Court agent classes
 #define CTAG_WRETCH			"CAT_WRETCH"		// Wretch classes untethered from adventurer
-#define CTAG_TRADER			"CAT_TRADER"		// Trader classes untethered from adventurer
 #define CTAG_LSKELETON		"CAT_LSKELETON"		// Lich Fortified Skeleton classes
 #define CTAG_NSKELETON		"CAT_NSKELETON"		// Necromancer Greater Skeleton classes
 #define CTAG_LICKER_WRETCH  "CAT_LICKER_WRETCH" // Licker wretch. Nuff said.
@@ -379,7 +378,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CLASS_CAT_ETRUSCA "Etrusca"
 #define CLASS_CAT_GRENZELHOFT "Grenzelhoft"
 #define CLASS_CAT_NALEDI "Naledi"
-#define CLASS_CAT_RANESHENI "Ranesheni"
+#define CLASS_CAT_ZYBANTU "Zybantu"
 #define CLASS_CAT_AAVNR "Aavnr"
 #define CLASS_CAT_GRONN "Gronn"
 #define CLASS_CAT_OTAVA "Otava"

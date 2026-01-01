@@ -16,6 +16,10 @@
 /datum/intent/spear/thrust/militia
 	penfactor = 40
 
+/datum/intent/spear/thrust/blunted
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+
 /datum/intent/spear/bash
 	name = "bash"
 	blade_class = BCLASS_BLUNT
@@ -112,7 +116,6 @@
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
-
 /datum/intent/rend
 	name = "rend"
 	icon_state = "inrend"
@@ -149,7 +152,7 @@
 /datum/intent/partizan/peel
 	name = "armor peel"
 	icon_state = "inpeel"
-	attack_verb = list("<font color ='#e7e7e7'>strongly peels</font>")
+	attack_verb = list("<font color ='#e7e7e7'>peels</font>")
 	animname = "cut"
 	blade_class = BCLASS_PEEL
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
@@ -158,14 +161,14 @@
 	swingdelay = 0
 	damfactor = 0.01
 	item_d_type = "slash"
-	peel_divisor = 5
+	peel_divisor = 4
 	reach = 2
 
 //Old partizan peel, for the naginata.
 /datum/intent/partizan/peel/nag
-	attack_verb = list("<font color ='#e7e7e7'>peels</font>")
+	attack_verb = list("<font color ='#e7e7e7'>weakly peels</font>")
 	swingdelay = 5
-	peel_divisor = 4
+	peel_divisor = 5
 
 /datum/intent/spear/bash/ranged/quarterstaff
 	damfactor = 1
@@ -398,8 +401,8 @@
 	name = "psydonic spear"
 	desc = "An ornate spear, plated in a ceremonial veneer of silver. The barbs pierce your palm, and - for just a moment - you see red. Never forget that you are why Psydon wept."
 	icon_state = "psyspear"
-	force = 15
-	force_wielded = 25
+	force = 20
+	force_wielded = 30
 	minstr = 11
 	wdefense = 6
 	resistance_flags = FIRE_PROOF	//It's meant to be smacked by a "lamptern", and is special enough to warrant overriding the spear weakness
@@ -416,6 +419,19 @@
 		added_int = 50,\
 		added_def = 2,\
 	)
+
+/obj/item/rogueweapon/spear/psyspear/old
+	name = "enduring spear"
+	desc = "An ornate spear, its silver tarnished by neglect. HE still guides the faithful's hand, if not this weapon."
+	icon_state = "psyspear"
+	force = 15
+	force_wielded = 25
+	is_silver = FALSE
+	smeltresult = /obj/item/ingot/steel
+	color = COLOR_FLOORTILE_GRAY
+
+/obj/item/rogueweapon/spear/psyspear/old/ComponentInitialize()
+	return
 
 /obj/item/rogueweapon/spear/silver
 	name = "silver spear"
@@ -438,21 +454,6 @@
 		added_int = 50,\
 		added_def = 2,\
 	)
-
-/obj/item/rogueweapon/spear/psyspear/old
-	name = "enduring spear"
-	desc = "An ornate spear, its silver tarnished by neglect. HE still guides the faithful's hand, if not this weapon."
-	icon_state = "psyspear"
-	force = 20
-	force_wielded = 30
-	minstr = 8
-	wdefense = 5
-	is_silver = FALSE
-	smeltresult = /obj/item/ingot/steel
-	color = COLOR_FLOORTILE_GRAY
-
-/obj/item/rogueweapon/spear/psyspear/old/ComponentInitialize()
-	return
 
 /obj/item/rogueweapon/spear/getonmobprop(tag)
 	. = ..()
@@ -1265,6 +1266,34 @@
 			if("wielded")
 				return list("shrink" = 0.8,"sx" = 8,"sy" = 0,"nx" = -1,"ny" = 0,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
+//Only a 'woodenstaff' for the purpose of CDR on spells.
+/obj/item/rogueweapon/woodstaff/sojourner
+	name = "sojourner staff"
+	desc = "What remains of an old psydonic spear. The tip is blunted, with both barbs and trident-like head removed. \
+	It serves a more noble purpose, now, as a sojourner's casting implement. Though, with enough force, one may still drive the tip forward."
+	icon_state = "psystaff"//Temp
+	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)
+	gripped_intents = list(/datum/intent/spear/thrust/blunted, /datum/intent/mace/smash/wood/ranged, /datum/intent/special/magicarc)
+	force = 18
+	force_wielded = 20//Worse than just using a knife, really, despite the range.
+	thrown_bclass = BCLASS_STAB
+	throwforce = 20
+	max_integrity = 150
+	max_blade_int = 180
+	smeltresult = /obj/item/ingot/silverblessed
+	is_silver = TRUE
+
+/obj/item/rogueweapon/woodstaff/sojourner/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
 /obj/item/rogueweapon/woodstaff/quarterstaff
 	name = "wooden quarterstaff"
 	desc = "A staff that makes any journey easier. Durable and swift, capable of bludgeoning stray volves and ruffians alike. Its length allow it to be used for a thrusting attack."
@@ -1474,6 +1503,20 @@
 	icon_state = "assegai_steel"
 	gripsprite = FALSE
 
+/obj/item/rogueweapon/spear/nomad
+	name = "nomad spear"
+	desc = "An odd sort of spear. No amount of further leverage will help, for you've all you need in one hand. \
+	Weighted poorly to a mind yet untrained in the use of it. \
+	All the same, it's a reinforcement for the fighting style of Dunewell's nomads. A shield over the arm, a spear in the hand."
+	icon_state = "nomadspear"//Temp sprite.
+	force = 25
+	minstr = 6//-2
+	max_blade_int = 230
+	max_integrity = 250
+	possible_item_intents = list(SPEAR_THRUST, SPEAR_CUT, SPEAR_BASH)
+	gripped_intents = null
+	gripsprite = FALSE
+	smeltresult = /obj/item/ingot/steel
 
 /////////////////////
 // Special Weapon! //
@@ -1578,3 +1621,26 @@
 		added_int = 0,\
 		added_def = 0,\
 	)
+
+
+//Elven weapons sprited and added by Jam
+
+/obj/item/rogueweapon/greatsword/elf
+	possible_item_intents = list(/datum/intent/sword/chop,/datum/intent/sword/strike) //bash is for nonlethal takedowns, only targets limbs
+	// Design Intent: It is pretty purely a two-handed weapon. In one hand it's a bit clumsy.
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/zwei, /datum/intent/sword/strike/bad)
+	alt_intents = list(null)//can't be alt-gripped. Ought to compensate for that.
+	name = "elven curveblade"
+	desc = "The Elven Curveblade is a traditional weapon, its practice as much a dance as a method of death. Flowing like the water's current, let its path lead to your enemy's throat."
+	icon_state = "elfcurveblade"
+	wlength = WLENGTH_LONG//less reach than greatsword!
+	minstr = 7//lighter
+	wdefense = 8//better defence than greatsword
+	sellprice = 60
+
+
+/obj/item/rogueweapon/spear/naginata/elf
+	name = "elven swordspear"
+	desc = "An elven weapon that combines the elegant sweeping blade typical of elven design with a lengthy handle. The true guardian of the forest realm."
+	icon_state = "elfglaive"
+	sellprice = 60

@@ -61,11 +61,11 @@
 /datum/crafting_recipe/roguetown/engineering/distiller
 	name = "copper distiller"
 	result = /obj/structure/fermentation_keg/distiller
-	reqs = list(/obj/item/ingot/copper = 2, /obj/item/roguegear/bronze = 1)
+	reqs = list(/obj/item/rogueore/copper = 2, /obj/item/reagent_containers/glass/bucket/pot/stone = 1) // changed to be craftable by cooks and provisoners. this is rarely ever used.
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	craftdiff = 1 // so if above average int you can craft it without having to dedicate to artificering shit.
 
 /datum/crafting_recipe/roguetown/engineering/freedomchair
 	name = "LIBERTAS"

@@ -202,22 +202,7 @@
 					for(var/mob/living/carbon/human/A in bandmates)
 						A.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)
 
-/obj/item/rogue/instrument/lute
-	name = "lute"
-	desc = "Its graceful curves were designed to weave joyful melodies."
-	icon_state = "lute"
-	song_list = list("A Knight's Return" = 'sound/music/instruments/lute (1).ogg',
-	"Amongst Fare Friends" = 'sound/music/instruments/lute (2).ogg',
-	"The Road Traveled by Few" = 'sound/music/instruments/lute (3).ogg',
-	"Tip Thine Tankard" = 'sound/music/instruments/lute (4).ogg',
-	"A Reed On the Wind" = 'sound/music/instruments/lute (5).ogg',
-	"Jests On Steel Ears" = 'sound/music/instruments/lute (6).ogg',
-	"Merchant in the Mire" = 'sound/music/instruments/lute (7).ogg',
-	"The Power" = 'modular_azurepeak/sound/music/instruments/lute (8).ogg', //Baldur's Gate 3 Song
-	"Bard Dance" = 'modular_azurepeak/sound/music/instruments/lute (9).ogg', //Baldur's Gate 3 Song
-	"Old Time Battles" = 'modular_azurepeak/sound/music/instruments/lute (10).ogg') //Baldur's Gate 3 Song
-
-/obj/item/rogue/instrument/accord
+/obj/item/rogue/instrument/accord //made all the instruments in alphabetical order bcuz why not?
 	name = "accordion"
 	desc = "A harmonious vessel of nostalgia and celebration."
 	icon_state = "accordion"
@@ -228,6 +213,32 @@
 	"Moonlight Carnival" = 'sound/music/instruments/accord (5).ogg',
 	"'Ye Best Be Goin'" = 'sound/music/instruments/accord (6).ogg',
 	"Beloved Blue" = 'sound/music/instruments/accord (7).ogg')
+
+/obj/item/rogue/instrument/drum
+	name = "drum"
+	desc = "Fashioned from taut skins across a sturdy frame, pulses like a giant heartbeat."
+	icon_state = "drum"
+	song_list = list("Barbarian's Moot" = 'sound/music/instruments/drum (1).ogg',
+	"Muster the Wardens" = 'sound/music/instruments/drum (2).ogg',
+	"The Earth That Quakes" = 'sound/music/instruments/drum (3).ogg',
+	"The Power" = 'sound/music/instruments/drum (4).ogg', //BG3 Song
+	"Bard Dance" = 'sound/music/instruments/drum (5).ogg', // BG3 Song
+	"Old Time Battles" = 'sound/music/instruments/drum (6).ogg') // BG3 Song
+
+/obj/item/rogue/instrument/flute
+	name = "flute"
+	desc = "A row of slender hollow tubes of varying lengths that produce a light airy sound when blown across."
+	icon_state = "flute"
+	song_list = list("Half-Dragon's Ten Mammon" = 'sound/music/instruments/flute (1).ogg',
+	"'The Local Favorite'" = 'sound/music/instruments/flute (2).ogg',
+	"Rous in the Cellar" = 'sound/music/instruments/flute (3).ogg',
+	"Her Boots, So Incandescent" = 'sound/music/instruments/flute (4).ogg',
+	"Moondust Minx" = 'sound/music/instruments/flute (5).ogg',
+	"Quest to the Ends" = 'sound/music/instruments/flute (6).ogg',
+	"Spit Shine" = 'sound/music/instruments/flute (7).ogg',
+	"The Power" = 'modular_azurepeak/sound/music/instruments/flute (8).ogg', //Baldur's Gate 3 Song
+	"Bard Dance" = 'modular_azurepeak/sound/music/instruments/flute (9).ogg', //Baldur's Gate 3 Song
+	"Old Time Battles" = 'modular_azurepeak/sound/music/instruments/flute (10).ogg') //Baldur's Gate 3 Song
 
 /obj/item/rogue/instrument/guitar
 	name = "guitar"
@@ -261,32 +272,6 @@
 	"Corridors of Time" = 'sound/music/instruments/harb (7).ogg',
 	"Determination" = 'sound/music/instruments/harb (8).ogg')
 
-/obj/item/rogue/instrument/flute
-	name = "flute"
-	desc = "A row of slender hollow tubes of varying lengths that produce a light airy sound when blown across."
-	icon_state = "flute"
-	song_list = list("Half-Dragon's Ten Mammon" = 'sound/music/instruments/flute (1).ogg',
-	"'The Local Favorite'" = 'sound/music/instruments/flute (2).ogg',
-	"Rous in the Cellar" = 'sound/music/instruments/flute (3).ogg',
-	"Her Boots, So Incandescent" = 'sound/music/instruments/flute (4).ogg',
-	"Moondust Minx" = 'sound/music/instruments/flute (5).ogg',
-	"Quest to the Ends" = 'sound/music/instruments/flute (6).ogg',
-	"Spit Shine" = 'sound/music/instruments/flute (7).ogg',
-	"The Power" = 'modular_azurepeak/sound/music/instruments/flute (8).ogg', //Baldur's Gate 3 Song
-	"Bard Dance" = 'modular_azurepeak/sound/music/instruments/flute (9).ogg', //Baldur's Gate 3 Song
-	"Old Time Battles" = 'modular_azurepeak/sound/music/instruments/flute (10).ogg') //Baldur's Gate 3 Song
-
-/obj/item/rogue/instrument/drum
-	name = "drum"
-	desc = "Fashioned from taut skins across a sturdy frame, pulses like a giant heartbeat."
-	icon_state = "drum"
-	song_list = list("Barbarian's Moot" = 'sound/music/instruments/drum (1).ogg',
-	"Muster the Wardens" = 'sound/music/instruments/drum (2).ogg',
-	"The Earth That Quakes" = 'sound/music/instruments/drum (3).ogg',
-	"The Power" = 'sound/music/instruments/drum (4).ogg', //BG3 Song
-	"Bard Dance" = 'sound/music/instruments/drum (5).ogg', // BG3 Song
-	"Old Time Battles" = 'sound/music/instruments/drum (6).ogg') // BG3 Song
-
 /obj/item/rogue/instrument/hurdygurdy
 	name = "hurdy-gurdy"
 	desc = "A knob-driven, wooden string instrument that reminds you of the oceans far."
@@ -297,6 +282,65 @@
 	"Becalmed" = 'sound/music/instruments/hurdy (4).ogg',
 	"The Bloody Throne" = 'sound/music/instruments/hurdy (5).ogg',
 	"We Shall Sail Together" = 'sound/music/instruments/hurdy (6).ogg')
+
+/obj/item/rogue/instrument/lute
+	name = "lute"
+	desc = "Its graceful curves were designed to weave joyful melodies."
+	icon_state = "lute"
+	song_list = list("A Knight's Return" = 'sound/music/instruments/lute (1).ogg',
+	"Amongst Fare Friends" = 'sound/music/instruments/lute (2).ogg',
+	"The Road Traveled by Few" = 'sound/music/instruments/lute (3).ogg',
+	"Tip Thine Tankard" = 'sound/music/instruments/lute (4).ogg',
+	"A Reed On the Wind" = 'sound/music/instruments/lute (5).ogg',
+	"Jests On Steel Ears" = 'sound/music/instruments/lute (6).ogg',
+	"Merchant in the Mire" = 'sound/music/instruments/lute (7).ogg',
+	"The Power" = 'modular_azurepeak/sound/music/instruments/lute (8).ogg', //Baldur's Gate 3 Song
+	"Bard Dance" = 'modular_azurepeak/sound/music/instruments/lute (9).ogg', //Baldur's Gate 3 Song
+	"Old Time Battles" = 'modular_azurepeak/sound/music/instruments/lute (10).ogg') //Baldur's Gate 3 Song
+
+/obj/item/rogue/instrument/psyaltery
+	name = "psyaltery"
+	desc = "A traditional form of boxed zither or box-harp that may be played plucked, with a plectrum or with hammers. They are particularly associated with divine beings, aasimars and liturgies."
+	icon_state = "psyaltery"
+	song_list = list(
+	"Disciples Tower" = 'sound/music/instruments/psyaltery (1).ogg',
+	"Green Sleeves" = 'sound/music/instruments/psyaltery (2).ogg',
+	"Midyear Melancholy" = 'sound/music/instruments/psyaltery (3).ogg',
+	"Santa Psydonia" = 'sound/music/instruments/psyaltery (4).ogg',
+	"Le Venardine" = 'sound/music/instruments/psyaltery (5).ogg',
+	"Azurea Fair" = 'sound/music/instruments/psyaltery (6).ogg',
+	"Amoroso" = 'sound/music/instruments/psyaltery (7).ogg',
+	"Lupian's Lullaby" = 'sound/music/instruments/psyaltery (8).ogg',
+	"White Wine Before Breakfast" = 'sound/music/instruments/psyaltery (9).ogg',
+	"Chevalier de Naledi" = 'sound/music/instruments/psyaltery (10).ogg')
+
+/obj/item/rogue/instrument/shamisen
+	name = "shamisen"
+	desc = "The shamisen, or simply «three strings», is an kazengunese stringed instrument with a washer, which is usually played with the help of a bachi."
+	icon_state = "shamisen"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	song_list = list(
+	"Cursed Apple" = 'sound/music/instruments/shamisen (1).ogg',
+	"Fire Dance" = 'sound/music/instruments/shamisen (2).ogg',
+	"Lute" = 'sound/music/instruments/shamisen (3).ogg',
+	"Tsugaru Ripple" = 'sound/music/instruments/shamisen (4).ogg',
+	"Tsugaru" = 'sound/music/instruments/shamisen (5).ogg',
+	"Season" = 'sound/music/instruments/shamisen (6).ogg',
+	"Parade" = 'sound/music/instruments/shamisen (7).ogg',
+	"Koshiro" = 'sound/music/instruments/shamisen (8).ogg')
+
+/obj/item/rogue/instrument/trumpet
+	name = "trumpet"
+	desc = "A long brass tube twisted around with a flared end. It has a few valves to press on the top."
+	icon_state = "trumpet"
+	song_list = list("Royal Entrance" = 'sound/music/instruments/trumpet (1).ogg',
+	"Royal Exit" = 'sound/music/instruments/trumpet (2).ogg',
+	"Royal News" = 'sound/music/instruments/trumpet (3).ogg',
+	"Royal Fanfare" = 'sound/music/instruments/trumpet (4).ogg',
+	"Royal Fanfare 2" = 'sound/music/instruments/trumpet (5).ogg',
+	"Royal Wedding" = 'sound/music/instruments/trumpet (6).ogg', //It has a little bit of organ in the background that I couldn't completely remove
+	"Honoring the Fallen" = 'sound/music/instruments/trumpet (7).ogg')
 
 /obj/item/rogue/instrument/viola
 	name = "viola"
@@ -331,48 +375,3 @@
 	"Bard Dance (Whistling)" = 'sound/music/instruments/vocalsx (3).ogg',
 	"Old Time Battles (Whistling)" = 'sound/music/instruments/vocalsx (4).ogg')
 
-/obj/item/rogue/instrument/shamisen
-	name = "shamisen"
-	desc = "The shamisen, or simply «three strings», is an kazengunese stringed instrument with a washer, which is usually played with the help of a bachi."
-	icon_state = "shamisen"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	song_list = list(
-	"Cursed Apple" = 'sound/music/instruments/shamisen (1).ogg',
-	"Fire Dance" = 'sound/music/instruments/shamisen (2).ogg',
-	"Lute" = 'sound/music/instruments/shamisen (3).ogg',
-	"Tsugaru Ripple" = 'sound/music/instruments/shamisen (4).ogg',
-	"Tsugaru" = 'sound/music/instruments/shamisen (5).ogg',
-	"Season" = 'sound/music/instruments/shamisen (6).ogg',
-	"Parade" = 'sound/music/instruments/shamisen (7).ogg',
-	"Koshiro" = 'sound/music/instruments/shamisen (8).ogg')
-
-/obj/item/rogue/instrument/trumpet
-	name = "trumpet"
-	desc = "A long brass tube twisted around with a flared end. It has a few valves to press on the top."
-	icon_state = "trumpet"
-	song_list = list("Royal Entrance" = 'sound/music/instruments/trumpet (1).ogg',
-	"Royal Exit" = 'sound/music/instruments/trumpet (2).ogg',
-	"Royal News" = 'sound/music/instruments/trumpet (3).ogg',
-	"Royal Fanfare" = 'sound/music/instruments/trumpet (4).ogg',
-	"Royal Fanfare 2" = 'sound/music/instruments/trumpet (5).ogg',
-	"Royal Wedding" = 'sound/music/instruments/trumpet (6).ogg', //It has a little bit of organ in the background that I couldn't completely remove
-	"Honoring the Fallen" = 'sound/music/instruments/trumpet (7).ogg')
-
-
-
-/obj/item/rogue/instrument/psyaltery
-	name = "psyaltery"
-	desc = "A traditional form of boxed zither or box-harp that may be played plucked, with a plectrum or with hammers. They are particularly associated with divine beings, aasimars and liturgies."
-	icon_state = "psyaltery"
-	song_list = list(
-	"Disciples Tower" = 'sound/music/instruments/psyaltery (1).ogg',
-	"Green Sleeves" = 'sound/music/instruments/psyaltery (2).ogg',
-	"Midyear Melancholy" = 'sound/music/instruments/psyaltery (3).ogg',
-	"Santa Psydonia" = 'sound/music/instruments/psyaltery (4).ogg',
-	"Le Venardine" = 'sound/music/instruments/psyaltery (5).ogg',
-	"Azurea Fair" = 'sound/music/instruments/psyaltery (6).ogg',
-	"Amoroso" = 'sound/music/instruments/psyaltery (7).ogg',
-	"Lupian's Lullaby" = 'sound/music/instruments/psyaltery (8).ogg',
-	"White Wine Before Breakfast" = 'sound/music/instruments/psyaltery (9).ogg',
-	"Chevalier de Naledi" = 'sound/music/instruments/psyaltery (10).ogg')

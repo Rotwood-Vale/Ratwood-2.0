@@ -15,7 +15,7 @@
 	var/trap_damage = 50 // baseline trap damage, reduced by armor checks. Wear your PPE in dungeons
 	var/def_zone = BODY_ZONE_CHEST //
 	var/used_time = 14 // interaction time for disabling traps, scales down with trap skill
- 
+
 
 	var/list/static/ignore_typecache
 	var/list/mob/immune_minds = list() //unused and a bit weird, helpful for making mobs immune to the traps without TRAIT_LIGHT_STEP
@@ -436,10 +436,12 @@
 	trap_damage = 60
 	alpha = 60
 	charges = 2 //feel free to add more than 1 use
+	checks_antimagic = FALSE
 
 	var/tmp/list/personal_reveal_images = list()
 	var/bandit_reveal_alpha = 140
 	var/others_reveal_alpha = 35
+	var/retinue_planted = FALSE//Is this a retinue trap? Inverses the checks for who triggers.
 
 /obj/structure/trap/bogtrap/flare()
 	alpha = 200
@@ -464,17 +466,29 @@
 	var/assigned = lowertext("[H.mind.assigned_role]")
 	var/special  = lowertext("[H.mind.special_role]")
 
-	if(assigned == "bandit" || special == "bandit")
-		return TRUE
+//We don't care about anyone but the MAAs/Wardens.
+	if(retinue_planted)
+		if(assigned == "man at arms")
+			return TRUE
 
-	if(assigned == "wretch")
-		return TRUE
+		if(assigned == "bogguard")
+			return TRUE
 
-	if(special == "lich" || special == "vampire lord")
-		return TRUE
+		if(assigned == "warden")
+			return TRUE
+//Otherwise...
+	else
+		if(assigned == "bandit" || special == "bandit")
+			return TRUE
 
-	if(assigned == "bogguard")
-		return TRUE
+		if(assigned == "wretch")
+			return TRUE
+
+		if(special == "lich" || special == "vampire lord")
+			return TRUE
+
+		if(assigned == "bogguard")
+			return TRUE
 
 	return FALSE
 
@@ -500,9 +514,15 @@
 	var/assigned = lowertext("[H.mind.assigned_role]")
 	var/special  = lowertext("[H.mind.special_role]")
 
-	return (assigned == "bandit" || special == "bandit" \
-		|| assigned == "bogguard" \
-		|| assigned == "warden" || special == "warden")
+//Is this hacky? Yeah. Does it work? I guess.
+	if(retinue_planted)
+		return (assigned == "man at arms" \
+			|| assigned == "bogguard" \
+			|| assigned == "warden" || special == "warden")
+	else
+		return (assigned == "bandit" || special == "bandit" \
+			|| assigned == "bogguard" \
+			|| assigned == "warden" || special == "warden")
 
 /obj/structure/trap/bogtrap/proc/show_personal_reveal(mob/user)
 	if(!user || !user.client)
@@ -545,19 +565,17 @@
 	. = ..()
 
 /obj/structure/trap/bogtrap/freeze
-    name = "trapbog (frost)"
-    checks_antimagic = FALSE
+	name = "trapbog (frost)"
 
 /obj/structure/trap/bogtrap/freeze/trap_effect(mob/living/L)
-    to_chat(L, span_danger("<B>You're frozen solid!</B>"))
-    L.Paralyze(50)
-    L.adjust_bodytemperature(-300)
-    playsound(src, 'sound/misc/explode/bottlebomb (1).ogg', 60, TRUE)
+	to_chat(L, span_danger("<B>You're frozen solid!</B>"))
+	L.Paralyze(50)
+	L.adjust_bodytemperature(-300)
+	playsound(src, 'sound/misc/explode/bottlebomb (1).ogg', 60, TRUE)
 
 
 /obj/structure/trap/bogtrap/bomb
 	name = "trapbog (blast)"
-	checks_antimagic = FALSE
 
 /obj/structure/trap/bogtrap/bomb/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>A buried charge detonates!</B>"))
@@ -583,7 +601,7 @@
 				continue
 			new /obj/structure/glowshroom(T)
 
- //Poison tr*p
+//Poison tr*p
 
 /obj/structure/trap/bogtrap/poison
 	name = "trapbog (toxic)"
@@ -594,3 +612,37 @@
 	L.Paralyze(30)
 	new /obj/effect/particle_effect/smoke/poison_gas(get_turf(src))
 	playsound(src, 'sound/items/beartrap.ogg', 200, TRUE)
+
+//Rous nest. Spawns a rather large rous.
+
+/obj/structure/trap/bogtrap/rous
+	name = "trapbog (rous)"
+	charges = 1
+	retinue_planted = TRUE
+
+/obj/structure/trap/bogtrap/rous/trap_effect(mob/living/L)
+	to_chat(L, span_danger("<B>You step atop a hidden cage!</B>"))
+	playsound(src, 'sound/items/beartrap.ogg', 200, TRUE)
+
+	L.AdjustKnockdown(5)
+	new /mob/living/simple_animal/hostile/retaliate/rogue/bigrat(get_turf(src))
+
+//Flare. Flashbangs viewiers. Alerts folks. Alarm trap, basically.
+//A better, RP friendly blind gas.
+
+/obj/structure/trap/bogtrap/flare_trap
+	name = "trapbog (flare)"
+	charges = 1
+	retinue_planted = TRUE
+
+/obj/structure/trap/bogtrap/flare_trap/trap_effect(mob/living/L)
+	playsound(src, 'sound/effects/hood_ignite.ogg', 200, TRUE)
+
+//The poor fools in view.
+	if(L in oviewers(7, src))
+		L.adjust_blurriness(12)
+		L.adjust_blindness(3)
+		L.emote("scream")
+//Church bell range. A bit far? Sure. Don't step on it.
+	loud_message("A flare can be seen shooting into the air, followed by a sharp crack", hearing_distance = 150)
+//The entire town knows you're here, now, buddy.

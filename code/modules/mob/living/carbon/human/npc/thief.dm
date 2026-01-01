@@ -127,6 +127,19 @@
 	l_hand = /obj/item/rogueweapon/huntingknife/idagger
 	if(prob(50))
 		l_hand = /obj/item/rogueweapon/huntingknife/copper
+	belt = /obj/item/storage/belt/rogue/leather/
+	if(prob(50))
+		beltl = /obj/item/lockpick
+	if(prob(10))
+		beltl = /obj/item/lockpickring/mundane
+	if(prob(80))
+		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+	if(prob(30))
+		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(20))
+		beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
+	if(prob(5))
+		id = /obj/item/clothing/ring/gold
 	H.STASTR = 11
 	H.STASPD = 16
 	H.STACON = 11

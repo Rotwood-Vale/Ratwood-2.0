@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(stress_messages, world.file2list("strings/rt/stress_messages.tx
 		return
 	if (stat != CONSCIOUS) // oblivion preserves our stress, for better or worse. (read: life optimizations weewoo)
 		return
-	var/new_stress = 0
+	var/new_stress = get_stress_amount()
 	for(var/stressor_type in stressors)
 		var/datum/stressevent/event = stressors[stressor_type]
 		if(event.time_added + event.timer > world.time)

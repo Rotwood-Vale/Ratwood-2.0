@@ -28,9 +28,8 @@
 		/datum/advclass/veteran/scout,
 		/datum/advclass/veteran/spy
 	)
-
-/datum/outfit/job/roguetown/captain
-	job_bitflag = BITFLAG_ROYALTY | BITFLAG_GARRISON	//Not a noble per-say but not really garrison either. So both, you are a courtier of sorts afterall + combat
+	job_traits = list(TRAIT_STEELHEARTED)
+	virtue_restrictions = list(/datum/virtue/combat/combat_aware)//given combat aware if old. Might hurt middle-aged vets, but middle aged vets don't suffer stat losses like old vets do
 
 /datum/job/roguetown/veteran/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
@@ -53,7 +52,7 @@
 	cmode_music = 'sound/music/cmode/towner/combat_retired.ogg'
 
 	category_tags = list(CTAG_VETERAN)
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_STR = 1,
@@ -109,6 +108,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/maces, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 5, TRUE)
 		H.change_stat(STATKEY_WIL, 1)
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 
 	H.adjust_blindness(-3)
 	if(H.mind)
@@ -129,7 +129,7 @@
 	outfit = /datum/outfit/job/roguetown/vet/footman
 
 	category_tags = list(CTAG_VETERAN)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
 		STATKEY_CON = 2,
 		STATKEY_INT = 2,
@@ -187,6 +187,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/maces, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/axes, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 5, TRUE)
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 	H.verbs |= /mob/proc/haltyell
 
 /datum/advclass/veteran/calvaryman
@@ -195,7 +196,7 @@
 	outfit = /datum/outfit/job/roguetown/vet/calvaryman
 
 	category_tags = list(CTAG_VETERAN)
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_NOBLE)
 	subclass_stats = list(
 		STATKEY_CON = 2,
 		STATKEY_WIL = 2,
@@ -251,6 +252,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 5, TRUE)
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 	H.verbs |= /mob/proc/haltyell
 
 	H.adjust_blindness(-3)
@@ -282,7 +284,7 @@
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	category_tags = list(CTAG_VETERAN)
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list(
 		STATKEY_WIL = 3,// two handed weapons require a LOT of stamina.
 		STATKEY_STR = 2,
@@ -341,6 +343,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/axes, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 4, TRUE) // two handed weapons require a LOT of stamina.
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 
 	H.adjust_blindness(-3)
 	if(H.mind)
@@ -365,7 +368,7 @@
 	outfit = /datum/outfit/job/roguetown/vet/scout
 
 	category_tags = list(CTAG_VETERAN)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_WOODSMAN, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_WOODSMAN)
 	subclass_stats = list(
 		STATKEY_PER = 3,// you are OLD you have OLD EYES. this is to counter that debuff so you can be OBSERVANT. You sacrifice your strength and armor, so.
 		STATKEY_INT = 2,
@@ -425,6 +428,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/tracking, 6, TRUE)
 		H.change_stat(STATKEY_PER, 2)
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 	H.verbs |= /mob/proc/haltyell
 	H.cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg' // so apparently this works for veteran, but not for advents. i dont know why.
 
@@ -435,7 +439,7 @@
 	subclass_languages = list(/datum/language/thievescant)
 	cmode_music = 'sound/music/cmode/nobility/combat_spymaster.ogg'
 	category_tags = list(CTAG_VETERAN)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CICERONE, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CICERONE)
 	subclass_stats = list(
 		STATKEY_INT = 3,// you are int-maxxing, especially if you go old.
 		STATKEY_PER = 1,
@@ -498,4 +502,5 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 6, TRUE)
 		H.change_stat(STATKEY_SPD, 1) // You get -2 speed from being old. You are still in the negative stat wise from picking old.
 		H.change_stat(STATKEY_PER, 2) // You get -2 perception from being old. I want you to at least have a positive perception, to represent that you're observant. The highest perception you can get with this is a 13, so I think we'll be okayed.
+		ADD_TRAIT(H, TRAIT_COMBAT_AWARE, TRAIT_GENERIC)
 	H.verbs |= /mob/proc/haltyell

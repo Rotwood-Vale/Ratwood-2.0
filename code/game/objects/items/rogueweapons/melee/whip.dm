@@ -183,11 +183,12 @@
 	)
 
 /obj/item/rogueweapon/whip/spiderwhip
-	force = 22
 	name = "lashkiss whip"
-	desc = "A dark whip with segmented, ashen spines for a base. Claimed to be hewn from dendrified prisoners of terror."
+	desc = "A drow whip of crimson cordage with a fierce-looking razor of blacksteel at its tip. The grip sports a metal knuckle guard perfect for clobbering surface dwellers in the jaw."
 	icon_state = "spiderwhip"
-	minstr = 6
+	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus. 
+	force = 22
+	minstr = 10 //meant for a medium armor mounted soldier. With the +2 from the drow merc statspread, it should cover most statpack silliness save for Wary.  
 
 /obj/item/rogueweapon/whip/bronze
 	name = "bronze whip"

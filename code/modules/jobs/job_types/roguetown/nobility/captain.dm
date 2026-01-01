@@ -144,51 +144,7 @@
 				r_hand = /obj/item/rogueweapon/halberd/capglaive
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 
-		var/armors = list(
-			"Brigandine",
-			"Coat of Plates",
-			"Steel Cuirass",
-			"Captain's armor"
-		)
-		var/armorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
-		switch(armorchoice)
-			if("Brigandine")
-				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/retinue
-				pants = /obj/item/clothing/under/roguetown/chainlegs
-				cloak = /obj/item/clothing/cloak/tabard/retinue/captain
-			if("Coat of Plates")
-				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/coatplates
-				pants = /obj/item/clothing/under/roguetown/chainlegs
-				cloak = /obj/item/clothing/cloak/tabard/retinue/captain
-			if("Fluted Cuirass")
-				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
-				pants = /obj/item/clothing/under/roguetown/chainlegs
-				cloak = /obj/item/clothing/cloak/tabard/retinue/captain
-			if("Captain's armor")
-				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/captain
-				pants = /obj/item/clothing/under/roguetown/chainlegs/captain
-				head = /obj/item/clothing/head/roguetown/helmet/heavy/captain
-				cloak = /obj/item/clothing/cloak/captain
 
-		if(armorchoice == "Captain's armor")
-			return // Get helmet from armor selection
-
-		var/helmets = list(
-			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
-			"Guard Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
-			"Barred Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff,
-			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
-			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
-			"Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
-			"Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
-			"Hounskull Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
-			"Etruscan Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
-			"Slitted Kettle"	= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
-			"None"
-		)
-		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
-		if(helmchoice != "None")
-			head = helmets[helmchoice]
 
 /obj/effect/proc_holder/spell/self/convertrole
 	name = "Recruit Beggar"

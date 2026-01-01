@@ -142,7 +142,7 @@
 		addtimer(CALLBACK(src, PROC_REF(deathtime)), 1 MINUTES)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/proc/deathtime()
-	target.add_atom_colour(newcolor, ADMIN_COLOUR_PRIORITY)
+	src.add_atom_colour(newcolor, ADMIN_COLOUR_PRIORITY)
 	start_take_damage = TRUE
 
 /mob/living/simple_animal/hostile/rogue/skeleton/Life(mob/user)

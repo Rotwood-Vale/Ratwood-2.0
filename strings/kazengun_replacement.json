@@ -1,31 +1,68 @@
 {
     "full": {
-		"Astrata": "Astrataru",
-		"Necra": "Necriko",
-		"Malum": "Malumuke",
-		"Ravox": "Ravoxake",
-		"Pestra": "Pestraka",
-		"Noc": "Nocuishi",
-		"Dendor": "Dendoru",
-		"Abyssor": "Abyssoro",
-		"Eora": "Eori",
-		"Xylix": "Xyliji",
-		"Psydon": "Saidon",
-		"Graggar": "Graggaiyuke",
-		"Matthios": "Matthioko",
-		"Boatha": "Baothumi",
-		"Zizo": "Zizoku"
+		"hello":"kon'nichiwa",
+		"goodbye":"sayonara",
+		"farewell":"saraba",
+		"sorry":"gomen'nasai",
+		"thanks":"arigatō",
+		"yes":"hai",
+		"no":"iie",
+		"duke":"daimyo",
+		"duchess":"daimyo",
+		"duchy":"han",
+		"dukedom":"han",
+		"bishop":"shinpu",
+		"prelate":"shinpu",
+		"church":"kyōkai",
+		"inquisition":"itanjinmon",
+		"inquisitor":"itanjimon-kan",
+		"knight":"kishi",
+		"knights":"kishi",
+		"captain":"taichō",
+		"sergeant":"gunsō",
+		"soldier":"ashigaru",
+		"soldiers":"ashigaru",
+		"cavalry":"kihei",
+		"archer":"shashu",
+		"archers":"shashu",
+		"squire":"jūsha",
+		"squires":"jūsha",
+		"maid":"jochū",
+		"maids":"jochū",
+		"butler":"kajū",
+		"butlers":"kajū",
+		"servant":"geboku",
+		"servants":"geboku",
+		"steward":"shitsuji",
+		"idiot":["baka", "aho"],
+		"jerk":"yarō",
+		"asshole":"kusoyarō",
+		"fucker":"kusoyarō",
+		"dumbass":"bakayarō"
 
     },
     "start": {
 
     },
+
     "end": {
 
     },
-	"multiword": {
 
+	"multiword": {
+		"good morning":"ohayō",
+		"good afternoon":"kon'nichiwa",
+		"good evening":"konbanwa",
+		"thank you":"arigatō gozaimasu",
+		"my apologies":["sumimasen", "mōshiwake arimasen", "mōshiwake gozaimasen", "shitsurei itashimasu"],
+		"fuck off":"fuzakeru na",
+		"shut the fuck up":"damare konoyarō",
+		"damn it":["kuso", "chikushō"],
+		"go to hell":"kutabare",
+		"blood brother":"aniki",
+		"blood sister":"aneki"
 	},
+
     "syllable": {
 
     }

@@ -163,14 +163,14 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/cave/lava)
 "Rl" = (
-/obj/item/roguegear{
+/obj/item/roguegear/bronze{
 	pixel_x = -6
 	},
-/obj/item/roguegear{
+/obj/item/roguegear/bronze{
 	pixel_y = -4;
 	pixel_x = 6
 	},
-/obj/item/roguegear{
+/obj/item/roguegear/bronze{
 	pixel_x = 1;
 	pixel_y = 5
 	},

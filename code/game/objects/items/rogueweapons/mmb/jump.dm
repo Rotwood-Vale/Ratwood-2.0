@@ -25,9 +25,7 @@
 		return FALSE
 
 	if(pulledby && pulledby != src)
-		to_chat(src, span_warning("I'm being grabbed."))
-		changeNext_move(mmb_intent.clickcd)
-		resist_grab()
+		to_chat(src, span_warning("I'm unable to jump while grabbed."))
 		return FALSE
 
 	if(IsOffBalanced())

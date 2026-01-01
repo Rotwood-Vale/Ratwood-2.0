@@ -12,6 +12,7 @@
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	tool_behaviour = TOOL_SHOVEL
+	associated_skill = /datum/skill/combat/maces
 	slot_flags = ITEM_SLOT_BACK
 	swingsound = list('sound/combat/wooshes/blunt/shovel_swing.ogg','sound/combat/wooshes/blunt/shovel_swing2.ogg')
 	drop_sound = 'sound/foley/dropsound/shovel_drop.ogg'
@@ -378,29 +379,29 @@
 		qdel(src)
 
 /obj/item/rogueweapon/shovel/saperka
-	force = 20
-	force_wielded = 30
-	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash, /datum/intent/shovelscoop)
 	name = "Saperka"
-	desc = "A compact, steel-headed spade favored by pioneers. Scarred by a hundred fieldworks, its socket is nicked from prying and the edge has been honed to bite through roots-or armor-in a pinch."
-	icon_state = "shovel"
+	desc = "A compact, steel-headed spade favored by pioneers. \
+	Scarred by a hundred fieldworks, its socket is nicked from prying and the edge has been honed to bite through roots-or armor-in a pinch."
+	force = 12//It has a gripped state. USE IT!!!!!
+	force_wielded = 28//It's not just a better battleaxe, now. God I hate this thing.
+	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash, /datum/intent/shovelscoop)
+	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash)
+	icon_state = "saperka"//Temp sprite. Why was this just the shovel icon? I HATE YOU!!!!
 	icon = 'icons/roguetown/weapons/tools.dmi'
+	sharpness = 100
 	max_blade_int = 260
+	blade_dulling = DULLING_SHAFT_WOOD
 	wlength = WLENGTH_SHORT
 	gripped_intents = null
-	wlength = WLENGTH_SHORT
-	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_NORMAL
-	sharpness = 100
 	smeltresult = /obj/item/ingot/steel
 	minstr = 9
 	wdefense = 5
 	swingsound = BLADEWOOSH_MED
 	associated_skill = /datum/skill/combat/axes
-	demolition_mod = 3.5 // breaks things fast
+	demolition_mod = 2.5//Woodcutter axe level. A whole 1.0 lower than what it was before. I hate you. - Carl
 	resistance_flags = FLAMMABLE
-	blade_dulling = DULLING_SHAFT_WOOD
-	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash)
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
 
 /obj/item/rogueweapon/shovel/saperka/getonmobprop(tag)

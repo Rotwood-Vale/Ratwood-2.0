@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(peasant_positions, list(
 	"Bathhouse Attendant",
 	"Prisoner",
 	"Beggar",
-	"Trader",
+	"Refugee",
 	"Pilgrim",
 ))
 
@@ -178,9 +178,9 @@ GLOBAL_LIST_INIT(roguefight_positions, list(
 
 //This list is used to prevent the duke from stripping nobility from certain jobs that aren't intrinsically a part of the town.
 GLOBAL_LIST_INIT(foreign_positions, list(
-	"Adventurer", 
-	"Mercenary", 
-	"Bandit", 
+	"Adventurer",
+	"Mercenary",
+	"Bandit",
 	"Wretch",
 	"Inquisitor",
 	"Suitor",

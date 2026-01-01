@@ -607,6 +607,7 @@
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+
 /datum/status_effect/debuff/lost_naledi_mask
 	id = "naledimask"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/naledimask
@@ -618,13 +619,22 @@
 	icon_state = "muscles"
 
 /datum/status_effect/debuff/lost_shaman_hood
-	id = "naledimask"
+	id = "shaman_hood"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/shamanhood
 	effectedstats = list(STATKEY_WIL = -3, STATKEY_LCK = -3)
 
 /atom/movable/screen/alert/status_effect/debuff/shamanhood
 	name = "Lost Hood"
 	desc = "The sacred hood is lost. I feel frail and sapped without it."
+
+/datum/status_effect/debuff/lost_oath_ring
+	id = "oath_ring"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/oath_ring
+	effectedstats = list(STATKEY_PER = -2, STATKEY_INT = -2)
+
+/atom/movable/screen/alert/status_effect/debuff/oath_ring
+	name = "Lost Oathmark"
+	desc = "The proof of my oath... it's gone!"
 
 ///////////////////////
 /// CLIMBING STUFF ///

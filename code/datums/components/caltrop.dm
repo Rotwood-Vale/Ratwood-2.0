@@ -22,8 +22,7 @@
 
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		var/is_taur = !!H.get_taur_tail()
-		if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE) || is_taur)
+		if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE) || HAS_TRAIT(H, TRAIT_LAMIAN_TAIL))
 			return
 
 		if(HAS_TRAIT(H, TRAIT_CALTROPIMMUNE))

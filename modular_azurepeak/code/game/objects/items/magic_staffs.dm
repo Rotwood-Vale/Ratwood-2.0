@@ -139,6 +139,10 @@
 	resistance_flags = FIRE_PROOF
 	sellprice = 40
 
+/obj/item/rogueweapon/woodstaff/sojourner
+	cast_time_reduction = EMERALD_CAST_TIME_REDUCTION
+	resistance_flags = FIRE_PROOF
+
 //crafting datums
 
 /datum/crafting_recipe/gemstaff

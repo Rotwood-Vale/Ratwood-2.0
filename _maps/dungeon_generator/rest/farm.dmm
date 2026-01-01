@@ -199,11 +199,11 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/under/tomb/indoors)
 "DI" = (
-/obj/item/roguegear,
+/obj/item/roguegear/bronze,
 /turf/open/floor/rogue/twig,
 /area/rogue/under/tomb/indoors)
 "Eb" = (
-/obj/item/roguegear,
+/obj/item/roguegear/bronze,
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb/cave/wet)
 "EE" = (
@@ -279,7 +279,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/under/tomb/indoors)
 "Pi" = (
-/obj/item/roguegear,
+/obj/item/roguegear/bronze,
 /obj/structure/roguewindow/openclose,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/tomb/indoors)
@@ -297,7 +297,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/cave/wet)
 "TF" = (
-/obj/item/roguegear,
+/obj/item/roguegear/bronze,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/cave/wet)
 "TL" = (

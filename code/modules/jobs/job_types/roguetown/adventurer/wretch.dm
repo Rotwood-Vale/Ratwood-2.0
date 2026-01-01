@@ -12,7 +12,7 @@
 	outfit_female = null
 	display_order = JDO_WRETCH
 	show_in_credits = FALSE
-	min_pq = 50
+	min_pq = 30//60>50>30. What a world. Fingers crossed that folks aren't as bad with it now.
 	max_pq = null
 
 	obsfuscated_job = TRUE
@@ -45,7 +45,8 @@
 		/datum/advclass/wretch/plaguebearer,
 		/datum/advclass/wretch/pyromaniac,
 		/datum/advclass/wretch/vigilante,
-		/datum/advclass/wretch/blackoakwyrm
+		/datum/advclass/wretch/blackoakwyrm,
+		/datum/advclass/wretch/antipope,
 	)
 
 /datum/job/roguetown/wretch/after_spawn(mob/living/L, mob/M, latejoin = TRUE)

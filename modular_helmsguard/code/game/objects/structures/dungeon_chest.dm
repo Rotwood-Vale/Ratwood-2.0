@@ -33,7 +33,7 @@
 
 /obj/structure/closet/crate/chest/dungeon/generic_item
 
-  
+
 /obj/structure/closet/crate/chest/dungeon/generic_item/PopulateContents()
 	..()
 	var/list/loot = list(
@@ -95,8 +95,8 @@
 
 		//medical
 		/obj/item/needle = 40,
-		/obj/item/natural/cloth = 50,
-		/obj/item/natural/bundle/cloth = 30,
+		/obj/item/natural/cloth/bandage = 50,
+		/obj/item/natural/bundle/cloth/bandage/full = 30,
 
 		//weapons
 		/obj/item/rogueweapon/mace = 20,
@@ -255,7 +255,7 @@
 		/obj/item/rogueweapon/sword/iron = 50,
 		/obj/item/rogueweapon/sword/iron/short = 50,
 		/obj/item/rogueweapon/sword/iron/messer = 30,
-		/obj/item/rogueweapon/sword/short/messer = 30,		
+		/obj/item/rogueweapon/sword/short/messer = 30,
 		/obj/item/rogueweapon/sword/falchion = 45,
 		/obj/item/rogueweapon/sword/sabre = 50,
 		/obj/item/rogueweapon/sword/falx = 35,
@@ -369,7 +369,7 @@
 	..()
 	var/list/loot = list(//ingot
 		/obj/item/needle = 30,
-		/obj/item/natural/bundle/cloth = 10,
+		/obj/item/natural/bundle/cloth/bandage/full = 10,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 50,
 		/datum/reagent/medicine/antidote = 30,
 		/datum/reagent/medicine/diseasecure = 10,
@@ -422,7 +422,7 @@
 
 		//others
 		/obj/item/reagent_containers/powder/ozium = 10,
-		/obj/item/reagent_containers/powder/spice = 10,	
+		/obj/item/reagent_containers/powder/spice = 10,
 		/obj/item/reagent_containers/powder/ozium = 10,
 		/obj/item/reagent_containers/powder/moondust = 10,
 		/obj/item/clothing/mask/cigarette/rollie/cannabis = 10,
@@ -559,7 +559,7 @@
 		/obj/item/clothing/cloak/tabard/blkknight = 5,
 		/obj/item/clothing/under/roguetown/platelegs/blk = 5,
 		/obj/item/clothing/gloves/roguetown/plate/blk = 5,
-		/obj/item/clothing/neck/roguetown/blkknight = 5,
+		/obj/item/clothing/neck/roguetown/dragon_scale = 5,
 		/obj/item/clothing/shoes/roguetown/boots/armor/blkknight = 5,
 		/obj/item/clothing/suit/roguetown/armor/plate/blkknight = 5,
 

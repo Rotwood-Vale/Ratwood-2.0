@@ -75,7 +75,7 @@
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/churn.ogg'
 	associated_skill = /datum/skill/magic/holy
-	invocations = list("The Undermaiden rebukes!")
+	invocations = list("The Undermaiden abhors you!")
 	invocation_type = "shout" //can be none, whisper, emote and shout
 	miracle = TRUE
 	devotion_cost = 20
@@ -350,7 +350,7 @@
 	no_early_release = TRUE
 	charging_slowdown = 1
 	chargedloop = /datum/looping_sound/invokeholy
-	gesture_required = TRUE 
+	gesture_required = TRUE
 	associated_skill = /datum/skill/magic/holy
 	recharge_time = 90 SECONDS
 	hide_charge_effect = TRUE
@@ -362,8 +362,6 @@
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	invocations = list("Awaken, rancor!!")
 	invocation_type = "shout"
-
-
 
 /obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance/cast(list/targets, mob/living/user)
 	. = ..()
@@ -378,7 +376,47 @@
 			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, NORTH),user)
 			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, SOUTH),user)
 		for(var/mob/living/simple_animal/hostile/rogue/spirit_vengeance/swarm in view(2, user))
-			swarm.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target) 
+			swarm.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+		return TRUE
+	revert_cast()
+	return FALSE
+
+
+/obj/effect/proc_holder/spell/invoked/raise_spirit_respite
+	name = "Aspect of Respite"
+	desc = "Summon an aspect of respite to relentlessly pursue your foe."
+	range = 7
+	sound = list('sound/magic/necra_sight.ogg')
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	releasedrain = 40
+	chargetime = 30
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokeholy
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/holy
+	recharge_time = 2 MINUTES
+	hide_charge_effect = TRUE
+	miracle = TRUE
+	devotion_cost = 100
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_state = "aspect"
+	action_icon_state = "aspect"
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	invocations = list("Awaken, aspect of respite!!")//Someone change this.
+	invocation_type = "shout"
+
+/obj/effect/proc_holder/spell/invoked/raise_spirit_respite/cast(list/targets, mob/living/user)
+	. = ..()
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(user.dir == SOUTH || user.dir == NORTH)
+			new /mob/living/simple_animal/hostile/rogue/spirit_respite(get_turf(user),user)
+		else
+			new /mob/living/simple_animal/hostile/rogue/spirit_respite(get_turf(user),user)
+		for(var/mob/living/simple_animal/hostile/rogue/spirit_respite/avatar in view(2, user))
+			avatar.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
 		return TRUE
 	revert_cast()
 	return FALSE

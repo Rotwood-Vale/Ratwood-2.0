@@ -215,6 +215,8 @@
 						new /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/warscholar(src.loc)
 					if(15)
 						new /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/anthrax(src.loc)
+					if(16)
+						new /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/oathmarked(src.loc)
 			if(C.signed == 0)
 				to_chat(H, "<span class='warning'>I cannot send an unsigned token.</span>")
 				return
@@ -352,8 +354,8 @@
 							I.marquevalue -= 4
 						budget2change(I.marquevalue, user, "MARQUE")
 						record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
-					if(I.paired)	
-						qdel(I.paired)	
+					if(I.paired)
+						qdel(I.paired)
 					qdel(I)
 					visible_message(span_warning("[user] sends something."))
 					playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
@@ -436,7 +438,7 @@
 							bonuses += 2
 						budget2change(bonuses, user, "MARQUE")
 						record_round_statistic(STATS_MARQUES_MADE, bonuses)
-					if(no || selfreport || stopfarming)		
+					if(no || selfreport || stopfarming)
 						qdel(I.paired)
 						qdel(I)
 						visible_message(span_warning("[user] sends something."))

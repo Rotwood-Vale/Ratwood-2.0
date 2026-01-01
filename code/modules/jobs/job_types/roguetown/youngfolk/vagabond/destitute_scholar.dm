@@ -1,5 +1,6 @@
 /datum/advclass/vagabond_scholar
 	name = "Destitute Scholar"
+	examine_name = "Beggar"
 	tutorial = "Knowledge is often both a boon and a curse. Whatever you know has left you with little to your name but your wits, and even then..."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS

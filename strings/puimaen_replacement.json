@@ -1,0 +1,67 @@
+{
+    "full": {
+		"hello":"annyeonghaseyo",
+		"goodbye":"annyeonghi gaseyo",
+		"farewell":"jagbyeol",
+		"sorry":"jeongmal mianhaeyo",
+		"thanks":"gamsahaeyo",
+		"yes":"ye",
+		"no":"aniyo",
+		"duke":"gungong",
+		"duchess":"gungong",
+		"duchy":"gongjaglyeong",
+		"dukedom":"gongjaglyeong",
+		"bishop":"sinbu",
+		"prelate":"sinbunim",
+		"church":"cheonjugyo",
+		"inquisition":"jimangsaeng",
+		"inquisitor":"idan simmun",
+		"knight":"gisa",
+		"knights":"gisa",
+		"captain":"seonjang",
+		"sergeant":"jungsa",
+		"soldier":"gun-in",
+		"soldiers":"gun-in",
+		"cavalry":"gibyeongdae",
+		"archer":"gungsu",
+		"archers":"gungsu",
+		"squire":"hyangsa",
+		"squires":"hyangsa",
+		"maid":"hanyeo",
+		"maids":"hanyeo",
+		"butler":"jibsa",
+		"butlers":"jibsa",
+		"servant":"hain",
+		"servants":"hain",
+		"idiot":"babo",
+		"jerk":"gae-sae-kki",
+		"asshole":"ssyangnom",
+		"fucker":"ssyangnom",
+		"dumbass":"deungsin"
+
+    },
+    "start": {
+
+    },
+
+    "end": {
+
+    },
+
+	"multiword": {
+		"good morning":"joh-eun achim-ieyo",
+		"good afternoon":"joh-eun ohueyo",
+		"good evening":"joh-eun jeonyeog-ieyo",
+		"thank you":"gamsahaeyo",
+		"fuck off":"kkeojyeo",
+		"shut the fuck up":"dak-chyeo",
+		"damn it":"ssi-bal",
+		"go to hell":"jiog-e gada",
+		"blood brother":"uihyeong",
+		"blood sister":"uijamae"
+	},
+
+    "syllable": {
+
+    }
+}

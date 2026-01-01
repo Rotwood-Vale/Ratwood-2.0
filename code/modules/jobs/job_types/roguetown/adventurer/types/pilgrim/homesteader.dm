@@ -5,7 +5,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/homesteader
 
-	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
+	category_tags = list(CTAG_DISABLED)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	subclass_stats = list(
 		STATKEY_SPD = -1,
@@ -163,7 +163,7 @@
 			to_chat(H, span_notice("You are agile and nimble."))
 			H.change_stat(STATKEY_SPD, 2)
 			H.change_stat(STATKEY_WIL, -1)
-			H.change_stat(STATKEY_STR, -1) 
+			H.change_stat(STATKEY_STR, -1)
 			H.change_stat(STATKEY_CON, 1)
 		if("Bookworm - INT +1, PER +1, WIL +1, STR -2, CON -2")
 			to_chat(H, span_notice("You are learned and wise."))
@@ -389,7 +389,7 @@
 			if(expert_skill_name in labor_skills)
 				labor_skills -= expert_skill_name
 			if(expert_skill_name in craft_skills)
-				craft_skills -= expert_skill_name 
+				craft_skills -= expert_skill_name
 
 		// Select one COMBAT skill to JOURNEYMAN
 		var/journeyman_combat_name = input(H, "Choose a COMBAT skill to JOURNEYMAN. [1/1]", "Skill Selection") as anything in combat_skills
@@ -446,7 +446,7 @@
 			"Survival Expert" = TRAIT_SURVIVAL_EXPERT,
 			"Sewing Expert" = TRAIT_SEWING_EXPERT
 		)
-		
+
 		// Non-skill-locking traits
 		var/regular_traits = list( //Actual survival suff
 			"Outdoorsman" = TRAIT_OUTDOORSMAN,

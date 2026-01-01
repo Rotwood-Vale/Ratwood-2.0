@@ -38,7 +38,7 @@
 			l_hand = /obj/item/rogueweapon/shield/heater
 
 /datum/outfit/job/roguetown/human/northern/bog_deserters/proc/add_random_deserter_beltl_stuff(mob/living/carbon/human/H)
-	var/add_random_deserter_beltl_stuff = rand(1,7)
+	var/add_random_deserter_beltl_stuff = rand(1,9)
 	switch(add_random_deserter_beltl_stuff)
 		if(1)
 			beltl = /obj/item/storage/belt/rogue/pouch/food
@@ -54,6 +54,10 @@
 			beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
 		if(7)
 			beltl = /obj/item/rogueweapon/scabbard/sheath
+		if(8)
+			beltl = /obj/item/storage/belt/rogue/pouch/treasure/lucky
+		if(9)
+			beltl = /obj/item/storage/belt/rogue/pouch/treasure
 
 /datum/outfit/job/roguetown/human/northern/bog_deserters/proc/add_random_deserter_beltr_stuff(mob/living/carbon/human/H)
 	var/add_random_deserter_beltr_stuff = rand(1,7)

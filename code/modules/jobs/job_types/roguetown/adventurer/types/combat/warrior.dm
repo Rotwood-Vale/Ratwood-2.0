@@ -72,12 +72,14 @@
 				pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 				neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 				gloves = /obj/item/clothing/gloves/roguetown/chain/iron
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			if("Iron Breastplate")
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
 				neck = /obj/item/clothing/neck/roguetown/coif/heavypadding
 				shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/random
 				pants = /obj/item/clothing/under/roguetown/splintlegs/iron
 				gloves = /obj/item/clothing/gloves/roguetown/angle
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			if("Gambeson & Helmet")
 				armor = /obj/item/clothing/suit/roguetown/armor/gambeson
 				neck = /obj/item/clothing/neck/roguetown/coif/padded//neck cover
@@ -91,10 +93,10 @@
 				pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
 				head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab
 				gloves = /obj/item/clothing/gloves/roguetown/angle
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
 	backpack_contents = list(

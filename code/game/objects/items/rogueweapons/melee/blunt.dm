@@ -29,7 +29,7 @@
 	desc = "A powerful, charged up strike that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 14 (1 - 4 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance. Not fully charging the attack limits knockback to 1 tile."
 
 /datum/intent/mace/smash/spec_on_apply_effect(mob/living/H, mob/living/user, params)
-	var/chungus_khan_str = user.STASTR 
+	var/chungus_khan_str = user.STASTR
 	if(H.has_status_effect(/datum/status_effect/debuff/yeetcd))
 		return // Recently knocked back, cannot be knocked back again yet
 	if(chungus_khan_str < 10)
@@ -280,8 +280,13 @@
 	name = "enduring handmace"
 	desc = "A shorthanded mace and convenient sleeping aid, its grown harder to swing with age, though it hasn't lost reliability."
 	force = 20
+	force_wielded = 25
 	wbalance = WBALANCE_NORMAL
 	icon_state = "opsyflangedmace"
+	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/mace/cudgel/psy/old/ComponentInitialize()
+	return
 
 /obj/item/rogueweapon/mace/cudgel/copper
 	name = "copper bludgeon"
@@ -715,7 +720,7 @@
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	chargetime = 0
 	swingdelay = 0
-	intent_intdamage_factor = 1.3//+.15 from normal mace strike. This is the weapon's purpose.
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 	penfactor = MAUL_DEFAULT_PENFACTOR//You're getting FULL armour damage with this.
 	clickcd = CLICK_CD_HEAVY//Take a guess.
 	icon_state = "instrike"
@@ -725,13 +730,38 @@
 	name = "crush"
 	blade_class = BCLASS_SMASH
 	attack_verb = list("crushes")
-//	chargetime = 2 SECONDS//Leftover from knockback. Return when that's good.
-	swingdelay = 12//+2 from mace smash. Walk away from it.
-	damfactor = 1.7//Identical to mace smash.
-	intent_intdamage_factor = 1.5//Yeah, that guy? Nuke him.
+	chargetime = 5
+	damfactor = 1.7
+	intent_intdamage_factor = 1.5//10% more than standard.
 	icon_state = "incrush"
-//TODO: Implement knockback that isn't coal. Gutted what I had. This just functioned like old blunt throwing. Not great. - Carl
-//	knockback = TRUE//We making it out of the vale with this one. RAAAAAA
+	desc = "This can throw a standing opponent and slow them down. \
+	5 second cooldown on consecutive targets. Prone targets halve the knockback distance. \
+	Not fully charging the attack limits knockback to 1 tile."
+
+//We making it out of the vale with this one. RAAAAAA
+/datum/intent/maul/crush/spec_on_apply_effect(mob/living/H, mob/living/user, params)
+	var/chungus_khan_str = user.STASTR
+	if(H.has_status_effect(/datum/status_effect/debuff/yeetcd))
+		return // Recently knocked back, cannot be knocked back again yet
+	if(chungus_khan_str < 10)
+		return // Too weak to have any effect
+	var/scaling = CLAMP((chungus_khan_str - 10), 1, 4)
+	H.apply_status_effect(/datum/status_effect/debuff/yeetcd)
+	H.Slowdown(scaling)
+	// Copypasta from knockback proc cuz I don't want the math there
+	var/knockback_tiles = scaling // 1 to 4 tiles based on strength
+	if(H.resting)
+		knockback_tiles = max(1, knockback_tiles / 2)
+	if(user?.client?.chargedprog < 100)
+		knockback_tiles = 1 // Minimal knockback on non-charged smash.
+	var/turf/edge_target_turf = get_edge_target_turf(H, get_dir(user, H))
+	if(istype(edge_target_turf))
+		H.safe_throw_at(edge_target_turf, \
+		knockback_tiles, \
+		scaling, \
+		user, \
+		spin = FALSE, \
+		force = H.move_force)
 
 /datum/intent/maul/spiked
 	name = "perforating strike"

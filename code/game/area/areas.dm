@@ -117,6 +117,9 @@
 
 	var/coven_protected = FALSE
 
+	/// If true, speech generated in this area will not propagate to other z-levels, and can only be heard by hearers with a line of sight.
+	var/soundproof = FALSE
+
 
 /**
   * A list of teleport locations
