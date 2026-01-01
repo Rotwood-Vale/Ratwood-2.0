@@ -84,28 +84,28 @@
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	switch(weapon_choice)
 		if("Longsword")
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 			beltr = /obj/item/rogueweapon/sword/long
 			r_hand = /obj/item/rogueweapon/scabbard/sword
 		if("Mace + Shield")
-			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
 			beltr = /obj/item/rogueweapon/mace
 			backr = /obj/item/rogueweapon/shield/tower/metal
 		if("Flail + Shield")
-			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
 			beltr = /obj/item/rogueweapon/flail
 			backr = /obj/item/rogueweapon/shield/tower/metal
 		if("Billhook")
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 			r_hand = /obj/item/rogueweapon/spear/billhook
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
 		if("Battle Axe")
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 			r_hand = /obj/item/rogueweapon/stoneaxe/battle
 		if("Greataxe")
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 			r_hand = /obj/item/rogueweapon/greataxe
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
 
