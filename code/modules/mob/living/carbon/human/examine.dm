@@ -124,7 +124,7 @@
 				display1 = span_info("ø ------------ ø\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
 			else
 				display1 = span_info("ø ------------ ø\nThis is the <EM>[used_name]</EM>, the [race_name].")
-		. = list("[display1] [display2]")	
+		. = list("[display1] [display2]")
 
 		if(HAS_TRAIT(src, TRAIT_WITCH))
 			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_WITCH))
@@ -981,6 +981,11 @@
 
 	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
 		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
+
+	/// Rumours & Gossip
+	if(length(rumour) || length(noble_gossip))
+		if(!obscure_name || (obscure_name && client?.prefs.masked_examine) || observer_privilege)
+			. += "<a href='?src=[REF(src)];task=view_rumours_gossip;'>Recall Rumours & Gossip</a>"
 
 	if(lip_style)
 		switch(lip_color)
