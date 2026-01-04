@@ -460,3 +460,30 @@
 	if(istype(other, /datum/wound/burn))
 		return FALSE
 	return TRUE
+
+/datum/wound/grievous/remove_from_bodypart()
+	bodypart_owner?.grievously_wounded = FALSE
+	. = ..()
+
+/datum/wound/grievous/pre_decapitation
+	name = "massacred spinal column"
+
+/datum/wound/grievous/pre_skullshatter
+	name = "shattered skull"
+
+/datum/wound/scorch
+	name = "divine punishment"
+	whp = 60  // Lasts a reasonable duration
+	woundpain = 0  // Set dynamically in upgrade()
+	can_sew = FALSE
+	can_cauterize = FALSE
+	disabling = FALSE
+	critical = FALSE
+	bleed_rate = 0
+	clotting_rate = 0
+
+/datum/wound/scorch/upgrade(dam, armor)
+	// Only add pain based on damage dealt
+	woundpain += (dam * 1.5)
+	update_name()
+	return ..()

@@ -338,4 +338,4 @@
 
 /mob/living/carbon/human/proc/get_vampire_generation()
 	var/datum/antagonist/vampire/licker_datum = mind?.has_antag_datum(/datum/antagonist/vampire)
-	return licker_datum?.generation
+	return (istype(licker_datum)) ? licker_datum.generation : FALSE

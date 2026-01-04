@@ -478,3 +478,8 @@
 	stressadd = 2
 	desc = span_boldred("The proof of my oath! It's been stolen!")
 	timer = INFINITY
+
+/datum/stressevent/scorch
+	timer = 2 MINUTES
+	stressadd = 5
+	desc = span_red("I was struck by the tyrant's fiery wrath!")

@@ -328,6 +328,8 @@
 	#define COMPONENT_CANT_TRACK 1
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
+///sent when a skeleton activates calcification during divine destruction
+#define COMSIG_LIVING_CALCIFICATION_OVERRIDE "living_calcification_override"
 // /mob/living/carbon signals
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SWAPHANDS	"carbon_swaphands"				//from base of /mob/living/carbon/swap_hand(held_index)

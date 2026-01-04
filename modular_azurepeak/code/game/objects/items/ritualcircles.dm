@@ -71,6 +71,64 @@
 		playsound(target, 'sound/magic/holyshield.ogg', 80, FALSE, -1) // Cool sound!
 // If you want to review a more complicated one, Undermaiden's Bargain is probs the most complicated of the starting set. - Have fun! - Onutsio 🏳️‍⚧️
 
+/datum/circle_rite/astrata
+	rites_list = list(
+		/datum/circle_rite/astrata/guiding_light,
+		/datum/circle_rite/astrata/suns_blessing,
+//		/datum/circle_rite/astrata/debug,
+	)
+	rites_list_string = list(
+		"Guiding Light",
+		"Sun's Shield",
+//		"Debug",
+	)
+	rituals_name = "Rituals of the Sun"
+	patron = /datum/patron/divine/astrata
+
+/datum/circle_rite/astrata/guiding_light
+	name = "Guiding Light"
+	chant_strings = list(
+		"I beseech the she-form of the Twinned God!!",
+		"To bring Order to a world of naught!!",
+		"Place your gaze upon me, oh Radiant one!!"
+	)
+	cooldown = /datum/status_effect/debuff/ritesexpended_high
+
+/datum/circle_rite/astrata/guiding_light/rite_proc(mob/living/carbon/human/user)
+	to_chat(user, span_danger("You feel the eye of Astrata turned upon you. Her warmth dances upon your cheek. You feel yourself warming up..."))
+	if(!HAS_TRAIT(user, TRAIT_CHOSEN)) //Priests don't burst into flames.
+		linked_circle.loc.visible_message(span_warning("[user]'s bursts to flames! Embraced by Her Warmth wholly!"))
+		playsound(linked_circle.loc, 'sound/combat/hits/burn (1).ogg', 100, FALSE, -1)
+		user.adjust_fire_stacks(10)
+		user.ignite_mob()
+		user.flash_fullscreen("redflash3")
+		user.emote("firescream")
+	var/ritualtargets = view(7, linked_circle.loc)
+	for(var/mob/living/carbon/human/target in ritualtargets) // defines the target as every human in this range
+		target.apply_status_effect(/datum/status_effect/buff/guidinglight) // applies the status effect
+		to_chat(target, span_astrata("Astrata's light guides me forward, drawn to me by the Ritualist's pyre!"))		playsound(target, 'sound/magic/holyshield.ogg', 80, FALSE, -1) // Cool sound!
+// If you want to review a more complicated one, Undermaiden's Bargain is probs the most complicated of the starting set. - Have fun! - Onutsio 🏳️‍⚧️
+
+
+/datum/circle_rite/astrata/suns_blessing
+	name = "Sun's Shield"
+	chant_strings = list(
+		"SUN-TYRANT. LET FYRE GUIDE MY GAZE!!",
+		"SOVEREIGN-SUPREME. YOUR WILL BE MYNE!!",
+		"ASTRATA. GIFT YOUR VESSEL AEGIS!!"
+	)
+	choose_host = TRUE
+	cooldown = /datum/status_effect/debuff/ritesexpended_low_very
+
+/datum/circle_rite/astrata/suns_blessing/rite_proc(mob/living/carbon/human/user)
+	if((rite_target.patron?.type) != /datum/patron/divine/astrata)
+		to_chat(user, span_warning("Astrata's blessing does not recognize [rite_target] as one of her faithful."))
+		to_chat(rite_target, span_warning("I am not recognized by Astrata's light."))
+		return
+	to_chat(user, span_astrata("Astrata's blessing descends upon [rite_target]!"))
+	to_chat(rite_target, span_astrata("Astrata's blessing fills you with radiant power. You can now shield yourself and your allies from flame!"))
+	rite_target.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suns_shield)
+	user.apply_status_effect(cooldown)
 
 /obj/structure/ritualcircle/noc
 	name = "Rune of the Moon"
