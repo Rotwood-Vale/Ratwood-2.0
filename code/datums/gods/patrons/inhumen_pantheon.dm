@@ -29,7 +29,9 @@
 					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/projectile/profane/miracle 	= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/rituos/miracle 				= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/raise_lesser_undead/miracle 	= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/rituos/miracle 				= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/wound_heal					= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/tame_undead/miracle			= CLERIC_T3,
 	)
 	confess_lines = list(

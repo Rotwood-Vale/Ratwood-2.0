@@ -129,6 +129,69 @@
 	shifted_speed_increase = 0.75
 	show_true_name = FALSE
 
+// Witch transformation spells - have do_after on both transform and revert, plus 1 minute cooldown
+/obj/effect/proc_holder/spell/targeted/shapeshift/witch
+	invocation_type = "none"
+	gesture_required = FALSE
+	recharge_time = 15 SECONDS
+	cooldown_min = 15 SECONDS
+	knockout_on_death = 0  // Override per-form below
+	die_with_shapeshifted_form = FALSE
+	revert_on_death = TRUE
+	show_true_name = FALSE
+	convert_damage = FALSE
+	do_gib = FALSE
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/witch/cast(list/targets, mob/user = usr)
+	user.visible_message(span_warning("[user] begins to twist and contort!"), span_notice("I begin to transform..."))
+	return ..()
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/witch/Shapeshift(mob/living/caster)
+	// Do-after before transforming
+	playsound(caster.loc, 'sound/body/shapeshift-start.ogg', 100, FALSE, 3)
+	if(!do_after(caster, 3 SECONDS, target = caster))
+		to_chat(caster, span_warning("Transformation interrupted!"))
+		revert_cast(caster)  // Refund the cooldown
+		return
+	
+	// Call parent to actually transform
+	var/total_damage = caster.getBruteLoss() + caster.getOxyLoss() + caster.getFireLoss() + caster.getToxLoss()
+	if (total_damage)
+		recharge_time = initial(recharge_time) + total_damage // very simple: the more damaged we are, the longer it takes to recover
+		if (total_damage >= 25)
+			to_chat(caster, span_warning("My wounded form will make the next shapeshift take longer!"))
+	else
+		recharge_time = initial(recharge_time)
+	return ..()
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/witch/Restore(mob/living/shape)
+	// Check if restrained before allowing revert
+	if(shape.restrained(ignore_grab = FALSE))
+		to_chat(shape, span_warn("I am restrained, I can't transform back!"))
+		revert_cast(shape)  // Refund the cooldown
+		return
+	
+	var/total_damage = shape.getBruteLoss() + shape.getOxyLoss() + shape.getFireLoss() + shape.getToxLoss()
+	var/shift_time = 3 SECONDS + (total_damage / 10)
+	// Add do-after for witches when reverting
+	playsound(shape.loc, 'sound/body/shapeshift-end.ogg', 100, FALSE, 3)
+	shape.visible_message(span_warning("[shape] begins to shift back!"), span_notice("I begin to transform..."))
+	if(!do_after(shape, shift_time, target = shape))
+		to_chat(shape, span_warning("Transformation revert interrupted!"))
+		revert_cast(shape)  // Refund the cooldown
+		return
+	
+	return ..()
+
+// Only zad and bat get knockout on death
+/obj/effect/proc_holder/spell/targeted/shapeshift/witch/crow
+	name = "Zad Form"
+	overlay_state = "zad"
+	shifted_speed_increase = 1.15
+	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat/crow
+	knockout_on_death = 15 SECONDS
+	show_true_name = FALSE
+
 /obj/effect/proc_holder/spell/targeted/shapeshift/bat/witch
 	name = "Bat Form"
 	overlay_state = "bat_transform"
@@ -137,7 +200,6 @@
 	show_true_name = FALSE
 	desc = ""
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat/witch
-	show_true_name = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/bat/witch
 	name = "bat"

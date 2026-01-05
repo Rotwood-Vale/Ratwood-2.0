@@ -93,6 +93,8 @@
 	clothes_req = FALSE
 	human_req = FALSE
 
+	revert_cast() // immediately revert our cooldown so we can shift out instantly if required (instead of needing to wait)
+
 	if(do_gib)
 		playsound(caster.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 80, FALSE, 3)
 		caster.spawn_gibs(FALSE)
