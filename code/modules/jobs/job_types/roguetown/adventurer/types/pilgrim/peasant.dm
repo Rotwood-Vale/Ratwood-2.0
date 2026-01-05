@@ -75,7 +75,7 @@
 	head = /obj/item/clothing/head/roguetown/strawhat
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
-	backl = /obj/item/storage/backpack/rogue/satchel
+	backl = /obj/item/storage/backpack/rogue/backpack
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
 	mouth = /obj/item/rogueweapon/huntingknife
@@ -94,7 +94,7 @@
 						/obj/item/seeds/onion = 1,
 						/obj/item/ash = 2,
 						/obj/item/reagent_containers/glass/bottle/waterskin = 1,
-						/obj/item/flashlight/flare/torch = 1,
+						/obj/item/flashlight/flare/torch/lantern/copper = 1,
 						/obj/item/recipe_book/survival = 1,
 						/obj/item/rogueweapon/scabbard/sheath = 1,
 						/obj/item/rogueweapon/hammer/wood = 1

@@ -62,11 +62,7 @@
 				to_chat(H, span_notice("You are a Bowman, hunting with bow and arrow from a distance."))
 				// Bow Hunter equipment
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-				var/obj/item/quiver/arrows/Q = new()
-				Q.arrows = list()
-				for(var/i in 1 to 10)
-					Q.arrows += new /obj/item/ammo_casing/caseless/rogue/arrow/iron(Q)
-				beltr = Q
+				beltr = /obj/item/quiver/arrows
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/short/messer/iron
 				// Bow-specific stats
@@ -109,19 +105,18 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
 	if(!backr)
-		backr = /obj/item/storage/backpack/rogue/satchel
+		backr = /obj/item/storage/backpack/rogue/backpack
 	if(!backl)
 		backl = /obj/item/storage/backpack/rogue/backpack
 	belt = /obj/item/storage/belt/rogue/leather
 	if(!beltr)
 		beltr = /obj/item/storage/meatbag
 	if(!beltl)
-		beltl = /obj/item/flashlight/flare/torch/lantern
+		beltl = /obj/item/flashlight/flare/torch/lantern/copper
 	backpack_contents = list(
 				/obj/item/flint = 1,
 				/obj/item/bait = 1,
 				/obj/item/rogueweapon/huntingknife = 1,
-				/obj/item/flashlight/flare/torch = 1,
 				/obj/item/recipe_book/survival = 1,
 				/obj/item/recipe_book/leatherworking = 1,
 				/obj/item/rogueweapon/scabbard/sheath = 1

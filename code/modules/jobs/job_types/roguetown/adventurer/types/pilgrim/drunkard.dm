@@ -62,15 +62,14 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	armor = /obj/item/clothing/suit/roguetown/shirt/shortshirt/random
-	backl = /obj/item/storage/backpack/rogue/satchel
+	backl = /obj/item/storage/backpack/rogue/backpack
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/lockpick
 	beltl = /obj/item/flint
 	backpack_contents = list(
-						/obj/item/storage/pill_bottle/dice = 1,
-						/obj/item/storage/pill_bottle/dice/farkle = 1,
-						/obj/item/reagent_containers/glass/cup = 1,
-						/obj/item/toy/cards/deck = 1,
-						/obj/item/roguecoin/copper = 3,
-						/obj/item/flashlight/flare/torch = 1,
-						)
+					/obj/item/storage/pill_bottle/dice = 1,
+					/obj/item/storage/pill_bottle/dice/farkle = 1,
+					/obj/item/reagent_containers/glass/cup = 1,
+					/obj/item/toy/cards/deck = 1,
+					/obj/item/roguecoin/copper = 3,
+					/obj/item/flashlight/flare/torch/lantern/copper = 1,

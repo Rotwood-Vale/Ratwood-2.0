@@ -77,7 +77,7 @@
 		head = /obj/item/clothing/head/roguetown/fisherhat
 		mouth = /obj/item/rogueweapon/huntingknife
 		armor = /obj/item/clothing/suit/roguetown/armor/workervest
-		backl = /obj/item/storage/backpack/rogue/satchel
+		backl = /obj/item/storage/backpack/rogue/backpack
 		belt = /obj/item/storage/belt/rogue/leather
 		backr = /obj/item/fishingrod
 		beltr = /obj/item/cooking/pan
@@ -85,7 +85,8 @@
 		backpack_contents = list(
 							/obj/item/natural/worms = 3,
 							/obj/item/rogueweapon/shovel/small = 1,
-							/obj/item/flashlight/flare/torch = 2,
+							/obj/item/flashlight/flare/torch/lantern/copper = 1,
+							/obj/item/repair_kit = 1,
 							/obj/item/recipe_book/survival = 1,
 							/obj/item/rogueweapon/scabbard/sheath = 1
 							)
@@ -95,7 +96,7 @@
 		neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 		head = /obj/item/clothing/head/roguetown/fisherhat
 		mouth = /obj/item/rogueweapon/huntingknife
-		backl = /obj/item/storage/backpack/rogue/satchel
+		backl = /obj/item/storage/backpack/rogue/backpack
 		belt = /obj/item/storage/belt/rogue/leather
 		backr = /obj/item/fishingrod
 		beltr = /obj/item/cooking/pan
@@ -103,6 +104,7 @@
 		backpack_contents = list(
 							/obj/item/natural/worms = 2,
 							/obj/item/rogueweapon/shovel/small = 1,
-							/obj/item/flashlight/flare/torch = 1,
+							/obj/item/flashlight/flare/torch/lantern/copper = 1,
+							/obj/item/repair_kit = 1,
 							/obj/item/rogueweapon/scabbard/sheath = 1
 							)

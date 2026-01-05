@@ -78,5 +78,6 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
 	backpack_contents = list(
 		/obj/item/recipe_book/survival,
-		/obj/item/bottle_kit
+		/obj/item/bottle_kit,
+		/obj/item/reagent_containers/powder/spice = 1
 	)

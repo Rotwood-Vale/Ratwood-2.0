@@ -76,11 +76,12 @@
 	belt = /obj/item/storage/belt/rogue/leather/cloth/lady
 	beltl = /obj/item/needle
 	beltr = /obj/item/rogueweapon/huntingknife/scissors
-	backl = /obj/item/storage/backpack/rogue/satchel
+	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
-						/obj/item/natural/cloth = 3,
-						/obj/item/natural/bundle/fibers/full = 1,
-						/obj/item/flashlight/flare/torch = 2,
+					/obj/item/natural/cloth = 3,
+					/obj/item/natural/bundle/fibers/full = 1,
+					/obj/item/flashlight/flare/torch/lantern/copper = 1,
+					/obj/item/repair_kit = 1,
 						/obj/item/needle/thorn = 1,
 						/obj/item/recipe_book/sewing = 1,
 						/obj/item/book/rogue/swatchbook = 1,

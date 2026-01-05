@@ -102,7 +102,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/light
 	pants = /obj/item/clothing/under/roguetown/tights/random
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	backr = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/storage/backpack/rogue/backpack
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
@@ -112,7 +112,7 @@
 	backpack_contents = list(
 		/obj/item/flint = 1,
 		/obj/item/rogueweapon/hammer/wood = 1,
-		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/flashlight/flare/torch/lantern/copper = 1,
 		/obj/item/rope = 2,
 		/obj/item/lockpick = 1,
 		/obj/item/reagent_containers/glass/bottle/waterskin = 1,

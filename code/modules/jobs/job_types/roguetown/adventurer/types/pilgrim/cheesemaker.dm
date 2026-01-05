@@ -125,5 +125,6 @@
 		/obj/item/reagent_containers/glass/bottle = 2,
 		/obj/item/book/rogue/yeoldecookingmanual = 1,
 		/obj/item/recipe_book/survival = 1,
+		/obj/item/reagent_containers/powder/spice = 1,
 		)
-	r_hand = /obj/item/flashlight/flare/torch
+	r_hand = /obj/item/flashlight/flare/torch/lantern/copper

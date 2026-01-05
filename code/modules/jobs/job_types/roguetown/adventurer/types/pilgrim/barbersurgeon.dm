@@ -27,7 +27,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/medicine = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 	)
@@ -80,12 +80,12 @@
 	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
-						/obj/item/natural/worms/leech/cheele = 2,
+						/obj/item/natural/worms/leech/cheele = 1,
 						/obj/item/natural/cloth = 3,
-						/obj/item/flashlight/flare/torch = 2,
+						/obj/item/flashlight/flare/torch/lantern/copper = 1,
 						/obj/item/rogueweapon/huntingknife/scissors/steel = 1,
-						/obj/item/hair_dye_cream = 3,
-						/obj/item/heart_blood_canister/filled = 2,
+						/obj/item/hair_dye_cream = 1,
+						/obj/item/heart_blood_canister/filled = 1,
 						/obj/item/bait/leech = 4
 						)
 	if(H.age == AGE_OLD)

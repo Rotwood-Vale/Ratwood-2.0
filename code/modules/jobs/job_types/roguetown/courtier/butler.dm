@@ -83,6 +83,9 @@
 	id = /obj/item/scomstone/bad
 	if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/armor/silkcoat
+	backpack_contents = list(
+		/obj/item/reagent_containers/powder/spice = 1
+	)
 
 /datum/advclass/seneschal/headmaid
 	name = "Head Maid"
@@ -117,6 +120,9 @@
 	beltr = /obj/item/storage/keyring/servant
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/mid
 	id = /obj/item/scomstone/bad
+	backpack_contents = list(
+		/obj/item/reagent_containers/powder/spice = 1
+	)
 
 /datum/advclass/seneschal/chiefbutler
 	name = "Chief Butler"
@@ -152,3 +158,6 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/mid
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/black
 	id = /obj/item/scomstone/bad
+	backpack_contents = list(
+		/obj/item/reagent_containers/powder/spice = 1
+	)

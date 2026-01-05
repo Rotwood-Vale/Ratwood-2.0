@@ -40,7 +40,7 @@
 	beltl = /obj/item/storage/magebag/witch
 	pants = /obj/item/clothing/under/roguetown/trou
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
-	backl = /obj/item/storage/backpack/rogue/satchel
+	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
 						/obj/item/reagent_containers/glass/mortar = 1,
 						/obj/item/pestle = 1,
@@ -48,8 +48,8 @@
 						/obj/item/recipe_book/alchemy = 1,
 						/obj/item/recipe_book/survival = 1,
 						/obj/item/recipe_book/magic = 1,
-						/obj/item/chalk = 2,
-						/obj/item/flashlight/flare/torch = 2
+						/obj/item/chalk = 1,
+						/obj/item/flashlight/flare/torch/lantern/copper = 1
 						)
 
 	var/classes = list("Old Magick", "Godsblood", "Mystagogue")
@@ -67,6 +67,7 @@
 			"Folk Healer",
 			"Warlock",
 			"Shamaness",
+			"Shaman",
 			"Occultist")
 		var/cosmetic_choice = input(H, "Select your practice.", "Witchcraft Practices") as anything in cosmetic_titles
 		
@@ -90,6 +91,10 @@
 			if("Shamaness")
 				to_chat(H, span_notice("You are a Shamaness, communing with spirits and nature."))
 				H.mind.cosmetic_class_title = "Shamaness"
+				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+			if("Shaman")
+				to_chat(H, span_notice("You are a Shaman, communing with spirits and nature."))
+				H.mind.cosmetic_class_title = "Shaman"
 				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 			if("Occultist")
 				to_chat(H, span_notice("You are an Occultist, delving into hidden mysteries."))
