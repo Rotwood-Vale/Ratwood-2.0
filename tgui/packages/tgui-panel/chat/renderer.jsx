@@ -5,6 +5,7 @@
  */
 
 import { createRoot } from 'react-dom/client';
+import { TooltipHTML } from 'tgui/components/TooltipHTML';
 import { createLogger } from 'tgui/logging';
 import { Tooltip } from 'tgui-core/components';
 import { EventEmitter } from 'tgui-core/events';
@@ -35,6 +36,7 @@ const SCROLL_TRACKING_TOLERANCE = 24;
 // List of injectable component names to the actual type
 export const TGUI_CHAT_COMPONENTS = {
   Tooltip,
+  TooltipHTML,
 };
 
 // List of injectable attibute names mapped to their proper prop
@@ -42,6 +44,7 @@ export const TGUI_CHAT_COMPONENTS = {
 export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
   position: 'position',
   content: 'content',
+  html: 'html',
 };
 
 const findNearestScrollableParent = (startingNode) => {
@@ -430,12 +433,18 @@ class ChatRenderer {
           const reactRoot = createRoot(childNode);
 
           /* eslint-disable react/no-danger */
-          reactRoot.render(
-            <Element {...outputProps}>
-              <span dangerouslySetInnerHTML={oldHtml} />
-            </Element>,
-            childNode,
-          );
+          // Gracefully handle missing components (cross-server compatibility)
+          if (Element) {
+            reactRoot.render(
+              <Element {...outputProps}>
+                <span dangerouslySetInnerHTML={oldHtml} />
+              </Element>,
+              childNode,
+            );
+          } else {
+            // Fallback: just render the inner content without the component wrapper
+            reactRoot.render(<span dangerouslySetInnerHTML={oldHtml} />, childNode);
+          }
         }
 
         // Highlight text

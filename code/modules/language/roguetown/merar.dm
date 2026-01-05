@@ -5,7 +5,6 @@
 	ask_verb = "mrrps"
 	exclaim_verb = "hisses"
 	key = "f"
-	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 80
 	default_priority = 90
 	icon_state = "asse"

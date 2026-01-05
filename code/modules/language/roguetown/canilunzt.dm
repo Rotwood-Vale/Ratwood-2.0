@@ -5,7 +5,6 @@
 	ask_verb = "rurs"
 	exclaim_verb = "snaps"
 	key = "l"
-	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 80
 	default_priority = 90
 	icon_state = "asse"

@@ -5,7 +5,6 @@
 	ask_verb = "ponders"
 	exclaim_verb = "exclaims"
 	key = "p" // p for ΨOSEIDON
-	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 60
 	default_priority = 90
 	icon_state = "asse"
