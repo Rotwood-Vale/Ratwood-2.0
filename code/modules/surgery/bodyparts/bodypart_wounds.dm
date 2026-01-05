@@ -104,7 +104,7 @@
 /obj/item/bodypart/proc/get_bleed_rate()
 	var/bleed_rate = bleeding
 	if(bandage && !HAS_BLOOD_DNA(bandage))
-		try_bandage_expire(bleed_rate)
+		process_bandage(bleed_rate)
 		var/obj/item/natural/cloth/cloth = bandage
 		bleed_rate *= cloth.bandage_effectiveness
 		if(bleed_rate <= 1) //if the bleeding is below this after being bandaged, bleeding stops completely, but the bandage still takes damage
@@ -563,14 +563,27 @@
 	new_bandage.forceMove(src)
 	return TRUE
 
-/obj/item/bodypart/proc/try_bandage_expire(bleed_rate)
+/obj/item/bodypart/proc/process_bandage(bleed_rate)
 	if(!bandage)
 		return FALSE
+	var/obj/item/natural/cloth/cloth
+	if(istype(bandage, /obj/item/natural/cloth))
+		cloth = bandage
+	if(cloth.medicine_quality)
+		if(cloth.medicine_amount >= 0)
+			heal_wounds(cloth.medicine_quality * 1)
+			heal_damage(cloth.medicine_quality * 1, cloth.medicine_quality * 1, 0, null, FALSE)
+			cloth.medicine_amount -= 0.25
+		else
+			cloth.medicine_amount = 0
+			cloth.medicine_quality = 0
+			cloth.detail_color = null
+			cloth.desc = initial(cloth.desc)
+			cloth.update_icon()
 	if(!bleed_rate)
 		return FALSE
 	var/bandage_health = 1
 	if(istype(bandage, /obj/item/natural/cloth))
-		var/obj/item/natural/cloth/cloth = bandage
 		cloth.bandage_health -= bleed_rate
 		bandage_health = cloth.bandage_health
 	if(bandage_health <= 0)

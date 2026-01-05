@@ -403,6 +403,16 @@
 	timer = INFINITY
 
 /datum/stressevent/oath_ring
-	stressadd = 1
+	stressadd = -1
 	desc = span_aiprivradio("My oath keeps me going. One step at a time. How much longer can I continue? How long has it been?")
 	timer = INFINITY
+
+/datum/stressevent/keep_standard
+	stressadd = -4
+	desc = span_aiprivradio("The standard speaks of certainty.")
+	timer = INFINITY
+
+/datum/stressevent/keep_standard_lesser
+	stressadd = -3
+	desc = span_aiprivradio("The standard calls out to me! It knows we're to see victory!")
+	timer = 3 MINUTES

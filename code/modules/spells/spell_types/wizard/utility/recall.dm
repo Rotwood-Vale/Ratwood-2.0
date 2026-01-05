@@ -1,4 +1,5 @@
 //Wizard teleportation. Intended to be locked to Magos / Lich. Don't hand this out.
+//Also given to the Hand mage subclass, now.
 //Pulled from SR, or wherever they got it. Cheers.
 /obj/effect/proc_holder/spell/self/recall
 	name = "Recall"

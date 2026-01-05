@@ -2,7 +2,7 @@
 	name = "street lamp" // Crafted through metalizing brazier(/obj/machinery/light/rogue/firebowl) and Standing Fire (/obj/machinery/light/rogue/firebowl/standing)
 	desc = "An obelisk of caste iron with an eerily glowing lamp attached to it. A promise of new technology at the dawn of a new age."
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
-	icon_state = "slamp1_nozap"
+	icon_state = "slamp1"
 	base_state = "slamp"
 	brightness = 10.9
 	nightshift_allowed = FALSE
@@ -20,7 +20,7 @@
 
 /obj/machinery/light/roguestreet/midlamp
 	icon = 'icons/roguetown/misc/64x64.dmi'
-	icon_state = "midlamp1_nozap"
+	icon_state = "midlamp1"
 	base_state = "midlamp"
 	pixel_x = -16
 	density = TRUE
@@ -29,7 +29,7 @@
 /obj/machinery/light/roguestreet/walllamp
 	name = "wall lamp" // Crafted through metalizing sconce.
 	desc = "An eerily glowing lamp attached to the wall via a caste iron frame. A promise of new technology at the dawn of a new age."
-	icon_state = "wlamp1_nozap"
+	icon_state = "wlamp1"
 	base_state = "wlamp"
 	brightness = 7.8
 	max_integrity = 125
@@ -37,7 +37,7 @@
 
 /obj/machinery/light/roguestreet/orange
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
-	icon_state = "o_slamp1_nozap"
+	icon_state = "o_slamp1"
 	base_state = "o_slamp"
 	brightness = 10.9
 	bulb_colour = "#da8c45"
@@ -46,7 +46,7 @@
 
 /obj/machinery/light/roguestreet/orange/midlamp
 	icon = 'icons/roguetown/misc/64x64.dmi'
-	icon_state = "o_midlamp1_nozap"
+	icon_state = "o_midlamp1"
 	base_state = "o_midlamp"
 	pixel_x = -16
 	density = TRUE
@@ -55,7 +55,7 @@
 /obj/machinery/light/roguestreet/orange/walllamp
 	name = "wall lamp"
 	desc = "An eerily glowing lamp attached to the wall via a caste iron frame. A promise of new technology at the dawn of a new age."
-	icon_state = "o_wlamp1_nozap"
+	icon_state = "o_wlamp1"
 	base_state = "o_wlamp"
 	brightness = 7.8
 	max_integrity = 125
@@ -75,7 +75,7 @@
 
 /obj/machinery/light/roguestreet/update_icon()
 	if(on)
-		icon_state = "[base_state]1_nozap"
+		icon_state = "[base_state]1"
 	else
 		icon_state = "[base_state]0"
 

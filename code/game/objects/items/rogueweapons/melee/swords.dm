@@ -916,11 +916,12 @@
 /obj/item/rogueweapon/sword/short/falchion
 	name = "falchion"
 	desc = "A single-edged sword that is similar to a messer in appearance, its origins trace back to Otava. An implement of commoners and knights alike. It's good for cutting and thrusting."
-	force = 20
+	force = 22
 	icon_state = "falchion"
 	wdefense = 6
 	w_class = WEIGHT_CLASS_BULKY // Did not fit in a bag before path rework. Does not fit in a bag now either.
 	sheathe_icon = "falchion"
+	max_blade_int = 250
 
 /obj/item/rogueweapon/sword/short/gladius
 	name = "gladius"
@@ -1018,14 +1019,15 @@
 	)
 
 /obj/item/rogueweapon/sword/short/messer
-	name = "messer"
+	name = "steel messer"
 	desc = "A \"Großesmesser\" of disputed Grenzel origin, meaning greatknife. It's a basic single-edge sword for civilian and military use. It excels at slicing and chopping, and it's made of steel. \
 	It can fill the exact function of a hunting sword, this one is more durable."
 	icon_state = "smesser"
-	force = 22	//Same damage as the iron messer
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/axe/chop, /datum/intent/sword/peel)
-	minstr = 5
-	wdefense = 4
+	force = 24	//Hunting sword + 4
+	max_blade_int = 250	//Sword + 50
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/rend/krieg, /datum/intent/axe/chop, /datum/intent/sword/peel)	//Krieg rend does not change from regular rend apart from dealing 20% damage to integrity
+	minstr = 6	// Hunting sword +2
+	wdefense = 4	//Hunting sword +2
 
 /obj/item/rogueweapon/sword/short/messer/iron
 	name = "hunting sword"
@@ -1150,8 +1152,8 @@
 	name = "stalker sabre"
 	desc = "A once elegant blade of mythril, diminishing under the suns gaze"
 	icon_state = "spidersaber"
-	force = 17
-	force_wielded = 20
+	force = 25 // same as elf sabre
+	force_wielded = 25
 	minstr = 7
 	wdefense = 9
 
@@ -2061,15 +2063,17 @@
 	icon_state = "bs_sword"
 	minstr = 6
 	smeltresult = /obj/item/ingot/blacksteel
-	max_integrity = 200
-	sellprice = 100
+	max_integrity = 300
+	sellprice = 150
 	sheathe_icon = "sword1"
 
 /obj/item/rogueweapon/sword/decorated/blacksteel
 	name = "decorated arming sword"
 	desc = "A valuable ornate arming sword made for the purpose of ceremonial fashion. It has a fine leather grip, a carefully engraved gold-plated crossguard, and its blade is made entirely of blacksteel."
 	icon_state = "bs_swordregal"
+	max_integrity = 280
 	sellprice = 200
+
 /obj/item/rogueweapon/sword/long/shotel
 	name = "steel shotel"
 	icon_state = "shotel_steel"

@@ -368,11 +368,12 @@
 	. = ..()
 	AddElement(/datum/element/tipped_item)	//Lets you tip your weapon in poison
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/corroded/dirk
+/obj/item/rogueweapon/huntingknife/idagger/steel/dirk
 	name = "fanged dagger"
-	desc = "A dagger modeled after the fang of an anthrax spider. Can be poisoned."
+	desc = "A vicious dagger of drow make with a cruel, curved, fanglike blade."
 	icon_state = "spiderdagger"
 	sheathe_icon = "spiderdagger"
+	force = 22 // Same as elvish dagger
 	smeltresult = null
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/holysee
@@ -420,6 +421,10 @@
 	force = 25
 	max_integrity = 200
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/huntingknife/idagger/dtace/Initialize()
+	. = ..()
+	AddElement(/datum/element/tipped_item)	//Lets you tip your weapon in poison
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
 	name = "steel parrying dagger"

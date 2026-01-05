@@ -278,6 +278,8 @@
 	// #define SPEECH_BUBBLE_TYPE 2
 	#define SPEECH_SPANS 3
 	// #define SPEECH_SANITIZE 4
+	///from base of /mob/verb/pointed: (atom/A)
+	#define COMSIG_MOB_POINTED "mob_pointed"
 	#define SPEECH_LANGUAGE 5
 	/* #define SPEECH_IGNORE_SPAM 6
 	#define SPEECH_FORCED 7 */

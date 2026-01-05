@@ -48,13 +48,15 @@
 			"[user] works the leechtick into [target]'s innards.",
 			"[user] works the leechtick into [target]'s innards.")
 		return FALSE
-	if (target.mind)
-		if(alert(target, "Are you ready to face the world, once more?", "Revival", "I must go on", "Let me rest") != "I must go on")
-			display_results(user, target, span_notice("[target]'s heart refuses the leechtick. They're only in sweet dreams, now."),
-				"[user] works the leechtick into [target]'s innards, but nothing happens.",
-				"[user] works the leechtick into [target]'s innards, but nothing happens.")
-			return FALSE
-	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
+	var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit()
+	if(underworld_spirit)
+		var/mob/dead/observer/ghost = underworld_spirit.ghostize()
+		qdel(underworld_spirit)
+		ghost.mind.transfer_to(target, TRUE)
+	target.grab_ghost(force = TRUE)
+	if(!target.mind.active)
+		to_chat(user, "Necra is not done with [target], yet.")
+		return
 	if(!target.revive(full_heal = FALSE))
 		display_results(user, target, span_notice("The leechtick refuses to meld with [target]'s heart. Their damage must be too severe still."),
 			"[user] works the leechtick into [target]'s innards, but nothing happens.",
@@ -63,12 +65,7 @@
 	display_results(user, target, span_notice("You succeed in restarting [target]'s heart with the infusion of the leechtick's viscera."),
 		"[user] works the leechtick into [target]'s innards.",
 		"[user] works the leechtick into [target]'s innards.")
-	var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit()
-	if(underworld_spirit)
-		var/mob/dead/observer/ghost = underworld_spirit.ghostize()
-		qdel(underworld_spirit)
-		ghost.mind.transfer_to(target, TRUE)
-	target.grab_ghost(force = TRUE) // even suicides
+	target.adjustOxyLoss(-target.getOxyLoss())
 	target.emote("breathgasp")
 	target.Jitter(100)
 	record_round_statistic(STATS_LUX_REVIVALS)

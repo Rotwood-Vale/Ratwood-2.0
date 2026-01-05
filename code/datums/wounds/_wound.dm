@@ -278,12 +278,11 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(!owner)
 		return
 
-	// For simple animals without bodyparts, use simple_bleeding
-	if(!bodypart_owner && owner.simple_wounds?.len)
+	// do simple bleeding
+	if(owner.simple_wounds?.len)
 		owner.simple_bleeding -= bleed_rate
 		bleed_rate = amount
 		owner.simple_bleeding += bleed_rate
-	// For carbon mobs with bodyparts
 	else if(bodypart_owner)
 		bodypart_owner.bleeding -= bleed_rate
 		bleed_rate = amount

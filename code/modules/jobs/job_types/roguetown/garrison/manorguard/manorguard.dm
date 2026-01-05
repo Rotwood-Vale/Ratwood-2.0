@@ -29,7 +29,8 @@
 		/datum/advclass/manorguard/footsman,
 		/datum/advclass/manorguard/skirmisher,
 		/datum/advclass/manorguard/cavalry,
-		/datum/advclass/manorguard/gormless
+		/datum/advclass/manorguard/gormless,
+		/datum/advclass/manorguard/standard_bearer
 	)
 
 /datum/outfit/job/roguetown/manorguard

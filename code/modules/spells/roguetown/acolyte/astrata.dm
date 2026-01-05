@@ -132,15 +132,6 @@
 		)
 		target.gib()
 		return TRUE
-	if(alert(target, "They are calling for you. Are you ready?", "Revival", "I need to wake up", "Don't let me go") != "I need to wake up")
-		target.visible_message(span_notice("Nothing happens. They are not being let go."))
-		return FALSE
-	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
-	if(!target.revive(full_heal = FALSE))
-		to_chat(user, span_warning("Nothing happens."))
-		revert_cast()
-		return FALSE
-	testing("revived2")
 	var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit()
 	//GET OVER HERE!
 	if(underworld_spirit)
@@ -148,6 +139,16 @@
 		qdel(underworld_spirit)
 		ghost.mind.transfer_to(target, TRUE)
 	target.grab_ghost(force = TRUE) // even suicides
+	if(!target.mind.active)
+		to_chat(user, "[target] will not return from afterlife.")
+		revert_cast()
+		return FALSE
+	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
+	if(!target.revive(full_heal = FALSE))
+		to_chat(user, span_warning("Nothing happens."))
+		revert_cast()
+		return FALSE
+	testing("revived2")
 	target.emote("breathgasp")
 	target.Jitter(100)
 	record_round_statistic(STATS_ASTRATA_REVIVALS)

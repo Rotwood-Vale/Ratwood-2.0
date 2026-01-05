@@ -334,8 +334,8 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/mask/rogue/facemask/shadowfacemask
-	name = "anthraxi war mask"
-	desc = "A metal mask resembling a spider's face. Such a visage haunts many an older dark elf's nitemares - while the younger generation simply scoffs at such relics."
+	name = "spider rider's mask"
+	desc = "A metal mask adorned with arachnid iconography. A grim visage crafted by a grim race."
 	icon_state = "shadowfacemask"
 
 /obj/item/clothing/mask/rogue/facemask/aalloy

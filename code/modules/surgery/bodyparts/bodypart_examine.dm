@@ -99,9 +99,15 @@
 			bodypart_status += "<B>Wounds:</B>"
 			if(bandage)
 				var/usedclass = "notice"
+				var/extratext = ""
 				if(bandage.return_blood_DNA())
 					usedclass = "bloody"
-				bodypart_status += "<a href='?src=[owner_ref];bandage=[REF(bandage)];bandaged_limb=[REF(src)]' class='[usedclass]'>Bandaged</a>"
+					extratext = " (bloodied)"
+				else if(istype(bandage, /obj/item/natural/cloth))
+					var/obj/item/natural/cloth/cloth = bandage
+					if(cloth.medicine_amount)
+						extratext = " (medicated)"
+				bodypart_status += "<a href='?src=[owner_ref];bandage=[REF(bandage)];bandaged_limb=[REF(src)]' class='[usedclass]'>Bandaged[extratext]</a>"
 			if(!bandage || observer_privilege)
 				for(var/datum/wound/wound as anything in wounds)
 					if(wound == null)
@@ -205,10 +211,16 @@
 			status += "<a href='?src=[owner_ref];embedded_limb=[REF(src)];embedded_object=[REF(embedded)];' class='info'>[uppertext(embedded.name)]</a>"
 
 	if(bandage)
+		var/usedclass = "info"
+		var/extratext = ""
 		if(HAS_BLOOD_DNA(bandage))
-			status += "<a href='?src=[owner_ref];bandaged_limb=[REF(src)];bandage=[REF(bandage)]' class='bloody'>[uppertext(bandage.name)]</a>"
-		else
-			status += "<a href='?src=[owner_ref];bandaged_limb=[REF(src)];bandage=[REF(bandage)]' class='info'>[uppertext(bandage.name)]</a>"
+			usedclass = "bloody"
+			extratext = " (bloodied)"
+		else if(istype(bandage, /obj/item/natural/cloth))
+			var/obj/item/natural/cloth/cloth = bandage
+			if(cloth.medicine_amount)
+				extratext = " (medicated)"
+		status += "<a href='?src=[owner_ref];bandaged_limb=[REF(src)];bandage=[REF(bandage)]' class='[usedclass]'>[uppertext(bandage.name)][extratext]</a>"
 
 	if(disabled)
 		status += span_deadsay("CRIPPLED")
