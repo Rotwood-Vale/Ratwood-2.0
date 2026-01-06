@@ -282,6 +282,12 @@
 		)
 		src.visible_message(span_warning("[src] shoves the silver psycross in [H]'s face!"))
 		say(pick(faith_lines), spans = list("torture"))
+		if (HAS_TRAIT(H, TRAIT_WITCH))
+			to_chat(H, span_notice("The weepers don't understand. They don't know what you are."))
+			to_chat(src, span_notice("[H] does not respond - your compulsion is fruitless. How can this be?"))
+			if (prob(30))
+				to_chat(src, span_warning("The hairs upon the back of your neck rise..."))
+			return
 		H.emote("agony", forced = TRUE)
 
 		if(!(do_mob(src, H, 10 SECONDS)))
@@ -348,6 +354,12 @@
 			"TELL ME!",
 		)
 		say(pick(torture_lines), spans = list("torture"))
+		if (HAS_TRAIT(H, TRAIT_WITCH))
+			to_chat(H, span_notice("The weepers don't understand. They don't know what you are."))
+			to_chat(src, span_notice("[H] does not respond - your compulsion is fruitless. How can this be?"))
+			if (prob(30))
+				to_chat(src, span_warning("The hairs upon the back of your neck rise..."))
+			return
 		H.emote("agony", forced = TRUE)
 
 		if(!(do_mob(src, H, 10 SECONDS)))
