@@ -1236,6 +1236,103 @@
 	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, id)
 	REMOVE_TRAIT(owner, TRAIT_STRONGBITE, id)
 
+
+/atom/movable/screen/alert/status_effect/buff/xylix_pratfall
+	name = "Blessing of the Pratfall"
+	desc = "My body has become a treacherous obstacle."
+	icon_state = "buff"
+
+/obj/effect/xylix_pratfall_proxy
+	name = ""
+	icon = 'icons/mob/mob.dmi'
+	icon_state = null
+	mouse_opacity = 0
+	layer = ABOVE_MOB_LAYER
+	anchored = TRUE
+	invisibility = INVISIBILITY_ABSTRACT
+
+	var/mob/living/owner
+
+/obj/effect/xylix_pratfall_proxy/Initialize(mapload, mob/living/_owner)
+	. = ..()
+	owner = _owner
+
+/datum/status_effect/buff/xylix_pratfall
+	id = "xylix_pratfall"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/xylix_pratfall
+	duration = 20 MINUTES
+
+	var/obj/effect/xylix_pratfall_proxy/proxy
+
+/datum/status_effect/buff/xylix_pratfall/on_apply()
+	. = ..()
+
+	if(!isliving(owner))
+		return
+
+	proxy = new(owner.loc, owner)
+
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
+	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_owner_deleted))
+	RegisterSignal(proxy, COMSIG_QDELETING, PROC_REF(on_proxy_deleted))
+
+/datum/status_effect/buff/xylix_pratfall/on_remove()
+	. = ..()
+	cleanup()
+
+/datum/status_effect/buff/xylix_pratfall/proc/on_owner_moved()
+	if(proxy && owner)
+		proxy.loc = owner.loc
+
+/datum/status_effect/buff/xylix_pratfall/proc/on_owner_deleted()
+	cleanup()
+
+/datum/status_effect/buff/xylix_pratfall/proc/on_proxy_deleted()
+	proxy = null
+
+/datum/status_effect/buff/xylix_pratfall/proc/cleanup()
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(owner, COMSIG_QDELETING)
+
+	QDEL_NULL(proxy)
+
+/obj/effect/xylix_pratfall_proxy/Crossed(atom/movable/AM)
+	. = ..()
+
+	if(!owner || !isliving(AM))
+		return
+
+	var/mob/living/L = AM
+	var/mob/living/M = owner
+
+	if(M.mobility_flags & MOBILITY_STAND)
+		return
+	if(L.buckled)
+		return
+	if(L.patron?.type == /datum/patron/divine/xylix)
+		return
+
+	var/list/messages = list(
+		"[L] tries to be graceful, but [M] has other plans!",
+		"[L] discovers that stepping on friends is hazardous!",
+		"[L] flails wildly as [M] turns into a slippery obstacle!",
+		"[L] forgets the art of walking thanks to [M]'s treachery!",
+		"[L] meets the floor in a most undignified manner, courtesy of [M]!"
+	)
+
+	L.visible_message(span_warning(pick(messages)))
+
+	var/list/sounds = list(
+		'sound/misc/clownedsitcomlaugh1.ogg',
+		'sound/misc/clownedsitcomlaugh2.ogg',
+		'sound/misc/clownedsitcomlaugh3.ogg'
+	)
+
+	playsound(L, pick(sounds), 50, TRUE)
+
+	L.AdjustKnockdown(2)
+
+
 /atom/movable/screen/alert/status_effect/buff/pacify
 	name = "Blessing of Eora"
 	desc = "I feel my heart as light as feathers. All my worries have washed away."
