@@ -26,30 +26,36 @@
 	if(!bounty_poster)
 		bounty_poster = "The Justiciary of The Vale"
 	
-	// Prompt for severity
-	var/bounty_severity = input(H, "How severe are your crimes?", "Bounty Severity") as anything in list("Misdeed", "Harm towards lyfe", "Horrific atrocities")
-	if(!bounty_severity)
-		bounty_severity = "Misdeed"
+	// Prompt for severity based on bounty poster
+	var/bounty_severity
+	if(bounty_poster == "The Justiciary of The Vale")
+		bounty_severity = input(H, "How severe are your crimes?", "Crime Severity") as anything in list("Misdemeanor", "Felony", "Atrocity")
+		if(!bounty_severity)
+			bounty_severity = "Misdemeanor"
+	else
+		bounty_severity = input(H, "How severe are your sins?", "Sin Severity") as anything in list("Transgression", "Heresy", "Apostasy")
+		if(!bounty_severity)
+			bounty_severity = "Transgression"
 	
 	// Apply appropriate trait based on combination
 	var/applied_trait
 	if(bounty_poster == "The Justiciary of The Vale")
 		// Criminal bounties
 		switch(bounty_severity)
-			if("Misdeed")
+			if("Misdemeanor")
 				applied_trait = TRAIT_MISDEMEANANT
-			if("Harm towards lyfe")
+			if("Felony")
 				applied_trait = TRAIT_LAWBREAKER
-			if("Horrific atrocities")
+			if("Atrocity")
 				applied_trait = TRAIT_CRIMINAL
 	else
 		// Heretic bounties (Holy See or Orthodoxy)
 		switch(bounty_severity)
-			if("Misdeed")
+			if("Transgression")
 				applied_trait = TRAIT_HERETIC_MINOR
-			if("Harm towards lyfe")
+			if("Heresy")
 				applied_trait = TRAIT_HERETIC_MAJOR
-			if("Horrific atrocities")
+			if("Apostasy")
 				applied_trait = TRAIT_HERETIC_VILE
 	
 	// Apply the trait
@@ -66,11 +72,11 @@
 	// Calculate bounty amount based on severity
 	var/bounty_total = rand(100, 400)
 	switch(bounty_severity)
-		if("Misdeed")
+		if("Misdemeanor", "Transgression")
 			bounty_total = rand(50, 150)
-		if("Harm towards lyfe")
+		if("Felony", "Heresy")
 			bounty_total = rand(200, 300)
-		if("Horrific atrocities")
+		if("Atrocity", "Apostasy")
 			bounty_total = rand(300, 400)
 			// Add to outlawed/excommunicated list for most severe crimes
 			if(bounty_poster == "The Justiciary of The Vale")

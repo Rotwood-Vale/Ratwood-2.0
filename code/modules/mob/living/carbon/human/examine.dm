@@ -140,11 +140,11 @@
 			// Law enforcement can see detailed bounty info
 			if(J?.department_flag & GARRISON || J?.department_flag & NOBLEMEN)
 				if(HAS_TRAIT(src, TRAIT_CRIMINAL))
-					. += span_danger("<b>WANTED - HORRIFIC ATROCITIES!</b>")
+					. += span_danger("<b>WANTED VILLAIN!</b>")
 				else if(HAS_TRAIT(src, TRAIT_LAWBREAKER))
-					. += span_warning("<b>WANTED CRIMINAL!</b>")
+					. += span_warning("<b>CRIMINAL!</b>")
 				else if(HAS_TRAIT(src, TRAIT_MISDEMEANANT))
-					. += span_info("<b>Wanted - Minor Offenses.</b>")
+					. += span_info("<b>Miscreant.</b>")
 			// Regular folk see vague text
 			else
 				. += span_notice("Something about [p_them()] seems... troubled.")
@@ -155,11 +155,11 @@
 			// Only Inquisition can see detailed heresy info
 			if(J?.department_flag & CHURCHMEN || J?.department_flag & INQUISITION)
 				if(HAS_TRAIT(src, TRAIT_HERETIC_VILE))
-					. += span_danger("<b>EXCOMMUNICATED HERETIC!</b>")
+					. += span_danger("<b>WANTED APOSTATE!</b>")
 				else if(HAS_TRAIT(src, TRAIT_HERETIC_MAJOR))
-					. += span_warning("<b>DANGEROUS HERETIC!</b>")
+					. += span_warning("<b>WANTED HERETIC!</b>")
 				else if(HAS_TRAIT(src, TRAIT_HERETIC_MINOR))
-					. += span_info("<b>Minor Heretic.</b>")
+					. += span_info("<b>Sinner.</b>")
 			// Regular folk see vague text
 			else
 				. += span_notice("Something about [p_them()] seems... troubled.")
