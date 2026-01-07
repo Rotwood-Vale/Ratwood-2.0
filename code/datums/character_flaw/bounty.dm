@@ -1,20 +1,23 @@
 // Bounty vice that uses wretch-style selection menu
 // Player selects who placed the bounty and severity when they spawn
 
-/datum/charflaw/hunted
-	name = "Hunted"
+/datum/charflaw/excidiumbounty
+	name = "Hungered by Excidium (+1 TRI)"
 	desc = "Somewhere in my past, I've made powerful enemies. A bounty has been placed on my head."
 
-/datum/charflaw/hunted/on_mob_creation(mob/user)
+/datum/charflaw/excidiumbounty/on_mob_creation(mob/user)
 	..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
 	
+	// Grant triumph for taking this flaw
+	H.adjust_triumphs(1)
+	
 	// Set up a timer to show bounty selection after character creation is complete
 	addtimer(CALLBACK(src, PROC_REF(select_bounty), H), 5 SECONDS)
 
-/datum/charflaw/hunted/proc/select_bounty(mob/living/carbon/human/H)
+/datum/charflaw/excidiumbounty/proc/select_bounty(mob/living/carbon/human/H)
 	if(!H || !H.mind)
 		return
 	

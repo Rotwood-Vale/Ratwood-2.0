@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Critical Weakness"=/datum/charflaw/critweakness,
 	"Silver Weakness"=/datum/charflaw/silverweakness,
 	"Hunted"=/datum/charflaw/hunted,
+	"Hungered by Excidium (+1 TRI)"=/datum/charflaw/excidiumbounty,
 	"Random or No Flaw"=/datum/charflaw/randflaw,
 	"No Flaw (3 TRIUMPHS)"=/datum/charflaw/noflaw,
 	))
