@@ -47,6 +47,13 @@ with light edits to work with roguecode */
 /datum/component/item_equipped_movement_rustle/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 	RegisterSignal(equipper, COMSIG_MOVABLE_MOVED, PROC_REF(try_step), override = TRUE)
+	
+	// PR #5139: Continue rustling even when stored in helmet
+	if(istype(source.loc, /obj/item/clothing/head))
+		var/obj/item/clothing/head/helmet = source.loc
+		if(ishuman(helmet.loc))
+			var/mob/living/carbon/human/wearer = helmet.loc
+			RegisterSignal(wearer, COMSIG_MOVABLE_MOVED, PROC_REF(try_step), override = TRUE)
 
 
 /datum/component/item_equipped_movement_rustle/proc/on_unequip(datum/source, mob/dropped)

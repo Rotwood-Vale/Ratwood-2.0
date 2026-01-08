@@ -33,6 +33,16 @@
 		var/mob/parent_mob = our_parent.loc
 		parent_mob.update_inv_head()
 
+// PR #5139: When items are inserted into helmet storage, trigger their rustle component
+/datum/component/storage/concrete/roguetown/hat/handle_item_insertion(obj/item/storing, prevent_warning = FALSE, mob/user, datum/component/storage/remote, params, storage_click = FALSE)
+	. = ..()
+	if(.)
+		// Check if the inserted item has a rustle component and trigger it
+		var/datum/component/item_equipped_movement_rustle/rustle_comp = storing.GetComponent(/datum/component/item_equipped_movement_rustle)
+		if(rustle_comp && ishuman(parent.loc))
+			var/mob/living/carbon/human/wearer = parent.loc
+			rustle_comp.on_equip(storing, wearer, SLOT_HEAD)
+
 /datum/component/storage/concrete/roguetown/hat/can_be_inserted(obj/item/storing, stop_messages, mob/user, worn_check = FALSE, params, storage_click = FALSE)
 	// we only want aesthetically head items, like flowercrowns, to be addable
 	if(!(storing.slot_flags & ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK))
@@ -89,6 +99,19 @@
 			return TRUE
 	return ..()
 
+/obj/item/clothing/head/attack_right(mob/user)
+	// PR #5031: Allow adjusting items stored in helmet
+	if(attachment_component && loc == user)
+		var/datum/component/storage/concrete/roguetown/our_component = GetComponent(attachment_component)
+		if(our_component && length(our_component.item_to_grid_coordinates))
+			// Let stored items handle their own adjustments
+			for(var/obj/item/thing in our_component.item_to_grid_coordinates)
+				if(thing.adjustable)
+					thing.AdjustClothes(user)
+					user.update_inv_head()
+					return TRUE
+	return ..()
+
 /obj/item/clothing/head/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, var/icon/clip_mask = null)
 	. = ..()
 	// Add overlays for items stored in the helmet's attachment storage
@@ -96,6 +119,7 @@
 		var/datum/component/storage/concrete/roguetown/our_component = GetComponent(attachment_component)
 		if(our_component && length(our_component.item_to_grid_coordinates))
 			for(var/obj/item/thing in our_component.item_to_grid_coordinates)
+				// PR #5031: Don't inherit parent's dye color for nested items
 				var/mutable_appearance/thing_overlay = thing.build_worn_icon(default_layer = default_layer, default_icon_file = thing.mob_overlay_icon ? thing.mob_overlay_icon : default_icon_file, isinhands = FALSE, female = female, override_state = thing.icon_state)
 				.overlays += thing_overlay
 
