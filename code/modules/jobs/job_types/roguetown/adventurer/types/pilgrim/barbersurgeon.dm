@@ -39,9 +39,9 @@
 		H.adjust_blindness(-3)
 		var/cosmetic_titles = list(
 			"Barber Surgeon",
-			"Surgeon",
-			"Chirurgeon",
-			"Nurse")
+			"Town Surgeon",
+			"Town Chirurgeon",
+			"Town Nurse")
 		var/cosmetic_choice = input(H, "Select your medical profession.", "Medical Professions") as anything in cosmetic_titles
 		
 		switch(cosmetic_choice)
@@ -50,19 +50,19 @@
 				H.mind.cosmetic_class_title = "Barber Surgeon"
 				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
-			if("Surgeon")
-				to_chat(H, span_notice("You are a Surgeon, performing operations."))
-				H.mind.cosmetic_class_title = "Surgeon"
+			if("Town Surgeon")
+				to_chat(H, span_notice("You are a Town Surgeon, performing operations."))
+				H.mind.cosmetic_class_title = "Town Surgeon"
 				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
-			if("Chirurgeon")
-				to_chat(H, span_notice("You are a Chirurgeon, a skilled medical practitioner."))
-				H.mind.cosmetic_class_title = "Chirurgeon"
+			if("Town Chirurgeon")
+				to_chat(H, span_notice("You are a Town Chirurgeon, a skilled medical practitioner."))
+				H.mind.cosmetic_class_title = "Town Chirurgeon"
 				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
-			if("Nurse")
-				to_chat(H, span_notice("You are a Nurse, caring for the sick and wounded."))
-				H.mind.cosmetic_class_title = "Nurse"
+			if("Town Nurse")
+				to_chat(H, span_notice("You are a Town Nurse, caring for the sick and wounded."))
+				H.mind.cosmetic_class_title = "Town Nurse"
 				H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 		H.set_blindness(0)

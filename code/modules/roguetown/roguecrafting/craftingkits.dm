@@ -47,21 +47,21 @@
 	var/filter_name = "seasoned_[effect_type]"
 	switch(effect_type)
 		if("healing")
-			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#ff69b4", "size" = 1)) // Pink
+			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#ff69b4", "size" = 0.2)) // Pink
 		if("wellfed")
-			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#ff4500", "size" = 1)) // Red-orange
+			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#ff4500", "size" = 0.2)) // Red-orange
 		if("energized")
-			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#ffff00", "size" = 1)) // Yellow
+			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#ffff00", "size" = 0.2)) // Yellow
 		if("clearheaded")
-			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#00bfff", "size" = 1)) // Cyan
+			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#00bfff", "size" = 0.2)) // Cyan
 		if("sweet")
-			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#ff1493", "size" = 1)) // Deep pink
+			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#ff1493", "size" = 0.2)) // Deep pink
 		if("smoky")
-			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#8b4513", "size" = 1)) // Saddle brown
+			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#8b4513", "size" = 0.2)) // Saddle brown
 		if("bitter")
-			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#556b2f", "size" = 1)) // Dark olive
+			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#556b2f", "size" = 0.2)) // Dark olive
 		if("tangy")
-			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#00ff7f", "size" = 1)) // Spring green
+			F.add_filter(filter_name, 1, list("type" = "outline", "color" = "#00ff7f", "size" = 0.2)) // Spring green
 	
 	RegisterSignal(F, COMSIG_FOOD_EATEN, .proc/on_food_eaten)
 
@@ -334,7 +334,7 @@
 			)
 			if(!findtext(armor.name, "riveted"))
 				armor.name = "riveted [armor.name]"
-			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#696969", "size" = 1))
+			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#696969", "size" = 0.2))
 		if("layered")
 			// +pierce armor (+END), -blunt armor, bulky (-PER), flammable
 			armor.armor = armor.armor.modifyRating(piercing = skill_mod, blunt = negative_mod, fire = -20)
@@ -346,7 +346,7 @@
 			)
 			if(!findtext(armor.name, "layered"))
 				armor.name = "layered [armor.name]"
-			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#8b7355", "size" = 1))
+			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#8b7355", "size" = 0.2))
 		if("fitted")
 			// Better mobility (+SPD), much less protection
 			armor.armor = armor.armor.modifyRating(blunt = -25, piercing = -25, fire = -15)
@@ -358,7 +358,7 @@
 			)
 			if(!findtext(armor.name, "fitted"))
 				armor.name = "fitted [armor.name]"
-			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#556b2f", "size" = 1))
+			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#556b2f", "size" = 0.2))
 		if("studded")
 			// Balanced protection increase, heavier and less flexible
 			var/balanced_mod = clamp(3 + smith_skill, 3, 10)
@@ -371,7 +371,7 @@
 			)
 			if(!findtext(armor.name, "studded"))
 				armor.name = "studded [armor.name]"
-			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#a9a9a9", "size" = 1))
+			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#a9a9a9", "size" = 0.2))
 		if("hardened")
 			// Heavy blunt protection (+CON), very weak to piercing, very heavy (-2 SPD)
 			var/heavy_mod = clamp(8 + (smith_skill * 2), 8, 25)
@@ -384,7 +384,7 @@
 			)
 			if(!findtext(armor.name, "hardened"))
 				armor.name = "hardened [armor.name]"
-			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#2f4f4f", "size" = 1))
+			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#2f4f4f", "size" = 0.2))
 		if("quilted")
 			// Comfortable padding (+END +pierce), very weak to blunt
 			armor.armor = armor.armor.modifyRating(blunt = -25, piercing = 5, fire = -25)
@@ -396,7 +396,7 @@
 			)
 			if(!findtext(armor.name, "quilted"))
 				armor.name = "quilted [armor.name]"
-			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#daa520", "size" = 1))
+			armor.add_filter(filter_name, 1, list("type" = "outline", "color" = "#daa520", "size" = 0.2))
 
 /obj/item/armor_kit
 	name = "armor materials"
@@ -602,14 +602,14 @@
 			weapon.wdefense_dynamic -= 1
 			if(!findtext(weapon.name, "honed"))
 				weapon.name = "honed [weapon.name]"
-			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#dc143c", "size" = 1))
+			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#dc143c", "size" = 0.2))
 		if("weighted")
 			// +parry (+WIL), -damage, heavy (-SPD)
 			weapon.wdefense_dynamic += defense_bonus
 			weapon.force_dynamic -= 2
 			if(!findtext(weapon.name, "weighted"))
 				weapon.name = "weighted [weapon.name]"
-			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#4169e1", "size" = 1))
+			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#4169e1", "size" = 0.2))
 		if("oiled")
 			// +armor penetration (+PER), -defense, slippery (-STR)
 			var/pen_bonus = clamp(0.2 + (smith_skill * 0.05), 0.2, 0.5)
@@ -617,7 +617,7 @@
 			weapon.wdefense_dynamic -= 2
 			if(!findtext(weapon.name, "oiled"))
 				weapon.name = "oiled [weapon.name]"
-			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#daa520", "size" = 1))
+			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#daa520", "size" = 0.2))
 		if("serrated")
 			// High damage (+STR), reduced defense, jagged (-WIL)
 			var/high_damage = clamp(3 + smith_skill, 3, 10)
@@ -625,7 +625,7 @@
 			weapon.wdefense_dynamic -= 2
 			if(!findtext(weapon.name, "serrated"))
 				weapon.name = "serrated [weapon.name]"
-			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#8b0000", "size" = 1))
+			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#8b0000", "size" = 0.2))
 		if("guarded")
 			// High defense bonus (+CON), heavier (-SPD), reduced damage
 			var/high_defense = clamp(2 + round(smith_skill * 0.8), 2, 8)
@@ -633,7 +633,7 @@
 			weapon.force_dynamic -= 2
 			if(!findtext(weapon.name, "guarded"))
 				weapon.name = "guarded [weapon.name]"
-			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#4682b4", "size" = 1))
+			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#4682b4", "size" = 0.2))
 		if("reinforced")
 			// Balanced improvement (+STR +CON), heavier (-SPD)
 			var/balanced = clamp(1 + round(smith_skill * 0.4), 1, 4)
@@ -642,7 +642,7 @@
 			weapon.wbalance -= 0.5
 			if(!findtext(weapon.name, "reinforced"))
 				weapon.name = "reinforced [weapon.name]"
-			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#708090", "size" = 1))
+			weapon.add_filter(filter_name, 1, list("type" = "outline", "color" = "#708090", "size" = 0.2))
 
 /obj/item/weapon_kit
 	name = "weapon materials"
@@ -869,7 +869,7 @@
 			)
 			if(!findtext(cloth.name, "embroidered"))
 				cloth.name = "embroidered [cloth.name]"
-			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#daa520", "size" = 1))
+			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#daa520", "size" = 0.2))
 		if("mended")
 			// +pierce (+CON), -blunt armor, patchy (-SPD, flammable)
 			cloth.armor = cloth.armor.modifyRating(piercing = skill_mod, blunt = negative_mod, fire = -20)
@@ -881,7 +881,7 @@
 			)
 			if(!findtext(cloth.name, "mended"))
 				cloth.name = "mended [cloth.name]"
-			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#8b7355", "size" = 1))
+			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#8b7355", "size" = 0.2))
 		if("tailored")
 			// Better fit (+SPD +INT), much less protection
 			cloth.armor = cloth.armor.modifyRating(blunt = -25, piercing = -25, fire = -20)
@@ -893,7 +893,7 @@
 			)
 			if(!findtext(cloth.name, "tailored"))
 				cloth.name = "tailored [cloth.name]"
-			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#4169e1", "size" = 1))
+			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#4169e1", "size" = 0.2))
 		if("reinforced")
 			// Extra padding (+blunt armor, +END), heavier and hot (-SPD, -fire)
 			cloth.armor = cloth.armor.modifyRating(blunt = skill_mod, piercing = negative_mod, fire = -25)
@@ -905,7 +905,7 @@
 			)
 			if(!findtext(cloth.name, "reinforced"))
 				cloth.name = "reinforced [cloth.name]"
-			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#696969", "size" = 1))
+			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#696969", "size" = 0.2))
 		if("padded")
 			// Comfortable cushioning (+CON, +pierce), bulky and flammable (-PER, -fire)
 			cloth.armor = cloth.armor.modifyRating(piercing = skill_mod, blunt = negative_mod, fire = -25)
@@ -917,7 +917,7 @@
 			)
 			if(!findtext(cloth.name, "padded"))
 				cloth.name = "padded [cloth.name]"
-			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#deb887", "size" = 1))
+			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#deb887", "size" = 0.2))
 		if("weatherproofed")
 			// Fire resistant (+fire armor, +END), stiff and heavy (-SPD, -pierce)
 			var/fire_mod = clamp(10 + (sewing_skill * 3), 10, 25)
@@ -930,7 +930,7 @@
 			)
 			if(!findtext(cloth.name, "weatherproofed"))
 				cloth.name = "weatherproofed [cloth.name]"
-			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#2f4f4f", "size" = 1))
+			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#2f4f4f", "size" = 0.2))
 		if("lined")
 			// Warm insulation (+fire resist, +STR), cumbersome (-blunt, -END)
 			var/warm_mod = clamp(8 + (sewing_skill * 2), 8, 20)
@@ -943,7 +943,7 @@
 			)
 			if(!findtext(cloth.name, "lined"))
 				cloth.name = "lined [cloth.name]"
-			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#8b4513", "size" = 1))
+			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#8b4513", "size" = 0.2))
 		if("pocketed")
 			// Extra storage (+INT), minimal armor and awkward (-all armor, -SPD)
 			cloth.armor = cloth.armor.modifyRating(blunt = -20, piercing = -20, fire = -15)
@@ -961,7 +961,7 @@
 					STR.max_w_class = WEIGHT_CLASS_SMALL
 			if(!findtext(cloth.name, "pocketed"))
 				cloth.name = "pocketed [cloth.name]"
-			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#a0522d", "size" = 1))
+			cloth.add_filter(filter_name, 1, list("type" = "outline", "color" = "#a0522d", "size" = 0.2))
 
 /obj/item/clothing_kit
 	name = "sewing materials"

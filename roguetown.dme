@@ -2060,6 +2060,7 @@
 #include "code\modules\mob\living\carbon\human\examine_tgui.dm"
 #include "code\modules\mob\living\carbon\human\human.dm"
 #include "code\modules\mob\living\carbon\human\human_defense.dm"
+#include "code\modules\mob\living\carbon\human\exercise.dm"
 #include "code\modules\mob\living\carbon\human\human_defines.dm"
 #include "code\modules\mob\living\carbon\human\human_helpers.dm"
 #include "code\modules\mob\living\carbon\human\human_movement.dm"
