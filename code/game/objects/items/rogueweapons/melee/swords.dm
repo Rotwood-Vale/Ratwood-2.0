@@ -143,6 +143,10 @@
 /datum/intent/rend/krieg
 	intent_intdamage_factor = 0.2
 
+/datum/intent/rend/krieg/short
+	damfactor = 1.8
+	swingdelay = 2
+
 //sword objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/sword
@@ -1025,7 +1029,7 @@
 	icon_state = "smesser"
 	force = 24	//Hunting sword + 4
 	max_blade_int = 250	//Sword + 50
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/rend/krieg, /datum/intent/axe/chop, /datum/intent/sword/peel)	//Krieg rend does not change from regular rend apart from dealing 20% damage to integrity
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/rend/krieg/short, /datum/intent/axe/chop, /datum/intent/sword/peel)	//1.8x rend, similar to partizan
 	minstr = 6	// Hunting sword +2
 	wdefense = 4	//Hunting sword +2
 
