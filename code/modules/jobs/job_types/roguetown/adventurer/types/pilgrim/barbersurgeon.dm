@@ -40,7 +40,6 @@
 		var/cosmetic_titles = list(
 			"Barber Surgeon",
 			"Surgeon",
-			"Barber",
 			"Chirurgeon",
 			"Nurse")
 		var/cosmetic_choice = input(H, "Select your medical profession.", "Medical Professions") as anything in cosmetic_titles
@@ -50,22 +49,22 @@
 				to_chat(H, span_notice("You are a Barber Surgeon, healing and cutting hair."))
 				H.mind.cosmetic_class_title = "Barber Surgeon"
 				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 			if("Surgeon")
 				to_chat(H, span_notice("You are a Surgeon, performing operations."))
 				H.mind.cosmetic_class_title = "Surgeon"
+				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
-			if("Barber")
-				to_chat(H, span_notice("You are a Barber, trimming hair and beards."))
-				H.mind.cosmetic_class_title = "Barber"
-				H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE)
 			if("Chirurgeon")
 				to_chat(H, span_notice("You are a Chirurgeon, a skilled medical practitioner."))
 				H.mind.cosmetic_class_title = "Chirurgeon"
-				H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 			if("Nurse")
 				to_chat(H, span_notice("You are a Nurse, caring for the sick and wounded."))
 				H.mind.cosmetic_class_title = "Nurse"
 				H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
+				H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 		H.set_blindness(0)
 	
 	mask = /obj/item/clothing/mask/rogue/spectacles
@@ -85,7 +84,7 @@
 						/obj/item/flashlight/flare/torch/lantern/copper = 1,
 						/obj/item/rogueweapon/huntingknife/scissors/steel = 1,
 						/obj/item/hair_dye_cream = 1,
-						/obj/item/heart_blood_canister/filled = 1,
+						/obj/item/heart_blood_canister/filled = 2,
 						/obj/item/bait/leech = 4
 						)
 	if(H.age == AGE_OLD)

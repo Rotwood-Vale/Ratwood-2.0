@@ -56,23 +56,18 @@
 			if("Blacksmith")
 				to_chat(H, span_notice("You are a Blacksmith, forging metal at the anvil."))
 				H.mind.cosmetic_class_title = "Blacksmith"
-				H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
 			if("Smith")
 				to_chat(H, span_notice("You are a Smith, working metal into tools and weapons."))
 				H.mind.cosmetic_class_title = "Smith"
-				H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 1, TRUE)
 			if("Metalworker")
 				to_chat(H, span_notice("You are a Metalworker, shaping iron and steel."))
 				H.mind.cosmetic_class_title = "Metalworker"
-				H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
 			if("Forgemaster")
 				to_chat(H, span_notice("You are a Forgemaster, master of the forge."))
 				H.mind.cosmetic_class_title = "Forgemaster"
-				H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
 			if("Ironworker")
 				to_chat(H, span_notice("You are an Ironworker, crafting with iron."))
 				H.mind.cosmetic_class_title = "Ironworker"
-				H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
 		H.set_blindness(0)
 	
 	belt = /obj/item/storage/belt/rogue/leather
