@@ -742,7 +742,7 @@
 	var/obj/item/clothing/cloth = parent
 	
 	// Only works on light armor
-	if(cloth.armor_class != ARMOR_CLASS_LIGHT)
+	if(cloth.armor_class != ARMOR_CLASS_LIGH && cloth.armor_class != ARMOR_CLASS_NONE)
 		return COMPONENT_INCOMPATIBLE
 	
 	// Check current modifications
