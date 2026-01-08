@@ -1,0 +1,12 @@
+################################
+# Port from Azure Peak PR #4374
+################################
+
+author: "Azure Peak (Ported)"
+
+delete-after: True
+
+changes:
+  - rscadd: "Helmets can now store decorative items! Shift-right-click a helmet in your hand to access a small 2x2 storage grid for aesthetic head/mask/neck slot items like flower crowns, cloth veils, or decorative chains."
+  - rscadd: "Items stored in helmets will appear as overlays when the helmet is worn, allowing for visual customization."
+  - code_imp: "Added helmet storage component system with proper nesting controls and signal handling."
