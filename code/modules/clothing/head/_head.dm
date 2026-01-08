@@ -1,3 +1,50 @@
+/datum/component/storage/concrete/roguetown/hat
+	screen_max_rows = 2
+	screen_max_columns = 2
+	max_w_class = WEIGHT_CLASS_GIGANTIC
+
+	cant_hold = list(
+		/obj/item/storage,
+		/obj/item/rogueweapon,
+		/obj/item/bomb,
+		/obj/item/flashlight,
+		/obj/item/recipe_book,
+	)
+
+	attack_hand_interact = FALSE
+	silent = TRUE
+	rustle_sound = null
+
+	insert_preposition = "onto"
+	allow_big_nesting = TRUE
+	allow_nesting = TRUE
+	intercept_parent_attack = FALSE
+	intercept_parent_mousedrop = FALSE
+
+/datum/component/storage/concrete/roguetown/hat/attackby(datum/source, obj/item/attacking_item, mob/user, params, storage_click)
+	if(is_type_in_list(attacking_item, cant_hold))
+		return FALSE
+	return ..()
+
+/datum/component/storage/concrete/roguetown/hat/update_icon()
+	. = ..()
+	var/obj/our_parent = real_location()
+	if(ismob(our_parent.loc))
+		var/mob/parent_mob = our_parent.loc
+		parent_mob.update_inv_head()
+
+/datum/component/storage/concrete/roguetown/hat/can_be_inserted(obj/item/storing, stop_messages, mob/user, worn_check = FALSE, params, storage_click = FALSE)
+	// we only want aesthetically head items, like flowercrowns, to be addable
+	if(!(storing.slot_flags & ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK))
+		return FALSE
+	// any sort of armoured item is forbidden, it's aesthetic only
+	if(storing.armor?.stab > 0 || storing.armor?.blunt > 0)
+		return FALSE
+	// don't allow recursive nesting, it must be empty
+	if(length(storing.contents))
+		return FALSE
+	return ..()
+
 /obj/item/clothing/head
 	name = BODY_ZONE_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
@@ -13,11 +60,44 @@
 	grid_height = 32
 	grid_width = 64
 
+	var/attachment_component = /datum/component/storage/concrete/roguetown/hat
+
 /obj/item/clothing/head/Initialize()
 	. = ..()
+	if(attachment_component)
+		AddComponent(attachment_component)
 	if(ishuman(loc) && dynamic_hair_suffix)
 		var/mob/living/carbon/human/H = loc
 		H.update_hair()
+
+/obj/item/clothing/head/get_examine_name(mob/user)
+	var/default_examine_name = ..()
+	if(attachment_component)
+		var/datum/component/storage/concrete/roguetown/our_component = GetComponent(attachment_component)
+		if(length(our_component.item_to_grid_coordinates))
+			var/list/examine_strings = list()
+			for(var/obj/item/thing as anything in our_component.item_to_grid_coordinates)
+				examine_strings += thing.get_examine_name(user)
+			default_examine_name += " ([examine_strings.Join(", ")])"
+	return default_examine_name
+
+/obj/item/clothing/head/ShiftRightClick(mob/user)
+	if(attachment_component)
+		var/datum/component/storage/storage_component = GetComponent(attachment_component)
+		if(storage_component)
+			storage_component.rmb_show(user)
+			return TRUE
+	return ..()
+
+/obj/item/clothing/head/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, var/icon/clip_mask = null)
+	. = ..()
+	// Add overlays for items stored in the helmet's attachment storage
+	if(!isinhands && attachment_component)
+		var/datum/component/storage/concrete/roguetown/our_component = GetComponent(attachment_component)
+		if(our_component && length(our_component.item_to_grid_coordinates))
+			for(var/obj/item/thing in our_component.item_to_grid_coordinates)
+				var/mutable_appearance/thing_overlay = thing.build_worn_icon(default_layer = default_layer, default_icon_file = thing.mob_overlay_icon ? thing.mob_overlay_icon : default_icon_file, isinhands = FALSE, female = female, override_state = thing.icon_state)
+				.overlays += thing_overlay
 
 ///Special throw_impact for hats to frisbee hats at people to place them on their heads/attempt to de-hat them.
 /obj/item/clothing/head/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)

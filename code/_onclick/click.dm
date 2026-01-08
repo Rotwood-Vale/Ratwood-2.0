@@ -873,6 +873,11 @@
 	return
 
 /mob/living/ShiftRightClickOn(atom/A, params)
+	// Check if we're holding something in our active hand and it wants to handle shift-right-click
+	var/obj/item/held_item = get_active_held_item()
+	if(held_item && held_item.ShiftRightClick(src))
+		return
+	
 	var/turf/T = get_turf(A)
 //	var/turf/MT = get_turf(src)
 	if(stat)

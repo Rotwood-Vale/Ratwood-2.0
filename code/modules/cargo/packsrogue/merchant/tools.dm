@@ -234,13 +234,3 @@
 	name = "Scissors, Iron"
 	cost = 30
 	contains = list(/obj/item/rogueweapon/huntingknife/scissors)
-
-/datum/supply_pack/rogue/tools/repairkit
-	name = "Cloth Repair Kit"
-	cost = 15
-	contains = list(/obj/item/repair_kit)
-
-/datum/supply_pack/rogue/tools/repairkit_metal
-	name = "Metal Repair Kit"
-	cost = 20
-	contains = list(/obj/item/repair_kit/metal)

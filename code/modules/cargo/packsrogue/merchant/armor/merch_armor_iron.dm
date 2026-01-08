@@ -6,6 +6,11 @@
 	crate_name = "merchant guild's crate"
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
+/datum/supply_pack/rogue/armor_iron/repairkit_metal
+	name = "Metal Repair Kit"
+	cost = 20
+	contains = list(/obj/item/repair_kit/metal)
+
 /datum/supply_pack/rogue/armor_iron/chainmail_iron
 	name = "Haubergeon"
 	cost = 25

@@ -4,6 +4,10 @@
 	crate_name = "merchant guild's crate"
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
+/datum/supply_pack/rogue/wardrobe/repairkit
+	name = "Cloth Repair Kit"
+	cost = 15
+	contains = list(/obj/item/repair_kit)
 
 /datum/supply_pack/rogue/wardrobe/hat/witchhat
 	name = "Witch-Hunter's Hat"

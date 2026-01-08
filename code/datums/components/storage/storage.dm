@@ -52,9 +52,13 @@
 	var/atom/movable/screen/close/closer						//close button object
 
 	var/allow_big_nesting = FALSE					//allow storage objects of the same or greater size.
+	var/allow_nesting = FALSE						//allow nested storage in general
 
 	var/attack_hand_interact = TRUE					//interact on attack hand.
 	var/quickdraw = FALSE							//altclick interact
+	
+	var/intercept_parent_attack = TRUE				//whether to intercept COMSIG_PARENT_ATTACKBY
+	var/intercept_parent_mousedrop = TRUE			//whether to intercept COMSIG_MOUSEDROP_ONTO and COMSIG_MOUSEDROPPED_ONTO
 
 	//Screen variables: Do not mess with these vars unless you know what you're doing. They're not defines so storage that isn't in the same location can be supported in the future.
 	var/screen_max_columns = INFINITY							//These two determine maximum screen sizes.
@@ -96,7 +100,8 @@
 
 	RegisterSignal(parent, COMSIG_TOPIC, PROC_REF(topic_handle))
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby))
+	if(intercept_parent_attack)
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby))
 
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, PROC_REF(on_attack_hand))
@@ -113,8 +118,9 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_alt_click))
-	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(mousedrop_onto))
-	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
+	if(intercept_parent_mousedrop)
+		RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(mousedrop_onto))
+		RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 
 /datum/component/storage/Destroy()
 	close_all()
