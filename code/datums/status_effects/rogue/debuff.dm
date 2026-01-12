@@ -1088,7 +1088,7 @@
 	id = "burningveins"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/killersice
 	effectedstats = list(STATKEY_CON = -10)
-	duration = 3 SECONDS
+	duration = 5 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/killersice
 	name = "Burning Veins"

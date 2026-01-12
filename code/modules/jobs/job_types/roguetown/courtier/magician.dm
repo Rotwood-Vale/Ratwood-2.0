@@ -114,6 +114,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/poison,
+		/obj/item/reagent_containers/glass/bottle/rogue/strongpoison,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
 		/obj/item/recipe_book/alchemy,
 		/obj/item/recipe_book/magic,

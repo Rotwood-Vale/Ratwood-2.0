@@ -205,7 +205,7 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/storage/keyring/hand = 1,
 		/obj/item/lockpickring/mundane = 1,
-		/obj/item/reagent_containers/glass/bottle/rogue/strongpoison = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,
 	)
 	if(H.age == AGE_OLD)
 		H.change_stat(STATKEY_SPD, -1)
