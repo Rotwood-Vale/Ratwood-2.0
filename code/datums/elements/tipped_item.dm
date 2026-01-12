@@ -44,7 +44,8 @@
 	if(isliving(target))
 		log_combat(user, target, "poisoned", addition="with [reagentlog2]")
 		source.reagents.trans_to(target, 2, transfered_by = user)
-
+		to_chat(target, span_userdanger("You feel an intense burning sensation spreading swiftly from the puncture!"))
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom, visible_message), span_danger("[target.name] appears greatly weakened by the poison!")), 10 SECONDS)
 /datum/element/tipped_item/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
 	if(source.reagents.total_volume)
 		var/reagent_color = mix_color_from_reagents(source.reagents.reagent_list)

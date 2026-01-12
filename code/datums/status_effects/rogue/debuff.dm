@@ -1083,3 +1083,25 @@
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+
+/datum/status_effect/debuff/killersice
+	id = "burningveins"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/killersice
+	effectedstats = list(STATKEY_CON = -10)
+	duration = 3 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/killersice
+	name = "Burning Veins"
+	desc = "Something is dreadfully wrong, your veins BURN."
+	icon_state = "dazed"
+
+/datum/status_effect/debuff/killersice/on_apply()
+		. = ..()
+		var/mob/living/carbon/C = owner
+		C.add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, multiplicative_slowdown = 1.5)
+
+/datum/status_effect/debuff/killersice/on_remove()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
