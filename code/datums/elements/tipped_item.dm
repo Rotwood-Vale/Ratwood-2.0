@@ -6,7 +6,7 @@
 	if(!ismovableatom(target))
 		return ELEMENT_INCOMPATIBLE
 	if(!target.reagents)
-		target.create_reagents(1)
+		target.create_reagents(2)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, PROC_REF(check_dip))
 	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(try_inject))
@@ -33,7 +33,7 @@
 	attacker.visible_message(span_danger("[attacker] is dipping \the [dipper] in [attacked_container]!"), "You dip \the [dipper] in \the [attacked_container]!", vision_distance = 2)
 	if(!do_after(attacker, 2 SECONDS, target = attacked_container))
 		return
-	attacked_container.reagents.trans_to(dipper, 1, transfered_by = attacker)
+	attacked_container.reagents.trans_to(dipper, 2, transfered_by = attacker)
 	attacker.visible_message(span_danger("[attacker] dips \the [dipper] in \the [attacked_container]!"), "You dip \the [dipper] in \the [attacked_container]!", vision_distance = 2)
 	log_combat(attacker, dipper, "poisoned", addition="with [reagentlog]")
 
@@ -43,7 +43,7 @@
 		return
 	if(isliving(target))
 		log_combat(user, target, "poisoned", addition="with [reagentlog2]")
-		source.reagents.trans_to(target, 1, transfered_by = user)
+		source.reagents.trans_to(target, 2, transfered_by = user)
 
 /datum/element/tipped_item/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
 	if(source.reagents.total_volume)
