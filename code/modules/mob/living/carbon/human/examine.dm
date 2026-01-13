@@ -141,12 +141,12 @@
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
 			// Law enforcement can see detailed bounty info
 			if(J?.department_flag & GARRISON || J?.department_flag & NOBLEMEN)
-			if(HAS_TRAIT(src, TRAIT_CRIMINAL_MAJOR))
-				. += span_danger("<b>WANTED VILLAIN!</b>")
-			else if(HAS_TRAIT(src, TRAIT_CRIMINAL_MODERATE))
-				. += span_warning("<b>CRIMINAL!</b>")
-			else if(HAS_TRAIT(src, TRAIT_CRIMINAL_MINOR))
-				. += span_notice("Something about [p_them()] is... troubling.")
+				if(HAS_TRAIT(src, TRAIT_CRIMINAL_MAJOR))
+					. += span_danger("<b>WANTED VILLAIN!</b>")
+				else if(HAS_TRAIT(src, TRAIT_CRIMINAL_MODERATE))
+					. += span_warning("<b>CRIMINAL!</b>")
+				else if(HAS_TRAIT(src, TRAIT_CRIMINAL_MINOR))
+					. += span_notice("Something about [p_them()] is... troubling.")
 
 		// Check for heretic bounties (Holy See / Orthodoxy)
 		if(HAS_TRAIT(src, TRAIT_HERETIC_MINOR) || HAS_TRAIT(src, TRAIT_HERETIC_MAJOR) || HAS_TRAIT(src, TRAIT_HERETIC_VILE))
