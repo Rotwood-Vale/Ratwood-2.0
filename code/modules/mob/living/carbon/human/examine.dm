@@ -146,8 +146,6 @@
 			else if(HAS_TRAIT(src, TRAIT_CRIMINAL_MODERATE))
 				. += span_warning("<b>CRIMINAL!</b>")
 			else if(HAS_TRAIT(src, TRAIT_CRIMINAL_MINOR))
-			// Regular folk see vague text
-			else
 				. += span_notice("Something about [p_them()] is... troubling.")
 
 		// Check for heretic bounties (Holy See / Orthodoxy)
