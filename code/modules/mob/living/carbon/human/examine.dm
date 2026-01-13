@@ -137,19 +137,18 @@
 				. += span_notice("Something about them seems... different.")
 
 		// Check for criminal bounties (Vale)
-		if(HAS_TRAIT(src, TRAIT_MISDEMEANANT) || HAS_TRAIT(src, TRAIT_LAWBREAKER) || HAS_TRAIT(src, TRAIT_CRIMINAL))
+		if(HAS_TRAIT(src, TRAIT_CRIMINAL_MINOR) || HAS_TRAIT(src, TRAIT_CRIMINAL_MODERATE) || HAS_TRAIT(src, TRAIT_CRIMINAL_MAJOR))
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
 			// Law enforcement can see detailed bounty info
 			if(J?.department_flag & GARRISON || J?.department_flag & NOBLEMEN)
-				if(HAS_TRAIT(src, TRAIT_CRIMINAL))
-					. += span_danger("<b>WANTED VILLAIN!</b>")
-				else if(HAS_TRAIT(src, TRAIT_LAWBREAKER))
-					. += span_warning("<b>CRIMINAL!</b>")
-				else if(HAS_TRAIT(src, TRAIT_MISDEMEANANT))
-					. += span_info("<b>Miscreant.</b>")
+			if(HAS_TRAIT(src, TRAIT_CRIMINAL_MAJOR))
+				. += span_danger("<b>WANTED VILLAIN!</b>")
+			else if(HAS_TRAIT(src, TRAIT_CRIMINAL_MODERATE))
+				. += span_warning("<b>CRIMINAL!</b>")
+			else if(HAS_TRAIT(src, TRAIT_CRIMINAL_MINOR))
 			// Regular folk see vague text
 			else
-				. += span_notice("Something about [p_them()] seems... troubled.")
+				. += span_notice("Something about [p_them()] is... troubling.")
 
 		// Check for heretic bounties (Holy See / Orthodoxy)
 		if(HAS_TRAIT(src, TRAIT_HERETIC_MINOR) || HAS_TRAIT(src, TRAIT_HERETIC_MAJOR) || HAS_TRAIT(src, TRAIT_HERETIC_VILE))
@@ -164,7 +163,7 @@
 					. += span_info("<b>Sinner.</b>")
 			// Regular folk see vague text
 			else
-				. += span_notice("Something about [p_them()] seems... troubled.")
+				. += span_notice("Something about [p_them()] is... troubling.")
 
 		if(GLOB.lord_titles[name])
 			. += span_notice("[m3] been granted the title of \"[GLOB.lord_titles[name]]\".")

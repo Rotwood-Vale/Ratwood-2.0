@@ -43,11 +43,11 @@
 		// Criminal bounties
 		switch(bounty_severity)
 			if("Misdemeanor")
-				applied_trait = TRAIT_MISDEMEANANT
+				applied_trait = TRAIT_CRIMINAL_MINOR
 			if("Felony")
-				applied_trait = TRAIT_LAWBREAKER
+				applied_trait = TRAIT_CRIMINAL_MODERATE
 			if("Atrocity")
-				applied_trait = TRAIT_CRIMINAL
+				applied_trait = TRAIT_CRIMINAL_MAJOR
 	else
 		// Heretic bounties (Holy See or Orthodoxy)
 		switch(bounty_severity)
