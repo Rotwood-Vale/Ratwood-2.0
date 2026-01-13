@@ -525,6 +525,90 @@
 	icon_state = "debuff"
 	color ="#af9f9f"
 
+/datum/status_effect/debuff/necrandeathdoorwilloss
+	id = "Necran Deathly calm!"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/necranwilloss
+	effectedstats = list(STATKEY_WIL = -4)
+	var/blimmune = FALSE
+	var/nobreath = FALSE
+
+/datum/status_effect/debuff/necrandeathdoorwilloss/on_apply()
+	. = ..()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
+		if(HAS_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE))
+			blimmune = TRUE
+		else
+			ADD_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+		if(HAS_TRAIT(H, TRAIT_NOBREATH))
+			nobreath = TRUE
+		else
+			ADD_TRAIT(H, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+
+/datum/status_effect/debuff/necrandeathdoorwilloss/on_remove()
+	. = ..()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
+		if(!blimmune)
+			REMOVE_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+		if(!nobreath)
+			REMOVE_TRAIT(H, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+
+/datum/status_effect/debuff/necrandeathdoorwilloss/process()
+	.=..()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.energy_add(-1)	//being in death's edge drains energy from people
+		var/area/rogue/our_area = get_area(H)
+		if(!(our_area.necra_area))
+			owner.remove_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)
+
+/atom/movable/screen/alert/status_effect/debuff/necranwilloss
+	name = "Necran Deathly calm!"
+	desc = "I am on the edge of my lady's realm. My motivation slackens with such deathly tranquility."
+	icon_state = "debuff"
+	color ="#af9f9f"
+
+/datum/status_effect/debuff/deathdoorwilloss
+	id = "Deathly calm!"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/deathdoorwilloss
+	effectedstats = list(STATKEY_WIL = -8)
+	var/blimmune = FALSE
+	var/nobreath = FALSE
+
+/datum/status_effect/debuff/deathdoorwilloss/on_apply()
+	. = ..()
+	if(HAS_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE))
+		blimmune = TRUE
+	else
+		ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+	if(HAS_TRAIT(owner, TRAIT_NOBREATH))
+		nobreath = TRUE
+	else
+		ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+
+/datum/status_effect/debuff/deathdoorwilloss/on_remove()
+	. = ..()
+	if(!blimmune)
+		REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, id)
+	if(!nobreath)
+		REMOVE_TRAIT(owner, TRAIT_NOBREATH, id)
+
+/datum/status_effect/debuff/deathdoorwilloss/process()
+	.=..()
+	owner.energy_add(-1)	//being in death's edge drains energy from people
+	var/area/rogue/our_area = get_area(owner)
+	if(!(our_area.necra_area))
+		owner.remove_status_effect(/datum/status_effect/debuff/deathdoorwilloss)
+
+/atom/movable/screen/alert/status_effect/debuff/deathdoorwilloss
+	name = "Deathly calm!"
+	desc = "I am on the edge of Death's realm. It is hard to feel motivated with such deathly tranquility."
+	icon_state = "debuff"
+	color ="#af9f9f"
+
 /atom/movable/screen/alert/status_effect/emberwine
 	name = "Aphrodesiac"
 	desc = "The warmth is spreading through my body..."
@@ -713,6 +797,208 @@
 	name = "Mesmerised"
 	desc = span_warning("Their beauty is otherwordly..")
 	icon_state = "acid"
+
+/////////////////////////
+///HARPY FLIGHT STUFF///
+///////////////////////
+
+/datum/status_effect/debuff/harpy_flight
+	id = "harpy_flight"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/harpy_flight
+	tick_interval = 10
+	var/obj/effect/flyer_shadow/shadow
+	var/mob/living/carbon/human/harpy
+	var/mob/living/carbon/human/passenger
+	var/stamcost = 9
+	var/obj/item/organ/wings/harpy/harpy_wings
+
+/datum/status_effect/debuff/harpy_flight/on_creation(mob/living/new_owner, new_stamcost)
+	stamcost = new_stamcost
+	harpy_wings = new_owner.getorganslot(ORGAN_SLOT_WINGS)
+	return ..()
+
+/datum/status_effect/debuff/harpy_flight/on_apply()
+	. = ..()
+	harpy = owner
+	animate(harpy, pixel_y = harpy.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
+	animate(pixel_y = harpy.pixel_y - 3, time = 6) // thank you oog
+	harpy.drop_all_held_items()
+	for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy_wings.nullspace_items)
+		var/talons_final = talons
+		harpy.put_in_hands(talons_final, TRUE, FALSE, TRUE)
+		break
+	harpy.movement_type |= FLYING
+	harpy.dna.species.speedmod += 0.3
+	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
+	harpy.apply_status_effect(/datum/status_effect/debuff/flight_sound_loop)
+	ADD_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
+	harpy.flying = TRUE
+	init_signals()
+
+/datum/status_effect/debuff/harpy_flight/tick()
+	. = ..()
+	harpy = owner
+	var/stamcost_final = stamcost
+	if(harpy.pulling)
+		stamcost_final = stamcost * 2
+	harpy.stamina_add(stamcost_final)
+//	to_chat(harpy, span_warningbig("[stamcost_final] REMOVED!")) // debug msg
+	if(harpy.pulledby)
+		passenger = harpy.pulling
+		if(harpy.pulledby != passenger)
+			to_chat(harpy, span_bloody("I can't fly while someone's grabbing me like this, AGHH!!"))
+			harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+	if(harpy.buckled)
+		to_chat(harpy, span_bloody("Ha-ha, time to rest my wings!"))
+		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+	if(harpy.mind)
+		harpy.mind.add_sleep_experience(/datum/skill/misc/athletics, (harpy.STAINT*0.03), FALSE)
+	if(!(harpy.mobility_flags & MOBILITY_STAND))
+		to_chat(harpy, span_bloody("I can't flap my wings while imbalanced like this! AGHH!!"))
+		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+	if(harpy.stamina >= harpy.max_stamina)
+		to_chat(harpy, span_bloody("I can't flap my wings for much more! AGHH!!"))
+		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+
+/datum/status_effect/debuff/harpy_flight/on_remove()
+	. = ..()
+	harpy = owner
+	if(harpy.pulling)
+		harpy.stop_pulling()
+	harpy.remove_status_effect(/datum/status_effect/debuff/flight_sound_loop)
+	harpy.dna.species.speedmod -= 0.3
+	harpy.remove_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE)
+	var/turf/tile_under_harpy = harpy.loc
+	harpy.movement_type &= ~FLYING
+	tile_under_harpy.zFall(harpy)
+	remove_signals()
+	animate(harpy)
+	REMOVE_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
+	harpy.flying = FALSE
+	if(harpy.is_holding_item_of_type(/obj/item/rogueweapon/huntingknife/idagger/harpy_talons))
+		for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy.held_items)
+			harpy.dropItemToGround(talons, TRUE)
+			return
+
+/atom/movable/screen/alert/status_effect/debuff/harpy_flight
+	name = "Flying..."
+	desc = "Tehee!!"
+	icon_state = "muscles"
+
+/obj/effect/flyer_shadow
+	name = "humanoid shadow"
+	desc = "A shadow cast from something flying above."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shadow"
+	anchored = TRUE
+	layer = BELOW_MOB_LAYER
+	alpha = 130
+	pixel_y = -5
+	var/datum/weakref/flying_ref
+
+/obj/effect/flyer_shadow/Initialize(mapload, flying_mob)
+	. = ..()
+	if(flying_mob)
+		flying_ref = WEAKREF(flying_mob)
+	transform = matrix() * 0.8 // Make the shadow slightly smaller
+
+/obj/effect/flyer_shadow/Destroy()
+	flying_ref = null
+	return ..()
+
+/datum/status_effect/debuff/harpy_flight/proc/init_signals()
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
+
+/datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source) // rewritten by @tmyqlfpir
+    SIGNAL_HANDLER
+
+    var/turf/cur_turf = get_turf(owner)
+    if(!cur_turf)
+        return
+    if(!shadow)
+        shadow = new /obj/effect/flyer_shadow(cur_turf, owner)
+    while(isopenspace(cur_turf))
+        var/turf/temp_turf = GET_TURF_BELOW(cur_turf)
+        if(!temp_turf || isclosedturf(temp_turf))
+            break
+        cur_turf = temp_turf
+    shadow.forceMove(cur_turf)
+
+/datum/status_effect/debuff/harpy_flight/proc/remove_signals()
+	UnregisterSignal(owner, list(
+		COMSIG_MOVABLE_MOVED,
+	))
+	if(shadow)
+		QDEL_NULL(shadow)
+
+/datum/status_effect/debuff/harpy_passenger
+	id = "harpy_passenger"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/harpy_passenger
+	tick_interval = 5
+	var/mob/living/carbon/human/passenger
+	var/mob/living/carbon/human/harpy
+
+/datum/status_effect/debuff/harpy_passenger/on_apply()
+	. = ..()
+	passenger = owner
+	animate(passenger, pixel_y = passenger.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
+	animate(pixel_y = passenger.pixel_y - 3, time = 6) // thank you oog
+	passenger.movement_type |= FLYING
+	passenger.drop_all_held_items() // think fast chucklenuts
+	passenger.put_in_hands(new /obj/item/harpy_leg, TRUE, FALSE, TRUE) // will have to make it so ppl can't dismount themselves
+
+/datum/status_effect/debuff/harpy_passenger/tick()
+	. = ..()
+	passenger = owner
+	if(!passenger.pulledby)
+		passenger.remove_status_effect(/datum/status_effect/debuff/harpy_passenger)
+
+/datum/status_effect/debuff/harpy_passenger/on_remove()
+	. = ..()
+	passenger = owner
+	animate(passenger)
+	if(passenger.is_holding_item_of_type(/obj/item/harpy_leg))
+		for(var/obj/item/harpy_leg/I in passenger.held_items)
+			if(istype(I, /obj/item/harpy_leg))
+				qdel(I)
+	if(passenger.pulledby)
+		harpy = passenger.pulledby
+		harpy.stop_pulling()
+	var/turf/tile_under_passenger = passenger.loc
+	passenger.movement_type &= ~FLYING
+	tile_under_passenger.zFall(passenger)
+
+/atom/movable/screen/alert/status_effect/debuff/harpy_passenger
+	name = "Being carried..."
+	desc = "ARGHHHH GET ME DOWN!!"
+	icon_state = "muscles"
+
+//////////////////////////////////////
+///FLIGHT SOUND LOOP STATUS EFFECT///
+////////////////////////////////////
+
+///I MEAN it's the easiest fucking way to do so in my mind LOL
+/datum/status_effect/debuff/flight_sound_loop
+	id = "flight_sound_loop"
+	tick_interval = 16
+	alert_type = null
+	var/list/wing_flap_sound = list(
+		'sound/foley/footsteps/flight_sounds/wingflap1.ogg',
+		'sound/foley/footsteps/flight_sounds/wingflap2.ogg',
+		'sound/foley/footsteps/flight_sounds/wingflap3.ogg',
+		'sound/foley/footsteps/flight_sounds/wingflap4.ogg',
+		'sound/foley/footsteps/flight_sounds/wingflap5.ogg',
+		'sound/foley/footsteps/flight_sounds/wingflap6.ogg',
+	)
+
+/datum/status_effect/debuff/flight_sound_loop/tick()
+	. = ..()
+	var/mob/living/carbon/human/harpy = owner
+	playsound(harpy, pick(wing_flap_sound), 100)
+
+/////////////////////////////
+///HARPY FLIGHT STUFF END///
+///////////////////////////
 
 /datum/status_effect/debuff/liver_failure
 	id = "liver_failure"

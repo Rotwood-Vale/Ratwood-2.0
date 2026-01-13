@@ -50,6 +50,20 @@
 	water_top_overlay = new(src)
 	update_icon()
 
+/turf/open/water/attack_hand(mob/user)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
+		to_chat(H, span_info("You gaze at your reflection in the water, concentrating on the glamoring magicks..."))
+		if(do_after(H, 3 SECONDS, src))
+			perform_mirror_transform(H)
+		return
+	else
+		to_chat(H, span_notice("You see your reflection in the water."))
+		return
+
 /turf/open/water/update_icon()
 	if(water_overlay)
 		water_overlay.color = water_color
@@ -183,24 +197,25 @@
 		if (istype(src,/turf/open/water/bloody))
 			L.add_mob_blood(L)
 
-		if(!(L.mobility_flags & MOBILITY_STAND) || water_level == 3)
-			L.SoakMob(FULL_BODY)
-		else
-			if(water_level == 2)
-				L.SoakMob(BELOW_CHEST)
-		if(water_overlay)
-			if(water_level > 1 && !istype(oldLoc, type))
-				playsound(AM, 'sound/foley/waterenter.ogg', 100, FALSE)
+		if(!(L.movement_type & FLYING))
+			if(!(L.mobility_flags & MOBILITY_STAND) || water_level == 3)
+				L.SoakMob(FULL_BODY)
 			else
-				playsound(AM, pick('sound/foley/watermove (1).ogg','sound/foley/watermove (2).ogg'), 100, FALSE)
-			if(istype(oldLoc, type) && (get_dir(src, oldLoc) != SOUTH))
-				water_overlay.layer = ABOVE_MOB_LAYER
-				water_overlay.plane = water_overlay.plane = GAME_PLANE_HIGHEST
-			else
-				spawn(6)
-					if(AM.loc == src)
-						water_overlay.layer = ABOVE_MOB_LAYER
-						water_overlay.plane = GAME_PLANE_HIGHEST
+				if(water_level == 2)
+					L.SoakMob(BELOW_CHEST)
+			if(water_overlay)
+				if(water_level > 1 && !istype(oldLoc, type))
+					playsound(AM, 'sound/foley/waterenter.ogg', 100, FALSE)
+				else
+					playsound(AM, pick('sound/foley/watermove (1).ogg','sound/foley/watermove (2).ogg'), 100, FALSE)
+				if(istype(oldLoc, type) && (get_dir(src, oldLoc) != SOUTH))
+					water_overlay.layer = ABOVE_MOB_LAYER
+					water_overlay.plane = water_overlay.plane = GAME_PLANE_HIGHEST
+				else
+					spawn(6)
+						if(AM.loc == src)
+							water_overlay.layer = ABOVE_MOB_LAYER
+							water_overlay.plane = GAME_PLANE_HIGHEST
 		if(!istype(L, /mob/living/carbon/human/species/skeleton))
 			return
 		if(!istype(src, /turf/open/water/sewer))
@@ -225,6 +240,12 @@
 				if (istype(C, /obj/item/reagent_containers/glass/bottle/waterskin/purifier) && water_reagent != water_reagent_purified)
 					var/obj/item/reagent_containers/glass/bottle/waterskin/purifier/P = C
 					P.cleanwater(user)
+			return
+
+	if(ishuman(user) && istype(C, /obj/item/handmirror))
+		var/mob/living/carbon/human/H = user
+		if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
+			to_chat(H, span_notice("To change yourself via water reflection, use your bare hands on the water."))
 			return
 	. = ..()
 

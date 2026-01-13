@@ -680,6 +680,33 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/underworldsafe
 	name = "safe zone"
 
+//Deathsdoor landmark
+/obj/effect/landmark/deaths_door/entry/Initialize(mapload)
+	. = ..()
+	var/turf/T = get_turf(src)
+	if(T)
+		GLOB.deaths_door_entries += T
+	qdel(src)
+
+/obj/effect/landmark/deaths_door/entry/tl
+	name = "deaths door entry point"
+/obj/effect/landmark/deaths_door/entry/tr
+	name = "deaths door entry point"
+/obj/effect/landmark/deaths_door/entry/bl
+	name = "deaths door entry point"
+/obj/effect/landmark/deaths_door/entry/br
+	name = "deaths door entry point"
+
+/obj/effect/landmark/deaths_door/exit/Initialize(mapload)
+	. = ..()
+	var/turf/T = get_turf(src)
+	if(T)
+		GLOB.deaths_door_exit = T
+	qdel(src)
+
+/obj/effect/landmark/deaths_door/exit
+	name = "deaths door exit point"
+
 GLOBAL_LIST_EMPTY(travel_tile_locations)
 
 /obj/effect/landmark/travel_tile_location

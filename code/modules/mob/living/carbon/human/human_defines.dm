@@ -60,8 +60,8 @@
 	var/obj/item/belt = null
 	var/obj/item/beltl = null
 	var/obj/item/beltr = null
-	var/obj/item/wear_ring = null
-	var/obj/item/wear_wrists = null
+	var/obj/item/clothing/wear_ring = null
+	var/obj/item/clothing/wear_wrists = null
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
@@ -79,7 +79,11 @@
 
 	var/list/datum/bioware = list()
 
-	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human))
+	var/static/list/can_ride_typecache = typecacheof(list(
+		/mob/living/carbon/human,
+		/mob/living/simple_animal/hostile,
+		/mob/living/carbon/human/species/goblin,
+	))
 	var/lastpuke = 0
 	var/last_fire_update
 	var/account_id
@@ -114,6 +118,8 @@
 	var/flavortext = null
 	var/ooc_notes = null
 	var/ooc_extra
+	var/rumour = null
+	var/noble_gossip = null
 	var/song_title
 	var/song_artist
 	var/received_resident_key = FALSE
@@ -151,7 +157,8 @@
 	/// Assoc list of culinary preferences of the mob
 	var/list/culinary_preferences = list()
 
-	var/datum/charflaw/charflaw
+	var/datum/charflaw/charflaw  // Legacy single vice (kept for compatibility)
+	var/list/datum/charflaw/vices = list()  // Multiple vices system
 
 	// curse list and cooldown
 	var/list/curses = list()

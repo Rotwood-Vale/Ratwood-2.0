@@ -111,3 +111,23 @@
 		/datum/sprite_accessory/wings/huge/angel,
 		/datum/sprite_accessory/wings/huge/skeleton,
 	)
+
+/datum/customizer/organ/wings/harpy
+	name = "Harpy Wings"
+	customizer_choices = list(/datum/customizer_choice/organ/wings/harpy)
+	allows_disabling = FALSE
+
+/datum/customizer_choice/organ/wings/harpy
+	name = "Harpy Wings"
+	organ_type = /obj/item/organ/wings/harpy
+	sprite_accessories = list(
+		/datum/sprite_accessory/wings/wide/harpywings_top,
+		/datum/sprite_accessory/wings/wide/harpywingsalt1_top,
+		/datum/sprite_accessory/wings/wide/harpywingsalt2_top,
+		/datum/sprite_accessory/wings/large/harpyswept,
+		/datum/sprite_accessory/wings/large/harpyswept_alt,
+		/datum/sprite_accessory/wings/large/harpyfluff,
+		/datum/sprite_accessory/wings/large/harpyfolded,
+		/datum/sprite_accessory/wings/large/harpyowl,
+		/datum/sprite_accessory/wings/large/harpybat_alt,
+	)

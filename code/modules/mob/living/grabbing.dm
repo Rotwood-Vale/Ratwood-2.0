@@ -20,6 +20,10 @@
 	var/bleed_suppressing = 0.75 //multiplier for how much we suppress bleeding, can accumulate so two grabs means 50% less bleeding; each grab being 25% basically.
 	var/chokehold = FALSE
 
+/obj/item/grabbing/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
+    . = ..()
+    . |= FALL_NO_MESSAGE
+
 /atom/movable //reference to all obj/item/grabbing
 	var/list/grabbedby = list()
 

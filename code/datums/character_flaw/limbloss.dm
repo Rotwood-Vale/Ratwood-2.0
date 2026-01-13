@@ -24,6 +24,7 @@
 	var/mob/living/carbon/human/H = user
 	var/obj/item/bodypart/r_arm/prosthetic/woodright/L = new()
 	L.attach_limb(H)
+	H.adjust_triumphs(1)
 
 /datum/charflaw/limbloss/arm_l
 	name = "Wood Arm (L)"
@@ -37,3 +38,4 @@
 	var/mob/living/carbon/human/H = user
 	var/obj/item/bodypart/l_arm/prosthetic/woodleft/L = new()
 	L.attach_limb(H)
+	H.adjust_triumphs(1)

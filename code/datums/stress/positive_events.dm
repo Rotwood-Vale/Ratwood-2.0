@@ -416,3 +416,8 @@
 	stressadd = -3
 	desc = span_aiprivradio("The standard calls out to me! It knows we're to see victory!")
 	timer = 3 MINUTES
+
+/datum/stressevent/parasolrain
+	timer = 1 MINUTES
+	stressadd = -2
+	desc = list(span_blue("A covered stroll in the rain is quite pleasant."))

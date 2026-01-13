@@ -10,6 +10,8 @@
 	var/warned
 
 /datum/magic_item/mythic/infernalflame/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag)
+		return
 	if(world.time < src.last_used + INFERNAL_FLAME_COOLDOWN)
 		return
 	if(isliving(target))
@@ -67,6 +69,8 @@
 			src.last_used = world.time
 
 /datum/magic_item/mythic/freezing/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag)
+		return
 	if(world.time < src.last_used + FREEZING_COOLDOWN)
 		return
 	if(isliving(target))

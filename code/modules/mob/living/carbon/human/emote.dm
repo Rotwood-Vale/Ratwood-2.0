@@ -233,3 +233,22 @@
 				to_chat(H, "<span style='color: #ff4444; font-weight: bold;'>[message]</span>")
 		to_chat(src, "You become preoccupied with [dread].")
 		return
+
+/datum/emote/living/carbon/human/wingsfly
+	key = "wingsfly"
+
+/datum/emote/living/carbon/human/wingsfly/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.has_status_effect(/datum/status_effect/debuff/harpy_flight))
+		H.visible_message(
+			span_biginfo("<span style='color:#[H.voice_color];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>[H]</b></span></span><span style='color: #c9c1ba;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> spreads [H.p_their()] wings, preparing to fly!</span>"),
+			runechat_message = "spreads [H.p_their()] wings!"
+		)
+	else
+		H.visible_message(
+			span_biginfo("<span style='color:#[H.voice_color];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>[H]</b></span></span><span style='color: #c9c1ba;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> flaps [H.p_their()] wings no more, as [H.p_they()] is back on the ground!</span>"),
+			runechat_message = "stops flapping [H.p_their()] wings!"
+		)

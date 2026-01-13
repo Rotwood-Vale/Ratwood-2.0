@@ -882,7 +882,7 @@
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
-		fully_heal(admin_revive = admin_revive)
+		fully_heal(admin_revive = admin_revive, break_restraints = admin_revive)
 	if(stat == DEAD && (admin_revive || can_be_revived())) //in some cases you can't revive (e.g. no brain)
 		GLOB.dead_mob_list -= src  //If any more forms of revival are added, better to use a proc to do this - easier to search
 		GLOB.alive_mob_list += src
@@ -923,11 +923,8 @@
 		var/obj/item/item = i
 		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM, src)
 
-
-
-//proc used to completely heal a mob.
-//admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
-/mob/living/proc/fully_heal(admin_revive = FALSE)
+/// proc used to completely heal a mob. admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
+/mob/living/proc/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	restore_blood()
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
@@ -2273,7 +2270,8 @@
 		if(ttime < 0)
 			ttime = 0
 
-	visible_message(span_info("[src] looks down through [T]."))
+	if(m_intent != MOVE_INTENT_SNEAK)
+		visible_message(span_info("[src] looks down through [T]."))
 
 	if(!do_after(src, ttime, target = src))
 		return

@@ -398,10 +398,10 @@
 /area/rogue/indoors/town/dwarfin/rockhill)
 "agl" = (
 /obj/structure/fluff/customsign{
-	pixel_y = 13;
 	desc = "Last Stop Saloon";
 	icon_state = "signwrote";
-	name = "Decrepit Sign"
+	name = "Decrepit Sign";
+	pixel_y = 13
 	},
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
@@ -1176,10 +1176,10 @@
 	pixel_y = 32
 	},
 /obj/structure/mineral_door/wood/donjon{
+	dir = 4;
 	locked = 1;
 	lockid = "walls";
-	name = "Gatehouse";
-	dir = 4
+	name = "Gatehouse"
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town)
@@ -4078,8 +4078,6 @@
 /area/rogue/indoors/inq)
 "bmw" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalgoesto = "rockhill5";
 	name = "Southeastern path to Rockhill"
 	},
@@ -8433,8 +8431,8 @@
 "cEk" = (
 /obj/structure/closet/crate/roguecloset{
 	keylock = 1;
-	lockid = "sergeant";
-	locked = 1
+	locked = 1;
+	lockid = "sergeant"
 	},
 /obj/item/storage/backpack/rogue/satchel,
 /obj/item/flashlight/flare/torch/lantern,
@@ -8948,6 +8946,7 @@
 /obj/item/clothing/cloak/half/red,
 /obj/item/clothing/suit/roguetown/shirt/undershirt/puritan,
 /obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
 "cLa" = (
@@ -9010,9 +9009,9 @@
 /obj/structure/fluff/railing/wood,
 /obj/machinery/light/rogue/firebowl{
 	layer = 4.0;
-	plane = -6;
+	pixel_x = -4;
 	pixel_y = 9;
-	pixel_x = -4
+	plane = -6
 	},
 /turf/open/floor/rogue/rooftop/green/corner1{
 	dir = 5
@@ -10137,10 +10136,10 @@
 "dct" = (
 /obj/structure/fluff/wallclock/vampire,
 /obj/effect/wisp/prestidigitation{
+	color = "#ff75b1";
 	desc = "A small, fiery ball of light made up of mystical energy.";
 	name = "Will-o'-the-wisp";
-	pixel_x = 0;
-	color = "#ff75b1"
+	pixel_x = 0
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/underworld/adventurespawn)
@@ -11399,8 +11398,8 @@
 	pixel_y = 12
 	},
 /obj/item/grown/log/tree/small{
-	pixel_y = 9;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 9
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town)
@@ -11791,9 +11790,9 @@
 /obj/structure/roguemachine/scomm/r,
 /obj/structure/table/wood/large_table/north_west,
 /obj/item/reagent_containers/glass/bottle/clayfancyvase{
-	pixel_y = 10;
+	layer = 3.1;
 	pixel_x = 8;
-	layer = 3.1
+	pixel_y = 10
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -15044,6 +15043,7 @@
 /area/rogue/indoors/town/dwarfin/rockhill)
 "eCg" = (
 /mob/living/simple_animal/hostile/rogue/skeleton/axe,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
 "eCi" = (
@@ -18417,6 +18417,7 @@
 /obj/item/paper/scroll,
 /obj/item/paper/scroll,
 /obj/item/paper/scroll,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/manor/rockhill)
 "fDE" = (
@@ -18538,8 +18539,6 @@
 /area/rogue/under/town/basement/keep)
 "fFc" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalgoesto = "rockhillsilly";
 	name = "Unlucky path to Rockhill"
 	},
@@ -20641,8 +20640,8 @@
 /area/rogue/indoors/town/cell)
 "gjr" = (
 /obj/structure/fluff/pillow/purple{
-	pixel_y = 1;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 1
 	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/outdoors/exposed/bath/vault{
@@ -22364,6 +22363,8 @@
 	keylock = 1;
 	lockid = "manor"
 	},
+/obj/item/rogueweapon/mace/parasol/noble,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor/rockhill)
 "gKx" = (
@@ -22879,6 +22880,10 @@
 /obj/machinery/light/rogue/torchholder/l,
 /turf/open/floor/rogue/tile/checkeralt,
 /area/rogue/indoors/town)
+"gSD" = (
+/obj/effect/landmark/quest_spawner/medium,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woodsrat/north)
 "gSE" = (
 /obj/structure/fluff/railing/corner,
 /obj/item/natural/bone,
@@ -23112,9 +23117,9 @@
 /area/rogue/under/cavewet)
 "gVF" = (
 /mob/living/carbon/spirit{
-	pixel_x = 10;
+	desc = "How long has it stood here like this...?";
 	name = "The Barkeeper";
-	desc = "How long has it stood here like this...?"
+	pixel_x = 10
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/underworld/adventurespawn)
@@ -25265,8 +25270,8 @@
 /area/rogue/indoors/town/manor/rockhill)
 "hEd" = (
 /obj/structure/bearpelt{
-	pixel_y = -42;
-	pixel_x = -13
+	pixel_x = -13;
+	pixel_y = -42
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/warden)
@@ -25858,8 +25863,8 @@
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hNI" = (
 /obj/effect/particle_effect/smoke{
-	lifetime = 14400;
-	color = "#7f788a"
+	color = "#7f788a";
+	lifetime = 14400
 	},
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
@@ -28086,8 +28091,8 @@
 "iwK" = (
 /obj/structure/table/wood/large_table/north_west,
 /obj/item/reagent_containers/glass/bottle/clayfancyvase{
-	pixel_y = -7;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -7
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/inq)
@@ -28558,8 +28563,8 @@
 /area/rogue/under/cavewet)
 "iDS" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
-	aportalid = "rockhillsilly";
-	alpha = 0
+	alpha = 0;
+	aportalid = "rockhillsilly"
 	},
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/indoors/shelter/mountains)
@@ -28849,12 +28854,12 @@
 "iHS" = (
 /obj/structure/table/wood/poor,
 /obj/item/reagent_containers/glass/cup/steel{
-	pixel_y = 7;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 7
 	},
 /obj/item/reagent_containers/glass/cup/steel{
-	pixel_y = 2;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 2
 	},
 /obj/machinery/light/rogue/wallfire/candle/l,
 /turf/open/floor/rogue/carpet,
@@ -29578,13 +29583,13 @@
 "iVh" = (
 /obj/structure/lever/wall{
 	dir = 8;
-	redstone_id = "gate_churchcell";
-	pixel_y = -7
+	pixel_y = -7;
+	redstone_id = "gate_churchcell"
 	},
 /obj/structure/lever/wall{
 	dir = 8;
-	redstone_id = "window_churchcell";
-	pixel_y = 9
+	pixel_y = 9;
+	redstone_id = "window_churchcell"
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/church/basement)
@@ -30055,8 +30060,6 @@
 	aportalid = "rockhill6"
 	},
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalid = "RockhillRandom"
 	},
 /turf/closed/wall/mineral/rogue/wooddark/horizontal,
@@ -30297,10 +30300,6 @@
 /obj/structure/fluff/walldeco/artificerflag,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/dwarfin/rockhill)
-"jgq" = (
-/obj/effect/landmark/quest_spawner/medium,
-/turf/open/floor/rogue/blocks,
-/area/rogue/indoors/town/church/chapel)
 "jgv" = (
 /obj/structure/mineral_door/wood/towner/miner,
 /turf/open/floor/rogue/ruinedwood,
@@ -30861,10 +30860,10 @@
 /area/rogue/indoors/town/bath)
 "jnZ" = (
 /obj/effect/wisp/prestidigitation{
+	color = "#ff75b1";
 	desc = "A small, fiery ball of light made up of mystical energy.";
 	name = "Will-o'-the-wisp";
-	pixel_x = 0;
-	color = "#ff75b1"
+	pixel_x = 0
 	},
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
@@ -35857,8 +35856,8 @@
 	})
 "kSj" = (
 /obj/structure/mineral_door/bars{
-	lockid = "inquisition";
 	locked = 1;
+	lockid = "inquisition";
 	name = "Proscribed Items"
 	},
 /turf/open/floor/rogue/concrete,
@@ -38330,9 +38329,9 @@
 /area/rogue/indoors/town/Academy)
 "lJy" = (
 /obj/structure/bars{
+	color = "#b0a497";
 	max_integrity = 2000;
-	name = "reinforced bars";
-	color = "#b0a497"
+	name = "reinforced bars"
 	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/garrison)
@@ -38529,10 +38528,6 @@
 /obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/west)
-"lNq" = (
-/obj/effect/landmark/quest_spawner/hard,
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/outdoors/woodsrat/north)
 "lNC" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -39558,8 +39553,6 @@
 /area/rogue/indoors)
 "mci" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalgoesto = "rockhill6";
 	name = "Eastern path to Rockhill"
 	},
@@ -40829,10 +40822,10 @@
 /area/rogue/indoors/town/church/chapel)
 "muo" = (
 /obj/structure/closet/crate/chest{
+	locked = 1;
 	lockid = "shop";
 	pixel_x = 2;
-	pixel_y = 5;
-	locked = 1
+	pixel_y = 5
 	},
 /obj/item/roguekey/shop,
 /obj/item/roguekey/shop,
@@ -41709,6 +41702,7 @@
 /obj/structure/fluff/railing/border/west{
 	pixel_x = -8
 	},
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/manor/rockhill)
 "mJz" = (
@@ -42758,8 +42752,8 @@
 /area/rogue/indoors/town/church)
 "ncu" = (
 /obj/item/roguebin/trash{
-	pixel_y = 9;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 9
 	},
 /turf/open/floor/rogue/rooftop/green{
 	dir = 4
@@ -43266,8 +43260,6 @@
 	aportalid = "rockhill1"
 	},
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalid = "RockhillRandom"
 	},
 /turf/open/floor/rogue/dirt/road,
@@ -46041,6 +46033,10 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town/rockhill)
+"oeV" = (
+/obj/effect/landmark/deaths_door/exit,
+/turf/open/floor/rogue/church,
+/area/rogue/indoors/town/church)
 "oeX" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -47663,10 +47659,10 @@
 /area/rogue/indoors/town)
 "oEt" = (
 /obj/effect/wisp/prestidigitation{
+	color = "#ff75b1";
 	desc = "A small, fiery ball of light made up of mystical energy.";
 	name = "Will-o'-the-wisp";
-	pixel_x = 0;
-	color = "#ff75b1"
+	pixel_x = 0
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/underworld/adventurespawn)
@@ -47697,8 +47693,8 @@
 /obj/item/natural/feather,
 /obj/structure/table/wood/long_table,
 /obj/item/candle/gold/lit{
-	pixel_y = 14;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = 14
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
@@ -49498,8 +49494,6 @@
 	aportalid = "rockhill5"
 	},
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalid = "RockhillRandom"
 	},
 /turf/closed/wall/mineral/rogue/wooddark/horizontal,
@@ -49785,6 +49779,7 @@
 /obj/item/rogueweapon/sword/rapier,
 /obj/item/perfume/random,
 /obj/item/lockpickring/mundane,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/manor/rockhill)
 "pmm" = (
@@ -50431,6 +50426,7 @@
 /obj/item/clothing/wrists/roguetown/royalsleeves,
 /obj/item/clothing/wrists/roguetown/royalsleeves,
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/princess,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
 "pvK" = (
@@ -51331,8 +51327,8 @@
 /area/rogue/indoors)
 "pKA" = (
 /obj/effect/particle_effect/smoke{
-	lifetime = 14400;
-	color = "#7f788a"
+	color = "#7f788a";
+	lifetime = 14400
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/underworld/adventurespawn)
@@ -53211,8 +53207,6 @@
 /area/rogue/outdoors/beach/harbor)
 "qoB" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalgoesto = "rockhill4";
 	name = "Southern path to Rockhill"
 	},
@@ -53462,9 +53456,9 @@
 /area/rogue/outdoors/bograt/south)
 "qse" = (
 /obj/structure/closet/crate/drawer{
+	keylock = 1;
 	locked = 1;
-	lockid = "crafterguild";
-	keylock = 1
+	lockid = "crafterguild"
 	},
 /obj/structure/fluff/walldeco/bigpainting{
 	pixel_x = 2
@@ -53622,8 +53616,8 @@
 /area/rogue/outdoors/bograt/safe)
 "quJ" = (
 /obj/structure/roguemachine/goldface{
-	pixel_y = 32;
-	density = 0
+	density = 0;
+	pixel_y = 32
 	},
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "vertw"
@@ -54960,6 +54954,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/item/rogueweapon/mace/parasol,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "qST" = (
@@ -55019,6 +55014,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/item/rogueweapon/mace/parasol,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "qTG" = (
@@ -55082,8 +55078,8 @@
 /area/rogue/indoors/town/church/chapel)
 "qUH" = (
 /obj/effect/decal/carpet{
-	pixel_y = -4;
-	pixel_x = -17
+	pixel_x = -17;
+	pixel_y = -4
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town)
@@ -55174,8 +55170,8 @@
 	pixel_x = -7
 	},
 /obj/structure/mineral_door/wood/fancywood{
-	lockid = "priest";
-	locked = 1
+	locked = 1;
+	lockid = "priest"
 	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church/chapel)
@@ -55874,8 +55870,6 @@
 /area/rogue/outdoors/bograt/above)
 "rkO" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalgoesto = "rockhill3";
 	name = "Southern path to Rockhill"
 	},
@@ -58358,8 +58352,6 @@
 /area/rogue/under/cave/rhgoblinencampment)
 "rXL" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalgoesto = "rockhill1";
 	name = "Western path to Rockhill"
 	},
@@ -59690,8 +59682,6 @@
 	aportalid = "rockhill5"
 	},
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalid = "RockhillRandom"
 	},
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
@@ -60740,8 +60730,8 @@
 /area/rogue/under/town/sewer)
 "sJU" = (
 /obj/structure/bearpelt{
-	color = "#a3a8c2";
-	alpha = 200
+	alpha = 200;
+	color = "#a3a8c2"
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/underworld/adventurespawn)
@@ -64463,8 +64453,6 @@
 /area/rogue/under/town/sewer)
 "tRv" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalgoesto = "RockhillRandom";
 	name = "Mysterious path to Rockhill"
 	},
@@ -66610,8 +66598,8 @@
 /area/rogue/outdoors/bograt/sunken)
 "uCH" = (
 /obj/structure/table/wood{
-	icon_state = "longtable";
-	dir = 1
+	dir = 1;
+	icon_state = "longtable"
 	},
 /obj/structure/underworld/barrier,
 /obj/structure/bell_common,
@@ -67940,8 +67928,8 @@
 /area/rogue/indoors/town/bath)
 "uXT" = (
 /obj/machinery/light/rogue/chand{
-	pixel_y = 8;
-	alpha = 200
+	alpha = 200;
+	pixel_y = 8
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/underworld/adventurespawn)
@@ -68408,8 +68396,6 @@
 	aportalid = "rockhill3"
 	},
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalid = "RockhillRandom"
 	},
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
@@ -68535,8 +68521,8 @@
 "vjJ" = (
 /obj/structure/table/wood/poor,
 /obj/structure/fluff/statue/small{
-	pixel_y = 13;
-	name = "conveniently placed statue"
+	name = "conveniently placed statue";
+	pixel_y = 13
 	},
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
@@ -69148,10 +69134,10 @@
 /area/rogue/indoors/town/church)
 "vsV" = (
 /obj/effect/wisp/prestidigitation{
+	color = "#ff75b1";
 	desc = "A small, fiery ball of light made up of mystical energy.";
 	name = "Will-o'-the-wisp";
-	pixel_x = 0;
-	color = "#ff75b1"
+	pixel_x = 0
 	},
 /obj/machinery/light/rogue/lanternpost,
 /turf/open/floor/rogue/underworld/road,
@@ -69713,8 +69699,8 @@
 "vBc" = (
 /obj/structure/table/wood/long_table/right,
 /obj/structure/fluff/walldeco/psybanner/red{
-	pixel_y = 32;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 32
 	},
 /obj/item/clothing/neck/roguetown/psicross/silver,
 /turf/open/floor/rogue/tile,
@@ -73769,8 +73755,6 @@
 	aportalid = "rockhill2"
 	},
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalid = "RockhillRandom"
 	},
 /obj/structure/mineral_door/wood{
@@ -73977,8 +73961,6 @@
 /area/rogue/indoors/town/tavern)
 "wRS" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalgoesto = "rockhill2";
 	name = "Southwestern path to Rockhill"
 	},
@@ -74608,6 +74590,7 @@
 /obj/item/clothing/suit/roguetown/shirt/tunic/purple,
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal,
 /obj/item/storage/backpack/rogue/satchel,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor/rockhill)
 "xcx" = (
@@ -75793,8 +75776,6 @@
 	aportalid = "rockhill4"
 	},
 /obj/structure/fluff/traveltile/rockhillentrance{
-	icon_state = "underworldportal";
-	icon = 'icons/roguetown/misc/structure.dmi';
 	aportalid = "RockhillRandom"
 	},
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
@@ -364232,7 +364213,7 @@ oqx
 lkU
 oqx
 oqx
-lNq
+oqx
 oqx
 lkU
 lkU
@@ -364678,7 +364659,7 @@ sHq
 rrQ
 rrQ
 rrQ
-jgq
+rrQ
 rrQ
 nGH
 lxr
@@ -371575,7 +371556,7 @@ lkU
 oqx
 oqx
 oqx
-oqx
+gSD
 oqx
 bef
 lkU
@@ -515651,7 +515632,7 @@ evl
 ihO
 noB
 mfy
-emH
+oeV
 waz
 emH
 waz

@@ -104,6 +104,50 @@
 		else
 			to_chat(src, "You will no longer be notified in chat when toggling Compliance Mode.")
 
+/client/verb/toggle_examine_blocks()
+	set category = "Options"
+	set name = "Toggle Examine Blocks"
+	if(prefs)
+		prefs.no_examine_blocks = !prefs.no_examine_blocks
+		prefs.save_preferences()
+		if(prefs.no_examine_blocks)
+			to_chat(src, "You will no longer see examined items in boxes.")
+		else
+			to_chat(src, "You will now see examined items in boxes.")
+
+/client/verb/toggle_autopunctuation()
+	set category = "Options"
+	set name = "Toggle Autopunctuation"
+	if(prefs)
+		prefs.no_autopunctuate = !prefs.no_autopunctuate
+		prefs.save_preferences()
+		if(prefs.no_autopunctuate)
+			to_chat(src, "Your messages will no longer be automatically punctuated.")
+		else
+			to_chat(src, "Your messages will now be automatically punctuated.")
+
+/client/verb/toggle_language_fonts()
+	set category = "Options"
+	set name = "Toggle Language Fonts"
+	if(prefs)
+		prefs.no_language_fonts = !prefs.no_language_fonts
+		prefs.save_preferences()
+		if(prefs.no_language_fonts)
+			to_chat(src, "You will no longer see languages in their stylized fonts.")
+		else
+			to_chat(src, "You will now see languages in their stylized fonts.")
+
+/client/verb/toggle_language_icon()
+	set category = "Options"
+	set name = "Toggle Language Icon"
+	if(prefs)
+		prefs.no_language_icon = !prefs.no_language_icon
+		prefs.save_preferences()
+		if(prefs.no_language_icon)
+			to_chat(src, "You will no longer see the language icon in front of a language.")
+		else
+			to_chat(src, "You will now see the language icon in front of a language.")
+
 /client/verb/toggle_lobby_music()
 	set name = "Toggle Lobby Music"
 	set category = "Options"

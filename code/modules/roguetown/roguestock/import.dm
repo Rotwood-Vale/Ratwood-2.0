@@ -88,6 +88,7 @@
 	new /obj/item/storage/keyring/guard(src)
 	new /obj/item/clothing/suit/roguetown/armor/leather/studded/warden(src)
 	new /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick(src)
+	new /obj/item/rogueweapon/huntingknife/idagger/warden_machete(src)
 	new /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden(src)
 
 /datum/roguestock/import/manatarms
@@ -334,7 +335,7 @@
 	new /obj/item/grown/log/tree/small(src)
 	new /obj/item/grown/log/tree/small(src)
 	new /obj/item/natural/bundle/fibers(src)
-	new /obj/item/grown/log/tree/stick(src)	
+	new /obj/item/grown/log/tree/stick(src)
 	new /obj/item/grown/log/tree/stick(src)
 
 /datum/roguestock/import/keyringsset

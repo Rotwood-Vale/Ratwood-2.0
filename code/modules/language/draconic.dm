@@ -1,11 +1,10 @@
 /datum/language/draconic
 	name = "Draconic"
-	desc = ""
+	desc = "The ancient and powerful language of dragons, spoken with hisses and roars. Its words carry the weight of primordial magic and draconic might."
 	speech_verb = "hisses"
 	ask_verb = "hisses"
 	exclaim_verb = "roars"
 	key = "s"
-	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 40
 	default_priority = 90
 	icon_state = "lizard"

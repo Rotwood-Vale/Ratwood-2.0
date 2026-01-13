@@ -157,3 +157,13 @@
 	name = "Love Potion"
 	cost = 300
 	contains = list(/obj/item/lovepotion)
+
+/datum/supply_pack/rogue/luxury/parasol
+	name = "Paper Parasol"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/mace/parasol)
+
+/datum/supply_pack/rogue/luxury/fineparasol
+	name = "Fine Parasol"
+	cost = 65
+	contains = list(/obj/item/rogueweapon/mace/parasol/noble)

@@ -163,8 +163,22 @@
 		zombie.npc_jump_chance = initial(zombie.npc_jump_chance)
 		zombie.rude = initial(zombie.rude)
 		zombie.tree_climber = initial(zombie.tree_climber)
+		// Remove all vices that were ephemeral (added during zombification)
 		if(zombie.charflaw)
-			zombie.charflaw.ephemeral = FALSE
+			if(zombie.charflaw.ephemeral)
+				// Remove from vices list if present
+				if(zombie.charflaw in zombie.vices)
+					zombie.vices -= zombie.charflaw
+				// Clear the legacy field
+				zombie.charflaw = null
+			else
+				zombie.charflaw.ephemeral = FALSE
+		
+		// Also clean up ephemeral vices from the vices list
+		for(var/datum/charflaw/vice in zombie.vices)
+			if(vice.ephemeral)
+				zombie.vices -= vice
+		
 		zombie.update_body()
 
 		zombie.STASTR = src.STASTR
@@ -184,6 +198,9 @@
 		for(var/trait in traits_zombie)
 			REMOVE_TRAIT(zombie, trait, "[type]")
 		zombie.remove_client_colour(/datum/client_colour/monochrome)
+		zombie.remove_language(/datum/language/undead)
+		var/datum/language_holder/language_holder = zombie.get_language_holder()
+		language_holder.selected_default_language = null
 
 		if(has_turned && become_rotman)
 			zombie.STACON = max(zombie.STACON - 2, 1) //ur rotting bro
@@ -252,6 +269,9 @@
 	zombie.faction += "undead"
 	zombie.faction += "zombie"
 	zombie.faction -= "neutral"
+	zombie.grant_language(/datum/language/undead)
+	var/datum/language_holder/language_holder = zombie.get_language_holder()
+	language_holder.selected_default_language = /datum/language/undead
 	zombie.verbs |= /mob/living/carbon/human/proc/zombie_seek
 	for(var/obj/item/bodypart/zombie_part as anything in zombie.bodyparts)
 		if(!zombie_part.rotted && !zombie_part.skeletonized)

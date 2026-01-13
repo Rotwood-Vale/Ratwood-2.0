@@ -317,6 +317,8 @@
 	var/last_client_interact = 0
 	var/hanged = FALSE
 
+	var/flying = FALSE
+
 	var/datum/weakref/offered_item_ref
 
 	/// cooldown for the next time this person can offer

@@ -5,7 +5,10 @@
 	chargedrain = 2
 	charging_slowdown = 3
 
-/datum/intent/swing/sling/can_charge() //checks for arms and spare empty hand removed since it can fire with one hand
+/datum/intent/swing/sling/can_charge(atom/clicked_object) //checks for arms and spare empty hand removed since it can fire with one hand
+	if(mastermob)
+		if(istype(clicked_object, /obj/item/quiver) && istype(mastermob.get_active_held_item(), /obj/item/gun/ballistic))
+			return FALSE
 	return TRUE
 
 /datum/intent/swing/sling/prewarning()
@@ -32,7 +35,10 @@
 	chargedrain = 2
 	charging_slowdown = 3
 
-/datum/intent/arc/sling/can_charge() //checks for arms and spare empty hand removed since it can fire with one hand
+/datum/intent/arc/sling/can_charge(atom/clicked_object) //checks for arms and spare empty hand removed since it can fire with one hand
+	if(mastermob)
+		if(istype(clicked_object, /obj/item/quiver) && istype(mastermob.get_active_held_item(), /obj/item/gun/ballistic))
+			return FALSE
 	return TRUE
 
 /datum/intent/arc/sling/prewarning()
@@ -150,7 +156,7 @@
 			user.transferItemToLoc(A, temp_stone) //off to stone purgatory you go
 			A = new /obj/item/ammo_casing/caseless/rogue/sling_bullet //putting a temporary sling bullet in its place. bonus force is kept on the sling and set to 0 if shot or stone is ejected
 		..()
-		
+
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling/attack_self(mob/user) //more unholy code
 	if (temp_stone != null) //if there's a 'stone' in the sling, drop it and delete the temporary ammo inside
 		user.dropItemToGround(temp_stone) //pulling the stone from stone purgatory and dropping it
@@ -185,9 +191,6 @@
 		if (temp_stone != null) //reseting after stone ammo use
 			bonus_stone_force = 0 //stone is thrown, so the bonus is lost
 			temp_stone = null //stone is gone, forever.
-	if(user.has_status_effect(/datum/status_effect/buff/clash) && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.bad_guard(span_warning("I can't focus on my Guard and sling rocks! This drains me!"), cheesy = TRUE)
 	. = ..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling/update_icon()

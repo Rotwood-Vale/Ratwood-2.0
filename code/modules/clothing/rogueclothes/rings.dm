@@ -225,7 +225,7 @@
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	armor_class = ARMOR_CLASS_LIGHT
+	armor_class = ARMOR_CLASS_NONE
 
 /obj/item/clothing/ring/fate_weaver/proc/dispel()
 	if(!QDELETED(src))

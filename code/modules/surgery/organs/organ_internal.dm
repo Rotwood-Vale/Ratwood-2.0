@@ -49,6 +49,8 @@
 	var/food_type = /obj/item/reagent_containers/food/snacks/organ
 	/// Original owner of the organ, the one who had it inside them last
 	var/mob/living/carbon/last_owner = null
+	/// Whether or not this organ should be regenerated at /datum/job/proc/equip() in _job.dm via /mob/living/carbon/proc/apply_organ_stuff()
+	var/should_regenerate = FALSE
 
 	grid_width = 32
 	grid_height = 32
@@ -402,3 +404,10 @@
 		if(!getorganslot(ORGAN_SLOT_EARS))
 			var/obj/item/organ/ears/ears = new()
 			ears.Insert(src)
+
+/mob/living/carbon/proc/apply_organ_stuff()
+	if(dna?.species)
+		dna.species.apply_organ_stuff_species(src)
+		return
+	else
+		regenerate_organs()

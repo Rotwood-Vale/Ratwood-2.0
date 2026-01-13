@@ -220,7 +220,7 @@
 
 /mob/living/carbon/human/proc/changevoice()
 	set name = "Change Second Voice (Can only use Once!)"
-	set category = "Virtue"
+	set category = "Memory"
 
 	var/newcolor = input(src, "Choose your character's SECOND voice color:", "VIRTUE","#a0a0a0") as color|null
 	if(newcolor)
@@ -232,7 +232,7 @@
 
 /mob/living/carbon/human/proc/swapvoice()
 	set name = "Swap Voice"
-	set category = "Virtue"
+	set category = "Memory"
 
 	if(!second_voice)
 		to_chat(src, span_info("I haven't decided on my second voice yet."))
@@ -248,7 +248,7 @@
 
 /mob/living/carbon/human/proc/toggleblindness()
 	set name = "Toggle Colorblindness"
-	set category = "Virtue"
+	set category = "Memory"
 
 	if(!get_client_color(/datum/client_colour/monochrome))
 		add_client_colour(/datum/client_colour/monochrome)
@@ -257,7 +257,7 @@
 
 /mob/living/carbon/human/proc/togglecombatawareness()
 	set name = "Toggle Combat Awareness"
-	set category = "Virtue"
+	set category = "Memory"
 
 	if(HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
 		REMOVE_TRAIT(src, TRAIT_COMBAT_AWARE, TRAIT_VIRTUE)

@@ -351,6 +351,7 @@
 
 	//Equip the rest of the gear
 	H.dna.species.before_equip_job(src, H, visualsOnly)
+	H.apply_organ_stuff() // apply super special sauce organ stuff when we spawn in, and therefore have MIND
 	if(!outfit_override && visualsOnly && visuals_only_outfit)
 		outfit_override = visuals_only_outfit
 	if(should_wear_femme_clothes(H))

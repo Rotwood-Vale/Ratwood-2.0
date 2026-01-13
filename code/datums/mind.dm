@@ -935,7 +935,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	personal_objectives.Cut()
 
 /proc/handle_special_items_retrieval(mob/user, atom/host_object)
-	// Attempts to retrieve an item from a player's stash, and applies any base colors, where preferable.
+	// Attempts to retrieve an item from a player's stash, and applies any base colors, custom names, and descriptions.
 	if(user.mind && isliving(user))
 		if(user.mind.special_items && user.mind.special_items.len)
 			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
@@ -945,11 +945,108 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 						var/path2item = user.mind.special_items[item]
 						user.mind.special_items -= item
 						var/obj/item/I = new path2item(user.loc)
+						
+						// Check if this is a loadout item and reduce armor if applicable
+						var/is_loadout_item = FALSE
+						var/keep_stats = FALSE
+						if(user.client?.prefs)
+							var/list/loadout_slots = list("loadout", "loadout2", "loadout3", "loadout4", "loadout5", 
+														  "loadout6", "loadout7", "loadout8", "loadout9", "loadout10")
+							for(var/slot in loadout_slots)
+								var/datum/loadout_item/loadout_datum = user.client.prefs.vars[slot]
+								if(loadout_datum && loadout_datum.path == path2item)
+									is_loadout_item = TRUE
+									keep_stats = loadout_datum.keep_loadout_stats
+									break
+						
+						// Apply modifications for loadout items (unless keep_loadout_stats is TRUE)
+						if(is_loadout_item && !keep_stats)
+							// Mark as loadout item to prevent crafting usage
+							I.loadout_item = TRUE
+							
+							// Add subtle examination text to indicate this is a loadout reproduction
+							if(I.desc)
+								I.desc += " The overall look and feel of the item suggests this may be a mere reproduction."
+							else
+								I.desc = "The overall look and feel of the item suggests this may be a mere reproduction."
+							
+							// Set sellprice to 0
+							I.sellprice = 0
+							
+							// Make items smelt to ash instead of original materials
+							I.smeltresult = /obj/item/ash
+							
+							// Only apply armor modifications to items that actually have armor values
+							// Check if this is clothing with any armor protection
+							if(istype(I, /obj/item/clothing))
+								var/obj/item/clothing/C = I
+								var/has_armor = FALSE
+								
+								// Check if the item has any non-zero armor values by checking the datum properties directly
+								if(C.armor && istype(C.armor, /datum/armor))
+									if(C.armor.blunt > 0 || C.armor.slash > 0 || C.armor.stab > 0 || \
+									   C.armor.piercing > 0 || C.armor.fire > 0 || C.armor.acid > 0)
+										has_armor = TRUE
+								
+								// Only modify items that actually have armor protection
+								if(has_armor)
+									// Remove crit protection
+									C.prevent_crits = null
+									// Set armor class to LIGHT for all loadout armor
+									if(C.armor_class != ARMOR_CLASS_NONE)
+										C.armor_class = ARMOR_CLASS_LIGHT
+									// Apply ARMOR_MIND_PROTECTION with slight randomization (±10%)
+									var/list/_baseArmor = ARMOR_MIND_PROTECTION
+									var/_percent = rand(-10, 10)
+									var/_scale = 1 + (_percent / 100)
+									var/_ab = round(_baseArmor["blunt"] * _scale)
+									var/_asl = round(_baseArmor["slash"] * _scale)
+									var/_ast = round(_baseArmor["stab"] * _scale)
+									var/_ap = round(_baseArmor["piercing"] * _scale)
+									var/_af = round(_baseArmor["fire"] * _scale)
+									var/_aa = round(_baseArmor["acid"] * _scale)
+									C.armor = getArmor(_ab, _asl, _ast, _ap, _af, _aa, 0)
+									// Randomize max integrity around light base by ±10% and ensure full integrity
+									var/_base_int = ARMOR_INT_CHEST_LIGHT_BASE
+									var/_variance = round(_base_int * 0.1)
+									C.max_integrity = _base_int + rand(-_variance, _variance)
+									C.obj_integrity = C.max_integrity
+							
+							// Reduce weapon damage by 30% (rounded down)
+							if(I.force > 0)
+								I.force = round(I.force * 0.7)
+							// Ensure non-clothing loadout items start at full integrity as well
+							I.obj_integrity = I.max_integrity
+							
+							// Halve weapon defense (wdefense) values
+							if(I.wdefense > 0)
+								I.wdefense = round(I.wdefense * 0.5)
+							
+						// Apply custom color if set (for clothing and weapons) - BEFORE putting in hands
+						var/dye = user.client?.prefs.resolve_loadout_to_color(path2item)
+						if (dye)
+							I.add_atom_colour(dye, FIXED_COLOUR_PRIORITY)
+							I.update_icon()
+						
+						// Apply custom name if set
+						var/custom_name = user.client?.prefs.resolve_loadout_to_name(path2item)
+						if (custom_name)
+							I.original_name = I.name // Store original name before renaming
+							I.name = custom_name
+							// Log to game log
+							log_game("[key_name(user)] retrieved loadout item with custom name: '[custom_name]' (original: '[I.original_name]')")
+						// Apply custom description if set
+						var/custom_desc = user.client?.prefs.resolve_loadout_to_desc(path2item)
+						if (custom_desc)
+							I.desc = custom_desc
+						
 						user.put_in_hands(I)
-						if (istype(I, /obj/item/clothing)) // commit any pref dyes to our item if it is clothing and we have them available
-							var/dye = user.client?.prefs.resolve_loadout_to_color(path2item)
-							if (dye)
-								I.add_atom_colour(dye, FIXED_COLOUR_PRIORITY)
+						
+						// Force update mob appearance to show colored item in hands
+						if(isliving(user))
+							var/mob/living/L = user
+							L.update_inv_hands()
+							L.update_icons() // Force full icon update
 
 /datum/mind/proc/load_curses()
 	if(!key)

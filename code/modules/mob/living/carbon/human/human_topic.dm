@@ -49,9 +49,11 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		if(do_after(usr, time_taken, needhand = TRUE, target = src))
 			if(QDELETED(I) || QDELETED(L) || !L.remove_embedded_object(I))
 				return
-			L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
+			var/hort = FALSE
+			hort = L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 			usr.put_in_hands(I)
-			emote("pain", TRUE)
+			if (hort)
+				emote("pain", TRUE)
 			playsound(loc, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
 			if(usr == src)
 				usr.visible_message("<span class='notice'>[usr] rips [I] out of [usr.p_their()] [L.name]!</span>", "<span class='notice'>I successfully remove [I] from my [L.name].</span>")
@@ -477,6 +479,29 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		else
 			user.visible_message("[user] fails to assess [src]!")
 		return
+
+	if(href_list["task"] == "view_rumours_gossip")
+		if(!ismob(usr))
+			return
+		var/msg = ""
+		if(rumour && length(rumour))
+			var/rumour_display = rumour
+			rumour_display = html_encode(rumour_display)
+			rumour_display = parsemarkdown_basic(rumour_display, hyperlink = TRUE)
+			msg += "<b>You recall what you heard around Town about [src]...</b><br>[rumour_display]"
+		if(((HAS_TRAIT(usr, TRAIT_NOBLE)) || observer_privilege) && length(noble_gossip))
+			if(msg)
+				msg += "<br><br>"
+			var/gossip_display = noble_gossip
+			gossip_display = html_encode(gossip_display)
+			gossip_display = parsemarkdown_basic(gossip_display, hyperlink = TRUE)
+			msg += "<b>You recall what the other Blue-bloods hushed about [src]...</b><br>[gossip_display]"
+		if(msg)
+			to_chat(usr, "<span class='info'>[msg]</span>")
+		else //Edge-case of there being ONLY noble gossip, but we aren't a noble.
+			to_chat(usr, "<span class='info'>Any tales of intrigue of this one are reserved to the nobility...</span>")
+		return
+
 	return ..() //end of this massive fucking chain. TODO: make the hud chain not spooky. - Yeah, great job doing that. - I made it worse sorry guys.
 
 //Sorry colorblind folks...

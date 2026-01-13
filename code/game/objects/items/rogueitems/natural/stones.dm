@@ -332,6 +332,15 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		return
 	else if(istype(W, /obj/item/rogueweapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to chisel blocks."))
+	else if(user.used_intent.type == /datum/intent/wing/shred && !user.cmode || user.used_intent.type == /datum/intent/wing/cut && !user.cmode)
+		playsound(src.loc, pick('sound/items/sharpen_long1.ogg','sound/items/sharpen_long2.ogg'), 100, TRUE)
+		user.visible_message(span_notice("[user] sharpens [W]!"))
+		W.add_bintegrity(12, user)
+		if(prob(35))
+			var/datum/effect_system/spark_spread/S = new()
+			var/turf/front = get_step(user,user.dir)
+			S.set_up(1, 1, front)
+			S.start()
 	else
 		..()
 

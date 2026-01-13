@@ -975,8 +975,8 @@
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "amw" = (
 /obj/effect/decal/cobbleedge{
@@ -1706,8 +1706,8 @@
 /obj/machinery/light/rogue/firebowl/standing,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "avH" = (
 /obj/structure/fluff/walldeco/chains,
@@ -2588,8 +2588,8 @@
 "aHc" = (
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "aHe" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
@@ -8945,6 +8945,7 @@
 /obj/item/clothing/cloak/half,
 /obj/item/storage/backpack/rogue/satchel,
 /obj/item/storage/backpack/rogue/satchel,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor)
 "ciC" = (
@@ -9333,8 +9334,8 @@
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "cnm" = (
 /obj/structure/stairs{
@@ -10434,8 +10435,8 @@
 /obj/structure/roguemachine/scomm/l,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "cBE" = (
 /obj/structure/table/wood,
@@ -10712,8 +10713,8 @@
 /obj/item/kitchen/fork,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "cEU" = (
 /turf/open/floor/rogue/grassred,
@@ -17357,6 +17358,7 @@
 "ekz" = (
 /obj/structure/closet/crate/roguecloset/dark,
 /obj/machinery/light/rogue/wallfire/candle,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/under/town/basement/keep)
 "ekC" = (
@@ -17775,8 +17777,8 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "eqd" = (
 /obj/structure/glowshroom{
@@ -18518,8 +18520,8 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "exV" = (
 /obj/structure/chair/stool/rogue,
@@ -20334,6 +20336,7 @@
 /obj/item/clothing/suit/roguetown/shirt/vampire,
 /obj/item/clothing/suit/roguetown/shirt/tunic/silktunic,
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/steward,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "eVi" = (
@@ -20544,8 +20547,8 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "eXH" = (
 /obj/structure/stairs,
@@ -22097,6 +22100,7 @@
 	pixel_y = 32
 	},
 /obj/structure/closet/crate/roguecloset/dark,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/under/town/basement/keep)
 "fpK" = (
@@ -23085,8 +23089,8 @@
 /obj/item/reagent_containers/glass/bowl,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "fDO" = (
 /obj/structure/roguemachine/scomm/l,
@@ -26476,8 +26480,8 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "gud" = (
 /obj/structure/stairs{
@@ -30462,8 +30466,8 @@
 /obj/structure/bars,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "hro" = (
 /obj/structure/fluff/walldeco/alarm,
@@ -34772,8 +34776,8 @@
 /obj/item/natural/bundle/stick,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "irz" = (
 /obj/structure/table/wood,
@@ -36175,8 +36179,8 @@
 /obj/structure/fermentation_keg/beer,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "iJC" = (
 /obj/structure/bed/rogue/inn/double,
@@ -37290,8 +37294,8 @@
 /obj/item/cooking/platter,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "iZA" = (
 /obj/structure/hotspring/border,
@@ -38363,8 +38367,8 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "jle" = (
 /obj/structure/bars/tough,
@@ -40101,8 +40105,8 @@
 /obj/structure/fermentation_keg/hagwoodbitter,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "jGy" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -40786,8 +40790,8 @@
 /obj/item/natural/bundle/stick,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "jOp" = (
 /obj/structure/flora/ausbushes/brflowers,
@@ -41933,8 +41937,8 @@
 /obj/item/bottle_kit,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "kbo" = (
 /turf/open/floor/rogue/ruinedwood,
@@ -43001,8 +43005,8 @@
 /obj/machinery/light/rogue/firebowl/standing,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "knR" = (
 /obj/structure/stairs/fancy/r{
@@ -47844,8 +47848,8 @@
 /obj/effect/landmark/start/knavewench,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "lvn" = (
 /obj/structure/closet/crate/chest,
@@ -51530,8 +51534,8 @@
 /obj/item/roguebin/water,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "mmN" = (
 /obj/machinery/light/rogue/torchholder{
@@ -52455,8 +52459,8 @@
 /obj/structure/fermentation_keg/zagul,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "mxu" = (
 /obj/machinery/light/rogue/wallfire/candle{
@@ -52585,8 +52589,8 @@
 /obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "mzB" = (
 /obj/structure/fluff/railing/border,
@@ -53073,8 +53077,8 @@
 /obj/item/natural/feather,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "mEK" = (
 /obj/effect/decal/cobbleedge{
@@ -53475,6 +53479,7 @@
 /obj/item/roguekey/sergeant,
 /obj/item/roguekey/armory,
 /obj/machinery/light/rogue/wallfire/candle,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/garrison)
 "mJQ" = (
@@ -56111,8 +56116,8 @@
 "ntJ" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "ntL" = (
 /turf/open/water/swamp,
@@ -56657,8 +56662,8 @@
 /obj/item/soap,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "nAL" = (
 /obj/structure/chair/stool/rogue,
@@ -58223,8 +58228,8 @@
 /obj/item/reagent_containers/food/snacks/grown/onion/rogue,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "nUL" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
@@ -60817,8 +60822,8 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "oAk" = (
 /obj/structure/fluff/railing/fence{
@@ -61170,8 +61175,8 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "oDD" = (
 /obj/structure/bookcase/random,
@@ -61340,8 +61345,8 @@
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "oGv" = (
 /obj/effect/decal/cobbleedge{
@@ -61615,8 +61620,8 @@
 /obj/structure/roguemachine/scomm/r,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "oJK" = (
 /obj/effect/decal/cobbleedge{
@@ -62137,8 +62142,8 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "oQh" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -62784,8 +62789,8 @@
 /obj/item/storage/roguebag,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "oXB" = (
 /turf/closed/mineral/rogue/tin,
@@ -63247,9 +63252,9 @@
 "pek" = (
 /obj/structure/mineral_door/wood/donjon{
 	dir = 1;
-	name = "Sergent's office";
+	locked = 1;
 	lockid = "sergeant";
-	locked = 1
+	name = "Sergent's office"
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/garrison)
@@ -63297,8 +63302,8 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "pfk" = (
 /obj/structure/rack/rogue/shelf/big{
@@ -69763,8 +69768,8 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "qHv" = (
 /obj/structure/fluff/railing/fence{
@@ -71160,8 +71165,8 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "qYv" = (
 /obj/structure/vine,
@@ -71529,8 +71534,8 @@
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "rdo" = (
 /obj/structure/rack/rogue/shelf/biggest,
@@ -72007,6 +72012,7 @@
 /obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
 /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess,
 /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "rjG" = (
@@ -73368,8 +73374,8 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "rzT" = (
 /obj/structure/fluff/railing/border/east,
@@ -74146,8 +74152,8 @@
 /obj/item/reagent_containers/food/snacks/grown/wheat,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "rLe" = (
 /turf/closed/wall/mineral/rogue/wood,
@@ -80345,6 +80351,10 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/exposed/town/keep)
+"tjU" = (
+/obj/effect/landmark/deaths_door/exit,
+/turf/open/floor/rogue/church,
+/area/rogue/indoors/town/church/basement)
 "tjV" = (
 /obj/structure/mineral_door/wood/donjon{
 	dir = 1;
@@ -91125,8 +91135,8 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "vKT" = (
 /obj/structure/fluff/railing/border/west,
@@ -93877,8 +93887,8 @@
 /obj/item/reagent_containers/food/snacks/rogue/cheddar,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "wrF" = (
 /obj/structure/lever/wall{
@@ -94752,8 +94762,8 @@
 /obj/structure/fermentation_keg/blackgoat,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "wCW" = (
 /obj/structure/table/church/end,
@@ -94974,6 +94984,7 @@
 	dir = 10;
 	pixel_y = 1
 	},
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "wFJ" = (
@@ -96082,6 +96093,7 @@
 "wTi" = (
 /obj/machinery/light/rogue/wallfire/candle,
 /obj/structure/closet/crate/roguecloset/dark,
+/obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/under/town/basement/keep)
 "wTk" = (
@@ -98267,8 +98279,8 @@
 /obj/structure/broadcast_horn/paid{
 	broadcaster_tag = "Merchant's Shop";
 	dir = 8;
-	pixel_y = 10;
-	layer = 5
+	layer = 5;
+	pixel_y = 10
 	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/shop)
@@ -101764,8 +101776,8 @@
 "yjV" = (
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement{
-	tavern_area = 1;
-	name = "tavern basement"
+	name = "tavern basement";
+	tavern_area = 1
 	})
 "yjY" = (
 /obj/structure/flora/rogueshroom{
@@ -165853,7 +165865,7 @@ lfr
 lfr
 cIz
 lfr
-lfr
+tjU
 jeQ
 kcq
 kcq

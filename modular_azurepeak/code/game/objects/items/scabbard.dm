@@ -550,6 +550,15 @@
 	valid_blade = /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
 	can_parry = FALSE
 
+/obj/item/rogueweapon/scabbard/sword/kazengun/noparry/loadout
+	name = "ceremonial scabbard"
+	desc = "A simple wooden scabbard, trimmed with bronze. Unlike its steel cousins, this one cannot parry."
+	valid_blade = /obj/item/rogueweapon/sword
+	invalid_blades = list(
+		/obj/item/rogueweapon/sword/long/exe,
+		/obj/item/rogueweapon/sword/long/exe/astrata,
+		/obj/item/rogueweapon/sword/long/martyr
+	)
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/steel
 	name = "hwang scabbard"

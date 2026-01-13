@@ -611,7 +611,7 @@
 		if(hud_used.zone_select)
 			hud_used.zone_select.update_icon()
 
-/mob/living/carbon/human/fully_heal(admin_revive = FALSE)
+/mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	dna?.species.spec_fully_heal(src)
 	if(admin_revive)
 		regenerate_limbs()
@@ -619,7 +619,7 @@
 	spill_embedded_objects()
 	set_heartattack(FALSE)
 	drunkenness = 0
-	..()
+	return ..()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()

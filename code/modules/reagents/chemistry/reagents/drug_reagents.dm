@@ -19,7 +19,7 @@
 			M.emote(pick("twitch_s","chuckle"))
 	M.apply_status_effect(/datum/status_effect/buff/weed)
 	if(M.has_flaw(/datum/charflaw/addiction/smoker))
-		M.sate_addiction()
+		M.sate_addiction(/datum/charflaw/addiction/smoker)
 	..()
 
 /datum/reagent/drug/space_drugs/on_mob_end_metabolize(mob/living/M)
@@ -94,7 +94,7 @@
 	M.AdjustParalyzed(-5, FALSE)
 	M.AdjustImmobilized(-5, FALSE)*/
 	if(M.has_flaw(/datum/charflaw/addiction/smoker))
-		M.sate_addiction()
+		M.sate_addiction(/datum/charflaw/addiction/smoker)
 	..()
 	. = 1
 

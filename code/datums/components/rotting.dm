@@ -1,4 +1,4 @@
-#define DEAD_TO_ZOMBIE_TIME 7 MINUTES	//Time before death -> raised as zombie (when outside of the city)	
+#define DEAD_TO_ZOMBIE_TIME 7 MINUTES	//Time before death -> raised as zombie (when outside of the city)
 										//(This isn't exact time. Extended 5 -> 7 because only takes 2-3 min in testing at 5.)
 
 /datum/component/rot
@@ -25,15 +25,15 @@
 
 /datum/component/rot/process()
 
-	var/amt2add = 10 // 1 Second. Base increment. 
+	var/amt2add = 10 // 1 Second. Base increment.
 	var/current_time = world.time
-    
+
 	// time elapsed since the last rot/process
 	var/elapsed_time = last_process ? (current_time - last_process) : 0
 	last_process = current_time
 
 	// Add amount based on the time elapsed. This is used to calculate when to wake/decompose
-	amount += (elapsed_time / 10) * amt2add 
+	amount += (elapsed_time / 10) * amt2add
 
 	return
 
@@ -49,7 +49,7 @@
 	..()
 	if(has_world_trait(/datum/world_trait/pestra_mercy))
 		amount -= 5 * time_elapsed
-	
+
 	var/mob/living/carbon/C = parent
 	var/is_zombie
 	if(HAS_TRAIT(C, TRAIT_DNR))
@@ -65,11 +65,13 @@
 	var/area/A = get_area(C)
 	if (istype(A, /area/rogue/indoors/town))	//Stops rotting inside town buildings; will stop your zombification such as at church or appothocary.
 		return
+	if (istype(A, /area/rogue/indoors/deathsedge))	//Stops rotting inside Death's Edge (Death's Door spell area)
+		return
 
 	if(!(C.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 		qdel(src)
 		return
-	
+
 	if(amount > DEAD_TO_ZOMBIE_TIME)
 		if(is_zombie)
 			var/datum/antagonist/zombie/Z = C.mind.has_antag_datum(/datum/antagonist/zombie)

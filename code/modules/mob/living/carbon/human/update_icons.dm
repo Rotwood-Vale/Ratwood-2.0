@@ -1353,6 +1353,8 @@ There are several things that need to be remembered:
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
 	var/icon/c_mask = taur?.clip_mask
 
+	var/icon/clip_mask_init
+
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[SLOT_PANTS]
 		inv.update_icon()
@@ -1367,8 +1369,10 @@ There are several things that need to be remembered:
 			var/racecustom
 			var/legsindex = get_limbloss_index(LEG_RIGHT, LEG_LEFT)
 			var/mutable_appearance/pants_overlay
-
-			if(dna.species.custom_clothes)
+			if(isharpy(src))
+				clip_mask_init = icon(icon = 'icons/roguetown/mob/bodies/f/harpy.dmi', icon_state = "harpy_clipmask")
+				c_mask = clip_mask_init
+			if(dna.species.custom_clothes) // should prolly make it a separate limb or just use clipmask then
 				racecustom = dna.species.clothes_id
 			if(gender == FEMALE && !dna.species.use_m)
 				pants_overlay = wear_pants.build_worn_icon(default_layer = PANTS_LAYER, default_icon_file = 'icons/mob/clothing/feet.dmi', female = TRUE, customi = racecustom, sleeveindex = legsindex, boobed_overlay = has_boobed_overlay(), clip_mask = c_mask)
@@ -1688,7 +1692,7 @@ generate/load female uniform sprites matching all previously decided variables
 			standing.pixel_y += L["y"]
 
 	standing.alpha = alpha
-	standing.color = color
+	standing.color = color // Always apply color (will be null if no color set, which is fine)
 
 	if(istype(clip_mask)) //For taur bodies/tails clipping off parts of uniforms and suits.
 		standing.filters += filter(type = "alpha", icon = clip_mask)

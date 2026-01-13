@@ -23,6 +23,14 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/tip_delay = 500 //tip delay in milliseconds
 	// Commend variable on prefs instead of client to prevent reconnect abuse (is persistant on prefs, opposed to not on client)
 	var/commendedsomeone = FALSE
+	// History tracking for character customization undo
+	var/list/customization_history = list()
+	// Loadout preset storage - 3 slots for saving/loading character customization
+	var/list/loadout_preset_1
+	var/list/loadout_preset_2
+	var/list/loadout_preset_3
+	// Temporary storage for loadout item selection (per-user to prevent race conditions)
+	var/list/temp_loadout_selection
 
 	//Antag preferences
 	var/list/be_special = list()		//Special role selection
@@ -86,6 +94,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/extra_language = "None" // Extra language
+	var/extra_language_1 = "None" // Additional triumph language slot 1
+	var/extra_language_2 = "None" // Additional triumph language slot 2
 	var/voice_color = "a0a0a0"
 	var/voice_pitch = 1
 	var/detail_color = "000"
@@ -117,6 +127,52 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
 
+// Point-buy system helpers
+// Base points available to every character
+/datum/preferences/proc/get_base_points()
+	return 10
+
+// Points gained from selected vices (+1 per selected vice)
+/datum/preferences/proc/get_vice_points()
+	var/points = 0
+	for(var/i = 1 to 5)
+		if(vars["vice[i]"])
+			points++
+	return points
+
+// Points spent on selected loadout items (uses triumph_cost as point cost)
+/datum/preferences/proc/get_loadout_points_spent()
+	var/spent = 0
+	for(var/i = 1 to 10)
+		var/datum/loadout_item/L = vars[i == 1 ? "loadout" : "loadout[i]"]
+		if(L && L.triumph_cost)
+			spent += L.triumph_cost
+	return spent
+
+// DEPRECATED - Languages now use actual triumph pool, not vice points
+// Kept for backwards compatibility but no longer used in calculations
+/datum/preferences/proc/get_language_points_spent()
+	var/spent = 0
+	if(extra_language_1 && extra_language_1 != "None")
+		spent += 2
+	if(extra_language_2 && extra_language_2 != "None")
+		spent += 4
+	return spent
+
+// Total points available = base + points from vices
+/datum/preferences/proc/get_total_points()
+	return get_base_points() + get_vice_points()
+
+// Legacy proc - remaining points after accounting for both loadouts and languages
+// NOTE: Languages now use ACTUAL triumphs (player.get_triumphs()), not vice points
+// This proc only calculates loadout point usage now
+/datum/preferences/proc/get_remaining_points()
+	var/total = get_total_points()
+	var/spent = get_loadout_points_spent() // Languages no longer count toward this
+	return total - spent
+
+
+/datum/preferences
 	var/unlock_content = 0
 
 	var/list/ignoring = list()
@@ -140,6 +196,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/autoconsume = FALSE
 	var/runmode = FALSE
 	var/no_examine_blocks = FALSE
+	var/no_autopunctuate = FALSE
+	var/no_language_fonts = FALSE
+	var/no_language_icon = FALSE
 
 	var/lastclass
 
@@ -157,6 +216,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/nickname = "Please Change Me"
 	var/highlight_color = "#FF0000"
 	var/datum/charflaw/charflaw
+	// Multiple vice selection (up to 5, at least 1 required)
+	var/datum/charflaw/vice1
+	var/datum/charflaw/vice2
+	var/datum/charflaw/vice3
+	var/datum/charflaw/vice4
+	var/datum/charflaw/vice5
 
 	var/static/default_cmusic_type = /datum/combat_music/default
 	var/datum/combat_music/combat_music
@@ -200,15 +265,57 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/loadout_item/loadout
 	var/datum/loadout_item/loadout2
 	var/datum/loadout_item/loadout3
+	var/datum/loadout_item/loadout4
+	var/datum/loadout_item/loadout5
+	var/datum/loadout_item/loadout6
+	var/datum/loadout_item/loadout7
+	var/datum/loadout_item/loadout8
+	var/datum/loadout_item/loadout9
+	var/datum/loadout_item/loadout10
 
 	var/loadout_1_hex
 	var/loadout_2_hex
 	var/loadout_3_hex
+	var/loadout_4_hex
+	var/loadout_5_hex
+	var/loadout_6_hex
+	var/loadout_7_hex
+	var/loadout_8_hex
+	var/loadout_9_hex
+	var/loadout_10_hex
+
+	// Custom names for loadout items
+	var/loadout_1_name
+	var/loadout_2_name
+	var/loadout_3_name
+	var/loadout_4_name
+	var/loadout_5_name
+	var/loadout_6_name
+	var/loadout_7_name
+	var/loadout_8_name
+	var/loadout_9_name
+	var/loadout_10_name
+
+	// Custom descriptions for loadout items
+	var/loadout_1_desc
+	var/loadout_2_desc
+	var/loadout_3_desc
+	var/loadout_4_desc
+	var/loadout_5_desc
+	var/loadout_6_desc
+	var/loadout_7_desc
+	var/loadout_8_desc
+	var/loadout_9_desc
+	var/loadout_10_desc
 
 	var/flavortext
 	var/flavortext_display
 
 	var/ooc_notes
+
+	var/rumour
+
+	var/noble_gossip
 
 	var/nsfwflavortext
 
@@ -414,8 +521,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			else
 				race_bonus = null
 
-			// LETHALSTONE EDIT BEGIN: add statpack selection
-			dat += "<b>Statpack:</b> <a href='?_src_=prefs;preference=statpack;task=input'>[statpack.name]</a><BR>"
 //			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(randomise[RANDOM_SPECIES]) ? "Yes" : "No"]</A><br>"
 
@@ -457,12 +562,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					virtue = GLOB.virtues[/datum/virtue/none]
 				if(virtuetwo.type in pref_species.restricted_virtues)
 					virtuetwo = GLOB.virtues[/datum/virtue/none]
-			dat += "<b>Virtue:</b> <a href='?_src_=prefs;preference=virtue;task=input'>[virtue]</a><BR>"
-			if(statpack.name == "Virtuous")
-				dat += "<b>Second Virtue:</b> <a href='?_src_=prefs;preference=virtuetwo;task=input'>[virtuetwo]</a><BR>"
-			else
+			if(statpack.name != "Virtuous")
 				virtuetwo = GLOB.virtues[/datum/virtue/none]
-			dat += "<b>Vice:</b> <a href='?_src_=prefs;preference=charflaw;task=input'>[charflaw]</a><BR>"
+			dat += "<b>Character Customization:</b> <a href='?_src_=prefs;preference=vices_menu;task=input'>Configure All</a><BR>"
 			var/datum/faith/selected_faith = GLOB.faithlist[selected_patron?.associated_faith]
 			dat += "<b>Faith:</b> <a href='?_src_=prefs;preference=faith;task=input'>[selected_faith?.name || "FUCK!"]</a><BR>"
 			dat += "<b>Patron:</b> <a href='?_src_=prefs;preference=patron;task=input'>[selected_patron?.name || "FUCK!"]</a><BR>"
@@ -538,12 +640,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<b>Mutant Color #2:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
 				dat += "<b>Mutant Color #3:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 
-			var/datum/language/selected_lang
-			var/lang_output = "None"
-			if(ispath(extra_language, /datum/language))
-				selected_lang = extra_language
-				lang_output = initial(selected_lang.name)
-			dat += "<b>Extra Language: </b><a href='?_src_=prefs;preference=extra_language;task=input'>[lang_output]</a>"
 			dat += "<br><b>Voice Color: </b><a href='?_src_=prefs;preference=voice;task=input'>Change</a>"
 			dat += "<br><b>Nickname Color: </b> </b><a href='?_src_=prefs;preference=highlight_color;task=input'>Change</a>"
 			dat += "<br><b>Voice Pitch: </b><a href='?_src_=prefs;preference=voice_pitch;task=input'>[voice_pitch]</a>"
@@ -560,6 +656,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<br><b>[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "<font color = '#802929'>" : ""]Flavortext:[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "</font>" : ""]</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=flavortext;task=input'>Change</a>"
 			dat += "<br><b>NSFW Flavortext:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=nsfwflavortext;task=input'>Change</a>"
 			dat += "<br><b>[(length(ooc_notes) < MINIMUM_OOC_NOTES) ? "<font color = '#802929'>" : ""]OOC Notes:[(length(ooc_notes) < MINIMUM_OOC_NOTES) ? "</font>" : ""]</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=ooc_notes;task=input'>Change</a>"
+
+			// Rumours / Gossip
+			dat += "<br><b>Rumours & Noble Gossip:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><br><a href='?_src_=prefs;preference=rumour;task=input'>Set Rumours</a><a href='?_src_=prefs;preference=gossip;task=input'>Set Gossip</a><a href='?_src_=prefs;preference=rumour_preview;task=input'><i>Preview</i></a>"
+
 			dat += "<br><b>ERP Preferences:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=erpprefs;task=input'>Change</a>"
 			dat += "<br><b>Song:</b> <a href='?_src_=prefs;preference=ooc_extra;task=input'>Change URL</a>"
 			dat += "<a href='?_src_=prefs;preference=change_title;task=input'>Change Title</a>"
@@ -570,21 +670,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat+= "<a href='?_src_=prefs;preference=clear_nsfw_gallery;task=input'>Clear Nsfw Gallery</a>"
 			dat += "<br><a href='?_src_=prefs;preference=ooc_preview;task=input'><b>Preview Examine</b></a>"
 
-			dat += "<br><b>Loadout Item I:</b> <a href='?_src_=prefs;preference=loadout_item;task=input'>[loadout ? loadout.name : "None"]</a>"
-			if (loadout_1_hex)
-				dat += "<a href='?_src_=prefs;preference=loadout1hex;task=input'> <span style='border: 1px solid #161616; background-color: [loadout_1_hex ? loadout_1_hex : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>"
-			else
-				dat += "<a href='?_src_=prefs;preference=loadout1hex;task=input'>(C)</a>"
-			dat += "<br><b>Loadout Item II:</b> <a href='?_src_=prefs;preference=loadout_item2;task=input'>[loadout2 ? loadout2.name : "None"]</a>"
-			if (loadout_2_hex)
-				dat += "<a href='?_src_=prefs;preference=loadout2hex;task=input'> <span style='border: 1px solid #161616; background-color: [loadout_2_hex ? loadout_2_hex : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>"
-			else
-				dat += "<a href='?_src_=prefs;preference=loadout2hex;task=input'>(C)</a>"
-			dat += "<br><b>Loadout Item III:</b> <a href='?_src_=prefs;preference=loadout_item3;task=input'>[loadout3 ? loadout3.name : "None"]</a>"
-			if (loadout_3_hex)
-				dat += "<a href='?_src_=prefs;preference=loadout3hex;task=input'><span style='border: 1px solid #161616; background-color: [loadout_3_hex ? loadout_3_hex : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>"
-			else
-				dat += "<a href='?_src_=prefs;preference=loadout3hex;task=input'>(C)</a>"
 			dat += "</td>"
 
 			dat += "</tr></table>"
@@ -983,12 +1068,14 @@ GLOBAL_LIST_EMPTY(chosen_names)
 						name += virtuetwo.name
 					else
 						name = virtuetwo.name
-				if(charflaw.type in job.vice_restrictions)
-					if(name)
-						name += ", "
-						name += charflaw.name
-					else
-						name += charflaw.name
+				// Check all vices
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+					if(vice?.type in job.vice_restrictions)
+						if(name)
+							name += ", "
+							name += vice.name
+						else
+							name = vice.name
 				if(!isnull(name))
 					HTML += "<font color='#a561a5'>[used_name] (Disallowed by Virtues / Vice: [name])</font></td> <td> </td></tr>"
 			if(length(job.virtue_restrictions))
@@ -1005,8 +1092,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					HTML += "<font color='#a59461'>[used_name] (Disallowed by Virtue: [name])</font></td> <td> </td></tr>"
 					continue
 			if(length(job.vice_restrictions))
-				if(charflaw.type in job.vice_restrictions)
-					HTML += "<font color='#a56161'>[used_name] (Disallowed by Vice: [charflaw.name])</font></td> <td> </td></tr>"
+				var/list/restricted_vices = list()
+				// Check all vices
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+					if(vice?.type in job.vice_restrictions)
+						restricted_vices += vice.name
+				if(length(restricted_vices))
+					HTML += "<font color='#a56161'>[used_name] (Disallowed by Vice: [restricted_vices.Join(", ")])</font></td> <td> </td></tr>"
 					continue
 			var/job_unavailable = JOB_AVAILABLE
 			if(isnewplayer(parent?.mob))
@@ -1630,30 +1722,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						ResetJobs()
 						to_chat(user, "<font color='red'>Classes reset.</font>")
 
-				// LETHALSTONE EDIT: add statpack selection
-				if ("statpack")
-					var/list/statpacks_available = list()
-					for (var/path as anything in GLOB.statpacks)
-						var/datum/statpack/statpack = GLOB.statpacks[path]
-						if (!statpack.name)
-							continue
-						var/index = statpack.name
-						if(length(statpack.stat_array))
-							index += " \n[statpack.generate_modifier_string()]"
-						statpacks_available[index] = statpack
-
-					statpacks_available = sort_list(statpacks_available)
-
-					var/statpack_input = tgui_input_list(user, "How shall your strengths manifest?", "STATPACK", statpacks_available, statpack)
-					if (statpack_input)
-						var/datum/statpack/statpack_chosen = statpacks_available[statpack_input]
-						statpack = statpack_chosen
-						to_chat(user, "<font color='purple'>[statpack.name]</font>")
-						to_chat(user, "<font color='purple'>[statpack.description_string()]</font>")
-						/* also, unset our virtue if we're not a virtuous statpack.
-						if (!istype(statpack, /datum/statpack/wildcard/virtuous) && virtue.type != /datum/virtue/none)
-							virtue = new /datum/virtue/none
-							to_chat(user, span_info("Your virtue has been removed due to taking a stat-altering statpack.")) */
 				// LETHALSTONE EDIT: add pronouns
 				if ("pronouns")
 					var pronouns_input = tgui_input_list(user, "Choose your character's pronouns", "PRONOUNS", GLOB.pronouns_list)
@@ -1937,6 +2005,41 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					ooc_notes = new_ooc_notes
 					to_chat(user, "<span class='notice'>Successfully updated OOC notes.</span>")
 					log_game("[user] has set their OOC notes'.")
+
+				if("rumour")
+					to_chat(user, span_notice("Rumours are things others might know, or think they know about you, they don't necessarily have to be precise, or even true. But remember that they can provide a hint to another player on how to interact with, or even think about your character.\n<b>Avoid explicit bodily descriptions, though rumors like \"sleeps around a lot\" are fine.</b>"))
+					var/new_rumour = tgui_input_text(user, "Input rumours about your character: (400 Character Limit)", "Rumours", rumour, multiline = TRUE, encode = FALSE, bigmodal = TRUE)
+					if(new_rumour == null)
+						return
+					if(new_rumour == "")
+						rumour = null
+						ShowChoices(user)
+						return
+					if(length(new_rumour) > 400)
+						to_chat(user, span_warning("Rumours cannot exceed 400 characters."))
+						ShowChoices(user)
+						return
+					rumour = new_rumour
+					to_chat(user, span_notice("Successfully updated Rumours"))
+					log_game("[user] has set their rumour'.")
+
+				if("gossip")
+					to_chat(user, span_notice("Gossip is rumours spread around, and known only in Noble circles, only other well-born individuals are aware of it. Gossip, similarly to standard rumours does not need to be precise or true, but remember that it can provide hints and avenues for other Nobles to interact with, and judge your Character.\n<b>Avoid explicit bodily descriptions, though rumors like \"sleeps around a lot\" are fine.</b>"))
+					var/new_gossip = tgui_input_text(user, "Input noble gossip about your character: (400 Character Limit)", "Noble Gossip", noble_gossip, multiline = TRUE, encode = FALSE, bigmodal = TRUE)
+					if(new_gossip == null)
+						return
+					if(new_gossip == "")
+						noble_gossip = null
+						ShowChoices(user)
+						return
+					if(length(new_gossip) > 400)
+						to_chat(user, span_notice("Noble gossip cannot exceed 400 characters."))
+						ShowChoices(user)
+						return
+					noble_gossip = new_gossip
+					to_chat(user, span_notice("Successfully updated Noble Gossip"))
+					log_game("[user] has set their noble gossip'.")
+
 				if("nsfwflavortext")
 					to_chat(user, "<span class='notice'>["<span class='bold'>NSFW Flavortext can be used for setting things like body descriptions and other physical details that may be conisdered explicit.</span>"]</span>")
 					to_chat(user, "<font color = '#d6d6d6'>Leave blank to clear.</font>")
@@ -2055,6 +2158,23 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					preview_examine_panel.viewing = user
 					preview_examine_panel.ui_interact(user)
 
+				if("rumour_preview")
+					var/msg = ""
+					if(rumour && length(rumour))
+						var/rumour_display = rumour
+						rumour_display = html_encode(rumour_display)
+						rumour_display = parsemarkdown_basic(rumour_display, hyperlink = TRUE)
+						msg += "<b>You recall what you heard around Town about [real_name]...</b><br>[rumour_display]"
+					if(length(noble_gossip))
+						if(msg)
+							msg += "<br><br>"
+						var/gossip_display = noble_gossip
+						gossip_display = html_encode(gossip_display)
+						gossip_display = parsemarkdown_basic(gossip_display, hyperlink = TRUE)
+						msg += "<b>You recall what the other Blue-bloods hushed about [real_name]...</b><br>[gossip_display]"
+					if(msg)
+						to_chat(user, "<span class='info'>[msg]</span>")
+
 				if("ooc_extra")
 					to_chat(user, "<span class='notice'>Add a link from a suitable host (catbox, etc) to an mp3 to embed in your flavor text.</span>")
 					to_chat(user, "<span class='notice'>If the song doesn't  play properly, ensure that it's a direct link that opens properly in a browser.</span>")
@@ -2109,97 +2229,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				if("familiar_prefs")
 					familiar_prefs.fam_show_ui()
 
-				if("loadout_item")
-					var/list/loadouts_available = list("None")
-					for (var/path as anything in GLOB.loadout_items)
-						var/datum/loadout_item/loadout = GLOB.loadout_items[path]
-						var/donoritem = loadout.donoritem
-						if(donoritem && !loadout.donator_ckey_check(user.ckey))
-							continue
-						if (!loadout.name)
-							continue
-						loadouts_available[loadout.name] = loadout
-
-					var/loadout_input = tgui_input_list(user, "Choose your character's loadout item. RMB a tree, statue or clock to collect. I cannot stress this enough. YOU DON'T SPAWN WITH THESE. YOU HAVE TO MANUALLY PICK THEM UP!!", "LOADOUT THAT YOU GET FROM A TREE OR STATUE OR CLOCK", loadouts_available)
-					if(loadout_input)
-						if(loadout_input == "None")
-							loadout = null
-							to_chat(user, "Who needs stuff anyway?")
-						else
-							loadout = loadouts_available[loadout_input]
-							to_chat(user, "<font color='yellow'><b>[loadout.name]</b></font>")
-							if(loadout.desc)
-								to_chat(user, "[loadout.desc]")
-				if("loadout_item2")
-					var/list/loadouts_available = list("None")
-					for (var/path as anything in GLOB.loadout_items)
-						var/datum/loadout_item/loadout2 = GLOB.loadout_items[path]
-						var/donoritem = loadout2.donoritem
-						if(donoritem && !loadout2.donator_ckey_check(user.ckey))
-							continue
-						if (!loadout2.name)
-							continue
-						loadouts_available[loadout2.name] = loadout2
-
-					var/loadout_input2 = tgui_input_list(user, "Choose your character's loadout item. RMB a tree, statue or clock to collect. I cannot stress this enough. YOU DON'T SPAWN WITH THESE. YOU HAVE TO MANUALLY PICK THEM UP!!", "LOADOUT THAT YOU GET FROM A TREE OR STATUE OR CLOCK", loadouts_available)
-					if(loadout_input2)
-						if(loadout_input2 == "None")
-							loadout2 = null
-							to_chat(user, "Who needs stuff anyway?")
-						else
-							loadout2 = loadouts_available[loadout_input2]
-							to_chat(user, "<font color='yellow'><b>[loadout2.name]</b></font>")
-							if(loadout2.desc)
-								to_chat(user, "[loadout2.desc]")
-				if("loadout_item3")
-					var/list/loadouts_available = list("None")
-					for (var/path as anything in GLOB.loadout_items)
-						var/datum/loadout_item/loadout3 = GLOB.loadout_items[path]
-						var/donoritem = loadout3.donoritem
-						if(donoritem && !loadout3.donator_ckey_check(user.ckey))
-							continue
-						if (!loadout3.name)
-							continue
-						loadouts_available[loadout3.name] = loadout3
-
-					var/loadout_input3 = tgui_input_list(user, "Choose your character's loadout item. RMB a tree, statue or clock to collect. I cannot stress this enough. YOU DON'T SPAWN WITH THESE. YOU HAVE TO MANUALLY PICK THEM UP!!", "LOADOUT THAT YOU GET FROM A TREE OR STATUE OR CLOCK", loadouts_available)
-					if(loadout_input3)
-						if(loadout_input3 == "None")
-							loadout3 = null
-							to_chat(user, "Who needs stuff anyway?")
-						else
-							loadout3 = loadouts_available[loadout_input3]
-							to_chat(user, "<font color='yellow'><b>[loadout3.name]</b></font>")
-							if(loadout3.desc)
-								to_chat(user, "[loadout3.desc]")
-				if("loadout1hex")
-					var/choice = input(user, "Choose a color.", "Loadout Item One Colour") as null|anything in colorlist
-					if (choice && colorlist[choice])
-						loadout_1_hex = colorlist[choice]
-						if (loadout)
-							to_chat(user, "The colour for your [loadout::name] has been set to <b>[choice]</b>.")
-					else
-						loadout_1_hex = null
-						to_chat(user, "The colour for your <b>first</b> loadout item has been cleared.")
-				if("loadout2hex")
-					var/choice = input(user, "Choose a color.", "Loadout Item Two Colour") as null|anything in colorlist
-					if (choice && colorlist[choice])
-						loadout_2_hex = colorlist[choice]
-						if (loadout2)
-							to_chat(user, "The colour for your [loadout2::name] has been set to <b>[choice]</b>.")
-					else
-						loadout_2_hex = null
-						to_chat(user, "The colour for your <b>second</b> loadout item has been cleared.")
-				if("loadout3hex")
-					var/choice = input(user, "Choose a color.", "Loadout Item Three Colour") as null|anything in colorlist
-					if (choice && colorlist[choice])
-						loadout_3_hex = colorlist[choice]
-						if (loadout3)
-							to_chat(user, "The colour for your [loadout3::name] has been set to <b>[choice]</b>.")
-					else
-						loadout_3_hex = null
-						to_chat(user, "The colour for your <b>third</b> loadout item has been cleared.")
-
 				if("species")
 					var/list/species = list()
 					for(var/A in GLOB.roundstart_races)
@@ -2225,51 +2254,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				if("dnr")
 					dnr_pref = !dnr_pref
 
-				if("virtue")
-					var/list/virtue_choices = list()
-					for (var/path as anything in GLOB.virtues)
-						var/datum/virtue/V = GLOB.virtues[path]
-						if (!V.name)
-							continue
-						if ((V.name == virtue.name || V.name == virtuetwo.name) && !istype(V, /datum/virtue/none))
-							continue
-						if (istype(V, /datum/virtue/heretic) && !istype(selected_patron, /datum/patron/inhumen))
-							continue
-						if(length(pref_species.restricted_virtues) && (V.type in pref_species.restricted_virtues))
-							continue
-						virtue_choices[V.name] = V
-					virtue_choices = sort_list(virtue_choices)
-					var/result = tgui_input_list(user, "What strength shall you wield?", "VIRTUES",virtue_choices)
-
-					if (result)
-						var/datum/virtue/virtue_chosen = virtue_choices[result]
-						virtue = virtue_chosen
-						to_chat(user, process_virtue_text(virtue_chosen))
-
-				if("virtuetwo")
-					var/list/virtue_choices = list()
-					for (var/path as anything in GLOB.virtues)
-						var/datum/virtue/V = GLOB.virtues[path]
-						if (!V.name)
-							continue
-						if ((V.name == virtue.name || V.name == virtuetwo.name) && !istype(V, /datum/virtue/none))
-							continue
-						if(length(pref_species.restricted_virtues) && (V.type in pref_species.restricted_virtues))
-							continue
-						if (istype(V, /datum/virtue/heretic) && !istype(selected_patron, /datum/patron/inhumen))
-							continue
-						virtue_choices[V.name] = V
-					virtue_choices = sort_list(virtue_choices)
-					var/result = tgui_input_list(user, "What strength shall you wield?", "VIRTUES",virtue_choices)
-
-					if (result)
-						var/datum/virtue/virtue_chosen = virtue_choices[result]
-						virtuetwo = virtue_chosen
-						to_chat(user, process_virtue_text(virtue_chosen))
-					/*	if (statpack.type != /datum/statpack/wildcard/virtuous)
-							statpack = new /datum/statpack/wildcard/virtuous
-							to_chat(user, span_purple("Your statpack has been set to virtuous (no stats) due to selecting a virtue.")) */
-
 				if("charflaw")
 					var/list/coom = GLOB.character_flaws.Copy()
 					var/result = tgui_input_list(user, "What burden will you bear?", "FLAWS",coom)
@@ -2279,6 +2263,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						charflaw = C
 						if(charflaw.desc)
 							to_chat(user, "<span class='info'>[charflaw.desc]</span>")
+				
+				if("vices_menu")
+					open_vices_menu(user)
+					return
 
 				if("race_bonus_select")
 					if(length(pref_species.custom_selection))
@@ -2736,12 +2724,74 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	return 1
 
 /datum/preferences/proc/resolve_loadout_to_color(item_path)
-	if (loadout && (item_path == loadout.path) && loadout_1_hex)
+	if (loadout && (item_path == loadout.path) && loadout_1_hex && length(loadout_1_hex))
 		return loadout_1_hex
-	if (loadout2 && (item_path == loadout2.path) && loadout_2_hex)
+	if (loadout2 && (item_path == loadout2.path) && loadout_2_hex && length(loadout_2_hex))
 		return loadout_2_hex
-	if (loadout3 && (item_path == loadout3.path) && loadout_3_hex)
+	if (loadout3 && (item_path == loadout3.path) && loadout_3_hex && length(loadout_3_hex))
 		return loadout_3_hex
+	if (loadout4 && (item_path == loadout4.path) && loadout_4_hex && length(loadout_4_hex))
+		return loadout_4_hex
+	if (loadout5 && (item_path == loadout5.path) && loadout_5_hex && length(loadout_5_hex))
+		return loadout_5_hex
+	if (loadout6 && (item_path == loadout6.path) && loadout_6_hex && length(loadout_6_hex))
+		return loadout_6_hex
+	if (loadout7 && (item_path == loadout7.path) && loadout_7_hex && length(loadout_7_hex))
+		return loadout_7_hex
+	if (loadout8 && (item_path == loadout8.path) && loadout_8_hex && length(loadout_8_hex))
+		return loadout_8_hex
+	if (loadout9 && (item_path == loadout9.path) && loadout_9_hex && length(loadout_9_hex))
+		return loadout_9_hex
+	if (loadout10 && (item_path == loadout10.path) && loadout_10_hex && length(loadout_10_hex))
+		return loadout_10_hex
+
+	return FALSE
+
+/datum/preferences/proc/resolve_loadout_to_name(item_path)
+	if (loadout && (item_path == loadout.path) && loadout_1_name)
+		return loadout_1_name
+	if (loadout2 && (item_path == loadout2.path) && loadout_2_name)
+		return loadout_2_name
+	if (loadout3 && (item_path == loadout3.path) && loadout_3_name)
+		return loadout_3_name
+	if (loadout4 && (item_path == loadout4.path) && loadout_4_name)
+		return loadout_4_name
+	if (loadout5 && (item_path == loadout5.path) && loadout_5_name)
+		return loadout_5_name
+	if (loadout6 && (item_path == loadout6.path) && loadout_6_name)
+		return loadout_6_name
+	if (loadout7 && (item_path == loadout7.path) && loadout_7_name)
+		return loadout_7_name
+	if (loadout8 && (item_path == loadout8.path) && loadout_8_name)
+		return loadout_8_name
+	if (loadout9 && (item_path == loadout9.path) && loadout_9_name)
+		return loadout_9_name
+	if (loadout10 && (item_path == loadout10.path) && loadout_10_name)
+		return loadout_10_name
+
+	return FALSE
+
+/datum/preferences/proc/resolve_loadout_to_desc(item_path)
+	if (loadout && (item_path == loadout.path) && loadout_1_desc)
+		return loadout_1_desc
+	if (loadout2 && (item_path == loadout2.path) && loadout_2_desc)
+		return loadout_2_desc
+	if (loadout3 && (item_path == loadout3.path) && loadout_3_desc)
+		return loadout_3_desc
+	if (loadout4 && (item_path == loadout4.path) && loadout_4_desc)
+		return loadout_4_desc
+	if (loadout5 && (item_path == loadout5.path) && loadout_5_desc)
+		return loadout_5_desc
+	if (loadout6 && (item_path == loadout6.path) && loadout_6_desc)
+		return loadout_6_desc
+	if (loadout7 && (item_path == loadout7.path) && loadout_7_desc)
+		return loadout_7_desc
+	if (loadout8 && (item_path == loadout8.path) && loadout_8_desc)
+		return loadout_8_desc
+	if (loadout9 && (item_path == loadout9.path) && loadout_9_desc)
+		return loadout_9_desc
+	if (loadout10 && (item_path == loadout10.path) && loadout_10_desc)
+		return loadout_10_desc
 
 	return FALSE
 
@@ -2812,6 +2862,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.eye_color = eye_color
 	if(extra_language && extra_language != "None")
 		character.grant_language(extra_language)
+	if(extra_language_1 && extra_language_1 != "None")
+		character.grant_language(extra_language_1)
+	if(extra_language_2 && extra_language_2 != "None")
+		character.grant_language(extra_language_2)
 	character.voice_color = voice_color
 	character.voice_pitch = voice_pitch
 	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
@@ -2829,9 +2883,23 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	character.jumpsuit_style = jumpsuit_style
 
-	if(charflaw)
+	// Apply multiple vices system
+	character.vices = list()
+	for(var/i = 1 to 5)
+		var/datum/charflaw/vice = vars["vice[i]"]
+		if(vice)
+			var/datum/charflaw/new_vice = new vice.type()
+			character.vices += new_vice
+			new_vice.on_mob_creation(character)
+			// Set first vice as the legacy charflaw for compatibility
+			if(i == 1)
+				character.charflaw = new_vice
+	
+	// Legacy single vice support (if new system not used)
+	if(!length(character.vices) && charflaw)
 		character.charflaw = new charflaw.type()
 		character.charflaw.on_mob_creation(character)
+		character.vices += character.charflaw
 
 	character.dna.real_name = character.real_name
 
@@ -2842,6 +2910,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.flavortext = flavortext
 
 	character.ooc_notes = ooc_notes
+
+	// Rumours / Noble gossip
+	character.rumour = rumour
+	character.noble_gossip = noble_gossip
 
 	character.nsfwflavortext = nsfwflavortext
 

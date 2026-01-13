@@ -115,12 +115,16 @@
 	var/ammo_type
 
 	var/arcshot = FALSE
+	var/diagonal_step = 0
+	var/diagonal_target_z = 0
 	var/poisontype
 	var/poisonamount
 	var/poisonfeel
 
 	var/accuracy = 65 //How likely the project will hit it's intended target area. Decreases over distance moved, increased from perception.
 	var/bonus_accuracy = 0 //bonus accuracy that cannot be affected by range drop off.
+
+	var/target_z = 0
 
 /obj/projectile/proc/handle_drop()
 	return
@@ -130,8 +134,38 @@
 	permutated = list()
 	decayedRange = range
 
+/obj/projectile/proc/get_nearest_open_turf(turf/center, max_range)
+	for(var/i in 0 to max_range)
+		for(var/turf/T in range(i, center))
+			if(!T.density && !has_dense_content(T))
+				return T
+	return null
+
+/obj/projectile/proc/has_dense_content(turf/T)
+	for(var/atom/A in T)
+		if(A.density && A != src && A != firer)
+			return TRUE
+	return FALSE
+
 /obj/projectile/proc/Range()
 	range--
+	if(diagonal_step && diagonal_target_z && z != diagonal_target_z)
+		if((decayedRange - range) >= diagonal_step)
+			var/turf/T = locate(x, y, diagonal_target_z)
+			if(T)
+				if(T.density || has_dense_content(T))
+					T = get_nearest_open_turf(T, 3)
+
+				if(T)
+					trajectory_ignore_forcemove = TRUE
+					forceMove(T)
+					trajectory_ignore_forcemove = FALSE
+					if(trajectory)
+						trajectory.z = T.z
+				else
+					qdel(src)
+					return
+
 	if(accuracy > 20) //so there is always a somewhat prevalent chance to hit the target, despite distance.
 		accuracy -= 10
 	if(range <= 0 && loc)
@@ -518,6 +552,25 @@
 		else if(T != loc)
 			step_towards(src, T)
 			hitscan_last = loc
+
+		if(arcshot && starting && target_z && z > target_z)
+			var/tx = starting.x + xo
+			var/ty = starting.y + yo
+
+			if(get_dist(loc, locate(tx, ty, z)) == 0)
+				var/turf/below = locate(x, y, target_z)
+				if(below)
+					var/old = loc
+					before_z_change(loc, below)
+					trajectory_ignore_forcemove = TRUE
+					forceMove(below)
+					trajectory_ignore_forcemove = FALSE
+					after_z_change(old, loc)
+					if(trajectory)
+						trajectory.z = below.z
+					forcemoved = TRUE
+					hitscan_last = loc
+
 	if(!hitscanning && !forcemoved)
 		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
 		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move
@@ -584,15 +637,26 @@
 /obj/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
 	var/turf/curloc = get_turf(source)
 	var/turf/targloc = get_turf(target)
+	var/turf/start_loc = curloc
+
 	if(targloc && curloc)
-		if(targloc.z > curloc.z)
-			var/turf/above = get_step_multiz(curloc, UP)
-			if(istype(above, /turf/open/transparent/openspace))
-				curloc = above
+		target_z = targloc.z
+		if(arcshot)
+			if(targloc.z > curloc.z)
+				var/turf/above = get_step_multiz(curloc, UP)
+				if(above)
+					curloc = above
+					start_loc = above
+		else
+			if(targloc.z != curloc.z)
+				var/dist = get_dist_euclidian(curloc, targloc)
+				diagonal_step = max(1, round(dist / 2))
+				diagonal_target_z = targloc.z
+
 	trajectory_ignore_forcemove = TRUE
-	forceMove(get_turf(source))
+	forceMove(start_loc)
 	trajectory_ignore_forcemove = FALSE
-	starting = get_turf(source)
+	starting = start_loc
 	original = target
 	if(targloc || !params)
 		yo = targloc.y - curloc.y

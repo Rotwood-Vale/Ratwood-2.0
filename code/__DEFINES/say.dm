@@ -57,6 +57,7 @@
 #define SPAN_CLOWN "clown"
 #define SPAN_SINGING "singing"
 
+
 #define SPAN_GEN "say"
 #define SPAN_ORATOR "orator"
 #define SPAN_DWARF "dwarf"
@@ -69,6 +70,7 @@
 #define SPAN_OTAVAN "otavan"
 #define SPAN_ETRUSCAN "etruscan"
 #define SPAN_ABYSSAL "abyssal"
+#define SPAN_GRENZELHOFTIAN "grenzelhoftian"
 #define SPAN_GRONNIC "gronnic"
 #define SPAN_BEAST "beast"
 #define SPAN_ORC "orc"
@@ -76,12 +78,15 @@
 #define SPAN_KAZENGUNESE "kazengunese"
 #define SPAN_KAZENACCENT "kazenaccent"
 #define SPAN_AAVNIC "aavnic"
-#define SPAN_UNDEAD "undead" //nyi but file found
+#define SPAN_UNDEAD "undead"
+
 #define SPAN_CAT "cat"		 //nyi but file found
 #define SPAN_MERAR "merar"
 #define SPAN_PULSEDEATH "pulsedeath"
 
 #define SPAN_PATREON_SAY "patreontalk"
+
+#define LANGUAGE_SPANS list(SPAN_GEN,SPAN_ORATOR, SPAN_DWARF, SPAN_ELF, SPAN_SAND, SPAN_SANDWAUK, SPAN_DELF, SPAN_HELL, SPAN_CANILUNZT, SPAN_OTAVAN, SPAN_ETRUSCAN, SPAN_ABYSSAL, SPAN_GRENZELHOFTIAN, SPAN_GRONNIC, SPAN_BEAST, SPAN_ORC, SPAN_DRACONIC, SPAN_KAZENGUNESE, SPAN_KAZENACCENT, SPAN_AAVNIC, SPAN_UNDEAD, SPAN_CAT, SPAN_MERAR, SPAN_PULSEDEATH)
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS 1

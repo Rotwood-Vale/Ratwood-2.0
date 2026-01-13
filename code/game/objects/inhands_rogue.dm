@@ -124,8 +124,8 @@ GLOBAL_LIST_EMPTY(icon_state_cache)
 	if(!blended)
 		return
 
-//	if(color) //getflat does this i think?
-//		blended.Blend(color,ICON_MULTIPLY)
+	if(color)
+		blended.Blend(color,ICON_MULTIPLY)
 
 	if(!skipoverlays)
 		for(var/V in overlays)

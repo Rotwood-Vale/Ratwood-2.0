@@ -386,6 +386,30 @@
 		/datum/mob_descriptor/scales/peeling,
 	)
 
+/datum/descriptor_choice/skin_harpy
+	name = "Skin & Feathers"
+	default_descriptor = /datum/mob_descriptor/feathers/fine
+	descriptors = list(
+		/datum/mob_descriptor/skin/normal,
+		/datum/mob_descriptor/skin/soft,
+		/datum/mob_descriptor/skin/rugged,
+		/datum/mob_descriptor/skin/diseased,
+		/datum/mob_descriptor/skin/dry,
+		/datum/mob_descriptor/skin/fine,
+		/datum/mob_descriptor/skin/wrinkled,
+		/datum/mob_descriptor/skin/sunkissed,
+		/datum/mob_descriptor/skin/aged,
+		/datum/mob_descriptor/skin/pockmarked,
+		/datum/mob_descriptor/skin/dusky,
+		/datum/mob_descriptor/skin/irritated,
+		/datum/mob_descriptor/skin/ashen,
+		/datum/mob_descriptor/feathers/fine,
+		/datum/mob_descriptor/feathers/stiff,
+		/datum/mob_descriptor/feathers/frayed,
+		/datum/mob_descriptor/feathers/delicate,
+		/datum/mob_descriptor/feathers/soft,
+	)
+
 #define PROMINENT_DESCRIPTORS \
 	/datum/mob_descriptor/prominent/hunched_over,\
 	/datum/mob_descriptor/prominent/drooling,\

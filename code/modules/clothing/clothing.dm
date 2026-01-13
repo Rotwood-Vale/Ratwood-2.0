@@ -538,3 +538,88 @@ BLIND     // can't see anything
 	if(text)
 		filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, -20, y_offset)
 	. = ..()
+
+/obj/proc/generate_tooltip(examine_text, showcrits)
+	return examine_text
+
+/obj/item/clothing/generate_tooltip(examine_text, showcrits)
+	if(!armor)	// No armor
+		return examine_text
+	
+	// Fake armor
+	if(armor.getRating("slash") == 0 && armor.getRating("stab") == 0 && armor.getRating("blunt") == 0 && armor.getRating("piercing") == 0)
+		return examine_text
+
+	var/str = ""
+	str += "[colorgrade_rating("🔨 BLUNT ", armor.blunt, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🪓 SLASH ", armor.slash, elaborate = TRUE)]"
+	str += "<br>"
+	str += "[colorgrade_rating("🗡️ STAB ", armor.stab, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)] "
+
+	if(showcrits && prevent_crits)
+		str += "<br>———————————————<br>"
+		str += "<font color = '#afaeae'><text-align: center>STOPS CRITS: <br>"
+		var/linebreak_count = 0
+		var/index = 0
+		for(var/flag in prevent_crits)
+			index++
+			if(flag == BCLASS_PICK) //BCLASS_PICK is named "stab", and "stabbing" is its own damage class. Prevents confusion.
+				flag = "pick"
+			str += ("[capitalize(flag)] ")
+			linebreak_count++
+			if(linebreak_count >= 3)
+				str += "<br>"
+				linebreak_count = 0
+			else if(index != length(prevent_crits))
+				str += " | "
+		str += "</font>"
+
+	//This makes it appear darker than the rest of examine text. Draws the cursor to it like to a link.
+	examine_text = "<font color = '#808080'>[examine_text]</font>"
+	// Make the armor info clickable; clicking prints full details to chat
+	return "<a href='byond://?src=\ref[src];show_examine=1'>[str]</a>"
+
+// Build the detailed examine string for chat output
+/obj/item/clothing/proc/build_examine_detail(mob/user, showcrits)
+	if(!armor) // No armor
+		return get_examine_string(user)
+
+	var/str = ""
+	str += "[colorgrade_rating("🔨 BLUNT  ", armor.blunt, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🪓 SLASH  ", armor.slash, elaborate = TRUE)]"
+	str += "<br>"
+	str += "[colorgrade_rating("🗡️ STAB   ", armor.stab, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)] "
+
+	if(showcrits && prevent_crits)
+		str += "<br>———————————————<br>"
+		str += "<font color = '#afaeae'><text-align: center>STOPS CRITS: <br>"
+		var/linebreak_count = 0
+		var/index = 0
+		for(var/flag in prevent_crits)
+			index++
+			if(flag == BCLASS_PICK)
+				flag = "pick"
+			str += ("[capitalize(flag)] ")
+			linebreak_count++
+			if(linebreak_count >= 3)
+				str += "<br>"
+				linebreak_count = 0
+			else if(index != length(prevent_crits))
+				str += " | "
+		str += "</font>"
+
+	var/examine_text = get_examine_string(user)
+	if(examine_text && length(examine_text))
+		str += "<br><font color = '#808080'>[examine_text]</font>"
+	return str
+
+// Handle clicks from chat to show the examine details
+/obj/item/clothing/Topic(href, href_list)
+	if(href_list["show_examine"]) 
+		var/mob/user = usr
+		if(user)
+			to_chat(user, build_examine_detail(user, TRUE))
+		return
+	..()

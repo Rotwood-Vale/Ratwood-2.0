@@ -27,13 +27,13 @@
 	. = ..()
 	if(href_list["consultcontracts"])
 		consult_contracts(usr)
-		return attack_hand(usr) 
+		return attack_hand(usr)
 	if(href_list["turnincontract"])
 		turn_in_contract(usr)
-		return attack_hand(usr) 
+		return attack_hand(usr)
 	if(href_list["abandoncontract"])
 		abandon_contract(usr)
-		return attack_hand(usr) 
+		return attack_hand(usr)
 	if(href_list["printcontracts"])
 		print_contracts(usr)
 		return attack_hand(usr)
@@ -47,7 +47,7 @@
 	contents += "<a href='?src=[REF(src)];consultcontracts=1'>Consult Contracts</a><br>"
 	contents += "<a href='?src=[REF(src)];turnincontract=1'>Turn in Contract</a><br>"
 	contents += "<a href='?src=[REF(src)];abandoncontract=1'>Abandon Contract</a><br>"
-	if(user.job == "Steward" || user.job == "Merchant")
+	if(user.job == "Steward" || user.job == "Clerk" || user.job == "Merchant"|| user.job == "Shophand")
 		contents += "<a href='?src=[REF(src)];printcontracts=1'>Print Issued Contracts</a><br>"
 	contents += "</center>"
 	var/datum/browser/popup = new(user, "Grand Contract Ledger", "", 500, 300)
@@ -86,7 +86,7 @@
 	var/type_choices = GLOB.global_quest_types
 
 	var/type_selection = tgui_input_list(user, "Select contract type", "CONTRACTS", type_choices[actual_difficulty])
-	
+
 	if(!type_selection)
 		return
 
@@ -119,7 +119,7 @@
 	attached_quest.deposit_amount = attached_quest.calculate_deposit()
 
 	// Set giver or receiver
-	if(user.job != "Merchant" && user.job != "Steward")
+	if(user.job != "Merchant" && user.job != "Steward"  && user.job != "Clerk" && user.job !="Shophand")
 		attached_quest.quest_receiver_reference = WEAKREF(user)
 		attached_quest.quest_receiver_name = user.real_name
 	else
@@ -232,13 +232,13 @@
 		// Calculate deposit return
 		var/deposit_return = scroll.assigned_quest.calculate_deposit()
 		total_deposit_return += deposit_return
-		
+
 		// Apply Steward/Mechant bonus if applicable (only to the base reward)
-		if(user.job == "Steward" || user.job == "Merchant")
+		if(user.job == "Steward" || user.job == "Clerk" || user.job == "Merchant" || user.job == "Shophand")
 			reward += base_reward * QUEST_HANDLER_REWARD_MULTIPLIER
 		else
 			reward += base_reward
-		
+
 		// Add deposit return to both reward totals
 		reward += deposit_return
 		original_reward += deposit_return
@@ -247,7 +247,7 @@
 			user.mind.active_quest -= 1
 			to_chat(span_notice("You now have [user.mind.active_quest] active quests."))
 			log_quest(user.ckey, user.mind, user, "Finish [scroll.assigned_quest.quest_type]")
-		
+
 		qdel(scroll.assigned_quest)
 		qdel(scroll)
 

@@ -141,8 +141,8 @@ SUBSYSTEM_DEF(job)
 		if(length(job.virtue_restrictions) && ((player.client.prefs.virtue.type in job.virtue_restrictions) || (player.client.prefs.virtuetwo?.type in job.virtue_restrictions)))
 			JobDebug("FOC incompatible with virtues, Player: [player], Job: [job.title], Virtue 1: [player.client.prefs.virtue.name]")
 			continue
-		if(length(job.vice_restrictions) && (player.client.prefs.charflaw.type in job.vice_restrictions))
-			JobDebug("FOC incompatible with vices, Player: [player], Job: [job.title], Vice: [player.client.prefs.charflaw.name]")
+		if(has_restricted_vice(player.client.prefs, job))
+			JobDebug("FOC incompatible with vices, Player: [player], Job: [job.title]")
 			continue
 		if(job.plevel_req > player.client.patreonlevel())
 			JobDebug("FOC incompatible with PATREON LEVEL, Player: [player], Job: [job.title], Race: [player.client.prefs.pref_species.name]")
@@ -224,8 +224,8 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ incompatible with virtues, Player: [player], Job: [job.title], Virtue 1: [player.client.prefs.virtue.name]")
 			continue
 
-		if(length(job.vice_restrictions) && (player.client.prefs.charflaw.type in job.vice_restrictions))
-			JobDebug("GRJ incompatible with vices, Player: [player], Job: [job.title], Vice: [player.client.prefs.charflaw.name]")
+		if(has_restricted_vice(player.client.prefs, job))
+			JobDebug("GRJ incompatible with vices, Player: [player], Job: [job.title]")
 			continue
 
 		if(job.plevel_req > player.client.patreonlevel())
@@ -468,8 +468,8 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO incompatible with virtues, Player: [player], Job: [job.title], Virtue 1: [player.client.prefs.virtue.name]")
 					continue
 
-				if(length(job.vice_restrictions) && (player.client.prefs.charflaw.type in job.vice_restrictions))
-					JobDebug("DO incompatible with vices, Player: [player], Job: [job.title], Vice: [player.client.prefs.charflaw.name]")
+				if(has_restricted_vice(player.client.prefs, job))
+					JobDebug("DO incompatible with vices, Player: [player], Job: [job.title]")
 					continue
 
 				if(job.plevel_req > player.client.patreonlevel())
@@ -479,9 +479,6 @@ SUBSYSTEM_DEF(job)
 				#ifdef USES_PQ
 				if(!isnull(job.min_pq) && (get_playerquality(player.ckey) < job.min_pq))
 					continue
-				#endif
-
-				#ifdef USES_PQ
 				if(!isnull(job.max_pq) && (get_playerquality(player.ckey) > job.max_pq))
 					continue
 				#endif
@@ -905,3 +902,25 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/JobDebug(message)
 	log_job_debug(message)
+
+/datum/controller/subsystem/job/proc/has_restricted_vice(datum/preferences/prefs, datum/job/job)
+	if(!length(job.vice_restrictions))
+		return FALSE
+	
+	// Check new vice system (vice1-vice5)
+	if(prefs.vice1?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice2?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice3?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice4?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice5?.type in job.vice_restrictions)
+		return TRUE
+	
+	// Legacy charflaw check
+	if(prefs.charflaw?.type in job.vice_restrictions)
+		return TRUE
+	
+	return FALSE

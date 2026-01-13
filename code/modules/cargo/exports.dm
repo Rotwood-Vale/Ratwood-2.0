@@ -28,6 +28,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /atom/movable
 	var/sellprice = 0 //sanitize this somewhere so it cant be decimals
 	var/static_price = FALSE
+	var/loadout_item = FALSE // TRUE if this item was spawned from the loadout system
 
 /atom/movable/proc/randomize_price()
 	if(sellprice)

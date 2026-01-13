@@ -251,6 +251,10 @@ GLOBAL_LIST(teleport_runes)
 	rune_in_use = FALSE
 	atoms_in_range = list()
 	for(var/atom/close_atom as anything in range(runesize, src))
+		if(iswallturf(close_atom))
+			to_chat(usr, span_hierophant_warning("Ritual failed, [src] is blocked by [close_atom]!"))
+			fail_invoke()
+			return
 		if(!ismovable(close_atom))
 			continue
 		if(isitem(close_atom))
@@ -808,11 +812,10 @@ GLOBAL_LIST(teleport_runes)
 	do_invoke_glow()
 
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning/proc/clear_obstacles(mob/living/user)
-	for(var/turf/closed/wall/mineral/rogue/anticheese in view(7, src))
-		if(anticheese.type == /turf/closed/wall/mineral/rogue/wood/window || anticheese.type == /turf/closed/wall/mineral/rogue/stone/window)
-			anticheese.visible_message(span_warning("[anticheese] crumbles under the force of the releasing wards."))
-			anticheese.ChangeTurf(/turf/open/floor/rogue/blocks)
-			continue
+	for(var/turf/closed/wall/anticheese in range(loc, runesize))
+		anticheese.visible_message(span_warning("[anticheese] crumbles under the force of the releasing wards."))
+		anticheese.ChangeTurf(/turf/open/floor/rogue/blocks)
+		continue
 
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning/mid// 96x96 rune t2(3x3 tile)
 	name = "sealate confinement matrix"

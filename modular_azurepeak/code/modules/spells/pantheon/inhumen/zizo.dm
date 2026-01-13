@@ -146,6 +146,9 @@
 	return skeletonized_parts
 
 /obj/effect/proc_holder/spell/invoked/rituos/cast(list/targets, mob/living/carbon/user)
+	// Define excluded bodyparts (head and chest can't be skeletonized)
+	var/list/excluded_bodyparts = list(/obj/item/bodypart/head, /obj/item/bodypart/chest)
+	
 	//check to see if we're all skeletonized first
 	var/pre_rituos = check_ritual_progress(user)
 	if (pre_rituos)
@@ -155,6 +158,20 @@
 	if (user.mind?.has_rituos)
 		to_chat(user, span_warning("I have not the mental fortitude to enact the Lesser Work again. I must rest first..."))
 		return FALSE
+	
+	// Find a bodypart to skeletonize
+	var/list/available_parts = list()
+	for (var/obj/item/bodypart/our_limb in user.bodyparts)
+		if (our_limb.type in excluded_bodyparts)
+			continue
+		if (!our_limb.skeletonized)
+			available_parts += our_limb
+	
+	if (!length(available_parts))
+		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
+		return FALSE
+	
+	var/obj/item/bodypart/part_to_bonify = pick(available_parts)
 
 	//hoo boy. here we go.
 	var/list/possible_parts = user.bodyparts.Copy()
@@ -169,9 +186,6 @@
 			if (istype(BP, skeleton_part))
 				possible_parts -= BP
 				break
-
-	var/obj/item/bodypart/the_part = pick(possible_parts)
-	var/obj/item/bodypart/part_to_bonify = user.get_bodypart(the_part.body_zone)
 
 	var/list/choices = list()
 	var/list/spell_choices = GLOB.learnable_spells
@@ -209,6 +223,7 @@
 	if (post_rituos)
 		//everything but our head is skeletonized now, so grant them journeyman rank and 3 extra spellpoints to grief people with
 		user.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
+		user.grant_language(/datum/language/undead)
 		user.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		user.mind?.adjust_spellpoints(18)
 		user.visible_message(span_boldwarning("[user]'s form swells with terrible power as they cast away almost all of the remnants of their mortal flesh, arcyne runes glowing upon their exposed bones..."), span_notice("I HAVE DONE IT! I HAVE COMPLETED HER LESSER WORK! I stand at the cusp of unspeakable power, but something is yet missing..."))

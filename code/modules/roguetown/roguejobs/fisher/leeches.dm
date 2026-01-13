@@ -257,6 +257,15 @@
 	blood_storage = BLOOD_VOLUME_BAD
 	blood_maximum = BLOOD_VOLUME_NORMAL
 	mindless_attach = FALSE
+	embedding = list(
+		"embed_chance" = 100,
+		"embedded_unsafe_removal_time" = 0,
+		"embedded_pain_chance" = 0,
+		"embedded_fall_chance" = 0,
+		"embedded_bloodloss"= 0,
+		"embedded_ignore_throwspeed_threshold" = TRUE,
+		"embedded_unsafe_removal_pain_multiplier" = 0,
+	) // the humble cheele is gentle. so gentle.
 
 /obj/item/natural/worms/leech/cheele/attack_self(mob/user)
 	. = ..()

@@ -1,14 +1,13 @@
 /datum/language/celestial
 	name = "Sama'glos"
-	desc = ""
+	desc = "The divine language of celestial beings and the desert kingdoms. Also known as Sandspeak, it carries the wisdom of the heavens and the shifting sands."
 	speech_verb = "says"
 	ask_verb = "asks"
 	exclaim_verb = "yells"
 	key = "c"
-	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 60
 	default_priority = 80
-	icon_state = "asse"
+	icon_state = "celestial"
 	spans = list(SPAN_SAND)
 	syllables = list(
 		"ak", "al", "am", "an", "ar", "bi", "da", "de", "di", "ek", "el",

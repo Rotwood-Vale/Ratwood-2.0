@@ -11,10 +11,9 @@
 					/obj/effect/proc_holder/spell/invoked/blood_heal				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/avert						= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/speakwithdead				= CLERIC_T1,
-					// /obj/effect/proc_holder/spell/invoked/deaths_door			= CLERIC_T1, // DO NOT RE-ENABLE UNTIL THIS IS FIXED. IT CRASHES CLIENTS.
+					/obj/effect/proc_holder/spell/invoked/deaths_door				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/targeted/abrogation				= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance	= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/raise_spirit_respite		= CLERIC_T3,
+					/obj/effect/proc_holder/spell/self/necra_spirits				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/targeted/churn					= CLERIC_T4,//Priest/Acolytes only. Thanks.
 	)
 	confess_lines = list(

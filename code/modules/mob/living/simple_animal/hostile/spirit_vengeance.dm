@@ -54,4 +54,9 @@
 	. = ..()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/simple_animal, death), TRUE), 30 SECONDS)
 
-
+/mob/living/simple_animal/hostile/rogue/spirit_vengeance/death(gibbed)
+	// Clean up any combat animation visuals in vis_contents to prevent memory leaks
+	// when the spirit despawns mid-combat
+	for(var/atom/movable/flick_visual/visual in vis_contents)
+		qdel(visual)
+	return ..()

@@ -1,15 +1,14 @@
 /datum/language/dwarvish
 	name = "Dwarvish"
-	desc = ""
+	desc = "The sturdy and guttural tongue of the dwarven clans, echoing through mountain halls and forges. A language of stone, metal, and enduring tradition."
 	speech_verb = "blabbers"
 	ask_verb = "asks"
 	exclaim_verb = "shouts"
 	key = "d"
-	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 73
 	default_priority = 90
 	spans = list(SPAN_DWARF)
-	icon_state = "asse"
+	icon_state = "dwarf"
 	syllables = list(
 "AA",
 "AL",

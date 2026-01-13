@@ -630,12 +630,11 @@
 							to_chat(user, "<span class='notice'>You see something!</span>")
 							playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 							if(!do_after(user,ow, target = target))
-								if(ismob(A)) // TODO: Baits with mobs on their fishloot lists OR water tiles with their own fish loot pools
+								if(A in subtypesof(/mob/living))
 									var/mob/M = A
-									if(M.type in subtypesof(/mob/living/simple_animal/hostile))
-										new M(target)
-									else
-										new M(user.loc)
+									new M(target)
+									if (!(M.type == /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab))
+										user.playsound_local(src, pick('sound/misc/jumpscare (1).ogg','sound/misc/jumpscare (2).ogg','sound/misc/jumpscare (3).ogg','sound/misc/jumpscare (4).ogg'), 100)
 									user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT*2) // High risk high reward
 								else
 									new A(user.loc)
@@ -1265,6 +1264,17 @@
 				return list("shrink" = 0.8,"sx" = -9,"sy" = 5,"nx" = 9,"ny" = 5,"wx" = -4,"wy" = 4,"ex" = 4,"ey" = 4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 32,"eturn" = -23,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("wielded")
 				return list("shrink" = 0.8,"sx" = 8,"sy" = 0,"nx" = -1,"ny" = 0,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+
+// Decorative Naledi staff for loadout - regular staff with Naledi appearance
+/obj/item/rogueweapon/woodstaff/decorative
+	name = "decorative naledian staff"
+	desc = "A staff styled after the war scholars' crescent moon design. While it carries the aesthetic of the Naledian warstaff, it lacks the refined balance and arcane attunement of the genuine article."
+	icon_state = "naledistaff"
+	possible_item_intents = list(/datum/intent/mace/strike/wood)
+	gripped_intents = list(/datum/intent/mace/strike/wood)
+	force = 10
+	force_wielded = 15
+	max_integrity = 150
 
 //Only a 'woodenstaff' for the purpose of CDR on spells.
 /obj/item/rogueweapon/woodstaff/sojourner

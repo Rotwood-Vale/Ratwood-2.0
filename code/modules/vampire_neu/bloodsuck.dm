@@ -135,7 +135,7 @@
 		ADD_TRAIT(src, TRAIT_REFUSED_VAMP_CONVERT, REF(sire))
 		return
 
-	fully_heal(TRUE)
+	fully_heal(TRUE, FALSE)
 	visible_message(span_danger("Some dark energy begins to flow from [sire] into [src]..."))
 	visible_message(span_red("[src] rises as a new spawn!"))
 	original_mind?.transfer_to(src, TRUE)

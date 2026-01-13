@@ -47,11 +47,13 @@
 	chargedrain = 0 //no drain to aim a crossbow
 	basetime = 20
 
-/datum/intent/shoot/crossbow/can_charge()
+/datum/intent/shoot/crossbow/can_charge(atom/clicked_object)
 	if(mastermob)
 		if(mastermob.get_num_arms(FALSE) < 2)
 			return FALSE
 		if(mastermob.get_inactive_held_item())
+			return FALSE
+		if(istype(clicked_object, /obj/item/quiver) && istype(mastermob.get_active_held_item(), /obj/item/gun/ballistic))
 			return FALSE
 	return TRUE
 
@@ -81,11 +83,13 @@
 
 
 
-/datum/intent/arc/crossbow/can_charge()
+/datum/intent/arc/crossbow/can_charge(atom/clicked_object)
 	if(mastermob)
 		if(mastermob.get_num_arms(FALSE) < 2)
 			return FALSE
 		if(mastermob.get_inactive_held_item())
+			return FALSE
+		if(istype(clicked_object, /obj/item/quiver) && istype(mastermob.get_active_held_item(), /obj/item/gun/ballistic))
 			return FALSE
 	return TRUE
 
@@ -161,9 +165,6 @@
 		BB.armor_penetration *= penfactor
 		BB.damage *= damfactor
 	cocked = FALSE
-	if(user.has_status_effect(/datum/status_effect/buff/clash) && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.bad_guard(span_warning("I can't focus on my Guard and loose bolts! This drains me!"), cheesy = TRUE)
 	..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/update_icon()

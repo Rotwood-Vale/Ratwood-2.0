@@ -11,10 +11,10 @@
 	associated_skill = /datum/skill/magic/arcane
 	hand_path = /obj/item/melee/touch_attack/nondetection
 	spell_tier = 1
-	hide_charge_effect = TRUE 
+	hide_charge_effect = TRUE
 	// Nondetection shouldn't need an invocation
 	xp_gain = TRUE
-	cost = 1 // Shit, situational
+	cost = 1
 
 /obj/item/melee/touch_attack/nondetection
 	name = "\improper arcyne focus"

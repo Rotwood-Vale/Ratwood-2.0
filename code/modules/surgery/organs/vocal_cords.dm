@@ -5,7 +5,8 @@
 
 /obj/item/organ/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_VOCALCORDS channel
 	name = "vocal cords"
-	icon_state = "appendix"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "vocal_cords"
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_VOICE
 	gender = PLURAL
@@ -21,6 +22,53 @@
 
 /obj/item/organ/vocal_cords/proc/handle_speech(message) //actually say the message
 	owner.say(message, spans = spans, sanitize = FALSE)
+
+///harpy song stuff///
+
+/obj/item/organ/vocal_cords/harpy
+	name = "harpy's song"
+	icon_state = "harpysong"		//Pulsating heart energy thing.
+	desc = "The blessed essence of harpysong. How did you get this... you monster!"
+	should_regenerate = TRUE
+	var/obj/item/rogue/instrument/vocals/harpy_vocals/vocals
+
+/obj/item/organ/vocal_cords/harpy/Initialize()
+	. = ..()
+	vocals = new(src)  //okay, i think it'll be tied to the organ
+
+/obj/item/organ/vocal_cords/harpy/Insert(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(M.mind)
+		M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/harpy_sing)
+
+/obj/item/organ/vocal_cords/harpy/Remove(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(M.mind)
+		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/harpy_sing)
+
+/obj/effect/proc_holder/spell/self/harpy_sing
+	name = "Harpy's Song"
+	desc = "Project your voice through song."
+	releasedrain = 10
+	chargedrain = 0
+	chargetime = 0
+	overlay_state = "love"
+	movement_interrupt = FALSE
+	associated_skill = null
+	antimagic_allowed = TRUE
+	ignore_cockblock = TRUE
+	recharge_time = 20
+	miracle = FALSE
+
+/obj/effect/proc_holder/spell/self/harpy_sing/cast(mob/living/carbon/human/user)
+	. = ..()
+	if(!user.has_status_effect(/datum/status_effect/buff/playing_music))
+		user.emote("clearthroat", forced = TRUE)
+	var/mob/living/carbon/human/harpy = user
+	var/obj/item/organ/vocal_cords/harpy/vocal_cords = harpy.getorganslot(ORGAN_SLOT_VOICE)
+	vocal_cords.vocals.attack_self(harpy)
+	if(prob(1)) // somebody, call saint jiub!!
+		playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)
 
 /obj/item/organ/adamantine_resonator
 	name = "adamantine resonator"

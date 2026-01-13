@@ -236,10 +236,14 @@
 			var/dam2take = round((get_complex_damage(AB,user,used_weapon.blade_dulling)/2),1)
 			if(dam2take)
 				var/intdam = used_weapon.max_blade_int ? INTEG_PARRY_DECAY : INTEG_PARRY_DECAY_NOSHARP
+				var/sharp_loss = SHARPNESS_ONHIT_DECAY
 				if(used_weapon == offhand)
 					intdam = INTEG_PARRY_DECAY_NOSHARP
+				if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+					sharp_loss += STRONG_SHP_BONUS
+					intdam += STRONG_INTG_BONUS
 				used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
-				used_weapon.remove_bintegrity(SHARPNESS_ONHIT_DECAY, user)
+				used_weapon.remove_bintegrity(sharp_loss, user)
 
 			if(mind && user.mind && HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
 				var/text = "[bodyzone2readablezone(user.zone_selected)]..."

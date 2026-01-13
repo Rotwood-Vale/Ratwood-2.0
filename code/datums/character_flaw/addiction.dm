@@ -1,17 +1,44 @@
 /mob/proc/sate_addiction()
 	return
 
-/mob/living/carbon/human/sate_addiction()
-	if(istype(charflaw, /datum/charflaw/addiction))
-		var/datum/charflaw/addiction/A = charflaw
-		if(!A.sated)
-			to_chat(src, span_blue(A.sated_text))
-		A.sated = TRUE
-		A.time = initial(A.time) //reset roundstart sate offset to standard
-		A.next_sate = world.time + A.time
-		remove_stress(/datum/stressevent/vice)
-		if(A.debuff)
-			remove_status_effect(A.debuff)
+/mob/living/carbon/human/sate_addiction(addiction_type)
+	var/datum/charflaw/addiction/A
+
+	// If a specific addiction type is requested, only sate that one.
+	if(addiction_type)
+		if(length(vices))
+			for(var/datum/charflaw/vice in vices)
+				if(istype(vice, addiction_type))
+					A = vice
+					break
+		if(!A && istype(charflaw, addiction_type))
+			A = charflaw
+	else
+		// Otherwise, try to find an addiction vice (prefer an unsated one).
+		if(length(vices))
+			for(var/datum/charflaw/vice in vices)
+				if(!istype(vice, /datum/charflaw/addiction))
+					continue
+				var/datum/charflaw/addiction/candidate = vice
+				if(!A)
+					A = candidate
+					continue
+				if(A.sated && !candidate.sated)
+					A = candidate
+		if(!A && istype(charflaw, /datum/charflaw/addiction))
+			A = charflaw
+
+	if(!A)
+		return
+
+	if(!A.sated)
+		to_chat(src, span_blue(A.sated_text))
+	A.sated = TRUE
+	A.time = initial(A.time) //reset roundstart sate offset to standard
+	A.next_sate = world.time + A.time
+	remove_stress(A.stress_event)  // Remove vice-specific stress event
+	if(A.debuff)
+		remove_status_effect(A.debuff)
 
 /datum/charflaw/addiction
 	var/next_sate = 0
@@ -22,12 +49,25 @@
 	var/needsate_text
 	var/sated_text = "That's much better..."
 	var/unsate_time
+	var/stress_event = /datum/stressevent/vice  // Specific stress event type for this vice
 
 
 /datum/charflaw/addiction/New()
 	..()
 	time = rand(6 MINUTES, 30 MINUTES)
 	next_sate = world.time + time
+
+// Clean up addiction effects when vice is removed
+/datum/charflaw/addiction/on_removal(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	// Remove stress event
+	if(stress_event)
+		H.remove_stress(stress_event)
+	// Remove debuff
+	if(debuff)
+		H.remove_status_effect(debuff)
 
 /datum/charflaw/addiction/flaw_on_life(mob/user)
 	if(!ishuman(user))
@@ -47,7 +87,7 @@
 		if(needsate_text)
 			to_chat(user, span_boldwarning("[needsate_text]"))
 	if(!sated)
-		H.add_stress(/datum/stressevent/vice)
+		H.add_stress(stress_event)  // Use vice-specific stress event
 		if(debuff)
 			H.apply_status_effect(debuff)
 
@@ -73,6 +113,7 @@
 	desc = "Drinking alcohol is my favorite thing."
 	time = 40 MINUTES
 	needsate_text = "Time for a drink."
+	stress_event = /datum/stressevent/vice/alcoholic
 
 
 /// KLEPTOMANIAC
@@ -82,6 +123,7 @@
 	desc = "As a child I had to rely on theft to survive. Whether that changed or not, I just can't get over it."
 	time = 30 MINUTES
 	needsate_text = "I need to STEAL something! I'll die if I don't!"
+	stress_event = /datum/stressevent/vice/kleptomaniac
 
 
 /// JUNKIE
@@ -91,6 +133,7 @@
 	desc = "I need a REAL high to take the pain of this rotten world away."
 	time = 40 MINUTES
 	needsate_text = "Time to get really high."
+	stress_event = /datum/stressevent/vice/junkie
 
 /// Smoker
 
@@ -99,6 +142,7 @@
 	desc = "I need to smoke something to take the edge off."
 	time = 40 MINUTES
 	needsate_text = "Time for a flavorful smoke."
+	stress_event = /datum/stressevent/vice/smoker
 
 /// GOD-FEARING
 
@@ -107,6 +151,7 @@
 	desc = "I need to pray to my Patron in their realm, it will make me and my prayers stronger."
 	time = 40 MINUTES
 	needsate_text = "Time to pray to my Patron."
+	stress_event = /datum/stressevent/vice/godfearing
 
 /// SADIST
 
@@ -115,6 +160,7 @@
 	desc = "There is no greater pleasure than the suffering of another."
 	time = 40 MINUTES
 	needsate_text = "I need to hear someone whimper."
+	stress_event = /datum/stressevent/vice/sadist
 
 /// MASOCHIST
 
@@ -123,4 +169,5 @@
 	desc = "I love the feeling of pain, so much I can't get enough of it."
 	time = 40 MINUTES
 	needsate_text = "I need someone to HURT me."
+	stress_event = /datum/stressevent/vice/masochist
 

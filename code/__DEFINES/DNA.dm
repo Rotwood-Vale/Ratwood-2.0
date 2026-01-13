@@ -133,6 +133,7 @@
 #define NO_ORGAN_FEATURES			22
 #define NO_BODYPART_FEATURES			23
 #define LAMIAN_TAIL		24
+#define HARPY			25
 
 //organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100

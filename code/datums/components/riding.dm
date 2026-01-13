@@ -259,6 +259,8 @@
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 6), TEXT_WEST = list(0, 6))
 	else if(istype(parent, /mob/living/carbon/human/species/wildshape)) //Snowflake druid travel
 		return list(TEXT_NORTH = list(8, 6), TEXT_SOUTH = list(8, 6), TEXT_EAST = list(8, 6), TEXT_WEST = list(8, 6))
+	else if(H.has_status_effect(/datum/status_effect/debuff/harpy_flight))
+		return list(TEXT_NORTH = list(0, -24), TEXT_SOUTH = list(0, -24), TEXT_EAST = list(0, -24), TEXT_WEST = list(0, -24))
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list(6, 4))
 

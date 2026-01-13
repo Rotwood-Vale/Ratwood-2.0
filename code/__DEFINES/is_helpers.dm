@@ -59,6 +59,8 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 
 #define istransparentturf(A) (istype(A, /turf/open/transparent) || istype(A, /turf/closed/transparent))
 
+#define isopenspace(A) (istype(A, /turf/open/transparent/openspace))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
@@ -94,7 +96,7 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 #define iswildkin(A) (is_species(A, /datum/species/anthromorph))
 #define isconstruct(A) (is_species(A, /datum/species/construct/metal))	//Specified 'M' due to redefine lower
 #define isdoll(A) (is_species(A, /datum/species/construct/porcelain))
-#define isvermin(A) (is_species(A, /datum/species/anthromorphsmall))
+#define iscritter(A) (is_species(A, /datum/species/anthromorphsmall))
 #define isaxian(A) (is_species(A, /datum/species/akula))
 #define islamia(A) (is_species(A, /datum/species/lamia))
 #define isdracon(A) (is_species(A, /datum/species/dracon))
@@ -102,6 +104,7 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 #define ismoth(A) (is_species(A, /datum/species/moth))
 #define istabaxi(A) (is_species(A, /datum/species/tabaxi))
 #define isvulp(A) (is_species(A, /datum/species/vulpkanin))
+#define isharpy(A) (is_species(A, /datum/species/harpy))
 
 
 //more carbon mobs

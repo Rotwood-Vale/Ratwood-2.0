@@ -8,31 +8,45 @@
 	light_outer_range = 4
 	light_power = 20
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
-
+	light_system = STATIC_LIGHT
 /obj/item/flashlight/lantern/shrunken/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(3, 3, 20, l_color = LIGHT_COLOR_BLOOD_MAGIC)
 	else
 		icon_state = initial(icon_state)
-		set_light(0)
+	set_light_on(on)
 
 /obj/structure/underworld/carriageman
 	name = "The Carriageman"
-	desc = "They will take the reigns and lead the way. But only if the price I can pay."
+	desc = "The dead pay tolls. The living may yet bargain. They will take the reigns and lead the way. But only if the price I can pay."
 	icon = 'icons/roguetown/underworld/enigma_carriageman.dmi'
 	icon_state = "carriageman"
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	anchored = TRUE
 	density = TRUE
-
+	var/toll = FALSE
 /obj/structure/underworld/carriageman/Initialize()
 	. = ..()
 	set_light(5, 4, 30, l_color = LIGHT_COLOR_BLUE)
 
-/obj/structure/underworld/carriageman/attack_hand(mob/living/carbon/spirit/user)
-	if(!user.paid)
+/obj/structure/underworld/carriageman/attack_hand(mob/living/user)
+	if(!istype(user, /mob/living/carbon/spirit))
+		if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE)&& toll)
+			to_chat(user, "<br><font color=purple><span class='bold'>HANDS EXCHANGE PAY AND OATHS GIVE WAY, BE ON YOUR WAY</span></font>")
+			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
+			toll = FALSE
+			if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
+				user.remove_status_effect(/datum/status_effect/debuff/ritesexpended)
+			return
+		if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE)&& !toll)
+			to_chat(user, "<br><font color=purple><span class='bold'>RITES ARE A FICKLE THING, SWORN ONCE A DAY- <br> PAY THE TOLL, AND OATHS GIVE WAY</span></font>")
+			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
+			return
+		to_chat(user, span_warning("The carriageman does not acknowledge the living."))
+		return
+	var/mob/living/carbon/spirit/ghost = user
+	if(!ghost.paid)
 		user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
 		to_chat(user, "<br><font color=purple><span class='bold'>FETCH THE TOLL AND YOU MAY BOARD</span></font>")
 	else
@@ -40,6 +54,20 @@
 		user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
 
 /obj/structure/underworld/carriageman/attackby(obj/item/W, mob/living/user)
+	if(!istype(user, /mob/living/carbon/spirit)&& !toll && HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		if(istype(W, /obj/item/thetoll))
+			qdel(W)
+			to_chat(user, "<br><font color=purple><span class='bold'>THE TOLL IS PAID, A TRANSACTION MADE.</span></font>")
+			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
+			toll = TRUE
+			return
+	if(!istype(user, /mob/living/carbon/spirit)&& toll && HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		if(istype(W, /obj/item/thetoll))
+			to_chat(user, "<br><font color=purple><span class='bold'>ONE TRANSACTION AT A TIME.</span></font>")
+			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
+			return
+	if(!istype(user, /mob/living/carbon/spirit) && !HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		to_chat(user, span_warning("The carriageman does not acknowledge the living."))
 	var/mob/living/carbon/spirit/ghost = user
 	if(istype(W, /obj/item/underworld/coin))
 		if(!ghost.paid)

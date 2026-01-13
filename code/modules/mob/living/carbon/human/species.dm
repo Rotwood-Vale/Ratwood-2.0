@@ -85,6 +85,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/species_traits = list()
 	// generic traits tied to having the species
 	var/list/inherent_traits = list()
+	/// Associative list of skills to adjustments
+	var/list/inherent_skills = list()
+
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.
 	var/list/inherent_factions
@@ -393,6 +396,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/datum/organ_dna/new_dna = neworgan.create_organ_dna()
 			C.dna.organ_dna[slot] = new_dna
 
+/datum/species/proc/apply_organ_stuff_species(mob/living/carbon/C)
+	var/obj/item/organ/organ
+
+	for(organ in C.internal_organs)
+		if(organ.should_regenerate)
+			organ.Insert(C, TRUE, FALSE)
+
 /datum/species/proc/random_character(mob/living/carbon/human/H)
 	H.real_name = random_name(H.gender,1)
 //	H.age = pick(possible_ages)
@@ -462,6 +472,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)
 
+	for(var/skill as anything in inherent_skills)
+		C.adjust_skillrank(skill, inherent_skills[skill], TRUE)
+
 	if(TRAIT_TOXIMMUNE in inherent_traits)
 		C.setToxLoss(0, TRUE, TRUE)
 
@@ -510,6 +523,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+
+	for(var/skill as anything in inherent_skills)
+		C.adjust_skillrank(skill, -inherent_skills[skill], TRUE)
 
 	if(inherent_factions)
 		for(var/i in inherent_factions)
@@ -615,6 +631,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/is_inhumen = HAS_TRAIT(H, TRAIT_INHUMEN_ANATOMY)
 	var/num_arms = H.get_num_arms(FALSE)
 	var/num_legs = H.get_num_legs(FALSE)
+	var/is_harpy = isharpy(H)
 	var/is_lamia = HAS_TRAIT(H, TRAIT_LAMIAN_TAIL)
 
 	switch(slot)
@@ -702,7 +719,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_SHOES)
 			if(H.shoes)
 				return FALSE
-			if(is_nudist || is_inhumen || is_lamia)
+			if(is_nudist || is_inhumen || is_lamia || is_harpy)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_SHOES) )
 				return FALSE
@@ -1481,6 +1498,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	if(user == target)
 		return FALSE
+	SEND_SIGNAL(user, COMSIG_MOB_KICKED, target)
 	if(!HAS_TRAIT(user, TRAIT_GARROTED))
 		if(user.check_leg_grabbed(1) || user.check_leg_grabbed(2))
 			to_chat(user, span_notice("I can't move my leg!"))
@@ -1524,7 +1542,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				var/text = "[bodyzone2readablezone(selzone)]..."
 				user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
 
-			user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
+			user.do_attack_animation_simple(target, ATTACK_EFFECT_KICK, TRUE)
 			if(!nodmg)
 				playsound(target, 'sound/combat/hits/kick/stomp.ogg', 100, TRUE, -1)
 
@@ -1535,7 +1553,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else
 		if(!target.kick_attack_check(user))
 			return 0
-		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
+		user.do_attack_animation_simple(target, ATTACK_EFFECT_KICK, TRUE)
 		playsound(target, 'sound/combat/hits/kick/kick.ogg', 100, TRUE, -1)
 
 		if (target.pulling && target.grab_state < GRAB_AGGRESSIVE)
@@ -1667,11 +1685,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.mind.attackedme[user.real_name] = world.time
 		user.stamina_add(15)
 		target.forcesay(GLOB.hit_appends)
-		if(user.has_status_effect(/datum/status_effect/buff/clash))
-			user.bad_guard(span_warning("The kick throws my stance off!"))
-		if(target.has_status_effect(/datum/status_effect/buff/clash))
-			target.bad_guard(span_warning("The kick throws my stance off!"))
-
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
@@ -1692,6 +1705,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		to_chat(M, span_warning("I attempt to touch [H]!"))
 		return 0
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style)
+	if(SEND_SIGNAL(H, COMSIG_MOB_ATTACKED_BY_HAND, M, H, attacker_style) & COMPONENT_HAND_NO_ATTACK)
+		return FALSE
 	switch(M.used_intent.type)
 		if(INTENT_HELP)
 			help(M, H, attacker_style)

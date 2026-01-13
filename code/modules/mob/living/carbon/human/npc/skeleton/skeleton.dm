@@ -70,7 +70,7 @@
 		if(OU)
 			equipOutfit(OU)
 
-/mob/living/carbon/human/species/skeleton/fully_heal(admin_revive)
+/mob/living/carbon/human/species/skeleton/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	. = ..()
 	skeletonize()
 

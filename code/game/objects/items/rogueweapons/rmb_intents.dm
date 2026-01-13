@@ -33,7 +33,7 @@
 		return
 	if(user == target)
 		return
-	
+
 	var/mob/living/carbon/human/HT = target
 	var/mob/living/carbon/human/HU = user
 	var/target_zone = HT.zone_selected
@@ -83,7 +83,7 @@
 		HU.changeNext_move(0.1 SECONDS, override = TRUE)
 		to_chat(HU, span_notice("[HT.p_they(TRUE)] fell for my bait <b>perfectly</b>! One more!"))
 		to_chat(HT, span_danger("I fall for [HU.p_their()]'s bait <b>perfectly</b>! I'm losing my footing! <b>I can't let this happen again!</b>"))
-	
+
 	if(HU.has_duelist_ring() && HT.has_duelist_ring() || HT.bait_stacks >= 2)	//We're explicitly (hopefully non-lethally) dueling. Flavor.
 		HT.emote("gasp")
 		HT.OffBalance(2 SECONDS)
@@ -105,7 +105,7 @@
 
 /datum/rmb_intent/strong
 	name = "strong"
-	desc = "Your attacks have +1 strength but use more stamina. Higher critrate with brutal attacks. Intentionally fails surgery steps."
+	desc = "Your attacks have +1 STR extra damage that ignores limits. Your attacks will cost the enemy more sharpness and integrity to defend against. Higher critrate with brutal attacks. Intentionally fails surgery steps.\nCosts more stamina per hit."
 	icon_state = "rmbstrong"
 
 /datum/rmb_intent/swift
@@ -187,10 +187,10 @@
 /datum/rmb_intent/riposte/special_attack(mob/living/user, atom/target)	//Wish we could breakline these somehow.
 	if(!user.has_status_effect(/datum/status_effect/buff/clash) && !user.has_status_effect(/datum/status_effect/debuff/clashcd))
 		if(!user.get_active_held_item()) //Nothing in our hand to Guard with.
-			return 
+			return
 		if(user.r_grab || user.l_grab || length(user.grabbedby)) //Not usable while grabs are in play.
 			return
-		if(!(user.mobility_flags & MOBILITY_STAND) || user.IsImmobilized() || user.IsOffBalanced()) //Not usable while we're offbalanced, immobilized or on the ground.
+		if(user.IsImmobilized() || user.IsOffBalanced()) //Not usable while we're offbalanced or immobilized
 			return
 		if(user.m_intent == MOVE_INTENT_RUN)
 			to_chat(user, span_warning("I can't focus on this while running."))

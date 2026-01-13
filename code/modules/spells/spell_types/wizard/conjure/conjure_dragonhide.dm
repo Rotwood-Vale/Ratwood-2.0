@@ -49,7 +49,7 @@
 	sleeved = null
 	boobed = FALSE
 	flags_inv = null
-	armor_class = ARMOR_CLASS_LIGHT
+	armor_class = ARMOR_CLASS_NONE
 	blade_dulling = DULLING_BASHCHOP
 	blocksound = PLATEHIT
 	armor = ARMOR_DRAGONHIDE

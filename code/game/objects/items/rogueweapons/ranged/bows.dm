@@ -5,11 +5,13 @@
 	chargedrain = 2
 	charging_slowdown = 3
 
-/datum/intent/shoot/bow/can_charge()
+/datum/intent/shoot/bow/can_charge(atom/clicked_object)
 	if(mastermob)
 		if(mastermob.get_num_arms(FALSE) < 2)
 			return FALSE
 		if(mastermob.get_inactive_held_item())
+			return FALSE
+		if(istype(clicked_object, /obj/item/quiver) && istype(mastermob.get_active_held_item(), /obj/item/gun/ballistic))
 			return FALSE
 	return TRUE
 
@@ -42,11 +44,13 @@
 	chargedrain = 2
 	charging_slowdown = 3
 
-/datum/intent/arc/bow/can_charge()
+/datum/intent/arc/bow/can_charge(atom/clicked_object)
 	if(mastermob)
 		if(mastermob.get_num_arms(FALSE) < 2)
 			return FALSE
 		if(mastermob.get_inactive_held_item())
+			return FALSE
+		if(istype(clicked_object, /obj/item/quiver) && istype(mastermob.get_active_held_item(), /obj/item/gun/ballistic))
 			return FALSE
 	return TRUE
 
@@ -235,9 +239,6 @@
 		else
 			BB.damage = BB.damage
 		BB.damage *= damfactor * (user.STAPER > 10 ? user.STAPER / 10 : 1)
-	if(user.has_status_effect(/datum/status_effect/buff/clash) && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.bad_guard(span_warning("I can't focus on my Guard and loose arrows! This drains me!"), cheesy = TRUE)
 	. = ..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/update_icon()
@@ -447,7 +448,7 @@
 	desc = "As the eagle was killed by the arrow winged with his own feather, so the hand of the world is wounded by its own skill."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "bow" //No time for sprite this shit
-	item_state = "bow" 
+	item_state = "bow"
 	possible_item_intents = list(
 		/datum/intent/shoot/bow/short,
 		/datum/intent/arc/bow/short,

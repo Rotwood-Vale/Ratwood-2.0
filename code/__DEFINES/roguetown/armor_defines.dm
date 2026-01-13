@@ -76,6 +76,7 @@
 #define ARMOR_DISPLAYCASE list("blunt" = 30, "slash" = 30, "stab" = 30,  "piercing" = 0, "fire" = 70, "acid" = 100)
 #define ARMOR_CLOSET list("blunt" = 20, "slash" = 10, "stab" = 15, "piercing" = 10, "fire" = 70, "acid" = 60)
 #define ARMOR_BLACKBAG list("blunt" = 100, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 75, "acid" = 100)
+#define ARMOR_MIND_PROTECTION list("blunt" = 25, "slash" = 25, "stab" = 15, "piercing" = 5, "fire" = 5, "acid" = 15)
 
 // Light AC
 // In general, light armor should always be vulnerable to stab, somewhat weak vs high pen slash (for now).

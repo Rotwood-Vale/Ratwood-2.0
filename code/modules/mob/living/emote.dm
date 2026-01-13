@@ -39,7 +39,7 @@
 			if(!patron?.can_pray(follower))
 				return
 			else
-				follower.sate_addiction()
+				follower.sate_addiction(/datum/charflaw/addiction/godfearing)
 		if(HAS_TRAIT(follower, TRAIT_CONVICTION))
 			follower.apply_status_effect(/datum/status_effect/buff/healing/prayer, 2)//Mend those wounds.
 			follower.reagents.add_reagent(/datum/reagent/consumable/nutriment, 3)//Just a small sum.
@@ -845,10 +845,10 @@
 		for(var/mob/living/carbon/human/L in viewers(7,user))
 			if(L == user)
 				if(L.has_flaw(/datum/charflaw/addiction/masochist))
-					L.sate_addiction()
+					L.sate_addiction(/datum/charflaw/addiction/masochist)
 				continue
 			if(L.has_flaw(/datum/charflaw/addiction/sadist))
-				L.sate_addiction()
+				L.sate_addiction(/datum/charflaw/addiction/sadist)
 
 /datum/emote/living/scream/strain
 	key = "strain"
@@ -870,10 +870,10 @@
 		for(var/mob/living/carbon/human/L in viewers(7,user))
 			if(L == user)
 				if(L.has_flaw(/datum/charflaw/addiction/masochist))
-					L.sate_addiction()
+					L.sate_addiction(/datum/charflaw/addiction/masochist)
 				continue // i hope this shit works.
 			if(L.has_flaw(/datum/charflaw/addiction/sadist))
-				L.sate_addiction()
+				L.sate_addiction(/datum/charflaw/addiction/sadist)
 
 /datum/emote/living/scream/firescream
 	key = "firescream"
@@ -888,10 +888,10 @@
 		for(var/mob/living/carbon/human/L in viewers(7,user))
 			if(L == user)
 				if(L.has_flaw(/datum/charflaw/addiction/masochist))
-					L.sate_addiction()
+					L.sate_addiction(/datum/charflaw/addiction/masochist)
 				continue // i hope this shit works.
 			if(L.has_flaw(/datum/charflaw/addiction/sadist))
-				L.sate_addiction()
+				L.sate_addiction(/datum/charflaw/addiction/sadist)
 
 /datum/emote/living/aggro
 	key = "aggro"
@@ -1445,7 +1445,7 @@
 	is_animal = TRUE
 
 /mob/living/carbon/human/verb/emote_caw()
-	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue))
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
 		set name = "Caw"
 		set category = "Noises"
 		emote("caw", intentional = TRUE, animal = TRUE)
@@ -1464,7 +1464,7 @@
 	is_animal = TRUE
 
 /mob/living/carbon/human/verb/emote_peep()
-	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue))
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
 		set name = "Peep"
 		set category = "Noises"
 		emote("peep", intentional = TRUE, animal = TRUE)
@@ -1483,7 +1483,7 @@
 	is_animal = TRUE
 
 /mob/living/carbon/human/verb/emote_hoot()
-	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue))
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
 		set name = "Hoot"
 		set category = "Noises"
 		emote("hoot", intentional = TRUE, animal = TRUE)

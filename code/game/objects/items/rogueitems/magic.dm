@@ -73,7 +73,7 @@
 	if(!do_after(user, time_to_use, target = user))
 		to_chat(user, span_warning("I need to focus..."))
 		return
-	
+
 	var/success_chance = 0
 
 	var/break_on_fail = FALSE
@@ -143,12 +143,18 @@
 	if (target == null)
 		return
 
+//You're once more warned and the trait prevents scrying. It also tells you WHO is trying to scry you.
+	if(HAS_TRAIT(target, TRAIT_ANTISCRYING))
+		to_chat(user, span_warning("I peer into the ball, but an impenetrable fog shrouds [target.real_name]."))
+		to_chat(target, span_warning("My arcyne shroud shrieks in alarm! I can clearly see [user.real_name] staring into the fog!"))
+		return
+
 	if(!prob(success_chance))
 		on_failure(user, target, failure_severity)
 		if(break_on_fail)
 			failure_break(user)
 		return
-	
+
 	playsound(src, 'sound/magic/whiteflame.ogg', 100, TRUE)
 	scry(user, target)
 

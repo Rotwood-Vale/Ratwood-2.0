@@ -22,6 +22,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	var/cell_area = FALSE
 	var/ceiling_protected = FALSE //Prevents tunneling into these from above
 	var/hoardmaster_protected = FALSE//If a player enters, it ashes them. Your greed will consume you.
+	var/necra_area = FALSE
 
 /area/rogue/Entered(mob/living/carbon/human/guy)
 	. = ..()
@@ -37,6 +38,11 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 		guy.add_stress(/datum/stressevent/seeblessed)
 	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_OVERTHERETIC))//Heretics are punished for walking in the Church with rites buffs.
 		guy.apply_status_effect(/datum/status_effect/debuff/overt_punishment)
+	if((src.necra_area == TRUE) && !(guy.has_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)||(guy.has_status_effect(/datum/status_effect/debuff/deathdoorwilloss)))) //Necra saps at wil
+		if(HAS_TRAIT(guy, TRAIT_SOUL_EXAMINE))
+			guy.apply_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)
+		else
+			guy.apply_status_effect(/datum/status_effect/debuff/deathdoorwilloss)
 	if((src.hoardmaster_protected == TRUE))//Your greed consumes you.
 		message_admins("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster, at [ADMIN_JMP(src)]")
 		log_admin("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster")
@@ -87,6 +93,15 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	for(var/obj/item/trash in src)
 		do_teleport(trash, returnzone)
 	GLOB.arenafolks.len = list()
+
+/area/rogue/indoors/deathsedge
+	name = "Death's Precipice"
+	deathsight_message = "an place bordering necra's grasp"
+	necra_area = TRUE
+	droning_sound = 'sound/music/area/underworlddrone.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	first_time_text = "DEATHS PRECIPICE"
 
 /area/rogue/indoors/eventarea
 	name = "Event Area"
@@ -480,7 +495,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = null
 	converted_type = /area/rogue/outdoors/exposed/tavern
 	tavern_area = TRUE
-	
+
 /area/rogue/outdoors/exposed/tavern
 	icon_state = "tavern"
 	droning_sound = 'sound/silence.ogg'

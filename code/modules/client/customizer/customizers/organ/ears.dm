@@ -337,3 +337,34 @@
 		/datum/sprite_accessory/ears/big/sandfox_large,
 		/datum/sprite_accessory/ears/lynx,
 		)
+
+/datum/customizer/organ/ears/harpy
+	name = "Harpy Ears"
+	customizer_choices = list(/datum/customizer_choice/organ/ears/harpy)
+	allows_disabling = TRUE
+	default_disabled = TRUE
+
+/datum/customizer_choice/organ/ears/harpy
+	name = "Harpy Ears"
+	organ_type = /obj/item/organ/ears/harpy
+	generic_random_pick = TRUE
+	sprite_accessories = list(
+		/datum/sprite_accessory/ears/bat,
+		/datum/sprite_accessory/ears/bigwolf,
+		/datum/sprite_accessory/ears/bigwolf_inner,
+		/datum/sprite_accessory/ears/bunny_perky,
+		/datum/sprite_accessory/ears/cat_big,
+		/datum/sprite_accessory/ears/cat_normal,
+		/datum/sprite_accessory/ears/eevee,
+		/datum/sprite_accessory/ears/elf,
+		/datum/sprite_accessory/ears/fennec,
+		/datum/sprite_accessory/ears/fox,
+		/datum/sprite_accessory/ears/vulp,
+		/datum/sprite_accessory/ears/kangaroo,
+		/datum/sprite_accessory/ears/otie,
+		/datum/sprite_accessory/ears/sergal,
+		/datum/sprite_accessory/ears/shark,
+		/datum/sprite_accessory/ears/perky,
+		/datum/sprite_accessory/ears/big/sandfox_large,
+		/datum/sprite_accessory/ears/lynx,
+	)
