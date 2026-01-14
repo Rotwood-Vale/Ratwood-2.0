@@ -73,11 +73,11 @@
 	var/bounty_total = rand(100, 400)
 	switch(bounty_severity)
 		if("Misdemeanor", "Transgression")
-			bounty_total = rand(50, 150)
+			bounty_total = rand(10, 100)
 		if("Felony", "Heresy")
-			bounty_total = rand(200, 300)
+			bounty_total = rand(100, 250)
 		if("Atrocity", "Apostasy")
-			bounty_total = rand(300, 400)
+			bounty_total = rand(250, 400)
 			// Add to outlawed/excommunicated list for most severe crimes
 			if(bounty_poster == "The Justiciary of The Vale")
 				GLOB.outlawed_players += H.real_name
