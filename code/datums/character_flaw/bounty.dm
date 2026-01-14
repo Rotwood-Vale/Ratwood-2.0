@@ -5,11 +5,24 @@
 	name = "Hungered by Excidium (+1 TRI)"
 	desc = "Somewhere in my past, I've made powerful enemies. A bounty has been placed on my head."
 
+// Prevent wretches, bandits, and beggars from selecting this vice
+/datum/charflaw/excidiumbounty/can_select_for_job(job_title)
+	if(job_title in list("Wretch", "Bandit", "Beggar"))
+		return FALSE
+	return TRUE
+
 /datum/charflaw/excidiumbounty/on_mob_creation(mob/user)
 	..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
+	
+	// Prevent wretches, bandits, and beggars from using this vice (they get bounties automatically or shouldn't have them)
+	if(H.mind?.assigned_role)
+		var/job_title = H.mind.assigned_role.title
+		if(job_title in list("Wretch", "Bandit", "Beggar"))
+			to_chat(H, span_warning("Your role already handles bounties automatically. The vice has been removed."))
+			return
 	
 	// Grant triumph for taking this flaw
 	H.adjust_triumphs(1)
