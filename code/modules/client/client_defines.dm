@@ -77,6 +77,9 @@
 
 	var/atom/movable/screen/click_catcher/void
 
+	///Cache for tracking which loadout icons have been sent to this client to prevent repeated browse_rsc calls
+	var/list/loadout_resources_sent
+
 	///used to make a special mouse cursor, this one for mouse up icon
 	var/mouse_up_icon = null
 	///used to make a special mouse cursor, this one for mouse up icon

@@ -1223,9 +1223,24 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				if(!(cache_key in GLOB.cached_loadout_icons))
 					// Prevent cache from growing too large
 					if(GLOB.cached_loadout_icons.len >= MAX_ICON_CACHE_SIZE)
-						GLOB.cached_loadout_icons.Cut(1, 50) // Remove oldest 50 entries
+						// Clear oldest entries when cache is full
+						var/list/keys_to_remove = list()
+						var/removed = 0
+						for(var/key in GLOB.cached_loadout_icons)
+							keys_to_remove += key
+							removed++
+							if(removed >= 50)
+								break
+						for(var/key in keys_to_remove)
+							GLOB.cached_loadout_icons -= key
 					GLOB.cached_loadout_icons[cache_key] = icon(icon_file, icon_state)
-				user << browse_rsc(GLOB.cached_loadout_icons[cache_key], "loadout_icon_[i].png")
+				// Only send resource if user hasn't received it yet
+				if(user?.client)
+					if(!user.client.loadout_resources_sent)
+						user.client.loadout_resources_sent = list()
+					if(!(cache_key in user.client.loadout_resources_sent))
+						user << browse_rsc(GLOB.cached_loadout_icons[cache_key], "loadout_icon_[i].png")
+						user.client.loadout_resources_sent[cache_key] = "loadout_icon_[i].png"
 				html += "<img src='loadout_icon_[i].png' style='max-width: 46px; max-height: 46px;' />"
 			
 			html += "</div>"
@@ -1843,9 +1858,25 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 						var/cache_key = "[icon_file]_[icon_state_name]"
 						if(!(cache_key in GLOB.cached_loadout_icons))
 							if(GLOB.cached_loadout_icons.len >= MAX_ICON_CACHE_SIZE)
-								GLOB.cached_loadout_icons.Cut(1, 50)
+								// Clear oldest entries when cache is full
+								var/list/keys_to_remove = list()
+								var/removed = 0
+								for(var/key in GLOB.cached_loadout_icons)
+									keys_to_remove += key
+									removed++
+									if(removed >= 50)
+										break
+								for(var/key in keys_to_remove)
+									GLOB.cached_loadout_icons -= key
 							GLOB.cached_loadout_icons[cache_key] = icon(icon_file, icon_state_name)
-						usr << browse_rsc(GLOB.cached_loadout_icons[cache_key], "loadout_select_[icon_counter].png")
+						// Only send resource if user hasn't received it yet
+						if(usr?.client)
+							if(!usr.client.loadout_resources_sent)
+								usr.client.loadout_resources_sent = list()
+							if(!(cache_key in usr.client.loadout_resources_sent))
+								var/resource_name = "loadout_select_[icon_counter].png"
+								usr << browse_rsc(GLOB.cached_loadout_icons[cache_key], resource_name)
+								usr.client.loadout_resources_sent[cache_key] = resource_name
 					
 					var/display_name = item.name
 					var/cost_text = ""
