@@ -18,7 +18,8 @@
 	roles = list(
 		/datum/migrant_role/werewolf = 1,
 	)
-	can_roll = FALSE
+	can_roll = TRUE
+	min_round_time = 25 MINUTES
 
 /datum/migrant_role/werewolf
 	name = "Adventurer"
@@ -45,7 +46,8 @@
 	roles = list(
 		/datum/migrant_role/vampire = 1,
 	)
-	can_roll = FALSE
+	can_roll = TRUE
+	min_round_time = 25 MINUTES
 
 /datum/migrant_role/vampire
 	name = "Adventurer"
@@ -72,7 +74,8 @@
 	roles = list(
 		/datum/migrant_role/unbound_death_knight = 1,
 	)
-	can_roll = FALSE
+	can_roll = TRUE
+	min_round_time = 10 MINUTES
 
 /datum/migrant_role/unbound_death_knight
 	name = "Adventurer"

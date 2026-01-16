@@ -22,6 +22,8 @@
 	var/greet_text
 	/// Whether this wave can roll at all. If not, it can still be forced to be ran, or used as "downgrade" wave
 	var/can_roll = TRUE
+	/// Minimum time (in deciseconds) that must pass in the round before this wave can roll. Set to 0 or null for no restriction.
+	var/min_round_time = null
 	/// What type of wave to downgrade to on failure
 	var/downgrade_wave
 	/// If defined, this will be the wave type to increment for purposes of checking `max_spawns`
@@ -46,6 +48,7 @@
 /datum/migrant_wave/pilgrim
 	name = "Pilgrimage"
 	downgrade_wave = /datum/migrant_wave/pilgrim_down_one
+	can_roll = TRUE
 	roles = list(
 		/datum/migrant_role/pilgrim = 4,
 	)
@@ -80,6 +83,7 @@
 /datum/migrant_wave/adventurer
 	name = "Adventure Party"
 	downgrade_wave = /datum/migrant_wave/adventurer_down_one
+	can_roll = TRUE
 	roles = list(
 		/datum/migrant_role/adventurer = 4,
 	)
@@ -114,7 +118,8 @@
 /datum/migrant_wave/bandit
 	name = "Bandit Raid"
 	downgrade_wave = /datum/migrant_wave/bandit_down_one
-	can_roll = FALSE
+	can_roll = TRUE
+	min_round_time = 30 MINUTES
 	weight = 16
 	spawn_landmark = "Bandit"
 	roles = list(

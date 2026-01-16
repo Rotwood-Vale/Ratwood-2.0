@@ -10,7 +10,7 @@
 	shared_occurence_type = SHARED_HIGH_THREAT
 
 	weight = 4
-	max_occurrences = 1
+	max_occurrences = 2
 
 	denominator = 80
 

@@ -122,11 +122,23 @@
 			if(SSmigrants.spawned_waves[used_wave_type] && SSmigrants.spawned_waves[used_wave_type] >= wave.max_spawns)
 				is_maxed_out = TRUE
 
+		// Check if wave is time-locked
+		var/is_time_locked = FALSE
+		var/time_remaining = 0
+		if(!isnull(wave.min_round_time))
+			var/time_elapsed = world.time - SSticker.round_start_time
+			if(time_elapsed < wave.min_round_time)
+				is_time_locked = TRUE
+				time_remaining = round((wave.min_round_time - time_elapsed) / (1 MINUTES))
+
 		var/wave_color = "#ffffff"
 		var/wave_name = wave.name
 		if(is_maxed_out)
 			wave_color = "#666666"
 			wave_name = "[wave.name] (MAXED)"
+		else if(is_time_locked)
+			wave_color = "#ff8800"
+			wave_name = "[wave.name] (LOCKED: [time_remaining]m)"
 		else if(threshold_reached)
 			wave_color = "gold"
 			wave_name = "[wave.name] (READY!)"
@@ -141,6 +153,8 @@
 		var/roll_percentage = 0
 		if(is_maxed_out)
 			roll_percentage = "0% (Maxed)"
+		else if(is_time_locked)
+			roll_percentage = "0% (Time Locked - [time_remaining]m remaining)"
 		else if(threshold_reached)
 			roll_percentage = "100% (Guaranteed)"
 		else if(total_weight > 0)
@@ -152,14 +166,16 @@
 		sidebar_dat += "<div style='margin-bottom: 12px; padding: 8px; border: 1px solid #444; border-radius: 4px;' title='Roll Chance: [roll_percentage] (Base: [wave.weight], Triumph: +[wave.triumph_total * 2])'>"
 		sidebar_dat += "<div style='color: [wave_color]; font-weight: bold; margin-bottom: 4px;'>[wave_name]</div>"
 		sidebar_dat += "<div style='background-color: #333; height: 12px; border-radius: 6px; margin-bottom: 4px;'>"
-		sidebar_dat += "<div style='background-color: [threshold_reached ? "gold" : (is_maxed_out ? "#666666" : "cyan")]; height: 100%; width: [progress_percent]%; border-radius: 6px;'></div>"
+		sidebar_dat += "<div style='background-color: [threshold_reached ? "gold" : (is_maxed_out ? "#666666" : (is_time_locked ? "#ff8800" : "cyan"))]; height: 100%; width: [progress_percent]%; border-radius: 6px;'></div>"
 		sidebar_dat += "</div>"
 		sidebar_dat += "<div style='display: flex; justify-content: space-between; align-items: center; font-size: 12px;'>"
 		sidebar_dat += "<span>[triumph_display]</span>"
 
-		// Only show contribution button if wave isn't maxed out
-		if(!is_maxed_out)
+		// Only show contribution button if wave isn't maxed out or time locked
+		if(!is_maxed_out && !is_time_locked)
 			sidebar_dat += "<a href='byond://?src=[REF(src)];task=contribute_triumph;wave=[wave_type]' style='background-color: #4a4a4a; color: white; text-decoration: none; padding: 2px 6px; border-radius: 3px; font-size: 11px;'>+T</a>"
+		else if(is_time_locked)
+			sidebar_dat += "<span style='background-color: #333; color: #ff8800; padding: 2px 6px; border-radius: 3px; font-size: 11px;'>🔒</span>"
 		else
 			sidebar_dat += "<span style='background-color: #333; color: #666; padding: 2px 6px; border-radius: 3px; font-size: 11px;'>MAX</span>"
 

@@ -15,7 +15,7 @@
 	maximum_antags = 2
 
 	weight = 3	//i love you
-	max_occurrences = 0 //temp back to migrant wave only
+	max_occurrences = 1
 
 	earliest_start = 0 SECONDS
 

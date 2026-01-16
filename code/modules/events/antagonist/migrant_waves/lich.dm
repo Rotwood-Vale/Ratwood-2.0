@@ -18,7 +18,8 @@
 	roles = list(
 		/datum/migrant_role/lich = 1,
 	)
-	can_roll = FALSE
+	can_roll = TRUE
+	min_round_time = 15 MINUTES
 
 /datum/migrant_role/lich
 	name = "Lich"

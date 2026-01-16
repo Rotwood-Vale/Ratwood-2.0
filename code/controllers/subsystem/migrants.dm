@@ -403,6 +403,9 @@ SUBSYSTEM_DEF(migrants)
 		var/datum/migrant_wave/wave = MIGRANT_WAVE(wave_type)
 		if(!wave.can_roll)
 			continue
+		// Check minimum round time requirement
+		if(!isnull(wave.min_round_time) && (world.time - SSticker.round_start_time) < wave.min_round_time)
+			continue
 		if(!isnull(wave.min_active) && active_migrants < wave.min_active)
 			continue
 		if(!isnull(wave.max_active) && active_migrants > wave.max_active)
@@ -432,6 +435,9 @@ SUBSYSTEM_DEF(migrants)
 	for(var/wave_type in GLOB.migrant_waves)
 		var/datum/migrant_wave/wave = MIGRANT_WAVE(wave_type)
 		if(!wave.can_roll)
+			continue
+		// Check minimum round time requirement
+		if(!isnull(wave.min_round_time) && (world.time - SSticker.round_start_time) < wave.min_round_time)
 			continue
 		if(wave.triumph_total >= wave.triumph_threshold)
 			// Still need to check population/active requirements
