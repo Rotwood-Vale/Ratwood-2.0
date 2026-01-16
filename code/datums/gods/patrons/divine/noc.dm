@@ -5,13 +5,18 @@
 	worshippers = "Wizards, Scholars, Night Owls"
 	mob_traits = list(TRAIT_NIGHT_OWL, TRAIT_NOCSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
+					/obj/effect/proc_holder/spell/invoked/wise_moon				= CLERIC_T0,
+					/obj/effect/proc_holder/spell/invoked/moondream				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/noc_sight				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/darkvision/miracle	= CLERIC_T0,
+					/obj/effect/proc_holder/spell/invoked/noc_grasp				= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/moon_light			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/invisibility/miracle	= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blindness				= CLERIC_T2,
 					/obj/effect/proc_holder/spell/self/noc_spell_bundle			= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/wisescroll			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/noc			= CLERIC_T4,
 	)
 	confess_lines = list(

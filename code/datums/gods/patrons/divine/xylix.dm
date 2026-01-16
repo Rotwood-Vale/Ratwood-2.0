@@ -5,13 +5,15 @@
 	worshippers = "Gamblers, Bards, Artists, The Silver-Tongued, Fluvians"
 	mob_traits = list(TRAIT_XYLIX)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/self/xylixslip				= CLERIC_T0,
+					/obj/effect/proc_holder/spell/invoked/mimicry				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/wheel					= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/tipscales				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/mockery				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/mastersillusion		= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/xylixlian_luck		= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/xylix		= CLERIC_T4,
+					/obj/effect/proc_holder/spell/invoked/xylixslip				= CLERIC_T4,
 	)
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",
