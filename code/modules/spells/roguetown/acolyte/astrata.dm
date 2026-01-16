@@ -669,26 +669,6 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 	alert_type = /atom/movable/screen/alert/status_effect/buff/astrata_gaze
 	duration = 20 SECONDS
 
-<<<<<<< HEAD
-/datum/status_effect/buff/astrata_gaze/on_apply(assocskill)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.viewcone_override = TRUE
-		H.hide_cone()
-		H.update_cone_show()
-	var/per_bonus = 0
-	if(assocskill)
-		if(assocskill > SKILL_LEVEL_NOVICE)
-			per_bonus++
-		duration *= assocskill
-	if(GLOB.tod == "day" || GLOB.tod == "dawn")
-		per_bonus++
-		duration *= 2
-	if(per_bonus > 0)
-		effectedstats = list(STATKEY_PER = per_bonus)
-	to_chat(owner, span_info("She shines through me! I can perceive all clear as dae!"))
-	. = ..()
-=======
 /datum/status_effect/buff/astrata_gaze/on_creation(mob/living/new_owner, slevel)
     // Only store skill level here
     skill_level = slevel
@@ -722,7 +702,6 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
     to_chat(owner, span_astrata("She shines through me! I can perceive all clear as dae!"))
 
     return ..()
->>>>>>> af40c200e1 (feature: Adds One ritual and Two Miracles to Astrata, Updates the code of all Astrata miracles and sorts the miracle file (#1924))
 
 /datum/status_effect/buff/astrata_gaze/on_remove()
 	. = ..()
@@ -732,7 +711,6 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 		H.hide_cone()
 		H.update_cone_show()
 
-<<<<<<< HEAD
 // =====================
 // Immolation Component
 // =====================
@@ -1122,7 +1100,6 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 		L.apply_status_effect(/datum/status_effect/buff/lightningstruck, 3 SECONDS)
 	sleep(10)
 	qdel(src)
-=======
 //T2. Scorch Support Code
 /datum/status_effect/scorch
 	id = "scorch"
@@ -1448,4 +1425,3 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 /obj/effect/proc_holder/spell/invoked/invoked_reverence/proc/remove_divine_overlay(mob/living/target)
 	if(target)
 		target.remove_overlay(MUTATIONS_LAYER)
->>>>>>> af40c200e1 (feature: Adds One ritual and Two Miracles to Astrata, Updates the code of all Astrata miracles and sorts the miracle file (#1924))
