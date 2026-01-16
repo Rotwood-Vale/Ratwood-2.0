@@ -36,13 +36,10 @@
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/astratan_path			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue	= CLERIC_T1,
-					/obj/effect/proc_holder/spell/self/scorch					= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/heal					= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/revive				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/wound_heal			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/immolation			= CLERIC_T4,
-					/obj/effect/proc_holder/spell/invoked/invoked_reverence		= CLERIC_T4
 	)
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",
@@ -50,34 +47,6 @@
 		"I SERVE THE GLORY OF THE SUN!",
 	)
 	storyteller = /datum/storyteller/astrata
-	rites = "Rune of Sun"
-
-/datum/patron/divine/astrata/situational_bonus(mob/living/follower, mob/living/target)
-	return list((GLOB.tod == "day"), 2)
-
-/datum/patron/divine/astrata/kazengun
-	name = "Aisata"
-	desc = "The she-form of the Twinned Gods, the combined amalgam of single-bodied Aisata and Noishi that opens her eyes at glorious Dae. Men bask under the gift of the Sun. A single form begets two Gods that shift at Dusk and Dawn but always endures, even at night."
-	associated_faith = /datum/faith/divine/kazengun
-	parentpatron = /datum/patron/divine/astrata
-	noresearch = TRUE
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/invoked/ignition				= CLERIC_T0,
-					/obj/effect/proc_holder/spell/self/astrata_gaze/kazengun	= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue	= CLERIC_T1,
-					/obj/effect/proc_holder/spell/self/scorch					= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/heal					= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/revive				= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/wound_heal			= CLERIC_T4,
-					/obj/effect/proc_holder/spell/invoked/invoked_reverence		= CLERIC_T4
-	)
-
-/datum/patron/divine/astrata/kazengun/lingyue
-	associated_faith = /datum/faith/divine/lingyue
-	noresearch = TRUE
->>>>>>> af40c200e1 (feature: Adds One ritual and Two Miracles to Astrata, Updates the code of all Astrata miracles and sorts the miracle file (#1924))
 
 /datum/patron/divine/noc
 	name = "Noc"
