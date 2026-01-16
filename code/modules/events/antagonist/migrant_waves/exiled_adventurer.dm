@@ -19,7 +19,7 @@
 		/datum/migrant_role/werewolf = 1,
 	)
 	can_roll = TRUE
-	min_round_time = 25 MINUTES
+	min_round_time = 30 MINUTES
 
 /datum/migrant_role/werewolf
 	name = "Adventurer"
@@ -47,7 +47,7 @@
 		/datum/migrant_role/vampire = 1,
 	)
 	can_roll = TRUE
-	min_round_time = 25 MINUTES
+	min_round_time = 30 MINUTES
 
 /datum/migrant_role/vampire
 	name = "Adventurer"
@@ -75,7 +75,7 @@
 		/datum/migrant_role/unbound_death_knight = 1,
 	)
 	can_roll = TRUE
-	min_round_time = 10 MINUTES
+	min_round_time = 30 MINUTES
 
 /datum/migrant_role/unbound_death_knight
 	name = "Adventurer"
