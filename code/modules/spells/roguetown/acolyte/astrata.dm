@@ -220,8 +220,8 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 	movement_interrupt = FALSE
 	chargedloop = null
 	sound = 'sound/magic/heal.ogg'
-	invocations = list()
-	invocation_type = "none"
+	invocation = null
+	invocation_type = null
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
 	recharge_time = 5 SECONDS
@@ -261,7 +261,7 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 	overlay_state = "sacredflame"
 	sound = 'sound/magic/bless.ogg'
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	invocations = list()
+	invocation = null
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("Feel Astrata's fiery wrath!")
+	invocation = "Feel Astrata's fiery wrath!"
 	invocation_type = "shout"
 	antimagic_allowed = TRUE
 	miracle = TRUE
@@ -347,7 +347,7 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 	desc = "Call upon Astrata's blessing to shield yourself and nearby divine followers from flame."
 	overlay_state = "burning"
 	recharge_time = 4 MINUTES
-	invocations = list("By Her light, we are shielded!")
+	invocation = "By Her light, we are shielded!"
 	invocation_type = "shout"
 	sound = 'sound/magic/holyshield.ogg'
 
@@ -418,7 +418,7 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		// Check for undead FIRST - obliterate them with holy light
-		if(target.mob_biotypes & MOB_UNDEAD)
+		if((target.mob_biotypes & MOB_UNDEAD) && !HAS_TRAIT(target, TRAIT_HOLLOW_LIFE))
 			// Range check - must be within 10 tiles and same z-level
 			var/distance = get_dist(user, target)
 			if(distance > 10)
@@ -553,7 +553,7 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 	chargedloop = /datum/looping_sound/invokeholy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/churn.ogg'
-	invocations = list("WITNESS HER DIVINE RADIANCE!!")
+	invocation = "WITNESS HER DIVINE RADIANCE!!"
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
@@ -598,7 +598,7 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 			
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				target_end = H.STACON
+				target_end = H.STAEND
 			
 			var/stat_difference = caster_int - target_end
 			
@@ -670,29 +670,38 @@ GLOBAL_LIST_EMPTY(divine_destruction_mobs) // Tracks mobs undergoing divine dest
 	duration = 20 SECONDS
 
 /datum/status_effect/buff/astrata_gaze/on_creation(mob/living/new_owner, slevel)
-	var/per_bonus = 0
-	duration = 20 SECONDS
+    // Only store skill level here
+    skill_level = slevel
+    .=..()
 
-	if(slevel > SKILL_LEVEL_NOVICE)
-		per_bonus++
+/datum/status_effect/buff/astrata_gaze/on_apply()
+	// Reset base values because the miracle can 
+	// now actually be recast at high enough skill and during day time
+	// This is a safeguard because buff code makes my head hurt
+    var/per_bonus = 0
+    duration = 20 SECONDS
 
-	if(GLOB.tod == "day" || GLOB.tod == "dawn")
-		per_bonus++
-		duration *= 2
+    if(skill_level > SKILL_LEVEL_NOVICE)
+        per_bonus++
 
-	duration *= slevel
+    if(GLOB.tod == "day" || GLOB.tod == "dawn")
+        per_bonus++
+        duration *= 2
 
-	if(per_bonus)
-		effectedstats = list(STATKEY_PER = per_bonus)
+    duration *= skill_level
 
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.viewcone_override = TRUE
-		H.hide_cone()
-		H.update_cone_show()
+    if(per_bonus)
+        effectedstats = list(STATKEY_PER = per_bonus)
 
-	to_chat(owner, span_astrata("She shines through me! I can perceive all clear as dae!"))
-	return ..()
+    if(ishuman(owner))
+        var/mob/living/carbon/human/H = owner
+        H.viewcone_override = TRUE
+        H.hide_cone()
+        H.update_cone_show()
+
+    to_chat(owner, span_astrata("She shines through me! I can perceive all clear as dae!"))
+
+    return ..()
 
 /datum/status_effect/buff/astrata_gaze/on_remove()
 	. = ..()
