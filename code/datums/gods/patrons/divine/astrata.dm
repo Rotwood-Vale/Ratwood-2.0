@@ -5,21 +5,14 @@
 	worshippers = "Nobility, The Righteous, The Zealous"
 	mob_traits = list(TRAIT_APRICITY)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/invoked/astrata_grasp			= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/ignition				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/self/astrata_gaze				= CLERIC_T0,
-					/obj/effect/proc_holder/spell/self/fire_resist				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/astratan_path			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/self/scorch					= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/astrataspark			= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/heal					= CLERIC_T2,
-					/obj/effect/proc_holder/spell/self/suns_shield				= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/invoked_reverence		= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/revive				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/immolation			= CLERIC_T4,
-					/obj/effect/proc_holder/spell/invoked/sunstrike				= CLERIC_T4,
 	)
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",
