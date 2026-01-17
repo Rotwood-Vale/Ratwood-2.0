@@ -128,6 +128,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
 
+	//Can you guess?
+	var/hand_ckey = ""
+
 // Point-buy system helpers
 // Base points available to every character
 /datum/preferences/proc/get_base_points()
@@ -940,6 +943,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	dat += "</td>"
 	dat += "<td width='33%' align='right'>"
+	dat += "<b>Hand: <a href='?_src_=prefs;preference;task=set_hand'>[hand_ckey ? hand_ckey : "(Anyone)"]</a></b>"
+	dat += "<br>"
 	dat += "<b>Be voice:</b> <a href='?_src_=prefs;preference=schizo_voice'>[(toggles & SCHIZO_VOICE) ? "Enabled":"Disabled"]</a>"
 	dat += "<br><b>Toggle Admin Sounds:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Enabled":"Disabled"]</a>"
 	dat += "</td>"
@@ -1603,6 +1608,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			handle_culinary_topic(user, href_list)
 			show_culinary_ui(user)
 			return
+		if("set_hand")
+			var/potential_hand_ckey = input(usr, "Enter the CKEY you would like to see as your Hand. Those not selected are unable to join, or ready up. This setting can be changed mid round, to allow latejoin.", "Bloodbound", hand_ckey) as text
+			if(!potential_hand_ckey)
+				hand_ckey = ""
+			hand_ckey = potential_hand_ckey
 		if("random")
 			switch(href_list["preference"])
 				if("name")
@@ -2286,7 +2296,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						charflaw = C
 						if(charflaw.desc)
 							to_chat(user, "<span class='info'>[charflaw.desc]</span>")
-				
+
 				if("vices_menu")
 					open_vices_menu(user)
 					return
@@ -2920,7 +2930,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			// Set first vice as the legacy charflaw for compatibility
 			if(i == 1)
 				character.charflaw = new_vice
-	
+
 	// Legacy single vice support (if new system not used)
 	if(!length(character.vices) && charflaw)
 		character.charflaw = new charflaw.type()

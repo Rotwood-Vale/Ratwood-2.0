@@ -255,3 +255,30 @@
 	if(!.)
 		return
 	GLOB.court_agents += recruit.real_name
+
+//Redmoon Hand selection stuff.
+/datum/job/roguetown/hand/special_check_latejoin(client/C)
+	if(SSjob.name_occupations["Grand Duke"].current_positions <= 0)
+		return
+	for(var/mob/living/carbon/human/duke in GLOB.player_list)
+		if(duke.mind.assigned_role == "Grand Duke")
+			if(duke.client.prefs.hand_ckey)
+				if(lowertext(duke.client.prefs.hand_ckey) == C.ckey)
+					return TRUE
+				else
+					return
+
+/datum/job/roguetown/hand/special_job_check(mob/dead/new_player/player)
+	if(!player)
+		return
+	if(!player.ckey)
+		return
+	for(var/mob/dead/new_player/duke in GLOB.player_list)
+		if(duke.mind.assigned_role == "Grand Duke")
+			if(duke.client.prefs.hand_ckey)
+				if(lowertext(duke.client.prefs.hand_ckey) == player.ckey)
+					to_chat(player, span_biginfo("You have been chosen as the throne's right hand..."))
+					return TRUE
+				else
+					to_chat(player, span_warning("The throne has chosen another..."))
+					return
