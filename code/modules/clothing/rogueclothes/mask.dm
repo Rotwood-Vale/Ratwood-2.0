@@ -297,6 +297,25 @@
 			REMOVE_TRAIT(user, TRAIT_NOCSHADES, "redlens")
 			return
 
+/obj/item/clothing/mask/rogue/facemask/steel/kazengun/wanderer
+	name = "steel mempo"
+	desc = "A steel half-mask of Kazengun origin. Cast in the visage of a fiend, it fits snugly around the neck, offering additional protection at the cost of head mobility."
+	icon_state = "steelmempo"
+	resistance_flags = FIRE_PROOF
+	armor = ARMOR_PLATE
+	body_parts_covered = NECK|MOUTH|NOSE
+
+/obj/item/clothing/mask/rogue/facemask/steel/kazengun/full/wanderer
+	desc = "A steel mask of Kazengun origin. Cast in the visage of a fiend, it fits snugly around the neck, offering additional protection at the cost of head mobility."
+	icon_state = "steelyoroi"
+	resistance_flags = FIRE_PROOF
+	armor = ARMOR_PLATE
+	body_parts_covered = NECK|FACE
+
+/obj/item/clothing/mask/rogue/facemask/steel/kazengun/full/kitsune
+	desc = "A steel mask of Kazengun origin. Cast in the visage of a vulpine monster, it fits snugly around the neck, offering additional protection at the cost of head mobility."
+	icon_state = "kitsuneyoroi"
+	
 /obj/item/clothing/mask/rogue/wildguard
 	name = "wild guard"
 	desc = "A mask shaped after the snarling beasts of Dendor."

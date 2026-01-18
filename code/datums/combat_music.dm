@@ -566,3 +566,17 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Zybantine"
 	credits = "Hakan Glante - Crusader Kings 3 Fate of Iberia OST - War \"Short\""
 	musicpath = list('sound/music/combat_zybantine.ogg')
+
+/datum/combat_music/sohei
+	name = "Sohei"
+	desc = "Blades cross, sparks fly."
+	shortname = "Sohei"
+	credits = "Rapid As Wildfires - Yu-peng Chen"
+	musicpath = list('sound/music/cmode/antag/combat_sohei.ogg')
+
+/datum/combat_music/swordhunter
+	name = "Sword Hunter"
+	desc = "Violence and greed, feeding into one another. Perpetuate the cycle."
+	shortname = "Sword Hunter"
+	credits = "Metal Gear Rising Revengeance - The Only Thing I Know For Real (Acoustic + Demo)"
+	musicpath = list('sound/music/cmode/antag/combat_swordhunter.ogg')

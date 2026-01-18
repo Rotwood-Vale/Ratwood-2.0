@@ -2004,3 +2004,9 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+
+/obj/item/clothing/cloak/darkcloak/minotaur
+	name = "minotaur cloak"
+	desc = "Minotaur fur and straw roughly sewn into a long mantle."
+	icon_state = "mino"
+	item_state = "mino"

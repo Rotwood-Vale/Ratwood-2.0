@@ -68,6 +68,12 @@
 	damfactor = 0.9
 	item_d_type = "stab"
 
+/datum/intent/mace/strike/reach
+	reach = 2
+
+/datum/intent/mace/smash/reach
+	reach = 2
+
 //blunt objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/mace
@@ -182,6 +188,19 @@
 		added_int = 50,\
 		added_def = 2,\
 	)
+
+/obj/item/rogueweapon/mace/goden/steel/tetsubo
+	name = "tetsubo"
+	desc = "A heavier variant of the kanabo, fitted with a steel sleeve bearing menacing spikes and favored by Ogrun Warlords. Requires immense strength to use, but hits like a raging bull."
+	icon_state = "tetsubo"
+	force = 20
+	force_wielded = 40 //Minotaur greataxe, but for blunt weapons
+	possible_item_intents = list(/datum/intent/mace/strike/reach)
+	gripped_intents = list(/datum/intent/mace/strike/reach, /datum/intent/mace/smash/reach, /datum/intent/effect/daze)
+	sharpness = IS_SHARP
+	icon = 'icons/roguetown/weapons/64.dmi'
+	minstr = 15
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/rogueweapon/mace/woodclub
 	force = 15

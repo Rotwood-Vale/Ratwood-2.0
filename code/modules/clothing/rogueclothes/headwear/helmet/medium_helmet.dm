@@ -603,3 +603,15 @@
 	max_integrity = 250
 	anvilrepair = TRUE
 	smeltresult = /obj/item/ingot/iron
+
+//Kazengun wretch
+/obj/item/clothing/head/roguetown/helmet/sallet/beastskull
+	name = "beast skull"
+	desc = "The skull of a horned beast, carved and fashioned into a helmet. An iron skull cap has been inserted on the inside."
+	icon_state = "marauder_head"
+	max_integrity = 280
+	smeltresult = /obj/item/ingot/iron
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	bloody_icon = 'icons/effects/blood64.dmi'

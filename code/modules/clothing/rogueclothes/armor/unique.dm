@@ -45,6 +45,18 @@
 	armor = ARMOR_LEATHER_STUDDED // Makes it the equivalence of studded with less integrity and better armor 
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 
+/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/outlaw
+	color = "#bbbbbb"
+
+/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/shrinekeeper
+	name = "eastern ceremonial robe"
+	desc = "A simple eastern robe, traditionally worn by Kazengunese priests. This one is reinforced with cured leather inlays."
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
+	allowed_race = CLOTHED_RACES_TYPES
+	color = "#414143"
+	icon_state = "shrinekeeper"
+	item_state = "shrinekeeper"
+
 //craftable variation of eastsuit, essentially requiring the presence of a tailor with relevant materials
 //still weak against blunt
 
