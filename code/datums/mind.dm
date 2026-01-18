@@ -171,6 +171,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		if(H.dna && H.dna.species)
 			known_people[H.real_name]["FSPECIES"] = H.dna.species.name
 		known_people[H.real_name]["FAGE"] = H.age
+		if(H.family_datum)
+			known_people[H.real_name]["FHOUSE"] = H.family_datum.housename
 		if(ishuman(current))
 			var/mob/living/carbon/human/C = current
 			var/heretic_text = H.get_heretic_symbol(C)
@@ -208,12 +210,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 				M.known_people[H.real_name]["FGENDER"] = referred_gender
 				M.known_people[H.real_name]["FSPECIES"] = H.dna.species.name
 				M.known_people[H.real_name]["FAGE"] = H.age
-				if(ishuman(M.current))
-					var/mob/living/carbon/human/C = M.current
-					var/heretic_text = C.get_heretic_symbol(H)
-					if (heretic_text)
-						M.known_people[H.real_name]["FHERESY"] = heretic_text
-
+				if(H.family_datum)
+					M.known_people[H.real_name]["FHOUSE"] = H.family_datum.housename
 
 /datum/mind/proc/do_i_know(datum/mind/person, name)
 	if(!person && !name)
@@ -260,13 +258,13 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		var/fgender = known_people[P]["FGENDER"]
 		var/fspecies = known_people[P]["FSPECIES"]
 		var/fage = known_people[P]["FAGE"]
+		var/fhouse = known_people[P]["FHOUSE"]
 		var/fheresy = known_people[P]["FHERESY"]
 		if(fcolor && fjob)
 			if (fheresy)
 				contents +="<B><font color=#f1d669>[fheresy]</font></B> "
-			contents += "<B><font color=#[fcolor];text-shadow:0 0 10px #8d5958, 0 0 20px #8d5958, 0 0 30px #8d5958, 0 0 40px #8d5958, 0 0 50px #e60073, 0 0 60px #8d5958, 0 0 70px #8d5958;>[P]</font></B><BR>[fjob], [fspecies], [capitalize(fgender)], [fage]"
+			contents += "<B><font color=#[fcolor];text-shadow:0 0 10px #8d5958, 0 0 20px #8d5958, 0 0 30px #8d5958, 0 0 40px #8d5958, 0 0 50px #e60073, 0 0 60px #8d5958, 0 0 70px #8d5958;>[P]</font></B><BR>[fjob], [fspecies], [capitalize(fgender)], [fage][fhouse ? "<br><b>House [fhouse]</b>" : ""]"
 			contents += "<BR>"
-
 	var/datum/browser/popup = new(user, "PEOPLEIKNOW", "", 260, 400)
 	popup.set_content(contents)
 	popup.open()
@@ -945,12 +943,12 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 						var/path2item = user.mind.special_items[item]
 						user.mind.special_items -= item
 						var/obj/item/I = new path2item(user.loc)
-						
+
 						// Check if this is a loadout item and reduce armor if applicable
 						var/is_loadout_item = FALSE
 						var/keep_stats = FALSE
 						if(user.client?.prefs)
-							var/list/loadout_slots = list("loadout", "loadout2", "loadout3", "loadout4", "loadout5", 
+							var/list/loadout_slots = list("loadout", "loadout2", "loadout3", "loadout4", "loadout5",
 														  "loadout6", "loadout7", "loadout8", "loadout9", "loadout10")
 							for(var/slot in loadout_slots)
 								var/datum/loadout_item/loadout_datum = user.client.prefs.vars[slot]
@@ -958,36 +956,36 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 									is_loadout_item = TRUE
 									keep_stats = loadout_datum.keep_loadout_stats
 									break
-						
+
 						// Apply modifications for loadout items (unless keep_loadout_stats is TRUE)
 						if(is_loadout_item && !keep_stats)
 							// Mark as loadout item to prevent crafting usage
 							I.loadout_item = TRUE
-							
+
 							// Add subtle examination text to indicate this is a loadout reproduction
 							if(I.desc)
 								I.desc += " The overall look and feel of the item suggests this may be a mere reproduction."
 							else
 								I.desc = "The overall look and feel of the item suggests this may be a mere reproduction."
-							
+
 							// Set sellprice to 0
 							I.sellprice = 0
-							
+
 							// Make items smelt to ash instead of original materials
 							I.smeltresult = /obj/item/ash
-							
+
 							// Only apply armor modifications to items that actually have armor values
 							// Check if this is clothing with any armor protection
 							if(istype(I, /obj/item/clothing))
 								var/obj/item/clothing/C = I
 								var/has_armor = FALSE
-								
+
 								// Check if the item has any non-zero armor values by checking the datum properties directly
 								if(C.armor && istype(C.armor, /datum/armor))
 									if(C.armor.blunt > 0 || C.armor.slash > 0 || C.armor.stab > 0 || \
 									   C.armor.piercing > 0 || C.armor.fire > 0 || C.armor.acid > 0)
 										has_armor = TRUE
-								
+
 								// Only modify items that actually have armor protection
 								if(has_armor)
 									// Remove crit protection
@@ -1011,23 +1009,23 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 									var/_variance = round(_base_int * 0.1)
 									C.max_integrity = _base_int + rand(-_variance, _variance)
 									C.obj_integrity = C.max_integrity
-							
+
 							// Reduce weapon damage by 30% (rounded down)
 							if(I.force > 0)
 								I.force = round(I.force * 0.7)
 							// Ensure non-clothing loadout items start at full integrity as well
 							I.obj_integrity = I.max_integrity
-							
+
 							// Halve weapon defense (wdefense) values
 							if(I.wdefense > 0)
 								I.wdefense = round(I.wdefense * 0.5)
-							
+
 						// Apply custom color if set (for clothing and weapons) - BEFORE putting in hands
 						var/dye = user.client?.prefs.resolve_loadout_to_color(path2item)
 						if (dye)
 							I.add_atom_colour(dye, FIXED_COLOUR_PRIORITY)
 							I.update_icon()
-						
+
 						// Apply custom name if set
 						var/custom_name = user.client?.prefs.resolve_loadout_to_name(path2item)
 						if (custom_name)
@@ -1039,9 +1037,9 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 						var/custom_desc = user.client?.prefs.resolve_loadout_to_desc(path2item)
 						if (custom_desc)
 							I.desc = custom_desc
-						
+
 						user.put_in_hands(I)
-						
+
 						// Force update mob appearance to show colored item in hands
 						if(isliving(user))
 							var/mob/living/L = user

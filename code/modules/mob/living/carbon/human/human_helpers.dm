@@ -169,6 +169,58 @@
 		return TRUE
 
 
+/mob/living/carbon/human/proc/MarryTo(mob/living/carbon/human/spouse)
+	if(!ishuman(spouse))
+		return null
+
+	// Set basic spouse relationship
+	spouse_mob = spouse
+	spouse.spouse_mob = src
+
+	// Handle family integration
+	var/datum/heritage/primary_family = null
+	//var/datum/heritage/secondary_family = null
+	var/datum/family_member/primary_member = null
+	var/datum/family_member/secondary_member = null
+
+	// Determine which family takes precedence
+	if(family_datum && !spouse.family_datum)
+		// Spouse joins our family
+		primary_family = family_datum
+		primary_member = family_member_datum
+		secondary_member = primary_family.CreateFamilyMember(spouse)
+
+	else if(!family_datum && spouse.family_datum)
+		// We join spouse's family
+		primary_family = spouse.family_datum
+		primary_member = spouse.family_member_datum
+		secondary_member = primary_family.CreateFamilyMember(src)
+
+	else if(family_datum && spouse.family_datum)
+		// Both have families - keep separate but mark as married
+		primary_family = family_datum
+		primary_member = family_member_datum
+		secondary_member = spouse.family_member_datum
+
+	else
+		// Neither has family - create new one
+		var/new_family_name = null
+		// Use the male's surname traditionally, or first person's if no male
+		if(gender == MALE)
+			new_family_name = family_datum?.SurnameFormatting(src)
+		else if(spouse.gender == MALE)
+			new_family_name = family_datum?.SurnameFormatting(spouse)
+
+		primary_family = new /datum/heritage(src, new_family_name)
+		primary_member = primary_family.founder
+		secondary_member = primary_family.CreateFamilyMember(spouse)
+
+	// Add spouse relationship in family system
+	if(primary_member && secondary_member && primary_family)
+		primary_family.MarryMembers(primary_member, secondary_member)
+
+	return primary_family
+
 /mob/living/carbon/human/proc/do_invisibility(timeinvis)
 	animate(src, alpha = 0, time = 0 SECONDS, easing = EASE_IN)
 	src.mob_timers[MT_INVISIBILITY] = world.time + timeinvis
@@ -229,3 +281,6 @@
 	walk_to_last_pos = null
 	walk_to_cached_path = null
 
+
+/mob/living/carbon/human/proc/ReturnRelation(mob/living/carbon/human/stranger)
+	return family_datum.ReturnRelation(src, stranger)
