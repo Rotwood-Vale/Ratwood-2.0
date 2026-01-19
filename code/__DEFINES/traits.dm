@@ -187,6 +187,12 @@
 #define TRAIT_SILVER_BLESSED "Silverblessed"
 #define TRAIT_OUTLANDER "Outlander"
 #define TRAIT_OUTLAW "Outlaw"
+#define TRAIT_CRIMINAL_MINOR "Misdemeanor"
+#define TRAIT_CRIMINAL_MODERATE "Felony"
+#define TRAIT_CRIMINAL_MAJOR "Atrocity"
+#define TRAIT_HERETIC_MINOR "Transgression"
+#define TRAIT_HERETIC_MAJOR "Heresy"
+#define TRAIT_HERETIC_VILE "Apostasy"
 #define TRAIT_KNOWNCRIMINAL "Known Criminal"
 #define TRAIT_BIGGUY "Big Guy"
 #define TRAIT_RESIDENT "Resident"
@@ -269,6 +275,12 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STEELHEARTED = span_info("I have hardened nerves, and do not waiver from the sight of violence in battle."),
 	TRAIT_OUTLANDER = span_info("Those of the vale see me as not of their land."),
 	TRAIT_OUTLAW = span_info("This land's nervelocks and castificos reject my touch."),
+	TRAIT_CRIMINAL_MINOR = span_info("There is a minor bounty on my head."),
+	TRAIT_CRIMINAL_MODERATE = span_warning("There is a sizable bounty on my head."),
+	TRAIT_CRIMINAL_MAJOR = span_danger("There is a SIGNIFICANT bounty on my head."),
+	TRAIT_HERETIC_MINOR = span_info("The clergy frowns upon my transgressions."),
+	TRAIT_HERETIC_MAJOR = span_warning("The church has declared me a heretic."),
+	TRAIT_HERETIC_VILE = span_danger("I am EXCOMMUNICATED and hunted by the faithful."),
 	TRAIT_LEPROSY = span_necrosis("I'm a disgusting leper..."),
 	TRAIT_VOTARY = span_info("I'm of the Holy See's own. I feel most comfortable on hallowed ground."),
 	TRAIT_TAVERN_FIGHTER = span_info("I am vigilant in my duties. The Tavern is my home, none shall dare oppose me or skip out on payment."),

@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Mute (+1 TRI)"=/datum/charflaw/mute,
 	"Critical Weakness (+1 TRI)"=/datum/charflaw/critweakness,
 	"Silver Weakness"=/datum/charflaw/silverweakness,
+	"Hungered by Excidium (+1 TRI)"=/datum/charflaw/excidiumbounty,
 	"Hunted (+1 TRI)"=/datum/charflaw/hunted,
 	"Ugly"=/datum/charflaw/ugly,
 	"Nudist"=/datum/charflaw/nudist,
@@ -56,6 +57,11 @@ GLOBAL_LIST_INIT(character_flaws, list(
 // Called when a vice is removed from a character to clean up persistent effects
 /datum/charflaw/proc/on_removal(mob/user)
 	return
+
+// Check if this flaw can be selected for a given job
+// Returns TRUE if allowed, FALSE if blocked
+/datum/charflaw/proc/can_select_for_job(job_title)
+	return TRUE
 
 /mob/proc/has_flaw(flaw)
 	return

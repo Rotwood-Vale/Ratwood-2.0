@@ -136,6 +136,33 @@
 			else
 				. += span_notice("Something about them seems... different.")
 
+		// Check for criminal bounties (Vale)
+		if(HAS_TRAIT(src, TRAIT_CRIMINAL_MINOR) || HAS_TRAIT(src, TRAIT_CRIMINAL_MODERATE) || HAS_TRAIT(src, TRAIT_CRIMINAL_MAJOR))
+			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
+			// Law enforcement can see detailed bounty info
+			if(J?.department_flag & GARRISON || J?.department_flag & NOBLEMEN)
+				if(HAS_TRAIT(src, TRAIT_CRIMINAL_MAJOR))
+					. += span_danger("<b>WANTED VILLAIN!</b>")
+				else if(HAS_TRAIT(src, TRAIT_CRIMINAL_MODERATE))
+					. += span_warning("<b>CRIMINAL!</b>")
+				else if(HAS_TRAIT(src, TRAIT_CRIMINAL_MINOR))
+					. += span_notice("Something about [p_them()] is... troubling.")
+
+		// Check for heretic bounties (Holy See / Orthodoxy)
+		if(HAS_TRAIT(src, TRAIT_HERETIC_MINOR) || HAS_TRAIT(src, TRAIT_HERETIC_MAJOR) || HAS_TRAIT(src, TRAIT_HERETIC_VILE))
+			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
+			// Only Inquisition can see detailed heresy info
+			if(J?.department_flag & CHURCHMEN || J?.department_flag & INQUISITION)
+				if(HAS_TRAIT(src, TRAIT_HERETIC_VILE))
+					. += span_danger("<b>WANTED APOSTATE!</b>")
+				else if(HAS_TRAIT(src, TRAIT_HERETIC_MAJOR))
+					. += span_warning("<b>WANTED HERETIC!</b>")
+				else if(HAS_TRAIT(src, TRAIT_HERETIC_MINOR))
+					. += span_info("<b>Sinner.</b>")
+			// Regular folk see vague text
+			else
+				. += span_notice("Something about [p_them()] is... troubling.")
+
 		if(GLOB.lord_titles[name])
 			. += span_notice("[m3] been granted the title of \"[GLOB.lord_titles[name]]\".")
 
