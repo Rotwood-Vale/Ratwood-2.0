@@ -6631,11 +6631,8 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/church/chapel)
 "cbA" = (
-/obj/item/bedsheet/rogue/pelt,
-/obj/machinery/light/rogue/wallfire/candle/r,
-/obj/structure/rack/rogue/shelf,
-/obj/structure/bed/rogue/inn,
-/turf/open/floor/carpet/royalblack,
+/obj/structure/fluff/psycross,
+/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/warden)
 "cbJ" = (
 /obj/structure/fluff/railing/wood{
@@ -14648,12 +14645,12 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/rockhill)
 "ewx" = (
-/obj/structure/closet/crate/chest/gold{
-	locked = 1;
-	lockid = "sergeant"
+/obj/structure/table/wood/crafted,
+/obj/machinery/light/rogue/wallfire/candle/floorcandle{
+	pixel_y = -3;
+	pixel_x = -1
 	},
-/obj/item/flashlight/flare/torch/lantern,
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/warden)
 "ewB" = (
 /obj/structure/chair/wood{
@@ -15789,21 +15786,8 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/town/sewer)
 "eOd" = (
-/obj/structure/table/wood{
-	dir = 1;
-	icon_state = "longtable"
-	},
-/obj/item/paper,
-/obj/item/paper,
-/obj/item/paper,
-/obj/item/paper,
-/obj/item/natural/feather,
-/obj/item/book/rogue/law{
-	layer = 5;
-	pixel_y = 6
-	},
 /turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/town/warden)
+/area/rogue/outdoors/rtfield/rockhill/above)
 "eOj" = (
 /obj/structure/roguewindow/openclose{
 	dir = 1
@@ -25026,13 +25010,11 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "hAb" = (
-/obj/structure/table/wood{
-	dir = 1;
-	icon_state = "longtable_mid"
+/obj/structure/chair/bench/church/smallbench{
+	dir = 4
 	},
-/obj/item/candle/skull/lit{
-	pixel_x = -23;
-	pixel_y = 4
+/obj/machinery/light/rogue/wallfire/candle{
+	pixel_y = -32
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/warden)
@@ -27327,6 +27309,17 @@
 	icon_state = "vertw"
 	},
 /area/rogue/indoors/town)
+"ijC" = (
+/obj/structure/table/wood/crafted,
+/obj/item/candle/yellow{
+	pixel_x = -12;
+	pixel_y = 16
+	},
+/obj/item/clothing/neck/roguetown/psicross/astrata{
+	pixel_y = -4
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/town/warden)
 "ijD" = (
 /obj/machinery/tanningrack,
 /turf/open/floor/rogue/tile,
@@ -29061,7 +29054,11 @@
 /turf/open/floor/rogue/blocks/paving,
 /area/rogue/indoors/town/bath)
 "iLl" = (
-/turf/open/floor/carpet/royalblack,
+/obj/structure/roguemachine/scomm{
+	pixel_y = -32;
+	scom_tag = "Garrison - Warden Fort Barracks"
+	},
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/warden)
 "iLD" = (
 /obj/machinery/light/rogue/wallfire/candle/floorcandle{
@@ -32175,8 +32172,9 @@
 /turf/open/floor/rogue/hay,
 /area/rogue/indoors)
 "jJW" = (
-/obj/structure/chair/wood/rogue,
-/turf/open/floor/carpet/royalblack,
+/obj/item/roguebin/water,
+/obj/machinery/light/rogue/wallfire/candle,
+/turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/warden)
 "jJY" = (
 /obj/structure/fluff/statue/gargoyle{
@@ -32378,6 +32376,11 @@
 	first_time_text = "Another Place";
 	name = "firezone"
 	})
+"jMW" = (
+/obj/structure/table/wood/crafted,
+/obj/machinery/light/rogue/wallfire/candle/floorcandle/alt,
+/turf/open/floor/carpet/red,
+/area/rogue/indoors/town/warden)
 "jNb" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -35457,16 +35460,11 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/rhgoblinencampment)
 "kKk" = (
-/obj/structure/closet/crate/roguecloset/inn{
-	keylock = 1;
-	lockid = "sergeant";
-	pixel_y = 5
+/obj/structure/roguemachine/scomm/l{
+	scom_tag = "Garrison - Warden Fort"
 	},
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
-/turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/town/warden)
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield/rockhill)
 "kKp" = (
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/bograt/above)
@@ -63278,12 +63276,15 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church/chapel)
 "tyY" = (
-/obj/item/clothing/mask/cigarette/pipe{
-	pixel_x = -4;
-	pixel_y = 13
+/obj/structure/table/wood/crafted,
+/obj/item/candle/yellow{
+	pixel_x = -12;
+	pixel_y = 2
 	},
-/obj/structure/table/wood{
-	icon_state = "longtable"
+/obj/machinery/light/rogue/wallfire/candle/l,
+/obj/item/clothing/neck/roguetown/psicross/dendor{
+	pixel_y = 5;
+	pixel_x = 7
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/warden)
@@ -67766,11 +67767,8 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/town/grove)
 "uVv" = (
-/obj/structure/mineral_door/wood/donjon{
-	dir = 1;
-	locked = 1;
-	lockid = "sergeant";
-	name = "Sargeant Office"
+/obj/structure/mineral_door/wood{
+	name = "Fort Chapel"
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/warden)
@@ -72219,6 +72217,10 @@
 "wqH" = (
 /obj/structure/table/wood{
 	icon_state = "largetable"
+	},
+/obj/item/book/rogue/law{
+	layer = 5;
+	pixel_y = 6
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/warden)
@@ -77245,8 +77247,10 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tavern)
 "xUd" = (
-/obj/structure/rack/rogue/shelf,
-/turf/open/floor/carpet/royalblack,
+/obj/structure/chair/bench/church/smallbench{
+	dir = 4
+	},
+/turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/warden)
 "xUe" = (
 /obj/structure/mineral_door/wood/donjon{
@@ -249193,7 +249197,7 @@ qvR
 igo
 fxx
 qvR
-qvR
+kKk
 qvR
 qvR
 moN
@@ -353731,7 +353735,7 @@ xlA
 xlA
 xlA
 xlA
-xlA
+eOd
 xlA
 xlA
 xlA
@@ -356322,9 +356326,9 @@ xlA
 xlA
 xlA
 wMB
-ttf
-hHC
-hHC
+wMB
+ijC
+tyY
 wMB
 wMB
 mJF
@@ -356753,10 +356757,10 @@ vIa
 vIa
 xlA
 fZe
-wMB
-xUd
-tyY
-iLl
+ttf
+hHC
+hHC
+hHC
 wMB
 sLg
 eSQ
@@ -357185,10 +357189,10 @@ vIa
 vIa
 vIa
 fZe
-vfD
+wMB
 jJW
-hAb
-iLl
+hHC
+hHC
 uVv
 eKF
 hEd
@@ -357619,12 +357623,12 @@ vIa
 vIa
 wMB
 xUd
-eOd
-iLl
+hHC
+xUd
 wMB
 vnv
 msr
-msr
+iLl
 wMB
 vfD
 dwj
@@ -358050,9 +358054,9 @@ tmH
 tmH
 vIa
 wMB
+xUd
 hHC
-hHC
-hHC
+hAb
 wMB
 wMB
 jXJ
@@ -358482,9 +358486,9 @@ tmH
 tmH
 vIa
 wMB
-kKk
-iLl
-iLl
+hHC
+hHC
+hHC
 wMB
 mNb
 nPo
@@ -358914,7 +358918,7 @@ fON
 tmH
 vIa
 wMB
-wMB
+jMW
 cbA
 ewx
 efu
@@ -359345,7 +359349,7 @@ iyK
 tmH
 tmH
 tmH
-vIa
+wMB
 wMB
 wMB
 efu
