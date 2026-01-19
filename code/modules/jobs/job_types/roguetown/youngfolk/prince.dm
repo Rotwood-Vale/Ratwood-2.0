@@ -17,7 +17,7 @@
 	display_order = JDO_PRINCE
 	give_bank_account = 30
 	noble_income = 20
-	min_pq = 1
+	min_pq = 3
 	max_pq = null
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_ROYAL

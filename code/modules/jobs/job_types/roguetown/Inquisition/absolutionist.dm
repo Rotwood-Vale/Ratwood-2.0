@@ -11,7 +11,7 @@
 	selection_color = JCOLOR_INQUISITION
 	outfit = /datum/outfit/job/roguetown/absolver
 	display_order = JDO_ABSOLVER
-	min_pq = 20
+	min_pq = 27
 	max_pq = null
 	round_contrib_points = 2
 	wanderer_examine = FALSE

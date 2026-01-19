@@ -17,7 +17,7 @@
 	outfit = /datum/outfit/job/roguetown/squire
 	display_order = JDO_SQUIRE
 	give_bank_account = TRUE
-	min_pq = -5 //squires aren't great but they can do some damage
+	min_pq = 1 //squires aren't great but they can do some damage
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_PEASANT
