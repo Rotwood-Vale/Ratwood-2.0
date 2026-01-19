@@ -15,7 +15,7 @@
 	bypass_jobban = TRUE
 	display_order = JDO_PRISONERR
 	give_bank_account = 10
-	min_pq = -50
+	min_pq = 0
 	max_pq = null
 	can_random = FALSE
 

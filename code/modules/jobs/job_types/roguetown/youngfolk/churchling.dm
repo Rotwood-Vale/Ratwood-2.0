@@ -15,7 +15,7 @@
 	outfit = /datum/outfit/job/roguetown/churchling
 	display_order = JDO_CHURCHLING
 	give_bank_account = TRUE
-	min_pq = -1
+	min_pq = 0
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_PEASANT

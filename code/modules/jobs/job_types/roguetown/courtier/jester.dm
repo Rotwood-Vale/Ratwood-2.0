@@ -17,7 +17,7 @@
 	outfit = /datum/outfit/job/roguetown/jester
 	display_order = JDO_JESTER
 	give_bank_account = TRUE
-	min_pq = -4 //silly jesters are funny so low PQ requirement
+	min_pq = 0 //silly jesters are funny so low PQ requirement
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_MINOR_NOBLE

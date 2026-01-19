@@ -17,7 +17,7 @@
 	job_traits = list(TRAIT_HOMESTEAD_EXPERT)
 	display_order = JDO_SERVANT
 	give_bank_account = TRUE
-	min_pq = -10
+	min_pq = 0
 	max_pq = null
 	round_contrib_points = 2
 	advjob_examine = TRUE
