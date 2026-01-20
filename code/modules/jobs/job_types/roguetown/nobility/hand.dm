@@ -225,9 +225,9 @@
 
 /datum/job/roguetown/hand/proc/know_agents(var/mob/living/carbon/human/H)
 	if(!GLOB.court_agents.len)
-		to_chat(H, span_boldnotice("You begun the week with no agents."))
+		to_chat(H, span_boldnotice("You've begun the week with no active agents."))
 	else
-		to_chat(H, span_boldnotice("We begun the week with these agents:"))
+		to_chat(H, span_boldnotice("While more may arrive, you have the following agents:"))
 		for(var/name in GLOB.court_agents)
 			to_chat(H, span_greentext(name))
 
