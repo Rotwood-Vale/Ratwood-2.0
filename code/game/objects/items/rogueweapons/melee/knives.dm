@@ -178,6 +178,31 @@
 
 	return
 
+
+/* Wooden Daggers.
+*  Intents, followed by the weapon itself.
+*
+*/
+/datum/intent/dagger/thrust/wood
+	penfactor = 15
+	blade_class = BCLASS_BLUNT
+/datum/intent/dagger/pick/wood
+	penfactor = 55
+	blade_class = BCLASS_BLUNT
+
+/obj/item/rogueweapon/huntingknife/wood
+	name = "wooden dagger"
+	desc = "A wooden dagger. Good for training."
+	icon_state = "wdagger"
+	possible_item_intents = list(/datum/intent/dagger/thrust/wood, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/pick/wood)
+	force = 4 //half of a wielded wood sword's.
+	thrown_bclass = BCLASS_BLUNT
+	max_integrity = 90
+	smeltresult = /obj/item/ash //It's a wooden dagger. What did you expect to happen?
+	associated_skill = /datum/skill/combat/knives
+	anvilrepair = /datum/skill/craft/carpentry
+	resistance_flags = FLAMMABLE
+
 /obj/item/rogueweapon/huntingknife/copper
 	name = "copper knife"
 	desc = "A knife made of copper. Lacking in durability."
