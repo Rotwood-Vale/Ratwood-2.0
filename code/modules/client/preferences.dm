@@ -1609,7 +1609,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			show_culinary_ui(user)
 			return
 		if("set_hand")
-			var/potential_hand_ckey = input(usr, "Enter the CKEY you would like to see as your Hand. Those not selected are unable to join, or ready up. This setting can be changed mid round, to allow latejoin.", "Bloodbound", hand_ckey) as text
+			var/potential_hand_ckey = input(usr, "Enter the CKEY you would like to see as your Hand. Those not selected are unable to join, or ready up. This setting can be changed mid round, to allow latejoin. This choice is not saved between rounds.", "Bloodbound", hand_ckey) as text
 			if(!potential_hand_ckey)
 				hand_ckey = ""
 			hand_ckey = potential_hand_ckey
