@@ -1496,11 +1496,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
 	triumph_cost = 3
 
-/datum/loadout_item/tri_regen_skin
-	name = "Regenerating Skin"
-	path = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple/weak
-	triumph_cost = 5
-
 /datum/loadout_item/tri_shamanic_coat
 	name = "Shamanic Coat"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi
