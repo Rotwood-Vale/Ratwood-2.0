@@ -46,7 +46,7 @@
 	tutorial = "You are a ranger, a hunter who volunteered to become a part of the wardens. You have great experience using bows."
 	outfit = /datum/outfit/job/roguetown/bogguardsman/ranger
 	category_tags = list(CTAG_WARDEN)
-	traits_applied = list(TRAIT_DODGEEXPERT)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_WOODWALKER)//Adding woodwalker to rangers. Fits that they should be able to move through the treetops easier
 	subclass_stats = list(
 		STATKEY_PER = 2,//7 points weighted, same as MAA. They get temp buffs in the woods instead of in the city.
 		STATKEY_SPD = 2,
