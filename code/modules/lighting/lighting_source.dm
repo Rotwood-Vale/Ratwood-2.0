@@ -292,8 +292,9 @@
 	var/datum/lighting_corner/C
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
-		source_turf.luminosity = CEILING(light_outer_range, 1)
-		for(T in view(CEILING(light_outer_range, 1), source_turf))
+		var/range_ceil = CEILING(light_outer_range, 1)
+		source_turf.luminosity = range_ceil
+		for(T in view(range_ceil, source_turf))
 			for (thing in T.get_corners(source_turf))
 				C = thing
 				corners[C] = 0
@@ -331,51 +332,64 @@
 					turfs += B
 		source_turf.luminosity = oldlum
 
+	// Optimization: Single-pass turf processing with removal tracking
 	LAZYINITLIST(affecting_turfs)
-	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
-	affecting_turfs += L
-	for(thing in L)
-		T = thing
-		LAZYADD(T.affecting_lights, src)
+	var/list/turfs_to_remove = affecting_turfs.Copy()
 
-	L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
-	affecting_turfs -= L
-	for (thing in L)
+	for(thing in turfs)
+		T = thing
+		if(affecting_turfs[T] != null)
+			turfs_to_remove -= T
+		else
+			LAZYADD(T.affecting_lights, src)
+			affecting_turfs += T
+
+	for(thing in turfs_to_remove)
 		T = thing
 		LAZYREMOVE(T.affecting_lights, src)
+	affecting_turfs -= turfs_to_remove
 
+	// Optimization: Single-pass corner processing with removal tracking
 	LAZYINITLIST(effect_str)
-	if (needs_update == LIGHTING_VIS_UPDATE)
-		for (thing in  corners - effect_str) // New corners
+	var/list/corners_to_remove = effect_str.Copy()
+
+	if(needs_update == LIGHTING_VIS_UPDATE)
+		for(thing in corners)
 			C = thing
-			LAZYADD(C.affecting, src)
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-			APPLY_CORNER(C)
+			if(effect_str[C] != null)
+				// Existing corner - keep it, don't reprocess
+				corners_to_remove -= C
+			else
+				// New corner
+				LAZYADD(C.affecting, src)
+				if(!C.active)
+					effect_str[C] = 0
+					continue
+				APPLY_CORNER(C)
 	else
-		L = corners - effect_str
-		for (thing in L) // New corners
+		for(thing in corners)
 			C = thing
-			LAZYADD(C.affecting, src)
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-			APPLY_CORNER(C)
+			if(effect_str[C] != null)
+				// Existing corner - update and mark as kept
+				corners_to_remove -= C
+				if(!C.active)
+					effect_str[C] = 0
+					continue
+				APPLY_CORNER(C)
+			else
+				// New corner
+				LAZYADD(C.affecting, src)
+				if(!C.active)
+					effect_str[C] = 0
+					continue
+				APPLY_CORNER(C)
 
-		for (thing in corners - L) // Existing corners
-			C = thing
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-			APPLY_CORNER(C)
-
-	L = effect_str - corners
-	for (thing in L) // Old, now gone, corners.
+	// Remove corners no longer in range
+	for(thing in corners_to_remove)
 		C = thing
 		REMOVE_CORNER(C)
 		LAZYREMOVE(C.affecting, src)
-	effect_str -= L
+	effect_str -= corners_to_remove
 
 	applied_lum_r = lum_r
 	applied_lum_g = lum_g
