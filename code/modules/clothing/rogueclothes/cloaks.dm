@@ -849,6 +849,17 @@
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 3
 
+/obj/item/clothing/cloak/darkcloak/minotaur
+	name = "minotaur cloak"
+	desc = "Minotaur fur and straw roughly sewn into a long mantle."
+	icon_state = "mino"
+	item_state = "mino"
+	salvage_result = /obj/item/natural/hide/cured
+	salvage_amount = 4
+
+/obj/item/clothing/cloak/darkcloak/minotaur/red
+	color = CLOTHING_RED
+
 /obj/item/clothing/cloak/apron/maid
 	name = "maid apron"
 	desc = "The frilly apron of a housemaster. It has pockets to store small things."
