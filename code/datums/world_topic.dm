@@ -86,6 +86,17 @@
 /datum/world_topic/ahelp_relay/Run(list/input)
 	relay_msg_admins(span_adminnotice("<b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b>"))
 
+/datum/world_topic/asay_relay
+	keyword = "asay_relay"
+	require_comms_key = TRUE
+
+/datum/world_topic/asay_relay/Run(list/input)
+	var/source = input["source"] || "Unknown Server"
+	var/sender = input["sender"] || "Unknown"
+	var/message = input["message"] || ""
+	var/formatted_msg = "<span class='adminsay'><span class='prefix'>ADMIN ([source]):</span> <EM>[sender]</EM>: <font color='#FF4500'><span class='message linkify'>[message]</span></font></span>"
+	to_chat(GLOB.admins, formatted_msg)
+
 /datum/world_topic/news_report
 	keyword = "News_Report"
 	require_comms_key = TRUE
