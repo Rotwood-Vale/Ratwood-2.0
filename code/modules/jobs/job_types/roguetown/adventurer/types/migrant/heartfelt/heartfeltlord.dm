@@ -157,7 +157,7 @@
 //datum/advclass/heartfelt/lord/conqueror
 //	name = "Conqueror of Heartfelt"
 //	tutorial = "You are the new Lord of Heartfelt of Heartfelt, conquering the a once-prosperous barony now in ruin. \
-	Guided by your Magos, you journey to the Reach, seeking aid to expand your domain, or perhaps claim a new throne."
+//  Guided by your Magos, you journey to the Reach, seeking aid to expand your domain, or perhaps claim a new throne."
 //	category_tags = list(CTAG_HFT_LORD)
 //	maximum_possible_slots = 1
 //	outfit = /datum/outfit/job/heartfelt/lord/conqueror
