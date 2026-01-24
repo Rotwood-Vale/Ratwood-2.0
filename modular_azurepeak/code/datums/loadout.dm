@@ -398,6 +398,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Tabard's Shroud, Black"
 	path = /obj/item/clothing/head/roguetown/roguehood/shroudblack
 
+/datum/loadout_item/tabardwhite
+	name = "Tabard, White"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/tabardwhite
+
+/datum/loadout_item/shroudwhite
+	name = "Tabard's Shroud, White"
+	path = /obj/item/clothing/head/roguetown/roguehood/shroudwhite
+
 /datum/loadout_item/poncho
 	name = "Poncho"
 	path = /obj/item/clothing/cloak/poncho
@@ -685,7 +693,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Golden Half-Mask"
 	path = /obj/item/clothing/mask/rogue/lordmask
 
-
 /datum/loadout_item/exoticsilkmask
 	name = "Exotic Silk Mask"
 	path = /obj/item/clothing/mask/rogue/exoticsilkmask
@@ -865,6 +872,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/collar_surgcollar
 	name = "Surgcollar"
 	path = /obj/item/clothing/neck/roguetown/collar/surgcollar
+
+/datum/loadout_item/scarf
+	name = "Scarf"
+	path = /obj/item/clothing/head/roguetown/scarf
 
 // MASKS
 /datum/loadout_item/skullmask
@@ -1977,3 +1988,75 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Paper Parasol"
 	path = /obj/item/rogueweapon/mace/parasol
 	triumph_cost = 3
+
+//INSTRUMENTS
+
+/datum/loadout_item/accordion
+	name = "Accordion"
+	path = /obj/item/rogue/instrument/accord
+	triumph_cost = 1
+
+/datum/loadout_item/bagpipe
+	name = "Bagpipe"
+	path = /obj/item/rogue/instrument/bagpipe
+	triumph_cost = 1
+
+/datum/loadout_item/drum
+	name = "Drum"
+	path = /obj/item/rogue/instrument/drum
+	triumph_cost = 1
+
+/datum/loadout_item/flute
+	name = "Flute"
+	path = /obj/item/rogue/instrument/flute
+	triumph_cost = 1
+
+/datum/loadout_item/guitar
+	name = "Guitar"
+	path = /obj/item/rogue/instrument/guitar
+	triumph_cost = 1
+
+/datum/loadout_item/harp
+	name = "Harp"
+	path = /obj/item/rogue/instrument/harp
+	triumph_cost = 1
+
+/datum/loadout_item/hurdygurdy
+	name = "Hurdy-Gurdy"
+	path = /obj/item/rogue/instrument/hurdygurdy
+	triumph_cost = 1
+
+/datum/loadout_item/jawharp
+	name = "Jaw Harp"
+	path = /obj/item/rogue/instrument/jawharp
+	triumph_cost = 1
+
+/datum/loadout_item/lute
+	name = "Lute"
+	path = /obj/item/rogue/instrument/lute
+	triumph_cost = 1
+
+/datum/loadout_item/psyaltery
+	name = "Psyaltery"
+	path = /obj/item/rogue/instrument/psyaltery
+	triumph_cost = 1
+
+/datum/loadout_item/shamisen
+	name = "Shamisen"
+	path = /obj/item/rogue/instrument/shamisen
+	triumph_cost = 1
+
+/datum/loadout_item/trumpet
+	name = "Trumpet"
+	path = /obj/item/rogue/instrument/trumpet
+	triumph_cost = 1
+
+/datum/loadout_item/viola
+	name = "Viola"
+	path = /obj/item/rogue/instrument/viola
+	triumph_cost = 1
+
+/datum/loadout_item/vocaltalisman
+	name = "Vocal Talisman"
+	path = /obj/item/rogue/instrument/vocals
+	triumph_cost = 1

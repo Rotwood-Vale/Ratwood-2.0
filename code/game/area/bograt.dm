@@ -11,7 +11,7 @@
 	droning_sound = 'sound/music/area/bog.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
-	ambush_times = list("night","dawn","dusk","day")	
+	ambush_times = list("night","dawn","dusk","day")
 	ambush_mobs = list(
 		/mob/living/carbon/human/species/skeleton/npc/ambush = 30,
 		/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 60,
@@ -46,9 +46,10 @@
 		/mob/living/carbon/human/species/skeleton/npc/rockhill = 15,
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 20,
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead = 10,)
-			
+
 	threat_region = THREAT_REGION_ROCKHILL_BOG_NORTH
-	
+	deathsight_message = "a waterlogged mire bridging civilization and the wretched, fetid bog"
+
 /area/rogue/outdoors/bograt/south
 	name = "Southern Terrorbog"
 	threat_region = THREAT_REGION_ROCKHILL_BOG_SOUTH
@@ -66,7 +67,8 @@
 		new /datum/ambush_config/bog_guard_deserters/hard = 2,
 		new /datum/ambush_config/mirespiders_ambush = 30,
 		new /datum/ambush_config/mirespiders_crawlers = 15,
-		/mob/living/simple_animal/hostile/retaliate/rogue/mossback = 10,)	
+		/mob/living/simple_animal/hostile/retaliate/rogue/mossback = 10,)
+	deathsight_message = "the depths of the wretched bog, home to old magycks and zizite prayers alike"
 
 /area/rogue/outdoors/bograt/west
 	name = "Western Terrorbog"
@@ -85,7 +87,8 @@
 		/mob/living/simple_animal/hostile/retaliate/rogue/mossback = 30,
 		new /datum/ambush_config/triple_deepone = 30,
 		new /datum/ambush_config/deepone_party = 20,)
-	
+	deathsight_message = "the terrible marsh towards setting sun"
+
 /area/rogue/outdoors/bograt/sunken
 	name = "Cursed Mire"
 	first_time_text = "THE CURSED MIRE"
@@ -102,11 +105,13 @@
 		new /datum/ambush_config/mirespiders_crawlers = 25,
 		new /datum/ambush_config/mirespiders_aragn = 10,
 		new /datum/ambush_config/mirespiders_unfair = 5)
+	deathsight_message = "the deepest depths of the mire, as dangerous as it is sunken"
 
 /area/rogue/outdoors/bograt/safe
 	name = "Terrorbog Pass"
 	ambush_times = null
 	ambush_mobs = null
+	deathsight_message = "a foreign, distant pass, leading to the fetid bog"
 
 /area/rogue/outdoors/bograt/above
 	name = "Terrorbog Above"

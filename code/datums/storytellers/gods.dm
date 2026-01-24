@@ -240,7 +240,7 @@
 			STATS_DEATHS = list("name" = "Total deaths:", "points" = 1.35, "capacity" = 100),
 		),
 		"Set 2" = list(
-			STATS_GRAVES_CONSECRATED = list("name" = "Graves consecrated:", "points" = 6.25, "capacity" = 80),
+			STATS_GRAVES_CONSECRATED = list("name" = "Graves consecrated:", "points" = 3.75, "capacity" = 80),
 		),
 		"Set 3" = list(
 			STATS_GRAVES_ROBBED = list("name" = "Graves robbed:", "points" = -3.75, "capacity" = -40),

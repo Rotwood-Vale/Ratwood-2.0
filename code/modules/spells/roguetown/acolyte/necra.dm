@@ -437,6 +437,19 @@
 			if(NORTHWEST)  directions += "northwest"
 			if(SOUTHEAST)  directions += "southeast"
 			if(SOUTHWEST)  directions += "southwest"
+	var/dist = get_dist(turf_user, turf_corpse)
+	var/distance_text
+
+	if(dist > 100)
+		distance_text = "Its presence feels distant."
+	else if(dist > 50)
+		distance_text = "The pull grows stronger, yet remains far."
+	else if(dist > 20)
+		distance_text = "You feel the corpse is not far now."
+	else if(dist > 0)
+		distance_text = "The corpse is very near."
+	else
+		distance_text = "It is here."
 
 	var/direction_text
 	if(length(directions))
@@ -444,4 +457,4 @@
 	else
 		direction_text = "nowhere discernible"
 
-	to_chat(user, span_notice("The Undermaiden pulls on your hand, guiding you [direction_text]."))
+	to_chat(user, span_notice("The Undermaiden pulls on your hand, guiding you [direction_text]. [distance_text]"))
