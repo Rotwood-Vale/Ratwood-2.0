@@ -32,4 +32,5 @@
 		/datum/advclass/trader/cuisiner,
 		/datum/advclass/trader/peddler,
 		/datum/advclass/trader/doomsayer,
+		/datum/advclass/trader/pony,
 	)
