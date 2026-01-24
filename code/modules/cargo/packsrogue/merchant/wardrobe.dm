@@ -145,4 +145,37 @@
 					/obj/item/clothing/mask/rogue/exoticsilkmask,
 				)
 
+/datum/supply_pack/rogue/wardrobe/suits/hblinders
+	name = "Pony Head Blinders"
+	cost = 60
+	contains = list(
+					/obj/item/clothing/mask/rogue/hblinders,
+				)
 
+/datum/supply_pack/rogue/wardrobe/suits/hbit
+	name = "Pony Head Bit"
+	cost = 60
+	contains = list(
+					/obj/item/clothing/head/roguetown/hbit,
+				)
+
+/datum/supply_pack/rogue/wardrobe/suits/harms
+	name = "Pony Arm Harness"
+	cost = 60
+	contains = list(
+					/obj/item/clothing/gloves/roguetown/harms,
+				)
+
+/datum/supply_pack/rogue/wardrobe/suits/hlegs
+	name = "Pony Leg Harness"
+	cost = 60
+	contains = list(
+					/obj/item/clothing/shoes/roguetown/armor/hlegs,
+				)
+
+/datum/supply_pack/rogue/wardrobe/suits/hcorset
+	name = "Pony Harness Corset"
+	cost = 80
+	contains = list(
+					/obj/item/clothing/suit/roguetown/armor/hcorset,
+				)
