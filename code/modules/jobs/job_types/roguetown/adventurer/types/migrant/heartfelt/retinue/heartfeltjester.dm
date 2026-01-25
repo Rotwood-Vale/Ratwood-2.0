@@ -2,7 +2,7 @@
 /datum/advclass/heartfelt/retinue/jester
 	name = "Heartfeltian Jester"
 	tutorial = "You are the Jester of Heartfelt, a bringer of laughter in brighter days, now left to wander through the ashes of a fallen home. \
-	Though grief weighs heavy beneath your painted smile, you turn your steps toward the Peak—hoping your wit, charm, and cunning may yet carve out a place for joy amidst the ruin."
+	Though grief weighs heavy beneath your painted smile, you turn your steps toward the Vale—hoping your wit, charm, and cunning may yet carve out a place for joy amidst the ruin."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/jester
@@ -11,6 +11,7 @@
 	category_tags = list(CTAG_HFT_RETINUE)
 	subclass_social_rank = SOCIAL_RANK_NOBLE
 	class_select_category = CLASS_CAT_HFT_COURT
+	traits_applied = list(TRAIT_ZJUMP, TRAIT_LEAPER, TRAIT_NUTCRACKER, TRAIT_NOFALLDAMAGE1, TRAIT_HEARTFELT)
 
 
 // HIGH COURT - /ONE SLOT/ Roles that were previously in the Court, but moved here.
@@ -55,11 +56,6 @@
 	H.verbs |= /mob/living/carbon/human/proc/ear_trick
 	if(!istype(H.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue))
 		H.internal_organs_slot[ORGAN_SLOT_TONGUE] = new /obj/item/organ/tongue/wild_tongue
-	ADD_TRAIT(H, TRAIT_ZJUMP, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_LEAPER, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_NUTCRACKER, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_NOFALLDAMAGE1, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_HEARTFELT, TRAIT_GENERIC)
 	if(prob(50))
 		ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC) // Jester :3
 	else

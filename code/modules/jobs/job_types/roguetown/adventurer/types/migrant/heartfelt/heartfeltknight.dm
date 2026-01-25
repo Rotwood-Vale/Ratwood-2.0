@@ -45,7 +45,7 @@
 /datum/advclass/heartfelt/knight
 	name = "Knight of Heartfelt"
 	tutorial = "You are a Knight of Heartfelt, once part of a brotherhood in service to your Lord. \
-	Now, alone and committed to safeguarding what remains of your court, you ride to the Peak, resolved to ensure their safe arrival."
+	Now, alone and committed to safeguarding what remains of your court, you ride to the Vale, resolved to ensure their safe arrival."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/heartfelt/knight
@@ -71,7 +71,7 @@
 	/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
 	/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
 	/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-	/datum/skill/combat/unarmed =SKILL_LEVEL_JOURNEYMAN,
+	/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
@@ -103,12 +103,13 @@
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 	)
 	// This code is broken but also not, I assume because it has 1 Advanced Class at the moment DO NOT UNCOMMENT. 
 	// IT WORKS :TM: still gives them a helm and grandmace, just not the choice
 	
 	H.adjust_blindness(-3)
-	var/weapons = list("Zweihander","Great Mace","Battle Axe","Greataxe","Estoc","Lucerne", "Partizan")
+	var/weapons = list("Zweihander","Great Mace","Battle Axe","Greataxe","Estoc","Lucerne", "Partizan", "Glaive")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
@@ -126,6 +127,8 @@
 			r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 		if("Partizan")
 			r_hand = /obj/item/rogueweapon/spear/partizan
+		if("Glaive")
+			/obj/item/rogueweapon/halberd/glaive
 		else //In case they DC or don't choose close the panel, etc
 			r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 

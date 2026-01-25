@@ -2,7 +2,7 @@
 /datum/advclass/heartfelt/retinue/houseguard
 	name = "Heartfeltian House Guard"
 	tutorial = "You are a House Guard for the Lord of Heartfelt, a valiant defender of the once-prosperous barony now in ruin. \
-	Guided by the Magos, you journey to the Peak, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
+	Guided by the Magos, you journey to the Vale, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/houseguard
@@ -11,11 +11,11 @@
 	category_tags = list(CTAG_HFT_RETINUE)
 	class_select_category = CLASS_CAT_HFT_GUARD
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
-	traits_applied = list(TRAIT_MEDIUMARMOR) // MAA footman W/O Guardsman Trait
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED) // Heavy Armor MAA footman W/O Guardsman Trait
 	subclass_stats = list(
 		STATKEY_STR = 2, 
 		STATKEY_INT = 1,
-		STATKEY_CON = 2,
+		STATKEY_CON = 3,
 		STATKEY_WIL = 2,
 		STATKEY_SPD = 1,
 	)
@@ -44,12 +44,12 @@
 
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/black // Fur cloak, instead using the brigandine for 'identification'
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+	gloves = /obj/item/clothing/gloves/roguetown/angle
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	beltl = /obj/item/rogueweapon/sword
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backr = /obj/item/storage/backpack/rogue/satchel/black
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord		//Bit worse shirt protection than the archer
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy		//Bit worse shirt protection than the archer
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/heartfelt	//Makes up for worse shirt protection with kinda better armor protection
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	neck = /obj/item/clothing/neck/roguetown/gorget
@@ -76,6 +76,7 @@
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 	)
 	H.verbs |= /mob/proc/haltyell
 
@@ -104,13 +105,13 @@
 /datum/advclass/heartfelt/retinue/housearb
 	name = "Heartfeltian Missilite"
 	tutorial = "You are a Missilite for the Lord of Heartfelt, a ranged combatant of the once-prosperous barony now in ruin. \
-	Guided by the Magos, you journey to the Peak, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
+	Guided by the Magos, you journey to the Vale, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/housearb
 	category_tags = list(CTAG_HFT_RETINUE)
 	class_select_category = CLASS_CAT_HFT_GUARD
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
-	traits_applied = list(TRAIT_MEDIUMARMOR) // Medium Armor Forced - Heavier 'Defensive' Class
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED) // Medium Armor Forced - Heavier 'Defensive' Class
 	subclass_stats = list(
 		STATKEY_SPD = 2,
 		STATKEY_PER = 2,
@@ -141,12 +142,12 @@
 
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/black // Fur cloak, instead of tabard due to using the brigandine for 'identification'
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+	gloves = /obj/item/clothing/gloves/roguetown/angle
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	beltl = /obj/item/rogueweapon/sword
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backr = /obj/item/storage/backpack/rogue/satchel/black
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord		
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy		
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/heartfelt
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	neck = /obj/item/clothing/neck/roguetown/gorget
@@ -159,12 +160,15 @@
 		if("Crossbow")
 			beltr = /obj/item/quiver/bolts
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+			H.change_stat(STATKEY_STR, 1)
 		if("Bow")
 			beltr = /obj/item/quiver/arrows
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+			H.change_stat(STATKEY_PER, 1)
 		if("Sling")
 			beltr = /obj/item/quiver/sling/iron
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling // Both are belt slots and it's not worth setting where the cugel goes for everyone else, sad.
+			H.change_stat(STATKEY_SPD, 1)
 		else
 			beltr = /obj/item/quiver/bolts
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
@@ -174,6 +178,7 @@
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 	)
 	H.verbs |= /mob/proc/haltyell
 
@@ -204,7 +209,7 @@
 /datum/advclass/heartfelt/retinue/squire
 	name = "Heartfeltian Squire"
 	tutorial = "You are a Squire for the Knights of Heartfelt, a trainee of the valiant defenders of the once-prosperous barony now in ruin. \
-	Guided by the Magos, you journey to the Peak, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
+	Guided by the Magos, you journey to the Vale, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/squire
@@ -212,14 +217,14 @@
 	pickprob = 100
 	category_tags = list(CTAG_HFT_RETINUE)
 	class_select_category = SOCIAL_RANK_MINOR_NOBLE
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SQUIRE_REPAIR)
-	subclass_stats = list( // 8 points, same as the rest.
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SQUIRE_REPAIR, TRAIT_STEELHEARTED)
+	subclass_stats = list( // Made 9 points due to lack of Guardsman Trait
 		STATKEY_STR = 1, 
 		STATKEY_INT = 1,
 		STATKEY_PER = 1,
 		STATKEY_CON = 2,
 		STATKEY_WIL = 2,
-		STATKEY_SPD = 1,
+		STATKEY_SPD = 2,
 	)
 	cmode_music = 'sound/music/combat_squire.ogg'
 
@@ -237,16 +242,18 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/heartfelt/retinue/squire/pre_equip(mob/living/carbon/human/H)
 	..()
 
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/heartfelt
-	gloves = /obj/item/clothing/gloves/roguetown/leather
+	gloves = /obj/item/clothing/gloves/roguetown/angle
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/flashlight/flare/torch/lantern
@@ -259,9 +266,10 @@
 		/obj/item/rogueweapon/hammer/iron = 1, // Failed Squire Virtue Items
 		/obj/item/polishing_cream = 1,
 		/obj/item/armor_brush = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 	) 
 
-	var/weapons = list("Sword & Shield","Mace & Shield","Spear","Crossbow", "Bow")
+	var/weapons = list("Sword & Shield","Mace & Shield","Spear & Shield","Crossbow", "Bow")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
@@ -271,12 +279,13 @@
 		if("Mace & Shield")
 			beltr = /obj/item/rogueweapon/mace/steel
 			backl = /obj/item/rogueweapon/shield/iron
-		if("Spear")
-			r_hand = /obj/item/rogueweapon/spear
+		if("Spear & Shield")
+			r_hand = /obj/item/rogueweapon/spear/boar
+			backl = /obj/item/rogueweapon/shield/iron
 		if("Crossbow")
 			beltr = /obj/item/quiver/bolts
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-		if("Bow") // They can head down to the armory to sideshift into one of the other bows.
+		if("Bow")
 			beltr = /obj/item/quiver/arrows
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 		else
