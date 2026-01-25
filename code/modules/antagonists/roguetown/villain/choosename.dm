@@ -1,4 +1,5 @@
-/mob/living/carbon/human/proc/choose_name_popup(input)
+// `timeout` is in seconds; set to 0 or negative for unlimited time.
+/mob/living/carbon/human/proc/choose_name_popup(input, timeout = 180)
 	if(QDELETED(src))
 		return
 	var/old_name = real_name
@@ -10,7 +11,7 @@
 		mob_timers["mirrortime"] = world.time
 		var/begin_time = world.time
 		var/new_name = input(src, "What should your [input] name be?", "MASK")
-		if(world.time > begin_time + 180 SECONDS)
+		if(timeout > 0 && world.time > begin_time + timeout SECONDS)
 			to_chat(src, "<font color='red'>You waited too long.</font>")
 			return
 		new_name = reject_bad_name(new_name)

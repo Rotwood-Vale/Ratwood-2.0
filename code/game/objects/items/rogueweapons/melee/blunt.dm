@@ -644,6 +644,27 @@
 	smelt_bar_num = 3
 	max_integrity = 350
 
+
+/obj/item/rogueweapon/mace/maul/grand/sahnuzal
+	// Exact replica of grand maul but dark crimson and extended reach
+	name = "Bloodfall"
+	desc = "A Brutal maul of Graggarite origin. It's so heavy, no sane mortal can lift this. Only the strongest of warriors can wield such a weapon, and even then, it is incredibly taxing on the body."
+	icon_state = "cross"
+	force_wielded = 50 // -1 compared to grand maul.
+	smeltresult = /obj/item/ingot/blacksteel
+	minstr = 20
+	wdefense_wbonus = 8
+	smelt_bar_num = 3
+	max_integrity = 2500
+	color = "#8B0000" // dark crimson
+	reach = 3
+	minstr_req = TRUE
+	hitsound = list('sound/shuz/woosh/hit1.ogg', 'sound/shuz/woosh/hit2.ogg', 'sound/shuz/woosh/hit3.ogg', 'sound/shuz/woosh/hit4.ogg')
+	swingsound = list('sound/shuz/woosh/woosh1.ogg', 'sound/shuz/woosh/woosh2.ogg', 'sound/shuz/woosh/woosh3.ogg', 'sound/shuz/woosh/woosh4.ogg')
+	demolition_mod = 4.25 // Moars Forts BEGONE!!! I AM CONQUEROR OF CONQUERORS!!!
+	wdefense = 5
+
+
 //Dwarvish mauls. Unobtanium outside of Grudgebearer. Do not change that.
 /obj/item/rogueweapon/mace/maul/steel
 	name = "dwarvish maul"
@@ -706,6 +727,49 @@
 	desc = "This can throw a standing opponent and slow them down. \
 	5 second cooldown on consecutive targets. Prone targets halve the knockback distance. \
 	Not fully charging the attack limits knockback to 1 tile."
+
+
+/datum/intent/maul/decimate
+	name = "decimate"
+	blade_class = BCLASS_SMASH
+	attack_verb = list("decimates", "annihilates", "obliterates")
+	chargetime = 6
+	damfactor = 2.5
+	intent_intdamage_factor = 3.0//30% more than standard.
+	icon_state = "incrush"
+	desc = "A devastating blow that can stagger even the mightiest of foes. \
+	6 second cooldown on consecutive targets. Prone targets halve the knockback distance. \
+	Not fully charging the attack limits knockback to 1 tile."
+
+
+//Copy paste of crush. Shotout to you Carl.
+/datum/intent/maul/decimate/spec_on_apply_effect(mob/living/H, mob/living/user, params)
+	var/chungus_khan_str = user.STASTR
+	if(H.has_status_effect(/datum/status_effect/debuff/yeetcd))
+		return // Recently knocked back, cannot be knocked back again yet
+	if(chungus_khan_str < 20)
+		return // Too weak to have any effect
+	var/scaling = CLAMP((chungus_khan_str - 10) / 2, 1, 4) // Decimate is less knockbacky
+	H.apply_status_effect(/datum/status_effect/debuff/yeetcd)
+	H.Slowdown(scaling)
+	// Drain 15% of the target's max stamina as fatigue
+	if(H && istype(H, /mob/living) && H.max_stamina)
+		var/stam_drain = max(1, round(H.max_stamina * 0.15))
+		H.stamina_add(stam_drain)
+	// Copypasta from knockback proc cuz I don't want the math there
+	var/knockback_tiles = scaling // 1 to 4 tiles based on strength
+	if(H.resting)
+		knockback_tiles = max(1, knockback_tiles / 2)
+	if(user?.client?.chargedprog < 100)
+		knockback_tiles = 1 // Minimal knockback on non-charged smash.
+	var/turf/edge_target_turf = get_edge_target_turf(H, get_dir(user, H))
+	if(istype(edge_target_turf))
+		H.safe_throw_at(edge_target_turf, \
+		knockback_tiles, \
+		scaling, \
+		user, \
+		spin = FALSE, \
+		force = H.move_force)
 
 //We making it out of the vale with this one. RAAAAAA
 /datum/intent/maul/crush/spec_on_apply_effect(mob/living/H, mob/living/user, params)
