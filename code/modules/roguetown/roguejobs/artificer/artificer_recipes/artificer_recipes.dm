@@ -318,6 +318,13 @@
 	additional_items = list(/obj/item/natural/wood/plank = 1)
 	hammers_per_item = 3
 
+/datum/artificer_recipe/wood/weapons/wdagger
+
+	name = "Wooden Dagger (+1 Plank)"
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/wood
+	hammers_per_item = 3
+	additional_items = list(/obj/item/natural/wood/plank = 1)
+
 /datum/artificer_recipe/wood/weapons/wshield
 	name = "Wooden Shield (+1 Plank)"
 	created_item = /obj/item/rogueweapon/shield/wood/crafted

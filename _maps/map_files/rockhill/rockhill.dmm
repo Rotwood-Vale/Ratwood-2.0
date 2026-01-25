@@ -64238,6 +64238,14 @@
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/warden)
+"tNN" = (
+/obj/structure/rack/rogue,
+/obj/item/rogueweapon/huntingknife/idagger/wood,
+/obj/item/rogueweapon/huntingknife/idagger/wood,
+/obj/item/rogueweapon/huntingknife/idagger/wood,
+/obj/item/rogueweapon/huntingknife/idagger/wood,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/town/rockhill)
 "tNU" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/spear,
@@ -370453,7 +370461,7 @@ xlm
 rEJ
 wPV
 sHm
-auT
+tNN
 mwE
 mwE
 mwE

@@ -38146,6 +38146,14 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
+"jir" = (
+/obj/structure/rack/rogue,
+/obj/item/rogueweapon/huntingknife/idagger/wood,
+/obj/item/rogueweapon/huntingknife/idagger/wood,
+/obj/item/rogueweapon/huntingknife/idagger/wood,
+/obj/item/rogueweapon/huntingknife/idagger/wood,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/manor)
 "jit" = (
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/rogue/hexstone,
@@ -310516,7 +310524,7 @@ kvz
 bql
 weQ
 hYq
-uQS
+jir
 uQS
 uQS
 hrt
