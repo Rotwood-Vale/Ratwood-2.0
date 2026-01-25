@@ -46,7 +46,7 @@
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
 						/obj/item/flint = 1,
-						/obj/item/flashlight/flare/torch = 1,
+						/obj/item/flashlight/flare/torch/lantern = 1,
 						/obj/item/rogueweapon/chisel = 1,
 						/obj/item/rogueweapon/hammer/wood = 1,
 						/obj/item/recipe_book/survival = 1,
