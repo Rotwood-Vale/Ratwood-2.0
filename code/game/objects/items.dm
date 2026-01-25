@@ -1152,6 +1152,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(nuforce < 10)
 		return 0
 
+	// Target-level immunity checks: if the owner of the affected bodypart is immune to dismember, abort.
+	if(affecting.owner && (HAS_TRAIT(affecting.owner, TRAIT_NODISMEMBER) || HAS_TRAIT(affecting.owner, TRAIT_TRUE_CRITICAL_RESISTANCE)))
+		return 0
+
 	var/probability = nuforce * (total_dam / affecting.max_damage)
 	var/hard_dismember = HAS_TRAIT(affecting, TRAIT_HARDDISMEMBER)
 	var/easy_dismember = affecting.rotted || affecting.skeletonized || HAS_TRAIT(affecting, TRAIT_EASYDISMEMBER)

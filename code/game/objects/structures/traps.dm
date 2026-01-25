@@ -129,7 +129,9 @@
 		return
 	flare()
 	if(isliving(AM))
-		trap_effect(AM)
+		// If the mob has True Unstoppable, the trap still triggers (flare) but has no effect
+		if(!HAS_TRAIT(AM, TRAIT_TRUEUNSTOPPABLE))
+			trap_effect(AM)
 
 /obj/structure/trap/proc/trap_effect(mob/living/L)
 	return

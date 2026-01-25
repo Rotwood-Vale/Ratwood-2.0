@@ -189,6 +189,23 @@
 			toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
 			if(HAS_TRAIT(src, TRAIT_PACIFISM)) // No Con-Checking if you're a pacifist. You aren't MEAN!!!
 				return FALSE
+
+			// Conqueror's Steps: special run/charge effect for antags with the trait
+			if(HAS_TRAIT(src, TRAIT_CONQUEROR_STEPS))
+				var/mob/living/L = M
+				// Drain target stamina fully (wind them)
+				if(isliving(L))
+					L.stamina_add(L.max_stamina)
+				var/playsound = FALSE
+				// Flat 50 brute that ignores armor checks
+				if(L.apply_damage(50, BRUTE, "chest", 0))
+					playsound = TRUE
+				if(playsound)
+					playsound(src, "genblunt", 100, TRUE)
+				visible_message(span_warning("[src] charges into [L] with unstoppable force!"), span_warning("I charge into [L] with unstoppable force!"))
+				if(isliving(L) && L.getBruteLoss() >= 150)
+					L.Unconscious(10 SECONDS)
+				return TRUE
 			var/mob/living/L = M
 
 			var/self_points = FLOOR((STACON + STASTR)/2, 1)

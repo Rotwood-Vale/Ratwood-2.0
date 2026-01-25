@@ -70,6 +70,10 @@
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+
+	// Steel Skin: flat 75% damage reduction for mobs with the trait
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
+		amount *= 0.1
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health, required_status)
 	else
@@ -81,6 +85,10 @@
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+
+	// Steel Skin: reduce positive fire damage
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
+		amount *= 0.1
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health, required_status)
 	else
@@ -97,6 +105,10 @@
 		else
 			blood_volume -= amount
 		blood_volume = max(blood_volume, 0)
+	// Steel Skin: reduce positive toxin damage
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
+		amount *= 0.1
+
 	if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
 		amount = min(amount, 0)
 	if(has_status_effect(/datum/status_effect/buff/fortify) && amount < 0)
@@ -112,6 +124,10 @@
 /mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+
+	// Steel Skin: reduce positive stamina damage
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
+		amount *= 0.1
 	if(amount > 0)
 		take_overall_damage(0, 0, amount, updating_health)
 	else

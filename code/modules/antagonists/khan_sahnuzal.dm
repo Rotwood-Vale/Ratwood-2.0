@@ -9,6 +9,7 @@
     var/max_simultaneous = 1
     var/active = FALSE
     var/mob = null
+    var/khan_scaled = FALSE
 
     proc/Initialize()
         // Called when module loads or antagonist manager registers this antagonist
@@ -25,7 +26,7 @@
         mob = H
         // Give unique equipment (create item with mob as owner/location)
         if(mob)
-            new /obj/item/rogueweapon/mace/maul/grand/sahnuzal(mob)
+            H.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/sahnuzal(mob), TRUE)
         return
 
     // Attempt to set the antagonist's displayed name. Returns 1 on success, 0 on failure.
@@ -70,20 +71,112 @@
         // TODO: implement behaviour
         return
 
+    proc/Perform_Decimate(mob/living/carbon/H = null)
+        // Gigantic maul crushing cone ability.
+        var/mob/living/carbon/human/M = H || mob
+        if(!M)
+            return FALSE
+
+        // Determine direction and target turfs
+        var/dir = M.dir
+        var/turf/center = get_step(M.loc, dir) // inner safe tile
+        if(!isturf(center))
+            to_chat(M, span_warning("There's nowhere to swing!"))
+            return FALSE
+
+        // Build cone (distance 2 and 3, with side tiles)
+        var/list/cone_turfs = list()
+        var/turf/prev = center
+        for(var/i = 2; i <= 3; i++)
+            if(!prev)
+                break
+            var/turf/T = get_step(prev, dir)
+            if(!isturf(T))
+                break
+            // center column
+            cone_turfs += T
+            // sides
+            var/turf/left = get_step(T, turn(dir, 90))
+            var/turf/right = get_step(T, turn(dir, -90))
+            if(isturf(left)) cone_turfs += left
+            if(isturf(right)) cone_turfs += right
+            prev = T
+
+        // Play oncast and VO
+        playsound(get_turf(M), pick('sound/shuz/obliterate/oncast1.ogg','sound/shuz/obliterate/oncast2.ogg'), 100, TRUE)
+        playsound(get_turf(M), pick('sound/shuz/obliterate/vo1.ogg','sound/shuz/obliterate/vo2.ogg','sound/shuz/obliterate/vo3.ogg'), 100, TRUE)
+
+        // Telegraph visuals that last the entire windup: green safe tile + red cone
+        var/windup_time = 1 SECONDS
+        if(isturf(center))
+            var/obj/effect/temp_visual/impact_effect/green_laser/safe_marker = new /obj/effect/temp_visual/impact_effect/green_laser(center)
+            safe_marker.duration = windup_time
+        for(var/turf/X in cone_turfs)
+            if(isturf(X))
+                var/obj/effect/temp_visual/impact_effect/red_laser/danger_marker = new /obj/effect/temp_visual/impact_effect/red_laser(X)
+                danger_marker.duration = windup_time
+
+        // Windup then apply effects
+        if(do_after(M, windup_time, target = M))
+            // Gather targets in cone tiles (exclude the inner safe tile)
+            var/list/hit_mobs = list()
+            for(var/turf/T in cone_turfs)
+                if(!isturf(T))
+                    continue
+                for(var/mob/living/L in locate(/mob/living) in T.contents)
+                    if(!L || L == M || L.stat == DEAD)
+                        continue
+                    if(!(L in hit_mobs))
+                        hit_mobs += L
+
+            if(!length(hit_mobs))
+                // Miss: play miss sound and spawn temporary dreamfiend ichor decals on every cone tile
+                playsound(get_turf(M), pick('sound/shuz/obliterate/miss1.ogg','sound/shuz/obliterate/miss2.ogg'), 100, TRUE)
+                for(var/turf/cone_tile in cone_turfs)
+                    if(isturf(cone_tile))
+                        var/obj/effect/decal/cleanable/dreamfiend_ichor/D = new /obj/effect/decal/cleanable/dreamfiend_ichor(cone_tile)
+                        if(D)
+                            spawn(12 SECONDS)
+                                if(D)
+                                    qdel(D)
+                return TRUE
+
+            // Hit something
+            if(length(hit_mobs) > 1)
+                playsound(get_turf(M), pick('sound/shuz/obliterate/multi1.ogg','sound/shuz/obliterate/multi2.ogg'), 100, TRUE)
+                for(var/mob/living/T in hit_mobs)
+                    if(!T || T.stat == DEAD)
+                        continue
+                    T.Knockdown(1)
+                    var/obj/item/bodypart/affecting = T.get_bodypart(BODY_ZONE_HEAD)
+                    if(!affecting)
+                        affecting = T.get_bodypart(BODY_ZONE_CHEST)
+                    if(affecting)
+                        affecting.bodypart_attacked_by(BCLASS_SMASH, rand(25,65), M, affecting.body_zone)
+                return TRUE
+
+            // Isolated target
+            if(length(hit_mobs) == 1)
+                var/mob/living/iso = hit_mobs[1]
+                playsound(get_turf(M), pick('sound/shuz/obliterate/isolated1.ogg','sound/shuz/obliterate/isolated2.ogg'), 100, TRUE)
+                playsound(get_turf(M), pick('sound/shuz/obliterate/hitisolated1.ogg','sound/shuz/obliterate/hitisolated2.ogg','sound/shuz/obliterate/hitisolated3.ogg'), 100, TRUE)
+                iso.Knockdown(1)
+                var/obj/item/bodypart/headbp = iso.get_bodypart(BODY_ZONE_HEAD)
+                if(!headbp)
+                    headbp = iso.get_bodypart(BODY_ZONE_CHEST)
+                if(headbp)
+                    headbp.bodypart_attacked_by(BCLASS_SMASH, rand(75,150), M, headbp.body_zone)
+                    // 45% chance to fracture neck (spine)
+                    if(prob(45))
+                        var/obj/item/bodypart/neckbp = iso.get_bodypart(BODY_ZONE_PRECISE_NECK)
+                        if(neckbp)
+                            neckbp.add_wound(/datum/wound/fracture/neck, FALSE, TRUE)
+                return TRUE
+        return TRUE
+
     // on_gain/after_name_change are defined below via absolute-path procs
 
-    // Spell placeholders
-    proc/spell_shadow_blast(mob/target)
-        // placeholder for an AOE blast
-        return
 
-    proc/spell_tendril_grasp(mob/target)
-        // placeholder for a tether/pull spell
-        return
-
-    proc/spell_realm_of_doom(mob/target)
-        // placeholder for ultimate that isolates target
-        return
 
 // Hook: make this antagonist discoverable by any antagonist manager in the project
 // Registration is handled by the antagonist manager; avoid top-level mutations here.
@@ -104,6 +197,81 @@
             A.owner_has_control = TRUE
             A.Grant(M)
             M.mind.khan_declare_action = A
+        // Clear any pre-existing traits so the Khan has a clean traitset, just in case
+        if(M.status_traits)
+            for(var/trait in list(M.status_traits))
+                REMOVE_TRAIT(M, trait, null)
+
+        // Reset any existing skill data and apply Khan-specific skill ranks in case we're converting someone who was already in game.
+        if(M.skills)
+            M.skills.Destroy()
+            M.skills = null
+        M.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_LEGENDARY, TRUE)
+        M.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
+        M.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_NOVICE, TRUE)
+        M.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+        M.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
+        M.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_MASTER, TRUE)
+        M.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
+        ADD_TRAIT(M, TRAIT_BIGGUY, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_STEEL_SKIN, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_STEEL_FEET, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_CRITICAL_RESISTANCE, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_TRUE_CRITICAL_RESISTANCE, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_NODISMEMBER, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_CONQUEROR_STEPS, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_GRABIMMUNE, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_NOPAINSTUN, INNATE_TRAIT)
+        if(M)
+            // Remove any existing equipped clothing/weapons so we reliably replace with Khan kit
+            // Delete everything the mob is wearing/holding (nuclear option, in case of admin fuckery, like making someone the Khan)
+            for(var/obj/item/I in M.get_equipped_items(TRUE))
+                if(I)
+                    qdel(I)
+            for(var/obj/item/I in M.held_items)
+                if(I)
+                    qdel(I)
+            M.update_inv_hands()
+            M.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn(M), SLOT_HEAD, TRUE)
+            var/obj/item/clothing/gloves/G = new /obj/item/clothing/gloves/roguetown/chain/gronn(M)
+            if(G)
+                G.color = "#FFFF00"
+            M.equip_to_slot_or_del(G, SLOT_GLOVES, TRUE)
+            var/obj/item/clothing/shoes/S = new /obj/item/clothing/shoes/roguetown/boots/armor/iron/gronn(M)
+            if(S)
+                S.color = "#FFFF00"
+            M.equip_to_slot_or_del(S, SLOT_SHOES, TRUE)
+            var/obj/item/clothing/under/P = new /obj/item/clothing/under/roguetown/chainlegs/kilt(M)
+            if(P)
+                P.color = "#FFFF00"
+            M.equip_to_slot_or_del(P, SLOT_PANTS, TRUE)
+            M.equip_to_slot_or_del(new /obj/item/clothing/cloak/lordcloak(M), SLOT_CLOAK, TRUE)
+            M.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap(M), SLOT_BACK_R, TRUE)
+            M.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/sahnuzal(M), TRUE)
+
+            // had this weird bug where things would constantly get colored. I am the dye machine!!111!
+            for(var/obj/item/I in M.get_equipped_items())
+                if(!I)
+                    continue
+                if(I.type == /obj/item/clothing/cloak/lordcloak)
+                    continue
+                if(I.type == /obj/item/rogueweapon/scabbard/gwstrap)
+                    continue
+                I.color = "#FFFF00"
+            M.STASTR = 20
+            M.STASPD = 3
+            M.STACON = 15 + rand(1,3)
+            M.STAWIL = 15 + rand(1,3)
+            M.STAPER = 15 + rand(1,3)
+
+            if(!src.khan_scaled)
+                M.transform = M.transform.Scale(1.25, 1.25)
+                M.transform = M.transform.Translate(0, (0.25 * 16))
+                M.update_transform()
+                src.khan_scaled = TRUE
+        // Grant the Decimate/Nightfall spell as an innate ability
+        if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/decimate))
+            M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/decimate)
 
 /datum/antagonist/khan_sahnuzal/remove_innate_effects(mob/living/mob_override)
     . = ..()
@@ -112,9 +280,29 @@
         M.verbs -= /mob/living/carbon/human/verb/declare_khan_war
         var/datum/action/innate/A = M.mind.khan_declare_action
         M.mind.khan_declare_action = null
+
+        REMOVE_TRAIT(M, TRAIT_BIGGUY, INNATE_TRAIT)
+        REMOVE_TRAIT(M, TRAIT_STEEL_SKIN, INNATE_TRAIT)
+        REMOVE_TRAIT(M, TRAIT_CRITICAL_RESISTANCE, INNATE_TRAIT)
+        REMOVE_TRAIT(M, TRAIT_TRUE_CRITICAL_RESISTANCE, INNATE_TRAIT)
+        REMOVE_TRAIT(M, TRAIT_NODISMEMBER, INNATE_TRAIT)
+        REMOVE_TRAIT(M, TRAIT_CONQUEROR_STEPS, INNATE_TRAIT)
+        REMOVE_TRAIT(M, TRAIT_GRABIMMUNE, INNATE_TRAIT)
+        REMOVE_TRAIT(M, TRAIT_NOPAINSTUN, INNATE_TRAIT)
+        REMOVE_TRAIT(M, TRAIT_STEEL_FEET, INNATE_TRAIT)
         if(A)
             A.Remove(M)
             qdel(A)
+        // Remove the granted Decimate spell if present
+        if(M.mind)
+            M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/decimate)
+        // Revert giant transform if applied
+        if(src && src.khan_scaled)
+            if(M)
+                M.transform = M.transform.Translate(0, -(0.25 * 16))
+                M.transform = M.transform.Scale(1/1.25, 1/1.25)
+                M.update_transform()
+            src.khan_scaled = FALSE
 
 
 /datum/antagonist/khan_sahnuzal/on_gain()

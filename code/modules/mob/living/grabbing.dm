@@ -178,6 +178,12 @@
 			to_chat(user, span_warning("Can't get a grip on this one!"))
 			return
 
+	// True Unstoppable: non-giants cannot grab/tackle this mob; giants still can
+	if(HAS_TRAIT(M, TRAIT_TRUEUNSTOPPABLE) && !HAS_TRAIT(user, TRAIT_BIGGUY))
+		if(user.cmode)
+			to_chat(user, span_warning("They shrug off your attempt!"))
+		return
+
 	if(M.compliance || M.surrendering)
 		combat_modifier = 2
 
@@ -323,6 +329,10 @@
 			else
 				user.stop_pulling()
 		if(/datum/intent/grab/shove)
+			// prevent shoves from non-giants against true unstoppable
+			if(HAS_TRAIT(M, TRAIT_TRUEUNSTOPPABLE) && !HAS_TRAIT(user, TRAIT_BIGGUY))
+				to_chat(user, span_warning("They shrug off your shove!"))
+				return FALSE
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE

@@ -20,7 +20,7 @@
 	//Blood regeneration if there is some space
 	if(blood_volume < BLOOD_VOLUME_NORMAL)
 		blood_volume += 0.1 // regenerate blood VERY slowly
-		if((blood_volume < BLOOD_VOLUME_OKAY) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
+		if((blood_volume < BLOOD_VOLUME_OKAY) && !(HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) || HAS_TRAIT(src, TRAIT_TRUE_CRITICAL_RESISTANCE)))
 			adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
 
 /mob/living/proc/handle_blood()
@@ -119,7 +119,7 @@
 
 	//Effects of bloodloss - only if we're actually alive, though
 	if (stat != DEAD)
-		if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
+		if(!(HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) || HAS_TRAIT(src, TRAIT_TRUE_CRITICAL_RESISTANCE)))
 			var/current_bleeding_tier
 			switch(blood_volume)
 				if(BLOOD_VOLUME_SAFE to INFINITY)

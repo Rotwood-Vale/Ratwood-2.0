@@ -42,6 +42,9 @@
 
 	if(C.status_flags & GODMODE)
 		return FALSE
+	// Absolute dismember immunity for True Critical Resistance
+	if(HAS_TRAIT(C, TRAIT_TRUE_CRITICAL_RESISTANCE))
+		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 	if(user)
@@ -162,6 +165,9 @@
 	if(!dismemberable)
 		return FALSE
 	if(C.status_flags & GODMODE)
+		return FALSE
+	// Absolute dismember immunity for True Critical Resistance
+	if(HAS_TRAIT(C, TRAIT_TRUE_CRITICAL_RESISTANCE))
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE

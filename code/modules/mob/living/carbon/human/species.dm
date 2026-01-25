@@ -693,6 +693,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			if(is_nudist)
 				return FALSE
+			// Khan's Steel Skin: refuse medium/heavy armor
+			// Khan's Steel Skin: refuse medium/heavy armor
+			// Narrow the type to clothing so the compiler knows `armor_class` exists.
+			var/obj/item/clothing/CL = I
+			if(HAS_TRAIT(H, TRAIT_STEEL_SKIN) && CL && CL.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM))
+				if(!disable_warning)
+					to_chat(H, span_warning("I refuse to wear such frivalous attire."))
+				return FALSE
 			if(I.blocking_behavior & BULKYBLOCKS)
 				if(H.cloak)
 					return FALSE
@@ -1588,6 +1596,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				shove_dir = get_dir(user.loc, target_oldturf)
 				target_shove_turf = get_step(target.loc, shove_dir)
 				target.Move(target_shove_turf, shove_dir)
+			else if(HAS_TRAIT(user, TRAIT_STEEL_FEET))
+				// Steel Feet: instant knockdown, no knockback
+				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+				target.visible_message(span_danger("[user.name] kicks [target.name], knocking them down!"),
+				span_danger("I'm knocked down from a kick by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, span_danger("I kick [target.name], knocking them down!"))
+				log_combat(user, target, "kicked", "knocking them down")
+
 			else if(HAS_TRAIT(user, TRAIT_STRONGKICK))
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 				target.throw_at(target_shove_turf, 1, 1)

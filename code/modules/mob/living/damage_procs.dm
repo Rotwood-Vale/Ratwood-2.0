@@ -161,6 +161,9 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
+		amount *= 0.1
+
 	. = bruteloss
 	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= bruteloss
@@ -178,6 +181,9 @@
 /mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
+		amount *= 0.1
 	if(mob_timers && amount > 0)
 		mob_timers["lastoxydam"] = world.time
 	if(has_status_effect(/datum/status_effect/buff/fortify) && amount < 0)
@@ -209,6 +215,9 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
+		amount *= 0.1
+
 	. = toxloss
 	toxloss = CLAMP((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= toxloss
@@ -235,6 +244,9 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
+		amount *= 0.1
+
 	. = fireloss
 	fireloss = CLAMP((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= fireloss
@@ -252,6 +264,9 @@
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
+		amount *= 0.1
 
 	. = cloneloss
 	cloneloss = CLAMP((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)

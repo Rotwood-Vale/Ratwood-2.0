@@ -598,6 +598,7 @@
 	desc = "The warmth of a fire soothes my ails."
 	icon_state = "campfire"
 
+
 /datum/status_effect/buff/healing/campfire
 	id = "healing_campfire"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/campfire

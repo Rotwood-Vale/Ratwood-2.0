@@ -676,6 +676,10 @@
 	Return TRUE if critical resistance was triggered, false if it don't work
 */
 /mob/living/proc/try_resist_critical()
+	// Absolute immunity: if a mob has the True Critical Resistance trait, block all critical effects unconditionally.
+	if(HAS_TRAIT(src, TRAIT_TRUE_CRITICAL_RESISTANCE))
+		return TRUE
+
 	var/resistance = HAS_TRAIT(src, TRAIT_CRITICAL_RESISTANCE)
 	if(!resistance)
 		return FALSE

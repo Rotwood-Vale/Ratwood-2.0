@@ -70,6 +70,17 @@
 	var/turf/open/T = prepare_step()
 	if(!T)
 		return
+	if(HAS_TRAIT(parent, TRAIT_CONQUEROR_STEPS))
+		var/list/steps_sounds = list(
+			'sound/shuz/steps/step1.ogg',
+			'sound/shuz/steps/step2.ogg',
+			'sound/shuz/steps/step3.ogg',
+			'sound/shuz/steps/step4.ogg',
+			'sound/shuz/steps/step5.ogg'
+		)
+		var/used = pick(steps_sounds)
+		playsound(T, used, "vol" = 80, "extrarange" = 8)
+		return
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
 		playsound(T, footstep_sounds, volume)
 		return
@@ -96,6 +107,17 @@
 	if(!T)
 		return
 	if(HAS_TRAIT(parent, TRAIT_SILENT_FOOTSTEPS))
+		return
+	if(HAS_TRAIT(parent, TRAIT_CONQUEROR_STEPS))
+		var/list/steps_sounds = list(
+			'sound/shuz/steps/step1.ogg',
+			'sound/shuz/steps/step2.ogg',
+			'sound/shuz/steps/step3.ogg',
+			'sound/shuz/steps/step4.ogg',
+			'sound/shuz/steps/step5.ogg'
+		)
+		var/used = pick(steps_sounds)
+		playsound(T, used, "vol" = 80, "extrarange" = 8)
 		return
 	var/mob/living/carbon/human/H = parent
 	var/feetCover = (H.wear_armor && (H.wear_armor.body_parts_covered & FEET)) || (H.wear_pants && (H.wear_pants.body_parts_covered & FEET))

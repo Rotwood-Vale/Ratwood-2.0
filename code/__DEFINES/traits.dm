@@ -15,9 +15,11 @@
 #define TRAIT_VAMPBITE "Vampire bite"
 #define TRAIT_STRONGBITE "Strong Bite"
 #define TRAIT_STRONGKICK "Strong Kick"
+#define TRAIT_STEEL_FEET "Steel Feet"
 #define TRAIT_NOBLE "Noble Blooded"
 #define TRAIT_DEFILED_NOBLE "Drained Noble Blood"
 #define TRAIT_DISGRACED_NOBLE "Formerly Noble Blooded"
+#define TRAIT_STEEL_FEET "Steel Feet"
 #define TRAIT_EMPATH "Empath"
 #define TRAIT_BREADY "Battleready"
 #define TRAIT_MEDIUMARMOR "Maille Training"
@@ -27,6 +29,7 @@
 #define TRAIT_DECEIVING_MEEKNESS "Deceiving Meekness"
 #define TRAIT_CRITICAL_RESISTANCE "Critical Resistance"
 #define TRAIT_CRITICAL_WEAKNESS "Critical Weakness"
+#define TRAIT_TRUE_CRITICAL_RESISTANCE "True Critical Resistance"
 #define TRAIT_DNR "Bane of Existence"
 #define TRAIT_MANIAC_AWOKEN "Awoken"
 #define TRAIT_INFINITE_STAMINA "Indefatigable" //for ai
@@ -207,6 +210,9 @@
 #define TRAIT_NOBREATH	"Breathless"
 #define TRAIT_TOXIMMUNE	"Poison Immune"
 #define TRAIT_GRABIMMUNE "Unstoppable"
+#define TRAIT_STEEL_SKIN "Steel Skin"
+#define TRAIT_CONQUEROR_STEPS "Conqueror's Steps"
+#define TRAIT_TRUEUNSTOPPABLE "True Unstoppable"
 #define TRAIT_ROTMAN "Rotman"
 #define TRAIT_ZOMBIE_IMMUNE "Deadite Immunity" //immune to deadite infection
 #define TRAIT_NOHUNGER	"Foodless"
@@ -314,6 +320,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_MAGEARMOR = span_info("My magics can protect me from a blow every so often."),
 	TRAIT_DECEIVING_MEEKNESS = span_info("People look at me and think I am a weakling. They are mistaken. I've learned how to hide my vices and true beliefs from others."),
 	TRAIT_CRITICAL_RESISTANCE = span_info("My constitution is iron-clad. My lifeblood flows slowly, I can resist the first few criitical wounds that would fell others, but repeated punishment will overwhelm my defenses."),
+	TRAIT_TRUEUNSTOPPABLE = span_warning("I shrug off most nets, traps and shoves; only other giants can grab me."),
 	TRAIT_CRITICAL_WEAKNESS = span_danger("I am weak to wounds that others could survive."),
 	TRAIT_DNR = span_danger("My lux' vigor is weak. There is no hope for me. This lyfe is all I have."),
 	TRAIT_MANIAC_AWOKEN = span_danger("I am <b>WAKING UP</b> and the sheeple know this. They will resist."),

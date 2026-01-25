@@ -657,11 +657,10 @@
 	smelt_bar_num = 3
 	max_integrity = 2500
 	color = "#8B0000" // dark crimson
-	reach = 3
+	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/decimate, /datum/intent/effect/daze, /datum/intent/effect/hobble)
 	minstr_req = TRUE
-	hitsound = list('sound/shuz/woosh/hit1.ogg', 'sound/shuz/woosh/hit2.ogg', 'sound/shuz/woosh/hit3.ogg', 'sound/shuz/woosh/hit4.ogg')
 	swingsound = list('sound/shuz/woosh/woosh1.ogg', 'sound/shuz/woosh/woosh2.ogg', 'sound/shuz/woosh/woosh3.ogg', 'sound/shuz/woosh/woosh4.ogg')
-	demolition_mod = 4.25 // Moars Forts BEGONE!!! I AM CONQUEROR OF CONQUERORS!!!
+	demolition_mod = 5 // Moars Forts BEGONE!!! I AM CONQUEROR OF CONQUERORS!!!
 	wdefense = 5
 
 
@@ -740,6 +739,8 @@
 	desc = "A devastating blow that can stagger even the mightiest of foes. \
 	6 second cooldown on consecutive targets. Prone targets halve the knockback distance. \
 	Not fully charging the attack limits knockback to 1 tile."
+	reach = 2
+	hitsound = list('sound/shuz/woosh/hit1.ogg', 'sound/shuz/woosh/hit2.ogg', 'sound/shuz/woosh/hit3.ogg', 'sound/shuz/woosh/hit4.ogg')
 
 
 //Copy paste of crush. Shotout to you Carl.

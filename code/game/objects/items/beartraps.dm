@@ -148,6 +148,13 @@
 	if(armed && isturf(loc))
 		if(isliving(AM))
 			var/mob/living/L = AM
+			// True Unstoppable: immune to mantraps
+			if(HAS_TRAIT(L, TRAIT_TRUEUNSTOPPABLE))
+				L.visible_message("<span class='info'>The [src] shatters against [L] and is destroyed!</span>", \
+					"<span class='info'>The [src] shatters against me and is destroyed!</span>")
+				playsound(loc, 'sound/items/beartrap.ogg', 200, TRUE, -1)
+				qdel(src)
+				return ..()
 			var/snap = TRUE
 			if(istype(L.buckled, /obj/vehicle))
 				var/obj/vehicle/ridden_vehicle = L.buckled
