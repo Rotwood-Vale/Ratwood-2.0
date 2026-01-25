@@ -415,6 +415,19 @@
 	I.appearance_flags = RESET_ALPHA
 	animate(I, alpha = 0, time = duration)
 
+/obj/effect/temp_visual/bonk_effect
+	name = "bonk"
+	icon = 'icons/effects/clan.dmi'
+	icon_state = "bonk"
+	duration = 20
+	layer = ABOVE_MOB_LAYER
+
+/obj/effect/temp_visual/bonk_effect/Initialize(mapload)
+	. = ..()
+	pixel_x = rand(-4,4)
+	pixel_y = rand(-4,4)
+	animate(src, pixel_y = pixel_y + 24, alpha = 0, time = duration)
+
 /obj/effect/temp_visual/bleed
 	name = "bleed"
 	icon = 'icons/effects/bleed.dmi'
