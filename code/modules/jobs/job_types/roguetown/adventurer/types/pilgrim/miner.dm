@@ -11,7 +11,6 @@
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	subclass_stats = list(
 		STATKEY_STR = 2,
-		STATKEY_CON = 2,
 		STATKEY_LCK = 2,
 		STATKEY_WIL = 1
 	)
@@ -54,7 +53,6 @@
 						/obj/item/recipe_book/builder = 1,
 						/obj/item/rogueweapon/scabbard/sheath = 1,
 						/obj/item/rogueweapon/huntingknife = 1,
-						/obj/item/storage/hip/orestore/bronze = 1
 						)
 	if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
