@@ -52,7 +52,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy		//Bit worse shirt protection than the archer
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/heartfelt	//Makes up for worse shirt protection with kinda better armor protection
 	pants = /obj/item/clothing/under/roguetown/chainlegs
-	neck = /obj/item/clothing/neck/roguetown/gorget
+	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 
 	H.adjust_blindness(-3)
 	var/weapons = list("Warhammer & Shield","Axe & Shield","Halberd","Greataxe")
@@ -150,7 +150,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy		
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/heartfelt
 	pants = /obj/item/clothing/under/roguetown/chainlegs
-	neck = /obj/item/clothing/neck/roguetown/gorget
+	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 
 	H.adjust_blindness(-3)
 	var/weapons = list("Crossbow","Bow","Sling")
