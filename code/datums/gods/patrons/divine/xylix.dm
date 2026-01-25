@@ -4,14 +4,16 @@
 	desc = "The Trickster is an unknown amongst the Pantheon. They created the Fluvian race with the gift of Fate, and serve the sole purpose of pulling pranks on Gods and Mortals alike. Their followers see freedom as an absolute, and despise slavery."
 	worshippers = "Gamblers, Bards, Artists, The Silver-Tongued, Fluvians"
 	mob_traits = list(TRAIT_XYLIX)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/self/xylixslip				= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/wheel					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/mockery				= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/mastersillusion		= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/resurrect/xylix		= CLERIC_T4,
+	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
+					/obj/effect/proc_holder/spell/self/xylixslip					= CLERIC_T0,
+					/obj/effect/proc_holder/spell/invoked/xylixlian_luck        	= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/lesser_heal 				= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/projectile/fetch/miracle 	= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/projectile/repel/miracle 	= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/mockery					= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/blood_heal				= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/mastersillusion			= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/wound_heal				= CLERIC_T4,
 	)
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",

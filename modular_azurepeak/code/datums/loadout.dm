@@ -206,9 +206,9 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Tricorn Hat"
 	path = /obj/item/clothing/head/roguetown/helmet/tricorn
 
-/datum/loadout_item/scarf
-	name = "Scarf"
-	path = /obj/item/clothing/head/roguetown/scarf
+/datum/loadout_item/maidband
+    name = "Maid's Headband"
+    path = /obj/item/clothing/head/roguetown/maidband
 
 /datum/loadout_item/nurseveil
 	name = "Nurse's Veil"
@@ -398,9 +398,21 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Tabard's Shroud, Black"
 	path = /obj/item/clothing/head/roguetown/roguehood/shroudblack
 
+/datum/loadout_item/tabardwhite
+	name = "Tabard, White"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/tabardwhite
+
+/datum/loadout_item/shroudwhite
+	name = "Tabard's Shroud, White"
+	path = /obj/item/clothing/head/roguetown/roguehood/shroudwhite
+
 /datum/loadout_item/poncho
 	name = "Poncho"
 	path = /obj/item/clothing/cloak/poncho
+
+/datum/loadout_item/guardhood
+	name = "Guard's Hood"
+	path = /obj/item/clothing/cloak/stabard/guardhood
 
 //SHOES
 /datum/loadout_item/darkboots
@@ -504,6 +516,18 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Striped Tunic"
 	path = /obj/item/clothing/suit/roguetown/armor/workervest
 
+/datum/loadout_item/formalshirt
+    name = "Formal Shirt"
+    path = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
+
+/datum/loadout_item/servantdress
+    name = "Dress, Servant"
+    path = /obj/item/clothing/suit/roguetown/shirt/dress/maid/servant
+
+/datum/loadout_item/maiddress
+    name = "Dress, Maid"
+    path = /obj/item/clothing/suit/roguetown/shirt/dress/maid
+
 /datum/loadout_item/dress
 	name = "Dress"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gen
@@ -596,6 +620,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Leather Tights"
 	path = /obj/item/clothing/under/roguetown/trou/leathertights
 
+/datum/loadout_item/formalshorts
+    name = "Formal Shorts"
+    path = /obj/item/clothing/under/roguetown/trou/formal/shorts
+
+/datum/loadout_item/formaltrousers
+    name = "Formal Trousers"
+    path = /obj/item/clothing/under/roguetown/trou/formal
+
 /datum/loadout_item/trou
 	name = "Work Trousers"
 	path = /obj/item/clothing/under/roguetown/trou
@@ -645,6 +677,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Exotic Silk Belt"
 	path = /obj/item/storage/belt/rogue/leather/exoticsilkbelt
 
+/datum/loadout_item/butlersuspenders
+    name = "Suspenders"
+    path = /obj/item/storage/belt/rogue/leather/suspenders/butler
+
 /datum/loadout_item/ragmask
 	name = "Rag Mask"
 	path = /obj/item/clothing/mask/rogue/ragmask
@@ -656,7 +692,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/golden_half_mask
 	name = "Golden Half-Mask"
 	path = /obj/item/clothing/mask/rogue/lordmask
-
 
 /datum/loadout_item/exoticsilkmask
 	name = "Exotic Silk Mask"
@@ -735,7 +770,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 // BELTS
 /datum/loadout_item/belt_cloth
 	name = "Cloth Sash"
-	path = /obj/item/storage/belt/rogue/leather/cloth
+	path = /obj/item/storage/belt/rogue/leather/sash
 
 /datum/loadout_item/belt_rope
 	name = "Rope Belt"
@@ -838,6 +873,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Surgcollar"
 	path = /obj/item/clothing/neck/roguetown/collar/surgcollar
 
+/datum/loadout_item/scarf
+	name = "Scarf"
+	path = /obj/item/clothing/head/roguetown/scarf
+
 // MASKS
 /datum/loadout_item/skullmask
 	name = "Skull Mask"
@@ -887,6 +926,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/tribal_cloak
 	name = "Tribal Cloak"
 	path = /obj/item/clothing/cloak/tribal
+
+/datum/loadout_item/maidapron
+    name = "Maid's Apron"
+    path = /obj/item/clothing/cloak/apron/maid
 
 /datum/loadout_item/battlenun_cloak
 	name = "Nun Cloak"
@@ -1573,7 +1616,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/tri_grenzelhoft_boots
 	name = "Grenzelhoft Boots"
-	path = /obj/item/clothing/shoes/roguetown/grenzelhoft
+	path = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 
 
 /datum/loadout_item/tri_kazengun_boots
@@ -1945,3 +1988,75 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Paper Parasol"
 	path = /obj/item/rogueweapon/mace/parasol
 	triumph_cost = 3
+
+//INSTRUMENTS
+
+/datum/loadout_item/accordion
+	name = "Accordion"
+	path = /obj/item/rogue/instrument/accord
+	triumph_cost = 1
+
+/datum/loadout_item/bagpipe
+	name = "Bagpipe"
+	path = /obj/item/rogue/instrument/bagpipe
+	triumph_cost = 1
+
+/datum/loadout_item/drum
+	name = "Drum"
+	path = /obj/item/rogue/instrument/drum
+	triumph_cost = 1
+
+/datum/loadout_item/flute
+	name = "Flute"
+	path = /obj/item/rogue/instrument/flute
+	triumph_cost = 1
+
+/datum/loadout_item/guitar
+	name = "Guitar"
+	path = /obj/item/rogue/instrument/guitar
+	triumph_cost = 1
+
+/datum/loadout_item/harp
+	name = "Harp"
+	path = /obj/item/rogue/instrument/harp
+	triumph_cost = 1
+
+/datum/loadout_item/hurdygurdy
+	name = "Hurdy-Gurdy"
+	path = /obj/item/rogue/instrument/hurdygurdy
+	triumph_cost = 1
+
+/datum/loadout_item/jawharp
+	name = "Jaw Harp"
+	path = /obj/item/rogue/instrument/jawharp
+	triumph_cost = 1
+
+/datum/loadout_item/lute
+	name = "Lute"
+	path = /obj/item/rogue/instrument/lute
+	triumph_cost = 1
+
+/datum/loadout_item/psyaltery
+	name = "Psyaltery"
+	path = /obj/item/rogue/instrument/psyaltery
+	triumph_cost = 1
+
+/datum/loadout_item/shamisen
+	name = "Shamisen"
+	path = /obj/item/rogue/instrument/shamisen
+	triumph_cost = 1
+
+/datum/loadout_item/trumpet
+	name = "Trumpet"
+	path = /obj/item/rogue/instrument/trumpet
+	triumph_cost = 1
+
+/datum/loadout_item/viola
+	name = "Viola"
+	path = /obj/item/rogue/instrument/viola
+	triumph_cost = 1
+
+/datum/loadout_item/vocaltalisman
+	name = "Vocal Talisman"
+	path = /obj/item/rogue/instrument/vocals
+	triumph_cost = 1

@@ -10,21 +10,41 @@
 		user.add_stress(/datum/stressevent/jesterphobia)
 	if(HAS_TRAIT(src, TRAIT_BEAUTIFUL) && user != src)//it doesn't really make sense that you can examine your own face
 		user.add_stress(/datum/stressevent/beautiful)
+		to_chat(user, span_info("[p_they(TRUE)] [p_are()] strikingly beautiful."))
 		// Apply Xylix buff when examining someone with the beautiful trait
 		if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy))
 			user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
 			to_chat(user, span_info("Their beauty brings a smile to my face, and fortune to my steps!"))
 	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
+		to_chat(user, span_warning("[p_they(TRUE)] [p_are()] quite ugly."))
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)
+	if(HAS_TRAIT(src, TRAIT_COMICSANS) && user != src)
+		to_chat(user, span_sans("[p_they(TRUE)] [p_have()] an oddly annoying face and voice."))
+	if(HAS_TRAIT(src, TRAIT_SCARRED) && user != src)
+		to_chat(user, span_warning("[p_their(TRUE)] face is marked with terrible scars."))
+	if(HAS_TRAIT(src, TRAIT_DISFIGURED) && user != src)
+		to_chat(user, span_warning("[p_their(TRUE)] face is grotesquely disfigured, making [p_them()] unrecognizable."))
 	if(HAS_TRAIT(src, TRAIT_LEPROSY) && user != src)
 		user.add_stress(/datum/stressevent/leprosy)
+	if(HAS_TRAIT(src, TRAIT_UNSETTLING_BEAUTY) && user != src)
+		// 70% chance to give debuff, 30% chance to give buff
+		if(prob(70) && !user.has_stress_event(/datum/stressevent/uncanny))
+			user.add_stress(/datum/stressevent/uncanny)
+			to_chat(user, span_warning("[p_they(TRUE)] [p_are()] unsettlingly beautiful... something is deeply wrong."))
+		else
+			if(!user.has_stress_event(/datum/stressevent/beautiful))
+				user.add_stress(/datum/stressevent/beautiful)
+				to_chat(user, span_info("[p_they(TRUE)] [p_are()] hauntingly beautiful."))
 	if(HAS_TRAIT(src, TRAIT_BEAUTIFUL_UNCANNY) && user != src)
+		// Original 50/50 eerie beauty
 		if(prob(50) && !user.has_stress_event(/datum/stressevent/uncanny))
 			user.add_stress(/datum/stressevent/beautiful)
+			to_chat(user, span_info("[p_they(TRUE)] possess[p_es()] an otherworldly beauty."))
 		else
 			if(!user.has_stress_event(/datum/stressevent/beautiful))
 				user.add_stress(/datum/stressevent/uncanny)
+				to_chat(user, span_warning("There's something eerily wrong about [p_their()] appearance."))
 	// Apply Xylix buff when examining someone with the beautiful trait
 	if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy) && user.has_stress_event(/datum/stressevent/beautiful))
 		user.apply_status_effect(/datum/status_effect/buff/xylix_joy)

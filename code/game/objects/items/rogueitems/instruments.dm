@@ -356,6 +356,44 @@
 	"Royal Wedding" = 'sound/music/instruments/trumpet (6).ogg', //It has a little bit of organ in the background that I couldn't completely remove
 	"Honoring the Fallen" = 'sound/music/instruments/trumpet (7).ogg')
 
+/obj/item/rogue/instrument/bagpipe
+	name = "bagpipe"
+	desc = "A commonly used woodwind instrument using enclosed reeds fed from a constant reservoir of air in the form of a bag."
+	dropshrink = 0.6
+	grid_width = 32
+	grid_height = 32
+	w_class = WEIGHT_CLASS_SMALL
+	icon_state = "bagpipe"
+	song_list = list("Dainty Man" = 'sound/music/instruments/bagpipe (1).ogg',
+	"Harpy in the Morning" = 'sound/music/instruments/bagpipe (2).ogg',
+	"Heartfelt Forever" = 'sound/music/instruments/bagpipe (3).ogg',
+	"Homeward Jig" = 'sound/music/instruments/bagpipe (4).ogg',
+	"On the Sea Shore" = 'sound/music/instruments/bagpipe (5).ogg',
+	"Soldier's Rest" = 'sound/music/instruments/bagpipe (6).ogg',
+	"Otavan Madame" = 'sound/music/instruments/bagpipe (7).ogg')
+
+/obj/item/rogue/instrument/jawharp
+	name = "jaw harp"
+	desc = "A vibrating reed attached to a sturdy frame, originally crafted in the Gronn Steppes. It produces a buzzing sound that mimics the winds of the plains."
+	dropshrink = 0.6
+	grid_width = 32
+	grid_height = 32
+	w_class = WEIGHT_CLASS_SMALL
+	icon_state = "jawharp"
+	song_list = list("Fly Away" = 'sound/music/instruments/jawharp (1).ogg',
+	"Nomad's Call" = 'sound/music/instruments/jawharp (2).ogg',
+	"Spirit of the Steppes" = 'sound/music/instruments/jawharp (3).ogg',
+	"The Mountain of Wisdom" = 'sound/music/instruments/jawharp (4).ogg',
+	"Who Told You" = 'sound/music/instruments/jawharp (5).ogg')
+/obj/item/rogue/instrument/jawharp/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.2,"sx" = -7,"sy" = -4,"nx" = 7,"ny" = -4,"wx" = -3,"wy" = -4,"ex" = 1,"ey" = -4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 110,"sturn" = -110,"wturn" = -110,"eturn" = 110,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.1,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
 /obj/item/rogue/instrument/viola
 	name = "viola"
 	desc = "The prim and proper Viola, every prince's first instrument taught."

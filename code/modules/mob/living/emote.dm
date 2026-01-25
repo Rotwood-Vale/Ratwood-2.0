@@ -1935,7 +1935,7 @@
 /datum/emote/living/gulp
 	key = "gulp"
 	key_third_person = "gulps"
-	message = "gulps nervously."
+	message = "gulps."
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = TRUE
 

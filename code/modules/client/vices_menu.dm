@@ -1506,6 +1506,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			var/list/virtues_available = list()
 			for(var/path as anything in GLOB.virtues)
 				var/datum/virtue/V = GLOB.virtues[path]
+				// Skip if already selected as secondary virtue
+				if(virtuetwo && V.type == virtuetwo.type)
+					continue
 				// Basic filtering can be added here if needed
 				virtues_available[V.name] = V
 			

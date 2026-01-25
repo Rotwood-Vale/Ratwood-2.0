@@ -607,8 +607,24 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						armor_blocked = TRUE
 					if(H.wear_armor && (H.wear_armor.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM)))
 						armor_blocked = TRUE
+					// Check nude sleeper trait
+					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
+						var/list/worn_items = H.get_equipped_items()
+						for(var/obj/item/I in worn_items)
+							// Skip abstract items
+							if(HAS_TRAIT(I, ABSTRACT_ITEM_TRAIT))
+								continue
+							// Allow NODROP items (body modifications like skin_armor)
+							if(HAS_TRAIT(I, TRAIT_NODROP))
+								continue
+							// Found clothing that blocks sleeping
+							armor_blocked = TRUE
+							break
 					if(armor_blocked && !fallingas)
-						to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
+						if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
+							to_chat(src, span_warning("I can't sleep while wearing clothes!"))
+						else
+							to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
 						fallingas = TRUE
 				if(!armor_blocked)
 					if(!fallingas)
@@ -631,8 +647,24 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						armor_blocked = TRUE
 					if(H.wear_armor && (H.wear_armor.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM)))
 						armor_blocked = TRUE
+					// Check nude sleeper trait
+					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
+						var/list/worn_items = H.get_equipped_items()
+						for(var/obj/item/I in worn_items)
+							// Skip abstract items
+							if(HAS_TRAIT(I, ABSTRACT_ITEM_TRAIT))
+								continue
+							// Allow NODROP items (body modifications like skin_armor)
+							if(HAS_TRAIT(I, TRAIT_NODROP))
+								continue
+							// Found clothing that blocks sleeping
+							armor_blocked = TRUE
+							break
 					if(armor_blocked && !fallingas)
-						to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
+						if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
+							to_chat(src, span_warning("I can't sleep while wearing clothes!"))
+						else
+							to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
 						fallingas = TRUE
 				if(!armor_blocked)
 					if(!fallingas)

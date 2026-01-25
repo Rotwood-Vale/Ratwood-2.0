@@ -22,6 +22,7 @@
 	droning_sound = 'sound/music/area/harbor.ogg'
 	converted_type = /area/rogue/under/lake
 	first_time_text = "Rockhill Harbor"
+	deathsight_message = "a bustling, windswept harbor"
 
 /area/rogue/outdoors/beach/north
 	name = "Northern Coast"

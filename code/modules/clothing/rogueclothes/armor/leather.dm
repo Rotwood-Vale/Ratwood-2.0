@@ -48,6 +48,19 @@
 	GLOB.lordcolor -= src
 	return ..()
 
+/obj/item/clothing/armor/gambeson/tailcoat
+	name = "tailcoat"
+	desc = "A finely-sewn tailcoat often worn by those on the brink of the upper echelons of Astratan caste."
+	icon = 'icons/roguetown/clothing/armor.dmi'
+	icon_state = "butlercoat"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
+	item_state = "butlercoat"
+	detail_tag = "_detail"
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_maids.dmi'
+	detail_color = CLOTHING_BLACK
+	slot_flags = ITEM_SLOT_ARMOR
+	armor = ARMOR_PADDED
+
 /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
 	name = "artificer jacket"
 	icon_state = "artijacket"

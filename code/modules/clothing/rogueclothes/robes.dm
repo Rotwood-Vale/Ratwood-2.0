@@ -321,6 +321,7 @@
 	color = null
 	icon_state = "feldrobe"
 	item_state = "feldrobe"
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 
 /obj/item/clothing/suit/roguetown/shirt/robe/tabardblack
 	name = "black tabard"
@@ -328,3 +329,12 @@
 	color = null
 	icon_state = "surgrobe"
 	item_state = "surgrobe"
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
+
+/obj/item/clothing/suit/roguetown/shirt/robe/tabardwhite
+	name = "white tabard"
+	desc = "Sleeveless robes, white like bone."
+	color = null
+	icon_state = "whiterobe"
+	item_state = "whiterobe"
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK

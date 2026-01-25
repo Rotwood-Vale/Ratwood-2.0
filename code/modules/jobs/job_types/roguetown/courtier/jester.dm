@@ -27,11 +27,14 @@
 	shoes = /obj/item/clothing/shoes/roguetown/jester
 	pants = /obj/item/clothing/under/roguetown/tights
 	armor = /obj/item/clothing/suit/roguetown/shirt/jester
-	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/storage/keyring/servant
-	beltl = /obj/item/storage/belt/rogue/pouch
+	backl = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/rogue/instrument/trumpet
+	belt = /obj/item/storage/belt/rogue/leather/black
+	beltr = /obj/item/storage/belt/rogue/pouch
+	beltl = /obj/item/rogue/instrument/drum
 	head = /obj/item/clothing/head/roguetown/jester
 	neck = /obj/item/clothing/neck/roguetown/coif
+	backpack_contents = list(/obj/item/storage/keyring/servant)
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)

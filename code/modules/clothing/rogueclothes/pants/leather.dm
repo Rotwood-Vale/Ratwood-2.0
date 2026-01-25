@@ -61,6 +61,29 @@
 	item_state = "leathertights"
 	salvage_result = /obj/item/natural/hide/cured
 
+/obj/item/clothing/under/roguetown/trou/formal
+	name = "formal trousers"
+	desc = "A formal pair of trousers."
+	icon = 'icons/roguetown/clothing/pants.dmi'
+	icon_state = "butlerpants"
+	item_state = "butlerpants"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/pants.dmi'
+	detail_tag = "_detail"
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_maids.dmi'
+	slot_flags = ITEM_SLOT_PANTS
+	salvage_result = /obj/item/natural/cloth
+	detail_color = CLOTHING_BLACK
+
+/obj/item/clothing/under/roguetown/trou/formal/shorts
+	name = "trouser shorts"
+	desc = "A pair of formal trouser shorts, fit for any strapping young lad."
+	icon = 'icons/roguetown/clothing/pants.dmi'
+	icon_state = "butlershorts"
+	item_state = "butlershorts"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/pants.dmi'
+	slot_flags = ITEM_SLOT_PANTS
+	detail_color = CLOTHING_BLACK
+
 /obj/item/clothing/under/roguetown/trou/leather/pontifex
 	name = "pontifex's chaqchur"
 	desc = "A handmade pair of baggy, thin leather pants. They end in a tight stocking around the calf, ballooning out around the thigh."

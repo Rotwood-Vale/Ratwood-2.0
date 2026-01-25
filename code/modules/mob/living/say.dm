@@ -185,7 +185,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message)
 		return
 
-	if(!can_speak_vocal(message))
+	// Allow sign languages and other tongueless speech to bypass the vocal speech check
+	var/using_tongueless_speech = language && (initial(language.flags) & TONGUELESS_SPEECH)
+	if(!can_speak_vocal(message) && !using_tongueless_speech)
 		emote("custom", message = "makes a muffled noise")
 		to_chat(src, span_warning("I can't talk."))
 		return

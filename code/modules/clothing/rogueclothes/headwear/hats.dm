@@ -264,6 +264,17 @@
 /obj/item/clothing/head/roguetown/headband/red
 	color = CLOTHING_RED
 
+/obj/item/clothing/head/roguetown/maidband
+	name = "maid headband"
+	desc = "A pleated cloth headband. It has gained widespread popularity from nobles travelling with their servants."
+	icon = 'icons/roguetown/clothing/head.dmi'
+	icon_state = "maidband"
+	item_state = "maidband"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+	slot_flags = ITEM_SLOT_HEAD
+	body_parts_covered = NONE
+	sewrepair = TRUE
+
 /obj/item/clothing/head/roguetown/priesthat
 	name = "priest's hat"
 	desc = ""

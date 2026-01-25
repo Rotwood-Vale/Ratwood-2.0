@@ -1,42 +1,42 @@
 
 GLOBAL_LIST_INIT(character_flaws, list(
 	"Alcoholic"=/datum/charflaw/addiction/alcoholic,
-	"Devout Follower"=/datum/charflaw/addiction/godfearing,
-	"Colorblind (+1 TRI)"=/datum/charflaw/colorblind,
-	"Smoker"=/datum/charflaw/addiction/smoker,
-	"Junkie"=/datum/charflaw/addiction/junkie,
-	"Unintelligible (+1 TRI)"=/datum/charflaw/unintelligible,
-	"Greedy"=/datum/charflaw/greedy,
-	"Narcoleptic (+1 TRI)"=/datum/charflaw/narcoleptic,
-	"Nymphomaniac"=/datum/charflaw/addiction/lovefiend,
-	"Sadist"=/datum/charflaw/addiction/sadist,
-	"Masochist"=/datum/charflaw/addiction/masochist,
-	"Paranoid"=/datum/charflaw/paranoid,
-	"Clingy"=/datum/charflaw/clingy,
-	"Isolationist"=/datum/charflaw/isolationist,
-	"Bad Sight (+1 TRI)"=/datum/charflaw/badsight,
-	"Cyclops (R) (+1 TRI)"=/datum/charflaw/noeyer,
-	"Cyclops (L) (+1 TRI)"=/datum/charflaw/noeyel,
-	"Blindness (+1 TRI)"=/datum/charflaw/noeyeall,
-	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
-	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
-	"Sleepless (+1 TRI)"=/datum/charflaw/sleepless,
-	"Mute (+1 TRI)"=/datum/charflaw/mute,
-	"Critical Weakness (+1 TRI)"=/datum/charflaw/critweakness,
-	"Silver Weakness"=/datum/charflaw/silverweakness,
-	"Hunted (+1 TRI)"=/datum/charflaw/hunted,
-	"Ugly"=/datum/charflaw/ugly,
-	"Nudist"=/datum/charflaw/nudist,
-	"Missing Nose"=/datum/charflaw/missing_nose,
-	"Disfigured"=/datum/charflaw/disfigured,
-	"Pacifism"=/datum/charflaw/pacifism,
 	"Annoying Face"=/datum/charflaw/annoying_face,
-	"Eerie Beauty"=/datum/charflaw/eerie_beauty,
-	"Nude Sleeper"=/datum/charflaw/nude_sleeper,
 	"Asundered Mind (+1 TRI)"=/datum/charflaw/mind_broken,
-	"Random or No Flaw"=/datum/charflaw/randflaw,
-	"No Flaw (-3 TRIUMPHS)"=/datum/charflaw/noflaw,
+	"Bad Sight (+1 TRI)"=/datum/charflaw/badsight,
+	"Blindness (+1 TRI)"=/datum/charflaw/noeyeall,
+	"Clingy"=/datum/charflaw/clingy,
+	"Colorblind (+1 TRI)"=/datum/charflaw/colorblind,
+	"Critical Weakness (+1 TRI)"=/datum/charflaw/critweakness,
+	"Cyclops (L) (+1 TRI)"=/datum/charflaw/noeyel,
+	"Cyclops (R) (+1 TRI)"=/datum/charflaw/noeyer,
+	"Devout Follower"=/datum/charflaw/addiction/godfearing,
+	"Greedy"=/datum/charflaw/greedy,
+	"Hunted (+1 TRI)"=/datum/charflaw/hunted,
+	"Isolationist"=/datum/charflaw/isolationist,
+	"Junkie"=/datum/charflaw/addiction/junkie,
 	"Leper (+1 TRIUMPHS)"=/datum/charflaw/leprosy,
+	"Masochist"=/datum/charflaw/addiction/masochist,
+	"Missing Nose"=/datum/charflaw/missing_nose,
+	"Mute (+1 TRI)"=/datum/charflaw/mute,
+	"Narcoleptic (+1 TRI)"=/datum/charflaw/narcoleptic,
+	"No Flaw (-3 TRIUMPHS)"=/datum/charflaw/noflaw,
+	"Nude Sleeper"=/datum/charflaw/nude_sleeper,
+	"Nudist"=/datum/charflaw/nudist,
+	"Nymphomaniac"=/datum/charflaw/addiction/lovefiend,
+	"Pacifism"=/datum/charflaw/pacifism,
+	"Paranoid"=/datum/charflaw/paranoid,
+	"Random or No Flaw"=/datum/charflaw/randflaw,
+	"Sadist"=/datum/charflaw/addiction/sadist,
+	"Scarred"=/datum/charflaw/scarred,
+	"Silver Weakness"=/datum/charflaw/silverweakness,
+	"Sleepless (+1 TRI)"=/datum/charflaw/sleepless,
+	"Smoker"=/datum/charflaw/addiction/smoker,
+	"Ugly"=/datum/charflaw/ugly,
+	"Unintelligible (+1 TRI)"=/datum/charflaw/unintelligible,
+	"Unsettling Beauty"=/datum/charflaw/unsettling_beauty,
+	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
+	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
 	))
 
 /datum/charflaw
@@ -477,6 +477,38 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		REMOVE_TRAIT(H, TRAIT_NUDE_SLEEPER, TRAIT_GENERIC)
+
+/datum/charflaw/unsettling_beauty
+	name = "Unsettling Beauty"
+	desc = "My appearance is deeply unsettling to most. There's something profoundly wrong about my features that disturbs those who look upon me. Incompatible with Socialite virtue."
+
+/datum/charflaw/unsettling_beauty/on_mob_creation(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		ADD_TRAIT(H, TRAIT_UNSETTLING_BEAUTY, TRAIT_GENERIC)
+
+/datum/charflaw/unsettling_beauty/on_removal(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		REMOVE_TRAIT(H, TRAIT_UNSETTLING_BEAUTY, TRAIT_GENERIC)
+
+/datum/charflaw/scarred
+	name = "Scarred"
+	desc = "My face bears terrible scars that make identification difficult, but not impossible."
+
+/datum/charflaw/scarred/on_mob_creation(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		ADD_TRAIT(H, TRAIT_SCARRED, TRAIT_GENERIC)
+
+/datum/charflaw/scarred/on_removal(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		REMOVE_TRAIT(H, TRAIT_SCARRED, TRAIT_GENERIC)
 
 /datum/charflaw/hunted/flaw_on_life(mob/user)
 	if(!ishuman(user))

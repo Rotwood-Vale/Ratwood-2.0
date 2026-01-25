@@ -295,6 +295,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if((invocation_type == "whisper" || invocation_type == "shout") && (!H.can_speak_vocal() || !H.getorganslot(ORGAN_SLOT_TONGUE)))
 			to_chat(user, span_warning("I can't get the words out!"))
 			return FALSE
+		// Spells cannot be cast using sign language (check specifically for SIGNLANG flag)
+		if((invocation_type == "whisper" || invocation_type == "shout"))
+			var/datum/language/default_lang = H.get_default_language()
+			if(default_lang && (initial(default_lang.flags) & SIGNLANG))
+				to_chat(user, span_warning("I cannot cast spells using [initial(default_lang.name)]! I need to speak the words aloud!"))
+				return FALSE
 
 		if(HAS_TRAIT(H, TRAIT_PARALYSIS) && !stat_allowed)
 			to_chat(user, span_warning("My body is paralyzed!"))

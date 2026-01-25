@@ -457,12 +457,14 @@
 		else
 			cloak = /obj/item/clothing/cloak/cape/crusader
 	if(H.mind)
-		var/weapons = list("Accordion","Drum","Flute","Guitar","Harp","Hurdy-Gurdy","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
+		var/weapons = list("Accordion","Bagpipe","Drum","Flute","Guitar","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
 		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Accordion")
 				backr = /obj/item/rogue/instrument/accord
+			if("Bagpipe")
+				backr = /obj/item/rogue/instrument/bagpipe
 			if("Drum")
 				backr = /obj/item/rogue/instrument/drum
 			if("Flute")
@@ -473,6 +475,8 @@
 				backr = /obj/item/rogue/instrument/harp
 			if("Hurdy-Gurdy")
 				backr = /obj/item/rogue/instrument/hurdygurdy
+			if("Jaw Harp")
+				backr = /obj/item/rogue/instrument/jawharp
 			if("Lute")
 				backr = /obj/item/rogue/instrument/lute
 			if("Psyaltery")

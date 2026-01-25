@@ -26,8 +26,11 @@
 		src.STASPD = 13
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/wolfclaws)
-		real_name = "volf" //So we don't get a random name
 		faction += "wolfs" // It IS a wolf
+		if (src.client.prefs?.wildshape_name)
+			real_name = "volf ([stored_mob.real_name])"
+		else
+			real_name = "volf"
 
 // WOLF SPECIES DATUM //
 /datum/species/shapewolf

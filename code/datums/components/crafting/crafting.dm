@@ -247,7 +247,7 @@
 				continue
 			if(R.structurecraft && istype(S, R.structurecraft))
 				continue
-			if(S.density)
+			if(S.density && !R.ignoredensity)
 				to_chat(user, span_warning("Something is in the way."))
 				return
 		for(var/obj/machinery/M in T)
