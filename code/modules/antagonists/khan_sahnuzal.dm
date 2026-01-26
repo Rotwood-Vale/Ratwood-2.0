@@ -11,24 +11,6 @@
     var/mob = null
     var/khan_scaled = FALSE
 
-    proc/Initialize()
-        // Called when module loads or antagonist manager registers this antagonist
-        // Register any required resources here
-        return
-
-    proc/CanSpawn() // extra checks before spawning
-        // e.g., check map, round stage, or config flags
-        return TRUE
-
-    proc/OnSpawn(mob/living/carbon/H)
-        // Called when Khan is spawned/created in the world
-        active = TRUE
-        mob = H
-        // Give unique equipment (create item with mob as owner/location)
-        if(mob)
-            H.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/sahnuzal(mob), TRUE)
-        return
-
     // Attempt to set the antagonist's displayed name. Returns 1 on success, 0 on failure.
     // Enforces that only admins may use the reserved name "Sahn-Uzal".
     proc/TrySetAntagName(mob/living/carbon/H, new_name as text)
@@ -58,22 +40,6 @@
         var/msg = "I am Khan " + clean + ", A great Warlord, Khan of the many Khanates of Gronn. I am here on holy mission. The mission to see the vale conquered, for I am conqueror of conquerors. I will not fail, for Graggar has bestowed upon me power great enough to topple even Kingsfield itself."
         to_chat(H, span_boldred(msg))
         return 1
-
-    proc/OnDeath(mob/living/carbon/H)
-        // Called on Khan death — reward players, clean up
-        active = FALSE
-        mob = null
-        return
-
-    proc/OnTick()
-        // Periodic behaviour: can be used to run AI checks, spawn adds, etc.
-        if(!active || !mob) return
-        // TODO: implement behaviour
-        return
-
-    // on_gain/after_name_change are defined below via absolute-path procs
-
-
 
 // Hook: make this antagonist discoverable by any antagonist manager in the project
 // Registration is handled by the antagonist manager; avoid top-level mutations here.
