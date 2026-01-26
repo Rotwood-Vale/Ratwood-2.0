@@ -147,7 +147,26 @@
         if(length(hit_mobs) == 1)
             var/mob/living/iso = hit_mobs[1]
             playsound(get_turf(M), pick('sound/shuz/obliterate/isolated1.ogg','sound/shuz/obliterate/isolated2.ogg'), 100, TRUE)
-            playsound(get_turf(M), pick('sound/shuz/obliterate/hitisolated1.ogg','sound/shuz/obliterate/hitisolated2.ogg','sound/shuz/obliterate/hitisolated3.ogg','sound/shuz/obliterate/hitisolated4.ogg','sound/shuz/obliterate/hitisolated5.ogg'), 100, TRUE)
+            
+            // Play one of the isolated voice lines with corresponding message
+            var/voice_choice = rand(1, 5)
+            switch(voice_choice)
+                if(1)
+                    playsound(get_turf(M), 'sound/shuz/obliterate/hitisolated1.ogg', 100, TRUE)
+                    M.say("YOUR END!", forced = "spell")
+                if(2)
+                    playsound(get_turf(M), 'sound/shuz/obliterate/hitisolated2.ogg', 100, TRUE)
+                    M.say("DIE!", forced = "spell")
+                if(3)
+                    playsound(get_turf(M), 'sound/shuz/obliterate/hitisolated3.ogg', 100, TRUE)
+                    M.say("NO ESCAPE!", forced = "spell")
+                if(4)
+                    playsound(get_turf(M), 'sound/shuz/obliterate/hitisolated4.ogg', 100, TRUE)
+                    M.say("FALL!", forced = "spell")
+                if(5)
+                    playsound(get_turf(M), 'sound/shuz/obliterate/hitisolated5.ogg', 100, TRUE)
+                    M.emote("laugh")
+            
             iso.Knockdown(1)
             var/obj/item/bodypart/headbp = iso.get_bodypart(BODY_ZONE_HEAD)
             if(!headbp)

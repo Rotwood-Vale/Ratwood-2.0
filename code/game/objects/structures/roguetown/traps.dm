@@ -20,6 +20,13 @@
 		var/mob/living/L = AM
 		if(L.movement_type & (FLYING|FLOATING)) //don't close the trap if they're flying/floating over it.
 			return ..()
+		// True Unstoppable: immune to spike pits, destroy the pit
+		if(HAS_TRAIT(L, TRAIT_TRUEUNSTOPPABLE))
+			L.visible_message("<span class='boldwarning'>[L] crushes \the [src] underfoot!</span>", \
+				"<span class='info'>I crush \the [src] underfoot!</span>")
+			playsound(loc, 'sound/foley/breaksound.ogg', 100, TRUE)
+			qdel(src)
+			return ..()
 
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM

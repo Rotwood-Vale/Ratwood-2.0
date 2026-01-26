@@ -1,4 +1,5 @@
-// Area definitions that must be loaded before maps
+// CentCom special areas
+
 /area/rogue/under/cave/inhumen
 	name = "Inhumen Cave"
 	icon_state = "cave"
@@ -31,18 +32,3 @@
 /area/rogue/outdoors/cave/inhumen/wretch/ghrotto
 	name = "Wretch Grotto"
 	icon_state = "cave"
-
-//#define LOWMEMORYMODE //uncomment this to load centcom and runtime station and thats it.
-
-#include "map_files\generic\CentCom.dmm"
-
-#ifndef LOWMEMORYMODE
-	#ifdef ALL_MAPS
-		#include "map_files\Roguetown\roguetown.dmm"
-		#include "map_files\Rogueworld\Rogueworld.dmm"
-
-		#ifdef TRAVISBUILDING
-			#include "templates.dm"
-		#endif
-	#endif
-#endif

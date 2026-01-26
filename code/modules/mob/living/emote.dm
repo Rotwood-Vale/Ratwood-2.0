@@ -840,6 +840,9 @@
 	show_runechat = FALSE
 
 /datum/emote/living/scream/painscream/run_emote(mob/user, params, type_override, intentional)
+	// Block painscream for mobs with TRAIT_NOPAIN
+	if(HAS_TRAIT(user, TRAIT_NOPAIN))
+		return FALSE
 	. = ..()
 	if(.)
 		for(var/mob/living/carbon/human/L in viewers(7,user))

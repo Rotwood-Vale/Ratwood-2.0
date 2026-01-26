@@ -119,6 +119,8 @@
         ADD_TRAIT(M, TRAIT_CONQUEROR_STEPS, INNATE_TRAIT)
         ADD_TRAIT(M, TRAIT_GRABIMMUNE, INNATE_TRAIT)
         ADD_TRAIT(M, TRAIT_NOPAINSTUN, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_TRUEUNSTOPPABLE, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_NOPAIN, INNATE_TRAIT)
         if(M)
             // Remove any existing equipped clothing/weapons so we reliably replace with Khan kit
             // Delete everything the mob is wearing/holding (nuclear option, in case of admin fuckery, like making someone the Khan)
@@ -175,6 +177,9 @@
         // Grant Death's Grasp spell
         if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/deathsgrasp))
             M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/deathsgrasp)
+        // Grant Realm of Death spell
+        if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/targeted/realm_of_death))
+            M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/realm_of_death)
 
 /datum/antagonist/khan_sahnuzal/remove_innate_effects(mob/living/mob_override)
     . = ..()
@@ -194,6 +199,8 @@
         REMOVE_TRAIT(M, TRAIT_GRABIMMUNE, INNATE_TRAIT)
         REMOVE_TRAIT(M, TRAIT_NOPAINSTUN, INNATE_TRAIT)
         REMOVE_TRAIT(M, TRAIT_STEEL_FEET, INNATE_TRAIT)
+        REMOVE_TRAIT(M, TRAIT_TRUEUNSTOPPABLE, INNATE_TRAIT)
+        REMOVE_TRAIT(M, TRAIT_NOPAIN, INNATE_TRAIT)
         if(A)
             A.Remove(M)
             qdel(A)
@@ -202,6 +209,7 @@
             M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/decimate)
             M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/indestructible)
             M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/deathsgrasp)
+            M.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/realm_of_death)
             // Clean up any active chains
             if(M.mind.khan_chain_targets && length(M.mind.khan_chain_targets) > 0)
                 var/obj/effect/proc_holder/spell/invoked/deathsgrasp/spell = locate() in M.mind.spell_list
