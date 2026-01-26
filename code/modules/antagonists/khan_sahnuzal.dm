@@ -2,7 +2,7 @@
     name = "Khan"
     var/description = "A great warlord of Gronn, a Khan of many Khanates."
     antagpanel_category = "Khan"
-    show_in_antagpanel = TRUE
+    show_in_antagpanel = FALSE
     rogue_enabled = TRUE
     var/hostile = TRUE
     var/spawn_weight = 1 

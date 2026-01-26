@@ -4,6 +4,7 @@
     // Verb metadata shown in the verbs UI
     set name = "Declare War"
     set category = "THE KHAN"
+    set hidden = TRUE  // Hidden by default, shown only when added to Khan's verbs
 
     // Only the Khan may use this
     if(!(src.mind && src.mind.has_antag_datum(/datum/antagonist/khan_sahnuzal)))
