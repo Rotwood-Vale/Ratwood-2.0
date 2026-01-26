@@ -169,6 +169,9 @@
         // Grant the Decimate/Nightfall spell as an innate ability
         if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/decimate))
             M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/decimate)
+        // Grant the Indestructible spell
+        if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/indestructible))
+            M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/indestructible)
 
 /datum/antagonist/khan_sahnuzal/remove_innate_effects(mob/living/mob_override)
     . = ..()
@@ -177,6 +180,7 @@
         M.verbs -= /mob/living/carbon/human/verb/declare_khan_war
         var/datum/action/innate/A = M.mind.khan_declare_action
         M.mind.khan_declare_action = null
+        M.mind.khan_indestructible_active = null
 
         REMOVE_TRAIT(M, TRAIT_BIGGUY, INNATE_TRAIT)
         REMOVE_TRAIT(M, TRAIT_STEEL_SKIN, INNATE_TRAIT)
@@ -190,9 +194,10 @@
         if(A)
             A.Remove(M)
             qdel(A)
-        // Remove the granted Decimate spell if present
+        // Remove the granted spells if present
         if(M.mind)
             M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/decimate)
+            M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/indestructible)
         // Revert giant transform if applied
         if(src && src.khan_scaled)
             if(M)

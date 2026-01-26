@@ -2923,6 +2923,7 @@
 #include "modular_azurepeak\code\modules\reagents\reagent_containers\rotcure.dm"
 #include "modular_azurepeak\code\modules\reagents\reagent_containers\spider_venom.dm"
 #include "modular_azurepeak\code\modules\spells\decimate.dm"
+#include "modular_azurepeak\code\modules\spells\indestructible.dm"
 #include "modular_azurepeak\code\modules\spells\minion_order.dm"
 #include "modular_azurepeak\code\modules\spells\orison.dm"
 #include "modular_azurepeak\code\modules\spells\warscholar.dm"

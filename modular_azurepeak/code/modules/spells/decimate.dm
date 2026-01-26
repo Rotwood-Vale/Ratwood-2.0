@@ -157,7 +157,4 @@
                         var/obj/item/bodypart/neckbp = iso.get_bodypart(BODY_ZONE_PRECISE_NECK)
                         if(neckbp)
                             neckbp.add_wound(/datum/wound/fracture/neck, FALSE, TRUE)
-            var/obj/effect/temp_visual/bonk_effect/bonk = new /obj/effect/temp_visual/bonk_effect(get_turf(iso))
-            return TRUE
-
-    return TRUE
+            new /obj/effect/temp_visual/bonk_effect(get_turf(iso))
