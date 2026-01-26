@@ -96,9 +96,9 @@
 			H.Paralyze(50) // 5 second stun
 			return TRUE
 	
-	// Successfully completed channel - heal for 150
-	H.adjustBruteLoss(-150)
-	H.adjustFireLoss(-150)
+	// Successfully completed channel - heal for 20 (balanced with Steel Skin's 90% damage reduction)
+	H.adjustBruteLoss(-20)
+	H.adjustFireLoss(-20)
 	to_chat(H, span_boldnotice("Divine power courses through me, mending my wounds!"))
 	H.visible_message(span_boldannounce("[H] completes the dark ritual, vitality flowing into [H.p_them()]!"), span_boldnotice("Success! The life essence restores me!"))
 	

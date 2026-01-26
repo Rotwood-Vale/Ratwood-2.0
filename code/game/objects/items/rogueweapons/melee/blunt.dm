@@ -650,7 +650,7 @@
 	name = "Bloodfall"
 	desc = "A Brutal maul of Graggarite origin. It's so heavy, no sane mortal can lift this. Only the strongest of warriors can wield such a weapon, and even then, it is incredibly taxing on the body."
 	icon_state = "cross"
-	force_wielded = 50 // -1 compared to grand maul.
+	force_wielded = 39
 	smeltresult = /obj/item/ingot/blacksteel
 	minstr = 20
 	wdefense_wbonus = 8
@@ -661,7 +661,7 @@
 	minstr_req = TRUE
 	swingsound = list('sound/shuz/woosh/woosh1.ogg', 'sound/shuz/woosh/woosh2.ogg', 'sound/shuz/woosh/woosh3.ogg', 'sound/shuz/woosh/woosh4.ogg')
 	demolition_mod = 5 // Moars Forts BEGONE!!! I AM CONQUEROR OF CONQUERORS!!!
-	wdefense = 5
+	wdefense = 4
 
 
 //Dwarvish mauls. Unobtanium outside of Grudgebearer. Do not change that.

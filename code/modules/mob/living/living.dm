@@ -849,10 +849,45 @@
 	return (allowmobs && reagents && can_inject(user))
 
 /mob/living/proc/updatehealth()
+	// ALWAYS DEBUG
+	if(ishuman(src))
+		to_chat(src, span_notice("DEBUG: updatehealth() called on human"))
+		var/mob/living/carbon/human/H = src
+		to_chat(H, span_notice("DEBUG: Has mind? [H.mind ? "YES" : "NO"]"))
+		if(H.mind)
+			var/datum/antagonist/khan_sahnuzal/KD = H.mind.has_antag_datum(/datum/antagonist/khan_sahnuzal)
+			to_chat(H, span_notice("DEBUG: Has Khan datum? [KD ? "YES" : "NO"]"))
+			if(KD)
+				to_chat(H, span_boldannounce("KHAN DEBUG: updatehealth() CALLED! status_flags=[status_flags], GODMODE bit=[status_flags & GODMODE]"))
+	
 	if(status_flags & GODMODE)
-		return
+		to_chat(src, span_warning("DEBUG: Blocked by GODMODE!"))
+		// Debug for Khan - but allow Khan to update health even in GODMODE (for testing)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
+				to_chat(H, span_warning("DEBUG: updatehealth() would be blocked by GODMODE, but proceeding anyway for Khan"))
+				// Don't return, let Khan's health update
+			else
+				return
+		else
+			return
+	
+	// Debug for Khan before calculation
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
+			to_chat(H, span_notice("DEBUG PRE: health=[health], maxHealth=[maxHealth], calculating..."))
+	
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 	health = min(health, maxHealth)
+	
+	// Debug for Khan after calculation
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
+			to_chat(H, span_notice("DEBUG POST: health=[health] (should be [maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()])"))
+	
 	if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
 		// You dont have any blood and your not bloodloss immune? Dead.
 		if(blood_volume <= 0)

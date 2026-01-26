@@ -754,6 +754,28 @@
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
+	// Khan uses a special damage system - handle it separately
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
+			// Khan's HP = maxHealth - (brute damage from all bodyparts)
+			// We convert brute damage to effective HP loss
+			var/total_brute_damage = 0
+			for(var/obj/item/bodypart/BP as anything in bodyparts)
+				total_brute_damage += BP.brute_dam
+			
+			// Calculate Khan's effective health
+			health = round(maxHealth - total_brute_damage, DAMAGE_PRECISION)
+			
+			// Debug output
+			to_chat(H, span_notice("KHAN HP: [health]/[maxHealth] (Total Brute: [total_brute_damage])"))
+			
+			// Update stat and check for death
+			update_stat()
+			update_mobility()
+			SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
+			return
+	
 	if(status_flags & GODMODE)
 		return
 	var/total_burn	= 0
@@ -1076,6 +1098,20 @@
 		if(health <= HEALTH_THRESHOLD_NEARDEATH && HAS_TRAIT(src, TRAIT_DEATHBARGAIN))
 			src.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
 			return
+		
+		// Khan death check - dies at 0 HP instead of -100
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
+				// Debug: Log Khan's health status
+				to_chat(H, span_notice("DEBUG: Health=[health], MaxHealth=[maxHealth], Brute=[getBruteLoss()], Fire=[getFireLoss()]"))
+				if(health <= 0)
+					// No deathgasp - Khan has custom death sequence
+					death()
+					return
+					cure_blind(UNCONSCIOUS_BLIND)
+					return
+		
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			INVOKE_ASYNC(src, PROC_REF(emote), "deathgurgle")
 			death()

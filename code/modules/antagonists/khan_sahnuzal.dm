@@ -163,6 +163,25 @@
             M.STAWIL = 15 + rand(1,3)
             M.STAPER = 15 + rand(1,3)
 
+
+            M.setMaxHealth(4000)
+            
+            // CRITICAL: Increase bodypart max_damage to allow 4000+ total brute accumulation
+            // Normal bodyparts cap at ~200 each (~1200 total). Damage is randomly distributed,
+            // so some bodyparts max out while others stay low. We need MASSIVE overhead.
+            // 20× multiplier = 4000 max per bodypart = 24,000 total capacity (plenty of room)
+            if(iscarbon(M))
+                var/mob/living/carbon/C = M
+                for(var/obj/item/bodypart/BP in C.bodyparts)
+                    BP.max_damage = BP.max_damage * 20
+            
+            M.status_flags &= ~GODMODE // Make sure Khan doesn't have GODMODE (except during death sequence)
+            M.updatehealth() // Initialize health tracking
+
+
+
+            M.cmode_music_override_name = "Khan of Gronn"
+
             if(!src.khan_scaled)
                 M.transform = M.transform.Scale(1.25, 1.25)
                 M.transform = M.transform.Translate(0, (0.25 * 16))
@@ -237,3 +256,70 @@
     if(owner && owner.current)
         src.TrySetAntagName(owner.current, owner.current.real_name)
     return
+
+// Custom death sequence for the Khan
+/mob/living/carbon/human/proc/khan_death_sequence()
+    if(!mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
+        return FALSE
+    
+    // Completely immobilize the Khan during the sequence
+    Immobilize(10 SECONDS)
+    Stun(10 SECONDS)
+    
+    // Drop any held items
+    dropItemToGround(get_active_held_item(), TRUE)
+    dropItemToGround(get_inactive_held_item(), TRUE)
+    
+    // Prevent normal death during sequence
+    var/old_godmode = status_flags & GODMODE
+    status_flags |= GODMODE
+    
+    // Play initial death foley
+    playsound(get_turf(src), 'sound/shuz/antag/deathfoley1.ogg', 100, TRUE)
+    
+    // Choose a random death voice line
+    var/voice_choice = rand(1, 3)
+    var/vo_file
+    var/death_message
+    var/vo_duration
+    
+    switch(voice_choice)
+        if(1)
+            vo_file = 'sound/shuz/antag/deth1.ogg'
+            death_message = "O' Gods...Greet me..."
+            vo_duration = 5 SECONDS // Adjust based on actual file length
+        if(2)
+            vo_file = 'sound/shuz/antag/deth2.ogg'
+            death_message = "The Hall of Bones....awaits..."
+            vo_duration = 5 SECONDS
+        if(3)
+            vo_file = 'sound/shuz/antag/deth3.ogg'
+            death_message = "I have +EARNED+....my place..."
+            vo_duration = 5 SECONDS
+    
+    // Play the voice line and say the message
+    playsound(get_turf(src), vo_file, 100, TRUE)
+    say(death_message, forced = "death")
+    visible_message(span_userdanger("[src] stumbles, strength finally failing..."))
+    
+    // Wait for voice line to finish
+    sleep(vo_duration)
+    
+    // Play final death sounds
+    playsound(get_turf(src), 'sound/shuz/antag/deathgasp.ogg', 100, TRUE)
+    playsound(get_turf(src), 'sound/shuz/antag/deathfoleyfinal.ogg', 100, TRUE)
+    
+    // Force lying down
+    Knockdown(100)
+    
+    // Collapse message
+    visible_message(span_danger("[src] collapses to the ground, the legendary Khan finally fallen!"))
+    
+    // Brief pause for dramatic effect
+    sleep(1 SECONDS)
+    
+    // Restore godmode state and actually die
+    if(!old_godmode)
+        status_flags &= ~GODMODE
+    
+    return TRUE

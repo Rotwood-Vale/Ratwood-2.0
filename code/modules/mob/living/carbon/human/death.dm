@@ -31,6 +31,12 @@
 	if(stat == DEAD)
 		return
 
+	// Khan custom death sequence
+	if(!gibbed && mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
+		if(khan_death_sequence())
+			// Sequence completed, now proceed with normal death
+			pass()
+
 	var/area/A = get_area(src)
 	dna?.species?.stop_wagging_tail(src)
 

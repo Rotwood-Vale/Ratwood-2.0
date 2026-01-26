@@ -189,8 +189,9 @@
 	if(victim?.client)
 		victim.stop_sound_channel(sound_channel)
 	
-	// Play deactivate sound
-	playsound(get_turf(khan), 'sound/shuz/realm/deactivate.ogg', 100, TRUE)
+	// Play deactivate sound for both Khan and victim
+	if(khan)
+		playsound(get_turf(khan), 'sound/shuz/realm/deactivate.ogg', 100, TRUE)
 	if(victim)
 		playsound(get_turf(victim), 'sound/shuz/realm/deactivate.ogg', 100, TRUE)
 	
@@ -346,15 +347,15 @@
 	
 /obj/effect/realm_hand/Initialize(mapload)
 	. = ..()
-	// Auto-delete after 5 seconds
-	addtimer(CALLBACK(src, PROC_REF(fade_away)), 5 SECONDS)
+	// Auto-delete after 12 seconds (increased from 5 for slower hand)
+	addtimer(CALLBACK(src, PROC_REF(fade_away)), 12 SECONDS)
 	
 /obj/effect/realm_hand/proc/start_pursuit()
 	if(!target_mob)
 		qdel(src)
 		return
-	// Use walk_towards with delay of 3 (slow movement)
-	walk_towards(src, target_mob, 0, 3)
+	// Use walk_towards with delay of 10 (much slower movement, was 3)
+	walk_towards(src, target_mob, 0, 10)
 	
 /obj/effect/realm_hand/proc/fade_away()
 	walk(src, 0) // Stop movement

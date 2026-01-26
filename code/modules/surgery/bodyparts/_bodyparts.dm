@@ -356,15 +356,26 @@
 	if(!brute && !burn && !stamina)
 		return FALSE
 
-	//cap at maxdamage
-	if(brute_dam + brute > max_damage)
-		brute_dam = max_damage
-	else
+	// Khan's bodyparts can exceed max_damage (his HP system needs it)
+	var/is_khan = FALSE
+	if(owner && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
+			is_khan = TRUE
+	
+	//cap at maxdamage (unless Khan)
+	if(is_khan)
 		brute_dam += brute
-	if(burn_dam + burn > max_damage)
-		burn_dam = max_damage
-	else
 		burn_dam += burn
+	else
+		if(brute_dam + brute > max_damage)
+			brute_dam = max_damage
+		else
+			brute_dam += brute
+		if(burn_dam + burn > max_damage)
+			burn_dam = max_damage
+		else
+			burn_dam += burn
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	stamina_dam += round(CLAMP(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
@@ -440,6 +451,13 @@
 	var/surgery_flags = get_surgery_flags()
 	if(surgery_flags & SURGERY_CLAMPED)
 		return BODYPART_DISABLED_CLAMPED
+	
+	// Khan's limbs never disable from damage
+	if(owner && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
+			return BODYPART_NOT_DISABLED
+	
 	var/total_dam = get_damage()
 	if((total_dam >= max_damage) || (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) && (total_dam >= (max_damage * 0.6))))
 		return BODYPART_DISABLED_DAMAGE

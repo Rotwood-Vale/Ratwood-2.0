@@ -165,7 +165,7 @@
                     M.say("FALL!", forced = "spell")
                 if(5)
                     playsound(get_turf(M), 'sound/shuz/obliterate/hitisolated5.ogg', 100, TRUE)
-                    M.emote("laugh")
+                    M.emote("me", 1, "laughs mockingly.", TRUE)
             
             iso.Knockdown(1)
             var/obj/item/bodypart/headbp = iso.get_bodypart(BODY_ZONE_HEAD)
