@@ -342,6 +342,13 @@
 	brute = round(max(brute * dmg_mlt, 0),DAMAGE_PRECISION)
 	burn = round(max(burn * dmg_mlt, 0),DAMAGE_PRECISION)
 	stamina = round(max(stamina * dmg_mlt, 0),DAMAGE_PRECISION)
+	
+	// Steel Skin: 90% damage reduction for Khan
+	if(owner && HAS_TRAIT(owner, TRAIT_STEEL_SKIN))
+		brute *= 0.1
+		burn *= 0.1
+		stamina *= 0.1
+	
 	brute = max(0, brute - brute_reduction)
 	burn = max(0, burn - burn_reduction)
 	//No stamina scaling.. for now..

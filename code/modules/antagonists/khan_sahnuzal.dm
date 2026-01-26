@@ -166,12 +166,15 @@
                 M.transform = M.transform.Translate(0, (0.25 * 16))
                 M.update_transform()
                 src.khan_scaled = TRUE
-        // Grant the Decimate/Nightfall spell as an innate ability
+        // Grant the Obliterate spell as an innate ability
         if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/decimate))
             M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/decimate)
         // Grant the Indestructible spell
         if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/indestructible))
             M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/indestructible)
+        // Grant Death's Grasp spell
+        if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/deathsgrasp))
+            M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/deathsgrasp)
 
 /datum/antagonist/khan_sahnuzal/remove_innate_effects(mob/living/mob_override)
     . = ..()
@@ -198,6 +201,13 @@
         if(M.mind)
             M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/decimate)
             M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/indestructible)
+            M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/deathsgrasp)
+            // Clean up any active chains
+            if(M.mind.khan_chain_targets && length(M.mind.khan_chain_targets) > 0)
+                var/obj/effect/proc_holder/spell/invoked/deathsgrasp/spell = locate() in M.mind.spell_list
+                if(spell)
+                    for(var/mob/living/carbon/human/victim in M.mind.khan_chain_targets)
+                        spell.break_chain(M, victim, "death")
         // Revert giant transform if applied
         if(src && src.khan_scaled)
             if(M)

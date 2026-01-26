@@ -119,6 +119,11 @@
                 if(isturf(cone_tile))
                     var/obj/effect/decal/cleanable/dreamfiend_ichor/D = new /obj/effect/decal/cleanable/dreamfiend_ichor(cone_tile)
                     D.alpha = 200
+                    // Fade out and delete after 5 seconds
+                    spawn(5 SECONDS)
+                        if(D)
+                            animate(D, alpha = 0, time = 1 SECONDS)
+                            QDEL_IN(D, 1 SECONDS)
             return TRUE
 
         // Hit something

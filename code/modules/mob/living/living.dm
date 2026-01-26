@@ -1161,6 +1161,12 @@
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
 			return
+		// Check for Khan chain
+		if(iscarbon(src))
+			var/mob/living/carbon/human/H = src
+			if(H.mind?.khan_chained_by)
+				if(H.try_resist_khan_chain())
+					return
 		if(has_status_effect(/datum/status_effect/leash_pet))
 			if(istype(src, /mob/living/carbon))
 				src:resist_leash()

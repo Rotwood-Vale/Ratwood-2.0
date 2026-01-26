@@ -2922,6 +2922,7 @@
 #include "modular_azurepeak\code\modules\mob\living\simple_animal\rogue\creacher\undead_wolf.dm"
 #include "modular_azurepeak\code\modules\reagents\reagent_containers\rotcure.dm"
 #include "modular_azurepeak\code\modules\reagents\reagent_containers\spider_venom.dm"
+#include "modular_azurepeak\code\modules\spells\deathsgrasp.dm"
 #include "modular_azurepeak\code\modules\spells\decimate.dm"
 #include "modular_azurepeak\code\modules\spells\indestructible.dm"
 #include "modular_azurepeak\code\modules\spells\minion_order.dm"
