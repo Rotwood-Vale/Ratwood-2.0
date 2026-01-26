@@ -8,7 +8,7 @@
 	tutorial = "They'd pulled you from the line. To be a Confessor was your fate. Now? You're one of the Inquisitor's sharpest, of eye and steady hand alike. \
 	Armed with your beloved sauterelle, you'll drive back the dark. One stake at a time."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = RACES_TOLERATED_UP
 	outfit = /datum/outfit/job/roguetown/arbalist
 	subclass_languages = list(/datum/language/otavan)
 	category_tags = list(CTAG_INQUISITION)

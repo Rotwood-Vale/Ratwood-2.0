@@ -12,7 +12,7 @@
 	A crimson gild upon your soul, a taint that can't be cleared. For you are a weapon of the Holy See. No more. No less. \
 	Defend the Prelate. Give up no hallowed ground. Die for the Ten."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_NO_CONSTRUCT
+	allowed_races = RACES_TOLERATED_UP
 	allowed_patrons = ALL_DIVINE_PATRONS
 	outfit = /datum/outfit/job/roguetown/martyr
 	min_pq = 10 //Cus it's a Martyr of the Ten. Get it.

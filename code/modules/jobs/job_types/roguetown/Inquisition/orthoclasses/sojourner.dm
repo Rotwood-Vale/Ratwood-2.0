@@ -7,7 +7,7 @@
 	within the hallowed halls that honed their gifts and refined the knowledge they'd held. Attached to the Inquisitor, you've one purpose. \
 	Show them that the fall wasn't pointless."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = RACES_TOLERATED_UP
 	outfit = /datum/outfit/job/roguetown/sojourner
 	subclass_languages = list(/datum/language/otavan, /datum/language/celestial)//You're still Naledi. A learned one, atop that.
 	category_tags = list(CTAG_INQUISITION)
