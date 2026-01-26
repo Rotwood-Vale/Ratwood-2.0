@@ -759,7 +759,6 @@
 		var/mob/living/carbon/human/H = src
 		if(H.mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
 			// Khan's HP = maxHealth - (brute damage from all bodyparts)
-			// We convert brute damage to effective HP loss
 			var/total_brute_damage = 0
 			for(var/obj/item/bodypart/BP as anything in bodyparts)
 				total_brute_damage += BP.brute_dam
@@ -767,8 +766,21 @@
 			// Calculate Khan's effective health
 			health = round(maxHealth - total_brute_damage, DAMAGE_PRECISION)
 			
-			// Debug output
-			to_chat(H, span_notice("KHAN HP: [health]/[maxHealth] (Total Brute: [total_brute_damage])"))
+			// Visual HP display under Khan (only visible to him)
+			var/hp_percent = (health / maxHealth) * 100
+			var/hp_color = "#00ff00" // Green
+			if(hp_percent <= 25)
+				hp_color = "#ff0000" // Red
+			else if(hp_percent <= 50)
+				hp_color = "#ff8800" // Orange
+			else if(hp_percent <= 75)
+				hp_color = "#ffff00" // Yellow
+			
+			maptext = "<span style='font-size:8px;color:[hp_color];text-align:center;font-weight:bold;text-shadow: 1px 1px 2px black;'>[health]/[maxHealth]</span>"
+			maptext_x = -32
+			maptext_y = -10
+			maptext_width = 96
+			maptext_height = 32
 			
 			// Update stat and check for death
 			update_stat()
@@ -1103,8 +1115,6 @@
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.mind?.has_antag_datum(/datum/antagonist/khan_sahnuzal))
-				// Debug: Log Khan's health status
-				to_chat(H, span_notice("DEBUG: Health=[health], MaxHealth=[maxHealth], Brute=[getBruteLoss()], Fire=[getFireLoss()]"))
 				if(health <= 0)
 					// No deathgasp - Khan has custom death sequence
 					death()

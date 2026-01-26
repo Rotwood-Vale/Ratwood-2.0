@@ -166,10 +166,7 @@
 
             M.setMaxHealth(4000)
             
-            // CRITICAL: Increase bodypart max_damage to allow 4000+ total brute accumulation
-            // Normal bodyparts cap at ~200 each (~1200 total). Damage is randomly distributed,
-            // so some bodyparts max out while others stay low. We need MASSIVE overhead.
-            // 20× multiplier = 4000 max per bodypart = 24,000 total capacity (plenty of room)
+            
             if(iscarbon(M))
                 var/mob/living/carbon/C = M
                 for(var/obj/item/bodypart/BP in C.bodyparts)
@@ -178,7 +175,11 @@
             M.status_flags &= ~GODMODE // Make sure Khan doesn't have GODMODE (except during death sequence)
             M.updatehealth() // Initialize health tracking
 
-
+            // So, i've had a lot of issues with getting the Khan to actually die...
+            // the only physical way I could actually make him die was by uncapping his limb damage, and make his hp go down via brute damage.
+            // the way i figured this out was because i always used to kill people via oxy damage from the VV panel. I looked into the code and
+            // brute damage is commented out from counting towards their hp. 
+            // i hope the carbon changes and stuff i made aren't too intrusive but this is the only way i could figure out how to make him actually die lol.
 
             M.cmode_music_override_name = "Khan of Gronn"
 
