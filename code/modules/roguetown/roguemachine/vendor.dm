@@ -387,7 +387,7 @@
 		held_items[P]["PRICE"] = 20
 
 	// Add fancy keys with a price of 100
-	for (var/Y in list(/obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomv))
+	for (var/Y in list(/obj/item/storage/keyring/innfancyi, /obj/item/roguekey/fancyroomii, /obj/item/storage/keyring/innfancyiii, /obj/item/storage/keyring/innfancyiv, /obj/item/storage/keyring/innfancyv))
 		var/obj/Q = new Y(src)
 		held_items[Q] = list()
 		held_items[Q]["NAME"] = Q.name
@@ -409,7 +409,7 @@
 		held_items[P]["PRICE"] = 20
 
 	// Add fancy keys with a price of 100
-	for (var/Y in list(/obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomiii))
+	for (var/Y in list(/obj/item/storage/keyring/innfancyi, /obj/item/storage/keyring/innfancyii, /obj/item/storage/keyring/innfancyiii))
 		var/obj/Q = new Y(src)
 		held_items[Q] = list()
 		held_items[Q]["NAME"] = Q.name

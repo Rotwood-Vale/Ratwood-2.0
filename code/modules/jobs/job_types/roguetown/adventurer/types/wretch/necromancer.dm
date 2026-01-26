@@ -14,7 +14,7 @@
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1
 	)
-	subclass_spellpoints = 12
+	subclass_spellpoints = 16
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
@@ -40,7 +40,6 @@
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	beltl = /obj/item/rogueweapon/huntingknife
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/woodstaff/ruby
 	backpack_contents = list(
 		/obj/item/spellbook_unfinished/pre_arcyne = 1,
 		/obj/item/roguegem/amethyst = 1,
@@ -69,3 +68,26 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 		wretch_select_bounty(H)
 	H.grant_language(/datum/language/undead)
+
+	var/staffs = list(
+		"ronts-focused staff",
+		"blortz-focused staff",
+		"saffira-focused staff",
+		"gemerald-focused staff",
+		"amethyst-focused staff",
+		"toper-focused staff",
+	)
+	var/staffchoice = input(H, H, "Choose your staff", "Available staffs") as anything in staffs
+	switch(staffchoice)
+		if("ronts-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/ruby
+		if("blortz-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/quartz
+		if("saffira-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/sapphire
+		if("gemerald-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/emerald
+		if("amethyst-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/amethyst
+		if("toper-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/toper

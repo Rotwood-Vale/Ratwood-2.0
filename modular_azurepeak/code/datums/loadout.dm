@@ -398,6 +398,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Tabard's Shroud, Black"
 	path = /obj/item/clothing/head/roguetown/roguehood/shroudblack
 
+/datum/loadout_item/tabardwhite
+	name = "Tabard, White"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/tabardwhite
+
+/datum/loadout_item/shroudwhite
+	name = "Tabard's Shroud, White"
+	path = /obj/item/clothing/head/roguetown/roguehood/shroudwhite
+
 /datum/loadout_item/poncho
 	name = "Poncho"
 	path = /obj/item/clothing/cloak/poncho
@@ -685,7 +693,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Golden Half-Mask"
 	path = /obj/item/clothing/mask/rogue/lordmask
 
-
 /datum/loadout_item/exoticsilkmask
 	name = "Exotic Silk Mask"
 	path = /obj/item/clothing/mask/rogue/exoticsilkmask
@@ -865,6 +872,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/collar_surgcollar
 	name = "Surgcollar"
 	path = /obj/item/clothing/neck/roguetown/collar/surgcollar
+
+/datum/loadout_item/scarf
+	name = "Scarf"
+	path = /obj/item/clothing/head/roguetown/scarf
 
 // MASKS
 /datum/loadout_item/skullmask
@@ -1225,6 +1236,58 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/cloak/templar/ravox
 
 // CLOTHING - DRESSES & ROBES
+/datum/loadout_item/tri_ornate_dress
+	name = "Ornate Dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/steward
+	triumph_cost = 3
+
+/datum/loadout_item/tri_princess_dress/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
+/datum/loadout_item/tri_ornate_tunic
+	name = "Ornate Tunic"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/silktunic
+	triumph_cost = 3
+
+/datum/loadout_item/tri_princess_dress/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
 /datum/loadout_item/tri_princess_dress
 	name = "Princess Dress"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
@@ -1524,11 +1587,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
 	triumph_cost = 3
 
-/datum/loadout_item/tri_regen_skin
-	name = "Regenerating Skin"
-	path = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple/weak
-	triumph_cost = 5
-
 /datum/loadout_item/tri_shamanic_coat
 	name = "Shamanic Coat"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi
@@ -1605,7 +1663,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/tri_grenzelhoft_boots
 	name = "Grenzelhoft Boots"
-	path = /obj/item/clothing/shoes/roguetown/grenzelhoft
+	path = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 
 
 /datum/loadout_item/tri_kazengun_boots
@@ -1977,3 +2035,75 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Paper Parasol"
 	path = /obj/item/rogueweapon/mace/parasol
 	triumph_cost = 3
+
+//INSTRUMENTS
+
+/datum/loadout_item/accordion
+	name = "Accordion"
+	path = /obj/item/rogue/instrument/accord
+	triumph_cost = 1
+
+/datum/loadout_item/bagpipe
+	name = "Bagpipe"
+	path = /obj/item/rogue/instrument/bagpipe
+	triumph_cost = 1
+
+/datum/loadout_item/drum
+	name = "Drum"
+	path = /obj/item/rogue/instrument/drum
+	triumph_cost = 1
+
+/datum/loadout_item/flute
+	name = "Flute"
+	path = /obj/item/rogue/instrument/flute
+	triumph_cost = 1
+
+/datum/loadout_item/guitar
+	name = "Guitar"
+	path = /obj/item/rogue/instrument/guitar
+	triumph_cost = 1
+
+/datum/loadout_item/harp
+	name = "Harp"
+	path = /obj/item/rogue/instrument/harp
+	triumph_cost = 1
+
+/datum/loadout_item/hurdygurdy
+	name = "Hurdy-Gurdy"
+	path = /obj/item/rogue/instrument/hurdygurdy
+	triumph_cost = 1
+
+/datum/loadout_item/jawharp
+	name = "Jaw Harp"
+	path = /obj/item/rogue/instrument/jawharp
+	triumph_cost = 1
+
+/datum/loadout_item/lute
+	name = "Lute"
+	path = /obj/item/rogue/instrument/lute
+	triumph_cost = 1
+
+/datum/loadout_item/psyaltery
+	name = "Psyaltery"
+	path = /obj/item/rogue/instrument/psyaltery
+	triumph_cost = 1
+
+/datum/loadout_item/shamisen
+	name = "Shamisen"
+	path = /obj/item/rogue/instrument/shamisen
+	triumph_cost = 1
+
+/datum/loadout_item/trumpet
+	name = "Trumpet"
+	path = /obj/item/rogue/instrument/trumpet
+	triumph_cost = 1
+
+/datum/loadout_item/viola
+	name = "Viola"
+	path = /obj/item/rogue/instrument/viola
+	triumph_cost = 1
+
+/datum/loadout_item/vocaltalisman
+	name = "Vocal Talisman"
+	path = /obj/item/rogue/instrument/vocals
+	triumph_cost = 1

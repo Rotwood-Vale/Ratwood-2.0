@@ -15,7 +15,7 @@
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1
 	)
-	subclass_spellpoints = 27 // Unlike Rogue Mage, who gets 6 but DExpert, this one don't have DExpert but have more spell points than anyone but the CM. 
+	subclass_spellpoints = 27 // Unlike Rogue Mage, who gets 6 but DExpert, this one don't have DExpert but have more spell points than anyone but the CM.
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
@@ -43,11 +43,10 @@
 	neck = /obj/item/clothing/neck/roguetown/leather // No iron gorget vs necro. They will have to acquire one in round.
 	beltl = /obj/item/storage/magebag
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/woodstaff/ruby
 	backpack_contents = list(
-		/obj/item/spellbook_unfinished/pre_arcyne = 1, 
+		/obj/item/spellbook_unfinished/pre_arcyne = 1,
 		/obj/item/roguegem/amethyst = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/chalk = 1,
@@ -61,3 +60,26 @@
 		H.mind?.adjust_spellpoints(6)
 	if(H.mind)
 		wretch_select_bounty(H)
+
+	var/staffs = list(
+		"ronts-focused staff",
+		"blortz-focused staff",
+		"saffira-focused staff",
+		"gemerald-focused staff",
+		"amethyst-focused staff",
+		"toper-focused staff",
+	)
+	var/staffchoice = input(H, H, "Choose your staff", "Available staffs") as anything in staffs
+	switch(staffchoice)
+		if("ronts-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/ruby
+		if("blortz-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/quartz
+		if("saffira-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/sapphire
+		if("gemerald-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/emerald
+		if("amethyst-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/amethyst
+		if("toper-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/toper

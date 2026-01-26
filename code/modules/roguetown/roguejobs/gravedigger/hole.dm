@@ -122,7 +122,7 @@
 					playsound(user, 'sound/misc/bellold.ogg', 20)
 					new /obj/item/soulthread((get_turf(user)))
 					corpse.burialrited = TRUE
-
+					record_round_statistic(STATS_GRAVES_CONSECRATED)
 
 /obj/structure/closet/dirthole/attackby(obj/item/attacking_item, mob/user, params)
 	if(!istype(attacking_item, /obj/item/rogueweapon/shovel))

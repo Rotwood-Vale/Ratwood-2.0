@@ -176,6 +176,9 @@
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	pre_equip(H, visualsOnly)
 
+	// Replace silver items with non-silver alternatives for characters with silver weakness
+	handle_silver_weakness(H)
+
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
 		H.equip_to_slot_or_del(new pants(H),SLOT_PANTS, TRUE)
@@ -276,6 +279,19 @@
 
 	H.update_body()
 	return TRUE
+
+
+/datum/outfit/proc/handle_silver_weakness(mob/living/carbon/human/H)
+	if(!H || !HAS_TRAIT(H, TRAIT_SILVER_WEAK))
+		return
+	
+	if(belt)
+		var/obj/item/checked_belt = new belt()
+		var/is_silver_belt = (checked_belt.is_silver || checked_belt.smeltresult == /obj/item/ingot/silver)
+		qdel(checked_belt)
+		
+		if(is_silver_belt)
+			belt = /obj/item/storage/belt/rogue/leather/black
 
 /datum/outfit/proc/move_storage(obj/item/new_item, turf/T)
 	if(new_item.forceMove(T))

@@ -173,7 +173,7 @@
 /datum/supply_pack/rogue/Sellsword/Grenzelshoes
 	name = "Grenzel Shoes"
 	cost = 15
-	contains = list(/obj/item/clothing/shoes/roguetown/grenzelhoft)
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/grenzelhoft)
 
 /datum/supply_pack/rogue/Sellsword/halberd
 	name = "Halberd"

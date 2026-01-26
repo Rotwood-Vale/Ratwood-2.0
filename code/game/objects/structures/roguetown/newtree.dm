@@ -270,6 +270,7 @@
 	icon_state = "center-leaf1"
 	density = FALSE
 	max_integrity = 10
+	plane = FLOOR_PLANE
 
 /obj/structure/flora/newleaf/Initialize()
 	. = ..()

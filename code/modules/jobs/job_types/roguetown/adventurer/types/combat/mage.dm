@@ -130,15 +130,19 @@
 			if("Spear")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/spear
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Whip")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				r_hand = /obj/item/rogueweapon/whip
 			if("Battle Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				backr = /obj/item/rogueweapon/stoneaxe/battle
 			if("Mace")
 				beltr = /obj/item/rogueweapon/mace
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
@@ -249,7 +253,7 @@
 	subclass_skills = list(
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN, 
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE, //let's encourage bonking people on the head rogues don't do it enough
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
@@ -273,7 +277,7 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
 	cloak = /obj/item/clothing/cloak/raincloak/mortus
-	backl = /obj/item/storage/backpack/rogue/satchel //backpack remains thief's special sauce 
+	backl = /obj/item/storage/backpack/rogue/satchel //backpack remains thief's special sauce
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather

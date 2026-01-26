@@ -87,18 +87,54 @@
 	devotion_cost = 30
 
 /obj/effect/proc_holder/spell/targeted/conjure_glowshroom/cast(list/targets, mob/user = usr)
-	..()
+	. = ..()
 
 	to_chat(user, span_notice("I begin enriching the soil around me!"))
 	if(!do_after(user, 2 SECONDS, progress = TRUE))
 		revert_cast()
 		return FALSE
 
-	var/turf/T = user.loc
-	for(var/X in GLOB.cardinals)
-		var/turf/TT = get_step(T, X)
-		if(!isclosedturf(TT) && !locate(/obj/structure/glowshroom) in TT && !locate(/obj/structure/glowshroom/dendorite) in TT)
-			new /obj/structure/glowshroom/dendorite(TT)
+	var/turf/target_turf = get_step(user, user.dir)
+	var/turf/target_turf_two = get_step(target_turf, turn(user.dir, 90))
+	var/turf/target_turf_three = get_step(target_turf, turn(user.dir, -90))
+	
+	if(!isclosedturf(target_turf) && !locate(/obj/structure/glowshroom) in target_turf && !locate(/obj/structure/glowshroom/dendorite) in target_turf)
+		new /obj/structure/glowshroom/dendorite(target_turf)
+	if(!isclosedturf(target_turf_two) && !locate(/obj/structure/glowshroom) in target_turf_two && !locate(/obj/structure/glowshroom/dendorite) in target_turf_two)
+		new /obj/structure/glowshroom/dendorite(target_turf_two)
+	if(!isclosedturf(target_turf_three) && !locate(/obj/structure/glowshroom) in target_turf_three && !locate(/obj/structure/glowshroom/dendorite) in target_turf_three)
+		new /obj/structure/glowshroom/dendorite(target_turf_three)
+	return TRUE
+
+/obj/effect/proc_holder/spell/targeted/conjure_vines
+	name = "Vine Sprout"
+	desc = "Summon vines nearby."
+	overlay_state = "blesscrop"
+	releasedrain = 90
+	invocations = list("Treefather, bring forth vines.")
+	invocation_type = "shout"
+	devotion_cost = 30
+	range = 1
+	recharge_time = 30 SECONDS
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	max_targets = 0
+	cast_without_targets = TRUE
+	sound = 'sound/items/dig_shovel.ogg'
+	associated_skill = /datum/skill/magic/holy
+	miracle = TRUE
+
+/obj/effect/proc_holder/spell/targeted/conjure_vines/cast(list/targets, mob/user = usr)
+	. = ..()
+	var/turf/target_turf = get_step(user, user.dir)
+	var/turf/target_turf_two = get_step(target_turf, turn(user.dir, 90))
+	var/turf/target_turf_three = get_step(target_turf, turn(user.dir, -90))
+	if(!locate(/obj/structure/vine) in target_turf)
+		new /obj/structure/vine(target_turf)
+	if(!locate(/obj/structure/vine) in target_turf_two)
+		new /obj/structure/vine(target_turf_two)
+	if(!locate(/obj/structure/vine) in target_turf_three)
+		new /obj/structure/vine(target_turf_three)
+
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/howl/call_of_the_moon
