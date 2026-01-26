@@ -21,7 +21,7 @@
 	give_bank_account = 1
 	min_pq = 10
 	max_pq = null
-	round_contrib_points = 3
+	round_contrib_points = 5
 
 	job_traits = list(TRAIT_MEDICINE_EXPERT, TRAIT_HOMESTEAD_EXPERT,
 						  TRAIT_ALCHEMY_EXPERT, TRAIT_SEWING_EXPERT,

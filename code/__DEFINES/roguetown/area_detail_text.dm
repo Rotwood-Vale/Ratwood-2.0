@@ -76,8 +76,14 @@ Rusted metals distantly grind in anoxic pus-condensate in-tune with the Signal. 
 #define DETAIL_TEXT_HIS_VAULT ""
 #define DETAIL_TEXT_FISHMAN_DUNGEON ""
 
-// Forsaken Cathedral
+#define DETAIL_TEXT_BLOODY_ARENA "This place smells like iron curdleing on rust. A giant coliseum. Blood, Dirt and Sand.. "
+
+// Forsaken Cathedral // Wretched Ghrotto
 #define DETAIL_TEXT_FORSAKEN_CATHEDRAL ""
+#define DETAIL_TEXT_WRETCHED_TEMPLE "A place used for worship of the wretched inhumen. Dejected by the followers of the ten, those that come here seek salvation in other forms."
+#define DETAIL_TEXT_WRETCHED_GHROTTO "\"This place was once a small encampment of refugees; their fate was said to have met with a terrible end. Slowly, it was claimed by those who otherwise had no home. \n\
+The buildings here have seen many uses; though the main camp is where most of the wretches huddle. \n\ The Eastern side lies an old shoppe, turned into a triage for their wretched health. \n\ The north held the ruins of an old church; with an odd gloom hanging about it. \n\ The west seemed to creak with frogs and cicada-- holding a pocket of ruined buildings between the cliffs."
+#define DETAIL_TEXT_WRETCHED_CAMP ""
 
 // Town
 #define DETAIL_TEXT_AZURE_PEAK ""

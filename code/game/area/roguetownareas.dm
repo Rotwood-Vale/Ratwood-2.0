@@ -163,6 +163,15 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	deathsight_message = "a twisted tangle of soaring peaks"
 	// I SURE HOPE NO ONE USE THIS HUH
 
+/area/rogue/outdoors/cave/inhumen/wretch/ghrotto
+	name = "WRETCHED GHROTTO"
+	icon_state = "outdoors"
+	first_time_text = "WRETCHED GHROTTO"
+	droning_sound = 'sound/ambience/bogday (1).ogg'
+	droning_sound_dusk = 'sound/ambience/bogday (2).ogg'
+	droning_sound_night = 'sound/ambience/bogday (3).ogg'
+	converted_type = /area/rogue/outdoors/dungeon1
+	detail_text = DETAIL_TEXT_WRETCHED_GHROTTO
 
 /area/rogue/indoors/shelter/mountains
 	icon_state = "mountains"

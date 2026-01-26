@@ -75,6 +75,8 @@
 		/datum/language/beast,
 	)
 
+	gibs_on_shapeshift = TRUE
+
 /datum/species/werewolf/send_voice(mob/living/carbon/human/H)
 	playsound(get_turf(H), pick('sound/vo/mobs/wwolf/wolftalk1.ogg','sound/vo/mobs/wwolf/wolftalk2.ogg'), 100, TRUE, -1)
 

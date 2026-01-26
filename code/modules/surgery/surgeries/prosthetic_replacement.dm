@@ -84,6 +84,7 @@
 	)
 	time = 3 SECONDS
 	requires_bodypart = FALSE //need a missing limb
+	surgery_flags_blocked = SURGERY_CONSTRUCT
 	requires_missing_bodypart = TRUE
 	requires_bodypart_type = NONE
 	skill_min = SKILL_LEVEL_JOURNEYMAN

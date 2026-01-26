@@ -135,7 +135,7 @@
 
 /obj/effect/proc_holder/spell/invoked/psydonendure
 	name = "ENDURE"
-	desc = "Mends the wounds of the target."
+	desc = "At the cost of some lyfe sustaining blood, I can mend the wounds of my target."
 	overlay_state = "ENDURE"
 	releasedrain = 20
 	chargedrain = 0
@@ -202,7 +202,7 @@
 					if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 						psicross_bonus = 0.4
 					if(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy)
-						zcross_trigger = TRUE	
+						zcross_trigger = TRUE
 
 		if(damtotal >= 300) // ARE THEY ENDURING MUCH, IN ONE WAY OR ANOTHER?
 			situational_bonus += 0.3
@@ -227,6 +227,7 @@
 			return FALSE
 
 		target.apply_status_effect(/datum/status_effect/buff/psyhealing, psyhealing)
+		user.blood_volume = max(user.blood_volume-30, 0)//We don't care about scaling, for this one.
 		return TRUE
 
 	revert_cast()
