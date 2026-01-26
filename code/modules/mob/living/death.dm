@@ -110,7 +110,10 @@ GLOBAL_LIST_EMPTY(last_words)
 	SSdroning.kill_loop(src.client)
 	SSdroning.kill_droning(src.client)
 	if(!nocutscene)
-		src.playsound_local(src, 'sound/misc/deth.ogg', 100)
+		// Check if in death realm - if so, skip normal death sound
+		var/turf/death_turf = get_turf(src)
+		if(!death_turf || death_turf.z != 1 || death_turf.x < 48 || death_turf.x > 66 || death_turf.y != 74)
+			src.playsound_local(src, 'sound/misc/deth.ogg', 100)
 
 	set_drugginess(0)
 	set_disgust(0)

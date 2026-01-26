@@ -34,6 +34,11 @@
 	var/area/A = get_area(src)
 	dna?.species?.stop_wagging_tail(src)
 
+	// Custom death sound for Realm of Death
+	var/turf/T = get_turf(src)
+	if(T && T.z == 1 && T.x >= 48 && T.x <= 66 && T.y == 74)
+		playsound_local(src, 'sound/shuz/realm/deathrealm.ogg', 80, FALSE)
+
 	if(client)
 		SSdroning.kill_droning(client)
 		SSdroning.kill_loop(client)

@@ -178,8 +178,8 @@
         if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/deathsgrasp))
             M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/deathsgrasp)
         // Grant Realm of Death spell
-        if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/targeted/realm_of_death))
-            M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/realm_of_death)
+        if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/realm_of_death))
+            M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/realm_of_death)
 
 /datum/antagonist/khan_sahnuzal/remove_innate_effects(mob/living/mob_override)
     . = ..()
@@ -209,7 +209,7 @@
             M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/decimate)
             M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/indestructible)
             M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/deathsgrasp)
-            M.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/realm_of_death)
+            M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/realm_of_death)
             // Clean up any active chains
             if(M.mind.khan_chain_targets && length(M.mind.khan_chain_targets) > 0)
                 var/obj/effect/proc_holder/spell/invoked/deathsgrasp/spell = locate() in M.mind.spell_list
