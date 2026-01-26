@@ -1119,8 +1119,6 @@
 					// No deathgasp - Khan has custom death sequence
 					death()
 					return
-					cure_blind(UNCONSCIOUS_BLIND)
-					return
 		
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			INVOKE_ASYNC(src, PROC_REF(emote), "deathgurgle")

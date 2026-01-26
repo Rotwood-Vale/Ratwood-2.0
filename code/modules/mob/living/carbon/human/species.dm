@@ -694,10 +694,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(is_nudist)
 				return FALSE
 			// Khan's Steel Skin: refuse medium/heavy armor
-			// Khan's Steel Skin: refuse medium/heavy armor
 			// Narrow the type to clothing so the compiler knows `armor_class` exists.
 			var/obj/item/clothing/CL = I
-			if(HAS_TRAIT(H, TRAIT_STEEL_SKIN) && CL && CL.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM))
+			if(HAS_TRAIT(H, TRAIT_STEEL_SKIN) && CL && (CL.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM)))
 				if(!disable_warning)
 					to_chat(H, span_warning("I refuse to wear such frivalous attire."))
 				return FALSE
