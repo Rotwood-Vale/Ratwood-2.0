@@ -238,11 +238,12 @@
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE) // actually makes them usable for the templar.
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Kargrund Maul")
-			H.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/malum(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
-			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		// DISABLED: malum weapon path does not exist
+		//if("Kargrund Maul")
+		//	H.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/malum(H), TRUE)
+		//	H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
+		//	H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
+		//	H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
 		if("Summer Scythe")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/bardiche/scythe(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
