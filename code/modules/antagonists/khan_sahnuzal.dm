@@ -11,35 +11,35 @@
     var/mob = null
     var/khan_scaled = FALSE
 
-    // Attempt to set the antagonist's displayed name. Returns 1 on success, 0 on failure.
-    // Enforces that only admins may use the reserved name "Sahn-Uzal".
-    proc/TrySetAntagName(mob/living/carbon/H, new_name as text)
-        if(!H)
-            return 0
-        var/clean = trim(new_name)
-        if(!length(clean))
-            return 0
+// Attempt to set the antagonist's displayed name. Returns 1 on success, 0 on failure.
+// Enforces that only admins may use the reserved name "Sahn-Uzal".
+/datum/antagonist/khan_sahnuzal/proc/TrySetAntagName(mob/living/carbon/H, new_name as text)
+    if(!H)
+        return 0
+    var/clean = trim(new_name)
+    if(!length(clean))
+        return 0
 
-        // reserved names (common variants)
-        var/list/reserved = list("Sahn-Uzal", "sahn-uzal", "Sahnuzal", "sahnuzal", "SAHN-UZAL", "SAHNUZAL")
-        for(var/word in reserved)
-            if(clean == word)
-                // allow if the player is an admin
-                if(!(H.client && check_rights_for(H.client, R_ADMIN)))
-                    to_chat(H, span_boldred("You are not worthy of such a name!"))
-                    return 0
+    // reserved names (common variants)
+    var/list/reserved = list("Sahn-Uzal", "sahn-uzal", "Sahnuzal", "sahnuzal", "SAHN-UZAL", "SAHNUZAL")
+    for(var/word in reserved)
+        if(clean == word)
+            // allow if the player is an admin
+            if(!(H.client && check_rights_for(H.client, R_ADMIN)))
+                to_chat(H, span_boldred("You are not worthy of such a name!"))
+                return 0
 
-        // Apply the name
-        H.name = clean
+    // Apply the name
+    H.name = clean
 
-        // Play spawn music locally
-        if(isturf(get_turf(H)))
-            playsound(get_turf(H), "sound/shuz/antag/spawnmusic.ogg", 60, FALSE, FALSE)
+    // Play spawn music locally
+    if(isturf(get_turf(H)))
+        playsound(get_turf(H), "sound/shuz/antag/spawnmusic.ogg", 60, FALSE, FALSE)
 
-        // Welcome message in bright bold red
-        var/msg = "I am Khan " + clean + ", A great Warlord, Khan of the many Khanates of Gronn. I am here on holy mission. The mission to see the vale conquered, for I am conqueror of conquerors. I will not fail, for Graggar has bestowed upon me power great enough to topple even Kingsfield itself."
-        to_chat(H, span_boldred(msg))
-        return 1
+    // Welcome message in bright bold red
+    var/msg = "I am Khan " + clean + ", A great Warlord, Khan of the many Khanates of Gronn. I am here on holy mission. The mission to see the vale conquered, for I am conqueror of conquerors. I will not fail, for Graggar has bestowed upon me power great enough to topple even Kingsfield itself."
+    to_chat(H, span_boldred(msg))
+    return 1
 
 // Hook: make this antagonist discoverable by any antagonist manager in the project
 // Registration is handled by the antagonist manager; avoid top-level mutations here.
