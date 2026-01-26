@@ -20,9 +20,22 @@
 
 	var/mob/living/carbon/human/M = user
 
-	// Check if we have any active chains
-	if(M.mind?.khan_chain_targets && length(M.mind.khan_chain_targets) > 0)
-		// Pull all chained targets
+	// First, check if we're targeting a new valid mob
+	var/mob/living/carbon/human/target = null
+	if(LAZYLEN(targets))
+		target = targets[1]
+	
+	// If we have a valid new target (not ourselves, alive, and not already chained), chain them
+	if(target && istype(target) && target.stat != DEAD && target != M)
+		// Check if already chained
+		if(M.mind?.khan_chain_targets && (target in M.mind.khan_chain_targets))
+			to_chat(M, span_warning("[target] is already chained!"))
+			revert_cast()
+			return FALSE
+		
+		// Valid new target - proceed to chain them (skip to chaining logic below)
+	else if(M.mind?.khan_chain_targets && length(M.mind.khan_chain_targets) > 0)
+		// No valid new target but we have chains - pull them
 		var/list/valid_chains = list()
 		for(var/mob/living/carbon/human/victim in M.mind.khan_chain_targets)
 			if(!victim || QDELETED(victim) || victim.stat == DEAD)
@@ -41,12 +54,13 @@
 		// Pull all valid chains
 		pull_chained_targets(M, valid_chains)
 		return TRUE
-
-	// No active chain, cast new one
-	var/mob/living/carbon/human/target = null
-	if(LAZYLEN(targets))
-		target = targets[1]
-
+	else
+		// No target and no chains
+		to_chat(M, span_warning("I need a valid target!"))
+		revert_cast()
+		return FALSE
+	
+	// At this point, we have a valid new target to chain
 	if(!target || !istype(target) || target.stat == DEAD)
 		to_chat(M, span_warning("I need a valid target!"))
 		revert_cast()
@@ -54,12 +68,6 @@
 
 	if(target == M)
 		to_chat(M, span_warning("I cannot chain myself!"))
-		revert_cast()
-		return FALSE
-	
-	// Check if already chained
-	if(M.mind?.khan_chain_targets && (target in M.mind.khan_chain_targets))
-		to_chat(M, span_warning("[target] is already chained!"))
 		revert_cast()
 		return FALSE
 
@@ -253,8 +261,9 @@
 	
 	to_chat(caster, span_notice("You pull your chained victims closer!"))
 	
-	// Break all chains after successful pull
-	for(var/mob/living/carbon/human/victim in victims)
+	// Break all chains after successful pull - use a copy of the list to avoid modification during iteration
+	var/list/victims_to_break = victims.Copy()
+	for(var/mob/living/carbon/human/victim in victims_to_break)
 		break_chain(caster, victim, "pull")
 
 // Handle the chain lock warning after timer
@@ -348,6 +357,7 @@
 			caster.visible_message(span_danger("The chain dissipates..."))
 		if("pull")
 			// Silent break after pull - no message needed
+			return
 
 // Add resist handler - called from the player's resist action
 /mob/living/carbon/human/proc/try_resist_khan_chain()
