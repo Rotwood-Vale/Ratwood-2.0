@@ -24,7 +24,7 @@
 
 /datum/coven_power/fae_trickery/darkling_trickery/activate(mob/living/target)
 	. = ..()
-	target.visible_message(span_suicide("[target] is disarmed!"), 
+	target.visible_message(span_suicide("[target] is disarmed!"),
 					span_boldwarning("I'm disarmed!"))
 	playsound(get_turf(target), 'sound/magic/mockery.ogg', 40, FALSE)
 	var/turnangle = (prob(50) ? 270 : 90)
@@ -62,7 +62,7 @@
 	name = "goblin"
 	desc = "A green changeling creature."
 	icon_state = "goblin"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PEEL, BCLASS_PIERCE, BCLASS_CHOP, BCLASS_LASHING, BCLASS_STAB)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PIERCE, BCLASS_CHOP, BCLASS_LASHING, BCLASS_STAB)
 	max_integrity = 200
 	body_parts_covered = FULL_HEAD
 	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
@@ -293,7 +293,7 @@
 		if(AM != owner)
 			AM.adjustBruteLoss(35)
 			AM.Knockdown(5)
-			AM.visible_message(span_suicide("[AM] is disarmed!"), 
+			AM.visible_message(span_suicide("[AM] is disarmed!"),
 							span_boldwarning("I'm disarmed!"))
 			playsound(get_turf(AM), 'sound/magic/mockery.ogg', 40, FALSE)
 			var/target_turf = get_ranged_target_turf(get_turf(AM), pick(GLOB.cardinals), rand(2, 5))

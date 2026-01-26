@@ -27,11 +27,6 @@
 		protection = used.armor.getRating(d_type)
 		if(!blade_dulling)
 			blade_dulling = BCLASS_BLUNT
-		if(blade_dulling == BCLASS_PEEL)	//Peel shouldn't be dealing any damage through armor, or to armor itself.
-			used.peel_coverage(def_zone, peeldivisor, src)
-			damage = 0
-			if(def_zone == BODY_ZONE_CHEST)
-				purge_peel(99)
 		if(used.blocksound)
 			playsound(loc, get_armor_sound(used.blocksound, blade_dulling), 100)
 		var/intdamage = damage
@@ -259,7 +254,7 @@
 			var/stealthy = (m_intent == MOVE_INTENT_SNEAK)
 			if(H.try_accept_offered_item(src, offered_item, stealthy))
 				return TRUE
-	
+
 	if(..())	//to allow surgery to return properly.
 		return
 	retaliate(user)

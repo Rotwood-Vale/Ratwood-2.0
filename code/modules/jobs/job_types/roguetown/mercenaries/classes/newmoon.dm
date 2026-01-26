@@ -86,7 +86,7 @@
 	force = 22//Dropped to 14 when on. Fire damage is a hell of a thing. -8, overall.
 	max_integrity = 200//+50
 	max_blade_int = 150//-50
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	damtype = BRUTE
 	light_color = LIGHT_COLOR_BLUE
 	var/on = FALSE
@@ -112,7 +112,7 @@
 	if(on)
 		on = FALSE
 		damtype = BRUTE
-		possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
+		possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 		force = 22
 	else
 		user.visible_message(span_warning("[user]'s blade lights up with a blue flame."))

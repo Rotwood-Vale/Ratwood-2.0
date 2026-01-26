@@ -154,7 +154,6 @@
 #define SWORD_THRUST	 /datum/intent/sword/thrust
 #define SWORD_CHOP		 /datum/intent/sword/chop //2h swords only
 #define SWORD_STRIKE	 /datum/intent/sword/strike //mordhau grip
-#define SWORD_PEEL		/datum/intent/sword/peel
 
 #define ELFSWORD_CUT		/datum/intent/sword/cut/elf
 #define ELFSWORD_THRUST		/datum/intent/sword/thrust/elf
@@ -167,8 +166,6 @@
 #define SPEAR_CUT			/datum/intent/spear/cut
 #define SPEAR_CAST          /datum/intent/spear/cast
 #define PARTIZAN_REND		/datum/intent/rend/reach/partizan
-#define PARTIZAN_PEEL		/datum/intent/partizan/peel
-#define PARTIZAN_PEEL_BAD	/datum/intent/partizan/peel/nag
 
 #define MESSER_CHOP			/datum/intent/sword/chop/messer
 
@@ -216,7 +213,6 @@
 #define BCLASS_PUNCH		"punch"
 #define BCLASS_BITE			"bite"
 #define BCLASS_BURN			"charring"
-#define BCLASS_PEEL			"peel"
 #define BCLASS_PUNISH		"punish"
 #define BCLASS_EFFECT		"effect"
 #define BCLASS_SUNDER       "sunder"

@@ -203,7 +203,7 @@
 			user.adjust_blurriness(3)
 			user.adjustBruteLoss(5)
 			user.apply_status_effect(/datum/status_effect/churned, M)
-	
+
 	//Niche signal for post-swingdelay attacks when we want to care about those.
 	_attacker_signal = null
 	_attacker_signal = SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK_POST_SWINGDELAY, M, user, src)
@@ -650,17 +650,6 @@
 	var/verb_appendix
 	if(!I.force_dynamic)
 		return
-	if(bladec == BCLASS_PEEL)
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			var/obj/item/used = H.get_best_worn_armor(hit_area, user.used_intent.item_d_type)
-			if(used)
-				if(used.peel_count)
-					verb_appendix =	" <font color ='#e7e7e7'>(\Roman[used.peel_count])</font>"
-				else
-					use_override = TRUE
-			else
-				use_override = TRUE
 	var/message_hit_area = ""
 	hit_area = parse_zone(hit_area, BP)
 	if(user.used_intent)

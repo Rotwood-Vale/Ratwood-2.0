@@ -131,7 +131,7 @@
 	name = "oathmarked's flamberge"
 	desc = "An incredibly well balanced blade, designed for a rather large frame. Heavy beyond any reasonable measure. \
 	The work of a master smith, or one with far too much time to spare. The blade of a noble, surely."
-	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/zwei, /datum/intent/sword/peel/big, /datum/intent/sword/strike/bad)
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/zwei, /datum/intent/sword/strike/bad)
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "oathflamberge"//Temp.
 	max_blade_int = 220

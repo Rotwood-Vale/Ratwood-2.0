@@ -149,26 +149,6 @@
 	item_d_type = "stab"
 	intent_intdamage_factor = 0.1//You're not chopping, unlike a standard rend.
 
-/datum/intent/partizan/peel
-	name = "armor peel"
-	icon_state = "inpeel"
-	attack_verb = list("<font color ='#e7e7e7'>peels</font>")
-	animname = "cut"
-	blade_class = BCLASS_PEEL
-	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	clickcd = CLICK_CD_CHARGED
-	penfactor = BLUNT_DEFAULT_PENFACTOR
-	swingdelay = 0
-	damfactor = 0.01
-	item_d_type = "slash"
-	peel_divisor = 4
-	reach = 2
-
-//Old partizan peel, for the naginata.
-/datum/intent/partizan/peel/nag
-	attack_verb = list("<font color ='#e7e7e7'>weakly peels</font>")
-	swingdelay = 5
-	peel_divisor = 5
 
 /datum/intent/spear/bash/ranged/quarterstaff
 	damfactor = 1
@@ -1180,7 +1160,6 @@
 	gripped_intents = list(
 		/datum/intent/sword/thrust/estoc,
 		/datum/intent/sword/lunge/estoc,
-		/datum/intent/sword/peel/big,
 		/datum/intent/sword/strike,
 	)
 	bigboy = TRUE
@@ -1388,7 +1367,7 @@
 	force = 8	//Not a possible one-handed weapon. Also too heavy!
 	force_wielded = 30
 	possible_item_intents = list(SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(SPEAR_THRUST, PARTIZAN_REND, PARTIZAN_PEEL, SPEAR_BASH)
+	gripped_intents = list(SPEAR_THRUST, PARTIZAN_REND, SPEAR_BASH)
 	icon_state = "partizan"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 12//Easily hit by knights and other dedicated combat roles
@@ -1453,7 +1432,7 @@
 	force = 16
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/spear/cut/naginata, SPEAR_BASH) // no stab for you little chuddy, it's a slashing weapon
-	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL_BAD, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, SPEAR_BASH)
 	icon_state = "naginata"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 7
@@ -1588,21 +1567,6 @@
 	canparry = FALSE
 	candodge = FALSE
 
-/datum/intent/sword/flay/dragonslayer
-	name = "flay"
-	icon_state = "inpeel"
-	attack_verb = list("<font color ='#e7e7e7'>flays</font>")
-	animname = "cut"
-	blade_class = BCLASS_PEEL
-	hitsound = list('sound/combat/hits/blunt/frying_pan(1).ogg', 'sound/combat/hits/blunt/frying_pan(2).ogg', 'sound/combat/hits/blunt/frying_pan(3).ogg', 'sound/combat/hits/blunt/frying_pan(4).ogg')
-	reach = 2
-	penfactor = BLUNT_DEFAULT_PENFACTOR
-	swingdelay = 15
-	clickcd = 50
-	damfactor = 0.5
-	item_d_type = "slash"
-	peel_divisor = 1
-
 //
 
 /obj/item/rogueweapon/greatsword/psygsword/dragonslayer
@@ -1613,7 +1577,7 @@
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	possible_item_intents = list(/datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/sucker_punch/dragonslayer)
-	gripped_intents = list(/datum/intent/sword/chop/dragonslayer, /datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/smash/dragonslayer, /datum/intent/sword/flay/dragonslayer)
+	gripped_intents = list(/datum/intent/sword/chop/dragonslayer, /datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/smash/dragonslayer)
 	force = 35
 	force_wielded = 55
 	minstr = 15

@@ -1773,9 +1773,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			Iforce = 0
 	var/bladec = user.used_intent.blade_class
 
-	// No self-peeling. Useful for debug, though.
-	if(H == user && bladec == BCLASS_PEEL)
-		bladec = BCLASS_BLUNT
 
 	var/higher_intfactor = max(user.used_intent.masteritem?.intdamage_factor, user.used_intent.intent_intdamage_factor)
 	var/lowest_intfactor = min(user.used_intent.masteritem?.intdamage_factor, user.used_intent.intent_intdamage_factor)
@@ -1785,14 +1782,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(higher_intfactor > 1)	//Make sure to keep your weapon and intent intfactors consistent to avoid problems here!
 		used_intfactor = higher_intfactor
 
-	if(ishuman(user) && user.mind && user.used_intent.blade_class != BCLASS_PEEL)
-		var/text = "[bodyzone2readablezone(selzone)]..."
-		if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
-			if(prob(10))
-				text = "<i>I can't tell...</i>"
-				user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
-		else
-			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
 
 	var/armor_block = H.run_armor_check(selzone, I.d_type, "", "",pen, damage = Iforce, blade_dulling=bladec, peeldivisor = user.used_intent.peel_divisor, intdamfactor = used_intfactor, used_weapon = I)
 
