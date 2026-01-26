@@ -9,6 +9,7 @@
 	cmode_music = 'sound/music/cmode/towner/combat_towner2.ogg'
 	category_tags = list(CTAG_TOWNER)
 	subclass_languages = list(/datum/language/thievescant)
+	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	subclass_stats = list(
 		STATKEY_CON = 3,
 		STATKEY_STR = 2,

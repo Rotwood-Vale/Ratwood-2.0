@@ -25,8 +25,11 @@
 		src.STASPD = 5 // You are a hulking mass of muscle, and this is for balance reasons
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/bearclaws)
-		real_name = "Direbear" //So we don't get a random name
 		faction += "bears" // It IS a bear
+		if (src.client.prefs?.wildshape_name)
+			real_name = "direbear ([stored_mob.real_name])"
+		else
+			real_name = "direbear"
 
 // BEAR SPECIES DATUM //
 /datum/species/shapebear

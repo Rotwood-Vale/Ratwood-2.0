@@ -45,7 +45,7 @@
 	spookynight = SPOOKY_MYSTICAL
 	droning_sound = 'sound/music/area/underdark.ogg'
 	droning_sound_dusk = null
-	droning_sound_night = null	
+	droning_sound_night = null
 	ambush_mobs = list(
 		/mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated = 20,
 		/mob/living/simple_animal/hostile/retaliate/rogue/spider = 15,
@@ -53,3 +53,4 @@
 		/mob/living/simple_animal/hostile/retaliate/rogue/minotaur = 15,
 		/mob/living/carbon/human/species/goblin/npc/ambush/moon = 40,
 		/mob/living/simple_animal/hostile/retaliate/rogue/troll = 15)
+	deathsight_message = "spiders and mushroom filled caverns"

@@ -215,6 +215,9 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 /_maps/**/backup/
 /_maps/templates.dm
 
+#fastload and whatnot
+/code/rt.dm
+
 #dmdoc default folder
 /dmdoc
 

@@ -234,6 +234,16 @@
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
 
+/obj/item/clothing/head/roguetown/roguehood/shroudwhite
+	name = "white shroud"
+	desc = "A billowing hood, carrying the aroma of snow."
+	icon_state = "whitehood"
+	item_state = "whitehood"
+	body_parts_covered = HEAD|EARS|NOSE
+	color = null
+	salvage_result = /obj/item/natural/cloth
+	salvage_amount = 1
+
 //Psydonite hoods.
 
 /obj/item/clothing/head/roguetown/roguehood/psydon

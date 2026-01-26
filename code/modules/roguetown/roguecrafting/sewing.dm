@@ -326,6 +326,13 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/sewing/whitetabard
+	name = "tabard (alt)"
+	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/tabardwhite)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+
 /datum/crafting_recipe/roguetown/sewing/stabard
 	name = "surcoat"
 	result = list(/obj/item/clothing/cloak/stabard)
@@ -1293,6 +1300,13 @@
 	name = "free man's shroud"
 	result = list(/obj/item/clothing/head/roguetown/menacing/bandit)
 	reqs = list(/obj/item/natural/cloth = 1)
+
+/datum/crafting_recipe/roguetown/sewing/shroudwhite
+	name = "white shroud"
+	result = list(/obj/item/clothing/head/roguetown/roguehood/shroudwhite)
+	reqs = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/surgicalbag
 	name = "surgeon's bag"

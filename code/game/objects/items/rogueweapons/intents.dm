@@ -55,6 +55,9 @@
 	var/mob_light = null // tracking mob_light
 	var/obj/effect/mob_charge_effect = null // The effect to be added (on top) of the mob while it is charging
 	var/custom_swingdelay = null	//Custom icon for its swingdelay.
+	//The below is for chipping on intents. Damage applied through armour, as a mechanic.
+	var/blunt_chipping = FALSE//Is this even capable of it?
+	var/blunt_chip_strength = null//How strong?
 
 
 	var/list/static/bonk_animation_types = list(
@@ -129,6 +132,18 @@
 	if(intent_intdamage_factor != 1)
 		var/percstr = abs(intent_intdamage_factor - 1) * 100
 		inspec += "\nThis intent deals [percstr]% [intent_intdamage_factor > 1 ? "more" : "less"] damage to integrity."
+	if(blunt_chipping)
+		var/chip_strength
+		switch(blunt_chip_strength)
+			if(BLUNT_CHIP_MINUSCULE)
+				chip_strength = "minuscule"
+			if(BLUNT_CHIP_WEAK)
+				chip_strength = "middling"
+			if(BLUNT_CHIP_STRONG)
+				chip_strength = "considerable"
+			if(BLUNT_CHIP_ABSURD)
+				chip_strength = "significant"
+		inspec += "\nA [chip_strength] sum of damage will bypass armour, if the target has no padded protection."
 	inspec += "<br>----------------------"
 
 	to_chat(user, "[inspec.Join()]")

@@ -57,7 +57,7 @@
 	/// Skill median used to apply success and speed bonuses
 	var/skill_median = SKILL_LEVEL_JOURNEYMAN
 	/// Modifiers to success chance when you're above the median
-	var/list/skill_bonuses = list(
+	var/list/skill_bonuses = alist(
 		1 = 0.5,
 		2 = 1,
 		3 = 1.5,
@@ -66,7 +66,7 @@
 		6 = 3,
 	)
 	/// Modifiers to success chance when you're below the median
-	var/list/skill_maluses = list(
+	var/list/skill_maluses = alist(
 		1 = -0.2,
 		2 = -0.4,
 		3 = -0.6,
@@ -293,7 +293,7 @@
 	if(success && success(user, target, target_zone, tool, intent))
 		if(ishuman(user))
 			var/mob/living/carbon/human/doctor = user
-			user.mind.add_sleep_experience(/datum/skill/misc/medicine, doctor.STAINT * (skill_min/2))
+			user.mind.add_sleep_experience(skill_used, doctor.STAINT * (skill_min/2))
 		play_success_sound(user, target, target_zone, tool)
 		if(repeating && can_do_step(user, target, target_zone, tool, intent, try_to_fail))
 			initiate(user, target, target_zone, tool, intent, try_to_fail)
