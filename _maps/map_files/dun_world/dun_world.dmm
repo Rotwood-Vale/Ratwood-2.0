@@ -3399,6 +3399,8 @@
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/mace/woodclub,
 /obj/item/rogueweapon/mace/woodclub,
+/obj/item/rogueweapon/mace/woodclub,
+/obj/item/rogueweapon/mace/woodclub,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "aPx" = (
@@ -48249,14 +48251,7 @@
 /turf/open/floor/rogue/tile/brick,
 /area/rogue/indoors/town/bath)
 "lzm" = (
-/obj/structure/mineral_door/swing_door{
-	keylock = 1;
-	locked = 1;
-	lockid = "manor";
-	name = "stables"
-	},
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/indoors/town/manor)
+)
 "lzn" = (
 /obj/structure/fluff/railing/wood/east{
 	layer = 2.8;
@@ -92292,13 +92287,6 @@
 /obj/structure/roguewindow/openclose,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town)
-"wai" = (
-/obj/item/reagent_containers/glass/bucket{
-	pixel_x = 12;
-	pixel_y = -9
-	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/outdoors/exposed/town/keep)
 "wal" = (
 /obj/structure/flora/roguetree,
 /turf/open/water/swamp/deep,
@@ -310523,10 +310511,10 @@ uQs
 vxe
 vxe
 vnq
-gzy
-gzy
-gzy
-gzy
+lzm
+lzm
+lzm
+lzm
 uKf
 kvz
 bql
@@ -310790,6 +310778,23 @@ lPq
 lPq
 lPq
 lPq
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
+lzm
 "}
 (208,1,2) = {"
 jrj
@@ -311881,7 +311886,7 @@ weQ
 weQ
 aMQ
 uQS
-uQS
+jir
 vxe
 bJn
 vQm
