@@ -74,7 +74,7 @@
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 1,
+		/obj/item/storage/belt/pouch/coins/veryrich = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 		)
 	if(H.mind)
@@ -139,12 +139,12 @@
 	r_hand = /obj/item/rogueweapon/sword/sabre/dec
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	neck = /obj/item/storage/belt/rogue/pouch/coins/veryrich
+	neck = /obj/item/storage/belt/pouch/coins/veryrich
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
+		/obj/item/storage/belt/pouch/coins/veryrich = 2,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 		)
 	mask = /obj/item/clothing/mask/rogue/spectacles/golden
