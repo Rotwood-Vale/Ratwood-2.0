@@ -332,46 +332,54 @@
 					turfs += B
 		source_turf.luminosity = oldlum
 
-	// Optimization: Single-pass turf processing with removal tracking
+	// Optimization: Single-pass turf processing without list copy
 	LAZYINITLIST(affecting_turfs)
-	var/list/turfs_to_remove = affecting_turfs.Copy()
+	var/list/turfs_to_remove = list()
 
+	// Build removal list by checking what's NOT in the new turfs
+	for(thing in affecting_turfs)
+		if(!(thing in turfs))
+			turfs_to_remove += thing
+
+	// Process new turfs
 	for(thing in turfs)
 		T = thing
-		if(affecting_turfs[T] != null)
-			turfs_to_remove -= T
-		else
+		if(affecting_turfs[T] == null)
 			LAZYADD(T.affecting_lights, src)
 			affecting_turfs += T
 
+	// Remove old turfs
 	for(thing in turfs_to_remove)
 		T = thing
 		LAZYREMOVE(T.affecting_lights, src)
 	affecting_turfs -= turfs_to_remove
 
-	// Optimization: Single-pass corner processing with removal tracking
+	// Optimization: Single-pass corner processing without list copy
 	LAZYINITLIST(effect_str)
-	var/list/corners_to_remove = effect_str.Copy()
+	var/list/corners_to_remove = list()
+
+	// Build removal list by checking what's NOT in the new corners
+	for(thing in effect_str)
+		if(!(thing in corners))
+			corners_to_remove += thing
 
 	if(needs_update == LIGHTING_VIS_UPDATE)
 		for(thing in corners)
 			C = thing
 			if(effect_str[C] != null)
 				// Existing corner - keep it, don't reprocess
-				corners_to_remove -= C
-			else
-				// New corner
-				LAZYADD(C.affecting, src)
-				if(!C.active)
-					effect_str[C] = 0
-					continue
-				APPLY_CORNER(C)
+				continue
+			// New corner
+			LAZYADD(C.affecting, src)
+			if(!C.active)
+				effect_str[C] = 0
+				continue
+			APPLY_CORNER(C)
 	else
 		for(thing in corners)
 			C = thing
 			if(effect_str[C] != null)
-				// Existing corner - update and mark as kept
-				corners_to_remove -= C
+				// Existing corner - update
 				if(!C.active)
 					effect_str[C] = 0
 					continue
