@@ -13,7 +13,7 @@
 
 	var/needs_update = FALSE
 	var/turf/myturf
-	var/cached_state = 0  // 0=unset, 1=transparent, 2=dark, 3=colored
+	var/cached_state = LIGHTING_STATE_UNSET
 
 /atom/movable/lighting_object/Initialize(mapload)
 	. = ..()
@@ -108,17 +108,17 @@
 
 	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
 	//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
-		if(cached_state != 1)
+		if(cached_state != LIGHTING_STATE_TRANSPARENT)
 			icon_state = "transparent"
 			color = null
-			cached_state = 1
+			cached_state = LIGHTING_STATE_TRANSPARENT
 	else if(!set_luminosity)
-		if(cached_state != 2)
+		if(cached_state != LIGHTING_STATE_DARK)
 			icon_state = "dark"
 			color = null
-			cached_state = 2
+			cached_state = LIGHTING_STATE_DARK
 	else
-		cached_state = 3
+		cached_state = LIGHTING_STATE_COLORED
 		icon_state = null
 		color = list(
 			rr, rg, rb, 00,
