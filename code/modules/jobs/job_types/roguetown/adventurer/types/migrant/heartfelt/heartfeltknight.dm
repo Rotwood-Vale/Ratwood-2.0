@@ -54,7 +54,7 @@
 	category_tags = list(CTAG_HFT_KNIGHT)
 	class_select_category = CLASS_CAT_HFT_COURT
 	subclass_social_rank = SOCIAL_RANK_NOBLE
-	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_GOODTRAINER, TRAIT_HEARTFELT)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_HEARTFELT)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_PER = 2,
