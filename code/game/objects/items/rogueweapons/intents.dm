@@ -58,6 +58,9 @@
 	//The below is for chipping on intents. Damage applied through armour, as a mechanic.
 	var/blunt_chipping = FALSE//Is this even capable of it?
 	var/blunt_chip_strength = null//How strong?
+	//Target restrictions on strikes, below.
+	var/target_restrictions = FALSE//Is it locked to only aiming at certain areas?
+	var/list/target_area//Where, if so?
 
 
 	var/list/static/bonk_animation_types = list(
@@ -144,6 +147,14 @@
 			if(BLUNT_CHIP_ABSURD)
 				chip_strength = "significant"
 		inspec += "\nA [chip_strength] sum of damage will bypass armour, if the target has no padded protection."
+	if(target_restrictions)
+		inspec += "\nThis intent will only allow full damage to specific locations. All others will remove penetration."
+		if(length(target_area))
+			inspec += "\nWorks on these bodyparts: "
+			var/str
+			for(var/part in target_area)
+				str +="|[bodyzone2readablezone(part)]|"
+			inspec += str
 	inspec += "<br>----------------------"
 
 	to_chat(user, "[inspec.Join()]")

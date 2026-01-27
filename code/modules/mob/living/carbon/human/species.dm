@@ -1785,6 +1785,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			Iforce = 0
 	var/bladec = user.used_intent.blade_class
 
+	//Does the intent require you to only strike specific areas?
+	if(user.used_intent?.target_restrictions)
+		if(length(int.target_area))//Yeah? Where?
+			if(selzone in int.target_area)//If within the location, we give you proper pen.
+				pen = I.armor_penetration + user.used_intent.penfactor
+			else//Otherwise? Well..
+				pen = BLUNT_DEFAULT_PENFACTOR
+				Iforce = Iforce / 2
+
 	// No self-peeling. Useful for debug, though.
 	if(H == user && bladec == BCLASS_PEEL)
 		bladec = BCLASS_BLUNT

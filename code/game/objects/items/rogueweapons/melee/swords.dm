@@ -147,6 +147,21 @@
 	damfactor = 1.8
 	swingdelay = 2
 
+//For halfswording. Dagger pick, again. Whoo!!!!
+/datum/intent/sword/thrust/half_sword
+	name = "aimed thrust"
+	icon_state = "inpick"
+	attack_verb = list("impales")
+	penfactor = 80
+	clickcd = 14
+	swingdelay = 14//+2 over dagger picking.
+	damfactor = 0.9//-20% below dagger picking.
+	blade_class = BCLASS_PICK
+	intent_intdamage_factor = 0.2
+	//To allow it to do some stupid stuff, m'lord.
+	target_restrictions = TRUE
+	target_area = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+
 //sword objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/sword
@@ -283,6 +298,7 @@
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/sword/strike, /datum/intent/sword/peel)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/sword/peel, /datum/intent/sword/chop)
 	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
+	half_intents =  list(/datum/intent/sword/thrust/half_sword, /datum/intent/sword/thrust/short)
 	icon_state = "longsword"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	item_state = "longsword"
