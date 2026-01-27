@@ -1799,6 +1799,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/nodmg = FALSE
 
+	var/text = "[bodyzone2readablezone(selzone)]..."
+	if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
+		if(prob(10))
+			text = "<i>I can't tell...</i>"
+			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+	else
+		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text) 
+
 	if(Iforce)
 		H.retaliate(user)
 
