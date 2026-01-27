@@ -338,7 +338,7 @@
 		return FALSE
 	//If you're reading this, please refactor this once we have TRAIT_CLERGY thanks
 	if(recruit.job in list("Priest", "Priestess", "Templar", "Acolyte", "Martyr"))
-		to_chat(recruiter, span_warning("Clergy cannot join the militia! Their loyalty is to the Ten!"))
+		to_chat(recruiter, span_warning("Clergy cannot join our cause! Their loyalty is to the Ten!"))
 		return FALSE
 	..()
 
