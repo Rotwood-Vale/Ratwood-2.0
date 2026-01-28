@@ -1,6 +1,6 @@
 
 /datum/advclass/heartfelt/retinue/physician
-	name = "Heartfeltian Physcian"
+	name = "Heartfeltian Physician"
 	tutorial = "You are the Physician of Heartfelt, once celebrated for your steady hands and healing wisdom, yet powerless to save your barony from its grim fate. \
 	Haunted by those you could not protect, you ascend toward the Vale-seeking redemption, renewed purpose, and perhaps a cure for the wounds the world has inflicted."
 	allowed_sexes = list(MALE, FEMALE)
