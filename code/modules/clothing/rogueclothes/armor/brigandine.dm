@@ -247,7 +247,7 @@
 		var/mob/L = loc
 		L.update_inv_armor()
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/update_icon()
+/obj/item/clothing/suit/roguetown/armor/brigandine/heartfelt/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
 		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
