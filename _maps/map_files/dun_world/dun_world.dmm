@@ -35115,7 +35115,7 @@
 "iag" = (
 /obj/structure/mineral_door/wood/fancywood{
 	locked = 1;
-	lockid = "royal","hand","concubine";
+	lockid = "concubine";
 	name = "Concubine's Apartment"
 	},
 /turf/open/floor/rogue/concrete,
