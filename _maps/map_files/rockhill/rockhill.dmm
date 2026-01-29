@@ -2629,7 +2629,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Seneschal's Quarters"
 	},
 /turf/open/floor/rogue/concrete,
@@ -6587,7 +6587,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Servant's Bunks"
 	},
 /turf/open/floor/rogue/concrete,
@@ -16511,7 +16511,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Seneschal's Quarters"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -25098,7 +25098,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen"
 	},
 /turf/open/floor/rogue/concrete,
@@ -26858,7 +26858,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen"
 	},
 /turf/open/floor/rogue/concrete,
@@ -32910,7 +32910,7 @@
 "jTV" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
-	lockid = "manor"
+	lockid = "servant"
 	},
 /turf/open/floor/rogue/tile{
 	icon_state = "greenstone"
@@ -40892,7 +40892,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen Storage"
 	},
 /turf/open/floor/rogue/concrete,
@@ -50357,6 +50357,9 @@
 /obj/item/roguekey/manor,
 /obj/item/roguekey/manor,
 /obj/item/roguekey/manor,
+/obj/item/roguekey/servant,
+/obj/item/roguekey/servant,
+/obj/item/roguekey/servant,
 /turf/open/floor/rogue/tile/tilerg,
 /area/rogue/indoors/town/manor/rockhill)
 "psH" = (

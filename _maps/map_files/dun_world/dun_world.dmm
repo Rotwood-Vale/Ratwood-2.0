@@ -6520,6 +6520,12 @@
 	},
 /turf/open/floor/rogue/tile/bath,
 /area/rogue/indoors/inq/basement)
+"byr" = (
+/obj/machinery/light/rogue/wallfire/candle/r{
+	pixel_x = -32
+	},
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors/town/garrison)
 "bys" = (
 /obj/structure/table/wood/poor/alt_alt,
 /turf/open/floor/rogue/concrete,
@@ -15586,7 +15592,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Seneschal's Quarters"
 	},
 /turf/open/floor/rogue/cobble,
@@ -22236,10 +22242,6 @@
 	},
 /turf/open/floor/rogue/blocks/paving/vert,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
-"fcG" = (
-/obj/structure/ladder/unbreakable,
-/turf/open/floor/rogue/cobble,
-/area/rogue/indoors/town/garrison)
 "fcI" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -22920,7 +22922,7 @@
 /obj/machinery/light/rogue/wallfire/candle/r{
 	pixel_x = -32
 	},
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /obj/effect/decal/edge{
 	color = "#3f3f3f";
 	dir = 1
@@ -26982,7 +26984,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Service Halls"
 	},
 /turf/open/floor/rogue/blocks/flipped,
@@ -32173,7 +32175,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/shelter)
 "hrb" = (
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/magician)
 "hrf" = (
@@ -35780,7 +35782,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Seneschal's Quarters"
 	},
 /turf/open/floor/rogue/cobble,
@@ -36387,7 +36389,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen Storage"
 	},
 /turf/open/floor/rogue/tile{
@@ -38563,7 +38565,7 @@
 "iQz" = (
 /obj/structure/mineral_door/wood/fancywood{
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen"
 	},
 /turf/open/floor/rogue/concrete,
@@ -39133,7 +39135,7 @@
 "iXH" = (
 /obj/structure/mineral_door/wood/fancywood{
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen"
 	},
 /turf/open/floor/rogue/concrete,
@@ -44726,7 +44728,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/shelter)
 "kkt" = (
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /turf/open/floor/rogue/greenstone/runed{
 	desc = "If only I could teleport across .."
 	},
@@ -52110,7 +52112,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/underdark/north)
 "lQz" = (
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /turf/open/floor/rogue/tile/bath{
 	icon_state = "bathtileratwood"
 	},
@@ -56247,7 +56249,7 @@
 "mLf" = (
 /obj/structure/mineral_door/wood/fancywood{
 	locked = 1;
-	lockid = "manor"
+	lockid = "servant"
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/manor)
@@ -57335,7 +57337,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen Storage"
 	},
 /turf/open/floor/rogue/blocks/flipped,
@@ -61041,7 +61043,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/exposed/town/keep/unbuildable)
 "nRK" = (
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /obj/machinery/light/rogue/wallfire/candle/r{
 	pixel_x = -32
 	},
@@ -61258,7 +61260,7 @@
 "nUi" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
-	lockid = "manor"
+	lockid = "servant"
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement/keep)
@@ -62610,7 +62612,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Servant's Bunks"
 	},
 /turf/open/floor/rogue/wood,
@@ -69119,7 +69121,7 @@
 "pHo" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "jesters chambers"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -71342,6 +71344,9 @@
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
 	},
+/obj/item/roguekey/servant,
+/obj/item/roguekey/servant,
+/obj/item/roguekey/servant,
 /turf/open/floor/rogue/tile/tilerg,
 /area/rogue/indoors/town)
 "qhC" = (
@@ -78480,14 +78485,6 @@
 /obj/structure/fluff/statue/psy,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/mountains)
-"rNS" = (
-/mob/living/simple_animal/pet/cat/kitten{
-	dir = 4;
-	name = "Oscar";
-	desc = "Oscar is a cute little kitten! He must be protected at all costs!"
-	},
-/turf/open/floor/rogue/carpet/lord/right,
-/area/rogue/indoors/town/manor)
 "rNX" = (
 /obj/structure/floordoor/open{
 	name = "Dwarven Bridge";
@@ -80679,12 +80676,13 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/cave)
 "spe" = (
-/mob/living/simple_animal/pet/dog/pug{
-	name = "Lola";
-	desc = "Lola snorts and hobbles about, unable to breathe. She's a fat little pug. Cute, but you can't help but feel a little bad for them.";
-	density = 0
+/obj/structure/mineral_door/wood{
+	icon_state = "wcv";
+	locked = 1;
+	lockid = "servant";
+	name = "Service Halls"
 	},
-/turf/open/floor/rogue/tile/harem,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/manor)
 "spf" = (
 /obj/structure/spider/cocoon,
@@ -85259,6 +85257,7 @@
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
 	},
+/obj/item/roguekey/servant,
 /turf/open/floor/rogue/tile/tilerg,
 /area/rogue/indoors/town)
 "tpk" = (
@@ -91308,7 +91307,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/town/basement)
 "uHd" = (
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "uHf" = (
@@ -91387,7 +91386,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/south)
 "uHO" = (
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
 	},
@@ -92677,7 +92676,7 @@
 /turf/open/water/swamp,
 /area/rogue/under/town/sewer)
 "uWU" = (
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder,
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/garrison)
 "uWZ" = (
@@ -96545,7 +96544,7 @@
 	pixel_y = 7
 	},
 /mob/living/simple_animal/pet/cat/rogue/rat{
-	dir = 4;
+	dir = 8;
 	pixel_x = -16;
 	pixel_y = -6
 	},
@@ -314676,13 +314675,13 @@ jWw
 wBD
 rvX
 rvX
-ipK
+byr
 ipK
 ipK
 uFH
 qRs
 jWw
-fcG
+lbI
 jWw
 vxe
 rMf
@@ -429943,7 +429942,7 @@ jWw
 mpY
 jWw
 jWw
-fcG
+lbI
 iWa
 wfq
 vmi
@@ -430820,7 +430819,7 @@ aIR
 qIt
 wzy
 hWW
-spe
+hWW
 hWW
 hWW
 hWW
@@ -431726,7 +431725,7 @@ lzQ
 lzQ
 lzQ
 lzQ
-rNS
+lzQ
 lzQ
 lzQ
 lzQ
@@ -445301,7 +445300,7 @@ jHJ
 nHg
 ugj
 ugj
-qat
+spe
 uQS
 uQS
 uHd

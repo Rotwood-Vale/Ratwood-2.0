@@ -553,6 +553,12 @@
 	icon_state = "ekey"
 	lockid = "archive"
 
+/obj/item/roguekey/servant
+	name = "servant key"
+	desc = "A key of the ducal servants. Hope it's not lost..."
+	icon_state = "brownkey"
+	lockid = "servant"
+
 //grenchensnacker
 /obj/item/roguekey/porta
 	name = "strange key"
