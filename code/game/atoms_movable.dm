@@ -1069,8 +1069,7 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 	var/datum/language/chosen_langtype
 	var/highest_priority
 
-	for(var/lt in H.languages)
-		var/datum/language/langtype = lt
+	for(var/datum/language/langtype as anything in H.languages)
 		if(!can_speak_in_language(langtype))
 			continue
 

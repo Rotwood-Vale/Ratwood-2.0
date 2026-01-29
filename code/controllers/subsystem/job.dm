@@ -285,6 +285,34 @@ SUBSYSTEM_DEF(job)
 	unassigned = list()
 	return
 
+/datum/controller/subsystem/job/proc/bitflag_to_department(department_flag, obsfuscated = FALSE)
+	var/key = "Wanderers"
+	if(obsfuscated)
+		return key
+	switch(department_flag) // Omega tier slop.
+		if(NOBLEMEN)
+			key = "Noblemen"
+		if(COURTIERS)
+			key = "Courtiers"
+		if(GARRISON)
+			key = "Garrison"
+		if(CHURCHMEN)
+			key = "Church"
+		if(INQUISITION)
+			key = "Inquisition"
+		if(YEOMEN)
+			key = "Yeomen"
+		if(GUILDSMEN)
+			key = "Guildsmen"
+		if(PEASANTS)
+			key = "Peasants"
+		if(YOUNGFOLK)
+			key = "Sidefolk"
+		if(WANDERERS)
+			key = "Wanderers"
+		else
+			key = "Wanderers"
+	return key
 
 //This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
 //it locates a head or runs out of levels to check

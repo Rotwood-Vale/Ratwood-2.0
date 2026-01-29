@@ -5,6 +5,7 @@
 	icon_state = "stockings"
 	slot_flags = ITEM_SLOT_MOUTH
 	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_TINY
 	obj_flags = CAN_BE_HIT
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	blade_dulling = DULLING_CUT
@@ -17,6 +18,7 @@
 	var/covers_breasts = FALSE
 	sewrepair = TRUE
 	salvage_result = /obj/item/natural/cloth
+	throw_speed = 0.5
 	var/sprite_acc = /datum/sprite_accessory/legwear/stockings
 
 /obj/item/legwears/attack(mob/M, mob/user, def_zone)

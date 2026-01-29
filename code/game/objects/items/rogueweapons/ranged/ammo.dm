@@ -440,36 +440,6 @@
 	name = "stone arrow"
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/arrow/stone
 
-// GUNPOWDER AMMO
-
-
-/obj/projectile/bullet/reusable/bullet
-	name = "lead ball"
-	damage = 50
-	damage_type = BRUTE
-	icon = 'icons/roguetown/weapons/ammo.dmi'
-	icon_state = "musketball_proj"
-	ammo_type = /obj/item/ammo_casing/caseless/rogue/bullet
-	range = 30
-	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
-	embedchance = 100
-	woundclass = BCLASS_STAB
-	flag = "piercing"
-	armor_penetration = 200
-	speed = 0.1
-
-/obj/item/ammo_casing/caseless/rogue/bullet
-	name = "lead sphere"
-	desc = "A small lead sphere. This should go well with gunpowder."
-	projectile_type = /obj/projectile/bullet/reusable/bullet
-	caliber = "musketball"
-	icon = 'icons/roguetown/weapons/ammo.dmi'
-	icon_state = "musketball"
-	dropshrink = 0.5
-	possible_item_intents = list(/datum/intent/use)
-	max_integrity = 0.1
-
-
 //mob projectiles
 
 /obj/projectile/bullet/reusable/arrow/orc

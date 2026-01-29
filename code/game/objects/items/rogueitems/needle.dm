@@ -187,32 +187,33 @@
 		return FALSE
 
 	var/moveup = 10
-	var/medskill = doctor.get_skill_level(/datum/skill/misc/medicine)
+	var/skill_used = target.construct ? /datum/skill/craft/engineering : /datum/skill/misc/medicine
+	var/doctor_skill = doctor.get_skill_level(skill_used)
 	var/informed = FALSE
-	moveup = (medskill+1) * 4
-	if(medskill > SKILL_LEVEL_EXPERT)
-		if(medskill == SKILL_LEVEL_MASTER)
-			moveup = medskill * 6
-		else if(medskill == SKILL_LEVEL_LEGENDARY)
-			moveup = medskill * 7
+	moveup = (doctor_skill+1) * 4
+	if(doctor_skill > SKILL_LEVEL_EXPERT)
+		if(doctor_skill == SKILL_LEVEL_MASTER)
+			moveup = doctor_skill * 6
+		else if(doctor_skill == SKILL_LEVEL_LEGENDARY)
+			moveup = doctor_skill * 7
 	while(!QDELETED(target_wound) && !QDELETED(src) && \
 		!QDELETED(user) && (target_wound.sew_progress < target_wound.sew_threshold) && \
 		stringamt >= 1)
 		var/sewing_start_delay = 2 SECONDS
-		if(medskill > SKILL_LEVEL_EXPERT)
-			if(medskill == SKILL_LEVEL_MASTER)
+		if(doctor_skill > SKILL_LEVEL_EXPERT)
+			if(doctor_skill == SKILL_LEVEL_MASTER)
 				sewing_start_delay = 1.5 SECONDS
-			else if(medskill == SKILL_LEVEL_LEGENDARY)
+			else if(doctor_skill == SKILL_LEVEL_LEGENDARY)
 				sewing_start_delay = 1 SECONDS
 		if(!do_after(doctor, sewing_start_delay, target = patient))
 			break
 		playsound(loc, 'sound/foley/sewflesh.ogg', 100, TRUE, -2)
 		target_wound.sew_progress = min(target_wound.sew_progress + moveup, target_wound.sew_threshold)
-		var/bleedreduction = max((0.5 * medskill), 0.5)
-		if(medskill > SKILL_LEVEL_EXPERT)
-			if(medskill == SKILL_LEVEL_MASTER)
+		var/bleedreduction = max((0.5 * doctor_skill), 0.5)
+		if(doctor_skill > SKILL_LEVEL_EXPERT)
+			if(doctor_skill == SKILL_LEVEL_MASTER)
 				bleedreduction = 3
-			else if(medskill == SKILL_LEVEL_LEGENDARY)
+			else if(doctor_skill == SKILL_LEVEL_LEGENDARY)
 				bleedreduction = 4
 		target_wound.set_bleed_rate(max( (target_wound.bleed_rate - bleedreduction), 0))
 		if(target_wound.bleed_rate == 0 && !informed)
@@ -230,8 +231,9 @@
 		if(target_wound.sew_progress < target_wound.sew_threshold)
 			continue
 		if(doctor.mind)
-			doctor.mind.add_sleep_experience(/datum/skill/misc/medicine, doctor.STAINT * 2.5)
-		use(1)
+			doctor.mind.add_sleep_experience(skill_used, doctor.STAINT * 2.5)
+		if(!target.construct)
+			use(1)
 		target_wound.sew_wound()
 		if(patient == doctor)
 			if(is_simple_animal)

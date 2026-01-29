@@ -444,6 +444,40 @@
 	hammers_per_item = 6
 	skill_level = 2
 
+/datum/artificer_recipe/ammunition/lead_ball
+	name = "lead ball x8 (+2 iron)"
+	required_item = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron)
+	created_item = list(//Enough for a pouch.
+				/obj/item/ammo_casing/caseless/bullet/lead,
+				/obj/item/ammo_casing/caseless/bullet/lead,
+				/obj/item/ammo_casing/caseless/bullet/lead,
+				/obj/item/ammo_casing/caseless/bullet/lead,
+				/obj/item/ammo_casing/caseless/bullet/lead,
+				/obj/item/ammo_casing/caseless/bullet/lead,
+				/obj/item/ammo_casing/caseless/bullet/lead,
+				/obj/item/ammo_casing/caseless/bullet/lead,
+				)
+	hammers_per_item = 6
+	skill_level = 4
+
+/datum/artificer_recipe/ammunition/grapeshot
+	name = "grapeshot x8 (+3 iron)"
+	required_item = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron)
+	created_item = list(
+				/obj/item/ammo_casing/caseless/bullet/grapeshot,
+				/obj/item/ammo_casing/caseless/bullet/grapeshot,
+				/obj/item/ammo_casing/caseless/bullet/grapeshot,
+				/obj/item/ammo_casing/caseless/bullet/grapeshot,
+				/obj/item/ammo_casing/caseless/bullet/grapeshot,
+				/obj/item/ammo_casing/caseless/bullet/grapeshot,
+				/obj/item/ammo_casing/caseless/bullet/grapeshot,
+				/obj/item/ammo_casing/caseless/bullet/grapeshot,
+				)
+	hammers_per_item = 6
+	skill_level = 4
+
 // --------- PROSTHETICS -----------
 
 /datum/artificer_recipe/prosthetics

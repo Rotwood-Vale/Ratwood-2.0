@@ -169,6 +169,13 @@
 	qdel(src)
 	return TRUE
 
+/datum/wound/slash/incision/construct
+	name = "open hatch"
+	check_name = span_bloody("<B>OPEN HATCH</B>")
+	bleed_rate = 0
+	sewn_bleed_rate = 0.0
+	bypass_bloody_wound_check = TRUE
+
 /datum/wound/slash/vein
 	name= "vein"
 	check_name = span_bloody("<B>VEIN</B")

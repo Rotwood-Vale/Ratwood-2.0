@@ -26,7 +26,10 @@
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/catclaws)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
-		real_name = "cat" //Stealthy transform, lets give it a try
+		if (src.client.prefs?.wildshape_name)
+			real_name = "cat ([stored_mob.real_name])"
+		else
+			real_name = "cat"
 
 // CAT SPECIES DATUM //
 /datum/species/shapecat

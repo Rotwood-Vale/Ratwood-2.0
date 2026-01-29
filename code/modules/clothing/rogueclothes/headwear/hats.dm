@@ -336,6 +336,14 @@
 	detail_tag = "_detail"
 	detail_color = COLOR_SILVER
 
+/obj/item/clothing/head/roguetown/duelisthat
+	name = "duelist's hat"
+	desc = "A feathered leather hat, to show them all your superiority."
+	icon_state = "duelisthat"
+	sewrepair = TRUE
+	detail_tag = "_detail"
+	detail_color = COLOR_SILVER
+
 /obj/item/clothing/head/roguetown/wizhat
 	name = "wizard hat"
 	desc = "Used to distinguish dangerous wizards from senile old men."

@@ -52,6 +52,8 @@
 	var/iterated_customizers = 0
 	for(var/customizer_type in customizers)
 		var/datum/customizer/customizer = CUSTOMIZER(customizer_type)
+		if(!customizer)
+			continue
 		if(!customizer.is_allowed(src))
 			continue
 		var/datum/customizer_entry/entry = get_customizer_entry_for_customizer_type(customizer_type)

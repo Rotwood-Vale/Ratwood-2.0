@@ -192,6 +192,7 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.bad_guard(span_suicide("I switched stances too quickly! It drains me!"), cheesy = TRUE)
+
 	if(user.mob_biotypes & MOB_UNDEAD)
 		if(M.has_status_effect(/datum/status_effect/buff/necras_vow))
 			if(isnull(user.mind))
@@ -203,7 +204,17 @@
 			user.adjust_blurriness(3)
 			user.adjustBruteLoss(5)
 			user.apply_status_effect(/datum/status_effect/churned, M)
-	
+		//This and necra's vow need a better way of handling this. But I'm too lazy to do that.
+		if(M.has_status_effect(/datum/status_effect/buff/inviolability))
+			if(isnull(user.mind))
+				user.adjust_fire_stacks(1)
+				user.ignite_mob()
+			else
+				if(prob(30))
+					to_chat(M, span_warning("Some matter of force harms us!"))
+			user.adjust_blurriness(2)
+			user.adjustBruteLoss(rand(10, 15))
+
 	//Niche signal for post-swingdelay attacks when we want to care about those.
 	_attacker_signal = null
 	_attacker_signal = SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK_POST_SWINGDELAY, M, user, src)

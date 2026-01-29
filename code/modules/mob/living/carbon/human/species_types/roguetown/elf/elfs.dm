@@ -181,4 +181,4 @@
 	return randname
 
 /datum/species/elf/wood/random_surname()
-	return " [pick(world.file2list("strings/rt/names/elf/elfwlast.txt"))]"
+	return "[pick(world.file2list("strings/rt/names/elf/elfwlast.txt"))]"

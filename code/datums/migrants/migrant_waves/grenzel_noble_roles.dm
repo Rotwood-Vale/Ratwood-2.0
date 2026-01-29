@@ -56,6 +56,7 @@
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
+		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/paper/scroll/writ_of_esteem/grenzel = 1,
@@ -142,7 +143,7 @@
 		STATKEY_WIL = 3,
 		STATKEY_SPD = -1,
 	)
-	subclass_stats = list(
+	subclass_skills = list(
 		/datum/skill/combat/wrestling= SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed= SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/polearms= SKILL_LEVEL_JOURNEYMAN,

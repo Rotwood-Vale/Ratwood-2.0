@@ -21,7 +21,7 @@
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
 		return !P.can_hit_target(src, P.permutated, src == P.original, TRUE)
-	if(mover.throwing)
+	if(mover?.throwing)
 		return (!density || !(mobility_flags & MOBILITY_STAND) || wallpressed || (mover.throwing.thrower == src && !ismob(mover)))
 	if(buckled == mover)
 		return TRUE
