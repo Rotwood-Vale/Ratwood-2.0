@@ -3,7 +3,7 @@
 	flag = BANDIT
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 5	//bare minimum of three on round start, regardless of garrison/holywarrior count
+	total_positions = 5	//bare minimum of five on round start, regardless of garrison/holywarrior count
 	spawn_positions = 5
 	antag_job = TRUE
 	allowed_races = RACES_ALL_KINDS
