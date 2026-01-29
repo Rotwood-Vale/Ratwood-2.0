@@ -30118,12 +30118,8 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/garrison)
 "gUs" = (
-/obj/structure/mineral_door/wood/fancywood{
-	locked = 1;
-	lockid = "royal";
-	name = "Lord's Apartment"
-	},
-/turf/open/floor/rogue/wood,
+/obj/machinery/light/rogue/wallfire/candle/l,
+/turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor)
 "gUu" = (
 /obj/structure/far_travel,
@@ -37488,7 +37484,7 @@
 "iDr" = (
 /obj/structure/mineral_door/wood/fancywood{
 	locked = 1;
-	lockid = "royal","hand";
+	lockid = "royal";
 	name = "Lord's Apartment"
 	},
 /turf/open/floor/rogue/wood,
@@ -64695,7 +64691,7 @@
 	name = "window bars";
 	opacity = 1
 	},
-/turf/closed/wall/mineral/rogue/stone/window,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/garrison)
 "oGQ" = (
 /obj/structure/bars/pipe{
@@ -64783,7 +64779,7 @@
 "oHF" = (
 /obj/machinery/light/rogue/torchholder/l,
 /obj/structure/roguemachine/scomm/l{
-	scom_tag = "Keep - Seneschal's Quarters"
+	scom_tag = "Keep - Armoury"
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
@@ -314670,7 +314666,7 @@ qIt
 qIt
 qIt
 xDu
-fAA
+gUs
 nAZ
 qIt
 qIt
@@ -551064,7 +551060,7 @@ ctu
 vxe
 fQE
 vxe
-gUs
+iDr
 vxe
 vxe
 xPL
