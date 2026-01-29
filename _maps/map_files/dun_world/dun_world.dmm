@@ -32822,8 +32822,7 @@
 "hyn" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 8;
-	locked = 1;
-	lockid = "nightman"
+	locked = 1
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/town/basement)
