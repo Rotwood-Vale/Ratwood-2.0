@@ -154,13 +154,18 @@
 // This is the define used to calculate falloff.
 // Assuming a brightness of 1 at range 1, formula should be (brightness = 1 / distance^2)
 // However, due to the weird range factor, brightness = (-(distance - full_dark_start) / (full_dark_start - full_light_end)) ^ light_max_bright
-#define LUM_FALLOFF(C, T)(CLAMP01(-((((C.x - T.x) ** 2 +(C.y - T.y) ** 2) ** 0.5 - light_outer_range) / max(light_outer_range - light_inner_range, 1))) ** light_falloff_curve)
+#define LUM_FALLOFF(C, T) CLAMP01(-((((C.x - T.x) ** 2 +(C.y - T.y) ** 2) ** 0.5 - light_outer_range) / lum_range_delta))
 
 #define APPLY_CORNER(C)                      \
 	. = LUM_FALLOFF(C, pixel_turf);          \
-	. *= (light_power ** 2);                \
-	. *= light_power < 0 ? -1:1;    		\
-	var/OLD = effect_str[C];                 \
+	if(lum_falloff_curve == 3)               \
+		. = . * . * .;                       \
+	else if(lum_falloff_curve == 2)          \
+		. *= .;                              \
+	else                                     \
+		. = . ** lum_falloff_curve;           \
+	. *= lum_power;                          \
+	OLD = effect_str[C];                     \
 	effect_str[C] = .;                       \
 											\
 	C.update_lumcount                        \
@@ -205,6 +210,10 @@
 		REMOVE_CORNER(C)
 		effect_str[C] = 0
 
+	var/OLD
+	var/lum_power = light_power * abs(light_power)
+	var/lum_range_delta = max(light_outer_range - light_inner_range, 1)
+	var/lum_falloff_curve = light_falloff_curve
 	APPLY_CORNER(C)
 	UNSETEMPTY(effect_str)
 
@@ -290,6 +299,12 @@
 	var/thing
 	var/turf/T
 	var/datum/lighting_corner/C
+	var/OLD
+
+	// Cache expensive math that is constant per update call
+	var/lum_power = light_power * abs(light_power) // (light_power ** 2) * sign
+	var/lum_range_delta = max(light_outer_range - light_inner_range, 1)
+	var/lum_falloff_curve = light_falloff_curve
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
 		var/range_ceil = CEILING(light_outer_range, 1)
@@ -298,7 +313,7 @@
 			for (thing in T.get_corners(source_turf))
 				C = thing
 				corners[C] = 0
-			turfs += T
+			turfs[T] = TRUE
 			var/turf/open/transparent/O = T
 			if(istype(O) && light_depth >= 1)
 				var/turf/open/B = get_step_multiz(T, DOWN)
@@ -306,7 +321,7 @@
 					for(thing in B.get_corners(source_turf))
 						C = thing
 						corners[C] = 0
-					turfs += B
+					turfs[B] = TRUE
 					if(light_depth > 1)
 						if(istype(B, /turf/open/transparent))
 							B = get_step_multiz(B, DOWN)
@@ -314,7 +329,7 @@
 								for(thing in B.get_corners(source_turf))
 									C = thing
 									corners[C] = 0
-								turfs += B
+								turfs[B] = TRUE
 						if(light_depth > 2)
 							if(istype(B, /turf/open/transparent))
 								B = get_step_multiz(B, DOWN)
@@ -322,14 +337,14 @@
 									for(thing in B.get_corners(source_turf))
 										C = thing
 										corners[C] = 0
-									turfs += B
+									turfs[B] = TRUE
 			if(light_height >= 1)
 				var/turf/open/B = get_step_multiz(T, UP)
 				if(istype(B, /turf/open/transparent))
 					for(thing in B.get_corners(source_turf))
 						C = thing
 						corners[C] = 0
-					turfs += B
+					turfs[B] = TRUE
 		source_turf.luminosity = oldlum
 
 	// Optimization: Single-pass turf processing without list copy
