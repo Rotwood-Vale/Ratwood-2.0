@@ -49016,14 +49016,6 @@
 /obj/item/clothing/mask/rogue/physician,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/town/sewer)
-"lib" = (
-/obj/structure/roguewindow/openclose/reinforced{
-	dir = 4;
-	opacity = 0
-	},
-/obj/structure/curtain/black,
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town/garrison)
 "lic" = (
 /obj/structure/table/wood/large_table/middle_west,
 /turf/open/floor/rogue/twig,
@@ -94771,15 +94763,6 @@
 /obj/item/reagent_containers/food/snacks/grown/wheat,
 /obj/item/reagent_containers/food/snacks/grown/wheat,
 /turf/open/floor/rogue/cobble,
-/area/rogue/indoors/town/garrison)
-"vux" = (
-/obj/structure/roguewindow/openclose/reinforced,
-/obj/structure/curtain/red{
-	icon_state = "curtain-closed";
-	open = 0;
-	color = "#8A0A00"
-	},
-/turf/closed/wall/mineral/rogue/wooddark/window,
 /area/rogue/indoors/town/garrison)
 "vuy" = (
 /obj/effect/decal/cobbleedge{
@@ -556043,7 +556026,7 @@ dEP
 dEP
 dEP
 dEP
-lib
+dEP
 dEP
 dEP
 ruD
@@ -557845,7 +557828,7 @@ aBB
 aBB
 iVE
 ctu
-vux
+dEP
 agd
 wHE
 dER
