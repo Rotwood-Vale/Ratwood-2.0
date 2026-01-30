@@ -13,7 +13,7 @@
 	subclass_stats = list(  // mounted knight, but slower.
 		STATKEY_STR = 2,
 		STATKEY_INT = 1,
-		STATKEY_CON = 1,
+		STATKEY_CON = 2,
 		STATKEY_WIL = 1,
 		STATKEY_PER = 2,
 		STATKEY_SPD = -1
@@ -58,18 +58,18 @@
 
 /datum/outfit/job/roguetown/mercenary/hangyaku/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("Sword","Great Mace","Spear","Bow")
+	var/weapons = list("Ssangsudo","Kanabo","Naginata","Bow")
 	var/weapon_choice = input(H, "Choose your weapon.", "WHEN STEEL MUST SPEAK...") as anything in weapons
 	switch(weapon_choice)
-		if("Sword")
+		if("Ssangsudo")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword/kazengun/noparry, SLOT_BELT_L, TRUE)	
-		if("Great Mace")
+		if("Kanabo")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/kanabo, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
-		if("Spear")
+		if("Naginata")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/spear/naginata, TRUE) 
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)

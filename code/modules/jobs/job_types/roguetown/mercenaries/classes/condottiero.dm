@@ -8,7 +8,7 @@
 	category_tags = list(CTAG_MERCENARY)
 	subclass_languages = list(/datum/language/etruscan, /datum/language/thievescant)
 	cmode_music = 'sound/music/combat_condottiero.ogg'
-	traits_applied = list(TRAIT_DODGEEXPERT)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
 		STATKEY_WIL = 2,
 		STATKEY_PER = 2,
@@ -16,8 +16,8 @@
 		STATKEY_INT = 1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER, //Possibly too high, no idea.
-		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER, //only affects reload time and aiming
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT, //they get a fucking sword, let them use it
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
@@ -42,12 +42,12 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/short
+	l_hand = /obj/item/rogueweapon/sword/short/messer
 	beltr = /obj/item/quiver/bolts
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
-	pants = /obj/item/clothing/under/roguetown/trou/leather
-	neck = /obj/item/clothing/neck/roguetown/chaincoif
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+	pants = /obj/item/clothing/under/roguetown/splintlegs
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/full
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,

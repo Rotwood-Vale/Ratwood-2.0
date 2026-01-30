@@ -75,7 +75,7 @@
 				H.change_stat(STATKEY_STR, 2)
 				H.change_stat(STATKEY_WIL, 1)
 				H.change_stat(STATKEY_CON, 2)
-				H.change_stat(STATKEY_SPD, 1)
+				H.change_stat(STATKEY_SPD, 2)
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 				H.dna.species.soundpack_m = new /datum/voicepack/male/evil() 	//Fits in my head all too well.
 				var/masks = list(
@@ -172,7 +172,8 @@
 				H.change_stat(STATKEY_WIL, 3)		//Two less speed, no con, compared to 'elite' sappers. 7 spread.
 				H.change_stat(STATKEY_STR, 2)
 				H.change_stat(STATKEY_PER, 2)
-				H.change_stat(STATKEY_SPD, -4)
+				H.change_stat(STATKEY_CON, 4) //Gromoverzhets are tough as nails, they need to be able to handle explosives.
+				H.change_stat(STATKEY_SPD, -4) //bitch they get a 3 stat total with this, fuck no I'm giving them some CON to make up for all that shit they're carrying, might as well make up for no armor skills and journeyman axes
 				ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)//No armour skill. They get BOMBS.
 				H.dna.species.soundpack_m = new /datum/voicepack/male/evil()
 				var/masks = list(
@@ -227,7 +228,7 @@
 				H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
 				H.change_stat(STATKEY_PER, 3)
 				H.change_stat(STATKEY_WIL, 2)
-				H.change_stat(STATKEY_SPD, 2)
+				H.change_stat(STATKEY_SPD, 3)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 
 			if("Plastunsky - Light Infantry")		//Tl;dr - Old Steppesman whip build, light armor, be the glass canon you always wanted to be. Live your life, king.
@@ -255,7 +256,7 @@
 				H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
 				H.change_stat(STATKEY_STR, 1)
 				H.change_stat(STATKEY_PER, 2)
-				H.change_stat(STATKEY_WIL, 1)
+				H.change_stat(STATKEY_WIL, 2)
 				H.change_stat(STATKEY_SPD, 2)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_OUTDOORSMAN, TRAIT_GENERIC)

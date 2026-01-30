@@ -39,10 +39,10 @@
 			if("Etruscan Longsword")		//A longsword with a compound ricasso. Accompanied by a traditional flip knife.
 				r_hand = /obj/item/rogueweapon/sword/long/etruscan
 				beltr = /obj/item/rogueweapon/huntingknife/idagger/navaja
-			if("Kriegsmesser")		//Och- eugh- German!
+			if("Kriegsmesser")		//Och- eugh- German! Accompanied by a fancy looking punch dagger to balance out the Avar origins
 				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
-				beltr = /obj/item/rogueweapon/huntingknife/idagger
-			if("Field Longsword")		//A common longsword.
+				beltr = /obj/item/rogueweapon/katar/punchdagger/frei
+			if("Field Longsword")		//A common longsword. LAAAAAME
 				r_hand = /obj/item/rogueweapon/sword/long
 				beltr = /obj/item/rogueweapon/huntingknife/idagger
 	belt = /obj/item/storage/belt/rogue/leather/sash
@@ -71,7 +71,7 @@
 		STATKEY_CON = 4,//This is going to need live testing, since I'm not sure they should be getting this much CON without using a statpack to spec. Revision pending.
 		STATKEY_PER = 3,
 		STATKEY_SPD = 1, //We want to encourage backstepping since you no longer get an extra layer of armour. I don't think this will break much of anything.
-		STATKEY_STR = 1,
+		STATKEY_INT = 1,
 		STATKEY_WIL = -2
 	)
 	subclass_skills = list(
@@ -97,10 +97,10 @@
 				l_hand = /obj/item/rogueweapon/katar/punchdagger/frei
 			if("Boar Spear")
 				r_hand = /obj/item/rogueweapon/spear/boar
-				wrists = /obj/item/rogueweapon/katar/punchdagger
+				wrists = /obj/item/rogueweapon/katar/punchdagger/frei
 			if("Lucerne")		//A normal lucerne for the people that get no drip & no bitches.
 				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
-				wrists = /obj/item/rogueweapon/katar/punchdagger
+				wrists = /obj/item/rogueweapon/katar/punchdagger/frei
 
 	belt = /obj/item/storage/belt/rogue/leather/sash
 	beltl = /obj/item/flashlight/flare/torch/lantern

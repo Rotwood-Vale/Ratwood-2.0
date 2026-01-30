@@ -7,10 +7,10 @@
 	cmode_music = 'sound/music/combat_vaquero.ogg'
 	category_tags = list(CTAG_MERCENARY)
 	subclass_languages = list(/datum/language/etruscan)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_DECEIVING_MEEKNESS, TRAIT_MEDIUMARMOR)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_DECEIVING_MEEKNESS, TRAIT_EQUESTRIAN, TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
 		STATKEY_SPD = 3,
-		STATKEY_INT = 2,
+		STATKEY_INT = 3,
 		STATKEY_WIL = 1
 	)
 	subclass_skills = list(
@@ -26,7 +26,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/riding = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/music = SKILL_LEVEL_EXPERT,
 	)

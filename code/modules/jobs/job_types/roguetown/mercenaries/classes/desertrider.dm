@@ -11,7 +11,7 @@
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
 		STATKEY_STR = 2,
-		STATKEY_WIL = 2,
+		STATKEY_WIL = 3,
 		STATKEY_SPD = 1,
 		STATKEY_CON = 1,
 	)
@@ -88,6 +88,7 @@
 		STATKEY_SPD = 3,
 		STATKEY_WIL = 2,
 		STATKEY_INT = 1,
+		STATKEY_PER = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
@@ -165,7 +166,6 @@
 		STATKEY_SPD = 3,
 		STATKEY_WIL = 2,
 		STATKEY_INT = 2,
-		STATKEY_PER = -1
 	)
 	subclass_spellpoints = 15
 	subclass_skills = list(
