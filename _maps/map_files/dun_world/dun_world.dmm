@@ -4084,7 +4084,7 @@
 	},
 /obj/structure/closet/crate/chest/crate{
 	locked = 1;
-	lockid = "nightmaiden";
+	lockid = "farm";
 	pixel_y = 14
 	},
 /turf/open/floor/rogue/cobble/mossy,
@@ -12943,6 +12943,15 @@
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
+"cXh" = (
+/obj/structure/mineral_door/wood{
+	icon_state = "wcv";
+	locked = 1;
+	lockid = "mage";
+	name = "Magos Office"
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/magician)
 "cXi" = (
 /obj/effect/decal/mossy{
 	dir = 1
@@ -13512,6 +13521,15 @@
 /obj/structure/closet/crate/chest/wicker,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/skeletoncrypt)
+"dfJ" = (
+/obj/effect/decal/edge{
+	color = "#3f3f3f"
+	},
+/obj/machinery/light/rogue/firebowl{
+	pixel_y = 10
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/exposed/town/keep)
 "dfK" = (
 /obj/structure/roguemachine/atm{
 	location_tag = "Courthouse";
@@ -37062,6 +37080,13 @@
 	},
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/indoors/town/manor)
+"ixz" = (
+/obj/structure/fluff/railing/border,
+/obj/structure/rack/rogue,
+/obj/item/quiver/bluntarrows,
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short,
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/exposed/town/keep)
 "ixB" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle,
 /area/rogue/indoors/town/shop)
@@ -76426,7 +76451,7 @@
 	dir = 1;
 	icon_state = "largetable"
 	},
-/obj/structure/fermentation_keg/random/water,
+/obj/structure/fermentation_keg/water,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/tavern)
 "rpx" = (
@@ -88000,7 +88025,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/church/basement)
 "tVZ" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/mimic/gold,
+/obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/magician)
 "tWc" = (
@@ -88943,7 +88968,8 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "mage"
+	lockid = "mage";
+	name = "Magos Wing"
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/magician)
@@ -95249,14 +95275,15 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/church/chapel)
 "vAE" = (
-/obj/structure/mineral_door/wood{
-	icon_state = "wcv";
-	locked = 1;
-	lockid = "tower";
-	name = "Arcyne Prison"
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 1
 	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town/magician)
+/obj/machinery/light/rogue/firebowl{
+	pixel_y = 10
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/exposed/town/keep)
 "vAL" = (
 /obj/item/reagent_containers/food/snacks/rogue/meat/spider,
 /turf/open/floor/rogue/cobble,
@@ -96065,7 +96092,7 @@
 	dir = 1;
 	icon_state = "largetable"
 	},
-/obj/structure/fermentation_keg/random/beer,
+/obj/structure/fermentation_keg/beer,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/tavern)
 "vLg" = (
@@ -102631,7 +102658,7 @@
 /area/rogue/outdoors/woods/south)
 "xjP" = (
 /obj/structure/table/finestone,
-/obj/item/rogueweapon/huntingknife/idagger/silver,
+/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne,
 /turf/open/floor/rogue/cobble{
 	max_integrity = 500000
 	},
@@ -103176,8 +103203,7 @@
 /area/rogue/indoors/town/garrison)
 "xqA" = (
 /obj/structure/mineral_door/wood/deadbolt{
-	dir = 4;
-	locked = 1
+	dir = 4
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/magician)
@@ -303859,7 +303885,7 @@ pWT
 uBc
 obH
 uBc
-qfA
+gzn
 qfA
 vyn
 aFv
@@ -312412,10 +312438,10 @@ iNW
 sho
 hWN
 qCf
-uaN
+dfJ
 afY
 afY
-uVv
+vAE
 weQ
 jWw
 jWw
@@ -316483,7 +316509,7 @@ kZd
 seH
 afY
 afY
-uVv
+vAE
 noW
 eIU
 jox
@@ -319195,7 +319221,7 @@ udw
 uaN
 afY
 afY
-uVv
+vAE
 xkg
 jmF
 jmF
@@ -432620,7 +432646,7 @@ afY
 cgJ
 oQG
 vAw
-upS
+ixz
 vmi
 vmi
 vmi
@@ -443958,7 +443984,7 @@ akl
 muB
 muB
 muB
-vAE
+kZt
 pSa
 pSa
 kZt
@@ -557868,7 +557894,7 @@ hGO
 xSM
 kus
 ddG
-ufQ
+cXh
 ddG
 ddG
 mcj
