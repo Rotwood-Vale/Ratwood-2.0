@@ -10365,14 +10365,6 @@
 /obj/structure/fluff/statue/femalestatue,
 /turf/open/floor/rogue/grassred,
 /area/rogue/under/underdark)
-"csg" = (
-/obj/structure/mineral_door/wood/donjon{
-	lockid = "merc";
-	name = "Vale Mercenary Guild"
-	},
-/obj/structure/roguewindow,
-/turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town)
 "csi" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/reagent_containers/glass/bottle/alchemical{
@@ -10812,6 +10804,10 @@
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/dwarfin)
+"cyv" = (
+/mob/living/simple_animal/hostile/retaliate/rogue/bull,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/town)
 "cyy" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/rogue/cobble/mossy,
@@ -32821,8 +32817,7 @@
 /area/rogue/under/town/sewer)
 "hyn" = (
 /obj/structure/mineral_door/wood/deadbolt{
-	dir = 8;
-	locked = 1
+	dir = 8
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/town/basement)
@@ -36690,7 +36685,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "isq" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/saiga,
+/mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/town)
 "iss" = (
@@ -41620,7 +41615,7 @@
 "jAB" = (
 /obj/structure/closet/crate/chest/crate{
 	locked = 1;
-	lockid = "nightmaiden";
+	lockid = "farm";
 	pixel_y = 14
 	},
 /turf/open/floor/rogue/cobble/mossy,
@@ -56441,7 +56436,9 @@
 	dir = 1;
 	icon_state = "longtable_mid"
 	},
-/obj/structure/mineral_door/wood/deadbolt/shutter,
+/obj/structure/mineral_door/wood/deadbolt/shutter{
+	dir = 2
+	},
 /obj/structure/bars{
 	icon_state = "barsbent";
 	layer = 2.81
@@ -63385,13 +63382,6 @@
 /obj/item/scomstone,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/church/chapel)
-"osr" = (
-/obj/effect/decal/edge{
-	color = "s";
-	dir = 8
-	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/outdoors/exposed/town/keep)
 "osv" = (
 /obj/machinery/light/rogue/wallfire{
 	pixel_x = -16;
@@ -65907,9 +65897,9 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/mountains/decap)
 "oUX" = (
-/obj/item/reagent_containers/glass/bucket/pot/copper,
-/turf/closed/wall/mineral/rogue/stonebrick,
-/area/rogue/indoors/inq)
+/mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/town)
 "oVe" = (
 /obj/structure/closet/crate/coffin/vampire,
 /turf/open/floor/rogue/carpet/lord/center/no_teleport,
@@ -66150,10 +66140,6 @@
 /mob/living/simple_animal/hostile/rogue/dragger,
 /turf/open/floor/carpet/red,
 /area/rogue/under/cave/dukecourt)
-"oXr" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck,
-/turf/open/floor/rogue/grassyel,
-/area/rogue/outdoors/town)
 "oXs" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/rogue/cobble,
@@ -71096,7 +71082,7 @@
 	lockid = "merc";
 	name = "Merc door"
 	},
-/turf/closed,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "qen" = (
 /obj/structure/flora/roguetree/burnt,
@@ -91142,7 +91128,7 @@
 /obj/effect/decal/cleanable/roguerune/arcyne/wall,
 /obj/structure/mineral_door/wood/deadbolt/arcyne{
 	desc = "A solid amalgamate of mana transformed into the shape of a door.";
-	lockid = "tower";
+	lockid = "mage";
 	name = "Magos Quarters";
 	max_integrity = 5000;
 	break_sound = 'sound/magic/antimagic.ogg';
@@ -91654,7 +91640,6 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/shelter/woods)
 "uLi" = (
-/mob/living/simple_animal/cow,
 /obj/structure/fluff/railing/border{
 	dir = 10
 	},
@@ -99100,13 +99085,6 @@
 "wsH" = (
 /turf/closed/wall/mineral/rogue/stone/window,
 /area/rogue/outdoors/mountains/decap/minotaurfort)
-"wsJ" = (
-/obj/effect/decal/edge{
-	color = "s";
-	dir = 8
-	},
-/turf/open/floor/rogue/cobble,
-/area/rogue/outdoors/exposed/town/keep)
 "wsN" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
@@ -107353,7 +107331,6 @@
 "ykH" = (
 /obj/structure/mannequin/male/female,
 /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess,
-/obj/structure/roguemachine/vendor/inn,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town)
 "ykK" = (
@@ -274869,7 +274846,7 @@ fpF
 dTh
 vjq
 dTp
-oUX
+dTp
 dTp
 dTp
 qDi
@@ -310210,7 +310187,7 @@ pqo
 lKo
 qBO
 fpx
-pWT
+cyv
 pWT
 xph
 dTT
@@ -310667,7 +310644,7 @@ hzU
 fpx
 pWT
 tUD
-oXr
+qyR
 cry
 dGz
 xmp
@@ -311119,7 +311096,7 @@ vsv
 aFv
 pWT
 pWT
-aFv
+oUX
 xph
 pWT
 qyR
@@ -311980,17 +311957,17 @@ bge
 bge
 nCI
 weQ
-wsJ
-wsJ
-osr
+weQ
+weQ
+noW
 pgu
 hgU
 hgU
 pgu
-wsJ
-wsJ
-wsJ
-wsJ
+weQ
+weQ
+weQ
+weQ
 pKR
 bge
 bge
@@ -317866,7 +317843,7 @@ afY
 uVv
 gsb
 jmF
-csg
+mQa
 dra
 dra
 eSl
