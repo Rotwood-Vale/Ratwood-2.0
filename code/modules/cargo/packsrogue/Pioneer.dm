@@ -212,10 +212,10 @@
 
 /datum/supply_pack/rogue/Pioneer/blackpowder_stick
 	name = "Blackpowder stick"
-	cost = 60//From 35. Why was this 35? OOOUGH. (HEY CARL, YOU KNOW WHY IT WAS 35? BECAUSE THEY CAN'T BLOW UP ONE SINGLE STONE WALL, FUCK YOU CARL, SERIOUSLY, FUCK YOU, USE THE SHIT YOU NERF)
+	cost = 60//From 35. Why was this 35? OOOUGH. (it's so weak m'lord, one stick can't even damage a stone wall, not even 3, m'lord. I fucking hate it so I'll give them enough to TRY to do something with them)
 	contains = list(/obj/item/tntstick)
 
 /datum/supply_pack/rogue/Pioneer/bomb_satchel
     name = "Bomb satchel"
-    cost = 155 // was 125, buffed because satchel bombs are pretty good for leveling 3 walls
+    cost = 200 // was 125, buffed because satchel bombs are pretty good for leveling 3 walls, also the average haul for a bandit is 300-400 from one of the 3 main locations, so they'd at most be able to afford 1-2 per haul, very little and completely giving up on the dragonscale necklace
     contains = list(/obj/item/satchel_bomb)
