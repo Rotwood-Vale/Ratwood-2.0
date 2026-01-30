@@ -17,21 +17,21 @@
 /obj/effect/proc_holder/spell/invoked/realm_of_death/cast(list/targets, mob/living/carbon/human/user)
 	if(active_duel)
 		to_chat(user, span_warning("You are already in a Realm of Death!"))
-		return FALSE
+		return TRUE
 		
 	var/mob/living/carbon/human/target = targets[1]
 	
 	if(!istype(target))
 		to_chat(user, span_warning("You can only drag mortals into the Realm of Death!"))
-		return FALSE
+		return TRUE
 		
 	if(target == user)
 		to_chat(user, span_warning("You cannot duel yourself!"))
-		return FALSE
+		return TRUE
 		
 	if(target.stat != CONSCIOUS)
 		to_chat(user, span_warning("Your target must be conscious!"))
-		return FALSE
+		return TRUE
 		
 	// Play wind-up sound
 	playsound(get_turf(user), pick('sound/shuz/realm/oncast1.ogg', 'sound/shuz/realm/oncast2.ogg', 'sound/shuz/realm/oncast3.ogg'), 100, TRUE)
@@ -354,8 +354,7 @@
 	if(!target_mob)
 		qdel(src)
 		return
-	// Use walk_towards with delay of 10 (much slower movement, was 3)
-	walk_towards(src, target_mob, 0, 10)
+	walk_towards(src, target_mob, 0, 35)
 	
 /obj/effect/realm_hand/proc/fade_away()
 	walk(src, 0) // Stop movement

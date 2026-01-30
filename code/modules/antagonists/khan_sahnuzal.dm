@@ -87,6 +87,7 @@
         ADD_TRAIT(M, TRAIT_NOPAINSTUN, INNATE_TRAIT)
         ADD_TRAIT(M, TRAIT_TRUEUNSTOPPABLE, INNATE_TRAIT)
         ADD_TRAIT(M, TRAIT_NOPAIN, INNATE_TRAIT)
+        ADD_TRAIT(M, TRAIT_KNEESTINGER_IMMUNITY, INNATE_TRAIT)
         if(M)
             // Remove any existing equipped clothing/weapons so we reliably replace with Khan kit
             // Delete everything the mob is wearing/holding (nuclear option, in case of admin fuckery, like making someone the Khan)
