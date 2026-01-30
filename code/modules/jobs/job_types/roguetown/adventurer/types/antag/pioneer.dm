@@ -10,7 +10,7 @@
 	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_WEBWALK)//GET THIS SHIT OFF OF ME!!!!!
 	subclass_stats = list(
 		STATKEY_INT = 3,
-		STATKEY_LCK = 2,
+		STATKEY_STR = 2,
 		STATKEY_PER = 2,
 		STATKEY_WIL = 2,
 		STATKEY_CON = 2,

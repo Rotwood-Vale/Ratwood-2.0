@@ -33,15 +33,30 @@
 	cost = 30
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat)
 
+/datum/supply_pack/rogue/Pioneer/Haubergeon
+	name = "Haubergeon"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail)
+
 /datum/supply_pack/rogue/Pioneer/gorget
 	name = "Gorget"
 	cost = 20
 	contains = list(/obj/item/clothing/neck/roguetown/gorget)
 
 /datum/supply_pack/rogue/Pioneer/gorget
+	name = "Steel Gorget"
+	cost = 35
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/steel)
+
+/datum/supply_pack/rogue/Pioneer/gorget
 	name = "Steel Coif"
 	cost = 30
 	contains = list(/obj/item/clothing/neck/roguetown/chaincoif)
+
+/datum/supply_pack/rogue/Pioneer/gorget
+	name = "Full Steel Coif"
+	cost = 45
+	contains = list(/obj/item/clothing/neck/roguetown/chaincoif/full)
 
 /datum/supply_pack/rogue/Pioneer/leather/Lbracers
 	name = "Leather Bracers"
@@ -77,6 +92,11 @@
 	name = "Hardened Leather Trousers"
 	cost = 20
 	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants)
+
+/datum/supply_pack/rogue/Pioneer/splintlegs
+	name = "Brigandine Chausses"
+	cost = 40
+	contains = list(/obj/item/clothing/under/roguetown/splintlegs)
 
 /datum/supply_pack/rogue/Pioneer/leather/lhelmet
 	name = "Leather Helmet"
@@ -132,9 +152,14 @@
 	cost = 20
 	contains = list(/obj/item/roguegear/bronze = 2)
 
+/datum/supply_pack/rogue/Pioneer/handsaw // WHY DID PIONEER NEVER GET THIS, THEY CAN'T MAKE A ARTIFICER TABLE WITHOUT IT, FUCK!!!
+	name = "Handsaw"
+	cost = 35
+	contains = list(/obj/item/rogueweapon/handsaw)
+
 /datum/supply_pack/rogue/Pioneer/bmbstrap
 	name = "Bombdolier"
-	cost = 70
+	cost = 45 //apparently bombs are only 1 space now, so this is actually useless compared to a satchel, might as well lower the cost to make it somewhat appealing
 	contains = list(/obj/item/bmbstrap)
 
 //Meh grenades.
@@ -149,28 +174,33 @@
 	cost = 20
 	contains = list(/obj/item/impact_grenade/smoke/healing_gas)
 
+/datum/supply_pack/rogue/Pioneer/botbomb
+	name = "Bottle bomb"
+	cost = 15 //cheaper because yk... they're the bomb guy/gal
+	contains = list(/obj/item/bomb)
+
 //Great grenades.
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_poison
 	name = "Impact grenade (poison)"
-	cost = 45
+	cost = 25 //it's a fucking 1 tile poison cloud calm down
 	contains = list(/obj/item/impact_grenade/smoke/poison_gas)
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_fire
 	name = "Impact grenade (fire)"
-	cost = 45
+	cost = 30
 	contains = list(/obj/item/impact_grenade/smoke/fire_gas)
 
 //Wild grenades.
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_explosion
 	name = "Impact grenade (explosion)"
-	cost = 60
+	cost = 35 //everyone who used it including me knows that it sucks, it'll be cheap.
 	contains = list(/obj/item/impact_grenade/explosion)
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_blind
 	name = "Impact grenade (blind)"
-	cost = 60
+	cost = 35
 	contains = list(/obj/item/impact_grenade/smoke/blind_gas)
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_mute
@@ -182,5 +212,10 @@
 
 /datum/supply_pack/rogue/Pioneer/blackpowder_stick
 	name = "Blackpowder stick"
-	cost = 100//From 35. Why was this 35? OOOUGH.
+	cost = 60//From 35. Why was this 35? OOOUGH. (HEY CARL, YOU KNOW WHY IT WAS 35? BECAUSE THEY CAN'T BLOW UP ONE SINGLE STONE WALL, FUCK YOU CARL, SERIOUSLY, FUCK YOU, USE THE SHIT YOU NERF)
 	contains = list(/obj/item/tntstick)
+
+/datum/supply_pack/rogue/Pioneer/bomb_satchel
+    name = "Bomb satchel"
+    cost = 155 // was 125, buffed because satchel bombs are pretty good for leveling 3 walls
+    contains = list(/obj/item/satchel_bomb)
