@@ -9162,7 +9162,7 @@
 	dir = 1;
 	opacity = 0
 	},
-/turf/closed/wall/mineral/rogue/wooddark/window,
+/turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/garrison)
 "ceD" = (
 /obj/structure/roguewindow/stained/silver,
@@ -15464,7 +15464,7 @@
 	opacity = 0
 	},
 /obj/structure/curtain/black,
-/turf/closed/wall/mineral/rogue/wooddark/window,
+/turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/manor)
 "dBG" = (
 /obj/structure/flora/roguegrass,
@@ -39147,6 +39147,13 @@
 /obj/structure/mirror,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
+"iXx" = (
+/obj/structure/roguewindow/openclose/reinforced{
+	opacity = 0;
+	dir = 1
+	},
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors/town/manor)
 "iXE" = (
 /obj/effect/spawner/lootdrop/general_loot_mid/x3,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -57344,10 +57351,7 @@
 	opacity = 0
 	},
 /obj/structure/curtain/brown,
-/turf/closed/wall/mineral/rogue/decostone/long{
-	dir = 1;
-	max_integrity = 999999
-	},
+/turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/manor)
 "mYw" = (
 /obj/structure/flora/ausbushes/ppflowers,
@@ -92865,10 +92869,11 @@
 /area/rogue/outdoors/town)
 "uZd" = (
 /obj/structure/roguewindow/openclose/reinforced{
+	dir = 4;
 	opacity = 0
 	},
-/turf/open/transparent/openspace,
-/area/rogue/indoors/town/manor)
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors/town/garrison)
 "uZh" = (
 /obj/structure/bed/rogue/inn/wool{
 	dir = 1
@@ -103334,6 +103339,16 @@
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods/northeast)
+"xsq" = (
+/obj/structure/roguewindow/openclose/reinforced{
+	opacity = 0;
+	dir = 1
+	},
+/obj/structure/curtain/red{
+	color = "#8A0A00"
+	},
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors/town/manor)
 "xss" = (
 /obj/structure/roguewindow/harem2{
 	max_integrity = 1000
@@ -546092,7 +546107,7 @@ bzn
 ugj
 bEv
 upm
-dji
+xsq
 vmi
 vmi
 vmi
@@ -551064,7 +551079,7 @@ lJH
 bcB
 bcB
 bcB
-cXk
+iXx
 vmi
 vmi
 vmi
@@ -551510,13 +551525,13 @@ mYs
 fSz
 viu
 fSz
-uZd
+oou
 dVK
 xCh
 xCh
 bcB
 bcB
-cXk
+iXx
 vmi
 vmi
 vmi
@@ -551962,7 +551977,7 @@ mYs
 fSz
 viu
 fSz
-uZd
+oou
 anT
 sLn
 uGM
@@ -552420,7 +552435,7 @@ rxa
 gSi
 jev
 fZT
-cXk
+iXx
 vmi
 vmi
 vmi
@@ -552866,7 +552881,7 @@ mYs
 fSz
 viu
 fSz
-uZd
+oou
 wZr
 dxt
 kUh
@@ -553318,13 +553333,13 @@ mYs
 fSz
 viu
 fSz
-uZd
+oou
 but
 mQw
 mQw
 bcB
 bcB
-cXk
+iXx
 vmi
 vmi
 vmi
@@ -553776,7 +553791,7 @@ mdz
 bcB
 bcB
 bcB
-cXk
+iXx
 vmi
 vmi
 vmi
@@ -555591,7 +555606,7 @@ vmi
 vmi
 vmi
 dEP
-xXW
+uZd
 dEP
 vmi
 vmi
@@ -560093,13 +560108,13 @@ vgL
 iZF
 qIt
 qIt
-drS
-drS
+mtD
+mtD
 qIt
-drS
+mtD
 qIt
-drS
-drS
+mtD
+mtD
 qIt
 qIt
 fSz
