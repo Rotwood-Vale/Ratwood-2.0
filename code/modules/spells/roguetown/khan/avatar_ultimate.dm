@@ -72,6 +72,11 @@
 	// The particle effect stays active until death
 
 /obj/effect/proc_holder/spell/invoked/avatar_ultimate/proc/play_avatar_karaoke(mob/living/carbon/human/user, list/viewers)
+	// Stop all sounds for viewers first
+	for(var/mob/M in viewers)
+		if(M.client)
+			M.playsound_local(M, null, 0, FALSE, channel = CHANNEL_NOTIFY, pressure_affected = FALSE)
+	
 	// Get a dedicated sound channel
 	var/sound_channel = SSsounds.random_available_channel()
 	

@@ -205,6 +205,12 @@
 	clear_all_lyrics(victim)
 
 /obj/effect/proc_holder/spell/invoked/realm_of_death/proc/start_karaoke(mob/living/carbon/human/khan, mob/living/carbon/human/victim)
+	// Stop all sounds for both participants first
+	if(khan?.client)
+		khan.playsound_local(khan, null, 0, FALSE, channel = CHANNEL_NOTIFY, pressure_affected = FALSE)
+	if(victim?.client)
+		victim.playsound_local(victim, null, 0, FALSE, channel = CHANNEL_NOTIFY, pressure_affected = FALSE)
+	
 	// Get a dedicated sound channel
 	sound_channel = SSsounds.random_available_channel()
 	
