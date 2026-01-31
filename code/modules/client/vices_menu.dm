@@ -1947,7 +1947,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 						vars["loadout_[slot]_hex"] = null
 					else
 						// Look up the hex value from colorlist
-						vars["loadout_[slot]_hex"] = new_color
+						vars["loadout_[slot]_hex"] = colorlist[new_color]
 					open_vices_menu(usr)
 				return
 	

@@ -23,7 +23,7 @@
 		return
 
 	if(href_list["ahelp"])
-		if(!check_rights(R_ADMIN, TRUE))
+		if(!check_rights(R_AHELP, TRUE))
 			return
 
 		var/ahelp_ref = href_list["ahelp"]
@@ -34,6 +34,8 @@
 			to_chat(usr, "Ticket [ahelp_ref] has been deleted!")
 
 	else if(href_list["ahelp_tickets"])
+		if(!check_rights(R_AHELP))
+			return
 		GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
 
 	else if(href_list["stickyban"])

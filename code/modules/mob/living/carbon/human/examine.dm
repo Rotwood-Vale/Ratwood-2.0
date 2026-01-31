@@ -129,7 +129,9 @@
 				rank_color = "#ECB20A"
 			if(SOCIAL_RANK_ROYAL)
 				rank_color = "#FFBF00"
-		var/social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='[rank_color]'>⚜</font></A>"
+		var/social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⚜</font></A>"
+		if(family_datum)
+			social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⛯</font></A>"
 		var/display1
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
 		if ((valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot))
@@ -146,7 +148,7 @@
 				display1 = span_info("ø ------------ ø\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
 			else
 				display1 = span_info("ø ------------ ø\nThis is the <EM>[used_name]</EM>, the [race_name].")
-		. = list("[display1] [display2]")	
+		. = list("[display1] [display2]")
 
 		if(HAS_TRAIT(src, TRAIT_WITCH))
 			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_WITCH))
@@ -307,6 +309,13 @@
 
 		if (HAS_TRAIT(src, TRAIT_LEPROSY))
 			. += span_necrosis("A LEPER...")
+
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(family_datum == H.family_datum && family_datum)
+				var/family_text = ReturnRelation(user)
+				if(family_text)
+					. += family_text
 
 		if (HAS_TRAIT(src, TRAIT_BEAUTIFUL))
 			switch (pronouns)

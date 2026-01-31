@@ -447,59 +447,93 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	. = ..()
 
 	if(href_list["explainshaft"])
-		to_chat(usr, span_info("Your weapon's shaft determines what kind of damage it is weak and strong against. Shafts other than Grand & Conjured Shaft can be swapped out.\n\
+		var/output = span_info("Your weapon's shaft determines what kind of damage it is weak and strong against. Shafts other than Grand & Conjured Shaft can be swapped out.\n\
 		<b>Metal Shaft</b>: [DULLFACTOR_COUNTERED_BY]x vs Blunt/Smash, [DULLFACTOR_COUNTERS] vs Cut/Chop. 1x Everything Else. \n\
 		<b>Reinforced Shaft</b>: [DULLFACTOR_COUNTERED_BY]x vs Stab/Pick, [DULLFACTOR_COUNTERS] vs Blunt/Smash. 1x Everything Else. \n\
 		<b>Wooden Shaft</b>: [DULLFACTOR_COUNTERED_BY]x vs Cut/Chop, [DULLFACTOR_COUNTERS] vs Blunt/Smash. 1x Everything Else. \n\
 		<b>Grand Shaft</b>: [DULLFACTOR_ANTAG]x vs Everything but Smash. 1x vs Smash. Only present on certain special weapons. \n\
 		<b>Conjured Shaft</b>: [DULLFACTOR_COUNTERED_BY]x vs Everything. Present on Conjured or Decrepit weapons. Also meant to represent crumbling weapons. \n\
-		"))
+		")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
 
 	if(href_list["explaindef"])
-		to_chat(usr, span_info("Each point of defense adds 10% to your parry chance.\n\
+		var/output = span_info("Each point of defense adds 10% to your parry chance.\n\
 		Your parry chance is increased by 20% per skill level in the weapon, and reduced by 20% per skill level of your attacker.\n\
-		Defense is often increased when you wield a weapon two-handed."))
+		Defense is often increased when you wield a weapon two-handed.")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
 
 	if(href_list["explainlength"])
-		to_chat(usr, span_info("A short weapon gains +10% accuracy on hitting any bodypart and can only attack the legs from the ground.\n\
+		var/output = span_info("A short weapon gains +10% accuracy on hitting any bodypart and can only attack the legs from the ground.\n\
 		A long weapon can hit chest or below from the ground, and can hit the feet while standing.\n\
-		A great weapon can hit any bodypart from anywhere."))
+		A great weapon can hit any bodypart from anywhere.")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
 
 	if(href_list["explainbalance"])
-		to_chat(usr, span_info("A heavy weapon is easier to dodge, and inflicts 2 stamina damage per level of strength differences on a parrying defender. \n\
+		var/output = span_info("A heavy weapon is easier to dodge, and inflicts 2 stamina damage per level of strength differences on a parrying defender. \n\
 		A swift balance weapon reduce the enemy's parry chance by 10% per level of speed difference, by up to 30%, \n\
 		If the defender have higher perception however, the penalty is reduced by 10% per point of difference, down to none.\n\
-		Intelligence also reduces the penalty by 3% per point of difference, down to none."))
+		Intelligence also reduces the penalty by 3% per point of difference, down to none.")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
+
 	var/additional_explanation = "This determines the damage dealt by this weapon. Force is increased / decrease by strength above / below 10 by 10% per point of differences,\n\
 	Each point of strength at 15 or above only applies an additional +3% damage, except on punches. Damage is also multiplied by damage factor on intents. \n\
 	Both multiplication are applied to the base number, and does not multiply each other. Reduced sharpness decrease the contribution of strength\n\
 	Force, combined with armor penetration on an intent determines whether an attack penetrate the target's armor. Armor penetrating attack deals less damage to the armor itself."
 	if(href_list["showforce"])
-		to_chat(usr, span_info("Actual Force: ([force]). [additional_explanation]"))
+		var/output = span_info("Actual Force: ([force]). [additional_explanation]")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
 
 	if(href_list["showforcewield"])
-		to_chat(usr, span_info("Wielded Force: ([force_wielded]). [additional_explanation]"))
+		var/output = span_info("Wielded Force: ([force_wielded]). [additional_explanation]")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
 
 	if(href_list["explainsharpness"])
-		to_chat(usr, span_info("Bladed weapons have sharpness. At [SHARPNESS_TIER1_THRESHOLD * 100]%, damage factor and strength damage starts to fall off gradually. \n\
+		var/output = span_info("Bladed weapons have sharpness. At [SHARPNESS_TIER1_THRESHOLD * 100]%, damage factor and strength damage starts to fall off gradually. \n\
 		At [SHARPNESS_TIER1_FLOOR * 100]%, strength and damage factor no longer applies. Below [SHARPNESS_TIER2_THRESHOLD * 100]%, the base damage value also starts to decline\n\
 		Sharpness declines by [SHARPNESS_ONHIT_DECAY] on parry for bladed weapon.\n\
-		A grindstone can restore max sharpness, whereas other sources will degrade 0.5 max integrity per sharpening."))
+		A grindstone can restore max sharpness, whereas other sources will degrade 0.5 max integrity per sharpening.")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
 
 	if(href_list["explaindurability"])
-		to_chat(usr, span_info("How durable your item is. On weapons, [INTEG_PARRY_DECAY] is lost on parry on a main hand bladed weapon. \n\
+		var/output = span_info("How durable your item is. On weapons, [INTEG_PARRY_DECAY] is lost on parry on a main hand bladed weapon. \n\
 		Blunt weapon or off-hand weapon loses [INTEG_PARRY_DECAY_NOSHARP] per parry instead. \n\
-		On armor, the blunt rating of an armor multiplies its effective durability against blunt damage."))
+		On armor, the blunt rating of an armor multiplies its effective durability against blunt damage.")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
 
 	if(href_list["explainintdamage"])
-		to_chat(usr, span_info("Multiplies the damage done to armor on hit."))
+		var/output = span_info("Multiplies the damage done to armor on hit.")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
 
 	if(href_list["explaindemolitionmod"])
-		to_chat(usr, span_info("Multiplies the damage done to objects when hitting them."))
+		var/output = span_info("Multiplies the damage done to objects when hitting them.")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
 
 	if(href_list["explainskill"])
-		to_chat(usr, span_info("The skill associated with this weapon. Each level gives +20% to your parry chance, -20% to your opponent's parry chance. \n\
-		The same is applied to dodge but with a +/-10% bonus. It also adds +8% chance to hit the body part you're aiming for."))
+		var/output = span_info("The skill associated with this weapon. Each level gives +20% to your parry chance, -20% to your opponent's parry chance. \n\
+		The same is applied to dodge but with a +/-10% bonus. It also adds +8% chance to hit the body part you're aiming for.")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
 
 	if(href_list["inspect"])
 		if(!usr.canUseTopic(src, be_close=TRUE))
@@ -632,7 +666,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					str = "Heavy"
 			inspec += "\n<b>ARMOR CLASS:</b> [str]"
 
-		to_chat(usr, "[inspec.Join()]")
+		var/output = "[inspec.Join()]"
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)	
 
 /obj/item
 	var/simpleton_price = FALSE

@@ -69,8 +69,7 @@
 
 	var/language_name = params["language_name"]
 	var/datum/language/language_datum
-	for(var/ld in GLOB.all_languages)
-		var/datum/language/LD = ld
+	for(var/datum/language/LD as anything in GLOB.all_languages)
 		if(language_name == initial(LD.name))
 			language_datum = LD
 	var/is_admin = check_rights_for(user.client, R_ADMIN)

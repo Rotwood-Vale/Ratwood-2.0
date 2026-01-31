@@ -1308,8 +1308,10 @@
 							var/bride_first_name = bride_name_parts[1]
 							thebride.real_name = "[bride_first_name] [surname]"
 							// Private notification to both
-							if(thegroom) to_chat(thegroom, span_notice("Your new shared surname is [surname]."))
-							if(thebride) to_chat(thebride, span_notice("Your new shared surname is [surname]."))
+							if(thegroom) 
+								to_chat(thegroom, span_notice("Your new shared surname is [surname]."))
+							if(thebride) 
+								to_chat(thebride, span_notice("Your new shared surname is [surname]."))
 							// Set marriedto fields
 							thegroom.marriedto = thebride.real_name
 							thebride.marriedto = thegroom.real_name
@@ -1317,8 +1319,9 @@
 							thebride.adjust_triumphs(1)
 							// After surname is set, have the priest say the wedding line
 							if(user && surname)
-								var/surname_trimmed = copytext(surname, 2) // Remove leading space if present
-								user.say("I hereby wed you [surname_trimmed]s.")
+								if(copytext(surname, 1, 2) == " ")
+									surname = copytext(surname, 2) // Remove leading space if present
+								user.say("I hereby wed you as [surname]s.")
 							priority_announce("[thegroom.real_name] has married [thebride.real_name]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
 							qdel(A)
 							marriage = TRUE

@@ -2033,3 +2033,10 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+
+/obj/item/clothing/cloak/half/duelistcape
+	name = "duelist cape"
+	desc = "A short cape favored by duelists."
+	icon_state = "duelistcape"
+	item_state = "duelistcape"
+	color = null
