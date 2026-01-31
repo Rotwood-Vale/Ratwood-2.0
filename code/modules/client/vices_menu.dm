@@ -667,11 +667,11 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	if(!user || !user.client)
 		return
 	
-	// Clean up duplicate vices/virtues (one-time fix for existing characters)
-	fix_duplicate_vices()
+	// Use client-side menu datum for UI generation
+	if(!user.client.vices_menu)
+		user.client.vices_menu = new /datum/vices_menu(user.client)
 	
-	var/html_content = generate_vices_html(user)
-	user << browse(html_content, "window=character_custom;size=750x500")
+	user.client.vices_menu.open_menu()
 
 /datum/preferences/proc/fix_duplicate_vices()
 	// Remove duplicate vices across slots
@@ -685,6 +685,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			else
 				seen_vices += vice.type
 
+// DEPRECATED: Moved to client-side /datum/vices_menu in vices_menu_client.dm for performance
+// This function is no longer used - HTML generation now happens on the client to reduce server load
+/*
 /datum/preferences/proc/generate_vices_html(mob/user)
 	// Use same colors as main character creation menu
 	var/list/theme = list(
@@ -1393,24 +1396,27 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	"}
 	
 	return html
+*/
+// End of deprecated function
 
 /datum/preferences/Topic(href, href_list)
 	. = ..()
 	
-	// Handle loadout item selection from icon menu
+	// Handle loadout item selection from icon menu (now from client-side datum)
 	if(href_list["select_loadout_item"])
-		if(!temp_loadout_selection)
+		// Get temp_loadout_selection from client-side menu
+		if(!usr?.client?.vices_menu?.temp_loadout_selection)
 			return
 		
 		var/item_id = href_list["select_loadout_item"]
 		var/slot = text2num(href_list["slot"])
-		var/list/selection_data = temp_loadout_selection
+		var/list/selection_data = usr.client.vices_menu.temp_loadout_selection
 		
 		var/list/items = selection_data["items"]
 		var/datum/loadout_item/selected = items[item_id]
 		
 		if(!selected || !slot)
-			temp_loadout_selection = null
+			usr.client.vices_menu.temp_loadout_selection = null
 			usr << browse(null, "window=loadout_select")
 			return
 		
@@ -1423,7 +1429,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			var/datum/loadout_item/other_item = vars[i == 1 ? "loadout" : "loadout[i]"]
 			if(other_item && other_item.type == selected.type)
 				to_chat(usr, span_warning("This item is already selected in slot [i]! Each item can only be selected once."))
-				temp_loadout_selection = null
+				usr.client.vices_menu.temp_loadout_selection = null
 				usr << browse(null, "window=loadout_select")
 				return
 		
@@ -1442,14 +1448,14 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			
 			if(spent_points + selected.triumph_cost > total_points)
 				to_chat(usr, span_warning("Not enough points! Need [selected.triumph_cost], but only have [total_points - spent_points] remaining."))
-				temp_loadout_selection = null
+				usr.client.vices_menu.temp_loadout_selection = null
 				usr << browse(null, "window=loadout_select")
 				return
 		
 		vars[slot_var] = selected
 		to_chat(usr, span_notice("Selected [selected.name] for slot [slot]."))
 		
-		temp_loadout_selection = null
+		usr.client.vices_menu.temp_loadout_selection = null
 		usr << browse(null, "window=loadout_select")
 		open_vices_menu(usr)
 		return
@@ -1696,206 +1702,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 
 		switch(action)
 			if("item")
-				// Clear any stale selection data and close existing windows
-				temp_loadout_selection = null
-				usr << browse(null, "window=loadout_select")
-				
-				// Initialize lists for available loadouts and selected loadouts
-				var/list/loadouts_available = list()
-				var/list/selected_loadouts = list()
-				var/list/selected_items = list()
-				for(var/i = 1 to 10)
-					var/datum/loadout_item/existing_item = vars[i == 1 ? "loadout" : "loadout[i]"]
-					if(existing_item)
-						selected_items += existing_item
-						selected_loadouts += existing_item.type
-				
-				// Build HTML menu with icons
-				var/pref_ref = "\ref[src]"
-				var/html = {"
-					<html>
-					<head>
-					<style>
-						body {
-							font-family: Verdana, Arial, sans-serif;
-							background: #100000 url('flowers.png') repeat;
-							color: #aa8f8f;
-							margin: 0;
-							padding: 10px;
-						}
-						.search-container {
-							margin-bottom: 15px;
-						}
-						.search-box {
-							width: 100%;
-							padding: 8px;
-							background: #00000044;
-							border: 1px solid #7b5353;
-							color: #aa8f8f;
-							font-family: Verdana, Arial, sans-serif;
-							font-size: 0.9em;
-							box-sizing: border-box;
-						}
-						.search-box:focus {
-							outline: none;
-							border-color: #aa8f8f;
-						}
-						.item-list {
-							display: flex;
-							flex-direction: column;
-							gap: 5px;
-						}
-						.item-entry {
-							display: flex;
-							align-items: center;
-							background: #00000044;
-							border: 1px solid #7b5353;
-							padding: 8px;
-							cursor: pointer;
-							transition: all 0.2s;
-						}
-						.item-entry:hover {
-							background: rgba(123, 83, 83, 0.3);
-							border-color: #7b5353;
-						}
-						.item-entry.hidden {
-							display: none;
-						}
-						.item-icon {
-							width: 32px;
-							height: 32px;
-							margin-right: 10px;
-							image-rendering: pixelated;
-							flex-shrink: 0;
-						}
-						.item-info {
-							flex: 1;
-						}
-						.item-name {
-							font-weight: bold;
-							color: #aa8f8f;
-							font-size: 0.85em;
-						}
-						.item-cost {
-							color: #ff6b6b;
-							font-size: 0.75em;
-						}
-						.locked-item {
-							opacity: 0.5;
-							cursor: not-allowed !important;
-							background: #00000066 !important;
-						}
-						.locked-item:hover {
-							background: #00000066 !important;
-							border-color: #7b5353 !important;
-						}
-						.lock-reason {
-							color: #ff9b42;
-							font-size: 0.7em;
-							margin-top: 3px;
-							font-style: italic;
-						}
-						h2 {
-							color: #aa8f8f;
-							text-align: center;
-							border-bottom: 2px solid #7b5353;
-							padding-bottom: 10px;
-							margin-top: 0;
-						}
-					</style>
-					</head>
-					<body>
-					<h2>Select Item for Slot [slot]</h2>
-					<div class='search-container'>
-						<input type='text' id='searchBox' class='search-box' placeholder='Search items...' onkeyup='filterItems()'>
-					</div>
-					<div class='item-list'>
-				"}
-				
-				var/icon_counter = 0
-				for(var/path as anything in GLOB.loadout_items)
-					var/datum/loadout_item/item = GLOB.loadout_items[path]
-					
-					var/is_locked = FALSE
-					var/lock_reason = ""
-					
-					// Check if donator item
-					if(item.donoritem && usr?.ckey)
-						if(!item.donator_ckey_check(usr.ckey))
-							continue
-					
-					// Check if nobility requirement is met
-					if(!item.nobility_check(usr?.client))
-						is_locked = TRUE
-						lock_reason = "🔒 Requires: Nobility virtue, or High priority for Noble/Courtier/Yeoman jobs"
-					
-					// Skip if already selected in another slot (but allow if it's the current slot's item)
-					var/datum/loadout_item/current_item = vars[slot_var]
-					if(item.type in selected_loadouts)
-						if(!current_item || current_item.type != item.type)
-							continue
-					
-					icon_counter++
-					
-					// Get item icon with caching
-					var/obj/item/sample = item.path
-					var/icon_file = initial(sample.icon)
-					var/icon_state_name = initial(sample.icon_state)
-					
-					if(icon_file && icon_state_name)
-						var/cache_key = "[icon_file]_[icon_state_name]"
-						if(!(cache_key in GLOB.cached_loadout_icons))
-							if(GLOB.cached_loadout_icons.len >= MAX_ICON_CACHE_SIZE)
-								GLOB.cached_loadout_icons.Cut(1, 50)
-							GLOB.cached_loadout_icons[cache_key] = icon(icon_file, icon_state_name)
-						usr << browse_rsc(GLOB.cached_loadout_icons[cache_key], "loadout_select_[icon_counter].png")
-					
-					var/display_name = item.name
-					var/cost_text = ""
-					if(item.triumph_cost)
-						cost_text = "<span class='item-cost'>(-[item.triumph_cost] PT)</span>"
-					
-					var/locked_class = is_locked ? "locked-item" : ""
-					var/onclick_action = is_locked ? "" : "onclick='window.location=\"byond://?src=[pref_ref];select_loadout_item=[icon_counter];slot=[slot]\"'"
-					var/lock_indicator = is_locked ? "<div class='lock-reason'>[lock_reason]</div>" : ""
-					
-					html += {"
-						<div class='item-entry [locked_class]' data-name='[display_name]' [onclick_action]>
-							<img class='item-icon' src='loadout_select_[icon_counter].png' onerror='this.style.display=\"none\"'>
-							<div class='item-info'>
-								<div class='item-name'>[display_name] [cost_text]</div>
-								[lock_indicator]
-							</div>
-						</div>
-					"}
-					
-					if(!is_locked)
-						loadouts_available["[icon_counter]"] = item
-				
-				html += {"
-					</div>
-					<script>
-						function filterItems() {
-							var searchValue = document.getElementById('searchBox').value.toLowerCase();
-							var items = document.getElementsByClassName('item-entry');
-							var idx;
-							for(idx = 0; idx < items.length; idx++) {
-								var itemName = items\[idx\].getAttribute('data-name').toLowerCase();
-								if(itemName.includes(searchValue)) {
-									items\[idx\].classList.remove('hidden');
-								} else {
-									items\[idx\].classList.add('hidden');
-								}
-							}
-						}
-					</script>
-				</body>
-				</html>
-				"}
-				
-				// Store the available items temporarily for callback and show window
-				temp_loadout_selection = list("prefs" = src, "items" = loadouts_available, "slot" = slot)
-				usr << browse(html, "window=loadout_select;size=500x700")
+				// Use client-side menu for loadout selection
+				if(usr?.client?.vices_menu)
+					usr.client.vices_menu.show_loadout_selection(slot)
 				return
 			
 			if("clear")

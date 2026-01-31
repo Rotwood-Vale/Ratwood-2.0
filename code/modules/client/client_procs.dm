@@ -38,6 +38,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 /client
 	var/whitelisted = 2
 	var/blacklisted = 2
+	var/datum/vices_menu/vices_menu // Client-side vices menu handler
 
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null

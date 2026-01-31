@@ -1486,6 +1486,8 @@
 #include "code\modules\client\preferences_toggles.dm"
 #include "code\modules\client\round_end_panel.dm"
 #include "code\modules\client\roundendmanifest.dm"
+#include "code\modules\client\vices_menu_client.dm"
+#include "code\modules\client\vices_menu_client2.dm"
 #include "code\modules\client\vices_menu.dm"
 #include "code\modules\client\customizer\customizer.dm"
 #include "code\modules\client\customizer\customizer_choice.dm"
