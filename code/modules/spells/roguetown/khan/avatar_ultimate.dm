@@ -75,7 +75,7 @@
 	// Stop all sounds for viewers first
 	for(var/mob/M in viewers)
 		if(M.client)
-			M.playsound_local(M, null, 0, FALSE, channel = CHANNEL_NOTIFY, pressure_affected = FALSE)
+			SEND_SOUND(M, sound(null))
 	
 	// Get a dedicated sound channel
 	var/sound_channel = SSsounds.random_available_channel()
