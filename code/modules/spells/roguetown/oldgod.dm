@@ -10,7 +10,7 @@
 	movement_interrupt = FALSE
 	sound = 'sound/magic/psydonbleeds.ogg'
 	invocations = list("I BLEED, SO THAT YOU MIGHT ENDURE!")
-	invocation_type = "shout"
+	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
 	recharge_time = 30 SECONDS
@@ -307,7 +307,7 @@
 	movement_interrupt = FALSE
 	sound = 'sound/magic/psyabsolution.ogg'
 	invocations = list("BE ABSOLVED!")
-	invocation_type = "shout"
+	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
 	recharge_time = 30 SECONDS // 60 seconds cooldown

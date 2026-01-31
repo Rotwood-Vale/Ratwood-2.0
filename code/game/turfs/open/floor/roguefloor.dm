@@ -543,6 +543,30 @@
 			qdel(I)
 	.=..()
 
+/turf/open/floor/rogue/dirt/MiddleClick(mob/user, params)
+	. = ..()
+	if(!isliving(user))
+		return
+	
+	var/mob/living/L = user
+	if(L.stat != CONSCIOUS)
+		return
+	
+	// Check if the user is holding a shovel
+	var/obj/item/rogueweapon/shovel/S = L.get_active_held_item()
+	if(!istype(S))
+		return
+	
+	// Check if in scoop intent
+	if(L.used_intent.type != /datum/intent/shovelscoop)
+		return
+	
+	// Call the shovel's autodig proc
+	if(S.start_autodig(L, src))
+		return TRUE
+	
+	return FALSE
+
 /turf/open/floor/rogue/dirt/Destroy()
 	if(holie)
 		QDEL_NULL(holie)

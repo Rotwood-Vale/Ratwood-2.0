@@ -126,6 +126,8 @@
 #define INIT_ORDER_ECONOMY			40
 #define INIT_ORDER_OUTPUTS			35
 #define INIT_ORDER_ATOMS			30
+#define INIT_ORDER_TREES			29
+#define INIT_ORDER_MAPGEN			28 //Can we possibly move this to BEFORE atom init in some way? I sure fuckin hope so.
 #define INIT_ORDER_LANGUAGE			25
 #define INIT_ORDER_MACHINES			20
 #define INIT_ORDER_SKILLS			15
@@ -176,7 +178,6 @@
 #define FIRE_PRIORITY_ACID			40
 #define FIRE_PRIORITY_BURNING		40
 #define FIRE_PRIORITY_DEFAULT		50
-#define FIRE_PRIORITY_MOBS_DEAD		50
 #define FIRE_PRIORITY_PARALLAX		65
 #define FIRE_PRIORITY_MOBS			100
 #define FIRE_PRIORITY_TGUI			110

@@ -662,6 +662,18 @@
 	demolition_mod = 5 // Moars Forts BEGONE!!! I AM CONQUEROR OF CONQUERORS!!!
 	wdefense = 4
 
+//This thing is warded. For fluff. And because it's COOL, we give them silver blessings.
+//+1 DEF from it, too. For a total of 7 defence when wielded.
+/obj/item/rogueweapon/mace/maul/grand/malum/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_TENNITE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 0,\
+		added_def = 1,\
+	)
 
 //Dwarvish mauls. Unobtanium outside of Grudgebearer. Do not change that.
 /obj/item/rogueweapon/mace/maul/steel

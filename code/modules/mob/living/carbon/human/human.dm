@@ -469,8 +469,16 @@
 
 			if(vision && vision.viewing_head && user_head.eyes)
 				. = user_head.eyes.tint
+				remove_client_colour(/datum/client_colour/monochrome/blind/dullahan)
+				clear_fullscreen("dullahan_body_vision")
+			else if(vision && !vision.viewing_head && user_head.eyes)
+				. = user_head.eyes.tint
+				add_client_colour(/datum/client_colour/monochrome/blind/dullahan)
+				overlay_fullscreen("dullahan_body_vision", /atom/movable/screen/fullscreen/curse)
 			else
 				. = INFINITY
+				remove_client_colour(/datum/client_colour/monochrome/blind)
+				clear_fullscreen("dullahan_body_vision")
 			return
 
 	. = ..()

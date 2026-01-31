@@ -258,7 +258,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return randname
 
 /datum/species/proc/random_surname()
-	return " [pick(world.file2list("strings/rt/names/human/humnorlast.txt"))]"
+	return "[pick(world.file2list("strings/rt/names/human/humnorlast.txt"))]"
 
 /datum/species/proc/regenerate_icons(mob/living/carbon/human/H)
 	return FALSE

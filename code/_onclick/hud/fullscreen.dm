@@ -187,7 +187,7 @@
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/curse
-	icon_state = "curse"
+	icon_state = "curse1"
 	layer = CURSE_LAYER
 	plane = FULLSCREEN_PLANE
 

@@ -412,6 +412,21 @@
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 
+/datum/crafting_recipe/roguetown/survival/wooddagger
+	name = "wood dagger (3x)"
+	category = "Tools"
+	result = list(
+		/obj/item/rogueweapon/huntingknife/idagger/wood,
+		/obj/item/rogueweapon/huntingknife/idagger/wood,
+		/obj/item/rogueweapon/huntingknife/idagger/wood
+		)
+	reqs = list(
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/natural/fibers = 1,
+		)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
 /datum/crafting_recipe/roguetown/survival/woodshield
 	name = "wooden shield"
 	category = "Tools"

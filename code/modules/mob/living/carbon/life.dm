@@ -3,22 +3,34 @@
 
 	if(notransform)
 		return
-
-	if(damageoverlaytemp)
-		damageoverlaytemp = 0
-		update_damage_hud()
-
-	//Reagent processing needs to come before breathing, to prevent edge cases.
-	handle_organs()
+	if(isnull(loc))
+		return
 
 	. = ..()
 
-	if (QDELETED(src))
-		return
+	if(times_fired % 2 == 0) // every 2nd (other) tick, update damage hud.
+		if(damageoverlaytemp)
+			damageoverlaytemp = 0
+			update_damage_hud()
+	if(!client) // Clientless? Handle organs and wounds every THIRD tick. (carbon AI as well, we'll see how this goes.)
+		if(times_fired % 3 == 0)
+			handle_organs()
+			handle_wounds()
+			handle_blood()
+	else
+		handle_organs()
+		handle_blood()
+		handle_wounds()
 
-	handle_wounds()
+	//Funny thing here, however. If they ARE skullcracked, we throw them a bone. In direct opposition to the above.
+	//Passive heals until they get out of skullcrack state. Just so they're not perma skullcracked without doctors.
+	//You can still break legs and the like without it passive healing. Do that instead.
+	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
+		var/list/wounds = get_wounds()
+		if(wounds.len > 0)
+			heal_wounds(0.3, list(/datum/wound/fracture/head, /datum/wound/fracture/head/brain, /datum/wound/fracture/neck))
+
 	handle_embedded_objects()
-	handle_blood()
 	handle_roguebreath()
 	var/bprv = handle_bodyparts()
 	if(bprv & BODYPART_LIFE_UPDATE_HEALTH)

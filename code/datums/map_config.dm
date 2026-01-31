@@ -23,7 +23,11 @@
 	var/space_ruin_levels = 7
 	var/space_empty_levels = 1
 
-	var/minetype = "lavaland"
+	/// List of unit tests that are skipped when running this map
+	var/list/skipped_tests
+
+	var/custom_area_sound = null
+	var/list/other_z
 
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
@@ -88,7 +92,6 @@
 			log_world("Map file ([map_folder]/[map_path]/[map_file]) does not exist!")
 			return
 
-	// "map_file": ["Lower.dmm", "Upper.dmm"]
 	else if (islist(map_file))
 		for (var/file in map_file)
 			if (!fexists("[map_folder]/[map_path]/[file]"))
@@ -134,11 +137,34 @@
 		log_world("map_config space_empty_levels is not a number!")
 		return
 
-	if ("minetype" in json)
-		minetype = json["minetype"]
-
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
+#ifdef UNIT_TESTS
+	// Check for unit tests to skip, no reason to check these if we're not running tests
+	for(var/path_as_text in json["ignored_unit_tests"])
+		var/path_real = text2path(path_as_text)
+		if(!ispath(path_real, /datum/unit_test))
+			stack_trace("Invalid path in mapping config for ignored unit tests: \[[path_as_text]\]")
+			continue
+		LAZYADD(skipped_tests, path_real)
+#endif
+	var/list/other_z = json["other_z"]
+	if(!islist(other_z) || !other_z.len)
+		defaulted = FALSE
+		return TRUE
+
+	var/list/final_z
+	for(var/map_path in other_z)
+		var/map_file = file(map_path)
+		if(!map_file)
+			stack_trace("tried to load another z-level that didn't exist")
+			continue
+		if(map_path in final_z)
+			stack_trace("tried to add two of the same z-level")
+			continue
+		LAZYOR(final_z, map_path)
+
+	src.other_z = final_z
 	defaulted = FALSE
 	return TRUE
 #undef CHECK_EXISTS
