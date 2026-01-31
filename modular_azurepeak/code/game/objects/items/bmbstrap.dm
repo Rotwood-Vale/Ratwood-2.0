@@ -13,11 +13,6 @@
 	unequip_delay_self = 5 SECONDS
 	max_integrity = 0
 	sellprice = 35
-	pixel_y = -16
-	pixel_x = -16
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
-	bigboy = TRUE
 	equip_sound = 'sound/blank.ogg'
 	bloody_icon_state = "bodyblood"
 	alternate_worn_layer = UNDER_CLOAK_LAYER
@@ -36,6 +31,14 @@
 			to_chat(loc, span_warning("Full!"))
 		return
 	..()
+
+/obj/item/bmbstrap/attack_right(mob/user)
+	if(tweps.len)
+		var/obj/O = tweps[tweps.len]
+		tweps -= O
+		user.put_in_active_hand(O, user.active_hand_index)
+		update_icon()
+		return TRUE
 
 /obj/item/bmbstrap/examine(mob/user)
 	. = ..()

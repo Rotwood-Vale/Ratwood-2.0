@@ -241,11 +241,8 @@
 				gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe
 				cloak = /obj/item/clothing/cloak/volfmantle			//Crazed man, gives the look.
-				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
-				beltr = /obj/item/rogueweapon/shield/buckler		//Doesn't get good shield skill + no armor, so they get this to compensate for no parry on whip.
-				beltl = /obj/item/rogueweapon/whip
-				neck = /obj/item/clothing/neck/roguetown/bevor		//Better neckpiece for slightly less skill variety. Based it off a cool piece of art...
-				H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+				neck = /obj/item/clothing/neck/roguetown/chaincoif	//Better neckpiece for slightly less skill variety. Based it off a cool piece of art...				H.adjust_skillrank(/datum/skill/combat/whipsflails, 2, TRUE)
 				H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)		//Bit high but he doesn't get huge strength boons so makes up for it. Same as a guard.
 				H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
@@ -260,5 +257,17 @@
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_OUTDOORSMAN, TRAIT_GENERIC)
 				H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()		//Semi-crazed warrior vibe.
+				var/weapons = list("Lándzsa", "Flail")
+				var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+				switch(weapon_choice)
+					if("Lándzsa")//Funny banner weapon & punchdagger, with whip I suppose.
+						r_hand = /obj/item/rogueweapon/spear/boar/aav
+						l_hand = /obj/item/rogueweapon/katar/punchdagger/aav
+						backl = /obj/item/rogueweapon/scabbard/gwstrap
+						H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)		//Use of the weapon.
+					if("Flail")//Or boring flail and buckler, whip.
+						beltl = /obj/item/rogueweapon/flail
+						beltr = /obj/item/rogueweapon/shield/buckler //Doesn't get good shield skill + no armor, so they get this to compensate for no parry on whip.
+						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)	//Old whip skill.
 
 	H.merctype = 11

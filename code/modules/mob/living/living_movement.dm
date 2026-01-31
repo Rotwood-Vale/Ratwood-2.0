@@ -16,12 +16,14 @@
 		unpixel_shift()
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
-	if((mover?.pass_flags & PASSMOB))
+	if(!mover)
+		return ..()
+	if((mover.pass_flags & PASSMOB))
 		return TRUE
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
 		return !P.can_hit_target(src, P.permutated, src == P.original, TRUE)
-	if(mover.throwing)
+	if(mover?.throwing)
 		return (!density || !(mobility_flags & MOBILITY_STAND) || wallpressed || (mover.throwing.thrower == src && !ismob(mover)))
 	if(buckled == mover)
 		return TRUE

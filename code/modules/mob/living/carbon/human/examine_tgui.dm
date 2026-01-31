@@ -79,7 +79,8 @@
 		nsfw_img_gallery = pref.nsfw_img_gallery
 		char_name = pref.real_name
 		song_url = pref.ooc_extra
-		is_vet = viewing.check_agevet()
+		if(viewing)
+			is_vet = viewing.check_agevet()
 		if(!headshot)
 			headshot = "headshot_red.png"
 

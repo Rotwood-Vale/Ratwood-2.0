@@ -294,6 +294,8 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "spider_s"
+	taur_markings_state = "spider_markings"
+	taur_tertiary_state = "spider_markings_2"
 
 	has_taur_color = TRUE
 

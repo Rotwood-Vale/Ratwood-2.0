@@ -734,7 +734,7 @@
 	possible_item_intents = list(SPEAR_BASH)
 	gripped_intents = list(SPEAR_THRUST, /datum/intent/spear/bash/ranged, /datum/intent/mace/smash/eaglebeak)//GET THEM OFF OF ME!!! OOOUGH!!!
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
-	icon_state = "standard"
+	icon_state = "standard_old"
 	max_blade_int = 260
 	max_integrity = 300//+50 from base. Because blacksteel or something.
 	smeltresult = /obj/item/ingot/blacksteel
@@ -743,9 +743,44 @@
 	var/repair_amount = 20
 	var/repair_time = 3 MINUTES//Quite some time for a full repair.
 	var/last_repair
+	var/secondary_tag = FALSE//Does this have two flag states?
+
+//This is an eagle's beak greataxe combination, basically, with some quirks.
+//Will actual poleaxes function like this? No. But it's a unique fluff weapon right now.
+//At least, when I make them into their own weapon class.
+//May as well make it unique, in some regard, until that point.
+/obj/item/rogueweapon/spear/keep_standard/poleaxe
+	desc = "The local lord's banner, fashioned to a poleaxe and turned into a deadly instrument of war. \
+	The man who wields this is said to bring great fortune to his house, and those who keep him safe. \
+	<small>Runes glow near the head of the weapon, visible for the faintest of moments. A sure sign of the arcyne.</small>"
+	force_wielded = 30//-4. You know why. Look at the intents.
+	minstr = 12//+1 over the eagle's beak.
+	max_blade_int = 200//+20 over the eagle's beak. -60 from the pike.
+	max_integrity = 260//-40 from parent. No longer blacksteel, but great all the same.
+	smeltresult = /obj/item/ingot/steel
+	gripped_intents = list(/datum/intent/spear/thrust/eaglebeak, /datum/intent/spear/bash/eaglebeak, \
+	/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe)//You get special intents, you special guy, you...
+	icon_state = "standard"
+	secondary_tag = TRUE
+
+//This is awful and I apologise.
+/obj/item/rogueweapon/spear/keep_standard/attack_self(mob/living/user)
+	if(secondary_tag)
+		if(wielded)
+			detail_tag = "_det1"
+			update_icon()
+			user.update_inv_hands()
+		else
+			detail_tag = "_det"
+			update_icon()
+			user.update_inv_hands()
+	..()
 
 /obj/item/rogueweapon/spear/keep_standard/equipped(mob/living/user)
 	. = ..()
+	if(secondary_tag)
+		detail_tag = "_det"
+		update_icon()
 	if(active_item)
 		return
 	active_item = TRUE
@@ -758,12 +793,16 @@
 		if(HAS_TRAIT(user, TRAIT_STANDARD_BEARER))
 			to_chat(user, span_suppradio("<small>It remains ready for your word. You need only ask.</small>"))
 			user.verbs |= /mob/proc/standard_position
+			user.verbs |= /mob/proc/standard_recuperate
+			user.verbs |= /mob/proc/standard_steady
 			user.verbs |= /mob/proc/standard_rally
 	else
 		to_chat(user, span_suicide("The standard's runes pulse, rejecting me as its <b>master</b>."))
 
 /obj/item/rogueweapon/spear/keep_standard/dropped(mob/living/user)
 	..()
+//	if(secondary_tag)
+//		detail_tag = "_det"
 	if(!active_item)
 		return
 	active_item = FALSE
@@ -776,6 +815,8 @@
 		if(HAS_TRAIT(user, TRAIT_STANDARD_BEARER))
 			to_chat(user, span_monkeyhive("<small>You feel ill. Was that a mistake?</small>"))
 			user.verbs -= /mob/proc/standard_position
+			user.verbs -= /mob/proc/standard_recuperate
+			user.verbs -= /mob/proc/standard_steady
 			user.verbs -= /mob/proc/standard_rally
 	else
 		to_chat(user, span_suicide("The standard's runes pulse, as if sighing in relief once I let go."))

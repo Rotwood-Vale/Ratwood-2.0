@@ -529,41 +529,26 @@
 	id = "Necran Deathly calm!"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/necranwilloss
 	effectedstats = list(STATKEY_WIL = -4)
-	var/blimmune = FALSE
-	var/nobreath = FALSE
+	tick_interval = 5 SECONDS
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_apply()
 	. = ..()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
-		if(HAS_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE))
-			blimmune = TRUE
-		else
-			ADD_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-		if(HAS_TRAIT(H, TRAIT_NOBREATH))
-			nobreath = TRUE
-		else
-			ADD_TRAIT(H, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	owner.add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_remove()
 	. = ..()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
-		if(!blimmune)
-			REMOVE_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-		if(!nobreath)
-			REMOVE_TRAIT(H, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	owner.remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/process()
 	.=..()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.energy_add(-1)	//being in death's edge drains energy from people
-		var/area/rogue/our_area = get_area(H)
-		if(!(our_area.necra_area))
-			owner.remove_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)
+	owner.energy_add(-1)	//being in death's edge drains energy from people
+	var/area/rogue/our_area = get_area(owner)
+	if(isnull(our_area) || !(our_area.necra_area))
+		owner.remove_status_effect(src)
 
 /atom/movable/screen/alert/status_effect/debuff/necranwilloss
 	name = "Necran Deathly calm!"
@@ -575,33 +560,24 @@
 	id = "Deathly calm!"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/deathdoorwilloss
 	effectedstats = list(STATKEY_WIL = -8)
-	var/blimmune = FALSE
-	var/nobreath = FALSE
+	tick_interval = 5 SECONDS
 
 /datum/status_effect/debuff/deathdoorwilloss/on_apply()
 	. = ..()
-	if(HAS_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE))
-		blimmune = TRUE
-	else
-		ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	if(HAS_TRAIT(owner, TRAIT_NOBREATH))
-		nobreath = TRUE
-	else
-		ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/deathdoorwilloss/on_remove()
 	. = ..()
-	if(!blimmune)
-		REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, id)
-	if(!nobreath)
-		REMOVE_TRAIT(owner, TRAIT_NOBREATH, id)
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/deathdoorwilloss/process()
 	.=..()
 	owner.energy_add(-1)	//being in death's edge drains energy from people
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.necra_area))
-		owner.remove_status_effect(/datum/status_effect/debuff/deathdoorwilloss)
+	if(isnull(our_area) || !(our_area.necra_area))
+		owner.remove_status_effect(src)
 
 /atom/movable/screen/alert/status_effect/debuff/deathdoorwilloss
 	name = "Deathly calm!"

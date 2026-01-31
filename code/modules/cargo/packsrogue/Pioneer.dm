@@ -131,13 +131,12 @@
 	name = "Cogs"
 	cost = 20
 	contains = list(/obj/item/roguegear/bronze = 2)
-/*
-//Return this when it actually WORKS!!!!!
+
 /datum/supply_pack/rogue/Pioneer/bmbstrap
 	name = "Bombdolier"
 	cost = 70
 	contains = list(/obj/item/bmbstrap)
-*/
+
 //Meh grenades.
 
 /datum/supply_pack/rogue/Pioneer/impactgrenade_smoke

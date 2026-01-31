@@ -246,6 +246,10 @@ SUBSYSTEM_DEF(triumphs)
 /datum/controller/subsystem/triumphs/proc/triumph_adjust(amt, target_ckey)
 	if(target_ckey in triumph_amount_cache)
 		triumph_amount_cache[target_ckey] += amt
+		// Prevent negative triumphs - clamp to minimum of 0
+		if(triumph_amount_cache[target_ckey] < 0)
+			triumph_amount_cache[target_ckey] = 0
+		
 		var/list/saving_data = list()
 		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/triumphs.json")
 		var/backup_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/triumphs.backup.json")

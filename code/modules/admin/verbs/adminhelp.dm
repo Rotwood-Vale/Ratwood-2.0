@@ -65,6 +65,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //opens the ticket listings for one of the 3 states
 /datum/admin_help_tickets/proc/BrowseTickets(state)
+	if(!check_rights(R_AHELP))
+		to_chat(usr, "<font color='red'>Error: You do not have permission to view tickets.</font>")
+		return
 	var/list/l2b
 	var/title
 	switch(state)

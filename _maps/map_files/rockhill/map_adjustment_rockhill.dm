@@ -30,3 +30,13 @@
 	)
 	// species_adjust = list()
 	// sexes_adjust = list()
+	//Threat regions is used for displaying specific regions on notice boards
+	threat_regions = list(
+		THREAT_REGION_ROCKHILL_BASIN,
+		THREAT_REGION_ROCKHILL_BOG_NORTH,
+		THREAT_REGION_ROCKHILL_BOG_WEST,
+		THREAT_REGION_ROCKHILL_BOG_SOUTH,
+		THREAT_REGION_ROCKHILL_BOG_SUNKMIRE,
+		THREAT_REGION_ROCKHILL_WOODS_NORTH,
+		THREAT_REGION_ROCKHILL_WOODS_SOUTH
+	)
