@@ -37,8 +37,6 @@
 	if(!owner || !prefs)
 		return ""
 	
-	var/mob/user = owner.mob
-	
 	// Use same colors as main character creation menu
 	var/list/theme = list(
 		"bg" = "#100000",
@@ -387,13 +385,6 @@
 	if(!prefs)
 		return ""
 	
-	var/list/theme = list(
-		"text" = "#aa8f8f",
-		"label" = "#aa8f8f",
-		"border" = "#7b5353",
-		"panel" = "#00000066"
-	)
-	
 	var/html = {"
 		<div class="statpack-section">
 			<h2>Statpack Selection</h2>
@@ -425,13 +416,6 @@
 /datum/vices_menu/proc/generate_virtues_tab()
 	if(!prefs)
 		return ""
-	
-	var/list/theme = list(
-		"text" = "#aa8f8f",
-		"label" = "#aa8f8f",
-		"border" = "#7b5353",
-		"panel" = "#00000066"
-	)
 	
 	var/html = {"
 		<div class="statpack-section">
