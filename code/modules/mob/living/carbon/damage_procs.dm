@@ -74,6 +74,8 @@
 	// Steel Skin: flat 75% damage reduction for mobs with the trait
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
 		amount *= 0.1
+	else if(amount > 0 && HAS_TRAIT(src, TRAIT_AVATAR_SKIN))
+		amount *= 0.45
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health, required_status)
 	else
@@ -89,6 +91,8 @@
 	// Steel Skin: reduce positive fire damage
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
 		amount *= 0.1
+	else if(amount > 0 && HAS_TRAIT(src, TRAIT_AVATAR_SKIN))
+		amount *= 0.45
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health, required_status)
 	else
@@ -105,9 +109,10 @@
 		else
 			blood_volume -= amount
 		blood_volume = max(blood_volume, 0)
-	// Steel Skin: reduce positive toxin damage
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
 		amount *= 0.1
+	else if(amount > 0 && HAS_TRAIT(src, TRAIT_AVATAR_SKIN))
+		amount *= 0.45
 
 	if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
 		amount = min(amount, 0)
@@ -128,6 +133,8 @@
 	// Steel Skin: reduce positive stamina damage
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
 		amount *= 0.1
+	else if(amount > 0 && HAS_TRAIT(src, TRAIT_AVATAR_SKIN))
+		amount *= 0.45
 	if(amount > 0)
 		take_overall_damage(0, 0, amount, updating_health)
 	else

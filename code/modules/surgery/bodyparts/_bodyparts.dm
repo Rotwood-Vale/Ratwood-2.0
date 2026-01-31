@@ -348,6 +348,11 @@
 		brute *= 0.1
 		burn *= 0.1
 		stamina *= 0.1
+	// Avatar Skin: 55% damage reduction for Avatar of Khan
+	else if(owner && HAS_TRAIT(owner, TRAIT_AVATAR_SKIN))
+		brute *= 0.45
+		burn *= 0.45
+		stamina *= 0.45
 	
 	brute = max(0, brute - brute_reduction)
 	burn = max(0, burn - burn_reduction)

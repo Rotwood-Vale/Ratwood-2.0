@@ -99,31 +99,12 @@
                     qdel(I)
             M.update_inv_hands()
             M.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn(M), SLOT_HEAD, TRUE)
-            var/obj/item/clothing/gloves/G = new /obj/item/clothing/gloves/roguetown/chain/gronn(M)
-            if(G)
-                G.color = "#FFFF00"
-            M.equip_to_slot_or_del(G, SLOT_GLOVES, TRUE)
-            var/obj/item/clothing/shoes/S = new /obj/item/clothing/shoes/roguetown/boots/armor/iron/gronn(M)
-            if(S)
-                S.color = "#FFFF00"
-            M.equip_to_slot_or_del(S, SLOT_SHOES, TRUE)
-            var/obj/item/clothing/under/P = new /obj/item/clothing/under/roguetown/chainlegs/kilt(M)
-            if(P)
-                P.color = "#FFFF00"
-            M.equip_to_slot_or_del(P, SLOT_PANTS, TRUE)
+            M.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/chain/gronn(M), SLOT_GLOVES, TRUE)
+            M.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/armor/iron/gronn(M), SLOT_SHOES, TRUE)
+            M.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs/kilt(M), SLOT_PANTS, TRUE)
             M.equip_to_slot_or_del(new /obj/item/clothing/cloak/lordcloak(M), SLOT_CLOAK, TRUE)
             M.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap(M), SLOT_BACK_R, TRUE)
             M.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/sahnuzal(M), TRUE)
-
-            // had this weird bug where things would constantly get colored. I am the dye machine!!111!
-            for(var/obj/item/I in M.get_equipped_items())
-                if(!I)
-                    continue
-                if(I.type == /obj/item/clothing/cloak/lordcloak)
-                    continue
-                if(I.type == /obj/item/rogueweapon/scabbard/gwstrap)
-                    continue
-                I.color = "#FFFF00"
             M.STASTR = 20
             M.STASPD = 3
             M.STACON = 15 + rand(1,3)
@@ -224,6 +205,178 @@
     if(owner && owner.current)
         src.TrySetAntagName(owner.current, owner.current.real_name)
     return
+// ============================================================================
+// AVATAR OF KHAN - Weaker player-controlled Khan that can transform temporarily
+// ============================================================================
+
+/datum/antagonist/khan_sahnuzal/avatar
+	name = "Avatar of Khan"
+	var/avatar_active = FALSE // Whether the Avatar Ultimate is currently active
+	var/avatar_end_time = 0 // When the Avatar transformation ends
+
+/datum/antagonist/khan_sahnuzal/avatar/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	if(!M)
+		return
+	
+	// Give them the verb to declare war
+	M.verbs |= /mob/living/carbon/human/verb/declare_khan_war
+	var/datum/action/innate/A = M.mind.khan_declare_action
+	if(!A)
+		A = new /datum/action/innate()
+		A.name = "Declare War"
+		A.desc = "Declare war upon the Vale with a thunderous proclamation."
+		A.button_icon = 'icons/mob/actions.dmi'
+		A.button_icon_state = "default"
+		A.icon_icon = 'icons/mob/actions.dmi'
+		A.owner_has_control = TRUE
+		A.Grant(M)
+		M.mind.khan_declare_action = A
+	
+	// Clear any pre-existing traits
+	if(M.status_traits)
+		for(var/trait in list(M.status_traits))
+			REMOVE_TRAIT(M, trait, null)
+
+	// Reset skills and apply Avatar-specific skill ranks
+	if(M.skills)
+		M.skills.Destroy()
+		M.skills = null
+	M.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_LEGENDARY, TRUE)
+	M.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
+	M.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_NOVICE, TRUE)
+	M.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+	M.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	M.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_MASTER, TRUE)
+	M.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
+	
+	// Avatar gets basic traits initially
+	ADD_TRAIT(M, TRAIT_AVATAR_SKIN, INNATE_TRAIT) // 55% damage reduction for Avatar
+	ADD_TRAIT(M, TRAIT_STEEL_FEET, INNATE_TRAIT)
+	ADD_TRAIT(M, TRAIT_NOPAINSTUN, INNATE_TRAIT)
+	ADD_TRAIT(M, TRAIT_NOPAIN, INNATE_TRAIT)
+	ADD_TRAIT(M, TRAIT_NODISMEMBER, INNATE_TRAIT)
+	ADD_TRAIT(M, TRAIT_CRITICAL_RESISTANCE, INNATE_TRAIT)
+	
+	// Equip the Avatar
+	if(M)
+		// Remove any existing equipment
+		for(var/obj/item/I in M.get_equipped_items(TRUE))
+			if(I)
+				qdel(I)
+		for(var/obj/item/I in M.held_items)
+			if(I)
+				qdel(I)
+		M.update_inv_hands()
+		M.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn(M), SLOT_HEAD, TRUE)
+		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/chain/gronn(M), SLOT_GLOVES, TRUE)
+		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/armor/iron/gronn(M), SLOT_SHOES, TRUE)
+		M.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs/kilt(M), SLOT_PANTS, TRUE)
+		M.equip_to_slot_or_del(new /obj/item/clothing/cloak/lordcloak(M), SLOT_CLOAK, TRUE)
+		M.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap(M), SLOT_BACK_R, TRUE)
+		M.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/sahnuzal(M), TRUE)
+		
+		// Avatar stats - strong but not as strong as full Khan
+		M.STASTR = 18
+		M.STASPD = 4
+		M.STACON = 13 + rand(1,3)
+		M.STAWIL = 13 + rand(1,3)
+		M.STAPER = 13 + rand(1,3)
+
+		M.setMaxHealth(2000) // Half the Khan's health
+		
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			for(var/obj/item/bodypart/BP in C.bodyparts)
+				BP.max_damage = BP.max_damage * 10 // Less durable than Khan
+		
+		M.status_flags &= ~GODMODE
+		M.updatehealth()
+
+		M.cmode_music_override_name = "Avatar of Khan"
+
+		if(!src.khan_scaled)
+			M.transform = M.transform.Scale(1.10, 1.10) // Slightly bigger than normal
+			M.transform = M.transform.Translate(0, (0.10 * 16))
+			M.update_transform()
+			src.khan_scaled = TRUE
+	
+	// Grant the Avatar spells
+	if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/avatar_ultimate))
+		M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/avatar_ultimate)
+	if(M.mind && !M.mind.has_spell(/obj/effect/proc_holder/spell/invoked/stampede))
+		M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stampede)
+
+/datum/antagonist/khan_sahnuzal/avatar/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	if(M && M.mind)
+		// Remove Avatar spells
+		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/avatar_ultimate)
+		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/stampede)
+
+// Proc to activate the Avatar transformation
+/datum/antagonist/khan_sahnuzal/avatar/proc/activate_avatar(mob/living/carbon/human/user)
+	if(avatar_active)
+		return
+	
+	avatar_active = TRUE
+	avatar_end_time = world.time + 99 SECONDS
+	
+	// Apply full Khan traits
+	ADD_TRAIT(user, TRAIT_BIGGUY, INNATE_TRAIT)
+	ADD_TRAIT(user, TRAIT_CRITICAL_RESISTANCE, INNATE_TRAIT)
+	ADD_TRAIT(user, TRAIT_TRUE_CRITICAL_RESISTANCE, INNATE_TRAIT)
+	ADD_TRAIT(user, TRAIT_NODISMEMBER, INNATE_TRAIT)
+	ADD_TRAIT(user, TRAIT_CONQUEROR_STEPS, INNATE_TRAIT)
+	ADD_TRAIT(user, TRAIT_GRABIMMUNE, INNATE_TRAIT)
+	ADD_TRAIT(user, TRAIT_NOPAINSTUN, INNATE_TRAIT)
+	ADD_TRAIT(user, TRAIT_TRUEUNSTOPPABLE, INNATE_TRAIT)
+	ADD_TRAIT(user, TRAIT_NOPAIN, INNATE_TRAIT)
+	ADD_TRAIT(user, TRAIT_KNEESTINGER_IMMUNITY, INNATE_TRAIT)
+	
+	// Grant all Khan spells
+	if(user.mind && !user.mind.has_spell(/obj/effect/proc_holder/spell/invoked/decimate))
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/decimate)
+	if(user.mind && !user.mind.has_spell(/obj/effect/proc_holder/spell/invoked/indestructible))
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/indestructible)
+	if(user.mind && !user.mind.has_spell(/obj/effect/proc_holder/spell/invoked/deathsgrasp))
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/deathsgrasp)
+	// Avatar does not get Realm of Death, they keep Stampede instead
+	
+	// Grow to full Khan size
+	if(src.khan_scaled)
+		// Remove the initial 1.10 scale first
+		user.transform = user.transform.Translate(0, -(0.10 * 16))
+		user.transform = user.transform.Scale(1/1.10, 1/1.10)
+		// Apply the full Khan 1.25 scale
+		user.transform = user.transform.Scale(1.25, 1.25)
+		user.transform = user.transform.Translate(0, (0.25 * 16))
+		user.update_transform()
+	
+	// Start the countdown timer
+	addtimer(CALLBACK(src, PROC_REF(end_avatar_transformation), user), 99 SECONDS)
+
+// Proc to end the Avatar transformation and kill the avatar
+/datum/antagonist/khan_sahnuzal/avatar/proc/end_avatar_transformation(mob/living/carbon/human/user)
+	if(!user || user.stat == DEAD)
+		return
+	
+	if(!istype(user))
+		return
+	
+	avatar_active = FALSE
+	
+	// Remove the particle effect
+	user.particles = null
+	
+	// Kill the avatar
+	to_chat(user, span_userdanger("Your mortal form cannot contain such power any longer!"))
+	user.visible_message(span_danger("[user]'s body disintegrates as the Avatar's power consumes them!"))
+	
+	// Apply massive damage to ensure death
+	user.adjustBruteLoss(10000)
+	user.death()
 
 // Custom death sequence for the Khan
 /mob/living/carbon/human/proc/khan_death_sequence()

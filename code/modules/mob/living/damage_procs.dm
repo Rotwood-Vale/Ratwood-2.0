@@ -163,6 +163,8 @@
 
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
 		amount *= 0.1
+	else if(amount > 0 && HAS_TRAIT(src, TRAIT_AVATAR_SKIN))
+		amount *= 0.45
 
 	. = bruteloss
 	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -246,6 +248,8 @@
 
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
 		amount *= 0.1
+	else if(amount > 0 && HAS_TRAIT(src, TRAIT_AVATAR_SKIN))
+		amount *= 0.45
 
 	. = fireloss
 	fireloss = CLAMP((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -267,6 +271,8 @@
 
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_STEEL_SKIN))
 		amount *= 0.1
+	else if(amount > 0 && HAS_TRAIT(src, TRAIT_AVATAR_SKIN))
+		amount *= 0.45
 
 	. = cloneloss
 	cloneloss = CLAMP((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)

@@ -210,6 +210,7 @@
 #define TRAIT_TOXIMMUNE	"Poison Immune"
 #define TRAIT_GRABIMMUNE "Unstoppable"
 #define TRAIT_STEEL_SKIN "Steel Skin"
+#define TRAIT_AVATAR_SKIN "Avatar Skin"
 #define TRAIT_CONQUEROR_STEPS "Conqueror's Steps"
 #define TRAIT_TRUEUNSTOPPABLE "True Unstoppable"
 #define TRAIT_ROTMAN "Rotman"
