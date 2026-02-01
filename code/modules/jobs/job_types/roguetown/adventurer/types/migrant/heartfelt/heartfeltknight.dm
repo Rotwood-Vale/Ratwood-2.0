@@ -98,6 +98,7 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	belt = /obj/item/storage/belt/rogue/leather/steel
 	backr = /obj/item/storage/backpack/rogue/satchel/black
+	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/knight
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,

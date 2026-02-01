@@ -68,8 +68,10 @@
 			backl = /obj/item/rogueweapon/shield/iron
 		if("Halberd")
 			r_hand = /obj/item/rogueweapon/halberd
+			backl = /obj/item/rogueweapon/scabbard/gwstrap
 		if("Greataxe")
 			r_hand = /obj/item/rogueweapon/greataxe
+			backl = /obj/item/rogueweapon/scabbard/gwstrap
 		else
 			r_hand = /obj/item/rogueweapon/halberd
 	backpack_contents = list(
