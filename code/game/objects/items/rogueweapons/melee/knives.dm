@@ -178,6 +178,8 @@
 
 	return
 
+
+
 /obj/item/rogueweapon/huntingknife/copper
 	name = "copper knife"
 	desc = "A knife made of copper. Lacking in durability."
@@ -361,6 +363,34 @@
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 	randomize_blade_int_on_init = TRUE
+	picklvl = 0.7
+
+/* Wooden Daggers.
+*  Intents, followed by the weapon itself.
+*
+*/
+/datum/intent/dagger/thrust/wood
+	penfactor = 15 //it is still a pointy piece of wood!
+	blade_class = BCLASS_BLUNT
+	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
+
+/datum/intent/dagger/thrust/pick/wood
+	penfactor = 35 //it is still a pointy piece of wood!
+	blade_class = BCLASS_BLUNT
+	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
+
+/obj/item/rogueweapon/huntingknife/idagger/wood
+	name = "wooden dagger"
+	desc = "A wooden dagger. Good for training."
+	icon_state = "wdagger"
+	possible_item_intents = list(/datum/intent/dagger/thrust/wood, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/thrust/pick/wood)
+	force = 4 //half of a wielded wood sword's.
+	thrown_bclass = BCLASS_BLUNT
+	max_integrity = 90
+	smeltresult = /obj/item/ash //It's a wooden dagger. What did you expect to happen?
+	associated_skill = /datum/skill/combat/knives
+	anvilrepair = /datum/skill/craft/carpentry //Wood swords get this, too.
+	resistance_flags = FLAMMABLE //...It's made of wood.
 	picklvl = 0.7
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/padagger

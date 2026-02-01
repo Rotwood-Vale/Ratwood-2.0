@@ -88,6 +88,11 @@
 	cost = 40
 	contains = list(/obj/item/rogueweapon/sword/long)
 
+/datum/supply_pack/rogue/sellsword/krieg
+	name = "kriegmesser"
+	cost = 40
+	contains = list(/obj/item/rogueweapon/sword/long/kriegmesser)
+
 /datum/supply_pack/rogue/Sellsword/sflail
 	name = "Steel Flail"
 	cost = 20

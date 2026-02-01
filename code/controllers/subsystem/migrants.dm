@@ -544,8 +544,14 @@ SUBSYSTEM_DEF(migrants)
 			global_triumph_contributions[ckey] -= wave.type
 
 /datum/controller/subsystem/migrants/proc/update_ui()
+	var/countdown_text
+	if(!current_wave)
+		countdown_text = "The mist will clear out of the way in [time_until_next_wave / (1 SECONDS)] seconds..."
+	else
+		countdown_text = "They will arrive in [wave_timer / (1 SECONDS)] seconds..."
 	for(var/client/client as anything in get_all_migrants())
-		client.prefs.migrant.show_ui()
+		if(client?.mob)
+			client.mob << output(countdown_text, "migration.browser:update_migrant_countdown")
 
 /datum/controller/subsystem/migrants/proc/get_active_migrant_amount()
 	var/list/migrants = get_active_migrants()

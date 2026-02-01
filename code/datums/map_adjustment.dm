@@ -28,6 +28,8 @@
 	/// Jobs that have age adjustments /datum/job = list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
 	var/list/ages_adjust
 
+	var/list/threat_regions
+
 /// called on map config is loaded.
 /// You need to change things manually here.
 /datum/map_adjustment/proc/on_mapping_init()
