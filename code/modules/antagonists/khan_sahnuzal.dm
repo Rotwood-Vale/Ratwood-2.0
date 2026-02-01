@@ -184,6 +184,11 @@
                 if(spell)
                     for(var/mob/living/carbon/human/victim in M.mind.khan_chain_targets)
                         spell.break_chain(M, victim, "death")
+        // Remove Khan health bar from client screen
+        if(M.client)
+            for(var/obj/screen/khan_health/KH in M.client.screen)
+                M.client.screen -= KH
+                qdel(KH)
         // Revert giant transform if applied
         if(src && src.khan_scaled)
             if(M)
@@ -314,6 +319,11 @@
 		// Remove Avatar spells
 		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/avatar_ultimate)
 		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/stampede)
+		// Remove Khan health bar from client screen
+		if(M.client)
+			for(var/obj/screen/khan_health/KH in M.client.screen)
+				M.client.screen -= KH
+				qdel(KH)
 
 // Proc to activate the Avatar transformation
 /datum/antagonist/khan_sahnuzal/avatar/proc/activate_avatar(mob/living/carbon/human/user)

@@ -752,6 +752,15 @@
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_CARBON_CRAWLING, TRUE)
 
+// Screen object for Khan's health bar (client-side only)
+/obj/screen/khan_health
+	name = "Khan Health"
+	icon = null
+	icon_state = null
+	screen_loc = "CENTER:-16,SOUTH+1:16"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = SPLASHSCREEN_LAYER
+
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
 	// Khan uses a special damage system - handle it separately
@@ -766,21 +775,26 @@
 			// Calculate Khan's effective health
 			health = round(maxHealth - total_brute_damage, DAMAGE_PRECISION)
 			
-			// Visual HP display under Khan (only visible to him)
-			var/hp_percent = (health / maxHealth) * 100
-			var/hp_color = "#00ff00" // Green
-			if(hp_percent <= 25)
-				hp_color = "#ff0000" // Red
-			else if(hp_percent <= 50)
-				hp_color = "#ff8800" // Orange
-			else if(hp_percent <= 75)
-				hp_color = "#ffff00" // Yellow
-			
-			maptext = "<span style='font-size:8px;color:[hp_color];text-align:center;font-weight:bold;text-shadow: 1px 1px 2px black;'>[health]/[maxHealth]</span>"
-			maptext_x = -32
-			maptext_y = -10
-			maptext_width = 96
-			maptext_height = 32
+			// Visual HP display under Khan (only visible to them via client)
+			if(client)
+				var/hp_percent = (health / maxHealth) * 100
+				var/hp_color = "#00ff00" // Green
+				if(hp_percent <= 25)
+					hp_color = "#ff0000" // Red
+				else if(hp_percent <= 50)
+					hp_color = "#ff8800" // Orange
+				else if(hp_percent <= 75)
+					hp_color = "#ffff00" // Yellow
+				
+				// Create or update screen object for health bar
+				var/obj/screen/khan_health/KH = locate() in client.screen
+				if(!KH)
+					KH = new /obj/screen/khan_health()
+					KH.screen_loc = "CENTER:-16,SOUTH+1:16"
+					client.screen += KH
+				KH.maptext = "<span style='font-size:10px;color:[hp_color];text-align:center;font-weight:bold;text-shadow: 1px 1px 2px black;'>[health]/[maxHealth]</span>"
+				KH.maptext_width = 96
+				KH.maptext_height = 32
 			
 			// Update stat and check for death
 			update_stat()

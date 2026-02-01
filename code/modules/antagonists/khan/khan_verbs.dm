@@ -23,10 +23,3 @@
         message_admins("[src] has declared war upon the Vale.")
         log_game("[src] declared war upon the Vale.")
     return
-
-
-/mob/living/carbon/human/verb/decimate()
-    // Decimate is provided as a spell now; use the spellcasting UI.
-    to_chat(src, span_notice("Nightfall is now a spell. Open your spell panel to cast it."))
-    return
-
