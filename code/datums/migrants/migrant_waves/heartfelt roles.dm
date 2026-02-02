@@ -18,14 +18,18 @@
 	advclass_cat_rolls = list(CTAG_HFT_KNIGHT = 20)
 	allowed_races = RACES_NO_CONSTRUCT
 	grant_lit_torch = FALSE
-	show_wanderer_examine = FALSE
+	show_wanderer_examine = FALSE 
 	advjob_examine = FALSE
+	outfit = /datum/outfit/job/roguetown/heartfelt/cloak
+
+/datum/outfit/job/roguetown/heartfelt/cloak/pre_equip(mob/living/carbon/human/H)
+	cloak = /obj/item/clothing/cloak/tabard
 
 /datum/migrant_role/heartfelt/knight/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	..()
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(istype(H.cloak, /obj/item/clothing/cloak/tabard/knight/guard))
+		if(istype(H.cloak, /obj/item/clothing/cloak/tabard))
 			var/obj/item/clothing/S = H.cloak
 			var/index = findtext(H.real_name, " ")
 			if(index)
