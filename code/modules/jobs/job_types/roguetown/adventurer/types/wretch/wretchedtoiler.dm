@@ -66,7 +66,7 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 			H.mind.current.faction += "[H.name]_faction"
-	var/classes = list("MALICIOUS Mastermind","SNIVELLING Servant", "MALEVOLENT Munitioneer")
+	var/classes = list("MALICIOUS Mastermind","SNIVELLING Servant", "MALEVOLENT Malum Munitioneer")
 	var/classchoice = input("Choose your archetypes", "Available archetypes") as anything in classes
 	switch(classchoice)
 		if("MALICIOUS Mastermind")
