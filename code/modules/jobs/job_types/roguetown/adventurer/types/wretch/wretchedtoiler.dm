@@ -6,7 +6,6 @@
 	outfit = /datum/outfit/job/roguetown/wretch/wretchedtoiler
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_JACKOFALLTRADES,
-		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_SMITHING_EXPERT,
 		TRAIT_SEWING_EXPERT,
 		TRAIT_SURVIVAL_EXPERT,
@@ -125,8 +124,8 @@
 
 			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/engineering, SKILL_LEVEL_APPRENTICE, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/labor/mining, SKILL_LEVEL_APPRENTICE, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, SKILL_LEVEL_APPRENTICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/labor/mining, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/butchering, SKILL_LEVEL_APPRENTICE, TRUE)
 			//buffs. you better be snarling "GET THEM, MASTER!" while you cast these
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fortitude)
@@ -137,10 +136,11 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/haste)
 			//the fit. you ready to TOIL?
 			backl = /obj/item/storage/backpack/rogue/backpack
-			var/discipline = list("SERVANT! POTIONS!", "SERVANT! REPAIR!", "SERVANT! DEFENSES!", "SERVANT! KIIIIILL!")
+			var/discipline = list("SERVANT! POTIONS!", "SERVANT! REPAIR!", "SERVANT! DEFENSES!")
 			var/discipline_choice = input(H,"You still hear your old master's echoing commands...", "What did they yell out most?") as anything in discipline
 			switch(discipline_choice)
-				if("SERVANT! POTIONS!")
+				if("SERVANT! POTIONS!")		//enough alchemy skill to be able to pump out regular potions. Still would be better as the plague doc
+					H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_JOURNEYMAN)
 					backpack_contents += list(
 						/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
 						/obj/item/reagent_containers/glass/bottle/rogue/stampot = 2,
@@ -149,12 +149,15 @@
 						/obj/item/alch/hypericum = 2,
 						/obj/item/alch/urtica = 2,
 					)
-				if("SERVANT! REPAIR!")
+				if("SERVANT! REPAIR!")		//realized that we dont have repair kits so they get some general smithing skills. Would still be better as Munitioneer though
+					H.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, SKILL_LEVEL_JOURNEYMAN)
+					H.adjust_skillrank_up_to(/datum/skill/craft/armorsmithing, SKILL_LEVEL_JOURNEYMAN)
+					H.adjust_skillrank_up_to(/datum/skill/craft/weaponsmithing, SKILL_LEVEL_JOURNEYMAN)
 					ADD_TRAIT(H, TRAIT_SQUIRE_REPAIR, TRAIT_GENERIC)
 					backpack_contents += list(
 						/obj/item/rogueweapon/hammer/steel = 1,
-						/obj/item/repair_kit/metal = 1,
-						/obj/item/repair_kit = 1,
+						/obj/item/armor_brush = 1,
+						/obj/item/polishing_cream = 1,
 					)
 				if("SERVANT! DEFENSES!")
 					H.adjust_skillrank_up_to(/datum/skill/craft/traps, SKILL_LEVEL_EXPERT, TRUE)
@@ -166,17 +169,10 @@
 						/obj/item/recipe_book/builder = 1,
 						/obj/item/recipe_book/survival = 1,
 					)
-				if("SERVANT! KIIIIILL!")
-					backpack_contents += list(
-						/obj/item/rogueweapon/stoneaxe/hurlbat = 2,
-					)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick) //hilarious
-					H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_APPRENTICE, TRUE) //for the brick
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 			neck = /obj/item/clothing/neck/roguetown/gorget/cursed_collar //hey, relax. it's just an iron gorget that you can't take off and makes you look like someone's pet
 			armor = /obj/item/clothing/suit/roguetown/shirt/rags //toilmaxxing
 		
-		if("MALEVOLENT Munitioneer")
+		if("MALEVOLENT Malum Munitioneer")
 			to_chat(H, span_warning("You are a passable warrior- though weak- but your true strength lies in your ability to bend the resources of the Vale to your will."))
 			H.change_stat(STATKEY_WIL, -2) 
 			H.change_stat(STATKEY_CON, 1) 
@@ -197,7 +193,6 @@
 
 			H.equip_to_slot_or_del(new /obj/item/storage/backpack/rogue/satchel/beltpack, SLOT_RING, TRUE)
 
-			head = /obj/item/clothing/head/roguetown/roguehood/warden/munitioneer
 			mask = /obj/item/clothing/mask/rogue/facemask/steel/paalloy
 			neck = /obj/item/clothing/neck/roguetown/gorget
 			pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
@@ -211,7 +206,7 @@
 			shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 			wrists = /obj/item/clothing/neck/roguetown/psicross/malum
 			H.put_in_hands(new /obj/item/rogueweapon/stoneaxe/woodcut/pick) //I gave you the pickaxe with the devotion regen so I dont want to hear complaints about not being able to pick the crossbow
-			if(H.mind)
+			if(H.mind)		//Essentially an Evil Malummite.
 				H.mind?.current.faction += "[H.name]_faction"
 				H.set_patron(/datum/patron/divine/malum)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mineroresight)
