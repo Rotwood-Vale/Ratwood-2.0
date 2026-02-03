@@ -36,7 +36,7 @@
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/satchel
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
-	id = /obj/item/clothing/ring/silver
+	id = /obj/item/clothing/ring/gold
 	beltl = /obj/item/rogueweapon/sword/sabre/dec
 	l_hand = /obj/item/rogueweapon/scabbard/sword
 	if(should_wear_masc_clothes(H))
