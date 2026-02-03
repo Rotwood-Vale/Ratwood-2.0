@@ -15,7 +15,7 @@
 		TRAIT_ARCYNE_T2, //no major offensive spells, but some utility.
 	)
 	cmode_music = 'sound/music/combat_cult.ogg'
-	extra_context = "Mastermind, or Servant of the Masses? The choice is yours." //choose between master and servant
+	extra_context = "Mastermind, Servant of the Masses, or The Munitioneer of Evil? The choice is yours." //choose between master and servant
 	maximum_possible_slots = 1 // do we need TWO antag weapon factories?
 	subclass_stats = list(
 		STATKEY_INT = 3,
@@ -67,7 +67,7 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 			H.mind.current.faction += "[H.name]_faction"
-	var/classes = list("MALICIOUS Mastermind","SNIVELLING servant", "MALUM'S MUNITIONEER")
+	var/classes = list("MALICIOUS Mastermind","SNIVELLING Servant", "MALEVOLENT Munitioneer")
 	var/classchoice = input("Choose your archetypes", "Available archetypes") as anything in classes
 	switch(classchoice)
 		if("MALICIOUS Mastermind")
@@ -90,6 +90,7 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mindlink)
 			//Giving them proper villain clothes
 			mask = /obj/item/clothing/mask/rogue/eyepatch // Chuunibyou up to 11.
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
 			head = /obj/item/clothing/head/roguetown/roguehood/shroudscarlet
 			shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
 			pants = /obj/item/clothing/under/roguetown/splintlegs/iron
@@ -106,13 +107,8 @@
 				if(/datum/patron/inhumen/zizo)
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/eyebite)
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill) //Because the Zizo T1 is utter dogshit
-					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy, SLOT_RING, TRUE)
-				if(/datum/patron/inhumen/matthios)
-					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios, SLOT_RING, TRUE)
 				if(/datum/patron/inhumen/baotha)
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/griefflower)
-				if(/datum/patron/inhumen/graggar) //MINIONS, ATTACK!!!
-					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar, SLOT_RING, TRUE)
 			H.mind.adjust_spellpoints(3) //just enough for maybe one or two offensive spells or extra utility
 
 		if("SNIVELLING servant") //Extra homesteader support buffs. They can spawn with a surplus of healing or tools.
@@ -177,12 +173,11 @@
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick) //hilarious
 					H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_APPRENTICE, TRUE) //for the brick
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-
 			neck = /obj/item/clothing/neck/roguetown/gorget/cursed_collar //hey, relax. it's just an iron gorget that you can't take off and makes you look like someone's pet
 			armor = /obj/item/clothing/suit/roguetown/shirt/rags //toilmaxxing
 		
-		if("MALUM'S MUNITIONEER")
-			to_chat(H, span_warning("You are a passable warrior- though weak- but your true strength lies in your ability to bend the resources of Azuria to your will."))
+		if("MALEVOLENT Munitioneer")
+			to_chat(H, span_warning("You are a passable warrior- though weak- but your true strength lies in your ability to bend the resources of the Vale to your will."))
 			H.change_stat(STATKEY_WIL, -2) 
 			H.change_stat(STATKEY_CON, 1) 
 			H.change_stat(STATKEY_STR, 2)
