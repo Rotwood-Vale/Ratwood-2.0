@@ -328,6 +328,7 @@
 		if(!(HU in SStreasury.bank_accounts)) //first off- do we not have an account? we'll ALWAYS scream if that's the case
 			playsound(loc, 'sound/misc/gold_license.ogg', 100, TRUE, -1)
 			say("UNKNOWN PERSON IN SECURE AREA- ARRETZ-VOUZ!!")
+			loud_message("The [src] shrieks, sounding an alarm", hearing_distance = 12)
 			next_yap = world.time + 6 SECONDS
 			return
 
@@ -345,11 +346,13 @@
 		else //?????
 			playsound(loc, 'sound/misc/gold_license.ogg', 100, TRUE, -1)
 			say("UNAUTHORIZED PERSON IN SECURE AREA- ARRETZ-VOUZ!!")
+			loud_message("The [src] shrieks, sounding an alarm", hearing_distance = 12)
 			next_yap = world.time + 6 SECONDS
 
 	else
 		playsound(loc, 'sound/misc/gold_license.ogg', 100, TRUE, -1)
 		say("UNKNOWN CREATURE IN SECURE AREA- ARRETZ-VOUS!!")
+		loud_message("The [src] shrieks, sounding an alarm", hearing_distance = 12)
 		next_yap = world.time + 6 SECONDS
 
 /obj/structure/fluff/walldeco/vinez // overlay vines for more flexibile mapping

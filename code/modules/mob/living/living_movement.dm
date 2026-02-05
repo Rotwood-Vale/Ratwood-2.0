@@ -16,7 +16,9 @@
 		unpixel_shift()
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
-	if((mover?.pass_flags & PASSMOB))
+	if(!mover)
+		return ..()
+	if((mover.pass_flags & PASSMOB))
 		return TRUE
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
