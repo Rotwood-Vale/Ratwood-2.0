@@ -57,7 +57,7 @@
 	main_dat += "<div style='text-align: center; margin-bottom: 15px;'>Wandering fools: [current_migrants ? "\Roman[current_migrants]" : "None"]</div>"
 
 	if(!SSmigrants.current_wave)
-		main_dat += "<div style='text-align: center; margin-bottom: 15px;'>The mist will clear out of the way in [(SSmigrants.time_until_next_wave / (1 SECONDS))] seconds...</div>"
+		main_dat += "<div style='text-align: center; margin-bottom: 15px;' id='migrant_countdown'>The mist will clear out of the way in [(SSmigrants.time_until_next_wave / (1 SECONDS))] seconds...</div>"
 	else
 		var/datum/migrant_wave/wave = MIGRANT_WAVE(SSmigrants.current_wave)
 		main_dat += "<div style='text-align: center; font-weight: bold; margin-bottom: 10px;'>[wave.name]</div>"
@@ -87,7 +87,7 @@
 				triumph_bonus_string = " <span style='color: gold;'>(+[triumph_bonus])</span>"
 
 			main_dat += "<div style='text-align: center; margin: 5px 0;'><a href='byond://?src=[REF(src)];task=toggle_role_preference;role=[role_type]'>[role_name]</a> - \Roman[role_amount] [stars_string][triumph_bonus_string]</div>"
-		main_dat += "<div style='text-align: center; margin-top: 15px;'>They will arrive in [(SSmigrants.wave_timer / (1 SECONDS))] seconds...</div>"
+		main_dat += "<div style='text-align: center; margin-top: 15px;' id='migrant_countdown'>They will arrive in [(SSmigrants.wave_timer / (1 SECONDS))] seconds...</div>"
 
 	main_dat += "</div>"
 
@@ -220,6 +220,11 @@
 		</div>
 	</div>
 	<script>
+		function update_migrant_countdown(text) {
+			var el = document.getElementById("migrant_countdown");
+			if (el) el.innerHTML = text;
+		}
+
 		// Cookie functions
 		function setCookie(name, value, days) {
 			var expires = "";

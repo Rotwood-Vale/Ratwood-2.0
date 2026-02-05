@@ -67,13 +67,13 @@
 	H.grant_language(/datum/language/grenzelhoftian)
 
 /datum/migrant_role/grenzel/bodyguard
-	name = "Leibwachter"
+	name = "Leibwächter"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_GRENZEL_GUARD = 20)
 
 /datum/advclass/grenzel_guard
-	name = "Leibwachter"
+	name = "Leibwächter"
 	tutorial = "You are a dilligent soldier in employ of the Envoy for protection and to assure that their mission goes as planned."
 	outfit = /datum/outfit/job/roguetown/grenzel/doppel
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)

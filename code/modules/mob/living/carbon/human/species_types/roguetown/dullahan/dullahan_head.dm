@@ -1,6 +1,28 @@
 /obj/item/bodypart/head/dullahan
 	attach_wound = null
 	var/list/head_items = list()
+	/// List of traits to ADD when the head is taken off. Traits given by this have the tag "dullahan"
+	var/list/traits_to_add = list(
+		TRAIT_CRITICAL_WEAKNESS, // Easy crits.
+		TRAIT_SPELLCOCKBLOCK, // No spell casting.
+		TRAIT_NORUN, // No running
+		TRAIT_EASYDISMEMBER, // They already get EASY DECAP, this is different.
+	)
+	/// Set of traits to REMOVE when the head is taken off. Assumed that traits removed are TRAIT_GENERIC.
+	var/list/traits_to_remove = list( // Keep this list up to date with traits that are unbalanced for Revenants to have.
+		TRAIT_DODGEEXPERT,
+		TRAIT_CRITICAL_RESISTANCE,
+		TRAIT_HARDDISMEMBER,
+		TRAIT_NOPAIN,
+		TRAIT_NOPAINSTUN,
+		TRAIT_HEAVYARMOR,
+		TRAIT_MEDIUMARMOR,
+		TRAIT_BREADY,
+		TRAIT_ZJUMP,
+		TRAIT_SENTINELOFWITS,
+	)
+	/// Stored traits removed by traits_to_remove
+	var/list/traits_removed = list()
 
 /obj/item/bodypart/head/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	. = ..()
@@ -204,7 +226,28 @@
 		if(worn_item)
 			user_dullahan.equip_to_slot(worn_item, text2num(item_slot))
 	head_items = list()
+	on_head_attached(user)
 	return ..()
+
+/obj/item/bodypart/head/dullahan/proc/on_head_detached(mob/living/carbon/human/user)
+	to_chat(user, span_bad("I feel my strength wane as my head is removed from my body."))
+	for(var/trait_to_add in traits_to_add)
+		ADD_TRAIT(user, trait_to_add, "dullahan")
+	for(var/trait_to_remove in traits_to_remove)
+		if(HAS_TRAIT(user, trait_to_remove))
+			REMOVE_TRAIT(user, trait_to_remove, TRAIT_GENERIC)
+			traits_removed += trait_to_remove
+
+/obj/item/bodypart/head/dullahan/proc/on_head_attached(mob/living/carbon/human/user)
+	to_chat(user, span_good("I feel my strength return as my head sits upon my body once more."))
+	for(var/trait_to_remove in traits_to_add) // I know, awful naming but! We're removing the traits we added.
+		if(HAS_TRAIT(user, trait_to_remove))
+			REMOVE_TRAIT(user, trait_to_remove, "dullahan")
+	for(var/trait_to_add in traits_removed)
+		ADD_TRAIT(user, trait_to_add, TRAIT_GENERIC)
+	traits_removed = list()
+	user.remove_client_colour(/datum/client_colour/monochrome/blind/dullahan)
+	user.clear_fullscreen("dullahan_body_vision")
 
 /obj/item/bodypart/head/dullahan/proc/insert_worn_items()
 	// Sorry. Roguetown hardcodes variables and I don't want to do that.
@@ -264,7 +307,7 @@
 		grabbedby.Cut()
 	if(!special)
 		insert_worn_items()
-
+	on_head_detached(user)
 	. = ..()
 
 /obj/item/bodypart/head/dullahan/update_icon_dropped()
@@ -290,6 +333,16 @@
 			hidden_slots |= head_item.transparent_protection
 		var/mutable_appearance/head_overlay = head_item.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi')
 		. += head_overlay
+	for(var/obj/item/organ/organ as anything in contents) // Applies organ features to head.
+		if(!isorgan(organ))
+			continue
+		if(!organ.is_visible())
+			continue
+		if(!(organ.slot in ORGAN_SLOTS_HEAD_ORGANS))
+			continue
+		var/mutable_appearance/organ_appearance = organ.get_bodypart_overlay(src)
+		if(organ_appearance)
+			. += organ_appearance
 
 	var/obj/item/wear_mask = head_items["[SLOT_WEAR_MASK]"]
 	if(wear_mask)
