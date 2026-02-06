@@ -716,7 +716,7 @@
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	chargetime = 0
 	swingdelay = 0
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	intent_intdamage_factor = 1.4//20% more than standard. Old integrity damage.
 	penfactor = MAUL_DEFAULT_PENFACTOR//You're getting FULL armour damage with this.
 	clickcd = CLICK_CD_HEAVY//Take a guess.
 	icon_state = "instrike"
@@ -731,7 +731,7 @@
 	attack_verb = list("crushes")
 	chargetime = 5
 	damfactor = 1.7
-	intent_intdamage_factor = 1.5//10% more than standard.
+	intent_intdamage_factor = 1.5//30% more than standard.
 	//We want chipping, m'lord.
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_ABSURD
