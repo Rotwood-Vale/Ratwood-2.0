@@ -752,12 +752,18 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(get_user_evilness(current) > 0)
 		possible_trees += /datum/talent_tree/necromancy
 
+	var/total_spent = 0
 	for(var/tree_type in possible_trees)
 		if(!talent_trees[tree_type])
 			talent_trees[tree_type] = new tree_type
 		var/datum/talent_tree/spell_tree = talent_trees[tree_type]
-		spell_tree.talent_points_available = spell_points - used_spell_points
-		spell_tree.talent_points_spent = used_spell_points
+		total_spent += spell_tree.talent_points_spent
+
+	used_spell_points = total_spent
+
+	for(var/tree_type in possible_trees)
+		var/datum/talent_tree/spell_tree = talent_trees[tree_type]
+		spell_tree.talent_points_available = spell_points - total_spent
 
 	if(!has_spell(/obj/effect/proc_holder/spell/self/talent_trees/learnspell)) //are we missing the learning spell?
 		if((spell_points - used_spell_points) > 0) //do we have points?

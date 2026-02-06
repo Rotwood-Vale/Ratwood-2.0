@@ -37,13 +37,17 @@
 					H.mind.talent_trees[tree_type] = new tree_type
 
 			var/total_spent = 0
-			for(var/t_type in H.mind.talent_trees)
-				var/datum/talent_tree/tree = H.mind.talent_trees[t_type]
-				total_spent += tree.talent_points_spent
+			for(var/tree_type in possible_trees)
+				var/datum/talent_tree/tree = H.mind.talent_trees[tree_type]
+				if(tree)
+					total_spent += tree.talent_points_spent
 
-			for(var/t_type in H.mind.talent_trees)
-				var/datum/talent_tree/tree = H.mind.talent_trees[t_type]
-				tree.talent_points_available = H.mind.spell_points - total_spent
+			H.mind.used_spell_points = total_spent
+
+			for(var/tree_type in possible_trees)
+				var/datum/talent_tree/tree = H.mind.talent_trees[tree_type]
+				if(tree)
+					tree.talent_points_available = H.mind.spell_points - total_spent
 	open_talent_interface(owner)
 
 /obj/effect/proc_holder/spell/self/talent_trees/proc/open_talent_interface(mob/user)
@@ -74,10 +78,15 @@
 		if(!target_tree)
 			return
 
+		var/list/possible_trees = list(/datum/talent_tree/arcane)
+		if(get_user_evilness(H) > 0)
+			possible_trees += /datum/talent_tree/necromancy
+
 		var/total_spent = 0
-		for(var/t_type in H.mind.talent_trees)
-			var/datum/talent_tree/tree = H.mind.talent_trees[t_type]
-			total_spent += tree.talent_points_spent
+		for(var/tree_type_iter in possible_trees)
+			var/datum/talent_tree/tree = H.mind.talent_trees[tree_type_iter]
+			if(tree)
+				total_spent += tree.talent_points_spent
 
 		target_tree.talent_points_available = H.mind.spell_points - total_spent
 
@@ -85,16 +94,17 @@
 
 		if(success && owner == usr)
 			total_spent = 0
-			for(var/t_type in H.mind.talent_trees)
-				var/datum/talent_tree/tree = H.mind.talent_trees[t_type]
-				total_spent += tree.talent_points_spent
+			for(var/tree_type_iter in possible_trees)
+				var/datum/talent_tree/tree = H.mind.talent_trees[tree_type_iter]
+				if(tree)
+					total_spent += tree.talent_points_spent
 
 			H.mind.used_spell_points = total_spent
 
-			for(var/t_type in H.mind.talent_trees)
-				var/datum/talent_tree/tree = H.mind.talent_trees[t_type]
-				tree.talent_points_available = H.mind.spell_points - total_spent
-				tree.talent_points_spent = tree.talent_points_spent
+			for(var/tree_type_iter in possible_trees)
+				var/datum/talent_tree/tree = H.mind.talent_trees[tree_type_iter]
+				if(tree)
+					tree.talent_points_available = H.mind.spell_points - total_spent
 
 			if(!H.mind.has_spell(/obj/effect/proc_holder/spell/self/talent_trees/learnspell))
 				if((H.mind.spell_points - H.mind.used_spell_points) > 0)
