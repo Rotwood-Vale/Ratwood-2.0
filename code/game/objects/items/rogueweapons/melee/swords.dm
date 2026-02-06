@@ -707,7 +707,6 @@
 	swingdelay = 4	//Slight delay to stab; big and heavy.
 	penfactor = BLUNT_DEFAULT_PENFACTOR //Flat tip? I don't know, man. This intent won't penetrate anything but it damages armor more.
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-	//We want chipping, m'lord.
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_MINUSCULE
 

@@ -175,7 +175,6 @@
 
 /datum/intent/spear/bash/ranged/quarterstaff
 	damfactor = 1
-	//We want chipping, m'lord.
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_WEAK//Use this instead of thrust for chip damage.
 
@@ -185,7 +184,6 @@
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	damfactor = 1.3 // Adds up to be slightly stronger than an unenhanced ebeak strike.
 	clickcd = CLICK_CD_CHARGED
-	//We want chipping, m'lord.
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_MINUSCULE//See above.
 
