@@ -8,12 +8,29 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hungryt1
 	effectedstats = list(STATKEY_CON = -1)
 	duration = 100
-	needs_processing = FALSE
+	var/healing_on_tick = 0.1
+	var/nutrition_drain_per_tick = 0.3
 
 /atom/movable/screen/alert/status_effect/debuff/hungryt1
 	name = "Hungry"
-	desc = "Hunger weakens this living body."
+	desc = "Hunger weakens this living body, but it still heals slowly."
 	icon_state = "hunger1"
+
+/datum/status_effect/debuff/hungryt1/tick()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	
+	// Check if we still have wounds to heal
+	var/list/wounds = C.get_wounds()
+	if(wounds.len > 0)
+		// Heal wounds at reduced rate
+		C.heal_wounds(healing_on_tick)
+		C.update_damage_overlays()
+		
+		// Drain nutrition as cost of healing
+		if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
+			C.adjust_nutrition(-nutrition_drain_per_tick)
 
 /datum/status_effect/debuff/hungryt2
 	id = "hungryt2"
@@ -44,12 +61,29 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/thirstyt1
 	effectedstats = list(STATKEY_WIL = -1)
 	duration = 100
-	needs_processing = FALSE
+	var/healing_on_tick = 0.1
+	var/hydration_drain_per_tick = 0.3
 
 /atom/movable/screen/alert/status_effect/debuff/thirstyt1
 	name = "Thirsty"
-	desc = "I need water."
+	desc = "I need water, but my body still heals slowly."
 	icon_state = "thirst1"
+
+/datum/status_effect/debuff/thirstyt1/tick()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	
+	// Check if we still have wounds to heal
+	var/list/wounds = C.get_wounds()
+	if(wounds.len > 0)
+		// Heal wounds at reduced rate
+		C.heal_wounds(healing_on_tick)
+		C.update_damage_overlays()
+		
+		// Drain hydration as cost of healing
+		if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
+			C.adjust_hydration(-hydration_drain_per_tick)
 
 /datum/status_effect/debuff/thirstyt2
 	id = "thirsty2"
