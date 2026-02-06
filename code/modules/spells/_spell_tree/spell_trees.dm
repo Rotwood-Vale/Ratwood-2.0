@@ -125,9 +125,9 @@
 	desc = "Master the flames. Further reduces fire spell energy cost and increases fire spell damage."
 	icon_state = "spell_default"
 	talent_cost = 5
-	node_x = -500
-	node_y = -100
-	prerequisites = list(/datum/talent_node/arcane/fire_fundamentals)
+	node_x = -600
+	node_y = -150
+	prerequisites = list(/datum/talent_node/arcane/fireball)
 	is_passive = TRUE
 	special = TRUE
 
@@ -141,16 +141,16 @@
 
 /datum/talent_node/arcane/fireball
 	talent_cost = 7
-	node_x = -600
-	node_y = -150
-	prerequisites = list(/datum/talent_node/arcane/fire_advanced)
+	node_x = -500
+	node_y = -100
+	prerequisites = list(/datum/talent_node/arcane/fire_fundamentals)
 	spell_type = /obj/effect/proc_holder/spell/invoked/projectile/fireball
 
 /datum/talent_node/arcane/greater_fireball
 	talent_cost = 10
 	node_x = -700
 	node_y = -200
-	prerequisites = list(/datum/talent_node/arcane/fireball)
+	prerequisites = list(/datum/talent_node/arcane/fire_advanced)
 	spell_type = /obj/effect/proc_holder/spell/invoked/projectile/fireball/greater
 
 /datum/talent_node/arcane/meteor_storm
@@ -191,9 +191,9 @@
 	desc = "Master the frost. Further reduces ice spell energy cost and increases ice spell damage."
 	icon_state = "spell_default"
 	talent_cost = 5
-	node_x = -500
-	node_y = 100
-	prerequisites = list(/datum/talent_node/arcane/ice_fundamentals)
+	node_x = -600
+	node_y = 150
+	prerequisites = list(/datum/talent_node/arcane/snap_freeze)
 	is_passive = TRUE
 	special = TRUE
 
@@ -206,10 +206,10 @@
 			to_chat(user, span_notice("Ice answers to you alone."))
 
 /datum/talent_node/arcane/snap_freeze
-	talent_cost = 8
-	node_x = -600
-	node_y = 150
-	prerequisites = list(/datum/talent_node/arcane/ice_advanced)
+	talent_cost = 6
+	node_x = -500
+	node_y = 100
+	prerequisites = list(/datum/talent_node/arcane/ice_fundamentals)
 	spell_type = /obj/effect/proc_holder/spell/invoked/snap_freeze
 
 /datum/talent_node/arcane/lightning_fundamentals
@@ -258,7 +258,7 @@
 			to_chat(user, span_notice("The fury of storms courses through you."))
 
 /datum/talent_node/arcane/thunderstrike
-	talent_cost = 8
+	talent_cost = 7
 	node_x = -100
 	node_y = -600
 	prerequisites = list(/datum/talent_node/arcane/lightning_advanced)
