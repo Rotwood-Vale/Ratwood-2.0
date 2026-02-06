@@ -27,6 +27,8 @@ GLOBAL_LIST_EMPTY_TYPED(schizohelps, /datum/schizohelp)
 		var/answer_button = span_info("(<a href='?src=[admin];schizohelp=[REF(ticket)];'>ANSWER</a>)")
 		to_chat(admin, "[message_admins] [answer_button]")
 	COOLDOWN_START(src, schizohelp_cooldown, 1 MINUTES)
+	// Comes out as... GAME: MENTOR HELP: GreedyPelican42/(Lord Featherton the Great) asked : How do I fly?
+	log_game("MENTOR HELP: [key_name(src)] asked : [msg]")
 
 /mob/proc/get_schizo_name()
 	var/static/list/possible_adjectives = list(
@@ -105,7 +107,8 @@ GLOBAL_LIST_EMPTY_TYPED(schizohelps, /datum/schizohelp)
 			if(!(listener.prefs.toggles & SCHIZO_VOICE))
 				continue
 			to_chat(listener, span_info("Someone answers:<i>[answer]</i>"))
-
+	// Comes out to GAME: MENTOR HELP: GilbertRobert1337/(Generic Bandito) answered CluelessSherlock01/(Greatest Detective)'s medition : You can look for footsteps by right clicking the eyeball HUD.
+	log_game("MENTOR HELP: [key_name(voice)] answered [key_name(owner)]'s meditation : [answer]")
 	answers[voice.key] = answer
 	if(length(answers) >= max_answers)
 		qdel(src)

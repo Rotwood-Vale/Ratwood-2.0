@@ -12261,7 +12261,6 @@
 /area/rogue/outdoors/bograt/above)
 "dJP" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp{
-	despawn_on_idle = 0;
 	faction = list("infernal","neutral")
 	},
 /turf/open/floor/rogue/volcanic{

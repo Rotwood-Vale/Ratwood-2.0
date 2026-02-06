@@ -301,6 +301,7 @@
 			else
 				target.mind.current.faction += faction_tag
 				user.say("Amicus declaratus es.")
+				target.notify_faction_change()
 		else if(istype(target, /mob/living/simple_animal))
 			if (faction_tag in target.faction)
 				target.faction -= faction_tag
@@ -308,6 +309,7 @@
 			else
 				target.faction |= faction_tag
 				user.say("Amicus declaratus es.")
+				target.notify_faction_change()
 		return TRUE
 	return FALSE
 

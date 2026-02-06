@@ -96,11 +96,15 @@
 				if(M.mind.language_holder)
 					var/finn
 					for(var/X in M.mind.language_holder.languages)
+						if(!X || !ispath(X, /datum/language))
+							continue
 						var/datum/language/LA = new X()
 						finn = TRUE
 						to_chat(M, "<span class='info'>[LA.name] - ,[LA.key]</span>")
 					if(!finn)
 						to_chat(M, "<span class='warning'>I don't know any languages.</span>")
+					else // open_language_menu
+						to_chat(M, "<a href='?src=[REF(M)];task=open_language_menu;'>Language Menu</a>")
 					to_chat(M, "*----*")
 		for(var/X in GLOB.roguetraits)
 			if(HAS_TRAIT(L, X))
@@ -913,7 +917,7 @@
 			var/obj/item/flipper = usr.get_active_held_item()
 			if(!flipper)
 				return
-			if((!usr.Adjacent(flipper) && !usr.DirectAccess(flipper)) || !isliving(usr) || usr.incapacitated())
+			if((!usr.Adjacent(flipper) && !usr.IsDirectlyAccessible(flipper)) || !isliving(usr) || usr.incapacitated())
 				return
 			var/old_width = flipper.grid_width
 			var/old_height = flipper.grid_height

@@ -315,13 +315,8 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		var/turf/target = get_step_multiz(src, DOWN)
 		if(target)
 			testing("canztrav")
-	//		if(can_zFall(P, 2, target))
-	//			testing("canztrue")
-	//			P.zfalling = TRUE
 			P.forceMove(target)
-	//			P.zfalling = FALSE
 			P.original = target
 			P.process_hit(target, P.select_target(target))
-			//bump
 			return BULLET_ACT_TURF
 	return ..()
