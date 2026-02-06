@@ -106,7 +106,8 @@
 		for(var/stashed_item in subclass_stashed_items)
 			H.mind?.special_items[stashed_item] = subclass_stashed_items[stashed_item]
 	if(subclass_spellpoints > 0)
-		H.mind?.adjust_spellpoints(subclass_spellpoints)
+		var/spellpoints = subclass_spellpoints + (GLOB.nightspassed - 1)
+		H.mind?.adjust_spellpoints(spellpoints)
 
 	if(subclass_social_rank)
 		H.social_rank = subclass_social_rank

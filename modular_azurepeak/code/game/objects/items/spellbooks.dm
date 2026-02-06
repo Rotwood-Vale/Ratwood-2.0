@@ -20,7 +20,7 @@
 	var/born_of_rock = FALSE
 	var/owner = null
 	var/list/allowed_readers = list()
-	var/bookquality = 3
+	var/bookquality = 1
 	var/pages_to_mastery = 7
 	var/used = FALSE
 	var/list/remarks = list("Recall that place of white and black, so cold after its season of heat...",
@@ -154,7 +154,10 @@
 			qualityoflearn *= 0.5
 			qualityoflearn = min(qualityoflearn, 15)
 	if (born_of_rock)
-		qualityoflearn *= 1.2
+		if(iskobold(user))
+			qualityoflearn *= 1.5
+		else
+			qualityoflearn *= 1.2
 	if(iskobold(user) && !born_of_rock)
 		qualityoflearn *= 0.1
 	user.visible_message(span_warning("[user] is filled with arcyne energy! You witness [user.p_their()] body convulse and spark brightly."), \
@@ -210,6 +213,7 @@
 		var/mob/living/carbon/human/gamer = user
 		if(gamer.job == "Court Magician")
 			designlist = list("steel", "gem", "skin", "mimic")
+			bookquality = max(3, bookquality)
 		var/the_time = world.time
 		var/design = input(user, "Select a design.","Spellbook Design") as null|anything in designlist
 		if(!design)
@@ -313,6 +317,7 @@
 					var/obj/item/book/spellbook/newbook = new /obj/item/book/spellbook(loc)
 					newbook.owner = user
 					newbook.desc += " Traces of [P] dust linger in its margins."
+					newbook.bookquality = max(2, min(5, floor(P.sellprice / 30)))
 					qdel(P)
 					qdel(src)
 				else
@@ -323,6 +328,7 @@
 						var/obj/item/book/spellbook/newbook = new /obj/item/book/spellbook(loc)
 						newbook.owner = user
 						newbook.desc += " Traces of [P] dust linger in its margins."
+						newbook.bookquality = max(2, min(5, floor(P.sellprice / 30)))
 						qdel(P)
 						qdel(src)
 					else
@@ -347,6 +353,7 @@
 						var/obj/item/book/spellbook/newbook = new /obj/item/book/spellbook(loc)
 						newbook.owner = user
 						newbook.born_of_rock = TRUE
+						newbook.bookquality = max(1, floor(the_rock.magic_power / 3))
 						newbook.desc += " Traces of multicolored stone limn its margins."
 						qdel(P)
 						qdel(src)
@@ -359,6 +366,7 @@
 							var/obj/item/book/spellbook/newbook = new /obj/item/book/spellbook(loc)
 							newbook.owner = user
 							newbook.born_of_rock = TRUE
+							newbook.bookquality = max(1, floor(the_rock.magic_power / 3))
 							newbook.desc += " Traces of multicolored stone limn its margins."
 							qdel(P)
 							qdel(src)

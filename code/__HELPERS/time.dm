@@ -28,6 +28,7 @@ GLOBAL_VAR_INIT(tod, FALSE)
 GLOBAL_VAR_INIT(forecast, FALSE)
 GLOBAL_VAR_INIT(todoverride, FALSE)
 GLOBAL_VAR_INIT(dayspassed, FALSE)
+GLOBAL_VAR_INIT(nightspassed, FALSE)
 
 /proc/settod()
 	var/time = station_time()
@@ -81,6 +82,7 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 	if(GLOB.tod != oldtod)
 		if(GLOB.tod == "dawn")
 			GLOB.dayspassed++
+			GLOB.nightspassed++
 			if(GLOB.dayspassed == 8)
 				GLOB.dayspassed = 1
 			SStreasury.distribute_estate_incomes()
