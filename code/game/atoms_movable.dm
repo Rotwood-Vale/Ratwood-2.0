@@ -762,12 +762,15 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = GLOB.pixel_diff_time, easing=LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = GLOB.pixel_diff_time * 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
-/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent, simplified = FALSE)
+/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent = null, simplified = FALSE)
 	if(used_item || !simplified)
 		var/animation_type = item_animation_override || used_intent?.get_attack_animation_type()
 		if(used_intent?.swingdelay)
-			draw_swingdelay(A, used_intent.custom_swingdelay, used_intent.swingdelay)
-			addtimer(CALLBACK(src, PROC_REF(do_item_attack_animation), A, visual_effect_icon, used_item, animation_type), used_intent.swingdelay)
+			if(isliving(src))
+				var/mob/living/L = src
+				if(L.mind)
+					draw_swingdelay(A, used_intent.custom_swingdelay, used_intent.swingdelay)
+					addtimer(CALLBACK(src, PROC_REF(do_item_attack_animation), A, visual_effect_icon, used_item, animation_type), used_intent.swingdelay)
 		else
 			do_item_attack_animation(A, visual_effect_icon, used_item, animation_type = animation_type)
 			return
@@ -775,14 +778,11 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, animation_type = ATTACK_ANIMATION_SWIPE)
-	if(used_item)
-		if(used_item.no_effect)
-			return
+	if(QDELETED(src) || QDELETED(A) || QDELETED(used_item))
+		return
 	if(!visual_effect_icon)
 		return
 	if(A == src)
-		return
-	if (isnull(used_item))
 		return
 	var/dist = get_dist(src, A)
 	if(dist <= 1)
@@ -1073,12 +1073,12 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 	var/highest_priority
 
 	for(var/datum/language/langtype as anything in H.languages)
-		if(!can_speak_in_language(langtype))
+		if(!can_speak_in_language(langtype.type))
 			continue
 
 		var/pri = initial(langtype.default_priority)
 		if(!highest_priority || (pri > highest_priority))
-			chosen_langtype = langtype
+			chosen_langtype = langtype.type
 			highest_priority = pri
 
 	H.selected_default_language = .

@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 		if(ckeywhitelist)
 			donoritem = TRUE
 	if (triumph_cost)
-		desc += "<b>Costs [triumph_cost] Points.</b>"
+		desc += "Costs [triumph_cost] Points."
 
 /datum/loadout_item/proc/donator_ckey_check(key)
 	if(ckeywhitelist && ckeywhitelist.Find(key))

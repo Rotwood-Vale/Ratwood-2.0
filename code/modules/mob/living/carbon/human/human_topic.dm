@@ -8,6 +8,12 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		to_chat(usr, span_notice("Usable blood that yields Vitae and total blood is not the same thing. It takes some time for blood to become nourishing for us."))
 		return
 
+	if(href_list["task"] == "open_language_menu")
+		if(!ismob(usr))
+			return
+		var/datum/language_holder/H = get_language_holder()
+		H.open_language_menu(usr)
+
 	if(href_list["task"] == "view_headshot")
 		if(!ismob(usr))
 			return

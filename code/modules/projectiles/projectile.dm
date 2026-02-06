@@ -155,7 +155,7 @@
 			if(T)
 				if(T.density || has_dense_content(T))
 					T = get_nearest_open_turf(T, 3)
-
+				
 				if(T)
 					trajectory_ignore_forcemove = TRUE
 					forceMove(T)
@@ -221,8 +221,8 @@
 
 	var/mob/living/L = target
 
-	if (!L.mind && istype(L, /mob/living/simple_animal))
-		damage *= npc_simple_damage_mult // bonus damage against simple animals.
+	if(!L.mind)
+		damage *= npc_simple_damage_mult // bonus damage against NPCs.
 	if(blocked != 100) // not completely blocked
 		if(damage && L.blood_volume && damage_type == BRUTE)
 			var/splatter_dir = dir
@@ -231,7 +231,6 @@
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
 			if(prob(33))
 				L.add_splatter_floor(target_loca)
-				L.add_splatter_wall(target_loca, force = damage, spill_amount = 2) //Projectiles hurt and spray blood everywhere behind and around of course.
 
 	if(impact_effect_type && !hitscan)
 		new impact_effect_type(target_loca, hitx, hity)
@@ -553,11 +552,11 @@
 		else if(T != loc)
 			step_towards(src, T)
 			hitscan_last = loc
-
+		
 		if(arcshot && starting && target_z && z > target_z)
 			var/tx = starting.x + xo
 			var/ty = starting.y + yo
-
+			
 			if(get_dist(loc, locate(tx, ty, z)) == 0)
 				var/turf/below = locate(x, y, target_z)
 				if(below)
@@ -578,7 +577,7 @@
 		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = 1, flags = ANIMATION_END_NOW)
 	Range()
 
-/obj/projectile/proc/process_homing()			//may need speeding up in the future performance wise.
+/obj/projectile/proc/process_homing()		//may need speeding up in the future performance wise.
 	if(!homing_target)
 		return FALSE
 	var/datum/point/PT = RETURN_PRECISE_POINT(homing_target)

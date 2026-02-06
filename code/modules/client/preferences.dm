@@ -211,6 +211,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/list/exp = list()
 	var/list/menuoptions
 
+	var/datum/loadout_menu/loadout_menu
+
 	var/datum/migrant_pref/migrant
 	var/next_special_trait = null
 

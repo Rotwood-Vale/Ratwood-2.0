@@ -32,6 +32,13 @@
 	return copy
 
 /datum/language_holder/proc/grant_language(datum/language/dt, shadow = FALSE)
+	if(GLOB.all_languages.len && isnull(GLOB.language_datum_instances[dt])) // If a non-language datum is passed, we take it as a string.
+		dt = replacetext(dt, "/datum/language/", "")
+		for(var/ld in GLOB.all_languages)
+			var/datum/language/LD = ld
+			if(dt == lowertext(initial(LD.name)))
+				dt = LD
+				break
 	if(shadow)
 		shadow_languages[dt] = TRUE
 	else
