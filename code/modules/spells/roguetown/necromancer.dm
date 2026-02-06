@@ -1,4 +1,4 @@
- /obj/effect/proc_holder/spell/invoked/bonechill
+/obj/effect/proc_holder/spell/invoked/bonechill
 	name = "Bone Chill"
 	desc = "Chill the target with necrotic energy. Severely reduces speed and weakens physical prowess."
 	cost = 3

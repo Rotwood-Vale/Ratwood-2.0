@@ -697,12 +697,12 @@
 			H.mind.set_spell_mastery("necromancy", 2)
 			to_chat(user, span_notice("Before you, is eternity. Her gaze is upon you."))
 
-/datum/talent_node/necromancy/bonechill
+/datum/talent_node/necromancy/raise_deadite
 	talent_cost = 3
 	node_x = -80
 	node_y = -240
 	prerequisites = list(/datum/talent_node/necromancy/wither, /datum/talent_node/necromancy/necromancy_advanced)
-	spell_type = /obj/effect/proc_holder/spell/invoked/bonechill
+	spell_type = /obj/effect/proc_holder/spell/invoked/raise_deadite
 
 /datum/talent_node/necromancy/eyebite
 	talent_cost = 3
@@ -711,12 +711,12 @@
 	prerequisites = list(/datum/talent_node/necromancy/necromancy_advanced)
 	spell_type = /obj/effect/proc_holder/spell/invoked/eyebite
 
-/datum/talent_node/necromancy/raise_deadite
+/datum/talent_node/necromancy/bonechill
 	talent_cost = 3
 	node_x = 0
 	node_y = -320
-	prerequisites = list(/datum/talent_node/necromancy/bonechill, /datum/talent_node/necromancy/eyebite)
-	spell_type = /obj/effect/proc_holder/spell/invoked/raise_deadite
+	prerequisites = list(/datum/talent_node/necromancy/raise_deadite, /datum/talent_node/necromancy/eyebite)
+	spell_type = /obj/effect/proc_holder/spell/invoked/bonechill
 
 /datum/talent_node/necromancy/undead_dominion
 	name = "Undead Dominion (5 Points)"
@@ -725,9 +725,8 @@
 	talent_cost = 5
 	node_x = 0
 	node_y = -400
-	prerequisites = list(/datum/talent_node/necromancy/raise_deadite)
+	prerequisites = list(/datum/talent_node/necromancy/bonechill)
 	is_passive = TRUE
-	spell_type = /obj/effect/proc_holder/spell/invoked/command_undead
 	special = TRUE
 
 /datum/talent_node/necromancy/undead_dominion/on_talent_learned(mob/user)
@@ -735,15 +734,16 @@
 		var/mob/living/carbon/human/H = user
 		if(H.mind)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/tame_undead)
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_guard)
 			to_chat(user, span_notice("She lends you Her forces to bend to your will."))
 
-/datum/talent_node/necromancy/raise_undead_guard
-	talent_cost = 4
+/datum/talent_node/necromancy/tame_undead
+	talent_cost = 2
 	node_x = -80
 	node_y = -480
 	prerequisites = list(/datum/talent_node/necromancy/undead_dominion)
-	spell_type = /obj/effect/proc_holder/spell/invoked/raise_undead_guard
+	spell_type = /obj/effect/proc_holder/spell/invoked/tame_undead
 
 /datum/talent_node/necromancy/raise_undead_formation
 	talent_cost = 6
@@ -767,7 +767,7 @@
 		/datum/talent_node/necromancy/eyebite,
 		/datum/talent_node/necromancy/raise_deadite,
 		/datum/talent_node/necromancy/undead_dominion,
-		/datum/talent_node/necromancy/raise_undead_guard,
+		/datum/talent_node/necromancy/tame_undead,
 		/datum/talent_node/necromancy/raise_undead_formation
 	)
 
