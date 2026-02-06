@@ -233,6 +233,12 @@
 		qdel(node)
 		return FALSE
 
+	if(node.spell_type)
+		var/user_tier = get_user_spell_tier(user)
+		if(node.spell_type.spell_tier > user_tier)
+			to_chat(user, span_warning("This art is beyond you."))
+			return FALSE
+
 	talent_points_available -= node.talent_cost
 	talent_points_spent += node.talent_cost
 	unlocked_talents += node_type
