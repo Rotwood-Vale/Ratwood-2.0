@@ -638,6 +638,14 @@
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
 		if(/datum/patron/divine/noc)
 			neck = /obj/item/clothing/neck/roguetown/psicross/noc
+			H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE) // Really good at reading... does this really do anything? No. BUT it's soulful.
+			H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
+			H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE) // for their arcane spells, very little CDR and cast speed.
+			if(H.mind)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+				H.mind.set_spell_mastery("arcane", 1)
+				H.mind.set_spell_mastery("illusion", 1)
+			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC) // So that they can take arcyne potential and not break.
 		if(/datum/patron/divine/abyssor)
 			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
 		if(/datum/patron/divine/dendor)

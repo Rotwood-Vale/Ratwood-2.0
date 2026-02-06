@@ -160,7 +160,12 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/knight, SLOT_HEAD, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE) // Really good at reading... does this really do anything? No. BUT it's soulful.
 			H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
-			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE) // for their arcane spells, very little CDR and cast speed.
+			if(H.mind)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+				H.mind.set_spell_mastery("arcane", 1)
+				H.mind.set_spell_mastery("illusion", 1)
+			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC) // So that they can take arcyne potential and not break.
 		if(/datum/patron/divine/ravox)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/ravox, SLOT_WRISTS, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket, SLOT_HEAD, TRUE)
