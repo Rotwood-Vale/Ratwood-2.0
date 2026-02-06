@@ -29,6 +29,7 @@
 
 	xp_gain = TRUE
 	miracle = FALSE
+	school = "transmutation"
 
 /obj/effect/proc_holder/spell/self/acidsplash/cast(mob/user = usr)
 	var/mob/living/target = user

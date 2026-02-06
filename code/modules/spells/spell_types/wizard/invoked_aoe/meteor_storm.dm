@@ -14,6 +14,7 @@
 	charging_slowdown = 2
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
+	school = "fire"
 
 /obj/effect/proc_holder/spell/invoked/meteor_storm/cast(list/targets, mob/user = usr)
 	var/turf/T = get_turf(targets[1])

@@ -113,6 +113,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/list/personal_objectives = list() // List of personal objectives not tied to the antag roles
 	var/list/special_people = list() // For characters whose text will display in a different colour when seen by this Mind
 	var/list/curses = list()
+	var/list/talent_trees = list()
+	var/list/spell_mastery = list()
 
 /datum/mind/New(key)
 	src.key = key
@@ -741,13 +743,29 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		S.on_gain(user)
 
 /datum/mind/proc/check_learnspell()
-	if(!has_spell(/obj/effect/proc_holder/spell/self/learnspell)) //are we missing the learning spell?
+	if(!spell_points)
+		return
+	if(!talent_trees)
+		talent_trees = list()
+
+	var/list/possible_trees = list(/datum/talent_tree/arcane)
+	if(get_user_evilness(current) > 0)
+		possible_trees += /datum/talent_tree/necromancy
+
+	for(var/tree_type in possible_trees)
+		if(!talent_trees[tree_type])
+			talent_trees[tree_type] = new tree_type
+		var/datum/talent_tree/spell_tree = talent_trees[tree_type]
+		spell_tree.talent_points_available = spell_points - used_spell_points
+		spell_tree.talent_points_spent = used_spell_points
+
+	if(!has_spell(/obj/effect/proc_holder/spell/self/talent_trees/learnspell)) //are we missing the learning spell?
 		if((spell_points - used_spell_points) > 0) //do we have points?
-			AddSpell(new /obj/effect/proc_holder/spell/self/learnspell(null)) //put it in
+			AddSpell(new /obj/effect/proc_holder/spell/self/talent_trees/learnspell(null)) //put it in
 			return
 
 	if((spell_points - used_spell_points) <= 0) //are we out of points?
-		RemoveSpell(/obj/effect/proc_holder/spell/self/learnspell) //bye bye spell
+		RemoveSpell(/obj/effect/proc_holder/spell/self/talent_trees/learnspell) //bye bye spell
 		return
 	return
 

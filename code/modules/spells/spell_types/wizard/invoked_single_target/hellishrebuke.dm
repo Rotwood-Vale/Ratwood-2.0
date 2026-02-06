@@ -24,12 +24,13 @@
 	gesture_required = TRUE
 	range = 1
 	ignore_los = FALSE
+	school = "fire"
 
 
 /obj/effect/proc_holder/spell/invoked/rebuke/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
 		var/mob/living/carbon/target = targets[1]
-		target.adjustFireLoss(30) //damage
+		do_spell_damage(user, target, 30, "BURN") //damage
 		target.adjust_fire_stacks(4)
 		target.ignite_mob()
 		target.visible_message(span_warning("[user] makes a rude gesture at [target] and causes them to burst into flames!"), \

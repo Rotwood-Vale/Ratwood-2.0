@@ -25,6 +25,7 @@
 	invocation_type = "shout"
 	cost = 3
 	xp_gain = TRUE
+	school = "lightning"
 
 /obj/projectile/magic/lightning
 	name = "bolt of lightning"

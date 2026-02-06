@@ -25,6 +25,7 @@
 	var/delay = 5
 	var/damage = 0 // damage based off your str 
 	var/area_of_effect = 0
+	school = "binding"
 
 
 
@@ -51,15 +52,15 @@
 				return TRUE
 
 			if(L.STASTR <= 15)
-				L.adjustBruteLoss(60)
+				do_spell_damage(user, L, 60, "BRUTE")
 				L.Knockdown(5)
 				to_chat(L, "<span class='userdanger'>You're magically weighed down, losing your footing!</span>")
 			else
 				L.OffBalance(10)
-				L.adjustBruteLoss(15)
-				to_chat(L, "<span class='userdanger'>You're magically weighed down, and your strength resist!</span>")
-			
-			
+				do_spell_damage(user, L, 20, "BRUTE")
+				to_chat(L, "<span class='userdanger'>You're magically weighed down, and your strength resists!</span>")
+
+
 	return TRUE
 /obj/effect/temp_visual/gravity
 	icon = 'icons/effects/effects.dmi'

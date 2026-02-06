@@ -32,6 +32,7 @@
 
 	xp_gain = TRUE
 	miracle = FALSE
+	school = "ice"
 
 /obj/effect/proc_holder/spell/invoked/projectile/ice_shard/cast(list/targets, mob/user = user)
 	var/mob/living/carbon/human/H = user

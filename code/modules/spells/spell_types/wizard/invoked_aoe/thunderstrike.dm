@@ -24,6 +24,7 @@
 	var/delay1 = 4 // Fast initial strike
 	var/delay2 = 8 // Slower follow-ups
 	var/delay3 = 12
+	school = "lightning"
 
 /obj/effect/proc_holder/spell/invoked/thunderstrike/cast(list/targets, mob/user = usr)
 	var/turf/centerpoint = get_turf(targets[1])

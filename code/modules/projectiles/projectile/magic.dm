@@ -304,7 +304,7 @@
 /obj/projectile/magic/sickness
 	name = "Bolt of Sickness"
 	icon_state = "xray"
-	damage = 10
+	damage = 20
 	damage_type = BURN
 	flag = "magic"
 	range = 15

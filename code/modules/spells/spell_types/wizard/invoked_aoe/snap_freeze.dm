@@ -25,6 +25,7 @@
 	var/delay = 10
 	var/damage = 30
 	var/area_of_effect = 2
+	school = "ice"
 
 /obj/effect/temp_visual/trapice
 	icon = 'icons/effects/effects.dmi'
@@ -73,9 +74,9 @@
 				return
 			play_cleave = TRUE
 			if(ishuman(L))
-				L.adjustFireLoss(damage)
+				do_spell_damage(user, L, damage, "BURN")
 			else
-				L.adjustFireLoss(damage + 30)
+				do_spell_damage(user, L, damage + 30, "BURN")
 			if(L.has_status_effect(/datum/status_effect/buff/frostbite))
 				return
 			else

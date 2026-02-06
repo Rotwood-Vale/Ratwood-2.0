@@ -75,7 +75,7 @@
 				qdel(src)
 				continue
 			play_cleave = TRUE
-			L.adjustBruteLoss(damage)
+			do_spell_damage(user, L, damage, "BURN")
 			playsound(affected_turf, "genslash", 80, TRUE)
 			to_chat(L, "<span class='userdanger'>You're cut by arcyne force!</span>")
 

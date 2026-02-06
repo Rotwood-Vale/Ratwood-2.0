@@ -23,6 +23,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	cost = 6
 	xp_gain = TRUE
+	school = "fire"
 
 /obj/projectile/magic/aoe/fireball/rogue
 	name = "fireball"

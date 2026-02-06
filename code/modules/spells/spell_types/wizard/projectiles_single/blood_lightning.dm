@@ -23,6 +23,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/blood
 	cost = 3
+	school = "necromancy"
 
 /obj/projectile/magic/bloodlightning
 	name = "blood bolt"

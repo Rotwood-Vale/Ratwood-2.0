@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/bonechill
+ /obj/effect/proc_holder/spell/invoked/bonechill
 	name = "Bone Chill"
 	desc = "Chill the target with necrotic energy. Severely reduces speed and weakens physical prowess."
 	cost = 3
@@ -19,6 +19,7 @@
 	human_req = TRUE
 	miracle = FALSE
 	zizo_spell = TRUE
+	school = "necromancy"
 
 /obj/effect/proc_holder/spell/invoked/bonechill/cast(list/targets, mob/living/user)
 	..()
@@ -37,7 +38,7 @@
 	if(iscarbon(target))
 		target.apply_status_effect(/datum/status_effect/debuff/chilled)
 	else
-		target.adjustBruteLoss(20)
+		do_spell_damage(user, target, 20, "BRUTE")
 
 	return TRUE
 
@@ -57,6 +58,8 @@
 	recharge_time = 15 SECONDS
 	miracle = FALSE
 	hide_charge_effect = TRUE
+	spell_tier = 2
+	school = "necromancy"
 
 /obj/effect/proc_holder/spell/invoked/eyebite/cast(list/targets, mob/living/user)
 	..()
@@ -64,7 +67,7 @@
 		return FALSE
 	var/mob/living/carbon/target = targets[1]
 	target.visible_message(span_info("A loud crunching sound has come from [target]!"), span_userdanger("I feel arcane teeth biting into my eyes!"))
-	target.adjustBruteLoss(30)
+	do_spell_damage(user, target, 30, "BRUTE")
 	target.blind_eyes(2)
 	target.blur_eyes(10)
 	return TRUE
@@ -88,7 +91,9 @@
 	var/cabal_affine = FALSE
 	var/is_summoned = FALSE
 	var/to_spawn = 4
+	spell_tier = 3
 	hide_charge_effect = TRUE
+	school = "necromancy"
 
 /obj/effect/proc_holder/spell/invoked/raise_undead_formation/cast(list/targets, mob/living/user)
 	..()
@@ -159,6 +164,8 @@
 	hide_charge_effect = TRUE
 	var/cabal_affine = FALSE
 	var/is_summoned = FALSE
+	spell_tier = 3
+	school = "necromancy"
 
 /obj/effect/proc_holder/spell/invoked/raise_undead_guard/cast(list/targets, mob/living/user)
 	..()
@@ -224,7 +231,9 @@
 	charging_slowdown = 1
 	gesture_required = TRUE
 	chargedloop = /datum/looping_sound/invokegen
+	spell_tier = 2
 	no_early_release = TRUE
+	school = "necromancy"
 
 /obj/effect/proc_holder/spell/invoked/tame_undead/cast(list/targets, mob/living/user)
 	..()
@@ -272,7 +281,9 @@
 	charging_slowdown = 1
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
+	spell_tier = 2
 	recharge_time = 15 SECONDS
+	school = "necromancy"
 
 /obj/effect/proc_holder/spell/invoked/gravemark
 	name = "Gravemark"
@@ -284,7 +295,9 @@
 	chargedloop = null
 	antimagic_allowed = TRUE
 	recharge_time = 15 SECONDS
+	spell_tier = 1
 	hide_charge_effect = TRUE
+	school = "necromancy"
 
 /obj/effect/proc_holder/spell/invoked/gravemark/cast(list/targets, mob/living/user)
 	. = ..()
@@ -323,6 +336,7 @@
 	releasedrain = 0
 	recharge_time = 3 SECONDS
 	chargedloop = /datum/looping_sound/invokegen
+	spell_tier = 1
 	var/list/summoned_minions = list() // You can reuse the one tracked by your summon spell
 	var/faction_ordering = FALSE ///this sets whether it orders mobs the user is aligned with in range or just mobs who are the character's 'friends' (ie, their summons)
 

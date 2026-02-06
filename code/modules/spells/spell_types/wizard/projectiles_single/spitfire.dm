@@ -27,6 +27,7 @@
 	chargedloop = /datum/looping_sound/invokefire
 	associated_skill = /datum/skill/magic/arcane
 	cost = 3
+	school = "fire"
 
 /obj/effect/proc_holder/spell/invoked/projectile/spitfire/cast(list/targets, mob/user = user)
 	var/mob/living/carbon/human/H = user

@@ -22,6 +22,7 @@
 	chargedloop = /datum/looping_sound/invokefire
 	cost = 9
 	xp_gain = TRUE
+	school = "fire"
 
 /obj/projectile/magic/aoe/fireball/rogue/great
 	name = "fireball"

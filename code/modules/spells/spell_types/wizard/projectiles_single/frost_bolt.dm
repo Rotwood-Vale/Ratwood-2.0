@@ -29,6 +29,7 @@
 
 	xp_gain = TRUE
 	miracle = FALSE
+	school = "ice"
 
 /obj/effect/proc_holder/spell/self/frostbolt/cast(mob/user = usr)
 	var/mob/living/target = user
