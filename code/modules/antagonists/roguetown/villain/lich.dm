@@ -137,6 +137,9 @@
 	H.grant_language(/datum/language/undead)
 
 	if(H.mind)
+		H.mind.set_spell_mastery("fire", 2)
+		H.mind.set_spell_mastery("arcane", 2)
+		H.mind.set_spell_mastery("necromancy", 2)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation)

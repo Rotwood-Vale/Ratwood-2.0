@@ -10,7 +10,6 @@
 	recharge_time = 2 MINUTES
 	human_req = TRUE
 	warnie = "spellwarning"
-	school = "transmutation"
 	spell_tier = 2
 	invocations = list("Ducere")
 	invocation_type = "whisper"

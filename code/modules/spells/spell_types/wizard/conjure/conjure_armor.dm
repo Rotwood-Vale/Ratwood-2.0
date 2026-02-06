@@ -22,6 +22,7 @@
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_MEDIUM
+	school = "conjuration"
 
 
 	var/objtoequip = /obj/item/clothing/ring/fate_weaver

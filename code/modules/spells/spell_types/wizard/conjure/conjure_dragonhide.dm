@@ -22,6 +22,7 @@
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_MEDIUM
+	school = "conjuration"
 
 
 	objtoequip = /obj/item/clothing/suit/roguetown/dragonhide

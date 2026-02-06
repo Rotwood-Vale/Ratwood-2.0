@@ -10,7 +10,6 @@
 	recharge_time = 2 MINUTES
 	human_req = TRUE
 	warnie = "spellwarning"
-	school = "transmutation"
 	spell_tier = 2
 	invocations = list("Oculi Accipitris.") // Oculi - Eyes. Accipitris - Hawk, singular.
 	invocation_type = "whisper"
@@ -22,6 +21,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	range = 7
+	school = "enhancement"
 
 /obj/effect/proc_holder/spell/invoked/hawks_eyes/cast(list/targets, mob/user)
 	var/atom/A = targets[1]

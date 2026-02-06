@@ -21,6 +21,7 @@
 	charging_slowdown = 3
 	chargedloop = /datum/looping_sound/wind
 	overlay_state = "mirror"
+	school = "illusion"
 
 /obj/effect/proc_holder/spell/invoked/mirror_transform/cast(list/targets, mob/user)  // Changed to match invoked spell pattern
 	if(!isliving(targets[1]))

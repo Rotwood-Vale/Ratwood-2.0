@@ -19,6 +19,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	overlay_state = "rune5"
 	range = 7
+	school = "transmutation"
 
 /obj/effect/proc_holder/spell/invoked/leap/cast(list/targets, mob/user = usr)
 	if(isliving(targets[1]))

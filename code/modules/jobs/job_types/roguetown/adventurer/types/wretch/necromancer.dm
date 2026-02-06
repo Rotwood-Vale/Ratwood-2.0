@@ -58,6 +58,7 @@
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
 		H.set_patron(/datum/patron/inhumen/zizo)
+		H.mind.set_spell_mastery("necromancy", 2)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/eyebite)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)

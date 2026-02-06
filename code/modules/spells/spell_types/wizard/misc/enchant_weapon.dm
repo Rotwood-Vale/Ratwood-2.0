@@ -31,6 +31,7 @@
 	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_LOW
+	school = "conjuration"
 
 /obj/effect/proc_holder/spell/invoked/enchant_weapon/cast(list/targets, mob/user = usr)
 	var/target = targets[1]

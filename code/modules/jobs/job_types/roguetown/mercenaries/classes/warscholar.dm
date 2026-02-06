@@ -62,6 +62,8 @@
 	if(H.mind)
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
+		H.mind.set_spell_mastery("enhancement", 2)
+		H.mind.set_spell_mastery("arcane", 2)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/giants_strength)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/longstrider)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)

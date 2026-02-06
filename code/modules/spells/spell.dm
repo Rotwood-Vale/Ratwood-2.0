@@ -538,7 +538,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		var/mob/living/carbon/human/H = ranged_ability_user
 		if(spell_tier && H.mind)
 			var/fatigue_mod = H.mind.get_spell_fatigue(school)
-			var/manadrain = (releasedrain * fatigue_mod) * spell_tier
+			var/manadrain = round((releasedrain * fatigue_mod) * spell_tier)
 			H.energy_add(-manadrain)
 	if(devotion_cost && ishuman(user))
 		var/mob/living/carbon/human/devotee = user
@@ -775,13 +775,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/mastery = get_spell_mastery(school)
 	switch(mastery)
 		if(0)
-			return 1.75
+			return 1
 		if(1)
-			return 1.25
+			return 0.6
 		if(2)
-			return 0.75
+			return 0.3
 		else
-			return 1.75
+			return 1
 
 /obj/effect/proc_holder/spell/proc/get_spell_dmg_mod(mob/user)
 	if(!ishuman(user))

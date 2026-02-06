@@ -7,11 +7,11 @@
 
 /datum/talent_node/arcane/New()
 	if(!special && spell_type)
-		name = initial(spell_type.name)
-		desc = initial(spell_type.desc)
+		name = "[spell_type.name] ([talent_cost] Points)"
+		desc = spell_type.desc
 		if(!desc)
 			desc = " "
-		icon_state = initial(spell_type.overlay_state)
+		icon_state = spell_type.overlay_state
 
 /datum/talent_node/arcane/prestidigitation
 	name = "Prestidigitation"
@@ -32,7 +32,7 @@
 			to_chat(user, span_notice("The mysteries of the Arcane unveil themselves to you."))
 
 /datum/talent_node/arcane/arcane_advanced
-	name = "Arcane Mastery"
+	name = "Arcane Mastery (5 Points)"
 	desc = "Master arcane forces. Further reduces arcane spell energy cost and increases arcane spell damage."
 	icon_state = "spell_default"
 	talent_cost = 5
@@ -120,7 +120,7 @@
 	spell_type = /obj/effect/proc_holder/spell/self/magicians_brick
 
 /datum/talent_node/arcane/fire_fundamentals
-	name = "Fire Fundamentals"
+	name = "Fire Fundamentals (2 Points)"
 	desc = "Attune to flame. Reduces fire spell energy cost."
 	icon_state = "spell_default"
 	talent_cost = 2
@@ -152,7 +152,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/rebuke
 
 /datum/talent_node/arcane/fire_advanced
-	name = "Fire Mastery"
+	name = "Fire Mastery (5 Points)"
 	desc = "Master the flames. Further reduces fire spell energy cost and increases fire spell damage."
 	icon_state = "spell_default"
 	talent_cost = 5
@@ -191,7 +191,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/meteor_storm
 
 /datum/talent_node/arcane/ice_fundamentals
-	name = "Ice Fundamentals"
+	name = "Ice Fundamentals (2 Points)"
 	desc = "Attune to frost. Reduces ice spell energy cost."
 	icon_state = "spell_default"
 	talent_cost = 2
@@ -216,7 +216,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/projectile/frostbolt
 
 /datum/talent_node/arcane/ice_advanced
-	name = "Ice Mastery"
+	name = "Ice Mastery (5 Points)"
 	desc = "Master the frost. Further reduces ice spell energy cost and increases ice spell damage."
 	icon_state = "spell_default"
 	talent_cost = 5
@@ -241,7 +241,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/snap_freeze
 
 /datum/talent_node/arcane/lightning_fundamentals
-	name = "Lightning Fundamentals"
+	name = "Lightning Fundamentals (2 Points)"
 	desc = "Attune to storm. Reduces lightning spell energy cost."
 	icon_state = "spell_default"
 	talent_cost = 2
@@ -266,7 +266,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt
 
 /datum/talent_node/arcane/lightning_advanced
-	name = "Lightning Mastery"
+	name = "Lightning Mastery (5 Points)"
 	desc = "Master the storm. Further reduces lightning spell energy cost and increases lightning spell damage."
 	icon_state = "spell_default"
 	talent_cost = 5
@@ -361,7 +361,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/mindlink
 
 /datum/talent_node/arcane/conjuration_fundamentals
-	name = "Conjuration Fundamentals"
+	name = "Conjuration Fundamentals (2 Points)"
 	desc = "Attune to summoning."
 	icon_state = "spell_default"
 	talent_cost = 2
@@ -421,7 +421,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/conjure_primordial
 
 /datum/talent_node/arcane/transmutation_fundamentals
-	name = "Transmutation Fundamentals"
+	name = "Transmutation Fundamentals (2 Points)"
 	desc = "Attune to change."
 	icon_state = "spell_default"
 	talent_cost = 2
@@ -439,7 +439,7 @@
 			to_chat(user, span_notice("Reality shifts at your touch."))
 
 /datum/talent_node/arcane/transmutation_advanced
-	name = "Transmutation Mastery"
+	name = "Transmutation Mastery (5 Points)"
 	desc = "Master transmutation. Further reduces transmutation spell energy cost and increases transmutation spell damage."
 	icon_state = "spell_default"
 	talent_cost = 5
@@ -520,7 +520,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/projectile/acidsplash
 
 /datum/talent_node/arcane/illusion_fundamentals
-	name = "Illusion Fundamentals"
+	name = "Illusion Fundamentals (2 Points)"
 	desc = "Attune to deception."
 	icon_state = "spell_default"
 	talent_cost = 2
@@ -552,7 +552,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/invisibility
 
 /datum/talent_node/arcane/enhancement_fundamentals
-	name = "Enhancement Fundamentals"
+	name = "Enhancement Fundamentals (2 Points)"
 	desc = "Attune to empowerment."
 	icon_state = "spell_default"
 	talent_cost = 2
@@ -598,7 +598,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/giants_strength
 
 /datum/talent_node/arcane/binding_fundamentals
-	name = "Binding Fundamentals"
+	name = "Binding Fundamentals (2 Points)"
 	desc = "Attune to restraint."
 	icon_state = "spell_default"
 	talent_cost = 2
@@ -637,11 +637,11 @@
 
 /datum/talent_node/necromancy/New()
 	if(!special && spell_type)
-		name = initial(spell_type.name)
-		desc = initial(spell_type.desc)
+		name = "[spell_type.name] ([talent_cost] Points)"
+		desc = spell_type.desc
 		if(!desc)
 			desc = " "
-		icon_state = initial(spell_type.overlay_state)
+		icon_state = spell_type.overlay_state
 
 /datum/talent_node/necromancy/necromancy_fundamentals
 	name = "Necromancy Fundamentals"
@@ -681,7 +681,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/wither
 
 /datum/talent_node/necromancy/necromancy_advanced
-	name = "Necromancy Mastery"
+	name = "Necromancy Mastery (5 Points)"
 	desc = "Master the dark arts. Further reduces necromancy spell energy cost and increases necromancy spell damage."
 	icon_state = "spell_default"
 	talent_cost = 5
@@ -719,7 +719,7 @@
 	spell_type = /obj/effect/proc_holder/spell/invoked/raise_deadite
 
 /datum/talent_node/necromancy/undead_dominion
-	name = "Undead Dominion"
+	name = "Undead Dominion (5 Points)"
 	desc = "Command, tame, and mark allies for your undead servants. Grants Command Undead, Gravemark, and Tame Undead."
 	icon_state = "spell_default"
 	talent_cost = 5

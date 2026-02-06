@@ -251,6 +251,8 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind) // State mandated spells c:
+		H.mind.set_spell_mastery("fire", 2)
+		H.mind.set_spell_mastery("arcane", 2)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/artillery)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)

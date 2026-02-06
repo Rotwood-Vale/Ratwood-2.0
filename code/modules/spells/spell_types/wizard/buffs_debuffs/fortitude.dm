@@ -9,7 +9,6 @@
 	recharge_time = 2 MINUTES
 	human_req = TRUE
 	warnie = "spellwarning"
-	school = "transmutation"
 	overlay_state = "fortitude"
 	no_early_release = TRUE
 	movement_interrupt = FALSE
@@ -21,6 +20,7 @@
 	charging_slowdown = 2
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
+	school = "enhancement"
 
 /obj/effect/proc_holder/spell/invoked/fortitude/cast(list/targets, mob/user)
 	var/atom/A = targets[1]

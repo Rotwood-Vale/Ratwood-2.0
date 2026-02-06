@@ -22,6 +22,7 @@
 
 	invocations = list("Appare, spiritus fidus.")
 	invocation_type = "whisper"
+	school = "conjuration"
 
 	var/mob/living/simple_animal/pet/familiar/fam
 	var/familiars = list()

@@ -21,6 +21,7 @@
 	glow_intensity = GLOW_INTENSITY_LOW
 	overlay_state = "rune1"
 	range = 7
+	school = "transmutation"
 
 /obj/effect/proc_holder/spell/invoked/enlarge/cast(list/targets, mob/user = usr)
 	if(isliving(targets[1]))

@@ -55,6 +55,7 @@
 	antimagic_allowed = TRUE
 	hide_charge_effect = TRUE
 	cost = 3 // Very useful
+	school = "illusion"
 
 /obj/effect/proc_holder/spell/invoked/invisibility/miracle
 	miracle = TRUE

@@ -19,6 +19,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	recharge_time = 45 SECONDS
 	hide_charge_effect = TRUE
+	school = "conjuration"
 	var/list/conjured_mobs = list()
 	var/spellsgranted = FALSE
 /obj/effect/proc_holder/spell/invoked/conjure_primordial/cast(list/targets, mob/living/user)

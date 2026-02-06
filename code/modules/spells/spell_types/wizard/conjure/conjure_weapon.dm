@@ -23,6 +23,7 @@
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_LOW
+	school = "conjuration"
 
 	var/obj/item/rogueweapon/conjured_weapon = null
 
