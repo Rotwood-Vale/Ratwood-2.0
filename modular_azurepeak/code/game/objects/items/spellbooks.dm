@@ -163,7 +163,10 @@
 	user.visible_message(span_warning("[user] is filled with arcyne energy! You witness [user.p_their()] body convulse and spark brightly."), \
 	span_notice("Noc blesses me. I have been granted knowledge and wisdom beyond my years, this tome's mysteries unveiled one at a time."))
 	qualityoflearn = qualityoflearn / 100
-	var/spellpoints = (src.bookquality * qualityoflearn)
+	//var/spellpoints = (src.bookquality * qualityoflearn)
+	var/spellpoints = 2
+	if(prob(25))
+		spellpoints = 3
 	spellpoints = CEILING(spellpoints, 1)
 	gamer.mind?.adjust_spellpoints(spellpoints)
 	user.log_message("successfully studied their spellbook and gained spellpoints", LOG_ATTACK, color="orange")
