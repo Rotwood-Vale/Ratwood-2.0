@@ -88,7 +88,7 @@ SUBSYSTEM_DEF(nightshift)
 	switch(todd)
 		if("dawn")
 			SEND_SIGNAL(src, COMSIG_MOB_DAWNED)
-			if(mind.has_changed_spell)
+			if(mind.spell_points)
 				mind.has_changed_spell += 1
 				to_chat(mind.current, span_smallnotice("I feel like I can study my tome some more..."))
 		if("day")
