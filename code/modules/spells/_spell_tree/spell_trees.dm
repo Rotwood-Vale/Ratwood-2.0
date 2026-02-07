@@ -1,3 +1,5 @@
+#define TALENT_TRAIT "talent"
+
 /datum/talent_node/arcane
 	talent_tree_id = "arcane"
 	name = "spell"
@@ -125,9 +127,9 @@
 	desc = "Master the flames. Further reduces fire spell energy cost and increases fire spell damage."
 	icon_state = "spell_default"
 	talent_cost = 5
-	node_x = -600
-	node_y = -150
-	prerequisites = list(/datum/talent_node/arcane/fireball)
+	node_x = -500
+	node_y = -100
+	prerequisites = list(/datum/talent_node/arcane/fire_fundamentals)
 	is_passive = TRUE
 	special = TRUE
 
@@ -141,16 +143,16 @@
 
 /datum/talent_node/arcane/fireball
 	talent_cost = 7
-	node_x = -500
-	node_y = -100
-	prerequisites = list(/datum/talent_node/arcane/fire_fundamentals)
+	node_x = -600
+	node_y = -150
+	prerequisites = list(/datum/talent_node/arcane/fire_advanced)
 	spell_type = /obj/effect/proc_holder/spell/invoked/projectile/fireball
 
 /datum/talent_node/arcane/greater_fireball
 	talent_cost = 10
 	node_x = -700
 	node_y = -200
-	prerequisites = list(/datum/talent_node/arcane/fire_advanced)
+	prerequisites = list(/datum/talent_node/arcane/fireball)
 	spell_type = /obj/effect/proc_holder/spell/invoked/projectile/fireball/greater
 
 /datum/talent_node/arcane/meteor_storm
@@ -191,9 +193,9 @@
 	desc = "Master the frost. Further reduces ice spell energy cost and increases ice spell damage."
 	icon_state = "spell_default"
 	talent_cost = 5
-	node_x = -600
-	node_y = 150
-	prerequisites = list(/datum/talent_node/arcane/snap_freeze)
+	node_x = -500
+	node_y = 100
+	prerequisites = list(/datum/talent_node/arcane/ice_fundamentals)
 	is_passive = TRUE
 	special = TRUE
 
@@ -206,10 +208,10 @@
 			to_chat(user, span_notice("Ice answers to you alone."))
 
 /datum/talent_node/arcane/snap_freeze
-	talent_cost = 6
-	node_x = -500
-	node_y = 100
-	prerequisites = list(/datum/talent_node/arcane/ice_fundamentals)
+	talent_cost = 8
+	node_x = -600
+	node_y = 150
+	prerequisites = list(/datum/talent_node/arcane/ice_advanced)
 	spell_type = /obj/effect/proc_holder/spell/invoked/snap_freeze
 
 /datum/talent_node/arcane/lightning_fundamentals
@@ -258,7 +260,7 @@
 			to_chat(user, span_notice("The fury of storms courses through you."))
 
 /datum/talent_node/arcane/thunderstrike
-	talent_cost = 7
+	talent_cost = 8
 	node_x = -100
 	node_y = -600
 	prerequisites = list(/datum/talent_node/arcane/lightning_advanced)
@@ -340,7 +342,7 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/nondetection
 
 /datum/talent_node/arcane/mindlink
-	talent_cost = 2
+	talent_cost = 4
 	node_x = 500
 	node_y = 0
 	prerequisites = list(/datum/talent_node/arcane/arcane_fundamentals)
@@ -569,8 +571,8 @@
 
 /datum/talent_node/arcane/mirror_transform
 	talent_cost = 1
-	node_x = -350
-	node_y = 210
+	node_x = -280
+	node_y = 140
 	prerequisites = list(/datum/talent_node/arcane/prestidigitation)
 	spell_type = /obj/effect/proc_holder/spell/invoked/mirror_transform
 
@@ -630,7 +632,7 @@
 
 /datum/talent_node/arcane/binding_fundamentals
 	name = "Binding Fundamentals (2 Points)"
-	desc = "Attune to binding."
+	desc = "Attune to restraint."
 	icon_state = "spell_default"
 	talent_cost = 2
 	node_x = -210
@@ -661,12 +663,72 @@
 	prerequisites = list(/datum/talent_node/arcane/binding_fundamentals)
 	spell_type = /obj/effect/proc_holder/spell/invoked/gravity
 
+/datum/talent_node/arcane/arcyne_affinity_t1
+	name = "Arcyne Affinity I (10 Points)"
+	desc = "Your connection to the arcyne deepens."
+	icon_state = "spell_default"
+	talent_cost = 10
+	node_x = -400
+	node_y = 400
+	prerequisites = list()
+	is_passive = TRUE
+	special = TRUE
+
+/datum/talent_node/arcane/arcyne_affinity_t1/on_talent_learned(mob/user)
+	..()
+	if(ishuman(user))
+		ADD_TRAIT(user, TRAIT_ARCYNE_T2, TALENT_TRAIT)
+		if(HAS_TRAIT(user, TRAIT_ARCYNE_T1))
+			REMOVE_TRAIT(user, TRAIT_ARCYNE_T1, TALENT_TRAIT)
+		to_chat(user, span_notice("The arcyne flows more freely through you."))
+
+/datum/talent_node/arcane/arcyne_affinity_t2
+	name = "Arcyne Affinity II (20 Points)"
+	desc = "Your mastery of the arcyne grows stronger."
+	icon_state = "spell_default"
+	talent_cost = 20
+	node_x = -400
+	node_y = 500
+	prerequisites = list(/datum/talent_node/arcane/arcyne_affinity_t1)
+	is_passive = TRUE
+	special = TRUE
+
+/datum/talent_node/arcane/arcyne_affinity_t2/on_talent_learned(mob/user)
+	..()
+	if(ishuman(user))
+		ADD_TRAIT(user, TRAIT_ARCYNE_T3, TALENT_TRAIT)
+		if(HAS_TRAIT(user, TRAIT_ARCYNE_T2))
+			REMOVE_TRAIT(user, TRAIT_ARCYNE_T2, TALENT_TRAIT)
+		to_chat(user, span_notice("The arcyne resonates powerfully within your being."))
+
+/datum/talent_node/arcane/arcyne_affinity_t3
+	name = "Arcyne Affinity III (40 Points)"
+	desc = "You have become one with the arcyne."
+	icon_state = "spell_default"
+	talent_cost = 40
+	node_x = -400
+	node_y = 600
+	prerequisites = list(/datum/talent_node/arcane/arcyne_affinity_t2)
+	is_passive = TRUE
+	special = TRUE
+
+/datum/talent_node/arcane/arcyne_affinity_t3/on_talent_learned(mob/user)
+	..()
+	if(ishuman(user))
+		ADD_TRAIT(user, TRAIT_ARCYNE_T4, TALENT_TRAIT)
+		if(HAS_TRAIT(user, TRAIT_ARCYNE_T3))
+			REMOVE_TRAIT(user, TRAIT_ARCYNE_T3, TALENT_TRAIT)
+		to_chat(user, span_notice("The arcyne bends to your will as an extension of yourself."))
+
 /datum/talent_tree/arcane
 	name = "Arcane Magic"
 	desc = "Master the fundamental forces of magic"
 	tree_identifier = "arcane"
 	tree_nodes = list(
 		/datum/talent_node/arcane/prestidigitation,
+		/datum/talent_node/arcane/arcyne_affinity_t1,
+		/datum/talent_node/arcane/arcyne_affinity_t2,
+		/datum/talent_node/arcane/arcyne_affinity_t3,
 		/datum/talent_node/arcane/light,
 		/datum/talent_node/arcane/message,
 		/datum/talent_node/arcane/mending,
@@ -857,7 +919,7 @@
 	node_x = 80
 	node_y = -480
 	prerequisites = list(/datum/talent_node/necromancy/undead_dominion)
-	spell_type = /obj/effect/proc_holder/spell/invoked/raise_undead_formation
+	spell_type = /obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer
 
 /datum/talent_tree/necromancy
 	name = "Necromancy"

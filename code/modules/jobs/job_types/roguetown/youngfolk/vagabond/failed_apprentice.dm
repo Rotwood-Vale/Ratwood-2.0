@@ -21,6 +21,13 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 	)
 
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+		)
+	)
+
 /datum/outfit/job/roguetown/vagabond/mage/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(should_wear_femme_clothes(H))

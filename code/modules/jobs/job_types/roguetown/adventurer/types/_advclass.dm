@@ -46,6 +46,8 @@
 	/// Spellpoints. If More than 0, Gives Prestidigitation & the Learning Spell.
 	var/subclass_spellpoints = 0
 
+	var/list/subclass_talent_trees
+
 	/// Subclass social rank, used to overwrite the job social rank
 	var/subclass_social_rank
 
@@ -105,9 +107,42 @@
 			return
 		for(var/stashed_item in subclass_stashed_items)
 			H.mind?.special_items[stashed_item] = subclass_stashed_items[stashed_item]
+
 	if(subclass_spellpoints > 0)
 		var/spellpoints = subclass_spellpoints + ((GLOB.nightspassed - 1) * 2)
 		H.mind?.adjust_spellpoints(spellpoints)
+
+	if(length(subclass_talent_trees))
+		if(!H.mind)
+			return
+		if(!H.mind.talent_trees)
+			H.mind.talent_trees = list()
+
+		var/list/node_cache = list()
+
+		for(var/tree_type in subclass_talent_trees)
+			if(!H.mind.talent_trees[tree_type])
+				H.mind.talent_trees[tree_type] = new tree_type
+			var/datum/talent_tree/tree = H.mind.talent_trees[tree_type]
+			var/list/nodes_to_unlock = subclass_talent_trees[tree_type]
+			for(var/node_type in nodes_to_unlock)
+				if(node_type in tree.unlocked_talents)
+					continue
+
+				if(!(node_type in node_cache))
+					node_cache[node_type] = new node_type
+
+				var/datum/talent_node/node = node_cache[node_type]
+				tree.unlocked_talents += node_type
+				node.on_talent_learned(H)
+
+				if(node.spell_type && !node.is_passive)
+					var/obj/effect/proc_holder/spell/new_spell = new node.spell_type
+					H.mind.AddSpell(new_spell)
+				qdel(node)
+
+		for(var/cached_type in node_cache)
+			qdel(node_cache[cached_type])
 
 	if(subclass_social_rank)
 		H.social_rank = subclass_social_rank

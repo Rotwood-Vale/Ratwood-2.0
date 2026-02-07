@@ -41,6 +41,23 @@
 	extra_context = "This subclass has multiple unique spells, including one in the form of an 'arcyne barrier'. \
 	So long as it's active, the user is immune to magic, yet still capable of casting it."
 
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/message,
+			/datum/talent_node/arcane/arcane_fundamentals,
+			/datum/talent_node/arcane/arcane_advanced,
+			/datum/talent_node/arcane/greater_forcewall,
+			/datum/talent_node/arcane/fetch,
+			/datum/talent_node/arcane/enhancement_fundamentals,
+			/datum/talent_node/arcane/hawks_eyes,
+			/datum/talent_node/arcane/stoneskin,
+			/datum/talent_node/arcane/ice_fundamentals,
+			/datum/talent_node/arcane/ice_advanced,
+			/datum/talent_node/arcane/snap_freeze,
+		)
+	)
+
 /datum/outfit/job/roguetown/sojourner
 	job_bitflag = BITFLAG_HOLY_WARRIOR
 
@@ -56,18 +73,8 @@
 		//Integral spells.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_armor/barrier)//Anti-magic.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		//Buff spells, next.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hawks_eyes)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stoneskin)
-		//Frost spells. Slowdown city. Hue city. Frigid. Or something.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/snap_freeze)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/frostbite)//Used by Sojourners only.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/ice_shard)//Used by Sojourners only.
-		//Finally, utility. Consider removing fetch, if fetch-slow is absurd. But that's the case for any mage.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
 
 	head = /obj/item/clothing/head/roguetown/roguehood/sojourner
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner

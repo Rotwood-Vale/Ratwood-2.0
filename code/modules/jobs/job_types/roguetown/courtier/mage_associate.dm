@@ -23,7 +23,7 @@
 	cmode_music = 'sound/music/cmode/nobility/combat_courtmage.ogg'
 	advjob_examine = TRUE // So that Court Magicians can know if they're teachin' a Apprentice or if someone's a bit more advanced of a player. Just makes the title show up as the advjob's name.
 	social_rank = SOCIAL_RANK_YEOMAN
-	job_traits = list(TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3)
+	job_traits = list(TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEARMOR)
 	job_subclasses = list(
 		/datum/advclass/wapprentice/associate,
 		/datum/advclass/wapprentice/alchemist,
@@ -65,6 +65,14 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+	)
+
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/arcyne_affinity_t2
+		)
 	)
 
 /datum/outfit/job/roguetown/wapprentice/associate/pre_equip(mob/living/carbon/human/H)
@@ -117,6 +125,14 @@
 		/datum/skill/labor/fishing = SKILL_LEVEL_NOVICE,
 	)
 
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/arcyne_affinity_t2
+		)
+	)
+
 /datum/outfit/job/roguetown/wapprentice/alchemist/pre_equip(mob/living/carbon/human/H)
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/magegreen
 	head = /obj/item/clothing/head/roguetown/roguehood/mage
@@ -158,6 +174,14 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE,
+	)
+
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/arcyne_affinity_t2
+		)
 	)
 
 /datum/outfit/job/roguetown/wapprentice/apprentice/pre_equip(mob/living/carbon/human/H)

@@ -8,7 +8,7 @@
 	class_select_category = CLASS_CAT_NALEDI
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/warscholar.ogg'
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
@@ -30,6 +30,25 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+	)
+
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/arcyne_affinity_t2,
+			/datum/talent_node/arcane/guidance,
+			/datum/talent_node/arcane/enhancement_fundamentals,
+			/datum/talent_node/arcane/fortitude,
+			/datum/talent_node/arcane/giants_strength,
+			/datum/talent_node/arcane/transmutation_fundamentals,
+			/datum/talent_node/arcane/transmutation_advanced,
+			/datum/talent_node/arcane/longstrider,
+			/datum/talent_node/arcane/haste,
+			/datum/talent_node/arcane/arcane_fundamentals,
+			/datum/talent_node/arcane/arcane_advanced,
+			/datum/talent_node/arcane/greater_forcewall
+		)
 	)
 
 /datum/outfit/job/roguetown/mercenary/warscholar
@@ -62,14 +81,6 @@
 	if(H.mind)
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
-		H.mind.set_spell_mastery("enhancement", 2)
-		H.mind.set_spell_mastery("arcane", 2)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/giants_strength)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/longstrider)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/haste)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fortitude)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
 	r_hand = /obj/item/rogueweapon/woodstaff/naledi
 
 
@@ -121,6 +132,16 @@
 	)
 	subclass_spellpoints = 0 // Override inheritance lol
 
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcane_fundamentals,
+			/datum/talent_node/arcane/fetch,
+			/datum/talent_node/arcane/ensnare,
+			/datum/talent_node/arcane/repel,
+		)
+	)
+
 /datum/outfit/job/roguetown/mercenary/warscholar_pontifex
 	var/detailcolor
 	allowed_patrons = list(/datum/patron/old_god)
@@ -145,10 +166,6 @@
 	if(H.mind)
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch) // In an attempt to make them less Possibly Wildly OP, they can't freely pick their spells. Casts at apprentice level, but doesn't get the spellbuy points it'd provide.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ensnare)
-		H.mind.AddSpell(new/obj/effect/proc_holder/spell/invoked/projectile/repel)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/bladeofpsydon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)
 
@@ -198,6 +215,15 @@
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
 	)
 	subclass_spellpoints = 0 // Override inheritance lol
+
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcynebolt,
+			/datum/talent_node/arcane/guidance,
+			/datum/talent_node/arcane/repulse,
+		)
+	)
 
 /datum/outfit/job/roguetown/mercenary/warscholar_vizier
 	var/detailcolor
@@ -251,10 +277,7 @@
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
 		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/lesser_heal)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt) // Give them little bit of offensive power to make them less boring.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/repulse) // A "defensive" spell to keep themselves safe
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stasis)

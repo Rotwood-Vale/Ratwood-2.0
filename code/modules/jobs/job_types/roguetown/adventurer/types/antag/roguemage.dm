@@ -8,7 +8,7 @@
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	subclass_spellpoints = 21
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
@@ -40,6 +40,17 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
+	)
+
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/arcyne_affinity_t2,
+		),
+		/datum/talent_tree/necromancy = list(
+			/datum/talent_node/necromancy/necromancy_fundamentals,
+		)
 	)
 
 /datum/outfit/job/roguetown/bandit/roguemage/pre_equip(mob/living/carbon/human/H)

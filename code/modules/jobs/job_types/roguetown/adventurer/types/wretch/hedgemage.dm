@@ -27,6 +27,17 @@
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 	)
 
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/arcyne_affinity_t2,
+		),
+		/datum/talent_tree/necromancy = list(
+			/datum/talent_node/necromancy/necromancy_fundamentals,
+		)
+	)
+
 // Hedge Mage on purpose has nearly the same fit as a Adv Mage / Mage Associate who cast conjure armor roundstart. Call it meta disguise.
 /datum/outfit/job/roguetown/wretch/hedgemage/pre_equip(mob/living/carbon/human/H)
 	mask = /obj/item/clothing/mask/rogue/eyepatch // Chuunibyou up to 11.

@@ -227,6 +227,28 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 	)
 
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/fire_fundamentals,
+			/datum/talent_node/arcane/fire_advanced,
+			/datum/talent_node/arcane/spitfire,
+			/datum/talent_node/arcane/message,
+			/datum/talent_node/arcane/arcane_fundamentals,
+			/datum/talent_node/arcane/arcane_advanced,
+			/datum/talent_node/arcane/arcynebolt,
+			/datum/talent_node/arcane/fetch,
+			/datum/talent_node/arcane/counterspell,
+			/datum/talent_node/arcane/repulse,
+			/datum/talent_node/arcane/transmutation_fundamentals,
+			/datum/talent_node/arcane/conjure_armor,
+			/datum/talent_node/arcane/magicians_brick,
+		)
+	)
+
+	subclass_spellpoints = 3
+
 /datum/outfit/job/roguetown/mercenary/grenzelhoft_mage/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You are a Gefechtgelehrter - \"Combat Scholar\" - A proud magos from the Celestial Academy of Magos, who's skills in Siege Magic and Arcyne Physics are unmatched."))
@@ -251,19 +273,7 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind) // State mandated spells c:
-		H.mind.set_spell_mastery("fire", 2)
-		H.mind.set_spell_mastery("arcane", 2)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/artillery)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/repulse)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_armor)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/counterspell)
-		H.mind?.adjust_spellpoints(3)
 	if(H.age == AGE_OLD) // FEAR the old man in a profession where men die young, or something corny like that.
 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 5, TRUE)
 		H.change_stat(STATKEY_SPD, -1)
@@ -271,8 +281,4 @@
 		H.change_stat(STATKEY_CON, -2)
 		H.change_stat(STATKEY_PER, 2)
 		H.change_stat(STATKEY_INT, 2)
-		H.mind?.adjust_spellpoints(3)
-		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
-	else
-		ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC) // Only T2 arcyne (Unless they're old) so if they get spell points from something they can only pick from the curated spellblade list
 	H.merctype = 7

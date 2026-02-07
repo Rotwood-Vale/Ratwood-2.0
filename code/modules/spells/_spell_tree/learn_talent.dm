@@ -388,6 +388,14 @@
 				filter: grayscale(100%);
 			}
 
+			.talent-node.tier-locked {
+				opacity: 0.4;
+				border: 3px solid #dc2626;
+				box-shadow: 0 0 20px rgba(220, 38, 38, 0.8),
+							0 0 40px rgba(220, 38, 38, 0.4),
+							inset 0 0 10px rgba(220, 38, 38, 0.3);
+			}
+
 			.talent-node.available {
 				opacity: 0.8;
 				filter: grayscale(50%);
@@ -629,14 +637,26 @@
 	var/center_x = 0
 	var/center_y = 0
 
+	var/user_spell_tier = 0
+	if(ishuman(user))
+		user_spell_tier = get_user_spell_tier(user)
+
 	for(var/node_type in tree.tree_nodes)
 		var/datum/talent_node/node = new node_type
 		var/is_unlocked = (node_type in tree.unlocked_talents)
 		var/is_available = is_unlocked || tree.can_learn_talent(node)
+		var/is_tier_locked = FALSE
+
+		if(node.spell_type)
+			if(node.spell_type.spell_tier > user_spell_tier)
+				is_tier_locked = TRUE
+				is_available = FALSE
 
 		var/class_list = "talent-node"
 		if(is_unlocked)
 			class_list += " unlocked"
+		else if(is_tier_locked)
+			class_list += " tier-locked"
 		else if(is_available)
 			class_list += " available"
 		else
@@ -646,6 +666,8 @@
 		var/node_y = center_y + node.node_y - 16
 
 		var/list/req_text = list()
+		if(is_tier_locked)
+			req_text += "⚠ Spell Tier Too High"
 		for(var/prereq_type in node.prerequisites)
 			var/datum/talent_node/prereq = new prereq_type
 			var/status = (prereq_type in tree.unlocked_talents) ? "✓" : "✗"

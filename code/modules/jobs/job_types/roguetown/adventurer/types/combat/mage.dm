@@ -7,7 +7,7 @@
 	class_select_category = CLASS_CAT_MAGE
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_PER = 2,
@@ -24,6 +24,14 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+	)
+
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/arcyne_affinity_t2
+		)
 	)
 
 /datum/outfit/job/roguetown/adventurer/mage/pre_equip(mob/living/carbon/human/H)
@@ -61,7 +69,7 @@
 	name = "Spellblade"
 	tutorial = "You are skilled in both the arcyne art and the art of the blade. But you are not a master of either nor could you channel your magick in armor."
 	outfit = /datum/outfit/job/roguetown/adventurer/spellblade
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
+	traits_applied = list(TRAIT_MAGEARMOR)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_INT = 1,
@@ -80,6 +88,17 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 	)
 
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/arcane_fundamentals,
+			/datum/talent_node/arcane/conjuration_fundamentals,
+			/datum/talent_node/arcane/enchant_weapon,
+			/datum/talent_node/arcane/conjure_weapon,
+		)
+	)
+
 /datum/outfit/job/roguetown/adventurer/spellblade/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You are skilled in both the arcyne art and the art of the blade. But you are not a master of either nor could you channel your magick in armor."))
@@ -96,8 +115,6 @@
 	backpack_contents = list(/obj/item/flashlight/flare/torch = 1,)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	if(H.mind)
 		var/weapons = list("Longsword", "Falchion & Wooden Shield", "Messer & Wooden Shield", "Hwando", "Spear", "Whip", "Battle Axe", "Mace")
@@ -153,7 +170,7 @@
 	tutorial = "You belong to a school of bards renowned for their study of both the arcane and the arts."
 	outfit = /datum/outfit/job/roguetown/adventurer/spellsinger
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_EMPATH, TRAIT_GOODLOVER)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_EMPATH, TRAIT_GOODLOVER)
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_SPD = 2,
@@ -171,6 +188,17 @@
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 	)
+
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/conjuration_fundamentals,
+			/datum/talent_node/arcane/enchant_weapon,
+			/datum/talent_node/arcane/conjure_weapon,
+		)
+	)
+
 /datum/outfit/job/roguetown/adventurer/spellsinger/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You belong to a school of bards renowned for their study of both the arcane and the arts."))
@@ -192,8 +220,6 @@
 	I.grant_inspiration(H, bard_tier = BARD_T2)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
@@ -239,7 +265,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 
-	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP) //dodge expert has the potential for being a big pain on spellcasters,  so we take away their mage armor as a trade.
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP) //dodge expert has the potential for being a big pain on spellcasters,  so we take away their mage armor as a trade.
 	subclass_stats = list(
 		STATKEY_STR = -1,
 		STATKEY_INT = 2,
@@ -267,6 +293,14 @@
 		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
 	)
 
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/lesserknock,
+		)
+	)
+
 /datum/outfit/job/roguetown/adventurer/spellthief/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("Some Rogues enhance their fine-honed skills of stealth and agility with spells, learning magical tricks to aid them in their trade. Some use their talents as pickpockets and burglars, while others are pranksters."))
@@ -292,4 +326,3 @@
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery) //it's back. if they become op feintmeisters remove this
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/lesserknock) //they're a magic thief. i mean come on

@@ -89,8 +89,8 @@ SUBSYSTEM_DEF(nightshift)
 		if("dawn")
 			SEND_SIGNAL(src, COMSIG_MOB_DAWNED)
 			if(mind.has_changed_spell)
-				mind.has_changed_spell = FALSE
-				to_chat(mind.current, span_smallnotice("I feel like I can study my tome again..."))
+				mind.has_changed_spell += 1
+				to_chat(mind.current, span_smallnotice("I feel like I can study my tome some more..."))
 		if("day")
 			SEND_SIGNAL(src, COMSIG_MOB_DAYED)
 			if(HAS_TRAIT(src, TRAIT_VAMP_DREAMS))

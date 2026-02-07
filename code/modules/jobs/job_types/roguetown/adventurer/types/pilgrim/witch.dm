@@ -6,7 +6,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/witch
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
-	traits_applied = list(TRAIT_DEATHSIGHT, TRAIT_WITCH, TRAIT_ARCYNE_T1, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_DEATHSIGHT, TRAIT_WITCH, TRAIT_ALCHEMY_EXPERT)
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	subclass_stats = list(
 		STATKEY_INT = 3,
@@ -57,9 +57,9 @@
 	switch (classchoice)
 		if("Old Magick")
 			// the original witch: arcyne t2 (buffed from t1) with 6 spellpoints
-			ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-			H.mind?.adjust_spellpoints(9) // twelve if you pick arcyne potential
+			H.mind?.adjust_spellpoints(22)
 		if("Godsblood")
 			//miracle witch: capped at t2 miracles. cannot pray to regain devo, but has high innate regen because of it (2 instead of 1 from major)
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
@@ -75,7 +75,7 @@
 			D.max_devotion *= 0.5
 			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-			H.mind?.adjust_spellpoints(6) // twelve if you pick arcyne potential
+			H.mind?.adjust_spellpoints(6)
 			neck = /obj/item/clothing/neck/roguetown/psicross/wood
 
 	if(H.mind)
@@ -99,8 +99,6 @@
 
 		switch (classchoice)
 			if("Old Magick")
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize)
 
 	if(H.gender == FEMALE)

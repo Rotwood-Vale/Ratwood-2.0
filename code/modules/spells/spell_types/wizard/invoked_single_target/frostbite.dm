@@ -23,11 +23,12 @@
 	glow_intensity = GLOW_INTENSITY_LOW
 	cost = 3
 	gesture_required = TRUE // Offensive spell
+	school = "ice"
 
 /obj/effect/proc_holder/spell/invoked/frostbite/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
 		var/mob/living/carbon/target = targets[1]
 		target.apply_status_effect(/datum/status_effect/buff/frostbite/) //apply debuff
-		target.adjustFireLoss(12) //damage
-		target.adjustBruteLoss(12)
+		do_spell_damage(user, target, 12, "BURN") //damage
+		do_spell_damage(user, target, 12, "BRUTE")
 		playsound(get_turf(target), 'sound/misc/bamf.ogg', 100, TRUE)

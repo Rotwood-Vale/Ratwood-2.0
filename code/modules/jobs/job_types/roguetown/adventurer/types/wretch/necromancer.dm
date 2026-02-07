@@ -28,6 +28,27 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN, //For lux extractions.
 	)
 
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/arcyne_affinity_t2,
+		),
+		/datum/talent_tree/necromancy = list(
+			/datum/talent_node/necromancy/necromancy_fundamentals,
+			/datum/talent_node/necromancy/necromancy_advanced,
+			/datum/talent_node/necromancy/ray_of_sickness,
+			/datum/talent_node/necromancy/silence,
+			/datum/talent_node/necromancy/wither,
+			/datum/talent_node/necromancy/bonechill,
+			/datum/talent_node/necromancy/eyebite,
+			/datum/talent_node/necromancy/raise_deadite,
+			/datum/talent_node/necromancy/undead_dominion,
+			/datum/talent_node/necromancy/tame_undead,
+			/datum/talent_node/necromancy/raise_undead_formation,
+		)
+	)
+
 /datum/outfit/job/roguetown/wretch/necromancer/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/roguehood/black
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
@@ -58,14 +79,6 @@
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
 		H.set_patron(/datum/patron/inhumen/zizo)
-		H.mind.set_spell_mastery("necromancy", 2)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/eyebite)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/tame_undead)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_guard)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 		wretch_select_bounty(H)
 	H.grant_language(/datum/language/undead)

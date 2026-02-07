@@ -112,10 +112,12 @@
 	if(!open)
 		attack_right(user)
 		return
+/*
 	if(used)
 		to_chat(user, span_warning("I've already studied this tome recently. I need rest before I can focus on it again."))
 		return
-	if(user.mind?.has_changed_spell == TRUE)
+*/
+	if(user.mind?.has_changed_spell > 0)
 		to_chat(user, span_notice("I struggle to study my arcane notes more. Perhaps a good rest would help."))
 		return FALSE
 	on_reading_start(user)
@@ -136,7 +138,7 @@
 		to_chat(user, span_notice("What was that gibberish? Even for the arcyne it was completely illegible!"))
 		recoil(user)
 		return
-	user.mind?.has_changed_spell = TRUE
+	user.mind?.has_changed_spell -= 1
 	var/mob/living/reader = user
 	var/qualityoflearn = (reader.STAINT*2 + (user.get_skill_level(/datum/skill/misc/reading)* 5) + (user.get_skill_level(/datum/skill/magic/arcane)*5))
 /*
@@ -182,15 +184,17 @@
 	spellpoints = CEILING(spellpoints, 1)
 	gamer.mind?.adjust_spellpoints(spellpoints)
 	user.log_message("successfully studied their spellbook and gained spellpoints", LOG_ATTACK, color="orange")
-	onlearned(user)
+	//onlearned(user)
 	if(prob(55))
 		to_chat(user, span_notice("Confounded arcyne mysteries, my notes have gone in circles. I must sleep before I can bring myself to open this damned thing again..."))
 		user.mind?.add_sleep_experience(/datum/skill/misc/reading, reader.STAINT*10)
 	to_chat(user, span_small("My notes include passages I've read before, but don't understand. I must sleep on their meaning..."))
 
+/*
 /obj/item/book/spellbook/proc/onlearned(mob/user)
 	used = TRUE
 	addtimer(CALLBACK(src, PROC_REF(reset_used)), 10 MINUTES)
+*/
 
 /obj/item/book/spellbook/proc/reset_used()
 	used = FALSE

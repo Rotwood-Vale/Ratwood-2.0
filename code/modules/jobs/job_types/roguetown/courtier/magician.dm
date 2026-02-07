@@ -26,7 +26,7 @@
 	// Can't get very far as a magician if you can't chant spells now can you?
 	vice_restrictions = list(/datum/charflaw/mute)
 
-	job_traits = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T4, TRAIT_SEEPRICES, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT, TRAIT_NOBLE)
+	job_traits = list(TRAIT_MAGEARMOR, TRAIT_SEEPRICES, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT, TRAIT_NOBLE)
 	job_subclasses = list(
 		/datum/advclass/courtmage
 	)
@@ -63,6 +63,15 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+	)
+
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/arcyne_affinity_t1,
+			/datum/talent_node/arcane/arcyne_affinity_t2,
+			/datum/talent_node/arcane/arcyne_affinity_t3
+		)
 	)
 
 /datum/outfit/job/roguetown/magician

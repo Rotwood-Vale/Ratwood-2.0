@@ -29,6 +29,20 @@
 		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
 	)
 
+	subclass_talent_trees = list(
+		/datum/talent_tree/arcane = list(
+			/datum/talent_node/arcane/prestidigitation,
+			/datum/talent_node/arcane/fire_fundamentals,
+			/datum/talent_node/arcane/fire_advanced,
+			/datum/talent_node/arcane/spitfire,
+			/datum/talent_node/arcane/fireball,
+			/datum/talent_node/arcane/rebuke,
+			/datum/talent_node/arcane/enhancement_fundamentals,
+			/datum/talent_node/arcane/stoneskin,
+		)
+	)
+
+
 /datum/outfit/job/roguetown/wretch/pyromaniac/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff //wear protection :)
 	mask = /obj/item/clothing/mask/rogue/facemask/
@@ -67,11 +81,4 @@
 			if("LET THERE BE FLAME!!!")
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 2, TRUE)
 				backr = /obj/item/rogueweapon/woodstaff/toper
-				if(H.mind)
-					H.mind.set_spell_mastery("fire", 2)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/rebuke)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stoneskin) // To not be instapaincritted if you accidentally hit yourself
 		wretch_select_bounty(H)
