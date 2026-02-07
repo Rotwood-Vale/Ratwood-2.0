@@ -38665,14 +38665,6 @@
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/outdoors/mountains/decap/gunduzirak/bossarena)
-"iDr" = (
-/obj/structure/mineral_door/wood/fancywood{
-	locked = 1;
-	lockid = "royal","hand";
-	name = "Lord's Apartment"
-	},
-/turf/open/floor/rogue/wood,
-/area/rogue/indoors/town/manor)
 "iDt" = (
 /obj/structure/manaflower,
 /turf/open/floor/rogue/grasscold,
@@ -552498,7 +552490,7 @@ mWk
 aaK
 woG
 uff
-iDr
+gUs
 dLy
 fZT
 qIt
