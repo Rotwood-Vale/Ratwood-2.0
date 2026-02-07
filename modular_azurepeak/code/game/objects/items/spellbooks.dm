@@ -139,6 +139,7 @@
 	user.mind?.has_changed_spell = TRUE
 	var/mob/living/reader = user
 	var/qualityoflearn = (reader.STAINT*2 + (user.get_skill_level(/datum/skill/misc/reading)* 5) + (user.get_skill_level(/datum/skill/magic/arcane)*5))
+/*
 	if(reader.has_status_effect(/datum/status_effect/buff/weed))
 		to_chat(user, span_smallgreen("Swampweed truly does open one's third eye to the secrets of the arcyne..."))
 		qualityoflearn += 10
@@ -147,6 +148,7 @@
 		to_chat(user, span_cultsmall("The rune beneath my feet glows..."))
 		qualityoflearn += rune.spellbonus
 		rune.do_invoke_glow()
+*/
 	if(!isarcyne(user))
 		if (gamer != owner)
 			qualityoflearn = 1
@@ -165,8 +167,18 @@
 	qualityoflearn = qualityoflearn / 100
 	//var/spellpoints = (src.bookquality * qualityoflearn)
 	var/spellpoints = 2
-	if(prob(25))
+	if(reader.has_status_effect(/datum/status_effect/buff/weed))
+		to_chat(user, span_smallgreen("Swampweed truly does open one's third eye to the secrets of the arcyne..."))
 		spellpoints = 3
+	else
+		var/obj/effect/decal/cleanable/roguerune/rune = (locate(/obj/effect/decal/cleanable/roguerune) in range(1, user))
+		if(rune)
+			to_chat(user, span_cultsmall("The rune beneath my feet glows..."))
+			spellpoints = 3
+			rune.do_invoke_glow()
+		else if(prob(25))
+			to_chat(user, span_smallgreen("Eureka! I've made a breakthrough..."))
+			spellpoints = 3
 	spellpoints = CEILING(spellpoints, 1)
 	gamer.mind?.adjust_spellpoints(spellpoints)
 	user.log_message("successfully studied their spellbook and gained spellpoints", LOG_ATTACK, color="orange")
