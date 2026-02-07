@@ -117,7 +117,7 @@
 		to_chat(user, span_warning("I've already studied this tome recently. I need rest before I can focus on it again."))
 		return
 */
-	if(user.mind?.has_changed_spell > 0)
+	if(user.mind?.has_changed_spell == 0)
 		to_chat(user, span_notice("I struggle to study my arcane notes more. Perhaps a good rest would help."))
 		return FALSE
 	on_reading_start(user)
