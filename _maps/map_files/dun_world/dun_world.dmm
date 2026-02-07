@@ -9041,7 +9041,6 @@
 	},
 /obj/machinery/light/rogue/wallfire/candle/l,
 /obj/item/roguekey/armory,
-/obj/item/roguekey/servant,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "bZe" = (
@@ -73567,6 +73566,9 @@
 /obj/item/roguekey/walls,
 /obj/item/roguekey/walls,
 /obj/item/roguekey/walls,
+/obj/item/roguekey/servant,
+/obj/item/roguekey/servant,
+/obj/item/roguekey/servant,
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
 	},
@@ -87892,6 +87894,7 @@
 /obj/item/roguekey/tavernkeep,
 /obj/item/roguekey/tower,
 /obj/item/roguekey/crafterguild,
+/obj/item/roguekey/servant,
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
 	},
