@@ -90,10 +90,14 @@
 	for(var/obj/item/held_thing in user.get_held_items())
 		if(held_thing == parent)
 			return
-		var/datum/component/skill_blessed/skill_comp = held_thing.GetComponent(/datum/component/skill_blessed)
-		if(!skill_comp)
+		var/list/datum/component/skill_blessed/comps = held_thing.GetComponents(/datum/component/skill_blessed)
+		if(!comps)
 			continue
-		other_skill = skill_comp
+		for(var/datum/component/skill_blessed/sb_comp in comps)
+			if(!HAS_TRAIT(user, sb_comp.required_trait))
+				continue
+			other_skill = sb_comp
+			break
 
 	user.adjust_skillrank_down_to(weapon_skill, original_skill, silent = TRUE)
 	to_chat(user, span_info("Another tyme, old friend. ([required_trait])"))

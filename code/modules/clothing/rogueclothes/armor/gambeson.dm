@@ -177,7 +177,7 @@
 	var/shiftable = FALSE
 	armor = ARMOR_PADDED_GOOD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 35
-	prevent_crits = PREVENT_CRITS_MOST
+	prevent_crits = prevent_crits
 	sellprice = 25
 	blocksound = SOFTUNDERHIT
 	blade_dulling = DULLING_BASHCHOP
