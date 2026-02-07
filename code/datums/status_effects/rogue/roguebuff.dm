@@ -93,10 +93,12 @@
 		return
 	var/mob/living/carbon/C = owner
 	
-	var/list/wounds = C.get_wounds()
-	if(wounds.len > 0)
-		C.heal_wounds(healing_on_tick)
-		C.update_damage_overlays()
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
 
 /datum/status_effect/buff/greatmealbuff
 	id = "greatmeal"
@@ -121,10 +123,12 @@
 		return
 	var/mob/living/carbon/C = owner
 	
-	var/list/wounds = C.get_wounds()
-	if(wounds.len > 0)
-		C.heal_wounds(healing_on_tick)
-		C.update_damage_overlays()
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
 
 /datum/status_effect/buff/sweet
 	id = "sugar"
@@ -147,10 +151,12 @@
 		return
 	var/mob/living/carbon/C = owner
 	
-	var/list/wounds = C.get_wounds()
-	if(wounds.len > 0)
-		C.heal_wounds(healing_on_tick)
-		C.update_damage_overlays()
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
 
 /datum/status_effect/buff/druqks
 	id = "druqks"
@@ -1381,10 +1387,12 @@
 		return
 	var/mob/living/carbon/C = owner
 	
-	var/list/wounds = C.get_wounds()
-	if(wounds.len > 0)
-		C.heal_wounds(healing_on_tick)
-		C.update_damage_overlays()
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
 
 /datum/status_effect/buff/seelie_drugs
 	id = "seelie drugs"
@@ -1862,16 +1870,17 @@
 		return
 	var/mob/living/carbon/C = owner
 	
-	// Check if we still have wounds to heal
-	var/list/wounds = C.get_wounds()
-	if(wounds.len > 0)
-		// Heal wounds
-		C.heal_wounds(healing_on_tick)
-		C.update_damage_overlays()
-		
-		// Drain nutrition as cost of healing
-		if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
-			C.adjust_nutrition(-nutrition_drain_per_tick)
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	// Heal wounds
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
+	
+	// Drain nutrition as cost of healing
+	if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
+		C.adjust_nutrition(-nutrition_drain_per_tick)
 
 // Well-Hydrated status effect - gives 0.2 wound healing per tick  
 /datum/status_effect/buff/wellhydrated
@@ -1891,13 +1900,14 @@
 		return
 	var/mob/living/carbon/C = owner
 	
-	// Check if we still have wounds to heal
-	var/list/wounds = C.get_wounds()
-	if(wounds.len > 0)
-		// Heal wounds
-		C.heal_wounds(healing_on_tick)
-		C.update_damage_overlays()
-		
-		// Drain hydration as cost of healing
-		if(!HAS_TRAIT(C, TRAIT_NOHUNGER)) // Using same trait for hydration too
-			C.adjust_hydration(-hydration_drain_per_tick)
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	// Heal wounds
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
+	
+	// Drain hydration as cost of healing
+	if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
+		C.adjust_hydration(-hydration_drain_per_tick)

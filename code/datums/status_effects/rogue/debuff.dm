@@ -21,16 +21,17 @@
 		return
 	var/mob/living/carbon/C = owner
 	
-	// Check if we still have wounds to heal
-	var/list/wounds = C.get_wounds()
-	if(wounds.len > 0)
-		// Heal wounds at reduced rate
-		C.heal_wounds(healing_on_tick)
-		C.update_damage_overlays()
-		
-		// Drain nutrition as cost of healing
-		if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
-			C.adjust_nutrition(-nutrition_drain_per_tick)
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	// Heal wounds at reduced rate
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
+	
+	// Drain nutrition as cost of healing
+	if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
+		C.adjust_nutrition(-nutrition_drain_per_tick)
 
 /datum/status_effect/debuff/hungryt2
 	id = "hungryt2"
@@ -74,16 +75,17 @@
 		return
 	var/mob/living/carbon/C = owner
 	
-	// Check if we still have wounds to heal
-	var/list/wounds = C.get_wounds()
-	if(wounds.len > 0)
-		// Heal wounds at reduced rate
-		C.heal_wounds(healing_on_tick)
-		C.update_damage_overlays()
-		
-		// Drain hydration as cost of healing
-		if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
-			C.adjust_hydration(-hydration_drain_per_tick)
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	// Heal wounds at reduced rate
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
+	
+	// Drain hydration as cost of healing
+	if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
+		C.adjust_hydration(-hydration_drain_per_tick)
 
 /datum/status_effect/debuff/thirstyt2
 	id = "thirsty2"
