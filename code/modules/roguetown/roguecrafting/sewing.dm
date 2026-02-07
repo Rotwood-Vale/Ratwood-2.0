@@ -663,9 +663,9 @@
 /datum/crafting_recipe/roguetown/sewing/hgambeson/fencer
 	name = "fencing shirt"
 	result = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
-	reqs = list(/obj/item/natural/cloth = 4,
+	reqs = list(/obj/item/natural/cloth = 5,
 				/obj/item/natural/silk = 2)
-	craftdiff = 5
+	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/sewing/chaperon
 	name = "chaperon hat"

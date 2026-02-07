@@ -174,8 +174,23 @@
 	altdetail_color = "#c08955"
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"
-	shiftable = FALSE
+	var/shiftable = FALSE
+	armor = ARMOR_PADDED_GOOD
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 35
+	prevent_crits = PREVENT_CRITS_MOST
+	sellprice = 25
+	blocksound = SOFTUNDERHIT
+	blade_dulling = DULLING_BASHCHOP
+	break_sound = 'sound/foley/cloth_rip.ogg'
+	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
+	sewrepair = TRUE
+	cold_protection = 10
 	var/picked = FALSE
+
+/obj/item/clothing/suit/roguetown/shirt/freifechter/shepherd
+	name = "shepherd's shirt"
+	desc = "A strong loosely worn quilted shirt that places little weight on the arms."
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 35
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/attack_right(mob/user)
 	..()
@@ -213,7 +228,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
 	name = "padded caftan"
-	desc = "A long overcoat commonly worn in Naledi, Kazengun, Gronn and Aavnr - but mostly associated with steppesmen and raiders. This specific kind rivals a gambeson in protection."
+	desc = "A long overcoat commonly worn in Naledi, Kazengun, and Aavnr - but mostly associated with steppesmen. This specific kind rivals a padded gambeson in protection."
 	icon_state = "chargah"
 	color = "#ffffff"
 	boobed = TRUE

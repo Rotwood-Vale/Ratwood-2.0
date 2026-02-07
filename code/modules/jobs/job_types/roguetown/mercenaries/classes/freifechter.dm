@@ -1,14 +1,16 @@
 /datum/advclass/mercenary/freelancer
-	name = "Freifechter"
-	tutorial = "You are a graduate of the Aavnic Freifechters - \"Freelancers\" - a prestigious fighting guild localized in the independent City-state of Szöréndnížina, recognized as an encomium to Ravox by the Holy See. It has formed an odd thirty yils ago, but its visitors come from all over Western Psydonia. You have swung one weapon ten-thousand times, and not the other way around. This class is for experienced combatants who have a solid grasp on footwork and stamina management, master skills alone won't save your lyfe."
+	name = "Freifechter Fencer"
+	tutorial = "You are a graduate of the Aavnic Freifechters - \"Freelancers\" - part of a prestigious fighting guild localized in the independent City-state of Szöréndnížina. It has formed an odd thirty yils ago, but its visitors come from all over Western Psydonia. You have swung one weapon ten-thousand times, and not the other way around. Your faith is stalwart in the teachings of the Psydonic Reformation, and you've become a warrior poet of sorts - educating the peasantry in the ways of the New Word and angering the Orthodoxy in turn. You've left your cradle in search of riches to fund your people's armies."
+	extra_context = "This class is for experienced players who have a solid grasp on footwork and stamina management, master skills alone won't save your lyfe. You make up for your inherent weaknesses and limitations with \"master strike\" mechanics."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/freelancer
 	subclass_languages = list(/datum/language/aavnic)//Your character could not have possibly "graduated" without atleast some basic knowledge of Aavnic.
+	allowed_patrons = list(/datum/patron/old_god)
 	class_select_category = CLASS_CAT_AAVNR
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_noble.ogg'
-	traits_applied = list(TRAIT_BADTRAINER)
+	traits_applied = list(TRAIT_BADTRAINER, TRAIT_INTELLECTUAL, TRAIT_LONGSWORDSMAN, TRAIT_FENCERDEXTERITY)
 	//To give you an edge in specialty moves like feints and stop you from being feinted
 	subclass_stats = list(
 		STATKEY_INT = 4,

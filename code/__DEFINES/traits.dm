@@ -61,6 +61,9 @@
 #define TRAIT_WOODSMAN "Talented Woodsman"
 #define TRAIT_LAMIAN_TAIL "Lamian Tail"
 #define TRAIT_DUNGEONMASTER "Ruthless Jailor"
+#define TRAIT_SKILLBLESSED "Skill Blessed"
+#define TRAIT_LONGSWORDSMAN "Master Longswordman"
+#define TRAIT_SABRIST "Renowned Sabrist"
 #define TRAIT_DEATHBARGAIN "Death Bargain" // Used by UNDERMAIDEN'S BARGAIN
 #define TRAIT_RITUALIST "Ritualist"  // Allows use of ritual chalk
 #define TRAIT_INQUISITION "Otavan Adherent"
@@ -94,7 +97,7 @@
 #define TRAIT_SIMPLESPEECH "Simple Speech" // Can only say the 1000 most common English-language words; other words get modified
 #define TRAIT_BLOODPOOL_BORN "Bloodpool Born"
 #define TRAIT_ROYALSERVANT "Household Insight" // Let's you see the royals liked/hated food/drink
-#define TRAIT_WAGES_SUSPENDED "Wages Suspended" //Stops nerve master daily pay for this guy
+#define TRAIT_WAGES_SUSPENDED "Wages Suspended" //Stops nerve master daily pay for this sucker
 #define TRAIT_SCALEARMOR "Weathered Scales"//Mage armor, refluffed to scales.
 
 //Hearthstone port (Tracking)
@@ -312,6 +315,9 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_DISGRACED_NOBLE = span_warning("I was a scion of a noble house... long ago."),
 	TRAIT_EMPATH = span_info("I can notice when people are in pain."),
 	TRAIT_BREADY = span_info("Defensive stance does not passively fatigue me. I regain energy slowly over time."),
+	TRAIT_SKILLBLESSED = span_greentext("I've reunited with an old friend of mine. All is well."),
+	TRAIT_LONGSWORDSMAN = span_info("\"I will crush anyone who opposes me. I am of royal blood. I dispense justice, advance the cause of good and destroy evil. To those who learn my crossings I will grant great fame and renown in the art of armed fighting.\" - I fight like a Master when I wield any longsword, though I can only perform master strikes with a perfectly balanced basket-hilted or reformist longsword."),
+	TRAIT_SABRIST = span_info("I've learned all there is to know about the Southern curve. When using a szöréndnížine sabre, I fight like a Master. My swings are innately more accurate when targetting hands and arms."),
 	TRAIT_MEDIUMARMOR = span_info("I can move freely in medium armor."),
 	TRAIT_HEAVYARMOR = span_info("I can move freely in heavy armor."),
 	TRAIT_DODGEEXPERT = span_info("I am much better at dodging incoming strikes, when dressed in either light armor or nothing at all. Heavier armor, such as maille or plate, is too burdensome for me to quickly maneuver in."),
