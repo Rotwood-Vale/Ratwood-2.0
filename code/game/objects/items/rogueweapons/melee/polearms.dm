@@ -21,7 +21,6 @@
 	desc = "Thrust your pike forward from its furthest end to reach farther ahead than any spear ever could. Only effective at three paces."
 	damfactor = 1.15
 	reach = 3
-	effective_range = 3
 	clickcd = CLICK_CD_CHARGED + 1
 	swingdelay = 1.5
 
@@ -32,9 +31,7 @@
 	swingdelay = 5
 	damfactor = 1.5
 	penfactor = 35
-	max_intent_damage = 54
 	reach = 2
-	effective_range = 2
 	icon_state = "inlance"
 	attack_verb = list("lances", "runs through", "skewers")
 

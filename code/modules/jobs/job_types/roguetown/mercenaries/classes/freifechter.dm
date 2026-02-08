@@ -31,10 +31,13 @@
 
 /datum/outfit/job/roguetown/mercenary/freelancer/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a master in the arts of the longsword. Wielder of Psydonia's most versatile and noble weapon, you needn't anything else. Your professionally made longsword facilitates moves from fechtbuchs the likes of The Etruscan Flower and Grenzelhoft's Wiedenhauer."))	l_hand = /obj/item/rogueweapon/scabbard/sword
+	to_chat(H, span_warning("You are a master in the arts of the longsword. Wielder of Psydonia's most versatile and noble weapon, you needn't anything else. Your professionally made longsword facilitates moves from fechtbuchs the likes of The Etruscan Flower and Grenzelhoft's Wiedenhauer."))
+	l_hand = /obj/item/rogueweapon/scabbard/sword
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer	//Experimental.
-	var/weapons = list("Etruscan Longsword", "Kriegsmesser", "Reformist Longsword")	if(H.mind)
-		var/weapon_choice = input(H, "Draw a sword.", "As presented to me by Master Oktawiusz...") as anything in weapons		switch(weapon_choice)
+	var/weapons = list("Etruscan Longsword", "Kriegsmesser", "Reformist Longsword")	
+	if(H.mind)
+		var/weapon_choice = input(H, "Draw a sword.", "As presented to me by Master Oktawiusz...") as anything in weapons		
+		switch(weapon_choice)
 			if("Kriegsmesser")		//Och- eugh- German!
 				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
 				beltr = /obj/item/rogueweapon/katar/punchdagger/frei
@@ -48,7 +51,7 @@
 		if(H.mind)
 			var/armors = list(
 				"Fencing Jacket"	= /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter,
-				"Fencing Cuirass"	= /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer
+				"Fencing Cuirass"	= /obj/item/clothing/suit/roguetown/armor/plate/half/fencer
 			)
 			var/armorchoice = input(H, "Don your armour.", "Security or Flexibility?") as anything in armors
 			armor = armors[armorchoice]
@@ -63,9 +66,9 @@
 
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
-		/obj/item/natural/bundle/cloth/bandage/full = 1
-		/obj/item/storage/belt/rogue/pouch/coins/poor,
-		/obj/item/rogueweapon/scabbard/sheath
+		/obj/item/natural/bundle/cloth/bandage/full = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/rogueweapon/scabbard/sheath = 1
 		)	
 	H.merctype = 6
 
@@ -73,7 +76,8 @@
 	name = "Lancer"
 	name = "Freifechter Lancer"
 	tutorial = "You are a graduate of the Aavnic Freifechters - \"Freelancers\" - part of a prestigious fighting guild localized in the independent City-state of Szöréndnížina. It has formed an odd thirty yils ago, but its visitors come from all over Western Psydonia. You have swung one weapon ten-thousand times, and not the other way around. A Lancer and his pike are inseparable, and the first line of offense. You can choose to display the banners of the Reformist Order or your own State."
-	extra_context = "This class is for experienced players who have a solid grasp on footwork and stamina management, master skills alone won't save your lyfe. You make up for your inherent weaknesses and limitations with unique high-durability weapons."	outfit = /datum/outfit/job/roguetown/mercenary/freelancer_lancer
+	extra_context = "This class is for experienced players who have a solid grasp on footwork and stamina management, master skills alone won't save your lyfe. You make up for your inherent weaknesses and limitations with unique high-durability weapons."
+	outfit = /datum/outfit/job/roguetown/mercenary/freelancer_lancer
 	subclass_languages = list(/datum/language/aavnic)//Your character could not have possibly "graduated" without atleast some basic knowledge of Aavnic.
 	allowed_patrons = list(/datum/patron/old_god)
 	traits_applied = list(TRAIT_BADTRAINER, TRAIT_FENCERDEXTERITY, TRAIT_INTELLECTUAL)
@@ -98,11 +102,13 @@
 
 /datum/outfit/job/roguetown/mercenary/freelancer_lancer/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You put complete trust in your polearm, the most effective weapon the world has seen. Why wear armour when you cannot be hit? You can choose to display the banners of the Reformist Order or your own State."))	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter
+	to_chat(H, span_warning("You put complete trust in your polearm, the most effective weapon the world has seen. Why wear armour when you cannot be hit? You can choose to display the banners of the Reformist Order or your own State."))
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	var/weapons = list("Graduate's Spear", "Banner of Szöréndnížina", "Banner of Psydonic Reformism")
 	if(H.mind)
 		var/weapon_choice = input(H, "Spear or Pike-Banner?", "As presented to me by Lance-Master Szörénsław...") as anything in weapons
+		switch(weapon_choice)
 			if("Graduate's Spear")		//A steel spear with a cool-looking stick & a banner sticking out of it.
 				r_hand = /obj/item/rogueweapon/spear/boar/frei
 				l_hand = /obj/item/rogueweapon/katar/punchdagger/frei
@@ -120,18 +126,12 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter
 	backr = /obj/item/storage/backpack/rogue/satchel/short
-
-	backpack_contents = list(
-		/obj/item/roguekey/mercenary,
-		/obj/item/storage/belt/rogue/pouch/coins/poor
-	)
-	H.merctype = 6
-
 	neck = /obj/item/clothing/neck/roguetown/psicross/reform
 
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
-		/obj/item/natural/bundle/cloth/bandage/full = 1
+		/obj/item/natural/bundle/cloth/bandage/full = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
 	H.merctype = 6
 
@@ -154,7 +154,7 @@
 		STATKEY_SPD = 2
 	)
 	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -171,7 +171,7 @@
 	if(H.mind)
 		var/armors = list(
 		"Fencing Jacket"	= /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter,
-		"Fencing Cuirass"	= /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer
+		"Fencing Cuirass"	= /obj/item/clothing/suit/roguetown/armor/plate/half/fencer
 		)
 		var/armorchoice = input(H, "Don your armour.", "Security or Flexibility?") as anything in armors
 		armor = armors[armorchoice]
