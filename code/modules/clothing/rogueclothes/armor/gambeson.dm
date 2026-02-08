@@ -174,10 +174,10 @@
 	altdetail_color = "#c08955"
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"
-	var/shiftable = FALSE
+	shiftable = FALSE
 	armor = ARMOR_PADDED_GOOD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 35
-	prevent_crits = prevent_crits
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
 	sellprice = 25
 	blocksound = SOFTUNDERHIT
 	blade_dulling = DULLING_BASHCHOP

@@ -487,6 +487,13 @@
 	icon_state = "fencercuirass"
 	item_state = "fencercuirass"
 
+/obj/item/clothing/suit/roguetown/armor/plate/half/fencer/ComponentInitialize()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP, 12)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_HONORBOUND)
+
+
+
 /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
 	name = "psydonic chestplate"
 	desc = "An expertly smithed form-fitting steel cuirass that is much lighter and agile, but breaks with much more ease. It's thinner, but backed with silk and leather."

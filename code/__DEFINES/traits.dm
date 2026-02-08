@@ -67,6 +67,7 @@
 #define TRAIT_ARMOUR_LIKED "Fitting Armour"
 #define TRAIT_ARMOUR_DISLIKED "Misfitting Armour"
 #define TRAIT_FENCERDEXTERITY "Fencer's Dexterity"
+#define TRAIT_HONORBOUND "Honorbound" // no idea what this trait even is
 #define TRAIT_DEATHBARGAIN "Death Bargain" // Used by UNDERMAIDEN'S BARGAIN
 #define TRAIT_RITUALIST "Ritualist"  // Allows use of ritual chalk
 #define TRAIT_INQUISITION "Otavan Adherent"

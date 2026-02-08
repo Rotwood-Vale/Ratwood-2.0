@@ -193,7 +193,7 @@
 	neck = /obj/item/clothing/neck/roguetown/fencerguard/generic
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
-	shoes = /obj/item/clothing/shoes/roguetown/grenzelhoft
+	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	backl = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather
 	backpack_contents = list(

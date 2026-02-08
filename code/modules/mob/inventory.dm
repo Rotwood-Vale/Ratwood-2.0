@@ -47,6 +47,12 @@
 /mob/proc/has_active_hand()
 	return has_hand_for_held_index(active_hand_index)
 
+/mob/proc/get_held_items()
+	var/list/obj/item/held_item = list()
+	held_item += get_active_held_item()
+	held_item += get_inactive_held_item()
+
+	return held_item
 
 //Finds the first available (null) index OR all available (null) indexes in held_items based on a side.
 //Lefts: 1, 3, 5, 7...
