@@ -100,7 +100,7 @@
 	subclass_stats = list(
 		STATKEY_WIL = 2,
 		STATKEY_PER = 2,
-		STATKEY_INT = 2,
+		STATKEY_CON = 1,
 	)
 
 	subclass_skills = list(
@@ -147,10 +147,8 @@
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander2.ogg'
 	traits_applied = list(TRAIT_INTELLECTUAL, TRAIT_FENCERDEXTERITY)
 	subclass_stats = list(
-		STATKEY_INT = 1,
-		STATKEY_PER = 1,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
+		STATKEY_INT = 2,
+		STATKEY_PER = 3,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
