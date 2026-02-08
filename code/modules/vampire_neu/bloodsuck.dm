@@ -51,9 +51,15 @@
 	log_combat(src, victim, "drank blood from ")
 
 	if(!VDrinker)
-		if(!HAS_TRAIT(src, TRAIT_HORDE))
+		if(!HAS_TRAIT(src, TRAIT_HORDE) && !HAS_TRAIT(src, TRAIT_HEMOPHAGE))
 			to_chat(src, span_warning("I'm going to puke..."))
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(8 SECONDS, 15 SECONDS))
+		if(HAS_TRAIT(src, TRAIT_HEMOPHAGE) && ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.adjust_nutrition(35)
+			H.adjust_hydration(35)
+			if(H.blood_volume < BLOOD_VOLUME_NORMAL)
+				H.blood_volume = min(H.blood_volume + 35, BLOOD_VOLUME_NORMAL)
 		return
 
 	if(victim.mind?.has_antag_datum(/datum/antagonist/werewolf) || (victim.stat != DEAD && victim.mind?.has_antag_datum(/datum/antagonist/zombie)))
@@ -134,6 +140,9 @@
 		sire.adjust_bloodpool(VITAE_PER_UNIQUE_CONVERSION_REJECT)
 		ADD_TRAIT(src, TRAIT_REFUSED_VAMP_CONVERT, REF(sire))
 		return
+
+	if(sire.stat == DEAD) // If you accept the prompt as a corpse, you get turned into a corpse vampire, which RR's you pretty much
+		return FALSE
 
 	fully_heal(TRUE, FALSE)
 	visible_message(span_danger("Some dark energy begins to flow from [sire] into [src]..."))

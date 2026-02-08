@@ -1,7 +1,7 @@
 //The antipope. Except not really. Charlatan that pushes forward the idea that the Inhumen are superior, or something.
-//Locked to Inhumen specifically so this gimmick works. Just a middling miraclist/mage with HANDS.
+//Locked to Inhumen specifically so this gimmick works. Just a middling miraclist with HANDS.
 //Gets the ability to torture, recycled from normal heretic, combined with EVIL sermons.
-//Think Iconoclast, but not actually THAT cracked for unarmed, and a few other gimmicks.
+//It doesn't get any actual, proper combat skills, now. Lets hope that sees to it not being as funny.
 #define EVIL_PRIEST_SERMON_COOLDOWN (30 MINUTES)
 /datum/advclass/wretch/antipope
 	name = "Doomsayer"
@@ -11,8 +11,8 @@
 	outfit = /datum/outfit/job/roguetown/wretch/antipope
 	cmode_music = 'sound/music/combat_holy.ogg'
 	category_tags = list(CTAG_WRETCH)
-//Resonance to harm their undead will be funny. Trust. Seer to see other Inhumen.
-	traits_applied = list(TRAIT_HERETIC_SEER, TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_RESONANCE, TRAIT_ARCYNE_T2, TRAIT_OVERTHERETIC)
+//Seer to see other Inhumen.
+	traits_applied = list(TRAIT_HERETIC_SEER, TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_RESONANCE, TRAIT_OVERTHERETIC)
 //Inverse of Priest. Kind of? STR instead of INT. CON/SPD instead of WIL.
 	subclass_stats = list(
 		STATKEY_STR = 4,//No armour skill. No DE/CR. Gains for Graggar.
@@ -20,16 +20,13 @@
 		STATKEY_SPD = 2,
 	)
 	maximum_possible_slots = 1//There can only be one antipope.
-	subclass_spellpoints = 3//TRUST THE PROCESS. 6 with the virtue.
 	subclass_skills = list(//Priest but not. Unlike the stats, we don't want to invert that. This'll be funny.
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,//You get HANDS. LAY THEM ON.
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,//Show them who's the boss, buddy.
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
 	)
 	extra_context = "Inhumen exclusive. No wretch bounty, for the purpose of infiltration and doomsaying. Given EVIL sermon abilities, torture and other quirks."
 
@@ -46,17 +43,13 @@
 	gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/rogueweapon/knuckles
-	beltl = /obj/item/storage/magebag
+	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/woodstaff/toper
+	backr = /obj/item/rogueweapon/woodstaff/quarterstaff
 	backpack_contents = list(
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
-		/obj/item/roguegem/amethyst = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/ritechalk = 1,
-		/obj/item/chalk = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 	)
 
@@ -66,6 +59,8 @@
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence)//Shut that guy up!
+	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nondetection)//For the purposes of meeting folks.
+	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/message)//See above.
 	H.verbs |= /mob/living/carbon/human/proc/completesermon_evil
 	H.verbs |= /mob/living/carbon/human/proc/revelations
 
