@@ -1,11 +1,4 @@
-///number of deciseconds in a day
-#define MIDNIGHT_ROLLOVER 864000
-
-///displays the current time into the round, with a lot of extra code just there for ensuring it looks okay after an entire day passes
-#define ROUND_TIME(...) ( "[world.time - SSticker.round_start_time > MIDNIGHT_ROLLOVER ? "[round((world.time - SSticker.round_start_time)/MIDNIGHT_ROLLOVER)]:[worldtime2text()]" : worldtime2text()]" )
-
-///Returns the time that has passed since the game started
-#define STATION_TIME_PASSED(...) (world.time - SSticker.round_start_time)
+#define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
 #define JANUARY		1
 #define FEBRUARY	2
@@ -29,6 +22,11 @@
 #define CHRISTMAS				"Christmas"
 #define FESTIVE_SEASON			"Festive Season"
 
+#define TOD_NIGHT	"night"
+#define TOD_DAWN	"dawn"
+#define TOD_DAY		"day"
+#define TOD_DUSK	"dusk"
+
 /*
 
 Days of the week to make it easier to reference them.
@@ -38,21 +36,29 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 */
 
 #define MONDAY		"Mon"
-#define TUESDAY	"Tue"
+#define TUESDAY		"Tue"
 #define WEDNESDAY	"Wed"
 #define THURSDAY	"Thu"
 #define FRIDAY		"Fri"
 #define SATURDAY	"Sat"
 #define SUNDAY		"Sun"
 
-#define SECONDS *10
+#define MILLISECONDS * 0.01
 
-#define MINUTES SECONDS*60
+#define DECISECONDS * 1 //the base unit all of these defines are scaled by, because byond uses that as a unit of measurement for some fucking reason
 
-#define HOURS MINUTES*60
+#define SECONDS * 10
 
-#define TICKS *world.tick_lag
+#define MINUTES SECONDS * 60
+
+#define HOURS MINUTES * 60
+
+#define TICKS * world.tick_lag
 
 #define DS2TICKS(DS) ((DS)/world.tick_lag)
 
 #define TICKS2DS(T) ((T) TICKS)
+
+#define MS2DS(T) ((T) MILLISECONDS)
+
+#define DS2MS(T) ((T) * 100)
