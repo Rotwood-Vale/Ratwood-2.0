@@ -35,6 +35,10 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 
 */
 
+///Returns the time that has passed since the game started
+#define STATION_TIME_PASSED(...) (world.time - SSticker.round_start_time)
+
+
 #define MONDAY		"Mon"
 #define TUESDAY		"Tue"
 #define WEDNESDAY	"Wed"
