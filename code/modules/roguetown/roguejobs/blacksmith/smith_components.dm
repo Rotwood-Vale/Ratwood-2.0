@@ -35,6 +35,8 @@
 /datum/component/forging/proc/on_quenched(obj/item/source, mob/living/user, turf/used_turf)
 	SIGNAL_HANDLER
 	handle_creation(used_turf, user)
+	// Clean up the original workpiece
+	qdel(parent)
 
 /datum/component/forging/proc/set_recipe(recipe_path)
 	var/datum/anvil_recipe/original_recipe = locate(recipe_path) in GLOB.anvil_recipes
@@ -264,5 +266,4 @@
 			var/obj/item/lockpick/L = I
 			L.picklvl = modifier
 
-	// Clean up the original workpiece
-	qdel(parent)
+
