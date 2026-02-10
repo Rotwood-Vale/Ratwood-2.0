@@ -443,7 +443,6 @@
 
 	unbuckle_all_mobs(force=1)
 
-	. = ..()
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
 		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
@@ -466,6 +465,7 @@
 		orbiting = null
 
 	LAZYNULL(client_mobs_in_contents)
+	return ..()
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()
