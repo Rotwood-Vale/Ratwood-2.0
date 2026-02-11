@@ -107,7 +107,7 @@
 	blade_class = BCLASS_BLUNT
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	damfactor = 0.9
-	swingdelay = 3.5
+	swingdelay = 4
 	clickcd = 10
 	recovery = 15
 	item_d_type = "blunt"
@@ -139,8 +139,8 @@
 	intent_effect = /datum/status_effect/debuff/dazed/longsword
 	target_parts = list(BODY_ZONE_PRECISE_NOSE)
 	damfactor = 0.9
-	clickcd = 14
-	swingdelay = 3.5
+	clickcd = 13
+	swingdelay = 3
 
 /datum/intent/effect/daze/longsword2h
 	name = "zorn ort"
