@@ -12,6 +12,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	selection_color = JCOLOR_NOBLE
 	allowed_races = RACES_TOLERATED_UP
 	allowed_sexes = list(MALE, FEMALE)
+	allowed_patrons = NON_PSYDON_PATRONS	//You are the lord of the Vale, crowned by Astrata. Inhumen worshippers have to at least hide their true beliefs - you should too
 	advclass_cat_rolls = list(CTAG_LORD = 20)
 
 	spells = list(
