@@ -838,11 +838,6 @@
 /obj/item/rogue/instrument/lute,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/cell)
-"aoa" = (
-/obj/structure/underworld/barrier,
-/obj/structure/underworld/barrier,
-/turf/open/floor/rogue/underworld/road,
-/area/rogue/underworld/adventurespawn)
 "aob" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/transparent/openspace,
@@ -8676,11 +8671,6 @@
 "cHf" = (
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church)
-"cHh" = (
-/obj/structure/underworld/barrier,
-/obj/structure/underworld/barrier,
-/turf/open/floor/rogue/churchrough,
-/area/rogue/underworld/adventurespawn)
 "cHl" = (
 /obj/item/flashlight/flare/torch/metal,
 /obj/structure/closet/crate/roguecloset{
@@ -24725,11 +24715,6 @@
 /obj/item/natural/stone,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/bograt/above)
-"htt" = (
-/turf/open/floor/rogue/churchrough,
-/area/rogue/underworld{
-	first_time_text = "wayfarer's dream"
-	})
 "htA" = (
 /obj/machinery/light/roguestreet/orange{
 	dir = 1;
@@ -31221,7 +31206,6 @@
 "jsl" = (
 /obj/structure/flora/roguetree/underworld,
 /obj/structure/underworld/barrier,
-/obj/structure/underworld/barrier,
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
 "jsq" = (
@@ -34679,11 +34663,6 @@
 	},
 /turf/open/water/swamp,
 /area/rogue/indoors/shelter/mountains)
-"kwk" = (
-/obj/structure/flora/roguetree/underworld,
-/obj/structure/underworld/barrier,
-/turf/open/floor/rogue/underworld/road,
-/area/rogue/underworld/adventurespawn)
 "kws" = (
 /obj/structure/mineral_door/wood/violet,
 /turf/open/floor/rogue/cobble/mossy,
@@ -48841,11 +48820,6 @@
 	dir = 1
 	},
 /area/rogue/indoors/town/church/chapel)
-"oVf" = (
-/obj/structure/underworld/barrier,
-/obj/structure/far_travel,
-/turf/open/floor/rogue/churchrough,
-/area/rogue/underworld/adventurespawn)
 "oVi" = (
 /obj/structure/closet/crate/chest{
 	lockid = "bog_gatehouse"
@@ -521438,9 +521412,9 @@ jcS
 jcS
 jnZ
 jsl
-uxY
-wMe
-uxY
+vqs
+dec
+vqs
 uxY
 jcS
 syY
@@ -523580,7 +523554,7 @@ fyc
 syY
 syY
 fmP
-kwk
+jsl
 jhV
 jhV
 jhV
@@ -523597,9 +523571,9 @@ vjJ
 uxY
 uxY
 jcS
-jsl
-cHh
-dec
+jcS
+wMe
+wMe
 wMe
 uxY
 jcS
@@ -524032,7 +524006,7 @@ uxY
 qLk
 ckz
 ckz
-htt
+ckz
 uxY
 jcS
 syY
@@ -525761,7 +525735,7 @@ uxY
 wMe
 wMe
 wMe
-vqs
+uxY
 jcS
 syY
 vIa
@@ -526170,9 +526144,9 @@ fyc
 "}
 (17,1,5) = {"
 syY
-kwk
-kwk
-kwk
+jsl
+jsl
+jsl
 rLc
 loh
 hSs
@@ -526193,7 +526167,7 @@ uxY
 wMe
 wMe
 dsZ
-vqs
+uxY
 jcS
 syY
 vIa
@@ -526624,9 +526598,9 @@ uDi
 wMe
 wMe
 wMe
-oVf
-aoa
-kwk
+dsZ
+uxY
+jsl
 syY
 vIa
 vIa
@@ -527057,7 +527031,7 @@ wMe
 wMe
 wMe
 wMe
-aoa
+uxY
 jcS
 syY
 vIa
@@ -527489,7 +527463,7 @@ qLk
 wMe
 wMe
 uxY
-vqs
+uxY
 jcS
 syY
 vIa
@@ -527918,10 +527892,10 @@ wMe
 wMe
 uxY
 jcS
-dec
-dec
-vqs
-vqs
+wMe
+wMe
+uxY
+uxY
 jcS
 syY
 vIa
@@ -528781,12 +528755,12 @@ uxY
 uxY
 wMe
 uxY
-jcS
-uxY
-uxY
-wMe
-jcS
-jcS
+jsl
+vqs
+vqs
+dec
+jsl
+jsl
 syY
 vIa
 vIa
@@ -529213,7 +529187,7 @@ jcS
 jcS
 wMe
 uxY
-jcS
+jsl
 uxY
 wMe
 uxY
@@ -529645,7 +529619,7 @@ jcS
 uxY
 wMe
 uxY
-jcS
+jsl
 uxY
 wMe
 wMe
@@ -530077,7 +530051,7 @@ jcS
 jnZ
 qoB
 jnZ
-jcS
+jsl
 wMe
 uxY
 pKA
@@ -530509,7 +530483,7 @@ jcS
 jcS
 jcS
 jcS
-jcS
+jsl
 pKA
 hNI
 wMe
