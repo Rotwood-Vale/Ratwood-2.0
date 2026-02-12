@@ -143,12 +143,12 @@
 
 /obj/structure/fluff/walldeco/psybanner
 	name = "banner"
-	desc = "A banner of the Holy Ferentian Inquisition. It was founded twenty years ago after the ascent of Queen Alexia I. Modelled off of the Otavan Inquisition, it enjoys close ties with its foreign counterpart in the name of rooting out heresy and warding off the encroaching darkness."
+	desc = "A banner of the Holy Otavan Inquisition."
 	icon_state = "Psybanner-PURPLE"
 
 /obj/structure/fluff/walldeco/psybanner/red
 	name = "banner"
-	desc = "A banner of the Holy Ferentian Inquisition. It was founded twenty years ago after the ascent of Queen Alexia I. Modelled off of the Otavan Inquisition, it enjoys close ties with its foreign counterpart in the name of rooting out heresy and warding off the encroaching darkness."
+	desc = "A banner of the Holy Otavan Inquisition."
 	icon_state = "Psybanner-RED"
 
 /obj/structure/fluff/walldeco/stone
