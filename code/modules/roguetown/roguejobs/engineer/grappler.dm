@@ -125,7 +125,7 @@ Reel teleports the attached atom to the grabbed turf.
 		if(attached && in_use)
 			if(get_dist(attached, grappled_turf) <= (user.z != grappled_turf.z ? max_range_z : max_range_noz))
 				user.visible_message("[user] reels in the [src]!")
-				if(do_after(user, 10))
+				if(do_after(user, 30))
 					reel()
 			else
 				to_chat(user, span_info("[attached] is too far!"))
@@ -308,7 +308,7 @@ Reel teleports the attached atom to the grabbed turf.
 		if(attached && in_use)
 			if(get_dist(attached, grappled_turf) <= (user.z != grappled_turf.z ? max_range_z : max_range_noz))
 				user.visible_message("[user] reels in \the [src]!")
-				if(do_after(user, 10))
+				if(do_after(user, 30))
 					reel()
 			else
 				to_chat(user, span_info("[target] is too far!"))
