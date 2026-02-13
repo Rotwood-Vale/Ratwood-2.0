@@ -256,9 +256,7 @@
 				///	I.polished = 4									You want it polished?
 				///	I.AddComponent(/datum/component/metal_glint) 	Buy a polishing kit then.
 
-		if(modifier <= 0.9)
-			I.max_integrity *= modifier
-		if(modifier >= 1.1)
+		if(modifier < 1)
 			I.max_integrity *= modifier
 
 		I.sellprice *= modifier
