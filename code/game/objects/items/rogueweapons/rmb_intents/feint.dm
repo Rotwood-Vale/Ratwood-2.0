@@ -90,7 +90,6 @@
 				if(prob(FEINT_CLASH_CHANCE))
 					playsound(src, 'sound/combat/clash_struck.ogg', 100)
 					HU.clash(HT, IU, IT) // With the feinter having the initiator bonus
-					return
 
 	HT.apply_status_effect(/datum/status_effect/debuff/exposed, 5 SECONDS)
 	HT.apply_status_effect(/datum/status_effect/debuff/clickcd, max(1.5 SECONDS + skill_factor, 2.5 SECONDS))
