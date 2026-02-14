@@ -87,7 +87,7 @@
 	if(istype(HT.rmb_intent, /datum/rmb_intent/feint)) // Feint-on-feint violence!!! If the target is on feint intent, you have a 50% to clash.
 		if(IU && IT)
 			if(ishuman(HU) && ishuman(HT))
-				if(prob(FEINT_CLASH_CHANCE + WILDCARD_BONUS))
+				if(prob(FEINT_CLASH_CHANCE))
 					playsound(src, 'sound/combat/clash_struck.ogg', 100)
 					HU.clash(HT, IU, IT) // With the feinter having the initiator bonus
 					return
