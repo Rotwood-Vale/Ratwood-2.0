@@ -1,4 +1,10 @@
-#define CMODE_TIME_BUFFER 15 SECONDS
+#define FEINT_BASE 50
+#define INT_PERCENTAGE_BONUS 10
+#define WILDCARD_BONUS 10
+#define SKILL_PERCENTAGE_BONUS 15
+#define FEINT_MAX_CHANCE 95
+#define FEINT_MIN_CHANCE 5
+#define FEINT_CLASH_CHANCE 50
 
 /datum/rmb_intent/feint
 	name = "feint"
@@ -18,62 +24,73 @@
 		return
 
 	var/mob/living/HT = target
-	var/mob/living/HU = user
+	var/mob/living/carbon/human/HU = user
 
-	// Riposte counters feint, but if an active riposte is up, feint counters it.
-	if(HT.d_intent == INTENT_PARRY) // Only immune to feints whilst NOT dodging and on riposte intent.
-		if(istype(HT.rmb_intent, /datum/rmb_intent/riposte) && !HT.has_status_effect(/datum/status_effect/buff/clash)) 
-			playsound(user, 'sound/combat/feint.ogg', 100, TRUE)
-			to_chat(HU, span_notice("[HT] looks at me like I'm some sort of fool!"))
-			to_chat(HT, span_danger("[HU] tried to feint an attack at me, what a fool!"))
-			HU.apply_status_effect(/datum/status_effect/debuff/feintcd)
-			return
-
-	if(world.time < HT.last_cmode_time + CMODE_TIME_BUFFER) // You attempted to bait someone who wasn't in combat mode within the past 15 seconds
+	// Anti typebait
+	if(world.time < HT.last_cmode_time + CMODE_TIME_BUFFER) // You attempted to feint someone who wasn't in combat mode within the past 15 seconds
 		playsound(user, 'sound/combat/feint.ogg', 100, TRUE)
 		HU.visible_message(span_danger("[HU] feints an attack at [HT], and makes a fool of themselves!"))
 		HU.Slowdown(3)
-		HU.OffBalance(4 SECONDS)
+		HU.OffBalance(2 SECONDS)
 		HU.apply_status_effect(/datum/status_effect/debuff/feintcd)
 		return
 
 	HU.visible_message(span_danger("[HU] feints an attack at [HT]!"))
 
-	var/perc = 50
-	var/obj/item/I = HU.get_active_held_item()
+	var/perc = FEINT_BASE
+	var/wildcard = pick(-1,0,1)
+	var/obj/item/IT = HT.get_active_held_item()
+	var/obj/item/IU = HU.get_active_held_item()
 	var/ourskill = 0
 	var/theirskill = 0
 	var/skill_factor = 0
 	if(HT.has_status_effect(/datum/status_effect/debuff/exposed))
 		perc = 0
 	else
-		if(I)
-			if(I.associated_skill)
-				ourskill = HU.get_skill_level(I.associated_skill)
+		// Riposte counters feint, but if an active riposte is up, feint counters it.
+		if(HT.d_intent == INTENT_PARRY) // No immunity. Just -20% chance to be feinted.
+			if(istype(HT.rmb_intent, /datum/rmb_intent/riposte) && !HT.has_status_effect(/datum/status_effect/buff/clash)) 
+				perc -= 20
+		if(istype(HT.rmb_intent, /datum/rmb_intent/aimed)) // 10% easier to feint someone who is on aimed intent
+			perc += 10
+		if(IU)
+			if(IU.associated_skill)
+				ourskill = HU.get_skill_level(IU.associated_skill)
 			if(HT.mind)
-				I = HT.get_active_held_item()
-				if(I?.associated_skill)
-					theirskill = HT.get_skill_level(I.associated_skill)
-		perc += (ourskill - theirskill) * 15    //skill is of the essence
-		perc += (HU.STAINT - HT.STAINT) * 5
-		if(HT.IsOffBalanced())
+				if(IT?.associated_skill)
+					theirskill = HT.get_skill_level(IT.associated_skill)
+		perc += (ourskill - theirskill) * SKILL_PERCENTAGE_BONUS
+		perc += (HU.STAINT - HT.STAINT) * INT_PERCENTAGE_BONUS
+		if(HT.IsOffBalanced()) // Easier to feint a target who is off-balanced.
 			perc += 10
 		if(HU.IsOffBalanced() || !(HU.mobility_flags & MOBILITY_STAND)) // Feinter is off balanced or lying down? Shoddy feint
 			perc -= 30
 		skill_factor = (ourskill - theirskill)/2
-		perc = CLAMP(perc, 10, 90) // Min of 10%, Max of 90%
+		if(wildcard > 0)
+			perc += WILDCARD_BONUS
+		else if(wildcard < 0 )
+			perc -= WILDCARD_BONUS
+		perc = CLAMP(perc, FEINT_MIN_CHANCE, FEINT_MAX_CHANCE)
 
 	HU.apply_status_effect(/datum/status_effect/debuff/feintcd)
+	HU.stamina_add(HU.stamina * 0.1)
 
 	if(HT.has_status_effect(/datum/status_effect/buff/clash)) // Guaranteed feint on an active guard. 
 		HT.remove_status_effect(/datum/status_effect/buff/clash)
-		to_chat(HU, span_notice("[HT.p_their(TRUE)] Guard disrupted!"))
+		to_chat(HU, span_notice("[HT.p_their(TRUE)] guard disrupted!"))
 	else if(!prob(perc))
 		playsound(HU, 'sound/combat/feint.ogg', 100, TRUE)
-		HU.stamina_add(HU.stamina * 0.1) // Failed? Lose some stamina.
 		if(HU.client?.prefs.showrolls)
 			to_chat(HU, span_warning("[HT.p_they(TRUE)] did not fall for my feint... [perc]%"))
 		return
+
+	if(istype(HT.rmb_intent, /datum/rmb_intent/feint)) // Feint-on-feint violence!!! If the target is on feint intent, you have a 50% to clash.
+		if(IU && IT)
+			if(ishuman(HU) && ishuman(HT))
+				if(prob(FEINT_CLASH_CHANCE + WILDCARD_BONUS))
+					playsound(src, 'sound/combat/clash_struck.ogg', 100)
+					HU.clash(HT, IU, IT) // With the feinter having the initiator bonus
+					return
 
 	HT.apply_status_effect(/datum/status_effect/debuff/exposed, 5 SECONDS)
 	HT.apply_status_effect(/datum/status_effect/debuff/clickcd, max(1.5 SECONDS + skill_factor, 2.5 SECONDS))
@@ -84,4 +101,10 @@
 	to_chat(HT, span_danger("I fall for [HU.p_their()] feint attack!"))
 	playsound(HU, 'sound/combat/riposte.ogg', 100, TRUE)
 
-#undef CMODE_TIME_BUFFER
+#undef FEINT_BASE
+#undef INT_PERCENTAGE_BONUS
+#undef SKILL_PERCENTAGE_BONUS
+#undef WILDCARD_BONUS
+#undef FEINT_MAX_CHANCE
+#undef FEINT_MIN_CHANCE
+#undef FEINT_CLASH_CHANCE

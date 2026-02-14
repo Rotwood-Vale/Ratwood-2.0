@@ -1,3 +1,5 @@
+#define CMODE_TIME_BUFFER 15 SECONDS
+
 /datum/rmb_intent
 	var/name = "intent"
 	var/desc = ""
@@ -13,7 +15,8 @@
 		addtimer(CALLBACK(src, PROC_REF(expire_peel)), 60 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	if(!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 		filtered_balloon_alert(TRAIT_COMBAT_AWARE, (cmode ? ("<i><font color = '#831414'>Tense</font></i>") : ("<i><font color = '#c7c6c6'>Relaxed</font></i>")), y_offset = 32)
-	last_cmode_time = world.time
+	if(world.time > last_cmode_time + CMODE_TIME_BUFFER) // This buffer is used purely to prevent type-baiting, it isn't an anti-combat mode spam solution.
+		last_cmode_time = world.time
 
 /datum/rmb_intent/proc/special_attack(mob/living/user, atom/target)
 	return
