@@ -230,6 +230,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Bard Hat"
 	path = /obj/item/clothing/head/roguetown/bardhat
 
+/datum/loadout_item/duelhat
+	name = "Duelist Hat"
+	path = /obj/item/clothing/head/roguetown/duelisthat
+
 /datum/loadout_item/fancyhat
 	name = "Fancy Hat"
 	path = /obj/item/clothing/head/roguetown/fancyhat
@@ -346,6 +350,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/halfcloak
 	name = "Halfcloak"
 	path = /obj/item/clothing/cloak/half
+
+/datum/loadout_item/duelcape
+	name = "Duelist Cape"
+	path = /obj/item/clothing/cloak/half/duelistcape
 
 /datum/loadout_item/ridercloak
 	name = "Rider Cloak"
@@ -507,6 +515,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/bottomtunic
 	name = "Low-cut Tunic"
 	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/lowcut
+
+/datum/loadout_item/tribalrag
+	name = "Tribal Rag"
+	path = /obj/item/clothing/suit/roguetown/shirt/tribalrag
 
 /datum/loadout_item/tunic
 	name = "Tunic"
@@ -973,6 +985,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/crafteast
 	name = "Eastern Craft Robe"
 	path = /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast
+
+/datum/loadout_item/doboeast
+	name = "Eastern Dobo Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast
 
 // HEADWEAR
 /datum/loadout_item/nochood
@@ -1451,6 +1467,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
 	triumph_cost = 3
 
+/datum/loadout_item/tri_duelist_coat
+	name = "Duelist Coat"
+	path = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
+	triumph_cost = 3
+
 /datum/loadout_item/tri_fencing_gambeson
 	name = "Fencing Gambeson (Otavan)"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
@@ -1460,7 +1481,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Fencing Shirt (Padded)"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
 	triumph_cost = 3
-
 
 /datum/loadout_item/tri_gambeson
 	name = "Gambeson"

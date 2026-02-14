@@ -133,6 +133,7 @@
 				zombie_antag.last_bite = world.time
 				if(bite_victim.zombie_infect_attempt())   // infect_attempt on bite
 					to_chat(user, span_danger("You feel your gift trickling from your mouth into [bite_victim]'s wound..."))
+
 	var/obj/item/grabbing/bite/B = new()
 	user.equip_to_slot_or_del(B, SLOT_MOUTH)
 	if(user.mouth == B)
@@ -262,6 +263,16 @@
 				var/datum/antagonist/zombie/existing_zombie = C.mind?.has_antag_datum(/datum/antagonist/zombie) //If the bite target is a zombie
 				if(!existing_zombie && caused_wound?.zombie_infect_attempt())   // infect_attempt on wound
 					to_chat(user, span_danger("You feel your gift trickling into [C]'s wound...")) //message to the zombie they infected the target
+
+			/*
+				LAMIA CHEW. VENOM INJECTION.
+			*/
+			if(HAS_TRAIT(user, TRAIT_VENOMOUS))
+				if(C.reagents)
+					var/poison = user.STACON/4
+					C.reagents.add_reagent(/datum/reagent/lam_venom, poison)
+					to_chat(user, span_necrosis("You inject venom into [C]!"))
+
 /*
 	Code below is for a zombie smashing the brains of unit. The code expects the brain to be part of the head which is not the case with AP. Kept for posterity in case it's used in an overhaul.
 */

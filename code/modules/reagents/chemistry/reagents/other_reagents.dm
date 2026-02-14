@@ -19,7 +19,7 @@
 /datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
-		if(C.get_blood_id() == /datum/reagent/blood && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+		if(C.get_blood_id() == /datum/reagent/blood && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits || HAS_TRAIT(C, TRAIT_HEMOPHAGE)))))
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)) || !HAS_TRAIT(C,TRAIT_NASTY_EATER))
 				C.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
@@ -28,7 +28,7 @@
 /datum/reagent/blood/shitty/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
-		if(C.get_blood_id() == /datum/reagent/blood && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+		if(C.get_blood_id() == /datum/reagent/blood && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits || HAS_TRAIT(C, TRAIT_HEMOPHAGE)))))
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)) || !(HAS_TRAIT(C, TRAIT_NASTY_EATER) && HAS_TRAIT(C, TRAIT_WILD_EATER)))
 				C.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.8)
 			else
@@ -58,6 +58,12 @@
 
 /datum/reagent/blood/on_mob_life(mob/living/carbon/H)//I hate you
 	..()
+	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
+		H.adjust_nutrition(2)
+		H.adjust_hydration(2)
+		if(H.blood_volume < BLOOD_VOLUME_NORMAL)
+			H.blood_volume = min(H.blood_volume+4, BLOOD_VOLUME_NORMAL)//Less effective than just water.
+		return
 	if(HAS_TRAIT(H, TRAIT_NASTY_EATER))
 		return
 	H.add_nausea(12) //Over 8 units will cause puking
@@ -67,6 +73,14 @@
 		..()
 /datum/reagent/blood/shitty/on_mob_life(mob/living/carbon/H)
 	..()
+	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
+		H.adjust_nutrition(0.3)
+		H.adjust_hydration(0.3)
+		if(H.blood_volume < BLOOD_VOLUME_NORMAL)
+			H.blood_volume = min(H.blood_volume+2, BLOOD_VOLUME_NORMAL)//Much less effective than just water.
+		if(prob(5))
+			to_chat(H, span_red("This will hardly do... I must procure a better source of lyfeblood..."))
+		return
 	if(HAS_TRAIT(H, TRAIT_NASTY_EATER) && HAS_TRAIT(H, TRAIT_WILD_EATER))
 		return
 	H.add_nausea(18) //Do not drink dirty blood!
@@ -105,10 +119,13 @@
 /datum/reagent/water/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			H.adjust_hydration(hydration)
-		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume = min(M.blood_volume+WATER_BLOOD_RESTORE, BLOOD_VOLUME_NORMAL)
+		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
+			M.add_nausea(2)
+		else
+			if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
+				H.adjust_hydration(hydration)
+			if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+				M.blood_volume = min(M.blood_volume+WATER_BLOOD_RESTORE, BLOOD_VOLUME_NORMAL)
 	..()
 #undef WATER_BLOOD_RESTORE
 
@@ -232,7 +249,7 @@
 		if(hotspot)
 			new /obj/effect/temp_visual/small_smoke(T)
 			qdel(hotspot)
-	
+
 	if(iswallturf(T))
 		if(!T.color)
 			return

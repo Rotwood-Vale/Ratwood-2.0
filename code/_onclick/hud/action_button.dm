@@ -12,6 +12,7 @@
 	var/id
 	var/ordered = TRUE //If the button gets placed into the default bar
 	nomouseover = FALSE
+	var/rebinding = FALSE
 
 	var/atom/movable/screen/maptext_holder/maptext_holder
 
@@ -51,6 +52,18 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["middle"])
+		if(rebinding)		// No matter what I did it kept opening up two windows when I clicked one button so we're doing this instead
+			return TRUE		// THE PROC IS LOCKED
+		rebinding = TRUE 	// Lock the proc variable
+		var/new_slot = input(linked_action.owner, "Enter action slot number (1-9):", "Rebind Action", linked_action.slot) as num|null
+		if(new_slot && new_slot >= 1 && new_slot <= 9)
+			for(var/datum/action/A in linked_action.owner.actions)
+				if(A.slot == new_slot)
+					A.slot = 0
+			linked_action.slot = new_slot
+		rebinding = FALSE 	// Unlock the proc once we're done (I know it's not a proc)
+		return TRUE
 	if(modifiers["alt"])
 		if(locked)
 			to_chat(usr, span_warning("Action button \"[name]\" is locked, unlock it first."))
@@ -65,8 +78,9 @@
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(modifiers["shift"])
-		examine_ui(usr)
-		return TRUE
+		if(linked_action.desc)//just in case it's null- make sure to give your actions descriptions!
+			to_chat(usr, "[linked_action.desc]\n[span_medradio("Alt-click: Reset Position | Ctrl-click: Toggle lock | Middle-click: Rebind slot")]") // Yes I just stole the medical_radio color
+			return TRUE
 	if(usr.next_click > world.time)
 		return
 	usr.next_click = world.time + 1
