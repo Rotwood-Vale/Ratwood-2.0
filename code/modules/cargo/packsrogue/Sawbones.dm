@@ -224,22 +224,7 @@
 // PROSTHETICS //
 /////////////////
 
-/datum/supply_pack/rogue/Sawbones/bronzeleftarm
-	name = "Prosthetic Left Arm"
+/datum/supply_pack/rogue/Sawbones/bronzeprosthetic
+	name = "Bronze Prosthetic"
 	cost = 10
-	contains = list(/obj/item/bodypart/l_arm/prosthetic/bronzeleft)
-
-/datum/supply_pack/rogue/Sawbones/bronzerightarm
-	name = "Prosthetic Right Arm"
-	cost = 10
-	contains = list(/obj/item/bodypart/r_arm/prosthetic/bronzeright)
-
-/datum/supply_pack/rogue/Sawbones/bronzeleftleg
-	name = "Prosthetic Left Leg"
-	cost = 10
-	contains = list(/obj/item/bodypart/l_leg/prosthetic/bronzeleft)
-
-/datum/supply_pack/rogue/Sawbones/bronzerightleg
-	name = "Prosthetic Right Leg"
-	cost = 10
-	contains = list(/obj/item/bodypart/r_leg/prosthetic/bronzeright)
+	contains = list(/obj/item/contraption/bronzeprosthetic)

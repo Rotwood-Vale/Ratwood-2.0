@@ -791,6 +791,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 				stat(null, "Next Map: [cached.map_name]")
 			stat(null, "ROUND ID: [GLOB.rogue_round_id ? GLOB.rogue_round_id : "NULL"]")
 			stat(null, "ROUND TIME: [time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0)] [world.time - SSticker.round_start_time]")
+			stat(null, "STORYTELLER: [SSgamemode.current_storyteller.name]")
+
 			if(SSgamemode.roundvoteend)
 				stat("ROUND END: [DisplayTimeText(time_left)]")
 			if(client?.holder)

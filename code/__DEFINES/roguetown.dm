@@ -98,6 +98,7 @@ Balloon Alert / Floating Text defines
 
 #define RACES_CONSTRUCT \
 	/datum/species/construct/metal,\
+	/datum/species/construct/metal/porcelain,\
 
 #define RACES_ALL_KINDS list(RACES_DESPISED, RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT)	//Truely no restrictions
 
@@ -157,6 +158,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/kobold,\
 	/datum/species/goblinp,\
 	/datum/species/construct/metal,\
+	/datum/species/construct/metal/porcelain,\
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
 	/datum/species/dwarf/gnome\
@@ -181,6 +183,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/halforc,\
 	/datum/species/harpy,\
 	/datum/species/construct/metal,\
+	/datum/species/construct/metal/porcelain,\
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
 )
@@ -199,6 +202,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/anthromorph,\
 	/datum/species/demihuman,\
 	/datum/species/construct/metal,\
+	/datum/species/construct/metal/porcelain,\
 	/datum/species/harpy,\
 	/datum/species/dullahan,\
 	/datum/species/lamia,\

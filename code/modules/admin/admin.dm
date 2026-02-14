@@ -30,7 +30,7 @@
 	body += "html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }"
 	body += "#container { display: flex; flex-direction: row; align-items: flex-start; width: 100%; overflow-x: hidden; flex-wrap: nowrap; }"
 	body += "#left { flex: 2; padding-right: 10px; min-width: 0; }"
-	body += "#skills-section, #languages-section, #stats-section { display: none; background: white; border: 1px solid black; padding: 10px; width: 100%; box-sizing: border-box; max-width: 100%; overflow-x: hidden; word-wrap: break-word; }"
+	body += "#skills-section, #languages-section, #stats-section, #patron-section { display: none; background: white; border: 1px solid black; padding: 10px; width: 100%; box-sizing: border-box; max-width: 100%; overflow-x: hidden; word-wrap: break-word; }"
 	body += "#right { flex: 1; border-left: 2px solid black; padding-left: 10px; max-height: 500px; overflow-y: auto; width: 250px; min-width: 250px; box-sizing: border-box; position: relative; }"
 	body += "#right-header { display: flex; justify-content: space-around; padding: 5px; background: white; border-bottom: 2px solid black; position: sticky; top: 0; z-index: 10; }"
 	body += "#right-header button { flex: 1; margin: 2px; padding: 5px; cursor: pointer; font-weight: bold; border: none; background-color: #ddd; border-radius: 5px; }"
@@ -44,6 +44,7 @@
 	body += "    document.getElementById('skills-section').style.display = (section === 'skills') ? 'block' : 'none';"
 	body += "    document.getElementById('languages-section').style.display = (section === 'languages') ? 'block' : 'none';"
 	body += "	 document.getElementById('stats-section').style.display = (section === 'stats') ? 'block' : 'none';"
+	body += "    document.getElementById('patron-section').style.display = (section === 'patron') ? 'block' : 'none';"
 	body += "}"
 
 	body += "function refreshAndKeepSection(section) {"
@@ -94,6 +95,10 @@
 			var/mob/living/living = M
 			patron = initial(living.patron.name)
 		body += "<br><br>Current Patron: [patron]"
+
+		// Role and Advclass display
+		body += "<br>Role: [M.job ? M.job : "None"]"
+		body += "<br>Advclass: [M.advjob ? M.advjob : "None"]"
 
 		var/idstatus = "<br>ID Status: "
 		if(!M.ckey)
@@ -164,8 +169,10 @@
 	body += "<br><br>"
 	body += "<A href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>Traitor panel</A> | "
 	body += "<A href='?_src_=holder;[HrefToken()];narrateto=[REF(M)]'>Narrate to</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>Subtle message</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>Subtle message</A>"
 	//body += "<A href='?_src_=holder;[HrefToken()];languagemenu=[REF(M)]'>Language Menu</A>"
+	body += "<br><A href='?_src_=holder;[HrefToken()];heal_panel=[REF(M)]'>Heal Panel</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];inventory_panel=[REF(M)]'>Inventory Panel</A>"
 
 	body += "</div>"
 
@@ -174,6 +181,7 @@
 	body += "<button onclick=\"toggleSection('skills')\">Skills</button>"
 	body += "<button onclick=\"toggleSection('languages')\">Languages</button>"
 	body += "<button onclick=\"toggleSection('stats')\">Stats</button>"
+	body += "<button onclick=\"toggleSection('patron')\">Patron</button>"
 	body += "</div>"
 
 
@@ -181,10 +189,10 @@
 	body += "<h3>Skills</h3><ul>"
 	for(var/skill_type in SSskills.all_skills)
 		var/datum/skill/skill = GetSkillRef(skill_type)
+		var/skill_level = 0
 		if(skill in M.skills?.known_skills)
-			body += "<li>[initial(skill.name)]: [M.skills?.known_skills[skill]] "
-		else
-			body += "<li>[initial(skill.name)]: 0"
+			skill_level = M.skills?.known_skills[skill]
+		body += "<li>[initial(skill.name)]: <a href='?_src_=holder;[HrefToken()];set_skill=[REF(M)];skill=[skill.type]'>[skill_level]</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];increase_skill=[REF(M)];skill=[skill.type]'>+</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];decrease_skill=[REF(M)];skill=[skill.type]'>-</a></li>"
 	body += "</ul></div>"
@@ -204,35 +212,53 @@
 	body += "<h3>Stats</h3><ul>"
 	if(isliving(M)) // Ensure M is a living mob
 		var/mob/living/living = M // Explicitly cast M to /mob/living
-		body += "<li>Strength: [living.STASTR] "
+		body += "<li>Strength: <a href='?_src_=holder;[HrefToken()];set_stat=[REF(M)];stat=strength'>[living.STASTR]</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];add_stat=[REF(M)];stat=strength'>+</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];lower_stat=[REF(M)];stat=strength'>-</a></li>"
 
-		body += "<li>Perception: [living.STAPER] "
+		body += "<li>Perception: <a href='?_src_=holder;[HrefToken()];set_stat=[REF(M)];stat=perception'>[living.STAPER]</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];add_stat=[REF(M)];stat=perception'>+</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];lower_stat=[REF(M)];stat=perception'>-</a></li>"
 
-		body += "<li>Willpower: [living.STAWIL] "
+		body += "<li>Willpower: <a href='?_src_=holder;[HrefToken()];set_stat=[REF(M)];stat=willpower'>[living.STAWIL]</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];add_stat=[REF(M)];stat=willpower'>+</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];lower_stat=[REF(M)];stat=willpower'>-</a></li>"
 
-		body += "<li>Constitution: [living.STACON] "
+		body += "<li>Constitution: <a href='?_src_=holder;[HrefToken()];set_stat=[REF(M)];stat=constitution'>[living.STACON]</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];add_stat=[REF(M)];stat=constitution'>+</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];lower_stat=[REF(M)];stat=constitution'>-</a></li>"
 
-		body += "<li>Intelligence: [living.STAINT] "
+		body += "<li>Intelligence: <a href='?_src_=holder;[HrefToken()];set_stat=[REF(M)];stat=intelligence'>[living.STAINT]</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];add_stat=[REF(M)];stat=intelligence'>+</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];lower_stat=[REF(M)];stat=intelligence'>-</a></li>"
 
-		body += "<li>Speed: [living.STASPD] "
+		body += "<li>Speed: <a href='?_src_=holder;[HrefToken()];set_stat=[REF(M)];stat=speed'>[living.STASPD]</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];add_stat=[REF(M)];stat=speed'>+</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];lower_stat=[REF(M)];stat=speed'>-</a></li>"
 
-		body += "<li>Luck: [living.STALUC] "
+		body += "<li>Luck: <a href='?_src_=holder;[HrefToken()];set_stat=[REF(M)];stat=fortune'>[living.STALUC]</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];add_stat=[REF(M)];stat=fortune'>+</a> "
 		body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];lower_stat=[REF(M)];stat=fortune'>-</a></li>"
 		body += "</ul>"
-
+		body += "</div>"
+		
+		// Patron Section
+		body += "<div id='patron-section'>"
+		body += "<h3>Patron</h3>"
+		body += "<p>Current: [initial(living.patron.name)]</p>"
+		body += "<ul>"
+		for(var/patron_type in GLOB.patronlist)
+			// Skip Undivided and Science patrons
+			if(patron_type == /datum/patron/divine/undivided || patron_type == /datum/patron/godless)
+				continue
+			var/datum/patron/P = GLOB.patronlist[patron_type]
+			// Skip if patron is null or has no name
+			if(!P || !initial(P.name))
+				continue
+			body += "<li>[initial(P.name)] "
+			body += "<a class='skill-btn' href='?_src_=holder;[HrefToken()];set_patron=[REF(M)];patron=[patron_type]'>Set</a></li>"
+		body += "</ul></div>"
+		
 
 		body += "</div>"
 		body += "</div>"
@@ -245,16 +271,508 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/admin_heal(mob/living/M in GLOB.mob_list)
-	set name = "Mob - Heal"
-	set desc = "Heal a mob to full health"
+	set name = "Show Health Panel"
 	set category = "-GameMaster-"
 
-	if(!check_rights())
+	if(!check_rights(R_ADMIN))
 		return
 
-	M.fully_heal(admin_revive = TRUE, break_restraints = TRUE)
-	message_admins(span_danger("Admin [key_name_admin(usr)] healed [key_name_admin(M)]!"))
-	log_admin("[key_name(usr)] healed [key_name(M)].")
+	show_heal_panel(M)
+
+/client/proc/show_heal_panel(mob/M)
+	holder?.show_heal_panel(M)
+
+/datum/admins/proc/show_heal_panel(mob/living/M)
+	log_admin("[key_name(usr)] opened heal panel for [key_name(M)]")
+	
+	if(!M)
+		return
+
+	var/body = "<html><head><title>Heal - [M.name]</title>"
+	body += "<style>"
+	body += "table { border-collapse: collapse; width: 100%; }"
+	body += "th, td { border: 1px solid black; padding: 5px; text-align: left; }"
+	body += "th { background-color: #ddd; }"
+	body += "</style>"
+	body +="</head><body>"
+	
+	body += "<b>Heal Panel: [M.name]</b><br><br>"
+	body += "<A href='?_src_=holder;[HrefToken()];heal_target=[REF(M)]'>Full Heal</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];heal_revive=[REF(M)]'>Revive</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];heal_refresh=[REF(M)]'>Refresh</A>"
+	if(ishuman(M))
+		body += " | <A href='?_src_=holder;[HrefToken()];heal_modify_organs=[REF(M)]'>Modify Organs</A>"
+	body += "<br><br>"
+	
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		
+		// Blood Volume
+		body += "<b>Blood Volume:</b> [H.blood_volume] / [BLOOD_VOLUME_NORMAL] units<br>"
+		body += "<A href='?_src_=holder;[HrefToken()];heal_blood_add100=[REF(M)]'>+100</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];heal_blood_add50=[REF(M)]'>+50</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];heal_blood_sub50=[REF(M)]'>-50</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];heal_blood_sub100=[REF(M)]'>-100</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];heal_blood_set=[REF(M)]'>Set Amount</A>"
+		body += "<br><br>"
+		
+		// Overall Damage (no label)
+		body += "TOXIN:<A href='?_src_=holder;[HrefToken()];heal_edit_overall=[REF(M)];damage_type=toxin'>[H.getToxLoss()]</A> | "
+		body += "OXY:<A href='?_src_=holder;[HrefToken()];heal_edit_overall=[REF(M)];damage_type=oxy'>[H.getOxyLoss()]</A>"
+		body += "<br><br>"
+		
+		// Bodypart Damage
+		body += "<b>Bodypart Damage:</b><br>"
+		body += "<table><tr><th>Body Part</th><th>Brute</th><th>Burn</th><th>Actions</th></tr>"
+		for(var/obj/item/bodypart/BP in H.bodyparts)
+			var/limb_name = BP.name
+			if(BP.status == BODYPART_ROBOTIC)
+				limb_name += " (prosthetic)"
+			body += "<tr>"
+			body += "<td>[limb_name]</td>"
+			body += "<td>BRUTE:<A href='?_src_=holder;[HrefToken()];heal_edit_damage=[REF(M)];bodypart=[REF(BP)];damage_type=brute'>[BP.brute_dam]</A></td>"
+			body += "<td>BURN:<A href='?_src_=holder;[HrefToken()];heal_edit_damage=[REF(M)];bodypart=[REF(BP)];damage_type=burn'>[BP.burn_dam]</A></td>"
+			body += "<td>"
+			body += "<A href='?_src_=holder;[HrefToken()];heal_fix_bodypart=[REF(M)];bodypart=[REF(BP)]'>Heal</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];heal_add_wound=[REF(M)];bodypart=[REF(BP)]'>Add Wound</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];heal_remove_bodypart=[REF(M)];bodypart=[REF(BP)]'>Remove</A>"
+			body += "</td>"
+			body += "</tr>"
+		body += "</table>"
+		body += "<br>"
+	else
+		// Simplified menu for non-human mobs
+		body += "<b>Health:</b> [M.health] / [M.maxHealth]<br>"
+		body += "BRUTE:<A href='?_src_=holder;[HrefToken()];heal_edit_simple=[REF(M)];damage_type=brute'>[M.getBruteLoss()]</A> | "
+		body += "BURN:<A href='?_src_=holder;[HrefToken()];heal_edit_simple=[REF(M)];damage_type=burn'>[M.getFireLoss()]</A> | "
+		body += "TOXIN:<A href='?_src_=holder;[HrefToken()];heal_edit_simple=[REF(M)];damage_type=toxin'>[M.getToxLoss()]</A> | "
+		body += "OXY:<A href='?_src_=holder;[HrefToken()];heal_edit_simple=[REF(M)];damage_type=oxy'>[M.getOxyLoss()]</A>"
+		body += "<br><br>"
+	
+	body += "<b>Wounds:</b><br>"
+	
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/list/all_wounds = list()
+		
+		for(var/obj/item/bodypart/BP in H.bodyparts)
+			if(BP.wounds && BP.wounds.len)
+				for(var/datum/wound/W in BP.wounds)
+					all_wounds += list(list("bodypart" = BP, "wound" = W))
+		
+		if(all_wounds.len)
+			body += "<table><tr><th>Body Part</th><th>Wound Type</th><th>Actions</th></tr>"
+			for(var/list/wound_data in all_wounds)
+				var/obj/item/bodypart/BP = wound_data["bodypart"]
+				var/datum/wound/W = wound_data["wound"]
+				body += "<tr>"
+				body += "<td>[BP.name]</td>"
+				body += "<td>[W.name]</td>"
+				body += "<td><A href='?_src_=holder;[HrefToken()];heal_remove_wound=[REF(M)];wound=[REF(W)]'>Remove</A></td>"
+				body += "</tr>"
+			body += "</table>"
+		else
+			body += "No wounds detected<br>"
+	else
+		body += "Wound system only available for humanoid mobs<br>"
+	
+	body += "</body></html>"
+
+	usr << browse(body, "window=adminplayeropts-heal[REF(M)];size=650x550")
+
+/datum/admins/proc/handle_heal_panel_topic(href_list)
+	if(!check_rights())
+		return FALSE
+	
+	if(!href_list["heal_action"])
+		return FALSE
+	
+	var/mob/living/target = locate(href_list["target"])
+	if(!target || !isliving(target))
+		to_chat(usr, span_warning("Target no longer exists!"))
+		return TRUE
+	
+	switch(href_list["heal_action"])
+		if("full_heal")
+			target.fully_heal(admin_revive = TRUE)
+			message_admins(span_danger("Admin [key_name_admin(usr)] fully healed [key_name_admin(target)]!"))
+			log_admin("[key_name(usr)] fully healed [key_name(target)].")
+			show_heal_panel(target)
+		
+		if("blood_add")
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				var/amount = text2num(href_list["amount"])
+				H.blood_volume = min(H.blood_volume + amount, BLOOD_VOLUME_MAXIMUM)
+				message_admins("[key_name_admin(usr)] added [amount] blood to [key_name_admin(target)].")
+				log_admin("[key_name(usr)] added [amount] blood to [key_name(target)].")
+				show_heal_panel(target)
+		
+		if("blood_sub")
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				var/amount = text2num(href_list["amount"])
+				H.blood_volume = max(H.blood_volume - amount, 0)
+				message_admins("[key_name_admin(usr)] removed [amount] blood from [key_name_admin(target)].")
+				log_admin("[key_name(usr)] removed [amount] blood from [key_name(target)].")
+				show_heal_panel(target)
+		
+		if("blood_set")
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				var/amount = text2num(href_list["amount"])
+				H.blood_volume = amount
+				message_admins("[key_name_admin(usr)] set [key_name_admin(target)]'s blood to [amount].")
+				log_admin("[key_name(usr)] set [key_name(target)]'s blood to [amount].")
+				show_heal_panel(target)
+		
+		if("remove_wound")
+			var/datum/wound/W = locate(href_list["wound"])
+			if(W && ishuman(target))
+				var/mob/living/carbon/human/H = target
+				for(var/obj/item/bodypart/BP in H.bodyparts)
+					if(W in BP.wounds)
+						BP.remove_wound(W)
+						message_admins("[key_name_admin(usr)] removed wound [W.name] from [key_name_admin(target)].")
+						log_admin("[key_name(usr)] removed wound [W.name] from [key_name(target)].")
+						break
+				show_heal_panel(target)
+		
+		if("refresh")
+			show_heal_panel(target)
+		
+		if("close")
+			return TRUE
+	
+	return TRUE
+
+/datum/admins/proc/show_inventory_panel(mob/living/M)
+	log_admin("[key_name(usr)] opened inventory panel for [key_name(M)]")
+	
+	if(!M)
+		to_chat(usr, "<span class='warning'>I seem to be selecting a mob that doesn't exist anymore.</span>")
+		return
+	
+	var/body = "<html><head><title>Inventory Panel - [M.name]</title>"
+	body += "<style>"
+	body += "table { border-collapse: collapse; width: 100%; }"
+	body += "th, td { border: 1px solid black; padding: 5px; text-align: left; }"
+	body += "th { background-color: #ddd; }"
+	body += "</style>"
+	body +="</head>"
+	body += "<body>"
+	
+	body += "<b>Inventory Panel: [M.name]</b><br><br>"
+	body += "<A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=repair_all'>Repair All</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=refresh'>Refresh</A>"
+	body += "<br><br>"
+	
+	var/list/all_items = list()
+	
+	// Add held items
+	for(var/obj/item/I in M.held_items)
+		if(I && !(I in all_items))
+			all_items += I
+	
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		for(var/obj/item/I in H.get_equipped_items(TRUE))
+			// Only include equipable items: clothing, weapons, armor
+			if(istype(I, /obj/item/clothing) || istype(I, /obj/item/rogueweapon) || I.slot_flags)
+				if(!(I in all_items))
+					all_items += I
+	
+	body += "<b>Equipment:</b><br>"
+	
+	if(all_items.len)
+		body += "<table><tr><th>Icon</th><th>Item</th><th>Integrity</th><th>Actions</th></tr>"
+		for(var/obj/item/I in all_items)
+			var/integrity_percent = 100
+			
+			if(I.obj_integrity && I.max_integrity)
+				integrity_percent = round((I.obj_integrity / I.max_integrity) * 100)
+			
+			body += "<tr>"
+			body += "<td><img src='data:image/png;base64,[icon2base64(icon(I.icon, I.icon_state))]' width=32 height=32></td>"
+			body += "<td>"
+			body += "<A href='?_src_=vars;[HrefToken()];Vars=[REF(I)]'>[I.name]</A>"
+			
+			// Check if item has contents
+			if(I.contents.len > 0)
+				body += " <A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=view_contents;item=[REF(I)]'>(Contents)</A>"
+			
+			body += "</td>"
+			body += "<td>[I.obj_integrity] / [I.max_integrity] ([integrity_percent]%)"
+			// Sharpness info below integrity if item has sharpness
+			if(I.max_blade_int > 0)
+				var/sharpness_percent = round((I.blade_int / I.max_blade_int) * 100)
+				body += "<br>Sharpness: [I.blade_int] / [I.max_blade_int] ([sharpness_percent]%)"
+			body += "</td>"
+			body += "<td>"
+			body += "<A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=repair_item;item=[REF(I)]'>Repair</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=drop_item;item=[REF(I)]'>Drop</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=destroy_item;item=[REF(I)]'>Delete</A>"
+			body += "</td>"
+			body += "</tr>"
+		body += "</table>"
+	else
+		body += "No equipment found<br>"
+	
+	body += "</body></html>"
+
+	usr << browse(body, "window=adminplayeropts-inventory[REF(M)];size=760x600")
+
+/datum/admins/proc/show_item_contents_panel(mob/living/M, obj/item/container)
+	if(!M || !container)
+		return
+	
+	var/body = "<html><head><title>Contents - [container.name]</title>"
+	body += "<style>"
+	body += "table { border-collapse: collapse; width: 100%; }"
+	body += "th, td { border: 1px solid black; padding: 5px; text-align: left; }"
+	body += "th { background-color: #ddd; }"
+	body += "</style>"
+	body += "</head>"
+	body += "<body>"
+	
+	body += "<b>Contents of: [container.name]</b><br><br>"
+	body += "<A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=view_contents;item=[REF(container)]'>Refresh</A>"
+	body += "<br><br>"
+	
+	if(container.contents.len > 0)
+		body += "<table><tr><th>Icon</th><th>Item</th><th>Integrity</th><th>Actions</th></tr>"
+		for(var/obj/O in container.contents)
+			var/integrity_percent = 100
+			var/integrity_text = "N/A"
+			
+			if(istype(O, /obj/item))
+				var/obj/item/I = O
+				if(I.obj_integrity && I.max_integrity)
+					integrity_percent = round((I.obj_integrity / I.max_integrity) * 100)
+					integrity_text = "[I.obj_integrity] / [I.max_integrity] ([integrity_percent]%)"
+			
+			body += "<tr>"
+			body += "<td><img src='data:image/png;base64,[icon2base64(icon(O.icon, O.icon_state))]' width=32 height=32></td>"
+			body += "<td>"
+			body += "<A href='?_src_=vars;[HrefToken()];Vars=[REF(O)]'>[O.name]</A>"
+			
+			// If this item also has contents, show contents button
+			if(istype(O, /obj/item) && O.contents.len > 0)
+				body += " <A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=view_contents;item=[REF(O)]'>(Contents)</A>"
+			
+			body += "</td>"
+			body += "<td>[integrity_text]"
+			// Sharpness info below integrity if item has sharpness
+			if(istype(O, /obj/item))
+				var/obj/item/I = O
+				if(I.max_blade_int > 0)
+					var/sharpness_percent = round((I.blade_int / I.max_blade_int) * 100)
+					body += "<br>Sharpness: [I.blade_int] / [I.max_blade_int] ([sharpness_percent]%)"
+			body += "</td>"
+			body += "<td>"
+			if(istype(O, /obj/item))
+				var/obj/item/I = O
+				if(I.max_integrity)
+					body += "<A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=repair_item;item=[REF(O)]'>Repair</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=drop_item;item=[REF(O)]'>Drop</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];target=[REF(M)];inventory_action=destroy_item;item=[REF(O)]'>Delete</A>"
+			body += "</td>"
+			body += "</tr>"
+		body += "</table>"
+	else
+		body += "This container is empty.<br>"
+	
+	body += "</body></html>"
+	
+	usr << browse(body, "window=adminplayeropts-contents[REF(container)];size=760x600")
+
+
+/datum/admins/proc/handle_inventory_panel_topic(href_list)
+	if(!check_rights(R_ADMIN))
+		return FALSE
+	
+	if(!href_list["inventory_action"])
+		return FALSE
+	
+	var/mob/living/target = locate(href_list["target"])
+	if(!target || !isliving(target))
+		to_chat(usr, span_warning("Target no longer exists!"))
+		return TRUE
+	
+	switch(href_list["inventory_action"])
+		if("repair_all")
+			var/repaired_count = 0
+			for(var/obj/item/I in target.held_items)
+				if(I && I.obj_integrity < I.max_integrity)
+					if(I.obj_broken)
+						I.obj_fix(null, TRUE)
+					else
+						I.obj_integrity = I.max_integrity
+					I.update_icon()
+					repaired_count++
+				// Also restore sharpness
+				if(I && I.max_blade_int > 0 && I.blade_int < I.max_blade_int)
+					I.blade_int = I.max_blade_int
+			
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				for(var/obj/item/I in H.GetAllContents())
+					if(I.obj_integrity < I.max_integrity)
+						if(I.obj_broken)
+							I.obj_fix(null, TRUE)
+						else
+							I.obj_integrity = I.max_integrity
+						I.update_icon()
+						repaired_count++
+					// Also restore sharpness
+					if(I.max_blade_int > 0 && I.blade_int < I.max_blade_int)
+						I.blade_int = I.max_blade_int
+			
+			to_chat(usr, span_notice("Repaired [repaired_count] items for [target.name]."))
+			to_chat(target, span_notice("Your equipment has been magically repaired!"))
+			message_admins("[key_name_admin(usr)] repaired all equipment for [key_name_admin(target)].")
+			log_admin("[key_name(usr)] repaired all equipment for [key_name(target)].")
+			show_inventory_panel(target)
+		
+		if("damage_all")
+			var/damaged_count = 0
+			for(var/obj/item/I in target.held_items)
+				if(I && I.max_integrity)
+					I.obj_integrity = I.max_integrity * 0.5
+					I.update_icon()
+					damaged_count++
+			
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				for(var/obj/item/I in H.GetAllContents())
+					if(I.max_integrity)
+						I.obj_integrity = I.max_integrity * 0.5
+						I.update_icon()
+						damaged_count++
+			
+			to_chat(usr, span_notice("Damaged [damaged_count] items for [target.name]."))
+			to_chat(target, span_warning("Your equipment suddenly feels weaker!"))
+			message_admins("[key_name_admin(usr)] damaged all equipment for [key_name_admin(target)].")
+			log_admin("[key_name(usr)] damaged all equipment for [key_name(target)].")
+			show_inventory_panel(target)
+		
+		if("destroy_all")
+			if(alert(usr, "Really destroy ALL equipment for [target.name]?", "Confirm", "Yes", "No") != "Yes")
+				show_inventory_panel(target)
+				return TRUE
+			
+			var/destroyed_count = 0
+			for(var/obj/item/I in target.held_items)
+				if(I)
+					qdel(I)
+					destroyed_count++
+			
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				for(var/obj/item/I in H.GetAllContents())
+					qdel(I)
+					destroyed_count++
+			
+			to_chat(usr, span_notice("Destroyed [destroyed_count] items for [target.name]."))
+			to_chat(target, span_danger("All your equipment disintegrates!"))
+			message_admins("[key_name_admin(usr)] destroyed all equipment for [key_name_admin(target)].")
+			log_admin("[key_name(usr)] destroyed all equipment for [key_name(target)].")
+			show_inventory_panel(target)
+		
+		if("repair_item")
+			var/obj/item/I = locate(href_list["item"])
+			if(I && I.max_integrity)
+				if(I.obj_broken)
+					I.obj_fix(null, TRUE)
+				else
+					I.obj_integrity = I.max_integrity
+				// Also restore sharpness
+				if(I.max_blade_int > 0)
+					I.blade_int = I.max_blade_int
+				I.update_icon()
+				to_chat(usr, span_notice("Repaired [I.name]."))
+				message_admins("[key_name_admin(usr)] repaired [I.name] for [key_name_admin(target)].")
+				log_admin("[key_name(usr)] repaired [I.name] for [key_name(target)].")
+				// Check if item is in a container, if so refresh contents panel
+				if(I.loc && istype(I.loc, /obj/item))
+					show_item_contents_panel(target, I.loc)
+				else
+					show_inventory_panel(target)
+		
+		if("drop_item")
+			var/obj/item/I = locate(href_list["item"])
+			if(I)
+				var/item_name = I.name
+				var/obj/container = I.loc
+				// Unequip if worn/held
+				if(ishuman(target))
+					var/mob/living/carbon/human/H = target
+					H.dropItemToGround(I, force = TRUE)
+				else if(isliving(target))
+					var/mob/living/L = target
+					L.dropItemToGround(I, force = TRUE)
+				else
+					I.forceMove(get_turf(target))
+				to_chat(usr, span_notice("Dropped [item_name]."))
+				to_chat(target, span_warning("Your [item_name] falls to the ground!"))
+				message_admins("[key_name_admin(usr)] dropped [item_name] for [key_name_admin(target)].")
+				log_admin("[key_name(usr)] dropped [item_name] for [key_name(target)].")
+				// Check if item was in a container, if so refresh contents panel
+				if(container && istype(container, /obj/item))
+					show_item_contents_panel(target, container)
+				else
+					show_inventory_panel(target)
+		
+		if("damage_item")
+			var/obj/item/I = locate(href_list["item"])
+			if(I && I.max_integrity)
+				I.obj_integrity = max(I.max_integrity * 0.25, 1)
+				I.update_icon()
+				to_chat(usr, span_notice("Damaged [I.name]."))
+				message_admins("[key_name_admin(usr)] damaged [I.name] for [key_name_admin(target)].")
+				log_admin("[key_name(usr)] damaged [I.name] for [key_name(target)].")
+				show_inventory_panel(target)
+		
+		if("destroy_item")
+			var/obj/item/I = locate(href_list["item"])
+			if(I)
+				var/item_name = I.name
+				var/obj/container = I.loc
+				qdel(I)
+				to_chat(usr, span_notice("Destroyed [item_name]."))
+				to_chat(target, span_warning("Your [item_name] disintegrates!"))
+				message_admins("[key_name_admin(usr)] destroyed [item_name] for [key_name_admin(target)].")
+				log_admin("[key_name(usr)] destroyed [item_name] for [key_name(target)].")
+				// Check if item was in a container, if so refresh contents panel
+				if(container && istype(container, /obj/item))
+					show_item_contents_panel(target, container)
+				else
+					show_inventory_panel(target)
+		
+		if("view_contents")
+			var/obj/item/I = locate(href_list["item"])
+			if(I)
+				show_item_contents_panel(target, I)
+		
+		if("refresh")
+			show_inventory_panel(target)
+		
+		if("close")
+			return TRUE
+	
+	return TRUE
+
+/datum/admins/proc/admin_show_inventory(mob/living/M in GLOB.mob_list)
+	set name = "Show Inventory Panel"
+	set category = "-GameMaster-"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	show_inventory_panel(M)
+
+/client/proc/show_inventory_panel(mob/M)
+	holder?.show_inventory_panel(M)
 
 /datum/admins/proc/show_player_panel(mob/M in GLOB.mob_list)
 	set category = "-GameMaster-"

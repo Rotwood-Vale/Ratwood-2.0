@@ -694,7 +694,7 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/human/update_inv_head(hide_nonstandard = FALSE)
-	queue_icon_update(PENDING_UPDATE_INV_HEAD)
+	update_inv_head_real(hide_nonstandard)
 
 /mob/living/carbon/human/update_inv_head_real(hide_nonstandard = FALSE)
 	remove_overlay(HEAD_LAYER)

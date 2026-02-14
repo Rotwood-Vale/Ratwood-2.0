@@ -13,8 +13,8 @@
 
 /obj/structure/spike_pit/Crossed(atom/movable/AM)
 	var/hitsound = pick('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	// TO DO: figure out how to either make jumping its own special proc
-	// Or read throw_at to understand how to parse it here to allow jumping
+	if(AM.throwing || AM.jumping) //Jumping is defined on movable for some reason.
+		return
 
 	if(isliving(AM))
 		var/mob/living/L = AM

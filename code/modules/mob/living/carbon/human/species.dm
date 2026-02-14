@@ -90,6 +90,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/inherent_traits = list()
 	/// Associative list of skills to adjustments
 	var/list/inherent_skills = list()
+	///traits a species can't get given by jobs
+	var/list/banned_traits = list()
+
 
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.

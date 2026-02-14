@@ -25,12 +25,12 @@
 	update_icon()
 	..()
 
-//Uncomment this, if you make them crafts.
-/*
-/obj/structure/curtain/directional/OnCrafted(dirin)
+//Crafted directional curtain - only openable from one side
+/obj/structure/curtain/directional/crafted
+
+/obj/structure/curtain/directional/crafted/OnCrafted(dirin)
 	dir = turn(dirin, 180)
 	closedir = dir
-*/
 
 /obj/structure/curtain/proc/toggle()
 	open = !open

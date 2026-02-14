@@ -13,6 +13,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	hand_path = /obj/item/melee/touch_attack/rogueweapon/bladeofpsydon
+	req_items = list(/obj/item/clothing/mask/rogue/lordmask/naledi)
 
 /obj/item/melee/touch_attack/rogueweapon/bladeofpsydon
 	name = "\improper arcyne push dagger"

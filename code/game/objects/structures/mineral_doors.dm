@@ -432,7 +432,7 @@
 /obj/structure/mineral_door/attacked_by(obj/item/I, mob/living/user)
 	..()
 	if(obj_broken || obj_destroyed)
-		var/obj/effect/track/structure/new_track = new(get_turf(src))
+		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
 		new_track.handle_creation(user)
 
 /obj/structure/mineral_door/proc/repairdoor(obj/item/I, mob/user)
@@ -696,7 +696,7 @@
 						log_admin("[H.real_name]([key_name(user)]) successfully lockpicked [src.name].")
 						record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 						record_round_statistic(STATS_LOCKS_PICKED)
-						var/obj/effect/track/structure/new_track = new(get_turf(src))
+						var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
 						new_track.handle_creation(user)
 					lock_toggle(user)
 					break
@@ -1019,6 +1019,7 @@
 	max_integrity = 2000
 	over_state = "dunjonopen"
 	var/viewportdir
+	var/window_closed = TRUE
 	kickthresh = 15
 	locksound = 'sound/foley/doors/lockmetal.ogg'
 	unlocksound = 'sound/foley/doors/lockmetal.ogg'
@@ -1094,14 +1095,17 @@
 /obj/structure/mineral_door/wood/donjon/proc/view_toggle(mob/user)
 	if(door_opened)
 		return
-	if(opacity)
-		to_chat(user, span_info("I slide the viewport open."))
+	window_closed = !window_closed //opacity == true, so inverting this sets it to false.
+	to_chat(user, span_info("I slide the viewport [window_closed ? "closed" : "open"]."))
+	set_opacity(window_closed)
+	playsound(src, 'sound/foley/doors/windowup.ogg', 100, FALSE)
+
+/obj/structure/mineral_door/wood/donjon/set_opacity(setter)
+	..()
+	if(!window_closed) //Keeps it non-opaque when the door shuts.
 		opacity = FALSE
-		playsound(src, 'sound/foley/doors/windowup.ogg', 100, FALSE)
 	else
-		to_chat(user, span_info("I slide the viewport closed."))
-		opacity = TRUE
-		playsound(src, 'sound/foley/doors/windowup.ogg', 100, FALSE)
+		opacity = setter
 
 /obj/structure/mineral_door/wood/donjon/stone/broken
 	desc = "A broken stone door from an era bygone. A new one must be constructed in its place."

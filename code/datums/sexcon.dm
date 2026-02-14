@@ -47,7 +47,6 @@
 	var/maxhorny
 	var/lasthorny
 	var/draining
-	var/blueballs
 	var/gender = MALE
 	var/last_clothing_check
 	var/last_silence_check
@@ -1092,10 +1091,6 @@
 	if(owner.stat != CONSCIOUS)
 		cancel_our_actions()
 
-	if(owner.hasTesticles())
-		if(horny > 30 && !blueballs)
-			blueballs = TRUE
-
 /datum/sex_controller/proc/adjust_horny(amt, source)
 	var/oldhorny = horny
 	if(owner.mind)
@@ -1128,8 +1123,7 @@
 		return TRUE
 
 	if(owner.hasTesticles())
-		if(horny <= 0 && oldhorny > 0 && blueballs && !source)
-			owner.add_stress(/datum/stressevent/blueb)
+		if(horny <= 0 && oldhorny > 0 && !source)
 			horny = clamp(horny - 80, -100, 250)
 
 /datum/sex_controller/proc/cum(source)
@@ -1139,7 +1133,6 @@
 		if(owner.mind.has_antag_datum(/datum/antagonist/obsessed))
 			return
 	record_round_statistic(STATS_PLEASURES)
-	blueballs = FALSE
 	adjust_horny(-350)
 	switch(source)
 		if("fapself")
