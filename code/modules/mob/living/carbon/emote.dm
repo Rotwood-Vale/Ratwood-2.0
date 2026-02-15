@@ -51,8 +51,13 @@
 	key = "moan"
 	key_third_person = "moans"
 	message = "moans."
-	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE
+
+/mob/living/carbon/human/verb/emote_moan()
+	set name = "Moan"
+	set category = "Noises"
+
+	emote("moan")
 
 /datum/emote/living/carbon/roll
 	key = "roll"

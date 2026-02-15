@@ -620,6 +620,27 @@
 			record_round_statistic(STATS_HUGS_MADE)
 			SEND_SIGNAL(user, COMSIG_MOB_HUGGED, target)
 
+/datum/emote/living/pat
+	key = "pat"
+	key_third_person = "pats"
+	message = ""
+	message_param = "pats %t head."
+	emote_type = EMOTE_VISIBLE
+	restraint_check = TRUE
+
+/mob/living/carbon/human/verb/emote_pat()
+	set name = "Pat"
+	set category = "Emotes"
+
+	emote("pat", intentional = TRUE, targetted = TRUE)
+
+/datum/emote/living/pat/adjacentaction(mob/user, mob/target)
+	. = ..()
+	if(!user || !target)
+		return
+	if(ishuman(target))
+		playsound(target.loc, pick('sound/body/pat.ogg'), 100, FALSE, -1)
+
 /datum/emote/living/holdbreath
     key = "hold"
     key_third_person = "holds"
