@@ -38,7 +38,7 @@
 #define COST_ORG_T2      5
 #endif
 #ifndef COST_ORG_T3
-#define COST_ORG_T3      500
+#define COST_ORG_T3      5
 #endif
 
 #ifndef ORG_PRICE_T1
@@ -55,27 +55,22 @@
 #define UNLOCK_SHUNNED_RP 5
 #endif
 
-// MOB dont blame me im a retard
 /mob/living/carbon/human
 	var/miracle_points = 0
 	var/church_favor = 0
 	var/personal_research_points = 0
-
 
 	var/unlocked_research_artefacts = FALSE
 	var/unlocked_research_org_t1   = FALSE
 	var/unlocked_research_org_t2   = FALSE
 	var/unlocked_research_org_t3   = FALSE
 
-
 	var/list/patron_relations = null
-
 
 	var/list/quest_ui_entries = null
 	var/quest_reroll_charges = 0
 	var/quest_reroll_last_ds = 0
 
-// GLOB
 var/global/list/divine_miracles_cache  = list()
 var/global/list/inhumen_miracles_cache = list()
 var/global/miracle_caches_built = FALSE
@@ -98,7 +93,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 	"Eora"    = list(/obj/item/artefact/eora_heart),
 )
 
-//HE:LP
 /proc/build_miracle_caches()
 	if(miracle_caches_built) return
 	build_cache_for_root(/datum/patron/divine,  divine_miracles_cache)
@@ -118,8 +112,8 @@ var/global/list/PATRON_ARTIFACTS = list(
 	if(!user || !user.mind) return
 	var/mob/living/carbon/human/H = istype(user, /mob/living/carbon/human) ? user : null
 	if(!H) return
-	if(!HAS_TRAIT(user, TRAIT_CLERGY)) { to_chat(user, span_warning("Only clergy may contemplate new miracles.")); return }
-	if(!H.devotion || !H.devotion.patron) { to_chat(user, span_warning("Your faith has no patron.")); return }
+	if(!HAS_TRAIT(user, TRAIT_FLESHCRAFTER)) { to_chat(user, span_warning("Only fleshcrafters kin may contemplate new miracles.")); return }
+	if(!H.devotion || !H.devotion.patron) { to_chat(user, span_warning("You have no patron.")); return }
 	open_learn_ui(H)
 
 /proc/build_divine_patrons_index()
@@ -174,7 +168,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 
 	var/list/result = list()
 
-	// divine
 	build_divine_patrons_index()
 	for(var/n in divine_patrons_index)
 		var/list/rec = divine_patrons_index[n]; if(!islist(rec)) continue
@@ -184,7 +177,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 			if(!(n in result)) result += "[n]"
 		qdel(P)
 
-	// inhumen
 	build_inhumen_patrons_index()
 	for(var/n2 in inhumen_patrons_index)
 		var/list/rec2 = inhumen_patrons_index[n2]; if(!islist(rec2)) continue
@@ -195,6 +187,7 @@ var/global/list/PATRON_ARTIFACTS = list(
 		qdel(P_inh2)
 
 	return result
+
 /proc/status_yn(flag)
 	return flag ? "<span style='color:#2ecc71'>Unlocked</span>" : "<span style='color:#e67e22'>Locked</span>"
 
@@ -209,38 +202,14 @@ var/global/list/PATRON_ARTIFACTS = list(
 	return s
 
 /proc/_is_templar(mob/living/carbon/human/H)
-	if(!H || !H.mind) return FALSE
-	var/list/cands = list()
-	if(("assigned_job" in H.mind.vars) && istype(H.mind.vars["assigned_job"], /datum/job))
-		var/datum/job/J = H.mind.vars["assigned_job"]
-		if(("title" in J.vars) && istext(J.vars["title"])) cands += lowertext("[J.vars["title"]]")
-		if(("name"  in J.vars) && istext(J.vars["name" ])) cands += lowertext("[J.vars["name"]]")
-	if(("assigned_role" in H.mind.vars) && istext(H.mind.vars["assigned_role"])) cands += lowertext("[H.mind.vars["assigned_role"]]")
-	if(("special_role" in H.mind.vars)  && istext(H.mind.vars["special_role"]))  cands += lowertext("[H.mind.vars["special_role"]]")
-	for(var/txt in cands)
-		if(findtext(txt, "templar"))
-			return TRUE
 	return FALSE
 
 /proc/_is_churchling(mob/living/carbon/human/H)
-	if(!H || !H.mind) return FALSE
-	var/list/cands = list()
-	if(("assigned_job" in H.mind.vars) && istype(H.mind.vars["assigned_job"], /datum/job))
-		var/datum/job/J = H.mind.vars["assigned_job"]
-		if(("title" in J.vars) && istext(J.vars["title"])) cands += lowertext("[J.vars["title"]]")
-		if(("name"  in J.vars) && istext(J.vars["name" ])) cands += lowertext("[J.vars["name"]]")
-	if(("assigned_role" in H.mind.vars) && istext(H.mind.vars["assigned_role"])) cands += lowertext("[H.mind.vars["assigned_role"]]")
-	if(("special_role" in H.mind.vars)  && istext(H.mind.vars["special_role"]))  cands += lowertext("[H.mind.vars["special_role"]]")
-	for(var/txt in cands)
-		if(findtext(txt, "churchling"))
-			return TRUE
 	return FALSE
 
-//T0-T4 or T1-T4 probably the first one coz its related to spells
 /proc/_tier_from_patrons(spell_path)
 	if(!ispath(spell_path, /obj/effect/proc_holder/spell)) return 0
 	var/max_tier = 0
-	// divine
 	for(var/p_type in typesof(/datum/patron/divine))
 		if(p_type == /datum/patron/divine) continue
 		var/datum/patron/P = new p_type
@@ -248,7 +217,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 			var/v = P.miracles[spell_path]
 			if(isnum(v)) max_tier = max(max_tier, v)
 		qdel(P)
-	// inhumen
 	for(var/i_type in typesof(/datum/patron/inhumen))
 		if(i_type == /datum/patron/inhumen) continue
 		var/datum/patron/P_inh = new i_type
@@ -296,19 +264,16 @@ var/global/list/PATRON_ARTIFACTS = list(
 	if(tier_val > 4) tier_val = 4
 	return tier_val
 
-// 0 → -1 (nuffin), 1 → 1, 2 → 2, 3 → 3, 4 → 4
 /proc/allowed_tier_by_relation(level)
 	if(!isnum(level) || level <= 0)
-		return 0      // 0  →  tier 0
-
+		return 0
 	if(level == 1)
-		return 1      //  1 → T1
+		return 1
 	if(level == 2)
-		return 2      //  2 → T2
+		return 2
 	if(level == 3)
-		return 3      // 3 → T3
-
-	return 4          // 4 →  T4
+		return 3
+	return 4
 
 /proc/get_spell_patron_name(spell_input)
 	var/spell_path = null
@@ -320,7 +285,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 	else
 		return ""
 
-	// divine
 	build_divine_patrons_index()
 	for(var/n in divine_patrons_index)
 		var/list/rec = divine_patrons_index[n]
@@ -331,7 +295,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 		qdel(P)
 		if(found) return "[n]"
 
-	// inhumen
 	build_inhumen_patrons_index()
 	for(var/n2 in inhumen_patrons_index)
 		var/list/rec2 = inhumen_patrons_index[n2]
@@ -349,18 +312,9 @@ var/global/list/PATRON_ARTIFACTS = list(
 	build_inhumen_patrons_index()
 	return (n in inhumen_patrons_index)
 
-// I forgot what it does but probably it unlocks shunned relations
 /proc/_shunned_relations_unlocked(mob/living/carbon/human/H)
-	if(!H) return FALSE
-	if(_is_churchling(H)) return TRUE
-	build_inhumen_patrons_index()
-	if(!islist(H.patron_relations)) return FALSE
-	for(var/n in inhumen_patrons_index)
-		if(n in H.patron_relations)
-			return TRUE
-	return FALSE
+	return TRUE
 
-// REROLL PROC
 /proc/_update_reroll_charges(mob/living/carbon/human/H)
 	if(!H) return
 	if(!H.quest_reroll_last_ds) H.quest_reroll_last_ds = world.time
@@ -371,7 +325,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 		H.quest_reroll_charges += add
 		H.quest_reroll_last_ds += add * QUEST_COOLDOWN_DS
 
-// CODE DONT MIND
 /obj/item/church_artefact
 	name = "sacred artefact"
 	desc = "A token blessed by a patron."
@@ -383,16 +336,15 @@ var/global/list/PATRON_ARTIFACTS = list(
 		patron_name = p_name
 		name = "Sacred Artefact of [p_name]"
 
-// SPELL
 /obj/effect/proc_holder/spell/self/learnmiracle
 	name = "Miracles"
 	desc = "Open miracle actions."
 	overlay_state = "startmiracle"
 
-	var/current_org_tab = "none"   // none | t1 | t2 | t3
+	var/current_org_tab = "none"
 	var/current_art_tab = "none"
-	var/current_rel_tab = "none"   // none | ten | shunned
-	var/current_learn_tab = "none" // none | patron_name
+	var/current_rel_tab = "none"
+	var/current_learn_tab = "none"
 
 /obj/effect/proc_holder/spell/self/learnmiracle/proc/_ensure_relations(mob/living/carbon/human/H)
 	if(!H.patron_relations || !islist(H.patron_relations))
@@ -409,12 +361,9 @@ var/global/list/PATRON_ARTIFACTS = list(
 		if(length(myname))
 			H.patron_relations[myname] = 4
 
-	if(_shunned_relations_unlocked(H))
-		for(var/sn in inhumen_patrons_index)
-			if(!(sn in H.patron_relations))
-				H.patron_relations[sn] = 0
-
-//  LEARN
+	for(var/sn in inhumen_patrons_index)
+		if(!(sn in H.patron_relations))
+			H.patron_relations[sn] = 0
 
 /obj/effect/proc_holder/spell/self/learnmiracle/proc/_build_learn_buckets(mob/living/carbon/human/H, include_inhumen = FALSE)
 	if(!miracle_caches_built) build_miracle_caches()
@@ -426,45 +375,31 @@ var/global/list/PATRON_ARTIFACTS = list(
 	if(H.devotion && H.devotion.patron && ("name" in H.devotion.patron.vars))
 		my_patron = "[H.devotion.patron.vars["name"]]"
 
-	var/is_templar = _is_templar(H)
-	var/is_churchling = _is_churchling(H)
-
-	// I-know-what-you-have-already
 	var/list/already_types = list()
 	if(H?.mind)
 		for(var/obj/effect/proc_holder/spell/K in H.mind.spell_list)
 			already_types[K.type] = TRUE
 
-	// ***  divine + inhumen double soul cultivation into SET
 	var/list/all_spell_types = list()
 	for(var/st1 in divine_miracles_cache)  all_spell_types[st1] = TRUE
 	for(var/st2 in inhumen_miracles_cache) all_spell_types[st2] = TRUE
 
-	var/list/buckets = list() // patron_name -> list(entries)
+	var/list/buckets = list()
 
 	for(var/st in all_spell_types)
 		var/obj/effect/proc_holder/spell/S = new st
 		if(!S) continue
 
 		var/tier = get_spell_tier(S)
-
-		// *** all
 		var/list/owners = get_spell_patron_names(st)
 
-		// *** set your own
 		if(!islist(owners) || !owners.len)
 			if(length(my_patron)) owners = list(my_patron)
 			else owners = list()
 
 		for(var/owner_name in owners)
-			// *** inhumen unlocks “Shunned”
-			if(_is_inhumen_patron_name(owner_name) && !_shunned_relations_unlocked(H))
-				continue
-
 			var/owner_rel = (owner_name == my_patron) ? 4 : (H.patron_relations && (owner_name in H.patron_relations) ? H.patron_relations[owner_name] : 0)
 			var/max_allowed = allowed_tier_by_relation(owner_rel)
-			if(is_templar) max_allowed = min(max_allowed, 2)
-			if(is_churchling) max_allowed = min(max_allowed, 1)
 
 			if(tier > max_allowed) continue
 
@@ -480,15 +415,13 @@ var/global/list/PATRON_ARTIFACTS = list(
 				"tier"    = tier,
 				"cost"    = cost,
 				"type"    = st,
-				"learned" = is_learned // ***
+				"learned" = is_learned
 			))
 			buckets[owner_name] = L
 
 		qdel(S)
 
 	return buckets
-
-// AAAAAAAAAAAAAAAAA LEARN UI
 
 /obj/effect/proc_holder/spell/self/learnmiracle/proc/open_learn_ui(mob/living/carbon/human/H)
 	var/list/buckets = _build_learn_buckets(H, FALSE)
@@ -504,20 +437,18 @@ var/global/list/PATRON_ARTIFACTS = list(
 	for(var/pn2 in inhumen_patrons_index) names_inh += "[pn2]"
 	names_inh = sortList(names_inh)
 
-	var/sh_unl = _shunned_relations_unlocked(H)
+	var/sh_unl = TRUE
 
 	var/html = "<center><h3>Learn Miracles</h3></center><hr>"
 	html += "Favor: <b>[H.church_favor]</b> | MP: <b>[H.miracle_points]</b><hr>"
 
 	var/list/nav = list()
 
-	// None
 	if(src.current_learn_tab == "none")
 		nav += "<b>None</b>"
 	else
 		nav += "<a href='?src=[REF(src)];learntab=none'>None</a>"
 
-	// --- divine
 	for(var/n in names_div)
 		var/relv = H.patron_relations && (n in H.patron_relations) ? H.patron_relations[n] : 0
 		if(relv > 0)
@@ -525,7 +456,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 		else
 			nav += "<span style='color:#7f8c8d'>[n]</span>"
 
-	// --- inhumen
 	for(var/n2 in names_inh)
 		var/relv2 = H.patron_relations && (n2 in H.patron_relations) ? H.patron_relations[n2] : 0
 		if(sh_unl && relv2 > 0)
@@ -561,7 +491,7 @@ var/global/list/PATRON_ARTIFACTS = list(
 				var/tier   = E["tier"]
 				var/cost   = E["cost"]
 				var/txtpath= "[E["type"]]"
-				var/is_learned = E["learned"] // ***
+				var/is_learned = E["learned"]
 
 				html += "<tr>"
 				html += "<td><b>[html_attr(nm)]</b></td>"
@@ -584,7 +514,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 	B.set_content(html)
 	B.open()
 
-// ------- RESEARCH UI --
 /obj/effect/proc_holder/spell/self/learnmiracle/proc/_organs_shop_block(mob/living/carbon/human/H)
 	var/html = ""
 	var/any_unlocked = (H.unlocked_research_org_t1 || H.unlocked_research_org_t2 || H.unlocked_research_org_t3)
@@ -621,7 +550,7 @@ var/global/list/PATRON_ARTIFACTS = list(
 	var/list/labels = list("eyes","stomach","liver","heart","lungs")
 	for(var/L in labels)
 		html += "<tr><td>[capitalize(L)]</td><td align='center'>"
-		if(HAS_TRAIT(H, TRAIT_CLERGY) && H.church_favor >= price)
+		if(HAS_TRAIT(H, TRAIT_FLESHCRAFTER) && H.church_favor >= price)
 			html += "<a href='?src=[REF(src)];buyorg=[src.current_org_tab];item=[L]'>Buy ([price] Favor)</a>"
 		else
 			html += "<span style='color:#7f8c8d'>Buy ([price] Favor)</span>"
@@ -646,22 +575,19 @@ var/global/list/PATRON_ARTIFACTS = list(
 	html += "<b>Miracle Points:</b> [mp]<br>"
 	html += "<hr>"
 
-	// Miracle point gimme
-	if(HAS_TRAIT(H, TRAIT_CLERGY))
+	if(HAS_TRAIT(H, TRAIT_FLESHCRAFTER))
 		if(fv >= RESEARCH_RP_PRICE_FLAVOR) html += "<a href='?src=[REF(src)];buyrp=1'>Buy 1 RP ([RESEARCH_RP_PRICE_FLAVOR] Favor)</a><br>"
 		else html += "<span style='color:#7f8c8d'>Buy 1 RP ([RESEARCH_RP_PRICE_FLAVOR] Favor)</span><br>"
 
 		if(fv >= MIRACLE_MP_PRICE_FLAVOR) html += "<a href='?src=[REF(src)];buymp=1'>Buy 1 MP ([MIRACLE_MP_PRICE_FLAVOR] Favor)</a><br>"
 		else html += "<span style='color:#7f8c8d'>Buy 1 MP ([MIRACLE_MP_PRICE_FLAVOR] Favor)</span><br>"
 	else
-		html += "<span style='color:#7f8c8d'>Only clergy can buy RP/MP.</span><br>"
+		html += "<span style='color:#7f8c8d'>Only fleshcrafters can buy RP/MP.</span><br>"
 
-	// Studies general shit
 	html += "<hr><b>Studies</b><br>"
 	html += "<table width='100%' cellspacing='2' cellpadding='2'>"
 	html += "<tr><th align='left'>Study</th><th width='110'>Status</th><th width='220'>Action</th></tr>"
 
-	// Artefacts
 	html += "<tr><td>Artefacts</td><td>[status_yn(H.unlocked_research_artefacts)]</td><td align='center'>"
 	if(!H.unlocked_research_artefacts)
 		if(rp >= COST_ARTEFACTS)	html += "<a href='?src=[REF(src)];unlock=artefacts'>Unlock ([COST_ARTEFACTS] RP)</a>"
@@ -670,7 +596,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 		html += "<span style='color:#7f8c8d'>-</span>"
 	html += "</td></tr>"
 
-	// Organs slops
 	html += "<tr><td>Organs T1</td><td>[status_yn(H.unlocked_research_org_t1)]</td><td align='center'>"
 	if(!H.unlocked_research_org_t1)
 		if(rp >= COST_ORG_T1)	html += "<a href='?src=[REF(src)];unlock=org_t1'>Unlock ([COST_ORG_T1] RP)</a>"
@@ -692,43 +617,25 @@ var/global/list/PATRON_ARTIFACTS = list(
 	else html += "<span style='color:#7f8c8d'>-</span>"
 	html += "</td></tr>"
 
-	// Unlockshynned
-	var/sh_unl = _shunned_relations_unlocked(H)
+	var/sh_unl = TRUE
 	html += "<tr><td>Shunned Knowledges</td><td>[status_yn(sh_unl)]</td><td align='center'>"
-	if(!sh_unl)
-		if(H.personal_research_points >= UNLOCK_SHUNNED_RP)
-			html += "<a href='?src=[REF(src)];unlock_shunned_rel=1'>Unlock ([UNLOCK_SHUNNED_RP] RP)</a>"
-		else
-			html += "<span style='color:#7f8c8d'>Unlock ([UNLOCK_SHUNNED_RP] RP)</span>"
-	else
-		html += "<span style='color:#7f8c8d'>-</span>"
+	html += "<span style='color:#7f8c8d'>-</span>"
 	html += "</td></tr>"
 
 	html += "</table>"
 
-	// THIS SHIT RELATED TO FEAR AND HUNGER STARTS HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 	var/list/nav_bits = list()
 	nav_bits += (src.current_rel_tab == "none") ? "<b>Relations: None</b>" : "<a href='?src=[REF(src)];reltab=none'>Relations: None</a>"
 	nav_bits += (src.current_rel_tab == "ten")  ? "<b>Ten</b>" : "<a href='?src=[REF(src)];reltab=ten'>Ten</a>"
-
-	// + shunned
-	if(_shunned_relations_unlocked(H))
-		nav_bits += (src.current_rel_tab == "shunned") ? "<b>Ascendants</b>" : "<a href='?src=[REF(src)];reltab=shunned'>Shunned</a>"
-	else
-		nav_bits += "<span style='color:#7f8c8d'>Ascendants</span>"
+	nav_bits += (src.current_rel_tab == "shunned") ? "<b>Ascendants</b>" : "<a href='?src=[REF(src)];reltab=shunned'>Shunned</a>"
 
 	html += "<hr>" + jointext(nav_bits, " | ") + "<br>"
 
-	var/is_templar = _is_templar(H)
-	var/is_churchling = _is_churchling(H)
-	var/rel_cap = is_templar ? 2 : (is_churchling ? 1 : 4)
-	//CHURCHLING PART ENDS
+	var/rel_cap = 4
 
-	// - Relations content STARTS HERE OH MY GOD I HATE BLANCE
-	if(src.current_rel_tab == "ten" || (src.current_rel_tab == "shunned" && _shunned_relations_unlocked(H)))
+	if(src.current_rel_tab == "ten" || src.current_rel_tab == "shunned")
 		var/list/idx = (src.current_rel_tab == "shunned") ? inhumen_patrons_index : divine_patrons_index
 		if(idx && idx.len)
-			// To be or not to be
 			html += "<br><b>[src.current_rel_tab == "shunned" ? "Shunned" : "Ten"] - Patron Relationships</b><br>"
 			html += "<div style='margin:6px 0; padding:8px; background:#222831; border-radius:6px;'>"
 			html += "<div><i>Relation chart (0..[rel_cap]):</i></div>"
@@ -737,7 +644,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 			for(var/nc in idx) names_chart += "[nc]"
 			names_chart = sortList(names_chart)
 
-			// MY PATRON YIPPIE
 			var/my_patron = ""
 			if(H.devotion && H.devotion.patron && ("name" in H.devotion.patron.vars))
 				my_patron = "[H.devotion.patron.vars["name"]]"
@@ -758,7 +664,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 
 			html += "</div><br>"
 
-			// Upgraded Yus
 			html += "<table width='100%' cellspacing='2' cellpadding='2'>"
 			html += "<tr><th align='left'>Patron</th><th>Domain</th><th width='80'>Level</th><th width='220'>Action</th></tr>"
 
@@ -787,9 +692,7 @@ var/global/list/PATRON_ARTIFACTS = list(
 						var/next = cur + 1
 						if(next > rel_cap) next = rel_cap
 						var/cost = (next == 1) ? 1 : (next == 2) ? 2 : (next == 3) ? 3 : 4
-						var/can = TRUE
-						if(src.current_rel_tab == "shunned" && !_shunned_relations_unlocked(H)) can = FALSE
-						if(can && H.personal_research_points >= cost)
+						if(H.personal_research_points >= cost)
 							html += "<a href='?src=[REF(src)];relten_up=[n]'>Upgrade to [next] ([cost] RP)</a>"
 						else
 							html += "<span style='color:#7f8c8d'>Upgrade to [next] ([cost] RP)</span>"
@@ -802,7 +705,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 	else
 		html += "<i>Relations hidden (None).</i>"
 
-	// Artefacts
 	if(H.unlocked_research_artefacts)
 		build_divine_patrons_index()
 		if(divine_patrons_index && length(divine_patrons_index))
@@ -845,26 +747,24 @@ var/global/list/PATRON_ARTIFACTS = list(
 							if(O && length(O.name)) name_txt = O.name
 							if(O) qdel(O)
 							html += "<tr><td>[html_attr(name_txt)]</td><td align='center'>"
-							if(HAS_TRAIT(H, TRAIT_CLERGY))
+							if(HAS_TRAIT(H, TRAIT_FLESHCRAFTER))
 								if(H.church_favor >= ARTEFACT_PRICE_FAVOR)
 									html += "<a href='?src=[REF(src)];buyart=[src.current_art_tab];item=[T]'>Buy ([ARTEFACT_PRICE_FAVOR] Favor)</a>"
 								else
 									html += "<span style='color:#7f8c8d'>Buy ([ARTEFACT_PRICE_FAVOR] Favor)</span>"
 							else
-								html += "<span style='color:#7f8c8d'>Only clergy may buy artefacts.</span>"
+								html += "<span style='color:#7f8c8d'>Only fleshcrafters may buy artefacts.</span>"
 							html += "</td></tr>"
 						html += "</table>"
 					else
 						html += "<i>No artefacts listed for this patron.</i>"
 
-	// Organs slop
 	html += _organs_shop_block(H)
 
 	var/datum/browser/B = new(user, "MIRACLE_RESEARCH", "", 740, 860)
 	B.set_content(html)
 	B.open()
 
-// ---- QUESTS UI
 /obj/effect/proc_holder/spell/self/learnmiracle/proc/open_quests_ui(mob/user)
 	var/mob/living/carbon/human/H = istype(user, /mob/living/carbon/human) ? user : null
 	if(!H) return
@@ -875,7 +775,7 @@ var/global/list/PATRON_ARTIFACTS = list(
 			init_needed = FALSE
 
 	if(init_needed)
-		H.quest_ui_entries = _rt_build_player_quest_set(H) // see quests.dm
+		H.quest_ui_entries = _rt_build_player_quest_set(H)
 		if(!H.quest_reroll_last_ds) H.quest_reroll_last_ds = world.time
 	_update_reroll_charges(H)
 
@@ -901,7 +801,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 	html += "Use the item under listed conditions to gain Favor. The item self-destructs in ~3 minutes."
 	html += "</div></center><hr>"
 
-	// *** BYOND says we cannot have at home "?.len" . Like the code works well ok buttttttttttttttttttttttttttttttttt
 	var/quest_count = islist(H.quest_ui_entries) ? H.quest_ui_entries.len : 0
 
 	for(var/i = 1, i <= quest_count, i++)
@@ -962,7 +861,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 	B2.set_content(html)
 	B2.open()
 
-// -- UPGRADE UI
 /obj/effect/proc_holder/spell/self/learnmiracle/proc/open_upgrade_ui(mob/user)
 	if(!istype(user, /mob/living/carbon/human)) return
 	var/mob/living/carbon/human/H = user
@@ -990,14 +888,12 @@ var/global/list/PATRON_ARTIFACTS = list(
 	B.set_content(html)
 	B.open()
 
-// -------------------- TOPIC --------------------
 /obj/effect/proc_holder/spell/self/learnmiracle/Topic(href, href_list)
 	. = ..()
 	if(!usr || !istype(usr, /mob/living/carbon/human)) return
 	var/mob/living/carbon/human/H = usr
 	_ensure_relations(H)
 
-	// REJOYCE MORE THAN 1 REROLL
 	if(href_list["q_reroll"])
 		_update_reroll_charges(H)
 		if(H.quest_reroll_charges <= 0)
@@ -1037,7 +933,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 
 		var/list/P = D["params"]
 		if(islist(P))
-			// YES WE KEEP PARAM WIRING FOR EXISTING TOKENS
 			if(istype(QI, /obj/item/quest_token/coin_chest))
 				var/obj/item/quest_token/coin_chest/CC = QI
 				if(P["required_sum"]) CC.required_sum = P["required_sum"]
@@ -1073,28 +968,18 @@ var/global/list/PATRON_ARTIFACTS = list(
 		open_quests_ui(H)
 		return
 
-	// Relations tab switch html shit
 	if(href_list["reltab"])
 		var/tb = lowertext(href_list["reltab"])
 		if(tb == "ten") src.current_rel_tab = "ten"
-		else if(tb == "shunned")
-			if(_shunned_relations_unlocked(H)) src.current_rel_tab = "shunned"
-			else src.current_rel_tab = "none"
+		else if(tb == "shunned") src.current_rel_tab = "shunned"
 		else src.current_rel_tab = "none"
 		open_research_ui(H); return
 
-	// Relation upgrade html shit
 	if(href_list["relten_up"])
 		var/god = href_list["relten_up"]
 		build_divine_patrons_index()
 		build_inhumen_patrons_index()
 		if(!(god in divine_patrons_index) && !(god in inhumen_patrons_index)) { open_research_ui(H); return }
-
-		// YES OR YES NO OR NO
-		if((god in inhumen_patrons_index))
-			if(!_shunned_relations_unlocked(H))
-				if(!(H.devotion && H.devotion.patron && "[H.devotion.patron.vars["name"]]" == god))
-					open_research_ui(H); return
 
 		if(H.devotion && H.devotion.patron && ("name" in H.devotion.patron.vars))
 			var/myname = "[H.devotion.patron.vars["name"]]"
@@ -1102,23 +987,9 @@ var/global/list/PATRON_ARTIFACTS = list(
 
 		var/cur = H.patron_relations[god]
 		if(!isnum(cur)) cur = 0
-
-		// ***************  hard cap templar relations at 2 *****
-		if(_is_templar(H) && cur >= 2) { open_research_ui(H); return }
-		//CHURCHLING PART STARTS
-		if(_is_churchling(H) && cur >= 1) { open_research_ui(H); return }
-		//CHURCHLING PART ENDS
-
 		if(cur >= 4) { open_research_ui(H); return }
 
 		var/next = cur + 1
-
-		// *************** block upgrade above 2 for templars *****
-		if(_is_templar(H) && next > 2) { open_research_ui(H); return }
-		//CHURCHLING PART STARTS
-		if(_is_churchling(H) && next > 1) { open_research_ui(H); return }
-		//CHURCHLING PART ENDS
-
 		var/cost = (next == 1) ? 1 : (next == 2) ? 2 : (next == 3) ? 3 : 4
 		if(H.personal_research_points < cost) { open_research_ui(H); return }
 
@@ -1128,11 +999,9 @@ var/global/list/PATRON_ARTIFACTS = list(
 		open_research_ui(H)
 		return
 
-	// --- Learn tabs ---
 	if(href_list["learntab"])
 		var/tb2 = href_list["learntab"]
 
-		// if None Then None I use It to hide issues not un block it
 		if(tb2 == "none")
 			src.current_learn_tab = "none"
 			open_learn_ui(H)
@@ -1143,16 +1012,13 @@ var/global/list/PATRON_ARTIFACTS = list(
 
 		var/can_select = FALSE
 
-		// divine
 		if(tb2 in divine_patrons_index)
 			var/relv = H.patron_relations && (tb2 in H.patron_relations) ? H.patron_relations[tb2] : 0
 			if(relv > 0) can_select = TRUE
 
-		// inhumen
 		if(!can_select && (tb2 in inhumen_patrons_index))
-			if(_shunned_relations_unlocked(H))
-				var/relv2 = H.patron_relations && (tb2 in H.patron_relations) ? H.patron_relations[tb2] : 0
-				if(relv2 > 0) can_select = TRUE
+			var/relv2 = H.patron_relations && (tb2 in H.patron_relations) ? H.patron_relations[tb2] : 0
+			if(relv2 > 0) can_select = TRUE
 
 		if(can_select)
 			src.current_learn_tab = "[tb2]"
@@ -1160,7 +1026,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 		open_learn_ui(H)
 		return
 
-	// --- Learn click ---
 	if(href_list["learnspell"])
 		var/txt = href_list["learnspell"]
 		var/typepath = text2path(txt)
@@ -1173,7 +1038,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 			open_learn_ui(H)
 			return
 
-		//no duplication exploit I want to say slur word
 		if(H?.mind)
 			for(var/obj/effect/proc_holder/spell/K in H.mind.spell_list)
 				if(K.type == typepath)
@@ -1213,12 +1077,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 
 		var/owner_rel = (real_owner == my_patron) ? 4 : (H.patron_relations && (real_owner in H.patron_relations) ? H.patron_relations[real_owner] : 0)
 		var/max_allowed = allowed_tier_by_relation(owner_rel)
-		if(_is_templar(H))
-			max_allowed = min(max_allowed, 2)
-		//CHURCHLING PART STARTS
-		if(_is_churchling(H))
-			max_allowed = min(max_allowed, 1)
-		//CHURCHLING PART ENDS
 
 		if(tier > max_allowed)
 			qdel(S)
@@ -1243,7 +1101,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 			open_learn_ui(H)
 			return
 
-		// Second no duplication exploit if GOOD GUYS figured out how to use HREF exploits
 		if(H?.mind)
 			for(var/obj/effect/proc_holder/spell/K in H.mind.spell_list)
 				if(K.type == typepath)
@@ -1258,13 +1115,11 @@ var/global/list/PATRON_ARTIFACTS = list(
 		open_learn_ui(H)
 		return
 
-	// --- Organs nav ---
 	if(href_list["orgtab"])
 		var/tbo = href_list["orgtab"]
 		if(tbo == "none" || tbo == "t1" || tbo == "t2" || tbo == "t3") src.current_org_tab = tbo
 		open_research_ui(H); return
 
-	// --- Artefact nav ---
 	if(href_list["arttab"])
 		var/tbA = href_list["arttab"]
 		if(tbA == "none") src.current_art_tab = "none"
@@ -1274,9 +1129,8 @@ var/global/list/PATRON_ARTIFACTS = list(
 			else src.current_art_tab = "none"
 		open_research_ui(H); return
 
-	// --- BUY / UNLOCK ---
 	if(href_list["buyart"])
-		if(!HAS_TRAIT(H, TRAIT_CLERGY)) { open_research_ui(H); return }
+		if(!HAS_TRAIT(H, TRAIT_FLESHCRAFTER)) { open_research_ui(H); return }
 		var/god2 = href_list["buyart"]
 		var/item_txt = href_list["item"]
 		build_divine_patrons_index()
@@ -1296,7 +1150,7 @@ var/global/list/PATRON_ARTIFACTS = list(
 		open_research_ui(H); return
 
 	if(href_list["buyorg"])
-		if(!HAS_TRAIT(H, TRAIT_CLERGY)) { open_research_ui(H); return }
+		if(!HAS_TRAIT(H, TRAIT_FLESHCRAFTER)) { open_research_ui(H); return }
 		var/tier = lowertext(href_list["buyorg"])
 		var/label = lowertext(href_list["item"])
 		if(!(label in list("eyes","stomach","liver","heart","lungs"))) { open_research_ui(H); return }
@@ -1317,14 +1171,14 @@ var/global/list/PATRON_ARTIFACTS = list(
 		open_research_ui(H); return
 
 	if(href_list["buyrp"])
-		if(!HAS_TRAIT(H, TRAIT_CLERGY) || H.church_favor < RESEARCH_RP_PRICE_FLAVOR) { open_research_ui(H); return }
+		if(!HAS_TRAIT(H, TRAIT_FLESHCRAFTER) || H.church_favor < RESEARCH_RP_PRICE_FLAVOR) { open_research_ui(H); return }
 		H.church_favor = max(0, H.church_favor - RESEARCH_RP_PRICE_FLAVOR)
 		H.personal_research_points++
 		to_chat(H, span_notice("You gained +1 Research Point."))
 		open_research_ui(H); return
 
 	if(href_list["buymp"])
-		if(!HAS_TRAIT(H, TRAIT_CLERGY) || H.church_favor < MIRACLE_MP_PRICE_FLAVOR) { open_research_ui(H); return }
+		if(!HAS_TRAIT(H, TRAIT_FLESHCRAFTER) || H.church_favor < MIRACLE_MP_PRICE_FLAVOR) { open_research_ui(H); return }
 		H.church_favor = max(0, H.church_favor - MIRACLE_MP_PRICE_FLAVOR)
 		H.miracle_points++
 		to_chat(H, span_notice("You gained +1 Miracle Point."))
@@ -1347,19 +1201,9 @@ var/global/list/PATRON_ARTIFACTS = list(
 		to_chat(H, span_notice("Study unlocked: [key]."))
 		open_research_ui(H); return
 
-	// --- Unlock shunned
 	if(href_list["unlock_shunned_rel"])
-		if(H.personal_research_points < UNLOCK_SHUNNED_RP) { open_research_ui(H); return }
-		H.personal_research_points = max(0, H.personal_research_points - UNLOCK_SHUNNED_RP)
-		build_inhumen_patrons_index()
-		if(!islist(H.patron_relations)) H.patron_relations = list()
-		for(var/n in inhumen_patrons_index)
-			if(!(n in H.patron_relations))
-				H.patron_relations[n] = 0
-		to_chat(H, span_notice("Shunned knowledges unlocked."))
 		open_research_ui(H); return
 
-	// --- Upgrade: Diagnose (2 MP) -
 	if(href_list["upgrade_diag"])
 		if(!istype(H) || !H?.mind) { open_upgrade_ui(H); return }
 		if(H.miracle_points < 2) { to_chat(H, span_warning("Not enough Miracle Points.")); open_upgrade_ui(H); return }
@@ -1378,7 +1222,6 @@ var/global/list/PATRON_ARTIFACTS = list(
 		to_chat(H, span_notice("Your Diagnose has been upgraded to Greater Diagnose (-2 MP)."))
 		open_upgrade_ui(H); return
 
-// DONT CHANGE IT PLEASE1111
 /obj/effect/proc_holder/spell/self/learnmiracle/cast(list/targets, mob/user)
 	if(!..()) return
 	if(!user) return

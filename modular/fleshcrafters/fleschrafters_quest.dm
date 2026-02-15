@@ -62,35 +62,36 @@
 	qdel(O)
 	return n
 
-/proc/_race_satisfies(H, key)
+/proc/_race_satisfies(mob/living/carbon/human/H, key)
 	if(!istype(H, /mob/living/carbon/human)) return FALSE
-	var/mob/living/carbon/human/HH = H
 
 	var/k = lowertext("[key]")
 
-	if(k == "northern_human") return ishumannorthern(HH)
-	if(k == "dwarf")          return isdwarf(HH)
-	if(k == "dark_elf")       return isdarkelf(HH)
-	if(k == "wood_elf")       return iswoodelf(HH)
-	if(k == "half_elf")       return ishalfelf(HH)
-	if(k == "half_orc")       return ishalforc(HH)
-	if(k == "goblin")         return isgoblinp(HH)
-	if(k == "kobold")         return iskobold(HH)
-	if(k == "lizard")         return islizard(HH)
-	if(k == "aasimar")        return isaasimar(HH)
-	if(k == "tiefling")       return istiefling(HH)
-	if(k == "halfkin")        return ishalfkin(HH)
-	if(k == "wildkin")        return iswildkin(HH)
-	if(k == "golem")          return isgolemp(HH)
-	if(k == "doll")           return isdoll(HH)
-	if(k == "vermin")         return isvermin(HH)
-	if(k == "dracon")         return isdracon(HH)
-	if(k == "axian")          return isaxian(HH)
-	if(k == "tabaxi")         return istabaxi(HH)
-	if(k == "vulp")           return isvulp(HH)
-	if(k == "lupian")         return islupian(HH)
-	if(k == "moth")           return ismoth(HH)
-	if(k == "lamia")          return islamia(HH)
+	if(k == "northern_human") return is_species(H, /datum/species/human/northern)
+	if(k == "dwarf")          return is_species(H, /datum/species/dwarf)
+	if(k == "dwarf_mountain") return is_species(H, /datum/species/dwarf/mountain)
+	if(k == "elf")            return is_species(H, /datum/species/elf)
+	if(k == "dark_elf")       return is_species(H, /datum/species/elf/dark)
+	if(k == "wood_elf")       return is_species(H, /datum/species/elf/wood)
+	if(k == "half_elf")       return is_species(H, /datum/species/human/halfelf)
+	if(k == "tiefling")       return is_species(H, /datum/species/tieberian)
+	if(k == "dullahan")       return is_species(H, /datum/species/dullahan)
+	if(k == "half_orc")       return is_species(H, /datum/species/halforc)
+	if(k == "lizard")         return is_species(H, /datum/species/lizardfolk)
+	if(k == "goblin")         return is_species(H, /datum/species/goblinp)
+	if(k == "kobold")         return is_species(H, /datum/species/kobold)
+	if(k == "aasimar")        return is_species(H, /datum/species/aasimar)
+	if(k == "halfkin")        return is_species(H, /datum/species/demihuman)
+	if(k == "wildkin")        return is_species(H, /datum/species/anthromorph)
+	if(k == "critter")        return is_species(H, /datum/species/anthromorphsmall)
+	if(k == "axian")          return is_species(H, /datum/species/akula)
+	if(k == "lamia")          return is_species(H, /datum/species/lamia)
+	if(k == "dracon")         return is_species(H, /datum/species/dracon)
+	if(k == "lupian")         return is_species(H, /datum/species/lupian)
+	if(k == "moth")           return is_species(H, /datum/species/moth)
+	if(k == "tabaxi")         return is_species(H, /datum/species/tabaxi)
+	if(k == "vulp")           return is_species(H, /datum/species/vulpkanin)
+	if(k == "harpy")          return is_species(H, /datum/species/harpy)
 
 	return FALSE
 
@@ -392,9 +393,12 @@
 var/global/list/Q_WITNESS_EFFECTS = list(
 	/datum/status_effect/buff/sermon,
 	/datum/status_effect/buff/drunk,
-	/datum/status_effect/buff/foodbuff,
+	/datum/status_effect/buff/greatsnackbuff,
+	/datum/status_effect/buff/snackbuff,
 	/datum/status_effect/buff/ozium,
 	/datum/status_effect/buff/moondust,
+	/datum/status_effect/buff/murkwine,
+	/datum/status_effect/buff/sweet,
 	/datum/status_effect/buff/moondust_purest,
 	/datum/status_effect/buff/starsugar,
 	/datum/status_effect/buff/weed
@@ -483,7 +487,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 	for(var/mob/living/carbon/human/HH in world)
 		if(!HH.client) continue
-		if(!HAS_TRAIT(HH, TRAIT_CLERGY)) continue
+		if(!HAS_TRAIT(HH, TRAIT_FLESHCRAFTER)) continue
 
 		if(HH.client.ckey == owner_ckey)
 			HH.church_favor += amount
@@ -505,8 +509,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		to_chat(user, span_warning("It does not heed your hand. (Owner: [owner_name].)"))
 		return FALSE
 
-	if(!HAS_TRAIT(M, TRAIT_CLERGY))
-		to_chat(user, span_warning("Only clergy may invoke this."))
+	if(!HAS_TRAIT(M, TRAIT_FLESHCRAFTER))
+		to_chat(user, span_warning("Only kindreds may invoke this."))
 		return FALSE
 
 	return TRUE
@@ -521,8 +525,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		to_chat(user, span_warning("Target must be a player."))
 		return FALSE
 
-	if(HAS_TRAIT(HH, TRAIT_CLERGY))
-		to_chat(user, span_warning("Clergy cannot be targeted."))
+	if(HAS_TRAIT(HH, TRAIT_FLESHCRAFTER))
+		to_chat(user, span_warning("Fellow kindreds cannot contribute."))
 		return FALSE
 
 	return TRUE

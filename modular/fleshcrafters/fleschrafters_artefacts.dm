@@ -104,26 +104,18 @@ Malum's tool
 //only one bar items you retard
 	if(istype(user.used_intent, /datum/intent/forge))
 		if(istype(target, /obj/machinery/anvil))
-			var/obj/machinery/anvil/A = target
-			if(A.hingot && istype(A.hingot, /obj/item/ingot))
-				var/obj/item/ingot/ing_on_anvil = A.hingot
-				A.hingot = null
-				A.update_icon()
-				ing_on_anvil.forceMove(src)
-				forge_open_category_menu(user, ing_on_anvil)
-				return
-			to_chat(user, span_warning("Place an ingot on the anvil or click an ingot directly."))
+			to_chat(user, span_warning("Click an ingot directly to forge."))
 			return
 
 		if(!isitem(target))
 			to_chat(user, span_warning("I need to click an ingot to forge."))
 			return
+
 		var/obj/item/ingot/ing = target
 		if(!istype(ing, /obj/item/ingot))
 			to_chat(user, span_warning("[target] is not an ingot."))
 			return
 
-		ing.forceMove(src)
 		forge_open_category_menu(user, ing)
 		return
 
@@ -1215,7 +1207,7 @@ Necra's Censer (by ARefrigerator)
 		if(user?.mind)
 			user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE)
 		record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
-		GLOB.scarlet_round_stats[STATS_FISH_CAUGHT]++
+		record_round_statistic(STATS_FISH_CAUGHT)
 
 	playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
 
@@ -1353,10 +1345,10 @@ Necra's Censer (by ARefrigerator)
 
 	var/mob/living/carbon/human/C = user
 
-	var/cost = HAS_TRAIT(target, TRAIT_CLERGY) ? 1000 : 0
+	var/cost = HAS_TRAIT(target, TRAIT_FLESHCRAFTER) ? 500 : 0
 
 	if(cost > 0 && C.church_favor < cost)
-		to_chat(C, span_warning("Your faith lacks the strength. ([cost] Favor required, you have [C.church_favor].)"))
+		to_chat(C, span_warning("I'm not strong enough to provide such action. ([cost] Favor required, you have [C.church_favor].)"))
 		return
 
 	user.visible_message(
