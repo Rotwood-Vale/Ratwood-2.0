@@ -75,7 +75,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/mealbuff
 	effectedstats = list(STATKEY_CON = 1)
 	duration = 30 MINUTES
-	var/healing_on_tick = 0.1
+	tick_interval = 5 SECONDS // Process less frequently for better performance
+	var/healing_on_tick = 0.5 // 0.1 * 5 - scaled by tick_interval
 
 /atom/movable/screen/alert/status_effect/buff/mealbuff
 	name = "Good meal"
@@ -105,7 +106,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/greatmealbuff
 	effectedstats = list(STATKEY_CON = 1, STATKEY_WIL = 1)
 	duration = 30 MINUTES
-	var/healing_on_tick = 0.1
+	tick_interval = 5 SECONDS // Process less frequently for better performance
+	var/healing_on_tick = 0.5 // 0.1 * 5 - scaled by tick_interval
 
 /atom/movable/screen/alert/status_effect/buff/greatmealbuff
 	name = "Great meal!"
@@ -135,7 +137,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/sweet
 	effectedstats = list(STATKEY_LCK = 1)
 	duration = 8 MINUTES
-	var/healing_on_tick = 0.1
+	tick_interval = 5 SECONDS // Process less frequently for better performance
+	var/healing_on_tick = 0.5 // 0.1 * 5 - scaled by tick_interval
 
 /atom/movable/screen/alert/status_effect/buff/sweet
 	name = "Sweet embrace"
@@ -1857,8 +1860,9 @@
 	id = "wellfed"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/wellfed
 	duration = 100 // Refreshed every tick by species.dm
-	var/healing_on_tick = 0.2
-	var/nutrition_drain_per_tick = 0.5 // Drain nutrition when healing
+	tick_interval = 5 SECONDS // Process less frequently for better performance
+	var/healing_on_tick = 1 // 0.2 * 5 - scaled by tick_interval
+	var/nutrition_drain_per_tick = 2.5 // 0.5 * 5 - scaled by tick_interval
 
 /atom/movable/screen/alert/status_effect/buff/wellfed
 	name = "Well-Fed"
@@ -1887,8 +1891,9 @@
 	id = "wellhydrated"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/wellhydrated
 	duration = 100 // Refreshed every tick by species.dm
-	var/healing_on_tick = 0.2
-	var/hydration_drain_per_tick = 0.5 // Drain hydration when healing
+	tick_interval = 5 SECONDS // Process less frequently for better performance
+	var/healing_on_tick = 1 // 0.2 * 5 - scaled by tick_interval
+	var/hydration_drain_per_tick = 2.5 // 0.5 * 5 - scaled by tick_interval
 
 /atom/movable/screen/alert/status_effect/buff/wellhydrated
 	name = "Well-Hydrated"
