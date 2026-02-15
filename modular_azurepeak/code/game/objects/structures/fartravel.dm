@@ -78,4 +78,5 @@
 		for(var/thing in embeds)
 			QDEL_NULL(thing)
 	QDEL_NULL(departing_mob)
+	returntolobby()
 
