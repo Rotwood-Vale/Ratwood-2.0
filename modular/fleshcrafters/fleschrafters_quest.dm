@@ -124,6 +124,12 @@
 
 	return FALSE
 
+/proc/_is_leaf_type(typepath)
+	if(!ispath(typepath))
+		return FALSE
+	var/list/subs = typesof(typepath)
+	return (!islist(subs) || subs.len <= 1)
+
 /proc/_target_has_flaw(H, flaw_type)
 	if(!istype(H, /mob/living/carbon/human)) return FALSE
 	var/mob/living/carbon/human/HH = H
@@ -315,20 +321,30 @@
 	var/list/names = list()
 	if(islist(type_list))
 		for(var/T in type_list)
+			if(!ispath(T, /datum/skill)) continue
+			if(!_is_leaf_type(T)) continue
+
 			var/datum/skill/SK = new T
-			var/n = (SK && SK.name) ? SK.name : "[T]"
+			if(SK && istext(SK.name) && length(SK.name))
+				names += SK.name
+			else
+				names += "[T]"
 			if(SK) qdel(SK)
-			names += n
 	return names
 
 /proc/_rt_flaw_names(list/type_list)
 	var/list/names = list()
 	if(islist(type_list))
 		for(var/T in type_list)
+			if(!ispath(T, /datum/charflaw)) continue
+			if(!_is_leaf_type(T)) continue
+
 			var/datum/charflaw/F = new T
-			var/n = (F && F.name) ? F.name : "[T]"
+			if(F && istext(F.name) && length(F.name))
+				names += F.name
+			else
+				names += "[T]"
 			if(F) qdel(F)
-			names += n
 	return names
 
 /proc/_rt_all_job_types_master()
@@ -360,9 +376,7 @@
 		/datum/job/roguetown/farmer,
 		/datum/job/roguetown/orphan,
 		/datum/job/roguetown/shophand,
-		/datum/job/roguetown/elder,
 		/datum/job/roguetown/niteman,
-		/datum/job/roguetown/loudmouth,
 		/datum/job/roguetown/archivist,
 		/datum/job/roguetown/barkeep,
 		/datum/job/roguetown/guildmaster,
@@ -374,10 +388,8 @@
 		/datum/job/roguetown/mercenary,
 		/datum/job/roguetown/bandit,
 		/datum/job/roguetown/wretch,
-		/datum/job/roguetown/warden,
 		/datum/job/roguetown/sergeant,
 		/datum/job/roguetown/dungeoneer,
-		/datum/job/roguetown/gatemaster,
 		/datum/job/roguetown/manorguard,
 		/datum/job/roguetown/squire,
 		/datum/job/roguetown/guardsman
@@ -1425,3 +1437,28 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		final_list += list(arch)
 
 	return final_list
+
+
+
+//BUFF
+
+/datum/status_effect/buff/parish_boon
+	id = "parish_boon"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/parish_boon
+	effectedstats = list("perception" = 1, "intelligence" = 1)
+	duration = 20 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/parish_boon
+	name = "Boon of the Parish"
+	desc = "You lent partial aid to the local church and bear a modest share of its blessing."
+	icon_state = "buff"
+
+/datum/status_effect/debuff/quest_lock
+	id = "quest_lock"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/quest_lock
+	duration = 20 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/quest_lock
+	name = "Edict of the Ten"
+	desc = "A sliver of sacred favor clings to you. Followers of the Ten will not enlist your aid in their routine."
+	icon_state = "debuff"

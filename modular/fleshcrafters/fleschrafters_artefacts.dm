@@ -47,7 +47,7 @@ Malum's tool
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/forge,  /datum/intent/smelt)
 	name = "Malum's tool"
 	desc = "A blessed hammer that forges fate as it pleases."
-	icon = 'icons/roguetown/items/artefactsten.dmi'
+	icon = 'modular/fleshcrafters/fleshcrafter_artefacts.dmi'
 	icon_state = "malumartefact"
 	sharpness = IS_BLUNT
 	//dropshrink = 0.8
@@ -305,7 +305,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/artefact/necra_censer
 	name = "Necra's censer"
 	desc = "A small bronze censer that expels an otherworldly mist."
-	icon = 'icons/roguetown/items/artefactsten.dmi'
+	icon = 'modular/fleshcrafters/fleshcrafter_artefacts.dmi'
 	icon_state = "necraartefact"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -336,7 +336,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/artefact/dendor_hose //bless your tree with its piss
 	name = "Dendor's Endless Hose"
 	desc = "A living crook of wood that bends soil to the Treefather’s will. Click soil to add ±100 water/nutriment, bless, or affect growth." //Dendor's piss
-	icon = 'icons/roguetown/items/artefactsten.dmi'
+	icon = 'modular/fleshcrafters/fleshcrafter_artefacts.dmi'
 	icon_state = "dendorartefact"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP
@@ -487,7 +487,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/artefact/noc_phylactery
 	name = "Noc's Phylactery"
 	desc = "A lunar phylactery of Noc: a crystal vessel that binds a drop of blood to a path under the moon's gaze. In elder nights, mages used such vessels to hunt apostates who abused or stole arcane knowledge."
-	icon = 'icons/roguetown/items/artefactsten.dmi'
+	icon = 'modular/fleshcrafters/fleshcrafter_artefacts.dmi'
 	icon_state = "nocartefact"
 	w_class = WEIGHT_CLASS_TINY
 	var/bound = FALSE
@@ -633,7 +633,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/artefact/eora_heart
 	name = "Eora's Heart"
 	desc = "A velvet heart dedicated to Eora. It remembers the names of bonds formed."
-	icon = 'icons/roguetown/items/artefactsten.dmi'
+	icon = 'modular/fleshcrafters/fleshcrafter_artefacts.dmi'
 	icon_state = "eoraartefact"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -821,7 +821,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/rogueweapon/surgery/multitool
 	name = "surgical multitool"
 	desc = "A compact, blessed device that unfolds into whatever the surgeon needs."
-	icon = 'icons/roguetown/items/artefactsten.dmi'
+	icon = 'modular/fleshcrafters/fleshcrafter_artefacts.dmi'
 	icon_state = "scapelpestra"
 	gripsprite = FALSE
 	wlength = WLENGTH_SHORT
@@ -1014,7 +1014,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/artifact/ravox_lens
 	name = "Ravox trace lens"
 	desc = "A fearless god's lens that reveals the truth."
-	icon = 'icons/roguetown/items/artefactsten.dmi'
+	icon = 'modular/fleshcrafters/fleshcrafter_artefacts.dmi'
 	icon_state = "ravoxartefact"
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
@@ -1135,7 +1135,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/fishingrod/abyssoid
     name = "Abyssor's rod"
     desc = "A rod blessed by Abyssor. It needs no bait."
-    icon = 'icons/roguetown/items/artefactsten.dmi'
+    icon = 'modular/fleshcrafters/fleshcrafter_artefacts.dmi'
     icon_state = "abyssorartefact"
 
     var/static/list/_abyssor_loot = list(
@@ -1261,7 +1261,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/clothing/gloves/xylix
     name = "Xylix gloves"
     desc = "Gloves favored by Xylix's acolytes. Fingers feel lighter, reach seems longer."
-    icon = 'icons/roguetown/items/artefactsten.dmi'
+    icon = 'modular/fleshcrafters/fleshcrafter_artefacts.dmi'
     icon_state = "xylixartefact"
     slot_flags = ITEM_SLOT_GLOVES
     w_class = WEIGHT_CLASS_SMALL
@@ -1325,7 +1325,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/artifact/astrata_star
 	name = "Star of Astrata"
 	desc = "An artifact used to help the lost find the true light."
-	icon = 'icons/roguetown/items/artefactsten.dmi'
+	icon = 'modular/fleshcrafters/fleshcrafter_artefacts.dmi'
 	icon_state = "astrataartefact"
 	force = 0
 
