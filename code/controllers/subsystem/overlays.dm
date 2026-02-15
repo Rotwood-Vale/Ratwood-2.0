@@ -1,14 +1,20 @@
+#define OVERLAY_THROTTLE 3 // update AI every N fires
+#define HAS_CLIENT(A) (ismob(A) && A:client)
+
 SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER
-	wait = 1
+	wait = 2
 	priority = FIRE_PRIORITY_OVERLAYS
 	init_order = INIT_ORDER_OVERLAY
+
 
 	var/list/queue
 	var/list/stats
 	var/list/overlay_icon_state_caches
 	var/list/overlay_icon_cache
+
+	var/throttle_counter = 0
 
 /datum/controller/subsystem/overlays/PreInit()
 	overlay_icon_state_caches = list()
@@ -44,29 +50,39 @@ SUBSYSTEM_DEF(overlays)
 		count = 0 //so if we runtime on the Cut, we don't try again.
 		queue.Cut(1,c+1)
 
-	for (var/thing in queue)
+	throttle_counter++
+	var/update_non_player = (throttle_counter % OVERLAY_THROTTLE) == 0
+	// Rewrote this to go through the queue with an index to the list, not sure if it'll improve performance at all. 
+	var/length = queue.len
+	for(var/i = 1, i < length + 1, i++)
+		var/atom/A = queue[i] // The most delicious of micro-optimizations
 		count++
-		if(thing)
-			var/atom/A = thing
-			/* 4/15/2024 - commented out until we resolve infinite overlays stacking onto mobs, i rather not have people bitch about invisible stuff over lag tbqh
+		if(A)
+			if(!update_non_player && !HAS_CLIENT(A))
+				// Think of pop-corn lists or a pop-stack. We'll be cutting the queue from 1 to count + 1. So we go ONE beyond that. 
+				//EVER so slightly cheaper... I think.
+				queue += A 
+			else
 				if(A.overlays.len >= MAX_ATOM_OVERLAYS)
-				//Break it real GOOD
-				stack_trace("Too many overlays on [A.type] - [A.overlays.len], refusing to update and cutting")
-				A.overlays.Cut()
-				continue*/
-			STAT_START_STOPWATCH
-			COMPILE_OVERLAYS(A)
-			STAT_STOP_STOPWATCH
-			STAT_LOG_ENTRY(stats, A.type)
-		if(mc_check)
-			if(MC_TICK_CHECK)
+					//Break it real GOOD
+					stack_trace("Too many overlays on [A.type] - [A.overlays.len], cutting down to [MAX_ATOM_OVERLAYS]")
+					A.overlays.Cut(MAX_ATOM_OVERLAYS, A.overlays.len + 1)
+				STAT_START_STOPWATCH
+				COMPILE_OVERLAYS(A)
+				STAT_STOP_STOPWATCH
+				STAT_LOG_ENTRY(stats, A.type)
+		if (mc_check)
+			if (MC_TICK_CHECK)
 				break
 		else
 			CHECK_TICK
 
-	if (count)
+	if(count)
 		queue.Cut(1,count+1)
 		count = 0
+
+#undef HAS_CLIENT
+#undef OVERLAY_THROTTLE
 
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()
