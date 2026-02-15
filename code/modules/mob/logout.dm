@@ -8,6 +8,11 @@
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
 	..()
 
+	// Save Ratworld inscription skill data
+	if(istype(src, /mob/living))
+		var/mob/living/L = src
+		L.ratworld_save_inscription()
+
 	if(loc)
 		loc.on_log(FALSE)
 

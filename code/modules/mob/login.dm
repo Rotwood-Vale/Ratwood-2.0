@@ -95,6 +95,11 @@
 	if(client)
 		client.preload_music()
 
+	// Load Ratworld inscription skill data
+	if(istype(src, /mob/living))
+		var/mob/living/L = src
+		L.ratworld_load_inscription()
+
 /**
   * Checks if the attached client is an admin and may deadmin them
   *

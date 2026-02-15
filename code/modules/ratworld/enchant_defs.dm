@@ -451,23 +451,6 @@ GLOBAL_LIST_INIT(rw_enchant_defs, list(
 
 // Roll a value for a specific enchant and slot_key (returns number, is_percent)
 /proc/ratworld_roll_enchant_value_for_slot(id, slot_key, mob/living/roller)
-    var/list/r = ratworld_get_enchant_slot_range(id, slot_key)
-    if(!islist(r)) return null
-    var/minv = r["min"]
-    var/maxv = r["max"]
-    var/is_percent = r["percent"]
-    if(isnull(minv) || isnull(maxv)) return null
-    // Support fractional steps: roll in tenths if needed
-    var/scale = (round(minv) != minv || round(maxv) != maxv) ? 10 : 1
-    var/min_scaled = round(minv * scale)
-    var/max_scaled = round(maxv * scale)
-    var/raw_roll = rand(min_scaled, max_scaled)
-    // If we know who is rolling, bias toward high rolls using their luck
-    if(roller)
-        var/luck = roller.ratworld_get_luck_total()
-        if(luck > 0 && max_scaled > min_scaled)
-            var/base = (raw_roll - min_scaled) / (max_scaled - min_scaled)
-            var/biased = ratworld_bias_roll_with_luck(luck, base)
-            raw_roll = round(min_scaled + (max_scaled - min_scaled) * biased)
-    var/ival = raw_roll / scale
-    return list("value" = ival, "percent" = is_percent)
+    // Rolling of values disabled. Items should carry explicit values in
+    // `I.vars["rw_enchant_vals"]` instead.
+    return null

@@ -182,8 +182,8 @@
 		reroll_max = tmp
 
 	// Roll within reduced band using user's luck
-	luck = user.ratworld_get_luck_total()
-	value = ratworld_roll_enchant_value_with_luck(luck, reroll_min, reroll_max)
+	// Deterministic reroll: use midpoint of the reduced band (no randomness)
+	value = (reroll_min + reroll_max) / 2
 
 	// Ensure enchant id list exists
 	if(!islist(I.vars["rw_enchants"]))

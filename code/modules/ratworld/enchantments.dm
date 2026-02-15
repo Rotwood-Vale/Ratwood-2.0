@@ -110,23 +110,9 @@ var/global/list/GLOB_rw_enchants
 // Rarity may influence N externally.
 /proc/ratworld_roll_enchant_ids(count = 1)
 	ratworld_init_enchantments()
-	count = max(0, round(count))
-	var/list/ids = list()
-	if(!count) return ids
-	// Build a working weight list excluding chosen ids
-	var/list/weights = list()
-	for(var/id in GLOB_rw_enchants)
-		var/datum/ratworld/enchantment/E = GLOB_rw_enchants[id]
-		weights[id] = max(1, E.weight)
-	// Allow at most two copies of the same enchant id; duplicates stack via value roller
-	var/list/counts = list()
-	while(ids.len < count && weights.len)
-		var/picked = pickweight(weights)
-		ids += picked
-		counts[picked] = (isnum(counts[picked]) ? counts[picked] + 1 : 1)
-		if(counts[picked] >= 2)
-			weights -= picked
-	return ids
+	// Random rolling disabled. Enchantments must be predefined on items via
+	// `I.vars["rw_enchants"]` and `I.vars["rw_enchant_vals"]`.
+	return list()
 
 // Attach enchantments to an item by id and call apply hooks. Ids are strings.
 /proc/ratworld_attach_enchantments(obj/item/I, list/enchant_ids)
@@ -141,14 +127,7 @@ var/global/list/GLOB_rw_enchants
 		if(!E) continue
 		I.vars["rw_enchants"] += id
 		E.apply_to_item(I)
-		// If a per-slot range exists for this enchant, roll a value using caller-provided slot key if present
-		// Expect caller to set I.vars["rw_slot_key"] temporarily when rolling (e.g., "CHEST"), else skip
-		var/slot_key = I.vars?["rw_slot_key"]
-		if(istext(slot_key))
-			// No roller mob here; base rolls remain unbiased
-			var/list/r = ratworld_roll_enchant_value_for_slot(id, slot_key, null)
-			if(islist(r))
-				I.vars["rw_enchant_vals"][id] = r["value"]
+		// No automatic value rolling: expect `rw_enchant_vals` to be set explicitly on the item.
 
 	// Ensure generic handlers and persistent item-side effects are installed once
 	ratworld_register_item_enchant_handlers(I)
@@ -689,68 +668,16 @@ var/global/list/GLOB_rw_enchants
 /proc/ratworld_roll_enchant_ids_for_slot(count = 1, slot_key)
 	if(!istext(slot_key)) return list()
 	ratworld_init_enchantments()
-	var/list/candidates = list()
-	for(var/id in GLOB_rw_enchants)
-		var/list/def = ratworld_get_enchant_def(id)
-		if(!islist(def)) continue
-		var/list/slots = def["slots"]
-		if(islist(slots) && slots[slot_key])
-			var/datum/ratworld/enchantment/E = GLOB_rw_enchants[id]
-			candidates[id] = max(1, E.weight)
-	var/list/picked = list()
-	var/list/counts = list()
-	count = max(0, round(count))
-	while(picked.len < count && candidates.len)
-		var/p = pickweight(candidates)
-		picked += p
-		counts[p] = (isnum(counts[p]) ? counts[p] + 1 : 1)
-		if(counts[p] >= 2)
-			candidates -= p
-	return picked
+	// Random per-slot rolling disabled. Expect items to declare their enchants explicitly.
+	return list()
 
 // Semi-rare: roll item +STAT bonuses (excluded: Fortune/Luck). Any gear can roll. Not socketable.
 // Design: up to total +2 across all stats per item (e.g. +1 STR +1 SPD, or +2 SPD),
 // and up to two rolls; duplicate rolls on the same attribute stack.
 /proc/ratworld_maybe_roll_item_stat_bonus(obj/item/I)
-	if(!I) return
-	// Eligible gear types
-	if(!(istype(I, /obj/item/rogueweapon) || istype(I, /obj/item/gun/ballistic/revolver/grenadelauncher/bow) || istype(I, /obj/item/clothing)))
-		return
-	// Disallow +STAT rolls on common rarity items
-	var/r = I.vars?["rw_rarity"]
-	if(!isnum(r)) r = 1
-	if(r <= RW_RARITY_COMMON) return
-	// Initialize containers
-	if(!islist(I.vars?["rw_stat_bonuses"]))
-		I.vars["rw_stat_bonuses"] = list()
-	var/list/bon = I.vars["rw_stat_bonuses"]
-	// Compute current total magnitude (sum of all bonuses)
-	var/total = 0
-	for(var/k in bon)
-		var/v = bon[k]
-		if(isnum(v)) total += v
-	// Hard cap: max total +2
-	if(total >= 2) return
-	// First roll gate: ~12% chance overall; second roll is rarer (~40% of first's chance)
-	if(!bon.len)
-		if(!prob(12)) return
-	else
-		if(!prob(5)) return
-	// Decide value; clamp so we never exceed +2 total
-	var/val = prob(5) ? 2 : 1
-	var/room = max(0, 2 - total)
-	if(room <= 0) return
-	if(val > room) val = room
-	if(val <= 0) return
-	// Choose among STR, SPD, INT, WIL, CON (exclude LUC)
-	var/list/cands = list("STR", "SPD", "INT", "WIL", "CON")
-	var/sid = pick(cands)
-	// Stack if same attribute rolled again
-	if(isnum(bon[sid]))
-		bon[sid] += val
-	else
-		bon[sid] = val
-	I.vars["rw_stat_bonuses"] = bon
+	// Disabled: stat randomization removed. +STAT bonuses must be provided
+	// explicitly on the item via `I.vars["rw_stat_bonuses"]`.
+	return
 
 // Helper accessors for systems to consume aggregated wearer bonuses safely
 /proc/ratworld_get_action_speed_mult(mob/living/L)
