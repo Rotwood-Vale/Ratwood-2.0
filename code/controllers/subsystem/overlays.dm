@@ -1,6 +1,7 @@
 #define OVERLAY_THROTTLE 5 // update AI every N fires
 #define HAS_CLIENT(A) (ismob(A) && A:client)
 #define ishud(A) (istype(A, /datum/hud))
+#define ishudelement(A) (istype(A, /atom/movable/screen))
 
 SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
@@ -59,7 +60,7 @@ SUBSYSTEM_DEF(overlays)
 		var/atom/A = queue[i] // The most delicious of micro-optimizations
 		count++
 		if(A)
-			if(!update_non_player && !HAS_CLIENT(A) && !ishud(A))
+			if(!update_non_player && !HAS_CLIENT(A) && !ishud(A) && !ishudelement(A))
 				// Think of pop-corn lists or a pop-stack. We'll be cutting the queue from 1 to count + 1. So we go ONE beyond that. 
 				//EVER so slightly cheaper... I think.
 				queue += A 
@@ -84,6 +85,7 @@ SUBSYSTEM_DEF(overlays)
 
 #undef HAS_CLIENT
 #undef ishud
+#undef ishudelement
 #undef OVERLAY_THROTTLE
 
 /proc/iconstate2appearance(icon, iconstate)
