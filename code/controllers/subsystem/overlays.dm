@@ -83,6 +83,7 @@ SUBSYSTEM_DEF(overlays)
 		count = 0
 
 #undef HAS_CLIENT
+#undef ishud
 #undef OVERLAY_THROTTLE
 
 /proc/iconstate2appearance(icon, iconstate)
