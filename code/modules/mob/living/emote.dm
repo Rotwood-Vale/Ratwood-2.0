@@ -624,7 +624,7 @@
 	key = "pat"
 	key_third_person = "pats"
 	message = ""
-	message_param = "pats %t head."
+	message_param = "pats %t head"
 	emote_type = EMOTE_VISIBLE
 	restraint_check = TRUE
 
