@@ -1,10 +1,11 @@
-#define OVERLAY_THROTTLE 3 // update AI every N fires
+#define OVERLAY_THROTTLE 4 // update AI every N fires
 #define HAS_CLIENT(A) (ismob(A) && A:client)
+#define ishud(A) (istype(A, /datum/hud))
 
 SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER
-	wait = 2
+	wait = 1
 	priority = FIRE_PRIORITY_OVERLAYS
 	init_order = INIT_ORDER_OVERLAY
 
@@ -58,7 +59,7 @@ SUBSYSTEM_DEF(overlays)
 		var/atom/A = queue[i] // The most delicious of micro-optimizations
 		count++
 		if(A)
-			if(!update_non_player && !HAS_CLIENT(A))
+			if(!update_non_player && !HAS_CLIENT(A) && !ishud(A))
 				// Think of pop-corn lists or a pop-stack. We'll be cutting the queue from 1 to count + 1. So we go ONE beyond that. 
 				//EVER so slightly cheaper... I think.
 				queue += A 
