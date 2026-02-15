@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(persistence)
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
+	RatworldLoadWorld() // Load world persistence
 	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
@@ -90,6 +91,7 @@ SUBSYSTEM_DEF(persistence)
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
 	SaveRandomizedRecipes()
+	RatworldSaveWorld() // Save world persistence
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/old/photo_albums.json")
