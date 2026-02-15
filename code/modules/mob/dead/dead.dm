@@ -50,7 +50,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/new_player/proc/lobby_refresh()
 	set waitfor = 0
-	if(!client || !client.mob)
+	if(!client)
 		return
 
 	if(client.is_new_player())
@@ -58,18 +58,14 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	var/time_remaining = SSticker.GetTimeLeft()
 	if(SSticker.HasRoundStarted() || time_remaining <= 0)
-		if(client)
-			client << browse(null, "window=lobby_window")
+		client << browse(null, "window=lobby_window")
 		return
-	if(client && !winexists(client, "lobby_window"))
+	if(!winexists(client, "lobby_window"))
 		open_lobby()  // creates window + browser control
 		sleep(0)
-	if(!client)
-		return
 	var/lobby_visible = winget(client, "lobby_window", "is-visible")
 	if(lobby_visible == "false") // winget returns a string...
-		if(client)
-			client << browse(null, "window=lobby_window")
+		client << browse(null, "window=lobby_window")
 		open_lobby()
 		sleep(0)
 

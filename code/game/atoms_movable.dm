@@ -491,18 +491,18 @@
 	A.Bumped(src)
 
 /atom/movable/proc/forceMove(atom/destination)
-	if(QDELETED(src))
-		return FALSE
-	
-	if(!destination)
-		return FALSE
+	if(!destination || QDELETED(src))
+		CRASH("[src] No valid destination passed into forceMove")
 
 	var/mob/living/carbon/human/H = null
 	if(ishuman(src.loc))
 		H = src.loc
 
 	. = FALSE
-	. = doMove(destination)
+	if(destination)
+		. = doMove(destination)
+	else
+		CRASH("[src] No valid destination passed into forceMove")
 
 	if(H)
 		H.update_a_intents()
@@ -1073,7 +1073,7 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 	var/highest_priority
 
 	for(var/datum/language/langtype as anything in H.languages)
-		if(!langtype || !can_speak_in_language(langtype.type))
+		if(!can_speak_in_language(langtype.type))
 			continue
 
 		var/pri = initial(langtype.default_priority)

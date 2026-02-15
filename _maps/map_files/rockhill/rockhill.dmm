@@ -71516,7 +71516,7 @@
 /area/rogue/indoors)
 "wbH" = (
 /obj/structure/mineral_door/wood/donjon{
-	armor = list("blunt" = 90, "slash" = 90, "stab" = 90, "piercing" = 0, "fire" = 50, "acid" = 50);
+	armor = list(blunt=90, slash=90, stab=90, bullet=0, laser=0, energy=100, bomb=10, bio=100, rad=100, fire=50, acid=50);
 	locked = 1;
 	lockid = "gobbo_chief";
 	name = "Riches"

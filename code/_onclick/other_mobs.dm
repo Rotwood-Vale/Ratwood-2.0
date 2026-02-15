@@ -33,10 +33,10 @@
 		rmb_stam_penalty = 1.5	// Uses a modifer instead of a flat addition, less than weapons no matter what rn. 50% extra stam cost basically.
 	if(isliving(A))
 		var/mob/living/L = A
-		if(used_intent && !used_intent.noaa)
+		if(!used_intent.noaa)
 			playsound(get_turf(src), pick(GLOB.unarmed_swingmiss), 100, FALSE)
 			// src.emote("attackgrunt")
-		if(used_intent && used_intent.releasedrain)
+		if(used_intent.releasedrain)
 			stamina_add(ceil(used_intent.releasedrain * rmb_stam_penalty))
 		if(L.has_status_effect(/datum/status_effect/buff/clash) && L.get_active_held_item() && ishuman(L))
 			var/mob/living/carbon/human/H = L
