@@ -1,4 +1,4 @@
-#define OVERLAY_THROTTLE 4 // update AI every N fires
+#define OVERLAY_THROTTLE 5 // update AI every N fires
 #define HAS_CLIENT(A) (ismob(A) && A:client)
 #define ishud(A) (istype(A, /datum/hud))
 
