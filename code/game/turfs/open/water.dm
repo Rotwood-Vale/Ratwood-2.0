@@ -249,7 +249,17 @@
 			return
 	. = ..()
 
+/turf/open/water/AltClick(mob/user)
+	// Alt-click to grab fish (works in or out of combat mode)
+	if(isliving(user) && ishuman(user))
+		var/mob/living/L = user
+		if(L.stat == CONSCIOUS)
+			attempt_grab_fishing(user)
+			return
+	return ..()
+
 /turf/open/water/attack_right(mob/user)
+	// Normal washing behavior
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.stat != CONSCIOUS)
@@ -301,6 +311,80 @@
 		return
 	..()
 
+/turf/open/water/proc/attempt_grab_fishing(mob/user)
+	// Alt-click grab fishing - catches fish AND items, but MUCH slower than using tools
+	user.visible_message(span_info("[user] reaches into [src] trying to grab something."))
+
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/H = user
+	// Hand fishing is much slower than using proper tools
+	var/base_catch_time = 400 // 40 seconds base - way slower than rod (12s)
+	var/skill_level = H.get_skill_level(/datum/skill/labor/fishing)
+	var/catch_time = max(150, base_catch_time - (skill_level * 15)) // Min 15 seconds even at max skill
+
+	if(!do_after(H, catch_time, target = src))
+		to_chat(user, span_warning("I failed to grab anything."))
+		return
+
+	// Get the appropriate grabbable pool based on water type
+	var/list/weighted_pool = get_grab_pool(H)
+
+	if(!weighted_pool || weighted_pool.len == 0)
+		to_chat(user, span_warning("There's nothing to grab here."))
+		return
+
+	// Hand fishing success is much lower than using tools: 40% base success + 2% per skill level
+	var/success_chance = 40 + (skill_level * 2)
+	success_chance = min(90, success_chance) // Cap at 90% even with max skill
+
+	if(prob(success_chance))
+		// Successful catch!
+		var/caught_type = pickweightAllowZero(weighted_pool)
+		if(caught_type)
+			var/obj/item/caught = new caught_type(H.loc)
+			user.visible_message(span_notice("[user] pulls a [caught.name] from [src]!"))
+			to_chat(user, span_notice("I pulled a [caught.name] from the water!"))
+			// Award fishing skill XP
+			H.mind?.add_sleep_experience(/datum/skill/labor/fishing, 1 + rand(0, 2))
+	else
+		user.visible_message(span_warning("[user] tries to grab something but slips!"))
+		to_chat(user, span_warning("I couldn't get a good grip!"))
+
+/turf/open/water/proc/get_grab_pool(mob/user)
+	// Select pool based on water type and filter to non-dangerous items
+	var/list/full_pool
+
+	if(istype(src, /turf/open/water/ocean/deep))
+		full_pool = createDeepSeaFishWeightListModlist(get_grab_fishing_mods(user))
+	else if(istype(src, /turf/open/water/ocean))
+		full_pool = createCoastalSeaFishWeightListModlist(get_grab_fishing_mods(user))
+	else if(istype(src, /turf/open/water/swamp))
+		full_pool = createMudFishWeightListModlist(get_grab_fishing_mods(user))
+	else if(istype(src, /turf/open/water/river) || istype(src, /turf/open/water/cleanshallow) || istype(src, /turf/open/water/pond))
+		full_pool = createFreshWaterFishWeightListModlist(get_grab_fishing_mods(user))
+	else
+		// Bath, sewer, bloody water - no fishing
+		return list()
+
+	// Filter to remove dangerous mobs but keep everything else
+	return filterPoolGrabbable(full_pool)
+
+/turf/open/water/proc/get_grab_fishing_mods(mob/user)
+	// Grab fishing can get trash and treasure, just not danger mobs
+	var/list/mods = list(
+		"commonFishingMod" = 1,
+		"rareFishingMod" = 1,
+		"treasureFishingMod" = 0.5, // Some treasure but less than rod
+		"trashFishingMod" = 1,      // Can grab trash
+		"dangerFishingMod" = 0,     // No danger mobs
+		"ceruleanFishingMod" = 0    // No special cerulean catch
+	)
+	return mods
+
+
+
 /turf/open/water/onbite(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user
@@ -310,10 +394,82 @@
 			var/mob/living/carbon/C = user
 			if(C.is_mouth_covered())
 				return
+		// Bite fishing requires combat mode to be on
+		if(L.cmode && ishuman(user))
+			attempt_bite_fishing(user)
+			return
+		// Normal drinking behavior (not in combat mode)
 		user.visible_message(span_info("[user] starts to drink from [src]."))
 		drink_act(user, L)
 		return
 	..()
+
+/turf/open/water/proc/attempt_bite_fishing(mob/user)
+	// Bite fishing - only catches fish, and MUCH slower/harder than using tools
+	user.visible_message(span_info("[user] tries to bite and catch a fish from [src]."))
+
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/H = user
+	var/catch_time = calculateBiteFishingSpeed(H)
+
+	if(!do_after(H, catch_time, target = src))
+		to_chat(user, span_warning("I failed to catch anything."))
+		return
+
+	// Get the appropriate fish pool based on water type
+	var/list/weighted_pool = get_bite_fish_pool(H)
+
+	if(!weighted_pool || weighted_pool.len == 0)
+		to_chat(user, span_warning("There's nothing to bite here."))
+		return
+
+	// Calculate success chance
+	var/success_chance = calculateBiteFishingSuccess(H)
+	if(prob(success_chance))
+		// Successful catch!
+		var/caught_type = pickweightAllowZero(weighted_pool)
+		if(caught_type)
+			var/obj/item/caught = new caught_type(H.loc)
+			user.visible_message(span_notice("[user] bites a [caught.name] from the water!"))
+			to_chat(user, span_notice("I caught a [caught.name]!"))
+			// Award fishing skill XP
+			H.mind?.add_sleep_experience(/datum/skill/labor/fishing, 1 + rand(1, 3))
+	else
+		user.visible_message(span_warning("[user] snaps at the water but catches nothing!"))
+		to_chat(user, span_warning("The fish was too quick!"))
+
+/turf/open/water/proc/get_bite_fish_pool(mob/user)
+	// Select pool based on water type and filter to fish only
+	var/list/full_pool
+
+	if(istype(src, /turf/open/water/ocean/deep))
+		full_pool = createDeepSeaFishWeightListModlist(get_fishing_mods(user))
+	else if(istype(src, /turf/open/water/ocean))
+		full_pool = createCoastalSeaFishWeightListModlist(get_fishing_mods(user))
+	else if(istype(src, /turf/open/water/swamp))
+		full_pool = createMudFishWeightListModlist(get_fishing_mods(user))
+	else if(istype(src, /turf/open/water/river) || istype(src, /turf/open/water/cleanshallow) || istype(src, /turf/open/water/pond))
+		full_pool = createFreshWaterFishWeightListModlist(get_fishing_mods(user))
+	else
+		// Bath, sewer, bloody water - no fishing
+		return list()
+
+	// Filter to fish only
+	return filterPoolFishOnly(full_pool)
+
+/turf/open/water/proc/get_fishing_mods(mob/user)
+	// Return default fishing modifiers for stat-less fishing
+	var/list/mods = list(
+		"commonFishingMod" = 1,
+		"rareFishingMod" = 1,
+		"treasureFishingMod" = 0, // No treasure when using mouth
+		"trashFishingMod" = 0,     // No trash when using mouth
+		"dangerFishingMod" = 0,    // No danger when using mouth
+		"ceruleanFishingMod" = 0   // No special cerulean catch
+	)
+	return mods
 
 /turf/open/water/proc/drink_act(mob/user, mob/living/L)
 	playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)

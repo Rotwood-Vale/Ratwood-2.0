@@ -181,9 +181,9 @@
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
-//	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-//		AltClickOn(A)
-//		return
+	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+		AltClickOn(A)
+		return
 //	if(modifiers["ctrl"])
 //		CtrlClickOn(A)
 //		return
@@ -670,6 +670,9 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
 	if(. & COMSIG_MOB_CANCEL_CLICKON)
 		return
+	if(A.Adjacent(src))
+		A.AltClick(src)
+	changeNext_move(CLICK_CD_RAPID)
 
 /atom/proc/AltClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)

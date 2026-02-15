@@ -119,3 +119,67 @@
 
 /proc/createCageFishWeightListModlist(list/fishingMods)
 	return createCageFishWeightList(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"])
+
+// Helpers for filtering fish pools
+/proc/is_fish_item(item_type)
+	// Returns TRUE if the item type is only a fish (food snack fish)
+	return ispath(item_type, /obj/item/reagent_containers/food/snacks/fish)
+
+/proc/is_dangerous_catch(catch_type)
+	// Returns TRUE if the catch is a dangerous mob
+	return (ispath(catch_type, /mob/living/simple_animal/hostile) || \
+			ispath(catch_type, /mob/living/carbon/human/species/goblin/npc/sea) || \
+			ispath(catch_type, /mob/living/simple_animal/hostile/rogue/deepone))
+
+/proc/filterPoolFishOnly(list/weightList)
+	// Returns a new weighted list containing only fish items
+	var/list/fishOnlyList = list()
+	for(var/item_type in weightList)
+		if(is_fish_item(item_type))
+			fishOnlyList[item_type] = weightList[item_type]
+	return counterlist_ceiling(fishOnlyList)
+
+/proc/filterPoolGrabbable(list/weightList)
+	// Returns a weighted list excluding dangerous mobs
+	var/list/grabbableList = list()
+	for(var/item_type in weightList)
+		if(!is_dangerous_catch(item_type))
+			grabbableList[item_type] = weightList[item_type]
+	return counterlist_ceiling(grabbableList)
+
+/proc/calculateBiteFishingSuccess(mob/living/carbon/human/user)
+	// Calculate success chance (0-100) for bite fishing
+	// Much lower than using tools: Base 25% + stat bonuses + skill bonus
+	var/success_chance = 25
+
+	// Strength adds grip (4% per 2 points, max 16%)
+	success_chance += min(16, (user.STASTR - 10) / 2 * 4)
+
+	// Perception adds awareness (5% per 2 points, max 20%)
+	success_chance += min(20, (user.STAPER - 10) / 2 * 5)
+
+	// Fishing skill bonus (up to 20% for legendary)
+	var/skill_level = user.get_skill_level(/datum/skill/labor/fishing)
+	success_chance += skill_level * 2
+
+	return min(85, success_chance) // Cap at 85% even with perfect stats
+
+/proc/calculateBiteFishingSpeed(mob/living/carbon/human/user)
+	// Calculate catch time in deciseconds for bite fishing
+	// Bite fishing should be MUCH slower than using proper tools
+	var/catch_time = 500 // 50 seconds base - way slower than rod (12s)
+
+	// Speed reduces time slightly (3% per 2 points, max 15% reduction)
+	var/speed_bonus = min(15, (user.STASPD - 10) / 2 * 3)
+	catch_time *= (100 - speed_bonus) / 100
+
+	// Perception helps a bit (2% per 2 points, max 8% reduction)
+	var/perception_bonus = min(8, (user.STAPER - 10) / 2 * 2)
+	catch_time *= (100 - perception_bonus) / 100
+
+	// Fishing skill bonus reduced (up to 20% reduction for legendary)
+	var/skill_level = user.get_skill_level(/datum/skill/labor/fishing)
+	var/skill_bonus = min(20, skill_level * 2)
+	catch_time *= (100 - skill_bonus) / 100
+
+	return max(200, catch_time) // Minimum 20 seconds even with best stats/skills
