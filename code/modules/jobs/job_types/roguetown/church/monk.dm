@@ -20,7 +20,7 @@
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
 	virtue_restrictions = list(/datum/virtue/utility/noble)
-	job_traits = list(TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_HOMESTEAD_EXPERT)
+	job_traits = list(TRAIT_RITUALIST, TRAIT_HOMESTEAD_EXPERT)
 	advclass_cat_rolls = list(CTAG_ACOLYTE = 2)
 	job_subclasses = list(
 		/datum/advclass/acolyte
@@ -130,7 +130,7 @@
 			armor = /obj/item/clothing/suit/roguetown/shirt/robe/necra
 			shirt = /obj/item/clothing/suit/roguetown/armor/leather/vest/black
 			cloak = /obj/item/clothing/cloak/raincloak/mortus
-			backr = /obj/item/rogueweapon/shovel/silver
+			backr = /obj/item/rogueweapon/shovel/mort_staff//Meant for morticians, but since we don't have those...
 			backpack_contents = list(/obj/item/ritechalk, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/natural/bundle/stick = 1, /obj/item/necra_censer = 1)
 		if(/datum/patron/divine/pestra)
 			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
@@ -207,8 +207,10 @@
 	if(H.patron?.type == /datum/patron/divine/necra) // Death and Moving on - grave diggers.
 		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
-		H.adjust_skillrank_up_to(/datum/skill/combat/maces, 2, TRUE) //Necran shovel usage
-		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE) // digging graves and carrying bodies builds muscles probably.
+		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
+		H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE)//For the stave. Beat back the dead. +1 from base, like Ravox.
+		H.adjust_skillrank_up_to(/datum/skill/combat/maces, 2, TRUE)//Or the shovel, I guess... loser...
+		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 2, TRUE)//And because you carry bodies or something. I guess.
 		H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
 	if(H.patron?.type == /datum/patron/divine/pestra) // Medicine and Healing - better surgeons and alchemists
 		H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
@@ -225,7 +227,7 @@
 		H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
 	if(H.patron?.type == /datum/patron/divine/ravox) // Justice and Honor - athletics and probably a bit better at handling the horrors of war
-		H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 3, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE) //On par with an Adventuring Monk. Seems quite fitting.
 		ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 	if(H.patron?.type == /datum/patron/divine/xylix)  // Trickery and Inspiration - muxic and rogueish skills

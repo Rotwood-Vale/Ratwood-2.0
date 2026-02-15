@@ -397,7 +397,6 @@
 		last_arousal_increase_time = world.time
 	arousal = clamp(amount, 0, MAX_AROUSAL)
 	update_pink_screen()
-	update_blueballs()
 	update_erect_state()
 
 /datum/sex_controller/proc/update_erect_state()
@@ -528,12 +527,6 @@
 	else
 		var/pain_msg = pick(list("It hurts a little...", "It stings...", "I'm aching..."))
 		to_chat(user, span_warning(pain_msg))
-
-/datum/sex_controller/proc/update_blueballs()
-	if(arousal >= BLUEBALLS_GAIN_THRESHOLD)
-		user.add_stress(/datum/stressevent/blueb)
-	else if (arousal <= BLUEBALLS_LOOSE_THRESHOLD)
-		user.remove_stress(/datum/stressevent/blueb)
 
 /datum/sex_controller/proc/check_active_ejaculation()
 	if(arousal < ACTIVE_EJAC_THRESHOLD)

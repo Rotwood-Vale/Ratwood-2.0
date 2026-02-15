@@ -136,11 +136,11 @@
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
 		if ((valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot))
 			if(display_as_wanderer)
-				display1 = span_info("ø ------------ ø\n<img src=[headshot_link] width=100 height=100/>\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
+				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
 			else if(used_title)
-				display1 = span_info("ø ------------ ø\n<img src=[headshot_link] width=100 height=100/>\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
+				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
 			else
-				display1 = span_info("ø ------------ ø\n<img src=[headshot_link] width=100 height=100/>\nThis is the <EM>[used_name]</EM>, the [race_name].")
+				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is the <EM>[used_name]</EM>, the [race_name].")
 		else
 			if(display_as_wanderer)
 				display1 = span_info("ø ------------ ø\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
@@ -584,7 +584,7 @@
 
 	//ID
 	if(wear_ring && !(SLOT_RING in obscured))
-		var/str = "[wear_ring.get_examine_string(user)] on [m2] hands. "
+		var/str = "[m3] [wear_ring.get_examine_string(user)] on [m2] hands. "
 		if(is_smart && istype(wear_ring, /obj/item/clothing/ring/active))
 			var/obj/item/clothing/ring/active/AR = wear_ring
 			if(AR.cooldowny)

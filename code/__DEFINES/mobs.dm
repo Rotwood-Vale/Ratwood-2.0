@@ -619,6 +619,11 @@
 //DOLL PAINT COLOR
 #define DOLL_PORCELAIN "ffffff"
 #define DOLL_SIENNA "a0522d"
+#define DOLL_KAZENGUN "dbcca9"
+#define DOLL_SCARLET_REACH "daa99c"
+#define DOLL_WALNUT "ba9882"
+#define DOLL_GLOOMHAVEN "897489"
+#define DOLL_EBON "4e3729"
 
 // Pixel shifting
 #define PIXEL_SHIFT_MAXIMUM 16

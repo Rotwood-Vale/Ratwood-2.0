@@ -528,95 +528,45 @@
 // --------- BRONZE -----------
 
 /datum/artificer_recipe/bronze/prosthetic
-	name = "Bronze Left Arm (+1 Cog)"
-	created_item = /obj/item/bodypart/l_arm/prosthetic/bronzeleft
+	name = "Bronze Prosthetic (+1 Cog)"
+	created_item = /obj/item/contraption/bronzeprosthetic
 	hammers_per_item = 15
 	skill_level = 4
 	additional_items = list(/obj/item/roguegear/bronze = 1)
 	i_type = "Prosthetics"
 
-/datum/artificer_recipe/bronze/prosthetic/arm_right
-	name = "Bronze Right Arm (+1 Cog)"
-	created_item = /obj/item/bodypart/r_arm/prosthetic/bronzeright
-
-/datum/artificer_recipe/bronze/prosthetic/bronzeleftleg
-	name = "Bronze Left Leg (+1 Cogs)"
-	created_item = /obj/item/bodypart/l_leg/prosthetic/bronzeleft
-
-/datum/artificer_recipe/bronze/prosthetic/bronzerightleg
-	name = "Bronze Right Leg (+1 Cogs)"
-	created_item = /obj/item/bodypart/r_leg/prosthetic/bronzeright
-
 // --------- GOLD -----------
 
 /datum/artificer_recipe/gold/prosthetic
-	name = "Gold Left Arm (+2 Cog)"
+	name = "Gold Prosthetic (+2 Cog)"
 	required_item = /obj/item/ingot/gold
-	created_item = /obj/item/bodypart/l_arm/prosthetic/gold
+	created_item = /obj/item/contraption/goldprosthetic
 	additional_items = list(/obj/item/roguegear/bronze,/obj/item/roguegear/bronze)
 	hammers_per_item = 20
 	skill_level = 5
 	i_type = "Prosthetics"
 
-/datum/artificer_recipe/gold/prosthetic/arm_right
-	name = "Gold Right Arm (+2 Cog)"
-	created_item = /obj/item/bodypart/r_arm/prosthetic/gold
-
-/datum/artificer_recipe/gold/prosthetic/leg_left
-	name = "Gold Left Leg (+2 Cog)"
-	created_item = /obj/item/bodypart/l_leg/prosthetic/gold
-
-/datum/artificer_recipe/gold/prosthetic/leg_right
-	name = "Gold Right Leg (+2 Cog)"
-	created_item = /obj/item/bodypart/r_leg/prosthetic/gold
-
 // --------- STEEL -----------
 
 /datum/artificer_recipe/steel/prosthetic
-	name = "Steel Left Arm (+1 Steel, +1 Cog)"
-	created_item = /obj/item/bodypart/l_arm/prosthetic/steel
+	name = "Steel Prosthetic (+1 Steel, +1 Cog)"
+	created_item = /obj/item/contraption/steelprosthetic
 	required_item = /obj/item/ingot/steel
 	additional_items = list(/obj/item/ingot/steel = 1, /obj/item/roguegear/bronze = 1)
 	hammers_per_item = 15
 	skill_level = 4
 	i_type = "Prosthetics"
 
-/datum/artificer_recipe/steel/prosthetic/arm_right
-	name = "Steel Right Arm (+1 Steel, +1 Cog)"
-	created_item = /obj/item/bodypart/r_arm/prosthetic/steel
-
-/datum/artificer_recipe/steel/prosthetic/leg_left
-	name = "Steel Left Leg (+1 Steel, +1 Cog)"
-	created_item = /obj/item/bodypart/l_leg/prosthetic/steel
-
-/datum/artificer_recipe/steel/prosthetic/leg_right
-	name = "Steel Right Leg (+1 Steel, +1 Cog)"
-	created_item = /obj/item/bodypart/r_leg/prosthetic/steel
-
-
 // --------- IRON -----------
 
 /datum/artificer_recipe/iron/prosthetic //These are the inexpensive alternatives
-	name = "Iron Left Arm (+1 Plank) (+1 Cog)"
-	created_item = /obj/item/bodypart/l_arm/prosthetic/iron
+	name = "Iron Prosthetic (+1 Plank) (+1 Cog)"
+	created_item = /obj/item/contraption/ironprosthetic
 	required_item = /obj/item/ingot/iron
 	additional_items = list(/obj/item/natural/wood/plank = 1, /obj/item/roguegear/bronze = 1)
 	hammers_per_item = 4
 	skill_level = 2
 	i_type = "Prosthetics"
-
-/datum/artificer_recipe/iron/prosthetic/arm_right
-	name = "Iron Right Arm (+1 Plank) (+1 Cog)"
-	created_item = /obj/item/bodypart/r_arm/prosthetic/iron
-
-/datum/artificer_recipe/iron/prosthetic/leg_left
-	name = "Iron Left Leg (+1 Plank) (+1 Cog)"
-	created_item = /obj/item/bodypart/l_leg/prosthetic/iron
-
-/datum/artificer_recipe/iron/prosthetic/leg_right
-	name = "Iron Right Leg (+1 Plank) (+1 Cog)"
-	created_item = /obj/item/bodypart/r_leg/prosthetic/iron
-
 
 // ------------ Explosives expansion----------
 /datum/artificer_recipe/general
@@ -647,70 +597,12 @@
 	hammers_per_item = 5
 	skill_level = 5
 
-/datum/artificer_recipe/general/impactexplosive
-	name = "Explosive Grenade"
-	required_item = /obj/item/ingot/copper
-	additional_items = list(/obj/item/paper/scroll,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/airdust,
-						 	/obj/item/alch/firedust)
-	created_item = /obj/item/impact_grenade/explosion
+/datum/artificer_recipe/general/smokebomb
+	name = "Gas belcher shells (x3) (+Cog)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/roguegear)
+	created_item = list(/obj/item/smokeshell,
+						/obj/item/smokeshell,
+						/obj/item/smokeshell)
+	skill_level = 3
 	hammers_per_item = 5
-	skill_level = 4
-
-/datum/artificer_recipe/general/impactsmoke
-	name = "Smoke Grenade"
-	required_item = /obj/item/ingot/copper
-	additional_items = list(/obj/item/paper/scroll,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/airdust,
-						 	/obj/item/alch/firedust)
-	created_item = /obj/item/impact_grenade/smoke
-	hammers_per_item = 5
-	skill_level = 4
-
-/datum/artificer_recipe/general/impactpoisonsmoke
-	name = "Poison Smoke Grenade"
-	required_item = /obj/item/ingot/copper
-	additional_items = list(/obj/item/paper/scroll,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/airdust,
-						 	/obj/item/alch/firedust,
-						 	/obj/item/alch/atropa)
-	created_item = /obj/item/impact_grenade/smoke/poison_gas
-	hammers_per_item = 5
-	skill_level = 4
-
-/datum/artificer_recipe/general/impactfiresmoke
-	name = "Conflagration Smoke Grenade"
-	required_item = /obj/item/ingot/copper
-	additional_items = list(/obj/item/paper/scroll,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/airdust,
-						 	/obj/item/alch/firedust,
-						 	/obj/item/reagent_containers/food/snacks/grown/rogue/fyritius)
-	created_item = /obj/item/impact_grenade/smoke/fire_gas
-	hammers_per_item = 5
-	skill_level = 4
-
-/datum/artificer_recipe/general/impactblindingsmoke
-	name = "Blinding Smoke Grenade"
-	required_item = /obj/item/ingot/copper
-	additional_items = list(/obj/item/paper/scroll,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/coaldust,
-							/obj/item/alch/airdust,
-						 	/obj/item/alch/firedust,
-						 	/obj/item/ash,
-						 	/obj/item/ash,
-						 	/obj/item/ash)
-	created_item = /obj/item/impact_grenade/smoke/blind_gas
-	hammers_per_item = 5
-	skill_level = 4

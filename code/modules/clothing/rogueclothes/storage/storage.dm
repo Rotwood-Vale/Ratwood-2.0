@@ -282,6 +282,7 @@
 	icon_state = "satchelshort"
 	item_state = "satchelshort"
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP //Implement a check in the future that prevents more than one being worn at once.
+	component_type = /datum/component/storage/concrete/roguetown/satchelshort
 
 /obj/item/storage/backpack/rogue/satchel/beltpack
 	name = "beltpack" //Satchel that fits on the cloak or belt slot. Should be exceptionally rare for on-spawn loadouts, unless a flag's added to make it incompatable with regular satchels.

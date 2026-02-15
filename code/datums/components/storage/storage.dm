@@ -52,6 +52,7 @@
 	var/atom/movable/screen/close/closer						//close button object
 
 	var/allow_big_nesting = FALSE					//allow storage objects of the same or greater size.
+	var/allow_nesting = FALSE						// fits in storage items of the same same or smaller size
 
 	var/attack_hand_interact = TRUE					//interact on attack hand.
 	var/quickdraw = FALSE							//altclick interact
@@ -70,6 +71,8 @@
 	//Vrell - Used for repair bypass clicks
 	var/being_repaired = FALSE
 
+	var/intercept_parent_attack = TRUE
+	var/intercept_parent_mousedrop = TRUE
 
 /datum/component/storage/Initialize(datum/component/storage/concrete/master)
 	if(!isatom(parent))
@@ -96,25 +99,25 @@
 
 	RegisterSignal(parent, COMSIG_TOPIC, PROC_REF(topic_handle))
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby))
+	if(intercept_parent_attack)
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, PROC_REF(on_attack_hand))
+		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(preattack_intercept))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(attack_self))
 
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, PROC_REF(on_attack_hand))
+	if(intercept_parent_mousedrop)
+		RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(mousedrop_onto))
+		RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
+
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, PROC_REF(show_to_ghost))
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(refresh_mob_views))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(_remove_and_refresh))
 	RegisterSignal(parent, COMSIG_ATOM_CANREACH, PROC_REF(canreach_react))
-
-	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(preattack_intercept))
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(attack_self))
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(signal_on_pickup))
-
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, PROC_REF(close_all))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_alt_click))
-	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(mousedrop_onto))
-	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 
 /datum/component/storage/Destroy()
 	close_all()

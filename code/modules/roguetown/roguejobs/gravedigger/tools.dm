@@ -513,3 +513,51 @@
 "eflip" = 1)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+//This is effectively an iron quarterstaff, with silver quality, arc intent and chopping. It's a weird thing, but fluff and soulful for Necrans.
+/obj/item/rogueweapon/shovel/mort_staff
+	name = "\improper mortician's staff"
+	desc = "A heavy, silver shovel's head, paired with a length of silver and boswellia wood. \
+	As with standard Necran practice in the many sects, it has been anointed in censer soot, permitting it to act as a focus."
+	force = 16//Iron quarterstaff level.
+	force_wielded = 22//See above.
+	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)//One hand lets you arc divine blast and such.
+	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff,
+	/datum/intent/axe/chop/stone, /datum/intent/shovelscoop)//Two hands to let you shovel and chop.
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "mortstaff"//Temp sprite.
+	associated_skill = /datum/skill/combat/staves
+	wdefense = 3
+	wdefense_wbonus = 3//Bless this, m'lord.
+	max_integrity = 200
+	resistance_flags = FLAMMABLE
+	sharpness = IS_BLUNT
+	slot_flags = ITEM_SLOT_BACK
+	walking_stick = TRUE
+	smeltresult = /obj/item/ingot/silver
+	bigboy = TRUE
+	anvilrepair = /datum/skill/craft/carpentry
+	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
+	is_silver = TRUE
+
+/obj/item/rogueweapon/shovel/mort_staff/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/shovel/mort_staff/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -6,"sy" = -1,"nx" = 8,"ny" = 0,"wx" = -4,"wy" = 0,"ex" = 2,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 32,"eturn" = -23,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 4,"sy" = -2,"nx" = -3,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
