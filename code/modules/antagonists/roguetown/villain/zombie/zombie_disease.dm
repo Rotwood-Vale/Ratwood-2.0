@@ -28,6 +28,9 @@
 	infected_wake = from_infected_wake
 
 /datum/status_effect/zombie_infection/tick()
+	if(!owner)
+		return
+	
 	if(world.time > message_cooldown_time)
 		var/warning_message = pick(infection_messages)
 		if(prob(10))
@@ -39,6 +42,7 @@
 		var/mob/living/carbon/human/H = owner
 		if(!iscarbon(H))
 			owner.remove_status_effect(/datum/status_effect/zombie_infection)
+			return
 
 		if(H.stat == DEAD || infected_wake)
 			H.zombie_check_can_convert()
