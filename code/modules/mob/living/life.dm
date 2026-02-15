@@ -1,8 +1,13 @@
+#define LIFE_AI_FIRE_INTERVAL 5 // Acts as a delay in how many times clientless mobs are processed (Multiply this value by 2 to get the amount of seconds)
+
 /mob/living/proc/Life(seconds, times_fired)
 	set waitfor = FALSE
 	set invisibility = 0
 
 	if(!client && ai_controller && ai_controller.ai_status == AI_STATUS_OFF)
+		return
+
+	if(!client && !(times_fired % LIFE_AI_FIRE_INTERVAL == 0))
 		return
 
 	SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds, times_fired)
@@ -34,13 +39,13 @@
 	if(isnull(loc))
 		return
 
-	if(times_fired % 3 == 0) // Every third tick, handle simple wounds
+	if(times_fired % LIFE_AI_FIRE_INTERVAL == 0) // Every X tick, handle simple wounds
 		if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
 			handle_wounds()
 			handle_embedded_objects()
 			handle_blood()
 			//passively heal even wounds with no passive healing
-			heal_wounds(3) // Check how many ticks we've passed then heal them based on the amount passed. (1 tick = 1, 2 ticks = 2, etc)
+			heal_wounds(LIFE_AI_FIRE_INTERVAL) // Check how many ticks we've passed then heal them based on the amount passed. (1 tick = 1, 2 ticks = 2, etc)
 
 	if(QDELETED(src)) // diseases can qdel the mob via transformations
 		return
@@ -60,12 +65,12 @@
 	 *  - Handle_traits() is a special case, it's a multiplier. Default: 1
 	 */
 	if(!client)
-		if(times_fired % 3 == 0)
-			handle_status_effects(3) //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
+		if(times_fired % LIFE_AI_FIRE_INTERVAL == 0)
+			handle_status_effects(LIFE_AI_FIRE_INTERVAL) //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 			handle_environment()
-			handle_random_events(15) // pain stun, vomitting, etc
+			handle_random_events(5 * LIFE_AI_FIRE_INTERVAL) // pain stun, vomitting, etc
 			update_sneak_invis()
-			handle_traits(3) // eye, ear, brain damages
+			handle_traits(LIFE_AI_FIRE_INTERVAL) // eye, ear, brain damages
 	else
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 		handle_environment()
@@ -186,3 +191,5 @@
 
 /mob/living/proc/update_damage_hud()
 	return
+
+#undef LIFE_AI_FIRE_INTERVAL
