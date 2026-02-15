@@ -1,6 +1,5 @@
 #define FEINT_BASE 50
 #define INT_PERCENTAGE_BONUS 10
-#define WILDCARD_BONUS 10
 #define SKILL_PERCENTAGE_BONUS 15
 #define FEINT_MAX_CHANCE 95
 #define FEINT_MIN_CHANCE 5
@@ -26,6 +25,17 @@
 	var/mob/living/HT = target
 	var/mob/living/carbon/human/HU = user
 
+	if(ishuman(HT)) // You feint someone who just tried to feint you, cancelling their attempted feint
+		var/datum/status_effect/buff/feint_clash/clash = HT.has_status_effect(/datum/status_effect/buff/feint_clash)
+		if(clash) // No need to check for mind as this will never happen with an NPC
+			var/mob/living/carbon/human/clashed_mob = clash.clashed_mob.resolve()
+			if(clashed_mob && clashed_mob == HU)
+				clash.was_feinted = TRUE
+				HU.play_overhead_indicator('icons/mob/overhead_effects.dmi', "clashr", 2 SECONDS, OBJ_LAYER, soundin = 'sound/combat/clash_draw.ogg', y_offset = 24)
+				HU.visible_message(span_danger("[HU] counters [HT]'s feint, saving themselves from exposing their guard!"))
+				HT.remove_status_effect(/datum/status_effect/buff/feint_clash)
+			return
+
 	// Anti typebait
 	if(world.time < HT.last_cmode_time + CMODE_TIME_BUFFER) // You attempted to feint someone who wasn't in combat mode within the past 15 seconds
 		playsound(user, 'sound/combat/feint.ogg', 100, TRUE)
@@ -38,7 +48,6 @@
 	HU.visible_message(span_danger("[HU] feints an attack at [HT]!"))
 
 	var/perc = FEINT_BASE
-	var/wildcard = pick(-1,0,1)
 	var/obj/item/IT = HT.get_active_held_item()
 	var/obj/item/IU = HU.get_active_held_item()
 	var/ourskill = 0
@@ -66,10 +75,6 @@
 		if(HU.IsOffBalanced() || !(HU.mobility_flags & MOBILITY_STAND)) // Feinter is off balanced or lying down? Shoddy feint
 			perc -= 30
 		skill_factor = (ourskill - theirskill)/2
-		if(wildcard > 0)
-			perc += WILDCARD_BONUS
-		else if(wildcard < 0 )
-			perc -= WILDCARD_BONUS
 		perc = CLAMP(perc, FEINT_MIN_CHANCE, FEINT_MAX_CHANCE)
 
 	HU.apply_status_effect(/datum/status_effect/debuff/feintcd)
@@ -84,12 +89,16 @@
 			to_chat(HU, span_warning("[HT.p_they(TRUE)] did not fall for my feint... [perc]%"))
 		return
 
-	if(istype(HT.rmb_intent, /datum/rmb_intent/feint)) // Feint-on-feint violence!!! If the target is on feint intent, you have a 50% to clash.
-		if(IU && IT)
-			if(ishuman(HU) && ishuman(HT))
-				if(prob(FEINT_CLASH_CHANCE))
-					playsound(src, 'sound/combat/clash_struck.ogg', 100)
-					HU.clash(HT, IU, IT) // With the feinter having the initiator bonus
+	if(HT.mind) // Won't happen against NPCs
+		if(istype(HT.rmb_intent, /datum/rmb_intent/feint)) // Feint-on-feint violence!!!
+			if(IU && IT)
+				if(ishuman(HU) && ishuman(HT)) // Won't happen against NPCs
+					if(prob(FEINT_CLASH_CHANCE))
+						HU.play_overhead_indicator('icons/mob/overhead_effects.dmi', "clashtwo", 4 SECONDS, OBJ_LAYER, soundin = 'sound/combat/clash_initiate.ogg', y_offset = 24)
+						HT.play_overhead_indicator('icons/mob/overhead_effects.dmi', "clashtwo", 4 SECONDS, OBJ_LAYER, soundin = 'sound/combat/clash_initiate.ogg', y_offset = 24)
+						HU.visible_message(span_danger("[HU] clashes with [HT], leaving themselves open to a counter attack from [HT]!"))
+						HU.apply_status_effect(/datum/status_effect/buff/feint_clash, HT)
+						return
 
 	HT.apply_status_effect(/datum/status_effect/debuff/exposed, 5 SECONDS)
 	HT.apply_status_effect(/datum/status_effect/debuff/clickcd, max(1.5 SECONDS + skill_factor, 2.5 SECONDS))
@@ -103,7 +112,6 @@
 #undef FEINT_BASE
 #undef INT_PERCENTAGE_BONUS
 #undef SKILL_PERCENTAGE_BONUS
-#undef WILDCARD_BONUS
 #undef FEINT_MAX_CHANCE
 #undef FEINT_MIN_CHANCE
 #undef FEINT_CLASH_CHANCE
