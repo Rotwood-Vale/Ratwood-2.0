@@ -55,7 +55,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		my_skill.current = null
 		QDEL_NULL(skills)
 	client_colours = null
-	ghostize(drawskip=TRUE)
+	returntolobby()
 	..()
 	return QDEL_HINT_QUEUE
 
