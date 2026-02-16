@@ -149,37 +149,37 @@
 
 /proc/calculateBiteFishingSuccess(mob/living/carbon/human/user)
 	// Calculate success chance (0-100) for bite fishing
-	// Much lower than using tools: Base 25% + stat bonuses + skill bonus
-	var/success_chance = 25
+	// Much lower than using tools: Base 20% + tiny stat help + HUGE skill bonus
+	var/success_chance = 20
 
-	// Strength adds grip (4% per 2 points, max 16%)
-	success_chance += min(16, (user.STASTR - 10) / 2 * 4)
+	// Strength adds grip (1% per 2 points, max 4%)
+	success_chance += min(4, (user.STASTR - 10) / 2 * 1)
 
-	// Perception adds awareness (5% per 2 points, max 20%)
-	success_chance += min(20, (user.STAPER - 10) / 2 * 5)
+	// Perception adds awareness (2% per 2 points, max 8%)
+	success_chance += min(8, (user.STAPER - 10) / 2 * 2)
 
-	// Fishing skill bonus (up to 20% for legendary)
+	// Fishing skill bonus (up to 66% for legendary) - SKILL IS EVERYTHING!
 	var/skill_level = user.get_skill_level(/datum/skill/labor/fishing)
-	success_chance += skill_level * 2
+	success_chance += skill_level * 6
 
-	return min(85, success_chance) // Cap at 85% even with perfect stats
+	return min(90, success_chance) // Cap at 90% with perfect skill and stats
 
 /proc/calculateBiteFishingSpeed(mob/living/carbon/human/user)
 	// Calculate catch time in deciseconds for bite fishing
 	// Bite fishing should be MUCH slower than using proper tools
 	var/catch_time = 500 // 50 seconds base - way slower than rod (12s)
 
-	// Speed reduces time slightly (3% per 2 points, max 15% reduction)
-	var/speed_bonus = min(15, (user.STASPD - 10) / 2 * 3)
+	// Speed reduces time slightly (1% per 2 points, max 5% reduction)
+	var/speed_bonus = min(5, (user.STASPD - 10) / 2 * 1)
 	catch_time *= (100 - speed_bonus) / 100
 
-	// Perception helps a bit (2% per 2 points, max 8% reduction)
-	var/perception_bonus = min(8, (user.STAPER - 10) / 2 * 2)
+	// Perception helps minimally (0.5% per 2 points, max 2% reduction)
+	var/perception_bonus = min(2, (user.STAPER - 10) / 2 * 0.5)
 	catch_time *= (100 - perception_bonus) / 100
 
-	// Fishing skill bonus reduced (up to 20% reduction for legendary)
+	// Fishing skill bonus is DOMINANT (up to 70% reduction for legendary) - SKILL IS EVERYTHING!
 	var/skill_level = user.get_skill_level(/datum/skill/labor/fishing)
-	var/skill_bonus = min(20, skill_level * 2)
+	var/skill_bonus = min(70, skill_level * 6.36)
 	catch_time *= (100 - skill_bonus) / 100
 
-	return max(200, catch_time) // Minimum 20 seconds even with best stats/skills
+	return max(120, catch_time) // Minimum 12 seconds with legendary skill
