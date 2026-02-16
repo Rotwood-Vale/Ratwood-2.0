@@ -13,6 +13,10 @@
 	var/list/phylacteries = list()
 	var/out_of_lives = FALSE
 
+	var/greater_skeleton_count = 0
+	var/greater_skeleton_cap = 4
+	var/list/greater_skeletons = list()
+
 	var/traits_lich = list(
 		TRAIT_INFINITE_STAMINA,
 		TRAIT_NOHUNGER,
@@ -55,13 +59,20 @@
 	equip_lich()
 	greet()
 	save_stats()
+	addtimer(CALLBACK(src, PROC_REF(increase_skeleton_cap)), 30 MINUTES)
 
 	return ..()
 
 /datum/antagonist/lich/greet()
 	to_chat(owner.current, span_userdanger("An immortal king cries for new subjects. Subdue and conquer."))
+	to_chat(owner.current, span_notice("You can summon up to [greater_skeleton_cap] greater skeletons. This limit will increase after 30 minutes."))
 	owner.announce_objectives()
 	..()
+
+/datum/antagonist/lich/proc/increase_skeleton_cap()
+	greater_skeleton_cap += 4
+	if(owner?.current)
+		to_chat(owner.current, span_boldnotice("Your necromantic powers grow stronger! You can now summon up to [greater_skeleton_cap] greater skeletons."))
 
 /datum/antagonist/lich/proc/save_stats()
 	STASTR = owner.current.STASTR
