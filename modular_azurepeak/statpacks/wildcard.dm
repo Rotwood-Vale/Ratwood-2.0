@@ -10,8 +10,8 @@
 	desc = "The first or the last - let destiny's fickle loom decree what your fate shall be."
 	stat_array = list(STAT_STRENGTH = list(-2, 2), STAT_PERCEPTION = list(-2, 2), STAT_INTELLIGENCE = list(-2, 2), STAT_CONSTITUTION = list(-2, 2), STAT_WILLPOWER = list(-2, 2), STAT_SPEED = list(-2, 2), STAT_FORTUNE = list(-2, 2))
 
-/datum/statpack/wildcard/xylix
-	name = "Xylix Touched"
+/datum/statpack/wildcard/xylix-touched
+	name = "Xylix-Touched"
 	desc = "Blessed or besmirched by the jester god himself, your life is one big joke. The question is, who's going to get the last laugh?"
 	stat_array = list(STAT_STRENGTH = list(-4, 4), STAT_PERCEPTION = list(-4, 4), STAT_INTELLIGENCE = list(-4, 4), STAT_CONSTITUTION = list(-4, 4), STAT_WILLPOWER = list(-4, 4), STAT_SPEED = list(-4, 4), STAT_FORTUNE = list(-4, 4))
 
