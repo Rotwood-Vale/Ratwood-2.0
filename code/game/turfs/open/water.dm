@@ -353,34 +353,61 @@
 		to_chat(user, span_warning("I couldn't get a good grip!"))
 
 /turf/open/water/proc/get_grab_pool(mob/user)
-	// Select pool based on water type and filter to non-dangerous items
-	var/list/full_pool
+	// Select pool based on water type - use specialized hand fishing pools
+	var/list/hand_pool
 
 	if(istype(src, /turf/open/water/ocean/deep))
-		full_pool = createDeepSeaFishWeightListModlist(get_grab_fishing_mods(user))
+		hand_pool = createHandFishingDeepSeaPoolModlist(get_grab_fishing_mods(user, "deep_sea"))
 	else if(istype(src, /turf/open/water/ocean))
-		full_pool = createCoastalSeaFishWeightListModlist(get_grab_fishing_mods(user))
+		hand_pool = createHandFishingSeaPoolModlist(get_grab_fishing_mods(user, "sea"))
 	else if(istype(src, /turf/open/water/swamp))
-		full_pool = createMudFishWeightListModlist(get_grab_fishing_mods(user))
+		hand_pool = createHandFishingMurkPoolModlist(get_grab_fishing_mods(user, "murk"))
 	else if(istype(src, /turf/open/water/river) || istype(src, /turf/open/water/cleanshallow) || istype(src, /turf/open/water/pond))
-		full_pool = createFreshWaterFishWeightListModlist(get_grab_fishing_mods(user))
+		hand_pool = createHandFishingFreshWaterPoolModlist(get_grab_fishing_mods(user, "fresh"))
 	else
 		// Bath, sewer, bloody water - no fishing
 		return list()
 
-	// Filter to remove dangerous mobs but keep everything else
-	return filterPoolGrabbable(full_pool)
+	return hand_pool
 
-/turf/open/water/proc/get_grab_fishing_mods(mob/user)
-	// Grab fishing can get trash and treasure, just not danger mobs
+/turf/open/water/proc/get_grab_fishing_mods(mob/user, water_type)
+	// Hand fishing modifiers vary by water type
 	var/list/mods = list(
 		"commonFishingMod" = 1,
 		"rareFishingMod" = 1,
-		"treasureFishingMod" = 0.5, // Some treasure but less than rod
-		"trashFishingMod" = 1,      // Can grab trash
-		"dangerFishingMod" = 0,     // No danger mobs
+		"treasureFishingMod" = 1,
+		"trashFishingMod" = 1,
+		"dangerFishingMod" = 0,     // No danger mobs in hand fishing
 		"ceruleanFishingMod" = 0    // No special cerulean catch
 	)
+	
+	// Adjust modifiers based on water type
+	switch(water_type)
+		if("murk")
+			// Murky water: MUCH more trash and treasure, fewer fish
+			mods["commonFishingMod"] = 0.6
+			mods["rareFishingMod"] = 0.5
+			mods["treasureFishingMod"] = 2.5
+			mods["trashFishingMod"] = 3.0
+		if("fresh")
+			// Fresh water: More fish, normal trash/treasure
+			mods["commonFishingMod"] = 1.5
+			mods["rareFishingMod"] = 1.3
+			mods["treasureFishingMod"] = 0.8
+			mods["trashFishingMod"] = 1.0
+		if("sea")
+			// Sea water: More clams/shellfish (handled in pool), moderate other items
+			mods["commonFishingMod"] = 1.2
+			mods["rareFishingMod"] = 1.1
+			mods["treasureFishingMod"] = 1.0
+			mods["trashFishingMod"] = 0.9
+		if("deep_sea")
+			// Deep sea: Even more clams, more treasure
+			mods["commonFishingMod"] = 1.0
+			mods["rareFishingMod"] = 1.3
+			mods["treasureFishingMod"] = 1.5
+			mods["trashFishingMod"] = 0.7
+	
 	return mods
 
 

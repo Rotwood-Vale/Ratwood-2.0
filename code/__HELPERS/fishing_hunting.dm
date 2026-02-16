@@ -120,6 +120,140 @@
 /proc/createCageFishWeightListModlist(list/fishingMods)
 	return createCageFishWeightList(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"])
 
+// Hand fishing pools - Only big fish and clams, more trash and treasure, no small stuff like shrimp
+/proc/createHandFishingFreshWaterPool(commonMod, rareMod, treasureMod, trashMod, dangerMod, ceruleanMod)
+	var/list/weightList = list(
+		// Big fish that can be grabbed
+		/obj/item/reagent_containers/food/snacks/fish/carp = 150*commonMod,
+		/obj/item/reagent_containers/food/snacks/fish/salmon = 100*commonMod,
+		/obj/item/reagent_containers/food/snacks/fish/eel = 120*commonMod,
+		// More treasure
+		/obj/item/reagent_containers/glass/bottle/rogue/wine = 3*treasureMod,
+		/obj/item/clothing/ring/gold = 2*treasureMod,
+		/obj/item/clothing/ring/silver = 3*treasureMod,
+		/obj/item/roguegem/blue = 1*treasureMod,
+		/obj/item/roguegem/green = 1*treasureMod,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 4*treasureMod,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1*treasureMod,
+		// More trash
+		/obj/item/grown/log/tree/stick = 4*trashMod,
+		/obj/item/natural/cloth = 3*trashMod,
+		/obj/item/natural/fibers = 3*trashMod,
+		/obj/item/natural/stone = 2*trashMod,
+		/obj/item/natural/bone = 2*trashMod,
+		/obj/item/clothing/shoes/roguetown/simpleshoes = 2*trashMod,
+		/obj/item/rope = 2*trashMod,
+		/obj/item/ammo_casing/caseless/rogue/arrow = 2*trashMod,
+		/obj/item/reagent_containers/glass/bottle/rogue = 4*trashMod,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab = 20,
+	)
+	return counterlist_ceiling(weightList)
+
+/proc/createHandFishingFreshWaterPoolModlist(list/fishingMods)
+	return createHandFishingFreshWaterPool(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"])
+
+/proc/createHandFishingSeaPool(commonMod, rareMod, treasureMod, trashMod, dangerMod, ceruleanMod)
+	var/list/weightList = list(
+		// Big fish
+		/obj/item/reagent_containers/food/snacks/fish/cod = 100*commonMod,
+		/obj/item/reagent_containers/food/snacks/fish/angler = 80*commonMod,
+		/obj/item/reagent_containers/food/snacks/fish/bass = 100*commonMod,
+		// Clams and shellfish - more common in sea
+		/obj/item/reagent_containers/food/snacks/fish/clam = 120*commonMod,
+		/obj/item/reagent_containers/food/snacks/fish/lobster = 60*rareMod,
+		// Treasure
+		/obj/item/reagent_containers/glass/bottle/rogue/wine = 3*treasureMod,
+		/obj/item/clothing/ring/gold = 2*treasureMod,
+		/obj/item/clothing/ring/silver = 3*treasureMod,
+		/obj/item/roguegem/blue = 2*treasureMod,
+		/obj/item/roguegem/green = 1*treasureMod,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 3*treasureMod,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 2*treasureMod,
+		// Trash
+		/obj/item/grown/log/tree/stick = 3*trashMod,
+		/obj/item/natural/cloth = 3*trashMod,
+		/obj/item/natural/fibers = 4*trashMod,
+		/obj/item/natural/stone = 2*trashMod,
+		/obj/item/natural/bone = 2*trashMod,
+		/obj/item/clothing/shoes/roguetown/simpleshoes = 2*trashMod,
+		/obj/item/rope = 3*trashMod,
+		/obj/item/ammo_casing/caseless/rogue/arrow = 2*trashMod,
+		/obj/item/reagent_containers/glass/bottle/rogue = 3*trashMod,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab = 30,
+	)
+	return counterlist_ceiling(weightList)
+
+/proc/createHandFishingSeaPoolModlist(list/fishingMods)
+	return createHandFishingSeaPool(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"])
+
+/proc/createHandFishingDeepSeaPool(commonMod, rareMod, treasureMod, trashMod, dangerMod, ceruleanMod)
+	var/list/weightList = list(
+		// Deep sea big fish
+		/obj/item/reagent_containers/food/snacks/fish/cod = 80*commonMod,
+		/obj/item/reagent_containers/food/snacks/fish/angler = 100*commonMod,
+		/obj/item/reagent_containers/food/snacks/fish/bass = 70*commonMod,
+		// More shellfish in deep sea
+		/obj/item/reagent_containers/food/snacks/fish/clam = 140*commonMod,
+		/obj/item/reagent_containers/food/snacks/fish/lobster = 90*rareMod,
+		/obj/item/roguegem/oyster = 50*rareMod,
+		// More treasure in deep
+		/obj/item/reagent_containers/glass/bottle/rogue/wine = 5*treasureMod,
+		/obj/item/clothing/ring/gold = 4*treasureMod,
+		/obj/item/clothing/ring/silver = 4*treasureMod,
+		/obj/item/roguegem/blue = 3*treasureMod,
+		/obj/item/roguegem/green = 2*treasureMod,
+		/obj/item/roguegem/amethyst = 1*treasureMod,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 5*treasureMod,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 3*treasureMod,
+		/obj/item/storage/belt/rogue/pouch/coins/rich = 1*treasureMod,
+		// Trash
+		/obj/item/grown/log/tree/stick = 2*trashMod,
+		/obj/item/natural/cloth = 3*trashMod,
+		/obj/item/natural/fibers = 3*trashMod,
+		/obj/item/natural/stone = 2*trashMod,
+		/obj/item/natural/bone = 3*trashMod,
+		/obj/item/clothing/shoes/roguetown/simpleshoes = 2*trashMod,
+		/obj/item/rope = 2*trashMod,
+		/obj/item/reagent_containers/glass/bottle/rogue = 3*trashMod,
+	)
+	return counterlist_ceiling(weightList)
+
+/proc/createHandFishingDeepSeaPoolModlist(list/fishingMods)
+	return createHandFishingDeepSeaPool(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"])
+
+/proc/createHandFishingMurkPool(commonMod, rareMod, treasureMod, trashMod, dangerMod, ceruleanMod)
+	var/list/weightList = list(
+		// Murk fish - only a few big ones
+		/obj/item/reagent_containers/food/snacks/fish/mudskipper = 150*commonMod,
+		/obj/item/natural/worms/leech = 80*rareMod,
+		// LOTS more trash in murk
+		/obj/item/grown/log/tree/stick = 8*trashMod,
+		/obj/item/natural/cloth = 6*trashMod,
+		/obj/item/natural/fibers = 7*trashMod,
+		/obj/item/natural/stone = 5*trashMod,
+		/obj/item/natural/bone = 5*trashMod,
+		/obj/item/clothing/shoes/roguetown/simpleshoes = 4*trashMod,
+		/obj/item/clothing/shoes/roguetown/boots = 3*trashMod,
+		/obj/item/rope = 5*trashMod,
+		/obj/item/ammo_casing/caseless/rogue/arrow = 4*trashMod,
+		/obj/item/reagent_containers/glass/bottle/rogue = 7*trashMod,
+		// More treasure in murk (sunken goods)
+		/obj/item/reagent_containers/glass/bottle/rogue/wine = 6*treasureMod,
+		/obj/item/clothing/ring/gold = 5*treasureMod,
+		/obj/item/clothing/ring/silver = 6*treasureMod,
+		/obj/item/roguegem/blue = 3*treasureMod,
+		/obj/item/roguegem/green = 3*treasureMod,
+		/obj/item/roguegem/amethyst = 2*treasureMod,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 7*treasureMod,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 3*treasureMod,
+		/obj/item/storage/belt/rogue/pouch/coins/rich = 1*treasureMod,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab = 20,
+	)
+	return counterlist_ceiling(weightList)
+
+/proc/createHandFishingMurkPoolModlist(list/fishingMods)
+	return createHandFishingMurkPool(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"])
+
 // Helpers for filtering fish pools
 /proc/is_fish_item(item_type)
 	// Returns TRUE if the item type is only a fish (food snack fish)
