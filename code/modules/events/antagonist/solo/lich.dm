@@ -15,7 +15,7 @@
 	maximum_antags = 2
 
 	weight = 3	//i love you
-	max_occurrences = 0 //temp back to migrant wave only
+	max_occurrences = 1
 
 	earliest_start = 0 SECONDS
 
@@ -23,5 +23,6 @@
 	antag_datum = /datum/antagonist/lich
 
 	restricted_roles = DEFAULT_ANTAG_BLACKLISTED_ROLES
+	allowed_storytellers = list(/datum/storyteller/zizo, /datum/storyteller/xylix)
 
 /datum/round_event/antagonist/solo/lich

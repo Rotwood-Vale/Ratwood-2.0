@@ -4,13 +4,16 @@
 	Should the spell fails to find a suitable soul, a mindless undead will be summoned in its place with decrepit equipment.\n\
 	This will only happen if you are in combat mode, to avoid any accident."
 	clothes_req = FALSE
-	range = 7
+	range = 1
 	overlay_state = "animate"
 	sound = list('sound/magic/magnet.ogg')
 	releasedrain = 40
 	chargetime = 60
 	warnie = "spellwarning"
+	glow_color = GLOW_COLOR_DISPLACEMENT
+	glow_intensity = GLOW_INTENSITY_VERY_HIGH
 	no_early_release = TRUE
+	movement_interrupt = TRUE
 	charging_slowdown = 1
 	chargedloop = /datum/looping_sound/invokegen
 	gesture_required = TRUE // Summon spell
@@ -47,6 +50,7 @@
 	var/mob/living/carbon/human/species/skeleton/no_equipment/target = new /mob/living/carbon/human/species/skeleton/no_equipment(T)
 	target.key = C.key
 	SSjob.EquipRank(target, "Fortified Skeleton", TRUE)
+	ADD_TRAIT(target, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
 	target.copy_known_languages_from(user, TRUE)
 	target.visible_message(span_warning("[target]'s eyes light up with an eerie glow!"))
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "FORTIFIED SKELETON"), 3 SECONDS)
