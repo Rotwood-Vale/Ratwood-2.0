@@ -36569,6 +36569,7 @@
 	dir = 1;
 	layer = 2
 	},
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/manor/rockhill)
 "lbP" = (
@@ -60420,8 +60421,6 @@
 "sBQ" = (
 /obj/item/seeds/pipeweed,
 /obj/item/seeds/pipeweed,
-/obj/item/seeds/berryrogue/poison,
-/obj/item/seeds/berryrogue/poison,
 /obj/structure/closet/crate/chest{
 	lockid = "physician"
 	},
@@ -60438,6 +60437,8 @@
 /obj/effect/spawner/lootdrop/potion_ingredient/herb,
 /obj/effect/spawner/lootdrop/potion_ingredient/herb,
 /obj/effect/spawner/lootdrop/potion_ingredient/herb,
+/obj/item/seeds/berryrogue,
+/obj/item/seeds/berryrogue,
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/manor/rockhill)
 "sBT" = (
