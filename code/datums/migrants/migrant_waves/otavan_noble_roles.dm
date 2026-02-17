@@ -208,8 +208,7 @@
 		STATKEY_SPD = -2,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,		//everybody was kung-fu fighting. Jman bc you're defending yourself, punk. Roleplay.
-		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE,		//no powergaming. Staves or bust.
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,		//everybody was kung-fu fighting. Jman bc you're defending yourself, punk. Roleplay.
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
