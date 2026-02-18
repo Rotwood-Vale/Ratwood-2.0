@@ -254,6 +254,7 @@
 	desc = "A made to last leather bag from the Psydonian heart of Otava. It's Otava's finest."
 	icon_state = "osatchel"
 	item_state = "osatchel"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP
 
 /obj/item/storage/backpack/rogue/satchel/mule/PopulateContents()
 	for(var/i in 1 to 3)

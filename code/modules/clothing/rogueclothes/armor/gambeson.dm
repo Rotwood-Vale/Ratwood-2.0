@@ -129,6 +129,8 @@
 	name = "fencing gambeson"
 	desc = "A large shirt with heavy padding meant to be used below armor. Will probably stop an arrow, unlikely to stop a bolt."
 	icon_state = "fancygamb"
+	armor = ARMOR_PADDED_ELITE
+	max_integrity = 350 //slightly better than normal paddded gambeson
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	color = "#5058c1"
 	detail_color = "#e98738"
@@ -288,9 +290,9 @@
 	icon_state = "leathertunic"
 	color = null
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
-	armor = ARMOR_PADDED
+	armor = ARMOR_PADDED_GOOD
 	shiftable = FALSE
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/shadowrobe
 	name = "stalker robe"

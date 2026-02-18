@@ -33,8 +33,8 @@
 /datum/inqports/supplies/extrafunding
 	name = "(80 Silvers) Extra Funding"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/extrafunding
-	marquescost = 16
-	maximum = 1
+	marquescost = 12
+	maximum = 2
 
 /obj/item/roguecoin/silver/inqpile/Initialize()
 	. = ..()
@@ -104,8 +104,8 @@
 /datum/inqports/supplies/lifebloodvials
 	name = "3 Vials of Strong Red"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/sredvials
-	maximum = 1
-	marquescost = 10
+	maximum = 2
+	marquescost = 8
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/sredvials/Initialize()
 	. = ..()
@@ -127,8 +127,8 @@
 /datum/inqports/supplies/strongbluevials
 	name = "3 Vials of Strong Blue"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials
-	maximum = 1
-	marquescost = 16
+	maximum = 3
+	marquescost = 10
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials/Initialize()
 	. = ..()
@@ -177,12 +177,14 @@
 	new /obj/item/reagent_containers/glass/bottle/alchemical/blessedwater(src)
 
 /datum/inqports/supplies/bottlebombs
-	name = "3 Bottlebombs"
+	name = "5 Bottlebombs"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs
-	marquescost = 12
+	marquescost = 10
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize()
 	. = ..()
+	new /obj/item/bomb(src)
+	new /obj/item/bomb(src)
 	new /obj/item/bomb(src)
 	new /obj/item/bomb(src)
 	new /obj/item/bomb(src)
@@ -250,7 +252,7 @@
 /datum/inqports/articles/accusations
 	name = "3 Accusations"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/accusations
-	marquescost = 8
+	marquescost = 2
 
 /obj/structure/closet/crate/chest/inqcrate/articles/accusations/Initialize()
 	. = ..()
@@ -262,7 +264,7 @@
 /datum/inqports/articles/confessions
 	name = "3 Confessions"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/confessions
-	marquescost = 12
+	marquescost = 6
 
 /obj/structure/closet/crate/chest/inqcrate/articles/confessions/Initialize()
 	. = ..()
@@ -294,7 +296,7 @@
 /datum/inqports/articles/whisperer
 	name = "1 Secret Whisperer"
 	item_type = /obj/item/speakerinq
-	marquescost = 8
+	marquescost = 4
 
 
 // ✤ EQUIPMENT ✤ BELONGS HERE! JUST BELOW!
@@ -322,7 +324,7 @@
 /datum/inqports/equipment/psysack
 	name = "1 Identity Concealer"
 	item_type = /obj/item/clothing/mask/rogue/sack/psy
-	marquescost = 6
+	marquescost = 4
 
 /datum/inqports/equipment/inqcordage
 	name = "2 Spools of Inquiry Cordage"
@@ -349,7 +351,7 @@
 /datum/inqports/equipment/psydonhelms
 	name = "Helms of Psydon"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/equipment/psydonhelms
-	marquescost = 12
+	marquescost = 10
 	maximum = 1
 
 /obj/structure/closet/crate/chest/inqcrate/equipment/psydonhelms/Initialize()
@@ -457,7 +459,7 @@
 /datum/inqports/wardrobe/nobledressup
 	name = "The Cost of Nobility Crate"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/wardrobe/nobledressup
-	marquescost = 18
+	marquescost = 10
 
 /obj/structure/closet/crate/chest/inqcrate/wardrobe/nobledressup/Initialize()
 	. = ..()

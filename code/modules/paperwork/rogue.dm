@@ -237,7 +237,7 @@
 /obj/item/paper/inqslip/confession
 	name = "confession"
 	base_icon_state = "confession"
-	marquevalue = 6
+	marquevalue = 10
 	desc = "A writ of religious guilt, printed on Otavan parchment: one signed not in ink, but blood. Press the confession against a suspect's bleeding wound, in order to obtain their signature. Once done, it is ready to be mailed back to Otava. Fold and seal it, it's only proper."
 	sliptype = 2
 

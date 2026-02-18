@@ -1099,8 +1099,8 @@
 	name = "forgotten blade"
 	desc = "'Let His name be naught but forgot'n.'"
 	icon_state = "oldpsybroadsword"
-	force = 20
-	force_wielded = 25
+	force = 25
+	force_wielded = 30
 	minstr = 11
 	wdefense = 6
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop, /datum/intent/sword/thrust, /datum/intent/rend/krieg)
@@ -1124,6 +1124,8 @@
 	name = "Creed"
 	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
 	icon_state = "psybroadsword"
+	force = 27
+	force_wielded = 33
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 

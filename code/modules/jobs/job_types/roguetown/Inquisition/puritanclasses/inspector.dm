@@ -15,14 +15,15 @@
 		TRAIT_SILVER_BLESSED,
 		TRAIT_INQUISITION,
 		TRAIT_PERFECT_TRACKER,
+		TRAIT_SLEUTH,
 		TRAIT_PURITAN,
 		TRAIT_OUTLANDER
 		)
 	subclass_stats = list(
-		STATKEY_CON = 3,
+		STATKEY_CON = 2,
 		STATKEY_WIL = 3,
 		STATKEY_SPD = 2,
-		STATKEY_PER = 1,
+		STATKEY_PER = 2,
 		STATKEY_INT = 1
 	)
 	subclass_skills = list(
@@ -32,7 +33,7 @@
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
@@ -52,12 +53,12 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1) //Capped to T2 miracles.
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/psydon
-	neck = /obj/item/clothing/neck/roguetown/gorget/steel
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/full
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan/inqboots
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	backr =  /obj/item/storage/backpack/rogue/satchel/otavan
 	head = /obj/item/clothing/head/roguetown/inqhat
-	mask = /obj/item/clothing/mask/rogue/spectacles/inq/spawnpair
+	mask = /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	id = /obj/item/clothing/ring/signet/silver
@@ -100,3 +101,6 @@
 			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy/relic(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+		if("Psydonic Dagger")
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, 5, TRUE)
+
