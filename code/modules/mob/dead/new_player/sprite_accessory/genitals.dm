@@ -65,6 +65,11 @@
 	color_key_defaults = list(null, KEY_CHEST_COLOR)
 	default_colors = list("C52828", null)
 
+/datum/sprite_accessory/penis/flared_knotted
+	icon_state = "flared"
+	name = "Flared, Knotted"
+	color_key_defaults = list(KEY_CHEST_COLOR, KEY_CHEST_COLOR)
+
 /datum/sprite_accessory/penis/tapered
 	icon_state = "tapered"
 	name = "Tapered"
