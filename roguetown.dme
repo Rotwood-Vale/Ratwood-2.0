@@ -1318,6 +1318,7 @@
 #include "code\modules\admin\verbs\cinematic.dm"
 #include "code\modules\admin\verbs\deadsay.dm"
 #include "code\modules\admin\verbs\debug.dm"
+#include "code\modules\admin\verbs\debug_mob_performance.dm"
 #include "code\modules\admin\verbs\diagnostics.dm"
 #include "code\modules\admin\verbs\direct_mob_faction.dm"
 #include "code\modules\admin\verbs\divinewrath.dm"
