@@ -81,13 +81,13 @@
 	
 	var/estimated_processing = high_priority + (medium_priority/2) + (low_priority/8)
 	if(estimated_processing > 200)
-		msg += "⚠️ Estimated [estimated_processing] NPCs processing per tick - may cause lag!\n"
+		msg += " Estimated [estimated_processing] NPCs processing per tick - may cause lag!\n"
 	if(with_vices > players * 2)
-		msg += "⚠️ NPCs have vices but shouldn't need them!\n"
+		msg += " NPCs have vices but shouldn't need them!\n"
 	if(processing_bodyparts > players * 8)
-		msg += "⚠️ Too many bodyparts processing on NPCs\n"
+		msg += " Too many bodyparts processing on NPCs\n"
 	if(high_priority > 100)
-		msg += "⚠️ [high_priority] NPCs in combat - consider spawning fewer combat NPCs\n"
+		msg += " [high_priority] NPCs in combat - consider spawning fewer combat NPCs\n"
 	
 	to_chat(src, "<pre>[msg]</pre>")
 	log_admin("[key] ran mob performance debug: [players] players, [high_priority] high priority, [medium_priority] medium, [low_priority] low")
