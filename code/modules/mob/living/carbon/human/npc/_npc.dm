@@ -28,6 +28,12 @@
 	/// When is the next time we'll attempt to stand up?
 	var/next_stand_attempt = 0
 	var/resist_attempts = 0
+	/// When did we last check for nearby players (for auto-sleeping distant NPCs)?
+	var/next_player_proximity_check = 0
+	/// Cached player proximity result (TRUE if players nearby)
+	var/has_nearby_players = TRUE
+	/// Current processing priority: "high", "medium", or "low"
+	var/ai_priority = "medium"
 	var/ai_currently_active = FALSE
 	var/attack_speed = 0
 
@@ -72,7 +78,14 @@
 	if(client)
 		if(!ai_when_client)
 			return
-	START_PROCESSING(SShumannpc,src)
+	// Determine initial priority based on AI state
+	var/initial_priority = "medium"
+	if(mode == NPC_AI_HUNT || target)
+		initial_priority = "high"
+	else if(mode == NPC_AI_IDLE)
+		initial_priority = has_nearby_players ? "medium" : "low"
+	ai_priority = initial_priority
+	SShumannpc.add_to_processing(src, initial_priority)
 
 /mob/living/carbon/human/proc/check_mouth_grabbed()
 	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
@@ -100,6 +113,29 @@
 		if(!ai_when_client)
 			walk_to(src,0)
 			return TRUE //remove us from processing
+	
+	// Periodically update cached player proximity and adjust priority
+	if(!client && world.time >= next_player_proximity_check)
+		next_player_proximity_check = world.time + 5 SECONDS
+		var/old_proximity = has_nearby_players
+		has_nearby_players = FALSE
+		
+		// Quick check: Any clients in our cell grid?
+		for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
+			if(length(grid.client_contents))
+				has_nearby_players = TRUE
+				break
+		
+		// Update priority if proximity changed
+		if(has_nearby_players != old_proximity)
+			update_ai_priority()
+		
+		// Auto-sleep distant idle NPCs
+		if(!has_nearby_players && mode == NPC_AI_IDLE && !target)
+			NPC_THINK("No players nearby, sleeping...")
+			mode = NPC_AI_SLEEP
+			walk_to(src, 0)
+			return TRUE // stop processing
 	cmode = 1
 	update_cone_show()
 	steps_moved_this_turn = 0
@@ -152,6 +188,28 @@
 	// TODO: Better converted-deadite AI than this.
 	if(mind?.has_antag_datum(/datum/antagonist/zombie))
 		try_do_deadite_idle() // sort of a misnomer, just handles zombie noises
+
+/// Update NPC processing priority based on current AI state
+/mob/living/carbon/human/proc/update_ai_priority()
+	if(mode == NPC_AI_OFF || mode == NPC_AI_SLEEP)
+		return
+	
+	var/new_priority = "medium" // Default
+	
+	// HIGH priority: Combat, hunting, fleeing
+	if(mode == NPC_AI_HUNT || mode == NPC_AI_FLEE || target)
+		new_priority = "high"
+	// MEDIUM priority: Idle with nearby players
+	else if(mode == NPC_AI_IDLE && has_nearby_players)
+		new_priority = "medium"
+	// LOW priority: Idle without nearby players
+	else if(mode == NPC_AI_IDLE && !has_nearby_players)
+		new_priority = "low"
+	
+	// Only update if changed
+	if(new_priority != ai_priority)
+		ai_priority = new_priority
+		SShumannpc.update_npc_priority(src, new_priority)
 
 /mob/living/carbon/human/proc/npc_stand()
 	if(next_move > world.time)
@@ -587,7 +645,7 @@
 		if(NPC_AI_IDLE)		// idle
 			if(world.time >= next_seek)
 				NPC_THINK("Seeking for targets...")
-				next_seek = world.time + 3 SECONDS
+				next_seek = world.time + 5 SECONDS
 				// If we search for targets above, we need to do this twice.
 				// Yes, this is kind of terrible, but it works(?). If it's enabled we do it a second time with is_checking_above = TRUE.
 				for(var/is_checking_above in FALSE to find_targets_above)
@@ -633,6 +691,7 @@
 					mode = NPC_AI_FLEE
 					m_intent = MOVE_INTENT_RUN
 					clear_path()
+					update_ai_priority() // Set to high priority when fleeing
 					return TRUE
 
 			if(!get_active_held_item() && !HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) && (mobility_flags & MOBILITY_PICKUP))
@@ -710,6 +769,8 @@
 	a_intent = INTENT_HELP
 	frustration = 0
 	walk_to(src,0)
+	// Adjust priority when exiting combat
+	update_ai_priority()
 
 // attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
 /// Try to attack using an offhand grab.
@@ -901,6 +962,8 @@
 		if(pathfinding_target != target)
 			clear_path() // Cancel pathfinding so that we can pursue our new enemy.
 		enemies |= L
+		// Set to high priority for combat responsiveness
+		update_ai_priority()
 
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/user, params)
@@ -954,6 +1017,11 @@
 
 	if(mode == NPC_AI_SLEEP)
 		mode = NPC_AI_IDLE
+		next_player_proximity_check = world.time + 5 SECONDS // Reset check timer when waking
+	
+	// Player entered nearby - update cached proximity and priority
+	has_nearby_players = TRUE
+	update_ai_priority()
 
 /mob/living/carbon/human/proc/on_client_exit(datum/source, datum/exited)
 	SIGNAL_HANDLER

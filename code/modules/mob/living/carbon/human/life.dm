@@ -36,7 +36,7 @@
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_LIFE)
 
-	if(. && (mode != NPC_AI_OFF))
+	if(. && (mode != NPC_AI_OFF) && (mode != NPC_AI_SLEEP))
 		handle_ai()
 
 	if(advsetup)
@@ -73,13 +73,13 @@
 	update_stamina()
 	update_energy()
 	
-	// Process all vices
-	if(mind && length(vices))
+	// Process all vices (only for clients - NPCs don't need roleplay flaws)
+	if(client && mind && length(vices))
 		for(var/datum/charflaw/vice in vices)
 			if(!vice.ephemeral)
 				vice.flaw_on_life(src)
 	// Legacy single vice support
-	else if(charflaw && !charflaw.ephemeral && mind)
+	else if(client && charflaw && !charflaw.ephemeral && mind)
 		charflaw.flaw_on_life(src)
 	
 	if(health <= 0)
