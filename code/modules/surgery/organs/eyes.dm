@@ -487,3 +487,37 @@
 	if(eyes.owner)
 		eyes.owner.update_body_parts(TRUE)
 
+/obj/item/organ/eyes/t1
+	parent_type = /obj/item/organ/eyes/robotic/glow
+
+	name = "Eyes of the Scholar of Noс."
+	desc = "In the past, it was an honor for many students to be blessed with such eyes - proof that you had found knowledge…"
+	icon_state = "burning_eyes"
+	eye_color = "#24128a"
+
+	max_light_beam_distance = 3
+	light_beam_distance = 3
+	light_object_power = 1
+
+/obj/item/organ/eyes/t1/emp_act(severity)
+		return
+
+/obj/item/organ/eyes/t2
+	name = "Blessed dendorite eyes"
+	desc = "Eyes, that will allow you to see your prey... Be blessed, hunter..."
+	color = "#c2ae40"
+	eye_color = "#864896"
+	see_in_dark = 5
+	sight_flags = SEE_OBJS | SEE_TURFS
+	flash_protect = FLASH_PROTECTION_WELDER
+
+/obj/item/organ/eyes/t3
+	name = "Cursed necran eyes"
+	desc = "Pair of eyes that been stolen from one of Her hounds..."
+	icon_state = "burning_eyes"
+	color = "#c2ae40"
+	eye_color = "#3c6696"
+	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	flash_protect = FLASH_PROTECTION_WELDER
+	see_in_dark = 10
