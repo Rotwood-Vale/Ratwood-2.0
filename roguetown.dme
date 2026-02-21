@@ -1223,6 +1223,7 @@
 #include "code\game\objects\structures\beds_chairs\bed.dm"
 #include "code\game\objects\structures\beds_chairs\chair.dm"
 #include "code\game\objects\structures\beds_chairs\roguechair.dm"
+#include "code\game\objects\structures\beds_chairs\wheelchair.dm"
 #include "code\game\objects\structures\crates_lockers\closets.dm"
 #include "code\game\objects\structures\crates_lockers\crates.dm"
 #include "code\game\objects\structures\crates_lockers\crates_preloaded.dm"
