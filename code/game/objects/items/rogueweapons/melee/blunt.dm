@@ -101,6 +101,7 @@
 	swingsound = BLUNTWOOSH_MED
 	minstr = 7
 	wdefense = 2
+	demolition_mod = 1.5
 	wbalance = WBALANCE_HEAVY
 	icon_angle_wielded = 50
 
@@ -349,6 +350,7 @@
 	smeltresult = /obj/item/ash
 	minstr = 7
 	wdefense = 5
+	demolition_mod = 1
 	wbalance = WBALANCE_NORMAL
 	associated_skill = /datum/skill/combat/swords
 	anvilrepair = /datum/skill/craft/carpentry
@@ -385,6 +387,7 @@
 	swingsound = BLUNTWOOSH_MED
 	minstr = 10
 	wdefense = 3
+	demolition_mod = 2
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -506,6 +509,7 @@
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 3
+	demolition_mod = 0.8 // You're not breaking much with this unless it's armor, the force is concentrated on a small area.
 
 /obj/item/rogueweapon/mace/warhammer/alloy
 	name = "decrepit warhammer"
@@ -612,7 +616,7 @@
 	minstr = 14
 	wdefense = 2
 	wdefense_wbonus = 1//3
-	demolition_mod = 1.25//Oh, yes...
+	demolition_mod = 2.25//Oh, yes... //Not as good as a woodcutter's axe but better than a stone axe
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
