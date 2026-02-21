@@ -394,7 +394,7 @@
 	contains = list(/obj/item/rogueweapon/sword/long)
 
 /datum/supply_pack/rogue/Brigand/krieg
-	name = "kriegmesser"
+	name = "Kriegmesser"
 	cost = 45
 	contains = list(/obj/item/rogueweapon/sword/long/kriegmesser)
 
