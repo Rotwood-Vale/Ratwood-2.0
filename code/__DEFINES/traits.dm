@@ -491,7 +491,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STANDARD_BEARER = span_info("The banner is my lifeline. Just as I am to it. The retinue know to rally around me, so long as I keep it safe."),
 	TRAIT_BAOTHA_FERTILITY_BOON = span_info("I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this"),
 	TRAIT_FUSILIER = span_suppradio("I've been trained in the safe use of smokepowder. Additionally, knowledge above <b><u>journeyman</u></b> status is attainable."),
-	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive...")
+	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
+	TRAIT_PARAPLEGIC = span_warning("My lower half is completely unresponsive. I cannot walk or stand.")
 ))
 
 // trait accessor defines
@@ -680,6 +681,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PARALYSIS	"paralysis" //Used for limb-based paralysis and full body paralysis
 #define TRAIT_BRITTLE "brittle" //The limb is more susceptible to fractures
 #define TRAIT_FINGERLESS "fingerless" //The limb has no fingies
+#define TRAIT_PARAPLEGIC "Paraplegic" //The legs are paralyzed, but the arms are not.
 
 //item traits
 #define TRAIT_NODROP			"nodrop"

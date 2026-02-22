@@ -1,41 +1,52 @@
+/datum/charflaw/paraplegic
+    name = "Paraplegic (Paralyzed)"
+    desc = "Your legs do not function. Nothing, not even prosthetics, will ever fix this. You will require a wheelchair to move around effectively."
 
-/datum/charflaw/limbloss
-	var/lost_zone
+/datum/charflaw/paraplegic/on_mob_creation(mob/user)
+    if(!ishuman(user))
+        return
+    var/mob/living/carbon/human/H = user
+    H.adjust_triumphs(3)
 
-/datum/charflaw/limbloss/on_mob_creation(mob/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	var/obj/item/bodypart/O = H.get_bodypart(lost_zone)
-	if(O)
-		O.drop_limb()
-		qdel(O)
-	return
+    // Delay the setup by 1 second to let the mob finish spawning and loading onto the map.
+    spawn(10)
+        apply_paraplegia(H)
 
-/datum/charflaw/limbloss/arm_r
-	name = "Wood Arm (R)"
-	desc = "I lost my right arm long ago, but the wooden arm doesn't bleed as much... but it is flammable.<br><i>(Incompatible with Bronze Arm (R) virtue)</i>"
-	lost_zone = BODY_ZONE_R_ARM
+// Helper proc to handle the delayed logic
+/datum/charflaw/paraplegic/proc/apply_paraplegia(mob/living/carbon/human/H)
+    if(!H || QDELETED(H))
+        return
+	// 1. Unbuckle them from anything they might be buckled to, just in case. This prevents potential softlocks where the player could spawn in buckled to something and be unable to move or interact with the world.
+    if(H.buckled)
+        H.buckled.unbuckle_mob(H)
 
-/datum/charflaw/limbloss/arm_r/on_mob_creation(mob/user)
-	..()
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	var/obj/item/bodypart/r_arm/prosthetic/woodright/L = new()
-	L.attach_limb(H)
-	H.adjust_triumphs(1)
+    // 2. Apply the brain trauma! This handles the traits and updates the bodyparts automatically.
+    H.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/charflaw/limbloss/arm_l
-	name = "Wood Arm (L)"
-	desc = "I lost my left arm long ago, but the wooden arm doesn't bleed as much... but it is flammable.<br><i>(Incompatible with Bronze Arm (L) virtue)</i>"
-	lost_zone = BODY_ZONE_L_ARM
+    // 3. Spawn and buckle them into the wheelchair
+    var/turf/spawn_turf = get_turf(H)
+    if(spawn_turf)
+        var/obj/structure/chair/wheelchair/W = new(spawn_turf)
+        W.setDir(H.dir)
+        W.buckle_mob(H)
 
-/datum/charflaw/limbloss/arm_l/on_mob_creation(mob/user)
-	..()
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	var/obj/item/bodypart/l_arm/prosthetic/woodleft/L = new()
-	L.attach_limb(H)
-	H.adjust_triumphs(1)
+/datum/charflaw/paraplegic/amputee
+    name = "Paraplegic (Amputee)"
+    desc = "You lost your legs entirely. Because of profound nerve damage, attaching prosthetics will not restore your mobility. You will require a wheelchair."
+
+/datum/charflaw/paraplegic/amputee/apply_paraplegia(mob/living/carbon/human/H)
+    // Run the parent proc to apply the trauma and spawn the wheelchair first
+    ..() 
+
+    if(!H || QDELETED(H))
+        return
+    // Sever and completely delete the actual legs
+    var/obj/item/bodypart/L = H.get_bodypart(BODY_ZONE_L_LEG)
+    if(L)
+        L.drop_limb()
+        qdel(L)
+
+    var/obj/item/bodypart/R = H.get_bodypart(BODY_ZONE_R_LEG)
+    if(R)
+        R.drop_limb()
+        qdel(R)

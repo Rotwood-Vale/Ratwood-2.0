@@ -40,6 +40,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
 	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
 	"Hemophage (+1 TRI)"=/datum/charflaw/hemophage,
+	"Paraplegic (+3 TRI)"=/datum/charflaw/paraplegic,
+	"Paraplegic Amputee (+3 TRI)"=/datum/charflaw/paraplegic/amputee,
 	))
 
 /datum/charflaw
