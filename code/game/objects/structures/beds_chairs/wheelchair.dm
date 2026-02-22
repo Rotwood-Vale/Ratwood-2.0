@@ -20,11 +20,10 @@
     // Variable to control movement cooldown
     var/move_delay = 0.5 SECONDS
     item_chair = /obj/item/chair/wheelchair
-    
 
 /obj/structure/chair/wheelchair/relaymove(mob/living/user, direction)
     if(user in buckled_mobs)
-        // FIX 1: Return FALSE so the client doesn't predict movement and rubberband!
+        // Return FALSE so the client doesn't predict movement and rubberband!
         if(world.time < last_moved + move_delay) 
             return FALSE 
 
@@ -33,8 +32,15 @@
         var/obj/structure/stairs/S = locate(/obj/structure/stairs) in current_turf
 
         if(S && direction == S.dir)
-            to_chat(user, span_warning("You can't push \the [src] up the stairs by yourself!"))
-            return FALSE // Return FALSE so they don't rubberband on stairs
+            to_chat(user, span_warning("\The [src] rolls back off the stairs as you try to climb up!"))
+            
+            // Fling them backward!
+            var/roll_back_dir = turn(direction, 180)
+            step(src, roll_back_dir) 
+            
+            // Give them a brief cooldown penalty so they can't spam the stairs
+            last_moved = world.time + 0.5 SECONDS 
+            return FALSE 
 
         var/turf/T = get_step(src, direction)
         if(T && !T.density)
@@ -44,7 +50,7 @@
                 
                 // Combat pixel-shifting and camera wobbling
                 for(var/mob/living/M in buckled_mobs)
-                    // FIX 2: Force the camera pan speed to match the chair, killing the wobble!
+                    // Force the camera pan speed to match the chair, killing the wobble!
                     M.glide_size = src.glide_size 
                     
                     if(iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M))
@@ -96,8 +102,7 @@
 /obj/structure/chair/wheelchair/post_buckle_mob(mob/living/M)
     . = ..()
     icon_state = full_state 
-    
-    // FIX 2 (Part B): Sync the camera instantly upon sitting down
+
     if(M)
         M.glide_size = src.glide_size
     
