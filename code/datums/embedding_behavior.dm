@@ -15,8 +15,8 @@
 	clamp_limbs = FALSE,
 )
 	. = locate(EMBEDID)
-	if (!.)
-	return new /datum/embedding_behavior(\
+	if(!.)
+		return new /datum/embedding_behavior(\
 		embed_chance,\
 		embedded_fall_chance,\
 		embedded_pain_chance,\
