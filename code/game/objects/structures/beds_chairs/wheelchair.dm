@@ -21,7 +21,15 @@
     if(user in buckled_mobs)
         if(world.time < last_moved + move_delay) 
             return TRUE // FIX: Tell the mob we caught the input, even if on cooldown, to stop prediction desyncs!
-            
+
+        // Check if we are currently sitting on a set of stairs
+        var/turf/current_turf = get_turf(src)
+        var/obj/structure/stairs/S = locate(/obj/structure/stairs) in current_turf
+
+        if(S && direction == S.dir)
+            to_chat(user, span_warning("You can't push \the [src] up the stairs by yourself!"))
+            return TRUE // Halt movement completely so they don't go up
+
         var/turf/T = get_step(src, direction)
         if(T && !T.density)
             if(step(src, direction)) // Verify the step actually succeeded before updating delays
