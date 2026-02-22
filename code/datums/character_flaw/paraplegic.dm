@@ -12,7 +12,8 @@
     if(!ishuman(user))
         return
     var/mob/living/carbon/human/H = user
-    apply_paraplegia(H)
+    // Delay the spawn by 1 second so Virtues have time to apply their traits!
+    addtimer(CALLBACK(src, .proc/apply_paraplegia, H), 1 SECONDS)
 
 /datum/charflaw/paraplegic/proc/apply_paraplegia(mob/living/carbon/human/H)
     if(!H || QDELETED(H))
@@ -26,10 +27,13 @@
     if(spawn_turf)
         var/obj/structure/chair/wheelchair/W
         
+        // Check for the Noble traits now that they have been applied
         if(HAS_TRAIT(H, TRAIT_NOBLE))
-            W = new /obj/structure/chair/wheelchair/noble(spawn_turf)
+            W = new /obj/structure/chair/wheelchair/noble(spawn_turf) // Red variant
+        else if(HAS_TRAIT(H, TRAIT_DEFILED_NOBLE) || HAS_TRAIT(H, TRAIT_DISGRACED_NOBLE))
+            W = new /obj/structure/chair/wheelchair/noble/purple(spawn_turf) // Purple variant
         else
-            W = new /obj/structure/chair/wheelchair(spawn_turf)
+            W = new /obj/structure/chair/wheelchair(spawn_turf) // Standard wooden
             
         W.setDir(H.dir)
         W.buckle_mob(H)
@@ -39,7 +43,7 @@
     desc = "You lost your legs entirely. Because of profound nerve damage, attaching prosthetics will not restore your mobility. You will require a wheelchair."
 
 /datum/charflaw/paraplegic/amputee/apply_paraplegia(mob/living/carbon/human/H)
-    // Run the parent proc to apply the trauma and spawn the wheelchair first
+    // Run the parent proc to apply the trauma and spawn the correct wheelchair
     ..() 
 
     if(!H || QDELETED(H))
