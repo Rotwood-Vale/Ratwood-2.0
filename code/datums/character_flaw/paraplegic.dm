@@ -16,17 +16,20 @@
 /datum/charflaw/paraplegic/proc/apply_paraplegia(mob/living/carbon/human/H)
     if(!H || QDELETED(H))
         return
-	// 1. Unbuckle them from anything they might be buckled to, just in case. This prevents potential softlocks where the player could spawn in buckled to something and be unable to move or interact with the world.
     if(H.buckled)
         H.buckled.unbuckle_mob(H)
 
-    // 2. Apply the brain trauma! This handles the traits and updates the bodyparts automatically.
     H.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
-    // 3. Spawn and buckle them into the wheelchair
     var/turf/spawn_turf = get_turf(H)
     if(spawn_turf)
-        var/obj/structure/chair/wheelchair/W = new(spawn_turf)
+        var/obj/structure/chair/wheelchair/W
+        
+        if(HAS_TRAIT(H, TRAIT_NOBLE))
+            W = new /obj/structure/chair/wheelchair/noble(spawn_turf)
+        else
+            W = new /obj/structure/chair/wheelchair(spawn_turf)
+            
         W.setDir(H.dir)
         W.buckle_mob(H)
 
@@ -35,7 +38,7 @@
     desc = "You lost your legs entirely. Because of profound nerve damage, attaching prosthetics will not restore your mobility. You will require a wheelchair."
 
 /datum/charflaw/paraplegic/amputee/apply_paraplegia(mob/living/carbon/human/H)
-    // Run the parent proc to apply the trauma and spawn the wheelchair first
+    // Run the parent proc to apply the trauma and spawn the wheelchair first (This now includes the Noble check!)
     ..() 
 
     if(!H || QDELETED(H))
