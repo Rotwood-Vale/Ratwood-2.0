@@ -122,135 +122,150 @@
 	return FALSE
 
 /datum/preferences/proc/check_vice_vice_conflict(vice_type, list/selected_vices, show_message = FALSE, mob/user = null)
-	// Check for vice conflicts
-	
-	// === EYE-RELATED CONFLICTS ===
-	// Bad Sight conflicts with: Cyclops (R), Cyclops (L), Blindness
-	if(vice_type == /datum/charflaw/badsight)
-		if(/datum/charflaw/noeyer in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Bad Sight vice conflicts with Cyclops (R) vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyel in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Bad Sight vice conflicts with Cyclops (L) vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyeall in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Bad Sight vice conflicts with Blindness vice!"))
-			return TRUE
-		if(/datum/charflaw/colorblind in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Bad Sight vice conflicts with Colorblind vice!"))
-			return TRUE
-	
-	// Cyclops (R) conflicts with: Bad Sight, Cyclops (L), Blindness, Colorblind
-	if(vice_type == /datum/charflaw/noeyer)
-		if(/datum/charflaw/badsight in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Cyclops (R) vice conflicts with Bad Sight vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyel in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Cyclops (R) vice conflicts with Cyclops (L) vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyeall in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Cyclops (R) vice conflicts with Blindness vice!"))
-			return TRUE
-		if(/datum/charflaw/colorblind in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Cyclops (R) vice conflicts with Colorblind vice!"))
-			return TRUE
-	
-	// Cyclops (L) conflicts with: Bad Sight, Cyclops (R), Blindness, Colorblind
-	if(vice_type == /datum/charflaw/noeyel)
-		if(/datum/charflaw/badsight in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Cyclops (L) vice conflicts with Bad Sight vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyer in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Cyclops (L) vice conflicts with Cyclops (R) vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyeall in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Cyclops (L) vice conflicts with Blindness vice!"))
-			return TRUE
-		if(/datum/charflaw/colorblind in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Cyclops (L) vice conflicts with Colorblind vice!"))
-			return TRUE
-	
-	// Blindness conflicts with: Bad Sight, Cyclops (R), Cyclops (L), Colorblind
-	if(vice_type == /datum/charflaw/noeyeall)
-		if(/datum/charflaw/badsight in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Blindness vice conflicts with Bad Sight vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyer in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Blindness vice conflicts with Cyclops (R) vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyel in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Blindness vice conflicts with Cyclops (L) vice!"))
-			return TRUE
-		if(/datum/charflaw/colorblind in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Blindness vice conflicts with Colorblind vice!"))
-			return TRUE
-	
-	// Colorblind conflicts with: Bad Sight, Cyclops (R), Cyclops (L), Blindness
-	if(vice_type == /datum/charflaw/colorblind)
-		if(/datum/charflaw/badsight in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Colorblind vice conflicts with Bad Sight vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyer in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Colorblind vice conflicts with Cyclops (R) vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyel in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Colorblind vice conflicts with Cyclops (L) vice!"))
-			return TRUE
-		if(/datum/charflaw/noeyeall in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Colorblind vice conflicts with Blindness vice!"))
-			return TRUE
-	
-	// === SLEEP-RELATED CONFLICTS ===
-	// Narcoleptic conflicts with: Insomnia (can't have both sleep disorders)
-	if(vice_type == /datum/charflaw/narcoleptic)
-		if(/datum/charflaw/sleepless in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Narcoleptic vice conflicts with Sleepless vice - you can't have both sleep disorders!"))
-			return TRUE
-	
-	// Insomnia conflicts with: Narcoleptic
-	if(vice_type == /datum/charflaw/sleepless)
-		if(/datum/charflaw/narcoleptic in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Sleepless vice conflicts with Narcoleptic vice - you can't have both sleep disorders!"))
-			return TRUE
-	
-	// === SPEECH-RELATED CONFLICTS ===
-	// Mute conflicts with: Unintelligible (can't have both speech impediments)
-	if(vice_type == /datum/charflaw/mute)
-		if(/datum/charflaw/unintelligible in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Mute vice conflicts with Unintelligible vice - you can't have both speech impediments!"))
-			return TRUE
-	
-	// Unintelligible conflicts with: Mute
-	if(vice_type == /datum/charflaw/unintelligible)
-		if(/datum/charflaw/mute in selected_vices)
-			if(show_message && user)
-				to_chat(user, span_warning("Unintelligible vice conflicts with Mute vice - you can't have both speech impediments!"))
-			return TRUE
+    // Check for vice conflicts
+    
+    // === EYE-RELATED CONFLICTS ===
+    // Bad Sight conflicts with: Cyclops (R), Cyclops (L), Blindness
+    if(vice_type == /datum/charflaw/badsight)
+        if(/datum/charflaw/noeyer in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Bad Sight vice conflicts with Cyclops (R) vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyel in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Bad Sight vice conflicts with Cyclops (L) vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyeall in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Bad Sight vice conflicts with Blindness vice!"))
+            return TRUE
+        if(/datum/charflaw/colorblind in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Bad Sight vice conflicts with Colorblind vice!"))
+            return TRUE
+    
+    // Cyclops (R) conflicts with: Bad Sight, Cyclops (L), Blindness, Colorblind
+    if(vice_type == /datum/charflaw/noeyer)
+        if(/datum/charflaw/badsight in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Cyclops (R) vice conflicts with Bad Sight vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyel in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Cyclops (R) vice conflicts with Cyclops (L) vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyeall in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Cyclops (R) vice conflicts with Blindness vice!"))
+            return TRUE
+        if(/datum/charflaw/colorblind in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Cyclops (R) vice conflicts with Colorblind vice!"))
+            return TRUE
+    
+    // Cyclops (L) conflicts with: Bad Sight, Cyclops (R), Blindness, Colorblind
+    if(vice_type == /datum/charflaw/noeyel)
+        if(/datum/charflaw/badsight in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Cyclops (L) vice conflicts with Bad Sight vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyer in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Cyclops (L) vice conflicts with Cyclops (R) vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyeall in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Cyclops (L) vice conflicts with Blindness vice!"))
+            return TRUE
+        if(/datum/charflaw/colorblind in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Cyclops (L) vice conflicts with Colorblind vice!"))
+            return TRUE
+    
+    // Blindness conflicts with: Bad Sight, Cyclops (R), Cyclops (L), Colorblind
+    if(vice_type == /datum/charflaw/noeyeall)
+        if(/datum/charflaw/badsight in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Blindness vice conflicts with Bad Sight vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyer in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Blindness vice conflicts with Cyclops (R) vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyel in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Blindness vice conflicts with Cyclops (L) vice!"))
+            return TRUE
+        if(/datum/charflaw/colorblind in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Blindness vice conflicts with Colorblind vice!"))
+            return TRUE
+    
+    // Colorblind conflicts with: Bad Sight, Cyclops (R), Cyclops (L), Blindness
+    if(vice_type == /datum/charflaw/colorblind)
+        if(/datum/charflaw/badsight in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Colorblind vice conflicts with Bad Sight vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyer in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Colorblind vice conflicts with Cyclops (R) vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyel in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Colorblind vice conflicts with Cyclops (L) vice!"))
+            return TRUE
+        if(/datum/charflaw/noeyeall in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Colorblind vice conflicts with Blindness vice!"))
+            return TRUE
+    
+    // === SLEEP-RELATED CONFLICTS ===
+    // Narcoleptic conflicts with: Insomnia (can't have both sleep disorders)
+    if(vice_type == /datum/charflaw/narcoleptic)
+        if(/datum/charflaw/sleepless in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Narcoleptic vice conflicts with Sleepless vice - you can't have both sleep disorders!"))
+            return TRUE
+    
+    // Insomnia conflicts with: Narcoleptic
+    if(vice_type == /datum/charflaw/sleepless)
+        if(/datum/charflaw/narcoleptic in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Sleepless vice conflicts with Narcoleptic vice - you can't have both sleep disorders!"))
+            return TRUE
+    
+    // === SPEECH-RELATED CONFLICTS ===
+    // Mute conflicts with: Unintelligible (can't have both speech impediments)
+    if(vice_type == /datum/charflaw/mute)
+        if(/datum/charflaw/unintelligible in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Mute vice conflicts with Unintelligible vice - you can't have both speech impediments!"))
+            return TRUE
+    
+    // Unintelligible conflicts with: Mute
+    if(vice_type == /datum/charflaw/unintelligible)
+        if(/datum/charflaw/mute in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Unintelligible vice conflicts with Mute vice - you can't have both speech impediments!"))
+            return TRUE
 
-	return FALSE
+    // === PARAPLEGIC CONFLICTS ===
+    // Paraplegic conflicts with: Paraplegic Amputee
+    if(vice_type == /datum/charflaw/paraplegic)
+        if(/datum/charflaw/paraplegic/amputee in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Paraplegic vice conflicts with Paraplegic Amputee vice!"))
+            return TRUE
+    
+    // Paraplegic Amputee conflicts with: Paraplegic
+    if(vice_type == /datum/charflaw/paraplegic/amputee)
+        if(/datum/charflaw/paraplegic in selected_vices)
+            if(show_message && user)
+                to_chat(user, span_warning("Paraplegic Amputee vice conflicts with Paraplegic vice!"))
+            return TRUE
+
+    return FALSE
 
 // Global cache for loadout item icons to prevent memory leaks
 GLOBAL_LIST_EMPTY(cached_loadout_icons)
