@@ -11,6 +11,10 @@
     var/last_moved = 0
     var/list/buckle_overlays = list()
     var/list/original_pixel_y = list()
+    
+    // NEW: Variables to easily swap states for subtypes
+    var/empty_state = "wheelchair-empty"
+    var/full_state = "wheelchair-full"
 
 /obj/structure/chair/wheelchair/relaymove(mob/living/user, direction)
     if(user in buckled_mobs)
@@ -44,7 +48,7 @@
 
 /obj/structure/chair/wheelchair/post_buckle_mob(mob/living/M)
     . = ..()
-    icon_state = "wheelchair-full"
+    icon_state = full_state // Uses the variable now
     // elevate small species slightly so their top halves show correctly when buckled
     if(M && (iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M)))
         if(isnull(original_pixel_y[M])) // FIX: Check for null, not false/0
@@ -59,7 +63,7 @@
 
 /obj/structure/chair/wheelchair/post_unbuckle_mob(mob/living/M)
     . = ..()
-    icon_state = "wheelchair-empty"
+    icon_state = empty_state // Uses the variable now
 
     // restore pixel_y for small species if we changed it
     if(M && !isnull(original_pixel_y[M])) // FIX: Consistency check
@@ -68,3 +72,20 @@
 
     handle_layer()
     glide_size = 0
+
+
+// === NOBLE WHEELCHAIR SUBTYPES === //
+
+/obj/structure/chair/wheelchair/noble
+    name = "noble wheelchair"
+    desc = "A lavishly gilded red wheelchair. It allows mobility-impaired individuals of high status to move around in comfort."
+    icon_state = "noblewheelchair-empty"
+    empty_state = "noblewheelchair-empty"
+    full_state = "noblewheelchair-full"
+
+/obj/structure/chair/wheelchair/noble/purple
+    name = "purple noble wheelchair"
+    desc = "A lavishly gilded purple wheelchair. It allows mobility-impaired individuals of high status to move around in comfort."
+    icon_state = "noblewheelchairp-empty"
+    empty_state = "noblewheelchairp-empty"
+    full_state = "noblewheelchairp-full"
