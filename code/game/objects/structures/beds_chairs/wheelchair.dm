@@ -77,14 +77,14 @@
 // === NOBLE WHEELCHAIR SUBTYPES === //
 
 /obj/structure/chair/wheelchair/noble
-    name = "noble wheelchair"
+    name = "fancy wheelchair"
     desc = "A lavishly gilded red wheelchair. It allows mobility-impaired individuals of high status to move around in comfort."
     icon_state = "noblewheelchair-empty"
     empty_state = "noblewheelchair-empty"
     full_state = "noblewheelchair-full"
 
 /obj/structure/chair/wheelchair/noble/purple
-    name = "purple noble wheelchair"
+    name = "fancy wheelchair"
     desc = "A lavishly gilded purple wheelchair. It allows mobility-impaired individuals of high status to move around in comfort."
     icon_state = "noblewheelchairp-empty"
     empty_state = "noblewheelchairp-empty"

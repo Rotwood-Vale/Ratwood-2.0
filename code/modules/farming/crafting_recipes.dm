@@ -16,6 +16,38 @@
 	skillcraft = /datum/skill/craft/carpentry
 	time = 4 SECONDS
 
+/datum/crafting_recipe/roguetown/structure/wheelchair
+    name = "wheelchair"
+    result = /obj/structure/chair/wheelchair
+    reqs = list(/obj/item/natural/wood/plank = 2, /obj/item/ingot/iron = 1, /obj/item/rotation_contraption/cog = 2)
+    verbage_simple = "construct"
+    verbage = "constructs"
+    craftdiff = 3
+    skillcraft = /datum/skill/craft/carpentry
+    time = 6 SECONDS
+
+/datum/crafting_recipe/roguetown/structure/noblewheelchair
+    name = "fancy red wheelchair"
+    result = /obj/structure/chair/wheelchair/noble
+    reqs = list(/obj/item/natural/wood/plank = 2, /obj/item/natural/silk = 4, /obj/item/ingot/bronze = 1, /obj/item/ingot/gold = 1, /obj/item/rotation_contraption/cog = 2)
+    verbage_simple = "construct"
+    verbage = "constructs"
+    craftdiff = 4
+    skillcraft = /datum/skill/craft/carpentry
+    time = 6 SECONDS
+    sellprice = 150
+
+/datum/crafting_recipe/roguetown/structure/noblewheelchairp
+    name = "fancy purple wheelchair"
+    result = /obj/structure/chair/wheelchair/noble/purple
+    reqs = list(/obj/item/natural/wood/plank = 2, /obj/item/natural/silk = 4, /obj/item/ingot/bronze = 1, /obj/item/ingot/gold = 1, /obj/item/rotation_contraption/cog = 2)
+    verbage_simple = "construct"
+    verbage = "constructs"
+    craftdiff = 4
+    skillcraft = /datum/skill/craft/carpentry
+    time = 6 SECONDS
+    sellprice = 150
+
 /datum/crafting_recipe/roguetown/survival/dryleaf
 	name = "dry swampweed"
 	result = /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry
