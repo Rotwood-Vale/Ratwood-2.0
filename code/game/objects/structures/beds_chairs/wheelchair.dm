@@ -1,7 +1,7 @@
 /obj/structure/chair/wheelchair
     // wheelchair: runtime adjustments for buckling and movement
     name = "wheelchair"
-    desc = "A chair with wheels. It allows mobility-impaired individuals to move around."
+    desc = "A wooden chair with wheels. It allows mobility-impaired individuals to move around."
     icon = 'icons/roguetown/misc/structure.dmi'
     icon_state = "wheelchair-empty"
     anchored = FALSE
@@ -12,13 +12,16 @@
     var/list/buckle_overlays = list()
     var/list/original_pixel_y = list()
     
-    // NEW: Variables to easily swap states for subtypes
+    // Variables to easily swap states for subtypes
     var/empty_state = "wheelchair-empty"
     var/full_state = "wheelchair-full"
+    
+    // NEW: Variable to control movement cooldown
+    var/move_delay = 0.5 SECONDS
 
 /obj/structure/chair/wheelchair/relaymove(mob/living/user, direction)
     if(user in buckled_mobs)
-        if(world.time < last_moved + 0.5 SECONDS)
+        if(world.time < last_moved + move_delay) // FIX: Now uses the variable
             return
         var/turf/T = get_step(src, direction)
         if(T && !T.density)
@@ -29,7 +32,7 @@
             // reapply the single +5 boost so they don't need to unbuckle/rebuckle.
             for(var/mob/living/M in buckled_mobs)
                 if(iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M))
-                    if(isnull(original_pixel_y[M])) // FIX: Check for null, not false/0
+                    if(isnull(original_pixel_y[M])) 
                         original_pixel_y[M] = M.pixel_y
                     var/expected_y = original_pixel_y[M] + 5
                     if(M.pixel_y != expected_y)
@@ -48,10 +51,10 @@
 
 /obj/structure/chair/wheelchair/post_buckle_mob(mob/living/M)
     . = ..()
-    icon_state = full_state // Uses the variable now
+    icon_state = full_state 
     // elevate small species slightly so their top halves show correctly when buckled
     if(M && (iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M)))
-        if(isnull(original_pixel_y[M])) // FIX: Check for null, not false/0
+        if(isnull(original_pixel_y[M])) 
             original_pixel_y[M] = M.pixel_y
         // invert offset: raise sprite by 5 pixels (was lowering previously)
         M.pixel_y = original_pixel_y[M] + 5
@@ -63,10 +66,10 @@
 
 /obj/structure/chair/wheelchair/post_unbuckle_mob(mob/living/M)
     . = ..()
-    icon_state = empty_state // Uses the variable now
+    icon_state = empty_state 
 
     // restore pixel_y for small species if we changed it
-    if(M && !isnull(original_pixel_y[M])) // FIX: Consistency check
+    if(M && !isnull(original_pixel_y[M])) 
         M.pixel_y = original_pixel_y[M]
         original_pixel_y -= M
 
@@ -78,14 +81,16 @@
 
 /obj/structure/chair/wheelchair/noble
     name = "fancy wheelchair"
-    desc = "A lavishly gilded red wheelchair. It allows mobility-impaired individuals of high status to move around in comfort."
+    desc = "A well-built, lavishly gilded red wheelchair. It allows mobility-impaired individuals of high status to move around in comfort."
     icon_state = "noblewheelchair-empty"
     empty_state = "noblewheelchair-empty"
     full_state = "noblewheelchair-full"
+    
+    move_delay = 0.35 SECONDS 
 
 /obj/structure/chair/wheelchair/noble/purple
     name = "fancy wheelchair"
-    desc = "A lavishly gilded purple wheelchair. It allows mobility-impaired individuals of high status to move around in comfort."
+    desc = "A well-built, lavishly gilded purple wheelchair. It allows mobility-impaired individuals of high status to move around in comfort."
     icon_state = "noblewheelchairp-empty"
     empty_state = "noblewheelchairp-empty"
     full_state = "noblewheelchairp-full"
