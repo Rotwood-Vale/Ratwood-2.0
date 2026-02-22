@@ -16,27 +16,31 @@
     var/empty_state = "wheelchair-empty"
     var/full_state = "wheelchair-full"
     
-    // NEW: Variable to control movement cooldown
+    // Variable to control movement cooldown
     var/move_delay = 0.5 SECONDS
 
 /obj/structure/chair/wheelchair/relaymove(mob/living/user, direction)
     if(user in buckled_mobs)
-        if(world.time < last_moved + move_delay) // FIX: Now uses the variable
-            return
+        if(world.time < last_moved + move_delay) 
+            return TRUE // FIX: Tell the mob we caught the input, even if on cooldown, to stop prediction desyncs!
+            
         var/turf/T = get_step(src, direction)
         if(T && !T.density)
-            step(src, direction)
-            setDir(direction)
-            last_moved = world.time
-            // If any buckled small species had their pixel_y changed by other code,
-            // reapply the single +5 boost so they don't need to unbuckle/rebuckle.
-            for(var/mob/living/M in buckled_mobs)
-                if(iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M))
-                    if(isnull(original_pixel_y[M])) 
-                        original_pixel_y[M] = M.pixel_y
-                    var/expected_y = original_pixel_y[M] + 5
-                    if(M.pixel_y != expected_y)
-                        M.pixel_y = expected_y
+            if(step(src, direction)) // Verify the step actually succeeded before updating delays
+                setDir(direction)
+                last_moved = world.time
+                
+                // If any buckled small species had their pixel_y changed by other code,
+                // reapply the single +5 boost so they don't need to unbuckle/rebuckle.
+                for(var/mob/living/M in buckled_mobs)
+                    if(iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M))
+                        if(isnull(original_pixel_y[M])) 
+                            original_pixel_y[M] = M.pixel_y
+                        var/expected_y = original_pixel_y[M] + 5
+                        if(M.pixel_y != expected_y)
+                            M.pixel_y = expected_y
+                            
+        return TRUE // FIX: Tell the mob's movement loop that the chair successfully handled the move.
 
 /obj/structure/chair/wheelchair/handle_layer()
     if(buckled_mobs && buckled_mobs.len)
@@ -58,11 +62,9 @@
             original_pixel_y[M] = M.pixel_y
         // invert offset: raise sprite by 5 pixels (was lowering previously)
         M.pixel_y = original_pixel_y[M] + 5
-        // ensure stored original is used if something else resets pixel_y later
-        // (we don't loop; reapply happens only when the chair moves)
+    
     handle_layer()
-    glide_size = 0
-    last_moved = 0
+    last_moved = world.time // Prevent instant movement the millisecond they buckle in
 
 /obj/structure/chair/wheelchair/post_unbuckle_mob(mob/living/M)
     . = ..()
@@ -74,8 +76,6 @@
         original_pixel_y -= M
 
     handle_layer()
-    glide_size = 0
-
 
 // === NOBLE WHEELCHAIR SUBTYPES === //
 
@@ -85,7 +85,6 @@
     icon_state = "noblewheelchair-empty"
     empty_state = "noblewheelchair-empty"
     full_state = "noblewheelchair-full"
-    
     move_delay = 0.4 SECONDS 
 
 /obj/structure/chair/wheelchair/noble/purple
