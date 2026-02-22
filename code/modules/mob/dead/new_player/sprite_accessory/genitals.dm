@@ -29,7 +29,7 @@
 		return "[icon_state]_1"
 	
 ///Old Azure code
- /*
+/*
 	if(pp.erect_state == ERECT_STATE_HARD)
 		return "[icon_state]_[min(3,pp.penis_size+1)]"
 	else

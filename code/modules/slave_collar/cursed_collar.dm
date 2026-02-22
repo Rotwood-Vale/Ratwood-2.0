@@ -132,12 +132,12 @@
 	. = ..()
 
 /obj/item/clothing/neck/roguetown/cursed_collar/proc/send_collar_signal(mob/living/carbon/human/user)
-    if(!collar_master) // Don't send signal if no master
-        SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)
-        return
-    SEND_SIGNAL(user, COMSIG_CARBON_GAIN_COLLAR, src)
+	if(!collar_master) // Don't send signal if no master
+		SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)
+		return
+	SEND_SIGNAL(user, COMSIG_CARBON_GAIN_COLLAR, src)
 
 /obj/item/clothing/neck/roguetown/cursed_collar/dropped(mob/living/carbon/human/user)
-    . = ..()
-    if(istype(user))
-        SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)
+	. = ..()
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)

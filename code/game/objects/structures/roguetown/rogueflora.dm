@@ -593,15 +593,15 @@
 //Thorn bush
 
 /obj/structure/flora/roguegrass/thorn_bush
-    name = "thorn bush"
-    desc = "A thorny bush. Watch your step!"
-    icon_state = "thornbush"
-    layer = ABOVE_ALL_MOB_LAYER
-    blade_dulling = DULLING_CUT
-    max_integrity = 35
-    climbable = FALSE
-    dir = SOUTH
-    debris = list(/obj/item/natural/thorn = 3, /obj/item/grown/log/tree/stick = 1)
+	name = "thorn bush"
+	desc = "A thorny bush. Watch your step!"
+	icon_state = "thornbush"
+	layer = ABOVE_ALL_MOB_LAYER
+	blade_dulling = DULLING_CUT
+	max_integrity = 35
+	climbable = FALSE
+	dir = SOUTH
+	debris = list(/obj/item/natural/thorn = 3, /obj/item/grown/log/tree/stick = 1)
 
 /obj/structure/flora/roguegrass/thorn_bush/update_icon()
 	icon_state = "thornbush"

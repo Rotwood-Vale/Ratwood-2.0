@@ -9,11 +9,11 @@
 // I nuked the former Searing Blade. Leaving 1 open for a future replacement
 
 /* Component used for adding enchantment from the enchant weapon spell
- Three types of enchantments are available:
- 1. Force Blade: Increases the force of the weapon by 5.
- 2. Durability: Increases the integrity and max integrity of the weapon by 100.
- The enchantment will lasts for 15 minutes, and will automatically refresh in the hand of an Arcyne user.
- There used to be a concept for a blade to set people on fire - but it was too broken if people didn't insta pat
+ * Three types of enchantments are available:
+ * 1. Force Blade: Increases the force of the weapon by 5.
+ * 2. Durability: Increases the integrity and max integrity of the weapon by 100.
+ * The enchantment will lasts for 15 minutes, and will automatically refresh in the hand of an Arcyne user.
+ * There used to be a concept for a blade to set people on fire - but it was too broken if people didn't insta pat
 */
 
 /datum/component/enchanted_weapon

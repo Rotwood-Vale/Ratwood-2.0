@@ -7,9 +7,9 @@
 	var/overlay_color
 
 /obj/item/blade/Initialize()
-    . = ..()
-    if(overlay_color)
-        color = overlay_color
+	. = ..()
+	if(overlay_color)
+		color = overlay_color
 
 /obj/item/blade/iron_axe
 	name = "iron axe blade"

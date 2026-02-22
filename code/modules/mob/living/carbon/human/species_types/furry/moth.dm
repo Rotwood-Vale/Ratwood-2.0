@@ -5,14 +5,14 @@
 	name = "Fluvian"
 	id = "moth"
 	desc = "<b>Fluvian</b><br> \
-    Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
-    Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and \
+	Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
+	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and \
 	rituals, not much is known about the moth-kin. These so-called \"mystics\" are rarely seen within humen and \
 	beastkin settlements, but those that find themselves in civilisation are oft ascended to nobility.<br>\
 	(+1 Speed, Blackleg Trait)"
 
 	expanded_desc = "Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
-    Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and rituals, not much \
+	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and rituals, not much \
 	is known about the moth-kin.\ These so-called \"mystics\" are rarely seen within humen and beastkin settlements. \
 	<br><br> \
 	Scholars frequently argue about the patron god of the Fluvian race, erring towards either the twin of Astrata, Noc, or the God-Head \

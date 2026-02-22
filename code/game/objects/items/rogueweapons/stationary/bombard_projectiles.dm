@@ -5,7 +5,7 @@ For the moment, just small 'charges'.
 Listed as 'cannonballs' because we'll just differentiate via var later.
 When? Whenever I get to it.
 Additionally, these differ from the concepts, because I wish to see them in practice first.
- - Carl
+- Carl
 */
 //This is a 'solid shot'. Does nothing, as of now.
 /obj/item/cannonball
