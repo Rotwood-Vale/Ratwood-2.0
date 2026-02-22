@@ -11,13 +11,11 @@
     var/last_moved = 0
     var/list/buckle_overlays = list()
     var/list/original_pixel_y = list()
-    
-    // Variables to easily swap states for subtypes
     var/empty_state = "wheelchair-empty"
     var/full_state = "wheelchair-full"
-    
-    // Variable to control movement cooldown
     var/move_delay = 0.5 SECONDS
+    item_chair = /obj/item/chair/wheelchair
+	
 
 /obj/structure/chair/wheelchair/relaymove(mob/living/user, direction)
     if(user in buckled_mobs)
@@ -86,6 +84,7 @@
     empty_state = "noblewheelchair-empty"
     full_state = "noblewheelchair-full"
     move_delay = 0.4 SECONDS 
+    item_chair = /obj/item/chair/wheelchair/noble
 
 /obj/structure/chair/wheelchair/noble/purple
     name = "fancy wheelchair"
@@ -93,3 +92,4 @@
     icon_state = "noblewheelchairp-empty"
     empty_state = "noblewheelchairp-empty"
     full_state = "noblewheelchairp-full"
+    item_chair = /obj/item/chair/wheelchair/noble/purple

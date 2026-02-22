@@ -357,3 +357,27 @@
 
 /obj/structure/chair/mime/post_unbuckle_mob(mob/living/M)
 	M.pixel_y -= 5
+
+// === WHEELCHAIR ITEMS === //
+
+/obj/item/chair/wheelchair
+    name = "wheelchair"
+    desc = "A wooden chair with wheels. It allows mobility-impaired individuals to move around."
+    icon = 'icons/roguetown/misc/structure.dmi'
+    icon_state = "wheelchair-empty" // Uses the empty sprite for the item
+    item_state = "woodenchair" // Uses standard chair inhand sprites
+    origin_type = /obj/structure/chair/wheelchair
+    break_chance = 15 // A bit sturdier than a standard wood chair
+
+/obj/item/chair/wheelchair/noble
+    name = "fancy wheelchair"
+    desc = "A well-built, lavishly gilded red wheelchair."
+    icon_state = "noblewheelchair-empty"
+    origin_type = /obj/structure/chair/wheelchair/noble
+    break_chance = 5 // Harder to break
+
+/obj/item/chair/wheelchair/noble/purple
+    name = "fancy wheelchair"
+    desc = "A well-built, lavishly gilded purple wheelchair."
+    icon_state = "noblewheelchairp-empty"
+    origin_type = /obj/structure/chair/wheelchair/noble/purple
