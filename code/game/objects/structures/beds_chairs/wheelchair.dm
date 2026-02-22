@@ -11,75 +11,116 @@
     var/last_moved = 0
     var/list/buckle_overlays = list()
     var/list/original_pixel_y = list()
+    var/list/original_pixel_x = list() // NEW: Track X offsets
+    
+    // Variables to easily swap states for subtypes
     var/empty_state = "wheelchair-empty"
     var/full_state = "wheelchair-full"
+    
+    // Variable to control movement cooldown
     var/move_delay = 0.5 SECONDS
-    item_chair = /obj/item/chair/wheelchair
-	
 
 /obj/structure/chair/wheelchair/relaymove(mob/living/user, direction)
     if(user in buckled_mobs)
         if(world.time < last_moved + move_delay) 
-            return TRUE // FIX: Tell the mob we caught the input, even if on cooldown, to stop prediction desyncs!
-
+            return TRUE
+            
         // Check if we are currently sitting on a set of stairs
         var/turf/current_turf = get_turf(src)
         var/obj/structure/stairs/S = locate(/obj/structure/stairs) in current_turf
 
         if(S && direction == S.dir)
             to_chat(user, span_warning("You can't push \the [src] up the stairs by yourself!"))
-            return TRUE // Halt movement completely so they don't go up
+            return TRUE 
 
         var/turf/T = get_step(src, direction)
         if(T && !T.density)
-            if(step(src, direction)) // Verify the step actually succeeded before updating delays
+            if(step(src, direction)) 
                 setDir(direction)
                 last_moved = world.time
                 
-                // If any buckled small species had their pixel_y changed by other code,
-                // reapply the single +5 boost so they don't need to unbuckle/rebuckle.
+                // Combat pixel-shifting by reapplying both X and Y offsets
                 for(var/mob/living/M in buckled_mobs)
                     if(iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M))
                         if(isnull(original_pixel_y[M])) 
                             original_pixel_y[M] = M.pixel_y
+                        if(isnull(original_pixel_x[M])) 
+                            original_pixel_x[M] = M.pixel_x
+                            
                         var/expected_y = original_pixel_y[M] + 5
+                        var/expected_x = original_pixel_x[M]
+                        
+                        // Apply directional shift
+                        if(direction == EAST)
+                            expected_x += 1
+                        else if(direction == WEST)
+                            expected_x -= 1
+                            
                         if(M.pixel_y != expected_y)
                             M.pixel_y = expected_y
+                        if(M.pixel_x != expected_x)
+                            M.pixel_x = expected_x
                             
         return TRUE
+
+// NEW: Dynamically shift X position when the chair turns in place
+/obj/structure/chair/wheelchair/setDir(newdir)
+    ..()
+    for(var/mob/living/M in buckled_mobs)
+        if(iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M))
+            if(!isnull(original_pixel_x[M])) 
+                var/expected_x = original_pixel_x[M]
+                if(newdir == EAST)
+                    expected_x += 1
+                else if(newdir == WEST)
+                    expected_x -= 1
+                M.pixel_x = expected_x
 
 /obj/structure/chair/wheelchair/handle_layer()
     if(buckled_mobs && buckled_mobs.len)
         var/mob/living/M = buckled_mobs[1]
         if(M && (dir == EAST || dir == WEST))
             layer = ABOVE_MOB_LAYER
-            // wheelchair sits above mob for east/west; no pixel offsets here
         else
-            ..() // Use base behavior for north/south
+            ..() 
     else
         ..()
 
 /obj/structure/chair/wheelchair/post_buckle_mob(mob/living/M)
     . = ..()
     icon_state = full_state 
-    // elevate small species slightly so their top halves show correctly when buckled
+    // elevate and shift small species so they show correctly when buckled
     if(M && (iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M)))
         if(isnull(original_pixel_y[M])) 
             original_pixel_y[M] = M.pixel_y
-        // invert offset: raise sprite by 5 pixels (was lowering previously)
+        if(isnull(original_pixel_x[M])) 
+            original_pixel_x[M] = M.pixel_x
+            
         M.pixel_y = original_pixel_y[M] + 5
+        
+        // Check current facing direction and apply X shift
+        var/expected_x = original_pixel_x[M]
+        if(dir == EAST)
+            expected_x += 1
+        else if(dir == WEST)
+            expected_x -= 1
+        M.pixel_x = expected_x
     
     handle_layer()
-    last_moved = world.time // Prevent instant movement the millisecond they buckle in
+    last_moved = world.time 
 
 /obj/structure/chair/wheelchair/post_unbuckle_mob(mob/living/M)
     . = ..()
     icon_state = empty_state 
 
-    // restore pixel_y for small species if we changed it
-    if(M && !isnull(original_pixel_y[M])) 
-        M.pixel_y = original_pixel_y[M]
-        original_pixel_y -= M
+    // restore both pixel_y and pixel_x for small species
+    if(M)
+        if(!isnull(original_pixel_y[M])) 
+            M.pixel_y = original_pixel_y[M]
+            original_pixel_y -= M
+        if(!isnull(original_pixel_x[M])) 
+            M.pixel_x = original_pixel_x[M]
+            original_pixel_x -= M
 
     handle_layer()
 
