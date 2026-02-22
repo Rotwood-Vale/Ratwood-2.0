@@ -86,7 +86,7 @@
     empty_state = "noblewheelchair-empty"
     full_state = "noblewheelchair-full"
     
-    move_delay = 0.35 SECONDS 
+    move_delay = 0.4 SECONDS 
 
 /obj/structure/chair/wheelchair/noble/purple
     name = "fancy wheelchair"

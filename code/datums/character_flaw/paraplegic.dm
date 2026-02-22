@@ -8,11 +8,12 @@
     var/mob/living/carbon/human/H = user
     H.adjust_triumphs(3)
 
-    // Delay the setup by 1 second to let the mob finish spawning and loading onto the map.
-    spawn(10)
-        apply_paraplegia(H)
+/datum/charflaw/paraplegic/apply_post_equipment(mob/user)
+    if(!ishuman(user))
+        return
+    var/mob/living/carbon/human/H = user
+    apply_paraplegia(H)
 
-// Helper proc to handle the delayed logic
 /datum/charflaw/paraplegic/proc/apply_paraplegia(mob/living/carbon/human/H)
     if(!H || QDELETED(H))
         return
@@ -38,7 +39,7 @@
     desc = "You lost your legs entirely. Because of profound nerve damage, attaching prosthetics will not restore your mobility. You will require a wheelchair."
 
 /datum/charflaw/paraplegic/amputee/apply_paraplegia(mob/living/carbon/human/H)
-    // Run the parent proc to apply the trauma and spawn the wheelchair first (This now includes the Noble check!)
+    // Run the parent proc to apply the trauma and spawn the wheelchair first
     ..() 
 
     if(!H || QDELETED(H))
