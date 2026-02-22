@@ -13,7 +13,7 @@
         return
     var/mob/living/carbon/human/H = user
     // Delay the spawn by 1 second so Virtues have time to apply their traits!
-    addtimer(CALLBACK(src, .proc/apply_paraplegia, H), 1 SECONDS)
+    addtimer(CALLBACK(src, "apply_paraplegia", H), 1 SECONDS)
 
 /datum/charflaw/paraplegic/proc/apply_paraplegia(mob/living/carbon/human/H)
     if(!H || QDELETED(H))
@@ -47,6 +47,11 @@
 
     if(!H || QDELETED(H))
         return
+    // Delete shoes so they don't drop on the floor or stay equipped magically
+    var/obj/item/shoes = H.get_item_by_slot(ITEM_SLOT_SHOES)
+    if(shoes)
+        qdel(shoes)
+
     // Sever and completely delete the actual legs
     var/obj/item/bodypart/L = H.get_bodypart(BODY_ZONE_L_LEG)
     if(L)
