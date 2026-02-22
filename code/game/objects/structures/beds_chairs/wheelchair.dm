@@ -11,7 +11,7 @@
     var/last_moved = 0
     var/list/buckle_overlays = list()
     var/list/original_pixel_y = list()
-    var/list/original_pixel_x = list() // NEW: Track X offsets
+    var/list/original_pixel_x = list()
     
     // Variables to easily swap states for subtypes
     var/empty_state = "wheelchair-empty"
@@ -19,19 +19,22 @@
     
     // Variable to control movement cooldown
     var/move_delay = 0.5 SECONDS
+    item_chair = /obj/item/chair/wheelchair
+    
 
 /obj/structure/chair/wheelchair/relaymove(mob/living/user, direction)
     if(user in buckled_mobs)
+        // FIX 1: Return FALSE so the client doesn't predict movement and rubberband!
         if(world.time < last_moved + move_delay) 
-            return TRUE
-            
+            return FALSE 
+
         // Check if we are currently sitting on a set of stairs
         var/turf/current_turf = get_turf(src)
         var/obj/structure/stairs/S = locate(/obj/structure/stairs) in current_turf
 
         if(S && direction == S.dir)
             to_chat(user, span_warning("You can't push \the [src] up the stairs by yourself!"))
-            return TRUE 
+            return FALSE // Return FALSE so they don't rubberband on stairs
 
         var/turf/T = get_step(src, direction)
         if(T && !T.density)
@@ -39,8 +42,11 @@
                 setDir(direction)
                 last_moved = world.time
                 
-                // Combat pixel-shifting by reapplying both X and Y offsets
+                // Combat pixel-shifting and camera wobbling
                 for(var/mob/living/M in buckled_mobs)
+                    // FIX 2: Force the camera pan speed to match the chair, killing the wobble!
+                    M.glide_size = src.glide_size 
+                    
                     if(iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M))
                         if(isnull(original_pixel_y[M])) 
                             original_pixel_y[M] = M.pixel_y
@@ -61,9 +67,10 @@
                         if(M.pixel_x != expected_x)
                             M.pixel_x = expected_x
                             
-        return TRUE
+                return TRUE // Return TRUE only if the step actually succeeded
+        return FALSE // Return FALSE if they hit a wall
 
-// NEW: Dynamically shift X position when the chair turns in place
+// Dynamically shift X position when the chair turns in place
 /obj/structure/chair/wheelchair/setDir(newdir)
     ..()
     for(var/mob/living/M in buckled_mobs)
@@ -89,6 +96,11 @@
 /obj/structure/chair/wheelchair/post_buckle_mob(mob/living/M)
     . = ..()
     icon_state = full_state 
+    
+    // FIX 2 (Part B): Sync the camera instantly upon sitting down
+    if(M)
+        M.glide_size = src.glide_size
+    
     // elevate and shift small species so they show correctly when buckled
     if(M && (iskobold(M) || iscritter(M) || isgoblinp(M) || isdwarf(M)))
         if(isnull(original_pixel_y[M])) 
