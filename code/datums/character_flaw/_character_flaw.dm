@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
 	"Leper (+1 TRI)"=/datum/charflaw/leprosy,
 	"Masochist"=/datum/charflaw/addiction/masochist,
-	"Missing Nose"=/datum/charflaw/missing_nose,
+	"Missing Nose (+2 TRI)"=/datum/charflaw/missing_nose,
 	"Mute (+1 TRI)"=/datum/charflaw/mute,
 	"Narcoleptic (+1 TRI)"=/datum/charflaw/narcoleptic,
 	"No Flaw (-3 TRI)"=/datum/charflaw/noflaw,
@@ -396,6 +396,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		ADD_TRAIT(H, TRAIT_MISSING_NOSE, TRAIT_GENERIC)
+		H.adjust_triumphs(2)
 
 /datum/charflaw/missing_nose/on_removal(mob/user)
 	..()
@@ -428,6 +429,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		ADD_TRAIT(H, TRAIT_PACIFISM, TRAIT_GENERIC)
+		H.adjust_triumphs(1)
 
 /datum/charflaw/pacifism/on_removal(mob/user)
 	..()
