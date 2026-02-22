@@ -253,8 +253,8 @@
 					I.name = "flawless [I.name]"
 				if(1.3)
 					I.name = "masterwork [I.name]"
-					I.polished = 4
-					I.AddComponent(/datum/component/metal_glint)
+				///	I.polished = 4									You want it polished?
+				///	I.AddComponent(/datum/component/metal_glint) 	Buy a polishing kit then.
 
 		if(modifier < 1)
 			I.max_integrity *= modifier
