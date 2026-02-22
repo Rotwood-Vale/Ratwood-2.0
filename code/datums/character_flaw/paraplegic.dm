@@ -27,13 +27,12 @@
     if(spawn_turf)
         var/obj/structure/chair/wheelchair/W
         
-        // Check for the Noble traits now that they have been applied
         if(HAS_TRAIT(H, TRAIT_NOBLE))
-            W = new /obj/structure/chair/wheelchair/noble(spawn_turf) // Red variant
+            W = new /obj/structure/chair/wheelchair/noble(spawn_turf)
         else if(HAS_TRAIT(H, TRAIT_DEFILED_NOBLE) || HAS_TRAIT(H, TRAIT_DISGRACED_NOBLE))
-            W = new /obj/structure/chair/wheelchair/noble/purple(spawn_turf) // Purple variant
+            W = new /obj/structure/chair/wheelchair/noble/purple(spawn_turf)
         else
-            W = new /obj/structure/chair/wheelchair(spawn_turf) // Standard wooden
+            W = new /obj/structure/chair/wheelchair(spawn_turf)
             
         W.setDir(H.dir)
         W.buckle_mob(H)

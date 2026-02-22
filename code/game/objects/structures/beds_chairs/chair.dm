@@ -364,8 +364,8 @@
     name = "wheelchair"
     desc = "A wooden chair with wheels. It allows mobility-impaired individuals to move around."
     icon = 'icons/roguetown/misc/structure.dmi'
-    icon_state = "wheelchair-empty" // Uses the empty sprite for the item
-    item_state = "woodenchair" // Uses standard chair inhand sprites
+    icon_state = "wheelchair-empty"
+    item_state = "woodenchair"
     origin_type = /obj/structure/chair/wheelchair
     break_chance = 15 // A bit sturdier than a standard wood chair
 
@@ -381,3 +381,4 @@
     desc = "A well-built, lavishly gilded purple wheelchair."
     icon_state = "noblewheelchairp-empty"
     origin_type = /obj/structure/chair/wheelchair/noble/purple
+    break_chance = 5 // Harder to break

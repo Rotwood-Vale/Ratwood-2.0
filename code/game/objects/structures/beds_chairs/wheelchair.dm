@@ -38,7 +38,7 @@
                         if(M.pixel_y != expected_y)
                             M.pixel_y = expected_y
                             
-        return TRUE // FIX: Tell the mob's movement loop that the chair successfully handled the move.
+        return TRUE
 
 /obj/structure/chair/wheelchair/handle_layer()
     if(buckled_mobs && buckled_mobs.len)
