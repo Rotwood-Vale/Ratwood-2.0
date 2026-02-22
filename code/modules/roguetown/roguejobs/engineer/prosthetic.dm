@@ -1,19 +1,28 @@
 /obj/item/bodypart/proc/prosthetic_attachment(var/mob/living/carbon/human/H, var/mob/user)
-	if(!ishuman(H))
-		return
+    if(!ishuman(H))
+        return
 
-	if(user.zone_selected != body_zone)
-		to_chat(user, span_warning("[src] isn't the right type for [parse_zone(user.zone_selected)]."))
-		return -1
+    // --- PARAPLEGIC REJECTION CHECK ---
+    // If the limb being attached is a leg, check if the target has the paraplegic vice
+    if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
+        if(H.has_flaw(/datum/charflaw/paraplegic))
+            user.visible_message(span_warning("[user] tries to attach [src] to [H], but it fails to interface!"), \
+                                 span_warning("[H]'s profound nerve damage prevents [src] from functioning. It is completely rejected."))
+            return -1 // Halt the attachment process completely
+    // ----------------------------------
 
-	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting)
-		return
+    if(user.zone_selected != body_zone)
+        to_chat(user, span_warning("[src] isn't the right type for [parse_zone(user.zone_selected)]."))
+        return -1
 
-	if(user.temporarilyRemoveItemFromInventory(src))
-		attach_limb(H)
-		user.visible_message(span_notice("[user] attaches [src] to [H]."))
-		return 1
+    var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
+    if(affecting)
+        return
+
+    if(user.temporarilyRemoveItemFromInventory(src))
+        attach_limb(H)
+        user.visible_message(span_notice("[user] attaches [src] to [H]."))
+        return 1
 
 /obj/item/contraption/bronzeprosthetic
 	name = "bronze prosthetic"
