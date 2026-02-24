@@ -31,9 +31,9 @@
 		/datum/skill/craft/traps = SKILL_LEVEL_EXPERT,
 		//these people live in the forest so let's give them some peasant skills
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/tanning = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/tanning = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
-		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,			//Even Robin Hood knew how to read n write
 	)
 
