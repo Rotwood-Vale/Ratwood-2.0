@@ -1075,13 +1075,13 @@
 
 /atom/movable/screen/alert/status_effect/debuff/terrorbogdebuff
 	name = "Sinister Miasma"
-	desc = "I feel VERY drained, tired, slow."
+	desc = "The miasma feels thick... its hard to think... hard to breath..."
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/terrorbogdebuff
 	id = "terrorbugdebuff"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/terrorbogdebuff
-	effectedstats = list(STATKEY_SPD = -1, STATKEY_PER = -1, STATKEY_STR = -1, STATKEY_CON = -1)
+	effectedstats = list(STATKEY_INT = -2, STATKEY_PER = -2, STATKEY_WILL = -2)
 
 /datum/status_effect/debuff/terrorbogdebuff/process()
 
@@ -1092,13 +1092,13 @@
 
 /atom/movable/screen/alert/status_effect/debuff/terrorbogdebufflow
 	name = "Miasma"
-	desc = "I feel drained, tired, slow."
+	desc = "The miasma clouds my mind and breath."
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/terrorbogdebufflow
 	id = "terrorbugdebufflow"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/terrorbogdebufflow
-	effectedstats = list(STATKEY_STR = -1, STATKEY_CON = -1)
+	effectedstats = list(STATKEY_WILL = -1)
 
 /datum/status_effect/debuff/terrorbogdebufflow/process()
 
