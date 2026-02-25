@@ -5,6 +5,17 @@
 // HELP ME
 // -----------------------------------------------
 
+
+/proc/html_attr(t as text)
+	if(!istext(t)) return ""
+	var/s = "[t]"
+	s = replacetext(s, "&", "&amp;")
+	s = replacetext(s, "<", "&lt;")
+	s = replacetext(s, ">", "&gt;")
+	s = replacetext(s, "\"", "&quot;")
+	s = replacetext(s, "'", "&#39;")
+	return s
+	
 /proc/_is_digit_string(t)
 	if(!istext(t)) return FALSE
 	if(length(t) != 4) return FALSE

@@ -2857,6 +2857,7 @@
 #include "modular\code\modules\maturity-prompt\code\maturity_subsystem.dm"
 #include "modular\Creechers\code\trufflepig.dm"
 #include "modular\fleshcrafters\fleschrafters_artefacts.dm"
+#include "modular\fleshcrafters\fleschrafters_hud.dm"
 #include "modular\fleshcrafters\fleschrafters_miracles.dm"
 #include "modular\fleshcrafters\fleschrafters_quest.dm"
 #include "modular\fleshcrafters\fleschrafters_research.dm"
