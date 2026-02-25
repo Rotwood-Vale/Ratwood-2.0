@@ -206,6 +206,9 @@
 	. = ..()
 	if(.)
 		if(enemies.len)
+			// Promote to high priority when in combat
+			if(world.time % 100 == 0) // Check every 10 seconds
+				SSmobs.promote_mob_priority(src)
 			if(prob(4))
 				emote("cidle")
 			if(prob(deaggroprob))
@@ -214,25 +217,30 @@
 						enemies = list()
 						src.visible_message(span_info("[src] calms down."))
 						LoseTarget()
+						// Demote priority after combat
+						SSmobs.demote_mob_priority(src)
 				else
 					mob_timers["aggro_time"] = world.time
 		else
 			if(prob(2)) //Plays an idle sound
 				emote("idle")
 
-			if(adult_growth)
-				growth_prog += 0.5
-				if(growth_prog >= 100)
-					if(isturf(loc))
-						var/mob/living/simple_animal/A = new adult_growth(loc)
-						if(tame)
-							A.tame = TRUE
-						qdel(src)
-						return
-			else
-				if(childtype)
-					make_babies()
-		if(udder)
+			// Only process growth/breeding occasionally when not in combat
+			if(world.time % 20 == 0) // Every 2 seconds instead of every tick
+				if(adult_growth)
+					growth_prog += 0.5
+					if(growth_prog >= 100)
+						if(isturf(loc))
+							var/mob/living/simple_animal/A = new adult_growth(loc)
+							if(tame)
+								A.tame = TRUE
+							qdel(src)
+							return
+				else
+					if(childtype)
+						make_babies()
+		// Udder processing less frequent
+		if(udder && world.time % 10 == 0) // Every second instead of every tick
 			if(production > 0)
 				production--
 				udder.generateMilk()
@@ -244,6 +252,8 @@
 //		retreat_distance = 10
 //		minimum_distance = 10
 	mob_timers["aggro_time"] = world.time
+	// Promote to high priority when entering combat
+	SSmobs.promote_mob_priority(src)
 	..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/attackby(obj/item/O, mob/user, params)

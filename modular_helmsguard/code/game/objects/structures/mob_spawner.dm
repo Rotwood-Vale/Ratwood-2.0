@@ -1,5 +1,5 @@
 GLOBAL_VAR_INIT(total_spawned_mobs, 0)
-GLOBAL_VAR_INIT(max_total_spawned_mobs, 400) // New global variable for the total limit
+GLOBAL_VAR_INIT(max_total_spawned_mobs, 250) // Global cap for NPC population
 
 /// ONLY TEMPLATE ///
 /*
@@ -83,7 +83,8 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 //		shake_camera(M, 3, 1)
 	last_activated = world.time
 	mobs_to_spawn = rand(min_mobs, max_mobs)
-	while(mobs < mobs_to_spawn && GLOB.max_total_spawned_mobs)
+	// FIX: Actually check if we're under the spawn cap
+	while(mobs < mobs_to_spawn && GLOB.total_spawned_mobs < GLOB.max_total_spawned_mobs)
 		spawn_mob()
 		if(mobs >= mobs_to_spawn)
 			reset()
@@ -97,8 +98,13 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 	if(length(spawning_turfs))
 		spawning_turf = pick(spawning_turfs)
 		var/spawnmob = pickweight(mob_types)
-		mymobs += new spawnmob(spawning_turf)
+		var/mob/living/spawned = new spawnmob(spawning_turf)
+		mymobs += spawned
 		mobs ++
+		// Track globally
+		GLOB.total_spawned_mobs++
+		// Register death signal to decrement counter
+		RegisterSignal(spawned, COMSIG_LIVING_DEATH, PROC_REF(on_mob_death))
 		for(var/mob/living/c in mymobs)
 			c.del_on_deaggro = (restart_time - 1 MINUTES)
 			c.faction = objfaction.Copy()
@@ -106,6 +112,11 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 				mymobs.Remove(c)
 	if(!spawning_turf)
 		return
+
+/obj/structure/mobspawner/proc/on_mob_death(mob/living/source)
+	SIGNAL_HANDLER
+	GLOB.total_spawned_mobs = max(0, GLOB.total_spawned_mobs - 1)
+	mymobs -= source
 
 /obj/structure/mobspawner/proc/reset()
 	mobs_to_spawn = 3
@@ -208,7 +219,8 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 //		shake_camera(M, 3, 1)
 	last_activated = world.time
 	mobs_to_spawn = rand(min_mobs, max_mobs)
-	while(mobs < mobs_to_spawn)
+	// FIX: Actually check if we're under the spawn cap
+	while(mobs < mobs_to_spawn && GLOB.total_spawned_mobs < GLOB.max_total_spawned_mobs)
 		spawn_mob()
 		if(mobs >= mobs_to_spawn)
 			reset()
@@ -223,16 +235,25 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 	if(length(spawning_turfs))
 		spawning_turf = pick(spawning_turfs)
 		var/spawnmob = pickweight(mob_types)
-		mymobs += new spawnmob(spawning_turf)
+		var/mob/living/spawned = new spawnmob(spawning_turf)
+		mymobs += spawned
 		mobs ++
+		// Track globally
+		GLOB.total_spawned_mobs++
+		// Register death signal to decrement counter
+		RegisterSignal(spawned, COMSIG_LIVING_DEATH, PROC_REF(on_mob_death))
 		for(var/mob/living/c in mymobs)
 			c.del_on_deaggro = (restart_time - 1 MINUTES)
 			c.faction = objfaction.Copy()
 			if(QDELETED(c) || c.stat == DEAD)
 				mymobs.Remove(c)
-		mobs ++
 	if(!spawning_turf)
 		return
+
+/obj/effect/mobspawner/proc/on_mob_death(mob/living/source)
+	SIGNAL_HANDLER
+	GLOB.total_spawned_mobs = max(0, GLOB.total_spawned_mobs - 1)
+	mymobs -= source
 
 /obj/effect/mobspawner/proc/reset()
 	mobs_to_spawn = 3
@@ -314,7 +335,8 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 /obj/effect/mobspawner/hole/activate()
 	last_activated = world.time
 	mobs_to_spawn = rand(min_mobs, max_mobs)
-	while(mobs < mobs_to_spawn)
+	// FIX: Actually check if we're under the spawn cap
+	while(mobs < mobs_to_spawn && GLOB.total_spawned_mobs < GLOB.max_total_spawned_mobs)
 		spawn_mob()
 		if(mobs >= mobs_to_spawn)
 			ready = FALSE
@@ -327,8 +349,13 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 	src.visible_message("<span class='danger'>[damob.name] [picked_string] [src]!</span>")
 	if(spawn_sound)
 		playsound(src, pick(spawn_sound), 100)
-	mymobs += new spawnmob(get_turf(src))
+	var/mob/living/spawned = new spawnmob(get_turf(src))
+	mymobs += spawned
 	mobs ++
+	// Track globally
+	GLOB.total_spawned_mobs++
+	// Register death signal to decrement counter
+	RegisterSignal(spawned, COMSIG_LIVING_DEATH, PROC_REF(on_mob_death))
 	for(var/mob/living/c in mymobs)
 		c.del_on_deaggro = (restart_time - 1 MINUTES)
 		c.faction = objfaction.Copy()

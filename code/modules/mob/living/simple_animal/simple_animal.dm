@@ -959,14 +959,16 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		return
 	. = ..()
 	if(.)
-		if(food > 0)
-			food--
-			pooprog++
-			production++
-			production = min(production, 100)
-			if(pooprog >= 100)
-				pooprog = 0
-				poop()
+		// Reduce food/poop processing frequency - only every 2 seconds instead of every tick
+		if(world.time % 20 == 0)
+			if(food > 0)
+				food--
+				pooprog++
+				production++
+				production = min(production, 100)
+				if(pooprog >= 100)
+					pooprog = 0
+					poop()
 
 /mob/living/simple_animal/proc/poop()
 	if(pooptype)
@@ -1004,7 +1006,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		update_grid()
 
 /mob/living/simple_animal/proc/update_grid()
-	next_grid_update_time = world.time + 5
+	// Reduced frequency: was 5 (0.5s), now 30 (3s) - 6x less frequent
+	next_grid_update_time = world.time + 30
 	var/turf/our_turf = get_turf(src)
 	if(isnull(our_turf) || isnull(our_cells))
 		return
