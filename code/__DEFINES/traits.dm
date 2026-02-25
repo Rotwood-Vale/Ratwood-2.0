@@ -283,7 +283,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_LEPROSY = span_necrosis("I'm a disgusting leper..."),
 	TRAIT_VOTARY = span_info("I'm of the Holy See's own. I feel most comfortable on hallowed ground."),
 	TRAIT_TAVERN_FIGHTER = span_info("I am vigilant in my duties. The Tavern is my home, none shall dare oppose me or skip out on payment."),
-	TRAIT_MIASMAEM = span_info("The Miasma Empowers Me. It Gives me Strength!")
+	TRAIT_MIASMAEM = span_info("The Miasma Empowers Me. It Gives me Strength!"),
 	TRAIT_MIASMARES = span_info("The Sinister Miasma's of the bog hold no sway over me."),
 	TRAIT_GUARDSMAN = span_info("I am vigilant in my duties. In the town I am sworn to protect, my abilities are sharper due to my routine and familiarity."),
 	TRAIT_WOODSMAN = span_info("I am vigilant in my duties. In the outdoor wilderness I am sworn to protect, my abilities are sharper due to my routine and familiarity."),

@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 		guy.apply_status_effect(/datum/status_effect/buff/terrorbogbuff)
 	if((src.terror_area == TRUE) && HAS_TRAIT(guy, TRAIT_MIASMASIN) && !guy.has_status_effect(/datum/status_effect/debuff/terrorbogdebuff)) //miasma vulnerability / debuff
 		guy.apply_status_effect(/datum/status_effect/debuff/terrorbogdebuff)
-	if((src.terror_area == TRUE) && HAS_TRAIT(guy, TRAIT_MIASMAS) && !guy.has_status_effect(/datum/status_effect/debuff/terrorbogdebufflow)) //miasma vulnerability / debuff
+	if((src.terror_area == TRUE) && HAS_TRAIT(guy, TRAIT_MIASMA) && !guy.has_status_effect(/datum/status_effect/debuff/terrorbogdebufflow)) //miasma vulnerability / debuff
 		guy.apply_status_effect(/datum/status_effect/debuff/terrorbogdebufflow)
 	if((src.tavern_area == TRUE) && HAS_TRAIT(guy, TRAIT_TAVERN_FIGHTER) && !guy.has_status_effect(/datum/status_effect/buff/barkeepbuff)) // THE FIGHTER
 		guy.apply_status_effect(/datum/status_effect/buff/barkeepbuff)

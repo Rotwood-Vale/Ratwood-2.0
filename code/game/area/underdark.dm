@@ -55,12 +55,9 @@
 		/mob/living/carbon/human/species/goblin/npc/ambush/moon = 40,
 		/mob/living/simple_animal/hostile/retaliate/rogue/troll = 15)
 	deathsight_message = "spiders and mushroom filled caverns"
-<<<<<<< Updated upstream
 	
 /area/rogue/under/underdark/rockhill/east
 	name = "Eastern Underdark"
 
 /area/rogue/under/underdark/rockhill/west
 	name = "Western Underdark"
-=======
->>>>>>> Stashed changes
