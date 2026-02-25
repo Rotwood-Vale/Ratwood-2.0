@@ -29,7 +29,7 @@
 
 /datum/sex_action/force_titjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] shoves [target]'s cock between [user.p_their()] tits."))
-	playsound(user, 'sound/misc/mat/fingering.ogg', 20, TRUE, -2, ignore_walls = FALSE)
+	user.sexcon.outercourse_noise(user)
 
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)
 

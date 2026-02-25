@@ -4,7 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_SEEPRICES_SHITTY)
+	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_SEEPRICES_SHITTY, TRAIT_DRUNK_HEALING)
 	category_tags = list(CTAG_TOWNER)
 	cmode_music = 'sound/music/combat_bum.ogg'
 	outfit = /datum/outfit/job/roguetown/adventurer/thug
@@ -22,8 +22,9 @@
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
+	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/beer = 1)
 
-	var/classes = list("Goon", "Miscreant", "Big Man")
+	var/classes = list("Goon", "Miscreant", "Big Man", "Longshoreman")
 	var/classchoice = input(H, "What kind of thug are you?", "TAKE UP ARMS") as anything in classes
 
 	switch(classchoice)
@@ -131,6 +132,8 @@
 
 			H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_NOVICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_NOVICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_APPRENTICE, TRUE)
@@ -147,3 +150,46 @@
 				if("Big Axe")
 					H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/greataxe
+				if("Big Stick")
+					H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					r_hand = /obj/item/rogueweapon/mace
+
+		if("Longshoreman")
+			to_chat(H, span_warning("You answered Abyssor's call when you were young, though in troublesome ways, \
+	pilaging for treasury from anyone who'd cross your path. Now your captain retires from a life of crime, \
+	settling down as do you. Still, there is coin to be made on land."))
+			H.set_blindness(0)
+
+	
+			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
+
+			H.change_stat(STATKEY_STR, 2)
+			H.change_stat(STATKEY_WIL, 2)
+			H.change_stat(STATKEY_CON, 2)
+			H.change_stat(STATKEY_SPD, -1)
+			H.change_stat(STATKEY_INT, -1)
+			H.change_stat(STATKEY_PER, -1)
+
+			head = /obj/item/clothing/head/roguetown/helmet/bandana
+			armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
+			pants = /obj/item/clothing/under/roguetown/trou/leather
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/red
+			r_hand = /obj/item/rogueweapon/sword/cutlass
+			beltr = /obj/item/rogueweapon/scabbard/sword
+			beltl = /obj/item/rogueweapon/huntingknife/idagger
+	
+
+			H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_APPRENTICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_APPRENTICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_APPRENTICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_NOVICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, SKILL_LEVEL_NOVICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_APPRENTICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_JOURNEYMAN, TRUE)

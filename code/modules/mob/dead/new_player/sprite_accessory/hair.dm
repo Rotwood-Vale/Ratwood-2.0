@@ -1602,6 +1602,102 @@
 	name = "Alsoprotagonist"
 	icon_state = "alsoprotagonist"
 
+/datum/sprite_accessory/hair/head/dunes
+	name = "Dunes"
+	icon_state = "dunes"
+
+/datum/sprite_accessory/hair/head/lakkaribun
+	name = "Lakkaribun"
+	icon_state = "lakkaribun"
+	
+/datum/sprite_accessory/hair/head/lakkaricut
+	name = "Lakkaricut"
+	icon_state = "lakkaricut"
+
+/datum/sprite_accessory/hair/head/sandcrop
+	name = "Sandcrop"
+	icon_state = "sandcrop"
+
+/datum/sprite_accessory/hair/head/steward
+	name = "Steward"
+	icon_state = "steward"
+
+/datum/sprite_accessory/hair/head/zaladin
+	name = "Zaladin"
+	icon_state = "zaladin"
+
+/datum/sprite_accessory/hair/head/tomboy
+	name = "Tomboy"
+	icon_state = "tomboy_f"
+
+/datum/sprite_accessory/hair/head/vagabond
+	name = "Vagabond"
+	icon_state = "vagabond"
+
+/datum/sprite_accessory/hair/head/puffdouble
+	name = "Puff Double"
+	icon_state = "puffdouble"
+
+/datum/sprite_accessory/hair/head/puffleft
+	name = "Puff Left"
+	icon_state = "puffleft"
+
+/datum/sprite_accessory/hair/head/puffright
+	name = "Puff Right"
+	icon_state = "puffright"
+
+/datum/sprite_accessory/hair/head/puffright
+	name = "Puff Right"
+	icon_state = "puffright"
+
+/datum/sprite_accessory/hair/head/alchemist
+	name = "Alchemist"
+	icon_state = "alchemist"
+
+/datum/sprite_accessory/hair/head/fortuneteller
+	name = "Fortuneteller"
+	icon_state = "fortuneteller"
+
+/datum/sprite_accessory/hair/head/kajam
+	name = "Kajam"
+	icon_state = "kajam"
+
+/datum/sprite_accessory/hair/head/mermaid
+	name = "Mermaid"
+	icon_state = "mermaid"
+
+/datum/sprite_accessory/hair/head/phoenix
+	name = "Phoenix"
+	icon_state = "phoenix"
+
+/datum/sprite_accessory/hair/head/phoenix_half_shaven
+	name = "Phoenix Half Shaven"
+	icon_state = "phoenix_half_shaven"
+
+/datum/sprite_accessory/hair/head/shorthair4
+	name = "Short Hair 4"
+	icon_state = "shorthair4"
+
+/datum/sprite_accessory/hair/head/slightlymessy
+	name = "Slightly Messy"
+	icon_state = "slightlymessy"
+
+/datum/sprite_accessory/hair/head/flatpressed
+	name = "Flat Pressed"
+	icon_state = "flatpressed"
+
+/datum/sprite_accessory/hair/head/unkempt_curls
+	name = "Unkempt Curls"
+	icon_state = "unkempt_curls"
+
+/datum/sprite_accessory/hair/head/shrine_priestess
+	name = "Shrine Priestess"
+	icon_state = "shrine_priestess"
+
+/datum/sprite_accessory/hair/head/beachwave
+	name = "Beach Wave"
+	icon_state = "beachwave"
+
 /datum/sprite_accessory/hair/head/vulpkian
 	abstract_type = /datum/sprite_accessory/hair/head/vulpkian
 	icon = 'icons/mob/sprite_accessory/hair/vulpkian_hair.dmi'

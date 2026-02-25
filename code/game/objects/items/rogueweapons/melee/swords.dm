@@ -142,6 +142,7 @@
 
 /datum/intent/rend/krieg
 	intent_intdamage_factor = 0.2
+	sharpness_penalty = 2
 
 /datum/intent/rend/krieg/short
 	damfactor = 1.8

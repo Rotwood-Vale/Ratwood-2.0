@@ -84,7 +84,7 @@
 // you can reasonably expect the icon_state to exist beforehand, or if you can cache the
 // value somewhere.
 GLOBAL_LIST_EMPTY(icon_state_cache)
-/proc/check_state_in_icon(var/checkstate, var/checkicon)
+/proc/check_state_in_icon(checkstate, checkicon)
 	// isicon() is apparently quite expensive so short-circuit out early if we can.
 	if(!istext(checkstate) || isnull(checkicon) || !(isfile(checkicon) || isicon(checkicon)))
 		return FALSE

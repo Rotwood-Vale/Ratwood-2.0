@@ -59,9 +59,12 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/brotherhoodtext = "Stand proud, for the Brotherhood!!"
 	var/chargetext = "Chaaaaaarge!!"
 
+	//Prince champion vars.
 	var/mob/living/carbon/champion = null
 	var/mob/living/carbon/ward = null
-
+	//Knight squire vars.
+	var/mob/living/carbon/knight = null
+	var/mob/living/carbon/squire = null
 
 	var/linglink
 	var/datum/martial_art/martial_art

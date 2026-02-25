@@ -248,7 +248,7 @@
 /obj/item/rogueweapon/woodstaff/militia
 	force = 20
 	force_wielded = 30
-	possible_item_intents = list(SPEAR_BASH, /datum/intent/spear/cut)
+	possible_item_intents = list(SPEAR_BASH, SPEAR_CUT_1H)
 	gripped_intents = list(/datum/intent/pick/ranged, /datum/intent/spear/thrust, SPEAR_BASH)
 	name = "militia goedendag"
 	desc = "Clubs - and their spiked descendants - are older than most languages and civilizations. Tyme hasn't made them any less deadly, however. "
@@ -325,7 +325,7 @@
 /obj/item/rogueweapon/spear/militia
 	force = 18
 	force_wielded = 30
-	possible_item_intents = list(SPEAR_THRUST, SPEAR_BASH)
+	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_CUT_1H)
 	gripped_intents = list(SPEAR_THRUST, SPEAR_CUT, SPEAR_BASH)
 	name = "militia spear"
 	desc = "Pitchforks and hoes traditionally till the soil. In tymes of peril, however, it isn't uncommon for a militiaman to pound them into polearms."

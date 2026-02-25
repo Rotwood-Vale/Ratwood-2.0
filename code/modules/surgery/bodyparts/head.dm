@@ -46,6 +46,9 @@
 	grabtargets = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)
 	resistance_flags = FLAMMABLE
 
+	/// Branded writing unique for head so it can be applied to neck
+	var/branded_writing_on_neck = ""
+
 	grid_width = 64
 	grid_height = 64
 

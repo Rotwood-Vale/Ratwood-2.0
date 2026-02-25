@@ -225,6 +225,12 @@
 	createditem_num = 3
 */
 
+/datum/anvil_recipe/tools/iron/branding
+	name = "Branding iron"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/surgery/cautery/branding
+
 /datum/anvil_recipe/tools/iron/shovel
 	name = "Shovel, Iron (+2 Sticks)"
 	req_bar = /obj/item/ingot/iron

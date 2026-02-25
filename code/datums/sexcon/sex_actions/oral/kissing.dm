@@ -23,7 +23,10 @@
 
 /datum/sex_action/kissing/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] makes out with [target]..."))
-	user.make_sucking_noise()
+	if(user.sexcon.force > SEX_FORCE_MID)
+		user.sexcon.oralcourse_noise(target)
+	else
+		user.sexcon.make_sucking_noise()
 
 	user.sexcon.perform_sex_action(user, 1, 2, TRUE)
 	user.sexcon.handle_passive_ejaculation()

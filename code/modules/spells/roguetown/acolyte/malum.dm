@@ -136,46 +136,46 @@
 		handle_heating_equipped(target, targeteditem, user)
 
 /proc/get_targeted_item(mob/user, mob/target)
-    var/target_item
-    switch(user.zone_selected)
-        if (BODY_ZONE_PRECISE_R_HAND)
-            target_item = target.held_items[2]
-        if (BODY_ZONE_PRECISE_L_HAND)
-            target_item = target.held_items[1]
-        if (BODY_ZONE_HEAD)
-            target_item = target.get_item_by_slot(SLOT_HEAD)
-        if (BODY_ZONE_PRECISE_EARS)
-            target_item = target.get_item_by_slot(SLOT_HEAD)
-        if (BODY_ZONE_CHEST)
-            if(target.get_item_by_slot(SLOT_ARMOR))
-                target_item = target.get_item_by_slot(SLOT_ARMOR)
-            else if (target.get_item_by_slot(SLOT_SHIRT))
-                target_item = target.get_item_by_slot(SLOT_SHIRT)    
-        if (BODY_ZONE_PRECISE_NECK)
-            target_item = target.get_item_by_slot(SLOT_NECK)
-        if (BODY_ZONE_PRECISE_R_EYE)
-            target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
-        if ( BODY_ZONE_PRECISE_L_EYE)
-            target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
-        if (BODY_ZONE_PRECISE_NOSE)
-            target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
-        if (BODY_ZONE_PRECISE_MOUTH)
-            target_item = target.get_item_by_slot(ITEM_SLOT_MOUTH)
-        if (BODY_ZONE_L_ARM)
-            target_item = target.get_item_by_slot(ITEM_SLOT_WRISTS)
-        if (BODY_ZONE_R_ARM)
-            target_item = target.get_item_by_slot(ITEM_SLOT_WRISTS)
-        if (BODY_ZONE_L_LEG)
-            target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
-        if (BODY_ZONE_R_LEG)
-            target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
-        if (BODY_ZONE_PRECISE_GROIN)
-            target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
-        if (BODY_ZONE_PRECISE_R_FOOT)
-            target_item = target.get_item_by_slot(ITEM_SLOT_SHOES)
-        if (BODY_ZONE_PRECISE_L_FOOT)
-            target_item = target.get_item_by_slot(ITEM_SLOT_SHOES)
-    return target_item
+	var/target_item
+	switch(user.zone_selected)
+		if (BODY_ZONE_PRECISE_R_HAND)
+			target_item = target.held_items[2]
+		if (BODY_ZONE_PRECISE_L_HAND)
+			target_item = target.held_items[1]
+		if (BODY_ZONE_HEAD)
+			target_item = target.get_item_by_slot(SLOT_HEAD)
+		if (BODY_ZONE_PRECISE_EARS)
+			target_item = target.get_item_by_slot(SLOT_HEAD)
+		if (BODY_ZONE_CHEST)
+			if(target.get_item_by_slot(SLOT_ARMOR))
+				target_item = target.get_item_by_slot(SLOT_ARMOR)
+			else if (target.get_item_by_slot(SLOT_SHIRT))
+				target_item = target.get_item_by_slot(SLOT_SHIRT)    
+		if (BODY_ZONE_PRECISE_NECK)
+			target_item = target.get_item_by_slot(SLOT_NECK)
+		if (BODY_ZONE_PRECISE_R_EYE)
+			target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
+		if ( BODY_ZONE_PRECISE_L_EYE)
+			target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
+		if (BODY_ZONE_PRECISE_NOSE)
+			target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
+		if (BODY_ZONE_PRECISE_MOUTH)
+			target_item = target.get_item_by_slot(ITEM_SLOT_MOUTH)
+		if (BODY_ZONE_L_ARM)
+			target_item = target.get_item_by_slot(ITEM_SLOT_WRISTS)
+		if (BODY_ZONE_R_ARM)
+			target_item = target.get_item_by_slot(ITEM_SLOT_WRISTS)
+		if (BODY_ZONE_L_LEG)
+			target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
+		if (BODY_ZONE_R_LEG)
+			target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
+		if (BODY_ZONE_PRECISE_GROIN)
+			target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
+		if (BODY_ZONE_PRECISE_R_FOOT)
+			target_item = target.get_item_by_slot(ITEM_SLOT_SHOES)
+		if (BODY_ZONE_PRECISE_L_FOOT)
+			target_item = target.get_item_by_slot(ITEM_SLOT_SHOES)
+	return target_item
 
 /proc/handle_tongs(obj/item/rogueweapon/tongs/T, mob/user) //Stole the code from smithing.
 	if (!T.hingot) return
@@ -303,7 +303,7 @@
 			show_visible_message(usr, "A wave of heat washes over the pile as [user] speaks Malum's name. The pile of valuables crumble into dust, only for the dust to reform into an item as if reborn from the flames. Malum has accepted the offering.", "A wave of heat washes over the pile as you speak Malum's name. The pile of valuables crumble into dust, only for the dust to reform into an item as if reborn from the flames. Malum has accepted the offering.")
 
 var/global/list/anvil_recipe_prices[][]
-/proc/add_recipe_to_global(var/datum/anvil_recipe/recipe)
+/proc/add_recipe_to_global(datum/anvil_recipe/recipe)
 	var/total_sellprice = 0
 	var/obj/item/ingot/bar = recipe.req_bar
 	var/obj/item/itemtosend = null

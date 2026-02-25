@@ -122,8 +122,7 @@
 		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
 			M.add_nausea(2)
 		else
-			if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-				H.adjust_hydration(hydration)
+			H.adjust_hydration(hydration)
 			if(M.blood_volume < BLOOD_VOLUME_NORMAL)
 				M.blood_volume = min(M.blood_volume+WATER_BLOOD_RESTORE, BLOOD_VOLUME_NORMAL)
 	..()
@@ -323,8 +322,7 @@
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			H.adjust_hydration(hydration)
+		H.adjust_hydration(hydration)
 	var/old_count = LAZYACCESS(data, "misc")
 	LAZYSET(data, "misc", old_count + 1)
 	M.jitteriness = min(M.jitteriness+4,10)

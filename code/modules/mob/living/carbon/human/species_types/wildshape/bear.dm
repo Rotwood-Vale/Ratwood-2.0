@@ -4,6 +4,8 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/bear_skin
+	wildshape_icon = 'icons/roguetown/mob/monster/direbear.dmi'
+	wildshape_icon_state = "direbear"
 	// Slow, tanky melee form that is purely focused on melee and some swimming
 
 //BUCKLING
@@ -19,10 +21,11 @@
 		src.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 
 		src.STASTR = 15 //Might be too high, but then again you're a bear, and you gotta wrestle
-		src.STACON = 6 
-		src.STAWIL = 6
-		src.STAPER = 12
+		src.STACON = 10
+		src.STAWIL = 10
+		src.STAPER = 7
 		src.STASPD = 5 // You are a hulking mass of muscle, and this is for balance reasons
+		src.STAINT = 5
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/bearclaws)
 		faction += "bears" // It IS a bear

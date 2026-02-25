@@ -198,11 +198,6 @@
 	stressadd = 10
 	desc = span_boldred("What have I done?")
 
-/datum/stressevent/blueb
-	timer = 1 MINUTES
-	stressadd = 2
-	desc = span_red("My loins ache!")
-
 /datum/stressevent/shunned_race
 	timer = 1 MINUTES
 	stressadd = 1

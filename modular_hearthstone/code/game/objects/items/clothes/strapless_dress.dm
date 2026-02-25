@@ -4,7 +4,7 @@
 	icon = 'modular_hearthstone/icons/obj/items/clothes/dress.dmi'
 	mob_overlay_icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/dress.dmi'
 	name = "strapless dress"
-	desc = "It barely covers anything at all!"
+	desc = "A form-fitting strapless dress with a high, revealing cut. It hugs every curve and hides almost nothing."
 	flags_inv = HIDEBOOB|HIDECROTCH
 	icon_state = "strapless"
 	sleevetype = null
@@ -31,7 +31,7 @@
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/alt
 	mob_overlay_icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/dress.dmi'
 	name = "strapless dress"
-	desc = "It barely covers anything at all!"
+	desc = "A form-fitting strapless dress with a high, revealing cut. It hugs every curve and hides almost nothing."
 	flags_inv = HIDEBOOB|HIDECROTCH
 	icon_state = "strapless2"
 	icon = 'modular_hearthstone/icons/obj/items/clothes/dress.dmi'

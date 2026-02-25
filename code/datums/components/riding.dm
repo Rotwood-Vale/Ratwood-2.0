@@ -3,6 +3,7 @@
 	var/last_move_diagonal = FALSE
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/keytype
+	var/riding_xp_move_counter = 0 //counter to reduce XP spam - award XP every 5 moves
 
 	var/slowed = FALSE
 	var/slowvalue = 1
@@ -58,8 +59,23 @@
 	var/atom/movable/AM = parent
 	AM.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 	for(var/mob/M in AM.buckled_mobs)
+		if(!istype(M, /mob/living))
+			continue
+		var/mob/living/rider = M
 		ride_check(M)
 		M.set_glide_size(AM.glide_size)
+		// Award riding XP if the RIDER is in run intent while moving on mount
+		// Only award XP every 5 moves to avoid spam
+		if(rider.m_intent == MOVE_INTENT_RUN)
+			riding_xp_move_counter++
+			if(riding_xp_move_counter >= 5)
+				// Scale XP with rider's STAINT stat, like all other skills do
+				// Award every 5 moves, so multiply by 5 to match movement-based XP frequency
+				var/xp_amt = rider.STAINT * 0.1
+				rider.mind && rider.mind.add_sleep_experience(/datum/skill/misc/riding, xp_amt)
+				riding_xp_move_counter = 0
+		else
+			riding_xp_move_counter = 0 //reset counter if not running
 	handle_vehicle_offsets()
 	handle_vehicle_layer()
 

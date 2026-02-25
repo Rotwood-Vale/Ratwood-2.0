@@ -8,7 +8,6 @@
 	chargetime = 0
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	damfactor = 1.1
-	intent_intdamage_factor = 1.15
 	swingdelay = 0
 	icon_state = "instrike"
 	item_d_type = "blunt"
@@ -73,6 +72,8 @@
 	penfactor = 25
 	damfactor = 0.9
 	item_d_type = "stab"
+	effective_range = 2
+	effective_range_type = EFF_RANGE_EXACT
 
 //blunt objs ฅ^•ﻌ•^ฅ
 

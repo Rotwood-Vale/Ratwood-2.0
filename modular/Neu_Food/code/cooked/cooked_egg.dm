@@ -22,6 +22,14 @@
 				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/two(loc)
 				qdel(I)
 				qdel(src)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/sausage/cooked))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,short_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausage(loc)
+				qdel(I)
+				qdel(src)
 	else
 		return ..()
 
@@ -61,26 +69,35 @@
 		return ..()
 
 /*	.............   Deviled Eggs   ................ */
-/obj/item/reagent_containers/food/snacks/rogue/stuffeggraw
+/obj/item/reagent_containers/food/snacks/rogue/stuffedegg
 	name = "raw stuffed egg"
 	desc = "Raw egg stuffed with a creamy cheese filling."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "deviledegg_raw"
-	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/preserved/stuffegg
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/stuffedegg/cooked
+	fried_type = /obj/item/reagent_containers/food/snacks/rogue/stuffedegg/cooked
 	foodtype = MEAT
 	warming = 5 MINUTES
 	rotprocess = SHELFLIFE_DECENT
+	faretype = FARE_POOR
 
-/obj/item/reagent_containers/food/snacks/rogue/preserved/stuffegg
+/obj/item/reagent_containers/food/snacks/rogue/stuffedegg/cooked
 	tastes = list("creamy cheese" = 1, "egg" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
 	name = "stuffed egg"
 	desc = "Egg stuffed with a creamy cheese filling."
-	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "deviledegg"
+
+/*	.............   Tartar   ................ */
+//This doesn't really count as either cooked or egg recipe (it does contain an egg at least) so whatever.
+/obj/item/reagent_containers/food/snacks/rogue/tartar
+	name = "tartar"
+	desc = "Grounded meat covered over with uncooked egg, favorite of the steppesmen. Said to have been named after a famous brigand."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
+	icon_state = "tartar"
 	foodtype = MEAT
-	warming = 5 MINUTES
 	rotprocess = SHELFLIFE_DECENT
+	faretype = FARE_NEUTRAL
 
 /* * * * * * * * * * * **
  *						*
@@ -112,3 +129,67 @@
 	icon_state = "baconegg"
 	eat_effect = /datum/status_effect/buff/mealbuff
 	rotprocess = SHELFLIFE_DECENT
+	faretype = FARE_NEUTRAL
+
+/*	.................   Hammerholdian Breakfast   ................... */
+//This is an extremely convoluded recipe probably not even worth it but yknow what, why not.
+/obj/item/reagent_containers/food/snacks/rogue/friedegg/sausage
+	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	tastes = list("fried egg" = 1, "sausage" = 1)
+	name = "wiener egg"
+	desc = "Fried egg with sausage on the side. A good start to a perfect morning."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
+	icon_state = "wieneregg"
+	eat_effect = /datum/status_effect/buff/snackbuff
+	faretype = FARE_NEUTRAL
+	rotprocess = SHELFLIFE_DECENT
+
+/obj/item/reagent_containers/food/snacks/rogue/friedegg/sausage/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	update_cooktime(user)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/bacon/fried))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,long_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausagebacon(loc)
+				qdel(I)
+				qdel(src)
+	else
+		return ..()
+
+/obj/item/reagent_containers/food/snacks/rogue/friedegg/sausagebacon
+	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	tastes = list("fried egg" = 1, "sausage" = 1, "bacon" = 1)
+	name = "wiener egg with bacon"
+	desc = "Fried egg with sausage and bacon on the side. Mere step away from greatness."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
+	icon_state = "wienereggbacon"
+	eat_effect = /datum/status_effect/buff/snackbuff
+	rotprocess = SHELFLIFE_DECENT
+	faretype = FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/friedegg/sausagebacon/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	update_cooktime(user)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/breadslice/toast))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,long_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/hammerhold(loc)
+				qdel(I)
+				qdel(src)
+	else
+		return ..()
+
+/obj/item/reagent_containers/food/snacks/rogue/friedegg/hammerhold
+	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	tastes = list("fried egg" = 1, "sausage" = 1, "bacon" = 1, "toast" = 1)
+	name = "Hammerholdian breakfast"
+	desc = "A classic of the northern fortresses, peeled of it's more exotic ingredients for Vale kitchens, a true staple of Dwarven diet."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
+	icon_state = "hammerbreak"
+	eat_effect = /datum/status_effect/buff/greatmealbuff
+	rotprocess = SHELFLIFE_DECENT
+	faretype = FARE_LAVISH

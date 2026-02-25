@@ -24,8 +24,8 @@
 	openspace.zFall(user) // slop?
 
 /obj/item/clothing/wall_grab/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
-    . = ..()
-    . |= FALL_NO_MESSAGE
+	. = ..()
+	. |= FALL_NO_MESSAGE
 
 /obj/item/rogueweapon/huntingknife/idagger/harpy_talons
 	name = "talons"
@@ -141,8 +141,8 @@
 	user.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
 
 /obj/item/rogueweapon/huntingknife/idagger/harpy_talons/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
-    . = ..()
-    . |= FALL_NO_MESSAGE
+	. = ..()
+	. |= FALL_NO_MESSAGE
 
 /obj/item/rogueweapon/huntingknife/idagger/harpy_talons/attack(mob/living/target, mob/living/carbon/human/user)
 	if(user.used_intent.type == /datum/intent/wing/grab)
@@ -195,5 +195,5 @@
 	qdel(src)
 
 /obj/item/harpy_leg/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
-    . = ..()
-    . |= FALL_NO_MESSAGE
+	. = ..()
+	. |= FALL_NO_MESSAGE

@@ -509,21 +509,21 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		gib()
 
 /mob/living/proc/butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)
-    var/list/parts = list()
-    if(botch_count)
-        parts += "[botch_count] botched ([botch_chance]%)"
-    if(normal_count)
-        parts += "[normal_count] normal"
-    if(perfect_count)
-        parts += "[perfect_count] perfect ([perfect_chance]%)"
+	var/list/parts = list()
+	if(botch_count)
+		parts += "[botch_count] botched ([botch_chance]%)"
+	if(normal_count)
+		parts += "[normal_count] normal"
+	if(perfect_count)
+		parts += "[perfect_count] perfect ([perfect_chance]%)"
 
-    var/msg = ""
-    for(var/i = 1, i <= length(parts), i++)
-        msg += parts[i]
-        if(i < length(parts))
-            msg += ", "
+	var/msg = ""
+	for(var/i = 1, i <= length(parts), i++)
+		msg += parts[i]
+		if(i < length(parts))
+			msg += ", "
 
-    return msg
+	return msg
 
 /mob/living/simple_animal/spawn_dust(just_ash = FALSE)
 	if(just_ash || !remains_type)

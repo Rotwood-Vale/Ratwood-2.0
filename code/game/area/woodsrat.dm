@@ -89,3 +89,22 @@
 	ambientnight = AMB_RIVERNIGHT
 	spookysounds = SPOOKY_FROG
 	spookynight = SPOOKY_FOREST
+
+//Making it a separate type and not a subtype makes it play nicer with the terrain generator
+/area/rogue/outdoors/woodsafe
+	name = "Rockhill Woods Pass"
+	icon_state = "woods"
+	first_time_text = null
+	ambush_times = null
+	ambush_mobs = null
+	ambientsounds = AMB_FORESTDAY
+	ambientnight = AMB_FORESTNIGHT
+	spookysounds = SPOOKY_CROWS
+	spookynight = SPOOKY_FOREST
+	droning_sound = 'sound/music/area/forest.ogg'
+	droning_sound_dusk = 'sound/music/area/septimus.ogg'
+	droning_sound_night = 'sound/music/area/forestnight.ogg'
+	soundenv = 15
+	warden_area = TRUE
+	converted_type = /area/rogue/indoors/shelter/woods
+	deathsight_message = "an eastern mountain pass, wooded and secluded in the wild"

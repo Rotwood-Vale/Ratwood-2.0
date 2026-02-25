@@ -32,6 +32,16 @@
 	var/charge = SEX_MAX_CHARGE
 	/// Whether we want to screw until finished, or non stop
 	var/do_until_finished = TRUE
+	/// The bed (if) we're occupying, update on starting an action
+	var/obj/structure/bed/rogue/bed = null
+	var/target_on_bed = FALSE
+	/// The table/pillory (if) target is lying/latching on, update on starting an action
+	var/obj/structure/table_or_pillory = null
+	/// The bush (if) we're on top of, update on starting an action
+	var/obj/structure/flora/roguegrass/grassy_knoll = null
+	/// If this person has a collar that rings on
+	var/collar_bell_user = FALSE
+	var/collar_bell_target = FALSE
 	/// Arousal won't change if active.
 	var/arousal_frozen = FALSE
 	var/last_arousal_increase_time = 0
@@ -67,6 +77,11 @@
 	//remove_from_target_receiving()
 	user = null
 	target = null
+	bed = null
+	table_or_pillory = null
+	grassy_knoll = null
+	collar_bell_user = FALSE
+	collar_bell_target = FALSE
 	if(knotted_status)
 		knot_exit()
 	//receiving = list()
@@ -80,9 +95,9 @@
 	var/dir = get_dir(user, target)
 	if(user.loc == target.loc)
 		dir = user.dir
-	if(speed > SEX_SPEED_MID)
+	if(speed > SEX_SPEED_MID && time > 1)
 		time -= 0.25
-	if(force < SEX_FORCE_MID)
+	if(force < SEX_FORCE_MID && pixels > 2)
 		pixels -= 1
 	switch(dir)
 		if(NORTH)
@@ -96,6 +111,65 @@
 
 	animate(user, pixel_x = target_x, pixel_y = target_y, time = time)
 	animate(pixel_x = oldx, pixel_y = oldy, time = time)
+	if(bed && force > SEX_FORCE_MID)
+		if(!istype(bed) || QDELETED(bed))
+			bed = null
+			target_on_bed = FALSE
+			return
+		oldy = bed.pixel_y
+		target_y = oldy-1
+		time /= 2
+		animate(bed, pixel_y = target_y, time = time)
+		animate(pixel_y = oldy, time = time)
+		if(target_on_bed && target)
+			oldy = target.pixel_y
+			target_y = oldy-1
+			animate(target, pixel_y = target_y, time = time)
+			animate(pixel_y = oldy, time = time)
+		bed.damage_bed(force > SEX_FORCE_HIGH ? 0.5 : 0.25)
+	else if(table_or_pillory && target && force > SEX_FORCE_MID)
+		if(!istype(table_or_pillory) || QDELETED(table_or_pillory))
+			table_or_pillory = null
+			return
+		oldy = table_or_pillory.pixel_y
+		target_y = oldy-1
+		time /= 2
+		animate(table_or_pillory, pixel_y = target_y, time = time)
+		animate(pixel_y = oldy, time = time)
+		oldy = target.pixel_y
+		target_y = oldy-1
+		animate(target, pixel_y = target_y, time = time)
+		animate(pixel_y = oldy, time = time)
+		playsound(table_or_pillory, pick(list('sound/misc/mat/table (1).ogg','sound/misc/mat/table (2).ogg','sound/misc/mat/table (3).ogg','sound/misc/mat/table (4).ogg')), 30, TRUE, ignore_walls = FALSE)
+	else if(grassy_knoll)
+		if(!istype(grassy_knoll) || QDELETED(grassy_knoll))
+			grassy_knoll = null
+			return
+		SEND_SIGNAL(grassy_knoll, COMSIG_MOVABLE_CROSSED, user)
+	
+	if((collar_bell_user || collar_bell_target) && (force > SEX_FORCE_MID))
+		playsound(collar_bell_target && target ? target : user, SFX_COLLARJINGLE, 50, TRUE, ignore_walls = FALSE)
+
+/obj/structure/bed/rogue
+	var/broken_matress = FALSE
+	var/broken_percentage = 0
+
+/obj/structure/bed/rogue/proc/damage_bed(dam_value)
+	if(sleepy <= 2) // the bed is already pretty awful and broken (i.e: straw bed/bedroll), so don't break it even further
+		return
+	broken_percentage += dam_value
+	if(!broken_matress && (broken_percentage >= 100))
+		broken_matress = TRUE
+		sleepy = 1 //Worse than a bedroll, better than nothing
+		visible_message(span_warning("\The [src] gives an violent snap. It looks broken!"))
+		playsound(src, 'sound/misc/mat/bed break.ogg', 50, TRUE, ignore_walls = FALSE)
+		desc += " The bed looks stained and has seen better daes."
+	else if(broken_percentage >= 100) // clamp
+		broken_percentage = 100
+	else
+		playsound(src, pick(list('sound/misc/mat/bed squeak (1).ogg','sound/misc/mat/bed squeak (2).ogg','sound/misc/mat/bed squeak (3).ogg')), 25, TRUE, ignore_walls = FALSE)
+		if(broken_percentage > 10)
+			playsound(src, 'sound/misc/mat/bed damage.ogg', broken_percentage>>2, TRUE, ignore_walls = FALSE)
 
 /datum/sex_controller/proc/is_spent()
 	if(charge < CHARGE_FOR_CLIMAX)
@@ -258,7 +332,7 @@
 	set_target(new_target)
 	show_ui()
 
-/datum/sex_controller/proc/cum_onto(var/mob/living/carbon/human/splashed_user = null)
+/datum/sex_controller/proc/cum_onto(mob/living/carbon/human/splashed_user = null)
 	log_combat(user, target, "Came onto the target")
 	playsound(target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	add_cum_floor(get_turf(target))
@@ -270,7 +344,7 @@
 			facial.refresh_cum()
 	after_ejaculation()
 
-/datum/sex_controller/proc/cum_into(oral = FALSE, var/mob/living/carbon/human/splashed_user = null)
+/datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null)
 	log_combat(user, target, "Came inside the target")
 	if(oral)
 		playsound(target, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
@@ -397,7 +471,6 @@
 		last_arousal_increase_time = world.time
 	arousal = clamp(amount, 0, MAX_AROUSAL)
 	update_pink_screen()
-	update_blueballs()
 	update_erect_state()
 
 /datum/sex_controller/proc/update_erect_state()
@@ -529,12 +602,6 @@
 		var/pain_msg = pick(list("It hurts a little...", "It stings...", "I'm aching..."))
 		to_chat(user, span_warning(pain_msg))
 
-/datum/sex_controller/proc/update_blueballs()
-	if(arousal >= BLUEBALLS_GAIN_THRESHOLD)
-		user.add_stress(/datum/stressevent/blueb)
-	else if (arousal <= BLUEBALLS_LOOSE_THRESHOLD)
-		user.remove_stress(/datum/stressevent/blueb)
-
 /datum/sex_controller/proc/check_active_ejaculation()
 	if(arousal < ACTIVE_EJAC_THRESHOLD)
 		return FALSE
@@ -551,7 +618,7 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_controller/proc/handle_passive_ejaculation(var/mob/living/carbon/human/splashed_user = null)
+/datum/sex_controller/proc/handle_passive_ejaculation(mob/living/carbon/human/splashed_user = null)
 	var/mob/living/carbon/human/M = user
 	if(aphrodisiac > 1.5)
 		if(M.check_handholding())
@@ -773,6 +840,12 @@
 	desire_stop = FALSE
 	user.doing = FALSE
 	current_action = null
+	bed = null
+	target_on_bed = FALSE
+	table_or_pillory = null
+	grassy_knoll = null
+	collar_bell_user = FALSE
+	collar_bell_target = FALSE
 	using_zones = list()
 
 /datum/sex_controller/proc/try_start_action(action_type)
@@ -790,6 +863,12 @@
 	// Set vars
 	desire_stop = FALSE
 	current_action = action_type
+	bed = null
+	target_on_bed = FALSE
+	table_or_pillory = null
+	grassy_knoll = null
+	collar_bell_user = FALSE
+	collar_bell_target = FALSE
 	var/datum/sex_action/action = SEX_ACTION(current_action)
 	log_combat(user, target, "Started sex action: [action.name]")
 	INVOKE_ASYNC(src, PROC_REF(sex_action_loop))
@@ -800,6 +879,8 @@
 	var/datum/sex_action/action = SEX_ACTION(current_action)
 	show_progress = 1
 	action.on_start(user, target)
+	find_occupying_furniture()
+	find_occupying_grass()
 	while(TRUE)
 		if(!isnull(target.client) && target.client.prefs.sexable == FALSE) //Vrell - Needs changed to let me test sex mechanics solo
 			break
@@ -815,6 +896,7 @@
 			break
 		if(desire_stop)
 			break
+		find_ringing_collar()
 		action.on_perform(user, target)
 		// It could want to finish afterwards the performed action
 		if(action.is_finished(user, target))
@@ -832,6 +914,38 @@
 	if(!action.can_perform(user, target))
 		return FALSE
 	return TRUE
+
+/datum/sex_controller/proc/find_occupying_furniture()
+	if(bed)
+		return
+	if(target && isturf(target.loc)) // find target's bed/table
+		if(!(target.mobility_flags & MOBILITY_STAND)) // if target is lying down
+			bed = locate() in target.loc
+			target_on_bed = TRUE
+			if(!bed) // bed not found, try finding a table
+				var/obj/structure/table/wood/table = locate() in target.loc
+				table_or_pillory = table
+		else // target standing up, check for pillory
+			var/obj/structure/pillory/pillory = locate() in target.loc
+			table_or_pillory = pillory
+	if(!bed && !(user.mobility_flags & MOBILITY_STAND) && isturf(user.loc)) // find our bed
+		bed = locate() in user.loc
+
+/datum/sex_controller/proc/find_occupying_grass()
+	if(grassy_knoll)
+		return
+	if(isturf(user.loc)) // find our grass
+		grassy_knoll = locate() in user.loc
+
+/datum/sex_controller/proc/find_ringing_collar()
+	var/obj/item/clothing/neck/roguetown/collar/collar
+	collar = user.get_item_by_slot(SLOT_NECK)
+	collar_bell_user = collar && istype(collar) && collar.bellsound
+	if(!target)
+		collar_bell_target = FALSE
+		return
+	collar = target.get_item_by_slot(SLOT_NECK)
+	collar_bell_target = collar && istype(collar) && collar.bellsound
 
 /datum/sex_controller/proc/inherent_perform_check(action_type, incapacitated)
 	var/datum/sex_action/action = SEX_ACTION(action_type)

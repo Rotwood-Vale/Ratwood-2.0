@@ -30,7 +30,7 @@
 
 /datum/sex_action/anal_ride_sex/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rides [target]."))
-	playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
+	user.sexcon.intercourse_noise(user)
 	user.sexcon.do_thrust_animate(target)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))

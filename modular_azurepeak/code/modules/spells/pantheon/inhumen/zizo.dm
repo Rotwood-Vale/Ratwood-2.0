@@ -117,75 +117,63 @@
 	no_early_release = TRUE
 	movement_interrupt = TRUE
 	recharge_time = 2 MINUTES
-	var/list/excluded_bodyparts = list(/obj/item/bodypart/head)
 	hide_charge_effect = TRUE
+	/// List of limbs that don't get skeletonized. Chest has special handling once you are at that point
+	var/static/list/excluded_bodyparts = list(/obj/item/bodypart/head, /obj/item/bodypart/chest)
+	/// How many times Rituos has been casted
+	var/rituos_counter = 0
 
 /obj/effect/proc_holder/spell/invoked/rituos/miracle
 	miracle = TRUE
 	devotion_cost = 120
 	associated_skill = /datum/skill/magic/holy
 
+/// Checks if Rituos is complete or not. Requires that you have all 4 skeletonized limbs + 5 or more casts
 /obj/effect/proc_holder/spell/invoked/rituos/proc/check_ritual_progress(mob/living/carbon/user)
-	var/rituos_complete = TRUE
-	for (var/obj/item/bodypart/our_limb in user.bodyparts)
-		if (our_limb.type in excluded_bodyparts)
+	// Check the counter, you need 5+ completions to "finish" rituos
+	if(rituos_counter < 5)
+		return FALSE
+
+	// Check the limbs, you need a full skeletonized body or else you can't succeed rituos
+	for(var/obj/item/bodypart/skeletonized_limb in user.bodyparts)
+		if(skeletonized_limb.type in excluded_bodyparts)
 			continue
-		if (!our_limb.skeletonized)
-			rituos_complete = FALSE
+		if(!skeletonized_limb.skeletonized)
+			return FALSE
 
-	return rituos_complete
-
-/obj/effect/proc_holder/spell/invoked/rituos/proc/get_skeletonized_bodyparts(mob/living/carbon/user)
-	var/skeletonized_parts = list()
-	for (var/obj/item/bodypart/our_limb in user.bodyparts)
-		if (our_limb.type in excluded_bodyparts)
-			continue
-		if (our_limb.skeletonized)
-			skeletonized_parts += our_limb.type
-
-	return skeletonized_parts
+	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/rituos/cast(list/targets, mob/living/carbon/user)
-	// Define excluded bodyparts (head and chest can't be skeletonized)
-	var/list/excluded_bodyparts = list(/obj/item/bodypart/head, /obj/item/bodypart/chest)
-	
-	//check to see if we're all skeletonized first
-	var/pre_rituos = check_ritual_progress(user)
-	if (pre_rituos)
-		to_chat(user, span_notice("I have completed Her Lesser Work. Only lichdom awaits me now, but just out of reach..."))
+	. = ..()
+	if(!user || !user.mind)
 		return FALSE
 
-	if (user.mind?.has_rituos)
+	if(user.mind.has_rituos)
 		to_chat(user, span_warning("I have not the mental fortitude to enact the Lesser Work again. I must rest first..."))
 		return FALSE
-	
+
 	// Find a bodypart to skeletonize
-	var/list/available_parts = list()
-	for (var/obj/item/bodypart/our_limb in user.bodyparts)
-		if (our_limb.type in excluded_bodyparts)
+	var/list/potential_bodypart = list()
+	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
+		if(limb.type in excluded_bodyparts)
 			continue
-		if (!our_limb.skeletonized)
-			available_parts += our_limb
-	
-	if (!length(available_parts))
+		if(limb.skeletonized)
+			continue
+		potential_bodypart += limb
+
+	if(!length(potential_bodypart) && rituos_counter < 4)
 		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
 		return FALSE
-	
-	var/obj/item/bodypart/part_to_bonify = pick(available_parts)
 
-	//hoo boy. here we go.
-	var/list/possible_parts = user.bodyparts.Copy()
-	var/list/skeletonized_parts = get_skeletonized_bodyparts(user)
+	var/obj/item/bodypart/part_to_bonify
+	if(rituos_counter == 4)
+		part_to_bonify = locate(/obj/item/bodypart/chest) in user.bodyparts
+	else
+		part_to_bonify = pick(potential_bodypart)
 
-	for(var/obj/item/bodypart/BP in possible_parts)
-		for(var/bodypart_type in excluded_bodyparts)
-			if(istype(BP, bodypart_type))
-				possible_parts -= BP
-				break
-		for(var/skeleton_part in skeletonized_parts)
-			if (istype(BP, skeleton_part))
-				possible_parts -= BP
-				break
+	if(!part_to_bonify)
+		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
+		return FALSE
 
 	var/list/choices = list()
 	var/list/spell_choices = GLOB.learnable_spells
@@ -194,16 +182,14 @@
 		if(spell_item.spell_tier > 3) // Hardcap Rituos choice to T3 to avoid Court Mage spells access
 			continue
 		choices["[spell_item.name]"] = spell_item
-
 	choices = sortList(choices)
-
 	var/choice = input("Choose an arcyne expression of the Lesser Work") as null|anything in choices
 	var/obj/effect/proc_holder/spell/item = choices[choice]
 
-	if (!choice || !item)
+	if(!choice || !item)
 		return FALSE
 
-	if (!(user.mob_biotypes & MOB_UNDEAD))
+	if(!(user.mob_biotypes & MOB_UNDEAD))
 		user.visible_message(span_warning("The pallor of the grave descends across [user]'s skin in a wave of arcyne energy..."), span_boldwarning("A deathly chill overtakes my body at my first culmination of the Lesser Work! I feel my heart slow down in my chest..."))
 		user.mob_biotypes |= MOB_UNDEAD
 		to_chat(user, span_smallred("I have forsaken the living. I am now closer to a deadite than a mortal... but I still yet draw breath and bleed."))
@@ -212,15 +198,16 @@
 	user.update_body_parts()
 	user.visible_message(span_warning("Faint runes flare beneath [user]'s skin before [user.p_their()] flesh suddenly slides away from [user.p_their()] [part_to_bonify.name]!"), span_notice("I feel arcyne power surge throughout my frail mortal form, as the Rituos takes its terrible price from my [part_to_bonify.name]."))
 
-	if (user.mind?.rituos_spell)
+	if(user.mind?.rituos_spell)
 		to_chat(user, span_warning("My knowledge of [user.mind.rituos_spell.name] flees..."))
 		user.mind.RemoveSpell(user.mind.rituos_spell)
 		user.mind.rituos_spell = null
 
 	user.mind.has_rituos = TRUE
+	rituos_counter++
 
 	var/post_rituos = check_ritual_progress(user)
-	if (post_rituos)
+	if(post_rituos)
 		//everything but our head is skeletonized now, so grant them journeyman rank and 3 extra spellpoints to grief people with
 		user.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 		user.grant_language(/datum/language/undead)
@@ -231,8 +218,9 @@
 		ADD_TRAIT(user, TRAIT_NOBREATH, "[type]")
 		ADD_TRAIT(user, TRAIT_ARCYNE_T3, "[type]")
 		ADD_TRAIT(user, TRAIT_OVERTHERETIC, "[type]")
-		if (prob(33))
+		if(prob(33))
 			to_chat(user, span_small("...what have I done?"))
+		user.mind?.RemoveSpell(src)
 		return TRUE
 	else
 		to_chat(user, span_notice("The Lesser Work of Rituos floods my mind with stolen arcyne knowledge: I can now cast [item.name] until I next rest..."))

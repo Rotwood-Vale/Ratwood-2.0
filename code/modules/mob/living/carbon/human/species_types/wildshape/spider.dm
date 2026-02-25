@@ -4,6 +4,8 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/spider_chitin
+	wildshape_icon = 'icons/roguetown/mob/monster/spider.dmi'
+	wildshape_icon_state = "honeys"
 	// Someone else balance this, I am here for code, not numbers
 
 /mob/living/carbon/human/species/wildshape/spider/gain_inherent_skills()
@@ -18,7 +20,7 @@
 
 		src.STASTR = 10
 		src.STACON = 6
-		src.STAWIL = 11
+		src.STAWIL = 10
 		src.STAPER = 12
 		src.STASPD = 14
 
@@ -47,7 +49,8 @@
 		TRAIT_BREADY, //Ambusher
 		TRAIT_ORGAN_EATER,
 		TRAIT_PIERCEIMMUNE, //Prevents weapon dusting and caltrop effects when killed/stepping on shards, also 8 legs.
-		TRAIT_LONGSTRIDER
+		TRAIT_LONGSTRIDER,
+		TRAIT_DODGEEXPERT,
 	)
 	inherent_biotypes = MOB_HUMANOID
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE)

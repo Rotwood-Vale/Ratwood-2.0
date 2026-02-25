@@ -129,7 +129,7 @@
 	return FALSE
 
 
- // buff
+// buff
 /datum/status_effect/buff/equalizebuff
 	id = "equalize"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/equalized
@@ -152,7 +152,7 @@
 	to_chat(owner, "<font color='yellow'>My link wears off, their stolen fire returns to them</font>")
 
 
- // debuff
+// debuff
 /datum/status_effect/debuff/equalizedebuff
 	id = "equalize"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/equalized

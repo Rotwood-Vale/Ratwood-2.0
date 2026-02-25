@@ -261,7 +261,7 @@
 	ispartner = TRUE
 	immolate = TRUE
 
-/datum/component/immolation/Initialize(mob/living/partner_mob, mob/living/carbon/caster_mob, var/holy_skill, var/is_astrata)
+/datum/component/immolation/Initialize(mob/living/partner_mob, mob/living/carbon/caster_mob, holy_skill, is_astrata)
 	if(!isliving(parent) || !iscarbon(partner_mob))
 		return COMPONENT_INCOMPATIBLE
 
@@ -615,7 +615,7 @@
 
 	return TRUE
 
-/obj/item/rogueweapon/light_spear/proc/astratan_spear_damage(var/turf/effect_layer, damage_mod)
+/obj/item/rogueweapon/light_spear/proc/astratan_spear_damage(turf/effect_layer, damage_mod)
 	new /obj/effect/temp_visual/thunderstrike_actual(effect_layer)
 	playsound(effect_layer, 'sound/magic/lightning.ogg', 50)
 	for(var/mob/living/L in effect_layer.contents)
