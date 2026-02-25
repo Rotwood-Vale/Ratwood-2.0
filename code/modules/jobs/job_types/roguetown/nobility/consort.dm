@@ -47,7 +47,7 @@
 	tutorial = "You belonged to a Noble Martial Family, renowned for its prowess and skill. Though you would never be the heir of your lands, your family brought you up to know how to defend yourself. In Exchange for Martial Support, you have been married off to the local Lord. "
 	outfit = /datum/outfit/job/roguetown/lady/warrior
 	category_tags = list(CTAG_CONSORT)
-	traits_applied = list(TRAIT_NOBLE, TRAIT_DODGEEXPERT, TRAIT_DECEIVING_MEEKNESS)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_DODGEEXPERT, TRAIT_DECEIVING_MEEKNESS,TRAIT_MIASMA)
 	subclass_stats = list(
 		STATKEY_LCK = 2,
 		STATKEY_INT = 2,
@@ -100,7 +100,7 @@
 	outfit = /datum/outfit/job/roguetown/lady/merchant
 	category_tags = list(CTAG_CONSORT)
 	noble_income = 80 // Only around 80 so its not absolutely broken amounts of coin
-	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_CICERONE, TRAIT_KEENEARS)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_CICERONE, TRAIT_KEENEARS,TRAIT_MIASMA)
 	subclass_stats = list(
 		STATKEY_LCK = 1,
 		STATKEY_INT = 2,
@@ -153,7 +153,7 @@
 	tutorial = "From Far lands, raised upon a Noble Family of Mages. You have earned the right of the local Lords Side, through your dedication and training to knowledge and power. Yet it has never been quite enough. And still you yearn to learn more."
 	outfit = /datum/outfit/job/roguetown/lady/wizard
 	category_tags = list(CTAG_CONSORT)
-	traits_applied = list(TRAIT_NOBLE, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_INTELLECTUAL)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_INTELLECTUAL,TRAIT_MIASMA)
 	subclass_stats = list(
 		STATKEY_LCK = 1,
 		STATKEY_INT = 3,
@@ -203,7 +203,7 @@
 	tutorial = "You are no Warrior, nor expert mage. You come from a renowned and wealthy Noble Family. One of Status and Dignity. Married off to the Local Lord of the Lands to Secure Alliances. Yet you fell in love. And as such, use the skills taught to you from your upbringing to assist your Love to the best of your ability."
 	outfit = /datum/outfit/job/roguetown/lady/loving
 	category_tags = list(CTAG_CONSORT)
-	traits_applied = list(TRAIT_NOBLE, TRAIT_CRITICAL_WEAKNESS,TRAIT_GOODLOVER,TRAIT_BEAUTIFUL,TRAIT_NUTCRACKER)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_CRITICAL_WEAKNESS,TRAIT_GOODLOVER,TRAIT_BEAUTIFUL,TRAIT_NUTCRACKER,TRAIT_MIASMA)
 	subclass_stats = list(
 		STATKEY_LCK = 5,
 		STATKEY_INT = 3,
