@@ -1,4 +1,3 @@
-
 /obj/item/bodypart
 	name = "limb"
 	desc = ""
@@ -21,6 +20,10 @@
 	var/use_digitigrade = NOT_DIGITIGRADE //Used for alternate legs, useless elsewhere
 	var/held_index = 0 //are we a hand? if so, which one!
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
+
+	var/icon_dirty = TRUE // if it needs icon rebuild (set by invalidate_limb_cache())
+	var/cached_limb_icon //Cached get_limb_icon() result for update_body_parts()
+	var/cached_limb_icon_key //Key for cached_limb_icon (icon_render_key + hideaux)
 
 	var/disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
@@ -631,6 +634,10 @@
 	limb_appearance_cache_key = null
 	cached_base_appearances = null
 
+	icon_dirty = TRUE
+	cached_limb_icon = null
+	cached_limb_icon_key = null
+	
 //Gives you a proper icon appearance for the dismembered limb
 /obj/item/bodypart/proc/get_limb_icon(dropped, hideaux = FALSE)
 	icon_state = ""
