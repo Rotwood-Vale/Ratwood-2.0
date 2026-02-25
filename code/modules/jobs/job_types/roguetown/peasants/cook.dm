@@ -19,7 +19,7 @@
 	social_rank = SOCIAL_RANK_PEASANT
 	//5 points (weighted)
 
-	job_traits = list(TRAIT_CICERONE, TRAIT_HOMESTEAD_EXPERT)
+	job_traits = list(TRAIT_CICERONE, TRAIT_HOMESTEAD_EXPERT,TRAIT_MIASMA)
 
 	advclass_cat_rolls = list(CTAG_COOK = 2)
 	job_subclasses = list(

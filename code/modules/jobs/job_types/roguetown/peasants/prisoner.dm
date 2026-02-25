@@ -29,6 +29,7 @@
 	neck = /obj/item/clothing/neck/roguetown/collar/leather
 	pants = /obj/item/clothing/under/roguetown/loincloth
 	ADD_TRAIT(H, TRAIT_OUTLAW, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMA,TRAIT_GENERIC)
 
 /datum/job/roguetown/prisonerr/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()

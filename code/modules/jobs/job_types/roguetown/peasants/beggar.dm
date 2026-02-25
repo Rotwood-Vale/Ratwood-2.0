@@ -9,7 +9,7 @@
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = ALL_AGES_LIST
 	outfit = /datum/outfit/job/roguetown/vagrant
-	job_traits = list(TRAIT_HOMESTEAD_EXPERT)
+	job_traits = list(TRAIT_HOMESTEAD_EXPERT,TRAIT_MIASMA)
 	bypass_lastclass = TRUE
 	bypass_jobban = FALSE
 	min_pq = -30

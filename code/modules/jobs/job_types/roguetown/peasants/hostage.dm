@@ -41,6 +41,7 @@
 		H.mind.add_antag_datum(new_antag)
 	ADD_TRAIT(H, TRAIT_BANDITCAMP, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_DISGRACED_NOBLE, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMA, TRAITGENERIC)
 	if(should_wear_femme_clothes(H))
 		H.change_stat(STATKEY_STR, -1)
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/purple
