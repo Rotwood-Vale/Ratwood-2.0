@@ -1951,7 +1951,9 @@ generate/load female uniform sprites matching all previously decided variables
 
 var/list/new_limbs = list()
 
-for(var/obj/item/bodypart/BP as anything in bodyparts)
+for(var/thing in bodyparts)
+	var/obj/item/bodypart/BP = thing
+	if(!BP) continue
 	var/hideaux_for_this = FALSE
 	if(BP.body_zone == BODY_ZONE_CHEST)
 		hideaux_for_this = hiden
