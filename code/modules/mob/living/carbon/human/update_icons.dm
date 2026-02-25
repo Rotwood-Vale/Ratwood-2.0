@@ -1947,34 +1947,35 @@ generate/load female uniform sprites matching all previously decided variables
 	var/list/new_limbs = list()
 	var/hiden = (wear_armor?.flags_inv & HIDEBOOB) || (wear_shirt?.flags_inv & HIDEBOOB) || (cloak?.flags_inv & HIDEBOOB)
 	var/hidearms = (wear_armor && (wear_armor.body_parts_covered & ARMS) && !wear_armor.sleeved) || \
-					(wear_shirt && (wear_shirt.body_parts_covered & ARMS) && !wear_shirt.sleeved)
+	               (wear_shirt && (wear_shirt.body_parts_covered & ARMS) && !wear_shirt.sleeved)
 
-for(var/obj/item/bodypart/BP as anything in bodyparts)
-	var/hideaux_for_this = FALSE
-	if(BP.body_zone == BODY_ZONE_CHEST)
-		hideaux_for_this = hiden
-	else if(BP.body_part == ARM_LEFT || BP.body_part == ARM_RIGHT)
-		hideaux_for_this = hidearms
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
+		var/hideaux_for_this = FALSE
+		if(BP.body_zone == BODY_ZONE_CHEST)
+			hideaux_for_this = hiden
+		else if(BP.body_part == ARM_LEFT || BP.body_part == ARM_RIGHT)
+			hideaux_for_this = hidearms
 
-	var/cache_key = "[icon_render_key]|[hideaux_for_this ? 1 : 0]"
+		var/cache_key = "[icon_render_key]|[hideaux_for_this ? 1 : 0]"
 
-	if(!BP.icon_dirty && BP.cached_limb_icon && BP.cached_limb_icon_key == cache_key)
-	else
-		BP.update_limb()
-		var/part_icon = BP.get_limb_icon(FALSE, hideaux_for_this)
-		new_limbs += part_icon
-		if(BP.vars["cached_limb_icon"]) BP:cached_limb_icon = part_icon
-		if(BP.vars["cached_limb_icon_key"]) BP:cached_limb_icon_key = cache_key
-		if(BP.vars["icon_dirty"]) BP:icon_dirty = FALSE
+		if(!BP.icon_dirty && BP.cached_limb_icon && BP.cached_limb_icon_key == cache_key)
+			new_limbs += BP.cached_limb_icon
+		else
+			BP.update_limb()
+			var/part_icon = BP.get_limb_icon(FALSE, hideaux_for_this)
+			new_limbs += part_icon
+			BP.cached_limb_icon = part_icon
+			BP.cached_limb_icon_key = cache_key
+			BP.icon_dirty = FALSE
 
-if(!_overlay_lists_equal(overlays_standing[BODYPARTS_LAYER], new_limbs))
-	remove_overlay(BODYPARTS_LAYER)
-	if(new_limbs.len)
-		overlays_standing[BODYPARTS_LAYER] = new_limbs
-		limb_icon_cache[icon_render_key] = new_limbs
-	apply_overlay(BODYPARTS_LAYER)
+	if(!_overlay_lists_equal(overlays_standing[BODYPARTS_LAYER], new_limbs))
+		remove_overlay(BODYPARTS_LAYER)
+		if(new_limbs.len)
+			overlays_standing[BODYPARTS_LAYER] = new_limbs
+			limb_icon_cache[icon_render_key] = new_limbs
+		apply_overlay(BODYPARTS_LAYER)
 
-update_damage_overlays()
+	update_damage_overlays()
 
 /mob/proc/update_body_parts_head_only()
 	return
