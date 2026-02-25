@@ -1081,7 +1081,7 @@
 /datum/status_effect/debuff/terrorbogdebuff
 	id = "terrorbugdebuff"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/terrorbogdebuff
-	effectedstats = list(STATKEY_SPD = -2, STATKEY_PER = -1, STATKEY_STR = -2, STATKEY_CON = -1)
+	effectedstats = list(STATKEY_SPD = -1, STATKEY_PER = -1, STATKEY_STR = -1, STATKEY_CON = -1)
 
 /datum/status_effect/debuff/terrorbogdebuff/process()
 
