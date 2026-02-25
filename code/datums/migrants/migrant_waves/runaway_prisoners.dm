@@ -46,7 +46,7 @@
 	name = "Runaway Prisoner (commoner)"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/adventurer/runaway_prisoner/commoner
-	traits_applied = list(TRAIT_CRITICAL_RESISTANCE)
+	traits_applied = list(TRAIT_CRITICAL_RESISTANCE,TRAIT_MIASMARES)
 	category_tags = list(CTAG_RUNAWAY_PRISONER)
 	subclass_stats = list(
 		STATKEY_LCK = 3,
@@ -84,7 +84,7 @@
 	name = "Runaway Prisoner (Noble)"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/adventurer/runaway_prisoner/noble
-	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_NOBLE, TRAIT_SEEPRICES)
+	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_NOBLE, TRAIT_SEEPRICES,TRAIT_MIASMARES)
 	category_tags = list(CTAG_RUNAWAY_PRISONER)
 	subclass_stats = list(
 		STATKEY_LCK = 3,
@@ -112,7 +112,7 @@
 	name = "Runaway Prisoner (Mage)"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/adventurer/runaway_prisoner/mage
-	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT,TRAIT_MIASMARES)
 	category_tags = list(CTAG_RUNAWAY_PRISONER)
 	subclass_spellpoints = 18
 	subclass_stats = list(

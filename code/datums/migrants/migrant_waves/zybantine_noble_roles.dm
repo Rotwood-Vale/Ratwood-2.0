@@ -14,7 +14,7 @@
 /datum/advclass/zybantine_emir
 	name = "Emir"
 	outfit = /datum/outfit/job/roguetown/zybantine/emir
-	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_ZYBANTINE_EMIR)
 	subclass_stats = list(
 		STATKEY_INT = 2,
@@ -74,7 +74,7 @@
 /datum/advclass/zybantine_amirah
 	name = "Amirah"
 	outfit = /datum/outfit/job/roguetown/zybantine/amirah
-	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_NUTCRACKER, TRAIT_GOODLOVER, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_NUTCRACKER, TRAIT_GOODLOVER, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_ZYBANTINE_AMIRAH)
 	subclass_stats = list(
 		STATKEY_INT = 3,
@@ -131,7 +131,7 @@
 /datum/advclass/zybantine_janissary
 	name = "Janissary Bodyguard"
 	outfit = /datum/outfit/job/roguetown/zybantine/janissary
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_ZYBANTINE_JANISSARY)
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -188,7 +188,7 @@
 /datum/advclass/zybantine_advisor
 	name = "Advisor"
 	outfit = /datum/outfit/job/roguetown/zybantine/advisor
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_ZYBANTINE_ADVISOR)
 	subclass_stats = list(
 		STATKEY_SPD = 2,

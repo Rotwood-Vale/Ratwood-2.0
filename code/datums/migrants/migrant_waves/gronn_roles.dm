@@ -56,6 +56,7 @@
 	ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 	if(!H.has_language(/datum/language/gronnic))
 		H.grant_language(/datum/language/gronnic)
@@ -105,6 +106,7 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)	//this guy can SNAP HIS FINGERS and LIGHT A FIRE???
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/lesser_heal)
@@ -175,6 +177,7 @@
 	ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 	if(!H.has_language(/datum/language/gronnic))
 		H.grant_language(/datum/language/gronnic)
@@ -221,6 +224,7 @@
 	ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 	if(!H.has_language(/datum/language/gronnic))
 		H.grant_language(/datum/language/gronnic)
@@ -283,6 +287,8 @@
 	H.change_stat(STATKEY_STR, -2)
 	H.change_stat(STATKEY_INT, 2)
 	H.change_stat(STATKEY_SPD, 2)
+
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 	H.cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 

@@ -16,7 +16,7 @@
 	name = "Émissaire"
 	outfit = /datum/outfit/job/roguetown/otavan/envoy
 	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled		//look at my horse, my horse is amazing
-	traits_applied = list(TRAIT_NOBLE, TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_OTAVAN_ENVOY)
 	subclass_stats = list(
 		STATKEY_INT = 2,
@@ -80,7 +80,7 @@
 	tutorial = "Whether through merit, blood or renown, you became a knight in service of the Otavan court. Now, tasked with escorting the Émissaire and protecting them at all cost, you ride into the Vale."
 	outfit = /datum/outfit/job/roguetown/otavan/knight
 	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled		//look at my horse, my horse is amazing
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_OTAVAN_KNIGHT)
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -139,7 +139,7 @@
 /datum/advclass/otavan_guard
 	name = "Otavan Arbalétrier"		//Modified skirmisher, main focus is crossbow and swords.
 	outfit = /datum/outfit/job/roguetown/otavan/guard
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_OTAVAN_GUARD)
 	subclass_stats = list(
 		STATKEY_STR = 1,
@@ -198,7 +198,7 @@
 /datum/advclass/otavan_preacher
 	name = "Psydonite Preacher"		//Basically a middle ground between a disciple and an adventurer monk. Staves and preaching!
 	outfit = /datum/outfit/job/roguetown/otavan/preacher
-	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_STEELHEARTED, TRAIT_SILVER_BLESSED, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_STEELHEARTED, TRAIT_SILVER_BLESSED, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_OTAVAN_PREACHER)
 	subclass_stats = list(
 		STATKEY_STR = 1,
@@ -261,7 +261,7 @@
 /datum/advclass/otavan_scribe
 	name = "Otavan Scribe"
 	outfit = /datum/outfit/job/roguetown/otavan/scribe
-	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_CICERONE, TRAIT_INTELLECTUAL, TRAIT_OUTLANDER)	//booksmart, moneysmart, winesmart
+	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_CICERONE, TRAIT_INTELLECTUAL, TRAIT_OUTLANDER,TRAIT_MIASMARES)	//booksmart, moneysmart, winesmart
 	category_tags = list(CTAG_OTAVAN_SCRIBE)
 	subclass_stats = list(
 		STATKEY_INT = 3,

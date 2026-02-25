@@ -15,7 +15,7 @@
 	EA-Hasir has entrusted you with some of his highest quality gold products- Make him proud, \
 	Rob 'em all blind."
 	outfit = /datum/outfit/job/roguetown/merchant/ea_hasir
-	traits_applied = list(TRAIT_NOBLE, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_EA_MERCHANT)
 	subclass_stats = list(
 		STATKEY_PER = 3,
@@ -72,7 +72,7 @@
 	EA-Hasir is a reliable employer, and you're guarding a rather high value merchant\
 	Keep them alive, and you may get paid enough to take a much needed break."
 	outfit = /datum/outfit/job/roguetown/ea_guard
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_EA_GUARD)
 	subclass_stats = list(
 		STATKEY_STR = 2,

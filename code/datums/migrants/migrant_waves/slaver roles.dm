@@ -46,6 +46,7 @@
 
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_XENOPHOBIC, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 	if(!H.has_language(/datum/language/celestial))
 		H.grant_language(/datum/language/celestial)
@@ -103,6 +104,7 @@
 
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_XENOPHOBIC, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 	if(!H.has_language(/datum/language/celestial))
 		H.grant_language(/datum/language/celestial)
@@ -159,6 +161,7 @@
 
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_XENOPHOBIC, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 	if(!H.has_language(/datum/language/celestial))
 		H.grant_language(/datum/language/celestial)
@@ -213,6 +216,7 @@
 
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_XENOPHOBIC, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 	if(!H.has_language(/datum/language/celestial))
 		H.grant_language(/datum/language/celestial)
@@ -259,3 +263,4 @@
 		H.cmode_music = 'sound/music/combat_zybantine.ogg'
 
 	ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)

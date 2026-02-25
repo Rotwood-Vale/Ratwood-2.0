@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 		return
 	if((src.town_area == TRUE) && HAS_TRAIT(guy, TRAIT_GUARDSMAN) && !guy.has_status_effect(/datum/status_effect/buff/guardbuffone)) //man at arms
 		guy.apply_status_effect(/datum/status_effect/buff/guardbuffone)
-	if((src.terror_area == TRUE) && HAS_TRAIT(guy, TRAIT_MIASMARES) && !guy.has_status_effect(/datum/status_effect/buff/terrorbogbuff)) //miasma resistance / antag buff
+	if((src.terror_area == TRUE) && HAS_TRAIT(guy, TRAIT_MIASMAEM) && !guy.has_status_effect(/datum/status_effect/buff/terrorbogbuff)) //miasma resistance / antag buff
 		guy.apply_status_effect(/datum/status_effect/buff/terrorbogbuff)
 	if((src.terror_area == TRUE) && HAS_TRAIT(guy, TRAIT_MIASMASIN) && !guy.has_status_effect(/datum/status_effect/debuff/terrorbogdebuff)) //miasma vulnerability / debuff
 		guy.apply_status_effect(/datum/status_effect/debuff/terrorbogdebuff)

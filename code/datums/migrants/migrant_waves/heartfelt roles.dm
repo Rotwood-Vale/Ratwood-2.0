@@ -46,6 +46,7 @@
 
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)	// no need for medium armor check
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 /datum/migrant_role/heartfelt/lady
 	name = "Lady of Heartfelt"
@@ -90,6 +91,7 @@
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NUTCRACKER, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 /datum/migrant_role/heartfelt/hand
 	name = "Hand of Heartfelt"
@@ -133,6 +135,7 @@
 
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 /datum/migrant_role/heartfelt/knight
 	name = "Knight of Heartfelt"
@@ -194,6 +197,7 @@
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 
 /datum/migrant_role/heartfelt/knight/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	..()
@@ -247,6 +251,7 @@
 	ADD_TRAIT(H, TRAIT_ARCYNE_T4, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_INTELLECTUAL, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/arcane, 5, TRUE)
@@ -314,6 +319,7 @@
 	ADD_TRAIT(H, TRAIT_CHOSEN, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMARES, TRAIT_GENERIC)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)

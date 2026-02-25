@@ -13,7 +13,7 @@
 /datum/advclass/grenzel_envoy
 	name = "Envoy"
 	outfit = /datum/outfit/job/roguetown/grenzel/envoy
-	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_GRENZEL_ENVOY)
 	subclass_stats = list(
 		STATKEY_INT = 2,
@@ -76,7 +76,7 @@
 	name = "Leibwächter"
 	tutorial = "You are a dilligent soldier in employ of the Envoy for protection and to assure that their mission goes as planned."
 	outfit = /datum/outfit/job/roguetown/grenzel/doppel
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED,TRAIT_MIASMARES)
 	category_tags = list(CTAG_GRENZEL_GUARD)
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -135,7 +135,7 @@
 /datum/advclass/grenzel_priest
 	name = "Envoy Priest"
 	outfit = /datum/outfit/job/roguetown/grenzel/doppel
-	traits_applied = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_GRAVEROBBER)
+	traits_applied = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_GRAVEROBBER,TRAIT_MIASMARES)
 	category_tags = list(CTAG_GRENZEL_PRIEST)
 	subclass_stats = list(
 		STATKEY_STR = -1,
