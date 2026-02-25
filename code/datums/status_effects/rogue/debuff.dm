@@ -1075,7 +1075,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/terrorbogdebuff
 	name = "Sinister Miasma"
-	desc = "I feel drained, tired, slow."
+	desc = "I feel VERY drained, tired, slow."
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/terrorbogdebuff
@@ -1089,3 +1089,20 @@
 	var/area/rogue/our_area = get_area(owner)
 	if(!(our_area.terror_area))
 		owner.remove_status_effect(/datum/status_effect/debuff/terrorbogdebuff)
+
+/atom/movable/screen/alert/status_effect/debuff/terrorbogdebufflow
+	name = "Miasma"
+	desc = "I feel drained, tired, slow."
+	icon_state = "debuff"
+
+/datum/status_effect/debuff/terrorbogdebufflow
+	id = "terrorbugdebufflow"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/terrorbogdebufflow
+	effectedstats = list(STATKEY_STR = -1, STATKEY_CON = -1)
+
+/datum/status_effect/debuff/terrorbogdebufflow/process()
+
+	.=..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!(our_area.terror_area))
+		owner.remove_status_effect(/datum/status_effect/debuff/terrorbogdebufflow)

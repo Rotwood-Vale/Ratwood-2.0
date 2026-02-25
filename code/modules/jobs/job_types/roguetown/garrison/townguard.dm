@@ -59,7 +59,7 @@ Archer is basically a 'bounty-catcher' in function, less specialized at close-qu
 	outfit = /datum/outfit/job/roguetown/guardsman/footsman
 
 	category_tags = list(CTAG_WATCH)
-	traits_applied = list(TRAIT_MEDIUMARMOR)
+	traits_applied = list(TRAIT_MEDIUMARMOR,TRAIT_MIASMA)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_CON = 1,

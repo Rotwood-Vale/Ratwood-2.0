@@ -45,6 +45,7 @@
 	H.advsetup = TRUE
 	H.invisibility = INVISIBILITY_MAXIMUM
 	H.become_blind("advsetup")
+	ADD_TRAIT(H, TRAIT_MIASMAEM,TRAIT_GENERIC)
 
 
 /*

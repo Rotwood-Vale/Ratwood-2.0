@@ -26,8 +26,9 @@
 		TRAIT_CRITICAL_RESISTANCE,
 		TRAIT_SILVER_BLESSED,
 		TRAIT_STEELHEARTED,
-		TRAIT_INQUISITION,,
-		TRAIT_RITUALIST//Handles conversions, too, now.
+		TRAIT_INQUISITION,
+		TRAIT_RITUALIST,
+		TRAIT_MIASMARES,//Handles conversions, too, now.
 	)
 
 	advclass_cat_rolls = list(CTAG_ABSOLVER = 2)

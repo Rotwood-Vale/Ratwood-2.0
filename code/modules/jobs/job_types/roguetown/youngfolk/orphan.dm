@@ -18,6 +18,7 @@
 	max_pq = null
 	round_contrib_points = 2
 	advjob_examine = TRUE
+	job_traits =list(TRAIT_MIASMA)
 
 	cmode_music = 'sound/music/combat_bum.ogg'
 	job_subclasses = list(

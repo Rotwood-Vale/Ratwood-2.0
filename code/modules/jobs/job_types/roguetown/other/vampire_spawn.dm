@@ -28,7 +28,7 @@
 
 	category_tags = list(CTAG_VAMPIRE_SPAWN)
 
-	traits_applied = list(TRAIT_HEAVYARMOR)
+	traits_applied = list(TRAIT_HEAVYARMOR,TRAIT_MIASMAEM)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_INT = 1,

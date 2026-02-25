@@ -21,7 +21,7 @@
 	round_contrib_points = 2
 	cmode_music = 'sound/music/combat_noble.ogg'
 	social_rank = SOCIAL_RANK_NOBLE
-	job_traits = list(TRAIT_NOBLE, TRAIT_SEEPRICES_SHITTY)
+	job_traits = list(TRAIT_NOBLE, TRAIT_SEEPRICES_SHITTY,TRAIT_MIASMA)
 	job_subclasses = list(
 		/datum/advclass/councillor
 	)

@@ -20,7 +20,7 @@
 	round_contrib_points = 2
 	cmode_music = 'sound/music/cmode/towner/combat_towner.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_SEEPRICES)
+	job_traits = list(TRAIT_SEEPRICES,TRAIT_MIASMA)
 
 	advclass_cat_rolls = list(CTAG_SHOPHAND = 2)
 	job_subclasses = list(

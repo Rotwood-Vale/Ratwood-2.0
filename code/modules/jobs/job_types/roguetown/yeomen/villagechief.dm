@@ -70,6 +70,7 @@
 	ADD_TRAIT(H, TRAIT_SEEPRICES_SHITTY, "[type]")
 	ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_MEDICINE_EXPERT, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MIASMA,TRAIT_GENERIC)
 	if(should_wear_femme_clothes(H))//Village grandma look.
 		head = /obj/item/clothing/head/roguetown/chaperon/greyscale/elder
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress

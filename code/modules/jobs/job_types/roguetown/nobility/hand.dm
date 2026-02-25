@@ -20,7 +20,7 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/cmode/nobility/combat_spymaster.ogg'
 	social_rank = SOCIAL_RANK_NOBLE
-	job_traits = list(TRAIT_NOBLE)
+	job_traits = list(TRAIT_NOBLE,TRAIT_MIASMA)
 	job_subclasses = list(
 		/datum/advclass/hand/blademaster,
 		/datum/advclass/hand/spymaster,

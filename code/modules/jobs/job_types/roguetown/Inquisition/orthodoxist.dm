@@ -23,7 +23,7 @@
 	advjob_examine = TRUE
 	give_bank_account = 15
 	social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_OUTLANDER, TRAIT_STEELHEARTED, TRAIT_INQUISITION)
+	job_traits = list(TRAIT_OUTLANDER, TRAIT_STEELHEARTED, TRAIT_INQUISITION,TRAIT_MIASMARES)
 	job_subclasses = list(
 		/datum/advclass/psydoniantemplar,
 		/datum/advclass/disciple,

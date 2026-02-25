@@ -11,3 +11,4 @@
 	job_reopens_slots_on_death = TRUE
 	same_job_respawn_delay = 10 SECONDS
 	announce_latejoin = FALSE
+	job_traits = list(TRAIT_MIASMA)

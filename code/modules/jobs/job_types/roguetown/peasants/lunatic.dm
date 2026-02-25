@@ -21,7 +21,7 @@
 	social_rank = SOCIAL_RANK_PEASANT
 	cmode_music = 'sound/music/combat_bum.ogg'
 
-	job_traits = list(TRAIT_JESTERPHOBIA)
+	job_traits = list(TRAIT_JESTERPHOBIA,TRAIT_MIASMARES)
 
 	advclass_cat_rolls = list(CTAG_LUNATIC = 2)
 	job_subclasses = list(

@@ -36,8 +36,10 @@
 		TRAIT_HERESIARCH,
 		TRAIT_ZURCH,	//Just so they can use the Zurch.
 		TRAIT_ANTISCRYING,
+		TRAIT_MIASMARES,
 	)
 	cmode_music = 'sound/music/cmode/antag/combat_assassin.ogg'
+
 	// Choices between: Ranged build, pioson knife-fighter w/ poison knife, garrote user/kidnapper build
 	job_subclasses = list(
 		/datum/advclass/assassin_ranger,

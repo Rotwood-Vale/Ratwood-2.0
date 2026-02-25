@@ -13,7 +13,7 @@
 
 	tutorial = "You are a member of the Rotwood Vale Guild of Crafts, a massive guild formed to represent the interests of all craftsmen in the township of Rotwood Vale.\
 	As a Guildsman, you hail from the three most important constituent guilds: The Smith's Guild, the Artificer's Guild, and the Architect's Guild. The Guildsmaster has sway over you, but it is not absolute."
-	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT)
+	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT,TRAIT_MIASMA)
 
 	outfit = /datum/outfit/job/roguetown/guildsman
 	selection_color = JCOLOR_YEOMAN

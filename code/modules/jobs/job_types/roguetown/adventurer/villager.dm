@@ -24,6 +24,7 @@
 	class_setup_examine = TRUE
 	cmode_music = 'sound/music/cmode/towner/combat_towner.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
+	job_traits= list(TRAIT_MIASMA)
 	job_subclasses = list(
 		/datum/advclass/barbersurgeon,
 		/datum/advclass/blacksmith,

@@ -16,7 +16,7 @@
 	outfit = null	//Handled by classes
 	outfit_female = null
 	advclass_cat_rolls = list(CTAG_MERCENARY = 20)
-	job_traits = list(TRAIT_STEELHEARTED,TRAIT_OUTLANDER)
+	job_traits = list(TRAIT_STEELHEARTED,TRAIT_OUTLANDER,TRAIT_MIASMARES)
 	always_show_on_latechoices = TRUE
 	class_categories = TRUE
 	social_rank = SOCIAL_RANK_PEASANT

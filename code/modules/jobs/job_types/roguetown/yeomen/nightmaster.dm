@@ -22,7 +22,8 @@
 		TRAIT_CICERONE,
 		TRAIT_NUTCRACKER,
 		TRAIT_GOODLOVER,
-		TRAIT_HOMESTEAD_EXPERT)
+		TRAIT_HOMESTEAD_EXPERT,
+		TRAIT_MIASMA)
 
 	advclass_cat_rolls = list(CTAG_BATHMOM = 2)
 	job_subclasses = list(

@@ -9,7 +9,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT)
 	advclass_cat_rolls = list(CTAG_SQUIRE = 20)
-	job_traits = list(TRAIT_SQUIRE_REPAIR)
+	job_traits = list(TRAIT_SQUIRE_REPAIR,TRAIT_MIASMA)
 
 	tutorial = "Your folks said you were going to be something, they had better aspirations for you than the life of a peasant. You practiced the basics \
 		in the field alongside your friends, swordfighting with sticks, chasing rabbits with grain flail, and helping around the house lifting heavy \

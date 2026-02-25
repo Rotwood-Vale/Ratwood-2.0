@@ -480,7 +480,7 @@
 	icon_state = "buff"
 
 /atom/movable/screen/alert/status_effect/buff/terrorbogbuff
-	name = "Miasma Resistance"
+	name = "Miasma Empowerment"
 	desc = "The Miasma no Longer Harms me, ive grown accustomed to its burdens"
 	icon_state = "buff"
 

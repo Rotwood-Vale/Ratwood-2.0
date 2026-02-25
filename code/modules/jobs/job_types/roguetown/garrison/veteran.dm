@@ -196,7 +196,7 @@
 	outfit = /datum/outfit/job/roguetown/vet/calvaryman
 
 	category_tags = list(CTAG_VETERAN)
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_NOBLE)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_NOBLE,TRAIT_MIASMA)
 	subclass_stats = list(
 		STATKEY_CON = 2,
 		STATKEY_WIL = 2,

@@ -5,7 +5,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	class_select_category = CLASS_CAT_TRADER
 	category_tags = list(CTAG_PILGRIM, CTAG_COURTAGENT, CTAG_LICKER_WRETCH)
-	traits_applied = list(TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT,TRAIT_MIASMA)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_PER = 2,

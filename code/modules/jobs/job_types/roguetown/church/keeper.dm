@@ -26,7 +26,8 @@
 	job_traits = list(TRAIT_MEDICINE_EXPERT, TRAIT_HOMESTEAD_EXPERT,
 						  TRAIT_ALCHEMY_EXPERT, TRAIT_SEWING_EXPERT,
 						  TRAIT_SURVIVAL_EXPERT, TRAIT_NOSTINK,
-						  TRAIT_STEELHEARTED)
+						  TRAIT_STEELHEARTED,
+						  TRAIT_MIASMA)
 
 	//You're part of a Pestran sect. Not nobility.
 	virtue_restrictions = list(/datum/virtue/utility/noble)
