@@ -53,6 +53,7 @@
 
 	var/del_on_deaggro = 0 //seconds to delete after losing aggro
 	var/last_aggro_loss = null
+	var/idle_death_timer = 0 // When set, mob will die after being idle this long (world.time)
 
 	var/retreat_health
 
@@ -88,6 +89,21 @@
 		return 0
 	if(del_on_deaggro && last_aggro_loss && (world.time >= last_aggro_loss + del_on_deaggro))
 		if(deaggrodel())
+			return
+	// Check for idle death timeout
+	if(GLOB.npc_idle_death_time > 0 && !client)
+		if(!idle_death_timer && !target && AIStatus == AI_IDLE)
+			// Start idle death timer when first becoming idle
+			idle_death_timer = world.time + GLOB.npc_idle_death_time
+		else if(idle_death_timer && (target || AIStatus != AI_IDLE))
+			// Cancel timer if we found a target or changed modes
+			idle_death_timer = 0
+		else if(idle_death_timer && world.time >= idle_death_timer)
+			// Time's up - peaceful death
+			visible_message(span_notice("[src] wanders off into the distance..."))
+			if(GLOB.total_spawned_mobs > 0)
+				GLOB.total_spawned_mobs--
+			qdel(src)
 			return
 	if(has_buckled_mobs() && tame)
 		return 0
