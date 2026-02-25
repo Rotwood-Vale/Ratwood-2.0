@@ -452,6 +452,7 @@
 	to_chat(owner, span_warning("My scales could probably stand another blow."))
 	playsound(owner, 'sound/combat/sharpness_loss2.ogg', 75, FALSE)
 	owner.scalearmor = 0
+// Area Buffs and Debuffs
 
 /atom/movable/screen/alert/status_effect/buff/guardbuffone
 	name = "Vigilant Guardsman"
@@ -478,10 +479,22 @@
 	desc = "This is my sanctuary. I can overpower any opposition that dares breach it."
 	icon_state = "buff"
 
+/atom/movable/screen/alert/status_effect/buff/terrorbogbuff
+	name = "Miasma Resistance"
+	desc = "The Miasma no Longer Harms me, ive grown accustomed to its burdens"
+	icon_state = "buff"
+
+// Buff Actives
+
 /datum/status_effect/buff/wardenbuff
 	id = "wardenbuff"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/wardenbuff
 	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 3)
+
+/datum/status_effect/buff/terrorbogbuff
+	id = "terrorbugbuff"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/terrorbogbuff
+	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 1, STATKEY_STR = 1, STATKEY_CON = 1)
 
 /datum/status_effect/buff/barkeepbuff
 	id = "barkeepbuff"
@@ -504,6 +517,13 @@
 	id = "dungeoneerbuff"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/dungeoneerbuff
 	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1, STATKEY_STR = 2)//This only works in 2 small areas on the entire map
+
+/datum/status_effect/buff/terrorbogbuff/process()
+
+	.=..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!(our_area.terror_area))
+		owner.remove_status_effect(/datum/status_effect/buff/terrorbogbuff)
 
 /datum/status_effect/buff/guardbuffone/process()
 

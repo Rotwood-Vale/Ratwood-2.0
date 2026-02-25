@@ -2,6 +2,7 @@
 	name = "The Undergrove"
 	icon_state = "cavewet"
 	warden_area = TRUE
+	terror_area = TRUE
 	first_time_text = "The Undergrove"
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER

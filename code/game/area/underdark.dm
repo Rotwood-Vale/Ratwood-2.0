@@ -2,6 +2,7 @@
 	name = "Central Underdark" // Northern is Sunken City
 	icon_state = "cavewet"
 	warden_area = FALSE
+	terror_area = TRUE
 	first_time_text = "The Underdark" // This is where most people will enter Underdark
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
@@ -54,9 +55,12 @@
 		/mob/living/carbon/human/species/goblin/npc/ambush/moon = 40,
 		/mob/living/simple_animal/hostile/retaliate/rogue/troll = 15)
 	deathsight_message = "spiders and mushroom filled caverns"
+<<<<<<< Updated upstream
 	
 /area/rogue/under/underdark/rockhill/east
 	name = "Eastern Underdark"
 
 /area/rogue/under/underdark/rockhill/west
 	name = "Western Underdark"
+=======
+>>>>>>> Stashed changes

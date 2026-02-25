@@ -1070,3 +1070,22 @@
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+
+// Area Debuffs
+
+/atom/movable/screen/alert/status_effect/debuff/terrorbogdebuff
+	name = "Sinister Miasma"
+	desc = "I feel drained, tired, slow."
+	icon_state = "debuff"
+
+/datum/status_effect/debuff/terrorbogdebuff
+	id = "terrorbugdebuff"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/terrorbogdebuff
+	effectedstats = list(STATKEY_SPD = -2, STATKEY_PER = -1, STATKEY_STR = -2, STATKEY_CON = -1)
+
+/datum/status_effect/debuff/terrorbogdebuff/process()
+
+	.=..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!(our_area.terror_area))
+		owner.remove_status_effect(/datum/status_effect/debuff/terrorbogdebuff)

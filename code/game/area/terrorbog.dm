@@ -2,6 +2,7 @@
 	name = "The Terrorbog"
 	icon_state = "bog"
 	warden_area = TRUE
+	terror_area = TRUE
 	ambientsounds = AMB_BOGDAY
 	ambientnight = AMB_BOGNIGHT
 	spookysounds = SPOOKY_FROG
@@ -34,6 +35,7 @@
 	droning_sound_dusk = null
 	droning_sound_night = null
 	deathsight_message = "a wretched, fetid bog"
+	terror_area = TRUE
 
 /area/rogue/outdoors/bog/north
 	name = "Northern Terrorbog"

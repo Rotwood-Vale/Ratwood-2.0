@@ -25,7 +25,7 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_knight.ogg'
 	social_rank = SOCIAL_RANK_NOBLE
-	job_traits = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_GUARDSMAN)
+	job_traits = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_GUARDSMAN,TRAIT_MIASMASIN)
 	job_subclasses = list(
 		/datum/advclass/captain/infantry
 	)

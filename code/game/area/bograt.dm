@@ -4,6 +4,7 @@
 	name = "Rockhill Bog"
 	icon_state = "bog"
 	warden_area = TRUE
+	terror_area = TRUE
 	ambientsounds = AMB_BOGDAY
 	ambientnight = AMB_BOGNIGHT
 	spookysounds = SPOOKY_FROG
@@ -33,6 +34,7 @@
 	droning_sound = 'sound/music/area/bog.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
+	terror_area = TRUE
 
 /area/rogue/outdoors/bograt/north
 	name = "Northern Terrorbog"

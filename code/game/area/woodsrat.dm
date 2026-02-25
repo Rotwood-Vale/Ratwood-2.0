@@ -12,6 +12,7 @@
 	droning_sound_night = 'sound/music/area/forestnight.ogg'
 	soundenv = 15
 	warden_area = TRUE
+	terror_area = TRUE
 	ambush_times = list("night","dawn","dusk","day")
 	ambush_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 40,

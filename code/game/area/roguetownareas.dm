@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	var/keep_area = FALSE
 	var/tavern_area = FALSE
 	var/warden_area = FALSE
+	var/terror_area = FALSE
 	var/holy_area = FALSE
 	var/cell_area = FALSE
 	var/ceiling_protected = FALSE //Prevents tunneling into these from above
@@ -30,6 +31,10 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 		return
 	if((src.town_area == TRUE) && HAS_TRAIT(guy, TRAIT_GUARDSMAN) && !guy.has_status_effect(/datum/status_effect/buff/guardbuffone)) //man at arms
 		guy.apply_status_effect(/datum/status_effect/buff/guardbuffone)
+	if((src.terror_area == TRUE) && HAS_TRAIT(guy, TRAIT_MIASMARES) && !guy.has_status_effect(/datum/status_effect/buff/terrorbogbuff)) //miasma resistance / antag buff
+		guy.apply_status_effect(/datum/status_effect/buff/terrorbogbuff)
+	if((src.terror_area == TRUE) && HAS_TRAIT(guy, TRAIT_MIASMASIN) && !guy.has_status_effect(/datum/status_effect/debuff/terrorbogdebuff)) //miasma vulnerability / debuff
+		guy.apply_status_effect(/datum/status_effect/debuff/terrorbogdebuff)
 	if((src.tavern_area == TRUE) && HAS_TRAIT(guy, TRAIT_TAVERN_FIGHTER) && !guy.has_status_effect(/datum/status_effect/buff/barkeepbuff)) // THE FIGHTER
 		guy.apply_status_effect(/datum/status_effect/buff/barkeepbuff)
 	if((src.warden_area == TRUE) && HAS_TRAIT(guy, TRAIT_WOODSMAN) && !guy.has_status_effect(/datum/status_effect/buff/wardenbuff)) // Warden
@@ -69,6 +74,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 
 /area/rogue/indoors/banditcamp
 	name = "Bandit Camp"
+	terror_area = TRUE
 	droning_sound = 'sound/music/area/banditcamp.ogg'
 	droning_sound_dusk = 'sound/music/area/banditcamp.ogg'
 	droning_sound_night = 'sound/music/area/banditcamp.ogg'
@@ -81,6 +87,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	hoardmaster_protected = TRUE
 
 /area/rogue/indoors/vampire_manor
+	terror_area = TRUE
 	name = "Vampire Manor"
 	droning_sound = 'sound/music/area/manor2.ogg'
 
@@ -129,6 +136,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	deathsight_message = "somewhere in the wilds"
 
 /area/rogue/outdoors/banditcamp
+	terror_area = TRUE
 	name = "Bandit Camp"
 	droning_sound = 'sound/music/area/banditcamp.ogg'
 	droning_sound_dusk = 'sound/music/area/banditcamp.ogg'
@@ -167,6 +175,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 
 /area/rogue/outdoors/cave/inhumen/wretch/ghrotto
 	name = "WRETCHED GHROTTO"
+	terror_area = TRUE
 	icon_state = "outdoors"
 	first_time_text = "WRETCHED GHROTTO"
 	droning_sound = 'sound/ambience/bogday (1).ogg'
@@ -211,7 +220,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/outdoors/rtfield/rockhill
 	first_time_text = "Rockhill Basin"
 	threat_region = THREAT_REGION_ROCKHILL_BASIN
-	town_area = TRUE
 
 /area/rogue/outdoors/rtfield/rockhill/above
 	ambientsounds = AMB_MOUNTAIN

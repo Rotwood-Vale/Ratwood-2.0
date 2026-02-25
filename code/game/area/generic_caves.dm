@@ -2,6 +2,7 @@
 /area/rogue/under/cave
 	name = "cave"
 	warden_area = TRUE
+	terror_area = TRUE
 	icon_state = "cave"
 	ambientsounds = AMB_GENCAVE
 	ambientnight = AMB_GENCAVE
@@ -31,6 +32,7 @@
 	droning_sound = 'sound/music/area/caves.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
+	terror_area = TRUE
 
 /area/rogue/under/cave/spider
 	icon_state = "spider"
@@ -41,12 +43,14 @@
 	droning_sound_dusk = null
 	droning_sound_night = null
 	converted_type = /area/rogue/outdoors/spidercave
+	terror_area = TRUE
 
 /area/rogue/outdoors/spidercave
 	icon_state = "spidercave"
 	droning_sound = 'sound/music/area/spidercave.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
+	terror_area = TRUE
 
 /area/rogue/under/spiderbase
 	name = "spiderbase"
@@ -57,9 +61,11 @@
 	droning_sound_dusk = null
 	droning_sound_night = null
 	converted_type = /area/rogue/outdoors/spidercave
+	terror_area = TRUE
 
 /area/rogue/outdoors/spidercave
 	icon_state = "spidercave"
 	droning_sound = 'sound/music/area/spidercave.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
+	terror_area = TRUE
