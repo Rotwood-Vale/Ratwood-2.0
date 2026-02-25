@@ -467,10 +467,12 @@
 
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
 		var/list/new_overlays = update_overlays()
+		if(_overlay_lists_equal(new_overlays, managed_overlays))
+			return
 		if(managed_overlays)
 			cut_overlay(managed_overlays)
-			managed_overlays = null
-		if(length(new_overlays))
+		managed_overlays = null
+		if(new_overlays && new_overlays.len)
 			managed_overlays = new_overlays
 			add_overlay(new_overlays)
 
