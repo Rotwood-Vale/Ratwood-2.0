@@ -458,6 +458,19 @@
 	SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_DESC, updates)
 
+// proc for /atom/proc/update_icon()
+/atom/proc/_overlay_lists_equal(list/A, list/B)
+	if(A == B)
+		return TRUE
+	if(!A || !B)
+		return FALSE
+	if(A.len != B.len)
+		return FALSE
+	for(var/i = 1 to A.len)
+		if(A[i] != B[i])
+			return FALSE
+	return TRUE
+
 /// Updates the icon of the atom
 /atom/proc/update_icon()
 	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
