@@ -1949,11 +1949,7 @@ generate/load female uniform sprites matching all previously decided variables
 	var/hidearms = (wear_armor && (wear_armor.body_parts_covered & ARMS) && !wear_armor.sleeved) || \
 					(wear_shirt && (wear_shirt.body_parts_covered & ARMS) && !wear_shirt.sleeved)
 
-var/list/new_limbs = list()
-
-for(var/thing in bodyparts)
-	var/obj/item/bodypart/BP = thing
-	if(!BP) continue
+for(var/obj/item/bodypart/BP as anything in bodyparts)
 	var/hideaux_for_this = FALSE
 	if(BP.body_zone == BODY_ZONE_CHEST)
 		hideaux_for_this = hiden
@@ -1962,9 +1958,7 @@ for(var/thing in bodyparts)
 
 	var/cache_key = "[icon_render_key]|[hideaux_for_this ? 1 : 0]"
 
-	if(BP.vars["icon_dirty"] && BP.vars["cached_limb_icon"] && BP.vars["cached_limb_icon_key"] && \
-		!BP:icon_dirty && BP:cached_limb_icon && BP:cached_limb_icon_key == cache_key)
-		new_limbs += BP:cached_limb_icon
+	if(!BP.icon_dirty && BP.cached_limb_icon && BP.cached_limb_icon_key == cache_key)
 	else
 		BP.update_limb()
 		var/part_icon = BP.get_limb_icon(FALSE, hideaux_for_this)
