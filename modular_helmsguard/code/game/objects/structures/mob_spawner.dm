@@ -1,7 +1,3 @@
-GLOBAL_VAR_INIT(total_spawned_mobs, 0)
-GLOBAL_VAR_INIT(max_total_spawned_mobs, 250) // Global cap for NPC population
-GLOBAL_VAR_INIT(npc_idle_death_time, 35 MINUTES) // Time before idle NPCs die (0 = disabled)
-
 /// ONLY TEMPLATE ///
 /*
 	MADE BY STONEDELF A.K.A FERALAPE

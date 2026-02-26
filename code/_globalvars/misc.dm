@@ -33,3 +33,8 @@ GLOBAL_VAR(bible_icon_state)
 GLOBAL_VAR(bible_item_state)
 GLOBAL_VAR(holy_weapon_type)
 GLOBAL_VAR(holy_armor_type)
+
+// NPC spawn management
+GLOBAL_VAR_INIT(total_spawned_mobs, 0)
+GLOBAL_VAR_INIT(max_total_spawned_mobs, 250)
+GLOBAL_VAR_INIT(npc_idle_death_time, 35 MINUTES)
