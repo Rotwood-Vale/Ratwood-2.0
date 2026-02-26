@@ -65,7 +65,9 @@
 		if(mind)
 			mind.transfer_to(O)
 
-		for(var/obj/item/organ/I as anything in internal_organs)
+		for(var/X in internal_organs)
+			var/obj/item/organ/I = X
+			int_organs += I
 			I.Remove(src, 1)
 
 		for(var/X in int_organs)
@@ -196,8 +198,10 @@
 
 		if(mind)
 			mind.transfer_to(O)
-		for(var/obj/item/organ/organ as anything in internal_organs)
-			organ.Remove(src, 1)
+		for(var/X in internal_organs)
+			var/obj/item/organ/I = X
+			int_organs += I
+			I.Remove(src, 1)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X

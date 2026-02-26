@@ -11,7 +11,8 @@
 
 	. = ..()
 
-	for(var/datum/brain_trauma/BT as anything in get_traumas())
+	for(var/T in get_traumas())
+		var/datum/brain_trauma/BT = T
 		BT.on_death()
 
 /mob/living/carbon/dust(just_ash, drop_items, force)
