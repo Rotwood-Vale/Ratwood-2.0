@@ -48,68 +48,46 @@ There are several things that need to be remembered:
 
 */
 
-/mob/living/carbon/proc/get_limbloss_index(limbr, limbl)
-	var/jazz = 1
-	for(var/obj/item/bodypart/affecting as anything in bodyparts)
-		if(affecting.body_part == limbr)
-			jazz += 1
-		if(affecting.body_part == limbl)
-			jazz += 2
-	return jazz
+/mob/living/carbon/human/proc/is_damage_visible_for_bp(obj/item/bodypart/BP)
+	if(!BP)
+		return FALSE
 
-//HAIR OVERLAY
-/mob/living/carbon/human/update_hair()
-	rebuild_obscured_flags()
-	update_body_parts(TRUE)
-	return
+	var/hidechest = (wear_armor?.flags_inv & HIDEBOOB) || (wear_shirt?.flags_inv & HIDEBOOB) || (cloak?.flags_inv & HIDEBOOB)
 
-/mob/living/carbon/human/update_body()
-	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
-	var/new_cache_key = "[HD ? HD.skeletonized : "nohead"]|[HAS_TRAIT(src, TRAIT_HUSK)]|[lip_style]|[lip_color]|[gender]|[dna?.species?.hairyness]|[hair_color]"
+	switch(BP.body_zone)
+		if(BODY_ZONE_CHEST)
+			if(hidechest)
+				return FALSE
+			if(wear_armor && (wear_armor.body_parts_covered & CHEST))
+				return FALSE
+			if(wear_shirt && (wear_shirt.body_parts_covered & CHEST))
+				return FALSE
+			if(cloak && (cloak.body_parts_covered & CHEST))
+				return FALSE
+		if(BODY_ZONE_HEAD)
+			return TRUE
 
-	if(body_overlay_cache_key == new_cache_key)
-		return
-	body_overlay_cache_key = new_cache_key
+	if(BP.body_part == ARM_LEFT || BP.body_part == ARM_RIGHT)
+		if(wear_armor && (wear_armor.body_parts_covered & ARMS))
+			return FALSE
+		if(wear_shirt && (wear_shirt.body_parts_covered & ARMS))
+			return FALSE
+		if(wear_wrists && (wear_wrists.body_parts_covered & ARMS))
+			return FALSE
+		if(gloves && (gloves.body_parts_covered & ARMS))
+			return FALSE
 
-	dna.species.handle_body(src)
-	..()
+	if(BP.body_part == LEG_LEFT || BP.body_part == LEG_RIGHT)
+		if(wear_armor && (wear_armor.body_parts_covered & LEGS))
+			return FALSE
+		if(wear_pants && (wear_pants.body_parts_covered & LEGS))
+			return FALSE
+		if(shoes && (shoes.body_parts_covered & LEGS))
+			return FALSE
 
-#define SUNDER_FILTER "sunder_filter"
+	return TRUE
 
-/mob/living/carbon/human/update_fire()
-	var/datum/status_effect/fire_handler/fire_stacks/sunder/sunder_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder)
-	var/datum/status_effect/fire_handler/fire_stacks/sunder/blessed/blessed_sunder = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
-	if(sunder_status?.on_fire || blessed_sunder?.on_fire)
-		var/filter = get_filter(SUNDER_FILTER)
-		if(!filter)
-			add_filter(SUNDER_FILTER, 2, list("type" = "outline", "color" = "#ffffff", "alpha" = 60, "size" = 1))
-		if(!sunder_light_obj)
-			sunder_light_obj = mob_light("#f5edda", 5, 5)
-		remove_overlay(SUNDER_LAYER)
-		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', "sunder_burning", -SUNDER_LAYER)
-		new_fire_overlay.appearance_flags = RESET_COLOR
-		overlays_standing[SUNDER_LAYER] = new_fire_overlay
-		apply_overlay(SUNDER_LAYER)
-		return
-	else
-		remove_filter(SUNDER_FILTER)
-		remove_overlay(SUNDER_LAYER)
-		QDEL_NULL(sunder_light_obj)
 
-	if(fire_stacks < 10)
-		return ..("Generic_mob_burning")
-	else
-		var/burning = dna.species.enflamed_icon
-		if(!burning)
-			return ..("widefire")
-		return ..(burning)
-
-#undef SUNDER_FILTER
-
-/mob/living/carbon/human/update_damage_overlays()
-	START_PROCESSING(SSdamoverlays,src)
-
-/// Generates a cache key for current damage overlay state
 /mob/living/carbon/human/proc/generate_damage_overlay_key()
 	var/key = "[gender]|[dna?.species?.type]|"
 
@@ -121,15 +99,17 @@ There are several things that need to be remembered:
 		key += "000"
 	key += "|"
 
-	// Bodypart states
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
+		if(!is_damage_visible_for_bp(BP))
+			key += "[BP.body_zone]H|"
+			continue
+
 		key += "[BP.body_zone][BP.brutestate][BP.burnstate]"
 		key += BP.skeletonized ? "S" : "N"
 		key += BP.bleeding > 0 ? "B" : "N"
 		key += "[length(BP.embedded_objects)]"
 		key += BP.bandage ? "b[BP.bandage.color]" : "n"
 
-		// Wound overlays - only add if present
 		if(BP.wounds && length(BP.wounds))
 			for(var/datum/wound/wound in BP.wounds)
 				if(wound.mob_overlay)
@@ -138,11 +118,11 @@ There are several things that need to be remembered:
 
 	return key
 
+
 /mob/living/carbon/human/proc/update_damage_overlays_real()
 	if(dna?.species?.update_damage_overlays(src))
 		return
 
-	// Check if damage overlay state has changed - skip rebuild if unchanged
 	var/new_cache_key = generate_damage_overlay_key()
 	if(damage_overlay_cache_key == new_cache_key)
 		return
@@ -169,12 +149,15 @@ There are several things that need to be remembered:
 				hidechest = TRUE
 
 	var/list/offset_features = dna.species.offset_features
-
 	var/needs_hair_update = FALSE
+
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		var/list/damage_overlays = list()
 		var/list/legdam_overlays = list()
 		var/list/armdam_overlays = list()
+
+		if(!is_damage_visible_for_bp(BP))
+			continue
 
 		if(BP.body_zone == BODY_ZONE_HEAD)
 			needs_hair_update = TRUE
@@ -201,7 +184,6 @@ There are several things that need to be remembered:
 				legdam_overlays += get_cached_damage_overlay(limb_icon, "legdam_[body_zone]_0[BP.burnstate]", LEG_DAMAGE_LAYER, offset_x, offset_y)
 				armdam_overlays += get_cached_damage_overlay(limb_icon, "armdam_[body_zone]_0[BP.burnstate]", ARM_DAMAGE_LAYER, offset_x, offset_y)
 			if(BP.bandage)
-				// Check if bleeding to determine bandage appearance
 				if(BP.bleeding || length(BP.embedded_objects))
 					bleed_checker = TRUE
 					var/bandage_color = BP.bandage.color
@@ -246,12 +228,12 @@ There are several things that need to be remembered:
 							damage_overlays += get_cached_damage_overlay(limb_icon, "[aux_zone]_[wound_overlay]", DAMAGE_LAYER, offset_x, offset_y)
 							legdam_overlays += get_cached_damage_overlay(limb_icon, "legdam_[aux_zone]_[wound_overlay]", LEG_DAMAGE_LAYER, offset_x, offset_y)
 							armdam_overlays += get_cached_damage_overlay(limb_icon, "armdam_[aux_zone]_[wound_overlay]", ARM_DAMAGE_LAYER, offset_x, offset_y)
+
 			if(!bleed_checker && BP.bandage)
 				var/bandage_color = BP.bandage.color
 				damage_overlays += get_cached_damage_overlay(limb_icon, "[aux_zone]_b", DAMAGE_LAYER, offset_x, offset_y, bandage_color)
 				legdam_overlays += get_cached_damage_overlay(limb_icon, "legdam_[aux_zone]_b", LEG_DAMAGE_LAYER, offset_x, offset_y, bandage_color)
 				armdam_overlays += get_cached_damage_overlay(limb_icon, "armdam_[aux_zone]_b", ARM_DAMAGE_LAYER, offset_x, offset_y, bandage_color)
-
 
 		limb_overlaysa += damage_overlays
 		limb_overlaysb += legdam_overlays
@@ -267,6 +249,15 @@ There are several things that need to be remembered:
 
 	if(needs_hair_update)
 		queue_icon_update(PENDING_UPDATE_HAIR)
+
+/mob/living/carbon/human/proc/get_limbloss_index(limbr, limbl)
+	var/jazz = 1
+	for(var/obj/item/bodypart/affecting as anything in bodyparts)
+		if(affecting.body_part == limbr)
+			jazz += 1
+		if(affecting.body_part == limbl)
+			jazz += 2
+	return jazz
 
 /* --------------------------------------- */
 //For legacy support.
