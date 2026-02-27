@@ -24,34 +24,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	var/hoardmaster_protected = FALSE//If a player enters, it ashes them. Your greed will consume you.
 	var/necra_area = FALSE
 
-/area/rogue/Entered(mob/living/carbon/human/guy)
-	. = ..()
-	if(!ishuman(guy))
-		return
-	if((src.town_area == TRUE) && HAS_TRAIT(guy, TRAIT_GUARDSMAN) && !guy.has_status_effect(/datum/status_effect/buff/guardbuffone)) //man at arms
-		guy.apply_status_effect(/datum/status_effect/buff/guardbuffone)
-	if((src.tavern_area == TRUE) && HAS_TRAIT(guy, TRAIT_TAVERN_FIGHTER) && !guy.has_status_effect(/datum/status_effect/buff/barkeepbuff)) // THE FIGHTER
-		guy.apply_status_effect(/datum/status_effect/buff/barkeepbuff)
-	if((src.warden_area == TRUE) && HAS_TRAIT(guy, TRAIT_WOODSMAN) && !guy.has_status_effect(/datum/status_effect/buff/wardenbuff)) // Warden
-		guy.apply_status_effect(/datum/status_effect/buff/wardenbuff)
-	if((src.cell_area == TRUE) && HAS_TRAIT(guy, TRAIT_DUNGEONMASTER) && !guy.has_status_effect(/datum/status_effect/buff/dungeoneerbuff)) // Dungeoneer
-		guy.apply_status_effect(/datum/status_effect/buff/dungeoneerbuff)
-	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_VOTARY))//Top Church guys get a buff. Opposite to overt heretics.
-		guy.add_stress(/datum/stressevent/seeblessed)
-	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_OVERTHERETIC))//Heretics are punished for walking in the Church with rites buffs.
-		guy.apply_status_effect(/datum/status_effect/debuff/overt_punishment)
-	if((src.necra_area == TRUE) && !(guy.has_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)||(guy.has_status_effect(/datum/status_effect/debuff/deathdoorwilloss)))) //Necra saps at wil
-		if(HAS_TRAIT(guy, TRAIT_SOUL_EXAMINE))
-			guy.apply_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)
-		else
-			guy.apply_status_effect(/datum/status_effect/debuff/deathdoorwilloss)
-	if((src.hoardmaster_protected == TRUE))//Your greed consumes you.
-		message_admins("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster, at [ADMIN_JMP(src)]")
-		log_admin("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster")
-		playsound(src, 'sound/misc/lava_death.ogg', 100, FALSE)
-		guy.dust()
-		GLOB.azure_round_stats[STATS_GREED_DUSTED]++
-
 /area/rogue/indoors
 	name = "indoors rt"
 	icon_state = "indoors"
