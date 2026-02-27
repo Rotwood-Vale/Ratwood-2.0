@@ -1935,19 +1935,23 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/living/carbon/human/update_body_parts(redraw = FALSE)
 	var/oldkey = icon_render_key
 	icon_render_key = generate_icon_render_key()
+
 	if(oldkey == icon_render_key && !redraw)
 		return
 
 	remove_overlay(BODYPARTS_LAYER)
+	var/cache_key_global = icon_render_key
 
-	if(!redraw && limb_icon_cache[icon_render_key])
-		load_limb_from_cache()
+	if(!redraw && limb_icon_cache[cache_key_global])
+		overlays_standing[BODYPARTS_LAYER] = limb_icon_cache[cache_key_global]
+		apply_overlay(BODYPARTS_LAYER)
+		update_damage_overlays()
 		return
 
 	var/list/new_limbs = list()
 	var/hiden = (wear_armor?.flags_inv & HIDEBOOB) || (wear_shirt?.flags_inv & HIDEBOOB) || (cloak?.flags_inv & HIDEBOOB)
 	var/hidearms = (wear_armor && (wear_armor.body_parts_covered & ARMS) && !wear_armor.sleeved) || \
-	               (wear_shirt && (wear_shirt.body_parts_covered & ARMS) && !wear_shirt.sleeved)
+		(wear_shirt && (wear_shirt.body_parts_covered & ARMS) && !wear_shirt.sleeved)
 
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		var/hideaux_for_this = FALSE
@@ -1972,7 +1976,7 @@ generate/load female uniform sprites matching all previously decided variables
 		remove_overlay(BODYPARTS_LAYER)
 		if(new_limbs.len)
 			overlays_standing[BODYPARTS_LAYER] = new_limbs
-			limb_icon_cache[icon_render_key] = new_limbs
+			limb_icon_cache[cache_key_global] = new_limbs
 		apply_overlay(BODYPARTS_LAYER)
 
 	update_damage_overlays()
