@@ -45,6 +45,7 @@
 			bp.aux_markings = markings[aux_zone].Copy()
 		else
 			bp.aux_markings = null
+		bp.invalidate_limb_cache()
 	human.update_body()
 	human.update_body_parts()
 
