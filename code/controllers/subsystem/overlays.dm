@@ -95,18 +95,18 @@ SUBSYSTEM_DEF(overlays)
 		icon_cache[icon] = .
 
 /atom/proc/build_appearance_list(list/build_overlays)
-	if (!islist(build_overlays))
+	if(!islist(build_overlays))
 		build_overlays = list(build_overlays)
-	for (var/overlay in build_overlays)
+
+	for(var/i = build_overlays.len, i >= 1, i--)
+		var/overlay = build_overlays[i]
 		if(!overlay)
-			build_overlays -= overlay
+			build_overlays.Cut(i, i+1)
 			continue
-		if (istext(overlay))
-			var/index = build_overlays.Find(overlay)
-			build_overlays[index] = iconstate2appearance(icon, overlay)
+		if(istext(overlay))
+			build_overlays[i] = iconstate2appearance(icon, overlay)
 		else if(isicon(overlay))
-			var/index = build_overlays.Find(overlay)
-			build_overlays[index] = icon2appearance(overlay)
+			build_overlays[i] = icon2appearance(overlay)
 
 	return build_overlays
 
@@ -164,12 +164,12 @@ SUBSYSTEM_DEF(overlays)
 	var/p_len = priority_overlays.len
 
 	if(priority)
-		priority_overlays += overlays  //or in the image. Can we use [image] = image?
+		priority_overlays |= overlays //or in the image. Can we use [image] = image?
 		var/fp_len = priority_overlays.len
 		if(NOT_QUEUED_ALREADY && fp_len != p_len)
 			QUEUE_FOR_COMPILE
 	else
-		add_overlays += overlays
+		add_overlays |= overlays
 		var/fa_len = add_overlays.len
 		if(NOT_QUEUED_ALREADY && fa_len != a_len)
 			QUEUE_FOR_COMPILE
@@ -183,7 +183,7 @@ SUBSYSTEM_DEF(overlays)
 	var/list/cached_other = other.overlays.Copy()
 	if(cached_other)
 		if(cut_old || !LAZYLEN(overlays))
-			remove_overlays = overlays
+			remove_overlays |= overlays
 		add_overlays = cached_other
 		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE
