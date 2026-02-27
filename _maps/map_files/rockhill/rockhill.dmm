@@ -56340,6 +56340,11 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town)
+"qBu" = (
+/obj/effect/decal/cleanable/debris/woody,
+/obj/machinery/light/rogue/smelter/great,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors)
 "qBF" = (
 /obj/structure/closet/crate/chest/wicker,
 /turf/open/floor/rogue/twig,
@@ -235613,7 +235618,7 @@ lxs
 lxs
 nqU
 dqx
-mvk
+qBu
 rJN
 rJN
 fPd
