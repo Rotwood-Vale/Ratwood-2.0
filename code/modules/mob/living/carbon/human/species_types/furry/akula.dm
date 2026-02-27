@@ -127,7 +127,10 @@
 		/datum/descriptor_choice/prominent_three,
 		/datum/descriptor_choice/prominent_four,
 	)
-
+	allowed_taur_types = list(
+		/obj/item/bodypart/taur/mermaid,
+		/obj/item/bodypart/taur/orca,
+	)
 	languages = list(
 		/datum/language/common,
 		/datum/language/abyssal
