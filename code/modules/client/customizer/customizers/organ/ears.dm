@@ -66,6 +66,8 @@
 /datum/customizer_choice/organ/ears/axian
 	name = "Axian Ears"
 	organ_type = /obj/item/organ/ears/akula
+	allows_disabling = TRUE
+	default_disabled = FALSE
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/shark,
 		/datum/sprite_accessory/ears/sergal,
