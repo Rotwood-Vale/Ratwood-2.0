@@ -35,6 +35,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Farkle Dice Container"
 	path = /obj/item/storage/pill_bottle/dice/farkle
 
+/datum/loadout_item/gaming_dice
+	name = "Gaming Dice Container"
+	path = /obj/item/storage/pill_bottle/dice
+
 /datum/loadout_item/tarot_deck
 	name = "Tarot Deck"
 	path = /obj/item/toy/cards/deck/tarot
