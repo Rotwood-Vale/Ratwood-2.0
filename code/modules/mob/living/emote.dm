@@ -687,6 +687,8 @@
 			message_param = "pats %t on the forehead"
 		if(BODY_ZONE_HEAD)
 			message_param = "pats %t' cheek"
+		if(BODY_ZONE_PRECISE_EARS)
+			message_param = "grabs %t ear and pats it"
 		if(BODY_ZONE_CHEST)
 			message_param = "pats %t on the back"
 		if(BODY_ZONE_L_ARM)
