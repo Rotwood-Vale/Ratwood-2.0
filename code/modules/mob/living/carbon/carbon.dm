@@ -639,6 +639,7 @@
 	var/nausea = 0
 	var/pain_threshold = 0
 	var/bleeding_tier = 0
+	var/lightning_flashing = FALSE
 	var/chem_pain = 0
 
 /mob/living/carbon/proc/update_chem_pain()
@@ -840,9 +841,6 @@
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
-
-/mob/living/carbon
-	var/lightning_flashing = FALSE
 
 /mob/living/carbon/update_sight()
 	if(!client)
