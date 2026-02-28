@@ -219,7 +219,7 @@
 			else if((access_zone_bitfield&SEX_ZONE_CHEST) && !get_location_accessible(user, BODY_ZONE_CHEST, grabs = FALSE, skipundies = TRUE))
 				access_zone_bitfield &= ~SEX_ZONE_CHEST
 		else
-		 	// hey YOU, add the new targeted zone to SEX_ZONE bitfield, and update update_all_accessible_body_zones()/get_accessible_body_zone()
+			// hey YOU, add the new targeted zone to SEX_ZONE bitfield, and update update_all_accessible_body_zones()/get_accessible_body_zone()
 			CRASH("sex_action: attempt to access non-existent bitfield for var body_zone_bitfield [body_zone]")
 
 /datum/sex_controller/proc/get_accessible_body_zone(body_zone_bitfield, body_zone, grabs)

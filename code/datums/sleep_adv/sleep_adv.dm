@@ -386,7 +386,7 @@ var/global/list/CROSS_TRAINING_MAP = list(
 	if(!can_buy_special())
 		return
 	// Apply special here
-	 //TODO SLEEP ADV SPECIALS
+	//TODO SLEEP ADV SPECIALS
 	sleep_adv_points -= get_special_cost()
 
 /datum/sleep_adv/proc/finish()
