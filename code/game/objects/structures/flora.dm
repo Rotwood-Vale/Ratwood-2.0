@@ -416,7 +416,49 @@
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
 
+/obj/structure/flora/tree/freehold
+	name = "underdark maple"
+	desc = "A rare breed of maple said to grow only in the Underdark."
+	icon = 'icons/obj/structures/freehold_fauna.dmi'
+	pixel_x = -16
+	layer = FLY_LAYER
+	log_amount = 10
 
+/obj/structure/flora/tree/freehold/tree1
+	icon_state = "freeholdtree1"
+
+/obj/structure/flora/tree/freehold/tree2
+	icon_state = "freeholdtree2"
+
+/obj/structure/flora/tree/freehold/tree3
+	icon_state = "freeholdtree3"
+
+/obj/structure/flora/tree/freehold/tree4
+	icon_state = "freeholdtree4"
+
+/obj/structure/flora/tree/freehold/tree5
+	icon_state = "freeholdtree5"
+
+/obj/structure/flora/tree/freehold/tree6
+	icon_state = "freeholdtree6"
+
+/obj/structure/flora/tree/freehold/tree7
+	icon_state = "freeholdtree7"
+
+/obj/structure/flora/tree/freehold/tree8
+	icon_state = "freeholdtree8"
+
+/obj/structure/flora/tree/freehold/tree9
+	icon_state = "freeholdtree9"
+
+/obj/structure/flora/tree/freehold/tree10
+	icon_state = "freeholdtree10"
+
+/obj/structure/flora/tree/freehold/tree11
+	icon_state = "freeholdtree11"
+
+/obj/structure/flora/tree/freehold/tree12
+	icon_state = "freeholdtree12"
 
 
 
