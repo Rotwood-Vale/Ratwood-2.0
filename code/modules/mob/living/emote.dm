@@ -658,6 +658,45 @@
 
 	return TRUE
 
+/datum/emote/living/pat
+	key = "pat"
+	key_third_person = "pats"
+	message = ""
+	message_param = "pats %t"
+	emote_type = EMOTE_VISIBLE
+	restraint_check = TRUE
+
+/mob/living/carbon/human/verb/emote_pat()
+	set name = "Pat"
+	set category = "Emotes"
+
+	emote("pat", intentional = TRUE, targetted = TRUE)
+
+/datum/emote/living/pat/adjacentaction(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	. = ..()
+	message_param = initial(message_param)
+	if(!user || !target)
+		return
+	if(!ishuman(user) || !ishuman(target))
+		return
+	playsound(target.loc, pick('sound/body/pat.ogg'), 100, FALSE, -1)
+	if(target.loc != user.loc && user.pulling != target)
+		return
+	switch(user.zone_selected)
+		if(BODY_ZONE_PRECISE_SKULL)
+			message_param = "pats %t on the forehead"
+		if(BODY_ZONE_HEAD)
+			message_param = "pats %t' cheek"
+		if(BODY_ZONE_CHEST)
+			message_param = "pats %t on the back"
+		if(BODY_ZONE_L_ARM)
+			message_param = "pats left shoulder of %t"
+		if(BODY_ZONE_R_ARM)
+			message_param = "pats right shoulder of %t"
+		if(BODY_ZONE_PRECISE_STOMACH)
+			message_param = "pats %t' belly"
+		if(BODY_ZONE_PRECISE_GROIN)
+			message_param = "pats %t' ass"
 
 /datum/emote/living/slap
 	key = "slap"
