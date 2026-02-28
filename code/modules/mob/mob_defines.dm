@@ -288,7 +288,8 @@
 
 	var/mobid = 0 //incremented on spawn
 
-	var/cmode = 0
+	/// Boolean for being on combat mode, off by default
+	var/cmode = FALSE
 	var/d_intent = INTENT_DODGE
 	var/islatejoin = FALSE
 	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
@@ -302,6 +303,8 @@
 
 	/// Whether the mob is pixel shifted or not
 	var/is_shifted = FALSE
+	/// If we are currently handholding someone. 0: Not handholding 1: Handholding with left hand 2: Handholding with right hand
+	var/handholding
 
 	///////TYPING INDICATORS///////
 	/// Set to true if we want to show typing indicators.

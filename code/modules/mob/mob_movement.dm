@@ -111,7 +111,7 @@
 	if(mob.shifting)
 		mob.pixel_shift(direct)
 		return FALSE
-	else if(mob.is_shifted)
+	else if(mob.is_shifted && !mob.handholding)
 		mob.unpixel_shift()
 
 	mob.last_client_interact = world.time
@@ -177,6 +177,14 @@
 				L.sprinted_tiles = 0
 
 	. = ..()
+
+	if(!isnull(mob.handholding))
+		mob.handholding_pixel_shift(mob.handholding)
+		var/mob/handholdee = mob.pulling // XANTODO replace grab with handhold
+		if(handholdee)
+			handholdee.Move(mob.loc)
+			handholdee.setDir(mob.dir)
+			handholdee.handholding_pixel_shift(handholdee.handholding)
 
 	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
 		add_delay *= 2

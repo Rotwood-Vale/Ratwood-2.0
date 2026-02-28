@@ -11,14 +11,20 @@
 	no_effect = TRUE
 	force = 0
 	experimental_inhand = FALSE
-	var/grabbed				//ref to what atom we are grabbing
-	var/obj/item/bodypart/limb_grabbed		//ref to actual bodypart being grabbed if we're grabbing a carbo
-	var/sublimb_grabbed		//ref to what precise (sublimb) we are grabbing (if any) (text)
+	///ref to what atom we are grabbing
+	var/grabbed
+	///ref to actual bodypart being grabbed if we're grabbing a carbo
+	var/obj/item/bodypart/limb_grabbed
+	///ref to what precise (sublimb) we are grabbing (if any) (text)
+	var/sublimb_grabbed
 	var/mob/living/carbon/grabbee
 	var/list/dependents = list()
 	var/handaction
-	var/bleed_suppressing = 0.75 //multiplier for how much we suppress bleeding, can accumulate so two grabs means 50% less bleeding; each grab being 25% basically.
+	///multiplier for how much we suppress bleeding, can accumulate so two grabs means 50% less bleeding; each grab being 25% basically.
+	var/bleed_suppressing = 0.75
 	var/chokehold = FALSE
+	/// Limb that this grab is in
+	var/grab_held_by
 
 /obj/item/grabbing/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
     . = ..()
@@ -103,6 +109,8 @@
 				part.grabbedby -= src
 				part = null
 				sublimb_grabbed = null
+		M.handholding = null
+		grabbee.handholding = null
 	if(isturf(grabbed))
 		var/turf/T = grabbed
 		T.grabbedby -= src

@@ -385,40 +385,29 @@
 			return FALSE
 	return TRUE
 
-/mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE, obj/item/item_override)
-	if(!AM || !src)
+/mob/living/start_pulling(atom/movable/target_movable, state, force = pull_force, supress_message = FALSE, obj/item/item_override)
+	if(!target_movable || !src)
 		return FALSE
-	if(!(AM.can_be_pulled(src, state, force)))
+	if(!(target_movable.can_be_pulled(src, state, force)))
 		return FALSE
 	if(throwing || !(mobility_flags & MOBILITY_PULL))
 		return FALSE
 
-	AM.add_fingerprint(src)
+	target_movable.add_fingerprint(src)
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
-	if(pulling && AM != pulling)
+	if(pulling && target_movable != pulling)
 		stop_pulling()
 
 	changeNext_move(CLICK_CD_GRABBING)
 
-//	if(AM.pulledby && AM.pulledby != src)
-//		if(AM == src)
-//			to_chat(src, span_warning("I'm being grabbed by something!"))
-//			return FALSE
-//		else
-//			if(!supress_message)
-//				AM.visible_message(span_danger("[src] has pulled [AM] from [AM.pulledby]'s grip."), span_danger("[src] has pulled me from [AM.pulledby]'s grip."), null, null, src)
-//
-//				to_chat(src, span_notice("I pull [AM] from [AM.pulledby]'s grip!"))
-//			log_combat(AM, AM.pulledby, "pulled from", src)
-//			AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
-	if(AM != src)
-		pulling = AM
-		AM.pulledby = src
+	if(target_movable != src)
+		pulling = target_movable
+		target_movable.pulledby = src
 	update_pull_hud_icon()
 
-	if(isliving(AM))
-		var/mob/living/target = AM
+	if(isliving(target_movable))
+		var/mob/living/target = target_movable
 		log_combat(src, target, "grabbed", addition="passive grab")
 		if(!iscarbon(src))
 			target.LAssailant = null
@@ -483,6 +472,7 @@
 				O.sublimb_grabbed = used_limb
 			put_in_hands(O)
 			O.update_hands(src)
+			O.grab_held_by = get_held_index_of_item(O) == 1 ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND
 			if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER) || item_override)
 				supress_message = TRUE
 				C.grippedby(src)
@@ -502,6 +492,7 @@
 				O.sublimb_grabbed = target.simple_limb_hit(zone_selected)
 			put_in_hands(O)
 			O.update_hands(src)
+			O.grab_held_by = get_held_index_of_item(O) == 1 ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND
 			if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER) || item_override)
 				supress_message = TRUE
 				target.grippedby(src)
@@ -518,9 +509,10 @@
 			var/sound_to_play = 'sound/combat/shove.ogg'
 			playsound(src.loc, sound_to_play, 50, TRUE, -1)
 		var/obj/item/grabbing/O = new(src)
-		O.name = "[AM.name]"
-		O.grabbed = AM
+		O.name = "[target_movable.name]"
+		O.grabbed = target_movable
 		O.grabbee = src
+		O.grab_held_by = get_held_index_of_item(O) == 1 ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND
 		src.put_in_hands(O)
 		O.update_hands(src)
 		update_grab_intents()
@@ -531,8 +523,8 @@
 //As of now, you get a free resist if either is met:
 // - Grabbed character skill at master or higher(5).
 // - Grabbing character skill at journeymen or lower(3).
-	if(isliving(AM))
-		var/mob/living/M = AM
+	if(isliving(target_movable))
+		var/mob/living/M = target_movable
 		if(M.mind)
 			if(M.cmode && M.stat == CONSCIOUS && !M.restrained(ignore_grab = TRUE))
 				if(M.get_skill_level(/datum/skill/combat/wrestling) >= 5 || src.get_skill_level(/datum/skill/combat/wrestling) <= 3)

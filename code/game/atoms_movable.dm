@@ -143,11 +143,11 @@
 			return FALSE
 	return ..()
 
-/atom/movable/proc/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE, obj/item/item_override)
-	testing("startpulling target: [AM]")
-	if(QDELETED(AM))
+/atom/movable/proc/start_pulling(atom/movable/target_movable, state, force = move_force, supress_message = FALSE, obj/item/item_override)
+	testing("startpulling target: [target_movable]")
+	if(QDELETED(target_movable))
 		return FALSE
-	if(!(AM.can_be_pulled(src, state, force)))
+	if(!(target_movable.can_be_pulled(src, state, force)))
 		return FALSE
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
@@ -155,31 +155,23 @@
 		if(state == 0)
 			stop_pulling()
 			return FALSE
-		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
-//		if(AM == pulling)
-//			setGrabState(state)
-//			if(istype(AM,/mob/living))
-//				var/mob/living/AMob = AM
-//				AMob.grabbedby(src)
-//			return TRUE
-//		stop_pulling()
-	if(AM.pulledby)
-		log_combat(AM, AM.pulledby, "pulled from", src)
-		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
-	if(AM != src)
-		pulling = AM
-		AM.pulledby = src
+	if(target_movable.pulledby)
+		log_combat(target_movable, target_movable.pulledby, "pulled from", src)
+		target_movable.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
+	if(target_movable != src)
+		pulling = target_movable
+		target_movable.pulledby = src
 	setGrabState(state)
-	if(ismob(AM))
-		var/mob/M = AM
+	if(ismob(target_movable))
+		var/mob/M = target_movable
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(M.doing)
 			M.doing = FALSE
 		if(!supress_message)
 			M.visible_message("<span class='warning'>[src] grabs [M].</span>", \
 				"<span class='danger'>[src] grabs you.</span>")
-	if(istype(AM, /mob/living/simple_animal))
-		var/mob/living/simple_animal/simple_animal = AM
+	if(istype(target_movable, /mob/living/simple_animal))
+		var/mob/living/simple_animal/simple_animal = target_movable
 		simple_animal.toggle_ai(AI_ON)
 	return TRUE
 
