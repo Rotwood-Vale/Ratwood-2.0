@@ -467,6 +467,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Raised Sandals"
 	path = /obj/item/clothing/shoes/roguetown/armor/rumaclan
 
+/datum/loadout_item/simpleshoes
+	name = "Simple Shoes"
+	path = /obj/item/clothing/shoes/roguetown/simpleshoes
+
 //SHIRTS
 /datum/loadout_item/longcoat
 	name = "Longcoat"
@@ -623,7 +627,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/loincloth
 	name = "Loincloth"
 	path = /obj/item/clothing/under/roguetown/loincloth
-	
+
 /datum/loadout_item/tights
 	name = "Cloth Tights"
 	path = /obj/item/clothing/under/roguetown/tights/black
@@ -780,6 +784,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/storage/belt/rogue/leather/shalal
 
 // BELTS
+/datum/loadout_item/leather
+	name = "Leather Belt"
+	path = /obj/item/storage/belt/rogue/leather
+
+/datum/loadout_item/leather_black
+	name = "Black Leather Belt"
+	path = /obj/item/storage/belt/rogue/leather/black
+
 /datum/loadout_item/belt_cloth
 	name = "Cloth Sash"
 	path = /obj/item/storage/belt/rogue/leather/sash
@@ -1071,7 +1083,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 //==========================
 // TRIUMPH LOADOUT ITEMS
 //==========================
-// 
+//
 // IMPORTANT INFORMATION ABOUT LOADOUT ITEMS:
 // All items selected from the loadout system receive the following automatic modifications:
 // - ARMOR: Set to ARMOR_PADDED_BAD (basic padded values) and ARMOR_INT_CHEST_LIGHT_BASE max integrity
@@ -1082,7 +1094,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 // - WEAPON DEFENSE: Reduced by 50% (wdefense halved)
 // - SMELT RESULT: Set to ash (cannot be smelted for materials)
 // - EXAMINATION: Items show as reproductions when examined
-// 
+//
 // These modifications ensure loadout items provide utility and customization
 // without bypassing game progression or economy balance.
 // without bypassing game progression or economy balance.
@@ -1555,6 +1567,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/tri_leather_corslet
 	name = "Leather Corslet"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/bikini
+	triumph_cost = 3
+
+/datum/loadout_item/corset
+	name = "Corset"
+	path = /obj/item/clothing/suit/roguetown/armor/corset
 	triumph_cost = 3
 
 /datum/loadout_item/tri_moose_hood
