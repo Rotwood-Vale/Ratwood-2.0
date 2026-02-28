@@ -720,7 +720,7 @@
 	START_PROCESSING(SSsex, user.sexcon)
 	START_PROCESSING(SSsex, src)
 
-/datum/sex_controller/grabdropped(var/obj/item/grabbing/G)
+/datum/sex_controller/grabdropped(obj/item/grabbing/G)
 	..()
 	if(fapping == G)
 		if(G.grabbee == owner)

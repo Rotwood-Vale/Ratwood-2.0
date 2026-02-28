@@ -204,7 +204,7 @@ SUBSYSTEM_DEF(BMtreasury)
 	/// The reference to the map's brassface, populated when it initializes.
 	var/obj/structure/roguemachine/bathvend/brassface
 
-/datum/controller/subsystem/BMtreasury/proc/add_to_vault(var/obj/item/I)
+/datum/controller/subsystem/BMtreasury/proc/add_to_vault(obj/item/I)
 	if(I.get_real_price() <= 0 || istype(I, /obj/item/roguecoin) || istype(I, /obj/item/storage))
 		return
 	if(I.type in vault_accounting)

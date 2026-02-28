@@ -48,12 +48,12 @@
 	return FALSE
 
 /datum/patron/divine/malum/on_lesser_heal(
-    mob/living/user,
-    mob/living/target,
-    message_out,
-    message_self,
-    conditional_buff,
-    situational_bonus
+	mob/living/user,
+	mob/living/target,
+	message_out,
+	message_self,
+	conditional_buff,
+	situational_bonus
 )
 	*message_out = span_info("A tempering heat is discharged out of [target]!")
 	*message_self = span_info("I feel the heat of a forge soothing my pains!")

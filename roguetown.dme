@@ -1232,6 +1232,7 @@
 #include "code\game\objects\structures\roguetown\bell.dm"
 #include "code\game\objects\structures\roguetown\bell_common.dm"
 #include "code\game\objects\structures\roguetown\gate.dm"
+#include "code\game\objects\structures\roguetown\gate_vertical.dm"
 #include "code\game\objects\structures\roguetown\handcart.dm"
 #include "code\game\objects\structures\roguetown\hidden_doors.dm"
 #include "code\game\objects\structures\roguetown\loot.dm"
@@ -3007,5 +3008,9 @@
 #include "modular_hearthstone\code\modules\mob\living\simple_animal\rogue\rogue_corpse.dm"
 #include "modular_hearthstone\code\modules\reagents\reagent_containers\lux.dm"
 #include "modular_helmsguard\code\modules\mobs\farm\horse.dm"
+#include "modular_rmh\code\modules\clothing\valentyi\skyrim_dress.dm"
+#include "modular_rmh\code\modules\clothing\valentyi\toga.dm"
+#include "modular_rmh\code\modules\clothing\valentyi\toga_sandals.dm"
+#include "modular_rmh\code\modules\clothing\armor\corset_color.dm"
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
 // END_INCLUDE

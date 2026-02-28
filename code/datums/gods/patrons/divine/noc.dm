@@ -43,12 +43,12 @@
 	return FALSE
 
 /datum/patron/divine/noc/on_lesser_heal(
-    mob/living/user,
-    mob/living/target,
-    message_out,
-    message_self,
-    conditional_buff,
-    situational_bonus
+	mob/living/user,
+	mob/living/target,
+	message_out,
+	message_self,
+	conditional_buff,
+	situational_bonus
 )
 	*message_out = span_info("A shroud of soft moonlight falls upon [target]!")
 	*message_self = span_notice("I'm shrouded in gentle moonlight!")

@@ -128,17 +128,6 @@
 	sellprice = 3
 	grid_height = 32
 	grid_width = 32
-	
-// Close enough crab cake is raw shellfish
-/obj/item/reagent_containers/food/snacks/rogue/foodbase/crabcakeraw
-	name = "raw crab cake"
-	desc = "A variant of the handpie filled with buttery, savory shellfish meat and made with a buttered slice of dough."
-	icon_state = "crab_cake_raw"
-	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/crabcake
-	fried_type = /obj/item/reagent_containers/food/snacks/rogue/crabcake
-	cooked_smell = /datum/pollutant/food/fried_crab_cake
-	w_class = WEIGHT_CLASS_NORMAL
-	dropshrink = 0.8
 
 /obj/item/reagent_containers/food/snacks/rogue/crabcake
 	name = "crab cake"

@@ -721,8 +721,8 @@
 	var/mob/living/carbon/human/climber
 
 /datum/status_effect/debuff/climbing_lfwb/on_creation(mob/living/new_owner, new_stamcost)
-    stamcost = new_stamcost
-    return ..()
+	stamcost = new_stamcost
+	return ..()
 
 /datum/status_effect/debuff/climbing_lfwb/on_apply()
 	. = ..()
@@ -897,19 +897,19 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
 
 /datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source) // rewritten by @tmyqlfpir
-    SIGNAL_HANDLER
+	SIGNAL_HANDLER
 
-    var/turf/cur_turf = get_turf(owner)
-    if(!cur_turf)
-        return
-    if(!shadow)
-        shadow = new /obj/effect/flyer_shadow(cur_turf, owner)
-    while(isopenspace(cur_turf))
-        var/turf/temp_turf = GET_TURF_BELOW(cur_turf)
-        if(!temp_turf || isclosedturf(temp_turf))
-            break
-        cur_turf = temp_turf
-    shadow.forceMove(cur_turf)
+	var/turf/cur_turf = get_turf(owner)
+	if(!cur_turf)
+		return
+	if(!shadow)
+		shadow = new /obj/effect/flyer_shadow(cur_turf, owner)
+	while(isopenspace(cur_turf))
+		var/turf/temp_turf = GET_TURF_BELOW(cur_turf)
+		if(!temp_turf || isclosedturf(temp_turf))
+			break
+		cur_turf = temp_turf
+	shadow.forceMove(cur_turf)
 
 /datum/status_effect/debuff/harpy_flight/proc/remove_signals()
 	UnregisterSignal(owner, list(

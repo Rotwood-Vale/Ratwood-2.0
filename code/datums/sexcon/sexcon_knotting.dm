@@ -20,7 +20,7 @@
 			return TRUE
 	return FALSE
 
-/datum/sex_controller/proc/knot_check_remove(var/action_path)
+/datum/sex_controller/proc/knot_check_remove(action_path)
 	if(!user.sexcon.knotted_status && !target.sexcon.knotted_status)
 		return
 	var/datum/sex_action/action = SEX_ACTION(action_path)
@@ -111,7 +111,7 @@
 	if(!islupian(user)) // only add to counter if top isn't a Lupian (for lore reasons)
 		GLOB.azure_round_stats[STATS_KNOTTED_NOT_LUPIANS]++
 
-/datum/sex_controller/proc/knot_movement_mods_remove_his_knot_ty(var/mob/living/carbon/human/top, var/mob/living/carbon/human/btm)
+/datum/sex_controller/proc/knot_movement_mods_remove_his_knot_ty(mob/living/carbon/human/top, mob/living/carbon/human/btm)
 	var/obj/item/organ/penis/penor = top.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penor)
 		return FALSE
@@ -339,7 +339,7 @@
 				facial.refresh_cum()
 	knot_exit(keep_top_status, keep_btm_status)
 
-/datum/sex_controller/proc/knot_exit(var/keep_top_status = FALSE, var/keep_btm_status = FALSE)
+/datum/sex_controller/proc/knot_exit(keep_top_status = FALSE, keep_btm_status = FALSE)
 	var/mob/living/carbon/human/top = knotted_owner
 	var/mob/living/carbon/human/btm = knotted_recipient
 	if(istype(top) && top.sexcon.knotted_status)

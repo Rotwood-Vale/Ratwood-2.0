@@ -117,15 +117,15 @@
 	var/branded_writing = ""
 
 /obj/item/organ/vagina/proc/be_impregnated(mob/living/carbon/human/father)
-    if(!owner)
-        return
-    if(owner.stat == DEAD)
-        return
-    if(pregnant)
-        to_chat(owner, span_love("I feel a surge of warmth in my belly again..."))
-        return
-    to_chat(owner, span_love("I feel a surge of warmth in my belly, I’m definitely pregnant!"))
-    pregnant = TRUE
+	if(!owner)
+		return
+	if(owner.stat == DEAD)
+		return
+	if(pregnant)
+		to_chat(owner, span_love("I feel a surge of warmth in my belly again..."))
+		return
+	to_chat(owner, span_love("I feel a surge of warmth in my belly, I’m definitely pregnant!"))
+	pregnant = TRUE
 	//TODO add a way to trigger lactating when pregnancy happens
 
 /obj/item/organ/breasts

@@ -257,7 +257,7 @@
 /obj/effect/landmark/start/helms/yeomen/tailor
 	name = "Tailor"
 	icon_state = "arrow"
-  
+
 /obj/effect/landmark/start/helms/peasants/soilson
 	name = "Soilson"
 	icon_state = "arrow"

@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(learnable_songst3, (list(/obj/effect/proc_holder/spell/invoked/
 
 
 
-/mob/living/carbon/human/proc/in_audience(var/mob/living/carbon/human/audiencee)
+/mob/living/carbon/human/proc/in_audience(mob/living/carbon/human/audiencee)
 	if(!src.mind)
 		return FALSE
 	if(!src.inspiration)

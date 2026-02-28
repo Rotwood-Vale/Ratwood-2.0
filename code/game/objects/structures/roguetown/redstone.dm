@@ -512,7 +512,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			bodyzone =  pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 			quiver_fire(firedirectionthree, bodyzone)
 
-/obj/structure/englauncher/proc/quiver_fire(var/launcher_direction, var/launcher_bodyzone)
+/obj/structure/englauncher/proc/quiver_fire(launcher_direction, launcher_bodyzone)
 	if(!ammo)
 		return
 	if(ammo.arrows.len)
@@ -524,7 +524,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			ammo.update_icon()
 			break
 
-/obj/structure/englauncher/proc/container_aerosolize(var/launcher_liquid, var/launcher_direction)
+/obj/structure/englauncher/proc/container_aerosolize(launcher_liquid, launcher_direction)
 	var/turf/T = get_step(src, launcher_direction) //check for turf
 	if(T)
 		var/obj/item/reagent_containers/con = launcher_liquid //get the container

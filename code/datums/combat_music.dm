@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_type)
 GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 
 // People make mistakes. This should help catch when that happens.
-/proc/cmode_track_to_namelist(var/datum/combat_music/track)
+/proc/cmode_track_to_namelist(datum/combat_music/track)
 	if(!track)
 		return
 	if(!track.name)

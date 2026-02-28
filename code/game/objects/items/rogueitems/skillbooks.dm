@@ -33,7 +33,7 @@
 				icon_state = "book[iconval]_[open]"
 
 
-/obj/item/skillbook/proc/set_bookstats(var/req,var/cap,var/topic)
+/obj/item/skillbook/proc/set_bookstats(req,cap,topic)
 	if(complete)
 		skill_req = req
 		skill_cap = cap
@@ -253,7 +253,7 @@
 		else
 			to_chat(user, span_notice("Maybe later."))
 
-/obj/item/skillbook/proc/get_text(var/skill_value)
+/obj/item/skillbook/proc/get_text(skill_value)
 	switch(skill_value)
 		if(SKILL_LEVEL_NOVICE)
 			return "novice"

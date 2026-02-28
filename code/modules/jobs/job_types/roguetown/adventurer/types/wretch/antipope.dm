@@ -1,58 +1,71 @@
-//The antipope. Except not really. Charlatan that pushes forward the idea that the Inhumen are superior, or something.
-//Locked to Inhumen specifically so this gimmick works. Just a middling miraclist with HANDS.
-//Gets the ability to torture, recycled from normal heretic, combined with EVIL sermons.
-//It doesn't get any actual, proper combat skills, now. Lets hope that sees to it not being as funny.
+//The antipope. The evil twin sibling of Bishop.
+//Locked to Inhumen. Powerful support class with, however, very limited combat potential.
+//Gets the ability to torture, recycled from normal heretic, combined with EVIL sermons and some extra miracles from other Inhumen patrons.
 #define EVIL_PRIEST_SERMON_COOLDOWN (30 MINUTES)
 /datum/advclass/wretch/antipope
-	name = "Doomsayer"
-	tutorial = "ONLY THE INHUMEN CAN SAVE THIS REALM! THE TENNITES ARE WRONG! YOU ARE THE MOUTHPIECE!"
+	name = "Heresiarch" //formerly Doomsayer
+	tutorial = "They are pretentious. They are weak. They are complacent. And they are hopeless. But you. You will change this. \
+    A high-ranking official of the Holy Ecclesial, for your deeds you have been blessed by the Four Ascendants to bring upon change and be their God Hand. \
+    But this change will be resisted. Crush the dissent. Show them why it is better to rule in Gehenna than serve under the Firmament."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = RACES_ALL_KINDS //The Inhumen discriminate not.
 	outfit = /datum/outfit/job/roguetown/wretch/antipope
-	cmode_music = 'sound/music/combat_holy.ogg'
+	cmode_music = 'sound/music/combat_cult.ogg'
 	category_tags = list(CTAG_WRETCH)
 //Seer to see other Inhumen.
 	traits_applied = list(TRAIT_HERETIC_SEER, TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_RESONANCE, TRAIT_OVERTHERETIC)
-//Inverse of Priest. Kind of? STR instead of INT. CON/SPD instead of WIL.
+//Support class statline, somewhat better than Bishop's. No armour traits, DE or CR, so needs good stats desperately.
 	subclass_stats = list(
-		STATKEY_STR = 4,//No armour skill. No DE/CR. Gains for Graggar.
+		STATKEY_INT = 4,
 		STATKEY_CON = 2,
+		STATKEY_WIL = 2,
 		STATKEY_SPD = 2,
 	)
-	maximum_possible_slots = 1//There can only be one antipope.
-	subclass_skills = list(//Priest but not. Unlike the stats, we don't want to invert that. This'll be funny.
+	maximum_possible_slots = 1//THERE CAN BE ONLY ONE GOD HAND.
+	subclass_skills = list(//Has Expert in two comparatively bad weapon types, otherwise supposed to be a support rather than a frontliner.
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,//Show them who's the boss, buddy.
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT, //For self-defence, no STR so can't grab well, only resist
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/staves = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/magic/holy = SKILL_LEVEL_MASTER, //You are Ascendants' chosen.
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
 	)
-	extra_context = "Inhumen exclusive. No wretch bounty, for the purpose of infiltration and doomsaying. Given EVIL sermon abilities, torture and other quirks."
+	extra_context = "Inhumen exclusive. No wretch bounty, for the purpose of infiltration and doomsaying. Given EVIL sermon abilities, torture, maxed out miracles of their own patron and some extra miracles from other Inhumen patrons."
 
-//A mix of monk and mage for kit. Kind of.
+/datum/outfit/job/roguetown/wretch/antipope
+    has_loadout = TRUE
+
+//Starts with some basic leather armour.
 /datum/outfit/job/roguetown/wretch/antipope/pre_equip(mob/living/carbon/human/H)
 	if(!istype(H.patron, /datum/patron/inhumen))
 		H.set_patron(/datum/patron/inhumen/zizo)//If you're not of the Inhumen before? You are now!
 	head = /obj/item/clothing/head/roguetown/roguehood
-	shoes = /obj/item/clothing/shoes/roguetown/sandals
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
 	gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/knuckles
+	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/special
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/woodstaff/quarterstaff
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/ritechalk = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
+		/obj/item/rogueweapon/scabbard/sheath = 1,
 	)
-
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 6, TRUE)
 	if(istype (H.patron, /datum/patron/inhumen/zizo))
 		H.mind?.current.faction += "[H.name]_faction"
 
@@ -61,15 +74,81 @@
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence)//Shut that guy up!
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nondetection)//For the purposes of meeting folks.
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/message)//See above.
+	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/evil_resurrect)//Sacrifice a heart to bring somebody back to life.
 	H.verbs |= /mob/living/carbon/human/proc/completesermon_evil
 	H.verbs |= /mob/living/carbon/human/proc/revelations
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 
+/datum/outfit/job/roguetown/wretch/antipope/choose_loadout(mob/living/carbon/human/H)
+	. = ..()
+	var/t3_count = 1
+	var/t2_count = 1
+	var/t1_count = 1
+	var/t0_count = 1
+	var/list/t3 = list()
+	var/list/t2 = list()
+	var/list/t1 = list()
+	var/list/t0 = list()
+	for(var/path as anything in GLOB.patrons_by_faith[/datum/faith/inhumen])
+		var/datum/patron/patron = GLOB.patronlist[path]
+		if(!patron || !patron.name)
+			continue
+		for(var/miracle in patron.miracles)
+			var/obj/effect/proc_holder/checked_miracle = miracle
+			if(patron.miracles[checked_miracle] == CLERIC_T3)
+				t3[initial(checked_miracle.name)] = checked_miracle
+			if(patron.miracles[checked_miracle] == CLERIC_T2)
+				t2[initial(checked_miracle.name)] = checked_miracle
+			if(patron.miracles[checked_miracle] == CLERIC_T1)
+				t1[initial(checked_miracle.name)] = checked_miracle
+			if(patron.miracles[checked_miracle] == CLERIC_T0)
+				t0[initial(checked_miracle.name)] = checked_miracle
+	for(var/miracle in t3)
+		if(H.mind?.has_spell(t3[miracle]))
+			t3.Remove(miracle)
+	for(var/miracle in t2)
+		if(H.mind?.has_spell(t2[miracle]))
+			t2.Remove(miracle)
+	for(var/miracle in t1)
+		if(H.mind?.has_spell(t1[miracle]))
+			t1.Remove(miracle)
+	for(var/miracle in t0)
+		if(H.mind?.has_spell(t0[miracle]))
+			t0.Remove(miracle)
+	for(var/i in 1 to t3_count)
+		var/t3_choice = input(H,"Choose your Tier Three Miracle.", "TAKE UP DARK KNOWLEDGE ([t3_count] CHOICES REMAIN)") as anything in t3
+		if(t3_choice)
+			var/obj/effect/proc_holder/chosen_miracle = t3[t3_choice]
+			H.mind?.AddSpell(new chosen_miracle)
+			t3.Remove(t3_choice)
+			t3_count--
+	for(var/i in 1 to t2_count)
+		var/t2_choice = input(H,"Choose your Tier Two Miracle.", "TAKE UP DARK KNOWLEDGE ([t2_count] CHOICES REMAIN)") as anything in t2
+		if(t2_choice)
+			var/obj/effect/proc_holder/chosen_miracle = t2[t2_choice]
+			H.mind?.AddSpell(new chosen_miracle)
+			t2.Remove(t2_choice)
+			t2_count--
+	for(var/i in 1 to t1_count)
+		var/t1_choice = input(H,"Choose your Tier One Miracle.", "TAKE UP DARK KNOWLEDGE ([t1_count] CHOICES REMAIN)") as anything in t1
+		if(t1_choice)
+			var/obj/effect/proc_holder/chosen_miracle = t1[t1_choice]
+			H.mind?.AddSpell(new chosen_miracle)
+			t1.Remove(t1_choice)
+			t1_count--
+	for(var/i in 1 to t0_count)
+		var/t0_choice = input(H,"Choose your Tier Zero Miracle.", "TAKE UP DARK KNOWLEDGE ([t0_count] CHOICES REMAIN)") as anything in t0
+		if(t0_choice)
+			var/obj/effect/proc_holder/chosen_miracle = t0[t0_choice]
+			H.mind?.AddSpell(new chosen_miracle)
+			t0.Remove(t0_choice)
+			t0_count--
+
 /mob/living/carbon/human/proc/completesermon_evil()
-	set name = "EVIL Sermon"
+	set name = "Inhumen Sermon"
 	set category = "Antipope"
 
 	if (!mind)

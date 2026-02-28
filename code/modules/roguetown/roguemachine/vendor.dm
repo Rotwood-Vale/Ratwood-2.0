@@ -18,7 +18,7 @@
 	var/will_hawk = TRUE
 	var/max_items = 30
 
-/obj/structure/roguemachine/vendor/proc/get_group_items(var/param)
+/obj/structure/roguemachine/vendor/proc/get_group_items(param)
 	// Accepts either:
 	// - an object/ref (e.g. REF(rep) from attack_hand links), or
 	// - a key string in the form "type_name"

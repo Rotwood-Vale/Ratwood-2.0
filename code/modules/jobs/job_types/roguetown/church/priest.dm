@@ -304,7 +304,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 
 	return TRUE
 
-/mob/living/carbon/human/proc/churchecancurse(var/mob/living/carbon/human/H, apostasy = FALSE)
+/mob/living/carbon/human/proc/churchecancurse(mob/living/carbon/human/H, apostasy = FALSE)
 	if (!H.devotion && apostasy)
 		to_chat(src, span_warning("This one's connection to the ten is too shallow."))
 		return FALSE
@@ -328,7 +328,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 
 	return TRUE
 
-/mob/living/carbon/human/proc/churcheapostasy(var/mob/living/carbon/human/H in GLOB.player_list)
+/mob/living/carbon/human/proc/churcheapostasy(mob/living/carbon/human/H in GLOB.player_list)
 	set name = "Apostasy"
 	set category = "Priest"
 
@@ -397,7 +397,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 
 	return
 
-/mob/living/carbon/human/proc/churchexcommunicate(var/mob/living/carbon/human/H in GLOB.player_list)
+/mob/living/carbon/human/proc/churchexcommunicate(mob/living/carbon/human/H in GLOB.player_list)
 	set name = "Excommunicate"
 	set category = "Priest"
 
@@ -467,7 +467,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 
 /* PRIEST CURSE - powerful debuffs to punish ppl outside church otherwise use apostasy
 code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep that updated if this gets any changes.*/
-/mob/living/carbon/human/proc/churchpriestcurse(var/mob/living/carbon/human/H in GLOB.player_list)
+/mob/living/carbon/human/proc/churchpriestcurse(mob/living/carbon/human/H in GLOB.player_list)
 	set name = "Divine Curse"
 	set category = "Priest"
 

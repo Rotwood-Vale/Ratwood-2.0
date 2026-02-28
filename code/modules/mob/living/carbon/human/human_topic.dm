@@ -621,7 +621,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 	return str*/
 
-/proc/skilldiff_report(var/input)
+/proc/skilldiff_report(input)
 	switch (input)
 		if(-6)
 			return "<font color = '#ff4ad2'>I know nothing. They -- everything</font>"

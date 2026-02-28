@@ -98,7 +98,7 @@
 			return
 
 
-/mob/living/simple_animal/hostile/rogue/ghost/wraith/bullet_act(var/obj/projectile/P)
+/mob/living/simple_animal/hostile/rogue/ghost/wraith/bullet_act(obj/projectile/P)
 	if(P)
 		P.visible_message(span_danger("\The [P.name] passes through the [src.name]!"))
 		return FALSE // Ignore projectiles
@@ -231,7 +231,7 @@
 
 
 
-/mob/living/simple_animal/hostile/rogue/ghost/wraith/proc/grapples(var/mob/living/carbon/C)
+/mob/living/simple_animal/hostile/rogue/ghost/wraith/proc/grapples(mob/living/carbon/C)
 	C.buckle_mob(src, TRUE, TRUE, FALSE, 0, 0) // Buckle the wraith to the target
 	C.visible_message(span_danger("\The [src] strangles \the [C]'s with its cold ghostly hands!"), \
 	span_danger("\The [src] is strangling me with its cold ghostly hands!"))
