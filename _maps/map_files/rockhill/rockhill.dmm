@@ -10166,6 +10166,10 @@
 /obj/item/rope/chain,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/garrison)
+"cRw" = (
+/obj/structure/roguemachine/goldface/crimsonface,
+/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/area/rogue/under/cave)
 "cRx" = (
 /obj/structure/flora/roguegrass,
 /obj/structure/fluff/statue/tdummy,
@@ -14572,6 +14576,10 @@
 /obj/machinery/light/rogue/lanternpost,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
+"ecL" = (
+/obj/structure/roguethrone/announcement,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/under/cave)
 "ecM" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -33499,6 +33507,10 @@
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
+"jls" = (
+/obj/structure/underworld/carriage_normal,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/under/cave)
 "jlu" = (
 /obj/structure/stairs,
 /turf/open/floor/rogue/wood,
@@ -34171,6 +34183,10 @@
 /obj/structure/flora/tinymushrooms,
 /turf/open/floor/rogue/grasspurple,
 /area/rogue/under/cavewet)
+"juS" = (
+/obj/structure/roguemachine/cashface,
+/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/area/rogue/under/cave)
 "juV" = (
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/grassgrey,
@@ -206964,7 +206980,7 @@ vRu
 vRu
 vRu
 tQZ
-gRG
+ecL
 gRG
 pff
 gRG
@@ -213456,7 +213472,7 @@ dlE
 iil
 lYg
 lYg
-lYg
+jls
 rdb
 dlE
 xJL
@@ -213884,7 +213900,7 @@ dBW
 sIg
 fjw
 fjw
-eDN
+cRw
 lYg
 lYg
 lYg
@@ -214316,7 +214332,7 @@ tQZ
 sIg
 fwd
 fjw
-eDN
+juS
 lYg
 lYg
 lYg
