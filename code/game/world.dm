@@ -1,5 +1,4 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
-
 GLOBAL_VAR(restart_counter)
 
 //This runs before most anything else, for more info see:

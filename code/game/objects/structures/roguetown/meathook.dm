@@ -89,29 +89,29 @@
 				return
 		release_mob(M)
 
-/obj/structure/meathook/proc/release_mob(mob/living/M)
-	if(M.butcher_results)
-		for(var/item in M.butcher_results)
+/obj/structure/meathook/proc/release_mob(mob/living/released)
+	if(released.butcher_results)
+		for(var/item in released.butcher_results)
 			if(ispath(item, /obj/item/reagent_containers/food/snacks))
-				M.butcher_results[item] -= 1
-	if(M.guaranteed_butcher_results)
-		for(var/item in M.guaranteed_butcher_results)
+				released.butcher_results[item] -= 1
+	if(released.guaranteed_butcher_results)
+		for(var/item in released.guaranteed_butcher_results)
 			if(ispath(item, /obj/item/reagent_containers/food/snacks))
-				M.guaranteed_butcher_results[item] -= 1
-	var/matrix/rot = matrix(M.transform)
-	if(ispath(M, /mob/living/simple_animal))
+				released.guaranteed_butcher_results[item] -= 1
+	var/matrix/rot = matrix(released.transform)
+	if(ispath(released, /mob/living/simple_animal))
 		rot.Turn(270)
-		animate(M, transform = rot, time = 3)
+		animate(released, transform = rot, time = 3)
 	else
 		rot.Turn(180)
-		animate(M, transform = rot, time = 3)
-	M.pixel_y = 0
-	M.pixel_x = 0
-	M.adjustBruteLoss(30)
-	src.visible_message(span_danger("[M] falls free of [src]!"))
-	unbuckle_mob(M,force=1)
-	M.emote("scream")
-	M.AdjustParalyzed(20)
+		animate(released, transform = rot, time = 3)
+	released.pixel_y = 0
+	released.pixel_x = 0
+	released.adjustBruteLoss(30)
+	src.visible_message(span_danger("[released] falls free of [src]!"))
+	unbuckle_mob(released,force=1)
+	INVOKE_ASYNC(released, TYPE_PROC_REF(/mob, emote), "scream")
+	released.AdjustParalyzed(20)
 
 /obj/structure/meathook/Destroy()
 	if(has_buckled_mobs())

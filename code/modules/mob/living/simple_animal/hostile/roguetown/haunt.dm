@@ -158,9 +158,8 @@
 /obj/structure/bonepile/Destroy()
 	soundloop.stop()
 	spawning = FALSE
-	for(var/H in haunts)
-		var/mob/living/simple_animal/hostile/rogue/haunt/D = H
-		D.death()
+	for(var/mob/living/simple_animal/hostile/rogue/haunt as anything in haunts)
+		INVOKE_ASYNC(haunt, TYPE_PROC_REF(/mob, death))
 	var/spawned = pick(/obj/item/reagent_containers/powder/spice)
 	new spawned(get_turf(src))
 	. = ..()
@@ -191,8 +190,8 @@
 	. = ..()
 
 /mob/living/simple_animal/hostile/rogue/haunt/death(gibbed)
-	emote("death")
-	..()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "death")
+	return ..()
 
 /mob/living/simple_animal/hostile/rogue/haunt/Life()
 	. = ..()
