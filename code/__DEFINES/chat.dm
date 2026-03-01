@@ -58,6 +58,8 @@
 #define conditional_tooltip(normal_text, tooltip_text, condition) ((condition) ? (span_tooltip(tooltip_text, normal_text)) : (normal_text))
 /// Adds a generic box around whatever message you're sending in chat. Really makes things stand out.
 #define examine_block(str) ("<div class='examine_block'>" + str + "</div>")
+/// Allows the chat headshot image to zoom in when moused over
+#define chat_headshot(str) ("<div class='chat_headshot'><img src='" + str + "'/></div>")
 /// Creates a tooltip with HTML content (use with caution)
 #define SPAN_NARRATION(str) ("<span class='narration'>[str]</span>")
 #define SPAN_HEAR(str) ("<span class='hear'>[str]</span>")

@@ -318,8 +318,8 @@
 	sellprice = 222
 
 /obj/item/ingot/weeping/Initialize()
-  ..()
-  filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(64,65),rand(1,5),rand(1,5)))
+	. = ..()
+	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(64,65),rand(1,5),rand(1,5)))
 
 /obj/item/ingot/draconic
 	name = "draconic ingot"

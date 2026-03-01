@@ -186,16 +186,16 @@
 /mob/living/carbon/human/var/tmp/wings_force_open
 
 /mob/living/carbon/human/proc/OpenWings()
-    var/obj/item/organ/wings/W = getorganslot(ORGAN_SLOT_WINGS)
-    if(W && W.can_open && !W.is_open)
-        W.is_open = TRUE
-        update_body_parts(TRUE)
+	var/obj/item/organ/wings/W = getorganslot(ORGAN_SLOT_WINGS)
+	if(W && W.can_open && !W.is_open)
+		W.is_open = TRUE
+		update_body_parts(TRUE)
 
 /mob/living/carbon/human/proc/CloseWings()
-    var/obj/item/organ/wings/W = getorganslot(ORGAN_SLOT_WINGS)
-    if(W && W.can_open && W.is_open)
-        W.is_open = FALSE
-        update_body_parts(TRUE)
+	var/obj/item/organ/wings/W = getorganslot(ORGAN_SLOT_WINGS)
+	if(W && W.can_open && W.is_open)
+		W.is_open = FALSE
+		update_body_parts(TRUE)
 
 // FEEL EMOTE VERB
 /mob/living/carbon/human/verb/emote_feel()

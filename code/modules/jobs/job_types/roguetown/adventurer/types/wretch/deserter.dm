@@ -52,7 +52,7 @@
 			"Lucerne",
 			"Battle Axe",
 			"Lance + Kite Shield",
-			"Samshir",
+			"Shamshir",		//WHO MISPELLED IT BRO
 		)
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
@@ -78,7 +78,7 @@
 			if("Lance + Kite Shield")
 				r_hand = /obj/item/rogueweapon/spear/lance
 				backr = /obj/item/rogueweapon/shield/tower/metal
-			if("Samshir")
+			if("Shamshir")
 				r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 		var/helmets = list(
 			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,

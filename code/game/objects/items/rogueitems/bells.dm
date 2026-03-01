@@ -71,7 +71,7 @@
 		. = ..()
 		create_barriers()
 
-    // Function to create barriers around the bell
+	// Function to create barriers around the bell
 	/obj/structure/stationary_bell/proc/create_barriers()
 		for(var/direction in GLOB.cardinals)
 			var/turf/adjacent_turf = get_step(src, direction)
@@ -86,7 +86,7 @@
 	if(istype(used_item, /obj/item/rogueweapon/mace/church))
 		playsound(loc, 'sound/misc/bell.ogg', 50, 1)
 		ring_bell()	//sound effect for players within 150 tiles
-		loud_message("The church bell rings, echoing solemnly", hearing_distance = 150)
+		loud_message("The [src] rings, echoing solemnly", hearing_distance = 150)
 		visible_message(span_notice("[user] uses the [used_item] to ring the [src]."))
 		ringing = TRUE
 		sleep(cooldown)

@@ -184,8 +184,8 @@
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				I.pixel_x = initial(I.pixel_x) += CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				I.pixel_y = initial(I.pixel_y) += CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_x = initial(I.pixel_x) += CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_x
+				I.pixel_y = initial(I.pixel_y) += CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_y
 				return 1
 
 	return ..()
@@ -229,8 +229,8 @@
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				I.pixel_x = initial(I.pixel_x) += CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				I.pixel_y = initial(I.pixel_y) += CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_x = initial(I.pixel_x) += CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_x
+				I.pixel_y = initial(I.pixel_y) += CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_y
 				return 1
 
 /obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
@@ -586,8 +586,8 @@
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = initial(W.pixel_x) + CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = initial(W.pixel_y) + CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_x = initial(W.pixel_x) + CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_x
+				W.pixel_y = initial(W.pixel_y) + CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_y
 				return 1
 
 /obj/structure/rack/attack_paw(mob/living/user)
@@ -609,6 +609,7 @@
 	icon_state = "shelf"
 	density = FALSE
 	climbable = FALSE
+	climb_offset = 0
 	dir = SOUTH
 	pixel_y = 32
 
@@ -616,15 +617,18 @@
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "shelf_big"
 	climbable = FALSE
+	climb_offset = 0
 	dir = SOUTH
 	pixel_y = 16
 
 /obj/structure/rack/rogue/shelf/biggest
 	icon_state = "shelf_biggest"
+	climb_offset = 0
 	pixel_y = 0
 
 /obj/structure/rack/rogue/shelf/notdense // makes the wall mounted one less weird in a way, got downside of offset when loaded again tho
 	density = FALSE
+	climb_offset = 0
 	pixel_y = 24
 
 // Necessary to avoid a critical bug with disappearing weapons.
@@ -635,8 +639,8 @@
 				var/list/click_params = params2list(params)
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 					return
-				W.pixel_x = initial(W.pixel_x) + CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = initial(W.pixel_y) + CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_x = initial(W.pixel_x) + CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_x
+				W.pixel_y = initial(W.pixel_y) + CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_y
 				return 1
 	else
 		. = ..()

@@ -66,6 +66,9 @@ GLOBAL_VAR_INIT(adventurer_hugbox_duration_still, 3 MINUTES)
 		/datum/advclass/foreigner/slaver,
 		/datum/advclass/foreigner/dunewell,
 		/datum/advclass/foreigner/gronn,
+		/datum/advclass/foreigner/nostromo,
+		/datum/advclass/foreigner/aavnik,
+		/datum/advclass/foreigner/bluthund,
 	)
 
 /mob/living/carbon/human/proc/adv_hugboxing_start()

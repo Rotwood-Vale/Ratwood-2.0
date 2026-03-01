@@ -96,10 +96,10 @@
 	var/list/utility_bundle = list(	//Utility means exactly that. Nothing offensive and nothing that can affect another person negatively. (Barring Fetch)
 		/obj/effect/proc_holder/spell/self/message,
 		/obj/effect/proc_holder/spell/invoked/leap,
-		/obj/effect/proc_holder/spell/targeted/touch/lesserknock,
 		/obj/effect/proc_holder/spell/invoked/mending,
 		/obj/effect/proc_holder/spell/invoked/projectile/fetch,
 		/obj/effect/proc_holder/spell/invoked/blink,
+		/obj/effect/proc_holder/spell/invoked/incantation,
 	)
 	var/list/offensive_bundle = list(	//This is not meant to make them combat-capable. A weak offensive, and mostly defensive option.
 		/obj/effect/proc_holder/spell/invoked/projectile/arcynebolt, // PLACEHOLDER
@@ -133,6 +133,9 @@
 			ADD_TRAIT(user, TRAIT_MAGEARMOR, TRAIT_MIRACLE)
 			user.mind?.RemoveSpell(src.type)
 		if("Buffs")
+			if(!user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/incantation))
+				var/circuitus = new /obj/effect/proc_holder/spell/invoked/incantation
+				user.mind?.AddSpell(circuitus)
 			add_spells(user, buff_bundle, choice_count = 4)
 			ADD_TRAIT(user, TRAIT_MAGEARMOR, TRAIT_MIRACLE)
 			user.mind?.RemoveSpell(src.type)

@@ -241,7 +241,7 @@
 	smeltresult = /obj/item/ingot/copper
 
 /obj/item/rogueweapon/stoneaxe/handaxe
-	force = 19
+	force = 18
 	possible_item_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop, /datum/intent/sword/peel)
 	name = "hatchet"
 	desc = "An iron hand axe."
@@ -251,6 +251,10 @@
 	smeltresult = /obj/item/ingot/iron
 	gripped_intents = null
 	wdefense = 2
+	wlength = WLENGTH_SHORT
+	w_class = WEIGHT_CLASS_NORMAL
+	grid_width = 32
+	grid_height = 96
 
 /obj/item/rogueweapon/stoneaxe/woodcut/bronze
 	name = "bronze axe"
@@ -504,8 +508,6 @@
 	)
 
 /obj/item/rogueweapon/greataxe/psy
-	force = 15
-	force_wielded = 25
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike) //When possible, add the longsword's 'alternate grip' mechanic to let people flip this around into a Mace-scaling weapon with swapped damage.
 	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/mace/rangedthrust, /datum/intent/mace/strike) //Axe-equivalent to the Godendag or Grand Mace.
 	name = "psydonic poleaxe"

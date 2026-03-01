@@ -143,7 +143,10 @@
 	H.update_transform()
 	return TRUE
 
-/mob/living/carbon/human/species/goblin/update_body(redraw = FALSE)
+/mob/living/carbon/human/species/goblin/update_body_parts(redraw)
+	update_body()
+
+/mob/living/carbon/human/species/goblin/update_body()
 	remove_overlay(BODY_LAYER)
 	if(!dna || !dna.species)
 		return
@@ -366,7 +369,7 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE) // Trash mob
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-        
+
 //////////////////   INVADER ZIM	//////////////////
 
 /obj/structure/gob_portal

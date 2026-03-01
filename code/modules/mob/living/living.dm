@@ -512,7 +512,8 @@
 				return FALSE
 
 		update_pull_movespeed()
-		set_pull_offsets(target, state)
+		if(!target.is_shifted)
+			set_pull_offsets(target, state)
 	else
 		if(!supress_message)
 			var/sound_to_play = 'sound/combat/shove.ogg'
@@ -626,7 +627,8 @@
 		if(ismob(pulling))
 			var/mob/living/M = pulling
 			M.reset_offsets("pulledby")
-			reset_pull_offsets(pulling)
+			if(!M.is_shifted)
+				reset_pull_offsets(pulling)
 			if(HAS_TRAIT(M, TRAIT_GARROTED))
 				var/obj/item/inqarticles/garrote/gcord = src.get_active_held_item()
 				if(!gcord)
@@ -901,8 +903,7 @@
 		if(mind)
 			if(admin_revive)
 				mind.remove_antag_datum(/datum/antagonist/zombie)
-			for(var/S in mind.spell_list)
-				var/obj/effect/proc_holder/spell/spell = S
+			for(var/obj/effect/proc_holder/spell/spell as anything in mind.spell_list)
 				spell.updateButtonIcon()
 		qdel(GetComponent(/datum/component/rot))
 
@@ -919,7 +920,7 @@
 
 /mob/living/Crossed(atom/movable/AM)
 	. = ..()
-	for(var/i in get_equipped_items())
+	for(var/i as anything in get_equipped_items())
 		var/obj/item/item = i
 		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM, src)
 
@@ -1158,7 +1159,7 @@
 					riding_datum.force_dismount(M)
 			return
 
-/mob/living/proc/submit(var/instant = FALSE)
+/mob/living/proc/submit(instant = FALSE)
 	set name = "Yield"
 	set category = "IC"
 	set hidden = 1
@@ -1218,6 +1219,7 @@
 		client.chargedprog = 0
 		client.tcompare = null //so we don't shoot the attack off
 		client.mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
+		STOP_PROCESSING(SSmousecharge, client)
 	if(used_intent)
 		used_intent.on_mouse_up()
 	if(mmb_intent)

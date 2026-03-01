@@ -39,10 +39,10 @@
 		container.reagents.add_reagent(/datum/reagent/consumable/milk, milk_to_take)
 		B.milk_stored -= milk_to_take
 		user.visible_message(
-			span_notice("[user] milks [p_themselves()] into \the [container]."),
+			span_notice("[user] milks [(src == user) ? p_themselves() : src] into \the [container]."),
 			span_notice("I milk [(src == user) ? "myself" : src] into \the [container].")
 		)
-		user.sexcon.adjust_arousal(2)
+		src?.sexcon?.adjust_arousal(2)
 		try_milking(user, container)
 	else
 		to_chat(user, span_warning("[container] is full."))
@@ -72,7 +72,7 @@
 	
 	container.reagents.add_reagent(/datum/reagent/consumable/milk, milk_produced)
 	user.visible_message(
-		span_notice("[user] milks [src] into \the [container]."),
+		span_notice("[user] milks [(src == user) ? p_themselves() : src] into \the [container]."),
 		span_notice("I milk [(src == user) ? "myself" : src] into \the [container].")
 	)
 	

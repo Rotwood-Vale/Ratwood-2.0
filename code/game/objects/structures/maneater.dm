@@ -88,7 +88,7 @@
 	visible_message(span_warningbig("[src] begins to gnaw on [victim]!"))
 	addtimer(CALLBACK(src, PROC_REF(begin_eat), victim), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
 
-/obj/structure/flora/roguegrass/maneater/real/proc/begin_eat(mob/living/victim, var/chew_factor = 1)
+/obj/structure/flora/roguegrass/maneater/real/proc/begin_eat(mob/living/victim, chew_factor = 1)
 	if(victim.loc != loc)
 		return
 	if(!(has_buckled_mobs() && victim.buckled))
@@ -151,7 +151,7 @@
 		name = "grass"
 		icon_state = "maneater-hidden"
 
-/obj/structure/flora/roguegrass/maneater/real/user_unbuckle_mob(mob/living/M, mob/user, var/break_factor = 1)
+/obj/structure/flora/roguegrass/maneater/real/user_unbuckle_mob(mob/living/M, mob/user, break_factor = 1)
 	if(obj_broken)
 		..()
 		return

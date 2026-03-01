@@ -34,7 +34,7 @@
 	user.sexcon.show_progress = !do_subtle
 	user.visible_message(user.sexcon.spanify_force("[user] [do_subtle ? pick("subtly","sneakily","covertly","stealthily","quietly") : user.sexcon.get_generic_force_adjective()] strokes [target]'s clit..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
-		playsound(user, 'sound/misc/mat/fingering.ogg', 30, TRUE, -2, ignore_walls = FALSE)
+		user.sexcon.generic_sex_noise()
 
 	target.sexcon.suppress_moan = do_subtle
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)

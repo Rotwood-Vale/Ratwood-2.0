@@ -56,33 +56,33 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(client.is_new_player())
 		return
 
-	if(SSticker.HasRoundStarted())
-		src << browse(null, "window=lobby_window")
+	var/time_remaining = SSticker.GetTimeLeft()
+	if(SSticker.HasRoundStarted() || time_remaining <= 0)
+		client << browse(null, "window=lobby_window")
 		return
-	if(!winexists(src, "lobby_window"))
+	if(!winexists(client, "lobby_window"))
 		open_lobby()  // creates window + browser control
 		sleep(0)
-	var/lobby_visible = winget(src, "lobby_window", "is-visible")
+	var/lobby_visible = winget(client, "lobby_window", "is-visible")
 	if(lobby_visible == "false") // winget returns a string...
-		src << browse(null, "window=lobby_window")
+		client << browse(null, "window=lobby_window")
 		open_lobby()
 		sleep(0)
 
 	// UPDATE TIMER -- Script in html\lobby\lobby.html / .js
 	var/timer_text
-	var/time_remaining = SSticker.GetTimeLeft()
 	if (time_remaining > 0)
 		timer_text = "Time To Start: [round(time_remaining/10)]s"
 	else if (time_remaining == -10)
 		timer_text = "Time To Start: DELAYED"
 	else
 		timer_text = "Time To Start: SOON"
-		src << browse(null, "window=lobby_window")
+		client << browse(null, "window=lobby_window")
 		return
-	src << output(timer_text, "lobby_window.browser:update_timer")
+	client << output(timer_text, "lobby_window.browser:update_timer")
 
 	// Update players ready!!
-	src << output(
+	client << output(
 	"Total players ready: [SSticker.totalPlayersReady]",
 	"lobby_window.browser:update_ready_count"
 	)
@@ -92,7 +92,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		bonus_html = span_good("Ready Bonus!")
 	else
 		bonus_html = span_highlight("No bonus! Ready up!")
-	src << output(bonus_html, "lobby_window.browser:update_ready_bonus")
+	client << output(bonus_html, "lobby_window.browser:update_ready_bonus")
 	var/list/dat = list()
 	var/list/ready_players_by_job = list()
 	var/list/wanderer_jobs = list(
@@ -146,12 +146,12 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 			dat += "<h3><center><font color='[JCOLOR_BY_DEPARTMENT[department]]'>----- [department] -----</font></center></h3>"
 			dat += jobs_under_department
 
-	src << output(dat.Join(), "lobby_window.browser:update_jobs")
+	client << output(dat.Join(), "lobby_window.browser:update_jobs")
 
 /mob/dead/new_player/proc/open_lobby()
 	if (!client)
 		return
-	src << browse(
+	client << browse(
 		file("html/lobby/lobby.html"),
 		"window=lobby_window;size=330x430"
 	)

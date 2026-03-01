@@ -369,12 +369,12 @@
 	return TRUE
 
 /proc/revive_familiar(obj/item/natural/stone/magic_stone, mob/living/simple_animal/pet/familiar/fam, mob/living/carbon/user)
-    // Consume the stone
-    to_chat(user, span_notice("You channel the stone's magic into [fam.name], reviving them!"))
-    qdel(magic_stone)
+	// Consume the stone
+	to_chat(user, span_notice("You channel the stone's magic into [fam.name], reviving them!"))
+	qdel(magic_stone)
 
-    // Revive and fully heal the familiar
-    fam.revive(full_heal = TRUE, admin_revive = TRUE)
-    fam.familiar_summoner = user
-    fam.visible_message(span_notice("[fam.name] is restored to life by [user]'s magic!"))
-    return TRUE
+	// Revive and fully heal the familiar
+	fam.revive(full_heal = TRUE, admin_revive = TRUE)
+	fam.familiar_summoner = user
+	fam.visible_message(span_notice("[fam.name] is restored to life by [user]'s magic!"))
+	return TRUE

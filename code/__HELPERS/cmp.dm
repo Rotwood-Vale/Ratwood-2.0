@@ -118,7 +118,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_bodypart_by_body_part_asc(obj/item/bodypart/limb_one, obj/item/bodypart/limb_two)
 	return limb_one.body_part - limb_two.body_part
 /proc/cmp_filter_priority_desc(list/A, list/B) // Compares two lists by their 'priority' key. Used for filters.
-    return (A["priority"] || 0) - (B["priority"] || 0)
+	return (A["priority"] || 0) - (B["priority"] || 0)
 
 /proc/cmp_skills_for_display(datum/skill/A, datum/skill/B)
 	return sorttext("[B.abstract_type]", "[A.abstract_type]") || sorttext(B.name, A.name)

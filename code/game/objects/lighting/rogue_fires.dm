@@ -102,6 +102,12 @@
 	bulb_colour = "#8ee2a7"
 	desc = "Soft and green like... well, nothing you can really think of right now."
 
+/obj/machinery/light/rogue/firebowl/standing/red
+	icon_state = "standingr1"
+	base_state = "standingr"
+	bulb_colour = "#f02929"
+	desc = "An unearthly red, wafting a faint scent of brimstone."
+
 
 /obj/machinery/light/rogue/firebowl/standing/proc/knock_over() //use this later for jump impacts and shit
 	icon_state = "[base_state]over"
@@ -220,6 +226,35 @@
 /obj/machinery/light/rogue/wallfire/candle/blue/l
 	pixel_y = 0
 	pixel_x = -32
+
+//GREEN!
+/obj/machinery/light/rogue/wallfire/candle/green
+	bulb_colour = "#60f382"
+	icon_state = "wallcandleg1"
+	base_state = "wallcandleg"
+	desc = "Tiny greenish flames flicker with unearthly warmth."
+
+/obj/machinery/light/rogue/wallfire/candle/green/r
+	pixel_y = 0
+	pixel_x = 32
+/obj/machinery/light/rogue/wallfire/candle/green/l
+	pixel_y = 0
+	pixel_x = -32
+
+//RED!
+/obj/machinery/light/rogue/wallfire/candle/red
+	bulb_colour = "#f02929"
+	icon_state = "wallcandler1"
+	base_state = "wallcandler"
+	desc = "Tiny red flames flicker hatefully in the dark."
+
+/obj/machinery/light/rogue/wallfire/candle/red/r
+	pixel_y = 0
+	pixel_x = 32
+/obj/machinery/light/rogue/wallfire/candle/red/l
+	pixel_y = 0
+	pixel_x = -32
+
 
 /obj/machinery/light/rogue/wallfire/candle/weak
 	light_power = 0.9
@@ -638,7 +673,7 @@
 	if(on)
 		try_cook(cooktime_divisor)
 
-/obj/machinery/light/rogue/hearth/proc/try_cook(var/cooktime_divisor)
+/obj/machinery/light/rogue/hearth/proc/try_cook(cooktime_divisor)
 	if(initial(fueluse) > 0)
 		if(fueluse > 0)
 			fueluse = max(fueluse - 10, 0)

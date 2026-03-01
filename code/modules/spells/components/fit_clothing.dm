@@ -6,11 +6,11 @@
 // I nuked the former Searing Blade. Leaving 1 open for a future replacement
 
 /* Shamelessly copied from enchant weapon, this will be set for chest and leg light armors
- Component used for adding enchantment from the enchant weapon spell
- Three types of enchantments are available:
- 2. Durability: Increases the integrity and max integrity of the weapon by 100.
- The enchantment will lasts for 15 minutes, and will automatically refresh in the hand of an Arcyne user.
- There used to be a concept for a blade to set people on fire - but it was too broken if people didn't insta pat
+ * Component used for adding enchantment from the enchant weapon spell
+ * Three types of enchantments are available:
+ * 2. Durability: Increases the integrity and max integrity of the weapon by 100.
+ * The enchantment will lasts for 15 minutes, and will automatically refresh in the hand of an Arcyne user.
+ * There used to be a concept for a blade to set people on fire - but it was too broken if people didn't insta pat
 */
 
 /datum/component/fit_clothing
@@ -75,7 +75,7 @@
 		qdel(src)
 		return
 
-/datum/component/fit_clothing/proc/apply_enchant(var/obj/item/I, is_fix = FALSE)
+/datum/component/fit_clothing/proc/apply_enchant(obj/item/I, is_fix = FALSE)
 	if(enchant_type == DURABILITY_ENCHANT)
 		if(!is_fix) // Obj fix already increase durability.
 			I.max_integrity += DURABILITY_INCREASE

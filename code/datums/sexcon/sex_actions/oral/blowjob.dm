@@ -28,7 +28,7 @@
 
 /datum/sex_action/blowjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] sucks [target]'s cock..."))
-	user.make_sucking_noise()
+	user.sexcon.oralcourse_noise(user)
 	user.sexcon.do_thrust_animate(target)
 
 	user.sexcon.perform_sex_action(target, 2, 0, TRUE)

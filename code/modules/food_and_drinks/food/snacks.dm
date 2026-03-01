@@ -152,7 +152,8 @@ All foods are distributed among various categories. Use common sense.
 			var/obj/item/reagent_containers/NU = new become_rot_type(loc)
 			var/atom/movable/location = loc
 			NU.reagents.clear_reagents()
-			reagents.trans_to(NU.reagents, reagents.maximum_volume)
+			if(reagents)
+				reagents.trans_to(NU.reagents, reagents.maximum_volume)
 			qdel(src)
 			if(!location || !SEND_SIGNAL(location, COMSIG_TRY_STORAGE_INSERT, NU, null, TRUE, TRUE))
 				NU.forceMove(get_turf(NU.loc))
@@ -183,8 +184,8 @@ All foods are distributed among various categories. Use common sense.
 		return
 	if(cooktime)
 		var/added_input = input
-		// Pick flat burninput instead of skill-scaled input so high cooking skill doesn't make food burn faster 
-		if(!cooked_type && !fried_type) 
+		// Pick flat burninput instead of skill-scaled input so high cooking skill doesn't make food burn faster
+		if(!cooked_type && !fried_type)
 			added_input = burninput
 		if(cooking < cooktime)
 			cooking = cooking + added_input
@@ -258,6 +259,11 @@ All foods are distributed among various categories. Use common sense.
 	// check to see if what we're eating is appropriate fare for our "social class" (aka nobles shouldn't be eating sticks of butter you troglodytes)
 	if (ishuman(eater))
 		var/mob/living/carbon/human/human_eater = eater
+		//Firstly, if you can't even eat any of this in the first place? You get ill. No care for anything else.
+		if(HAS_TRAIT(human_eater, TRAIT_HEMOPHAGE))
+			to_chat(eater, span_red("I can't lyve off of this..."))
+			human_eater.add_nausea(50)//Take a guess.
+			return//Seriously. We don't care. Drink some blood, instead.
 		if(human_eater.culinary_preferences)
 			var/favorite_food_type = human_eater.culinary_preferences[CULINARY_FAVOURITE_FOOD]
 			if(favorite_food_type == type)
@@ -369,7 +375,7 @@ All foods are distributed among various categories. Use common sense.
 			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
 
 		if(M == user) //If you're eating it yourself.
-		/*			
+		/*
 			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
 				to_chat(M, span_warning("I don't feel like eating any more junk food at the moment!"))
 				return FALSE
@@ -395,7 +401,7 @@ All foods are distributed among various categories. Use common sense.
 				if(0 to NUTRITION_LEVEL_STARVING)
 					user.visible_message(span_notice("[user] hungrily [eatverb]s \the [src], gobbling it down!"), span_notice("I hungrily [eatverb] \the [src], gobbling it down!"))
 					M.changeNext_move(CLICK_CD_MELEE * 0.5)
-		/*			
+		/*
 			if(M.energy <= 50)
 				user.visible_message(span_notice("[user] hungrily [eatverb]s \the [src], gobbling it down!"), span_notice("I hungrily [eatverb] \the [src], gobbling it down!"))
 			else if(M.energy > 50 && M.energy < 500)

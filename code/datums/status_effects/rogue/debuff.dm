@@ -8,6 +8,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hungryt1
 	effectedstats = list(STATKEY_CON = -1)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hungryt1
 	name = "Hungry"
@@ -19,6 +20,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hungryt2
 	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_WIL = -1)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hungryt2
 	name = "Hungry"
@@ -30,6 +32,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hungryt3
 	effectedstats = list(STATKEY_STR = -5, STATKEY_CON = -3, STATKEY_WIL = -2)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hungryt3
 	name = "Hungry"
@@ -41,6 +44,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/thirstyt1
 	effectedstats = list(STATKEY_WIL = -1)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/thirstyt1
 	name = "Thirsty"
@@ -52,6 +56,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/thirstyt2
 	effectedstats = list(STATKEY_SPD = -1, STATKEY_WIL = -2)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/thirstyt2
 	name = "Thirsty"
@@ -63,6 +68,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/thirstyt3
 	effectedstats = list(STATKEY_STR = -1, STATKEY_SPD = -2, STATKEY_WIL = -3)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/thirstyt3
 	name = "Thirsty"
@@ -126,6 +132,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	effectedstats = list(STATKEY_SPD = -1)
 	duration = -1
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	name = "Dizzy"
@@ -137,6 +144,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	effectedstats = list(STATKEY_STR = -1, STATKEY_SPD = -2)
 	duration = -1
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	name = "Faint"
@@ -148,6 +156,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt3
 	effectedstats = list(STATKEY_STR = -3, STATKEY_SPD = -4)
 	duration = -1
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt3
 	name = "Drained"
@@ -157,6 +166,7 @@
 /datum/status_effect/debuff/sleepytime
 	id = "sleepytime"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/sleepytime
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/netted
 	name = "Net"
@@ -210,6 +220,7 @@
 /datum/status_effect/debuff/vamp_dreams
 	id = "sleepytime"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/vamp_dreams
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/vamp_dreams
 	name = "Insight"
@@ -710,8 +721,8 @@
 	var/mob/living/carbon/human/climber
 
 /datum/status_effect/debuff/climbing_lfwb/on_creation(mob/living/new_owner, new_stamcost)
-    stamcost = new_stamcost
-    return ..()
+	stamcost = new_stamcost
+	return ..()
 
 /datum/status_effect/debuff/climbing_lfwb/on_apply()
 	. = ..()
@@ -886,19 +897,19 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
 
 /datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source) // rewritten by @tmyqlfpir
-    SIGNAL_HANDLER
+	SIGNAL_HANDLER
 
-    var/turf/cur_turf = get_turf(owner)
-    if(!cur_turf)
-        return
-    if(!shadow)
-        shadow = new /obj/effect/flyer_shadow(cur_turf, owner)
-    while(isopenspace(cur_turf))
-        var/turf/temp_turf = GET_TURF_BELOW(cur_turf)
-        if(!temp_turf || isclosedturf(temp_turf))
-            break
-        cur_turf = temp_turf
-    shadow.forceMove(cur_turf)
+	var/turf/cur_turf = get_turf(owner)
+	if(!cur_turf)
+		return
+	if(!shadow)
+		shadow = new /obj/effect/flyer_shadow(cur_turf, owner)
+	while(isopenspace(cur_turf))
+		var/turf/temp_turf = GET_TURF_BELOW(cur_turf)
+		if(!temp_turf || isclosedturf(temp_turf))
+			break
+		cur_turf = temp_turf
+	shadow.forceMove(cur_turf)
 
 /datum/status_effect/debuff/harpy_flight/proc/remove_signals()
 	UnregisterSignal(owner, list(

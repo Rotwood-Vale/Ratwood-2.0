@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(title)
 
 	if(!file_path)
 #ifndef ROGUEWORLD
-		file_path = "icons/default_title.dmi"
+		file_path = "icons/title_static.png"
 #else
 		file_path = "icons/rogueworld_title.dmi"
 #endif

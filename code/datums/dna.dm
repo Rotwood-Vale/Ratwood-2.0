@@ -13,6 +13,8 @@
 	var/stability = 100
 	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 	var/list/organ_dna = list()
+	//Familytree variable
+	var/parent_mix
 	///Body markings of the DNA's owner. This is for storing their original state for re-creating the character. They'll get changed on species mutation
 	var/list/list/body_markings = list()
 	///Current body size, used for proper re-sizing and keeping track of that
@@ -331,3 +333,7 @@
 	if(value > values)
 		value = values
 	return value
+
+/mob/living/carbon/human/proc/MixDNA(mob/living/carbon/human/father = "", mob/living/carbon/human/mother = "", override = FALSE)
+	if(override == FALSE && dna.parent_mix)
+		dna.parent_mix = "[father]/[mother]"

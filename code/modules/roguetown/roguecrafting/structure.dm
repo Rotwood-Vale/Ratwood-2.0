@@ -1011,6 +1011,13 @@
 	craftdiff = 0
 	ignoredensity = TRUE
 
+/datum/crafting_recipe/roguetown/structure/curtaindirectional
+	name = "curtain (directional)"
+	result = /obj/structure/curtain/directional/crafted
+	reqs = list(/obj/item/natural/cloth = 2)
+	craftdiff = 1
+	ignoredensity = TRUE
+
 /datum/crafting_recipe/roguetown/structure/curtainblack
 	name = "curtain(black)"
 	result = /obj/structure/curtain/black

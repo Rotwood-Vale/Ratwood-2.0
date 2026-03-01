@@ -218,3 +218,16 @@
 	importexport_amt = 5
 	stockpile_limit = 25
 	passive_generation = 1
+
+/datum/roguestock/stockpile/viscera
+	name = "Viscera"
+	desc = "Viscera from animals."
+	item_type = /obj/item/alch/viscera
+	held_items = list(0, 2)
+	payout_price = 2
+	withdraw_price = 2
+	transport_fee = 1
+	export_price = 4
+	importexport_amt = 5
+	stockpile_limit = 12
+	passive_generation = 1

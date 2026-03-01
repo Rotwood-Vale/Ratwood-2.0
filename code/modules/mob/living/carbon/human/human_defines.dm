@@ -102,6 +102,19 @@
 
 	var/canseebandits = FALSE
 
+	//Familytree datum
+	//I dont know how to do UI huds so this will have to do for now.
+	var/family_UI = FALSE
+	var/mob/living/carbon/spouse_mob
+	var/image/spouse_indicator
+	var/setspouse
+	var/gender_choice_pref = ANY_GENDER
+	var/familytree_pref = FAMILY_NONE
+	var/datum/heritage/family_datum
+	var/list/temp_ui_list = list()
+	var/xenophobe = FALSE
+	var/restricted_species = null
+
 	var/marriedto
 
 	var/has_stubble = TRUE
@@ -112,18 +125,23 @@
 	var/funeral = FALSE // Whether the body has received rites or not.
 
 	var/datum/devotion/devotion = null // Used for cleric_holder for priests
+	var/datum/family_member/family_member_datum
 	var/datum/inspiration/inspiration = null
 
 	var/headshot_link = null
 	var/flavortext = null
 	var/ooc_notes = null
 	var/ooc_extra
+	var/ooc_extra_img
+	var/ooc_extra_img_link
 	var/rumour = null
 	var/noble_gossip = null
 	var/song_title
 	var/song_artist
 	var/received_resident_key = FALSE
 	var/nsfwflavortext = null
+	var/nsfw_ooc_extra_img
+	var/nsfw_ooc_extra_img_link
 	var/erpprefs = null
 
 	var/list/img_gallery = list()

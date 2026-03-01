@@ -42,6 +42,8 @@
 	var/headshot = ""
 	var/list/img_gallery = list()
 	var/list/nsfw_img_gallery = list()
+	var/ooc_extra_image = ""
+	var/nsfw_ooc_extra_image = ""
 	var/char_name
 	var/song_url
 	var/has_song = FALSE
@@ -50,7 +52,7 @@
 
 	if(ishuman(holder))
 		var/mob/living/carbon/human/holder_human = holder
-		if(!(holder.wear_armor && holder.wear_armor.flags_inv) && !(holder.wear_shirt && holder.wear_shirt.flags_inv))
+		if(!(holder.wear_armor && holder.wear_armor.flags_inv) && !(holder.wear_shirt && holder.wear_shirt.flags_inv) && !(holder_human.underwear))
 			is_naked = TRUE
 		obscured = ((!isobserver(user)) && !holder_human.client?.prefs?.masked_examine) && ((holder_human.wear_mask && (holder_human.wear_mask.flags_inv & HIDEFACE)) || (holder_human.head && (holder_human.head.flags_inv & HIDEFACE)))
 		flavor_text = obscured ? "Obscured" : holder.flavortext
@@ -64,6 +66,8 @@
 			headshot += holder.headshot_link
 			img_gallery = holder.img_gallery
 			nsfw_img_gallery = holder.nsfw_img_gallery
+			ooc_extra_image = holder.ooc_extra_img
+			nsfw_ooc_extra_image = holder.nsfw_ooc_extra_img
 		if(!holder.headshot_link)
 			headshot = "headshot_red.png"
 
@@ -77,6 +81,8 @@
 		headshot = pref.headshot_link
 		img_gallery = pref.img_gallery
 		nsfw_img_gallery = pref.nsfw_img_gallery
+		ooc_extra_image = pref.ooc_extra_img
+		nsfw_ooc_extra_image = pref.nsfw_ooc_extra_img
 		char_name = pref.real_name
 		song_url = pref.ooc_extra
 		if(viewing)
@@ -109,6 +115,8 @@
 		"ooc_notes_nsfw" = ooc_notes_nsfw,
 		"img_gallery" = img_gallery,
 		"nsfw_img_gallery" = nsfw_img_gallery,
+		"ooc_extra_image" = ooc_extra_image,
+		"nsfw_ooc_extra_image" = nsfw_ooc_extra_image,
 		"is_playing" = is_playing,
 		"has_song" = has_song,
 		"is_vet" = is_vet,

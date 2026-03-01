@@ -24,6 +24,20 @@
 		return TRUE
 	..()
 
+/obj/item/storage/belt/rogue/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rogueweapon/huntingknife))
+		var/obj/item/rogueweapon/huntingknife/K = W
+		if(K.sheathe_icon)
+			for(var/obj/item/rogueweapon/scabbard/sheath/sheath in contents)
+				if(!sheath.sheathed) // if no weapon in there
+					if(sheath.eat_sword(user, K, TRUE))
+						user.visible_message(
+							span_notice("[user] slips [W] into [src]'s sheath."),
+							span_notice("I slip [W] into [src]'s sheath.")
+						)
+						return
+	..()	
+
 /obj/item/storage/belt/rogue/leather
 	name = "belt"
 	desc = "A fine leather strap notched with holes for a buckle to secure itself."
@@ -282,6 +296,7 @@
 	icon_state = "satchelshort"
 	item_state = "satchelshort"
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP //Implement a check in the future that prevents more than one being worn at once.
+	component_type = /datum/component/storage/concrete/roguetown/satchelshort
 
 /obj/item/storage/backpack/rogue/satchel/beltpack
 	name = "beltpack" //Satchel that fits on the cloak or belt slot. Should be exceptionally rare for on-spawn loadouts, unless a flag's added to make it incompatable with regular satchels.

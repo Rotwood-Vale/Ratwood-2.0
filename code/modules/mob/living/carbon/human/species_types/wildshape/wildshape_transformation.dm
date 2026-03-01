@@ -67,6 +67,8 @@
 	W.adjustBruteLoss(getBruteLoss())
 	W.adjustFireLoss(getFireLoss())
 	W.adjustOxyLoss(getOxyLoss())
+	W.set_nutrition(nutrition)
+	W.set_hydration(hydration)
 
 	src.adjustBruteLoss(-src.getBruteLoss())
 	src.adjustFireLoss(-src.getFireLoss())
@@ -137,6 +139,8 @@
 	W.adjustBruteLoss(getBruteLoss())
 	W.adjustFireLoss(getFireLoss())
 	W.adjustOxyLoss(getOxyLoss())
+	W.set_nutrition(nutrition)
+	W.set_hydration(hydration)
 
 	src.adjustBruteLoss(-src.getBruteLoss())
 	src.adjustFireLoss(-src.getFireLoss())

@@ -471,7 +471,7 @@ SUBSYSTEM_DEF(migrants)
 	var/triumph_bonus = wave.triumph_total
 
 	// Triumph provides a linear bonus to weight (configurable multiplier)
-	var/triumph_multiplier = 2 // Each triumph point adds 2x weight
+	var/triumph_multiplier = 6 // Each triumph point adds 6x weight
 	var/final_weight = base_weight + (triumph_bonus * triumph_multiplier)
 
 	return max(final_weight, 1) // Ensure minimum weight of 1
@@ -544,8 +544,14 @@ SUBSYSTEM_DEF(migrants)
 			global_triumph_contributions[ckey] -= wave.type
 
 /datum/controller/subsystem/migrants/proc/update_ui()
+	var/countdown_text
+	if(!current_wave)
+		countdown_text = "The mist will clear out of the way in [time_until_next_wave / (1 SECONDS)] seconds..."
+	else
+		countdown_text = "They will arrive in [wave_timer / (1 SECONDS)] seconds..."
 	for(var/client/client as anything in get_all_migrants())
-		client.prefs.migrant.show_ui()
+		if(client?.mob)
+			client.mob << output(countdown_text, "migration.browser:update_migrant_countdown")
 
 /datum/controller/subsystem/migrants/proc/get_active_migrant_amount()
 	var/list/migrants = get_active_migrants()

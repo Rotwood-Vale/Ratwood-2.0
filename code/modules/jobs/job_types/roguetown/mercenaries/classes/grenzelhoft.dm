@@ -1,6 +1,6 @@
 /datum/advclass/mercenary/grenzelhoft
 	name = "Doppelsoldner"
-	tutorial = "You are a Doppelsoldner - \"Double-pay Mercenary\" - an experienced frontline swordsman trained by the Zenitstadt fencing guild."
+	tutorial = "You are a Doppelsöldner - \"Double-pay Mercenary\" - an experienced frontline swordsman trained by the Zenitstadt fencing guild."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft
@@ -35,7 +35,7 @@
 
 /datum/outfit/job/roguetown/mercenary/grenzelhoft/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a Doppelsoldner - \"Double-pay Mercenary\" - an experienced frontline swordsman trained by the Zenitstadt fencing guild."))
+	to_chat(H, span_warning("You are a Doppelsöldner - \"Double-pay Mercenary\" - an experienced frontline swordsman trained by the Zenitstadt fencing guild."))
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate
 	if(H.mind)
 		var/weapons = list("Zweihander", "Kriegmesser & Buckler")
@@ -68,7 +68,7 @@
 	H.merctype = 7
 
 /datum/advclass/mercenary/grenzelhoft/halberdier
-	name = "Halberdier"
+	name = "Hellebardier"
 	tutorial = "You're an experienced soldier skilled in the use of polearms and axes. Your equals make up the bulk of the mercenary guild's forces."
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_halberdier
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
@@ -101,13 +101,15 @@
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate
 	if(H.mind)
-		var/weapons = list("Halberd", "Partizan")
+		var/weapons = list("Halberd", "Partizan", "Eagle's Beak")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Halberd")
 				r_hand = /obj/item/rogueweapon/halberd
 			if("Partizan")
 				r_hand = /obj/item/rogueweapon/spear/partizan
+			if("Eagle's Beak")
+				r_hand = /obj/item/rogueweapon/eaglebeak
 	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
@@ -129,7 +131,7 @@
 
 //crossbow and axe class. Rearguard. Utility skills, no medium armor, no dodge expert. This is NOT a go-face-first-into-war class.
 /datum/advclass/mercenary/grenzelhoft/crossbowman
-	name = "Armbrustschutze"
+	name = "Armbrustschütze"
 	tutorial = "You're a proved marksman with a crossbow, and learned how to set up camp and defenses in the wild. The guild needs you."
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_crossbowman
 	traits_applied = list( TRAIT_STEELHEARTED)
@@ -229,7 +231,7 @@
 
 /datum/outfit/job/roguetown/mercenary/grenzelhoft_mage/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a Gefechtgelehrter - \"Combat Scholar\" - A proud magos from the Celestial Academy of Magos, who's skills in Siege Magic and Arcyne Physics are unmatched."))
+	to_chat(H, span_warning("You are a Gefechtsgelehrter - \"Combat Scholar\" - A proud magos from the Celestial Academy of Magos, who's skills in Siege Magic and Arcyne Physics are unmatched."))
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
 	backl = /obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff
 	cloak = /obj/item/clothing/cloak/stabard/grenzelmage

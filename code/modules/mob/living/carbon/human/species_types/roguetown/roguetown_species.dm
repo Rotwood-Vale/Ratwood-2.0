@@ -53,6 +53,8 @@
 			return strings("russian_replacement.json", type, convert_HTML = TRUE)
 		if("Pirate accent")
 			return strings("axian_replacement.json", type, convert_HTML = TRUE)
+		if("Low-Town accent")
+			return strings("poor_replacement.json", type, convert_HTML = TRUE)
 
 /datum/species/proc/get_accent(mob/living/carbon/human/H)
 	return get_accent_list(H,"full")

@@ -28,7 +28,7 @@
 		H.mind.add_antag_datum(new_antag)
 
 /datum/reagent/vampsolution
-	metabolization_rate = 0.5
+	metabolization_rate = 1
 
 /datum/reagent/vampsolution/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(30)
@@ -37,7 +37,9 @@
 			M.emote(pick("twitch_s","giggle"))
 		else
 			M.emote(pick("twitch_s","chuckle"))
-	M.apply_status_effect(/datum/status_effect/debuff/vampbite)
+	// Apply vampbite once, do not refresh duration endlessly
+	if(!M.has_status_effect(/datum/status_effect/debuff/vampbite))
+		M.apply_status_effect(/datum/status_effect/debuff/vampbite)
 	..()
 
 /atom/movable/screen/fullscreen/vampsolution
@@ -49,6 +51,7 @@
 
 /datum/reagent/vampsolution/on_mob_metabolize(mob/living/M, mob/living/S)
 	M.overlay_fullscreen("druqk", /atom/movable/screen/fullscreen/druqks)
+	M.set_drugginess(30)
 	M.update_body_parts_head_only()
 	if(M.client)
 		ADD_TRAIT(M, TRAIT_DRUQK, "based")

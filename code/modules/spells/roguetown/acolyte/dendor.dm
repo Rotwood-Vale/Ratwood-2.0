@@ -90,20 +90,15 @@
 	. = ..()
 
 	to_chat(user, span_notice("I begin enriching the soil around me!"))
-	if(!do_after(user, 2 SECONDS, progress = TRUE))
+	if(!do_after(user, 0.5 SECONDS, progress = TRUE))
 		revert_cast()
 		return FALSE
 
-	var/turf/target_turf = get_step(user, user.dir)
-	var/turf/target_turf_two = get_step(target_turf, turn(user.dir, 90))
-	var/turf/target_turf_three = get_step(target_turf, turn(user.dir, -90))
-	
-	if(!isclosedturf(target_turf) && !locate(/obj/structure/glowshroom) in target_turf && !locate(/obj/structure/glowshroom/dendorite) in target_turf)
-		new /obj/structure/glowshroom/dendorite(target_turf)
-	if(!isclosedturf(target_turf_two) && !locate(/obj/structure/glowshroom) in target_turf_two && !locate(/obj/structure/glowshroom/dendorite) in target_turf_two)
-		new /obj/structure/glowshroom/dendorite(target_turf_two)
-	if(!isclosedturf(target_turf_three) && !locate(/obj/structure/glowshroom) in target_turf_three && !locate(/obj/structure/glowshroom/dendorite) in target_turf_three)
-		new /obj/structure/glowshroom/dendorite(target_turf_three)
+	var/turf/T = user.loc
+	for(var/X in GLOB.cardinals)
+		var/turf/TT = get_step(T, X)
+		if(!isclosedturf(TT) && !locate(/obj/structure/glowshroom) in TT)
+			new /obj/structure/glowshroom(TT)
 	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/conjure_vines
@@ -128,12 +123,12 @@
 	var/turf/target_turf = get_step(user, user.dir)
 	var/turf/target_turf_two = get_step(target_turf, turn(user.dir, 90))
 	var/turf/target_turf_three = get_step(target_turf, turn(user.dir, -90))
-	if(!locate(/obj/structure/vine) in target_turf)
-		new /obj/structure/vine(target_turf)
-	if(!locate(/obj/structure/vine) in target_turf_two)
-		new /obj/structure/vine(target_turf_two)
-	if(!locate(/obj/structure/vine) in target_turf_three)
-		new /obj/structure/vine(target_turf_three)
+	if(!locate(/obj/structure/vine/dendor) in target_turf)
+		new /obj/structure/vine/dendor(target_turf)
+	if(!locate(/obj/structure/vine/dendor) in target_turf_two)
+		new /obj/structure/vine/dendor(target_turf_two)
+	if(!locate(/obj/structure/vine/dendor) in target_turf_three)
+		new /obj/structure/vine/dendor(target_turf_three)
 
 	return TRUE
 

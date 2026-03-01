@@ -181,7 +181,7 @@
 		used_name = f_title
 	return used_name
 
-/client/proc/job_greet(var/datum/job/greeting_job)
+/client/proc/job_greet(datum/job/greeting_job)
 	if(mob.job == greeting_job.title)
 		greeting_job.greet(mob)
 
@@ -262,6 +262,12 @@
 
 	if(social_rank)
 		H.social_rank = social_rank
+	if(istype(H, /mob/living/carbon/human))
+		var/mob/living/carbon/human/Hu = H
+		if(Hu.familytree_pref != FAMILY_NONE && !Hu.family_datum)
+			var/timer = rand(60, 180)
+			addtimer(CALLBACK(SSfamilytree, TYPE_PROC_REF(/datum/controller/subsystem/familytree, AddLocal), H, Hu.familytree_pref), timer SECONDS)
+
 	var/department = SSjob.bitflag_to_department(department_flag, obsfuscated_job)
 	if (!hidden_job)
 		var/mob/living/carbon/human/Hu = H

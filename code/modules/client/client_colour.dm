@@ -143,6 +143,9 @@
 /datum/client_colour/monochrome/blind
 	priority = 2
 
+/datum/client_colour/monochrome/blind/dullahan
+	priority = 2
+
 /datum/client_colour/stress_fade
 	colour = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 	priority = 0

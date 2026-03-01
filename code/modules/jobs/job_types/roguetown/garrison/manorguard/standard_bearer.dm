@@ -36,7 +36,6 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	pants = /obj/item/clothing/under/roguetown/splintlegs
-	r_hand = /obj/item/rogueweapon/spear/keep_standard
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
@@ -46,6 +45,16 @@
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
 	H.verbs |= /mob/proc/haltyell
+
+	if(H.mind)
+		var/weapons = list("Pike","Poleaxe")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		H.set_blindness(0)
+		switch(weapon_choice)
+			if("Pike")
+				r_hand = /obj/item/rogueweapon/spear/keep_standard
+			if("Poleaxe")
+				r_hand = /obj/item/rogueweapon/spear/keep_standard/poleaxe
 
 //These are really hacky, but it works.
 //One proc to moodbuff.
@@ -113,3 +122,77 @@
 					strdir = dir2text(dir)
 					var/fullmsg = span_warning("The standard shrieks, pulling at my mind from [strz ? "<b>[strz]</b>" : ""][strdir ? "[strz ? " and " : ""]<b>[strdir]</b>" : ""].")
 					to_chat(L, fullmsg)
+
+//Another, to give energy and a very poor heal to nearby retinue.
+//This looks strong, but it's mostly fluff. Very weak heal. Decent energy return.
+//Better results just drinking red and blue, but makes the standard bearer a solid addition to the squad.
+//Well, beyond their weapon and such, I suppose, at least...
+/mob/proc/standard_recuperate()
+	set name = "RECUPERATE"
+	set category = "Standard"
+	emote("standard_recuperate", intentional = TRUE)
+	stamina_add(rand(15,35))
+	energy_add(-200)//Law of exchange, or something.
+
+/datum/emote/living/standard_recuperate
+	key = "standard_recuperate"
+	message = "plants the standard!"
+	emote_type = EMOTE_VISIBLE
+	show_runechat = TRUE
+
+/datum/emote/living/standard_recuperate/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(do_after(user, 8 SECONDS))//RELAX, LADS!!
+		playsound(user.loc, 'sound/combat/shieldraise.ogg', 100, FALSE, -1)
+		if(.)
+			for(var/mob/living/carbon/human/L in viewers(7,user))
+				if(HAS_TRAIT(L, TRAIT_GUARDSMAN))
+					to_chat(L, span_monkeyhive("The standard eases my weary mind. I feel rested."))
+					L.apply_status_effect(/datum/status_effect/buff/healing, 0.2)//As much as a bard's lowest strength healing song. Poor. Very poor.
+					if(L.energy < L.max_energy)
+						L.energy_add(100)//Consider that the average player's is going to be 1k+. Enough to facilitate sprinting away from fighting, at 0.
+
+//Steady ahead, lads.
+//This gives light step and luck. Why? Mire walking, if needed. At the cost of your energy.
+/mob/proc/standard_steady()
+	set name = "STEADY"
+	set category = "Standard"
+	emote("standard_steady", intentional = TRUE)
+	stamina_add(rand(15,35))
+	energy_add(-300)//Ooough... help me!!!!
+
+/datum/emote/living/standard_steady
+	key = "standard_steady"
+	message = "plants the standard!"
+	emote_type = EMOTE_VISIBLE
+	show_runechat = TRUE
+
+/datum/emote/living/standard_steady/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(do_after(user, 8 SECONDS))//You really should just slow down. Take in the sights.
+		playsound(user.loc, 'sound/combat/shieldraise.ogg', 100, FALSE, -1)
+		if(.)
+			for(var/mob/living/carbon/human/L in viewers(7,user))
+				if(HAS_TRAIT(L, TRAIT_GUARDSMAN))
+					to_chat(L, span_monkeyhive("The Standard assures that we'll step true. Lightly. Steady. Unlikely to set off traps and tricks."))
+					L.apply_status_effect(/datum/status_effect/buff/standard_steady)
+
+/atom/movable/screen/alert/status_effect/buff/standard_steady
+	name = "Steady"
+	desc = "The Standard guides my steps. I can be sure of where I walk, trudging about with a lighter gait than I normally do..."
+	icon_state = "buff"
+
+/datum/status_effect/buff/standard_steady
+	id = "standard_steady"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/standard_steady
+	effectedstats = list(STATKEY_LCK = 1)
+	duration = 2 MINUTES
+
+/datum/status_effect/buff/standard_steady/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, id)
+
+/datum/status_effect/buff/standard_steady/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_LIGHT_STEP, id)
+

@@ -129,16 +129,18 @@
 				rank_color = "#ECB20A"
 			if(SOCIAL_RANK_ROYAL)
 				rank_color = "#FFBF00"
-		var/social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='[rank_color]'>⚜</font></A>"
+		var/social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⚜</font></A>"
+		if(family_datum)
+			social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⛯</font></A>"
 		var/display1
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
 		if ((valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot))
 			if(display_as_wanderer)
-				display1 = span_info("ø ------------ ø\n<img src=[headshot_link] width=100 height=100/>\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
+				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
 			else if(used_title)
-				display1 = span_info("ø ------------ ø\n<img src=[headshot_link] width=100 height=100/>\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
+				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
 			else
-				display1 = span_info("ø ------------ ø\n<img src=[headshot_link] width=100 height=100/>\nThis is the <EM>[used_name]</EM>, the [race_name].")
+				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is the <EM>[used_name]</EM>, the [race_name].")
 		else
 			if(display_as_wanderer)
 				display1 = span_info("ø ------------ ø\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
@@ -146,7 +148,7 @@
 				display1 = span_info("ø ------------ ø\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
 			else
 				display1 = span_info("ø ------------ ø\nThis is the <EM>[used_name]</EM>, the [race_name].")
-		. = list("[display1] [display2]")	
+		. = list("[display1] [display2]")
 
 		if(HAS_TRAIT(src, TRAIT_WITCH))
 			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_WITCH))
@@ -273,6 +275,9 @@
 			if(has_flaw(/datum/charflaw/addiction/lovefiend) && user.has_flaw(/datum/charflaw/addiction/lovefiend))
 				. += span_aiprivradio("[m1] as lovesick as I.")
 
+			if(has_flaw(/datum/charflaw/marked_by_baotha) && HAS_TRAIT(user, TRAIT_DEPRAVED))
+				. += span_aiprivradio("[m1] marked by the debauched scent of my patron.")
+
 			if(has_flaw(/datum/charflaw/addiction/junkie) && user.has_flaw(/datum/charflaw/addiction/junkie))
 				. += span_deadsay("[m1] carrying the same dust marks on their nose as I.")
 
@@ -307,6 +312,13 @@
 
 		if (HAS_TRAIT(src, TRAIT_LEPROSY))
 			. += span_necrosis("A LEPER...")
+
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(family_datum == H.family_datum && family_datum)
+				var/family_text = ReturnRelation(user)
+				if(family_text)
+					. += family_text
 
 		if (HAS_TRAIT(src, TRAIT_BEAUTIFUL))
 			switch (pronouns)
@@ -512,6 +524,10 @@
 		var/str = "[m3] [belt.get_examine_string(user)] about [m2] waist. "
 		str += belt.integrity_check(is_smart)
 		. += str
+		if(istype(belt, /obj/item/storage/belt/rogue)) // check if belt has dildo attached
+			var/obj/item/storage/belt/rogue/belt_with_dildo = belt
+			if(belt_with_dildo.attached_toy)
+				. += "[m3] [belt_with_dildo.attached_toy.get_examine_string(user)] attached to [m2] belt. "
 
 	//right belt
 	if(beltr && !(SLOT_BELT_R in obscured))
@@ -575,7 +591,7 @@
 
 	//ID
 	if(wear_ring && !(SLOT_RING in obscured))
-		var/str = "[wear_ring.get_examine_string(user)] on [m2] hands. "
+		var/str = "[m3] [wear_ring.get_examine_string(user)] on [m2] hands. "
 		if(is_smart && istype(wear_ring, /obj/item/clothing/ring/active))
 			var/obj/item/clothing/ring/active/AR = wear_ring
 			if(AR.cooldowny)
@@ -838,10 +854,10 @@
 		. += span_warning("[msg.Join("\n")]")
 
 	// Show especially large embedded objects at a glance
-	for(var/obj/item/bodypart/part in bodyparts)
-		if (LAZYLEN(part.embedded_objects))
-			for(var/obj/item/stuck_thing in part.embedded_objects)
-				if (stuck_thing.w_class >= WEIGHT_CLASS_SMALL)
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		if(LAZYLEN(part.embedded_objects))
+			for(var/obj/item/stuck_thing as anything in part.embedded_objects)
+				if(stuck_thing.w_class >= WEIGHT_CLASS_SMALL)
 					. += span_bloody("<b>[m3] \a [stuck_thing] stuck in [m2] [part.name]!</b>")
 
 	if(ishuman(user))
@@ -999,6 +1015,19 @@
 			if(femgen)
 				. += span_info(femgen)
 
+	// Print out branding
+	for(var/obj/item/bodypart/branded_bodypart as anything in bodyparts)
+		if(length(branded_bodypart.branded_writing) && get_location_accessible(src, branded_bodypart.body_zone))
+			. += span_info("[capitalize(m2)] [lowertext(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(branded_bodypart.branded_writing)]."
+		if(istype(branded_bodypart, /obj/item/bodypart/chest))
+			var/obj/item/bodypart/chest/buttocks = branded_bodypart
+			if(length(buttocks.branded_writing_on_buttocks) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
+				. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(buttocks.branded_writing_on_buttocks)]."
+		else if(istype(branded_bodypart, /obj/item/bodypart/head))
+			var/obj/item/bodypart/head/neck = branded_bodypart
+			if(length(neck.branded_writing_on_neck) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
+				. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
+
 	// Characters with the hunted flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
 		if(skipface && user.has_flaw(/datum/charflaw/hunted) && user != src)
@@ -1098,7 +1127,7 @@
 			if(HAS_TRAIT(examiner, TRAIT_COMMIE))
 				villain_text = span_notice("Free man!")
 			if(HAS_TRAIT(src,TRAIT_KNOWNCRIMINAL))
-				villain_text = span_userdanger("BANDIT!")
+				villain_text = span_userdanger("OUTLAW!")
 		if(mind.special_role == "Deadite")
 			villain_text = span_userdanger("DEADITE!")
 		if(mind.special_role == "Vampire Lord")

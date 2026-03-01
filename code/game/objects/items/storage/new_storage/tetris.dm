@@ -24,7 +24,7 @@
 	var/grid_height
 
 /obj/item/proc/inventory_flip(mob/user, force = FALSE)
-	if(!force && (user && ((!user.Adjacent(src) && !user.DirectAccess(src)) || !isliving(user))))
+	if(!force && (user && ((!user.Adjacent(src) && !user.IsDirectlyAccessible(src)) || !isliving(user))))
 		return
 	var/old_width = grid_width
 	var/old_height = grid_height
@@ -290,7 +290,7 @@
 	if(isitem(host))
 		var/obj/item/host_item = host
 		var/datum/component/storage/storage_internal = storing.GetComponent(/datum/component/storage)
-		if((storing.w_class >= host_item.w_class) && storage_internal && !allow_big_nesting)
+		if(!allow_big_nesting && (storing.w_class >= host_item.w_class) && storage_internal && !storage_internal.allow_nesting)
 			if(!stop_messages)
 				to_chat(user, span_warning("[host_item] cannot hold [storing] as it's a storage item of the same size!"))
 			return FALSE //To prevent the stacking of same sized storage items
