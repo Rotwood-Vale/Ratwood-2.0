@@ -1,5 +1,5 @@
 /datum/wound/facial
-	name = "facial trauma"
+	name = "facial trauma" // in implementation, this is for severed head organs, name here isn't indicative...
 	sound_effect = 'sound/combat/crit.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	whp = null
@@ -7,6 +7,7 @@
 	can_sew = FALSE
 	can_cauterize = FALSE
 	critical = FALSE
+	permanent = TRUE
 
 /datum/wound/facial/can_stack_with(datum/wound/other)
 	if(istype(other, /datum/wound/facial) && (type == other.type))
@@ -257,6 +258,7 @@
 		"The testicles are eviscerated!",
 	)
 	whp = null
+	permanent = TRUE
 
 /datum/wound/cbt/permanent/on_mob_gain(mob/living/affected)
 	. = ..()
