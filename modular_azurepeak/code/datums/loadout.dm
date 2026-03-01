@@ -1576,7 +1576,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/corset
 	name = "Corset"
 	path = /obj/item/clothing/suit/roguetown/armor/corset
-	triumph_cost = 3
 
 /datum/loadout_item/tri_moose_hood
 	name = "Moose Hood (Shaman)"
