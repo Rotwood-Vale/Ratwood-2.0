@@ -18,9 +18,9 @@ cfg
 data
 SQL
 tgui/node_modules
-tgstation.dmb
+Ratwood-2.0.dmb
 tgstation.int
-tgstation.rsc
+Ratwood-2.0.rsc
 tgstation.lk
 tgstation.dyn.rsc
 libmariadb.dll

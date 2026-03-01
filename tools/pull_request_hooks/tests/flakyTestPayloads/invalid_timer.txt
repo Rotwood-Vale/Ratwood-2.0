@@ -2300,15 +2300,15 @@
 2023-11-12T09:08:25.5002844Z Artifact test_artifacts_tramstation has been successfully uploaded!
 2023-11-12T09:08:25.5131976Z ##[group]Run tgstation/byond-client-compatibility-check@v3
 2023-11-12T09:08:25.5132416Z with:
-2023-11-12T09:08:25.5132646Z   dmb-location: tgstation.dmb
+2023-11-12T09:08:25.5132646Z   dmb-location: Ratwood-2.0.dmb
 2023-11-12T09:08:25.5132971Z   max-required-client-version: 514
 2023-11-12T09:08:25.5133284Z ##[endgroup]
 2023-11-12T09:08:25.5322365Z ##[group]Run (( 514 ))
 2023-11-12T09:08:25.5322641Z [36;1m(( 514 ))[0m
 2023-11-12T09:08:25.5367699Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
 2023-11-12T09:08:25.5368129Z ##[endgroup]
-2023-11-12T09:08:25.5463568Z ##[group]Run echo "required-client-version=$(( $( head -n2 tgstation.dmb | tail -n1 | cut -d " " -f 4 ) ))" >> $GITHUB_OUTPUT
-2023-11-12T09:08:25.5464593Z [36;1mecho "required-client-version=$(( $( head -n2 tgstation.dmb | tail -n1 | cut -d " " -f 4 ) ))" >> $GITHUB_OUTPUT[0m
+2023-11-12T09:08:25.5463568Z ##[group]Run echo "required-client-version=$(( $( head -n2 Ratwood-2.0.dmb | tail -n1 | cut -d " " -f 4 ) ))" >> $GITHUB_OUTPUT
+2023-11-12T09:08:25.5464593Z [36;1mecho "required-client-version=$(( $( head -n2 Ratwood-2.0.dmb | tail -n1 | cut -d " " -f 4 ) ))" >> $GITHUB_OUTPUT[0m
 2023-11-12T09:08:25.5503899Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
 2023-11-12T09:08:25.5504317Z ##[endgroup]
 2023-11-12T09:08:25.5643709Z ##[group]Run (( 514 <= 514 ))

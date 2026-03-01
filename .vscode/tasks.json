@@ -64,10 +64,10 @@
 		},
 		{
 			"type": "dreammaker",
-			"dme": "tgstation.dme",
+			"dme": "Ratwood-2.0.dme",
 			"problemMatcher": ["$dreammaker"],
 			"group": "build",
-			"label": "dm: build - tgstation.dme"
+			"label": "dm: build - Ratwood-2.0.dme"
 		},
 		{
 			"command": "${command:dreammaker.reparse}",
