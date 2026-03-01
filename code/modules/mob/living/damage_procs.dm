@@ -17,6 +17,12 @@
 		testing("faildam")
 		return 0
 	clear_typing_indicator()
+	
+	// Track combat damage for wound healing cooldown
+	if(iscarbon(src) && damage > 0)
+		var/mob/living/carbon/C = src
+		C.last_combat_time = world.time
+	
 	var/damage_amount =  forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)

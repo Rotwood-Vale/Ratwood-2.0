@@ -95,3 +95,5 @@
 	var/damage_overlay_cache_key
 	/// Cached key for body overlay state (facial features, etc) - invalidated when body state changes
 	var/body_overlay_cache_key
+	/// World time when last combat damage was taken - used for wound healing cooldown
+	var/last_combat_time = 0

@@ -75,6 +75,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/mealbuff
 	effectedstats = list(STATKEY_CON = 1)
 	duration = 30 MINUTES
+	tick_interval = 5 SECONDS // Process less frequently for better performance
+	var/healing_on_tick = 0.5 // 0.1 * 5 - scaled by tick_interval
 
 /atom/movable/screen/alert/status_effect/buff/mealbuff
 	name = "Good meal"
@@ -87,11 +89,25 @@
 	if(owner.has_status_effect(/datum/status_effect/buff/greatmealbuff))
 		owner.remove_status_effect(/datum/status_effect/buff/mealbuff)
 
+/datum/status_effect/buff/mealbuff/tick()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
+
 /datum/status_effect/buff/greatmealbuff
 	id = "greatmeal"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/greatmealbuff
 	effectedstats = list(STATKEY_CON = 1, STATKEY_WIL = 1)
 	duration = 30 MINUTES
+	tick_interval = 5 SECONDS // Process less frequently for better performance
+	var/healing_on_tick = 0.5 // 0.1 * 5 - scaled by tick_interval
 
 /atom/movable/screen/alert/status_effect/buff/greatmealbuff
 	name = "Great meal!"
@@ -104,11 +120,25 @@
 	if(owner.has_status_effect(/datum/status_effect/buff/mealbuff))
 		owner.remove_status_effect(/datum/status_effect/buff/mealbuff) //can't stack two meal buffs, it'll keep the highest one
 
+/datum/status_effect/buff/greatmealbuff/tick()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
+
 /datum/status_effect/buff/sweet
 	id = "sugar"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/sweet
 	effectedstats = list(STATKEY_LCK = 1)
 	duration = 8 MINUTES
+	tick_interval = 5 SECONDS // Process less frequently for better performance
+	var/healing_on_tick = 0.5 // 0.1 * 5 - scaled by tick_interval
 
 /atom/movable/screen/alert/status_effect/buff/sweet
 	name = "Sweet embrace"
@@ -118,6 +148,18 @@
 /datum/status_effect/buff/sweet/on_apply()
 	. = ..()
 	owner.add_stress(/datum/stressevent/sweet)
+
+/datum/status_effect/buff/sweet/tick()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
 
 /datum/status_effect/buff/druqks
 	id = "druqks"
@@ -1328,6 +1370,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/vigorized
 	duration = 10 MINUTES
 	effectedstats = list(STATKEY_SPD = 1, STATKEY_INT = 1)
+	var/healing_on_tick = 0.1
 
 /atom/movable/screen/alert/status_effect/vigorized
 	name = "Vigorized"
@@ -1341,6 +1384,18 @@
 /datum/status_effect/buff/vigorized/on_remove()
 	. = ..()
 	to_chat(owner, span_warning("The surge of energy inside me fades..."))
+
+/datum/status_effect/buff/vigorized/tick()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
 
 /datum/status_effect/buff/seelie_drugs
 	id = "seelie drugs"
@@ -1795,3 +1850,69 @@
 /atom/movable/screen/alert/status_effect/buff/oath_ring
 	name = "Oathmarked"
 	desc = "The oath drives me forward, so long as the reminder is kept near."
+
+// ============================================
+// HUNGER AND THIRST HEALING SYSTEM
+// ============================================
+
+// Well-Fed status effect - gives 0.2 wound healing per tick
+/datum/status_effect/buff/wellfed
+	id = "wellfed"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/wellfed
+	duration = 100 // Refreshed every tick by species.dm
+	tick_interval = 5 SECONDS // Process less frequently for better performance
+	var/healing_on_tick = 1 // 0.2 * 5 - scaled by tick_interval
+	var/nutrition_drain_per_tick = 2.5 // 0.5 * 5 - scaled by tick_interval
+
+/atom/movable/screen/alert/status_effect/buff/wellfed
+	name = "Well-Fed"
+	desc = "My body is well-nourished and healing naturally."
+	icon_state = "foodbuff"
+
+/datum/status_effect/buff/wellfed/tick()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	// Heal wounds
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
+	
+	// Drain nutrition as cost of healing
+	if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
+		C.adjust_nutrition(-nutrition_drain_per_tick)
+
+// Well-Hydrated status effect - gives 0.2 wound healing per tick  
+/datum/status_effect/buff/wellhydrated
+	id = "wellhydrated"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/wellhydrated
+	duration = 100 // Refreshed every tick by species.dm
+	tick_interval = 5 SECONDS // Process less frequently for better performance
+	var/healing_on_tick = 1 // 0.2 * 5 - scaled by tick_interval
+	var/hydration_drain_per_tick = 2.5 // 0.5 * 5 - scaled by tick_interval
+
+/atom/movable/screen/alert/status_effect/buff/wellhydrated
+	name = "Well-Hydrated"
+	desc = "My body is well-hydrated and healing naturally."
+	icon_state = "foodbuff"
+
+/datum/status_effect/buff/wellhydrated/tick()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	
+	// Check combat cooldown - no healing for 5 minutes after taking damage
+	if(world.time < C.last_combat_time + 5 MINUTES)
+		return
+	
+	// Heal wounds
+	C.heal_wounds(healing_on_tick)
+	C.update_damage_overlays()
+	
+	// Drain hydration as cost of healing
+	if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
+		C.adjust_hydration(-hydration_drain_per_tick)
