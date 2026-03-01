@@ -203,7 +203,6 @@
 /datum/status_effect/compliance
 	id = "compliance"
 	alert_type = /atom/movable/screen/alert/status_effect/compliance
-	needs_processing = FALSE
 
 /datum/status_effect/carebox
 	id = "carebox"

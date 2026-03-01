@@ -96,8 +96,6 @@
 				if(M.mind.language_holder)
 					var/finn
 					for(var/X in M.mind.language_holder.languages)
-						if(!X || !ispath(X, /datum/language))
-							continue
 						var/datum/language/LA = new X()
 						finn = TRUE
 						to_chat(M, "<span class='info'>[LA.name] - ,[LA.key]</span>")

@@ -34,8 +34,7 @@
 	var/atom/movable/screen/alert/status_effect/linked_alert = null
 	/// Each entry defines a stat affected by the status effect during its duration.
 	var/list/effectedstats = list()
-	/// if TRUE, we will be entered into SSfastprocess for ticking. if the effect is cleared/managed by another source, this should be FALSE.
-	var/needs_processing = TRUE
+
 
 	///Icon path for this effect's on-mob effect.
 	var/mob_effect_icon = 'icons/mob/mob_effects.dmi'
@@ -80,13 +79,11 @@
 		A?.attached_effect = src //so the alert can reference us, if it needs to
 		linked_alert = A //so we can reference the alert, if we need to
 
-	if(needs_processing)
-		START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SSfastprocess, src)
 	return TRUE
 
 /datum/status_effect/Destroy()
-	if(needs_processing)
-		STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSfastprocess, src)
 	if(owner)
 		linked_alert = null
 		owner.clear_alert(id)
@@ -99,9 +96,8 @@
 		on_remove()
 		owner = null
 
-	effectedstats = null
-	. = ..()
-	return QDEL_HINT_IWILLGC
+	effectedstats = list()
+	return ..()
 
 /datum/status_effect/process(wait)
 	if(QDELETED(owner))
