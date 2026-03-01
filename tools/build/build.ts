@@ -17,7 +17,7 @@ import { prependDefines } from "./lib/tgs";
 
 export const TGS_MODE = process.env.CBT_BUILD_MODE === "TGS";
 
-export const DME_NAME = "roguetown";
+export const DME_NAME = "Ratwood-2.0";
 
 Juke.chdir("../..", import.meta.url);
 
