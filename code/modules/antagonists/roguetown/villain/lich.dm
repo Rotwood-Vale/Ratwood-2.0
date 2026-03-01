@@ -13,6 +13,10 @@
 	var/list/phylacteries = list()
 	var/out_of_lives = FALSE
 
+	var/greater_skeleton_count = 0
+	var/greater_skeleton_cap = 4
+	var/list/greater_skeletons = list()
+
 	var/traits_lich = list(
 		TRAIT_INFINITE_STAMINA,
 		TRAIT_NOHUNGER,
@@ -55,13 +59,20 @@
 	equip_lich()
 	greet()
 	save_stats()
+	addtimer(CALLBACK(src, PROC_REF(increase_skeleton_cap)), 30 MINUTES)
 
 	return ..()
 
 /datum/antagonist/lich/greet()
 	to_chat(owner.current, span_userdanger("An immortal king cries for new subjects. Subdue and conquer."))
+	to_chat(owner.current, span_notice("You can summon up to [greater_skeleton_cap] greater skeletons. This limit will increase after 30 minutes."))
 	owner.announce_objectives()
 	..()
+
+/datum/antagonist/lich/proc/increase_skeleton_cap()
+	greater_skeleton_cap += 4
+	if(owner?.current)
+		to_chat(owner.current, span_boldnotice("Your necromantic powers grow stronger! You can now summon up to [greater_skeleton_cap] greater skeletons."))
 
 /datum/antagonist/lich/proc/save_stats()
 	STASTR = owner.current.STASTR
@@ -137,6 +148,7 @@
 	H.grant_language(/datum/language/undead)
 
 	if(H.mind)
+		H.verbs += /mob/living/carbon/human/proc/lich_global_announcement
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation)
@@ -290,17 +302,76 @@
 
 /obj/effect/proc_holder/spell/self/lich_announce
 	name = "Command Will"
-	desc = "Send a booming message to the undead under your will."
+	desc = "Send a telepathic message to the undead under your will."
 	recharge_time = 20 SECONDS
+	overlay_state = "message"
 
 /obj/effect/proc_holder/spell/self/lich_announce/cast(list/targets, mob/user)
 	if(user.stat)
+		return FALSE
+
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
 		return FALSE
 
 	var/calltext = input("Send Your Will To Your Undead", "UNDEAD ANNOUNCE") as text|null
 	if(!calltext)
 		return FALSE
 
-	priority_announce("[calltext]", title = "Your Lich King Commands", sound = 'sound/misc/deadbell.ogg', sender = user, receiver = /mob/living/carbon/human/species/skeleton)
+	var/skeleton_faction = "[H.real_name]_faction"
+	var/found_skeletons = FALSE
+
+	// Send to all skeletons with matching faction
+	for(var/mob/living/skeleton in GLOB.mob_list)
+		if(skeleton.stat == DEAD)
+			continue
+
+		// Check simple animal skeletons
+		if(istype(skeleton, /mob/living/simple_animal/hostile/rogue/skeleton))
+			var/mob/living/simple_animal/hostile/rogue/skeleton/S = skeleton
+			if(skeleton_faction in S.faction)
+				to_chat(S, span_boldnotice("Your master [H.real_name] commands: [calltext]"))
+				found_skeletons = TRUE
+
+		// Check carbon human skeletons (greater skeletons)
+		else if(istype(skeleton, /mob/living/carbon/human))
+			var/mob/living/carbon/human/skel_human = skeleton
+			if(skeleton_faction in skel_human.faction)
+				to_chat(skel_human, span_boldnotice("Your master [H.real_name] commands: [calltext]"))
+				found_skeletons = TRUE
+
+	// Also show to arcane eyes
+	for(var/mob/dead/observer/rogue/arcaneeye/A in GLOB.mob_list)
+		to_chat(A, span_boldnotice("Lich [H.real_name] commands their skeletons: [calltext]"))
+
+	if(found_skeletons)
+		to_chat(user, span_notice("You send your command to your skeletal minions."))
+	else
+		to_chat(user, span_warning("You have no skeletons to command."))
 
 	..()
+
+/mob/living/carbon/human/proc/lich_global_announcement()
+	set name = "Global Announcement"
+	set category = "LICH"
+
+	if(stat)
+		return
+
+	var/announcementinput = input("Announce your presence to the realm", "Make an Announcement") as text|null
+	if(announcementinput)
+		if(!src.can_speak_vocal())
+			to_chat(src, span_warning("I can't speak!"))
+			return FALSE
+		if(!COOLDOWN_FINISHED(src, lich_announcement))
+			to_chat(src, span_warning("I must wait before making another announcement."))
+			return FALSE
+		visible_message(span_warning("[src] channels dark energies to project their voice across the realm..."))
+		if(do_after(src, 15 SECONDS, target = src))
+			say(announcementinput)
+			priority_announce("[announcementinput]", "The Lich [real_name] Speaks", 'sound/misc/deadbell.ogg', sender = src)
+			COOLDOWN_START(src, lich_announcement, 60 MINUTES)
+		else
+			to_chat(src, span_warning("Your announcement was interrupted!"))
+			return FALSE
+

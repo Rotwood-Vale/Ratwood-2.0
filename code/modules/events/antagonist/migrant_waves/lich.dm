@@ -12,6 +12,7 @@
 		TAG_COMBAT,
 		TAG_VILLIAN,
 	)
+	allowed_storytellers = list(/datum/storyteller/zizo, /datum/storyteller/xylix)
 
 /datum/migrant_wave/lich
 	name = "Wandering Lich"
