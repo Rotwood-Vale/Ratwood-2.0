@@ -32,6 +32,11 @@
 	
 	if(obj_broken || !Adjacent(user))
 		return
+	
+	// Check for no reflection trait
+	if(HAS_TRAIT(H, TRAIT_NO_REFLECTION))
+		to_chat(H, span_danger("The mirror shows nothing where my reflection should be. I am unseen..."))
+		return
 
 	if(!HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
 		to_chat(H, span_warning("You look into the mirror but see only your normal reflection."))

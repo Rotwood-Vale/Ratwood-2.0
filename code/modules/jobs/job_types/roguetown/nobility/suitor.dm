@@ -21,6 +21,7 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_noble.ogg'
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
+	vice_restrictions = list(/datum/charflaw/nudist)
 	job_traits = list(TRAIT_NOBLE)
 
 /datum/outfit/job/roguetown/suitor

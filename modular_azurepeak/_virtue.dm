@@ -5,6 +5,8 @@ GLOBAL_LIST_EMPTY(virtues)
 	var/name
 	/// A brief, in-character description of what the virtue does.
 	var/desc
+	/// The category this virtue belongs to: "origin", "origin_items", or "feats"
+	var/category = "feats"
 	/// A list containing any traits we need to add to the mob.
 	var/list/added_traits = list()
 	/// An associative list containing any skills we want to adjust. You can also pass list objects into this in the following format: list(SKILL_TYPE, SKILL_INCREASE, SKILL_MAXIMUM) as needed.
@@ -17,13 +19,22 @@ GLOBAL_LIST_EMPTY(virtues)
 	var/list/added_stats = list()
 	/// The cost of the virtue to apply in TRIUMPH points, if any.
 	var/triumph_cost = 0
+	/// The cost of the virtue in virtue points. 5 = major combat, 4 = impactful, 2 = minor, 1 = origin items
+	var/virtue_cost = 0
 	/// A custom addendum that explains what the virtue does outside of the traits / skill adjustments.
 	var/custom_text
+	/// List of feat type paths that this origin blocks from being selected. Supports both specific types and general parent paths.
+	/// Example: list(/datum/virtue/utility/blacksmith) blocks only that feat, list(/datum/virtue/combat) blocks all combat feats
+	var/list/blocked_feats = list()
+	/// List of origin item type paths that this origin blocks from being selected. Supports both specific types and general parent paths.
+	var/list/blocked_items = list()
 
 /datum/virtue/New()
 	. = ..()
 	if (triumph_cost)
 		desc += "<b>Costs [triumph_cost] TRIUMPH.</b>"
+	if (virtue_cost)
+		desc += " <b>([virtue_cost] point\s)</b>"
 
 /datum/virtue/proc/apply_to_human(mob/living/carbon/human/recipient)
 	return

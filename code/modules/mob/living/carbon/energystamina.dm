@@ -118,6 +118,10 @@
 		if(energy <= 0)
 			if(iscarbon(src))
 				var/mob/living/carbon/C = src
+				// Weak heart: increased risk even without starvation
+				if(HAS_TRAIT(C, TRAIT_WEAK_HEART) && prob(25))
+					to_chat(C, span_danger("Your weak heart struggles as you push yourself too hard!"))
+					C.adjustOxyLoss(10)
 				if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
 					if(C.nutrition <= 0)
 						if(C.hydration <= 0)
@@ -176,8 +180,16 @@
 		addtimer(CALLBACK(src, PROC_REF(Immobilize), 30), 1 SECONDS)
 		if(iscarbon(src))
 			var/mob/living/carbon/C = src
-			if(C.get_stress_amount() >= 30)
+			// Weak heart: heart attack at half stress threshold (15 instead of 30)
+			var/stress_threshold = HAS_TRAIT(C, TRAIT_WEAK_HEART) ? 15 : 30
+			if(C.get_stress_amount() >= stress_threshold)
 				C.heart_attack()
+			// Weak heart: additional chance for heart attack when exhausted
+			else if(HAS_TRAIT(C, TRAIT_WEAK_HEART) && prob(10))
+				to_chat(C, span_warning("Your heart pounds dangerously in your chest!"))
+				C.blur_eyes(5)
+				if(C.get_stress_amount() >= 10 && prob(30))
+					C.heart_attack()
 			if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
 				if(C.nutrition <= 0)
 					if(C.hydration <= 0)

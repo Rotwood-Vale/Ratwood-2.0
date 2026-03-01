@@ -18,6 +18,8 @@
 	advjob_examine = FALSE
 	give_bank_account = 15
 	social_rank = SOCIAL_RANK_YEOMAN
+	vice_restrictions = list(/datum/charflaw/silverweakness, /datum/charflaw/noeyeall)
+	// NOTE: Noc-Scorched and Astrata-Scorched are now virtues, restrictions handled at virtue level
 
 	job_traits = list(
 		TRAIT_NOPAINSTUN,

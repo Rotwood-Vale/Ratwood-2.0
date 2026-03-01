@@ -77,6 +77,9 @@
 
 /datum/skill_holder/proc/adjust_experience(skill, amt, silent = FALSE)
 	var/datum/skill/S = GetSkillRef(skill)
+	// Block reading skill experience gain for illiterate characters
+	if(S.type == /datum/skill/misc/reading && amt > 0 && HAS_TRAIT(current, TRAIT_ILLITERATE))
+		return
 	skill_experience[S] = max(0, skill_experience[S] + amt) //Prevent going below 0
 	var/old_level = known_skills[S]
 	switch(skill_experience[S])
@@ -143,6 +146,11 @@
 		return
 	if(!skill)
 		CRASH("adjust_skillrank was called without a specified skill!")
+	// Block reading skill training for illiterate characters
+	if(skill == /datum/skill/misc/reading && amt > 0 && HAS_TRAIT(current, TRAIT_ILLITERATE))
+		if(!silent)
+			to_chat(current, span_warning("I cannot learn to read. The letters remain meaningless scribbles to me."))
+		return
 	/// The skill we are changing
 	var/datum/skill/skill_ref = GetSkillRef(skill)
 	/// How much experience the mob gets at the end

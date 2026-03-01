@@ -221,6 +221,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	spans |= speech_span
 
+	// Add comic sans span for characters with the annoying face trait
+	if(HAS_TRAIT(src, TRAIT_COMICSANS))
+		spans |= SPAN_SANS
+
 	if(language)
 		var/datum/language/L = GLOB.language_datum_instances[language]
 		var/list/chosen_spans
@@ -260,6 +264,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		send_speech_sign(message, message_range, src, bubble_type, spans, language, message_mode, original_message)
 	else
 		send_speech(message, message_range, src, bubble_type, spans, language, message_mode, original_message)
+
+	// Clamorous sating from speech
+	if(ishuman(src))
+		for(var/mob/living/carbon/human/H in hearers(7, src))
+			if(H.has_flaw(/datum/charflaw/addiction/clamorous))
+				var/clam_chance = 7 + (H.STALUC - 10)
+				if(prob(clam_chance))
+					H.sate_addiction(/datum/charflaw/addiction/clamorous)
 
 	if(succumbed)
 		succumb(1)

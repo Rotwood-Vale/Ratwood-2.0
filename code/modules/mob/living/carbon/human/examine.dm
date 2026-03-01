@@ -3,8 +3,8 @@
 		return
 	if(user.mind)
 		user.mind.i_know_person(src)
-	if(user.has_flaw(/datum/charflaw/paranoid))	//We hate different species, that are stronger than us, and aren't racist themselves
-		if(dna.species.name != user.dna.species.name && (STASTR - user.STASTR) > 1 && !has_flaw(/datum/charflaw/paranoid))
+	if(user.has_flaw(/datum/charflaw/addiction/paranoid))	//We hate different species, that are stronger than us, and aren't racist themselves
+		if(dna.species.name != user.dna.species.name && (STASTR - user.STASTR) > 1 && !has_flaw(/datum/charflaw/addiction/paranoid))
 			user.add_stress(/datum/stressevent/parastr)
 	if(HAS_TRAIT(user, TRAIT_JESTERPHOBIA) && job == "Jester")
 		user.add_stress(/datum/stressevent/jesterphobia)
@@ -16,35 +16,24 @@
 			user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
 			to_chat(user, span_info("Their beauty brings a smile to my face, and fortune to my steps!"))
 	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
-		to_chat(user, span_warning("[p_they(TRUE)] [p_are()] quite ugly."))
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)
-	if(HAS_TRAIT(src, TRAIT_COMICSANS) && user != src)
-		to_chat(user, span_sans("[p_they(TRUE)] [p_have()] an oddly annoying face and voice."))
-	if(HAS_TRAIT(src, TRAIT_SCARRED) && user != src)
-		to_chat(user, span_warning("[p_their(TRUE)] face is marked with terrible scars."))
-	if(HAS_TRAIT(src, TRAIT_DISFIGURED) && user != src)
-		to_chat(user, span_warning("[p_their(TRUE)] face is grotesquely disfigured, making [p_them()] unrecognizable."))
 	if(HAS_TRAIT(src, TRAIT_LEPROSY) && user != src)
 		user.add_stress(/datum/stressevent/leprosy)
 	if(HAS_TRAIT(src, TRAIT_UNSETTLING_BEAUTY) && user != src)
 		// 70% chance to give debuff, 30% chance to give buff
 		if(prob(70) && !user.has_stress_event(/datum/stressevent/uncanny))
 			user.add_stress(/datum/stressevent/uncanny)
-			to_chat(user, span_warning("[p_they(TRUE)] [p_are()] unsettlingly beautiful... something is deeply wrong."))
 		else
 			if(!user.has_stress_event(/datum/stressevent/beautiful))
 				user.add_stress(/datum/stressevent/beautiful)
-				to_chat(user, span_info("[p_they(TRUE)] [p_are()] hauntingly beautiful."))
 	if(HAS_TRAIT(src, TRAIT_BEAUTIFUL_UNCANNY) && user != src)
 		// Original 50/50 eerie beauty
 		if(prob(50) && !user.has_stress_event(/datum/stressevent/uncanny))
 			user.add_stress(/datum/stressevent/beautiful)
-			to_chat(user, span_info("[p_they(TRUE)] possess[p_es()] an otherworldly beauty."))
 		else
 			if(!user.has_stress_event(/datum/stressevent/beautiful))
 				user.add_stress(/datum/stressevent/uncanny)
-				to_chat(user, span_warning("There's something eerily wrong about [p_their()] appearance."))
 	// Apply Xylix buff when examining someone with the beautiful trait
 	if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy) && user.has_stress_event(/datum/stressevent/beautiful))
 		user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
@@ -97,6 +86,18 @@
 	else
 		on_examine_face(user)
 		var/used_name = name
+		// Scarred trait only hides the name, nothing else
+		if(HAS_TRAIT(src, TRAIT_SCARRED) && !observer_privilege)
+			// Use descriptor system like masked characters
+			var/list/d_list = get_mob_descriptors()
+			var/trait_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
+			var/stature_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_STATURE), "%DESC1%"))]"
+			var/descriptor_name = "[trait_desc] [stature_desc]"
+			if(descriptor_name != " " && descriptor_name != "")
+				used_name = descriptor_name
+			else
+				// Fallback to gender-based unknown name
+				used_name = "Unknown [(gender == FEMALE) ? "Woman" : "Man"]"
 		var/used_title = get_role_title()
 		// Check for cosmetic class titles (for advclass cosmetic variants)
 		if(mind && mind.cosmetic_class_title)
@@ -276,7 +277,7 @@
 				. += span_aiprivradio("[m1] as lovesick as I.")
 
 			if(has_flaw(/datum/charflaw/marked_by_baotha) && HAS_TRAIT(user, TRAIT_DEPRAVED))
-				. += span_aiprivradio("[m1] marked by the debauched scent of my patron.")
+				. += span_love("[m1] is marked by a debauched scent.")
 
 			if(has_flaw(/datum/charflaw/addiction/junkie) && user.has_flaw(/datum/charflaw/addiction/junkie))
 				. += span_deadsay("[m1] carrying the same dust marks on their nose as I.")
@@ -287,7 +288,7 @@
 			if(has_flaw(/datum/charflaw/addiction/alcoholic) && user.has_flaw(/datum/charflaw/addiction/alcoholic))
 				. += span_syndradio("[m1] struggling to hide the hangover, and the stench of spirits. We're alike.")
 
-			if(has_flaw(/datum/charflaw/paranoid) && user.has_flaw(/datum/charflaw/paranoid))
+			if(has_flaw(/datum/charflaw/addiction/paranoid) && user.has_flaw(/datum/charflaw/addiction/paranoid))
 				var/mob/living/carbon/human/H = user
 				if(dna.species.name == H.dna.species.name)
 					. += span_nicegreen("[m1] privy to the dangers of all these strangers around us. [m1] just as afraid as I am.")
@@ -309,6 +310,36 @@
 		var/inquisition_text = get_inquisition_text(user)
 		if(inquisition_text)
 			. +=span_notice(inquisition_text)
+		
+		// Show vices when examining yourself
+		if(user == src && ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(length(H.vices) > 0)
+				. += span_info("<b>My Vices:</b>")
+				for(var/datum/charflaw/vice in H.vices)
+					var/vice_info = "• [vice.name]"
+					// Show faction information for Averse and Paranoid vices
+					if(istype(vice, /datum/charflaw/averse))
+						if(user.client && user.client.prefs && user.client.prefs.averse_chosen_faction)
+							var/faction_name = "Unknown"
+							for(var/fname in GLOB.averse_factions)
+								if(GLOB.averse_factions[fname] == user.client.prefs.averse_chosen_faction)
+									faction_name = fname
+									break
+							vice_info += " <i>(Loathes: [faction_name])</i>"
+						else
+							vice_info += " <i>(No faction chosen)</i>"
+					else if(istype(vice, /datum/charflaw/addiction/paranoid))
+						if(user.client && user.client.prefs && user.client.prefs.paranoid_chosen_faction)
+							var/faction_name = "Unknown"
+							for(var/fname in GLOB.averse_factions)
+								if(GLOB.averse_factions[fname] == user.client.prefs.paranoid_chosen_faction)
+									faction_name = fname
+									break
+							vice_info += " <i>(Trusts: [faction_name])</i>"
+						else
+							vice_info += " <i>(No faction chosen)</i>"
+					. += span_info(vice_info)
 
 		if (HAS_TRAIT(src, TRAIT_LEPROSY))
 			. += span_necrosis("A LEPER...")
@@ -337,6 +368,57 @@
 					. += span_redtext("[m1] repugnant!")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_redtext("[m1] repulsive!")
+
+		if (HAS_TRAIT(src, TRAIT_COMICSANS))
+			. += span_sans("[m3] an oddly annoying face and voice.")
+
+		if (HAS_TRAIT(src, TRAIT_SCARRED))
+			. += span_redtext("[capitalize(m2)] face is marked with terrible scars.")
+
+		if (HAS_TRAIT(src, TRAIT_DISFIGURED))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					. += span_beautiful_masc("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+				if (SHE_HER, HE_HIM_F)
+					. += span_beautiful_fem("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+
+		if (HAS_TRAIT(src, TRAIT_UNSETTLING_BEAUTY))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					if(user.has_stress_event(/datum/stressevent/uncanny))
+						. += span_beautiful_masc("[m1] unsettlingly handsome... something is deeply wrong.")
+					else
+						. += span_beautiful_masc("[m1] hauntingly handsome.")
+				if (SHE_HER, HE_HIM_F)
+					if(user.has_stress_event(/datum/stressevent/uncanny))
+						. += span_beautiful_fem("[m1] unsettlingly beautiful... something is deeply wrong.")
+					else
+						. += span_beautiful_fem("[m1] hauntingly beautiful.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					if(user.has_stress_event(/datum/stressevent/uncanny))
+						. += span_beautiful_nb("[m1] unsettlingly attractive... something is deeply wrong.")
+					else
+						. += span_beautiful_nb("[m1] hauntingly attractive.")
+
+		if (HAS_TRAIT(src, TRAIT_BEAUTIFUL_UNCANNY))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					if(user.has_stress_event(/datum/stressevent/beautiful))
+						. += span_beautiful_masc("[m1] possess[p_es()] an otherworldly handsomeness.")
+					else
+						. += span_beautiful_masc("There's something eerily wrong about [m2] appearance.")
+				if (SHE_HER, HE_HIM_F)
+					if(user.has_stress_event(/datum/stressevent/beautiful))
+						. += span_beautiful_fem("[m1] possess[p_es()] an otherworldly beauty.")
+					else
+						. += span_beautiful_fem("There's something eerily wrong about [m2] appearance.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					if(user.has_stress_event(/datum/stressevent/beautiful))
+						. += span_beautiful_nb("[m1] possess[p_es()] an otherworldly allure.")
+					else
+						. += span_beautiful_nb("There's something eerily wrong about [m2] appearance.")
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
@@ -415,6 +497,14 @@
 		str += "[wear_shirt.integrity_check(is_smart)]"
 		if(is_stupid)
 			str = "[m3] some kind of shirt!"
+		. += str
+
+	//skin armor (natural armor layer)
+	if(skin_armor)
+		var/str = "[m3] a layer of [skin_armor.get_examine_string(user)]. "
+		str += "[skin_armor.integrity_check(is_smart)]"
+		if(is_stupid)
+			str = "[m3] some weird tough skin!"
 		. += str
 
 	//uniform
@@ -863,7 +953,23 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/stress = H.get_stress_amount()//stress check for racism
-		if(H.has_flaw(/datum/charflaw/paranoid) || stress >= 4)//Paranoid or stressed, for basic examine.
+		
+		// New Paranoid faction-based logic
+		if(H.has_flaw(/datum/charflaw/addiction/paranoid))
+			var/datum/charflaw/addiction/paranoid/paranoid_flaw = locate(/datum/charflaw/addiction/paranoid) in H.vices
+			if(!paranoid_flaw)
+				paranoid_flaw = locate(/datum/charflaw/addiction/paranoid) in list(H.charflaw)
+			if(paranoid_flaw && ishuman(src))
+				var/mob/living/carbon/human/examined = src
+				if(paranoid_flaw.check_faction(H, examined))
+					// Examining someone of own faction - sate addiction
+					H.sate_addiction(/datum/charflaw/addiction/paranoid)
+				else if(examined.mind?.assigned_role)
+					// Examining someone of different faction - add stress
+					H.add_stress(/datum/stressevent/paracrowd)
+		
+		// Old race-based stress for non-Paranoid or highly stressed individuals
+		if(!H.has_flaw(/datum/charflaw/addiction/paranoid) && stress >= 4)
 			if(H.dna.species.name != dna.species.name)
 				if(dna.species.stress_examine)//some species don't have a stress desc
 					. += dna.species.stress_desc

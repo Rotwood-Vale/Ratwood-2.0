@@ -17,6 +17,7 @@
 	max_pq = null
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_YEOMAN
+	vice_restrictions = list(/datum/charflaw/illiterate, /datum/charflaw/unintelligible)
 	job_subclasses = list(
 		/datum/advclass/seneschal/seneschal,
 		/datum/advclass/seneschal/headmaid,

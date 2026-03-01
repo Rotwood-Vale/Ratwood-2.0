@@ -575,6 +575,33 @@
 		added_def = 0,\
 	)
 
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/attack(mob/living/M, mob/living/user)
+	// Check for stake vulnerability - silver stakes are even more deadly
+	if(ishuman(M) && HAS_TRAIT(M, TRAIT_STAKE_VULNERABLE))
+		var/mob/living/carbon/human/H = M
+		var/target_zone = user.zone_selected
+		// If targeting torso/chest where the heart is
+		if(target_zone == BODY_ZONE_CHEST)
+			// Higher chance to hit heart with silver stake (blessed weapon)
+			if(prob(70)) // 70% chance to hit heart when targeting chest
+				H.visible_message(span_danger("[user] drives the blessed silver stake through [H]'s heart!"), \
+					span_userdanger("[user] drives a blessed silver stake through my heart!"))
+				to_chat(H, span_deadsay("The blessed silver pierces my cursed heart... Astrata claims me..."))
+				// Instant death for cursed beings
+				H.adjustBruteLoss(300)
+				H.emote("scream")
+				playsound(get_turf(H), 'sound/combat/hits/bladed/genstab (1).ogg', 100, TRUE)
+				H.Knockdown(50)
+				H.death()
+				return
+			else
+				to_chat(user, span_warning("The silver stake narrowly misses [H]'s heart!"))
+				H.visible_message(span_warning("[user] stabs [H] with the silver stake, but misses the heart!"), \
+					span_danger("[user] stabs me with a blessed stake!"))
+				// Even a miss with silver stake burns cursed beings
+				H.adjustFireLoss(20)
+	return ..()
+
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\

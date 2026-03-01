@@ -23,6 +23,7 @@
 	display_order = JDO_MARTYR
 	social_rank = SOCIAL_RANK_NOBLE
 	give_bank_account = TRUE
+	vice_restrictions = list(/datum/charflaw/nudist, /datum/charflaw/pacifism, /datum/charflaw/noeyeall)
 
 	cmode_music = 'sound/music/combat_martyrsafe.ogg'
 	job_traits = list(

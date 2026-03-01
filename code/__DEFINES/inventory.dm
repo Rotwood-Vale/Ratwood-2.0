@@ -208,6 +208,8 @@
 #define BELOW_HEAD	(CHEST | GROIN | VITALS | ARMS | HANDS | LEGS | FEET)
 #define BELOW_CHEST	(GROIN | VITALS | LEGS | FEET) //for water
 #define FULL_BODY	(FULL_HEAD | NECK | BELOW_HEAD)
+#define ALMOST_FULL_BODY	(CHEST | GROIN | LEGS | ARMS | HEAD) // To leave vulnerable at extremities.
+
 
 //defines for the index of hands
 #define LEFT_HANDS 1

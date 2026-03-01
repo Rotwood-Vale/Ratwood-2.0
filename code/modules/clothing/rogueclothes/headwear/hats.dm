@@ -200,6 +200,7 @@
 	sewrepair = TRUE
 	//dropshrink = 0.75
 	dynamic_hair_suffix = null
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/headband/bloodied
 	name = "bloodied headband"
@@ -274,6 +275,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	body_parts_covered = NONE
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/priesthat
 	name = "priest's hat"

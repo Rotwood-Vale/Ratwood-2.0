@@ -18,6 +18,7 @@
 	min_pq = 3 // Has actual responsibility and is a key figure in town.
 	max_pq = null
 	round_contrib_points = 3
+	vice_restrictions = list(/datum/charflaw/mute, /datum/charflaw/unintelligible)
 
 	job_traits = list(TRAIT_INTELLECTUAL, TRAIT_ARCYNE_T1, TRAIT_MAGEARMOR, TRAIT_SEEPRICES_SHITTY, TRAIT_HOMESTEAD_EXPERT)
 

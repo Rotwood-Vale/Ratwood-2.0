@@ -48,6 +48,9 @@
 	var/marking = "None"
 
 	var/shavelevel = 0
+
+	// Persistent body overlays
+	var/mutable_appearance/baotha_mark_overlay
 	var/breathe_tick = 0 // Used for gas mask delays.
 	var/socks = "Nude" //Which socks the player wants
 	var/backpack = DBACKPACK		//Which backpack type the player has chosen.

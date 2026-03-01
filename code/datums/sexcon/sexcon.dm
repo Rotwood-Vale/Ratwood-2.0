@@ -401,7 +401,20 @@
 /datum/sex_controller/proc/ejaculate()
 	SEND_SIGNAL(user, COMSIG_MOB_EJACULATED)
 	log_combat(user, user, "Ejaculated")
-	user.visible_message(span_love("[user] makes a mess!"))
+	
+	// Thrillseeker: suppress mess message during combat
+	var/suppress_mess = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.has_flaw(/datum/charflaw/addiction/thrillseeker))
+			var/datum/charflaw/addiction/thrillseeker/t_flaw = locate(/datum/charflaw/addiction/thrillseeker) in H.vices
+			if(!t_flaw)
+				t_flaw = locate(/datum/charflaw/addiction/thrillseeker) in list(H.charflaw)
+			if(t_flaw && t_flaw.in_combat)
+				suppress_mess = TRUE
+	
+	if(!suppress_mess)
+		user.visible_message(span_love("[user] makes a mess!"))
 	playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	add_cum_floor(get_turf(user))
 	after_ejaculation()
@@ -422,7 +435,20 @@
 	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
 		user.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	user.add_stress(/datum/stressevent/cumok)
-	user.emote("sexmoanhvy", forced = TRUE)
+	
+	// Thrillseeker: suppress moan during combat
+	var/suppress_moan = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.has_flaw(/datum/charflaw/addiction/thrillseeker))
+			var/datum/charflaw/addiction/thrillseeker/t_flaw = locate(/datum/charflaw/addiction/thrillseeker) in H.vices
+			if(!t_flaw)
+				t_flaw = locate(/datum/charflaw/addiction/thrillseeker) in list(H.charflaw)
+			if(t_flaw && t_flaw.in_combat)
+				suppress_moan = TRUE
+	
+	if(!suppress_moan)
+		user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
 	last_ejaculation_time = world.time
 	record_round_statistic(STATS_PLEASURES)

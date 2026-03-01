@@ -608,6 +608,32 @@
 						user.add_mob_blood(src)
 	send_item_attack_message(I, user, hitlim)
 	if(I.force_dynamic)
+		// Thrillseeker arousal increase and combat tracking
+		if(ishuman(user))
+			var/mob/living/carbon/human/attacker = user
+			if(attacker.has_flaw(/datum/charflaw/addiction/thrillseeker))
+				var/datum/charflaw/addiction/thrillseeker/t_flaw = locate(/datum/charflaw/addiction/thrillseeker) in attacker.vices
+				if(!t_flaw)
+					t_flaw = locate(/datum/charflaw/addiction/thrillseeker) in list(attacker.charflaw)
+				if(t_flaw)
+					if(!t_flaw.in_combat)
+						t_flaw.in_combat = TRUE
+						t_flaw.combat_start_time = world.time
+					if(attacker.sexcon)
+						attacker.sexcon.adjust_arousal(3)
+		
+		if(ishuman(src))
+			var/mob/living/carbon/human/defender = src
+			if(defender.has_flaw(/datum/charflaw/addiction/thrillseeker))
+				var/datum/charflaw/addiction/thrillseeker/t_flaw = locate(/datum/charflaw/addiction/thrillseeker) in defender.vices
+				if(!t_flaw)
+					t_flaw = locate(/datum/charflaw/addiction/thrillseeker) in list(defender.charflaw)
+				if(t_flaw)
+					if(!t_flaw.in_combat)
+						t_flaw.in_combat = TRUE
+						t_flaw.combat_start_time = world.time
+					if(defender.sexcon)
+						defender.sexcon.adjust_arousal(3)
 		return TRUE
 
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)

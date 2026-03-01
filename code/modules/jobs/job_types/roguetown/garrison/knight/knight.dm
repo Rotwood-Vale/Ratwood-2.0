@@ -24,6 +24,7 @@
 
 	cmode_music = 'sound/music/combat_knight.ogg'
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
+	vice_restrictions = list(/datum/charflaw/nudist, /datum/charflaw/pacifism, /datum/charflaw/noeyeall)
 	job_subclasses = list(
 		/datum/advclass/knight/heavy,
 		/datum/advclass/knight/footknight,

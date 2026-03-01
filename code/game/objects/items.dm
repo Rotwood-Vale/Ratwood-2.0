@@ -254,6 +254,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/no_use_cd = FALSE //if true, no cooldown when interacting with it
 	var/vorpal = FALSE // does this item/weapon circumvent two-stage death during dismemberment? (do not add this to anything but ultra rare shit)
 
+	/// Item is compatible with Nudist and Nude Sleeper vice traits. Nudists can equip these (where they otherwise couldn't), and nude sleepers can fall asleep while wearing these.
+	/// Mainly intended for small accessories and things that don't cover much, or for resolving unimmersive situations. See other examples of nudist-friendly items.
+	/// Stripping these items from nude sleepers is 2x faster while they are unconscious.
+	var/nudist_approved = FALSE
+
 /obj/item/Initialize()
 	. = ..()
 	if(!pixel_x && !pixel_y && !bigboy)
@@ -937,7 +942,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(M, span_warning("...What?"))
 		return FALSE
 
-	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
+	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, equipper)
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)

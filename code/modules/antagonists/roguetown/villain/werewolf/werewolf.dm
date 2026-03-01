@@ -77,7 +77,7 @@
 		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/skeleton))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
+	if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED) || HAS_TRAIT(src, TRAIT_SILVER_CURED))
 		return FALSE
 	return TRUE
 

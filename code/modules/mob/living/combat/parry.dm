@@ -288,6 +288,12 @@
 		if(H.stamina_add(parrydrain))
 			if(W)
 				playsound(get_turf(src), pick(W.parrysound), 100, FALSE)
+				// Clamorous sating from parry sounds
+				for(var/mob/living/carbon/human/H2 in hearers(7, src))
+					if(H2.has_flaw(/datum/charflaw/addiction/clamorous))
+						var/clam_chance = 7 + (H2.STALUC - 10)
+						if(prob(clam_chance))
+							H2.sate_addiction(/datum/charflaw/addiction/clamorous)
 			if(src.client)
 				record_round_statistic(STATS_PARRIES)
 			if(istype(rmb_intent, /datum/rmb_intent/riposte))
@@ -307,6 +313,12 @@
 	else
 		if(W)
 			playsound(get_turf(src), pick(W.parrysound), 100, FALSE)
+			// Clamorous sating from parry sounds
+			for(var/mob/living/carbon/human/H2 in hearers(7, src))
+				if(H2.has_flaw(/datum/charflaw/addiction/clamorous))
+					var/clam_chance = 7 + (H2.STALUC - 10)
+					if(prob(clam_chance))
+						H2.sate_addiction(/datum/charflaw/addiction/clamorous)
 		return TRUE
 
 /mob/proc/do_unarmed_parry(parrydrain as num, mob/living/user)
@@ -314,6 +326,12 @@
 		var/mob/living/carbon/human/H = src
 		if(H.stamina_add(parrydrain))
 			playsound(get_turf(src), pick(parry_sound), 100, FALSE)
+			// Clamorous sating from unarmed parry sounds
+			for(var/mob/living/carbon/human/H2 in hearers(7, src))
+				if(H2.has_flaw(/datum/charflaw/addiction/clamorous))
+					var/clam_chance = 7 + (H2.STALUC - 10)
+					if(prob(clam_chance))
+						H2.sate_addiction(/datum/charflaw/addiction/clamorous)
 			src.visible_message(span_warning("<b>[src]</b> parries [user]!"))
 			if(src.client)
 				record_round_statistic(STATS_PARRIES)
@@ -325,4 +343,10 @@
 		if(src.client)
 			record_round_statistic(STATS_PARRIES)
 		playsound(get_turf(src), pick(parry_sound), 100, FALSE)
+		// Clamorous sating from unarmed parry sounds
+		for(var/mob/living/carbon/human/H2 in hearers(7, src))
+			if(H2.has_flaw(/datum/charflaw/addiction/clamorous))
+				var/clam_chance = 7 + (H2.STALUC - 10)
+				if(prob(clam_chance))
+					H2.sate_addiction(/datum/charflaw/addiction/clamorous)
 		return TRUE

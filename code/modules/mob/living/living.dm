@@ -1399,6 +1399,9 @@
 			return
 		if(L.compliance || L.surrendering)
 			surrender_mod = 0.5
+		else if(HAS_TRAIT(L, TRAIT_NUDE_SLEEPER))
+			if(what.nudist_approved && (L.stat != CONSCIOUS))
+				surrender_mod = 0.5 // concession for letting nude sleepers wear certain items: people can swipe them fast
 
 	if(!who.Adjacent(src))
 		return

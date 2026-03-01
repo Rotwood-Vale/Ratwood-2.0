@@ -73,13 +73,13 @@
 	update_stamina()
 	update_energy()
 	
-	// Process all vices
+	// Process vices that need life ticks (performance optimization)
 	if(mind && length(vices))
 		for(var/datum/charflaw/vice in vices)
-			if(!vice.ephemeral)
+			if(!vice.ephemeral && vice.needs_life_tick)
 				vice.flaw_on_life(src)
 	// Legacy single vice support
-	else if(charflaw && !charflaw.ephemeral && mind)
+	else if(charflaw && !charflaw.ephemeral && charflaw.needs_life_tick && mind)
 		charflaw.flaw_on_life(src)
 	
 	if(health <= 0)

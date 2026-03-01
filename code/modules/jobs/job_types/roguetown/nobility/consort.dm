@@ -20,6 +20,7 @@
 	min_pq = 5
 	max_pq = null
 	round_contrib_points = 3
+	vice_restrictions = list(/datum/charflaw/nudist)
 
 /datum/job/roguetown/exlady
 	title = "Consort Dowager"

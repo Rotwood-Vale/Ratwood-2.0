@@ -14,17 +14,20 @@
 	static_price = FALSE
 	resistance_flags = FIRE_PROOF
 
-//Kobolds eating GEMS. Dwarves, behold, your BANE.
+//Kobolds and Lithovores eating GEMS. Dwarves, behold, your BANE.
 /obj/item/roguegem/attack(mob/living/M, mob/user)
 	testing("attack")
 	if(!user.cmode)
 
-		if(iskobold(M))
+		if(iskobold(M) || HAS_TRAIT(M, TRAIT_LITHOVORE))
 			if(M == user)
 				user.visible_message(span_warning("[user] is attempting to eat [src]!"), span_warning("I begin to eat [src]!"))
 			else
 				user.visible_message(span_warning("[user] begins to force [M] to eat [src]!"), span_warning("I attempt to force [M] to eat [src]!"))
 			if(do_after(user, 40))
+				// Provide nutrition based on gem value
+				var/nutrition_amount = sellprice * 0.15
+				M.adjust_nutrition(nutrition_amount)
 				var/healydoodle_gems = sellprice*0.6
 				M.apply_status_effect(/datum/status_effect/buff/gemmuncher, healydoodle_gems)
 				playsound(get_turf(src), 'modular_azurepeak/sound/spellbooks/glass.ogg', 100)
@@ -250,12 +253,12 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
-//Kobolds eating RIDDLES. PSYDON WEPT.
+//Kobolds and Lithovores eating RIDDLES. PSYDON WEPT.
 /obj/item/riddleofsteel/attack(mob/living/M, mob/user)
 	testing("attack")
 	if(!user.cmode)
 
-		if(iskobold(M))
+		if(iskobold(M) || HAS_TRAIT(M, TRAIT_LITHOVORE))
 			if(M == user)
 				user.visible_message(span_warning("[user] is attempting to eat [src]!"), span_warning("I begin to eat [src]!"))
 			else
@@ -272,6 +275,9 @@
 					M.visible_message(span_deadsay("[src] explodes in a shower of arcyne fire and energy, violently engulfing [M]!"))
 					M.add_stress(/datum/stressevent/riddle_munch)//You still get the stress, even if you don't get the heal.
 				else//You won the toss, but you still lose. Because this is a waste of a riddle.
+					// Provide nutrition for successful consumption
+					var/nutrition_amount = sellprice * 0.1
+					M.adjust_nutrition(nutrition_amount)
 					var/healydoodle_riddle = sellprice*0.5//Not as effective, on a per-value basis. But it's still MUCH better.
 					M.apply_status_effect(/datum/status_effect/buff/gemmuncher, healydoodle_riddle)
 					M.add_stress(/datum/stressevent/riddle_munch)//Why would you do this?

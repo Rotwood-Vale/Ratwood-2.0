@@ -1,6 +1,7 @@
 // Virtue Packs - Triumph-cost combinations of virtues that make thematic sense together
 
 /datum/virtue/pack
+	category = "packs"
 	/// List of virtue types that this pack grants
 	var/list/granted_virtues = list()
 
@@ -18,27 +19,16 @@
 			V.handle_added_languages(recipient)
 			V.handle_stats(recipient)
 
-// Bronze Golem Pack: Both Bronze Arms
-// For those who have replaced both arms with mechanical prosthetics
-/datum/virtue/pack/bronzegolem
-	name = "Bronze Golem (-3 TRI)"
-	desc = "Through wealth, misfortune, or perhaps experimentation, both of my arms have been replaced with bronze prosthetics. I am part man, part machine - a walking testament to artifice."
-	triumph_cost = 3
-	granted_virtues = list(
-		/datum/virtue/utility/bronzearm_r,
-		/datum/virtue/utility/bronzearm_l
-	)
-	custom_text = "Grants both Bronze Arm virtues:\n\
-	- Bronze Arm (R): Right arm replaced with bronze prosthetic\n\
-	- Bronze Arm (L): Left arm replaced with bronze prosthetic\n\
-	- +1 Engineering skill from studying the mechanisms"
+// NOTE: Bronze Golem pack has been removed
+// Use the new Prosthetic Limbs virtue system instead, which allows selecting all 4 limbs
+// in bronze, iron, or steel appearance with the same functionality
 
 // Enchanting Performer Pack: Socialite + Performer + Second Voice
 // For entertainers, bards, and charismatic performers
 /datum/virtue/pack/enchanter
-	name = "Enchanting Performer (-12 TRI)"
+	name = "Enchanting Performer"
 	desc = "I am a master of the stage and salon alike - beautiful, talented, and able to become anyone through voice and charm. My performances captivate audiences, and my social graces open every door."
-	triumph_cost = 12
+	virtue_cost = 10
 	granted_virtues = list(
 		/datum/virtue/utility/socialite,
 		/datum/virtue/utility/performer,
@@ -52,9 +42,9 @@
 // Traveling Scholar Pack: Linguist + Rich and Shrewd + Equestrian
 // For worldly scholars who have traveled extensively and accumulated wealth and knowledge
 /datum/virtue/pack/travelingscholar
-	name = "Traveling Scholar (-15 TRI)"
+	name = "Traveling Scholar"
 	desc = "My travels across distant lands have made me wealthy in both coin and wisdom. I speak many tongues, understand the value of all things, and ride with practiced ease. The world is my library, and every road teaches me something new."
-	triumph_cost = 15
+	virtue_cost = 10
 	granted_virtues = list(
 		/datum/virtue/utility/linguist,
 		/datum/virtue/items/rich,
@@ -65,24 +55,39 @@
 	- Rich and Shrewd: Appraise spell, see prices, coinpurse stashed (SEEPRICES)\n\
 	- Equestrian: Tame goat mount, +1 Riding, saddle stashed, navigate doors while mounted (EQUESTRIAN)"
 
-// Scrappy Survivor Pack: Cunning Provisioner + Forester + Feral Appetite
+// Feral Survivor Pack: Natural Armour + Pilgrim + Feral Appetite
 /datum/virtue/pack/scrappysurvivor
-	name = "Scrappy Survivor (-10 TRI)"
-	desc = "I've lived through hard times - poverty, famine, or exile taught me to make do with what I have. I can fish, farm, forage, and most importantly, I can stomach anything. Spoiled rations? Raw meat? Doesn't matter - I'll eat it and keep going."
-	triumph_cost = 10
+	name = "Feral Survivor"
+	desc = "I've lived through hard times in the wilds - poverty, famine, or exile taught me to survive like an animal. My skin has grown thick from exposure to the elements, I know the basics of homesteading, and most importantly, I can stomach anything. Spoiled rations? Raw meat? Doesn't matter - I'll eat it and keep going."
+	virtue_cost = 10
 	granted_virtues = list(
-		/datum/virtue/utility/forester,
+		/datum/virtue/combat/tough_hide,
+		/datum/virtue/utility/homesteader,
 		/datum/virtue/utility/feral_appetite
 	)
-	custom_text = "Grants two virtues for the hardened survivor:\n\
-	- Forester: Cooking, Athletics, Farming, Fishing, Lumberjacking skills, Trusty Hoe (HOMESTEAD_EXPERT trait)\n\
+	custom_text = "Grants three virtues for the feral survivor:\n\
+	- Natural Armour: Tough hide that regenerates over time (skin armor slot with regeneration)\n\
+	- Pilgrim: Cooking, Athletics, Farming, Fishing, Lumberjacking, Knife skills, hoe/knife/food bag stashed (HOMESTEAD_EXPERT trait)\n\
 	- Feral Appetite: Can safely eat raw, toxic or spoiled food (NASTY_EATER trait)"
+
+	// Sturdy Giant Pack: Natural Armor + Giant
+/datum/virtue/pack/sturdygiant
+	name = "Sturdy Giant"
+	desc = "I am both large and hardy — my size and thick skin make me difficult to wound."
+	virtue_cost = 5
+	granted_virtues = list(
+		/datum/virtue/combat/tough_hide,
+		/datum/virtue/size/giant
+	)
+	custom_text = "Grants two virtues for the hulking creature.:\n\
+	- Natural Armour: Tough hide that replaces your shirt slot with a regenerating skin armor.\n\
+	- Giant: Increased sprite size and +1 Constitution."
 
 // High Society Pack: Nobility + Socialite
 /datum/virtue/pack/highsociety
-	name = "High Society (-12 TRI)"
+	name = "High Society"
 	desc = "I was born into privilege and raised in the finest circles. Noble blood runs through my veins, I read the emotions of others with ease, and my charm opens every door. Wealth, beauty, and status are my birthright."
-	triumph_cost = 12
+	virtue_cost = 10
 	granted_virtues = list(
 		/datum/virtue/utility/noble,
 		/datum/virtue/utility/socialite
@@ -93,22 +98,24 @@
 
 // Trusted Housekeeper Pack: Resident + Cunning Provisioner
 /datum/virtue/pack/housekeeper
-	name = "Trusted Housekeeper (-9 TRI)"
+	name = "Trusted Housekeeper"
 	desc = "I've served the households of this city for years - cooking, cleaning, and managing provisions. I know every street, have a home here, and my skills in the kitchen are unmatched. The city trusts me, and I know how to make do."
-	triumph_cost = 9
+	virtue_cost = 10
 	granted_virtues = list(
 		/datum/virtue/utility/resident,
-		/datum/virtue/utility/granary
+		/datum/virtue/utility/granary,
+		/datum/virtue/utility/homesteader
 	)
 	custom_text = "Grants two virtues for the city servant:\n\
 	- Resident: City residency, treasury account, home in the city\n\
-	- Cunning Provisioner: Cooking & Fishing skills, food bag stashed (HOMESTEAD_EXPERT)"
+	- Cunning Provisioner: Cooking & Fishing skills, food bag stashed (HOMESTEAD_EXPERT)\n\
+	- Pilgrim: Cooking, Athletics, Farming, Fishing, Lumberjacking, Knife skills, hoe/knife/food bag stashed."
 
 // Broken Soul Pack: Ugly + Tolerant + Deadened
 /datum/virtue/pack/brokensoul
-	name = "Broken Soul (-3 TRI)"
+	name = "Broken Soul"
 	desc = "Life has been cruel to me. My appearance drives others away, I've learned to endure what most cannot, and I've felt nothing for so long I can barely remember what emotions were like. I am a walking testament to survival through suffering."
-	triumph_cost = 3
+	virtue_cost = 10
 	granted_virtues = list(
 		/datum/virtue/utility/ugly,
 		/datum/virtue/utility/tolerant,

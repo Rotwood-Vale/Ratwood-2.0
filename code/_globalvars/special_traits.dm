@@ -36,8 +36,10 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		player = character.client
 	apply_charflaw_equipment(character, player)
 	apply_prefs_special(character, player)
-	apply_prefs_virtue(character, player)
 	apply_prefs_race_bonus(character, player)
+	// Apply new origin virtue system AFTER job equipment to prevent skills from being overridden
+	if(player.prefs)
+		player.prefs.apply_origin_virtues_and_feats(character)
 	apply_voicepacks(character, player)
 	if(player.prefs.dnr_pref)
 		apply_dnr_trait(character, player)
@@ -104,7 +106,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 			apply_virtue(character, virtue_type)
 		else
 			to_chat(character, "Incorrect Virtue parameters! (Heretic virtue on a non-heretic) It will not be applied.")
-	if(virtuetwo_type && virtuous)
+	if(virtuetwo_type && virtuetwo_type.type != /datum/virtue/none && virtuous)
 		if(virtue_check(virtuetwo_type, heretic))
 			apply_virtue(character, virtuetwo_type)
 		else
@@ -137,10 +139,10 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	return FALSE
 
 /proc/apply_charflaw_equipment(mob/living/carbon/human/character, client/player)
-	// Apply multiple vices system (vice1-vice5)
+	// Apply multiple vices system (vice1-vice8)
 	var/applied_new_system = FALSE
 	if(player?.prefs)
-		for(var/i = 1 to 5)
+		for(var/i = 1 to 8)
 			var/datum/charflaw/vice = player.prefs.vars["vice[i]"]
 			if(vice)
 				vice.apply_post_equipment(character)

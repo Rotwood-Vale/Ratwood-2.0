@@ -20,6 +20,7 @@
 	min_pq = 1 //Introductory guard role, but still requires knowledge of escalation.
 	max_pq = null
 	round_contrib_points = 2
+	vice_restrictions = list(/datum/charflaw/nudist, /datum/charflaw/pacifism, /datum/charflaw/noeyeall, /datum/charflaw/illiterate, /datum/charflaw/unintelligible)
 
 	cmode_music = 'sound/music/combat_ManAtArms.ogg'
 

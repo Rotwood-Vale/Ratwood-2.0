@@ -164,6 +164,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	spitoutmouth = FALSE
 	experimental_inhand = FALSE
+	nudist_approved = TRUE
 	bundletype = /obj/item/natural/bundle/cloth
 	sellprice = 4
 	detail_tag = "_soaked"

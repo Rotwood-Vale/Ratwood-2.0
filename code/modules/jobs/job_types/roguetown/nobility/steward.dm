@@ -20,6 +20,7 @@
 	social_rank = SOCIAL_RANK_NOBLE
 	advclass_cat_rolls = list(CTAG_STEWARD = 2)
 	virtue_restrictions = list(/datum/virtue/utility/blacksmith)
+	vice_restrictions = list(/datum/charflaw/nudist, /datum/charflaw/silverweakness, /datum/charflaw/illiterate, /datum/charflaw/unintelligible)
 
 	job_traits = list(TRAIT_NOBLE, TRAIT_SEEPRICES)
 	job_subclasses = list(

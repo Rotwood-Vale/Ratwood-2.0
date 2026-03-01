@@ -3,7 +3,7 @@
 	var/mob/living/carbon/human/H = user
 	if(H.stat == DEAD) return
 	if(H.advsetup) return
-	if(HAS_TRAIT(H, TRAIT_SILVER_BLESSED)) return
+	if(HAS_TRAIT(H, TRAIT_SILVER_BLESSED) || HAS_TRAIT(H, TRAIT_SILVER_CURED)) return
 
 	// Werewolf transforms at night AND under the sky
 	if(!transformed && !transforming)

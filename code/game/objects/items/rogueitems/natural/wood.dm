@@ -398,6 +398,31 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
 
+/obj/item/grown/log/tree/stake/attack(mob/living/M, mob/living/user)
+	// Check for stake vulnerability
+	if(ishuman(M) && HAS_TRAIT(M, TRAIT_STAKE_VULNERABLE))
+		var/mob/living/carbon/human/H = M
+		var/target_zone = user.zone_selected
+		// If targeting torso/chest where the heart is
+		if(target_zone == BODY_ZONE_CHEST)
+			// Roll to hit the heart
+			if(prob(50)) // 50% chance to hit heart when targeting chest
+				H.visible_message(span_danger("[user] drives the wooden stake through [H]'s heart!"), \
+					span_userdanger("[user] drives a wooden stake through my heart!"))
+				to_chat(H, span_deadsay("The stake pierces through my cursed heart... this is the end..."))
+				// Massive damage - essentially lethal
+				H.adjustBruteLoss(200)
+				H.emote("scream")
+				playsound(get_turf(H), 'sound/combat/hits/bladed/genstab (1).ogg', 100, TRUE)
+				H.Knockdown(50)
+				H.death()
+				return
+			else
+				to_chat(user, span_warning("The stake narrowly misses [H]'s heart!"))
+				H.visible_message(span_warning("[user] stabs [H] with the stake, but misses the heart!"), \
+					span_danger("[user] stabs me with a stake!"))
+	return ..()
+
 //................	Lumber essence	............... //
 /obj/item/grown/log/tree/small/essence
 	name = "essence of lumber"

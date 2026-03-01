@@ -94,6 +94,9 @@
 		blood_volume = max(blood_volume, 0)
 	if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
 		amount = min(amount, 0)
+	if(HAS_TRAIT(src, TRAIT_TOXRESIST)) //50% poison resistance
+		if(amount > 0) //Only reduce poison damage, not healing
+			amount *= 0.5
 	if(has_status_effect(/datum/status_effect/buff/fortify) && amount < 0)
 		amount *= 1.5
 	return ..()
