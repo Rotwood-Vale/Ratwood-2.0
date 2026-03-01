@@ -43,11 +43,11 @@ jobs:
           tools/bootstrap/python -c ''
       - name: Run Linters
         run: |
-          bash tools/ci/check_filedirs.sh roguetown.dme
+          bash tools/ci/check_filedirs.sh Ratwood-2.0.dme
           bash tools/ci/check_changelogs.sh
           find . -name "*.php" -print0 | xargs -0 -n1 php -l
           # bash tools/ci/check_grep.sh # TODO: fix indentation etc
-          # tools/bootstrap/python tools/ci/validate_dme.py < roguetown.dme # TODO: fix unincluded files
+          # tools/bootstrap/python tools/ci/validate_dme.py < Ratwood-2.0.dme # TODO: fix unincluded files
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1

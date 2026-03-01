@@ -1,4 +1,4 @@
-environment = "roguetown.dme"
+environment = "Ratwood-2.0.dme"
 
 [langserver]
 dreamchecker = true
