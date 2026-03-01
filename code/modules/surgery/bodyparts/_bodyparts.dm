@@ -65,6 +65,10 @@
 	var/limb_appearance_cache_key
 	/// Cached base limb appearances (without organ/feature overlays)
 	var/list/cached_base_appearances
+	/// Cached key for body markings overlays
+	var/markings_overlay_cache_key
+	/// Cached markings overlays list
+	var/list/cached_markings_overlays
 
 	//Damage messages used by help_shake_act()
 	var/heavy_brute_msg = "MANGLED"
@@ -123,11 +127,13 @@
 /obj/item/bodypart/proc/adjust_marking_overlays(list/appearance_list)
 	return
 
-/obj/item/bodypart/proc/get_specific_markings_overlays(list/specific_markings, aux = FALSE, mob/living/carbon/human/human_owner, override_color)
+/obj/item/bodypart/proc/get_specific_markings_overlays(list/specific_markings, aux = FALSE, mob/living/carbon/human/human_owner, override_color, suppress_main_markings = FALSE)
 	var/list/appearance_list = list()
-//	var/specific_layer = aux ? aux_layer : BODYPARTS_LAYER
-	var/specific_layer = aux_layer ? aux_layer : BODYPARTS_LAYER
+	var/specific_layer = BODY_MARKINGS_LAYER
 	var/specific_render_zone = aux ? aux_zone : body_zone
+	if(!aux && suppress_main_markings)
+		return appearance_list
+
 	for(var/key in specific_markings)
 		var/color = specific_markings[key]
 		var/datum/body_marking/BM = GLOB.body_markings[key]
@@ -138,6 +144,7 @@
 			render_limb_string = "[render_limb_string]_[gendaar]"
 
 		var/mutable_appearance/accessory_overlay = mutable_appearance(BM.icon, "[BM.icon_state]_[render_limb_string]", -specific_layer)
+		accessory_overlay.appearance_flags = RESET_COLOR
 		if(override_color)
 			accessory_overlay.color = "#[override_color]"
 		else
@@ -145,16 +152,41 @@
 		appearance_list += accessory_overlay
 	return appearance_list
 
+/obj/item/bodypart/proc/get_markings_signature(list/specific_markings)
+	if(!specific_markings || !length(specific_markings))
+		return ""
+	var/list/signature_parts = list()
+	for(var/key in specific_markings)
+		signature_parts += "[key]=[specific_markings[key]]"
+	return signature_parts.Join(";")
+
 /obj/item/bodypart/proc/get_markings_overlays(override_color)
 	if((!markings && !aux_markings) || !owner || !ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
+	var/suppress_main_markings = FALSE
+	if(body_zone == BODY_ZONE_L_ARM || body_zone == BODY_ZONE_R_ARM)
+		suppress_main_markings = \
+			(human_owner.wear_armor && (human_owner.wear_armor.body_parts_covered & ARMS)) || \
+			(human_owner.wear_shirt && (human_owner.wear_shirt.body_parts_covered & ARMS)) || \
+			(human_owner.wear_wrists && (human_owner.wear_wrists.body_parts_covered & ARMS))
+	else if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
+		suppress_main_markings = \
+			(human_owner.wear_armor && (human_owner.wear_armor.body_parts_covered & LEGS)) || \
+			(human_owner.wear_pants && (human_owner.wear_pants.body_parts_covered & LEGS))
+
+	var/cache_key = "[human_owner.gender]|[override_color]|[suppress_main_markings]|[get_markings_signature(markings)]|[get_markings_signature(aux_markings)]"
+	if(markings_overlay_cache_key == cache_key && cached_markings_overlays)
+		return cached_markings_overlays.Copy()
+
 	var/list/appearance_list = list()
 	if(markings)
-		appearance_list += get_specific_markings_overlays(markings, FALSE, human_owner, override_color)
+		appearance_list += get_specific_markings_overlays(markings, FALSE, human_owner, override_color, suppress_main_markings)
 	if(aux_markings)
 		appearance_list += get_specific_markings_overlays(aux_markings, TRUE, human_owner, override_color)
 	adjust_marking_overlays(appearance_list)
+	markings_overlay_cache_key = cache_key
+	cached_markings_overlays = appearance_list.Copy()
 	return appearance_list
 
 /obj/item/bodypart/grabbedintents(mob/living/user, precise)
@@ -630,6 +662,8 @@
 /obj/item/bodypart/proc/invalidate_limb_cache()
 	limb_appearance_cache_key = null
 	cached_base_appearances = null
+	markings_overlay_cache_key = null
+	cached_markings_overlays = null
 
 //Gives you a proper icon appearance for the dismembered limb
 /obj/item/bodypart/proc/get_limb_icon(dropped, hideaux = FALSE)
