@@ -172,7 +172,7 @@
 	icon = 'icons/obj/alcohol.dmi'
 	icon_state = "red_wine"
 	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 50)
-	desc = "A bottle that contains a generic red-wine, likely from Raneshen. It has a red-clay cork-seal."
+	desc = "A bottle that contains a generic red-wine, likely from Zybantium. It has a red-clay cork-seal."
 
 /obj/item/reagent_containers/glass/bottle/rogue/wine/sourwine
 	name = "Bottle of Grenzelhoft Sour"
@@ -333,7 +333,7 @@
 
 /obj/item/reagent_containers/glass/bottle/claybottle/wine
 	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 75)
-	desc = "A clay bottle that contains a generic red-wine, likely from Raneshen. It has a red-clay cork-seal."
+	desc = "A clay bottle that contains a generic red-wine, likely from Zybantium. It has a red-clay cork-seal."
 
 /obj/item/reagent_containers/glass/bottle/claybottle/water
 	list_reagents = list(/datum/reagent/water = 75)

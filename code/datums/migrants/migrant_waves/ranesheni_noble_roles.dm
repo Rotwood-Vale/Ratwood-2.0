@@ -1,21 +1,21 @@
-#define CTAG_RANESHENI_EMIR "ranesheni_emir"
-#define CTAG_RANESHENI_AMIRAH "ranesheni_amirah"
-#define CTAG_RANESHENI_JANISSARY "ranesheni_janissari"
-#define CTAG_RANESHENI_ADVISOR "ranesheni_advisor"
+#define CTAG_ZYBANTINE_EMIR "zybantine_emir"
+#define CTAG_ZYBANTINE_AMIRAH "zybantine_amirah"
+#define CTAG_ZYBANTINE_JANISSARY "zybantine_janissari"
+#define CTAG_ZYBANTINE_ADVISOR "zybantine_advisor"
 
-/datum/migrant_role/ranesheni/emir
+/datum/migrant_role/zybantine/emir
 	name = "Emir"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
-	advclass_cat_rolls = list(CTAG_RANESHENI_EMIR = 20)
+	advclass_cat_rolls = list(CTAG_ZYBANTINE_EMIR = 20)
 	greet_text = "You are an envoy from the Empire, traveling with bodyguards and a priest to represent your homeland.\
 	 What exactly you have been sent here to speak about- only you know."
 
-/datum/advclass/ranesheni_emir
+/datum/advclass/zybantine_emir
 	name = "Emir"
-	outfit = /datum/outfit/job/roguetown/ranesheni/emir
+	outfit = /datum/outfit/job/roguetown/zybantine/emir
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
-	category_tags = list(CTAG_RANESHENI_EMIR)
+	category_tags = list(CTAG_ZYBANTINE_EMIR)
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_CON = 1,
@@ -39,7 +39,7 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
 	)
 
-/datum/outfit/job/roguetown/ranesheni/emir/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/zybantine/emir/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/circlet
 	mask = /obj/item/clothing/head/roguetown/roguehood/red
@@ -49,8 +49,8 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	id = /obj/item/clothing/ring/gold
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
-	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	backl = /obj/item/storage/backpack/rogue/satchel/short
@@ -68,17 +68,17 @@
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
 	H.grant_language(/datum/language/celestial)
 
-/datum/migrant_role/ranesheni/amirah
+/datum/migrant_role/ZYBANTINE/amirah
 	name = "Amirah"
 	allowed_sexes = list(FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
-	advclass_cat_rolls = list(CTAG_RANESHENI_AMIRAH = 20)
+	advclass_cat_rolls = list(CTAG_ZYBANTINE_AMIRAH = 20)
 
-/datum/advclass/ranesheni_amirah
+/datum/advclass/ZYBANTINE_amirah
 	name = "Amirah"
-	outfit = /datum/outfit/job/roguetown/ranesheni/amirah
+	outfit = /datum/outfit/job/roguetown/zybantine/amirah
 	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_NUTCRACKER, TRAIT_GOODLOVER)
-	category_tags = list(CTAG_RANESHENI_AMIRAH)
+	category_tags = list(CTAG_ZYBANTINE_AMIRAH)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_CON = 1,
@@ -98,7 +98,7 @@
 		/datum/skill/misc/music = SKILL_LEVEL_MASTER,
 	)
 
-/datum/outfit/job/roguetown/ranesheni/amirah/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/zybantine/amirah/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(should_wear_femme_clothes(H))
 		belt = /obj/item/storage/belt/rogue/leather/cloth/lady
@@ -127,18 +127,18 @@
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
 	H.grant_language(/datum/language/celestial)
 
-/datum/migrant_role/ranesheni/janissary
+/datum/migrant_role/ZYBANTINE/janissary
 	name = "Janissary"
 	greet_text = "You are a dilligent soldier in employ of the Emir for protection and to assure that their mission goes as planned."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
-	advclass_cat_rolls = list(CTAG_RANESHENI_JANISSARY = 20)
+	advclass_cat_rolls = list(CTAG_ZYBANTINE_JANISSARY = 20)
 
-/datum/advclass/ranesheni_janissary
+/datum/advclass/ZYBANTINE_janissary
 	name = "Janissary"
-	outfit = /datum/outfit/job/roguetown/ranesheni/janissary
+	outfit = /datum/outfit/job/roguetown/zybantine/janissary
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
-	category_tags = list(CTAG_RANESHENI_JANISSARY)
+	category_tags = list(CTAG_ZYBANTINE_JANISSARY)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
@@ -160,21 +160,21 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 	)
 
-/datum/outfit/job/roguetown/ranesheni/janissary/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/zybantine/janissary/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguetown/helmet/sallet/raneshen
+	head = /obj/item/clothing/head/roguetown/helmet/sallet/zyb
 	mask = /obj/item/clothing/mask/rogue/facemask/steel
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 	cloak = /obj/item/clothing/cloak/half/rider/red
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/leather
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 	backl = /obj/item/storage/backpack/rogue/satchel/short
-	backr = /obj/item/rogueweapon/shield/tower/raneshen
+	backr = /obj/item/rogueweapon/shield/tower/zyb
 	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
@@ -188,16 +188,16 @@
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
 	H.grant_language(/datum/language/celestial)
 
-/datum/migrant_role/ranesheni/advisor
+/datum/migrant_role/zybantine/advisor
 	name = "Advisor"
 	greet_text = "You are the Emir's advisor and loyal protector."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
-	advclass_cat_rolls = list(CTAG_RANESHENI_ADVISOR = 20)
+	advclass_cat_rolls = list(CTAG_ZYBANTINE_ADVISOR = 20)
 
-/datum/advclass/ranesheni_advisor
+/datum/advclass/zybantine_advisor
 	name = "Janissary"
-	outfit = /datum/outfit/job/roguetown/ranesheni/advisor
+	outfit = /datum/outfit/job/roguetown/zybantine/advisor
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
 	category_tags = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER)
 	subclass_stats = list(
@@ -222,14 +222,14 @@
 		/datum/skill/craft/traps = SKILL_LEVEL_EXPERT,
 	)
 
-/datum/outfit/job/roguetown/ranesheni/advisor/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/zybantine/advisor/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/leather
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/shalal
@@ -247,7 +247,7 @@
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
 	H.grant_language(/datum/language/celestial)
 
-#undef CTAG_RANESHENI_EMIR
-#undef CTAG_RANESHENI_AMIRAH
-#undef CTAG_RANESHENI_JANISSARY
-#undef CTAG_RANESHENI_ADVISOR
+#undef CTAG_ZYBANTINE_EMIR
+#undef CTAG_ZYBANTINE_AMIRAH
+#undef CTAG_ZYBANTINE_JANISSARY
+#undef CTAG_ZYBANTINE_ADVISOR

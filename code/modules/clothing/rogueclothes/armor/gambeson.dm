@@ -260,9 +260,9 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	name = "padded desert coat"
-	desc = "A slim-fitting sherwani, a Ranesheni-styled coat meant to endure in the desert's climate. This one is heavily padded, meant for a warrior to wear."
+	desc = "A slim-fitting sherwani, a Zybantine-styled coat meant to endure in the desert's climate. This one is heavily padded, meant for a warrior to wear."
 	icon_state = "sherwani"
 	color = "#eec39a"
 	shiftable = FALSE

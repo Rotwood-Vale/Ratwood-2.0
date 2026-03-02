@@ -286,18 +286,18 @@
 	icon_state = "ancientsh"
 	smeltresult = /obj/item/ingot/purifiedaalloy
 
-/obj/item/rogueweapon/shield/tower/raneshen
+/obj/item/rogueweapon/shield/tower/zyb
 	name = "rider shield"
-	desc = "A shield of Raneshen design. Clever usage of wood, iron, and leather make an impressive match for any weapon."
+	desc = "A shield of Zybantine design. Clever usage of wood, iron, and leather make an impressive match for any weapon."
 	icon_state = "desert_rider"
 	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK)
 	force = 25
-	throwforce = 25 //for cosplaying captain raneshen
+	throwforce = 25 //for cosplaying captain zybantium
 	wdefense = 11
 	max_integrity = 220 //not fully metal but not fully wood either
 	anvilrepair = /datum/skill/craft/carpentry
 
-/obj/item/rogueweapon/shield/tower/raneshen/getonmobprop(tag)
+/obj/item/rogueweapon/shield/tower/zyb/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)

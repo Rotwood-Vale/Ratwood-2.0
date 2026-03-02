@@ -112,7 +112,7 @@
 /obj/item/clothing/neck/roguetown/roguehood/shalal/hijab/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, null, null, (UPD_HEAD|UPD_MASK|UPD_NECK))
 
-/obj/item/clothing/head/roguetown/roguehood/shalal/hijab/raneshen
+/obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
 	name = "padded headscarf"
 	desc = "A common sight amongst those travelling the long desert routes, it offers protection from the heat and a modicum of it against the beasts that prowl its more comfortable nites."
 	max_integrity = 100

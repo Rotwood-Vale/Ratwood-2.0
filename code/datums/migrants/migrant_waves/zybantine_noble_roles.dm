@@ -34,8 +34,8 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	id = /obj/item/clothing/ring/gold
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
-	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	backl = /obj/item/storage/backpack/rogue/satchel/short
@@ -142,19 +142,19 @@
 
 /datum/outfit/job/roguetown/zybantine/janissary/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguetown/helmet/sallet/raneshen
+	head = /obj/item/clothing/head/roguetown/helmet/sallet/zyb
 	mask = /obj/item/clothing/mask/rogue/facemask/steel
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 	cloak = /obj/item/clothing/cloak/half/rider/red
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/leather
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 	backl = /obj/item/storage/backpack/rogue/satchel/short
-	backr = /obj/item/rogueweapon/shield/tower/raneshen
+	backr = /obj/item/rogueweapon/shield/tower/zyb
 	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
@@ -203,7 +203,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/leather
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/shalal

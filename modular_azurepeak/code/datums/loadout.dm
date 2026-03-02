@@ -1480,7 +1480,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 // CLOTHING - ARMOR (Alphabetically Ordered)
 /datum/loadout_item/tri_desert_coat
 	name = "Desert Coat"
-	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	triumph_cost = 3
 
 /datum/loadout_item/tri_duelist_coat
@@ -1617,14 +1617,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
 	triumph_cost = 3
 
-/datum/loadout_item/tri_raneshen_coat
-	name = "Raneshen Coat"
-	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/raneshen
+/datum/loadout_item/tri_zyb_coat
+	name = "Zybantine Coat"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 	triumph_cost = 3
 
-/datum/loadout_item/tri_raneshen_gambeson
-	name = "Raneshen Gambeson"
-	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+/datum/loadout_item/tri_zyb_gambeson
+	name = "Zybantine Gambeson"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	triumph_cost = 3
 
 /datum/loadout_item/tri_shamanic_coat
@@ -1658,9 +1658,9 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/head/roguetown/roguehood/pontifex
 	triumph_cost = 2
 
-/datum/loadout_item/tri_raneshen_hijab
-	name = "Raneshen Hijab"
-	path = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/raneshen
+/datum/loadout_item/tri_zyb_hijab
+	name = "Zybantine Hijab"
+	path = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
 	triumph_cost = 2
 
 
@@ -1767,9 +1767,9 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/under/roguetown/trou/leather/pontifex
 	triumph_cost = 2
 
-/datum/loadout_item/tri_raneshen_pants
-	name = "Raneshen Pants"
-	path = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
+/datum/loadout_item/tri_zyb_pants
+	name = "Zybantine Pants"
+	path = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
 	triumph_cost = 2
 
 

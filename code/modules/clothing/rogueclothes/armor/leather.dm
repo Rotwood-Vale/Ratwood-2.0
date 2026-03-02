@@ -148,9 +148,9 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE	
 
-/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/raneshen
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 	name = "megarmach scale coat"
-	desc = "A set of lightweight armor fashioned from the scales of the Ranesheni \'megarmach\', an armored reptilian creacher that ambushes prey by the riverside, and drags them deep into Abyssor's domain."
+	desc = "A set of lightweight armor fashioned from the scales of the Zybantine \'megarmach\', an armored reptilian creacher that ambushes prey by the riverside, and drags them deep into Abyssor's domain."
 	icon_state = "pangolin"
 	item_state = "pangolin"
 
