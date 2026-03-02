@@ -152,3 +152,52 @@ GLOBAL_LIST_INIT(dwarfskeleton_aggro, world.file2list("strings/rt/dskeletonaggro
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+
+
+//I wanted to make dwarf skeleton miners but it inherits the previous outfit, meaning it wears things it shouldn't. I could probably fix this by rearranging things but it'd mean touching Dunworld and getting up in the system guts
+// /mob/living/carbon/human/species/dwarfskeleton/ambush/miner
+// 	skel_outfit = /datum/outfit/job/roguetown/dwarfskeleton/miner/
+
+// /datum/outfit/job/roguetown/dwarfskeleton/miner/pre_equip(mob/living/carbon/human/H)
+// 	..()
+// 	cloak = null
+// 	wrists = null
+// 	armor = null
+// 	shirt = null
+// 	pants = null
+// 	head = null
+// 	neck = null
+// 	mask = null
+// 	shoes = null
+// 	gloves = null
+// 	l_hand = null
+// 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+// 	pants = /obj/item/clothing/under/roguetown/loincloth/brown
+// 	if(prob(40))
+// 		pants =	/obj/item/clothing/under/roguetown/trou
+// 	if(prob(25))
+// 		head = /obj/item/clothing/head/roguetown/helmet
+// 	if(prob(25))
+// 		head = /obj/item/clothing/head/roguetown/helmet/horned
+// 	belt = /obj/item/storage/belt/rogue/leather/rope
+// 	neck = /obj/item/clothing/neck/roguetown/collar/leather
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
+// 	r_hand = /obj/item/rogueweapon/pick/aalloy
+// 	if(prob(20))
+// 		r_hand = /obj/item/rogueweapon/shovel/aalloy
+
+// 	H.STASTR = 12
+// 	H.STASPD = 11
+// 	H.STACON = 12
+// 	H.STAWIL = 12
+// 	H.STAPER = 14
+// 	H.STAINT = 11
+// 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
+// 	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
+// 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
+// 	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
+// 	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
+// 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+// 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+// 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
+// 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)

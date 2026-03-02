@@ -37,16 +37,18 @@
 	var/bypass_tax = FALSE
 	var/list/categories = list(
 		"Alcohols",
-		"Apparel",
-		"Consumable",
+		"Food",
+		"Substances",
 		"Gems",
-		"Instruments",
 		"Luxury",
-		"Livestock",
 		"Cosmetics",
+		"Instruments",
+		"Magic",
+		"Livestock",
 		"Raw Materials",
 		"Seeds",
 		"Tools",
+		"Apparel",
 		"Wardrobe",
 	)
 	var/list/categories_gamer = list(
@@ -59,7 +61,7 @@
 		"Weapons (Ranged)",
 		"Weapons (Iron and Shields)",
 		"Weapons (Steel)",
-		"Weapons (Foreign)",
+		"Weapons (Exotic)",
 	)
 	var/is_public = FALSE // Whether it is a public access vendor.
 	var/extra_fee = 0 // Extra Guild Fees on purchases. Meant to make publicface very unprofitable.
@@ -76,16 +78,18 @@
 	categories = list(
 		"Adventuring Supplies",
 		"Alcohols",
-		"Consumable",
+		"Food",
+		"Substances",
 		"Gems",
 		"Instruments",
 		"Luxury",
+		"Magic",
 		"Livestock",
 		"Cosmetics",
 		"Raw Materials",
 		"Seeds",
 		"Tools",
-		"Weapons (Foreign)",
+		"Weapons (Exotic)",
 	)
 	categories_gamer = list()
 

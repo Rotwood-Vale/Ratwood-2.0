@@ -183,6 +183,13 @@
 	max_integrity = ARMOR_INT_HELMET_STEEL + 50
 	icon_state = "shishak"
 
+/obj/item/clothing/head/roguetown/helmet/sallet/hussarhelm
+	name = "Hussar's Helmet"
+	desc = "A helm worn by the Czwarteki Hussars, ornate in its design and made to protect the user from stray bolts and arrows during charge."
+	body_parts_covered = HEAD|EARS|HAIR|NECK
+	max_integrity = ARMOR_INT_HELMET_STEEL + 50
+	icon_state = "hussarhelm"
+
 /obj/item/clothing/head/roguetown/helmet/sallet/visored/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), HIDEHAIR, null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Sallet. Does not hide anything when opened.
 

@@ -10,9 +10,9 @@
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_DISGRACED_NOBLE)
 	subclass_stats = list(
-		STATKEY_CON = 3, //dark souls 3 dual greatshield moment
+		STATKEY_CON = 2,
 		STATKEY_STR = 2,
-		STATKEY_WIL = 3,	//-LCK +WIL
+		STATKEY_WIL = 2,
 		STATKEY_INT = 2,
 		STATKEY_SPD = 1,
 	)
@@ -77,3 +77,10 @@
 				beltl = /obj/item/rogueweapon/mace/steel
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+
+/datum/outfit/job/roguetown/bandit/hedgeknight/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	for(var/datum/bounty/b in GLOB.head_bounties)
+		if(b.target == H.real_name || b.target_hidden == H.real_name)
+			H.change_stat(STATKEY_CON, 1)
+			H.change_stat(STATKEY_WIL, 1)

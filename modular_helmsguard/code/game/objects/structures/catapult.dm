@@ -44,16 +44,16 @@
 	return 0
 
 /obj/structure/catapult/attack_hand(mob/living/carbon/user)
-    // Check if the catapult is loaded
+	// Check if the catapult is loaded
 	if (packed) // Check if the catapult is packed
-        // Provide a message indicating it cannot be used
+		// Provide a message indicating it cannot be used
 		user.visible_message("<span class='notice'>The catapult is currently packed and cannot be used.</span>")
 		return // Exit the proc early since no further action can be taken
 
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone else is currently using this equipment.</span>")
 		return
-    // Provide choices to the user
+	// Provide choices to the user
 	if(!ready)
 		user.visible_message("<span class='notice'>[user] cranks the catapult's arm back into position.</span>")
 		playsound(src, "modular_helmsguard/sound/catapult/adjusting.ogg", 100)
@@ -223,7 +223,7 @@
 		update_icon()
 
 /obj/structure/catapult/proc/unload_projectile(mob/living/carbon/user)
-    // Code to handle unloading logic
+	// Code to handle unloading logic
 
 	var/atom/L = drop_location()
 	var/atom/movable/AM
@@ -231,7 +231,7 @@
 		AM.forceMove(L)
 	playsound(src, 'sound/foley/hit_rock.ogg', 100)
 	src.loaded = 0
-    // Additional unloading logic...
+	// Additional unloading logic...
 
 /obj/item/boulder
 	name = "boulder"
@@ -281,7 +281,7 @@
 				qdel(src)
 
 /obj/item/boulder/proc/do_shrapnel_effect(atom/target)
-    // Create a shrapnel component for this instance of the boulder
+	// Create a shrapnel component for this instance of the boulder
 	var/datum/component/shrapnel/shrapnel_effect = new /datum/component/shrapnel()
 	var/turf/origin_turf = get_turf(src)
 	var/boomchannel = SSsounds.random_available_channel()

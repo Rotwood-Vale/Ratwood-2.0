@@ -1,6 +1,6 @@
 // Special Mercenary Weapons, at exorbitant prices
 /datum/supply_pack/rogue/merc_weapons
-	group = "Weapons (Foreign)"
+	group = "Weapons (Exotic)"
 	crate_name = "merchant guild's crate"
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
@@ -94,21 +94,24 @@
 	name = "Elven Shortsword"
 	cost = 60
 	contains = list(/obj/item/rogueweapon/sword/short/elf)
-
 	
 /datum/supply_pack/rogue/merc_weapons/elflongsword
 	name = "Elven Longsword"
 	cost = 80
 	contains = list(/obj/item/rogueweapon/sword/long/elf)
 
-	
 /datum/supply_pack/rogue/merc_weapons/elfswordspear
 	name = "Elven Swordspear"
 	cost = 100
 	contains = list(/obj/item/rogueweapon/spear/naginata/elf)
 
-	
 /datum/supply_pack/rogue/merc_weapons/elfcurveblade
 	name = "Elven Curveblade"
 	cost = 120
 	contains = list(/obj/item/rogueweapon/greatsword/elf)
+
+//adding it here because... it's a weapon!
+/datum/supply_pack/rogue/merc_weapons/silverdagger
+	name = "Silver Dagger"
+	cost = 120 //Silver weapons have been made much less powerful but much more common over time
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver)

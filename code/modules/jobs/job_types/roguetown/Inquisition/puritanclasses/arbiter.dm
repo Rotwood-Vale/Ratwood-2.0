@@ -18,7 +18,7 @@
 		TRAIT_INQUISITION,
 		TRAIT_PURITAN,
 		TRAIT_OUTLANDER
-		)//-1 stats over Ordinator/Inspector, if counting STR/SPD as 2 each.
+		)//-1 stats over Ordinator/Inspector, if counting STR/SPD as 2 each. +1 over in a respective area when selecting their sect.
 	subclass_stats = list(
 		STATKEY_CON = 3,
 		STATKEY_WIL = 3,
@@ -48,19 +48,17 @@
 	H.verbs |= /mob/living/carbon/human/proc/faith_test
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim
 	cloak = /obj/item/clothing/cloak/cape/inquisitor
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
-	belt = /obj/item/storage/belt/rogue/leather
+	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/arbiter
+	belt = /obj/item/storage/belt/rogue/leather/arbiter
 	neck = /obj/item/clothing/neck/roguetown/psicross/silver
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan/inqboots
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/arbiter
 	backr =  /obj/item/storage/backpack/rogue/satchel/otavan
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	beltl = /obj/item/quiver/bolts
-	mask = /obj/item/clothing/mask/rogue/spectacles/inq/spawnpair
-	gloves = /obj/item/clothing/gloves/roguetown/chain/psydon
+	mask = /obj/item/clothing/mask/rogue/sack/psy/arbiter
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
 	id = /obj/item/clothing/ring/signet/silver
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/armored
 	backpack_contents = list(
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,
@@ -96,3 +94,135 @@
 		if("Consecratia (Flail)")
 			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/psyflail/relic(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
+	//Now, for their 'sect'. They can either choose a heavy gambeson and +1SPD, or inquisitor coat and +1STR.
+	var/sect = list("Ancient - Gilbranze, Gambesons & Speed", "New Age - Silver, Overcoats & Strength")
+	var/sect_choice = input(H,"FIND YOUR SECT", "WHAT ARE WE?") as anything in sect
+	switch(sect_choice)
+		if("Ancient - Gilbranze, Gambesons & Speed")
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/arbiter, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter, SLOT_GLOVES, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq/arbiter, SLOT_ARMOR, TRUE)
+			H.change_stat(STATKEY_SPD, 1)//We'll probably drop this.
+		if("New Age - Silver, Overcoats & Strength")
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/arbiter/vice, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter/vice, SLOT_GLOVES, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/arbiter, SLOT_ARMOR, TRUE)
+			H.change_stat(STATKEY_STR, 1)//As above. But for now we'll see if it's ok.
+
+/*
+Below are the Arbiter's funny things.
+Reused from OldRW. But cool. Soulful, even.
+Here because they're unused elsewhere.
+*/
+/obj/item/storage/belt/rogue/leather/arbiter
+	name = "webbing"
+	desc = "A leather belt, paired with some Otavan style webbing and pouches. <br>\
+	A style pioneered by an arbiters, a century or two ago. Maintained by those who require much of the same."
+	icon_state = "overseerbelt"
+	item_state = "overseerbelt"
+	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq/arbiter
+	name = "arbiter gambeson"
+	desc = "A heavy, padded gambeson that provides adequate protection against unarmed innocents. \
+	It reeks of smokepowder and sulphur. Common of sanctification rituals."
+	icon_state = "overseerjacket"
+	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+
+/obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/arbiter
+	name = "arbiter brigandine"
+	desc = "A heavy, reinforced brigandine coat. Set in a tasteful burgundy covering, backed by silver plating. \
+	It's sure not to leave anyone indifferent, for they'll come to know it. In time."
+	icon_state = "viceseercoat"
+	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	boobed = TRUE
+	is_silver = TRUE
+
+/obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter
+	name = "arbiter gloves"
+	desc = "Heavy, thick leather gloves, adorned with bright strips."
+	icon_state = "overseergloves"
+	item_state = "overseergloves"
+	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+
+/obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter/vice
+	icon_state = "viceseergloves"
+	item_state = "viceseergloves"
+
+/obj/item/clothing/head/roguetown/helmet/arbiter
+	name = "arbiter mask"
+	desc = "An iconic, gilbranze mask, depicting the visage of Him. Weeping, as He is."
+	icon_state = "overseermask"
+	item_state = "overseermask"
+	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	flags_inv = HIDEFACE
+	body_parts_covered = FACE|HEAD|HAIR|EARS|NOSE
+	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
+	block2add = FOV_BEHIND
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	sewrepair = TRUE
+	anvilrepair = /datum/skill/craft/armorsmithing
+	smeltresult = /obj/item/ingot/purifiedaalloy
+	var/active_item = FALSE
+
+/obj/item/clothing/head/roguetown/helmet/arbiter/vice
+	desc = "An iconic, silver mask depicting the visage of Him. Weeping, as He is."
+	icon_state = "viceseermask"
+	item_state = "viceseermask"
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
+
+//The intent of the trait was to frighten heretics, if they saw the user with it present.
+//Alas...
+/obj/item/clothing/head/roguetown/helmet/arbiter/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_HEAD)
+		active_item = TRUE
+//		ADD_TRAIT(user, TRAIT_ARBITER, TRAIT_GENERIC)
+		to_chat(user, span_red("With such a mask over your face, all judgement is waived. For who but a heretic might argue your purpose?"))
+	return
+
+/obj/item/clothing/head/roguetown/helmet/arbiter/dropped(mob/living/user)
+	..()
+	if(!active_item)
+		return
+	active_item = FALSE
+//	REMOVE_TRAIT(user, TRAIT_ARBITER, TRAIT_GENERIC)
+	to_chat(user, span_red("As if flooded with sudden clarity, perhaps your actions might require a steady hand..."))
+
+/obj/item/clothing/mask/rogue/sack/psy/arbiter
+	name = "arbiter hood"
+	desc = "You wouldn't hide your face if there was another way. It's not as if you've no reason for it. \
+	Would they ever understand? Truly?"
+	icon_state = "overseerhood"
+	item_state = "overseerhood"
+	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS
+	body_parts_covered = FACE|EARS|MOUTH|NECK
+	slot_flags = ITEM_SLOT_MASK
+	sewrepair = TRUE
+
+/obj/item/clothing/under/roguetown/heavy_leather_pants/arbiter
+	name = "heavy trousers"
+	desc = "A pair of heavy, washed-out trousers in grey colors."
+	icon_state = "overseerpants"
+	item_state = "overseerpants"
+	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+
+/obj/item/clothing/suit/roguetown/shirt/undershirt/arbiter
+	icon_state = "overseershirt"
+	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	color = null

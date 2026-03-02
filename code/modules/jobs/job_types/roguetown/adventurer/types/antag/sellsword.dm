@@ -13,8 +13,8 @@
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
-		STATKEY_CON = 2,	//-LCK +CON
+		STATKEY_SPD = 1,
+		STATKEY_CON = 1,
 		STATKEY_PER = 1,
 	)
 	subclass_skills = list(
@@ -93,3 +93,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_JOURNEYMAN, TRUE)
+
+/datum/outfit/job/roguetown/bandit/sellsword/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	for(var/datum/bounty/b in GLOB.head_bounties)
+		if(b.target == H.real_name || b.target_hidden == H.real_name)
+			H.change_stat(STATKEY_SPD, 1)
+			H.change_stat(STATKEY_CON, 1)

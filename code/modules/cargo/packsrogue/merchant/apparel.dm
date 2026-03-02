@@ -5,7 +5,7 @@
 
 /datum/supply_pack/rogue/apparel/hoods
 	name = "Shoulder Hood"
-	cost = 30
+	cost = 25
 	contains = list(
 					/obj/item/clothing/head/roguetown/roguehood/random,
 					/obj/item/clothing/head/roguetown/roguehood/random,
@@ -112,7 +112,7 @@
 
 /datum/supply_pack/rogue/apparel/cloaks/leather
 	name = "Rain Cloak"
-	cost = 80
+	cost = 20
 	contains = list(
 					/obj/item/clothing/cloak/raincloak/brown,
 					/obj/item/clothing/cloak/raincloak/brown,
@@ -146,11 +146,3 @@
 					/obj/item/clothing/under/roguetown/trou,
 				)
 
-/datum/supply_pack/rogue/apparel/hair_dye
-	name = "Hair Dye Cream"
-	cost = 10
-	contains = list(
-					/obj/item/hair_dye_cream,
-					/obj/item/hair_dye_cream,
-					/obj/item/hair_dye_cream,
-				)

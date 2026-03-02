@@ -104,6 +104,10 @@
 	name = "cooked chicken"
 	scent = "cooked chicken"
 
+/datum/pollutant/food/fried_chicken
+	name = "fried chicken"
+	scent = "fried chicken"
+
 /datum/pollutant/food/fried_sausage
 	name = "fried sausage"
 	scent = "fried sausage"
@@ -119,6 +123,10 @@
 /datum/pollutant/food/roasted_seeds
 	name = "roasted seeds"
 	scent = "roasted seeds"
+
+/datum/pollutant/food/muffin
+	name = "fresh baked muffin"
+	scent = "fresh baked muffin"
 
 /datum/pollutant/food/fried_rat
 	name = "fried rats"

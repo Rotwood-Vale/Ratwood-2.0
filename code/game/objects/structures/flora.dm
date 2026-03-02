@@ -10,7 +10,7 @@
 		return INITIALIZE_HINT_QDEL
 
 /obj/structure/flora/rogueflora
-    icon = 'icons/obj/flora/rogueflora.dmi'
+	icon = 'icons/obj/flora/rogueflora.dmi'
 
 /obj/structure/flora/rogueflora/wormwood
 	icon_state = "worm_wood"

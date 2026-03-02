@@ -770,14 +770,18 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 				var/mob/living/L = src
 				if(L.mind)
 					draw_swingdelay(A, used_intent.custom_swingdelay, used_intent.swingdelay)
-					addtimer(CALLBACK(src, PROC_REF(do_item_attack_animation), A, visual_effect_icon, used_item, animation_type), used_intent.swingdelay)
+					addtimer(CALLBACK(src, PROC_REF(do_item_attack_animation), A, visual_effect_icon, used_item, animation_type, used_intent), used_intent.swingdelay)
 		else
-			do_item_attack_animation(A, visual_effect_icon, used_item, animation_type = animation_type)
+			do_item_attack_animation(A, visual_effect_icon, used_item, animation_type = animation_type, used_intent = used_intent)
 			return
 	wiggle(A)
 
 
-/atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, animation_type = ATTACK_ANIMATION_SWIPE)
+
+/atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, animation_type = ATTACK_ANIMATION_SWIPE, datum/intent/used_intent)
+	if(used_item)
+		if(used_item.no_effect)
+			return
 	if(QDELETED(src) || QDELETED(A) || QDELETED(used_item))
 		return
 	if(!visual_effect_icon)
@@ -927,10 +931,10 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 				animate(attack, pixel_y = 3 * y_sign * angle_mult, time = 0.2 SECONDS, easing = CIRCULAR_EASING | EASE_IN, flags = ANIMATION_PARALLEL)
 				animate(pixel_y = y_return, time = 0.2 SECONDS, easing = CIRCULAR_EASING | EASE_OUT)
 	else
-		do_attack_animation_simple(A, visual_effect_icon)
+		do_attack_animation_simple(A, visual_effect_icon, used_intent = used_intent)
 
 	///Oldschool indicators. Used by non-weapon intents or simple mobs.
-/atom/movable/proc/do_attack_animation_simple(atom/A, visual_effect_icon, wiggle = TRUE)
+/atom/movable/proc/do_attack_animation_simple(atom/A, visual_effect_icon, wiggle = TRUE, datum/intent/used_intent)
 	var/newdir = get_dir(src, A)
 	var/turf/first_step = get_step(src, newdir)
 	var/obj/effect/temp_visual/dir_setting/attack_effect/firstatk = new(first_step, newdir)
@@ -944,6 +948,22 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 			var/obj/effect/temp_visual/dir_setting/attack_effect/atk = new(next_step, newdir)
 			atk.icon_state = visual_effect_icon
 			atk.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+			if(used_intent?.effective_range)
+				var/draw_eff_range_vfx = FALSE
+				switch(used_intent?.effective_range_type)
+					if(EFF_RANGE_EXACT)
+						if(used_intent?.effective_range == (i + 1))	//We only start this loop if dist is >1 so we start from the second tracer onwards.
+							draw_eff_range_vfx = TRUE
+					if(EFF_RANGE_ABOVE)
+						if(used_intent?.effective_range <= (i + 1))
+							draw_eff_range_vfx = TRUE
+					if(EFF_RANGE_BELOW)
+						if(used_intent?.effective_range >= (i + 1))
+							draw_eff_range_vfx = TRUE
+				if(draw_eff_range_vfx)
+					var/obj/effect/temp_visual/dir_setting/attack_effect/atk_effrange = new(next_step, newdir)
+					atk_effrange.icon_state = "effrange"
+					atk_effrange.layer = (atk.layer + 0.1)	//Should always be on top of the regular indicator.
 			first_step = next_step
 	if(wiggle)
 		wiggle(A)

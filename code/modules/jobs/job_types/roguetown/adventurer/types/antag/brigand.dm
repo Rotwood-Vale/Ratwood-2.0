@@ -9,10 +9,9 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
-		STATKEY_STR = 4,	//have you seen this idiot's starting gear and skill spread??
+		STATKEY_STR = 3,	//have you seen this idiot's starting gear and skill spread??
 		STATKEY_WIL = 3,	//-LCK +WIL
 		STATKEY_CON = 2,
-		STATKEY_SPD = 1,
 		STATKEY_INT = -1
 	)
 	subclass_skills = list(
@@ -84,3 +83,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_JOURNEYMAN, TRUE)
+
+/datum/outfit/job/roguetown/bandit/brigand/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	for(var/datum/bounty/b in GLOB.head_bounties)
+		if(b.target == H.real_name || b.target_hidden == H.real_name)
+			H.change_stat(STATKEY_STR, 1)
+			H.change_stat(STATKEY_SPD, 1)

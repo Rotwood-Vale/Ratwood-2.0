@@ -2,10 +2,10 @@
 
 /// Incision
 /datum/surgery_step/incise/construct
-    name = "Uncover"
-    surgery_flags = SURGERY_CONSTRUCT
-    surgery_flags_blocked = SURGERY_INCISED
-    skill_used = /datum/skill/craft/engineering
+	name = "Uncover"
+	surgery_flags = SURGERY_CONSTRUCT
+	surgery_flags_blocked = SURGERY_INCISED
+	skill_used = /datum/skill/craft/engineering
 
 /datum/surgery_step/incise/construct/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	display_results(user, target, span_notice("I begin to make an opening in [target]'s [parse_zone(target_zone)]..."),
@@ -23,11 +23,11 @@
 
 /// Clamping
 /datum/surgery_step/clamp/construct
-    name = "Secure cogs"
-    surgery_flags = SURGERY_CONSTRUCT
-    surgery_flags_blocked = SURGERY_CLAMPED
-    skill_used = /datum/skill/craft/engineering
-    surgery_flags_blocked = null
+	name = "Secure cogs"
+	surgery_flags = SURGERY_CONSTRUCT
+	surgery_flags_blocked = SURGERY_CLAMPED
+	skill_used = /datum/skill/craft/engineering
+	surgery_flags_blocked = null
 
 /datum/surgery_step/clamp/construct/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	display_results(user, target, span_notice("I begin to secure cogs in [target]'s [parse_zone(target_zone)]..."),
@@ -45,10 +45,10 @@
 
 /// Retracting
 /datum/surgery_step/retract/construct
-    name = "Open inner-hatch"
-    surgery_flags = SURGERY_CONSTRUCT
-    surgery_flags_blocked = SURGERY_RETRACTED
-    skill_used = /datum/skill/craft/engineering
+	name = "Open inner-hatch"
+	surgery_flags = SURGERY_CONSTRUCT
+	surgery_flags_blocked = SURGERY_RETRACTED
+	skill_used = /datum/skill/craft/engineering
 
 /datum/surgery_step/retract/construct/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	return ..()
@@ -60,10 +60,10 @@
 
 /// Saw bone
 /datum/surgery_step/saw/construct
-    name = "Saw support structure"
-    surgery_flags = SURGERY_INCISED | SURGERY_RETRACTED | SURGERY_CONSTRUCT
-    surgery_flags_blocked = SURGERY_BROKEN
-    skill_used = /datum/skill/craft/engineering
+	name = "Saw support structure"
+	surgery_flags = SURGERY_INCISED | SURGERY_RETRACTED | SURGERY_CONSTRUCT
+	surgery_flags_blocked = SURGERY_BROKEN
+	skill_used = /datum/skill/craft/engineering
 
 /datum/surgery_step/saw/construct/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	display_results(user, target, span_notice("I begin to saw through the support structure in [target]'s [parse_zone(target_zone)]..."),
@@ -93,10 +93,10 @@
 
 /// Drill bone
 /datum/surgery_step/drill/construct
-    name = "Drill inner-structure"
-    surgery_flags = SURGERY_INCISED | SURGERY_RETRACTED | SURGERY_CONSTRUCT
-    surgery_flags_blocked = SURGERY_BROKEN
-    skill_used = /datum/skill/craft/engineering
+	name = "Drill inner-structure"
+	surgery_flags = SURGERY_INCISED | SURGERY_RETRACTED | SURGERY_CONSTRUCT
+	surgery_flags_blocked = SURGERY_BROKEN
+	skill_used = /datum/skill/craft/engineering
 
 /datum/surgery_step/drill/construct/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	return ..()

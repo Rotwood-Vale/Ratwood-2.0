@@ -43,6 +43,15 @@
 	/obj/item/needle/pestra //Gets the special needle!
 	)
 
+/obj/item/storage/belt/rogue/surgery_bag/full/improv
+	populate_contents = list(
+		/obj/item/rogueweapon/surgery/saw/improv,
+		/obj/item/rogueweapon/surgery/hemostat/improv,
+		/obj/item/rogueweapon/surgery/retractor/improv,
+		/obj/item/natural/bundle/cloth/bandage/full,
+		/obj/item/needle/aalloy
+	)
+
 /obj/item/storage/belt/rogue/surgery_bag/empty
 	populate_contents = list(
 	)

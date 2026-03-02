@@ -4,6 +4,8 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/wolf_skin
+	wildshape_icon = 'icons/roguetown/mob/monster/vol.dmi'
+	wildshape_icon_state = "vv"
 	// Someone else balance this, I am here for code, not numbers
 
 //BUCKLING

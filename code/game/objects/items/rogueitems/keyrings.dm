@@ -35,20 +35,20 @@
 		return TRUE
 
 /obj/item/storage/keyring/update_icon()
-    ..()
-    switch(contents.len)
-        if(0)
-            icon_state = "keyring0"
-        if(1)
-            icon_state = "keyring1"
-        if(2)
-            icon_state = "keyring2"
-        if(3)
-            icon_state = "keyring3"
-        if(4)
-            icon_state = "keyring4"
-        else
-            icon_state = "keyring5"
+	..()
+	switch(contents.len)
+		if(0)
+			icon_state = "keyring0"
+		if(1)
+			icon_state = "keyring1"
+		if(2)
+			icon_state = "keyring2"
+		if(3)
+			icon_state = "keyring3"
+		if(4)
+			icon_state = "keyring4"
+		else
+			icon_state = "keyring5"
 
 /obj/item/storage/keyring/proc/update_desc()
 	if(contents.len)
@@ -59,12 +59,12 @@
 		desc = ""
 
 /obj/item/storage/keyring/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-    . = ..()
-    playsound(src, "sound/items/gems (1).ogg", 100, FALSE)
-    update_desc()
+	. = ..()
+	playsound(src, "sound/items/gems (1).ogg", 100, FALSE)
+	update_desc()
 
 /obj/item/storage/keyring/Exited(atom/movable/gone, direction)
-    . = ..()
+	. = ..()
 
 /obj/item/storage/keyring/getonmobprop(tag)
 	. = ..()
@@ -251,7 +251,7 @@
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/tower, /obj/item/roguekey/mage)
 
 /obj/item/storage/keyring/innkeep
-	keys = list(/obj/item/roguekey/tavern, /obj/item/roguekey/tavernkeep, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomv, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomii, /obj/item/roguekey/roomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomv)
+	keys = list(/obj/item/roguekey/tavern, /obj/item/roguekey/tavernkeep, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomix, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomv, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomii, /obj/item/roguekey/roomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomv)
 
 /obj/item/storage/keyring/innfancyi // 3 Keys
 	name = "luxury room I keyring"

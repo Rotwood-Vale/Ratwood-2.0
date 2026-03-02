@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NOSLEEP = span_warning("I can't sleep."),
 	TRAIT_ROT_EATER = span_necrosis("I can eat rotten food."),
 	TRAIT_ORGAN_EATER = span_bloody("I can eat organs and raw flesh."),
-	TRAIT_KNEESTINGER_IMMUNITY = "I am immune to the shock of kneestingers.",
+	TRAIT_KNEESTINGER_IMMUNITY = "I am immune to the shock of kneestingers and vines.",
 	TRAIT_SOUL_EXAMINE = span_deadsay("I know when someone's soul has departed."),
 	TRAIT_CRACKHEAD = span_love("I can use drugs as much as I want!"),
 	TRAIT_COMMIE = span_bloody("I can recognize other free men, and they can recognize me too."),

@@ -253,7 +253,7 @@ SUBSYSTEM_DEF(treasury)
 	if(total_paid > 0)
 		log_to_steward("Daily wages distributed: [total_paid]m total")
 
-/datum/controller/subsystem/treasury/proc/do_export(var/datum/roguestock/D, silent = FALSE)
+/datum/controller/subsystem/treasury/proc/do_export(datum/roguestock/D, silent = FALSE)
 	if((D.held_items[1] < D.importexport_amt))
 		return FALSE
 	var/amt = D.get_export_price()

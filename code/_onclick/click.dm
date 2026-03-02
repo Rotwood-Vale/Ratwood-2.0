@@ -305,7 +305,7 @@
 						target = M
 						break
 					if(target)
-						if(target.Adjacent(src) || (CanReach(target, W)))
+						if(target.Adjacent(src) || (CanReach(target, W) && used_intent.effective_range_type))
 							do_attack_animation(T, used_intent.animname, used_intent.masteritem, used_intent = src.used_intent)
 							resolveAdjacentClick(target,W,params,used_hand)
 							atkswinging = null
@@ -570,9 +570,9 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	return
 
 /**
-  *Middle click
-  *Mainly used for swapping hands
-  */
+ *Middle click
+ *Mainly used for swapping hands
+ */
 /mob/proc/MiddleClickOn(atom/A, params)
 	. = SEND_SIGNAL(src, COMSIG_MOB_MIDDLECLICKON, A)
 	if(. & COMSIG_MOB_CANCEL_CLICKON)

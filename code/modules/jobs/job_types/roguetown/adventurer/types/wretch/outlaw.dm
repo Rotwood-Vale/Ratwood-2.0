@@ -30,6 +30,7 @@
 		/datum/skill/misc/stealing = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/traps = SKILL_LEVEL_MASTER,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,		//why did these guys not even have SOME crafting experience?
 	)
 
 
@@ -84,16 +85,18 @@
 	outfit = /datum/outfit/job/roguetown/wretch/marauder
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
 	subclass_languages = list(/datum/language/thievescant)
-	//Still the speed class
+	traits_applied = list(TRAIT_MEDIUMARMOR)	//let us Try giving them medium armor. What can go wrong?!
+	//Still a bit quick but sturdier. A bit more stupid, though.	
 	subclass_stats = list(
 		STATKEY_CON = 2,
-		STATKEY_SPD = 2,
-		STATKEY_STR = 1,
-		STATKEY_WIL = 1
+		STATKEY_WIL = 2,
+		STATKEY_SPD = 1,
+		STATKEY_STR = 2,
+		STATKEY_INT = -1
 	)
 	subclass_skills = list(
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,		//Fear the man who robs at a distance. Somehow.
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
@@ -107,6 +110,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,		//build some pallisade barricades or the likes! Blockade!
 	)
 
 /datum/outfit/job/roguetown/wretch/marauder/pre_equip(mob/living/carbon/human/H)
@@ -114,7 +118,7 @@
 	to_chat(H, span_warning("You are a brigand and a pillager - you prefer to get your coins with direct means from unfortunate victims."))
 	head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron		//iron breastplate so they need to find a way to upgrade it. Only piece of medium armor they get
 	cloak = /obj/item/clothing/cloak/stabard/dungeon
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -130,9 +134,10 @@
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/roguebag = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/weapons = list("Just A Heater Shield","Dagger + Crossbow", "Militia Warpick + Heater Shield", "Militia Spear + Heater Shield")
+		var/weapons = list("Just A Heater Shield","Dagger + Crossbow", "Militia Warpick + Heater Shield", "Militia Spear + Heater Shield", "Militia War-Axe", "Militia Goedendag", "Flail + Heater Shield")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -148,10 +153,20 @@
 				beltr = /obj/item/quiver/bolts
 			if ("Militia Warpick + Heater Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-				beltl = /obj/item/rogueweapon/pick/militia
+				beltl = /obj/item/rogueweapon/pick/militia/steel		//this one has axe skill. Other one had MINING.
 				backr = /obj/item/rogueweapon/shield/iron
 			if ("Militia Spear + Heater Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				l_hand = /obj/item/rogueweapon/spear/militia
+				backr = /obj/item/rogueweapon/shield/heater
+			if ("Militia War-Axe")
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
+				l_hand = /obj/item/rogueweapon/greataxe/militia
+			if ("Militia Goedendag")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+				l_hand = /obj/item/rogueweapon/woodstaff/militia
+			if ("Flail + Heater Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				l_hand = /obj/item/rogueweapon/flail/sflail
 				backr = /obj/item/rogueweapon/shield/heater
 		wretch_select_bounty(H)

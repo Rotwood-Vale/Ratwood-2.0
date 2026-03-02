@@ -1274,13 +1274,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/grind_requirements() //Used to check for extra requirements for grinding an object
 	return TRUE
 
- //Called BEFORE the object is ground up - use this to change grind results based on conditions
- //Use "return -1" to prevent the grinding from occurring
+//Called BEFORE the object is ground up - use this to change grind results based on conditions
+//Use "return -1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
 
 /obj/item/proc/on_juice()
 
-/obj/item/proc/get_force_string(var/force)
+/obj/item/proc/get_force_string(force)
 	switch(force)
 		if(0 to 9)
 			return "Puny"

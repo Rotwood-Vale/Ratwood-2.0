@@ -275,6 +275,9 @@
 			if(has_flaw(/datum/charflaw/addiction/lovefiend) && user.has_flaw(/datum/charflaw/addiction/lovefiend))
 				. += span_aiprivradio("[m1] as lovesick as I.")
 
+			if(has_flaw(/datum/charflaw/marked_by_baotha) && HAS_TRAIT(user, TRAIT_DEPRAVED))
+				. += span_aiprivradio("[m1] marked by the debauched scent of my patron.")
+
 			if(has_flaw(/datum/charflaw/addiction/junkie) && user.has_flaw(/datum/charflaw/addiction/junkie))
 				. += span_deadsay("[m1] carrying the same dust marks on their nose as I.")
 
@@ -521,6 +524,10 @@
 		var/str = "[m3] [belt.get_examine_string(user)] about [m2] waist. "
 		str += belt.integrity_check(is_smart)
 		. += str
+		if(istype(belt, /obj/item/storage/belt/rogue)) // check if belt has dildo attached
+			var/obj/item/storage/belt/rogue/belt_with_dildo = belt
+			if(belt_with_dildo.attached_toy)
+				. += "[m3] [belt_with_dildo.attached_toy.get_examine_string(user)] attached to [m2] belt. "
 
 	//right belt
 	if(beltr && !(SLOT_BELT_R in obscured))
@@ -1008,6 +1015,19 @@
 			if(femgen)
 				. += span_info(femgen)
 
+	// Print out branding
+	for(var/obj/item/bodypart/branded_bodypart as anything in bodyparts)
+		if(length(branded_bodypart.branded_writing) && get_location_accessible(src, branded_bodypart.body_zone))
+			. += span_info("[capitalize(m2)] [lowertext(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(branded_bodypart.branded_writing)]."
+		if(istype(branded_bodypart, /obj/item/bodypart/chest))
+			var/obj/item/bodypart/chest/buttocks = branded_bodypart
+			if(length(buttocks.branded_writing_on_buttocks) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
+				. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(buttocks.branded_writing_on_buttocks)]."
+		else if(istype(branded_bodypart, /obj/item/bodypart/head))
+			var/obj/item/bodypart/head/neck = branded_bodypart
+			if(length(neck.branded_writing_on_neck) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
+				. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
+
 	// Characters with the hunted flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
 		if(skipface && user.has_flaw(/datum/charflaw/hunted) && user != src)
@@ -1107,7 +1127,7 @@
 			if(HAS_TRAIT(examiner, TRAIT_COMMIE))
 				villain_text = span_notice("Free man!")
 			if(HAS_TRAIT(src,TRAIT_KNOWNCRIMINAL))
-				villain_text = span_userdanger("BANDIT!")
+				villain_text = span_userdanger("OUTLAW!")
 		if(mind.special_role == "Deadite")
 			villain_text = span_userdanger("DEADITE!")
 		if(mind.special_role == "Vampire Lord")

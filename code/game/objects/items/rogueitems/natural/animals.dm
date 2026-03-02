@@ -172,7 +172,7 @@
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/heatershield,
 		/datum/crafting_recipe/roguetown/leather/neck/leather_collar,
-    /datum/crafting_recipe/roguetown/leather/neck/leather_leash
+	/datum/crafting_recipe/roguetown/leather/neck/leather_leash
 	)
 
 

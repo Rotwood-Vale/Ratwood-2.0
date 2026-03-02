@@ -65,7 +65,7 @@
 	for(var/color in color_list)
 		. += color
 
-/proc/find_key_by_value(var/list/list, value)
+/proc/find_key_by_value(list/list, value)
 	for(var/key in list)
 		var/found_value = list[key]
 		if(found_value == value)

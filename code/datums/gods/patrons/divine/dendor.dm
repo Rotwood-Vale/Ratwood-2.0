@@ -9,7 +9,7 @@
 					/obj/effect/proc_holder/spell/targeted/blesscrop			= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/targeted/wildshape			= CLERIC_T2,
+					/obj/effect/proc_holder/spell/self/wildshape				= CLERIC_T2,
 					/obj/effect/proc_holder/spell/targeted/beasttame			= CLERIC_T2,
 					/obj/effect/proc_holder/spell/targeted/conjure_glowshroom	= CLERIC_T3,
 					/obj/effect/proc_holder/spell/targeted/conjure_vines 		= CLERIC_T3,
@@ -45,12 +45,12 @@
 	return FALSE
 
 /datum/patron/divine/dendor/on_lesser_heal(
-    mob/living/user,
-    mob/living/target,
-    message_out,
-    message_self,
-    conditional_buff,
-    situational_bonus
+	mob/living/user,
+	mob/living/target,
+	message_out,
+	message_self,
+	conditional_buff,
+	situational_bonus
 )
 	*message_out = span_info("A rush of primal energy spirals about [target]!")
 	*message_self = span_notice("I'm infused with primal energies!")

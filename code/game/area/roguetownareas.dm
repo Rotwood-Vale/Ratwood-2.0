@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/indoors/ravoxarena/can_craft_here()
 	return FALSE
 
-/area/rogue/indoors/ravoxarena/proc/cleanthearena(var/turf/returnzone)
+/area/rogue/indoors/ravoxarena/proc/cleanthearena(turf/returnzone)
 	for(var/obj/item/trash in src)
 		do_teleport(trash, returnzone)
 	GLOB.arenafolks.len = list()

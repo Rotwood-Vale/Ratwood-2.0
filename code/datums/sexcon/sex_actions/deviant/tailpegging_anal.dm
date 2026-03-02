@@ -26,7 +26,7 @@
 
 /datum/sex_action/tailpegging_anal/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fucks [target]'s ass with their tail."))
-	playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
+	user.sexcon.outercourse_noise(target)
 	user.sexcon.do_thrust_animate(target)
 
 	user.sexcon.perform_sex_action(target, 2.4, 7, TRUE)

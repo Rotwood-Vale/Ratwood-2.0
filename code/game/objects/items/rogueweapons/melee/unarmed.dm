@@ -413,6 +413,7 @@
 	item_d_type = "slash"
 	misscost = 10
 	intent_intdamage_factor = 0.05
+	sharpness_penalty = 2
 
 /datum/intent/claw/rend/steel
 	damfactor = 3

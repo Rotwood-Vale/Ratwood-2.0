@@ -512,7 +512,8 @@
 				return FALSE
 
 		update_pull_movespeed()
-		set_pull_offsets(target, state)
+		if(!target.is_shifted)
+			set_pull_offsets(target, state)
 	else
 		if(!supress_message)
 			var/sound_to_play = 'sound/combat/shove.ogg'
@@ -626,7 +627,8 @@
 		if(ismob(pulling))
 			var/mob/living/M = pulling
 			M.reset_offsets("pulledby")
-			reset_pull_offsets(pulling)
+			if(!M.is_shifted)
+				reset_pull_offsets(pulling)
 			if(HAS_TRAIT(M, TRAIT_GARROTED))
 				var/obj/item/inqarticles/garrote/gcord = src.get_active_held_item()
 				if(!gcord)
@@ -1157,7 +1159,7 @@
 					riding_datum.force_dismount(M)
 			return
 
-/mob/living/proc/submit(var/instant = FALSE)
+/mob/living/proc/submit(instant = FALSE)
 	set name = "Yield"
 	set category = "IC"
 	set hidden = 1

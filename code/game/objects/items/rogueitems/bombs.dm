@@ -252,8 +252,8 @@
 	var/radius = 3
 
 /obj/item/bomb/smoke/attack_self(mob/user)
-    ..()
-    light()
+	..()
+	light()
 
 /obj/item/bomb/smoke/ex_act()
 	if(!QDELETED(src))
@@ -285,7 +285,7 @@
 	qdel(src)
 
 /obj/item/grenade/smokebomb
-    parent_type = /obj/item/bomb/smoke
+	parent_type = /obj/item/bomb/smoke
 
 
 /obj/item/tntstick
@@ -382,9 +382,9 @@
 	light()
 
 /obj/item/satchel_bomb/ex_act()
-    if(!QDELETED(src))
-        lit = TRUE
-        explode(TRUE)
+	if(!QDELETED(src))
+		lit = TRUE
+		explode(TRUE)
 
 /obj/item/satchel_bomb/proc/light()
 	if(!lit)

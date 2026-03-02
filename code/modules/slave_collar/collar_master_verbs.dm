@@ -131,7 +131,8 @@
 
 		to_chat(pet, span_userdanger("<i>Your collar resonates with your master's voice:</i> [message]"))
 		playsound(pet, 'sound/misc/vampirespell.ogg', 50, TRUE)
-		pet.do_jitter_animation(15)
+		if(!pet.is_shifted)
+			pet.do_jitter_animation(15)
 		message_count++
 
 	if(message_count > 0)
@@ -285,7 +286,8 @@
 		to_chat(pet, span_userdanger("Your collar compels you to perform an action!"))
 		pet.visible_message(span_warning("[pet]'s collar pulses as they are forced to act!"))
 		pet.say(message) // The game will automatically handle * for emotes
-		pet.do_jitter_animation(15)
+		if(!pet.is_shifted)
+			pet.do_jitter_animation(15)
 		playsound(pet, 'sound/misc/vampirespell.ogg', 50, TRUE)
 		action_count++
 

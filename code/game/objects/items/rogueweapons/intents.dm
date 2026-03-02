@@ -55,10 +55,16 @@
 	var/mob_light = null // tracking mob_light
 	var/obj/effect/mob_charge_effect = null // The effect to be added (on top) of the mob while it is charging
 	var/custom_swingdelay = null	//Custom icon for its swingdelay.
+	/// Effective range for penfactor to apply fully.
+	var/effective_range = null
+	///	Effective range type. Can be Exact, Below or Above. Be sure to set this if you use effective_range!
+	/// Only use this with reach is >1 because otherwise like... why.
+	var/effective_range_type = EFF_RANGE_NONE
+	/// Extra sharpness drain per successful & parried hit.
+	var/sharpness_penalty = 0
 	//The below is for chipping on intents. Damage applied through armour, as a mechanic.
 	var/blunt_chipping = FALSE//Is this even capable of it?
 	var/blunt_chip_strength = null//How strong?
-
 
 	var/list/static/bonk_animation_types = list(
 		BCLASS_BLUNT,
@@ -93,7 +99,19 @@
 	if(desc)
 		inspec += "\n[desc]"
 	if(reach != 1)
-		inspec += "\n<b>Reach:</b> [reach]"
+		inspec += "\n<b>Reach:</b> [reach] paces"
+	if(effective_range)
+		var/suffix
+		switch(effective_range_type)
+			if(EFF_RANGE_EXACT)
+				suffix = "exactly"
+			if(EFF_RANGE_ABOVE)
+				suffix = "at and beyond"
+			if(EFF_RANGE_BELOW)
+				suffix = "at and within"
+			else
+				CRASH("effective_range found without a valid effective_range_type on [src] intent by [user]")
+		inspec += "\n<b>Effective Range:</b> [suffix] [effective_range] paces"
 	if(damfactor != 1)
 		inspec += "\n<b>Damage:</b> [damfactor]"
 	if(penfactor)
@@ -132,6 +150,8 @@
 	if(intent_intdamage_factor != 1)
 		var/percstr = abs(intent_intdamage_factor - 1) * 100
 		inspec += "\nThis intent deals [percstr]% [intent_intdamage_factor > 1 ? "more" : "less"] damage to integrity."
+	if(sharpness_penalty)
+		inspec += "\nThis intent will cost some sharpness for every attack made."
 	if(blunt_chipping)
 		var/chip_strength
 		switch(blunt_chip_strength)
