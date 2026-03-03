@@ -78,8 +78,8 @@
 				used = list('sound/vo/male/gen/rage (1).ogg','sound/vo/male/gen/rage (2).ogg')
 			if("scream")
 				used = list('sound/vo/male/gen/scream (1).ogg','sound/vo/male/gen/scream (2).ogg')
-				if(prob(1))
-					used = 'sound/vo/male/wilhelm_scream.ogg'
+				if(prob(2))
+					used = pick('sound/vo/male/wilhelm_scream.ogg', 'sound/vo/male/agony_scream.ogg')
 			if("shh")
 				used = 'sound/vo/male/gen/shh.ogg'
 			if("sigh")
