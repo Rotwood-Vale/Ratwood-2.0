@@ -74,6 +74,7 @@
 	mortal = TRUE
 	/// Some head fractures will knock your lights out, if not flat-out paralyze you.
 	var/knockout = 10	//10 tick knockout (1 sec)
+	var/static/instant_death_chance = 100
 
 /datum/wound/fracture/head/on_mob_gain(mob/living/affected)
 	. = ..()
@@ -87,6 +88,16 @@
 		if(iscarbon(affected))
 			var/mob/living/carbon/carbon_affected = affected
 			carbon_affected.update_disabled_bodyparts()
+	if(mortal) // your skull is literally being shattered, it should generally kill you most of the time and damage your brain
+		var/con_adjustment = owner.STACON
+		if(prob(instant_death_chance - con_adjustment) )
+			owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(50, 80) - (con_adjustment * 2))
+			to_chat(owner, span_userdanger("MMHHHMYYY HEADD HURTSS HURRR---???"))
+		else
+			owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(20, 40) - (con_adjustment * 2))
+			to_chat(owner, span_userdanger("MY HEAD! THE PAIN IS UNREAL!"))
+		if(prob(instant_death_chance - (con_adjustment * 2) ) )
+			owner.death()
 
 /datum/wound/fracture/head/on_mob_loss(mob/living/affected)
 	. = ..()

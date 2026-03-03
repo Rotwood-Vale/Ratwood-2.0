@@ -22,13 +22,6 @@
 		handle_blood()
 		handle_wounds()
 
-	//Funny thing here, however. If they ARE skullcracked, we throw them a bone. In direct opposition to the above.
-	//Passive heals until they get out of skullcrack state. Just so they're not perma skullcracked without doctors.
-	//You can still break legs and the like without it passive healing. Do that instead.
-	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
-		var/list/wounds = get_wounds()
-		if(wounds.len > 0)
-			heal_wounds(0.3, list(/datum/wound/fracture/head, /datum/wound/fracture/head/brain, /datum/wound/fracture/neck))
 
 	handle_embedded_objects()
 	handle_roguebreath()
