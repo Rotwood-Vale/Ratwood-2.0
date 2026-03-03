@@ -94,7 +94,7 @@
 			owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(50, 80) - (con_adjustment * 2))
 			to_chat(owner, span_userdanger("MMHHHMYYY HEADD HURTSS HURRR---???"))
 		else
-			owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(20, 40) - (con_adjustment * 2))
+			owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(41, 50) - (con_adjustment * 2))
 			to_chat(owner, span_userdanger("MY HEAD! THE PAIN IS UNREAL!"))
 		if(prob(instant_death_chance - (con_adjustment * 2) ) )
 			owner.death()
