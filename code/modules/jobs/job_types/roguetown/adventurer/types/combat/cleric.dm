@@ -723,11 +723,9 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backpack_contents = list(
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
-		/obj/item/storage/belt/rogue/pouch/medicine = 1,
-		/obj/item/ritechalk = 1
+		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
+		/obj/item/storage/belt/rogue/pouch/medicine = 1
 		)
 	
 	if (H.mind)
