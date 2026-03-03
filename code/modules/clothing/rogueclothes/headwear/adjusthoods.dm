@@ -139,6 +139,32 @@
 	color = CLOTHING_BLACK
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK
 
+/obj/item/clothing/head/roguetown/roguehood/poacher
+	name = "weathered warden's hood"
+	desc = "A leather hood, sewn larger than usual to accommodate a helmet. There's dried blood on its broken left antler. The price for true freedom, paid with someone else's life."
+	color = null
+	icon_state = "poacherhood"
+	item_state = "poacherhood"
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	bloody_icon = 'icons/effects/blood64.dmi'
+	body_parts_covered = NECK
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	dynamic_hair_suffix = ""
+	edelay_type = 1
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	max_integrity = 200
+
+	name = "weathered warden's hood"
+	desc = "A leather hood, sewn larger than usual to accomodate a helmet. There's some dried blood on its broken left antler. The price for true freedom, paid with someone else's life."
+	icon_state = "poacherhood"
+	item_state = "poacherhood"
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
+
 // Holy Hoods
 
 /obj/item/clothing/head/roguetown/roguehood/astrata

@@ -320,9 +320,15 @@
 
 /obj/item/roguekey/roomviii
 	name = "room VIII key"
-	desc = "The key to the eight room."
+	desc = "The key to the eighth room."
 	icon_state = "brownkey"
 	lockid = "roomviii"
+
+/obj/item/roguekey/roomix
+	name = "room IX key"
+	desc = "The key to the ninth room."
+	icon_state = "brownkey"
+	lockid = "roomix"
 
 /obj/item/roguekey/roomhunt
 	name = "HUNT room key"

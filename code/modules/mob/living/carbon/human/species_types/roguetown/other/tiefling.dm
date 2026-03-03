@@ -131,7 +131,13 @@
 		"Chyerno" = SKIN_COLOR_CHYERNO,
 		"Drema"	= SKIN_COLOR_DREMA,
 		"Chir"	= SKIN_COLOR_CHIR,
-		"Vesyl"	= SKIN_COLOR_VESYL
+		"Vesyl"	= SKIN_COLOR_VESYL,
+		"Krosec" = SKIN_COLOR_KROSEC,
+		"Asza" = SKIN_COLOR_ASZA,
+		"Krizzsha" = SKIN_COLOR_KRIZZSHA,
+		"Tosiz" = SKIN_COLOR_TOSIZ,
+		"Velothel" = SKIN_COLOR_VELOTHEL,
+		"Ashol" = SKIN_COLOR_ASHOL
 	)
 
 /datum/species/tieberian/get_hairc_list()

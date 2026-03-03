@@ -19,4 +19,3 @@
 /datum/loadout_item/corset_colored
 	name = "colorable corset"
 	path = /obj/item/clothing/suit/roguetown/armor/corset/colored
-	triumph_cost = 3
