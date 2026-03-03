@@ -109,10 +109,18 @@ GLOBAL_LIST_EMPTY(collar_masters)
 		return
 
 	// Prevent self-collaring
-	if(pet == collar.collar_master)
+/*	if(pet == collar.collar_master)
 		to_chat(pet, span_warning("The collar refuses to clasp shut."))
 		pet.dropItemToGround(collar, force = TRUE)
 		return FALSE
+*/
+	if(alert(pet, "Submit to the collar's control?", "Cursed Collar", "Yes!", "No") != "Yes!")
+		pet.visible_message(span_warning("[pet] resists the collar's control."))
+		to_chat(pet, span_warning("Your defiant will prevents the collar from binding to you!"))
+		pet.dropItemToGround(collar, force = TRUE)
+		return FALSE
+
+	collar.allow_self_unequip = FALSE
 
 	to_chat(pet, span_notice("Your collar pulses, reinforcing your master's control..."))
 	SEND_SIGNAL(pet, COMSIG_CARBON_GAIN_COLLAR, collar)

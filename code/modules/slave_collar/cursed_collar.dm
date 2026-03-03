@@ -111,6 +111,7 @@
 	. = ..()
 	if(!user)
 		return
+	allow_self_unequip = TRUE
 	SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)
 
 	// Find and remove from any collar master's pet list
