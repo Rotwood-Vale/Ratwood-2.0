@@ -210,7 +210,12 @@
 		to_chat(human, span_notice("They're just where I left them..."))
 	else
 		to_chat(human, span_notice("It's just where I left it..."))
-	name = "[user.real_name] the [human.advjob ? human.advjob : human.job]'s house"
+	var/owner_title = human.job  // If you somehow have no job at all, it'll just be "Name's house"
+	if(human.mind && human.mind.cosmetic_class_title)
+		owner_title = human.mind.cosmetic_class_title
+	else if(human.advjob)
+		owner_title = human.advjob		
+	name = "[user.real_name][owner_title ? " the [owner_title]" : ""]'s house"
 	return TRUE
 
 /obj/structure/mineral_door/Move()

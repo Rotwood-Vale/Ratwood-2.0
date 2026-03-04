@@ -56,6 +56,7 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/woodstaff/quarterstaff
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,

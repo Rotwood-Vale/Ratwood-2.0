@@ -273,11 +273,16 @@
 	return TRUE
 
 /obj/item/reagent_containers/powder/mineral/attackby(obj/item/I, mob/user, params)
-	if(water_added)
-		if(istype(I, /obj/item/natural/cloth))
-			user.visible_message(span_info("[user] sifts the minerals..."))
-			playsound(get_turf(user), 'modular/Neu_Food/sound/peppermill.ogg', 90, TRUE, -1)
-			if(do_after(user,3 SECONDS, target = src))
-				new /obj/item/reagent_containers/powder/coarse_salt(loc)
-				qdel(src)
-	else ..()
+	if(!water_added)
+		return ..()
+
+	if(!istype(I, /obj/item/natural/cloth))
+		return ..()
+
+	user.visible_message(span_info("[user] sifts the minerals..."))
+	playsound(get_turf(user), 'modular/Neu_Food/sound/peppermill.ogg', 90, TRUE, -1)
+	if(!do_after(user, 3 SECONDS, target = src))
+		return ..()
+
+	new /obj/item/reagent_containers/powder/coarse_salt(get_turf(loc))
+	qdel(src)

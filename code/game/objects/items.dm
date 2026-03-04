@@ -183,6 +183,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/twohands_required = FALSE
 
+	var/from_stockpile = FALSE
+
 	var/bloody_icon = 'icons/effects/blood.dmi'
 	var/bloody_icon_state = "itemblood"
 	var/dam_icon = 'icons/effects/item_damage32.dmi'
