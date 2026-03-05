@@ -104,8 +104,10 @@
 			unlocked_cats+="Sawbones"
 		if("Hedge Knight")
 			unlocked_cats+="Knight"
-		if("Rogue Mage")
-			unlocked_cats+="Mage"
+		if("SpellBlade")
+			unlocked_cats+="SpellBlade"
+		if("Hedge Magician")
+			unlocked_cats+="Hedge Magician"
 		if("Knave")
 			unlocked_cats+="Knave"
 		if("Iconoclast")
