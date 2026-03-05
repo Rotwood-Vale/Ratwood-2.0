@@ -35,11 +35,12 @@
 	job_subclasses = list(
 		/datum/advclass/brigand,
 		/datum/advclass/hedgeknight,
+		/datum/advclass/hedgemage,
 		/datum/advclass/iconoclast,
 		/datum/advclass/knave,
-		/datum/advclass/roguemage,
 		/datum/advclass/sawbones,
 		/datum/advclass/sellsword,
+		/datum/advclass/spellblade,
 		/datum/advclass/pioneer
 	)
 
