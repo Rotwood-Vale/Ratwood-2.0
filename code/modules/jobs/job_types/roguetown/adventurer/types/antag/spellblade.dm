@@ -8,11 +8,11 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	subclass_spellpoints = 18
 	category_tags = list(CTAG_BANDIT)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_ARCYNE_T3, TRAIT_MAGEARMOR)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_ARCYNE_T2, TRAIT_MAGEARMOR)
 	subclass_stats = list(
-		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
 		STATKEY_PER = 2, // Adv mage get 2 perception so whatever. It is useful for aiming body parts but have no direct synergy with spells.
+		STATKEY_STR = 1,
 		STATKEY_SPD = 1,
 		STATKEY_CON = 1,
 	)
