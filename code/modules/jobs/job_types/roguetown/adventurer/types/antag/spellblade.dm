@@ -1,9 +1,9 @@
-/datum/advclass/roguemage //mage class - like the adventurer SpellBlade, but more evil.
+/datum/advclass/spellblade //mage class - like the adventurer SpellBlade, but more evil.
 	name = "SpellBlade"
 	tutorial = "As a mage, you learned spells can not cover all area's of your trade."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/bandit/roguemage/spellblade
+	outfit = /datum/outfit/job/roguetown/bandit/spellblade
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	subclass_spellpoints = 18
@@ -35,7 +35,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	)
 
-/datum/outfit/job/roguetown/bandit/roguemage/spellblade/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/bandit/spellblade/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	pants = /obj/item/clothing/under/roguetown/trou/leather
@@ -61,7 +61,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 
-/datum/outfit/job/roguetown/bandit/roguemage/post_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/bandit/spellblade/post_equip(mob/living/carbon/human/H)
 	. = ..()
 	for(var/datum/bounty/b in GLOB.head_bounties)
 		if(b.target == H.real_name || b.target_hidden == H.real_name)
