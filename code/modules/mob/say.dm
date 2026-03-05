@@ -199,5 +199,5 @@
 	else if(key == "%")
 		return MODE_SING
 	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
-		var/key_symbol = lowertext(copytext_char(message, 2, 3))
+		var/key_symbol = LOWER_TEXT(copytext_char(message, 2, 3))
 		return GLOB.department_radio_keys[key_symbol]

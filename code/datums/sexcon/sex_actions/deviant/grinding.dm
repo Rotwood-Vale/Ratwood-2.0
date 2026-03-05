@@ -33,7 +33,7 @@
 			zone_text = target.getorganslot(ORGAN_SLOT_BREASTS) ? "tits" : "chest"
 			pleasure_target = 1
 		else
-			zone_text = lowertext(parse_zone(user.zone_selected))
+			zone_text = LOWER_TEXT(parse_zone(user.zone_selected))
 			pleasure_target = 0
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle

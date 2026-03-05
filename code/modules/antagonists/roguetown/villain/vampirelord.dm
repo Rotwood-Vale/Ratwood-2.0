@@ -902,7 +902,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 				to_chat(owner, "<B>Goal #[count]</B>: [objective.explanation_text] <span class='redtext'>Failure.</span>")
 				traitorwin = FALSE
 			count += objective.triumph_count
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 	if(traitorwin)
 		if(count)
 			if(owner)
@@ -1017,7 +1017,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 					traitorwin = FALSE
 				count += objective.triumph_count
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 	if(traitorwin)
 		if(count)
 			if(owner)

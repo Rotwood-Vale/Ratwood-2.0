@@ -1287,11 +1287,11 @@
 						// Excommunication check for both participants
 						var/excomm_found = FALSE
 						for(var/excomm_name in GLOB.excommunicated_players)
-							var/clean_excomm = lowertext(trim(excomm_name))
-							if(thegroom && clean_excomm == lowertext(trim(thegroom.real_name)))
+							var/clean_excomm = LOWER_TEXT(trim(excomm_name))
+							if(thegroom && clean_excomm == LOWER_TEXT(trim(thegroom.real_name)))
 								excomm_found = TRUE
 								break
-							if(thebride && clean_excomm == lowertext(trim(thebride.real_name)))
+							if(thebride && clean_excomm == LOWER_TEXT(trim(thebride.real_name)))
 								excomm_found = TRUE
 								break
 						if(!excomm_found)

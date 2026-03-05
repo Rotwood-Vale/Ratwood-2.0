@@ -98,7 +98,7 @@
 		return
 	var/value = accent_list[key]
 	if (!value)
-		value = accent_list[lowertext(key)]
+		value = accent_list[LOWER_TEXT(key)]
 	if (!value)
 		value = accent_list[uppertext(key)]
 	if (!value)

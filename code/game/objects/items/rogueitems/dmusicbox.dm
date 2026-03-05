@@ -104,7 +104,7 @@ GLOBAL_VAR_INIT(musicboxes_last_download, 0) //last time of the last download, t
 		return
 
 	var/filename = "[infile]"
-	var/file_ext = lowertext(copytext(filename, -4))
+	var/file_ext = LOWER_TEXT(copytext(filename, -4))
 	var/file_size = length(infile)
 
 	if(file_ext != ".ogg")

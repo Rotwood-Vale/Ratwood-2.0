@@ -109,7 +109,7 @@
 					return
 
 				var/filename = "[infile]"
-				var/file_ext = lowertext(copytext(filename, -4))
+				var/file_ext = LOWER_TEXT(copytext(filename, -4))
 				var/file_size = length(infile)
 				message_admins("[ADMIN_LOOKUPFLW(user)] uploaded a song [filename] of size [file_size / 1000000] (~MB).")
 				if(file_ext != ".ogg")
