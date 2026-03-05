@@ -51,3 +51,45 @@
 	playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 	budget2change(prize, get_turf(src))
 	return
+
+/obj/structure/roguemachine/freeholdinvite
+	name = "Oathmarker"
+	desc = "A solemn engine of blood and covenant, by which the willing are received into the people of the Freehold."
+	icon = 'icons/roguetown/misc/machines.dmi'
+	icon_state = "atm"
+	density = FALSE
+	blade_dulling = DULLING_BASH
+	pixel_y = 32
+
+/obj/structure/roguemachine/freeholdinvite/attack_hand(mob/user)
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/H = user
+
+	if(HAS_TRAIT(H, TRAIT_FREEHOLDER))
+		say("The mark is already upon you.")
+		return
+
+	var/choice = alert(user, "The machine offers to bind you with the mark of the Freehold. Will you accept it?", src.name, "Accept", "Decline")
+	if(choice != "Accept")
+		return
+
+	if(!Adjacent(user))
+		return
+
+	to_chat(user, span_warning("The machine bites my finger."))
+	icon_state = "atm-b"
+	H.flash_fullscreen("redflash3")
+	playsound(H, 'sound/combat/hits/bladed/genstab (1).ogg', 100, FALSE, -1)
+
+	H.add_trait(TRAIT_FREEHOLDER)
+
+	spawn(5)
+		say("Blood accepted. The mark is yours.")
+		playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+	return
+
+/obj/structure/roguemachine/freeholdinvite/examine(mob/user)
+	. += ..()
+	. += span_info("Its needles wait for any willing hand.")
