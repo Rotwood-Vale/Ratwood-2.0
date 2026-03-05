@@ -13,7 +13,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	//I don't know why the others are aligned but I shall do the same.
 	vis_flags		= VIS_INHERIT_ID
 
-/atom/movable/openspace_backdrop/Initialize()
+/atom/movable/openspace_backdrop/Initialize(mapload)
 	. = ..()
 //	filters += filter(type = "blur", size = 3)
 
