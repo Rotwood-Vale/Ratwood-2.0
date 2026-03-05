@@ -1,110 +1,1317 @@
-"aQ" = (/obj/structure/stairs{dir = 4},/turf/open/floor/rogue/ruinedwood/spiral,/area/rogue/underworld/adventurespawn)
-"aY" = (/obj/structure/mineral_door/swing_door,/obj/structure/underworld/barrier,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"aZ" = (/obj/structure/fluff/walldeco/innsign,/obj/structure/underworld/barrier,/turf/closed/wall/mineral/rogue/decowood,/area/rogue/underworld/adventurespawn)
-"dy" = (/obj/structure/fluff/walldeco/stone{pixel_y = 32},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"dA" = (/obj/structure/underworld/barrier,/obj/effect/landmark/start/adventurerlate{dir = 1},/obj/effect/landmark/start/courtagent,/turf/open/floor/rogue/churchrough,/area/rogue/underworld{first_time_text = "wayfarer's dream"})
-"dI" = (/obj/structure/table/wood{dir = 1; icon_state = "longtable"},/obj/structure/underworld/barrier,/obj/structure/bell_common,/turf/open/floor/rogue/blocks/stonered/tiny,/area/rogue/underworld/adventurespawn)
-"ec" = (/obj/effect/wisp/prestidigitation{color = "#ff75b1"; desc = "A small, fiery ball of light made up of mystical energy."; name = "Will-o'-the-wisp"; pixel_x = 0},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"fs" = (/obj/structure/underworld/carriageman{pixel_x = -15; pixel_y = -20},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"fM" = (/turf/closed/mineral/rogue/bedrock,/area/rogue/underworld/adventurespawn)
-"ic" = (/obj/structure/chair/stool/rogue,/turf/open/floor/rogue/herringbone,/area/rogue/underworld/adventurespawn)
-"iS" = (/obj/structure/underworld/barrier,/turf/closed/wall/mineral/rogue/decostone/cand,/area/rogue/underworld/adventurespawn)
-"iY" = (/obj/structure/underworld/carriage{pixel_x = -97; pixel_y = -36},/turf/closed/mineral/rogue/bedrock,/area/rogue/underworld{first_time_text = "wayfarer's dream"})
-"kd" = (/obj/structure/table/wood{dir = 1; icon_state = "longtable_mid"},/obj/structure/underworld/barrier,/turf/open/floor/rogue/herringbone,/area/rogue/underworld/adventurespawn)
-"mH" = (/obj/structure/fluff/traveltile/rockhillentrance{aportalgoesto = "rockhill4"; name = "Southern path to Rockhill"},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"mM" = (/obj/structure/fluff/wallclock/vampire,/obj/effect/wisp/prestidigitation{color = "#ff75b1"; desc = "A small, fiery ball of light made up of mystical energy."; name = "Will-o'-the-wisp"; pixel_x = 0},/turf/open/floor/rogue/ruinedwood/spiral,/area/rogue/underworld/adventurespawn)
-"nT" = (/obj/machinery/light/rogue/lanternpost{pixel_y = 12},/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"ob" = (/obj/structure/table/wood{dir = 1; icon_state = "longtable_mid"},/obj/item/reagent_containers/glass/cup/skull,/obj/structure/underworld/barrier,/turf/open/floor/rogue/herringbone,/area/rogue/underworld/adventurespawn)
-"ps" = (/obj/effect/particle_effect/smoke{color = "#7f788a"; lifetime = 14400},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"pO" = (/obj/structure/stairs{dir = 1},/turf/open/floor/rogue/ruinedwood/spiral,/area/rogue/underworld/adventurespawn)
-"rN" = (/obj/structure/fluff/statue/gargoyle,/obj/structure/underworld/barrier,/turf/closed/wall/mineral/rogue/stone/blue_moss,/area/rogue/underworld/adventurespawn)
-"sh" = (/obj/structure/table/wood{icon_state = "tablewood1"},/obj/item/reagent_containers/glass/cup/skull,/obj/item/reagent_containers/glass/cup/skull,/turf/open/floor/rogue/herringbone,/area/rogue/underworld/adventurespawn)
-"sX" = (/obj/structure/table/wood{icon_state = "tablewood1"},/obj/item/reagent_containers/glass/cup/skull,/obj/item/reagent_containers/glass/cup/skull,/obj/item/toy/cards/cardhand,/turf/open/floor/rogue/herringbone,/area/rogue/underworld/adventurespawn)
-"tV" = (/obj/structure/underworld/barrier,/turf/closed/wall/mineral/rogue/craftstone,/area/rogue/underworld/adventurespawn)
-"ub" = (/obj/structure/rack/rogue,/obj/item/reagent_containers/glass/cup/skull,/obj/item/reagent_containers/glass/cup/skull,/obj/item/reagent_containers/glass/cup/skull,/obj/item/reagent_containers/glass/cup/skull,/obj/item/reagent_containers/glass/cup/skull,/obj/item/reagent_containers/glass/cup/skull,/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"ug" = (/obj/structure/chair/stool/rogue,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"uw" = (/obj/structure/fluff/traveltile/rockhillentrance{aportalgoesto = "rockhill2"; name = "Southwestern path to Rockhill"},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"vv" = (/obj/structure/fluff/traveltile/rockhillentrance{aportalgoesto = "rockhill3"; name = "Southern path to Rockhill"},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"wH" = (/obj/effect/wisp/prestidigitation{color = "#ff75b1"; desc = "A small, fiery ball of light made up of mystical energy."; name = "Will-o'-the-wisp"; pixel_x = 0},/obj/machinery/light/rogue/lanternpost,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"xb" = (/mob/living/carbon/spirit{desc = "How long has it stood here like this...?"; name = "The Barkeeper"; pixel_x = 10},/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"xp" = (/obj/structure/underworld/barrier,/obj/structure/underworld/barrier,/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"xV" = (/obj/structure/bearpelt{alpha = 200; color = "#a3a8c2"},/turf/open/floor/rogue/herringbone,/area/rogue/underworld/adventurespawn)
-"yt" = (/obj/structure/fluff/traveltile/rockhillentrance{aportalgoesto = "rockhill5"; name = "Southeastern path to Rockhill"},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"yF" = (/obj/structure/fluff/traveltile/rockhillentrance{aportalgoesto = "rockhillsilly"; name = "Unlucky path to Rockhill"},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Aa" = (/obj/structure/flora/roguetree/underworld,/obj/structure/underworld/barrier,/obj/structure/underworld/barrier,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Al" = (/obj/structure/underworld/barrier,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"AV" = (/obj/structure/underworld/barrier,/turf/closed/wall/mineral/rogue/decowood,/area/rogue/underworld/adventurespawn)
-"Bf" = (/obj/structure/underworld/barrier,/obj/structure/underworld/barrier,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Bh" = (/obj/machinery/light/rogue/hearth,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"BX" = (/obj/structure/roguewindow,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Cn" = (/obj/structure/underworld/barrier,/turf/closed/wall/mineral/rogue/stone/blue_moss,/area/rogue/underworld/adventurespawn)
-"Dm" = (/obj/structure/flora/roguetree/underworld,/obj/structure/underworld/barrier,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"DS" = (/obj/structure/mineral_door/swing_door,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Eh" = (/turf/open/floor/rogue/underworld/road{density = null},/area/rogue/underworld/adventurespawn)
-"FL" = (/obj/structure/fluff/customsign{desc = "Last Stop Saloon"; icon_state = "signwrote"; name = "Decrepit Sign"; pixel_y = 13},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Gu" = (/obj/structure/fermentation_keg/beer,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Hm" = (/turf/closed/mineral/rogue/bedrock,/area/rogue/underworld{first_time_text = "wayfarer's dream"})
-"Jn" = (/obj/structure/underworld/barrier,/obj/effect/landmark/start/adventurerlate{dir = 1},/obj/effect/landmark/start/courtagent,/obj/effect/landmark/start/adventurerlate{dir = 1},/turf/open/floor/rogue/churchrough,/area/rogue/underworld{first_time_text = "wayfarer's dream"})
-"JE" = (/turf/closed/wall/mineral/rogue/wooddark,/area/rogue/underworld/adventurespawn)
-"JW" = (/obj/structure/underworld/barrier,/turf/closed/mineral/rogue/bedrock,/area/rogue/underworld/adventurespawn)
-"Kf" = (/obj/structure/rack/rogue,/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"Lh" = (/obj/machinery/light/rogue/wallfire/candle/blue/l,/turf/open/floor/rogue/herringbone,/area/rogue/underworld/adventurespawn)
-"LF" = (/obj/machinery/light/rogue/firebowl/stump,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Mq" = (/obj/structure/fluff/traveltile/rockhillentrance{aportalgoesto = "rockhill1"; name = "Western path to Rockhill"},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"MA" = (/turf/open/floor/rogue/herringbone,/area/rogue/underworld/adventurespawn)
-"MR" = (/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"MW" = (/obj/machinery/light/rogue/wallfire,/obj/structure/underworld/barrier,/turf/closed/wall/mineral/rogue/craftstone,/area/rogue/underworld/adventurespawn)
-"Oi" = (/obj/structure/table/wood/poor,/obj/structure/fluff/statue/small{name = "conveniently placed statue"; pixel_y = 13},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Pk" = (/obj/structure/underworld/barrier,/obj/effect/landmark/start/adventurerlate{dir = 1},/obj/effect/landmark/start/courtagent,/obj/effect/landmark/start/adventurerlate{dir = 1},/obj/effect/landmark/start/adventurerlate{dir = 1},/turf/open/floor/rogue/churchrough,/area/rogue/underworld{first_time_text = "wayfarer's dream"})
-"QK" = (/obj/structure/flora/roguetree/underworld,/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"QU" = (/obj/structure/far_travel,/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"Rt" = (/obj/structure/underworld/barrier,/turf/open/floor/rogue/churchrough,/area/rogue/underworld{first_time_text = "wayfarer's dream"})
-"RB" = (/obj/machinery/light/rogue/lanternpost,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Sr" = (/obj/structure/chair/stool/rogue,/turf/open/floor/rogue/ruinedwood/spiral,/area/rogue/underworld/adventurespawn)
-"Ta" = (/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"Tz" = (/obj/machinery/gear_painter,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Uk" = (/obj/structure/fluff/statue/gargoyle,/obj/structure/underworld/barrier,/turf/closed/wall/mineral/rogue/decostone/cand,/area/rogue/underworld/adventurespawn)
-"UT" = (/obj/structure/fluff/traveltile/rockhillentrance{aportalgoesto = "rockhill6"; name = "Eastern path to Rockhill"},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"VA" = (/turf/closed/wall/mineral/rogue/decowood,/area/rogue/underworld/adventurespawn)
-"VB" = (/obj/structure/underworld/barrier,/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"VD" = (/obj/structure/fluff/traveltile/rockhillentrance{aportalgoesto = "RockhillRandom"; name = "Mysterious path to Rockhill"},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"VL" = (/obj/effect/particle_effect/smoke{color = "#7f788a"; lifetime = 14400},/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"WW" = (/obj/machinery/light/rogue/chand{alpha = 200; pixel_y = 8},/turf/open/floor/rogue/churchrough,/area/rogue/underworld/adventurespawn)
-"WX" = (/obj/structure/toilet,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Xc" = (/obj/structure/flora/roguetree/underworld,/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Xq" = (/obj/machinery/light/rogue/lanternpost{dir = 1},/turf/open/floor/rogue/underworld/road,/area/rogue/underworld/adventurespawn)
-"Xw" = (/turf/open/floor/rogue/ruinedwood/spiral,/area/rogue/underworld/adventurespawn)
-"XA" = (/obj/structure/roguewindow,/turf/open/floor/rogue/herringbone,/area/rogue/underworld/adventurespawn)
-"YW" = (/obj/effect/wisp/prestidigitation{color = "#ff75b1"; desc = "A small, fiery ball of light made up of mystical energy."; name = "Will-o'-the-wisp"; pixel_x = 0},/turf/open/floor/rogue/herringbone,/area/rogue/underworld/adventurespawn)
-"Zz" = (/obj/structure/stairs{dir = 8},/turf/open/floor/rogue/ruinedwood/spiral,/area/rogue/underworld/adventurespawn)
-"ZD" = (/obj/machinery/light/rogue/wallfire/candle/blue/r,/turf/open/floor/rogue/ruinedwood/spiral,/area/rogue/underworld/adventurespawn)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aQ" = (
+/obj/structure/stairs{
+	dir = 4
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/underworld/adventurespawn)
+"aY" = (
+/obj/structure/mineral_door/swing_door,
+/obj/structure/underworld/barrier,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"aZ" = (
+/obj/structure/fluff/walldeco/innsign,
+/obj/structure/underworld/barrier,
+/turf/closed/wall/mineral/rogue/decowood,
+/area/rogue/underworld/adventurespawn)
+"dy" = (
+/obj/structure/fluff/walldeco/stone{
+	pixel_y = 32
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"dA" = (
+/obj/structure/underworld/barrier,
+/obj/effect/landmark/start/adventurerlate{
+	dir = 1
+	},
+/obj/effect/landmark/start/courtagent,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld{
+	first_time_text = "wayfarer's dream"
+	})
+"dI" = (
+/obj/structure/table/wood{
+	dir = 1;
+	icon_state = "longtable"
+	},
+/obj/structure/underworld/barrier,
+/obj/structure/bell_common,
+/turf/open/floor/rogue/blocks/stonered/tiny,
+/area/rogue/underworld/adventurespawn)
+"ec" = (
+/obj/effect/wisp/prestidigitation{
+	color = "#ff75b1";
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"fs" = (
+/obj/structure/underworld/carriageman{
+	pixel_x = -15;
+	pixel_y = -20
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"fM" = (
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue/underworld/adventurespawn)
+"ic" = (
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/underworld/adventurespawn)
+"iS" = (
+/obj/structure/underworld/barrier,
+/turf/closed/wall/mineral/rogue/decostone/cand,
+/area/rogue/underworld/adventurespawn)
+"iY" = (
+/obj/structure/underworld/carriage{
+	pixel_x = -97;
+	pixel_y = -36
+	},
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue/underworld{
+	first_time_text = "wayfarer's dream"
+	})
+"kd" = (
+/obj/structure/table/wood{
+	dir = 1;
+	icon_state = "longtable_mid"
+	},
+/obj/structure/underworld/barrier,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/underworld/adventurespawn)
+"mH" = (
+/obj/structure/fluff/traveltile/rockhillentrance{
+	aportalgoesto = "rockhill4";
+	name = "Southern path to Rockhill"
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"mM" = (
+/obj/structure/fluff/wallclock/vampire,
+/obj/effect/wisp/prestidigitation{
+	color = "#ff75b1";
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/underworld/adventurespawn)
+"nT" = (
+/obj/machinery/light/rogue/lanternpost{
+	pixel_y = 12
+	},
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"ob" = (
+/obj/structure/table/wood{
+	dir = 1;
+	icon_state = "longtable_mid"
+	},
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/structure/underworld/barrier,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/underworld/adventurespawn)
+"ps" = (
+/obj/effect/particle_effect/smoke{
+	color = "#7f788a";
+	lifetime = 14400
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"pO" = (
+/obj/structure/stairs{
+	dir = 1
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/underworld/adventurespawn)
+"rN" = (
+/obj/structure/fluff/statue/gargoyle,
+/obj/structure/underworld/barrier,
+/turf/closed/wall/mineral/rogue/stone/blue_moss,
+/area/rogue/underworld/adventurespawn)
+"sh" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/underworld/adventurespawn)
+"sX" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/toy/cards/cardhand,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/underworld/adventurespawn)
+"tV" = (
+/obj/structure/underworld/barrier,
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/underworld/adventurespawn)
+"ub" = (
+/obj/structure/rack/rogue,
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"ug" = (
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"uw" = (
+/obj/structure/fluff/traveltile/rockhillentrance{
+	aportalgoesto = "rockhill2";
+	name = "Southwestern path to Rockhill"
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"vv" = (
+/obj/structure/fluff/traveltile/rockhillentrance{
+	aportalgoesto = "rockhill3";
+	name = "Southern path to Rockhill"
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"wH" = (
+/obj/effect/wisp/prestidigitation{
+	color = "#ff75b1";
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/obj/machinery/light/rogue/lanternpost,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"xb" = (
+/mob/living/carbon/spirit{
+	desc = "How long has it stood here like this...?";
+	name = "The Barkeeper";
+	pixel_x = 10
+	},
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"xp" = (
+/obj/structure/underworld/barrier,
+/obj/structure/underworld/barrier,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"xV" = (
+/obj/structure/bearpelt{
+	alpha = 200;
+	color = "#a3a8c2"
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/underworld/adventurespawn)
+"yt" = (
+/obj/structure/fluff/traveltile/rockhillentrance{
+	aportalgoesto = "rockhill5";
+	name = "Southeastern path to Rockhill"
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"yF" = (
+/obj/structure/fluff/traveltile/rockhillentrance{
+	aportalgoesto = "rockhillsilly";
+	name = "Unlucky path to Rockhill"
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Aa" = (
+/obj/structure/flora/roguetree/underworld,
+/obj/structure/underworld/barrier,
+/obj/structure/underworld/barrier,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Al" = (
+/obj/structure/underworld/barrier,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"AV" = (
+/obj/structure/underworld/barrier,
+/turf/closed/wall/mineral/rogue/decowood,
+/area/rogue/underworld/adventurespawn)
+"Bf" = (
+/obj/structure/underworld/barrier,
+/obj/structure/underworld/barrier,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Bh" = (
+/obj/machinery/light/rogue/hearth,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"BX" = (
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Cn" = (
+/obj/structure/underworld/barrier,
+/turf/closed/wall/mineral/rogue/stone/blue_moss,
+/area/rogue/underworld/adventurespawn)
+"Dm" = (
+/obj/structure/flora/roguetree/underworld,
+/obj/structure/underworld/barrier,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"DS" = (
+/obj/structure/mineral_door/swing_door,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Eh" = (
+/turf/open/floor/rogue/underworld/road{
+	density = null
+	},
+/area/rogue/underworld/adventurespawn)
+"FL" = (
+/obj/structure/fluff/customsign{
+	desc = "Last Stop Saloon";
+	icon_state = "signwrote";
+	name = "Decrepit Sign";
+	pixel_y = 13
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Gu" = (
+/obj/structure/fermentation_keg/beer,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Hm" = (
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue/underworld{
+	first_time_text = "wayfarer's dream"
+	})
+"Jn" = (
+/obj/structure/underworld/barrier,
+/obj/effect/landmark/start/adventurerlate{
+	dir = 1
+	},
+/obj/effect/landmark/start/courtagent,
+/obj/effect/landmark/start/adventurerlate{
+	dir = 1
+	},
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld{
+	first_time_text = "wayfarer's dream"
+	})
+"JE" = (
+/turf/closed/wall/mineral/rogue/wooddark,
+/area/rogue/underworld/adventurespawn)
+"JW" = (
+/obj/structure/underworld/barrier,
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue/underworld/adventurespawn)
+"Kf" = (
+/obj/structure/rack/rogue,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"Lh" = (
+/obj/machinery/light/rogue/wallfire/candle/blue/l,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/underworld/adventurespawn)
+"LF" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Mq" = (
+/obj/structure/fluff/traveltile/rockhillentrance{
+	aportalgoesto = "rockhill1";
+	name = "Western path to Rockhill"
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"MA" = (
+/turf/open/floor/rogue/herringbone,
+/area/rogue/underworld/adventurespawn)
+"MR" = (
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"MW" = (
+/obj/machinery/light/rogue/wallfire,
+/obj/structure/underworld/barrier,
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/underworld/adventurespawn)
+"Oi" = (
+/obj/structure/table/wood/poor,
+/obj/structure/fluff/statue/small{
+	name = "conveniently placed statue";
+	pixel_y = 13
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Pk" = (
+/obj/structure/underworld/barrier,
+/obj/effect/landmark/start/adventurerlate{
+	dir = 1
+	},
+/obj/effect/landmark/start/courtagent,
+/obj/effect/landmark/start/adventurerlate{
+	dir = 1
+	},
+/obj/effect/landmark/start/adventurerlate{
+	dir = 1
+	},
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld{
+	first_time_text = "wayfarer's dream"
+	})
+"QK" = (
+/obj/structure/flora/roguetree/underworld,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"QU" = (
+/obj/structure/far_travel,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"Rt" = (
+/obj/structure/underworld/barrier,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld{
+	first_time_text = "wayfarer's dream"
+	})
+"RB" = (
+/obj/machinery/light/rogue/lanternpost,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Sr" = (
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/underworld/adventurespawn)
+"Ta" = (
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"Tz" = (
+/obj/machinery/gear_painter,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Uk" = (
+/obj/structure/fluff/statue/gargoyle,
+/obj/structure/underworld/barrier,
+/turf/closed/wall/mineral/rogue/decostone/cand,
+/area/rogue/underworld/adventurespawn)
+"UT" = (
+/obj/structure/fluff/traveltile/rockhillentrance{
+	aportalgoesto = "rockhill6";
+	name = "Eastern path to Rockhill"
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"VA" = (
+/turf/closed/wall/mineral/rogue/decowood,
+/area/rogue/underworld/adventurespawn)
+"VB" = (
+/obj/structure/underworld/barrier,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"VD" = (
+/obj/structure/fluff/traveltile/rockhillentrance{
+	aportalgoesto = "RockhillRandom";
+	name = "Mysterious path to Rockhill"
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"VL" = (
+/obj/effect/particle_effect/smoke{
+	color = "#7f788a";
+	lifetime = 14400
+	},
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"WW" = (
+/obj/machinery/light/rogue/chand{
+	alpha = 200;
+	pixel_y = 8
+	},
+/turf/open/floor/rogue/churchrough,
+/area/rogue/underworld/adventurespawn)
+"WX" = (
+/obj/structure/toilet,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Xc" = (
+/obj/structure/flora/roguetree/underworld,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Xq" = (
+/obj/machinery/light/rogue/lanternpost{
+	dir = 1
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/underworld/adventurespawn)
+"Xw" = (
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/underworld/adventurespawn)
+"XA" = (
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/underworld/adventurespawn)
+"YW" = (
+/obj/effect/wisp/prestidigitation{
+	color = "#ff75b1";
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/underworld/adventurespawn)
+"Zz" = (
+/obj/structure/stairs{
+	dir = 8
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/underworld/adventurespawn)
+"ZD" = (
+/obj/machinery/light/rogue/wallfire/candle/blue/r,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/underworld/adventurespawn)
 
 (1,1,1) = {"
-fMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfM
-fMfMfMfMfMfMfMfMfMfMfMXcXcXcXcXcDmfMfMfMfMfMfMfMfMfMfMfMfM
-fMfMfMfMfMfMfMfMXcXcJWXcVAXcXcXcDmfMfMfMfMfMfMfMfMfMfMfMfM
-fMfMfMfMfMfMfMfMfMXcDmXcGuGuVAXcDmyFXcXcfMfMfMfMfMfMfMfMfM
-fMfMfMfMfMfMfMXcXcXctVubMRWWMRVAiSMRXcXcXcfMfMfMfMfMfMfMfM
-fMfMfMfMfMfMfMXcXcXctVKfxbEhMRTaUkWXMRMRXcfMfMfMfMfMfMfMfM
-fMfMfMfMfMfMfMXcXctVtVobkddIaYAVAVAVXcMRXcfMfMfMfMfMfMfMfM
-fMfMfMfMfMfMfMXctVMWdyicicugMAmMMRAVMRMRXcfMfMfMfMfMfMfMfM
-fMfMfMXcXcXcXcXctVBhMAMAxVMAMAugXwMRMRMRXcXcXcXcXcfMfMfMfM
-fMfMfMXcMqMRecXctVtVicshugYWicsXSrBXMRXcXcMRecUTXcfMfMfMfM
-fMfMfMXcMRTaMRMRXcCnLhicMRMRMAugZDAVXcXcXcTaTaecXcfMfMfMfM
-fMfMfMXcecMRTaMRTzrNCnAVBXDSXAaZAVUkXcMRTaTaMRXcXcXcXcfMfM
-fMfMfMXcXcXcTaTaMRXcecaQXwXwXwZzMRTzTaTaTaXcXcXcecytXcfMfM
-fMXcXcXcXcecTaTaXcMRMRJEpOpOpOJEMRMRMRTaXcXcecTaTaTaXcfMfM
-fMXcXcMRMRMRTaTaMRMRRBMRMRTaTaFLXqMRTaMRXcMRTaTaTaTaXcfMfM
-fMXcMRwHMRTaTaTaTaTaTaTaTaMRTaTaMRMRTaXcXcTaTaMRMRMRXcfMfM
-fMXcuwTaTaMRMRMRMRTaOiTzMRMRMRTaTaTaTaMRMRTaMRXcXcXcXcfMfM
-fMXcecMRMRXcXcMRTaTaMRMRMRMRMRMRTaTaTaTaTaTaMRXcMRecXcfMfM
-fMXcMRMRXcXcMRTaTaMRMRMRVDfsMRVDMRTaTaTaTaTaTaTaTamHXcfMfM
-fMXcXcXcMRecvvMRecMRXcMRMRMRMRMRMRnTTaecMRMRMRMRMRecXcfMfM
-fMfMJWAaAaAaAaAaAaAaAaLFMRMRMRMRMRTaTaLFXcXcXcXcXcXcXcfMfM
-fMfMQKVLTaMRTaTaVBAlxpRtJnPkPkTaTaTaTaTaVBMRMRMRMRTaVLTafM
-fMfMTaVLTaTaMRTaVBVBVBRtHmiYdATaTaTaTaTaVBTaMRTaTaMRpsTafM
-fMfMQKTaVLMRMRMRVBVBVBRtRtRtdATaQUQUTaMRAlTaTaMRTaVLTaTafM
-fMfMfMXcXcMRMRMRAlAlAlAlAlAlAlAlAlBfBfAlAlMRXcMRMRMRMRMRfM
-fMfMfMfMXcXcXcXcDmDmDmDmDmDmDmDmXcXcXcXcXcXcXcXcXcXcXcXcfM
-fMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfMfM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+"}
+(2,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+"}
+(3,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+Xc
+MR
+uw
+ec
+MR
+Xc
+JW
+QK
+Ta
+QK
+fM
+fM
+fM
+"}
+(4,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+MR
+wH
+Ta
+MR
+MR
+Xc
+Aa
+VL
+VL
+Ta
+Xc
+fM
+fM
+"}
+(5,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+Mq
+MR
+ec
+Xc
+Xc
+MR
+MR
+Ta
+MR
+Xc
+MR
+Aa
+Ta
+Ta
+VL
+Xc
+Xc
+fM
+"}
+(6,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+MR
+Ta
+MR
+Xc
+ec
+MR
+Ta
+MR
+Xc
+Xc
+ec
+Aa
+MR
+Ta
+MR
+MR
+Xc
+fM
+"}
+(7,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+ec
+MR
+Ta
+Ta
+Ta
+Ta
+Ta
+MR
+Xc
+MR
+vv
+Aa
+Ta
+MR
+MR
+MR
+Xc
+fM
+"}
+(8,1,1) = {"
+fM
+fM
+fM
+fM
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+MR
+MR
+Ta
+Ta
+Ta
+Ta
+MR
+MR
+Ta
+MR
+Aa
+Ta
+Ta
+MR
+MR
+Xc
+fM
+"}
+(9,1,1) = {"
+fM
+fM
+Xc
+fM
+Xc
+Xc
+Xc
+tV
+tV
+tV
+Xc
+Tz
+MR
+Xc
+MR
+Ta
+MR
+Ta
+Ta
+ec
+Aa
+VB
+VB
+VB
+Al
+Dm
+fM
+"}
+(10,1,1) = {"
+fM
+fM
+Xc
+Xc
+Xc
+Xc
+tV
+MW
+Bh
+tV
+Cn
+rN
+Xc
+MR
+MR
+Ta
+Ta
+Ta
+MR
+MR
+Aa
+Al
+VB
+VB
+Al
+Dm
+fM
+"}
+(11,1,1) = {"
+fM
+fM
+JW
+Dm
+tV
+tV
+tV
+dy
+MA
+ic
+Lh
+Cn
+ec
+MR
+RB
+Ta
+Oi
+MR
+MR
+Xc
+Aa
+xp
+VB
+VB
+Al
+Dm
+fM
+"}
+(12,1,1) = {"
+fM
+Xc
+Xc
+Xc
+ub
+Kf
+ob
+ic
+MA
+sh
+ic
+AV
+aQ
+JE
+MR
+Ta
+Tz
+MR
+MR
+MR
+LF
+Rt
+Rt
+Rt
+Al
+Dm
+fM
+"}
+(13,1,1) = {"
+fM
+Xc
+VA
+Gu
+MR
+xb
+kd
+ic
+xV
+ug
+MR
+BX
+Xw
+pO
+MR
+Ta
+MR
+MR
+VD
+MR
+MR
+Jn
+Hm
+Rt
+Al
+Dm
+fM
+"}
+(14,1,1) = {"
+fM
+Xc
+Xc
+Gu
+WW
+Eh
+dI
+ug
+MA
+YW
+MR
+DS
+Xw
+pO
+Ta
+MR
+MR
+MR
+fs
+MR
+MR
+Pk
+iY
+Rt
+Al
+Dm
+fM
+"}
+(15,1,1) = {"
+fM
+Xc
+Xc
+VA
+MR
+MR
+aY
+MA
+MA
+ic
+MA
+XA
+Xw
+pO
+Ta
+Ta
+MR
+MR
+MR
+MR
+MR
+Pk
+dA
+dA
+Al
+Dm
+fM
+"}
+(16,1,1) = {"
+fM
+Xc
+Xc
+Xc
+VA
+Ta
+AV
+mM
+ug
+sX
+ug
+aZ
+Zz
+JE
+FL
+Ta
+Ta
+MR
+VD
+MR
+MR
+Ta
+Ta
+Ta
+Al
+Dm
+fM
+"}
+(17,1,1) = {"
+fM
+Dm
+Dm
+Dm
+iS
+Uk
+AV
+MR
+Xw
+Sr
+ZD
+AV
+MR
+MR
+Xq
+MR
+Ta
+Ta
+MR
+MR
+MR
+Ta
+Ta
+QU
+Al
+Xc
+fM
+"}
+(18,1,1) = {"
+fM
+fM
+fM
+yF
+MR
+WX
+AV
+AV
+MR
+BX
+AV
+Uk
+Tz
+MR
+MR
+MR
+Ta
+Ta
+Ta
+nT
+Ta
+Ta
+Ta
+QU
+Bf
+Xc
+fM
+"}
+(19,1,1) = {"
+fM
+fM
+fM
+Xc
+Xc
+MR
+Xc
+MR
+MR
+MR
+Xc
+Xc
+Ta
+MR
+Ta
+Ta
+Ta
+Ta
+Ta
+Ta
+Ta
+Ta
+Ta
+Ta
+Bf
+Xc
+fM
+"}
+(20,1,1) = {"
+fM
+fM
+fM
+Xc
+Xc
+MR
+MR
+MR
+MR
+Xc
+Xc
+MR
+Ta
+Ta
+MR
+Xc
+MR
+Ta
+Ta
+ec
+LF
+Ta
+Ta
+MR
+Al
+Xc
+fM
+"}
+(21,1,1) = {"
+fM
+fM
+fM
+fM
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+Ta
+Ta
+Xc
+Xc
+Xc
+MR
+Ta
+Ta
+MR
+Xc
+VB
+VB
+Al
+Al
+Xc
+fM
+"}
+(22,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+MR
+Ta
+Ta
+Xc
+Xc
+MR
+Ta
+Ta
+Ta
+Ta
+MR
+Xc
+MR
+Ta
+Ta
+MR
+Xc
+fM
+"}
+(23,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+ec
+Ta
+MR
+Xc
+ec
+Ta
+Ta
+MR
+MR
+Ta
+MR
+Xc
+MR
+MR
+Ta
+Xc
+Xc
+fM
+"}
+(24,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+UT
+ec
+Xc
+Xc
+Ta
+Ta
+MR
+Xc
+Xc
+Ta
+MR
+Xc
+MR
+Ta
+MR
+MR
+Xc
+fM
+"}
+(25,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+Xc
+Xc
+Xc
+ec
+Ta
+Ta
+MR
+Xc
+MR
+Ta
+MR
+Xc
+MR
+Ta
+Ta
+MR
+Xc
+fM
+"}
+(26,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+yt
+Ta
+Ta
+MR
+Xc
+ec
+mH
+ec
+Xc
+Ta
+MR
+VL
+MR
+Xc
+fM
+"}
+(27,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
+VL
+ps
+Ta
+MR
+Xc
+fM
+"}
+(28,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+Ta
+Ta
+Ta
+MR
+Xc
+fM
+"}
+(29,1,1) = {"
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
 "}
