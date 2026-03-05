@@ -27,7 +27,7 @@
 	base_icon = "pillory_reinforced"
 
 
-/obj/structure/pillory/Initialize()
+/obj/structure/pillory/Initialize(mapload)
 	LAZYINITLIST(buckled_mobs)
 	. = ..()
 

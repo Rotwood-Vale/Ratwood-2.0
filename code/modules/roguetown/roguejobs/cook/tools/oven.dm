@@ -81,7 +81,7 @@
 
 /obj/machinery/light/rogue/oven/center
 
-/obj/machinery/light/rogue/oven/Initialize()
+/obj/machinery/light/rogue/oven/Initialize(mapload)
 	. = ..()
 	update_icon()
 

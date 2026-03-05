@@ -27,7 +27,7 @@
 	wander = FALSE
 	cmode_music = FALSE
 
-/mob/living/carbon/human/species/orc/npc/Initialize()
+/mob/living/carbon/human/species/orc/npc/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/orc)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)

@@ -20,7 +20,7 @@
 
 /obj/item/storage/belt/rogue/pouch/coins
 
-/obj/item/storage/belt/rogue/pouch/coins/mid/Initialize()
+/obj/item/storage/belt/rogue/pouch/coins/mid/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/silver/pile/H = new(loc)
 	if(istype(H))
@@ -31,7 +31,7 @@
 		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, C, null, TRUE, TRUE))
 			qdel(C)
 
-/obj/item/storage/belt/rogue/pouch/coins/poor/Initialize()
+/obj/item/storage/belt/rogue/pouch/coins/poor/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/copper/pile/H = new(loc)
 	if(istype(H))
@@ -43,7 +43,7 @@
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 				qdel(H)
 
-/obj/item/storage/belt/rogue/pouch/coins/rich/Initialize()
+/obj/item/storage/belt/rogue/pouch/coins/rich/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/silver/pile/H = new(loc)
 	if(istype(H))
@@ -59,7 +59,7 @@
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 				qdel(H)
 
-/obj/item/storage/belt/pouch/coins/veryrich/Initialize()
+/obj/item/storage/belt/pouch/coins/veryrich/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/gold/pile/H = new(loc)
 	if(istype(H))
@@ -75,14 +75,14 @@
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 				qdel(H)
 
-/obj/item/storage/belt/rogue/pouch/coins/virtuepouch/Initialize()
+/obj/item/storage/belt/rogue/pouch/coins/virtuepouch/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/gold/virtuepile/H = new(loc)
 	if(istype(H))
 		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 			qdel(H)
 
-/obj/item/storage/belt/rogue/pouch/coins/readyuppouch/Initialize()
+/obj/item/storage/belt/rogue/pouch/coins/readyuppouch/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/silver/pile/readyuppile/H = new(loc)
 	if(istype(H))

@@ -243,7 +243,7 @@
 	var/incoming = list('modular_helmsguard/sound/catapult/incoming.ogg', 'modular_helmsguard/sound/catapult/incoming2.ogg', 'modular_helmsguard/sound/catapult/incoming3.ogg')
 
 
-/obj/item/boulder/Initialize()
+/obj/item/boulder/Initialize(mapload)
 	. = ..()
 	icon_state = "b-[rand(1,3)]"
 

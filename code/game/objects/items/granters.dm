@@ -98,7 +98,7 @@
 /obj/item/book/granter/spell/random
 	icon_state = "random_book"
 
-/obj/item/book/granter/spell/random/Initialize()
+/obj/item/book/granter/spell/random/Initialize(mapload)
 	. = ..()
 	var/static/banned_spells = list(/obj/item/book/granter/spell/mimery_blockade)
 	var/real_type = pick(subtypesof(/obj/item/book/granter/spell) - banned_spells)

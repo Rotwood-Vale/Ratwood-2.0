@@ -242,7 +242,7 @@
 /obj/item/clothing/cloak/tabard/knight/attack_right(mob/user)
 	return
 
-/obj/item/clothing/cloak/tabard/knight/Initialize()
+/obj/item/clothing/cloak/tabard/knight/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -257,7 +257,7 @@
 	detail_color = CLOTHING_RED
 	boobed_detail = FALSE
 
-/obj/item/clothing/cloak/tabard/crusader/Initialize()
+/obj/item/clothing/cloak/tabard/crusader/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -408,7 +408,7 @@
 		return
 	picked = TRUE
 
-/obj/item/clothing/cloak/tabard/retinue/Initialize()
+/obj/item/clothing/cloak/tabard/retinue/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -563,7 +563,7 @@
 		return
 	picked = TRUE
 
-/obj/item/clothing/cloak/stabard/guard/Initialize()
+/obj/item/clothing/cloak/stabard/guard/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -612,7 +612,7 @@
 /obj/item/clothing/cloak/stabard/mercenary
 	detail_tag = "_quad"
 
-/obj/item/clothing/cloak/stabard/mercenary/Initialize()
+/obj/item/clothing/cloak/stabard/mercenary/Initialize(mapload)
 	. = ..()
 	detail_tag = pick("_quad", "_spl", "_box", "_dim")
 	color = clothing_color2hex(pick(CLOTHING_COLOR_NAMES))
@@ -726,7 +726,7 @@
 		return
 	picked = TRUE
 
-/obj/item/clothing/cloak/stabard/surcoat/guard/Initialize()
+/obj/item/clothing/cloak/stabard/surcoat/guard/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -780,7 +780,7 @@
 		var/mob/L = loc
 		L.update_inv_cloak()
 
-/obj/item/clothing/cloak/lordcloak/Initialize()
+/obj/item/clothing/cloak/lordcloak/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -1009,7 +1009,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/rainhood/furhood
 	salvage_result = /obj/item/natural/fur
 
-/obj/item/clothing/cloak/raincloak/furcloak/crafted/Initialize()
+/obj/item/clothing/cloak/raincloak/furcloak/crafted/Initialize(mapload)
 	. = ..()
 	if(prob(50))
 		color = pick("#685542","#66564d")
@@ -1063,7 +1063,7 @@
 /obj/item/clothing/cloak/cape/guard
 	color = CLOTHING_AZURE
 
-/obj/item/clothing/cloak/cape/guard/Initialize()
+/obj/item/clothing/cloak/cape/guard/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -1283,7 +1283,7 @@
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	inhand_mod = FALSE
 
-/obj/item/clothing/cloak/half/vet/Initialize()
+/obj/item/clothing/cloak/half/vet/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -1739,7 +1739,7 @@
 		return
 	picked = TRUE
 
-/obj/item/clothing/cloak/stabard/guardhood/Initialize()
+/obj/item/clothing/cloak/stabard/guardhood/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -1834,7 +1834,7 @@
 	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 
-/obj/item/clothing/cloak/graggar/Initialize()
+/obj/item/clothing/cloak/graggar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "CLOAK", "RENDERED ASUNDER")
 
@@ -1991,7 +1991,7 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/cloak/cotehardie/Initialize()
+/obj/item/clothing/cloak/cotehardie/Initialize(mapload)
 	..()
 	update_icon()
 
@@ -2017,7 +2017,7 @@
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	detail_color = "#39404d"
 
-/obj/item/clothing/cloak/captain/Initialize()
+/obj/item/clothing/cloak/captain/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary, GLOB.lordsecondary)

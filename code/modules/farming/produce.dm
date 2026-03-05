@@ -270,7 +270,7 @@
 	var/color_index = "good"
 	rotprocess = SHELFLIFE_SHORT
 
-/obj/item/reagent_containers/food/snacks/grown/berries/rogue/Initialize()
+/obj/item/reagent_containers/food/snacks/grown/berries/rogue/Initialize(mapload)
 	if(GLOB.berrycolors[color_index])
 		filling_color = GLOB.berrycolors[color_index]
 	else
@@ -497,7 +497,7 @@
 	list_reagents = list(/datum/reagent/drug/nicotine = 5, /datum/reagent/consumable/nutriment = 1)
 	grind_results = list(/datum/reagent/drug/nicotine = 10)
 
-/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry/Initialize()
+/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/sigdry,
@@ -521,7 +521,7 @@
 	grind_results = list(/datum/reagent/drug/space_drugs = 5)
 	eat_effect = /datum/status_effect/debuff/badmeal
 
-/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry/Initialize()
+/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/sigsweet,

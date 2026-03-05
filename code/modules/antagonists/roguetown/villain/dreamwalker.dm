@@ -233,7 +233,7 @@
 	var/max_uses = 3
 	var/turf/linked_turf
 
-/obj/structure/portal_jaunt/Initialize()
+/obj/structure/portal_jaunt/Initialize(mapload)
 	. = ..()
 	cooldown = world.time + 4 SECONDS
 	visible_message(span_warning("[src] shimmers into existence!"))
@@ -605,19 +605,19 @@
 	shockwave_damage = TRUE
 
 // Update weapon initializations with specific effects
-/obj/item/rogueweapon/greataxe/dreamscape/active/Initialize()
+/obj/item/rogueweapon/greataxe/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "fire", 20 SECONDS)
 
-/obj/item/rogueweapon/halberd/glaive/dreamscape/active/Initialize()
+/obj/item/rogueweapon/halberd/glaive/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "frost", 40 SECONDS)
 
-/obj/item/rogueweapon/greatsword/bsword/dreamscape/active/Initialize()
+/obj/item/rogueweapon/greatsword/bsword/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "poison", 20 SECONDS)
 
-/obj/item/rogueweapon/spear/dreamscape_trident/active/Initialize()
+/obj/item/rogueweapon/spear/dreamscape_trident/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -643,7 +643,7 @@
 	item_flags = DREAM_ITEM
 	peel_threshold = 5
 
-/obj/item/clothing/suit/roguetown/armor/plate/full/dreamwalker/Initialize()
+/obj/item/clothing/suit/roguetown/armor/plate/full/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -656,7 +656,7 @@
 	item_flags = DREAM_ITEM
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 
-/obj/item/clothing/under/roguetown/platelegs/dreamwalker/Initialize()
+/obj/item/clothing/under/roguetown/platelegs/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -668,7 +668,7 @@
 	armor = ARMOR_ASCENDANT
 	item_flags = DREAM_ITEM
 
-/obj/item/clothing/shoes/roguetown/boots/armor/dreamwalker/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -679,7 +679,7 @@
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	item_flags = DREAM_ITEM
 
-/obj/item/clothing/gloves/roguetown/plate/dreamwalker/Initialize()
+/obj/item/clothing/gloves/roguetown/plate/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -699,6 +699,6 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/obj/item/clothing/head/roguetown/helmet/bascinet/dreamwalker/Initialize()
+/obj/item/clothing/head/roguetown/helmet/bascinet/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)

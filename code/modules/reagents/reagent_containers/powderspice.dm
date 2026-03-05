@@ -175,7 +175,7 @@
 	volume = 1
 	sellprice = 0
 
-/obj/item/reagent_containers/powder/rocknut/Initialize()
+/obj/item/reagent_containers/powder/rocknut/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/rocknutdry,

@@ -145,7 +145,7 @@
 	. = ..()
 	. += span_info("This can be locked by a physician's key")
 
-/obj/structure/roguemachine/goldface/Initialize()
+/obj/structure/roguemachine/goldface/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -340,7 +340,7 @@
 	set_light(0)
 	return ..()
 
-/obj/structure/roguemachine/goldface/Initialize()
+/obj/structure/roguemachine/goldface/Initialize(mapload)
 	. = ..()
 	update_icon()
 

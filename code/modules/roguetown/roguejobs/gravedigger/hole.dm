@@ -64,7 +64,7 @@
 			playsound(src, 'sound/foley/bodyfall (3).ogg', 90, TRUE)
 			user.visible_message(span_warning("[user] emerges from [src]!"),span_alert("I emerge from [src]!"))
 
-/obj/structure/closet/dirthole/closed/loot/Initialize()
+/obj/structure/closet/dirthole/closed/loot/Initialize(mapload)
 	. = ..()
 	lootroll = rand(1,4)
 
@@ -324,7 +324,7 @@
 			can_buckle = FALSE
 	update_abovemob()
 
-/obj/structure/closet/dirthole/Initialize()
+/obj/structure/closet/dirthole/Initialize(mapload)
 	abovemob = mutable_appearance('icons/turf/roguefloor.dmi', "grave_above")
 	abovemob.layer = ABOVE_MOB_LAYER
 	update_icon()

@@ -19,7 +19,7 @@
 	name = "black lipstick"
 	colour = "black"
 
-/obj/item/azure_lipstick/Initialize()
+/obj/item/azure_lipstick/Initialize(mapload)
 	. = ..()
 	update_icon()
 

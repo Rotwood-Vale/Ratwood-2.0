@@ -20,7 +20,7 @@
 	var/lumber_amount = 1
 	metalizer_result = /obj/item/rogueore/iron
 
-/obj/item/grown/log/tree/Initialize()
+/obj/item/grown/log/tree/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/woodstaff,
@@ -98,7 +98,7 @@
 	lumber_amount = 0
 	metalizer_result = /obj/item/rogueore/copper
 
-/obj/item/grown/log/tree/small/Initialize()
+/obj/item/grown/log/tree/small/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/stoneaxe,
@@ -204,7 +204,7 @@
 	lumber_amount = 0
 	metalizer_result = null
 
-/obj/item/grown/log/tree/bowpartial/Initialize()
+/obj/item/grown/log/tree/bowpartial/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/bow,
@@ -221,7 +221,7 @@
 	icon = 'icons/roguetown/items/64x.dmi'
 	icon_state = "recurve_bowstave"
 
-/obj/item/grown/log/tree/bowpartial/recurve/Initialize()
+/obj/item/grown/log/tree/bowpartial/recurve/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/recurvebow,
@@ -233,7 +233,7 @@
 	icon = 'icons/roguetown/items/64x.dmi'
 	icon_state = "long_bowstave"
 
-/obj/item/grown/log/tree/bowpartial/longbow/Initialize()
+/obj/item/grown/log/tree/bowpartial/longbow/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/longbow,
@@ -274,7 +274,7 @@
 			if(!HAS_TRAIT(L, TRAIT_WOODWALKER))
 				L.consider_ambush()
 
-/obj/item/grown/log/tree/stick/Initialize()
+/obj/item/grown/log/tree/stick/Initialize(mapload)
 	icon_state = "stick[rand(1,2)]"
 	..()
 	var/static/list/slapcraft_recipe_list = list(
@@ -387,7 +387,7 @@
 	lumber_amount = 0
 	metalizer_result = /obj/item/ammo_casing/caseless/rogue/arrow/iron
 
-/obj/item/grown/log/tree/stake/Initialize()
+/obj/item/grown/log/tree/stake/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/whetstone,

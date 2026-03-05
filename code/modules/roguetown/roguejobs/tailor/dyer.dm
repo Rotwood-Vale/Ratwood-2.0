@@ -75,7 +75,7 @@ var/global/list/pridelist = list(
 			)
 	var/list/used_colors
 
-/obj/machinery/gear_painter/Initialize()
+/obj/machinery/gear_painter/Initialize(mapload)
 	..()
 	used_colors = colorlist
 

@@ -32,7 +32,7 @@
 	mode = NPC_AI_IDLE
 	wander = FALSE
 
-/mob/living/carbon/human/species/skeleton/Initialize()
+/mob/living/carbon/human/species/skeleton/Initialize(mapload)
 	. = ..()
 	cut_overlays()
 	spawn(10)

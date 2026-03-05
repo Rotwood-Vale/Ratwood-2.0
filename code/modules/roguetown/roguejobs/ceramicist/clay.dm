@@ -32,7 +32,7 @@
 	cooktime = 0
 	burntime = 0
 
-/obj/item/natural/clay/Initialize()
+/obj/item/natural/clay/Initialize(mapload)
 	if(cooked_type)
 		cooktime = 30 SECONDS
 	..() // The ..() refers to calling the parent class's (obj/item/natural) Initialize() proc.

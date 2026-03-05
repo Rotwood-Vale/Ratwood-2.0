@@ -326,7 +326,7 @@
 				addtimer(CALLBACK(src, PROC_REF(trigger_weather)), rand(5,20))
 				return TRUE
 
-/obj/machinery/light/rogue/torchholder/Initialize()
+/obj/machinery/light/rogue/torchholder/Initialize(mapload)
 	torchy = new /obj/item/flashlight/flare/torch(src)
 	torchy.spark_act()
 	torchy.weather_resistant = TRUE
@@ -465,7 +465,7 @@
 	var/mob/living/carbon/human/lastuser
 	var/datum/looping_sound/boilloop/boilloop
 
-/obj/machinery/light/rogue/hearth/Initialize()
+/obj/machinery/light/rogue/hearth/Initialize(mapload)
 	boilloop = new(src, FALSE)
 	. = ..()
 

@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 		return FALSE
 	. = ..()
 
-/mob/living/carbon/human/species/elf/dark/drowraider/Initialize()
+/mob/living/carbon/human/species/elf/dark/drowraider/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/elf/dark)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)

@@ -21,7 +21,7 @@
 	grid_width = 32
 	grid_height = 32
 
-/obj/item/mattcoin/Initialize()
+/obj/item/mattcoin/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	update_icon()

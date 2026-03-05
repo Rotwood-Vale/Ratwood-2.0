@@ -9,7 +9,7 @@
 	layer = ABOVE_MOB_LAYER
 	var/input_point
 
-/obj/structure/roguemachine/contractledger/Initialize()
+/obj/structure/roguemachine/contractledger/Initialize(mapload)
 	. = ..()
 	input_point = locate(x, y - 1, z)
 	var/obj/effect/decal/marker_export/marker = new(get_turf(input_point))

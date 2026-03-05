@@ -64,7 +64,7 @@
 	var/active_item = FALSE //Prevents issues like dragon ring giving negative str instead
 	var/legendaryarcane = FALSE
 	var/legendaryathletics = FALSE
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/Initialize()
+/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/Initialize(mapload)
 	.=..()
 	update_description()
 
@@ -190,7 +190,7 @@
 	icon_state = "graggarplate"
 	armor = ARMOR_CUIRASS
 
-/obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar/Initialize()
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
 
@@ -261,7 +261,7 @@
 			H.update_inv_armor()
 			H.update_icon()
 
-/obj/item/clothing/suit/roguetown/armor/plate/full/samsibsa/Initialize()
+/obj/item/clothing/suit/roguetown/armor/plate/full/samsibsa/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -321,7 +321,7 @@
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
 
-/obj/item/clothing/suit/roguetown/armor/plate/full/matthios/Initialize()
+/obj/item/clothing/suit/roguetown/armor/plate/full/matthios/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -338,7 +338,7 @@
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
 
-/obj/item/clothing/suit/roguetown/armor/plate/full/zizo/Initialize()
+/obj/item/clothing/suit/roguetown/armor/plate/full/zizo/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 

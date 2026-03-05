@@ -32,7 +32,7 @@
 	should_regenerate = TRUE
 	var/obj/item/rogue/instrument/vocals/harpy_vocals/vocals
 
-/obj/item/organ/vocal_cords/harpy/Initialize()
+/obj/item/organ/vocal_cords/harpy/Initialize(mapload)
 	. = ..()
 	vocals = new(src)  //okay, i think it'll be tied to the organ
 

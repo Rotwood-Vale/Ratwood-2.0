@@ -189,7 +189,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
-/mob/living/simple_animal/Initialize()
+/mob/living/simple_animal/Initialize(mapload)
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
 	if(gender == PLURAL)

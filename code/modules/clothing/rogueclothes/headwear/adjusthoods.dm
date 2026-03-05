@@ -48,11 +48,11 @@
 /obj/item/clothing/head/roguetown/roguehood/darkgreen
 	color = "#264d26"
 
-/obj/item/clothing/head/roguetown/roguehood/random/Initialize()
+/obj/item/clothing/head/roguetown/roguehood/random/Initialize(mapload)
 	color = pick("#544236", "#435436", "#543836", "#79763f")
 	..()
 
-/obj/item/clothing/head/roguetown/roguehood/mage/Initialize()
+/obj/item/clothing/head/roguetown/roguehood/mage/Initialize(mapload)
 	color = pick("#4756d8", "#759259", "#bf6f39", "#c1b144", "#b8252c")
 	..()
 

@@ -53,7 +53,7 @@
 	..()
 	user.update_inv_hands()
 
-/obj/item/paper/scroll/Initialize()
+/obj/item/paper/scroll/Initialize(mapload)
 	open = FALSE
 	update_icon_state()
 	..()

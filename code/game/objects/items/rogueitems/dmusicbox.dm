@@ -39,7 +39,7 @@ GLOBAL_VAR_INIT(musicboxes_last_download, 0) //last time of the last download, t
 	var/playingnewtrack = FALSE
 	anvilrepair = /datum/skill/craft/blacksmithing
 
-/obj/item/dmusicbox/Initialize()
+/obj/item/dmusicbox/Initialize(mapload)
 	GLOB.musicboxes += src
 	soundloop = new(src, FALSE)
 //	soundloop.start()

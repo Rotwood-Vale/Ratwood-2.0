@@ -106,7 +106,7 @@
 	var/heavy_bow = FALSE //used for adding a STR check to the charge time of a bow
 	metalizer_result = /obj/item/restraints/legcuffs/beartrap/armed
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/Initialize()
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/Initialize(mapload)
 	. = ..()
 	if(heavy_bow == TRUE)
 		src.possible_item_intents = list(

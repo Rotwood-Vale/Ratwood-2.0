@@ -61,7 +61,7 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 	dir = turn(dirin, 180)
 */
 
-/obj/structure/bombard/Initialize()
+/obj/structure/bombard/Initialize(mapload)
 	. = ..()
 	zdial = src.z
 

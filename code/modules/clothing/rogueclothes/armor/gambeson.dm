@@ -102,7 +102,7 @@
 	max_integrity = 250 //Same as grenzelshirt
 	shiftable = FALSE
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/Initialize()
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -151,7 +151,7 @@
 			H.update_inv_shirt()
 			H.update_icon()
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan/Initialize()
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan/Initialize(mapload)
 	. = ..()		
 	update_icon()
 
@@ -191,7 +191,7 @@
 			H.update_inv_shirt()
 			H.update_icon()
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/Initialize()
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/Initialize(mapload)
 	. = ..()		
 	update_icon()
 

@@ -31,7 +31,7 @@
 			add_overlay(filling)
 	return
 
-/obj/machinery/light/rogue/cauldron/Initialize()
+/obj/machinery/light/rogue/cauldron/Initialize(mapload)
 	create_reagents(500, DRAINABLE | AMOUNT_VISIBLE | REFILLABLE)
 	. = ..()
 

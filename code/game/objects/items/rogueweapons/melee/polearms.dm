@@ -1481,7 +1481,7 @@
 		pic.color = "#FFA500"
 		add_overlay(pic)
 
-/obj/item/rogueweapon/spear/otava/Initialize()
+/obj/item/rogueweapon/spear/otava/Initialize(mapload)
 	. = ..()
 	// toying a bit to see if i can make it be orange
 	detail_tag = "_det"

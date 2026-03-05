@@ -52,7 +52,7 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/Initialize()
+/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/Initialize(mapload)
 	..()
 	update_icon()
 

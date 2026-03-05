@@ -88,7 +88,7 @@
 		soundloop.stop()
 		user.remove_status_effect(/datum/status_effect/buff/cranking_soulchurner)
 
-/obj/item/psydonmusicbox/Initialize()
+/obj/item/psydonmusicbox/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	. = ..()
 
@@ -1379,7 +1379,7 @@ Inquisitorial armory down here
 		icon_state = "[initial(icon_state)]"
 	update_icon_state()
 
-/obj/item/inqarticles/bmirror/Initialize()
+/obj/item/inqarticles/bmirror/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	. = ..()
 

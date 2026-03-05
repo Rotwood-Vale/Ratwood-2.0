@@ -304,7 +304,7 @@
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
 
-/obj/item/clothing/head/roguetown/helmet/heavy/xylixhelm/Initialize()
+/obj/item/clothing/head/roguetown/helmet/heavy/xylixhelm/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_JINGLE_BELLS, 2)
 
@@ -701,7 +701,7 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
 	var/active_item = FALSE
 
-/obj/item/clothing/head/roguetown/helmet/heavy/graggar/Initialize()
+/obj/item/clothing/head/roguetown/helmet/heavy/graggar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "HELM", "RENDERED ASUNDER")
 
@@ -720,7 +720,7 @@
 	active_item = FALSE
 	REMOVE_TRAIT(user, TRAIT_BITERHELM, TRAIT_GENERIC)
 
-/obj/item/clothing/head/roguetown/helmet/heavy/matthios/Initialize()
+/obj/item/clothing/head/roguetown/helmet/heavy/matthios/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "VISAGE")
 
@@ -752,7 +752,7 @@
 	user.update_inv_head()
 
 
-/obj/item/clothing/head/roguetown/helmet/heavy/zizo/Initialize()
+/obj/item/clothing/head/roguetown/helmet/heavy/zizo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "HELMET")
 
