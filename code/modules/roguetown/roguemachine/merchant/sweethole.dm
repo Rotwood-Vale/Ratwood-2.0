@@ -83,7 +83,7 @@
 	H.flash_fullscreen("redflash3")
 	playsound(H, 'sound/combat/hits/bladed/genstab (1).ogg', 100, FALSE, -1)
 
-	H.add_trait(TRAIT_FREEHOLDER)
+	ADD_TRAIT(H, TRAIT_FREEHOLDER, TRAIT_GENERIC)
 
 	spawn(5)
 		say("Blood accepted. The mark is yours.")
