@@ -245,7 +245,7 @@
 
 		if(user.mind.active_quest >= 1)
 			user.mind.active_quest -= 1
-			to_chat(span_notice("You now have [user.mind.active_quest] active quests."))
+			to_chat(user, span_notice("You now have [user.mind.active_quest] active quests."))
 			log_quest(user.ckey, user.mind, user, "Finish [scroll.assigned_quest.quest_type]")
 
 		qdel(scroll.assigned_quest)
