@@ -56,8 +56,6 @@
 
 	switch (classchoice)
 		if("Old Magick")
-			// the original witch: arcyne t2 (buffed from t1) with 6 spellpoints
-			ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.mind?.adjust_spellpoints(9) // twelve if you pick arcyne potential
 		if("Godsblood")
