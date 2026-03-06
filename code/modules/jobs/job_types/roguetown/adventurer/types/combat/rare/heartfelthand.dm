@@ -7,7 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/heartfelthand
 	maximum_possible_slots = 1
 	pickprob = 100
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_SEEPRICES)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_SEEPRICES, TRAIT_NOBLE)
 	category_tags = list(CTAG_DISABLED)
 	subclass_stats = list(
 		STATKEY_PER = 3,
