@@ -1627,20 +1627,20 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/blkknight/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/feather) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Plume") as anything in colorlist
+		var/choice = input(user, "Choose a color.", "Plume") as anything in GLOB.colorlist
 		user.visible_message(span_warning("[user] adds [W] to [src]."))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
-		detail_color = colorlist[choice]
+		detail_color = GLOB.colorlist[choice]
 		detail_tag = "_detail"
 		update_icon()
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
 	if(istype(W, /obj/item/natural/cloth) && !altdetail_tag)
-		var/choicealt = input(user, "Choose a color.", "Orle") as anything in colorlist
+		var/choicealt = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist
 		user.visible_message(span_warning("[user] adds [W] to [src]."))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
-		altdetail_color = colorlist[choicealt]
+		altdetail_color = GLOB.colorlist[choicealt]
 		altdetail_tag = "_detailalt"
 		update_icon()
 		if(loc == user && ishuman(user))

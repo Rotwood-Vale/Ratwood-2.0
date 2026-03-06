@@ -357,8 +357,8 @@
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in colorlist
-		var/playerchoice = colorlist[choice]
+		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
 		detail_tag = "_detail"

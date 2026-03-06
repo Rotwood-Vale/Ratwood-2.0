@@ -308,7 +308,7 @@
 		qdel(sacrifice)
 	}
 	buyprice = tithe / divine_tax
-	for (var/list/entry in anvil_recipe_prices)
+	for (var/list/entry in GLOB.anvil_recipe_prices)
 	{
 		var/obj/item/tentative_item = entry[1] // The recipe
 		var/total_sellprice = entry[2] // The precompiled material price
@@ -335,7 +335,8 @@
 			sparks.start()
 			show_visible_message(usr, "A wave of heat washes over the pile as [user] speaks Malum's name. The pile of valuables crumble into dust, only for the dust to reform into an item as if reborn from the flames. Malum has accepted the offering.", "A wave of heat washes over the pile as you speak Malum's name. The pile of valuables crumble into dust, only for the dust to reform into an item as if reborn from the flames. Malum has accepted the offering.")
 
-var/global/list/anvil_recipe_prices[][]
+GLOBAL_LIST_EMPTY(anvil_recipe_prices)
+
 /proc/add_recipe_to_global(datum/anvil_recipe/recipe)
 	var/total_sellprice = 0
 	var/obj/item/ingot/bar = recipe.req_bar
@@ -353,7 +354,7 @@ var/global/list/anvil_recipe_prices[][]
 	if (!istype(recipe.created_item, /list))
 		itemtosend = recipe.created_item
 	if (total_sellprice > 0)
-		global.anvil_recipe_prices += list(list(itemtosend, total_sellprice))
+		GLOB.anvil_recipe_prices += list(list(itemtosend, total_sellprice))
 
 /proc/initialize_anvil_recipe_prices()
 	for (var/datum/anvil_recipe/armor/recipe)
@@ -368,15 +369,15 @@ var/global/list/anvil_recipe_prices[][]
 	{
 		add_recipe_to_global(recipe)
 	}
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/flute, 10))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/drum, 10))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/harp, 20))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/trumpet, 20))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/lute, 20))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/guitar, 30))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/accord, 30))
-	global.anvil_recipe_prices += list(list(new /obj/item/riddleofsteel, 400))
-	global.anvil_recipe_prices += list(list(new /obj/item/dmusicbox, 500))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/flute, 10))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/drum, 10))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/harp, 20))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/trumpet, 20))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/lute, 20))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/guitar, 30))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/accord, 30))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/riddleofsteel, 400))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/dmusicbox, 500))
 	// Add any other recipe types if needed
 
 /world/New()
