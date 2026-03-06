@@ -20,7 +20,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_deletion))
 
 	START_PROCESSING(SSprocessing, src)
-	addtimer(CALLBACK(src, .proc/remove_bond), duration)
+	addtimer(CALLBACK(src, PROC_REF(remove_bond)), duration)
 
 	var/mob/living/L = parent
 	L.apply_status_effect(/datum/status_effect/baotha_joyride)

@@ -125,8 +125,8 @@
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 	to_chat(parent, span_userdanger("Your body pulses with strange dream energies."))
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_item_equipped)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_item_dropped)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_item_equipped))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_item_dropped))
 	// Register for processing
 	START_PROCESSING(SSprocessing, src)
 
@@ -181,7 +181,7 @@
 	if(I in repairing_items)
 		return
 	repairing_items += I
-	RegisterSignal(I, COMSIG_ITEM_BROKEN, .proc/on_item_broken)
+	RegisterSignal(I, COMSIG_ITEM_BROKEN, PROC_REF(on_item_broken))
 
 	// If item is already broken, start full repair process
 	if(I.obj_broken)
@@ -208,7 +208,7 @@
 		deltimer(repair_timers[I])
 
 	// Set a timer to fully repair after 1 minute
-	repair_timers[I] = addtimer(CALLBACK(src, .proc/finish_full_repair, I), 1 MINUTES, TIMER_STOPPABLE)
+	repair_timers[I] = addtimer(CALLBACK(src, PROC_REF(finish_full_repair), I), 1 MINUTES, TIMER_STOPPABLE)
 
 /datum/component/dreamwalker_repair/proc/finish_full_repair(obj/item/I)
 	// Check if the item is still in our inventory and broken
@@ -293,7 +293,7 @@
 /datum/component/dreamwalker_mark/Initialize()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOB_ITEM_ATTACK, .proc/on_attack)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_ATTACK, PROC_REF(on_attack))
 
 /datum/component/dreamwalker_mark/Destroy()
 	if(marked_target)
@@ -318,7 +318,7 @@
 	mark_start_time = 0
 
 	if(marked_target)
-		RegisterSignal(marked_target, COMSIG_LIVING_DEATH, .proc/on_target_death)
+		RegisterSignal(marked_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
 		to_chat(parent, span_notice("You begin focusing your dream energy on [marked_target]."))
 
 		// Remove any existing summon spell
@@ -478,8 +478,8 @@
 	src.effect_type = effect_type
 	src.cooldown_time = cooldown_time
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SUCCESS, .proc/on_attack)
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SUCCESS, PROC_REF(on_attack))
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 
 
 /datum/component/dream_weapon/proc/on_attack(obj/item/source, mob/living/target, mob/living/user)
