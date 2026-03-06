@@ -47,11 +47,8 @@ GLOBAL_LIST_EMPTY(selectable_moanpacks)
 
 /datum/moan_pack/proc/get_moans(key)
 	switch(key)
-		if("sexmoanlight")
-			if(isnull(sounds_sexmoanlight))
-				return
-			else
-				return pick(sounds_sexmoanlight)
+		if("sexmoanlight" && !isnull(sounds_sexmoanlight))
+			return pick(sounds_sexmoanlight)
 		if("sexmoanmed")
 			if(isnull(sounds_sexmoanmed))
 				return
