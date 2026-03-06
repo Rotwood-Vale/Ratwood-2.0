@@ -71,7 +71,6 @@
 	/// Most head fractures are serious enough to cause paralysis.
 	var/paralysis = TRUE
 	/// Some head fractures instantly kill you if you have critical weakness. Others won't.
-	mortal = TRUE
 	/// Some head fractures will knock your lights out, if not flat-out paralyze you.
 	var/knockout = 10	//10 tick knockout (1 sec)
 
@@ -87,6 +86,9 @@
 		if(iscarbon(affected))
 			var/mob/living/carbon/carbon_affected = affected
 			carbon_affected.update_disabled_bodyparts()
+	var/mob/living/carbon/CA = affected
+	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS) && !isconstruct(CA))
+		affected.death()
 
 /datum/wound/fracture/head/on_mob_loss(mob/living/affected)
 	. = ..()
@@ -113,11 +115,16 @@
 	embed_chance = 100	// Didn't we remove embeding..?
 	bleed_rate = 10		// Aooouuugh.. my brain..
 	knockout = 20
-	paralysis = TRUE
 
-/datum/wound/fracture/head/eyes/on_mob_gain(mob/living/affected)
+/datum/wound/fracture/head/brain/on_mob_gain(mob/living/affected)
 	. = ..()
-	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS) && (!isconstruct(human_mob)))
+	ADD_TRAIT(affected, TRAIT_PARALYSIS, "[type]")
+	ADD_TRAIT(affected, TRAIT_NOPAIN, "[type]")
+	if(iscarbon(affected))
+		var/mob/living/carbon/carbon_affected = affected
+		carbon_affected.update_disabled_bodyparts()
+	var/mob/living/carbon/CA = affected
+	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS) && !isconstruct(CA))
 		affected.death()
 
 /datum/wound/fracture/head/eyes
@@ -162,7 +169,8 @@
 	affected.confused += 25	//Drunk-walk effect, basically.
 	affected.dizziness += 25
 	ADD_TRAIT(affected, TRAIT_DEAF, "[type]")
-	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS) && (!isconstruct(human_mob)))
+	var/mob/living/carbon/CA = affected
+	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS) && !isconstruct(CA))
 		affected.death()
 
 /datum/wound/fracture/head/ears/on_mob_loss(mob/living/affected)
@@ -205,7 +213,7 @@
 	)
 	mortal = FALSE
 	whp = 50
-	bleed_rate = 5				//Lower than others, still bad though. 
+	bleed_rate = 5				//Lower than others, still bad though.
 	clotting_threshold = 0.3	//Slightly higher still
 	clotting_rate = 0.1			//Slower clotting, not bad though for bleeder wound.
 
@@ -237,7 +245,8 @@
 	if(iscarbon(affected))
 		var/mob/living/carbon/carbon_affected = affected
 		carbon_affected.update_disabled_bodyparts()
-	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS) && (!isconstruct(human_mob)))
+	var/mob/living/carbon/CA = affected
+	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS) && !isconstruct(CA))
 		affected.death()
 
 /datum/wound/fracture/neck/on_mob_loss(mob/living/affected)
@@ -267,7 +276,7 @@
 	affected.Immobilize(15)		//Stuns you, major downside
 	if(istype(affected, /mob/living/carbon)) // Intended for PVE skeletons
 		var/mob/living/carbon/CA = affected
-		if(HAS_TRAIT(CA, TRAIT_CRITICAL_WEAKNESS) && (NOBLOOD in CA.dna.species.species_traits))
+		if(HAS_TRAIT(CA, TRAIT_CRITICAL_WEAKNESS) && (NOBLOOD in CA.dna.species.species_traits) && !isconstruct(CA))
 			CA.death()
 
 /datum/wound/fracture/chest/on_life()
