@@ -1795,3 +1795,20 @@
 /atom/movable/screen/alert/status_effect/buff/oath_ring
 	name = "Oathmarked"
 	desc = "The oath drives me forward, so long as the reminder is kept near."
+
+/atom/movable/screen/alert/status_effect/buff/freeholdbuff
+	name = "Freehold Oath"
+	desc = "I am sworn to defend my new homeland."
+	icon_state = "buff"
+
+/datum/status_effect/buff/freeholdbuff
+	id = "freeholdbuff"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/freeholdbuff
+	effectedstats = list(STATKEY_CON = 2, STATKEY_INT = 2, STATKEY_WIL = 2, STATKEY_SPD = 2, STATKEY_STR = 2, STATKEY_PER = 2) //to make it harder for free looters and bored keepoids
+	duration = -1
+
+/datum/status_effect/buff/freeholdbuff/process()
+	.=..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!our_area || !our_area.freehold_area)
+		owner.remove_status_effect(/datum/status_effect/buff/freeholdbuff)

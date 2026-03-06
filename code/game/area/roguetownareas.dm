@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	var/ceiling_protected = FALSE //Prevents tunneling into these from above
 	var/hoardmaster_protected = FALSE//If a player enters, it ashes them. Your greed will consume you.
 	var/necra_area = FALSE
+	var/freehold_area = FALSE
 
 /area/rogue/Entered(mob/living/carbon/human/guy)
 	. = ..()
@@ -36,16 +37,20 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 		guy.apply_status_effect(/datum/status_effect/buff/wardenbuff)
 	if((src.cell_area == TRUE) && HAS_TRAIT(guy, TRAIT_DUNGEONMASTER) && !guy.has_status_effect(/datum/status_effect/buff/dungeoneerbuff)) // Dungeoneer
 		guy.apply_status_effect(/datum/status_effect/buff/dungeoneerbuff)
-	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_VOTARY))//Top Church guys get a buff. Opposite to overt heretics.
+	if((src.freehold_area == TRUE) && HAS_TRAIT(guy, TRAIT_FREEHOLDER) && !guy.has_status_effect(/datum/status_effect/buff/freeholdbuff)) // Freeholder in Freehold
+		guy.apply_status_effect(/datum/status_effect/buff/freeholdbuff)
+	if((src.freehold_area == TRUE) && HAS_TRAIT(guy, TRAIT_GUARDSMAN) && !guy.has_status_effect(/datum/status_effect/debuff/freehold_guard_debuff)) // Keepoids will suffer in Freehold but not mercs and other adventurers
+		guy.apply_status_effect(/datum/status_effect/debuff/freehold_guard_debuff)
+	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_VOTARY)) //Top Church guys get a buff. Opposite to overt heretics.
 		guy.add_stress(/datum/stressevent/seeblessed)
-	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_OVERTHERETIC))//Heretics are punished for walking in the Church with rites buffs.
+	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_OVERTHERETIC)) //Heretics are punished for walking in the Church with rites buffs.
 		guy.apply_status_effect(/datum/status_effect/debuff/overt_punishment)
 	if((src.necra_area == TRUE) && !(guy.has_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)||(guy.has_status_effect(/datum/status_effect/debuff/deathdoorwilloss)))) //Necra saps at wil
 		if(HAS_TRAIT(guy, TRAIT_SOUL_EXAMINE))
 			guy.apply_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)
 		else
 			guy.apply_status_effect(/datum/status_effect/debuff/deathdoorwilloss)
-	if((src.hoardmaster_protected == TRUE))//Your greed consumes you.
+	if((src.hoardmaster_protected == TRUE)) //Your greed consumes you.
 		message_admins("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster, at [ADMIN_JMP(src)]")
 		log_admin("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster")
 		playsound(src, 'sound/misc/lava_death.ogg', 100, FALSE)
@@ -844,3 +849,22 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	name = "wayfarer's dream"
 	icon_state = "dream"
 	first_time_text = "A Wayfarer's Dream"
+
+/area/rogue/outdoors/freehold
+	name = "Freehold"
+	icon_state = "town"
+	soundenv = 16
+	droning_sound = 'sound/music/area/townstreets.ogg'
+	droning_sound_dusk = 'sound/music/area/septimus.ogg'
+	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	converted_type = /area/rogue/indoors/shelter/freehold
+	first_time_text = "FREEHOLD"
+	freehold_area = TRUE
+	deathsight_message = "a district sworn to common cause"
+
+/area/rogue/indoors/shelter/freehold
+	icon_state = "town"
+	droning_sound = 'sound/music/area/townstreets.ogg'
+	droning_sound_dusk = 'sound/music/area/septimus.ogg'
+	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	freehold_area = TRUE

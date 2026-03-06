@@ -1153,3 +1153,26 @@
 			return "[verbose ? "Conjured" : "(C. shaft)"]"
 		else
 			return null
+
+/mob/living/proc/get_freehold_text(mob/examiner)
+	var/freehold_text
+
+	if(!ishuman(src) || !ishuman(examiner))
+		return freehold_text
+
+	var/mob/living/carbon/human/H = examiner
+	var/mob/living/carbon/human/TH = src
+	var/skipface = (TH.wear_mask && (TH.wear_mask.flags_inv & HIDEFACE)) || (TH.head && (TH.head.flags_inv & HIDEFACE))
+
+	if(HAS_TRAIT(src, TRAIT_RAIDER) && HAS_TRAIT(H, TRAIT_RAIDER))
+		freehold_text = "A fellow raider."
+	if(HAS_TRAIT(src, TRAIT_RAIDER) && HAS_TRAIT(H, TRAIT_FREEHOLDER) && !HAS_TRAIT(H, TRAIT_RAIDER))
+		freehold_text = "A participant in the raid."
+	if(HAS_TRAIT(src, TRAIT_RAIDER) && !HAS_TRAIT(H, TRAIT_FREEHOLDER) && !HAS_TRAIT(H, TRAIT_RAIDER))
+		freehold_text = span_userdanger("RAIDER!")
+	if(HAS_TRAIT(src, TRAIT_FREEHOLDER) && HAS_TRAIT(H, TRAIT_RAIDER) && !HAS_TRAIT(src, TRAIT_RAIDER))
+		freehold_text = "A fellow Freeholder."
+	if(HAS_TRAIT(src, TRAIT_FREEHOLDER) && HAS_TRAIT(H, TRAIT_FREEHOLDER) && skipface && !HAS_TRAIT(src, TRAIT_RAIDER))
+		freehold_text = "A fellow Freeholder."
+
+	return freehold_text

@@ -258,7 +258,7 @@
     explosion_block = 1
     baseturfs = list(/turf/open/floor/rogue/dirt/road)
 
-/turf/closed/wall/churchpass/attack_hand(mob/user)
+/turf/closed/wall/freeholdpass/attack_hand(mob/user)
     if(HAS_TRAIT(user, TRAIT_FREEHOLDER))
         to_chat(user, span_notice("The wall fades away before you..."))
         disappear()
@@ -266,7 +266,7 @@
     else
         return ..() 
 
-/turf/closed/wall/churchpass/proc/disappear()
+/turf/closed/wall/freeholdpass/proc/disappear()
     density = FALSE
     opacity = FALSE
     icon_state = ""
@@ -274,7 +274,7 @@
 
     addtimer(CALLBACK(src, PROC_REF(reappear)), 10 SECONDS)
 
-/turf/closed/wall/churchpass/proc/reappear()
+/turf/closed/wall/freeholdpass/proc/reappear()
     density = TRUE
     opacity = TRUE
     icon_state = initial(icon_state)

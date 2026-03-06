@@ -244,7 +244,8 @@
 #define TRAIT_SPELL_DISPERSION "Barrier Dispersion"
 #define TRAIT_CONVICTION "Conviction" //Can hear Tennite prayers. Praying heals and provides nutrition.
 #define TRAIT_STANDARD_BEARER "Standard Bearer"//Can use the keep's standard to provide buffs and rally the retinue.
-#define TRAIT_FREEHOLDER "Freeholder" //Join the comrades (antag city)
+#define TRAIT_FREEHOLDER "Freeholder" //A member of antag village (my lil roguetown)
+#define TRAIT_RAIDER "Raider" //Murder murder kill kill. Freeholder's throne triggers it
 
 // Economic Roles Traits
 // Most of these should NOT be given to any true combat roles (I.E. anything with Dexpert or Miracle / Good Magic) with very few exceptions
@@ -493,7 +494,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_BAOTHA_FERTILITY_BOON = span_info("I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this"),
 	TRAIT_FUSILIER = span_suppradio("I've been trained in the safe use of smokepowder. Additionally, knowledge above <b><u>journeyman</u></b> status is attainable."),
 	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
-	TRAIT_FREEHOLDER = span_warning("I renounce ye city and bind myself by oath unto mountain village and its folk.")
+	TRAIT_FREEHOLDER = span_warning("I renounce ye city and bind myself by oath unto mountain village and its folk."),
+	TRAIT_RAIDER = span_userdanger("I am part of the raid.")
 ))
 
 // trait accessor defines

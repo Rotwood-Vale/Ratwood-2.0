@@ -1,8 +1,8 @@
 GLOBAL_VAR(announcement_throne)
 
-/obj/structure/roguethrone/announcement
+/obj/structure/roguemachine/freeholdthrone
 	name = "throne of Freehold"
-	desc = "No "
+	desc = "A throne from which freeholders may address the realm."
 	icon = 'icons/roguetown/misc/freethrone.dmi'
 	icon_state = "freeholdthrone"
 	density = FALSE
@@ -17,20 +17,28 @@ GLOBAL_VAR(announcement_throne)
 	var/next_announcement_time = 0
 	var/raid_called = FALSE
 
-/obj/structure/roguethrone/announcement/Initialize()
+/obj/structure/roguemachine/freeholdthrone/Initialize()
 	. = ..()
+	become_hearing_sensitive()
 	if(GLOB.announcement_throne == null)
 		GLOB.announcement_throne = src
 
-/obj/structure/roguethrone/announcement/Destroy()
+/obj/structure/roguemachine/freeholdthrone/Destroy()
 	if(GLOB.announcement_throne == src)
 		GLOB.announcement_throne = null
+	lose_hearing_sensitivity()
 	return ..()
 
-/obj/structure/roguethrone/announcement/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, message)
+/obj/structure/roguemachine/freeholdthrone/examine()
+	. = ..()
+	. += span_notice("Those seated upon it may speak to it.")
+	. += span_notice("Say 'secrets of the throne' to hear its commands.")
+	. += span_notice("Say 'make announcement' to address the realm.")
+	. += span_notice("Say 'announce raid' to call the freeholders to raid.")
+	. += span_notice("Say 'nevermind' to cancel.")
+
+/obj/structure/roguemachine/freeholdthrone/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(speaker == src)
-		return
-	if(speaker.loc != loc)
 		return
 	if(!ishuman(speaker))
 		return
@@ -42,9 +50,10 @@ GLOBAL_VAR(announcement_throne)
 		return
 
 	var/mob/living/carbon/human/H = speaker
+	var/lower_message = lowertext(message)
 
 	if(mode)
-		if(findtext(message, "nevermind"))
+		if(findtext(lower_message, "nevermind"))
 			mode = 0
 			say("Very well.")
 			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
@@ -52,12 +61,12 @@ GLOBAL_VAR(announcement_throne)
 
 	switch(mode)
 		if(0)
-			if(findtext(message, "secrets of the throne"))
+			if(findtext(lower_message, "secrets of the throne"))
 				say("My commands are: Make Announcement, Announce Raid, Nevermind")
 				playsound(src, 'sound/misc/machinelong.ogg', 100, FALSE, -1)
 				return
 
-			if(findtext(message, "make announcement"))
+			if(findtext(lower_message, "make announcement"))
 				if(world.time < next_announcement_time)
 					say("Tis not yet time for another announcement. Wait [DisplayTimeText(next_announcement_time - world.time)].")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
@@ -71,7 +80,7 @@ GLOBAL_VAR(announcement_throne)
 				mode = 1
 				return
 
-			if(findtext(message, "announce raid"))
+			if(findtext(lower_message, "announce raid"))
 				if(raid_called)
 					say("A raid has already been declared from this throne.")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
@@ -95,7 +104,7 @@ GLOBAL_VAR(announcement_throne)
 			mode = 0
 			return
 
-/obj/structure/roguethrone/announcement/proc/make_throne_announcement(mob/living/user, raw_message)
+/obj/structure/roguemachine/freeholdthrone/proc/make_throne_announcement(mob/living/user, raw_message)
 	if(world.time < next_announcement_time)
 		return
 	if(!SScommunications.can_announce(user))
@@ -106,7 +115,8 @@ GLOBAL_VAR(announcement_throne)
 	next_announcement_time = world.time + 10 MINUTES
 	SScommunications.make_announcement(user, FALSE, raw_message)
 
-/obj/structure/roguethrone/announcement/proc/make_raid_announcement(mob/living/user, raw_message)
+
+/obj/structure/roguemachine/freeholdthrone/proc/make_raid_announcement(mob/living/user, raw_message)
 	if(raid_called)
 		return FALSE
 	if(!HAS_TRAIT(user, TRAIT_FREEHOLDER))
@@ -117,3 +127,14 @@ GLOBAL_VAR(announcement_throne)
 	priority_announce("[user.real_name] calls for a raid: [raw_message]", "A RAID IS DECLARED", 'sound/misc/royal_decree2.ogg', "The warboss")
 	raid_called = TRUE
 	return TRUE
+
+/obj/structure/roguemachine/freeholdthrone/process()
+	. = ..()
+
+	if(!raid_called)
+		return
+
+	for(var/mob/living/carbon/human/H in view(7, src))
+		if(!HAS_TRAIT(H, TRAIT_FREEHOLDER))
+			continue
+		H.apply_status_effect(/datum/status_effect/buff/raidercall)

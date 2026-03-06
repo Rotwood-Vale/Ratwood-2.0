@@ -1070,3 +1070,40 @@
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+
+/atom/movable/screen/alert/status_effect/debuff/freehold_guard_debuff
+	name = "Hostile Ground"
+	desc = "This is independent territory. I cannot move here with the same ease as on patrolled ground."
+	icon_state = "debuff"
+
+/datum/status_effect/debuff/freehold_guard_debuff
+	id = "freehold_guard_debuff"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/freehold_guard_debuff
+	effectedstats = list(STATKEY_CON = -3, STATKEY_WIL = -2, STATKEY_SPD = -3, STATKEY_INT = -3, STATKEY_STR = -2, STATKEY_PER = -2) //hire other people to cope with problems (neet mercs). Also not to ruin antag's fun too early.
+	duration = -1
+
+/datum/status_effect/debuff/freehold_guard_debuff/process()
+	.=..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!our_area || !our_area.freehold_area)
+		owner.remove_status_effect(/datum/status_effect/debuff/freehold_guard_debuff)	
+
+/atom/movable/screen/alert/status_effect/buff/raidercall
+	name = "Raid Call"
+	desc = "The Freehold's call to raid stirs my blood."
+	icon_state = "call_to_arms"
+
+/datum/status_effect/buff/raidercall
+	id = "raidercall"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/raidercall
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	effectedstats = list(STATKEY_STR = 1, STATKEY_WIL = 2, STATKEY_CON = 1, STATKEY_SPD = 1)
+
+/datum/status_effect/buff/raidercall/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_RAIDER, id)
+
+/datum/status_effect/buff/raidercall/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_RAIDER, id)

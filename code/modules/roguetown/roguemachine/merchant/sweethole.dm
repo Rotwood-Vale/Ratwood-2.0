@@ -20,34 +20,24 @@
 		to_chat(user, span_warning("[src] does not respond to non-freeholders."))
 		return FALSE
 	return TRUE
-
 /obj/structure/roguemachine/cashface/attackby(obj/item/P, mob/user, params)
 	if(!anchored)
 		return ..()
-
 	if(!can_use_cashface(user))
 		return
-
 	if(istype(P, /obj/item/roguecoin))
 		to_chat(user, span_warning("[src] rejects coin."))
 		return
-
-	if(P.anchored || !isturf(P.loc))
+	if(P.anchored)
 		return ..()
-
 	if(istype(P, /obj/structure/handcart))
 		return ..()
-
 	var/prize = round(P.get_real_price())
 	if(prize < 1)
 		to_chat(user, span_warning("[P] is worthless to [src]."))
 		return
-
-	record_round_statistic(STATS_TRADE_VALUE_EXPORTED, prize)
-
-	P.visible_message(span_warning("[P] is swallowed by [src]!"))
+	user.visible_message(span_warning("[user] feeds [P] into [src]!"))
 	qdel(P)
-
 	playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 	budget2change(prize, get_turf(src))
 	return
