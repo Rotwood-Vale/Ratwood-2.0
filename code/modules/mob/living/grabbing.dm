@@ -38,7 +38,9 @@
 	valid_check()
 
 /obj/item/grabbing/proc/valid_check()
-	// We require adjacency to count the grab as valid
+	if(!grabbee || !grabbed)
+		qdel(src)
+		return FALSE
 	if(grabbee.Adjacent(grabbed))
 		return TRUE
 	grabbee.stop_pulling(FALSE)
