@@ -39,7 +39,7 @@
 	/// Icon for sheathing. Only null for weapons that are unsheathable.
 	var/sheathe_icon = null
 
-/obj/item/rogueweapon/Initialize()
+/obj/item/rogueweapon/Initialize(mapload)
 	. = ..()
 	if(!destroy_message)
 		destroy_message = span_warning("\The [src] shatters!")

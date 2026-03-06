@@ -15,7 +15,7 @@
 	smeltresult = /obj/item/ingot/gold
 	sellprice = 10
 
-/obj/item/rogueore/gold/Initialize()
+/obj/item/rogueore/gold/Initialize(mapload)
 	icon_state = "oregold[rand(1,3)]"
 	..()
 
@@ -27,7 +27,7 @@
 	smeltresult = /obj/item/ingot/silver
 	sellprice = 8
 
-/obj/item/rogueore/silver/Initialize()
+/obj/item/rogueore/silver/Initialize(mapload)
 	icon_state = "oresilv[rand(1,3)]"
 	..()
 
@@ -39,7 +39,7 @@
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 5
 
-/obj/item/rogueore/iron/Initialize()
+/obj/item/rogueore/iron/Initialize(mapload)
 	icon_state = "oreiron[rand(1,3)]"
 	..()
 
@@ -51,7 +51,7 @@
 	smeltresult = /obj/item/ingot/copper
 	sellprice = 3
 
-/obj/item/rogueore/copper/Initialize()
+/obj/item/rogueore/copper/Initialize(mapload)
 	icon_state = "orecop[rand(1,3)]"
 	..()
 
@@ -62,7 +62,7 @@
 	smeltresult = /obj/item/ingot/tin
 	sellprice = 4
 
-/obj/item/rogueore/tin/Initialize()
+/obj/item/rogueore/tin/Initialize(mapload)
 	icon_state = "oretin[rand(1,3)]"
 	..()
 
@@ -97,7 +97,7 @@
 	else
 		return ..()
 
-/obj/item/rogueore/coal/Initialize()
+/obj/item/rogueore/coal/Initialize(mapload)
 	icon_state = "orecoal[rand(1,3)]"
 	..()
 
@@ -317,7 +317,7 @@
 	color = "#CECA9C"
 	sellprice = 222
 
-/obj/item/ingot/weeping/Initialize()
+/obj/item/ingot/weeping/Initialize(mapload)
 	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(64,65),rand(1,5),rand(1,5)))
 

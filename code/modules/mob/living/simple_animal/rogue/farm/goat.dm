@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/retaliate/rogue/goat/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/goat/Initialize(mapload)
 	. = ..()
 	GLOB.farm_animals++
 	if(tame)
@@ -275,7 +275,7 @@
 		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
 		D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/goatmale/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/goatmale/Initialize(mapload)
 	. = ..()
 	GLOB.farm_animals++
 	if(tame)

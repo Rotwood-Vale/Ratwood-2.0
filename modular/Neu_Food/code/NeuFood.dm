@@ -29,7 +29,7 @@
 	cooktime = 30 SECONDS
 	var/process_step // used for pie making and other similar modular foods
 
-/obj/item/reagent_containers/food/snacks/rogue/Initialize()
+/obj/item/reagent_containers/food/snacks/rogue/Initialize(mapload)
 	. = ..()
 	eatverb = pick("bite","chew","nibble","gobble","chomp")
 
@@ -106,7 +106,7 @@
 /* * * * * * * * * * * * * * *	*
  *								*
  *		Powder & Salt			*
- *					 			*
+ *								*
  *								*
  * * * * * * * * * * * * * * * 	*/
 

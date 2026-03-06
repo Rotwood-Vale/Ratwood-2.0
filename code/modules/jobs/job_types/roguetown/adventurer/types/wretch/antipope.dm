@@ -5,8 +5,8 @@
 /datum/advclass/wretch/antipope
 	name = "Heresiarch" //formerly Doomsayer
 	tutorial = "They are pretentious. They are weak. They are complacent. And they are hopeless. But you. You will change this. \
-    A high-ranking official of the Holy Ecclesial, for your deeds you have been blessed by the Four Ascendants to bring upon change and be their God Hand. \
-    But this change will be resisted. Crush the dissent. Show them why it is better to rule in Gehenna than serve under the Firmament."
+	A high-ranking official of the Holy Ecclesial, for your deeds you have been blessed by the Four Ascendants to bring upon change and be their God Hand. \
+	But this change will be resisted. Crush the dissent. Show them why it is better to rule in Gehenna than serve under the Firmament."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS //The Inhumen discriminate not.
 	outfit = /datum/outfit/job/roguetown/wretch/antipope
@@ -38,7 +38,7 @@
 	extra_context = "Inhumen exclusive. No wretch bounty, for the purpose of infiltration and doomsaying. Given EVIL sermon abilities, torture, maxed out miracles of their own patron and some extra miracles from other Inhumen patrons."
 
 /datum/outfit/job/roguetown/wretch/antipope
-    has_loadout = TRUE
+	has_loadout = TRUE
 
 //Starts with some basic leather armour.
 /datum/outfit/job/roguetown/wretch/antipope/pre_equip(mob/living/carbon/human/H)

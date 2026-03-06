@@ -73,7 +73,7 @@
 	spell_holder = holder
 
 /datum/incantation_data/proc/parse_and_execute(text)
-	text = trim(lowertext(text))
+	text = trim(LOWER_TEXT(text))
 
 	if(!length(text) || !findtext(text, "!"))
 		to_chat(caster, span_warning("Empty or invalid incantation!"))

@@ -256,7 +256,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/no_use_cd = FALSE //if true, no cooldown when interacting with it
 	var/vorpal = FALSE // does this item/weapon circumvent two-stage death during dismemberment? (do not add this to anything but ultra rare shit)
 
-/obj/item/Initialize()
+/obj/item/Initialize(mapload)
 	. = ..()
 	if(!pixel_x && !pixel_y && !bigboy)
 		pixel_x = rand(-5,5)
@@ -317,7 +317,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if (obj_broken)
 				update_damaged_state()
 
-/obj/item/Initialize()
+/obj/item/Initialize(mapload)
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
 

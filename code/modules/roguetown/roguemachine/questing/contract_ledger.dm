@@ -9,7 +9,7 @@
 	layer = ABOVE_MOB_LAYER
 	var/input_point
 
-/obj/structure/roguemachine/contractledger/Initialize()
+/obj/structure/roguemachine/contractledger/Initialize(mapload)
 	. = ..()
 	input_point = locate(x, y - 1, z)
 	var/obj/effect/decal/marker_export/marker = new(get_turf(input_point))
@@ -245,7 +245,7 @@
 
 		if(user.mind.active_quest >= 1)
 			user.mind.active_quest -= 1
-			to_chat(span_notice("You now have [user.mind.active_quest] active quests."))
+			to_chat(user, span_notice("You now have [user.mind.active_quest] active quests."))
 			log_quest(user.ckey, user.mind, user, "Finish [scroll.assigned_quest.quest_type]")
 
 		qdel(scroll.assigned_quest)

@@ -95,8 +95,13 @@
 	bottle_desc = "A bottle of locally-brewed Whipwine. Said to be based off a Kazengun recipe. It has a particularly... leathery flavor."
 	reagent_to_brew = /datum/reagent/consumable/ethanol/whipwine
 	needed_reagents = list(/datum/reagent/water = 198)
-	needed_items = list(/obj/item/alch/atropa = 1, /obj/item/reagent_containers/food/snacks/sugar = 1, /obj/item/alch/matricaria = 1,
-						 /obj/item/alch/paris = 1, /obj/item/rogueweapon/whip = 1) // poisonous herbs, sugar, and an actual whip. the power of Mistranslations...
+	needed_items = list(
+		/obj/item/alch/atropa = 1,
+		/obj/item/reagent_containers/food/snacks/sugar = 1,
+		/obj/item/alch/matricaria = 1,
+		/obj/item/alch/paris = 1,
+		/obj/item/rogueweapon/whip = 1,
+	) // poisonous herbs, sugar, and an actual whip. the power of Mistranslations...
 	brewed_amount = 6
 	brew_time = 5 MINUTES
 	sell_value = 30
@@ -108,8 +113,11 @@
 	bottle_desc = "A potentially heretickal brew, Lux, when fermented, breaks down into Vitae, which can further ferment into a delectable wine."
 	reagent_to_brew = /datum/reagent/consumable/ethanol/luxwine
 	needed_reagents = list(/datum/reagent/water = 198) // standard
-	needed_items = list(/obj/item/reagent_containers/lux_impure = 1, /obj/item/reagent_containers/food/snacks/sugar = 2,
-						 /obj/item/alch/calendula = 1) // a single lux, sugar, and a healing herb. seems fair 2 me.
+	needed_items = list(
+		/obj/item/reagent_containers/lux_impure = 1,
+		/obj/item/reagent_containers/food/snacks/sugar = 2,
+		/obj/item/alch/calendula = 1,
+	) // a single lux, sugar, and a healing herb. seems fair 2 me.
 	brewed_amount = 2 // should make 2 bottles
 	brew_time = 5 MINUTES
 	sell_value = 120  // this shits heretical and has a high black market value

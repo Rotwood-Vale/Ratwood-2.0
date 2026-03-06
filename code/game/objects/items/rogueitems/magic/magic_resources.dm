@@ -93,7 +93,7 @@
 	desc = "An old stone from age long ago, marked with glowing sigils."
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/magic/artifact/Initialize()
+/obj/item/magic/artifact/Initialize(mapload)
 	.=..()
 	var/list/listy = list("runedartifact", "runedartifact1")
 	var/newicon = pick(listy)

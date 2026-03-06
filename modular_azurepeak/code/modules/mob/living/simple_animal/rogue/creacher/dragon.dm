@@ -69,7 +69,7 @@
 	limb_destroyer = TRUE
 //	stat_attack = UNCONSCIOUS
 
-/mob/living/simple_animal/hostile/retaliate/rogue/dragon/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/dragon/Initialize(mapload)
 	. = ..()
 	gender = MALE
 	if(prob(33))
@@ -228,7 +228,7 @@
 		/obj/item/natural/head/dragon/broodmother = 1)
 
 
-/mob/living/simple_animal/hostile/retaliate/rogue/dragon/broodmother/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/dragon/broodmother/Initialize(mapload)
 	. = ..()
 
 	fire_breath = new(src)

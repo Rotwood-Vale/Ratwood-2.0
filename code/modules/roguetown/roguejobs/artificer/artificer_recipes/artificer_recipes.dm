@@ -581,8 +581,8 @@
 							/obj/item/alch/coaldust,
 							/obj/item/alch/airdust,
 							/obj/item/alch/airdust,
-						 	/obj/item/alch/firedust,
-						 	/obj/item/alch/firedust)
+							/obj/item/alch/firedust,
+							/obj/item/alch/firedust)
 	created_item = /obj/item/tntstick
 	hammers_per_item = 5
 	skill_level = 4

@@ -39,7 +39,7 @@ GLOBAL_VAR_INIT(musicboxes_last_download, 0) //last time of the last download, t
 	var/playingnewtrack = FALSE
 	anvilrepair = /datum/skill/craft/blacksmithing
 
-/obj/item/dmusicbox/Initialize()
+/obj/item/dmusicbox/Initialize(mapload)
 	GLOB.musicboxes += src
 	soundloop = new(src, FALSE)
 //	soundloop.start()
@@ -104,7 +104,7 @@ GLOBAL_VAR_INIT(musicboxes_last_download, 0) //last time of the last download, t
 		return
 
 	var/filename = "[infile]"
-	var/file_ext = lowertext(copytext(filename, -4))
+	var/file_ext = LOWER_TEXT(copytext(filename, -4))
 	var/file_size = length(infile)
 
 	if(file_ext != ".ogg")

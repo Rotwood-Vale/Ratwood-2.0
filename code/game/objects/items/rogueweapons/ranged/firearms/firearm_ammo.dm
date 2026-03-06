@@ -180,14 +180,14 @@
 /obj/item/quiver/bullet/update_icon()
 	return
 
-/obj/item/quiver/bullet/lead/Initialize()
+/obj/item/quiver/bullet/lead/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/bullet/lead/B = new()
 		arrows += B
 	update_icon()
 
-/obj/item/quiver/bullet/grapeshot/Initialize()
+/obj/item/quiver/bullet/grapeshot/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/bullet/grapeshot/B = new()

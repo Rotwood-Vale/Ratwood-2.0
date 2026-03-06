@@ -135,7 +135,7 @@
 	update_icon()
 	isSwitchingStates = FALSE
 
-/obj/structure/mineral_door/Initialize()
+/obj/structure/mineral_door/Initialize(mapload)
 	. = ..()
 	if(!base_state)
 		base_state = icon_state
@@ -843,7 +843,7 @@
 	smashable = TRUE
 	metalizer_result = /obj/structure/mineral_door/wood/donjon
 
-/obj/structure/mineral_door/wood/Initialize()
+/obj/structure/mineral_door/wood/Initialize(mapload)
 	if(icon_state =="woodhandle")
 		if(icon_state != "wcv")
 			if(prob(10))
@@ -945,7 +945,7 @@
 	dir = turn(dirin, 180)
 	lockdir = dir
 
-/obj/structure/mineral_door/wood/deadbolt/Initialize()
+/obj/structure/mineral_door/wood/deadbolt/Initialize(mapload)
 	. = ..()
 	lockdir = dir
 	icon_state = base_state
@@ -1077,7 +1077,7 @@
 		to_chat(user, span_warning("The viewport doesn't toggle from this side."))
 		return
 
-/obj/structure/mineral_door/wood/donjon/Initialize()
+/obj/structure/mineral_door/wood/donjon/Initialize(mapload)
 	viewportdir = dir
 	icon_state = base_state
 	..()
@@ -1123,7 +1123,7 @@
 	obj_broken = 1
 	repairable = FALSE
 
-/obj/structure/mineral_door/wood/donjon/stone/broken/Initialize()
+/obj/structure/mineral_door/wood/donjon/stone/broken/Initialize(mapload)
 	..()
 	icon_state = "stonebr" // Weird override otherwise
 
@@ -1160,7 +1160,7 @@
 	desc = ""
 	icon_state = "barsold"
 
-/obj/structure/mineral_door/bars/Initialize()
+/obj/structure/mineral_door/bars/Initialize(mapload)
 	. = ..()
 	add_overlay(mutable_appearance(icon, "barsopen", ABOVE_MOB_LAYER))
 

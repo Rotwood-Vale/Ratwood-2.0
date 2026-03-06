@@ -70,7 +70,7 @@
 	sharpness_penalty = 2
 
 /datum/intent/spear/cut/halberd
-	damfactor = 0.9
+	damfactor = 1.2
 
 /datum/intent/spear/cut/scythe
 	reach = 3
@@ -1481,7 +1481,7 @@
 		pic.color = "#FFA500"
 		add_overlay(pic)
 
-/obj/item/rogueweapon/spear/otava/Initialize()
+/obj/item/rogueweapon/spear/otava/Initialize(mapload)
 	. = ..()
 	// toying a bit to see if i can make it be orange
 	detail_tag = "_det"

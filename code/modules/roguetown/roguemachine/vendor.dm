@@ -281,7 +281,7 @@
 	update_icon()
 	icon_state = "streetvendor0"
 
-/obj/structure/roguemachine/vendor/Initialize()
+/obj/structure/roguemachine/vendor/Initialize(mapload)
 	. = ..()
 	update_icon()
 	START_PROCESSING(SSroguemachine, src)
@@ -376,7 +376,7 @@
 /obj/structure/roguemachine/vendor/bathhouse
 	keycontrol = "nightman"
 
-/obj/structure/roguemachine/vendor/inn/Initialize()
+/obj/structure/roguemachine/vendor/inn/Initialize(mapload)
 	. = ..()
 
 	// Add room keys with a price of 20
@@ -398,7 +398,7 @@
 /obj/structure/roguemachine/vendor/innrockhill
 	keycontrol = "tavern"
 
-/obj/structure/roguemachine/vendor/innrockhill/Initialize()
+/obj/structure/roguemachine/vendor/innrockhill/Initialize(mapload)
 	. = ..()
 
 	// Add room keys with a price of 20
@@ -422,7 +422,7 @@
 /obj/structure/roguemachine/vendor/merchant
 	keycontrol = "merchant"
 
-/obj/structure/roguemachine/vendor/merchant/Initialize()
+/obj/structure/roguemachine/vendor/merchant/Initialize(mapload)
 	. = ..()
 	for(var/X in list(/obj/item/roguekey/apartments/stall1,/obj/item/roguekey/apartments/stall2,/obj/item/roguekey/apartments/stall3))
 		var/obj/P = new X(src)
@@ -434,7 +434,7 @@
 /obj/structure/roguemachine/vendor/stablemaster
 	keycontrol = "stablemaster"
 
-/obj/structure/roguemachine/vendor/stablemaster/Initialize()
+/obj/structure/roguemachine/vendor/stablemaster/Initialize(mapload)
 	. = ..()
 	for(var/X in list(/obj/item/roguekey/apartments/stablemaster_1,/obj/item/roguekey/apartments/stablemaster_2,/obj/item/roguekey/apartments/stablemaster_3,/obj/item/roguekey/apartments/stablemaster_4,/obj/item/roguekey/apartments/stablemaster_5))
 		var/obj/P = new X(src)

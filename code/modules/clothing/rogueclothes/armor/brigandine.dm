@@ -18,7 +18,7 @@
 	sleeved_detail = FALSE
 	boobed_detail = FALSE
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/Initialize()
+/obj/item/clothing/suit/roguetown/armor/brigandine/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_COAT_STEP)
 
@@ -47,7 +47,7 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/retinue/Initialize()
+/obj/item/clothing/suit/roguetown/armor/brigandine/retinue/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -143,7 +143,7 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue/Initialize()
+/obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -192,8 +192,8 @@
 /obj/item/clothing/suit/roguetown/armor/brigandine/haraate/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in colorlist
-		var/playerchoice = colorlist[choice]
+		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
 		detail_tag = "_detail"

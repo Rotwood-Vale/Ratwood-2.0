@@ -62,7 +62,7 @@
 	. = ..()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, extinguish_mob)), 1 SECONDS)
 
-/mob/living/simple_animal/pet/familiar/Initialize()
+/mob/living/simple_animal/pet/familiar/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOFALLDAMAGE1, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, TRAIT_GENERIC)

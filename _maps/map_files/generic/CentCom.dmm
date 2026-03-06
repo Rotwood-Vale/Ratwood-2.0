@@ -1257,20 +1257,14 @@
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
 	},
-/obj/item/roguekey/walls{
-	lockid = "bandit";
-	name = "old key";
-	pixel_x = -9
+/obj/item/roguekey/bandit,
+/obj/item/roguekey/bandit{
+	pixel_x = 11;
+	pixel_y = -3
 	},
-/obj/item/roguekey/walls{
-	lockid = "bandit";
-	name = "old key";
-	pixel_y = 3
-	},
-/obj/item/roguekey/walls{
-	lockid = "bandit";
-	name = "old key";
-	pixel_x = 12
+/obj/item/roguekey/bandit{
+	pixel_x = -11;
+	pixel_y = -4
 	},
 /turf/open/floor/rogue/ruinedwood{
 	dir = 1;
@@ -4133,6 +4127,14 @@
 /obj/structure/closet/crate/coffin/vampire,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampire_manor)
+"wd" = (
+/obj/item/roguekey/inhumen,
+/obj/structure/table/wood/poor,
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/obj/item/roguekey/inhumen,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/under/cave/inhumen/wretch/camp)
 "wj" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt,
@@ -23047,7 +23049,7 @@ wD
 xd
 Em
 Kx
-Cd
+wd
 Pj
 YR
 zg

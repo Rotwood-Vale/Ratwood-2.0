@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(biggates)
 /obj/structure/gate/preopen
 	icon_state = "gate0"
 
-/obj/structure/gate/preopen/Initialize()
+/obj/structure/gate/preopen/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(open))
 
@@ -32,14 +32,14 @@ GLOBAL_LIST_EMPTY(biggates)
 	base_state = "bar"
 	opacity = FALSE
 
-/obj/structure/gate/bars/Initialize()
+/obj/structure/gate/bars/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(close))
 
 /obj/structure/gate/bars/preopen
 	icon_state = "bar0"
 
-/obj/structure/gate/bars/preopen/Initialize()
+/obj/structure/gate/bars/preopen/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(open))
 
@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(biggates)
 	opacity = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/structure/gate/Initialize()
+/obj/structure/gate/Initialize(mapload)
 	. = ..()
 	update_icon()
 	var/turf/T = loc
@@ -154,7 +154,7 @@ GLOBAL_LIST_EMPTY(biggates)
 	var/gid
 	var/obj/structure/gate/attached_gate
 
-/obj/structure/winch/Initialize()
+/obj/structure/winch/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -197,6 +197,6 @@ GLOBAL_LIST_EMPTY(biggates)
 	redstone_id = "swamp_psy_dungeon_hour"
 	max_integrity = 9999
 
-/obj/structure/gate/psy_vault/Initialize()
+/obj/structure/gate/psy_vault/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(open)), 1 HOURS)

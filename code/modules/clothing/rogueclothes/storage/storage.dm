@@ -179,7 +179,7 @@
 
 /obj/item/storage/belt/rogue/pouch/coins
 
-/obj/item/storage/belt/rogue/pouch/coins/mid/Initialize()
+/obj/item/storage/belt/rogue/pouch/coins/mid/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/silver/pile/H = new(loc)
 	if(istype(H))
@@ -190,7 +190,7 @@
 		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, C, null, TRUE, TRUE))
 			qdel(C)
 
-/obj/item/storage/belt/rogue/pouch/coins/poor/Initialize()
+/obj/item/storage/belt/rogue/pouch/coins/poor/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/copper/pile/H = new(loc)
 	if(istype(H))
@@ -202,7 +202,7 @@
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 				qdel(H)
 
-/obj/item/storage/belt/rogue/pouch/coins/rich/Initialize()
+/obj/item/storage/belt/rogue/pouch/coins/rich/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/silver/pile/H = new(loc)
 	if(istype(H))
@@ -223,14 +223,14 @@
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, G, null, TRUE, TRUE))
 				qdel(G)
 
-/obj/item/storage/belt/rogue/pouch/coins/virtuepouch/Initialize()
+/obj/item/storage/belt/rogue/pouch/coins/virtuepouch/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/gold/virtuepile/H = new(loc)
 	if(istype(H))
 		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 			qdel(H)
 
-/obj/item/storage/belt/rogue/pouch/coins/readyuppouch/Initialize()
+/obj/item/storage/belt/rogue/pouch/coins/readyuppouch/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/silver/pile/readyuppile/H = new(loc)
 	if(istype(H))
@@ -451,7 +451,7 @@
 	if(knives.len)
 		. += span_notice("[knives.len] inside.")
 
-/obj/item/storage/belt/rogue/leather/knifebelt/iron/Initialize()
+/obj/item/storage/belt/rogue/leather/knifebelt/iron/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/rogueweapon/huntingknife/throwingknife/K = new()
@@ -462,35 +462,35 @@
 	icon_state = "blackknife"
 	item_state = "blackknife"
 
-/obj/item/storage/belt/rogue/leather/knifebelt/black/iron/Initialize()
+/obj/item/storage/belt/rogue/leather/knifebelt/black/iron/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/rogueweapon/huntingknife/throwingknife/K = new()
 		knives += K
 	update_icon()
 
-/obj/item/storage/belt/rogue/leather/knifebelt/black/steel/Initialize()
+/obj/item/storage/belt/rogue/leather/knifebelt/black/steel/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/rogueweapon/huntingknife/throwingknife/steel/K = new()
 		knives += K
 	update_icon()
 
-/obj/item/storage/belt/rogue/leather/knifebelt/black/silver/Initialize()
+/obj/item/storage/belt/rogue/leather/knifebelt/black/silver/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/rogueweapon/huntingknife/throwingknife/silver/K = new()
 		knives += K
 	update_icon()
 
-/obj/item/storage/belt/rogue/leather/knifebelt/black/psydon/Initialize()
+/obj/item/storage/belt/rogue/leather/knifebelt/black/psydon/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/rogueweapon/huntingknife/throwingknife/psydon/K = new()
 		knives += K
 	update_icon()
 
-/obj/item/storage/belt/rogue/leather/knifebelt/black/kazengun/Initialize()
+/obj/item/storage/belt/rogue/leather/knifebelt/black/kazengun/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/rogueweapon/huntingknife/throwingknife/kazengun/K = new()

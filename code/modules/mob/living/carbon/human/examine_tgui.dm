@@ -49,6 +49,7 @@
 	var/has_song = FALSE
 	var/is_vet = FALSE
 	var/is_naked = FALSE
+	var/nsfw_examine_always = FALSE
 
 	if(ishuman(holder))
 		var/mob/living/carbon/human/holder_human = holder
@@ -57,6 +58,7 @@
 		obscured = ((!isobserver(user)) && !holder_human.client?.prefs?.masked_examine) && ((holder_human.wear_mask && (holder_human.wear_mask.flags_inv & HIDEFACE)) || (holder_human.head && (holder_human.head.flags_inv & HIDEFACE)))
 		flavor_text = obscured ? "Obscured" : holder.flavortext
 		flavor_text_nsfw = obscured ? "Obscured" : holder.nsfwflavortext
+		nsfw_examine_always = holder_human.client?.prefs?.nsfw_examine_always
 		ooc_notes += holder.ooc_notes
 		ooc_notes_nsfw += holder.erpprefs
 		char_name = holder.name
@@ -76,6 +78,7 @@
 		obscured = FALSE
 		flavor_text = pref.flavortext
 		flavor_text_nsfw = pref.nsfwflavortext
+		nsfw_examine_always = FALSE
 		ooc_notes = pref.ooc_notes
 		ooc_notes_nsfw = pref.erpprefs
 		headshot = pref.headshot_link
@@ -121,6 +124,7 @@
 		"has_song" = has_song,
 		"is_vet" = is_vet,
 		"is_naked" = is_naked,
+		"nsfw_examine_always" = nsfw_examine_always,
 	)
 	return data
 

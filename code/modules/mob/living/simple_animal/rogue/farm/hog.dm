@@ -225,7 +225,7 @@
 	STASPD = 2
 	adult_growth = /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog
 
-/mob/living/simple_animal/hostile/retaliate/rogue/swine/test/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/swine/test/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_type)
@@ -264,7 +264,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S

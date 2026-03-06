@@ -87,7 +87,7 @@
 		return TRUE
 #endif
 
-/mob/living/carbon/human/Initialize()
+/mob/living/carbon/human/Initialize(mapload)
 #ifdef MATURESERVER
 	sexcon = new /datum/sex_controller(src)
 #endif
@@ -1027,7 +1027,7 @@
 /mob/living/carbon/human/species
 	var/race = null
 
-/mob/living/carbon/human/species/Initialize()
+/mob/living/carbon/human/species/Initialize(mapload)
 	. = ..()
 	if(race)
 		set_species(race)

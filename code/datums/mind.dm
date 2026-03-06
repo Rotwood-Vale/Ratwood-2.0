@@ -501,10 +501,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		var/challenger_heart_location
 
 		if(target_heart)
-			target_heart_location = target_heart.owner ? target_heart.owner.prepare_deathsight_message() : lowertext(get_area_name(target_heart))
+			target_heart_location = target_heart.owner ? target_heart.owner.prepare_deathsight_message() : LOWER_TEXT(get_area_name(target_heart))
 
 		if(challenger_heart)
-			challenger_heart_location = challenger_heart.owner ? challenger_heart.owner.prepare_deathsight_message() : lowertext(get_area_name(challenger_heart))
+			challenger_heart_location = challenger_heart.owner ? challenger_heart.owner.prepare_deathsight_message() : LOWER_TEXT(get_area_name(challenger_heart))
 
 		if(recipient == challenger)
 			if(target)
@@ -951,8 +951,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 						var/is_loadout_item = FALSE
 						var/keep_stats = FALSE
 						if(user.client?.prefs)
-							var/list/loadout_slots = list("loadout", "loadout2", "loadout3", "loadout4", "loadout5",
-														  "loadout6", "loadout7", "loadout8", "loadout9", "loadout10")
+							var/list/loadout_slots = list(
+								"loadout", "loadout2", "loadout3", "loadout4", "loadout5",
+								"loadout6", "loadout7", "loadout8", "loadout9", "loadout10",
+							)
 							for(var/slot in loadout_slots)
 								var/datum/loadout_item/loadout_datum = user.client.prefs.vars[slot]
 								if(loadout_datum && loadout_datum.path == path2item)
@@ -985,8 +987,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 								// Check if the item has any non-zero armor values by checking the datum properties directly
 								if(C.armor && istype(C.armor, /datum/armor))
-									if(C.armor.blunt > 0 || C.armor.slash > 0 || C.armor.stab > 0 || \
-									   C.armor.piercing > 0 || C.armor.fire > 0 || C.armor.acid > 0)
+									if(C.armor.blunt > 0 || C.armor.slash > 0 || C.armor.stab > 0 || C.armor.piercing > 0 || C.armor.fire > 0 || C.armor.acid > 0)
 										has_armor = TRUE
 
 								// Only modify items that actually have armor protection

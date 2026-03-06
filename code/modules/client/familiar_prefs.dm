@@ -176,7 +176,7 @@
 				fam_show_ui()
 				return
 			familiar_ooc_extra_link = link
-			var/ext = lowertext(splittext(link, ".")[length(splittext(link, "."))])
+			var/ext = LOWER_TEXT(splittext(link, ".")[length(splittext(link, "."))])
 			var/info
 			switch(ext)
 				if("jpg", "jpeg", "png", "gif")

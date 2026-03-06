@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 	///The time remaining in which the soil was given special fertilizer, effect is similar to being blessed but with less beneficial effects
 	var/fertilized_time = 0
 
-/obj/structure/soil/Initialize()
+/obj/structure/soil/Initialize(mapload)
 	. = ..()
 	GLOB.soil_list += src
 
@@ -334,7 +334,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 		produce_ready = FALSE
 		update_icon()
 
-/obj/structure/soil/Initialize()
+/obj/structure/soil/Initialize(mapload)
 	START_PROCESSING(SSprocessing, src)
 	GLOB.weather_act_upon_list += src
 	. = ..()

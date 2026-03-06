@@ -25,7 +25,7 @@
 		"Roguery",
 		)
 
-/obj/structure/roguemachine/bathvend/Initialize()
+/obj/structure/roguemachine/bathvend/Initialize(mapload)
 	. = ..()
 	SSBMtreasury.brassface = src
 	update_icon()

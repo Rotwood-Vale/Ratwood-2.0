@@ -291,7 +291,7 @@
 	armor = ARMOR_ASCENDANT
 	icon_state = "graggarplateboots"
 
-/obj/item/clothing/shoes/roguetown/boots/armor/graggar/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/graggar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
 
@@ -303,7 +303,7 @@
 	icon_state = "matthiosboots"
 	armor = ARMOR_ASCENDANT
 
-/obj/item/clothing/shoes/roguetown/boots/armor/matthios/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/matthios/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -320,7 +320,7 @@
 	icon_state = "zizoboots"
 	armor = ARMOR_ASCENDANT
 
-/obj/item/clothing/shoes/roguetown/boots/armor/zizo/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/zizo/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -357,8 +357,8 @@
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in colorlist
-		var/playerchoice = colorlist[choice]
+		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
 		detail_tag = "_detail"
@@ -401,7 +401,7 @@
 	color = primary
 	update_icon()
 
-/obj/item/clothing/shoes/roguetown/jester/Initialize()
+/obj/item/clothing/shoes/roguetown/jester/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_JINGLE_BELLS, 2)
 	if(GLOB.lordprimary)

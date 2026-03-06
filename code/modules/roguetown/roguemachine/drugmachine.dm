@@ -250,7 +250,7 @@
 	STOP_PROCESSING(SSroguemachine, src)
 	return ..()
 
-/obj/structure/roguemachine/drugmachine/Initialize()
+/obj/structure/roguemachine/drugmachine/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSroguemachine, src)
 	update_icon()
