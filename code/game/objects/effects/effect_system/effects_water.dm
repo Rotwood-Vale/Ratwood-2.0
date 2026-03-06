@@ -33,12 +33,12 @@
 // to something, like a smoking beaker, so then you can just call start() and the steam
 // will always spawn at the items location, even if it's moved.
 
-/* Example:
-var/datum/effect_system/steam_spread/steam = new() -- creates new system
-steam.set_up(5, 0, mob.loc) -- sets up variables
-OPTIONAL: steam.attach(mob)
-steam.start() -- spawns the effect
-*/
+// Example:
+// var/datum/effect_system/steam_spread/steam = new() -- creates new system
+// steam.set_up(5, 0, mob.loc) -- sets up variables
+// OPTIONAL: steam.attach(mob)
+// steam.start() -- spawns the effect
+
 /////////////////////////////////////////////
 /obj/effect/particle_effect/steam
 	name = "steam"
