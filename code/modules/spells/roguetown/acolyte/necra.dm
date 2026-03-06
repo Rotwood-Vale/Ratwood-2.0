@@ -18,19 +18,47 @@
 
 /obj/effect/proc_holder/spell/targeted/burialrite/cast(list/targets, mob/user = usr)
 	. = ..()
+	submission = TRUE
+	var/mob/living/carbon/human/M = null
+	INVOKE_ASYNC(src, PROC_REF(giveup), M)
 	var/success = FALSE
+	
 	for(var/obj/structure/closet/crate/coffin/coffin in view(1))
-		success = pacify_coffin(coffin, user)
-		if(success)
-			user.visible_message("[user] consecrates [coffin]!", "My funeral rites have been performed on [coffin]!")
-			return
+	if(!submission) //fakes burial so you can kill bill your way out
+		success = !pacify_coffin(coffin, user)
+			if(success)
+				user.visible_message("[user] consecrates [coffin]!", "My funeral rites have been performed on [coffin]!")
+				submission = TRUE
+	
 	for(var/obj/structure/closet/dirthole/hole in view(1))
+	if(!submission) //fakes burial so you can kill bill your way out
+		success = !pacify_coffin(hole, user)
+		if(success)
+			user.visible_message("[user] consecrates [hole]!", "My funeral rites have been performed on [hole]!")
+			submission = TRUE
+
+	for(var/obj/structure/closet/crate/coffin/coffin in view(1))
+	submission = TRUE
+	if(submission)
+		success = pacify_coffin(coffin, user)
+			if(success)
+			user.visible_message("[user] consecrates [coffin]!", "My funeral rites have been performed on [coffin]!")
+			submission = FALSE
+
+	for(var/obj/structure/closet/dirthole/hole in view(1))
+	if(submission)
 		success = pacify_coffin(hole, user)
 		if(success)
 			user.visible_message("[user] consecrates [hole]!", "My funeral rites have been performed on [hole]!")
 			record_round_statistic(STATS_GRAVES_CONSECRATED)
-			return
+			submission = TRUE
+	
 	to_chat(user, span_red("I failed to perform the rites."))
+
+/obj/structure/closet/dirthole/proc/giveup(mob/living/corpse)
+	if(alert(M, "Do you submit to burial and pass on? You have 15 seconds to decide.", "CHOICE OF LYFE", "LIVE", "REST") == "REST")
+		if(M.Adjacent(src))	//No buffering this for later
+			submission = FALSE
 
 /obj/effect/proc_holder/spell/targeted/churn
 	name = "Churn Undead"

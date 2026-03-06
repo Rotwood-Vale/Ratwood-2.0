@@ -69,16 +69,30 @@
 	..()
 
 /mob/dead/new_player/proc/reducespawntime(amt)
-	if(ckey)
-		if(amt)
-			if(GLOB.respawntimes[ckey])
-				GLOB.respawntimes[ckey] = GLOB.respawntimes[ckey] + amt
+	if(submission)
+		if(ckey)
+			if(amt)
+				if(GLOB.respawntimes[ckey])
+					GLOB.respawntimes[ckey] = GLOB.respawntimes[ckey] + amt
 
 /obj/structure/gravemarker/OnCrafted(dir, mob/user)
+	. = ..()
+	submission = TRUE
+	var/mob/living/carbon/human/M = null
+	INVOKE_ASYNC(src, PROC_REF(giveup), M)
 	icon_state = "gravemarker[rand(1,3)]"
 	for(var/obj/structure/closet/dirthole/hole in loc)
-		if(pacify_coffin(hole, user))
-			to_chat(user, span_notice("I feel their soul finding peace..."))
-			SEND_SIGNAL(user, COMSIG_GRAVE_CONSECRATED, hole)
-			record_round_statistic(STATS_GRAVES_CONSECRATED)
-	return ..()
+		if(submission)
+			(pacify_coffin(hole, user))
+				to_chat(user, span_notice("I feel their soul finding peace..."))
+				SEND_SIGNAL(user, COMSIG_GRAVE_CONSECRATED, hole)
+				record_round_statistic(STATS_GRAVES_CONSECRATED)
+	
+	if(!submission)//fakes burial so you can kill bill your way out
+		to_chat(user, span_notice("I feel their soul finding peace..."))
+		submission = TRUE
+
+/obj/structure/gravemarker/proc/giveup(mob/living/corpse)
+	if(alert(M, "Do you submit to burial and pass on? You have 15 seconds to decide.", "CHOICE OF LYFE", "LIVE", "REST") == "REST")
+		if(M.Adjacent(src))	//No buffering this for later
+			submission = FALSE
