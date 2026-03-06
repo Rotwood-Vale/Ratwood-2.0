@@ -91,21 +91,15 @@
 	set category = "Noises"
 
 	var/datum/sex_controller/S = sexcon
-	switch(S.arousal)
-		if(0 to 40)
-			if(!can_speak())
-				emote("sexmoangag", forced = TRUE)
-			else
+	if(!can_speak())
+		emote("sexmoangag", forced = TRUE)
+	else
+		switch(S.arousal)
+			if(0 to 40)
 				emote("sexmoanlight", forced = TRUE)
-		if(40 to 75)
-			if(!can_speak())
-				emote("sexmoangag", forced = TRUE)
-			else
+			if(41 to 75)
 				emote("sexmoanmed", forced = TRUE)
-		if(75 to INFINITY)
-			if(!can_speak())
-				emote("sexmoanmed", forced = TRUE)
-			else
+			if(76 to INFINITY)
 				emote("sexmoanhvy", forced = TRUE)
 
 /datum/emote/living/carbon/human/eyebrow

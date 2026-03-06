@@ -640,9 +640,9 @@
 		switch(arousal)
 			if(0 to 40)
 				chosen_emote = "sexmoanlight"
-			if(40 to 75)
+			if(41 to 75)
 				chosen_emote = "sexmoanmed"
-			if(75 to INFINITY)
+			if(76 to INFINITY)
 				chosen_emote = "sexmoanhvy"
 
 	if(pain_amt >= PAIN_MILD_EFFECT)

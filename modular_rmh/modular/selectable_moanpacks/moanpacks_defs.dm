@@ -46,30 +46,17 @@ GLOBAL_LIST_EMPTY(selectable_moanpacks)
 	var/list/sounds_sexmoangag_org
 
 /datum/moan_pack/proc/get_moans(key)
-	switch(key)
-		if("sexmoanlight" && !isnull(sounds_sexmoanlight))
-			return pick(sounds_sexmoanlight)
-		if("sexmoanmed")
-			if(isnull(sounds_sexmoanmed))
-				return
-			else
-				return pick(sounds_sexmoanmed)
-		if("sexmoanhvy")
-			if(isnull(sounds_sexmoanhvy))
-				return
-			else
-				return pick(sounds_sexmoanhvy)
-		if("sexmoangag")
-			if(isnull(sounds_sexmoangag))
-				return
-			else
-				return pick(sounds_sexmoangag)
-		if("sexmoangag_org")
-			if(isnull(sounds_sexmoangag_org))
-				return
-			else
-				return pick(sounds_sexmoangag_org)
-	return
+  switch(key)
+    if("sexmoanlight")
+      return pick(sounds_sexmoanlight)
+    if("sexmoanmed")
+      return pick(sounds_sexmoanmed)
+    if("sexmoanhvy")
+      return pick(sounds_sexmoanhvy)
+    if("sexmoangag")
+      return pick(sounds_sexmoangag)
+    if("sexmoangag_org")
+      return pick(sounds_sexmoangag_org)
 
 //MALES
 
