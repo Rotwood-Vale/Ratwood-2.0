@@ -214,7 +214,7 @@
 						if(vpath.sounds_sexmoangag_org)
 							possible_sounds = vpath.get_moans(key)
 
-			 // LETHALSTONE ADDITION BEGIN: use preference-set voice types where possible
+			// LETHALSTONE ADDITION BEGIN: use preference-set voice types where possible
 			if(H.voice_type && !(key in moan_keys)) // So it won't override moans
 				switch (H.voice_type)
 					if (VOICE_TYPE_MASC)
