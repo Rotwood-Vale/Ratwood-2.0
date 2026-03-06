@@ -72,8 +72,6 @@
 	penfactor = 25
 	damfactor = 0.9
 	item_d_type = "stab"
-	effective_range = 2
-	effective_range_type = EFF_RANGE_EXACT
 
 //blunt objs ฅ^•ﻌ•^ฅ
 
