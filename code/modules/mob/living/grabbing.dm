@@ -115,6 +115,7 @@
 			grabbee.l_grab = null
 		if(grabbee.mouth == src)
 			grabbee.mouth = null
+		grabbee = null
 	for(var/datum/D in dependents)
 		D.grabdropped(src)
 	return ..()
