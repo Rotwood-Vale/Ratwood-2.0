@@ -2,7 +2,7 @@
 
 /datum/intent/swing/sling
 	chargetime = 1 //used for edge cases only, /datum/intent/shoot/sling/get_chargetime handles the actual number
-	chargedrain = 2
+	chargedrain = 3
 	charging_slowdown = 3
 
 /datum/intent/swing/sling/can_charge(atom/clicked_object)
@@ -19,7 +19,7 @@
 /datum/intent/swing/sling/get_chargetime() //determines swing length. damage is in /obj/item/gun/ballistic/revolver/grenadelauncher/sling/process_fire
 	if(mastermob && chargetime)
 		var/newtime = 0 //value to determine charging time in deciseconds
-		newtime = (newtime + 20) //base 2.0 seconds
+		newtime = (newtime + 30) //base 3.0 seconds
 		newtime = (newtime - (mastermob.get_skill_level(/datum/skill/combat/slings) * 1.5)) //each point of skill is -0.15 seconds, maximum -0.9 seconds
 		newtime = (newtime - (mastermob.STAPER / 2)) //each point of perception is -0.05 seconds, maximum -1.0 second
 		newtime = (newtime - (mastermob.STASTR / 5)) //each point of strength is -0.02 seconds, maximum -0.4 seconds
@@ -49,7 +49,7 @@
 /datum/intent/arc/sling/get_chargetime() //same calculations as swing but with a greater base for throwing through teammates
 	if(mastermob && chargetime)
 		var/newtime = 0 //value to determine charging time in deciseconds
-		newtime = (newtime + 22) //base 2.2 seconds
+		newtime = (newtime + 33) //base 3.3 seconds
 		newtime = (newtime - (mastermob.get_skill_level(/datum/skill/combat/slings) * 1.5)) //each point of skill is -0.15 seconds, maximum -0.9 seconds
 		newtime = (newtime - (mastermob.STAPER / 2)) //each point of perception is -0.05 seconds, maximum -1.0 second
 		newtime = (newtime - (mastermob.STASTR / 5)) //each point of strength is -0.02 seconds, maximum -0.4 seconds
