@@ -34,6 +34,9 @@
 	var/use_params_for_runechat = FALSE
 	var/is_animal = FALSE
 
+	//RMH EDIT
+	var/static/list/moan_keys = list("sexmoanlight","sexmoanmed","sexmoanhvy","sexmoangag","sexmoangag_org")
+
 /datum/emote/New()
 	if(!runechat_msg && !use_params_for_runechat)
 		//strip punctuation
@@ -191,8 +194,28 @@
 				possible_sounds = H.dna.species.soundpack_f.get_sound(key,modifier)
 			else if(H.dna.species.soundpack_m)
 				possible_sounds = H.dna.species.soundpack_m.get_sound(key,modifier)
+			//RMH ADD - manual voicepack selection
+			if(H.moan_selection && (key in moan_keys))
+				var/datum/moan_pack/vpath = new H.moan_selection
+				switch(key)
+					if("sexmoanlight")
+						if(vpath.sounds_sexmoanlight)
+							possible_sounds = vpath.get_moans(key)
+					if("sexmoanmed")
+						if(vpath.sounds_sexmoanmed)
+							possible_sounds = vpath.get_moans(key)
+					if("sexmoanhvy")
+						if(vpath.sounds_sexmoanhvy)
+							possible_sounds = vpath.get_moans(key)
+					if("sexmoangag")
+						if(vpath.sounds_sexmoangag)
+							possible_sounds = vpath.get_moans(key)
+					if("sexmoangag_org")
+						if(vpath.sounds_sexmoangag_org)
+							possible_sounds = vpath.get_moans(key)
+
 			 // LETHALSTONE ADDITION BEGIN: use preference-set voice types where possible
-			if(H.voice_type)
+			if(H.voice_type && !(key in moan_keys)) // So it won't override moans
 				switch (H.voice_type)
 					if (VOICE_TYPE_MASC)
 						possible_sounds = H.dna.species.soundpack_m.get_sound(key, modifier)

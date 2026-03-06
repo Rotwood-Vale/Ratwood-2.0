@@ -406,26 +406,24 @@ GLOBAL_LIST_EMPTY(collar_masters)
 	pet.do_jitter_animation(10)
 
 	// Sound effects based on arousal level
-	if(prob(10))  // 10% chance each tick to make a sound
+	if(prob(15))  // 15% chance each tick to make a sound
 		var/current_arousal = pet.sexcon.arousal
-		if(current_arousal > 60)
-			playsound(pet, pick('sound/vo/female/gen/se/sex (1).ogg',
-							  'sound/vo/female/gen/se/sex (2).ogg',
-							  'sound/vo/female/gen/se/sex (3).ogg',
-							  'sound/vo/female/gen/se/sex (4).ogg',
-							  'sound/vo/female/gen/se/sex (5).ogg',
-							  'sound/vo/female/gen/se/sex (6).ogg',
-							  'sound/vo/female/gen/se/sex (7).ogg'), 50, TRUE)
-			pet.emote("moan")
-		else if(current_arousal > 10)
-			playsound(pet, pick('sound/vo/female/gen/se/sexlight (1).ogg',
-							  'sound/vo/female/gen/se/sexlight (2).ogg',
-							  'sound/vo/female/gen/se/sexlight (3).ogg',
-							  'sound/vo/female/gen/se/sexlight (4).ogg',
-							  'sound/vo/female/gen/se/sexlight (5).ogg',
-							  'sound/vo/female/gen/se/sexlight (6).ogg',
-							  'sound/vo/female/gen/se/sexlight (7).ogg'), 50, TRUE)
-			pet.emote("whimper")
+		switch(current_arousal)
+			if(0 to 40)
+				if(!pet.can_speak())
+					pet.emote("sexmoangag")
+				else
+					pet.emote("sexmoanlight")
+			if(40 to 75)
+				if(!pet.can_speak())
+					pet.emote("sexmoangag")
+				else
+					pet.emote("sexmoanmed")
+			if(75 to INFINITY)
+				if(!pet.can_speak())
+					pet.emote("sexmoangag")
+				else
+					pet.emote("sexmoanhvy")
 
 	// Continue loop
 	pet.active_timers[loop_id] = addtimer(CALLBACK(src, PROC_REF(arousal_tick), pet, amount_per_tick, loop_id), 1 SECONDS, TIMER_STOPPABLE)
