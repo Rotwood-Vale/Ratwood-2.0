@@ -105,7 +105,6 @@
 
 /datum/wound/fracture/head/brain
 	name = "depressed cranial fracture"
-	severity = WOUND_SEVERITY_FATAL
 	crit_message = list(
 		"The cranium is punctured!",
 		"The cranium is pierced!",
@@ -115,6 +114,11 @@
 	bleed_rate = 10		// Aooouuugh.. my brain..
 	knockout = 20
 	paralysis = TRUE
+
+/datum/wound/fracture/head/eyes/on_mob_gain(mob/living/affected)
+	. = ..()
+	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS) && (!isconstruct(human_mob)))
+		affected.death()
 
 /datum/wound/fracture/head/eyes
 	name = "orbital fracture"
@@ -141,7 +145,6 @@
 
 /datum/wound/fracture/head/ears
 	name = "temporal fracture"
-	severity = WOUND_SEVERITY_FATAL
 	crit_message = list(
 		"The orbital bone is punctured!",
 		"The temporal bone is pierced!",
@@ -159,6 +162,8 @@
 	affected.confused += 25	//Drunk-walk effect, basically.
 	affected.dizziness += 25
 	ADD_TRAIT(affected, TRAIT_DEAF, "[type]")
+	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS) && (!isconstruct(human_mob)))
+		affected.death()
 
 /datum/wound/fracture/head/ears/on_mob_loss(mob/living/affected)
 	. = ..()
@@ -232,7 +237,7 @@
 	if(iscarbon(affected))
 		var/mob/living/carbon/carbon_affected = affected
 		carbon_affected.update_disabled_bodyparts()
-	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
+	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS) && (!isconstruct(human_mob)))
 		affected.death()
 
 /datum/wound/fracture/neck/on_mob_loss(mob/living/affected)
