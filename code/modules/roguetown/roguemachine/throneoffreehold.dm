@@ -20,6 +20,7 @@ GLOBAL_VAR(announcement_throne)
 /obj/structure/roguemachine/freeholdthrone/Initialize()
 	. = ..()
 	become_hearing_sensitive()
+	START_PROCESSING(SSobj, src)
 	if(GLOB.announcement_throne == null)
 		GLOB.announcement_throne = src
 
@@ -27,6 +28,7 @@ GLOBAL_VAR(announcement_throne)
 	if(GLOB.announcement_throne == src)
 		GLOB.announcement_throne = null
 	lose_hearing_sensitivity()
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/roguemachine/freeholdthrone/examine()
@@ -115,7 +117,6 @@ GLOBAL_VAR(announcement_throne)
 	next_announcement_time = world.time + 10 MINUTES
 	SScommunications.make_announcement(user, FALSE, raw_message)
 
-
 /obj/structure/roguemachine/freeholdthrone/proc/make_raid_announcement(mob/living/user, raw_message)
 	if(raid_called)
 		return FALSE
@@ -126,15 +127,11 @@ GLOBAL_VAR(announcement_throne)
 
 	priority_announce("[user.real_name] calls for a raid: [raw_message]", "A RAID IS DECLARED", 'sound/misc/royal_decree2.ogg', "The warboss")
 	raid_called = TRUE
-	return TRUE
-
-/obj/structure/roguemachine/freeholdthrone/process()
-	. = ..()
-
-	if(!raid_called)
-		return
 
 	for(var/mob/living/carbon/human/H in view(7, src))
 		if(!HAS_TRAIT(H, TRAIT_FREEHOLDER))
 			continue
 		H.apply_status_effect(/datum/status_effect/buff/raidercall)
+		to_chat(H, span_notice("The call to raid stirs your blood."))
+
+	return TRUE

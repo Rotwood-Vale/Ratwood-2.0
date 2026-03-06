@@ -1812,3 +1812,23 @@
 	var/area/rogue/our_area = get_area(owner)
 	if(!our_area || !our_area.freehold_area)
 		owner.remove_status_effect(/datum/status_effect/buff/freeholdbuff)
+
+/atom/movable/screen/alert/status_effect/buff/raidercall
+	name = "Raid Call"
+	desc = "I am a member of the raid."
+	icon_state = "call_to_arms"
+
+/datum/status_effect/buff/raidercall
+	id = "raidercall"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/raidercall
+	duration = 10 MINUTES
+	status_type = STATUS_EFFECT_REFRESH
+	effectedstats = list(STATKEY_STR = 1, STATKEY_WIL = 1, STATKEY_CON = 1, STATKEY_SPD = 1)
+
+/datum/status_effect/buff/raidercall/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_RAIDER, id)
+
+/datum/status_effect/buff/raidercall/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_RAIDER, id)
