@@ -1808,7 +1808,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks_male)
 						if(moanpack_sel_input)
 							moan_selection = moanpack_sel_input
-							to_chat(user, "<font color='red'>Your character will now use the '[lowertext(moanpack_sel_input)]' moanpack.</font>")
+							to_chat(user, "<font color='red'>Your character will now use the '[LOWER_TEXT(moanpack_sel_input)]' moanpack.</font>")
 						else
 							moan_selection = MOANPACK_TYPE_DEF
 					else
@@ -1816,7 +1816,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks_female)
 						if(moanpack_sel_input)
 							moan_selection = moanpack_sel_input
-							to_chat(user, "<font color='red'>Your character will now use the '[lowertext(moanpack_sel_input)]' moanpack.</font>")
+							to_chat(user, "<font color='red'>Your character will now use the '[LOWER_TEXT(moanpack_sel_input)]' moanpack.</font>")
 						else
 							moan_selection = MOANPACK_TYPE_DEF
 
