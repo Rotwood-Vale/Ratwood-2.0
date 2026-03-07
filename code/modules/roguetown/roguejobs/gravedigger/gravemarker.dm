@@ -138,7 +138,7 @@
 		//removes cuffs
 		corpse.uncuff()
 
-    	// Restore heart if missing
+		// Restore heart if missing
 		if(!corpse.getorgan(/obj/item/organ/heart))
 			var/obj/item/organ/heart/H = new /obj/item/organ/heart()
 			H.Insert(corpse)
