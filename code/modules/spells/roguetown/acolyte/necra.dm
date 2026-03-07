@@ -37,19 +37,16 @@
 				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without a brain."))
 				continue
 
+			user.visible_message("[user] consecrates [coffin]!", "My funeral rites have been performed on [coffin]!")
+			record_round_statistic(STATS_GRAVES_CONSECRATED)
+			success = TRUE
 			var/submission = ask_burial(corpse)
 
-			if(submission) //fakes burial so you can kill bill your way out
+			if(submission)
 				pacify_coffin(coffin, user)
-				user.visible_message("[user] consecrates [coffin]!", "My funeral rites have been performed on [coffin]!")
-				record_round_statistic(STATS_GRAVES_CONSECRATED)
-				success = TRUE
 
-			else //fakes burial so you can kill bill your way out
-				user.visible_message("[user] consecrates [coffin]!", "My funeral rites have been performed on [coffin]!")
+			else
 				record_round_statistic(STATS_BURIALS_REJECTED)
-
-			break
 
 	//Graves
 	for(var/obj/structure/closet/dirthole/H in view(1,user))
@@ -67,19 +64,16 @@
 				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without a brain."))
 				continue
 
+			user.visible_message("[user] consecrates [H]!", "My funeral rites have been performed on [H]!")
+			success = TRUE
 			var/submission = ask_burial(corpse)
 
 			if(submission)
 				pacify_coffin(H, user)
-				user.visible_message("[user] consecrates [H]!", "My funeral rites have been performed on [H]!")
 				record_round_statistic(STATS_GRAVES_CONSECRATED)
-				success = TRUE
 
-			else //fakes burial so you can kill bill your way out
-				user.visible_message("[user] consecrates [H]!", "My funeral rites have been performed on [H]!")
+			else
 				record_round_statistic(STATS_BURIALS_REJECTED)
-
-			break
 
 
 	if(!success)

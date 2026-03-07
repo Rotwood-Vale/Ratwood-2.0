@@ -112,7 +112,7 @@
 
 		for(var/mob/living/carbon/human/corpse in coffin)
 
-			if(corpse.stat != DEAD && !corpse.fake_burialrited)
+			if(corpse.stat != DEAD)
 				to_chat(user, "That one hasn't truly passed on yet?!")
 				return
 
@@ -129,24 +129,14 @@
 				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without a brain."))
 				return
 
-			var/submission = ask_burial(corpse)
-
 			to_chat(user, "I begin my burial rites...")
 
 			if(do_after(user, 50))
 				user.say("#Rest thy soul for all aeon within Necra's embrace!")
 				to_chat(user, "I have extracted a strand of luxthread, proof of passing.")
 				playsound(user, 'sound/misc/bellold.ogg', 20)
-
-				if(submission)
-					new /obj/item/soulthread((get_turf(user)))
-					corpse.burialrited = TRUE
-					record_round_statistic(STATS_GRAVES_CONSECRATED)
-
-				else //fakes burial so you can kill bill your way out
-					new /obj/item/soulthread((get_turf(user)))
-					corpse.fake_burialrited = TRUE
-					record_round_statistic(STATS_BURIALS_REJECTED)
+				new /obj/item/soulthread((get_turf(user)))
+				record_round_statistic(STATS_GRAVES_CONSECRATED)
 
 /obj/structure/closet/dirthole/attackby(obj/item/attacking_item, mob/user, params)
 	if(!istype(attacking_item, /obj/item/rogueweapon/shovel))

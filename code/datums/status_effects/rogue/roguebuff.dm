@@ -593,6 +593,39 @@
 		owner.adjustCloneLoss(-healing_on_tick, 0)
 // Lesser miracle effect end
 
+/datum/status_effect/buff/burial/determination
+	id = "determination"
+	duration = 2 MINUTES
+	tick_interval = 1 SECONDS
+	examine_text = "SUBJECTPRONOUN looks abosultely pissed off!"
+	var/healing_on_tick = 0.1
+	var/tech_healing_modifier = 0.1
+
+/datum/status_effect/buff/burial/determination/on_creation(mob/living/new_owner, new_healing_on_tick, is_inhumen = FALSE)
+	healing_on_tick = new_healing_on_tick
+	tech_healing_modifier = SSchimeric_tech.get_healing_multiplier()
+	return ..()
+
+/datum/status_effect/buff/burial/determination/on_apply()
+	SEND_SIGNAL(owner, COMSIG_LIVING_MIRACLE_HEAL_APPLY, healing_on_tick, src)
+	return TRUE
+
+/datum/status_effect/buff/burial/determination/tick()
+	var/list/wCount = owner.get_wounds()
+	if(!owner.construct)
+		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
+			owner.blood_volume = min(owner.blood_volume+healing_on_tick * 50, BLOOD_VOLUME_NORMAL)
+		if(wCount.len > 0)
+			owner.heal_wounds(healing_on_tick)
+			owner.update_damage_overlays()
+		owner.adjustBruteLoss(-healing_on_tick, 0)
+		owner.adjustFireLoss(-healing_on_tick, 0)
+		owner.adjustOxyLoss(-(healing_on_tick * 50), 0)
+		owner.adjustToxLoss(-(healing_on_tick * 50), 0)
+		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
+		owner.adjustCloneLoss(-healing_on_tick, 0)
+// Burial effect end
+
 /atom/movable/screen/alert/status_effect/buff/healing/campfire
 	name = "Warming Respite"
 	desc = "The warmth of a fire soothes my ails."
@@ -1361,7 +1394,7 @@
 	mob_effect_icon_state = "eff_riposte"
 	mob_effect_layer = MOB_EFFECT_LAYER_GUARD
 
-//We have a lot of signals as the ability is meant to be interrupted by or interact with a lot of mechanics. 
+//We have a lot of signals as the ability is meant to be interrupted by or interact with a lot of mechanics.
 /datum/status_effect/buff/clash/on_creation(mob/living/new_owner, ...)
 	//!Danger! Zone!
 	//These signals use OVERRIDES and can OVERLAP with anything else using them.
@@ -1398,7 +1431,7 @@
 	if(ishuman(target) && target.get_active_held_item() && !bad_guard)
 		var/mob/living/carbon/human/HM = target
 		var/obj/item/IM = target.get_active_held_item()
-		var/obj/item/IU 
+		var/obj/item/IU
 		if(user.used_intent.masteritem)
 			IU = user.used_intent.masteritem
 		HM.process_clash(user, IM, IU)

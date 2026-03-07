@@ -94,56 +94,54 @@
 				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without a brain, who would recieve it?."))
 				continue
 
+			to_chat(user, span_notice("I feel their soul finding peace..."))
+			SEND_SIGNAL(user, COMSIG_GRAVE_CONSECRATED, hole)
 			var/submission = ask_burial(corpse, user)
 
 			if(submission)
 				(pacify_coffin(hole, user))
-				to_chat(user, span_notice("I feel their soul finding peace..."))
-				SEND_SIGNAL(user, COMSIG_GRAVE_CONSECRATED, hole)
-				record_round_statistic(STATS_GRAVES_CONSECRATED)
-				break
 
 			else//fakes burial so you can kill bill your way out
-				to_chat(user, span_notice("I feel their soul finding peace..."))
 				record_round_statistic(STATS_BURIALS_REJECTED)
 
-				break
-
 /proc/ask_burial(mob/living/carbon/human/corpse, mob/user)
+
 	if(!corpse)
 		return FALSE
 
+	if(!corpse.mind || !corpse.mind.key)
+		return TRUE
+
+	var/mob/target = corpse
+
 	var/mob/dead/observer/ghost = corpse.get_ghost()
+	if(ghost)
+		target = ghost
 
 	var/choice = tgui_alert(
-		,ghost,
+		target,
 		"Do you submit to burial and pass on?\nYou have 60 seconds to decide.",
 		"CHOICE OF LYFE",
-		"LIVE",
-		"REST",
+		list("LIVE","REST"),
 		60 SECONDS
 	)
 
-	if(!choice && !ghost)
+	if(!choice)
 		choice = "REST"
-
-	if(!corpse.mind?.key || !corpse.mind.key)
-		return TRUE
 
 	if(choice == "REST")
 		return TRUE
 
 	if(choice == "LIVE")
 
-		corpse.fake_burialrited = TRUE
+
+		//removes cuffs
+		corpse.uncuff()
 
     	// Restore heart if missing
 		if(!corpse.getorgan(/obj/item/organ/heart))
 			var/obj/item/organ/heart/H = new /obj/item/organ/heart()
 			H.Insert(corpse)
-
-		corpse.fake_burialrited = TRUE
-		corpse.adjustOxyLoss(-corpse.getOxyLoss())
 
 		//removes zombie status
 		corpse.mind.remove_antag_datum(/datum/antagonist/zombie)
@@ -151,39 +149,30 @@
 
 		// Apply revive penalties and healing
 		corpse.apply_status_effect(/datum/status_effect/debuff/revived)
-		corpse.apply_status_effect(/datum/status_effect/buff/healing, 30)
+		corpse.apply_status_effect(/datum/status_effect/buff/burial/determination, 0.1)
 
 		var/list/wounds = corpse.get_wounds()
 		//Prevents chain death
 		if(wounds && wounds.len)
 			corpse.heal_wounds(
-			0.3,
+			0,
 			list(
 				/datum/wound/dismemberment,
 				/datum/wound/slash,
 				/datum/wound/artery,
-				/datum/wound/puncture
-			)
-		)
-
-		// Heal skull / neck fractures if paralyzed
-		if(HAS_TRAIT(corpse, TRAIT_PARALYSIS))
-			corpse.get_wounds()
-			if(wounds.len > 0)
-				corpse.heal_wounds(
-				0.3,
-				list(
-					/datum/wound/fracture/head,
-					/datum/wound/fracture/head/brain,
-					/datum/wound/fracture/neck
+				/datum/wound/puncture,
+				/datum/wound/fracture/head,
+				/datum/wound/fracture/head/brain,
+				/datum/wound/fracture/neck
 				)
 			)
-			corpse.revive(full_heal = FALSE)
-			corpse.grab_ghost(force = TRUE)
-			corpse.update_body()
-			to_chat(corpse,span_userdanger("Through sheer will you find a surge of strength, clawing your way back from death.")
+
+		corpse.revive(full_heal = FALSE)
+		corpse.grab_ghost(force = TRUE)
+		corpse.update_body()
+		to_chat(corpse,span_userdanger("Through sheer will you find a surge of strength, clawing your way back from death.")
 							)
 
-			return FALSE
+		return FALSE
 
 
