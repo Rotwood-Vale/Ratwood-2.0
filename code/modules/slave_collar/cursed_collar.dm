@@ -11,6 +11,7 @@
 	slot_flags = ITEM_SLOT_NECK
 	body_parts_covered = NECK
 	resistance_flags = INDESTRUCTIBLE
+	leashable = TRUE
 	var/mob/living/carbon/human/victim = null
 	var/datum/mind/collar_master = null
 	var/silenced = FALSE
@@ -40,7 +41,7 @@
 		surrender_mod = 0.5
 
 	applying = TRUE
-	if(do_mob(user, C, 50 * surrender_mod))
+	if(do_mob(user, C, 10 SECONDS * surrender_mod))
 		playsound(loc, 'sound/foley/equip/equip_armor_plate.ogg', 30, TRUE, -2)
 
 		// Get or create collar master datum first
