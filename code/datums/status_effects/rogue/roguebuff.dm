@@ -1394,7 +1394,7 @@
 	mob_effect_icon_state = "eff_riposte"
 	mob_effect_layer = MOB_EFFECT_LAYER_GUARD
 
-//We have a lot of signals as the ability is meant to be interrupted by or interact with a lot of mechanics.
+//We have a lot of signals as the ability is meant to be interrupted by or interact with a lot of mechanics. 
 /datum/status_effect/buff/clash/on_creation(mob/living/new_owner, ...)
 	//!Danger! Zone!
 	//These signals use OVERRIDES and can OVERLAP with anything else using them.
@@ -1431,7 +1431,7 @@
 	if(ishuman(target) && target.get_active_held_item() && !bad_guard)
 		var/mob/living/carbon/human/HM = target
 		var/obj/item/IM = target.get_active_held_item()
-		var/obj/item/IU
+		var/obj/item/IU 
 		if(user.used_intent.masteritem)
 			IU = user.used_intent.masteritem
 		HM.process_clash(user, IM, IU)
