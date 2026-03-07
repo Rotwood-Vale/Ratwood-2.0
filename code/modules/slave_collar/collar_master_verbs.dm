@@ -21,6 +21,13 @@
 		return
 
 	CM.temp_selected_pets = list(valid_pets[selected])
+	var/nsfw_allowed = TRUE
+	for(var/mob/living/carbon/human/pet in CM.temp_selected_pets)
+		var/obj/item/clothing/neck/roguetown/cursed_collar/collar = pet.get_item_by_slot(SLOT_NECK)
+		if(istype(collar))
+			if(!collar.sex_actions_allowed)
+				nsfw_allowed = FALSE
+				break
 
 	var/list/options = list(
 		"Select pets" = /mob/proc/collar_master_select_pets,
@@ -40,7 +47,20 @@
 		"Free Pet" = /mob/proc/collar_master_release_pet,
 	)
 
-	var/choice = input(src, "Choose a command:", "Collar Control") as null|anything in options
+	var/list/options_sfw = list(
+		"Select pets" = /mob/proc/collar_master_select_pets,
+		"Listen to Pets" = /mob/proc/collar_master_listen,
+		"Shock Pets" = /mob/proc/collar_master_shock,
+		"Send Message" = /mob/proc/collar_master_send_message,
+		"Force Surrender" = /mob/proc/collar_master_force_surrender,
+		"Toggle Pet Speech" = /mob/proc/collar_master_toggle_speech,
+		"Force Action" = /mob/proc/collar_master_force_action,
+		"Toggle Pet Hallucinations" = /mob/proc/collar_master_toggle_hallucinate,
+		"Impose Will" = /mob/proc/collar_master_illusion,
+		"Free Pet" = /mob/proc/collar_master_release_pet,
+	)
+
+	var/choice = input(src, "Choose a command:", "Collar Control") as null|anything in nsfw_allowed ? options : options_sfw
 	if(!choice || !CM || !length(CM.temp_selected_pets))
 		return
 

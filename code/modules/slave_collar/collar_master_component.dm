@@ -24,6 +24,7 @@ GLOBAL_LIST_EMPTY(collar_masters)
 /datum/component/collar_master
 	var/datum/mind/mindparent
 	var/list/my_pets = list()
+	var/list/submissive_pets = list()
 	var/list/temp_selected_pets = list()
 	var/listening = FALSE
 	var/deny_orgasm = FALSE
@@ -109,16 +110,16 @@ GLOBAL_LIST_EMPTY(collar_masters)
 		return
 
 	// Prevent self-collaring
-/*	if(pet == collar.collar_master)
+	if(pet == collar.collar_master)
 		to_chat(pet, span_warning("The collar refuses to clasp shut."))
 		pet.dropItemToGround(collar, force = TRUE)
 		return FALSE
-*/
-	if(alert(pet, "Submit to the collar's control?", "Cursed Collar", "Yes!", "No") != "Yes!")
-		pet.visible_message(span_warning("[pet] resists the collar's control."))
-		to_chat(pet, span_warning("Your defiant will prevents the collar from binding to you!"))
-		pet.dropItemToGround(collar, force = TRUE)
-		return FALSE
+
+	if(alert(pet, "Submit to the collar's control completely? (LEWD ACTS ENABLED)", "Cursed Collar", "No", "Yes!") != "Yes!")
+		pet.visible_message(span_warning("[pet]'s will resists the collar's control... but only slightly."))
+		collar.sex_actions_allowed = FALSE
+	else
+		collar.sex_actions_allowed = TRUE
 
 	collar.allow_self_unequip = FALSE
 

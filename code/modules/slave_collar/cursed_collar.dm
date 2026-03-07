@@ -15,6 +15,7 @@
 	var/datum/mind/collar_master = null
 	var/silenced = FALSE
 	var/applying = FALSE
+	var/sex_actions_allowed = FALSE
 
 /obj/item/clothing/neck/roguetown/cursed_collar/attack(mob/living/carbon/human/C, mob/living/user)
 	if(!istype(C))
@@ -70,7 +71,6 @@
 	collar_master = user.mind
 	to_chat(user, span_userdanger("You feel the collar being imprinted with your will."))
 
-
 /obj/item/clothing/neck/roguetown/cursed_collar/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot != SLOT_NECK)
@@ -87,12 +87,6 @@
 
 	if(!user.mind)
 		user.visible_message(span_warning("\The [src] fails to lock around [user]'s neck."))
-		user.dropItemToGround(src, force = TRUE)
-		return
-
-	if(alert(user, "Submit to the collar's control?", "Cursed Collar", "Yes!", "No") != "Yes!")
-		user.visible_message(span_warning("[user] resists the collar's control."))
-		to_chat(user, span_warning("Your defiant will prevents the collar from binding to you!"))
 		user.dropItemToGround(src, force = TRUE)
 		return
 
