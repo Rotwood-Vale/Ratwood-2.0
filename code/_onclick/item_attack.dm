@@ -92,6 +92,7 @@
 	var/pegleg = 0			//Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
 	var/construct = 0
 	var/burialrited = FALSE
+	var/fake_burialrited = FALSE
 
 #define ATTACK_OVERRIDE_NODEFENSE 2
 

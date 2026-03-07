@@ -15,50 +15,75 @@
 	invocation_type = "whisper" //can be none, whisper, emote and shout
 	miracle = TRUE
 	devotion_cost = 5 //very weak spell, you can just make a grave marker with a literal stick
+	var/submission = TRUE
 
 /obj/effect/proc_holder/spell/targeted/burialrite/cast(list/targets, mob/user = usr)
 	. = ..()
-	submission = TRUE
-	var/mob/living/carbon/human/M = null
-	INVOKE_ASYNC(src, PROC_REF(giveup), M)
 	var/success = FALSE
-	
+
+	//Coffins
 	for(var/obj/structure/closet/crate/coffin/coffin in view(1))
-	if(!submission) //fakes burial so you can kill bill your way out
-		success = !pacify_coffin(coffin, user)
-			if(success)
+		for(var/mob/living/carbon/human/corpse in coffin)
+
+			if(corpse.stat != DEAD)
+				continue
+
+			 //Check essential body parts before proceeding
+			if(!corpse.get_bodypart(BODY_ZONE_HEAD))
+				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without its head."))
+				continue
+
+			if(!corpse.getorgan(/obj/item/organ/brain))
+				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without a brain."))
+				continue
+
+			var/submission = ask_burial(corpse)
+
+			if(submission) //fakes burial so you can kill bill your way out
+				pacify_coffin(coffin, user)
 				user.visible_message("[user] consecrates [coffin]!", "My funeral rites have been performed on [coffin]!")
-				submission = TRUE
-	
-	for(var/obj/structure/closet/dirthole/hole in view(1))
-	if(!submission) //fakes burial so you can kill bill your way out
-		success = !pacify_coffin(hole, user)
-		if(success)
-			user.visible_message("[user] consecrates [hole]!", "My funeral rites have been performed on [hole]!")
-			submission = TRUE
+				record_round_statistic(STATS_GRAVES_CONSECRATED)
+				success = TRUE
 
-	for(var/obj/structure/closet/crate/coffin/coffin in view(1))
-	submission = TRUE
-	if(submission)
-		success = pacify_coffin(coffin, user)
-			if(success)
-			user.visible_message("[user] consecrates [coffin]!", "My funeral rites have been performed on [coffin]!")
-			submission = FALSE
+			else //fakes burial so you can kill bill your way out
+				user.visible_message("[user] consecrates [coffin]!", "My funeral rites have been performed on [coffin]!")
+				record_round_statistic(STATS_BURIALS_REJECTED)
 
-	for(var/obj/structure/closet/dirthole/hole in view(1))
-	if(submission)
-		success = pacify_coffin(hole, user)
-		if(success)
-			user.visible_message("[user] consecrates [hole]!", "My funeral rites have been performed on [hole]!")
-			record_round_statistic(STATS_GRAVES_CONSECRATED)
-			submission = TRUE
-	
-	to_chat(user, span_red("I failed to perform the rites."))
+			break
 
-/obj/structure/closet/dirthole/proc/giveup(mob/living/corpse)
-	if(alert(M, "Do you submit to burial and pass on? You have 15 seconds to decide.", "CHOICE OF LYFE", "LIVE", "REST") == "REST")
-		if(M.Adjacent(src))	//No buffering this for later
-			submission = FALSE
+	//Graves
+	for(var/obj/structure/closet/dirthole/H in view(1,user))
+		for(var/mob/living/carbon/human/corpse in H)
+
+			if(corpse.stat != DEAD)
+				continue
+
+			 //Check essential body parts before proceeding
+			if(!corpse.get_bodypart(BODY_ZONE_HEAD))
+				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without its head."))
+				continue
+
+			if(!corpse.getorgan(/obj/item/organ/brain))
+				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without a brain."))
+				continue
+
+			var/submission = ask_burial(corpse)
+
+			if(submission)
+				pacify_coffin(H, user)
+				user.visible_message("[user] consecrates [H]!", "My funeral rites have been performed on [H]!")
+				record_round_statistic(STATS_GRAVES_CONSECRATED)
+				success = TRUE
+
+			else //fakes burial so you can kill bill your way out
+				user.visible_message("[user] consecrates [H]!", "My funeral rites have been performed on [H]!")
+				record_round_statistic(STATS_BURIALS_REJECTED)
+
+			break
+
+
+	if(!success)
+		to_chat(user, span_red("I failed to perform the rites."))
 
 /obj/effect/proc_holder/spell/targeted/churn
 	name = "Churn Undead"

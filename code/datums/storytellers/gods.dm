@@ -242,13 +242,16 @@
 		"Set 2" = list(
 			STATS_GRAVES_CONSECRATED = list("name" = "Graves consecrated:", "points" = 3.75, "capacity" = 80),
 		),
-		"Set 3" = list(
-			STATS_GRAVES_ROBBED = list("name" = "Graves robbed:", "points" = -3.75, "capacity" = -40),
+		"set 3" = list(
+			STATS_BURIALS_REJECTED = list("name" = "Burials rejected:", "points" = 3.75, "capacity" = 80),
 		),
 		"Set 4" = list(
-			STATS_DEADITES_KILLED = list("name" = "Deadites killed:", "points" = 6.25, "capacity" = 90),
+			STATS_GRAVES_ROBBED = list("name" = "Graves robbed:", "points" = -3.75, "capacity" = -40),
 		),
 		"Set 5" = list(
+			STATS_DEADITES_KILLED = list("name" = "Deadites killed:", "points" = 6.25, "capacity" = 90),
+		),
+		"Set 6" = list(
 			STATS_VAMPIRES_KILLED = list("name" = "Vampires killed:", "points" = 12.5, "capacity" = 70),
 			STATS_SKELETONS_KILLED = list("name" = "Skeletons killed:", "points" = 5, "capacity" = 50),
 		)

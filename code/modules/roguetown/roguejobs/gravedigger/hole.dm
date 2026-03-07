@@ -8,6 +8,7 @@
 	var/mutable_appearance/abovemob
 	var/turf/open/floor/rogue/dirt/mastert
 	var/faildirt = 0
+	var/submission = TRUE
 	mob_storage_capacity = 3
 	allow_dense = TRUE
 	opened = TRUE
@@ -105,43 +106,47 @@
 
 /obj/structure/closet/dirthole/attack_hand(mob/living/user)
 	. = ..()
-	submission = TRUE
-	var/mob/living/carbon/human/M = null
-	INVOKE_ASYNC(src, PROC_REF(giveup), M)
+
 	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 		var/atom/movable/coffin = src
-		for(var/mob/living/corpse in coffin)
-			if(!corpse.stat == DEAD)
+
+		for(var/mob/living/carbon/human/corpse in coffin)
+
+			if(corpse.stat != DEAD && !corpse.fake_burialrited)
 				to_chat(user, "That one hasn't truly passed on yet?!")
 				return
-			if(corpse.burialrited)
+
+			if(corpse.burialrited && corpse.fake_burialrited)
 				to_chat(user, "This grave has already been consecrated...")
 				return
-			else
 
-	to_chat(user, "I begin my burial rites...")
-		if(do_after(user, 50))
-			user.say("#Rest thy soul for all aeon within Necra's embrace!")
-			to_chat(user, "I have extracted a strand of luxthread, proof of passing.")
-			playsound(user, 'sound/misc/bellold.ogg', 20)
-			new /obj/item/soulthread((get_turf(user)))
-			corpse.burialrited = TRUE
-			record_round_statistic(STATS_GRAVES_CONSECRATED)
+			 //Check essential body parts before proceeding
+			if(!corpse.get_bodypart(BODY_ZONE_HEAD))
+				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without its head."))
+				return
 
-	if(!submission) //fakes burial so you can kill bill your way out
-		to_chat(user, "I begin my burial rites...")
+			if(!corpse.getorgan(/obj/item/organ/brain))
+				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without a brain."))
+				return
+
+			var/submission = ask_burial(corpse)
+
+			to_chat(user, "I begin my burial rites...")
+
 			if(do_after(user, 50))
 				user.say("#Rest thy soul for all aeon within Necra's embrace!")
 				to_chat(user, "I have extracted a strand of luxthread, proof of passing.")
 				playsound(user, 'sound/misc/bellold.ogg', 20)
-				new /obj/item/soulthread((get_turf(user)))
-				corpse.burialrited = FALSE
-				submission = TRUE
 
-/obj/structure/closet/dirthole/proc/giveup(mob/living/corpse)
-	if(alert(M, "Do you submit to burial and pass on? You have 15 seconds to decide.", "CHOICE OF LYFE", "LIVE", "REST") == "REST")
-		if(M.Adjacent(src))	//No buffering this for later
-			submission = FALSE
+				if(submission)
+					new /obj/item/soulthread((get_turf(user)))
+					corpse.burialrited = TRUE
+					record_round_statistic(STATS_GRAVES_CONSECRATED)
+
+				else //fakes burial so you can kill bill your way out
+					new /obj/item/soulthread((get_turf(user)))
+					corpse.fake_burialrited = TRUE
+					record_round_statistic(STATS_BURIALS_REJECTED)
 
 /obj/structure/closet/dirthole/attackby(obj/item/attacking_item, mob/user, params)
 	if(!istype(attacking_item, /obj/item/rogueweapon/shovel))

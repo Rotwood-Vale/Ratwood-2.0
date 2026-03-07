@@ -103,6 +103,7 @@
 //Necra
 #define STATS_SKELETONS_KILLED "skeletons_killed"
 #define STATS_GRAVES_CONSECRATED "graves_consecrated"
+#define STATS_BURIALS_REJECTED "burials_rejected"
 #define STATS_GRAVES_ROBBED "graves_robbed"
 #define STATS_DEADITES_KILLED "deadites_killed"
 #define STATS_VAMPIRES_KILLED "vampires_killed"

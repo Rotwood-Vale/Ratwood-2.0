@@ -9,12 +9,12 @@
 	if(owner?.current)
 		if(owner.current.job == "Acolyte" || istype(owner.current.mind?.assigned_role, /datum/job/roguetown/monk))
 			required_burials = 2
-		RegisterSignal(owner.current, COMSIG_GRAVE_CONSECRATED, PROC_REF(on_grave_consecrated))
+		RegisterSignal(owner.current, COMSIG_GRAVE_CONSECRATED, PROC_REF(on_grave_consecrated), COMSIG_BURIAL_REJECTED, PROC_REF(on_grave_consecrated))
 	update_explanation_text()
 
 /datum/objective/proper_burial/Destroy()
 	if(owner?.current)
-		UnregisterSignal(owner.current, COMSIG_GRAVE_CONSECRATED)
+		UnregisterSignal(owner.current, COMSIG_GRAVE_CONSECRATED, COMSIG_BURIAL_REJECTED)
 	return ..()
 
 /datum/objective/proper_burial/proc/on_grave_consecrated(datum/source, obj/structure/closet/dirthole/hole)
@@ -34,7 +34,7 @@
 	completed = TRUE
 	adjust_storyteller_influence("Necra", 15)
 	escalate_objective()
-	UnregisterSignal(owner.current, COMSIG_GRAVE_CONSECRATED)
+	UnregisterSignal(owner.current, COMSIG_GRAVE_CONSECRATED, COMSIG_BURIAL_REJECTED)
 
 /datum/objective/proper_burial/update_explanation_text()
 	explanation_text = "Consecrate [required_burials] grave\s by building a grave marker or using funeral rites to earn Necra's approval."
