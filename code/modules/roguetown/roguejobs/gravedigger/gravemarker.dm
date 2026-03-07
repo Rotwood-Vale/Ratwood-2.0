@@ -109,7 +109,7 @@
 
 				break
 
-proc/ask_burial(mob/living/carbon/human/corpse, mob/user)
+/proc/ask_burial(mob/living/carbon/human/corpse, mob/user)
 	if(!corpse)
 		return FALSE
 
