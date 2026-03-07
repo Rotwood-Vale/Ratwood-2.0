@@ -28,7 +28,7 @@
 			if(corpse.stat != DEAD)
 				continue
 
-			 //Check essential body parts before proceeding
+			//Check essential body parts before proceeding
 			if(!corpse.get_bodypart(BODY_ZONE_HEAD))
 				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without its head."))
 				continue
@@ -55,7 +55,7 @@
 			if(corpse.stat != DEAD)
 				continue
 
-			 //Check essential body parts before proceeding
+			//Check essential body parts before proceeding
 			if(!corpse.get_bodypart(BODY_ZONE_HEAD))
 				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without its head."))
 				continue

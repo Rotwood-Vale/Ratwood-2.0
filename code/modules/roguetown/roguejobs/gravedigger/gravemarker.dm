@@ -167,11 +167,10 @@
 				)
 			)
 
-		corpse.revive(full_heal = FALSE)
 		corpse.grab_ghost(force = TRUE)
+		corpse.revive(full_heal = FALSE)
 		corpse.update_body()
-		to_chat(corpse,span_userdanger("Through sheer will you find a surge of strength, clawing your way back from death.")
-						)
+		to_chat(corpse,span_userdanger("Through sheer will you find a surge of strength, clawing your way back from death."))
 
 		return FALSE
 
