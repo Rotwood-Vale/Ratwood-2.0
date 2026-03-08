@@ -211,3 +211,104 @@
 	icon_state = "underworldportal"
 
 /obj/structure/fluff/traveltile/eventarea
+
+/obj/structure/fluff/freehold_ladder_portal
+	name = "hidden ladder"
+	desc = "A hidden route known only to the Freeholders."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "ladder11" 
+	density = FALSE
+	anchored = TRUE
+	layer = ABOVE_OPEN_TURF_LAYER
+	max_integrity = 0
+
+	var/portal_id = null
+	var/portal_goesto = null
+	var/travel_delay = 10 SECONDS
+
+/obj/structure/fluff/freehold_ladder_portal/Initialize(mapload)
+	. = ..()
+
+/obj/structure/fluff/freehold_ladder_portal/proc/find_destination()
+	if(!portal_goesto)
+		return null
+
+	for(var/obj/structure/fluff/freehold_ladder_portal/P in world)
+		if(P == src)
+			continue
+		if(P.portal_id != portal_goesto)
+			continue
+		return P
+
+	return null
+
+/obj/structure/fluff/freehold_ladder_portal/attack_hand(mob/user)
+	. = ..()
+
+	if(!isliving(user))
+		return .
+
+	var/mob/living/L = user
+
+	if(!HAS_TRAIT(L, TRAIT_FREEHOLDER))
+		to_chat(L, span_warning("I do not know the way through this hidden passage."))
+		return .
+
+	var/obj/structure/fluff/freehold_ladder_portal/target_portal = find_destination()
+	if(!target_portal)
+		to_chat(L, span_warning("This ladder leads nowhere."))
+		return .
+
+	to_chat(L, span_notice("I begin moving through the hidden passage..."))
+
+	if(!do_after(L, travel_delay, needhand = FALSE, target = src))
+		return .
+
+	if(QDELETED(src) || QDELETED(target_portal) || QDELETED(L))
+		return .
+
+	if(!HAS_TRAIT(L, TRAIT_FREEHOLDER))
+		to_chat(L, span_warning("I lose my way."))
+		return .
+
+	playsound(src, 'sound/misc/portal_enter.ogg', 100, TRUE)
+	L.forceMove(get_turf(target_portal))
+	playsound(target_portal, 'sound/misc/portal_enter.ogg', 100, TRUE)
+	to_chat(L, span_notice("I arrive at the other end of the passage."))
+	return .
+
+/obj/structure/fluff/freehold_ladder_portal/one
+	name = "hidden ladder"
+	portal_id = "1"
+	portal_goesto = "4"
+	travel_delay = 10 SECONDS
+
+/obj/structure/fluff/freehold_ladder_portal/two
+	name = "hidden ladder"
+	portal_id = "2"
+	portal_goesto = "5"
+	travel_delay = 10 SECONDS
+
+/obj/structure/fluff/freehold_ladder_portal/three
+	name = "hidden ladder"
+	portal_id = "3"
+	portal_goesto = "6"
+	travel_delay = 10 SECONDS
+
+/obj/structure/fluff/freehold_ladder_portal/four
+	name = "hidden ladder"
+	portal_id = "4"
+	portal_goesto = "1"
+	travel_delay = 1 MINUTES
+
+/obj/structure/fluff/freehold_ladder_portal/five
+	name = "hidden ladder"
+	portal_id = "5"
+	portal_goesto = "2"
+	travel_delay = 1 MINUTES
+
+/obj/structure/fluff/freehold_ladder_portal/six
+	name = "hidden ladder"
+	portal_id = "6"
+	portal_goesto = "3"
+	travel_delay = 1 MINUTES
