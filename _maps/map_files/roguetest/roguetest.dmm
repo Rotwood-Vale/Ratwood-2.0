@@ -712,7 +712,7 @@
 	dir = 1;
 	icon_state = "borderfall"
 	},
-/obj/item/roguekey/merchant,
+/obj/item/key/merchant,
 /turf/open/floor/rogue/tile/masonic/single,
 /area/rogue/indoors)
 "xG" = (
@@ -767,7 +767,7 @@
 "zf" = (
 /obj/structure/roguethrone,
 /obj/structure/roguemachine/titan,
-/obj/item/roguekey/lord,
+/obj/item/key/lord,
 /obj/effect/landmark/start,
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors)

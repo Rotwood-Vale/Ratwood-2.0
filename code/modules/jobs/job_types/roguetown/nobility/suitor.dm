@@ -55,7 +55,7 @@
 /datum/outfit/job/roguetown/suitor/envoy/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(should_wear_femme_clothes(H))
-		neck = /obj/item/roguekey/manor
+		neck = /obj/item/key/manor
 		beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 		belt = /obj/item/storage/belt/rogue/leather/cloth/lady
 		head = /obj/item/clothing/head/roguetown/nyle/consortcrown
@@ -74,7 +74,7 @@
 		backl = /obj/item/rogue/instrument/lute
 		shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 		belt = /obj/item/storage/belt/rogue/leather
-		neck = /obj/item/roguekey/manor
+		neck = /obj/item/key/manor
 		beltl = /obj/item/flashlight/flare/torch/lantern
 		beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 		backr = /obj/item/storage/backpack/rogue/satchel
@@ -118,7 +118,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	belt = /obj/item/storage/belt/rogue/leather/black
-	neck = /obj/item/roguekey/manor
+	neck = /obj/item/key/manor
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -172,7 +172,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	belt = /obj/item/storage/belt/rogue/leather
-	neck = /obj/item/roguekey/manor
+	neck = /obj/item/key/manor
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	beltr = /obj/item/rogueweapon/sword/sabre/dec
 	backr = /obj/item/storage/backpack/rogue/satchel

@@ -63,7 +63,7 @@
 	wrists = /obj/item/clothing/neck/roguetown/psicross/noc
 
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary = 1,
+		/obj/item/key/mercenary = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/spellbook_unfinished/pre_arcyne = 1,

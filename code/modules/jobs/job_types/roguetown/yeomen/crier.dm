@@ -77,7 +77,7 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
-	beltl = /obj/item/roguekey/crier
+	beltl = /obj/item/key/crier
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	id = /obj/item/scomstone
 	backpack_contents = list(

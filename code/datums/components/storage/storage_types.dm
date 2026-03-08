@@ -63,7 +63,7 @@
 
 /datum/component/storage/concrete/roguetown/keyring/New(datum/P, ...)
 	. = ..()
-	can_hold = typecacheof(list(/obj/item/roguekey))
+	can_hold = typecacheof(list(/obj/item/key))
 
 /datum/component/storage/concrete/roguetown/belt/knife_belt
 	screen_max_rows = 3		//Lets you hold a regular knife + keys basically.

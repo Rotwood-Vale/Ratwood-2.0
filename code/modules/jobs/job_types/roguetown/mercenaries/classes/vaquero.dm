@@ -59,7 +59,7 @@
 					/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
 					/obj/item/lockpick = 1,
 					/obj/item/flashlight/flare/torch = 1,
-					/obj/item/roguekey/mercenary = 1,
+					/obj/item/key/mercenary = 1,
 					/obj/item/rogueweapon/scabbard/sheath = 1
 					)
 	var/datum/inspiration/I = new /datum/inspiration(H)

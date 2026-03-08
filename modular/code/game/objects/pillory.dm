@@ -57,8 +57,8 @@
 	if(!latched)
 		to_chat(user, span_warning("It's not latched shut!"))
 		return
-	if(istype(P, /obj/item/roguekey))
-		var/obj/item/roguekey/K = P
+	if(istype(P, /obj/item/key))
+		var/obj/item/key/K = P
 		if(K.lockid in lockid)
 			togglelock(user)
 			return
@@ -68,7 +68,7 @@
 			return
 	if(istype(P, /obj/item/storage/keyring))
 		var/obj/item/storage/keyring/K = P
-		for(var/obj/item/roguekey/KE in K.keys)
+		for(var/obj/item/key/KE in K.keys)
 			if(KE.lockid in lockid)
 				togglelock(user)
 				return

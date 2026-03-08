@@ -2720,9 +2720,9 @@
 	icon_state = "borderfall"
 	},
 /obj/structure/closet/crate/drawer,
-/obj/item/roguekey/warden,
-/obj/item/roguekey/warden,
-/obj/item/roguekey/warden,
+/obj/item/key/warden,
+/obj/item/key/warden,
+/obj/item/key/warden,
 /obj/machinery/light/rogue/torchholder/l,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter/woods)

@@ -129,7 +129,7 @@
 
 /obj/structure/broadcast_horn/paid/attackby(obj/item/P, mob/user, params)
 	// Handle locking/unlocking with crier key
-	if(istype(P, /obj/item/roguekey/crier))
+	if(istype(P, /obj/item/key/crier))
 		is_locked = !is_locked
 		listening = FALSE
 		playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)

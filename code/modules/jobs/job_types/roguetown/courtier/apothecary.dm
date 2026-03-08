@@ -61,7 +61,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
-	beltr = /obj/item/roguekey/physician
+	beltr = /obj/item/key/physician
 	id = /obj/item/scomstone/bad
 	r_hand = /obj/item/rogueweapon/woodstaff/
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
@@ -71,7 +71,7 @@
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/clothing/mask/rogue/physician = 1,
 		/obj/item/storage/keyring = 1,
-		/obj/item/roguekey/keeper = 1
+		/obj/item/key/keeper = 1
 	)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)

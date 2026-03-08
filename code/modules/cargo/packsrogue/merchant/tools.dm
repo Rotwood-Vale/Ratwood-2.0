@@ -186,7 +186,7 @@
 	name = "Spare Shopkey"
 	cost = 10
 	not_in_public = TRUE
-	contains = list(/obj/item/roguekey/shop)
+	contains = list(/obj/item/key/shop)
 
 /datum/supply_pack/rogue/tools/alch_bottle
 	name = "Alchemy Bottle"

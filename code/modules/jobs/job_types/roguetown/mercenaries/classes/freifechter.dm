@@ -54,7 +54,7 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary,
+		/obj/item/key/mercenary,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
 		/obj/item/rogueweapon/scabbard/sheath
 		)	
@@ -111,7 +111,7 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary,
+		/obj/item/key/mercenary,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 	)
 	H.merctype = 6

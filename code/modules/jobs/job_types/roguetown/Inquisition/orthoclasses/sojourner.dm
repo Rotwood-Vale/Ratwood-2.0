@@ -83,7 +83,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/mid
 	cloak = /obj/item/clothing/cloak/psydontabard/alt
-	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
+	backpack_contents = list(/obj/item/key/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/ortho = 1,
 	/obj/item/roguegem/amethyst/naledi = 1,
 	/obj/item/spellbook_unfinished/pre_arcyne = 1)

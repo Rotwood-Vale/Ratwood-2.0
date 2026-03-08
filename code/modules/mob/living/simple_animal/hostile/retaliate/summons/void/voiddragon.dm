@@ -662,9 +662,9 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	health = 8000
 	maxHealth = 8000
 	enraged = TRUE
-	loot = list(/obj/item/roguekey/mage/dragon)
+	loot = list(/obj/item/key/mage/dragon)
 
-/obj/item/roguekey/mage/dragon
+/obj/item/key/mage/dragon
 	name = "void key"
 	desc = "A shimmering, awful looking key. Once embedded in a dragon's scales, now no more than a trophy."
 	icon_state = "voidkey"//Temp. I hate temp sprites!!!!
@@ -681,7 +681,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 
 /obj/effect/oneway/dragon/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	if(istype(W, /obj/item/roguekey/mage/dragon))
+	if(istype(W, /obj/item/key/mage/dragon))
 		visible_message(span_boldannounce("The magical barrier disperses!"))
 		qdel(src)
 

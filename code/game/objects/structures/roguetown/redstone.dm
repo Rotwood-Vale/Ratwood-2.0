@@ -401,7 +401,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 
 /obj/structure/englauncher/attack_right(mob/user)
 	var/obj/item = user.get_active_held_item()
-	if(istype(item, /obj/item/roguekey) || istype(item, /obj/item/storage/keyring))
+	if(istype(item, /obj/item/key) || istype(item, /obj/item/storage/keyring))
 		if(locked)
 			to_chat(user, span_warning("It won't turn this way. Try turning to the left."))
 			launcher_rattle()
@@ -457,7 +457,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 
 /obj/structure/englauncher/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_FAST)
-	if(istype(I, /obj/item/roguekey) || istype(I, /obj/item/storage/keyring))
+	if(istype(I, /obj/item/key) || istype(I, /obj/item/storage/keyring))
 		if(!locked)
 			to_chat(user, span_warning("It won't turn this way. Try turning to the right."))
 			playsound(src, rattlesound, 100)
@@ -557,7 +557,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		if(!R.contents.len)
 			return
 		var/list/keysy = shuffle(R.contents.Copy())
-		for(var/obj/item/roguekey/K in keysy)
+		for(var/obj/item/key/K in keysy)
 			if(user.cmode)
 				if(!do_after(user, 10, TRUE, src))
 					break
@@ -571,8 +571,8 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		launcher_rattle()
 		return
 	else
-		var/obj/item/roguekey/K = I
-		if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord)) //master key cares not for lockhashes
+		var/obj/item/key/K = I
+		if(K.lockhash == lockhash || istype(K, /obj/item/key/lord)) //master key cares not for lockhashes
 			lock_toggle(user)
 			return
 		else

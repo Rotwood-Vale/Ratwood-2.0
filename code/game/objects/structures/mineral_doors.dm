@@ -196,11 +196,11 @@
 	else
 		resident_key_amount = 1
 	for(var/i in 1 to resident_key_amount)
-		var/obj/item/roguekey/key
+		var/obj/item/key/key
 		if(resident_key_type)
 			key = new resident_key_type(get_turf(human))
 		else
-			key = new /obj/item/roguekey(get_turf(human))
+			key = new /obj/item/key(get_turf(human))
 		key.lockid = lockid
 		key.lockhash = lockhash
 		human.put_in_hands(key)
@@ -242,7 +242,7 @@
 				user.visible_message(span_warning("[user] smashes through [src]!"))
 			return
 		if(locked)
-			if(istype(user.get_active_held_item(), /obj/item/roguekey) || istype(user.get_active_held_item(), /obj/item/storage/keyring))
+			if(istype(user.get_active_held_item(), /obj/item/key) || istype(user.get_active_held_item(), /obj/item/storage/keyring))
 				src.attackby(user.get_active_held_item(), user, TRUE)
 				return
 			door_rattle()
@@ -357,7 +357,7 @@
 	update_icon()
 	isSwitchingStates = FALSE
 	if(autobump && src.Adjacent(last_bumper))
-		if(istype(last_bumper.get_active_held_item(), /obj/item/roguekey) || istype(last_bumper.get_active_held_item(), /obj/item/storage/keyring))
+		if(istype(last_bumper.get_active_held_item(), /obj/item/key) || istype(last_bumper.get_active_held_item(), /obj/item/storage/keyring))
 			src.attack_right(last_bumper)
 	last_bumper = null
 
@@ -387,7 +387,7 @@
 
 /obj/structure/mineral_door/attackby(obj/item/I, mob/user, autobump = FALSE)
 	user.changeNext_move(CLICK_CD_FAST)
-	if(istype(I, /obj/item/roguekey) || istype(I, /obj/item/storage/keyring))
+	if(istype(I, /obj/item/key) || istype(I, /obj/item/storage/keyring))
 		if(!locked)
 			to_chat(user, span_warning("It won't turn this way. Try turning to the right."))
 			door_rattle()
@@ -509,10 +509,10 @@
 
 	// Check hand first
 	var/obj/item/W = user.get_active_held_item()
-	if(W && (istype(W, /obj/item/roguekey) || istype(W, /obj/item/storage/keyring)))
-		if(istype(W, /obj/item/roguekey))
-			var/obj/item/roguekey/K = W
-			if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord))
+	if(W && (istype(W, /obj/item/key) || istype(W, /obj/item/storage/keyring)))
+		if(istype(W, /obj/item/key))
+			var/obj/item/key/K = W
+			if(K.lockhash == lockhash || istype(K, /obj/item/key/lord))
 				return W
 		if(istype(W, /obj/item/storage/keyring))
 			if(keyring_has_matching_key(W))
@@ -531,9 +531,9 @@
 			if(!I) continue
 
 			// Check if the belt item itself is a key or keyring
-			if(istype(I, /obj/item/roguekey))
-				var/obj/item/roguekey/K = I
-				if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord))
+			if(istype(I, /obj/item/key))
+				var/obj/item/key/K = I
+				if(K.lockhash == lockhash || istype(K, /obj/item/key/lord))
 					return I
 			if(istype(I, /obj/item/storage/keyring))
 				if(keyring_has_matching_key(I))
@@ -542,9 +542,9 @@
 			// Check inside the belt item if it has contents (storage belts, etc.)
 			if(I.contents && I.contents.len)
 				for(var/obj/item/contained_item in I.contents)
-					if(istype(contained_item, /obj/item/roguekey))
-						var/obj/item/roguekey/K = contained_item
-						if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord))
+					if(istype(contained_item, /obj/item/key))
+						var/obj/item/key/K = contained_item
+						if(K.lockhash == lockhash || istype(K, /obj/item/key/lord))
 							return I // Return the belt item that contains the key
 					if(istype(contained_item, /obj/item/storage/keyring))
 						if(keyring_has_matching_key(contained_item))
@@ -558,8 +558,8 @@
 		return FALSE
 
 	for(var/obj/item/I in keyring.contents)
-		if(istype(I, /obj/item/roguekey))
-			var/obj/item/roguekey/K = I
+		if(istype(I, /obj/item/key))
+			var/obj/item/key/K = I
 			if(K.lockhash == lockhash)
 				return TRUE
 		if(istype(I, /obj/item/storage/keyring))
@@ -581,9 +581,9 @@
 	if(I.contents && I.contents.len && !istype(I, /obj/item/storage/keyring))
 		var/obj/item/found_key = null
 		for(var/obj/item/contained_item in I.contents)
-			if(istype(contained_item, /obj/item/roguekey))
-				var/obj/item/roguekey/K = contained_item
-				if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord))
+			if(istype(contained_item, /obj/item/key))
+				var/obj/item/key/K = contained_item
+				if(K.lockhash == lockhash || istype(K, /obj/item/key/lord))
 					found_key = contained_item
 					break
 			if(istype(contained_item, /obj/item/storage/keyring))
@@ -605,7 +605,7 @@
 		if(!R.contents.len)
 			return
 		var/list/keysy = shuffle(R.contents.Copy())
-		for(var/obj/item/roguekey/K in keysy)
+		for(var/obj/item/key/K in keysy)
 			if(user.cmode)
 				if(!do_after(user, 10, TRUE, src))
 					break
@@ -623,8 +623,8 @@
 		door_rattle()
 		return
 	else
-		var/obj/item/roguekey/K = I
-		if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord)) //master key cares not for lockhashes
+		var/obj/item/key/K = I
+		if(K.lockhash == lockhash || istype(K, /obj/item/key/lord)) //master key cares not for lockhashes
 			lock_toggle(user)
 			if(autobump)
 				src.Open()
@@ -965,11 +965,11 @@
 		return
 
 	var/obj/item = user.get_active_held_item()
-	var/obj/item/roguekey/found_key = null
+	var/obj/item/key/found_key = null
 	var/obj/item/storage/keyring/found_keyring = null
 
 	// Check held item first
-	if(istype(item, /obj/item/roguekey))
+	if(istype(item, /obj/item/key))
 		found_key = item
 	else if(istype(item, /obj/item/storage/keyring))
 		found_keyring = item
@@ -988,15 +988,15 @@
 					continue
 				checked_items += I
 
-				if(istype(I, /obj/item/roguekey))
-					var/obj/item/roguekey/K = I
-					if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord))
+				if(istype(I, /obj/item/key))
+					var/obj/item/key/K = I
+					if(K.lockhash == lockhash || istype(K, /obj/item/key/lord))
 						found_key = K
 						break
 				if(istype(I, /obj/item/storage/keyring))
 					var/obj/item/storage/keyring/R = I
-					for(var/obj/item/roguekey/K in R.contents)
-						if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord))
+					for(var/obj/item/key/K in R.contents)
+						if(K.lockhash == lockhash || istype(K, /obj/item/key/lord))
 							found_keyring = R
 							break
 					if(found_keyring)
@@ -1189,7 +1189,7 @@
 	locked = TRUE
 	keylock = TRUE
 	grant_resident_key = TRUE
-	resident_key_type = /obj/item/roguekey/townie
+	resident_key_type = /obj/item/key/townie
 	resident_role = /datum/job/roguetown/villager
 	lockid = null //Will be randomized
 
@@ -1234,7 +1234,7 @@
 	locked = TRUE
 	keylock = TRUE
 	grant_resident_key = TRUE
-	resident_key_type = /obj/item/roguekey/bath
+	resident_key_type = /obj/item/key/bath
 	resident_role = /datum/job/roguetown/nightmaiden
 	lockid = null //Will be randomized
 

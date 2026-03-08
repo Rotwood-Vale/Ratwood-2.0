@@ -263,7 +263,7 @@
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
 	if(user in src)
 		return
-	if(istype(W, /obj/item/roguekey) || istype(W, /obj/item/storage/keyring))
+	if(istype(W, /obj/item/key) || istype(W, /obj/item/storage/keyring))
 		trykeylock(W, user)
 		return
 	if(istype(W, /obj/item/lockpick))
@@ -300,7 +300,7 @@
 		if(!R.contents.len)
 			return
 		var/list/keysy = shuffle(R.contents.Copy())
-		for(var/obj/item/roguekey/K in keysy)
+		for(var/obj/item/key/K in keysy)
 			if(user.cmode)
 				if(!do_after(user, 10, TRUE, src))
 					break
@@ -312,8 +312,8 @@
 					playsound(src, 'sound/foley/doors/lockrattle.ogg', 100)
 		return
 	else
-		var/obj/item/roguekey/K = I
-		if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord))
+		var/obj/item/key/K = I
+		if(K.lockhash == lockhash || istype(K, /obj/item/key/lord))
 			togglelock(user)
 			return
 		else

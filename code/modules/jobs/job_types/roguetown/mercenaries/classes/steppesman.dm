@@ -34,7 +34,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary,
+		/obj/item/key/mercenary,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/rogueweapon/huntingknife/idagger/steel,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
@@ -101,7 +101,7 @@
 				l_hand = /obj/item/rogueweapon/stoneaxe/battle/steppesman
 				neck = /obj/item/clothing/neck/roguetown/chaincoif
 				backpack_contents = list(
-					/obj/item/roguekey/mercenary,
+					/obj/item/key/mercenary,
 					/obj/item/storage/belt/rogue/pouch/coins/poor,
 					/obj/item/rogueweapon/handsaw,
 					/obj/item/rogueweapon/chisel,
@@ -155,7 +155,7 @@
 				neck = /obj/item/clothing/neck/roguetown/chaincoif
 				//No whip, dagger, etc. Only the explosives and some basic stuff.
 				backpack_contents = list(
-					/obj/item/roguekey/mercenary,
+					/obj/item/key/mercenary,
 					/obj/item/storage/belt/rogue/pouch/coins/poor,
 					/obj/item/tntstick
 					)

@@ -31,7 +31,7 @@
 		reagents.flags |= NO_REACT
 		reagents.flags &= ~OPENCONTAINER
 	if(is_crafted) // spawn a key
-		var/obj/item/roguekey/key = new /obj/item/roguekey/physician(get_turf(src))
+		var/obj/item/key/key = new /obj/item/key/physician(get_turf(src))
 		key.lockid = "random_potion_peddler_id_[rand(1,9999999)]" // I know, not foolproof
 		key.name = "potion seller key"
 		keycontrol = key.lockid
@@ -88,8 +88,8 @@
 		update_icon()
 		playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 		return attack_hand(user)
-	if(istype(P, /obj/item/roguekey))
-		var/obj/item/roguekey/K = P
+	if(istype(P, /obj/item/key))
+		var/obj/item/key/K = P
 		if(K.lockid == keycontrol)
 			locked = !locked
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
@@ -103,7 +103,7 @@
 				return
 	if(istype(P, /obj/item/storage/keyring))
 		var/obj/item/storage/keyring/K = P
-		for(var/obj/item/roguekey/KE in K.keys)
+		for(var/obj/item/key/KE in K.keys)
 			if(KE.lockid == keycontrol)
 				locked = !locked
 				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)

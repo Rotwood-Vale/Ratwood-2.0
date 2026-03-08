@@ -253,7 +253,7 @@
 		shake_camera(M, 7, 1)
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/vo/mobs/skel/skeleton_death (5).ogg', 80, TRUE, TRUE)
-	new /obj/item/roguekey/mage/lich(T)
+	new /obj/item/key/mage/lich(T)
 	return ..()
 
 
@@ -414,7 +414,7 @@
 
 /obj/effect/oneway/lich/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	if(istype(W, /obj/item/roguekey/mage/lich))
+	if(istype(W, /obj/item/key/mage/lich))
 		visible_message(span_boldannounce("The magical barrier disperses!"))
 		qdel(src)
 
@@ -423,7 +423,7 @@
 	teleport_restricted = TRUE
 
 //Loot
-/obj/item/roguekey/mage/lich
+/obj/item/key/mage/lich
 	name = "archlich's key"
 	desc = "A strange key the Archlich dropped."
 	icon_state = "eyekey"

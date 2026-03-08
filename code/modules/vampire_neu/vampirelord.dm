@@ -60,7 +60,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
 	beltr = /obj/item/storage/belt/pouch/coins/veryrich
 	head  = /obj/item/clothing/head/roguetown/vampire
-	beltl = /obj/item/roguekey/vampire
+	beltl = /obj/item/key/vampire
 	cloak = /obj/item/clothing/cloak/cape/puritan
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	backl = /obj/item/storage/backpack/rogue/satchel/black

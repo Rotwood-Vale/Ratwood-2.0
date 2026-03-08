@@ -49,7 +49,7 @@
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary,
+		/obj/item/key/mercenary,
 		/obj/item/flashlight/flare/torch/lantern,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
 		/obj/item/rogueweapon/scabbard/sheath/kazengun
@@ -144,7 +144,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/plate/kote
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary,
+		/obj/item/key/mercenary,
 		/obj/item/flashlight/flare/torch/lantern,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
 		)

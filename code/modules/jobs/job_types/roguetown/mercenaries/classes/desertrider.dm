@@ -45,7 +45,7 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary,
+		/obj/item/key/mercenary,
 		/obj/item/rogueweapon/huntingknife/idagger/navaja,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/rogueweapon/scabbard/sheath,
@@ -122,7 +122,7 @@
 	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary,
+		/obj/item/key/mercenary,
 		/obj/item/rogueweapon/huntingknife/idagger/navaja,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/flashlight/flare/torch,
@@ -202,7 +202,7 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary,
+		/obj/item/key/mercenary,
 		/obj/item/rogueweapon/huntingknife/idagger/navaja,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/spellbook_unfinished/pre_arcyne,

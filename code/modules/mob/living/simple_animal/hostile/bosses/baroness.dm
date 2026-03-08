@@ -184,7 +184,7 @@
 		shake_camera(M, 7, 1)
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/vo/female/gen/deathgurgle (1).ogg', 80, TRUE, TRUE)
-	new /obj/item/roguekey/mage/baroness(T)
+	new /obj/item/key/mage/baroness(T)
 	new /obj/item/clothing/neck/roguetown/ornateamulet(T)
 	return ..()
 
@@ -271,12 +271,12 @@
 
 /obj/effect/oneway/baroness/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	if(istype(W, /obj/item/roguekey/mage/baroness))
+	if(istype(W, /obj/item/key/mage/baroness))
 		visible_message(span_boldannounce("The magical barrier disperses!"))
 		qdel(src)
 
 //Loot
-/obj/item/roguekey/mage/baroness
+/obj/item/key/mage/baroness
 	name = "baroness' key"
 	desc = "An offputting key the Baroness dropped."
 	icon_state = "toothkey"

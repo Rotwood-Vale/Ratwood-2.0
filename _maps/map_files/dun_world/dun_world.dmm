@@ -1706,11 +1706,11 @@
 /obj/structure/roguemachine/mail{
 	mailtag = "Guildmaster's Office"
 	},
-/obj/item/roguekey/tailor,
-/obj/item/roguekey/tailor,
+/obj/item/key/tailor,
+/obj/item/key/tailor,
 /obj/machinery/light/rogue/wallfire/candle/r,
-/obj/item/roguekey/crafterguild,
-/obj/item/roguekey/crafterguild,
+/obj/item/key/crafterguild,
+/obj/item/key/crafterguild,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin)
 "avy" = (
@@ -2329,8 +2329,8 @@
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town)
 "aCN" = (
-/obj/item/roguekey/crier,
-/obj/item/roguekey/crier,
+/obj/item/key/crier,
+/obj/item/key/crier,
 /obj/structure/closet/crate/drawer,
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/rogue/herringbone,
@@ -7729,8 +7729,8 @@
 /turf/closed/wall/mineral/rogue/roofwall/innercorner,
 /area/rogue/indoors/town/church/chapel)
 "bRX" = (
-/obj/item/roguekey/apartments/stable1,
-/obj/item/roguekey/apartments/stable2,
+/obj/item/key/apartments/stable1,
+/obj/item/key/apartments/stable2,
 /obj/structure/closet/crate/drawer,
 /obj/structure/fluff/littlebanners/bluewhite{
 	pixel_y = 15
@@ -8251,12 +8251,12 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/underdark/north)
 "bZc" = (
-/obj/item/roguekey/vault,
+/obj/item/key/vault,
 /obj/structure/closet/crate/roguecloset/lord{
 	lockid = "steward"
 	},
 /obj/machinery/light/rogue/wallfire/candle/l,
-/obj/item/roguekey/armory,
+/obj/item/key/armory,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "bZe" = (
@@ -14438,7 +14438,7 @@
 	pixel_y = 29;
 	redstone_id = "bog_dung_psy_trap_hall_j2"
 	},
-/obj/item/roguekey/psy_bog/exit{
+/obj/item/key/psy_bog/exit{
 	desc = "A strange key...ever enduring. Use this to break the magical barrier and leave this place.";
 	name = "Rusted exit key"
 	},
@@ -17265,7 +17265,7 @@
 /area/rogue/under/town/sewer)
 "ehu" = (
 /obj/structure/table/wood/long_table,
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	lockid = "farm";
 	name = "farm key"
 	},
@@ -18388,14 +18388,14 @@
 "evj" = (
 /obj/structure/table/wood/long_table/right,
 /obj/structure/fluff/railing/border/east,
-/obj/item/roguekey/mercenary/bedrooms,
-/obj/item/roguekey/mercenary/bedrooms/ii,
-/obj/item/roguekey/mercenary/bedrooms/iii,
-/obj/item/roguekey/mercenary/bedrooms/iv,
-/obj/item/roguekey/mercenary/bedrooms/v,
-/obj/item/roguekey/mercenary/bedrooms/vi,
-/obj/item/roguekey/mercenary/bedrooms/vii,
-/obj/item/roguekey/mercenary/bedrooms/viii,
+/obj/item/key/mercenary/bedrooms,
+/obj/item/key/mercenary/bedrooms/ii,
+/obj/item/key/mercenary/bedrooms/iii,
+/obj/item/key/mercenary/bedrooms/iv,
+/obj/item/key/mercenary/bedrooms/v,
+/obj/item/key/mercenary/bedrooms/vi,
+/obj/item/key/mercenary/bedrooms/vii,
+/obj/item/key/mercenary/bedrooms/viii,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town)
 "evu" = (
@@ -20478,11 +20478,11 @@
 /area/rogue/indoors/town/physician)
 "eVn" = (
 /obj/structure/closet/crate/drawer,
-/obj/item/roguekey/tailor{
+/obj/item/key/tailor{
 	pixel_x = 4;
 	pixel_y = -1
 	},
-/obj/item/roguekey/tailor,
+/obj/item/key/tailor,
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/rogue/wood/herringbone,
 /area/rogue/indoors/town)
@@ -24587,8 +24587,8 @@
 "fWJ" = (
 /obj/structure/closet/crate/chest/neu,
 /obj/item/flashlight/flare/torch/lantern,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/dungeon,
+/obj/item/key/dungeon,
+/obj/item/key/dungeon,
 /obj/item/needle/thorn,
 /obj/item/needle/thorn,
 /obj/item/needle/thorn,
@@ -35992,11 +35992,11 @@
 /area/rogue/indoors/inq/basement)
 "iFk" = (
 /obj/structure/closet/crate/drawer,
-/obj/item/roguekey/priest,
-/obj/item/roguekey/graveyard,
+/obj/item/key/priest,
+/obj/item/key/graveyard,
 /obj/item/storage/keyring/priest,
-/obj/item/roguekey/church,
-/obj/item/roguekey/church,
+/obj/item/key/church,
+/obj/item/key/church,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/church/chapel)
 "iFy" = (
@@ -36407,22 +36407,22 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/rtfield)
 "iKh" = (
-/obj/item/roguekey{
+/obj/item/key{
 	icon_state = "brownkey";
 	lockid = "locker1";
 	name = "locker I key"
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	icon_state = "brownkey";
 	lockid = "locker2";
 	name = "locker II key"
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	icon_state = "brownkey";
 	lockid = "locker3";
 	name = "locker III key"
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	icon_state = "brownkey";
 	lockid = "locker4";
 	name = "locker IV key"
@@ -36797,9 +36797,9 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/his_vault)
 "iQn" = (
-/obj/item/roguekey/physician,
-/obj/item/roguekey/physician,
-/obj/item/roguekey/physician,
+/obj/item/key/physician,
+/obj/item/key/physician,
+/obj/item/key/physician,
 /obj/item/clothing/neck/roguetown/psicross/pestra,
 /obj/structure/closet/crate/drawer,
 /turf/open/floor/carpet/red,
@@ -38488,7 +38488,7 @@
 "jjW" = (
 /obj/structure/rack/rogue/shelf,
 /obj/structure/rack/rogue,
-/obj/item/roguekey/apartments/stall3,
+/obj/item/key/apartments/stall3,
 /obj/item/reagent_containers/glass/cup/wooden{
 	pixel_x = 5;
 	pixel_y = 39
@@ -39211,15 +39211,15 @@
 "jtk" = (
 /obj/structure/rack/rogue,
 /obj/machinery/light/rogue/wallfire/candle/l,
-/obj/item/roguekey/dungeon{
+/obj/item/key/dungeon{
 	lockid = "drow";
 	name = "cell key"
 	},
-/obj/item/roguekey/dungeon{
+/obj/item/key/dungeon{
 	lockid = "drow";
 	name = "cell key"
 	},
-/obj/item/roguekey/dungeon{
+/obj/item/key/dungeon{
 	lockid = "drow";
 	name = "cell key"
 	},
@@ -39581,9 +39581,9 @@
 /obj/item/paper/scroll,
 /obj/item/paper/scroll,
 /obj/item/paper/scroll,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
 /obj/item/clothing/ring/silver,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
@@ -40103,10 +40103,10 @@
 	locked = 1;
 	lockid = "warden"
 	},
-/obj/item/roguekey/warden,
-/obj/item/roguekey/warden,
-/obj/item/roguekey/warden,
-/obj/item/roguekey/warden,
+/obj/item/key/warden,
+/obj/item/key/warden,
+/obj/item/key/warden,
+/obj/item/key/warden,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town/warden)
 "jDW" = (
@@ -42525,7 +42525,7 @@
 	pixel_x = 1;
 	pixel_y = 3
 	},
-/obj/item/roguekey/manor,
+/obj/item/key/manor,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor)
 "kgd" = (
@@ -47129,18 +47129,18 @@
 /obj/item/storage/keyring,
 /obj/item/storage/keyring,
 /obj/item/storage/keyring,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/sergeant,
-/obj/item/roguekey/sergeant,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/sergeant,
+/obj/item/key/sergeant,
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
 	locked = 1;
@@ -47149,10 +47149,10 @@
 /obj/item/scomstone/bad/garrison,
 /obj/item/scomstone/bad/garrison,
 /obj/item/scomstone/bad/garrison,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
+/obj/item/key/dungeon,
+/obj/item/key/dungeon,
+/obj/item/key/walls,
+/obj/item/key/walls,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/garrison)
 "lkC" = (
@@ -53646,19 +53646,19 @@
 /area/rogue/indoors/cave)
 "mJL" = (
 /obj/structure/closet/crate/roguecloset/inn,
-/obj/item/roguekey/armory,
+/obj/item/key/armory,
 /obj/item/clothing/suit/roguetown/armor/brigandine,
 /obj/item/storage/keyring,
 /obj/item/storage/backpack/rogue/satchel,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/sheriff,
-/obj/item/roguekey/garrison,
+/obj/item/key/manor,
+/obj/item/key/walls,
+/obj/item/key/dungeon,
+/obj/item/key/sheriff,
+/obj/item/key/garrison,
 /obj/item/storage/belt/rogue/leather/steel/tasset,
-/obj/item/roguekey/warden,
-/obj/item/roguekey/sergeant,
-/obj/item/roguekey/armory,
+/obj/item/key/warden,
+/obj/item/key/sergeant,
+/obj/item/key/armory,
 /obj/machinery/light/rogue/wallfire/candle,
 /obj/item/rogueweapon/mace/parasol/noble,
 /turf/open/floor/rogue/concrete,
@@ -61031,23 +61031,23 @@
 /turf/open/floor/carpet/red,
 /area/rogue/under/cave/mazedungeon)
 "ozX" = (
-/obj/item/roguekey/roomiv{
+/obj/item/key/roomiv{
 	lockid = "roomvi";
 	name = "room VI key"
 	},
-/obj/item/roguekey/roomiv{
+/obj/item/key/roomiv{
 	lockid = "roomv";
 	name = "room V key"
 	},
-/obj/item/roguekey/roomiv,
-/obj/item/roguekey/roomiii,
-/obj/item/roguekey/roomii,
-/obj/item/roguekey/roomi,
-/obj/item/roguekey/fancyroomi,
-/obj/item/roguekey/fancyroomii,
-/obj/item/roguekey/fancyroomiii,
-/obj/item/roguekey/fancyroomiv,
-/obj/item/roguekey/fancyroomv,
+/obj/item/key/roomiv,
+/obj/item/key/roomiii,
+/obj/item/key/roomii,
+/obj/item/key/roomi,
+/obj/item/key/fancyroomi,
+/obj/item/key/fancyroomii,
+/obj/item/key/fancyroomiii,
+/obj/item/key/fancyroomiv,
+/obj/item/key/fancyroomv,
 /obj/structure/closet/crate/chest/crate{
 	color = "#8f7f62";
 	name = "Spare keys"
@@ -62041,7 +62041,7 @@
 	})
 "oMi" = (
 /obj/structure/closet/dirthole/closed,
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	desc = "This is a rusty key. You're not sure where it goes to.";
 	lockid = "vesseldeck";
 	name = "strange key"
@@ -63773,7 +63773,7 @@
 /area/rogue/under/cave/skeletoncrypt)
 "phK" = (
 /obj/structure/closet/dirthole/closed,
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	desc = "This is a rusty key. You're not sure where it goes to.";
 	lockid = "vesseldeck";
 	name = "strange key"
@@ -67930,12 +67930,12 @@
 	locked = 1;
 	lockid = "steward"
 	},
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/walls,
+/obj/item/key/walls,
+/obj/item/key/walls,
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
 	},
@@ -70176,11 +70176,11 @@
 /area/rogue/indoors/town/manor)
 "qJr" = (
 /obj/structure/closet/crate/drawer,
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/nightman,
+/obj/item/key/nightmaiden,
+/obj/item/key/nightmaiden,
+/obj/item/key/nightmaiden,
+/obj/item/key/nightmaiden,
+/obj/item/key/nightman,
 /obj/structure/mirror,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
@@ -71897,9 +71897,9 @@
 	icon_state = "longtable_mid"
 	},
 /obj/item/paper,
-/obj/item/roguekey/inquisition,
-/obj/item/roguekey/inquisition,
-/obj/item/roguekey/inquisition,
+/obj/item/key/inquisition,
+/obj/item/key/inquisition,
+/obj/item/key/inquisition,
 /obj/structure/fluff/walldeco/painting/seraphina{
 	pixel_y = 32
 	},
@@ -72270,7 +72270,7 @@
 /area/rogue/outdoors/town)
 "riV" = (
 /obj/structure/table/wood,
-/obj/item/roguekey/apartments/stall1,
+/obj/item/key/apartments/stall1,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town)
 "riW" = (
@@ -76358,15 +76358,15 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/shelter)
 "sjw" = (
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "bath1";
 	name = "room I key"
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "bath2";
 	name = "room II key"
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "bath3";
 	name = "room III key"
 	},
@@ -78345,7 +78345,7 @@
 /area/rogue/under/cave/dukecourt)
 "sHD" = (
 /obj/structure/table/wood/fancy/red,
-/obj/item/roguekey/psy_bog/two{
+/obj/item/key/psy_bog/two{
 	name = "Rusted exit key"
 	},
 /turf/open/floor/rogue/cobble,
@@ -79774,19 +79774,19 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/cell)
 "sZY" = (
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	desc = "This is a rusty key. You're not sure where it goes to.";
 	lockid = "vesseldeck";
 	name = "strange key"
 	},
 /obj/structure/closet/dirthole/closed,
 /obj/item/storage/keyring,
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	desc = "This is a rusty key. You're not sure where it goes to.";
 	lockid = "vesseldeck";
 	name = "strange key"
 	},
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "You're not sure where this goes to.";
 	lockid = "captain_bedroom";
 	name = "strange key"
@@ -81111,26 +81111,26 @@
 	locked = 1;
 	lockid = "steward"
 	},
-/obj/item/roguekey/manor,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/steward,
-/obj/item/roguekey/church,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/graveyard,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/mercenary,
-/obj/item/roguekey/tavern,
-/obj/item/roguekey/physician,
-/obj/item/roguekey/farm,
-/obj/item/roguekey/tailor,
-/obj/item/roguekey/shop,
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/archive,
-/obj/item/roguekey/apartments/stable1,
-/obj/item/roguekey/apartments/stable2,
-/obj/item/roguekey/tavernkeep,
-/obj/item/roguekey/tower,
-/obj/item/roguekey/crafterguild,
+/obj/item/key/manor,
+/obj/item/key/walls,
+/obj/item/key/steward,
+/obj/item/key/church,
+/obj/item/key/dungeon,
+/obj/item/key/graveyard,
+/obj/item/key/garrison,
+/obj/item/key/mercenary,
+/obj/item/key/tavern,
+/obj/item/key/physician,
+/obj/item/key/farm,
+/obj/item/key/tailor,
+/obj/item/key/shop,
+/obj/item/key/nightmaiden,
+/obj/item/key/archive,
+/obj/item/key/apartments/stable1,
+/obj/item/key/apartments/stable2,
+/obj/item/key/tavernkeep,
+/obj/item/key/tower,
+/obj/item/key/crafterguild,
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
 	},
@@ -81504,8 +81504,8 @@
 /obj/item/book_crafting_kit,
 /obj/item/book_crafting_kit,
 /obj/item/book_crafting_kit,
-/obj/item/roguekey/archive,
-/obj/item/roguekey/archive,
+/obj/item/key/archive,
+/obj/item/key/archive,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/magician)
 "ttR" = (
@@ -81754,8 +81754,8 @@
 /area/rogue/outdoors/town)
 "twj" = (
 /obj/structure/closet/crate/drawer,
-/obj/item/roguekey/merchant,
-/obj/item/roguekey/shop,
+/obj/item/key/merchant,
+/obj/item/key/shop,
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
 	},
@@ -81885,11 +81885,11 @@
 /area/rogue/indoors/shelter/mountains/decap)
 "txE" = (
 /obj/structure/closet/crate/drawer,
-/obj/item/roguekey/tavern,
-/obj/item/roguekey/tavern,
-/obj/item/roguekey/tavern,
-/obj/item/roguekey/tavern,
-/obj/item/roguekey/tavern,
+/obj/item/key/tavern,
+/obj/item/key/tavern,
+/obj/item/key/tavern,
+/obj/item/key/tavern,
+/obj/item/key/tavern,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/tavern)
 "txF" = (
@@ -83376,8 +83376,8 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/shelter)
 "tQF" = (
-/obj/item/roguekey/farm,
-/obj/item/roguekey/farm,
+/obj/item/key/farm,
+/obj/item/key/farm,
 /obj/structure/closet/crate/drawer,
 /obj/structure/mirror,
 /obj/machinery/light/rogue/wallfire/candle/l,
@@ -86720,7 +86720,7 @@
 /area/rogue/indoors/town/shop)
 "uFb" = (
 /obj/structure/table/wood,
-/obj/item/roguekey/apartments/stall2,
+/obj/item/key/apartments/stall2,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town)
 "uFd" = (
@@ -93807,15 +93807,15 @@
 /area/rogue/under/town/sewer)
 "wmP" = (
 /obj/structure/closet/crate/roguecloset/inn,
-/obj/item/roguekey/armory,
-/obj/item/roguekey/sheriff,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/manor,
+/obj/item/key/armory,
+/obj/item/key/sheriff,
+/obj/item/key/dungeon,
+/obj/item/key/walls,
+/obj/item/key/manor,
 /obj/item/storage/keyring,
 /obj/item/storage/belt/rogue/leather/steel/tasset,
-/obj/item/roguekey/warden,
-/obj/item/roguekey/sergeant,
+/obj/item/key/warden,
+/obj/item/key/sergeant,
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/garrison)
@@ -95434,7 +95434,7 @@
 /obj/item/paper/scroll,
 /obj/item/natural/feather,
 /obj/machinery/light/rogue/wallfire/candle/r,
-/obj/item/roguekey/church,
+/obj/item/key/church,
 /turf/open/floor/rogue/wood/herringbone,
 /area/rogue/indoors/town/church/chapel)
 "wHT" = (
@@ -96978,15 +96978,15 @@
 /obj/structure/closet/crate/drawer/random{
 	pixel_y = 0
 	},
-/obj/item/roguekey/tower,
-/obj/item/roguekey/tower,
+/obj/item/key/tower,
+/obj/item/key/tower,
 /obj/item/clothing/mask/cigarette/pipe/westman,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /obj/machinery/light/rogue/wallfire/candle,
-/obj/item/roguekey/archive,
-/obj/item/roguekey/archive,
+/obj/item/key/archive,
+/obj/item/key/archive,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/magician)
 "xaH" = (
@@ -98985,7 +98985,7 @@
 	},
 /obj/item/roguegem/diamond,
 /obj/item/clothing/ring/active/nomag,
-/obj/item/roguekey/lord,
+/obj/item/key/lord,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "xAs" = (
@@ -99932,8 +99932,8 @@
 /area/rogue/under/cave/licharena)
 "xKC" = (
 /obj/structure/closet/crate/chest/neu_iron,
-/obj/item/roguekey/church,
-/obj/item/roguekey/church,
+/obj/item/key/church,
+/obj/item/key/church,
 /obj/item/needle/thorn,
 /obj/item/reagent_containers/glass/cup/tin{
 	pixel_x = -11

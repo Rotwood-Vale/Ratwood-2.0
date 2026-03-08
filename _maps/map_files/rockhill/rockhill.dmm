@@ -1254,11 +1254,11 @@
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/bath)
 "asQ" = (
-/obj/item/roguekey/mercenary,
-/obj/item/roguekey/mercenary,
-/obj/item/roguekey/mercenary,
-/obj/item/roguekey/mercenary,
-/obj/item/roguekey/mercenary,
+/obj/item/key/mercenary,
+/obj/item/key/mercenary,
+/obj/item/key/mercenary,
+/obj/item/key/mercenary,
+/obj/item/key/mercenary,
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors)
@@ -4217,15 +4217,15 @@
 	lockid = "Cphysician";
 	pixel_y = 5
 	},
-/obj/item/roguekey/physician,
-/obj/item/roguekey/physician,
-/obj/item/roguekey/physician,
+/obj/item/key/physician,
+/obj/item/key/physician,
+/obj/item/key/physician,
 /obj/effect/decal/cobbleedge{
 	dir = 4;
 	icon_state = "borderfall";
 	pixel_x = 8
 	},
-/obj/item/roguekey/courtphysician,
+/obj/item/key/courtphysician,
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/manor/rockhill)
 "bkQ" = (
@@ -8985,8 +8985,8 @@
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/clothing/suit/roguetown/shirt/formal,
 /obj/item/clothing/shoes/roguetown/armor,
-/obj/item/roguekey/sergeant,
-/obj/item/roguekey/sergeant,
+/obj/item/key/sergeant,
+/obj/item/key/sergeant,
 /obj/item/scomstone/bad/garrison,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/garrison)
@@ -9036,8 +9036,8 @@
 	pixel_y = 28
 	},
 /obj/item/needle,
-/obj/item/roguekey/tailor,
-/obj/item/roguekey/tailor,
+/obj/item/key/tailor,
+/obj/item/key/tailor,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "cFu" = (
@@ -9488,9 +9488,9 @@
 	icon_state = "longtable_mid"
 	},
 /obj/item/paper,
-/obj/item/roguekey/inquisition,
-/obj/item/roguekey/inquisition,
-/obj/item/roguekey/inquisition,
+/obj/item/key/inquisition,
+/obj/item/key/inquisition,
+/obj/item/key/inquisition,
 /obj/structure/fluff/walldeco/painting/seraphina{
 	pixel_y = 32
 	},
@@ -9737,7 +9737,7 @@
 /obj/item/reagent_containers/glass/cup/wooden{
 	pixel_x = 6
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "this key opens the guard's doors in the old goblin encampment";
 	icon_state = "spikekey";
 	lockid = "gobbo_guards";
@@ -12795,7 +12795,7 @@
 "dFz" = (
 /obj/item/reagent_containers/glass/cup/golden,
 /obj/structure/table/wood,
-/obj/item/roguekey/lord{
+/obj/item/key/lord{
 	pixel_x = 9
 	},
 /turf/open/floor/rogue/carpet/lord/right,
@@ -14203,9 +14203,9 @@
 	pixel_y = 0
 	},
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/nightmaiden,
+/obj/item/key/nightmaiden,
+/obj/item/key/nightmaiden,
+/obj/item/key/nightmaiden,
 /obj/item/storage/keyring,
 /obj/item/storage/keyring,
 /turf/open/floor/rogue/churchmarble,
@@ -14780,15 +14780,15 @@
 /area/rogue/indoors/town/dwarfin/rockhill)
 "eik" = (
 /obj/structure/rack/rogue,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
+/obj/item/key/walls,
+/obj/item/key/walls,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
 "eil" = (
@@ -16099,10 +16099,10 @@
 	pixel_x = 24;
 	pixel_y = 12
 	},
-/obj/item/roguekey/tavern,
-/obj/item/roguekey/tavern,
-/obj/item/roguekey/tavern,
-/obj/item/roguekey/tavernkeep,
+/obj/item/key/tavern,
+/obj/item/key/tavern,
+/obj/item/key/tavern,
+/obj/item/key/tavernkeep,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/tavern)
 "eCr" = (
@@ -17389,7 +17389,7 @@
 	icon_state = "borderfall";
 	pixel_y = 8
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "This old key opens the peddler for the local lowtown eatery.";
 	icon_state = "brownkey";
 	lockid = "ship";
@@ -18382,7 +18382,7 @@
 /area/rogue/outdoors/rtfield/rockhill)
 "fjR" = (
 /obj/machinery/light/rogue/firebowl,
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "this key opens basic doors in the old goblin encampment";
 	icon_state = "brownkey";
 	lockid = "gobbo";
@@ -20331,21 +20331,21 @@
 /area/rogue/under/town/sewer)
 "fLn" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/roguekey/roomii,
-/obj/item/roguekey/roomiii,
-/obj/item/roguekey/roomiv,
-/obj/item/roguekey/roomiv{
+/obj/item/key/roomii,
+/obj/item/key/roomiii,
+/obj/item/key/roomiv,
+/obj/item/key/roomiv{
 	lockid = "roomv";
 	name = "room V key"
 	},
-/obj/item/roguekey/roomiv{
+/obj/item/key/roomiv{
 	lockid = "roomvi";
 	name = "room VI key"
 	},
-/obj/item/roguekey/roomi,
-/obj/item/roguekey/roomvii,
-/obj/item/roguekey/roomviii,
-/obj/item/roguekey/roomix,
+/obj/item/key/roomi,
+/obj/item/key/roomvii,
+/obj/item/key/roomviii,
+/obj/item/key/roomix,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/tavern)
 "fLz" = (
@@ -20636,8 +20636,8 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/town/basement/keep)
 "fOs" = (
-/obj/item/roguekey/vault,
-/obj/item/roguekey/armory,
+/obj/item/key/vault,
+/obj/item/key/armory,
 /obj/structure/closet/crate/roguecloset/lord{
 	lockid = "steward"
 	},
@@ -20657,38 +20657,38 @@
 	locked = 1;
 	lockid = "steward"
 	},
-/obj/item/roguekey/manor,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/steward,
-/obj/item/roguekey/church,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/graveyard,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/mercenary,
-/obj/item/roguekey/tavern,
-/obj/item/roguekey/physician,
-/obj/item/roguekey/farm,
-/obj/item/roguekey/tailor,
-/obj/item/roguekey/shop,
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/archive,
-/obj/item/roguekey/apartments/stable1,
-/obj/item/roguekey/apartments/stable2,
-/obj/item/roguekey/tavernkeep,
-/obj/item/roguekey/tower{
+/obj/item/key/manor,
+/obj/item/key/walls,
+/obj/item/key/steward,
+/obj/item/key/church,
+/obj/item/key/dungeon,
+/obj/item/key/graveyard,
+/obj/item/key/garrison,
+/obj/item/key/mercenary,
+/obj/item/key/tavern,
+/obj/item/key/physician,
+/obj/item/key/farm,
+/obj/item/key/tailor,
+/obj/item/key/shop,
+/obj/item/key/nightmaiden,
+/obj/item/key/archive,
+/obj/item/key/apartments/stable1,
+/obj/item/key/apartments/stable2,
+/obj/item/key/tavernkeep,
+/obj/item/key/tower{
 	desc = "This key should open anything within the wizard's tower."
 	},
-/obj/item/roguekey/crafterguild,
+/obj/item/key/crafterguild,
 /obj/structure/bars/pipe{
 	dir = 1
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "This old key opens the peddler for the hightown street shop.";
 	icon_state = "brownkey";
 	lockid = "street_shop01";
 	name = "Street Shop Key"
 	},
-/obj/item/roguekey/courtphysician,
+/obj/item/key/courtphysician,
 /turf/open/floor/rogue/tile/tilerg,
 /area/rogue/indoors/town/manor/rockhill)
 "fON" = (
@@ -21908,7 +21908,7 @@
 /area/rogue/outdoors/town/roofs)
 "gfL" = (
 /obj/structure/well,
-/obj/item/roguekey{
+/obj/item/key{
 	icon_state = "brownkey";
 	lockid = "gobbo";
 	name = "goblin key"
@@ -22252,7 +22252,7 @@
 	icon_state = "largetable"
 	},
 /obj/item/candle/gold/lit,
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "guestroom2";
 	name = "Manor Guestroom II Key"
@@ -22398,7 +22398,7 @@
 /area/rogue/outdoors/rtfield/rockhill)
 "gml" = (
 /obj/structure/table/wood/poor,
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "This old key opens the peddler for the lowtown smithy.";
 	icon_state = "brownkey";
 	lockid = "towner_blacksmith";
@@ -28273,7 +28273,7 @@
 /obj/structure/toilet,
 /obj/item/natural/poo/horse,
 /mob/living/carbon/human/species/goblin/npc/cave,
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "this key opens the chief and shaman's  doors in the old goblin encampment";
 	icon_state = "cheesekey";
 	lockid = "gobbo_chief";
@@ -29037,11 +29037,11 @@
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 1
 	},
-/obj/item/roguekey/butcher,
-/obj/item/roguekey/butcher,
-/obj/item/roguekey/farm,
-/obj/item/roguekey/farm,
-/obj/item/roguekey/farm,
+/obj/item/key/butcher,
+/obj/item/key/butcher,
+/obj/item/key/farm,
+/obj/item/key/farm,
+/obj/item/key/farm,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "idw" = (
@@ -29792,7 +29792,7 @@
 	pixel_x = -8
 	},
 /obj/item/candle/gold/lit,
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "guestroom1";
 	name = "Manor Guestroom I Key"
@@ -31155,13 +31155,13 @@
 	dir = 10;
 	icon_state = "largetable"
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	icon_state = "spikekey";
 	lockid = "punishroom";
 	name = "punishment room key";
 	pixel_y = 9
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	icon_state = "spikekey";
 	lockid = "punishroom";
 	name = "punishment room key";
@@ -31406,12 +31406,12 @@
 /area/rogue/indoors)
 "iMj" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/roguekey/fancyroomiii,
-/obj/item/roguekey/fancyroomiii,
-/obj/item/roguekey/fancyroomii,
-/obj/item/roguekey/fancyroomi,
-/obj/item/roguekey/fancyroomi,
-/obj/item/roguekey/fancyroomii,
+/obj/item/key/fancyroomiii,
+/obj/item/key/fancyroomiii,
+/obj/item/key/fancyroomii,
+/obj/item/key/fancyroomi,
+/obj/item/key/fancyroomi,
+/obj/item/key/fancyroomii,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/tavern)
 "iMk" = (
@@ -38182,9 +38182,9 @@
 	lockid = "sergeant";
 	pixel_y = 5
 	},
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
+/obj/item/key/walls,
+/obj/item/key/walls,
+/obj/item/key/walls,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/warden)
 "kKn" = (
@@ -40011,8 +40011,8 @@
 	},
 /area/rogue/under/cave/skeletoncrypt)
 "lpY" = (
-/obj/item/roguekey/crier,
-/obj/item/roguekey/crier,
+/obj/item/key/crier,
+/obj/item/key/crier,
 /obj/structure/closet/crate/drawer,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town)
@@ -40550,12 +40550,12 @@
 /obj/structure/closet/crate/chest{
 	lockid = "farm"
 	},
-/obj/item/roguekey/farm,
-/obj/item/roguekey/farm,
-/obj/item/roguekey/farm,
-/obj/item/roguekey/farm,
-/obj/item/roguekey/farm,
-/obj/item/roguekey/farm,
+/obj/item/key/farm,
+/obj/item/key/farm,
+/obj/item/key/farm,
+/obj/item/key/farm,
+/obj/item/key/farm,
+/obj/item/key/farm,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "lyB" = (
@@ -40985,16 +40985,16 @@
 /area/rogue/outdoors/beach/harbor)
 "lFW" = (
 /obj/structure/rack/rogue,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
+/obj/item/key/walls,
+/obj/item/key/dungeon,
+/obj/item/key/dungeon,
+/obj/item/key/dungeon,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
 "lFY" = (
@@ -41789,9 +41789,9 @@
 /obj/item/paper/scroll,
 /obj/item/paper/scroll,
 /obj/item/paper/scroll,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
 /obj/structure/closet/crate/roguecloset/inn/chest{
 	keylock = 1;
 	lockid = "kitchen"
@@ -41837,7 +41837,7 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	icon_state = "brownkey";
 	lockid = "gobbo";
 	name = "goblin key"
@@ -41890,7 +41890,7 @@
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
 	},
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "counsil2";
 	name = "Counsillor's Room II Key"
@@ -43126,14 +43126,14 @@
 /area/rogue/indoors/town/manor/rockhill)
 "mjL" = (
 /obj/structure/rack/rogue,
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "This old key opens the peddler for the local lowtown eatery.";
 	icon_state = "brownkey";
 	lockid = "foodshop";
 	name = "Food Shop Peddler Key";
 	pixel_x = -7
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "This old key opens the peddler for the local lowtown eatery.";
 	icon_state = "brownkey";
 	lockid = "foodshoproom2";
@@ -43141,21 +43141,21 @@
 	pixel_x = 8;
 	pixel_y = -6
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "This old key opens the peddler for the local lowtown eatery.";
 	icon_state = "brownkey";
 	lockid = "foodshoproom1";
 	name = "Lowtown Inn Spare Room #1";
 	pixel_y = -3
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "This old key opens the peddler for the local lowtown eatery.";
 	icon_state = "brownkey";
 	lockid = "foodshoproom1";
 	name = "Lowtown Inn Spare Room #1";
 	pixel_y = -3
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "This old key opens the peddler for the local lowtown eatery.";
 	icon_state = "brownkey";
 	lockid = "foodshoproom2";
@@ -43163,7 +43163,7 @@
 	pixel_x = 8;
 	pixel_y = -6
 	},
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "This old key opens the peddler for the local lowtown eatery.";
 	icon_state = "brownkey";
 	lockid = "foodshop";
@@ -43935,15 +43935,15 @@
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/roguekey/shop,
-/obj/item/roguekey/shop,
-/obj/item/roguekey/shop,
-/obj/item/roguekey/shop,
-/obj/item/roguekey/shop,
+/obj/item/key/shop,
+/obj/item/key/shop,
+/obj/item/key/shop,
+/obj/item/key/shop,
+/obj/item/key/shop,
 /obj/item/storage/keyring,
 /obj/item/storage/keyring,
 /obj/item/storage/keyring,
-/obj/item/roguekey/merchant,
+/obj/item/key/merchant,
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/shop)
 "muv" = (
@@ -45509,10 +45509,10 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/Academy)
 "mTB" = (
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/dungeon,
+/obj/item/key/dungeon,
+/obj/item/key/dungeon,
+/obj/item/key/dungeon,
+/obj/item/key/dungeon,
 /obj/structure/rack/rogue/shelf/biggest,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement/keep)
@@ -45878,11 +45878,11 @@
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/shop)
 "naA" = (
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
+/obj/item/key/garrison,
 /obj/structure/rack/rogue/shelf/biggest,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement/keep)
@@ -46796,7 +46796,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woodsrat/river)
 "nnT" = (
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "this key opens the guard's doors in the old goblin encampment";
 	icon_state = "spikekey";
 	lockid = "gobbo_guards";
@@ -47337,9 +47337,9 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/under/cave)
 "nxt" = (
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
+/obj/item/key/walls,
+/obj/item/key/walls,
+/obj/item/key/walls,
 /obj/structure/rack/rogue/shelf/biggest,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement/keep)
@@ -52307,7 +52307,7 @@
 /area/rogue/under/underdark/rockhill)
 "oUs" = (
 /obj/structure/closet/crate/drawer,
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "An unremarkable iron key found in an abandoned old church.";
 	icon_state = "brownkey";
 	lockid = "zizochurchtreasure";
@@ -53622,7 +53622,7 @@
 /obj/item/reagent_containers/glass/bottle/rogue/wine,
 /obj/item/roguecoin/gold/pile,
 /obj/item/roguecoin/silver/pile,
-/obj/item/roguekey/nightman,
+/obj/item/key/nightman,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/outdoors/exposed/bath/vault{
 	droning_sound_dusk = null;
@@ -53952,45 +53952,45 @@
 	locked = 1;
 	lockid = "steward"
 	},
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/manor{
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/walls,
+/obj/item/key/walls,
+/obj/item/key/walls,
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "guestroom1";
 	name = "Manor Guestroom I Key"
 	},
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "guestroom1";
 	name = "Manor Guestroom I Key"
 	},
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "guestroom2";
 	name = "Manor Guestroom II Key"
 	},
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "guestroom2";
 	name = "Manor Guestroom II Key"
 	},
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "guestroom3";
 	name = "Manor Guestroom III Key"
 	},
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "guestroom3";
 	name = "Manor Guestroom III Key"
 	},
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
 /turf/open/floor/rogue/tile/tilerg,
 /area/rogue/indoors/town/manor/rockhill)
 "psH" = (
@@ -54286,7 +54286,7 @@
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
 	},
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "counsil1";
 	name = "Counsillor's Room I Key"
@@ -55246,17 +55246,17 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/tavern)
 "pLs" = (
-/obj/item/roguekey/armory,
+/obj/item/key/armory,
 /obj/item/storage/keyring,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/walls,
-/obj/item/roguekey/dungeon,
-/obj/item/roguekey/garrison,
-/obj/item/roguekey/warden,
-/obj/item/roguekey/sergeant,
-/obj/item/roguekey/armory,
+/obj/item/key/manor,
+/obj/item/key/walls,
+/obj/item/key/dungeon,
+/obj/item/key/garrison,
+/obj/item/key/warden,
+/obj/item/key/sergeant,
+/obj/item/key/armory,
 /obj/structure/closet/crate/roguecloset,
-/obj/item/roguekey/sheriff,
+/obj/item/key/sheriff,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/manor/rockhill)
 "pLz" = (
@@ -56417,24 +56417,24 @@
 	pixel_x = 32;
 	pixel_y = 4
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "lux3";
 	name = "room III key";
 	pixel_y = 7
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "steam";
 	name = "steam room key";
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "steam";
 	name = "steam room key";
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "lux3";
 	name = "room III key";
 	pixel_y = 7
@@ -56580,7 +56580,7 @@
 	dir = 1;
 	icon_state = "borderfall"
 	},
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "counsil3";
 	name = "Counsillor's Room III Key"
@@ -57491,10 +57491,10 @@
 /obj/structure/fluff/walldeco/bigpainting{
 	pixel_x = 2
 	},
-/obj/item/roguekey/crafterguild,
-/obj/item/roguekey/crafterguild,
-/obj/item/roguekey/tailor,
-/obj/item/roguekey/tailor,
+/obj/item/key/crafterguild,
+/obj/item/key/crafterguild,
+/obj/item/key/tailor,
+/obj/item/key/tailor,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "qsl" = (
@@ -61927,7 +61927,7 @@
 	icon_state = "tablewood1"
 	},
 /obj/item/reagent_containers/food/snacks/rogue/meat/mince/beef,
-/obj/item/roguekey{
+/obj/item/key{
 	icon_state = "brownkey";
 	lockid = "gobbo";
 	name = "goblin key"
@@ -61961,8 +61961,8 @@
 	pixel_x = 32
 	},
 /obj/item/scomstone,
-/obj/item/roguekey/priest,
-/obj/item/roguekey/church,
+/obj/item/key/priest,
+/obj/item/key/church,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/church/chapel)
 "rMU" = (
@@ -62094,7 +62094,7 @@
 	first_time_text = "Tower of the Magos"
 	})
 "rOi" = (
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "lux1";
 	name = "room I key"
 	},
@@ -62102,19 +62102,19 @@
 	dir = 9;
 	icon_state = "largetable"
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "lux2";
 	name = "room II key";
 	pixel_x = 9;
 	pixel_y = -11
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "lux2";
 	name = "room II key";
 	pixel_x = 9;
 	pixel_y = -11
 	},
-/obj/item/roguekey/nightmaiden{
+/obj/item/key/nightmaiden{
 	lockid = "lux1";
 	name = "room I key"
 	},
@@ -62212,7 +62212,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors)
 "rQl" = (
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "this key opens the chief and shaman's  doors in the old goblin encampment";
 	icon_state = "cheesekey";
 	lockid = "gobbo_chief";
@@ -63026,10 +63026,10 @@
 	locked = 1;
 	lockid = "nightman"
 	},
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/nightmaiden,
-/obj/item/roguekey/nightmaiden,
+/obj/item/key/nightmaiden,
+/obj/item/key/nightmaiden,
+/obj/item/key/nightmaiden,
+/obj/item/key/nightmaiden,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
 "sce" = (
@@ -66255,9 +66255,9 @@
 /obj/item/paper,
 /obj/item/natural/feather,
 /obj/item/book/rogue/law,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/manor,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/manor/rockhill)
 "taa" = (
@@ -66561,7 +66561,7 @@
 /obj/structure/table/wood/large_table/middle_west,
 /obj/item/paper/scroll,
 /obj/item/natural/feather,
-/obj/item/roguekey/church,
+/obj/item/key/church,
 /obj/structure/fluff/wallclock,
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/church)
@@ -67735,7 +67735,7 @@
 	keylock = 1;
 	lockid = "guestroom1"
 	},
-/obj/item/roguekey/manor,
+/obj/item/key/manor,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/manor/rockhill)
 "tvU" = (
@@ -69933,7 +69933,7 @@
 	lockid = "guestroom3";
 	pixel_y = 2
 	},
-/obj/item/roguekey/manor,
+/obj/item/key/manor,
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/manor/rockhill)
 "ueq" = (
@@ -70556,20 +70556,20 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/manor/rockhill)
 "upd" = (
-/obj/item/roguekey/church,
-/obj/item/roguekey/church,
-/obj/item/roguekey/church,
-/obj/item/roguekey/church,
-/obj/item/roguekey/church,
-/obj/item/roguekey/church,
-/obj/item/roguekey/church,
-/obj/item/roguekey/church,
-/obj/item/roguekey/church,
-/obj/item/roguekey/graveyard,
-/obj/item/roguekey/graveyard,
-/obj/item/roguekey/graveyard,
-/obj/item/roguekey/graveyard,
-/obj/item/roguekey/graveyard,
+/obj/item/key/church,
+/obj/item/key/church,
+/obj/item/key/church,
+/obj/item/key/church,
+/obj/item/key/church,
+/obj/item/key/church,
+/obj/item/key/church,
+/obj/item/key/church,
+/obj/item/key/church,
+/obj/item/key/graveyard,
+/obj/item/key/graveyard,
+/obj/item/key/graveyard,
+/obj/item/key/graveyard,
+/obj/item/key/graveyard,
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/storage/keyring,
 /obj/item/storage/keyring,
@@ -71884,7 +71884,7 @@
 /turf/closed/mineral/random/rogue,
 /area/rogue/outdoors/woodsrat/south)
 "uLi" = (
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "this key opens the chief and shaman's  doors in the old goblin encampment";
 	icon_state = "cheesekey";
 	lockid = "gobbo_chief";
@@ -74203,7 +74203,7 @@
 	keylock = 1;
 	lockid = "guestroom2"
 	},
-/obj/item/roguekey/manor,
+/obj/item/key/manor,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/manor/rockhill)
 "vvp" = (
@@ -76265,7 +76265,7 @@
 	dir = 6;
 	icon_state = "largetable"
 	},
-/obj/item/roguekey/manor{
+/obj/item/key/manor{
 	desc = "This key will open a Manor guest room.";
 	lockid = "guestroom3";
 	name = "Manor Guestroom III Key"
@@ -76679,7 +76679,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/beach/harbor)
 "wid" = (
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "This old key opens the peddler for the hightown street shop.";
 	icon_state = "brownkey";
 	lockid = "street_shop01";
@@ -76942,7 +76942,7 @@
 /area/rogue/indoors)
 "wlF" = (
 /obj/structure/closet/crate/chest,
-/obj/item/roguekey{
+/obj/item/key{
 	desc = "this key opens the guard's doors in the old goblin encampment";
 	icon_state = "spikekey";
 	lockid = "gobbo_guards";
@@ -82681,18 +82681,18 @@
 /obj/structure/closet/crate/drawer/random{
 	pixel_y = 16
 	},
-/obj/item/roguekey/tower,
-/obj/item/roguekey/tower,
+/obj/item/key/tower,
+/obj/item/key/tower,
 /obj/item/clothing/mask/cigarette/pipe/westman,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/manor,
-/obj/item/roguekey/archive,
-/obj/item/roguekey/archive,
-/obj/item/roguekey/mage,
-/obj/item/roguekey/tower{
+/obj/item/key/manor,
+/obj/item/key/manor,
+/obj/item/key/archive,
+/obj/item/key/archive,
+/obj/item/key/mage,
+/obj/item/key/tower{
 	desc = "This key should open anything within the wizard's tower."
 	},
-/obj/item/roguekey/tower{
+/obj/item/key/tower{
 	desc = "This key should open anything within the wizard's tower."
 	},
 /turf/open/floor/carpet/royalblack,

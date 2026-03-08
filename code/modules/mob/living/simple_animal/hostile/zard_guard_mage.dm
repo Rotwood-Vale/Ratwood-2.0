@@ -139,7 +139,7 @@
 
 /obj/effect/oneway/psy_bog/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	if(istype(W, /obj/item/roguekey/psy_bog/exit))
+	if(istype(W, /obj/item/key/psy_bog/exit))
 		visible_message(span_boldannounce("The magical barrier disperses!"))
 		qdel(src)
 
@@ -154,19 +154,19 @@
 
 /obj/effect/oneway/psy_bog_two/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	if(istype(W, /obj/item/roguekey/psy_bog/two))
+	if(istype(W, /obj/item/key/psy_bog/two))
 		visible_message(span_boldannounce("The magical barrier disperses!"))
 		qdel(src)
 
 
 //Loot
-/obj/item/roguekey/psy_bog/exit
+/obj/item/key/psy_bog/exit
 	name = "Rusted key"
 	desc = "A strange key...ever enduring."
 	icon_state = "rustkey"
 	lockid = "psy_bog_dung_lootkey"
 
-/obj/item/roguekey/psy_bog/two
+/obj/item/key/psy_bog/two
 	name = "Rusted key"
 	desc = "A strange key...ever enduring."
 	icon_state = "rustkey"

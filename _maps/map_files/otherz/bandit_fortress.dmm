@@ -817,32 +817,32 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/banditcamp)
 "tp" = (
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	lockid = "bandit";
 	name = "old key";
 	pixel_y = 3
 	},
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	lockid = "bandit";
 	name = "old key";
 	pixel_y = 3
 	},
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	lockid = "bandit";
 	name = "old key";
 	pixel_y = 3
 	},
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	lockid = "bandit";
 	name = "old key";
 	pixel_y = 3
 	},
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	lockid = "bandit";
 	name = "old key";
 	pixel_y = 3
 	},
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	lockid = "bandit";
 	name = "old key";
 	pixel_y = 3
@@ -1993,17 +1993,17 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
 "Yh" = (
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	lockid = "bandit";
 	name = "old key";
 	pixel_x = -9
 	},
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	lockid = "bandit";
 	name = "old key";
 	pixel_y = 3
 	},
-/obj/item/roguekey/walls{
+/obj/item/key/walls{
 	lockid = "bandit";
 	name = "old key";
 	pixel_x = 12

@@ -61,7 +61,7 @@
 	mask = /obj/item/clothing/mask/rogue/sack/psy
 	id = /obj/item/clothing/ring/signet/silver
 	backpack_contents = list(
-		/obj/item/roguekey/inquisition = 1,
+		/obj/item/key/inquisition = 1,
 		/obj/item/grapplinghook = 1,
 		/obj/item/paper/inqslip/arrival/ortho = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,

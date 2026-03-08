@@ -56,7 +56,7 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary = 1,
+		/obj/item/key/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/flashlight/flare/torch
@@ -123,7 +123,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary = 1,
+		/obj/item/key/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,

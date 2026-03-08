@@ -76,7 +76,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
-	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
+	backpack_contents = list(/obj/item/key/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/ortho = 1)
 	belt = /obj/item/storage/belt/rogue/leather/rope/dark
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan

@@ -1257,12 +1257,12 @@
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
 	},
-/obj/item/roguekey/bandit,
-/obj/item/roguekey/bandit{
+/obj/item/key/bandit,
+/obj/item/key/bandit{
 	pixel_x = 11;
 	pixel_y = -3
 	},
-/obj/item/roguekey/bandit{
+/obj/item/key/bandit{
 	pixel_x = -11;
 	pixel_y = -4
 	},
@@ -3431,9 +3431,9 @@
 	dir = 1;
 	icon_state = "longtable"
 	},
-/obj/item/roguekey/vampire,
-/obj/item/roguekey/vampire,
-/obj/item/roguekey/vampire,
+/obj/item/key/vampire,
+/obj/item/key/vampire,
+/obj/item/key/vampire,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/vampire_manor)
 "rH" = (
@@ -4128,11 +4128,11 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampire_manor)
 "wd" = (
-/obj/item/roguekey/inhumen,
+/obj/item/key/inhumen,
 /obj/structure/table/wood/poor,
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
-/obj/item/roguekey/inhumen,
+/obj/item/key/inhumen,
+/obj/item/key/inhumen,
+/obj/item/key/inhumen,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/inhumen/wretch/camp)
 "wj" = (

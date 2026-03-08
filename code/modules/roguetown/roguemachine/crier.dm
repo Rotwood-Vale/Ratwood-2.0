@@ -18,9 +18,9 @@
 	var/total_payments = 0 // Central storage of all broadcaster payments.
 
 /obj/structure/roguemachine/crier/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/roguekey))
-		var/obj/item/roguekey/K = P
-		if(K.lockid == keycontrol || istype(K, /obj/item/roguekey/lord))
+	if(istype(P, /obj/item/key))
+		var/obj/item/key/K = P
+		if(K.lockid == keycontrol || istype(K, /obj/item/key/lord))
 			locked = !locked
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 			return
@@ -32,7 +32,7 @@
 		if(!K.contents.len)
 			return
 		var/list/keysy = K.contents.Copy()
-		for(var/obj/item/roguekey/KE in keysy)
+		for(var/obj/item/key/KE in keysy)
 			if(KE.lockid == keycontrol)
 				locked = !locked
 				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)

@@ -79,8 +79,8 @@
 		update_icon()
 		playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 		return attack_hand(user)
-	if(istype(P, /obj/item/roguekey))
-		var/obj/item/roguekey/K = P
+	if(istype(P, /obj/item/key))
+		var/obj/item/key/K = P
 		if(K.lockid == keycontrol)
 			locked = !locked
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
@@ -94,7 +94,7 @@
 				return
 	if(istype(P, /obj/item/storage/keyring))
 		var/obj/item/storage/keyring/K = P
-		for(var/obj/item/roguekey/KE in K)
+		for(var/obj/item/key/KE in K)
 			if(KE.lockid == keycontrol)
 				locked = !locked
 				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
@@ -380,14 +380,14 @@
 	. = ..()
 
 	// Add room keys with a price of 20
-	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomviii))
+	for (var/X in list(/obj/item/key/roomi, /obj/item/key/roomii, /obj/item/key/roomiii, /obj/item/key/roomiv, /obj/item/key/roomv, /obj/item/key/roomvi, /obj/item/key/roomvii, /obj/item/key/roomviii))
 		var/obj/P = new X(src)
 		held_items[P] = list()
 		held_items[P]["NAME"] = P.name
 		held_items[P]["PRICE"] = 20
 
 	// Add fancy keys with a price of 100
-	for (var/Y in list(/obj/item/storage/keyring/innfancyi, /obj/item/roguekey/fancyroomii, /obj/item/storage/keyring/innfancyiii, /obj/item/storage/keyring/innfancyiv, /obj/item/storage/keyring/innfancyv))
+	for (var/Y in list(/obj/item/storage/keyring/innfancyi, /obj/item/key/fancyroomii, /obj/item/storage/keyring/innfancyiii, /obj/item/storage/keyring/innfancyiv, /obj/item/storage/keyring/innfancyv))
 		var/obj/Q = new Y(src)
 		held_items[Q] = list()
 		held_items[Q]["NAME"] = Q.name
@@ -402,7 +402,7 @@
 	. = ..()
 
 	// Add room keys with a price of 20
-	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomix))
+	for (var/X in list(/obj/item/key/roomi, /obj/item/key/roomii, /obj/item/key/roomiii, /obj/item/key/roomiv, /obj/item/key/roomv, /obj/item/key/roomvi, /obj/item/key/roomvii, /obj/item/key/roomviii, /obj/item/key/roomix))
 		var/obj/P = new X(src)
 		held_items[P] = list()
 		held_items[P]["NAME"] = P.name
@@ -424,7 +424,7 @@
 
 /obj/structure/roguemachine/vendor/merchant/Initialize(mapload)
 	. = ..()
-	for(var/X in list(/obj/item/roguekey/apartments/stall1,/obj/item/roguekey/apartments/stall2,/obj/item/roguekey/apartments/stall3))
+	for(var/X in list(/obj/item/key/apartments/stall1,/obj/item/key/apartments/stall2,/obj/item/key/apartments/stall3))
 		var/obj/P = new X(src)
 		held_items[P] = list()
 		held_items[P]["NAME"] = P.name
@@ -436,7 +436,7 @@
 
 /obj/structure/roguemachine/vendor/stablemaster/Initialize(mapload)
 	. = ..()
-	for(var/X in list(/obj/item/roguekey/apartments/stablemaster_1,/obj/item/roguekey/apartments/stablemaster_2,/obj/item/roguekey/apartments/stablemaster_3,/obj/item/roguekey/apartments/stablemaster_4,/obj/item/roguekey/apartments/stablemaster_5))
+	for(var/X in list(/obj/item/key/apartments/stablemaster_1,/obj/item/key/apartments/stablemaster_2,/obj/item/key/apartments/stablemaster_3,/obj/item/key/apartments/stablemaster_4,/obj/item/key/apartments/stablemaster_5))
 		var/obj/P = new X(src)
 		held_items[P] = list()
 		held_items[P]["NAME"] = P.name
