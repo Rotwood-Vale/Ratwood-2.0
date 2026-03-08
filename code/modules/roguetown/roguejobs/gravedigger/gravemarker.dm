@@ -91,7 +91,7 @@
 				continue
 
 			if(!corpse.getorgan(/obj/item/organ/brain))
-				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without a brain, who would recieve it?."))
+				to_chat(user, span_userdanger("You cannot give this corpse a proper burial without a brain, who would receive it?"))
 				continue
 
 			to_chat(user, span_notice("I feel their soul finding peace..."))
