@@ -116,7 +116,7 @@
 				to_chat(user, "That one hasn't truly passed on yet?!")
 				return
 
-			if(corpse.burialrited && corpse.fake_burialrited)
+			if(corpse.burialrited)
 				to_chat(user, "This grave has already been consecrated...")
 				return
 
@@ -135,6 +135,7 @@
 				user.say("#Rest thy soul for all aeon within Necra's embrace!")
 				to_chat(user, "I have extracted a strand of luxthread, proof of passing.")
 				playsound(user, 'sound/misc/bellold.ogg', 20)
+				corpse.burialrited = TRUE
 				new /obj/item/soulthread((get_turf(user)))
 				record_round_statistic(STATS_GRAVES_CONSECRATED)
 
