@@ -246,6 +246,7 @@
 #define TRAIT_STANDARD_BEARER "Standard Bearer"//Can use the keep's standard to provide buffs and rally the retinue.
 #define TRAIT_FREEHOLDER "Freeholder" //A member of antag village (my lil roguetown)
 #define TRAIT_RAIDER "Raider" //Murder murder kill kill. Freeholder's throne triggers it
+#define TRAIT_TOKEN_TOUCHED "Token Touched" //you can comment your antag only once, habibi
 
 // Economic Roles Traits
 // Most of these should NOT be given to any true combat roles (I.E. anything with Dexpert or Miracle / Good Magic) with very few exceptions
@@ -495,7 +496,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_FUSILIER = span_suppradio("I've been trained in the safe use of smokepowder. Additionally, knowledge above <b><u>journeyman</u></b> status is attainable."),
 	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
 	TRAIT_FREEHOLDER = span_warning("I renounce ye city and bind myself by oath unto mountain village and its folk."),
-	TRAIT_RAIDER = span_userdanger("I am part of the raid.")
+	TRAIT_RAIDER = span_userdanger("I am part of the raid."),
+	TRAIT_TOKEN_TOUCHED = span_warning("I have taken my freehold token, and the press shall yield me no second.")
 ))
 
 // trait accessor defines

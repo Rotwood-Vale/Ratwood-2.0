@@ -1520,6 +1520,10 @@
 	dir = 4
 	},
 /area/rogue/indoors/town/shop)
+"awr" = (
+/obj/structure/roguemachine/capturepoint/church,
+/turf/closed/wall/mineral/rogue/decostone/center,
+/area/rogue/indoors/town/church/chapel)
 "awx" = (
 /obj/structure/mineral_door/bars{
 	locked = 1;
@@ -9648,6 +9652,10 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/town/roofs/keep)
+"cKh" = (
+/obj/structure/roguemachine/capturepoint/lowtown,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/rtfield/rockhill)
 "cKn" = (
 /obj/structure/roguemachine/withdraw,
 /turf/open/floor/rogue/tile,
@@ -33566,7 +33574,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "jls" = (
-/obj/structure/underworld/carriage_normal,
+/obj/structure/roguemachine/freeholdpress,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/shelter/freehold)
 "jlu" = (
@@ -34505,6 +34513,10 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/garrison)
+"jzg" = (
+/obj/structure/roguemachine/capturepoint/hightown,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/town/rockhill)
 "jzi" = (
 /obj/machinery/light/rogue/firebowl/standing/blue,
 /turf/open/floor/rogue/greenstone,
@@ -34784,6 +34796,10 @@
 	name = "reinforced roofing"
 	},
 /area/rogue/indoors/town/manor/rockhill)
+"jDu" = (
+/obj/structure/roguemachine/capturepoint/keep,
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/exposed/town/keep)
 "jDy" = (
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/herringbone,
@@ -213655,7 +213671,7 @@ dlE
 iil
 lYg
 lYg
-jls
+lYg
 rdb
 dlE
 xJL
@@ -214948,7 +214964,7 @@ wxG
 qFF
 dNW
 iZe
-lYg
+jls
 lYg
 lYg
 lYg
@@ -256457,7 +256473,7 @@ xGP
 qvR
 fxx
 fxx
-fxx
+cKh
 sjP
 gAe
 qvR
@@ -375983,7 +375999,7 @@ eYs
 pOf
 nbR
 eYs
-pOf
+jDu
 nbR
 nbR
 pOf
@@ -378610,7 +378626,7 @@ apn
 csd
 gdR
 evo
-aOv
+jzg
 aOv
 pjT
 aOv
@@ -509501,7 +509517,7 @@ fZJ
 fZJ
 fZJ
 fZJ
-tja
+awr
 hmL
 nhW
 tkX
