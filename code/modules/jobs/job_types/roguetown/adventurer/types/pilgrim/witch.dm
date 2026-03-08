@@ -7,7 +7,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	traits_applied = list(TRAIT_DEATHSIGHT, TRAIT_WITCH, TRAIT_ARCYNE_T1, TRAIT_ALCHEMY_EXPERT)
-	maximum_possible_slots = 2 // Changed since witch is a 'power' class for a towner role, makes them more unique
+	maximum_possible_slots = 3 // Changed since witch is a 'power' class for a towner role, makes them more unique
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 2,
