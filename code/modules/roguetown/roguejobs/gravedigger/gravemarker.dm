@@ -101,7 +101,7 @@
 			if(submission)
 				(pacify_coffin(hole, user))
 
-			else//fakes burial so you can kill bill your way out
+			else//fakes burial so you can be retrieved
 				record_round_statistic(STATS_BURIALS_REJECTED)
 
 /proc/ask_burial(mob/living/carbon/human/corpse, mob/user)
@@ -134,44 +134,8 @@
 
 	if(choice == "LIVE")
 
+	to_chat(corpse,span_userdanger("You deny necra's embrace, you're not ready to pass on just yet."))
 
-		//removes cuffs
-		corpse.uncuff()
-
-		// Restore heart if missing
-		if(!corpse.getorgan(/obj/item/organ/heart))
-			var/obj/item/organ/heart/H = new /obj/item/organ/heart()
-			H.Insert(corpse)
-
-		//removes zombie status
-		corpse.mind.remove_antag_datum(/datum/antagonist/zombie)
-		corpse.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
-
-		// Apply revive penalties and healing
-		corpse.apply_status_effect(/datum/status_effect/debuff/revived)
-		corpse.apply_status_effect(/datum/status_effect/buff/burial/determination, 0.1)
-
-		var/list/wounds = corpse.get_wounds()
-		//Prevents chain death
-		if(wounds && wounds.len)
-			corpse.heal_wounds(
-			0,
-			list(
-				/datum/wound/dismemberment,
-				/datum/wound/slash,
-				/datum/wound/artery,
-				/datum/wound/puncture,
-				/datum/wound/fracture/head,
-				/datum/wound/fracture/head/brain,
-				/datum/wound/fracture/neck
-				)
-			)
-
-		corpse.grab_ghost(force = TRUE)
-		corpse.revive(full_heal = FALSE)
-		corpse.update_body()
-		to_chat(corpse,span_userdanger("Through sheer will you find a surge of strength, clawing your way back from death."))
-
-		return FALSE
+	return FALSE
 
 
