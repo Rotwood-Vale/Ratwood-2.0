@@ -597,7 +597,7 @@
 	id = "determination"
 	duration = 2 MINUTES
 	tick_interval = 1 SECONDS
-	examine_text = "SUBJECTPRONOUN looks abosultely pissed off!"
+	examine_text = "SUBJECTPRONOUN looks absolutely pissed off!"
 	var/healing_on_tick = 0.1
 	var/tech_healing_modifier = 0.1
 
