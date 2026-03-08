@@ -1191,6 +1191,7 @@
 #include "code\game\objects\structures\displaycase.dm"
 #include "code\game\objects\structures\divine.dm"
 #include "code\game\objects\structures\dock_bell.dm"
+#include "code\game\objects\structures\dragon_war_banner.dm"
 #include "code\game\objects\structures\dungeontools.dm"
 #include "code\game\objects\structures\fence.dm"
 #include "code\game\objects\structures\fireaxe.dm"
