@@ -17,7 +17,7 @@ GLOBAL_VAR(announcement_throne)
 	var/next_announcement_time = 0
 	var/raid_called = FALSE
 
-/obj/structure/roguemachine/freeholdthrone/Initialize()
+/obj/structure/roguemachine/freeholdthrone/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	START_PROCESSING(SSobj, src)
@@ -52,7 +52,7 @@ GLOBAL_VAR(announcement_throne)
 		return
 
 	var/mob/living/carbon/human/H = speaker
-	var/lower_message = lowertext(message)
+	var/lower_message = UNLINT(lowertext(message))
 
 	if(mode)
 		if(findtext(lower_message, "nevermind"))
