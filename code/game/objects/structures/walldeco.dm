@@ -455,3 +455,30 @@
 	density = FALSE
 	opacity = TRUE
 	max_integrity = 100
+
+/obj/structure/fluff/walldeco/bogbanner
+	name = "banner"
+	desc = "A red banner hanging off a wall."
+	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon_state = "bogbanner-whole"
+	layer = WALL_OBJ_LAYER+0.1
+
+/obj/structure/fluff/walldeco/bogbanner/brown
+	name = "banner"
+	desc = "A red banner hanging off a wall."
+	icon_state = "bogbanner-brown"
+
+/obj/structure/fluff/walldeco/bogbanner/zizo
+	name = "profane banner"
+	desc = "A bloodstained banner with a profane zcross depicted on it."
+	icon_state = "bogbanner-zizo"
+
+/obj/structure/fluff/walldeco/bogbanner/bogguard
+	name = "banner"
+	desc = "A torn banner with a snake depicted on it."
+	icon_state = "bogbanner-snake"
+
+/obj/structure/fluff/walldeco/bogbanner/bogguard/animated
+	name = "banner"
+	desc = "A torn banner with a snake depicted on it."
+	icon_state = "bogbanner-snake-anim"

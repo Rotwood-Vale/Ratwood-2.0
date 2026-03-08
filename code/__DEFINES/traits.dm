@@ -237,6 +237,8 @@
 #define TRAIT_SILVER_WEAK "Silver Weakness"
 #define TRAIT_ASSASSIN	"Assassin"
 #define TRAIT_EQUESTRIAN "Equestrian"
+#define TRAIT_GANG_A "Gang Rontz Ratz"
+#define TRAIT_GANG_B "Gang Blortz Volves"
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
 #define TRAIT_RACISMISBAD "Heritage Vision"
@@ -499,7 +501,9 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
 	TRAIT_FREEHOLDER = span_warning("I renounce ye city and bind myself by oath unto mountain village and its folk."),
 	TRAIT_RAIDER = span_userdanger("I am part of the raid."),
-	TRAIT_TOKEN_TOUCHED = span_warning("I have taken my freehold token, and the press shall yield me no second.")
+	TRAIT_TOKEN_TOUCHED = span_warning("I have taken my freehold token, and the press shall yield me no second."),
+	TRAIT_GANG_A = span_info("I belong to the Rontz Ratz gang"),
+	TRAIT_GANG_B = span_info("I belong to the Blortz Volves gang")
 ))
 
 // trait accessor defines

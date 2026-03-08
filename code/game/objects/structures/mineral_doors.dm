@@ -319,7 +319,7 @@
 	else
 		Open(silent)
 
-/obj/structure/mineral_door/proc/Open(silent = FALSE)
+/obj/structure/mineral_door/proc/Open(silent = FALSE, mob/user)
 	isSwitchingStates = TRUE
 	if(!silent)
 		playsound(src, openSound, 100)
@@ -337,7 +337,7 @@
 	if(close_delay != -1)
 		addtimer(CALLBACK(src, PROC_REF(Close)), close_delay)
 
-/obj/structure/mineral_door/proc/Close(silent = FALSE, autobump = FALSE)
+/obj/structure/mineral_door/proc/Close(silent = FALSE, autobump = FALSE, mob/user)
 	if(isSwitchingStates || !door_opened)
 		return
 	var/turf/T = get_turf(src)

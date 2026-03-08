@@ -580,6 +580,9 @@
 /obj/item/clothing/mask/rogue/ragmask/red //predyed mask for NPCs
 	color = CLOTHING_RED
 
+/obj/item/clothing/mask/rogue/ragmask/azure  //predyed mask for gang
+	color = CLOTHING_AZURE
+
 /obj/item/clothing/mask/rogue/ragmask/black
 	color = CLOTHING_BLACK
 

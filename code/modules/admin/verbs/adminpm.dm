@@ -171,28 +171,37 @@
 			if(recipient.prefs.toggles & SOUND_ADMINHELP)
 				SEND_SOUND(recipient, sound('sound/blank.ogg'))
 
-		else
-			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
-				if(!recipient.current_ticket)
-					new /datum/admin_help(msg, recipient, TRUE)
+		else if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
+			var/datum/admin_help/created_ticket
+			if(!recipient.current_ticket)
+				created_ticket = new /datum/admin_help(msg, recipient, TRUE)
+			else
+				created_ticket = recipient.current_ticket
 
-				to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
-				to_chat(recipient, span_adminsay("Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='linkify'>[msg]</span>"))
-				to_chat(recipient, span_adminsay("<i>Click on the administrator's name to reply.</i>"))
-				to_chat(src, span_notice("Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[msg]</span>"))
+			to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
+			to_chat(recipient, span_adminsay("Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='linkify'>[msg]</span>"))
+			// Provide explicit ticket controls for the new ticket system
+			to_chat(recipient, span_adminsay("<i><a href='?viewticket=1'>View ticket</a> | <a href='?replyticket=1'>Quick reply</a></i>"))
+			to_chat(src, span_notice("Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[msg]</span>"))
 
-				admin_ticket_log(recipient, "<font color='purple'>PM From [key_name_admin(src)]: [keywordparsedmsg]</font>")
+			admin_ticket_log(recipient, "<font color='purple'>PM From [key_name_admin(src)]: [keywordparsedmsg]</font>")
 
-				//always play non-admin recipients the adminhelp sound
-				SEND_SOUND(recipient, sound('sound/adminhelp.ogg'))
+			//always play non-admin recipients the adminhelp sound
+			SEND_SOUND(recipient, sound('sound/adminhelp.ogg'))
 
-				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
-				if(CONFIG_GET(flag/popup_admin_pm))
-					INVOKE_ASYNC(src, PROC_REF(popup_admin_pm), recipient, msg)
+			//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
+			if(CONFIG_GET(flag/popup_admin_pm))
+				INVOKE_ASYNC(src, PROC_REF(popup_admin_pm), recipient, msg)
 
-			else		//neither are admins
-				to_chat(src, span_danger("Error: Admin-PM: Non-admin to non-admin PM communication is forbidden."))
-				return
+			// Open the admin ticket panel with this ticket pre-selected for the sender,
+			// so admins always see their own (admin-facing) view and not the player's chat.
+			if(created_ticket && usr)
+				GLOB.ahelp_tickets.selected_tickets[usr.ckey] = created_ticket.id
+				GLOB.ahelp_tickets.ui_interact(usr)
+
+		else		//neither are admins
+			to_chat(src, span_danger("Error: Admin-PM: Non-admin to non-admin PM communication is forbidden."))
+			return
 
 	if(irc)
 		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")

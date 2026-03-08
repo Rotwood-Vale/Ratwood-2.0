@@ -241,6 +241,10 @@
 			if(H.marriedto == name)
 				. += span_love("It's my spouse.")
 
+		var/gang_message = get_gang_text(user)
+		if (gang_message)
+			. += gang_message
+
 		if(name in GLOB.excommunicated_players)
 			. += span_userdanger("HERETIC! SHAME!")
 
@@ -1154,6 +1158,9 @@
 		else
 			return null
 
+
+/// Freeholders
+
 /mob/living/proc/get_freehold_text(mob/examiner)
 	var/freehold_text
 
@@ -1176,3 +1183,24 @@
 		freehold_text = "A fellow Freeholder."
 
 	return freehold_text
+
+/// Simple gang sytem
+
+/mob/living/proc/get_gang_text(mob/examiner)
+	var/gang_text = null
+
+	if (HAS_TRAIT(src, TRAIT_GANG_A))
+		if (HAS_TRAIT(examiner, TRAIT_GANG_A))
+			gang_text = span_notice ("My Rontz Ratz gang member!")
+		else if (HAS_TRAIT(examiner, TRAIT_GANG_B))
+			gang_text = span_userdanger ("Rontz Ratz scum! Enemy!") ///I don't know why it doesn't indicate the correct gang here
+
+
+	if (HAS_TRAIT(src, TRAIT_GANG_B))
+		if (HAS_TRAIT(examiner, TRAIT_GANG_B))
+			gang_text = span_notice ("My Blortz Volves gang member!")
+		else if (HAS_TRAIT(examiner, TRAIT_GANG_A))
+			gang_text = span_userdanger ("Blortz Volves scum! Enemy!")
+
+	return gang_text
+
