@@ -37,7 +37,7 @@
 	AIStatus = AI_OFF
 	ai_controller = /datum/ai_controller/mudcrab
 	
-/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/Initialize(mapload)
 	..()
 	AddElement(/datum/element/ai_retaliate)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_type)
@@ -69,7 +69,7 @@
 	var/spawning = FALSE
 	attacked_sound = null
 
-/obj/structure/crabnest/Initialize()
+/obj/structure/crabnest/Initialize(mapload)
 	. = ..()
 	spawn_crab()
 

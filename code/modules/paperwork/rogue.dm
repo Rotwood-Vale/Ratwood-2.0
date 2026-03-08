@@ -53,7 +53,7 @@
 	..()
 	user.update_inv_hands()
 
-/obj/item/paper/scroll/Initialize()
+/obj/item/paper/scroll/Initialize(mapload)
 	open = FALSE
 	update_icon_state()
 	..()
@@ -485,16 +485,16 @@
 /obj/item/paper/scroll/writ_of_esteem/zybantine
 	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity. This one bears the signet of the Zybantine Empress."
 	info = "By Imperial Decree of the Calipha, Empress Sayjit Al-Halruik, Premier of Zybantium, Lady of the Gypsum Rose, in the name of PSYDON, the Most Gracious, the Most Merciful.\
-	 I, Empress of the Zybantine Empire, sovereign of desert and court, issue this edict. Bearer, my appointed commander of the journey, holds full covenant and safe-conduct to treat,\
-	 levy, pledge, and seal on behalf of my dominion and community. Let all governors and lords honor this writ, valid beneath my seal, witnessed by my vizier and scribe. Defiance \
-	 invites reckoning; assistance earns favor. Thus is spoken and decreed from the Court of the Empire of Zybantium."
+	I, Empress of the Zybantine Empire, sovereign of desert and court, issue this edict. Bearer, my appointed commander of the journey, holds full covenant and safe-conduct to treat,\
+	levy, pledge, and seal on behalf of my dominion and community. Let all governors and lords honor this writ, valid beneath my seal, witnessed by my vizier and scribe. Defiance \
+	invites reckoning; assistance earns favor. Thus is spoken and decreed from the Court of the Empire of Zybantium."
 	icon_state = "contractsigned"
 
 /obj/item/paper/scroll/writ_of_esteem/grenzel
 	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity.This one bears the signet of the Grenzelhoft Holy See."
 	info = "By the command of his Imperial Majesty, through the Council of Electors, does bestow this writ. Let it be known that the bearer of this writ is empowered to negotiate,\
-	 speak, and act in the Emperor’s stead as if it were His Majesty’s own words. None shall gainsay this authority, under seal and witness of the Electors assembled.\
-	 Verdinand III, Emperor of The Holy See of Grenzelhoft."
+	speak, and act in the Emperor’s stead as if it were His Majesty’s own words. None shall gainsay this authority, under seal and witness of the Electors assembled.\
+	Verdinand III, Emperor of The Holy See of Grenzelhoft."
 	icon_state = "contractsigned"
 
 /obj/item/paper/scroll/writ_of_esteem/otavan

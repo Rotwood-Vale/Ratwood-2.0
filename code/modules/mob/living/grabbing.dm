@@ -30,7 +30,7 @@
 /turf
 	var/list/grabbedby = list()
 
-/obj/item/grabbing/Initialize()
+/obj/item/grabbing/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 

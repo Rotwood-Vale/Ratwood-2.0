@@ -44,7 +44,7 @@
 	/// Whether we can be attached to mindless mobs.
 	var/mindless_attach = TRUE
 
-/obj/item/natural/worms/leech/Initialize()
+/obj/item/natural/worms/leech/Initialize(mapload)
 	. = ..()
 	//leech lore
 	leech_lore()

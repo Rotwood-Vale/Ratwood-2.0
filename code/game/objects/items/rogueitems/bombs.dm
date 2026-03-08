@@ -14,7 +14,7 @@
 	grid_width = 32
 	grid_height = 64
 
-/obj/item/bomb/Initialize()
+/obj/item/bomb/Initialize(mapload)
 	..()
 	fuze = rand(40,60)
 
@@ -135,7 +135,7 @@
 	var/obj/item/bomb/b_type = /obj/item/bomb
 	var/list/obj/item/tripwire/wire_trigger = list()
 
-/obj/item/bomb/tripbomb/Initialize()
+/obj/item/bomb/tripbomb/Initialize(mapload)
 	..()
 	icon_state = b_type.icon_state
 
@@ -203,7 +203,7 @@
 
 	if(istype(I, /obj/item/natural/fibers))
 		if(payload.wire_trigger.len == 2)
-			to_chat(span_warning("I can not extend [src] anymore."))
+			to_chat(user, span_warning("I can not extend [src] anymore."))
 			return ..()
 		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
 			to_chat(user, span_warning("I stop extending [src]."))
@@ -446,7 +446,7 @@
 	grid_width = 32
 	grid_height = 32
 
-/obj/item/impact_grenade/Initialize()
+/obj/item/impact_grenade/Initialize(mapload)
 	. = ..()
 
 // Define a base explodes() proc that subtypes can override because its now explodes proc

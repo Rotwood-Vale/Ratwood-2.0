@@ -562,7 +562,7 @@
 	max_blade_int = 250
 	icon = 'icons/roguetown/weapons/64.dmi'
 
-/obj/item/rogueweapon/greataxe/steel/doublehead/graggar/Initialize()
+/obj/item/rogueweapon/greataxe/steel/doublehead/graggar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "AXE", "RENDERED ASUNDER")
 

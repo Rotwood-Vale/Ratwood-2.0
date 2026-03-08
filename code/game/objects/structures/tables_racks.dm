@@ -260,7 +260,7 @@
 	climb_offset = 10
 	buildstack = /obj/item/grown/log/tree/small
 
-/obj/structure/table/wood/crafted/Initialize()
+/obj/structure/table/wood/crafted/Initialize(mapload)
 	. = ..()
 	icon_state = "tablewood1"
 
@@ -457,7 +457,7 @@
 		/obj/structure/table/wood/fancy/royalblue)
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
-/obj/structure/table/wood/fancy/Initialize()
+/obj/structure/table/wood/fancy/Initialize(mapload)
 	. = ..()
 	// Needs to be set dynamically because table smooth sprites are 32x34,
 	// which the editor treats as a two-tile-tall object. The sprites are that
@@ -657,7 +657,7 @@
 	buckle_requires_restraints = 1
 	var/mob/living/carbon/human/patient = null
 
-/obj/structure/table/optable/Initialize()
+/obj/structure/table/optable/Initialize(mapload)
 	. = ..()
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)

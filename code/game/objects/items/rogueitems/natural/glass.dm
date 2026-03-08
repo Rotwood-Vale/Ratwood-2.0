@@ -109,7 +109,7 @@
 	max_integrity = 40
 	smeltresult = /obj/item/natural/glass
 
-/obj/item/natural/glass_shard/Initialize()
+/obj/item/natural/glass_shard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, force)
 	AddComponent(/datum/component/butchering, 150, 65)

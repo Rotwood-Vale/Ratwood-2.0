@@ -9,7 +9,7 @@
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_ZYBANTINE_EMIR = 20)
 	greet_text = "You are an envoy from the zybantine Empire, traveling with bodyguards and your personal advisor to represent your homeland.\
-	 What exactly you have been sent here to speak about- only you know."
+	What exactly you have been sent here to speak about- only you know."
 
 /datum/advclass/zybantine_emir
 	name = "Emir"

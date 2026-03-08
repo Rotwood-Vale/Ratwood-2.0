@@ -51,7 +51,7 @@
 	can_have_ai = FALSE
 	ai_controller = /datum/ai_controller/mirespider
 
-/mob/living/simple_animal/hostile/retaliate/rogue/mirespider/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/mirespider/Initialize(mapload)
 	. = ..()
 	update_icon()
 	AddElement(/datum/element/ai_retaliate)
@@ -192,7 +192,7 @@
 
 	var/list/mob/living/simple_animal/hostile/retaliate/rogue/mirespider/followers = list()
 
-/mob/living/simple_animal/hostile/rogue/mirespider_lurker/Initialize()
+/mob/living/simple_animal/hostile/rogue/mirespider_lurker/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_KNEESTINGER_IMMUNITY, INNATE_TRAIT)
@@ -280,7 +280,7 @@
 	desc = "YOU SHOULD NOT BE SEEING THIS, GO YELL AT KETRAI."
 	icon_state = "crawler"
 
-/obj/random/spider/Initialize()
+/obj/random/spider/Initialize(mapload)
 	. = ..()
 	spawn_random_spider_at(loc)
 	qdel(src)

@@ -40,7 +40,7 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/timeleft = 20 SECONDS
 
-/obj/structure/forcefield_weak/Initialize()
+/obj/structure/forcefield_weak/Initialize(mapload)
 	. = ..()
 	if(timeleft)
 		QDEL_IN(src, timeleft) //delete after it runs out

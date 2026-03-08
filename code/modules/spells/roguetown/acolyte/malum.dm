@@ -68,6 +68,39 @@
 	charging_slowdown = 3
 	chargedloop = /datum/looping_sound/invokegen
 	devotion_cost = 80
+	/// Structural damage the spell does
+	var/const/structure_damage = 1000
+	/// Radius of the spell
+	var/const/radius = 1
+	/// Radius of the quake
+	var/const/shakeradius = 7
+	/// Delay between the ground marking appearing and the effect playing
+	var/const/delay = 2 SECONDS
+
+/obj/effect/proc_holder/spell/invoked/hammerfall/cast(list/targets, mob/user = usr)
+	var/turf/fallzone = null
+	fallzone = get_turf(targets[1])
+	if(!fallzone)
+		return
+	show_visible_message(usr, "[usr] raises their arm, conjuring a hammer wreathed in molten fire. As they hurl it toward the ground, the earth trembles under its impact, shaking its very foundations!", "You raise your arm, conjuring a hammer wreathed in molten fire. As you hurl it toward the ground, the earth trembles under its impact, shaking its very foundations!")
+	for(var/turf/open/visual in view(radius, fallzone))
+		var/obj/effect/temp_visual/lavastaff/Lava = new /obj/effect/temp_visual/lavastaff(visual)
+		animate(Lava, alpha = 255, time = 5)
+	sleep(delay)
+	for(var/mob/living/carbon/screenshaken in view(shakeradius, fallzone))
+		shake_camera(screenshaken, 5, 5)
+	for(var/mob/living/carbon/shaken in view(radius, fallzone))
+		shaken.apply_effect(1 SECONDS, EFFECT_KNOCKDOWN, 0)
+		show_visible_message(shaken, null, "The ground quakes, making me fall over.")
+	for(var/obj/structure/damaged in view(radius, fallzone))
+		if(istype(damaged, /obj/structure/flora/newbranch))
+			continue
+		damaged.take_damage(structure_damage, BRUTE,"blunt",1)
+	for(var/turf/closed/wall/damagedwalls in view(radius, fallzone))
+		damagedwalls.take_damage(structure_damage, BRUTE,"blunt",1)
+	for(var/turf/closed/mineral/aoemining in view(radius, fallzone))
+		aoemining.lastminer = usr
+		aoemining.take_damage(structure_damage, BRUTE,"blunt",1)
 
 /obj/effect/proc_holder/spell/invoked/craftercovenant
 	name = "The Crafter’s Covenant"
@@ -275,7 +308,7 @@
 		qdel(sacrifice)
 	}
 	buyprice = tithe / divine_tax
-	for (var/list/entry in anvil_recipe_prices)
+	for (var/list/entry in GLOB.anvil_recipe_prices)
 	{
 		var/obj/item/tentative_item = entry[1] // The recipe
 		var/total_sellprice = entry[2] // The precompiled material price
@@ -302,7 +335,8 @@
 			sparks.start()
 			show_visible_message(usr, "A wave of heat washes over the pile as [user] speaks Malum's name. The pile of valuables crumble into dust, only for the dust to reform into an item as if reborn from the flames. Malum has accepted the offering.", "A wave of heat washes over the pile as you speak Malum's name. The pile of valuables crumble into dust, only for the dust to reform into an item as if reborn from the flames. Malum has accepted the offering.")
 
-var/global/list/anvil_recipe_prices[][]
+GLOBAL_LIST_EMPTY(anvil_recipe_prices)
+
 /proc/add_recipe_to_global(datum/anvil_recipe/recipe)
 	var/total_sellprice = 0
 	var/obj/item/ingot/bar = recipe.req_bar
@@ -313,14 +347,14 @@ var/global/list/anvil_recipe_prices[][]
 	if (recipe.additional_items)
 		for (var/obj/additional_item in recipe.additional_items)
 			total_sellprice += additional_item.sellprice
-	if (istype(recipe.created_item, /list))
+	if (islist(recipe.created_item))
 		var/list/itemlist = recipe.created_item
 		total_sellprice = total_sellprice/itemlist.len
-		itemtosend = recipe.created_item[1]
+		itemtosend = itemlist[1]
 	if (!istype(recipe.created_item, /list))
 		itemtosend = recipe.created_item
 	if (total_sellprice > 0)
-		global.anvil_recipe_prices += list(list(itemtosend, total_sellprice))
+		GLOB.anvil_recipe_prices += list(list(itemtosend, total_sellprice))
 
 /proc/initialize_anvil_recipe_prices()
 	for (var/datum/anvil_recipe/armor/recipe)
@@ -335,56 +369,20 @@ var/global/list/anvil_recipe_prices[][]
 	{
 		add_recipe_to_global(recipe)
 	}
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/flute, 10))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/drum, 10))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/harp, 20))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/trumpet, 20))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/lute, 20))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/guitar, 30))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/accord, 30))
-	global.anvil_recipe_prices += list(list(new /obj/item/riddleofsteel, 400))
-	global.anvil_recipe_prices += list(list(new /obj/item/dmusicbox, 500))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/flute, 10))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/drum, 10))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/harp, 20))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/trumpet, 20))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/lute, 20))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/guitar, 30))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/accord, 30))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/riddleofsteel, 400))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/dmusicbox, 500))
 	// Add any other recipe types if needed
 
 /world/New()
 	..()
 	initialize_anvil_recipe_prices() // Precompute recipe prices on startup
-
-/obj/effect/proc_holder/spell/invoked/hammerfall/cast(list/targets, mob/user = usr)
-	var/turf/fallzone = null
-	var/const/damage = 250 //Structural damage the spell does. At 250, it would take 4 casts (8 minutes and 320 devotion) to destroy a normal door.
-	var/const/radius = 1 //Radius of the spell
-	var/const/shakeradius = 7 //Radius of the quake
-	var/diceroll = 0
-	var/const/dc = 42 //Code will roll 2d20 and add target's perception and Speed then compare to this to see if they fall down or not. 42 Means they need to roll 2x 20 with Speed and Perception at I
-	var/const/delay = 2 SECONDS // Delay between the ground marking appearing and the effect playing.
-	fallzone = get_turf(targets[1])
-	if(!fallzone)
-		return
-	else
-		show_visible_message(usr, "[usr] raises their arm, conjuring a hammer wreathed in molten fire. As they hurl it toward the ground, the earth trembles under its impact, shaking its very foundations!", "You raise your arm, conjuring a hammer wreathed in molten fire. As you hurl it toward the ground, the earth trembles under its impact, shaking its very foundations!")
-	for (var/turf/open/visual in view(radius, fallzone))
-		var/obj/effect/temp_visual/lavastaff/Lava = new /obj/effect/temp_visual/lavastaff(visual)
-		animate(Lava, alpha = 255, time = 5)
-	sleep(delay)
-	for (var/mob/living/carbon/screenshaken in view(shakeradius, fallzone))
-		shake_camera(screenshaken, 5, 5)
-	for (var/mob/living/carbon/shaken in view(radius, fallzone))
-		diceroll = roll(2,20) + shaken.STAPER + shaken.STASPD
-		if (diceroll > dc)
-			shaken.apply_effect(1 SECONDS, EFFECT_IMMOBILIZE, 0)
-			show_visible_message(shaken, null, "The ground quakes but I manage to keep my footing.")
-		else
-			shaken.apply_effect(1 SECONDS, EFFECT_KNOCKDOWN, 0)		
-			show_visible_message(shaken, null, "The ground quakes, making me fall over.")
-	for (var/obj/structure/damaged in view(radius, fallzone))
-		if(!istype(damaged, /obj/structure/flora/newbranch))
-			damaged.take_damage(damage,BRUTE,"blunt",1)
-	for (var/turf/closed/wall/damagedwalls in view(radius, fallzone))
-		damagedwalls.take_damage(damage,BRUTE,"blunt",1)
-	for (var/turf/closed/mineral/aoemining in view(radius, fallzone))
-		aoemining.lastminer = usr
-		aoemining.take_damage(damage,BRUTE,"blunt",1)
 
 /obj/effect/proc_holder/spell/invoked/malum_flame_rogue
 	name = "Malum's Fire"

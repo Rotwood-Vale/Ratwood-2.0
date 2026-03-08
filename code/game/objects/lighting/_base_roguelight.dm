@@ -13,7 +13,7 @@
 	var/crossfire = TRUE
 	var/can_damage = FALSE
 
-/obj/machinery/light/rogue/Initialize()
+/obj/machinery/light/rogue/Initialize(mapload)
 	if(soundloop)
 		soundloop = new soundloop(src, FALSE)
 		soundloop.start()

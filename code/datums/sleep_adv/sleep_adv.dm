@@ -1,3 +1,53 @@
+GLOBAL_LIST_INIT(cross_training_map, list(
+	//skill name then list cross trained skills at their multiplier
+	"lumberjacking" = list("axes" = 0.25, "athletics" = 0.05),
+	"crafting" = list("carpentry" = 0.1, "masonry" = 0.1),
+	"weaponsmithing" = list("armorsmithing" = 0.25, "blacksmithing" = 0.25),
+	"armorsmithing" = list("weaponsmithing" = 0.25, "blacksmithing" = 0.25),
+	"blacksmithing" = list("armorsmithing" = 0.25, "weaponsmithing" = 0.25, "smelting" = 0.1),
+	//"smelting" = (),
+	"carpentry" = list("crafting" = 0.25, "masonry" = 0.1),
+	"masonry" = list("crafting" = 0.25, "carpentry" = 0.1),
+	"traps" = list("tracking" = 0.25, "engineering" = 0.25),
+	//"cooking" = list("alchemy" = 0.1),
+	"engineering" = list("traps" = 0.5, "crafting" = 0.1),
+	"tanning" = list("sewing" = 0.5, "butchering" = 0.1),
+	"alchemy" = list("cooking" = 0.1),
+
+	"knives" = list("swords" = 0.25, "unarmed" = 0.1),
+	"swords" = list("knives" = 0.25),
+	"polearms" = list("axes" = 0.25),
+	"maces" = list("whipsflails" = 0.25),
+	"axes" = list("lumberjacking" = 0.5, "polearms" = 0.25),
+	"whipsflails" = list("maces" = 0.25),
+	"bows" = list("crossbows" = 0.25),
+	"crossbows" = list("bows" = 0.25),
+	"wrestling" = list("unarmed" = 0.25),
+	"unarmed" = list("wrestling" = 0.25),
+	//"shields" = (),
+	//"slings" = (),
+
+	//"farming" = (),
+	"mining" = list("axes" = 0.1, "maces" = 0.1, "athletics" = 0.1),
+	//"fishing" = (),
+	"butchering" = list("tanning" = 0.25, "medicine" = 0.25, "knives" = 0.25),
+	"lumberjacking" = list("axes" = 0.25, "unarmed" = 0.05, "athletics" = 0.1),
+
+	"athletics" = list("swimming" = 1, "climbing" = 1),
+	"climbing" = list("athletics" = 0.25, "swimming" = 0.25),
+	//"reading" = (),
+	"swimming" = list("athletics" = 0.1, "climbing" = 0.1),
+	//"stealing" = (),
+	//"sneaking" = (),
+	//"lockpicking" = (),
+	//"riding" = (),
+	//"music" = (),
+	"medicine" = list("sewing" = 0.25, "butchering" = 0.1),
+	"sewing" = list("sewing" = 0.5, "medicine" = 0.1),
+	"tracking" = list("traps" = 0.25, "sneaking" = 0.25),
+	//"ceramics" = (),
+))
+
 /datum/sleep_adv
 	var/sleep_adv_cycle = 0
 	var/sleep_adv_points = 0
@@ -113,8 +163,8 @@
 		show_xp = FALSE
 	if(!can_advance_pre && can_advance_post && !silent)
 		to_chat(mind.current, span_nicegreen(pick(list(
-			"I'm getting a better grasp at [lowertext(skillref.name)]...",
-			"With some rest, I feel like I can get better at [lowertext(skillref.name)]...",
+			"I'm getting a better grasp at [LOWER_TEXT(skillref.name)]...",
+			"With some rest, I feel like I can get better at [LOWER_TEXT(skillref.name)]...",
 			"[skillref.name] starts making more sense to me...",
 		))))
 		if(!COOLDOWN_FINISHED(src, level_up))
@@ -125,7 +175,7 @@
 		show_xp = FALSE
 	if(!capped_pre && capped_post && !silent)
 		to_chat(mind.current, span_nicegreen(pick(list(
-			"My [lowertext(skillref.name)] can no longer improve without some rest and meditation...",
+			"My [LOWER_TEXT(skillref.name)] can no longer improve without some rest and meditation...",
 		))))
 		if(!COOLDOWN_FINISHED(src, level_up))
 			if((L.client?.prefs.floating_text_toggles & XP_TEXT))
@@ -139,14 +189,14 @@
 			COOLDOWN_START(src, xp_show, XP_SHOW_COOLDOWN)
 
 /datum/sleep_adv/proc/add_cross_training_experience(primary_skill, amt)
-	if(!amt || !(primary_skill in CROSS_TRAINING_MAP))
+	if(!amt || !(primary_skill in GLOB.cross_training_map))
 		return
 
 	var/mob/living/L = mind.current
 	if(!L) return
 
-	for(var/secondary_skill in CROSS_TRAINING_MAP[primary_skill])
-		var/multiplier = CROSS_TRAINING_MAP[primary_skill][secondary_skill]
+	for(var/secondary_skill in GLOB.cross_training_map[primary_skill])
+		var/multiplier = GLOB.cross_training_map[primary_skill][secondary_skill]
 		if(!multiplier || multiplier <= 0)
 			continue
 
@@ -155,57 +205,6 @@
 			continue
 
 		adjust_sleep_xp(secondary_skill, sec_amt)
-
-var/global/list/CROSS_TRAINING_MAP = list(
-	//skill name then list cross trained skills at their multiplier
-	"lumberjacking" = list("axes" = 0.25, "athletics" = 0.05),
-	"crafting" = list("carpentry" = 0.1, "masonry" = 0.1),
-	"weaponsmithing" = list("armorsmithing" = 0.25, "blacksmithing" = 0.25),
-	"armorsmithing" = list("weaponsmithing" = 0.25, "blacksmithing" = 0.25),
-	"blacksmithing" = list("armorsmithing" = 0.25, "weaponsmithing" = 0.25, "smelting" = 0.1),
-	//"smelting" = (),
-	"carpentry" = list("crafting" = 0.25, "masonry" = 0.1),
-	"masonry" = list("crafting" = 0.25, "carpentry" = 0.1),
-	"traps" = list("tracking" = 0.25, "engineering" = 0.25),
-	//"cooking" = list("alchemy" = 0.1),
-	"engineering" = list("traps" = 0.5, "crafting" = 0.1),
-	"tanning" = list("sewing" = 0.5, "butchering" = 0.1),
-	"alchemy" = list("cooking" = 0.1),
-
-	"knives" = list("swords" = 0.25, "unarmed" = 0.1),
-	"swords" = list("knives" = 0.25),
-	"polearms" = list("axes" = 0.25),
-	"maces" = list("whipsflails" = 0.25),
-	"axes" = list("lumberjacking" = 0.5, "polearms" = 0.25),
-	"whipsflails" = list("maces" = 0.25),
-	"bows" = list("crossbows" = 0.25),
-	"crossbows" = list("bows" = 0.25),
-	"wrestling" = list("unarmed" = 0.25),
-	"unarmed" = list("wrestling" = 0.25),
-	//"shields" = (),
-	//"slings" = (),
-
-	//"farming" = (),
-	"mining" = list("axes" = 0.1, "maces" = 0.1, "athletics" = 0.1),
-	//"fishing" = (),
-	"butchering" = list("tanning" = 0.25, "medicine" = 0.25, "knives" = 0.25),
-	"lumberjacking" = list("axes" = 0.25, "unarmed" = 0.05, "athletics" = 0.1),
-
-	"athletics" = list("swimming" = 1, "climbing" = 1),
-	"climbing" = list("athletics" = 0.25, "swimming" = 0.25),
-	//"reading" = (),
-	"swimming" = list("athletics" = 0.1, "climbing" = 0.1),
-	//"stealing" = (),
-	//"sneaking" = (),
-	//"lockpicking" = (),
-	//"riding" = (),
-	//"music" = (),
-	"medicine" = list("sewing" = 0.25, "butchering" = 0.1),
-	"sewing" = list("sewing" = 0.5, "medicine" = 0.1),
-	"tracking" = list("traps" = 0.25, "sneaking" = 0.25),
-	//"ceramics" = (),
-)
-
 
 /datum/sleep_adv/proc/advance_cycle()
 	// Stuff
@@ -378,7 +377,7 @@ var/global/list/CROSS_TRAINING_MAP = list(
 			skill_string += " and "
 		else if(i != 1)
 			skill_string += ", "
-		skill_string += lowertext(skill_name)
+		skill_string += LOWER_TEXT(skill_name)
 	to_chat(mind.current, span_notice("I feel inspired about [skill_string]..."))
 
 
@@ -386,7 +385,7 @@ var/global/list/CROSS_TRAINING_MAP = list(
 	if(!can_buy_special())
 		return
 	// Apply special here
-	 //TODO SLEEP ADV SPECIALS
+	//TODO SLEEP ADV SPECIALS
 	sleep_adv_points -= get_special_cost()
 
 /datum/sleep_adv/proc/finish()

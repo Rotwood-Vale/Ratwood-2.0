@@ -410,21 +410,21 @@ GLOBAL_LIST_EMPTY(collar_masters)
 		var/current_arousal = pet.sexcon.arousal
 		if(current_arousal > 60)
 			playsound(pet, pick('sound/vo/female/gen/se/sex (1).ogg',
-							  'sound/vo/female/gen/se/sex (2).ogg',
-							  'sound/vo/female/gen/se/sex (3).ogg',
-							  'sound/vo/female/gen/se/sex (4).ogg',
-							  'sound/vo/female/gen/se/sex (5).ogg',
-							  'sound/vo/female/gen/se/sex (6).ogg',
-							  'sound/vo/female/gen/se/sex (7).ogg'), 50, TRUE)
+							'sound/vo/female/gen/se/sex (2).ogg',
+							'sound/vo/female/gen/se/sex (3).ogg',
+							'sound/vo/female/gen/se/sex (4).ogg',
+							'sound/vo/female/gen/se/sex (5).ogg',
+							'sound/vo/female/gen/se/sex (6).ogg',
+							'sound/vo/female/gen/se/sex (7).ogg'), 50, TRUE)
 			pet.emote("moan")
 		else if(current_arousal > 10)
 			playsound(pet, pick('sound/vo/female/gen/se/sexlight (1).ogg',
-							  'sound/vo/female/gen/se/sexlight (2).ogg',
-							  'sound/vo/female/gen/se/sexlight (3).ogg',
-							  'sound/vo/female/gen/se/sexlight (4).ogg',
-							  'sound/vo/female/gen/se/sexlight (5).ogg',
-							  'sound/vo/female/gen/se/sexlight (6).ogg',
-							  'sound/vo/female/gen/se/sexlight (7).ogg'), 50, TRUE)
+							'sound/vo/female/gen/se/sexlight (2).ogg',
+							'sound/vo/female/gen/se/sexlight (3).ogg',
+							'sound/vo/female/gen/se/sexlight (4).ogg',
+							'sound/vo/female/gen/se/sexlight (5).ogg',
+							'sound/vo/female/gen/se/sexlight (6).ogg',
+							'sound/vo/female/gen/se/sexlight (7).ogg'), 50, TRUE)
 			pet.emote("whimper")
 
 	// Continue loop

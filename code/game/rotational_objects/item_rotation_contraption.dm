@@ -13,7 +13,7 @@
 	var/place_behavior
 	var/resize_factor
 
-/obj/item/rotation_contraption/Initialize()
+/obj/item/rotation_contraption/Initialize(mapload)
 	. = ..()
 	if(placed_type)
 		set_type(placed_type)
