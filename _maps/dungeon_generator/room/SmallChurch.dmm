@@ -68,10 +68,10 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)
 "cN" = (
-/obj/structure/bed/rogue/shit{
+/obj/structure/bed/shit{
 	pixel_y = 23
 	},
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)
 "cP" = (
@@ -396,8 +396,8 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/tomb/indoors/church)
 "mM" = (
-/obj/structure/bed/rogue/inn/hay,
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
+/obj/structure/bed/inn/hay,
 /obj/item/bedsheet/rogue/cloth,
 /obj/effect/spawner/lootdrop/general_loot_low,
 /turf/open/floor/rogue/churchmarble,
@@ -547,7 +547,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/tomb/indoors/church)
 "ty" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /obj/item/bedsheet/rogue/cloth,
 /obj/effect/spawner/lootdrop/general_loot_low,
 /turf/open/floor/rogue/churchmarble,
@@ -925,14 +925,14 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)
 "KC" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /obj/item/bedsheet/rogue/cloth,
 /obj/item/bedsheet/rogue/cloth,
 /mob/living/carbon/human/species/skeleton/npc/hardspread,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)
 "KF" = (
-/obj/structure/bed/rogue/inn,
+/obj/structure/bed/inn,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)
 "KK" = (
@@ -1081,8 +1081,8 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb/cave)
 "PW" = (
-/obj/structure/bed/rogue/shit,
-/obj/structure/bed/rogue/shit{
+/obj/structure/bed/shit,
+/obj/structure/bed/shit{
 	pixel_y = 23
 	},
 /turf/open/floor/rogue/churchmarble,
@@ -1132,7 +1132,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/tomb)
 "SL" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /obj/item/bedsheet/rogue/cloth,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)

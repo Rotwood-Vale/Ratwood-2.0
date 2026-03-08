@@ -190,7 +190,7 @@
 /turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "Oy" = (
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)

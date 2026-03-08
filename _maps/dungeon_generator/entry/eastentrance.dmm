@@ -49,7 +49,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "lo" = (
-/obj/structure/bed/rogue/inn,
+/obj/structure/bed/inn,
 /obj/machinery/light/rogue/torchholder/c,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb/indoors)

@@ -58,7 +58,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "be" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb/indoors)
 "bi" = (
@@ -488,7 +488,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "mj" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "mR" = (
@@ -1036,7 +1036,7 @@
 /turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "Dx" = (
-/obj/structure/bed/rogue/inn/wooldouble,
+/obj/structure/bed/inn/wooldouble,
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
@@ -1152,12 +1152,12 @@
 	},
 /area/rogue/under/tomb/lake)
 "Gw" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "GE" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /obj/item/bedsheet/rogue/pelt,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb/indoors)
@@ -1258,7 +1258,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Ke" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /obj/item/bedsheet/rogue/fabric,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)

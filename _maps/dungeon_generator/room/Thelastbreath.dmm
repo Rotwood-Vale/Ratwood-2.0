@@ -334,7 +334,7 @@
 /area/rogue/under/tomb/indoors)
 "eL" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/l,
-/obj/structure/bed/rogue/inn,
+/obj/structure/bed/inn,
 /obj/item/bedsheet/rogue/fabric,
 /obj/item/natural/cloth,
 /turf/open/floor/rogue/hexstone,
@@ -760,7 +760,7 @@
 /turf/open/water/swamp,
 /area/rogue/under/tomb/cave)
 "ki" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
@@ -1870,7 +1870,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "Bi" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors)
@@ -2003,7 +2003,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/indoors)
 "DA" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors/royal)
@@ -2430,7 +2430,7 @@
 /turf/open/floor/rogue/tile/checker,
 /area/rogue/under/tomb/indoors)
 "IN" = (
-/obj/structure/bed/rogue/inn,
+/obj/structure/bed/inn,
 /obj/item/bedsheet/rogue/fabric,
 /obj/item/natural/cloth,
 /turf/open/floor/rogue/hexstone,
@@ -2564,7 +2564,7 @@
 /turf/open/floor/rogue/church,
 /area/rogue/under/tomb/indoors)
 "Lr" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "Ls" = (
@@ -2932,7 +2932,7 @@
 /area/rogue/under/tomb/indoors)
 "RC" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/r,
-/obj/structure/bed/rogue/inn,
+/obj/structure/bed/inn,
 /obj/item/bedsheet/rogue/fabric,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
@@ -3087,7 +3087,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors)
 "TS" = (
-/obj/structure/bed/rogue/inn,
+/obj/structure/bed/inn,
 /obj/item/bedsheet/rogue/fabric,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)

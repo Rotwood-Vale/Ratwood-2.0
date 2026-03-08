@@ -855,7 +855,7 @@
 /turf/open/floor/rogue/church,
 /area/rogue/under/tomb/indoors)
 "EX" = (
-/obj/structure/bed/rogue/inn,
+/obj/structure/bed/inn,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/tomb/indoors)
 "Fg" = (

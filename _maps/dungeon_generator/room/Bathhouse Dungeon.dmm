@@ -252,7 +252,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "fe" = (
 /obj/machinery/light/rogue/wallfire/candle/weak,
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /turf/open/floor/rogue/church,
 /area/rogue/under/tomb/indoors)
 "fk" = (
@@ -297,7 +297,7 @@
 /turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors)
 "gu" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /turf/open/floor/rogue/church,
 /area/rogue/under/tomb/indoors)
 "gJ" = (
@@ -312,7 +312,7 @@
 	},
 /area/rogue/under/tomb/sewer)
 "gQ" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/double_pelt,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors/royal)
@@ -1000,7 +1000,7 @@
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/tomb/indoors/magic)
 "uT" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors/royal)
@@ -1081,7 +1081,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "wj" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/tomb/indoors/royal)
@@ -1347,7 +1347,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "BX" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /turf/open/floor/rogue/church,
 /area/rogue/under/tomb/indoors)
 "BY" = (

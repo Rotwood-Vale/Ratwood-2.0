@@ -27,7 +27,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "i" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "j" = (
@@ -40,7 +40,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "l" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
@@ -120,7 +120,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "B" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobble,

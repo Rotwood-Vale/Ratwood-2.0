@@ -248,7 +248,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/tomb/cave/wet)
 "KX" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /obj/item/bedsheet/rogue/pelt,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors)

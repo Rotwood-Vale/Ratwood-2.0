@@ -76,7 +76,7 @@
 /turf/open/water/swamp/deep,
 /area/rogue/under/tomb/cave/lava)
 "jL" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/indoors)
 "jO" = (
@@ -203,7 +203,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/cave/lava)
 "AG" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/indoors)
 "Ce" = (

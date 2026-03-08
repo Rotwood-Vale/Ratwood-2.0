@@ -122,7 +122,7 @@
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/tomb)
 "bL" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /obj/structure/fluff/walldeco/painting/queen{
 	pixel_x = 31;
@@ -1198,7 +1198,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb/indoors)
 "nU" = (
-/obj/structure/bed/rogue/inn,
+/obj/structure/bed/inn,
 /obj/item/bedsheet/rogue/fabric{
 	pixel_x = 0;
 	pixel_y = 7
@@ -1361,7 +1361,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/under/tomb/indoors)
 "qg" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /obj/machinery/light/rogue/wallfire/candle/blue,
 /turf/open/floor/rogue/tile/masonic/single,
@@ -1708,7 +1708,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "vx" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/carpet/red,
 /area/rogue/under/tomb/indoors)
@@ -1776,7 +1776,7 @@
 /turf/closed/wall/pipe,
 /area/rogue/under/tomb/indoors)
 "wr" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/under/tomb/indoors)
 "ws" = (
@@ -2205,7 +2205,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb/indoors)
 "AK" = (
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /obj/item/bedsheet/rogue/pelt,
 /obj/item/clothing/head/roguetown/helmet/coppercap,
 /turf/open/floor/rogue/twig,
@@ -2426,7 +2426,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "CX" = (
-/obj/structure/bed/rogue/inn,
+/obj/structure/bed/inn,
 /obj/item/bedsheet/rogue/fabric,
 /turf/open/floor/rogue/tile/masonic/spiral,
 /area/rogue/under/tomb/indoors)
@@ -2548,7 +2548,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb)
 "EO" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/twig,
 /area/rogue/under/tomb/indoors)
 "ET" = (
@@ -4000,7 +4000,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/royal)
 "Wb" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /mob/living/carbon/human/species/orc/npc/footsoldier,
 /turf/open/floor/rogue/twig,
 /area/rogue/under/tomb/indoors)

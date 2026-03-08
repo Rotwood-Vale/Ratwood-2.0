@@ -21,7 +21,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "e" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/landmark/start/vagrantlate{
 	dir = 8
@@ -36,7 +36,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "g" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
@@ -71,7 +71,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "n" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/effect/decal/remains/human/grave,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
@@ -205,7 +205,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "N" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "O" = (
@@ -249,7 +249,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "V" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)

@@ -218,7 +218,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue)
 "Lj" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /mob/living/simple_animal/hostile/retaliate/rogue/orc,
 /turf/open/floor/rogue/dirt,
 /area/rogue)

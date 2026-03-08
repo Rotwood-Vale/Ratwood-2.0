@@ -835,7 +835,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb/indoors)
 "Wz" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/bedsheet/rogue/pelt,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -845,7 +845,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/cave)
 "WO" = (
-/obj/structure/bed/rogue/inn/wooldouble,
+/obj/structure/bed/inn/wooldouble,
 /obj/item/bedsheet/rogue/double_pelt,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)

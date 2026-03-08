@@ -46,7 +46,7 @@
 /obj/effect/decal/remains/human{
 	pixel_y = 12
 	},
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "t" = (

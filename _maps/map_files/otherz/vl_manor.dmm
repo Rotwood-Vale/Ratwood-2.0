@@ -461,7 +461,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/vampire_manor)
 "hC" = (
-/obj/structure/bed/rogue/inn/double{
+/obj/structure/bed/inn/double{
 	dir = 1
 	},
 /obj/item/bedsheet/rogue/fabric_double{
@@ -821,7 +821,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/vampire_manor)
 "oc" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/vampire_manor)
 "of" = (
@@ -1295,7 +1295,7 @@
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/woods/vampire_lair)
 "wy" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/vampire_manor)
@@ -1337,7 +1337,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/vampire_manor)
 "wX" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/vampire_manor)
 "wZ" = (
@@ -2147,7 +2147,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampire_manor)
 "JG" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/vampire_manor)
 "JJ" = (
@@ -2364,7 +2364,7 @@
 /turf/open/floor/rogue/tile/bfloorz,
 /area/rogue/indoors/vampire_manor)
 "Mu" = (
-/obj/structure/bed/rogue/inn/double{
+/obj/structure/bed/inn/double{
 	dir = 1
 	},
 /obj/item/bedsheet/rogue/fabric_double{
@@ -2456,7 +2456,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/vampire_manor)
 "NK" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 1
 	},

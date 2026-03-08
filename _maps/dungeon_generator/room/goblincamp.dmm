@@ -223,7 +223,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb/wilds)
 "AA" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /mob/living/carbon/human/species/goblin/npc/cave,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/indoors)
@@ -356,7 +356,7 @@
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/under/tomb/wilds)
 "Pu" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/indoors)
 "QS" = (

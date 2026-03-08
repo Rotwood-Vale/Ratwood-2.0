@@ -503,7 +503,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "tv" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/carpet/red,
 /area/rogue/under/tomb/indoors/royal)
 "tJ" = (
@@ -604,7 +604,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/indoors/royal)
 "zj" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/carpet/red,
 /area/rogue/under/tomb/indoors/royal)

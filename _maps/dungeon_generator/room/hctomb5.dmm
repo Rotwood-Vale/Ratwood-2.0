@@ -502,7 +502,7 @@
 /area/rogue/under/tomb)
 "Zz" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
-/obj/structure/bed/rogue/inn,
+/obj/structure/bed/inn,
 /obj/item/bedsheet/rogue/wool,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/tomb/indoors/rest)

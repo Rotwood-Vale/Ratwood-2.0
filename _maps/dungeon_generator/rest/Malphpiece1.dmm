@@ -36,7 +36,7 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "ax" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/indoors)
 "ay" = (
@@ -109,7 +109,7 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "uR" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "vD" = (

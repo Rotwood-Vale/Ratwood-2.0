@@ -231,7 +231,7 @@
 	},
 /area/rogue/under/tomb)
 "wA" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
 "wE" = (
@@ -353,7 +353,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "JM" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "JR" = (

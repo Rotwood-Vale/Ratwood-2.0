@@ -316,7 +316,7 @@
 			if("wielded")
 				return list("shrink" = 0.8,"sx" = -20,"sy" = -6,"nx" = 0,"ny" = -7,"wx" = -18,"wy" = -5,"ex" = -4,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -42,"sturn" = 33,"wturn" = 33,"eturn" = -21,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 
-/obj/structure/bed/rogue
+/obj/structure/bed
 	icon_state = "bed"
 	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
@@ -326,32 +326,32 @@
 	debris = list(/obj/item/grown/log/tree/small = 1)
 	metalizer_result = /obj/machinery/anvil/crafted
 
-/obj/structure/bed/rogue/OnCrafted(dirin)
+/obj/structure/bed/OnCrafted(dirin)
 	dirin = turn(dirin, 180)
 	. = ..(dirin)
 	update_icon()
 
-/obj/structure/bed/rogue/attack_right(mob/user)
+/obj/structure/bed/attack_right(mob/user)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
 		rotcomp.HandRot(rotcomp,user,ROTATION_CLOCKWISE)
 
-/obj/structure/bed/rogue/shit
+/obj/structure/bed/shit
 	name = "straw bed"
 	desc = "A rough bed of straw. It's scratchy, and probably hides lots of bugs, but at least it's dry and warm."
 	icon_state = "shitbed"
 	sleepy = 1
 	metalizer_result = null
 
-/obj/structure/bed/rogue/post_buckle_mob(mob/living/M)
+/obj/structure/bed/post_buckle_mob(mob/living/M)
 	..()
 	M.set_mob_offsets("bed_buckle", _x = 0, _y = 5)
 
-/obj/structure/bed/rogue/post_unbuckle_mob(mob/living/M)
+/obj/structure/bed/post_unbuckle_mob(mob/living/M)
 	..()
 	M.reset_offsets("bed_buckle")
 
-/obj/structure/bed/rogue/bedroll
+/obj/structure/bed/bedroll
 	name = "bedroll"
 	desc = "So you can sleep on the ground in relative peace."
 	icon_state = "bedroll"
@@ -360,7 +360,7 @@
 	sleepy = 2
 	metalizer_result = null
 
-/obj/structure/bed/rogue/bedroll/attack_hand(mob/user, params)
+/obj/structure/bed/bedroll/attack_hand(mob/user, params)
 	..()
 	user.visible_message(span_notice("[user] begins rolling up \the [src]."))
 	if(do_after(user, 2 SECONDS, TRUE, src))
@@ -392,11 +392,11 @@
 			return
 	user.visible_message(span_notice("[user] begins placing \the [src] down on the ground."))
 	if(do_after(user, 2 SECONDS, TRUE, src))
-		var/obj/structure/bed/rogue/bedroll/new_bedroll = new /obj/structure/bed/rogue/bedroll(get_turf(src))
+		var/obj/structure/bed/bedroll/new_bedroll = new /obj/structure/bed/bedroll(get_turf(src))
 		new_bedroll.color = src.color
 		qdel(src)
 
-/obj/structure/bed/rogue/inn
+/obj/structure/bed/inn
 	icon_state = "inn_bed"
 	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
@@ -405,7 +405,7 @@
 	sleepy = 3
 	debris = list(/obj/item/grown/log/tree/small = 1)
 
-/obj/structure/bed/rogue/inn/wooldouble
+/obj/structure/bed/inn/wooldouble
 	icon_state = "double_wool"
 	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
@@ -415,7 +415,7 @@
 	sleepy = 3
 	debris = list(/obj/item/grown/log/tree/small = 2)
 
-/obj/structure/bed/rogue/inn/double
+/obj/structure/bed/inn/double
 	icon_state = "double"
 	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
@@ -425,17 +425,17 @@
 	sleepy = 3
 	debris = list(/obj/item/grown/log/tree/small = 2)
 /*            ///////WIP  This will essentially allow for multiple mobs to buckle, just needs to change mousedrop function
-/obj/structure/bed/rogue/inn/double
+/obj/structure/bed/inn/double
 	var/list/buckled_mobs = list()
 
-/obj/structure/bed/rogue/inn/double/post_buckle_mob(mob/living/M)
+/obj/structure/bed/inn/double/post_buckle_mob(mob/living/M)
 	. = ..()
 	if(!buckled_mobs)
 		buckled_mobs = list()
 	buckled_mobs += M
 	M.set_mob_offsets("bed_buckle", _x = buckled_mobs.len * 10, _y = 5)
 
-/obj/structure/bed/rogue/inn/double/post_unbuckle_mob(mob/living/M)
+/obj/structure/bed/inn/double/post_unbuckle_mob(mob/living/M)
 	. = ..()
 	if(M in buckled_mobs)
 		buckled_mobs -= M
@@ -446,7 +446,7 @@
 		buckled_mob.set_mob_offsets("bed_buckle", _x = x_offset, _y = 5)
 		x_offset += 10
 */
-/obj/structure/bed/rogue/inn/hay
+/obj/structure/bed/inn/hay
 	icon_state = "haybed"
 	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
@@ -455,7 +455,7 @@
 	sleepy = 3
 	debris = list(/obj/item/grown/log/tree/small = 1)
 
-/obj/structure/bed/rogue/inn/wool
+/obj/structure/bed/inn/wool
 	icon_state = "woolbed"
 	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
@@ -464,7 +464,7 @@
 	sleepy = 3
 	debris = list(/obj/item/grown/log/tree/small = 1)
 
-/obj/structure/bed/rogue/inn/pileofshit
+/obj/structure/bed/inn/pileofshit
 	icon_state = "shitbed2"
 	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE

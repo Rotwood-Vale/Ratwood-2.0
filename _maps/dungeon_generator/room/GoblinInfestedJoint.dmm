@@ -405,7 +405,7 @@
 /turf/open/floor/rogue/rooftop,
 /area/rogue/under/tomb)
 "mE" = (
-/obj/structure/bed/rogue/inn/wooldouble,
+/obj/structure/bed/inn/wooldouble,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "mQ" = (
@@ -729,7 +729,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "zU" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "zV" = (

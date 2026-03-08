@@ -559,7 +559,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(buckled?.sleepy)
 			sleepy_mod = buckled.sleepy
 		else if(isturf(loc)) //No illegal tech.
-			var/obj/structure/bed/rogue/bed = locate() in loc
+			var/obj/structure/bed/bed = locate() in loc
 			if(bed)
 				sleepy_mod = bed.sleepy
 			else
@@ -598,7 +598,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(buckled?.sleepy)
 			sleepy_mod = buckled.sleepy
 		else if(isturf(loc) && !(mobility_flags & MOBILITY_STAND))
-			var/obj/structure/bed/rogue/bed = locate() in loc
+			var/obj/structure/bed/bed = locate() in loc
 			if(bed)
 				sleepy_mod = bed.sleepy
 			else

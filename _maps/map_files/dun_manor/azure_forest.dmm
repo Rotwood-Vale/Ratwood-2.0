@@ -593,7 +593,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest)
 "eA" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/shelter/woods)
 "eC" = (
@@ -723,7 +723,7 @@
 /area/rogue/outdoors/beach/forest)
 "fJ" = (
 /obj/item/bedsheet/rogue/double_pelt,
-/obj/structure/bed/rogue/inn/wooldouble,
+/obj/structure/bed/inn/wooldouble,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "fQ" = (
@@ -934,7 +934,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/shelter/mountains)
 "hG" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/forest)
 "hI" = (
@@ -1062,7 +1062,7 @@
 	},
 /area/rogue/indoors/shelter/woods)
 "iB" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors/shelter/woods)
 "iC" = (
@@ -1456,7 +1456,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/town/basement)
 "lO" = (
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /obj/item/bedsheet/rogue/pelt,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
@@ -1857,7 +1857,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors/shelter/woods)
 "pk" = (
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/woods)
 "po" = (
@@ -2428,7 +2428,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "tT" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /obj/item/reagent_containers/glass/bottle/rogue/healthpot,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
@@ -2496,7 +2496,7 @@
 /turf/open/water/sewer,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "ut" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/dungeon1/gethsmane)
@@ -2788,7 +2788,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "wU" = (
-/obj/structure/bed/rogue,
+/obj/structure/bed,
 /obj/effect/landmark/start/bogguardsman{
 	name = "Warden";
 	dir = 8;
@@ -2869,7 +2869,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/shelter/woods)
 "xG" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement)
 "xH" = (
@@ -3009,7 +3009,7 @@
 /area/rogue/indoors)
 "yT" = (
 /obj/item/bedsheet/rogue/pelt,
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "yY" = (
@@ -3668,7 +3668,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors)
 "DL" = (
-/obj/structure/bed/rogue/inn/pileofshit,
+/obj/structure/bed/inn/pileofshit,
 /obj/item/bedsheet/rogue/cloth,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/town/basement)
@@ -4422,7 +4422,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/woods)
 "Ju" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement)
 "Jw" = (
@@ -4522,7 +4522,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/woods)
 "Ky" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "wooden_floort"
 	},
@@ -4823,7 +4823,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/town/basement)
 "MY" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/item/clothing/suit/roguetown/shirt/rags,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
@@ -4869,7 +4869,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors)
 "Nq" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /mob/living/carbon/human/species/goblin/npc/ambush/sea,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement)
@@ -6061,7 +6061,7 @@
 /turf/closed/wall/wooddark/end,
 /area/rogue/indoors/shelter/woods)
 "Xr" = (
-/obj/structure/bed/rogue/inn/wooldouble,
+/obj/structure/bed/inn/wooldouble,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "Xt" = (
@@ -6372,7 +6372,7 @@
 /area/rogue/indoors)
 "ZH" = (
 /obj/item/flint,
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "ZL" = (

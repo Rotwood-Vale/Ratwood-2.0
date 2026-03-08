@@ -629,7 +629,7 @@
 
 /datum/crafting_recipe/roguetown/structure/strawbed
 	name = "bed, straw"
-	result = /obj/structure/bed/rogue/shit
+	result = /obj/structure/bed/shit
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/fibers = 1)
 	verbage_simple = "construct"
@@ -639,7 +639,7 @@
 
 /datum/crafting_recipe/roguetown/structure/bed
 	name = "bed, nice"
-	result = /obj/structure/bed/rogue/inn
+	result = /obj/structure/bed/inn
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/natural/cloth = 2)
 	tools = list(/obj/item/needle)
@@ -650,7 +650,7 @@
 
 /datum/crafting_recipe/roguetown/structure/woolbed
 	name = "bed, wood"
-	result = /obj/structure/bed/rogue/inn/wool
+	result = /obj/structure/bed/inn/wool
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/natural/cloth = 1)
 	tools = list(/obj/item/needle)
@@ -661,7 +661,7 @@
 
 /datum/crafting_recipe/roguetown/structure/doublebed
 	name = "bed, double"
-	result = /obj/structure/bed/rogue/inn/double
+	result = /obj/structure/bed/inn/double
 	reqs = list(/obj/item/grown/log/tree/small = 3,
 				/obj/item/natural/cloth = 4)
 	tools = list(/obj/item/needle)
@@ -673,7 +673,7 @@
 
 /datum/crafting_recipe/roguetown/structure/wooldoublebed
 	name = "bed, double wool"
-	result = /obj/structure/bed/rogue/inn/wooldouble
+	result = /obj/structure/bed/inn/wooldouble
 	reqs = list(/obj/item/grown/log/tree/small = 3,
 				/obj/item/natural/cloth = 3)
 	tools = list(/obj/item/needle)

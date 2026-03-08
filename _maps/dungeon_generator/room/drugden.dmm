@@ -19,7 +19,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "fo" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
@@ -39,7 +39,7 @@
 /turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/wet)
 "ht" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "hA" = (
@@ -51,7 +51,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "hU" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/item/roguestatue/iron,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
@@ -77,7 +77,7 @@
 /turf/open/water/bath,
 /area/rogue/under/tomb/indoors)
 "js" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /mob/living/carbon/human/species/skeleton/npc/mediumspread,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
@@ -266,7 +266,7 @@
 /area/rogue/under/tomb/indoors)
 "AD" = (
 /obj/machinery/light/rogue/wallfire/candle/blue,
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Be" = (

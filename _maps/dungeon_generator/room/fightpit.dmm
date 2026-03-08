@@ -603,7 +603,7 @@
 /turf/closed/wall/stone/window/moss,
 /area/rogue/under/tomb)
 "YP" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "YS" = (

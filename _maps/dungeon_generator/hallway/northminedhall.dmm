@@ -93,7 +93,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "C" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/item/clothing/cloak/raincloak,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)

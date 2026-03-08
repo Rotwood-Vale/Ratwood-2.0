@@ -87,7 +87,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "bn" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/structure/curtain,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
@@ -324,7 +324,7 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "gl" = (
-/obj/structure/bed/rogue/inn/wooldouble{
+/obj/structure/bed/inn/wooldouble{
 	pixel_y = -1;
 	pixel_x = 1
 	},
@@ -388,7 +388,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "hD" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/structure/curtain,
 /obj/item/natural/worms/leech/cheele,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -601,7 +601,7 @@
 	},
 /area/rogue/under/tomb/indoors/church)
 "mS" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/structure/curtain,
 /obj/item/weapon/surgery/bonesetter,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -667,7 +667,7 @@
 /obj/effect/decal/cobbleedge{
 	dir = 10
 	},
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors/church)
 "ot" = (
@@ -977,7 +977,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/under/tomb/indoors)
 "tb" = (
-/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
 /obj/item/reagent_containers/food/snacks/rogue/meat/mince/fish,
 /obj/item/reagent_containers/food/snacks/rogue/meat/mince/fish{
@@ -1357,7 +1357,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb)
 "BG" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/structure/curtain,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -1792,7 +1792,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
 "JT" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/structure/curtain,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -1950,7 +1950,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "Nw" = (
-/obj/structure/bed/rogue/bedroll,
+/obj/structure/bed/bedroll,
 /turf/open/floor/rogue/tile,
 /area/rogue/under/tomb/indoors)
 "Nx" = (

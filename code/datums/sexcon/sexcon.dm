@@ -33,7 +33,7 @@
 	/// Whether we want to screw until finished, or non stop
 	var/do_until_finished = TRUE
 	/// The bed (if) we're occupying, update on starting an action
-	var/obj/structure/bed/rogue/bed = null
+	var/obj/structure/bed/bed = null
 	var/target_on_bed = FALSE
 	/// The table/pillory (if) target is lying/latching on, update on starting an action
 	var/obj/structure/table_or_pillory = null
@@ -153,27 +153,6 @@
 	
 	if((collar_bell_user || collar_bell_target) && (force > SEX_FORCE_MID))
 		playsound(collar_bell_target && target ? target : user, SFX_COLLARJINGLE, 50, TRUE, ignore_walls = FALSE)
-
-/obj/structure/bed/rogue
-	var/broken_matress = FALSE
-	var/broken_percentage = 0
-
-/obj/structure/bed/rogue/proc/damage_bed(dam_value)
-	if(sleepy <= 2) // the bed is already pretty awful and broken (i.e: straw bed/bedroll), so don't break it even further
-		return
-	broken_percentage += dam_value
-	if(!broken_matress && (broken_percentage >= 100))
-		broken_matress = TRUE
-		sleepy = 1 //Worse than a bedroll, better than nothing
-		visible_message(span_warning("\The [src] gives an violent snap. It looks broken!"))
-		playsound(src, 'sound/misc/mat/bed break.ogg', 50, TRUE, ignore_walls = FALSE)
-		desc += " The bed looks stained and has seen better daes."
-	else if(broken_percentage >= 100) // clamp
-		broken_percentage = 100
-	else
-		playsound(src, pick(list('sound/misc/mat/bed squeak (1).ogg','sound/misc/mat/bed squeak (2).ogg','sound/misc/mat/bed squeak (3).ogg')), 25, TRUE, ignore_walls = FALSE)
-		if(broken_percentage > 10)
-			playsound(src, 'sound/misc/mat/bed damage.ogg', broken_percentage>>2, TRUE, ignore_walls = FALSE)
 
 /datum/sex_controller/proc/is_spent()
 	if(charge < CHARGE_FOR_CLIMAX)

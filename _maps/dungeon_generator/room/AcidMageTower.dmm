@@ -614,7 +614,7 @@
 /turf/open/lava/acid,
 /area/rogue/under/tomb/cave/wet)
 "xo" = (
-/obj/structure/bed/rogue/inn/wooldouble,
+/obj/structure/bed/inn/wooldouble,
 /obj/item/bedsheet/rogue/fabric_double,
 /obj/item/clothing/ring/gold,
 /obj/machinery/light/rogue/wallfire/candle/blue,

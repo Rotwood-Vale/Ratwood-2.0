@@ -92,7 +92,7 @@
 	},
 /area/rogue/under/tomb/cave/lava)
 "to" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/tomb/indoors)
 "tq" = (

@@ -761,7 +761,7 @@
 /turf/open/floor/rogue/blocks/platform,
 /area/rogue/under/cave/inhumen/wretch/temple)
 "cj" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/item/bedsheet/rogue/cloth,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/inhumen/wretch/camp)
@@ -1155,7 +1155,7 @@
 /obj/structure/fluff/walldeco/chains{
 	icon_state = "chains8"
 	},
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/structure/bars/grille,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen/wretch/camp)
@@ -1603,7 +1603,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/cave/inhumen/wretch/ghrotto)
 "hw" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/ruinedwood{
 	dir = 1;
 	icon_state = "vertw"
@@ -1721,7 +1721,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
 "ii" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampire_manor)
 "ij" = (
@@ -2091,7 +2091,7 @@
 /turf/open/floor/rogue/sand,
 /area/rogue/under/cave/inhumen/wretch/graggarena)
 "kl" = (
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /obj/item/bedsheet/rogue/cloth,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen/wretch/camp)
@@ -2297,7 +2297,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/banditcamp)
 "lg" = (
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /obj/item/bedsheet/rogue/cloth,
 /obj/machinery/light/roguestreet/walllamp,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -2642,7 +2642,7 @@
 /obj/structure/fluff/walldeco/chains{
 	icon_state = "chains5"
 	},
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/structure/bars/grille,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen/wretch/camp)
@@ -3692,7 +3692,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/inhumen/wretch/camp)
 "tl" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/banditcamp)
 "tp" = (
@@ -3878,7 +3878,7 @@
 	name = "Wretched Caves"
 	})
 "uL" = (
-/obj/structure/bed/rogue{
+/obj/structure/bed{
 	dir = 1
 	},
 /turf/open/floor/rogue/hexstone,
@@ -5368,7 +5368,7 @@
 	name = "Wretched Caves"
 	})
 "Dd" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/item/bedsheet/rogue/cloth,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen/wretch/camp)
@@ -5527,7 +5527,7 @@
 	name = "Wretched Caves"
 	})
 "DR" = (
-/obj/structure/bed/rogue,
+/obj/structure/bed,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/banditcamp)
 "DS" = (
@@ -5721,7 +5721,7 @@
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
 "EV" = (
-/obj/structure/bed/rogue/inn/hay,
+/obj/structure/bed/inn/hay,
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/vampire_manor)
@@ -5980,7 +5980,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/mountains)
 "Go" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/item/bedsheet/rogue/cloth,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/cave/inhumen/wretch/camp)
@@ -6838,7 +6838,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/inhumen/wretch/camp)
 "Lr" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/item/bedsheet/rogue/cloth,
 /obj/structure/roguemachine/scomm{
 	pixel_x = 32;
@@ -6939,7 +6939,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/banditcamp)
 "LX" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/item/bedsheet/rogue/cloth,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen/wretch/temple)
@@ -8510,7 +8510,7 @@
 	},
 /area/rogue/outdoors/cave/inhumen/wretch/ghrotto)
 "Wb" = (
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /obj/structure/fluff/walldeco/med3{
 	pixel_y = 32
 	},
@@ -8911,7 +8911,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/cave/inhumen/wretch/ghrotto)
 "Yx" = (
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /obj/item/bedsheet/rogue/cloth,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
@@ -8996,7 +8996,7 @@
 /obj/structure/fluff/walldeco/chains{
 	icon_state = "chains4"
 	},
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /obj/structure/bars/grille,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/inhumen/wretch/camp)

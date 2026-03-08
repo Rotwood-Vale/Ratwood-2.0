@@ -30,7 +30,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/banditcamp)
 "ai" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
 "ak" = (
@@ -329,7 +329,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/banditcamp)
 "ic" = (
-/obj/structure/bed/rogue/inn/hay{
+/obj/structure/bed/inn/hay{
 	dir = 1
 	},
 /turf/open/floor/rogue/twig,
@@ -364,7 +364,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
 "iZ" = (
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /obj/structure/fluff/walldeco/med5{
 	pixel_x = 32
 	},
@@ -595,7 +595,7 @@
 /area/rogue/outdoors/banditcamp)
 "on" = (
 /obj/structure/fluff/railing/border/east,
-/obj/structure/bed/rogue/shit{
+/obj/structure/bed/shit{
 	name = "makeshift bed"
 	},
 /turf/open/floor/rogue/dirt/road,
@@ -1393,7 +1393,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/banditcamp)
 "Iu" = (
-/obj/structure/bed/rogue/bedroll{
+/obj/structure/bed/bedroll{
 	dir = 1
 	},
 /turf/open/floor/rogue/hay,
@@ -1571,7 +1571,7 @@
 /turf/open/floor/rogue/hay,
 /area/rogue/indoors/banditcamp)
 "Nv" = (
-/obj/structure/bed/rogue/bedroll{
+/obj/structure/bed/bedroll{
 	dir = 1
 	},
 /obj/machinery/light/rogue/torchholder/l,
@@ -1632,7 +1632,7 @@
 /area/rogue/outdoors/banditcamp)
 "Pv" = (
 /obj/structure/fluff/railing/border/north,
-/obj/structure/bed/rogue/shit{
+/obj/structure/bed/shit{
 	name = "makeshift bed"
 	},
 /turf/open/floor/rogue/dirt/road,
@@ -1656,7 +1656,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/banditcamp)
 "PR" = (
-/obj/structure/bed/rogue/shit{
+/obj/structure/bed/shit{
 	name = "makeshift bed"
 	},
 /turf/open/floor/rogue/hay,
@@ -1730,7 +1730,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/banditcamp)
 "Rr" = (
-/obj/structure/bed/rogue/inn/wool,
+/obj/structure/bed/inn/wool,
 /obj/structure/fluff/walldeco/med3{
 	pixel_x = 32
 	},
@@ -1975,7 +1975,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/banditcamp)
 "XM" = (
-/obj/structure/bed/rogue/shit,
+/obj/structure/bed/shit,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
 "XY" = (
