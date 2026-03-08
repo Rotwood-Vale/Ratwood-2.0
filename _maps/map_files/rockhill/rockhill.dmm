@@ -39738,6 +39738,10 @@
 	icon_state = "wooden_floor2"
 	},
 /area/rogue/outdoors/beach/harbor)
+"kDQ" = (
+/obj/machinery/light/rogue/wallfire/candle/blue,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/underdark/rockhill)
 "kDS" = (
 /obj/structure/fluff/statue/small{
 	pass_flags = 1;
@@ -44442,7 +44446,7 @@
 /area/rogue/under/town/basement)
 "lXK" = (
 /obj/structure/fluff/freehold_ladder_portal/six,
-/turf/open/floor/rogue/grasspurple,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/under/underdark/rockhill)
 "lXN" = (
 /obj/structure/roguemachine/chimeric_heart_beast,
@@ -71852,6 +71856,10 @@
 "tEb" = (
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/garrison)
+"tEe" = (
+/obj/machinery/light/rogue/wallfire/candle/blue,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cavewet)
 "tEi" = (
 /obj/structure/bars,
 /obj/structure/table/wood,
@@ -159136,7 +159144,7 @@ efz
 mUI
 mUI
 mUI
-jkR
+mUI
 mUI
 mUI
 mUI
@@ -159999,8 +160007,8 @@ ael
 ael
 mUI
 mtu
-jkR
-ael
+kDQ
+efz
 mtu
 mUI
 mUI
@@ -160428,10 +160436,10 @@ vJc
 vJc
 efz
 efz
-ael
-ael
+efz
+efz
 aQf
-ael
+efz
 lXK
 mtu
 mUI
@@ -160863,8 +160871,8 @@ ael
 dFR
 mUI
 mtu
-jkR
-ael
+efz
+efz
 mtu
 mUI
 bpD
@@ -161727,9 +161735,9 @@ efz
 mUI
 mUI
 mUI
-jkR
-jkR
-jkR
+mUI
+mUI
+mUI
 bpD
 bpD
 bpD
@@ -163777,7 +163785,7 @@ jxS
 jxS
 jxS
 jxS
-aaf
+tEe
 gRs
 wcM
 whb
@@ -164205,9 +164213,9 @@ whb
 whb
 whb
 jxS
-gRs
-gRs
-gRs
+aaf
+aaf
+aaf
 gQh
 wcM
 gRs
@@ -164637,7 +164645,7 @@ whb
 whb
 whb
 jxS
-aaf
+tEe
 aaf
 aaf
 cVP
@@ -165501,9 +165509,9 @@ whb
 whb
 whb
 jxS
-gRs
-gRs
-gRs
+aaf
+aaf
+aaf
 jxS
 whb
 whb
@@ -181972,7 +181980,7 @@ aaf
 aaf
 whb
 xks
-aaf
+tEe
 aaf
 xks
 whb
