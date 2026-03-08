@@ -49,7 +49,7 @@
 /area/rogue/under/tomb)
 "s" = (
 /obj/structure/handcart,
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "u" = (
@@ -74,7 +74,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "C" = (
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "D" = (

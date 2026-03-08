@@ -34,7 +34,7 @@
 	. += span_smallnotice("Knives and lockpicks can be stowed inside.")
 
 /obj/item/clothing/shoes/roguetown/boots/attackby(obj/item/W, mob/living/carbon/user, params)
-	if(istype(W, /obj/item/rogueweapon/huntingknife))
+	if(istype(W, /obj/item/weapon/huntingknife))
 		if(holdingknife == null)
 			for(var/obj/item/clothing/shoes/roguetown/boots/B in user.get_equipped_items(TRUE))
 				to_chat(loc, span_warning("I quickly slot [W] into [B]!"))

@@ -108,35 +108,35 @@
 		if("Longsword + Shield")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
-			beltr = /obj/item/rogueweapon/sword/long
-			r_hand = /obj/item/rogueweapon/scabbard/sword
-			backr = /obj/item/rogueweapon/shield/tower/metal
+			beltr = /obj/item/weapon/sword/long
+			r_hand = /obj/item/weapon/scabbard/sword
+			backr = /obj/item/weapon/shield/tower/metal
 		if("Mace + Shield")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
-			beltr = /obj/item/rogueweapon/mace
-			backr = /obj/item/rogueweapon/shield/tower/metal
+			beltr = /obj/item/weapon/mace
+			backr = /obj/item/weapon/shield/tower/metal
 		if("Flail + Shield")
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
-			beltr = /obj/item/rogueweapon/flail
-			backr = /obj/item/rogueweapon/shield/tower/metal
+			beltr = /obj/item/weapon/flail
+			backr = /obj/item/weapon/shield/tower/metal
 		if("Billhook")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
-			r_hand = /obj/item/rogueweapon/spear/billhook
-			backr = /obj/item/rogueweapon/scabbard/gwstrap
+			r_hand = /obj/item/weapon/spear/billhook
+			backr = /obj/item/weapon/scabbard/gwstrap
 		if("Lance + Kite Shield")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
-			r_hand = /obj/item/rogueweapon/spear/lance
-			backr = /obj/item/rogueweapon/shield/tower/metal
+			r_hand = /obj/item/weapon/spear/lance
+			backr = /obj/item/weapon/shield/tower/metal
 		if("Battle Axe")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-			r_hand = /obj/item/rogueweapon/stoneaxe/battle
+			r_hand = /obj/item/weapon/stoneaxe/battle
 		if("Greataxe")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-			r_hand = /obj/item/rogueweapon/greataxe
-			backr = /obj/item/rogueweapon/scabbard/gwstrap
+			r_hand = /obj/item/weapon/greataxe
+			backr = /obj/item/weapon/scabbard/gwstrap
 
 /datum/migrant_role/kj_squire
 	name = "Squire"

@@ -99,7 +99,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blkknight/death
 	gloves = /obj/item/clothing/gloves/roguetown/plate/blk/death
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/black
-	backl = /obj/item/rogueweapon/sword/long/death
+	backl = /obj/item/weapon/sword/long/death
 
 	H.change_stat(STATKEY_INT, 3)
 	H.change_stat(STATKEY_STR, 2)

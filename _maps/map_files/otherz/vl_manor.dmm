@@ -202,8 +202,8 @@
 /area/rogue/indoors/vampire_manor)
 "dm" = (
 /obj/structure/closet/crate/roguecloset,
-/obj/item/rogueweapon/huntingknife/cleaver,
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /obj/item/clothing/head/roguetown/chef,
 /obj/item/kitchen/spoon/iron,
 /obj/item/kitchen/spoon/iron,
@@ -387,7 +387,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/vampire_manor)
 "fQ" = (
-/obj/item/rogueweapon/pick,
+/obj/item/weapon/pick,
 /turf/open/floor/rogue/dirt/ambush,
 /area/rogue/indoors/vampire_manor)
 "fW" = (
@@ -531,10 +531,10 @@
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
 	},
-/obj/item/rogueweapon/hammer/iron,
-/obj/item/rogueweapon/tongs,
-/obj/item/rogueweapon/tongs,
-/obj/item/rogueweapon/hammer/iron,
+/obj/item/weapon/hammer/iron,
+/obj/item/weapon/tongs,
+/obj/item/weapon/tongs,
+/obj/item/weapon/hammer/iron,
 /obj/machinery/light/rogue/wallfire/candle/l,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
@@ -1903,7 +1903,7 @@
 /obj/structure/closet/crate/roguecloset,
 /obj/item/soap/bath,
 /obj/item/soap/bath,
-/obj/item/rogueweapon/huntingknife/scissors/steel{
+/obj/item/weapon/huntingknife/scissors/steel{
 	pixel_y = -5;
 	sellprice = 8
 	},
@@ -2133,7 +2133,7 @@
 /area/rogue/indoors/vampire_manor)
 "Jx" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/shield/wood,
+/obj/item/weapon/shield/wood,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/vampire_manor)
 "JD" = (
@@ -2686,7 +2686,7 @@
 /area/rogue/indoors/vampire_manor)
 "Rr" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/shield/wood,
+/obj/item/weapon/shield/wood,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/vampire_manor)
@@ -3029,7 +3029,7 @@
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/rogueweapon/huntingknife/chefknife{
+/obj/item/weapon/huntingknife/chefknife{
 	pixel_x = 5;
 	pixel_y = 1
 	},

@@ -74,7 +74,7 @@
 	backpack_contents = list(
 		/obj/item/recipe_book/survival = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
+		/obj/item/weapon/huntingknife = 1,
 		/obj/item/flint = 1,
 		)
 	if(H.age == AGE_OLD)//So ppl have reason to pick this I guess?

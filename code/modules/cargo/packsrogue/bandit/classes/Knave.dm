@@ -126,27 +126,27 @@
 /datum/supply_pack/rogue/Knave/placejapan
 	name = "Kazengunese Dagger"
 	cost = 25
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/kazengun)
+	contains = list(/obj/item/weapon/huntingknife/idagger/steel/kazengun)
 
 /datum/supply_pack/rogue/Knave/parrydag
 	name = "Parry Dagger"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/parrying)
+	contains = list(/obj/item/weapon/huntingknife/idagger/steel/parrying)
 
 /datum/supply_pack/rogue/Knave/saildagger
 	name = "Etruscan Sail Dagger"
 	cost = 30
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/parrying/vaquero)
+	contains = list(/obj/item/weapon/huntingknife/idagger/steel/parrying/vaquero)
 
 /datum/supply_pack/rogue/Knave/Navaja
 	name = "Navaja"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/navaja)
+	contains = list(/obj/item/weapon/huntingknife/idagger/navaja)
 
 /datum/supply_pack/rogue/Knave/elfdagger
 	name = "Elven Dagger"
 	cost = 40
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver/elvish)
+	contains = list(/obj/item/weapon/huntingknife/idagger/silver/elvish)
 
 //////////////////////
 // WEAPONS - RANGED //
@@ -185,12 +185,12 @@
 /datum/supply_pack/rogue/Knave/steeltossblade
 	name = "Single Steel Tossblade"
 	cost = 5
-	contains = list(/obj/item/rogueweapon/huntingknife/throwingknife/steel)
+	contains = list(/obj/item/weapon/huntingknife/throwingknife/steel)
 
 /datum/supply_pack/rogue/Knave/silvertossblade
 	name = "Single Silver Tossblade"
 	cost = 25 // Because I can imagine how annoying these would be. 
-	contains = list(/obj/item/rogueweapon/huntingknife/throwingknife/silver)
+	contains = list(/obj/item/weapon/huntingknife/throwingknife/silver)
 
 /////////////////////////////
 // WEAPONS - RANGED - AMMO //

@@ -46,7 +46,7 @@
 	var/mob_type
 	var/mob/new_mob
 	var/spawned_mobs = 0	
-	loot = list(/obj/item/rogueweapon/mace/goden/deepduke)
+	loot = list(/obj/item/weapon/mace/goden/deepduke)
 //stolen from lich code
 /mob/living/simple_animal/hostile/boss/fishboss/handle_automated_action()
 	. = ..()
@@ -91,6 +91,6 @@
 	src.spawn_gibs()
 	src.spawn_gibs()
 	src.spawn_gibs()
-	new/obj/item/rogueweapon/mace/goden/deepduke(src.drop_location())
+	new/obj/item/weapon/mace/goden/deepduke(src.drop_location())
 	qdel(src)
 	return

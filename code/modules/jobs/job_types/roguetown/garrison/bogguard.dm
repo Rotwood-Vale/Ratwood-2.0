@@ -82,11 +82,11 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden
 	beltr = /obj/item/quiver/arrows
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/warden_machete
+	beltl = /obj/item/weapon/huntingknife/idagger/warden_machete
 	backpack_contents = list(
 		/obj/item/storage/keyring/guard = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		/obj/item/signal_horn = 1
 		)
@@ -156,14 +156,14 @@
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
-	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
-	beltl = /obj/item/rogueweapon/huntingknife
-	r_hand = /obj/item/rogueweapon/spear
+	backl = /obj/item/weapon/scabbard/gwstrap
+	beltr = /obj/item/weapon/stoneaxe/woodcut/wardenpick
+	beltl = /obj/item/weapon/huntingknife
+	r_hand = /obj/item/weapon/spear
 	backpack_contents = list(
 		/obj/item/storage/keyring/guard = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/signal_horn = 1
 		)
 	H.verbs |= /mob/proc/haltyell

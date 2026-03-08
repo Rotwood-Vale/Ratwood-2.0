@@ -53,8 +53,8 @@
 		/obj/item/reagent_containers/food/snacks/butter = 1,
 		/obj/item/kitchen/rollingpin = 1,
 		/obj/item/flint = 1,
-		/obj/item/rogueweapon/huntingknife/chefknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/chefknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/recipe_book/survival = 1,
 		)
 		// no ration wrappers by design

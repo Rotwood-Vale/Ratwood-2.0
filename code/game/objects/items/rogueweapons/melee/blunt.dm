@@ -77,7 +77,7 @@
 
 //blunt objs ฅ^•ﻌ•^ฅ
 
-/obj/item/rogueweapon/mace
+/obj/item/weapon/mace
 	force = 20
 	force_wielded = 25
 	possible_item_intents = list(/datum/intent/mace/strike)
@@ -104,7 +104,7 @@
 	wbalance = WBALANCE_HEAVY
 	icon_angle_wielded = 50
 
-/obj/item/rogueweapon/mace/getonmobprop(tag)
+/obj/item/weapon/mace/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -115,7 +115,7 @@
 			if("onbelt")
 				return list("shrink" = 0.5,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/mace/bronze
+/obj/item/weapon/mace/bronze
 	force = 23
 	force_wielded = 29
 	name = "bronze mace"
@@ -126,7 +126,7 @@
 	max_integrity = 250
 	wdefense = 2
 
-/obj/item/rogueweapon/mace/alloy
+/obj/item/weapon/mace/alloy
 	name = "decrepit mace"
 	desc = "Frayed bronze, perched atop a rotwooden shaft. His sacrifice had drowned Old Syon, and - in its wake - left Man bereft of all it had accomplished. With all other prayers falling upon deaf ears, Man had crafted this idol in tribute to its new God; violence."
 	icon_state = "amace"
@@ -139,7 +139,7 @@
 	anvilrepair = null
 
 
-/obj/item/rogueweapon/mace/church
+/obj/item/weapon/mace/church
 	force = 25
 	force_wielded = 30
 	name = "bell ringer"
@@ -149,7 +149,7 @@
 	smeltresult = /obj/item/ingot/steel
 	wdefense = 3
 
-/obj/item/rogueweapon/mace/steel
+/obj/item/weapon/mace/steel
 	force = 25
 	force_wielded = 32
 	name = "steel mace"
@@ -160,13 +160,13 @@
 	wdefense = 3
 	smelt_bar_num = 2
 
-/obj/item/rogueweapon/mace/steel/palloy
+/obj/item/weapon/mace/steel/palloy
 	name = "ancient alloy mace"
 	desc = "Polished gilbranze, perched atop a reinforced shaft. Break the unenlightened into naught-but-giblets; like a potter's vessels, dashed against the rocks."
 	icon_state = "amace"
 	smeltresult = /obj/item/ingot/aaslag
 
-/obj/item/rogueweapon/mace/steel/silver
+/obj/item/weapon/mace/steel/silver
 	force = 30
 	force_wielded = 35
 	name = "silver mace"
@@ -179,7 +179,7 @@
 	smelt_bar_num = 2
 	is_silver = TRUE
 
-/obj/item/rogueweapon/mace/steel/silver/ComponentInitialize()
+/obj/item/weapon/mace/steel/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -190,7 +190,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/mace/woodclub
+/obj/item/weapon/mace/woodclub
 	force = 15
 	force_wielded = 18
 	name = "wooden club"
@@ -206,7 +206,7 @@
 	minstr = 7
 	resistance_flags = FLAMMABLE
 
-/obj/item/rogueweapon/mace/woodclub/New()
+/obj/item/weapon/mace/woodclub/New()
 	..()
 	icon_state = "club[rand(1,2)]"
 
@@ -221,7 +221,7 @@
 /datum/intent/mace/smash/wood/ranged
 	reach = 2
 
-/obj/item/rogueweapon/mace/cudgel
+/obj/item/weapon/mace/cudgel
 	name = "cudgel"
 	desc = "A stubby little club for used by guards, brigands, and various criminals. Perfect to cripple someone on a budget."
 	force = 22
@@ -248,7 +248,7 @@
 	intent_intdamage_factor = 0.5	// Purposefully bad at damaging armor.
 	icon_state = "inbash"	// Wallop is too long for a button; placeholder.
 
-/obj/item/rogueweapon/mace/cudgel/shellrungu
+/obj/item/weapon/mace/cudgel/shellrungu
 	name = "shell rungu"
 	desc = "A ceremonial rungu carved out of clam shell. Not intended for combat. Its used in various Sea and Coastal Elven rituals and ceremonies."
 	icon = 'icons/gems/gem_shell.dmi'
@@ -257,7 +257,7 @@
 	max_integrity = 75
 	sellprice = 35
 
-/obj/item/rogueweapon/mace/cudgel/psy
+/obj/item/weapon/mace/cudgel/psy
 	name = "psydonic handmace"
 	desc = "A shorter variant of the flanged silver mace, rebalanced for one-handed usage. It isn't uncommon for these sidearms to mysteriously 'vanish' from an Adjudicator's belt, only to be 'rediscovered' - and subsequently kept - by a Confessor."
 	force = 25
@@ -270,7 +270,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/mace/cudgel/psy/ComponentInitialize()
+/obj/item/weapon/mace/cudgel/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -281,7 +281,7 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/mace/cudgel/psy/preblessed/ComponentInitialize()
+/obj/item/weapon/mace/cudgel/psy/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -292,7 +292,7 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/mace/cudgel/psy/old
+/obj/item/weapon/mace/cudgel/psy/old
 	name = "enduring handmace"
 	desc = "A shorthanded mace and convenient sleeping aid, its grown harder to swing with age, though it hasn't lost reliability."
 	force = 20
@@ -301,10 +301,10 @@
 	icon_state = "opsyflangedmace"
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rogueweapon/mace/cudgel/psy/old/ComponentInitialize()
+/obj/item/weapon/mace/cudgel/psy/old/ComponentInitialize()
 	return
 
-/obj/item/rogueweapon/mace/cudgel/copper
+/obj/item/weapon/mace/cudgel/copper
 	name = "copper bludgeon"
 	desc = "An extremely crude weapon for cruder bastards."
 	force = 15
@@ -313,7 +313,7 @@
 	smeltresult = /obj/item/ingot/copper
 	wdefense = 2
 
-/obj/item/rogueweapon/mace/cudgel/justice
+/obj/item/weapon/mace/cudgel/justice
 	name = "'Justice'"
 	desc = "The icon of the right of office of the Marshal. While mostly ceremonial in design, it serves it's purpose in dishing out some much needed justice."
 	force = 30
@@ -328,7 +328,7 @@
 	minstr = 7
 	wdefense = 5
 
-/obj/item/rogueweapon/mace/cudgel/getonmobprop(tag)
+/obj/item/weapon/mace/cudgel/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -337,7 +337,7 @@
 			if("onbelt")
 				return list("shrink" = 0.4,"sx" = -3,"sy" = -4,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 70,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 1,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/mace/wsword
+/obj/item/weapon/mace/wsword
 	name = "wooden sword"
 	desc = "This wooden sword is great for training."
 	force = 5
@@ -355,7 +355,7 @@
 	resistance_flags = FLAMMABLE
 
 
-/obj/item/rogueweapon/mace/wsword/getonmobprop(tag)
+/obj/item/weapon/mace/wsword/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -367,7 +367,7 @@
 				return list("shrink" = 0.5,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 
-/obj/item/rogueweapon/mace/goden
+/obj/item/weapon/mace/goden
 	force = 15
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/mace/strike)
@@ -392,7 +392,7 @@
 	bigboy = TRUE
 	gripsprite = TRUE
 
-/obj/item/rogueweapon/mace/goden/getonmobprop(tag)
+/obj/item/weapon/mace/goden/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -403,7 +403,7 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/mace/goden/aalloy
+/obj/item/weapon/mace/goden/aalloy
 	name = "decrepit grand mace"
 	desc = "Good nite, sire."
 	force = 12
@@ -414,7 +414,7 @@
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
-/obj/item/rogueweapon/mace/goden/steel
+/obj/item/weapon/mace/goden/steel
 	name = "grand mace"
 	desc = "Good morning, sire."
 	icon_state = "polemace"
@@ -424,14 +424,14 @@
 	smelt_bar_num = 2
 	wdefense_wbonus = 5
 
-/obj/item/rogueweapon/mace/goden/steel/paalloy
+/obj/item/weapon/mace/goden/steel/paalloy
 	name = "ancient grand mace"
 	desc = "A twisting polehammer, forged in polished gilbranze. What did you think this was all about? This destruction, this war, this sacrifice; it was all to prepare Man for its true ascension."
 	icon_state = "ancient_supermace"
 	smeltresult = /obj/item/ingot/aaslag
 
 
-/obj/item/rogueweapon/mace/goden/deepduke
+/obj/item/weapon/mace/goden/deepduke
 	name = "deep duke's staff"
 	desc = "A staff made of seaglass and sturdy but unusual metal, holding no power after its misled owner's death. More useful as a bashing tool than a magic focus."
 	icon = 'icons/mob/monster/pufferboss.dmi'
@@ -443,7 +443,7 @@
 	smeltresult = /obj/item/ingot/steelholy
 	smelt_bar_num = 2
 
-/obj/item/rogueweapon/mace/goden/kanabo
+/obj/item/weapon/mace/goden/kanabo
 	name = "kanabo"
 	desc = "A steel-banded wooden club, made to break the enemy in spirit as much as in flesh. One of the outliers among the many more elegant weapons of Kazengun."
 	icon_state = "kanabo"
@@ -451,7 +451,7 @@
 	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/stab, /datum/intent/effect/daze)
 	max_integrity = 225 // it's strong wood, but it's still wood.
 
-/obj/item/rogueweapon/mace/goden/psymace
+/obj/item/weapon/mace/goden/psymace
 	name = "psydonic mace"
 	desc = "An ornate mace, plated in a ceremonial veneer of silver. Even the unholy aren't immune to discombobulation."
 	icon_state = "psymace"
@@ -464,7 +464,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/mace/goden/psymace/ComponentInitialize()
+/obj/item/weapon/mace/goden/psymace/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -475,7 +475,7 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/mace/goden/psymace/old
+/obj/item/weapon/mace/goden/psymace/old
 	name = "enduring mace"
 	desc = "An ornate mace, its silver tarnished by neglect. Even without HIS holy blessing, its weight ENDURES."
 	icon_state = "psymace"
@@ -487,16 +487,16 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/mace/goden/psymace/old/ComponentInitialize()
+/obj/item/weapon/mace/goden/psymace/old/ComponentInitialize()
 	return
 
-/obj/item/rogueweapon/mace/spiked
+/obj/item/weapon/mace/spiked
 	icon_state = "spiked_club"
 
-/obj/item/rogueweapon/mace/steel/morningstar
+/obj/item/weapon/mace/steel/morningstar
 	icon_state = "morningstar"
 
-/obj/item/rogueweapon/mace/warhammer
+/obj/item/weapon/mace/warhammer
 	force = 20
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/pick)
 	gripped_intents = null
@@ -507,7 +507,7 @@
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 3
 
-/obj/item/rogueweapon/mace/warhammer/alloy
+/obj/item/weapon/mace/warhammer/alloy
 	name = "decrepit warhammer"
 	desc = "A macehead of frayed bronze, spiked and perched atop a thin shaft. To see such a knightly implement abandoned to decay and neglect; that wounds the heart greater than any well-poised strike."
 	icon_state = "awarhammer"
@@ -518,7 +518,7 @@
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
-/obj/item/rogueweapon/mace/warhammer/steel
+/obj/item/weapon/mace/warhammer/steel
 	force = 25
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/pick, /datum/intent/mace/warhammer/stab)
 	name = "steel warhammer"
@@ -527,7 +527,7 @@
 	smeltresult = /obj/item/ingot/steel
 	wdefense = 4
 
-/obj/item/rogueweapon/mace/warhammer/getonmobprop(tag)
+/obj/item/weapon/mace/warhammer/getonmobprop(tag)
 	if(tag)
 		switch(tag)
 			if("gen")
@@ -538,13 +538,13 @@
 				return list("shrink" = 0.4,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 	return ..()
 
-/obj/item/rogueweapon/mace/warhammer/steel/paalloy
+/obj/item/weapon/mace/warhammer/steel/paalloy
 	name = "ancient alloy warhammer"
 	desc = "A macehead of polished gilbranze, spiked and perched atop a reinforced shaft. An elegant weapon from a more civilized age; when Man lived in harmony with one-another, and when 'the undying' was nothing more than a nitemare's thought."
 	icon_state = "awarhammer"
 	smeltresult = /obj/item/ingot/aaslag
 
-/obj/item/rogueweapon/mace/warhammer/steel/silver
+/obj/item/weapon/mace/warhammer/steel/silver
 	name = "silver warhammer"
 	desc = "A heavy warhammer, forged from pure silver. It follows the Otavan design of a 'lucerene'; a shortened polehammer with a pronounced spike, rebalanced for one-handed usage. Resplendent in presentation, righteous in purpose."
 	icon_state = "silverhammer"
@@ -556,7 +556,7 @@
 	smelt_bar_num = 2
 	is_silver = TRUE
 
-/obj/item/rogueweapon/mace/warhammer/steel/silver/ComponentInitialize()
+/obj/item/weapon/mace/warhammer/steel/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -596,7 +596,7 @@
 
 //Mauls. Woe. Most characters will not be able to engage with this, beyond hobbling.
 //Why? The unique strength lockout. The minimum strength is not a suggestion.
-/obj/item/rogueweapon/mace/maul
+/obj/item/weapon/mace/maul
 	force = 12//Don't one-hand this.
 	force_wielded = 32//-3 compared to grand mace(steel goden). Better intents.
 	possible_item_intents = list(/datum/intent/mace/strike)
@@ -623,7 +623,7 @@
 	minstr_req = TRUE//You MUST have the required strength. No exceptions.
 	max_integrity = 300
 
-/obj/item/rogueweapon/mace/maul/getonmobprop(tag)
+/obj/item/weapon/mace/maul/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -632,7 +632,7 @@
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
-/obj/item/rogueweapon/mace/maul/grand
+/obj/item/weapon/mace/maul/grand
 	name = "grand maul"
 	desc = "You could probably crack a man's spine just by tapping them with this. \
 	Only a lunatic would carry something so heavy, however."
@@ -645,14 +645,14 @@
 	max_integrity = 350
 
 //Malumite maul. Intended for Templars.
-/obj/item/rogueweapon/mace/maul/grand/malum
+/obj/item/weapon/mace/maul/grand/malum
 	name = "Kargrund Maul"
 	desc = "Forged from the legacy of dwarven rock-hammers, this maul’s holy steel and divine runes grant it immense power. \
 	Unwieldy to those weak of arm or faith, its mighty blows have the strength to shatter both stone and skull alike."
 	icon_state = "malumhammer"
 	minstr = 8//Handled by the unique interaction below. Inverted to start, since they spawn with it, and funny stuff can happen.
 
-/obj/item/rogueweapon/mace/maul/grand/malum/pickup(mob/living/user)
+/obj/item/weapon/mace/maul/grand/malum/pickup(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_FORGEBLESSED))
 		src.minstr = 8//-10, if you have the ability to use this.
 	else
@@ -661,7 +661,7 @@
 
 //This thing is warded. For fluff. And because it's COOL, we give them silver blessings.
 //+1 DEF from it, too. For a total of 7 defence when wielded.
-/obj/item/rogueweapon/mace/maul/grand/malum/ComponentInitialize()
+/obj/item/weapon/mace/maul/grand/malum/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_TENNITE,\
@@ -673,7 +673,7 @@
 	)
 
 //Dwarvish mauls. Unobtanium outside of Grudgebearer. Do not change that.
-/obj/item/rogueweapon/mace/maul/steel
+/obj/item/weapon/mace/maul/steel
 	name = "dwarvish maul"
 	desc = "An incredibly heavy, oversized hammer. The owner is not compensating, for this maul will do the speaking. \
 	This one has been well balanced, allowing for a weaker wielder to make use of it."
@@ -684,7 +684,7 @@
 	smelt_bar_num = 3//You'll break my heart.
 	max_integrity = 340
 
-/obj/item/rogueweapon/mace/maul/spiked
+/obj/item/weapon/mace/maul/spiked
 	name = "spiked maul"
 	desc = "Covered in spikes, such is the weapon of a Dwarvish smith. \
 	This one has been well balanced, allowing for a weaker wielder to make use of it."

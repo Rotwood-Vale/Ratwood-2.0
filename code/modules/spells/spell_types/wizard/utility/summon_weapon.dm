@@ -19,7 +19,7 @@
 		var/message
 		if(!marked_item) //linking item to the spell
 			message = "<span class='notice'>"
-			for(var/obj/item/rogueweapon/item in hand_items)
+			for(var/obj/item/weapon/item in hand_items)
 				if(item.item_flags & ABSTRACT)
 					continue
 				if(SEND_SIGNAL(item, COMSIG_ITEM_MARK_RETRIEVAL) & COMPONENT_BLOCK_MARK_RETRIEVAL)
@@ -48,7 +48,7 @@
 			marked_item = 		null
 
 		else	//Getting previously marked item
-			var/obj/item/rogueweapon/item_to_retrieve = marked_item
+			var/obj/item/weapon/item_to_retrieve = marked_item
 
 			var/infinite_recursion = 0 //I don't want to know how someone could put something inside itself but these are wizards so let's be safe
 			while(!isturf(item_to_retrieve.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.

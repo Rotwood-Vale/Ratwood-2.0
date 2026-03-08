@@ -29,11 +29,11 @@
 		cloak = /obj/item/clothing/cloak/stabard/bog
 	switch(rand(1, 3))
 		if(1)
-			r_hand = /obj/item/rogueweapon/sword/iron
+			r_hand = /obj/item/weapon/sword/iron
 		if(2)
-			r_hand = /obj/item/rogueweapon/spear
+			r_hand = /obj/item/weapon/spear
 		if(3)
-			r_hand = /obj/item/rogueweapon/mace
+			r_hand = /obj/item/weapon/mace
 	H.STASTR = rand(12,14)
 	H.STASPD = 8
 	H.STACON = 4
@@ -60,7 +60,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
 	belt = /obj/item/storage/belt/rogue/leather
-	r_hand = /obj/item/rogueweapon/halberd
+	r_hand = /obj/item/weapon/halberd
 	H.STASTR = 18
 	H.STASPD = 10
 	H.STACON = 10

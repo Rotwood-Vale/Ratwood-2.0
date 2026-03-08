@@ -13,10 +13,10 @@
 /obj/vehicle/ridden/dinghy/Initialize(mapload)
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.keytype = /obj/item/rogueweapon/mace/oar
+	D.keytype = /obj/item/weapon/mace/oar
 	D.allowed_turf_typecache = typecacheof(allowed_turf)
 
-/obj/item/rogueweapon/mace/oar
+/obj/item/weapon/mace/oar
 	name = "oar"
 	desc = "A wooden club with a flattened head for paddling boats about."
 	icon = 'icons/obj/boat_accessories.dmi'
@@ -28,7 +28,7 @@
 
 /datum/crafting_recipe/roguetown/survival/oar
 	name = "Oar (1 Log, 2 Fibers)"
-	result = /obj/item/rogueweapon/mace/oar
+	result = /obj/item/weapon/mace/oar
 	reqs = list(
 		/obj/item/grown/log/tree = 1,
 		/obj/item/natural/fibers = 2,

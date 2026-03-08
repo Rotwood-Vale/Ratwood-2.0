@@ -273,7 +273,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
 "qY" = (
-/obj/item/rogueweapon/huntingknife/copper,
+/obj/item/weapon/huntingknife/copper,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/indoors)
 "rb" = (
@@ -410,7 +410,7 @@
 /area/rogue/under/tomb/indoors)
 "xs" = (
 /obj/machinery/anvil,
-/obj/item/rogueweapon/tongs,
+/obj/item/weapon/tongs,
 /turf/open/floor/rogue/blocks/paving,
 /area/rogue/under/tomb/indoors)
 "xu" = (
@@ -610,7 +610,7 @@
 /turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors)
 "Jp" = (
-/obj/item/rogueweapon/hammer/iron,
+/obj/item/weapon/hammer/iron,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/tomb/indoors)
 "Ju" = (
@@ -637,7 +637,7 @@
 /turf/open/floor/rogue/blocks/paving,
 /area/rogue/under/tomb/indoors)
 "Ls" = (
-/obj/item/rogueweapon/pick/stone{
+/obj/item/weapon/pick/stone{
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -777,7 +777,7 @@
 /turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "Ug" = (
-/obj/item/rogueweapon/pick/stone,
+/obj/item/weapon/pick/stone,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave)
 "Ut" = (

@@ -40,13 +40,13 @@
 	belt = /obj/item/storage/belt/rogue/leather/shalal/purple
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 	cloak = /obj/item/clothing/cloak/cape/purple
-	backr = /obj/item/rogueweapon/shield/heater
+	backr = /obj/item/weapon/shield/heater
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr = /obj/item/rogueweapon/sword/long/shotel
+	beltr = /obj/item/weapon/sword/long/shotel
 	backpack_contents = list(/obj/item/rope/chain = 2,
 							/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-							/obj/item/rogueweapon/huntingknife = 1)
+							/obj/item/weapon/huntingknife = 1)
 
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian

@@ -237,7 +237,7 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 		to_chat(user, "<span class='danger'>[src] is not filled with smokepowder!</span>")
 		return
 
-	if(istype(O, /obj/item/rogueweapon/woodstaff/quarterstaff/bombard_sponge))
+	if(istype(O, /obj/item/weapon/woodstaff/quarterstaff/bombard_sponge))
 		if(rammed)
 			user.visible_message("<span class='notice'>The [src] is already packed properly with smokepowder!</span>")
 			return

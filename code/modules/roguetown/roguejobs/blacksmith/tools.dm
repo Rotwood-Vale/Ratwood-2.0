@@ -1,5 +1,5 @@
 //Base hammer type. (Wood / Iron / Steel)
-/obj/item/rogueweapon/hammer
+/obj/item/weapon/hammer
 	force = 21
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
 	name = "template hammer"
@@ -17,7 +17,7 @@
 	grid_height = 64
 	var/quality = 1
 
-/obj/item/rogueweapon/hammer/getonmobprop(tag)
+/obj/item/weapon/hammer/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -28,14 +28,14 @@
 			if("onbelt")
 				return list("shrink" = 0.5,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/hammer/attack_hand(mob/living/user)
+/obj/item/weapon/hammer/attack_hand(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_CURSE_MALUM))
 		to_chat(user, span_warning("Your cursed hands burn at the touch of the hammer!"))
 		user.freak_out()
 		return
 	. = ..()
 
-/obj/item/rogueweapon/hammer/attack_obj(obj/attacked_object, mob/living/user)
+/obj/item/weapon/hammer/attack_obj(obj/attacked_object, mob/living/user)
 	if(!isliving(user) || !user.mind)
 		return
 
@@ -53,12 +53,12 @@
 
 	. = ..()
 
-/obj/item/rogueweapon/hammer/proc/get_repair_percent(obj/attacked_object)
+/obj/item/weapon/hammer/proc/get_repair_percent(obj/attacked_object)
 	. = 0.025 // 2.5% Repairing per hammer smack
 	if(locate(/obj/machinery/anvil) in attacked_object.loc)
 		. *= 2 // Double the repair amount if we're using an anvil
 
-/obj/item/rogueweapon/hammer/proc/repair_bodypart(obj/item/bodypart/attacked_prosthetic, mob/living/user)
+/obj/item/weapon/hammer/proc/repair_bodypart(obj/item/bodypart/attacked_prosthetic, mob/living/user)
 	if(!attacked_prosthetic.anvilrepair) //No hammering flesh limbs
 		return
 	if(attacked_prosthetic.obj_integrity >= attacked_prosthetic.max_integrity && attacked_prosthetic.brute_dam == 0 && attacked_prosthetic.burn_dam == 0 && attacked_prosthetic.wounds == null && attacked_prosthetic.disabled == BODYPART_NOT_DISABLED)
@@ -97,7 +97,7 @@
 
 	while(do_after(user, CLICK_CD_MELEE, target = attacked_prosthetic))
 
-/obj/item/rogueweapon/hammer/proc/repair_item(obj/item/attacked_item, mob/living/user)
+/obj/item/weapon/hammer/proc/repair_item(obj/item/attacked_item, mob/living/user)
 	if(!attacked_item.anvilrepair || (attacked_item.obj_integrity >= attacked_item.max_integrity) || !isturf(attacked_item.loc))
 		return
 
@@ -144,7 +144,7 @@
 
 	while(do_after(user, CLICK_CD_MELEE, target = attacked_item))
 
-/obj/item/rogueweapon/hammer/proc/repair_structure(obj/structure/attacked_structure, mob/living/user)
+/obj/item/weapon/hammer/proc/repair_structure(obj/structure/attacked_structure, mob/living/user)
 	if(!attacked_structure.hammer_repair || !attacked_structure.max_integrity)
 		return
 	if(user.get_skill_level(attacked_structure.hammer_repair) <= 0)
@@ -165,14 +165,14 @@
 
 	while(do_after(user, CLICK_CD_MELEE, target = attacked_structure))
 
-/obj/item/rogueweapon/hammer/attack(mob/living/M, mob/user)
+/obj/item/weapon/hammer/attack(mob/living/M, mob/user)
 	testing("attack")
 	if(!user.cmode)
 		hammerheal(M, user)
 	else
 		. = ..() //normal hit
 
-/obj/item/rogueweapon/hammer/proc/hammerheal(mob/living/M, mob/user)
+/obj/item/weapon/hammer/proc/hammerheal(mob/living/M, mob/user)
 	if(!M.can_inject(user, TRUE))
 		return
 	if(!ishuman(M))
@@ -233,21 +233,21 @@
 	else //Non-construct.
 		to_chat(user, span_warning("I can't tinker on living flesh!"))
 
-/obj/item/rogueweapon/hammer/wood	// wood hammer (mallet)
+/obj/item/weapon/hammer/wood	// wood hammer (mallet)
 	name = "wooden mallet"
 	desc = "A wooden mallet is an artificers second best friend! But it may also come in handy to a smith..."
 	icon_state = "hammer_w"
 	force = 16
-	metalizer_result = /obj/item/rogueweapon/hammer/iron
+	metalizer_result = /obj/item/weapon/hammer/iron
 
-/obj/item/rogueweapon/hammer/stone	// stone hammer
+/obj/item/weapon/hammer/stone	// stone hammer
 	name = "stone hammer"
 	desc = "A makeshift hammer, made with a crudly chisled-down rock."
 	icon_state = "hammer_r"
 	force = 18
 	max_integrity = 15
 
-/obj/item/rogueweapon/hammer/aalloy
+/obj/item/weapon/hammer/aalloy
 	name = "decrepit hammer"
 	desc = "A hammer of wrought bronze. It has pounded out the beginning of a thousand legacies; of humble adventurers, of noble legionnaires, and of foolish heroes."
 	icon_state = "ahammer"
@@ -259,27 +259,27 @@
 
 
 
-/obj/item/rogueweapon/hammer/copper
+/obj/item/weapon/hammer/copper
 	name = "copper hammer"
 	desc = "A copper hammer, slightly better than a stone hammer."
 	icon_state = "hammer_c"
 	force = 20
 	max_integrity = 100
 
-/obj/item/rogueweapon/hammer/iron	// iron hammer
+/obj/item/weapon/hammer/iron	// iron hammer
 	name = "hammer"
 	desc = "Each strikes reverberate loudly chanting war!"
 	icon_state = "hammer_i"
 	smeltresult = /obj/item/ingot/iron
 
-/obj/item/rogueweapon/hammer/steel	// steel hammer
+/obj/item/weapon/hammer/steel	// steel hammer
 	name = "claw hammer"
 	desc = "Steel to drive the iron nail without mercy."
 	icon_state = "hammer_s"
 	smeltresult = /obj/item/ingot/steel
 
 /*
-/obj/item/rogueweapon/hammer/steel/attack_turf(turf/T, mob/living/user)
+/obj/item/weapon/hammer/steel/attack_turf(turf/T, mob/living/user)
 	if(!user.cmode)
 		if(T.hammer_repair && T.max_integrity && !T.obj_broken)
 			var/repair_percent = 0.05
@@ -295,7 +295,7 @@
 			return
 	..()
 */
-/obj/item/rogueweapon/hammer/blacksteel
+/obj/item/weapon/hammer/blacksteel
 	force = 25
 	name = "blacksteel hammer"
 	desc = "A hammer made of blacksteel, to drive even the hardest metals into submission."
@@ -305,7 +305,7 @@
 	quality = 2
 	smeltresult = /obj/item/ingot/blacksteel
 
-/obj/item/rogueweapon/hammer/blacksteel/getonmobprop(tag)
+/obj/item/weapon/hammer/blacksteel/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -317,7 +317,7 @@
 				return list("shrink" = 0.5,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 
-/obj/item/rogueweapon/tongs
+/obj/item/weapon/tongs
 	force = 10
 	possible_item_intents = list(/datum/intent/mace/strike)
 	name = "tongs"
@@ -336,23 +336,23 @@
 	grid_width = 32
 	grid_height = 64
 
-/obj/item/rogueweapon/tongs/examine(mob/user)
+/obj/item/weapon/tongs/examine(mob/user)
 	. = ..()
 	if(hott)
 		. += span_warning("The tip is hot to the touch.")
 
-/obj/item/rogueweapon/tongs/get_temperature()
+/obj/item/weapon/tongs/get_temperature()
 	if(hott)
 		return FIRE_MINIMUM_TEMPERATURE_TO_SPREAD
 	return ..()
 
-/obj/item/rogueweapon/tongs/fire_act(added, maxstacks)
+/obj/item/weapon/tongs/fire_act(added, maxstacks)
 	. = ..()
 	hott = world.time
 	update_icon()
 	addtimer(CALLBACK(src, PROC_REF(make_unhot), world.time), 10 SECONDS)
 
-/obj/item/rogueweapon/tongs/update_icon()
+/obj/item/weapon/tongs/update_icon()
 	. = ..()
 	if(!hingot)
 		icon_state = "tongs"
@@ -362,12 +362,12 @@
 		else
 			icon_state = "tongsi0"
 
-/obj/item/rogueweapon/tongs/proc/make_unhot(input)
+/obj/item/weapon/tongs/proc/make_unhot(input)
 	if(hott == input)
 		hott = FALSE
 		update_icon()
 
-/obj/item/rogueweapon/tongs/attack_self(mob/user)
+/obj/item/weapon/tongs/attack_self(mob/user)
 	if(hingot)
 		if(isturf(user.loc))
 			hingot.forceMove(get_turf(user))
@@ -375,7 +375,7 @@
 			hott = FALSE
 			update_icon()
 
-/obj/item/rogueweapon/tongs/dropped()
+/obj/item/weapon/tongs/dropped()
 	. = ..()
 	if(hingot)
 		hingot.forceMove(get_turf(src))
@@ -383,7 +383,7 @@
 	hott = FALSE
 	update_icon()
 
-/obj/item/rogueweapon/tongs/getonmobprop(tag)
+/obj/item/weapon/tongs/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -394,14 +394,14 @@
 			if("onbelt")
 				return list("shrink" = 0.5,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/tongs/stone
+/obj/item/weapon/tongs/stone
 	name = "stone tongs"
 	icon_state = "stonetongs"
 	force = 5
 	smeltresult = null
 	max_integrity = 15
 
-/obj/item/rogueweapon/tongs/stone/update_icon()
+/obj/item/weapon/tongs/stone/update_icon()
 	. = ..()
 	if(!hingot)
 		icon_state = "stonetongs"
@@ -411,7 +411,7 @@
 		else
 			icon_state = "stonetongsi0"
 
-/obj/item/rogueweapon/tongs/aalloy
+/obj/item/weapon/tongs/aalloy
 	name = "decrepit tongs"
 	desc = "Wrought bronze pincers the molten alloy, putting it before the anvil and hammer. Soon, it will fashion a new legacy; one unmarred by this dogmatic millenia."
 	icon_state = "atongs"
@@ -421,7 +421,7 @@
 	color = "#bb9696"
 	sellprice = 5
 
-/obj/item/rogueweapon/tongs/aalloy/update_icon()
+/obj/item/weapon/tongs/aalloy/update_icon()
 	. = ..()
 	if(!hingot)
 		icon_state = "atongs"
@@ -431,7 +431,7 @@
 		else
 			icon_state = "atongsi0"
 
-/obj/item/rogueweapon/tongs/blacksteel
+/obj/item/weapon/tongs/blacksteel
 	name = "blacksteel tongs"
 	desc = "A pair of blacksteel jaws almost certainly used as a sign of prestige."
 	icon_state = "bs_tongs"
@@ -439,7 +439,7 @@
 	icon = 'icons/weapons/tools.dmi'
 	smeltresult = /obj/item/ingot/blacksteel
 
-/obj/item/rogueweapon/tongs/blacksteel/update_icon()
+/obj/item/weapon/tongs/blacksteel/update_icon()
 	. = ..()
 	if(!hingot)
 		icon_state = "bs_tongs"

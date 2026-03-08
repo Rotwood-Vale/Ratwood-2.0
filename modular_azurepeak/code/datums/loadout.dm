@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/bauernwehr
 	name = "Bauernwehr"
-	path = /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr
+	path = /obj/item/weapon/huntingknife/throwingknife/bauernwehr
 	triumph_cost = 3
 
 /datum/loadout_item/broom
@@ -122,42 +122,42 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/ancient_hammer
 	name = "Ancient Hammer"
-	path = /obj/item/rogueweapon/hammer/aalloy
+	path = /obj/item/weapon/hammer/aalloy
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_tongs
 	name = "Ancient Tongs"
-	path = /obj/item/rogueweapon/tongs/aalloy
+	path = /obj/item/weapon/tongs/aalloy
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_pick
 	name = "Ancient Pick"
-	path = /obj/item/rogueweapon/pick/aalloy
+	path = /obj/item/weapon/pick/aalloy
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_shovel
 	name = "Ancient Shovel"
-	path = /obj/item/rogueweapon/shovel/aalloy
+	path = /obj/item/weapon/shovel/aalloy
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_hoe
 	name = "Ancient Hoe"
-	path = /obj/item/rogueweapon/hoe/aalloy
+	path = /obj/item/weapon/hoe/aalloy
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_sickle
 	name = "Ancient Sickle"
-	path = /obj/item/rogueweapon/sickle/aalloy
+	path = /obj/item/weapon/sickle/aalloy
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_thresher
 	name = "Ancient Thresher"
-	path = /obj/item/rogueweapon/thresher/aalloy
+	path = /obj/item/weapon/thresher/aalloy
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_pitchfork
 	name = "Ancient Pitchfork"
-	path = /obj/item/rogueweapon/pitchfork/aalloy
+	path = /obj/item/weapon/pitchfork/aalloy
 	triumph_cost = 3
 
 //COOKWARE
@@ -759,7 +759,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/tri_kazengun_scabbard
 	name = "Kazengun Cerimonial Scabbard"
-	path = /obj/item/rogueweapon/scabbard/sword/kazengun/noparry/loadout
+	path = /obj/item/weapon/scabbard/sword/kazengun/noparry/loadout
 	triumph_cost = 3
 
 /datum/loadout_item/tri_kazengun_scabbard/nobility_check(client/C)
@@ -1110,79 +1110,79 @@ GLOBAL_LIST_EMPTY(loadout_items)
 // TOOLS & OBJECTS
 /datum/loadout_item/tri_shovel
 	name = "Shovel"
-	path = /obj/item/rogueweapon/shovel
+	path = /obj/item/weapon/shovel
 	triumph_cost = 2
 
 /datum/loadout_item/tri_sickle
 	name = "Sickle"
-	path = /obj/item/rogueweapon/sickle
+	path = /obj/item/weapon/sickle
 	triumph_cost = 2
 
 // BLUNT WEAPONS
 /datum/loadout_item/tri_woodclub
 	name = "Wooden Club"
-	path = /obj/item/rogueweapon/mace/woodclub
+	path = /obj/item/weapon/mace/woodclub
 	triumph_cost = 2
 	keep_loadout_stats = TRUE
 
 // AXES
 /datum/loadout_item/tri_bone_axe
 	name = "Bone Axe"
-	path = /obj/item/rogueweapon/stoneaxe/boneaxe
+	path = /obj/item/weapon/stoneaxe/boneaxe
 	triumph_cost = 2
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/ancient_axe
 	name = "Ancient Axe"
-	path = /obj/item/rogueweapon/stoneaxe/woodcut/aaxe
+	path = /obj/item/weapon/stoneaxe/woodcut/aaxe
 	triumph_cost = 4
 
 // SWORDS
 /datum/loadout_item/tri_stone_sword
 	name = "Stone Sword"
-	path = /obj/item/rogueweapon/sword/stone
+	path = /obj/item/weapon/sword/stone
 	triumph_cost = 2
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/ancient_gladius
 	name = "Ancient Gladius"
-	path = /obj/item/rogueweapon/sword/short/gladius/pagladius
+	path = /obj/item/weapon/sword/short/gladius/pagladius
 	triumph_cost = 4
 
 /datum/loadout_item/ancient_khopesh
 	name = "Ancient Khopesh"
-	path = /obj/item/rogueweapon/sword/sabre/palloy
+	path = /obj/item/weapon/sword/sabre/palloy
 	triumph_cost = 4
 
 // DAGGERS & KNIVES
 /datum/loadout_item/tri_stone_knife
 	name = "Stone Knife"
-	path = /obj/item/rogueweapon/huntingknife/stoneknife
+	path = /obj/item/weapon/huntingknife/stoneknife
 	triumph_cost = 2
 	keep_loadout_stats = TRUE
 
 // MACES & BLUNT
 /datum/loadout_item/ancient_mace
 	name = "Ancient Mace"
-	path = /obj/item/rogueweapon/mace/goden/steel/paalloy
+	path = /obj/item/weapon/mace/goden/steel/paalloy
 	triumph_cost = 4
 
 // POLEARMS & SPEARS
 /datum/loadout_item/tri_stone_spear
 	name = "Stone Spear"
-	path = /obj/item/rogueweapon/spear/stone
+	path = /obj/item/weapon/spear/stone
 	triumph_cost = 2
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/tri_bone_spear
 	name = "Bone Spear"
-	path = /obj/item/rogueweapon/spear/bonespear
+	path = /obj/item/weapon/spear/bonespear
 	triumph_cost = 2
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/ancient_spear
 	name = "Ancient Spear"
-	path = /obj/item/rogueweapon/spear/aalloy
+	path = /obj/item/weapon/spear/aalloy
 	triumph_cost = 4
 
 // ARMOR & CLOTHING
@@ -1203,19 +1203,19 @@ GLOBAL_LIST_EMPTY(loadout_items)
 // POLEARMS & SPEARS
 /datum/loadout_item/tri_quarterstaff
 	name = "Quarterstaff"
-	path = /obj/item/rogueweapon/woodstaff/quarterstaff
+	path = /obj/item/weapon/woodstaff/quarterstaff
 	triumph_cost = 3
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/tri_woodstaff
 	name = "Woodstaff"
-	path = /obj/item/rogueweapon/woodstaff
+	path = /obj/item/weapon/woodstaff
 	triumph_cost = 3
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/tri_scythe
 	name = "Peasant Scythe"
-	path = /obj/item/rogueweapon/scythe
+	path = /obj/item/weapon/scythe
 	triumph_cost = 3
 	keep_loadout_stats = TRUE
 
@@ -1816,7 +1816,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 // POLEARMS & STAVES
 /datum/loadout_item/tri_naledi_staff
 	name = "Naledi Staff (Decorative)"
-	path = /obj/item/rogueweapon/woodstaff/decorative
+	path = /obj/item/weapon/woodstaff/decorative
 	triumph_cost = 3
 
 
@@ -2056,7 +2056,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/branding_stick
 	name = "Crude Branding Stick"
-	path = /obj/item/rogueweapon/surgery/cautery/branding/crude
+	path = /obj/item/weapon/surgery/cautery/branding/crude
 	triumph_cost = 1
 
 //ADDITIONAL ITEMS
@@ -2078,7 +2078,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/parasol
 	name = "Paper Parasol"
-	path = /obj/item/rogueweapon/mace/parasol
+	path = /obj/item/weapon/mace/parasol
 	triumph_cost = 3
 
 //INSTRUMENTS

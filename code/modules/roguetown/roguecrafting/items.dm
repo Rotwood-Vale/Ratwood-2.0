@@ -281,7 +281,7 @@
 // Woodcutting recipe
 /datum/crafting_recipe/roguetown/survival/lumberjacking
 	skillcraft = /datum/skill/labor/lumberjacking
-	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	tools = list(/obj/item/weapon/huntingknife = 1)
 
 /datum/crafting_recipe/hair_dye
 	name = "hair dye cream"
@@ -297,42 +297,42 @@
 	name = "bone die (d4)"
 	result = /obj/item/dice/d4
 	reqs = list(/obj/item/natural/bone = 1)
-	tools = list(/obj/item/rogueweapon/huntingknife)
+	tools = list(/obj/item/weapon/huntingknife)
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/survival/d6
 	name = "bone die (d6)"
 	result = /obj/item/dice/d6
 	reqs = list(/obj/item/natural/bone = 1)
-	tools = list(/obj/item/rogueweapon/huntingknife)
+	tools = list(/obj/item/weapon/huntingknife)
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/survival/d8
 	name = "bone die (d8)"
 	result = /obj/item/dice/d8
 	reqs = list(/obj/item/natural/bone = 1)
-	tools = list(/obj/item/rogueweapon/huntingknife)
+	tools = list(/obj/item/weapon/huntingknife)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/survival/d10
 	name = "bone die (d10)"
 	result = /obj/item/dice/d10
 	reqs = list(/obj/item/natural/bone = 1)
-	tools = list(/obj/item/rogueweapon/huntingknife)
+	tools = list(/obj/item/weapon/huntingknife)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/survival/d12
 	name = "bone die (d12)"
 	result = /obj/item/dice/d12
 	reqs = list(/obj/item/natural/bone = 1)
-	tools = list(/obj/item/rogueweapon/huntingknife)
+	tools = list(/obj/item/weapon/huntingknife)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/survival/d20
 	name = "bone die (d20)"
 	result = /obj/item/dice/d20
 	reqs = list(/obj/item/natural/bone = 1)
-	tools = list(/obj/item/rogueweapon/huntingknife)
+	tools = list(/obj/item/weapon/huntingknife)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/survival/dye_brush
@@ -387,7 +387,7 @@
 // Improvised surgey tools. They go here for now (TM)
 /datum/crafting_recipe/roguetown/survival/improvisedsaw
 	name = "improvised surgery saw"
-	result = /obj/item/rogueweapon/surgery/saw/improv
+	result = /obj/item/weapon/surgery/saw/improv
 	reqs = list(
 		/obj/item/natural/fibers = 1,
 		/obj/item/natural/stone = 1,
@@ -397,7 +397,7 @@
 
 /datum/crafting_recipe/roguetown/survival/improvisedclamp
 	name = "improvised retractor"
-	result = /obj/item/rogueweapon/surgery/retractor/improv
+	result = /obj/item/weapon/surgery/retractor/improv
 	reqs = list(
 		/obj/item/natural/fibers = 1,
 		/obj/item/grown/log/tree/stick = 2,
@@ -406,7 +406,7 @@
 
 /datum/crafting_recipe/roguetown/survival/improvisedhemo
 	name = "improvised clamp"
-	result = /obj/item/rogueweapon/surgery/hemostat/improv
+	result = /obj/item/weapon/surgery/hemostat/improv
 	reqs = list(
 		/obj/item/natural/fibers = 1,
 		/obj/item/grown/log/tree/stick = 2,

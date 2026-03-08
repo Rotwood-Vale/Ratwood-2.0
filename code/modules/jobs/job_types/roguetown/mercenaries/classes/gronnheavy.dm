@@ -46,15 +46,15 @@
 	cloak = /obj/item/clothing/cloak/volfmantle			//Aura farming.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/iron //Weakspot.
 	pants = /obj/item/clothing/under/roguetown/platelegs/iron/gronn
-	r_hand = /obj/item/rogueweapon/mace/maul //this is literally the only weapon type they'll get to use. No alternatives.
+	r_hand = /obj/item/weapon/mace/maul //this is literally the only weapon type they'll get to use. No alternatives.
 	neck = /obj/item/clothing/neck/roguetown/gorget //Their weakspot. Go replace it if you're a chud I guess
 	backl = /obj/item/storage/backpack/rogue/satchel/black
-	backr = /obj/item/rogueweapon/scabbard/gwstrap
+	backr = /obj/item/weapon/scabbard/gwstrap
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/metal = 1,
 		/obj/item/key/mercenary = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)

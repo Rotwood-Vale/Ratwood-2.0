@@ -42,12 +42,12 @@
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Zweihander")
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/greatsword/grenz
+				backl = /obj/item/weapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/greatsword/grenz
 			if("Kriegmesser & Buckler") // Buckler cuz they have no shield skill.
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
-				backl = /obj/item/rogueweapon/shield/buckler
+				beltr = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/long/kriegmesser
+				backl = /obj/item/weapon/shield/buckler
 	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
@@ -62,8 +62,8 @@
 		/obj/item/key/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.merctype = 7
 
@@ -98,18 +98,18 @@
 /datum/outfit/job/roguetown/mercenary/grenzelhoft_halberdier/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You're an experienced soldier skilled in the use of polearms and axes. Your equals make up the bulk of the mercenary guild's forces."))
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	backl = /obj/item/weapon/scabbard/gwstrap
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate
 	if(H.mind)
 		var/weapons = list("Halberd", "Partizan", "Eagle's Beak")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Halberd")
-				r_hand = /obj/item/rogueweapon/halberd
+				r_hand = /obj/item/weapon/halberd
 			if("Partizan")
-				r_hand = /obj/item/rogueweapon/spear/partizan
+				r_hand = /obj/item/weapon/spear/partizan
 			if("Eagle's Beak")
-				r_hand = /obj/item/rogueweapon/eaglebeak
+				r_hand = /obj/item/weapon/eaglebeak
 	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
@@ -124,8 +124,8 @@
 		/obj/item/key/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.merctype = 7
 
@@ -166,7 +166,7 @@
 	..()
 	to_chat(H, span_warning("You're a proved marksman with a crossbow, and learned how to set up camp and defenses in the wild. The guild needs you."))
 	beltr = /obj/item/quiver/bolts
-	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel
+	beltl = /obj/item/weapon/stoneaxe/woodcut/steel
 	r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	if(H.mind)
 		var/armor_options = list("Light Brigandine", "Studded Leather Vest")
@@ -190,8 +190,8 @@
 		/obj/item/key/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.merctype = 7
 
@@ -233,7 +233,7 @@
 	..()
 	to_chat(H, span_warning("You are a Gefechtsgelehrter - \"Combat Scholar\" - A proud magos from the Celestial Academy of Magos, who's skills in Siege Magic and Arcyne Physics are unmatched."))
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
-	backl = /obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff
+	backl = /obj/item/weapon/woodstaff/emerald/blacksteelstaff
 	cloak = /obj/item/clothing/cloak/stabard/grenzelmage
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
 	//General gear regardless of class.
@@ -249,8 +249,8 @@
 		/obj/item/key/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	if(H.mind) // State mandated spells c:
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)

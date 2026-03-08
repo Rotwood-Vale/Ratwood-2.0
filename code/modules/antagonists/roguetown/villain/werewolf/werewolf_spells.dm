@@ -44,7 +44,7 @@
 	recharge_time = 20 //2 seconds
 	ignore_cockblock = TRUE
 	var/list/extended_claw_record = list(FALSE, FALSE)
-	var/static/claw_type = /obj/item/rogueweapon/werewolf_claw
+	var/static/claw_type = /obj/item/weapon/werewolf_claw
 
 /obj/effect/proc_holder/spell/self/claws/cast(list/targets, mob/user)
 	. = ..()
@@ -70,11 +70,11 @@
 				continue
 			var/new_claw
 			if(hand_index == LEFT_HANDS)
-				new_claw = new /obj/item/rogueweapon/werewolf_claw/left(user)
+				new_claw = new /obj/item/weapon/werewolf_claw/left(user)
 				user.put_in_l_hand(new_claw)
 				extended_claw_record[LEFT_HANDS] = new_claw
 			else
-				new_claw = new /obj/item/rogueweapon/werewolf_claw/right(user)
+				new_claw = new /obj/item/weapon/werewolf_claw/right(user)
 				user.put_in_r_hand(new_claw)
 				extended_claw_record[RIGHT_HANDS] = new_claw
 			RegisterSignal(new_claw, COMSIG_QDELETING, PROC_REF(clear_claw_entry))

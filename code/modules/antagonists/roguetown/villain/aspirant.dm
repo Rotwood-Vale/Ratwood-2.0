@@ -26,11 +26,11 @@
 	switch(chosen)
 		if(CHOICE_POISON_BLADE)
 			owner.special_items["Poison"] = /obj/item/reagent_containers/glass/bottle/rogue/poison
-			owner.special_items["Killer's Knife"] = /obj/item/rogueweapon/huntingknife/idagger/steel/corroded
+			owner.special_items["Killer's Knife"] = /obj/item/weapon/huntingknife/idagger/steel/corroded
 			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
 			aspirant_mob.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)	//Expert knives cus you're not getting much else.
 		if(CHOICE_SKILLS)
-			owner.special_items["Mace"] = /obj/item/rogueweapon/mace/cudgel		//Go knock him out lol
+			owner.special_items["Mace"] = /obj/item/weapon/mace/cudgel		//Go knock him out lol
 			owner.special_items["Chains"] = /obj/item/rope/chain
 			owner.special_items["Lockpicks"] = /obj/item/lockpickring/mundane
 			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))

@@ -1,8 +1,8 @@
 /datum/quest/retrieval
 	quest_type = QUEST_RETRIEVAL
 	var/list/fetch_items = list(
-		/obj/item/rogueweapon/huntingknife/throwingknife/steel,
-		/obj/item/rogueweapon/huntingknife,
+		/obj/item/weapon/huntingknife/throwingknife/steel,
+		/obj/item/weapon/huntingknife,
 		/obj/item/reagent_containers/glass/bottle/rogue/whitewine
 	)
 

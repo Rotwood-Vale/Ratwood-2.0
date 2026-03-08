@@ -39,15 +39,15 @@
 /datum/outfit/job/roguetown/adventurer/blacksmith/pre_equip(mob/living/carbon/human/H)
 	..()
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/hammer/iron
-	beltl = /obj/item/rogueweapon/tongs
+	beltr = /obj/item/weapon/hammer/iron
+	beltl = /obj/item/weapon/tongs
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	cloak = /obj/item/clothing/cloak/apron/blacksmith
-	mouth = /obj/item/rogueweapon/huntingknife
+	mouth = /obj/item/weapon/huntingknife
 	pants = /obj/item/clothing/under/roguetown/trou
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/scabbard/sheath
+	backr = /obj/item/weapon/scabbard/sheath
 	backpack_contents = list(
 		/obj/item/flint = 1,
 		/obj/item/rogueore/coal = 4,

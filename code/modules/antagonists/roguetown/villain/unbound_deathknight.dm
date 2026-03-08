@@ -149,7 +149,7 @@
 	H.mind.adjust_spellpoints(9)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
 
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	beltl = /obj/item/weapon/scabbard/sword
 	belt = /obj/item/storage/belt/rogue/leather
 	pants = /obj/item/clothing/under/roguetown/platelegs/blk/death
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/blkknight
@@ -187,22 +187,22 @@
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in list("Longsword", "Warhammer", "Halberd")
 	switch(weapon_choice)
 		if("Longsword")
-			beltl = /obj/item/rogueweapon/scabbard/sword
-			l_hand = /obj/item/rogueweapon/sword/long/death
-			backl = /obj/item/rogueweapon/shield/tower/metal
+			beltl = /obj/item/weapon/scabbard/sword
+			l_hand = /obj/item/weapon/sword/long/death
+			backl = /obj/item/weapon/shield/tower/metal
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		if ("Warhammer")
-			beltr = /obj/item/rogueweapon/mace/warhammer/steel
-			backl = /obj/item/rogueweapon/shield/tower/metal
+			beltr = /obj/item/weapon/mace/warhammer/steel
+			backl = /obj/item/weapon/shield/tower/metal
 			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
 		if("Halberd")
-			backl = /obj/item/rogueweapon/scabbard/gwstrap
-			r_hand = /obj/item/rogueweapon/halberd
+			backl = /obj/item/weapon/scabbard/gwstrap
+			r_hand = /obj/item/weapon/halberd
 			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, 
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1, 
+		/obj/item/weapon/scabbard/sheath = 1
 	)
 	H.set_blindness(0)
 

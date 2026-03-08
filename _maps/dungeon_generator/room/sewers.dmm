@@ -108,7 +108,7 @@
 /turf/open/floor/rogue/metal/barograte/open,
 /area/rogue/under/tomb/sewer)
 "oB" = (
-/obj/item/rogueweapon/greatsword/grenz,
+/obj/item/weapon/greatsword/grenz,
 /turf/open/floor/rogue/metal/barograte/open,
 /area/rogue/under/tomb/sewer)
 "px" = (

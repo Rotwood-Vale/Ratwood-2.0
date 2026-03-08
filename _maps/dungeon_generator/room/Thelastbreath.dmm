@@ -72,7 +72,7 @@
 /area/rogue/under/tomb)
 "bp" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/surgery/scalpel,
+/obj/item/weapon/surgery/scalpel,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "bq" = (
@@ -90,7 +90,7 @@
 /turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "bH" = (
-/obj/item/rogueweapon/mace/wsword,
+/obj/item/weapon/mace/wsword,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/tomb/indoors)
 "bO" = (
@@ -459,7 +459,7 @@
 /area/rogue/under/tomb/wilds)
 "gN" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/surgery/bonesetter,
+/obj/item/weapon/surgery/bonesetter,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "gO" = (
@@ -498,7 +498,7 @@
 "gW" = (
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/clothing/neck/roguetown/gorget/copper,
-/obj/item/rogueweapon/woodstaff/quarterstaff/steel,
+/obj/item/weapon/woodstaff/quarterstaff/steel,
 /obj/item/clothing/shoes/roguetown/shortboots,
 /obj/item/clothing/head/roguetown/circlet,
 /obj/item/clothing/ring/topaz,
@@ -698,7 +698,7 @@
 /obj/item/clothing/mask/rogue/physician,
 /obj/item/storage/belt/rogue/surgery_bag/full/physician,
 /obj/item/clothing/suit/roguetown/shirt/robe/physician,
-/obj/item/rogueweapon/surgery/scalpel,
+/obj/item/weapon/surgery/scalpel,
 /mob/living/carbon/human/species/skeleton/npc/medium/noequip,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
@@ -1099,7 +1099,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/cave)
 "pA" = (
-/obj/item/rogueweapon/surgery/hammer,
+/obj/item/weapon/surgery/hammer,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "pE" = (
@@ -1225,7 +1225,7 @@
 /area/rogue/under/tomb/indoors)
 "rw" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /turf/open/floor/rogue/tile/checker,
 /area/rogue/under/tomb/indoors)
 "rA" = (
@@ -1254,7 +1254,7 @@
 /turf/open/water/bath,
 /area/rogue/under/tomb)
 "sg" = (
-/obj/item/rogueweapon/surgery/cautery,
+/obj/item/weapon/surgery/cautery,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "sj" = (
@@ -1432,8 +1432,8 @@
 	STAWIL = 12;
 	candodge = 0
 	},
-/obj/item/rogueweapon/sword/decorated,
-/obj/item/rogueweapon/shield/buckler/palloy,
+/obj/item/weapon/sword/decorated,
+/obj/item/weapon/shield/buckler/palloy,
 /obj/item/clothing/neck/roguetown/psicross/silver,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
@@ -2639,7 +2639,7 @@
 /obj/item/candle/yellow/lit{
 	pixel_y = 6
 	},
-/obj/item/rogueweapon/sword/decorated,
+/obj/item/weapon/sword/decorated,
 /turf/open/floor/rogue/church,
 /area/rogue/under/tomb/indoors/church)
 "MC" = (
@@ -3154,7 +3154,7 @@
 /obj/item/clothing/neck/roguetown/chaincoif,
 /obj/item/clothing/ring/quartz,
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron,
-/obj/item/rogueweapon/sword/rapier,
+/obj/item/weapon/sword/rapier,
 /obj/item/clothing/neck/roguetown/psicross/silver,
 /mob/living/carbon/human/species/skeleton/npc/hard/noequip,
 /turf/open/floor/rogue/carpet,
@@ -3176,7 +3176,7 @@
 /area/rogue/under/tomb/indoors)
 "Vl" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/mace/wsword,
+/obj/item/weapon/mace/wsword,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "Vn" = (
@@ -3234,7 +3234,7 @@
 "VK" = (
 /obj/structure/table/optable,
 /obj/structure/curtain,
-/obj/item/rogueweapon/surgery/hemostat,
+/obj/item/weapon/surgery/hemostat,
 /obj/item/natural/cloth,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
@@ -3383,7 +3383,7 @@
 /area/rogue/under/tomb/indoors)
 "Yy" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/surgery/retractor,
+/obj/item/weapon/surgery/retractor,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "Yz" = (

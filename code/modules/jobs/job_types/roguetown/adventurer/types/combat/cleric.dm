@@ -74,20 +74,20 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist//Just this and disciple, effectively.
 			if("Katar")
-				beltl = /obj/item/rogueweapon/katar/bronze
+				beltl = /obj/item/weapon/katar/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Knuckledusters")
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					beltl = /obj/item/rogueweapon/knuckles/psydon/old
+					beltl = /obj/item/weapon/knuckles/psydon/old
 					gloves = /obj/item/clothing/gloves/roguetown/bandages
 				else
-					beltl = /obj/item/rogueweapon/knuckles/bronzeknuckles
+					beltl = /obj/item/weapon/knuckles/bronzeknuckles
 					gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Quarterstaff")
 				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 2, TRUE)
-				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
-				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/woodstaff/quarterstaff/iron
+				l_hand = /obj/item/weapon/scabbard/gwstrap
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 
@@ -217,7 +217,7 @@
 	- a longsword in one hand, and a clenched psycross in the other."))
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/shield/iron
+	backr = /obj/item/weapon/shield/iron
 	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	pants = /obj/item/clothing/under/roguetown/chainlegs
@@ -305,37 +305,37 @@
 				switch(weapon_choice)
 					if("Longsword")
 						if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-							beltr = /obj/item/rogueweapon/sword/long/oldpsysword
+							beltr = /obj/item/weapon/sword/long/oldpsysword
 						else
-							beltr = /obj/item/rogueweapon/sword/long
-						r_hand = /obj/item/rogueweapon/scabbard/sword
+							beltr = /obj/item/weapon/sword/long
+						r_hand = /obj/item/weapon/scabbard/sword
 						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					if("Mace")
 						H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 						if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-							beltr = /obj/item/rogueweapon/mace/cudgel/psy/old
+							beltr = /obj/item/weapon/mace/cudgel/psy/old
 						else
-							beltr = /obj/item/rogueweapon/mace
+							beltr = /obj/item/weapon/mace
 					if("Flail")
 						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-						beltr = /obj/item/rogueweapon/flail
+						beltr = /obj/item/weapon/flail
 					if("Whip")
 						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-						beltr = /obj/item/rogueweapon/whip
+						beltr = /obj/item/weapon/whip
 					if("Spear")
 						H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 						if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-							r_hand = /obj/item/rogueweapon/spear/psyspear/old
+							r_hand = /obj/item/weapon/spear/psyspear/old
 						else
-							r_hand = /obj/item/rogueweapon/spear
-						l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+							r_hand = /obj/item/weapon/spear
+						l_hand = /obj/item/weapon/scabbard/gwstrap
 					if("Axe")
 						H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-						r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
+						r_hand = /obj/item/weapon/stoneaxe/woodcut
 			if("Crusader - Silver Longsword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				l_hand = /obj/item/rogueweapon/sword/long/silver //Turns the Paladin into a pre-Exorcist version of the Monster Hunter. Differences are +1 CON / -1 INT, access to minor miracles, and more limb coverage.
-				beltl = /obj/item/rogueweapon/scabbard/sword //Functionally, inflicts silverbane at the cost of -5 damage. Likely won't be a balancing issue, unless we start seeing +5-10 Clerics overnight.
+				l_hand = /obj/item/weapon/sword/long/silver //Turns the Paladin into a pre-Exorcist version of the Monster Hunter. Differences are +1 CON / -1 INT, access to minor miracles, and more limb coverage.
+				beltl = /obj/item/weapon/scabbard/sword //Functionally, inflicts silverbane at the cost of -5 damage. Likely won't be a balancing issue, unless we start seeing +5-10 Clerics overnight.
 
 	H.set_blindness(0)
 	switch(H.patron?.type)
@@ -420,7 +420,7 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/iron
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/special
+	beltr = /obj/item/weapon/huntingknife/idagger/steel/special
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)//Capped to T2 miracles. Devotion at T2.
@@ -428,7 +428,7 @@
 	I.grant_inspiration(H, bard_tier = BARD_T2)
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
@@ -625,10 +625,10 @@
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Woodstaff")
-				backr = /obj/item/rogueweapon/woodstaff
+				backr = /obj/item/weapon/woodstaff
 			if("Quarterstaff")
-				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
-				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/woodstaff/quarterstaff/iron
+				l_hand = /obj/item/weapon/scabbard/gwstrap
 
 	if(istype(H.patron, /datum/patron/divine))
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)

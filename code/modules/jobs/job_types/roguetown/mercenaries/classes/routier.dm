@@ -47,17 +47,17 @@
 		switch(classchoice)
 			if("Swordsman")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				l_hand = /obj/item/rogueweapon/sword/short/falchion
+				beltl = /obj/item/weapon/scabbard/sword
+				l_hand = /obj/item/weapon/sword/short/falchion
 			if("Macebearer")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-				beltl = /obj/item/rogueweapon/mace/steel/morningstar
+				beltl = /obj/item/weapon/mace/steel/morningstar
 			if("Flailman")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
-				beltl = /obj/item/rogueweapon/flail/sflail
+				beltl = /obj/item/weapon/flail/sflail
 			if("Foot Lancer")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-				r_hand = /obj/item/rogueweapon/spear/lance
+				r_hand = /obj/item/weapon/spear/lance
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
@@ -69,11 +69,11 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan
 	gloves = /obj/item/clothing/gloves/roguetown/otavan
 	backr = /obj/item/storage/backpack/rogue/satchel/black
-	backl = /obj/item/rogueweapon/shield/tower/metal
+	backl = /obj/item/weapon/shield/tower/metal
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.merctype = 10

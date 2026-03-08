@@ -28,15 +28,15 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/gambeson
 	neck = /obj/item/key/mercenary
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
-	beltr = /obj/item/rogueweapon/sword/sabre
+	beltr = /obj/item/weapon/sword/sabre
 	if(prob(50))
-		beltr = /obj/item/rogueweapon/sword
+		beltr = /obj/item/weapon/sword
 	shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt/merc
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	if(should_wear_femme_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights/black
-		beltr = /obj/item/rogueweapon/sword/sabre
+		beltr = /obj/item/weapon/sword/sabre
 	H.adjust_skillrank(/datum/skill/misc/swimming, rand(1,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, rand(1,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, rand(1,5), TRUE)

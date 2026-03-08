@@ -45,18 +45,18 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Bardiche")
-				r_hand = /obj/item/rogueweapon/halberd/bardiche
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/halberd/bardiche
+				backl = /obj/item/weapon/scabbard/gwstrap
 			if("Sword & Shield")
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/sabre
-				backl = /obj/item/rogueweapon/shield/wood
+				beltr = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/sabre
+				backl = /obj/item/weapon/shield/wood
 
 		backpack_contents = list(
-			/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+			/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 			/obj/item/rope/chain = 1,
 			/obj/item/storage/keyring/guardcastle = 1,
-			/obj/item/rogueweapon/scabbard/sheath = 1,
+			/obj/item/weapon/scabbard/sheath = 1,
 			/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 			)
 		H.verbs |= /mob/proc/haltyell

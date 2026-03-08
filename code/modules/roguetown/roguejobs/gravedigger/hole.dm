@@ -125,9 +125,9 @@
 					record_round_statistic(STATS_GRAVES_CONSECRATED)
 
 /obj/structure/closet/dirthole/attackby(obj/item/attacking_item, mob/user, params)
-	if(!istype(attacking_item, /obj/item/rogueweapon/shovel))
+	if(!istype(attacking_item, /obj/item/weapon/shovel))
 		return ..()
-	var/obj/item/rogueweapon/shovel/attacking_shovel = attacking_item
+	var/obj/item/weapon/shovel/attacking_shovel = attacking_item
 	if(user.used_intent.type != /datum/intent/shovelscoop)
 		return
 

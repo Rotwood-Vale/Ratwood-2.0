@@ -32,13 +32,13 @@
 	pants = /obj/item/clothing/under/roguetown/tights//The idea is sort of that they just pick whichever colours correspond with the lord colours in round.
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/mace//Sign of status - he doesn't have the stats to actually use this in any meaningful way.
+	beltr = /obj/item/weapon/mace//Sign of status - he doesn't have the stats to actually use this in any meaningful way.
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone/bad//He is meant to be helping people around - hard to do when he can't hear their calls
 	backpack_contents = list(
 		/obj/item/storage/keyring/velder  = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)

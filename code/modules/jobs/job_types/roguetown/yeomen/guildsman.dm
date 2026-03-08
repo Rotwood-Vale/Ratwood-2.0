@@ -73,8 +73,8 @@
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
 		backr = /obj/item/storage/backpack/rogue/satchel
 		backpack_contents = list(
-			/obj/item/rogueweapon/hammer/iron = 1,
-			/obj/item/rogueweapon/tongs = 1,
+			/obj/item/weapon/hammer/iron = 1,
+			/obj/item/weapon/tongs = 1,
 			/obj/item/recipe_book/blacksmithing = 1,
 			)
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
@@ -88,8 +88,8 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt
 		backr = /obj/item/storage/backpack/rogue/satchel
 		backpack_contents = list(
-			/obj/item/rogueweapon/hammer/iron = 1,
-			/obj/item/rogueweapon/tongs = 1,
+			/obj/item/weapon/hammer/iron = 1,
+			/obj/item/weapon/tongs = 1,
 			/obj/item/recipe_book/blacksmithing = 1,
 			)
 		belt = /obj/item/storage/belt/rogue/leather
@@ -148,7 +148,7 @@
 	beltl = /obj/item/key/crafterguild
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
-						/obj/item/rogueweapon/hammer/steel = 1,
+						/obj/item/weapon/hammer/steel = 1,
 						/obj/item/lockpickring/mundane = 1,
 						/obj/item/recipe_book/blacksmithing = 1,
 						/obj/item/recipe_book/engineering = 1,
@@ -207,18 +207,18 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	beltl = /obj/item/rogueweapon/pick/steel
-	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
+	beltl = /obj/item/weapon/pick/steel
+	backr = /obj/item/weapon/stoneaxe/woodcut/steel/woodcutter
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
-						/obj/item/rogueweapon/hammer/steel = 1,
-						/obj/item/rogueweapon/handsaw = 1,
+						/obj/item/weapon/hammer/steel = 1,
+						/obj/item/weapon/handsaw = 1,
 						/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
-						/obj/item/rogueweapon/chisel = 1,
+						/obj/item/weapon/chisel = 1,
 						/obj/item/flashlight/flare/torch = 1,
 						/obj/item/flint = 1,
-						/obj/item/rogueweapon/huntingknife = 1,
-						/obj/item/rogueweapon/handsaw = 1,
+						/obj/item/weapon/huntingknife = 1,
+						/obj/item/weapon/handsaw = 1,
 						/obj/item/dye_brush = 1,
 						/obj/item/recipe_book/engineering = 1,
 						/obj/item/recipe_book/builder = 1,

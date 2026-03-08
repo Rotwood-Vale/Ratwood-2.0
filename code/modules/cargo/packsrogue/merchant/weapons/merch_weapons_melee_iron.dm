@@ -8,98 +8,98 @@
 	name = "Sword"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/sword/iron,
+					/obj/item/weapon/sword/iron,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/shortsword
 	name = "Shortsword"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/sword/short/iron,
+					/obj/item/weapon/sword/short/iron,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/messer
 	name = "Messer"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/sword/short/messer/iron,
+					/obj/item/weapon/sword/short/messer/iron,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/mace
 	name = "Mace"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/mace,
+					/obj/item/weapon/mace,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/cudgel
 	name = "Cudgel"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/mace/cudgel,
+					/obj/item/weapon/mace/cudgel,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/dagger
 	name = "Dagger"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/huntingknife/idagger,
+					/obj/item/weapon/huntingknife/idagger,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/axe
 	name = "Axe"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/stoneaxe/woodcut,
+					/obj/item/weapon/stoneaxe/woodcut,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/quarterstaff
 	name = "Reinforced Quarterstaff - Iron"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/woodstaff/quarterstaff/iron,
+					/obj/item/weapon/woodstaff/quarterstaff/iron,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/spear
 	name = "Spear"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/spear,
+					/obj/item/weapon/spear,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/flail
 	name = "Flail"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/flail,
+					/obj/item/weapon/flail,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/hammer
 	name = "Warhammer"
 	cost = 25 // 1 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/mace/warhammer,
+					/obj/item/weapon/mace/warhammer,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/claymore
 	name = "Claymore"
 	cost = 40 // 2 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/greatsword/zwei,
+					/obj/item/weapon/greatsword/zwei,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/greataxe
 	name = "Greataxe"
 	cost = 45 // 2 Iron Ingot, 1 Small Log
 	contains = list(
-					/obj/item/rogueweapon/greataxe,
+					/obj/item/weapon/greataxe,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/bardiche
 	name = "Bardiche"
 	cost = 45 // 2 Iron Ingot, 1 Small Log
 	contains = list(
-					/obj/item/rogueweapon/halberd/bardiche,
+					/obj/item/weapon/halberd/bardiche,
 				)
 
 
@@ -107,47 +107,47 @@
 	name = "Lucerne Hammer"
 	cost = 45 // 2 Iron Ingot, 1 Small Log
 	contains = list(
-					/obj/item/rogueweapon/eaglebeak/lucerne,
+					/obj/item/weapon/eaglebeak/lucerne,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/goedendag
 	name = "Goedendag"
 	cost = 40 // 2 Iron Ingot
 	contains = list(
-					/obj/item/rogueweapon/mace/goden,
+					/obj/item/weapon/mace/goden,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/whip
 	name = "Whip"
 	cost = 20 // 2 Leather 1 Stone so, vibe based.
 	contains = list(
-					/obj/item/rogueweapon/whip,
+					/obj/item/weapon/whip,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/shield
 	name = "Shield, Wooden"
 	cost = 15 // Vibe based, 1 Small Log
 	contains = list(
-					/obj/item/rogueweapon/shield/wood,
+					/obj/item/weapon/shield/wood,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/towershield
 	name = "Shield, Tower"
 	cost = 30 // 1 Iron Ingot, 1 Small Log
 	contains = list(
-					/obj/item/rogueweapon/shield/tower,
+					/obj/item/weapon/shield/tower,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/buckler
 	name = "Shield, Buckler"
 	cost = 70 // 2 Steel Ingot
 	contains = list(
-					/obj/item/rogueweapon/shield/buckler,
+					/obj/item/weapon/shield/buckler,
 				)
 
 /datum/supply_pack/rogue/iron_weapons/tower
 	name = "Shield, Kite"
 	cost = 70 // 2 Steel Ingot
 	contains = list(
-					/obj/item/rogueweapon/shield/tower/metal,
+					/obj/item/weapon/shield/tower/metal,
 				)

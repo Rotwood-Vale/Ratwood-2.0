@@ -1137,7 +1137,7 @@
 /turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "zR" = (
-/obj/item/rogueweapon/werewolf_claw/right,
+/obj/item/weapon/werewolf_claw/right,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/cave/dungeon1)
 "Ae" = (
@@ -1261,7 +1261,7 @@
 /area/rogue/under/cave/dungeon1)
 "Cu" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/sword/rapier/lord,
+/obj/item/weapon/sword/rapier/lord,
 /turf/open/floor/rogue/blocks/paving,
 /area/rogue/under/cave/dungeon1)
 "CD" = (
@@ -1578,7 +1578,7 @@
 /obj/item/grown/log/tree/stick,
 /obj/item/grown/log/tree/stick,
 /obj/structure/table/wood/crafted,
-/obj/item/rogueweapon/stoneaxe/woodcut,
+/obj/item/weapon/stoneaxe/woodcut,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -2172,7 +2172,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "WO" = (
-/obj/item/rogueweapon/werewolf_claw/left,
+/obj/item/weapon/werewolf_claw/left,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/cave/dungeon1)
 "Xi" = (
@@ -2262,7 +2262,7 @@
 /area/rogue/under/cave/dungeon1)
 "Zw" = (
 /obj/structure/table/wood/crafted,
-/obj/item/rogueweapon/stoneaxe/woodcut,
+/obj/item/weapon/stoneaxe/woodcut,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "Zy" = (

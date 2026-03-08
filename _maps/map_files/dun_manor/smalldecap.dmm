@@ -13,7 +13,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "ay" = (
-/obj/item/rogueweapon/pick/stone,
+/obj/item/weapon/pick/stone,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "az" = (
@@ -491,7 +491,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/cave/scarymaze)
 "gn" = (
-/obj/item/rogueweapon/shovel,
+/obj/item/weapon/shovel,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains)
 "gt" = (
@@ -903,7 +903,7 @@
 /obj/structure/closet/crate/chest/lootbox,
 /obj/effect/spawner/lootdrop/potion_stats,
 /obj/item/clothing/neck/roguetown/talkstone,
-/obj/item/rogueweapon/sword/sabre/elf,
+/obj/item/weapon/sword/sabre/elf,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/dragonden)
 "lM" = (
@@ -912,7 +912,7 @@
 /area/rogue/under/cave/undeadmanor)
 "lP" = (
 /obj/machinery/anvil/crafted,
-/obj/item/rogueweapon/hammer/iron,
+/obj/item/weapon/hammer/iron,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "lS" = (
@@ -1580,7 +1580,7 @@
 	},
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "vg" = (
-/obj/item/rogueweapon/pick/stone,
+/obj/item/weapon/pick/stone,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/mountains/decap)
 "vj" = (
@@ -2171,7 +2171,7 @@
 	name = "inhumen rune";
 	color = "#61190b"
 	},
-/obj/item/rogueweapon/huntingknife/idagger/steel,
+/obj/item/weapon/huntingknife/idagger/steel,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "BW" = (
@@ -2684,7 +2684,7 @@
 "Iy" = (
 /obj/structure/closet/crate/chest/lootbox,
 /obj/item/scomstone,
-/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel,
+/obj/item/weapon/greatsword/grenz/flamberge/blacksteel,
 /obj/effect/spawner/lootdrop/potion_stats,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/dragonden)
@@ -2727,7 +2727,7 @@
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "IT" = (
 /obj/structure/closet/crate/roguecloset,
-/obj/item/rogueweapon/sword/rapier/dec,
+/obj/item/weapon/sword/rapier/dec,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/undeadmanor)
 "IY" = (
@@ -2812,7 +2812,7 @@
 /area/rogue/outdoors/mountains/decap)
 "JV" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/sword/silver,
+/obj/item/weapon/sword/silver,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblinfort)
 "JX" = (
@@ -2845,7 +2845,7 @@
 "Km" = (
 /obj/structure/table/wood/crafted,
 /obj/effect/decal/cleanable/dirt/cobweb,
-/obj/item/rogueweapon/pick,
+/obj/item/weapon/pick,
 /obj/item/natural/feather,
 /obj/effect/spawner/lootdrop/potion_ingredient,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -3527,7 +3527,7 @@
 /obj/item/cooking/pan,
 /obj/item/reagent_containers/powder/flour,
 /obj/item/reagent_containers/powder/flour,
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/food,
 /turf/open/floor/rogue/tile,
 /area/rogue/outdoors/mountains/decap/stepbelow)
@@ -3909,7 +3909,7 @@
 "Zg" = (
 /obj/structure/rack/rogue/shelf/big,
 /obj/item/grown/log/tree/stick,
-/obj/item/rogueweapon/pick,
+/obj/item/weapon/pick,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Zk" = (

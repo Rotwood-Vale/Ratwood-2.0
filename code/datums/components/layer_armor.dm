@@ -165,7 +165,7 @@
 			examine_list += span_info("[SSskills.all_skills[skill]] — [SSskills.level_names_plain[repair_skills[skill]]]")
 
 /datum/component/layeredarmor/proc/attacked_by(datum/source, obj/item/I, mob/living/user)
-	if(ishuman(user) && istype(I, /obj/item/rogueweapon/hammer))
+	if(ishuman(user) && istype(I, /obj/item/weapon/hammer))
 		var/mob/living/carbon/human/H = user
 		var/can_do
 		if(length(repair_items) && !HAS_TRAIT(user, TRAIT_TRAINED_SMITH))

@@ -820,7 +820,7 @@
 /obj/item/clothing/wrists/roguetown/royalsleeves,
 /obj/item/clothing/shoes/roguetown/boots/nobleboot,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/rogueweapon/sword/rapier/dec,
+/obj/item/weapon/sword/rapier/dec,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors/royal)
 "IE" = (
@@ -1201,7 +1201,7 @@
 /area/rogue/under/tomb/wilds)
 "Zo" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /obj/item/kitchen/rollingpin,
 /obj/machinery/light/rogue/wallfire/candle/weak,
 /turf/open/floor/rogue/tile,

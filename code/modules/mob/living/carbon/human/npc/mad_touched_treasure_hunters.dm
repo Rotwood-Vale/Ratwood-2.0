@@ -80,13 +80,13 @@
 	gloves = /obj/item/clothing/gloves/roguetown/plate/paalloy
 	cloak = /obj/item/clothing/cloak/wickercloak
 	if(prob(33))
-		r_hand = /obj/item/rogueweapon/greatsword/paalloy
+		r_hand = /obj/item/weapon/greatsword/paalloy
 	else if(prob(33))
-		r_hand = /obj/item/rogueweapon/shield/buckler
-		l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
+		r_hand = /obj/item/weapon/shield/buckler
+		l_hand = /obj/item/weapon/huntingknife/idagger/steel/padagger
 	else
-		r_hand = /obj/item/rogueweapon/sword/sabre/palloy
-		l_hand = /obj/item/rogueweapon/sword/sabre/palloy
+		r_hand = /obj/item/weapon/sword/sabre/palloy
+		l_hand = /obj/item/weapon/sword/sabre/palloy
 
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	//carbon ai is still pretty dumb so making them a threat to players requires pretty crazy looking stats. don't think too hard about it.

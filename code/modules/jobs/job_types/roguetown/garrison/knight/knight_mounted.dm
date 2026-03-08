@@ -50,31 +50,31 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Longsword + Crossbow")
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/long
+				beltl = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/long
 				beltr = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 			if("Billhook + Recurve Bow")
-				r_hand = /obj/item/rogueweapon/spear/billhook
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/billhook
+				backl = /obj/item/weapon/scabbard/gwstrap
 				beltr = /obj/item/quiver/arrows
 				beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 			if("Grand Mace + Longbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 				beltr = /obj/item/quiver/arrows
-				beltl = /obj/item/rogueweapon/mace/goden/steel
+				beltl = /obj/item/weapon/mace/goden/steel
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 			if("Sabre + Recurve Bow")
-				l_hand = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/sabre
+				l_hand = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/sabre
 				beltr = /obj/item/quiver/arrows
 				beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 			if("Lance + Kite Shield")
-				r_hand = /obj/item/rogueweapon/spear/lance
-				backl = /obj/item/rogueweapon/shield/tower/metal
+				r_hand = /obj/item/weapon/spear/lance
+				backl = /obj/item/weapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_APPRENTICE, TRUE) // Let them skip dummy hitting
 
@@ -111,7 +111,7 @@
 		armor = armors[armorchoice]
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 	)

@@ -1097,8 +1097,8 @@
 /obj/item/clothing/under/roguetown/platelegs/paalloy,
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced,
 /obj/item/clothing/neck/roguetown/chaincoif,
-/obj/item/rogueweapon/sword/rapier,
-/obj/item/rogueweapon/shield/buckler/palloy,
+/obj/item/weapon/sword/rapier,
+/obj/item/weapon/shield/buckler/palloy,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/tomb)
 "mU" = (
@@ -1184,7 +1184,7 @@
 /obj/item/clothing/under/roguetown/platelegs/paalloy,
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced,
 /obj/item/clothing/neck/roguetown/chaincoif,
-/obj/item/rogueweapon/spear/billhook,
+/obj/item/weapon/spear/billhook,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "nN" = (
@@ -1436,7 +1436,7 @@
 "rl" = (
 /obj/machinery/light/rogue/chand,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/rogueweapon/huntingknife/idagger/steel,
+/obj/item/weapon/huntingknife/idagger/steel,
 /obj/item/clothing/suit/roguetown/shirt/jester,
 /obj/item/clothing/shoes/roguetown/jester,
 /obj/item/clothing/head/roguetown/jester,
@@ -2514,7 +2514,7 @@
 /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket,
 /obj/item/clothing/head/roguetown/articap,
 /obj/item/clothing/shoes/roguetown/boots/nobleboot,
-/obj/item/rogueweapon/huntingknife/idagger/steel,
+/obj/item/weapon/huntingknife/idagger/steel,
 /obj/item/scomstone,
 /mob/living/carbon/human/species/skeleton/npc/medium/noequip,
 /turf/open/floor/carpet/red,
@@ -2870,8 +2870,8 @@
 /obj/item/clothing/under/roguetown/platelegs/paalloy,
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced,
 /obj/item/clothing/neck/roguetown/chaincoif,
-/obj/item/rogueweapon/mace/warhammer/steel,
-/obj/item/rogueweapon/shield/tower/metal,
+/obj/item/weapon/mace/warhammer/steel,
+/obj/item/weapon/shield/tower/metal,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Ia" = (

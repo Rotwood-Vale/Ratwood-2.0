@@ -603,7 +603,7 @@
 "mS" = (
 /obj/structure/bed/rogue/shit,
 /obj/structure/curtain,
-/obj/item/rogueweapon/surgery/bonesetter,
+/obj/item/weapon/surgery/bonesetter,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "mW" = (
@@ -1274,7 +1274,7 @@
 /area/rogue/under/tomb)
 "zA" = (
 /obj/structure/table/optable,
-/obj/item/rogueweapon/shovel,
+/obj/item/weapon/shovel,
 /obj/effect/spawner/lootdrop/general_loot_mid,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/tomb/indoors)
@@ -1380,7 +1380,7 @@
 /obj/item/clothing/head/roguetown/wizhat,
 /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe,
 /obj/item/clothing/shoes/roguetown/sandals,
-/obj/item/rogueweapon/woodstaff,
+/obj/item/weapon/woodstaff,
 /obj/item/clothing/mask/rogue/facemask/copper,
 /obj/item/clothing/under/roguetown/trou/shadowpants,
 /mob/living/carbon/human/species/skeleton/npc/no_equipment,
@@ -1855,7 +1855,7 @@
 	},
 /area/rogue/under/tomb/indoors)
 "KV" = (
-/obj/item/rogueweapon/surgery/scalpel,
+/obj/item/weapon/surgery/scalpel,
 /obj/structure/closet/crate/chest/crate,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/dirt,

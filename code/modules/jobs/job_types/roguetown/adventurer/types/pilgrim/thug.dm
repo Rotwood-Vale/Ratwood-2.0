@@ -63,10 +63,10 @@
 					r_hand = /obj/item/cooking/pan
 				if("Knuckles")
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
-					r_hand = /obj/item/rogueweapon/knuckles
+					r_hand = /obj/item/weapon/knuckles
 				if("Navaja")
 					H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_APPRENTICE, TRUE)
-					r_hand = /obj/item/rogueweapon/huntingknife/idagger/navaja
+					r_hand = /obj/item/weapon/huntingknife/idagger/navaja
 				if("Bare Hands")
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 					ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
@@ -149,10 +149,10 @@
 					ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				if("Big Axe")
 					H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-					r_hand = /obj/item/rogueweapon/greataxe
+					r_hand = /obj/item/weapon/greataxe
 				if("Big Stick")
 					H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
-					r_hand = /obj/item/rogueweapon/mace
+					r_hand = /obj/item/weapon/mace
 
 		if("Longshoreman")
 			to_chat(H, span_warning("You answered Abyssor's call when you were young, though in troublesome ways, \
@@ -174,9 +174,9 @@
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
 			pants = /obj/item/clothing/under/roguetown/trou/leather
 			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/red
-			r_hand = /obj/item/rogueweapon/sword/cutlass
-			beltr = /obj/item/rogueweapon/scabbard/sword
-			beltl = /obj/item/rogueweapon/huntingknife/idagger
+			r_hand = /obj/item/weapon/sword/cutlass
+			beltr = /obj/item/weapon/scabbard/sword
+			beltl = /obj/item/weapon/huntingknife/idagger
 	
 
 			H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)

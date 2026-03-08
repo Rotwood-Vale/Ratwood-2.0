@@ -98,7 +98,7 @@
 /datum/supply_pack/rogue/Pioneer/parrydag
 	name = "Parry Dagger"
 	cost = 30
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/parrying)
+	contains = list(/obj/item/weapon/huntingknife/idagger/steel/parrying)
 
 //Tools of the trade.
 
@@ -110,12 +110,12 @@
 /datum/supply_pack/rogue/Pioneer/hammer
 	name = "Smith hammer"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/hammer/iron)
+	contains = list(/obj/item/weapon/hammer/iron)
 
 /datum/supply_pack/rogue/Pioneer/tongs
 	name = "Smith tongs"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/tongs)
+	contains = list(/obj/item/weapon/tongs)
 
 /datum/supply_pack/rogue/Pioneer/cogs
 	name = "Cogs"
@@ -191,12 +191,12 @@
 /datum/supply_pack/rogue/Pioneer/bombard_palantir
 	name = "Palantir"
 	cost = 250
-	contains = list(/obj/item/rogueweapon/palantir)
+	contains = list(/obj/item/weapon/palantir)
 
 /datum/supply_pack/rogue/Pioneer/bombard_sponge
 	name = "Bombard sponge"
 	cost = 150
-	contains = list(/obj/item/rogueweapon/woodstaff/quarterstaff/bombard_sponge)
+	contains = list(/obj/item/weapon/woodstaff/quarterstaff/bombard_sponge)
 
 /datum/supply_pack/rogue/Pioneer/smokepowder_flask
 	name = "Smokepowder flask"

@@ -190,7 +190,7 @@
 
 /datum/coven_power/quietus/baals_caress/can_activate(atom/target, alert = FALSE)
 	. = ..()
-	var/obj/item/rogueweapon/target_weapon = target
+	var/obj/item/weapon/target_weapon = target
 	if(!istype(target_weapon))
 		if(alert)
 			to_chat(owner, span_warning("[src] can only be used on weapons!"))
@@ -203,7 +203,7 @@
 
 	return .
 
-/datum/coven_power/quietus/baals_caress/activate(obj/item/rogueweapon/target)
+/datum/coven_power/quietus/baals_caress/activate(obj/item/weapon/target)
 	. = ..()
 	target.AddElement(/datum/element/one_time_poison, list(/datum/reagent/bloodacid = 2))
 

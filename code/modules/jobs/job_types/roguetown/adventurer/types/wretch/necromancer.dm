@@ -38,7 +38,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/reagent_containers/glass/bottle/rogue/manapot
 	neck = /obj/item/clothing/neck/roguetown/gorget
-	beltl = /obj/item/rogueweapon/huntingknife
+	beltl = /obj/item/weapon/huntingknife
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/spellbook_unfinished/pre_arcyne = 1,
@@ -46,7 +46,7 @@
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/necro_relics/necro_crystal = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		/obj/item/ritechalk = 1
 		)
@@ -80,14 +80,14 @@
 	var/staffchoice = input(H, H, "Choose your staff", "Available staffs") as anything in staffs
 	switch(staffchoice)
 		if("ronts-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/ruby
+			backr = /obj/item/weapon/woodstaff/ruby
 		if("blortz-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/quartz
+			backr = /obj/item/weapon/woodstaff/quartz
 		if("saffira-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/sapphire
+			backr = /obj/item/weapon/woodstaff/sapphire
 		if("gemerald-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/emerald
+			backr = /obj/item/weapon/woodstaff/emerald
 		if("amethyst-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/amethyst
+			backr = /obj/item/weapon/woodstaff/amethyst
 		if("toper-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/toper
+			backr = /obj/item/weapon/woodstaff/toper

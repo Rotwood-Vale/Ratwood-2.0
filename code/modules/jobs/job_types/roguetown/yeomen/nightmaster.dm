@@ -69,7 +69,7 @@
 	wrists = /obj/item/storage/keyring/nightman
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	pants = /obj/item/clothing/under/roguetown/trou/leather
-	beltl = /obj/item/rogueweapon/whip
+	beltl = /obj/item/weapon/whip
 
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(

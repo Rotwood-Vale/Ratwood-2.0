@@ -18,7 +18,7 @@
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/clothing/under/roguetown/trou/leathertights,
 /obj/item/clothing/wrists/roguetown/bracers/leather,
-/obj/item/rogueweapon/pick/militia,
+/obj/item/weapon/pick/militia,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/cave/lava)
 "g" = (
@@ -88,7 +88,7 @@
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/clothing/under/roguetown/trou/leathertights,
 /obj/item/clothing/wrists/roguetown/bracers/leather,
-/obj/item/rogueweapon/stoneaxe/battle,
+/obj/item/weapon/stoneaxe/battle,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/cave/lava)
 "x" = (
@@ -167,7 +167,7 @@
 /area/rogue/under/tomb/cave/lava)
 "M" = (
 /obj/machinery/anvil,
-/obj/item/rogueweapon/hammer/steel{
+/obj/item/weapon/hammer/steel{
 	pixel_x = -6;
 	pixel_y = 5
 	},

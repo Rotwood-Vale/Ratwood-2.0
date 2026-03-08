@@ -48,8 +48,8 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
-	beltl = /obj/item/rogueweapon/pick
-	backr = /obj/item/rogueweapon/stoneaxe/woodcut
+	beltl = /obj/item/weapon/pick
+	backr = /obj/item/weapon/stoneaxe/woodcut
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
 						/obj/item/flashlight/flare/torch = 1,

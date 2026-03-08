@@ -25,7 +25,7 @@
 	var/enchant_type = FORCE_BLADE_ENCHANT // The type of enchantment
 
 /datum/component/enchanted_weapon/Initialize(duration_override, allow_refresh_override, refresh_skill_override, enchant_type_override)
-	if(!istype(parent, /obj/item/rogueweapon))
+	if(!istype(parent, /obj/item/weapon))
 		return COMPONENT_INCOMPATIBLE
 	var/obj/item/I = parent
 

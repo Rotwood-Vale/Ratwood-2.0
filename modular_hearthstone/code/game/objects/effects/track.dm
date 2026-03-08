@@ -356,11 +356,11 @@
 		var/obj/effect/track/structure/this = this_track
 		var/weapon
 		if(holding)
-			if(istype(holding,/obj/item/rogueweapon))
-				var/static/list/weapon_types = list(/obj/item/rogueweapon/sword, /obj/item/rogueweapon/mace, /obj/item/rogueweapon/spear, /obj/item/rogueweapon/greatsword, /obj/item/rogueweapon/pick, /obj/item/rogueweapon/huntingknife/idagger, /obj/item/rogueweapon/whip, /obj/item/lockpick)
+			if(istype(holding,/obj/item/weapon))
+				var/static/list/weapon_types = list(/obj/item/weapon/sword, /obj/item/weapon/mace, /obj/item/weapon/spear, /obj/item/weapon/greatsword, /obj/item/weapon/pick, /obj/item/weapon/huntingknife/idagger, /obj/item/weapon/whip, /obj/item/lockpick)
 				for(var/type in weapon_types)
 					if(istype(holding, type))
-						var/obj/item/rogueweapon/found = type
+						var/obj/item/weapon/found = type
 						weapon = initial(found.name)
 
 			if(weapon)

@@ -49,9 +49,9 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	id = /obj/item/mattcoin
 	backpack_contents = list(
-					/obj/item/rogueweapon/huntingknife/idagger = 1,
+					/obj/item/weapon/huntingknife/idagger = 1,
 					/obj/item/flashlight/flare/torch = 1,
-					/obj/item/rogueweapon/scabbard/sheath = 1
+					/obj/item/weapon/scabbard/sheath = 1
 					)
 	H.adjust_blindness(-3)
 	if(H.mind)
@@ -60,21 +60,21 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Master Swordsman")
-				beltr = /obj/item/rogueweapon/sword/long/death
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				backl = /obj/item/rogueweapon/shield/tower/metal
+				beltr = /obj/item/weapon/sword/long/death
+				beltl = /obj/item/weapon/scabbard/sword
+				backl = /obj/item/weapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if("Master Spearman")
-				r_hand = /obj/item/rogueweapon/spear/death
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/death
+				backl = /obj/item/weapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)	//No shields, you have a two-hander!
 			if("Master Cleaver")
-				beltl = /obj/item/rogueweapon/stoneaxe/battle
-				backl = /obj/item/rogueweapon/shield/tower/metal
+				beltl = /obj/item/weapon/stoneaxe/battle
+				backl = /obj/item/weapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)		//No shields, 'cause of things like greataxes.
 			if("Master Bludgeoner")
-				beltl = /obj/item/rogueweapon/mace/steel
+				beltl = /obj/item/weapon/mace/steel
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 

@@ -49,8 +49,8 @@
 			. += span_info("- [item]")
 
 /obj/machinery/light/rogue/smelter/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(istype(attacking_item, /obj/item/rogueweapon/tongs))
-		var/obj/item/rogueweapon/tongs/tongs = attacking_item
+	if(istype(attacking_item, /obj/item/weapon/tongs))
+		var/obj/item/weapon/tongs/tongs = attacking_item
 		if(tongs.hingot)
 			if(length(contained_items) >= max_contained_items)
 				to_chat(user, span_warn("\The [src] is already full!"))
@@ -77,11 +77,11 @@
 			if(on)
 				var/tyme = world.time
 				tongs.hott = tyme
-				addtimer(CALLBACK(tongs, TYPE_PROC_REF(/obj/item/rogueweapon/tongs, make_unhot), tyme), 20 SECONDS)
+				addtimer(CALLBACK(tongs, TYPE_PROC_REF(/obj/item/weapon/tongs, make_unhot), tyme), 20 SECONDS)
 			tongs.update_icon()
 		return
 
-	if(istype(attacking_item, /obj/item/rogueweapon/hammer))
+	if(istype(attacking_item, /obj/item/weapon/hammer))
 		to_chat(user, span_warning("\The [attacking_item] should be used at an anvil, not \the [src]!"))
 		return
 
@@ -98,7 +98,7 @@
 
 /obj/machinery/light/rogue/smelter/attack_right(mob/user)
 	var/obj/item/held_item = user.get_active_held_item()
-	if(istype(held_item, /obj/item/rogueweapon/tongs))
+	if(istype(held_item, /obj/item/weapon/tongs))
 		attackby(held_item, user)
 		return
 

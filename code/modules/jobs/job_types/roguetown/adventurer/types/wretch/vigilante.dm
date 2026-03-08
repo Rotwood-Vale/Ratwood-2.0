@@ -55,8 +55,8 @@
 	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 5, TRUE) //No civilized barbarian. Sorry chud. Go play Berserker if you want that.
 	H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 5, TRUE) //I can do this all day.
 	backl = /obj/item/storage/backpack/rogue/backpack/bagpack
-	beltl = /obj/item/rogueweapon/knuckles
-	beltr = /obj/item/rogueweapon/stoneaxe/hurlbat
+	beltl = /obj/item/weapon/knuckles
+	beltr = /obj/item/weapon/stoneaxe/hurlbat
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood
 	cloak = /obj/item/clothing/cloak/thief_cloak
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket
@@ -67,7 +67,7 @@
 	wretch_select_bounty(H)
 
 /datum/outfit/job/roguetown/wretch/vigilante/proc/owl_equip(mob/living/carbon/human/H)
-	backl = /obj/item/rogueweapon/woodstaff/quarterstaff/steel //nonlethal takedowns
+	backl = /obj/item/weapon/woodstaff/quarterstaff/steel //nonlethal takedowns
 	beltr = /obj/item/quiver/sling/iron
 	l_hand = /obj/item/grapplinghook
 	r_hand = /obj/item/bomb/smoke
@@ -98,9 +98,9 @@
 	wretch_select_bounty(H)
 
 /datum/outfit/job/roguetown/wretch/vigilante/proc/bullshit_equip(mob/living/carbon/human/H)
-	beltr = /obj/item/rogueweapon/stoneaxe/hurlbat
-	r_hand = /obj/item/rogueweapon/stoneaxe/hurlbat
-	l_hand = /obj/item/rogueweapon/stoneaxe/hurlbat
+	beltr = /obj/item/weapon/stoneaxe/hurlbat
+	r_hand = /obj/item/weapon/stoneaxe/hurlbat
+	l_hand = /obj/item/weapon/stoneaxe/hurlbat
 	beltl = /obj/item/quiver/javelin/steel
 	backl = /obj/item/quiver/javelin/steel
 	cloak = /obj/item/clothing/cloak/cape

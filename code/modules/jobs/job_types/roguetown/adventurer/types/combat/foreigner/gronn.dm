@@ -37,10 +37,10 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/stoneaxe/handaxe
-	beltl = /obj/item/rogueweapon/huntingknife
+	beltr = /obj/item/weapon/stoneaxe/handaxe
+	beltl = /obj/item/weapon/huntingknife
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backpack_contents = list(/obj/item/rogueweapon/scabbard/sheath)
+	backpack_contents = list(/obj/item/weapon/scabbard/sheath)
 
 	if(H.mind)
 		var/gronnish_lot = list("Bruiser","Archer")
@@ -50,8 +50,8 @@
 				//Equipment
 				head = /obj/item/clothing/head/roguetown/helmet/nomadhelmet
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/halberd/bardiche
+				backr = /obj/item/weapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/halberd/bardiche
 				//Skills & Stats.
 				H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)

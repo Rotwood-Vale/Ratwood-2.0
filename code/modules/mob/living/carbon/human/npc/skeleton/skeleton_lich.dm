@@ -46,6 +46,6 @@
 
 	H.set_patron(/datum/patron/inhumen/zizo)
 	if(prob(50))
-		r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
+		r_hand = /obj/item/weapon/eaglebeak/lucerne
 	else
-		r_hand = /obj/item/rogueweapon/greatsword/zwei
+		r_hand = /obj/item/weapon/greatsword/zwei

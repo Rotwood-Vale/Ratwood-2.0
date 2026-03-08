@@ -140,9 +140,9 @@
 	qdel(src)
 
 /mob/living/carbon/human/proc/attackhostage()
-	if(!istype(hostagetaker.get_active_held_item(), /obj/item/rogueweapon))
+	if(!istype(hostagetaker.get_active_held_item(), /obj/item/weapon))
 		return
-	var/obj/item/rogueweapon/WP = hostagetaker.get_active_held_item()
+	var/obj/item/weapon/WP = hostagetaker.get_active_held_item()
 	WP.attack(src, hostagetaker)
 	hostagetaker.visible_message("<span class='danger'>\The [hostagetaker] attacks \the [src] reflexively!</span>")
 	hostagetaker.hostage = null

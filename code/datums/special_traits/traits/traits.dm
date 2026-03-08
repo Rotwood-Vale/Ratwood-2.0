@@ -96,7 +96,7 @@
 	character.cmode_music = 'sound/music/cmode/adventurer/combat_outlander4.ogg'
 	character.change_stat(STATKEY_SPD, 2)
 	character.adjust_skillrank_up_to(/datum/skill/combat/swords, 6, TRUE) //will make a unique trait later on
-	character.mind.special_items["Rapier"] = /obj/item/rogueweapon/sword/rapier
+	character.mind.special_items["Rapier"] = /obj/item/weapon/sword/rapier
 
 /datum/special_trait/eagle_eyed
 	name = "Eagle Eyed"
@@ -118,7 +118,7 @@
 /datum/special_trait/mule/on_apply(mob/living/carbon/human/character, silent)
 	character.mind.special_items["Stash One"] = /obj/item/storage/backpack/rogue/satchel/mule
 	character.mind.special_items["Stash Two"] = /obj/item/storage/backpack/rogue/satchel/mule
-	character.mind.special_items["Dagger"] = /obj/item/rogueweapon/huntingknife/idagger
+	character.mind.special_items["Dagger"] = /obj/item/weapon/huntingknife/idagger
 	character.adjust_skillrank_up_to(/datum/skill/combat/knives, 2, TRUE)
 
 /datum/special_trait/cunning_linguist
@@ -189,7 +189,7 @@
 	weight = 50
 
 /datum/special_trait/pineapple/on_apply(mob/living/carbon/human/character, silent)
-	character.mind.special_items["Whip"] = /obj/item/rogueweapon/whip
+	character.mind.special_items["Whip"] = /obj/item/weapon/whip
 	character.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 6, TRUE)
 
 /datum/special_trait/psydons_rider

@@ -23,8 +23,8 @@
 		. += span_warning("[current_workpiece] is too hot to touch.")
 
 /obj/machinery/anvil/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/rogueweapon/tongs))
-		var/obj/item/rogueweapon/tongs/T = W
+	if(istype(W, /obj/item/weapon/tongs))
+		var/obj/item/weapon/tongs/T = W
 		if(current_workpiece)
 			// Handle adding items to forging with tongs
 			var/datum/component/forging/forging_comp = current_workpiece.GetComponent(/datum/component/forging)
@@ -86,9 +86,9 @@
 			update_icon()
 			return
 
-	if(istype(W, /obj/item/rogueweapon/hammer))
+	if(istype(W, /obj/item/weapon/hammer))
 		user.changeNext_move(CLICK_CD_FAST)
-		var/obj/item/rogueweapon/hammer/hammer = W
+		var/obj/item/weapon/hammer/hammer = W
 		if(!current_workpiece)
 			return
 
@@ -263,7 +263,7 @@
 			ui.close()
 
 			// if we have a hammer in our hand, start working immediately
-			var/obj/item/rogueweapon/hammer/hammer = usr.get_active_held_item()
+			var/obj/item/weapon/hammer/hammer = usr.get_active_held_item()
 			if(istype(hammer))
 				attackby(hammer, user)
 

@@ -61,7 +61,7 @@
 	head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 	id = /obj/item/mattcoin
 
-	r_hand = /obj/item/rogueweapon/woodstaff/diamond
+	r_hand = /obj/item/weapon/woodstaff/diamond
 	if(H.age == AGE_OLD)
 		head = /obj/item/clothing/head/roguetown/wizhat/gen
 		armor = /obj/item/clothing/suit/roguetown/shirt/robe

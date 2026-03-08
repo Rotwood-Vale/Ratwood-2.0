@@ -78,7 +78,7 @@
 		return
 	lastminer = user
 	..()
-	if(istype(I, /obj/item/rogueweapon/pick))
+	if(istype(I, /obj/item/weapon/pick))
 		if(!isliving(user))
 			return
 

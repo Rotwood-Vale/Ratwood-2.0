@@ -212,8 +212,8 @@
 		/obj/item/clothing/gloves/roguetown/chain,
 		/obj/item/storage/belt/rogue/leather/black,
 		/obj/item/reagent_containers/glass/bottle/rogue/manapot,
-		/obj/item/rogueweapon/huntingknife/idagger/steel,
-		/obj/item/rogueweapon/woodstaff/riddle_of_steel,
+		/obj/item/weapon/huntingknife/idagger/steel,
+		/obj/item/weapon/woodstaff/riddle_of_steel,
 		/obj/item/ritechalk,
 		/obj/item/storage/backpack/rogue/satchel,
 	)

@@ -21,12 +21,12 @@
 	glow_intensity = GLOW_INTENSITY_LOW
 
 	gesture_required = TRUE // Don't really matter
-	var/obj/item/rogueweapon/conjured_brick = null
+	var/obj/item/weapon/conjured_brick = null
 
 /obj/effect/proc_holder/spell/self/magicians_brick/cast(list/targets, mob/living/user = usr)
 	if(src.conjured_brick)
 		qdel(conjured_brick)
-	var/obj/item/rogueweapon/R = new /obj/item/rogueweapon/magicbrick(user.drop_location())
+	var/obj/item/weapon/R = new /obj/item/weapon/magicbrick(user.drop_location())
 	R.AddComponent(/datum/component/conjured_item)
 
 	if(user.STAINT > 10)
@@ -44,7 +44,7 @@
 		qdel(conjured_brick)
 	return ..()
 
-/obj/item/rogueweapon/magicbrick
+/obj/item/weapon/magicbrick
 	name = "magician's brick"
 	desc = "A brick formed out of arcane energy. Not a actual brick and cannot be used for construction. Makes for a very deadly melee and throwing weapon."
 	icon = 'icons/items/cooking.dmi'

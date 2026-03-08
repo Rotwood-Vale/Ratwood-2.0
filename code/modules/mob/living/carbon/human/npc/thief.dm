@@ -124,9 +124,9 @@
 		neck = /obj/item/clothing/neck/roguetown/leather
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	l_hand = /obj/item/rogueweapon/huntingknife/idagger
+	l_hand = /obj/item/weapon/huntingknife/idagger
 	if(prob(50))
-		l_hand = /obj/item/rogueweapon/huntingknife/copper
+		l_hand = /obj/item/weapon/huntingknife/copper
 	belt = /obj/item/storage/belt/rogue/leather/
 	if(prob(50))
 		beltl = /obj/item/lockpick

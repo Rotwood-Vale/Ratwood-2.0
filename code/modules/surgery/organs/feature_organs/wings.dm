@@ -67,7 +67,7 @@
 	if(M.mind)
 		if(isharpy(M))
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/harpy_flight)
-			src.nullspace_items += new /obj/item/rogueweapon/huntingknife/idagger/harpy_talons
+			src.nullspace_items += new /obj/item/weapon/huntingknife/idagger/harpy_talons
 			M.skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/harpy_skin
 		else
 			to_chat(M, span_bloody("I have the wings, yes... BUT HOW THE FARK DO I USE THEM?!!"))

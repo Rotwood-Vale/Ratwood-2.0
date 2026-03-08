@@ -1,4 +1,4 @@
-/obj/item/rogueweapon/pick
+/obj/item/weapon/pick
 	force = 17
 	force_wielded = 21
 	possible_item_intents = list(/datum/intent/pick/bad)
@@ -18,7 +18,7 @@
 	grid_width = 64
 	grid_height = 64
 
-/obj/item/rogueweapon/pick/getonmobprop(tag)
+/obj/item/weapon/pick/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -29,7 +29,7 @@
 			if("onbelt")
 				return list("shrink" = 0.5,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/pick/steel
+/obj/item/weapon/pick/steel
 	name = "steel pick"
 	desc = "With a reinforced handle and sturdy shaft, this is a superior tool for delving in the darkness."
 	force = 21
@@ -40,7 +40,7 @@
 	max_integrity = 600
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rogueweapon/pick/blacksteel
+/obj/item/weapon/pick/blacksteel
 	name = "blacksteel pick"
 	desc = "Glimmering with silver-y black, this is a pretigious tool for miners delving in the darkness."
 	force_wielded = 30
@@ -52,7 +52,7 @@
 	smeltresult = /obj/item/ingot/blacksteel
 
 
-/obj/item/rogueweapon/pick/stone
+/obj/item/weapon/pick/stone
 	name = "stone pick"
 	desc = "Stone versus sharp stone, who wins?"
 	force = 12
@@ -63,7 +63,7 @@
 	max_integrity = 250
 	smeltresult = null
 
-/obj/item/rogueweapon/pick/aalloy
+/obj/item/weapon/pick/aalloy
 	name = "decrepit pick"
 	desc = "A chisel of wrought bronze, which once labored to gather the ores necessary for an ancient alloy; such was lost in the aftermath of Her ascension."
 	force = 12
@@ -76,7 +76,7 @@
 	color = "#bb9696"
 	sellprice = 15
 
-/obj/item/rogueweapon/pick/copper
+/obj/item/weapon/pick/copper
 	name = "copper pick"
 	desc = "A copper pick, slightly better than a stone pick."
 	force = 15

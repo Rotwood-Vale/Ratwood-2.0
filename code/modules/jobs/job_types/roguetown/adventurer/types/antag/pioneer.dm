@@ -49,15 +49,15 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/shovel/saperka
+	backr = /obj/item/weapon/shovel/saperka
 	beltl = /obj/item/storage/detpack
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	id = /obj/item/mattcoin
 	backpack_contents = list(
 		/obj/item/restraints/legcuffs/beartrap = 4,
 		/obj/item/flint = 1,
-		/obj/item/rogueweapon/hammer/iron = 1,
-		/obj/item/rogueweapon/pick/steel = 1,
+		/obj/item/weapon/hammer/iron = 1,
+		/obj/item/weapon/pick/steel = 1,
 	)
 
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed)
@@ -87,14 +87,14 @@
 	invocations = list("Measure twice, set once...")
 	invocation_type = "whisper"
 	miracle = FALSE
-	req_items = list(/obj/item/rogueweapon/shovel)
+	req_items = list(/obj/item/weapon/shovel)
 
 	var/setup_delay = 8 SECONDS
 	var/pending = FALSE
 	var/trap_path = /obj/structure/trap/bogtrap/bomb
 
 /obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed/proc/_has_saperka(mob/living/user)
-	for(var/obj/item/rogueweapon/shovel/saperka/S in user)
+	for(var/obj/item/weapon/shovel/saperka/S in user)
 		return TRUE
 	return FALSE
 

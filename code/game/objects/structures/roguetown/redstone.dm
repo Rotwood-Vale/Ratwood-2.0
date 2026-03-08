@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 				desc = "a lever with a carving scratched out"
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		return
-	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
+	else if(istype(item, /obj/item/weapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to rename doors."))
 
 /obj/structure/lever/onkick(mob/user)
@@ -287,7 +287,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 				desc = "a plate with a carving scratched out"
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		return
-	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
+	else if(istype(item, /obj/item/weapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to rename plates."))
 
 
@@ -384,7 +384,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 				desc = "a launcher with a carving scratched out"
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		return
-	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
+	else if(istype(item, /obj/item/weapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to rename the launcher."))
 	playsound(loc, 'sound/misc/keyboard_enter.ogg', 100, FALSE, -1)
 	sleep(7)
@@ -440,7 +440,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 					firedirection = WEST
 					firedirectiontwo = NORTHWEST
 					firedirectionthree = SOUTHWEST
-		else if (user.is_holding_item_of_type(/obj/item/rogueweapon/hammer))
+		else if (user.is_holding_item_of_type(/obj/item/weapon/hammer))
 			sleep(1)
 			switch(spreadmode)
 				if(TRUE)
@@ -710,7 +710,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 				desc = "a hatch with a carving scratched out"
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		return
-	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
+	else if(istype(item, /obj/item/weapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to rename the plate."))
 
 /obj/structure/kybraxor

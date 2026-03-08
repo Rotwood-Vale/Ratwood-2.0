@@ -4,7 +4,7 @@
 /area/rogue/under/tomb/cave/lava)
 "q" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/hammer/iron,
+/obj/item/weapon/hammer/iron,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave/lava)
 "r" = (
@@ -13,7 +13,7 @@
 /area/rogue/under/tomb/cave/lava)
 "t" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/mace/warhammer/steel,
+/obj/item/weapon/mace/warhammer/steel,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/cave/lava)
 "u" = (
@@ -53,7 +53,7 @@
 /area/rogue/under/tomb/cave/lava)
 "N" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/tongs,
+/obj/item/weapon/tongs,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/cave/lava)
 "O" = (

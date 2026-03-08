@@ -52,10 +52,10 @@
 	armor = /obj/item/clothing/cloak/stabard/crusader
 	cloak = /obj/item/clothing/cloak/cape/crusader
 	gloves = /obj/item/clothing/gloves/roguetown/chain
-	backr = /obj/item/rogueweapon/shield/tower/metal
+	backr = /obj/item/weapon/shield/tower/metal
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltr = /obj/item/rogueweapon/scabbard/sword
-	r_hand = /obj/item/rogueweapon/sword/decorated
+	beltr = /obj/item/weapon/scabbard/sword
+	r_hand = /obj/item/weapon/sword/decorated
 	beltl = /obj/item/clothing/head/roguetown/helmet/heavy/crusader
 	neck = /obj/item/clothing/neck/roguetown/psicross/g
 	backpack_contents = list(
@@ -71,8 +71,8 @@
 				cloak = /obj/item/clothing/cloak/raincloak/furcloak
 				beltl = /obj/item/clothing/head/roguetown/helmet/heavy/crusader/t
 				neck = /obj/item/clothing/neck/roguetown/psicross
-				r_hand = /obj/item/rogueweapon/sword/sabre
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/sabre
+				beltr = /obj/item/weapon/scabbard/sword
 				belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 
 	if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
@@ -80,10 +80,10 @@
 		gloves = null
 		shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 		backpack_contents = list(
-							/obj/item/rogueweapon/huntingknife/idagger/silver = 1,
+							/obj/item/weapon/huntingknife/idagger/silver = 1,
 							/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 							/obj/item/flashlight/flare/torch = 1,
-							/obj/item/rogueweapon/scabbard/sheath = 1
+							/obj/item/weapon/scabbard/sheath = 1
 							)
 		H.change_stat(STATKEY_STR, 1)
 

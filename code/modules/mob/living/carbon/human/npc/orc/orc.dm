@@ -97,8 +97,8 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant
 	head = /obj/item/clothing/head/roguetown/helmet/leather
 	shoes = /obj/item/clothing/shoes/roguetown/gladiator
-	r_hand = /obj/item/rogueweapon/stoneaxe/boneaxe
-	l_hand = /obj/item/rogueweapon/shield/wood
+	r_hand = /obj/item/weapon/stoneaxe/boneaxe
+	l_hand = /obj/item/weapon/shield/wood
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	if(prob(5))
 		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot

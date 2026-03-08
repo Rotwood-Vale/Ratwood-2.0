@@ -40,7 +40,7 @@
 		shoes = /obj/item/clothing/shoes/roguetown/boots/armor/dwarven
 		cloak = /obj/item/clothing/cloak/forrestercloak/snow
 		belt = /obj/item/storage/belt/rogue/leather/black
-		beltr = /obj/item/rogueweapon/mace
+		beltr = /obj/item/weapon/mace
 		beltl = /obj/item/flashlight/flare/torch
 		backl = /obj/item/storage/backpack/rogue/backpack
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
@@ -51,19 +51,19 @@
 		backpack_contents = list(
 			/obj/item/key/mercenary,
 			/obj/item/storage/belt/rogue/pouch/coins/poor,
-			/obj/item/rogueweapon/hammer/iron,
+			/obj/item/weapon/hammer/iron,
 			/obj/item/paper/scroll/grudge,
 			/obj/item/natural/feather,
-			/obj/item/rogueweapon/tongs = 1,
+			/obj/item/weapon/tongs = 1,
 			)
 		var/weapons = list("Grand Mace", "Spiked Maul")
 		var/wepchoice = input("Choose your weapon", "Available weapons") as anything in weapons
 		switch(wepchoice)
 			if("Grand Mace")
-				backr = /obj/item/rogueweapon/mace/goden/steel
+				backr = /obj/item/weapon/mace/goden/steel
 			if("Spiked Maul")
-				r_hand = /obj/item/rogueweapon/mace/maul/spiked
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/mace/maul/spiked
+				backr = /obj/item/weapon/scabbard/gwstrap
 		H.merctype = 8
 
 /datum/advclass/mercenary/grudgebearer/soldier
@@ -104,7 +104,7 @@
 		backpack_contents = list(
 			/obj/item/key/mercenary,
 			/obj/item/storage/belt/rogue/pouch/coins/poor,
-			/obj/item/rogueweapon/hammer/iron,
+			/obj/item/weapon/hammer/iron,
 			/obj/item/paper/scroll/grudge,
 			/obj/item/natural/feather,
 			)
@@ -113,12 +113,12 @@
 			var/wepchoice = input(H, "Choose your weapon", "Available weapons") as anything in weapons
 			switch(wepchoice)
 				if("Axe")
-					backr = /obj/item/rogueweapon/stoneaxe/battle
+					backr = /obj/item/weapon/stoneaxe/battle
 				if("Grand Mace")
-					backr = /obj/item/rogueweapon/mace/goden/steel
+					backr = /obj/item/weapon/mace/goden/steel
 				if("Maul")
-					r_hand = /obj/item/rogueweapon/mace/maul/steel
-					backr = /obj/item/rogueweapon/scabbard/gwstrap
+					r_hand = /obj/item/weapon/mace/maul/steel
+					backr = /obj/item/weapon/scabbard/gwstrap
 		H.merctype = 8
 
 

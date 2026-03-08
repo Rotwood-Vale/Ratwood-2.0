@@ -21,7 +21,7 @@
 	var/cursed_item_intdamage
 
 /datum/component/silverbless/Initialize(pre_blessed = BLESSING_NONE, silver_type, added_force, added_blade_int, added_int, added_def)
-	if(!istype(parent, /obj/item/rogueweapon))
+	if(!istype(parent, /obj/item/weapon))
 		return COMPONENT_INCOMPATIBLE
 	src.pre_blessed = pre_blessed
 	src.silver_type = silver_type
@@ -100,7 +100,7 @@
 /datum/component/silverbless/proc/on_fix()
 	if(!is_blessed)
 		return
-	var/obj/item/rogueweapon/I = parent
+	var/obj/item/weapon/I = parent
 	I.force += added_force
 	if(I.force_wielded)
 		I.force_wielded += added_force

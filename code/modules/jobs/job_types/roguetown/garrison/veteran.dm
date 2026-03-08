@@ -96,8 +96,8 @@
 	cloak = /obj/item/clothing/cloak/half/vet
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.verbs |= /mob/proc/haltyell
 
@@ -117,11 +117,11 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Longsword")
-				H.put_in_hands(new /obj/item/rogueweapon/sword/long)
-				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L)
+				H.put_in_hands(new /obj/item/weapon/sword/long)
+				H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/sword, SLOT_BELT_L)
 			if("Sabre")
-				H.put_in_hands(new /obj/item/rogueweapon/sword/sabre)
-				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L)
+				H.put_in_hands(new /obj/item/weapon/sword/sabre)
+				H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/sword, SLOT_BELT_L)
 
 /datum/advclass/veteran/footman
 	name = "Retired Footman"
@@ -167,18 +167,18 @@
 	gloves = /obj/item/clothing/gloves/roguetown/plate
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
-	l_hand = /obj/item/rogueweapon/sword
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword
+	beltl = /obj/item/weapon/scabbard/sword
 	beltr = /obj/item/storage/keyring/guardcastle
 	backr = /obj/item/storage/backpack/rogue/satchel/black
-	backl = /obj/item/rogueweapon/shield/tower/metal
-	r_hand = /obj/item/rogueweapon/spear/billhook
+	backl = /obj/item/weapon/shield/tower/metal
+	r_hand = /obj/item/weapon/spear/billhook
 	belt = /obj/item/storage/belt/rogue/leather/black
 	cloak = /obj/item/clothing/cloak/half/vet
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/combat/shields, 6, TRUE)
@@ -240,8 +240,8 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	cloak = /obj/item/clothing/cloak/half/vet
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/storage/keyring/guardcastle = 1
 		)
 	if(H.age == AGE_OLD)
@@ -262,19 +262,19 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Sword + Recurve Bow")
-				r_hand = /obj/item/rogueweapon/sword/long
+				r_hand = /obj/item/weapon/sword/long
 				beltl = /obj/item/quiver/arrows
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				beltr = /obj/item/weapon/scabbard/sword
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 
 			if("Axe + Crossbow")
-				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/steel
+				r_hand = /obj/item/weapon/stoneaxe/woodcut/steel
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltl = /obj/item/quiver/bolts
 
 			if ("Spear + Shield")
-				r_hand = /obj/item/rogueweapon/spear
-				backl = /obj/item/rogueweapon/shield/tower/metal
+				r_hand = /obj/item/weapon/spear
+				backl = /obj/item/weapon/shield/tower/metal
 
 /datum/advclass/veteran/merc
 	name = "Retired Mercenary"
@@ -325,14 +325,14 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
-	beltl = /obj/item/rogueweapon/sword/short
+	beltl = /obj/item/weapon/sword/short
 	beltr = /obj/item/storage/keyring/guardcastle
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	belt = /obj/item/storage/belt/rogue/leather/black
 	cloak = /obj/item/clothing/cloak/half/vet
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.verbs |= /mob/proc/haltyell
 
@@ -352,15 +352,15 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Zweihander")
-				H.put_in_hands(new /obj/item/rogueweapon/greatsword/grenz)
+				H.put_in_hands(new /obj/item/weapon/greatsword/grenz)
 				H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
-				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L)
+				H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/gwstrap, SLOT_BACK_L)
 			if("Halberd")
-				H.put_in_hands(new /obj/item/rogueweapon/halberd)
+				H.put_in_hands(new /obj/item/weapon/halberd)
 				H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE) // SO, fun fact. The description of the grenzel halbardier says they specialize in axes, but they get no axe skill. Maybe this guy is where that rumor came from.
 				H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
-				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L)
+				H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/gwstrap, SLOT_BACK_L)
 
 /datum/advclass/veteran/scout
 	name = "Former Scout"
@@ -417,9 +417,9 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	cloak = /obj/item/clothing/cloak/half/vet
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/storage/keyring/guardcastle = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/combat/bows, 6, TRUE)
@@ -480,14 +480,14 @@
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots
-	beltl = /obj/item/rogueweapon/whip
+	beltl = /obj/item/weapon/whip
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/iron
 	cloak = /obj/item/clothing/cloak/raincloak/mortus
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/silver/elvish = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/silver/elvish = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/storage/keyring/guardcastle = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,
 		/obj/item/lockpickring/mundane,

@@ -12,7 +12,7 @@
 /obj/structure/fluff/nest,
 /obj/item/alch/bone,
 /obj/item/clothing/head/roguetown/helmet/heavy/dwarven,
-/obj/item/rogueweapon/spear/billhook,
+/obj/item/weapon/spear/billhook,
 /obj/item/clothing/ring/topaz,
 /obj/item/roguecoin/gold/pile,
 /obj/item/roguecoin/silver/pile,
@@ -24,8 +24,8 @@
 /turf/closed/wall/decostone/fluffstone,
 /area/rogue/under/tomb/cave)
 "m" = (
-/obj/item/rogueweapon/huntingknife/copper,
-/obj/item/rogueweapon/shield/buckler/palloy,
+/obj/item/weapon/huntingknife/copper,
+/obj/item/weapon/shield/buckler/palloy,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/blocks/paving/vert,
 /area/rogue/under/tomb/sewer)
@@ -36,7 +36,7 @@
 /turf/closed/rock,
 /area/rogue/under/tomb/sewer)
 "x" = (
-/obj/item/rogueweapon/shield/tower,
+/obj/item/weapon/shield/tower,
 /obj/item/clothing/cloak/templar/dendor,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/blocks/paving,
@@ -64,7 +64,7 @@
 /area/rogue/under/tomb/sewer)
 "G" = (
 /obj/structure/fluff/wallclock/vampire,
-/obj/item/rogueweapon/whip/nagaika,
+/obj/item/weapon/whip/nagaika,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/cave)
 "I" = (

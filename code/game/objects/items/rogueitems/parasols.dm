@@ -1,4 +1,4 @@
-/obj/item/rogueweapon/mace/parasol
+/obj/item/weapon/mace/parasol
 	force = 6
 	force_wielded = 6
 	name = "paper parasol"
@@ -21,18 +21,18 @@
 	grid_height = 64
 	dropshrink = 0.8
 
-/obj/item/rogueweapon/mace/parasol/New()
+/obj/item/weapon/mace/parasol/New()
 	..()
 	icon_state = "parasol[rand(1,6)]"
 
-/obj/item/rogueweapon/mace/parasol/getonmobprop(tag)
+/obj/item/weapon/mace/parasol/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
 			if("gen")
 				return list("shrink" = 0.8,"sx" = -6,"sy" = 8,"nx" = 6,"ny" = 9,"wx" = 0,"wy" = 7,"ex" = -1,"ey" = 9,"northabove" = 1,"southabove" = 1,"eastabove" = 1,"westabove" = 1,"nturn" = -50,"sturn" = 40,"wturn" = 50,"eturn" = -50,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 
-/obj/item/rogueweapon/mace/parasol/noble
+/obj/item/weapon/mace/parasol/noble
 	name = "fine parasol"
 	desc = "A delicate instrument intended to shield one's delicate head from the rain and sun. This one is a beautiful luxurious white and gold, with fringes."
 	icon = 'icons/items/parasols64.dmi'
@@ -45,11 +45,11 @@
 	pixel_y = -16
 	dropshrink = 0.8
 
-/obj/item/rogueweapon/mace/parasol/noble/New()
+/obj/item/weapon/mace/parasol/noble/New()
 	..()
 	icon_state = "parasol[rand(1,2)]"
 
-/obj/item/rogueweapon/mace/parasol/noble/getonmobprop(tag)
+/obj/item/weapon/mace/parasol/noble/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)

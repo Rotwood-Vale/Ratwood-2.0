@@ -92,9 +92,9 @@
 /area/rogue/under/tomb)
 "ry" = (
 /obj/structure/closet/crate/chest/gold,
-/obj/item/rogueweapon/sword/cutlass,
-/obj/item/rogueweapon/huntingknife/idagger/silver,
-/obj/item/rogueweapon/shield/tower/metal,
+/obj/item/weapon/sword/cutlass,
+/obj/item/weapon/huntingknife/idagger/silver,
+/obj/item/weapon/shield/tower/metal,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb)
 "rz" = (

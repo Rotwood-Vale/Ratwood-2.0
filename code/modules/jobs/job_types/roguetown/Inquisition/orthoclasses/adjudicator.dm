@@ -46,7 +46,7 @@
 	has_loadout = TRUE
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	cloak = /obj/item/clothing/cloak/psydontabard
-	backr = /obj/item/rogueweapon/shield/tower/metal
+	backr = /obj/item/weapon/shield/tower/metal
 	gloves = /obj/item/clothing/gloves/roguetown/chain/psydon
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	pants = /obj/item/clothing/under/roguetown/chainlegs
@@ -54,7 +54,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	belt = /obj/item/storage/belt/rogue/leather/black
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/weapon/scabbard/sword
 	id = /obj/item/clothing/ring/signet/silver
 	backpack_contents = list(/obj/item/key/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/adju = 1,
@@ -95,39 +95,39 @@
 	switch(weapon_choice)
 		//Typical arms and such.
 		if("Psydonic Longsword")
-			H.put_in_hands(new /obj/item/rogueweapon/sword/long/psysword(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/sword(H), TRUE)
+			H.put_in_hands(new /obj/item/weapon/sword/long/psysword(H), TRUE)
+			H.put_in_hands(new /obj/item/weapon/scabbard/sword(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		if("Psydonic War Axe")
-			H.put_in_hands(new /obj/item/rogueweapon/stoneaxe/battle/psyaxe(H), TRUE)
+			H.put_in_hands(new /obj/item/weapon/stoneaxe/battle/psyaxe(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
 		if("Psydonic Whip")
-			H.put_in_hands(new /obj/item/rogueweapon/whip/psywhip_lesser(H), TRUE)
+			H.put_in_hands(new /obj/item/weapon/whip/psywhip_lesser(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		if("Psydonic Flail")
-			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/psyflail(H), TRUE)
+			H.put_in_hands(new /obj/item/weapon/flail/sflail/psyflail(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		if("Psydonic Mace")
-			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/psymace(H), TRUE)
+			H.put_in_hands(new /obj/item/weapon/mace/goden/psymace(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 		//Polearms and the like.
 		if("Psydonic Spear + Handmace")
-			H.put_in_hands(new /obj/item/rogueweapon/spear/psyspear(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/mace/cudgel/psy, SLOT_BELT_L, TRUE)
+			H.put_in_hands(new /obj/item/weapon/spear/psyspear(H), TRUE)
+			H.put_in_hands(new /obj/item/weapon/scabbard/gwstrap(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/mace/cudgel/psy, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Psydonic Poleaxe + Shortsword")
-			H.put_in_hands(new /obj/item/rogueweapon/greataxe/psy(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/sword/short/psy, SLOT_BELT_L, TRUE)
+			H.put_in_hands(new /obj/item/weapon/greataxe/psy(H), TRUE)
+			H.put_in_hands(new /obj/item/weapon/scabbard/gwstrap(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/sword/short/psy, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
 		if("Psydonic Halberd + Shortsword")
-			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/sword/short/psy, SLOT_BELT_L, TRUE)
+			H.put_in_hands(new /obj/item/weapon/halberd/psyhalberd(H), TRUE)
+			H.put_in_hands(new /obj/item/weapon/scabbard/gwstrap(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/sword/short/psy, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Psydonic Greatsword + Handmace")
-			H.put_in_hands(new /obj/item/rogueweapon/greatsword/psygsword(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/mace/cudgel/psy, SLOT_BELT_L, TRUE)
+			H.put_in_hands(new /obj/item/weapon/greatsword/psygsword(H), TRUE)
+			H.put_in_hands(new /obj/item/weapon/scabbard/gwstrap(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/mace/cudgel/psy, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)

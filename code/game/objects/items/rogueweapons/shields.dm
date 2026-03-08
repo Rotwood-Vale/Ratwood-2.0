@@ -6,7 +6,7 @@
 #define SHIELD_SMASH_METAL 	/datum/intent/mace/smash/shield/metal
 #define SHIELD_BANG_COOLDOWN (3 SECONDS)
 
-/obj/item/rogueweapon/shield
+/obj/item/weapon/shield
 	name = ""
 	desc = ""
 	icon_state = ""
@@ -34,11 +34,11 @@
 	COOLDOWN_DECLARE(shield_bang)
 
 
-/obj/item/rogueweapon/shield/attackby(obj/item/attackby_item, mob/user, params)
+/obj/item/weapon/shield/attackby(obj/item/attackby_item, mob/user, params)
 
 	// Shield banging
 	if(src == user.get_inactive_held_item())
-		if(istype(attackby_item, /obj/item/rogueweapon))
+		if(istype(attackby_item, /obj/item/weapon))
 			if(!COOLDOWN_FINISHED(src, shield_bang))
 				return
 			user.visible_message(span_danger("[user] bangs [src] with [attackby_item]!"))
@@ -48,7 +48,7 @@
 
 	return ..()
 
-/obj/item/rogueweapon/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the projectile", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the projectile", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
 	var/mob/attacker
 	var/obj/item/I
@@ -105,7 +105,7 @@
 /datum/intent/mace/smash/shield/metal
 	hitsound = list('sound/combat/parry/shield/metalshield (1).ogg')
 
-/obj/item/rogueweapon/shield/wood
+/obj/item/weapon/shield/wood
 	name = "wooden shield"
 	desc = "A sturdy wooden shield. Will block anything you can imagine."
 	icon_state = "woodsh"
@@ -113,7 +113,7 @@
 	anvilrepair = /datum/skill/craft/carpentry
 	coverage = 30
 
-/obj/item/rogueweapon/shield/attack_right(mob/user)
+/obj/item/weapon/shield/attack_right(mob/user)
 	if(overlays.len)
 		..()
 		return
@@ -142,7 +142,7 @@
 
 	update_icon()
 
-/obj/item/rogueweapon/shield/wood/getonmobprop(tag)
+/obj/item/weapon/shield/wood/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -151,7 +151,7 @@
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/rogueweapon/shield/tower
+/obj/item/weapon/shield/tower
 	name = "tower shield"
 	desc = "A gigantic, iron reinforced shield that covers the entire body, a design-copy of the Aasimar shields of an era gone by."
 	icon_state = "shield_tower"
@@ -168,7 +168,7 @@
 	max_integrity = 300
 	anvilrepair = /datum/skill/craft/weaponsmithing
 
-/obj/item/rogueweapon/shield/tower/holysee
+/obj/item/weapon/shield/tower/holysee
 	name = "see shield"
 	desc = "A final, staunch line against the darkness. For it's not what is before the shield-carrier that matters, but the home behind them."
 	icon_state = "gsshield"
@@ -187,12 +187,12 @@
 	max_integrity = 330
 	sellprice = 30
 
-/obj/item/rogueweapon/shield/tower/holysee/MiddleClick(mob/user, params)
+/obj/item/weapon/shield/tower/holysee/MiddleClick(mob/user, params)
 	. = ..()
 	swapped = !swapped
 	update_icon()
 
-/obj/item/rogueweapon/shield/tower/holysee/update_icon()
+/obj/item/weapon/shield/tower/holysee/update_icon()
 	. = ..()
 	if(swapped)
 		icon_state = "gsshielddark"
@@ -200,7 +200,7 @@
 		icon_state = "gsshield"
 
 
-/obj/item/rogueweapon/shield/tower/getonmobprop(tag)
+/obj/item/weapon/shield/tower/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -209,7 +209,7 @@
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/rogueweapon/shield/tower/metal
+/obj/item/weapon/shield/tower/metal
 	name = "kite shield"
 	desc = "A kite-shaped iron shield. Reliable and sturdy."
 	icon_state = "kitesh"
@@ -229,7 +229,7 @@
 	sellprice = 30
 	anvilrepair = /datum/skill/craft/weaponsmithing
 
-/obj/item/rogueweapon/shield/tower/metal/getonmobprop(tag)
+/obj/item/weapon/shield/tower/metal/getonmobprop(tag)
 	if(tag)
 		switch(tag)
 			if("gen")
@@ -238,7 +238,7 @@
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 	return ..()
 
-/obj/item/rogueweapon/shield/tower/metal/psy
+/obj/item/weapon/shield/tower/metal/psy
 	name = "Covenant"
 	desc = "A Psydonian endures. A Psydonian preserves themselves. A Psydonian preserves His flock."
 	icon_state = "psyshield"
@@ -258,7 +258,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/shield/tower/metal/psy/ComponentInitialize()
+/obj/item/weapon/shield/tower/metal/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -269,7 +269,7 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/shield/tower/metal/alloy
+/obj/item/weapon/shield/tower/metal/alloy
 	name = "decrepit shield"
 	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship.. alongside its former legionnaire."
 	max_integrity = 120
@@ -280,13 +280,13 @@
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
-/obj/item/rogueweapon/shield/tower/metal/palloy
+/obj/item/weapon/shield/tower/metal/palloy
 	name = "ancient shield"
 	desc = "A venerable scutum, plated with polished gilbranze. An undying legionnaire's closest friend; that which rebukes arrow-and-bolt alike with unphasing prejudice. It is a reminder - one of many - that Her progress cannot be stopped."
 	icon_state = "ancientsh"
 	smeltresult = /obj/item/ingot/purifiedaalloy
 
-/obj/item/rogueweapon/shield/tower/raneshen
+/obj/item/weapon/shield/tower/raneshen
 	name = "rider shield"
 	desc = "A shield of Raneshen design. Clever usage of wood, iron, and leather make an impressive match for any weapon."
 	icon_state = "desert_rider"
@@ -297,7 +297,7 @@
 	max_integrity = 220 //not fully metal but not fully wood either
 	anvilrepair = /datum/skill/craft/carpentry
 
-/obj/item/rogueweapon/shield/tower/raneshen/getonmobprop(tag)
+/obj/item/weapon/shield/tower/raneshen/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -306,13 +306,13 @@
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/rogueweapon/shield/tower/spidershield
+/obj/item/weapon/shield/tower/spidershield
 	name = "spider shield"
 	desc = "A bulky shield of spike-like lengths molten together. The motifs evoke anything but safety and protection."
 	icon_state = "spidershield"
 	coverage = 55
 
-/obj/item/rogueweapon/shield/buckler
+/obj/item/weapon/shield/buckler
 	name = "buckler shield"
 	desc = "A sturdy buckler shield. Will block anything you can imagine."
 	icon_state = "bucklersh"
@@ -332,11 +332,11 @@
 	grid_height = 64
 	anvilrepair = /datum/skill/craft/weaponsmithing
 
-/obj/item/rogueweapon/shield/buckler/examine(mob/living/user)
+/obj/item/weapon/shield/buckler/examine(mob/living/user)
 	. = ..()
 	. += "Buckler uses the skill of your active weapon to parry. Otherwise it uses your shields skill."
 
-/obj/item/rogueweapon/shield/buckler/proc/bucklerskill(mob/living/user)
+/obj/item/weapon/shield/buckler/proc/bucklerskill(mob/living/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/bucklerer = user
@@ -345,14 +345,14 @@
 	if(mainhand)
 		if(mainhand.can_parry)
 			weapon_parry = TRUE
-	if(istype(mainhand, /obj/item/rogueweapon/shield/buckler))
+	if(istype(mainhand, /obj/item/weapon/shield/buckler))
 		associated_skill = /datum/skill/combat/shields
 	if(weapon_parry && mainhand.associated_skill && ispath(mainhand.associated_skill, /datum/skill/combat))
 		associated_skill = mainhand.associated_skill
 	else
 		associated_skill = /datum/skill/combat/shields
 
-/obj/item/rogueweapon/shield/buckler/getonmobprop(tag)
+/obj/item/weapon/shield/buckler/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -361,7 +361,7 @@
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/rogueweapon/shield/buckler/palloy
+/obj/item/weapon/shield/buckler/palloy
 	name = "ancient buckler"
 	desc = "An object once before its time, now out of it. The artisan's hammerstrikes are still visible in the mottled surface, yet \
 	the encroach of rust and rot threatens even this memory."
@@ -369,7 +369,7 @@
 	max_integrity = 85
 	smeltresult = /obj/item/ingot/purifiedaalloy
 
-/obj/item/rogueweapon/shield/heater
+/obj/item/weapon/shield/heater
 	name = "heater shield"
 	desc = "A sturdy wood and leather shield. Made to not be too encumbering while still providing good protection."
 	icon_state = "heatersh"
@@ -381,7 +381,7 @@
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	max_integrity = 220
 
-/obj/item/rogueweapon/shield/heater/getonmobprop(tag)
+/obj/item/weapon/shield/heater/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -391,7 +391,7 @@
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 
-/obj/item/rogueweapon/shield/iron
+/obj/item/weapon/shield/iron
 	name = "iron shield"
 	desc = "A heavy iron shield. It's cheaper than steel, but more encumbering."
 	icon_state = "ironsh"
@@ -405,7 +405,7 @@
 	max_integrity = 220
 	anvilrepair = /datum/skill/craft/weaponsmithing
 
-/obj/item/rogueweapon/shield/iron/getonmobprop(tag)
+/obj/item/weapon/shield/iron/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -416,13 +416,13 @@
 
 #undef SHIELD_BANG_COOLDOWN
 
-/obj/item/rogueweapon/shield/iron/steppesman
+/obj/item/weapon/shield/iron/steppesman
 	name = "steppesman shield"
 	desc = "A banded iron shield decorated with traditional Aavnic colours, often seen in the hands of the Steppesmen."
 	icon_state = "ironsh_steppeman"
 	max_integrity = 250 //+30
 
-/obj/item/rogueweapon/shield/iron/nomad
+/obj/item/weapon/shield/iron/nomad
 	name = "nomad shield"
 	desc = "A slim shield, likely wrought of gilbranze and iron alike. An unholy combination. \
 	The work is of another lyfe, not yet seen since the first era."
@@ -430,7 +430,7 @@
 	coverage = 40//+10
 	max_integrity = 200//-20
 
-/*/obj/item/rogueweapon/shield/buckler/freelancer
+/*/obj/item/weapon/shield/buckler/freelancer
 	name = "fencer's wrap"
 	desc = "A traditional Etruscan quilted cloth square with a woolen cover. It can be used to daze and distract people with its bright colours and hanging steel balls."
 	force = 10
@@ -439,7 +439,7 @@
 	max_integrity = 200
 	possible_item_intents = list(SHIELD_BLOCK, FENCER_DAZE) */
 
-/obj/item/rogueweapon/shield/capbuckler // unique, better buckler for knight captain
+/obj/item/weapon/shield/capbuckler // unique, better buckler for knight captain
 	name = "'Order'"
 	desc = "A special buckler shield made out of blacksteel for the captain of the guard, adorned with the vale's crest."
 	icon_state = "capbuckler"
@@ -462,11 +462,11 @@
 	sellprice = 100 // lets not make it too profitable
 	smeltresult = /obj/item/ingot/blacksteel
 
-/obj/item/rogueweapon/shield/capbuckler/examine(mob/living/user)
+/obj/item/weapon/shield/capbuckler/examine(mob/living/user)
 	. = ..()
 	. += "Buckler uses the skill of your active weapon to parry. Otherwise it uses your shields skill."
 
-/obj/item/rogueweapon/shield/capbuckler/proc/bucklerskill(mob/living/user)
+/obj/item/weapon/shield/capbuckler/proc/bucklerskill(mob/living/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/bucklerer = user
@@ -475,14 +475,14 @@
 	if(mainhand)
 		if(mainhand.can_parry)
 			weapon_parry = TRUE
-	if(istype(mainhand, /obj/item/rogueweapon/shield/capbuckler))
+	if(istype(mainhand, /obj/item/weapon/shield/capbuckler))
 		associated_skill = /datum/skill/combat/shields
 	if(weapon_parry && mainhand.associated_skill)
 		associated_skill = mainhand.associated_skill
 	else
 		associated_skill = /datum/skill/combat/shields
 
-/obj/item/rogueweapon/shield/capbuckler/getonmobprop(tag)
+/obj/item/weapon/shield/capbuckler/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -492,7 +492,7 @@
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 
-/obj/item/rogueweapon/shield/steam
+/obj/item/weapon/shield/steam
 	name = "steam shield"
 	desc = "A sturdy wood shield thats been highly modified by an artificer. It seems to have several pipes and gears built into it."
 	icon_state = "artificershield"
@@ -507,7 +507,7 @@
 	var/cooldowny
 	var/cdtime = 30 SECONDS
 
-/obj/item/rogueweapon/shield/steam/attack_self(mob/user)
+/obj/item/weapon/shield/steam/attack_self(mob/user)
 	if(cooldowny)
 		if(world.time < cooldowny + cdtime)
 			to_chat(user, span_warning("[src] hisses weakly, It's still building up steam!"))
@@ -549,10 +549,10 @@
 				to_chat(M, span_danger( "You're thrown back by [user]!"))
 			AM.safe_throw_at(throwtarget, 4, 2, user, TRUE, force = MOVE_FORCE_OVERPOWERING)
 
-/obj/item/rogueweapon/shield/steam/proc/steamready(mob/user)
+/obj/item/weapon/shield/steam/proc/steamready(mob/user)
 	playsound(user, 'sound/items/steamcreation.ogg', 100, FALSE, -1)
 	to_chat(user, span_warning("[src] is ready to be used again!"))
-/obj/item/rogueweapon/shield/steam/getonmobprop(tag)
+/obj/item/weapon/shield/steam/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)

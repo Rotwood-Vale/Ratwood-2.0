@@ -70,7 +70,7 @@
 	if(I)
 		user.visible_message(span_danger("\The [I.name] passes through the [src.name]!"))
 		return // Ignore thrown items
-	if(I && istype(I, /obj/item/rogueweapon) && I.is_silver)
+	if(I && istype(I, /obj/item/weapon) && I.is_silver)
 		user.visible_message(span_danger("\The [I.name] strikes the [src.name], harming it!"))
 		return ..() // Resume parent procedure if hit by a rogueweapon with is_silver
 	..()
@@ -81,15 +81,15 @@
 	if(I)
 		src.visible_message(span_danger("\The [I.name] passes through the [src.name]!"))
 		return // Ignore thrown items
-	if(I && istype(I, /obj/item/rogueweapon) && I.is_silver)
+	if(I && istype(I, /obj/item/weapon) && I.is_silver)
 		src.visible_message(span_danger("\The [I.name] strikes the [src.name], harming it!"))
 		return ..() // Resume parent procedure if hit by a rogueweapon with is_silver
 	..()
 
 /mob/living/simple_animal/hostile/rogue/ghost/wraith/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum, damage_flag)
 	// Handle interactions when hit by an object
-	if(AM && istype(AM, /obj/item) && istype(AM, /obj/item/rogueweapon))
-		var/obj/item/rogueweapon/thrown = AM
+	if(AM && istype(AM, /obj/item) && istype(AM, /obj/item/weapon))
+		var/obj/item/weapon/thrown = AM
 		if(thrown.is_silver)
 			visible_message(span_danger("\The [AM.name] strikes the [src.name], harming it!"))
 			return ..() // Resume parent procedure if hit by a rogueweapon with is_silver

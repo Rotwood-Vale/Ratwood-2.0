@@ -33,8 +33,8 @@
 /datum/outfit/job/roguetown/mercenary/seonjang/pre_equip(mob/living/carbon/human/H)
 	..()
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain
-	beltl = /obj/item/rogueweapon/scabbard/sword/kazengun/gold
+	beltr = /obj/item/weapon/sword/sabre/mulyeog/rumacaptain
+	beltl = /obj/item/weapon/scabbard/sword/kazengun/gold
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/key/mercenary,

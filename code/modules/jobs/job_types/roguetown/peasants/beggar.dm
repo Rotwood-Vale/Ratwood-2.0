@@ -55,8 +55,8 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant
 		pants = /obj/item/clothing/under/roguetown/tights/vagrant
 		shoes = /obj/item/clothing/shoes/roguetown/shalal // wise boots
-		r_hand = /obj/item/rogueweapon/woodstaff/wise // dog beating staff
-		l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/special // dog butchering knife
+		r_hand = /obj/item/weapon/woodstaff/wise // dog beating staff
+		l_hand = /obj/item/weapon/huntingknife/idagger/steel/special // dog butchering knife
 		H.adjust_skillrank(/datum/skill/misc/sneaking, rand(2,5), TRUE)
 		H.adjust_skillrank(/datum/skill/misc/stealing, 5, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/climbing, rand(2,5), TRUE)
@@ -110,11 +110,11 @@
 		H.adjust_skillrank(/datum/skill/misc/lockpicking, pick (1,2,3,4,5), TRUE) // thug lyfe
 		H.STALUC = rand(1, 20)
 	if(prob(5))
-		r_hand = /obj/item/rogueweapon/mace/woodclub
+		r_hand = /obj/item/weapon/mace/woodclub
 	else
 		r_hand = null
 	if(prob(5))
-		l_hand = /obj/item/rogueweapon/mace/woodclub
+		l_hand = /obj/item/weapon/mace/woodclub
 	else
 		l_hand = null
 	H.change_stat(STATKEY_STR, -1)

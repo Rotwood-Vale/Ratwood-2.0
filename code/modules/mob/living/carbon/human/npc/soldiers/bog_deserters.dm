@@ -15,27 +15,27 @@
 	var/random_deserter_weapon = rand(1,3)
 	switch(random_deserter_weapon)
 		if(1)
-			r_hand = /obj/item/rogueweapon/sword/iron
-			l_hand = /obj/item/rogueweapon/shield/heater
+			r_hand = /obj/item/weapon/sword/iron
+			l_hand = /obj/item/weapon/shield/heater
 		if(2)
-			r_hand = /obj/item/rogueweapon/spear
+			r_hand = /obj/item/weapon/spear
 		if(3)
-			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
+			r_hand = /obj/item/weapon/stoneaxe/woodcut
 
 /datum/outfit/job/roguetown/human/northern/bog_deserters/proc/add_random_deserter_weapon_hard(mob/living/carbon/human/H)
 	var/add_random_deserter_weapon_hard = rand(1,4)
 	switch(add_random_deserter_weapon_hard)
 		if(1)
-			r_hand = /obj/item/rogueweapon/sword/iron
-			l_hand = /obj/item/rogueweapon/shield/heater
+			r_hand = /obj/item/weapon/sword/iron
+			l_hand = /obj/item/weapon/shield/heater
 		if(2)
-			r_hand = /obj/item/rogueweapon/mace/warhammer
-			l_hand = /obj/item/rogueweapon/shield/heater
+			r_hand = /obj/item/weapon/mace/warhammer
+			l_hand = /obj/item/weapon/shield/heater
 		if(3)
-			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
+			r_hand = /obj/item/weapon/stoneaxe/woodcut
 		if(4)
-			r_hand = /obj/item/rogueweapon/flail
-			l_hand = /obj/item/rogueweapon/shield/heater
+			r_hand = /obj/item/weapon/flail
+			l_hand = /obj/item/weapon/shield/heater
 
 /datum/outfit/job/roguetown/human/northern/bog_deserters/proc/add_random_deserter_beltl_stuff(mob/living/carbon/human/H)
 	var/add_random_deserter_beltl_stuff = rand(1,9)
@@ -53,7 +53,7 @@
 		if(6)
 			beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
 		if(7)
-			beltl = /obj/item/rogueweapon/scabbard/sheath
+			beltl = /obj/item/weapon/scabbard/sheath
 		if(8)
 			beltl = /obj/item/storage/belt/rogue/pouch/treasure/lucky
 		if(9)
@@ -75,7 +75,7 @@
 		if(6)
 			beltr = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
 		if(7)
-			beltr = /obj/item/rogueweapon/scabbard/sword
+			beltr = /obj/item/weapon/scabbard/sword
 
 /datum/outfit/job/roguetown/human/northern/bog_deserters/proc/add_random_deserter_armor_hard(mob/living/carbon/human/H)
 	var/random_deserter_armor_hard = rand(1,3)

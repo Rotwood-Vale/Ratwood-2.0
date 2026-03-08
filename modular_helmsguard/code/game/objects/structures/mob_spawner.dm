@@ -343,8 +343,8 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 
 
 /obj/effect/mobspawner/hole/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/rogueweapon/shovel))
-		var/obj/item/rogueweapon/shovel/attacking_shovel = attacking_item
+	if(istype(attacking_item, /obj/item/weapon/shovel))
+		var/obj/item/weapon/shovel/attacking_shovel = attacking_item
 		if(user.used_intent.type != /datum/intent/shovelscoop)
 			return
 		if(attacking_shovel.heldclod)
@@ -357,8 +357,8 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 				src.visible_message("<span class='danger'>[user] seals [src] with dirts!</span>")
 				Destroy()
 
-	if(istype(attacking_item, /obj/item/rogueweapon/pick))
-		var/obj/item/rogueweapon/pick/attacking_pick = attacking_item
+	if(istype(attacking_item, /obj/item/weapon/pick))
+		var/obj/item/weapon/pick/attacking_pick = attacking_item
 		playsound(loc,'sound/foley/hit_rock.ogg', 100, TRUE)
 		src.visible_message("<span class='danger'>[user] is picking at the [src] with [attacking_pick]!</span>")
 		if(do_after(user, rand(30,60), src))

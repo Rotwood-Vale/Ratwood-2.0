@@ -447,13 +447,13 @@
 			var/obj/item/new_weapon
 			switch(choice)
 				if("Dreamreaver Greataxe")
-					new_weapon = new /obj/item/rogueweapon/greataxe/dreamscape/active(user.loc)
+					new_weapon = new /obj/item/weapon/greataxe/dreamscape/active(user.loc)
 				if("Harmonious Spear")
-					new_weapon = new /obj/item/rogueweapon/halberd/glaive/dreamscape/active(user.loc)
+					new_weapon = new /obj/item/weapon/halberd/glaive/dreamscape/active(user.loc)
 				if("Oozing Sword")
-					new_weapon = new /obj/item/rogueweapon/greatsword/bsword/dreamscape/active(user.loc)
+					new_weapon = new /obj/item/weapon/greatsword/bsword/dreamscape/active(user.loc)
 				if("Thunderous Trident")
-					new_weapon = new /obj/item/rogueweapon/spear/dreamscape_trident/active(user.loc)
+					new_weapon = new /obj/item/weapon/spear/dreamscape_trident/active(user.loc)
 
 			if(new_weapon)
 				to_chat(user, span_notice("You shape the sylveric ingots into a [choice]."))
@@ -531,7 +531,7 @@
 			H.adjust_fire_stacks(2)
 			H.ignite_mob()
 
-/obj/item/rogueweapon/halberd/glaive/dreamscape
+/obj/item/weapon/halberd/glaive/dreamscape
 	name = "otherworldly spear"
 	desc = "A strange spear, who knows where it came from. It seems like it is made out of ancient bone."
 	icon_state = "dreamspear"
@@ -542,7 +542,7 @@
 	max_blade_int = 200
 	wdefense = 8
 
-/obj/item/rogueweapon/halberd/glaive/dreamscape/active
+/obj/item/weapon/halberd/glaive/dreamscape/active
 	desc = "A strange spear, who knows where it came from. Strange harmonious sounds ring out as wind passes through the holes."
 	icon_state = "dreamspearactive"
 	max_blade_int = 400
@@ -550,7 +550,7 @@
 	force = 20
 	force_wielded = 35
 
-/obj/item/rogueweapon/greatsword/bsword/dreamscape
+/obj/item/weapon/greatsword/bsword/dreamscape
 	name = "otherworldly sword"
 	desc = "A strange sword made out of a strange reflective metal."
 	icon_state = "dreamsword"
@@ -565,7 +565,7 @@
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop, /datum/intent/sword/lunge, /datum/intent/sword/thrust/estoc)
 	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
 
-/obj/item/rogueweapon/greatsword/bsword/dreamscape/active
+/obj/item/weapon/greatsword/bsword/dreamscape/active
 	name = "otherworldly sword"
 	desc = "A strange sword made out of a strange reflective metal. It oozes sickening sludge."
 	icon_state = "dreamswordactive"
@@ -574,7 +574,7 @@
 	force_wielded = 35
 	wdefense = 5
 
-/obj/item/rogueweapon/spear/dreamscape_trident
+/obj/item/weapon/spear/dreamscape_trident
 	name = "otherworldly trident"
 	desc = "A strange trident. It feels like it shouldn't be an effective weapon, but the dull metal whispers tales of its power to you."
 	icon_state = "dreamtri"
@@ -591,7 +591,7 @@
 	var/shockwave_divisor = 3
 	var/shockwave_damage = FALSE
 
-/obj/item/rogueweapon/spear/dreamscape_trident/active
+/obj/item/weapon/spear/dreamscape_trident/active
 	name = "Iridescent trident"
 	desc = "A strange trident glimmering with an oily hue. The air shimmers around it."
 	icon_state = "dreamtriactive"
@@ -605,19 +605,19 @@
 	shockwave_damage = TRUE
 
 // Update weapon initializations with specific effects
-/obj/item/rogueweapon/greataxe/dreamscape/active/Initialize(mapload)
+/obj/item/weapon/greataxe/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "fire", 20 SECONDS)
 
-/obj/item/rogueweapon/halberd/glaive/dreamscape/active/Initialize(mapload)
+/obj/item/weapon/halberd/glaive/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "frost", 40 SECONDS)
 
-/obj/item/rogueweapon/greatsword/bsword/dreamscape/active/Initialize(mapload)
+/obj/item/weapon/greatsword/bsword/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "poison", 20 SECONDS)
 
-/obj/item/rogueweapon/spear/dreamscape_trident/active/Initialize(mapload)
+/obj/item/weapon/spear/dreamscape_trident/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 

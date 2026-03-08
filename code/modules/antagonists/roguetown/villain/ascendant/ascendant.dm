@@ -26,9 +26,9 @@
 	var/STAWIL
 
 	var/static/list/possible_weapons = list(
-		/obj/item/rogueweapon/sword/cutlass,
-		/obj/item/rogueweapon/sword/decorated,
-		/obj/item/rogueweapon/sword/sabre/dec,
+		/obj/item/weapon/sword/cutlass,
+		/obj/item/weapon/sword/decorated,
+		/obj/item/weapon/sword/sabre/dec,
 	)
 
 /datum/antagonist/ascendant/on_gain()

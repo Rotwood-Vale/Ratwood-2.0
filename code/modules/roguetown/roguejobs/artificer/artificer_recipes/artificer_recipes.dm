@@ -130,7 +130,7 @@
 
 /datum/artificer_recipe/wood/tools
 	name = "Wooden Mallet"
-	created_item = /obj/item/rogueweapon/hammer/wood
+	created_item = /obj/item/weapon/hammer/wood
 	hammers_per_item = 8
 	i_type = "Tools"
 
@@ -164,7 +164,7 @@
 	name = "Grappler (+1 ironpick)(+2 bronze gears)(+1 rope)"
 	required_item = /obj/item/ingot/bronze
 	created_item = /obj/item/grapplinghook
-	additional_items = list(/obj/item/rogueweapon/pick, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/rope)
+	additional_items = list(/obj/item/weapon/pick, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/rope)
 	skill_level = 4
 
 // --------- Contraptions -----------
@@ -301,7 +301,7 @@
 
 /datum/artificer_recipe/wood/weapons //Again, a bit silly, but is important
 	name = "Wooden Staff (+1 Plank)"
-	created_item = /obj/item/rogueweapon/woodstaff
+	created_item = /obj/item/weapon/woodstaff
 	additional_items = list(/obj/item/natural/wood/plank = 1)
 	hammers_per_item = 3
 	i_type = "Weapons"
@@ -314,44 +314,44 @@
 
 /datum/artificer_recipe/wood/weapons/wsword
 	name = "Wooden Sword (+1 Plank)"
-	created_item = /obj/item/rogueweapon/mace/wsword
+	created_item = /obj/item/weapon/mace/wsword
 	additional_items = list(/obj/item/natural/wood/plank = 1)
 	hammers_per_item = 3
 
 /datum/artificer_recipe/wood/weapons/wdagger
 
 	name = "Wooden Dagger (3x) (+1 Plank)"
-	created_item = list(/obj/item/rogueweapon/huntingknife/idagger/wood,
-						/obj/item/rogueweapon/huntingknife/idagger/wood,
-						/obj/item/rogueweapon/huntingknife/idagger/wood
+	created_item = list(/obj/item/weapon/huntingknife/idagger/wood,
+						/obj/item/weapon/huntingknife/idagger/wood,
+						/obj/item/weapon/huntingknife/idagger/wood
 						)
 	additional_items = list(/obj/item/natural/wood/plank = 1)
 	hammers_per_item = 2
 
 /datum/artificer_recipe/wood/weapons/wshield
 	name = "Wooden Shield (+1 Plank)"
-	created_item = /obj/item/rogueweapon/shield/wood/crafted
+	created_item = /obj/item/weapon/shield/wood/crafted
 	additional_items = list(/obj/item/natural/wood/plank = 1)
 	hammers_per_item = 6
 	skill_level = 2
 
-/obj/item/rogueweapon/shield/wood/crafted
+/obj/item/weapon/shield/wood/crafted
 	sellprice = 6
 
 /datum/artificer_recipe/wood/weapons/hshield
 	name = "Heater Shield (+1 Cured Leather)"
-	created_item = /obj/item/rogueweapon/shield/heater/crafted
+	created_item = /obj/item/weapon/shield/heater/crafted
 	additional_items = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/hide/cured = 1)
 	hammers_per_item = 6
 	skill_level = 3
 
-/obj/item/rogueweapon/shield/heater/crafted
+/obj/item/weapon/shield/heater/crafted
 	sellprice = 6
 
 /datum/artificer_recipe/wood/weapons/steamshield
 	name = "Steam Shield (+1 wood plank)(+2 Bronze gear)(+2 bronze ingot)"
 	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze,/obj/item/natural/wood/plank, /obj/item/ingot/bronze,/obj/item/ingot/bronze)
-	created_item = /obj/item/rogueweapon/shield/steam
+	created_item = /obj/item/weapon/shield/steam
 	hammers_per_item = 12
 	skill_level = 3
 

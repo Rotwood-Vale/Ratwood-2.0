@@ -17,10 +17,10 @@
 	cloak = /obj/item/clothing/cloak/lepoardcloak
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/hussar
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/long/marlin
-	r_hand = /obj/item/rogueweapon/huntingknife
-	beltr = /obj/item/rogueweapon/scabbard/sheath
+	beltl = /obj/item/weapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/long/marlin
+	r_hand = /obj/item/weapon/huntingknife
+	beltr = /obj/item/weapon/scabbard/sheath
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	backl = /obj/item/storage/backpack/rogue/satchel
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
@@ -66,8 +66,8 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	belt = /obj/item/storage/belt/rogue/leather
-	l_hand = /obj/item/rogueweapon/sword/sabre
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/sabre
+	beltl = /obj/item/weapon/scabbard/sword
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backr = /obj/item/storage/backpack/rogue/satchel
 	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
@@ -108,14 +108,14 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/hussar
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/weapon/scabbard/sword
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	belt = /obj/item/storage/belt/rogue/leather/steel
 	backr = /obj/item/storage/backpack/rogue/satchel/black
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	backl = /obj/item/weapon/scabbard/gwstrap
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	l_hand = /obj/item/rogueweapon/sword/sabre
-	r_hand = /obj/item/rogueweapon/spear/lance
+	l_hand = /obj/item/weapon/sword/sabre
+	r_hand = /obj/item/weapon/spear/lance
 	H.adjust_skillrank(/datum/skill/combat/polearms, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
@@ -172,7 +172,7 @@
 
 /datum/outfit/job/roguetown/czwarteki/journeyman/pre_equip(mob/living/carbon/human/H)
 	..()
-	l_hand = /obj/item/rogueweapon/sword/sabre
+	l_hand = /obj/item/weapon/sword/sabre
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
@@ -181,15 +181,15 @@
 	cloak = /obj/item/clothing/cloak/stabard/surcoat
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/weapon/scabbard/sword
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/scabbard/gwstrap
-	r_hand = /obj/item/rogueweapon/spear
+	backr = /obj/item/weapon/scabbard/gwstrap
+	r_hand = /obj/item/weapon/spear
 	backpack_contents = list(
-		/obj/item/rogueweapon/scabbard/sheath,
+		/obj/item/weapon/scabbard/sheath,
 		/obj/item/clothing/neck/roguetown/chaincoif,
-		/obj/item/rogueweapon/hammer/iron
+		/obj/item/weapon/hammer/iron
 	)
 
 	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
@@ -246,7 +246,7 @@
 	pants = /obj/item/clothing/under/roguetown/trou/formal/shorts
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather/rope
-	beltr = /obj/item/rogueweapon/huntingknife
+	beltr = /obj/item/weapon/huntingknife
 	backl = /obj/item/storage/backpack/rogue/satchel
 
 	backpack_contents = list(

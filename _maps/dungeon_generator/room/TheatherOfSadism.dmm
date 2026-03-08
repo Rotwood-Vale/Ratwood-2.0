@@ -91,10 +91,10 @@
 /area/rogue/under/tomb)
 "gk" = (
 /obj/structure/closet/crate/chest/gold,
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /obj/item/clothing/cloak/apron/cook,
 /obj/item/clothing/head/roguetown/roguehood/feld,
-/obj/item/rogueweapon/spear/stone/copper,
+/obj/item/weapon/spear/stone/copper,
 /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor,
 /turf/open/floor/rogue/tile/checker,
 /area/rogue/under/tomb/indoors)
@@ -497,7 +497,7 @@
 /obj/item/clothing/under/roguetown/chainlegs/iron,
 /obj/item/clothing/mask/rogue/facemask/goldmask,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/rogueweapon/estoc,
+/obj/item/weapon/estoc,
 /mob/living/carbon/human/species/skeleton/npc/hard/noequip,
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/tomb/indoors/royal)

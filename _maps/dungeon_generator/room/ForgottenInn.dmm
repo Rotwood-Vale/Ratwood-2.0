@@ -62,7 +62,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "hm" = (
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /obj/structure/fluff/walldeco/bigpainting/lake,
 /obj/structure/table/wood{
 	icon_state = "longtable"
@@ -410,7 +410,7 @@
 	pixel_x = -13
 	},
 /obj/effect/decal/cleanable/blood,
-/obj/item/rogueweapon/huntingknife{
+/obj/item/weapon/huntingknife{
 	pixel_y = -2;
 	pixel_x = -14
 	},

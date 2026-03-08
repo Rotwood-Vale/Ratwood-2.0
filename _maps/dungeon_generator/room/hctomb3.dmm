@@ -144,7 +144,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/rogueweapon/shield/tower/metal,
+/obj/item/weapon/shield/tower/metal,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/tomb/indoors)
@@ -186,7 +186,7 @@
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/tomb/indoors)
 "fN" = (
-/obj/item/rogueweapon/mace/warhammer{
+/obj/item/weapon/mace/warhammer{
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/blood/old,
@@ -448,7 +448,7 @@
 /area/rogue/under/tomb)
 "rj" = (
 /obj/structure/trap/curse/hidden,
-/obj/item/rogueweapon/pick/stone,
+/obj/item/weapon/pick/stone,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/cave/wet)
 "rn" = (
@@ -465,7 +465,7 @@
 /area/rogue/under/tomb/cave/spider)
 "rV" = (
 /obj/structure/rack/rogue/shelf/notdense,
-/obj/item/rogueweapon/mace/steel/morningstar{
+/obj/item/weapon/mace/steel/morningstar{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/blocks/stonered,
@@ -1165,8 +1165,8 @@
 /area/rogue/under/tomb/cave/wet)
 "Mu" = (
 /obj/structure/closet/crate/chest/neu_iron,
-/obj/item/rogueweapon/tongs,
-/obj/item/rogueweapon/hammer,
+/obj/item/weapon/tongs,
+/obj/item/weapon/hammer,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/tomb/cave/spider)
 "MS" = (
@@ -1387,7 +1387,7 @@
 /area/rogue/under/tomb/indoors)
 "Vz" = (
 /obj/machinery/anvil,
-/obj/item/rogueweapon/mace/warhammer/steel,
+/obj/item/weapon/mace/warhammer/steel,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/tomb/cave/spider)
@@ -1530,7 +1530,7 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/clothing/under/roguetown/trou,
 /obj/structure/rack/rogue/shelf/notdense,
-/obj/item/rogueweapon/eaglebeak/lucerne{
+/obj/item/weapon/eaglebeak/lucerne{
 	pixel_y = 16
 	},
 /turf/open/floor/rogue/blocks/stonered/tiny,

@@ -49,18 +49,18 @@
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/quiver/arrows
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/short/messer/iron
+	beltl = /obj/item/weapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/short/messer/iron
 	r_hand = /obj/item/storage/meatbag
 	backpack_contents = list(
 				/obj/item/flint = 1,
 				/obj/item/bait = 1,
-				/obj/item/rogueweapon/huntingknife = 1,
+				/obj/item/weapon/huntingknife = 1,
 				/obj/item/flashlight/flare/torch = 1,
 				/obj/item/flashlight/flare/torch/lantern = 1,
 				/obj/item/recipe_book/survival = 1,
 				/obj/item/recipe_book/leatherworking = 1,
-				/obj/item/rogueweapon/scabbard/sheath = 1
+				/obj/item/weapon/scabbard/sheath = 1
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	if(H.mind)
@@ -106,19 +106,19 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
-	backr = /obj/item/rogueweapon/scabbard/gwstrap
+	backr = /obj/item/weapon/scabbard/gwstrap
 	backl = /obj/item/storage/backpack/rogue/backpack
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/storage/meatbag
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	l_hand = /obj/item/rogueweapon/spear
+	l_hand = /obj/item/weapon/spear
 	backpack_contents = list(
 				/obj/item/flint = 1,
 				/obj/item/bait = 1,
-				/obj/item/rogueweapon/huntingknife = 1,
+				/obj/item/weapon/huntingknife = 1,
 				/obj/item/recipe_book/survival = 1,
 				/obj/item/recipe_book/leatherworking = 1,
-				/obj/item/rogueweapon/scabbard/sheath = 1
+				/obj/item/weapon/scabbard/sheath = 1
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	if(H.mind)

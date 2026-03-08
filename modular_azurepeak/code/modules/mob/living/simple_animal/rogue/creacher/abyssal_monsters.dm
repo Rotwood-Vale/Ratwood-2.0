@@ -176,7 +176,7 @@
 /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/death()
 	if(prob(100))
 		if(prob(1))
-			new /obj/item/rogueweapon/greataxe/dreamscape/active(loc)
+			new /obj/item/weapon/greataxe/dreamscape/active(loc)
 		else
 			new /obj/effect/spawner/lootdrop/roguetown/abyssor(loc)
 	new /obj/effect/decal/cleanable/dreamfiend_ichor/huge(loc)

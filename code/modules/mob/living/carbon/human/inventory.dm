@@ -475,18 +475,18 @@
 
 	if(!equipped)
 		return FALSE
-	if(!istype(equipped, /obj/item/rogueweapon/scabbard))
+	if(!istype(equipped, /obj/item/weapon/scabbard))
 		if(SEND_SIGNAL(equipped, COMSIG_CONTAINS_STORAGE))
 			if(!equipped.contents.len)
 				return FALSE
 			var/obj/item/stored = equipped.contents[equipped.contents.len]
 			if(!stored || stored.on_found(src))
 				return FALSE
-			if(!istype(stored, /obj/item/rogueweapon/scabbard))
+			if(!istype(stored, /obj/item/weapon/scabbard))
 				return FALSE
 			use_thing = stored
 
-	var/obj/item/rogueweapon/scabbard/scab = use_thing ? use_thing : equipped
+	var/obj/item/weapon/scabbard/scab = use_thing ? use_thing : equipped
 	if(!istype(scab))
 		return FALSE
 	if(!thing)

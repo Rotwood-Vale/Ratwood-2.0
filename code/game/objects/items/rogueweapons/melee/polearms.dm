@@ -235,7 +235,7 @@
 
 //polearm objs ฅ^•ﻌ•^ฅ
 
-/obj/item/rogueweapon/woodstaff
+/obj/item/weapon/woodstaff
 	force = 10
 	force_wielded = 15
 	possible_item_intents = list(SPEAR_BASH)
@@ -261,7 +261,7 @@
 	anvilrepair = /datum/skill/craft/carpentry
 	resistance_flags = FLAMMABLE
 
-/obj/item/rogueweapon/woodstaff/getonmobprop(tag)
+/obj/item/weapon/woodstaff/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -272,11 +272,11 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/woodstaff/wise
+/obj/item/weapon/woodstaff/wise
 	name = "wise staff"
 	desc = "A staff for keeping the volves at bay..."
 
-/obj/item/rogueweapon/woodstaff/aries
+/obj/item/weapon/woodstaff/aries
 	name = "staff of the shepherd"
 	desc = "This staff makes you look important to any peasant."
 	force = 25
@@ -291,7 +291,7 @@
 	gripsprite = FALSE
 	gripped_intents = null
 
-/obj/item/rogueweapon/woodstaff/aries/getonmobprop(tag)
+/obj/item/weapon/woodstaff/aries/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -301,7 +301,7 @@
 				return list("shrink" = 0.6,"sx" = 4,"sy" = -2,"nx" = -3,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
 
-/obj/item/rogueweapon/spear
+/obj/item/weapon/spear
 	force = 20
 	force_wielded = 30
 	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_CUT_1H)
@@ -329,7 +329,7 @@
 	throwforce = 25
 	resistance_flags = FLAMMABLE
 
-/obj/item/rogueweapon/spear/trident
+/obj/item/weapon/spear/trident
 	// Better one handed & throwing weapon, flimsier.
 	name = "bronze trident"
 	desc = "A bronze trident from the seas designed to pierce fish upon its hooked teeth. Feels balanced in your hand, like you could throw it quite easily."
@@ -350,7 +350,7 @@
 		"ceruleanFishingMod" = 0, // 1 on cerulean aril, 0 on everything else
 	)
 
-/obj/item/rogueweapon/spear/trident/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/spear/trident/afterattack(obj/target, mob/user, proximity)
 	var/sl = user.get_skill_level(/datum/skill/labor/fishing)
 	var/ft = 150
 	var/fpp =  130 - (40 + (sl * 15))
@@ -413,7 +413,7 @@
 					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			update_icon()
 
-/obj/item/rogueweapon/spear/aalloy
+/obj/item/weapon/spear/aalloy
 	name = "decrepit spear"
 	desc = "A rotting staff, tipped with frayed bronze. After the stone, but before the sword; an interlude for the violence that would soon engulf His world."
 	icon_state = "ancient_spear"
@@ -426,14 +426,14 @@
 	anvilrepair = null
 	randomize_blade_int_on_init = TRUE
 
-/obj/item/rogueweapon/spear/paalloy
+/obj/item/weapon/spear/paalloy
 	name = "ancient spear"
 	desc = "A gnarled staff, tipped with polished gilbranze. Your breathing hilts, and your knuckles tighten around the staff; you see what is yet to come, yet your mind refuses to retain it. To know what fate this dying world has - it would drive any man inzane."
 	smeltresult = /obj/item/ingot/aaslag
 	icon_state = "ancient_spear"
 
 
-/obj/item/rogueweapon/spear/psyspear
+/obj/item/weapon/spear/psyspear
 	name = "psydonic spear"
 	desc = "An ornate spear, plated in a ceremonial veneer of silver. The barbs pierce your palm, and - for just a moment - you see red. Never forget that you are why Psydon wept."
 	icon_state = "psyspear"
@@ -445,7 +445,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/spear/psyspear/ComponentInitialize()
+/obj/item/weapon/spear/psyspear/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -456,7 +456,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/spear/psyspear/old
+/obj/item/weapon/spear/psyspear/old
 	name = "enduring spear"
 	desc = "An ornate spear, its silver tarnished by neglect. HE still guides the faithful's hand, if not this weapon."
 	icon_state = "psyspear"
@@ -466,10 +466,10 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/spear/psyspear/old/ComponentInitialize()
+/obj/item/weapon/spear/psyspear/old/ComponentInitialize()
 	return
 
-/obj/item/rogueweapon/spear/silver
+/obj/item/weapon/spear/silver
 	name = "silver spear"
 	desc = "A winged staff, tipped with a silver spearhead. It bares a resemblenece to the 'boar spear', but with a critical difference; instead of stopping hogs, it halts charging deadites from spreading their sickness any further."
 	icon_state = "silverspear"
@@ -480,7 +480,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/spear/silver/ComponentInitialize()
+/obj/item/weapon/spear/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -491,7 +491,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/spear/getonmobprop(tag)
+/obj/item/weapon/spear/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -500,7 +500,7 @@
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
-/obj/item/rogueweapon/spear/bonespear
+/obj/item/weapon/spear/bonespear
 	force = 18
 	force_wielded = 22
 	name = "bone spear"
@@ -523,7 +523,7 @@
 	max_integrity = 60
 	throwforce = 20
 
-/obj/item/rogueweapon/spear/billhook
+/obj/item/weapon/spear/billhook
 	name = "billhook"
 	desc = "A neat hook. Used to pull riders from horses, as well as defend against said horses when used in a proper formation. The reinforcements along it's shaft grant it higher durability against attacks."
 	icon_state = "billhook"
@@ -533,7 +533,7 @@
 	wdefense = 6
 	throwforce = 15
 
-/obj/item/rogueweapon/spear/improvisedbillhook
+/obj/item/weapon/spear/improvisedbillhook
 	force = 12
 	force_wielded = 25
 	name = "improvised billhook"
@@ -544,7 +544,7 @@
 	wdefense = 4
 	throwforce = 10
 
-/obj/item/rogueweapon/spear/stone
+/obj/item/weapon/spear/stone
 	force = 15
 	force_wielded = 18
 	name = "stone spear"
@@ -567,7 +567,7 @@
 	throwforce = 20
 
 // Copper spear, no point to adjust force just slightly better integrity
-/obj/item/rogueweapon/spear/stone/copper
+/obj/item/weapon/spear/stone/copper
 	name = "copper spear"
 	desc = "A simple spear with a copper tip. More durable than stone, but not much better."
 	pixel_y = 0
@@ -578,7 +578,7 @@
 	icon_state = "cspear"
 	smeltresult = null
 
-/obj/item/rogueweapon/fishspear
+/obj/item/weapon/fishspear
 	force = 20
 	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_BASH, SPEAR_CAST) //bash is for nonlethal takedowns, only targets limbs
 	name = "fishing spear"
@@ -612,7 +612,7 @@
 		"ceruleanFishingMod" = 0, // 1 on cerulean aril, 0 on everything else
 	)
 
-/obj/item/rogueweapon/fishspear/depthseek //DO NOT ADD RECIPE. MEANT TO BE AN ABYSSORITE RELIC. IDEA COURTESY OF LORDINQPLAS
+/obj/item/weapon/fishspear/depthseek //DO NOT ADD RECIPE. MEANT TO BE AN ABYSSORITE RELIC. IDEA COURTESY OF LORDINQPLAS
 	force = 45
 	name = "blessed depthseeker"
 	desc = "A beautifully crafted weapon, with handle carved of some beast's bone, inlaid with smooth seaglass at pommel and head, with two prongs smithed of fine dwarven steel. The seaglass carving at the head is a masterwork in and of itself, you can feel an abyssal energy radiating off it."
@@ -622,12 +622,12 @@
 	wdefense = 8
 	throwforce = 50
 
-/obj/item/rogueweapon/fishspear/attack_self(mob/user)
+/obj/item/weapon/fishspear/attack_self(mob/user)
 	if(user.used_intent.type == SPEAR_CAST)
 		if(user.doing)
 			user.doing = 0
 
-/obj/item/rogueweapon/fishspear/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/fishspear/afterattack(obj/target, mob/user, proximity)
 	var/sl = user.get_skill_level(/datum/skill/labor/fishing) // User's skill level
 	var/ft = 160 //Time to get a catch, in ticks
 	var/fpp =  130 - (40 + (sl * 15)) // Fishing power penalty based on fishing skill level
@@ -689,7 +689,7 @@
 					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			update_icon()
 
-/obj/item/rogueweapon/fishspear/getonmobprop(tag)
+/obj/item/weapon/fishspear/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -742,7 +742,7 @@
 					"eflip" = 0,
 					)
 
-/obj/item/rogueweapon/halberd
+/obj/item/weapon/halberd
 	force = 15
 	force_wielded = 30
 	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_BASH)
@@ -767,7 +767,7 @@
 	walking_stick = TRUE
 	wdefense = 6
 
-/obj/item/rogueweapon/halberd/getonmobprop(tag)
+/obj/item/weapon/halberd/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -778,7 +778,7 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/spear/holysee
+/obj/item/weapon/spear/holysee
 	name = "see spear"
 	desc = "A blessed spear, wielded by the Holy See's templars to keep the forces of evil at bay. The design is remarkably well-balanced, allowing it for effective off-handed use with a shield. The prongs seem to catch even the tiniest glimmer of daelight, magnifying it into a blinding glare. </br>'I fear no evil, my Gods, for thou art with me!'"
 	icon_state = "gsspear"
@@ -786,7 +786,7 @@
 	max_blade_int = 225
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rogueweapon/halberd/bardiche
+/obj/item/weapon/halberd/bardiche
 	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/spear/thrust/eaglebeak, /datum/intent/spear/cut/bardiche, /datum/intent/axe/chop, SPEAR_BASH)
 	name = "bardiche"
@@ -796,7 +796,7 @@
 	smeltresult = /obj/item/ingot/iron
 	max_blade_int = 200
 
-/obj/item/rogueweapon/halberd/bardiche/aalloy
+/obj/item/weapon/halberd/bardiche/aalloy
 	name = "decrepit bardiche"
 	desc = "An imposing poleaxe, wrought from frayed bronze. Whatever noble purpose this weapon held has long since decayed; for it now persists to sunder the chaff that clings to this dying world."
 	max_integrity = 180
@@ -809,14 +809,14 @@
 	anvilrepair = null
 	randomize_blade_int_on_init = TRUE
 
-/obj/item/rogueweapon/halberd/bardiche/paalloy
+/obj/item/weapon/halberd/bardiche/paalloy
 	name = "ancient bardiche"
 	desc = "A terrifying poleaxe, forged from polished gilbranze. When Her ascension came, these weapons - bereft of their wielders - sunk deep into the earth. Shadowed hands cradled the blades over the centuries, and would eventually create its steel-tipped successor; the glaive."
 	icon_state = "ancient_bardiche"
 	smeltresult = /obj/item/ingot/aaslag
 
 
-/obj/item/rogueweapon/halberd/bardiche/scythe
+/obj/item/weapon/halberd/bardiche/scythe
 	name = "summer scythe"
 	desc = "Summer's verdancy runs through the head of this scythe. All the more to sow."
 	icon_state = "dendorscythe"
@@ -824,12 +824,12 @@
 	force_wielded = 33 // +3
 	max_integrity = 300 // +50
 
-/obj/item/rogueweapon/halberd/psyhalberd/relic
+/obj/item/weapon/halberd/psyhalberd/relic
 	name = "Stigmata"
 	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
 	icon_state = "psyhalberd"
 
-/obj/item/rogueweapon/halberd/psyhalberd/relic/ComponentInitialize()
+/obj/item/weapon/halberd/psyhalberd/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -840,7 +840,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/halberd/psyhalberd
+/obj/item/weapon/halberd/psyhalberd
 	name = "psydonic halberd"
 	desc = "A reliable design that has served humenkind to fell the enemy and defend Psydon's flock - now fitted with a lengthier blade and twin, silver-tipped beaks."
 	icon_state = "silverhalberd"
@@ -850,7 +850,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/halberd/psyhalberd/ComponentInitialize()
+/obj/item/weapon/halberd/psyhalberd/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -861,7 +861,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/halberd/glaive
+/obj/item/weapon/halberd/glaive
 	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, SPEAR_BASH)
 	name = "glaive"
@@ -872,7 +872,7 @@
 	max_blade_int = 160
 	wdefense = 9
 
-/obj/item/rogueweapon/halberd/glaive/getonmobprop(tag)
+/obj/item/weapon/halberd/glaive/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -883,7 +883,7 @@
 			if("onback")
 				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/rogueweapon/eaglebeak
+/obj/item/weapon/eaglebeak
 	force = 15
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh)
@@ -909,7 +909,7 @@
 	wbalance = WBALANCE_HEAVY
 	sellprice = 60
 
-/obj/item/rogueweapon/eaglebeak/getonmobprop(tag)
+/obj/item/weapon/eaglebeak/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -921,7 +921,7 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 
-/obj/item/rogueweapon/eaglebeak/lucerne
+/obj/item/weapon/eaglebeak/lucerne
 	name = "lucerne"
 	desc = "A polehammer of simple iron. Fracture bone and dissent with simple brute force. The studding along its shaft makes for a slightly more reinforced weapon."
 	force = 12
@@ -955,7 +955,7 @@
 	clickcd = CLICK_CD_HEAVY // Slightly longer since it has RANGE. Don't want to increase charge time more since it is unreliable.
 	blunt_chip_strength = BLUNT_CHIP_ABSURD
 
-/obj/item/rogueweapon/spear/bronze
+/obj/item/weapon/spear/bronze
 	name = "bronze spear"
 	desc = "An antiquital staff, adorned with a bronze spearhead. Ancient in both design and purpose, its lighter weight once complimented the towering shields of precivilizational legionnaires. While rarely seen beyond the Deadlands, nowadaes, its lightweight balance makes it perfect for one-handed thrusts and throws."
 	force = 25
@@ -968,7 +968,7 @@
 	max_blade_int = 225
 	max_integrity = 155
 
-/obj/item/rogueweapon/greatsword
+/obj/item/weapon/greatsword
 	force = 12
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/sword/chop,/datum/intent/sword/strike) //bash is for nonlethal takedowns, only targets limbs
@@ -999,7 +999,7 @@
 	wdefense = 5
 	smelt_bar_num = 3
 
-/obj/item/rogueweapon/greatsword/getonmobprop(tag)
+/obj/item/weapon/greatsword/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -1012,7 +1012,7 @@
 			if("altgrip")
 				return list("shrink" = 0.6,"sx" = 4,"sy" = 0,"nx" = -7,"ny" = 1,"wx" = -8,"wy" = 0,"ex" = 8,"ey" = -1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -135,"sturn" = -35,"wturn" = 45,"eturn" = 145,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
 
-/obj/item/rogueweapon/greatsword/iron
+/obj/item/weapon/greatsword/iron
 	name = "iron greatsword"
 	desc = "Wrought in iron. Heftier and less sturdier than its steel equivalent - but it still does the job."
 	icon_state = "igsw"
@@ -1022,7 +1022,7 @@
 	smelt_bar_num = 3
 	smeltresult = /obj/item/ingot/iron
 
-/obj/item/rogueweapon/greatsword/aalloy
+/obj/item/weapon/greatsword/aalloy
 	name = "decrepit greatsword"
 	desc = "A massive blade, wrought in frayed bronze. It is too big to be called a sword; massive, thick, heavy, and far too rough. Indeed, this blade was more like a heap of raw metal."
 	force = 10
@@ -1036,13 +1036,13 @@
 	randomize_blade_int_on_init = TRUE
 
 
-/obj/item/rogueweapon/greatsword/paalloy
+/obj/item/weapon/greatsword/paalloy
 	name = "ancient greatsword"
 	desc = "A massive blade, forged from polished gilbronze. Your kind will discover your true nature, in wrath and ruin. You will take to the stars and burn them out, one by one. Only when the last star turns to dust, will you finally realize that She was trying to save you from Man's greatest foe; oblivion."
 	icon_state = "ancient_gsw"
 	smeltresult = /obj/item/ingot/aaslag
 
-/obj/item/rogueweapon/greatsword/zwei
+/obj/item/weapon/greatsword/zwei
 	name = "claymore"
 	desc = "This is much longer than a common greatsword, and well balanced too!"
 	icon_state = "claymore"
@@ -1053,7 +1053,7 @@
 	force = 14
 	force_wielded = 35
 
-/obj/item/rogueweapon/greatsword/grenz
+/obj/item/weapon/greatsword/grenz
 	name = "steel zweihander"
 	icon_state = "steelzwei"
 	smeltresult = /obj/item/ingot/steel
@@ -1063,7 +1063,7 @@
 	force = 14
 	force_wielded = 35
 
-/obj/item/rogueweapon/greatsword/grenz/flamberge
+/obj/item/weapon/greatsword/grenz/flamberge
 	name = "steel flamberge"
 	desc = "A close relative of the Grenzelhoftian \"zweihander\", favored by Otavan nobility. The name comes from its unique, flame-shaped blade; a labor only surmountable by Psydonia's finest weaponsmiths."
 	icon_state = "steelflamberge"
@@ -1071,7 +1071,7 @@
 	max_integrity = 180
 	wdefense = 6
 
-/obj/item/rogueweapon/greatsword/grenz/flamberge/ravox
+/obj/item/weapon/greatsword/grenz/flamberge/ravox
 	name = "Censure"
 	desc = "A blade that invites imagery of hope. Of men clad in shattered plate and bearing blackened pauldrons, \
 	standing at His side. To correct Her wrongs, as they sought the censure of divine tyranny. \
@@ -1081,7 +1081,7 @@
 	max_blade_int = 240
 	wdefense = 7//You are truly unique, m'lord.
 
-/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel
+/obj/item/weapon/greatsword/grenz/flamberge/blacksteel
 	name = "blacksteel flamberge"
 	desc = "An uncommon kind of sword with a characteristically undulating style of blade, made with an equally rare metal. \
 	The wave in the blade is considered to contribute a flame-like quality to its appearance, turning it into a menacing sight. \
@@ -1092,7 +1092,7 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/blacksteel
 
-/obj/item/rogueweapon/greatsword/psygsword
+/obj/item/weapon/greatsword/psygsword
 	name = "psydonic greatsword"
 	desc = "It is said that a Psydonian smith was guided by Saint Malum himself to forge such a formidable blade, and given the task to slay a daemon preying on the Otavan farmlands. The design was retrieved, studied, and only a few replicas made - for they believe it dulls its edge."
 	icon_state = "silverexealt"
@@ -1101,7 +1101,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greatsword/psygsword/ComponentInitialize()
+/obj/item/weapon/greatsword/psygsword/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1112,13 +1112,13 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/psygsword/relic
+/obj/item/weapon/greatsword/psygsword/relic
 	name = "Apocrypha"
 	desc = "In the Otavan mosaics, Saint Ravox - bare in all but a beaked helmet and loincloth - is often depicted wielding such an imposing greatweapon against the Dark Star, Graggar. Regardless of whether this relic was actually wielded by divinity-or-not, its unparallel strength will nevertheless command even the greatest foes to fall."
 	icon_state = "psygsword"
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/exe, /datum/intent/sword/strike/bad)
 
-/obj/item/rogueweapon/greatsword/psygsword/relic/ComponentInitialize()
+/obj/item/weapon/greatsword/psygsword/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -1129,7 +1129,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/bsword/psy
+/obj/item/weapon/greatsword/bsword/psy
 	name = "forgotten blade"
 	desc = "'Let His name be naught but forgot'n.'"
 	icon_state = "oldpsybroadsword"
@@ -1143,7 +1143,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/greatsword/bsword/psy/ComponentInitialize()
+/obj/item/weapon/greatsword/bsword/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1154,14 +1154,14 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/bsword/psy/relic
+/obj/item/weapon/greatsword/bsword/psy/relic
 	name = "Creed"
 	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
 	icon_state = "psybroadsword"
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/greatsword/bsword/psy/getonmobprop(tag)
+/obj/item/weapon/greatsword/bsword/psy/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -1170,7 +1170,7 @@
 			if("onback") return list("shrink" = 0.5, "sx" = -1, "sy" = 2, "nx" = 0, "ny" = 2, "wx" = 2, "wy" = 1, "ex" = 0, "ey" = 1, "nturn" = 0, "sturn" = 0, "wturn" = 70, "eturn" = 15, "nflip" = 1, "sflip" = 1, "wflip" = 1, "eflip" = 1, "northabove" = 1, "southabove" = 0, "eastabove" = 0, "westabove" = 0)
 			if("onbelt") return list("shrink" = 0.3, "sx" = -4, "sy" = -6, "nx" = 5, "ny" = -6, "wx" = 0, "wy" = -6, "ex" = -1, "ey" = -6, "nturn" = 100, "sturn" = 156, "wturn" = 90, "eturn" = 180, "nflip" = 0, "sflip" = 0, "wflip" = 0, "eflip" = 0, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0)
 
-/obj/item/rogueweapon/greatsword/bsword/psy/relic/ComponentInitialize()
+/obj/item/weapon/greatsword/bsword/psy/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -1181,14 +1181,14 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten
+/obj/item/weapon/greatsword/bsword/psy/unforgotten
 	name = "unforgotten blade"
 	desc = "High Inquisitor Archibald once recorded an expedition of seven brave Adjudicators into Gronnian snow-felled wastes to root out evil. Its leader, Holy Ordinator Guillemin, was said to have held on for seven daes and seven nights against darksteel-clad heretics before Psydon acknowledged his endurance. Nothing but his blade remained - his psycross wrapped around its hilt in rememberance."
 	icon_state = "forgottenblade"
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten/ComponentInitialize()
+/obj/item/weapon/greatsword/bsword/psy/unforgotten/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1199,7 +1199,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/estoc
+/obj/item/weapon/estoc
 	name = "estoc"
 	desc = "A sword possessed of a quite long and tapered blade that is intended to be thrust between the \
 	gaps in an opponent's armor. The hilt is wrapped tight in black leather."
@@ -1234,7 +1234,7 @@
 	wdefense_wbonus = 6
 	smelt_bar_num = 2
 
-/obj/item/rogueweapon/estoc/getonmobprop(tag)
+/obj/item/weapon/estoc/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -1287,7 +1287,7 @@
 					"eflip" = 0,
 					)
 
-/obj/item/rogueweapon/woodstaff/naledi
+/obj/item/weapon/woodstaff/naledi
 	name = "naledian warstaff"
 	desc = "A staff carrying the crescent moon of Psydon's knowledge, as well as the black and gold insignia of the war scholars."
 	icon_state = "naledistaff"
@@ -1297,7 +1297,7 @@
 	force_wielded = 22
 	max_integrity = 250
 
-/obj/item/rogueweapon/woodstaff/naledi/getonmobprop(tag)
+/obj/item/weapon/woodstaff/naledi/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -1307,7 +1307,7 @@
 				return list("shrink" = 0.8,"sx" = 8,"sy" = 0,"nx" = -1,"ny" = 0,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
 // Decorative Naledi staff for loadout - regular staff with Naledi appearance
-/obj/item/rogueweapon/woodstaff/decorative
+/obj/item/weapon/woodstaff/decorative
 	name = "decorative naledian staff"
 	desc = "A staff styled after the war scholars' crescent moon design. While it carries the aesthetic of the Naledian warstaff, it lacks the refined balance and arcane attunement of the genuine article."
 	icon_state = "naledistaff"
@@ -1318,7 +1318,7 @@
 	max_integrity = 150
 
 //Only a 'woodenstaff' for the purpose of CDR on spells.
-/obj/item/rogueweapon/woodstaff/sojourner
+/obj/item/weapon/woodstaff/sojourner
 	name = "sojourner staff"
 	desc = "What remains of an old psydonic spear. The tip is blunted, with both barbs and trident-like head removed. \
 	It serves a more noble purpose, now, as a sojourner's casting implement. Though, with enough force, one may still drive the tip forward."
@@ -1334,7 +1334,7 @@
 	smeltresult = /obj/item/ingot/silverblessed
 	is_silver = TRUE
 
-/obj/item/rogueweapon/woodstaff/sojourner/ComponentInitialize()
+/obj/item/weapon/woodstaff/sojourner/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1345,7 +1345,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/woodstaff/quarterstaff
+/obj/item/weapon/woodstaff/quarterstaff
 	name = "wooden quarterstaff"
 	desc = "A staff that makes any journey easier. Durable and swift, capable of bludgeoning stray volves and ruffians alike. Its length allow it to be used for a thrusting attack."
 	force = 15
@@ -1355,7 +1355,7 @@
 	associated_skill = /datum/skill/combat/staves
 	max_integrity = 150
 
-/obj/item/rogueweapon/woodstaff/quarterstaff/iron
+/obj/item/weapon/woodstaff/quarterstaff/iron
 	name = "iron quarterstaff"
 	desc = "A quarterstaff reinforced with iron tips. It is capable of dealing more damage than a wooden one, and its blunt ends make for a decent blunt thrusting weapon. Can be used to bash down your opponents weapons."
 	force = 16
@@ -1365,7 +1365,7 @@
 	associated_skill = /datum/skill/combat/staves
 	max_integrity = 200
 
-/obj/item/rogueweapon/woodstaff/quarterstaff/steel
+/obj/item/weapon/woodstaff/quarterstaff/steel
 	name = "steel quarterstaff"
 	desc = "A quarterstaff reinforced with steel tips and steel rings, blurring the line between a light polehammer and a reinforced quarterstaff. Extremely durable, and more than capable of bludgeoning brigands to death. Durable enough to break your opponents weapons."
 	force = 18
@@ -1375,7 +1375,7 @@
 	associated_skill = /datum/skill/combat/staves
 	max_integrity = 200
 
-/obj/item/rogueweapon/woodstaff/quarterstaff/silver
+/obj/item/weapon/woodstaff/quarterstaff/silver
 	name = "silver quarterstaff"
 	desc = "A quarterstaff reinforced with silver tips. A relatively new design, purportedly inspired by the warstaffs oft-carried by Naledian warscholars. Durable enough to catch avantyne to the shaft, without so much as a splinter - or so, they say."
 	force = 20
@@ -1386,7 +1386,7 @@
 	max_integrity = 250
 	is_silver = TRUE
 
-/obj/item/rogueweapon/woodstaff/quarterstaff/silver/ComponentInitialize()
+/obj/item/weapon/woodstaff/quarterstaff/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1397,7 +1397,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/woodstaff/quarterstaff/psy
+/obj/item/weapon/woodstaff/quarterstaff/psy
 	name = "psydonic quarterstaff"
 	desc = "A quarterstaff reinforced with silver tips. A relatively new design, purportedly inspired by the warstaffs oft-carried by Naledian warscholars. Durable enough to catch avantyne to the shaft, without so much as a splinter - or so, they say."
 	force = 20
@@ -1409,7 +1409,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/woodstaff/quarterstaff/psy/ComponentInitialize()
+/obj/item/weapon/woodstaff/quarterstaff/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1420,7 +1420,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/spear/partizan
+/obj/item/weapon/spear/partizan
 	name = "partizan"
 	desc = "A heavy, reinforced spear-like polearm of disputed origin. It's fitted with a studded shaft, a steel spearhead and protrusions to aid in parrying."
 	force = 8	//Not a possible one-handed weapon. Also too heavy!
@@ -1439,7 +1439,7 @@
 	minstr_req = TRUE//No more speed partizan.
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rogueweapon/spear/partizan/getonmobprop(tag)
+/obj/item/weapon/spear/partizan/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -1448,7 +1448,7 @@
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 4,"sy" = -2,"nx" = -3,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
-/obj/item/rogueweapon/spear/boar
+/obj/item/weapon/spear/boar
 	name = "boar spear"
 	desc = "A spear with a wide head and a pair of wings below the head. The wings are designed to prevent a boar from charging past the spearhead. \
 	It is also useful for parrying and stopping a charging opponent."
@@ -1459,7 +1459,7 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rogueweapon/spear/otava
+/obj/item/weapon/spear/otava
 	name = "banner of Otava"
 	desc = "A banner carrying the colors of the Principality of Otava, turned into a formidable steel pike. \
 	Only seen held by the most loyal of the Otavan Holy See's men."
@@ -1473,7 +1473,7 @@
 	smeltresult = /obj/item/ingot/steel
 	resistance_flags = FIRE_PROOF
 
-/obj/item/rogueweapon/spear/otava/update_icon()
+/obj/item/weapon/spear/otava/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
 		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
@@ -1481,7 +1481,7 @@
 		pic.color = "#FFA500"
 		add_overlay(pic)
 
-/obj/item/rogueweapon/spear/otava/Initialize(mapload)
+/obj/item/weapon/spear/otava/Initialize(mapload)
 	. = ..()
 	// toying a bit to see if i can make it be orange
 	detail_tag = "_det"
@@ -1489,27 +1489,27 @@
 	update_icon()
 	GLOB.lordcolor += src
 
-/obj/item/rogueweapon/spear/otava/lordcolor(primary,secondary)
+/obj/item/weapon/spear/otava/lordcolor(primary,secondary)
 	// Ignore incoming colors, always use orange
 	detail_tag = "_det"
 	detail_color = "#FFA500"
 	update_icon()
 
-/obj/item/rogueweapon/spear/otava/Destroy()
+/obj/item/weapon/spear/otava/Destroy()
 	GLOB.lordcolor -= src
 	return ..()
 
-/obj/item/rogueweapon/spear/boar/frei
+/obj/item/weapon/spear/boar/frei
 	name = "Aavnic lándzsa"
 	desc = "A regional earspoon lance with a carved handle, adorned with the colours of the Freifechters. These are smithed by the legendary armourers of Vyšvou and given to distinguished lancers upon their graduation."
 	icon_state = "praguespear"
 
-/obj/item/rogueweapon/spear/boar/aav
+/obj/item/weapon/spear/boar/aav
 	name = "Aavnic lándzsa"//I'm creatively bankrupt.
 	desc = "A regional earspoon lance with a carved handle, adorned with the colours of a Steppesman's banner."
 	icon_state = "avspear"
 
-/obj/item/rogueweapon/spear/lance
+/obj/item/weapon/spear/lance
 	name = "lance"
 	desc = "A long polearm designed to be used from horseback, couched under the arm. It has a vambrace to prevent the arm sliding up \
 	the shaft on impact. "
@@ -1525,7 +1525,7 @@
 	resistance_flags = null
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rogueweapon/spear/naginata
+/obj/item/weapon/spear/naginata
 	name = "naginata"
 	desc = "A traditional Kazengunese polearm, combining the reach of a spear with the cutting power of a curved blade. Due to the brittle quality of Kazengunese bladesmithing, weaponsmiths have adapted its blade to be easily replaceable when broken by a peg upon the end of the shaft."
 	force = 16
@@ -1541,7 +1541,7 @@
 	icon_angle_wielded = 50
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rogueweapon/spear/naginata/getonmobprop(tag)
+/obj/item/weapon/spear/naginata/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -1550,7 +1550,7 @@
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 4,"sy" = -2,"nx" = -3,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
-/obj/item/rogueweapon/halberd/capglaive
+/obj/item/weapon/halberd/capglaive
 	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh, SPEAR_BASH)
 	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, SPEAR_BASH)
 	name = "'Deliverer'"
@@ -1567,7 +1567,7 @@
 	sellprice = 250
 	wdefense = 12
 
-/obj/item/rogueweapon/halberd/capglaive/getonmobprop(tag)
+/obj/item/weapon/halberd/capglaive/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -1576,7 +1576,7 @@
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
-/obj/item/rogueweapon/spear/assegai/iron
+/obj/item/weapon/spear/assegai/iron
 	name = "iron assegai"
 	desc = "A long spear originating from the southern regions of Naledi. Commoners living along the great river Bilomari are taught to use assegai so they can defend themselves against the Djinn."
 	icon = 'icons/weapons/64.dmi'
@@ -1585,7 +1585,7 @@
 	icon_state = "assegai_iron"
 	gripsprite = FALSE
 
-/obj/item/rogueweapon/spear/assegai
+/obj/item/weapon/spear/assegai
 	name = "steel assegai"
 	desc = "A long spear originating from the southern regions of Naledi. Commoners living along the great river Bilomari are taught to use assegai so they can defend themselves against the Djinn."
 	icon = 'icons/weapons/64.dmi'
@@ -1594,7 +1594,7 @@
 	icon_state = "assegai_steel"
 	gripsprite = FALSE
 
-/obj/item/rogueweapon/spear/nomad
+/obj/item/weapon/spear/nomad
 	name = "nomad spear"
 	desc = "An odd sort of spear. No amount of further leverage will help, for you've all you need in one hand. \
 	Weighted poorly to a mind yet untrained in the use of it. \
@@ -1683,7 +1683,7 @@
 
 //
 
-/obj/item/rogueweapon/greatsword/psygsword/dragonslayer
+/obj/item/weapon/greatsword/psygsword/dragonslayer
 	name = "\"Daemonslayer\""
 	desc = "'That thing was too big to be called a sword. Too big, too thick, too heavy, and too rough. No, it was more like a large hunk of silver.' </br>Intimidatingly massive, unfathomably powerful, and - above all else - a testament to one's guts."
 	icon_state = "machaslayer"
@@ -1700,9 +1700,9 @@
 	max_blade_int = 555
 	alt_intents = null
 	is_silver = TRUE
-	smeltresult = /obj/item/rogueweapon/sword/long/kriegmesser/silver //Too thick to completely melt.
+	smeltresult = /obj/item/weapon/sword/long/kriegmesser/silver //Too thick to completely melt.
 
-/obj/item/rogueweapon/greatsword/psygsword/dragonslayer/ComponentInitialize()
+/obj/item/weapon/greatsword/psygsword/dragonslayer/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -1716,7 +1716,7 @@
 
 //Elven weapons sprited and added by Jam
 
-/obj/item/rogueweapon/greatsword/elf
+/obj/item/weapon/greatsword/elf
 	possible_item_intents = list(/datum/intent/sword/chop,/datum/intent/sword/strike) //bash is for nonlethal takedowns, only targets limbs
 	// Design Intent: It is pretty purely a two-handed weapon. In one hand it's a bit clumsy.
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/zwei, /datum/intent/sword/strike/bad)
@@ -1730,7 +1730,7 @@
 	sellprice = 60
 
 
-/obj/item/rogueweapon/spear/naginata/elf
+/obj/item/weapon/spear/naginata/elf
 	name = "elven swordspear"
 	desc = "An elven weapon that combines the elegant sweeping blade typical of elven design with a lengthy handle. The true guardian of the forest realm."
 	icon_state = "elfglaive"

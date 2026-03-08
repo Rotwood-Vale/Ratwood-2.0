@@ -1,6 +1,6 @@
 
 //Not clay but part of pottery/glassblowing.
-/obj/item/rogueweapon/blowrod
+/obj/item/weapon/blowrod
 	force = 10
 	possible_item_intents = list(/datum/intent/mace/strike)
 	name = "Blowing Rod"

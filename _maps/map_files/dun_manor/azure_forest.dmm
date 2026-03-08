@@ -470,7 +470,7 @@
 /obj/structure/rack/rogue,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /obj/machinery/light/rogue/torchholder/l,
-/obj/item/rogueweapon/shield/buckler,
+/obj/item/weapon/shield/buckler,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/town/basement)
 "dL" = (
@@ -742,7 +742,7 @@
 /obj/item/natural/stone{
 	pixel_y = -14
 	},
-/obj/item/rogueweapon/hammer/claw,
+/obj/item/weapon/hammer/claw,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "fX" = (
@@ -1125,7 +1125,7 @@
 "jq" = (
 /obj/structure/rack/rogue,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
-/obj/item/rogueweapon/woodstaff,
+/obj/item/weapon/woodstaff,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/town/basement)
 "jr" = (
@@ -1133,7 +1133,7 @@
 /turf/open/floor/rogue/church,
 /area/rogue/under/town/basement)
 "jt" = (
-/obj/item/rogueweapon/pick/stone,
+/obj/item/weapon/pick/stone,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/town/basement)
 "jw" = (
@@ -1814,7 +1814,7 @@
 /area/rogue/under/town/basement)
 "oC" = (
 /obj/structure/closet/crate/chest/wicker,
-/obj/item/rogueweapon/hoe,
+/obj/item/weapon/hoe,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/shelter/woods)
 "oK" = (
@@ -1989,7 +1989,7 @@
 /obj/effect/decal/cobbleedge{
 	dir = 4
 	},
-/obj/item/rogueweapon/shovel,
+/obj/item/weapon/shovel,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/town/basement)
 "qe" = (
@@ -2385,7 +2385,7 @@
 /obj/structure/closet/crate/chest/wicker,
 /obj/item/fishingrod,
 /obj/item/fishingrod,
-/obj/item/rogueweapon/huntingknife,
+/obj/item/weapon/huntingknife,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
@@ -3085,7 +3085,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/town/basement)
 "zH" = (
-/obj/item/rogueweapon/huntingknife/stoneknife,
+/obj/item/weapon/huntingknife/stoneknife,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods)
 "zM" = (
@@ -3304,7 +3304,7 @@
 /obj/item/reagent_containers/glass/bowl{
 	pixel_x = -8
 	},
-/obj/item/rogueweapon/huntingknife/chefknife,
+/obj/item/weapon/huntingknife/chefknife,
 /obj/item/kitchen/rollingpin,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors/shelter/woods)
@@ -3389,7 +3389,7 @@
 /area/rogue/indoors/shelter/woods)
 "BA" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/whip,
+/obj/item/weapon/whip,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement)
 "BC" = (
@@ -4019,7 +4019,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement)
 "GF" = (
-/obj/item/rogueweapon/hammer/iron,
+/obj/item/weapon/hammer/iron,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "GH" = (
@@ -4475,7 +4475,7 @@
 /turf/open/water/ocean,
 /area/rogue/under/cavewet/bogcaves)
 "JZ" = (
-/obj/item/rogueweapon/stoneaxe,
+/obj/item/weapon/stoneaxe,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "Kg" = (
@@ -4755,7 +4755,7 @@
 	density = 0;
 	pixel_y = 18
 	},
-/obj/item/rogueweapon/sword/long,
+/obj/item/weapon/sword/long,
 /obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
@@ -4865,7 +4865,7 @@
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "Nl" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/huntingknife/stoneknife,
+/obj/item/weapon/huntingknife/stoneknife,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors)
 "Nq" = (
@@ -5625,7 +5625,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "TG" = (
-/obj/item/rogueweapon/sword/short/iron,
+/obj/item/weapon/sword/short/iron,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/town/basement)
 "TI" = (
@@ -5718,7 +5718,7 @@
 	pixel_x = -5;
 	pixel_y = 9
 	},
-/obj/item/rogueweapon/pick/stone,
+/obj/item/weapon/pick/stone,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/town/basement)
 "UJ" = (
@@ -5862,7 +5862,7 @@
 /turf/open/water/swamp/deep,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "VG" = (
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/town/basement)
@@ -5974,15 +5974,15 @@
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "WK" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/sword/short,
-/obj/item/rogueweapon/sword/short,
-/obj/item/rogueweapon/sword/short,
-/obj/item/rogueweapon/stoneaxe/woodcut/wardenpick,
-/obj/item/rogueweapon/stoneaxe/woodcut/wardenpick,
-/obj/item/rogueweapon/stoneaxe/woodcut/wardenpick,
-/obj/item/rogueweapon/huntingknife/idagger/steel,
-/obj/item/rogueweapon/huntingknife/idagger/steel,
-/obj/item/rogueweapon/huntingknife/idagger/steel,
+/obj/item/weapon/sword/short,
+/obj/item/weapon/sword/short,
+/obj/item/weapon/sword/short,
+/obj/item/weapon/stoneaxe/woodcut/wardenpick,
+/obj/item/weapon/stoneaxe/woodcut/wardenpick,
+/obj/item/weapon/stoneaxe/woodcut/wardenpick,
+/obj/item/weapon/huntingknife/idagger/steel,
+/obj/item/weapon/huntingknife/idagger/steel,
+/obj/item/weapon/huntingknife/idagger/steel,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter/woods)
 "WL" = (
@@ -6041,8 +6041,8 @@
 	lockid = "warden";
 	keylock = 1
 	},
-/obj/item/rogueweapon/shovel,
-/obj/item/rogueweapon/stoneaxe/woodcut,
+/obj/item/weapon/shovel,
+/obj/item/weapon/stoneaxe/woodcut,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/shelter/woods)
 "Xp" = (

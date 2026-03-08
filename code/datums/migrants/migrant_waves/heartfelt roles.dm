@@ -15,10 +15,10 @@
 	cloak = /obj/item/clothing/cloak/heartfelt
 	armor = /obj/item/clothing/suit/roguetown/armor/heartfelt/lord
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/long/marlin
-	r_hand = /obj/item/rogueweapon/huntingknife
-	beltr = /obj/item/rogueweapon/scabbard/sheath
+	beltl = /obj/item/weapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/long/marlin
+	r_hand = /obj/item/weapon/huntingknife
+	beltr = /obj/item/weapon/scabbard/sheath
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	backl = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone
@@ -70,8 +70,8 @@
 			armor = /obj/item/clothing/suit/roguetown/armor/armordress
 	belt = /obj/item/storage/belt/rogue/leather/cloth/lady
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr = /obj/item/rogueweapon/scabbard/sheath
-	r_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
+	beltr = /obj/item/weapon/scabbard/sheath
+	r_hand = /obj/item/weapon/huntingknife/idagger/silver/elvish
 	id = /obj/item/clothing/ring/silver
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
@@ -108,10 +108,10 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/heartfelt/hand
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	gloves =/obj/item/clothing/gloves/roguetown/angle
-	l_hand = /obj/item/rogueweapon/sword/sabre/dec
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	r_hand = /obj/item/rogueweapon/huntingknife/combat
-	beltr = /obj/item/rogueweapon/scabbard/sheath
+	l_hand = /obj/item/weapon/sword/sabre/dec
+	beltl = /obj/item/weapon/scabbard/sword
+	r_hand = /obj/item/weapon/huntingknife/combat
+	beltr = /obj/item/weapon/scabbard/sheath
 	backr = /obj/item/storage/backpack/rogue/satchel/heartfelt
 	mask = /obj/item/clothing/mask/rogue/spectacles/golden
 	id = /obj/item/scomstone
@@ -152,24 +152,24 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/full
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/weapon/scabbard/sword
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	belt = /obj/item/storage/belt/rogue/leather/steel
 	backr = /obj/item/storage/backpack/rogue/satchel/black
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
-	l_hand = /obj/item/rogueweapon/sword/long
+	backl = /obj/item/weapon/scabbard/gwstrap
+	l_hand = /obj/item/weapon/sword/long
 	var/weaponroll = rand(1, 100)	//LETS GO GAMBLING!!
 	switch(weaponroll)
 		if(1 to 20)
-			r_hand = /obj/item/rogueweapon/eaglebeak
+			r_hand = /obj/item/weapon/eaglebeak
 		if(21 to 40)
-			r_hand = /obj/item/rogueweapon/mace/goden/steel
+			r_hand = /obj/item/weapon/mace/goden/steel
 		if(41 to 60)
-			r_hand = /obj/item/rogueweapon/estoc
+			r_hand = /obj/item/weapon/estoc
 		if(61 to 80)
-			r_hand = /obj/item/rogueweapon/greatsword
+			r_hand = /obj/item/weapon/greatsword
 		if(81 to 100)
-			r_hand = /obj/item/rogueweapon/greataxe/steel
+			r_hand = /obj/item/weapon/greataxe/steel
 	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
@@ -233,7 +233,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	id = /obj/item/clothing/ring/gold
-	r_hand = /obj/item/rogueweapon/woodstaff/diamond	//Meant to be their own little court magos, give them a bone. 2nd only to the riddle of steel/court magos staff
+	r_hand = /obj/item/weapon/woodstaff/diamond	//Meant to be their own little court magos, give them a bone. 2nd only to the riddle of steel/court magos staff
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/poison,
@@ -241,8 +241,8 @@
 		/obj/item/recipe_book/alchemy,
 		/obj/item/recipe_book/magic,
 		/obj/item/book/spellbook,
-		/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne,
-		/obj/item/rogueweapon/scabbard/sheath
+		/obj/item/weapon/huntingknife/idagger/silver/arcyne,
+		/obj/item/weapon/scabbard/sheath
 	)
 	ADD_TRAIT(H, TRAIT_ARCYNE_T4, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)

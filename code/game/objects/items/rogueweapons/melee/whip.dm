@@ -1,4 +1,4 @@
-/obj/item/rogueweapon/whip
+/obj/item/weapon/whip
 	force = 21
 	possible_item_intents = list(/datum/intent/whip/lash, /datum/intent/whip/crack, /datum/intent/whip/punish)
 	name = "whip"
@@ -20,7 +20,7 @@
 	grid_width = 32
 	grid_height = 64
 
-/obj/item/rogueweapon/whip/getonmobprop(tag)
+/obj/item/weapon/whip/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -94,7 +94,7 @@
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
-/obj/item/rogueweapon/whip/nagaika
+/obj/item/weapon/whip/nagaika
 	name = "nagaika whip"
 	desc = "A short but heavy leather whip, sporting a blunt reinforced tip and a longer handle."
 	icon_state = "nagaika"
@@ -102,20 +102,20 @@
 	possible_item_intents = list(/datum/intent/whip/crack/blunt, /datum/intent/whip/lash, /datum/intent/sword/strike)
 	wdefense = 1	//Akin to a cudgel, still terrible at parrying though. Better than nothing I guess; thing is used irl as a counter-weapon to knives.
 
-/obj/item/rogueweapon/whip/xylix
+/obj/item/weapon/whip/xylix
 	name = "cackle lash"
 	desc = "The chimes of this whip are said to sound as the trickster's laughter itself."
 	icon_state = "xylixwhip"
 	force = 24
 
-/obj/item/rogueweapon/whip/antique
+/obj/item/weapon/whip/antique
 	name = "Repenta En"
 	desc = "A multi-tailed whip that's extremely well-maintained. The gilded handle first burdens the hand with its inordinate weight, and then the mind with an unsettling realization; this is not a tool of honor. </br>'Ravox stands for justice, not murder.'"
 	force = 25
 	minstr = 11
 	icon_state = "gwhip"
 
-/obj/item/rogueweapon/whip/antique/psywhip
+/obj/item/weapon/whip/antique/psywhip
 	name = "Daybreak"
 	desc = "A chain-linked whip, meticulously assembled from a hundred pieces of blessed silver. Its origins are steeped in mythos: most believe it to originate from an ancient bloodline of vampyre-killers, which once saved Psydonia from a powerful lyckerlorde. Whether it was happenstance or fate itself that eventually led it into your grasp, however, is better left unspoken. </br>'There, upon the Cathedral's ceiling, was painted a scene-most-beautiful: of a robed Psydon standing before the Archdevil, parting the nite's sky with a crack from His fiery whip. Just as He had done prior, so too must you bring daelight to the darkness.'"
 	icon_state = "psywhip"
@@ -127,7 +127,7 @@
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/whip/antique/psywhip/ComponentInitialize()
+/obj/item/weapon/whip/antique/psywhip/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -138,7 +138,7 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/whip/silver
+/obj/item/weapon/whip/silver
 	name = "silver whip"
 	desc = "A hefty, silver whip. The uncoiled leather is tipped with a silver barb, which can sunder the blighted from a remarkable distance. </br>'Die, monster! You don't belong in this world!'"
 	icon_state = "silverwhip"
@@ -149,7 +149,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/whip/silver/ComponentInitialize()
+/obj/item/weapon/whip/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -160,7 +160,7 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/whip/psywhip_lesser
+/obj/item/weapon/whip/psywhip_lesser
 	name = "psydonic whip"
 	desc = "An ornate whip, plated in a ceremonial veneer of silver. Crack the leather and watch as the apostates clammer aside."
 	icon_state = "psywhip_lesser"
@@ -171,7 +171,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/whip/psywhip_lesser/ComponentInitialize()
+/obj/item/weapon/whip/psywhip_lesser/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -182,7 +182,7 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/whip/spiderwhip
+/obj/item/weapon/whip/spiderwhip
 	name = "lashkiss whip"
 	desc = "A drow whip of crimson cordage with a fierce-looking razor of blacksteel at its tip. The grip sports a metal knuckle guard perfect for clobbering surface dwellers in the jaw."
 	icon_state = "spiderwhip"
@@ -190,7 +190,7 @@
 	force = 22
 	minstr = 10 //meant for a medium armor mounted soldier. With the +2 from the drow merc statspread, it should cover most statpack silliness save for Wary.  
 
-/obj/item/rogueweapon/whip/bronze
+/obj/item/weapon/whip/bronze
 	name = "bronze whip"
 	desc = "A heavy whip, corded from thick leather and adorned with a razor-sharp bronzehead. In ancient tymes, this shepherd's weapon once repelled the gnashing teeth of bloodthirsty nitebeasts: now, it seperates limb-from-trunk with thunderous claps. </br>Holding this whip imbues you with determination.. and a rather odd hankering for turkey dinners."
 	icon_state = "silverwhip"

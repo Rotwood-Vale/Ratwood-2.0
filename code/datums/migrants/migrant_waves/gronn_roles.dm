@@ -21,14 +21,14 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/kurche
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltl = /obj/item/rogueweapon/scabbard/sheath
-	beltr = /obj/item/rogueweapon/stoneaxe/battle
+	beltl = /obj/item/weapon/scabbard/sheath
+	beltr = /obj/item/weapon/stoneaxe/battle
 	r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 	l_hand = /obj/item/quiver/arrows
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife = 1
+		/obj/item/weapon/huntingknife = 1
 		)
 	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)  // only affects drawtime. They get no PER buff, come on.
@@ -82,9 +82,9 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltl = /obj/item/rogueweapon/huntingknife
+	beltl = /obj/item/weapon/huntingknife
 	beltr = /obj/item/storage/belt/rogue/surgery_bag/full/improv
-	backpack_contents = list(/obj/item/reagent_containers/glass/mortar, /obj/item/pestle, /obj/item/rogueweapon/handclaw/gronn, /obj/item/rogueweapon/scabbard/sheath)
+	backpack_contents = list(/obj/item/reagent_containers/glass/mortar, /obj/item/pestle, /obj/item/weapon/handclaw/gronn, /obj/item/weapon/scabbard/sheath)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
@@ -136,20 +136,20 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/scabbard/gwstrap
-	beltl = /obj/item/rogueweapon/huntingknife
-	beltr = /obj/item/rogueweapon/stoneaxe/handaxe
-	backpack_contents = list(/obj/item/rogueweapon/scabbard/sheath)
+	backr = /obj/item/weapon/scabbard/gwstrap
+	beltl = /obj/item/weapon/huntingknife
+	beltr = /obj/item/weapon/stoneaxe/handaxe
+	backpack_contents = list(/obj/item/weapon/scabbard/sheath)
 	var/weaponroll = rand(1, 80)  //did I tell you guys I like gambling?
 	switch(weaponroll)
 		if(1 to 20)
-			r_hand = /obj/item/rogueweapon/halberd/bardiche
+			r_hand = /obj/item/weapon/halberd/bardiche
 		if(21 to 40)
-			r_hand = /obj/item/rogueweapon/greataxe
+			r_hand = /obj/item/weapon/greataxe
 		if(41 to 60)
-			r_hand = /obj/item/rogueweapon/halberd/bardiche/paalloy  // Literally just a cooler bardiche.
+			r_hand = /obj/item/weapon/halberd/bardiche/paalloy  // Literally just a cooler bardiche.
 		if(61 to 80)
-			r_hand = /obj/item/rogueweapon/greataxe  //50/50 between greataxe or a bardiche.
+			r_hand = /obj/item/weapon/greataxe  //50/50 between greataxe or a bardiche.
 	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
@@ -199,8 +199,8 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltl = /obj/item/rogueweapon/huntingknife
-	backpack_contents = list(/obj/item/rogueweapon/scabbard/sheath)
+	beltl = /obj/item/weapon/huntingknife
+	backpack_contents = list(/obj/item/weapon/scabbard/sheath)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
@@ -235,8 +235,8 @@
 			if("Tribesman")
 				H.set_blindness(0)
 				to_chat(H, span_warning("You are a Tribesman, riding with the Hordes upon Saiga Back, spear and axe in hand. Though you may not be out gathering and finding prey like the hunters, you know how to build and help to set up camp"))
-				beltr = /obj/item/rogueweapon/stoneaxe/woodcut
-				l_hand = /obj/item/rogueweapon/spear/bonespear
+				beltr = /obj/item/weapon/stoneaxe/woodcut
+				l_hand = /obj/item/weapon/spear/bonespear
 				H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
@@ -245,7 +245,7 @@
 			if("Hunter")
 				H.set_blindness(0)
 				to_chat(H, span_warning("You are a Hunter, be it riding in the Hordes upon Saiga in battle, launching arrows upon the poor foe before you, or hunting to keep the tribe fed while on march. "))
-				beltr = /obj/item/rogueweapon/stoneaxe/boneaxe
+				beltr = /obj/item/weapon/stoneaxe/boneaxe
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 				l_hand = /obj/item/quiver/arrows
 				H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
@@ -301,8 +301,8 @@
 				H.set_blindness(0)
 				to_chat(H, span_warning(""))
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
-				r_hand = /obj/item/rogueweapon/pitchfork
-				l_hand = /obj/item/rogueweapon/pick
+				r_hand = /obj/item/weapon/pitchfork
+				l_hand = /obj/item/weapon/pick
 
 				H.adjust_skillrank(/datum/skill/labor/farming, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/labor/mining, 2, TRUE)
@@ -315,13 +315,13 @@
 				H.set_blindness(0)
 				to_chat(H, span_warning(""))
 
-				beltr = /obj/item/rogueweapon/hammer/iron
-				beltl = /obj/item/rogueweapon/tongs
+				beltr = /obj/item/weapon/hammer/iron
+				beltl = /obj/item/weapon/tongs
 				gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 				cloak = /obj/item/clothing/cloak/apron/blacksmith
 				pants = /obj/item/clothing/under/roguetown/trou
 				backl = /obj/item/storage/backpack/rogue/backpack
-				backr = /obj/item/rogueweapon/scabbard/sheath
+				backr = /obj/item/weapon/scabbard/sheath
 
 				backpack_contents = list(
 					/obj/item/flint = 1,
@@ -371,7 +371,7 @@
 					/obj/item/rogue/instrument/flute = 1,
 					/obj/item/rogue/instrument/drum = 1,
 					/obj/item/flashlight/flare/torch = 1,
-					/obj/item/rogueweapon/scabbard/sheath = 1
+					/obj/item/weapon/scabbard/sheath = 1
 					)
 				H.adjust_skillrank(/datum/skill/misc/music, 4, TRUE)
 				H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)

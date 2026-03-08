@@ -110,7 +110,7 @@
 	beltr = /obj/item/storage/keyring/mage
 	beltl = /obj/item/storage/magebag/associate
 	id = /obj/item/clothing/ring/gold
-	r_hand = /obj/item/rogueweapon/woodstaff/riddle_of_steel/magos
+	r_hand = /obj/item/weapon/woodstaff/riddle_of_steel/magos
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/poison,
@@ -118,5 +118,5 @@
 		/obj/item/recipe_book/alchemy,
 		/obj/item/recipe_book/magic,
 		/obj/item/book/spellbook,
-		/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne
+		/obj/item/weapon/huntingknife/idagger/silver/arcyne
 	)

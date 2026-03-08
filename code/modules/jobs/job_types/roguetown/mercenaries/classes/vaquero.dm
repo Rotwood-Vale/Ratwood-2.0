@@ -50,17 +50,17 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 	cloak = /obj/item/clothing/cloak/half/rider/red
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/rapier/vaquero
-	beltr = /obj/item/rogueweapon/scabbard/sheath
-	r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying/vaquero
+	beltl = /obj/item/weapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/rapier/vaquero
+	beltr = /obj/item/weapon/scabbard/sheath
+	r_hand = /obj/item/weapon/huntingknife/idagger/steel/parrying/vaquero
 	backpack_contents = list(
 					/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-					/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
+					/obj/item/weapon/huntingknife/idagger/navaja = 1,
 					/obj/item/lockpick = 1,
 					/obj/item/flashlight/flare/torch = 1,
 					/obj/item/key/mercenary = 1,
-					/obj/item/rogueweapon/scabbard/sheath = 1
+					/obj/item/weapon/scabbard/sheath = 1
 					)
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T1)

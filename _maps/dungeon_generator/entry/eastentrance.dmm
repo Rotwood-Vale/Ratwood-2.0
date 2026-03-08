@@ -5,7 +5,7 @@
 /area/rogue/under/tomb/indoors)
 "bz" = (
 /obj/structure/table/wood/crafted,
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb/indoors)
 "bD" = (
@@ -123,9 +123,9 @@
 /obj/item/seeds/wheat,
 /obj/item/seeds/wheat,
 /obj/item/seeds/wheat,
-/obj/item/rogueweapon/hoe,
-/obj/item/rogueweapon/sickle,
-/obj/item/rogueweapon/thresher,
+/obj/item/weapon/hoe,
+/obj/item/weapon/sickle,
+/obj/item/weapon/thresher,
 /obj/item/seeds/onion,
 /obj/item/seeds/onion,
 /obj/item/seeds/onion,

@@ -53,155 +53,155 @@
 /datum/anvil_recipe/weapons/aalloy/flail
 	name = "Flail, Decrepit"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/flail/aflail
+	created_item = /obj/item/weapon/flail/aflail
 
 /datum/anvil_recipe/weapons/paalloy/flail/
 	name = "Flail, Ancient"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/flail/sflail/paflail
+	created_item = /obj/item/weapon/flail/sflail/paflail
 
 /datum/anvil_recipe/weapons/aalloy/dagger
 	name = "Dagger, Decrepit"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/adagger
+	created_item = /obj/item/weapon/huntingknife/idagger/adagger
 
 
 /datum/anvil_recipe/weapons/paalloy/dagger
 	name = "Dagger, Ancient"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
+	created_item = /obj/item/weapon/huntingknife/idagger/steel/padagger
 
 /datum/anvil_recipe/weapons/aalloy/knuckles
 	name = "Knuckles, Decrepit"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/knuckles/aknuckles
+	created_item = /obj/item/weapon/knuckles/aknuckles
 
 /datum/anvil_recipe/weapons/paalloy/knuckles
 	name = "Knuckles, Ancient"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/knuckles/paknuckles
+	created_item = /obj/item/weapon/knuckles/paknuckles
 
 /datum/anvil_recipe/weapons/aalloy/gladius
 	name = "Gladius, Decrepit"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/sword/short/gladius/agladius
+	created_item = /obj/item/weapon/sword/short/gladius/agladius
 
 
 /datum/anvil_recipe/weapons/paalloy/gladius
 	name = "Gladius, Ancient"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/sword/short/gladius/pagladius
+	created_item = /obj/item/weapon/sword/short/gladius/pagladius
 
 /datum/anvil_recipe/weapons/aalloy/shortsword
 	name = "Shortsword, Decrepit"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/sword/short/ashort
+	created_item = /obj/item/weapon/sword/short/ashort
 
 /datum/anvil_recipe/weapons/paalloy/shortsword
 	name = "Shortsword, Ancient"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/sword/short/pashortsword
+	created_item = /obj/item/weapon/sword/short/pashortsword
 
 /datum/anvil_recipe/weapons/aalloy/khopesh
 	name = "Khopesh, Decrepit"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/sword/sabre/alloy
+	created_item = /obj/item/weapon/sword/sabre/alloy
 
 /datum/anvil_recipe/weapons/paalloy/khopesh
 	name = "Khopesh, Ancient"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/sword/sabre/palloy
+	created_item = /obj/item/weapon/sword/sabre/palloy
 
 /datum/anvil_recipe/weapons/aalloy/handaxe
 	name = "Axe, Decrepit"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/aaxe
+	created_item = /obj/item/weapon/stoneaxe/woodcut/aaxe
 
 /datum/anvil_recipe/weapons/paalloy/handaxe
 	name = "Axe, Ancient"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
+	created_item = /obj/item/weapon/stoneaxe/woodcut/steel/paaxe
 
 /datum/anvil_recipe/weapons/aalloy/mace
 	name = "Mace, Decrepit"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/mace/alloy
+	created_item = /obj/item/weapon/mace/alloy
 
 
 /datum/anvil_recipe/weapons/paalloy/mace
 	name = "Mace, Ancient"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/mace/steel/palloy
+	created_item = /obj/item/weapon/mace/steel/palloy
 
 /datum/anvil_recipe/weapons/aalloy/warhammer
 	name = "Warhammer, Decrepit"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/mace/warhammer/alloy
+	created_item = /obj/item/weapon/mace/warhammer/alloy
 
 /datum/anvil_recipe/weapons/paalloy/warhammer
 	name = "Warhammer, Ancient"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/mace/warhammer/steel/paalloy
+	created_item = /obj/item/weapon/mace/warhammer/steel/paalloy
 
 /datum/anvil_recipe/weapons/aalloy/tossblade
 	name = "Tossblades, Decrepit (x4)"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/aalloy
+	created_item = /obj/item/weapon/huntingknife/throwingknife/aalloy
 	createditem_num = 4
 
 /datum/anvil_recipe/weapons/paalloy/tossblade
 	name = "Tossblades, Ancient (x4)"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/steel/palloy
+	created_item = /obj/item/weapon/huntingknife/throwingknife/steel/palloy
 	createditem_num = 4
 
 /datum/anvil_recipe/weapons/aalloy/gsw
 	name = "Greatsword, Decrepit (+2 Alloy)"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/greatsword/aalloy
+	created_item = /obj/item/weapon/greatsword/aalloy
 	additional_items = list(/obj/item/ingot/aalloy, /obj/item/ingot/aalloy)
 
 /datum/anvil_recipe/weapons/paalloy/gsw
 	name = "Greatsword, Ancient (+2 Purified Alloy)"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/greatsword/paalloy
+	created_item = /obj/item/weapon/greatsword/paalloy
 	additional_items = list(/obj/item/ingot/purifiedaalloy, /obj/item/ingot/purifiedaalloy)
 
 /datum/anvil_recipe/weapons/aalloy/bardiche
 	name = "Bardiche, Decrepit (+1 log, +1 Alloy)"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/halberd/bardiche/aalloy
+	created_item = /obj/item/weapon/halberd/bardiche/aalloy
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
 
 /datum/anvil_recipe/weapons/paalloy/bardiche
 	name = "Bardiche, Ancient (+1 log, +1 Purified Alloy)"
 	req_bar = /obj/item/ingot/purifiedaalloy
-	created_item = /obj/item/rogueweapon/halberd/bardiche/paalloy
+	created_item = /obj/item/weapon/halberd/bardiche/paalloy
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
 
 /datum/anvil_recipe/weapons/aalloy/grandmace
 	name = "Grand Mace, Decrepit (+1 Alloy, +1 Small Log)"
 	req_bar = /obj/item/ingot/aalloy
 	additional_items = list(/obj/item/ingot/aalloy, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/mace/goden/aalloy
+	created_item = /obj/item/weapon/mace/goden/aalloy
 
 /datum/anvil_recipe/weapons/paalloy/grandmace
 	name = "Grand Mace, Purified (+1 Purified Alloy, +1 Small Log)"
 	req_bar = /obj/item/ingot/purifiedaalloy
 	additional_items = list(/obj/item/ingot/purifiedaalloy, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/mace/goden/steel/paalloy
+	created_item = /obj/item/weapon/mace/goden/steel/paalloy
 
 /datum/anvil_recipe/weapons/aalloy/spear
 	name = "Spear, Decrepit(+1 Small Log)"
 	req_bar = /obj/item/ingot/aalloy
 	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/aalloy
+	created_item = /obj/item/weapon/spear/aalloy
 
 /datum/anvil_recipe/weapons/paalloy/spear
 	name = "Spear, Ancient (+1 Small Log)"
 	req_bar = /obj/item/ingot/purifiedaalloy
 	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/paalloy
+	created_item = /obj/item/weapon/spear/paalloy
 
 /datum/anvil_recipe/weapons/aalloy/javelin
 	name = "Javelin, Decrepit (+1 Small Log) (x2)"
@@ -224,93 +224,93 @@
 	name = "Hatchet, Copper (+1 Copper)"
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/ingot/copper)
-	created_item = /obj/item/rogueweapon/stoneaxe/handaxe/copper
+	created_item = /obj/item/weapon/stoneaxe/handaxe/copper
 
 /datum/anvil_recipe/weapons/copper/cbludgeon
 	name = "Budgeon, Copper (+1 Stick)"
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/mace/cudgel/copper
+	created_item = /obj/item/weapon/mace/cudgel/copper
 
 /datum/anvil_recipe/weapons/copper/cdagger
 	name = "Knife, Copper (x2)"
 	req_bar = /obj/item/ingot/copper
-	created_item = /obj/item/rogueweapon/huntingknife/copper
+	created_item = /obj/item/weapon/huntingknife/copper
 	createditem_num = 2
 
 /datum/anvil_recipe/weapons/copper/cmesser
 	name = "Messer, Copper"
 	req_bar = /obj/item/ingot/copper
-	created_item = /obj/item/rogueweapon/sword/short/messer/copper
+	created_item = /obj/item/weapon/sword/short/messer/copper
 
 /datum/anvil_recipe/weapons/copper/cspears
 	name = "Spear, Copper (+1 Small Log) (x2)"
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/stone/copper
+	created_item = /obj/item/weapon/spear/stone/copper
 	createditem_num = 2
 
 /datum/anvil_recipe/weapons/copper/crhomphaia
 	name = "Rhomphaia, Copper (+1 Copper)"
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/ingot/copper)
-	created_item = /obj/item/rogueweapon/sword/long/rhomphaia/copper
+	created_item = /obj/item/weapon/sword/long/rhomphaia/copper
 
 // BRONZE
 
 /datum/anvil_recipe/weapons/bronze/katar
 	name = "Katar, Bronze"
 	req_bar = /obj/item/ingot/bronze
-	created_item = /obj/item/rogueweapon/katar/bronze
+	created_item = /obj/item/weapon/katar/bronze
 
 /datum/anvil_recipe/weapons/bronze/bronzeknuckle
 	name = "Knuckledusters, Bronze"
 	req_bar = /obj/item/ingot/bronze
-	created_item = /obj/item/rogueweapon/knuckles/bronzeknuckles
+	created_item = /obj/item/weapon/knuckles/bronzeknuckles
 
 /datum/anvil_recipe/weapons/bronze/gladius
 	name = "Gladius, Bronze"
 	req_bar = /obj/item/ingot/bronze
-	created_item = /obj/item/rogueweapon/sword/short/gladius
+	created_item = /obj/item/weapon/sword/short/gladius
 
 /datum/anvil_recipe/weapons/bronze/sword
 	name = "Sword, Bronze"
 	req_bar = /obj/item/ingot/bronze
-	created_item = /obj/item/rogueweapon/sword/bronze
+	created_item = /obj/item/weapon/sword/bronze
 
 /datum/anvil_recipe/weapons/bronze/axe
 	name = "Axe, Bronze"
 	req_bar = /obj/item/ingot/bronze
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/bronze
+	created_item = /obj/item/weapon/stoneaxe/woodcut/bronze
 
 /datum/anvil_recipe/weapons/bronze/mace
 	name = "Mace, Bronze"
 	req_bar = /obj/item/ingot/bronze
-	created_item = /obj/item/rogueweapon/mace/bronze
+	created_item = /obj/item/weapon/mace/bronze
 
 /datum/anvil_recipe/weapons/bronze/dagger
 	name = "Dagger, Bronze"
 	req_bar = /obj/item/ingot/bronze
-	created_item = /obj/item/rogueweapon/huntingknife/bronze
+	created_item = /obj/item/weapon/huntingknife/bronze
 
 /datum/anvil_recipe/weapons/bronze/whip
 	name = "Whip, Bronze-Tipped (+3 Cured Leather)"
 	req_bar = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
-	created_item = /obj/item/rogueweapon/whip/bronze
+	created_item = /obj/item/weapon/whip/bronze
 
 /datum/anvil_recipe/weapons/bronze/spear
 	name = "Spear, Bronze (+1 Bronze, +1 Small Log)"
 	req_bar = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/ingot/bronze, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/bronze
+	created_item = /obj/item/weapon/spear/bronze
 
 /datum/anvil_recipe/weapons/bronze/trident
 	name = "Trident, Bronze (+1 Steel, +1 Iron, +1 Small Log)"
 	req_bar = /obj/item/ingot/bronze
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/iron, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/trident
+	created_item = /obj/item/weapon/spear/trident
 
 // IRON
 
@@ -318,37 +318,37 @@
 	name = "Sword, Iron"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_sword
-	created_item = /obj/item/rogueweapon/sword/iron
+	created_item = /obj/item/weapon/sword/iron
 
 /datum/anvil_recipe/weapons/iron/swordshort
 	name = "Shortsword, Iron"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_sword
-	created_item = /obj/item/rogueweapon/sword/short/iron
+	created_item = /obj/item/weapon/sword/short/iron
 
 /datum/anvil_recipe/weapons/iron/messer
 	name = "Messer, Iron"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_sword
-	created_item = /obj/item/rogueweapon/sword/short/messer/iron
+	created_item = /obj/item/weapon/sword/short/messer/iron
 
 /datum/anvil_recipe/weapons/iron/dagger
 	name = "Dagger, Iron"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_knife
-	created_item = /obj/item/rogueweapon/huntingknife/idagger
+	created_item = /obj/item/weapon/huntingknife/idagger
 	createditem_num = 1
 
 /datum/anvil_recipe/weapons/iron/flail
 	name = "Flail, Iron"
 	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/rogueweapon/flail
+	created_item = /obj/item/weapon/flail
 
 /datum/anvil_recipe/weapons/iron/huntknife
 	name = "Hunting Knife, Iron"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_knife
-	created_item = /obj/item/rogueweapon/huntingknife
+	created_item = /obj/item/weapon/huntingknife
 	createditem_num = 1
 
 /datum/anvil_recipe/weapons/steel/greatsword
@@ -356,49 +356,49 @@
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_sword
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron)
-	created_item = /obj/item/rogueweapon/greatsword/iron
+	created_item = /obj/item/weapon/greatsword/iron
 
 /datum/anvil_recipe/weapons/iron/claymore
 	name = "Claymore, Iron (+2 Iron)"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_sword
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron)
-	created_item = /obj/item/rogueweapon/greatsword/zwei
+	created_item = /obj/item/weapon/greatsword/zwei
 
 /datum/anvil_recipe/weapons/iron/axe
 	name = "Axe, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_axe
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut
+	created_item = /obj/item/weapon/stoneaxe/woodcut
 
 /datum/anvil_recipe/weapons/iron/greataxe
 	name = "Greataxe, Iron (+1 Iron, +1 Small Log)"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_axe
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/greataxe
+	created_item = /obj/item/weapon/greataxe
 
 /datum/anvil_recipe/weapons/iron/cudgel
 	name = "Cudgel, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_mace
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/mace/cudgel
+	created_item = /obj/item/weapon/mace/cudgel
 
 /datum/anvil_recipe/weapons/iron/mace
 	name = "Mace, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_mace
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/mace
+	created_item = /obj/item/weapon/mace
 
 /datum/anvil_recipe/weapons/iron/warhammer
 	name = "Warhammer, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_mace
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/mace/warhammer
+	created_item = /obj/item/weapon/mace/warhammer
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/iron/spear
@@ -406,34 +406,34 @@
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_polearm
 	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear
+	created_item = /obj/item/weapon/spear
 
 /datum/anvil_recipe/weapons/iron/bardiche
 	name = "Bardiche, Iron (+1 Iron, +1 Small Log)"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_polearm
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/halberd/bardiche
+	created_item = /obj/item/weapon/halberd/bardiche
 
 /datum/anvil_recipe/weapons/iron/lucerne
 	name = "Lucerne, Iron (+1 Iron, +1 Small Log)"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_polearm
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/eaglebeak/lucerne
+	created_item = /obj/item/weapon/eaglebeak/lucerne
 
 /datum/anvil_recipe/weapons/iron/polemace
 	name = "Goedendag, Iron (+1 Small Log)"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_mace
 	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/mace/goden
+	created_item = /obj/item/weapon/mace/goden
 
 /datum/anvil_recipe/weapons/iron/tossblade
 	name = "Tossblades, Iron (x4)"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_knife
-	created_item = /obj/item/rogueweapon/huntingknife/throwingknife
+	created_item = /obj/item/weapon/huntingknife/throwingknife
 	createditem_num = 4
 
 /datum/anvil_recipe/weapons/iron/javelin
@@ -448,14 +448,14 @@
 	name = "Handclaws, Iron (+1 Iron)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron)
-	created_item = /obj/item/rogueweapon/handclaw
+	created_item = /obj/item/weapon/handclaw
 	craftdiff = 2
 
 /datum/anvil_recipe/weapons/iron/maul
 	name = "Maul (+1 Iron)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron)
-	created_item = /obj/item/rogueweapon/mace/maul
+	created_item = /obj/item/weapon/mace/maul
 	craftdiff = 4
 
 /// STEEL WEAPONS
@@ -463,7 +463,7 @@
 	name = "Dagger, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_knife
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel
+	created_item = /obj/item/weapon/huntingknife/idagger/steel
 	createditem_num = 1
 
 /datum/anvil_recipe/weapons/steel/daggerparrying
@@ -471,92 +471,92 @@
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_knife
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
+	created_item = /obj/item/weapon/huntingknife/idagger/steel/parrying
 
 /datum/anvil_recipe/weapons/steel/katar
 	name = "Katar, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_knife
-	created_item = /obj/item/rogueweapon/katar
+	created_item = /obj/item/weapon/katar
 
 /datum/anvil_recipe/weapons/steel/punchdagger
 	name = "Punch Dagger"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_knife
-	created_item = /obj/item/rogueweapon/katar/punchdagger
+	created_item = /obj/item/weapon/katar/punchdagger
 
 /datum/anvil_recipe/weapons/steel/steelknuckle
 	name = "Knuckles, Steel"
 	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/rogueweapon/knuckles
+	created_item = /obj/item/weapon/knuckles
 
 /datum/anvil_recipe/weapons/steel/hurlbat
 	name = "Hurlbat"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_axe
-	created_item = /obj/item/rogueweapon/stoneaxe/hurlbat
+	created_item = /obj/item/weapon/stoneaxe/hurlbat
 
 /datum/anvil_recipe/weapons/steel/rapier
 	name = "Rapier, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/rapier
+	created_item = /obj/item/weapon/sword/rapier
 
 /datum/anvil_recipe/weapons/steel/cutlass
 	name = "Cutlass, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/cutlass
+	created_item = /obj/item/weapon/sword/cutlass
 
 /datum/anvil_recipe/weapons/steel/swordshort
 	name = "Shortsword, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/short
+	created_item = /obj/item/weapon/sword/short
 
 /datum/anvil_recipe/weapons/steel/falchion
 	name = "Falchion, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/short/falchion
+	created_item = /obj/item/weapon/sword/short/falchion
 
 /datum/anvil_recipe/weapons/steel/messer
 	name = "Messer, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/short/messer
+	created_item = /obj/item/weapon/sword/short/messer
 
 /datum/anvil_recipe/weapons/steel/sword
 	name = "Sword, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword
+	created_item = /obj/item/weapon/sword
 
 /datum/anvil_recipe/weapons/steel/saber
 	name = "Sabre, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/sabre
+	created_item = /obj/item/weapon/sword/sabre
 
 /datum/anvil_recipe/weapons/steel/flail
 	name = "Flail, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/flail/sflail
+	created_item = /obj/item/weapon/flail/sflail
 
 /datum/anvil_recipe/weapons/steel/longsword
 	name = "Longsword, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/sword/long
+	created_item = /obj/item/weapon/sword/long
 
 /datum/anvil_recipe/weapons/steel/trainingsword
 	name = "Training Sword, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/sword/long/training
+	created_item = /obj/item/weapon/sword/long/training
 	craftdiff = 3
 
 /datum/anvil_recipe/weapons/steel/trainingsword
@@ -564,7 +564,7 @@
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/sword/long/training
+	created_item = /obj/item/weapon/sword/long/training
 	craftdiff = 3
 
 /datum/anvil_recipe/weapons/steel/kriegmesser
@@ -572,35 +572,35 @@
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/sword/long/kriegmesser
+	created_item = /obj/item/weapon/sword/long/kriegmesser
 
 /datum/anvil_recipe/weapons/steel/battleaxe
 	name = "Battle Axe, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_axe
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/stoneaxe/battle
+	created_item = /obj/item/weapon/stoneaxe/battle
 
 /datum/anvil_recipe/weapons/steel/combatknife
 	name = "Combat Knife, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_knife
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/huntingknife/combat
+	created_item = /obj/item/weapon/huntingknife/combat
 
 /datum/anvil_recipe/weapons/steel/mace
 	name = "Mace, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_mace
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/mace/steel
+	created_item = /obj/item/weapon/mace/steel
 
 /datum/anvil_recipe/weapons/steel/swarhammer
 	name = "Warhammer, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_mace
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/mace/warhammer/steel
+	created_item = /obj/item/weapon/mace/warhammer/steel
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/steel/greatsword
@@ -608,35 +608,35 @@
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/greatsword
+	created_item = /obj/item/weapon/greatsword
 
 /datum/anvil_recipe/weapons/steel/flamb
 	name = "Flamberge, Steel (+2 Steel)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/greatsword/grenz/flamberge
+	created_item = /obj/item/weapon/greatsword/grenz/flamberge
 
 /datum/anvil_recipe/weapons/steel/estoc
 	name = "Estoc, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/estoc
+	created_item = /obj/item/weapon/estoc
 
 /datum/anvil_recipe/weapons/steel/axe
 	name = "Axe, Steel (+1 Stick)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_axe
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel
+	created_item = /obj/item/weapon/stoneaxe/woodcut/steel
 	craftdiff = 2
 
 /datum/anvil_recipe/weapons/steel/pulaski //returned and balanced with craftdiff added
 	name = "Pulaski axe (+1 Stick)"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/pick
+	created_item = /obj/item/weapon/stoneaxe/woodcut/pick
 	craftdiff = 2
 
 /datum/anvil_recipe/weapons/steel/greataxe
@@ -644,76 +644,76 @@
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_axe
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/greataxe/steel
+	created_item = /obj/item/weapon/greataxe/steel
 
 /datum/anvil_recipe/weapons/steel/greataxe/doublehead
 	name = "Double-Headed Greataxe, Steel (+2 Steel, +1 Small Log)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_axe
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/greataxe/steel/doublehead
+	created_item = /obj/item/weapon/greataxe/steel/doublehead
 
 /datum/anvil_recipe/weapons/steel/billhook
 	name = "Billhook, Steel (+1 Small Log)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/billhook
+	created_item = /obj/item/weapon/spear/billhook
 
 /datum/anvil_recipe/weapons/steel/halberd
 	name = "Halberd, Steel (+1 Steel, +1 Small Log)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/halberd
+	created_item = /obj/item/weapon/halberd
 
 /datum/anvil_recipe/weapons/steel/eaglebeak
 	name = "Eagle's Beak (+1 Steel, +1 Small Log)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/eaglebeak
+	created_item = /obj/item/weapon/eaglebeak
 
 /datum/anvil_recipe/weapons/steel/grandmace
 	name = "Grand Mace, Steel (+1 Steel, +1 Small Log)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_mace
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/mace/goden/steel
+	created_item = /obj/item/weapon/mace/goden/steel
 
 /datum/anvil_recipe/weapons/steel/partizan
 	name = "Partizan, Steel (+1 Steel, +1 Small Log)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/partizan
+	created_item = /obj/item/weapon/spear/partizan
 
 /datum/anvil_recipe/weapons/steel/naginata
 	name = "Naginata, Steel (+1 Big Log)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/grown/log/tree/) //looong spear
-	created_item = /obj/item/rogueweapon/spear/naginata
+	created_item = /obj/item/weapon/spear/naginata
 
 /datum/anvil_recipe/weapons/steel/boarspear
 	name = "Boar Spear, Steel (+1 Steel, +1 Small Log)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/boar
+	created_item = /obj/item/weapon/spear/boar
 
 /datum/anvil_recipe/weapons/steel/lance
 	name = "Lance, Steel (+1 Steel, +1 Small Log)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/lance
+	created_item = /obj/item/weapon/spear/lance
 
 /datum/anvil_recipe/weapons/steel/tossblade
 	name = "Tossblade, Steel (x4)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_knife
-	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/steel
+	created_item = /obj/item/weapon/huntingknife/throwingknife/steel
 	createditem_num = 4
 
 /datum/anvil_recipe/weapons/steel/javelin
@@ -729,33 +729,33 @@
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/fishspear
+	created_item = /obj/item/weapon/fishspear
 
 /datum/anvil_recipe/weapons/steel/rhomphaia
 	name = "Rhomphaia, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/sword/long/rhomphaia
+	created_item = /obj/item/weapon/sword/long/rhomphaia
 
 /datum/anvil_recipe/weapons/steel/falx
 	name = "Falx, Steel"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/falx
+	created_item = /obj/item/weapon/sword/falx
 
 /datum/anvil_recipe/weapons/steel/claws
 	name = "Handclaws, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/handclaw/steel
+	created_item = /obj/item/weapon/handclaw/steel
 	craftdiff = 3
 
 /datum/anvil_recipe/weapons/steel/maul
 	name = "Grand Maul (+2 Steel)"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/mace/maul/grand
+	created_item = /obj/item/weapon/mace/maul/grand
 	craftdiff = 5
 
 /// UPGRADED WEAPONS
@@ -765,26 +765,26 @@
 /datum/anvil_recipe/weapons/decorated/sword
 	name = "Sword, Decorated (+1 Steel Sword)"
 	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/rogueweapon/sword)
-	created_item = /obj/item/rogueweapon/sword/decorated
+	additional_items = list(/obj/item/weapon/sword)
+	created_item = /obj/item/weapon/sword/decorated
 
 /datum/anvil_recipe/weapons/decorated/saber
 	name = "Sabre, Decorated (+1 Steel Sabre)"
 	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/rogueweapon/sword/sabre)
-	created_item = /obj/item/rogueweapon/sword/sabre/dec
+	additional_items = list(/obj/item/weapon/sword/sabre)
+	created_item = /obj/item/weapon/sword/sabre/dec
 
 /datum/anvil_recipe/weapons/decorated/rapier
 	name = "Rapier, Decorated (+1 Steel Rapier)"
 	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/rogueweapon/sword/rapier)
-	created_item = /obj/item/rogueweapon/sword/rapier/dec
+	additional_items = list(/obj/item/weapon/sword/rapier)
+	created_item = /obj/item/weapon/sword/rapier/dec
 
 /datum/anvil_recipe/weapons/decorated/longsword
 	name = "Longsword, Decorated (+1 Steel Longsword)"
 	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/rogueweapon/sword/long)
-	created_item = /obj/item/rogueweapon/sword/long/dec
+	additional_items = list(/obj/item/weapon/sword/long)
+	created_item = /obj/item/weapon/sword/long/dec
 
 
 // SILVER
@@ -793,101 +793,101 @@
 	name = "Sabre, Elvish (+1 Gold)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/gold)
-	created_item = /obj/item/rogueweapon/sword/sabre/elf
+	created_item = /obj/item/weapon/sword/sabre/elf
 
 /datum/anvil_recipe/weapons/silver/elfdagger
 	name = "Dagger, Elvish (+1 Silver)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver)
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
+	created_item = /obj/item/weapon/huntingknife/idagger/silver/elvish
 
 /datum/anvil_recipe/weapons/silver/dagger
 	name = "Dagger, Silver"
 	req_bar = /obj/item/ingot/silver
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/silver
+	created_item = /obj/item/weapon/huntingknife/idagger/silver
 
 /datum/anvil_recipe/weapons/silver/shortsword
 	name = "Shortsword, Silver"
 	req_bar = /obj/item/ingot/silver
-	created_item = /obj/item/rogueweapon/sword/short/silver
+	created_item = /obj/item/weapon/sword/short/silver
 
 /datum/anvil_recipe/weapons/silver/sword
 	name = "Arming Sword, Silver (+1 Silver)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver)
-	created_item = /obj/item/rogueweapon/sword/silver
+	created_item = /obj/item/weapon/sword/silver
 
 /datum/anvil_recipe/weapons/silver/sword
 	name = "Rapier, Silver (+1 Silver)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver)
-	created_item = /obj/item/rogueweapon/sword/rapier/silver
+	created_item = /obj/item/weapon/sword/rapier/silver
 
 /datum/anvil_recipe/weapons/silver/longsword
 	name = "Longsword, Silver (+2 Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/sword/long/silver
+	created_item = /obj/item/weapon/sword/long/silver
 
 /datum/anvil_recipe/weapons/silver/broadsword
 	name = "Broadsword, Silver (+2 Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/sword/long/kriegmesser/silver
+	created_item = /obj/item/weapon/sword/long/kriegmesser/silver
 
 /datum/anvil_recipe/weapons/silver/waraxe
 	name = "War Axe, Silver (+2 Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/silver
+	created_item = /obj/item/weapon/stoneaxe/woodcut/silver
 
 /datum/anvil_recipe/weapons/silver/poleaxe
 	name = "Poleaxe, Silver (+2 Silver, +2 Small Logs)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/greataxe/silver
+	created_item = /obj/item/weapon/greataxe/silver
 
 /datum/anvil_recipe/weapons/silver/mace
 	name = "Mace, Silver (+1 Silver)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver)
-	created_item = /obj/item/rogueweapon/mace/steel/silver
+	created_item = /obj/item/weapon/mace/steel/silver
 
 /datum/anvil_recipe/weapons/silver/warhammer
 	name = "Warhammer, Silver (+1 Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/mace/warhammer/steel/silver
+	created_item = /obj/item/weapon/mace/warhammer/steel/silver
 
 /datum/anvil_recipe/weapons/silver/quarterstaff
 	name = "Quarterstaff, Silver (+1 Silver, +3 Small Logs)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/woodstaff/quarterstaff/silver
+	created_item = /obj/item/weapon/woodstaff/quarterstaff/silver
 
 /datum/anvil_recipe/weapons/silver/spear
 	name = "Spear, Silver (+1 Silver, +3 Small Logs)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/silver
+	created_item = /obj/item/weapon/spear/silver
 
 /datum/anvil_recipe/weapons/silver/morningstar
 	name = "Morningstar, Silver (+1 Silver, +1 Chain)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver, /obj/item/rope/chain)
-	created_item = /obj/item/rogueweapon/flail/sflail/silver
+	created_item = /obj/item/weapon/flail/sflail/silver
 
 /datum/anvil_recipe/weapons/silver/whip
 	name = "Whip, Silver (+1 Leather Whip)"
 	req_bar = /obj/item/ingot/silver
-	additional_items = list(/obj/item/rogueweapon/whip)
-	created_item = /obj/item/rogueweapon/whip/silver
+	additional_items = list(/obj/item/weapon/whip)
+	created_item = /obj/item/weapon/whip/silver
 
 /datum/anvil_recipe/weapons/silver/tossblade
 	name = "Tossblades, Silver (+1 Silver)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver)
-	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/silver
+	created_item = /obj/item/weapon/huntingknife/throwingknife/silver
 	createditem_num = 4
 
 /datum/anvil_recipe/weapons/silver/javelin
@@ -902,14 +902,14 @@
 /datum/anvil_recipe/weapons/gladius
 	name = "Gladius, Bronze"
 	req_bar = /obj/item/ingot/bronze
-	created_item = /obj/item/rogueweapon/sword/short/gladius
+	created_item = /obj/item/weapon/sword/short/gladius
 	craftdiff = 2
 
 /datum/anvil_recipe/weapons/bronze/spear
 	name = "Spear, Bronze (+1 Bronze, +1 Small Log)"
 	req_bar = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/ingot/bronze, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/bronze
+	created_item = /obj/item/weapon/spear/bronze
 	craftdiff = 2
 
 /datum/anvil_recipe/weapons/bronze/trident
@@ -917,13 +917,13 @@
 	req_bar = /obj/item/ingot/bronze
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/iron, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/trident
+	created_item = /obj/item/weapon/spear/trident
 	craftdiff = 4
 
 /datum/anvil_recipe/weapons/bronze/bronzeknuckle
 	name = "Knuckles, Bronze"
 	req_bar = /obj/item/ingot/bronze
-	created_item = /obj/item/rogueweapon/knuckles/bronzeknuckles
+	created_item = /obj/item/weapon/knuckles/bronzeknuckles
 	craftdiff = 2
 
 /// SHIELDS
@@ -931,37 +931,37 @@
 	name = "Kite Shield (+1 Steel, +1 Cured Leather)"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/hide/cured)
-	created_item = /obj/item/rogueweapon/shield/tower/metal
+	created_item = /obj/item/weapon/shield/tower/metal
 
 /datum/anvil_recipe/weapons/alloy/shield
 	name = "Shield, Decrepit (+1 Alloy, +1 Cured Leather)"
 	req_bar = /obj/item/ingot/aalloy
 	additional_items = list(/obj/item/ingot/aalloy, /obj/item/natural/hide/cured)
-	created_item = /obj/item/rogueweapon/shield/tower/metal/alloy
+	created_item = /obj/item/weapon/shield/tower/metal/alloy
 
 /datum/anvil_recipe/weapons/alloy/shield
 	name = "Shield, Ancient (+1 Purified Alloy, +1 Cured Leather)"
 	req_bar = /obj/item/ingot/purifiedaalloy
 	additional_items = list(/obj/item/ingot/purifiedaalloy, /obj/item/natural/hide/cured)
-	created_item = /obj/item/rogueweapon/shield/tower/metal/palloy
+	created_item = /obj/item/weapon/shield/tower/metal/palloy
 
 /datum/anvil_recipe/weapons/iron/towershield
 	name = "Tower Shield (+1 Small Log)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/shield/tower
+	created_item = /obj/item/weapon/shield/tower
 
 /datum/anvil_recipe/weapons/steel/buckler
 	name = "Buckler (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/shield/buckler
+	created_item = /obj/item/weapon/shield/buckler
 
 /datum/anvil_recipe/weapons/iron/roundshield
 	name = "Shield, Iron (+1 Iron)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron)
-	created_item = /obj/item/rogueweapon/shield/iron
+	created_item = /obj/item/weapon/shield/iron
 
 // CROSSBOW
 
@@ -1087,7 +1087,7 @@
 	name = "Executioner's Sword (+2 Iron)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron)
-	created_item = /obj/item/rogueweapon/sword/long/exe
+	created_item = /obj/item/weapon/sword/long/exe
 	i_type = "Weapons"
 	craftdiff = 4
 
@@ -1097,21 +1097,21 @@
 /datum/anvil_recipe/weapons/blacksteel/arming
 	name = "Blacksteel Arming Sword"
 	req_bar = /obj/item/ingot/blacksteel
-	created_item = /obj/item/rogueweapon/sword/blacksteel
+	created_item = /obj/item/weapon/sword/blacksteel
 	craftdiff = 5
 
 /datum/anvil_recipe/weapons/blacksteel/flamberge
 	name = "Blacksteel Flamberge (+1 Blacksteel, +1 Ruby)"
 	req_bar = /obj/item/ingot/blacksteel
 	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/roguegem/ruby)
-	created_item = /obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel
+	created_item = /obj/item/weapon/greatsword/grenz/flamberge/blacksteel
 
 
 /datum/anvil_recipe/weapons/blacksteel/decsword
 	name = "Blacksteel Sword, Decorated (+1 Steel Sword)"
 	req_bar = /obj/item/ingot/blacksteel
-	additional_items = list(/obj/item/rogueweapon/sword)
-	created_item = /obj/item/rogueweapon/sword/decorated/blacksteel
+	additional_items = list(/obj/item/weapon/sword)
+	created_item = /obj/item/weapon/sword/decorated/blacksteel
 	craftdiff = 5
 
 //Church Weapons forged from Holy Steel
@@ -1121,28 +1121,28 @@
 /datum/anvil_recipe/weapons/holysteel/church_longsword
 	name = "Longsword, Templaric"
 	req_bar = /obj/item/ingot/steelholy
-	created_item = /obj/item/rogueweapon/sword/long/church
+	created_item = /obj/item/weapon/sword/long/church
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/holysteel/church_spear
 	name = "Spear, Templaric (+1 Holy Steel)"
 	req_bar = /obj/item/ingot/steelholy
 	additional_items = list(/obj/item/ingot/steelholy)
-	created_item = /obj/item/rogueweapon/spear/holysee
+	created_item = /obj/item/weapon/spear/holysee
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/holysteel/decasword
 	name = "Longsword, Decablessed (+1 Holy Steel)"
 	req_bar = /obj/item/ingot/steelholy
 	additional_items = list(/obj/item/ingot/steelholy)
-	created_item = /obj/item/rogueweapon/sword/long/undivided
+	created_item = /obj/item/weapon/sword/long/undivided
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/holysteel/decashield
 	name = "Shield, Decablessed (+1 Holy Steel)"
 	req_bar = /obj/item/ingot/steelholy
 	additional_items = list(/obj/item/ingot/steelholy)
-	created_item = /obj/item/rogueweapon/shield/tower/holysee
+	created_item = /obj/item/weapon/shield/tower/holysee
 	i_type = "Weapons"
 
 // BLESSED SILVER
@@ -1150,79 +1150,79 @@
 /datum/anvil_recipe/weapons/psy/axe
 	name = "Psydonic War Axe (+1 Blessed Silver, +1 Stick)"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/stoneaxe/battle/psyaxe
+	created_item = /obj/item/weapon/stoneaxe/battle/psyaxe
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/stick)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/mace
 	name = "Psydonic Mace (+1 Blessed Silver, +1 Stick)"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/mace/goden/psymace
+	created_item = /obj/item/weapon/mace/goden/psymace
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/stick)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/spear
 	name = "Psydonic Spear (+1 Blessed Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/spear/psyspear
+	created_item = /obj/item/weapon/spear/psyspear
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/dagger
 	name = "Psydonic Dagger"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
+	created_item = /obj/item/weapon/huntingknife/idagger/silver/psydagger
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/shortsword
 	name = "Psydonic Shortsword"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/sword/short/psy
+	created_item = /obj/item/weapon/sword/short/psy
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/katar
 	name = "Psydonic Katar"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/katar/psydon
+	created_item = /obj/item/weapon/katar/psydon
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/knuckles
 	name = "Psydonic Knuckledusters"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/knuckles/psydon
+	created_item = /obj/item/weapon/knuckles/psydon
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/cudgel
 	name = "Psydonic Handmace"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/mace/cudgel/psy
+	created_item = /obj/item/weapon/mace/cudgel/psy
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/halberd
 	name = "Psydonic Halberd (+2 Blessed Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/halberd/psyhalberd
+	created_item = /obj/item/weapon/halberd/psyhalberd
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/gsword
 	name = "Psydonic Greatsword (+2 Blessed Silver)"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/greatsword/psygsword
+	created_item = /obj/item/weapon/greatsword/psygsword
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/sword
 	name = "Psydonic Longsword (+1 Blessed Silver)"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/sword/long/psysword
+	created_item = /obj/item/weapon/sword/long/psysword
 	additional_items = list(/obj/item/ingot/silverblessed)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/whip
 	name = "Psydonic Whip (+3 Cured Leather)"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/whip/psywhip_lesser
+	created_item = /obj/item/weapon/whip/psywhip_lesser
 	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
 	i_type = "Weapons"
 
@@ -1231,78 +1231,78 @@
 /datum/anvil_recipe/weapons/psy/axe/inq
 	name = "Psydonic War Axe (+1 Blessed Silver, +1 Stick)"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/stoneaxe/battle/psyaxe
+	created_item = /obj/item/weapon/stoneaxe/battle/psyaxe
 	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/stick)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/mace/inq
 	name = "Psydonic Mace (+1 Blessed Silver, +1 Stick)"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/mace/goden/psymace
+	created_item = /obj/item/weapon/mace/goden/psymace
 	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/stick)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/spear/inq
 	name = "Psydonic Spear (+1 Blessed Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/spear/psyspear
+	created_item = /obj/item/weapon/spear/psyspear
 	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/small)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/dagger/inq
 	name = "Psydonic Dagger"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
+	created_item = /obj/item/weapon/huntingknife/idagger/silver/psydagger
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/shortsword/inq
 	name = "Psydonic Shortsword"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/sword/short/psy
+	created_item = /obj/item/weapon/sword/short/psy
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/katar/inq
 	name = "Psydonic Katar"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/katar/psydon
+	created_item = /obj/item/weapon/katar/psydon
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/knuckles/inq
 	name = "Psydonic Knuckles"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/knuckles/psydon
+	created_item = /obj/item/weapon/knuckles/psydon
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/cudgel/inq
 	name = "Psydonic Handmace"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/mace/cudgel/psy
+	created_item = /obj/item/weapon/mace/cudgel/psy
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/halberd/inq
 	name = "Psydonic Halberd (+2 Blessed Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/halberd/psyhalberd
+	created_item = /obj/item/weapon/halberd/psyhalberd
 	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/small)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/gsword/inq
 	name = "Psydonic Greatsword (+2 Blessed Silver)"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/greatsword/psygsword
+	created_item = /obj/item/weapon/greatsword/psygsword
 	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/ingot/silverblessed/bullion)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/sword/inq
 	name = "Psydonic Longsword (+1 Blessed Silver)"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/sword/long/psysword
+	created_item = /obj/item/weapon/sword/long/psysword
 	additional_items = list(/obj/item/ingot/silverblessed/bullion)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/whip/inq
 	name = "Psydonic Whip (+3 Cured Leather)"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/whip/psywhip_lesser
+	created_item = /obj/item/weapon/whip/psywhip_lesser
 	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
 	i_type = "Weapons"

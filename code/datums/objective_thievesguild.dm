@@ -14,12 +14,12 @@
 /datum/objective/thieves_guild_objective/proc/setup_steal_objective()
 	var/list/items
 	items = list(
-		list("Staff of the Shepherd", /obj/item/rogueweapon/woodstaff/aries),
+		list("Staff of the Shepherd", /obj/item/weapon/woodstaff/aries),
 		list("Crown of Rotwood Vale", /obj/item/clothing/head/roguetown/crown/serpcrown),
-		list("Bell Ringer", /obj/item/rogueweapon/mace/church),
+		list("Bell Ringer", /obj/item/weapon/mace/church),
 		list("Pepper Mill", /obj/item/reagent_containers/peppermill),
-		list("Sword of the Mad Duke", /obj/item/rogueweapon/sword/rapier/lord),
-		list("Judgement", /obj/item/rogueweapon/sword/long/judgement),
+		list("Sword of the Mad Duke", /obj/item/weapon/sword/rapier/lord),
+		list("Judgement", /obj/item/weapon/sword/long/judgement),
 		list("Holy Book", /obj/item/book/rogue/bookofpriests),
 		list("The Master Key", /obj/item/key/lord),
 		list("Book of Law", /obj/item/book/rogue/law),

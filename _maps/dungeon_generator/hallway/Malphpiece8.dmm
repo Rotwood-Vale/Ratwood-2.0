@@ -106,7 +106,7 @@
 /area/rogue/under/tomb/cave)
 "uF" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/pitchfork/copper,
+/obj/item/weapon/pitchfork/copper,
 /obj/item/reagent_containers/glass/cup/wooden,
 /obj/item/clothing/mask/cigarette/pipe/crafted,
 /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry,

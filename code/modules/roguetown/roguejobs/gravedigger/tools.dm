@@ -1,4 +1,4 @@
-/obj/item/rogueweapon/shovel
+/obj/item/weapon/shovel
 	force = 21
 	possible_item_intents = list(/datum/intent/shovelscoop, /datum/intent/mace/strike/shovel)
 	gripped_intents = list(/datum/intent/shovelscoop, /datum/intent/mace/strike/shovel, /datum/intent/axe/chop/stone)
@@ -22,19 +22,19 @@
 	grid_width = 32
 	grid_height = 96
 
-/obj/item/rogueweapon/shovel/Destroy()
+/obj/item/weapon/shovel/Destroy()
 	if(heldclod)
 		QDEL_NULL(heldclod)
 	return ..()
 
-/obj/item/rogueweapon/shovel/dropped(mob/user)
+/obj/item/weapon/shovel/dropped(mob/user)
 	if(heldclod && isturf(loc))
 		heldclod.forceMove(loc)
 		heldclod = null
 	update_icon()
 	. = ..()
 
-/obj/item/rogueweapon/shovel/update_icon()
+/obj/item/weapon/shovel/update_icon()
 	if(heldclod)
 		icon_state = "dirt[initial(icon_state)]"
 	else
@@ -52,14 +52,14 @@
 	misscost = 0
 	no_attack = TRUE
 
-/obj/item/rogueweapon/shovel/attack(mob/living/M, mob/living/user)
+/obj/item/weapon/shovel/attack(mob/living/M, mob/living/user)
 	. = ..()
 	if(. && heldclod && get_turf(M))
 		heldclod.forceMove(get_turf(M))
 		heldclod = null
 		update_icon()
 
-/obj/item/rogueweapon/shovel/attack_turf(turf/T, mob/living/user)
+/obj/item/weapon/shovel/attack_turf(turf/T, mob/living/user)
 	user.changeNext_move(user.used_intent.clickcd)
 	if(user.used_intent.type == /datum/intent/shovelscoop)
 		if(istype(T, /turf/open/floor/rogue/dirt))
@@ -106,7 +106,7 @@
 		return
 	. = ..()
 
-/obj/item/rogueweapon/shovel/proc/start_autodig(mob/living/L, turf/T)
+/obj/item/weapon/shovel/proc/start_autodig(mob/living/L, turf/T)
 	if(!isliving(L) || !istype(T, /turf/open/floor/rogue/dirt))
 		return FALSE
 	
@@ -164,7 +164,7 @@
 	
 	return TRUE
 
-/obj/item/rogueweapon/shovel/getonmobprop(tag)
+/obj/item/weapon/shovel/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -216,7 +216,7 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 
-/obj/item/rogueweapon/shovel/small
+/obj/item/weapon/shovel/small
 	force = 7
 	name = "spade"
 	desc = "Indispensable for tending the soil."
@@ -231,7 +231,7 @@
 	smeltresult = null
 	grid_height = 64
 
-/obj/item/rogueweapon/shovel/aalloy
+/obj/item/weapon/shovel/aalloy
 	force = 8
 	name = "decrepit shovel"
 	desc = "A tool of wrought bronze, for burying the lyfeless. His worshippers would say that death is necessary; that the bod will nourish this world, so that more lyfe may sprout. But to those who know the truth - Her truth, it is nothing more than a mockery."
@@ -240,7 +240,7 @@
 	color = "#bb9696"
 	sellprice = 15
 
-/obj/item/rogueweapon/shovel/silver
+/obj/item/weapon/shovel/silver
 	force = 25
 	name = "silver shovel"
 	desc = "The only trait that distinguishes a man from a beast is their empathy. To mutilate the dead, regardless of what they've done in lyfe, is to invoke divine wrath. See them buried beneath crossed soil; ferry their spirit to the world beyond Psydonia, and towards their final judgement."
@@ -249,7 +249,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/shovel/silver/ComponentInitialize()
+/obj/item/weapon/shovel/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -260,7 +260,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/shovel/silver/preblessed/ComponentInitialize()
+/obj/item/weapon/shovel/silver/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_TENNITE,\
@@ -437,7 +437,7 @@
 		usr.put_in_hands(B)
 		qdel(src)
 
-/obj/item/rogueweapon/shovel/saperka
+/obj/item/weapon/shovel/saperka
 	name = "Saperka"
 	desc = "A compact, steel-headed spade favored by pioneers. \
 	Scarred by a hundred fieldworks, its socket is nicked from prying and the edge has been honed to bite through roots-or armor-in a pinch."
@@ -463,7 +463,7 @@
 	resistance_flags = FLAMMABLE
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
 
-/obj/item/rogueweapon/shovel/saperka/getonmobprop(tag)
+/obj/item/weapon/shovel/saperka/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -515,7 +515,7 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 //This is effectively an iron quarterstaff, with silver quality, arc intent and chopping. It's a weird thing, but fluff and soulful for Necrans.
-/obj/item/rogueweapon/shovel/mort_staff
+/obj/item/weapon/shovel/mort_staff
 	name = "\improper mortician's staff"
 	desc = "A heavy, silver shovel's head, paired with a length of silver and boswellia wood. \
 	As with standard Necran practice in the many sects, it has been anointed in censer soot, permitting it to act as a focus."
@@ -540,7 +540,7 @@
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
 	is_silver = TRUE
 
-/obj/item/rogueweapon/shovel/mort_staff/ComponentInitialize()
+/obj/item/weapon/shovel/mort_staff/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -551,7 +551,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/shovel/mort_staff/getonmobprop(tag)
+/obj/item/weapon/shovel/mort_staff/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)

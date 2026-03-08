@@ -358,7 +358,7 @@
 		if(isliving(src))
 			var/mob/living/L = src
 			var/obj/item/offh = L.get_inactive_held_item()
-			if(offh && HAS_TRAIT(L, TRAIT_DUALWIELDER) && istype(offh, /obj/item/rogueweapon))//Check if theres even a weapon in the second hand
+			if(offh && HAS_TRAIT(L, TRAIT_DUALWIELDER) && istype(offh, /obj/item/weapon))//Check if theres even a weapon in the second hand
 				if((istype(W, offh) || istype(offh, W)) && W != offh && !(L.check_arm_grabbed(L.get_inactive_hand_index())) && (L.last_used_double_attack <= world.time))
 					if(L.stamina_add(2))
 						L.last_used_double_attack = world.time + 3 SECONDS

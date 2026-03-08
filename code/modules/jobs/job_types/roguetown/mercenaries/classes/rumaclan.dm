@@ -34,8 +34,8 @@
 	..()
 	to_chat(H, span_warning("You are well versed and experienced in swordfighting, you have no problem in taking up most jobs so long as the coin is good, for either yourself or the clan and the seonjang."))
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/scabbard/sword/kazengun/steel
-	beltl = /obj/item/rogueweapon/sword/sabre/mulyeog/rumahench
+	beltr = /obj/item/weapon/scabbard/sword/kazengun/steel
+	beltl = /obj/item/weapon/sword/sabre/mulyeog/rumahench
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
 	cloak = /obj/item/clothing/cloak/eastcloak1
 	armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
@@ -93,7 +93,7 @@
 	backpack_contents = list(
 		/obj/item/key/mercenary,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
-		/obj/item/rogueweapon/huntingknife/idagger,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger,
+		/obj/item/weapon/scabbard/sheath = 1,
 		)
 	H.merctype = 9

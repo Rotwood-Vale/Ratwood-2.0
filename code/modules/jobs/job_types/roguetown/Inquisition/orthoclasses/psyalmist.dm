@@ -40,7 +40,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/psydon
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
+	beltr = /obj/item/weapon/huntingknife/idagger/silver/psydagger
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/mid
 	id = /obj/item/clothing/ring/signet/silver
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)

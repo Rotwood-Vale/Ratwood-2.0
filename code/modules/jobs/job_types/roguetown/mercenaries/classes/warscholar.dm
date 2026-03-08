@@ -68,7 +68,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/haste)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fortitude)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
-	r_hand = /obj/item/rogueweapon/woodstaff/naledi
+	r_hand = /obj/item/weapon/woodstaff/naledi
 
 
 	head = /obj/item/clothing/head/roguetown/roguehood/hierophant
@@ -85,9 +85,9 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
+		/obj/item/weapon/huntingknife/idagger = 1,
 		/obj/item/spellbook_unfinished/pre_arcyne = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.merctype = 14
 
@@ -166,8 +166,8 @@
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
 		/obj/item/lockpick = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.merctype = 14
 
@@ -218,7 +218,7 @@
 		"BLACK" = "#242526"
 	))
 	to_chat(H, span_warning("You are a Naledi Vizier. Your research into miracles and holy incantations has lead you to esoteric magycks. Though psydonians have long struggled to channel their all-father's divinity, a combination of the saint's power may be similar enough."))
-	r_hand = /obj/item/rogueweapon/woodstaff/naledi
+	r_hand = /obj/item/weapon/woodstaff/naledi
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/magered
 
 	mask = /obj/item/clothing/mask/rogue/lordmask/tarnished
@@ -239,8 +239,8 @@
 
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)

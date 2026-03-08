@@ -19,7 +19,7 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
 /obj/item/clothing/gloves/roguetown/chain,
 /obj/item/clothing/under/roguetown/chainlegs,
-/obj/item/rogueweapon/halberd,
+/obj/item/weapon/halberd,
 /obj/item/clothing/suit/roguetown/armor/plate/scale,
 /mob/living/carbon/human/species/skeleton/npc/hard/noequip,
 /turf/open/floor/rogue/carpet,

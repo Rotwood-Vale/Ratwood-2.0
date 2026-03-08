@@ -30,12 +30,12 @@
 				if("Melancholic Crankbox - Antimagic")
 					choice = /obj/item/psydonmusicbox
 				if("Daybreak - Silver Whip")
-					choice = /obj/item/rogueweapon/whip/antique/psywhip
+					choice = /obj/item/weapon/whip/antique/psywhip
 				if("Stigmata - Silver Halberd")
-					choice = /obj/item/rogueweapon/halberd/psyhalberd
+					choice = /obj/item/weapon/halberd/psyhalberd
 					user.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)	//We make sure the weapon is usable by the Inquisitor.
 				if("Apocrypha - Silver Greatsword")
-					choice = /obj/item/rogueweapon/greatsword/psygsword
+					choice = /obj/item/weapon/greatsword/psygsword
 					user.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)		//Ditto.
 				if("Golgatha - SYON Shard Censer")
 					choice = /obj/item/flashlight/flare/torch/lantern/psycenser
@@ -260,15 +260,15 @@ Inquisitorial armory down here
 
 /obj/structure/closet/crate/chest/inqarmory/PopulateContents()
 	.=..()
-	new /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger(src)
-	new /obj/item/rogueweapon/greatsword/psygsword(src)
-	new /obj/item/rogueweapon/halberd/psyhalberd(src)
-	new /obj/item/rogueweapon/whip/psywhip_lesser
-	new /obj/item/rogueweapon/flail/sflail/psyflail
-	new /obj/item/rogueweapon/spear/psyspear(src)
-	new /obj/item/rogueweapon/sword/long/psysword(src)
-	new /obj/item/rogueweapon/mace/goden/psymace(src)
-	new /obj/item/rogueweapon/stoneaxe/battle/psyaxe(src)
+	new /obj/item/weapon/huntingknife/idagger/silver/psydagger(src)
+	new /obj/item/weapon/greatsword/psygsword(src)
+	new /obj/item/weapon/halberd/psyhalberd(src)
+	new /obj/item/weapon/whip/psywhip_lesser
+	new /obj/item/weapon/flail/sflail/psyflail
+	new /obj/item/weapon/spear/psyspear(src)
+	new /obj/item/weapon/sword/long/psysword(src)
+	new /obj/item/weapon/mace/goden/psymace(src)
+	new /obj/item/weapon/stoneaxe/battle/psyaxe(src)
 	*/
 
 /obj/item/flashlight/flare/torch/lantern/psycenser
@@ -398,7 +398,7 @@ Inquisitorial armory down here
 	var/silver
 
 /datum/component/psyblessed/Initialize(preblessed = FALSE, force, blade_int, int, def, makesilver)
-	if(!istype(parent, /obj/item/rogueweapon))
+	if(!istype(parent, /obj/item/weapon))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ITEM_OBJFIX, PROC_REF(on_fix))
@@ -454,7 +454,7 @@ Inquisitorial armory down here
 
 // This is called right after the object is fixed and all of its force / wdefense values are reset to initial. We re-apply the relevant bonuses.
 /datum/component/psyblessed/proc/on_fix()
-	var/obj/item/rogueweapon/I = parent
+	var/obj/item/weapon/I = parent
 	I.force += added_force
 	if(I.force_wielded)
 		I.force_wielded += added_force

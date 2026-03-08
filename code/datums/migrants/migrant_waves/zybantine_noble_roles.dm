@@ -39,12 +39,12 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	backl = /obj/item/storage/backpack/rogue/satchel/short
-	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/sabre/shamshir
+	beltl = /obj/item/weapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/navaja = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/paper/scroll/writ_of_esteem/zybantine = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 2
@@ -102,8 +102,8 @@
 		id = /obj/item/clothing/ring/silver
 	backl = /obj/item/storage/backpack/rogue/satchel/short
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 2
 	)
@@ -154,13 +154,13 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 	backl = /obj/item/storage/backpack/rogue/satchel/short
-	backr = /obj/item/rogueweapon/shield/tower/raneshen
-	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	backr = /obj/item/weapon/shield/tower/raneshen
+	l_hand = /obj/item/weapon/sword/sabre/shamshir
+	beltl = /obj/item/weapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/navaja = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1
 		)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
@@ -213,9 +213,9 @@
 	beltr = /obj/item/quiver/bolts
 	cloak = /obj/item/clothing/cloak/raincloak/red
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/navaja = 1,
+		/obj/item/weapon/huntingknife/idagger/steel = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1
 		)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'

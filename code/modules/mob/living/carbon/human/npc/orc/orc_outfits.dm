@@ -26,12 +26,12 @@
 	var/wepchoice = rand(1, 3)
 	switch(wepchoice)
 		if(1)
-			l_hand = /obj/item/rogueweapon/stoneaxe/boneaxe
+			l_hand = /obj/item/weapon/stoneaxe/boneaxe
 		if(2)
-			l_hand = /obj/item/rogueweapon/spear/bonespear
-			r_hand = /obj/item/rogueweapon/shield/wood // Help preserve integrity
+			l_hand = /obj/item/weapon/spear/bonespear
+			r_hand = /obj/item/weapon/shield/wood // Help preserve integrity
 		if(3)
-			l_hand = /obj/item/rogueweapon/mace/cudgel/copper
+			l_hand = /obj/item/weapon/mace/cudgel/copper
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	if(prob(50))
 		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
@@ -66,16 +66,16 @@
 	var/wepchoice = rand(1, 5)
 	switch(wepchoice)
 		if(1)
-			l_hand = /obj/item/rogueweapon/spear
+			l_hand = /obj/item/weapon/spear
 		if(2)
-			l_hand = /obj/item/rogueweapon/sword/short/falchion
-			r_hand = /obj/item/rogueweapon/shield/wood // Help preserve integrity
+			l_hand = /obj/item/weapon/sword/short/falchion
+			r_hand = /obj/item/weapon/shield/wood // Help preserve integrity
 		if(3)
-			l_hand = /obj/item/rogueweapon/mace // Threat to parry-er
+			l_hand = /obj/item/weapon/mace // Threat to parry-er
 		if(4)
-			l_hand = /obj/item/rogueweapon/greataxe
+			l_hand = /obj/item/weapon/greataxe
 		if(5)
-			l_hand = /obj/item/rogueweapon/pick/militia
+			l_hand = /obj/item/weapon/pick/militia
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	if(prob(5))
 		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
@@ -127,9 +127,9 @@
 	var/wepchoice = rand(1, 2)
 	switch(wepchoice)
 		if(1)
-			l_hand = /obj/item/rogueweapon/huntingknife/idagger
+			l_hand = /obj/item/weapon/huntingknife/idagger
 		if(2)
-			l_hand = /obj/item/rogueweapon/pick/militia
+			l_hand = /obj/item/weapon/pick/militia
 	H.STASTR = 13 // GAGGER GAGGER GAGGER
 	H.STASPD = 10 // Fast, for an orc
 	H.STACON = 12
@@ -169,18 +169,18 @@
 	var/wepchoice = rand(1, 6)
 	switch(wepchoice)
 		if(1)
-			l_hand = /obj/item/rogueweapon/halberd/bardiche
+			l_hand = /obj/item/weapon/halberd/bardiche
 		if(2)
-			l_hand = /obj/item/rogueweapon/greatsword/zwei
+			l_hand = /obj/item/weapon/greatsword/zwei
 		if(3)
-			l_hand = /obj/item/rogueweapon/greataxe
+			l_hand = /obj/item/weapon/greataxe
 		if(4)
-			l_hand = /obj/item/rogueweapon/eaglebeak/lucerne
+			l_hand = /obj/item/weapon/eaglebeak/lucerne
 		if(5)
-			l_hand = /obj/item/rogueweapon/mace/goden
+			l_hand = /obj/item/weapon/mace/goden
 		if(6)
-			l_hand = /obj/item/rogueweapon/sword/short/falchion
-			r_hand = /obj/item/rogueweapon/sword/short/falchion // intrusive thoughts
+			l_hand = /obj/item/weapon/sword/short/falchion
+			r_hand = /obj/item/weapon/sword/short/falchion // intrusive thoughts
 	H.STASTR = 14 // GAGGER GAGGER GAGGER
 	H.STASPD = 10 // Fast, for an orc
 	H.STACON = 12

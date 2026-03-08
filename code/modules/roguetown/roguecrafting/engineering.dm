@@ -231,7 +231,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	tools = list(/obj/item/weapon/huntingknife = 1)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/engineering/stickshaft
@@ -242,7 +242,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	tools = list(/obj/item/weapon/huntingknife = 1)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/engineering/cog
@@ -254,7 +254,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	tools = list(/obj/item/weapon/huntingknife = 1)
 	craftdiff = 4
 
 
@@ -266,7 +266,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	tools = list(/obj/item/weapon/huntingknife = 1)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/engineering/large_cog
@@ -277,7 +277,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	tools = list(/obj/item/weapon/huntingknife = 1)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/engineering/gearbox

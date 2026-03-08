@@ -41,8 +41,8 @@
 	head = /obj/item/clothing/head/roguetown/helmet
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/short
+	beltl = /obj/item/weapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/short
 	beltr = /obj/item/quiver/bolts
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
@@ -51,8 +51,8 @@
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/navaja = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/lockpick = 1
 		)
 	H.merctype = 3

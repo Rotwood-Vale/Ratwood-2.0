@@ -96,7 +96,7 @@
 /area/rogue/under/cave)
 "aC" = (
 /obj/structure/closet/crate/chest,
-/obj/item/rogueweapon/sword/long/exe,
+/obj/item/weapon/sword/long/exe,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
 "aD" = (

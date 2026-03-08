@@ -51,8 +51,8 @@
 	cloak = /obj/item/clothing/cloak/cape/nomad
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	beltr = /obj/item/reagent_containers/glass/bottle/waterskin
-	backpack_contents = list(/obj/item/rogueweapon/huntingknife = 1,
-							/obj/item/rogueweapon/scabbard/sheath = 1)
+	backpack_contents = list(/obj/item/weapon/huntingknife = 1,
+							/obj/item/weapon/scabbard/sheath = 1)
 
 	if(H.mind)
 		var/nomad_purpose = list("Escape the Cycle | Shield and Spear","Perpetuate the Cycle | Miraclist")
@@ -63,9 +63,9 @@
 				H.change_stat(STATKEY_STR, 1)//Total of 6 stats, as 1 STR/SPD counts for 2.
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)//Only adventurer, as of adding, to have expert shields. Wild.
-				r_hand = /obj/item/rogueweapon/spear/nomad
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				backr = /obj/item/rogueweapon/shield/iron/nomad
+				r_hand = /obj/item/weapon/spear/nomad
+				backl = /obj/item/weapon/scabbard/gwstrap
+				backr = /obj/item/weapon/shield/iron/nomad
 			if("Perpetuate the Cycle | Miraclist")
 				var/datum/devotion/C = new /datum/devotion(H, H.patron)
 				C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
@@ -73,9 +73,9 @@
 				H.change_stat(STATKEY_SPD, 1)//As above, 6 stats total.
 				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/magic/holy, 3, TRUE)
-				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
+				r_hand = /obj/item/weapon/woodstaff/quarterstaff/iron
 				backl = /obj/item/storage/backpack/rogue/satchel
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				backr = /obj/item/weapon/scabbard/gwstrap
 
 //Just the nomad clothes.
 /obj/item/clothing/cloak/cape/nomad

@@ -52,14 +52,14 @@
 	name = "Sheath"
 	cost = 12
 	contains = list(
-					/obj/item/rogueweapon/scabbard/sheath
+					/obj/item/weapon/scabbard/sheath
 				)
 
 /datum/supply_pack/rogue/adventure_supplies/scabbard
 	name = "Scabbard"
 	cost = 15
 	contains = list(
-					/obj/item/rogueweapon/scabbard/sword
+					/obj/item/weapon/scabbard/sword
 				)
 
 /datum/supply_pack/rogue/adventure_supplies/ropes
@@ -74,12 +74,12 @@
 /datum/supply_pack/rogue/adventure_supplies/woodstaff
 	name = "Six Foot Pole (Wooden Staff)"
 	cost = 6
-	contains = list(/obj/item/rogueweapon/woodstaff)
+	contains = list(/obj/item/weapon/woodstaff)
 
 /datum/supply_pack/rogue/adventure_supplies/quarterstaff
 	name = "Eight Foot Pole "
 	cost = 12
-	contains = list(/obj/item/rogueweapon/woodstaff/quarterstaff)
+	contains = list(/obj/item/weapon/woodstaff/quarterstaff)
 
 /datum/supply_pack/rogue/adventure_supplies/lamptern
 	name = "Lamptern"

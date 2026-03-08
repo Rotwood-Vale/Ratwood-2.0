@@ -58,28 +58,28 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Estoc")
-				r_hand = /obj/item/rogueweapon/estoc
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/estoc
+				backr = /obj/item/weapon/scabbard/gwstrap
 			if("Longsword + Shield")
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/long
-				backr = /obj/item/rogueweapon/shield/tower/metal
+				beltr = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/long
+				backr = /obj/item/weapon/shield/tower/metal
 			if("Mace + Shield")
-				beltr = /obj/item/rogueweapon/mace/steel
-				backr = /obj/item/rogueweapon/shield/tower/metal
+				beltr = /obj/item/weapon/mace/steel
+				backr = /obj/item/weapon/shield/tower/metal
 			if("Flail + Shield")
-				beltr = /obj/item/rogueweapon/flail/sflail
-				backr = /obj/item/rogueweapon/shield/tower/metal
+				beltr = /obj/item/weapon/flail/sflail
+				backr = /obj/item/weapon/shield/tower/metal
 			if("Lucerne")
-				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/eaglebeak/lucerne
+				backr = /obj/item/weapon/scabbard/gwstrap
 			if("Battle Axe")
-				backr = /obj/item/rogueweapon/stoneaxe/battle
+				backr = /obj/item/weapon/stoneaxe/battle
 			if("Lance + Kite Shield")
-				r_hand = /obj/item/rogueweapon/spear/lance
-				backr = /obj/item/rogueweapon/shield/tower/metal
+				r_hand = /obj/item/weapon/spear/lance
+				backr = /obj/item/weapon/shield/tower/metal
 			if("Shamshir")
-				r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+				r_hand = /obj/item/weapon/sword/sabre/shamshir
 		var/helmets = list(
 			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
 			"Guard Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
@@ -118,10 +118,10 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/satchel //gwstraps landing on backr asyncs with backpack_contents
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 
@@ -169,27 +169,27 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Warhammer & Shield")
-				beltr = /obj/item/rogueweapon/mace/warhammer
-				backl = /obj/item/rogueweapon/shield/iron
+				beltr = /obj/item/weapon/mace/warhammer
+				backl = /obj/item/weapon/shield/iron
 			if("Sabre & Shield")
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/sabre
-				backl = /obj/item/rogueweapon/shield/wood
+				beltr = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/sabre
+				backl = /obj/item/weapon/shield/wood
 			if("Axe & Shield")
-				beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel
-				backl = /obj/item/rogueweapon/shield/iron
+				beltr = /obj/item/weapon/stoneaxe/woodcut/steel
+				backl = /obj/item/weapon/shield/iron
 			if("Billhook")
-				r_hand = /obj/item/rogueweapon/spear/billhook
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/billhook
+				backl = /obj/item/weapon/scabbard/gwstrap
 			if("Halberd")
-				r_hand = /obj/item/rogueweapon/halberd
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/halberd
+				backl = /obj/item/weapon/scabbard/gwstrap
 			if("Crossbow")
 				beltr = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 			if("Greataxe")
-				r_hand = /obj/item/rogueweapon/greataxe
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/greataxe
+				backl = /obj/item/weapon/scabbard/gwstrap
 	H.verbs |= list(/mob/living/carbon/human/mind/proc/setorderswretch)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/retreat)
@@ -228,11 +228,11 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/chain
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-	beltl = /obj/item/rogueweapon/mace/cudgel
+	beltl = /obj/item/weapon/mace/cudgel
 	belt = /obj/item/storage/belt/rogue/leather
 	backr = /obj/item/storage/backpack/rogue/satchel
 
-	backpack_contents = list(/obj/item/natural/cloth = 1, /obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, /obj/item/rope/chain = 1, /obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/flashlight/flare/torch/lantern/prelit = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	backpack_contents = list(/obj/item/natural/cloth = 1, /obj/item/weapon/huntingknife/idagger/steel/special = 1, /obj/item/rope/chain = 1, /obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/flashlight/flare/torch/lantern/prelit = 1, /obj/item/weapon/scabbard/sheath = 1)
 
 /obj/effect/proc_holder/spell/invoked/order
 	name = ""

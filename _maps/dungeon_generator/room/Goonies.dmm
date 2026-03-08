@@ -241,7 +241,7 @@
 /area/rogue/under/tomb/lake)
 "fU" = (
 /obj/structure/table/wood/crafted,
-/obj/item/rogueweapon/surgery/retractor,
+/obj/item/weapon/surgery/retractor,
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
@@ -1052,7 +1052,7 @@
 "DZ" = (
 /obj/structure/table/optable,
 /obj/structure/curtain/bounty,
-/obj/item/rogueweapon/surgery/scalpel,
+/obj/item/weapon/surgery/scalpel,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Er" = (
@@ -1323,7 +1323,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/cave/wet)
 "Mf" = (
-/obj/item/rogueweapon/surgery/hemostat,
+/obj/item/weapon/surgery/hemostat,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Mk" = (

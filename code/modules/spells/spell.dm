@@ -215,7 +215,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if(sbook && sbook?.open)
 			newtime = newtime - (chargetime * (sbook.get_cdr()))
 		//staff cast time reduction
-		var/obj/item/rogueweapon/woodstaff/staff = ranged_ability_user.is_holding_item_of_type(/obj/item/rogueweapon/woodstaff/)
+		var/obj/item/weapon/woodstaff/staff = ranged_ability_user.is_holding_item_of_type(/obj/item/weapon/woodstaff/)
 		if(staff)
 			newtime = newtime - (chargetime * (staff.cast_time_reduction))
 		if(newtime > 0)

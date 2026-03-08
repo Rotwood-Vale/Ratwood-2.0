@@ -13,41 +13,41 @@
 	sewrepair = TRUE
 	component_type = /datum/component/storage/concrete/roguetown/surgery_bag
 	populate_contents = list(
-		/obj/item/rogueweapon/surgery/scalpel,
-		/obj/item/rogueweapon/surgery/saw,
-		/obj/item/rogueweapon/surgery/hemostat/first,
-		/obj/item/rogueweapon/surgery/hemostat/second, //Different types for multiple surgery sites. 
-		/obj/item/rogueweapon/surgery/hemostat/third,
-		/obj/item/rogueweapon/surgery/retractor,
-		/obj/item/rogueweapon/surgery/retractor,
-		/obj/item/rogueweapon/surgery/bonesetter,
-		/obj/item/rogueweapon/surgery/cautery,
-		/obj/item/rogueweapon/surgery/hammer,
+		/obj/item/weapon/surgery/scalpel,
+		/obj/item/weapon/surgery/saw,
+		/obj/item/weapon/surgery/hemostat/first,
+		/obj/item/weapon/surgery/hemostat/second, //Different types for multiple surgery sites. 
+		/obj/item/weapon/surgery/hemostat/third,
+		/obj/item/weapon/surgery/retractor,
+		/obj/item/weapon/surgery/retractor,
+		/obj/item/weapon/surgery/bonesetter,
+		/obj/item/weapon/surgery/cautery,
+		/obj/item/weapon/surgery/hammer,
 		/obj/item/natural/bundle/cloth/bandage/full,
 		/obj/item/needle
 	)
 
 /obj/item/storage/belt/rogue/surgery_bag/full/physician
 	populate_contents = list(
-	/obj/item/rogueweapon/surgery/scalpel,
-	/obj/item/rogueweapon/surgery/saw,
-	/obj/item/rogueweapon/surgery/hemostat/first,  //Different types for multiple surgery sites. 
-	/obj/item/rogueweapon/surgery/hemostat/second,
-	/obj/item/rogueweapon/surgery/hemostat/third,
-	/obj/item/rogueweapon/surgery/retractor,
-	/obj/item/rogueweapon/surgery/retractor,
-	/obj/item/rogueweapon/surgery/bonesetter,
-	/obj/item/rogueweapon/surgery/cautery,
+	/obj/item/weapon/surgery/scalpel,
+	/obj/item/weapon/surgery/saw,
+	/obj/item/weapon/surgery/hemostat/first,  //Different types for multiple surgery sites. 
+	/obj/item/weapon/surgery/hemostat/second,
+	/obj/item/weapon/surgery/hemostat/third,
+	/obj/item/weapon/surgery/retractor,
+	/obj/item/weapon/surgery/retractor,
+	/obj/item/weapon/surgery/bonesetter,
+	/obj/item/weapon/surgery/cautery,
 	/obj/item/natural/bundle/cloth/bandage/full,
-	/obj/item/rogueweapon/surgery/hammer,
+	/obj/item/weapon/surgery/hammer,
 	/obj/item/needle/pestra //Gets the special needle!
 	)
 
 /obj/item/storage/belt/rogue/surgery_bag/full/improv
 	populate_contents = list(
-		/obj/item/rogueweapon/surgery/saw/improv,
-		/obj/item/rogueweapon/surgery/hemostat/improv,
-		/obj/item/rogueweapon/surgery/retractor/improv,
+		/obj/item/weapon/surgery/saw/improv,
+		/obj/item/weapon/surgery/hemostat/improv,
+		/obj/item/weapon/surgery/retractor/improv,
 		/obj/item/natural/bundle/cloth/bandage/full,
 		/obj/item/needle/aalloy
 	)

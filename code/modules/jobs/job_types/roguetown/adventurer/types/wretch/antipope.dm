@@ -52,17 +52,17 @@
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
 	gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/special
+	beltr = /obj/item/weapon/huntingknife/idagger/steel/special
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/woodstaff/quarterstaff
+	backr = /obj/item/weapon/woodstaff/quarterstaff
 	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/ritechalk = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 	)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 6, TRUE)

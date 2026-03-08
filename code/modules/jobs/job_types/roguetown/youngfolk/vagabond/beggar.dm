@@ -48,12 +48,12 @@
 			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/l
 
 	if(prob(5))
-		r_hand = /obj/item/rogueweapon/mace/woodclub
+		r_hand = /obj/item/weapon/mace/woodclub
 	else
 		r_hand = null
 
 	if(prob(5))
-		l_hand = /obj/item/rogueweapon/mace/woodclub
+		l_hand = /obj/item/weapon/mace/woodclub
 	else
 		l_hand = null
 

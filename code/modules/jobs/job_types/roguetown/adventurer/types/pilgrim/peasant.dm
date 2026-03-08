@@ -38,7 +38,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	armor = /obj/item/clothing/suit/roguetown/armor/workervest
-	mouth = /obj/item/rogueweapon/huntingknife
+	mouth = /obj/item/weapon/huntingknife
 	beltr = /obj/item/flint
 	if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
@@ -50,7 +50,7 @@
 						/obj/item/ash=1,
 						/obj/item/flashlight/flare/torch = 1,
 						/obj/item/recipe_book/survival = 1,
-						/obj/item/rogueweapon/scabbard/sheath = 1
+						/obj/item/weapon/scabbard/sheath = 1
 						)
-	beltl = /obj/item/rogueweapon/sickle
-	backr = /obj/item/rogueweapon/hoe
+	beltl = /obj/item/weapon/sickle
+	backr = /obj/item/weapon/hoe

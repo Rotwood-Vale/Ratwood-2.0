@@ -40,30 +40,30 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Claymore")
-				r_hand = /obj/item/rogueweapon/greatsword/zwei
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/greatsword/zwei
+				backl = /obj/item/weapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 			if("Great Mace")
-				r_hand = /obj/item/rogueweapon/mace/goden/steel
+				r_hand = /obj/item/weapon/mace/goden/steel
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 			if("Battle Axe")
-				r_hand = /obj/item/rogueweapon/stoneaxe/battle
+				r_hand = /obj/item/weapon/stoneaxe/battle
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 			if("Greataxe")
-				r_hand = /obj/item/rogueweapon/greataxe/steel
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/greataxe/steel
+				backl = /obj/item/weapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 			if("Estoc")
-				r_hand = /obj/item/rogueweapon/estoc
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/estoc
+				backl = /obj/item/weapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 			if("Lucerne")
-				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/eaglebeak/lucerne
+				backl = /obj/item/weapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 			if("Partizan")
-				r_hand = /obj/item/rogueweapon/spear/partizan
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/partizan
+				backl = /obj/item/weapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
@@ -99,7 +99,7 @@
 		armor = armors[armorchoice]
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 	)

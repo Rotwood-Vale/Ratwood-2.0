@@ -37,4 +37,4 @@
 		cloak = /obj/item/clothing/cloak/raincloak/brown
 		gloves = /obj/item/clothing/gloves/roguetown/fingerless
 
-	r_hand = /obj/item/rogueweapon/woodstaff
+	r_hand = /obj/item/weapon/woodstaff

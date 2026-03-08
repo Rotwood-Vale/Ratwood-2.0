@@ -96,12 +96,12 @@ GLOBAL_LIST_INIT(dwarfskeleton_aggro, world.file2list("strings/rt/dskeletonaggro
 			mask = /obj/item/clothing/mask/rogue/facemask/steel
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
-	l_hand = /obj/item/rogueweapon/spear/bronze
+	l_hand = /obj/item/weapon/spear/bronze
 	if(prob(50))
-		l_hand = /obj/item/rogueweapon/sword/short/gladius
-		r_hand = /obj/item/rogueweapon/shield/wood
+		l_hand = /obj/item/weapon/sword/short/gladius
+		r_hand = /obj/item/weapon/shield/wood
 		if(prob(20))
-			l_hand = /obj/item/rogueweapon/knuckles/bronzeknuckles
+			l_hand = /obj/item/weapon/knuckles/bronzeknuckles
 
 	H.STASTR = 12
 	H.STASPD = 11
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(dwarfskeleton_aggro, world.file2list("strings/rt/dskeletonaggro
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
 	belt = /obj/item/storage/belt/rogue/leather
-	l_hand = /obj/item/rogueweapon/greataxe
+	l_hand = /obj/item/weapon/greataxe
 	r_hand = null
 
 	H.STASTR = 16
@@ -182,9 +182,9 @@ GLOBAL_LIST_INIT(dwarfskeleton_aggro, world.file2list("strings/rt/dskeletonaggro
 // 	belt = /obj/item/storage/belt/rogue/leather/rope
 // 	neck = /obj/item/clothing/neck/roguetown/collar/leather
 // 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-// 	r_hand = /obj/item/rogueweapon/pick/aalloy
+// 	r_hand = /obj/item/weapon/pick/aalloy
 // 	if(prob(20))
-// 		r_hand = /obj/item/rogueweapon/shovel/aalloy
+// 		r_hand = /obj/item/weapon/shovel/aalloy
 
 // 	H.STASTR = 12
 // 	H.STASPD = 11

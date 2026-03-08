@@ -37,8 +37,8 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	id = /obj/item/clothing/ring/silver
-	beltl = /obj/item/rogueweapon/sword/sabre/dec
-	l_hand = /obj/item/rogueweapon/scabbard/sword
+	beltl = /obj/item/weapon/sword/sabre/dec
+	l_hand = /obj/item/weapon/scabbard/sword
 	if(should_wear_masc_clothes(H))
 		cloak = /obj/item/clothing/cloak/half/red
 		shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/red
@@ -133,29 +133,29 @@
 		switch(weapon_choice)
 			if("Longsword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				beltr = /obj/item/rogueweapon/sword/long
-				r_hand = /obj/item/rogueweapon/scabbard/sword
+				beltr = /obj/item/weapon/sword/long
+				r_hand = /obj/item/weapon/scabbard/sword
 			if("Mace + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				beltr = /obj/item/rogueweapon/mace
-				backr = /obj/item/rogueweapon/shield/tower/metal
+				beltr = /obj/item/weapon/mace
+				backr = /obj/item/weapon/shield/tower/metal
 			if("Flail + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				beltr = /obj/item/rogueweapon/flail
-				backr = /obj/item/rogueweapon/shield/tower/metal
+				beltr = /obj/item/weapon/flail
+				backr = /obj/item/weapon/shield/tower/metal
 			if("Billhook")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/spear/billhook
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/billhook
+				backr = /obj/item/weapon/scabbard/gwstrap
 			if("Battle Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/stoneaxe/battle
+				r_hand = /obj/item/weapon/stoneaxe/battle
 			if("Greataxe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/greataxe
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/greataxe
+				backr = /obj/item/weapon/scabbard/gwstrap
 
 /datum/advclass/noble/squire
 	name = "Squire Errant"
@@ -201,7 +201,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backr = /obj/item/storage/backpack/rogue/satchel
-	backpack_contents = list(/obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/armor_brush = 1, /obj/item/polishing_cream = 1, /obj/item/rogueweapon/hammer/iron = 1, /obj/item/rogueweapon/huntingknife = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	backpack_contents = list(/obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/armor_brush = 1, /obj/item/polishing_cream = 1, /obj/item/weapon/hammer/iron = 1, /obj/item/weapon/huntingknife = 1, /obj/item/weapon/scabbard/sheath = 1)
 	if(H.mind)
 		var/armors = list("Light Armor","Medium Armor")
 		var/armor_choice = input(H, "Choose your armor.", "HOW WILL YOU LOOK WHEN YOU DIE") as anything in armors
@@ -222,17 +222,17 @@
 		var/weapon_choice = input(H, "Choose your weapon.", "WHAT WILL YOU SWING BEFORE DEATH") as anything in weapons
 		switch(weapon_choice)
 			if("Arming Sword")
-				backl = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/iron
+				backl = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/iron
 			if("Shortsword + Shield")
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				backl = /obj/item/rogueweapon/shield/wood
-				r_hand = /obj/item/rogueweapon/sword/short/iron
+				beltr = /obj/item/weapon/scabbard/sword
+				backl = /obj/item/weapon/shield/wood
+				r_hand = /obj/item/weapon/sword/short/iron
 			if("Bow & Arrow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltr = /obj/item/quiver/arrows
 			if("Spear")
-				r_hand = /obj/item/rogueweapon/spear
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear
+				backl = /obj/item/weapon/scabbard/gwstrap
 	H.set_blindness(0)

@@ -141,14 +141,14 @@ GLOBAL_LIST_INIT(searaider_aggro, world.file2list("strings/rt/searaideraggroline
 		gloves = /obj/item/clothing/gloves/roguetown/leather
 	switch(rand(1, 4))
 		if(1)
-			r_hand = /obj/item/rogueweapon/sword/iron
-			l_hand = /obj/item/rogueweapon/shield/wood
+			r_hand = /obj/item/weapon/sword/iron
+			l_hand = /obj/item/weapon/shield/wood
 		if(2)
-			r_hand = /obj/item/rogueweapon/spear
+			r_hand = /obj/item/weapon/spear
 		if(3)
-			r_hand = /obj/item/rogueweapon/greataxe
+			r_hand = /obj/item/weapon/greataxe
 		if(4)
-			r_hand = /obj/item/rogueweapon/greatsword/zwei
+			r_hand = /obj/item/weapon/greatsword/zwei
 	if(prob(50))
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		beltr = /obj/item/storage/belt/rogue/pouch/treasure/

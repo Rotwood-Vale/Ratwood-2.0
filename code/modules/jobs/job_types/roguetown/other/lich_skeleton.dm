@@ -63,7 +63,7 @@ LICH SKELETONS
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
 	shoes = /obj/item/clothing/shoes/roguetown/sandals/aalloy
 
-	backr = /obj/item/rogueweapon/shield/wood
+	backr = /obj/item/weapon/shield/wood
 	beltl = /obj/item/quiver/javelin/paalloy
 	H.adjust_blindness(-3)
 	var/weapons = list("Gladius","Kopesh","Shortsword","Axe", "Flail")
@@ -71,19 +71,19 @@ LICH SKELETONS
 	H.set_blindness(0)
 	switch(weapon_choice)
 		if("Gladius")
-			beltr = /obj/item/rogueweapon/sword/short/gladius/pagladius
+			beltr = /obj/item/weapon/sword/short/gladius/pagladius
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		if("Kopesh")
-			beltr = /obj/item/rogueweapon/sword/sabre/palloy
+			beltr = /obj/item/weapon/sword/sabre/palloy
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		if("Shortsword")
-			beltr = /obj/item/rogueweapon/sword/short/pashortsword
+			beltr = /obj/item/weapon/sword/short/pashortsword
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		if("Axe")
-			beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
+			beltr = /obj/item/weapon/stoneaxe/woodcut/steel/paaxe
 			H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
 		if("Flail")
-			beltr = /obj/item/rogueweapon/flail/sflail/paflail
+			beltr = /obj/item/weapon/flail/sflail/paflail
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 
 	H.energy = H.max_energy
@@ -130,7 +130,7 @@ LICH SKELETONS
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
 	shoes = /obj/item/clothing/shoes/roguetown/sandals/aalloy
 
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
+	beltr = /obj/item/weapon/huntingknife/idagger/steel/padagger
 	H.adjust_blindness(-3)
 	var/weapons = list("Recurve Bow","Yew Longbow", "Crossbow", "Sling")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
@@ -202,24 +202,24 @@ LICH SKELETONS
 	H.set_blindness(0)
 	switch(weapon_choice)
 		if("Greatsword")
-			r_hand = /obj/item/rogueweapon/greatsword/paalloy
+			r_hand = /obj/item/weapon/greatsword/paalloy
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		if("Bardiche")
-			r_hand = /obj/item/rogueweapon/halberd/bardiche/paalloy
+			r_hand = /obj/item/weapon/halberd/bardiche/paalloy
 			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 		if("Grand Mace")
-			r_hand = /obj/item/rogueweapon/mace/goden/steel/paalloy
+			r_hand = /obj/item/weapon/mace/goden/steel/paalloy
 			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
 		if("Mace + Shield")
-			r_hand = /obj/item/rogueweapon/mace/steel/palloy
-			l_hand = /obj/item/rogueweapon/shield/wood
+			r_hand = /obj/item/weapon/mace/steel/palloy
+			l_hand = /obj/item/weapon/shield/wood
 			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
 		if("Spear")
-			r_hand = /obj/item/rogueweapon/spear/paalloy
+			r_hand = /obj/item/weapon/spear/paalloy
 			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 		if("Warhammer + Shield")
-			r_hand = /obj/item/rogueweapon/mace/warhammer/steel/paalloy
-			l_hand = /obj/item/rogueweapon/shield/wood
+			r_hand = /obj/item/weapon/mace/warhammer/steel/paalloy
+			l_hand = /obj/item/weapon/shield/wood
 			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
 
@@ -271,7 +271,7 @@ LICH SKELETONS
 	shoes = /obj/item/clothing/shoes/roguetown/sandals/aalloy
 	backl = /obj/item/storage/backpack/rogue/satchel
 
-	beltr = /obj/item/rogueweapon/stoneaxe/woodcut
-	beltl = /obj/item/rogueweapon/pick/copper
+	beltr = /obj/item/weapon/stoneaxe/woodcut
+	beltl = /obj/item/weapon/pick/copper
 
 	H.energy = H.max_energy

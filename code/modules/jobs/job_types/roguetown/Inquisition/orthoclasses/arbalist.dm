@@ -55,7 +55,7 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
 	belt = /obj/item/storage/belt/rogue/leather/stakebelt//Because your 'crossbow' FUCKS.
 	beltr = /obj/item/quiver/heavybolts//IT REALLY DOES. You can't get more of these. Swap to a normal crossbow afterwards.
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy//Your ticket to fame, brother.
+	beltl = /obj/item/weapon/huntingknife/idagger/silver/stake/preblessed/psy//Your ticket to fame, brother.
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	mask = /obj/item/clothing/mask/rogue/sack/psy

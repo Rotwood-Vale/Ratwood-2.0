@@ -37,7 +37,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/storage/backpack/rogue/satchel
-	beltr = /obj/item/rogueweapon/mace/cudgel
+	beltr = /obj/item/weapon/mace/cudgel
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead = 1,
@@ -45,8 +45,8 @@
 		/obj/item/reagent_containers/glass/bottle/rogue/beer/blackgoat = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/elfred = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/elfblue = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/ingot/copper = 2,
 		/obj/item/roguegear = 1,
 		/obj/item/bottle_kit = 1,

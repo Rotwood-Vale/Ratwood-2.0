@@ -46,17 +46,17 @@
 		var/weapon_choice = input(H, "Choose your weapon", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Naginata")
-				r_hand = /obj/item/rogueweapon/spear/naginata
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/naginata
+				backr = /obj/item/weapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				armor = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
 			if("Quarterstaff")
-				backr = /obj/item/rogueweapon/woodstaff/quarterstaff/steel
+				backr = /obj/item/weapon/woodstaff/quarterstaff/steel
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				armor = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
 			if("Hwando")
-				beltl = /obj/item/rogueweapon/sword/sabre/mulyeog
-				beltr = /obj/item/rogueweapon/scabbard/sword/kazengun
+				beltl = /obj/item/weapon/sword/sabre/mulyeog
+				beltr = /obj/item/weapon/scabbard/sword/kazengun
 				armor = /obj/item/clothing/suit/roguetown/armor/basiceast
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
@@ -108,12 +108,12 @@
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Tanto")
-				beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
-				beltl = /obj/item/rogueweapon/scabbard/sheath/kazengun
+				beltr = /obj/item/weapon/huntingknife/idagger/steel/kazengun
+				beltl = /obj/item/weapon/scabbard/sheath/kazengun
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
 			if("Kodachi")
-				beltr = /obj/item/rogueweapon/sword/short/kazengun
-				beltl = /obj/item/rogueweapon/scabbard/sword/kazengun/kodachi
+				beltr = /obj/item/weapon/sword/short/kazengun
+				beltl = /obj/item/weapon/scabbard/sword/kazengun/kodachi
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		var/masks = list("Oni","Kitsune")
 		var/mask_choice = input(H, "Choose your mask.", "HIDE YOURSELF") as anything in masks

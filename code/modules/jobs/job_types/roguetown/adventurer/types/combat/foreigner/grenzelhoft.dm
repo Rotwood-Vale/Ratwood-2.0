@@ -33,7 +33,7 @@
 
 /datum/outfit/job/roguetown/adventurer/bluthund/pre_equip(mob/living/carbon/human/H)
 	..()
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	backl = /obj/item/weapon/scabbard/gwstrap
 	wrists = wrists = /obj/item/clothing/wrists/roguetown/splintarms/iron
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/clothing/neck/roguetown/gorget
@@ -46,8 +46,8 @@
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	if(H.mind)
 		var/grenzel_purpose = list("Zweihander","Halberd","Eagle's Beak")
@@ -55,10 +55,10 @@
 		switch(weapon_choice)
 			if("Zweihander")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-				r_hand = /obj/item/rogueweapon/greatsword/grenz
+				r_hand = /obj/item/weapon/greatsword/grenz
 			if("Halberd")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-				r_hand = /obj/item/rogueweapon/halberd
+				r_hand = /obj/item/weapon/halberd
 			if("Eagle's Beak")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-				r_hand = /obj/item/rogueweapon/eaglebeak
+				r_hand = /obj/item/weapon/eaglebeak

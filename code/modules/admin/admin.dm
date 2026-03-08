@@ -478,7 +478,7 @@
 		var/mob/living/carbon/human/H = M
 		for(var/obj/item/I in H.get_equipped_items(TRUE))
 			// Only include equipable items: clothing, weapons, armor
-			if(istype(I, /obj/item/clothing) || istype(I, /obj/item/rogueweapon) || I.slot_flags)
+			if(istype(I, /obj/item/clothing) || istype(I, /obj/item/weapon) || I.slot_flags)
 				if(!(I in all_items))
 					all_items += I
 	

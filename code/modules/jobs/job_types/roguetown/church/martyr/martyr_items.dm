@@ -1,4 +1,4 @@
-/obj/item/rogueweapon/sword/long/martyr
+/obj/item/weapon/sword/long/martyr
 	force = 30
 	force_wielded = 36
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike,  /datum/intent/sword/peel)
@@ -31,7 +31,7 @@
 	toggle_state = null
 	is_important = TRUE
 
-/obj/item/rogueweapon/sword/long/martyr/ComponentInitialize()
+/obj/item/weapon/sword/long/martyr/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_TENNITE,\
@@ -55,11 +55,11 @@
 		item_d_type = "fire"
 		blade_class = BCLASS_CHOP
 
-/obj/item/rogueweapon/sword/long/martyr/Initialize(mapload)
+/obj/item/weapon/sword/long/martyr/Initialize(mapload)
 	AddComponent(/datum/component/martyrweapon)
 	..()
 
-/obj/item/rogueweapon/sword/long/martyr/attack_hand(mob/user)
+/obj/item/weapon/sword/long/martyr/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/datum/job/J = SSjob.GetJob(H.mind?.assigned_role)
@@ -87,13 +87,13 @@
 	else
 		return FALSE
 
-/obj/item/rogueweapon/sword/long/martyr/Destroy()
+/obj/item/weapon/sword/long/martyr/Destroy()
 	var/datum/component/martyr = GetComponent(/datum/component/martyrweapon)
 	if(martyr)
 		martyr.ClearFromParent()
 	return ..()
 
-/obj/item/rogueweapon/sword/long/martyr/getonmobprop(tag)
+/obj/item/weapon/sword/long/martyr/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)

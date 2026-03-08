@@ -659,7 +659,7 @@
 	icon_state = "brownkey"
 
 /obj/item/key/custom/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/rogueweapon/hammer))
+	if(istype(I, /obj/item/weapon/hammer))
 		var/input = (input(user, "What would you name this key?", "", "") as text)
 		if(input)
 			name = input + " key"
@@ -676,7 +676,7 @@
 	lockhash = 0
 
 /obj/item/customblank/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/rogueweapon/hammer))
+	if(istype(I, /obj/item/weapon/hammer))
 		var/input = input(user, "What would you like to set the key ID to?", "", 0) as num
 		input = max(0, input)
 		to_chat(user, span_notice("You set the key ID to [input]."))
@@ -691,7 +691,7 @@
 		var/obj/item/customlock/held = user.get_active_held_item()
 		src.lockhash = held.lockhash
 		to_chat(user, span_notice("You fine-tune [src] to the lock's internals."))
-	else if(istype(user.get_active_held_item(), /obj/item/rogueweapon/hammer) && src.lockhash != 0)
+	else if(istype(user.get_active_held_item(), /obj/item/weapon/hammer) && src.lockhash != 0)
 		var/obj/item/key/custom/F = new (get_turf(src))
 		F.lockhash = src.lockhash
 		to_chat(user, span_notice("You finish [F]."))
@@ -709,7 +709,7 @@
 	lockhash = 0
 
 /obj/item/customlock/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/rogueweapon/hammer))
+	if(istype(I, /obj/item/weapon/hammer))
 		var/input = input(user, "What would you like to set the lock ID to?", "", 0) as num
 		input = max(0, input)
 		to_chat(user, span_notice("You set the lock ID to [input]."))
@@ -736,7 +736,7 @@
 		var/obj/item/customblank/held = user.get_active_held_item()
 		src.lockhash = held.lockhash
 		to_chat(user, span_notice("You align the lock's internals to [held]."))
-	else if(istype(user.get_active_held_item(), /obj/item/rogueweapon/hammer) && src.lockhash != 0)
+	else if(istype(user.get_active_held_item(), /obj/item/weapon/hammer) && src.lockhash != 0)
 		var/obj/item/customlock/finished/F = new (get_turf(src))
 		F.lockhash = src.lockhash
 		to_chat(user, span_notice("You finish [F]."))
@@ -749,7 +749,7 @@
 	var/holdname = ""
 
 /obj/item/customlock/finished/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/rogueweapon/hammer))
+	if(istype(I, /obj/item/weapon/hammer))
 		src.holdname = input(user, "What would you like to name this?", "", "") as text
 		if(holdname)
 			to_chat(user, span_notice("You label the [name] with [holdname]."))

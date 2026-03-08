@@ -25,7 +25,7 @@
 		armor = /obj/item/clothing/suit/roguetown/shirt/rags
 	
 	pants = /obj/item/clothing/under/roguetown/loincloth
-	r_hand = /obj/item/rogueweapon/woodstaff
+	r_hand = /obj/item/weapon/woodstaff
 
 	if(prob(33))
 		cloak = /obj/item/clothing/cloak/half/brown

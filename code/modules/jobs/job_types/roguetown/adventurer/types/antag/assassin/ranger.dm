@@ -50,8 +50,8 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 					/obj/item/flashlight/flare/torch/lantern/prelit = 1,
-					/obj/item/rogueweapon/scabbard/sheath = 1,
-					/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
+					/obj/item/weapon/scabbard/sheath = 1,
+					/obj/item/weapon/huntingknife/idagger/steel = 1,
 					/obj/item/needle/thorn = 1,
 					/obj/item/natural/cloth = 1,
 					)
@@ -59,7 +59,7 @@
 	neck = /obj/item/clothing/neck/roguetown/coif
 	head = /obj/item/clothing/head/roguetown/helmet/kettle
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
+	beltr = /obj/item/weapon/stoneaxe/woodcut/wardenpick
 	H.adjust_blindness(-3)
 	if(H.mind)
 		var/weapons = list("Yew Longbow","Crossbow")

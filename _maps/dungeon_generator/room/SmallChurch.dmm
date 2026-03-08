@@ -24,7 +24,7 @@
 	pixel_y = 10
 	},
 /obj/item/clothing/cloak/half/shadowcloak,
-/obj/item/rogueweapon/mace/warhammer/steel,
+/obj/item/weapon/mace/warhammer/steel,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
 /obj/item/clothing/gloves/roguetown/chain/iron,
 /obj/item/clothing/under/roguetown/chainlegs/iron,
@@ -247,7 +247,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)
 "hW" = (
-/obj/item/rogueweapon/pick/copper,
+/obj/item/weapon/pick/copper,
 /turf/open/floor/rogue/woodturned/nosmooth,
 /area/rogue/under/tomb/cave)
 "ij" = (
@@ -443,7 +443,7 @@
 /area/rogue/under/tomb/indoors/church)
 "oq" = (
 /obj/item/clothing/head/roguetown/helmet/leather,
-/obj/item/rogueweapon/pick/copper,
+/obj/item/weapon/pick/copper,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb)
 "oA" = (
@@ -886,7 +886,7 @@
 	pixel_y = 10
 	},
 /obj/item/clothing/cloak/half/shadowcloak,
-/obj/item/rogueweapon/greatsword/grenz,
+/obj/item/weapon/greatsword/grenz,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
 /obj/item/clothing/gloves/roguetown/chain/iron,
 /obj/item/clothing/under/roguetown/chainlegs/iron,
@@ -940,7 +940,7 @@
 /area/rogue/under/tomb)
 "KS" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/rogueweapon/huntingknife/idagger/steel/padagger,
+/obj/item/weapon/huntingknife/idagger/steel/padagger,
 /obj/effect/decal/cleanable/sigil,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb/indoors/church)
@@ -958,7 +958,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb)
 "LR" = (
-/obj/item/rogueweapon/pick/copper,
+/obj/item/weapon/pick/copper,
 /obj/item/flint,
 /turf/open/floor/rogue/woodturned/nosmooth,
 /area/rogue/under/tomb/cave)
@@ -982,7 +982,7 @@
 /turf/open/floor/rogue/tile/masonic/spiral,
 /area/rogue/under/tomb/indoors/church)
 "Mr" = (
-/obj/item/rogueweapon/pick/copper,
+/obj/item/weapon/pick/copper,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "MD" = (
@@ -1041,7 +1041,7 @@
 /area/rogue/under/tomb/indoors/church)
 "OP" = (
 /obj/structure/closet/dirthole/grave,
-/obj/item/rogueweapon/shovel{
+/obj/item/weapon/shovel{
 	pixel_x = -4;
 	pixel_y = -1
 	},

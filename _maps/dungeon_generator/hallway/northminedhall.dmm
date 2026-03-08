@@ -31,7 +31,7 @@
 	pixel_x = 9;
 	pixel_y = -8
 	},
-/obj/item/rogueweapon/stoneaxe,
+/obj/item/weapon/stoneaxe,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "k" = (
@@ -57,7 +57,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "v" = (
-/obj/item/rogueweapon/huntingknife/stoneknife,
+/obj/item/weapon/huntingknife/stoneknife,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "w" = (
@@ -127,7 +127,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "R" = (
-/obj/item/rogueweapon/stoneaxe,
+/obj/item/weapon/stoneaxe,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "V" = (

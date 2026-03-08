@@ -23,7 +23,7 @@
 /datum/component/storage/concrete/roguetown/surgery_bag/New(datum/P, ...)
 	. = ..()
 	can_hold = typecacheof(list(
-	/obj/item/rogueweapon/surgery,
+	/obj/item/weapon/surgery,
 	/obj/item/needle,
 	/obj/item/natural/worms/leech,
 	/obj/item/reagent_containers/lux,

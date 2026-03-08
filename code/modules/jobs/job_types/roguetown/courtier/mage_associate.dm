@@ -36,7 +36,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/storage/keyring/mageapprentice
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/woodstaff
+	backr = /obj/item/weapon/woodstaff
 	shoes = /obj/item/clothing/shoes/roguetown/gladiator // FANCY SANDALS
 
 /datum/advclass/wapprentice/associate
@@ -129,7 +129,7 @@
 		/obj/item/recipe_book/magic = 1,
 		/obj/item/chalk = 1,
 		/obj/item/spellbook_unfinished/pre_arcyne = 1,
-		/obj/item/rogueweapon/sickle
+		/obj/item/weapon/sickle
 		)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)

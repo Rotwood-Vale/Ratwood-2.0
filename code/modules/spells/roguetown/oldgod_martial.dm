@@ -255,7 +255,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	antimagic_allowed = TRUE
 	miracle = TRUE
 	devotion_cost = 100
-	var/obj/item/rogueweapon/conjured_lux_bolt = null
+	var/obj/item/weapon/conjured_lux_bolt = null
 
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt/cast(mob/living/carbon/human/user)
 	if(!isliving(user))

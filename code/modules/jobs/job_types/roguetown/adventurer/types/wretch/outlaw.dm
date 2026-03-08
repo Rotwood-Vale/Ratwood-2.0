@@ -51,7 +51,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	mask = /obj/item/clothing/mask/rogue/ragmask/black
 	beltr = /obj/item/quiver/bolts
-	r_hand = /obj/item/rogueweapon/mace/cudgel //From thief PR
+	r_hand = /obj/item/weapon/mace/cudgel //From thief PR
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/lockpickring/mundane = 1,
@@ -68,15 +68,15 @@
 		switch(weapon_choice)
 			if("Rapier")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				l_hand = /obj/item/rogueweapon/sword/rapier
+				beltl = /obj/item/weapon/scabbard/sword
+				l_hand = /obj/item/weapon/sword/rapier
 			if("Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
-				beltl = /obj/item/rogueweapon/scabbard/sheath
-				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/special // Why were they spawning with an elven dagger in the first place??? Please LMK.
+				beltl = /obj/item/weapon/scabbard/sheath
+				l_hand = /obj/item/weapon/huntingknife/idagger/steel/special // Why were they spawning with an elven dagger in the first place??? Please LMK.
 			if ("Whip")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
-				beltl = /obj/item/rogueweapon/whip
+				beltl = /obj/item/weapon/whip
 		wretch_select_bounty(H)
 
 /datum/advclass/wretch/outlaw/marauder
@@ -128,7 +128,7 @@
 	neck = /obj/item/clothing/neck/roguetown/gorget 
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	mask = /obj/item/clothing/mask/rogue/ragmask/black
-	r_hand = /obj/item/rogueweapon/mace/cudgel //From thief PR
+	r_hand = /obj/item/weapon/mace/cudgel //From thief PR
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
@@ -144,29 +144,29 @@
 			if("Just An Iron Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				backr = /obj/item/rogueweapon/shield/iron
+				backr = /obj/item/weapon/shield/iron
 			if("Dagger + Crossbow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
-				beltl = /obj/item/rogueweapon/scabbard/sheath
-				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
+				beltl = /obj/item/weapon/scabbard/sheath
+				l_hand = /obj/item/weapon/huntingknife/idagger/steel
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltr = /obj/item/quiver/bolts
 			if ("Militia Warpick + Heater Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-				beltl = /obj/item/rogueweapon/pick/militia/steel		//this one has axe skill. Other one had MINING.
-				backr = /obj/item/rogueweapon/shield/iron
+				beltl = /obj/item/weapon/pick/militia/steel		//this one has axe skill. Other one had MINING.
+				backr = /obj/item/weapon/shield/iron
 			if ("Militia Spear + Heater Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
-				l_hand = /obj/item/rogueweapon/spear/militia
-				backr = /obj/item/rogueweapon/shield/heater
+				l_hand = /obj/item/weapon/spear/militia
+				backr = /obj/item/weapon/shield/heater
 			if ("Militia War-Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-				l_hand = /obj/item/rogueweapon/greataxe/militia
+				l_hand = /obj/item/weapon/greataxe/militia
 			if ("Militia Goedendag")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
-				l_hand = /obj/item/rogueweapon/woodstaff/militia
+				l_hand = /obj/item/weapon/woodstaff/militia
 			if ("Flail + Heater Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
-				l_hand = /obj/item/rogueweapon/flail/sflail
-				backr = /obj/item/rogueweapon/shield/heater
+				l_hand = /obj/item/weapon/flail/sflail
+				backr = /obj/item/weapon/shield/heater
 		wretch_select_bounty(H)

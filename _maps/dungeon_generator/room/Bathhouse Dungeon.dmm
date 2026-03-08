@@ -1242,7 +1242,7 @@
 "zJ" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/closet/dirthole/closed/loot,
-/obj/item/rogueweapon/shovel/small,
+/obj/item/weapon/shovel/small,
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb/wilds)
 "zY" = (

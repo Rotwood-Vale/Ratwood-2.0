@@ -73,7 +73,7 @@
 /area/rogue/under/tomb/indoors)
 "fp" = (
 /obj/machinery/light/rogue/forge,
-/obj/item/rogueweapon/tongs,
+/obj/item/weapon/tongs,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "fw" = (
@@ -161,7 +161,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb)
 "lR" = (
-/obj/item/rogueweapon/sword/iron,
+/obj/item/weapon/sword/iron,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "lW" = (
@@ -305,7 +305,7 @@
 	pixel_y = 8;
 	pixel_x = 8
 	},
-/obj/item/rogueweapon/sword/decorated{
+/obj/item/weapon/sword/decorated{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -336,8 +336,8 @@
 /area/rogue/under/tomb)
 "xK" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/spear/billhook,
-/obj/item/rogueweapon/spear/billhook{
+/obj/item/weapon/spear/billhook,
+/obj/item/weapon/spear/billhook{
 	pixel_y = -8
 	},
 /turf/open/floor/rogue/hexstone,
@@ -394,7 +394,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb)
 "Cw" = (
-/obj/item/rogueweapon/spear,
+/obj/item/weapon/spear,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
@@ -456,7 +456,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/anvil,
-/obj/item/rogueweapon/hammer/iron,
+/obj/item/weapon/hammer/iron,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "IU" = (
@@ -582,7 +582,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "Xi" = (
-/obj/item/rogueweapon/huntingknife/idagger/steel,
+/obj/item/weapon/huntingknife/idagger/steel,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "XV" = (

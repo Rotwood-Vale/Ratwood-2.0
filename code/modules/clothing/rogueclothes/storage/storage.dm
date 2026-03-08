@@ -25,10 +25,10 @@
 	..()
 
 /obj/item/storage/belt/rogue/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rogueweapon/huntingknife))
-		var/obj/item/rogueweapon/huntingknife/K = W
+	if(istype(W, /obj/item/weapon/huntingknife))
+		var/obj/item/weapon/huntingknife/K = W
 		if(K.sheathe_icon)
-			for(var/obj/item/rogueweapon/scabbard/sheath/sheath in contents)
+			for(var/obj/item/weapon/scabbard/sheath/sheath in contents)
 				if(!sheath.sheathed) // if no weapon in there
 					if(sheath.eat_sword(user, K, TRUE))
 						user.visible_message(
@@ -406,13 +406,13 @@
 		to_chat(user, span_warning("Your [src.name] is full!"))
 		return
 	to_chat(user, span_notice("You begin to gather the ammunition..."))
-	for(var/obj/item/rogueweapon/huntingknife/throwingknife/K in T.contents)
+	for(var/obj/item/weapon/huntingknife/throwingknife/K in T.contents)
 		if(do_after(user, 5))
 			if(!eatknife(K))
 				break
 
 /obj/item/storage/belt/rogue/leather/knifebelt/proc/eatknife(obj/A)
-	if(A.type in typesof(/obj/item/rogueweapon/huntingknife/throwingknife))
+	if(A.type in typesof(/obj/item/weapon/huntingknife/throwingknife))
 		if(knives.len < max_storage)
 			A.forceMove(src)
 			knives += A
@@ -422,7 +422,7 @@
 			return FALSE
 
 /obj/item/storage/belt/rogue/leather/knifebelt/attackby(obj/A, loc, params)
-	if(A.type in typesof(/obj/item/rogueweapon/huntingknife/throwingknife))
+	if(A.type in typesof(/obj/item/weapon/huntingknife/throwingknife))
 		if(knives.len < max_storage)
 			if(ismob(loc))
 				var/mob/M = loc
@@ -454,7 +454,7 @@
 /obj/item/storage/belt/rogue/leather/knifebelt/iron/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/rogueweapon/huntingknife/throwingknife/K = new()
+		var/obj/item/weapon/huntingknife/throwingknife/K = new()
 		knives += K
 	update_icon()
 
@@ -465,35 +465,35 @@
 /obj/item/storage/belt/rogue/leather/knifebelt/black/iron/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/rogueweapon/huntingknife/throwingknife/K = new()
+		var/obj/item/weapon/huntingknife/throwingknife/K = new()
 		knives += K
 	update_icon()
 
 /obj/item/storage/belt/rogue/leather/knifebelt/black/steel/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/rogueweapon/huntingknife/throwingknife/steel/K = new()
+		var/obj/item/weapon/huntingknife/throwingknife/steel/K = new()
 		knives += K
 	update_icon()
 
 /obj/item/storage/belt/rogue/leather/knifebelt/black/silver/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/rogueweapon/huntingknife/throwingknife/silver/K = new()
+		var/obj/item/weapon/huntingknife/throwingknife/silver/K = new()
 		knives += K
 	update_icon()
 
 /obj/item/storage/belt/rogue/leather/knifebelt/black/psydon/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/rogueweapon/huntingknife/throwingknife/psydon/K = new()
+		var/obj/item/weapon/huntingknife/throwingknife/psydon/K = new()
 		knives += K
 	update_icon()
 
 /obj/item/storage/belt/rogue/leather/knifebelt/black/kazengun/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/rogueweapon/huntingknife/throwingknife/kazengun/K = new()
+		var/obj/item/weapon/huntingknife/throwingknife/kazengun/K = new()
 		knives += K
 	update_icon()
 

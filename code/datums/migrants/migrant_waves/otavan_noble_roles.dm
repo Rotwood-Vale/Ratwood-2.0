@@ -56,12 +56,12 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
-	l_hand = /obj/item/rogueweapon/sword/sabre
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/sabre
+	beltl = /obj/item/weapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/paper/scroll/writ_of_esteem/otavan = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 2,
@@ -109,7 +109,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/weapon/scabbard/sword
 	neck = /obj/item/clothing/neck/roguetown/fencerguard
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
 	head = /obj/item/clothing/head/roguetown/helmet/otavan
@@ -118,13 +118,13 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan
 	gloves = /obj/item/clothing/gloves/roguetown/otavan
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
-	r_hand = /obj/item/rogueweapon/spear/otava
-	l_hand = /obj/item/rogueweapon/sword/short/falchion
+	backl = /obj/item/weapon/scabbard/gwstrap
+	r_hand = /obj/item/weapon/spear/otava
+	l_hand = /obj/item/weapon/sword/short/falchion
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		)
 	H.cmode_music = 'sound/music/combat_routier.ogg'
 	H.grant_language(/datum/language/otavan)
@@ -178,12 +178,12 @@
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/quiver/bolts
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	beltl = /obj/item/weapon/scabbard/sword
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-	l_hand = /obj/item/rogueweapon/sword
+	l_hand = /obj/item/weapon/sword
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 	)
 	H.cmode_music = 'sound/music/combat_routier.ogg'
 	H.grant_language(/datum/language/otavan)
@@ -225,7 +225,7 @@
 	if (!(istype(H.patron, /datum/patron/old_god)))		//PSYDON ENDURE PURITY AFLOAT PSYDON PSYDON ENDURE PSYDON OTAVA PSYDON WAH WAH WAH
 		to_chat(H, span_warning("PSYDON has taught me to ENDURE whatever it takes - and HE guides my hand and words."))
 		H.set_patron(/datum/patron/old_god)
-	r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/psy
+	r_hand = /obj/item/weapon/woodstaff/quarterstaff/psy
 	head = /obj/item/clothing/head/roguetown/roguehood/psydon
 	mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
@@ -294,8 +294,8 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
-	r_hand = /obj/item/rogueweapon/huntingknife/idagger
-	beltl = /obj/item/rogueweapon/scabbard/sheath
+	r_hand = /obj/item/weapon/huntingknife/idagger
+	beltl = /obj/item/weapon/scabbard/sheath
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
 		/obj/item/natural/feather = 1,

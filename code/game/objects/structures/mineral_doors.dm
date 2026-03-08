@@ -429,7 +429,7 @@
 					desc = "a door with a carving scratched out"
 				playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 			return
-		else if(istype(I, /obj/item/rogueweapon/chisel/assembly))
+		else if(istype(I, /obj/item/weapon/chisel/assembly))
 			to_chat(user, span_warning("You most use both hands to rename doors."))
 		else
 			return ..()

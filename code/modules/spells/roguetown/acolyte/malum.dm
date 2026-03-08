@@ -161,7 +161,7 @@
 	if (!targeteditem || targeteditem.smeltresult == /obj/item/ash || target.anti_magic_check(TRUE,TRUE)) 
 		show_visible_message(user, "After their incantation, [user] points at [target] but it seems to have no effect.", "After your incantation, you point at [target] but it seems to have no effect.")
 		return
-	if (istype(targeteditem, /obj/item/rogueweapon/tongs))
+	if (istype(targeteditem, /obj/item/weapon/tongs))
 		handle_tongs(targeteditem, user)
 	else if (should_heat_in_hand(user, target, targeteditem, nosmeltore))
 		handle_heating_in_hand(target, targeteditem, user)
@@ -210,11 +210,11 @@
 			target_item = target.get_item_by_slot(ITEM_SLOT_SHOES)
 	return target_item
 
-/proc/handle_tongs(obj/item/rogueweapon/tongs/T, mob/user) //Stole the code from smithing.
+/proc/handle_tongs(obj/item/weapon/tongs/T, mob/user) //Stole the code from smithing.
 	if (!T.hingot) return
 	var/tyme = world.time
 	T.hott = tyme
-	addtimer(CALLBACK(T, TYPE_PROC_REF(/obj/item/rogueweapon/tongs, make_unhot), tyme), 100)
+	addtimer(CALLBACK(T, TYPE_PROC_REF(/obj/item/weapon/tongs, make_unhot), tyme), 100)
 	T.update_icon()
 	show_visible_message(user, "After [user]'s incantation, the ingot inside [T] starts glowing.", "After your incantation, the ingot inside [T] starts glowing.")
 

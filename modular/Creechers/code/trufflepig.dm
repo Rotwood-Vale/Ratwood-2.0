@@ -23,14 +23,14 @@
 
 /turf/open/floor/rogue/dirt/attackby(obj/item/W, mob/user, params)
 	if(hidden_truffles)
-		if(istype(W, /obj/item/rogueweapon/shovel))
+		if(istype(W, /obj/item/weapon/shovel))
 			playsound(get_turf(src),'sound/items/dig_shovel.ogg', 70, TRUE)
 			if(user.used_intent.type == /datum/intent/shovelscoop)
 				if(do_after(user, 3 SECONDS, target = src))
 					new /obj/item/reagent_containers/food/snacks/rogue/truffles(get_turf(src))
 					hidden_truffles = FALSE
 	if(hidden_toxicshrooms)
-		if(istype(W, /obj/item/rogueweapon/shovel))
+		if(istype(W, /obj/item/weapon/shovel))
 			playsound(get_turf(src),'sound/items/dig_shovel.ogg', 70, TRUE)
 			if(user.used_intent.type == /datum/intent/shovelscoop)
 				if(do_after(user, 3 SECONDS, target = src))

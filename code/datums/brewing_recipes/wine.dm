@@ -100,7 +100,7 @@
 		/obj/item/reagent_containers/food/snacks/sugar = 1,
 		/obj/item/alch/matricaria = 1,
 		/obj/item/alch/paris = 1,
-		/obj/item/rogueweapon/whip = 1,
+		/obj/item/weapon/whip = 1,
 	) // poisonous herbs, sugar, and an actual whip. the power of Mistranslations...
 	brewed_amount = 6
 	brew_time = 5 MINUTES

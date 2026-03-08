@@ -16,7 +16,7 @@
 /datum/supply_pack/rogue/blackmarket_tools/woodstaff
 	name = "Six Foot Pole"
 	cost = 5
-	contains = list(/obj/item/rogueweapon/woodstaff)
+	contains = list(/obj/item/weapon/woodstaff)
 
 /datum/supply_pack/rogue/blackmarket_tools/pouches
 	name = "Pouch"

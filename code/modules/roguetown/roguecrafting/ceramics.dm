@@ -6,7 +6,7 @@
 	structurecraft = /obj/structure/fluff/ceramicswheel
 
 /datum/crafting_recipe/roguetown/ceramics/glass
-	tools = list(/obj/item/rogueweapon/blowrod) // To shape it
+	tools = list(/obj/item/weapon/blowrod) // To shape it
 	structurecraft = /obj/machinery/light/rogue/smelter // To heat it
 
 /* 0 diff */

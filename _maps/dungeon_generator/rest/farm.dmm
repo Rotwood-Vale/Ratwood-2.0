@@ -170,10 +170,10 @@
 	pixel_x = 7;
 	pixel_y = 13
 	},
-/obj/item/rogueweapon/hoe/copper{
+/obj/item/weapon/hoe/copper{
 	pixel_y = -1
 	},
-/obj/item/rogueweapon/shovel{
+/obj/item/weapon/shovel{
 	pixel_y = -5
 	},
 /turf/open/floor/rogue/twig,

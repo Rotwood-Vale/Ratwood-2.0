@@ -155,21 +155,21 @@
 	var/add_random_psy_vault_guard_weapon = rand(1, 7)
 	switch(add_random_psy_vault_guard_weapon)
 		if(1)
-			r_hand = /obj/item/rogueweapon/sword/short/messer
-			l_hand = /obj/item/rogueweapon/shield/tower/metal
+			r_hand = /obj/item/weapon/sword/short/messer
+			l_hand = /obj/item/weapon/shield/tower/metal
 		if(2)
-			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
+			r_hand = /obj/item/weapon/sword/long/kriegmesser
 		if(3)
-			r_hand = /obj/item/rogueweapon/eaglebeak
+			r_hand = /obj/item/weapon/eaglebeak
 		if(4)
-			r_hand = /obj/item/rogueweapon/mace/warhammer/steel
-			l_hand = /obj/item/rogueweapon/shield/tower/metal
+			r_hand = /obj/item/weapon/mace/warhammer/steel
+			l_hand = /obj/item/weapon/shield/tower/metal
 		if(5)
-			r_hand = /obj/item/rogueweapon/greatsword/grenz
+			r_hand = /obj/item/weapon/greatsword/grenz
 		if(6)
-			r_hand = /obj/item/rogueweapon/greataxe/steel
+			r_hand = /obj/item/weapon/greataxe/steel
 		if(7)
-			r_hand = /obj/item/rogueweapon/mace/goden/steel
+			r_hand = /obj/item/weapon/mace/goden/steel
 		// 2 hand weapon to dilute the pool to keep ranged viable
  
 /datum/outfit/job/roguetown/human/species/lizardfolk/psy_vault_guard/proc/add_random_psy_vault_guard_mask(mob/living/carbon/human/H)

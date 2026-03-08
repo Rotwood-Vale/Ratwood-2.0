@@ -39,12 +39,12 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr = /obj/item/rogueweapon/stoneaxe/woodcut
+	beltr = /obj/item/weapon/stoneaxe/woodcut
 	backpack_contents = list(
 		/obj/item/clothing/neck/roguetown/psicross/silver = 3,
 		/obj/item/clothing/neck/roguetown/psicross = 2,
 		/obj/item/clothing/neck/roguetown/psicross/wood = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
+		/obj/item/weapon/huntingknife = 1,
 		/obj/item/recipe_book/survival = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 		)

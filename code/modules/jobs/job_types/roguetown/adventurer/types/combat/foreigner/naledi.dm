@@ -27,8 +27,8 @@
 	to_chat(H, span_warning("An asylum-seeker from the war-torn deserts of Naledi, \
 	driven north as your homeland continues to be ravaged by an endless conflict against the Djinn."))
 	mask = /obj/item/clothing/mask/rogue/lordmask/tarnished
-	r_hand = /obj/item/rogueweapon/spear/assegai
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	r_hand = /obj/item/weapon/spear/assegai
+	backl = /obj/item/weapon/scabbard/gwstrap
 	backr = /obj/item/storage/backpack/rogue/satchel
 	wrists = /obj/item/clothing/neck/roguetown/psicross/naledi
 	shoes = /obj/item/clothing/shoes/roguetown/sandals
@@ -38,4 +38,4 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/black
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	backpack_contents = list(/obj/item/rogueweapon/huntingknife = 1)
+	backpack_contents = list(/obj/item/weapon/huntingknife = 1)

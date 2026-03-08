@@ -116,11 +116,11 @@ GLOBAL_LIST_EMPTY(players_in_dream)
 /obj/effect/spawner/lootdrop/roguetown/abyssor
 	icon_state = "cot"
 	loot = list(
-		/obj/item/rogueweapon/greataxe/dreamscape = 50,
-		/obj/item/rogueweapon/halberd/glaive/dreamscape = 25,
-		/obj/item/rogueweapon/greatsword/bsword/dreamscape = 25,
+		/obj/item/weapon/greataxe/dreamscape = 50,
+		/obj/item/weapon/halberd/glaive/dreamscape = 25,
+		/obj/item/weapon/greatsword/bsword/dreamscape = 25,
 		/obj/item/abyssal_marker/volatile = 150,
-		/obj/item/rogueweapon/spear/dreamscape_trident = 5,
+		/obj/item/weapon/spear/dreamscape_trident = 5,
 		/obj/item/reagent_containers/food/snacks/fish/creepy_shark = 1,
 		/obj/item/reagent_containers/food/snacks/fish/creepy_squid = 1,
 	)

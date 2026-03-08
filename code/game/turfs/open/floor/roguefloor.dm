@@ -553,7 +553,7 @@
 		return
 	
 	// Check if the user is holding a shovel
-	var/obj/item/rogueweapon/shovel/S = L.get_active_held_item()
+	var/obj/item/weapon/shovel/S = L.get_active_held_item()
 	if(!istype(S))
 		return
 	

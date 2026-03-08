@@ -72,7 +72,7 @@
 
 /datum/crafting_recipe/roguetown/leather/container/gwstrap
 	name = "greatweapon strap"
-	result = /obj/item/rogueweapon/scabbard/gwstrap
+	result = /obj/item/weapon/scabbard/gwstrap
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/rope = 1)
 
@@ -129,7 +129,7 @@
 
 /datum/crafting_recipe/roguetown/leather/container/scabbard/sword
 	name = "sword scabbard"
-	result = list(/obj/item/rogueweapon/scabbard/sword)
+	result = list(/obj/item/weapon/scabbard/sword)
 	reqs = list(
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/fibers = 1)
@@ -137,7 +137,7 @@
 
 /datum/crafting_recipe/roguetown/leather/container/scabbard/dagger
 	name = "dagger sheath"
-	result = list(/obj/item/rogueweapon/scabbard/sheath)
+	result = list(/obj/item/weapon/scabbard/sheath)
 	reqs = list(
 		/obj/item/natural/hide/cured = 1)
 	craftdiff = 2

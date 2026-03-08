@@ -37,10 +37,10 @@
 /datum/outfit/job/roguetown/adventurer/masterblacksmith/pre_equip(mob/living/carbon/human/H)
 	..()
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/hammer/iron
-	beltl = /obj/item/rogueweapon/tongs
+	beltr = /obj/item/weapon/hammer/iron
+	beltl = /obj/item/weapon/tongs
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid
-	mouth = /obj/item/rogueweapon/huntingknife
+	mouth = /obj/item/weapon/huntingknife
 
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	mask = /obj/item/clothing/mask/rogue/facemask/steel
@@ -54,7 +54,7 @@
 						/obj/item/rogueore/iron=2,
 						/obj/item/rogueore/silver=1,
 						/obj/item/flashlight/flare/torch = 1,
-						/obj/item/rogueweapon/scabbard/sheath = 1
+						/obj/item/weapon/scabbard/sheath = 1
 						)
 	if(H.pronouns == HE_HIM)
 		shoes = /obj/item/clothing/shoes/roguetown/boots/leather

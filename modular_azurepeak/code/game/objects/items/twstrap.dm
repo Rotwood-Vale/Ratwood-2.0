@@ -27,7 +27,7 @@
 	sewrepair = TRUE
 
 /obj/item/twstrap/attackby(obj/A, mob/living/carbon/user, params)
-	if(istype(A, /obj/item/throwing_star) || istype(A, /obj/item/rogueweapon/huntingknife))
+	if(istype(A, /obj/item/throwing_star) || istype(A, /obj/item/weapon/huntingknife))
 		if(tweps.len < max_storage)
 			user.transferItemToLoc(A, tweps)
 			tweps += A

@@ -45,7 +45,7 @@
 		if(istype(I, /obj/item/rogueore/gold))
 			sacrifice = I
 
-	if(istype(target, /obj/item/rogueweapon))
+	if(istype(target, /obj/item/weapon))
 		var/obj/item/I = target
 		var/enchant_type = input(user, "Select the type of enchantment you want to apply:", "Enchant Weapon") as anything in enchant_types
 		if(!enchant_type)

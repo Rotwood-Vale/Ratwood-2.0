@@ -43,11 +43,11 @@
 		belt = /obj/item/storage/belt/rogue/leather
 		backl = /obj/item/fishingrod
 		beltr = /obj/item/cooking/pan
-		mouth = /obj/item/rogueweapon/huntingknife
+		mouth = /obj/item/weapon/huntingknife
 		beltl = /obj/item/flint
 		backpack_contents = list(
 							/obj/item/natural/worms = 2,
-							/obj/item/rogueweapon/shovel/small=1,
+							/obj/item/weapon/shovel/small=1,
 							/obj/item/flashlight/flare/torch = 1,
 							)
 	else
@@ -60,9 +60,9 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		beltr = /obj/item/fishingrod
-		beltl = /obj/item/rogueweapon/huntingknife
+		beltl = /obj/item/weapon/huntingknife
 		backpack_contents = list(
 			/obj/item/natural/worms = 2,
-			/obj/item/rogueweapon/shovel/small=1,
-			/obj/item/rogueweapon/scabbard/sheath = 1
+			/obj/item/weapon/shovel/small=1,
+			/obj/item/weapon/scabbard/sheath = 1
 			)

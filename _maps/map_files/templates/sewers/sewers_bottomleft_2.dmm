@@ -28,7 +28,7 @@
 /area/rogue/under/town/sewer)
 "n" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/hammer/iron,
+/obj/item/weapon/hammer/iron,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "p" = (

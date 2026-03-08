@@ -26,13 +26,13 @@
 	var/obj/item/conjured_tool = null
 
 	var/list/tool_options = list(
-		"Hoe" = /obj/item/rogueweapon/hoe,
-		"Thresher" = /obj/item/rogueweapon/thresher,
-		"Sickle" = /obj/item/rogueweapon/sickle,
-		"Pitchfork" = /obj/item/rogueweapon/pitchfork,
-		"Tongs" = /obj/item/rogueweapon/tongs,
-		"Hammer" = /obj/item/rogueweapon/hammer/iron,
-		"Shovel" = /obj/item/rogueweapon/shovel,
+		"Hoe" = /obj/item/weapon/hoe,
+		"Thresher" = /obj/item/weapon/thresher,
+		"Sickle" = /obj/item/weapon/sickle,
+		"Pitchfork" = /obj/item/weapon/pitchfork,
+		"Tongs" = /obj/item/weapon/tongs,
+		"Hammer" = /obj/item/weapon/hammer/iron,
+		"Shovel" = /obj/item/weapon/shovel,
 		"Fishing Rod" = /obj/item/fishingrod,
 	)
 

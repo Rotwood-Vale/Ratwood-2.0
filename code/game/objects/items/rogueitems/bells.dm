@@ -83,7 +83,7 @@
 /obj/structure/stationary_bell/attackby(obj/item/used_item, mob/user)
 	if(ringing)
 		return
-	if(istype(used_item, /obj/item/rogueweapon/mace/church))
+	if(istype(used_item, /obj/item/weapon/mace/church))
 		playsound(loc, 'sound/misc/bell.ogg', 50, 1)
 		ring_bell()	//sound effect for players within 150 tiles
 		loud_message("The [src] rings, echoing solemnly", hearing_distance = 150)

@@ -1,14 +1,14 @@
 //Lazily shoving all donator fluff items in here for now. Feel free to make this a sub-folder or something, I think it's just easier to keep a list here and just modify as needed.
 
 //Plexiant's donator item - rapier
-/obj/item/rogueweapon/sword/rapier/aliseo
+/obj/item/weapon/sword/rapier/aliseo
 	name = "Rapier di Aliseo"
 	desc = "A rapier of sporting a steel blade and decrotive silver-plating. Elaborately designed in classic intricate yet functional Etrucian style, the pummel appears to be embedded with a cut emerald with a family crest engraved in the fine leather grip of the handle."
 	icon_state = "plex"
 	icon = 'modular_azurepeak/icons/obj/items/donor_weapons_64.dmi'
 
 //Ryebread's donator item - estoc
-/obj/item/rogueweapon/estoc/worttrager
+/obj/item/weapon/estoc/worttrager
 	name = "Wortträger"
 	desc = "An imported Grenzelhoftian panzerstecher, a superbly crafted implement devoid of armory marks- merely bearing a maker's mark and the Zenitstadt seal. This one has a grip of walnut wood, and a pale saffira set within the crossguard. The ricasso is engraved with Ravoxian scripture."
 	icon_state = "mansa"
@@ -75,7 +75,7 @@
 			H.update_inv_head()
 
 //Bigfoot's donator item - steel great axe with gilded pattern
-/obj/item/rogueweapon/greataxe/steel/gilded
+/obj/item/weapon/greataxe/steel/gilded
 	name = "gilded greataxe"
 	desc = "A gilded steel great axe, a long-handled axe with a single blade made for ruining someone's day beyond any measure.."
 	icon_state = "orin"
@@ -93,20 +93,20 @@
 	sleeved = 'modular_azurepeak/icons/clothing/onmob/donor_sleeves_armor.dmi' //No sleeves
 
 //Eiren's donator items - zweihander and sabres
-/obj/item/rogueweapon/greatsword/zwei/eiren
+/obj/item/weapon/greatsword/zwei/eiren
 	name = "Regret"
 	desc = "People bring the small flames of their wishes together... to keep them from burning out, we cast our own flames into the biggest fire we can find. But you know... I didn't bring a flame with me. As for me, maybe I just wandered up to the campfire to warm myself a little..."
 	icon_state = "eiren"
 	icon = 'modular_azurepeak/icons/obj/items/donor_weapons_64.dmi'
 
-/obj/item/rogueweapon/sword/sabre/eiren
+/obj/item/weapon/sword/sabre/eiren
 	name = "Lunae"
 	desc = "Two blades, one forged in Noc's light, a soothing breath of clarity. Here, and here alone, were moon and fire ever together."
 	icon_state = "eiren2"
 	icon = 'modular_azurepeak/icons/obj/items/donor_weapons.dmi'
 	sheathe_icon = "eiren2"
 
-/obj/item/rogueweapon/sword/sabre/eiren/small
+/obj/item/weapon/sword/sabre/eiren/small
 	name = "Cinis"
 	desc = "Two blades, the other born of Astrata's ire, a raging flame of passion. Here, and here alone, were fates severed and torn."
 	icon_state = "eiren3"
@@ -114,14 +114,14 @@
 	sheathe_icon = "eiren3"
 
 //pretzel's special sword
-/obj/item/rogueweapon/greatsword/weeperslathe
+/obj/item/weapon/greatsword/weeperslathe
 	name = "Weeper's Lathe"
 	desc = "A recreation of a gilbronze greatsword, wrought in steel. Inscribed on the blade is a declaration: \"I HAVE ONLY A SHORT TYME TO LYVE, BUT I AM NOT AFRAID TO DIE.\"" 
 	icon_state = "weeperslathe"
 	icon = 'modular_azurepeak/icons/obj/items/donor_weapons_64.dmi'
 
 //inverserun's claymore
-/obj/item/rogueweapon/greatsword/zwei/inverserun
+/obj/item/weapon/greatsword/zwei/inverserun
 	name = "Votive Thorns"
 	desc = "Promises hurt, but so does plucking rosa. Hoping hurts, but so does looking at the beauty of Astrata's light. Pick yourself back up. Remember your promise, despite the thorns."
 	icon_state = "inverse"

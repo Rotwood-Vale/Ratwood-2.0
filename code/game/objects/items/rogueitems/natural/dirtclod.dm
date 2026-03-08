@@ -7,8 +7,8 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/natural/dirtclod/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rogueweapon/shovel))
-		var/obj/item/rogueweapon/shovel/S = W
+	if(istype(W, /obj/item/weapon/shovel))
+		var/obj/item/weapon/shovel/S = W
 		if(!S.heldclod && user.used_intent.type == /datum/intent/shovelscoop)
 			playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
 			src.forceMove(S)
@@ -65,8 +65,8 @@
 	climb_offset = 10
 
 /obj/structure/fluff/clodpile/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rogueweapon/shovel))
-		var/obj/item/rogueweapon/shovel/S = W
+	if(istype(W, /obj/item/weapon/shovel))
+		var/obj/item/weapon/shovel/S = W
 		if(user.used_intent.type == /datum/intent/shovelscoop)
 			if(!S.heldclod)
 				playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)

@@ -36,7 +36,7 @@
 
 /datum/outfit/job/roguetown/adventurer/cheesemaker/pre_equip(mob/living/carbon/human/H)
 	..()
-	mouth = /obj/item/rogueweapon/huntingknife
+	mouth = /obj/item/weapon/huntingknife
 	belt = /obj/item/storage/belt/rogue/leather
 	if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
@@ -53,7 +53,7 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	beltl = /obj/item/flint
-	beltr = /obj/item/rogueweapon/scabbard/sheath
+	beltr = /obj/item/weapon/scabbard/sheath
 	backpack_contents = list(
 		/obj/item/reagent_containers/powder/salt = 3,
 		/obj/item/reagent_containers/food/snacks/rogue/cheddar = 2,

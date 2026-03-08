@@ -17,8 +17,8 @@
 
 /datum/outfit/job/roguetown/vagabond/deprived/pre_equip(mob/living/carbon/human/H)
 	..()
-	l_hand = /obj/item/rogueweapon/shield/wood
-	r_hand = /obj/item/rogueweapon/mace/woodclub
+	l_hand = /obj/item/weapon/shield/wood
+	r_hand = /obj/item/weapon/mace/woodclub
 	if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/rags
 	else if(should_wear_masc_clothes(H))

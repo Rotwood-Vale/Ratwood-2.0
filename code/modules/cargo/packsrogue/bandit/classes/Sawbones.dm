@@ -126,12 +126,12 @@
 /datum/supply_pack/rogue/Sawbones/rapier
 	name = "Rapier"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/sword/rapier)
+	contains = list(/obj/item/weapon/sword/rapier)
 
 /datum/supply_pack/rogue/Sawbones/estoc
 	name = "Estoc"
 	cost = 40
-	contains = list(/obj/item/rogueweapon/estoc)
+	contains = list(/obj/item/weapon/estoc)
 
 ///////////
 // BOMBS //

@@ -27,7 +27,7 @@
 	. = ..()
 	. |= FALL_NO_MESSAGE
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons
+/obj/item/weapon/huntingknife/idagger/harpy_talons
 	name = "talons"
 	desc = "Harpy talons. Birds of prey and all..."
 	experimental_inhand = FALSE
@@ -50,13 +50,13 @@
 	var/repair_time = 250 //The amount of time between each repair
 	var/last_repair //last time the tattoos got repaired
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
+/obj/item/weapon/huntingknife/idagger/harpy_talons/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
 	. = ..()
 	if(obj_integrity < max_integrity)
 		START_PROCESSING(SSobj, src)
 		return
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/process()
+/obj/item/weapon/huntingknife/idagger/harpy_talons/process()
 	if(obj_integrity >= max_integrity) 
 		STOP_PROCESSING(SSobj, src)
 		src.visible_message(span_notice("[src] are in a much better shape now, enough resting!"), vision_distance = 1)
@@ -66,7 +66,7 @@
 		obj_integrity = min(obj_integrity + src.repair_amount, src.max_integrity)
 	..()
 
-///obj/item/rogueweapon/huntingknife/equipped(mob/user, slot, initial = FALSE) // idk if I should remove the sound, I think it's p neat even if a bit gamey
+///obj/item/weapon/huntingknife/equipped(mob/user, slot, initial = FALSE) // idk if I should remove the sound, I think it's p neat even if a bit gamey
 
 /datum/intent/wing/cut
 	name = "cut"
@@ -116,22 +116,22 @@
 	damfactor = 1.1
 	blade_class = BCLASS_PICK
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/equipped(mob/user, slot, initial)
+/obj/item/weapon/huntingknife/idagger/harpy_talons/equipped(mob/user, slot, initial)
 	. = ..()
 	wielded = TRUE
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/attack_self(mob/user)
+/obj/item/weapon/huntingknife/idagger/harpy_talons/attack_self(mob/user)
 	if(user.pulling)
 		var/mob/living/passenger = user.pulling
 		user.stop_pulling()
 		passenger.remove_status_effect(/datum/status_effect/debuff/harpy_passenger)
 		return
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/Initialize(mapload)
+/obj/item/weapon/huntingknife/idagger/harpy_talons/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/dropped(mob/living/carbon/human/user)
+/obj/item/weapon/huntingknife/idagger/harpy_talons/dropped(mob/living/carbon/human/user)
 	. = ..()
 	src.moveToNullspace()
 	if(user.pulling)
@@ -140,11 +140,11 @@
 		passenger.remove_status_effect(/datum/status_effect/debuff/harpy_passenger)
 	user.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
+/obj/item/weapon/huntingknife/idagger/harpy_talons/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
 	. = ..()
 	. |= FALL_NO_MESSAGE
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/weapon/huntingknife/idagger/harpy_talons/attack(mob/living/target, mob/living/carbon/human/user)
 	if(user.used_intent.type == /datum/intent/wing/grab)
 		if(isliving(target))
 			if(target != user)

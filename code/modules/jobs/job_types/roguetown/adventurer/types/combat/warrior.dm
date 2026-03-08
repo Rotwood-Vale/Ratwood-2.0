@@ -39,30 +39,30 @@
 		switch(weapon_choice)
 			if("Longsword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-				backr = /obj/item/rogueweapon/sword/long
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				backr = /obj/item/weapon/sword/long
+				beltr = /obj/item/weapon/scabbard/sword
 			if("Mace")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
-				beltr = /obj/item/rogueweapon/mace
+				beltr = /obj/item/weapon/mace
 			if("Billhook")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
-				r_hand = /obj/item/rogueweapon/spear/billhook
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/billhook
+				backr = /obj/item/weapon/scabbard/gwstrap
 			if("Battle Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-				backr = /obj/item/rogueweapon/stoneaxe/battle
+				backr = /obj/item/weapon/stoneaxe/battle
 			if("Short Sword & Iron Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				backr = /obj/item/rogueweapon/shield/iron
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/short/iron
+				backr = /obj/item/weapon/shield/iron
+				beltr = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/short/iron
 			if("Iron Saber & Wood Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/saber/iron
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				backr = /obj/item/rogueweapon/shield/wood
+				r_hand = /obj/item/weapon/sword/saber/iron
+				beltr = /obj/item/weapon/scabbard/sword
+				backr = /obj/item/weapon/shield/wood
 		var/armors = list("Chainmaille Set","Iron Breastplate","Gambeson & Helmet","Light Raneshi Armor")
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
 		switch(armor_choice)
@@ -101,8 +101,8 @@
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 
 /datum/advclass/sfighter/duelist
@@ -139,12 +139,12 @@
 		switch(weapon_choice)
 			if("Rapier")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-				l_hand = /obj/item/rogueweapon/sword/rapier
-				r_hand = /obj/item/rogueweapon/scabbard/sword
+				l_hand = /obj/item/weapon/sword/rapier
+				r_hand = /obj/item/weapon/scabbard/sword
 			if("Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
-				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
-				beltr = /obj/item/rogueweapon/scabbard/sheath
+				r_hand = /obj/item/weapon/huntingknife/idagger/steel
+				beltr = /obj/item/weapon/scabbard/sheath
 	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	head = /obj/item/clothing/head/roguetown/duelisthat
 	mask = /obj/item/clothing/mask/rogue/duelmask
@@ -157,12 +157,12 @@
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/shield/buckler
+	backr = /obj/item/weapon/shield/buckler
 	belt = /obj/item/storage/belt/rogue/leather
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/parrying = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/clothing/ring/duelist = 2
 		)
 
@@ -203,34 +203,34 @@
 			if("Bronze Katar")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-				r_hand = /obj/item/rogueweapon/katar/bronze
+				r_hand = /obj/item/weapon/katar/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Bronze Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/bronze
+				r_hand = /obj/item/weapon/stoneaxe/woodcut/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Bronze Sword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/bronze
+				beltr = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Bronze Mace")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-				r_hand = /obj/item/rogueweapon/mace/bronze
+				r_hand = /obj/item/weapon/mace/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Bronze Spear")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-				r_hand = /obj/item/rogueweapon/spear/bronze
+				r_hand = /obj/item/weapon/spear/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Discipline - Whiphunter")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				head = /obj/item/clothing/head/roguetown/headband/monk/barbarian
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
-				r_hand = /obj/item/rogueweapon/whip/bronze
+				r_hand = /obj/item/weapon/whip/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 				H.change_stat(STATKEY_SPD, -1) //Little more protection, little less speed.
 				H.change_stat(STATKEY_PER, 1) //Allows for more critical usage of the Whip's strengths.
@@ -252,8 +252,8 @@
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/rogueweapon/huntingknife/bronze = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/bronze = 1,
 		)
 
 /datum/advclass/sfighter/ironclad
@@ -334,25 +334,25 @@
 		switch(weapon_choice)
 			if("Executioner's Sword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				backr = /obj/item/rogueweapon/sword/long/exe
+				backr = /obj/item/weapon/sword/long/exe
 			if("Warhammer + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				beltr = /obj/item/rogueweapon/mace/warhammer
-				backr = /obj/item/rogueweapon/shield/iron
+				beltr = /obj/item/weapon/mace/warhammer
+				backr = /obj/item/weapon/shield/iron
 			if("Flail + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				beltr = /obj/item/rogueweapon/flail
-				backr = /obj/item/rogueweapon/shield/iron
+				beltr = /obj/item/weapon/flail
+				backr = /obj/item/weapon/shield/iron
 			if("Lucerne")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/eaglebeak/lucerne
+				backr = /obj/item/weapon/scabbard/gwstrap
 			if("Greataxe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/greataxe
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/greataxe
+				backr = /obj/item/weapon/scabbard/gwstrap
 
 /datum/advclass/sfighter/mhunter
 	name = "Exorcist"
@@ -391,75 +391,75 @@
 		switch(silver_choice)
 			if("Silver Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/huntingknife/idagger/silver
-				beltr = /obj/item/rogueweapon/scabbard/sheath
+				r_hand = /obj/item/weapon/huntingknife/idagger/silver
+				beltr = /obj/item/weapon/scabbard/sheath
 			if("Silver Shortsword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/short/silver
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/short/silver
+				beltr = /obj/item/weapon/scabbard/sword
 			if("Silver Arming Sword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/silver
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/silver
+				beltr = /obj/item/weapon/scabbard/sword
 			if("Silver Rapier")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/rapier/silver
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/rapier/silver
+				beltr = /obj/item/weapon/scabbard/sword
 			if("Silver Longsword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/long/silver
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/long/silver
+				beltr = /obj/item/weapon/scabbard/sword
 			if("Silver Broadsword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser/silver
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/long/kriegmesser/silver
+				beltr = /obj/item/weapon/scabbard/sword
 			if("Silver Mace")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/mace/steel/silver
+				r_hand = /obj/item/weapon/mace/steel/silver
 			if("Silver Warhammer")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/mace/warhammer/steel/silver
+				r_hand = /obj/item/weapon/mace/warhammer/steel/silver
 			if("Silver Morningstar")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/flail/sflail/silver
+				r_hand = /obj/item/weapon/flail/sflail/silver
 			if("Silver Whip")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/whip/silver
+				r_hand = /obj/item/weapon/whip/silver
 			if("Silver War Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/silver
+				r_hand = /obj/item/weapon/stoneaxe/woodcut/silver
 			if("Silver Poleaxe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/greataxe/silver
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/greataxe/silver
+				backr = /obj/item/weapon/scabbard/gwstrap
 			if("Silver Spear")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/spear/silver
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/silver
+				backr = /obj/item/weapon/scabbard/gwstrap
 			if("Silver Quarterstaff")
 				H.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/silver
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/woodstaff/quarterstaff/silver
+				backr = /obj/item/weapon/scabbard/gwstrap
 
 		var/sidearm = list("Dagger", "Parrying Dagger", "Seax", "Blessed Silver Stake", "Blessed Silver Shovel", "Greatshield")
 		var/sidearm_choice = input(H, "Choose your SIDEARM.", "SAY YOUR PRAYERS.") as anything in sidearm
 		switch(sidearm_choice)
 			if("Dagger")
-				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
+				l_hand = /obj/item/weapon/huntingknife/idagger/steel
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if("Parrying Dagger")
-				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
+				l_hand = /obj/item/weapon/huntingknife/idagger/steel/parrying
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if("Seax")
-				l_hand = /obj/item/rogueweapon/huntingknife/combat
+				l_hand = /obj/item/weapon/huntingknife/combat
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if("Blessed Silver Stake")
-				l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed
+				l_hand = /obj/item/weapon/huntingknife/idagger/silver/stake/preblessed
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if("Blessed Silver Shovel")
-				l_hand = /obj/item/rogueweapon/shovel/silver/preblessed //Unlocks the secret 'Shovel Knight' subclass. No dagger skills if you take this. Doesn't scale off anything, I think. Raw style.
+				l_hand = /obj/item/weapon/shovel/silver/preblessed //Unlocks the secret 'Shovel Knight' subclass. No dagger skills if you take this. Doesn't scale off anything, I think. Raw style.
 			if("Greatshield")
-				l_hand = /obj/item/rogueweapon/shield/tower/metal
+				l_hand = /obj/item/weapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
 		var/discipline = list("Traditionalist - Bewitched Alchemics + Hauberk", "Reformist - Dodge Expert + Haubergeon", "Orthodoxist - Plate Training + Cuirass")
@@ -521,8 +521,8 @@
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/metal = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/rogueweapon/huntingknife = 1, //Ensures that Exorcists who take the Shovel can still butcher wildlife. Minor oversight on my part.
+		/obj/item/weapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife = 1, //Ensures that Exorcists who take the Shovel can still butcher wildlife. Minor oversight on my part.
 		)
 	if(H.age == AGE_OLD)
 		H.change_stat(STATKEY_INT, 1)

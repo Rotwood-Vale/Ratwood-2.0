@@ -1080,7 +1080,7 @@
 /datum/crafting_recipe/roguetown/structure/spike_pit
 	name = "spike pit (Dirt Floor needed)"
 	result = list(/obj/structure/spike_pit)
-	tools = list(/obj/item/rogueweapon/shovel = 1)
+	tools = list(/obj/item/weapon/shovel = 1)
 	reqs = list(/obj/item/grown/log/tree/stake = 3)
 	skillcraft = /datum/skill/craft/crafting
 	craftdiff = 1	//Low skill, but at least some. Kinda decently strong after all w/ combat.

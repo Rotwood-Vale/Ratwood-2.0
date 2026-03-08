@@ -48,7 +48,7 @@
 	/obj/item/alch/salvia,
 	/obj/item/alch/artemisia,
 	/obj/item/alch/rosa,
-	/obj/item/rogueweapon/huntingknife/idagger/navaja,
+	/obj/item/weapon/huntingknife/idagger/navaja,
 	/obj/item/lockpick,
 	/obj/item/reagent_containers/glass/bottle/alchemical/strpot,
 	/obj/item/reagent_containers/glass/bottle/alchemical/endpot,

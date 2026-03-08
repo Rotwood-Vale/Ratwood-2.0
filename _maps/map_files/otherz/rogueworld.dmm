@@ -124,7 +124,7 @@
 /area/rogue/outdoors/rtfield)
 "sk" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/rogueweapon/sword/sabre/dec,
+/obj/item/weapon/sword/sabre/dec,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
 "st" = (
@@ -271,7 +271,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/town/sargoth)
 "RW" = (
-/obj/item/rogueweapon/shovel,
+/obj/item/weapon/shovel,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
 "Sc" = (
@@ -279,9 +279,9 @@
 /area/rogue/under/cave)
 "TB" = (
 /obj/structure/closet/crate/chest/gold,
-/obj/item/rogueweapon/hoe,
-/obj/item/rogueweapon/pick,
-/obj/item/rogueweapon/hammer,
+/obj/item/weapon/hoe,
+/obj/item/weapon/pick,
+/obj/item/weapon/hammer,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
 "TS" = (

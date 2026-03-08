@@ -57,7 +57,7 @@
 	H.adjust_blindness(-3)
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/key/tavern
-	beltr = /obj/item/rogueweapon/huntingknife/cleaver
+	beltr = /obj/item/weapon/huntingknife/cleaver
 	backr = /obj/item/storage/backpack/rogue/satchel
 	cloak = /obj/item/clothing/cloak/apron/cook
 	head = /obj/item/clothing/head/roguetown/cookhat

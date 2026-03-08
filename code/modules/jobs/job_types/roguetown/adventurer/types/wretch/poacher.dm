@@ -51,8 +51,8 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	backpack_contents = list(
 		/obj/item/bait = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
@@ -79,14 +79,14 @@
 		var/weapon_choice = input(H, "Choose your melee weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Dagger")
-				beltr = /obj/item/rogueweapon/scabbard/sheath
-				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel //Poacher already has Expert in Knives, but as a compensation you get a steel-tier dagger, whereas with Axe and Cudgel you get iron-tier weapons.
+				beltr = /obj/item/weapon/scabbard/sheath
+				r_hand = /obj/item/weapon/huntingknife/idagger/steel //Poacher already has Expert in Knives, but as a compensation you get a steel-tier dagger, whereas with Axe and Cudgel you get iron-tier weapons.
 			if("Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-				beltr = /obj/item/rogueweapon/stoneaxe/woodcut
+				beltr = /obj/item/weapon/stoneaxe/woodcut
 			if ("Cudgel")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-				beltr = /obj/item/rogueweapon/mace/cudgel
+				beltr = /obj/item/weapon/mace/cudgel
 		var/rangedweapons = list("Recurve Bow", "Crossbow", "Sling")
 		var/rangedweapon_choice = input(H, "Choose your ranged weapon.", "TAKE UP ARMS") as anything in rangedweapons
 		switch(rangedweapon_choice)

@@ -1,4 +1,4 @@
-/obj/item/rogueweapon/greataxe/dreamscape
+/obj/item/weapon/greataxe/dreamscape
 	force = 10
 	force_wielded = 35
 	name = "otherworldly axe"
@@ -14,7 +14,7 @@
 	item_flags = DREAM_ITEM
 	wbalance = WBALANCE_HEAVY
 
-/obj/item/rogueweapon/greataxe/dreamscape/active
+/obj/item/weapon/greataxe/dreamscape/active
 	// to do, make this burn you if you don't regularly soak it.
 	force = 15
 	force_wielded = 40

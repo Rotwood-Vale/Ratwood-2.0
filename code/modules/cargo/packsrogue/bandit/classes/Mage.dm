@@ -136,27 +136,27 @@
 /datum/supply_pack/rogue/Mage/leather/woodenstaff
 	name = "Wooden Staff"
 	cost = 5
-	contains = list(/obj/item/rogueweapon/woodstaff)
+	contains = list(/obj/item/weapon/woodstaff)
 
 /datum/supply_pack/rogue/Mage/leather/qstaff
 	name = "Iron quarterstaff"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/woodstaff/quarterstaff/iron)
+	contains = list(/obj/item/weapon/woodstaff/quarterstaff/iron)
 
 /datum/supply_pack/rogue/Mage/leather/sqstaff
 	name = "Steel quarterstaff"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/woodstaff/quarterstaff/steel)
+	contains = list(/obj/item/weapon/woodstaff/quarterstaff/steel)
 
 /datum/supply_pack/rogue/Mage/sdagger
 	name = "Silver Dagger"
 	cost = 60
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver)
+	contains = list(/obj/item/weapon/huntingknife/idagger/silver)
 
 /datum/supply_pack/rogue/Mage/asdagger
 	name = "Arcyne Silver Dagger"
 	cost = 120
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne)
+	contains = list(/obj/item/weapon/huntingknife/idagger/silver/arcyne)
 
 ///////////
 // MAGIC //

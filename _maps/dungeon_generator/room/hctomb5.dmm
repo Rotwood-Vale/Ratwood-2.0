@@ -343,7 +343,7 @@
 	pixel_y = 0
 	},
 /obj/structure/table/wood,
-/obj/item/rogueweapon/huntingknife/idagger/silver{
+/obj/item/weapon/huntingknife/idagger/silver{
 	pixel_x = 6;
 	pixel_y = 5
 	},

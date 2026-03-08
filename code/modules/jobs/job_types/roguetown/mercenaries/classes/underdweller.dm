@@ -54,16 +54,16 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather/black
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/pick
+	beltl = /obj/item/weapon/stoneaxe/woodcut/pick
 	beltr = /obj/item/storage/detpack
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/shield/wood
+	backr = /obj/item/weapon/shield/wood
 	backpack_contents = list(
 		/obj/item/key/mercenary,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
 		/obj/item/flint,
-		/obj/item/rogueweapon/huntingknife,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.merctype = 12
 

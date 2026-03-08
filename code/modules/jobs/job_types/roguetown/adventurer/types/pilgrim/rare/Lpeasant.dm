@@ -54,9 +54,9 @@
 						/obj/item/seeds/apple=1,
 						/obj/item/ash=1,
 						/obj/item/flashlight/flare/torch = 1,
-						/obj/item/rogueweapon/huntingknife = 1,
-						/obj/item/rogueweapon/scabbard/sheath = 1
+						/obj/item/weapon/huntingknife = 1,
+						/obj/item/weapon/scabbard/sheath = 1
 						)
-	beltl = /obj/item/rogueweapon/sickle
+	beltl = /obj/item/weapon/sickle
 	beltr = /obj/item/flint
-	backr = /obj/item/rogueweapon/hoe
+	backr = /obj/item/weapon/hoe

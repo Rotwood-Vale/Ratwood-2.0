@@ -25,13 +25,13 @@
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron/aalloy
 	gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
 	if(prob(33))
-		l_hand = /obj/item/rogueweapon/spear/aalloy
+		l_hand = /obj/item/weapon/spear/aalloy
 	else if(prob(33))
-		l_hand = /obj/item/rogueweapon/flail/aflail
-		r_hand = /obj/item/rogueweapon/shield/tower/metal/alloy/skeleton
+		l_hand = /obj/item/weapon/flail/aflail
+		r_hand = /obj/item/weapon/shield/tower/metal/alloy/skeleton
 	else
-		l_hand = /obj/item/rogueweapon/sword/short/gladius/agladius	// ave
-		r_hand = /obj/item/rogueweapon/shield/tower/metal/alloy/skeleton
+		l_hand = /obj/item/weapon/sword/short/gladius/agladius	// ave
+		r_hand = /obj/item/weapon/shield/tower/metal/alloy/skeleton
 
 
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
@@ -45,7 +45,7 @@
 	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 
-/obj/item/rogueweapon/shield/tower/metal/alloy/skeleton
+/obj/item/weapon/shield/tower/metal/alloy/skeleton
 	force = 10
 	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship. This one seems half rotted."
 

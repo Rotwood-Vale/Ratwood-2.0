@@ -45,17 +45,17 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Stunmace & Shield")
-				r_hand = /obj/item/rogueweapon/mace/stunmace
-				backl = /obj/item/rogueweapon/shield/iron
+				r_hand = /obj/item/weapon/mace/stunmace
+				backl = /obj/item/weapon/shield/iron
 			if("Maul - 14STR Minimum")
-				r_hand = /obj/item/rogueweapon/mace/maul
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/mace/maul
+				backl = /obj/item/weapon/scabbard/gwstrap
 
 	backpack_contents = list(//Iron dagger and ale instead of red.
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
+		/obj/item/weapon/huntingknife/idagger = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/keyring/guardcastle = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1,
 		)
 

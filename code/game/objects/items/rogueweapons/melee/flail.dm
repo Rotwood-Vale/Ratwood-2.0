@@ -1,4 +1,4 @@
-/obj/item/rogueweapon/flail
+/obj/item/weapon/flail
 	force = 25
 	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flail)
 	name = "flail"
@@ -93,7 +93,7 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	item_d_type = "blunt"
 
-/obj/item/rogueweapon/flail/getonmobprop(tag)
+/obj/item/weapon/flail/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -102,7 +102,7 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/flail/aflail
+/obj/item/weapon/flail/aflail
 	name = "decrepit flail"
 	desc = "A spiked ball of wrought bronze, chained to a rotwooden handle. The chains groan with every twirl, strained by forces it hadn't felt in millenia; swing it a bit too hard, and there's a chance that the flailhead might completely fly off."
 	icon_state = "aflail"
@@ -112,20 +112,20 @@
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
-/obj/item/rogueweapon/flail/sflail/paflail
+/obj/item/weapon/flail/sflail/paflail
 	name = "ancient flail"
 	desc = "A spiked ball of polished gilbranze, chained to a reinforced handle. They say that His children worshipped the flail above all else, for its twirls replicated the Comet Syon's blazing flights."
 	icon_state = "aflail"
 	smeltresult = /obj/item/ingot/aaslag
 
-/obj/item/rogueweapon/flail/sflail
+/obj/item/weapon/flail/sflail
 	force = 30
 	icon_state = "flail"
 	desc = "This is a swift, steel flail. Strikes hard and far."
 	smeltresult = /obj/item/ingot/steel
 	minstr = 5
 
-/obj/item/rogueweapon/flail/sflail/silver
+/obj/item/weapon/flail/sflail/silver
 	force = 35
 	icon_state = "silverflail"
 	name = "silver morningstar"
@@ -135,7 +135,7 @@
 	minstr = 12
 	is_silver = TRUE
 
-/obj/item/rogueweapon/flail/sflail/silver/ComponentInitialize()
+/obj/item/weapon/flail/sflail/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -146,14 +146,14 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/flail/sflail/necraflail
+/obj/item/weapon/flail/sflail/necraflail
 	name = "swift journey"
 	desc = "The striking head is full of teeth, rattling viciously with ever strike, with every rotation. Each set coming from one the wielder has laid to rest. Carried alongside them as a great show of respect."
 	icon_state = "necraflail"
 	force = 35
 	is_silver = TRUE
 
-/obj/item/rogueweapon/flail/sflail/necraflail/ComponentInitialize()
+/obj/item/weapon/flail/sflail/necraflail/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -164,7 +164,7 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/flail/sflail/psyflail
+/obj/item/weapon/flail/sflail/psyflail
 	name = "psydonic flail"
 	desc = "An ornate flail, plated in a ceremonial veneer of silver. Its flanged head can crumple even the toughest of darksteel-maille."
 	icon_state = "psyflail"
@@ -174,7 +174,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/flail/sflail/psyflail/ComponentInitialize()
+/obj/item/weapon/flail/sflail/psyflail/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -185,7 +185,7 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/flail/sflail/psyflail/old
+/obj/item/weapon/flail/sflail/psyflail/old
 	name = "enduring flail"
 	desc = "An ornate flail, its silver tarnished by neglect. Bring down the COMET on the unholy."
 	icon_state = "psyflail"
@@ -196,16 +196,16 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/flail/sflail/psyflail/old/ComponentInitialize()
+/obj/item/weapon/flail/sflail/psyflail/old/ComponentInitialize()
 	return
 
-/obj/item/rogueweapon/flail/sflail/psyflail/relic
+/obj/item/weapon/flail/sflail/psyflail/relic
 	name = "Consecratia"
 	desc = "The weight of His anguish, His pain, His hope and His love for humenkind - all hanging on the ornamental silver-steel head chained to this arm. <br><br>A declaration of love for all that Psydon lives for, and a crushing reminder to the arch-nemesis that they will not triumph as long as He endures."
 	icon_state = "psymorningstar"
 	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flailrange)
 
-/obj/item/rogueweapon/flail/sflail/psyflail/relic/ComponentInitialize()
+/obj/item/weapon/flail/sflail/psyflail/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -216,7 +216,7 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/flail/peasantwarflail
+/obj/item/weapon/flail/peasantwarflail
 	force = 10
 	force_wielded = 35
 	possible_item_intents = list(/datum/intent/flail/strike)
@@ -243,7 +243,7 @@
 	wdefense = 4
 	resistance_flags = FLAMMABLE
 
-/obj/item/rogueweapon/flail/peasantwarflail/getonmobprop(tag)
+/obj/item/weapon/flail/peasantwarflail/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -252,7 +252,7 @@
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
-/obj/item/rogueweapon/flail/peasantwarflail/matthios
+/obj/item/weapon/flail/peasantwarflail/matthios
 	name = "Gilded Flail"
 	desc = "Weight of wealth in a deadly striking end."
 	icon_state = "matthiosflail"
@@ -265,11 +265,11 @@
 	anvilrepair = /datum/skill/craft/weaponsmithing
 
 
-/obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
+/obj/item/weapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "FLAIL")
 
-/obj/item/rogueweapon/flail/militia
+/obj/item/weapon/flail/militia
 	name = "militia flail"
 	desc = "In another lyfe, this humble thresher was used to pound stalks into grain. Under a militiaman's grasp, however, it has found a new purpose: to humble overconfident bandits with crippling blows."
 	icon_state = "milflail"

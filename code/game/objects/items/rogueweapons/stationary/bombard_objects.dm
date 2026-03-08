@@ -1,7 +1,7 @@
 /*
 Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 */
-/obj/item/rogueweapon/palantir
+/obj/item/weapon/palantir
 	name = "\improper palantir"
 	desc = "An arcyne compass, runed and imbued with energy. \
 	That is, of course, to say that this is able to detect leyline intersection points. Or LIPs, for short. \
@@ -16,7 +16,7 @@ Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 	var/last_y = "UNKNOWN"
 	var/last_z = "UNKNOWN"
 
-/obj/item/rogueweapon/palantir/examine(mob/user)
+/obj/item/weapon/palantir/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_FUSILIER))
 		. += "<small>Last 'X-LIP' recorded: <span class='warning'>[last_x]</span> <br>\
@@ -25,7 +25,7 @@ Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 	else
 		. += "<small>As expected, you've no understanding of the smaller details. Someone trained with smokepowder might know...</small>"
 
-/obj/item/rogueweapon/palantir/afterattack(atom/A, mob/living/user, adjacent, params) //handles coord obtaining
+/obj/item/weapon/palantir/afterattack(atom/A, mob/living/user, adjacent, params) //handles coord obtaining
 	if(!HAS_TRAIT(user, TRAIT_FUSILIER))
 		to_chat(user, "<span class='warning'>This device is beyond your understanding...</span>")
 		return
@@ -44,7 +44,7 @@ Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 		to_chat(user, "<span class='warning'>You must remain still!</span>")
 
 //This is a weapon because it makes me chuckle. Sorry.
-/obj/item/rogueweapon/woodstaff/quarterstaff/bombard_sponge
+/obj/item/weapon/woodstaff/quarterstaff/bombard_sponge
 	name = "powder ram"
 	desc = "A bulky, heavy rod with a sponge at one end, and a fool at the other. Wholly unsuited for combat."
 	icon = 'icons/weapons/stationary/bombard64.dmi'

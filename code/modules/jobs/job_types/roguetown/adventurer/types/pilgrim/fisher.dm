@@ -49,7 +49,7 @@
 		shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 		neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 		head = /obj/item/clothing/head/roguetown/fisherhat
-		mouth = /obj/item/rogueweapon/huntingknife
+		mouth = /obj/item/weapon/huntingknife
 		armor = /obj/item/clothing/suit/roguetown/armor/workervest
 		backl = /obj/item/storage/backpack/rogue/satchel
 		belt = /obj/item/storage/belt/rogue/leather
@@ -58,17 +58,17 @@
 		beltl = /obj/item/flint
 		backpack_contents = list(
 							/obj/item/natural/worms = 2,
-							/obj/item/rogueweapon/shovel/small = 1,
+							/obj/item/weapon/shovel/small = 1,
 							/obj/item/flashlight/flare/torch = 1,
 							/obj/item/recipe_book/survival = 1,
-							/obj/item/rogueweapon/scabbard/sheath = 1
+							/obj/item/weapon/scabbard/sheath = 1
 							)
 	else
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
 		shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 		neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 		head = /obj/item/clothing/head/roguetown/fisherhat
-		mouth = /obj/item/rogueweapon/huntingknife
+		mouth = /obj/item/weapon/huntingknife
 		backl = /obj/item/storage/backpack/rogue/satchel
 		belt = /obj/item/storage/belt/rogue/leather
 		backr = /obj/item/fishingrod
@@ -76,7 +76,7 @@
 		beltl = /obj/item/flint
 		backpack_contents = list(
 							/obj/item/natural/worms = 2,
-							/obj/item/rogueweapon/shovel/small = 1,
+							/obj/item/weapon/shovel/small = 1,
 							/obj/item/flashlight/flare/torch = 1,
-							/obj/item/rogueweapon/scabbard/sheath = 1
+							/obj/item/weapon/scabbard/sheath = 1
 							)

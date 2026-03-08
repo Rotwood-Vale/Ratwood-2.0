@@ -41,12 +41,12 @@
 	var/obj/item/mainhand = get_active_held_item()
 	var/obj/item/offhand = get_inactive_held_item()
 	var/obj/item/used_weapon = mainhand
-	var/obj/item/rogueweapon/shield/buckler/skiller = get_inactive_held_item()  // buckler code
-	var/obj/item/rogueweapon/shield/buckler/skillerbuck = get_active_held_item()
+	var/obj/item/weapon/shield/buckler/skiller = get_inactive_held_item()  // buckler code
+	var/obj/item/weapon/shield/buckler/skillerbuck = get_active_held_item()
 
-	if(istype(offhand, /obj/item/rogueweapon/shield/buckler))
+	if(istype(offhand, /obj/item/weapon/shield/buckler))
 		skiller.bucklerskill(H)
-	if(istype(mainhand, /obj/item/rogueweapon/shield/buckler))
+	if(istype(mainhand, /obj/item/weapon/shield/buckler))
 		skillerbuck.bucklerskill(H)  //buckler code end
 
 	if(mainhand)

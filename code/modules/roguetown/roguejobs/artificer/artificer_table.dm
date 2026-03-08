@@ -24,7 +24,7 @@
 			material = I
 			update_icon()
 			return
-	if(istype(I, /obj/item/rogueweapon/hammer))
+	if(istype(I, /obj/item/weapon/hammer))
 		user.changeNext_move(CLICK_CD_RAPID)
 		if(!material)
 			return

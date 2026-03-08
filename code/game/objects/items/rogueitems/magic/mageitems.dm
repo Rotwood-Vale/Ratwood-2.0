@@ -167,31 +167,31 @@
 	return FALSE
 
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne
+/obj/item/weapon/huntingknife/idagger/silver/arcyne
 	name = "arcyne silver dagger"
 	desc = "This dagger glows a faint purple. Quicksilver runs across its blade."
 	var/is_bled = FALSE
 	var/obj/effect/decal/cleanable/roguerune/rune_to_scribe = null
 	var/chosen_keyword
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne/Initialize(mapload)
+/obj/item/weapon/huntingknife/idagger/silver/arcyne/Initialize(mapload)
 	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=2, offset=1, color=rgb(128, 0, 128, 1))
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/attackby(obj/item/M, mob/user, params)
+/obj/item/weapon/huntingknife/idagger/silver/attackby(obj/item/M, mob/user, params)
 	if(istype(M,/obj/item/rogueore/cinnabar))
 		var/crafttime = (6 SECONDS - ((user.get_skill_level(/datum/skill/magic/arcane))* 0.5 SECONDS))
 		if(do_after(user, crafttime, target = src))
 			playsound(loc, 'sound/magic/scrapeblade.ogg', 100, TRUE)
 			to_chat(user, span_notice("I press arcyne magic into the blade and it throbs in a deep purple..."))
-			var/obj/arcyne_knife = new /obj/item/rogueweapon/huntingknife/idagger/silver/arcyne
+			var/obj/arcyne_knife = new /obj/item/weapon/huntingknife/idagger/silver/arcyne
 			qdel(M)
 			qdel(src)
 			user.put_in_active_hand(arcyne_knife)
 	else
 		return ..()
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne/attack_self(mob/living/carbon/human/user)
+/obj/item/weapon/huntingknife/idagger/silver/arcyne/attack_self(mob/living/carbon/human/user)
 
 	if(!isarcyne(user))
 		return
@@ -235,7 +235,7 @@
 		)
 		new rune_to_scribe(Turf, chosen_keyword)
 
-/obj/item/rogueweapon/huntingknife/idagger/proc/check_for_structures_and_closed_turfs(loc, obj/effect/decal/cleanable/roguerune/rune_to_scribe)
+/obj/item/weapon/huntingknife/idagger/proc/check_for_structures_and_closed_turfs(loc, obj/effect/decal/cleanable/roguerune/rune_to_scribe)
 	for(var/turf/T in range(loc, rune_to_scribe.runesize))
 		//check for /sturcture subtypes in the turf's contents
 		for(var/obj/structure/S in T.contents)

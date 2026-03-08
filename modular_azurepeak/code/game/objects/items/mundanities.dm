@@ -194,8 +194,8 @@
 
 	if(src.can_sealed == 1)
 
-//		if(A.type in subtypesof(/obj/item/rogueweapon/huntingknife)) //knife
-		if(istype(A, /obj/item/rogueweapon/huntingknife))
+//		if(A.type in subtypesof(/obj/item/weapon/huntingknife)) //knife
+		if(istype(A, /obj/item/weapon/huntingknife))
 			to_chat(user, span_notice("I dig in the blade and start opening the top of the container..."))
 			playsound(src.loc, 'sound/items/canned_food_open.ogg', 75, TRUE)
 			if(do_after(user,50, target = src))

@@ -1139,7 +1139,7 @@
 
 	return villain_text
 
-/proc/get_blade_dulling_text(obj/item/rogueweapon/I, verbose = FALSE)
+/proc/get_blade_dulling_text(obj/item/weapon/I, verbose = FALSE)
 	switch(I.blade_dulling)
 		if(DULLING_SHAFT_WOOD)
 			return "[verbose ? "Wooden" : "(W. shaft)"]"

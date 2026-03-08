@@ -552,19 +552,19 @@
 	devotion_cost = 100//See below as to why. Slowdown and funny damage.
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
-	var/obj/item/rogueweapon/conjured_spear = null
+	var/obj/item/weapon/conjured_spear = null
 
 /obj/effect/proc_holder/spell/self/astratan_spear/cast(list/targets, mob/living/user = usr)
 	if(src.conjured_spear)
 		qdel(conjured_spear)
-	var/obj/item/rogueweapon/R = new /obj/item/rogueweapon/light_spear(user.drop_location())
+	var/obj/item/weapon/R = new /obj/item/weapon/light_spear(user.drop_location())
 	R.AddComponent(/datum/component/conjured_item)
 	user.put_in_hands(R)
 	src.conjured_spear = R
 	return TRUE
 
 //The spear itself. A summoned weapon you charge(throw for now) for an AoE effect.
-/obj/item/rogueweapon/light_spear
+/obj/item/weapon/light_spear
 	name = "lightning spear"
 	desc = "A spear of light, pulled from Her domain. Throw far. Strike true."
 	icon_state = "astratan_spear"//Martyr sword without the hilt, for now. Temp.
@@ -583,16 +583,16 @@
 	var/step_delay = 10//Delay for the strike. Adjust sleep in the damage proc if changing.
 	var/strike_damage = 25//Target damage. 25 on center, 19 on outer.
 
-/obj/item/rogueweapon/light_spear/attack_self()
+/obj/item/weapon/light_spear/attack_self()
 	qdel(src)
 
-/obj/item/rogueweapon/light_spear/afterattack()
+/obj/item/weapon/light_spear/afterattack()
 	qdel(src)
 
-/obj/item/rogueweapon/light_spear/attack_hand()
+/obj/item/weapon/light_spear/attack_hand()
 	qdel(src)
 
-/obj/item/rogueweapon/light_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/weapon/light_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Make it look worse than it is, initially. For show. As long as they don't stick around...
 	if(iscarbon(hit_atom))
@@ -615,7 +615,7 @@
 
 	return TRUE
 
-/obj/item/rogueweapon/light_spear/proc/astratan_spear_damage(turf/effect_layer, damage_mod)
+/obj/item/weapon/light_spear/proc/astratan_spear_damage(turf/effect_layer, damage_mod)
 	new /obj/effect/temp_visual/thunderstrike_actual(effect_layer)
 	playsound(effect_layer, 'sound/magic/lightning.ogg', 50)
 	for(var/mob/living/L in effect_layer.contents)

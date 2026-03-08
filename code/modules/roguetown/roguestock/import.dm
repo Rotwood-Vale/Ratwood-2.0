@@ -73,7 +73,7 @@
 	new /obj/item/clothing/shoes/roguetown/boots/armor(src)
 	new /obj/item/storage/keyring/guardcastle(src)
 	new /obj/item/storage/belt/rogue/leather/steel(src)
-	new /obj/item/rogueweapon/sword/long(src)
+	new /obj/item/weapon/sword/long(src)
 
 /datum/roguestock/import/warden
 	name = "Warden Equipment Crate"
@@ -87,8 +87,8 @@
 	new /obj/item/clothing/cloak/wardencloak(src)
 	new /obj/item/storage/keyring/guard(src)
 	new /obj/item/clothing/suit/roguetown/armor/leather/studded/warden(src)
-	new /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick(src)
-	new /obj/item/rogueweapon/huntingknife/idagger/warden_machete(src)
+	new /obj/item/weapon/stoneaxe/woodcut/wardenpick(src)
+	new /obj/item/weapon/huntingknife/idagger/warden_machete(src)
 	new /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden(src)
 
 /datum/roguestock/import/manatarms
@@ -110,7 +110,7 @@
 	new /obj/item/clothing/shoes/roguetown/boots/armor(src)
 	new /obj/item/storage/keyring/guardcastle(src)
 	new /obj/item/storage/belt/rogue/leather/steel(src)
-	new /obj/item/rogueweapon/spear(src)
+	new /obj/item/weapon/spear(src)
 
 /datum/roguestock/import/crossbow
 	name = "Crossbows Crate"
@@ -261,9 +261,9 @@
 
 /obj/structure/closet/crate/chest/steward/farmequip/Initialize(mapload)
 	. = ..()
-	new /obj/item/rogueweapon/hoe(src)
-	new /obj/item/rogueweapon/pitchfork(src)
-	new /obj/item/rogueweapon/sickle(src)
+	new /obj/item/weapon/hoe(src)
+	new /obj/item/weapon/pitchfork(src)
+	new /obj/item/weapon/sickle(src)
 	new /obj/item/seeds/apple(src)
 	new /obj/item/seeds/wheat(src)
 	new /obj/item/seeds/berryrogue(src)
@@ -277,8 +277,8 @@
 
 /obj/structure/closet/crate/chest/steward/blacksmith/Initialize(mapload)
 	. = ..()
-	new /obj/item/rogueweapon/hammer/iron(src)
-	new /obj/item/rogueweapon/tongs(src)
+	new /obj/item/weapon/hammer/iron(src)
+	new /obj/item/weapon/tongs(src)
 	new /obj/item/natural/stone(src)
 	new /obj/item/natural/stone(src)
 	new /obj/item/natural/stone(src)
@@ -302,9 +302,9 @@
 
 /obj/structure/closet/crate/chest/steward/craftsman/Initialize(mapload)
 	. = ..()
-	new /obj/item/rogueweapon/hammer/wood(src)
-	new /obj/item/rogueweapon/chisel(src)
-	new /obj/item/rogueweapon/handsaw(src)
+	new /obj/item/weapon/hammer/wood(src)
+	new /obj/item/weapon/chisel(src)
+	new /obj/item/weapon/handsaw(src)
 
 /datum/roguestock/import/glasscrate
 	name = "Glass Crate"
@@ -330,7 +330,7 @@
 
 /obj/structure/closet/crate/chest/steward/tailor/Initialize(mapload)
 	. = ..()
-	new /obj/item/rogueweapon/huntingknife/scissors/steel(src)
+	new /obj/item/weapon/huntingknife/scissors/steel(src)
 	new /obj/item/needle(src)
 	new /obj/item/grown/log/tree/small(src)
 	new /obj/item/grown/log/tree/small(src)

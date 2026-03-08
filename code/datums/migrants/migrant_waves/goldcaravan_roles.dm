@@ -38,7 +38,7 @@
 	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
-	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/navaja)
+	backpack_contents = list(/obj/item/weapon/huntingknife/idagger/navaja)
 	head = /obj/item/clothing/head/roguetown/chaperon/noble
 	neck = /obj/item/clothing/neck/roguetown/horus
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
@@ -101,10 +101,10 @@
 	pants = /obj/item/clothing/under/roguetown/splintlegs/iron
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/shield/wood
+	backr = /obj/item/weapon/shield/wood
 	belt = /obj/item/storage/belt/rogue/leather
-	r_hand = /obj/item/rogueweapon/sword/falchion
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	r_hand = /obj/item/weapon/sword/falchion
+	beltr = /obj/item/weapon/scabbard/sword
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots

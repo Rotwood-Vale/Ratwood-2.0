@@ -466,7 +466,7 @@
 				desc = "a passage with a carving scratched out"
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		return
-	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
+	else if(istype(item, /obj/item/weapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to rename the passage."))
 
 /obj/structure/bars/grille
@@ -531,7 +531,7 @@
 				desc = "a grille with a carving scratched out"
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		return
-	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
+	else if(istype(item, /obj/item/weapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to rename the grille."))
 
 /obj/structure/bars/pipe
@@ -1100,14 +1100,14 @@
 		/obj/item/kitchen/spoon/silver,
 		/obj/item/candle/candlestick/gold,
 		/obj/item/candle/candlestick/silver,
-		/obj/item/rogueweapon/sword/long/judgement, // various unique weapons around from a few roles follows. Don't lose your fancy toys....
-		/obj/item/rogueweapon/sword/long/oathkeeper,
-		/obj/item/rogueweapon/woodstaff/riddle_of_steel/magos, //bit dumb for a bandit mage to toss this toy away but whatever
+		/obj/item/weapon/sword/long/judgement, // various unique weapons around from a few roles follows. Don't lose your fancy toys....
+		/obj/item/weapon/sword/long/oathkeeper,
+		/obj/item/weapon/woodstaff/riddle_of_steel/magos, //bit dumb for a bandit mage to toss this toy away but whatever
 		/obj/item/clothing/head/roguetown/circlet,
 		/obj/item/carvedgem,  //Some of these aren't particularly worth much, but it'd be REALLY unintuitive for "valuables" to not actually be offerings
-		/obj/item/rogueweapon/huntingknife/stoneknife/kukri,
-		/obj/item/rogueweapon/huntingknife/stoneknife/opalknife,
-		/obj/item/rogueweapon/mace/cudgel/shellrungu,
+		/obj/item/weapon/huntingknife/stoneknife/kukri,
+		/obj/item/weapon/huntingknife/stoneknife/opalknife,
+		/obj/item/weapon/mace/cudgel/shellrungu,
 		/obj/item/clothing/mask/rogue/facemask/carved,
 		/obj/item/clothing/neck/roguetown/carved,
 		/obj/item/kitchen/fork/carved,

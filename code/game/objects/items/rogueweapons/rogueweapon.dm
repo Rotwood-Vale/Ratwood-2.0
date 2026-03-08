@@ -1,6 +1,6 @@
 
 
-/obj/item/rogueweapon
+/obj/item/weapon
 	name = ""
 	desc = ""
 	icon_state = "sabre"
@@ -39,12 +39,12 @@
 	/// Icon for sheathing. Only null for weapons that are unsheathable.
 	var/sheathe_icon = null
 
-/obj/item/rogueweapon/Initialize(mapload)
+/obj/item/weapon/Initialize(mapload)
 	. = ..()
 	if(!destroy_message)
 		destroy_message = span_warning("\The [src] shatters!")
 
-/obj/item/rogueweapon/ComponentInitialize()
+/obj/item/weapon/ComponentInitialize()
 	if(is_silver) // By default, silver weapons are supposed to be blesseable.
 		AddComponent(\
 			/datum/component/silverbless,\
@@ -56,10 +56,10 @@
 			added_def = 2,\
 		)
 
-/obj/item/rogueweapon/get_examine_string(mob/user, thats = FALSE)
+/obj/item/weapon/get_examine_string(mob/user, thats = FALSE)
 	return "[thats? "That's ":""]<b>[get_examine_name(user)]</b> <font size = 1>[get_blade_dulling_text(src)]</font>"
 
-/obj/item/rogueweapon/obj_break(damage_flag)
+/obj/item/weapon/obj_break(damage_flag)
 	..()
 	if(force)
 		force /= 5
@@ -78,7 +78,7 @@
 	if(can_parry)
 		can_parry = FALSE
 
-/obj/item/rogueweapon/obj_fix()
+/obj/item/weapon/obj_fix()
 	force = initial(force)
 	force_wielded = initial(force_wielded)
 	update_force_dynamic()
@@ -90,7 +90,7 @@
 	can_parry = initial(can_parry)
 	..()
 
-/obj/item/rogueweapon/rmb_self(mob/user)
+/obj/item/weapon/rmb_self(mob/user)
 	if(length(alt_intents))
 		if(altgripped)
 			ungrip(user)
@@ -123,7 +123,7 @@
 	desc = "A hefty, forged shaft. Exceptionally difficult to cut, but easier to bend with blunt force."
 	icon_state = "metalshaft"
 
-/obj/item/rogueweapon/attackby(obj/item/W, mob/living/user, params)
+/obj/item/weapon/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/shaft) && (blade_dulling != DULLING_SHAFT_GRAND && blade_dulling != DULLING_SHAFT_CONJURED) && (blade_dulling > DULLING_FLOOR))	//hacky
 		user.visible_message(span_info("[user] begins to replace the shaft on [src]..."))
 		if(do_after(user, 50))
@@ -133,7 +133,7 @@
 	. = ..()
 
 
-/obj/item/rogueweapon/proc/replace_shaft(obj/item/shaft/S)
+/obj/item/weapon/proc/replace_shaft(obj/item/shaft/S)
 	var/new_shaft
 	var/obj/item/shaft/replaced_shaft
 	switch(S.type)

@@ -23,7 +23,7 @@
 
 /datum/antagonist/assassin/on_gain()
 	owner.current.cmode_music = list('sound/music/cmode/antag/combat_assassin.ogg')
-	var/yea = /obj/item/rogueweapon/huntingknife/idagger/steel/profane
+	var/yea = /obj/item/weapon/huntingknife/idagger/steel/profane
 	owner.special_items["Profane Dagger"] = yea // Assigned assassins can get their special dagger from right clicking certain objects.
 	to_chat(owner.current, "<span class='danger'>I've blended in well up until this point, but it's time for the Hunted of Graggar to perish. I must get my dagger from where I hid it.</span>")
 	return ..()
@@ -49,7 +49,7 @@
 /datum/antagonist/assassin/roundend_report()
 	var/traitorwin = FALSE
 	for(var/obj/item/I in owner.current) // Check to see if the Assassin has their profane dagger on them, and then check the souls contained therein.
-		if(istype(I, /obj/item/rogueweapon/huntingknife/idagger/steel/profane))
+		if(istype(I, /obj/item/weapon/huntingknife/idagger/steel/profane))
 			for(var/mob/dead/observer/profane/A in I) // Each trapped soul is announced to the server
 				if(A)
 					to_chat(world, "The [A.name] has been stolen for Graggar by [owner.name].<span class='greentext'>DAMNATION!</span>")

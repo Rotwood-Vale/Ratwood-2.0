@@ -89,21 +89,21 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle
+	beltr = /obj/item/weapon/huntingknife/idagger/steel/pestrasickle
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+	backpack_contents = list(/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 							/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 							/obj/item/heart_canister = 2,
 							/obj/item/heart_blood_vial/filled = 2,
 							/obj/item/heart_blood_canister/filled = 1,
 							/obj/item/heart_blood_vial = 5,
 							/obj/item/heart_blood_canister = 1,
-							/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
+							/obj/item/weapon/huntingknife/idagger/steel/parrying = 1,
 							/obj/item/key/keeper = 1,
 							/obj/item/key/keeper_inner = 1,
 							/obj/item/storage/keyring/churchie = 1,
-							/obj/item/rogueweapon/scabbard/sheath = 2)
+							/obj/item/weapon/scabbard/sheath = 2)
 	H.put_in_hands(new /obj/item/storage/belt/rogue/surgery_bag/full/physician(H), TRUE)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)

@@ -40,10 +40,10 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid
-	beltl = /obj/item/rogueweapon/blowrod
-	beltr = /obj/item/rogueweapon/tongs   // Necessary for removing hot glass panes from furnaces.
+	beltl = /obj/item/weapon/blowrod
+	beltr = /obj/item/weapon/tongs   // Necessary for removing hot glass panes from furnaces.
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/shovel  // For getting clay
+	backr = /obj/item/weapon/shovel  // For getting clay
 
 	backpack_contents = list(
 		/obj/item/natural/clay = 3,

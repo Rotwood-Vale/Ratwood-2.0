@@ -37,7 +37,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/puritan
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full
-	beltr = /obj/item/rogueweapon/huntingknife/cleaver /// proper self defense an tree aquiring
+	beltr = /obj/item/weapon/huntingknife/cleaver /// proper self defense an tree aquiring
 	pants = /obj/item/clothing/under/roguetown/trou
 	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
 	backl = /obj/item/storage/backpack/rogue/backpack
@@ -45,7 +45,7 @@
 						/obj/item/natural/worms/leech/cheele = 1,
 						/obj/item/natural/cloth = 2,
 						/obj/item/flashlight/flare/torch = 1,
-						/obj/item/rogueweapon/huntingknife/scissors/steel = 1,
+						/obj/item/weapon/huntingknife/scissors/steel = 1,
 						/obj/item/hair_dye_cream = 3,
 						/obj/item/heart_blood_canister/filled = 2,
 						/obj/item/bait/leech = 4

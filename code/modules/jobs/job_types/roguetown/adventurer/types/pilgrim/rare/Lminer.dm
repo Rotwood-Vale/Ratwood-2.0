@@ -49,18 +49,18 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid
-	beltl = /obj/item/rogueweapon/pick
+	beltl = /obj/item/weapon/pick
 	beltr = /obj/item/storage/hip/orestore/bronze
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
 						/obj/item/flint = 1,
 						/obj/item/flashlight/flare/torch = 1,
-						/obj/item/rogueweapon/chisel = 1,
-						/obj/item/rogueweapon/hammer/wood = 1,
+						/obj/item/weapon/chisel = 1,
+						/obj/item/weapon/hammer/wood = 1,
 						/obj/item/recipe_book/survival = 1,
 						/obj/item/recipe_book/builder = 1,
-						/obj/item/rogueweapon/scabbard/sheath = 1,
-						/obj/item/rogueweapon/huntingknife = 1,
+						/obj/item/weapon/scabbard/sheath = 1,
+						/obj/item/weapon/huntingknife = 1,
 						/obj/item/storage/hip/orestore/bronze = 1
 						)
 	if(H.mind)

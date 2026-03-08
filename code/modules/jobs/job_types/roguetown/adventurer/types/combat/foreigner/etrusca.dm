@@ -43,7 +43,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	cloak = /obj/item/clothing/cloak/half/rider/red
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltr = /obj/item/rogueweapon/scabbard/sheath
+	beltr = /obj/item/weapon/scabbard/sheath
 	if(H.mind)
 		var/nostromo_purpose = list("Navigator","Castaway")
 		var/purpose_choice = input(H, "Choose your FAILING", "WHY THE PLANK") as anything in nostromo_purpose
@@ -51,12 +51,12 @@
 			if("Navigator")
 				H.change_stat(STATKEY_PER, 2)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)//No shield skill, since you're buckler reliant.
-				r_hand = /obj/item/rogueweapon/sword/long/etruscan//You'd stolen this, probably. It's just a longsword reskin.
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				backr = /obj/item/rogueweapon/shield/buckler
+				r_hand = /obj/item/weapon/sword/long/etruscan//You'd stolen this, probably. It's just a longsword reskin.
+				beltl = /obj/item/weapon/scabbard/sword
+				backr = /obj/item/weapon/shield/buckler
 				backpack_contents = list(
 								/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-								/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
+								/obj/item/weapon/huntingknife/idagger/navaja = 1,
 								/obj/item/flashlight/flare/torch = 1,
 								)
 			if("Castaway")
@@ -67,10 +67,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, 3, TRUE)
 				//You already know why...
 				backr = /obj/item/rogue/instrument/flute
-				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying/vaquero
+				r_hand = /obj/item/weapon/huntingknife/idagger/steel/parrying/vaquero
 				backpack_contents = list(
 								/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 								/obj/item/lockpick = 1,
 								/obj/item/flashlight/flare/torch = 1,
-								/obj/item/rogueweapon/scabbard/sheath = 1
+								/obj/item/weapon/scabbard/sheath = 1
 								)

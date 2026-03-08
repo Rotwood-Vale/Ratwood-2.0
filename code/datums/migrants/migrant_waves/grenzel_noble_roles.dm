@@ -52,14 +52,14 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	backl = /obj/item/storage/backpack/rogue/satchel/short
-	l_hand = /obj/item/rogueweapon/sword/long
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/long
+	beltl = /obj/item/weapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
 		/obj/item/storage/belt/pouch/coins/veryrich = 2,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/paper/scroll/writ_of_esteem/grenzel = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 2
@@ -116,12 +116,12 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
 	backr = /obj/item/storage/backpack/rogue/satchel/short
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
-	r_hand = /obj/item/rogueweapon/greatsword/grenz
+	backl = /obj/item/weapon/scabbard/gwstrap
+	r_hand = /obj/item/weapon/greatsword/grenz
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 		/obj/item/natural/bundle/cloth/bandage/full = 1,
 		)

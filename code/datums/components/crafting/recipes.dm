@@ -108,7 +108,7 @@
 				<div>
 			"}
 	var/obj/item/clothing/suit/roguetown/armor/bookarmor = initial(created_stuff)
-	var/obj/item/rogueweapon/bookweapon = initial(created_stuff)
+	var/obj/item/weapon/bookweapon = initial(created_stuff)
 
 	if(!(bookarmor?.armor == "")&&!isnull(bookarmor?.armor) )
 		var/obj/item/clothing/C = initial(created_stuff)

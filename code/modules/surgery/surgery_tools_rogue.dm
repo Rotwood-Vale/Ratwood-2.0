@@ -1,4 +1,4 @@
-/obj/item/rogueweapon/surgery
+/obj/item/weapon/surgery
 	name = "surgical tool"
 	desc = "Something that will tear your guts apart."
 	icon = 'icons/items/surgery.dmi'
@@ -22,11 +22,11 @@
 	grid_width = 32
 	grid_height = 64
 
-/obj/item/rogueweapon/surgery/Initialize(mapload)
+/obj/item/weapon/surgery/Initialize(mapload)
 	. = ..()
 	item_flags |= SURGICAL_TOOL //let's not stab patients for fun
 
-/obj/item/rogueweapon/surgery/scalpel
+/obj/item/weapon/surgery/scalpel
 	name = "scalpel"
 	desc = "A tool used to carve precisely into the flesh of the sickly."
 	icon_state = "scalpel"
@@ -38,7 +38,7 @@
 	tool_behaviour = TOOL_SCALPEL
 	smeltresult = null
 
-/obj/item/rogueweapon/surgery/saw
+/obj/item/weapon/surgery/saw
 	name = "saw"
 	desc = "A tool used to carve through bone."
 	icon_state = "bonesaw"
@@ -56,7 +56,7 @@
 	tool_behaviour = TOOL_SAW
 	smeltresult = null
 
-/obj/item/rogueweapon/surgery/hemostat
+/obj/item/weapon/surgery/hemostat
 	name = "forceps"
 	desc = "A tool used to clamp down on soft tissue."
 	icon_state = "forceps"
@@ -69,16 +69,16 @@
 	tool_behaviour = TOOL_HEMOSTAT
 	smeltresult = null
 
-/obj/item/rogueweapon/surgery/hemostat/first //Three different types now to allow multiple surgical sites at once.
+/obj/item/weapon/surgery/hemostat/first //Three different types now to allow multiple surgical sites at once.
 	name = "\improper Tarsis forceps"
 
-/obj/item/rogueweapon/surgery/hemostat/second
+/obj/item/weapon/surgery/hemostat/second
 	name = "\improper Sisrat forceps"
 
-/obj/item/rogueweapon/surgery/hemostat/third
+/obj/item/weapon/surgery/hemostat/third
 	name = "\improper Medella forceps"
 
-/obj/item/rogueweapon/surgery/retractor
+/obj/item/weapon/surgery/retractor
 	name = "speculum"
 	desc = "A tool used to spread tissue open for surgical access."
 	icon_state = "speculum"
@@ -95,7 +95,7 @@
 	tool_behaviour = TOOL_RETRACTOR
 	smeltresult = null
 
-/obj/item/rogueweapon/surgery/bonesetter
+/obj/item/weapon/surgery/bonesetter
 	name = "bone forceps"
 	desc = "A tool used to clamp down on hard tissue."
 	icon_state = "bonesetter"
@@ -108,7 +108,7 @@
 	tool_behaviour = TOOL_BONESETTER
 	smeltresult = null
 
-/obj/item/rogueweapon/surgery/cautery
+/obj/item/weapon/surgery/cautery
 	name = "cautery iron"
 	desc = "A tool used to cauterize wounds. Heat it up before use."
 	icon_state = "cauteryiron"
@@ -130,18 +130,18 @@
 	var/heated = FALSE
 	smeltresult = null
 
-/obj/item/rogueweapon/surgery/cautery/examine(mob/user)
+/obj/item/weapon/surgery/cautery/examine(mob/user)
 	. = ..()
 	if(heated)
 		. += span_warning("The tip is hot to the touch.")
 
-/obj/item/rogueweapon/surgery/cautery/update_icon_state()
+/obj/item/weapon/surgery/cautery/update_icon_state()
 	. = ..()
 	icon_state = initial(icon_state)
 	if(heated)
 		icon_state = "[initial(icon_state)]_hot"
 
-/obj/item/rogueweapon/surgery/cautery/pre_attack(atom/A, mob/living/user, params)
+/obj/item/weapon/surgery/cautery/pre_attack(atom/A, mob/living/user, params)
 	if(!istype(user.a_intent, /datum/intent/use))
 		return ..()
 	var/heating = 0
@@ -155,7 +155,7 @@
 		return TRUE
 	return ..()
 
-/obj/item/rogueweapon/surgery/cautery/fire_act(added, maxstacks)
+/obj/item/weapon/surgery/cautery/fire_act(added, maxstacks)
 	. = ..()
 	if(!heated)
 		playsound(src, 'sound/items/firelight.ogg', 100, vary = TRUE)
@@ -164,12 +164,12 @@
 		deltimer(cool_timer)
 	cool_timer = addtimer(CALLBACK(src, PROC_REF(update_heated), FALSE), added SECONDS, TIMER_STOPPABLE)
 
-/obj/item/rogueweapon/surgery/cautery/get_temperature()
+/obj/item/weapon/surgery/cautery/get_temperature()
 	if(heated)
 		return FIRE_MINIMUM_TEMPERATURE_TO_SPREAD
 	return ..()
 
-/obj/item/rogueweapon/surgery/cautery/proc/update_heated(new_heated)
+/obj/item/weapon/surgery/cautery/proc/update_heated(new_heated)
 	heated = new_heated
 	if(heated)
 		damtype = BURN
@@ -179,7 +179,7 @@
 		tool_behaviour = null
 	update_icon()
 
-/obj/item/rogueweapon/surgery/cautery/branding
+/obj/item/weapon/surgery/cautery/branding
 	name = "branding iron"
 	desc = "A iron that is well-writ upon flesh. Heat it up before use."
 	icon_state = "brandingiron"
@@ -189,11 +189,11 @@
 	var/branding_low_quality = FALSE
 	var/branding_count = 0
 
-/obj/item/rogueweapon/surgery/cautery/branding/slave
+/obj/item/weapon/surgery/cautery/branding/slave
 	name = "slaver branding iron"
 	desc = "Used to claim ownership on lost property. Heat it up before use."
 
-/obj/item/rogueweapon/surgery/cautery/branding/crude
+/obj/item/weapon/surgery/cautery/branding/crude
 	name = "crude branding stick"
 	desc = "It's made of coal, string and a stick. Looks like I can brand myself with it at least two times before it snaps. Heat it up before use."
 	icon_state = "brandingiron_crude"
@@ -201,14 +201,14 @@
 	branding_low_quality = TRUE
 	branding_count = 2
 
-/obj/item/rogueweapon/surgery/cautery/branding/examine(mob/user)
+/obj/item/weapon/surgery/cautery/branding/examine(mob/user)
 	. = ..()
 	if(!setbranding || !length(setbranding))
 		. += span_warning("There is no branding symbol set yet.")
 	else
 		. += span_warning("It will imprint [setbranding].")
 
-/obj/item/rogueweapon/surgery/cautery/branding/attack_self(mob/living/user)
+/obj/item/weapon/surgery/cautery/branding/attack_self(mob/living/user)
 	. = ..()
 	if(!istype(user))
 		return
@@ -224,7 +224,7 @@
 			setbranding = null
 	..()
 
-/obj/item/rogueweapon/surgery/cautery/branding/pre_attack(atom/A, mob/living/user, params)
+/obj/item/weapon/surgery/cautery/branding/pre_attack(atom/A, mob/living/user, params)
 	if(!istype(user.a_intent, /datum/intent/use))
 		return ..()
 	if(!heated)
@@ -438,7 +438,7 @@
 	if(owner.stat == CONSCIOUS)
 		to_chat(owner, span_userdanger("I can barely feel my lips again."))
 
-/obj/item/rogueweapon/surgery/hammer
+/obj/item/weapon/surgery/hammer
 	name = "examination hammer"
 	desc = "A small hammer used to check a patient's reactions and diagnose their condition."
 	icon_state = "kneehammer"
@@ -455,7 +455,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	thrown_bclass = BCLASS_BLUNT
 
-/obj/item/rogueweapon/surgery/hammer/pre_attack(atom/A, mob/living/user, params)
+/obj/item/weapon/surgery/hammer/pre_attack(atom/A, mob/living/user, params)
 	if(!istype(user.a_intent, /datum/intent/use))
 		return ..()
 	var/medskill = user.get_skill_level(/datum/skill/misc/medicine)
@@ -479,7 +479,7 @@
 ////////////////////
 
 //All are subtypes of the regular tools with worse behavior success chances.
-/obj/item/rogueweapon/surgery/saw/improv
+/obj/item/weapon/surgery/saw/improv
 	name = "improvised saw"
 	desc = "A tool used to carve through bone crudely, but better than nothing."
 	icon_state = "bonesaw_wood"
@@ -490,13 +490,13 @@
 	tool_behaviour = TOOL_IMPROVISED_SAW
 	sharpness = IS_BLUNT
 
-/obj/item/rogueweapon/surgery/hemostat/improv
+/obj/item/weapon/surgery/hemostat/improv
 	name = "improvised clamp"
 	desc = "A tool used to clamp down on soft tissue. A poor alternative to metal but better than nothing."
 	icon_state = "forceps_wood"
 	tool_behaviour = TOOL_IMPROVISED_HEMOSTAT
 
-/obj/item/rogueweapon/surgery/retractor/improv
+/obj/item/weapon/surgery/retractor/improv
 	name = "improvised retractor"
 	desc = "A tool used to spread tissue open for surgical access in a tentative manner."
 	icon_state = "speculum_wood"

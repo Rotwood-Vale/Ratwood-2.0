@@ -121,7 +121,7 @@
 	backpack_contents = list(
 		/obj/item/rope = 1,
 		/obj/item/candle/eora = 1,
-		/obj/item/rogueweapon/whip = 1,
+		/obj/item/weapon/whip = 1,
 		/obj/item/clothing/mask/rogue/blindfold = 1,
 	)
 	if(should_wear_femme_clothes(H))
@@ -190,7 +190,7 @@
 	..()
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
-	beltl = /obj/item/rogueweapon/whip
+	beltl = /obj/item/weapon/whip
 	backl = /obj/item/storage/backpack/rogue/satchel
 	head = /obj/item/clothing/head/roguetown/menacing
 	neck = /obj/item/key/nightmaiden

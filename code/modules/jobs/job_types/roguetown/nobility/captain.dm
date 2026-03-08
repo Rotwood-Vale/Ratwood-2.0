@@ -109,8 +109,8 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	backpack_contents = list(
 		/obj/item/storage/keyring/sheriff = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
 	if(H.mind)
@@ -137,13 +137,13 @@
 		switch(weapon_choice)
 			if("Sabre")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/capsabre
-				l_hand = /obj/item/rogueweapon/shield/capbuckler
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/capsabre
+				l_hand = /obj/item/weapon/shield/capbuckler
+				beltr = /obj/item/weapon/scabbard/sword
 			if("Glaive")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
-				r_hand = /obj/item/rogueweapon/halberd/capglaive
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/halberd/capglaive
+				backl = /obj/item/weapon/scabbard/gwstrap
 
 
 

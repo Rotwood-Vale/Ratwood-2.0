@@ -200,7 +200,7 @@
 	name = "Terminus Est (+1 Gold Bar, +1 Steel, +1 Rontz)"
 	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/steel, /obj/item/roguegem/ruby)
-	created_item = /obj/item/rogueweapon/sword/long/exe/cloth
+	created_item = /obj/item/weapon/sword/long/exe/cloth
 	craftdiff = SKILL_LEVEL_MASTER
 	appro_skill = /datum/skill/craft/weaponsmithing
 	i_type = "Weapons"
@@ -270,6 +270,6 @@
 	req_bar = /obj/item/ingot/silver
 	hides_from_books = TRUE
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/ingot/silver/, /obj/item/ingot/draconic, /obj/item/ingot/weeping, /obj/item/riddleofsteel, /obj/item/grown/log/tree)
-	created_item = /obj/item/rogueweapon/greatsword/psygsword/dragonslayer
+	created_item = /obj/item/weapon/greatsword/psygsword/dragonslayer
 	appro_skill = /datum/skill/craft/weaponsmithing
 	craftdiff = SKILL_LEVEL_LEGENDARY

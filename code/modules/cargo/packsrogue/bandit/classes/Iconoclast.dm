@@ -141,42 +141,42 @@
 /datum/supply_pack/rogue/Iconoclast/katar
 	name = "Katar"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/katar)
+	contains = list(/obj/item/weapon/katar)
 
 /datum/supply_pack/rogue/Iconoclast/punchdagger
 	name = "Punch Dagger"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/katar/punchdagger)
+	contains = list(/obj/item/weapon/katar/punchdagger)
 
 /datum/supply_pack/rogue/Iconoclast/knuckles
 	name = "Steel Knuckles"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/knuckles)
+	contains = list(/obj/item/weapon/knuckles)
 
 /datum/supply_pack/rogue/Iconoclast/mace
 	name = "Iron Mace"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/mace)
+	contains = list(/obj/item/weapon/mace)
 
 /datum/supply_pack/rogue/Iconoclast/steelmace
 	name = "Steel Mace"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/mace/steel)
+	contains = list(/obj/item/weapon/mace/steel)
 
 /datum/supply_pack/rogue/Iconoclast/cudgel
 	name = "Cudgel"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/mace/cudgel)
+	contains = list(/obj/item/weapon/mace/cudgel)
 
 /datum/supply_pack/rogue/Iconoclast/billhook
 	name = "Billhook"
 	cost = 15
-	contains = list(/obj/item/rogueweapon/spear/billhook)
+	contains = list(/obj/item/weapon/spear/billhook)
 
 /datum/supply_pack/rogue/Iconoclast/halberd
 	name = "Halberd"
 	cost = 15
-	contains = list(/obj/item/rogueweapon/halberd)
+	contains = list(/obj/item/weapon/halberd)
 
 /////////////
 // SHIELDS //
@@ -185,10 +185,10 @@
 /datum/supply_pack/rogue/Iconoclast/Tshield
 	name = "Tower Shield"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/shield/tower)
+	contains = list(/obj/item/weapon/shield/tower)
 
 /datum/supply_pack/rogue/Iconoclast/kiteshield
 	name = "Kite Shield"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/shield/tower/metal)
+	contains = list(/obj/item/weapon/shield/tower/metal)
 

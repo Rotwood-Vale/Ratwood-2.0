@@ -488,7 +488,7 @@
 /area/rogue/under/tomb/indoors/magic)
 "ty" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /turf/open/floor/rogue/tile/checker,
 /area/rogue/under/tomb/indoors/magic)
 "tD" = (
@@ -1107,13 +1107,13 @@
 "Qf" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/table/wood,
-/obj/item/rogueweapon/surgery/saw,
-/obj/item/rogueweapon/surgery/scalpel,
-/obj/item/rogueweapon/surgery/retractor,
+/obj/item/weapon/surgery/saw,
+/obj/item/weapon/surgery/scalpel,
+/obj/item/weapon/surgery/retractor,
 /turf/open/floor/rogue/tile/masonic/spiral,
 /area/rogue/under/tomb/indoors/magic)
 "Qj" = (
-/obj/item/rogueweapon/pick/copper,
+/obj/item/weapon/pick/copper,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/cave/wet)
 "Qm" = (

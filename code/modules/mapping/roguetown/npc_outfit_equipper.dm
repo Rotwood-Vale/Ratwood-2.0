@@ -34,6 +34,6 @@
 	for(var/obj/item/clothing/clothing in get_turf(src))
 		located.equip_to_appropriate_slot(clothing)
 
-	for(var/obj/item/rogueweapon/weapon in get_turf(src))
+	for(var/obj/item/weapon/weapon in get_turf(src))
 		located.put_in_hands(weapon)
 	qdel(src)

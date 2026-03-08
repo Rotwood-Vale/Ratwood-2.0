@@ -37,9 +37,9 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/heartfelt/hand
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	gloves =/obj/item/clothing/gloves/roguetown/angle
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/sabre/dec
-	beltr = /obj/item/rogueweapon/huntingknife
+	beltl = /obj/item/weapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/sabre/dec
+	beltr = /obj/item/weapon/huntingknife
 	backr = /obj/item/storage/backpack/rogue/satchel/heartfelt
 	backpack_contents = list(
 						/obj/item/flashlight/flare/torch = 1,

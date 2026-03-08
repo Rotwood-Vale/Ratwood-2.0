@@ -1,4 +1,4 @@
-/obj/item/rogueweapon/scabbard
+/obj/item/weapon/scabbard
 	name = "scabbard"
 	desc = ""
 
@@ -28,33 +28,33 @@
 	COOLDOWN_DECLARE(shield_bang)
 
 	/// Weapon path and its children that are allowed
-	var/obj/item/rogueweapon/valid_blade
+	var/obj/item/weapon/valid_blade
 	/// Specific weapons that are allowed. Bypasses valid_blade
-	var/list/obj/item/rogueweapon/valid_blades
+	var/list/obj/item/weapon/valid_blades
 	/// Specific weapons that are not allowed. Bypassed valid_blade
-	var/list/obj/item/rogueweapon/invalid_blades
+	var/list/obj/item/weapon/invalid_blades
 
 	/// Stores weapon
-	var/obj/item/rogueweapon/sheathed
+	var/obj/item/weapon/sheathed
 
 	var/sheathe_time = 0.1 SECONDS
 	var/sheathe_sound = 'sound/foley/equip/scabbard_holster.ogg'
 
 
-/obj/item/rogueweapon/scabbard/attack_obj(obj/O, mob/living/user)
+/obj/item/weapon/scabbard/attack_obj(obj/O, mob/living/user)
 	return FALSE
 
 
-/obj/item/rogueweapon/scabbard/attack_turf(turf/T, mob/living/user)
+/obj/item/weapon/scabbard/attack_turf(turf/T, mob/living/user)
 	to_chat(user, span_notice("I search for my sword..."))
-	for(var/obj/item/rogueweapon/sword/sword in T.contents)
+	for(var/obj/item/weapon/sword/sword in T.contents)
 		if(eat_sword(user, sword))
 			break
 
 	..()
 
 
-/obj/item/rogueweapon/scabbard/proc/weapon_check(mob/living/user, obj/A)
+/obj/item/weapon/scabbard/proc/weapon_check(mob/living/user, obj/A)
 	if(sheathed)
 		to_chat(user, span_warning("The sheath is occupied!"))
 		return FALSE
@@ -72,7 +72,7 @@
 	return TRUE
 
 
-/obj/item/rogueweapon/scabbard/proc/eat_sword(mob/living/user, obj/A, sheathing_from_belt = FALSE)
+/obj/item/weapon/scabbard/proc/eat_sword(mob/living/user, obj/A, sheathing_from_belt = FALSE)
 	if(!weapon_check(user, A))
 		return FALSE
 	if(obj_broken)
@@ -100,7 +100,7 @@
 	return TRUE
 
 
-/obj/item/rogueweapon/scabbard/proc/puke_sword(mob/living/user)
+/obj/item/weapon/scabbard/proc/puke_sword(mob/living/user)
 	if(!sheathed)
 		return FALSE
 
@@ -127,7 +127,7 @@
 	return TRUE
 
 
-/obj/item/rogueweapon/scabbard/MouseDrop(atom/over)
+/obj/item/weapon/scabbard/MouseDrop(atom/over)
 	..()
 	var/mob/living/M = usr
 
@@ -139,27 +139,27 @@
 			add_fingerprint(usr)
 
 
-/obj/item/rogueweapon/scabbard/attack_hand(mob/user)
+/obj/item/weapon/scabbard/attack_hand(mob/user)
 	if(sheathed)
 		return puke_sword(user)
 
 	..()
 
 
-/obj/item/rogueweapon/scabbard/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/scabbard/attackby(obj/item/I, mob/user, params)
 	if(!sheathed)
 		if(!eat_sword(user, I))
 			return ..()
 
 
-/obj/item/rogueweapon/scabbard/examine(mob/user)
+/obj/item/weapon/scabbard/examine(mob/user)
 	. = ..()
 
 	if(sheathed)
 		. += span_notice("The sheath is occupied by [sheathed]. Left-click to pull it out.")
 
 
-/obj/item/rogueweapon/scabbard/update_icon(mob/living/user)
+/obj/item/weapon/scabbard/update_icon(mob/living/user)
 	if(sheathed)
 		icon_state = "[initial(icon_state)]_[sheathed.sheathe_icon]"
 	else
@@ -173,7 +173,7 @@
 	getonmobprop(tag)
 
 
-/obj/item/rogueweapon/scabbard/getonmobprop(tag)
+/obj/item/weapon/scabbard/getonmobprop(tag)
 	..()
 
 	if(tag)
@@ -257,7 +257,7 @@
 */
 
 
-/obj/item/rogueweapon/scabbard/sheath
+/obj/item/weapon/scabbard/sheath
 	name = "dagger sheath"
 	desc = "A slingable sheath made of leather, meant to host surprises in smaller sizes."
 	sewrepair = TRUE
@@ -265,7 +265,7 @@
 	icon_state = "sheath"
 	item_state = "sheath"
 
-	valid_blade = /obj/item/rogueweapon/huntingknife
+	valid_blade = /obj/item/weapon/huntingknife
 	w_class = WEIGHT_CLASS_SMALL
 
 	grid_width = 32
@@ -276,19 +276,19 @@
 	sellprice = 2
 
 	invalid_blades = list(
-		/obj/item/rogueweapon/huntingknife/idagger/silver/stake
+		/obj/item/weapon/huntingknife/idagger/silver/stake
 	)
 
-/obj/item/rogueweapon/scabbard/sheath/weapon_check(mob/living/user, obj/item/A)
+/obj/item/weapon/scabbard/sheath/weapon_check(mob/living/user, obj/item/A)
 	. = ..()
 	if(.)
-		if(!istype(A, /obj/item/rogueweapon))
+		if(!istype(A, /obj/item/weapon))
 			return
-		var/obj/item/rogueweapon/sheathing = A
+		var/obj/item/weapon/sheathing = A
 		if(!sheathing.sheathe_icon)
 			return FALSE
 
-/obj/item/rogueweapon/scabbard/sheath/getonmobprop(tag)
+/obj/item/weapon/scabbard/sheath/getonmobprop(tag)
 	..()
 
 	if(tag)
@@ -372,7 +372,7 @@
 */
 
 
-/obj/item/rogueweapon/scabbard/gwstrap
+/obj/item/weapon/scabbard/gwstrap
 	name = "greatweapon strap"
 	desc = ""
 
@@ -401,18 +401,18 @@
 	max_integrity = 0
 	sellprice = 15
 
-/obj/item/rogueweapon/scabbard/gwstrap/weapon_check(mob/living/user, obj/item/A)
+/obj/item/weapon/scabbard/gwstrap/weapon_check(mob/living/user, obj/item/A)
 	. = ..()
 	if(.)
 		if(sheathed)
 			return FALSE
-		if(istype(A, /obj/item/rogueweapon))
+		if(istype(A, /obj/item/weapon))
 			if(A.w_class >= WEIGHT_CLASS_BULKY)
 				return TRUE
 		if(!istype(A, /obj/item/clothing/neck/roguetown/psicross)) //snowflake that bypasses the valid_blades that i made. i will commit seppuku eventually
 			return FALSE
 
-/obj/item/rogueweapon/scabbard/gwstrap/update_icon(mob/living/user)
+/obj/item/weapon/scabbard/gwstrap/update_icon(mob/living/user)
 	if(sheathed)
 		worn_x_dimension = 64
 		worn_y_dimension = 64
@@ -431,11 +431,11 @@
 
 	getonmobprop(tag)
 
-/obj/item/rogueweapon/scabbard/gwstrap/getonmobprop(tag)
+/obj/item/weapon/scabbard/gwstrap/getonmobprop(tag)
 	..()
 	if(!sheathed)
 		return
-	if(istype(sheathed, /obj/item/rogueweapon/estoc) || istype(sheathed, /obj/item/rogueweapon/greatsword))
+	if(istype(sheathed, /obj/item/weapon/estoc) || istype(sheathed, /obj/item/weapon/greatsword))
 		switch(tag)
 			if("onback")
 				return list(
@@ -494,7 +494,7 @@
 */
 
 
-/obj/item/rogueweapon/scabbard/sword
+/obj/item/weapon/scabbard/sword
 	name = "simple scabbard"
 	desc = "The natural evolution to the advent of longblades."
 
@@ -503,24 +503,24 @@
 
 	sewrepair = TRUE
 
-	valid_blade = /obj/item/rogueweapon/sword
+	valid_blade = /obj/item/weapon/sword
 //You'd think think it'd look for subtypes, but no.
 	invalid_blades = list(
-		/obj/item/rogueweapon/sword/long/exe,
-		/obj/item/rogueweapon/sword/long/exe/astrata,
-		/obj/item/rogueweapon/sword/long/martyr
+		/obj/item/weapon/sword/long/exe,
+		/obj/item/weapon/sword/long/exe/astrata,
+		/obj/item/weapon/sword/long/martyr
 	)
 
 	force = 7
 	max_integrity = 750
 	sellprice = 3
 
-/obj/item/rogueweapon/scabbard/sheath/weapon_check(mob/living/user, obj/item/A)
+/obj/item/weapon/scabbard/sheath/weapon_check(mob/living/user, obj/item/A)
 	. = ..()
 	if(.)
-		if(!istype(A, /obj/item/rogueweapon))
+		if(!istype(A, /obj/item/weapon))
 			return
-		var/obj/item/rogueweapon/sheathing = A
+		var/obj/item/weapon/sheathing = A
 		if(!sheathing.sheathe_icon)
 			return FALSE
 
@@ -530,13 +530,13 @@
 */
 
 
-/obj/item/rogueweapon/scabbard/sword/kazengun
+/obj/item/weapon/scabbard/sword/kazengun
 	name = "simple kazengun scabbard"
 	desc = "A piece of steel lined with wood. Great for batting away blows."
 	icon_state = "kazscab"
 	item_state = "kazscab"
 
-	valid_blade = /obj/item/rogueweapon/sword/sabre/mulyeog
+	valid_blade = /obj/item/weapon/sword/sabre/mulyeog
 	associated_skill = /datum/skill/combat/shields
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE
@@ -544,53 +544,53 @@
 
 	max_integrity = 0
 
-/obj/item/rogueweapon/scabbard/sword/kazengun/noparry
+/obj/item/weapon/scabbard/sword/kazengun/noparry
 	name = "ceremonial kazengun scabbard"
 	desc = "A simple wooden scabbard, trimmed with bronze. Unlike its steel cousins, this one cannot parry."
 
-	valid_blade = /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
+	valid_blade = /obj/item/weapon/sword/long/kriegmesser/ssangsudo
 	can_parry = FALSE
 
-/obj/item/rogueweapon/scabbard/sword/kazengun/noparry/loadout
+/obj/item/weapon/scabbard/sword/kazengun/noparry/loadout
 	name = "ceremonial scabbard"
 	desc = "A simple wooden scabbard, trimmed with bronze. Unlike its steel cousins, this one cannot parry."
-	valid_blade = /obj/item/rogueweapon/sword
+	valid_blade = /obj/item/weapon/sword
 	invalid_blades = list(
-		/obj/item/rogueweapon/sword/long/exe,
-		/obj/item/rogueweapon/sword/long/exe/astrata,
-		/obj/item/rogueweapon/sword/long/martyr
+		/obj/item/weapon/sword/long/exe,
+		/obj/item/weapon/sword/long/exe/astrata,
+		/obj/item/weapon/sword/long/martyr
 	)
 
-/obj/item/rogueweapon/scabbard/sword/kazengun/steel
+/obj/item/weapon/scabbard/sword/kazengun/steel
 	name = "hwang scabbard"
 	desc = "A cloud-patterned scabbard with a cloth sash. Used for blocking."
 	icon_state = "kazscab_steel"
 	item_state = "kazscab_steel"
-	valid_blade = /obj/item/rogueweapon/sword/sabre/mulyeog/rumahench
+	valid_blade = /obj/item/weapon/sword/sabre/mulyeog/rumahench
 
 
-/obj/item/rogueweapon/scabbard/sword/kazengun/gold
+/obj/item/weapon/scabbard/sword/kazengun/gold
 	name = "gold-stained Xinyi scabbard"
 	desc = "An ornate, wooden scabbard with a sash. Great for parrying."
 	icon_state = "kazscab_gold"
 	item_state = "kazscab_gold"
-	valid_blade = /obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain
+	valid_blade = /obj/item/weapon/sword/sabre/mulyeog/rumacaptain
 	sellprice = 10
 
-/obj/item/rogueweapon/scabbard/sword/kazengun/kodachi
+/obj/item/weapon/scabbard/sword/kazengun/kodachi
 	name = "plain lacquer scabbard"
 	desc = "A plain lacquered scabbard with simple steel hardware. A plain dark cloth serves to hang it from a belt."
 	icon_state = "kazscabyuruku"
 	item_state = "kazscabyuruku"
-	valid_blade = /obj/item/rogueweapon/sword/short/kazengun
+	valid_blade = /obj/item/weapon/sword/short/kazengun
 	wdefense = 4
 
-/obj/item/rogueweapon/scabbard/sheath/kazengun
+/obj/item/weapon/scabbard/sheath/kazengun
 	name = "plain lacquer sheath"
 	desc = "A simple lacquered sheath, for shorter eastern-styled blades."
 	icon_state = "kazscabdagger"
 	item_state = "kazscabdagger"
-	valid_blade = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
+	valid_blade = /obj/item/weapon/huntingknife/idagger/steel/kazengun
 	associated_skill = /datum/skill/combat/shields
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE

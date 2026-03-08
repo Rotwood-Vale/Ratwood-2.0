@@ -50,19 +50,19 @@
 	head = /obj/item/clothing/head/roguetown/strawhat
 	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/stoneaxe/woodcut/ //simple but effective
+	backr = /obj/item/weapon/stoneaxe/woodcut/ //simple but effective
 	neck = 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
-	beltl = /obj/item/rogueweapon/sickle
+	beltl = /obj/item/weapon/sickle
 
 	backpack_contents = list(
 		/obj/item/flint = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
+		/obj/item/weapon/huntingknife = 1,
 		/obj/item/recipe_book/builder = 1,
 		/obj/item/recipe_book/survival = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/seeds/wheat = 2,
 		/obj/item/seeds/apple = 1,
 		/obj/item/ash = 3,
@@ -97,14 +97,14 @@
 
 /datum/outfit/job/roguetown/refugee/prospector/pre_equip(mob/living/carbon/human/H)
 	..()
-	r_hand = /obj/item/rogueweapon/pick/copper
+	r_hand = /obj/item/weapon/pick/copper
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/hammer/copper
-	beltl = /obj/item/rogueweapon/tongs
+	beltr = /obj/item/weapon/hammer/copper
+	beltl = /obj/item/weapon/tongs
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	cloak = /obj/item/clothing/cloak/apron/blacksmith
-	mouth = /obj/item/rogueweapon/huntingknife/bronze
+	mouth = /obj/item/weapon/huntingknife/bronze
 	pants = /obj/item/clothing/under/roguetown/trou
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(

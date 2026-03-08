@@ -47,22 +47,22 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Warhammer & Shield")
-				beltr = /obj/item/rogueweapon/mace/warhammer
-				backl = /obj/item/rogueweapon/shield/iron
+				beltr = /obj/item/weapon/mace/warhammer
+				backl = /obj/item/weapon/shield/iron
 			if("Axe & Shield")
-				beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel
-				backl = /obj/item/rogueweapon/shield/iron
+				beltr = /obj/item/weapon/stoneaxe/woodcut/steel
+				backl = /obj/item/weapon/shield/iron
 			if("Halberd")
-				r_hand = /obj/item/rogueweapon/halberd
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/halberd
+				backl = /obj/item/weapon/scabbard/gwstrap
 			if("Greataxe")
-				r_hand = /obj/item/rogueweapon/greataxe
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/greataxe
+				backl = /obj/item/weapon/scabbard/gwstrap
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/keyring/guardcastle = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
 	H.verbs |= /mob/proc/haltyell

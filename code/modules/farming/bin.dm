@@ -153,8 +153,8 @@
 	if(user.used_intent)
 		if(user.used_intent.type in list(/datum/intent/fill,/datum/intent/pour,/datum/intent/splash))
 			return TRUE
-	if(istype(I, /obj/item/rogueweapon/tongs))
-		var/obj/item/rogueweapon/tongs/T = I
+	if(istype(I, /obj/item/weapon/tongs))
+		var/obj/item/weapon/tongs/T = I
 		if(T.hingot && istype(T.hingot))
 			return TRUE
 	return FALSE
@@ -162,8 +162,8 @@
 /obj/item/roguebin/attackby(obj/item/I, mob/user, params)
 	if(!reagents || !reagents.maximum_volume) //trash
 		return ..()
-	if(istype(I, /obj/item/rogueweapon/tongs))
-		var/obj/item/rogueweapon/tongs/T = I
+	if(istype(I, /obj/item/weapon/tongs))
+		var/obj/item/weapon/tongs/T = I
 		if(T.hingot && istype(T.hingot, /obj/item/ingot))
 			var/obj/item/ingot/ingot = T.hingot
 

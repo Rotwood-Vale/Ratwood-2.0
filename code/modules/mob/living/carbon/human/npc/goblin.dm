@@ -320,26 +320,26 @@
 	var/loadout = rand(1,5)
 	switch(loadout)
 		if(1) //tribal spear
-			r_hand = /obj/item/rogueweapon/spear/stone
+			r_hand = /obj/item/weapon/spear/stone
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/hide/goblin
 		if(2) //tribal axe
-			r_hand = /obj/item/rogueweapon/stoneaxe
+			r_hand = /obj/item/weapon/stoneaxe
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/hide/goblin
 		if(3) //tribal club
-			r_hand = /obj/item/rogueweapon/mace/woodclub
+			r_hand = /obj/item/weapon/mace/woodclub
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/hide/goblin
 			if(prob(10))
 				head = /obj/item/clothing/head/roguetown/helmet/leather/goblin
 		if(4) //lightly armored sword/flail/daggers
 			if(prob(50))
-				r_hand = /obj/item/rogueweapon/sword/iron
+				r_hand = /obj/item/weapon/sword/iron
 			else
-				r_hand = /obj/item/rogueweapon/mace/spiked
+				r_hand = /obj/item/weapon/mace/spiked
 			if(prob(30))
-				l_hand = /obj/item/rogueweapon/shield/wood
+				l_hand = /obj/item/weapon/shield/wood
 			if(prob(23))
-				r_hand = /obj/item/rogueweapon/huntingknife/stoneknife
-				l_hand = /obj/item/rogueweapon/huntingknife/stoneknife
+				r_hand = /obj/item/weapon/huntingknife/stoneknife
+				l_hand = /obj/item/weapon/huntingknife/stoneknife
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/goblin
 			if(prob(80))
 				head = /obj/item/clothing/head/roguetown/helmet/leather/goblin
@@ -354,12 +354,12 @@
 			else
 				head = /obj/item/clothing/head/roguetown/helmet/leather/goblin
 			if(prob(50))
-				r_hand = /obj/item/rogueweapon/sword/iron
+				r_hand = /obj/item/weapon/sword/iron
 			else
-				r_hand = /obj/item/rogueweapon/mace/spiked
+				r_hand = /obj/item/weapon/mace/spiked
 			if(prob(20))
-				r_hand = /obj/item/rogueweapon/flail
-				l_hand = /obj/item/rogueweapon/shield/wood
+				r_hand = /obj/item/weapon/flail
+				l_hand = /obj/item/weapon/shield/wood
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)

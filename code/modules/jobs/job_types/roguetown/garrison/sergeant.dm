@@ -93,10 +93,10 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/guard) // We'll just use Watchmen as sorta conscripts yeag?
 	H.verbs |= list(/mob/living/carbon/human/proc/request_outlaw, /mob/proc/haltyell, /mob/living/carbon/human/mind/proc/setorders)
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/keyring/guardsergeant = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
 	H.adjust_blindness(-3)
@@ -106,21 +106,21 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Rhomphaia")			//Rare-ish anti-armor two hander sword. Kinda alternative of a bastard sword type. Could be cool.
-				backl = /obj/item/rogueweapon/scabbard/sword
-				l_hand = /obj/item/rogueweapon/sword/long/rhomphaia
-				beltr = /obj/item/rogueweapon/mace/cudgel
+				backl = /obj/item/weapon/scabbard/sword
+				l_hand = /obj/item/weapon/sword/long/rhomphaia
+				beltr = /obj/item/weapon/mace/cudgel
 			if("Flail & Shield")	//Tower-shield, higher durability wood shield w/ more coverage. Plus a steel flail; maybe.. less broken that a steel mace?
-				beltr = /obj/item/rogueweapon/flail/sflail
-				backl = /obj/item/rogueweapon/shield/tower
+				beltr = /obj/item/weapon/flail/sflail
+				backl = /obj/item/weapon/shield/tower
 			if("Halberd")			//Halberd - basically exact same as MAA. It's a really valid build. Spear thrust + sword chop + bash.
-				r_hand = /obj/item/rogueweapon/halberd
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				beltr = /obj/item/rogueweapon/mace/cudgel
+				r_hand = /obj/item/weapon/halberd
+				backl = /obj/item/weapon/scabbard/gwstrap
+				beltr = /obj/item/weapon/mace/cudgel
 			if("Sabre & Crossbow")	//Versetile skirmisher class. Considered other swords but sabre felt best without being too strong. (This one gets no cudgel, no space.)
 				beltr = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				r_hand = /obj/item/rogueweapon/sword/sabre
-				l_hand = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/sabre
+				l_hand = /obj/item/weapon/scabbard/sword
 
 		var/armors = list(
 			"Brigandine"		= /obj/item/clothing/suit/roguetown/armor/brigandine/retinue,

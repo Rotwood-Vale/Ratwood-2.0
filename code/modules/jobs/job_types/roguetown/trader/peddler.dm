@@ -43,9 +43,9 @@
 		/obj/item/reagent_containers/powder/spice = 2,
 		/obj/item/reagent_containers/powder/ozium = 1,
 		/obj/item/reagent_containers/powder/moondust = 2,
-		/obj/item/rogueweapon/huntingknife = 1,
+		/obj/item/weapon/huntingknife = 1,
 		/obj/item/recipe_book/survival = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)

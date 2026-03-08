@@ -21,7 +21,7 @@
 	)
 	added_stashed_items = list(
 		"Needle" = /obj/item/needle,
-		"Scissors" = /obj/item/rogueweapon/huntingknife/scissors
+		"Scissors" = /obj/item/weapon/huntingknife/scissors
 	)
 
 /datum/virtue/utility/physician
@@ -63,9 +63,9 @@
 						list(/datum/skill/craft/ceramics, 2, 2)
 	)
 	added_stashed_items = list(
-		"Hammer" = /obj/item/rogueweapon/hammer/wood,
-		"Chisel" = /obj/item/rogueweapon/chisel,
-		"Hand Saw" = /obj/item/rogueweapon/handsaw
+		"Hammer" = /obj/item/weapon/hammer/wood,
+		"Chisel" = /obj/item/weapon/chisel,
+		"Hand Saw" = /obj/item/weapon/handsaw
 	)
 
 /datum/virtue/utility/mining
@@ -73,6 +73,6 @@
 	added_traits = list(TRAIT_SMITHING_EXPERT) // Not sure whether smithing or homestead but given mining goods goes into smithing this fits better?
 	desc = "The dark shafts, the damp smells of ichor and the laboring hours are no stranger to me. I keep my pickaxe and lamptern close, and have been taught how to mine well."
 	added_stashed_items = list(
-		"Steel Pickaxe" = /obj/item/rogueweapon/pick/steel,
+		"Steel Pickaxe" = /obj/item/weapon/pick/steel,
 		"Lamptern" = /obj/item/flashlight/flare/torch/lantern)
 	added_skills = list(list(/datum/skill/labor/mining, 3, 6))

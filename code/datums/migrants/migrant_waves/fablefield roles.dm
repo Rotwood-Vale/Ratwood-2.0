@@ -18,10 +18,10 @@
 	cloak = /obj/item/clothing/cloak/half/red
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogue/instrument/guitar
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	beltr = /obj/item/rogueweapon/scabbard/sheath
-	r_hand = /obj/item/rogueweapon/sword/rapier/dec
-	l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
+	beltl = /obj/item/weapon/scabbard/sword
+	beltr = /obj/item/weapon/scabbard/sheath
+	r_hand = /obj/item/weapon/sword/rapier/dec
+	l_hand = /obj/item/weapon/huntingknife/idagger/silver/elvish
 	backpack_contents = list(/obj/item/book/rogue/tales1, /obj/item/book/rogue/blackmountain, /obj/item/book/rogue/tales3)
 	H.adjust_skillrank(/datum/skill/misc/music, 6, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
@@ -65,10 +65,10 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
 	cloak = /obj/item/clothing/cloak/half/orange
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/sword/rapier
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	beltr = /obj/item/rogueweapon/scabbard/sheath
-	l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
+	backr = /obj/item/weapon/sword/rapier
+	beltl = /obj/item/weapon/scabbard/sword
+	beltr = /obj/item/weapon/scabbard/sheath
+	l_hand = /obj/item/weapon/huntingknife/idagger/steel
 	var/instrumentroll = rand(1, 100)	//GAMBLING !!!
 	switch(instrumentroll)
 		if(1 to 20)
@@ -81,7 +81,7 @@
 			r_hand = /obj/item/rogue/instrument/hurdygurdy
 		if(81 to 100)
 			r_hand = /obj/item/rogue/instrument/trumpet
-	backpack_contents = list(/obj/item/book/rogue/nitebeast, /obj/item/flashlight/flare/torch/lantern, /obj/item/flint, /obj/item/rogueweapon/scabbard/sheath)
+	backpack_contents = list(/obj/item/book/rogue/nitebeast, /obj/item/flashlight/flare/torch/lantern, /obj/item/flint, /obj/item/weapon/scabbard/sheath)
 	H.adjust_skillrank(/datum/skill/misc/music, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)

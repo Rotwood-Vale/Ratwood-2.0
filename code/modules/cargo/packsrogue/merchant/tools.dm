@@ -112,22 +112,22 @@
 /datum/supply_pack/rogue/tools/hoe
 	name = "Hoe"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/hoe,)
+	contains = list(/obj/item/weapon/hoe,)
 
 /datum/supply_pack/rogue/tools/thresher
 	name = "Thresher"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/thresher,)
+	contains = list(/obj/item/weapon/thresher,)
 
 /datum/supply_pack/rogue/tools/sickle
 	name = "Sickle"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/sickle,)
+	contains = list(/obj/item/weapon/sickle,)
 
 /datum/supply_pack/rogue/tools/pfork
 	name = "Pitchfork"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/pitchfork,)
+	contains = list(/obj/item/weapon/pitchfork,)
 
 
 /datum/supply_pack/rogue/tools/plough
@@ -138,7 +138,7 @@
 /datum/supply_pack/rogue/tools/ironpick
 	name = "Iron Pickaxe"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/pick,)
+	contains = list(/obj/item/weapon/pick,)
 
 /datum/supply_pack/rogue/tools/soapps
 	name = "Soap"
@@ -160,22 +160,22 @@
 /datum/supply_pack/rogue/tools/scythe
 	name = "Scythe"
 	cost = 25
-	contains = list(/obj/item/rogueweapon/scythe)
+	contains = list(/obj/item/weapon/scythe)
 
 /datum/supply_pack/rogue/tools/handsaw
 	name = "Handsaw"
 	cost = 35
-	contains = list(/obj/item/rogueweapon/handsaw)
+	contains = list(/obj/item/weapon/handsaw)
 
 /datum/supply_pack/rogue/tools/handsaw
 	name = "Chisel"
 	cost = 35
-	contains = list(/obj/item/rogueweapon/chisel)
+	contains = list(/obj/item/weapon/chisel)
 
 /datum/supply_pack/rogue/tools/hammer
 	name = "Hammer"
 	cost = 35
-	contains = list(/obj/item/rogueweapon/hammer/iron)
+	contains = list(/obj/item/weapon/hammer/iron)
 
 /datum/supply_pack/rogue/tools/fryingpan
 	name = "Frying Pan"
@@ -214,7 +214,7 @@
 /datum/supply_pack/rogue/tools/gwstrap
 	name = "Greatweapon Strap"
 	cost = 30
-	contains = list(/obj/item/rogueweapon/scabbard/gwstrap)
+	contains = list(/obj/item/weapon/scabbard/gwstrap)
 
 /datum/supply_pack/rogue/tools/headhook
 	name = "Iron Head Hook"
@@ -234,12 +234,12 @@
 /datum/supply_pack/rogue/tools/spade
 	name = "Wooden Spade"
 	cost = 5
-	contains = list(/obj/item/rogueweapon/shovel/small)
+	contains = list(/obj/item/weapon/shovel/small)
 
 /datum/supply_pack/rogue/tools/shovel
 	name = "Shovel"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/shovel)
+	contains = list(/obj/item/weapon/shovel)
 
 /datum/supply_pack/rogue/tools/surgeonsbag
 	name = "Surgeon's bag, Full"
@@ -249,4 +249,4 @@
 /datum/supply_pack/rogue/tools/scissors
 	name = "Scissors, Iron"
 	cost = 30
-	contains = list(/obj/item/rogueweapon/huntingknife/scissors)
+	contains = list(/obj/item/weapon/huntingknife/scissors)

@@ -36,7 +36,7 @@
 		cloak = /obj/item/clothing/cloak/raincloak/brown
 		gloves = /obj/item/clothing/gloves/roguetown/fingerless
 
-	r_hand = /obj/item/rogueweapon/woodstaff
+	r_hand = /obj/item/weapon/woodstaff
 
 	if (H.mind)
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)

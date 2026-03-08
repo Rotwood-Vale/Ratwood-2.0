@@ -36,12 +36,12 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	pants = /obj/item/clothing/under/roguetown/splintlegs
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	backl = /obj/item/weapon/scabbard/gwstrap
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/keyring/guardcastle = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
 	H.verbs |= /mob/proc/haltyell
@@ -52,9 +52,9 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Pike")
-				r_hand = /obj/item/rogueweapon/spear/keep_standard
+				r_hand = /obj/item/weapon/spear/keep_standard
 			if("Poleaxe")
-				r_hand = /obj/item/rogueweapon/spear/keep_standard/poleaxe
+				r_hand = /obj/item/weapon/spear/keep_standard/poleaxe
 
 //These are really hacky, but it works.
 //One proc to moodbuff.

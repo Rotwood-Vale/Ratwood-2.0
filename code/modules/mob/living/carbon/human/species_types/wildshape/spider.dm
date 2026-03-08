@@ -121,7 +121,7 @@
 	miss_sound = "bluntswoosh"
 	item_d_type = "stab"
 
-/obj/item/rogueweapon/spider_fang
+/obj/item/weapon/spider_fang
 	name = "spider fang"
 	desc = ""
 	item_state = null
@@ -146,13 +146,13 @@
 	item_flags = DROPDEL
 	experimental_inhand = FALSE
 
-/obj/item/rogueweapon/spider_fang/right
+/obj/item/weapon/spider_fang/right
 	icon_state = "claw_r"
 
-/obj/item/rogueweapon/spider_fang/left
+/obj/item/weapon/spider_fang/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/spider_fang/Initialize(mapload)
+/obj/item/weapon/spider_fang/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
@@ -169,16 +169,16 @@
 
 /obj/effect/proc_holder/spell/self/spiderfangs/cast(mob/user = usr)
 	..()
-	var/obj/item/rogueweapon/spider_fang/left/l
-	var/obj/item/rogueweapon/spider_fang/right/r
+	var/obj/item/weapon/spider_fang/left/l
+	var/obj/item/weapon/spider_fang/right/r
 
 	l = user.get_active_held_item()
 	r = user.get_inactive_held_item()
 	if(extended)
-		if(istype(l, /obj/item/rogueweapon/spider_fang))
+		if(istype(l, /obj/item/weapon/spider_fang))
 			user.dropItemToGround(l, TRUE)
 			qdel(l)
-		if(istype(r, /obj/item/rogueweapon/spider_fang))
+		if(istype(r, /obj/item/weapon/spider_fang))
 			user.dropItemToGround(r, TRUE)
 			qdel(r)
 		//user.visible_message("Your claws retract.", "You feel your claws retracting.", "You hear a sound of claws retracting.")

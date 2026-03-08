@@ -75,7 +75,7 @@
 
 //Weaponry.
 
-/obj/item/rogueweapon/katar
+/obj/item/weapon/katar
 	slot_flags = ITEM_SLOT_HIP
 	force = 24
 	possible_item_intents = list(/datum/intent/katar/cut, /datum/intent/katar/thrust)
@@ -102,7 +102,7 @@
 	grid_width = 32
 	sharpness_mod = 2	//Can't parry, so it decays quicker on-hit.
 
-/obj/item/rogueweapon/katar/getonmobprop(tag)
+/obj/item/weapon/katar/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -111,14 +111,14 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/katar/abyssor
+/obj/item/weapon/katar/abyssor
 	name = "barotrauma"
 	desc = "A gift from a creature of the sea. The claw is sharpened to a wicked edge."
 	icon_state = "abyssorclaw"
 	force = 27	//Its thrust will be able to pen 80 stab armor if the wielder has 17 STR. (With softcap)
 	max_integrity = 80
 
-/obj/item/rogueweapon/katar/bronze
+/obj/item/weapon/katar/bronze
 	name = "bronze katar"
 	desc = "A bronze blade that sits above the user's fist. Commonly used by those proficient at unarmed fighting."
 	force = 21 //-3 damage malus, same as the knuckles.
@@ -126,7 +126,7 @@
 	max_integrity = 80
 	smeltresult = /obj/item/ingot/bronze
 
-/obj/item/rogueweapon/katar/punchdagger
+/obj/item/weapon/katar/punchdagger
 	name = "punch dagger"
 	desc = "A weapon that combines the ergonomics of the Ranesheni katar with the capabilities of the Western Psydonian \"knight-killers\". It can be tied around the wrist."
 	slot_flags = ITEM_SLOT_WRISTS
@@ -138,19 +138,19 @@
 	possible_item_intents = list(/datum/intent/dagger/thrust, /datum/intent/dagger/thrust/pick)
 	icon_state = "plug"
 
-/obj/item/rogueweapon/katar/punchdagger/frei
+/obj/item/weapon/katar/punchdagger/frei
 	name = "vývrtka"
 	desc = "A type of punch dagger of Aavnic make initially designed to level the playing field with an orc in fisticuffs, its serrated edges and longer, thinner point are designed to maximize pain for the recipient. It's aptly given the name of \"corkscrew\", and this specific one has the colours of Szöréndnížina. Can be worn on your ring slot."
 	icon_state = "freiplug"
 	slot_flags = ITEM_SLOT_RING
 
-/obj/item/rogueweapon/katar/punchdagger/aav
+/obj/item/weapon/katar/punchdagger/aav
 	name = "vývrtka"
 	desc = "A type of punch dagger of Aavnic make initially designed to level the playing field with an orc in fisticuffs, its serrated edges and longer, thinner point are designed to maximize pain for the recipient. It's aptly given the name of \"corkscrew\", and this specific one has the colours of a Steppesman's banner. Can be worn on your ring slot."
 	icon_state = "avplug"
 	slot_flags = ITEM_SLOT_RING
 
-/obj/item/rogueweapon/katar/psydon
+/obj/item/weapon/katar/psydon
 	name = "psydonic katar"
 	desc = "An exotic weapon taken from the hands of wandering monks, an esoteric design to the Otavan Orthodoxy. Special care was taken into account towards the user's knuckles: silver-tipped steel from tip to edges, and His holy cross reinforcing the heart of the weapon, with curved shoulders to allow its user to deflect incoming blows - provided they lead it in with the blade."
 	icon_state = "psykatar"
@@ -159,7 +159,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/katar/psydon/ComponentInitialize()
+/obj/item/weapon/katar/psydon/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -170,7 +170,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/knuckles/psydon
+/obj/item/weapon/knuckles/psydon
 	name = "psydonic knuckles"
 	desc = "A simple piece of harm molded in a holy mixture of steel and silver, finished with three stumps - Psydon's crown - to crush the heretics' garments and armor into smithereens."
 	icon_state = "psyknuckle"
@@ -179,7 +179,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/knuckles/psydon/ComponentInitialize()
+/obj/item/weapon/knuckles/psydon/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -190,7 +190,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/knuckles/psydon/old
+/obj/item/weapon/knuckles/psydon/old
 	name = "enduring knuckles"
 	desc = "A simple piece of harm molded in a holy mixture of steel and silver, its holy blessing long since faded. You are HIS weapon, you needn't fear Aeon."
 	icon_state = "psyknuckle"
@@ -199,10 +199,10 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/knuckles/psydon/old/ComponentInitialize()
+/obj/item/weapon/knuckles/psydon/old/ComponentInitialize()
 	return
 
-/obj/item/rogueweapon/knuckles
+/obj/item/weapon/knuckles
 	name = "steel knuckles"
 	desc = "A mean looking pair of steel knuckles."
 	force = 25
@@ -226,7 +226,7 @@
 	grid_width = 64
 	grid_height = 32
 
-/obj/item/rogueweapon/knuckles/getonmobprop(tag)
+/obj/item/weapon/knuckles/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -235,7 +235,7 @@
 			if("onbelt")
 				return list("shrink" = 0.1,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/knuckles/bronzeknuckles
+/obj/item/weapon/knuckles/bronzeknuckles
 	name = "bronze knuckles"
 	desc = "A mean looking pair of bronze knuckles. Mildly heavier than it's steel counterpart, making it a solid defensive option, if less wieldy."
 	force = 22
@@ -256,7 +256,7 @@
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/bronze
 
-/obj/item/rogueweapon/knuckles/aknuckles
+/obj/item/weapon/knuckles/aknuckles
 	name = "decrepit knuckles"
 	desc = "a set of knuckles made of ancient metals, Aeon's grasp wither their form."
 	icon_state = "aknuckle"
@@ -266,20 +266,20 @@
 	smeltresult = /obj/item/ingot/aalloy
 	blade_dulling = DULLING_SHAFT_CONJURED
 
-/obj/item/rogueweapon/knuckles/paknuckles
+/obj/item/weapon/knuckles/paknuckles
 	name = "ancient knuckles"
 	desc = "a set of knuckles made of ancient metals, Aeon's grasp has been lifted from their form."
 	icon_state = "aknuckle"
 	smeltresult = /obj/item/ingot/aaslag
 
-/obj/item/rogueweapon/knuckles/eora
+/obj/item/weapon/knuckles/eora
 	name = "close caress"
 	desc = "Some times call for a more intimate approach."
 	force = 24
 	icon_state = "eoraknuckle"
 
 //Claws. God, I hate these.
-/obj/item/rogueweapon/handclaw
+/obj/item/weapon/handclaw
 	slot_flags = ITEM_SLOT_HIP
 	name = "Iron Hound Claws"
 	desc = "A pair of heavily curved claws, styled after beasts of the wilds for rending bare flesh, \
@@ -307,7 +307,7 @@
 	grid_height = 96
 	grid_width = 32
 
-/obj/item/rogueweapon/handclaw/steel
+/obj/item/weapon/handclaw/steel
 	name = "Steel Mantis Claws"
 	desc = "A pair of steel claws, An uncommon sight in Gronn as they do not forge their own steel, \
 			Their longer blades offer a superior defence option but their added weight slows them down."
@@ -322,7 +322,7 @@
 	smeltresult = /obj/item/ingot/steel
 	sharpness_mod = 2
 
-/obj/item/rogueweapon/handclaw/gronn
+/obj/item/weapon/handclaw/gronn
 	name = "Gronn Beast Claws"
 	desc = "A pair of uniquely reinforced iron claws forged with the addition of bone by the Iskarn shamans of the Northern Empty. \
 			Their unique design aids them in slipping between the plates in armor and their light weight supports rapid aggressive slashes. \
@@ -336,7 +336,7 @@
 	max_blade_int = 200
 	max_integrity = 200
 
-/obj/item/rogueweapon/handclaw/getonmobprop(tag)
+/obj/item/weapon/handclaw/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)

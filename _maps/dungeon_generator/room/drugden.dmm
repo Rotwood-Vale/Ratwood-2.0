@@ -232,7 +232,7 @@
 /area/rogue/under/tomb/cave/wet)
 "uv" = (
 /obj/structure/table/vtable,
-/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne,
+/obj/item/weapon/huntingknife/idagger/silver/arcyne,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "uF" = (
@@ -425,7 +425,7 @@
 /area/rogue/under/tomb/indoors)
 "RE" = (
 /obj/structure/table/vtable/v2,
-/obj/item/rogueweapon/huntingknife/idagger/silver{
+/obj/item/weapon/huntingknife/idagger/silver{
 	pixel_y = 3;
 	pixel_x = -3
 	},

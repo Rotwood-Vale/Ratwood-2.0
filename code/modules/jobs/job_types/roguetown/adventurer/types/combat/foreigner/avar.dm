@@ -49,10 +49,10 @@
 	neck = /obj/item/clothing/neck/roguetown/leather
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch,
-		/obj/item/rogueweapon/huntingknife/idagger/steel,
+		/obj/item/weapon/huntingknife/idagger/steel,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
-		/obj/item/rogueweapon/scabbard/sheath,
-		/obj/item/rogueweapon/whip/nagaika,
+		/obj/item/weapon/scabbard/sheath,
+		/obj/item/weapon/whip/nagaika,
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 
@@ -71,18 +71,18 @@
 					new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
 			if("Footman")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/sabre/steppesman
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				backl = /obj/item/rogueweapon/shield/buckler
+				r_hand = /obj/item/weapon/sword/sabre/steppesman
+				beltl = /obj/item/weapon/scabbard/sword
+				backl = /obj/item/weapon/shield/buckler
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 			if("Axeman")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 3, TRUE)
-				r_hand = /obj/item/rogueweapon/stoneaxe/battle/steppesman
-				backl = /obj/item/rogueweapon/shield/buckler
+				r_hand = /obj/item/weapon/stoneaxe/battle/steppesman
+				backl = /obj/item/weapon/shield/buckler
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 			if("Pikeman")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
-				r_hand = /obj/item/rogueweapon/spear/boar/aav
-				l_hand = /obj/item/rogueweapon/katar/punchdagger/aav
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/boar/aav
+				l_hand = /obj/item/weapon/katar/punchdagger/aav
+				backl = /obj/item/weapon/scabbard/gwstrap
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)

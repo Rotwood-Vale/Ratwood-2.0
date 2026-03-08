@@ -4,7 +4,7 @@
 /area/rogue/under/tomb/cave/lava)
 "ag" = (
 /obj/structure/fluff/walldeco/chains,
-/obj/item/rogueweapon/shield/tower/metal,
+/obj/item/weapon/shield/tower/metal,
 /turf/open/floor/rogue/volcanic,
 /area/rogue/under/tomb/cave/lava)
 "ah" = (
@@ -32,7 +32,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave/lava)
 "aT" = (
-/obj/item/rogueweapon/mace/steel,
+/obj/item/weapon/mace/steel,
 /turf/open/floor/rogue/volcanic,
 /area/rogue/under/tomb/cave/lava)
 "gp" = (
@@ -180,7 +180,7 @@
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/tomb/indoors)
 "Sk" = (
-/obj/item/rogueweapon/flail,
+/obj/item/weapon/flail,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave/lava)
 "Vk" = (

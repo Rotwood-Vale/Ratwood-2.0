@@ -377,16 +377,16 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 
 	switch(choice)
 		if("Harmonious Spear")
-			new_weapon = new /obj/item/rogueweapon/halberd/glaive/dreamscape(user.loc)
+			new_weapon = new /obj/item/weapon/halberd/glaive/dreamscape(user.loc)
 			skill_to_teach = /datum/skill/combat/polearms
 		if("Oozing Sword")
-			new_weapon = new /obj/item/rogueweapon/greatsword/bsword/dreamscape(user.loc)
+			new_weapon = new /obj/item/weapon/greatsword/bsword/dreamscape(user.loc)
 			skill_to_teach = /datum/skill/combat/swords
 		if("Dreamreaver Greataxe")
-			new_weapon = new /obj/item/rogueweapon/greataxe/dreamscape(user.loc)
+			new_weapon = new /obj/item/weapon/greataxe/dreamscape(user.loc)
 			skill_to_teach = /datum/skill/combat/axes
 		if("Thunderous Trident")
-			new_weapon = new /obj/item/rogueweapon/spear/dreamscape_trident(user.loc)
+			new_weapon = new /obj/item/weapon/spear/dreamscape_trident(user.loc)
 			skill_to_teach = /datum/skill/combat/polearms
 
 	if(new_weapon)
@@ -1193,7 +1193,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 	gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
-	backr = /obj/item/rogueweapon/sword/long/zizo
+	backr = /obj/item/weapon/sword/long/zizo
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 
@@ -1452,7 +1452,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	gloves = /obj/item/clothing/gloves/roguetown/plate/matthios
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/matthios
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
-	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
+	backr = /obj/item/weapon/flail/peasantwarflail/matthios
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 
 /obj/structure/ritualcircle/matthios/proc/matthiosconversion(mob/living/carbon/human/target)
@@ -1684,7 +1684,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/graggar
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 	cloak = /obj/item/clothing/cloak/graggar
-	r_hand = /obj/item/rogueweapon/greataxe/steel/doublehead/graggar
+	r_hand = /obj/item/weapon/greataxe/steel/doublehead/graggar
 
 /obj/structure/ritualcircle/graggar/proc/graggarconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)

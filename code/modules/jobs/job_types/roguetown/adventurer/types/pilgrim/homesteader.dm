@@ -295,7 +295,7 @@
 	var/profession_sets = list(
 		"Physiker Set" = list(
 			/obj/item/bedroll,
-			/obj/item/rogueweapon/huntingknife/scissors,
+			/obj/item/weapon/huntingknife/scissors,
 			/obj/item/storage/belt/rogue/surgery_bag/full,
 			/obj/item/storage/belt/rogue/pouch/medicine,
 			/obj/effect/proc_holder/spell/invoked/diagnose/secular,
@@ -307,21 +307,21 @@
 			/obj/item/folding_table_stored,
 			/obj/item/storage/meatbag,
 			/obj/item/millstone,
-			/obj/item/rogueweapon/hoe
+			/obj/item/weapon/hoe
 		),
 		"Prospector Set" = list(
-			/obj/item/rogueweapon/hammer/steel,
+			/obj/item/weapon/hammer/steel,
 			/obj/item/folding_table_stored,
 			/obj/item/lockpickring/mundane,
-			/obj/item/rogueweapon/pick,
-			/obj/item/rogueweapon/huntingknife/scissors,
-			/obj/item/rogueweapon/scabbard/gwstrap
+			/obj/item/weapon/pick,
+			/obj/item/weapon/huntingknife/scissors,
+			/obj/item/weapon/scabbard/gwstrap
 		)
 	)
 
 	// Daily Tools - basic combination
 	var/daily_tools_combos = list(
-		"Bronze Axe + Bronze Knife + Sheath" = list(/obj/item/rogueweapon/stoneaxe/woodcut/bronze, /obj/item/rogueweapon/huntingknife/bronze, /obj/item/rogueweapon/scabbard/sheath),
+		"Bronze Axe + Bronze Knife + Sheath" = list(/obj/item/weapon/stoneaxe/woodcut/bronze, /obj/item/weapon/huntingknife/bronze, /obj/item/weapon/scabbard/sheath),
 		"Simple Bow + Quiver" = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow, /obj/item/quiver/arrows)
 	)
 
@@ -496,7 +496,7 @@
 //Debloats their contents
 	backpack_contents = list(
 						/obj/item/flint = 1,
-						/obj/item/rogueweapon/handsaw = 1,
+						/obj/item/weapon/handsaw = 1,
 						/obj/item/dye_brush = 1,
 						/obj/item/reagent_containers/powder/salt = 1,
 						/obj/item/reagent_containers/food/snacks/rogue/cheddar = 2,
@@ -504,8 +504,8 @@
 						/obj/item/flashlight/flare/torch/lantern = 1,
 //						/obj/item/book/rogue/yeoldecookingmanual = 1,
 //						/obj/item/natural/worms = 2,
-						/obj/item/rogueweapon/shovel/small = 1,
-						/obj/item/rogueweapon/chisel = 1,
+						/obj/item/weapon/shovel/small = 1,
+						/obj/item/weapon/chisel = 1,
 	)
 
 	if(H.mind)

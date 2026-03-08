@@ -77,13 +77,13 @@
 	var/weapon_choice = rand(1, 4)
 	switch(weapon_choice)
 		if(1)
-			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/aaxe
+			r_hand = /obj/item/weapon/stoneaxe/woodcut/aaxe
 		if(2)
-			r_hand = /obj/item/rogueweapon/sword/short/ashort
+			r_hand = /obj/item/weapon/sword/short/ashort
 		if(3)
-			r_hand = /obj/item/rogueweapon/spear/aalloy
+			r_hand = /obj/item/weapon/spear/aalloy
 		if(4)
-			r_hand = /obj/item/rogueweapon/mace/alloy
+			r_hand = /obj/item/weapon/mace/alloy
 	H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
@@ -117,13 +117,13 @@
 	var/weapon_choice = rand(1, 4)
 	switch(weapon_choice)
 		if(1)
-			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/aaxe
+			r_hand = /obj/item/weapon/stoneaxe/woodcut/aaxe
 		if(2)
-			r_hand = /obj/item/rogueweapon/sword/short/ashort
+			r_hand = /obj/item/weapon/sword/short/ashort
 		if(3)
-			r_hand = /obj/item/rogueweapon/spear/aalloy
+			r_hand = /obj/item/weapon/spear/aalloy
 		if(4)
-			r_hand = /obj/item/rogueweapon/mace/alloy
+			r_hand = /obj/item/weapon/mace/alloy
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
@@ -150,9 +150,9 @@
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
 	if(prob(50))
-		r_hand = /obj/item/rogueweapon/huntingknife/idagger/adagger
+		r_hand = /obj/item/weapon/huntingknife/idagger/adagger
 	else
-		r_hand = /obj/item/rogueweapon/knuckles/aknuckles
+		r_hand = /obj/item/weapon/knuckles/aknuckles
 	if(prob(20))
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		if(prob(50))
@@ -198,13 +198,13 @@
 	if(prob(5))
 		id = /obj/item/clothing/ring/aalloy
 	if(prob(33)) // 33% chance of shield, so ranged don't get screwed over entirely
-		l_hand = /obj/item/rogueweapon/shield/tower/metal/alloy
+		l_hand = /obj/item/weapon/shield/tower/metal/alloy
 	if(prob(33))
-		r_hand = /obj/item/rogueweapon/spear/aalloy
+		r_hand = /obj/item/weapon/spear/aalloy
 	else if(prob(33))
-		r_hand = /obj/item/rogueweapon/sword/short/gladius/agladius	// ave
+		r_hand = /obj/item/weapon/sword/short/gladius/agladius	// ave
 	else
-		r_hand = /obj/item/rogueweapon/flail/aflail
+		r_hand = /obj/item/weapon/flail/aflail
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
@@ -236,8 +236,8 @@
 		shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
 		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
 		gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
-		r_hand = /obj/item/rogueweapon/sword/sabre/alloy
-		l_hand = /obj/item/rogueweapon/sword/sabre/alloy
+		r_hand = /obj/item/weapon/sword/sabre/alloy
+		l_hand = /obj/item/weapon/sword/sabre/alloy
 	else // Withered Dreadknight
 		H.STASPD = 8
 		cloak = /obj/item/clothing/cloak/tabard/blkknight
@@ -250,9 +250,9 @@
 		neck = /obj/item/clothing/neck/roguetown/gorget/aalloy
 		gloves = /obj/item/clothing/gloves/roguetown/plate/aalloy
 		if(prob(50))
-			r_hand = /obj/item/rogueweapon/greatsword/aalloy
+			r_hand = /obj/item/weapon/greatsword/aalloy
 		else
-			r_hand = /obj/item/rogueweapon/mace/goden/aalloy
+			r_hand = /obj/item/weapon/mace/goden/aalloy
 	
 	if(prob(60))
 		belt = /obj/item/storage/belt/rogue/leather/rope
@@ -302,15 +302,15 @@
 	if(prob(70))
 		gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
 	if(prob(20))
-		l_hand = /obj/item/rogueweapon/shield/tower/metal/alloy
+		l_hand = /obj/item/weapon/shield/tower/metal/alloy
 	if(prob(25))
-		r_hand = /obj/item/rogueweapon/spear/aalloy
+		r_hand = /obj/item/weapon/spear/aalloy
 	else if(prob(25))
-		r_hand = /obj/item/rogueweapon/mace/alloy
+		r_hand = /obj/item/weapon/mace/alloy
 	else if(prob(25))
-		r_hand = /obj/item/rogueweapon/sword/short/ashort
+		r_hand = /obj/item/weapon/sword/short/ashort
 	else
-		r_hand = /obj/item/rogueweapon/flail/aflail
+		r_hand = /obj/item/weapon/flail/aflail
 	if(prob(40))
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		if(prob(50))
@@ -365,13 +365,13 @@
 	var/weapon_choice = rand(1, 4)
 	switch(weapon_choice)
 		if(1)
-			r_hand = /obj/item/rogueweapon/sickle/aalloy
+			r_hand = /obj/item/weapon/sickle/aalloy
 		if(2)
-			r_hand = /obj/item/rogueweapon/woodstaff
+			r_hand = /obj/item/weapon/woodstaff
 		if(3)
-			r_hand = /obj/item/rogueweapon/huntingknife/idagger/adagger
+			r_hand = /obj/item/weapon/huntingknife/idagger/adagger
 		if(4)
-			r_hand = /obj/item/rogueweapon/mace/woodclub
+			r_hand = /obj/item/weapon/mace/woodclub
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
@@ -405,9 +405,9 @@
 		head = /obj/item/clothing/head/roguetown/helmet/horned
 	neck = /obj/item/clothing/neck/roguetown/collar/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	r_hand = /obj/item/rogueweapon/pick/aalloy
+	r_hand = /obj/item/weapon/pick/aalloy
 	if(prob(20))
-		r_hand = /obj/item/rogueweapon/shovel/aalloy
+		r_hand = /obj/item/weapon/shovel/aalloy
 	if(prob(40))
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		if(prob(50))

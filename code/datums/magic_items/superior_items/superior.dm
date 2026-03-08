@@ -189,5 +189,5 @@
 
 /datum/magic_item/superior/smithing/on_apply(obj/item/i)
 	.=..()
-	var/obj/item/rogueweapon/hammer/hammer = i
+	var/obj/item/weapon/hammer/hammer = i
 	hammer.quality = hammer.quality *2

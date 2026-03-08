@@ -15,7 +15,7 @@
 /area/rogue/under/tomb/cave)
 "f" = (
 /obj/structure/fluff/walldeco/vinez/offset,
-/obj/item/rogueweapon/pick/militia,
+/obj/item/weapon/pick/militia,
 /obj/item/roguegem/random,
 /turf/open/floor/rogue/volcanic,
 /area/rogue/under/tomb/cave)
@@ -36,7 +36,7 @@
 /obj/structure/table/vtable,
 /obj/item/reagent_containers/food/snacks/rogue/cheddarwedge/aged,
 /obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
-/obj/item/rogueweapon/huntingknife/idagger/silver,
+/obj/item/weapon/huntingknife/idagger/silver,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb/cave)
 "o" = (

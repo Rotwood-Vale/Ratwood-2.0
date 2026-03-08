@@ -32,21 +32,21 @@
 	name = "Sickle, Copper (+1 Stick)"
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/sickle/copper
+	created_item = /obj/item/weapon/sickle/copper
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/copper/pick
 	name = "Pick, Copper (+1 Stick)"
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pick/copper
+	created_item = /obj/item/weapon/pick/copper
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/copper/pitchfork
 	name = "Pitchfork, Copper (+2 Sticks)"
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pitchfork/copper
+	created_item = /obj/item/weapon/pitchfork/copper
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/copper/lamptern
@@ -58,7 +58,7 @@
 	name = "Hammer, Copper (+Stick)"
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hammer/copper
+	created_item = /obj/item/weapon/hammer/copper
 	i_type = "Tools"
 
 
@@ -68,56 +68,56 @@
 	name = "Thresher, Decrepit (+1 Stick)"
 	req_bar = /obj/item/ingot/aalloy
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/thresher/aalloy
+	created_item = /obj/item/weapon/thresher/aalloy
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/aalloy/hoe
 	name = "Hoe, Decrepit (+2 Sticks)"
 	req_bar = /obj/item/ingot/aalloy
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hoe/aalloy
+	created_item = /obj/item/weapon/hoe/aalloy
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/aalloy/pitchfork
 	name = "Pitchfork, Decrepit (+2 Sticks)"
 	req_bar = /obj/item/ingot/aalloy
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pitchfork/aalloy
+	created_item = /obj/item/weapon/pitchfork/aalloy
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/aalloy/hammer
 	name = "Hammer, Decrepit (+1 Stick)"
 	req_bar = /obj/item/ingot/aalloy
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hammer/aalloy
+	created_item = /obj/item/weapon/hammer/aalloy
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/aalloy/sickle
 	name = "Sickle, Decrepit (+1 Stick)"
 	req_bar = /obj/item/ingot/aalloy
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/sickle/aalloy
+	created_item = /obj/item/weapon/sickle/aalloy
 	i_type = "Tools"
 
 
 /datum/anvil_recipe/tools/aalloy/tongs
 	name = "Tongs, Decrepit"
 	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/rogueweapon/tongs/aalloy
+	created_item = /obj/item/weapon/tongs/aalloy
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/aalloy/pick
 	name = "Pickaxe, Decrepit (+1 Stick)"
 	req_bar = /obj/item/ingot/aalloy
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pick/aalloy
+	created_item = /obj/item/weapon/pick/aalloy
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/aalloy/shovel
 	name = "Shovel, Decrepit (+2 Sticks)"
 	req_bar = /obj/item/ingot/aalloy
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/shovel/aalloy
+	created_item = /obj/item/weapon/shovel/aalloy
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/aalloy/sewingneedle
@@ -179,7 +179,7 @@
 /datum/anvil_recipe/tools/iron/blowrod
 	name = "Glass Blowing Rod"
 	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/rogueweapon/blowrod
+	created_item = /obj/item/weapon/blowrod
 
 /datum/anvil_recipe/tools/iron/surgerytools
 	name = "Surgeon's Bag (+1 Iron, +1 Cured Leather)"
@@ -229,65 +229,65 @@
 	name = "Branding iron"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/ingot/iron)
-	created_item = /obj/item/rogueweapon/surgery/cautery/branding
+	created_item = /obj/item/weapon/surgery/cautery/branding
 
 /datum/anvil_recipe/tools/iron/shovel
 	name = "Shovel, Iron (+2 Sticks)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/shovel
+	created_item = /obj/item/weapon/shovel
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/iron/hammer
 	name = "Hammer, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hammer/iron
+	created_item = /obj/item/weapon/hammer/iron
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/iron/handsaw
 	name = "Handsaw, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/handsaw
+	created_item = /obj/item/weapon/handsaw
 
 /datum/anvil_recipe/tools/iron/chisel
 	name = "Chisel, Iron"
 	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/rogueweapon/chisel
+	created_item = /obj/item/weapon/chisel
 
 /datum/anvil_recipe/tools/iron/tongs
 	name = "Tongs, Iron"
 	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/rogueweapon/tongs
+	created_item = /obj/item/weapon/tongs
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/iron/sickle
 	name = "Sickle, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/sickle
+	created_item = /obj/item/weapon/sickle
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/iron/pick
 	name = "Pickaxe, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pick
+	created_item = /obj/item/weapon/pick
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/iron/hoe
 	name = "Hoe, Iron (+2 Sticks)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hoe
+	created_item = /obj/item/weapon/hoe
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/iron/pitchfork
 	name = "Pitchfork, Iron (+2 Sticks)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pitchfork
+	created_item = /obj/item/weapon/pitchfork
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/iron/lamptern
@@ -306,7 +306,7 @@
 	name = "Thresher, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/thresher
+	created_item = /obj/item/weapon/thresher
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/iron/headhook
@@ -319,7 +319,7 @@
 /datum/anvil_recipe/tools/scissors
 	name = "Scissors"
 	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/rogueweapon/huntingknife/scissors
+	created_item = /obj/item/weapon/huntingknife/scissors
 	i_type = "Tools"
 
 // --------- Steel -----------
@@ -328,13 +328,13 @@
 	name = "Claw Hammer (+1 Stick)"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hammer/steel
+	created_item = /obj/item/weapon/hammer/steel
 
 /datum/anvil_recipe/tools/steel/pick
 	name = "Pickaxe, Steel (+1 Stick)"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pick/steel
+	created_item = /obj/item/weapon/pick/steel
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/steel/cups
@@ -346,19 +346,19 @@
 /datum/anvil_recipe/tools/steel/chefknife
 	name = "Chef's Knife"
 	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/rogueweapon/huntingknife/chefknife
+	created_item = /obj/item/weapon/huntingknife/chefknife
 	createditem_num = 1
 
 /datum/anvil_recipe/tools/steel/cleaver
 	name = "Cleaver"
 	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/rogueweapon/huntingknife/cleaver
+	created_item = /obj/item/weapon/huntingknife/cleaver
 	createditem_num = 1
 
 /datum/anvil_recipe/tools/steelscissors
 	name = "Scissors"
 	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/rogueweapon/huntingknife/scissors/steel
+	created_item = /obj/item/weapon/huntingknife/scissors/steel
 	i_type = "Tools"
 
 // --------- SILVER -----------
@@ -380,7 +380,7 @@
 	name = "Shovel, Silver (+1 Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/ingot/silver, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/shovel/silver
+	created_item = /obj/item/weapon/shovel/silver
 
 // --------- GOLD RECIPES-----------
 
@@ -557,18 +557,18 @@
 	name = "Blacksteel hammer (+1 Stick)"
 	req_bar = /obj/item/ingot/blacksteel
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hammer/blacksteel
+	created_item = /obj/item/weapon/hammer/blacksteel
 
 /datum/anvil_recipe/tools/blacksteel/pick
 	name = "Blacksteel Pickaxe (+1 Stick)"
 	req_bar = /obj/item/ingot/blacksteel
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pick/blacksteel
+	created_item = /obj/item/weapon/pick/blacksteel
 
 /datum/anvil_recipe/tools/blacksteel/tongs
 	name = "Blacksteel Tongs"
 	req_bar = /obj/item/ingot/blacksteel
-	created_item = /obj/item/rogueweapon/tongs/blacksteel
+	created_item = /obj/item/weapon/tongs/blacksteel
 // --------- HEARTBEAST TOOLS -----------
 /datum/anvil_recipe/tools/heartbeast_vials
 	name = "Blood vials"

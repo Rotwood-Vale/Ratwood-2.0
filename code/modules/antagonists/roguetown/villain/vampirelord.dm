@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	cloak = /obj/item/clothing/cloak/cape/puritan
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	backl = /obj/item/storage/backpack/rogue/satchel/black
-	backr = /obj/item/rogueweapon/sword/long/judgement/vlord
+	backr = /obj/item/weapon/sword/long/judgement/vlord
 	H.ambushable = FALSE
 
 /datum/outfit/job/roguetown/vampthrall/pre_equip(mob/living/carbon/human/H) // you're old but you ain't that old

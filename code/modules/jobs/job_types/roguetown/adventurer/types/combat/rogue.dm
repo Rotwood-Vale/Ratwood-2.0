@@ -43,14 +43,14 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
-	backr = /obj/item/rogueweapon/shovel
+	backr = /obj/item/weapon/shovel
 	head = /obj/item/clothing/head/roguetown/fedora
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	backpack_contents = list(
 		/obj/item/lockpick = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	if(H.mind)
 		var/weapons = list("Sabre","Whip")
@@ -59,11 +59,11 @@
 		switch(weapon_choice)
 			if("Sabre")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				beltr = /obj/item/rogueweapon/sword/sabre
-				r_hand = /obj/item/rogueweapon/scabbard/sword
+				beltr = /obj/item/weapon/sword/sabre
+				r_hand = /obj/item/weapon/scabbard/sword
 			if("Whip")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				beltr = /obj/item/rogueweapon/whip
+				beltr = /obj/item/weapon/whip
 
 /datum/advclass/rogue/thief
 	name = "Thief"
@@ -111,12 +111,12 @@
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/iron
 	cloak = /obj/item/clothing/cloak/raincloak/mortus
 	beltl = /obj/item/quiver/Warrows
-	beltr = /obj/item/rogueweapon/mace/cudgel
+	beltr = /obj/item/weapon/mace/cudgel
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
+		/obj/item/weapon/huntingknife/idagger/steel = 1,
 		/obj/item/lockpickring/mundane = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 
 /datum/advclass/rogue/bard
@@ -157,13 +157,13 @@
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel
+	beltr = /obj/item/weapon/huntingknife/idagger/steel
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
 	backl = /obj/item/storage/backpack/rogue/satchel
 	cloak = /obj/item/clothing/cloak/half/red
 	backpack_contents = list(
 		/obj/item/lockpick = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T3)
@@ -241,10 +241,10 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr = /obj/item/rogueweapon/sword/cutlass
+	beltr = /obj/item/weapon/sword/cutlass
 	backpack_contents = list(
 		/obj/item/bomb = 1,
 		/obj/item/lockpick = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife/idagger/steel/parrying = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)

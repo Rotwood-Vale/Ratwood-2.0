@@ -45,8 +45,8 @@
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/elven_helm
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/elven_plate
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	beltl = /obj/item/rogueweapon/scabbard/sheath
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltl = /obj/item/weapon/scabbard/sheath
+	beltr = /obj/item/weapon/scabbard/sword
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/elven_boots
 	cloak = /obj/item/clothing/cloak/forrestercloak
 	gloves = /obj/item/clothing/gloves/roguetown/elven_gloves
@@ -54,11 +54,11 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
 	pants = /obj/item/clothing/under/roguetown/trou/leather
-	backr = /obj/item/rogueweapon/scabbard/gwstrap
+	backr = /obj/item/weapon/scabbard/gwstrap
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/flashlight/flare/torch
 		)
 
@@ -68,11 +68,11 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Elven Swordspear and Longsword")
-				r_hand = /obj/item/rogueweapon/spear/naginata/elf
-				l_hand = /obj/item/rogueweapon/sword/long/elf
+				r_hand = /obj/item/weapon/spear/naginata/elf
+				l_hand = /obj/item/weapon/sword/long/elf
 			if("Elven Curveblade and Shortsword")
-				r_hand = /obj/item/rogueweapon/greatsword/elf
-				l_hand = /obj/item/rogueweapon/sword/short/elf
+				r_hand = /obj/item/weapon/greatsword/elf
+				l_hand = /obj/item/weapon/sword/short/elf
 
 	H.merctype = 2
 /datum/advclass/mercenary/blackoak/ranger
@@ -110,9 +110,9 @@
 	head = /obj/item/clothing/head/roguetown/helmet/sallet/elven
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/trophyfur
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/full
-	beltr = /obj/item/rogueweapon/scabbard/sword
-	r_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
-	l_hand = /obj/item/rogueweapon/sword/short/elf
+	beltr = /obj/item/weapon/scabbard/sword
+	r_hand = /obj/item/weapon/huntingknife/idagger/silver/elvish
+	l_hand = /obj/item/weapon/sword/short/elf
 	beltl = /obj/item/quiver/arrows
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/elven_boots
@@ -125,8 +125,8 @@
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/navaja = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/flashlight/flare/torch = 1
 		)
 

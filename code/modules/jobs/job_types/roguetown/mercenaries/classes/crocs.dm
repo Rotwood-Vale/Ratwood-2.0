@@ -56,8 +56,8 @@
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1, 
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
-		/obj/item/rogueweapon/huntingknife/idagger/steel/dirk = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife/idagger/steel/dirk = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/fluted/shadowplate
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/shadowrobe
@@ -65,7 +65,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	mask = /obj/item/clothing/mask/rogue/facemask/shadowfacemask
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
-	backr = /obj/item/rogueweapon/shield/tower/spidershield
+	backr = /obj/item/weapon/shield/tower/spidershield
 	beltl = /obj/item/rope/chain
 	
 	
@@ -97,11 +97,11 @@
 	switch(weapon_choice)
 		if("Sabre")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/stalker, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/sword, SLOT_BELT_R, TRUE)
+			H.put_in_hands(new /obj/item/weapon/sword/sabre/stalker, TRUE)
 		if("Whip")
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/whip/spiderwhip, SLOT_BELT_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/whip/spiderwhip, SLOT_BELT_R, TRUE)
 
 /datum/advclass/mercenary/crocsass
 	name = "Crocs de l'araignée Assassin"
@@ -162,8 +162,8 @@
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1, 
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
-		/obj/item/rogueweapon/huntingknife/idagger/steel/dirk = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/dirk = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/lockpick = 1
 		)
 	head = /obj/item/clothing/neck/roguetown/chaincoif/full/black
@@ -206,5 +206,5 @@
 			H.equip_to_slot_or_del(new /obj/item/quiver/poisonarrows/, SLOT_BELT_R, TRUE)
 		if("Dual Daggers")
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath, SLOT_BELT_R, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/dirk, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/sheath, SLOT_BELT_R, TRUE)
+			H.put_in_hands(new /obj/item/weapon/huntingknife/idagger/steel/dirk, TRUE)

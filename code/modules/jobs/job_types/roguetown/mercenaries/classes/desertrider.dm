@@ -46,9 +46,9 @@
 	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
 		/obj/item/key/mercenary,
-		/obj/item/rogueweapon/huntingknife/idagger/navaja,
+		/obj/item/weapon/huntingknife/idagger/navaja,
 		/obj/item/flashlight/flare/torch,
-		/obj/item/rogueweapon/scabbard/sheath,
+		/obj/item/weapon/scabbard/sheath,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
 	var/weapons = list("Heavy Mace","Shamshir and Shield","Spear and Shield","Axe and Shield")
@@ -58,24 +58,24 @@
 		switch(weapon_choice)
 			if("Heavy Mace")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-				backl = /obj/item/rogueweapon/mace/goden
+				backl = /obj/item/weapon/mace/goden
 			if("Shamshir and Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-				backl = /obj/item/rogueweapon/shield/tower/raneshen
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				backl = /obj/item/weapon/shield/tower/raneshen
+				beltr = /obj/item/weapon/scabbard/sword
 			if("Spear and Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-				r_hand = /obj/item/rogueweapon/spear
-				backl = /obj/item/rogueweapon/shield/tower/raneshen
+				r_hand = /obj/item/weapon/spear
+				backl = /obj/item/weapon/shield/tower/raneshen
 			if("Axe and Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)	//lets see if people pick it!
-				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
-				backl = /obj/item/rogueweapon/shield/tower/raneshen
+				r_hand = /obj/item/weapon/stoneaxe/woodcut
+				backl = /obj/item/weapon/shield/tower/raneshen
 
 	shoes = /obj/item/clothing/shoes/roguetown/shalal
 	belt = /obj/item/storage/belt/rogue/leather/shalal
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+	beltl = /obj/item/weapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/sabre/shamshir
 
 	H.merctype = 4
 
@@ -119,12 +119,12 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
 	backr = /obj/item/storage/backpack/rogue/satchel/black
-	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+	l_hand = /obj/item/weapon/sword/sabre/shamshir
 	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
 		/obj/item/key/mercenary,
-		/obj/item/rogueweapon/huntingknife/idagger/navaja,
-		/obj/item/rogueweapon/scabbard/sheath,
+		/obj/item/weapon/huntingknife/idagger/navaja,
+		/obj/item/weapon/scabbard/sheath,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
@@ -135,21 +135,21 @@
 		switch(weapon_choice)
 			if("Shamshir and Javelin")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+				r_hand = /obj/item/weapon/sword/sabre/shamshir
 				backl = /obj/item/quiver/javelin/iron
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				beltl = /obj/item/weapon/scabbard/sword
+				beltr = /obj/item/weapon/scabbard/sword
 			if("Whips and Knives")	///They DO enslave people after all
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
-				beltr = /obj/item/rogueweapon/whip
-				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
-				beltl = /obj/item/rogueweapon/scabbard/sword
+				beltr = /obj/item/weapon/whip
+				r_hand = /obj/item/weapon/huntingknife/idagger/steel/parrying
+				beltl = /obj/item/weapon/scabbard/sword
 			if("Recurve Bow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltl = /obj/item/quiver/arrows
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				beltr = /obj/item/weapon/scabbard/sword
 	shoes = /obj/item/clothing/shoes/roguetown/shalal
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 
@@ -203,8 +203,8 @@
 	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
 		/obj/item/key/mercenary,
-		/obj/item/rogueweapon/huntingknife/idagger/navaja,
-		/obj/item/rogueweapon/scabbard/sheath,
+		/obj/item/weapon/huntingknife/idagger/navaja,
+		/obj/item/weapon/scabbard/sheath,
 		/obj/item/spellbook_unfinished/pre_arcyne,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
@@ -212,8 +212,8 @@
 
 	shoes = /obj/item/clothing/shoes/roguetown/shalal
 	belt = /obj/item/storage/belt/rogue/leather/shalal
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+	beltl = /obj/item/weapon/scabbard/sword
+	l_hand = /obj/item/weapon/sword/sabre/shamshir
 
 	H.merctype = 4
 

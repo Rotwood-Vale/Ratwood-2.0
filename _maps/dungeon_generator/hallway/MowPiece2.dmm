@@ -4,7 +4,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb)
 "ai" = (
-/obj/item/rogueweapon/huntingknife/idagger/silver,
+/obj/item/weapon/huntingknife/idagger/silver,
 /obj/item/natural/stone,
 /obj/item/natural/stone{
 	pixel_y = -6;
@@ -27,7 +27,7 @@
 /area/rogue/under/tomb)
 "bT" = (
 /obj/structure/closet/crate/chest/old_crate,
-/obj/item/rogueweapon/sword/rapier/dec,
+/obj/item/weapon/sword/rapier/dec,
 /obj/item/clothing/suit/roguetown/armor/plate/half,
 /obj/item/clothing/mask/rogue/facemask,
 /obj/item/organ/heart,
@@ -233,7 +233,7 @@
 /area/rogue/under/tomb)
 "RT" = (
 /obj/structure/table/wood/crafted,
-/obj/item/rogueweapon/huntingknife{
+/obj/item/weapon/huntingknife{
 	pixel_y = 3;
 	pixel_x = -5
 	},

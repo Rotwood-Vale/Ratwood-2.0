@@ -7,8 +7,8 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "ai" = (
-/obj/item/rogueweapon/shield/buckler/palloy,
-/obj/item/rogueweapon/sword/sabre/palloy,
+/obj/item/weapon/shield/buckler/palloy,
+/obj/item/weapon/sword/sabre/palloy,
 /obj/item/clothing/mask/rogue/facemask/copper,
 /obj/item/clothing/neck/roguetown/gorget/copper,
 /obj/item/clothing/wrists/roguetown/bracers/copper,

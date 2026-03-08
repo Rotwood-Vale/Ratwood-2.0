@@ -19,8 +19,8 @@
 	cloak = /obj/item/clothing/cloak/cape/purple
 	backl = /obj/item/storage/backpack/rogue/backpack
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr = /obj/item/rogueweapon/whip/antique
-	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2, /obj/item/rope/chain = 1, /obj/item/flint = 1, /obj/item/clothing/neck/roguetown/collar/leather = 2, /obj/item/rogueweapon/surgery/cautery/branding/slave = 1)
+	beltr = /obj/item/weapon/whip/antique
+	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2, /obj/item/rope/chain = 1, /obj/item/flint = 1, /obj/item/clothing/neck/roguetown/collar/leather = 2, /obj/item/weapon/surgery/cautery/branding/slave = 1)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 5, TRUE)
@@ -72,10 +72,10 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/sword/sabre/shamshir
+	backr = /obj/item/weapon/sword/sabre/shamshir
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
-	beltr = /obj/item/rogueweapon/scabbard/sword
-	backpack_contents = list(/obj/item/rope/chain = 1, /obj/item/rogueweapon/huntingknife/idagger = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	beltr = /obj/item/weapon/scabbard/sword
+	backpack_contents = list(/obj/item/rope/chain = 1, /obj/item/weapon/huntingknife/idagger = 1, /obj/item/weapon/scabbard/sheath = 1)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 3, TRUE)
@@ -128,10 +128,10 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/shield/tower
-	beltr = /obj/item/rogueweapon/whip
+	backr = /obj/item/weapon/shield/tower
+	beltr = /obj/item/weapon/whip
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
-	backpack_contents = list(/obj/item/rope/chain = 1, /obj/item/rogueweapon/huntingknife/idagger = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	backpack_contents = list(/obj/item/rope/chain = 1, /obj/item/weapon/huntingknife/idagger = 1, /obj/item/weapon/scabbard/sheath = 1)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
@@ -187,7 +187,7 @@
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	beltr = /obj/item/quiver/bolts
-	backpack_contents = list(/obj/item/rope/chain = 1, /obj/item/rogueweapon/huntingknife/combat = 1, /obj/item/needle = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	backpack_contents = list(/obj/item/rope/chain = 1, /obj/item/weapon/huntingknife/combat = 1, /obj/item/needle = 1, /obj/item/weapon/scabbard/sheath = 1)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 3, TRUE)

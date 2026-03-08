@@ -88,7 +88,7 @@
 /*	........   Kitchen tools / items   ................ */
 
 
-/obj/item/rogueweapon/huntingknife/cleaver
+/obj/item/weapon/huntingknife/cleaver
 	lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
 	righthand_file = 'modular/Neu_Food/icons/food_righthand.dmi'
 	item_state = "cleaver"

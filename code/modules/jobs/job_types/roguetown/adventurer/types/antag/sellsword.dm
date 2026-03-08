@@ -63,7 +63,7 @@
 		switch(weapon_choice)
 			if("The Deserter (Maces, Shields & Crossbows)") 
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltl = /obj/item/rogueweapon/mace/steel
+				beltl = /obj/item/weapon/mace/steel
 				beltr = /obj/item/quiver/bolts
 				armor = /obj/item/clothing/suit/roguetown/armor/chainmail
 				head = /obj/item/clothing/head/roguetown/helmet/kettle
@@ -72,9 +72,9 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 			if("The Mercenary (Swords, Shields & Polearms)") 
-				backl = /obj/item/rogueweapon/shield/heater
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				beltr = /obj/item/rogueweapon/sword/short/falchion
+				backl = /obj/item/weapon/shield/heater
+				beltl = /obj/item/weapon/scabbard/sword
+				beltr = /obj/item/weapon/sword/short/falchion
 				armor = /obj/item/clothing/suit/roguetown/armor/chainmail
 				head = /obj/item/clothing/head/roguetown/helmet/sallet
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
@@ -83,7 +83,7 @@
 			if("The Hunter (Axes, Archery, Sneaking, Climbing & Athletics)")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltl = /obj/item/quiver/arrows
-				beltr = /obj/item/rogueweapon/stoneaxe/battle
+				beltr = /obj/item/weapon/stoneaxe/battle
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 				cloak = /obj/item/clothing/cloak/raincloak/furcloak/black

@@ -145,7 +145,7 @@
 
 /datum/crafting_recipe/roguetown/leather/whip
 	name = "leather whip"
-	result = /obj/item/rogueweapon/whip
+	result = /obj/item/weapon/whip
 	reqs = list(/obj/item/natural/hide/cured = 2,/obj/item/natural/stone = 1)
 	sellprice = 39
 	craftdiff = 1

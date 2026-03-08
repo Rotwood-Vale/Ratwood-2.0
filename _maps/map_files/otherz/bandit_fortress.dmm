@@ -645,7 +645,7 @@
 /area/rogue/indoors/banditcamp)
 "oY" = (
 /obj/structure/flora/roguetree/stump,
-/obj/item/rogueweapon/stoneaxe/woodcut/wardenpick,
+/obj/item/weapon/stoneaxe/woodcut/wardenpick,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/banditcamp)
 "pd" = (
@@ -668,8 +668,8 @@
 /area/rogue/outdoors/woods)
 "ql" = (
 /obj/structure/closet/crate/roguecloset,
-/obj/item/rogueweapon/huntingknife/cleaver,
-/obj/item/rogueweapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
+/obj/item/weapon/huntingknife/cleaver,
 /obj/item/clothing/head/roguetown/chef,
 /obj/item/kitchen/spoon/iron,
 /obj/item/kitchen/spoon/iron,
@@ -1400,7 +1400,7 @@
 /area/rogue/indoors/banditcamp)
 "IC" = (
 /obj/structure/table/wood/poor,
-/obj/item/rogueweapon/huntingknife/chefknife,
+/obj/item/weapon/huntingknife/chefknife,
 /obj/machinery/light/rogue/torchholder/r,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/banditcamp)
@@ -1665,7 +1665,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/banditcamp)
 "Qc" = (
-/obj/item/rogueweapon/hammer/iron,
+/obj/item/weapon/hammer/iron,
 /obj/machinery/anvil,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)

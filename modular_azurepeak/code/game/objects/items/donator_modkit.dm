@@ -29,14 +29,14 @@
 //Plexiant - Custom rapier type
 /obj/item/enchantingkit/plexiant
 	name = "'Rapier di Aliseo' morphing elixir"
-	target_items = list(/obj/item/rogueweapon/sword/rapier)		//Takes any subpated rapier and turns it into unique one.
-	result_item = /obj/item/rogueweapon/sword/rapier/aliseo
+	target_items = list(/obj/item/weapon/sword/rapier)		//Takes any subpated rapier and turns it into unique one.
+	result_item = /obj/item/weapon/sword/rapier/aliseo
 
 //Ryebread - Custom estoc type
 /obj/item/enchantingkit/ryebread
 	name = "'Worttrager' morphing elixir"
-	target_items = list(/obj/item/rogueweapon/estoc)		//Takes any subpated rapier and turns it into unique one.
-	result_item = /obj/item/rogueweapon/estoc/worttrager
+	target_items = list(/obj/item/weapon/estoc)		//Takes any subpated rapier and turns it into unique one.
+	result_item = /obj/item/weapon/estoc/worttrager
 
 //Srusu - Custom dress type
 /obj/item/enchantingkit/srusu
@@ -71,8 +71,8 @@
 //Bigfoot - Custom great axe type
 /obj/item/enchantingkit/bigfoot_axe
 	name = "'Gilded Great Axe' morphing elixir"
-	target_items = list(/obj/item/rogueweapon/greataxe/steel)
-	result_item = /obj/item/rogueweapon/greataxe/steel/gilded
+	target_items = list(/obj/item/weapon/greataxe/steel)
+	result_item = /obj/item/weapon/greataxe/steel/gilded
 
 //Zydras donator item - bathmatron padded dress
 /obj/item/enchantingkit/zydras
@@ -83,30 +83,30 @@
 //Eiren - Zweihander and sabres
 /obj/item/enchantingkit/eiren
 	name = "'Regret' morphing elixir"
-	target_items = list(/obj/item/rogueweapon/greatsword/zwei)		//now only takes the zwei and nothing else
-	result_item = /obj/item/rogueweapon/greatsword/zwei/eiren
+	target_items = list(/obj/item/weapon/greatsword/zwei)		//now only takes the zwei and nothing else
+	result_item = /obj/item/weapon/greatsword/zwei/eiren
 
 /obj/item/enchantingkit/eirensabre
 	name = "'Lunae' morphing elixir"
-	target_items = list(/obj/item/rogueweapon/sword/sabre)
-	result_item = /obj/item/rogueweapon/sword/sabre/eiren
+	target_items = list(/obj/item/weapon/sword/sabre)
+	result_item = /obj/item/weapon/sword/sabre/eiren
 
 /obj/item/enchantingkit/eirensabre2
 	name = "'Cinis' morphing elixir"
-	target_items = list(/obj/item/rogueweapon/sword/sabre)
-	result_item = /obj/item/rogueweapon/sword/sabre/eiren/small
+	target_items = list(/obj/item/weapon/sword/sabre)
+	result_item = /obj/item/weapon/sword/sabre/eiren/small
 
 //pretzel - custom steel greatsword. PSYDON LYVES. PSYDON ENDVRES.
 /obj/item/enchantingkit/waff
 	name = "'Weeper's Lathe' morphing elixir"
-	target_items = list(/obj/item/rogueweapon/greatsword)		// i, uh. i really do promise i'm only gonna use it on steel greatswords.
-	result_item = /obj/item/rogueweapon/greatsword/weeperslathe
+	target_items = list(/obj/item/weapon/greatsword)		// i, uh. i really do promise i'm only gonna use it on steel greatswords.
+	result_item = /obj/item/weapon/greatsword/weeperslathe
 
 //inverserun claymore
 /obj/item/enchantingkit/inverserun
 	name = "'Votive Thorns' morphing elixir"
-	target_items = list(/obj/item/rogueweapon/greatsword/zwei)
-	result_item = /obj/item/rogueweapon/greatsword/zwei/inverserun
+	target_items = list(/obj/item/weapon/greatsword/zwei)
+	result_item = /obj/item/weapon/greatsword/zwei/inverserun
 
 //Zoe - Tytos Blackwood cloak
 /obj/item/enchantingkit/zoe

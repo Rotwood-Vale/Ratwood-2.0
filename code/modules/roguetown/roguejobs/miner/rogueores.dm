@@ -164,8 +164,8 @@
 			sellprice *= 1.3
 
 /obj/item/ingot/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/rogueweapon/tongs))
-		var/obj/item/rogueweapon/tongs/T = I
+	if(istype(I, /obj/item/weapon/tongs))
+		var/obj/item/weapon/tongs/T = I
 		if (loc in user.contents)
 			to_chat(user, span_warning("I can't take out \the [src] from inside."))
 			return

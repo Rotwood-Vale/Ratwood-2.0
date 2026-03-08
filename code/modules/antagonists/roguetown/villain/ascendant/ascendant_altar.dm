@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 			to_chat(user, span_userdanger("GOD IS COMING."))
 			sleep(10)
 			to_chat(user, span_userdanger("GODISCOMINGGODISCOMING"))
-			new /obj/item/rogueweapon/sword/long/judgement/ascendant
+			new /obj/item/weapon/sword/long/judgement/ascendant
 			addomen(ASCEND_WAKENING)
 			ADD_TRAIT(user, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			ADD_TRAIT(user, TRAIT_ANTIMAGIC, TRAIT_GENERIC)

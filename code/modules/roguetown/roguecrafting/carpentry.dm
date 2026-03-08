@@ -5,6 +5,6 @@
 		/obj/item/grown/log/tree/stick = 1,
 		)
 	tools = list(
-		/obj/item/rogueweapon/huntingknife,
+		/obj/item/weapon/huntingknife,
 		)
 	craftdiff = 0

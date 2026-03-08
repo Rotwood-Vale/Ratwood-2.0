@@ -49,9 +49,9 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather/atgervi
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/atgervi
-	backr = /obj/item/rogueweapon/shield/atgervi
+	backr = /obj/item/weapon/shield/atgervi
 	backl = /obj/item/storage/backpack/rogue/satchel/black
-	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi
+	beltr = /obj/item/weapon/stoneaxe/woodcut/steel/atgervi
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle //They didn't have neck protection before.
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
@@ -60,8 +60,8 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_2)	//Capped to T1 miracles.
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 	H.merctype = 1
 
@@ -114,15 +114,15 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	beltl = /obj/item/flashlight/flare/torch
-	H.put_in_hands(new /obj/item/rogueweapon/handclaw/gronn, FALSE)
+	H.put_in_hands(new /obj/item/weapon/handclaw/gronn, FALSE)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/rogueweapon/stoneaxe/hurlbat = 1
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
+		/obj/item/weapon/stoneaxe/hurlbat = 1
 		)
 	H.merctype = 1
 
@@ -192,7 +192,7 @@
 	icon_state = "atgervi_boots"
 	item_state = "atgervi_boots"
 
-/obj/item/rogueweapon/shield/atgervi
+/obj/item/weapon/shield/atgervi
 	name = "kite shield"
 	desc = "A large but light wooden shield with a steel boss in the center to deflect blows more easily."
 	icon_state = "atgervi_shield"
@@ -208,14 +208,14 @@
 	max_integrity = 300
 	experimental_inhand = FALSE
 
-/obj/item/rogueweapon/shield/atgervi/getonmobprop(tag)
+/obj/item/weapon/shield/atgervi/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
 			if("onback")
 				return list("shrink" = 0.7,"sx" = -17,"sy" = -15,"nx" = -15,"ny" = -15,"wx" = -12,"wy" = -15,"ex" = -18,"ey" = -15,"nturn" = 0,"sturn" = 0,"wturn" = 180,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 1,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi
+/obj/item/weapon/stoneaxe/woodcut/steel/atgervi
 	name = "Bearded Axe"
 	desc = "A large axe easily wielded in one hand or two, With a large hooked axehead to tearing into flesh and armor and ripping it away brutally."
 	icon_state = "atgervi_axe"
@@ -229,7 +229,7 @@
 	force = 26
 	force_wielded = 33
 
-/obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi/getonmobprop(tag)
+/obj/item/weapon/stoneaxe/woodcut/steel/atgervi/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)

@@ -96,7 +96,7 @@
 	desc = "I was once a squire in training, but failed to achieve knighthood. Though my dreams of glory were dashed, I retained my knowledge of equipment maintenance and repair, including how to polish arms and armor."
 	added_traits = list(TRAIT_SQUIRE_REPAIR)
 	added_stashed_items = list(
-		"Hammer" = /obj/item/rogueweapon/hammer/iron,
+		"Hammer" = /obj/item/weapon/hammer/iron,
 		"Polishing Cream" = /obj/item/polishing_cream,
 		"Fine Brush" = /obj/item/armor_brush
 	)
@@ -237,7 +237,7 @@
 	name = "Forester"
 	added_traits = list(TRAIT_HOMESTEAD_EXPERT)
 	desc = "The forest is your home, or at least, it used to be. You always long to return and roam free once again, and you have not forgotten your knowledge on how to be self sufficient."
-	added_stashed_items = list("Trusty hoe" = /obj/item/rogueweapon/hoe)
+	added_stashed_items = list("Trusty hoe" = /obj/item/weapon/hoe)
 	added_skills = list(list(/datum/skill/craft/cooking, 2, 2),
 						list(/datum/skill/misc/athletics, 2, 2),
 						list(/datum/skill/labor/farming, 2, 2),
@@ -251,9 +251,9 @@
 	desc= "As they say, 'hearth is where the heart is'. You are intimately familiar with the labors of lyfe, and have stowed away everything necessary to start anew: a hunting dagger, your trusty hoe, and a sack of assorted supplies."
 	triumph_cost = 3
 	added_stashed_items = list(
-		"Hoe" = /obj/item/rogueweapon/hoe,
+		"Hoe" = /obj/item/weapon/hoe,
 		"Bag of Food" = /obj/item/storage/roguebag/food,
-		"Hunting Knife" = /obj/item/rogueweapon/huntingknife
+		"Hunting Knife" = /obj/item/weapon/huntingknife
 	)
 	added_skills = list(list(/datum/skill/craft/cooking, 3, 3),
 						list(/datum/skill/misc/athletics, 2, 2),

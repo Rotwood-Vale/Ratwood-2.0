@@ -330,7 +330,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			qdel(src)
 			user.mind.add_sleep_experience(/datum/skill/craft/masonry, (user.STAINT*0.2))
 		return
-	else if(istype(W, /obj/item/rogueweapon/chisel/assembly))
+	else if(istype(W, /obj/item/weapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to chisel blocks."))
 	else if(user.used_intent.type == /datum/intent/wing/shred && !user.cmode || user.used_intent.type == /datum/intent/wing/cut && !user.cmode)
 		playsound(src.loc, pick('sound/items/sharpen_long1.ogg','sound/items/sharpen_long2.ogg'), 100, TRUE)
@@ -486,7 +486,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			user.mind.add_sleep_experience(/datum/skill/craft/masonry, (user.STAINT*0.5))
 			qdel(src)
 		return
-	else if(istype(W, /obj/item/rogueweapon/chisel/assembly))
+	else if(istype(W, /obj/item/weapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to chisel blocks."))
 	..()
 
@@ -629,5 +629,5 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			user.mind.add_sleep_experience(/datum/skill/craft/masonry, (user.STAINT*1))
 			qdel(src)
 		return
-	else if(istype(W, /obj/item/rogueweapon/chisel/assembly))
+	else if(istype(W, /obj/item/weapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to chisel blocks."))

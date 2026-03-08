@@ -343,7 +343,7 @@
 /area/rogue/under/tomb/cave/lava)
 "vF" = (
 /obj/effect/decal/cleanable/sigil,
-/obj/item/rogueweapon/huntingknife/idagger/silver,
+/obj/item/weapon/huntingknife/idagger/silver,
 /obj/item/reagent_containers/powder/moondust_purest,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/tomb/indoors/magic)
@@ -358,12 +358,12 @@
 /area/rogue/under/tomb/indoors/magic)
 "xk" = (
 /obj/structure/closet/crate/chest/neu_fancy,
-/obj/item/rogueweapon/sickle,
-/obj/item/rogueweapon/pitchfork,
-/obj/item/rogueweapon/hoe,
-/obj/item/rogueweapon/thresher,
+/obj/item/weapon/sickle,
+/obj/item/weapon/pitchfork,
+/obj/item/weapon/hoe,
+/obj/item/weapon/thresher,
 /obj/item/reagent_containers/glass/bucket,
-/obj/item/rogueweapon/shovel,
+/obj/item/weapon/shovel,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/cave/lava)
 "xS" = (

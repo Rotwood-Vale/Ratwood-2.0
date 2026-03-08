@@ -48,7 +48,7 @@
 
 /datum/outfit/job/roguetown/mercenary/oathmarked/pre_equip(mob/living/carbon/human/H)
 	..()
-	r_hand = /obj/item/rogueweapon/eaglebeak/oathmarked//Very, very strong. IT HAS PICK. Swap to a glaive if you'd rather.
+	r_hand = /obj/item/weapon/eaglebeak/oathmarked//Very, very strong. IT HAS PICK. Swap to a glaive if you'd rather.
 	belt = /obj/item/storage/belt/rogue/leather/steel
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	beltl = /obj/item/flashlight/flare/torch/lantern
@@ -62,12 +62,12 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/oathmarked
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver/astrata/oathmarked
 	id = /obj/item/clothing/ring/oathmarked
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	backl = /obj/item/weapon/scabbard/gwstrap
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/steel = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/book/rogue/secret/oathmarked = 1,
 		)
 	H.merctype = 16
@@ -97,10 +97,10 @@
 
 /datum/outfit/job/roguetown/mercenary/oathmarked/executor/pre_equip(mob/living/carbon/human/H)
 	..()
-	r_hand = /obj/item/rogueweapon/greatsword/grenz/oathmarked//A greatsword with peel. Bridges the gap between an estoc and standard zwei.
+	r_hand = /obj/item/weapon/greatsword/grenz/oathmarked//A greatsword with peel. Bridges the gap between an estoc and standard zwei.
 
 //Oathmarked's equipment.
-/obj/item/rogueweapon/eaglebeak/oathmarked
+/obj/item/weapon/eaglebeak/oathmarked
 	force = 12//Two-hand this.
 	force_wielded = 32
 	gripped_intents = list(/datum/intent/spear/thrust/eaglebeak, /datum/intent/spear/bash/eaglebeak,
@@ -114,7 +114,7 @@
 	max_blade_int = 200
 	sellprice = 120
 
-/obj/item/rogueweapon/eaglebeak/oathmarked/examine(mob/user)
+/obj/item/weapon/eaglebeak/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
 		. += "<small>An oathmarked's polehammer. Designed in an earlier era, under the direction of Hadr�nzhar. \
@@ -127,7 +127,7 @@
 	reach = 2
 	clickcd = CLICK_CD_HEAVY
 
-/obj/item/rogueweapon/greatsword/grenz/oathmarked
+/obj/item/weapon/greatsword/grenz/oathmarked
 	name = "oathmarked's flamberge"
 	desc = "An incredibly well balanced blade, designed for a rather large frame. Heavy beyond any reasonable measure. \
 	The work of a master smith, or one with far too much time to spare. The blade of a noble, surely."
@@ -140,7 +140,7 @@
 	minstr = 11//+2
 	minstr_req = TRUE//You MUST have the required strength. No exceptions.
 
-/obj/item/rogueweapon/greatsword/grenz/oathmarked/examine(mob/user)
+/obj/item/weapon/greatsword/grenz/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
 		. += "<small>An oathmarked's flamberge. Designed in an earlier era, under the direction of Hadr�nzhar. \

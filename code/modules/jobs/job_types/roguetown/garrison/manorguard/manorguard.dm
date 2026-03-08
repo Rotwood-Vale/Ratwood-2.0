@@ -43,7 +43,7 @@
 
 /datum/outfit/job/roguetown/manorguard
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
-	beltl = /obj/item/rogueweapon/mace/cudgel
+	beltl = /obj/item/weapon/mace/cudgel
 	belt = /obj/item/storage/belt/rogue/leather
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone/bad/garrison

@@ -37,14 +37,14 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/reagent_containers/glass/bottle/rogue/manapot
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
-	beltl = /obj/item/rogueweapon/huntingknife
+	beltl = /obj/item/weapon/huntingknife
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/woodstaff
+	backr = /obj/item/weapon/woodstaff
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/spellbook_unfinished/pre_arcyne = 1,
 		/obj/item/roguegem/amethyst = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/recipe_book/magic = 1,
 		/obj/item/chalk = 1
 		)
@@ -104,44 +104,44 @@
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Longsword")
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/long
+				beltr = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/long
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if("Falchion & Wooden Shield")
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				backr = /obj/item/rogueweapon/shield/wood
-				r_hand = /obj/item/rogueweapon/sword/short/falchion
+				beltr = /obj/item/weapon/scabbard/sword
+				backr = /obj/item/weapon/shield/wood
+				r_hand = /obj/item/weapon/sword/short/falchion
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_APPRENTICE, TRUE)
 			if("Messer & Wooden Shield")
-				beltr = /obj/item/rogueweapon/scabbard/sword
-				backr = /obj/item/rogueweapon/shield/wood
-				r_hand = /obj/item/rogueweapon/sword/short/messer/iron
+				beltr = /obj/item/weapon/scabbard/sword
+				backr = /obj/item/weapon/shield/wood
+				r_hand = /obj/item/weapon/sword/short/messer/iron
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_APPRENTICE, TRUE)
 			if("Hwando")
-				r_hand = /obj/item/rogueweapon/sword/sabre/mulyeog // Meant to not have the special foreign scabbards.
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/sabre/mulyeog // Meant to not have the special foreign scabbards.
+				beltr = /obj/item/weapon/scabbard/sword
 				armor = /obj/item/clothing/suit/roguetown/armor/basiceast
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if("Spear")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/spear
+				r_hand = /obj/item/weapon/spear
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				backr = /obj/item/weapon/scabbard/gwstrap
 			if("Whip")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-				r_hand = /obj/item/rogueweapon/whip
+				r_hand = /obj/item/weapon/whip
 			if("Battle Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-				backr = /obj/item/rogueweapon/stoneaxe/battle
+				backr = /obj/item/weapon/stoneaxe/battle
 			if("Mace")
-				beltr = /obj/item/rogueweapon/mace
+				beltr = /obj/item/weapon/mace
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	switch(H.patron?.type)
@@ -185,8 +185,8 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
-	beltr = /obj/item/rogueweapon/scabbard/sword
-	r_hand = /obj/item/rogueweapon/sword/sabre
+	beltr = /obj/item/weapon/scabbard/sword
+	r_hand = /obj/item/weapon/sword/sabre
 	backpack_contents = list(/obj/item/flashlight/flare/torch = 1)
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T2)
@@ -282,12 +282,12 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	belt = /obj/item/storage/belt/rogue/leather //no knifebelt, you can shoot magic n shit
-	beltr = /obj/item/rogueweapon/mace/cudgel //sovlful -1 STR mace gaming. pray to xylix for thine knockout crit, sire
+	beltr = /obj/item/weapon/mace/cudgel //sovlful -1 STR mace gaming. pray to xylix for thine knockout crit, sire
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife/idagger = 1, //take conjure weapon if you want a fancy dagger
+		/obj/item/weapon/huntingknife/idagger = 1, //take conjure weapon if you want a fancy dagger
 		/obj/item/recipe_book/survival = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 		)
 
 	if(H.mind)

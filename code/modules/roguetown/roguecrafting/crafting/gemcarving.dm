@@ -1,7 +1,7 @@
 /datum/crafting_recipe/roguetown/gemcarving
 	abstract_type = /datum/crafting_recipe/roguetown/gemcarving
 	skillcraft = /datum/skill/craft/masonry
-	tools = list(/obj/item/rogueweapon/chisel)
+	tools = list(/obj/item/weapon/chisel)
 	category = "Gem Carving"
 
 /datum/crafting_recipe/roguetown/gemcarving/jadefork
@@ -156,7 +156,7 @@
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/kukri
 	name = "jade kukri"
-	result = /obj/item/rogueweapon/huntingknife/stoneknife/kukri
+	result = /obj/item/weapon/huntingknife/stoneknife/kukri
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
@@ -330,7 +330,7 @@
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/rungu
 	name = "shell rungu"
-	result = /obj/item/rogueweapon/mace/cudgel/shellrungu
+	result = /obj/item/weapon/mace/cudgel/shellrungu
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
@@ -1266,6 +1266,6 @@
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/knife
 	name = "opal knife"
-	result = /obj/item/rogueweapon/huntingknife/stoneknife/opalknife
+	result = /obj/item/weapon/huntingknife/stoneknife/opalknife
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_MASTER

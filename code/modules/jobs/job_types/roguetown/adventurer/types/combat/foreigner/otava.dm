@@ -40,5 +40,5 @@
 	belt = /obj/item/storage/belt/rogue/leather/rope/dark
 	head = /obj/item/clothing/head/roguetown/roguehood/psydon
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
-	beltl = /obj/item/rogueweapon/whip
-	backpack_contents = list(/obj/item/rogueweapon/huntingknife = 1)
+	beltl = /obj/item/weapon/whip
+	backpack_contents = list(/obj/item/weapon/huntingknife = 1)

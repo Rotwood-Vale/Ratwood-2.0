@@ -114,7 +114,7 @@
 	miss_sound = "bluntswoosh"
 	item_d_type = "slash"
 
-/obj/item/rogueweapon/cat_claw //Backscratcher
+/obj/item/weapon/cat_claw //Backscratcher
 	name = "cat claw"
 	desc = ""
 	item_state = null
@@ -140,13 +140,13 @@
 	item_flags = DROPDEL
 	experimental_inhand = FALSE
 
-/obj/item/rogueweapon/cat_claw/right
+/obj/item/weapon/cat_claw/right
 	icon_state = "claw_r"
 
-/obj/item/rogueweapon/cat_claw/left
+/obj/item/weapon/cat_claw/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/cat_claw/Initialize(mapload)
+/obj/item/weapon/cat_claw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
@@ -163,16 +163,16 @@
 
 /obj/effect/proc_holder/spell/self/catclaws/cast(mob/user = usr)
 	..()
-	var/obj/item/rogueweapon/cat_claw/left/l
-	var/obj/item/rogueweapon/cat_claw/right/r
+	var/obj/item/weapon/cat_claw/left/l
+	var/obj/item/weapon/cat_claw/right/r
 
 	l = user.get_active_held_item()
 	r = user.get_inactive_held_item()
 	if(extended)
-		if(istype(l, /obj/item/rogueweapon/cat_claw))
+		if(istype(l, /obj/item/weapon/cat_claw))
 			user.dropItemToGround(l, TRUE)
 			qdel(l)
-		if(istype(r, /obj/item/rogueweapon/cat_claw))
+		if(istype(r, /obj/item/weapon/cat_claw))
 			user.dropItemToGround(r, TRUE)
 			qdel(r)
 		//user.visible_message("Your claws retract.", "You feel your claws retracting.", "You hear a sound of claws retracting.")

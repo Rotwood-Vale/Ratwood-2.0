@@ -38,12 +38,12 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	backr = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	r_hand = /obj/item/rogueweapon/spear
+	r_hand = /obj/item/weapon/spear
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel = 1, 
-		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/rogueweapon/hammer/iron = 1, 
-		/obj/item/rogueweapon/tongs = 1, 
+		/obj/item/weapon/huntingknife/idagger/steel = 1, 
+		/obj/item/weapon/scabbard/sheath = 1,
+		/obj/item/weapon/hammer/iron = 1, 
+		/obj/item/weapon/tongs = 1, 
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
 	)
 	if(H.mind)
@@ -110,13 +110,13 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/blacksteel/modern/plateboots
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	belt = /obj/item/storage/belt/rogue/leather/steel/tasset
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/weapon/scabbard/sword
 	backr = /obj/item/storage/backpack/rogue/satchel
-	l_hand = /obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel
+	l_hand = /obj/item/weapon/greatsword/grenz/flamberge/blacksteel
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel = 1, 
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife/idagger/steel = 1, 
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/ritechalk = 1,
 	)

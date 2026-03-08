@@ -1263,7 +1263,7 @@
 
 /datum/crafting_recipe/roguetown/sewing/paperparasol
 	name = "paper parasol"
-	result = list(/obj/item/rogueweapon/mace/parasol)
+	result = list(/obj/item/weapon/mace/parasol)
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 2,
 				/obj/item/paper/scroll = 3)
@@ -1353,7 +1353,7 @@
 
 /datum/crafting_recipe/roguetown/sewing/fineparasol
 	name = "fine parasol"
-	result = list(/obj/item/rogueweapon/mace/parasol/noble)
+	result = list(/obj/item/weapon/mace/parasol/noble)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/silk = 4,
 				/obj/item/paper/scroll = 2)

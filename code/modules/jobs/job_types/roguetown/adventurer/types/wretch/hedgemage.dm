@@ -50,8 +50,8 @@
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/chalk = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 	)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
@@ -72,14 +72,14 @@
 	var/staffchoice = input(H, H, "Choose your staff", "Available staffs") as anything in staffs
 	switch(staffchoice)
 		if("ronts-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/ruby
+			backr = /obj/item/weapon/woodstaff/ruby
 		if("blortz-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/quartz
+			backr = /obj/item/weapon/woodstaff/quartz
 		if("saffira-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/sapphire
+			backr = /obj/item/weapon/woodstaff/sapphire
 		if("gemerald-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/emerald
+			backr = /obj/item/weapon/woodstaff/emerald
 		if("amethyst-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/amethyst
+			backr = /obj/item/weapon/woodstaff/amethyst
 		if("toper-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/toper
+			backr = /obj/item/weapon/woodstaff/toper

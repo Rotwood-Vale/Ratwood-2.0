@@ -47,11 +47,11 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/black 
-	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
-	beltl = /obj/item/rogueweapon/huntingknife
+	beltr = /obj/item/weapon/stoneaxe/woodcut/steel/woodcutter
+	beltl = /obj/item/weapon/huntingknife
 	backpack_contents = list(
 						/obj/item/flint = 1,
 						/obj/item/flashlight/flare/torch = 1,
-						/obj/item/rogueweapon/scabbard/sheath = 1
+						/obj/item/weapon/scabbard/sheath = 1
 						)
 

@@ -35,7 +35,7 @@
 /area/rogue/under/tomb/cave)
 "cc" = (
 /obj/structure/closet/dirthole/grave,
-/obj/item/rogueweapon/shovel,
+/obj/item/weapon/shovel,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "dr" = (
@@ -77,7 +77,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "gp" = (
-/obj/item/rogueweapon/shovel,
+/obj/item/weapon/shovel,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "gT" = (
@@ -200,8 +200,8 @@
 /area/rogue/under/tomb)
 "rU" = (
 /obj/structure/closet/dirthole/closed,
-/obj/item/rogueweapon/shield/tower,
-/obj/item/rogueweapon/mace/cudgel/copper,
+/obj/item/weapon/shield/tower,
+/obj/item/weapon/mace/cudgel/copper,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /mob/living/carbon/human/species/skeleton/npc/no_equipment,
 /turf/open/floor/rogue/dirt,
@@ -212,7 +212,7 @@
 /area/rogue/under/tomb/cave)
 "sF" = (
 /obj/structure/closet/dirthole/closed,
-/obj/item/rogueweapon/mace/spiked,
+/obj/item/weapon/mace/spiked,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "tc" = (
@@ -344,7 +344,7 @@
 "DA" = (
 /obj/structure/closet/dirthole/grave,
 /obj/structure/closet/burial_shroud,
-/obj/item/rogueweapon/shield/wood,
+/obj/item/weapon/shield/wood,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "DH" = (
@@ -419,7 +419,7 @@
 "Hc" = (
 /mob/living/carbon/human/species/skeleton/npc/no_equipment,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/rogueweapon/shovel,
+/obj/item/weapon/shovel,
 /obj/item/clothing/under/roguetown/trou/leather/mourning,
 /obj/item/clothing/suit/roguetown/shirt/robe/necra,
 /obj/item/burial_shroud,
@@ -505,7 +505,7 @@
 /area/rogue/under/tomb/cave)
 "Rk" = (
 /obj/structure/closet/dirthole/closed,
-/obj/item/rogueweapon/shield/wood,
+/obj/item/weapon/shield/wood,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "Sk" = (
@@ -531,7 +531,7 @@
 /area/rogue/under/tomb/cave)
 "Wk" = (
 /mob/living/carbon/human/species/skeleton/npc/no_equipment,
-/obj/item/rogueweapon/shovel,
+/obj/item/weapon/shovel,
 /obj/item/burial_shroud,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/clothing/under/roguetown/trou/leather/mourning,

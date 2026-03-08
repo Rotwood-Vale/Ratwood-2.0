@@ -45,27 +45,27 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Rapier + Longbow")
-				r_hand = /obj/item/rogueweapon/sword/rapier
-				beltl = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/rapier
+				beltl = /obj/item/weapon/scabbard/sword
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 				beltr = /obj/item/quiver/arrows
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
 			if("Estoc + Recurve Bow")
-				r_hand = /obj/item/rogueweapon/estoc
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/estoc
+				backl = /obj/item/weapon/scabbard/gwstrap
 				beltr = /obj/item/quiver/arrows
 				beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
 			if("Sabre + Buckler")
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/sabre
-				backl = /obj/item/rogueweapon/shield/buckler
+				beltl = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/sabre
+				backl = /obj/item/weapon/shield/buckler
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
 			if("Whip + Crossbow")
-				beltl = /obj/item/rogueweapon/whip
+				beltl = /obj/item/weapon/whip
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltr = /obj/item/quiver/bolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
@@ -102,7 +102,7 @@
 		if(helmchoice != "None")
 			head = helmets[helmchoice]
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 	)

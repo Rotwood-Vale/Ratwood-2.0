@@ -74,11 +74,11 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/naledi
 	neck = /obj/item/clothing/neck/roguetown/psicross/g //Naledians covet gold far more than typical Orthodoxists covet silver.
 	id = /obj/item/clothing/ring/signet
-	r_hand = /obj/item/rogueweapon/woodstaff/sojourner//A very questionable spear. No pen. Middling CDR on cast.
+	r_hand = /obj/item/weapon/woodstaff/sojourner//A very questionable spear. No pen. Middling CDR on cast.
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
-	backr = /obj/item/rogueweapon/scabbard/gwstrap
+	backr = /obj/item/weapon/scabbard/gwstrap
 	belt = /obj/item/storage/belt/rogue/leather/rope/dark
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/mid

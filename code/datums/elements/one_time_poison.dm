@@ -3,7 +3,7 @@
 
 /datum/element/one_time_poison/Attach(atom/movable/target, list/reagent_list)
 	. = ..()
-	if(!istype(target, /obj/item/rogueweapon))
+	if(!istype(target, /obj/item/weapon))
 		return ELEMENT_INCOMPATIBLE
 	if(!LAZYLEN(reagent_list))
 		return ELEMENT_INCOMPATIBLE

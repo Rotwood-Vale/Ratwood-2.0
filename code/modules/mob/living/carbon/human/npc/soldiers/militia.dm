@@ -111,29 +111,29 @@
 	switch(rand(1, 11))
 		// Militia Weapon. Of course they spawn with it
 		if(1)
-			r_hand = /obj/item/rogueweapon/woodstaff/militia
+			r_hand = /obj/item/weapon/woodstaff/militia
 		if(2)
-			r_hand = /obj/item/rogueweapon/greataxe/militia
+			r_hand = /obj/item/weapon/greataxe/militia
 		if(3)
-			r_hand = /obj/item/rogueweapon/spear/militia
+			r_hand = /obj/item/weapon/spear/militia
 		if(4)
-			r_hand = /obj/item/rogueweapon/spear
-			l_hand = /obj/item/rogueweapon/shield/wood
+			r_hand = /obj/item/weapon/spear
+			l_hand = /obj/item/weapon/shield/wood
 		if(5)
-			r_hand = /obj/item/rogueweapon/scythe
+			r_hand = /obj/item/weapon/scythe
 		if(6)
-			r_hand = /obj/item/rogueweapon/pick/militia
+			r_hand = /obj/item/weapon/pick/militia
 		if(7)
-			r_hand = /obj/item/rogueweapon/sword/falchion/militia
+			r_hand = /obj/item/weapon/sword/falchion/militia
 		if(8)
-			r_hand = /obj/item/rogueweapon/mace/cudgel
+			r_hand = /obj/item/weapon/mace/cudgel
 		if(9)
-			r_hand = /obj/item/rogueweapon/mace/goden
+			r_hand = /obj/item/weapon/mace/goden
 		if(10)
-			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
-			l_hand = /obj/item/rogueweapon/shield/wood
+			r_hand = /obj/item/weapon/stoneaxe/woodcut
+			l_hand = /obj/item/weapon/shield/wood
 		if(11)
-			r_hand = /obj/item/rogueweapon/flail/peasantwarflail
+			r_hand = /obj/item/weapon/flail/peasantwarflail
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	H.eye_color = pick("27becc", "35cc27", "000000")
 	H.hair_color = pick ("4f4f4f", "61310f", "faf6b9")

@@ -73,12 +73,12 @@
 /datum/coven_power/demonic/conflagration/activate()
 	. = ..()
 	owner.drop_all_held_items()
-	owner.put_in_r_hand(new /obj/item/rogueweapon/gangrel(owner))
-	owner.put_in_l_hand(new /obj/item/rogueweapon/gangrel(owner))
+	owner.put_in_r_hand(new /obj/item/weapon/gangrel(owner))
+	owner.put_in_l_hand(new /obj/item/weapon/gangrel(owner))
 
 /datum/coven_power/demonic/conflagration/deactivate()
 	. = ..()
-	for(var/obj/item/rogueweapon/gangrel/claws in owner)
+	for(var/obj/item/weapon/gangrel/claws in owner)
 		qdel(claws)
 
 //PSYCHOMACHIA
@@ -144,7 +144,7 @@
 			burnt_turfs |= T
 		sleep(0.5 SECONDS)
 
-/obj/item/rogueweapon/gangrel
+/obj/item/weapon/gangrel
 	name = "claws"
 	desc = ""
 	item_state = null

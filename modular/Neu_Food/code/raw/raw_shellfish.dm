@@ -89,7 +89,7 @@
 	closed = TRUE
 
 /obj/item/reagent_containers/food/snacks/fish/oyster/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/rogueweapon/huntingknife))
+	if(istype(I, /obj/item/weapon/huntingknife))
 		if(closed)
 			user.visible_message("<span class='notice'>[user] opens the oyster with the knife.</span>")
 			closed = FALSE

@@ -40,7 +40,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave/lava)
 "l" = (
-/obj/item/rogueweapon/pick/steel,
+/obj/item/weapon/pick/steel,
 /obj/effect/decal/cleanable/blood/gibs/body,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/volcanic,
@@ -126,7 +126,7 @@
 /turf/open/floor/rogue/volcanic,
 /area/rogue/under/tomb/cave/lava)
 "N" = (
-/obj/item/rogueweapon/pick/steel,
+/obj/item/weapon/pick/steel,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave/lava)

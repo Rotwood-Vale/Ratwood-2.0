@@ -61,7 +61,7 @@
 
 /obj/structure/spike_pit/attackby(obj/item/I, mob/user, params)
 
-	if(istype(I, /obj/item/rogueweapon/shovel))
+	if(istype(I, /obj/item/weapon/shovel))
 		playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
 		to_chat(user, span_info("I start covering up \the [name]..."))
 		if(do_after(user, 5 SECONDS, src))

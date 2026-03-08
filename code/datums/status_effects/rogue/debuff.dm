@@ -810,7 +810,7 @@
 	animate(harpy, pixel_y = harpy.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
 	animate(pixel_y = harpy.pixel_y - 3, time = 6) // thank you oog
 	harpy.drop_all_held_items()
-	for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy_wings.nullspace_items)
+	for(var/obj/item/weapon/huntingknife/idagger/harpy_talons/talons in harpy_wings.nullspace_items)
 		var/talons_final = talons
 		harpy.put_in_hands(talons_final, TRUE, FALSE, TRUE)
 		break
@@ -862,8 +862,8 @@
 	animate(harpy)
 	REMOVE_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
 	harpy.flying = FALSE
-	if(harpy.is_holding_item_of_type(/obj/item/rogueweapon/huntingknife/idagger/harpy_talons))
-		for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy.held_items)
+	if(harpy.is_holding_item_of_type(/obj/item/weapon/huntingknife/idagger/harpy_talons))
+		for(var/obj/item/weapon/huntingknife/idagger/harpy_talons/talons in harpy.held_items)
 			harpy.dropItemToGround(talons, TRUE)
 			return
 

@@ -39,7 +39,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltl = /obj/item/rogueweapon/huntingknife
+	beltl = /obj/item/weapon/huntingknife
 
 	var/static/list/safe_bodyzones = list(
 		BODY_ZONE_HEAD,

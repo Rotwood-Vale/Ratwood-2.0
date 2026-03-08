@@ -24,8 +24,8 @@
 	var/lootnumber = 1
 	for(i=0, i<lootnumber, i++)
 		loot.Add(pickweight(list(
-		/obj/item/rogueweapon/mace = 10,
-		/obj/item/rogueweapon/sword = 10,
+		/obj/item/weapon/mace = 10,
+		/obj/item/weapon/sword = 10,
 		/obj/item/clothing/suit/roguetown/armor/leather/hide = 5,
 		/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 5,
 		/obj/item/clothing/head/roguetown/helmet/leather = 5,

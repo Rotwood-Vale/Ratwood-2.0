@@ -120,7 +120,7 @@
 	clickcd = 10
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR // I'm evil
 
-/obj/item/rogueweapon/saiga_hoof //Like a mace
+/obj/item/weapon/saiga_hoof //Like a mace
 	name = "saiga hoof"
 	desc = ""
 	item_state = null
@@ -147,13 +147,13 @@
 	item_flags = DROPDEL
 	experimental_inhand = FALSE
 
-/obj/item/rogueweapon/saiga_hoof/right //Placeholders
+/obj/item/weapon/saiga_hoof/right //Placeholders
 	icon_state = "claw_r"
 
-/obj/item/rogueweapon/saiga_hoof/left
+/obj/item/weapon/saiga_hoof/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/saiga_hoof/Initialize(mapload)
+/obj/item/weapon/saiga_hoof/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
@@ -170,16 +170,16 @@
 
 /obj/effect/proc_holder/spell/self/saigahoofs/cast(mob/user = usr)
 	..()
-	var/obj/item/rogueweapon/saiga_hoof/left/l
-	var/obj/item/rogueweapon/saiga_hoof/right/r
+	var/obj/item/weapon/saiga_hoof/left/l
+	var/obj/item/weapon/saiga_hoof/right/r
 
 	l = user.get_active_held_item()
 	r = user.get_inactive_held_item()
 	if(extended)
-		if(istype(l, /obj/item/rogueweapon/saiga_hoof))
+		if(istype(l, /obj/item/weapon/saiga_hoof))
 			user.dropItemToGround(l, TRUE)
 			qdel(l)
-		if(istype(r, /obj/item/rogueweapon/saiga_hoof))
+		if(istype(r, /obj/item/weapon/saiga_hoof))
 			user.dropItemToGround(r, TRUE)
 			qdel(r)
 		//user.visible_message("Your claws retract.", "You feel your claws retracting.", "You hear a sound of claws retracting.")

@@ -23,7 +23,7 @@
 	category = "Ranged"
 	result = /obj/item/grown/log/tree/bowpartial
 	reqs = list(/obj/item/grown/log/tree/small = 1)
-	tools = /obj/item/rogueweapon/huntingknife
+	tools = /obj/item/weapon/huntingknife
 	verbage_simple = "carve"
 	verbage = "carves"
 
@@ -49,7 +49,7 @@
 		/obj/item/reagent_containers/food/snacks/tallow = 1,
 		/obj/item/natural/fibers = 2,
 		)
-	tools = /obj/item/rogueweapon/huntingknife
+	tools = /obj/item/weapon/huntingknife
 	verbage_simple = "carve"
 	verbage = "carves"
 	craftdiff = 3
@@ -76,7 +76,7 @@
 		/obj/item/reagent_containers/food/snacks/tallow = 1,
 		/obj/item/natural/fibers = 2,
 		)
-	tools = /obj/item/rogueweapon/huntingknife
+	tools = /obj/item/weapon/huntingknife
 	verbage_simple = "carve"
 	verbage = "carves"
 	craftdiff = 4

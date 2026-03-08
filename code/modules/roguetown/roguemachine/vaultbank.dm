@@ -279,7 +279,7 @@
 		feedme()
 		return
 
-	if (!istype(I, /obj/item/rogueweapon))
+	if (!istype(I, /obj/item/weapon))
 		return
 
 	if (I.d_type != BCLASS_BLUNT)

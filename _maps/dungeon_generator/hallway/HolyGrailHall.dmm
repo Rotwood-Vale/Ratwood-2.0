@@ -11,7 +11,7 @@
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/sparsegrass,
-/obj/item/rogueweapon/sword/iron,
+/obj/item/weapon/sword/iron,
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb/wilds)
 "aM" = (
@@ -120,7 +120,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/wilds)
 "lg" = (
-/obj/item/rogueweapon/sword/iron,
+/obj/item/weapon/sword/iron,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave)
 "lq" = (
@@ -342,7 +342,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb/wilds)
 "HY" = (
-/obj/item/rogueweapon/stoneaxe/woodcut,
+/obj/item/weapon/stoneaxe/woodcut,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/wilds)
 "Id" = (
@@ -390,7 +390,7 @@
 /area/rogue/under/tomb/cave)
 "Nd" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/obj/item/rogueweapon/stoneaxe/woodcut,
+/obj/item/weapon/stoneaxe/woodcut,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/wilds)
 "Pr" = (

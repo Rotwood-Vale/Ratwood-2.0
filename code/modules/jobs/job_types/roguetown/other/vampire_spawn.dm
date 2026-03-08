@@ -79,43 +79,43 @@
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Longsword + Crossbow")
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/long
+				beltl = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/long
 				beltr = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 			if("Billhook + Recurve Bow")
-				r_hand = /obj/item/rogueweapon/spear/billhook
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/billhook
+				backl = /obj/item/weapon/scabbard/gwstrap
 				beltr = /obj/item/quiver/arrows
 				beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			if("Grand Mace + Longbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 				beltr = /obj/item/quiver/arrows
-				beltl = /obj/item/rogueweapon/mace/goden/steel
+				beltl = /obj/item/weapon/mace/goden/steel
 			if("Sabre + Recurve Bow")
-				l_hand = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/sabre
+				l_hand = /obj/item/weapon/scabbard/sword
+				r_hand = /obj/item/weapon/sword/sabre
 				beltr = /obj/item/quiver/arrows
 				beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			if("Claymore")
-				r_hand = /obj/item/rogueweapon/greatsword/zwei
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/greatsword/zwei
+				backl = /obj/item/weapon/scabbard/gwstrap
 			if("Great Mace")
-				r_hand = /obj/item/rogueweapon/mace/goden/steel
+				r_hand = /obj/item/weapon/mace/goden/steel
 			if("Battle Axe")
-				r_hand = /obj/item/rogueweapon/stoneaxe/battle
+				r_hand = /obj/item/weapon/stoneaxe/battle
 			if("Greataxe")
-				r_hand = /obj/item/rogueweapon/greataxe/steel
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/greataxe/steel
+				backl = /obj/item/weapon/scabbard/gwstrap
 			if("Estoc")
-				r_hand = /obj/item/rogueweapon/estoc
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/estoc
+				backl = /obj/item/weapon/scabbard/gwstrap
 			if("Lucerne")
-				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/eaglebeak/lucerne
+				backl = /obj/item/weapon/scabbard/gwstrap
 			if("Partizan")
-				r_hand = /obj/item/rogueweapon/spear/partizan
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				r_hand = /obj/item/weapon/spear/partizan
+				backl = /obj/item/weapon/scabbard/gwstrap
 
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	pants = /obj/item/clothing/under/roguetown/chainlegs
@@ -148,8 +148,8 @@
 		armor = armors[armorchoice]
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, 
+		/obj/item/weapon/huntingknife/idagger/steel/special = 1, 
 		/obj/item/rope/chain = 1, 
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/weapon/scabbard/sheath = 1
 	)
 #undef CTAG_VAMPIRE_SPAWN

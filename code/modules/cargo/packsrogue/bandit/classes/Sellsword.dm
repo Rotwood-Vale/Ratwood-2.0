@@ -171,133 +171,133 @@
 /datum/supply_pack/rogue/Sellsword/flail
 	name = "Iron Flail"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/flail)
+	contains = list(/obj/item/weapon/flail)
 
 /datum/supply_pack/rogue/Sellsword/sflail
 	name = "Steel Flail"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/flail/sflail)
+	contains = list(/obj/item/weapon/flail/sflail)
 
 /datum/supply_pack/rogue/Sellsword/mace
 	name = "Iron Mace"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/mace)
+	contains = list(/obj/item/weapon/mace)
 
 /datum/supply_pack/rogue/Sellsword/steelmace
 	name = "Steel Mace"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/mace/steel)
+	contains = list(/obj/item/weapon/mace/steel)
 
 /datum/supply_pack/rogue/Sellsword/axe
 	name = "Iron Axe"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut)
+	contains = list(/obj/item/weapon/stoneaxe/woodcut)
 
 /datum/supply_pack/rogue/Sellsword/Staxe
 	name = "Steel Battle Axe"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/stoneaxe/battle)
+	contains = list(/obj/item/weapon/stoneaxe/battle)
 
 /datum/supply_pack/rogue/Sellsword/militiasword
 	name = "Maciejowski"
 	cost = 25
-	contains = list(/obj/item/rogueweapon/sword/falchion/militia)
+	contains = list(/obj/item/weapon/sword/falchion/militia)
 
 /datum/supply_pack/rogue/Sellsword/militiapick
 	name = "Steel Warpick"
 	cost = 25
-	contains = list(/obj/item/rogueweapon/pick/militia/steel)
+	contains = list(/obj/item/weapon/pick/militia/steel)
 
 /datum/supply_pack/rogue/Sellsword/militiaaxe
 	name = "Militia Axe"
 	cost = 25
-	contains = list(/obj/item/rogueweapon/greataxe/militia)
+	contains = list(/obj/item/weapon/greataxe/militia)
 
 /datum/supply_pack/rogue/Sellsword/militiaspear
 	name = "Militia Spear"
 	cost = 35
-	contains = list(/obj/item/rogueweapon/spear/militia)
+	contains = list(/obj/item/weapon/spear/militia)
 
 /datum/supply_pack/rogue/Sellsword/steelspear
 	name = "Steel Spear"
 	cost = 35
-	contains = list(/obj/item/rogueweapon/spear/boar)
+	contains = list(/obj/item/weapon/spear/boar)
 
 /datum/supply_pack/rogue/Sellsword/billhook
 	name = "Billhook"
 	cost = 35
-	contains = list(/obj/item/rogueweapon/spear/billhook)
+	contains = list(/obj/item/weapon/spear/billhook)
 
 /datum/supply_pack/rogue/Sellsword/partizan
 	name = "Partizan"
 	cost = 40
-	contains = list(/obj/item/rogueweapon/spear/partizan)
+	contains = list(/obj/item/weapon/spear/partizan)
 
 /datum/supply_pack/rogue/Sellsword/ebeak
 	name = "Eagle's Beak"
 	cost = 40
-	contains = list(/obj/item/rogueweapon/eaglebeak)
+	contains = list(/obj/item/weapon/eaglebeak)
 
 /datum/supply_pack/rogue/Sellsword/bspear
 	name = "Boar Spear"
 	cost = 40
-	contains = list(/obj/item/rogueweapon/spear/boar)
+	contains = list(/obj/item/weapon/spear/boar)
 
 /datum/supply_pack/rogue/Sellsword/ssword
 	name = "Short Sword"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/sword/short)
+	contains = list(/obj/item/weapon/sword/short)
 
 /datum/supply_pack/rogue/Sellsword/asword
 	name = "Arming Sword"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/sword)
+	contains = list(/obj/item/weapon/sword)
 
 /datum/supply_pack/rogue/Sellsword/lsword
 	name = "Longsword"
 	cost = 40
-	contains = list(/obj/item/rogueweapon/sword/long)
+	contains = list(/obj/item/weapon/sword/long)
 
 /datum/supply_pack/rogue/Sellsword/krieg
 	name = "kriegmesser"
 	cost = 40
-	contains = list(/obj/item/rogueweapon/sword/long/kriegmesser)
+	contains = list(/obj/item/weapon/sword/long/kriegmesser)
 
 /datum/supply_pack/rogue/Sellsword/estoc
 	name = "Estoc"
 	cost = 50
-	contains = list(/obj/item/rogueweapon/estoc)
+	contains = list(/obj/item/weapon/estoc)
 
 //Specialist swords.
 /datum/supply_pack/rogue/Sellsword/falx
 	name = "Falx"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/sword/falx)
+	contains = list(/obj/item/weapon/sword/falx)
 
 /datum/supply_pack/rogue/Sellsword/falchion
 	name = "Falchion"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/sword/short/falchion)
+	contains = list(/obj/item/weapon/sword/short/falchion)
 
 /datum/supply_pack/rogue/Sellsword/sabre
 	name = "Sabre"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/sword/sabre)
+	contains = list(/obj/item/weapon/sword/sabre)
 
 /datum/supply_pack/rogue/Sellsword/rhomphaia
 	name = "Rhomphaia"
 	cost = 40
-	contains = list(/obj/item/rogueweapon/sword/long/rhomphaia)
+	contains = list(/obj/item/weapon/sword/long/rhomphaia)
 
 /datum/supply_pack/rogue/Sellsword/silverasword
 	name = "Silver Arming Sword"
 	cost = 60
-	contains = list(/obj/item/rogueweapon/sword/silver)
+	contains = list(/obj/item/weapon/sword/silver)
 
 /datum/supply_pack/rogue/Sellsword/silverlsword
 	name = "Silver Long Sword"
 	cost = 80
-	contains = list(/obj/item/rogueweapon/sword/long/silver)
+	contains = list(/obj/item/weapon/sword/long/silver)
 
 //////////////////////
 // WEAPONS - RANGED //
@@ -344,12 +344,12 @@
 /datum/supply_pack/rogue/Sellsword/buckler
 	name = "Buckler"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/shield/buckler)
+	contains = list(/obj/item/weapon/shield/buckler)
 
 /datum/supply_pack/rogue/Sellsword/ironshield
 	name = "Iron Shield"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/shield/iron)
+	contains = list(/obj/item/weapon/shield/iron)
 
 /////////////
 // GRENZEL //
@@ -388,17 +388,17 @@
 /datum/supply_pack/rogue/Sellsword/halberd
 	name = "Halberd"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/halberd)
+	contains = list(/obj/item/weapon/halberd)
 
 /datum/supply_pack/rogue/Sellsword/SZweihandersword
 	name = "Steel Zweihander"
 	cost = 60
-	contains = list(/obj/item/rogueweapon/greatsword/grenz)
+	contains = list(/obj/item/weapon/greatsword/grenz)
 
 /datum/supply_pack/rogue/Sellsword/SFlamberge
 	name = "Steel Flamberge"
 	cost = 60
-	contains = list(/obj/item/rogueweapon/greatsword/grenz/flamberge)
+	contains = list(/obj/item/weapon/greatsword/grenz/flamberge)
 
 //////////////////////
 // RANESHEN - RIDER //
@@ -427,12 +427,12 @@
 /datum/supply_pack/rogue/Sellsword/shalalsaber
 	name = "Shalal Saber"
 	cost = 30
-	contains = list(/obj/item/rogueweapon/sword/long/marlin)
+	contains = list(/obj/item/weapon/sword/long/marlin)
 
 /datum/supply_pack/rogue/Sellsword/dridersword
 	name = "Shamshir"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/sword/sabre/shamshir)
+	contains = list(/obj/item/weapon/sword/sabre/shamshir)
 
 ///////////////////////
 // 	 FORLON HOPE	 //
@@ -466,9 +466,9 @@
 /datum/supply_pack/rogue/Sellsword/steelwarhammer
 	name = "Steel Warhammer"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/mace/warhammer/steel)
+	contains = list(/obj/item/weapon/mace/warhammer/steel)
 
 /datum/supply_pack/rogue/Sellsword/heatshield
 	name = "Heater Shield"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/shield/heater)
+	contains = list(/obj/item/weapon/shield/heater)

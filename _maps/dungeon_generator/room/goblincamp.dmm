@@ -40,7 +40,7 @@
 /area/rogue/under/tomb/cave)
 "eU" = (
 /obj/effect/decal/cleanable/blood/drip,
-/obj/item/rogueweapon/spear/billhook,
+/obj/item/weapon/spear/billhook,
 /obj/item/clothing/head/roguetown/circlet,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/effect/spawner/lootdrop/potion_vitals,
@@ -362,7 +362,7 @@
 "QS" = (
 /obj/structure/table/wood,
 /obj/item/millstone,
-/obj/item/rogueweapon/huntingknife/idagger,
+/obj/item/weapon/huntingknife/idagger,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/wilds)
 "Rc" = (
@@ -370,7 +370,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/tomb/wilds)
 "RK" = (
-/obj/item/rogueweapon/mace/woodclub,
+/obj/item/weapon/mace/woodclub,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/tomb/wilds)
 "Sc" = (

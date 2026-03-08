@@ -231,7 +231,7 @@
 			close_up(user)
 		else
 			open_up(user)
-	else if(!(get_dir(src,user) == lockdir) && (istype(held_knife, /obj/item/rogueweapon/huntingknife)))
+	else if(!(get_dir(src,user) == lockdir) && (istype(held_knife, /obj/item/weapon/huntingknife)))
 		var/lockprogress = 0
 		var/locktreshold = window_lock_strength
 

@@ -28,4 +28,4 @@
 		return
 
 	user.adjust_bloodpool(-500)
-	new /obj/item/rogueweapon/sword/long/judgement/vlord(get_turf(src))
+	new /obj/item/weapon/sword/long/judgement/vlord(get_turf(src))

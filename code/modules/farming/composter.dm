@@ -59,7 +59,7 @@
 /obj/structure/composter/proc/try_handle_flipping_compost(obj/item/attacking_item, mob/user, params)
 	var/using_tool = FALSE
 	if(attacking_item)
-		if(istype(attacking_item, /obj/item/rogueweapon/pitchfork) || istype(attacking_item, /obj/item/rogueweapon/shovel))
+		if(istype(attacking_item, /obj/item/weapon/pitchfork) || istype(attacking_item, /obj/item/weapon/shovel))
 			using_tool = TRUE
 	var/do_time = using_tool ? 4 SECONDS : 7 SECONDS
 	var/fatigue = using_tool ? 10 : 20

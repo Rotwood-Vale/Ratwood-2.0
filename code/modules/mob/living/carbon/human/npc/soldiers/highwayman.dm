@@ -114,22 +114,22 @@ GLOBAL_LIST_INIT(highwayman_aggro, world.file2list("strings/rt/highwaymanaggroli
 	H.STAPER = 10
 	H.STAINT = 10
 	if(prob(50))
-		r_hand = /obj/item/rogueweapon/sword/short/iron
+		r_hand = /obj/item/weapon/sword/short/iron
 	else
-		r_hand = /obj/item/rogueweapon/mace/cudgel
+		r_hand = /obj/item/weapon/mace/cudgel
 	if(prob(10))
-		r_hand = /obj/item/rogueweapon/sword/falchion/militia
+		r_hand = /obj/item/weapon/sword/falchion/militia
 	if(prob(10))
-		r_hand = /obj/item/rogueweapon/sword/short/messer/iron
+		r_hand = /obj/item/weapon/sword/short/messer/iron
 	if(prob(10))
-		r_hand = /obj/item/rogueweapon/stoneaxe/handaxe
+		r_hand = /obj/item/weapon/stoneaxe/handaxe
 	if(prob(20))
-		r_hand = /obj/item/rogueweapon/pick/militia
+		r_hand = /obj/item/weapon/pick/militia
 	if(prob(25))	
-		l_hand = /obj/item/rogueweapon/shield/wood
+		l_hand = /obj/item/weapon/shield/wood
 	if(prob(10))
-		l_hand = /obj/item/rogueweapon/huntingknife/idagger
-		l_hand = /obj/item/rogueweapon/huntingknife/idagger
+		l_hand = /obj/item/weapon/huntingknife/idagger
+		l_hand = /obj/item/weapon/huntingknife/idagger
 	H.eye_color = "27becc"
 	H.hair_color = "61310f"
 	H.facial_hair_color = H.hair_color

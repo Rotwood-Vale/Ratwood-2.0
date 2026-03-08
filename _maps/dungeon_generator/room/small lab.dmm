@@ -210,7 +210,7 @@
 "xQ" = (
 /obj/structure/closet/crate/chest/neu_fancy,
 /obj/effect/mapping_helpers/access/locker,
-/obj/item/rogueweapon/huntingknife/idagger/silver,
+/obj/item/weapon/huntingknife/idagger/silver,
 /obj/item/reagent_containers/powder/moondust_purest,
 /obj/item/reagent_containers/powder/moondust_purest{
 	pixel_y = -4;
@@ -247,7 +247,7 @@
 "BV" = (
 /obj/structure/table/wood/crafted,
 /obj/item/millstone,
-/obj/item/rogueweapon/huntingknife/cleaver{
+/obj/item/weapon/huntingknife/cleaver{
 	pixel_y = 7;
 	pixel_x = -2
 	},

@@ -36,10 +36,10 @@
 	backpack_contents = list(
 		/obj/item/key/mercenary,
 		/obj/item/flashlight/flare/torch,
-		/obj/item/rogueweapon/huntingknife/idagger/steel,
+		/obj/item/weapon/huntingknife/idagger/steel,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
-		/obj/item/rogueweapon/whip/nagaika,
-		/obj/item/rogueweapon/scabbard/sheath
+		/obj/item/weapon/whip/nagaika,
+		/obj/item/weapon/scabbard/sheath
 		)
 
 	// CLASS ARCHETYPES
@@ -60,9 +60,9 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe	//Scale armor w/ better durability & unique sprite
 				cloak = /obj/item/clothing/cloak/raincloak/furcloak
 				wrists = /obj/item/clothing/wrists/roguetown/bracers
-				backl = /obj/item/rogueweapon/shield/iron/steppesman
-				beltl= /obj/item/rogueweapon/scabbard/sword
-				l_hand = /obj/item/rogueweapon/sword/sabre/steppesman
+				backl = /obj/item/weapon/shield/iron/steppesman
+				beltl= /obj/item/weapon/scabbard/sword
+				l_hand = /obj/item/weapon/sword/sabre/steppesman
 				neck = /obj/item/clothing/neck/roguetown/chaincoif
 				H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
@@ -97,16 +97,16 @@
 				gloves = /obj/item/clothing/gloves/roguetown/chain
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
 				wrists = /obj/item/clothing/wrists/roguetown/bracers
-				backl = /obj/item/rogueweapon/shield/iron/steppesman // rucksack aka /bagpack eats whatever goes to backpack_contents so replaced with shield
-				l_hand = /obj/item/rogueweapon/stoneaxe/battle/steppesman
+				backl = /obj/item/weapon/shield/iron/steppesman // rucksack aka /bagpack eats whatever goes to backpack_contents so replaced with shield
+				l_hand = /obj/item/weapon/stoneaxe/battle/steppesman
 				neck = /obj/item/clothing/neck/roguetown/chaincoif
 				backpack_contents = list(
 					/obj/item/key/mercenary,
 					/obj/item/storage/belt/rogue/pouch/coins/poor,
-					/obj/item/rogueweapon/handsaw,
-					/obj/item/rogueweapon/chisel,
-					/obj/item/rogueweapon/huntingknife/combat,
-					/obj/item/rogueweapon/scabbard/sheath
+					/obj/item/weapon/handsaw,
+					/obj/item/weapon/chisel,
+					/obj/item/weapon/huntingknife/combat,
+					/obj/item/weapon/scabbard/sheath
 				)
 				H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
@@ -148,10 +148,10 @@
 				else
 					armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe
 				wrists = /obj/item/clothing/wrists/roguetown/bracers
-				backl = /obj/item/rogueweapon/shield/iron/steppesman
+				backl = /obj/item/weapon/shield/iron/steppesman
 				beltl = /obj/item/tntstick
 				beltr = /obj/item/tntstick
-				l_hand = /obj/item/rogueweapon/stoneaxe/battle/steppesman
+				l_hand = /obj/item/weapon/stoneaxe/battle/steppesman
 				neck = /obj/item/clothing/neck/roguetown/chaincoif
 				//No whip, dagger, etc. Only the explosives and some basic stuff.
 				backpack_contents = list(
@@ -261,13 +261,13 @@
 				var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 				switch(weapon_choice)
 					if("Lándzsa")//Funny banner weapon & punchdagger, with whip I suppose.
-						r_hand = /obj/item/rogueweapon/spear/boar/aav
-						l_hand = /obj/item/rogueweapon/katar/punchdagger/aav
-						backl = /obj/item/rogueweapon/scabbard/gwstrap
+						r_hand = /obj/item/weapon/spear/boar/aav
+						l_hand = /obj/item/weapon/katar/punchdagger/aav
+						backl = /obj/item/weapon/scabbard/gwstrap
 						H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)		//Use of the weapon.
 					if("Flail")//Or boring flail and buckler, whip.
-						beltl = /obj/item/rogueweapon/flail
-						beltr = /obj/item/rogueweapon/shield/buckler //Doesn't get good shield skill + no armor, so they get this to compensate for no parry on whip.
+						beltl = /obj/item/weapon/flail
+						beltr = /obj/item/weapon/shield/buckler //Doesn't get good shield skill + no armor, so they get this to compensate for no parry on whip.
 						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)	//Old whip skill.
 
 	H.merctype = 11

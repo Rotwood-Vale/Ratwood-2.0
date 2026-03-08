@@ -350,7 +350,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
 	belt = /obj/item/storage/belt/rogue/leather/black
-	r_hand = /obj/item/rogueweapon/sword/long/zizo
+	r_hand = /obj/item/weapon/sword/long/zizo
 	l_hand = null
 	H.STASTR = 20
 	H.STAPER = 20

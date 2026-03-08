@@ -76,37 +76,37 @@
 /datum/supply_pack/rogue/Supplies/gwstrap
 	name = "Greatweapon Strap"
 	cost = 15
-	contains = list(/obj/item/rogueweapon/scabbard/gwstrap)
+	contains = list(/obj/item/weapon/scabbard/gwstrap)
 
 /datum/supply_pack/rogue/Supplies/scabbard
 	name = "Sword Scabbard"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/scabbard/sword)
+	contains = list(/obj/item/weapon/scabbard/sword)
 
 /datum/supply_pack/rogue/Supplies/sheath
 	name = "Dagger Sheath"
 	cost = 5
-	contains = list(/obj/item/rogueweapon/scabbard/sheath)
+	contains = list(/obj/item/weapon/scabbard/sheath)
 
 /datum/supply_pack/rogue/Supplies/hknife
 	name = "Hunting Knife"
 	cost = 5
-	contains = list(/obj/item/rogueweapon/huntingknife)
+	contains = list(/obj/item/weapon/huntingknife)
 
 /datum/supply_pack/rogue/Supplies/dagger
 	name = "Iron Dagger"
 	cost = 10
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger)
+	contains = list(/obj/item/weapon/huntingknife/idagger)
 
 /datum/supply_pack/rogue/Supplies/daggerss
 	name = "Steel Dagger"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel)
+	contains = list(/obj/item/weapon/huntingknife/idagger/steel)
 
 /datum/supply_pack/rogue/Supplies/daggersil
 	name = "Silver Dagger"
 	cost = 80
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver)
+	contains = list(/obj/item/weapon/huntingknife/idagger/silver)
 
 /datum/supply_pack/rogue/Supplies/Waterskin
 	name = "Waterskin"
@@ -185,12 +185,12 @@
 /datum/supply_pack/rogue/Supplies/pick
 	name = "Iron Pick"
 	cost = 12		// Also a thing you can just kinda find, though moderately useful.
-	contains = list(/obj/item/rogueweapon/pick)
+	contains = list(/obj/item/weapon/pick)
 
 /datum/supply_pack/rogue/Supplies/pick/steel
 	name = "Steel Pick"
 	cost = 35
-	contains = list(/obj/item/rogueweapon/pick/steel)
+	contains = list(/obj/item/weapon/pick/steel)
 
 //////////////
 // COOKING  //		//Very basic ingredients. Nothing like meat or fruits, you can go and get those yourself. Buying components for everyone on your own will add up quickly. What are YOU bringing for the Matthios potluck?

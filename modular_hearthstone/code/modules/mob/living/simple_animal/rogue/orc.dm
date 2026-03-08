@@ -34,7 +34,7 @@
 	speak_emote = list("grunts")
 	speak = list("WAAAGH!", "KRUSH AND KILL!", "Never should have come here!", "Slaughter them all!", "Kill everything!", "Hahaha! Die!")
 	loot = list(/obj/effect/mob_spawn/human/orc/corpse/savageorc,
-			/obj/item/rogueweapon/stoneaxe/boneaxe,
+			/obj/item/weapon/stoneaxe/boneaxe,
 			/obj/effect/decal/cleanable/blood)
 	faction = list("orcs")
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
@@ -57,7 +57,7 @@
 	icon_living = "savageorc2"
 	icon_dead = "savageorc2"
 	loot = list(/obj/effect/mob_spawn/human/orc/corpse/savageorc2,
-			/obj/item/rogueweapon/stoneaxe/boneaxe,
+			/obj/item/weapon/stoneaxe/boneaxe,
 			/obj/effect/decal/cleanable/blood)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/orc/orc_marauder
@@ -73,7 +73,7 @@
 	maxHealth = ORC_HEALTH * 2 //TWICE THE ORC
 	health = ORC_HEALTH * 2
 	loot = list(/obj/effect/mob_spawn/human/orc/corpse/orcmarauder,
-			/obj/item/rogueweapon/sword/short/messer/iron,
+			/obj/item/weapon/sword/short/messer/iron,
 			/obj/effect/decal/cleanable/blood)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/orc/orc_marauder/spear
@@ -83,7 +83,7 @@
 	base_intents = list(/datum/intent/spear/thrust/orcthrust)
 	ai_controller = /datum/ai_controller/spear_orc
 	loot = list(/obj/effect/mob_spawn/human/orc/corpse/orcmarauder,
-			/obj/item/rogueweapon/spear,
+			/obj/item/weapon/spear,
 			/obj/effect/decal/cleanable/blood)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/orc/orc_marauder/ravager
@@ -97,7 +97,7 @@
 	maxHealth = ORC_HEALTH * 5
 	health = ORC_HEALTH * 5
 	loot = list(/obj/effect/mob_spawn/human/orc/corpse/orcravager,
-			/obj/item/rogueweapon/halberd/bardiche,
+			/obj/item/weapon/halberd/bardiche,
 			/obj/effect/decal/cleanable/blood)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/orc/spear
@@ -113,7 +113,7 @@
 	attack_verb_simple = "stab"
 	attack_sound = 'sound/blank.ogg'
 	loot = list(/obj/effect/mob_spawn/human/orc/corpse/savageorc,
-			/obj/item/rogueweapon/spear/bonespear,
+			/obj/item/weapon/spear/bonespear,
 			/obj/effect/decal/cleanable/blood)
 
 
@@ -126,7 +126,7 @@
 	ai_controller = /datum/ai_controller/spear_orc
 	base_intents = list(/datum/intent/spear/thrust/orcthrust)
 	loot = list(/obj/effect/mob_spawn/human/orc/corpse/savageorc2,
-			/obj/item/rogueweapon/spear/bonespear,
+			/obj/item/weapon/spear/bonespear,
 			/obj/effect/decal/cleanable/blood)
 
 /datum/intent/simple/axe/orc

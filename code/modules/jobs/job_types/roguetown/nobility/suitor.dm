@@ -119,7 +119,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	belt = /obj/item/storage/belt/rogue/leather/black
 	neck = /obj/item/key/manor
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
+	beltl = /obj/item/weapon/huntingknife/idagger/steel
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/clothing/ring/silver
@@ -174,7 +174,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/key/manor
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr = /obj/item/rogueweapon/sword/sabre/dec
+	beltr = /obj/item/weapon/sword/sabre/dec
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/clothing/ring/silver
 	backpack_contents = list(/obj/item/storage/belt/rogue/pouch/coins/mid = 1)

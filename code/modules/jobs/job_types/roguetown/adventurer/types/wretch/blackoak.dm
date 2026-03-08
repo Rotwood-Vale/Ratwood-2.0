@@ -55,13 +55,13 @@
 	head = /obj/item/clothing/head/roguetown/helmet/sallet/elven
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/trophyfur
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/special
-	beltr = /obj/item/rogueweapon/scabbard/sword
-	r_hand = /obj/item/rogueweapon/halberd/glaive
-	backr = /obj/item/rogueweapon/scabbard/gwstrap
+	beltl = /obj/item/weapon/huntingknife/idagger/steel/special
+	beltr = /obj/item/weapon/scabbard/sword
+	r_hand = /obj/item/weapon/halberd/glaive
+	backr = /obj/item/weapon/scabbard/gwstrap
 	backpack_contents = list(
 				/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-				/obj/item/rogueweapon/scabbard/sheath = 1,
+				/obj/item/weapon/scabbard/sheath = 1,
 				/obj/item/flashlight/flare/torch
 				)
 
@@ -75,9 +75,9 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Elven Swordspear and Longsword")
-				r_hand = /obj/item/rogueweapon/spear/naginata/elf
-				l_hand = /obj/item/rogueweapon/sword/long/elf
+				r_hand = /obj/item/weapon/spear/naginata/elf
+				l_hand = /obj/item/weapon/sword/long/elf
 			if("Elven Curveblade and Shortsword")
-				r_hand = /obj/item/rogueweapon/greatsword/elf
-				l_hand = /obj/item/rogueweapon/sword/short/elf
+				r_hand = /obj/item/weapon/greatsword/elf
+				l_hand = /obj/item/weapon/sword/short/elf
 

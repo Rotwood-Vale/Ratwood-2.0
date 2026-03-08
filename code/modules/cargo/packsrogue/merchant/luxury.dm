@@ -21,7 +21,7 @@
 /datum/supply_pack/rogue/luxury/silverdagger
 	name = "Silver Dagger"
 	cost = 120 //Silver weapons have been made much less powerful but much more common over time
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver)
+	contains = list(/obj/item/weapon/huntingknife/idagger/silver)
 
 /datum/supply_pack/rogue/luxury/polishing_kit
 	name = "Polishing Kit"
@@ -82,12 +82,12 @@
 /datum/supply_pack/rogue/luxury/parasol
 	name = "Paper Parasol"
 	cost = 25
-	contains = list(/obj/item/rogueweapon/mace/parasol)
+	contains = list(/obj/item/weapon/mace/parasol)
 
 /datum/supply_pack/rogue/luxury/fineparasol
 	name = "Fine Parasol"
 	cost = 65
-	contains = list(/obj/item/rogueweapon/mace/parasol/noble)
+	contains = list(/obj/item/weapon/mace/parasol/noble)
 
 /datum/supply_pack/rogue/luxury/suidust
 	name = "Dust of Disguise (Gender only)"

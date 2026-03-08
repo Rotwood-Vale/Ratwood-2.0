@@ -56,7 +56,7 @@
 	if(istype(target.rmb_intent, /datum/rmb_intent/strong))
 		bonus++
 
-	if(istype(target.get_active_held_item(), /obj/item/rogueweapon))
+	if(istype(target.get_active_held_item(), /obj/item/weapon))
 		bonus += 0.5
 
 	if(target == user && target.blood_volume <= BLOOD_VOLUME_OKAY && COOLDOWN_FINISHED(src, lesser_heal_buff_cooldown))

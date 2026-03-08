@@ -67,10 +67,10 @@
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 
 		backpack_contents = list(
-			/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+			/obj/item/weapon/huntingknife/idagger/steel/special = 1,
 			/obj/item/rope/chain = 1,
 			/obj/item/storage/keyring/guardcastle = 1,
-			/obj/item/rogueweapon/scabbard/sheath = 1,
+			/obj/item/weapon/scabbard/sheath = 1,
 			/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 			)
 		H.verbs |= /mob/proc/haltyell
@@ -107,7 +107,7 @@
 	associated_skill = /datum/skill/craft/traps
 	invocation_type = "whisper"
 	miracle = FALSE
-	req_items = list(/obj/item/rogueweapon/shovel)
+	req_items = list(/obj/item/weapon/shovel)
 	var/setup_delay = 8 SECONDS
 	var/pending = FALSE
 	var/trap_path = /obj/structure/trap/bogtrap/bomb

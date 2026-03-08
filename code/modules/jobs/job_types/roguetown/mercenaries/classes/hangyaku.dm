@@ -46,13 +46,13 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/plate/kote
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
+	beltr = /obj/item/weapon/huntingknife/idagger/steel/kazengun
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/key/mercenary,
 		/obj/item/flashlight/flare/torch/lantern,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
-		/obj/item/rogueweapon/scabbard/sheath/kazengun
+		/obj/item/weapon/scabbard/sheath/kazengun
 		)
 	H.merctype = 9
 
@@ -63,16 +63,16 @@
 	switch(weapon_choice)
 		if("Sword")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword/kazengun/noparry, SLOT_BELT_L, TRUE)	
+			H.put_in_hands(new /obj/item/weapon/sword/long/kriegmesser/ssangsudo, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/sword/kazengun/noparry, SLOT_BELT_L, TRUE)	
 		if("Great Mace")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/kanabo, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
+			H.put_in_hands(new /obj/item/weapon/mace/goden/kanabo, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
 		if("Spear")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/spear/naginata, TRUE) 
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
+			H.put_in_hands(new /obj/item/weapon/spear/naginata, TRUE) 
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
 		if("Bow")
 			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve, TRUE) 
@@ -161,8 +161,8 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/woodstaff/militia, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
+			H.put_in_hands(new /obj/item/weapon/woodstaff/militia, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
 		if("Farmer") //farming, cooking, butchery, fishing
 			ADD_TRAIT(H, TRAIT_SURVIVAL_EXPERT, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -171,16 +171,16 @@
 			H.adjust_skillrank_up_to(/datum/skill/labor/butchering, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_APPRENTICE, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/spear/militia, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
+			H.put_in_hands(new /obj/item/weapon/spear/militia, TRUE)
 		if("Tailor") // sewing/etc.
 			ADD_TRAIT(H, TRAIT_SEWING_EXPERT, TRAIT_GENERIC)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/sword, SLOT_BELT_R, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/sewing, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/tanning, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/butchering, SKILL_LEVEL_APPRENTICE, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/sword/falchion/militia, TRUE)
+			H.put_in_hands(new /obj/item/weapon/sword/falchion/militia, TRUE)
 		if("Laborer") //physical labor; smelting, pottery, mining. you'll have to get the smithing yourself.
 			ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -189,18 +189,18 @@
 			H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/masonry, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/mining, SKILL_LEVEL_APPRENTICE, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/pick/militia/steel, TRUE)
+			H.put_in_hands(new /obj/item/weapon/pick/militia/steel, TRUE)
 		if("Merchant") //the sneaky one.
 			ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/pouch/coins/mid, SLOT_BELT_L, TRUE) 
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath/kazengun, SLOT_BELT_R, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/sheath/kazengun, SLOT_BELT_R, TRUE)
+			H.put_in_hands(new /obj/item/weapon/huntingknife/idagger/steel/kazengun, TRUE)
 		if("Levy") //straight-up fighter. gets a naginata AND a tanto.
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/spear/naginata, TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath/kazengun, SLOT_BELT_R, TRUE)
+			H.put_in_hands(new /obj/item/weapon/spear/naginata, TRUE)
+			H.put_in_hands(new /obj/item/weapon/huntingknife/idagger/steel/kazengun, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/scabbard/sheath/kazengun, SLOT_BELT_R, TRUE)

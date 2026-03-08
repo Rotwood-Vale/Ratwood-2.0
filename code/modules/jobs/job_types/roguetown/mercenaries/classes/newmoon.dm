@@ -48,7 +48,7 @@
 
 /datum/outfit/job/roguetown/mercenary/newmoon/pre_equip(mob/living/carbon/human/H)
 	..()
-	r_hand = /obj/item/rogueweapon/sword/sabre/newmoon
+	r_hand = /obj/item/weapon/sword/sabre/newmoon
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	head = /obj/item/clothing/head/roguetown/roguehood/reinforced/newmoon
@@ -57,15 +57,15 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/newmoon
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/newmoon_jacket
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/weapon/scabbard/sword
 	beltl = /obj/item/reagent_containers/glass/bottle/rogue/manapot
 	backr = /obj/item/storage/backpack/rogue/satchel
 	wrists = /obj/item/clothing/neck/roguetown/psicross/noc
 
 	backpack_contents = list(
 		/obj/item/key/mercenary = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/weapon/huntingknife = 1,
+		/obj/item/weapon/scabbard/sheath = 1,
 		/obj/item/spellbook_unfinished/pre_arcyne = 1,
 		/obj/item/roguegem/amethyst = 1,
 		/obj/item/lockpick = 1,
@@ -78,7 +78,7 @@
 
 //Their sabre. Peel capable when off. Does burn when on. OldRW rage inducing classic, returned.
 //Now properly inflicts burn wounds, on top of the burn type damage. Very painful.
-/obj/item/rogueweapon/sword/sabre/newmoon
+/obj/item/weapon/sword/sabre/newmoon
 	name = "freezing saber"
 	desc = "A fragile sabre adorned with a bright blue freezing mist. Holding the blade feels like it might give you frostbite."
 	icon = 'icons/weapons/32.dmi'
@@ -102,13 +102,13 @@
 //	damfactor = 1.2//Not with new wounds!!!!
 	blade_class = BCLASS_BURN
 
-/obj/item/rogueweapon/sword/sabre/newmoon/update_icon()
+/obj/item/weapon/sword/sabre/newmoon/update_icon()
 	if(on)
 		icon_state = "nm_saber_freeze"
 	else
 		icon_state = "nm_saber"
 
-/obj/item/rogueweapon/sword/sabre/newmoon/attack_self(mob/user)
+/obj/item/weapon/sword/sabre/newmoon/attack_self(mob/user)
 	if(on)
 		on = FALSE
 		damtype = BRUTE

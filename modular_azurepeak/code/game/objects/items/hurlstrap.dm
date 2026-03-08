@@ -27,7 +27,7 @@
 	sewrepair = TRUE
 
 /obj/item/hurlstrap/attackby(obj/A, mob/living/carbon/user, params)
-	if(istype(A, /obj/item/rogueweapon/stoneaxe/hurlbat) || istype(A, /obj/item/rogueweapon/stoneaxe/handaxe))
+	if(istype(A, /obj/item/weapon/stoneaxe/hurlbat) || istype(A, /obj/item/weapon/stoneaxe/handaxe))
 		if(tweps.len < max_storage)
 			user.transferItemToLoc(A, tweps)
 			tweps += A

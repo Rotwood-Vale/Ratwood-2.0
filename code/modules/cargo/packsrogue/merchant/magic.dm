@@ -18,7 +18,7 @@
 /datum/supply_pack/rogue/magic/silverdagger
 	name = "Silver Dagger"
 	cost = 120 //Silver weapons have been made much less powerful but much more common over time
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver)
+	contains = list(/obj/item/weapon/huntingknife/idagger/silver)
 
 /datum/supply_pack/rogue/magic/nomag
 	name = "Ring of Null Magic"

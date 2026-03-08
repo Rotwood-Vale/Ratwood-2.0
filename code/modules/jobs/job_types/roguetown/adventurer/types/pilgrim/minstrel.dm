@@ -32,14 +32,14 @@
 	pants = /obj/item/clothing/under/roguetown/tights/random
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather/cloth
-	beltr = /obj/item/rogueweapon/huntingknife/idagger
+	beltr = /obj/item/weapon/huntingknife/idagger
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 						/obj/item/rogue/instrument/lute = 1,
 						/obj/item/rogue/instrument/flute = 1,
 						/obj/item/rogue/instrument/drum = 1,
 						/obj/item/flashlight/flare/torch = 1,
-						/obj/item/rogueweapon/scabbard/sheath = 1
+						/obj/item/weapon/scabbard/sheath = 1
 						)
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T3)

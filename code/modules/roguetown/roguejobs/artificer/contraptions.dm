@@ -124,7 +124,7 @@
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			qdel(I)
 			addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
-	if(istype(I, /obj/item/rogueweapon/hammer))
+	if(istype(I, /obj/item/weapon/hammer))
 		hammer_action(I, user)
 	..()
 

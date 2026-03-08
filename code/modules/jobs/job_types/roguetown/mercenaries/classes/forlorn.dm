@@ -55,9 +55,9 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife,
+		/obj/item/weapon/huntingknife,
 		/obj/item/key/mercenary,
-		/obj/item/rogueweapon/scabbard/sheath,
+		/obj/item/weapon/scabbard/sheath,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
 	H.merctype = 5
@@ -72,12 +72,12 @@
 	var/weapon_choice = input(H, "Choose your weapon.", "ARMS OF THE ORDER") as anything in weapons
 	switch(weapon_choice)
 		if("Warhammer")
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/mace/warhammer/steel, SLOT_BELT_L)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/heater, SLOT_BACK_L)
+			H.equip_to_slot_or_del(new /obj/item/weapon/mace/warhammer/steel, SLOT_BELT_L)
+			H.equip_to_slot_or_del(new /obj/item/weapon/shield/heater, SLOT_BACK_L)
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT)
 		if("crossbow")
 			H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_L)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/sword/short/falchion, SLOT_BELT_R)
+			H.equip_to_slot_or_del(new /obj/item/weapon/sword/short/falchion, SLOT_BELT_R)
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow, SLOT_BACK_L)
 			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT)
 
