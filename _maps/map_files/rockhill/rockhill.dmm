@@ -33159,7 +33159,7 @@
 "jmQ" = (
 /obj/structure/bars/pipe{
 	dir = 1;
-	icon = 'icons/turf/roguefloor.dmi';
+	icon = 'icons/turf/floors.dmi';
 	pixel_x = -14;
 	pixel_y = -17
 	},
@@ -53519,7 +53519,7 @@
 "pmh" = (
 /obj/structure/bars/pipe{
 	dir = 1;
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/town/rockhill)
@@ -66791,7 +66791,7 @@
 	},
 /obj/structure/bars/pipe{
 	dir = 4;
-	icon = 'icons/turf/roguefloor.dmi';
+	icon = 'icons/turf/floors.dmi';
 	pixel_x = -16;
 	pixel_y = 15
 	},
@@ -76744,7 +76744,7 @@
 	lockdifficulty = 1.5
 	},
 /obj/structure/fluff/walldeco/fakewall{
-	icon = 'icons/turf/roguewall.dmi';
+	icon = 'icons/turf/walls.dmi';
 	icon_state = "roofTurf_M";
 	name = "Suspicious Tiles";
 	pixel_y = -1

@@ -25,7 +25,7 @@
 /obj/structure/gravemarker
 	name = "grave marker"
 	desc = "A simple marker honouring the departed.."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "gravemarker1"
 	density = FALSE
 	max_integrity = 0

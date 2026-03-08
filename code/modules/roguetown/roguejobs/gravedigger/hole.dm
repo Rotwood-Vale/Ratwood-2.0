@@ -3,7 +3,7 @@
 	name = "hole"
 	desc = "Just a small hole..."
 	icon_state = "hole1"
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	var/stage = 1
 	var/mutable_appearance/abovemob
 	var/turf/open/floor/rogue/dirt/mastert
@@ -325,7 +325,7 @@
 	update_abovemob()
 
 /obj/structure/closet/dirthole/Initialize(mapload)
-	abovemob = mutable_appearance('icons/turf/roguefloor.dmi', "grave_above")
+	abovemob = mutable_appearance('icons/turf/floors.dmi', "grave_above")
 	abovemob.layer = ABOVE_MOB_LAYER
 	update_icon()
 	var/turf/open/floor/rogue/dirt/T = loc

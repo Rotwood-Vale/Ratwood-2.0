@@ -16,7 +16,7 @@
 	gender = PLURAL
 	name = "water"
 	desc = "Good enough to drink, wet enough to douse fires."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "together"
 	baseturfs = /turf/open/water
 	slowdown = 5
@@ -368,7 +368,7 @@
 /turf/open/water/bath
 	name = "water"
 	desc = "Soothing water, with soapy bubbles on the surface."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "bathtileW"
 	water_level = 2
 	water_color = "#FFFFFF"
@@ -382,7 +382,7 @@
 /turf/open/water/sewer
 	name = "sewage"
 	desc = "This dark water smells like dead rats and sulphur!"
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "pavingW"
 	water_level = 1
 	water_color = "#705a43"
@@ -398,7 +398,7 @@
 /turf/open/water/swamp
 	name = "murk"
 	desc = "Weeds and algae cover the surface of the water."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "dirtW2"
 	water_level = 2
 	water_color = "#705a43"
@@ -409,7 +409,7 @@
 /turf/open/water/bloody
 	name = "blood"
 	desc = "Is that... a river of blood? EVIL!"
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "dirtW2"
 	water_level = 2
 	water_color = "#941010"
@@ -507,7 +507,7 @@
 /turf/open/water/cleanshallow
 	name = "water"
 	desc = "Clear and shallow water, what a blessing!"
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "rockw2"
 	water_level = 2
 	slowdown = 3
@@ -522,7 +522,7 @@
 /turf/open/water/river
 	name = "river"
 	desc = "A river of crystal clear water flows swiftly along the contours of the land."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "rivermove"
 	water_level = 3
 	slowdown = 5
@@ -597,7 +597,7 @@
 	name = "salt water"
 	desc = "The waves lap at the coast, hungry to swallow the land. Doesn't look too deep."
 	icon_state = "ash"
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	water_level = 2
 	water_color = "#3e7459"
 	slowdown = 4
@@ -609,7 +609,7 @@
 	name = "salt water"
 	desc = "Deceptively deep, be careful not to find yourself this far out."
 	icon_state = "water"
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	water_level = 3
 	water_color = "#3e7459"
 	slowdown = 8
@@ -620,7 +620,7 @@
 	name = "pond"
 	desc = "Still and alarmingly idyllic water. Covered in concerning overgrowth of duckweed."
 	icon_state = "pond"
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	water_level = 3
 	water_color = "#367e94"
 	slowdown = 3
@@ -633,7 +633,7 @@
 /turf/open/water/ocean/deep/thermalwater
 	name = "healing hot spring"
 	desc = "A warm spring with gentle ripples. Standing here soothes your body."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "together"
 	water_color = "#23b9df"
 	water_reagent = /datum/reagent/water

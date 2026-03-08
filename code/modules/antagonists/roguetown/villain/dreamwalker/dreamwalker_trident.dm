@@ -1,5 +1,5 @@
 /obj/effect/visuals/black_ice
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "blackice"
 	layer = TURF_LAYER + 1
 	density = FALSE

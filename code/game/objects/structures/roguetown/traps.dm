@@ -3,7 +3,7 @@
 	desc = "A hole filled with sharp wooden ends that protrude upwards."
 	icon_state = "spike_pit"
 	can_buckle = TRUE
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	density = FALSE
 	anchored = TRUE
 	can_buckle = FALSE

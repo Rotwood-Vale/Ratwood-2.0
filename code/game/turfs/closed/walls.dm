@@ -23,7 +23,7 @@
 	smooth_diag = FALSE
 	sheet_type = null
 	wallclimb = TRUE
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 
 /turf/closed/wall/attack_tk()
 	return

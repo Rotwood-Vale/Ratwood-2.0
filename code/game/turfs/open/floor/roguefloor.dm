@@ -1,23 +1,3 @@
-/turf/open/floor/rogue
-	desc = ""
-	canSmoothWith = null
-	smooth = SMOOTH_FALSE
-	var/smooth_icon = null
-	var/prettifyturf = FALSE
-	icon = 'icons/turf/roguefloor.dmi'
-	baseturfs = list(/turf/open/transparent/openspace)
-	neighborlay = ""
-
-/turf/open/floor/rogue/break_tile()
-	return //unbreakable
-
-/turf/open/floor/rogue/burn_tile()
-	return //unburnable
-
-/turf/open/floor/rogue/Initialize(mapload)
-	if(smooth_icon)
-		icon = smooth_icon
-	. = ..()
 
 /turf/open/floor/rogue/ruinedwood
 	icon_state = "wooden_floor"
@@ -706,7 +686,7 @@
 /turf/open/floor/rogue/hay
 	name = "hay"
 	desc = "Dried grass strewn across the floor. It's not the worst thing to sleep on."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "hay"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_SAND
@@ -1142,21 +1122,21 @@
 /obj/effect/decal/herringbone
 	name = "herringbone flooring"
 	desc = "These stone bricks have been carefully arranged in a rather pleasing pattern."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "herringedge"
 	mouse_opacity = 0
 
 /obj/effect/decal/wood/herringbone
 	name = "herringbone flooring"
 	desc = "thin planks of wood carefully arranged in a rather pleasing pattern."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "herringbonewoodedge"
 	mouse_opacity = 0
 
 /obj/effect/decal/wood/herringbone2
 	name = "herringbone flooring"
 	desc = "Thin planks of wood carefully arranged in a rather pleasing pattern."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "herringbonewood2edge"
 	mouse_opacity = 0
 
@@ -1249,28 +1229,28 @@
 /obj/effect/decal/mossy
 	name = "mossy brick floor"
 	desc = "dirt and moss have crept between the gaps of this stone-brick flooring."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "mossyedge"
 	mouse_opacity = 0
 
 /obj/effect/decal/cobble/mossy
 	name = "mossy brick floor"
 	desc = "Dirt and moss have crept between the gaps of this stone-brick flooring. Rather fitting for an outdoor garden; not so much for a home."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "mossystone_edges"
 	mouse_opacity = 0
 
 /obj/effect/decal/edge
 	name = "stone edge"
 	desc = "A piece of stone used to border city roads."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "border"
 	mouse_opacity = 0
 
 /obj/effect/decal/edge_corner
 	name = "stone edge corner"
 	desc = "A piece of stone used to border city roads."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "border_corner"
 	mouse_opacity = 0
 
@@ -1295,7 +1275,7 @@
 /obj/effect/decal/cobbleedge
 	name = "old cobble path"
 	desc = "Erosion and time have worn this path to half-scattered rocks slowly sinking back into the earth."
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "cobblestone_edges"
 	mouse_opacity = 0
 
@@ -1413,15 +1393,15 @@
 	icon_state = "brown"
 
 /turf/open/floor/rogue/tile/harem
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "harem"
 
 /turf/open/floor/rogue/tile/harem1
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "harem1"
 
 /turf/open/floor/rogue/tile/harem2
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "harem2"
 
 /turf/open/floor/rogue/concrete

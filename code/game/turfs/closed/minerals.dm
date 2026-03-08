@@ -3,7 +3,7 @@
 /turf/closed/rock //wall piece
 	name = "rock"
 	desc = "Lichens and moss cling to the jagged contours of the rock face. It is slick with moisture and exudes the heavy odors of dirt, minerals, and petrichor."
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockyash"
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
 	opacity = 1
@@ -202,7 +202,7 @@
 //	layer = ABOVE_MOB_LAYER
 	name = "rock"
 	desc = "Lichens and moss cling to the jagged contours of the rock face. It is slick with moisture and exudes the heavy odors of dirt, minerals, and petrichor."
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "minrandbad"
 	smooth = SMOOTH_TRUE | SMOOTH_MORE
 	smooth_icon = 'icons/turf/walls/cwall.dmi'

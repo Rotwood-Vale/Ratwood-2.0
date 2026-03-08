@@ -32,7 +32,7 @@
 /obj/structure/fluff/traveltile
 	name = "travel"
 	icon_state = "travel"
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	density = FALSE
 	anchored = TRUE
 	layer = ABOVE_OPEN_TURF_LAYER

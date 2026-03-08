@@ -180,7 +180,7 @@
 /turf/closed/wall/tent
 	name = "tent"
 	desc = "Made from durable fabric stretched over wooden branches."
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "tent"
 	smooth = SMOOTH_FALSE
 	blade_dulling = DULLING_BASHCHOP
@@ -200,7 +200,7 @@
 /turf/closed/wall/wooddark
 	name = "dark wood wall"
 	desc = "Made from durable, somewhat darker wood." // i am not sure if the wood is really dark
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "corner"
 	smooth = SMOOTH_FALSE
 	blade_dulling = DULLING_BASHCHOP
@@ -249,7 +249,7 @@
 
 /turf/closed/wall/roofwall
 	name = "wooden wall"
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = ""
 	smooth = SMOOTH_FALSE
 	blade_dulling = DULLING_BASHCHOP
@@ -305,7 +305,7 @@
 /turf/closed/wall/decowood
 	name = "decorated wooden wall"
 	desc = "Meticulously designed by a professional carpenter."
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "decowood"
 	smooth = SMOOTH_FALSE
 	blade_dulling = DULLING_BASHCHOP
@@ -331,7 +331,7 @@
 /turf/closed/wall/decostone
 	name = "decorated stone wall"
 	desc = "The mason did an excellent job etching details into this wall."
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "decostone-b"
 	smooth = SMOOTH_MORE
 	blade_dulling = DULLING_BASH
@@ -352,7 +352,7 @@
 
 /obj/structure/thronething
 	name = "decorated stone wall" // what is thronething??
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	max_integrity = 0
 	opacity = 0
 	icon_state = "decostone-l"
@@ -406,7 +406,7 @@
 /turf/closed/wall/shroud //vines
 	name = "thick treetop"
 	desc = "All the birds flew away before I could see one!"
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "shroud1"
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = null
@@ -555,5 +555,5 @@
 
 /turf/closed/dungeon_void
 	name = "thick dungeon shroud"
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "shroud1"

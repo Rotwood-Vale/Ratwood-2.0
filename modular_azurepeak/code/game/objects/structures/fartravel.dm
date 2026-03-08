@@ -3,7 +3,7 @@
 /obj/structure/far_travel //Shamelessly jury-rigged from the way Fallout13 handles this.
 	name = "far travel"
 	desc = "Anywhere is better than here.\n(Drag your sprite onto this to exit the round!)"
-	icon = 'icons/turf/roguefloor.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "fartravel"
 	layer = BELOW_OBJ_LAYER
 	density = FALSE

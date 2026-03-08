@@ -3,6 +3,7 @@
 	//- you should use istype() if you want to find out whether a floor has a certain type
 	//- floor_tile is now a path, and not a tile obj
 	name = "floor"
+	desc = ""
 	icon = 'icons/turf/floors.dmi'
 	baseturfs = /turf/open/transparent/openspace
 
@@ -27,6 +28,25 @@
 	burn_power = 15
 
 	tiled_dirt = TRUE
+	canSmoothWith = null
+	smooth = SMOOTH_FALSE
+	var/smooth_icon = null
+	var/prettifyturf = FALSE
+	icon = 'icons/turf/floors.dmi'
+	baseturfs = list(/turf/open/transparent/openspace)
+	neighborlay = ""
+
+/turf/open/floor/rogue/break_tile()
+	return //unbreakable
+
+/turf/open/floor/rogue/burn_tile()
+	return //unburnable
+
+/turf/open/floor/rogue/Initialize(mapload)
+	if(smooth_icon)
+		icon = smooth_icon
+	. = ..()
+
 
 /turf/open/floor/Initialize(mapload)
 
