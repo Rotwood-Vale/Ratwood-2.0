@@ -503,7 +503,7 @@
 "Zz" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/wool,
+/obj/item/bedsheet/wool,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/tomb/indoors/rest)
 "ZJ" = (

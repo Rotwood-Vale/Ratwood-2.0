@@ -722,7 +722,7 @@
 /turf/open/water/ocean,
 /area/rogue/outdoors/beach/forest)
 "fJ" = (
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/structure/bed/inn/wooldouble,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
@@ -1457,7 +1457,7 @@
 /area/rogue/under/town/basement)
 "lO" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "lP" = (
@@ -2794,7 +2794,7 @@
 	dir = 8;
 	jobspawn_override = list("Bog Master","Bog Guard","Warden")
 	},
-/obj/item/bedsheet/rogue/wool,
+/obj/item/bedsheet/wool,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/woods)
 "wV" = (
@@ -3008,7 +3008,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "yT" = (
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /obj/structure/bed/inn/wool,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
@@ -3669,7 +3669,7 @@
 /area/rogue/indoors)
 "DL" = (
 /obj/structure/bed/inn/pileofshit,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/town/basement)
 "DP" = (

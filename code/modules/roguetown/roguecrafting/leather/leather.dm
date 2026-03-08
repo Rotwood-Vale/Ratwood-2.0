@@ -17,7 +17,7 @@
 
 /datum/crafting_recipe/roguetown/leather/peltbedsheet
 	name = "bedsheet, pelt"
-	result = /obj/item/bedsheet/rogue/pelt
+	result = /obj/item/bedsheet/pelt
 	reqs = list(/obj/item/natural/fibers = 1,
 				/obj/item/natural/fur = 1)
 	tools = list(/obj/item/needle)
@@ -25,7 +25,7 @@
 
 /datum/crafting_recipe/roguetown/leather/doublepeltbedsheet
 	name = "bedsheet, double pelt"
-	result = /obj/item/bedsheet/rogue/double_pelt
+	result = /obj/item/bedsheet/double_pelt
 	reqs = list(/obj/item/natural/fibers = 1,
 				/obj/item/natural/fur = 2)
 	tools = list(/obj/item/needle)

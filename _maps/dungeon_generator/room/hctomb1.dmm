@@ -837,7 +837,7 @@
 "Wz" = (
 /obj/structure/bed/shit,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "WD" = (
@@ -846,7 +846,7 @@
 /area/rogue/under/tomb/cave)
 "WO" = (
 /obj/structure/bed/inn/wooldouble,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "WP" = (

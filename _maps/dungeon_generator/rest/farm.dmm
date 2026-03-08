@@ -249,7 +249,7 @@
 /area/rogue/under/tomb/cave/wet)
 "KX" = (
 /obj/structure/bed/inn/hay,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors)
 "La" = (

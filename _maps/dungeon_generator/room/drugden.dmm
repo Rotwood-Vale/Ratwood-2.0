@@ -20,7 +20,7 @@
 /area/rogue/under/tomb/indoors)
 "fo" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "fY" = (

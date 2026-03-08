@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aJ" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "aZ" = (

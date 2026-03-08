@@ -398,7 +398,7 @@
 "mM" = (
 /obj/structure/bed/inn/hay,
 /obj/structure/bed/inn/hay,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /obj/effect/spawner/lootdrop/general_loot_low,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)
@@ -548,7 +548,7 @@
 /area/rogue/under/tomb/indoors/church)
 "ty" = (
 /obj/structure/bed/inn/hay,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /obj/effect/spawner/lootdrop/general_loot_low,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)
@@ -926,8 +926,8 @@
 /area/rogue/under/tomb/indoors/church)
 "KC" = (
 /obj/structure/bed/inn/hay,
-/obj/item/bedsheet/rogue/cloth,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
+/obj/item/bedsheet/cloth,
 /mob/living/carbon/human/species/skeleton/npc/hardspread,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)
@@ -1133,7 +1133,7 @@
 /area/rogue/under/tomb)
 "SL" = (
 /obj/structure/bed/inn/hay,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/tomb/indoors/church)
 "Tm" = (

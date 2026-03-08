@@ -1506,7 +1506,7 @@
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "uw" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/undeadmanor)
 "ux" = (
@@ -2160,7 +2160,7 @@
 	},
 /area/rogue/under/cave/undeadmanor)
 "BR" = (
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/structure/bed/inn/double{
 	dir = 4
 	},
@@ -3729,7 +3729,7 @@
 /obj/structure/bed/inn/double{
 	dir = 4
 	},
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/undeadmanor)
 "WT" = (

@@ -333,7 +333,7 @@
 /area/rogue/indoors/shelter)
 "bm" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/wood,
 /area/rogue/under/town/basement)
@@ -546,12 +546,12 @@
 /area/rogue/indoors/shelter)
 "cJ" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/orcdungeon)
 "cN" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/cave)
 "cO" = (
@@ -864,7 +864,7 @@
 /area/rogue/under/cave/dukecourt)
 "eX" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/shelter)
 "eZ" = (
@@ -2095,7 +2095,7 @@
 /area/rogue/outdoors/beach)
 "nR" = (
 /obj/structure/bed/inn/wooldouble,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors/shelter)
 "nS" = (
@@ -2532,7 +2532,7 @@
 /area/rogue/outdoors/beach/forest)
 "qI" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter)
 "qJ" = (
@@ -2675,7 +2675,7 @@
 /area/rogue/outdoors/beach)
 "ry" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "rz" = (
@@ -3210,7 +3210,7 @@
 /area/rogue/indoors/shelter)
 "vr" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/rogue/woodturned/nosmooth,
 /area/rogue/indoors/shelter)
 "vt" = (
@@ -3908,7 +3908,7 @@
 /area/rogue/indoors/shelter)
 "zU" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/shelter)
 "zV" = (
@@ -5922,7 +5922,7 @@
 /area/rogue/outdoors/beach)
 "MV" = (
 /obj/structure/bed/inn/wooldouble,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/structure/fluff/walldeco/painting{
 	pixel_y = 32
 	},
@@ -7329,7 +7329,7 @@
 /area/rogue/under/cave/orcdungeon)
 "WL" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/indoors/shelter)
 "WM" = (
@@ -7383,7 +7383,7 @@
 /area/rogue/under/cave/dukecourt)
 "Xb" = (
 /obj/structure/bed/inn/hay,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter)
 "Xc" = (
@@ -7746,7 +7746,7 @@
 	},
 /area/rogue/outdoors/beach)
 "ZE" = (
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/structure/bed/inn/wooldouble,
 /turf/open/floor/carpet/red,
 /area/rogue/under/cave/dukecourt)

@@ -86,14 +86,14 @@
 
 /datum/crafting_recipe/roguetown/sewing/clothbedsheet
 	name = "bedsheet, cloth"
-	result = list(/obj/item/bedsheet/rogue/cloth)
+	result = list(/obj/item/bedsheet/cloth)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/fabricbedsheet // cloth bedsheet's fancier looking cousin
 	name = "bedsheet, fabric"
-	result = list(/obj/item/bedsheet/rogue/fabric)
+	result = list(/obj/item/bedsheet/fabric)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1,
 				/obj/item/natural/silk = 1)
@@ -101,7 +101,7 @@
 
 /datum/crafting_recipe/roguetown/sewing/doublefabricbedsheet
 	name = "bedsheet, double fabric"
-	result = list(/obj/item/bedsheet/rogue/fabric_double)
+	result = list(/obj/item/bedsheet/fabric_double)
 	reqs = list(/obj/item/natural/cloth = 4,
 				/obj/item/natural/fibers = 2,
 				/obj/item/natural/silk = 2)

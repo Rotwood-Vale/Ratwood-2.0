@@ -123,7 +123,7 @@
 /area/rogue/under/tomb)
 "bL" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/structure/fluff/walldeco/painting/queen{
 	pixel_x = 31;
 	pixel_y = 0
@@ -1199,7 +1199,7 @@
 /area/rogue/under/tomb/indoors)
 "nU" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric{
+/obj/item/bedsheet/fabric{
 	pixel_x = 0;
 	pixel_y = 7
 	},
@@ -1362,7 +1362,7 @@
 /area/rogue/under/tomb/indoors)
 "qg" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/machinery/light/rogue/wallfire/candle/blue,
 /turf/open/floor/rogue/tile/masonic/single,
 /area/rogue/under/tomb/indoors/magic)
@@ -1709,7 +1709,7 @@
 /area/rogue/under/tomb/indoors)
 "vx" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/carpet/red,
 /area/rogue/under/tomb/indoors)
 "vA" = (
@@ -2206,7 +2206,7 @@
 /area/rogue/under/tomb/indoors)
 "AK" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /obj/item/clothing/head/roguetown/helmet/coppercap,
 /turf/open/floor/rogue/twig,
 /area/rogue/under/tomb/indoors)
@@ -2427,7 +2427,7 @@
 /area/rogue/under/tomb)
 "CX" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /turf/open/floor/rogue/tile/masonic/spiral,
 /area/rogue/under/tomb/indoors)
 "CY" = (

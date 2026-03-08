@@ -335,7 +335,7 @@
 "eL" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/l,
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /obj/item/natural/cloth,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
@@ -1871,7 +1871,7 @@
 /area/rogue/under/tomb/indoors)
 "Bi" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors)
 "Bq" = (
@@ -2004,7 +2004,7 @@
 /area/rogue/under/tomb/indoors)
 "DA" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors/royal)
 "DB" = (
@@ -2431,7 +2431,7 @@
 /area/rogue/under/tomb/indoors)
 "IN" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /obj/item/natural/cloth,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
@@ -2933,7 +2933,7 @@
 "RC" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/r,
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "RE" = (
@@ -3088,7 +3088,7 @@
 /area/rogue/under/tomb/indoors)
 "TS" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "TV" = (

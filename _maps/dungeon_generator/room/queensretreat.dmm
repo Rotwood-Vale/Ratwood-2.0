@@ -605,7 +605,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "zj" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/carpet/red,
 /area/rogue/under/tomb/indoors/royal)
 "zx" = (

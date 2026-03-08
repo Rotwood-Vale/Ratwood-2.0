@@ -9,7 +9,7 @@
 /area/rogue/under/tomb/indoors)
 "aN" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors/magic)
 "aR" = (
@@ -338,7 +338,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "mT" = (
-/obj/item/bedsheet/rogue/cloth{
+/obj/item/bedsheet/cloth{
 	pixel_x = 9;
 	pixel_y = -4
 	},
@@ -857,7 +857,7 @@
 "GP" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors)
 "GY" = (
@@ -990,7 +990,7 @@
 /area/rogue/under/tomb/indoors)
 "Nn" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/rogue/carpet,
@@ -1015,7 +1015,7 @@
 /area/rogue/under/tomb/indoors)
 "NJ" = (
 /obj/structure/bed/inn/hay,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "NM" = (
@@ -1257,7 +1257,7 @@
 /area/rogue/under/tomb/indoors)
 "XV" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors)
 "Yl" = (
@@ -1272,7 +1272,7 @@
 /area/rogue/under/tomb/indoors)
 "Yt" = (
 /obj/structure/bed/inn/hay,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors/magic)
 "Yv" = (

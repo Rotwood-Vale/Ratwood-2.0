@@ -464,7 +464,7 @@
 /obj/structure/bed/inn/double{
 	dir = 1
 	},
-/obj/item/bedsheet/rogue/fabric_double{
+/obj/item/bedsheet/fabric_double{
 	dir = 1
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -1296,7 +1296,7 @@
 /area/rogue/outdoors/woods/vampire_lair)
 "wy" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/vampire_manor)
 "wE" = (
@@ -2367,7 +2367,7 @@
 /obj/structure/bed/inn/double{
 	dir = 1
 	},
-/obj/item/bedsheet/rogue/fabric_double{
+/obj/item/bedsheet/fabric_double{
 	dir = 1
 	},
 /turf/open/floor/carpet/purple,
@@ -2460,7 +2460,7 @@
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 1
 	},
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/vampire_manor)
 "NM" = (

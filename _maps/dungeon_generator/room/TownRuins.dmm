@@ -978,7 +978,7 @@
 /area/rogue/under/tomb/indoors)
 "tb" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/item/reagent_containers/food/snacks/rogue/meat/mince/fish,
 /obj/item/reagent_containers/food/snacks/rogue/meat/mince/fish{
 	pixel_y = 4;

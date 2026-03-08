@@ -1037,7 +1037,7 @@
 /area/rogue/under/tomb/indoors)
 "Dx" = (
 /obj/structure/bed/inn/wooldouble,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Dz" = (
@@ -1153,12 +1153,12 @@
 /area/rogue/under/tomb/lake)
 "Gw" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "GE" = (
 /obj/structure/bed/inn/hay,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb/indoors)
 "Hb" = (
@@ -1259,7 +1259,7 @@
 /area/rogue/under/tomb/indoors)
 "Ke" = (
 /obj/structure/bed/inn/hay,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Kl" = (

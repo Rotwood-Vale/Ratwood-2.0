@@ -808,7 +808,7 @@
 /area/rogue/outdoors/beach)
 "aAn" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/town/basement/keep)
 "aAs" = (
@@ -1002,7 +1002,7 @@
 /area/rogue/indoors)
 "aGU" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /obj/effect/landmark/start/orthodoxist,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/church/basement)
@@ -1506,7 +1506,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/garrison)
 "aZk" = (
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /obj/structure/bed/inn/double,
 /turf/open/floor/carpet/red,
@@ -1997,7 +1997,7 @@
 /area/rogue/indoors/town/bath)
 "boi" = (
 /obj/structure/bed,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "bou" = (
@@ -2877,7 +2877,7 @@
 "bTb" = (
 /obj/structure/bed,
 /obj/effect/landmark/start/farmer,
-/obj/item/bedsheet/rogue/wool,
+/obj/item/bedsheet/wool,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town)
 "bTn" = (
@@ -3062,7 +3062,7 @@
 	pixel_x = -32
 	},
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "cal" = (
@@ -3140,7 +3140,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/mountains)
 "cej" = (
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /obj/effect/landmark/start/wapprentice{
 	dir = 1
 	},
@@ -4680,7 +4680,7 @@
 /obj/structure/bed/inn,
 /obj/machinery/light/rogue/wallfire/candle/l,
 /obj/effect/landmark/start/martyr,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /turf/open/floor/rogue/wood/herringbone,
 /area/rogue/indoors/town/church/chapel)
 "deV" = (
@@ -4732,7 +4732,7 @@
 /area/rogue/indoors/town/manor)
 "dgf" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
@@ -5055,7 +5055,7 @@
 /area/rogue/indoors/town/manor)
 "dqH" = (
 /obj/structure/bed/inn/wooldouble,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "dqL" = (
@@ -6190,7 +6190,7 @@
 /area/rogue/indoors/town/dwarfin)
 "ehi" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
@@ -7602,7 +7602,7 @@
 /area/rogue/indoors/town/tavern)
 "fja" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "fjm" = (
@@ -7877,7 +7877,7 @@
 "ftD" = (
 /obj/machinery/light/rogue/wallfire/candle/l,
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/tavern)
 "ftG" = (
@@ -8398,7 +8398,7 @@
 /area/rogue/indoors)
 "fNP" = (
 /obj/structure/bed,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /obj/machinery/light/rogue/wallfire/candle/l,
 /obj/effect/landmark/start/fisher{
 	dir = 4
@@ -8659,7 +8659,7 @@
 /area/rogue/indoors/town/church/chapel)
 "gap" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town)
@@ -9281,7 +9281,7 @@
 "gyF" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
 /obj/structure/bed,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
@@ -9568,7 +9568,7 @@
 /area/rogue/indoors/town/dwarfin)
 "gKS" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town)
 "gLg" = (
@@ -9781,7 +9781,7 @@
 /area/rogue/indoors/town)
 "gSj" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/effect/landmark/start/archivist,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
@@ -10368,7 +10368,7 @@
 /obj/effect/landmark/start/farmer{
 	dir = 1
 	},
-/obj/item/bedsheet/rogue/wool,
+/obj/item/bedsheet/wool,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town)
 "hoU" = (
@@ -10740,7 +10740,7 @@
 /area/rogue/indoors/town/bath)
 "hED" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/tavern)
 "hEP" = (
@@ -11413,7 +11413,7 @@
 /area/rogue/indoors/town/manor)
 "ife" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /obj/effect/landmark/start/apothecary,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/physician)
@@ -11613,7 +11613,7 @@
 /area/rogue/outdoors/rtfield)
 "ioB" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/effect/landmark/start/merchant{
 	dir = 8
 	},
@@ -11668,7 +11668,7 @@
 /area/rogue/indoors/town/garrison)
 "iqs" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /obj/effect/landmark/start/servant,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
@@ -11987,7 +11987,7 @@
 /area/rogue/under/town/basement/keep)
 "iCl" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/effect/landmark/start/marshal{
 	dir = 8
 	},
@@ -12128,7 +12128,7 @@
 /area/rogue/indoors/town/bath)
 "iHH" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern)
@@ -13196,7 +13196,7 @@
 /area/rogue/indoors/town)
 "jsn" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /obj/effect/landmark/start/jester{
 	dir = 8
 	},
@@ -13273,7 +13273,7 @@
 /area/rogue/outdoors/town)
 "jxA" = (
 /obj/structure/bed,
-/obj/item/bedsheet/rogue/wool,
+/obj/item/bedsheet/wool,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town)
 "jxU" = (
@@ -13980,7 +13980,7 @@
 	pixel_y = 32
 	},
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
@@ -14115,7 +14115,7 @@
 /area/rogue/indoors/town/magician)
 "jZq" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "jZs" = (
@@ -14189,7 +14189,7 @@
 	dir = 8
 	},
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/church/basement)
 "kcy" = (
@@ -14605,7 +14605,7 @@
 /area/rogue/indoors/town/bath)
 "kuB" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/structure/fluff/walldeco/rpainting/crown{
 	pixel_y = 32
 	},
@@ -14813,7 +14813,7 @@
 /area/rogue/outdoors/mountains)
 "kzX" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/tavern)
@@ -16927,7 +16927,7 @@
 /area/rogue/indoors/town/manor)
 "lUs" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
@@ -17362,7 +17362,7 @@
 /area/rogue/indoors/town)
 "mkN" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/effect/landmark/start/guard_captain,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/garrison)
@@ -18108,7 +18108,7 @@
 /area/rogue/outdoors/town/roofs)
 "mIE" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/effect/landmark/start/prince{
 	dir = 8
 	},
@@ -18996,7 +18996,7 @@
 /area/rogue/indoors/town)
 "nqr" = (
 /obj/structure/bed,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /obj/effect/landmark/start/dungeoneer{
 	dir = 8
 	},
@@ -19860,7 +19860,7 @@
 /area/rogue/indoors/town/garrison)
 "nSp" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/tavern)
@@ -19915,7 +19915,7 @@
 /area/rogue/indoors/town/garrison)
 "nTP" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/effect/landmark/start/hand{
 	dir = 1
 	},
@@ -20522,7 +20522,7 @@
 /area/rogue/indoors/town)
 "opL" = (
 /obj/structure/bed,
-/obj/item/bedsheet/rogue/wool,
+/obj/item/bedsheet/wool,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "opV" = (
@@ -20747,7 +20747,7 @@
 /area/rogue/outdoors/town)
 "owo" = (
 /obj/structure/bed,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /obj/machinery/light/rogue/wallfire/candle/l,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
@@ -21071,7 +21071,7 @@
 /area/rogue/indoors/town/church/basement)
 "oIv" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /obj/effect/landmark/start/councillor,
 /obj/structure/fluff/walldeco/rpainting/crown{
 	pixel_y = 32
@@ -21395,7 +21395,7 @@
 /area/rogue/indoors/town/garrison)
 "oVd" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/tavern)
 "oVp" = (
@@ -21692,7 +21692,7 @@
 "pgz" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /obj/effect/landmark/start/knavewench,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/tavern)
@@ -21919,7 +21919,7 @@
 /area/rogue/outdoors/town)
 "pnY" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /obj/effect/landmark/start/mercenary,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors)
@@ -22461,7 +22461,7 @@
 /area/rogue/outdoors/mountains)
 "pIJ" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /obj/effect/landmark/start/servant{
 	dir = 8
 	},
@@ -22986,7 +22986,7 @@
 "qai" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/tavern)
 "qal" = (
@@ -23398,7 +23398,7 @@
 /area/rogue/indoors/town/manor)
 "qwu" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/machinery/light/rogue/wallfire/candle/blue/r,
 /obj/effect/landmark/start/nightman,
 /turf/open/floor/carpet/royalblack,
@@ -23732,7 +23732,7 @@
 /area/rogue/under/town/sewer)
 "qHr" = (
 /obj/structure/bed/inn/wooldouble,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors)
 "qHw" = (
@@ -24146,7 +24146,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement/keep)
 "qVZ" = (
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/structure/bed/inn/wooldouble,
 /obj/effect/landmark/start/physician{
 	dir = 8
@@ -25354,7 +25354,7 @@
 /area/rogue/indoors/town/church/basement)
 "rMM" = (
 /obj/structure/bed/inn/wooldouble,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
@@ -26342,7 +26342,7 @@
 /area/rogue/indoors/town)
 "svn" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/machinery/light/rogue/wallfire/candle,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
@@ -26997,7 +26997,7 @@
 "sTR" = (
 /obj/structure/bed/inn/double,
 /obj/structure/fluff/wallclock/r,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "sUf" = (
@@ -27152,7 +27152,7 @@
 /area/rogue/indoors/town/manor)
 "taA" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/tavern)
@@ -27203,14 +27203,14 @@
 /area/rogue/indoors/shelter/mountains)
 "tcG" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
 /area/rogue/indoors/town/manor)
 "tcL" = (
 /obj/structure/bed,
-/obj/item/bedsheet/rogue/pelt,
+/obj/item/bedsheet/pelt,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /obj/effect/landmark/start/fisher{
 	dir = 8
@@ -27760,7 +27760,7 @@
 /area/rogue/indoors/town/bath)
 "tvc" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
@@ -28234,7 +28234,7 @@
 /area/rogue/indoors/town)
 "tJX" = (
 /obj/structure/bed/inn,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /obj/effect/landmark/start/councillor,
 /turf/open/floor/carpet/inn,
 /area/rogue/under/town/basement/keep)
@@ -28996,7 +28996,7 @@
 /area/rogue/outdoors/town)
 "umZ" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /obj/effect/landmark/start/nightmaiden{
 	dir = 1
 	},
@@ -30660,7 +30660,7 @@
 /area/rogue/indoors/town/tavern)
 "vCX" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "vDq" = (
@@ -30711,7 +30711,7 @@
 /obj/effect/landmark/start/wapprentice{
 	dir = 1
 	},
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /obj/machinery/light/rogue/wallfire/candle/blue/r,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
@@ -30908,7 +30908,7 @@
 /area/rogue/indoors/town/manor)
 "vQw" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/effect/landmark/start/sergeant,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/garrison)
@@ -31023,7 +31023,7 @@
 /area/rogue/indoors/town/tavern)
 "vWO" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town)
 "vWP" = (
@@ -31125,7 +31125,7 @@
 /area/rogue/outdoors/mountains)
 "vZe" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/fabric,
+/obj/item/bedsheet/fabric,
 /obj/effect/landmark/start/magician{
 	dir = 8
 	},
@@ -31554,7 +31554,7 @@
 /area/rogue/outdoors/rtfield)
 "wob" = (
 /obj/structure/bed,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
@@ -31912,7 +31912,7 @@
 /area/rogue/indoors)
 "wzx" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/double_pelt,
+/obj/item/bedsheet/double_pelt,
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/town/basement/keep)
@@ -32929,7 +32929,7 @@
 /area/rogue/outdoors/rtfield)
 "xfc" = (
 /obj/structure/bed/inn/wool,
-/obj/item/bedsheet/rogue/cloth,
+/obj/item/bedsheet/cloth,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "xfj" = (
@@ -33552,7 +33552,7 @@
 "xzi" = (
 /obj/machinery/light/rogue/wallfire/candle,
 /obj/structure/bed,
-/obj/item/bedsheet/rogue/wool,
+/obj/item/bedsheet/wool,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town)
 "xzu" = (
@@ -34167,7 +34167,7 @@
 /area/rogue/under/town/basement)
 "xRc" = (
 /obj/structure/bed/inn/double,
-/obj/item/bedsheet/rogue/fabric_double,
+/obj/item/bedsheet/fabric_double,
 /obj/effect/landmark/start/prince{
 	dir = 1
 	},
