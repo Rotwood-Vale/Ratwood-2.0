@@ -21,7 +21,7 @@
 /turf/open/floor/rogue/blocks/paving,
 /area/rogue/under/tomb/sewer)
 "g" = (
-/turf/closed/wall/mineral/rogue/decostone/fluffstone,
+/turf/closed/wall/decostone/fluffstone,
 /area/rogue/under/tomb/cave)
 "m" = (
 /obj/item/rogueweapon/huntingknife/copper,
@@ -33,7 +33,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/cave)
 "r" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb/sewer)
 "x" = (
 /obj/item/rogueweapon/shield/tower,
@@ -81,7 +81,7 @@
 /turf/open/floor/rogue/blocks/paving,
 /area/rogue/under/tomb/sewer)
 "V" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "W" = (
 /turf/open/floor/rogue/blocks/paving/vert,

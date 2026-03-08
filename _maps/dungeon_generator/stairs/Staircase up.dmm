@@ -37,7 +37,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "X" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 
 (1,1,1) = {"

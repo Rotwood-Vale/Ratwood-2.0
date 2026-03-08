@@ -3,7 +3,6 @@
 /turf/closed/wall
 	name = ""
 	desc = ""
-	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
 	explosion_block = 1
 
@@ -14,12 +13,17 @@
 	var/sheet_type = null
 	var/sheet_amount = 2
 
-	canSmoothWith = list(
-	/turf/closed/wall)
-	smooth = SMOOTH_TRUE
-
 	var/list/dent_decals
 	var/obj/effect/track/thievescant/thiefmessage
+
+	canSmoothWith = null
+	desc = ""
+	smooth = SMOOTH_FALSE
+	var/smooth_icon = null
+	smooth_diag = FALSE
+	sheet_type = null
+	wallclimb = TRUE
+	icon = 'icons/turf/roguewall.dmi'
 
 /turf/closed/wall/attack_tk()
 	return

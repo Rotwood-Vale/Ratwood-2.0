@@ -11,7 +11,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "n" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "v" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
@@ -26,7 +26,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "S" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 
 (1,1,1) = {"

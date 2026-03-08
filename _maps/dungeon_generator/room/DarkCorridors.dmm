@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aB" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/cave/wet)
 "aL" = (
 /obj/effect/decal/remains/human,
@@ -138,7 +138,7 @@
 /area/rogue/under/tomb)
 "nK" = (
 /obj/structure/fluff/walldeco/stone,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb)
 "of" = (
 /obj/structure/trap/fire,
@@ -157,7 +157,7 @@
 /area/rogue/under/tomb/cave/wet)
 "pM" = (
 /obj/structure/fluff/walldeco/chains,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/cave/wet)
 "pZ" = (
 /obj/effect/spawner/lootdrop/potion_stats,
@@ -165,7 +165,7 @@
 /area/rogue/under/tomb)
 "qe" = (
 /obj/structure/fluff/walldeco/chains,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb)
 "qi" = (
 /obj/item/clothing/ring/quartz,
@@ -178,7 +178,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
 "qz" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb)
 "qE" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider,
@@ -325,7 +325,7 @@
 /area/rogue/under/tomb/indoors/church)
 "EY" = (
 /obj/structure/flora/roguegrass,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "Fq" = (
 /obj/structure/flora/roguegrass,
@@ -354,7 +354,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/cave/wet)
 "IE" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb)
 "IK" = (
 /obj/effect/decal/remains/human,
@@ -365,7 +365,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "Jm" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "Kw" = (
 /obj/structure/spider/stickyweb,
@@ -423,13 +423,13 @@
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/under/tomb/indoors/church)
 "Op" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "OR" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb/wilds)
 "Pv" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors/church)
 "PR" = (
 /obj/structure/fluff/statue/knight/r,
@@ -518,7 +518,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
 "WB" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "WI" = (
 /obj/machinery/light/rogue/firebowl/standing/blue,

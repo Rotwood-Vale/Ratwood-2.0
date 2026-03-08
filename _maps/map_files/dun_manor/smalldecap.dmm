@@ -100,11 +100,11 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "bX" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "cf" = (
 /obj/structure/stone_tile/block/cracked,
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "ch" = (
 /obj/machinery/light/rogue/campfire,
@@ -236,7 +236,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/scarymaze)
 "dm" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner";
 	dir = 1
 	},
@@ -274,7 +274,7 @@
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "dF" = (
 /obj/structure/fluff/walldeco/rpainting/crown,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/cave/undeadmanor)
 "dH" = (
 /obj/structure/table/wood,
@@ -291,7 +291,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "dM" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/cave/undeadmanor)
 "dO" = (
 /obj/structure/table/wood{
@@ -442,7 +442,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "fk" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner";
 	dir = 4
 	},
@@ -485,7 +485,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "gb" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/cave/dragonden)
 "ge" = (
 /turf/open/floor/rogue/churchmarble,
@@ -623,7 +623,7 @@
 	},
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "hW" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/outdoors/mountains)
 "hZ" = (
 /obj/item/natural/stone{
@@ -661,7 +661,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/under/cave/undeadmanor)
 "iq" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/spidercave)
 "ir" = (
 /obj/structure/chair/wood/rogue{
@@ -807,7 +807,7 @@
 /obj/structure/bars/pipe{
 	dir = 9
 	},
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "kW" = (
 /obj/effect/decal/cleanable/blood/gibs,
@@ -863,7 +863,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "lv" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/mountains/decap)
 "lA" = (
 /obj/structure/bed/rogue/shit{
@@ -928,7 +928,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "lY" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cave/dragonden)
 "mb" = (
 /obj/effect/decal/cobbleedge{
@@ -938,7 +938,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "mi" = (
-/turf/closed/wall/mineral/rogue/stone/window/moss,
+/turf/closed/wall/stone/window/moss,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "mj" = (
 /turf/open/floor/rogue/volcanic,
@@ -1140,7 +1140,7 @@
 /turf/open/lava,
 /area/rogue/outdoors/mountains/decap)
 "pf" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/outdoors/spidercave)
 "ph" = (
 /obj/structure/table/wood{
@@ -1186,7 +1186,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "pX" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "qa" = (
 /obj/structure/spider/stickyweb,
@@ -1249,7 +1249,7 @@
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "qK" = (
 /obj/structure/fluff/walldeco/rpainting/forest,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/cave/undeadmanor)
 "qM" = (
 /turf/open/floor/rogue/blocks/platform,
@@ -1294,7 +1294,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/goblinfort)
 "rp" = (
-/turf/closed/wall/mineral/rogue/stone/red_moss,
+/turf/closed/wall/stone/red_moss,
 /area/rogue/outdoors/mountains/decap)
 "rq" = (
 /obj/structure/table/wood,
@@ -1302,7 +1302,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/undeadmanor)
 "rt" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "rJ" = (
 /obj/item/grown/log/tree/stake,
@@ -1318,7 +1318,7 @@
 /obj/structure/bars/pipe{
 	dir = 1
 	},
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "rU" = (
 /obj/item/natural/stone{
@@ -1466,7 +1466,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "tX" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "ua" = (
 /obj/structure/bars/pipe,
@@ -1696,7 +1696,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "wq" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "ws" = (
 /obj/effect/decal/remains/saiga,
@@ -1767,7 +1767,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "xt" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/outdoors/mountains/decap)
 "xz" = (
 /obj/structure/rack/rogue,
@@ -1814,7 +1814,7 @@
 	},
 /area/rogue/under/cave/undeadmanor)
 "xL" = (
-/turf/closed/wall/mineral/rogue/decostone/long{
+/turf/closed/wall/decostone/long{
 	dir = 1;
 	icon_state = "decostone-l"
 	},
@@ -1831,7 +1831,7 @@
 /turf/open/water/cleanshallow,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "xS" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/cave/goblinfort)
 "xV" = (
 /obj/structure/bars/tough,
@@ -1878,7 +1878,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/undeadmanor)
 "yp" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/outdoors/mountains/decap)
 "yr" = (
 /obj/machinery/light/rogue/firebowl,
@@ -1897,7 +1897,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "yB" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/cave/scarymaze)
 "yC" = (
 /obj/structure/bars/pipe{
@@ -2009,7 +2009,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/undeadmanor)
 "zX" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/under/cave)
 "zY" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
@@ -2070,7 +2070,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/under/cave/goblinfort)
 "AJ" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "AX" = (
 /obj/machinery/light/rogue/torchholder/c,
@@ -2094,7 +2094,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Be" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	dir = 4;
 	icon_state = "iron_corner"
 	},
@@ -2185,7 +2185,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/undeadmanor)
 "BZ" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner"
 	},
 /area/rogue/outdoors/mountains/decap/stepbelow)
@@ -2273,7 +2273,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Db" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_line"
 	},
 /area/rogue/outdoors/mountains/decap/stepbelow)
@@ -2282,7 +2282,7 @@
 	endTurfX = 128;
 	endTurfY = 128
 	},
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/mountains/decap)
 "Dg" = (
 /obj/effect/decal/cleanable/blood/gibs,
@@ -2607,7 +2607,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Hz" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/indoors/shelter/mountains/decap)
 "HF" = (
 /obj/structure/closet/crate/chest/old_crate,
@@ -2649,7 +2649,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/undeadmanor)
 "HU" = (
-/turf/closed/wall/mineral/rogue/stone/window,
+/turf/closed/wall/stone/window,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "HW" = (
 /turf/open/floor/rogue/volcanic,
@@ -2857,7 +2857,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Kp" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Kq" = (
 /obj/machinery/light/rogue/wallfire/candle,
@@ -2916,13 +2916,13 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/spidercave)
 "Ln" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_line";
 	dir = 4
 	},
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Lo" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_line"
 	},
 /area/rogue/outdoors/mountains/decap)
@@ -3044,7 +3044,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Nt" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner";
 	dir = 4
 	},
@@ -3098,7 +3098,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/undeadmanor)
 "Oj" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cave)
 "Or" = (
 /obj/structure/closet/crate/chest/old_crate,
@@ -3208,7 +3208,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "PJ" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_line";
 	dir = 4
 	},
@@ -3227,7 +3227,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/under/cave/undeadmanor)
 "PQ" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/outdoors/mountains/decap)
 "PR" = (
 /obj/structure/closet/crate/chest/lootbox,
@@ -3314,7 +3314,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Ra" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner";
 	dir = 1
 	},
@@ -3379,7 +3379,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblinfort)
 "RQ" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "RT" = (
 /obj/item/reagent_containers/glass/mortar{
@@ -3402,7 +3402,7 @@
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Sr" = (
 /obj/structure/fluff/walldeco/rpainting,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/cave/undeadmanor)
 "Ss" = (
 /obj/structure/fluff/walldeco/wallshield{
@@ -3480,7 +3480,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/undeadmanor)
 "Tz" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner";
 	dir = 8
 	},
@@ -3644,7 +3644,7 @@
 /obj/structure/bars/pipe{
 	dir = 8
 	},
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "VJ" = (
 /turf/open/floor/rogue/metal,
@@ -3687,7 +3687,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Wg" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	dir = 8;
 	icon_state = "iron_corner"
 	},
@@ -3710,7 +3710,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/mountains/decap)
 "Wu" = (
-/turf/closed/wall/mineral/rogue/stone/red_moss,
+/turf/closed/wall/stone/red_moss,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "Wv" = (
 /obj/effect/decal/remains/wolf,
@@ -3749,7 +3749,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "WW" = (
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "WX" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -3943,7 +3943,7 @@
 /area/rogue/outdoors/mountains)
 "ZC" = (
 /obj/structure/fluff/walldeco/painting/queen,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/cave/undeadmanor)
 "ZH" = (
 /obj/structure/fluff/railing/border{
@@ -3959,7 +3959,7 @@
 	dir = 1;
 	pixel_x = 4
 	},
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "ZQ" = (
 /obj/structure/mineral_door/wood/deadbolt{

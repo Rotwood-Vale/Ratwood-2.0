@@ -7,7 +7,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/tomb/sewer)
 "am" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/tomb/sewer)
 "ar" = (
 /obj/structure/ladder,
@@ -42,7 +42,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/sewer)
 "aW" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/sewer)
 "aZ" = (
 /obj/structure/fluff/walldeco/chains,

@@ -145,7 +145,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "fk" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/under/tomb/indoors/magic)
 "ga" = (
 /turf/open/floor/rogue/naturalstone,
@@ -224,7 +224,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "ie" = (
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/turf/closed/wall/wooddark/horizontal,
 /area/rogue/under/tomb/indoors/magic)
 "ih" = (
 /obj/structure/fireaxecabinet{
@@ -331,7 +331,7 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors)
 "mM" = (
-/turf/closed/wall/mineral/rogue/wooddark/window,
+/turf/closed/wall/wooddark/window,
 /area/rogue/under/tomb/indoors)
 "mO" = (
 /obj/structure/flora/rogueshroom/happy/random,
@@ -376,7 +376,7 @@
 /turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/under/tomb/indoors)
 "nB" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors/magic)
 "nM" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/r,
@@ -463,7 +463,7 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors/magic)
 "pH" = (
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/turf/closed/wall/wooddark/horizontal,
 /area/rogue/under/tomb/indoors)
 "qc" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -637,7 +637,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/indoors)
 "wv" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "wD" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/mole,
@@ -702,7 +702,7 @@
 /turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/under/tomb/indoors)
 "AK" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/under/tomb/indoors)
 "Bn" = (
 /obj/structure/stairs{
@@ -716,7 +716,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave)
 "BJ" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors/magic)
 "BO" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
@@ -1051,7 +1051,7 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors/magic)
 "Qd" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "Qt" = (
 /obj/structure/bonepile,
@@ -1283,10 +1283,10 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors)
 "YH" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors)
 "YO" = (
-/turf/closed/mineral,
+/turf/closed/rock,
 /area/rogue/under/tomb/cave)
 "YQ" = (
 /obj/structure/table/wood/crafted,

@@ -41,7 +41,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "o" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "r" = (
 /obj/machinery/light/rogue/torchholder/r,
@@ -58,7 +58,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "y" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "z" = (
 /obj/structure/closet/crate/chest,

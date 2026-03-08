@@ -26,7 +26,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "ak" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "al" = (
 /mob/living/carbon/human/species/skeleton/npc/hardspread,
@@ -45,7 +45,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "aO" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "aR" = (
 /obj/structure/table/wood,

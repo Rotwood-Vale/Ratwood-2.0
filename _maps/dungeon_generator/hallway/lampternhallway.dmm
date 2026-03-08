@@ -19,7 +19,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "s" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 4
 	},
 /area/rogue/under/tomb)
@@ -48,7 +48,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "G" = (
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/under/tomb)
 "H" = (
 /obj/structure/bars/grille,
@@ -70,7 +70,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "P" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 8
 	},
 /area/rogue/under/tomb)
@@ -89,7 +89,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "Y" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb)
 "Z" = (
 /obj/structure/bars/grille,

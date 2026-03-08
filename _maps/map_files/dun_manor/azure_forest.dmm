@@ -25,7 +25,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter/woods)
 "ad" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cavewet/bogcaves)
 "ai" = (
 /obj/effect/decal/cobbleedge{
@@ -45,7 +45,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods)
 "at" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/town/basement)
 "av" = (
 /obj/item/needle/thorn,
@@ -146,7 +146,7 @@
 /area/rogue/outdoors/mountains)
 "bn" = (
 /obj/structure/fluff/walldeco/innsign,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/town/basement)
 "bo" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon,
@@ -247,10 +247,10 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/shelter/woods)
 "bS" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/indoors)
 "bT" = (
-/turf/closed/wall/mineral/rogue/tent{
+/turf/closed/wall/tent{
 	dir = 4
 	},
 /area/rogue/under/town/basement)
@@ -296,7 +296,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods)
 "cp" = (
-/turf/closed/mineral/random/rogue/med,
+/turf/closed/rock/random/med,
 /area/rogue/under/cavewet/bogcaves)
 "cq" = (
 /obj/structure/fluff/railing/border{
@@ -335,7 +335,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/woods)
 "cA" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/outdoors/beach/forest)
 "cJ" = (
 /obj/structure/fluff/railing/wood{
@@ -351,7 +351,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "cO" = (
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/town/basement)
 "cR" = (
 /obj/effect/decal/cobbleedge,
@@ -393,7 +393,7 @@
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "de" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "di" = (
 /obj/machinery/light/rogue/firebowl/stump,
@@ -511,7 +511,7 @@
 /area/rogue/under/town/basement)
 "eg" = (
 /obj/structure/fluff/walldeco/customflag,
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/indoors/shelter/woods)
 "eh" = (
 /obj/structure/fluff/railing/border{
@@ -613,7 +613,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains)
 "eI" = (
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/outdoors/woods)
 "eK" = (
 /turf/open/floor/rogue/twig,
@@ -623,7 +623,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains)
 "eQ" = (
-/turf/closed/wall/mineral/rogue/tent{
+/turf/closed/wall/tent{
 	dir = 4
 	},
 /area/rogue/outdoors/beach/forest)
@@ -653,7 +653,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/mountains)
 "fd" = (
-/turf/closed/mineral/random/rogue/med,
+/turf/closed/rock/random/med,
 /area/rogue/under/cave)
 "fj" = (
 /mob/living/carbon/human/species/skeleton/npc/medium,
@@ -680,7 +680,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "fr" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "ft" = (
 /obj/structure/mineral_door/bars,
@@ -771,7 +771,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "gc" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/indoors/shelter/woods)
 "gg" = (
 /obj/structure/closet/crate/chest,
@@ -787,7 +787,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "gr" = (
-/turf/closed/mineral/random/rogue/med,
+/turf/closed/rock/random/med,
 /area/rogue/under/town/basement)
 "gs" = (
 /obj/structure/bars/steel,
@@ -858,10 +858,10 @@
 /turf/open/water/swamp,
 /area/rogue/under/cavewet/bogcaves)
 "gU" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cave)
 "gX" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/indoors/shelter/woods)
 "he" = (
 /obj/structure/roguewindow/openclose/reinforced,
@@ -920,7 +920,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "hw" = (
-/turf/closed/wall/mineral/rogue/wooddark/end{
+/turf/closed/wall/wooddark/end{
 	dir = 8
 	},
 /area/rogue/under/town/basement)
@@ -948,7 +948,7 @@
 /area/rogue/indoors)
 "hQ" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "hS" = (
 /obj/structure/closet/crate/chest/crate,
@@ -991,12 +991,12 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/mountains)
 "ie" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
+/turf/closed/wall/roofwall/outercorner{
 	dir = 1
 	},
 /area/rogue/indoors/shelter/woods)
 "ig" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle{
+/turf/closed/wall/roofwall/middle{
 	dir = 1
 	},
 /area/rogue/indoors/shelter/woods)
@@ -1113,7 +1113,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/woods)
 "jn" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner";
 	dir = 8
 	},
@@ -1137,7 +1137,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/town/basement)
 "jw" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/town/basement)
 "jx" = (
 /obj/structure/closet/dirthole/closed/loot,
@@ -1188,7 +1188,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement)
 "jK" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/town/basement)
 "jN" = (
 /obj/machinery/tanningrack,
@@ -1328,7 +1328,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/town/basement)
 "kV" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/outdoors/woods)
 "kY" = (
 /turf/open/floor/rogue/dirt/road,
@@ -1356,7 +1356,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "lh" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/under/cave)
 "li" = (
 /obj/structure/flora/roguegrass/water,
@@ -1399,7 +1399,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/town/basement)
 "lw" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_line";
 	dir = 4
 	},
@@ -1513,7 +1513,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/town/basement)
 "mh" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/under/cavewet/bogcaves)
 "mj" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/food,
@@ -1542,7 +1542,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/beach/forest)
 "ms" = (
-/turf/closed/wall/mineral/rogue/tent{
+/turf/closed/wall/tent{
 	dir = 8
 	},
 /area/rogue/outdoors/beach/forest)
@@ -1555,7 +1555,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/under/town/basement)
 "mu" = (
-/turf/closed/wall/mineral/rogue/wooddark/end{
+/turf/closed/wall/wooddark/end{
 	dir = 4;
 	icon_state = "endwooddark"
 	},
@@ -1587,7 +1587,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "mO" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/indoors/shelter/woods)
 "mQ" = (
 /obj/item/natural/cloth,
@@ -1649,7 +1649,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods)
 "nu" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle{
+/turf/closed/wall/roofwall/middle{
 	dir = 8
 	},
 /area/rogue/indoors/shelter/woods)
@@ -1672,13 +1672,13 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors)
 "nA" = (
-/turf/closed/wall/mineral/rogue/wooddark/end{
+/turf/closed/wall/wooddark/end{
 	dir = 4;
 	icon_state = "endwooddark"
 	},
 /area/rogue/indoors/shelter/woods)
 "nB" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
+/turf/closed/wall/roofwall/outercorner{
 	dir = 4
 	},
 /area/rogue/indoors/shelter/woods)
@@ -1710,7 +1710,7 @@
 	endTurfY = 155;
 	endTurfX = 155
 	},
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cave)
 "nT" = (
 /obj/structure/closet/crate/roguecloset/dark{
@@ -1748,7 +1748,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/beach/forest)
 "oa" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/indoors/shelter/woods)
 "oc" = (
 /mob/living/carbon/human/species/skeleton/npc/easy,
@@ -1762,7 +1762,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/beach/forest)
 "oj" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner";
 	dir = 4
 	},
@@ -1899,7 +1899,7 @@
 /turf/open/water/swamp,
 /area/rogue/under/town/basement)
 "pC" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/woods)
 "pD" = (
 /obj/structure/fluff/railing/border{
@@ -1943,7 +1943,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/shelter/woods)
 "pV" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner";
 	dir = 1
 	},
@@ -2015,7 +2015,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/shelter/woods)
 "qj" = (
-/turf/closed/wall/mineral/rogue/tent{
+/turf/closed/wall/tent{
 	dir = 8
 	},
 /area/rogue/indoors/shelter/woods)
@@ -2054,7 +2054,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "qK" = (
-/turf/closed/mineral/random/rogue/med,
+/turf/closed/rock/random/med,
 /area/rogue/outdoors/mountains)
 "qN" = (
 /mob/living/carbon/human/species/skeleton/npc/medium,
@@ -2068,7 +2068,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "qV" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/indoors/shelter/woods)
 "qX" = (
 /obj/structure/glowshroom,
@@ -2088,7 +2088,7 @@
 	endTurfX = 155;
 	endTurfY = 155
 	},
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cave)
 "rg" = (
 /obj/item/roguecoin/copper,
@@ -2134,7 +2134,7 @@
 /turf/open/water/sewer,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "rv" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/outdoors/beach/forest)
 "ry" = (
 /obj/structure/table/wood{
@@ -2150,7 +2150,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/town/basement)
 "rz" = (
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/indoors/shelter/woods)
 "rE" = (
 /obj/structure/chair/wood/rogue{
@@ -2173,7 +2173,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cavewet/bogcaves)
 "rK" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
+/turf/closed/wall/roofwall/outercorner{
 	dir = 8
 	},
 /area/rogue/indoors/shelter/woods)
@@ -2228,7 +2228,7 @@
 /turf/open/water/sewer,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "si" = (
-/turf/closed/wall/mineral/rogue/tent{
+/turf/closed/wall/tent{
 	dir = 1
 	},
 /area/rogue/outdoors/beach/forest)
@@ -2240,7 +2240,7 @@
 /obj/structure/fluff/railing/fence{
 	dir = 8
 	},
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/town/basement)
 "sq" = (
 /obj/machinery/light/small{
@@ -2361,7 +2361,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors)
 "to" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "tr" = (
 /obj/structure/fluff/railing/border{
@@ -2408,7 +2408,7 @@
 /obj/structure/fluff/railing/fence{
 	dir = 4
 	},
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/under/town/basement)
 "tN" = (
 /turf/open/lava/acid,
@@ -2609,7 +2609,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/shelter/woods)
 "vp" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/cavewet/bogcaves)
 "vq" = (
 /obj/structure/bars/steel{
@@ -2689,7 +2689,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "vY" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/indoors)
 "wa" = (
 /obj/structure/bars,
@@ -2779,7 +2779,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/woods)
 "wN" = (
-/turf/closed/wall/mineral/rogue/tent{
+/turf/closed/wall/tent{
 	dir = 1
 	},
 /area/rogue/under/town/basement)
@@ -2920,7 +2920,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "yi" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_line"
 	},
 /area/rogue/under/cavewet/bogcaves)
@@ -2946,10 +2946,10 @@
 /turf/open/water/swamp,
 /area/rogue/outdoors/woods)
 "yq" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/outdoors/mountains)
 "ys" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/outdoors/woods)
 "yB" = (
 /obj/structure/table/wood{
@@ -2992,7 +2992,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/forest)
 "yQ" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_line";
 	dir = 4
 	},
@@ -3013,14 +3013,14 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "yY" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "za" = (
 /obj/item/restraints/legcuffs/beartrap/armed/camouflage,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement)
 "zb" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/under/town/basement)
 "zf" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools,
@@ -3136,7 +3136,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "Aa" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "Ac" = (
 /obj/effect/decal/cleanable/blood,
@@ -3155,7 +3155,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/forest)
 "Ai" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "Aj" = (
 /obj/structure/mineral_door/wood/donjon{
@@ -3183,7 +3183,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter/woods)
 "Ao" = (
-/turf/closed/wall/mineral/rogue/wooddark/end{
+/turf/closed/wall/wooddark/end{
 	dir = 1;
 	icon_state = "endwooddark"
 	},
@@ -3213,7 +3213,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "Az" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_joint";
 	dir = 8
 	},
@@ -3428,7 +3428,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods)
 "BP" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/outdoors/woods)
 "BS" = (
 /obj/structure/roguewindow,
@@ -3504,7 +3504,7 @@
 /obj/structure/lever/wall{
 	redstone_id = "puzzle2"
 	},
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/town/basement)
 "Cz" = (
 /obj/machinery/light/rogue/oven/south,
@@ -3588,7 +3588,7 @@
 /turf/open/water/swamp,
 /area/rogue/outdoors/woods)
 "De" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/under/town/basement)
 "Dj" = (
 /obj/structure/vine,
@@ -3612,7 +3612,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors)
 "Dp" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/town/basement)
 "Dq" = (
 /obj/structure/stairs/stone{
@@ -3638,7 +3638,7 @@
 /turf/open/water/swamp,
 /area/rogue/under/cavewet/bogcaves)
 "Dz" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/under/town/basement)
 "DA" = (
 /obj/structure/flora/newtree,
@@ -3678,7 +3678,7 @@
 /area/rogue/under/cave/dungeon1/gethsmane)
 "DR" = (
 /obj/structure/vine,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "DU" = (
 /obj/structure/table/wood{
@@ -3709,7 +3709,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/woods)
 "Ef" = (
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/outdoors/mountains)
 "Eg" = (
 /obj/structure/closet/dirthole/grave,
@@ -3724,7 +3724,7 @@
 /area/rogue/indoors/shelter/woods)
 "Eq" = (
 /obj/structure/vine,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/town/basement)
 "Er" = (
 /obj/structure/fluff/railing/border{
@@ -3760,7 +3760,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/woods)
 "EK" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_joint";
 	dir = 2
 	},
@@ -3840,7 +3840,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains)
 "Fl" = (
-/turf/closed/wall/mineral/rogue/tent{
+/turf/closed/wall/tent{
 	dir = 1
 	},
 /area/rogue/indoors/shelter/woods)
@@ -3878,7 +3878,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/town/basement)
 "Fy" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle,
+/turf/closed/wall/roofwall/middle,
 /area/rogue/indoors/shelter/woods)
 "Fz" = (
 /obj/structure/bars/steel,
@@ -3895,7 +3895,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/woods)
 "FG" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/indoors/shelter/woods)
 "FH" = (
 /obj/structure/roguerock,
@@ -3976,10 +3976,10 @@
 /turf/open/water/swamp,
 /area/rogue/under/town/basement)
 "Gq" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/indoors)
 "Gr" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_line"
 	},
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
@@ -4023,7 +4023,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "GH" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/under/cave)
 "GK" = (
 /turf/open/floor/rogue/cobble,
@@ -4075,7 +4075,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods)
 "He" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner";
 	dir = 8
 	},
@@ -4124,7 +4124,7 @@
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/woods)
 "Hr" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/cavewet/bogcaves)
 "Hs" = (
 /obj/effect/decal/remains/human,
@@ -4177,7 +4177,7 @@
 /area/rogue/under/town/basement)
 "HI" = (
 /obj/structure/vine,
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/under/town/basement)
 "HJ" = (
 /obj/effect/decal/remains/human,
@@ -4282,7 +4282,7 @@
 /turf/open/water/swamp/deep,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "Iu" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/under/cavewet/bogcaves)
 "Iv" = (
 /obj/structure/fluff/railing/wood,
@@ -4426,7 +4426,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement)
 "Jw" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/outdoors/mountains)
 "Jx" = (
 /turf/open/floor/rogue/cobblerock,
@@ -4454,7 +4454,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "JM" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/outdoors/beach/forest)
 "JO" = (
 /obj/structure/fluff/railing/border{
@@ -4465,7 +4465,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors)
 "JQ" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner";
 	dir = 4
 	},
@@ -4532,7 +4532,7 @@
 /turf/open/water/sewer,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "KG" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/indoors)
 "KI" = (
 /obj/structure/table/wood{
@@ -4588,7 +4588,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/beach/forest)
 "Ld" = (
-/turf/closed/wall/mineral/rogue/tent{
+/turf/closed/wall/tent{
 	dir = 4
 	},
 /area/rogue/indoors/shelter/woods)
@@ -4639,7 +4639,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/shelter/woods)
 "Lt" = (
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/turf/closed/wall/wooddark/horizontal,
 /area/rogue/indoors/shelter/woods)
 "Ly" = (
 /mob/living/carbon/human/species/skeleton/npc/easy,
@@ -4710,7 +4710,7 @@
 /area/rogue/outdoors/mountains)
 "Md" = (
 /obj/structure/vine,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "Mf" = (
 /obj/structure/flora/roguegrass/water,
@@ -4731,7 +4731,7 @@
 /obj/structure/lever/wall{
 	redstone_id = "puzzle3"
 	},
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/town/basement)
 "Mn" = (
 /obj/machinery/light/rogue/torchholder/r,
@@ -4815,7 +4815,7 @@
 /turf/open/water/swamp,
 /area/rogue/indoors/shelter/woods)
 "MV" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner,
+/turf/closed/wall/roofwall/outercorner,
 /area/rogue/indoors/shelter/woods)
 "MX" = (
 /obj/structure/closet/crate/coffin,
@@ -4874,7 +4874,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement)
 "Nt" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle{
+/turf/closed/wall/roofwall/middle{
 	dir = 4
 	},
 /area/rogue/indoors/shelter/woods)
@@ -4883,7 +4883,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet/bogcaves)
 "Nx" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/indoors)
 "Nz" = (
 /obj/item/clothing/head/peaceflower{
@@ -4928,7 +4928,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/woods)
 "NR" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/indoors/shelter/woods)
 "NS" = (
 /obj/structure/closet/crate/chest,
@@ -4957,7 +4957,7 @@
 	},
 /area/rogue/indoors/shelter/woods)
 "NU" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/indoors/shelter/woods)
 "NX" = (
 /obj/structure/bars/pipe,
@@ -5005,7 +5005,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "OJ" = (
-/turf/closed/wall/mineral/rogue/wooddark/window,
+/turf/closed/wall/wooddark/window,
 /area/rogue/outdoors/beach/forest)
 "OK" = (
 /obj/structure/fluff/railing/border{
@@ -5037,7 +5037,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "OZ" = (
-/turf/closed/wall/mineral/rogue/tent{
+/turf/closed/wall/tent{
 	dir = 8
 	},
 /area/rogue/under/town/basement)
@@ -5069,7 +5069,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter/woods)
 "Pz" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "PC" = (
 /obj/item/roguebin/water/gross,
@@ -5310,7 +5310,7 @@
 /turf/open/water/ocean,
 /area/rogue/outdoors/beach/forest)
 "Ry" = (
-/turf/closed/mineral/random/rogue/med,
+/turf/closed/rock/random/med,
 /area/rogue/outdoors/woods)
 "Rz" = (
 /obj/item/grown/log/tree/small,
@@ -5398,7 +5398,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/mountains)
 "Se" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/mountains)
 "Sh" = (
 /obj/structure/fluff/railing/border{
@@ -5462,7 +5462,7 @@
 /area/rogue/outdoors/woods)
 "SF" = (
 /obj/structure/vine,
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "SG" = (
 /obj/structure/closet/crate/coffin,
@@ -5679,10 +5679,10 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "Up" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/outdoors/beach/forest)
 "Ut" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/outdoors/woods)
 "Uu" = (
 /obj/structure/roguetent,
@@ -5703,7 +5703,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods)
 "UC" = (
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/cavewet/bogcaves)
 "UE" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon,
@@ -5867,7 +5867,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/town/basement)
 "VO" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cavewet/bogcaves)
 "VP" = (
 /obj/effect/decal/cobbleedge{
@@ -5876,7 +5876,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "VR" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/outdoors/mountains)
 "VU" = (
 /obj/machinery/light/rogue/torchholder/c,
@@ -5949,7 +5949,7 @@
 	},
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "Wx" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_corner"
 	},
 /area/rogue/under/cave/dungeon1/gethsmane)
@@ -6006,7 +6006,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "WV" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "WZ" = (
 /obj/machinery/light/rogue/firebowl/stump,
@@ -6058,7 +6058,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/woods)
 "Xq" = (
-/turf/closed/wall/mineral/rogue/wooddark/end,
+/turf/closed/wall/wooddark/end,
 /area/rogue/indoors/shelter/woods)
 "Xr" = (
 /obj/structure/bed/rogue/inn/wooldouble,
@@ -6165,7 +6165,7 @@
 	name = null;
 	redstone_id = "puzzle1"
 	},
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/town/basement)
 "Yi" = (
 /turf/open/floor/rogue/cobblerock,
@@ -6191,7 +6191,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "Yr" = (
-/turf/closed/wall/mineral/rogue/wooddark/end{
+/turf/closed/wall/wooddark/end{
 	dir = 8
 	},
 /area/rogue/indoors/shelter/woods)
@@ -6236,13 +6236,13 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors/shelter/woods)
 "YH" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_line"
 	},
 /area/rogue/under/cave/dungeon1/gethsmane)
 "YQ" = (
 /obj/structure/boatbell/fluff,
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/outdoors/beach/forest)
 "YS" = (
 /obj/structure/bars/pipe,
@@ -6314,7 +6314,7 @@
 /area/rogue/indoors)
 "Zm" = (
 /obj/structure/fluff/walldeco/innsign,
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/indoors)
 "Zp" = (
 /obj/structure/roguerock,
@@ -6406,7 +6406,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement)
 "ZW" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_joint";
 	dir = 4
 	},

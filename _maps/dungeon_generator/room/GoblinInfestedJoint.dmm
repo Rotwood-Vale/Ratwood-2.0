@@ -9,7 +9,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/tomb)
 "aZ" = (
-/turf/closed/mineral/rogue/silver,
+/turf/closed/rock/silver,
 /area/rogue/under/tomb/cave/spider)
 "bk" = (
 /turf/open/floor/rogue/naturalstone,
@@ -29,7 +29,7 @@
 /area/rogue/under/tomb/cave)
 "bv" = (
 /obj/effect/decal/cleanable/blood,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "bA" = (
 /obj/structure/spider/stickyweb,
@@ -43,7 +43,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/tomb/indoors)
 "bZ" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 8
 	},
 /area/rogue/under/tomb/indoors)
@@ -129,11 +129,11 @@
 /turf/open/floor/rogue/rooftop,
 /area/rogue/under/tomb)
 "dy" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "dC" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb)
 "ew" = (
 /obj/item/natural/rock,
@@ -141,7 +141,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "eG" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors)
 "fm" = (
 /obj/structure/mineral_door/bars,
@@ -167,7 +167,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/indoors)
 "fD" = (
-/turf/closed/wall/mineral/rogue/wooddark/end,
+/turf/closed/wall/wooddark/end,
 /area/rogue/under/tomb/indoors)
 "fG" = (
 /obj/item/rogueore/iron{
@@ -202,11 +202,11 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "go" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/spider)
 "gu" = (
 /obj/effect/decal/cleanable/food/flour,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors)
 "gB" = (
 /turf/open/floor/rogue/dirt,
@@ -291,7 +291,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "ip" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb)
 "ix" = (
 /obj/structure/fluff/railing/border,
@@ -307,7 +307,7 @@
 /turf/open/floor/rogue/rooftop,
 /area/rogue/under/tomb)
 "ju" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/indoors)
 "jE" = (
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
@@ -382,7 +382,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave)
 "lS" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "mb" = (
 /obj/structure/noose,
@@ -425,10 +425,10 @@
 /area/rogue/under/tomb)
 "nE" = (
 /obj/structure/wallladder,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors)
 "nF" = (
-/turf/closed/mineral/rogue/gold,
+/turf/closed/rock/gold,
 /area/rogue/under/tomb/cave/spider)
 "nR" = (
 /obj/structure/fluff/railing/border{
@@ -445,10 +445,10 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "oz" = (
-/turf/closed/mineral/rogue/gem,
+/turf/closed/rock/gem,
 /area/rogue/under/tomb/cave/spider)
 "oC" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 1
 	},
 /area/rogue/under/tomb/indoors)
@@ -456,7 +456,7 @@
 /turf/open/floor/rogue/rooftop,
 /area/rogue/under/tomb)
 "pf" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "pL" = (
 /obj/item/storage/roguebag{
@@ -483,11 +483,11 @@
 /area/rogue/under/tomb)
 "qe" = (
 /obj/machinery/light/rogue/wallfire,
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors)
 "qf" = (
 /obj/structure/flora/roguegrass,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "ql" = (
 /obj/structure/barricade/crude,
@@ -599,7 +599,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/tomb)
 "uU" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb)
 "uV" = (
 /obj/item/chair/rogue,
@@ -626,7 +626,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb)
 "vo" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "vG" = (
 /obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
@@ -684,7 +684,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/indoors)
 "xj" = (
-/turf/closed/wall/mineral/rogue/decostone/long{
+/turf/closed/wall/decostone/long{
 	dir = 1
 	},
 /area/rogue/under/tomb/indoors)
@@ -693,7 +693,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/indoors)
 "xJ" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors)
 "xK" = (
 /obj/structure/flora/roguegrass,
@@ -720,7 +720,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "yQ" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors)
 "zg" = (
 /turf/open/floor/rogue/grass,
@@ -748,7 +748,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "AN" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb)
 "AP" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
@@ -773,7 +773,7 @@
 /obj/effect/decal/remains/human{
 	pixel_x = 12
 	},
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors)
 "By" = (
 /obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
@@ -805,7 +805,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/under/tomb/indoors)
 "CF" = (
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/turf/closed/wall/wooddark/horizontal,
 /area/rogue/under/tomb/indoors)
 "CP" = (
 /obj/structure/flora/roguegrass,
@@ -850,7 +850,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave)
 "Et" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors)
 "EC" = (
 /obj/structure/mineral_door/wood/violet,
@@ -927,7 +927,7 @@
 /turf/open/water/swamp,
 /area/rogue/under/tomb)
 "HK" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 4
 	},
 /area/rogue/under/tomb/indoors)
@@ -975,7 +975,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "Ky" = (
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/under/tomb/indoors)
 "Kz" = (
 /obj/item/natural/stone{
@@ -1048,7 +1048,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "ON" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "PD" = (
 /obj/structure/barricade,
@@ -1258,7 +1258,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/under/tomb/indoors)
 "WS" = (
-/turf/closed/wall/mineral/rogue/decostone/end,
+/turf/closed/wall/decostone/end,
 /area/rogue/under/tomb/indoors)
 "Xi" = (
 /obj/item/rogueore/tin{
@@ -1339,7 +1339,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "ZH" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb)
 "ZJ" = (
 /obj/item/storage/roguebag,

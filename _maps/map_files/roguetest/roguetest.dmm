@@ -126,7 +126,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors)
 "ej" = (
-/turf/closed/mineral/random/rogue/med,
+/turf/closed/rock/random/med,
 /area/rogue/outdoors/rtfield)
 "fb" = (
 /obj/structure/table/wood{
@@ -156,7 +156,7 @@
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors)
 "hh" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/outdoors/rtfield)
 "hG" = (
 /obj/structure/table/wood{
@@ -241,7 +241,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors)
 "jK" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/indoors/cave)
 "kl" = (
 /obj/structure/plough,
@@ -772,7 +772,7 @@
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors)
 "zo" = (
-/turf/closed/wall/mineral/rogue/decowood/vert,
+/turf/closed/wall/decowood/vert,
 /area/rogue/indoors)
 "zr" = (
 /obj/item/storage/roguebag,
@@ -810,10 +810,10 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "AO" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/indoors)
 "AU" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/indoors/cave)
 "AX" = (
 /turf/open/floor/rogue/grass,
@@ -886,7 +886,7 @@
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "CU" = (
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/indoors)
 "CZ" = (
 /turf/open/floor/rogue/dirt/road,
@@ -979,7 +979,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "Gk" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/indoors)
 "Gm" = (
 /obj/structure/fluff/grindwheel,
@@ -1182,7 +1182,7 @@
 /area/rogue/indoors)
 "Of" = (
 /obj/structure/fluff/railing/corner/north_east,
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/outdoors/rtfield)
 "Oh" = (
 /obj/structure/table/cooling,
@@ -1199,7 +1199,7 @@
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors)
 "OI" = (
-/turf/closed/wall/mineral/rogue/decostone/long{
+/turf/closed/wall/decostone/long{
 	dir = 1
 	},
 /area/rogue/indoors)
@@ -1304,7 +1304,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
 "TN" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/indoors)
 "Ur" = (
 /obj/structure/table/wood{
@@ -1401,7 +1401,7 @@
 /turf/open/floor/rogue/hay,
 /area/rogue/indoors)
 "WL" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/outdoors/rtfield)
 "WM" = (
 /obj/structure/roguewindow,

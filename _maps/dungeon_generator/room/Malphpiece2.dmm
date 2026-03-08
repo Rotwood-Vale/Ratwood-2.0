@@ -10,7 +10,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "k" = (
-/turf/closed/wall/mineral/rogue/decostone/fluffstone,
+/turf/closed/wall/decostone/fluffstone,
 /area/rogue/under/tomb)
 "o" = (
 /obj/machinery/light/rogue/firebowl,
@@ -46,7 +46,7 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/tomb)
 "U" = (
-/turf/closed/mineral,
+/turf/closed/rock,
 /area/rogue/under/tomb)
 
 (1,1,1) = {"

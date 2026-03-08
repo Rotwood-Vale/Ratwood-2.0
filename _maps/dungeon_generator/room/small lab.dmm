@@ -163,7 +163,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "uJ" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/indoors)
 "uP" = (
 /turf/open/transparent/openspace,
@@ -236,7 +236,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "zM" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "zU" = (
 /obj/structure/glowshroom{
@@ -318,7 +318,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "LG" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors)
 "Ns" = (
 /obj/structure/mineral_door/wood/violet,
@@ -332,7 +332,7 @@
 /area/rogue/under/tomb/indoors)
 "NL" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/indoors)
 "NS" = (
 /obj/effect/dungeon_directional_helper/north,
@@ -419,7 +419,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "UM" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb/indoors)
 "Wu" = (
 /turf/open/floor/rogue/cobblerock,

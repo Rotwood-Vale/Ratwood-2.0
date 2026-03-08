@@ -167,7 +167,7 @@
 /area/rogue/under/tomb/indoors)
 "sd" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/decowood/vert,
+/turf/closed/wall/decowood/vert,
 /area/rogue/under/tomb/indoors)
 "sh" = (
 /obj/structure/roguewindow/openclose{
@@ -199,7 +199,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "tP" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "ur" = (
 /obj/item/reagent_containers/glass/cup/wooden/crafted{
@@ -245,7 +245,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/indoors)
 "AX" = (
-/turf/closed/wall/mineral/rogue/decowood/vert,
+/turf/closed/wall/decowood/vert,
 /area/rogue/under/tomb/indoors)
 "Bz" = (
 /mob/living/carbon/human/species/skeleton/npc/supereasy,
@@ -328,7 +328,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Im" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/indoors)
 "It" = (
 /obj/structure/mineral_door/wood,
@@ -352,13 +352,13 @@
 /area/rogue/under/tomb/indoors)
 "Ml" = (
 /obj/structure/fluff/walldeco/painting/queen,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/indoors)
 "MK" = (
 /obj/machinery/light/rogue/wallfire{
 	pixel_x = 16
 	},
-/turf/closed/wall/mineral/rogue/decowood/vert,
+/turf/closed/wall/decowood/vert,
 /area/rogue/under/tomb/indoors)
 "Nc" = (
 /obj/structure/rack/rogue/shelf/biggest,
@@ -383,7 +383,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Oj" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/under/tomb/indoors)
 "Ov" = (
 /obj/effect/dungeon_directional_helper/west,
@@ -509,7 +509,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "ZT" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 
 (1,1,1) = {"

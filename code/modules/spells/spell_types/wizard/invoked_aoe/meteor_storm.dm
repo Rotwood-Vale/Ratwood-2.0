@@ -70,7 +70,7 @@
 	new /obj/effect/temp_visual/fireball(T)
 	sleep(duration)
 	if(ismineralturf(T))
-		var/turf/closed/mineral/M = T
+		var/turf/closed/rock/M = T
 		M.gets_drilled()
 	new /obj/effect/hotspot(T)
 	for(var/turf/nearby in RANGE_TURFS(3, T))

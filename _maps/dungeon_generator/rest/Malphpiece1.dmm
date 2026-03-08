@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ag" = (
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/turf/closed/wall/wooddark/horizontal,
 /area/rogue/under/tomb/indoors)
 "ah" = (
 /obj/structure/fermentation_keg/beer,
@@ -44,7 +44,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "aA" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors)
 "aE" = (
 /obj/structure/mineral_door/bars,
@@ -55,7 +55,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "aG" = (
-/turf/closed/wall/mineral/rogue/wooddark/end,
+/turf/closed/wall/wooddark/end,
 /area/rogue/under/tomb/indoors)
 "aI" = (
 /obj/machinery/light/rogue/firebowl/standing,
@@ -65,14 +65,14 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "aM" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "aQ" = (
 /obj/effect/dungeon_directional_helper/south,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "aT" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "aU" = (
 /obj/effect/dungeon_directional_helper/east,

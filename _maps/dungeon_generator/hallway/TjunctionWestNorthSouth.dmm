@@ -11,7 +11,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "W" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb)
 "Y" = (
 /obj/effect/dungeon_directional_helper/south,

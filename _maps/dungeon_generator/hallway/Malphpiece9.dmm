@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/wall/mineral/rogue/decostone/center,
+/turf/closed/wall/decostone/center,
 /area/rogue/under/tomb/cave)
 "b" = (
 /obj/structure/fluff/walldeco/vinez/l,
@@ -49,7 +49,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/tomb/cave)
 "k" = (
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/under/tomb/cave)
 "l" = (
 /obj/structure/fluff/walldeco/bath/six,
@@ -59,7 +59,7 @@
 /area/rogue/under/tomb/cave)
 "m" = (
 /obj/structure/fluff/walldeco/bath/four,
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/under/tomb/cave)
 "n" = (
 /obj/effect/dungeon_directional_helper/north,
@@ -110,7 +110,7 @@
 	dir = 6
 	},
 /obj/structure/fluff/walldeco/stone,
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/under/tomb/cave)
 "z" = (
 /mob/living/simple_animal/hostile/retaliate/bat,
@@ -188,7 +188,7 @@
 	dir = 6
 	},
 /obj/structure/fluff/walldeco/stone,
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/under/tomb/cave)
 "N" = (
 /obj/structure/fluff/statue/gargoyle/moss/candles,
@@ -212,7 +212,7 @@
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/under/tomb/cave)
 "T" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "V" = (
 /obj/structure/fluff/walldeco/bath/five,
@@ -228,7 +228,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/tomb/cave)
 "X" = (
-/turf/closed/wall/mineral/rogue/decostone/end,
+/turf/closed/wall/decostone/end,
 /area/rogue/under/tomb/cave)
 "Z" = (
 /obj/structure/fluff/walldeco/vinez/r,

@@ -1,4 +1,4 @@
-/turf/closed/wall/mineral
+/turf/closed/wall
 	name = "mineral wall"
 	desc = ""
 	icon_state = ""

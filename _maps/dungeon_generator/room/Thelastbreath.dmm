@@ -14,7 +14,7 @@
 /area/rogue/under/tomb/indoors)
 "av" = (
 /obj/structure/fluff/walldeco/med4,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "aw" = (
 /obj/structure/closet/crate/drawer,
@@ -36,7 +36,7 @@
 /area/rogue/under/tomb/indoors)
 "aE" = (
 /obj/machinery/light/rogue/wallfire,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors/royal)
 "aF" = (
 /obj/structure/roguewindow/stained/silver,
@@ -54,7 +54,7 @@
 /area/rogue/under/tomb/indoors)
 "aZ" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/l,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "ba" = (
 /turf/open/floor/rogue/tile/checker,
@@ -68,7 +68,7 @@
 /area/rogue/under/tomb/indoors)
 "bj" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb)
 "bp" = (
 /obj/structure/table/wood,
@@ -87,7 +87,7 @@
 "bF" = (
 /obj/structure/fluff/walldeco/vinez,
 /obj/structure/fluff/walldeco/psybanner/red,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "bH" = (
 /obj/item/rogueweapon/mace/wsword,
@@ -115,7 +115,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "ca" = (
 /obj/structure/fluff/walldeco/psybanner/red,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors/royal)
 "cc" = (
 /obj/structure/fluff/nest,
@@ -131,7 +131,7 @@
 /area/rogue/under/tomb/indoors)
 "ck" = (
 /obj/machinery/light/rogue/wallfire/candle/l,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "co" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -210,7 +210,7 @@
 "dm" = (
 /obj/structure/fluff/walldeco/rpainting/forest,
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "do" = (
 /obj/structure/flora/roguegrass,
@@ -280,13 +280,13 @@
 /area/rogue/under/tomb/indoors)
 "ef" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "ei" = (
 /obj/structure/lever/hidden{
 	redstone_id = "L2"
 	},
-/turf/closed/wall/mineral/rogue/decostone{
+/turf/closed/wall/decostone{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors)
@@ -299,11 +299,11 @@
 /area/rogue/under/tomb)
 "eu" = (
 /obj/structure/fluff/walldeco/painting/seraphina,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "ew" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "ey" = (
 /obj/structure/fluff/walldeco/bigpainting,
@@ -423,7 +423,7 @@
 "fW" = (
 /obj/structure/fluff/walldeco/vinez,
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "gg" = (
 /obj/structure/fluff/nest,
@@ -533,7 +533,7 @@
 /turf/open/floor/rogue/church,
 /area/rogue/under/tomb/indoors)
 "hr" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "hs" = (
 /obj/structure/mineral_door/bars,
@@ -548,7 +548,7 @@
 "hz" = (
 /obj/structure/fluff/walldeco/vinez,
 /obj/structure/fluff/walldeco/psybanner,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "hB" = (
 /obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
@@ -603,7 +603,7 @@
 "ip" = (
 /obj/structure/mirror/fancy,
 /obj/structure/fluff/walldeco/med5,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "is" = (
 /obj/structure/fluff/psycross/crafted,
@@ -672,7 +672,7 @@
 /turf/open/floor/rogue/tile/checker,
 /area/rogue/under/tomb/indoors)
 "jo" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "jq" = (
 /obj/item/reagent_containers/glass/cup/golden,
@@ -723,7 +723,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "L5"
 	},
-/turf/closed/wall/mineral/rogue/decostone/cand{
+/turf/closed/wall/decostone/cand{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors)
@@ -743,7 +743,7 @@
 /area/rogue/under/tomb/indoors)
 "ka" = (
 /obj/machinery/light/rogue/wallfire/candle/blue,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "kc" = (
 /obj/effect/spawner/lootdrop/general_loot_low,
@@ -768,7 +768,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "L8"
 	},
-/turf/closed/wall/mineral/rogue/decostone/cand{
+/turf/closed/wall/decostone/cand{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors)
@@ -799,13 +799,13 @@
 /area/rogue/under/tomb/wilds)
 "kC" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "kE" = (
 /obj/structure/lever/hidden{
 	redstone_id = "L13"
 	},
-/turf/closed/wall/mineral/rogue/decostone/cand{
+/turf/closed/wall/decostone/cand{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors/royal)
@@ -869,7 +869,7 @@
 /area/rogue/under/tomb/indoors/church)
 "lS" = (
 /obj/structure/fluff/walldeco/psybanner/red,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "lV" = (
 /obj/structure/stairs/stone/d{
@@ -893,7 +893,7 @@
 /area/rogue/under/tomb/indoors)
 "mf" = (
 /obj/machinery/light/rogue/wallfire/candle/l,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "mh" = (
 /obj/item/natural/rock,
@@ -949,7 +949,7 @@
 /area/rogue/under/tomb)
 "mP" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "nc" = (
 /obj/item/reagent_containers/glass/bucket,
@@ -984,7 +984,7 @@
 /area/rogue/under/tomb/cave)
 "nC" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/r,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "nG" = (
 /obj/structure/stairs/stone/d{
@@ -1054,7 +1054,7 @@
 /area/rogue/under/tomb/indoors)
 "oM" = (
 /obj/structure/fluff/walldeco/psybanner,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors)
 "oY" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -1126,7 +1126,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "pO" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb)
 "pY" = (
 /mob/living/carbon/human/species/skeleton/npc/mediumspread,
@@ -1214,7 +1214,7 @@
 /area/rogue/under/tomb/indoors)
 "rm" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "rp" = (
 /turf/open/floor/rogue/blocks,
@@ -1235,7 +1235,7 @@
 /area/rogue/under/tomb/indoors)
 "rB" = (
 /obj/structure/fluff/walldeco/psybanner,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb)
 "rI" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -1277,7 +1277,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "L3"
 	},
-/turf/closed/wall/mineral/rogue/decostone/cand{
+/turf/closed/wall/decostone/cand{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors)
@@ -1348,7 +1348,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "th" = (
 /obj/structure/fluff/walldeco/psybanner/red,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors)
 "tm" = (
 /obj/structure/fluff/railing/border{
@@ -1381,11 +1381,11 @@
 /area/rogue/under/tomb)
 "tF" = (
 /obj/structure/fluff/walldeco/psybanner,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "tG" = (
 /obj/structure/fluff/walldeco/rpainting/crown,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "tJ" = (
 /obj/item/chair/rogue,
@@ -1409,7 +1409,7 @@
 	redstone_id = "Gate320"
 	},
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb)
 "ud" = (
 /obj/effect/decal/cleanable/blood,
@@ -1478,7 +1478,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "L1"
 	},
-/turf/closed/wall/mineral/rogue/decostone/cand{
+/turf/closed/wall/decostone/cand{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors/royal)
@@ -1627,7 +1627,7 @@
 /area/rogue/under/tomb/indoors)
 "xg" = (
 /obj/structure/fluff/walldeco/med,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "xp" = (
 /obj/structure/fluff/statue/knight/r,
@@ -1721,7 +1721,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "L6"
 	},
-/turf/closed/wall/mineral/rogue/decostone/cand{
+/turf/closed/wall/decostone/cand{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors)
@@ -1775,13 +1775,13 @@
 /obj/effect/waterfall{
 	pixel_y = 32
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "zG" = (
 /obj/structure/lever/hidden{
 	redstone_id = "L11"
 	},
-/turf/closed/wall/mineral/rogue/decostone{
+/turf/closed/wall/decostone{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors)
@@ -1921,7 +1921,7 @@
 /area/rogue/under/tomb/indoors)
 "BV" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/royal)
 "BW" = (
 /obj/effect/decal/cleanable/blood,
@@ -1982,7 +1982,7 @@
 /area/rogue/under/tomb)
 "CR" = (
 /obj/structure/fluff/wallclock,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "CT" = (
 /obj/structure/stairs/stone/d,
@@ -2015,7 +2015,7 @@
 /area/rogue/under/tomb/wilds)
 "DF" = (
 /obj/structure/fluff/walldeco/painting/skull,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "DO" = (
 /obj/item/reagent_containers/glass/cup/skull,
@@ -2083,7 +2083,7 @@
 /turf/open/floor/rogue/church,
 /area/rogue/under/tomb/indoors)
 "EF" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/royal)
 "EI" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
@@ -2114,7 +2114,7 @@
 "EY" = (
 /obj/structure/fluff/walldeco/vinez,
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "EZ" = (
 /obj/structure/fluff/nest,
@@ -2122,7 +2122,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/indoors)
 "Fa" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "Ff" = (
 /obj/structure/trap/fire,
@@ -2159,7 +2159,7 @@
 /area/rogue/under/tomb/wilds)
 "FF" = (
 /obj/machinery/light/rogue/wallfire,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/royal)
 "FI" = (
 /obj/structure/fluff/nest,
@@ -2184,7 +2184,7 @@
 /area/rogue/under/tomb)
 "FW" = (
 /obj/structure/fluff/walldeco/painting/seraphina,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/royal)
 "Ga" = (
 /obj/structure/trap/wall_projectile{
@@ -2219,11 +2219,11 @@
 /area/rogue/under/tomb/indoors)
 "Gv" = (
 /obj/structure/fluff/walldeco/painting,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/royal)
 "Gx" = (
 /obj/machinery/light/rogue/wallfire/candle/l,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/royal)
 "Gy" = (
 /obj/structure/table/vtable,
@@ -2245,7 +2245,7 @@
 /area/rogue/under/tomb)
 "GG" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/lava)
 "GI" = (
 /obj/structure/fluff/nest,
@@ -2268,7 +2268,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "GY" = (
 /obj/machinery/light/rogue/wallfire/candle/l,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "Ha" = (
 /obj/structure/trap/fire,
@@ -2281,10 +2281,10 @@
 "Hf" = (
 /obj/structure/fluff/walldeco/vinez,
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "Hi" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors/royal)
 "Hj" = (
 /obj/item/natural/stone,
@@ -2306,7 +2306,7 @@
 /turf/open/floor/rogue/tile/checker,
 /area/rogue/under/tomb/indoors)
 "Hz" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "HF" = (
 /obj/effect/decal/cleanable/blood,
@@ -2410,7 +2410,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "W2"
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "II" = (
 /obj/machinery/light/rogue/wallfire/candle/blue,
@@ -2443,7 +2443,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "L4"
 	},
-/turf/closed/wall/mineral/rogue/decostone/cand{
+/turf/closed/wall/decostone/cand{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors)
@@ -2521,7 +2521,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "L9"
 	},
-/turf/closed/wall/mineral/rogue/decostone/cand{
+/turf/closed/wall/decostone/cand{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors)
@@ -2538,7 +2538,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave)
 "La" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "Lk" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
@@ -2571,7 +2571,7 @@
 /obj/machinery/light/rogue/oven/south{
 	pixel_y = 0
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "Lt" = (
 /obj/structure/fluff/railing/border,
@@ -2601,7 +2601,7 @@
 "LS" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/fluff/walldeco/psybanner/red,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors)
 "LU" = (
 /obj/structure/fluff/nest,
@@ -2734,7 +2734,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "NZ" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "Oi" = (
 /obj/effect/decal/cleanable/blood/gibs,
@@ -2811,7 +2811,7 @@
 /area/rogue/under/tomb)
 "Pp" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "Pw" = (
 /obj/effect/decal/cleanable/blood,
@@ -2827,7 +2827,7 @@
 /area/rogue/under/tomb/indoors)
 "PU" = (
 /obj/structure/fluff/walldeco/med6,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "PW" = (
 /obj/structure/table/wood,
@@ -2843,20 +2843,20 @@
 	redstone_id = "W1"
 	},
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "Qn" = (
 /obj/structure/lever/hidden{
 	redstone_id = "L10"
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "Qp" = (
 /obj/structure/mineral_door/bars,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/indoors)
 "Qr" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/lava)
 "Qs" = (
 /obj/structure/rack/rogue/shelf/biggest,
@@ -2897,7 +2897,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "L7"
 	},
-/turf/closed/wall/mineral/rogue/decostone{
+/turf/closed/wall/decostone{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors)
@@ -2945,7 +2945,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "L12"
 	},
-/turf/closed/wall/mineral/rogue/decostone{
+/turf/closed/wall/decostone{
 	name = "suspicious stone wall"
 	},
 /area/rogue/under/tomb/indoors)
@@ -3022,7 +3022,7 @@
 /area/rogue/under/tomb/indoors)
 "Sv" = (
 /obj/structure/fluff/walldeco/rpainting/crown,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors/royal)
 "SF" = (
 /obj/structure/fluff/statue/knightalt/r,
@@ -3034,7 +3034,7 @@
 /area/rogue/under/tomb/cave)
 "SJ" = (
 /obj/effect/decal/cleanable/blood/puddle,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors)
 "ST" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -3060,7 +3060,7 @@
 /area/rogue/under/tomb/wilds)
 "Tn" = (
 /obj/structure/fluff/walldeco/psybanner,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "To" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -3285,10 +3285,10 @@
 	redstone_id = "W4"
 	},
 /obj/structure/mirror,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "WU" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors)
 "WW" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/food,
@@ -3318,7 +3318,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/cave/lava)
 "XA" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/under/tomb/indoors)
 "XE" = (
 /obj/machinery/light/rogue/wallfire/candle/l,
@@ -3379,7 +3379,7 @@
 /area/rogue/under/tomb)
 "Yx" = (
 /obj/structure/fluff/walldeco/med3,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "Yy" = (
 /obj/structure/table/wood,

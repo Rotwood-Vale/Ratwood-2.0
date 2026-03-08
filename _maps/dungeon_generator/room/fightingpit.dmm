@@ -120,7 +120,7 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb)
 "wg" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb)
 "wj" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf,
@@ -141,7 +141,7 @@
 /area/rogue/under/tomb)
 "Bw" = (
 /obj/item/reagent_containers/glass/bottle/rogue/redwine,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "BJ" = (
 /obj/machinery/light/rogue/torchholder{
@@ -175,7 +175,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb)
 "HQ" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb)
 "IM" = (
 /obj/structure/stairs{
@@ -185,7 +185,7 @@
 /area/rogue/under/tomb)
 "IO" = (
 /obj/effect/decal/cleanable/debris/glassy,
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb)
 "Jx" = (
 /obj/structure/bars,
@@ -235,7 +235,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb)
 "Qq" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "Si" = (
 /obj/machinery/light/rogue/torchholder/c,
@@ -269,7 +269,7 @@
 /area/rogue/under/tomb)
 "XR" = (
 /obj/item/reagent_containers/glass/bottle/rogue/whitewine,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "ZC" = (
 /obj/machinery/light/rogue/torchholder/r,

@@ -10,10 +10,10 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue/under/tomb/cave/lava)
 "aI" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/cave/lava)
 "be" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/lava)
 "bs" = (
 /obj/structure/bookcase/random/nonfiction,
@@ -24,7 +24,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors/magic)
 "cx" = (
-/turf/closed/wall/mineral/rogue/stone/window,
+/turf/closed/wall/stone/window,
 /area/rogue/under/tomb/indoors/magic)
 "cF" = (
 /turf/open/floor/rogue/dirt,
@@ -89,7 +89,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/tomb/indoors)
 "ho" = (
-/turf/closed/wall/mineral/rogue/stone/window,
+/turf/closed/wall/stone/window,
 /area/rogue/under/tomb/indoors)
 "id" = (
 /obj/structure/fluff/walldeco/church/line,
@@ -501,7 +501,7 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue/under/tomb/cave/lava)
 "GA" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors)
 "GH" = (
 /turf/open/floor/rogue/grassred,
@@ -524,7 +524,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/tomb/cave/lava)
 "HN" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors/magic)
 "Ib" = (
 /obj/structure/rack/rogue/shelf/biggest,
@@ -551,7 +551,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/cave/lava)
 "Jr" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb/indoors/magic)
 "Kc" = (
 /obj/effect/decal/cleanable/sigil/NW,
@@ -645,7 +645,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/cave/lava)
 "Sd" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb/cave/lava)
 "So" = (
 /obj/structure/fluff/railing/border{
@@ -755,7 +755,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/cave/lava)
 "Yn" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/cave/lava)
 "ZH" = (
 /turf/open/floor/rogue/metal,

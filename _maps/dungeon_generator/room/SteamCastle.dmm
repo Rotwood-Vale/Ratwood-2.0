@@ -87,7 +87,7 @@
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/under/tomb/indoors)
 "bj" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/tomb/wilds)
 "bk" = (
 /obj/structure/bars/pipe{
@@ -205,7 +205,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "CastleSecret1"
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "cP" = (
 /obj/effect/decal/remains/human,
@@ -216,7 +216,7 @@
 /area/rogue/under/tomb/indoors)
 "cS" = (
 /obj/machinery/light/rogue/wallfire/candle,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "cU" = (
 /obj/structure/mineral_door/bars,
@@ -331,7 +331,7 @@
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/under/tomb/indoors)
 "eE" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/under/tomb)
 "eF" = (
 /obj/effect/decal/cleanable/blood,
@@ -380,7 +380,7 @@
 /obj/effect/mapping_helpers/secret_door_creator{
 	redstone_id = "CastleSecret6"
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "fc" = (
 /obj/machinery/light/rogue/wallfire/candle/blue,
@@ -566,7 +566,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "CastleSecret6"
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "hu" = (
 /mob/living/carbon/human/species/skeleton/npc/bogguard,
@@ -582,7 +582,7 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "hI" = (
-/turf/closed/mineral,
+/turf/closed/rock,
 /area/rogue/under/tomb)
 "hK" = (
 /obj/machinery/light/rogue/wallfire/candle,
@@ -895,7 +895,7 @@
 /area/rogue/under/tomb/indoors)
 "ll" = (
 /obj/machinery/light/rogue/wallfire/candle/blue,
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/tomb/indoors)
 "lm" = (
 /obj/machinery/light/rogue/wallfire/candle/blue,
@@ -1215,7 +1215,7 @@
 	redstone_id = "CastleSecret5";
 	floor_turf = /turf/open/floor/rogue/cobble
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "og" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -1238,7 +1238,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "ow" = (
 /obj/effect/decal/cleanable/blood,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "oB" = (
 /obj/item/chair/wood{
@@ -1431,7 +1431,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/indoors)
 "rk" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "rl" = (
 /obj/machinery/light/rogue/chand,
@@ -1548,7 +1548,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/indoors)
 "ta" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb)
 "th" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/food,
@@ -1576,7 +1576,7 @@
 	redstone_id = "CastleSecret1";
 	floor_turf = /turf/open/floor/rogue/tile/masonic/spiral
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "tH" = (
 /obj/structure/table/wood/crafted,
@@ -1773,7 +1773,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb)
 "wn" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/tomb/indoors)
 "wr" = (
 /obj/structure/bed/rogue/shit,
@@ -1811,7 +1811,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "wL" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/under/tomb/indoors)
 "wM" = (
 /obj/structure/bars/pipe,
@@ -1944,7 +1944,7 @@
 /area/rogue/under/tomb/indoors)
 "xZ" = (
 /obj/machinery/light/rogue/wallfire/candle/blue,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "ya" = (
 /obj/structure/chair/stool/rogue,
@@ -1953,7 +1953,7 @@
 /area/rogue/under/tomb)
 "yb" = (
 /obj/machinery/light/rogue/wallfire,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "yh" = (
 /mob/living/carbon/human/species/skeleton/npc/hardspread,
@@ -2284,7 +2284,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/wilds)
 "Bq" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb/indoors)
 "Br" = (
 /turf/open/floor/rogue/grassred,
@@ -2351,7 +2351,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb/indoors)
 "Cb" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb/indoors)
 "Cc" = (
 /obj/structure/bars/pipe{
@@ -2460,7 +2460,7 @@
 /area/rogue/under/tomb/indoors)
 "Di" = (
 /obj/machinery/light/rogue/wallfire/candle,
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb/indoors)
 "Dp" = (
 /obj/structure/bars,
@@ -2774,7 +2774,7 @@
 	redstone_id = "CastleSecret4";
 	floor_turf = /turf/open/floor/rogue/hexstone
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "Hj" = (
 /obj/structure/table/wood,
@@ -2976,7 +2976,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/wilds)
 "Jx" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb/indoors/royal)
 "Jy" = (
 /obj/structure/closet/crate/chest/neu,
@@ -3031,7 +3031,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
 "Ks" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/tomb)
 "Ky" = (
 /obj/structure/rack/rogue/shelf/biggest,
@@ -3152,7 +3152,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "LX" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "LY" = (
 /obj/effect/decal/cleanable/blood,
@@ -3193,7 +3193,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "CastleSecret5"
 	},
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "MJ" = (
 /obj/item/cooking/platter/copper,
@@ -3231,7 +3231,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "Nk" = (
 /obj/machinery/light/rogue/wallfire/candle,
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb/indoors/royal)
 "Nm" = (
 /obj/structure/bars/pipe{
@@ -3345,7 +3345,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "OM" = (
 /obj/machinery/light/rogue/wallfire/candle/blue,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "OO" = (
 /turf/open/floor/rogue/cobble,
@@ -3729,7 +3729,7 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "Tw" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/wilds)
 "Tz" = (
 /obj/structure/fluff/railing/fence{
@@ -4094,7 +4094,7 @@
 /turf/open/floor/rogue/tile/bath,
 /area/rogue/under/tomb/indoors)
 "Xf" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "Xh" = (
 /obj/structure/mineral_door/bars,
@@ -4123,7 +4123,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "XJ" = (
-/turf/closed/wall/mineral/rogue/stone/window,
+/turf/closed/wall/stone/window,
 /area/rogue/under/tomb/indoors)
 "XL" = (
 /turf/open/floor/rogue/herringbone,
@@ -4152,7 +4152,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb)
 "XY" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb)
 "Ya" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga,
@@ -4191,7 +4191,7 @@
 	redstone_id = "CastleSecret3";
 	floor_turf = /turf/open/floor/rogue/tile
 	},
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb/indoors/royal)
 "YJ" = (
 /obj/structure/roguerock,

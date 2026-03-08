@@ -7,12 +7,12 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/cave)
 "eC" = (
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/cave)
 "fu" = (
 /obj/structure/fluff/walldeco/painting/seraphina,
 /obj/structure/fluff/walldeco/painting/seraphina,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/cave)
 "fy" = (
 /obj/structure/flora/rogueshroom/happy/random,
@@ -20,7 +20,7 @@
 /area/rogue/under/tomb/cave)
 "fE" = (
 /obj/structure/flora/rogueshroom/happy/random,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "ha" = (
 /obj/structure/flora/roguegrass/swampweed,
@@ -43,7 +43,7 @@
 /area/rogue/under/tomb/cave)
 "kc" = (
 /obj/structure/fluff/walldeco/painting/skull,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/cave)
 "my" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/minotaur/axe,
@@ -66,7 +66,7 @@
 /area/rogue/under/tomb/cave)
 "rf" = (
 /obj/structure/fluff/walldeco/painting,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/cave)
 "rh" = (
 /obj/structure/bed/rogue/shit,
@@ -98,7 +98,7 @@
 /area/rogue/under/tomb/cave)
 "tb" = (
 /obj/structure/fluff/walldeco/rpainting/forest,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/cave)
 "tk" = (
 /obj/structure/mineral_door/wood/fancywood,
@@ -135,7 +135,7 @@
 /area/rogue/under/tomb/cave)
 "BA" = (
 /obj/structure/fluff/walldeco/rpainting/crown,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/cave)
 "Ev" = (
 /obj/structure/table/wood/fancy/royalblack,
@@ -184,7 +184,7 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/cave)
 "Kt" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "Ln" = (
 /obj/machinery/light/rogue/torchholder/c,
@@ -221,7 +221,7 @@
 /area/rogue/under/tomb/cave)
 "Xb" = (
 /obj/structure/fluff/walldeco/painting/queen,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/cave)
 "Xd" = (
 /obj/machinery/light/rogue/wallfire/candle/r,

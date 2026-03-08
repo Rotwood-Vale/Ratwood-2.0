@@ -21,10 +21,10 @@
 /area/rogue/under/tomb/cave)
 "ak" = (
 /obj/structure/fluff/walldeco/vinez/r,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/cave)
 "ar" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/cave)
 "au" = (
 /obj/structure/fluff/walldeco/vinez/l,
@@ -76,7 +76,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/cave)
 "aP" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/cave)
 "aQ" = (
 /obj/structure/table/vtable,
@@ -100,7 +100,7 @@
 /area/rogue/under/tomb/cave)
 "aV" = (
 /obj/structure/fluff/walldeco/vinez/l,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/cave)
 "aX" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/r,

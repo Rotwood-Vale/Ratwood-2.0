@@ -6,7 +6,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "k" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "v" = (
 /obj/effect/dungeon_directional_helper/east,
@@ -14,7 +14,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
 "E" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb)
 
 (1,1,1) = {"

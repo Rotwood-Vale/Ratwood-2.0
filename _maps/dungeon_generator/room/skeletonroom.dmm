@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "bZ" = (
 /obj/structure/fluff/walldeco/painting/skull,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/indoors/church)
 "eD" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb/indoors/church)
 "fs" = (
 /turf/open/floor/rogue/hexstone{
@@ -34,7 +34,7 @@
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/tomb/indoors/church)
 "gQ" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/indoors/church)
 "hp" = (
 /obj/structure/mineral_door/wood/deadbolt{
@@ -104,7 +104,7 @@
 /area/rogue/under/tomb/indoors/church)
 "pn" = (
 /obj/structure/fluff/walldeco/painting,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/indoors/church)
 "pt" = (
 /obj/structure/fluff/railing/border{
@@ -155,7 +155,7 @@
 /area/rogue/under/tomb/indoors/church)
 "uN" = (
 /obj/structure/fluff/walldeco/painting/skull,
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb/indoors/church)
 "ve" = (
 /obj/effect/dungeon_directional_helper/south,
@@ -167,7 +167,7 @@
 /area/rogue/under/tomb/indoors/church)
 "Dn" = (
 /obj/structure/fluff/walldeco/rpainting/crown,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/indoors/church)
 "FJ" = (
 /obj/item/reagent_containers/food/snacks/smallrat,
@@ -181,7 +181,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "HA" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "IO" = (
 /turf/open/floor/rogue/hexstone{
@@ -261,7 +261,7 @@
 /area/rogue/under/tomb/indoors/church)
 "SB" = (
 /obj/structure/fluff/walldeco/rpainting/forest,
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb/indoors/church)
 "SO" = (
 /turf/open/floor/rogue/cobblerock,

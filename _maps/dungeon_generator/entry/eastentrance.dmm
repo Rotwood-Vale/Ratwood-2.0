@@ -86,7 +86,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "mT" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "no" = (
 /obj/structure/table/wood/crafted,
@@ -196,7 +196,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb/indoors)
 "Hw" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors)
 "LD" = (
 /obj/item/reagent_containers/glass/bucket,

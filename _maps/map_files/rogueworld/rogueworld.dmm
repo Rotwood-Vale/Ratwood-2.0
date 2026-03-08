@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/woods)
 "ab" = (
 /turf/open/floor/rogue/dirt/road,
@@ -13,10 +13,10 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/cave)
 "ae" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cavelava)
 "af" = (
-/turf/closed/mineral/rogue/salt,
+/turf/closed/rock/salt,
 /area/rogue/outdoors/woods)
 "ag" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/goat,
@@ -42,7 +42,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods)
 "am" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/outdoors/woods)
 "an" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/chicken,
@@ -53,7 +53,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "ap" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/outdoors/woods)
 "aq" = (
 /turf/open/floor/rogue/dirt/road,
@@ -65,20 +65,20 @@
 /turf/open/lava,
 /area/rogue/under/cavelava)
 "at" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/under/cavelava)
 "au" = (
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "av" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cavelava)
 "aw" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cave)
 "ax" = (
-/turf/closed/mineral/random/rogue/med,
+/turf/closed/rock/random/med,
 /area/rogue/under/cave)
 "ay" = (
 /turf/open/floor/rogue/dirt/road,
@@ -111,7 +111,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
 "aF" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/outdoors/woods)
 "aG" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
@@ -125,10 +125,10 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
 "aJ" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave)
 "aK" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cavewet)
 "aL" = (
 /turf/open/water/gross/rust,
@@ -137,10 +137,10 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cavewet)
 "aN" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/cavewet)
 "aO" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/under/cavewet)
 "aP" = (
 /obj/structure/closet/crate/chest/lootbox,
@@ -150,10 +150,10 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/cavewet)
 "aR" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/basement)
 "aS" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/basement)
 "aT" = (
 /turf/open/floor/rogue/blocks,
@@ -222,20 +222,20 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/basement)
 "bf" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cavewet)
 "bg" = (
 /obj/structure/stairs,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/basement)
 "bh" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/indoors/cave)
 "bi" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/cave)
 "bj" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/bog)
 "bk" = (
 /turf/open/water/gross,
@@ -258,13 +258,13 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/mountains)
 "bq" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/mountains)
 "br" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/mountains)
 "bs" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/indoors/cave)
 "bt" = (
 /turf/open/floor/rogue/blocks,
@@ -291,13 +291,13 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/cave)
 "bz" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/outdoors/mountains)
 "bA" = (
 /turf/open/floor/rogue/volcanic,
 /area/rogue/outdoors/mountains)
 "bB" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/outdoors/mountains)
 "bC" = (
 /turf/open/water,
@@ -314,20 +314,20 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains)
 "bG" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/indoors/cave)
 "bH" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/outdoors/woods)
 "bI" = (
 /obj/structure/stairs,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "bJ" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/outdoors/bog)
 "bK" = (
-/turf/closed/mineral/random/rogue,
+/turf/closed/rock/random,
 /area/rogue/indoors/cave)
 "bL" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
@@ -338,35 +338,35 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bog)
 "bN" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/indoors/cave)
 "bO" = (
 /obj/effect/landmark/mapGenerator/rogue/cave,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cavelava)
 "bP" = (
 /obj/effect/landmark/mapGenerator/rogue/cave,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cave)
 "bQ" = (
 /obj/effect/landmark/mapGenerator/rogue/cave,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/cavewet)
 "bR" = (
 /obj/effect/landmark/mapGenerator/rogue/cave,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/indoors/cave)
 "bS" = (
 /obj/effect/landmark/mapGenerator/rogue/bog,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/indoors/cave)
 "bT" = (
 /obj/effect/landmark/mapGenerator/rogue/forest,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/indoors/cave)
 "bU" = (
 /obj/effect/landmark/mapGenerator/sunlights,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/indoors/cave)
 "bV" = (
 /obj/structure/flora/roguetree,
@@ -385,7 +385,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bog)
 "bZ" = (
-/turf/closed/mineral/rogue/salt,
+/turf/closed/rock/salt,
 /area/rogue/outdoors/mountains)
 "ca" = (
 /turf/open/transparent/openspace,
@@ -405,7 +405,7 @@
 /area/rogue/outdoors/woods)
 "cf" = (
 /obj/effect/spawner/roguemap/pit,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/indoors/cave)
 "cg" = (
 /obj/structure/closet/crate/chest/lootbox,

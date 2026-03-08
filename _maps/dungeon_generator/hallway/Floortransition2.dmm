@@ -3,7 +3,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/cave)
 "g" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "h" = (
 /obj/structure/glowshroom,
@@ -23,7 +23,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/cave)
 "n" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue)
 "p" = (
 /obj/item/ammo_casing/caseless/rogue/arrow,

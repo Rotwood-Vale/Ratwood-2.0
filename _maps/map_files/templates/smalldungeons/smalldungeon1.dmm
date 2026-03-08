@@ -17,7 +17,7 @@
 /area/rogue/under/cave/dungeon1)
 "aG" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
-/turf/closed/wall/mineral/rogue/decostone/mossy/red,
+/turf/closed/wall/decostone/mossy/red,
 /area/rogue/under/cave/dungeon1)
 "aL" = (
 /obj/structure/table/wood/crafted,
@@ -44,7 +44,7 @@
 /area/rogue/under/cave/dungeon1)
 "bc" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "bd" = (
 /obj/item/rogue/painting,
@@ -492,7 +492,7 @@
 /area/rogue/under/cave/dungeon1)
 "mo" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/closed/wall/mineral/rogue/decostone/mossy/red,
+/turf/closed/wall/decostone/mossy/red,
 /area/rogue/under/cave/dungeon1)
 "mE" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
@@ -577,7 +577,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "nW" = (
-/turf/closed/wall/mineral/rogue/decostone/mossy/red/long,
+/turf/closed/wall/decostone/mossy/red/long,
 /area/rogue/under/cave/dungeon1)
 "nZ" = (
 /obj/structure/well/fountain,
@@ -621,7 +621,7 @@
 /area/rogue/under/cave/dungeon1)
 "oU" = (
 /obj/structure/fluff/walldeco/rpainting/forest,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "oW" = (
 /obj/item/chair/stool/bar/rogue/crafted,
@@ -807,7 +807,7 @@
 /area/rogue/under/cave/dungeon1)
 "sD" = (
 /obj/machinery/light/rogue/oven,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "sE" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -821,7 +821,7 @@
 /area/rogue/under/cave/dungeon1)
 "sW" = (
 /obj/structure/fluff/walldeco/rpainting,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "sY" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
@@ -985,7 +985,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/cave/dungeon1)
 "ws" = (
-/turf/closed/mineral/random/rogue/high,
+/turf/closed/rock/random/high,
 /area/rogue/under/cave/dungeon1)
 "wu" = (
 /obj/effect/decal/cobbleedge{
@@ -1029,7 +1029,7 @@
 /area/rogue/under/cave/dungeon1)
 "xm" = (
 /obj/structure/fluff/statue/gargoyle,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "xs" = (
 /obj/structure/table/wood{
@@ -1061,7 +1061,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "xZ" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/cave/dungeon1)
 "yd" = (
 /turf/open/floor/rogue/tile/masonic/single,
@@ -1134,7 +1134,7 @@
 /area/rogue/under/cave/dungeon1)
 "zL" = (
 /obj/structure/fluff/walldeco/rpainting/crown,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "zR" = (
 /obj/item/rogueweapon/werewolf_claw/right,
@@ -1207,7 +1207,7 @@
 /area/rogue/under/cave/dungeon1)
 "Bk" = (
 /obj/structure/fluff/statue,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "Bw" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -1312,7 +1312,7 @@
 /area/rogue/under/cave/dungeon1)
 "Dr" = (
 /obj/structure/fluff/walldeco/serpflag,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "Ds" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
@@ -1381,7 +1381,7 @@
 "Ey" = (
 /obj/structure/fluff/statue/gargoyle,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "EB" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -1755,7 +1755,7 @@
 /area/rogue/under/cave/dungeon1)
 "Mm" = (
 /obj/structure/fluff/walldeco/painting/queen,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "Mq" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
@@ -1806,7 +1806,7 @@
 /area/rogue/under/cave/dungeon1)
 "Nu" = (
 /obj/structure/fluff/walldeco/painting,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "Nz" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
@@ -1842,7 +1842,7 @@
 /area/rogue/under/cave/dungeon1)
 "Of" = (
 /obj/effect/decal/cleanable/blood/bubblegum,
-/turf/closed/wall/mineral/rogue/decostone/mossy/red,
+/turf/closed/wall/decostone/mossy/red,
 /area/rogue/under/cave/dungeon1)
 "Ov" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -1950,7 +1950,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "RK" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "RS" = (
 /turf/open/floor/rogue/tile/masonic/inverted,
@@ -1993,7 +1993,7 @@
 "Ts" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/cobweb,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "Tt" = (
 /obj/structure/rack/rogue,
@@ -2091,7 +2091,7 @@
 /area/rogue/under/cave/dungeon1)
 "Vs" = (
 /obj/structure/fluff/walldeco/painting/seraphina,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "Vt" = (
 /obj/structure/fluff/walldeco/chains,
@@ -2102,7 +2102,7 @@
 "Vu" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/fluff/walldeco/rpainting,
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/cave/dungeon1)
 "VA" = (
 /obj/structure/chair/wood/rogue{
@@ -2125,7 +2125,7 @@
 /area/rogue/under/cave/dungeon1)
 "VY" = (
 /obj/effect/decal/cobbleedge,
-/turf/closed/wall/mineral/rogue/decostone/mossy/red/long,
+/turf/closed/wall/decostone/mossy/red/long,
 /area/rogue/under/cave/dungeon1)
 "Wc" = (
 /obj/item/grown/log/tree/stick,
@@ -2157,7 +2157,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "WC" = (
-/turf/closed/wall/mineral/rogue/stone/window,
+/turf/closed/wall/stone/window,
 /area/rogue/under/cave/dungeon1)
 "WJ" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -2200,7 +2200,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "XZ" = (
-/turf/closed/wall/mineral/rogue/decostone/mossy/red,
+/turf/closed/wall/decostone/mossy/red,
 /area/rogue/under/cave/dungeon1)
 "Ya" = (
 /obj/structure/bookcase,

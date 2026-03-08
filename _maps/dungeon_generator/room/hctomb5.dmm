@@ -51,7 +51,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "fv" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors/rest)
 "fx" = (
 /obj/effect/decal/cobbleedge{
@@ -93,7 +93,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb/indoors/rest)
 "js" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors)
 "jI" = (
 /obj/machinery/light/rogue/torchholder/l,
@@ -121,7 +121,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/under/tomb/indoors/rest)
 "oZ" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "pK" = (
 /turf/open/transparent/openspace,
@@ -137,7 +137,7 @@
 /turf/open/floor/carpet/purple,
 /area/rogue/under/tomb/indoors/rest)
 "qV" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb)
 "rX" = (
 /obj/structure/table/wood,
@@ -199,10 +199,10 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/tomb)
 "xw" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb/indoors/rest)
 "xH" = (
-/turf/closed/wall/mineral/rogue/decostone/center,
+/turf/closed/wall/decostone/center,
 /area/rogue/under/tomb/indoors)
 "yk" = (
 /turf/open/floor/rogue/dirt,
@@ -298,7 +298,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/under/tomb/indoors/rest)
 "Kz" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "LP" = (
 /obj/item/clothing/under/roguetown/skirt/random{

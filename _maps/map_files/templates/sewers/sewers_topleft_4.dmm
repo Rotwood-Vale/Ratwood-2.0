@@ -8,7 +8,7 @@
 /area/rogue/under/town/sewer)
 "d" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "g" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -24,7 +24,7 @@
 /turf/open/water/sewer,
 /area/rogue/under/town/sewer)
 "p" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "q" = (
 /obj/structure/closet/crate/chest,
@@ -45,7 +45,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "H" = (
 /obj/structure/glowshroom,
@@ -56,10 +56,10 @@
 /area/rogue/under/town/sewer)
 "K" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "N" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "R" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
@@ -68,7 +68,7 @@
 /area/rogue/under/town/sewer)
 "S" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "V" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,

@@ -24,10 +24,10 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "A" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "S" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 
 (1,1,1) = {"

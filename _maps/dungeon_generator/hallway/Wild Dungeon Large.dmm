@@ -96,7 +96,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb/wilds)
 "ly" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "mr" = (
 /obj/structure/fluff/nest,
@@ -140,7 +140,7 @@
 /area/rogue/under/tomb/wilds)
 "pT" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "rj" = (
 /obj/structure/flora/ausbushes/leafybush,
@@ -357,7 +357,7 @@
 "Lu" = (
 /obj/structure/fluff/walldeco/vinez,
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "Mm" = (
 /obj/structure/flora/roguegrass,

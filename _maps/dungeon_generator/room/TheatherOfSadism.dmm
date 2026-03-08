@@ -42,7 +42,7 @@
 /area/rogue/under/tomb)
 "cJ" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors)
 "dY" = (
 /obj/structure/chair/wood/rogue/chair3{
@@ -79,15 +79,15 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue/under/tomb)
 "fN" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors)
 "fS" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors)
 "fY" = (
 /obj/structure/fluff/walldeco/med5,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb)
 "gk" = (
 /obj/structure/closet/crate/chest/gold,
@@ -162,7 +162,7 @@
 /area/rogue/under/tomb)
 "jW" = (
 /obj/structure/fluff/walldeco/med2,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb)
 "kx" = (
 /obj/structure/chair/wood/rogue/chair3{
@@ -222,14 +222,14 @@
 /area/rogue/under/tomb)
 "oU" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb)
 "oW" = (
 /obj/machinery/light/rogue/firebowl,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb)
 "pB" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors/royal)
 "pS" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
@@ -265,7 +265,7 @@
 /area/rogue/under/tomb)
 "qV" = (
 /obj/structure/fluff/walldeco/med3,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors)
 "re" = (
 /turf/open/transparent/openspace,
@@ -314,7 +314,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "tI" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb)
 "uf" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -389,10 +389,10 @@
 /area/rogue/under/tomb/indoors)
 "xI" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors/royal)
 "xX" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors)
 "yh" = (
 /obj/effect/decal/cleanable/blood/gibs,
@@ -422,7 +422,7 @@
 /area/rogue/under/tomb)
 "yy" = (
 /obj/structure/fluff/walldeco/med6,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb)
 "yC" = (
 /obj/effect/dungeon_directional_helper/south,
@@ -503,7 +503,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "EG" = (
 /obj/structure/fluff/walldeco/med4,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb)
 "FD" = (
 /obj/structure/fluff/railing/border{
@@ -618,7 +618,7 @@
 /turf/open/floor/rogue/tile/checker,
 /area/rogue/under/tomb/indoors)
 "LZ" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb)
 "Nl" = (
 /turf/open/floor/rogue/metal,
@@ -766,7 +766,7 @@
 /area/rogue/under/tomb)
 "Sj" = (
 /obj/structure/fluff/walldeco/painting/skull,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors/royal)
 "Sx" = (
 /mob/living/carbon/human/species/orc/npc/berserker,
@@ -862,10 +862,10 @@
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/under/tomb/indoors/royal)
 "Wd" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb)
 "Wy" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors/royal)
 "WE" = (
 /obj/effect/decal/cleanable/blood,

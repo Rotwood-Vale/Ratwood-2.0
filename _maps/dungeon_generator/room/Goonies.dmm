@@ -69,7 +69,7 @@
 	floor_turf = /turf/open/floor/rogue/ruinedwood;
 	redstone_id = "Ship1"
 	},
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "bj" = (
 /obj/structure/fluff/railing/border{
@@ -362,7 +362,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "jn" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "jo" = (
 /obj/structure/flora/roguegrass/water,
@@ -402,7 +402,7 @@
 /area/rogue/under/tomb/indoors)
 "ka" = (
 /obj/structure/flora/roguegrass/water,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/wet)
 "kj" = (
 /obj/structure/fluff/railing/border,
@@ -451,7 +451,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb/indoors)
 "lJ" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "lR" = (
 /obj/structure/fluff/statue/knight/r,
@@ -534,7 +534,7 @@
 /obj/structure/lever/hidden{
 	redstone_id = "Ship1"
 	},
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "oi" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -568,7 +568,7 @@
 /area/rogue/under/tomb/indoors)
 "oC" = (
 /obj/structure/fluff/walldeco/rpainting/crown,
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "oN" = (
 /obj/structure/roguewindow/openclose{
@@ -678,14 +678,14 @@
 /area/rogue/under/tomb/indoors)
 "sS" = (
 /obj/machinery/light/rogue/wallfire/candle,
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "tj" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb/indoors)
 "tm" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/wet)
 "tr" = (
 /obj/structure/fluff/railing/wood,
@@ -843,7 +843,7 @@
 /area/rogue/under/tomb/lake)
 "ya" = (
 /obj/effect/waterfall,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/wet)
 "ym" = (
 /obj/structure/fluff/railing/border{
@@ -992,7 +992,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Bt" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/lake)
 "BI" = (
 /obj/structure/closet/crate/chest/old_crate,
@@ -1007,7 +1007,7 @@
 /area/rogue/under/tomb/cave)
 "Cu" = (
 /obj/machinery/light/rogue/wallfire/candle/blue,
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "Cx" = (
 /mob/living/carbon/human/species/skeleton/npc/hard,
@@ -1033,7 +1033,7 @@
 /area/rogue/under/tomb/indoors)
 "Dn" = (
 /obj/structure/fluff/walldeco/med3,
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "Dx" = (
 /obj/structure/bed/rogue/inn/wooldouble,
@@ -1137,7 +1137,7 @@
 	floor_turf = /turf/open/floor/rogue/ruinedwood;
 	redstone_id = "Ship1"
 	},
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "FY" = (
 /obj/structure/flora/roguegrass/water,
@@ -1215,7 +1215,7 @@
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/tomb/indoors)
 "IS" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/cave/wet)
 "IV" = (
 /obj/structure/fluff/railing/border{

@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 
 #define iswallturf(A) (istype(A, /turf/closed/wall))
 
-#define ismineralturf(A) (istype(A, /turf/closed/mineral))
+#define ismineralturf(A) (istype(A, /turf/closed/rock))
 
 #define islava(A) (istype(A, /turf/open/lava))
 

@@ -3,17 +3,17 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
 "aG" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "aO" = (
 /obj/effect/dungeon_directional_helper/south,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
 "aV" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "aZ" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb)
 "bi" = (
 /obj/effect/decal/cleanable/blood/old,

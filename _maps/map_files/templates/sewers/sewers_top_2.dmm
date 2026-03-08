@@ -14,11 +14,11 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/sewer)
 "f" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "g" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "k" = (
 /obj/structure/table/wood,
@@ -47,7 +47,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "u" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "B" = (
 /obj/structure/chair/wood/rogue,
@@ -82,7 +82,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/town/sewer)
 "R" = (
-/turf/closed/wall/mineral/rogue/pipe{
+/turf/closed/wall/pipe{
 	icon_state = "iron_line";
 	dir = 4
 	},

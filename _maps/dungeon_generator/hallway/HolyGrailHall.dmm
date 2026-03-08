@@ -106,7 +106,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb/wilds)
 "kv" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "kO" = (
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -194,7 +194,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/wilds)
 "rK" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "rS" = (
 /obj/structure/flora/roguegrass/bush/westleach,
@@ -234,7 +234,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb/wilds)
 "vf" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "wk" = (
 /obj/structure/flora/ausbushes/sparsegrass,

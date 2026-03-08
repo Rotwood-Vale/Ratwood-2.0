@@ -8,7 +8,7 @@
 /turf/open/floor/rogue/volcanic,
 /area/rogue/under/tomb/cave/lava)
 "ah" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/lava)
 "ai" = (
 /turf/open/floor/rogue/volcanic,
@@ -40,7 +40,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave/lava)
 "hA" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "kF" = (
 /obj/structure/fluff/big_chain,
@@ -149,7 +149,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/cave/lava)
 "AC" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/tomb/indoors)
 "Ji" = (
 /turf/open/floor/rogue/dirt/road,

@@ -1270,7 +1270,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 	if(NewLoc)
 		var/NewLocTurf = get_turf(NewLoc)
-		if(istype(NewLocTurf, /turf/closed/mineral/rogue/bedrock)) // prevent going out of bounds.
+		if(istype(NewLocTurf, /turf/closed/rock/bedrock)) // prevent going out of bounds.
 			return
 		forceMove(NewLoc)
 		update_parallax_contents()

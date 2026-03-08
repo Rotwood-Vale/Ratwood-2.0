@@ -24,7 +24,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave/spider)
 "i" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/spider)
 "j" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider,
@@ -83,7 +83,7 @@
 /area/rogue/under/tomb/cave/spider)
 "B" = (
 /obj/effect/decal/remains/human,
-/turf/closed/mineral,
+/turf/closed/rock,
 /area/rogue/under/tomb/cave/spider)
 "D" = (
 /obj/effect/decal/remains/human,
@@ -103,7 +103,7 @@
 /area/rogue/under/tomb/cave/spider)
 "J" = (
 /obj/structure/spider/stickyweb,
-/turf/closed/mineral,
+/turf/closed/rock,
 /area/rogue/under/tomb/cave/spider)
 "K" = (
 /obj/effect/decal/remains/human,
@@ -124,7 +124,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave/spider)
 "M" = (
-/turf/closed/mineral,
+/turf/closed/rock,
 /area/rogue/under/tomb/cave/spider)
 "N" = (
 /obj/item/clothing/suit/roguetown/shirt,

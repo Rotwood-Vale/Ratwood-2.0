@@ -284,7 +284,7 @@
 	return FALSE
 
 
-/proc/get_complex_damage(obj/item/I, mob/living/user, blade_dulling, turf/closed/mineral/T)
+/proc/get_complex_damage(obj/item/I, mob/living/user, blade_dulling, turf/closed/rock/T)
 	var/dullfactor = 1
 	if(!I?.force)
 		return 0

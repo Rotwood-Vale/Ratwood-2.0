@@ -50,10 +50,10 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb/indoors)
 "t" = (
-/turf/closed/wall/mineral/rogue/wooddark/slitted,
+/turf/closed/wall/wooddark/slitted,
 /area/rogue/under/tomb/indoors)
 "v" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "w" = (
 /obj/effect/dungeon_directional_helper/north,
@@ -76,13 +76,13 @@
 /area/rogue/under/tomb/indoors)
 "D" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/wooddark/window,
+/turf/closed/wall/wooddark/window,
 /area/rogue/under/tomb/indoors)
 "G" = (
 /turf/open/floor/rogue/twig,
 /area/rogue/under/tomb/cave)
 "I" = (
-/turf/closed/wall/mineral/rogue/wooddark/slitted,
+/turf/closed/wall/wooddark/slitted,
 /area/rogue/under/tomb/cave)
 "M" = (
 /obj/structure/roguerock,
@@ -100,7 +100,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave)
 "W" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "X" = (
 /obj/structure/fluff/walldeco/vinez/offset,

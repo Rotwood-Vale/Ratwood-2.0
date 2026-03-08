@@ -1,12 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "c" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "e" = (
 /obj/item/reagent_containers/glass/cup/wooden,
@@ -99,7 +99,7 @@
 /area/rogue/under/town/sewer)
 "v" = (
 /obj/structure/fluff/walldeco/stone,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "x" = (
 /obj/structure/table/wood{
@@ -138,7 +138,7 @@
 /area/rogue/under/town/sewer)
 "E" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "F" = (
 /obj/structure/bars,
@@ -185,7 +185,7 @@
 /area/rogue/under/town/sewer)
 "R" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "S" = (
 /obj/structure/table/wood{
@@ -214,7 +214,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "W" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "Z" = (
 /obj/structure/spider/stickyweb,

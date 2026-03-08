@@ -36,7 +36,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "hr" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/wet)
 "ht" = (
 /obj/structure/bed/rogue/shit,
@@ -92,7 +92,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/under/tomb/indoors)
 "jV" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/under/tomb/indoors)
 "jX" = (
 /obj/structure/mineral_door/wood/fancywood,
@@ -348,7 +348,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "JE" = (
-/turf/closed/wall/mineral/rogue/decowood/vert,
+/turf/closed/wall/decowood/vert,
 /area/rogue/under/tomb/indoors)
 "JF" = (
 /obj/structure/fluff/railing/border{

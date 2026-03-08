@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "b" = (
 /obj/structure/table/church/m,
@@ -54,7 +54,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "J" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "K" = (
 /obj/structure/bars/tough,

@@ -17,7 +17,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors/royal)
 "aw" = (
-/turf/closed/wall/mineral/rogue/roofwall/innercorner{
+/turf/closed/wall/roofwall/innercorner{
 	dir = 1
 	},
 /area/rogue/under/tomb/indoors/royal)
@@ -229,7 +229,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb/wilds)
 "ig" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "ir" = (
 /obj/structure/fluff/railing/border{
@@ -294,7 +294,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/tomb/wilds)
 "la" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/wilds)
 "lb" = (
 /mob/living/carbon/human/species/skeleton/npc/bogguard,
@@ -308,7 +308,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/wilds)
 "lK" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
+/turf/closed/wall/roofwall/outercorner{
 	dir = 1
 	},
 /area/rogue/under/tomb)
@@ -387,7 +387,7 @@
 /turf/open/floor/rogue/tile/bath,
 /area/rogue/under/tomb/indoors/royal)
 "oA" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors/royal)
 "oT" = (
 /obj/structure/flora/roguegrass,
@@ -480,7 +480,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors/royal)
 "tk" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle{
+/turf/closed/wall/roofwall/middle{
 	dir = 8
 	},
 /area/rogue/under/tomb)
@@ -507,7 +507,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/under/tomb/indoors/royal)
 "tJ" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
+/turf/closed/wall/roofwall/outercorner{
 	dir = 4
 	},
 /area/rogue/under/tomb)
@@ -570,7 +570,7 @@
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/tomb/indoors/royal)
 "wE" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner,
+/turf/closed/wall/roofwall/outercorner,
 /area/rogue/under/tomb)
 "wQ" = (
 /obj/structure/fluff/railing/wood{
@@ -591,7 +591,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "yi" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle,
+/turf/closed/wall/roofwall/middle,
 /area/rogue/under/tomb)
 "ys" = (
 /obj/structure/fluff/railing/wood{
@@ -614,7 +614,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors/royal)
 "zz" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb/wilds)
 "zI" = (
 /obj/item/chair/wood/wings{
@@ -631,7 +631,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors/royal)
 "Bn" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle{
+/turf/closed/wall/roofwall/middle{
 	dir = 1
 	},
 /area/rogue/under/tomb)
@@ -644,7 +644,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors/royal)
 "BM" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle{
+/turf/closed/wall/roofwall/middle{
 	dir = 4
 	},
 /area/rogue/under/tomb)
@@ -707,7 +707,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors/royal)
 "Eq" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "Ey" = (
 /obj/structure/roguewindow/openclose{
@@ -737,7 +737,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors/royal)
 "FC" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors/royal)
 "FX" = (
 /obj/structure/fluff/railing/wood{
@@ -1066,7 +1066,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/wilds)
 "Sa" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
+/turf/closed/wall/roofwall/outercorner{
 	dir = 8
 	},
 /area/rogue/under/tomb)

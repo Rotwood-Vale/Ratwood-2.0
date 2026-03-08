@@ -16,7 +16,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/cave/lava)
 "dk" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/under/tomb/indoors)
 "dv" = (
 /obj/effect/dungeon_directional_helper/east,
@@ -132,7 +132,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/cave/lava)
 "oW" = (
-/turf/closed/wall/mineral/rogue/stone/window,
+/turf/closed/wall/stone/window,
 /area/rogue/under/tomb/cave/lava)
 "pO" = (
 /turf/open/floor/rogue/churchmarble,
@@ -207,7 +207,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/indoors)
 "Ce" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/lava)
 "Cj" = (
 /turf/open/lava/acid,
@@ -377,7 +377,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/tomb/cave/lava)
 "WY" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "YK" = (
 /obj/structure/fluff/railing/border,

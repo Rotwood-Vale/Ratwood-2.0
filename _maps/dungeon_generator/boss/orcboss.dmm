@@ -97,7 +97,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue)
 "tP" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue)
 "vi" = (
 /turf/open/transparent/openspace,
@@ -173,7 +173,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue)
 "Fq" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue)
 "Fr" = (
 /obj/item/clothing/shoes/roguetown/boots/nobleboot,
@@ -223,7 +223,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue)
 "Ln" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue)
 "MQ" = (
 /obj/structure/closet/dirthole/closed/loot,
@@ -281,7 +281,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue)
 "XK" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue)
 "Yl" = (
 /obj/structure/chair/stool/rogue,

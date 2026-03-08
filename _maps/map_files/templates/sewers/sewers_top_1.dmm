@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "n" = (
 /obj/structure/glowshroom,
@@ -13,7 +13,7 @@
 /turf/open/water/sewer,
 /area/rogue/under/town/sewer)
 "O" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "S" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
@@ -21,7 +21,7 @@
 /area/rogue/under/town/sewer)
 "T" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "Y" = (
 /obj/structure/glowshroom,

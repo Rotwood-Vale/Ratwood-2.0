@@ -108,7 +108,7 @@
 /area/rogue/under/tomb/indoors/magic)
 "oT" = (
 /obj/item/roguegem/green,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors/magic)
 "qJ" = (
 /obj/structure/stairs{
@@ -163,10 +163,10 @@
 /area/rogue/under/tomb/indoors/magic)
 "vI" = (
 /obj/item/natural/rock,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors/magic)
 "vV" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "wu" = (
 /obj/effect/decal/cleanable/dirt,
@@ -322,7 +322,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/tomb/indoors/magic)
 "TP" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors/magic)
 "UB" = (
 /obj/effect/decal/cleanable/debris/stony,
@@ -332,7 +332,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors/magic)
 "Vw" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors/magic)
 "VA" = (
 /obj/effect/decal/remains/bigrat,

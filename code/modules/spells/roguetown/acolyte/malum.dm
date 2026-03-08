@@ -98,7 +98,7 @@
 		damaged.take_damage(structure_damage, BRUTE,"blunt",1)
 	for(var/turf/closed/wall/damagedwalls in view(radius, fallzone))
 		damagedwalls.take_damage(structure_damage, BRUTE,"blunt",1)
-	for(var/turf/closed/mineral/aoemining in view(radius, fallzone))
+	for(var/turf/closed/rock/aoemining in view(radius, fallzone))
 		aoemining.lastminer = usr
 		aoemining.take_damage(structure_damage, BRUTE,"blunt",1)
 

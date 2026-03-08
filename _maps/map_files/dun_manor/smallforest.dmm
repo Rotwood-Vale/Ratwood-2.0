@@ -10,7 +10,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/woods)
 "ad" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/mountains)
 "ae" = (
 /obj/effect/spawner/roguemap/stump,
@@ -18,7 +18,7 @@
 /area/rogue/outdoors/woods)
 "af" = (
 /obj/structure/flora/newtree,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/outdoors/woods)
 "ag" = (
 /obj/structure/flora/newtree,
@@ -30,10 +30,10 @@
 	},
 /area/rogue/outdoors/woods)
 "ai" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/outdoors/woods)
 "aj" = (
-/turf/closed/wall/mineral/rogue/wooddark/end{
+/turf/closed/wall/wooddark/end{
 	icon_state = "endwooddark";
 	dir = 4
 	},
@@ -45,13 +45,13 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "al" = (
-/turf/closed/wall/mineral/rogue/wooddark/end{
+/turf/closed/wall/wooddark/end{
 	icon_state = "endwooddark";
 	dir = 8
 	},
 /area/rogue/outdoors/woods)
 "am" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/outdoors/woods)
 "an" = (
 /turf/open/floor/rogue/rooftop{
@@ -136,10 +136,10 @@
 /turf/open/water/cleanshallow,
 /area/rogue/outdoors/woods)
 "bp" = (
-/turf/closed/mineral/rogue/salt,
+/turf/closed/rock/salt,
 /area/rogue/outdoors/woods)
 "cM" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/outdoors/woods)
 "cS" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/goatmale,
@@ -150,7 +150,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "dI" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/woods)
 "dZ" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/goat,
@@ -169,7 +169,7 @@
 "fZ" = (
 /obj/structure/flora/newtree,
 /obj/structure/flora/newtree,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/woods)
 "hb" = (
 /obj/structure/fluff/railing/fence,
@@ -192,7 +192,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "mJ" = (
-/turf/closed/mineral/rogue/coal,
+/turf/closed/rock/coal,
 /area/rogue/outdoors/woods)
 "om" = (
 /turf/open/transparent/openspace,
@@ -218,7 +218,7 @@
 /area/rogue/outdoors/woods)
 "sk" = (
 /obj/structure/flora/newtree,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/woods)
 "sN" = (
 /turf/open/floor/rogue/grass,
@@ -260,7 +260,7 @@
 	endTurfY = 128;
 	endTurfX = 128
 	},
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/woods)
 "CG" = (
 /obj/structure/fluff/railing/fence{

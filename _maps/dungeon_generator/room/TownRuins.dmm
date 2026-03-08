@@ -1,14 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ad" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb/indoors)
 "af" = (
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/under/tomb)
 "ai" = (
 /obj/effect/decal/cleanable/debris/glassy,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "al" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -44,7 +44,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb/indoors)
 "be" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb/indoors)
 "bh" = (
 /obj/item/natural/stone{
@@ -142,11 +142,11 @@
 /area/rogue/under/tomb)
 "cn" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors)
 "cz" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb)
 "cM" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -203,7 +203,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb)
 "dE" = (
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/under/tomb/indoors)
 "dF" = (
 /obj/structure/chair/bench/church/r,
@@ -295,7 +295,7 @@
 /area/rogue/under/tomb)
 "fu" = (
 /obj/structure/fluff/walldeco/rpainting/crown,
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/turf/closed/wall/wooddark/horizontal,
 /area/rogue/under/tomb/indoors)
 "fC" = (
 /obj/structure/well,
@@ -349,7 +349,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/tomb)
 "gC" = (
-/turf/closed/wall/mineral/rogue/wooddark/end,
+/turf/closed/wall/wooddark/end,
 /area/rogue/under/tomb/indoors)
 "gH" = (
 /obj/effect/dungeon_directional_helper/east,
@@ -371,7 +371,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "hl" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors/church)
 "hw" = (
 /obj/structure/flora/roguegrass/water,
@@ -439,7 +439,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "jo" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 4
 	},
 /area/rogue/under/tomb/indoors/church)
@@ -449,7 +449,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/under/tomb/indoors)
 "jt" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 4
 	},
 /area/rogue/under/tomb/indoors)
@@ -551,7 +551,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb/indoors)
 "lw" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb)
 "lz" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -574,7 +574,7 @@
 "lT" = (
 /obj/structure/curtain/brown,
 /obj/structure/curtain/brown,
-/turf/closed/wall/mineral/rogue/wooddark/window,
+/turf/closed/wall/wooddark/window,
 /area/rogue/under/tomb/indoors)
 "mq" = (
 /obj/effect/spawner/lootdrop/general_loot_hi,
@@ -586,7 +586,7 @@
 /area/rogue/under/tomb/indoors)
 "mx" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "mA" = (
 /obj/structure/mirror/fancy,
@@ -596,7 +596,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "mG" = (
-/turf/closed/wall/mineral/rogue/decostone/long{
+/turf/closed/wall/decostone/long{
 	dir = 1
 	},
 /area/rogue/under/tomb/indoors/church)
@@ -617,7 +617,7 @@
 /area/rogue/under/tomb/indoors)
 "mZ" = (
 /obj/structure/fluff/walldeco/rpainting/forest,
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors)
 "nd" = (
 /turf/open/floor/rogue/dirt/road,
@@ -733,7 +733,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb/indoors)
 "oP" = (
-/turf/closed/wall/mineral/rogue/decostone/long{
+/turf/closed/wall/decostone/long{
 	dir = 1
 	},
 /area/rogue/under/tomb/indoors)
@@ -756,7 +756,7 @@
 /area/rogue/under/tomb)
 "pg" = (
 /obj/effect/decal/cleanable/debris/glassy,
-/turf/closed/wall/mineral/rogue/wooddark/slitted,
+/turf/closed/wall/wooddark/slitted,
 /area/rogue/under/tomb/indoors)
 "ph" = (
 /obj/structure/flora/roguegrass,
@@ -772,7 +772,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb/indoors/church)
 "pt" = (
-/turf/closed/wall/mineral/rogue/wooddark/slitted,
+/turf/closed/wall/wooddark/slitted,
 /area/rogue/under/tomb/indoors)
 "pz" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -853,7 +853,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "qY" = (
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/turf/closed/wall/wooddark/horizontal,
 /area/rogue/under/tomb/indoors)
 "rh" = (
 /obj/structure/rack/rogue/shelf/biggest,
@@ -883,7 +883,7 @@
 /area/rogue/under/tomb)
 "rt" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb)
 "ru" = (
 /obj/structure/mineral_door/wood/deadbolt,
@@ -903,11 +903,11 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/tomb/indoors)
 "rV" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors)
 "rX" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb)
 "sb" = (
 /obj/structure/fluff/railing/border{
@@ -935,7 +935,7 @@
 /area/rogue/under/tomb)
 "sn" = (
 /obj/structure/fluff/walldeco/painting/skull,
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors)
 "sx" = (
 /obj/structure/barricade,
@@ -965,11 +965,11 @@
 "sP" = (
 /obj/machinery/light/rogue/torchholder,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb)
 "sQ" = (
 /obj/structure/curtain/brown,
-/turf/closed/wall/mineral/rogue/wooddark/window,
+/turf/closed/wall/wooddark/window,
 /area/rogue/under/tomb/indoors)
 "sY" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1052,7 +1052,7 @@
 /area/rogue/under/tomb/indoors)
 "ue" = (
 /obj/structure/fluff/walldeco/customflag,
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors)
 "uf" = (
 /obj/structure/bars/pipe{
@@ -1075,7 +1075,7 @@
 /area/rogue/under/tomb)
 "uC" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb)
 "uL" = (
 /obj/machinery/light/rogue/torchholder/r,
@@ -1126,7 +1126,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
 "vV" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb)
 "vY" = (
 /obj/item/natural/stone,
@@ -1175,7 +1175,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "xe" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/indoors)
 "xf" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1236,7 +1236,7 @@
 /area/rogue/under/tomb/indoors)
 "yP" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/rogue/wooddark/end,
+/turf/closed/wall/wooddark/end,
 /area/rogue/under/tomb)
 "zd" = (
 /obj/structure/bars/pipe{
@@ -1256,14 +1256,14 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
 "zo" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb)
 "zs" = (
 /obj/machinery/light/rogue/torchholder/r,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb/indoors)
 "zt" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 1
 	},
 /area/rogue/under/tomb/indoors)
@@ -1311,7 +1311,7 @@
 /area/rogue/under/tomb)
 "AC" = (
 /obj/machinery/light/rogue/wallfire,
-/turf/closed/wall/mineral/rogue/wooddark/end,
+/turf/closed/wall/wooddark/end,
 /area/rogue/under/tomb/indoors)
 "AF" = (
 /obj/item/natural/stone{
@@ -1332,14 +1332,14 @@
 	pixel_x = -7
 	},
 /obj/effect/decal/cobbleedge,
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/under/tomb/indoors/church)
 "AP" = (
 /obj/effect/dungeon_directional_helper/north,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
 "AU" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "Bc" = (
 /obj/structure/curtain/brown,
@@ -1348,7 +1348,7 @@
 /area/rogue/under/tomb/indoors)
 "By" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 8
 	},
 /area/rogue/under/tomb/indoors)
@@ -1395,7 +1395,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "CJ" = (
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/closed/wall/decostone/long,
 /area/rogue/under/tomb/indoors/church)
 "CK" = (
 /obj/structure/chair/bench/church,
@@ -1432,7 +1432,7 @@
 /area/rogue/under/tomb)
 "Dk" = (
 /obj/effect/decal/cleanable/debris/glassy,
-/turf/closed/wall/mineral/rogue/wooddark/slitted,
+/turf/closed/wall/wooddark/slitted,
 /area/rogue/under/tomb)
 "Dq" = (
 /obj/item/natural/stone{
@@ -1480,7 +1480,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "DG" = (
-/turf/closed/wall/mineral/rogue/wooddark/end,
+/turf/closed/wall/wooddark/end,
 /area/rogue/under/tomb)
 "DK" = (
 /obj/structure/bars/pipe{
@@ -1503,7 +1503,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "DV" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb)
 "DX" = (
 /obj/structure/glowshroom,
@@ -1558,7 +1558,7 @@
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/tomb/indoors)
 "Fz" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 8
 	},
 /area/rogue/under/tomb/indoors)
@@ -1578,7 +1578,7 @@
 /area/rogue/under/tomb)
 "FZ" = (
 /obj/structure/flora/roguegrass,
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/tomb)
 "Gb" = (
 /obj/structure/closet/crate/chest/crate,
@@ -1600,7 +1600,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/indoors/church)
 "Gu" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 8
 	},
 /area/rogue/under/tomb/indoors/church)
@@ -1647,7 +1647,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/under/tomb/indoors)
 "GW" = (
-/turf/closed/wall/mineral/rogue/decostone/end,
+/turf/closed/wall/decostone/end,
 /area/rogue/under/tomb/indoors/church)
 "GX" = (
 /obj/structure/roguetent,
@@ -1702,7 +1702,7 @@
 "HW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/rogue/decostone/long{
+/turf/closed/wall/decostone/long{
 	dir = 1
 	},
 /area/rogue/under/tomb/indoors)
@@ -1721,7 +1721,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Ig" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb)
 "Ii" = (
 /turf/open/floor/rogue/dirt,
@@ -1733,7 +1733,7 @@
 /area/rogue/under/tomb/indoors)
 "Iw" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "Ix" = (
 /obj/structure/bars/pipe{
@@ -1783,7 +1783,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "JE" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb/indoors)
 "JM" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -1825,7 +1825,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Kt" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/tomb)
 "KB" = (
 /obj/item/broom,
@@ -1850,7 +1850,7 @@
 /area/rogue/under/tomb/indoors)
 "KT" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/rogue/decostone/long{
+/turf/closed/wall/decostone/long{
 	dir = 1
 	},
 /area/rogue/under/tomb/indoors)
@@ -1944,7 +1944,7 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/tomb/indoors/church)
 "Nl" = (
-/turf/closed/wall/mineral/rogue/wooddark/slitted,
+/turf/closed/wall/wooddark/slitted,
 /area/rogue/under/tomb)
 "Nu" = (
 /turf/open/floor/rogue/naturalstone,
@@ -2032,7 +2032,7 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors/church)
 "OQ" = (
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/turf/closed/wall/wooddark/horizontal,
 /area/rogue/under/tomb)
 "Pf" = (
 /obj/structure/noose,
@@ -2088,7 +2088,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb)
 "QL" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 1
 	},
 /area/rogue/under/tomb/indoors/church)
@@ -2182,7 +2182,7 @@
 /area/rogue/under/tomb/indoors)
 "SY" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/indoors/church)
 "Td" = (
 /obj/machinery/light/rogue/hearth,
@@ -2194,7 +2194,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/tomb/indoors)
 "Tq" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/under/tomb/indoors)
 "TC" = (
 /obj/structure/fluff/railing/border{
@@ -2219,7 +2219,7 @@
 /area/rogue/under/tomb/indoors)
 "TP" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/under/tomb/indoors)
 "TY" = (
 /obj/structure/stairs{

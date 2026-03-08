@@ -111,7 +111,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "I" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "M" = (
 /obj/structure/roguetent,

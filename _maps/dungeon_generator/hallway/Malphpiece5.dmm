@@ -21,7 +21,7 @@
 /area/rogue/under/tomb/cave)
 "i" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/r,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/cave)
 "j" = (
 /obj/structure/fluff/walldeco/vinez/offset,
@@ -45,7 +45,7 @@
 /area/rogue/under/tomb/cave)
 "q" = (
 /obj/structure/fluff/walldeco/stone,
-/turf/closed/wall/mineral/rogue/decostone/center,
+/turf/closed/wall/decostone/center,
 /area/rogue/under/tomb/cave)
 "t" = (
 /obj/machinery/light/rogue/wallfire/candle/blue,
@@ -60,7 +60,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb/cave)
 "x" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/cave)
 "A" = (
 /obj/item/chair/rogue/fancy{
@@ -69,15 +69,15 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb/cave)
 "C" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "D" = (
 /obj/structure/bars/pipe/left,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "E" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "J" = (
 /turf/open/floor/rogue/herringbone,
@@ -91,7 +91,7 @@
 /turf/open/floor/rogue/volcanic,
 /area/rogue/under/tomb/cave)
 "M" = (
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/under/tomb/cave)
 "N" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -126,7 +126,7 @@
 /area/rogue/under/tomb/cave)
 "Z" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/l,
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue/under/tomb/cave)
 
 (1,1,1) = {"

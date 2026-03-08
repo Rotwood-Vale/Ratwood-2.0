@@ -93,10 +93,10 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/sewer)
 "aU" = (
-/turf/closed/wall/mineral/rogue/pipe,
+/turf/closed/wall/pipe,
 /area/rogue/under/tomb/sewer)
 "aW" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/sewer)
 "aY" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,

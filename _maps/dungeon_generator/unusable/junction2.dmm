@@ -6,7 +6,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/cave)
 "s" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 
 (1,1,1) = {"

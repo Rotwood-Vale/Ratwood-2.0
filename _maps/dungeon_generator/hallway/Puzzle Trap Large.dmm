@@ -19,7 +19,7 @@
 /area/rogue/under/tomb)
 "cP" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/stone/window,
+/turf/closed/wall/stone/window,
 /area/rogue/under/tomb)
 "ed" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
@@ -86,7 +86,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "kG" = (
-/turf/closed/wall/mineral/rogue/stone/window/moss,
+/turf/closed/wall/stone/window/moss,
 /area/rogue/under/tomb)
 "kU" = (
 /obj/structure/spider/cocoon,
@@ -101,7 +101,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
 "ml" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "mM" = (
 /turf/open/water/river{
@@ -119,7 +119,7 @@
 "oa" = (
 /obj/machinery/light/rogue/wallfire/candle,
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "oF" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
@@ -159,7 +159,7 @@
 /area/rogue/under/tomb)
 "qI" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "rD" = (
 /obj/machinery/light/rogue/wallfire/candle,
@@ -265,7 +265,7 @@
 /area/rogue/under/tomb)
 "yj" = (
 /obj/effect/waterfall,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "yD" = (
 /obj/structure/mineral_door/bars,
@@ -408,15 +408,15 @@
 /area/rogue/under/tomb)
 "NV" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb)
 "NZ" = (
 /obj/structure/fluff/walldeco/vinez,
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "Oz" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb)
 "PH" = (
 /obj/structure/flora/roguegrass/water/reeds,
@@ -444,7 +444,7 @@
 /area/rogue/under/tomb)
 "Sb" = (
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/rogue/stone/window/moss,
+/turf/closed/wall/stone/window/moss,
 /area/rogue/under/tomb)
 "Sz" = (
 /obj/structure/spider/cocoon,
@@ -471,7 +471,7 @@
 /turf/open/water/river,
 /area/rogue/under/tomb)
 "UL" = (
-/turf/closed/wall/mineral/rogue/stone/window,
+/turf/closed/wall/stone/window,
 /area/rogue/under/tomb)
 "UR" = (
 /obj/structure/spider/stickyweb,
@@ -528,7 +528,7 @@
 "YT" = (
 /obj/structure/fluff/walldeco/vinez,
 /obj/structure/fluff/walldeco/vinez,
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb)
 
 (1,1,1) = {"

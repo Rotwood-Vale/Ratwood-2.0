@@ -47,7 +47,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "k" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "m" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -145,7 +145,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "H" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "K" = (
 /obj/structure/closet/crate/chest,

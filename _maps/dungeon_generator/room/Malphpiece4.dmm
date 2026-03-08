@@ -18,16 +18,16 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors/royal)
 "cr" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds/bog)
 "cB" = (
 /obj/structure/fluff/walldeco/painting/queen,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/indoors/royal)
 "cG" = (
 /obj/structure/fluff/walldeco/painting/seraphina,
 /obj/structure/fluff/walldeco/painting/seraphina,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/indoors/royal)
 "cO" = (
 /obj/machinery/light/rogue/torchholder/c,
@@ -70,7 +70,7 @@
 /area/rogue/under/tomb/indoors)
 "lX" = (
 /obj/machinery/light/rogue/torchholder/c,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds/bog)
 "mh" = (
 /obj/structure/bed/rogue/shit,
@@ -96,7 +96,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "pK" = (
 /obj/structure/fluff/walldeco/rpainting/forest,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/indoors/royal)
 "pX" = (
 /obj/structure/chair/stool/rogue,
@@ -144,18 +144,18 @@
 /area/rogue/under/tomb/indoors/royal)
 "xQ" = (
 /obj/structure/fluff/walldeco/painting/skull,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/indoors/royal)
 "yI" = (
 /obj/structure/fluff/walldeco/painting,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/indoors/royal)
 "Bv" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/minotaur/axe/female,
 /turf/open/floor/rogue/tile/checkeralt,
 /area/rogue/under/tomb/indoors/royal)
 "CP" = (
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/indoors/royal)
 "CX" = (
 /obj/machinery/light/rogue/firebowl/standing,
@@ -171,7 +171,7 @@
 /area/rogue/under/tomb/wilds/bog)
 "HA" = (
 /obj/structure/fluff/walldeco/rpainting/crown,
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/indoors/royal)
 "HM" = (
 /obj/structure/flora/roguegrass/swampweed,
@@ -198,10 +198,10 @@
 /area/rogue/under/tomb/wilds/bog)
 "Mq" = (
 /obj/structure/flora/rogueshroom/happy/random,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds/bog)
 "NI" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "NT" = (
 /obj/structure/flora/rogueshroom/happy/random,

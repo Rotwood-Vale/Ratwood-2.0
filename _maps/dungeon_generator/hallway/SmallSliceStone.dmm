@@ -5,10 +5,10 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb)
 "e" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/tomb)
 "o" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/under/tomb)
 "K" = (
 /turf/open/floor/rogue/cobblerock,

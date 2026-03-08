@@ -45,7 +45,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/indoors/banditcamp)
 "as" = (
-/turf/closed/wall/mineral/rogue/wooddark/end,
+/turf/closed/wall/wooddark/end,
 /area/rogue/indoors/banditcamp)
 "av" = (
 /obj/structure/fluff/railing/fence{
@@ -151,12 +151,12 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
 "dz" = (
-/turf/closed/wall/mineral/rogue/tent{
+/turf/closed/wall/tent{
 	dir = 4
 	},
 /area/rogue/indoors/banditcamp)
 "dI" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/indoors/banditcamp)
 "dO" = (
 /turf/open/floor/rogue/dirt,
@@ -240,10 +240,10 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
 "fU" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/indoors/cave)
 "gi" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/indoors/banditcamp)
 "gw" = (
 /obj/structure/fluff/railing/border/north,
@@ -335,7 +335,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
 "if" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/outdoors/woods)
 "ih" = (
 /obj/item/coveter,
@@ -436,7 +436,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
 "kK" = (
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/turf/closed/wall/wooddark/horizontal,
 /area/rogue/indoors/banditcamp)
 "kN" = (
 /obj/effect/decal/cobbleedge{
@@ -485,7 +485,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/banditcamp)
 "lJ" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/wall/wooddark/vertical,
 /area/rogue/indoors/banditcamp)
 "lN" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -633,7 +633,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
 "oJ" = (
-/turf/closed/wall/mineral/rogue/stone/moss,
+/turf/closed/wall/stone/moss,
 /area/rogue/indoors/banditcamp)
 "oL" = (
 /obj/structure/closet/crate/chest,
@@ -972,7 +972,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/woods)
 "wG" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/indoors/banditcamp)
 "wI" = (
 /obj/structure/fluff/railing/fence{
@@ -1070,7 +1070,7 @@
 /turf/open/floor/rogue/snow,
 /area/rogue/outdoors/mountains)
 "zJ" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/indoors/banditcamp)
 "Ag" = (
 /obj/structure/stairs{
@@ -1115,7 +1115,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/cave)
 "BE" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/outdoors/mountains)
 "BH" = (
 /obj/machinery/light/rogue/firebowl/stump,
@@ -1213,7 +1213,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
 "CS" = (
-/turf/closed/wall/mineral/rogue/wooddark/end/west,
+/turf/closed/wall/wooddark/end/west,
 /area/rogue/indoors/banditcamp)
 "CT" = (
 /obj/structure/table/wood/poor,
@@ -1334,7 +1334,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/cave)
 "GE" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/indoors/cave)
 "GH" = (
 /obj/machinery/light/rogue/firebowl/stump,
@@ -1356,7 +1356,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/cave)
 "Hk" = (
-/turf/closed/wall/mineral/rogue/wooddark/end/east,
+/turf/closed/wall/wooddark/end/east,
 /area/rogue/indoors/banditcamp)
 "Hm" = (
 /obj/machinery/light/rogue/torchholder/c,
@@ -1752,7 +1752,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
 "Si" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/outdoors/banditcamp)
 "Sl" = (
 /obj/structure/chair/stool/rogue,
@@ -1776,7 +1776,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/banditcamp)
 "Sw" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/indoors/banditcamp)
 "SC" = (
 /obj/structure/roguemachine/bounty{
@@ -1832,14 +1832,14 @@
 	endTurfX = 90;
 	endTurfY = 80
 	},
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/indoors/cave)
 "Uo" = (
 /obj/structure/fluff/statue/knight,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/banditcamp)
 "Us" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/outdoors/woods)
 "Uy" = (
 /turf/open/floor/rogue/ruinedwood/turned,
@@ -1968,7 +1968,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/banditcamp)
 "XF" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/outdoors/woods)
 "XI" = (
 /obj/structure/fermentation_keg/water,

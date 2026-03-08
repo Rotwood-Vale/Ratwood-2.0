@@ -11,7 +11,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb)
 "Y" = (
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/under/tomb)
 
 (1,1,1) = {"

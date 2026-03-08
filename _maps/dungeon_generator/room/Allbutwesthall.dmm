@@ -17,13 +17,13 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb/cave)
 "av" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb/indoors)
 "aw" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/indoors)
 "aA" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "aB" = (
 /turf/open/floor/rogue/naturalstone,
@@ -187,7 +187,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "MY" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "Oy" = (
 /obj/structure/bed/rogue/inn/wool,
@@ -229,7 +229,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
 "XS" = (
-/turf/closed/wall/mineral/rogue/wooddark/window,
+/turf/closed/wall/wooddark/window,
 /area/rogue/under/tomb/indoors)
 "Yx" = (
 /obj/structure/fluff/railing/fence,

@@ -17,7 +17,7 @@
 /turf/open/transparent/openspace,
 /area/rogue)
 "f" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 4
 	},
 /area/rogue)
@@ -42,7 +42,7 @@
 /turf/open/transparent/openspace,
 /area/rogue)
 "o" = (
-/turf/closed/wall/mineral/rogue/decostone,
+/turf/closed/wall/decostone,
 /area/rogue)
 "p" = (
 /obj/machinery/light/rogue/torchholder/l,
@@ -93,14 +93,14 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue)
 "D" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue)
 "E" = (
 /obj/structure/stairs,
 /turf/open/floor/rogue/hexstone,
 /area/rogue)
 "J" = (
-/turf/closed/wall/mineral/rogue/decostone/long{
+/turf/closed/wall/decostone/long{
 	dir = 1
 	},
 /area/rogue)
@@ -126,7 +126,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue)
 "P" = (
-/turf/closed/wall/mineral/rogue/decostone/end{
+/turf/closed/wall/decostone/end{
 	dir = 8
 	},
 /area/rogue)

@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "b" = (
 /obj/structure/spider/stickyweb,
@@ -44,14 +44,14 @@
 /area/rogue/under/town/sewer)
 "z" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "E" = (
 /obj/structure/bars,
 /turf/open/water/sewer,
 /area/rogue/under/town/sewer)
 "F" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "H" = (
 /obj/effect/spawner/lootdrop/roguetown/sewers,
@@ -73,7 +73,7 @@
 /area/rogue/under/town/sewer)
 "P" = (
 /obj/effect/decal/cleanable/ash/large,
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "Q" = (
 /turf/open/water/swamp,

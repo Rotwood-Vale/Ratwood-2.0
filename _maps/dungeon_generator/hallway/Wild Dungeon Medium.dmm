@@ -180,7 +180,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/tomb/wilds)
 "zL" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "zY" = (
 /obj/structure/flora/roguegrass,
@@ -369,7 +369,7 @@
 /area/rogue/under/tomb/wilds)
 "Ub" = (
 /obj/effect/decal/cleanable/blood,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "US" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,

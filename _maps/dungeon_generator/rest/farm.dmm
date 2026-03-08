@@ -54,7 +54,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/tomb/indoors)
 "dz" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave/wet)
 "eO" = (
 /turf/open/water/river{
@@ -155,7 +155,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb/cave/wet)
 "tr" = (
-/turf/closed/wall/mineral/rogue/stone,
+/turf/closed/wall/stone,
 /area/rogue/under/tomb/indoors)
 "tE" = (
 /obj/structure/rack/rogue/shelf/biggest,
@@ -253,7 +253,7 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors)
 "La" = (
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/indoors)
 "Lj" = (
 /obj/structure/roguewindow/openclose{
@@ -329,7 +329,7 @@
 	pixel_y = 14;
 	pixel_x = -6
 	},
-/turf/closed/wall/mineral/rogue/wood,
+/turf/closed/wall/wood,
 /area/rogue/under/tomb/indoors)
 
 (1,1,1) = {"

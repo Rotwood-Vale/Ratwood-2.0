@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ae" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/cave)
 "ao" = (
 /obj/structure/chair/stool/rogue,
@@ -304,7 +304,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/wilds)
 "Kr" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/under/tomb/indoors)
 "KC" = (
 /obj/structure/flora/roguetree/stump/pine,
@@ -408,7 +408,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/tomb/wilds)
 "XD" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb/wilds)
 "XN" = (
 /turf/open/water/river{

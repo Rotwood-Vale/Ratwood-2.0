@@ -13,7 +13,7 @@
 "aZ" = (
 /obj/structure/fluff/walldeco/innsign,
 /obj/structure/underworld/barrier,
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/underworld/adventurespawn)
 "dy" = (
 /obj/structure/fluff/walldeco/stone{
@@ -57,7 +57,7 @@
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
 "fM" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/underworld/adventurespawn)
 "ic" = (
 /obj/structure/chair/stool/rogue,
@@ -65,14 +65,14 @@
 /area/rogue/underworld/adventurespawn)
 "iS" = (
 /obj/structure/underworld/barrier,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/underworld/adventurespawn)
 "iY" = (
 /obj/structure/underworld/carriage{
 	pixel_x = -97;
 	pixel_y = -36
 	},
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/underworld{
 	first_time_text = "wayfarer's dream"
 	})
@@ -132,7 +132,7 @@
 "rN" = (
 /obj/structure/fluff/statue/gargoyle,
 /obj/structure/underworld/barrier,
-/turf/closed/wall/mineral/rogue/stone/blue_moss,
+/turf/closed/wall/stone/blue_moss,
 /area/rogue/underworld/adventurespawn)
 "sh" = (
 /obj/structure/table/wood{
@@ -153,7 +153,7 @@
 /area/rogue/underworld/adventurespawn)
 "tV" = (
 /obj/structure/underworld/barrier,
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/underworld/adventurespawn)
 "ub" = (
 /obj/structure/rack/rogue,
@@ -239,7 +239,7 @@
 /area/rogue/underworld/adventurespawn)
 "AV" = (
 /obj/structure/underworld/barrier,
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/underworld/adventurespawn)
 "Bf" = (
 /obj/structure/underworld/barrier,
@@ -256,7 +256,7 @@
 /area/rogue/underworld/adventurespawn)
 "Cn" = (
 /obj/structure/underworld/barrier,
-/turf/closed/wall/mineral/rogue/stone/blue_moss,
+/turf/closed/wall/stone/blue_moss,
 /area/rogue/underworld/adventurespawn)
 "Dm" = (
 /obj/structure/flora/roguetree/underworld,
@@ -286,7 +286,7 @@
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
 "Hm" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/underworld{
 	first_time_text = "wayfarer's dream"
 	})
@@ -304,11 +304,11 @@
 	first_time_text = "wayfarer's dream"
 	})
 "JE" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/underworld/adventurespawn)
 "JW" = (
 /obj/structure/underworld/barrier,
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/underworld/adventurespawn)
 "Kf" = (
 /obj/structure/rack/rogue,
@@ -338,7 +338,7 @@
 "MW" = (
 /obj/machinery/light/rogue/wallfire,
 /obj/structure/underworld/barrier,
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/closed/wall/craftstone,
 /area/rogue/underworld/adventurespawn)
 "Oi" = (
 /obj/structure/table/wood/poor,
@@ -396,7 +396,7 @@
 "Uk" = (
 /obj/structure/fluff/statue/gargoyle,
 /obj/structure/underworld/barrier,
-/turf/closed/wall/mineral/rogue/decostone/cand,
+/turf/closed/wall/decostone/cand,
 /area/rogue/underworld/adventurespawn)
 "UT" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
@@ -406,7 +406,7 @@
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
 "VA" = (
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/closed/wall/decowood,
 /area/rogue/underworld/adventurespawn)
 "VB" = (
 /obj/structure/underworld/barrier,

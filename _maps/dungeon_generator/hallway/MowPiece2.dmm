@@ -141,14 +141,14 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
 "tJ" = (
-/turf/closed/wall/mineral/rogue/tent,
+/turf/closed/wall/tent,
 /area/rogue/under/tomb)
 "uV" = (
 /obj/item/clothing/neck/roguetown/psicross/silver,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb)
 "xG" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "yE" = (
 /obj/effect/decal/cleanable/blood,
@@ -160,7 +160,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/tomb)
 "As" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/rogue/under/tomb)
 "Be" = (
 /obj/item/reagent_containers/glass/bottle,

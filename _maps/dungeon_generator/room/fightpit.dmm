@@ -90,7 +90,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb)
 "gt" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb/indoors)
 "gu" = (
 /obj/structure/fluff/railing/border{
@@ -188,7 +188,7 @@
 /area/rogue/under/tomb)
 "nS" = (
 /obj/structure/fluff/walldeco/stone,
-/turf/closed/wall/mineral/rogue/stone/window/moss,
+/turf/closed/wall/stone/window/moss,
 /area/rogue/under/tomb)
 "nW" = (
 /obj/structure/mineral_door/wood/window{
@@ -332,7 +332,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "xp" = (
-/turf/closed/mineral/rogue/bedrock,
+/turf/closed/rock/bedrock,
 /area/rogue/under/tomb)
 "xK" = (
 /obj/structure/rack/rogue/shelf/biggest,
@@ -368,7 +368,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "zb" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/tomb)
 "zl" = (
 /obj/item/rogueore/coal,
@@ -412,7 +412,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/tomb/indoors)
 "FZ" = (
-/turf/closed/wall/mineral/rogue/stone/window/moss,
+/turf/closed/wall/stone/window/moss,
 /area/rogue/under/tomb/indoors)
 "Gf" = (
 /obj/structure/fluff/railing/border{
@@ -600,7 +600,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb)
 "Yv" = (
-/turf/closed/wall/mineral/rogue/stone/window/moss,
+/turf/closed/wall/stone/window/moss,
 /area/rogue/under/tomb)
 "YP" = (
 /obj/structure/bed/rogue/shit,

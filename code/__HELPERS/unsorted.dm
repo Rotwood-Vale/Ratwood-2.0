@@ -1026,7 +1026,7 @@ rough example of the "cone" made by the 3 dirs checked
 		for(x in x to t_center.x+c_dist)
 			T = locate(x,y,t_center.z)
 			if(T)
-				if(istype(T, /turf/closed/wall/mineral/rogue/stone/unbreakable)||istype(T, /turf/closed/mineral/rogue/bedrock))
+				if(istype(T, /turf/closed/wall/stone/unbreakable)||istype(T, /turf/closed/rock/bedrock))
 					continue //if its unbreakable or bedrock, we skip this one
 				else
 					L += T
@@ -1036,7 +1036,7 @@ rough example of the "cone" made by the 3 dirs checked
 		for(y in t_center.y-c_dist to y)
 			T = locate(x,y,t_center.z)
 			if(T)
-				if(istype(T, /turf/closed/wall/mineral/rogue/stone/unbreakable)||istype(T, /turf/closed/mineral/rogue/bedrock))
+				if(istype(T, /turf/closed/wall/stone/unbreakable)||istype(T, /turf/closed/rock/bedrock))
 					continue //if its unbreakable or bedrock, we skip this one
 				else
 					L += T
@@ -1046,7 +1046,7 @@ rough example of the "cone" made by the 3 dirs checked
 		for(x in t_center.x-c_dist to x)
 			T = locate(x,y,t_center.z)
 			if(T)
-				if(istype(T, /turf/closed/wall/mineral/rogue/stone/unbreakable)||istype(T, /turf/closed/mineral/rogue/bedrock))
+				if(istype(T, /turf/closed/wall/stone/unbreakable)||istype(T, /turf/closed/rock/bedrock))
 					continue //if its unbreakable or bedrock, we skip this one
 				else
 					L += T
@@ -1056,7 +1056,7 @@ rough example of the "cone" made by the 3 dirs checked
 		for(y in y to t_center.y+c_dist)
 			T = locate(x,y,t_center.z)
 			if(T)
-				if(istype(T, /turf/closed/wall/mineral/rogue/stone/unbreakable)||istype(T, /turf/closed/mineral/rogue/bedrock))
+				if(istype(T, /turf/closed/wall/stone/unbreakable)||istype(T, /turf/closed/rock/bedrock))
 					continue //if its unbreakable or bedrock, we skip this one
 				else
 					L += T

@@ -81,7 +81,7 @@
 	},
 /area/shuttle/arrival)
 "g" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/turf/closed/wall/wooddark,
 /area/shuttle/arrival)
 "h" = (
 /obj/structure/fluff/railing/border{

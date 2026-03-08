@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/rogue,
+/turf/closed/rock,
 /area/rogue/under/town/sewer)
 "b" = (
 /obj/structure/table/wood{
@@ -81,7 +81,7 @@
 /area/rogue/under/town/sewer)
 "p" = (
 /obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "q" = (
 /obj/structure/mineral_door/swing_door,
@@ -103,7 +103,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "u" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "v" = (
 /obj/structure/chair/wood/rogue/chair3{
@@ -186,7 +186,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/closed/wall/mineral/rogue/stonebrick,
+/turf/closed/wall/stonebrick,
 /area/rogue/under/town/sewer)
 "K" = (
 /obj/structure/chair/stool/rogue,

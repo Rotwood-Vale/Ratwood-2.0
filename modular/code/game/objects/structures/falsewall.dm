@@ -26,7 +26,7 @@
 	max_integrity = 1800
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
-	canSmoothWith = list(/obj/structure/falsewall/stone, /turf/closed/wall/mineral/rogue/stone)
+	canSmoothWith = list(/obj/structure/falsewall/stone, /turf/closed/wall/stone)
 	var/fake_icon = 'icons/turf/walls/wall.dmi'
 	var/mineral_amount = 2
 	var/walltype = /turf/closed/wall
