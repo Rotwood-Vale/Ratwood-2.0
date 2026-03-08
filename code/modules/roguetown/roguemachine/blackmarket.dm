@@ -36,7 +36,7 @@
 		"Exotic Import"
 	)
 
-/obj/structure/roguemachine/blackmarket/Initialize()
+/obj/structure/roguemachine/blackmarket/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -144,7 +144,7 @@
 	set_light(0)
 	return ..()
 
-/obj/structure/roguemachine/blackmarket/Initialize()
+/obj/structure/roguemachine/blackmarket/Initialize(mapload)
 	. = ..()
 	update_icon()
 

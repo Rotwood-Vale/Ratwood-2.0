@@ -9,7 +9,7 @@
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_RANESHENI_EMIR = 20)
 	greet_text = "You are an envoy from the Empire, traveling with bodyguards and a priest to represent your homeland.\
-	 What exactly you have been sent here to speak about- only you know."
+	What exactly you have been sent here to speak about- only you know."
 
 /datum/advclass/ranesheni_emir
 	name = "Emir"

@@ -130,7 +130,7 @@
 	/// Throwing/Flying non mobs can always exit the turf regardless of other flags
 	var/allow_flying_outwards = TRUE
 
-/obj/structure/fluff/railing/Initialize()
+/obj/structure/fluff/railing/Initialize(mapload)
 	. = ..()
 	init_connect_loc_element()
 	var/lay = getwlayer(dir)
@@ -285,7 +285,7 @@
 	pass_crawl = FALSE
 	climb_offset = 6
 
-/obj/structure/fluff/railing/fence/Initialize()
+/obj/structure/fluff/railing/fence/Initialize(mapload)
 	. = ..()
 	smooth_fences()
 
@@ -483,7 +483,7 @@
 	var/togg = FALSE
 	redstone_structure = TRUE
 
-/obj/structure/bars/grille/Initialize()
+/obj/structure/bars/grille/Initialize(mapload)
 	AddComponent(/datum/component/squeak, list('sound/foley/footsteps/FTMET_A1.ogg','sound/foley/footsteps/FTMET_A2.ogg','sound/foley/footsteps/FTMET_A3.ogg','sound/foley/footsteps/FTMET_A4.ogg'), 40)
 	dir = pick(GLOB.cardinals)
 	return ..()
@@ -570,7 +570,7 @@
 	drag_slowdown = 3
 	metalizer_result = /obj/item/roguegear/bronze
 
-/obj/structure/fluff/clock/Initialize()
+/obj/structure/fluff/clock/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	soundloop.start()
 	. = ..()
@@ -695,7 +695,7 @@
 //			if(SSshuttle.emergency.timeLeft() < 30 MINUTES)
 //				. += span_warning("The last boat will leave in [round(SSshuttle.emergency.timeLeft()/600)] minutes.")
 
-/obj/structure/fluff/wallclock/Initialize()
+/obj/structure/fluff/wallclock/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	soundloop.start()
 	. = ..()
@@ -853,7 +853,7 @@
 	max_integrity = 300
 	dir = SOUTH
 
-/obj/structure/fluff/statue/Initialize()
+/obj/structure/fluff/statue/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -1175,7 +1175,7 @@
 	var/divine = TRUE
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
 
-/obj/structure/fluff/psycross/Initialize()
+/obj/structure/fluff/psycross/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
@@ -1287,11 +1287,11 @@
 						// Excommunication check for both participants
 						var/excomm_found = FALSE
 						for(var/excomm_name in GLOB.excommunicated_players)
-							var/clean_excomm = lowertext(trim(excomm_name))
-							if(thegroom && clean_excomm == lowertext(trim(thegroom.real_name)))
+							var/clean_excomm = LOWER_TEXT(trim(excomm_name))
+							if(thegroom && clean_excomm == LOWER_TEXT(trim(thegroom.real_name)))
 								excomm_found = TRUE
 								break
-							if(thebride && clean_excomm == lowertext(trim(thebride.real_name)))
+							if(thebride && clean_excomm == LOWER_TEXT(trim(thebride.real_name)))
 								excomm_found = TRUE
 								break
 						if(!excomm_found)

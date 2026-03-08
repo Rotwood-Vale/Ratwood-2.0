@@ -7,7 +7,7 @@
 	anchored= TRUE
 	var/time_delay = 0
 
-/obj/structure/zizo_bane/Initialize()
+/obj/structure/zizo_bane/Initialize(mapload)
 	. = ..()
 	var/matrix/M = matrix()
 	M.Scale(0.6, 0.6)

@@ -122,6 +122,12 @@
 /datum/emote/living/carbon/human/wag
 	key = "wag"
 
+/mob/living/carbon/human/verb/emote_wag()
+	set name = "Wag"
+	set category = "Emotes"
+
+	emote("wag")
+
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!.)

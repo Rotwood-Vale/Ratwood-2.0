@@ -37,7 +37,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	set_light(0)
 	return ..()
 
-/obj/structure/roguemachine/titan/Initialize()
+/obj/structure/roguemachine/titan/Initialize(mapload)
 	. = ..()
 	icon_state = null
 	become_hearing_sensitive()

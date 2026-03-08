@@ -2,7 +2,7 @@
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
 
-/mob/living/Initialize()
+/mob/living/Initialize(mapload)
 	. = ..()
 	update_a_intents()
 	swap_rmb_intent(num=1)

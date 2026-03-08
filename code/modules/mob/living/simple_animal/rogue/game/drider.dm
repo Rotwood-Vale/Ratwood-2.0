@@ -36,7 +36,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/drider/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/drider/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/drider/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOFALLDAMAGE2, TRAIT_GENERIC)
@@ -147,7 +147,7 @@
 			return "foreleg"
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/rogue/drider/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/drider/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S

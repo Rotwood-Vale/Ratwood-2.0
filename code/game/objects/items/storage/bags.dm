@@ -24,7 +24,7 @@
 	icon_state = "tray_psy"
 	desc = ""
 
-/obj/item/storage/bag/tray/Initialize()
+/obj/item/storage/bag/tray/Initialize(mapload)
 	. = ..()
 	update_icon()
 

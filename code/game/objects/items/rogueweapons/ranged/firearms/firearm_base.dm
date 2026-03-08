@@ -86,7 +86,7 @@ At least, it should. Fingers crossed.
 			if("onback")
 				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/gun/ballistic/firearm/Initialize()
+/obj/item/gun/ballistic/firearm/Initialize(mapload)
 	. = ..()
 	myrod = new /obj/item/ramrod(src)
 

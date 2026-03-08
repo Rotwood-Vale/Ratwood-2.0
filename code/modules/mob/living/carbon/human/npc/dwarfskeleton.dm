@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(dwarfskeleton_aggro, world.file2list("strings/rt/dskeletonaggro
 		say(pick(GLOB.dwarfskeleton_aggro))
 		linepoint(target)
 
-/mob/living/carbon/human/species/dwarfskeleton/Initialize()
+/mob/living/carbon/human/species/dwarfskeleton/Initialize(mapload)
 	. = ..()
 	cut_overlays()
 	spawn(10)

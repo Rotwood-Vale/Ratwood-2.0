@@ -12,7 +12,7 @@
 	var/current_cat = "1"
 
 
-/obj/structure/roguemachine/Hoardmaster/Initialize()
+/obj/structure/roguemachine/Hoardmaster/Initialize(mapload)
 	. = ..()
 	update_icon()
 	var/namechance = rand(1,6)

@@ -81,7 +81,7 @@
 		if("idle")
 			return pick('modular_azurepeak/sound/mobs/abyssal/abyssal_idle.ogg')
 
-/mob/living/simple_animal/hostile/rogue/dreamfiend/Initialize()
+/mob/living/simple_animal/hostile/rogue/dreamfiend/Initialize(mapload)
 	AddElement(/datum/element/ai_retaliate)
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_GENERIC)
@@ -89,7 +89,7 @@
 	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC) //Dreamfiends fall into the 'eldritch' category. Technically not 'unholy', but certainly monstrous.
 	. = ..()
 
-/mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/Initialize()
+/mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/Initialize(mapload)
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_INFINITE_STAMINA, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)

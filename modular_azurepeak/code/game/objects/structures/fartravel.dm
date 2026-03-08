@@ -71,8 +71,8 @@
 		// If departure is a lord, remove them from found_lords to prevent false omen triggers
 	if(departing_mob.mind && departing_mob.ckey)
 		if(departing_mob.mind.assigned_role == "Grand Duke" || departing_mob.mind.assigned_role == "Grand Duchess")
-			if(found_lords[departing_mob.ckey])
-				found_lords -= departing_mob.ckey
+			if(GLOB.found_lords[departing_mob.ckey])
+				GLOB.found_lords -= departing_mob.ckey
 	if(departing_mob.has_embedded_objects())
 		var/list/embeds = departing_mob.get_embedded_objects()
 		for(var/thing in embeds)

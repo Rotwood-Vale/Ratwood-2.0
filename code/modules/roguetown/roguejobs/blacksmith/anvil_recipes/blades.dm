@@ -6,7 +6,7 @@
 	var/datum/anvil_recipe/currecipe
 	var/overlay_color
 
-/obj/item/blade/Initialize()
+/obj/item/blade/Initialize(mapload)
 	. = ..()
 	if(overlay_color)
 		color = overlay_color

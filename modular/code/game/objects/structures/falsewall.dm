@@ -33,7 +33,7 @@
 	var/opening = FALSE
 	damage_deflection = 10
 
-/obj/structure/falsewall/Initialize()
+/obj/structure/falsewall/Initialize(mapload)
 	. = ..()
 	if(smooth_icon)
 		icon = smooth_icon

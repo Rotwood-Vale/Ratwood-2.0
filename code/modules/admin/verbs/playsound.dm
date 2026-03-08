@@ -63,7 +63,10 @@
 
 		mob.update_music_volume(CHANNEL_ADMIN, prefs.musicvol)
 		mob.update_music_volume(CHANNEL_BUZZ, prefs.musicvol)
-		mob.update_music_volume(CHANNEL_CMUSIC, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_CMUSIC1, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_CMUSIC2, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_CMUSIC3, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_CMUSIC4, prefs.musicvol)
 
 
 /client/verb/show_rolls()

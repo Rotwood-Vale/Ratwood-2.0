@@ -9,7 +9,7 @@
 	max_integrity = 0
 	var/aportalloc = "a"
 
-/obj/structure/fluff/testportal/Initialize()
+/obj/structure/fluff/testportal/Initialize(mapload)
 	name = aportalloc
 	..()
 
@@ -42,7 +42,7 @@
 	var/aallmig
 	var/required_trait = null
 
-/obj/structure/fluff/traveltile/Initialize()
+/obj/structure/fluff/traveltile/Initialize(mapload)
 	GLOB.traveltiles += src
 	. = ..()
 

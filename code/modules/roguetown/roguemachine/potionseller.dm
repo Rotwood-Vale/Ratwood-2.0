@@ -24,7 +24,7 @@
 	is_crafted = TRUE
 	max_integrity = 100
 
-/obj/structure/roguemachine/potionseller/Initialize()
+/obj/structure/roguemachine/potionseller/Initialize(mapload)
 	. = ..()
 	if(!reagents)
 		create_reagents(200*3)

@@ -125,7 +125,7 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 	Whatever is contained within should stay that way, and you far from it."
 	icon_state = "emberwine"
 
-/obj/item/cannonball/smoke_emberwine/Initialize()
+/obj/item/cannonball/smoke_emberwine/Initialize(mapload)
 	create_reagents(50)
 	var/list/warcrime = list(/datum/reagent/consumable/ethanol/beer/emberwine = 50)
 	reagents.add_reagent_list(warcrime)
@@ -160,7 +160,7 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 		icon_state = "anychem_empty"
 	return
 
-/obj/item/cannonball/smoke_custom/Initialize()
+/obj/item/cannonball/smoke_custom/Initialize(mapload)
 	create_reagents(50, DRAINABLE | REFILLABLE | AMOUNT_VISIBLE)
 	. = ..()
 

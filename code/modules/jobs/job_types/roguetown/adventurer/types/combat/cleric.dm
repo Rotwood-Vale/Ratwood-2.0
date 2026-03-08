@@ -455,6 +455,10 @@
 			cloak = /obj/item/clothing/cloak/templar/xylix
 		if (/datum/patron/divine/pestra)
 			cloak = /obj/item/clothing/cloak/templar/pestra
+		if(/datum/patron/inhumen/zizo)
+			cloak = /obj/item/clothing/cloak/cape/crusader
+			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
+			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 		else
 			cloak = /obj/item/clothing/cloak/cape/crusader
 	if(H.mind)
@@ -671,3 +675,70 @@
 		if(/datum/patron/divine/xylix)
 			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
 			H.cmode_music = 'sound/music/combat_jester.ogg'
+
+/datum/advclass/cleric/stigmata
+	name = "Stigmata"
+	tutorial = "PSYDON weeps. You are a devout cleric of the Allfather whom takes the suffering of others upon themselves. You have eschewn violence. You will suffer. You will endure."
+	outfit = /datum/outfit/job/roguetown/adventurer/stigmata
+	allowed_races = RACES_NO_CONSTRUCT
+
+	traits_applied = list(
+		TRAIT_PACIFISM,
+		TRAIT_EMPATH,
+		TRAIT_CRITICAL_RESISTANCE,
+		TRAIT_STEELHEARTED,
+		TRAIT_RITUALIST
+	)
+	subclass_stats = list(
+		STATKEY_CON = 5,
+		STATKEY_WIL = 3,
+		STATKEY_SPD = 1,
+		STATKEY_STR = -2,
+	)
+	subclass_skills = list(
+		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/fishing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
+	)
+	subclass_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+	)
+	extra_context = "This is a psydonite only subclass, it will force you to be one if it is not set. You will be a pacifist and are able to draw upon a weaker version of the abilities known by a Psydonic Absolver."
+
+/datum/outfit/job/roguetown/adventurer/stigmata
+	allowed_patrons = list(/datum/patron/old_god)
+
+/datum/outfit/job/roguetown/adventurer/stigmata/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	H.adjust_blindness(-3)
+	pants = /obj/item/clothing/under/roguetown/tights/black
+	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/black
+	neck = /obj/item/clothing/neck/roguetown/psicross/silver
+	shoes = /obj/item/clothing/shoes/roguetown/boots
+	backl = /obj/item/storage/backpack/rogue/satchel
+	belt = /obj/item/storage/belt/rogue/leather
+	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
+	backpack_contents = list(
+		/obj/item/recipe_book/survival = 1,
+		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
+		/obj/item/storage/belt/rogue/pouch/medicine = 1,
+		/obj/item/ritechalk = 1
+		)
+	
+	if (H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonlux_tamper) // absolver's bleed transfer
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonamend) // nerfed no-rez version of absolver's absolve
+
+	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = (CLERIC_REGEN_ABSOLVER / 2), start_maxed = TRUE)
+

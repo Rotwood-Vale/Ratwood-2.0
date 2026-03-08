@@ -21,7 +21,7 @@
 	grid_height = 32
 	grid_width = 32
 
-/obj/item/bait/Initialize()
+/obj/item/bait/Initialize(mapload)
 	. = ..()
 	check_counter = world.time
 
