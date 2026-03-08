@@ -511,6 +511,9 @@
 		return FALSE
 	if(owner && ((owner.status_flags & GODMODE) || HAS_TRAIT(owner, TRAIT_PIERCEIMMUNE)))
 		return FALSE
+	var/try_embed_sig = SEND_SIGNAL(src, COMSIG_BODYPART_TRY_EMBED_ITEM, embedder)
+	if(try_embed_sig & COMPONENT_PREVENT_EMBED)
+		return FALSE
 	if(istype(embedder, /obj/item/natural/worms/leech))
 		record_round_statistic(STATS_LEECHES_EMBEDDED)
 	LAZYADD(embedded_objects, embedder)
@@ -533,6 +536,8 @@
 			var/datum/component/silverbless/psyblessed = embedder.GetComponent(/datum/component/silverbless)
 			owner.adjust_fire_stacks(1, psyblessed?.is_blessed ? /datum/status_effect/fire_handler/fire_stacks/sunder/blessed : /datum/status_effect/fire_handler/fire_stacks/sunder)
 			to_chat(owner, span_danger("the [embedder] in your body painfully jostles!"))
+	SEND_SIGNAL(src, COMSIG_BODYPART_EMBEDDED_ITEM_ADDED, embedder)
+	SEND_SIGNAL(embedder, COMSIG_ITEM_EMBEDDED_IN_BODYPART, src)
 	return TRUE
 
 /// Removes an embedded object from this bodypart
@@ -542,6 +547,9 @@
 	if(ispath(embedder))
 		embedder = has_embedded_object(embedder)
 	if(!istype(embedder) || !is_object_embedded(embedder))
+		return FALSE
+	var/try_remove_embed_sig = SEND_SIGNAL(src, COMSIG_BODYPART_TRY_REMOVE_EMBEDDED_ITEM, embedder)
+	if(try_remove_embed_sig & COMPONENT_PREVENT_REMOVE_EMBED)
 		return FALSE
 	LAZYREMOVE(embedded_objects, embedder)
 	embedder.is_embedded = FALSE
@@ -554,6 +562,8 @@
 		if(!owner.has_embedded_objects())
 			owner.clear_alert("embeddedobject")
 		update_disabled()
+	SEND_SIGNAL(src, COMSIG_BODYPART_EMBEDDED_ITEM_REMOVED, embedder)
+	SEND_SIGNAL(embedder, COMSIG_ITEM_REMOVED_FROM_EMBED_IN_BODYPART, src)
 	return TRUE
 
 /obj/item/bodypart/proc/try_bandage(obj/item/new_bandage)

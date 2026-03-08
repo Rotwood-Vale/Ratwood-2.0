@@ -80,6 +80,10 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/list/severity_names = list()
 	/// Whether miracles heal it.
 	var/healable_by_miracles = TRUE
+	/// if this wound should not heal by any means barring the flagrantly supernatural
+	var/permanent = FALSE
+	/// if this wound was applied to a psydonian -- special handling of wounds for psydon's true faithful
+	var/they_yet_lyve = null
 
 /datum/wound/Destroy(force)
 	if(bodypart_owner)
@@ -181,6 +185,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		affected.bandage_expire() //new bleeding wounds always expire bandages, fuck you
 	if(disabling)
 		affected.update_disabled()
+	if(HAS_TRAIT(owner, TRAIT_PSYDONITE)) // with every broken bone i swear i lived
+		// set here to cache the trait lookup, rather than checking every on_life
+		they_yet_lyve = TRUE
 
 /// Removes this wound from a given bodypart
 /datum/wound/proc/remove_from_bodypart()
@@ -263,8 +270,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /datum/wound/proc/on_life()
 	if(!isnull(clotting_threshold) && clotting_rate && (bleed_rate > clotting_threshold))
 		set_bleed_rate(max(clotting_threshold, bleed_rate - clotting_rate))
-	if(owner.stat != DEAD && passive_healing) // passive healing is only called if we're like, you know, alive
-		heal_wound(passive_healing)
+	if(!permanent && owner.stat != DEAD && (passive_healing || they_yet_lyve) ) // passive healing is only called if we're like, you know, alive
+		var/passive_heal_amount = they_yet_lyve ? max(passive_healing * 2, 1) : passive_healing
+		heal_wound(passive_heal_amount)
 	return TRUE
 
 /// Called on handle_wounds(), on the life() proc
@@ -291,9 +299,6 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 
 /// Heals this wound by the given amount, and deletes it if it's healed completely
 /datum/wound/proc/heal_wound(heal_amount)
-	// Wound cannot be healed normally, whp is null
-	if(isnull(whp))
-		return 0
 	var/amount_healed = min(whp, round(heal_amount, DAMAGE_PRECISION))
 	var/pain_healed = min(woundpain, round(heal_amount / 2, DAMAGE_PRECISION))
 	whp -= amount_healed

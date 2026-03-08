@@ -530,3 +530,12 @@
 //Roguetown-specific
 #define  COMSIG_MOB_ON_KICK	"mob_on_kick"	//from /mob/living/proc/try_kick(atom/A). This is for when the src has done a kick.
 #define  COMSIG_MOB_KICKED	"mob_kicked"	//from /datum/species/proc/kicked(mob/living/carbon/human/user, mob/living/carbon/human/target). This is for when the mob has BEEN kicked.
+
+#define COMSIG_BODYPART_TRY_EMBED_ITEM "bodypart_try_embed_item" //from /obj/item/bodypart/proc/add_embedded_object; sent to the bodypart when something is trying to embed: (/obj/item/item_being_embedded)
+	#define COMPONENT_PREVENT_EMBED (1<<0) //when something happened that stopped the embed!
+#define COMSIG_BODYPART_EMBEDDED_ITEM_ADDED "bodypart_embedded_item_added" //from /obj/item/bodypart/proc/add_embedded_object; sent to the bodypart embedded into: (/obj/item/item_being_embedded)
+#define COMSIG_ITEM_EMBEDDED_IN_BODYPART "item_embedded_in_bodypart" //from /obj/item/bodypart/proc/add_embedded_object; sent to the item embedding into a bodypart: (/obj/item/bodypart/embedded_into)
+#define COMSIG_BODYPART_TRY_REMOVE_EMBEDDED_ITEM "bodypart_try_remove_embedded_item" //from /obj/item/bodypart/proc/remove_embedded_object(); sent to the bodypart the item is removed from: (/obj/item/item_being_removed_as_embedded)
+	#define COMPONENT_PREVENT_REMOVE_EMBED (1<<0) //returned when something prevents an item from being removed as embedded (think: curses, barbed arrows, etc.)
+#define COMSIG_BODYPART_EMBEDDED_ITEM_REMOVED "bodypart_embedded_item_removed" //from /obj/item/bodypart/proc/remove_embedded_object(); sent to the bodypart the item is removed from: (/obj/item/item_being_removed_as_embedded)
+#define COMSIG_ITEM_REMOVED_FROM_EMBED_IN_BODYPART "item_removed_from_embed_in_bodypart" //from /obj/item/bodypart/proc/remove_embedded_object(); sent to the item removed from the bodypart: (/obj/item/bodypart/bodypart_removed_from)

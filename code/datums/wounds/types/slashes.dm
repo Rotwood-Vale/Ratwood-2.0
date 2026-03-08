@@ -161,6 +161,30 @@
 	passive_healing = 0
 	sleep_healing = 0
 
+/datum/wound/slash/incision/on_bodypart_gain(obj/item/bodypart/affected)
+	. = ..()
+	RegisterSignal(bodypart_owner, COMSIG_BODYPART_EMBEDDED_ITEM_ADDED, PROC_REF(forced_open))
+
+/datum/wound/slash/incision/proc/forced_open(datum/source, obj/item/item_newly_embedded)
+	SIGNAL_HANDLER
+
+	if(!istype(item_newly_embedded, /obj/item/rogueweapon/surgery/hemostat))
+		return NONE
+	UnregisterSignal(COMSIG_ITEM_EMBEDDED_IN_BODYPART)
+	RegisterSignal(item_newly_embedded, COMSIG_ITEM_REMOVED_FROM_EMBED_IN_BODYPART, PROC_REF(not_forced_open))
+	permanent = TRUE
+
+/datum/wound/slash/incision/proc/not_forced_open(datum/source, obj/item/bodypart/bodypart_removed_from)
+	SIGNAL_HANDLER
+
+	if(bodypart_removed_from != bodypart_owner)
+		log_runtime("[source] wasn't properly deregistered and re-registered for embedding!\
+			Expected: [bodypart_owner]\
+			Got: [bodypart_removed_from]")
+	UnregisterSignal(source, COMSIG_ITEM_REMOVED_FROM_EMBED_IN_BODYPART) //should be deregistered even if unsuccessful; deregister is also the success case
+	RegisterSignal(bodypart_owner, COMSIG_ITEM_EMBEDDED_IN_BODYPART, PROC_REF(forced_open))
+	permanent = FALSE
+
 /datum/wound/slash/incision/sew_wound()
 	qdel(src)
 	return TRUE
