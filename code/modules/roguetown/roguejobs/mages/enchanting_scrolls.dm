@@ -6,7 +6,7 @@ T1 Enchantments below here*/
 /obj/item/enchantmentscroll
 	name = "scroll of enchanting"
 	desc = "A scroll imbued with an arcane enchantment. Can be used on certain items to imbue them."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "enchantment"
 	var/component
 	possible_item_intents = list(/datum/intent/use)

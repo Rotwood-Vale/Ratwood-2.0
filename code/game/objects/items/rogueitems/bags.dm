@@ -3,8 +3,8 @@
 	desc = "A sack of rough cloth meant for peasantry."
 	icon_state = "cbag"
 	item_state = "cbag"
-	icon = 'icons/roguetown/items/misc.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+	icon = 'icons/items/misc.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head_items.dmi'
 	slot_flags = ITEM_SLOT_HEAD
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = NONE

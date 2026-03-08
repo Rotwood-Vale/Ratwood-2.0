@@ -4,7 +4,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/wolf_skin
-	wildshape_icon = 'icons/roguetown/mob/monster/fox.dmi'
+	wildshape_icon = 'icons/mob/monster/fox.dmi'
 	wildshape_icon_state = "fox"
 	//This is basically just Wolf & Cat form combined, think rogue form
 
@@ -72,7 +72,7 @@
 	playsound(get_turf(H), pick('sound/vo/mobs/vw/idle (1).ogg','sound/vo/mobs/vw/idle (2).ogg','sound/vo/mobs/vw/bark (1).ogg','sound/vo/mobs/vw/bark (2).ogg','sound/vo/mobs/vw/idle (3).ogg'), 80, TRUE, -1)
 
 /datum/species/shapefox/regenerate_icons(mob/living/carbon/human/H)
-	H.icon = 'icons/roguetown/mob/monster/fox.dmi'
+	H.icon = 'icons/mob/monster/fox.dmi'
 	H.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	H.icon_state = "fox"
 	H.update_damage_overlays()
@@ -123,7 +123,7 @@
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	max_blade_int = 600
 	max_integrity = 600
 	force = 20

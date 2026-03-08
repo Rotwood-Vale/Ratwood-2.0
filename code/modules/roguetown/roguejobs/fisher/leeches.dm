@@ -3,7 +3,7 @@
 /obj/item/natural/worms/leech
 	name = "leech"
 	desc = "A disgusting, blood-sucking parasite."
-	icon = 'icons/roguetown/items/surgery.dmi'
+	icon = 'icons/items/surgery.dmi'
 	icon_state = "leech"
 	baitpenalty = 0
 	fishingMods=list(

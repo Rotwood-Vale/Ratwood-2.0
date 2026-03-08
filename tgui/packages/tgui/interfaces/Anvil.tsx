@@ -55,7 +55,7 @@ export const LonelyAnvil = (props) => {
           <Stack.Item fontSize={2}>This Anvil Sits Idle.</Stack.Item>
           <Stack.Item>
             <DmIcon
-              icon="icons/roguetown/misc/forge.dmi"
+              icon="icons/misc/forge.dmi"
               icon_state="anvil"
               width={16}
               height={16}

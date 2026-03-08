@@ -568,7 +568,7 @@
 	name = "lightning spear"
 	desc = "A spear of light, pulled from Her domain. Throw far. Strike true."
 	icon_state = "astratan_spear"//Martyr sword without the hilt, for now. Temp.
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	item_flags = SLOWS_WHILE_IN_HAND
 	slowdown = 2

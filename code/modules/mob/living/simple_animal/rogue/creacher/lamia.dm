@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/lamia
-	icon = 'icons/roguetown/mob/monster/lamia.dmi'
+	icon = 'icons/mob/monster/lamia.dmi'
 	name = "lamia"
 	desc = "This slithering monstrosity has a human torso, a large snake tail, and four bladed arms."
 	icon_state = "lamia_f"

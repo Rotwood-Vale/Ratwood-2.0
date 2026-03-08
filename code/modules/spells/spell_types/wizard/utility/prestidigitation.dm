@@ -183,7 +183,7 @@
 	light_outer_range =  4
 	light_color = "#3FBAFD"
 
-	icon = 'icons/roguetown/items/lighting.dmi'
+	icon = 'icons/items/lighting.dmi'
 	icon_state = "wisp"
 
 #undef PRESTI_CLEAN

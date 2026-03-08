@@ -1,7 +1,7 @@
 /obj/structure/wild_plant
 	name = "wild plants"
 	desc = "A wild plant"
-	icon = 'icons/roguetown/misc/crops.dmi'
+	icon = 'icons/misc/crops.dmi'
 	var/datum/plant_def/plant_type
 	var/spread_chance = 75
 

@@ -8,7 +8,7 @@
 /obj/item/roguecoin
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/items/valuable.dmi'
+	icon = 'icons/items/valuable.dmi'
 	icon_state = ""
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'

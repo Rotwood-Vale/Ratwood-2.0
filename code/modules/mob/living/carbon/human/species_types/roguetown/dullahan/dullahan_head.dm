@@ -331,7 +331,7 @@
 		hidden_slots |= head_item.flags_inv
 		if(transparent_protection)
 			hidden_slots |= head_item.transparent_protection
-		var/mutable_appearance/head_overlay = head_item.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi')
+		var/mutable_appearance/head_overlay = head_item.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/clothing/onmob/head.dmi')
 		. += head_overlay
 	for(var/obj/item/organ/organ as anything in contents) // Applies organ features to head.
 		if(!isorgan(organ))

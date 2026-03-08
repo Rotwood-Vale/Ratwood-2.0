@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/rogue/deepone
 	name = "Deep One"
 	desc = ""
-	icon = 'icons/roguetown/mob/monster/fishman.dmi'
+	icon = 'icons/mob/monster/fishman.dmi'
 	icon_state = "deep1"
 	icon_living = "deep1"
 	icon_dead = "deep1_d"
@@ -44,7 +44,7 @@
 /mob/living/simple_animal/hostile/rogue/deepone/arm
 	name = "Deep One"
 	desc = ""
-	icon = 'icons/roguetown/mob/monster/fishman.dmi'
+	icon = 'icons/mob/monster/fishman.dmi'
 	icon_state = "deep1_arm"
 	health = DEEPONE_HEALTH * 1.4
 	harm_intent_damage = 25
@@ -57,7 +57,7 @@
 /mob/living/simple_animal/hostile/rogue/deepone/spit
 	name = "Deep One"
 	desc = ""
-	icon = 'icons/roguetown/mob/monster/fishman.dmi'
+	icon = 'icons/mob/monster/fishman.dmi'
 	icon_state = "deep1_spit"
 	icon_living = "deep1_spit"
 	icon_dead = "deep1_d"
@@ -73,7 +73,7 @@
 /mob/living/simple_animal/hostile/rogue/deepone/wiz
 	name = "Deep One Devout"
 	desc = ""
-	icon = 'icons/roguetown/mob/monster/fishman.dmi'
+	icon = 'icons/mob/monster/fishman.dmi'
 	icon_state = "deep1_wiz"
 	icon_living = "deep1_wiz"
 	icon_dead = "deep1_d"

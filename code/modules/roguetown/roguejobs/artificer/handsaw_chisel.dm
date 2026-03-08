@@ -7,7 +7,7 @@
 	name = "handsaw"
 	desc = "Iron tool for woodworking."
 	icon_state = "handsaw"
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	grid_width = 32
 	grid_height = 96
 	sharpness = IS_SHARP
@@ -27,7 +27,7 @@
 	name = "chisel"
 	desc = "Add something to strike it with before doing stonework. Like a mallet or a stone."
 	icon_state = "chisel"
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	grid_width = 32
 	grid_height = 64
 	force = 10

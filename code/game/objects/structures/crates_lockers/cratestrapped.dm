@@ -1,7 +1,7 @@
 /obj/structure/closet/crate/chest/trapped
 	name = "chest"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "chest3s"
 	locked = FALSE
 	anchored = TRUE //meant for dungeons, maybe a craftable subtype in the future can be coded
@@ -81,7 +81,7 @@
 /obj/structure/closet/crate/chest/trapped/locked
 	name = "chest"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "chest3s"
 	locked = TRUE
 	var/list/loot_weighted_list = list(

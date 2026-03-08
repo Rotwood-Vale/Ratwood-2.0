@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/glass/bottle/alchemical
 	name = "alchemical vial"
 	desc = "A cute bottle that can hold three swigs of liquid, which is useful for both miserly business practices and preventing accidental overdosing. This one lacks a cork."
-	icon = 'icons/roguetown/misc/alchemy.dmi'
+	icon = 'icons/misc/alchemy.dmi'
 	icon_state = "vial_bottle"
 	amount_per_transfer_from_this = 10
 	amount_per_gulp = 10

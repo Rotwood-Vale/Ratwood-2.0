@@ -48,7 +48,7 @@
 	light_outer_range = 10
 	light_color = LIGHT_COLOR_WHITE
 	force = 10
-	icon = 'icons/roguetown/rav/obj/cult.dmi'
+	icon = 'icons/rav/obj/cult.dmi'
 	icon_state = "sphere0"
 	item_state = "sphere0"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

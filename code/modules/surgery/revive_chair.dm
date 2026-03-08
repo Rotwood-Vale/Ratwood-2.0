@@ -4,7 +4,7 @@
 /obj/structure/chair/frankenstein
 	name = "Fulmenor chair"
 	desc = "A nightmarish contraption of pipes, and sparking electrodes. It seems permanently fixed to the ground. Affectionately known as the ZRONK device."
-	icon = 'icons/roguetown/misc/struc48x48.dmi'
+	icon = 'icons/misc/struc48x48.dmi'
 	icon_state = "frankenchair0"
 	anchored = TRUE
 	density = FALSE

@@ -3,7 +3,7 @@
 
 /obj/structure/meathook
 	name = "meathook"
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "meathook"
 	desc = "A hook used to secure livestock for butchering."
 	density = TRUE

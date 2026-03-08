@@ -48,7 +48,7 @@
 	clickcd = 12
 
 /mob/living/simple_animal/hostile/retaliate/rogue/primordial
-	icon = 'icons/roguetown/mob/monster/primordial.dmi'
+	icon = 'icons/mob/monster/primordial.dmi'
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
 	faction = list("neutral")

@@ -3,7 +3,7 @@
 /obj/item/bouquet
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/items/misc.dmi' 
+	icon = 'icons/items/misc.dmi' 
 	icon_state = ""
 	item_state = ""
 
@@ -37,8 +37,8 @@
 /obj/item/flowercrown
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/clothing/head.dmi' 
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+	icon = 'icons/clothing/head.dmi' 
+	mob_overlay_icon = 'icons/clothing/onmob/head_items.dmi'
 	alternate_worn_layer  = 8.9 //On top of helmet
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	body_parts_covered = null

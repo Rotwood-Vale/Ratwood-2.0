@@ -10,7 +10,7 @@
 /obj/structure/roguemachine/steward
 	name = "nerve master"
 	desc = "The stewards most trusted friend."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "steward_machine"
 	density = TRUE
 	blade_dulling = DULLING_BASH

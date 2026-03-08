@@ -3,7 +3,7 @@
 	name = "bottle bomb"
 	desc = "A fiery explosion waiting to be coaxed from its glass prison."
 	icon_state = "bbomb"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 0
 	slot_flags = ITEM_SLOT_HIP
@@ -173,7 +173,7 @@
 /obj/item/tripwire
 	name = "fibre tripwire"
 	desc = "You almost missed it - phew. Best cut it with a blade to disarm it."
-	icon = 'icons/roguetown/items/misc.dmi'	
+	icon = 'icons/items/misc.dmi'	
 	icon_state = "wire"
 	anchored = TRUE
 	var/obj/item/bomb/tripbomb/payload
@@ -241,7 +241,7 @@
 	name = "smoke bomb"
 	desc = "A soft sphere with an alchemical mixture and a dispersion mechanism hidden inside. Any pressure will detonate it."
 	icon_state = "smokebomb"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 0
 	slot_flags = ITEM_SLOT_HIP
@@ -293,7 +293,7 @@
 	desc = "A bit of blastpowder in paper shell..."
 	icon_state = "tnt_stick"
 	var/lit_state = "tnt_stick-lit"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	slot_flags = ITEM_SLOT_HIP
@@ -365,7 +365,7 @@
 	desc = "A satchel full of blastpowder..."
 	icon_state = "satchel_bomb"
 	var/lit_state = "satchel_bomb-lit"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 0
 	throw_range = 2
@@ -439,7 +439,7 @@
 	desc = "Some substance, hidden under paper"
 	dropshrink = 0.6
 	icon_state = "impact_grenade"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 1
@@ -479,7 +479,7 @@
 	desc = "a metal shell for spraying gas out"
 	dropshrink = 0.6
 	icon_state = "smokeshell_blank"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 1

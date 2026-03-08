@@ -5,7 +5,7 @@
 	name = "template hammer"
 	desc = "If you see this - scream, cry, piss, run, shit yourself, then report it to a dev. Shouldn't be here."
 	icon_state = "hammer"
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.8
 	wlength = WLENGTH_SHORT
@@ -299,7 +299,7 @@
 	force = 25
 	name = "blacksteel hammer"
 	desc = "A hammer made of blacksteel, to drive even the hardest metals into submission."
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	icon_state = "bs_masterhammer"
 	item_state = "bs_masterhammer"
 	quality = 2
@@ -323,7 +323,7 @@
 	name = "tongs"
 	desc = "A pair of blacksteel tongs that'll hold onto Psydonia's hottest metal without ever warping. 'Tis a symbol of prestige."
 	icon_state = "tongs"
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.8
 	wlength = WLENGTH_SHORT
@@ -436,7 +436,7 @@
 	desc = "A pair of blacksteel jaws almost certainly used as a sign of prestige."
 	icon_state = "bs_tongs"
 	wdefense = 6
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	smeltresult = /obj/item/ingot/blacksteel
 
 /obj/item/rogueweapon/tongs/blacksteel/update_icon()

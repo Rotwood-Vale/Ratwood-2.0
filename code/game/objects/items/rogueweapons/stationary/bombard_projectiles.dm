@@ -11,7 +11,7 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 /obj/item/cannonball
 	name = "\improper bombard charge (SOL)"
 	desc = "A hefty bombard charge. Capped by a solid end."
-	icon = 'icons/roguetown/weapons/stationary/bombard_projectiles.dmi'
+	icon = 'icons/weapons/stationary/bombard_projectiles.dmi'
 	icon_state = "basic"
 
 /obj/item/cannonball/proc/detonate(turf/T)
@@ -151,7 +151,7 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 	..()
 	cut_overlays()
 	if(reagents.total_volume > 0)
-		var/mutable_appearance/internal = mutable_appearance('icons/roguetown/weapons/stationary/bombard_projectiles.dmi', "anychem_full_overlay")
+		var/mutable_appearance/internal = mutable_appearance('icons/weapons/stationary/bombard_projectiles.dmi', "anychem_full_overlay")
 		internal.color = mix_color_from_reagents(reagents.reagent_list)
 		internal.alpha = mix_alpha_from_reagents(reagents.reagent_list)
 		add_overlay(internal)

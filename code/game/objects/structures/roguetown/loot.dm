@@ -1,7 +1,7 @@
 /obj/structure/loot/pile
 	name = "loot pile"
 	desc = "Looters don't read, and readers don't loot"
-	icon = 'icons/roguetown/mob/monster/wraith.dmi'
+	icon = 'icons/mob/monster/wraith.dmi'
 	icon_state = "hauntpile"
 	layer = ABOVE_ALL_MOB_LAYER
 	blade_dulling = DULLING_CUT

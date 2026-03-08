@@ -2,7 +2,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	name = "crossbow"
 	desc = "A deadly weapon that shoots a bolt with terrific power."
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	icon_state = "crossbow0"
 	item_state = "crossbow"
 	experimental_onhip = TRUE
@@ -170,7 +170,7 @@
 	icon_state = "[item_state][cocked ? "1" : "0"]"
 
 	if(chambered && !hasloadedsprite)
-		var/mutable_appearance/ammo = mutable_appearance('icons/roguetown/weapons/ammo.dmi', chambered.icon_state)
+		var/mutable_appearance/ammo = mutable_appearance('icons/weapons/ammo.dmi', chambered.icon_state)
 		add_overlay(ammo)
 	if(chambered && hasloadedsprite)
 		icon_state = "[item_state][2]"
@@ -190,7 +190,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	name = "slurbow"
 	desc = "A lighter weight crossbow with a distinct barrel shroud holding the bolt in place. Light enough to arm by hand. <br>They're popular among among highwaymen and the patrolling lamplighters of Otava."
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	icon_state = "slurbow0"
 	item_state = "slurbow"
 	possible_item_intents = list(/datum/intent/shoot/crossbow/slurbow, /datum/intent/arc/crossbow/slurbow, INTENT_GENERIC)
@@ -210,7 +210,7 @@
 	name = "sauterelle"
 	desc = "An incredibly heavy crossbow, designed for a dedicated arbalist to wield. \
 	Modified to be loaded by hand. A tedious affair."
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	icon_state = "heavycrossbow0"
 	item_state = "heavycrossbow"
 	fire_sound = 'sound/combat/Ranged/firebow-shot-02.ogg'

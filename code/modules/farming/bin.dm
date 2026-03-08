@@ -1,7 +1,7 @@
 /obj/item/roguebin
 	name = "wood bin"
 	desc = "A washbin, a trashbin, a bloodbin... Your choices are limitless."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "washbin1"
 	var/base_state
 	density = TRUE
@@ -48,7 +48,7 @@
 	cut_overlays()
 	if(reagents)
 		if(reagents.total_volume)
-			var/mutable_appearance/filling = mutable_appearance('icons/roguetown/misc/structure.dmi', "liquid2")
+			var/mutable_appearance/filling = mutable_appearance('icons/misc/structure.dmi', "liquid2")
 			filling.color = mix_color_from_reagents(reagents.reagent_list)
 			filling.alpha = mix_alpha_from_reagents(reagents.reagent_list)
 			add_overlay(filling)

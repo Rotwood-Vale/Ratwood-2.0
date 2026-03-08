@@ -1,7 +1,7 @@
 /obj/effect/mapping_helpers/outfit_handler
 	name = "generic outfit equipper (SET PATH IN VARS)"
 	icon_state = "plate_alt"
-	icon = 'icons/roguetown/clothing/armor.dmi'
+	icon = 'icons/clothing/armor.dmi'
 	alpha = 155 //so its easier to tell apart
 	late = TRUE
 	var/datum/outfit/outfit_to_equip
@@ -20,7 +20,7 @@
 /obj/effect/mapping_helpers/floor_clothing_equipper
 	name = "floor clothes equipper (PLACE ITEMS ON FLOOR)"
 	icon_state = "leather"
-	icon = 'icons/roguetown/clothing/armor.dmi'
+	icon = 'icons/clothing/armor.dmi'
 	alpha = 155 //so its easier to tell apart
 	late = TRUE
 

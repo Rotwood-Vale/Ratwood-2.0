@@ -1,7 +1,7 @@
 /obj/item/storage/fancy/shhig
 	name = "Shhig Brand Zigs"
 	desc = "Shhig's Brand Zigs; known for their smooth draw and complex flavour profile. Go on... give them a try. Your life expectancy isn't very high anyway."
-	icon = 'icons/roguetown/items/smokebox.dmi'
+	icon = 'icons/items/smokebox.dmi'
 	icon_state = "smokebox"
 	item_state = "smokebox"
 	icon_type = "smoke"

@@ -2,7 +2,7 @@
 /obj/structure/ladder
 	name = "ladder"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "ladder11"
 	anchored = TRUE
 	var/obj/structure/ladder/down   //the ladder below this one
@@ -198,7 +198,7 @@
 /obj/structure/wallladder
 	name = "wall ladder"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "ladderwall"
 	anchored = TRUE
 	var/obj/structure/ladder/down   //the ladder below this one
@@ -226,7 +226,7 @@
 /obj/structure/rope_ladder
 	name = "rope"
 	desc = "A length of rope that has been lowered against a surface to allow climbing."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "pillar"
 	anchored = TRUE
 	obj_flags = BLOCK_Z_OUT_DOWN

@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/stockpile
 	name = "stockpile"
 	desc = ""
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "stockpile_vendor"
 	density = FALSE
 	blade_dulling = DULLING_BASH

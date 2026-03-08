@@ -10,7 +10,7 @@
 	name = ""
 	desc = ""
 	icon_state = ""
-	icon = 'icons/roguetown/weapons/shields32.dmi'
+	icon = 'icons/weapons/shields32.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	flags_1 = null
 	force = 10
@@ -118,7 +118,7 @@
 		..()
 		return
 
-	var/icon/J = new('icons/roguetown/weapons/shield_heraldry.dmi')
+	var/icon/J = new('icons/weapons/shield_heraldry.dmi')
 	var/list/istates = J.IconStates()
 	for(var/icon_s in istates)
 		if(!findtext(icon_s, "[icon_state]_"))
@@ -134,7 +134,7 @@
 	var/picked_name = input(user, "Choose a Heraldry", "ROGUETOWN", name) as null|anything in sortList(istates)
 	if(!picked_name)
 		picked_name = "none"
-	var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/shield_heraldry.dmi', "[icon_state]_[picked_name]")
+	var/mutable_appearance/M = mutable_appearance('icons/weapons/shield_heraldry.dmi', "[icon_state]_[picked_name]")
 	M.appearance_flags = NO_CLIENT_COLOR
 	add_overlay(M)
 	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
@@ -443,7 +443,7 @@
 	name = "'Order'"
 	desc = "A special buckler shield made out of blacksteel for the captain of the guard, adorned with the vale's crest."
 	icon_state = "capbuckler"
-	icon = 'icons/roguetown/weapons/special/captain.dmi'
+	icon = 'icons/weapons/special/captain.dmi'
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
 	force = 20
 	throwforce = 10

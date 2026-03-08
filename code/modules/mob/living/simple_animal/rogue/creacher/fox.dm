@@ -1,6 +1,6 @@
 //Subtype of wolf, but non-hostile until attacked instead of default hostile.
 /mob/living/simple_animal/hostile/retaliate/rogue/fox
-	icon = 'icons/roguetown/mob/monster/fox.dmi'
+	icon = 'icons/mob/monster/fox.dmi'
 	name = "venard"
 	desc = "A majestic beast of Dendor's realm, hopping through the local fauna."
 	icon_state = "fox"
@@ -71,7 +71,7 @@
 	name = "remains"
 	gender = PLURAL
 	icon_state = "bones"
-	icon = 'icons/roguetown/mob/monster/fox.dmi'
+	icon = 'icons/mob/monster/fox.dmi'
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fox/get_sound(input)
 	switch(input)

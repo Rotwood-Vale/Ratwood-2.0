@@ -1,7 +1,7 @@
 /obj/item/net
 	name = "net"
 	desc = "A weighed net used to entrap foes. Can be thrown to ensnare a target's legs and slow them down. Victims can struggle out of it and it will fall off after a short time."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "net"
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
 	force = 10

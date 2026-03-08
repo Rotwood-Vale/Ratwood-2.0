@@ -2,7 +2,7 @@
 /obj/structure/portal
 	name = "gate"
 	desc = "This gate's enveloping darkness is too oppressive to pass through."
-	icon = 'icons/roguetown/misc/portal.dmi'
+	icon = 'icons/misc/portal.dmi'
 	icon_state = "portal"
 	density = TRUE
 	anchored = TRUE

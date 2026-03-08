@@ -4,7 +4,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/saiga_skin
-	wildshape_icon = 'icons/roguetown/mob/monster/saiga.dmi'
+	wildshape_icon = 'icons/mob/monster/saiga.dmi'
 	wildshape_icon_state = "saiga"
 	// Someone else balance this, I am here for code, not numbers
 
@@ -73,7 +73,7 @@
 	playsound(get_turf(H), pick('sound/vo/mobs/saiga/idle (1).ogg','sound/vo/mobs/saiga/idle (2).ogg','sound/vo/mobs/saiga/idle (3).ogg','sound/vo/mobs/saiga/idle (4).ogg','sound/vo/mobs/saiga/idle (5).ogg','sound/vo/mobs/saiga/idle (6).ogg','sound/vo/mobs/saiga/idle (7).ogg'), 100, TRUE, -1)
 
 /datum/species/shapesaiga/regenerate_icons(mob/living/carbon/human/H)
-	H.icon = 'icons/roguetown/mob/monster/saiga.dmi'
+	H.icon = 'icons/mob/monster/saiga.dmi'
 	H.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	H.icon_state = "saiga"
 	H.update_damage_overlays()
@@ -126,7 +126,7 @@
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	max_blade_int = 600
 	max_integrity = 600
 	force = 20

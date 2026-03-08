@@ -1,7 +1,7 @@
 /obj/structure/shisha
 	name = "shisha pipe"
 	desc = "A traditional shisha pipe."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "zbuski"
 	density = FALSE
 	anchored = TRUE
@@ -98,14 +98,14 @@
 /obj/structure/shisha/hookah
 	name = "shisha pipe"
 	desc = "A traditional shisha pipe."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "hookah"
 	anchored = FALSE
 
 /obj/item/hookah_mouthpiece
 	name = "hookah mouthpiece"
 	desc = "Pestra knows how many tongues this thing has seen so far."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "mouthpiece"
 	force = 5 // To hit someone with it.
 	possible_item_intents = list(/datum/intent/smoke, INTENT_GENERIC)

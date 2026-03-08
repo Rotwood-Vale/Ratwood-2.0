@@ -27,7 +27,7 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 /obj/structure/bombard
 	name = "portable bombard"
 	desc = "A light, portable bombard. Looks as if only a trained hand can aim it..."
-	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
+	icon = 'icons/weapons/stationary/bombard.dmi'
 	icon_state = "smallmortar"
 	anchored = 1
 	density = 1
@@ -51,7 +51,7 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 /obj/structure/bombard/fixed
 	name = "heavy bombard"
 	desc = "A massive, stationary bombard. Unlike a portable bombard, this one is capable of firing practically anywhere. With enough smokepowder and a dream..."
-	icon = 'icons/roguetown/weapons/stationary/bombard48.dmi'
+	icon = 'icons/weapons/stationary/bombard48.dmi'
 	icon_state = "bigmortar"//We'll get a bigger projectile set, for this one, later. That's what the heavy var was for, before.
 	fixed = 1
 	heavy = TRUE

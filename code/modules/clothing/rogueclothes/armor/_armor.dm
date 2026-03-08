@@ -3,12 +3,12 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	body_parts_covered = CHEST
 	body_parts_inherent = CHEST
-	icon = 'icons/roguetown/clothing/armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
+	icon = 'icons/clothing/armor.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/armor.dmi'
 	equip_sound = 'sound/foley/equip/equip_armor.ogg'
 	drop_sound = 'sound/foley/equip/equip_armor.ogg'
 	pickup_sound =  'sound/blank.ogg'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_armor.dmi'
 	sleevetype = "shirt"
 	edelay_type = 0
 	equip_delay_self = 2.5 SECONDS

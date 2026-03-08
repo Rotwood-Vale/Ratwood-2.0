@@ -5,7 +5,7 @@
 	name = "shovel"
 	desc = "Essential for digging (graves) in this darkened earth."
 	icon_state = "shovel"
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.8
 	wdefense = 3
@@ -245,7 +245,7 @@
 	name = "silver shovel"
 	desc = "The only trait that distinguishes a man from a beast is their empathy. To mutilate the dead, regardless of what they've done in lyfe, is to invoke divine wrath. See them buried beneath crossed soil; ferry their spirit to the world beyond Psydonia, and towards their final judgement."
 	icon_state = "silvershovel"
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
@@ -446,7 +446,7 @@
 	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash, /datum/intent/shovelscoop)
 	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash)
 	icon_state = "saperka"//Temp sprite. Why was this just the shovel icon? I HATE YOU!!!!
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	sharpness = 100
 	max_blade_int = 260
 	blade_dulling = DULLING_SHAFT_WOOD
@@ -524,7 +524,7 @@
 	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)//One hand lets you arc divine blast and such.
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff,
 	/datum/intent/axe/chop/stone, /datum/intent/shovelscoop)//Two hands to let you shovel and chop.
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	icon_state = "mortstaff"//Temp sprite.
 	associated_skill = /datum/skill/combat/staves
 	wdefense = 3

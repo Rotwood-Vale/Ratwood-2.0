@@ -47,7 +47,7 @@
 /obj/item/rogueweapon/magicbrick
 	name = "magician's brick"
 	desc = "A brick formed out of arcane energy. Not a actual brick and cannot be used for construction. Makes for a very deadly melee and throwing weapon."
-	icon = 'icons/roguetown/items/cooking.dmi'
+	icon = 'icons/items/cooking.dmi'
 	icon_state = "claybrickcook"
 	dropshrink = 0.75
 	force = 15 // Copy pasted from real brick + 1 for neat number

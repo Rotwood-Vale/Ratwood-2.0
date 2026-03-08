@@ -48,7 +48,7 @@
 	return
 
 /obj/effect/temp_visual/stone_throw
-	icon = 'icons/roguetown/items/natural.dmi'
+	icon = 'icons/items/natural.dmi'
 	icon_state = "stonebig1"
 	name = "stone"
 	desc = "You should scram..."

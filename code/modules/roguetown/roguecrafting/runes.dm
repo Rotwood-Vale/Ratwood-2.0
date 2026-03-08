@@ -4,7 +4,7 @@
 	var/reading = FALSE //sanity
 	var/oneuse = TRUE //default this is true, but admins can var this to 0 if we wanna all have a pass around of the rod form rune
 	w_class = WEIGHT_CLASS_TINY
-	icon = 'icons/roguetown/items/books.dmi'
+	icon = 'icons/items/books.dmi'
 
 /obj/item/rune/proc/turn_page(mob/user)
 	//playsound(user, pick('sound/blank.ogg'), 30, TRUE)

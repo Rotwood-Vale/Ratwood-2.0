@@ -1,8 +1,8 @@
 /obj/item/clothing/wrists/roguetown
 	slot_flags = ITEM_SLOT_WRISTS
-	sleeved = 'icons/roguetown/clothing/onmob/wrists.dmi'
-	icon = 'icons/roguetown/clothing/wrists.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/wrists.dmi'
+	sleeved = 'icons/clothing/onmob/wrists.dmi'
+	icon = 'icons/clothing/wrists.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/wrists.dmi'
 	sleevetype = "shirt"
 	resistance_flags = FLAMMABLE
 	sewrepair = TRUE
@@ -269,9 +269,9 @@
 	name = "gem bracelet base"
 	desc = "You shouldn't be seeing this."
 	slot_flags = ITEM_SLOT_WRISTS
-	icon = 'icons/roguetown/clothing/wrists.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/gembracelet.dmi'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_gembracelet.dmi'
+	icon = 'icons/clothing/wrists.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/gembracelet.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_gembracelet.dmi'
 	salvage_result = null
 
 /obj/item/clothing/wrists/roguetown/gem/jadebracelet

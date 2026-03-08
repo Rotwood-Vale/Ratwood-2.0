@@ -132,7 +132,7 @@
 	name = "remains"
 	gender = PLURAL
 	icon_state = "skele"
-	icon = 'icons/roguetown/mob/monster/cow.dmi'
+	icon = 'icons/mob/monster/cow.dmi'
 
 /mob/living/simple_animal/hostile/retaliate/rogue/trufflepig/Life()
 	. = ..()

@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/noticeboard
 	name = "Notice Board"
 	desc = "A large wooden notice board, carrying postings from all across the vale. A ZAD perch sits atop it."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "noticeboard0"
 	density = TRUE
 	anchored = TRUE
@@ -17,7 +17,7 @@
 /obj/structure/roguemachine/boardbarrier //Blocks sprite locations
 	name = ""
 	desc = "A large wooden notice board, carrying postings from all across the vale. A ZAD perch sits atop it."
-	icon = 'icons/roguetown/underworld/underworld.dmi'
+	icon = 'icons/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 	density = TRUE
 	anchored = TRUE

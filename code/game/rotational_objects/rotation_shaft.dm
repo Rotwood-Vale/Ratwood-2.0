@@ -1,6 +1,6 @@
 /obj/structure/rotation_piece
 	name = "shaft"
-	icon = 'icons/roguetown/misc/shafts_cogs.dmi'
+	icon = 'icons/misc/shafts_cogs.dmi'
 	icon_state = "shaft"
 	layer = ABOVE_MOB_LAYER
 	rotation_structure = TRUE

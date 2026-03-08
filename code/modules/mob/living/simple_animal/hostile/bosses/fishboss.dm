@@ -4,7 +4,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	boss_abilities = list(/datum/action/boss/lich_summon_minions)
 	faction = list("deepone")
-	icon = 'icons/roguetown/mob/monster/pufferboss.dmi'
+	icon = 'icons/mob/monster/pufferboss.dmi'
 	icon_state = "pufferman"
 	wander = 0
 	vision_range = 16

@@ -7,7 +7,7 @@
 /obj/item/dummy/treasure
 	name = "zenarii"
 	desc = "A glint of gold..? Or... on closer inspection..."
-	icon = 'icons/roguetown/items/valuable.dmi'
+	icon = 'icons/items/valuable.dmi'
 	icon_state = "g19"
 	dropshrink = 0.75
 	w_class = WEIGHT_CLASS_TINY

@@ -44,10 +44,10 @@
 	liked_food = GROSS | MEAT | FRIED
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	possible_ages = ALL_AGES_LIST
-	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mta.dmi'
-	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fma.dmi'
-	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
-	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
+	limbs_icon_m = 'icons/mob/bodies/m/mta.dmi'
+	limbs_icon_f = 'icons/mob/bodies/f/fma.dmi'
+	dam_icon = 'icons/mob/bodies/dam/dam_male.dmi'
+	dam_icon_f = 'icons/mob/bodies/dam/dam_female.dmi'
 	offset_features = list(
 		OFFSET_ID = list(0,1), OFFSET_GLOVES = list(0,1), OFFSET_WRISTS = list(0,1),\
 		OFFSET_CLOAK = list(0,1), OFFSET_FACEMASK = list(0,1), OFFSET_HEAD = list(0,1), \

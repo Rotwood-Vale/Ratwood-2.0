@@ -209,7 +209,7 @@
 /obj/item/fertilizer
 	name = "fertilizer"
 	desc = "A mix of compost, manure, and bone meal."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "fertilizer"
 	w_class = WEIGHT_CLASS_SMALL
 	grid_width = 32

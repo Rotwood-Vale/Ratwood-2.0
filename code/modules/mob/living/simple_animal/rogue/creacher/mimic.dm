@@ -2,7 +2,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mimic
 	name = "chest"
-	icon = 'icons/roguetown/mob/monster/mimic.dmi'
+	icon = 'icons/mob/monster/mimic.dmi'
 	icon_state = "mimicopen"
 	icon_living = "mimicopen"
 	icon_dead = "mimicdead"

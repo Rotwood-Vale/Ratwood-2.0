@@ -1,7 +1,7 @@
 /obj/structure/telescope
 	name = "telescope"
 	desc = "A mysterious telescope pointing towards the stars."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "telescope"
 	density = TRUE
 	anchored = FALSE
@@ -28,7 +28,7 @@
 /obj/structure/globe
 	name = "globe"
 	desc = "A mysterious globe representing the world."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "globe"
 	density = TRUE
 	anchored = FALSE

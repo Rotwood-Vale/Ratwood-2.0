@@ -1,7 +1,7 @@
 /mob/living/carbon/human/species/goblin
 	name = "goblin"
 
-	icon = 'icons/roguetown/mob/monster/goblins.dmi'
+	icon = 'icons/mob/monster/goblins.dmi'
 	icon_state = "goblin"
 	race = /datum/species/goblin
 	gender = MALE
@@ -222,7 +222,7 @@
 		src.dna.species.soundpack_f = new /datum/voicepack/other/goblin()
 		var/obj/item/headdy = get_bodypart("head")
 		if(headdy)
-			headdy.icon = 'icons/roguetown/mob/monster/goblins.dmi'
+			headdy.icon = 'icons/mob/monster/goblins.dmi'
 			headdy.icon_state = "[src.dna.species.id]_head"
 			headdy.sellprice = 30
 	src.grant_language(/datum/language/orcish)
@@ -374,7 +374,7 @@
 
 /obj/structure/gob_portal
 	name = "Gob Portal"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "shitportal"
 	max_integrity = 200
 	anchored = TRUE

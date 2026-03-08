@@ -1,7 +1,7 @@
 /obj/structure/vampthrone
 	name = "The Blood Throne"
 	desc = "A big ominous throne."
-	icon = 'icons/roguetown/misc/vthrone.dmi'
+	icon = 'icons/misc/vthrone.dmi'
 	icon_state = "throne"
 	density = FALSE
 	can_buckle = TRUE

@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/camera
 	name = "face"
 	desc = ""
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "camera-mid"
 	density = FALSE
 	blade_dulling = DULLING_BASH

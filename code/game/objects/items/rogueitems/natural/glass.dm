@@ -1,7 +1,7 @@
 /obj/item/natural/glass
 	name = "glass"
 	desc = "Windowpanes for construction work."
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	icon_state = "glasspane"
 	dropshrink = 0.8
 	grid_width = 64
@@ -57,7 +57,7 @@
 /obj/item/natural/bundle/glass
 	name = "stack of glass"
 	desc = "A stack of fragile glass panes."
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	experimental_inhand = FALSE
 	icon_state = "glasspane1"
 	item_state = "glasspane"
@@ -95,7 +95,7 @@
 /obj/item/natural/glass_shard
 	name = "shard"
 	desc = "A sharp shard of glass."
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	experimental_inhand = FALSE
 	icon_state = "shard1"
 	item_state = "shard"

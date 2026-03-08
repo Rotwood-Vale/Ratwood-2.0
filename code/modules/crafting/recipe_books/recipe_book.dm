@@ -1,7 +1,7 @@
 
 
 /obj/item/recipe_book
-	icon = 'icons/roguetown/items/books.dmi'
+	icon = 'icons/items/books.dmi'
 
 	grid_width = 32
 	grid_height = 32

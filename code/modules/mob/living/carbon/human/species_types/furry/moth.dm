@@ -24,8 +24,8 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	limbs_icon_m = 'icons/mob/species/moth_male.dmi'
 	limbs_icon_f = 'icons/mob/species/moth_female.dmi'
-	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
-	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
+	dam_icon = 'icons/mob/bodies/dam/dam_male.dmi'
+	dam_icon_f = 'icons/mob/bodies/dam/dam_female.dmi'
 	soundpack_m = /datum/voicepack/male/moth
 	soundpack_f = /datum/voicepack/female/moth
 	offset_features = list(

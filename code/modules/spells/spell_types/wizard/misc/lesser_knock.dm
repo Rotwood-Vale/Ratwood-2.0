@@ -32,7 +32,7 @@
 	desc = "A faintly glowing lockpick that appears to be held together by the mysteries of the arcyne. To dispel it, simply use it on anything that isn't a door."
 	catchphrase = null
 	possible_item_intents = list(/datum/intent/use)
-	icon = 'icons/roguetown/items/keys.dmi'
+	icon = 'icons/items/keys.dmi'
 	icon_state = "lockpick"
 	color = "#3FBAFD" // spooky magic blue color that's also used by presti
 	picklvl = 0.99

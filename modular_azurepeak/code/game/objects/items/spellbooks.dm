@@ -8,7 +8,7 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 
 /obj/item/book/spellbook
 	var/open = FALSE
-	icon = 'icons/roguetown/items/books.dmi'
+	icon = 'icons/items/books.dmi'
 	icon_state = "spellbookbrown_0"
 	slot_flags = ITEM_SLOT_HIP
 	var/base_icon_state = "spellbookbrown"
@@ -180,7 +180,7 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 	var/pages_left = 4
 	name = "bound scrollpaper"
 	dropshrink = 0.6
-	icon = 'icons/roguetown/items/books.dmi'
+	icon = 'icons/items/books.dmi'
 	icon_state ="basic_book_0"
 	desc = "Thick scroll paper bound at the spine. It lacks pages."
 	throw_speed = 1

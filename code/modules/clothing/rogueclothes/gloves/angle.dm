@@ -21,7 +21,7 @@
 	desc = "Regal gloves of Grenzelhoftian design, more a fashion statement than actual protection."
 	icon_state = "grenzelgloves"
 	item_state = "grenzelgloves"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/stonekeep_merc.dmi'
 	color = "#ffffff"
 
 /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith

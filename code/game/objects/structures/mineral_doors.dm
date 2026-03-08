@@ -8,7 +8,7 @@
 	opacity = TRUE
 	layer = CLOSED_DOOR_LAYER
 
-	icon = 'icons/roguetown/misc/doors.dmi'
+	icon = 'icons/misc/doors.dmi'
 	icon_state = "metal"
 	max_integrity = 1000
 	integrity_failure = 0.5
@@ -831,7 +831,7 @@
 	damage_deflection = 12
 	layer = ABOVE_MOB_LAYER
 	keylock = TRUE
-	icon = 'icons/roguetown/misc/doors.dmi'
+	icon = 'icons/misc/doors.dmi'
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
@@ -899,7 +899,7 @@
 	opacity = FALSE
 	windowed = TRUE
 	keylock = FALSE
-	icon = 'icons/roguetown/misc/doors.dmi'
+	icon = 'icons/misc/doors.dmi'
 	icon_state = "swing"
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
@@ -1139,7 +1139,7 @@
 	damage_deflection = 15
 	layer = ABOVE_MOB_LAYER
 	keylock = TRUE
-	icon = 'icons/roguetown/misc/doors.dmi'
+	icon = 'icons/misc/doors.dmi'
 	blade_dulling = DULLING_BASH
 	opacity = FALSE
 	windowed = TRUE

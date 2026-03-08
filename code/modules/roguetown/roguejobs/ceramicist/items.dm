@@ -6,7 +6,7 @@
 	name = "Blowing Rod"
 	desc = "A blowing rod for shaping glass."
 	icon_state = "blowJobRod" // sorry not sorry
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.8
 	wlength = WLENGTH_SHORT

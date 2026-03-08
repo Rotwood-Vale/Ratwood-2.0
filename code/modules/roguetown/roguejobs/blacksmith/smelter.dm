@@ -6,7 +6,7 @@
 // DO NOT RE-ENABLE IT UNTIL FURTHER NOTICE
 
 /obj/machinery/light/rogue/smelter
-	icon = 'icons/roguetown/misc/forge.dmi'
+	icon = 'icons/misc/forge.dmi'
 	name = "stone furnace"
 	desc = "A stone furnace, weathered by time and heat."
 	icon_state = "cavesmelter0"
@@ -205,7 +205,7 @@
 	..()
 
 /obj/machinery/light/rogue/smelter/great
-	icon = 'icons/roguetown/misc/forge.dmi'
+	icon = 'icons/misc/forge.dmi'
 	name = "great furnace"
 	desc = "The pinnacle of dwarven engineering and the miracle of Malum's blessed fire crystal, allowing for greater alloys to be made."
 	icon_state = "smelter0"
@@ -288,7 +288,7 @@
 	actively_smelting = FALSE
 
 /obj/machinery/light/rogue/smelter/bronze
-	icon = 'icons/roguetown/misc/forge.dmi'
+	icon = 'icons/misc/forge.dmi'
 	name = "bronze melter"
 	desc = "An object of humen make, this furnace is capable of making bronze or iron."
 	icon_state = "brosmelter0"
@@ -341,7 +341,7 @@
 	actively_smelting = FALSE
 
 /obj/machinery/light/rogue/smelter/hiron
-	icon = 'icons/roguetown/misc/forge.dmi'
+	icon = 'icons/misc/forge.dmi'
 	name = "iron bloomery"
 	desc = "An object of humen make, this furnace is capable of making high quanities of iron."
 	icon_state = "hironsmelter0"

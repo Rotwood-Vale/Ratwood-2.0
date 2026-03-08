@@ -1,7 +1,7 @@
 /obj/structure/waterwheel
 	name = "waterwheel"
 
-	icon = 'icons/roguetown/misc/waterwheel.dmi'
+	icon = 'icons/misc/waterwheel.dmi'
 	icon_state = "1"
 
 	layer = 5

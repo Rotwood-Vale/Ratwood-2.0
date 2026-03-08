@@ -223,7 +223,7 @@
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"
 	desc = ""
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
 	righthand_file = 'modular/Neu_Food/icons/food_righthand.dmi'
 	icon_state = "woodbucket"

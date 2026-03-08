@@ -21,7 +21,7 @@
 	color = null
 	icon_state = "eoramask"
 	item_state = "eoramask"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64

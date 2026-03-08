@@ -217,7 +217,7 @@
 	name = "washed rice"
 	desc = ""
 	gender = PLURAL
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "rice"
 	list_reagents = list(/datum/reagent/floure = 1)
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/preserved/rice_cooked

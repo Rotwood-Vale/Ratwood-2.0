@@ -751,7 +751,7 @@
 /obj/item/magnifying_glass
 	name = "magnifying glass"
 	desc = "A tool for detailed inspection."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "magnifying_glass"
 
 	grid_height = 64
@@ -803,7 +803,7 @@
 /obj/item/bee_treatment
 	name = "bee medication"
 	desc = "A treatment for bee diseases."
-	icon = 'icons/roguetown/items/cooking.dmi'
+	icon = 'icons/items/cooking.dmi'
 	icon_state = "clear_vial1"
 	var/treatment_type = "general"
 	var/treatment_strength = 30

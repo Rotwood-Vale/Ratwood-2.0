@@ -9,7 +9,7 @@
 	slot_flags = ITEM_SLOT_HIP
 	obj_flags = null
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/roguetown/items/lighting.dmi'
+	icon = 'icons/items/lighting.dmi'
 	var/flintcd = 0
 	anvilrepair = /datum/skill/craft/blacksmithing
 	resistance_flags = FIRE_PROOF

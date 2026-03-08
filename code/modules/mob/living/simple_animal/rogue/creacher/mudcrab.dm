@@ -58,7 +58,7 @@
 
 /obj/structure/crabnest
 	name = "Mudcrab Burrow"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "crabnest"
 	max_integrity = 200
 	anchored = TRUE

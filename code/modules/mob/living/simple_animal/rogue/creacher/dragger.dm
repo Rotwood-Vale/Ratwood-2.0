@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/rogue/dragger
-	icon = 'icons/roguetown/underworld/enigma_dragger.dmi'
+	icon = 'icons/underworld/enigma_dragger.dmi'
 	icon_state = "dragger"
 	icon_living = "dragger"
 	icon_dead = "dragger_dead"

@@ -1,7 +1,7 @@
 /obj/item/rogueweapon/surgery
 	name = "surgical tool"
 	desc = "Something that will tear your guts apart."
-	icon = 'icons/roguetown/items/surgery.dmi'
+	icon = 'icons/items/surgery.dmi'
 	item_state = "bone_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'

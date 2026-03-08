@@ -129,7 +129,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	light_outer_range = 7
 	force = 5
-	icon = 'icons/roguetown/items/lighting.dmi'
+	icon = 'icons/items/lighting.dmi'
 	icon_state = "torch"
 	item_state = "torch"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

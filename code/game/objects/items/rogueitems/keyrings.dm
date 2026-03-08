@@ -4,7 +4,7 @@
 	name = "keyring"
 	desc = "Will help you organize your keys."
 	icon_state = "keyring0"
-	icon = 'icons/roguetown/items/keys.dmi'
+	icon = 'icons/items/keys.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -101,7 +101,7 @@
 	name = "lockpickring"
 	desc = "A piece of bent wire to store lockpicking tools. Too bulky for fine work."
 	icon_state = "pickring0"
-	icon = 'icons/roguetown/items/keys.dmi'
+	icon = 'icons/items/keys.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

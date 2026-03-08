@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/vendor
 	name = "PEDDLER"
 	desc = "The stomach of this thing can been stuffed with fun things for you to buy."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "streetvendor1"
 	density = TRUE
 	blade_dulling = DULLING_BASH

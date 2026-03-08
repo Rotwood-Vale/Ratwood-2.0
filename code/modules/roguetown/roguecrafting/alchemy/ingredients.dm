@@ -1,7 +1,7 @@
 /obj/item/alch
 	name = "dust"
 	desc = ""
-	icon = 'icons/roguetown/misc/alchemy.dmi'
+	icon = 'icons/misc/alchemy.dmi'
 	icon_state = "irondust"
 	w_class = WEIGHT_CLASS_TINY
 	experimental_inhand = FALSE
@@ -375,7 +375,7 @@
 /obj/item/alch/salvia
 	name = "salvia"
 	icon_state = "salvia"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head_items.dmi'
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_TINY
@@ -438,8 +438,8 @@
 	icon_state = "rosa"
 	item_state = "rosa"
 	desc = "It is said that these were white - until Graggar bled on its fields."
-	icon = 'icons/roguetown/misc/alchemy.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+	icon = 'icons/misc/alchemy.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head_items.dmi'
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_MOUTH
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_TINY

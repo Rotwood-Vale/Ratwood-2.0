@@ -3,7 +3,7 @@
 	tutorial = "The New Moon Spellblades of Zybantia are the remnants of a fallen Nocite monastery in an unknown region of Lalvestine, \
 	the last major stronghold of the Ten in the Zybantian Empire. \
 	Their monastic lyfestyle and devotion collapsed quickly under the weight of the Rot, and they were forced from a lyfe of devout solitude \
-	into that of a common sellsword; Noc’s blessings proving rather useful when slaying monsters and men alike. \
+	into that of a common sellsword; Nocï¿½s blessings proving rather useful when slaying monsters and men alike. \
 	For whatever reason, you find yourself in the region, offering your skills to the highest bidder. Knowledge is power."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
@@ -81,7 +81,7 @@
 /obj/item/rogueweapon/sword/sabre/newmoon
 	name = "freezing saber"
 	desc = "A fragile sabre adorned with a bright blue freezing mist. Holding the blade feels like it might give you frostbite."
-	icon = 'icons/roguetown/weapons/32.dmi'
+	icon = 'icons/weapons/32.dmi'
 	icon_state = "nm_saber"
 	force = 22//Dropped to 14 when on. Fire damage is a hell of a thing. -8, overall.
 	max_integrity = 200//+50

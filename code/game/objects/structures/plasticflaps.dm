@@ -2,7 +2,7 @@
 	name = "iron bars"
 	desc = "It seems pretty rusty."
 	gender = PLURAL
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "bars_passage"
 	density = FALSE
 	anchored = TRUE

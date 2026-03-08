@@ -1,6 +1,6 @@
 
 /obj/machinery/light/rogue/forge
-	icon = 'icons/roguetown/misc/forge.dmi'
+	icon = 'icons/misc/forge.dmi'
 	name = "stone forge"
 	desc = "This forge sings of war and creation."
 	icon_state = "forge0"

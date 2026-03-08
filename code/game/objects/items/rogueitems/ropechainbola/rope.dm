@@ -2,7 +2,7 @@
 	name = "rope"
 	desc = "A woven hemp rope."
 	gender = PLURAL
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "rope"
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
 	throwforce = 5

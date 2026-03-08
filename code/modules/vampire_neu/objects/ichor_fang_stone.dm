@@ -2,7 +2,7 @@
 	name = "Bloodstained Stone"
 	desc = "Pedestal for your Ichor Fang. It can also recall it!"
 	max_integrity = 999999
-	icon = 'icons/roguetown/items/natural.dmi'
+	icon = 'icons/items/natural.dmi'
 	icon_state = "stonebig2"
 
 /obj/structure/ichor_stone/attack_hand(mob/living/carbon/human/user)

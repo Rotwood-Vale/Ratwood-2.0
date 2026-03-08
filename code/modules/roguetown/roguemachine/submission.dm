@@ -2,7 +2,7 @@
 /obj/structure/feedinghole
 	name = "FEEDING HOLE"
 	desc = ""
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "feedinghole"
 	density = FALSE
 	pixel_y = 32

@@ -1,5 +1,5 @@
 /obj/item/clothing/cloak/templar/astratan
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/cloaks.dmi'
 	alternate_worn_layer = TABARD_LAYER
 	boobed = FALSE
 	name = "astratan tabard"
@@ -8,7 +8,7 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/cloak/templar/malumite
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/cloaks.dmi'
 	alternate_worn_layer = TABARD_LAYER
 	boobed = FALSE
 	name = "tabard of malum"
@@ -16,7 +16,7 @@
 	icon_state = "malumtabard"
 
 /obj/item/clothing/cloak/templar/necran
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/cloaks.dmi'
 	alternate_worn_layer = TABARD_LAYER
 	boobed = FALSE
 	name = "necran tabard"
@@ -24,7 +24,7 @@
 	icon_state = "necratabard"
 
 /obj/item/clothing/cloak/templar/pestran
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/cloaks.dmi'
 	alternate_worn_layer = TABARD_LAYER
 	boobed = TRUE
 	name = "pestran tabard"
@@ -32,7 +32,7 @@
 	icon_state = "pestratabard"
 
 /obj/item/clothing/cloak/templar/eoran
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/cloaks.dmi'
 	alternate_worn_layer = TABARD_LAYER
 	boobed = TRUE
 	name = "eoran tabard"
@@ -40,19 +40,19 @@
 	icon_state = "eoratabard"
 
 /obj/item/clothing/cloak/templar/xylixian
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/cloaks.dmi'
 	alternate_worn_layer = TABARD_LAYER
 	boobed = TRUE
 	name = "xylixian cloak"
 	desc = "Swirling cloth, jingling bells! Oh, how I love the path to hell!"
 	icon_state = "xylixcloak"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_cloaks.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_cloaks.dmi'
 	sleevetype = "shirt"
 
 /obj/item/clothing/cloak/templar/undivided
 	name = "see tabard"
 	desc = "A symbol of the See. The last daes are upon us, lamb. Do you yet cling to hope?"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/cloaks.dmi'
 	alternate_worn_layer = TABARD_LAYER
 	boobed = TRUE
 	icon_state = "seetabard"

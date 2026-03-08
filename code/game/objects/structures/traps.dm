@@ -253,7 +253,7 @@
 
 /obj/structure/trap/saw_blades // vanderlin traps and AP traps below
 	name = "saw plate trap"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "saw_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
@@ -270,14 +270,14 @@
 /obj/structure/sawblade_trap
 	name = "saw blade"
 	desc = "A fast spinning saw blade, propelled by some unknown mechanism"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "trap_saw"
 	density = FALSE
 	anchored = TRUE
 
 /obj/structure/trap/bomb // fire can RR easily, dangerous
 	name = "bomb plate trap"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "bomb_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
@@ -288,7 +288,7 @@
 
 /obj/structure/trap/flame // fire can RR easily, dangerous
 	name = "flamejet plate trap"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
@@ -300,7 +300,7 @@
 
 /obj/structure/trap/shock
 	name = "lightning plate trap"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "shock_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
@@ -313,7 +313,7 @@
 
 /obj/structure/trap/wall_projectile
 	name = "arrow plate trap"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "arrow_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
@@ -367,7 +367,7 @@
 
 /obj/structure/trap/rock_fall
 	name = "rock fall trap"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "rockfall_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
@@ -383,7 +383,7 @@
 
 /obj/structure/trap/water
 	name = "water trap"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "water_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
@@ -399,7 +399,7 @@
 
 /obj/structure/trap/curse
 	name = "deactivated trap" //Im not activated guys I swear Im a broken trap I dont work
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "base_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
@@ -407,7 +407,7 @@
 
 /obj/structure/trap/curse/hidden
 	name = "curse trap"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "base_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
@@ -428,7 +428,7 @@
 /obj/structure/trap/bogtrap
 	name = "trapbog"
 	desc = "A cleverly concealed device with a nasty surprise."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "beartrap"
 	name = "mantrap"
 	time_between_triggers = 100 //feel free to add more than 1 use

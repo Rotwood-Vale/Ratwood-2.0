@@ -226,7 +226,7 @@
 	name = "dream rift"
 	desc = "A shimmering portal to another place. You hear countless whispers when you get close, seems dangerous."
 	icon_state = "shitportal"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	max_integrity = 250
 	var/cooldown = 0
 	var/uses = 0
@@ -407,7 +407,7 @@
 
 /obj/item/ingot/sylveric
 	name = "Sylveric ingot"
-	icon = 'icons/roguetown/items/ore.dmi'
+	icon = 'icons/items/ore.dmi'
 	icon_state = "ingotsylveric"
 	desc = "An impossibly light metal that seems to grow harder and heavier when pressured. Nothing seems to be able to shape this metal."
 
@@ -432,10 +432,10 @@
 
 		// Show weapon selection menu
 		var/list/weapon_options = list(
-			"Dreamreaver Greataxe" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamaxeactive"),
-			"Harmonious Spear" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamspearactive"),
-			"Oozing Sword" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamswordactive"),
-			"Thunderous Trident" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamtriactive")
+			"Dreamreaver Greataxe" = image(icon = 'icons/weapons/64.dmi', icon_state = "dreamaxeactive"),
+			"Harmonious Spear" = image(icon = 'icons/weapons/64.dmi', icon_state = "dreamspearactive"),
+			"Oozing Sword" = image(icon = 'icons/weapons/64.dmi', icon_state = "dreamswordactive"),
+			"Thunderous Trident" = image(icon = 'icons/weapons/64.dmi', icon_state = "dreamtriactive")
 		)
 
 		var/choice = show_radial_menu(user, src, weapon_options, require_near = TRUE, tooltips = TRUE)
@@ -691,7 +691,7 @@
 	max_integrity = ARMOR_INT_HELMET_ANTAG
 	peel_threshold = 4
 	item_flags = DREAM_ITEM
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/32x48/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/32x48/head.dmi'
 	block2add = null
 	worn_x_dimension = 32
 	worn_y_dimension = 48

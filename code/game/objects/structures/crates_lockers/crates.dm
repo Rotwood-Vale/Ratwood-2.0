@@ -55,7 +55,7 @@
 	icon_state = "casket"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	material_drop_amount = 5
 	open_sound = 'sound/blank.ogg'
 	close_sound = 'sound/blank.ogg'

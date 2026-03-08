@@ -98,7 +98,7 @@
 	name = "game satchel"
 	desc = "A cloth and leather satchel for storing the fruit of one's hunt."
 	icon_state = "gamesatchel"
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	slot_flags = ITEM_SLOT_BACK_L|ITEM_SLOT_BACK_R|ITEM_SLOT_HIP
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = NONE

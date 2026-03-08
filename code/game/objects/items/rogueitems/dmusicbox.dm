@@ -22,7 +22,7 @@ GLOBAL_VAR_INIT(musicboxes_last_download, 0) //last time of the last download, t
 /obj/item/dmusicbox
 	name = "dwarven music box"
 	desc = "It is essential that the deepest caves be tuned to the right frequency of vibrations."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "mbox0"
 	gripped_intents = list(INTENT_GENERIC)
 	w_class = WEIGHT_CLASS_HUGE

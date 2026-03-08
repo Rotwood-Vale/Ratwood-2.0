@@ -51,7 +51,7 @@
 			span_notice("You become utterly still, blending into your surroundings like a stone.")
 		)
 
-		user.icon = 'icons/roguetown/items/natural.dmi'
+		user.icon = 'icons/items/natural.dmi'
 		user.icon_state = "stone1"
 		user.icon_living = "stone1"
 		user.name = "Stone"
@@ -94,7 +94,7 @@
 
 /obj/item/glow_petal
 	name = "Faint Petals"
-	icon = 'icons/roguetown/mob/familiars.dmi'
+	icon = 'icons/mob/familiars.dmi'
 	icon_state = "leaf_trail"
 	anchored = TRUE
 	mouse_opacity = 0

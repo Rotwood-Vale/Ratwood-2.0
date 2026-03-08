@@ -1,7 +1,7 @@
 /obj/structure/flora/grass/tangler
 	name = "twisting shrub"
 	desc = "Green, spiky and....I think I saw it move!"
-	icon = 'icons/roguetown/mob/monster/tangler.dmi'
+	icon = 'icons/mob/monster/tangler.dmi'
 	icon_state = "tangler_hidden"
 	var/faction = list("plants")
 

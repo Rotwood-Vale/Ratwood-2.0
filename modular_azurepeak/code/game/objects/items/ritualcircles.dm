@@ -1,7 +1,7 @@
 /obj/structure/ritualcircle
 	name = "ritual circle"
 	desc = ""
-	icon = 'icons/roguetown/misc/rituals.dmi'
+	icon = 'icons/misc/rituals.dmi'
 	icon_state = "ritual_base"
 	layer = BELOW_OBJ_LAYER
 	density = FALSE
@@ -339,10 +339,10 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				return
 
 			var/list/weapon_options = list(
-				"Dreamreaver Greataxe" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamaxe"),
-				"Harmonious Spear" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamspear"),
-				"Oozing Sword" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamsword"),
-				"Thunderous Trident" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamtri")
+				"Dreamreaver Greataxe" = image(icon = 'icons/weapons/64.dmi', icon_state = "dreamaxe"),
+				"Harmonious Spear" = image(icon = 'icons/weapons/64.dmi', icon_state = "dreamspear"),
+				"Oozing Sword" = image(icon = 'icons/weapons/64.dmi', icon_state = "dreamsword"),
+				"Thunderous Trident" = image(icon = 'icons/weapons/64.dmi', icon_state = "dreamtri")
 			)
 
 			var/choice = show_radial_menu(user, src, weapon_options, require_near = TRUE, tooltips = TRUE)
@@ -452,7 +452,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 /obj/item/abyssal_marker
 	name = "abyssal marker"
 	desc = "A pulsating crystal shard that hums with otherworldly energy."
-	icon = 'icons/roguetown/misc/rituals.dmi'
+	icon = 'icons/misc/rituals.dmi'
 	icon_state = "abyssal_marker"
 	w_class = WEIGHT_CLASS_SMALL
 	var/turf/marked_location
@@ -537,7 +537,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 /obj/structure/active_abyssor_rune
 	name = "awakened abyssal rune"
 	desc = "A violently pulsating rune emitting storm energy."
-	icon = 'icons/roguetown/misc/rituals.dmi'
+	icon = 'icons/misc/rituals.dmi'
 	icon_state = "abyssoralt_active"
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
@@ -568,7 +568,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 /obj/structure/crystal_spire
 	name = "crystal spire"
 	desc = "A massive crystalline structure pulsing with abyssal energy. Dark ice spreads from its base."
-	icon = 'icons/roguetown/misc/rituals.dmi'
+	icon = 'icons/misc/rituals.dmi'
 	icon_state = "crystal_spire"
 	anchored = TRUE
 	density = TRUE
@@ -985,7 +985,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 /obj/item/soulthread
 	name = "lux-thread"
 	desc = "Eerie glowing thread, cometh from the grave"
-	icon = 'icons/roguetown/items/natural.dmi'
+	icon = 'icons/items/natural.dmi'
 	icon_state = "luxthread"
 	var/strungtogether = 1
 	sellprice = 3
@@ -1014,7 +1014,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	grid_height = 32
 	name = "toll"
 	desc = "Proof of ten souls being sent to Necra, formed of a material that is not metal, constantly weeping a minute amount of blood. Ten souls for one, the Ferryman may send one back before Necra fully has them."
-	icon = 'icons/roguetown/underworld/enigma_husks.dmi'
+	icon = 'icons/underworld/enigma_husks.dmi'
 	icon_state = "soultoken"
 	sellprice = 30
 
@@ -1880,7 +1880,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.sexcon.set_arousal(100)
 		loc.visible_message(span_cult("[target] moans and shivers on top of the rune. Lashes of purple flame dance across their lower abdomen as a new marking appears against their form."))
 		spawn(20)
-			var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+			var/mutable_appearance/marking_overlay = mutable_appearance('icons/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
 			target.add_overlay(marking_overlay)
 			target.update_body_parts()
 			playsound(target, 'sound/health/fastbeat.ogg', 60)

@@ -94,7 +94,7 @@
 	desc = "A hunter's prized possession. Keep it sharp, and it might last you through the wild."
 	icon_state = "huntingknife"
 	sheathe_icon = "huntingknife"
-	icon = 'icons/roguetown/weapons/daggers32.dmi'
+	icon = 'icons/weapons/daggers32.dmi'
 	item_state = "bone_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -231,7 +231,7 @@
 	desc = "Chop, chop, chop!"
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/cleaver)
 	icon_state = "cleaver"
-	icon = 'icons/roguetown/weapons/daggers32.dmi'
+	icon = 'icons/weapons/daggers32.dmi'
 	parrysound = list('sound/combat/parry/bladed/bladedmedium (1).ogg','sound/combat/parry/bladed/bladedmedium (2).ogg','sound/combat/parry/bladed/bladedmedium (3).ogg')
 	swingsound = list('sound/combat/wooshes/bladed/wooshmed (1).ogg','sound/combat/wooshes/bladed/wooshmed (2).ogg','sound/combat/wooshes/bladed/wooshmed (3).ogg')
 	throwforce = 15
@@ -276,7 +276,7 @@
 	desc = "Keep it in the kitchen!"
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/cleaver, /datum/intent/dagger/thrust)
 	icon_state = "chefsknife"
-	icon = 'icons/roguetown/weapons/daggers32.dmi'
+	icon = 'icons/weapons/daggers32.dmi'
 	parrysound = list('sound/combat/parry/bladed/bladedmedium (1).ogg','sound/combat/parry/bladed/bladedmedium (2).ogg','sound/combat/parry/bladed/bladedmedium (3).ogg')
 	swingsound = list('sound/combat/wooshes/bladed/wooshmed (1).ogg','sound/combat/wooshes/bladed/wooshmed (2).ogg','sound/combat/wooshes/bladed/wooshmed (3).ogg')
 	throwforce = 15
@@ -293,7 +293,7 @@
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/cleaver, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/thrust/combat)
 	icon_state = "combatknife"
 	sheathe_icon = "combatknife"
-	icon = 'icons/roguetown/weapons/daggers32.dmi'
+	icon = 'icons/weapons/daggers32.dmi'
 	parrysound = list('sound/combat/parry/bladed/bladedmedium (1).ogg','sound/combat/parry/bladed/bladedmedium (2).ogg','sound/combat/parry/bladed/bladedmedium (3).ogg')
 	swingsound = list('sound/combat/wooshes/bladed/wooshmed (1).ogg','sound/combat/wooshes/bladed/wooshmed (2).ogg','sound/combat/wooshes/bladed/wooshmed (3).ogg')
 	throwforce = 16
@@ -550,7 +550,7 @@
 	name = "silver-tipped stake"
 	desc = "A branch that has been broken off of a boswellia tree, sharpened to a fine point and tipped with blessed silver. It can lay most unholy creechers to rest, but only by piercing their hearts."
 	icon_state = "stake" //Should hopefully autogenerate an inhand. Need to politely ask a coder to import a custom sprite for this stake, later.
-	icon = 'icons/roguetown/items/natural.dmi'
+	icon = 'icons/items/natural.dmi'
 	force = 20
 	throwforce = 20
 	wdefense = 0
@@ -710,7 +710,7 @@
 /obj/item/rogueweapon/huntingknife/stoneknife/kukri
 	name = "jade kukri"
 	desc = "A kukri made out of jade. Its more of a ceremonial piece than it is an implement of war, its somewhat fragile. Be gentle with it."
-	icon = 'icons/roguetown/gems/gem_jade.dmi'
+	icon = 'icons/gems/gem_jade.dmi'
 	icon_state = "kukri_jade"
 	max_integrity = 75
 	max_blade_int = 50
@@ -721,7 +721,7 @@
 /obj/item/rogueweapon/huntingknife/stoneknife/opalknife
 	name = "opal knife"
 	desc = "A beautiful knife carved out of opal. Its not intended for combat. It's presence is vital in some Crimson Elven ceremonies."
-	icon = 'icons/roguetown/gems/gem_opal.dmi'
+	icon = 'icons/gems/gem_opal.dmi'
 	icon_state = "knife_opal"
 	max_integrity = 75
 	max_blade_int = 50
@@ -922,7 +922,7 @@
 	max_integrity = 100
 	name = "iron scissors"
 	desc = "Scissors made of iron that may be used to salvage usable materials from clothing."
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	icon_state = "iscissors"
 	inv_storage_delay = null
 

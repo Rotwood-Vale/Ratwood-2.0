@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	selectable_by_vampires = FALSE
 
 /obj/structure/vampire
-	icon = 'icons/roguetown/topadd/death/vamp-lord.dmi'
+	icon = 'icons/topadd/death/vamp-lord.dmi'
 	density = TRUE
 
 /obj/structure/vampire/Initialize(mapload)

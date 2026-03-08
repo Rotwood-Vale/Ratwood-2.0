@@ -1,6 +1,6 @@
 /obj/item/herbseed
 	name = "herb seeds"
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "seeds"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE

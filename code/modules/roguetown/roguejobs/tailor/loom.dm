@@ -1,5 +1,5 @@
 /obj/machinery/loom
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	name = "loom"
 	desc = "A wooden frame with taut threads ready to weave fabric."
 	icon_state = "loom"

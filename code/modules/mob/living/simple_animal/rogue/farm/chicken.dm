@@ -1,6 +1,6 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/chicken
-	icon = 'icons/roguetown/mob/monster/chicken.dmi'
+	icon = 'icons/mob/monster/chicken.dmi'
 	name = "\improper chicken"
 	desc = ""
 	icon_state = "chicken_brown"
@@ -175,7 +175,7 @@
 /obj/structure/fluff/nest
 	name = "nest"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "nest"
 	density = FALSE
 	anchored = TRUE

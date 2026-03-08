@@ -45,7 +45,7 @@
 			H.dna.species.soundpack_f = new /datum/voicepack/other/goblin()
 		var/obj/item/headdy = H.get_bodypart("head")
 		if(headdy)
-			headdy.icon = 'icons/roguetown/mob/monster/goblins.dmi'
+			headdy.icon = 'icons/mob/monster/goblins.dmi'
 			headdy.icon_state = "[H.dna.species.id]_head"
 			headdy.sellprice = rand(7,20)
 		H.regenerate_limb(BODY_ZONE_R_ARM)

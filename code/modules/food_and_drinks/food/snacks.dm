@@ -162,7 +162,7 @@ All foods are distributed among various categories. Use common sense.
 	else
 		if(to_color)
 			color = "#6c6897"
-		var/mutable_appearance/rotflies = mutable_appearance('icons/roguetown/mob/rotten.dmi', "rotten")
+		var/mutable_appearance/rotflies = mutable_appearance('icons/mob/rotten.dmi', "rotten")
 		add_overlay(rotflies)
 		name = "rotten [initial(name)]"
 		eat_effect = /datum/status_effect/debuff/rotfood

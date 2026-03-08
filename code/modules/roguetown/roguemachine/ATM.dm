@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/atm
 	name = "nervelock"
 	desc = "Stores and withdraws currency for accounts managed by the Grand Duchy of the vale."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "atm"
 	density = FALSE
 	blade_dulling = DULLING_BASH
@@ -221,7 +221,7 @@
 /obj/item/coveter
 	name = "Covetous Crown"
 	desc = "A Crown which craves the brow of miesters and the vault's jawbank; it could be also be mounted upon a restrained person's head to drain their miester account in a pinch."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "crown_object"
 	force = 10
 	throwforce = 10

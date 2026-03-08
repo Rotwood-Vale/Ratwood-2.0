@@ -1,9 +1,9 @@
 /obj/item/clothing/gloves/roguetown/blacksteel/modern/plategloves
 	name = "blacksteel plate gauntlets"
 	desc = "A set of plate gauntlets forged of blacksteel, using a modern design."
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
-	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
+	sleeved = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplategloves"
 	item_state = "bplategloves"
 	armor = ARMOR_PLATE_BSTEEL
@@ -19,8 +19,8 @@
 /obj/item/clothing/gloves/roguetown/blacksteel/plategloves
 	name = "ancient blacksteel plate gauntlets"
 	desc = "A set of plate gauntlets forged of blacksteel."
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bkgloves"
 	item_state = "bkgloves"
 	armor = ARMOR_PLATE_BSTEEL

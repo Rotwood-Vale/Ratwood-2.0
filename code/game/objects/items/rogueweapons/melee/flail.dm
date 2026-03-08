@@ -4,7 +4,7 @@
 	name = "flail"
 	desc = "This is a swift, iron flail. Strikes hard and far."
 	icon_state = "iflail"
-	icon = 'icons/roguetown/weapons/blunt32.dmi'
+	icon = 'icons/weapons/blunt32.dmi'
 	sharpness = IS_BLUNT
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
@@ -224,7 +224,7 @@
 	name = "militia thresher"
 	desc = "Just like how a sling's bullet can fell a giant, so too does this great flail follow the principle of converting 'momentum' into 'plate-rupturing force'."
 	icon_state = "peasantwarflail"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64

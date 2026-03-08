@@ -15,7 +15,7 @@
 /obj/structure/roguemachine/goldface
 	name = "GOLDFACE"
 	desc = "Gilded tombs do worms enfold."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "streetvendor1"
 	density = TRUE
 	blade_dulling = DULLING_BASH

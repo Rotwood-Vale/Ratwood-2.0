@@ -2,7 +2,7 @@
 /obj/structure/reliquarybox
 	name = "otavan reliquary"
 	desc = "A foreboding red chest with a intricate lock design. It seems to only fit a very specific key. Choose wisely."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "chestweird1"
 	anchored = TRUE
 	density = TRUE
@@ -52,7 +52,7 @@
 	name = "melancholic crankbox"
 	desc = ""
 	icon_state = "psydonmusicbox"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	var/cranking = FALSE
 	force = 15
@@ -468,7 +468,7 @@ Inquisitorial armory down here
 /obj/item/inqarticles/indexer
 	name = "\improper INDEXER"
 	desc = "A blessed ampoule with a retractable bladetip, intended to further information gathering through hematology. Siphon blood from an individual until the INDEXER clicks shut, then mail it back to Otava for cataloguing."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "indexer"
 	item_state = "indexer"
 	throw_speed = 3
@@ -679,7 +679,7 @@ Inquisitorial armory down here
 /obj/item/inqarticles/tallowpot
 	name = "tallowpot"
 	desc = "A small metal pot meant for holding waxes or melted redtallow. Convenient for coating signet rings and making an imprint. The warmth of a torch, lamptern, or candle should be enough to melt the redtallow for stamping writs."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "tallowpot"
 	item_state = "tallowpot"
 	dropshrink = 0.9
@@ -766,7 +766,7 @@ Inquisitorial armory down here
 /obj/item/rope/inqarticles/inquirycord
 	name = "inquiry cordage"
 	desc = "A length of thick leather inquiry cordage that has been dipped in both holy water and dye before being consecrated and spell-laced. Intended for apprehending foes and rethreading tools at the worst of times."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "inqcordage"
 	item_state = "inqcordage"
 	throw_speed = 1
@@ -800,7 +800,7 @@ Inquisitorial armory down here
 /obj/item/inqarticles/garrote // Do not give this item out freely to other classes. Do not subtype this item for other classes. This is intended purely as the Confessor's identifying sidegrade, and as a bonus for the Inspector INQ. I will be very sad if you disregard this comment. Thank you. - Yische.
 	name = "\proper seizing garrote" // It's nonlethal. It's so silly and fun.
 	desc = "A macabre instrument favored by the more clandestine of the Psydonian Silver Order; A length of thick leather inquiry cordage that has been dipped in both holy water and dye before being consecrated and spell-laced, held and threaded between two iron links. Perfect for apprehension."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "garrote"
 	item_state = "garrote"
 	gripsprite = TRUE
@@ -1014,8 +1014,8 @@ Inquisitorial armory down here
 	desc = "A heavily spell-weaved padded sack intended to muffle the cries made within it. Due to the heaviness of the materials involved, application and removal of these is usually difficult for the untrained."
 	icon_state = "blackbag"
 	item_state = "blackbag"
-	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+	icon = 'icons/clothing/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head.dmi'
 	blocksound = SOFTHIT
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
@@ -1158,7 +1158,7 @@ Inquisitorial armory down here
 /obj/item/inqarticles/bmirror
 	name = "black mirror"
 	desc = ""
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "bmirror"
 	item_state = "bmirror"
 	grid_height = 64
@@ -1421,7 +1421,7 @@ Inquisitorial armory down here
 /obj/item/inqarticles/spyglass
 	name = "otavan nocshade eyepiece"
 	desc = ""
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "spyglass"
 	item_state = "spyglass"
 	grid_height = 32
@@ -1435,7 +1435,7 @@ Inquisitorial armory down here
 	name = "skeleton key"
 	desc = "a quasiheretical object recovered from a raid on a Zizoid cult long ago. It can open any lock you wish it to."
 	icon_state = "skeleton_key"
-	icon = 'icons/roguetown/items/keys.dmi'
+	icon = 'icons/items/keys.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

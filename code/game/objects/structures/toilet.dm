@@ -1,7 +1,7 @@
 /obj/structure/toilet
 	name = "toilet"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "toilet"
 	density = FALSE
 	anchored = TRUE

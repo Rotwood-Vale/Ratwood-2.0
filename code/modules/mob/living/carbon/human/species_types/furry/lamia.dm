@@ -25,10 +25,10 @@
 	use_skintones = 1
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	possible_ages = ALL_AGES_LIST
-	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mt.dmi' // lips
-	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fm.dmi' //lips
-	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
-	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
+	limbs_icon_m = 'icons/mob/bodies/m/mt.dmi' // lips
+	limbs_icon_f = 'icons/mob/bodies/f/fm.dmi' //lips
+	dam_icon = 'icons/mob/bodies/dam/dam_male.dmi'
+	dam_icon_f = 'icons/mob/bodies/dam/dam_female.dmi'
 	clothes_id = "lamia"
 	custom_clothes = TRUE
 	soundpack_m = /datum/voicepack/male

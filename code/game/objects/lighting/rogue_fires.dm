@@ -7,7 +7,7 @@
 /obj/machinery/light/rogue/firebowl
 	name = "brazier"
 	desc = "A solid stone brazier. It's as sturdy as the mountains themselves."
-	icon = 'icons/roguetown/misc/lighting.dmi'
+	icon = 'icons/misc/lighting.dmi'
 	icon_state = "stonefire1"
 	bulb_colour = "#ffa35c"
 	brightness = 12
@@ -268,7 +268,7 @@
 
 /obj/machinery/light/rogue/wallfire/candle/floorcandle
 	name = "candles"
-	icon = 'icons/roguetown/items/lighting.dmi'
+	icon = 'icons/items/lighting.dmi'
 	icon_state = "floorcandle1"
 	base_state = "floorcandle"
 	pixel_y = 0
@@ -426,7 +426,7 @@
 	desc = "A dazzling and resplendant array of candles held aloft by a dozen slender metal arms joined together and suspended from the ceiling."
 	icon_state = "chand1"
 	base_state = "chand"
-	icon = 'icons/roguetown/misc/tallwide.dmi'
+	icon = 'icons/misc/tallwide.dmi'
 	density = FALSE
 	brightness = 10
 	pixel_x = -10
@@ -781,7 +781,7 @@
 /obj/item/mobilestove
 	name = "packed stove"
 	desc = "A portable bronze stovetop. The underside is covered in an esoteric pattern of small tubes. Whatever heats the hob is hidden inside the body of the device"
-	icon = 'icons/roguetown/misc/lighting.dmi'
+	icon = 'icons/misc/lighting.dmi'
 	icon_state = "hobostovep"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
@@ -885,7 +885,7 @@
 
 /obj/machinery/light/rogue/campfire/pyre
 	name = "pyre"
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "pyre1"
 	base_state = "pyre"
 	brightness = 10

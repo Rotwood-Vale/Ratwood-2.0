@@ -2,7 +2,7 @@
 	name = "zad"
 	desc = "A black bird commonly associated with Necra. They were once trained for use in carrying messages around and respected for their cleverness, but are nowadays considered no better than vermin."
 	icon_state = "crow"
-	icon = 'icons/roguetown/mob/monster/crow.dmi'
+	icon = 'icons/mob/monster/crow.dmi'
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	foodtype = RAW
 	verb_say = "squeaks"
@@ -21,7 +21,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/friedcrow
 	name = "fried zad"
 	desc = "It took some work to pluck off all the feathers, but in the end you prevailed. The result is a surprisingly crispy, if bland, morsel."
-	icon = 'icons/roguetown/items/food.dmi'
+	icon = 'icons/items/food.dmi'
 	icon_state = "fcrow"
 	bitesize = 2
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)

@@ -1,7 +1,7 @@
 /obj/item/broom
 	name = "broom"
 	desc = "A broom, made from a bundle of twigs."
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	icon_state = "broom"
 	possible_item_intents = list(/datum/intent/use)
 	gripped_intents = list(/datum/intent/use, /datum/intent/mace/strike/wood)

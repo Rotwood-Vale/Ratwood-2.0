@@ -5,7 +5,7 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	icon_state = "antlerhood"
 	item_state = "antlerhood"
-	icon = 'icons/roguetown/clothing/head.dmi'
+	icon = 'icons/clothing/head.dmi'
 	body_parts_covered = HEAD|HAIR|EARS|NECK
 	slot_flags = ITEM_SLOT_HEAD
 	dynamic_hair_suffix = ""
@@ -25,8 +25,8 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	icon_state = "beekeeper"
 	item_state = "beekeeper"
-	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+	icon = 'icons/clothing/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head.dmi'
 	alternate_worn_layer  = 8.9 //On top of helmet
 	body_parts_covered = HEAD|HAIR|EARS|NECK
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
@@ -64,8 +64,8 @@
 	color = null
 	icon_state = "deathface"
 	item_state = "deathface"
-	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi' //Overrides slot icon behavior
+	icon = 'icons/clothing/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head.dmi' //Overrides slot icon behavior
 	body_parts_covered = NECK|MOUTH //Jaw bone
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEEARS|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
@@ -79,8 +79,8 @@
 	color = null
 	icon_state = "dendormask"
 	item_state = "dendormask"
-	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+	icon = 'icons/clothing/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head.dmi'
 	body_parts_covered = MOUTH
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT

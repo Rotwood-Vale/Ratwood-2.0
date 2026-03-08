@@ -67,7 +67,7 @@
 /obj/structure/barricade/rogue
 	name = "wooden barricade"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "woodenbarricade_r"
 	max_integrity = 60
 	bar_material = WOOD
@@ -75,7 +75,7 @@
 
 /obj/structure/barricade/rogue/crude
 	name = "crude plank barricade"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "woodenbarricade_r2"
 	max_integrity = 40
 

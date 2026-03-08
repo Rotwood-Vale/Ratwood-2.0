@@ -1,7 +1,7 @@
 /obj/structure/closet/crate/chest
 	name = "chest"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "chest3s"
 	base_icon_state = "chest3s"
 	drag_slowdown = 2
@@ -73,7 +73,7 @@
 /obj/structure/closet/crate/roguecloset
 	name = "closet"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	base_icon_state = "closet"
 	icon_state = "closet"
 	drag_slowdown = 4
@@ -115,7 +115,7 @@
 /obj/structure/closet/crate/drawer
 	name = "drawer"
 	desc = "A wooden drawer."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "drawer5"
 	base_icon_state = "drawer5"
 	drag_slowdown = 2
@@ -132,7 +132,7 @@
 /obj/structure/closet/crate/drawer/inn
 	name = "drawer"
 	desc = "A wooden drawer."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "drawer5"
 	base_icon_state = "drawer5"
 	dir = SOUTH

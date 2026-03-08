@@ -14,7 +14,7 @@
 /obj/structure/fluff/pillow
 	name = "pillows"
 	desc = "Soft plush pillows. Resting your head on one is so relaxing."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "pillow"
 	density = FALSE
 
@@ -272,7 +272,7 @@
 /obj/structure/fluff/railing/fence
 	name = "palisade"
 	desc = "A rudimentary barrier that might keep the monsters at bay."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	destroy_sound = 'sound/misc/treefall.ogg'
 	icon_state = "fence"
@@ -327,7 +327,7 @@
 /obj/structure/bars
 	name = "bars"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "bars"
 	density = TRUE
 	anchored = TRUE
@@ -553,7 +553,7 @@
 /obj/structure/fluff/clock
 	name = "clock"
 	desc = ""
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "clock"
 	density = FALSE
 	anchored = FALSE
@@ -636,7 +636,7 @@
 /obj/structure/fluff/wallclock
 	name = "clock"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "wallclock"
 	density = FALSE
 	anchored = TRUE
@@ -717,7 +717,7 @@
 /obj/structure/fluff/wallclock/vampire
 	name = "ancient clock"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "wallclockvampire"
 	density = FALSE
 	anchored = TRUE
@@ -737,7 +737,7 @@
 /obj/structure/fluff/signage
 	name = "sign"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "shitsign"
 	density = TRUE
 	anchored = TRUE
@@ -759,7 +759,7 @@
 	icon_state = "signwrote"
 	name = "sign"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 /obj/structure/fluff/buysign/examine(mob/user)
 	. = ..()
 	if(!user.is_literate())
@@ -771,7 +771,7 @@
 	icon_state = "signwrote"
 	name = "sign"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 /obj/structure/fluff/sellsign/examine(mob/user)
 	. = ..()
 	if(!user.is_literate())
@@ -787,7 +787,7 @@
 	var/wrotesign
 	max_integrity = 500
 	blade_dulling = DULLING_BASHCHOP
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 
 /obj/structure/fluff/customsign/examine(mob/user)
 	. = ..()
@@ -829,7 +829,7 @@
 /obj/structure/fluff/alch
 	name = "alchemical lab"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "alch"
 	density = TRUE
 	anchored = TRUE
@@ -843,7 +843,7 @@
 /obj/structure/fluff/statue
 	name = "statue"
 	desc = ""
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "bstatue"
 	density = FALSE
 	anchored = TRUE
@@ -904,7 +904,7 @@
 	name = "astrata statue"
 	desc = "A stone statue of the sun Goddess Astrata. Bless."
 	icon_state = "astrata"
-	icon = 'icons/roguetown/misc/tallandwide.dmi'
+	icon = 'icons/misc/tallandwide.dmi'
 
 /obj/structure/fluff/statue/astrata/gold
 	name = "ornamental astrata statue"
@@ -916,7 +916,7 @@
 	name = "abyssor statue"
 	desc = "A slate statue of the ancient god abyssor. One of many depictions drawn from a dream no doubt. This particular one is horrifying to look at."
 	icon_state = "abyssor"
-	icon = 'icons/roguetown/misc/tallandwide.dmi'
+	icon = 'icons/misc/tallandwide.dmi'
 	pixel_x = -16
 
 /obj/structure/fluff/statue/abyssor/dolomite
@@ -949,43 +949,43 @@
 
 /obj/structure/fluff/statue/psy
 	icon_state = "psy"
-	icon = 'icons/roguetown/misc/96x96.dmi'
+	icon = 'icons/misc/96x96.dmi'
 	pixel_x = -32
 
 /obj/structure/fluff/statue/psybloody
 	icon_state = "psy_bloody"
-	icon = 'icons/roguetown/misc/96x96.dmi'
+	icon = 'icons/misc/96x96.dmi'
 	pixel_x = -32
 
 
 /obj/structure/fluff/statue/small
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "elfs"
 
 /obj/structure/fluff/statue/pillar
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "pillar"
 
 /obj/structure/fluff/statue/femalestatue
-	icon = 'icons/roguetown/misc/ay.dmi'
+	icon = 'icons/misc/ay.dmi'
 	icon_state = "1"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue1
-	icon = 'icons/roguetown/misc/ay.dmi'
+	icon = 'icons/misc/ay.dmi'
 	icon_state = "2"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue2
-	icon = 'icons/roguetown/misc/ay.dmi'
+	icon = 'icons/misc/ay.dmi'
 	icon_state = "5"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue/zizo
-	icon = 'icons/roguetown/misc/ay.dmi'
+	icon = 'icons/misc/ay.dmi'
 	icon_state = "4"
 	pixel_x = -32
 	pixel_y = -16
@@ -997,7 +997,7 @@
 /obj/structure/fluff/statue/tdummy
 	name = "practice dummy"
 	icon_state = "p_dummy"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 
 /obj/structure/fluff/statue/tdummy/attackby(obj/item/W, mob/user, params)
 	if(!user.cmode)
@@ -1062,7 +1062,7 @@
 	they certainly can't imagine what he actually looks like. \
 	This is but one of many depictions to the many-faced god, and yet it appears ready to receive tribute all the same."
 	icon_state = "evilidol"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	damage_deflection = INFINITY//We don't want this smashed normally. Prevents items from doing it damage, by mistake, too.
 // What items the idol will accept
 	var/treasuretypes = list(
@@ -1156,7 +1156,7 @@
 /obj/structure/fluff/psycross
 	name = "pantheon cross"
 	icon_state = "psycross"
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	break_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 	density = FALSE
@@ -1433,7 +1433,7 @@
 /obj/structure/fluff/headstake
 	name = "head on a stake"
 	desc = ""
-	icon = 'icons/roguetown/items/natural.dmi'
+	icon = 'icons/items/natural.dmi'
 	icon_state = "headstake"
 	density = FALSE
 	anchored = TRUE

@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat
-	icon = 'icons/roguetown/mob/monster/bigrat.dmi'
+	icon = 'icons/mob/monster/bigrat.dmi'
 	name = "rous"
 	desc = "This is a big rat with beady red eyes, drawn to decay and filth."
 	icon_state = "rat"
@@ -75,7 +75,7 @@
 	name = "remains"
 	gender = PLURAL
 	icon_state = "ratbones"
-	icon = 'icons/roguetown/mob/monster/bigrat.dmi'
+	icon = 'icons/mob/monster/bigrat.dmi'
 	pixel_x = -16
 	pixel_y = -8
 

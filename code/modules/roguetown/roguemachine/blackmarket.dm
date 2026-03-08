@@ -13,7 +13,7 @@
 /obj/structure/roguemachine/blackmarket
 	name = "COPPERFACE"
 	desc = "Never gets tired, does not ask questions, only minor signs of tampering. Alas, fashioned with copper of low quality."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "copperface"
 	density = TRUE
 	blade_dulling = DULLING_BASH

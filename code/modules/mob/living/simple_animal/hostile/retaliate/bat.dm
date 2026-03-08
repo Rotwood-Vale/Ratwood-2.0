@@ -84,7 +84,7 @@
 /mob/living/simple_animal/hostile/retaliate/bat/crow
 	name = "zad"
 	desc = ""
-	icon = 'icons/roguetown/mob/monster/crow.dmi'
+	icon = 'icons/mob/monster/crow.dmi'
 	icon_state = "crow_flying"
 	icon_living = "crow_flying"
 	icon_dead = "crow1"
@@ -102,4 +102,4 @@
 	desc = "Nevermore..."
 	gender = PLURAL
 	icon_state = "crow1"
-	icon = 'icons/roguetown/mob/monster/crow.dmi'
+	icon = 'icons/mob/monster/crow.dmi'

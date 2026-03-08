@@ -1,7 +1,7 @@
 /obj/item/natural/shellplant
 	name = "shellplant"
 	desc = "You shouldn't be seeing this."
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = ""
 	var/foodamt = 1 //how much food can be extracted
 	var/foodextracted = null //the food item to extract from the plant
@@ -89,7 +89,7 @@
 /obj/item/pumpkinshell
 	name = "pumpkin shell"
 	desc = "The emptied shell of a pumpkin, without its flesh and seeds."
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "pumpkinshell"
 	w_class = WEIGHT_CLASS_SMALL
 

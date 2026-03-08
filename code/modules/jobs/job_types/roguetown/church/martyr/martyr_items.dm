@@ -4,7 +4,7 @@
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike,  /datum/intent/sword/peel)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust,  /datum/intent/sword/peel, /datum/intent/sword/chop)
 	icon_state = "martyrsword"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	item_state = "martyrsword"
 	lefthand_file = 'icons/mob/inhands/weapons/roguemartyr_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/roguemartyr_righthand.dmi'
@@ -108,7 +108,7 @@
 	color = null
 	icon_state = "martyrcloak"
 	item_state = "martyrcloak"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/cloaks.dmi'
 	body_parts_covered = CHEST|GROIN
 	boobed = FALSE
 	sellprice = 100
@@ -118,12 +118,12 @@
 /obj/item/clothing/suit/roguetown/armor/plate/full/holysee
 	name = "holy silver plate"
 	desc = "Silver-clad plate for the guardians and the warriors, for the spears and shields of the Ten."
-	icon = 'icons/roguetown/clothing/special/martyr.dmi'
+	icon = 'icons/clothing/special/martyr.dmi'
 	icon_state = "silverarmor"
 	item_state = "silverarmor"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_armor.dmi'
 	sleevetype = "silverarmor"
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/martyr.dmi'
 	armor = ARMOR_PLATE
 	sellprice = 1000
 	smeltresult = /obj/item/ingot/silver
@@ -132,9 +132,9 @@
 /obj/item/clothing/under/roguetown/platelegs/holysee
 	name = "holy silver chausses"
 	desc = "Plate leggings of silver forged for the Holy See's forces. A sea of silver to descend upon evil."
-	icon = 'icons/roguetown/clothing/special/martyr.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
+	icon = 'icons/clothing/special/martyr.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/martyr.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_pants.dmi'
 	sleevetype = "silverlegs"
 	icon_state = "silverlegs"
 	item_state = "silverlegs"
@@ -146,8 +146,8 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/holysee
 	name = "holy silver bascinet"
 	desc = "Branded by the Holy See, these helms are worn by it's chosen warriors. A bastion of hope in the dark nite."
-	icon = 'icons/roguetown/clothing/special/martyr.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyrbascinet.dmi'
+	icon = 'icons/clothing/special/martyr.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/martyrbascinet.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	adjustable = CAN_CADJUST
 	emote_environment = 3
@@ -167,11 +167,11 @@
 /obj/item/clothing/cloak/holysee
 	name = "holy silver vestments"
 	desc = "A set of vestments worn by the Holy See's forces, silver embroidery and seals of light ordain it as a bastion against evil."
-	icon = 'icons/roguetown/clothing/special/martyr.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
+	icon = 'icons/clothing/special/martyr.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/martyr.dmi'
 	icon_state = "silvertabard"
 	item_state = "silvertabard"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_cloaks.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_cloaks.dmi'
 	sleevetype = "silvertabard"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN

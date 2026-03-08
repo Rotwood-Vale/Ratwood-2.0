@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/mail
 	name = "HERMES"
 	desc = "Carrier zads have fallen severely out of fashion ever since the advent of this hydropneumatic mail system. A coin slot activates the mechanism for dispensing parchment(a zenny) and quills(a ziliqua)."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "mail"
 	density = FALSE
 	blade_dulling = DULLING_BASH
@@ -630,7 +630,7 @@
 
 /obj/item/roguemachine/mastermail
 	name = "MASTER OF MAILS"
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "mailspecial"
 	pixel_y = 32
 	max_integrity = 0

@@ -1,7 +1,7 @@
 /obj/item/listeningdevice
 	name = "listener"
 	desc = "An ever-attentive ear..."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "listenstone"
 	dropshrink = 0.6
 	gripped_intents = null

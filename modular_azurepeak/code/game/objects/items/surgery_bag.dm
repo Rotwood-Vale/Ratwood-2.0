@@ -1,7 +1,7 @@
 /obj/item/storage/belt/rogue/surgery_bag
 	name = "surgeon's bag"
 	desc = "Made to hold everything a people-butcher will need. Contains a list of implements... what even IS a Sisrat?"
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	mob_overlay_icon = null
 	icon_state = "surgery_bag"
 	slot_flags = ITEM_SLOT_HIP

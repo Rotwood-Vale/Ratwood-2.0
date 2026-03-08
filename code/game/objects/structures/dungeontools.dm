@@ -4,7 +4,7 @@
 /obj/structure/dungeontool/trigger // A hidden obj that sends a redstone trigger when crossed by a mob with a mind
 	name = "invisible trigger plate"
 	desc = "Used for quietly triggering redstone structures. Only triggered by mobs with a mind"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "pressureplate"
 	max_integrity = 9999
 	damage_deflection = 100
@@ -27,7 +27,7 @@
 /obj/structure/dungeontool/triggered // A simple obj that does a thing when activated by redstone. Create subtypes, do not use this parent obj
 	name = "triggered obj"
 	desc = "Does a thing when triggered"
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "base_trap_plate"
 	max_integrity = 9999
 	damage_deflection = 100
@@ -76,7 +76,7 @@
 
 /obj/structure/dungeontool/triggered/invisibleshutterclosed //useful monster closets
 	name = "invisible shutter (closed)"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "shutter0"
 	desc = "Can only be opened, but not closed by a redstone trigger."
 	density = TRUE

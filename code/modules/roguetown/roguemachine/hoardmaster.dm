@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/Hoardmaster
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/misc/96x96.dmi'
+	icon = 'icons/misc/96x96.dmi'
 	icon_state = "Hoardmaster"
 	density = TRUE
 	blade_dulling = DULLING_BASH
@@ -140,7 +140,7 @@
 /obj/structure/roguemachine/hoardbarrier //Blocks sprite locations
 	name = ""
 	desc = "Formerly a covetous creature, this one now shares its Hoard with the Freefolk. Protecting the transactor's Hoard, and trading it for Favor."
-	icon = 'icons/roguetown/underworld/underworld.dmi'
+	icon = 'icons/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 	density = TRUE
 	anchored = TRUE

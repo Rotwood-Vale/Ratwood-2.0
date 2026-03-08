@@ -2,7 +2,7 @@
 	name = "blunderbuss"
 	desc = "A makeshift smokepowder weapon, intended to shoot grapeshot. \
 	Such weapons are that of the rabble. Put together from salvaged handgonnes and scrap."
-	icon = 'icons/roguetown/weapons/guns32.dmi'
+	icon = 'icons/weapons/guns32.dmi'
 	icon_state = "blunderbuss"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'

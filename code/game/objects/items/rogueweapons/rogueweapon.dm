@@ -104,7 +104,7 @@
 /obj/item/shaft
 	name = "debug shaft"
 	desc = "you should not see this"
-	icon = 'icons/roguetown/misc/shafts.dmi'
+	icon = 'icons/misc/shafts.dmi'
 	icon_state = "woodshaft"
 	grid_height = 32
 	grid_width = 32

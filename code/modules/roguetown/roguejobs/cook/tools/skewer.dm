@@ -4,7 +4,7 @@
 	name = "skewer"
 	desc = "A sturdy skewer, smeared with remnants of previous meals."
 	icon_state = "skewer"
-	icon = 'icons/roguetown/items/cooking.dmi'
+	icon = 'icons/items/cooking.dmi'
 	item_state = "rods"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'

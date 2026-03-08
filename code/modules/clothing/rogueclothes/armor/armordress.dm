@@ -29,12 +29,12 @@
 //................ Winter Dress ............... //
 /obj/item/clothing/suit/roguetown/armor/armordress/winterdress
 	name = "winter dress"
-	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	icon = 'icons/clothing/shirts_royalty.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts_royalty.dmi'
 	desc = "A thick, padded, and comfortable dress popular amongst nobility during winter."
 	body_parts_covered = COVERAGE_FULL
 	icon_state = "winterdress"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
 	boobed = TRUE
 	detail_tag = "_detail"
 	detail_color = CLOTHING_BLACK

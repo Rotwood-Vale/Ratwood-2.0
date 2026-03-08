@@ -4,7 +4,7 @@
 	icon_state = "gear"
 	var/on_icon
 	var/off_icon
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	smeltresult = /obj/item/ingot/bronze
 	slot_flags = ITEM_SLOT_HIP
@@ -366,7 +366,7 @@
 /obj/item/contraption/folding_table_stored
 	name = "folding table"
 	desc = "A folding table, useful for setting up a temporary workspace."
-	icon = 'icons/roguetown/misc/gadgets.dmi'
+	icon = 'icons/misc/gadgets.dmi'
 	icon_state = "foldingTableStored"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
@@ -393,7 +393,7 @@
 /obj/item/contraption/shears
 	name = "amputation shears"
 	desc = "A powered shear used for achieving a clean separation between limb and patient. Keeping the patient still is imperative to aligning the blades."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "shears"
 	on_icon = "shears"
 	off_icon = "shears"

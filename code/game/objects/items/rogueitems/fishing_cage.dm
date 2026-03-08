@@ -2,7 +2,7 @@
 	name = "fishing cage"
 	desc = "A sturdy cage used to catch shellfishes. Put a leech or worm inside and an unfortunate shellfish should be lured inside shortly."
 	icon_state = "fishingcage"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BACK

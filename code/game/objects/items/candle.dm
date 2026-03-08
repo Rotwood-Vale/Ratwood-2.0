@@ -90,14 +90,14 @@
 		user.visible_message(span_notice("[user] snuffs [src]."))
 
 /obj/item/candle/yellow
-	icon = 'icons/roguetown/items/lighting.dmi'
+	icon = 'icons/items/lighting.dmi'
 
 /obj/item/candle/yellow/lit
 	start_lit = TRUE
 	icon_state = "candle1_lit"
 
 /obj/item/candle/eora
-	icon = 'icons/roguetown/items/lighting.dmi'
+	icon = 'icons/items/lighting.dmi'
 	name = "eora's candle"
 	desc = "A rather lovely candle with a reddish hue."
 	color = "#f858b5ff"
@@ -113,7 +113,7 @@
 	start_lit = TRUE
 
 /obj/item/candle/skull
-	icon = 'icons/roguetown/items/lighting.dmi'
+	icon = 'icons/items/lighting.dmi'
 	icon_state = "skullcandle"
 	desc = "A rather macabre way to hold a candle. Fit for crypts and old dusty libraries."
 	infinite = TRUE
@@ -127,7 +127,7 @@
 
 /obj/item/candle/candlestick
 	name = "parent candlestick"
-	icon = 'icons/roguetown/items/lighting.dmi'
+	icon = 'icons/items/lighting.dmi'
 	icon_state = "gcandelabra"
 	infinite = TRUE
 	desc = "The parent candlestick that gave all of the little, real candlesticks their traits. You should not be seeing this, report this."
@@ -201,7 +201,7 @@
 
 /obj/item/candle/silver
 	name = "silver candle"
-	icon = 'icons/roguetown/items/lighting.dmi'
+	icon = 'icons/items/lighting.dmi'
 	icon_state = "scandle"
 	infinite = TRUE
 	sellprice = 50

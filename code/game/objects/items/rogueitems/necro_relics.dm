@@ -1,7 +1,7 @@
 /obj/item/necro_relics/necro_crystal
 	name = "dark crystal"
 	desc = "It feels cold in your hands. You shouldn't be holding this."
-	icon = 'icons/roguetown/items/gems.dmi'
+	icon = 'icons/items/gems.dmi'
 	icon_state = "necro_crystal"
 	hitsound = 'sound/blank.ogg'
 	dropshrink = 0.6

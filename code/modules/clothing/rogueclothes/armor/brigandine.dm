@@ -165,9 +165,9 @@
 	name = "captain's brigandine"
 	desc = "A coat with plates specifically tailored and forged for the captain of the vale."
 	icon_state = "capplate"
-	icon = 'icons/roguetown/clothing/special/captain.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
-	sleeved = 'icons/roguetown/clothing/special/onmob/captain.dmi'
+	icon = 'icons/clothing/special/captain.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/captain.dmi'
+	sleeved = 'icons/clothing/special/onmob/captain.dmi'
 	detail_tag = "_detail"
 	detail_color = "#39404d"
 	blocksound = SOFTHIT

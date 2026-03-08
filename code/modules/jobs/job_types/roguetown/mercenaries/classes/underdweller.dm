@@ -110,7 +110,7 @@
 	desc = "A pouch to carry sticks of blasting powder. What sort of lunatic would do that?"
 	icon_state = "strapbag"
 	item_state = "strapbag"
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_HIP
 	resistance_flags = NONE

@@ -11,7 +11,7 @@ Reel teleports the attached atom to the grabbed turf.
 /obj/item/grapplinghook
 	name = "bronze grappler"
 	desc = "The finest innovation in industrial dwarven Engineering. Used to haul crates and kegs in shafts too steep for railcarts. Can be used on people who aren't too large.\nHas a range of VI tiles on the same plane, and a range of III tiles across planes.\nGrappling in the same plane will be blocked by any dense objects."
-	icon = 'icons/roguetown/misc/gadgets.dmi'
+	icon = 'icons/misc/gadgets.dmi'
 	icon_state = "grappler_used"
 	item_state = "grappler"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

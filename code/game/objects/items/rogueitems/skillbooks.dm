@@ -1,7 +1,7 @@
 /obj/item/skillbook
 	name = "blank skillbook"
 	desc = "A book to improve your skills."
-	icon = 'icons/roguetown/items/books.dmi'
+	icon = 'icons/items/books.dmi'
 	icon_state = "basic_book_0"
 	var/open = FALSE
 	var/iconval = 0
@@ -151,7 +151,7 @@
 /obj/item/skillbook/unfinished
 	name = "unfinished skillbook"
 	desc = "A blank template waiting for your expertise."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "grudge"
 	complete = FALSE
 	writing_page = TRUE

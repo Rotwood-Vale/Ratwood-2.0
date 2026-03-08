@@ -5,7 +5,7 @@
 	desc = ""
 	icon_state = "pouch0"
 	item_state = "pouch"
-	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon = 'icons/weapons/ammo.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY

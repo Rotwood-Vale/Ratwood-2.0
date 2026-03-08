@@ -5,7 +5,7 @@
 /obj/item/construction/repairkit/structure
 	name = "structure repair kit"
 	desc = "a structure repairkit, able to broken doors and windows. A skilled carpenter can use this to reinforce them as well"
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	icon_state = "strucrepairkit"
 	grid_width = 32
 	grid_height = 32

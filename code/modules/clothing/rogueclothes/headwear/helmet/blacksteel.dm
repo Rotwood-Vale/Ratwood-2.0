@@ -2,8 +2,8 @@
 	name = "blacksteel armet"
 	desc = "An armet forged of durable blacksteel, utilizing a modern design."
 	body_parts_covered = FULL_HEAD
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplatehelm"
 	item_state = "bplatehelm"
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
@@ -23,8 +23,8 @@
 	name = "blacksteel bucket helm"
 	desc = "A bucket helmet forged of durable blacksteel. None shall pass.."
 	body_parts_covered = FULL_HEAD
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bkhelm"
 	item_state = "bkhelm"
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
@@ -49,8 +49,8 @@
 	max_integrity = ARMOR_INT_SIDE_BLACKSTEEL
 	anvilrepair = /datum/skill/craft/armorsmithing
 	sewrepair = FALSE
-	icon = 'icons/roguetown/clothing/wrists.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+	icon = 'icons/clothing/wrists.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head.dmi'
 	alternate_worn_layer  = 8.9 //On top of helmet
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 

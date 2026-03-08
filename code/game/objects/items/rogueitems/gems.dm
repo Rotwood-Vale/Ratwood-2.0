@@ -2,7 +2,7 @@
 /obj/item/roguegem
 	name = "mother of all gems"
 	icon_state = "ruby_cut"
-	icon = 'icons/roguetown/items/gems.dmi'
+	icon = 'icons/items/gems.dmi'
 	desc = "A debug tool to help us later"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
@@ -136,49 +136,49 @@
 /obj/item/roguegem/onyxa
 	name = "onyxa"
 	desc = "A sinister, glimmering stone. Valuable to the drow, it is sometimes used in necromantic rituals. Mirrors made of this are said to never show your own face."
-	icon = 'icons/roguetown/gems/gem_onyxa.dmi'
+	icon = 'icons/gems/gem_onyxa.dmi'
 	icon_state = "raw_onyxa"
 	sellprice = 30
 
 /obj/item/roguegem/jade
 	name = "jade"
 	desc = "A dull green gem prized in Lingyue and Kazengun alike. Lingyuese tradition holds that jade is the essence of Psydon, protecting both soul and flesh from decay and corruption."
-	icon = 'icons/roguetown/gems/gem_jade.dmi'
+	icon = 'icons/gems/gem_jade.dmi'
 	icon_state = "raw_jade"
 	sellprice = 50
 
 /obj/item/roguegem/oyster
 	name = "fossilized clam"
 	desc = "A fossilized clam shell. It would be a good idea to pry it open with a chisel."
-	icon = 'icons/roguetown/gems/gem_shell.dmi'
+	icon = 'icons/gems/gem_shell.dmi'
 	icon_state = "oyster_closed"
 	sellprice = 5
 
 /obj/item/roguegem/coral
 	name = "heartstone"
 	desc = "Jagged like a hound's tooth. Heartstone is speculated to be the crystalized blood of fallen sailors. It is sacred to Abyssorites and is used in numerous Abyssorites rituals."
-	icon = 'icons/roguetown/gems/gem_coral.dmi'
+	icon = 'icons/gems/gem_coral.dmi'
 	icon_state = "raw_coral"
 	sellprice = 60
 
 /obj/item/roguegem/turq
 	name = "cerulite"
 	desc = "A beautiful teal gem that carves easily. Beloved by mages, its remarkable clarity makes it a favored tool of Naledi’s astrologer-mages in divination."
-	icon = 'icons/roguetown/gems/gem_turq.dmi'
+	icon = 'icons/gems/gem_turq.dmi'
 	icon_state = "raw_turq"
 	sellprice = 75
 
 /obj/item/roguegem/amber
 	name = "amber"
 	desc = "A chunk of fossilized sunlight. Believed to have been shed during the shattering of the First Sun, its remnants are prized among Astratans. Raaneshi sometimes use fragments as currency, instead of mammon."
-	icon = 'icons/roguetown/gems/gem_amber.dmi'
+	icon = 'icons/gems/gem_amber.dmi'
 	icon_state = "raw_amber"
 	sellprice = 50
 
 /obj/item/roguegem/opal
 	name = "opal"
 	desc = "A dazzling gem of great value. Opal is widely speculated to be the crystallized essence left behind by rainbows."
-	icon = 'icons/roguetown/gems/gem_opal.dmi'
+	icon = 'icons/gems/gem_opal.dmi'
 	icon_state = "raw_opal"
 	sellprice = 80
 
@@ -228,7 +228,7 @@
 /obj/item/riddleofsteel
 	name = "riddle of steel"
 	icon_state = "ros"
-	icon = 'icons/roguetown/items/gems.dmi'
+	icon = 'icons/items/gems.dmi'
 	desc = "Flesh, mind."
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
@@ -288,7 +288,7 @@
 /obj/item/pearl
 	name = "pearl"
 	icon_state = "pearl"
-	icon = 'icons/roguetown/items/gems.dmi'
+	icon = 'icons/items/gems.dmi'
 	desc = "A beautiful pearl. Can be strung up into an amulet."
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'

@@ -6,7 +6,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	static_price = TRUE
 	sellprice = 100
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	var/deployed_structure = /obj/structure/fluff/walldeco/painting
 
 /obj/item/rogue/painting/attack_turf(turf/T, mob/living/user)
@@ -30,7 +30,7 @@
 /obj/structure/fluff/walldeco/painting
 	name = "painting"
 	desc = "The artist is unknown. The subject is unknown. Maybe a memorial to a corpse that was trampled on the trail to this reality."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "painting_deployed"
 	anchored = TRUE
 	density = FALSE

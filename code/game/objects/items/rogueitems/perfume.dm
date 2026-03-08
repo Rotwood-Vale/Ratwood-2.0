@@ -1,7 +1,7 @@
 /obj/item/perfume
 	name = "perfume bottle"
 	desc = "A bottle of pleasantly smelling fragrance."
-	icon = 'icons/roguetown/items/perfume.dmi'
+	icon = 'icons/items/perfume.dmi'
 	icon_state = "perfume-bottle-empty"
 
 	w_class = WEIGHT_CLASS_TINY

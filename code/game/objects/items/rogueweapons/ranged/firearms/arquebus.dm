@@ -13,7 +13,7 @@
 	desc = "A small smokepowder weapon, balanced for use in a single hand. \
 	Even with great power, men squabbled until the conclave smiths of Naledi relented, producing these in limited batches. \
 	This is an incredibly rare example of such. Each tailored to its user's will."
-	icon = 'icons/roguetown/weapons/guns32.dmi'
+	icon = 'icons/weapons/guns32.dmi'
 	icon_state = "pistol"
 	item_state = "pistol"
 	force = 10

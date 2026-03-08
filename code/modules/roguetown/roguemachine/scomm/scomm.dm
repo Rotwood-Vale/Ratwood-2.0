@@ -6,7 +6,7 @@
 /obj/structure/roguemachine/scomm
 	name = "SCOM"
 	desc = "The Supernatural Communication Optical Machine is a wonder of magic and technology, able to transmit and receive messages across long distance. There's a button in the MIDDLE for making private jabberline connections."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "scomm1"
 	density = FALSE
 	blade_dulling = DULLING_BASH

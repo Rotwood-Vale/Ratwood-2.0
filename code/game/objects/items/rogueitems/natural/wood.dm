@@ -1,5 +1,5 @@
 /obj/item/grown/log/tree
-	icon = 'icons/roguetown/items/natural.dmi'
+	icon = 'icons/items/natural.dmi'
 	name = "log"
 	desc = "A big tree log. It's very heavy and cumbersome, best cut into pieces for more uses."
 	icon_state = "log"
@@ -218,7 +218,7 @@
 /obj/item/grown/log/tree/bowpartial/recurve
 	name = "recurve bowstave"
 	desc = "An incomplete recurve bow, waiting to be strung."
-	icon = 'icons/roguetown/items/64x.dmi'
+	icon = 'icons/items/64x.dmi'
 	icon_state = "recurve_bowstave"
 
 /obj/item/grown/log/tree/bowpartial/recurve/Initialize(mapload)
@@ -230,7 +230,7 @@
 /obj/item/grown/log/tree/bowpartial/longbow
 	name = "long bowstave"
 	desc = "An incomplete longbow, waiting to be strung."
-	icon = 'icons/roguetown/items/64x.dmi'
+	icon = 'icons/items/64x.dmi'
 	icon_state = "long_bowstave"
 
 /obj/item/grown/log/tree/bowpartial/longbow/Initialize(mapload)
@@ -417,7 +417,7 @@
 /obj/item/natural/wood/plank
 	name = "wooden plank"
 	desc = "A flat piece of wood, useful for flooring."
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	icon_state = "plank"
 	grid_width = 64
 	grid_height = 224
@@ -464,7 +464,7 @@
 	desc = "Several planks in a neat pile."
 	icon_state = "plankbundle1"
 	item_state = "plankbundle"
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	grid_width = 128
 	grid_height = 224
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'

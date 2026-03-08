@@ -4,7 +4,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/spider_chitin
-	wildshape_icon = 'icons/roguetown/mob/monster/spider.dmi'
+	wildshape_icon = 'icons/mob/monster/spider.dmi'
 	wildshape_icon_state = "honeys"
 	// Someone else balance this, I am here for code, not numbers
 
@@ -78,7 +78,7 @@
 	playsound(get_turf(H), pick('sound/vo/mobs/spider/speak (1).ogg','sound/vo/mobs/spider/speak (2).ogg','sound/vo/mobs/spider/speak (3).ogg','sound/vo/mobs/spider/speak (4).ogg'), 80, TRUE, -1)
 
 /datum/species/shapespider/regenerate_icons(mob/living/carbon/human/H)
-	H.icon = 'icons/roguetown/mob/monster/spider.dmi'
+	H.icon = 'icons/mob/monster/spider.dmi'
 	H.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	H.icon_state = "honeys"
 	H.update_damage_overlays()
@@ -127,7 +127,7 @@
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	max_blade_int = 400
 	max_integrity = 400
 	force = 25 //More than the volf, more fragile, hits slower

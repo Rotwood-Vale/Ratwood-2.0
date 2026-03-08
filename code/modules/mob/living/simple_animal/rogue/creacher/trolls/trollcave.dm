@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/troll/cave
 	name = "cave troll"
 	desc = "Dwarven tales of giants and trolls often contain these creatures, horrifying amalgamations of flesh and crystal who have long since abandoned Malum's ways."
-	icon = 'icons/roguetown/mob/monster/trolls/troll_cave.dmi'
+	icon = 'icons/mob/monster/trolls/troll_cave.dmi'
 	health = CAVETROLL_HEALTH
 	maxHealth = CAVETROLL_HEALTH
 	ai_controller = /datum/ai_controller/troll_cave

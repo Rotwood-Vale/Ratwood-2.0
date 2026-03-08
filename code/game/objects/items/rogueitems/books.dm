@@ -1,6 +1,6 @@
 /obj/item/book/rogue
 	var/open = FALSE
-	icon = 'icons/roguetown/items/books.dmi'
+	icon = 'icons/items/books.dmi'
 	icon_state = "basic_book_0"
 	slot_flags = ITEM_SLOT_HIP
 	var/base_icon_state = "basic_book"
@@ -565,7 +565,7 @@
 		stage++
 
 	if(stage == 2)
-		var/icon/J = new('icons/roguetown/items/books.dmi')
+		var/icon/J = new('icons/items/books.dmi')
 		var/list/istates = J.IconStates()
 		var/list/icon_choice = list()
 		for(var/icon_s in istates)
@@ -576,7 +576,7 @@
 			if(findtext(icon_s, "_1"))
 				continue
 			icon_choice += list(
-				"[icon_s]" = icon(icon = 'icons/roguetown/items/books.dmi', icon_state = icon_s)
+				"[icon_s]" = icon(icon = 'icons/items/books.dmi', icon_state = icon_s)
 			)
 
 		var/icon_input = show_radial_menu(user, src, icon_choice, require_near = TRUE, tooltips = FALSE)
@@ -597,7 +597,7 @@
 /obj/item/manuscript
 	name = "2 page manuscript"
 	desc = "A 2 page written piece aspiring to one dae become a book."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "manuscript"
 	dir = 2
 	resistance_flags = FLAMMABLE
@@ -744,7 +744,7 @@
 /obj/item/book_crafting_kit
 	name = "book crafting kit"
 	desc = "Apply on a written manuscript to create a book."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "book_crafting_kit"
 
 /obj/item/book/rogue/swatchbook

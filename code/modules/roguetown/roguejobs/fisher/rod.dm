@@ -4,7 +4,7 @@
 	name = "fishing rod"
 	desc = "Made from weathered wood and coarse twine. The tool of the battle against the dark waters below."
 	icon_state = "rod"
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	sharpness = IS_BLUNT
 	wlength = WLENGTH_NORMAL
 	var/obj/item/baited = null

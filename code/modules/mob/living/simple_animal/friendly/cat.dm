@@ -91,7 +91,7 @@
 	name = "black cat"
 	desc = "Possessed of lamplike eyes and a meow that sounds like the rattle of bones. Black cats are sacred to Necra, said to bring wandering spirits to the Carriageman."
 	gender = FEMALE
-	icon = 'icons/roguetown/topadd/takyon/Cat.dmi'
+	icon = 'icons/topadd/takyon/Cat.dmi'
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
@@ -99,7 +99,7 @@
 /mob/living/simple_animal/pet/cat/rogue/archibald
 	name = "Archibald"
 	desc = "Rare toothless spider fron the north - won't bite but will stare you down!"
-	icon = 'icons/roguetown/mob/monster/spider.dmi'
+	icon = 'icons/mob/monster/spider.dmi'
 	icon_state = "honeys"
 	icon_living = "honeys"
 	icon_dead = "honeys-dead"
@@ -109,7 +109,7 @@
 /mob/living/simple_animal/pet/cat/rogue/rat
 	name = "Boris"
 	desc = "Sated on lifetimes of the Keep's grain, there is simply no longer any point in slaying this beast. For it has already won."
-	icon = 'icons/roguetown/mob/monster/bigrat.dmi'
+	icon = 'icons/mob/monster/bigrat.dmi'
 	icon_state = "rat"
 	icon_living = "rat"
 	icon_dead = "rat1"

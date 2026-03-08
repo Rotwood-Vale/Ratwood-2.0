@@ -1,6 +1,6 @@
 //Bobcats are a faster, still hostile, version of a wolf.
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat
-	icon = 'icons/roguetown/mob/monster/bobcat.dmi'
+	icon = 'icons/mob/monster/bobcat.dmi'
 	name = "lynx"
 	desc = "An adorable albiet hated creacher of the vale's northern coast, hunting livestock and vulnrable people alike.."
 	icon_state = "bobcat"
@@ -35,4 +35,4 @@
 	name = "remains"
 	gender = PLURAL
 	icon_state = "bones"
-	icon = 'icons/roguetown/mob/monster/bobcat.dmi'
+	icon = 'icons/mob/monster/bobcat.dmi'

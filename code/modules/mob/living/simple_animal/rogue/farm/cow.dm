@@ -1,6 +1,6 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/cow
-	icon = 'icons/roguetown/mob/monster/cow.dmi'
+	icon = 'icons/mob/monster/cow.dmi'
 	name = "cow"
 	desc = ""
 	icon_state = "cow"
@@ -45,7 +45,7 @@
 	name = "remains"
 	gender = PLURAL
 	icon_state = "skele"
-	icon = 'icons/roguetown/mob/monster/cow.dmi'
+	icon = 'icons/mob/monster/cow.dmi'
 
 /mob/living/simple_animal/hostile/retaliate/rogue/cow/get_sound(input)
 	switch(input)
@@ -136,7 +136,7 @@
 		..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/bull
-	icon = 'icons/roguetown/mob/monster/cow.dmi'
+	icon = 'icons/mob/monster/cow.dmi'
 	name = "cow"
 	icon_state = "bull"
 	icon_living = "bull"

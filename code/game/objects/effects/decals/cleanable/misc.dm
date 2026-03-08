@@ -148,7 +148,7 @@
 /obj/effect/decal/cleanable/debris
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	icon_state = "tiny"
 	beauty = -20
 /obj/effect/decal/cleanable/debris/Initialize(mapload)

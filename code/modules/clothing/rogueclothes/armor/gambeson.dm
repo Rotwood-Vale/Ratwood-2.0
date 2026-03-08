@@ -225,7 +225,7 @@
 	desc = "Padded shirt for extra comfort and protection, adorned in vibrant colors."
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	icon_state = "grenzelshirt"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/stonekeep_merc.dmi'
 	boobed = FALSE // Temporary fix, set to FALSE because for some reason boobed and details don't want to work together, removing the ability to dye it or it's details for the onmob
 	detail_tag = "_detail"
 	detail_color = CLOTHING_WHITE

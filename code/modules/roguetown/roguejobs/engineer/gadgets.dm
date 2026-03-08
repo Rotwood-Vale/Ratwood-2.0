@@ -1,7 +1,7 @@
 /obj/item/storage/gadget
 	name = "gadget"
 	desc = "A gadget of some sort."
-	icon = 'icons/roguetown/misc/gadgets.dmi'
+	icon = 'icons/misc/gadgets.dmi'
 	icon_state = "gadget"
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_HIP
@@ -26,7 +26,7 @@
 /obj/item/folding_table_stored
 	name = "folding table"
 	desc = "A folding table, useful for setting up a temporary workspace."
-	icon = 'icons/roguetown/misc/gadgets.dmi'
+	icon = 'icons/misc/gadgets.dmi'
 	icon_state = "foldingTableStored"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF

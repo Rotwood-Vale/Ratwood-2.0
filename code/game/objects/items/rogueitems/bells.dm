@@ -3,7 +3,7 @@
 /obj/item/handheld_bell
 	name = "church bell"
 	desc = "A small bell that rings loudly when used."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "churchbell"
 	throw_speed = 2
 	throw_range = 5
@@ -57,7 +57,7 @@
 /obj/structure/stationary_bell
 	name = "church bell"
 	desc = "A large bell that rings out for all to hear."
-	icon = 'icons/roguetown/misc/96x96.dmi'
+	icon = 'icons/misc/96x96.dmi'
 	icon_state = "churchbell"
 	anchored = TRUE
 	density = TRUE
@@ -114,7 +114,7 @@
 /obj/item/jingle_bells
 	name = "jingling bells"
 	desc = "A set of little bells that make a satifying ring when jostled."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "bells"
 	throwforce = 5
 	dropshrink = 0.5

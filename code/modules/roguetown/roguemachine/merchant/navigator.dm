@@ -4,7 +4,7 @@
 /obj/item/roguemachine/navigator
 	name = "navigator"
 	desc = "A machine that attracts the attention of trading balloons."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "ballooner"
 	density = TRUE
 	blade_dulling = DULLING_BASH
@@ -34,7 +34,7 @@
 /obj/structure/roguemachine/balloon_pad
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = ""
 	density = FALSE
 	layer = BELOW_OBJ_LAYER

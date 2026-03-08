@@ -2,7 +2,7 @@
 	name = "Ritual Chalk"
 	icon_state = "chalk"
 	desc = "Simple white chalk. A useful tool for rites."
-	icon = 'icons/roguetown/misc/rituals.dmi'
+	icon = 'icons/misc/rituals.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	experimental_inhand = FALSE
 

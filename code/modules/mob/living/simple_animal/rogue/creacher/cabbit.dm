@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/cabbit	//Technically mudcrab subtype, it's a rabbit though. Shrimpler that way.
 	name = "cabbit"
 	desc = "A cabbit, a particular favorite of local fauna; both as a pet and as a tasty meal."
-	icon = 'icons/roguetown/mob/cabbit.dmi'
+	icon = 'icons/mob/cabbit.dmi'
 	icon_state = "cabbit"
 	icon_living = "cabbit"
 	icon_dead = "cabbit_dead"
@@ -34,5 +34,5 @@
 /obj/effect/decal/remains/cabbit
 	name = "remains"
 	gender = PLURAL
-	icon = 'icons/roguetown/mob/cabbit.dmi'
+	icon = 'icons/mob/cabbit.dmi'
 	icon_state = "cabbit_remains"

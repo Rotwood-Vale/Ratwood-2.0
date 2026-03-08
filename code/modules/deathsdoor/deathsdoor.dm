@@ -4,7 +4,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 /obj/structure/deaths_door_shrine
 	name = "A Way Out"
 	desc = "The eerie calm comes to an end, one way or another."
-	icon = 'icons/roguetown/misc/foliagetall.dmi'
+	icon = 'icons/misc/foliagetall.dmi'
 	icon_state = "doorway"
 	opacity = FALSE
 	density = TRUE
@@ -125,7 +125,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 /obj/structure/deaths_door_portal
 	name = "death's door"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "underworldportal"
 	anchored = TRUE
 	density = FALSE
@@ -284,7 +284,7 @@ GLOBAL_VAR_INIT(underworld_strands, 0)
 /obj/structure/waywardspirit
 	name = "A Wayward Soul"
 	desc = "Lost in the deathly tranquility, never to return."
-	icon = 'icons/roguetown/underworld/enigma_husks.dmi'
+	icon = 'icons/underworld/enigma_husks.dmi'
 	icon_state = "hollow"
 	opacity = FALSE
 	density = FALSE

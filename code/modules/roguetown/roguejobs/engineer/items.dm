@@ -1,5 +1,5 @@
 /obj/item/roguegear
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	name = "example cog"
 	desc = "You should not be seeing this."
 	icon_state = "gear"

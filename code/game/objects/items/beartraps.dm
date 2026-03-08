@@ -13,7 +13,7 @@
 	breakouttime = 30 SECONDS
 
 /obj/item/restraints/legcuffs/beartrap
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	name = "mantrap"
 	gender = NEUTER
 	throw_speed = 1

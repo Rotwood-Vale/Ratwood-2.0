@@ -1925,7 +1925,7 @@
 #define READ_BOTH 3
 
 /atom/movable/screen/read
-	icon = 'icons/roguetown/hud/read.dmi'
+	icon = 'icons/hud/read.dmi'
 	icon_state = ""
 	name = ""
 	screen_loc = "1,1"

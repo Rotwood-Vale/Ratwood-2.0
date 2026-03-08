@@ -2,7 +2,7 @@
 	name = "canvas"
 	desc = "A perfect place to paint"
 
-	icon = 'icons/roguetown/items/paint_supplies/canvas_32.dmi'
+	icon = 'icons/items/paint_supplies/canvas_32.dmi'
 	icon_state = "canvas"
 
 	var/easel_offset = 9
@@ -21,7 +21,7 @@
 	var/canvas_size = "32x32"
 	var/reject = FALSE
 
-	var/canvas_icon = 'icons/roguetown/items/paint_supplies/canvas_32x32.dmi'
+	var/canvas_icon = 'icons/items/paint_supplies/canvas_32x32.dmi'
 	var/canvas_icon_state = "canvas"
 	var/canvas_screen_loc = "6,6"
 	var/canvas_divider_x = 5
@@ -116,7 +116,7 @@
 	if("[x][y]" in overlay_to_index)
 		cut_overlay(overlay_to_index["[x][y]"])
 		overlay_to_index -= "[x][y]"
-	var/mutable_appearance/MA = mutable_appearance('icons/roguetown/items/paint_supplies/pixel.dmi', "pixel")
+	var/mutable_appearance/MA = mutable_appearance('icons/items/paint_supplies/pixel.dmi', "pixel")
 	MA.color = current_color
 	MA.pixel_x = x
 	MA.pixel_y = y
@@ -141,7 +141,7 @@
 	//	SSpaintings.update_paintings()
 
 /atom/movable/screen/canvas
-	icon = 'icons/roguetown/items/paint_supplies/canvas_32x32.dmi'
+	icon = 'icons/items/paint_supplies/canvas_32x32.dmi'
 	icon_state = "canvas"
 	screen_loc = "6,6"
 
@@ -233,7 +233,7 @@
 /obj/structure/easel
 	name = "easel"
 	desc = ""
-	icon = 'icons/roguetown/items/paint_supplies/paint_items.dmi'
+	icon = 'icons/items/paint_supplies/paint_items.dmi'
 	icon_state = "easel"
 	density = TRUE
 	resistance_flags = FLAMMABLE
@@ -272,7 +272,7 @@
 /obj/item/paint_brush
 	name = "paint brush"
 	desc = "A tool used for painting"
-	icon = 'icons/roguetown/items/paint_supplies/paint_items.dmi'
+	icon = 'icons/items/paint_supplies/paint_items.dmi'
 	icon_state = "paintbrush"
 
 	grid_height = 32
@@ -333,7 +333,7 @@
 /obj/item/paint_palette
 	name = "paint palette"
 	desc = "A tool used for painting"
-	icon = 'icons/roguetown/items/paint_supplies/paint_items.dmi'
+	icon = 'icons/items/paint_supplies/paint_items.dmi'
 	icon_state = "palette"
 
 	grid_height = 32

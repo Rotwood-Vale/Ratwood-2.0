@@ -15,9 +15,9 @@
 	use_skintones = TRUE
 	skin_tone_wording = "Skin Color"
 	limbs_icon_m = 'icons/mob/species/anthro_small_male.dmi'
-	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fd.dmi'
-	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
-	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
+	limbs_icon_f = 'icons/mob/bodies/f/fd.dmi'
+	dam_icon = 'icons/mob/bodies/dam/dam_male.dmi'
+	dam_icon_f = 'icons/mob/bodies/dam/dam_female.dmi'
 	soundpack_m = /datum/voicepack/male/goblin
 	soundpack_f = /datum/voicepack/female/goblin
 	custom_clothes = TRUE

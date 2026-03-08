@@ -1,7 +1,7 @@
 /obj/item/undies
 	name = "briefs"
 	desc = "An absolute necessity."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "briefs"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE

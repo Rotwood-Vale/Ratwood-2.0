@@ -1304,25 +1304,25 @@
 	desc = "Dazzling symmetrical patterns flow with an old culture's style."
 	pixel_w = -16
 	pixel_z = -17
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "kover"
 
 /obj/effect/decal/carpet/kover_darkred
 	name = "rustic red rug"
 	desc = "Dazzling symmetrical patterns flow with an old culture's style."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "kover_darkred"
 
 /obj/effect/decal/carpet/kover_purple
 	name = "rustic purple rug"
 	desc = "Dazzling symmetrical patterns flow with an old culture's style."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "kover_purple"
 
 /obj/effect/decal/carpet/kover_black
 	name = "rustic black carpet"
 	desc = "Dazzling symmetrical patterns flow with an old culture's style."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "kover_black"
 
 /obj/effect/decal/carpet/square
@@ -1330,19 +1330,19 @@
 	desc = "Soft green carpeting that reminds you of grassy meadows."
 	pixel_w = -16
 	pixel_z = -16
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "greencarpet"
 
 /obj/effect/decal/carpet/square/black
 	name = "black carpet"
 	desc = "As black as the night sky during a storm."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "blackcarpet"
 
 /obj/structure/giantfur
 	name = "giant fur"
 	desc = "Pelt of some gigantic animal, made into a mat."
-	icon = 'icons/roguetown/misc/96x96.dmi'
+	icon = 'icons/misc/96x96.dmi'
 	icon_state = "fur"
 	density = FALSE
 	anchored = TRUE

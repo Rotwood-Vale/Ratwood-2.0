@@ -388,49 +388,49 @@
 	switch(slot_worn_on)
 		if(SLOT_MANNEQUIN_FEET)
 			clothing_layer = SHOES_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/feet.dmi'
+			overlay_icon = 'icons/clothing/onmob/feet.dmi'
 		if(SLOT_MANNEQUIN_GLOVES)
 			sleeves = TRUE
 			clothing_layer = GLOVES_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/gloves.dmi'
+			overlay_icon = 'icons/clothing/onmob/gloves.dmi'
 		if(SLOT_MANNEQUIN_WRISTS)
 			sleeves = TRUE
 			clothing_layer = WRISTS_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/wrists.dmi'
+			overlay_icon = 'icons/clothing/onmob/wrists.dmi'
 		if(SLOT_MANNEQUIN_ARMOR)
 			sleeves = TRUE
 			clothing_layer = ARMOR_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+			overlay_icon = 'icons/clothing/onmob/shirts.dmi'
 		if(SLOT_MANNEQUIN_MASK)
 			is_female = FALSE
 			clothing_layer = MASK_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/masks.dmi'
+			overlay_icon = 'icons/clothing/onmob/masks.dmi'
 		if(SLOT_MANNEQUIN_BELT)
 			clothing_layer = BELT_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
+			overlay_icon = 'icons/clothing/onmob/belts.dmi'
 		if(SLOT_MANNEQUIN_SHIRT)
 			sleeves = TRUE
 			clothing_layer = SHIRT_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+			overlay_icon = 'icons/clothing/onmob/shirts.dmi'
 		if(SLOT_MANNEQUIN_PANTS)
 			clothing_layer = PANTS_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/pants.dmi'
+			overlay_icon = 'icons/clothing/onmob/pants.dmi'
 		if(SLOT_MANNEQUIN_HEAD)
 			is_female = FALSE
 			clothing_layer = HEAD_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+			overlay_icon = 'icons/clothing/onmob/head.dmi'
 		if(SLOT_MANNEQUIN_NECK)
 			is_female = FALSE
 			clothing_layer = NECK_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/neck.dmi'
+			overlay_icon = 'icons/clothing/onmob/neck.dmi'
 		if(SLOT_MANNEQUIN_CLOAK)
 			sleeves = TRUE
 			clothing_layer = CLOAK_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+			overlay_icon = 'icons/clothing/onmob/cloaks.dmi'
 		if(SLOT_MANNEQUIN_RING)
 		//Rings are gendered, and most rings won't show up because there are currently a handful of ring onmob sprites.
 			clothing_layer = RING_LAYER
-			overlay_icon = 'icons/roguetown/clothing/onmob/rings.dmi'
+			overlay_icon = 'icons/clothing/onmob/rings.dmi'
 
 	if(worn_thing.alternate_worn_layer)
 		clothing_layer = worn_thing.alternate_worn_layer

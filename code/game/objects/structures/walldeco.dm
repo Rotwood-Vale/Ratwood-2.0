@@ -2,7 +2,7 @@
 /obj/structure/fluff/walldeco
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/misc/decoration.dmi'
+	icon = 'icons/misc/decoration.dmi'
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 0
@@ -68,35 +68,35 @@
 /obj/structure/fluff/walldeco/bsmith
 	name = "sign"
 	desc = ""
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "bsmith"
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/goblet
 	name = "sign"
 	desc = ""
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "goblet"
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/flower
 	name = "sign"
 	desc = ""
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "flower"
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/barbersign
 	name = "sign"
 	desc = "The iconic swirl of the barber surgeon."
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "barbersign"
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/barbersignreverse
 	name = "sign"
 	desc = "The iconic swirl of the barber surgeon."
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "barbersignflip"
 	layer = ABOVE_MOB_LAYER
 
@@ -182,7 +182,7 @@
 
 /obj/structure/fluff/walldeco/bigpainting
 	name = "painting"
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "sherwoods"
 	pixel_y = 32
 	pixel_x = -16
@@ -192,7 +192,7 @@
 
 /obj/structure/fluff/walldeco/mona
 	name = "painting"
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "mona"
 	pixel_y = 32
 
@@ -201,7 +201,7 @@
 	alpha = 180
 	layer = 4.26
 	icon_state = "chains1"
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	can_buckle = 1
 	buckle_lying = 0
 	breakoutextra = 5 MINUTES
@@ -439,7 +439,7 @@
 /obj/effect/decal/shadow_floor
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/misc/decoration.dmi'
+	icon = 'icons/misc/decoration.dmi'
 	icon_state = "shadow_floor"
 	mouse_opacity = 0
 

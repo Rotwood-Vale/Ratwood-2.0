@@ -53,7 +53,7 @@
 						Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat
-	icon = 'icons/roguetown/mob/monster/gote.dmi'
+	icon = 'icons/mob/monster/gote.dmi'
 	name = "goat"
 	desc = ""
 	icon_state = "goat"
@@ -123,7 +123,7 @@
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat/goatlet
-	icon = 'icons/roguetown/mob/monster/gote.dmi'
+	icon = 'icons/mob/monster/gote.dmi'
 	name = "goatlet"
 	desc = ""
 	icon_state = "goatlet"
@@ -191,7 +191,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goatmale
-	icon = 'icons/roguetown/mob/monster/gote.dmi'
+	icon = 'icons/mob/monster/gote.dmi'
 	name = "goat"
 	icon_state = "goatmale"
 	icon_living = "goatmale"
@@ -361,7 +361,7 @@
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat/goatletboy
-	icon = 'icons/roguetown/mob/monster/gote.dmi'
+	icon = 'icons/mob/monster/gote.dmi'
 	name = "goatlet"
 	desc = ""
 	gender = MALE

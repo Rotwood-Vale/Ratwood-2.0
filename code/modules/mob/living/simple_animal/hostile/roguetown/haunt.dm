@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/rogue/haunt
 	name = "haunt"
 	desc = ""
-	icon = 'icons/roguetown/mob/monster/wraith.dmi'
+	icon = 'icons/mob/monster/wraith.dmi'
 	icon_state = "haunt"
 	icon_living = "haunt"
 	icon_dead = null
@@ -109,7 +109,7 @@
 	melee_damage_upper = 40
 
 /obj/structure/bonepile
-	icon = 'icons/roguetown/mob/monster/wraith.dmi'
+	icon = 'icons/mob/monster/wraith.dmi'
 	icon_state = "hauntpile"
 	max_integrity = 100
 	anchored = TRUE

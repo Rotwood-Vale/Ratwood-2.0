@@ -2,7 +2,7 @@
 /obj/structure/fluff/testportal
 	name = "portal"
 	icon_state = "shitportal"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	density = FALSE
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
@@ -189,7 +189,7 @@
 /obj/structure/fluff/traveltile/dungeon
 	name = "gate"
 	desc = "This gate's enveloping darkness is so opressive you dread to step through it."
-	icon = 'icons/roguetown/misc/portal.dmi'
+	icon = 'icons/misc/portal.dmi'
 	icon_state = "portal"
 	density = FALSE
 	anchored = TRUE
@@ -201,13 +201,13 @@
 /obj/structure/fluff/traveltile/magicportal
 	desc = "flickering, warping magick"
 	name = "mysterious portal"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "shitportal"
 
 /obj/structure/fluff/traveltile/rockhillentrance
 	desc = "Awake from this dream. The road to Rockhill awaits."
 	name = "To Rockhill"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "underworldportal"
 
 /obj/structure/fluff/traveltile/eventarea

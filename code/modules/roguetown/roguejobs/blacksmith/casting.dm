@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/glass/crucible
 	name = "crucible"
 	desc = "A clay crucible for melting metals. Handle with care when hot."
-	icon = 'icons/roguetown/items/anvil_casting.dmi'
+	icon = 'icons/items/anvil_casting.dmi'
 	icon_state = "crucible"
 	item_state = "crucible"
 	force = 10
@@ -125,14 +125,14 @@
 /obj/item/sprue_funnel
 	name = "sprue and funnel"
 	desc = "A combined sprue and funnel for directing molten metal into a mold."
-	icon = 'icons/roguetown/items/anvil_casting.dmi'
+	icon = 'icons/items/anvil_casting.dmi'
 	icon_state = "sprue"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/mold
 	name = "blade mold"
 	desc = "A steel mold for casting blades."
-	icon = 'icons/roguetown/items/anvil_casting.dmi'
+	icon = 'icons/items/anvil_casting.dmi'
 	icon_state = "mold_blank"
 	var/blade_type = null
 	var/obj/item/sprue_funnel/attached_sprue = null

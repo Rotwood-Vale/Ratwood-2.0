@@ -2,7 +2,7 @@
 	name = "rat"
 	desc = "A scurrying rodent often found in sewers and pantries."
 	icon_state = "srat"
-	icon = 'icons/roguetown/mob/monster/rat.dmi'
+	icon = 'icons/mob/monster/rat.dmi'
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	foodtype = RAW
 	verb_say = "squeaks"
@@ -40,7 +40,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/friedrat
 	name = "fried rat"
 	desc = ""
-	icon = 'icons/roguetown/items/food.dmi'
+	icon = 'icons/items/food.dmi'
 	icon_state = "cookedrat"
 	bitesize = 2
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)

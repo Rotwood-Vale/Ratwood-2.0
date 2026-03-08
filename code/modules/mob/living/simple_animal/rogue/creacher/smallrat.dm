@@ -3,7 +3,7 @@
 	name = "rat"
 	desc = ""
 	icon_state = "srat"
-	icon = 'icons/roguetown/mob/monster/rat.dmi'
+	icon = 'icons/mob/monster/rat.dmi'
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak = list("squeaks")
 	speak_chance = 1

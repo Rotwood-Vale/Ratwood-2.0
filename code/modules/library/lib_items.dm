@@ -1,6 +1,6 @@
 /obj/structure/bookcase
 	name = "bookcase"
-	icon = 'icons/roguetown/misc/bookshelf.dmi'
+	icon = 'icons/misc/bookshelf.dmi'
 	icon_state = "bookcase"
 	var/based = "a"
 	desc = ""

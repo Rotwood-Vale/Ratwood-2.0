@@ -46,7 +46,7 @@
 /obj/item/paper
 	name = "parchment"
 	gender = NEUTER
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "paper"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -522,7 +522,7 @@
 /obj/item/smallDelivery
 	name = "package"
 	desc = ""
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	icon_state = "deliverypackage3"
 	item_state = "deliverypackage"
 	var/giftwrapped = 0

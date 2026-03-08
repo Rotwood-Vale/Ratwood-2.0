@@ -1,6 +1,6 @@
 /obj/item/organ/ears
 	name = "ears"
-	icon = 'icons/roguetown/items/surgery.dmi'
+	icon = 'icons/items/surgery.dmi'
 	icon_state = "ear"
 	desc = ""
 	zone = BODY_ZONE_PRECISE_EARS

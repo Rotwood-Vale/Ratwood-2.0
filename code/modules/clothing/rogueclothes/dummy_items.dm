@@ -31,7 +31,7 @@
 	name = "talons"
 	desc = "Harpy talons. Birds of prey and all..."
 	experimental_inhand = FALSE
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	icon_state = "harpy_talon" // coder kitbash 5 minute sprite ugh
 	drop_sound = 'sound/blank.ogg'
 	gripped_intents = list(/datum/intent/wing/cut, /datum/intent/wing/shred, /datum/intent/wing/grab, /datum/intent/wing/pick)

@@ -545,7 +545,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 /obj/item/natural/stoneblock
 	name = "stone block"
 	desc = "A rectangular stone block for building."
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	icon_state = "stoneblock"
 	drop_sound = 'sound/foley/brickdrop.ogg'
 	hitsound = 'sound/foley/brickdrop.ogg'
@@ -590,7 +590,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	name = "stack of stone blocks"
 	desc = "A stack of stone blocks."
 	icon_state = "stoneblockbundle1"
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	item_state = "block"
 	experimental_inhand = FALSE
 	grid_width = 64

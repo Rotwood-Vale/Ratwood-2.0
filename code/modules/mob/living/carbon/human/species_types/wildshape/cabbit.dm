@@ -4,7 +4,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/cabbit_skin
-	wildshape_icon = 'icons/roguetown/mob/cabbit.dmi'
+	wildshape_icon = 'icons/mob/cabbit.dmi'
 	wildshape_icon_state = "cabbit"
 	// The form when you gotta go fast and want to be cute
 
@@ -68,7 +68,7 @@
 	)
 
 /datum/species/shapecabbit/regenerate_icons(mob/living/carbon/human/H)
-	H.icon = 'icons/roguetown/mob/cabbit.dmi'
+	H.icon = 'icons/mob/cabbit.dmi'
 	H.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	H.icon_state = "cabbit"
 	H.update_damage_overlays()
@@ -117,7 +117,7 @@
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	max_blade_int = 200
 	max_integrity = 200
 	force = 8 //Pitiful, literally less than a wooden stick or a thrown toy

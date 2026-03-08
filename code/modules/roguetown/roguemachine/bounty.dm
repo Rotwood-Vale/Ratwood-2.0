@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/bounty
 	name = "EXCIDIUM"
 	desc = "Created by a fanatical sect of devout followers of Ravox, this machine sets bounties."
-	icon = 'icons/roguetown/topadd/statue1.dmi'
+	icon = 'icons/topadd/statue1.dmi'
 	icon_state = "baldguy"
 	density = FALSE
 	blade_dulling = DULLING_BASH
@@ -372,7 +372,7 @@
 	name = "LIBERTAS"
 	desc = "A chair-shaped machine normally used to place cursed collars onto a prisoner's neck. \
 	This one's been tampered with, and now does the opposite - re-purposed to remove those wretched iron collars."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "evilchair"
 	blade_dulling = DULLING_BASH
 	color = "#F75D59"
@@ -444,7 +444,7 @@
 /obj/structure/chair/arrestchair
 	name = "CASTIFICO"
 	desc = "A chair-shaped machine that collects bounties, for a greater reward, in exchange for a penalty that some might consider worse than death."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "evilchair"
 	blade_dulling = DULLING_BASH
 	item_chair = null

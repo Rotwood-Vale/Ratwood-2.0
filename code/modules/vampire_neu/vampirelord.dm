@@ -166,8 +166,8 @@
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/iron/vampire
 	icon_state = "vunder"
-	icon = 'icons/roguetown/clothing/shirts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	icon = 'icons/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
 	name = "ancient chain shirt"
 	desc = ""
 	body_parts_covered = COVERAGE_TORSO

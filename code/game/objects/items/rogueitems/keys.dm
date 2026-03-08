@@ -3,7 +3,7 @@
 	name = "key"
 	desc = "An unremarkable iron key."
 	icon_state = "iron"
-	icon = 'icons/roguetown/items/keys.dmi'
+	icon = 'icons/items/keys.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -36,7 +36,7 @@
 	name = "lockpick"
 	desc = "A small, sharp piece of metal to aid opening locks in the absence of a key."
 	icon_state = "lockpick"
-	icon = 'icons/roguetown/items/keys.dmi'
+	icon = 'icons/items/keys.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	dropshrink = 0.75
 	throwforce = 0
@@ -56,8 +56,8 @@
 	desc = "Often used by wealthy courtesans and nobility to keep hair and clothing in place."
 	icon_state = "goldpin"
 	item_state = "goldpin"
-	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+	icon = 'icons/clothing/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head_items.dmi'
 	resistance_flags = FIRE_PROOF
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	body_parts_covered = NONE
@@ -94,8 +94,8 @@
 	desc = "Often used by wealthy courtesans and nobility to keep hair and clothing in place. This one's silver - a rarity."
 	icon_state = "silverpin"
 	item_state = "silverpin"
-	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+	icon = 'icons/clothing/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head_items.dmi'
 	material = "silver"
 	is_silver = TRUE
 
@@ -669,7 +669,7 @@
 /obj/item/customblank //i'd prefer not to make a seperate item for this honestly
 	name = "blank custom key"
 	desc = "A key without its teeth carved in. Endless possibilities..."
-	icon = 'icons/roguetown/items/keys.dmi'
+	icon = 'icons/items/keys.dmi'
 	icon_state = "brownkey"
 	w_class = WEIGHT_CLASS_TINY
 	dropshrink = 0.75
@@ -702,7 +702,7 @@
 /obj/item/customlock
 	name = "unfinished lock"
 	desc = "A lock without its pins set. Endless possibilities..."
-	icon = 'icons/roguetown/items/keys.dmi'
+	icon = 'icons/items/keys.dmi'
 	icon_state = "lock"
 	w_class = WEIGHT_CLASS_SMALL
 	dropshrink = 0.75

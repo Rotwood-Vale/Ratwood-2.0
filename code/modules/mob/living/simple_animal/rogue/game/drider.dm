@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/drider //lol
-	icon = 'icons/roguetown/mob/monster/drider.dmi'
+	icon = 'icons/mob/monster/drider.dmi'
 	name = "drider spider"
 	desc = ""
 	pixel_x = -2

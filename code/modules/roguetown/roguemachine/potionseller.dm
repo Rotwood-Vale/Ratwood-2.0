@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/potionseller
 	name = "POTION SELLER"
 	desc = "The stomach of this thing can been stuffed with fluids for you to buy."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "streetvendor1"
 	density = TRUE
 	blade_dulling = DULLING_BASH

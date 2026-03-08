@@ -4,7 +4,7 @@
 	name = "whip"
 	desc = "A leather whip, tipped with a flintknapped stone. Though intended to shepherd unruly livestock, the tip's jagged points also suffice at leaving assailants with horrific lacerations."
 	icon_state = "whip"
-	icon = 'icons/roguetown/weapons/whips32.dmi'
+	icon = 'icons/weapons/whips32.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.75
 	wlength = WLENGTH_NORMAL

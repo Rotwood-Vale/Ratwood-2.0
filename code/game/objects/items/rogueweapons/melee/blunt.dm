@@ -85,7 +85,7 @@
 	name = "mace"
 	desc = "Helps anyone fall asleep."
 	icon_state = "mace"
-	icon = 'icons/roguetown/weapons/blunt32.dmi'
+	icon = 'icons/weapons/blunt32.dmi'
 	item_state = "mace_greyscale"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -251,7 +251,7 @@
 /obj/item/rogueweapon/mace/cudgel/shellrungu
 	name = "shell rungu"
 	desc = "A ceremonial rungu carved out of clam shell. Not intended for combat. Its used in various Sea and Coastal Elven rituals and ceremonies."
-	icon = 'icons/roguetown/gems/gem_shell.dmi'
+	icon = 'icons/gems/gem_shell.dmi'
 	icon_state = "rungu_shell"
 
 	max_integrity = 75
@@ -375,7 +375,7 @@
 	name = "Goedendag"
 	desc = "Good morning."
 	icon_state = "goedendag"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.75
 	wlength = WLENGTH_LONG
@@ -434,7 +434,7 @@
 /obj/item/rogueweapon/mace/goden/deepduke
 	name = "deep duke's staff"
 	desc = "A staff made of seaglass and sturdy but unusual metal, holding no power after its misled owner's death. More useful as a bashing tool than a magic focus."
-	icon = 'icons/roguetown/mob/monster/pufferboss.dmi'
+	icon = 'icons/mob/monster/pufferboss.dmi'
 	icon_state = "pufferprod"
 	force = 15
 	force_wielded = 35
@@ -604,7 +604,7 @@
 	name = "maul"
 	desc = "Who would need something this large? It looks like it was made for tearing down walls, rather than men."
 	icon_state = "sledge"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	wlength = WLENGTH_LONG
 	swingsound = BLUNTWOOSH_HUGE
 	slot_flags = null//No.

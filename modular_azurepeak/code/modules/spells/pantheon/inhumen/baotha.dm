@@ -267,8 +267,8 @@
 	desc = "Once a flower of love, now touched by Baotha's hand. Its petals whisper of desire, despair, and the kind of longing that never dies. Worn by those who cannot let go."
 	icon_state = "peaceflower"
 	item_state = "peaceflower"
-	icon = 'icons/roguetown/items/produce.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+	icon = 'icons/items/produce.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head_items.dmi'
 
 /obj/item/clothing/ring/griefflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()

@@ -1,7 +1,7 @@
 /obj/structure/chair/bench
 	name = "bench"
 	icon_state = "bench"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	buildstackamount = 1
 	item_chair = null
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
@@ -14,7 +14,7 @@
 
 /obj/structure/chair/smallbench
 	name = "small bench"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "benchsmall"
 	buildstackamount = 1
 	item_chair = null
@@ -126,7 +126,7 @@
 
 /obj/structure/chair/wood/rogue
 	icon_state = "chair2"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	item_chair = /obj/item/chair/rogue
 	blade_dulling = DULLING_BASHCHOP
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
@@ -139,7 +139,7 @@
 
 /obj/structure/chair/wood/rogue/chair3
 	icon_state = "chair3"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	item_chair = /obj/item/chair/rogue
 	blade_dulling = DULLING_BASHCHOP
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
@@ -147,7 +147,7 @@
 
 /obj/structure/chair/wood/rogue/chair4
 	icon_state = "chair4"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	item_chair = /obj/item/chair/rogue
 	blade_dulling = DULLING_BASHCHOP
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
@@ -155,7 +155,7 @@
 
 /obj/structure/chair/wood/rogue/chair5
 	icon_state = "chair5"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	item_chair = /obj/item/chair/rogue
 	blade_dulling = DULLING_BASHCHOP
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
@@ -163,7 +163,7 @@
 
 /obj/structure/chair/wood/rogue/throne
 	icon_state = "thronechair"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	blade_dulling = DULLING_BASHCHOP
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = "woodimpact"
@@ -171,7 +171,7 @@
 
 /obj/item/chair/rogue
 	name = "chair"
-	icon = 'icons/roguetown/items/chairs.dmi'
+	icon = 'icons/items/chairs.dmi'
 	icon_state = "chair2"
 	origin_type = /obj/structure/chair/wood/rogue
 	blade_dulling = DULLING_BASHCHOP
@@ -281,7 +281,7 @@
 	name = "stool"
 	desc = "Three stubby legs nailed to the underside of a small round seat. Stable, if simple."
 	icon_state = "barstool"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	item_chair = /obj/item/chair/stool/bar/rogue
 	max_integrity = 100
 	blade_dulling = DULLING_BASHCHOP
@@ -292,7 +292,7 @@
 	name = "stool"
 	desc = "Three stubby legs nailed to the underside of a small round seat. Stable, if simple."
 	icon_state = "baritem"
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	origin_type = /obj/structure/chair/stool/rogue
 	blade_dulling = DULLING_BASHCHOP
 	can_parry = TRUE
@@ -318,7 +318,7 @@
 
 /obj/structure/bed/rogue
 	icon_state = "bed"
-	icon = 'icons/roguetown/misc/beds.dmi'
+	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -370,7 +370,7 @@
 
 /obj/item/bedroll
 	name = "rolled bedroll"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "bedroll_r"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
@@ -398,7 +398,7 @@
 
 /obj/structure/bed/rogue/inn
 	icon_state = "inn_bed"
-	icon = 'icons/roguetown/misc/beds.dmi'
+	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -407,7 +407,7 @@
 
 /obj/structure/bed/rogue/inn/wooldouble
 	icon_state = "double_wool"
-	icon = 'icons/roguetown/misc/beds.dmi'
+	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -417,7 +417,7 @@
 
 /obj/structure/bed/rogue/inn/double
 	icon_state = "double"
-	icon = 'icons/roguetown/misc/beds.dmi'
+	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -448,7 +448,7 @@
 */
 /obj/structure/bed/rogue/inn/hay
 	icon_state = "haybed"
-	icon = 'icons/roguetown/misc/beds.dmi'
+	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -457,7 +457,7 @@
 
 /obj/structure/bed/rogue/inn/wool
 	icon_state = "woolbed"
-	icon = 'icons/roguetown/misc/beds.dmi'
+	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -466,7 +466,7 @@
 
 /obj/structure/bed/rogue/inn/pileofshit
 	icon_state = "shitbed2"
-	icon = 'icons/roguetown/misc/beds.dmi'
+	icon = 'icons/misc/beds.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90

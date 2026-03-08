@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	name = "The Tomb of Alotheos"
 	desc = "Greedy fool, will you emerge rich and victorious, or be entombed forever?"
 
-	icon = 'icons/roguetown/misc/portal.dmi'
+	icon = 'icons/misc/portal.dmi'
 	icon_state = "portal"
 	density = TRUE
 	anchored = TRUE
@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 
 	obj_flags = INDESTRUCTIBLE
 
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "ladder10"
 
 	var/dungeon_id

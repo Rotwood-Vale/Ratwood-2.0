@@ -1,7 +1,7 @@
 /obj/structure/bell_common
 	name = "bell"
 	desc = "A good way to get someone's attention... or piss them off."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "bell_common"
 	density = FALSE
 	max_integrity = 0

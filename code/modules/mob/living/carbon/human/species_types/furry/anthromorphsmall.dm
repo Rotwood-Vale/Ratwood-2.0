@@ -34,8 +34,8 @@
 	possible_ages = ALL_AGES_LIST
 	limbs_icon_m = 'icons/mob/species/anthro_small_malea.dmi'
 	limbs_icon_f = 'icons/mob/species/anthro_small_femalea.dmi'
-	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
-	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
+	dam_icon = 'icons/mob/bodies/dam/dam_male.dmi'
+	dam_icon_f = 'icons/mob/bodies/dam/dam_female.dmi'
 	soundpack_m = /datum/voicepack/male/elf
 	soundpack_f = /datum/voicepack/female/elf
 	use_f = TRUE

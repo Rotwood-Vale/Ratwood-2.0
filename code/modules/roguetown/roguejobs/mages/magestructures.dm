@@ -107,7 +107,7 @@
 /obj/structure/well/fountain/mana
 	name = "mana fountain"
 	desc = "This fountain produces a strange blue liquid. It seems faintly magical. Attempts to bottle it seems to cause it to inexplicably turn into water."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "manafountain"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -137,7 +137,7 @@
 	
 
 /obj/machinery/light/rogue/forge/arcane
-	icon = 'icons/roguetown/misc/forge.dmi'
+	icon = 'icons/misc/forge.dmi'
 	name = "infernal forge"
 	desc = "This forge uses cycling magma from an internal core to heat things."
 	icon_state = "infernal0"
@@ -237,7 +237,7 @@
 /obj/structure/manaflower
 	name = "manaflower"
 	desc = ""
-	icon = 'icons/roguetown/misc/crops.dmi'
+	icon = 'icons/misc/crops.dmi'
 	icon_state = "manabloom2"
 	color = null
 	layer = BELOW_MOB_LAYER

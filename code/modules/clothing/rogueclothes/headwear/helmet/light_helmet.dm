@@ -45,7 +45,7 @@
 	desc = "The skull of a fearsome saiga. Looks like it could withstand some damage."
 	icon_state = "saigahead"
 	item_state = "saigahead"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/64x64/head.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -78,7 +78,7 @@
 	item_state = "spellcasterhat"
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_SPELLSINGER
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
@@ -91,8 +91,8 @@
 	desc = "Whether it's monsters or fair maidens, a true Grenzelhoftian slays both. This hat contains a hidden metallic cap underneath to protect the head from blows."
 	icon_state = "grenzelhat"
 	item_state = "grenzelhat"
-	icon = 'icons/roguetown/clothing/head.dmi'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
+	icon = 'icons/clothing/head.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/stonekeep_merc.dmi'
 	slot_flags = ITEM_SLOT_HEAD
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"

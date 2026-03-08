@@ -7,8 +7,8 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	armor_class = ARMOR_CLASS_LIGHT
 	icon_state = "spellcasterrobe"
-	icon = 'icons/roguetown/clothing/armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
+	icon = 'icons/clothing/armor.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/armor.dmi'
 	sleeved = null
 	color = null
 	r_sleeve_status = SLEEVE_NORMAL
@@ -19,7 +19,7 @@
 	desc = "A dirty dobo robe with white lapels. Can be upgraded through the use of a tailor to increase its integrity and protection."
 	icon_state = "eastsuit3"
 	item_state = "eastsuit3"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_armor.dmi'
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	body_parts_covered = COVERAGE_FULL
@@ -53,7 +53,7 @@
 	desc = "The scars on your body were once stories of strength and bravado."
 	icon_state = "eastsuit1"
 	item_state = "eastsuit1"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_armor.dmi'
 	armor = ARMOR_LEATHER_STUDDED 
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 
@@ -76,8 +76,8 @@
 	armor = list("blunt" = 100, "slash" = 20, "stab" = 130, "piercing" = 40, "fire" = 0, "acid" = 0)
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PICK, BCLASS_SMASH)
 	body_parts_covered = COVERAGE_FULL
-	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	icon = 'icons/clothing/special/race_armor.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfchest"
 	item_state = "welfchest"
 	anvilrepair = /datum/skill/craft/carpentry

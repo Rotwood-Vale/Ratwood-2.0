@@ -5,7 +5,7 @@
 /obj/item/construction/nail
 	name = "Nail"
 	desc = "A small nail, used for securing wood down to things"
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	icon_state = "nails1"
 	grid_width = 32
 	grid_height = 32
@@ -52,7 +52,7 @@
 	desc = "Several nails in a pile."
 	icon_state = "nail1"
 	item_state = "plankbundle"
-	icon = 'icons/roguetown/items/crafting.dmi'
+	icon = 'icons/items/crafting.dmi'
 	grid_width = 32
 	grid_height = 32
 	drop_sound = 'sound/foley/coinphy (1).ogg'

@@ -2,9 +2,9 @@
 	slot_flags = ITEM_SLOT_GLOVES
 	body_parts_covered = HANDS
 	body_parts_inherent = HANDS
-	sleeved = 'icons/roguetown/clothing/onmob/gloves.dmi'
-	icon = 'icons/roguetown/clothing/gloves.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/gloves.dmi'
+	sleeved = 'icons/clothing/onmob/gloves.dmi'
+	icon = 'icons/clothing/gloves.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/gloves.dmi'
 	bloody_icon_state = "bloodyhands"
 	sleevetype = "shirt"
 	siemens_coefficient = 1

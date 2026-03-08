@@ -18,27 +18,27 @@
 /obj/item/contraption/bronzeprosthetic
 	name = "bronze prosthetic"
 	desc = "A prosthetic made of bronze. Use it in your hand to determine what limb it will function as."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prb_blank"
 
 /obj/item/contraption/ironprosthetic
 	name = "iron prosthetic"
 	desc = "A prosthetic made of iron. Use it in your hand to determine what limb it will function as."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "pri_blank"
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/contraption/steelprosthetic
 	name = "steel prosthetic"
 	desc = "A prosthetic made of steel. Use it in your hand to determine what limb it will function as."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prs_blank"
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/contraption/goldprosthetic
 	name = "golden prosthetic"
 	desc = "A prosthetic made of gold. Use it in your hand to determine what limb it will function as."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prc_blank"
 	smeltresult = /obj/item/ingot/gold
 
@@ -147,7 +147,7 @@
 /obj/item/bodypart/l_arm/prosthetic/woodleft
 	name = "wooden left arm"
 	desc = "A left arm of wood."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "pr_arm"
 	item_state = "pr_arm"
 	limb_material = "wood"
@@ -168,7 +168,7 @@
 /obj/item/bodypart/l_arm/prosthetic/iron
 	name = "iron left arm"
 	desc = "A left arm of iron."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "pri_arm"
 	prosthetic_prefix = "pri"
 	resistance_flags = FIRE_PROOF
@@ -187,7 +187,7 @@
 /obj/item/bodypart/l_arm/prosthetic/steel
 	name = "steel left arm"
 	desc = "A left arm of steel."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prs_arm"
 	prosthetic_prefix = "prs"
 	resistance_flags = FIRE_PROOF
@@ -206,7 +206,7 @@
 /obj/item/bodypart/l_arm/prosthetic/bronzeleft
 	name = "bronze left arm"
 	desc = "A replacement left arm, engineered out of bronze."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "bp_arm"
 	prosthetic_prefix = "prs"
 	limb_material = "bronze"
@@ -228,7 +228,7 @@
 /obj/item/bodypart/l_arm/prosthetic/gold
 	name = "golden left arm"
 	desc = "A left arm of cogs and gold."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prc_arm"
 	prosthetic_prefix = "prc"
 	resistance_flags = FIRE_PROOF
@@ -249,7 +249,7 @@
 /obj/item/bodypart/r_arm/prosthetic/woodright
 	name = "wooden right arm"
 	desc = "A right arm of wood."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "pr_arm"
 	limb_material = "wood"
 	resistance_flags = FLAMMABLE
@@ -269,7 +269,7 @@
 /obj/item/bodypart/r_arm/prosthetic/iron
 	name = "iron right arm"
 	desc = "A right arm of iron."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "pri_arm"
 	prosthetic_prefix = "pri"
 	resistance_flags = FIRE_PROOF
@@ -288,7 +288,7 @@
 /obj/item/bodypart/r_arm/prosthetic/steel
 	name = "steel right arm"
 	desc = "A right arm of steel."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prs_arm"
 	prosthetic_prefix = "prs"
 	resistance_flags = FIRE_PROOF
@@ -307,7 +307,7 @@
 /obj/item/bodypart/r_arm/prosthetic/bronzeright
 	name = "bronze right arm"
 	desc = "A replacement right arm, engineered out of bronze."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "bp_arm"
 	prosthetic_prefix = "prs"
 	limb_material = "bronze" // still need a different onmob sprite for bronze limbs brah
@@ -329,7 +329,7 @@
 /obj/item/bodypart/r_arm/prosthetic/gold
 	name = "golden right arm"
 	desc = "A right arm of cogs and gold."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prc_arm"
 	prosthetic_prefix = "prc"
 	resistance_flags = FIRE_PROOF
@@ -352,7 +352,7 @@
 /obj/item/bodypart/l_leg/prosthetic
 	name = "wooden left leg"
 	desc = "A left leg made of wood."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "pr_leg"
 	resistance_flags = FLAMMABLE
 	obj_flags = CAN_BE_HIT
@@ -372,7 +372,7 @@
 /obj/item/bodypart/l_leg/prosthetic/iron
 	name = "iron left leg"
 	desc = "A left leg of iron."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "pri_leg"
 	prosthetic_prefix = "pri"
 	resistance_flags = FIRE_PROOF
@@ -391,7 +391,7 @@
 /obj/item/bodypart/l_leg/prosthetic/steel
 	name = "steel left leg"
 	desc = "A left leg of steel."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prs_leg"
 	prosthetic_prefix = "prs"
 	resistance_flags = FIRE_PROOF
@@ -410,7 +410,7 @@
 /obj/item/bodypart/l_leg/prosthetic/bronzeleft
 	name = "bronze left leg"
 	desc = "A replacement left leg, engineered out of bronze."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "bp_leg"
 	prosthetic_prefix = "prs"
 	limb_material = "bronze"
@@ -429,7 +429,7 @@
 /obj/item/bodypart/l_leg/prosthetic/gold
 	name = "golden left leg"
 	desc = "A left leg of cogs and gold."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prc_leg"
 	prosthetic_prefix = "prc"
 	resistance_flags = FIRE_PROOF
@@ -449,7 +449,7 @@
 /obj/item/bodypart/r_leg/prosthetic
 	name = "wooden right leg"
 	desc = "A right leg made of wood."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "pr_leg"
 	resistance_flags = FLAMMABLE
 	obj_flags = CAN_BE_HIT
@@ -467,7 +467,7 @@
 /obj/item/bodypart/r_leg/prosthetic/iron
 	name = "iron right leg"
 	desc = "A right leg of iron."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "pri_leg"
 	prosthetic_prefix = "pri"
 	resistance_flags = FIRE_PROOF
@@ -487,7 +487,7 @@
 /obj/item/bodypart/r_leg/prosthetic/steel
 	name = "steel right leg"
 	desc = "A right leg of steel."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prs_leg"
 	prosthetic_prefix = "prs"
 	resistance_flags = FIRE_PROOF
@@ -507,7 +507,7 @@
 /obj/item/bodypart/r_leg/prosthetic/bronzeright
 	name = "bronze right leg"
 	desc = "A replacement right leg, engineered out of bronze."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "bp_leg"
 	prosthetic_prefix = "prs"
 	limb_material = "bronze"
@@ -527,7 +527,7 @@
 /obj/item/bodypart/r_leg/prosthetic/gold
 	name = "golden right leg"
 	desc = "A right leg of cogs and gold."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "prc_leg"
 	prosthetic_prefix = "prc"
 	resistance_flags = FIRE_PROOF

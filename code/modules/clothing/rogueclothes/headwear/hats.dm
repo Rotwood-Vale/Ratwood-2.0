@@ -267,10 +267,10 @@
 /obj/item/clothing/head/roguetown/maidband
 	name = "maid headband"
 	desc = "A pleated cloth headband. It has gained widespread popularity from nobles travelling with their servants."
-	icon = 'icons/roguetown/clothing/head.dmi'
+	icon = 'icons/clothing/head.dmi'
 	icon_state = "maidband"
 	item_state = "maidband"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head.dmi'
 	slot_flags = ITEM_SLOT_HEAD
 	body_parts_covered = NONE
 	sewrepair = TRUE
@@ -280,7 +280,7 @@
 	desc = ""
 	icon_state = "priest"
 	//dropshrink = 0
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	dynamic_hair_suffix = "+generic"
 	sellprice = 77
@@ -348,7 +348,7 @@
 	name = "wizard hat"
 	desc = "Used to distinguish dangerous wizards from senile old men."
 	icon_state = "wizardhat"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	dynamic_hair_suffix = "+generic"
 	worn_x_dimension = 64
@@ -418,7 +418,7 @@
 	desc = ""
 	icon_state = "witch"
 	item_state = "witch"
-	icon = 'icons/roguetown/clothing/head.dmi'
+	icon = 'icons/clothing/head.dmi'
 	sewrepair = TRUE
 
 /obj/item/clothing/head/roguetown/archercap
@@ -520,8 +520,8 @@
 	flags_inv = null
 	sleevetype = null
 	sleeved = null
-	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi' //Overrides slot icon behavior
+	icon = 'icons/clothing/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head.dmi' //Overrides slot icon behavior
 	alternate_worn_layer  = 8.9 //On top of helmet
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_MOUTH|ITEM_SLOT_NECK
 	armor = list("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)

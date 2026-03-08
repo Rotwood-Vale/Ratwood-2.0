@@ -2,7 +2,7 @@
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror, mirror, on the wall..."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "mirror"
 	density = FALSE
 	anchored = TRUE
@@ -288,7 +288,7 @@
 /obj/item/handmirror
 	name = "hand mirror"
 	desc = "Mirror, mirror, in my hand, who's the fairest in the land?"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "handmirror"
 	grid_width = 32
 	grid_height = 64

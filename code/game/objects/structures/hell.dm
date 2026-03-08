@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(hellspawns)
 
 /obj/structure/fluff/psyexit
 	name = "escape"
-	icon = 'icons/roguetown/misc/hell.dmi'
+	icon = 'icons/misc/hell.dmi'
 	icon_state = "hellexit"
 	alpha = 150
 	density = FALSE
@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(hellspawns)
 
 /obj/structure/fluff/helljailer
 	name = "jailer"
-	icon = 'icons/roguetown/mob/monster/hellkeeper.dmi'
+	icon = 'icons/mob/monster/hellkeeper.dmi'
 	icon_state = "hellkeeper"
 	density = FALSE
 	anchored = FALSE

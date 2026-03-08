@@ -1,6 +1,6 @@
 
 /obj/item/roguestatue
-	icon = 'icons/roguetown/items/valuable.dmi'
+	icon = 'icons/items/valuable.dmi'
 	name = "statue"
 	icon_state = ""
 	w_class = WEIGHT_CLASS_NORMAL
@@ -102,7 +102,7 @@
 			. += span_green("It's been nicely polished.")
 
 /obj/item/polishing_cream
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	name = "polishing cream"
 	desc = "A pure silver compound made for making the best metals shine."
 	icon_state = "cream"
@@ -137,7 +137,7 @@
 				icon_state = "empty_cream"
 
 /obj/item/armor_brush
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	name = "fine brush"
 	desc = "A coarse brush for scrubbing armor thoroughly. Made of the finest Lupin hair."
 	icon_state = "brush_0"
@@ -226,7 +226,7 @@
 
 /obj/effect/temp_visual/armor_glint
 	name = "glint"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "glint"
 	alpha = 200
 	duration = 13

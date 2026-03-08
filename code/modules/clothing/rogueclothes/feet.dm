@@ -1,7 +1,7 @@
 /obj/item/clothing/shoes/roguetown
 	name = "shoes"
-	icon = 'icons/roguetown/clothing/feet.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/feet.dmi'
+	icon = 'icons/clothing/feet.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/feet.dmi'
 	desc = ""
 	gender = PLURAL
 	slot_flags = ITEM_SLOT_SHOES
@@ -249,7 +249,7 @@
 	name = "grenzelhoft boots"
 	icon_state = "grenzelboots"
 	item_state = "grenzelboots"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/stonekeep_merc.dmi'
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_LEATHER_GOOD
 	salvage_amount = 1
@@ -261,8 +261,8 @@
 	desc = "The living trunks still blossom in the spring. They let water through, but it is never cold."
 	armor = list("blunt" = 100, "slash" = 10, "stab" = 100, "piercing" = 20, "fire" = 0, "acid" = 0) //Resistant to blunt and stab, but very weak to slash.
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
-	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	icon = 'icons/clothing/special/race_armor.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfshoes"
 	item_state = "welfshoes"
 	anvilrepair = /datum/skill/craft/carpentry
@@ -462,9 +462,9 @@
 	name = "blacksteel plate boots"
 	desc = "Boots forged of durable blacksteel, using a modern design."
 	body_parts_covered = FEET
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
-	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
+	sleeved = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplateboots"
 	item_state = "bplateboots"
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
@@ -480,8 +480,8 @@
 	name = "ancient blacksteel plate boots"
 	desc = "Boots forged of durable blacksteel."
 	body_parts_covered = FEET
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bkboots"
 	item_state = "bkboots"
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
@@ -511,7 +511,7 @@
 	desc = "A pair of strange sandals that push you off the ground."
 	icon_state = "eastsandals"
 	item_state = "eastsandals"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/stonekeep_merc.dmi'
 	armor = ARMOR_LEATHER_GOOD
 
 /obj/item/clothing/shoes/roguetown/armor/hlegs

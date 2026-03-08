@@ -2,7 +2,7 @@
 /obj/item/millstone // Previous structure path means it cannot be crafted on tables
 	name = "millstone"
 	desc = "A millstone used to grind grain into flour."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "millstone"
 	density = FALSE
 	anchored = FALSE

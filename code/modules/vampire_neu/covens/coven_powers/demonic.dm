@@ -150,7 +150,7 @@
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
-	icon = 'icons/roguetown/weapons/special/claws.dmi'
+	icon = 'icons/weapons/special/claws.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/claws_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/claws_righthand.dmi'
 	icon_state = "claws"

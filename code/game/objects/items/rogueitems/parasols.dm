@@ -3,7 +3,7 @@
 	force_wielded = 6
 	name = "paper parasol"
 	desc = "A delicate instrument intended to shield one's delicate head from the rain and sun."
-	icon = 'icons/roguetown/items/parasols32.dmi'
+	icon = 'icons/items/parasols32.dmi'
 	icon_state = "parasol1"
 	wbalance = WBALANCE_SWIFT
 	wdefense = 1
@@ -35,7 +35,7 @@
 /obj/item/rogueweapon/mace/parasol/noble
 	name = "fine parasol"
 	desc = "A delicate instrument intended to shield one's delicate head from the rain and sun. This one is a beautiful luxurious white and gold, with fringes."
-	icon = 'icons/roguetown/items/parasols64.dmi'
+	icon = 'icons/items/parasols64.dmi'
 	icon_state = "parasol1"
 	max_integrity = 75 // Fashion over function
 	sellprice = 45 // Takes master sewing and silk to create

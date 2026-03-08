@@ -59,7 +59,7 @@
 	desc = "A pile of dirt."
 	icon_state = "clodpile"
 	var/dirtamt = 5
-	icon = 'icons/roguetown/items/natural.dmi'
+	icon = 'icons/items/natural.dmi'
 	climbable = FALSE
 	density = FALSE
 	climb_offset = 10

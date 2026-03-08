@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/powder
 	name = "default powder"
 	desc = ""
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "spice"
 	item_state = "spice"
 	possible_transfer_amounts = list()
@@ -13,7 +13,7 @@
 /obj/item/reagent_containers/powder/spice
 	name = "spice"
 	desc = ""
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "spice"
 	item_state = "spice"
 	possible_transfer_amounts = list()
@@ -229,7 +229,7 @@
 /obj/item/reagent_containers/powder/ozium
 	name = "ozium"
 	desc = ""
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "ozium"
 	possible_transfer_amounts = list()
 	volume = 15
@@ -263,7 +263,7 @@
 /obj/item/reagent_containers/powder/moondust
 	name = "moondust"
 	desc = "a mound of iridescent white powder with an acrid, potent scent that numbs your nostrils"
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "moondust"
 	possible_transfer_amounts = list()
 	volume = 15
@@ -310,7 +310,7 @@
 /obj/item/reagent_containers/powder/moondust_purest
 	name = "moondust"
 	desc = "a spectacularly glittering pile of flaky, iridescent powder"
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "moondust_purest"
 	possible_transfer_amounts = list()
 	volume = 18
@@ -360,7 +360,7 @@
 /obj/item/reagent_containers/powder/starsugar
 	name = "starsugar"
 	desc = "A powerful stimulant. Brings you closer to feeling as She does. Taboo and illegal in many places."
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "starsugar"
 	item_state = "starsugar"
 	possible_transfer_amounts = list()
@@ -442,7 +442,7 @@
 /obj/item/reagent_containers/powder/herozium
 	name = "herozium"
 	desc = "Sweet unfeeling. Do you like to hurt other people? Outright banned and controlled in most regions."
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "herozium"
 	item_state = "herozium"
 	possible_transfer_amounts = list()
@@ -452,7 +452,7 @@
 	sellprice = 30
 
 /atom/movable/screen/fullscreen/herozium
-	icon = 'icons/roguetown/maniac/fullscreen_wakeup_lossy_compression.dmi'
+	icon = 'icons/maniac/fullscreen_wakeup_lossy_compression.dmi'
 	icon_state = "wake_up"
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER

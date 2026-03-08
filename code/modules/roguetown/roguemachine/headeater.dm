@@ -2,7 +2,7 @@
 /obj/structure/roguemachine/headeater
 	name = "HEADEATER"
 	desc = "A machine where you deposit heads of wanted creechurs and spits out coins. The makers charges a hefty fee - 60% of the bounty. Seeking the cooperation of a merchant might be more profitable."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "headeater"
 	density = FALSE
 	blade_dulling = DULLING_BASH

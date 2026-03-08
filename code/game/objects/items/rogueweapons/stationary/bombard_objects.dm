@@ -6,7 +6,7 @@ Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 	desc = "An arcyne compass, runed and imbued with energy. \
 	That is, of course, to say that this is able to detect leyline intersection points. Or LIPs, for short. \
 	An incredibly expensive device, likely pried from one of the Queen's own magicians."
-	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
+	icon = 'icons/weapons/stationary/bombard.dmi'
 	icon_state = "compass"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
@@ -47,7 +47,7 @@ Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 /obj/item/rogueweapon/woodstaff/quarterstaff/bombard_sponge
 	name = "powder ram"
 	desc = "A bulky, heavy rod with a sponge at one end, and a fool at the other. Wholly unsuited for combat."
-	icon = 'icons/roguetown/weapons/stationary/bombard64.dmi'
+	icon = 'icons/weapons/stationary/bombard64.dmi'
 	icon_state = "ramrod"
 	item_state = "ramrod"
 	w_class = WEIGHT_CLASS_BULKY
@@ -63,7 +63,7 @@ Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 	name = "\improper light bombard frame"
 	desc = "A light bombard's frame. If you'd the barrel, you could set up a light bombard... <br>\
 	<small>To do so, you must have both pieces and 'craft' it.</small>"
-	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
+	icon = 'icons/weapons/stationary/bombard.dmi'
 	icon_state = "kit_frame"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 5
@@ -74,7 +74,7 @@ Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 	name = "\improper light bombard barrel"
 	desc = "A light bombard's barrel. If you'd the frame, you could set up a light bombard... <br>\
 	<small>To do so, you must have both pieces and 'craft' it.</small>"
-	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
+	icon = 'icons/weapons/stationary/bombard.dmi'
 	icon_state = "kit_barrel"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 5

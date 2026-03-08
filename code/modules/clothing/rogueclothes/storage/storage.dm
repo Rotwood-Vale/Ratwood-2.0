@@ -1,8 +1,8 @@
 /obj/item/storage/belt/rogue
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/clothing/belts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
+	icon = 'icons/clothing/belts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/belts.dmi'
 	icon_state = ""
 	item_state = ""
 	slot_flags = ITEM_SLOT_BELT
@@ -151,16 +151,16 @@
 /obj/item/storage/belt/rogue/leather/suspenders/butler
 	name = "suspenders"
 	desc = "A pair of suspenders which go over the shoulders. Used for keeping one's pants in place in an admittably fashionable style."
-	icon = 'icons/roguetown/clothing/belts.dmi'
+	icon = 'icons/clothing/belts.dmi'
 	icon_state = "butlersuspenders"
 	item_state = "butlersuspenders"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/belts.dmi'
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/storage/belt/rogue/pouch
 	name = "pouch"
 	desc = "A small sack with a drawstring that allows it to be worn around the neck. Or at the hips, provided you have a belt."
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	mob_overlay_icon = null
 	icon_state = "pouch"
 	item_state = "pouch"
@@ -245,7 +245,7 @@
 	desc = "Modest, easy on the shoulders, and holds a respectable amount."
 	icon_state = "satchel"
 	item_state = "satchel"
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	resistance_flags = FIRE_PROOF
@@ -303,8 +303,8 @@
 	desc = "A lighter satchel that rests against the rump, freeing the shoulders from any weight. It's traditionally worn in place of a belt or cloak."
 	icon_state = "gamesatchel" //Later down the line, take the unused belt-satchel onmob and rename it to 'gamesatchel'.
 	item_state = "satchel"
-	icon = 'icons/roguetown/clothing/storage.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
+	icon = 'icons/clothing/storage.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/belts.dmi'
 	slot_flags = ITEM_SLOT_CLOAK|ITEM_SLOT_BELT //Implement a check that prevents one from being worn on both slots at once. Another coder's duty, I think.
 	edelay_type = 1
 	equip_delay_self = 10
@@ -316,7 +316,7 @@
 	desc = "One of the best ways to carry many things while keeping your hands free."
 	icon_state = "backpack"
 	item_state = "backpack"
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK_L
 	resistance_flags = FIRE_PROOF
@@ -332,7 +332,7 @@
 	desc = "A leather backpack with complex pipework coursing through it. It hums and vibrates constantly."
 	icon_state = "artibackpack"
 	item_state = "artibackpack" 
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK_L
 	resistance_flags = FIRE_PROOF
@@ -509,8 +509,8 @@
 /obj/item/storage/hip/headhook
 	name = "head hook"
 	desc = "an iron hook for storing 6 heads"
-	icon = 'icons/roguetown/clothing/belts.dmi'
-	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi' //N/A uncomment when a mob_overlay icon is made and added
+	icon = 'icons/clothing/belts.dmi'
+	//mob_overlay_icon = 'icons/clothing/onmob/belts.dmi' //N/A uncomment when a mob_overlay icon is made and added
 	icon_state = "ironheadhook"
 	item_state = "ironheadhook"
 	slot_flags = ITEM_SLOT_HIP
@@ -526,8 +526,8 @@
 /obj/item/storage/hip/headhook/bronze
 	name = "bronze head hook"
 	desc = "a bronze hook for storing 12 heads"
-	icon = 'icons/roguetown/clothing/belts.dmi'
-	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
+	icon = 'icons/clothing/belts.dmi'
+	//mob_overlay_icon = 'icons/clothing/onmob/belts.dmi'
 	icon_state = "bronzeheadhook"
 	item_state = "bronzeheadhook"
 	slot_flags = ITEM_SLOT_HIP
@@ -544,7 +544,7 @@
 	name = "climbing gear"
 	desc = "Lets you do the impossible."
 	color = null
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	item_state = "climbing_gear" // sprites from lfwb kitbashed with grappler for inventory sprite
 	icon_state = "climbing_gear" // sprites from lfwb kitbashed among each other for onmob sprite
 	alternate_worn_layer = UNDER_CLOAK_LAYER
@@ -558,8 +558,8 @@
 /obj/item/storage/hip/orestore/bronze
 	name = "mechanized ore bag"
 	desc = "a ticking Ore bag for sorting and compressing ore, ingots, and gems"
-	icon = 'icons/roguetown/items/misc.dmi'
-	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
+	icon = 'icons/items/misc.dmi'
+	//mob_overlay_icon = 'icons/clothing/onmob/belts.dmi'
 	icon_state = "rucksack"
 	item_state = "rucksack"
 	slot_flags = ITEM_SLOT_HIP

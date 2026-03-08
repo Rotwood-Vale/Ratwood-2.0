@@ -450,7 +450,7 @@
 	name = "Winged Plate"
 	desc = "A Czwarteki Plate Armor covering the upper Torso with 'wings' attached to the back. Striking fear into the enemy as their Hussars Ride Forth."
 	icon_state = "hussar"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/32x48/czwarteki.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/32x48/czwarteki.dmi'
 	body_parts_covered = CHEST|GROIN|VITALS|ARMS
 	equip_delay_self = 8 SECONDS
 	unequip_delay_self = 8 SECONDS

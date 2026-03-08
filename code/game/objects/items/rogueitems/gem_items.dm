@@ -1,7 +1,7 @@
 /obj/item/carvedgem
 	name = "bug beaver"
 	desc = "You shouldn't be seeing this."
-	icon = 'icons/roguetown/gems/gem_amber.dmi'
+	icon = 'icons/gems/gem_amber.dmi'
 	icon_state = "beaver_amber"
 	sellprice = 0
 	grid_height = 32
@@ -13,7 +13,7 @@
 /obj/item/carvedgem/shell
 	name = "shell base"
 	desc = "if you encountered this, it's a bug!"
-	icon = 'icons/roguetown/gems/gem_shell.dmi'
+	icon = 'icons/gems/gem_shell.dmi'
 	icon_state = "raw_shell"
 
 /obj/item/carvedgem/shell/openoyster
@@ -140,7 +140,7 @@
 /obj/item/carvedgem/rose/
 	name = "rose base"
 	desc = "if you are seeing this, it's a bug, report it to coders"
-	icon = 'icons/roguetown/gems/gem_rose.dmi'
+	icon = 'icons/gems/gem_rose.dmi'
 	icon_state = "raw_rose"
 	grid_height = 32
 	grid_width = 32
@@ -271,7 +271,7 @@
 /obj/item/carvedgem/jade
 	name = "jade base"
 	desc =  "if you are seeing this, it's a bug, report it to coders"
-	icon = 'icons/roguetown/gems/gem_jade.dmi'
+	icon = 'icons/gems/gem_jade.dmi'
 	icon_state = "cutgem_jade"
 	grid_height = 32
 	grid_width = 32
@@ -385,7 +385,7 @@
 /obj/item/carvedgem/onyxa
 	name = "onyxa base"
 	desc = "if you are seeing this, it's a bug, report it to coders"
-	icon = 'icons/roguetown/gems/gem_onyxa.dmi'
+	icon = 'icons/gems/gem_onyxa.dmi'
 	icon_state = "cutgem_onyxa"
 	grid_height = 32
 	grid_width = 32
@@ -507,7 +507,7 @@
 /obj/item/carvedgem/turq
 	name = "cerulite base"
 	desc = "if you are seeing this, it's a bug, report it to coders"
-	icon = 'icons/roguetown/gems/gem_turq.dmi'
+	icon = 'icons/gems/gem_turq.dmi'
 	icon_state = "cutgem_turq"
 	grid_height = 32
 	grid_width = 32
@@ -630,7 +630,7 @@
 /obj/item/carvedgem/coral
 	name = "heartstone base"
 	desc = "if you are seeing this, it's a bug, report it to coders"
-	icon = 'icons/roguetown/gems/gem_coral.dmi'
+	icon = 'icons/gems/gem_coral.dmi'
 	icon_state = "cutgem_coral"
 	grid_height = 32
 	grid_width = 32
@@ -752,7 +752,7 @@
 /obj/item/carvedgem/amber
 	name = "amber base"
 	desc = "if you are seeing this, it's a bug, report it to coders"
-	icon = 'icons/roguetown/gems/gem_amber.dmi'
+	icon = 'icons/gems/gem_amber.dmi'
 	icon_state = "cutgem_amber"
 	grid_height = 32
 	grid_width = 32
@@ -876,7 +876,7 @@
 /obj/item/carvedgem/opal
 	name = "opal base"
 	desc = "if you are seeing this, it's a bug, report it to coders"
-	icon = 'icons/roguetown/gems/gem_opal.dmi'
+	icon = 'icons/gems/gem_opal.dmi'
 	icon_state = "cutgem_opal"
 	grid_height = 32
 	grid_width = 32

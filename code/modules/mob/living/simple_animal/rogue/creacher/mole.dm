@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/mole
-	icon = 'icons/roguetown/mob/monster/mole.dmi'
+	icon = 'icons/mob/monster/mole.dmi'
 	name = "mole"
 	icon_state = "mole"
 	icon_living = "mole"
@@ -71,7 +71,7 @@
 	name = "remains"
 	gender = PLURAL
 	icon_state = "mole_bones"
-	icon = 'icons/roguetown/mob/monster/mole.dmi'
+	icon = 'icons/mob/monster/mole.dmi'
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mole/Initialize(mapload)
 	. = ..()

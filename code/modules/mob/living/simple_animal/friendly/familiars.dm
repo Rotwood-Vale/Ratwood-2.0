@@ -13,7 +13,7 @@
 	name = "Generic Wizard familiar"
 	desc = "The spirit of what makes a familiar (You shouldn't be seeing this.)"
 
-	icon = 'icons/roguetown/mob/familiars.dmi'
+	icon = 'icons/mob/familiars.dmi'
 
 	butcher_results = list(/obj/item/natural/stone = 1)
 

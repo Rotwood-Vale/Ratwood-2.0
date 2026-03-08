@@ -1,7 +1,7 @@
 /obj/structure/gate_vertical
 	name = "vertical gate"
 	desc = "A steel gate that blocks north-south."
-	icon = 'icons/roguetown/misc/verticalgate.dmi'
+	icon = 'icons/misc/verticalgate.dmi'
 	icon_state = "gate1"
 	density = TRUE
 	anchored = TRUE

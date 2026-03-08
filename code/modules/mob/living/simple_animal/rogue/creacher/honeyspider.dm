@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/spider
-	icon = 'icons/roguetown/mob/monster/spider.dmi'
+	icon = 'icons/mob/monster/spider.dmi'
 	name = "beespider"
 	icon_state = "honeys"
 	icon_living = "honeys"
@@ -57,7 +57,7 @@
 	stat_attack = UNCONSCIOUS
 
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated
-	icon = 'icons/roguetown/mob/monster/spider.dmi'
+	icon = 'icons/mob/monster/spider.dmi'
 	name = "skallax spider"
 	icon_state = "skallax"
 	icon_living = "skallax"

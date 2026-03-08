@@ -3,7 +3,7 @@
 /obj/structure/roguemachine/scomm
 	name = "SCOM"
 	desc = "The Supernatural Communication Optical Machine is a wonder of magic and technology."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "scomm1"
 	density = FALSE
 	blade_dulling = DULLING_BASH
@@ -338,7 +338,7 @@
 	throwforce = 10
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP|ITEM_SLOT_NECK|ITEM_SLOT_RING
 	obj_flags = null
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
 	muteinmouth = TRUE
@@ -446,7 +446,7 @@
 	//throwforce = 10
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP|ITEM_SLOT_NECK|ITEM_SLOT_WRISTS
 	obj_flags = null
-	icon = 'icons/roguetown/clothing/neck.dmi'
+	icon = 'icons/clothing/neck.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
 	muteinmouth = TRUE
@@ -515,7 +515,7 @@
 	throwforce = 10
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP|ITEM_SLOT_NECK|ITEM_SLOT_RING
 	obj_flags = null
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
 	muteinmouth = TRUE
@@ -619,7 +619,7 @@
 	desc = "Sweet secrets whispered so freely."
 	var/speaking = TRUE
 	sellprice = 20
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "scomite"
 	gripped_intents = null
 	dropshrink = 0.75
@@ -630,7 +630,7 @@
 	experimental_inhand = FALSE
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP|ITEM_SLOT_RING
 	possible_item_intents = list(INTENT_GENERIC)
-	sleeved = 'icons/roguetown/clothing/onmob/neck.dmi'
+	sleeved = 'icons/clothing/onmob/neck.dmi'
 	grid_width = 32
 	grid_height = 32
 	var/fakename = "secret whisperer"
@@ -704,7 +704,7 @@
 /obj/item/listeningdevice
 	name = "listener"
 	desc = "An ever-attentive ear..."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "listenstone"
 	dropshrink = 0.6
 	gripped_intents = null

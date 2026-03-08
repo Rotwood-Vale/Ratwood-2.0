@@ -3,7 +3,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga
 	name = "saiga doe"
 	desc = ""
-	icon = 'icons/roguetown/mob/monster/saiga.dmi'
+	icon = 'icons/mob/monster/saiga.dmi'
 	icon_state = "saiga"
 	icon_living = "saiga"
 	icon_dead = "saiga_dead"
@@ -242,7 +242,7 @@
 	name = "remains"
 	gender = PLURAL
 	icon_state = "skele"
-	icon = 'icons/roguetown/mob/monster/saiga.dmi'
+	icon = 'icons/mob/monster/saiga.dmi'
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/get_sound(input)
 	switch(input)
@@ -274,7 +274,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigaboy
-	icon = 'icons/roguetown/mob/monster/saiga.dmi'
+	icon = 'icons/mob/monster/saiga.dmi'
 	name = "saiga"
 	desc = ""
 	gender = MALE

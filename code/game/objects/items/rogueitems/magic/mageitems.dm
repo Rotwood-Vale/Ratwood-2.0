@@ -3,7 +3,7 @@
 	desc = "A pouch to carry handfuls of ingredients for summoning and alchemy."
 	icon_state = "summoning"
 	item_state = "summoning"
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_HIP
 	resistance_flags = NONE
@@ -96,7 +96,7 @@
 /obj/item/chalk
 	name = "stick of chalk"
 	desc = "A stark-white stick of chalk, possibly made from quicksilver. "
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "chalk"
 	throw_speed = 2
 	throw_range = 5
@@ -254,7 +254,7 @@
 /obj/item/mimictrinket
 	name = "mimic trinket"
 	desc = "A small mimic, imbued with the arcane to make it docile. It can transform into most things it touchs. "
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "mimic_trinket"
 	possible_item_intents = list(/datum/intent/use)
 	var/duration = 10 MINUTES
@@ -338,7 +338,7 @@
 /obj/item/clothing/ring/active/shimmeringlens
 	name = "shimmering lens"
 	desc = "A radiantly shimmering glass of lens that shimmers with magick. Looking through it gives you a bit of a headache."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "lens"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | ACID_PROOF

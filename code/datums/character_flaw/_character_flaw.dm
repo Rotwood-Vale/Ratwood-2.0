@@ -752,7 +752,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/marked_by_baotha/on_mob_creation(mob/user)
 
-	var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[user.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+	var/mutable_appearance/marking_overlay = mutable_appearance('icons/misc/baotha_marking.dmi', "marking_[user.gender == "male" ? "m" : "f"]", -BODY_LAYER)
 	user.add_overlay(marking_overlay)
 
 	spawn(40)

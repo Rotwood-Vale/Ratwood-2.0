@@ -25,11 +25,11 @@
 		inhand_y_dimension = 32
 
 /obj/item/inhand_tester
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "inhand_test"
 
 /obj/item/inhand_tester/big
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 
 /obj/item/proc/getmoboverlay(tag, prop, behind = FALSE, mirrored = FALSE)
 	var/used_index = icon_state
@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(icon_state_cache)
 	var/list/used_prop = prop
 	var/UH = 64
 	var/UW = 64
-	var/used_mask = 'icons/roguetown/helpers/inhand_64.dmi'
+	var/used_mask = 'icons/helpers/inhand_64.dmi'
 	var/icon/returned = icon(used_mask, "blank")
 	var/icon/blended
 	var/skipoverlays = FALSE
@@ -143,7 +143,7 @@ GLOBAL_LIST_EMPTY(icon_state_cache)
 	if(blended.Height() == 32)
 		UW = 32
 		UH = 32
-		used_mask = 'icons/roguetown/helpers/inhand.dmi'
+		used_mask = 'icons/helpers/inhand.dmi'
 
 	var/list/directions = list(
 		list("north", "n", "northabove", WEST),

@@ -2,8 +2,8 @@
 /obj/item/clothing/head/roguetown/cyberdeck
 	name = "cyberdeck headset"
 	desc = "Sweet dreams..."
-	icon = 'icons/roguetown/maniac/clothing.dmi'
-	mob_overlay_icon = 'icons/roguetown/maniac/clothing_mob.dmi'
+	icon = 'icons/maniac/clothing.dmi'
+	mob_overlay_icon = 'icons/maniac/clothing_mob.dmi'
 	icon_state = "cyberdeck"
 	armor = ARMOR_CLOTHING
 	tint = TINT_BLIND //it covers ya eyes
@@ -20,16 +20,16 @@
 /obj/item/clothing/suit/roguetown/shirt/formal
 	name = "formal shirt"
 	desc = "TNC is the fairest company I know."
-	icon = 'icons/roguetown/maniac/clothing.dmi'
-	mob_overlay_icon = 'icons/roguetown/maniac/clothing_mob.dmi'
+	icon = 'icons/maniac/clothing.dmi'
+	mob_overlay_icon = 'icons/maniac/clothing_mob.dmi'
 	icon_state = "shirt"
 
 /obj/item/clothing/under/roguetown/tights/formal
 	name = "formal pants"
 	desc = "TNC is the fairest company I know."
 	gender = PLURAL
-	icon = 'icons/roguetown/maniac/clothing.dmi'
-	mob_overlay_icon = 'icons/roguetown/maniac/clothing_mob.dmi'
+	icon = 'icons/maniac/clothing.dmi'
+	mob_overlay_icon = 'icons/maniac/clothing_mob.dmi'
 	icon_state = "pants"
 
 /datum/outfit/treyliam

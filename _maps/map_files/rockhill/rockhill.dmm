@@ -4966,7 +4966,7 @@
 "bxu" = (
 /obj/structure/fluff/walldeco/fakewall{
 	name = "Bridge..?";
-	icon = 'icons/roguetown/misc/structure.dmi';
+	icon = 'icons/misc/structure.dmi';
 	icon_state = "floorgrille";
 	desc = "It certainly looks like a bridge..?"
 	},
@@ -28777,7 +28777,7 @@
 /area/rogue/outdoors/town/grove)
 "hZH" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/minotaur{
-	icon = 'icons/roguetown/mob/monster/cow.dmi';
+	icon = 'icons/mob/monster/cow.dmi';
 	icon_state = "cow";
 	name = "Odd Cow";
 	pixel_x = 0

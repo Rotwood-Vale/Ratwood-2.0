@@ -117,7 +117,7 @@
 	icon_state = "chair1"
 	name = "chair"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	buildstacktype = null

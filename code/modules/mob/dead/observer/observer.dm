@@ -74,7 +74,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer/rogue/nodraw
 	draw_icon = FALSE
-	icon = 'icons/roguetown/mob/misc.dmi'
+	icon = 'icons/mob/misc.dmi'
 	icon_state = "hollow"
 	alpha = 150
 

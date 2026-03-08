@@ -1034,7 +1034,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 /obj/item/clothing/neck/roguetown/portalamulet
 	name = "Gate Amulet"
 	icon_state = "bloodtooth"
-	icon = 'icons/roguetown/clothing/neck.dmi'
+	icon = 'icons/clothing/neck.dmi'
 	var/uses = 3
 
 /obj/item/clothing/neck/roguetown/portalamulet/Initialize(mapload)
@@ -1046,7 +1046,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	return ..()
 
 /obj/structure/vampire
-	icon = 'icons/roguetown/topadd/death/vamp-lord.dmi'
+	icon = 'icons/topadd/death/vamp-lord.dmi'
 	var/unlocked = FALSE
 	density = TRUE
 

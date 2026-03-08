@@ -1,7 +1,7 @@
 /obj/item/hair_dye_cream
 	name = "hair dye cream"
 	desc = "A cream that can be used to dye and style hair with various colors and gradients."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "cream"
 	w_class = WEIGHT_CLASS_SMALL
 	var/uses_remaining = 30

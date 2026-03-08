@@ -1,7 +1,7 @@
 /obj/item/natural/head
 	name = "generic animal head"
 	desc = "You shouldn't be seeing this."
-	icon = 'icons/roguetown/items/bounty_heads.dmi'
+	icon = 'icons/items/bounty_heads.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	grid_width = 64
 	grid_height = 64

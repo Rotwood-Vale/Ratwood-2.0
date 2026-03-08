@@ -1,7 +1,7 @@
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf
-	icon = 'icons/roguetown/mob/monster/vol.dmi'
+	icon = 'icons/mob/monster/vol.dmi'
 	name = "volf"
 	desc = "A snarling beast of mangy fur and yellowed teeth. Volves are known to attack hapless travelers in the deep forests when prey is scarce."
 	icon_state = "vv"
@@ -79,7 +79,7 @@
 	desc = "Whether by starvation, disease, inter-pack conflict, or an unlucky kick from a saiga, this volf has died."
 	gender = PLURAL
 	icon_state = "bones"
-	icon = 'icons/roguetown/mob/monster/vol.dmi'
+	icon = 'icons/mob/monster/vol.dmi'
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf/Initialize(mapload)
 	. = ..()

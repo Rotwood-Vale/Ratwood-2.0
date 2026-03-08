@@ -382,7 +382,7 @@ There are several things that need to be remembered:
 		var/mutable_appearance/neck_overlay
 
 		if(!(SLOT_NECK in check_obscured_slots()))
-			neck_overlay = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/neck.dmi')
+			neck_overlay = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/clothing/onmob/neck.dmi')
 			if(gender == MALE)
 				if(OFFSET_NECK in dna.species.offset_features)
 					neck_overlay.pixel_x += dna.species.offset_features[OFFSET_NECK][1]
@@ -708,7 +708,7 @@ There are several things that need to be remembered:
 
 	if(head)
 		update_hud_head(head)
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi', female = FALSE)
+		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/clothing/onmob/head.dmi', female = FALSE)
 		var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
 		if(head_overlay)
 			remove_overlay(HEAD_LAYER)
@@ -793,7 +793,7 @@ There are several things that need to be remembered:
 					standing_front += onbelt_overlay
 					standing_behind += onbelt_behind
 			else
-				onbelt_overlay = beltr.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/belt_r.dmi')
+				onbelt_overlay = beltr.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/clothing/onmob/belt_r.dmi')
 				if(onbelt_overlay)
 					if(gender == MALE)
 						if(OFFSET_BELT in dna.species.offset_features)
@@ -854,7 +854,7 @@ There are several things that need to be remembered:
 					standing_front += onbelt_overlay
 					standing_behind += onbelt_behind
 			else
-				onbelt_overlay = beltl.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/belt_l.dmi')
+				onbelt_overlay = beltl.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/clothing/onmob/belt_l.dmi')
 				if(onbelt_overlay)
 					if(gender == MALE)
 						if(OFFSET_BELT in dna.species.offset_features)
@@ -878,9 +878,9 @@ There are several things that need to be remembered:
 				if(dna.species.custom_clothes)
 					racecustom = dna.species.clothes_id
 				if((gender == FEMALE && !dna.species.use_m) || dna.species.use_f)
-					mbeltoverlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/belts.dmi', female = TRUE, customi = racecustom, boobed_overlay = has_boobed_overlay())
+					mbeltoverlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/clothing/onmob/belts.dmi', female = TRUE, customi = racecustom, boobed_overlay = has_boobed_overlay())
 				else
-					mbeltoverlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/belts.dmi', female = FALSE, customi = racecustom)
+					mbeltoverlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/clothing/onmob/belts.dmi', female = FALSE, customi = racecustom)
 				if(mbeltoverlay && !dna.species.custom_clothes)
 					if(gender == MALE)
 						if(OFFSET_BELT in dna.species.offset_features)
@@ -1035,7 +1035,7 @@ There are several things that need to be remembered:
 					overcloaks += back_overlay
 					backbehind += behindback_overlay
 			else
-				back_overlay = backr.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/back_r.dmi')
+				back_overlay = backr.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/clothing/onmob/back_r.dmi')
 				if(gender == MALE)
 					if(OFFSET_BACK in dna.species.offset_features)
 						back_overlay.pixel_x += dna.species.offset_features[OFFSET_BACK][1]
@@ -1088,7 +1088,7 @@ There are several things that need to be remembered:
 					overcloaks += back_overlay
 					backbehind += behindback_overlay
 			else
-				back_overlay = backl.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/back_l.dmi')
+				back_overlay = backl.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/clothing/onmob/back_l.dmi')
 				if(gender == MALE)
 					if(OFFSET_BACK in dna.species.offset_features)
 						back_overlay.pixel_x += dna.species.offset_features[OFFSET_BACK][1]
@@ -1408,7 +1408,7 @@ There are several things that need to be remembered:
 			var/legsindex = get_limbloss_index(LEG_RIGHT, LEG_LEFT)
 			var/mutable_appearance/pants_overlay
 			if(isharpy(src))
-				clip_mask_init = icon(icon = 'icons/roguetown/mob/bodies/f/harpy.dmi', icon_state = "harpy_clipmask")
+				clip_mask_init = icon(icon = 'icons/mob/bodies/f/harpy.dmi', icon_state = "harpy_clipmask")
 				c_mask = clip_mask_init
 			if(dna.species.custom_clothes) // should prolly make it a separate limb or just use clipmask then
 				racecustom = dna.species.clothes_id
@@ -1467,7 +1467,7 @@ There are several things that need to be remembered:
 
 	if(mouth)
 		if(!(SLOT_MOUTH in check_obscured_slots()))
-			overlays_standing[MOUTH_LAYER] = mouth.build_worn_icon(default_layer = MOUTH_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/mouth_items.dmi')
+			overlays_standing[MOUTH_LAYER] = mouth.build_worn_icon(default_layer = MOUTH_LAYER, default_icon_file = 'icons/clothing/onmob/mouth_items.dmi')
 		update_hud_mouth(mouth)
 
 	apply_overlay(MOUTH_LAYER)
@@ -1494,7 +1494,7 @@ There are several things that need to be remembered:
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/roguetown/mob/bodies/cuffed.dmi', "[legcuffed.icon_state]down", -LEGCUFF_LAYER)
+		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/bodies/cuffed.dmi', "[legcuffed.icon_state]down", -LEGCUFF_LAYER)
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 

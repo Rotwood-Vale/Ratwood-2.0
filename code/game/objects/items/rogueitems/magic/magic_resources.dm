@@ -10,7 +10,7 @@
 /obj/item/magic
 	name = "magic resource"
 	desc = "You shouldn't be seeing this."
-	icon = 'icons/roguetown/items/magic_resources.dmi'
+	icon = 'icons/items/magic_resources.dmi'
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_TINY
 	grid_width = 32

@@ -1,7 +1,7 @@
 /obj/structure/flora/newtree
 	name = "tree"
 	desc = "The thick core of a tree."
-	icon = 'icons/roguetown/misc/tree.dmi'
+	icon = 'icons/misc/tree.dmi'
 	icon_state = "tree1"
 	var/tree_type = 1
 	var/base_state
@@ -196,7 +196,7 @@
 /obj/structure/flora/newbranch
 	name = "branch"
 	desc = "A stable branch, should be safe to walk on."
-	icon = 'icons/roguetown/misc/tree.dmi'
+	icon = 'icons/misc/tree.dmi'
 	icon_state = "branch-end1"
 	attacked_sound = 'sound/misc/woodhit.ogg'
 //	var/tree_type = 1
@@ -255,7 +255,7 @@
 
 
 /obj/structure/flora/newleaf/corner
-	icon = 'icons/roguetown/misc/tree.dmi'
+	icon = 'icons/misc/tree.dmi'
 	icon_state = "corner-leaf1"
 
 
@@ -266,7 +266,7 @@
 
 /obj/structure/flora/newleaf
 	name = "leaves"
-	icon = 'icons/roguetown/misc/tree.dmi'
+	icon = 'icons/misc/tree.dmi'
 	icon_state = "center-leaf1"
 	density = FALSE
 	max_integrity = 10

@@ -1,12 +1,12 @@
 /obj/item/clothing/suit/roguetown/shirt
 	slot_flags = ITEM_SLOT_SHIRT
 	body_parts_covered = CHEST|VITALS
-	icon = 'icons/roguetown/clothing/shirts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	icon = 'icons/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
 	equip_sound = 'sound/blank.ogg'
 	drop_sound = 'sound/blank.ogg'
 	pickup_sound =  'sound/blank.ogg'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts.dmi'
 	sleevetype = "shirt"
 	edelay_type = 1
 	equip_delay_self = 25
@@ -34,7 +34,7 @@
 	desc = "A soft garment designed to prevent chafing from wearing heavy robes all dae and night."
 	icon_state = "priestunder"
 	item_state = "priestunder"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts.dmi'
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
@@ -100,7 +100,7 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	icon_state = "puritan_shirt"
 	allowed_race = CLOTHED_RACES_TYPES
-	sleeved = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	sleeved = 'icons/clothing/onmob/shirts.dmi'
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	salvage_result = /obj/item/natural/silk
@@ -165,13 +165,13 @@
 //................ Royal Dress (Ball Gown)............... //
 /obj/item/clothing/suit/roguetown/shirt/dress/royal
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	icon = 'icons/clothing/shirts_royalty.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts_royalty.dmi'
 	name = "royal gown"
 	desc = "An elaborate ball gown, a favoured fashion of queens and elevated nobility in Enigma."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "royaldress"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
 	boobed = TRUE
 	detail_tag = "_detail"
 	detail_color = CLOTHING_BLACK
@@ -224,12 +224,12 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/winterdress_light
 	name = "cold dress"
-	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	icon = 'icons/clothing/shirts_royalty.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts_royalty.dmi'
 	desc = "A thick and comfortable dress popular amongst nobility during winter."
 	body_parts_covered = COVERAGE_FULL
 	icon_state = "winterdress"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
 	boobed = TRUE
 	detail_tag = "_detail"
 	detail_color = CLOTHING_BLACK
@@ -270,13 +270,13 @@
 	..()
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gown
-	icon = 'icons/roguetown/clothing/shirts_gown.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_gown.dmi'
+	icon = 'icons/clothing/shirts_gown.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts_gown.dmi'
 	name = "spring gown"
 	desc = "A delicate gown that captures the essence of the season of renewal."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "springgown"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts_gown.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts_gown.dmi'
 	boobed = TRUE
 	detail_tag = "_detail"
 	detail_color = CLOTHING_DARK_GREEN
@@ -384,9 +384,9 @@
 	name = "archivist's robe"
 	desc = "Robes belonging to seekers of knowledge."
 	icon_state = "archivist"
-	icon = 'icons/roguetown/clothing/shirts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+	icon = 'icons/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	flags_inv = HIDECROTCH|HIDEBOOB
 	r_sleeve_status = SLEEVE_NORMAL
@@ -471,7 +471,7 @@
 	icon_state = "silkdress"
 	item_state = "silkdress"
 	color = "#e6e5e5"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
 	flags_inv = HIDECROTCH|HIDEBOOB
 	salvage_result = /obj/item/natural/silk
 	salvage_amount = 2
@@ -536,9 +536,9 @@
 	desc = "Whether it's standup, slapstick, or wrestling nobles to the floor, this tunick can take it all."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "jestershirt"
-	icon = 'icons/roguetown/clothing/shirts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
-	sleeved = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	icon = 'icons/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
+	sleeved = 'icons/clothing/onmob/shirts.dmi'
 	boobed = FALSE // for some reason when boobed, the game likes to get rid of the detail and altdetail. I went ahead and just merged it into the main icon.
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"
@@ -617,13 +617,13 @@
 //................ Noble Dress ............... //
 /obj/item/clothing/suit/roguetown/shirt/dress/noble
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	icon = 'icons/roguetown/clothing/shirts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	icon = 'icons/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
 	name = "noble dress"
 	desc = "An elegant dress fit for nobility, crafted with the finest materials and adorned with intricate details."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "nobledress"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts.dmi'
 
 
 /obj/item/clothing/suit/roguetown/shirt/dress/noble/update_icon()
@@ -653,13 +653,13 @@
 //................ Velvet Dress ............... //
 /obj/item/clothing/suit/roguetown/shirt/dress/velvet
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	icon = 'icons/roguetown/clothing/shirts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	icon = 'icons/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
 	name = "velvet dress"
 	desc = "A luxurious dress made of the finest velvet, soft to the touch and rich in appearance."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "velvetdress"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts.dmi'
 
 //Servant Clothing:
 //................ Maid Dress   ............... //
@@ -667,13 +667,13 @@
 	name = "maid dress"
 	desc = "A dress befitting the housekeeper of a lord's staff. While not as intricate as a royal's, it is indicative of the house's status."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_maids.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_maids.dmi'
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	boobed = TRUE
 	icon_state = "maiddress"
 	item_state = "maiddress"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	detail_tag = "_detail"
 	detail_color = CLOTHING_BLACK
@@ -684,7 +684,7 @@
 	desc = "A dress worn by those of manors and noble staff. Commonly black, though some estates dye them to their house colors."
 	icon_state = "maidgown"
 	item_state = "maidgown"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	detail_color = CLOTHING_BLACK
 
@@ -693,10 +693,10 @@
 	desc = "A comfortable yet functional dress shirt often worn by the staff of a noble household."
 	icon_state = "butlershirt"
 	item_state = "butlershirt"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_maids.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_maids.dmi'
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	icon = 'icons/roguetown/clothing/shirts.dmi'
+	icon = 'icons/clothing/shirts.dmi'
 //End Servant Clothing
 
 //kazengite content
@@ -706,9 +706,9 @@
 	desc = "A shirt typically used by thugs."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "eastshirt1"
-	icon = 'icons/roguetown/clothing/shirts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
-	sleeved = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	icon = 'icons/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
+	sleeved = 'icons/clothing/onmob/shirts.dmi'
 	boobed = TRUE
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
@@ -721,9 +721,9 @@
 	desc = "A shirt typically used by foreign gangs."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "eastshirt2"
-	icon = 'icons/roguetown/clothing/shirts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+	icon = 'icons/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts.dmi'
 	boobed = TRUE
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
@@ -741,9 +741,9 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	body_parts_covered = COVERAGE_FULL
 	body_parts_inherent = COVERAGE_FULL
-	icon = 'icons/roguetown/clothing/shirts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+	icon = 'icons/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/shirts.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_shirts.dmi'
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	allowed_race = NON_DWARVEN_RACE_TYPES

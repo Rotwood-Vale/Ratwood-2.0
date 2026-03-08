@@ -1,7 +1,7 @@
 /obj/item/storage/belt/rogue/pouch
 	name = "pouch"
 	desc = "A small sack with a drawstring that allows it to be worn around the neck. Or at the hips, provided you have a belt."
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	mob_overlay_icon = null
 	icon_state = "pouch"
 	item_state = "pouch"

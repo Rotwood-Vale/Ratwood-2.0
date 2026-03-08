@@ -4,7 +4,7 @@
 	desc = ""
 	icon_state = "quiver0"
 	item_state = "quiver"
-	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon = 'icons/weapons/ammo.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -285,7 +285,7 @@
 /obj/item/quiver/sling
 	name = "sling bullet pouch"
 	desc = "This pouch holds the ouch." //i came up with this line on an impulse
-	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon = 'icons/weapons/ammo.dmi'
 	icon_state = "slingpouch"
 	item_state = "slingpouch"
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_NECK
@@ -357,7 +357,7 @@
 /obj/item/quiver/zigs
 	name = "zig box"
 	desc = "A box for all your smoking needs."
-	icon = 'icons/roguetown/clothing/storage.dmi'
+	icon = 'icons/clothing/storage.dmi'
 	icon_state = "smokebox"
 	item_state = "smokebox"
 	slot_flags = ITEM_SLOT_HIP

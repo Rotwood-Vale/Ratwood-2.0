@@ -2,7 +2,7 @@
 	name = "Wanderer"
 	verb_say = "moans"
 	initial_language_holder = /datum/language_holder/universal
-	icon = 'icons/roguetown/underworld/enigma_husks.dmi'
+	icon = 'icons/underworld/enigma_husks.dmi'
 	icon_state = "hollow"
 	gender = NEUTER
 	pass_flags = PASSTABLE
@@ -21,27 +21,27 @@
 	var/summoned = FALSE
 
 /obj/item/bodypart/chest/spirit
-	icon = 'icons/roguetown/underworld/underworld.dmi'
+	icon = 'icons/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 
 /obj/item/bodypart/head/spirit
-	icon = 'icons/roguetown/underworld/underworld.dmi'
+	icon = 'icons/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 
 /obj/item/bodypart/l_arm/spirit
-	icon = 'icons/roguetown/underworld/underworld.dmi'
+	icon = 'icons/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 
 /obj/item/bodypart/l_leg/spirit
-	icon = 'icons/roguetown/underworld/underworld.dmi'
+	icon = 'icons/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 
 /obj/item/bodypart/r_arm/spirit
-	icon = 'icons/roguetown/underworld/underworld.dmi'
+	icon = 'icons/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 
 /obj/item/bodypart/r_leg/spirit
-	icon = 'icons/roguetown/underworld/underworld.dmi'
+	icon = 'icons/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 
 /mob/living/carbon/spirit/Initialize(mapload, cubespawned=FALSE, mob/spawner)

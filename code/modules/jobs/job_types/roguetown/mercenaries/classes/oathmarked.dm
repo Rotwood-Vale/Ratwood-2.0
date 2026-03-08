@@ -117,7 +117,7 @@
 /obj/item/rogueweapon/eaglebeak/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>An oathmarked's polehammer. Designed in an earlier era, under the direction of Hadrûnzhar. \
+		. += "<small>An oathmarked's polehammer. Designed in an earlier era, under the direction of Hadrï¿½nzhar. \
 		A lord lost to centuries. The original keeper of the oath. The purpose was simple: <br>\
 		A hammer to break the rabble. A pick to slay the traitors. A head to pierce both.</small>"
 
@@ -132,7 +132,7 @@
 	desc = "An incredibly well balanced blade, designed for a rather large frame. Heavy beyond any reasonable measure. \
 	The work of a master smith, or one with far too much time to spare. The blade of a noble, surely."
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/zwei, /datum/intent/sword/peel/big, /datum/intent/sword/strike/bad)
-	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon = 'icons/weapons/swords64.dmi'
 	icon_state = "oathflamberge"//Temp.
 	max_blade_int = 220
 	max_integrity = 200
@@ -143,7 +143,7 @@
 /obj/item/rogueweapon/greatsword/grenz/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>An oathmarked's flamberge. Designed in an earlier era, under the direction of Hadrûnzhar. \
+		. += "<small>An oathmarked's flamberge. Designed in an earlier era, under the direction of Hadrï¿½nzhar. \
 		A lord lost to centuries. The original keeper of the oath. The purpose was simple: <br>\
 		A blade fit for a king, to bear the oath's violence in place of the lordling's hand.</small>"
 
@@ -151,8 +151,8 @@
 /obj/item/clothing/gloves/roguetown/plate/oathmarked
 	name = "oathmarked gauntlets"
 	desc = "Plate gauntlets made out of blackened steel."
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplategloves"//Temp.
 	item_state = "bplategloves"
 	max_integrity = ARMOR_INT_SIDE_IRON + 50//275. 25 less than standard steel.
@@ -160,8 +160,8 @@
 /obj/item/clothing/suit/roguetown/armor/plate/full/oathmarked
 	name = "oathmarked armor"
 	desc = "Weathered, blackened steel plate armor. Fit for a noble. Weaker as a result of the smithing process, though no less protective."
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplate"//Temp.
 	item_state = "bplate"
 	max_integrity = ARMOR_INT_CHEST_PLATE_IRON + 50//425. 75 less than standard steel plate.
@@ -169,8 +169,8 @@
 /obj/item/clothing/under/roguetown/platelegs/oathmarked
 	name = "oathmarked chausses"
 	desc = "Reinforced armor to protect the legs, fashioned out of blackened steel plate."
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplatelegs"//Temp.
 	item_state = "bplatelegs"
 	max_integrity = ARMOR_INT_LEG_IRON_PLATE + 50//350. 50 less than standard steel chausses.
@@ -178,16 +178,16 @@
 /obj/item/clothing/shoes/roguetown/boots/armor/oathmarked
 	name = "oathmarked boots"
 	desc = "Boots forged of a set of blackened steel plates to protect your fragile toes."
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplateboots"//Temp.
 	item_state = "bplateboots"
 
 /obj/item/clothing/head/roguetown/helmet/heavy/oathmarked
 	name = "oathmarked helmet"
 	desc = "An ancient helm, similar in design to a modern blacksteel armet. Albeit without the visor. Expensive looking, but certainly not blacksteel..."
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplatehelm_nv"//Temp.
 	item_state = "bplatehelm_nv"
 	block2add = FOV_BEHIND
@@ -206,7 +206,7 @@
 /obj/item/clothing/neck/roguetown/psicross/silver/astrata/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>Hadrûnzhar, the best of his house. A drakian that stood above the squabbles of inter-drakian conflict. \
+		. += "<small>Hadrï¿½nzhar, the best of his house. A drakian that stood above the squabbles of inter-drakian conflict. \
 		He'd given his Oathmarked a singular purpose: <br>\
 		To destroy all that would harm Astrata's noble order. To eradicate the taint of left-handed magyks from the world.</small>"
 
@@ -214,14 +214,14 @@
 	name = "oathmarked cape"
 	desc = "A cape fit for an enormous frame."
 	icon_state = "bkcape"
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
-	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
+	sleeved = 'icons/clothing/special/onmob/blkknight.dmi'
 
 /obj/item/clothing/cloak/cape/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>Hadrûnzhar was known for his showboating and sudden violent outbursts. \
+		. += "<small>Hadrï¿½nzhar was known for his showboating and sudden violent outbursts. \
 		Once meant to be a symbol of mockery, for resentful Oathmarked, this cape now represents something greater. \
 		Hope. Hope that one dae he may return. \
 		For just as he'd vanished into Eressioth's demesne, all drakian, knowing or otherwise, pray for his return.</small>"
@@ -237,6 +237,6 @@
 /obj/item/book/rogue/secret/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>Ancient, written by Hadrûnzhar's closest after he'd vanished. \
+		. += "<small>Ancient, written by Hadrï¿½nzhar's closest after he'd vanished. \
 		It sets out the guidelines that all Oathmarked are doomed to follow. \
-		Just as Hadrûnzhar had in another era, before he'd slipped out of the knowing world.</small>"
+		Just as Hadrï¿½nzhar had in another era, before he'd slipped out of the knowing world.</small>"

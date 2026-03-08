@@ -132,8 +132,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	body_parts_covered = null
 	grind_results = list()
 	slot_flags = ITEM_SLOT_MOUTH
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/mouth_items.dmi'
-	icon = 'icons/roguetown/items/lighting.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/mouth_items.dmi'
+	icon = 'icons/items/lighting.dmi'
 	heat = 1000
 	spitoutmouth = FALSE
 	light_outer_range = 1
@@ -439,7 +439,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/cigbutt
 	name = "cigarette butt"
 	desc = ""
-	icon = 'icons/roguetown/items/lighting.dmi'
+	icon = 'icons/items/lighting.dmi'
 	icon_state = "cigbutt"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
@@ -468,8 +468,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = null
 	var/packeditem = 0
 	slot_flags = ITEM_SLOT_MOUTH
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/mouth_items.dmi'
-	icon = 'icons/roguetown/items/lighting.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/mouth_items.dmi'
+	icon = 'icons/items/lighting.dmi'
 	muteinmouth = FALSE
 
 /obj/item/clothing/mask/cigarette/pipe/westman

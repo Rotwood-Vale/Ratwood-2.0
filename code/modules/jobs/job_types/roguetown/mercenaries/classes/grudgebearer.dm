@@ -125,8 +125,8 @@
 /obj/item/clothing/suit/roguetown/armor/plate/full/dwarven
 	name = "grudgebearer dwarven plate"
 	desc = "A standard, layered plate worn by many dwarven troops. It cannot be worked on without intrinsic dwarven knowledge."
-	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	icon = 'icons/clothing/special/race_armor.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/race_armor.dmi'
 	allowed_race = list(/datum/species/dwarf, /datum/species/dwarf/mountain)
 	icon_state = "dwarfchest"
 	item_state = "dwarfchest"
@@ -161,8 +161,8 @@
 	armor = ARMOR_GRUDGEBEARER
 	prevent_crits = list(BCLASS_TWIST)
 	allowed_race = list(/datum/species/dwarf, /datum/species/dwarf/mountain)
-	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	icon = 'icons/clothing/special/race_armor.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/race_armor.dmi'
 	icon_state = "dwarfhead"
 	item_state = "dwarfhead"
 	block2add = FOV_BEHIND
@@ -186,8 +186,8 @@
 /obj/item/clothing/gloves/roguetown/plate/dwarven
 	name = "grudgebearer dwarven gauntlets"
 	desc = "Forged to fit the stubbiest of fingers. It is covered in protective layers."
-	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	icon = 'icons/clothing/special/race_armor.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/race_armor.dmi'
 	allowed_race = list(/datum/species/dwarf, /datum/species/dwarf/mountain)
 	prevent_crits = list(BCLASS_TWIST)
 	icon_state = "dwarfhand"
@@ -202,8 +202,8 @@
 /obj/item/clothing/shoes/roguetown/boots/armor/dwarven
 	name = "grudgebearer dwarven boots"
 	desc = "Clatters mightily. It is covered in protective layers."
-	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	icon = 'icons/clothing/special/race_armor.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/race_armor.dmi'
 	allowed_race = list(/datum/species/dwarf, /datum/species/dwarf/mountain)
 	prevent_crits = list(BCLASS_TWIST)
 	icon_state = "dwarfshoe"

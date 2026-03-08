@@ -3,12 +3,12 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	body_parts_covered = GROIN|LEGS
-	icon = 'icons/roguetown/clothing/pants.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/pants.dmi'
+	icon = 'icons/clothing/pants.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/pants.dmi'
 	equip_sound = 'sound/blank.ogg'
 	drop_sound = 'sound/blank.ogg'
 	pickup_sound =  'sound/blank.ogg'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_pants.dmi'
 	sleevetype = "leg"
 	equip_delay_self = 30
 	bloody_icon_state = "bodyblood"

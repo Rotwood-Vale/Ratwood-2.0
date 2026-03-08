@@ -1129,7 +1129,7 @@
 	duration = 15
 	plane = GAME_PLANE_UPPER
 	layer = ABOVE_ALL_MOB_LAYER
-	icon = 'icons/roguetown/mob/rotten.dmi'
+	icon = 'icons/mob/rotten.dmi'
 	icon_state = "rotten"
 
 

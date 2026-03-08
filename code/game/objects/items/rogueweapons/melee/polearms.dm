@@ -243,7 +243,7 @@
 	name = "wooden staff"
 	desc = "A solid dependable walking stick that allows one to traverse rough terrain with ease, keep the weight off an injured leg, or reliably fend off incoming blows. Perfect for beggars, pilgrims, and mages."
 	icon_state = "woodstaff"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -282,7 +282,7 @@
 	force = 25
 	force_wielded = 28
 	icon_state = "aries"
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	pixel_y = 0
 	pixel_x = 0
 	inhand_x_dimension = 64
@@ -309,7 +309,7 @@
 	name = "spear"
 	desc = "One of the oldest weapons still in use today, second only to the club. The lack of reinforcements along the shaft leaves it vulnerable to being split in two."
 	icon_state = "spear"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -573,7 +573,7 @@
 	pixel_y = 0
 	pixel_x = 0
 	max_integrity = 100
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	dam_icon = 'icons/effects/item_damage32.dmi'
 	icon_state = "cspear"
 	smeltresult = null
@@ -584,7 +584,7 @@
 	name = "fishing spear"
 	desc = "This two-pronged and barbed spear was made to catch those pesky fish."
 	icon_state = "fishspear"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -750,7 +750,7 @@
 	name = "halberd"
 	desc = "A steel halberd, the pinnacle of all cumulative melee weapon knowledge. The only downside is the cost, so it's rarely seen outside of the guardsmans' hands. The reinforcements along the shaft provide greater durability."
 	icon_state = "halberd"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -891,7 +891,7 @@
 	name = "eagle's beak"
 	desc = "A reinforced pole affixed with an ornate steel eagle's head, of which its beak is intended to pierce with great harm."
 	icon_state = "eaglebeak"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -983,7 +983,7 @@
 		'sound/combat/parry/bladed/bladedlarge (2).ogg',
 		'sound/combat/parry/bladed/bladedlarge (3).ogg',
 		)
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -1204,7 +1204,7 @@
 	desc = "A sword possessed of a quite long and tapered blade that is intended to be thrust between the \
 	gaps in an opponent's armor. The hilt is wrapped tight in black leather."
 	icon_state = "estoc"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -1428,7 +1428,7 @@
 	possible_item_intents = list(SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(SPEAR_THRUST, PARTIZAN_REND, PARTIZAN_PEEL, SPEAR_BASH)
 	icon_state = "partizan"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	minstr = 12//Easily hit by knights and other dedicated combat roles
 	max_blade_int = 200
 	wdefense = 6
@@ -1452,7 +1452,7 @@
 	name = "boar spear"
 	desc = "A spear with a wide head and a pair of wings below the head. The wings are designed to prevent a boar from charging past the spearhead. \
 	It is also useful for parrying and stopping a charging opponent."
-	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon = 'icons/weapons/polearms64.dmi'
 	icon_state = "boarspear"
 	force_wielded = 33 // 10% base damage increase
 	wdefense = 6 // A little bit extra
@@ -1463,7 +1463,7 @@
 	name = "banner of Otava"
 	desc = "A banner carrying the colors of the Principality of Otava, turned into a formidable steel pike. \
 	Only seen held by the most loyal of the Otavan Holy See's men."
-	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon = 'icons/weapons/polearms64.dmi'
 	icon_state = "standard"
 	force = 15	//ideally, two-hands
 	force_wielded = 33 // It's basically a boar spear
@@ -1513,7 +1513,7 @@
 	name = "lance"
 	desc = "A long polearm designed to be used from horseback, couched under the arm. It has a vambrace to prevent the arm sliding up \
 	the shaft on impact. "
-	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon = 'icons/weapons/polearms64.dmi'
 	icon_state = "lance"
 	force = 15 // Its gonna sucks for 1 handed use
 	force_wielded = 20 // Lower damage because a 3 tiles thrust without full charge time still deal base damage.
@@ -1533,7 +1533,7 @@
 	possible_item_intents = list(/datum/intent/spear/cut/naginata, SPEAR_BASH) // no stab for you little chuddy, it's a slashing weapon
 	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL_BAD, SPEAR_BASH)
 	icon_state = "naginata"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	minstr = 7
 	max_blade_int = 150 //Nippon suteeru (dogshit)
 	wdefense = 5
@@ -1557,7 +1557,7 @@
 	desc = "As if glaives werent hard enough to produce, this one in particular is made out of blacksteel. A piece of art made for the captain of the guard, its a tool to deliver justice and help those weaker than the wielder."
 	force = 17
 	force_wielded = 35
-	icon = 'icons/roguetown/weapons/special/captainglaive.dmi'
+	icon = 'icons/weapons/special/captainglaive.dmi'
 	icon_state = "capglaive"
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/blacksteel
@@ -1579,7 +1579,7 @@
 /obj/item/rogueweapon/spear/assegai/iron
 	name = "iron assegai"
 	desc = "A long spear originating from the southern regions of Naledi. Commoners living along the great river Bilomari are taught to use assegai so they can defend themselves against the Djinn."
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	max_integrity = 150
 	max_blade_int = 150
 	icon_state = "assegai_iron"
@@ -1588,7 +1588,7 @@
 /obj/item/rogueweapon/spear/assegai
 	name = "steel assegai"
 	desc = "A long spear originating from the southern regions of Naledi. Commoners living along the great river Bilomari are taught to use assegai so they can defend themselves against the Djinn."
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	max_integrity = 250
 	max_blade_int = 200
 	icon_state = "assegai_steel"
@@ -1687,7 +1687,7 @@
 	name = "\"Daemonslayer\""
 	desc = "'That thing was too big to be called a sword. Too big, too thick, too heavy, and too rough. No, it was more like a large hunk of silver.' </br>Intimidatingly massive, unfathomably powerful, and - above all else - a testament to one's guts."
 	icon_state = "machaslayer"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	possible_item_intents = list(/datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/sucker_punch/dragonslayer)

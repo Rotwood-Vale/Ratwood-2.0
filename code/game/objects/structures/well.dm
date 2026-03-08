@@ -3,7 +3,7 @@
 /obj/structure/well
 	name = "well"
 	desc = "Far down inside the dark hole, water laps the walls of smooth brickwork."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "well"
 	anchored = TRUE
 	density = TRUE
@@ -31,7 +31,7 @@
 /obj/structure/well/poisoned
 	name = "dubious well"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "well"
 	color = "#59aa65"
 	anchored = TRUE
@@ -59,7 +59,7 @@
 /obj/structure/well/fountain
 	name = "water fountain"
 	desc = "A slightly more civilized alternative to drinking straight from a river."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "fountain"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -96,7 +96,7 @@
 /obj/structure/well/fountainswamp
 	name = "water fountain"
 	desc = "Green-tinted bogwater dances through sheets of thick floating algae."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "fountain"
 	color = "#a3c2a8"
 	layer = ABOVE_ALL_MOB_LAYER

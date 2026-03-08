@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/withdraw
 	name = "vomitorium"
 	desc = ""
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "submit"
 	density = FALSE
 	blade_dulling = DULLING_BASH

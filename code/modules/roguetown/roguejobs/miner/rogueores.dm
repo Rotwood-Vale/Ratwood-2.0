@@ -1,6 +1,6 @@
 /obj/item/rogueore
 	name = "ore"
-	icon = 'icons/roguetown/items/ore.dmi'
+	icon = 'icons/items/ore.dmi'
 	icon_state = "ore"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF
@@ -120,7 +120,7 @@
 
 /obj/item/ingot
 	name = "ingot"
-	icon = 'icons/roguetown/items/ore.dmi'
+	icon = 'icons/items/ore.dmi'
 	icon_state = "ingot"
 	w_class = WEIGHT_CLASS_NORMAL
 	smeltresult = null

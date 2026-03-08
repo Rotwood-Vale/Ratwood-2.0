@@ -1,5 +1,5 @@
 /obj/item/reagent_containers/food/snacks/grown
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	dried_type = null
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
@@ -79,7 +79,7 @@
 	seed = /obj/item/seeds/wheat
 	name = "wheat grain"
 	desc = ""
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "wheat"
 	gender = PLURAL
 	filling_color = "#F0E68C"
@@ -93,7 +93,7 @@
 	seed = /obj/item/seeds/wheat/oat
 	name = "oat grain"
 	desc = ""
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "oat"
 	gender = PLURAL
 	filling_color = "#556B2F"
@@ -107,7 +107,7 @@
 	seed = /obj/item/seeds/rice
 	name = "rice grain"
 	desc = "Rice grains, ready to be worked with water to be cleaned."
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "rice"
 	gender = PLURAL
 	filling_color = "#f0f0f0"
@@ -128,7 +128,7 @@
 	tastes = list("apple" = 1)
 	trash = /obj/item/trash/applecore
 	faretype = FARE_POOR
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	slot_flags = ITEM_SLOT_HEAD
 	worn_x_dimension = 64
@@ -340,7 +340,7 @@
 /obj/item/reagent_containers/food/snacks/sugar
 	name = "sugar"
 	desc = "Milled sugarcane, sweet as can be."
-	icon = 'icons/roguetown/items/produce.dmi'
+	icon = 'icons/items/produce.dmi'
 	icon_state = "salt"
 	tastes = list("sweet" = 1)
 	list_reagents = list(/datum/reagent/consumable/sugar = 15)
@@ -365,7 +365,7 @@
 	name = "sunflower"
 	desc = "A large, bright yellow flower. Can be worn on the head."
 	icon_state = "sunflower"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head_items.dmi'
 	seed = /obj/item/seeds/sunflower
 	slot_flags = ITEM_SLOT_HEAD
 	throwforce = 0

@@ -300,7 +300,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/infestation
 	duration = 10 SECONDS
 	effectedstats = list(STATKEY_CON = -2)
-	var/static/mutable_appearance/rotten = mutable_appearance('icons/roguetown/mob/rotten.dmi', "rotten")
+	var/static/mutable_appearance/rotten = mutable_appearance('icons/mob/rotten.dmi', "rotten")
 
 /datum/status_effect/buff/infestation/on_apply()
 	. = ..()

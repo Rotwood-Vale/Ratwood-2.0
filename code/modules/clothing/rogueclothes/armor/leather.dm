@@ -51,12 +51,12 @@
 /obj/item/clothing/armor/gambeson/tailcoat
 	name = "tailcoat"
 	desc = "A finely-sewn tailcoat often worn by those on the brink of the upper echelons of Astratan caste."
-	icon = 'icons/roguetown/clothing/armor.dmi'
+	icon = 'icons/clothing/armor.dmi'
 	icon_state = "butlercoat"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/armor.dmi'
 	item_state = "butlercoat"
 	detail_tag = "_detail"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_maids.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_maids.dmi'
 	detail_color = CLOTHING_BLACK
 	slot_flags = ITEM_SLOT_ARMOR
 	armor = ARMOR_PADDED
@@ -82,8 +82,8 @@
 	name = "forester's armor"
 	desc = "A hardened leather harness with a large pauldron worn over a maille coat, associated with the wardens."
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	icon = 'icons/roguetown/clothing/special/warden.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
+	icon = 'icons/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/warden.dmi'
 	icon_state = "forestleather"
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/upgraded
@@ -143,7 +143,7 @@
 	icon_state = "confessorcoat"
 	item_state = "confessorcoat"
 	body_parts_covered = COVERAGE_FULL
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_armor.dmi'
 	armor = ARMOR_LEATHER_STUDDED
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE	
@@ -256,7 +256,7 @@
 	icon_state = "sailorvest"
 	color = null
 	slot_flags = ITEM_SLOT_ARMOR
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_armor.dmi'
 	sleevetype = "shirt"
 	sewrepair = TRUE
 
@@ -267,7 +267,7 @@
 	name = "silk jacket"
 	desc = "A soft and comfortable jacket."
 	icon_state = "nightman"
-	sleeved = 'icons/roguetown/clothing/onmob/armor.dmi'
+	sleeved = 'icons/clothing/onmob/armor.dmi'
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
@@ -283,8 +283,8 @@
 /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	name = "leather coat"
 	desc = "A stylish coat worn by Duelists of Valoria. Light and flexible, it does not impede the complex movements they are known for. Well padded."
-	icon = 'icons/roguetown/clothing/armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
+	icon = 'icons/clothing/armor.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/armor.dmi'
 
 	icon_state = "bwleathercoat"
 	item_state = "bwleathercoat"

@@ -146,7 +146,7 @@
 //! --BLACKSTONE SCROLLS-- !/
 /obj/item/book/granter/spell/blackstone/
 	desc = "A scroll of potential known only to those that can decipher its secrets."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	oneuse = TRUE
 	drop_sound = 'sound/foley/dropsound/paper_drop.ogg'
 	pickup_sound =  'sound/blank.ogg'
@@ -326,7 +326,7 @@
 /obj/item/book/granter/spell_points
 	name = "Arcyne Insight"
 	icon_state = "scrollpurple"
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	oneuse = TRUE
 	var/spellpoints = 3
 	drop_sound = 'sound/foley/dropsound/paper_drop.ogg'

@@ -3,7 +3,7 @@
 	desc = "Sweet secrets whispered so freely."
 	var/speaking = TRUE
 	sellprice = 20
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "scomite"
 	gripped_intents = null
 	dropshrink = 0.75
@@ -14,7 +14,7 @@
 	experimental_inhand = FALSE
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP|ITEM_SLOT_RING
 	possible_item_intents = list(INTENT_GENERIC)
-	sleeved = 'icons/roguetown/clothing/onmob/neck.dmi'
+	sleeved = 'icons/clothing/onmob/neck.dmi'
 	grid_width = 32
 	grid_height = 32
 	var/fakename = "secret whisperer"

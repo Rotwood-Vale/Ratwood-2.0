@@ -1,7 +1,7 @@
 /obj/item/clothing/head/roguetown
 	name = "hat"
 	desc = ""
-	icon = 'icons/roguetown/clothing/head.dmi'
+	icon = 'icons/clothing/head.dmi'
 	icon_state = "top_hat"
 	item_state = "that"
 	body_parts_covered = HEAD|HAIR

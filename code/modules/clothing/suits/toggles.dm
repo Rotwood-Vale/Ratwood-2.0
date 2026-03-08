@@ -115,8 +115,8 @@
 /obj/item/clothing/head/hooded
 	var/obj/item/clothing/connected_cloak
 	dynamic_hair_suffix = ""
-	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+	icon = 'icons/clothing/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head.dmi'
 
 /obj/item/clothing/head/hooded/Destroy()
 	if(connected_cloak)

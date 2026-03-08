@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/noticeboard
 	name = "Notice Board"
 	desc = "A large wooden notice board, carrying postings from all across the realm. A ZAD perch sits atop it."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	icon_state = "noticeboard0"
 	density = TRUE
 	anchored = TRUE

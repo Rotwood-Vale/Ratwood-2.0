@@ -5,7 +5,7 @@
 	name = "\improper Streetpipe"
 	desc = "Also known as the People's Mouth, so long as the people can afford the ratfeed to pay for it."
 	icon_state = "broadcaster_crass"
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	blade_dulling = DULLING_BASH
 	max_integrity = 0
 	density = TRUE
@@ -109,7 +109,7 @@
 	name = "\improper Streetpipe"
 	desc = "Also known as the People's Mouth, so long as the people can afford the ratfeed to pay for it."
 	icon_state = "broadcaster_crass"
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	var/is_locked = FALSE
 
 /obj/structure/broadcast_horn/paid/examine()

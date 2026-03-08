@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/rogue/demon
 	name = "haunt"
 	desc = ""
-	icon = 'icons/roguetown/mob/monster/wraith.dmi'
+	icon = 'icons/mob/monster/wraith.dmi'
 	icon_state = "haunt"
 	icon_living = "haunt"
 	icon_dead = null

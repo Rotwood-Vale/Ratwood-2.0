@@ -3,7 +3,7 @@
 /obj/item/scrying
 	name = "scrying orb"
 	desc = "On it's glass depths, you can scry on many beings..."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state ="scrying"
 	throw_speed = 3
 	throw_range = 7
@@ -27,7 +27,7 @@
 /obj/item/scrying/eye
 	name = "accursed eye"
 	desc = "It is pulsating."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state ="scryeye"
 	cooldown = 5 MINUTES
 
@@ -367,7 +367,7 @@ Necra's Censer
 /obj/item/necra_censer
 	name = "Necra's censer"
 	desc = "A small bronze censer that expels an otherworldly mist."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state ="necra_censer"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -393,7 +393,7 @@ Necra's Censer
 /obj/item/circuitus_scroll
 	name = "Circuitus Scroll"
 	desc = "A scroll prepared for use in the art of Circuitus. Write an incantation upon this scroll and perform Circuitus while holding it to perform the spell written."
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	icon_state = "scroll"
 	w_class = WEIGHT_CLASS_TINY
 	max_integrity = 30
@@ -423,7 +423,7 @@ Necra's Censer
 
 /obj/item/memory_string
 	name = "memory string"
-	icon = 'icons/roguetown/items/natural.dmi'
+	icon = 'icons/items/natural.dmi'
 	icon_state = "fibers"
 	possible_item_intents = list(/datum/intent/use)
 	desc = "A memory string. For use in the art of circuitus, as a means to store iotas."

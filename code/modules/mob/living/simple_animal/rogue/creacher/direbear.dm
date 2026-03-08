@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/direbear	//This way don't need new unqiue AI controller. Wolves are modular anyway.
-	icon = 'icons/roguetown/mob/monster/direbear.dmi'
+	icon = 'icons/mob/monster/direbear.dmi'
 	name = "direbear"
 	icon_state = "direbear"
 	icon_living = "direbear"
@@ -76,7 +76,7 @@
 	name = "remains"
 	gender = PLURAL
 	icon_state = "bones"
-	icon = 'icons/roguetown/mob/monster/direbear.dmi'
+	icon = 'icons/mob/monster/direbear.dmi'
 
 /datum/intent/simple/bite/bear
 	clickcd = RAT_ATTACK_SPEED	//Slightly slower than wolfs by .1

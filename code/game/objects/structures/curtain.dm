@@ -1,7 +1,7 @@
 /obj/structure/curtain
 	name = "curtain"
 	desc = ""
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	var/icon_type = "curtain" // used in making the icon state
 	icon_state = "curtain-open"
 	color = "#ffffff" // Default color, mappers can easily change it.

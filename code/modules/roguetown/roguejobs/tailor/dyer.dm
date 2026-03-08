@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 /obj/machinery/gear_painter
 	name = "Dye Station"
 	desc = "A station to give your apparel a fresh new color! Recommended to use with white items for best results."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "dyestation"
 	density = TRUE
 	anchored = TRUE
@@ -486,7 +486,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 // PAINTBRUSH
 
 /obj/item/dye_brush
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/items/misc.dmi'
 	name = "dye brush"
 	desc = "A sizeable brush made of the finest mane-hairs. Thick dye adheres to it well."
 	icon_state = "dbrush"
@@ -499,7 +499,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 
 /obj/item/dye_brush/update_icon()
 	if(dye)
-		var/mutable_appearance/M = mutable_appearance('icons/roguetown/items/misc.dmi', "dbrush_colour")
+		var/mutable_appearance/M = mutable_appearance('icons/items/misc.dmi', "dbrush_colour")
 		M.color = dye
 		M.alpha = 150
 		add_overlay(M)

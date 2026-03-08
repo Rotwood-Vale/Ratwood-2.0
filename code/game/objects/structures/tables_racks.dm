@@ -252,7 +252,7 @@
 /obj/structure/table/wood
 	name = "wooden table"
 	desc = ""
-	icon = 'icons/roguetown/misc/tables.dmi'
+	icon = 'icons/misc/tables.dmi'
 	icon_state = "tablewood"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
@@ -344,7 +344,7 @@
 /obj/structure/table/church
 	name = "stone table"
 	desc = ""
-	icon = 'icons/roguetown/misc/tables.dmi'
+	icon = 'icons/misc/tables.dmi'
 	icon_state = "churchtable"
 	max_integrity = 300
 	smooth = 0
@@ -375,7 +375,7 @@
 	dir = 1
 
 /obj/structure/table/church/m
-	icon = 'icons/roguetown/misc/tables.dmi'
+	icon = 'icons/misc/tables.dmi'
 	icon_state = "churchtable_mid"
 
 /obj/structure/table/church/m/alt
@@ -384,7 +384,7 @@
 /obj/structure/table/finestone
 	name = "fine stone table"
 	desc = ""
-	icon = 'icons/roguetown/misc/tables.dmi'
+	icon = 'icons/misc/tables.dmi'
 	icon_state = "stonetable_small"
 	max_integrity = 400
 	smooth = 0
@@ -394,7 +394,7 @@
 /obj/structure/table/vtable
 	name = "ancient wooden table"
 	desc = ""
-	icon = 'icons/roguetown/misc/tables.dmi'
+	icon = 'icons/misc/tables.dmi'
 	icon_state = "vtable"
 	max_integrity = 300
 	smooth = 0
@@ -402,14 +402,14 @@
 	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/table/vtable/v2
-	icon = 'icons/roguetown/misc/tables.dmi'
+	icon = 'icons/misc/tables.dmi'
 	icon_state = "vtable2"
 	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/table/fine
 	name = "wooden table"
 	desc = ""
-	icon = 'icons/roguetown/misc/tables.dmi'
+	icon = 'icons/misc/tables.dmi'
 	icon_state = "tablefine"
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
@@ -420,13 +420,13 @@
 /obj/structure/table/finer
 	name = "wooden table"
 	desc = ""
-	icon = 'icons/roguetown/misc/tables.dmi'
+	icon = 'icons/misc/tables.dmi'
 	icon_state = "tablefine2"
 
 /obj/structure/table/cooling //cooling table made by artificers
 	name = "Cooling Table"
 	desc = "Used to keep your food cool and rot free"
-	icon = 'icons/roguetown/misc/tables.dmi'
+	icon = 'icons/misc/tables.dmi'
 	icon_state = "tablewood_alt"
 	resistance_flags = FLAMMABLE
 	max_integrity = 40 //making this weak, its fragile
@@ -504,7 +504,7 @@
 /obj/structure/table/wood/folding
 	name = "folding table"
 	desc = "A folding table, useful for setting up a temporary workspace."
-	icon = 'icons/roguetown/misc/gadgets.dmi'
+	icon = 'icons/misc/gadgets.dmi'
 	icon_state = "foldingtableDeployed"
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
@@ -596,7 +596,7 @@
 
 
 /obj/structure/rack/rogue
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "rack"
 	climbable = TRUE
 	climb_offset = 10
@@ -605,7 +605,7 @@
 	qdel(src)
 
 /obj/structure/rack/rogue/shelf
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "shelf"
 	density = FALSE
 	climbable = FALSE
@@ -614,7 +614,7 @@
 	pixel_y = 32
 
 /obj/structure/rack/rogue/shelf/big
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "shelf_big"
 	climbable = FALSE
 	climb_offset = 0

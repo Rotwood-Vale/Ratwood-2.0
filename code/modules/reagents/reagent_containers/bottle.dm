@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 /obj/item/reagent_containers/glass/bottle
 	name = "bottle"
 	desc = "A bottle with a cork."
-	icon = 'icons/roguetown/items/cooking.dmi'
+	icon = 'icons/items/cooking.dmi'
 	icon_state = "clear_bottle1"
 	amount_per_transfer_from_this = 10
 	amount_per_gulp = 5

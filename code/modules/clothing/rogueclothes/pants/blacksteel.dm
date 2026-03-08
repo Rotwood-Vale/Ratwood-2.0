@@ -2,9 +2,9 @@
 	name = "blacksteel plate chausses"
 	desc = "Reinforced leg plates forged of durable blacksteel, using a modern design."
 	gender = PLURAL
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
-	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
+	sleeved = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplatelegs"
 	item_state = "bplatelegs"
 	sewrepair = FALSE
@@ -21,8 +21,8 @@
 	name = "ancient blacksteel plate chausses"
 	desc = "Reinforced leg plates forged of durable blacksteel."
 	gender = PLURAL
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bklegs"
 	item_state = "bklegs"
 	sewrepair = FALSE

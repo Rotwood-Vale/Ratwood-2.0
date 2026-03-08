@@ -5,7 +5,7 @@
 	name = "PARENT SPHERE"
 	desc = "YOU SHOULD NOT BE SEEING THIS. YELL AT CARL!!!"
 	projectile_type = /obj/projectile/bullet/firearm
-	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon = 'icons/weapons/ammo.dmi'
 	icon_state = "musketball"
 	possible_item_intents = list(/datum/intent/use)
 	dropshrink = 0.5
@@ -25,7 +25,7 @@
 	damage_type = BRUTE
 	woundclass = BCLASS_PIERCE//This assures pen, similar to crossbows.
 	flag = "piercing"//Vestigial, but just in case we use another flag later.
-	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon = 'icons/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/bullet
 	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
@@ -125,7 +125,7 @@
 /obj/item/quiver/bullet
 	name = "lead ball pouch"
 	desc = "This pouch can hold a handful of musket balls, or, perhaps, grapeshot."
-	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon = 'icons/weapons/ammo.dmi'
 	icon_state = "slingpouch"//Need another sprite.
 	item_state = "slingpouch"
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_NECK

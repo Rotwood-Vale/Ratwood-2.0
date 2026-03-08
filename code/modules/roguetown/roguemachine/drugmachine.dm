@@ -8,7 +8,7 @@
 /obj/structure/roguemachine/drugmachine
 	name = "PURITY"
 	desc = "You want to destroy your life."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "purity"
 	density = TRUE
 	blade_dulling = DULLING_BASH

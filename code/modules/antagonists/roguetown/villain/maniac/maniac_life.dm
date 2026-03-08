@@ -87,7 +87,7 @@
 	var/mob_state = pick("mom", "shadow", "deepone")
 	if(mob_message == "It's mom!")
 		mob_state = "mom"
-	var/image/mob_image = image('icons/roguetown/maniac/dreamer_mobs.dmi', spawning_turf, mob_state, FLOAT_LAYER, get_dir(spawning_turf, dreamer))
+	var/image/mob_image = image('icons/maniac/dreamer_mobs.dmi', spawning_turf, mob_state, FLOAT_LAYER, get_dir(spawning_turf, dreamer))
 	mob_image.plane = GAME_PLANE_UPPER
 	dreamer.client.images += mob_image
 	to_chat(dreamer, span_userdanger("<span class='big'>[mob_message]</span>"))
@@ -161,7 +161,7 @@
 		INVOKE_ASYNC(src, PROC_REF(handle_wall), wall, dreamer)
 
 /datum/antagonist/maniac/proc/handle_wall(turf/closed/wall, mob/living/dreamer)
-	var/image/shit = image('icons/roguetown/maniac/shit.dmi', wall, "splat[rand(1,8)]")
+	var/image/shit = image('icons/maniac/shit.dmi', wall, "splat[rand(1,8)]")
 	dreamer.client?.images += shit
 	var/offset = pick(-1, 1, 2)
 	var/disappearfirst = rand(2 SECONDS, 4 SECONDS)
@@ -184,7 +184,7 @@
 		INVOKE_ASYNC(src, PROC_REF(handle_waking_up_floor), floor, dreamer)
 
 /datum/antagonist/maniac/proc/handle_waking_up_floor(turf/open/floor, mob/living/dreamer)
-	var/mutable_appearance/fake_floor = image('icons/roguetown/maniac/dreamer_floors.dmi', floor,  pick("rcircuitanim", "gcircuitanim"), floor.layer + 0.1)
+	var/mutable_appearance/fake_floor = image('icons/maniac/dreamer_floors.dmi', floor,  pick("rcircuitanim", "gcircuitanim"), floor.layer + 0.1)
 	dreamer.client.images += fake_floor
 	var/offset = pick(-1, 1, 2)
 	var/disappearfirst = 3 SECONDS

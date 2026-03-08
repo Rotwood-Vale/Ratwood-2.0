@@ -161,7 +161,7 @@
 	damage_deflection = 14
 	icon_state = "sword1"
 	sheathe_icon = "sword1"
-	icon = 'icons/roguetown/weapons/swords32.dmi'
+	icon = 'icons/weapons/swords32.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/rogue_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/rogue_righthand.dmi'
 	parrysound = list(
@@ -285,7 +285,7 @@
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/sword/peel, /datum/intent/sword/chop)
 	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
 	icon_state = "longsword"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	item_state = "longsword"
 	sheathe_icon = "longsword"
 	lefthand_file = 'icons/mob/inhands/weapons/roguebig_lefthand.dmi'
@@ -811,7 +811,7 @@
 /obj/item/rogueweapon/sword/long/kriegmesser/silver
 	name = "silver broadsword"
 	desc = "A two-handed broadsword, fitted with a blade of pure silver. Each swing commands more effort than the last, but not without purpose. One blow to crack the deadite's leg in twain; and a heartbeat later, another to splatter the soil with bile and teeth."
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	icon_state = "silverbroadsword"
 	sheathe_icon = "psysword"
 	force = 20
@@ -838,7 +838,7 @@
 /obj/item/rogueweapon/sword/long/kriegmesser/psy
 	name = "psydonic broadsword"
 	desc = "Sunder, cleave, smite; a sea of coagulated blackness, speckled with crimson. Absolve, cherish, endure; the will of one, christened to save Psydonia when all else is lost. </br>'Even here it is not safe, and even this grave has been defaced. Yet, someone has written on this stone, in some angry hand - HOPE RIDES ALONE..'"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	icon_state = "silverbroadsword"
 	sheathe_icon = "psysword"
 	force = 20
@@ -1001,7 +1001,7 @@
 /obj/item/rogueweapon/sword/short/silver
 	name = "silver shortsword"
 	desc = "A shortsword with a blade of pure silver. In the marginalia of tomes depicting Psydonia's crusading orders, there is no sight more iconic than that of the hauberk-draped paladin; a kite shield in one hand, and this glimmering sidearm in the other."
-	icon = 'icons/roguetown/weapons/daggers32.dmi'
+	icon = 'icons/weapons/daggers32.dmi'
 	icon_state = "silverswordshort"
 	sheathe_icon = "psyswordshort"
 	force = 20
@@ -1168,7 +1168,7 @@
 	force = 24
 	wdefense = 6	//Has chop mode, so slightly less defense. Slightly.
 	icon_state = "tabi"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/chop)
 	alt_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike, /datum/intent/sword/chop)
 	bigboy = TRUE
@@ -1194,7 +1194,7 @@
 	desc = "A practically brand new sword type with a straight, slender and sharply pointed blade meant to be wielded in one hand. \
 		Originating in the islands of Etrusca, its name comes from the term \"spada ropera\" (Literally \"dress sword\") due to its primary function being that of an accessory. \
 		A very young type of fighting technique for this weapon is emerging in the island, aptly named \"Destreza\" for dexterity."
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	icon_state = "rapier"
 	sheathe_icon = "rapier"
 	bigboy = TRUE
@@ -1218,7 +1218,7 @@
 /obj/item/rogueweapon/sword/rapier/vaquero
 	name = "cup-hilt rapier"
 	desc = "A special variant of an Etruscan rapier. The cup hilt of this weapon is both simpler to produce and more protective than the type of traditional design of current rapiers."
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	icon_state = "cup_hilt_rapier"
 	wdefense = 8
 	force = 25
@@ -1403,7 +1403,7 @@
 /obj/item/rogueweapon/sword/rapier/eora
 	name = "\"Heartstring\""
 	desc = "A specialty-made bilbo hilt rapier made in service to Lady Eora. For the time when soft words can no longer be spoken, and hearts are to be pierced."
-	icon = 'icons/roguetown/weapons/swords32.dmi'
+	icon = 'icons/weapons/swords32.dmi'
 	icon_state = "eorarapier"
 	sheathe_icon = "eorarapier"
 	grid_width = 32
@@ -1809,7 +1809,7 @@
 	name = "kriegsmesser"
 	desc = "A large two-handed sword with a single-edged blade, a crossguard and a knife-like hilt. \
 	It is meant to be wielded with both hands and is a popular weapon amongst Grenzelhoftian mercenaries."
-	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon = 'icons/weapons/swords64.dmi'
 	icon_state = "kriegmesser"
 	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/krieg, /datum/intent/rend/krieg, /datum/intent/sword/strike)
@@ -1819,7 +1819,7 @@
 /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
 	name = "ssangsudo"
 	desc = "A style of long blade used by the kouken of Kazengun. A weapon supremely skilled in the art of cutting."
-	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon = 'icons/weapons/swords64.dmi'
 	icon_state = "ssangsudo"
 	sheathe_icon = "ssangsudo"
 	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/rend, /datum/intent/sword/strike) // better rend by .05
@@ -1859,7 +1859,7 @@
 	force = 20
 	name = "hook sword"
 	desc = "A steel sword with a hooked design at the tip of it; perfect for disarming enemies. Its back edge is sharpened and the hilt appears to have a sharpened tip."
-	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon = 'icons/weapons/swords64.dmi'
 	icon_state = "hook_sword"
 	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/hook, /datum/intent/sword/strike, /datum/intent/sword/disarm)
 	max_integrity = 180
@@ -2047,7 +2047,7 @@
 	name = "'Law'"
 	desc = "A lavish sabre made for the captain, this one of a kind blacksteel beauty is meant to be used to uphold the law."
 	icon_state = "capsabre"
-	icon = 'icons/roguetown/weapons/special/captain.dmi'
+	icon = 'icons/weapons/special/captain.dmi'
 	force = 25 // same as elvish sabre
 	max_integrity = 200 // more integrity because blacksteel, a bit less than the flamberge
 	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/sword/strike)
@@ -2080,7 +2080,7 @@
 /obj/item/rogueweapon/sword/long/shotel
 	name = "steel shotel"
 	icon_state = "shotel_steel"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	desc = "A long curved blade of Ranesheni Design."
 	possible_item_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/long) //Shotels get 2 tile reach.
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/long)
@@ -2149,7 +2149,7 @@
 /obj/item/rogueweapon/sword/long/elf
 	name = "elven longsword"
 	desc = "This mighty flowing sword is of classic elven design."
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	icon_state = "elflongsword"
 	sellprice = 50
 	sheathe_icon = "elfsword"

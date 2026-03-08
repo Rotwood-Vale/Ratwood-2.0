@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/troll/axe
 	name = "troll skull-splitter"
 	desc = "This one seems smarter than the rest... And its axe could cut a man in two."
-	icon = 'icons/roguetown/mob/monster/trolls/troll_axe.dmi'
+	icon = 'icons/mob/monster/trolls/troll_axe.dmi'
 	perfect_butcher_results = list(
 		/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 5,
 		/obj/item/natural/hide = 5,

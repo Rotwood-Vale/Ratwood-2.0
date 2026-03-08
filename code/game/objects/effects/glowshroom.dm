@@ -6,7 +6,7 @@
 	anchored = TRUE
 	opacity = 0
 	density = FALSE
-	icon = 'icons/roguetown/misc/foliage.dmi'
+	icon = 'icons/misc/foliage.dmi'
 	icon_state = "glowshroom1" //replaced in New
 	layer = SPACEVINE_LAYER //A bit high but keeps it from fucking layering UNDER EVERYTHING
 	light_system = MOVABLE_LIGHT

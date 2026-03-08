@@ -1,7 +1,7 @@
 /obj/structure/flora/roguegrass/herb
 	name = "herbbush"
 	desc = "A bush,for an herb. This shouldn't show up."
-	icon = 'icons/roguetown/misc/herbfoliage.dmi'
+	icon = 'icons/misc/herbfoliage.dmi'
 	icon_state = "spritemeplz"
 	var/res_replenish
 	max_integrity = 10
@@ -183,7 +183,7 @@
 
 /obj/structure/flora/roguegrass/herb/manabloom
 	name = "manabloom"
-	icon = 'icons/roguetown/misc/crops.dmi' // this is awful why am I doing this
+	icon = 'icons/misc/crops.dmi' // this is awful why am I doing this
 	icon_state = "manabloom2"
 
 	herbtype = /obj/item/reagent_containers/food/snacks/grown/manabloom

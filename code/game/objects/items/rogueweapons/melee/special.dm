@@ -35,7 +35,7 @@
 	name = "master's rod"
 	desc = "Bend the knee. Can't be used outside of the manor."
 	icon_state = "scepter"
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.75
 	wlength = WLENGTH_NORMAL
@@ -116,7 +116,7 @@
 	force = 25
 	force_wielded = 25
 	name = "stunmace"
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	icon_state = "stunmace0"
 	desc = "Pain is our currency here."
 	gripped_intents = null
@@ -253,7 +253,7 @@
 	name = "militia goedendag"
 	desc = "Clubs - and their spiked descendants - are older than most languages and civilizations. Tyme hasn't made them any less deadly, however. "
 	icon_state = "peasantwarclub"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	smeltresult = /obj/item/rogueore/coal
 	sharpness = IS_SHARP
 	walking_stick = TRUE
@@ -330,7 +330,7 @@
 	name = "militia spear"
 	desc = "Pitchforks and hoes traditionally till the soil. In tymes of peril, however, it isn't uncommon for a militiaman to pound them into polearms."
 	icon_state = "peasantwarspear"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	minstr = 8
 	max_blade_int = 120
 	max_integrity = 200
@@ -469,7 +469,7 @@
 	name = "scythe"
 	desc = "The bane of fields, the trimmer of grass, the harvester of wheat, and - depending on who you ask - the shepherd of souls to the afterlyfe."
 	icon_state = "peasantscythe"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -507,7 +507,7 @@
 	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick, /datum/intent/stab/militia)
 	icon_state = "milpick"
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	sharpness = IS_SHARP
 	wlength = WLENGTH_SHORT
 	max_blade_int = 140
@@ -733,7 +733,7 @@
 	throwforce = 32//It'll be funny. Trust.
 	possible_item_intents = list(SPEAR_BASH)
 	gripped_intents = list(SPEAR_THRUST, /datum/intent/spear/bash/ranged, /datum/intent/mace/smash/eaglebeak)//GET THEM OFF OF ME!!! OOOUGH!!!
-	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon = 'icons/weapons/polearms64.dmi'
 	icon_state = "standard_old"
 	max_blade_int = 260
 	max_integrity = 300//+50 from base. Because blacksteel or something.

@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/lever
 	name = "lever"
 	desc = "I want to pull it."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "leverfloor0"
 	density = FALSE
 	anchored = TRUE
@@ -228,7 +228,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/pressure_plate //vanderlin port
 	name = "pressure plate"
 	desc = "Be careful. Stepping on this could either mean a bomb exploding or a door closing on you."
-	icon = 'icons/roguetown/misc/traps.dmi'
+	icon = 'icons/misc/traps.dmi'
 	icon_state = "pressureplate"
 	max_integrity = 45 // so it gets destroyed when used to explode a bomb
 	density = FALSE
@@ -303,7 +303,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/englauncher
 	name = "Engineer's Launcher"
 	desc = "A engineering contraption made to launch various objects in the direction its pointed."
-	icon = 'icons/roguetown/misc/engineering_structure.dmi'
+	icon = 'icons/misc/engineering_structure.dmi'
 	icon_state = "activator"
 	max_integrity = 45 // so it gets destroyed when used to explode a bomb
 	//w_class = WEIGHT_CLASS_HUGE // mechanical stuff is usually pretty heavy.
@@ -602,7 +602,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/floordoor
 	name = "floorhatch"
 	desc = "A handy floor hatch for people who need privacy upstairs."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "floorhatch1"
 	density = FALSE
 	anchored = TRUE
@@ -718,7 +718,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	desc = "The mad duke's hungriest pet."
 	density = FALSE
 	nomouseover = TRUE
-	icon = 'icons/roguetown/misc/96x96.dmi'
+	icon = 'icons/misc/96x96.dmi'
 	icon_state = "kybraxor1"
 	redstone_id = "gatelava"
 	var/openn = FALSE

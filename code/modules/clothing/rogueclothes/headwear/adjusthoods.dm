@@ -7,8 +7,8 @@
 	color = CLOTHING_BROWN
 	icon_state = "basichood"
 	item_state = "basichood"
-	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi' //Overrides slot icon behavior
+	icon = 'icons/clothing/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head.dmi' //Overrides slot icon behavior
 	alternate_worn_layer  = 8.9 //On top of helmet
 	body_parts_covered = NECK|HAIR|EARS|HEAD
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
@@ -72,8 +72,8 @@
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEFACE
 	sleevetype = null
 	sleeved = null
-	icon = 'icons/roguetown/clothing/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi' //Overrides slot icon behavior
+	icon = 'icons/clothing/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/head.dmi' //Overrides slot icon behavior
 	alternate_worn_layer  = 8.9 //On top of helmet
 	body_parts_covered = HEAD|HAIR|EARS|NECK
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
@@ -145,8 +145,8 @@
 	color = null
 	icon_state = "poacherhood"
 	item_state = "poacherhood"
-	icon = 'icons/roguetown/clothing/special/warden.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
+	icon = 'icons/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/warden64.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -162,8 +162,8 @@
 	desc = "A leather hood, sewn larger than usual to accomodate a helmet. There's some dried blood on its broken left antler. The price for true freedom, paid with someone else's life."
 	icon_state = "poacherhood"
 	item_state = "poacherhood"
-	icon = 'icons/roguetown/clothing/special/warden.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
+	icon = 'icons/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/warden64.dmi'
 
 // Holy Hoods
 
@@ -173,7 +173,7 @@
 	color = null
 	icon_state = "astratahood"
 	item_state = "astratahood"
-	icon = 'icons/roguetown/clothing/head.dmi'
+	icon = 'icons/clothing/head.dmi'
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	dynamic_hair_suffix = ""
@@ -191,7 +191,7 @@
 	color = null
 	icon_state = "abyssorhood"
 	item_state = "abyssorhood"
-	icon = 'icons/roguetown/clothing/head.dmi'
+	icon = 'icons/clothing/head.dmi'
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	dynamic_hair_suffix = ""

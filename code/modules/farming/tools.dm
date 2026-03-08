@@ -6,7 +6,7 @@
 	name = "thresher"
 	desc = "A shredding tool for farmers."
 	icon_state = "flail"
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	item_state = "mace_greyscale"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -72,7 +72,7 @@
 	name = "sickle"
 	desc = "Rusted blade, worn handle, symbol of toil."
 	icon_state = "sickle"
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	item_state = "crysknife"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -118,7 +118,7 @@
 	desc = "A tool for tiling soil. It's all dirty and worn."
 	icon_state = "hoe"
 	slot_flags = ITEM_SLOT_BACK
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	item_state = "pitchfork"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
@@ -293,7 +293,7 @@
 	name = "pitchfork"
 	desc = "Iron tines on a sturdy shaft essential for farmlike labour."
 	icon_state = "pitchfork"
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	item_state = "pitchfork"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
@@ -328,7 +328,7 @@
 
 /obj/item/rogueweapon/pitchfork/copper
 	name = "copper pitchfork"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64

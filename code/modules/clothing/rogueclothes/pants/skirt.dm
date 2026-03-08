@@ -4,9 +4,9 @@
 	desc = "Long, flowing, and modest."
 	icon_state = "skirt"
 	item_state = "skirt"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/pants.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/pants.dmi'
 	sleevetype = "skirt"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/sleeves_pants.dmi'
 	alternate_worn_layer = (SHIRT_LAYER)
 	salvage_amount = 1
 

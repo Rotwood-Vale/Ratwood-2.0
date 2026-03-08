@@ -124,7 +124,7 @@
 /obj/item/clothing/neck/portalamulet
 	name = "Gate Amulet"
 	icon_state = "bloodtooth"
-	icon = 'icons/roguetown/clothing/neck.dmi'
+	icon = 'icons/clothing/neck.dmi'
 	var/uses = 3
 
 /obj/item/clothing/neck/portalamulet/Initialize(mapload)

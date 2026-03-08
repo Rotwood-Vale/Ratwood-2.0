@@ -21,8 +21,8 @@
 
 /obj/item/clothing/mask/rogue
 	name = ""
-	icon = 'icons/roguetown/clothing/masks.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/masks.dmi'
+	icon = 'icons/clothing/masks.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/masks.dmi'
 	body_parts_covered = FACE
 	slot_flags = ITEM_SLOT_MASK
 	experimental_inhand = FALSE
@@ -39,7 +39,7 @@
 		update_icon()
 		return
 
-	var/icon/J = new('icons/roguetown/clothing/onmob/masks.dmi')
+	var/icon/J = new('icons/clothing/onmob/masks.dmi')
 	var/list/istates = J.IconStates()
 	for(var/icon_s in istates)
 		if(findtext(icon_s, "[icon_state]_snout"))

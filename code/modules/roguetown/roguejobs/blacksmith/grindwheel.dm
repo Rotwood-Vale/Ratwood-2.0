@@ -1,7 +1,7 @@
 /obj/structure/fluff/grindwheel
 	name = "grinding wheel"
 	desc = "Steadily hums when operated, a massive wheel of grinding stone."
-	icon = 'icons/roguetown/misc/forge.dmi'
+	icon = 'icons/misc/forge.dmi'
 	icon_state = "grindwheel"
 	density = TRUE
 	anchored = FALSE

@@ -4,7 +4,7 @@
 /obj/structure/flora/roguetree
 	name = "old tree"
 	desc = "An old wicked tree that not even elves could love."
-	icon = 'icons/roguetown/misc/foliagetall.dmi'
+	icon = 'icons/misc/foliagetall.dmi'
 	icon_state = "t1"
 	opacity = 1
 	density = 1
@@ -144,7 +144,7 @@
 /obj/structure/flora/roguetree/burnt
 	name = "burnt tree"
 	desc = "Maybe lightning, maybe war, took the life of this once lively tree."
-	icon = 'icons/roguetown/misc/96x96.dmi'
+	icon = 'icons/misc/96x96.dmi'
 	icon_state = "t1"
 	stump_type = /obj/structure/flora/roguetree/stump/burnt
 	pixel_x = -32
@@ -157,7 +157,7 @@
 	name = "tree stump"
 	desc = "This stump is burnt. Maybe someone was trying to get coal the easy way."
 	icon_state = "st1"
-	icon = 'icons/roguetown/misc/96x96.dmi'
+	icon = 'icons/misc/96x96.dmi'
 	stump_type = null
 	pixel_x = -32
 	metalizer_result = /obj/machinery/anvil
@@ -181,7 +181,7 @@
 /obj/structure/flora/roguetree/underworld
 	name = "screaming tree"
 	desc = "Human faces everywhere."
-	icon = 'icons/roguetown/misc/foliagetall.dmi'
+	icon = 'icons/misc/foliagetall.dmi'
 	icon_state = "screaming1"
 	opacity = 1
 	density = 1
@@ -263,7 +263,7 @@
 /obj/structure/flora/roguegrass
 	name = "grass"
 	desc = "Green, soft, and lively."
-	icon = 'icons/roguetown/misc/foliage.dmi'
+	icon = 'icons/misc/foliage.dmi'
 	icon_state = "grass1"
 	attacked_sound = "plantcross"
 	destroy_sound = "plantcross"
@@ -454,7 +454,7 @@
 	return
 
 /obj/structure/flora/roguegrass/bush/wall/tall
-	icon = 'icons/roguetown/misc/foliagetall.dmi'
+	icon = 'icons/misc/foliagetall.dmi'
 	icon_state = "tallbush1"
 	opacity = 1
 	pixel_x = -16
@@ -480,7 +480,7 @@
 /obj/structure/flora/rogueshroom
 	name = "mushroom"
 	desc = "Mushrooms are the only happy beings in this land."
-	icon = 'icons/roguetown/misc/foliagetall.dmi'
+	icon = 'icons/misc/foliagetall.dmi'
 	icon_state = "mush1"
 	opacity = 0
 	density = 0
@@ -550,7 +550,7 @@
 	climbable = TRUE
 	climb_time = 0
 	density = TRUE
-	icon = 'icons/roguetown/misc/foliagetall.dmi'
+	icon = 'icons/misc/foliagetall.dmi'
 	plane = GAME_PLANE
 	layer = TABLE_LAYER
 	blade_dulling = DULLING_CUT
@@ -570,7 +570,7 @@
 	name = "rock"
 	desc = "A rock protuding from the ground."
 	icon_state = "rock1"
-	icon = 'icons/roguetown/misc/foliage.dmi'
+	icon = 'icons/misc/foliage.dmi'
 	opacity = 0
 	max_integrity = 50
 	climbable = TRUE
@@ -759,7 +759,7 @@
 /obj/structure/flora/rogueshroom/happy
 	name = "underdark mushroom"
 	icon_state = "happymush1"
-	icon = 'icons/roguetown/misc/foliagetall.dmi'
+	icon = 'icons/misc/foliagetall.dmi'
 	desc = "Mushrooms might be the happiest beings in this god forsaken place."
 
 /obj/structure/flora/rogueshroom/happy/mushroom2
@@ -787,7 +787,7 @@
 /obj/structure/flora/mushroomcluster
 	name = "mushroom cluster"
 	desc = "A cluster of mushrooms native to the underdark."
-	icon = 'icons/roguetown/misc/foliage.dmi'
+	icon = 'icons/misc/foliage.dmi'
 	icon_state = "mushroomcluster"
 	density = TRUE
 
@@ -798,7 +798,7 @@
 /obj/structure/flora/tinymushrooms
 	name = "small mushroom cluster"
 	desc = "A cluster of tiny mushrooms native to the underdark."
-	icon = 'icons/roguetown/misc/foliage.dmi'
+	icon = 'icons/misc/foliage.dmi'
 	icon_state = "tinymushrooms"
 
 /obj/structure/flora/roguetree/pine

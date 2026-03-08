@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/vaultbank
 	name = "\improper JAWBANK"
 	desc = "Collects and secures the treasury of the Grand Duchy of the vale."
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "jawbank"
 	density = TRUE
 	blade_dulling = DULLING_BASH

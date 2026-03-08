@@ -349,34 +349,34 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			continue
 		switch(kind)
 			if("shadow")
-				A = image('icons/roguetown/maniac/dreamer_mobs.dmi',H,"M3")
+				A = image('icons/maniac/dreamer_mobs.dmi',H,"M3")
 				A.name = "???"
 				target.playsound_local(target, pick('sound/misc/heroin_rush.ogg'), 80, 1)
 				target.playsound_local(H, pick('sound/vo/mobs/ghost/whisper (1).ogg','sound/vo/mobs/ghost/whisper (2).ogg','sound/vo/mobs/ghost/whisper (3).ogg'), 100, 1)
 			if("monster")//Horror
-				A = image('icons/roguetown/mob/monster/horrors.dmi',H,"horror1")
+				A = image('icons/mob/monster/horrors.dmi',H,"horror1")
 				A.name = "ZIZOZIZOZIZO"
 				target.playsound_local(H, pick('sound/combat/gib (1).ogg'), 80, 1)
 				target.playsound_local(target, pick('sound/misc/hel.ogg'), 80, 1)
 			if("skeleton")//skeleton
-				A = image('icons/roguetown/mob/skeleton_male.dmi',H,"z")
+				A = image('icons/mob/skeleton_male.dmi',H,"z")
 				A.name = "Skeleton"
 				target.playsound_local(H, pick('sound/vo/mobs/skel/skeleton_rage (1).ogg','sound/vo/mobs/skel/skeleton_rage (2).ogg','sound/vo/mobs/skel/skeleton_rage (3).ogg'), 80, 1)
 			if("ww")//ww
-				A = image('icons/roguetown/mob/monster/werewolf.dmi',H,"wwolf_m")
+				A = image('icons/mob/monster/werewolf.dmi',H,"wwolf_m")
 				A.name = "Moon Howler"
 				target.playsound_local(H, pick('sound/combat/gib (1).ogg'), 80, 1)
 				target.playsound_local(H, pick('sound/vo/mobs/wwolf/roar.ogg'), 80, 1)
 			if("spider")//Spider
-				A = image('icons/roguetown/mob/monster/spider.dmi',H,"skallax")
+				A = image('icons/mob/monster/spider.dmi',H,"skallax")
 				A.name = "Ambush spider"
 				target.playsound_local(H, 'sound/vo/mobs/spider/idle (1).ogg', 80, 1)
 			if("maneater")//Maneater
-				A = image('icons/roguetown/mob/monster/maneater.dmi',H,"maneater")
+				A = image('icons/mob/monster/maneater.dmi',H,"maneater")
 				A.name = "Maneater"
 				target.playsound_local(H, pick('sound/vo/mobs/plant/attack (1).ogg','sound/vo/mobs/plant/attack (2).ogg','sound/vo/mobs/plant/attack (3).ogg','sound/vo/mobs/plant/attack (4).ogg'), 80, 1)
 			if("demon")//Demon
-				A = image('icons/roguetown/mob/monster/hellkeeper.dmi',H,"hellkeeper")
+				A = image('icons/mob/monster/hellkeeper.dmi',H,"hellkeeper")
 				A.name = "RUN"
 				target.playsound_local(H, pick('sound/combat/caught.ogg','sound/misc/astratascream.ogg'), 80, 1)
 				target.playsound_local(target, 'sound/misc/carriage1.ogg', 80, 1)
@@ -407,7 +407,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	feedback_details += "Type: [kind]"
 	switch(kind)
 		if("shadow")//shadowperson
-			A = image('icons/roguetown/maniac/dreamer_mobs.dmi',target,"M3")
+			A = image('icons/maniac/dreamer_mobs.dmi',target,"M3")
 			target.playsound_local(target, pick('sound/misc/heroin_rush.ogg'), 60, 1)
 			target.playsound_local(target, pick('sound/vo/mobs/ghost/whisper (1).ogg','sound/vo/mobs/ghost/whisper (2).ogg','sound/vo/mobs/ghost/whisper (3).ogg'), 80, 1)
 			/*sleep(10) //I'm not good enough at coding to know how to implement these sounds, but here are the sounds if you want to fix and add them
@@ -417,7 +417,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			sleep(230)
 			target.playsound_local(target, pick('sound/vo/mobs/ghost/death.ogg'), 80, 1)*/
 		if("monster")//Bodyhorror
-			A = image('icons/roguetown/mob/monster/horrors.dmi',target,"horror1")
+			A = image('icons/mob/monster/horrors.dmi',target,"horror1")
 			target.playsound_local(target, pick('sound/combat/gib (1).ogg'), 80, 1)
 			target.playsound_local(target, pick('sound/misc/hel.ogg'), 80, 1)
 			/*sleep(10)
@@ -427,7 +427,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			sleep(230)
 			target.playsound_local(target, pick('sound/combat/gib (1).ogg'), 80, 1)*/
 		if("ww")//Werewolf
-			A = image('icons/roguetown/mob/monster/werewolf.dmi',target,"wwolf_m")
+			A = image('icons/mob/monster/werewolf.dmi',target,"wwolf_m")
 			target.playsound_local(target, pick('sound/combat/gib (1).ogg'), 80, 1)
 			target.playsound_local(target, pick('sound/vo/mobs/wwolf/roar.ogg'), 80, 1)
 			/*sleep(10)
@@ -438,7 +438,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.playsound_local(target, pick('sound/combat/gib (1).ogg'), 80, 1)
 			target.playsound_local(target, pick('sound/vo/mobs/wwolf/death.ogg'), 80, 1)*/
 		if("skeleton")//Skeleton
-			A = image('icons/roguetown/mob/skeleton_male.dmi',target,"z")
+			A = image('icons/mob/skeleton_male.dmi',target,"z")
 			target.playsound_local(target, pick('sound/vo/mobs/skel/skeleton_rage (1).ogg','sound/vo/mobs/skel/skeleton_rage (2).ogg','sound/vo/mobs/skel/skeleton_rage (3).ogg'), 80, 1)
 			/*sleep(10)
 			target.playsound_local(target, pick('sound/vo/mobs/skel/skeleton_idle (1).ogg','sound/vo/mobs/skel/skeleton_idle (2).ogg','sound/vo/mobs/skel/skeleton_idle (3).ogg'), 80, 1)
@@ -449,10 +449,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			sleep(10)
 			target.playsound_local(target, pick('sound/vo/mobs/skel/skeleton_death (2).ogg','sound/vo/mobs/skel/skeleton_death (1).ogg'), 80, 1)*/
 		if("spider")//Spider
-			A = image('icons/roguetown/mob/monster/spider.dmi',target,"skallax")
+			A = image('icons/mob/monster/spider.dmi',target,"skallax")
 			target.playsound_local(target, 'sound/vo/mobs/spider/idle (1).ogg', 80, 1)
 		if("demon")//Demon
-			A = image('icons/roguetown/mob/monster/hellkeeper.dmi',target,"hellkeeper")
+			A = image('icons/mob/monster/hellkeeper.dmi',target,"hellkeeper")
 			target.playsound_local(target, pick('sound/combat/caught.ogg','sound/misc/astratascream.ogg'), 80, 1)
 			target.playsound_local(target, 'sound/misc/carriage1.ogg', 80, 1)
 			/*sleep(20)
@@ -464,7 +464,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			sleep(80)
 			target.playsound_local(target, pick('sound/misc/carriage4.ogg'), 80, 1)*/
 		if("maneater")//maneater
-			A = image('icons/roguetown/mob/monster/maneater.dmi',target,"maneater")
+			A = image('icons/mob/monster/maneater.dmi',target,"maneater")
 			target.playsound_local(target, pick('sound/vo/mobs/plant/attack (1).ogg','sound/vo/mobs/plant/attack (2).ogg','sound/vo/mobs/plant/attack (3).ogg','sound/vo/mobs/plant/attack (4).ogg'), 80, 1)
 			/*sleep(290)
 			target.playsound_local(target, pick('sound/vo/mobs/plant/pain (1).ogg','sound/vo/mobs/plant/pain (2).ogg','sound/vo/mobs/plant/pain (3).ogg','sound/vo/mobs/plant/pain (4).ogg'), 80, 1)*/
@@ -830,23 +830,23 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.halitem.plane = ABOVE_HUD_PLANE
 			switch(rand(1,5))
 				if(1) //bottlebomb
-					target.halitem.icon = 'icons/roguetown/items/misc.dmi'
+					target.halitem.icon = 'icons/items/misc.dmi'
 					target.halitem.icon_state = "bbomb-lit"
 					target.halitem.name = "bottle bomb"
 				if(2) //skull
-					target.halitem.icon = 'icons/roguetown/items/valuable.dmi'
+					target.halitem.icon = 'icons/items/valuable.dmi'
 					target.halitem.icon_state = "uw1"
 					target.halitem.name = "!!!"
 				if(3) //crown
-					target.halitem.icon = 'icons/roguetown/clothing/head.dmi'
+					target.halitem.icon = 'icons/clothing/head.dmi'
 					target.halitem.icon_state = "serpcrown"
 					target.halitem.name = "Crown of Rotwood Vale"
 				if(4) //clawl
-					target.halitem.icon = 'icons/roguetown/weapons/unarmed32.dmi'
+					target.halitem.icon = 'icons/weapons/unarmed32.dmi'
 					target.halitem.icon_state = "claw_l"
 					target.halitem.name = "ravager claws"
 				if(5) //clawr
-					target.halitem.icon = 'icons/roguetown/weapons/unarmed32.dmi'
+					target.halitem.icon = 'icons/weapons/unarmed32.dmi'
 					target.halitem.icon_state = "claw_r"
 					target.halitem.name = "ravager claws"
 			feedback_details += "Type: [target.halitem.name]"
@@ -944,7 +944,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	return ..()
 
 /obj/effect/hallucination/danger/anomaly/show_icon()
-	image = image('icons/roguetown/maniac/dreamer_mobs.dmi',src,"M3",OBJ_LAYER+0.01)
+	image = image('icons/maniac/dreamer_mobs.dmi',src,"M3",OBJ_LAYER+0.01)
 	if(target.client)
 		target.client.images += image
 
@@ -1078,17 +1078,17 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					body.transform = M
 					target.halbody = body
 				if(2)
-					target.halbody = image('icons/roguetown/mob/monster/horrors.dmi',husk_point,"horror3",TURF_LAYER)
+					target.halbody = image('icons/mob/monster/horrors.dmi',husk_point,"horror3",TURF_LAYER)
 				if(3)
-					target.halbody = image('icons/roguetown/mob/monster/horrors.dmi',husk_point,"headcrab",TURF_LAYER)
+					target.halbody = image('icons/mob/monster/horrors.dmi',husk_point,"headcrab",TURF_LAYER)
 				if(4)
-					target.halbody = image('icons/roguetown/mob/monster/horrors.dmi',husk_point,"horror4",TURF_LAYER)
+					target.halbody = image('icons/mob/monster/horrors.dmi',husk_point,"horror4",TURF_LAYER)
 				if(5)
-					target.halbody = image('icons/roguetown/maniac/dreamer_mobs.dmi',husk_point,"mom",TURF_LAYER)
+					target.halbody = image('icons/maniac/dreamer_mobs.dmi',husk_point,"mom",TURF_LAYER)
 				if(6)
-					target.halbody = image('icons/roguetown/maniac/dreamer_mobs.dmi',husk_point,"M3",TURF_LAYER)
+					target.halbody = image('icons/maniac/dreamer_mobs.dmi',husk_point,"M3",TURF_LAYER)
 				if(7)
-					target.halbody = image('icons/roguetown/maniac/creations.dmi',husk_point,"creation1",TURF_LAYER)
+					target.halbody = image('icons/maniac/creations.dmi',husk_point,"creation1",TURF_LAYER)
 				if(8)
 					target.halbody = image('icons/mob/human.dmi',husk_point,"husk",TURF_LAYER)
 				if(9)
@@ -1184,7 +1184,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		qdel(src)
 		return
 
-	hallucinated_image = image('icons/roguetown/maniac/dreamer_mobs.dmi', start_turf, icon_state, FLOAT_LAYER, get_dir(start_turf, victim))
+	hallucinated_image = image('icons/maniac/dreamer_mobs.dmi', start_turf, icon_state, FLOAT_LAYER, get_dir(start_turf, victim))
 	hallucinated_image.plane = GAME_PLANE_UPPER
 	victim.client.images += hallucinated_image
 

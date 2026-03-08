@@ -1,7 +1,7 @@
 /obj/item/natural/brick
 	name = "brick"
 	desc = "A cooked red brick."
-	icon = 'icons/roguetown/items/cooking.dmi'	//It's because these are cooked via clay. Don't ask questions.
+	icon = 'icons/items/cooking.dmi'	//It's because these are cooked via clay. Don't ask questions.
 	icon_state = "claybrickcook"
 	gripped_intents = null
 	sellprice = 3
@@ -49,7 +49,7 @@
 	name = "stack of bricks"
 	desc = "A stack of bricks."
 	icon_state = "brickbundle1"
-	icon = 'icons/roguetown/items/cooking.dmi'	//It's because these are cooked via clay. Don't ask questions.
+	icon = 'icons/items/cooking.dmi'	//It's because these are cooked via clay. Don't ask questions.
 	experimental_inhand = FALSE
 	grid_width = 64
 	grid_height = 64

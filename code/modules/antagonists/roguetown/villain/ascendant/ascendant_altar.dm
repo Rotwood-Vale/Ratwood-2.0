@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 
 // Altar, sacrifice the right on this to
 /obj/structure/ascendant_altar
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "alch"
 	var/ascend_stage = 0 //stages - 0 is base, 1 is 1st capstone, 2 is 2nd capstone, 3 is full ascension
 	var/ascendpoints = 0 //artefact points

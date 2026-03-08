@@ -9,7 +9,7 @@
 /obj/item/rogue/instrument
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/items/music.dmi'
+	icon = 'icons/items/music.dmi'
 	icon_state = ""
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK_R|ITEM_SLOT_BACK_L
 	can_parry = TRUE

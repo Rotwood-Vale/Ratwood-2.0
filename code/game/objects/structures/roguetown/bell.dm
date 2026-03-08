@@ -1,7 +1,7 @@
 /obj/structure/boatbell
 	name = "bell"
 	desc = "This is the doomspeller of Roguetown."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/misc/structure.dmi'
 	icon_state = "bell"
 	density = FALSE
 	max_integrity = 0
@@ -31,7 +31,7 @@
 /obj/structure/standingbell
 	name = "service bell"
 	desc = "A small mana-infused bell that carries its chime across the city to a select few ears. Use this to call for service."
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "standingbell"
 	density = FALSE
 	max_integrity = 0

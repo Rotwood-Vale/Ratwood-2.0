@@ -3,7 +3,7 @@ GLOBAL_VAR(moneymaster)
 /obj/structure/roguemachine/money
 	name = "machine"
 	desc = ""
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/misc/machines.dmi'
 	icon_state = "money1"
 	density = FALSE
 	blade_dulling = DULLING_BASH
@@ -225,7 +225,7 @@ GLOBAL_VAR(moneymaster)
 	name = "janus twins"
 	desc = "They may hold money for you."
 	icon_state = "twins"
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/misc/64x64.dmi'
 	budget = 0
 	pixel_x = -16
 	izmaster = TRUE

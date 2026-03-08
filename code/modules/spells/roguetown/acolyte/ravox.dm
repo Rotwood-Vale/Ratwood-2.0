@@ -321,7 +321,7 @@ GLOBAL_LIST_EMPTY(arenafolks) // we're just going to use a list and add to it. S
 
 
 /obj/structure/fluff/ravox
-	icon = 'icons/roguetown/rav/obj/flags.dmi'
+	icon = 'icons/rav/obj/flags.dmi'
 	density = FALSE
 	anchored = TRUE
 	blade_dulling = DULLING_BASHCHOP

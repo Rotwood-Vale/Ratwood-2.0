@@ -6,7 +6,7 @@
 	name = "iron pick"
 	desc = "This tool is essential to mine in the dark depths."
 	icon_state = "pick"
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/weapons/tools.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.8
 	wlength = WLENGTH_NORMAL

@@ -3,8 +3,8 @@
 	desc = "A beacon."
 	icon_state = "shrunkenlamp"
 	item_state = "shrunkenlamp"
-	lefthand_file = 'icons/roguetown/underworld/enigma_husks.dmi'
-	righthand_file = 'icons/roguetown/underworld/enigma_husks.dmi'
+	lefthand_file = 'icons/underworld/enigma_husks.dmi'
+	righthand_file = 'icons/underworld/enigma_husks.dmi'
 	light_outer_range = 4
 	light_power = 20
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
@@ -19,7 +19,7 @@
 /obj/structure/underworld/carriageman
 	name = "The Carriageman"
 	desc = "The dead pay tolls. The living may yet bargain. They will take the reigns and lead the way. But only if the price I can pay."
-	icon = 'icons/roguetown/underworld/enigma_carriageman.dmi'
+	icon = 'icons/underworld/enigma_carriageman.dmi'
 	icon_state = "carriageman"
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -86,7 +86,7 @@
 /obj/structure/underworld/barrier //Blocks sprite locations
 	name = "DONT STAND HERE"
 	desc = "The Undermaiden awaits."
-	icon = 'icons/roguetown/underworld/underworld.dmi'
+	icon = 'icons/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 	density = TRUE
 	anchored = TRUE
@@ -94,7 +94,7 @@
 /obj/structure/underworld/carriage_normal
 	name = "Carriage"
 	desc = "The vale awaits."
-	icon = 'icons/roguetown/underworld/enigma_carriage.dmi'
+	icon = 'icons/underworld/enigma_carriage.dmi'
 	icon_state = "carriage_normal"
 	anchored = TRUE
 	density = TRUE
@@ -106,7 +106,7 @@
 /obj/structure/underworld/carriage
 	name = "Carriage"
 	desc = "The Undermaiden awaits."
-	icon = 'icons/roguetown/underworld/enigma_carriage.dmi'
+	icon = 'icons/underworld/enigma_carriage.dmi'
 	icon_state = "carriage_lit"
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -134,7 +134,7 @@ GLOBAL_VAR_INIT(underworld_coins, 0)
 /obj/item/underworld/coin
 	name = "The Toll"
 	desc = "This is more than just a coin."
-	icon = 'icons/roguetown/underworld/enigma_husks.dmi'
+	icon = 'icons/underworld/enigma_husks.dmi'
 	icon_state = "soultoken_floor"
 	var/should_track = TRUE
 

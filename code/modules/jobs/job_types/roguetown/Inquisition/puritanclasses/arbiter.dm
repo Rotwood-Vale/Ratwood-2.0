@@ -120,8 +120,8 @@ Here because they're unused elsewhere.
 	A style pioneered by an arbiters, a century or two ago. Maintained by those who require much of the same."
 	icon_state = "overseerbelt"
 	item_state = "overseerbelt"
-	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	icon = 'icons/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/clothing/special/overseer/onmob/overseer.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq/arbiter
@@ -129,18 +129,18 @@ Here because they're unused elsewhere.
 	desc = "A heavy, padded gambeson that provides adequate protection against unarmed innocents. \
 	It reeks of smokepowder and sulphur. Common of sanctification rituals."
 	icon_state = "overseerjacket"
-	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
-	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	icon = 'icons/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/clothing/special/overseer/onmob/overseer.dmi'
+	sleeved = 'icons/clothing/special/overseer/onmob/overseer.dmi'
 
 /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/arbiter
 	name = "arbiter brigandine"
 	desc = "A heavy, reinforced brigandine coat. Set in a tasteful burgundy covering, backed by silver plating. \
 	It's sure not to leave anyone indifferent, for they'll come to know it. In time."
 	icon_state = "viceseercoat"
-	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
-	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	icon = 'icons/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/clothing/special/overseer/onmob/overseer.dmi'
+	sleeved = 'icons/clothing/special/overseer/onmob/overseer.dmi'
 	boobed = TRUE
 	is_silver = TRUE
 
@@ -149,8 +149,8 @@ Here because they're unused elsewhere.
 	desc = "Heavy, thick leather gloves, adorned with bright strips."
 	icon_state = "overseergloves"
 	item_state = "overseergloves"
-	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	icon = 'icons/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/clothing/special/overseer/onmob/overseer.dmi'
 
 /obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter/vice
 	icon_state = "viceseergloves"
@@ -161,8 +161,8 @@ Here because they're unused elsewhere.
 	desc = "An iconic, gilbranze mask, depicting the visage of Him. Weeping, as He is."
 	icon_state = "overseermask"
 	item_state = "overseermask"
-	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	icon = 'icons/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/clothing/special/overseer/onmob/overseer.dmi'
 	flags_inv = HIDEFACE
 	body_parts_covered = FACE|HEAD|HAIR|EARS|NOSE
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
@@ -204,8 +204,8 @@ Here because they're unused elsewhere.
 	Would they ever understand? Truly?"
 	icon_state = "overseerhood"
 	item_state = "overseerhood"
-	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	icon = 'icons/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/clothing/special/overseer/onmob/overseer.dmi'
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS
 	body_parts_covered = FACE|EARS|MOUTH|NECK
 	slot_flags = ITEM_SLOT_MASK
@@ -216,13 +216,13 @@ Here because they're unused elsewhere.
 	desc = "A pair of heavy, washed-out trousers in grey colors."
 	icon_state = "overseerpants"
 	item_state = "overseerpants"
-	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
-	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	icon = 'icons/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/clothing/special/overseer/onmob/overseer.dmi'
+	sleeved = 'icons/clothing/special/overseer/onmob/overseer.dmi'
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/arbiter
 	icon_state = "overseershirt"
-	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
-	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	icon = 'icons/clothing/special/overseer/overseer.dmi'
+	mob_overlay_icon = 'icons/clothing/special/overseer/onmob/overseer.dmi'
+	sleeved = 'icons/clothing/special/overseer/onmob/overseer.dmi'
 	color = null

@@ -141,8 +141,8 @@
 	testing("GDC [index]")
 	if(sleevetype)
 		var/icon/dismembered		= icon("icon"=icon, "icon_state"=t_color)
-		var/icon/r_mask				= icon("icon"='icons/roguetown/clothing/onmob/helpers/dismemberment.dmi', "icon_state"="r_[sleevetype]")
-		var/icon/l_mask				= icon("icon"='icons/roguetown/clothing/onmob/helpers/dismemberment.dmi', "icon_state"="l_[sleevetype]")
+		var/icon/r_mask				= icon("icon"='icons/clothing/onmob/helpers/dismemberment.dmi', "icon_state"="r_[sleevetype]")
+		var/icon/l_mask				= icon("icon"='icons/clothing/onmob/helpers/dismemberment.dmi', "icon_state"="l_[sleevetype]")
 		switch(sleeveindex)
 			if(1)
 				dismembered.Blend(r_mask, ICON_MULTIPLY)
@@ -333,7 +333,7 @@
 
 	if(wear_neck)
 		if(!(SLOT_NECK in check_obscured_slots()))
-			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/roguetown/clothing/neck.dmi')
+			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/clothing/neck.dmi')
 		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
@@ -365,7 +365,7 @@
 		if(hide_nonstandard && (head.worn_x_dimension != 32 || head.worn_y_dimension != 32))
 			update_hud_head(head)
 			return
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi')
+		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/clothing/onmob/head.dmi')
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)
@@ -374,7 +374,7 @@
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		var/mutable_appearance/inhand_overlay = mutable_appearance('icons/roguetown/mob/bodies/cuffed.dmi', "[handcuffed.icon_state]up", -HANDCUFF_LAYER)
+		var/mutable_appearance/inhand_overlay = mutable_appearance('icons/mob/bodies/cuffed.dmi', "[handcuffed.icon_state]up", -HANDCUFF_LAYER)
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.dna && H.dna.species.sexes)

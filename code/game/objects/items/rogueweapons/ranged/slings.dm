@@ -65,7 +65,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 	name = "sling"
 	desc = "Twisted fibers manifest into a strung pouch capable of hurling stones afar."
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	icon_state = "sling"
 	item_state = "sling"
 	experimental_onhip = TRUE
@@ -198,7 +198,7 @@
 	cut_overlays()
 	if(chambered)
 		icon_state = "[initial(icon_state)]_ready"
-		var/mutable_appearance/ammo = mutable_appearance('icons/roguetown/weapons/ammo.dmi', chambered.icon_state)
+		var/mutable_appearance/ammo = mutable_appearance('icons/weapons/ammo.dmi', chambered.icon_state)
 		add_overlay(ammo)
 	if(!ismob(loc))
 		return

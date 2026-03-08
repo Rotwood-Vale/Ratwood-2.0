@@ -3,7 +3,7 @@
 	desc = "A loud bell that carries its sound to the nearby ports. Signals merchants we are looking to trade."
 
 
-	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon = 'icons/misc/tallstructure.dmi'
 	icon_state = "dock_bell"
 
 

@@ -1,8 +1,8 @@
 /obj/item/clothing/neck/roguetown
 	name = "necklace"
 	desc = ""
-	icon = 'icons/roguetown/clothing/neck.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/neck.dmi'
+	icon = 'icons/clothing/neck.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/neck.dmi'
 	bloody_icon_state = "bodyblood"
 	experimental_inhand = FALSE
 	alternate_worn_layer = NECK_LAYER
@@ -415,8 +415,8 @@
 	..()
 
 	if(slot == SLOT_WRISTS)
-		mob_overlay_icon = 'icons/roguetown/clothing/onmob/wrists.dmi'
-		sleeved = 'icons/roguetown/clothing/onmob/wrists.dmi'
+		mob_overlay_icon = 'icons/clothing/onmob/wrists.dmi'
+		sleeved = 'icons/clothing/onmob/wrists.dmi'
 	if(slot == SLOT_NECK)
 		mob_overlay_icon = initial(mob_overlay_icon)
 		sleeved = initial(sleeved)
@@ -727,8 +727,8 @@
 
 /obj/item/clothing/neck/roguetown/collar/feldcollar
 	name = "feldcollar"
-	icon = 'icons/roguetown/clothing/neck.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/neck.dmi'
+	icon = 'icons/clothing/neck.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/neck.dmi'
 	desc = "A sturdy collar made of leather, commonly worn by field workers."
 	icon_state = "feldcollar"
 	item_state = "feldcollar"
@@ -739,8 +739,8 @@
 
 /obj/item/clothing/neck/roguetown/collar/surgcollar
 	name = "surgcollar"
-	icon = 'icons/roguetown/clothing/neck.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/neck.dmi'
+	icon = 'icons/clothing/neck.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/neck.dmi'
 	desc = "A specialized collar designed for medical practitioners, with reinforced padding."
 	icon_state = "surgcollar"
 	item_state = "surgcollar"
@@ -955,8 +955,8 @@
 	//Provides the full array, since this isn't a +2 to literally everything stat wise now. Although armour does this anyways, I suppose.
 	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_STAB, BCLASS_PIERCE, BCLASS_PICK, BCLASS_BLUNT)
 	blocksound = PLATEHIT
-	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	icon = 'icons/clothing/special/blkknight.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/blkknight.dmi'
 	//dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
 	sellprice = 666

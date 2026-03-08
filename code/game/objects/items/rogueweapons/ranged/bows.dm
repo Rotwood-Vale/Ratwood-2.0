@@ -81,7 +81,7 @@
 	name = "simple shortbow"
 	desc = "This simply hewn shortbow is functional enough. Not the greatest length, \
 	or poundage, nor the quickest shot, but it works"
-	icon = 'icons/roguetown/weapons/32.dmi'
+	icon = 'icons/weapons/32.dmi'
 	icon_state = "bow"
 	item_state = "bow"
 	experimental_onhip = TRUE
@@ -245,7 +245,7 @@
 
 	cut_overlays()
 	if(chambered)
-		var/mutable_appearance/ammo = mutable_appearance('icons/roguetown/weapons/ammo.dmi', chambered.icon_state)
+		var/mutable_appearance/ammo = mutable_appearance('icons/weapons/ammo.dmi', chambered.icon_state)
 		ammo.transform = mat
 		add_overlay(ammo)
 
@@ -264,7 +264,7 @@
 	name = "recurve bow"
 	desc = "A medium length composite bow of glued horn, wood, and sinew with good shooting \
 	characteristics."
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	icon_state = "recurve_bow"
 	force = 9
 	pixel_y = -16
@@ -353,7 +353,7 @@
 	name = "yew longbow"
 	desc = "A sturdy warbow made of a tillered yew stave. It's difficult to handle, but the \
 	power is worth the effort."
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/weapons/64.dmi'
 	icon_state = "longbow"
 	slot_flags = ITEM_SLOT_BACK
 	damfactor = 1.2
@@ -442,7 +442,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short
 	name = "short bow"
 	desc = "As the eagle was killed by the arrow winged with his own feather, so the hand of the world is wounded by its own skill."
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	icon_state = "bow" //No time for sprite this shit
 	item_state = "bow"
 	possible_item_intents = list(

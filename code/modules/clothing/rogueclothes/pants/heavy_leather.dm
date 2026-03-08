@@ -61,7 +61,7 @@
 	desc = "Padded pants for extra comfort and protection, adorned in vibrant colors."
 	icon_state = "grenzelpants"
 	item_state = "grenzelpants"
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
+	sleeved = 'icons/clothing/onmob/helpers/stonekeep_merc.dmi'
 	detail_tag = "_detail"
 	var/picked = FALSE
 	armor_class = ARMOR_CLASS_LIGHT

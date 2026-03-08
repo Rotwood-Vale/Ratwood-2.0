@@ -1,7 +1,7 @@
 /obj/item/pestle
 	name = "pestle"
 	desc = "A small, round-end stone tool oft used by physicians to crush and mix medicine."
-	icon = 'icons/roguetown/misc/alchemy.dmi'
+	icon = 'icons/misc/alchemy.dmi'
 	icon_state = "pestle"
 	force = 7
 	dropshrink = 0.9
@@ -13,7 +13,7 @@
 /obj/item/reagent_containers/glass/mortar
 	name = "alchemical mortar"
 	desc = "A small, thick-walled stone bowl made for grinding things up inside."
-	icon = 'icons/roguetown/misc/alchemy.dmi'
+	icon = 'icons/misc/alchemy.dmi'
 	icon_state = "mortar"
 	dropshrink = 0.75
 	amount_per_transfer_from_this = 9

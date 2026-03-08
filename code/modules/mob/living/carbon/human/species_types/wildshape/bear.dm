@@ -4,7 +4,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/bear_skin
-	wildshape_icon = 'icons/roguetown/mob/monster/direbear.dmi'
+	wildshape_icon = 'icons/mob/monster/direbear.dmi'
 	wildshape_icon_state = "direbear"
 	// Slow, tanky melee form that is purely focused on melee and some swimming
 
@@ -81,7 +81,7 @@
 	playsound(get_turf(H), pick('sound/vo/mobs/direbear/direbear_attack1.ogg','sound/vo/mobs/direbear/direbear_attack2.ogg','sound/vo/mobs/direbear/direbear_attack3.ogg'), 80, TRUE, -1)
 
 /datum/species/shapebear/regenerate_icons(mob/living/carbon/human/H)
-	H.icon = 'icons/roguetown/mob/monster/direbear.dmi'
+	H.icon = 'icons/mob/monster/direbear.dmi'
 	H.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	H.icon_state = "direbear"
 	H.update_damage_overlays()
@@ -132,7 +132,7 @@
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/weapons/misc32.dmi'
 	max_blade_int = 600
 	max_integrity = 600
 	force = 20

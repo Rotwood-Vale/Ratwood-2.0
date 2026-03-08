@@ -413,7 +413,7 @@
 	item_state = "ordinatorhelm"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	adjustable = CAN_CADJUST
@@ -459,7 +459,7 @@
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL + ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY // Worst vision. Yes.
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	smeltresult = /obj/item/ingot/silver
@@ -627,8 +627,8 @@
 	body_parts_covered = FULL_HEAD | NECK
 	armor = list("blunt" = 100, "slash" = 20, "stab" = 110, "piercing" = 40, "fire" = 0, "acid" = 0)//Resistant to blunt & stab, but very weak to slash.
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
-	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	icon = 'icons/clothing/special/race_armor.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfhead"
 	item_state = "welfhead"
 	block2add = FOV_BEHIND
@@ -681,7 +681,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/matthios
 	name = "gilded visage"
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	desc = "All that glitters is not gold,"
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
@@ -775,8 +775,8 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/captain
 	name = "captain's helmet"
 	desc = "An elegant barbute, fitted with the gold trim and polished metal of nobility."
-	icon = 'icons/roguetown/clothing/special/captain.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
+	icon = 'icons/clothing/special/captain.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/captain.dmi'
 	icon_state = "capbarbute"
 	adjustable = CAN_CADJUST
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT

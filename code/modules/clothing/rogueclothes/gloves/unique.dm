@@ -1,8 +1,8 @@
 /obj/item/clothing/gloves/roguetown/elven_gloves
 	name = "woad elven gloves"
 	desc = "The insides are lined with soft, living leaves and soil. They wick away moisture easily."
-	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	icon = 'icons/clothing/special/race_armor.dmi'
+	mob_overlay_icon = 'icons/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfhand"
 	item_state = "welfhand"
 	armor = list("blunt" = 100, "slash" = 10, "stab" = 110, "piercing" = 20, "fire" = 0, "acid" = 0)//Resistant to blunt and stab, super weak to slash.
@@ -15,9 +15,9 @@
 /obj/item/clothing/gloves/roguetown/bandages
 	name = "bandages"
 	desc = "Thickly-woven bandages that've been wrapped around the hands. It soaks up the sweat from your palm, strengthens your fists, and protects your knuckles from dislodged teeth."
-	sleeved = 'icons/roguetown/clothing/onmob/gloves.dmi'
-	icon = 'icons/roguetown/clothing/gloves.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/gloves.dmi'
+	sleeved = 'icons/clothing/onmob/gloves.dmi'
+	icon = 'icons/clothing/gloves.dmi'
+	mob_overlay_icon = 'icons/clothing/onmob/gloves.dmi'
 	icon_state = "clothwraps"
 	item_state = "clothwraps"
 	armor = ARMOR_LEATHER
