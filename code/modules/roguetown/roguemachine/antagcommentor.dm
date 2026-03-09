@@ -1,3 +1,6 @@
+/datum/mind
+	var/freehold_token_touched = FALSE // I need to test it before mob/living/carbon/human because druids shitters going to abuse shit out of their ass broken spell
+
 /obj/structure/roguemachine/freeholdpress
 	name = "Karmic eye"
 	desc = "A machine that turns your karma into a reward."
@@ -51,8 +54,7 @@
 		playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		return
 
-	// Non-freeholder branch: get token
-	if(HAS_TRAIT(H, TRAIT_TOKEN_TOUCHED))
+	if(H.mind?.freehold_token_touched)
 		to_chat(H, span_warning("This machine will grant me no further token. Only once per my life."))
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
@@ -62,7 +64,8 @@
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 
-	ADD_TRAIT(H, TRAIT_TOKEN_TOUCHED, TRAIT_GENERIC)
+	if(H.mind)
+		H.mind.freehold_token_touched = TRUE
 	to_chat(H, span_notice("The machine presses a fleeting token into my hand."))
 	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 	new /obj/item/freehold_token(get_turf(H), H)
@@ -71,7 +74,7 @@
 	name = "A karmic token"
 	desc = "A fleeting token, warm from the press. It will not last long."
 	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = "coin"
+	icon_state = "karmacoin"
 	w_class = WEIGHT_CLASS_SMALL
 	var/owner_ckey
 	var/owner_name

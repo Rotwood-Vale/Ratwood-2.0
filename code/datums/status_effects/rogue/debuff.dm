@@ -1088,22 +1088,3 @@
 	if(!our_area || !our_area.freehold_area)
 		owner.remove_status_effect(/datum/status_effect/debuff/freehold_guard_debuff)	
 
-/atom/movable/screen/alert/status_effect/buff/raidercall
-	name = "Raid Call"
-	desc = "The Freehold's call to raid stirs my blood."
-	icon_state = "call_to_arms"
-
-/datum/status_effect/buff/raidercall
-	id = "raidercall"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/raidercall
-	duration = 10 SECONDS
-	status_type = STATUS_EFFECT_REFRESH
-	effectedstats = list(STATKEY_STR = 1, STATKEY_WIL = 2, STATKEY_CON = 1, STATKEY_SPD = 1)
-
-/datum/status_effect/buff/raidercall/on_apply()
-	. = ..()
-	ADD_TRAIT(owner, TRAIT_RAIDER, id)
-
-/datum/status_effect/buff/raidercall/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_RAIDER, id)
