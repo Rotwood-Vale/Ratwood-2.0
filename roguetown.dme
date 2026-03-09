@@ -2550,6 +2550,7 @@
 #include "code\modules\roguetown\roguemachine\scomm\whisperer.dm"
 #include "code\modules\roguetown\roguemachine\steward\steward.dm"
 #include "code\modules\roguetown\roguemachine\stockpile\stockpile.dm"
+#include "code\modules\roguetown\roguemachine\stockpile\stockpile_saltcamp.dm"
 #include "code\modules\roguetown\roguemachine\stockpile\withdraw_tab.dm"
 #include "code\modules\roguetown\roguestock\_roguestock.dm"
 #include "code\modules\roguetown\roguestock\bounties.dm"
