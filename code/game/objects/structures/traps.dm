@@ -664,7 +664,7 @@
 
 /obj/structure/trap/mine_collapse/trap_effect(mob/living/L)
 	..()
-	if(!prob(3))
+	if(!prob(4))
 		return
 	var/turf/T = get_turf(src)
 	if(!T || isclosedturf(T))
@@ -685,7 +685,7 @@
 		return FALSE
 	new /obj/effect/temp_visual/trap/mine_collapse/left(T)
 	new /obj/effect/temp_visual/trap/mine_collapse/right(T)
-	var/time_delay = 5 SECONDS
+	var/time_delay = 4 SECONDS
 	if(triggered_by_neighbor)
 		time_delay += (rand(2,10) / 2)
 	addtimer(CALLBACK(src, PROC_REF(collapse), triggered_by_neighbor), wait = time_delay)
@@ -744,7 +744,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "trap"
 	light_outer_range = 2
-	duration = 5 SECONDS
+	duration = 4 SECONDS
 
 /obj/effect/temp_visual/trap/mine_collapse/left
 	pixel_x = -8
