@@ -171,7 +171,7 @@ GLOBAL_VAR_INIT(underworld_coins, 0)
 			new /obj/item/underworld/coin(B.loc)
 
 /obj/item/detroyt_toll
-    name = "Ticket"
-    desc = "This is more than just compressed salt."
-    icon = 'icons/roguetown/items/misc.dmi'
-    icon_state = "ticket_detroyt"
+	name = "Ticket"
+	desc = "This is more than just compressed salt."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "ticket_detroyt"
