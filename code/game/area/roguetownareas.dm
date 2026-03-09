@@ -516,6 +516,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_dusk = null
 	droning_sound_night = null
 	cell_area = TRUE
+	town_area = TRUE
 	no_special_item_retrieval = TRUE
 	deathsight_message = "the drone of pickaxes and penance"
 
