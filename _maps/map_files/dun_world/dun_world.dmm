@@ -33981,9 +33981,6 @@
 "ige" = (
 /obj/structure/bed/rogue,
 /obj/item/bedsheet/rogue/cloth,
-/obj/effect/landmark/start/dungeoneer{
-	dir = 8
-	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/cell)
 "igl" = (
@@ -86738,6 +86735,15 @@
 /obj/structure/flora/roguetree/stump/log,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/cave/underhamlet)
+"uFo" = (
+/obj/structure/mineral_door/wood/donjon{
+	dir = 4;
+	locked = 1;
+	lockid = "dungeon";
+	name = "oubliette"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/indoors/town/cell)
 "uFp" = (
 /obj/effect/decal/remains/wolf,
 /turf/open/floor/rogue/dirt/road,
@@ -98816,6 +98822,13 @@
 	},
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/warden)
+"xyu" = (
+/obj/structure/fluff/traveltile/dungeoneer{
+	aportalgoesto = "siberia1";
+	aportalid = "siberia2"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/indoors/cave/southern)
 "xyC" = (
 /obj/structure/bars{
 	color = "#755f48";
@@ -100233,7 +100246,6 @@
 /area/rogue/outdoors/bog/south)
 "xOb" = (
 /obj/structure/table/wood/poor/alt,
-/obj/item/rogueweapon/sword/long/exe/cloth,
 /obj/item/natural/stone,
 /obj/item/storage/belt/rogue/surgery_bag/full,
 /turf/open/floor/rogue/wood,
@@ -180708,11 +180720,11 @@ tjf
 tjf
 tjf
 tjf
-tjf
-tjf
-tjf
-cak
-aYF
+yhQ
+yhQ
+yhQ
+yhQ
+yhQ
 aYF
 aYF
 aYF
@@ -181160,11 +181172,11 @@ tjf
 tjf
 tjf
 tjf
-tjf
-tjf
-tjf
-tjf
-aYF
+yhQ
+wXy
+xyu
+wXy
+yhQ
 aYF
 aYF
 aYF
@@ -181613,9 +181625,9 @@ yhQ
 yhQ
 yhQ
 yhQ
-yhQ
-yhQ
-yhQ
+wXy
+wXy
+wXy
 yhQ
 yhQ
 aYF
@@ -182066,7 +182078,7 @@ urh
 urh
 urh
 urh
-urh
+uFo
 urh
 urh
 yhQ
