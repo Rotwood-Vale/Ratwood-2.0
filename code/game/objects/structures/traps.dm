@@ -677,12 +677,12 @@
 	trigger_collapse()
 
 /obj/structure/trap/mine_collapse/proc/trigger_collapse(triggered_by_neighbor = FALSE, do_sfx = TRUE)
-	rolling_rocks = TRUE
 	var/turf/T = get_turf(src)
 	if(!T || isclosedturf(T))
 		return FALSE
 	if(!istype(T, /turf/open/floor/rogue))
 		return FALSE
+	rolling_rocks = TRUE
 	new /obj/effect/temp_visual/trap/mine_collapse/left(T)
 	new /obj/effect/temp_visual/trap/mine_collapse/right(T)
 	var/time_delay = 4 SECONDS
