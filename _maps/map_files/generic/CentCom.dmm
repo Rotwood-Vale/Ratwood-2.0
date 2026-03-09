@@ -767,11 +767,6 @@
 	},
 /turf/open/water/pond,
 /area/rogue/indoors/ravoxarena)
-"cb" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/structure/trap/mine_collapse,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/dietroyt)
 "cf" = (
 /turf/open/floor/rogue/blocks/platform,
 /area/rogue/under/cave/inhumen/wretch/temple)
@@ -1109,7 +1104,9 @@
 /area/rogue/outdoors/cave/inhumen/wretch/ghrotto)
 "ek" = (
 /obj/item/clothing/shoes/roguetown/boots/aalloy,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "el" = (
@@ -1155,7 +1152,9 @@
 "ex" = (
 /obj/item/bodypart/r_leg,
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "eD" = (
@@ -1168,7 +1167,9 @@
 	dir = 8;
 	icon_state = "stickyweb2"
 	},
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/grasspurple,
 /area/rogue/dietroyt)
 "eH" = (
@@ -1202,7 +1203,9 @@
 /area/rogue/indoors/banditcamp)
 "eR" = (
 /obj/structure/spider/stickyweb,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "eS" = (
@@ -1523,7 +1526,9 @@
 /obj/effect/decal/cleanable/coom,
 /obj/effect/decal/cleanable/coom,
 /obj/effect/decal/cleanable/coom,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "go" = (
@@ -1565,6 +1570,12 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen/wretch/temple)
+"gC" = (
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
+/turf/closed/mineral/rogue/salt,
+/area/rogue/dietroyt)
 "gE" = (
 /obj/effect/decal/edge{
 	color = "#3f3f3f";
@@ -1709,7 +1720,9 @@
 /obj/effect/decal/cleanable/coom,
 /obj/effect/decal/cleanable/coom,
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/sexy/random,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "ht" = (
@@ -1775,7 +1788,9 @@
 /area/rogue/under/cave/inhumen/wretch/temple)
 "hF" = (
 /obj/item/natural/cloth,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "hH" = (
@@ -2213,7 +2228,9 @@
 	dir = 4;
 	icon_state = "stickyweb2"
 	},
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "kc" = (
@@ -2585,10 +2602,6 @@
 /obj/structure/curtain/black,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/cave/inhumen/wretch/camp)
-"lN" = (
-/obj/structure/trap/mine_collapse,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/dietroyt)
 "lP" = (
 /obj/machinery/light/rogue/wallfire/candle/blue/l,
 /turf/open/water/cleanshallow,
@@ -2609,7 +2622,9 @@
 	dir = 8;
 	icon_state = "stickyweb2"
 	},
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/grasspurple,
 /area/rogue/dietroyt)
 "mc" = (
@@ -2850,6 +2865,15 @@
 /obj/machinery/light/rogue/wallfire/candle/floorcandle,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/ravoxarena)
+"mW" = (
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
+/turf/open/floor/rogue/grasspurple,
+/area/rogue/dietroyt)
 "mX" = (
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/rogue/dirt,
@@ -3172,7 +3196,9 @@
 	})
 "oQ" = (
 /obj/item/clothing/suit/roguetown/armor/leather/hide/goblin,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "oR" = (
@@ -3901,10 +3927,6 @@
 /obj/effect/decal/remains/cabbit,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave/inhumen/wretch/graggarena)
-"sV" = (
-/obj/structure/trap/mine_collapse,
-/turf/open/floor/rogue/grasspurple,
-/area/rogue/dietroyt)
 "sW" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/naturalstone,
@@ -4109,7 +4131,9 @@
 /area/rogue/outdoors/cave/inhumen/wretch/ghrotto)
 "ul" = (
 /obj/item/clothing/suit/roguetown/armor/leather/goblin,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "uo" = (
@@ -4147,7 +4171,9 @@
 /area/rogue/under/cave/inhumen/wretch/camp)
 "uD" = (
 /obj/item/roguecoin/silver/pile,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "uE" = (
@@ -4918,7 +4944,9 @@
 /area/rogue/outdoors/banditcamp)
 "zb" = (
 /obj/effect/decal/cleanable/blood/splatter/walls,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/closed/mineral/rogue/salt,
 /area/rogue/dietroyt)
 "zf" = (
@@ -5113,6 +5141,13 @@
 /obj/structure/flora/roguegrass/bush/winter,
 /turf/open/floor/rogue/snowpatchy,
 /area/rogue/outdoors/banditcamp)
+"zY" = (
+/obj/structure/fluff/nest,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/dietroyt)
 "zZ" = (
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/ruinedwood/turned,
@@ -6109,7 +6144,9 @@
 	dir = 4;
 	icon_state = "stickyweb2"
 	},
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "Ff" = (
@@ -6470,6 +6507,10 @@
 /obj/effect/decal/cleanable/debris/stony,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/inhumen/wretch/camp)
+"Hr" = (
+/obj/structure/trap/mine_collapse,
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/indoors/deathsedge)
 "Hs" = (
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -6666,7 +6707,9 @@
 	})
 "Iw" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "Ix" = (
@@ -7258,6 +7301,13 @@
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"Lv" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/dietroyt)
 "Lx" = (
 /obj/structure/roguewindow/stained/zizo,
 /turf/open/floor/rogue/dirt,
@@ -7565,7 +7615,9 @@
 "Na" = (
 /obj/structure/fluff/nest,
 /obj/item/clothing/head/roguetown/helmet/leather/goblin,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "Nc" = (
@@ -8273,11 +8325,6 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp)
-"QX" = (
-/obj/structure/fluff/nest,
-/obj/structure/trap/mine_collapse,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/dietroyt)
 "QY" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods{
@@ -8463,6 +8510,12 @@
 	first_time_text = "Murder Pass";
 	name = "Bandit Woods"
 	})
+"Sa" = (
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
+/turf/open/floor/rogue/grasspurple,
+/area/rogue/dietroyt)
 "Sf" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/dirt/road,
@@ -8807,10 +8860,6 @@
 "Uj" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/vampire_manor)
-"Um" = (
-/obj/structure/trap/mine_collapse,
-/turf/closed/mineral/rogue/salt,
-/area/rogue/dietroyt)
 "Uo" = (
 /obj/effect/wisp/prestidigitation{
 	desc = "A small, fiery ball of light made up of mystical energy.";
@@ -8863,6 +8912,12 @@
 /obj/item/reagent_containers/glass/bottle/alchemical,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/inhumen/wretch/camp)
+"UB" = (
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/dietroyt)
 "UC" = (
 /obj/machinery/light/rogue/torchholder/hotspring,
 /turf/open/floor/rogue/cobblerock,
@@ -9232,7 +9287,9 @@
 "WO" = (
 /obj/item/bodypart/l_leg,
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "WP" = (
@@ -9470,7 +9527,9 @@
 	})
 "Ym" = (
 /obj/item/rogueweapon/stoneaxe/boneaxe,
-/obj/structure/trap/mine_collapse,
+/obj/structure/trap/mine_collapse{
+	respawn_rock = /turf/closed/mineral/rogue/salt
+	},
 /turf/open/floor/rogue/grasspurple,
 /area/rogue/dietroyt)
 "Yn" = (
@@ -18623,43 +18682,43 @@ JY
 "}
 (69,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-QX
-lN
+gC
+gC
+gC
+gC
+zY
+UB
 ul
-lN
-lN
-QX
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+UB
+UB
+zY
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 kb
-sV
-Um
-Um
-Um
-Um
-QX
-QX
-lN
+mW
+gC
+gC
+gC
+gC
+zY
+zY
+UB
 hF
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -18753,43 +18812,43 @@ JY
 "}
 (70,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-lN
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+UB
+gC
+gC
+gC
 Na
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 eR
-sV
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+Sa
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 ek
-cb
+Lv
 ex
 zb
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -18883,43 +18942,43 @@ JY
 "}
 (71,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-lN
-lN
-lN
+gC
+gC
+gC
+gC
+gC
+UB
+UB
+UB
 oQ
 gn
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 kb
 Ym
 kb
-Um
-Um
-Um
-Um
-Um
-Um
-lN
+gC
+gC
+gC
+gC
+gC
+gC
+UB
 WO
-cb
+Lv
 zb
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -19013,43 +19072,43 @@ JY
 "}
 (72,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-Um
-QX
-cb
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+zY
+Lv
+gC
 hs
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-sV
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+Sa
 Fd
-lN
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+UB
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 zb
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -19143,43 +19202,43 @@ JY
 "}
 (73,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-sV
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+Sa
 lZ
-sV
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+Sa
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -19273,43 +19332,43 @@ JY
 "}
 (74,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Iw
 uD
 eG
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -19403,43 +19462,43 @@ JY
 "}
 (75,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -19533,43 +19592,43 @@ JY
 "}
 (76,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -19663,43 +19722,43 @@ JY
 "}
 (77,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -19793,43 +19852,43 @@ JY
 "}
 (78,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -19923,43 +19982,43 @@ JY
 "}
 (79,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -20053,43 +20112,43 @@ bX
 "}
 (80,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -20183,43 +20242,43 @@ bX
 "}
 (81,1,1) = {"
 Vr
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
-Um
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
+gC
 Vr
 bX
 bX
@@ -23196,7 +23255,7 @@ Ey
 MC
 MC
 MC
-Ey
+Hr
 Ey
 Ey
 Ey
