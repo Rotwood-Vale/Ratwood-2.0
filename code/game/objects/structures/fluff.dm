@@ -1478,3 +1478,9 @@
 	stake.forceMove(drop_location())
 	stake = null
 	qdel(src)
+
+/obj/structure/fluff/wallclock/attack_right(mob/user)
+    if(user.mind && isliving(user))
+        var/area/rogue/user_area = get_area(user)
+        if(user_area?.no_special_item_retrieval) // area does not allow fetching special items, return
+            return
