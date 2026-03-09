@@ -245,6 +245,10 @@
 		if (gang_message)
 			. += gang_message
 
+		var/freehold_message = get_freehold_text(user)
+		if(freehold_message)
+			. += freehold_message
+
 		if(name in GLOB.excommunicated_players)
 			. += span_userdanger("HERETIC! SHAME!")
 
@@ -1162,27 +1166,31 @@
 /// Freeholders
 
 /mob/living/proc/get_freehold_text(mob/examiner)
-	var/freehold_text
-
 	if(!ishuman(src) || !ishuman(examiner))
-		return freehold_text
+		return null
+	if(src == examiner)
+		return null
 
 	var/mob/living/carbon/human/H = examiner
 	var/mob/living/carbon/human/TH = src
-	var/skipface = (TH.wear_mask && (TH.wear_mask.flags_inv & HIDEFACE)) || (TH.head && (TH.head.flags_inv & HIDEFACE))
+	var/target_masked = (TH.wear_mask && (TH.wear_mask.flags_inv & HIDEFACE)) || (TH.head && (TH.head.flags_inv & HIDEFACE))
 
-	if(HAS_TRAIT(src, TRAIT_RAIDER) && HAS_TRAIT(H, TRAIT_RAIDER))
-		freehold_text = "A fellow raider."
-	if(HAS_TRAIT(src, TRAIT_RAIDER) && HAS_TRAIT(H, TRAIT_FREEHOLDER) && !HAS_TRAIT(H, TRAIT_RAIDER))
-		freehold_text = "A participant in the raid."
-	if(HAS_TRAIT(src, TRAIT_RAIDER) && !HAS_TRAIT(H, TRAIT_FREEHOLDER) && !HAS_TRAIT(H, TRAIT_RAIDER))
-		freehold_text = span_userdanger("RAIDER!")
-	if(HAS_TRAIT(src, TRAIT_FREEHOLDER) && HAS_TRAIT(H, TRAIT_RAIDER) && !HAS_TRAIT(src, TRAIT_RAIDER))
-		freehold_text = "A fellow Freeholder."
-	if(HAS_TRAIT(src, TRAIT_FREEHOLDER) && HAS_TRAIT(H, TRAIT_FREEHOLDER) && skipface && !HAS_TRAIT(src, TRAIT_RAIDER))
-		freehold_text = "A fellow Freeholder."
+	if(HAS_TRAIT(TH, TRAIT_RAIDER))
+		if(HAS_TRAIT(H, TRAIT_RAIDER))
+			return span_notice("A fellow legionnarie from Roguetown. They are part of the raid.")
+		if(HAS_TRAIT(H, TRAIT_FREEHOLDER))
+			return span_notice("A friend of the Roguetown, though for now obeying the call to raid.")
+		return span_userdanger("RAIDER! They are NOT going to be your friend, they are going to kill and eat you!")
 
-	return freehold_text
+	if(HAS_TRAIT(TH, TRAIT_FREEHOLDER))
+		if(HAS_TRAIT(H, TRAIT_RAIDER))
+			return span_notice("My comrade from the Roguetown, though not part of the raid.")
+		if(HAS_TRAIT(H, TRAIT_FREEHOLDER))
+			return span_notice("A fellow citizen of Roguetown.")
+		if(!target_masked)
+			return span_warning("A dirty rogue from that roguetown...")
+
+	return null
 
 /// Simple gang sytem
 

@@ -1072,8 +1072,8 @@
 		C.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
 
 /atom/movable/screen/alert/status_effect/debuff/freehold_guard_debuff
-	name = "Hostile Ground"
-	desc = "This is independent territory. I cannot move here with the same ease as on patrolled ground."
+	name = "Wrong district"
+	desc = "You dont belong to this place, little keepy.."
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/freehold_guard_debuff

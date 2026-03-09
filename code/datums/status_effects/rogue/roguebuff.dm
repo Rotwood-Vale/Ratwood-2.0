@@ -1797,8 +1797,8 @@
 	desc = "The oath drives me forward, so long as the reminder is kept near."
 
 /atom/movable/screen/alert/status_effect/buff/freeholdbuff
-	name = "Freehold Oath"
-	desc = "I am sworn to defend my new homeland."
+	name = "A rogue of the roguetown"
+	desc = "I am sworn to defend the fatherland!"
 	icon_state = "buff"
 
 /datum/status_effect/buff/freeholdbuff
