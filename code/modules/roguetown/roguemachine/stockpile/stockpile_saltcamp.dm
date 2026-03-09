@@ -10,13 +10,9 @@
 	blade_dulling = DULLING_BASH
 	pixel_y = 32
 
-	var/list/salt_accounts = null
+	var/list/salt_accounts = list()
 	var/salt_spent_on_gambling = 0
 	var/gambling_active = FALSE
-
-/obj/structure/roguemachine/stockpile_saltcamp/Initialize()
-	salt_accounts = list()
-	. = ..()
 
 /obj/structure/roguemachine/stockpile_saltcamp/Destroy()
 	salt_accounts = null
