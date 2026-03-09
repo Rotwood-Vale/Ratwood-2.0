@@ -274,37 +274,6 @@
 	playsound(target, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 	qdel(src)
 
-	var/choice = input(user, "Choose the normal level reward (a temporary buff).", src.name) as null|anything in choices
-	if(!choice)
-		in_use = FALSE
-		return
-
-	switch(choice)
-		if("Speed and Perception")
-			if(target.has_status_effect(/datum/status_effect/buff/freehold_normal_faith_spdper))
-				to_chat(user, span_warning("[target] already has it."))
-				in_use = FALSE
-				return
-			target.apply_status_effect(/datum/status_effect/buff/freehold_normal_faith_spdper)
-
-		if("Strength and Constitution")
-			if(target.has_status_effect(/datum/status_effect/buff/freehold_normal_faith_strcon))
-				to_chat(user, span_warning("[target] already has it."))
-				in_use = FALSE
-				return
-			target.apply_status_effect(/datum/status_effect/buff/freehold_normal_faith_strcon)
-
-		if("Intelligence and Willpower")
-			if(target.has_status_effect(/datum/status_effect/buff/freehold_normal_faith_intwil))
-				to_chat(user, span_warning("[target] already has it."))
-				in_use = FALSE
-				return
-			target.apply_status_effect(/datum/status_effect/buff/freehold_normal_faith_intwil)
-
-	user.visible_message(span_notice("[user] lays a token of plain faith upon [target]."))
-	to_chat(target, span_notice("A normal blessing settles upon you."))
-	playsound(target, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
-	qdel(src)
 
 /obj/item/freehold_token/proc/apply_great_faith(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.has_status_effect(/datum/status_effect/debuff/freehold_bad_faith))
