@@ -659,6 +659,9 @@
 	var/turf/closed/respawn_rock = /turf/closed/mineral/random/rogue
 	var/rolling_rocks = FALSE
 
+/obj/structure/trap/mine_collapse/salt
+	respawn_rock = /turf/closed/mineral/rogue/salt
+
 /obj/structure/trap/mine_collapse/trap_effect(mob/living/L)
 	..()
 	if(!prob(3))
