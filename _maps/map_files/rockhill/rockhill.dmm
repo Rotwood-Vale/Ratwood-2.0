@@ -7705,11 +7705,6 @@
 /obj/item/rogueweapon/hammer/iron,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
-"clS" = (
-/obj/structure/bed/rogue/shit,
-/obj/effect/landmark/start/prisonerr,
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/indoors/town/cell)
 "clW" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -23957,9 +23952,6 @@
 /area/rogue/outdoors/beach/harbor)
 "gIa" = (
 /obj/structure/bed/rogue/shit,
-/obj/effect/landmark/start/prisonerr{
-	dir = 4
-	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/cell)
 "gIc" = (
@@ -63137,13 +63129,6 @@
 "sdL" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/beach/harbor)
-"sei" = (
-/obj/structure/bed/rogue/shit,
-/obj/effect/landmark/start/prisonerr{
-	dir = 1
-	},
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/indoors/town/cell)
 "sej" = (
 /obj/item/carvedgem/turq/statue{
 	pixel_x = -1;
@@ -67760,7 +67745,6 @@
 	locked = 1;
 	lockid = "dungeon"
 	},
-/obj/item/rogueweapon/sword/long/exe/cloth,
 /obj/item/rogueweapon/whip,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell)
@@ -82794,6 +82778,10 @@
 /area/rogue/under/cave/rhgoblinencampment)
 "xTZ" = (
 /obj/item/reagent_containers/food/snacks/smallrat,
+/obj/structure/fluff/traveltile/dungeoneer{
+	aportalgoesto = "siberia1";
+	aportalid = "siberia2"
+	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cavewet)
 "xUa" = (
@@ -276348,14 +276336,14 @@ lrs
 lrs
 pUC
 pUC
-clS
+gIa
 utV
 utV
 pUC
 fXK
 pOm
 pOm
-sei
+gIa
 pUC
 uiZ
 pOm
@@ -277651,7 +277639,7 @@ vqG
 muA
 pOm
 utV
-sei
+gIa
 vqG
 pOm
 qLn
