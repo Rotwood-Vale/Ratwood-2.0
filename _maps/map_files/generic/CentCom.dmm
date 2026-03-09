@@ -2282,6 +2282,12 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inhumen/wretch/graggarena)
+"kq" = (
+/obj/structure/roguemachine/mail{
+	mailtag = "Dungeoneer's Office"
+	},
+/turf/closed/wall/mineral/rogue/stone/window,
+/area/rogue/dietroyt)
 "kr" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/cobble/mossy,
@@ -9619,7 +9625,6 @@
 /area/rogue/outdoors/cave/inhumen/wretch/ghrotto)
 "Zm" = (
 /obj/structure/roguemachine/scomm,
-/obj/structure/roguemachine/mail/r,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "Zn" = (
@@ -15203,7 +15208,7 @@ NK
 hS
 jO
 jO
-IL
+kq
 rk
 jO
 Pq
