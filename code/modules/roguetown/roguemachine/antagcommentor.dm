@@ -114,6 +114,10 @@
 	var/mob/living/carbon/human/U = user
 	var/mob/living/carbon/human/H = target
 
+	if(U == H)
+		to_chat(U, span_warning("I cannot offer this token to myself."))
+		return
+
 	if(!HAS_TRAIT(H, TRAIT_FREEHOLDER))
 		to_chat(user, span_warning("[H] is not a Freeholder."))
 		return
