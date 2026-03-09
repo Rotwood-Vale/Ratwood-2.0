@@ -93,25 +93,25 @@
 #define ARMOR_LEATHER list("blunt" = 60, "slash" = 50, "stab" = 40, "piercing" = 30, "fire" = 0, "acid" = 0)
 #define ARMOR_SPELLSINGER list("blunt" = 70, "slash" = 70, "stab" = 50, "piercing" = 40, "fire" = 0, "acid" = 0)
 #define ARMOR_LEATHER_GOOD list("blunt" = 90, "slash" = 70, "stab" = 50, "piercing" = 50, "fire" = 0, "acid" = 0)
-#define ARMOR_LEATHER_STUDDED list("blunt" = 80, "slash" = 80, "stab" = 60, "piercing" = 40, "fire" = 0, "acid" = 0) // Pseudo metallic armor therefore worse vs blunt and piercing
+#define ARMOR_LEATHER_STUDDED list("blunt" = 80, "slash" = 80, "stab" = 60, "piercing" = 50, "fire" = 0, "acid" = 0) // Pseudo metallic armor therefore worse vs blunt
 //Reinforced hoods are an odd exception.
 #define ARMOR_REINFORCED_HOOD list("blunt" = 50, "slash" = 30, "stab" = 40, "piercing" = 40, "fire" = 0, "acid" = 0)
 
 
 // Medium AC
-#define ARMOR_CUIRASS list("blunt" = 40, "slash" = 100, "stab" = 80, "piercing" = 40, "fire" = 0, "acid" = 0)
-#define ARMOR_MAILLE list("blunt" = 40, "slash" = 100, "stab" = 80, "piercing" = 10, "fire" = 0, "acid" = 0)
+#define ARMOR_CUIRASS list("blunt" = 40, "slash" = 100, "stab" = 80, "piercing" = 70, "fire" = 0, "acid" = 0)
+#define ARMOR_MAILLE list("blunt" = 40, "slash" = 100, "stab" = 80, "piercing" = 30, "fire" = 0, "acid" = 0)
 
 // Heavy AC
 // Also applicable to fully metallic armor (i.e. helmet)
-#define ARMOR_PLATE_BAD list("blunt" = 10, "slash" = 50, "stab" = 50, "piercing" = 20, "fire" = 0, "acid" = 0) // For really bad / copper plate
-#define ARMOR_PLATE list("blunt" = 10, "slash" = 100, "stab" = 80, "piercing" = 40, "fire" = 0, "acid" = 0)
+#define ARMOR_PLATE_BAD list("blunt" = 10, "slash" = 50, "stab" = 50, "piercing" = 30, "fire" = 0, "acid" = 0) // For really bad / copper plate
+#define ARMOR_PLATE list("blunt" = 10, "slash" = 100, "stab" = 80, "piercing" = 70, "fire" = 0, "acid" = 0)
 #define ARMOR_PLATE_BSTEEL list("blunt" = 80, "slash" = 100, "stab" = 90, "piercing" = 80, "fire" = 0, "acid" = 0) // It's EVIL. OH GOD.
 
 //Antag / Special / Unique armor defines
 #define ARMOR_VAMP list("blunt" = 100, "slash" = 100, "stab" = 90, "piercing" = 80, "fire" = 0, "acid" = 0)
 #define ARMOR_WWOLF list("blunt" = 100, "slash" = 90, "stab" = 80, "piercing" = 70, "fire" = 40, "acid" = 0)
-#define ARMOR_DRAGONSCALE list("blunt" = 100, "slash" = 100, "stab" = 100, "fire" = 50, "acid" = 0)
+#define ARMOR_DRAGONSCALE list("blunt" = 100, "slash" = 100, "stab" = 100, "piercing" = 80, "fire" = 50, "acid" = 0)
 #define ARMOR_ASCENDANT list("blunt" = 50, "slash" = 100, "stab" = 80, "piercing" = 80, "fire" = 0, "acid" = 0)
 #define ARMOR_GRUDGEBEARER list("blunt" = 40, "slash" = 200, "stab" = 200, "piercing" = 100, "fire" = 0, "acid" = 0)
 #define ARMOR_ZIZOCONCSTRUCT list("blunt" = 60, "slash" = 70, "stab" = 70, "piercing" = 60, "fire" = 40, "acid" = 10)
