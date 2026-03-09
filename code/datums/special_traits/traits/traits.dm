@@ -337,16 +337,6 @@
 	character.transform = character.transform.Translate(0, (0.25 * 16))
 	character.update_transform()
 
-/datum/special_trait/atheism
-	name = "Godless"
-	greet_text = span_notice("Gods may exist, but know what? I care not.")
-	req_text = "Non-Church Role"
-	restricted_jobs = list(CHURCH_ROLES)
-	weight = 100
-
-/datum/special_trait/atheism/on_apply(mob/living/carbon/human/character, silent)
-	character.set_patron(/datum/patron/godless)
-
 //negative
 /datum/special_trait/nimrod
 	name = "Nimrod"
@@ -371,16 +361,6 @@
 	if(character.beltr == pouch)
 		character.beltr = null
 	qdel(pouch)
-
-/datum/special_trait/hussite
-	name = "Known Heretic"
-	greet_text = span_boldwarning("I've been denounced by the church for either reasons legitimate or not!")
-	req_text = "Non-church role"
-	weight = 20
-	restricted_jobs = list(CHURCH_ROLES)
-
-/datum/special_trait/hussite/on_apply(mob/living/carbon/human/character, silent)
-	GLOB.excommunicated_players += character.real_name
 
 /datum/special_trait/bounty
 	name = "Hunted Man"

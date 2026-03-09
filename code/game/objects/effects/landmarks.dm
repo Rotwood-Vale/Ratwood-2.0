@@ -239,6 +239,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Templar"
 	icon_state = "arrow"
 
+/obj/effect/landmark/start/penitent
+	name = "Penitent"
+	icon_state = "arrow"
+
 /obj/effect/landmark/start/martyr
 	name = "Martyr"
 	icon_state = "arrow"

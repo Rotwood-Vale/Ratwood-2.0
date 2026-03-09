@@ -72,6 +72,45 @@
 				/obj/item/magic/melded/t3 = 1)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/arcana/collarofservitude
+	name = "collar of servitude"
+	result = /obj/item/clothing/neck/roguetown/gorget/controllable/shock
+	reqs = list(/obj/item/clothing/neck/roguetown/gorget = 1,
+				/obj/item/magic/melded/t1 = 1)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/arcana/collarofservitude_explosive
+	name = "explosive collar of servitude"
+	result = /obj/item/clothing/neck/roguetown/gorget/controllable/shock_explosive
+	reqs = list(/obj/item/clothing/neck/roguetown/gorget = 1,
+				/obj/item/roguegem = 1,
+				/obj/item/magic/melded/t2 = 1)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/arcana/collarofservitude_binding
+	name = "mana binding collar of servitude"
+	result = /obj/item/clothing/neck/roguetown/gorget/controllable/shock_antimagic
+	reqs = list(/obj/item/clothing/neck/roguetown/gorget = 1,
+				/obj/item/roguegem = 1,
+				/obj/item/magic/melded/t1 = 1)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/arcana/collarofservitude_binding_explosive
+	name = "mana binding explosive collar of servitude"
+	result = /obj/item/clothing/neck/roguetown/gorget/controllable/full
+	reqs = list(/obj/item/clothing/neck/roguetown/gorget = 1,
+				/obj/item/roguegem = 1,
+				/obj/item/magic/melded/t2 = 1)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/arcana/collar_detonator
+	name = "collar detonator"
+	result = /obj/item/collar_detonator
+	reqs = list(/obj/item/customlock = 1,
+				/obj/item/roguegem = 1,
+				/obj/item/magic/melded/t1 = 1)
+	craftdiff = 4
+
 /datum/crafting_recipe/roguetown/arcana/temporalhourglass
 	name = "temporal hourglass"
 	result = /obj/item/hourglass/temporal
@@ -79,7 +118,6 @@
 				/obj/item/magic/leyline = 1,
 				/obj/item/magic/melded/t2 = 1)
 	craftdiff = 3
-
 
 /datum/crafting_recipe/roguetown/arcana/shimmeringlens
 	name = "shimmering lens"

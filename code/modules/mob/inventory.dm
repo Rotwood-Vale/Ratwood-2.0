@@ -302,6 +302,9 @@
 	if(HAS_TRAIT(I, TRAIT_NODROP) && !force)
 		return FALSE
 
+	if((SEND_SIGNAL(I, COMSIG_ITEM_PRE_UNEQUIP, force, newloc, no_move, invdrop, silent) & COMPONENT_ITEM_BLOCK_UNEQUIP) && !force)
+		return FALSE
+
 	// Can't take it out of your equipment, can still hold and pick it up, put in and out of storage.
 	// Other people have to remove this from you.
 	if(HAS_TRAIT(I, TRAIT_NO_SELF_UNEQUIP) && !force)

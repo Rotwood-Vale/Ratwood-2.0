@@ -443,6 +443,11 @@
 	desc = span_boldred("The hood! My faith wavers without it. I feel ashamed.")
 	timer = 999 MINUTES
 
+/datum/stressevent/collaroff
+	stressadd = 3
+	desc = span_boldred("The restraining collar is not shackling me, and the burning gaze of Astrata is immolating my soul..")
+	timer = 999 MINUTES
+	
 /datum/stressevent/headless
 	stressadd = 3
 	desc = span_red("Where is their head? What is that flame?!")

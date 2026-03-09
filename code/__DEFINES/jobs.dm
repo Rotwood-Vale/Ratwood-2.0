@@ -275,6 +275,7 @@
 #define JDO_PRIEST 10
 #define JDO_MARTYR 11
 #define JDO_TEMPLAR 12
+#define JDO_PENITENT 12.1
 #define JDO_MONK 13
 #define JDO_DRUID 13.1
 #define JDO_CHURCHLING 14
@@ -365,7 +366,8 @@
 	/datum/job/roguetown/druid,\
 	/datum/job/roguetown/monk,\
 	/datum/job/roguetown/priest,\
-	/datum/job/roguetown/templar
+	/datum/job/roguetown/templar,\
+	/datum/job/roguetown/penitent
 
 #define PEASANT_ROLES \
 	/datum/job/roguetown/villager,\

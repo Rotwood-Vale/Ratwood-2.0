@@ -212,6 +212,14 @@
 			else
 				. += span_notice("A disgraced noble.")
 
+		if(HAS_TRAIT(src, TRAIT_CHURCH_PENITENT))
+			if(HAS_TRAIT(src, TRAIT_ZURCH))
+				. += span_notice("A lost and defeated follower of the Four..")
+			if(HAS_TRAIT(src, TRAIT_CHOSEN))
+				. += span_notice("A heretic subjugated by the Sun Tyrant. Her Authority is absolute.")
+			else
+				. += span_notice("A heretic brought to justice by the TEN.")
+
 		//For tennite schism god-event
 		if(length(GLOB.tennite_schisms))
 			var/datum/tennite_schism/S = GLOB.tennite_schisms[1]

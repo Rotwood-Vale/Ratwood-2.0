@@ -187,6 +187,18 @@
 	new /obj/item/bomb(src)
 	new /obj/item/bomb(src)
 
+/datum/inqports/supplies/collar
+	name = "3 Collars of Servitude Alongside Key"
+	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/collars
+	marquescost = 8
+
+/obj/structure/closet/crate/chest/inqcrate/supplies/collars/Initialize()
+	. = ..()
+	new /obj/item/clothing/neck/roguetown/gorget/controllable/full(src)
+	new /obj/item/clothing/neck/roguetown/gorget/controllable/full(src)
+	new /obj/item/clothing/neck/roguetown/gorget/controllable/full(src)
+	new /obj/item/collar_detonator(src)
+
 /datum/inqports/supplies/bullion
 	name = "6 Blessed Silver Bullion"
 	item_type = /obj/structure/closet/crate/chest/inqreliquary/relic/bullion/

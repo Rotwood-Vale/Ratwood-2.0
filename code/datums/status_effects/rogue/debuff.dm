@@ -707,6 +707,15 @@
 	name = "Lost Oathmark"
 	desc = "The proof of my oath... it's gone!"
 
+/datum/status_effect/debuff/collar_scorned
+	id = "missing_collar"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/collar_scorned
+	effectedstats = list(STATKEY_CON = -2, STATKEY_INT = -2, STATKEY_LCK = -2, STATKEY_PER = -2, STATKEY_SPD = -2, STATKEY_STR = -2, STATKEY_WIL = -2)
+
+/atom/movable/screen/alert/status_effect/debuff/collar_scorned
+	name = "Scorned by Servitude"
+	desc = "Astrata's watchful gaze and Ravoxian sword hang over my head. I must obey.."
+
 ///////////////////////
 /// CLIMBING STUFF ///
 /////////////////////
