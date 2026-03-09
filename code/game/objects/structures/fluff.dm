@@ -665,7 +665,7 @@
 						user.mind.special_items -= item
 						var/obj/item/I = new path2item(user.loc)
 						user.put_in_hands(I)
-		return
+			return
 
 /obj/structure/fluff/wallclock/Destroy()
 	if(soundloop)
