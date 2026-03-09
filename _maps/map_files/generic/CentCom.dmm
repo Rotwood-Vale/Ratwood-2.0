@@ -2014,6 +2014,10 @@
 "jg" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
+"ji" = (
+/obj/effect/landmark/start/dungeoneer,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/dietroyt)
 "jj" = (
 /obj/machinery/light/rogue/wallfire/candle{
 	pixel_y = -32
@@ -3587,7 +3591,8 @@
 	locked = 1;
 	lockid = "dungeon";
 	dir = 4;
-	max_integrity = 5000
+	max_integrity = 5000;
+	name = "Punishment"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
@@ -3930,7 +3935,8 @@
 	locked = 1;
 	lockid = "dungeon";
 	dir = 1;
-	max_integrity = 5000
+	max_integrity = 5000;
+	name = "Keep"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
@@ -7255,10 +7261,6 @@
 /obj/item/rogueweapon/spear/billhook,
 /turf/open/floor/rogue/cobble,
 /area/rogue)
-"LF" = (
-/obj/effect/landmark/start/dungeoneer,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/dietroyt)
 "LG" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -7809,6 +7811,16 @@
 "ON" = (
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/outdoors/mountains)
+"OO" = (
+/obj/structure/mineral_door/wood/donjon{
+	locked = 1;
+	lockid = "dungeon";
+	dir = 1;
+	max_integrity = 5000;
+	name = "Dungeoneer's Quarters"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/dietroyt)
 "OP" = (
 /obj/machinery/light/rogue/torchholder/c,
 /turf/open/floor/rogue/grasscold,
@@ -14800,7 +14812,7 @@ jO
 jO
 jO
 jO
-LF
+ji
 KH
 KH
 KH
@@ -14929,7 +14941,7 @@ Vr
 Cl
 JO
 Rv
-tn
+OO
 KH
 KH
 KH
