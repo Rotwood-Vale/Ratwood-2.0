@@ -247,7 +247,7 @@
 	density = TRUE
 	time_between_triggers = 1200 //Exists for 2 minutes
 
-/obj/structure/trap/ward/Initialize(mapload)
+/obj/structure/trap/ward/Initialize()
 	. = ..()
 	QDEL_IN(src, time_between_triggers)
 
@@ -463,8 +463,8 @@
 	if(!H || !H.mind)
 		return FALSE
 
-	var/assigned = LOWER_TEXT("[H.mind.assigned_role]")
-	var/special  = LOWER_TEXT("[H.mind.special_role]")
+	var/assigned = lowertext("[H.mind.assigned_role]")
+	var/special  = lowertext("[H.mind.special_role]")
 
 //We don't care about anyone but the MAAs/Wardens.
 	if(retinue_planted)
@@ -511,8 +511,8 @@
 /obj/structure/trap/bogtrap/proc/is_exempt_viewer(mob/living/H)
 	if(!H || !H.mind)
 		return FALSE
-	var/assigned = LOWER_TEXT("[H.mind.assigned_role]")
-	var/special  = LOWER_TEXT("[H.mind.special_role]")
+	var/assigned = lowertext("[H.mind.assigned_role]")
+	var/special  = lowertext("[H.mind.special_role]")
 
 //Is this hacky? Yeah. Does it work? I guess.
 	if(retinue_planted)
@@ -646,3 +646,105 @@
 //Church bell range. A bit far? Sure. Don't step on it.
 	loud_message("A flare can be seen shooting into the air, followed by a sharp crack", hearing_distance = 150)
 //The entire town knows you're here, now, buddy.
+
+/obj/structure/trap/mine_collapse
+	name = "mineshaft collapse trigger"
+	icon_state = "nothing"
+	desc = ""
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = 0
+	max_integrity = 0
+	bound_width = 128
+	obj_flags = INDESTRUCTIBLE
+	var/turf/closed/respawn_rock = /turf/closed/mineral/random/rogue
+	var/rolling_rocks = FALSE
+
+/obj/structure/trap/mine_collapse/trap_effect(mob/living/L)
+	..()
+	if(!prob(3))
+		return
+	var/turf/T = get_turf(src)
+	if(!T || isclosedturf(T))
+		return
+	if(!istype(T, /turf/open/floor/rogue))
+		return
+	if(!ishuman(L))
+		return
+	to_chat(L,span_danger("You feel rocks fall from the ceiling!"))
+	trigger_collapse()
+
+/obj/structure/trap/mine_collapse/proc/trigger_collapse(triggered_by_neighbor = FALSE, do_sfx = TRUE)
+	rolling_rocks = TRUE
+	var/turf/T = get_turf(src)
+	if(!T || isclosedturf(T))
+		return FALSE
+	if(!istype(T, /turf/open/floor/rogue))
+		return FALSE
+	new /obj/effect/temp_visual/trap/mine_collapse/left(T)
+	new /obj/effect/temp_visual/trap/mine_collapse/right(T)
+	var/time_delay = 5 SECONDS
+	if(triggered_by_neighbor)
+		time_delay += (rand(2,10) / 2)
+	addtimer(CALLBACK(src, PROC_REF(collapse), triggered_by_neighbor), wait = time_delay)
+	if(do_sfx)
+		playsound(src, 'sound/misc/cavein.ogg', 200, TRUE)
+	return TRUE
+
+/obj/structure/trap/mine_collapse/proc/collapse(triggered_by_neighbor = FALSE)
+	rolling_rocks = FALSE
+	var/turf/T = get_turf(src)
+	if(!T || isclosedturf(T) || !respawn_rock)
+		return
+	if(!istype(T, /turf/open/floor/rogue))
+		return
+	var/turf/X = T.PlaceOnTop(respawn_rock)
+	playsound(src, 'sound/misc/meteorimpact.ogg', 200, TRUE)
+	if(!X)
+		return
+	if(!triggered_by_neighbor)
+		X.loud_message("Loud rocks falling can be heard")
+	for(var/mob/living/L in T)
+		var/def_zone = BODY_ZONE_CHEST
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			if(C.mobility_flags & MOBILITY_STAND)
+				def_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
+			else
+				def_zone = BODY_ZONE_HEAD
+		var/obj/item/bodypart/BP = L.get_bodypart(def_zone)
+		if(BP)
+			L.visible_message(span_boldwarning("Rocks comes crashing down on [L]'s [BP]!"), \
+					span_userdanger("Rocks crushes my [BP]!"))
+			L.emote("agony")
+			BP.add_wound(/datum/wound/fracture)
+			BP.update_disabled()
+			L.apply_damage(90, BRUTE, def_zone)
+			L.Paralyze(80)
+
+	var/area/center_area = get_area(T)
+	var/trigger_sfx = TRUE
+	for(var/obj/structure/trap/mine_collapse/other_mineshafts in range(2, src))
+		if(src == other_mineshafts)
+			continue
+		if(other_mineshafts.rolling_rocks)
+			continue
+		if(isclosedturf(other_mineshafts))
+			continue
+		if(center_area != get_area(other_mineshafts))
+			continue
+		if(other_mineshafts.trigger_collapse(TRUE, trigger_sfx))
+			trigger_sfx = FALSE
+		if(prob(33))
+			break
+
+/obj/effect/temp_visual/trap/mine_collapse
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "trap"
+	light_outer_range = 2
+	duration = 5 SECONDS
+
+/obj/effect/temp_visual/trap/mine_collapse/left
+	pixel_x = -8
+
+/obj/effect/temp_visual/trap/mine_collapse/right
+	pixel_x = 8
