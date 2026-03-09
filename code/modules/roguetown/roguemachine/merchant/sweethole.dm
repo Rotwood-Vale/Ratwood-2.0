@@ -15,6 +15,7 @@
 	. += span_notice("Only freeholders may operate it.")
 	if(ishuman(user) && HAS_TRAIT(user, TRAIT_FREEHOLDER))
 		. += span_info("It currently stores [stored_mammon] mammon.")
+
 /obj/structure/roguemachine/cashface/proc/can_use_cashface(mob/living/user)
 	if(!ishuman(user))
 		return FALSE
@@ -25,6 +26,8 @@
 
 /obj/structure/roguemachine/cashface/attack_hand(mob/user)
 	if(!can_use_cashface(user))
+		return
+	if(!Adjacent(user))
 		return
 	if(stored_mammon < 1)
 		say("Nothing is stored within.")
@@ -38,6 +41,10 @@
 	var/selection = input(user, "There are [stored_mammon] mammon stored within. Choose which currency you'd like to withdraw.", src) as null|anything in choicez
 	if(!selection)
 		return
+	if(QDELETED(src) || QDELETED(user))
+		return
+	if(!Adjacent(user))
+		return
 	var/mod = 1
 	if(selection == "GOLD")
 		mod = 10
@@ -47,21 +54,23 @@
 	coin_amt = round(coin_amt)
 	if(coin_amt < 1)
 		return
+	if(QDELETED(src) || QDELETED(user))
+		return
+	if(!Adjacent(user))
+		return
 	var/max_coins = 20
 	if(coin_amt > max_coins)
 		to_chat(user, span_warning("Maximum withdrawal limit exceeded. You can only withdraw up to [max_coins] coins at once."))
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		return
-	if(!Adjacent(user))
 		return
 	if((coin_amt * mod) > stored_mammon)
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 	stored_mammon -= (coin_amt * mod)
 	playsound(src, 'sound/misc/coindispense.ogg', 100, FALSE, -1)
-	budget2change(coin_amt * mod, get_turf(src), selection)
+	budget2change(coin_amt * mod, user, selection)
 	return
-	
+
 /obj/structure/roguemachine/cashface/attackby(obj/item/P, mob/user, params)
 	if(!anchored)
 		return ..()

@@ -102,40 +102,46 @@ SUBSYSTEM_DEF(capturepoints)
 		. += span_notice("Sworn to: [P.owner_faction].")
 		. += span_notice("Stored tribute: [P.pooled_mammon] mammon.")
 
-/obj/structure/roguemachine/capturepoint/proc/get_user_faction(mob/living/carbon/human/user)
+/obj/structure/roguemachine/capturepoint/proc/is_church_member(mob/living/carbon/human/user)
+	if(!user?.mind)
+		return FALSE
+	var/datum/job/target_job = SSjob.GetJob(user.mind.assigned_role)
+	if(target_job && (target_job.type in list(CHURCH_ROLES)))
+		return TRUE
+	return FALSE
+
+/obj/structure/roguemachine/capturepoint/proc/is_freehold_member(mob/living/carbon/human/user)
 	if(!user)
-		return null
+		return FALSE
+	return HAS_TRAIT(user, TRAIT_FREEHOLDER)
 
-	if(user.mind)
-		var/datum/job/target_job = SSjob.GetJob(user.mind.assigned_role)
-		if(target_job && (target_job.type in list(CHURCH_ROLES)))
-			return CAPTURE_FACTION_CHURCH
+/obj/structure/roguemachine/capturepoint/proc/is_outlander_member(mob/living/carbon/human/user)
+	if(!user)
+		return FALSE
+	return HAS_TRAIT(user, TRAIT_OUTLANDER)
 
-	if(HAS_TRAIT(user, TRAIT_FREEHOLDER))
-		return CAPTURE_FACTION_FREEHOLD
+/obj/structure/roguemachine/capturepoint/proc/is_keep_member(mob/living/carbon/human/user)
+	if(!user)
+		return FALSE
+	if(is_church_member(user))
+		return FALSE
+	if(is_freehold_member(user))
+		return FALSE
+	if(is_outlander_member(user))
+		return FALSE
+	return TRUE
 
-	if(HAS_TRAIT(user, TRAIT_OUTLANDER))
-		return CAPTURE_FACTION_OUTLANDERS
-
-	return CAPTURE_FACTION_KEEP
-
-/* /obj/structure/roguemachine/capturepoint/proc/update_appearance()
-	var/datum/capture_point_data/P = SScapturepoints.get_point(point_id)
-	if(!P)
-		icon_state = "streetvendor1"
-		return
-
-	switch(P.owner_faction)
-		if(CAPTURE_FACTION_KEEP)
-			icon_state = "streetvendor1"
-		if(CAPTURE_FACTION_OUTLANDERS)
-			icon_state = "streetvendor1"
+/obj/structure/roguemachine/capturepoint/proc/can_collect_for_faction(mob/living/carbon/human/user, faction)
+	switch(faction)
 		if(CAPTURE_FACTION_CHURCH)
-			icon_state = "streetvendor1"
+			return is_church_member(user)
 		if(CAPTURE_FACTION_FREEHOLD)
-			icon_state = "streetvendor1"
-		else
-			icon_state = "streetvendor1" */  //me potat
+			return is_freehold_member(user)
+		if(CAPTURE_FACTION_OUTLANDERS)
+			return is_outlander_member(user)
+		if(CAPTURE_FACTION_KEEP)
+			return is_keep_member(user)
+	return FALSE
 
 /obj/structure/roguemachine/capturepoint/attack_hand(mob/user)
 	if(!ishuman(user))
@@ -178,15 +184,12 @@ SUBSYSTEM_DEF(capturepoints)
 		return
 	if(!Adjacent(user))
 		return
-
 	var/datum/capture_point_data/P = SScapturepoints.get_point(point_id)
 	if(!P)
 		return
-
 	if(P.owner_faction == faction_choice)
 		to_chat(user, span_warning("[src] is already sworn to [faction_choice]."))
 		return
-
 	user.visible_message(span_notice("[user] begins swearing [point_id] to [faction_choice]..."))
 	if(!do_after(user, 1 MINUTES, target = src))
 		return
@@ -194,7 +197,6 @@ SUBSYSTEM_DEF(capturepoints)
 		return
 	if(!Adjacent(user))
 		return
-
 	SScapturepoints.set_owner(point_id, faction_choice)
 	visible_message(span_notice("[user] swears [point_id] to [faction_choice]!"))
 
@@ -203,30 +205,23 @@ SUBSYSTEM_DEF(capturepoints)
 		return
 	if(!Adjacent(user))
 		return
-
 	var/datum/capture_point_data/P = SScapturepoints.get_point(point_id)
 	if(!P)
 		return
-
-	var/user_faction = get_user_faction(user)
-	if(!user_faction)
-		to_chat(user, span_warning("[src] does not recognize my allegiance."))
+	if(!can_collect_for_faction(user, P.owner_faction))
+		to_chat(user, span_warning("This standard does not answer to my faction."))
 		return
-
-	if(P.owner_faction != user_faction)
-		to_chat(user, span_warning("This wardstone does not answer to my faction."))
-		return
-
 	var/key = "[point_id]::[P.owner_faction]"
 	var/already_taken_ticks = user.mind.capture_withdrawals[key] || 0
 	var/total_ticks_available = round(P.pooled_mammon / CAPTURE_TICK_VALUE)
 	var/claimable_ticks = total_ticks_available - already_taken_ticks
-
 	if(claimable_ticks <= 0)
 		to_chat(user, span_warning("There is no tribute ready for me to collect yet."))
 		return
-
 	var/amount = claimable_ticks * CAPTURE_WITHDRAW_PER_TICK
+	if(amount < 1)
+		to_chat(user, span_warning("There is no tribute ready for me to collect yet."))
+		return
 	if(P.pooled_mammon < amount)
 		to_chat(user, span_warning("The tribute store is not yet rich enough to pay my due."))
 		return
@@ -240,40 +235,43 @@ SUBSYSTEM_DEF(capturepoints)
 	P = SScapturepoints.get_point(point_id)
 	if(!P)
 		return
-	if(P.owner_faction != user_faction)
-		to_chat(user, span_warning("This wardstone no longer answers to my faction."))
+	if(!can_collect_for_faction(user, P.owner_faction))
+		to_chat(user, span_warning("This standard no longer answers to my faction."))
 		return
 	key = "[point_id]::[P.owner_faction]"
 	already_taken_ticks = user.mind.capture_withdrawals[key] || 0
 	total_ticks_available = round(P.pooled_mammon / CAPTURE_TICK_VALUE)
 	claimable_ticks = total_ticks_available - already_taken_ticks
-	if(claimable_ticks <= 0)
+	amount = claimable_ticks * CAPTURE_WITHDRAW_PER_TICK
+	if(claimable_ticks <= 0 || amount < 1)
 		to_chat(user, span_warning("There is no tribute left ready for me to collect."))
 		return
-	amount = claimable_ticks * CAPTURE_WITHDRAW_PER_TICK
 	if(P.pooled_mammon < amount)
 		to_chat(user, span_warning("The tribute store is not yet rich enough to pay my due."))
 		return
 	if(!SScapturepoints.withdraw_from_point(point_id, amount))
-		to_chat(user, span_warning("The wardstone fails to yield its tribute."))
+		to_chat(user, span_warning("The standard fails to yield its tribute."))
 		return
 	user.mind.capture_withdrawals[key] = already_taken_ticks + claimable_ticks
-	budget2change(amount, get_turf(src))
+	budget2change(amount, user)
 	visible_message(span_notice("[user] collects [amount] mammon from [point_id]."))
-
 
 /obj/structure/roguemachine/capturepoint/church
 	name = "church standard"
 	desc = "A standard raised over the church."
+	point_id = CAPTURE_POINT_CHURCH
 
 /obj/structure/roguemachine/capturepoint/lowtown
 	name = "lowtown standard"
 	desc = "A standard raised over lowtown."
+	point_id = CAPTURE_POINT_LOWTOWN
 
 /obj/structure/roguemachine/capturepoint/hightown
 	name = "hightown standard"
 	desc = "A standard raised over hightown."
+	point_id = CAPTURE_POINT_HIGHTOWN
 
 /obj/structure/roguemachine/capturepoint/keep
 	name = "keep standard"
 	desc = "A standard raised over the keep."
+	point_id = CAPTURE_POINT_KEEP
