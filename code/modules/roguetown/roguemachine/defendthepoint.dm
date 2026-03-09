@@ -12,13 +12,6 @@
 #define CAPTURE_TICK_VALUE 200
 #define CAPTURE_WITHDRAW_PER_TICK 40
 
-#define CHURCH_ROLES \
-	/datum/job/roguetown/churchling,\
-	/datum/job/roguetown/druid,\
-	/datum/job/roguetown/monk,\
-	/datum/job/roguetown/priest,\
-	/datum/job/roguetown/templar
-
 /datum/capture_point_data
 	var/id
 	var/owner_faction = CAPTURE_FACTION_KEEP
