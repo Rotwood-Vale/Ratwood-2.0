@@ -97,7 +97,7 @@
 		if(T.stat != DEAD) // If theyre alive
 			skill_multiplier = 4
 
-	if(skill_multiplier && can_train_combat_skill(L, /datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT))
+	if(skill_multiplier && can_train_combat_skill(L, /datum/skill/combat/crossbows, SKILL_LEVEL_LEGENDARY))
 		L.mind.add_sleep_experience(/datum/skill/combat/crossbows, L.STAINT * skill_multiplier)
 
 //arrows ฅ^•ﻌ•^ฅ
@@ -190,7 +190,7 @@
 		if(T.stat != DEAD) // If theyre alive
 			skill_multiplier = 4
 
-	if(skill_multiplier && can_train_combat_skill(L, /datum/skill/combat/bows, SKILL_LEVEL_EXPERT))
+	if(skill_multiplier && can_train_combat_skill(L, /datum/skill/combat/bows, SKILL_LEVEL_LEGENDARY))
 		L.mind.add_sleep_experience(/datum/skill/combat/bows, L.STAINT * skill_multiplier)
 
 /obj/projectile/bullet/reusable/arrow/blunt
