@@ -30,7 +30,7 @@
 	. += span_notice("A karmic token may be offered only to a Freeholder.")
 	. += span_notice("A token of plain faith grants a lesser blessing (the receiver can pick a temporary buff).")
 	. += span_notice("A token of great faith grants a greater blessing (the receiver can pick a permanent buff).")
-	. += span_notice("A token of bad faith lays a curse instead (receiver is getting marked as a coal and punished).")
+	. += span_notice("A token of bad faith lays a curse instead (receiver is getting marked and punished).")
 	. += span_notice("A blessing lasts only 3 minutes and must be claimed here before it fades.")
 	. += span_notice("A Freeholder bearing a blessing is supposed to touch the machine to claim a reward.")
 
