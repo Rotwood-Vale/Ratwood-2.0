@@ -123,7 +123,8 @@
 	H.verbs |= list(
 		/mob/living/carbon/human/proc/request_outlaw,
 		/mob/proc/haltyell,
-		/mob/living/carbon/human/mind/proc/setorders
+		/mob/living/carbon/human/mind/proc/setorders,
+		/mob/living/carbon/human/proc/take_squire
 	)
 	H.adjust_blindness(-3)
 	if(H.mind)

@@ -20,7 +20,8 @@
 		STATKEY_PER = 1,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,//Light armour. Get them!!!
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
@@ -33,7 +34,6 @@
 /datum/outfit/job/roguetown/adventurer/bluthund/pre_equip(mob/living/carbon/human/H)
 	..()
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
-	r_hand = /obj/item/rogueweapon/greatsword/grenz
 	wrists = wrists = /obj/item/clothing/wrists/roguetown/splintarms/iron
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/clothing/neck/roguetown/gorget
@@ -49,3 +49,16 @@
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
+	if(H.mind)
+		var/grenzel_purpose = list("Zweihander","Halberd","Eagle's Beak")
+		var/weapon_choice = input(H, "Choose your ALLY", "WOE THE CONTRACT") as anything in grenzel_purpose
+		switch(weapon_choice)
+			if("Zweihander")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+				r_hand = /obj/item/rogueweapon/greatsword/grenz
+			if("Halberd")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+				r_hand = /obj/item/rogueweapon/halberd
+			if("Eagle's Beak")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+				r_hand = /obj/item/rogueweapon/eaglebeak

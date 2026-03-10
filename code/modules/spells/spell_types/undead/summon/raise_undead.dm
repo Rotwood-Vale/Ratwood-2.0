@@ -54,7 +54,7 @@
 	target.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/raise_undead/proc/backup_summon(var/turf/T)
+/obj/effect/proc_holder/spell/invoked/raise_undead/proc/backup_summon(turf/T)
 	var/skeleton_roll = rand(1, 3)
 	// 66% chance of medium 33% of heavy
 	switch(skeleton_roll)

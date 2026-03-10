@@ -87,7 +87,7 @@
 		return TRUE
 #endif
 
-/mob/living/carbon/human/Initialize()
+/mob/living/carbon/human/Initialize(mapload)
 #ifdef MATURESERVER
 	sexcon = new /datum/sex_controller(src)
 #endif
@@ -643,9 +643,6 @@
 				else if(energy > 0)
 					hud_used.energy.icon_state = "energy10"
 
-		if(hud_used.zone_select)
-			hud_used.zone_select.update_icon()
-
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	dna?.species.spec_fully_heal(src)
 	if(admin_revive)
@@ -686,7 +683,6 @@
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_REAPPLY_PREFS, "Reapply Preferences")
-	VV_DROPDOWN_OPTION(VV_HK_COPY_OUTFIT, "Copy Outfit")
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
 	VV_DROPDOWN_OPTION(VV_HK_PURGE_PARTOF_SLOT, "Purge Part of Slot")
 	VV_DROPDOWN_OPTION(VV_HK_PURGE_SLOT, "Purge Slot")
@@ -706,7 +702,15 @@
 						if("Flavor")
 							flavortext = null
 							nsfwflavortext = null
+							ooc_extra_img = null
+							ooc_extra_img_link = null
+							nsfw_ooc_extra_img = null
+							nsfw_ooc_extra_img_link = null
 							client.prefs?.flavortext = null
+							client.prefs?.ooc_extra_img = null
+							client.prefs?.ooc_extra_img_link = null
+							client.prefs?.nsfw_ooc_extra_img = null
+							client.prefs?.nsfw_ooc_extra_img_link = null
 						if("Notes")
 							ooc_notes = null
 							erpprefs = null
@@ -736,6 +740,10 @@
 			if(alert(usr,"This cannot be undone. Are you sure?","DON'T FATFINGER THIS","Yes","No") == "Yes")
 				flavortext = null
 				nsfwflavortext = null
+				ooc_extra_img = null
+				ooc_extra_img_link = null
+				nsfw_ooc_extra_img = null
+				nsfw_ooc_extra_img_link = null
 				erpprefs = null
 				ooc_notes = null
 				ooc_extra = null
@@ -746,6 +754,10 @@
 				if(client)
 					client.prefs?.flavortext = null
 					client.prefs?.nsfwflavortext = null
+					client.prefs?.ooc_extra_img = null
+					client.prefs?.ooc_extra_img_link = null
+					client.prefs?.nsfw_ooc_extra_img = null
+					client.prefs?.nsfw_ooc_extra_img_link = null
 					client.prefs?.erpprefs = null
 					client.prefs?.ooc_notes = null
 					client.prefs?.ooc_extra = null
@@ -764,10 +776,6 @@
 		if(!client || !client.prefs)
 			return
 		client.prefs.copy_to(src, TRUE, FALSE)
-	if(href_list[VV_HK_COPY_OUTFIT])
-		if(!check_rights(R_SPAWN))
-			return
-		copy_outfit()
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
@@ -1016,7 +1024,7 @@
 /mob/living/carbon/human/species
 	var/race = null
 
-/mob/living/carbon/human/species/Initialize()
+/mob/living/carbon/human/species/Initialize(mapload)
 	. = ..()
 	if(race)
 		set_species(race)

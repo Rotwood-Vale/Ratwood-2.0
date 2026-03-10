@@ -12,7 +12,7 @@
 	var/current_category = "Postings"
 	var/list/categories = list("Postings", "Premium Postings", "Scout Report")
 
-/obj/structure/roguemachine/noticeboard/Initialize()
+/obj/structure/roguemachine/noticeboard/Initialize(mapload)
 	. = ..()
 	SSroguemachine.noticeboards += src
 

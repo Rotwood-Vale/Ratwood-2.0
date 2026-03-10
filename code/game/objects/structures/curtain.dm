@@ -20,17 +20,17 @@
 	directional = TRUE//Do these care about which side you open from in the first place?
 
 //Because we don't want existing curtains to update on spawn like this.
-/obj/structure/curtain/directional/Initialize()
+/obj/structure/curtain/directional/Initialize(mapload)
 	closedir = dir
 	update_icon()
 	..()
 
-//Uncomment this, if you make them crafts.
-/*
-/obj/structure/curtain/directional/OnCrafted(dirin)
+//Crafted directional curtain - only openable from one side
+/obj/structure/curtain/directional/crafted
+
+/obj/structure/curtain/directional/crafted/OnCrafted(dirin)
 	dir = turn(dirin, 180)
 	closedir = dir
-*/
 
 /obj/structure/curtain/proc/toggle()
 	open = !open
@@ -117,6 +117,13 @@
 /obj/structure/curtain/black
 	color = "#414143"
 
+/obj/structure/curtain/orange
+	color = "#a3622c"
+
+/obj/structure/curtain/yellow
+	color = "#a18727"
+
+
 //This is awful and I apologise.
 /obj/structure/curtain/directional/red
 	color = "#a32121"
@@ -138,3 +145,9 @@
 
 /obj/structure/curtain/directional/black
 	color = "#414143"
+
+/obj/structure/curtain/directional/orange
+	color = "#a3622c"
+
+/obj/structure/curtain/directional/yellow
+	color = "#a18727"

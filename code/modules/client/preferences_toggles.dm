@@ -60,6 +60,17 @@
 		else
 			to_chat(src, "Your character information will no longer be viewable when masked.")
 
+/client/verb/nsfw_examine_always()
+	set category = "Options"
+	set name = "Toggle NSFW Examine"
+	if(prefs)
+		prefs.nsfw_examine_always = !prefs.nsfw_examine_always
+		prefs.save_preferences()
+		if(prefs.nsfw_examine_always)
+			to_chat(src, "Your character NSFW information will always be visible.")
+		else
+			to_chat(src, "Your character NSFW information will only be visible when nude.")
+
 /client/verb/mute_animal_emotes()
 	set category = "Options"
 	set name = "Toggle Animal Noise Emotes"
@@ -95,7 +106,7 @@
 
 /client/verb/toggle_compliance_notifs() // The messages need to be on-by-default while this is in its early stages.
 	set category = "Options"
-	set name = "Compliance Notifs"
+	set name = "Toggle Compliance Notifs"
 	if(prefs)
 		prefs.compliance_notifs = !prefs.compliance_notifs
 		prefs.save_preferences()

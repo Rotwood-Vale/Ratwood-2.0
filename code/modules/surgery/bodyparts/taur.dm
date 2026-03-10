@@ -85,7 +85,7 @@
 	. += tertiary
 
 /*********************************/
-/* TAUR TYPES                    */
+/* TAUR TYPES                   */
 /*********************************/
 GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 

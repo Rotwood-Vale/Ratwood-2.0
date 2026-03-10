@@ -44,7 +44,7 @@
 	nomouseover = FALSE
 	var/swimdir = FALSE
 
-/turf/open/water/Initialize()
+/turf/open/water/Initialize(mapload)
 	.  = ..()
 	water_overlay = new(src)
 	water_top_overlay = new(src)
@@ -375,7 +375,7 @@
 	slowdown = 3
 	water_reagent = /datum/reagent/water/bathwater
 
-/turf/open/water/bath/Initialize()
+/turf/open/water/bath/Initialize(mapload)
 	.  = ..()
 	icon_state = "bathtile"
 
@@ -390,9 +390,9 @@
 	wash_in = FALSE
 	water_reagent = /datum/reagent/water/gross/sewage
 
-/turf/open/water/sewer/Initialize()
+/turf/open/water/sewer/Initialize(mapload)
 	icon_state = "paving"
-	water_color = pick("#705a43","#697043")
+	water_color = pick("#705a43","#697043", "#6C6543")
 	.  = ..()
 
 /turf/open/water/swamp
@@ -417,13 +417,13 @@
 	wash_in = FALSE
 	water_reagent = /datum/reagent/blood/shitty
 
-/turf/open/water/swamp/Initialize()
+/turf/open/water/swamp/Initialize(mapload)
 	icon_state = "dirt"
 	dir = pick(GLOB.cardinals)
 	water_color = pick("#705a43")
 	.  = ..()
 
-/turf/open/water/bloody/Initialize()
+/turf/open/water/bloody/Initialize(mapload)
 	icon_state = "dirt"
 	dir = pick(GLOB.cardinals)
 	water_color = pick("#880808")
@@ -514,7 +514,7 @@
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water
 
-/turf/open/water/cleanshallow/Initialize()
+/turf/open/water/cleanshallow/Initialize(mapload)
 	icon_state = "rock"
 	dir = pick(GLOB.cardinals)
 	.  = ..()
@@ -530,6 +530,13 @@
 	swim_skill = TRUE
 	var/river_processing
 	swimdir = TRUE
+
+/turf/open/water/river/muddy
+	water_color = "#705a43"
+	water_reagent = /datum/reagent/water/gross
+	icon_state = "rockwd"
+	name = "muddy river"
+	desc = "A river of thick, silt-laden sludge lurches languidly through the land."
 
 /turf/open/water/river/flow
 	icon_state = "rockwd"
@@ -553,7 +560,7 @@
 		water_top_overlay.icon_state = "rivertop"
 		water_top_overlay.dir = dir
 
-/turf/open/water/river/Initialize()
+/turf/open/water/river/Initialize(mapload)
 	icon_state = "rock"
 	.  = ..()
 
@@ -634,7 +641,7 @@
 	var/heal_amount = 20
 	var/last_heal = 0
 
-/turf/open/water/ocean/deep/thermalwater/Initialize()
+/turf/open/water/ocean/deep/thermalwater/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

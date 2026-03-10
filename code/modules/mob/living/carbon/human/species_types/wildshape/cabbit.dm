@@ -4,6 +4,8 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/cabbit_skin
+	wildshape_icon = 'icons/roguetown/mob/cabbit.dmi'
+	wildshape_icon_state = "cabbit"
 	// The form when you gotta go fast and want to be cute
 
 /mob/living/carbon/human/species/wildshape/cabbit/gain_inherent_skills()
@@ -141,7 +143,7 @@
 /obj/item/rogueweapon/cabbit_claw/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/cabbit_claw/Initialize()
+/obj/item/rogueweapon/cabbit_claw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)

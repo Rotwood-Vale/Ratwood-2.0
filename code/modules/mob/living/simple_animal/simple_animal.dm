@@ -189,7 +189,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
-/mob/living/simple_animal/Initialize()
+/mob/living/simple_animal/Initialize(mapload)
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
 	if(gender == PLURAL)
@@ -509,21 +509,21 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		gib()
 
 /mob/living/proc/butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)
-    var/list/parts = list()
-    if(botch_count)
-        parts += "[botch_count] botched ([botch_chance]%)"
-    if(normal_count)
-        parts += "[normal_count] normal"
-    if(perfect_count)
-        parts += "[perfect_count] perfect ([perfect_chance]%)"
+	var/list/parts = list()
+	if(botch_count)
+		parts += "[botch_count] botched ([botch_chance]%)"
+	if(normal_count)
+		parts += "[normal_count] normal"
+	if(perfect_count)
+		parts += "[perfect_count] perfect ([perfect_chance]%)"
 
-    var/msg = ""
-    for(var/i = 1, i <= length(parts), i++)
-        msg += parts[i]
-        if(i < length(parts))
-            msg += ", "
+	var/msg = ""
+	for(var/i = 1, i <= length(parts), i++)
+		msg += parts[i]
+		if(i < length(parts))
+			msg += ", "
 
-    return msg
+	return msg
 
 /mob/living/simple_animal/spawn_dust(just_ash = FALSE)
 	if(just_ash || !remains_type)
@@ -744,7 +744,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	if(!selhand)
 		selhand = (active_hand_index % held_items.len)+1
 	if(istext(selhand))
-		selhand = lowertext(selhand)
+		selhand = LOWER_TEXT(selhand)
 		if(selhand == "right" || selhand == "r")
 			selhand = 2
 		if(selhand == "left" || selhand == "l")

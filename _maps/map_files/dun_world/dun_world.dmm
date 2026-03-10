@@ -8717,6 +8717,7 @@
 /obj/structure/fluff/walldeco/med2{
 	pixel_y = -32
 	},
+/obj/item/rogueweapon/surgery/cautery/branding,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/cell)
 "ceL" = (
@@ -10072,6 +10073,7 @@
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/rogueweapon/whip,
 /obj/structure/fluff/railing/border/north,
+/obj/item/rogueweapon/surgery/cautery/branding,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "cvc" = (
@@ -23705,6 +23707,7 @@
 /obj/item/rogueweapon/whip,
 /obj/item/storage/roguebag,
 /obj/item/storage/roguebag,
+/obj/item/rogueweapon/surgery/cautery/branding/slave,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "fKP" = (

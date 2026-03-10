@@ -136,11 +136,11 @@
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
 		if ((valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot))
 			if(display_as_wanderer)
-				display1 = span_info("ø ------------ ø\n<img src=[headshot_link] width=100 height=100/>\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
+				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
 			else if(used_title)
-				display1 = span_info("ø ------------ ø\n<img src=[headshot_link] width=100 height=100/>\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
+				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
 			else
-				display1 = span_info("ø ------------ ø\n<img src=[headshot_link] width=100 height=100/>\nThis is the <EM>[used_name]</EM>, the [race_name].")
+				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is the <EM>[used_name]</EM>, the [race_name].")
 		else
 			if(display_as_wanderer)
 				display1 = span_info("ø ------------ ø\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
@@ -224,14 +224,14 @@
 					. += (user_side == mob_side) ? span_notice("Fellow [their_god.name] supporter!") : span_userdanger("Vile [their_god.name] supporter!")
 
 		if(dna.species.use_skintones)
-			var/skin_tone_wording = dna.species.skin_tone_wording ? lowertext(dna.species.skin_tone_wording) : "skin tone"
+			var/skin_tone_wording = dna.species.skin_tone_wording ? LOWER_TEXT(dna.species.skin_tone_wording) : "skin tone"
 			var/list/skin_tones = dna.species.get_skin_list()
 			var/skin_tone_seen = "incomprehensible"
 			if(!HAS_TRAIT(src, TRAIT_ROTMAN) && skin_tone)
 				//AGGHHHHH this is stupid
 				for(var/tone in skin_tones)
 					if(src.skin_tone == skin_tones[tone])
-						skin_tone_seen = lowertext(tone)
+						skin_tone_seen = LOWER_TEXT(tone)
 						break
 			var/slop_lore_string = "."
 			. += span_info("[capitalize(m2)] [skin_tone_wording] is [skin_tone_seen][slop_lore_string]")
@@ -240,6 +240,10 @@
 			var/mob/living/carbon/human/H = user
 			if(H.marriedto == name)
 				. += span_love("It's my spouse.")
+
+		var/gang_message = get_gang_text(user)
+		if (gang_message)
+			. += gang_message
 
 		if(name in GLOB.excommunicated_players)
 			. += span_userdanger("HERETIC! SHAME!")
@@ -274,6 +278,9 @@
 		if(user != src && !HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS) && ishuman(user))
 			if(has_flaw(/datum/charflaw/addiction/lovefiend) && user.has_flaw(/datum/charflaw/addiction/lovefiend))
 				. += span_aiprivradio("[m1] as lovesick as I.")
+
+			if(has_flaw(/datum/charflaw/marked_by_baotha) && HAS_TRAIT(user, TRAIT_DEPRAVED))
+				. += span_aiprivradio("[m1] marked by the debauched scent of my patron.")
 
 			if(has_flaw(/datum/charflaw/addiction/junkie) && user.has_flaw(/datum/charflaw/addiction/junkie))
 				. += span_deadsay("[m1] carrying the same dust marks on their nose as I.")
@@ -363,7 +370,7 @@
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if(HAS_TRAIT(user, TRAIT_ROYALSERVANT))
 		var/datum/job/our_job = SSjob.name_occupations[job]
-		if(length(culinary_preferences) && is_type_in_list(our_job, list(/datum/job/roguetown/lord, /datum/job/roguetown/lady, /datum/job/roguetown/exlady, /datum/job/roguetown/prince)))
+		if(length(culinary_preferences) && is_type_in_list(our_job, list(/datum/job/roguetown/lord, /datum/job/roguetown/lady, /datum/job/roguetown/exlady, /datum/job/roguetown/prince, /datum/job/roguetown/hand, /datum/job/roguetown/steward, /datum/job/roguetown/councillor, /datum/job/roguetown/physician, /datum/job/roguetown/knight, /datum/advclass/knight/irregularknight, /datum/job/roguetown/magician, /datum/job/roguetown/dungeoneer)))
 			var/obj/item/reagent_containers/food/snacks/fav_food = src.culinary_preferences[CULINARY_FAVOURITE_FOOD]
 			var/datum/reagent/consumable/fav_drink = src.culinary_preferences[CULINARY_FAVOURITE_DRINK]
 			if(fav_food)
@@ -521,6 +528,10 @@
 		var/str = "[m3] [belt.get_examine_string(user)] about [m2] waist. "
 		str += belt.integrity_check(is_smart)
 		. += str
+		if(istype(belt, /obj/item/storage/belt/rogue)) // check if belt has dildo attached
+			var/obj/item/storage/belt/rogue/belt_with_dildo = belt
+			if(belt_with_dildo.attached_toy)
+				. += "[m3] [belt_with_dildo.attached_toy.get_examine_string(user)] attached to [m2] belt. "
 
 	//right belt
 	if(beltr && !(SLOT_BELT_R in obscured))
@@ -584,7 +595,7 @@
 
 	//ID
 	if(wear_ring && !(SLOT_RING in obscured))
-		var/str = "[wear_ring.get_examine_string(user)] on [m2] hands. "
+		var/str = "[m3] [wear_ring.get_examine_string(user)] on [m2] hands. "
 		if(is_smart && istype(wear_ring, /obj/item/clothing/ring/active))
 			var/obj/item/clothing/ring/active/AR = wear_ring
 			if(AR.cooldowny)
@@ -1008,6 +1019,19 @@
 			if(femgen)
 				. += span_info(femgen)
 
+	// Print out branding
+	for(var/obj/item/bodypart/branded_bodypart as anything in bodyparts)
+		if(length(branded_bodypart.branded_writing) && get_location_accessible(src, branded_bodypart.body_zone))
+			. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(branded_bodypart.branded_writing)]."
+		if(istype(branded_bodypart, /obj/item/bodypart/chest))
+			var/obj/item/bodypart/chest/buttocks = branded_bodypart
+			if(length(buttocks.branded_writing_on_buttocks) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
+				. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(buttocks.branded_writing_on_buttocks)]."
+		else if(istype(branded_bodypart, /obj/item/bodypart/head))
+			var/obj/item/bodypart/head/neck = branded_bodypart
+			if(length(neck.branded_writing_on_neck) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
+				. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
+
 	// Characters with the hunted flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
 		if(skipface && user.has_flaw(/datum/charflaw/hunted) && user != src)
@@ -1107,7 +1131,7 @@
 			if(HAS_TRAIT(examiner, TRAIT_COMMIE))
 				villain_text = span_notice("Free man!")
 			if(HAS_TRAIT(src,TRAIT_KNOWNCRIMINAL))
-				villain_text = span_userdanger("BANDIT!")
+				villain_text = span_userdanger("OUTLAW!")
 		if(mind.special_role == "Deadite")
 			villain_text = span_userdanger("DEADITE!")
 		if(mind.special_role == "Vampire Lord")
@@ -1133,3 +1157,24 @@
 			return "[verbose ? "Conjured" : "(C. shaft)"]"
 		else
 			return null
+
+/// Simple gang sytem
+
+/mob/living/proc/get_gang_text(mob/examiner)
+	var/gang_text = null
+
+	if (HAS_TRAIT(src, TRAIT_GANG_A))
+		if (HAS_TRAIT(examiner, TRAIT_GANG_A))
+			gang_text = span_notice ("My Rontz Ratz gang member!")
+		else if (HAS_TRAIT(examiner, TRAIT_GANG_B))
+			gang_text = span_userdanger ("Rontz Ratz scum! Enemy!") ///I don't know why it doesn't indicate the correct gang here
+
+
+	if (HAS_TRAIT(src, TRAIT_GANG_B))
+		if (HAS_TRAIT(examiner, TRAIT_GANG_B))
+			gang_text = span_notice ("My Blortz Volves gang member!")
+		else if (HAS_TRAIT(examiner, TRAIT_GANG_A))
+			gang_text = span_userdanger ("Blortz Volves scum! Enemy!")
+
+	return gang_text
+

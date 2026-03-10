@@ -19,7 +19,7 @@
 	sellprice = 2
 	bundletype = /obj/item/natural/bundle/fibers
 
-/obj/item/natural/fibers/Initialize()
+/obj/item/natural/fibers/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/stonehoe,
@@ -178,7 +178,7 @@
 	var/medicine_quality
 	var/medicine_amount = 0
 
-/obj/item/natural/cloth/Initialize()
+/obj/item/natural/cloth/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/longbowpartial,
@@ -367,7 +367,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
 
-/obj/item/natural/thorn/Initialize()
+/obj/item/natural/thorn/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/tneedle,
@@ -558,7 +558,7 @@
 
 /obj/item/natural/bundle/bone/rdm
 
-/obj/item/natural/bundle/bone/rdm/Initialize()
+/obj/item/natural/bundle/bone/rdm/Initialize(mapload)
 	..()
 	amount = rand(2,6)
 /*/obj/item/natural/bone/attackby(obj/item/I, mob/living/user, params)
@@ -597,7 +597,7 @@
 	spitoutmouth = FALSE
 	experimental_inhand = FALSE
 
-/obj/item/natural/bowstring/Initialize()
+/obj/item/natural/bowstring/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/bow,

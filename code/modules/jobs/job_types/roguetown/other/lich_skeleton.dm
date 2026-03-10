@@ -209,6 +209,7 @@ LICH SKELETONS
 			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 		if("Grand Mace")
 			r_hand = /obj/item/rogueweapon/mace/goden/steel/paalloy
+			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
 		if("Mace + Shield")
 			r_hand = /obj/item/rogueweapon/mace/steel/palloy
 			l_hand = /obj/item/rogueweapon/shield/wood

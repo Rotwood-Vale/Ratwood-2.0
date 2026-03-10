@@ -27,9 +27,9 @@
 		return "[icon_state]_2"
 	else
 		return "[icon_state]_1"
-	
+
 ///Old Azure code
- /*
+/*
 	if(pp.erect_state == ERECT_STATE_HARD)
 		return "[icon_state]_[min(3,pp.penis_size+1)]"
 	else
@@ -111,7 +111,7 @@
 /datum/sprite_accessory/testicles
 	icon = 'icons/mob/sprite_accessory/genitals/gonads.dmi'
 	color_key_name = "Sack"
-	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_BEHIND_LAYER)
 
 /datum/sprite_accessory/testicles/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)
@@ -188,6 +188,11 @@
 /datum/sprite_accessory/vagina/hairy
 	icon_state = "hairy"
 	name = "Hairy"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+/datum/sprite_accessory/vagina/trimmed
+	icon_state = "trimmed"
+	name = "Trimmed"
 	color_key_defaults = list(KEY_HAIR_COLOR)
 
 /datum/sprite_accessory/vagina/spade

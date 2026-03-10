@@ -19,6 +19,7 @@
 	light_color = "#ff13d8ff"
 	var/list/held_items = list()
 	locked = FALSE
+	lockid = "nightman"
 	var/budget = 0
 	var/secret_budget = 0
 	var/recent_payments = 0
@@ -28,7 +29,7 @@
 /obj/structure/roguemachine/drugmachine/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/roguekey))
 		var/obj/item/roguekey/K = P
-		if(K.lockid == "nightman")
+		if(K.lockid == lockid)
 			locked = !locked
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 			update_icon()
@@ -37,13 +38,17 @@
 			to_chat(user, span_warning("Wrong key."))
 			return
 	if(istype(P, /obj/item/storage/keyring))
-		var/obj/item/storage/keyring/K = P
-		for(var/obj/item/roguekey/KE in K.keys)
-			if(KE.lockid == "nightman")
+		var/right_key = FALSE
+		for(var/obj/item/roguekey/KE in P.contents)
+			if(KE.lockid == lockid)
+				right_key = TRUE
 				locked = !locked
 				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 				update_icon()
 				return attack_hand(user)
+		if(!right_key)
+			to_chat(user, span_warning("Wrong key."))
+			return
 	if(istype(P, /obj/item/roguecoin/aalloy))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
@@ -65,7 +70,7 @@
 			if(drugrade_flags & DRUGRADE_MONEYB)
 				amt = recent_payments * 0.50
 			recent_payments = 0
-			send_ooc_note("<b>Income from PURITY:</b> [amt]", job = "Nightmaster")
+			send_ooc_note("<b>Income from PURITY:</b> [amt]", job = "Bathmaster")
 			secret_budget += amt
 			last_payout = world.time
 
@@ -196,7 +201,7 @@
 
 
 	var/mob/living/carbon/human/H = user
-	if(H.job == "Nightmaster")
+	if(H.job == "Bathmaster")
 		if(canread)
 			contents += "<a href='?src=[REF(src)];secrets=1'>Secrets</a><BR>"
 			contents += "Mammon Washing: [recent_payments] -- Your cut, Master! [secret_budget]<BR>"
@@ -245,7 +250,7 @@
 	STOP_PROCESSING(SSroguemachine, src)
 	return ..()
 
-/obj/structure/roguemachine/drugmachine/Initialize()
+/obj/structure/roguemachine/drugmachine/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSroguemachine, src)
 	update_icon()
@@ -256,6 +261,7 @@
 	held_items[/obj/item/clothing/mask/cigarette/rollie/mentha] = list("PRICE" = rand(6,11),"NAME" = "mentha zig")
 	held_items[/obj/item/clothing/mask/cigarette/rollie/nicotine] = list("PRICE" = rand(5,10),"NAME" = "zig")
 	held_items[/obj/item/storage/fancy/shhig] = list("PRICE" = rand(40,60), "NAME" = "Shhig brand premium zigs")
+	held_items[/obj/item/alch/transisdust] = list("PRICE" = rand(80,120), "NAME" = "sui dust")
 	// azure peak addition start - lipstick
 	held_items[/obj/item/azure_lipstick] = list("PRICE" = rand(33,50),"NAME" = "red lipstick")
 	held_items[/obj/item/azure_lipstick/jade] = list("PRICE" = rand(33,50),"NAME" = "jade lipstick")

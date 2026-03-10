@@ -5,6 +5,10 @@
 	screen_max_rows = 4
 	max_w_class = WEIGHT_CLASS_NORMAL
 
+/datum/component/storage/concrete/roguetown/satchelshort
+	screen_max_rows = 3
+	max_w_class = WEIGHT_CLASS_NORMAL
+
 /datum/component/storage/concrete/roguetown/backpack
 	screen_max_rows = 7
 	screen_max_columns = 5
@@ -223,40 +227,41 @@
 /datum/component/storage/concrete/grid/orestore/New(datum/P, ...)
 	. = ..()
 	set_holdable(
-		typecacheof(list(/obj/item/rogueore,
-						 /obj/item/rogueore/gold,
-						 /obj/item/rogueore/silver,
-						 /obj/item/rogueore/iron,
-						 /obj/item/rogueore/copper,
-						 /obj/item/rogueore/tin,
-						 /obj/item/rogueore/coal,
-						 /obj/item/rogueore/coal/charcoal,
-						 /obj/item/rogueore/cinnabar,
-						 /obj/item/ingot,
-						 /obj/item/ingot/gold,
-						 /obj/item/ingot/iron,
-						 /obj/item/ingot/copper,
-						 /obj/item/ingot/tin,
-						 /obj/item/ingot/bronze,
-						 /obj/item/ingot/silver,
-						 /obj/item/ingot/steel,
-						 /obj/item/ingot/blacksteel,
-						 /obj/item/ingot/steelholy,
-						 /obj/item/ingot/silverblessed,
-						 /obj/item/ingot/aalloy,
-						 /obj/item/ingot/purifiedaalloy,
-						 /obj/item/ingot/aaslag,
-						 /obj/item/roguegem,
-						 /obj/item/roguegem/green,
-						 /obj/item/roguegem/blue,
-						 /obj/item/roguegem/yellow,
-						 /obj/item/roguegem/violet,
-						 /obj/item/roguegem/ruby,
-						 /obj/item/roguegem/diamond,
-						 /obj/item/roguegem/amethyst,
-						 /obj/item/riddleofsteel,
-						 /obj/item/pearl,
-						 /obj/item/pearl/blue)
+		typecacheof(list(
+			/obj/item/rogueore,
+			/obj/item/rogueore/gold,
+			/obj/item/rogueore/silver,
+			/obj/item/rogueore/iron,
+			/obj/item/rogueore/copper,
+			/obj/item/rogueore/tin,
+			/obj/item/rogueore/coal,
+			/obj/item/rogueore/coal/charcoal,
+			/obj/item/rogueore/cinnabar,
+			/obj/item/ingot,
+			/obj/item/ingot/gold,
+			/obj/item/ingot/iron,
+			/obj/item/ingot/copper,
+			/obj/item/ingot/tin,
+			/obj/item/ingot/bronze,
+			/obj/item/ingot/silver,
+			/obj/item/ingot/steel,
+			/obj/item/ingot/blacksteel,
+			/obj/item/ingot/steelholy,
+			/obj/item/ingot/silverblessed,
+			/obj/item/ingot/aalloy,
+			/obj/item/ingot/purifiedaalloy,
+			/obj/item/ingot/aaslag,
+			/obj/item/roguegem,
+			/obj/item/roguegem/green,
+			/obj/item/roguegem/blue,
+			/obj/item/roguegem/yellow,
+			/obj/item/roguegem/violet,
+			/obj/item/roguegem/ruby,
+			/obj/item/roguegem/diamond,
+			/obj/item/roguegem/amethyst,
+			/obj/item/riddleofsteel,
+			/obj/item/pearl,
+			/obj/item/pearl/blue)
 	))
 
 /datum/component/storage/concrete/grid/orestore/bronze

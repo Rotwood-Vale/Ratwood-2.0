@@ -322,8 +322,8 @@
 /obj/item/clothing/neck/roguetown/fencerguard/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Otavan colors") as anything in colorlist
-		var/playerchoice = colorlist[choice]
+		var/choice = input(user, "Choose a color.", "Otavan colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
 		detail_tag = "_detail"
@@ -342,7 +342,7 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/neck/roguetown/fencerguard/Initialize()
+/obj/item/clothing/neck/roguetown/fencerguard/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -389,7 +389,7 @@
 	blocksound = PLATEHIT
 	leashable = TRUE
 
-/obj/item/clothing/neck/roguetown/gorget/cursed_collar/Initialize()
+/obj/item/clothing/neck/roguetown/gorget/cursed_collar/Initialize(mapload)
 	. = ..()
 	name = "cursed collar"
 	ADD_TRAIT(src, TRAIT_NO_SELF_UNEQUIP, CURSED_ITEM_TRAIT)
@@ -810,9 +810,9 @@
 	smeltresult = /obj/item/riddleofsteel
 	var/active_item
 
-/obj/item/clothing/neck/roguetown/psicross/malum/secret/Initialize()
-  ..()
-  filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,2),rand(127,128),rand(254,255)))
+/obj/item/clothing/neck/roguetown/psicross/malum/secret/Initialize(mapload)
+	..()
+	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,2),rand(127,128),rand(254,255)))
 
 /obj/item/clothing/neck/roguetown/psicross/malum/secret/equipped(mob/living/user, slot)
 	. = ..()
@@ -853,9 +853,9 @@
 	sellprice = 666
 	var/active_item
 
-/obj/item/clothing/neck/roguetown/psicross/weeping/Initialize()
-  ..()
-  filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(254,255),rand(1,2),rand(1,2)))
+/obj/item/clothing/neck/roguetown/psicross/weeping/Initialize(mapload)
+	..()
+	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(254,255),rand(1,2),rand(1,2)))
 
 /obj/item/clothing/neck/roguetown/psicross/weeping/equipped(mob/living/user, slot)
 	. = ..()
@@ -899,7 +899,7 @@
 	body_parts_covered = NONE //it's not armor
 	leashable = TRUE
 
-/obj/item/clothing/neck/roguetown/collar/prisoner/Initialize()
+/obj/item/clothing/neck/roguetown/collar/prisoner/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 

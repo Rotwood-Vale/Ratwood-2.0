@@ -98,7 +98,7 @@
 /obj/item/book/granter/spell/random
 	icon_state = "random_book"
 
-/obj/item/book/granter/spell/random/Initialize()
+/obj/item/book/granter/spell/random/Initialize(mapload)
 	. = ..()
 	var/static/banned_spells = list(/obj/item/book/granter/spell/mimery_blockade)
 	var/real_type = pick(subtypesof(/obj/item/book/granter/spell) - banned_spells)
@@ -145,11 +145,11 @@
 
 //! --BLACKSTONE SCROLLS-- !/
 /obj/item/book/granter/spell/blackstone/
-    desc = "A scroll of potential known only to those that can decipher its secrets."
-    icon = 'icons/roguetown/items/misc.dmi'
-    oneuse = TRUE
-    drop_sound = 'sound/foley/dropsound/paper_drop.ogg'
-    pickup_sound =  'sound/blank.ogg'
+	desc = "A scroll of potential known only to those that can decipher its secrets."
+	icon = 'icons/roguetown/items/misc.dmi'
+	oneuse = TRUE
+	drop_sound = 'sound/foley/dropsound/paper_drop.ogg'
+	pickup_sound =  'sound/blank.ogg'
 
 /obj/item/book/granter/spell/blackstone/onlearned(mob/living/carbon/user)
 	..()

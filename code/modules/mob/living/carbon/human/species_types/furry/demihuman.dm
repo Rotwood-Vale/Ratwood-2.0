@@ -34,7 +34,7 @@
 	"Half-Pig", "Half-Boar", "Half-Rabbit", "Half-Horse", "Half-Donkey",
 	"Half-Hyena", "Half-Deer", "Half-Bear", "Half-Panda", "Half-Coyote",
 	"Half-Moose", "Half-Jackal", "Half-Panther", "Half-Lynx", "Half-Leopard",
-	"Half-Monkey", "Half-Bird", "Half-Seal", "Half-Bat", "Half-Otter", "Half-Cow",
+	"Half-Monkey", "Half-Bird", "Half-Seal", "Half-Frog", "Half-Bat", "Half-Otter", "Half-Cow",
 	"Half-Bull", "Half-Bee", "Half-Lizard", "Half-Insect", "Half-Spider", "Half-Monster"
 	)
 
@@ -205,6 +205,7 @@
 		"Naledi" = SKIN_COLOR_NALEDI,
 		"Naledi South" = SKIN_COLOR_NALEDI_LIGHT,
 		"Kazengun" = SKIN_COLOR_KAZENGUN,
+		"Czwarteki" = SKIN_COLOR_CZWARTEKI,
 	)
 
 /datum/species/demihuman/on_species_gain(mob/living/carbon/C, datum/species/old_species)

@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	//Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
 	var/ineligible_for_roles = FALSE
 
-/mob/dead/new_player/Initialize()
+/mob/dead/new_player/Initialize(mapload)
 //	if(client && SSticker.state == GAME_STATE_STARTUP)
 //		var/atom/movable/screen/splash/S = new(client, TRUE, TRUE)
 //		S.Fade(TRUE)
@@ -162,10 +162,11 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 			if(ready != tready)
 				ready = tready
 		//if it's post initialisation and they're trying to observe we do the needful
-		if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
-			ready = tready
-			make_me_an_observer()
-			return
+		// Check the git blame for why this was removed.
+		// if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
+		// 	ready = tready
+		// 	make_me_an_observer()
+		// 	return
 
 	if(href_list["refresh"])
 		winshow(src, "preferencess_window", FALSE)

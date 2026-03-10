@@ -159,7 +159,7 @@
 		user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineeranalyze)
 		to_chat(user, span_notice("Time to stop working"))
 
-/obj/item/clothing/mask/rogue/spectacles/Initialize()
+/obj/item/clothing/mask/rogue/spectacles/Initialize(mapload)
 	..()
 	AddComponent(/datum/component/spill, null, 'sound/blank.ogg')
 
@@ -385,7 +385,7 @@
 	var/bounty_amount
 	cansnout = TRUE
 
-/obj/item/clothing/mask/rogue/facemask/prisoner/Initialize()
+/obj/item/clothing/mask/rogue/facemask/prisoner/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -579,6 +579,9 @@
 
 /obj/item/clothing/mask/rogue/ragmask/red //predyed mask for NPCs
 	color = CLOTHING_RED
+
+/obj/item/clothing/mask/rogue/ragmask/azure  //predyed mask for gang
+	color = CLOTHING_AZURE
 
 /obj/item/clothing/mask/rogue/ragmask/black
 	color = CLOTHING_BLACK

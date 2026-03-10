@@ -25,7 +25,7 @@
 	var/repair_skill = /datum/skill/craft/carpentry
 	var/repair_started = FALSE
 
-/obj/structure/roguewindow/Initialize()
+/obj/structure/roguewindow/Initialize(mapload)
 	update_icon()
 	..()
 
@@ -35,7 +35,7 @@
 /obj/structure/roguewindow/attacked_by(obj/item/I, mob/living/user)
 	..()
 	if(obj_broken || obj_destroyed)
-		var/obj/effect/track/structure/new_track = new(get_turf(src))
+		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
 		message_admins("Window [obj_destroyed ? "destroyed" : "broken"] by [user?.real_name] using [I] [ADMIN_JMP(src)]")
 		log_admin("Window [obj_destroyed ? "destroyed" : "broken"] by [user?.real_name] at X:[src.x] Y:[src.y] Z:[src.z] in area: [get_area(src)]")
 		new_track.handle_creation(user)
@@ -127,7 +127,7 @@
 	dir = turn(dirin, 180)
 	lockdir = dir
 
-/obj/structure/roguewindow/openclose/Initialize()
+/obj/structure/roguewindow/openclose/Initialize(mapload)
 	..()
 	lockdir = dir
 	icon_state = base_state
@@ -145,7 +145,7 @@
 	dir = turn(dirin, 180)
 	lockdir = dir
 
-/obj/structure/roguewindow/openclose/reinforced/Initialize()
+/obj/structure/roguewindow/openclose/reinforced/Initialize(mapload)
 	..()
 	lockdir = dir
 	icon_state = base_state
@@ -160,7 +160,7 @@
 	dir = turn(dirin, 180)
 	lockdir = dir
 
-/obj/structure/roguewindow/openclose/reinforced/brick/Initialize()
+/obj/structure/roguewindow/openclose/reinforced/brick/Initialize(mapload)
 	..()
 	lockdir = dir
 	icon_state = base_state
@@ -184,7 +184,7 @@
 	base_state = "harem3-solid"
 	repair_costs = list(/obj/item/natural/glass, /obj/item/natural/glass)
 
-/obj/structure/roguewindow/openclose/Initialize()
+/obj/structure/roguewindow/openclose/Initialize(mapload)
 	lockdir = dir
 	icon_state = base_state
 	GLOB.TodUpdate += src

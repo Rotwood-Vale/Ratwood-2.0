@@ -126,7 +126,7 @@
 	//flipping knives has a cooldown on to_chat to reduce chatspam
 	COOLDOWN_DECLARE(flip_cooldown)
 
-/obj/item/rogueweapon/huntingknife/Initialize()
+/obj/item/rogueweapon/huntingknife/Initialize(mapload)
 	..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/peasantry/maciejowski_knife,
@@ -426,7 +426,7 @@
 	icon_state = "warden_machete"
 	sheathe_icon = "warden_machete"
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/corroded/Initialize()
+/obj/item/rogueweapon/huntingknife/idagger/steel/corroded/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/tipped_item)	//Lets you tip your weapon in poison
 
@@ -472,7 +472,7 @@
 	force = 22 // 10% - This is a 8 clickCD weapon
 	max_integrity = 200
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle/Initialize()
+/obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/tipped_item)	//Lets you tip your weapon in poison
 
@@ -486,7 +486,7 @@
 	smeltresult = /obj/item/ingot/steel
 	picklvl = 1.3
 
-/obj/item/rogueweapon/huntingknife/idagger/dtace/Initialize()
+/obj/item/rogueweapon/huntingknife/idagger/dtace/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/tipped_item)	//Lets you tip your weapon in poison
 
@@ -624,7 +624,7 @@
 	var/is_bled = FALSE
 	picklvl = 1.1
 
-/obj/item/weapon/knife/dagger/silver/arcyne/Initialize()
+/obj/item/weapon/knife/dagger/silver/arcyne/Initialize(mapload)
 	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=2, offset=1, color=rgb(128, 0, 128, 1))
 

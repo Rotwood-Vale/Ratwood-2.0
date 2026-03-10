@@ -155,6 +155,128 @@
 	owner = C
 	return TRUE
 
+//Admin dismember - bypasses armor checks but otherwise functions like normal dismember
+/obj/item/bodypart/proc/admin_dismember(dam_type = BRUTE, bclass = BCLASS_CUT, mob/living/user, zone_precise = src.body_zone, damage = 0, vorpal = FALSE)
+	if(!owner)
+		return FALSE
+	var/mob/living/carbon/C = owner
+	if(!dismemberable)
+		return FALSE
+	
+	// Admin dismember bypasses all armor and resistance checks
+	
+	if(C.status_flags & GODMODE)
+		return FALSE
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+		return FALSE
+	if(user)
+		if(zone_precise in list(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_HAND))
+			return FALSE //No dismemberment on hand/feet.
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_DISMEMBER, src) & COMPONENT_CANCEL_DISMEMBER)
+		return FALSE //signal handled the dropping
+
+	// Skip critical resistance check for admin dismember
+
+	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
+	if(affecting && dismember_wound)
+		affecting.add_wound(dismember_wound)
+	playsound(C, pick(dismemsound), 50, FALSE, -1)
+
+	var/stress2give = /datum/stressevent/viewdismember
+	var/guillotine_execution = FALSE
+	if(C.buckled)
+		if(istype(C.buckled, /obj/structure/guillotine))
+			guillotine_execution = TRUE
+		if(istype(C.buckled, /obj/structure/fluff/psycross))
+			if(C.real_name in GLOB.excommunicated_players)
+				stress2give = /datum/stressevent/viewsinpunish
+
+	if(body_zone == BODY_ZONE_HEAD)
+		SEND_SIGNAL(C, COMSIG_MOB_DECAPPED)
+		// decaps should happen in two phases: the first one inflicts a spinal column sever, killing them instantly.
+		// if they're already spinal-severed, THEN the head is removed.
+		// extra note: we only do this for mobs with a mind, aka not NPCS. npcs always get insta-decapped as before
+		if (owner?.client && !vorpal && !guillotine_execution && two_stage_death && !grievously_wounded)
+			if (owner?.construct)
+				C.visible_message(span_danger("<b>[C]'s wrought skull is <span class='crit'>CLEFT NIGH IN TWAIN</span> by a fearsome blow, crumbling into a <span class='crit'>CLOUD of DUST!</span></b>"))
+				C.death()
+				return
+
+			if (skeletonized)
+				C.visible_message(span_danger("<b>[C]'s bony skull is <span class='crit'>MULCHED</span> by a fearsome blow, spalling into a <span class='crit'>CLOUD of SHARDS!</span></b>"))
+				C.death()
+				return
+			else
+				C.visible_message(span_danger("<B>[C] is <span class='crit'>LYFE-ENDED</span> as their ravaged neck <span class='crit'>BLOSSOMS</span> into petals of <span class='crit'>GORE and BONE!</span></B>"))
+				add_wound(/datum/wound/grievous/pre_decapitation) // this causes a bigass wound, marks the limb as greviously wounded and instantly kills the affected user.
+				return
+		else
+			// we're greviously wounded OR we don't give a shit about two-stage death (guillotines, npcs, etc)
+			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
+	else
+		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
+	if(!HAS_TRAIT(C, TRAIT_NOPAIN))
+		C.emote("painscream")
+	if(!(NOBLOOD in C.dna?.species?.species_traits))
+		add_mob_blood(C)
+	C.add_stress(/datum/stressevent/dismembered)
+
+	if(stress2give && C.mind) //Shouldn't be freaking out over a boglin getting their shit rocked.
+		for(var/mob/living/carbon/CA in hearers(world.view, C))
+			if(CA != C && !HAS_TRAIT(CA, TRAIT_BLIND) && !guillotine_execution)
+				if(stress2give == /datum/stressevent/viewdismember)
+					if(HAS_TRAIT(CA, TRAIT_STEELHEARTED))
+						continue
+				CA.add_stress(stress2give)
+	// Ensure grabbedby is a list so it can be properly .Cut()'d
+	grabbedby = SANITIZE_LIST(grabbedby)
+	if(grabbedby)
+		if(dam_type != BURN)
+			for(var/obj/item/grabbing/grab in grabbedby)
+				if(grab.grab_state != GRAB_AGGRESSIVE)
+					continue
+
+				var/mob/living/carbon/human = grab.grabbee
+				var/hand_index = human.get_held_index_of_item(grab)
+				human.dropItemToGround(grab)
+				drop_limb()
+				human.put_in_hand(src, hand_index)
+
+				if(grabbedby)
+					grabbedby.Cut()
+				return TRUE
+
+		if(grabbedby)
+			grabbedby.Cut()
+
+	if(length(wounds))
+		for(var/datum/wound/wound in wounds)
+			remove_wound(wound.type)
+
+
+	drop_limb()
+	if(dam_type == BURN)
+		burn()
+		return TRUE
+
+	var/turf/location = C.loc
+	if(istype(location))
+		C.add_splatter_floor(location)
+	var/direction = pick(GLOB.cardinals)
+	var/t_range = rand(2,max(throw_range/2, 2))
+	var/turf/target_turf = get_turf(src)
+	for(var/i in 1 to t_range-1)
+		var/turf/new_turf = get_step(target_turf, direction)
+		if(!new_turf)
+			break
+		target_turf = new_turf
+		if(new_turf.density)
+			break
+	throw_at(target_turf, throw_range, throw_speed)
+	owner = C
+	return TRUE
+
 /obj/item/bodypart/chest/dismember(dam_type = BRUTE, bclass = BCLASS_CUT, mob/living/user, zone_precise = src.body_zone, damage = 0, vorpal = FALSE)
 	if(!owner)
 		return FALSE

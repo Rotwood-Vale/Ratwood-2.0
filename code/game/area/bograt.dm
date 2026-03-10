@@ -121,3 +121,20 @@
 	first_time_text = null
 	ambush_times = null
 	ambush_mobs = null
+
+//Making it a separate type and not a subtype makes it play nicer with the terrain generator
+/area/rogue/outdoors/bogsafe
+	name = "Terrorbog Pass"
+	ambush_times = null
+	ambush_mobs = null
+	deathsight_message = "a foreign, distant pass, leading to the fetid bog"
+	icon_state = "bog"
+	warden_area = TRUE
+	ambientsounds = AMB_BOGDAY
+	ambientnight = AMB_BOGNIGHT
+	spookysounds = SPOOKY_FROG
+	spookynight = SPOOKY_GEN
+	droning_sound = 'sound/music/area/bog.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	converted_type = /area/rogue/indoors/shelter/bograt

@@ -98,9 +98,20 @@
 /datum/migrant_wave/ranesheni_noble_down_eight
 	name = "Ranesheni Emir"
 	shared_wave_type = /datum/migrant_wave/ranesheni_noble
+	downgrade_wave = /datum/migrant_wave/ranesheni_noble_down_nine
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/ranesheni/emir = 1,
 		/datum/migrant_role/ranesheni/janissary = 1,
+	)
+	greet_text = "You are far from home on missive from the Ranesheni Empire."
+
+/datum/migrant_wave/ranesheni_noble_down_nine
+	name = "Ranesheni Emir"
+	shared_wave_type = /datum/migrant_wave/ranesheni_noble
+	downgrade_wave = /datum/migrant_wave/ranesheni_noble_down_nine
+	can_roll = FALSE
+	roles = list(
+		/datum/migrant_role/ranesheni/emir = 1,
 	)
 	greet_text = "You are far from home on missive from the Ranesheni Empire."

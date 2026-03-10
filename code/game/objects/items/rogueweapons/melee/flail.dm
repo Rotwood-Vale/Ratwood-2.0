@@ -265,7 +265,7 @@
 	anvilrepair = /datum/skill/craft/weaponsmithing
 
 
-/obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize()
+/obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "FLAIL")
 

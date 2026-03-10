@@ -112,7 +112,7 @@
 	smeltresult = null	//No resource return
 	sellprice = 15		//Iron is worth 20, so these gotta be a little cheaper
 
-/obj/item/roguestatue/clay/Initialize()
+/obj/item/roguestatue/clay/Initialize(mapload)
 	. = ..()
 	icon_state = "claystatuecooked[pick(1,2)]"
 
@@ -124,6 +124,6 @@
 	smeltresult = null	//No resource return
 	sellprice = 70		//Silver is roughly 90 mammon, steel is 40. This sits roughly between. It's high skill to make and a bit of a grind so - worth it since resources to make aren't rare..
 
-/obj/item/roguestatue/glass/Initialize()
+/obj/item/roguestatue/glass/Initialize(mapload)
 	. = ..()
 	icon_state = "statueglass[pick(1,2)]"

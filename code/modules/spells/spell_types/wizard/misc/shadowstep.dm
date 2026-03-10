@@ -14,6 +14,7 @@
 	hide_charge_effect = TRUE
 	gesture_required = TRUE // Mobility spell
 	spell_tier = 2
+	req_items = list(/obj/item/clothing/mask/rogue/lordmask/naledi)
 	// This is super telegraphed so it shouldn't need any whisper. It can stay silent as a unique.
 	var/area_of_effect = 1
 	var/max_range = 7
@@ -39,11 +40,11 @@
 	var/dist = get_dist(Tt, Tu)
 	var/last_dir
 	var/turf/last_step
-	if(Tu.z > Tt.z) 
+	if(Tu.z > Tt.z)
 		last_step = get_step_multiz(Tu, DOWN)
 	else if(Tu.z < Tt.z)
 		last_step = get_step_multiz(Tu, UP)
-	else 
+	else
 		last_step = locate(Tu.x, Tu.y, Tu.z)
 	var/success = FALSE
 	for(var/i = 0, i <= dist, i++)
@@ -88,6 +89,19 @@
 					to_chat(user, span_info("Too close!"))
 					revert_cast()
 					return
+
+				//Hacky LoS borrowed from blinks.
+				var/turf/start = get_turf(user)
+				var/list/turf_list = getline(start, T)
+				// Remove the last turf (target location) from the check
+				if(length(turf_list) > 0)
+					turf_list.len--
+				for(var/turf/turf in turf_list)
+					if(turf.density)
+						to_chat(user, span_warning("There's something in the way!"))//A check before the other checks, for hacky LoS, without including doors.
+						revert_cast()
+						return
+
 				to_chat(user, span_info("I begin to meld with the shadows.."))
 				lockon(T, user)
 				if(do_after(user, 5 SECONDS))

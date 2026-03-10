@@ -23,7 +23,7 @@
 	var/med_name
 	var/minor_name
 
-/obj/item/alch/Initialize()
+/obj/item/alch/Initialize(mapload)
 	. = ..()
 	if(!isnull(major_pot))
 		var/datum/alch_cauldron_recipe/rec = locate(major_pot) in GLOB.alch_cauldron_recipes

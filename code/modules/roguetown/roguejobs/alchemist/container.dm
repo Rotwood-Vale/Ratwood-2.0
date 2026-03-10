@@ -209,6 +209,13 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/elfblue = 50)
 	desc = "A bottle gilded with a golden cork-seal. This is the legendary Valmora Blue from the Vineyard of Valmora, headed by a sainted Dark-Elf swordsmaster. This bottle would swoon Gods over!"
 
+/obj/item/reagent_containers/glass/bottle/rogue/luxwine
+	name = "Bottle of Luxintenebre"
+	icon = 'icons/obj/alcohol.dmi'
+	icon_state = "luxwine"
+	list_reagents = list(/datum/reagent/consumable/ethanol/luxwine = 50)
+	desc = "A regal-looking bottle with an avantyne cork-seal. Faint whispers of somebody's darkest secrets can be heard coming from the bottle."
+
 //AZURE DRINKS
 /obj/item/reagent_containers/glass/bottle/rogue/beer/jagdtrunk
 	name = "Bottle of Schnapps"

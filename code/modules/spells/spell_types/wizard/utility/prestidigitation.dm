@@ -36,7 +36,7 @@
 	var/spark_cd = 0
 	var/gatherspeed = 35
 
-/obj/item/melee/touch_attack/prestidigitation/Initialize()
+/obj/item/melee/touch_attack/prestidigitation/Initialize(mapload)
 	. = ..()
 	mote = new(src)
 

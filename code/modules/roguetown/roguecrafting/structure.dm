@@ -1011,6 +1011,13 @@
 	craftdiff = 0
 	ignoredensity = TRUE
 
+/datum/crafting_recipe/roguetown/structure/curtaindirectional
+	name = "curtain (directional)"
+	result = /obj/structure/curtain/directional/crafted
+	reqs = list(/obj/item/natural/cloth = 2)
+	craftdiff = 1
+	ignoredensity = TRUE
+
 /datum/crafting_recipe/roguetown/structure/curtainblack
 	name = "curtain(black)"
 	result = /obj/structure/curtain/black
@@ -1110,7 +1117,7 @@
 /datum/crafting_recipe/roguetown/structure/noose/TurfCheck(mob/user, turf/T)
 	var/turf/checking = get_step_multiz(T, UP)
 	if(!checking)
-		return TRUE // Letting you craft in centcomm Z-level (bandit/vampire/wretch camps)
+		return TRUE // Letting you craft in centcom Z-level (bandit/vampire/wretch camps)
 	if(!isopenturf(checking))
 		return FALSE
 	if(istype(checking, /turf/open/transparent/openspace))

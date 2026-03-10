@@ -38,7 +38,7 @@
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
-/mob/living/simple_animal/hostile/retaliate/goat/Initialize()
+/mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload)
 	udder = new()
 	. = ..()
 
@@ -117,7 +117,7 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 	pooptype = /obj/item/natural/poo/cow
 
-/mob/living/simple_animal/cow/Initialize()
+/mob/living/simple_animal/cow/Initialize(mapload)
 	if(gender == FEMALE)
 		udder = new()
 	. = ..()
@@ -213,7 +213,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/chick/Initialize()
+/mob/living/simple_animal/chick/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
@@ -275,7 +275,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/chicken/Initialize()
+/mob/living/simple_animal/chicken/Initialize(mapload)
 	. = ..()
 	if(!body_color)
 		body_color = pick(validColors)
@@ -333,7 +333,7 @@
 	name = "udder"
 	var/in_use // so you can't spam milking sounds
 
-/obj/item/udder/Initialize()
+/obj/item/udder/Initialize(mapload)
 	create_reagents(100)
 	reagents.add_reagent(/datum/reagent/consumable/milk, rand(0,20))
 	. = ..()

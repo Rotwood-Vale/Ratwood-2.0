@@ -52,7 +52,7 @@
 			"Lucerne",
 			"Battle Axe",
 			"Lance + Kite Shield",
-			"Samshir",
+			"Shamshir",		//WHO MISPELLED IT BRO
 		)
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
@@ -78,7 +78,7 @@
 			if("Lance + Kite Shield")
 				r_hand = /obj/item/rogueweapon/spear/lance
 				backr = /obj/item/rogueweapon/shield/tower/metal
-			if("Samshir")
+			if("Shamshir")
 				r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 		var/helmets = list(
 			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
@@ -468,33 +468,3 @@
 	accept_message = "For the Brotherhood!"
 	refuse_message = "I refuse."
 
-/obj/effect/proc_holder/spell/self/convertrole/brotherhood/cast(list/targets,mob/user = usr)
-	. = ..()
-	var/list/recruitment = list()
-	for(var/mob/living/carbon/human/recruit in (get_hearers_in_view(recruitment_range, user) - user))
-		//not allowed
-		if(!can_convert(recruit))
-			continue
-		recruitment[recruit.name] = recruit
-	if(!length(recruitment))
-		to_chat(user, span_warning("There are no potential recruits in range."))
-		return
-	var/inputty = input(user, "Select a potential recruit!", "[name]") as anything in recruitment
-	if(inputty)
-		var/mob/living/carbon/human/recruit = recruitment[inputty]
-		if(!QDELETED(recruit) && (recruit in get_hearers_in_view(recruitment_range, user)))
-			INVOKE_ASYNC(src, PROC_REF(convert), recruit, user)
-		else
-			to_chat(user, span_warning("Recruitment failed!"))
-	else
-		to_chat(user, span_warning("Recruitment cancelled."))
-
-
-/obj/effect/proc_holder/spell/self/convertrole/brother
-	name = "Recruit Brother"
-	new_role = "Brother"
-	overlay_state = "recruit_brother"
-	recruitment_faction = "Brother"
-	recruitment_message = "We're in this together now, %RECRUIT!"
-	accept_message = "All for one and one for all!"
-	refuse_message = "I refuse."

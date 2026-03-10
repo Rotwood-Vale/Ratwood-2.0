@@ -34,7 +34,7 @@
 	to_chat(loc, span_notice(repairmsg_begin))
 	reptimer = addtimer(CALLBACK(src, PROC_REF(armour_regen)), repair_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
 
-/obj/item/clothing/suit/roguetown/armor/regenerating/proc/armour_regen(var/repair_percent = 0.2 * max_integrity)
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/armour_regen(repair_percent = 0.2 * max_integrity)
 	if(obj_integrity >= max_integrity)
 		to_chat(loc, span_notice(repairmsg_end))
 		if(reptimer)
