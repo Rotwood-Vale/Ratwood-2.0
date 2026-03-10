@@ -20,7 +20,6 @@ GLOBAL_VAR(announcement_throne)
 /obj/structure/roguemachine/freeholdthrone/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
-	START_PROCESSING(SSobj, src)
 	if(GLOB.announcement_throne == null)
 		GLOB.announcement_throne = src
 
@@ -28,7 +27,6 @@ GLOBAL_VAR(announcement_throne)
 	if(GLOB.announcement_throne == src)
 		GLOB.announcement_throne = null
 	lose_hearing_sensitivity()
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/roguemachine/freeholdthrone/examine()
@@ -115,7 +113,7 @@ GLOBAL_VAR(announcement_throne)
 		return
 
 	next_announcement_time = world.time + 10 MINUTES
-	SScommunications.make_announcement(user, FALSE, raw_message)
+	priority_announce(raw_message, "ROGUETOWN", 'sound/misc/royal_decree.ogg', "Roguetown")
 
 /obj/structure/roguemachine/freeholdthrone/proc/make_raid_announcement(mob/living/user, raw_message)
 	if(raid_called)
@@ -125,7 +123,7 @@ GLOBAL_VAR(announcement_throne)
 	if(!raw_message || !length(trim(raw_message)))
 		return FALSE
 
-	priority_announce("[user.real_name] calls for a raid: [raw_message]", "A RAID IS DECLARED", 'sound/misc/royal_decree2.ogg', "The warboss")
+	priority_announce(raw_message, "ROGUETOWN CALLS FOR RAID", 'sound/misc/royal_decree2.ogg', "Roguetown")
 	raid_called = TRUE
 
 	for(var/mob/living/carbon/human/H in view(7, src))
