@@ -27497,6 +27497,7 @@
 	pixel_y = 37
 	},
 /obj/structure/rack/rogue/shelf,
+/obj/effect/landmark/start/penitent,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/church/chapel)
 "gGN" = (
@@ -35997,6 +35998,7 @@
 /obj/item/storage/keyring/priest,
 /obj/item/roguekey/church,
 /obj/item/roguekey/church,
+/obj/item/collar_detonator,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/church/chapel)
 "iFy" = (
@@ -53414,6 +53416,8 @@
 /obj/item/paper/inqslip/accusation,
 /obj/item/inqarticles/indexer,
 /obj/item/inqarticles/indexer,
+/obj/item/collar_detonator,
+/obj/item/clothing/neck/roguetown/gorget/controllable/shock_explosive,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/inq/office)
 "mHd" = (

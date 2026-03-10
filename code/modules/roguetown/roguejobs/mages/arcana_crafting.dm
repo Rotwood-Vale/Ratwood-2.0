@@ -103,14 +103,6 @@
 				/obj/item/magic/melded/t2 = 1)
 	craftdiff = 4
 
-/datum/crafting_recipe/roguetown/arcana/collar_detonator
-	name = "collar detonator"
-	result = /obj/item/collar_detonator
-	reqs = list(/obj/item/customlock = 1,
-				/obj/item/roguegem = 1,
-				/obj/item/magic/melded/t1 = 1)
-	craftdiff = 4
-
 /datum/crafting_recipe/roguetown/arcana/temporalhourglass
 	name = "temporal hourglass"
 	result = /obj/item/hourglass/temporal

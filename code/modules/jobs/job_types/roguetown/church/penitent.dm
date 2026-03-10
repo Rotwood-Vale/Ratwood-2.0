@@ -1,4 +1,4 @@
-/datum/job/roguetown/templar
+/datum/job/roguetown/penitent
 	title = "Penitent"
 	department_flag = CHURCHMEN
 	faction = "Station"
@@ -56,8 +56,8 @@
 
 /datum/advclass/penitent/crusader
 	name = "Penitent"
-	tutorial = "You are a templar of the Church, trained in heavy weaponry and zealous warfare. You are the instrument of your God's wrath, clad in steel and faith."
-	outfit = /datum/outfit/job/roguetown/templar/crusader
+	tutorial = "You are a formerly devout worshipper of the Four currently undergoing Penance in one of the distant Tennite Churches. Judges of Grenzelhoft's Holy See deemed you worthy of salvation.. Were they right, however?"
+	outfit = /datum/outfit/job/roguetown/penitent/crusader
 	category_tags = list(CTAG_PENITENT)
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	traits_applied = list(TRAIT_HEAVYARMOR)
@@ -91,22 +91,21 @@
 		H.set_patron(/datum/patron/inhumen/zizo)//If you're not of the Inhumen before? You are now!
 	wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
 	cloak = /obj/item/clothing/cloak/undivided
-	backr = /obj/item/rogueweapon/shield/tower/metal
 	id = /obj/item/clothing/ring/aalloy
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/ritechalk = 1,
+		/obj/item/book/rogue/bibble,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/clothing/neck/roguetown/gorget/controllable/shock_explosive = 1,
-		/obj/item/collar_detonator = 1
+		/obj/item/storage/keyring/churchie = 1
 		)
 	gloves = /obj/item/clothing/gloves/roguetown/chain
 	mask = /obj/item/clothing/mask/rogue/facemask/steel/paalloy
-	neck = /obj/item/clothing/neck/roguetown/chaincoif
+	head = /obj/item/clothing/head/roguetown/roguehood/astrata
+	neck = /obj/item/clothing/neck/roguetown/gorget/controllable/shock_explosive
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
+	armor = /obj/item/clothing/suit/roguetown/armor/plate
 	belt = /obj/item/storage/belt/rogue/leather/black
-	beltl = /obj/item/rogueweapon/scabbard/sword
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
@@ -136,3 +135,20 @@
 		H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_JOURNEYMAN, TRUE) //unlike wanderer, normal heretic can get these bonuses
+
+
+/obj/item/clothing/neck/roguetown/gorget/controllable/shock_explosive/equipped(mob/user, slot)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(HAS_TRAIT(H, TRAIT_CHURCH_PENITENT)) //DEBUFF
+			H.remove_status_effect(/datum/status_effect/debuff/collar_scorned)
+			H.remove_stress(/datum/stressevent/collaroff)
+
+/obj/item/clothing/neck/roguetown/gorget/controllable/shock_explosive/dropped(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(HAS_TRAIT(H, TRAIT_CHURCH_PENITENT)) //DEBUFF
+			H.apply_status_effect(/datum/status_effect/debuff/collar_scorned)
+			H.add_stress(/datum/stressevent/collaroff)

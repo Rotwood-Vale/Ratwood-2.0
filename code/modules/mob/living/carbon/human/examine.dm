@@ -218,7 +218,7 @@
 			if(HAS_TRAIT(src, TRAIT_CHOSEN))
 				. += span_notice("A heretic subjugated by the Sun Tyrant. Her Authority is absolute.")
 			else
-				. += span_notice("A heretic brought to justice by the TEN.")
+				. += span_phobia("A heretic brought to justice by the TEN.")
 
 		//For tennite schism god-event
 		if(length(GLOB.tennite_schisms))

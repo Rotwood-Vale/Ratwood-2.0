@@ -275,12 +275,12 @@
 #define JDO_PRIEST 10
 #define JDO_MARTYR 11
 #define JDO_TEMPLAR 12
-#define JDO_PENITENT 12.1
 #define JDO_MONK 13
 #define JDO_DRUID 13.1
 #define JDO_CHURCHLING 14
 #define JDO_KEEPER 14.1
 #define JDO_GRAVEMAN 15
+#define JDO_PENITENT 16
 
 #define JDO_MERCHANT 17
 #define JDO_SHOPHAND 17.1

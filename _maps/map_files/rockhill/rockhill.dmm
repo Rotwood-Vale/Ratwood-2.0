@@ -61963,6 +61963,7 @@
 /obj/item/scomstone,
 /obj/item/roguekey/priest,
 /obj/item/roguekey/church,
+/obj/item/collar_detonator,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/church/chapel)
 "rMU" = (
@@ -69248,6 +69249,8 @@
 	lockid = "puritan";
 	keylock = 1
 	},
+/obj/item/collar_detonator,
+/obj/item/clothing/neck/roguetown/gorget/controllable/shock_explosive,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/inq/office)
 "tSt" = (
@@ -83564,6 +83567,10 @@
 "yeS" = (
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/bograt/above)
+"yeU" = (
+/obj/effect/landmark/start/penitent,
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/town/church/basement)
 "yeY" = (
 /obj/structure/rack/rogue,
 /obj/item/candle/yellow{
@@ -292368,7 +292375,7 @@ ewf
 ewf
 wGs
 eFm
-gzk
+yeU
 gzk
 ryM
 vRu
