@@ -79,3 +79,38 @@
 		icon_state = "[based][contents.len]"
 	else
 		icon_state = "bookcase"
+
+/obj/structure/bookcase/freeholdpass
+	name = "bookcase"
+	desc = "A bookcase. Something about it feels slightly off."
+	anchored = TRUE
+	density = TRUE
+	opacity = TRUE
+	var/is_open = FALSE
+
+/obj/structure/bookcase/freeholdpass/attack_hand(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_FREEHOLDER))
+		if(!is_open)
+			to_chat(user, span_notice("The bookcase slides aside before you..."))
+			disappear()
+			return
+	return ..()
+
+/obj/structure/bookcase/freeholdpass/proc/disappear()
+	if(is_open)
+		return
+	is_open = TRUE
+	density = FALSE
+	opacity = FALSE
+	icon_state = ""
+	playsound(src, 'sound/misc/area.ogg', 10, FALSE)
+	addtimer(CALLBACK(src, PROC_REF(reappear)), 10 SECONDS)
+
+/obj/structure/bookcase/freeholdpass/proc/reappear()
+	if(!is_open)
+		return
+	is_open = FALSE
+	density = TRUE
+	opacity = TRUE
+	update_icon()
+	playsound(src, 'sound/misc/area.ogg', 10, FALSE)
