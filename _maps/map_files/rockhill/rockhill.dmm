@@ -60171,7 +60171,6 @@
 	})
 "qnc" = (
 /obj/structure/bookcase/freeholdpass,
-/obj/structure/bookcase/freeholdpass,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
 "qnd" = (
