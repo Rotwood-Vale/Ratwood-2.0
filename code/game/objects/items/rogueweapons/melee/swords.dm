@@ -1213,10 +1213,10 @@
 	intent_effect = /datum/status_effect/debuff/dazed/freisabre
 	target_parts = list(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 	blade_class = BCLASS_CUT
-	damfactor = 1.25
+	damfactor = 1.35
 	clickcd = 12
 	recovery = 8
-	swingdelay = 3
+	swingdelay = 2
 	canparry = TRUE
 	candodge = FALSE
 
@@ -1224,7 +1224,8 @@
 	name = "szöréndnížine sabre"
 	desc = "A rare, specialty-made sabre domestic to Szöréndnížina, made similarly to those of the Potentate's Hussars. It has a large, open hilt with a cross-shaped guard formed from quillons and langets and a heavy curved blade. A chain is attached to the crossguard and into the pommel, protecting the hand. Unlike shorter and ligther sabres, it's large enough to reach the feet."
 	icon = 'icons/roguetown/weapons/special/freifechter.dmi'
-	possible_item_intents = list(/datum/intent/sword/cut/sabre/master, /datum/intent/sword/thrust/sabre, /datum/intent/effect/daze/freisabre, /datum/intent/rend)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre/master, /datum/intent/sword/thrust/long/halfsword, /datum/intent/effect/daze/freisabre, /datum/intent/rend)
+	force = 25 // same as all the other merc sabres
 	wdefense = 7
 	minstr = 8
 	icon_state = "szabla"
