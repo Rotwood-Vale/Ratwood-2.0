@@ -11,8 +11,10 @@
 
 /obj/structure/roguemachine/cashface/examine(mob/user)
 	. = ..()
-	. += span_notice("Feed it goods by hand and it stores their value.")
-	. += span_notice("Only freeholders may operate it.")
+	. += span_notice("Feed it goods by hand and it stores their value within (based on real_value of item).")
+	. += span_notice("Only Freeholders may operate it.")
+	. += span_notice("Coins are rejected.")
+	. += span_notice("Stored mammon may be withdrawn here as bronze, silver, or gold.")
 	if(ishuman(user) && HAS_TRAIT(user, TRAIT_FREEHOLDER))
 		. += span_info("It currently stores [stored_mammon] mammon.")
 
@@ -103,6 +105,13 @@
 	blade_dulling = DULLING_BASH
 	pixel_y = 32
 
+/obj/structure/roguemachine/freeholdinvite/examine(mob/user)
+	. = ..()
+	. += span_info("Its needles wait for any willing hand.")
+	. += span_notice("Here the willing may be bound into the people of the Freehold.")
+	. += span_notice("It takes blood in token of the oath.")
+	. += span_notice("Those already sworn cannot be marked anew.")
+
 /obj/structure/roguemachine/freeholdinvite/attack_hand(mob/user)
 	if(!ishuman(user))
 		return
@@ -124,7 +133,3 @@
 		say("Blood accepted. The mark is yours.")
 		playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 	return
-
-/obj/structure/roguemachine/freeholdinvite/examine(mob/user)
-	. += ..()
-	. += span_info("Its needles wait for any willing hand.")

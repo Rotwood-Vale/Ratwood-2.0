@@ -1,7 +1,6 @@
 /datum/mind
 	var/freehold_token_touched = FALSE // I need to test it before mob/living/carbon/human because druids shitters going to abuse shit out of their ass broken spell
 
-
 /obj/structure/roguemachine/freeholdpress/proc/target_apply_normal_reward(mob/living/carbon/human/H, reward_type) //helper help me
 	if(!H || !reward_type)
 		return
@@ -23,6 +22,30 @@
 	density = FALSE
 	blade_dulling = DULLING_BASH
 	pixel_y = 32
+	
+/obj/structure/roguemachine/freeholdpress/examine(mob/user)
+	. = ..()
+	. += span_notice("A non-Freeholder may press a karmic token from it only once in their life.")
+	. += span_notice("A karmic token lasts only 3 minutes.")
+	. += span_notice("A karmic token may be offered only to a Freeholder.")
+	. += span_notice("A token of plain faith grants a lesser blessing (the receiver can pick a temporary buff).")
+	. += span_notice("A token of great faith grants a greater blessing (the receiver can pick a permanent buff).")
+	. += span_notice("A token of bad faith lays a curse instead (receiver is getting marked as a coal and punished).")
+	. += span_notice("A blessing lasts only 3 minutes and must be claimed here before it fades.")
+	. += span_notice("A Freeholder bearing a blessing is supposed to touch the machine to claim a reward.")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+
+		if(HAS_TRAIT(H, TRAIT_FREEHOLDER))
+			. += span_info("As a Freeholder, a lesser blessing lets me choose a temporary reward.")
+			. += span_info("As a Freeholder, a greater blessing lets me choose a permanent reward.")
+		else
+			if(H.mind?.freehold_token_touched)
+				. += span_warning("It has nothing more to grant me.")
+			else
+				. += span_info("It may still grant me a karmic token.")
+
 
 /obj/structure/roguemachine/freeholdpress/attack_hand(mob/user)
 	if(!ishuman(user))
