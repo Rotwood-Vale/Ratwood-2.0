@@ -519,7 +519,8 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	town_area = TRUE
 	no_special_item_retrieval = TRUE
 	deathsight_message = "the drone of pickaxes and penance"
-
+	first_time_text = "DIE TROYT"
+	detail_text = DETAIL_TEXT_DIETROYT
 
 /area/rogue/indoors/town/tavern
 	name = "tavern"
