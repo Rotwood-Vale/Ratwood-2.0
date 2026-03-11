@@ -270,6 +270,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	COOLDOWN_DECLARE(bark_previewing)
 	var/hear_barks = TRUE
 
+	// Moanpacks preview
+	COOLDOWN_DECLARE(moan_previewing)
+
 	// PATREON
 	// Vrell - I fucking hate how inconsistent the variable style is for this shit. underscores? all lowercase? camelcase?
 	var/patreon_say_color = "ff7a05"
@@ -535,7 +538,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<b>Voice Pack</b>: <a href='?_src_=prefs;preference=voicepack;task=input'>[voice_pack]</a><BR>"
 			// RMH EDIT
 			dat += "<b>Moanpack Type</b>: <a href='?_src_=prefs;preference=moanselection;task=input'>[moan_selection]</a><BR>"
-
+			dat += "<b><a href='?_src_=prefs;preference=moanpreview;task=input'>Preview Moans</a></b><br>"
 
 			dat += "<BR>"
 			dat += "<b>Race:</b> <a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a>[spec_check(user) ? "" : " (!)"]<BR>"
@@ -1811,9 +1814,18 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							to_chat(user, "<font color='red'>Your character will now use the '[LOWER_TEXT(moanpack_sel_input)]' moanpack.</font>")
 						else
 							moan_selection = MOANPACK_TYPE_DEF
-					else
+					else if (user.client.prefs.voice_type == VOICE_TYPE_FEM)
 						generate_selectable_moanpacks()
 						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks_female)
+						if(moanpack_sel_input)
+							moan_selection = moanpack_sel_input
+							to_chat(user, "<font color='red'>Your character will now use the '[LOWER_TEXT(moanpack_sel_input)]' moanpack.</font>")
+						else
+							moan_selection = MOANPACK_TYPE_DEF
+
+					else
+						generate_selectable_moanpacks()
+						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks)
 						if(moanpack_sel_input)
 							moan_selection = moanpack_sel_input
 							to_chat(user, "<font color='red'>Your character will now use the '[LOWER_TEXT(moanpack_sel_input)]' moanpack.</font>")
@@ -2018,6 +2030,36 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						addtimer(CALLBACK(barkbox, TYPE_PROC_REF(/atom/movable, bark), list(parent.mob), 7, 70, BARK_DO_VARY(bark_pitch, bark_variance)), total_delay)
 						total_delay += rand(DS2TICKS(bark_speed/4), DS2TICKS(bark_speed/4) + DS2TICKS(bark_speed/4)) TICKS
 					QDEL_IN(barkbox, total_delay)
+
+				if("moanpreview")
+					if(SSticker.current_state == GAME_STATE_STARTUP)
+						to_chat(user, "<span class='warning'>Moan previews can't play during initialization!</span>")
+						return
+					if(!COOLDOWN_FINISHED(src, moan_previewing))
+						return
+					if(!parent || !parent.mob)
+						return
+					COOLDOWN_START(src, moan_previewing, 5 SECONDS)
+					if(!moan_selection)
+						to_chat(user, "<span class='warning'>No moanpack selected!</span>")
+						return
+					var/atom/movable/moanbox = new(get_turf(parent.mob))
+					var/type = GLOB.selectable_moanpacks[moan_selection]
+					var/datum/moan_pack/MP
+					if(moan_selection == MOANPACK_TYPE_DEF)
+						if(voice_type == VOICE_TYPE_MASC)
+							MP = new /datum/moan_pack/male
+						else
+							MP = new /datum/moan_pack/female
+					else
+						MP = new type
+					var/list/moan_types = list("sexmoanlight", "sexmoanmed", "sexmoanhvy")
+					var/moan_key = moan_types[rand(1, length(moan_types))]
+					var/soundin = MP.get_moans(moan_key)
+					if(soundin)
+						addtimer(CALLBACK(GLOBAL_PROC, /proc/playsound, moanbox, soundin, 70, 0, 7), 0)
+					QDEL_IN(moanbox, 10 TICKS)
+					qdel(MP)
 
 				if("highlight_color")
 					var/new_color = color_pick_sanitized(user, "Choose your character's nickname highlight color:", "Character Preference","#"+highlight_color)

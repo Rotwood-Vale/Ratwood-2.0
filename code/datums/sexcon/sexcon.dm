@@ -635,7 +635,14 @@
 		return
 	if(prob(50))
 		return
+
+	var/has_baotha_patron = user.patron && istype(user.patron, /datum/patron/inhumen/baotha)
+	var/has_masochist = user.has_flaw(/datum/charflaw/addiction/masochist)
+	var/marked_by_baotha = user.has_flaw(/datum/charflaw/marked_by_baotha)
+	var/likes_pain = has_baotha_patron || has_masochist || marked_by_baotha
+
 	var/chosen_emote
+
 	if(!user.can_speak())
 		chosen_emote = "sexmoangag"
 	else
@@ -648,33 +655,44 @@
 				chosen_emote = "sexmoanhvy"
 
 	if(pain_amt >= PAIN_MILD_EFFECT)
-		if(giving)
-			if(!user.can_speak())
-				chosen_emote = "sexmoangag"
-			else
-				if(prob(15))
-					chosen_emote = "sexmoanhvy"
+		if(likes_pain)
+			if(giving)
+				if(!user.can_speak())
+					chosen_emote = "sexmoangag"
 				else
-					chosen_emote = "sexmoanmed"
-	if(pain_amt >= PAIN_MED_EFFECT)
-		if(giving)
-			if(!user.can_speak())
-				chosen_emote = "sexmoangag"
-			else
-				if(prob(20))
-					chosen_emote = "sexmoanhvy"
-				else
-					chosen_emote = "sexmoanmed"
+					if(prob(15))
+						chosen_emote = "sexmoanhvy"
+					else
+						chosen_emote = "sexmoanmed"
 		else
-			if(!user.can_speak())
-				chosen_emote = "sexmoangag"
+			if(giving)
+				if(prob(30))
+					chosen_emote = "groan"
+			else
+				if(prob(40))
+					chosen_emote = "painmoan"
+
+	if(pain_amt >= PAIN_MED_EFFECT)
+		if(likes_pain)
+			if(giving)
+				if(!user.can_speak())
+					chosen_emote = "sexmoangag"
+				else
+					if(prob(20))
+						chosen_emote = "sexmoanhvy"
+					else
+						chosen_emote = "sexmoanmed"
+		else
+			if(giving)
+				if(prob(50))
+					chosen_emote = "groan"
 			else
 				if(prob(60))
 					// Because males have atrocious whimper noise
-					if(user.gender == FEMALE && prob(15))
+					if(user.gender == FEMALE && prob(50))
 						chosen_emote = "whimper"
 					else
-						chosen_emote = "sexmoanhvy"
+						chosen_emote = "groan"
 
 	last_moan = world.time
 	user.emote(chosen_emote, forced = TRUE)
@@ -1223,13 +1241,13 @@
 	var/infection_probability = 40
 	if(top.mind.has_antag_datum(/datum/antagonist/werewolf))
 		WWtop = top.mind.has_antag_datum(/datum/antagonist/werewolf/)
-	
+
 	if(bottom.mind.has_antag_datum(/datum/antagonist/werewolf))
 		WWbottom = bottom.mind.has_antag_datum(/datum/antagonist/werewolf/)
 
 	if(WWtop && WWbottom)
 		return
-	
+
 	if(WWtop && WWtop.transformed && !WWbottom)
 		if(prob(infection_probability))
 			var/answer = tgui_alert(top, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
@@ -1250,7 +1268,7 @@
 		return
 
 /datum/proc/deadite_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
-	
+
 	if(!top || !bottom || !top.mind || !bottom.mind)
 		return
 	var/datum/antagonist/zombie/ZMtop
@@ -1258,13 +1276,13 @@
 	var/infection_probability = 40
 	if(top.mind.has_antag_datum(/datum/antagonist/zombie))
 		ZMtop = top.mind.has_antag_datum(/datum/antagonist/zombie/)
-	
+
 	if(bottom.mind.has_antag_datum(/datum/antagonist/zombie))
 		ZMbottom = bottom.mind.has_antag_datum(/datum/antagonist/zombie/)
-	
+
 	if(ZMtop && ZMbottom)
 		return
-	
+
 	if(ZMtop && !ZMbottom)
 		if(prob(infection_probability))
 			var/answer = tgui_alert(top, "Spread HER gift?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
@@ -1283,7 +1301,7 @@
 				top.zaids_check()
 		return
 ///Making sure they're not any other antag or immune then applies zombie infection
-/mob/living/carbon/human/proc/zaids_check() 
+/mob/living/carbon/human/proc/zaids_check()
 	if(!mind)
 		return
 	if(mind.has_antag_datum(/datum/antagonist/vampire))

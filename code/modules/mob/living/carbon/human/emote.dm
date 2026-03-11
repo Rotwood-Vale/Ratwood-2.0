@@ -86,9 +86,15 @@
 		if(C.silent || !C.can_speak())
 			message = "makes a noise."
 
+/mob/living/carbon/human
+	var/next_sex_moan = 0
+
 /mob/living/carbon/human/verb/sex_moan()
 	set name = "Moan"
 	set category = "Noises"
+
+	if(world.time < next_sex_moan)
+		return
 
 	var/datum/sex_controller/S = sexcon
 	if(!can_speak())
@@ -101,6 +107,8 @@
 				emote("sexmoanmed", forced = TRUE)
 			if(76 to INFINITY)
 				emote("sexmoanhvy", forced = TRUE)
+
+	next_sex_moan = world.time + 3 SECONDS
 
 /datum/emote/living/carbon/human/eyebrow
 	key = "eyebrow"
