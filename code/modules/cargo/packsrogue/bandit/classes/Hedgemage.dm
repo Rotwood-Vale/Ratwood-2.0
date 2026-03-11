@@ -148,7 +148,7 @@
 	cost = 40
 	contains = list(/obj/item/rogueweapon/estoc)
 
-	/datum/supply_pack/rogue/Sellsword/ssword
+/datum/supply_pack/rogue/Sellsword/ssword
 	name = "Short Sword"
 	cost = 10
 	contains = list(/obj/item/rogueweapon/sword/short)
