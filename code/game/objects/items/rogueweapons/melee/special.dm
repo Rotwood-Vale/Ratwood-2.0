@@ -28,7 +28,7 @@
 /datum/intent/special/bandit_punish
 	name = "punish"
 	blade_class = null
-	icon_state = "inuse"
+	icon_state = "intouch"
 	tranged = TRUE
 	noaa = TRUE
 
@@ -40,70 +40,116 @@
 
 /// INTENT DATUMS	^
 
-/obj/item/rogueweapon/dragonz
-	force = 15
-	force_wielded = 30
-	force_thrown = 30
+/obj/item/rogueweapon/special/dragonz
+	var/obj/effect/proc_holder/spell/invoked/order/retreat/bandit/banner_spell
+	force = 25
+	thrown_bclass = BCLASS_STAB
+	throwforce = 35
 	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_BASH, /datum/intent/special/bandit_punish, /datum/intent/special/deploy)
-	gripped_intents = list(SPEAR_THRUST, /datum/intent/spear/cut/halberd, SPEAR_BASH)
 	name = "dragon's zeal"
-	desc = "A flag adorned with the finest purple dye, golden thread inlays, and the softest silk money can buy. This particular flag has the heraldry of a dragon, it seems to be staring at you."
-	icon_state = "halberd"
+	desc = "A purple flag with the characteristics of a dragon, you cannot help but feel it is alive..."
+	icon_state = "d_banner"
 	icon = 'icons/roguetown/weapons/64.dmi'
+	item_icons = list(
+		WEAR_L_HAND = 'icons/roguetown/weapons/roguegiant_72.dmi',
+		WEAR_R_HAND = 'icons/roguetown/weapons/roguegiant_72.dmi'
+		)
+	item_state = list(
+		WEAR_L_HAND = "d_banner"
+		WEAR_R_HAND = "d_banner
+
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	bigboy = TRUE
-	gripsprite = TRUE
-	wlength = WLENGTH_GREAT
-	w_class = WEIGHT_CLASS_BULKY
-	minstr = 9
+	layer = MOB_LAYER - 0.1
+	wlength_LONG
+	minstr = 8
 	max_blade_int = 300
 	max_integrity = 300
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	associated_skill = /datum/skill/combat/polearms
+	resistance_flags = FIRE_PROOF
 	walking_stick = TRUE
-	wdefense = 3
-	wdefense_wbonus = 6
+	blade_dulling = DULLING_SHAFT_METAL
+	wdefense = 6
 	COOLDOWN_DECLARE(dragonz)
 
-/obj/item/rogueweapon/dragonz/getonmobprop(tag)
+/obj/item/rogueweapon/special/dragonz/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list("shrink" = 0.6,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
-			if("wielded")
-				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
-			if("onbelt")
-				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+				return list("shrink" = 0,"sx" = 0,"sy" = 0,"nx" = 0,"ny" = 0,"wx" = 0,"wy" = 0,"ex" = 0,"ey" = 0,"northabove" = 0,"southabove" = 0,"eastabove" = 0,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
 
-/obj/item/rogueweapon/dragonz/afterattack(atom/target, mob/user, flag)
+/obj/item/rogueweapon/special/dragonz/Initialize()
+    . = ..()
+
+/obj/item/rogueweapon/special/dragonz/pickup(mob/living/user)
 	. = ..()
 
-	if(istype(user.used_intent, /datum/intent/special/bandit_punish))
+	if(!ishuman(user))
+		return
+
+	if(user.mind?.special_role != "Bandit")
+		user.visible_message(user, span_danger("The [src] sears [user]'s flesh!"))
+
+		user.adjustFireLoss(15)
+		user.electrocute_act(5, src)
+
+		user.dropItemToGround(src)
+		playsound(user, 'sound/misc/zizo.ogg', 70)
+
+
+	else
+		user.change_stat(STATKEY_CON, 2)
+
+		to_chat(user, span_suppradio("The Hoardmaster's focus is now drawn to you, you are bolstered by a strange sense of purpose."))
+
+		banner_spell = new /obj/effect/proc_holder/spell/invoked/order/retreat/bandit
+		banner_spell.attached_banner = src
+
+		user.AddSpell(banner_spell)
+
+/obj/item/rogueweapon/special/dragonz/dropped(mob/living/user)
+	. = ..()
+
+	if(user.mind?.special_role == "Bandit")
+		user.change_stat(STATKEY_CON, -2)
+
+	if(banner_spell)
+		user.RemoveSpell(banner_spell)
+		qdel(banner_spell)
+		banner_spell = null
+
+/obj/item/rogueweapon/special/dragonz/afterattack(atom/target, mob/user, flag)
+
+
+	if(istype(user.used_intent, /datum/intent/special/deploy))
 		deploy(user)
 		return
 
+	if(!istype(user.used_intent, /datum/intent/special/bandit_punish))
+		return
+
+	. = ..()
 
 	if(get_dist(user, target) > 7)
 		return
 
-	user.changeNext_move(CLICK_CD_MELEE)
-
 	if(ishuman(user))
-		var/mob/living/carbon/human/HU = user
 
-		if(HU.advclass != "iconoclast")
+		if(user.advjob != "Iconoclast")
 			to_chat(user, span_danger("The dragon doesn't support me."))
 			return
 
 		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
 
-			if(H == HU)
+			if(target == user)
+				to_chat(user, span_danger("The dragon dosen't like masochists.."))
 				return
+
+			var/mob/living/carbon/human/H = target
 
 			if(!COOLDOWN_FINISHED(src, dragonz))
 				to_chat(user, span_danger("The [src] is not ready yet! [round(COOLDOWN_TIMELEFT(src, dragonz) / 10, 1)] seconds left!"))
@@ -114,51 +160,48 @@
 				return
 
 			if(istype(user.used_intent, /datum/intent/special/bandit_punish))
-				HU.visible_message(span_warning("[HU] punished [H] with the [src]."))
+				user.visible_message(user, span_danger("[user] punished [target] with the [src]."))
 				user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 				H.electrocute_act(5, src)
 				COOLDOWN_START(src, dragonz, 30 SECONDS)
-				to_chat(H, span_danger("I'm punished by the dragon!"))
+				to_chat(target, span_danger("I'm punished by the dragon!"))
 				return
 
-/obj/item/rogueweapon/dragonz/attack_self(mob/living/user)
+/obj/item/rogueweapon/special/dragonz/attack_self(mob/living/user)
 	. = ..()
 
-	var/mob/living/carbon/human/HU = user
-
-	if(HU.job != "bandit")
-	
+	if(user.mind?.special_role != "Bandit")
 		to_chat(user, span_danger("The dragon scoffs at your arrogance."))
 		return FALSE
 
-	user.visible_message(span_userdanger("[user] is about to wave the flag [src]!"))
+	user.visible_message(user, span_warning("[user] is about to wave the [src]!"))
 
 	user.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS) // We don't want them to spam the message.
 
-	if(do_after(user, 30 SECONDS)) // Enough time for any antag to kick or interrupt third party, me think
+	if(do_after(user, 5 SECONDS))
+		user.visible_message(user, span_danger("[user] waved the [src]!"))
 		rally(user)
 
-/obj/item/rogueweapon/dragonz/proc/rally(mob/living/user)
+/obj/item/rogueweapon/special/dragonz/proc/rally(mob/living/user)
 
 	var/turf/origin_turf = get_turf(src)
 	var/area/target_area = get_area(src)
 
 	user.visible_message(span_userdanger("[user] waves the flag!"))
 
-	playsound(src, 'modular_hearthstone/sound/items/watchhorn.ogg', 100, TRUE)
+	playsound(user, 'sound/horns/o_rally.ogg', 70)
 
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
 
 		if(player.stat == DEAD)
 			continue
 
-		if(player.job != "bandit")
+		if(player.mind?.special_role != "Bandit")
 			continue
 
-		var/area/player_area = get_area(player)
-
-		if(istype(target_area, /area/rogue/indoors/banditcamp) && !istype(player_area, /area/rogue/indoors/banditcamp))
+		if(istype(target_area, /area/rogue/indoors/banditcamp) && !istype(get_area(player), /area/rogue/indoors/banditcamp))
 			to_chat(player, span_danger("The dragon calls you back to camp!"))
+			playsound(user, 'sound/horns/o_rally_distant.ogg', 70)
 			continue
 
 		var/dirtext = "The dragon calls you to the "
@@ -174,61 +217,101 @@
 			if(NORTHWEST) dirtext += "northwest!"
 			if(SOUTHEAST) dirtext += "southeast!"
 			if(SOUTHWEST) dirtext += "southwest!"
-			else dirtext = "The dragon calls you, but the direction is unclear."
+
+			else
+
+				dirtext = "The dragon calls you, but the direction is unclear."
+				playsound(player, 'sound/horns/o_rally_distant.ogg', 50)
 
 		to_chat(player, span_userdanger(dirtext))
 
-/obj/item/rogueweapon/dragonz/proc/deploy(mob/living/user)
-	if(user.action_busy)
+/obj/item/rogueweapon/special/dragonz/proc/deploy(mob/living/user)
+
+	var/turf/T = get_step(user, user.dir)
+
+	if(get_dist(user, T) > 1)
 		return
 
-	if(SSinterior.in_interior(user))
-		to_chat(user, SPAN_WARNING("There's no way to deploy [src] in here!"))
+	if(!T)
 		return
 
-	var/turf/turf_to_plant = get_step(user, user.dir)
-	if(istype(turf_to_plant, /turf/open))
-		var/turf/open/floor = turf_to_plant
-		if(!floor.allow_construction || istype(floor, /turf/open/space))
-			to_chat(user, SPAN_WARNING("You cannot deploy [src] here, find a more secure surface!"))
-			return
-	else
-		to_chat(user, SPAN_WARNING("[turf_to_plant] is blocking you from deploying [src]!"))
+	if(!istype(T, /turf/open))
+		to_chat(user, span_warning("You cannot deploy here!"))
 		return
 
-	for(var/obj/object in turf_to_plant)
+	for(var/obj/object in T)
 		if(object.density)
-			to_chat(user, SPAN_WARNING("You need a clear, open area to deploy [src], something is blocking the way in front of you!"))
+			to_chat(user, span_warning("You need a clear area to deploy [src]!"))
 			return
 
-	user.visible_message(SPAN_NOTICE("[user] starts planting [src] into the ground..."), SPAN_NOTICE("You start planting [src] into the ground..."))
-	playsound(user, 'sound/effects/flag_raising.ogg', 30)
-	if(!do_after(user, 6 SECONDS, INTERRUPT_ALL, BUSY_ICON_GENERIC))
+	user.visible_message(user, span_warning("[user] starts planting [src] into the ground..."))
+
+	playsound(user, 'sound/foley/Building-01.ogg', 50)
+
+	if(!do_after(user, 6 SECONDS))
 		return
 
-	user.visible_message(SPAN_NOTICE("[user] plants [src] into the ground!"), SPAN_NOTICE("You plant [src] into the ground!"))
-	new /obj/structure/flag/matthios(turf_to_plant)
-	playsound(user, 'sound/effects/flag_raising.ogg', 30)
+	user.visible_message(user, span_warning("[user] plants [src] into the ground!"))
+
+	new /obj/structure/matthios/bandit_banner(T)
+	playsound(user, 'sound/horns/o_hold.ogg', 70)
 
 	qdel(src)
 
-/obj/item/rogueweapon/dragonz/pickup(mob/living/user)
+
+
+/obj/effect/proc_holder/spell/invoked/order/retreat/bandit
+	var/obj/item/rogueweapon/special/dragonz/attached_banner
+	COOLDOWN_DECLARE(retreat)
+	name = "Tactical Retreat!"
+	chargedrain = 0
+	chargetime = 0
+	desc = "Gives you the will to runaway!"
+	overlay_state = "movemovemove"
+
+/obj/effect/proc_holder/spell/invoked/order/retreat/bandit/cast(list/targets, mob/living/user)
 	. = ..()
 
-	if(!ishuman(user))
-		return
+	if(!attached_banner || attached_banner.loc != user)
+		to_chat(user, span_warning("You must be holding the banner!"))
+		return FALSE
 
-	var/mob/living/carbon/human/H = user
+	if(user.mind?.special_role != "Bandit")
+		return FALSE
 
-	if(H.job != "bandit")
-		to_chat(H, span_danger("The dragon's banner sears your flesh!"))
+	if(!COOLDOWN_FINISHED(src, retreat))
+		to_chat(user, span_warning("The banner is not ready yet! [round(COOLDOWN_TIMELEFT(src, retreat) / 10, 1)] seconds left!"))
+		return FALSE
 
-		H.adjustFireLoss(15)
-		H.electrocute_act(5, src)
+	user.say("Fall back! Regroup and retreat!")
 
-		H.dropItemToGround(src)
+	for(var/mob/living/target in range(14, user))
 
-		return
+		if(target.mind?.special_role == "Bandit")
+			target.apply_status_effect(/datum/status_effect/buff/order/retreat/bandit)
+
+	COOLDOWN_START(src, retreat, 15 MINUTES)
+
+	return TRUE
+
+/datum/status_effect/buff/order/retreat/bandit/nextmove_modifier()
+	return 0.85
+
+/datum/status_effect/buff/order/retreat/bandit
+	id = "movemovemove"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/order/retreat
+	effectedstats = list(STATKEY_SPD = 3, STATKEY_WIL = 3, STATKEY_INT = -3, STATKEY_PER = -3, STATKEY_STR = -1)
+	duration = 2 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/order/retreat/bandit
+	name = "Tactical Retreat!!"
+	desc = "My commander has ordered me to fall back!"
+	icon_state = "buff"
+
+/datum/status_effect/buff/order/retreat/bandit/on_apply()
+	. = ..()
+	to_chat(owner, span_blue("My commander orders me to fall back!"))
+
 
 /obj/item/rogueweapon/lordscepter
 	force = 20
