@@ -661,6 +661,7 @@
 	var/turf/closed/respawn_rock = /turf/closed/mineral/random/rogue
 	var/rolling_rocks = FALSE
 	var/list/static/whitelist_typecache
+	var/list/static/remove_stones
 
 /obj/structure/trap/mine_collapse/salt
 	respawn_rock = /turf/closed/mineral/rogue/salt
@@ -669,6 +670,8 @@
 	. = ..()
 	if(!whitelist_typecache)
 		whitelist_typecache = typecacheof(/mob/living/carbon/human)
+	if(!remove_stones)
+		remove_stones = typecacheof(list(/obj/item/natural/rock, /obj/item/natural/stone))
 
 /obj/structure/trap/mine_collapse/Crossed(atom/movable/AM)
 	if(!is_type_in_typecache(AM, whitelist_typecache))
@@ -716,6 +719,9 @@
 	if(!X)
 		return
 	last_trigger = world.time
+	for(var/obj/I in T) // 'absorb' smaller stones
+		if(is_type_in_typecache(I, remove_stones))
+			qdel(I)
 	if(!triggered_by_neighbor)
 		X.loud_message("Loud rocks falling can be heard")
 	for(var/mob/living/L in T)
