@@ -10,7 +10,7 @@
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_ARCYNE_T3, TRAIT_MAGEARMOR, TRAIT_ALCHEMY_EXPERT)
-	subclass_spellpoints = 36
+	subclass_spellpoints = 30
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
