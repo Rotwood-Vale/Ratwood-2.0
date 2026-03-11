@@ -607,10 +607,24 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = ""
 	set hidden = 1
-	var/list/mobs = getpois(mobs_only=1,skip_mindless=1)
+	var/list/all_mobs = getpois(mobs_only=1,skip_mindless=1)
+	var/list/allowed_mobs = list()
 
-	var/input = input("Who?!", "Haunt", null, null) as null|anything in mobs
-	var/mob/target = mobs[input]
+	// admins can see everybody, i think thats fair
+	if(!check_rights(R_ADMIN, FALSE))
+		for(var/current_name in all_mobs)
+			var/mob/current_mob = all_mobs[current_name]
+
+			if(current_mob.client)
+				// check if the player is afraid of ghosts
+				var/datum/preferences/current_prefs = current_mob.client.prefs
+				if(!current_prefs.afraid_of_ghosts)
+					allowed_mobs[current_name] = current_mob
+	else
+		allowed_mobs += all_mobs
+
+	var/input = input("Who?!", "Haunt", null, null) as null|anything in allowed_mobs
+	var/mob/target = allowed_mobs[input]
 	ManualFollow(target)
 
 /datum/mind

@@ -196,6 +196,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/mastervol = 50
 
 	var/anonymize = TRUE
+	var/afraid_of_ghosts = FALSE
 	var/masked_examine = FALSE
 	var/nsfw_examine_always = FALSE
 	var/mute_animal_emotes = FALSE
@@ -2869,9 +2870,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					return
 
 				if("observe")
-				var/mob/dead/new_player/P = user
-				P.make_me_an_observer()
-				return
+					var/mob/dead/new_player/P = user
+					P.make_me_an_observer()
+					return
 
 				if("finished")
 					user << browse(null, "window=latechoices") //closes late choices window

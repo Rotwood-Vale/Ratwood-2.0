@@ -317,6 +317,17 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	prefs.save_preferences()
 	to_chat(src, span_notice("OOC Anonymize is now [prefs.anonymize ? "ENABLED (your handle will be randomized)" : "DISABLED (your ckey will be shown)"]."))
 
+/client/verb/toggle_afraid_of_ghosts()
+	set name = "Toggle Fear of Ghosts"
+	set category = "OOC"
+	set desc = "Permit or forbid ghosts from orbiting you."
+	if(!mob)
+		return
+	// Flip preference
+	prefs.afraid_of_ghosts = !prefs.afraid_of_ghosts
+	prefs.save_preferences()
+	to_chat(src, span_notice("Fear of ghosts is now [prefs.afraid_of_ghosts ? "ENABLED (Ghosts can no longer orbit you)" : "DISABLED (Ghosts can now orbit you)"]."))
+
 //Checks admin notice
 /client/verb/admin_notice()
 	set name = "Adminnotice"
