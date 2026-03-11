@@ -1,94 +1,122 @@
-/obj/structure/flag/matthios
+
+/obj/structure/matthios/bandit_banner
 	name = "Dragon War Banner"
 	desc = ""
 	anchored = TRUE
 	density = TRUE
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "woodenbarricade"
+	icon = 'icons/roguetown/weapons/roguegiant_72.dmi'
+	icon_state = "d_bannerw"
+	var/list/buffed = list()
 
-/obj/structure/flag/matthios/Initialize()
+/obj/structure/matthios/bandit_banner/Initialize()
 	. = ..()
+
 	START_PROCESSING(SSobj, src)
+	return
 
-/obj/structure/flag/matthios/Destroy()
+	INITIALIZE_HINT_NORMAL
+
+/obj/structure/matthios/bandit_banner/Destroy()
+
+	for(var/mob/living/carbon/human/H in buffed)
+	H.remove_status_effect(/datum/status_effect/buff/bandit_banner)
+
+	buffed.Cut()
+
 	STOP_PROCESSING(SSobj, src)
-	return ..()
+	return
 
-/obj/structure/flag/matthios/process()
-	//has to be in line of sight
-	for(var/mob/living/carbon/human/H in view(7, src))
+	..()
 
-		if(H.job == "bandit")
+/obj/structure/matthios/bandit_banner/process()
+	var/list/current = list()
 
-			if(!H.has_status_effect(/datum/status_effect/buff/bandit_banner))
-				H.apply_status_effect(/datum/status_effect/buff/bandit_banner)
+	for(var/mob/living/carbon/human/H in viewers(7, src))
 
-		else
-			if(H.has_status_effect(/datum/status_effect/buff/bandit_banner))
-				H.remove_status_effect(/datum/status_effect/buff/bandit_banner)
+	if(H.mind?.special_role != "Bandit")
+	continue
+
+	current.Add(H)
+
+	if(!(H in buffed))
+		H.apply_status_effect(/datum/status_effect/buff/bandit_banner)
+		buffed.Add(H) // remove buff from those who left range
+
+	for(var/mob/living/carbon/human/H in buffed.Copy())
+
+	if(!(H in current))
+		H.remove_status_effect(/datum/status_effect/buff/bandit_banner)
+		buffed.Remove(H)
 
 /datum/status_effect/buff/bandit_banner
+
 	id = "bandit_banner"
-	duration = -1
-	tick_interval = 2
+	mob_effect_icon_state = "buff"
 	examine_text = "SUBJECTPRONOUN fights with the fury of the dragon."
+	alert_type = /atom/movable/screen/alert/status_effect
 
 /datum/status_effect/buff/bandit_banner/on_apply()
 
-	owner.change_stat(STAT_STR, 1)
-	owner.change_stat(STAT_PER, 1)
-	owner.change_stat(STAT_END, 1)
-	owner.change_stat(STAT_CON, 1)
-	owner.change_stat(STAT_INT, 1)
-	owner.change_stat(STAT_SPD, 1)
-	owner.change_stat(STAT_LCK, 1)
+	to_chat(owner, span_notice("You feel the strength of the dragon flow into your body."))
+
+	owner.change_stat(STATKEY_STR, 1)
+	owner.change_stat(STATKEY_PER, 1)
+	owner.change_stat(STATKEY_WIL, 1)
+	owner.change_stat(STATKEY_CON, 1)
+	owner.change_stat(STATKEY_INT, 1)
+	owner.change_stat(STATKEY_SPD, 1)
+	owner.change_stat(STATKEY_LCK, 1)
 
 /datum/status_effect/buff/bandit_banner/on_remove()
 
-	owner.change_stat(STAT_STR, -1)
-	owner.change_stat(STAT_PER, -1)
-	owner.change_stat(STAT_END, -1)
-	owner.change_stat(STAT_CON, -1)
-	owner.change_stat(STAT_INT, -1)
-	owner.change_stat(STAT_SPD, -1)
-	owner.change_stat(STAT_LCK, -1)
+	to_chat(owner, span_notice("The dragon's strength fades."))
+
+	owner.change_stat(STATKEY_STR, -1)
+	owner.change_stat(STATKEY_PER, -1)
+	owner.change_stat(STATKEY_WIL, -1)
+	owner.change_stat(STATKEY_CON, -1)
+	owner.change_stat(STATKEY_INT, -1)
+	owner.change_stat(STATKEY_SPD, -1)
+	owner.change_stat(STATKEY_LCK, -1)
 
 /datum/status_effect/buff/bandit_banner/tick()
 
-	if(owner)
-		owner.adjust_mana(1)
+	if(owner) owner.energy_add(1)
 
-/obj/structure/flag/matthios/attack_hand(mob/living/user)
+/obj/structure/matthios/bandit_banner/attack_hand(mob/living/user)
 
 	if(!ishuman(user))
 		return
 
-	var/mob/living/carbon/human/H = user
+		if(user.mind.special_role == "Bandit")
+		user.visible_message(span_warning("[user] begins pulling the dragon banner from the ground!"))
 
-	if(H.job == "bandit")
-
-		user.visible_message(span_notice("[user] begins pulling the dragon banner from the ground!"))
-
-		if(!do_after(user, 5 SECONDS, target = src))
+		if(!do_after(user, 3 SECONDS, target = src))
 			return
 
-		user.visible_message(span_notice("[user] pulls the dragon banner free!"))
+		user.visible_message(span_warning("[user] pulls the dragon banner free!"))
+		playsound(src, 'sound/items/empty_shovel.ogg', 70)
 
-		var/obj/item/rogueweapon/dragonz/banner = new(user)
+		var/obj/item/rogueweapon/special/dragonz/banner = new(user.loc)
+
 		user.put_in_active_hand(banner)
-
+		banner.pickup(user)
+		banner.update_icon()
+		user.update_inv_hands()
 
 		qdel(src)
 
 	else
 
-		user.visible_message(span_notice("[user] attempts to kick the banner over!"))
+		user.visible_message(span_warning("[user] attempts to kick the banner over!"))
+		playsound(src, 'sound/misc/woodhit.ogg', 70)
 
 		if(!do_after(user, 15 SECONDS, target = src))
-			return
+		return
 
-		user.visible_message(span_notice("[user] kicks the banner over!"))
+		user.visible_message(span_warning("[user] kicks the banner over!"))
+		playsound(src, 'sound/misc/treefall.ogg', 70)
 
-		new /obj/item/rogueweapon/dragonz(loc)
+		new /obj/item/rogueweapon/special/dragonz(loc)
 
 		qdel(src)

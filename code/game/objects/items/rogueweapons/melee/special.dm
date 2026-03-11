@@ -42,6 +42,7 @@
 
 /obj/item/rogueweapon/special/dragonz
 	var/obj/effect/proc_holder/spell/invoked/order/retreat/bandit/banner_spell
+	var/item_icon = attachment.icon_state
 	force = 25
 	thrown_bclass = BCLASS_STAB
 	throwforce = 35
@@ -49,14 +50,11 @@
 	name = "dragon's zeal"
 	desc = "A purple flag with the characteristics of a dragon, you cannot help but feel it is alive..."
 	icon_state = "d_banner"
+	item_state = "d_banner"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	item_icons = list(
-		WEAR_L_HAND = 'icons/roguetown/weapons/roguegiant_72.dmi',
-		WEAR_R_HAND = 'icons/roguetown/weapons/roguegiant_72.dmi'
-		)
-	item_state = list(
-		WEAR_L_HAND = "d_banner"
-		WEAR_R_HAND = "d_banner
+	item = 'icons/roguetown/weapons/roguegiant_72.dmi'
+	name = "dragon banner"
+
 
 	pixel_y = -16
 	pixel_x = -16
