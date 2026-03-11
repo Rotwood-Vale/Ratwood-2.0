@@ -18,6 +18,7 @@
 	sewrepair = TRUE
 	grid_width = 32
 	grid_height = 64
+	nudist_approved = TRUE
 
 /obj/item/rope/Initialize(mapload)
 	. = ..()
