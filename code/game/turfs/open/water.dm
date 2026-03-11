@@ -107,7 +107,10 @@
 	if(!isliving(swimmer))
 		return 0
 	if(!isnull(swimmer.grabbedby))
-		return 0
+		for(var/obj/item/grabbing/active_grab in swimmer.grabbedby)
+			if(active_grab.grabbed == active_grab.grabbee)
+				continue
+			return 0
 	if(!swim_skill)
 		return 0 // no stam cost
 	if(swimmer.is_floor_hazard_immune())
