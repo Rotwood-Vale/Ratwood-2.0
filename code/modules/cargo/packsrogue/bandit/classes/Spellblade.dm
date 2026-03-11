@@ -129,7 +129,7 @@
 /datum/supply_pack/rogue/spellblade/lightbrig
 	name = "Lightweight Brigandine"
 	cost = 20
-	contains = list(/obj/item/clothing/suit/roguetown/armor/Brigandine/light)
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/light)
 
 ///////////////////
 // WRISTS/GLOVES //
