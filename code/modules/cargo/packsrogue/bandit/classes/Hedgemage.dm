@@ -138,40 +138,10 @@
 // WEAPONS //
 /////////////
 
-/datum/supply_pack/rogue/Sawbones/rapier
-	name = "Rapier"
-	cost = 20
-	contains = list(/obj/item/rogueweapon/sword/rapier)
-
-/datum/supply_pack/rogue/Sawbones/estoc
-	name = "Estoc"
-	cost = 40
-	contains = list(/obj/item/rogueweapon/estoc)
-
-/datum/supply_pack/rogue/Sellsword/ssword
-	name = "Short Sword"
-	cost = 10
-	contains = list(/obj/item/rogueweapon/sword/short)
-
-/datum/supply_pack/rogue/Sellsword/asword
-	name = "Arming Sword"
-	cost = 20
-	contains = list(/obj/item/rogueweapon/sword)
-
-/datum/supply_pack/rogue/Sellsword/lsword
-	name = "Longsword"
-	cost = 40
-	contains = list(/obj/item/rogueweapon/sword/long)
-
 /datum/supply_pack/rogue/hedgemage/leather/woodenstaff
 	name = "Wooden Staff"
 	cost = 5
 	contains = list(/obj/item/rogueweapon/woodstaff)
-
-/datum/supply_pack/rogue/hedgemage/leather/qstaff
-	name = "Iron quarterstaff"
-	cost = 10
-	contains = list(/obj/item/rogueweapon/woodstaff/quarterstaff/iron)
 
 /datum/supply_pack/rogue/hedgemage/leather/sqstaff
 	name = "Steel quarterstaff"
