@@ -355,7 +355,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/nudist
 	name = "Nudist"
-	desc = "I refuse to wear clothes. They are a hindrance to my freedom."
+	desc = "I refuse to wear clothes. They are a hindrance to my freedom. I can tolerate certain accessories."
 
 /datum/charflaw/nudist/on_mob_creation(mob/user)
 	..()
@@ -467,7 +467,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/nude_sleeper
 	name = "Nude Sleeper"
-	desc = "I can't fall asleep unless I'm nude and in bed."
+	desc = "I can't fall asleep unless I'm nude and in bed. I cannot sleep while wearing equipment. (Unremovable clothing and certain accessories are allowed.)"
 
 /datum/charflaw/nude_sleeper/on_mob_creation(mob/user)
 	..()

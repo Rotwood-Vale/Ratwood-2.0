@@ -1005,6 +1005,7 @@
 	else
 		return set_selected_zone(choice, usr)
 
+/*
 /atom/movable/screen/zone_sel/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
 
@@ -1049,6 +1050,7 @@
 	if(!isobserver(usr) && hovering)
 		vis_contents -= hover_overlays_cache[hovering]
 		hovering = null
+*/
 
 /atom/movable/screen/zone_sel/proc/get_zone_at(icon_x, icon_y, gender = MALE)
 	if(gender == MALE)

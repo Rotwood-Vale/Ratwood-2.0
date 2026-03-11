@@ -77,6 +77,7 @@
 	blocksound = SOFTUNDERHIT
 	blade_dulling = DULLING_BASHCHOP
 	armor = ARMOR_PADDED
+	nudist_approved = TRUE
 
 	repairmsg_begin = "My skin begins to slowly mend its abuse.."
 	repairmsg_continue = "My skin mends some of its abuse.."

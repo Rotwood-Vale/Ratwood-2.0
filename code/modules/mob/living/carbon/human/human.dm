@@ -643,9 +643,6 @@
 				else if(energy > 0)
 					hud_used.energy.icon_state = "energy10"
 
-		if(hud_used.zone_select)
-			hud_used.zone_select.update_icon()
-
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	dna?.species.spec_fully_heal(src)
 	if(admin_revive)

@@ -243,6 +243,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		werewolf_infect_attempt()
 	if(mortal && HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
 		affected.death()
+	if(affected.hud_used?.zone_select)
+		affected.hud_used.zone_select.update_icon()
 
 /// Removes this wound from a given, simpler than adding to a bodypart - No extra effects
 /datum/wound/proc/remove_from_mob()
@@ -258,6 +260,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /datum/wound/proc/on_mob_loss(mob/living/affected)
 	if(mob_overlay)
 		affected.update_damage_overlays()
+	if(affected.hud_used?.zone_select)
+		affected.hud_used.zone_select.update_icon()
 
 /// Called on handle_wounds(), on the life() proc
 /datum/wound/proc/on_life()
@@ -326,6 +330,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(mob_overlay != old_overlay)
 		owner?.update_damage_overlays()
 	record_round_statistic(STATS_WOUNDS_SEWED)
+	if(owner.hud_used?.zone_select)
+		owner.hud_used.zone_select.update_icon()
 	return TRUE
 
 /// Checks if this wound has a special infection (zombie or werewolf)

@@ -237,6 +237,8 @@
 #define TRAIT_SILVER_WEAK "Silver Weakness"
 #define TRAIT_ASSASSIN	"Assassin"
 #define TRAIT_EQUESTRIAN "Equestrian"
+#define TRAIT_GANG_A "Gang Rontz Ratz"
+#define TRAIT_GANG_B "Gang Blortz Volves"
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
 #define TRAIT_RACISMISBAD "Heritage Vision"
@@ -493,7 +495,9 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STANDARD_BEARER = span_info("The banner is my lifeline. Just as I am to it. The retinue know to rally around me, so long as I keep it safe."),
 	TRAIT_BAOTHA_FERTILITY_BOON = span_info("I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this"),
 	TRAIT_FUSILIER = span_suppradio("I've been trained in the safe use of smokepowder. Additionally, knowledge above <b><u>journeyman</u></b> status is attainable."),
-	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive...")
+	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
+	TRAIT_GANG_A = span_info("I belong to the Rontz Ratz gang"),
+	TRAIT_GANG_B = span_info("I belong to the Blortz Volves gang")
 ))
 
 // trait accessor defines

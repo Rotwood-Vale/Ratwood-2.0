@@ -11,7 +11,7 @@
 /datum/sex_action/grind_body/can_perform(mob/living/user, mob/living/target)
 	if(user == target)
 		return FALSE
-	if(!user.Adjacent(target))
+	if(!user.sexcon.Adjacent_Or_Closet(target))
 		return FALSE
 	if(!target.get_bodypart(check_zone(user.zone_selected)))
 		return FALSE

@@ -196,6 +196,11 @@
 			grabstate = l_grab.grab_state
 	return grabstate
 
+/datum/sex_controller/proc/Adjacent_Or_Closet(atom/neighbor)
+	if(istype(user.loc, /obj/structure/closet) || istype(user.loc, /obj/structure/handcart) || istype(neighbor.loc, /obj/structure/closet) || istype(neighbor.loc, /obj/structure/handcart)) // within container
+		return user.loc == neighbor.loc
+	return user.Adjacent(neighbor)
+
 /proc/add_cum_floor(turfu, do_big_puddle = FALSE)
 	if(!turfu || !isturf(turfu))
 		return

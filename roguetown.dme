@@ -3014,6 +3014,7 @@
 #include "modular_rmh\code\modules\clothing\valentyi\toga.dm"
 #include "modular_rmh\code\modules\clothing\valentyi\toga_sandals.dm"
 #include "modular_rmh\code\modules\clothing\armor\corset_color.dm"
+#include "modular_rmh\code\modules\clothing\face\fancy_spectacles.dm"
 #include "modular_rmh\code\modules\clothing\vladegeg\courtesan.dm"
 #include "modular_rmh\code\modules\clothing\vladegeg\desert_sorceress.dm"
 #include "modular_rmh\code\modules\clothing\vladegeg\explorer.dm"

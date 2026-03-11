@@ -24,6 +24,7 @@
 	block2add = FOV_BEHIND
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/roguehood/ComponentInitialize()
 	. = ..()
@@ -62,6 +63,7 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	max_integrity = 120//+20 over base. -30 from previous value.
 	blocksound = SOFTHIT
+	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/roguehood/shalal
 	name = "keffiyeh"
@@ -89,6 +91,7 @@
 	overarmor = FALSE
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/roguehood/shalal/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, HEAD|EARS|NECK|HAIR, HIDEHAIR|HIDEFACE, null, null, null, (UPD_HEAD|UPD_MASK|UPD_NECK))
@@ -122,6 +125,7 @@
 	item_state = "hijab"
 	icon_state = "deserthood"
 	naledicolor = TRUE
+	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood
 	name = "heavy hood"
@@ -132,6 +136,7 @@
 	item_state = "heavyhood"
 	icon_state = "heavyhood"
 	hidesnoutADJ = FALSE
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/yoruku
 	name = "shadowed hood"
@@ -291,6 +296,7 @@
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	max_integrity = 200
+	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/roguehood/psydon/confessor
 	name = "confessional hood"
@@ -320,6 +326,7 @@
 	icon_state = "deserthood"
 	item_state = "deserthood"
 	naledicolor = TRUE
+	nudist_approved = FALSE // armored
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
 
@@ -334,6 +341,7 @@
 	naledicolor = TRUE
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
+	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/roguehood/sojourner
 	name = "sojourner's shroud"
@@ -354,3 +362,4 @@
 	max_integrity = ARMOR_INT_SIDE_STEEL //High leather-tier protection and critical resistances, steel-tier integrity. Integrity boost encourages hand-to-hand parrying. Weaker than the Psydonic Thorns.
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
+	nudist_approved = FALSE // armored

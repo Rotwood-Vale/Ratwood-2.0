@@ -178,6 +178,7 @@
 	icon_state = "gladiator"
 	item_state = "gladiator"
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/sandals
 	name = "sandals"
@@ -186,12 +187,14 @@
 	icon_state = "sandals"
 	item_state = "sandals"
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/sandals/aalloy
 	name = "decrepit sandals"
 	desc = "Frayed bronze platforms, curled about to cradle the feet. The beaches that these sandals once treaded are no more; pearly sands, long since turnt to glass from the Comet Syon's impact."
 	icon_state = "ancientsandals"
 	color = "#bb9696"
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/shalal
 	name = "babouche"
@@ -504,6 +507,7 @@
 	is_barefoot = TRUE
 	sewrepair = TRUE
 	armor = ARMOR_CLOTHING
+	nudist_approved = TRUE
 
 //kazen update
 /obj/item/clothing/shoes/roguetown/armor/rumaclan
@@ -513,6 +517,7 @@
 	item_state = "eastsandals"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
 	armor = ARMOR_LEATHER_GOOD
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/armor/hlegs
 	name = "leg harness"

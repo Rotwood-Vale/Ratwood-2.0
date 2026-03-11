@@ -12,6 +12,9 @@
 	else if(armor >= 100)
 		if(absorb_text)
 			to_chat(src, span_notice("[absorb_text]"))
+		var/obj/item/blocked_weapon = used_weapon
+		if(blocked_weapon)
+			SEND_SIGNAL(blocked_weapon, COMSIG_ITEM_ARMOR_BLOCKED)
 //		else
 //			to_chat(src, span_notice("My armor absorbs the blow!"))
 	else if(armor > 0)
