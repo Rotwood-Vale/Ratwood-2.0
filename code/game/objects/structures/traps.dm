@@ -656,11 +656,24 @@
 	max_integrity = 0
 	bound_width = 128
 	obj_flags = INDESTRUCTIBLE
+	time_between_triggers = 1 MINUTES
+
 	var/turf/closed/respawn_rock = /turf/closed/mineral/random/rogue
 	var/rolling_rocks = FALSE
+	var/list/static/whitelist_typecache
 
 /obj/structure/trap/mine_collapse/salt
 	respawn_rock = /turf/closed/mineral/rogue/salt
+
+/obj/structure/trap/mine_collapse/Initialize(mapload)
+	. = ..()
+	if(!whitelist_typecache)
+		whitelist_typecache = typecacheof(/mob/living/carbon/human)
+
+/obj/structure/trap/mine_collapse/Crossed(atom/movable/AM)
+	if(!is_type_in_typecache(AM, whitelist_typecache))
+		return
+	. = ..()
 
 /obj/structure/trap/mine_collapse/trap_effect(mob/living/L)
 	..()
@@ -670,8 +683,6 @@
 	if(!T || isclosedturf(T))
 		return
 	if(!istype(T, /turf/open/floor/rogue))
-		return
-	if(!ishuman(L))
 		return
 	to_chat(L,span_danger("You feel rocks fall from the ceiling!"))
 	trigger_collapse()
@@ -686,8 +697,8 @@
 	new /obj/effect/temp_visual/trap/mine_collapse/left(T)
 	new /obj/effect/temp_visual/trap/mine_collapse/right(T)
 	var/time_delay = 4 SECONDS
-	if(triggered_by_neighbor)
-		time_delay += (rand(2,10) / 2)
+	if(triggered_by_neighbor) // add between 1 tick to 1 second of ticks
+		time_delay += rand(1,1 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(collapse), triggered_by_neighbor), wait = time_delay)
 	if(do_sfx)
 		playsound(src, 'sound/misc/cavein.ogg', 200, TRUE)
@@ -704,6 +715,7 @@
 	playsound(src, 'sound/misc/meteorimpact.ogg', 200, TRUE)
 	if(!X)
 		return
+	last_trigger = world.time
 	if(!triggered_by_neighbor)
 		X.loud_message("Loud rocks falling can be heard")
 	for(var/mob/living/L in T)
@@ -718,7 +730,7 @@
 		if(BP)
 			L.visible_message(span_boldwarning("Rocks comes crashing down on [L]'s [BP]!"), \
 					span_userdanger("Rocks crushes my [BP]!"))
-			L.emote("agony")
+			L.emote("paincrit", forced = TRUE)
 			BP.add_wound(/datum/wound/fracture)
 			BP.update_disabled()
 			L.apply_damage(90, BRUTE, def_zone)
