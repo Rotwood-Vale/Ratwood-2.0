@@ -6,7 +6,6 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/freelancer
 	subclass_languages = list(/datum/language/aavnic)//Your character could not have possibly "graduated" without atleast some basic knowledge of Aavnic.
-	allowed_patrons = list(/datum/patron/old_god)
 	class_select_category = CLASS_CAT_AAVNR
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_noble.ogg'
@@ -21,6 +20,7 @@
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN, //punchdagger moment
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE, //climbing at apprentice is needed for literally everyone
@@ -38,15 +38,16 @@
 	if(H.mind)
 		var/weapon_choice = input(H, "Draw a sword.", "As presented to me by Master Oktawiusz...") as anything in weapons		
 		switch(weapon_choice)
-			if("Kriegsmesser")		//Och- eugh- German!
+			if("Kriegsmesser(NO SPECIAL SKILLS)")		//Och- eugh- German!
 				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
-				beltr = /obj/item/rogueweapon/katar/punchdagger/frei
+				beltr = /obj/item/rogueweapon/huntingknife/idagger/navaja/freifechter
 			if("Etruscan Longsword")		//A longsword with a compound ricasso. Accompanied by a traditional flip knife.
 				r_hand = /obj/item/rogueweapon/sword/long/etruscan
 				beltr = /obj/item/rogueweapon/huntingknife/idagger/navaja/freifechter
 			if("Reformist Longsword")
 				r_hand = /obj/item/rogueweapon/sword/long/etruscan/freifechter
 				beltr = /obj/item/rogueweapon/huntingknife/idagger/navaja/freifechter
+				H.set_patron(/datum/patron/old_god)
 
 		if(H.mind)
 			var/armors = list(
@@ -63,9 +64,11 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	neck = /obj/item/clothing/neck/roguetown/psicross/reform
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
+		/obj/item/rogueweapon/katar/punchdagger/frei = 1,
 		/obj/item/natural/bundle/cloth/bandage/full = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
@@ -79,7 +82,6 @@
 	extra_context = "This class is for experienced players who have a solid grasp on footwork and stamina management, master skills alone won't save your lyfe. You make up for your inherent weaknesses and limitations with unique high-durability weapons."
 	outfit = /datum/outfit/job/roguetown/mercenary/freelancer_lancer
 	subclass_languages = list(/datum/language/aavnic)//Your character could not have possibly "graduated" without atleast some basic knowledge of Aavnic.
-	allowed_patrons = list(/datum/patron/old_god)
 	traits_applied = list(TRAIT_BADTRAINER, TRAIT_FENCERDEXTERITY, TRAIT_INTELLECTUAL)
 	//To give you an edge in specialty moves like feints and stop you from being feinted
 	subclass_stats = list(
@@ -118,6 +120,7 @@
 			if("Banner of Psydonic Reformism")
 				r_hand = /obj/item/rogueweapon/spear/boar/frei/pike/reformist
 				wrists = /obj/item/rogueweapon/katar/punchdagger/frei
+				H.set_patron(/datum/patron/old_god)
 
 	belt = /obj/item/storage/belt/rogue/leather/sash
 	beltl = /obj/item/flashlight/flare/torch/lantern
@@ -127,6 +130,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	neck = /obj/item/clothing/neck/roguetown/psicross/reform
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
@@ -143,7 +147,6 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/sabrist
 	subclass_languages = list(/datum/language/aavnic)//Your character could not have possibly "graduated" without atleast some basic knowledge of Aavnic.
-	allowed_patrons = list(/datum/patron/old_god)
 	class_select_category = CLASS_CAT_AAVNR
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/frei_sabre.ogg'
@@ -154,8 +157,9 @@
 		STATKEY_SPD = 2
 	)
 	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN, //punchdagger moment
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
@@ -184,12 +188,13 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain	//Obsessed with arms-hands. Keeping them protected on-spawn.
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	neck = /obj/item/clothing/neck/roguetown/psicross/reform
 
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
-		/obj/item/natural/bundle/cloth/bandage/full = 1
+		/obj/item/natural/bundle/cloth/bandage/full = 1,
+		/obj/item/rogueweapon/katar/punchdagger/frei = 1
 		)	
 	H.merctype = 6
