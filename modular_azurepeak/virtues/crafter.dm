@@ -74,5 +74,7 @@
 	desc = "The dark shafts, the damp smells of ichor and the laboring hours are no stranger to me. I keep my pickaxe and lamptern close, and have been taught how to mine well."
 	added_stashed_items = list(
 		"Steel Pickaxe" = /obj/item/rogueweapon/pick/steel,
-		"Lamptern" = /obj/item/flashlight/flare/torch/lantern)
+		"Lamptern" = /obj/item/flashlight/flare/torch/lantern,
+		"Ore Bag" = /obj/item/storage/hip/orestore/bronze,
+	)
 	added_skills = list(list(/datum/skill/labor/mining, 3, 6))

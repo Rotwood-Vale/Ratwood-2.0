@@ -460,7 +460,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = null
 	deathsight_message = "the rustle of heavy books"
 
-/area/rogue/indoors/town/bath
+/area/rogue/indoors/town/bath/vault
 	name = "Baths"
 	icon_state = "bath"
 	droning_sound = 'sound/music/area/bath.ogg'
@@ -469,11 +469,15 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	converted_type = /area/rogue/outdoors/exposed/bath
 	deathsight_message = "a den of pleasure and gluttony"
 
+/area/rogue/indoors/town/bath
+	name = "Bathmaster vault"
+	icon_state = "bathvault"
+
 /area/rogue/outdoors/exposed/bath
 	icon_state = "bath"
 	droning_sound = 'sound/music/area/bath.ogg'
 
-/area/rogue/outdoors/exposed/bath/vault
+/area/rogue/outdoors/exposed/bath/vault//Note that this DOESN'T WORK!! The mechanic is actually keyed to the particular type of floor-tile instead of area tile. Weird, I know. Also there's no reason for it to be Exposed, no idea why that's been the case.
 	name = "Bathmaster vault"
 	icon_state = "bathvault"
 	ceiling_protected = TRUE

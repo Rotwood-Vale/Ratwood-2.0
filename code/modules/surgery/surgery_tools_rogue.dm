@@ -22,7 +22,7 @@
 	grid_width = 32
 	grid_height = 64
 
-/obj/item/rogueweapon/surgery/Initialize()
+/obj/item/rogueweapon/surgery/Initialize(mapload)
 	. = ..()
 	item_flags |= SURGICAL_TOOL //let's not stab patients for fun
 
@@ -259,7 +259,7 @@
 	if(!user.Adjacent(target) || user.stat >= UNCONSCIOUS)
 		return TRUE
 	if(!get_location_accessible(target, user.zone_selected))
-		to_chat(user, span_warning("There is clothes obsecuring the [lowertext(parse_zone(user.zone_selected))]."))
+		to_chat(user, span_warning("There is clothes obsecuring the [LOWER_TEXT(parse_zone(user.zone_selected))]."))
 		if(!branding_self)
 			to_chat(target, span_userdanger("[user] pulls \the [src] away."))
 		return TRUE
@@ -326,7 +326,7 @@
 					if(length(testes.branded_writing))
 						to_chat(user, span_warning("I reburn over the existing marking."))
 					testes.branded_writing = setbranding
-		user.visible_message(span_info("[target] [description_recoil] as \the [src] sears [target.p_their()] [lowertext(answer)]! The fresh brand shows [span_boldwarning(setbranding)]."))
+		user.visible_message(span_info("[target] [description_recoil] as \the [src] sears [target.p_their()] [LOWER_TEXT(answer)]! The fresh brand shows [span_boldwarning(setbranding)]."))
 		if(!QDELETED(branding_part) && istype(branding_part)) // if targeted body part still exists, apply damage
 			target.apply_damage(branding_damage, BURN, branding_part)
 		if(!branding_self)
@@ -378,7 +378,7 @@
 		if(tits) // tits are avaialble, show as choice
 			answer = tgui_alert(user, "Brand them?", "Please answer in [DisplayTimeText(100)]!", list(capitalize(branding_part.name), "Tits", "Cancel"), 100)
 		else
-			answer = tgui_alert(user, "Brand their [lowertext(branding_part.name)]?", "Please answer in [DisplayTimeText(100)]!", list("Yes", "Cancel"), 100)
+			answer = tgui_alert(user, "Brand their [LOWER_TEXT(branding_part.name)]?", "Please answer in [DisplayTimeText(100)]!", list("Yes", "Cancel"), 100)
 		if(!answer || answer == "Cancel")
 			to_chat(user, span_warning("I pull \the [src] away."))
 			if(!branding_self)

@@ -17,7 +17,7 @@
 	var/gid
 	var/obj/structure/attached_to
 
-/obj/structure/gate_vertical/Initialize()
+/obj/structure/gate_vertical/Initialize(mapload)
 	. = ..()
 	update_gate_icon()
 

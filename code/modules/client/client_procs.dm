@@ -122,6 +122,25 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+	// Adminhelp ticket shortcuts
+	// Open the current adminhelp ticket chat window
+	if(href_list["viewticket"])
+		get_adminhelp()
+		return
+
+	// Quick reply to the current ticket using the adminhelp system
+	if(href_list["replyticket"])
+		if(!current_ticket)
+			to_chat(src, span_notice("You don't have an active admin help ticket to reply to."))
+			return
+		var/msg = input(src, "Reply to the admin team:", "Adminhelp reply") as message|null
+		if(!msg)
+			return
+		// Route through the normal adminhelp flow so spam checks and
+		// ticket reuse logic continue to apply.
+		adminhelp(msg)
+		return
+
 	if(href_list["playerlistrogue"])
 		if(SSticker.current_state != GAME_STATE_FINISHED)
 			return
@@ -825,7 +844,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
 
-			 //we sleep after telling the client to reconnect, so if we still exist something is up
+			//we sleep after telling the client to reconnect, so if we still exist something is up
 			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
 
 			qdel(src)

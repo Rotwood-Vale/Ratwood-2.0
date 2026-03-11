@@ -178,6 +178,7 @@
 	icon_state = "gladiator"
 	item_state = "gladiator"
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/sandals
 	name = "sandals"
@@ -186,12 +187,14 @@
 	icon_state = "sandals"
 	item_state = "sandals"
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/sandals/aalloy
 	name = "decrepit sandals"
 	desc = "Frayed bronze platforms, curled about to cradle the feet. The beaches that these sandals once treaded are no more; pearly sands, long since turnt to glass from the Comet Syon's impact."
 	icon_state = "ancientsandals"
 	color = "#bb9696"
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/shalal
 	name = "babouche"
@@ -291,7 +294,7 @@
 	armor = ARMOR_ASCENDANT
 	icon_state = "graggarplateboots"
 
-/obj/item/clothing/shoes/roguetown/boots/armor/graggar/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/graggar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
 
@@ -303,7 +306,7 @@
 	icon_state = "matthiosboots"
 	armor = ARMOR_ASCENDANT
 
-/obj/item/clothing/shoes/roguetown/boots/armor/matthios/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/matthios/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -320,7 +323,7 @@
 	icon_state = "zizoboots"
 	armor = ARMOR_ASCENDANT
 
-/obj/item/clothing/shoes/roguetown/boots/armor/zizo/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/zizo/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -357,8 +360,8 @@
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in colorlist
-		var/playerchoice = colorlist[choice]
+		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
 		detail_tag = "_detail"
@@ -401,7 +404,7 @@
 	color = primary
 	update_icon()
 
-/obj/item/clothing/shoes/roguetown/jester/Initialize()
+/obj/item/clothing/shoes/roguetown/jester/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_JINGLE_BELLS, 2)
 	if(GLOB.lordprimary)
@@ -504,6 +507,7 @@
 	is_barefoot = TRUE
 	sewrepair = TRUE
 	armor = ARMOR_CLOTHING
+	nudist_approved = TRUE
 
 //kazen update
 /obj/item/clothing/shoes/roguetown/armor/rumaclan
@@ -513,6 +517,7 @@
 	item_state = "eastsandals"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
 	armor = ARMOR_LEATHER_GOOD
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/armor/hlegs
 	name = "leg harness"

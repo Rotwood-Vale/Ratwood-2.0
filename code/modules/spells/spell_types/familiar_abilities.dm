@@ -46,7 +46,7 @@
 			user.original_icon_living = user.icon_living
 			user.original_name = user.name
 
-		 user.visible_message(
+		user.visible_message(
 			span_notice("[user.name] becomes utterly still, their body taking on the appearance of a stone."),
 			span_notice("You become utterly still, blending into your surroundings like a stone.")
 		)

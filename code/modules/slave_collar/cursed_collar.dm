@@ -11,6 +11,7 @@
 	slot_flags = ITEM_SLOT_NECK
 	body_parts_covered = NECK
 	resistance_flags = INDESTRUCTIBLE
+	nudist_approved = TRUE
 	var/mob/living/carbon/human/victim = null
 	var/datum/mind/collar_master = null
 	var/silenced = FALSE

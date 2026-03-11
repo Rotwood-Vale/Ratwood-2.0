@@ -20,7 +20,7 @@
 	grid_height = 32
 	grid_width = 32
 
-/obj/item/roguekey/Initialize()
+/obj/item/roguekey/Initialize(mapload)
 	. = ..()
 	if(lockid)
 		if(GLOB.lockids[lockid])
@@ -106,7 +106,7 @@
 	lockid = "lord"
 	visual_replacement = /obj/item/roguekey/royal
 
-/obj/item/roguekey/lord/Initialize()
+/obj/item/roguekey/lord/Initialize(mapload)
 	. = ..()
 	if(SSroguemachine.key)
 		qdel(src)

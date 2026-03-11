@@ -322,8 +322,8 @@
 /obj/item/clothing/neck/roguetown/fencerguard/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Otavan colors") as anything in colorlist
-		var/playerchoice = colorlist[choice]
+		var/choice = input(user, "Choose a color.", "Otavan colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
 		detail_tag = "_detail"
@@ -342,7 +342,7 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/neck/roguetown/fencerguard/Initialize()
+/obj/item/clothing/neck/roguetown/fencerguard/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -385,7 +385,7 @@
 	blocksound = PLATEHIT
 	leashable = TRUE
 
-/obj/item/clothing/neck/roguetown/gorget/cursed_collar/Initialize()
+/obj/item/clothing/neck/roguetown/gorget/cursed_collar/Initialize(mapload)
 	. = ..()
 	name = "cursed collar"
 	ADD_TRAIT(src, TRAIT_NO_SELF_UNEQUIP, CURSED_ITEM_TRAIT)
@@ -410,6 +410,7 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	grid_width = 32
 	grid_height = 32
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/psicross/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	..()
@@ -659,6 +660,7 @@
 	resistance_flags = FIRE_PROOF
 	sellprice = 100
 	anvilrepair = /datum/skill/craft/armorsmithing
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/psicross/naledi
 	name = "naledian psy-bracelet"
@@ -679,6 +681,7 @@
 	bellsound = FALSE
 	bell = FALSE
 	salvage_result = null
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/collar/leather
 	name = "leather collar"
@@ -736,6 +739,7 @@
 	dropshrink = 0.5
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_MASK
 	body_parts_covered = NECK|FACE
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/collar/surgcollar
 	name = "surgcollar"
@@ -748,6 +752,7 @@
 	dropshrink = 0.5
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_MASK
 	body_parts_covered = NECK|FACE
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/luckcharm
 	name = "luck charm"
@@ -761,6 +766,7 @@
 	var/goodluckactivated = FALSE
 	salvage_result = /obj/item/natural/fibers
 	salvage_result = 1
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/luckcharm/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -800,7 +806,7 @@
 	smeltresult = /obj/item/riddleofsteel
 	var/active_item
 
-/obj/item/clothing/neck/roguetown/psicross/malum/secret/Initialize()
+/obj/item/clothing/neck/roguetown/psicross/malum/secret/Initialize(mapload)
 	..()
 	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,2),rand(127,128),rand(254,255)))
 
@@ -843,7 +849,7 @@
 	sellprice = 666
 	var/active_item
 
-/obj/item/clothing/neck/roguetown/psicross/weeping/Initialize()
+/obj/item/clothing/neck/roguetown/psicross/weeping/Initialize(mapload)
 	..()
 	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(254,255),rand(1,2),rand(1,2)))
 
@@ -889,7 +895,7 @@
 	body_parts_covered = NONE //it's not armor
 	leashable = TRUE
 
-/obj/item/clothing/neck/roguetown/collar/prisoner/Initialize()
+/obj/item/clothing/neck/roguetown/collar/prisoner/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -1031,6 +1037,7 @@
 	sellprice = 0
 	salvage_result = null
 	smeltresult = null
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/carved/jadeamulet
 	name = "jade amulet"

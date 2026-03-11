@@ -125,8 +125,8 @@
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 	to_chat(parent, span_userdanger("Your body pulses with strange dream energies."))
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_item_equipped)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_item_dropped)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_item_equipped))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_item_dropped))
 	// Register for processing
 	START_PROCESSING(SSprocessing, src)
 
@@ -181,7 +181,7 @@
 	if(I in repairing_items)
 		return
 	repairing_items += I
-	RegisterSignal(I, COMSIG_ITEM_BROKEN, .proc/on_item_broken)
+	RegisterSignal(I, COMSIG_ITEM_BROKEN, PROC_REF(on_item_broken))
 
 	// If item is already broken, start full repair process
 	if(I.obj_broken)
@@ -208,7 +208,7 @@
 		deltimer(repair_timers[I])
 
 	// Set a timer to fully repair after 1 minute
-	repair_timers[I] = addtimer(CALLBACK(src, .proc/finish_full_repair, I), 1 MINUTES, TIMER_STOPPABLE)
+	repair_timers[I] = addtimer(CALLBACK(src, PROC_REF(finish_full_repair), I), 1 MINUTES, TIMER_STOPPABLE)
 
 /datum/component/dreamwalker_repair/proc/finish_full_repair(obj/item/I)
 	// Check if the item is still in our inventory and broken
@@ -233,7 +233,7 @@
 	var/max_uses = 3
 	var/turf/linked_turf
 
-/obj/structure/portal_jaunt/Initialize()
+/obj/structure/portal_jaunt/Initialize(mapload)
 	. = ..()
 	cooldown = world.time + 4 SECONDS
 	visible_message(span_warning("[src] shimmers into existence!"))
@@ -293,7 +293,7 @@
 /datum/component/dreamwalker_mark/Initialize()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOB_ITEM_ATTACK, .proc/on_attack)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_ATTACK, PROC_REF(on_attack))
 
 /datum/component/dreamwalker_mark/Destroy()
 	if(marked_target)
@@ -318,7 +318,7 @@
 	mark_start_time = 0
 
 	if(marked_target)
-		RegisterSignal(marked_target, COMSIG_LIVING_DEATH, .proc/on_target_death)
+		RegisterSignal(marked_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
 		to_chat(parent, span_notice("You begin focusing your dream energy on [marked_target]."))
 
 		// Remove any existing summon spell
@@ -478,8 +478,8 @@
 	src.effect_type = effect_type
 	src.cooldown_time = cooldown_time
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SUCCESS, .proc/on_attack)
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SUCCESS, PROC_REF(on_attack))
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 
 
 /datum/component/dream_weapon/proc/on_attack(obj/item/source, mob/living/target, mob/living/user)
@@ -605,19 +605,19 @@
 	shockwave_damage = TRUE
 
 // Update weapon initializations with specific effects
-/obj/item/rogueweapon/greataxe/dreamscape/active/Initialize()
+/obj/item/rogueweapon/greataxe/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "fire", 20 SECONDS)
 
-/obj/item/rogueweapon/halberd/glaive/dreamscape/active/Initialize()
+/obj/item/rogueweapon/halberd/glaive/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "frost", 40 SECONDS)
 
-/obj/item/rogueweapon/greatsword/bsword/dreamscape/active/Initialize()
+/obj/item/rogueweapon/greatsword/bsword/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "poison", 20 SECONDS)
 
-/obj/item/rogueweapon/spear/dreamscape_trident/active/Initialize()
+/obj/item/rogueweapon/spear/dreamscape_trident/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -643,7 +643,7 @@
 	item_flags = DREAM_ITEM
 	peel_threshold = 5
 
-/obj/item/clothing/suit/roguetown/armor/plate/full/dreamwalker/Initialize()
+/obj/item/clothing/suit/roguetown/armor/plate/full/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -656,7 +656,7 @@
 	item_flags = DREAM_ITEM
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 
-/obj/item/clothing/under/roguetown/platelegs/dreamwalker/Initialize()
+/obj/item/clothing/under/roguetown/platelegs/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -668,7 +668,7 @@
 	armor = ARMOR_ASCENDANT
 	item_flags = DREAM_ITEM
 
-/obj/item/clothing/shoes/roguetown/boots/armor/dreamwalker/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -679,7 +679,7 @@
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	item_flags = DREAM_ITEM
 
-/obj/item/clothing/gloves/roguetown/plate/dreamwalker/Initialize()
+/obj/item/clothing/gloves/roguetown/plate/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -699,6 +699,6 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/obj/item/clothing/head/roguetown/helmet/bascinet/dreamwalker/Initialize()
+/obj/item/clothing/head/roguetown/helmet/bascinet/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)

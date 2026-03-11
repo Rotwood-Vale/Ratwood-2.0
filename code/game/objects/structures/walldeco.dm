@@ -39,7 +39,7 @@
 	pixel_y = 0
 	pixel_x = -32
 
-/obj/structure/fluff/walldeco/wantedposter/Initialize()
+/obj/structure/fluff/walldeco/wantedposter/Initialize(mapload)
 	. = ..()
 	icon_state = "wanted[rand(1,3)]"
 	dir = pick(GLOB.cardinals)
@@ -164,7 +164,7 @@
 	mouse_opacity = 0
 	layer = BELOW_MOB_LAYER+0.1
 
-/obj/structure/fluff/walldeco/stone/Initialize()
+/obj/structure/fluff/walldeco/stone/Initialize(mapload)
 	icon_state = "walldec[rand(1,6)]"
 	..()
 
@@ -208,7 +208,7 @@
 	buckleverb = "tie"
 	smeltresult = /obj/item/rope/chain
 
-/obj/structure/fluff/walldeco/chains/Initialize()
+/obj/structure/fluff/walldeco/chains/Initialize(mapload)
 	icon_state = "chains[rand(1,8)]"
 	..()
 
@@ -217,7 +217,7 @@
 	desc = "A banner flutters in the breeze in the proud heraldic colors of the Duchy."
 	icon_state = "wallflag"
 
-/obj/structure/fluff/walldeco/customflag/Initialize()
+/obj/structure/fluff/walldeco/customflag/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -455,3 +455,30 @@
 	density = FALSE
 	opacity = TRUE
 	max_integrity = 100
+
+/obj/structure/fluff/walldeco/bogbanner
+	name = "banner"
+	desc = "A red banner hanging off a wall."
+	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon_state = "bogbanner-whole"
+	layer = WALL_OBJ_LAYER+0.1
+
+/obj/structure/fluff/walldeco/bogbanner/brown
+	name = "banner"
+	desc = "A red banner hanging off a wall."
+	icon_state = "bogbanner-brown"
+
+/obj/structure/fluff/walldeco/bogbanner/zizo
+	name = "profane banner"
+	desc = "A bloodstained banner with a profane zcross depicted on it."
+	icon_state = "bogbanner-zizo"
+
+/obj/structure/fluff/walldeco/bogbanner/bogguard
+	name = "banner"
+	desc = "A torn banner with a snake depicted on it."
+	icon_state = "bogbanner-snake"
+
+/obj/structure/fluff/walldeco/bogbanner/bogguard/animated
+	name = "banner"
+	desc = "A torn banner with a snake depicted on it."
+	icon_state = "bogbanner-snake-anim"

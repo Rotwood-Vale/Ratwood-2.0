@@ -55,7 +55,7 @@
 		item_d_type = "fire"
 		blade_class = BCLASS_CHOP
 
-/obj/item/rogueweapon/sword/long/martyr/Initialize()
+/obj/item/rogueweapon/sword/long/martyr/Initialize(mapload)
 	AddComponent(/datum/component/martyrweapon)
 	..()
 

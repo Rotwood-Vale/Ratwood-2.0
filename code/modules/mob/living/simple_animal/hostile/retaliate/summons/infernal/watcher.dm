@@ -49,7 +49,7 @@
 	projectiletype = /obj/projectile/magic/aoe/fireball/rogue
 	ranged_message = "stares"
 
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 

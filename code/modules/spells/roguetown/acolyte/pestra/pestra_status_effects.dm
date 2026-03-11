@@ -157,8 +157,10 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/pestilent_plague
 	duration = 60 SECONDS
 	tick_interval = 3 SECONDS
-	effectedstats = list(STATKEY_CON = -1,
-						 STATKEY_STR = -3)
+	effectedstats = list(
+		STATKEY_CON = -1,
+		STATKEY_STR = -3,
+	)
 	var/outline_colour = "#095000"
 
 /datum/status_effect/debuff/pestilent_plague/on_apply()

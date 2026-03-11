@@ -27,7 +27,7 @@
 	var/list/categories = list("Raw Materials", "Foodstuffs", "Fruits", "Seafood")
 	var/list/daily_payments = list() // Associative list: job name -> payment amount
 
-/obj/structure/roguemachine/steward/Initialize()
+/obj/structure/roguemachine/steward/Initialize(mapload)
 	. = ..()
 	if(SStreasury.steward_machine == null) //The "only one" mapped in Nerve Master at map start
 		SStreasury.steward_machine = src

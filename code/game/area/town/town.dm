@@ -110,11 +110,15 @@
 	droning_sound_night = null
 	converted_type = /area/rogue/outdoors/exposed/bath
 
+/area/rogue/indoors/town/bath/vault
+	name = "Bathmaster vault"
+	icon_state = "bathvault"
+
 /area/rogue/outdoors/exposed/bath
 	icon_state = "bath"
 	droning_sound = 'sound/music/area/bath.ogg'
 
-/area/rogue/outdoors/exposed/bath/vault
+/area/rogue/outdoors/exposed/bath/vault//Note that this DOESN'T WORK!!
 	name = "Bathmaster vault"
 	icon_state = "bathvault"
 	ceiling_protected = TRUE

@@ -196,7 +196,17 @@
 			grabstate = l_grab.grab_state
 	return grabstate
 
-/proc/add_cum_floor(turfu)
+/datum/sex_controller/proc/Adjacent_Or_Closet(atom/neighbor)
+	if(istype(user.loc, /obj/structure/closet) || istype(user.loc, /obj/structure/handcart) || istype(neighbor.loc, /obj/structure/closet) || istype(neighbor.loc, /obj/structure/handcart)) // within container
+		return user.loc == neighbor.loc
+	return user.Adjacent(neighbor)
+
+/proc/add_cum_floor(turfu, do_big_puddle = FALSE)
 	if(!turfu || !isturf(turfu))
 		return
-	new /obj/effect/decal/cleanable/coom(turfu)
+	var/obj/effect/decal/cleanable/coom/puddle = new /obj/effect/decal/cleanable/coom(turfu)
+	if(do_big_puddle)
+		var/obj/effect/decal/cleanable/coom/puddle_big = new /obj/effect/decal/cleanable/coom(turfu)
+		if(puddle_big && puddle) // inherit pixel offset from first puddle
+			puddle_big.pixel_x = puddle.pixel_x
+			puddle_big.pixel_y = puddle.pixel_y

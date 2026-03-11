@@ -27,7 +27,10 @@
 	user.visible_message(span_warning("[user] starts masturbating over [user.get_active_held_item()]..."))
 
 /datum/sex_action/masturbate_container/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/chosen_verb = pick(list("pleasures themself over [user.get_active_held_item()]", "sensually massages themself over [user.get_active_held_item()]", "masturbates over [user.get_active_held_item()]"))
+	var/container_name = user.get_active_held_item()
+	if(!container_name)
+		container_name = "container"
+	var/chosen_verb = pick(list("pleasures themself over \the [container_name]", "sensually massages themself over \the [container_name]", "masturbates over \the [container_name]"))
 
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb]."))
 

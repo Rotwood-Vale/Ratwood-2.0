@@ -97,6 +97,14 @@
 /proc/sanitize(t,list/repl_chars = null)
 	return html_encode(sanitize_simple(t,repl_chars))
 
+/// Sanitizes text while preserving newlines as HTML &lt;br&gt; tags.
+/// Use this for ticket messages so line breaks survive sanitize() and display correctly in TGUI.
+/proc/sanitize_preserve_newlines(t)
+	var/list/lines = splittext(t, "\n")
+	for(var/i = 1 to lines.len)
+		lines[i] = sanitize(lines[i])
+	return jointext(lines, "<br>")
+
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
 /proc/strip_html(t,limit=MAX_MESSAGE_LEN)
@@ -760,7 +768,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return string
 
 	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
-	var/macro = lowertext(copytext(string, next_backslash + 1, next_space))
+	var/macro = LOWER_TEXT(copytext(string, next_backslash + 1, next_space))
 	var/rest = next_backslash > leng ? "" : copytext(string, next_space + 1)
 
 	//See https://secure.byond.com/docs/ref/info.html#/DM/text/macros

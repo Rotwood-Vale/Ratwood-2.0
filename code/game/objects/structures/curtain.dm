@@ -20,7 +20,7 @@
 	directional = TRUE//Do these care about which side you open from in the first place?
 
 //Because we don't want existing curtains to update on spawn like this.
-/obj/structure/curtain/directional/Initialize()
+/obj/structure/curtain/directional/Initialize(mapload)
 	closedir = dir
 	update_icon()
 	..()

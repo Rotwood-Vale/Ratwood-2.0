@@ -121,7 +121,7 @@
 	///Base difficulty for noticing these tracks
 	var/base_diff = 11
 
-/obj/effect/track/Initialize()
+/obj/effect/track/Initialize(mapload)
 	. = ..()
 	real_image = image(icon, src, real_icon_state, ABOVE_OPEN_TURF_LAYER) //Default image in case manually created.
 

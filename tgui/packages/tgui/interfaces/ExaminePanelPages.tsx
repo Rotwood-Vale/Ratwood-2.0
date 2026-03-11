@@ -16,6 +16,7 @@ export const FlavorTextPage = (props) => {
     is_naked,
     ooc_extra_image,
     nsfw_ooc_extra_image,
+    nsfw_examine_always,
   } = data;
   const [oocNotesIndex, setOocNotesIndex] = useState('SFW');
   const [flavorTextIndex, setFlavorTextIndex] = useState('SFW');
@@ -116,7 +117,7 @@ export const FlavorTextPage = (props) => {
                   </Button>
                   <Button
                     selected={flavorTextIndex === 'NSFW'}
-                    disabled={!flavor_text_nsfw|| !is_naked}
+                    disabled={!flavor_text_nsfw || (!is_naked && !nsfw_examine_always)}
                     bold={flavorTextIndex === 'NSFW'}
                     onClick={() => setFlavorTextIndex('NSFW')}
                     textAlign="center"
@@ -170,7 +171,7 @@ export const FlavorTextPage = (props) => {
 
 export const ImageGalleryPage = () => {
   const { data } = useBackend<ExaminePanelData>();
-  const { img_gallery, nsfw_img_gallery, is_naked } = data;
+  const { img_gallery, nsfw_img_gallery, is_naked, nsfw_examine_always } = data;
 
   const [galleryMode, setGalleryMode] = useState<'SFW' | 'NSFW'>('SFW');
 
@@ -195,7 +196,7 @@ export const ImageGalleryPage = () => {
           </Button>
           <Button
             selected={galleryMode === 'NSFW'}
-            disabled={!is_naked || !nsfw_img_gallery}
+            disabled={!nsfw_img_gallery || (!is_naked && !nsfw_examine_always)}
             bold={galleryMode === 'NSFW'}
             onClick={() => setGalleryMode('NSFW')}
             textAlign="center"

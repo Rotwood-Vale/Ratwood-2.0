@@ -355,7 +355,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/nudist
 	name = "Nudist"
-	desc = "I refuse to wear clothes. They are a hindrance to my freedom."
+	desc = "I refuse to wear clothes. They are a hindrance to my freedom. I can tolerate certain accessories."
 
 /datum/charflaw/nudist/on_mob_creation(mob/user)
 	..()
@@ -467,7 +467,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/nude_sleeper
 	name = "Nude Sleeper"
-	desc = "I can't fall asleep unless I'm nude and in bed."
+	desc = "I can't fall asleep unless I'm nude and in bed. I cannot sleep while wearing equipment. (Unremovable clothing and certain accessories are allowed.)"
 
 /datum/charflaw/nude_sleeper/on_mob_creation(mob/user)
 	..()
@@ -528,11 +528,11 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/unintelligible/on_mob_creation(mob/user)
 	var/mob/living/carbon/human/recipient = user
-	addtimer(CALLBACK(src, .proc/unintelligible_apply, recipient), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(unintelligible_apply), recipient), 5 SECONDS)
 
 /datum/charflaw/unintelligible/proc/unintelligible_apply(mob/living/carbon/human/user)
 	if(user.advsetup)
-		addtimer(CALLBACK(src, .proc/unintelligible_apply, user), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(unintelligible_apply), user), 5 SECONDS)
 		return
 	user.remove_language(/datum/language/common)
 	user.adjust_skillrank(/datum/skill/misc/reading, -6, TRUE)

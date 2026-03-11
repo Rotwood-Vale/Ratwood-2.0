@@ -494,6 +494,7 @@
 
 //AASIMAR SKIN TONES
 #define SKIN_COLOR_CULTOR "b5a4a4"
+#define SKIN_COLOR_ARCHON "feddcd"
 #define SKIN_COLOR_SPIRITUS "f0eded"
 #define SKIN_COLOR_PLANETAR "ffd859"
 #define SKIN_COLOR_DEVA "b6f1f2"

@@ -11,7 +11,7 @@
 	var/list/categories = list("Raw Materials", "Foodstuffs", "Fruits", "Seafood")
 	var/datum/withdraw_tab/withdraw_tab = null
 
-/obj/structure/roguemachine/stockpile/Initialize()
+/obj/structure/roguemachine/stockpile/Initialize(mapload)
 	. = ..()
 	SSroguemachine.stock_machines += src
 	withdraw_tab = new(stockpile_index, src)

@@ -10,7 +10,7 @@
 	wander = TRUE
 	infected = TRUE
 
-/mob/living/carbon/human/species/npc/deadite/Initialize()
+/mob/living/carbon/human/species/npc/deadite/Initialize(mapload)
 	. = ..()
 	var/species = list(
 		/datum/species/human/northern,
