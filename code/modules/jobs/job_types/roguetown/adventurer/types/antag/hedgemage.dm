@@ -1,7 +1,7 @@
 /datum/advclass/hedgemage //mage class - like the Magician, but more evil.
 	name = "Hedge Magician"
 	tutorial = "Formerly a renown magician, you were forced to leave your comfortable \
-	tower for one reason or another. However, as tarnished as your reputation may be \
+	tower for one reason or another. However, as tarnished as your reputation may be, \
 	show them you are still not to be underestimated."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
