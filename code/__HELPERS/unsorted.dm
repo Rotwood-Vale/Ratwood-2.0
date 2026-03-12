@@ -237,7 +237,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 ///Admins keep their existing observer tooling even when a target has creeper protection.
 /proc/ghost_bypasses_creeper_protection(mob/viewer)
-	return !!viewer?.client?.holder
+	return !!check_rights_for(viewer?.client, R_ADMIN)
 
 ///Whether a protected living target should be hidden from this observer.
 /proc/is_hidden_from_ghosts(atom/target, mob/viewer)
@@ -256,13 +256,11 @@ Turf and target are separate in case you want to teleport some distance from a t
 			. += observer
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0,skip_mindless=0,team=null, mob/viewer=null)
+/proc/getpois(mobs_only=0,skip_mindless=0,team=null)
 	var/list/mobs = sortmobs()
 	var/list/namecounts = list()
 	var/list/pois = list()
 	for(var/mob/M in mobs)
-		if(viewer && is_hidden_from_ghosts(M, viewer))
-			continue
 		if(skip_mindless && (!M.mind || !M.ckey))
 			continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins

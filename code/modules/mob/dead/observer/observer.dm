@@ -621,7 +621,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = ""
 	set hidden = 1
-	var/list/mobs = getpois(mobs_only=1,skip_mindless=1, viewer = src)
+	var/list/all_mobs = getpois(mobs_only=1,skip_mindless=1)
+	var/list/mobs = list()
+
+	if(!ghost_bypasses_creeper_protection(src))
+		for(var/current_name in all_mobs)
+			var/mob/current_mob = all_mobs[current_name]
+			if(!has_creeper_protection(current_mob))
+				mobs[current_name] = current_mob
+	else
+		mobs += all_mobs
 
 	var/input = input("Who?!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
@@ -683,7 +692,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/list/dest = list() //List of possible destinations (mobs)
 		var/target = null	   //Chosen target.
 
-		dest += getpois(mobs_only=1, viewer = src) //Fill list, prompt user with list
+		dest += getpois(mobs_only=1) //Fill list, prompt user with list
 		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
 
 		if (!target)//Make sure we actually have a target
@@ -1034,7 +1043,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set hidden = 1
 	if(!check_rights(R_WATCH))
 		return
-	var/list/creatures = getpois(viewer = src)
+	var/list/creatures = getpois()
 
 	reset_perspective(null)
 
