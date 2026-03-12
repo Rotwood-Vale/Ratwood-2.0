@@ -104,7 +104,7 @@
 
 		to_chat(user, span_suppradio("The Hoardmaster's focus is now drawn to you, you are bolstered by a strange sense of purpose."))
 
-		banner_spell = new /obj/effect/proc_holder/spell/invoked/order/retreat/bandit
+		banner_spell = new (/obj/effect/proc_holder/spell/invoked/banner, /obj/effect/proc_holder/spell/self/convertrole/bandit)
 		banner_spell.attached_banner = src
 
 		user.AddSpell(banner_spell)
@@ -112,20 +112,19 @@
 /obj/item/rogueweapon/special/dragonz/dropped(mob/living/user)
 	. = ..()
 
-	if(user.mind?.special_role == "Bandit")
-		user.change_stat(STATKEY_CON, -2)
+	lose_hearing_sensitivity()
+	SSroguemachine.scomm_machines -= src
+
+	user.change_stat(STATKEY_CON, -2)
 
 	if(banner_spell)
 		user.RemoveSpell(banner_spell)
 		qdel(banner_spell)
 		banner_spell = null
 
+		//punish code
+
 /obj/item/rogueweapon/special/dragonz/afterattack(atom/target, mob/user, flag)
-
-
-	if(istype(user.used_intent, /datum/intent/special/deploy))
-		deploy(user)
-		return
 
 	if(!istype(user.used_intent, /datum/intent/special/bandit_punish))
 		return
@@ -165,10 +164,12 @@
 				to_chat(target, span_danger("I'm punished by the dragon!"))
 				return
 
+		//flag wave/rally code
+
 /obj/item/rogueweapon/special/dragonz/attack_self(mob/living/user)
 	. = ..()
 
-	if(user.mind?.special_role != "Bandit")
+	if(user.advjob != "Iconoclast")
 		to_chat(user, span_danger("The dragon scoffs at your arrogance."))
 		return FALSE
 
@@ -178,50 +179,7 @@
 
 	if(do_after(user, 5 SECONDS))
 		user.visible_message(user, span_danger("[user] waved the [src]!"))
-		rally(user)
-
-/obj/item/rogueweapon/special/dragonz/proc/rally(mob/living/user)
-
-	var/turf/origin_turf = get_turf(src)
-	var/area/target_area = get_area(src)
-
-	user.visible_message(span_userdanger("[user] waves the flag!"))
-
-	playsound(user, 'sound/horns/o_rally.ogg', 70)
-
-	for(var/mob/living/carbon/human/player in GLOB.player_list)
-
-		if(player.stat == DEAD)
-			continue
-
-		if(player.mind?.special_role != "Bandit")
-			continue
-
-		if(istype(target_area, /area/rogue/indoors/banditcamp) && !istype(get_area(player), /area/rogue/indoors/banditcamp))
-			to_chat(player, span_danger("The dragon calls you back to camp!"))
-			playsound(user, 'sound/horns/o_rally_distant.ogg', 70)
-			continue
-
-		var/dirtext = "The dragon calls you to the "
-
-		var/direction = angle2dir(Get_Angle(player, origin_turf))
-
-		switch(direction)
-			if(NORTH) dirtext += "north!"
-			if(SOUTH) dirtext += "south!"
-			if(EAST) dirtext += "east!"
-			if(WEST) dirtext += "west!"
-			if(NORTHEAST) dirtext += "northeast!"
-			if(NORTHWEST) dirtext += "northwest!"
-			if(SOUTHEAST) dirtext += "southeast!"
-			if(SOUTHWEST) dirtext += "southwest!"
-
-			else
-
-				dirtext = "The dragon calls you, but the direction is unclear."
-				playsound(player, 'sound/horns/o_rally_distant.ogg', 50)
-
-		to_chat(player, span_userdanger(dirtext))
+		bandit_rally(user)
 
 /obj/item/rogueweapon/special/dragonz/proc/deploy(mob/living/user)
 
@@ -252,63 +210,40 @@
 	user.visible_message(user, span_warning("[user] plants [src] into the ground!"))
 
 	new /obj/structure/matthios/bandit_banner(T)
-	playsound(user, 'sound/horns/o_hold.ogg', 70)
 
 	qdel(src)
 
+	//banner message code
 
+/obj/item/rogueweapon/special/dragonz/attack_right(mob/living/carbon/human/user)
+	user.changeNext_move(CLICK_CD_INTENTCAP)
+	var/input_text = input(user, "Enter your message:", "Message")
+	if(input_text)
+		var/usedcolor = user.voice_color
+		if(user.voicecolor_override)
+			usedcolor = user.voicecolor_override
+		user.whisper(input_text)
+		var/list/tspans = list()
+		if(user.client.patreonlevel() >= GLOB.patreonsaylevel)
+			tspans |= SPAN_PATREON_SAY
+		if(length(input_text) > 100)
+			input_text = "<large>[input_text]</large>"
+		for(var/obj/item/rogueweapon/special/dragonz/S in SSroguemachine.scomm_machines)
+			S.repeat_message(input_text, src, usedcolor, tspans = tspans)
 
-/obj/effect/proc_holder/spell/invoked/order/retreat/bandit
-	var/obj/item/rogueweapon/special/dragonz/attached_banner
-	COOLDOWN_DECLARE(retreat)
-	name = "Tactical Retreat!"
-	chargedrain = 0
-	chargetime = 0
-	desc = "Gives you the will to runaway!"
-	overlay_state = "movemovemove"
-
-/obj/effect/proc_holder/spell/invoked/order/retreat/bandit/cast(list/targets, mob/living/user)
-	. = ..()
-
-	if(!attached_banner || attached_banner.loc != user)
-		to_chat(user, span_warning("You must be holding the banner!"))
-		return FALSE
-
-	if(user.mind?.special_role != "Bandit")
-		return FALSE
-
-	if(!COOLDOWN_FINISHED(src, retreat))
-		to_chat(user, span_warning("The banner is not ready yet! [round(COOLDOWN_TIMELEFT(src, retreat) / 10, 1)] seconds left!"))
-		return FALSE
-
-	user.say("Fall back! Regroup and retreat!")
-
-	for(var/mob/living/target in range(14, user))
-
-		if(target.mind?.special_role == "Bandit")
-			target.apply_status_effect(/datum/status_effect/buff/order/retreat/bandit)
-
-	COOLDOWN_START(src, retreat, 15 MINUTES)
-
-	return TRUE
-
-/datum/status_effect/buff/order/retreat/bandit/nextmove_modifier()
-	return 0.85
-
-/datum/status_effect/buff/order/retreat/bandit
-	id = "movemovemove"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/order/retreat
-	effectedstats = list(STATKEY_SPD = 3, STATKEY_WIL = 3, STATKEY_INT = -3, STATKEY_PER = -3, STATKEY_STR = -1)
-	duration = 2 MINUTES
-
-/atom/movable/screen/alert/status_effect/buff/order/retreat/bandit
-	name = "Tactical Retreat!!"
-	desc = "My commander has ordered me to fall back!"
-	icon_state = "buff"
-
-/datum/status_effect/buff/order/retreat/bandit/on_apply()
-	. = ..()
-	to_chat(owner, span_blue("My commander orders me to fall back!"))
+/obj/item/rogueweapon/special/dragonz/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(!can_speak())
+		return
+	if(message == "" || !message)
+		return
+	spans |= speech_span
+	if(!language)
+		language = get_default_language()
+	if(istype(loc, /obj/item))
+		var/obj/item/I = loc
+		I.send_speech(message, 0, I, , spans, message_language=language)
+	else
+		send_speech(message, 0, src, , spans, message_language=language)
 
 
 /obj/item/rogueweapon/lordscepter
