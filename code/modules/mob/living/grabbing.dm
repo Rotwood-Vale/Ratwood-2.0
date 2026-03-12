@@ -434,11 +434,11 @@
 			return
 	playsound(C.loc, "genblunt", 100, FALSE, -1)
 	C.next_attack_msg.Cut()
-	if(isdoll(C)) 
+	if(isdoll(C))
 		armor_block = C.getarmor(sublimb_grabbed, "blunt")
 		if(armor_block > 1)
 			C.apply_damage(damage, BRUTE, limb_grabbed, armor_block)
-	else 
+	else
 		armor_block = C.run_armor_check(limb_grabbed, "blunt")
 		C.apply_damage(damage, BRUTE, limb_grabbed, armor_block)
 	limb_grabbed.bodypart_attacked_by(BCLASS_TWIST, damage, user, sublimb_grabbed, crit_message = TRUE)
@@ -455,12 +455,12 @@
 		limb_grabbed.drop_limb(TRUE)
 	if(ishuman(user) && user.mind)
 		var/text = "[bodyzone2readablezone(user.zone_selected)]..."
-		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+		user.perception_balloon_alert(text, required_perception = 12)
 
 	if(limb_grabbed.body_zone == sublimb_grabbed && isdoll(C))
 		var/mob/living/carbon/human/target = C
 		armor_block = target.getarmor(sublimb_grabbed, "slash")
-		
+
 		if(armor_block >= 1)
 			target.visible_message(span_danger("[target]'s [parse_zone(sublimb_grabbed)] fails to be twisted off!"), \
 				span_danger("[user] tries to twist my [parse_zone(sublimb_grabbed)] out of it's socket but the armor keeps it in place!"))
@@ -472,7 +472,7 @@
 		to_chat(user, span_warning("I begin popping [target]'s [parse_zone(sublimb_grabbed)] out of socket."))
 
 		var/delay = (sublimb_grabbed == BODY_ZONE_HEAD) ? 100 : 6
-		
+
 		if(do_after(user, delay, target = target))
 			target.visible_message(span_danger("[target]'s [parse_zone(sublimb_grabbed)] has been popped out of socket!"), \
 				span_userdanger("My [parse_zone(sublimb_grabbed)] has been popped out of socket!"))
@@ -485,7 +485,7 @@
 
 			qdel(src)
 			user.put_in_active_hand(limb_grabbed)
-	  
+
 	// Dealing damage to the head beforehand is intentional.
 	if(limb_grabbed.body_zone == BODY_ZONE_HEAD && isdullahan(C))
 		var/mob/living/carbon/human/target = C
@@ -663,7 +663,7 @@
 	log_combat(user, C, "limbsmashed [limb_grabbed] ")
 	if(ishuman(user) && user.mind)
 		var/text = "[bodyzone2readablezone(user.zone_selected)]..."
-		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+		user.perception_balloon_alert(text, required_perception = 12)
 
 /datum/intent/grab
 	unarmed = TRUE

@@ -141,11 +141,11 @@
 			y_offset = BALLOON_Y_OFFSET_TIER3
 		if(text)
 			if(!HAS_TRAIT(H, TRAIT_DECEIVING_MEEKNESS))
-				H.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, x_offset, y_offset)
+				H.perception_balloon_alert(text, x_offset, y_offset, required_perception = 13)
 			else
 				if(prob(10))
 					text = "<i>Tired...?</i>"
-					H.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, x_offset, y_offset)
+					H.perception_balloon_alert(text, x_offset, y_offset, required_perception = 13)
 
 	if(stamina >= max_stamina)
 		stamina = max_stamina

@@ -536,7 +536,7 @@ BLIND     // can't see anything
 		text = "Armor <br><font color = '#a8705a'>sundered</font>"
 		y_offset = 30
 	if(text)
-		filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, -20, y_offset)
+		perception_balloon_alert(text, -20, y_offset, required_perception = 13)
 	. = ..()
 
 /obj/proc/generate_tooltip(examine_text, showcrits)
@@ -545,7 +545,7 @@ BLIND     // can't see anything
 /obj/item/clothing/generate_tooltip(examine_text, showcrits)
 	if(!armor)	// No armor
 		return examine_text
-	
+
 	// Fake armor
 	if(armor.getRating("slash") == 0 && armor.getRating("stab") == 0 && armor.getRating("blunt") == 0 && armor.getRating("piercing") == 0)
 		return examine_text
@@ -617,7 +617,7 @@ BLIND     // can't see anything
 
 // Handle clicks from chat to show the examine details
 /obj/item/clothing/Topic(href, href_list)
-	if(href_list["show_examine"]) 
+	if(href_list["show_examine"])
 		var/mob/user = usr
 		if(user)
 			to_chat(user, build_examine_detail(user, TRUE))

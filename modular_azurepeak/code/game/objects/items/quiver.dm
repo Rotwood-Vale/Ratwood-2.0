@@ -78,8 +78,8 @@
 					arrows -= AR
 					B.attackby(AR, loc, params)
 					if(ismob(loc))
-						var/mob/M = loc
-						if(HAS_TRAIT(M, TRAIT_COMBAT_AWARE))
+						var/mob/living/M = loc
+						if(ishuman(M) && M.STAPER >= 14)
 							M.balloon_alert(M, "[length(arrows)] left...")
 					break
 		return

@@ -43,7 +43,7 @@
 	var/client/viewer_client = viewer?.client
 	if (isnull(viewer_client))
 		return
-	
+
 	if(!(viewer_client.prefs.floating_text_toggles & FLOATING_TEXT))
 		return
 
@@ -102,13 +102,20 @@
 ///Proc for creating a balloon alert that only someone with a specific trait would see.
 /atom/proc/filtered_balloon_alert(trait, text, x_offset, y_offset)
 	var/list/candidates = get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
-	if(trait)	
+	if(trait)
 		for(var/mob/living/carbon/human/H in candidates)
 			if(HAS_TRAIT(H, trait))
 				candidates -= H
 	else
 		CRASH("filtered_balloon_alert called without a trait, either it's an error or use balloon_alert instead.")
 
+	balloon_alert_to_viewers(text, null, DEFAULT_MESSAGE_RANGE, candidates, x_offset, y_offset)
+
+/atom/proc/perception_balloon_alert(text, required_perception = 10, x_offset, y_offset)
+	var/list/candidates = get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
+	for(var/mob/living/carbon/human/H in candidates)
+		if(H.STAPER >= required_perception)
+			candidates -= H
 	balloon_alert_to_viewers(text, null, DEFAULT_MESSAGE_RANGE, candidates, x_offset, y_offset)
 
 #undef BALLOON_TEXT_CHAR_LIFETIME_INCREASE_MIN
