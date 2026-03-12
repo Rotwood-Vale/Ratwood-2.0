@@ -528,7 +528,7 @@
 	icon_state = "milsteelpick"
 	max_blade_int = 180
 	max_integrity = 600
-	associated_skill = /datum/skill/combat/axes
+	associated_skill = /datum/skill/labor/mining
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
 	wdefense = 3
