@@ -3,8 +3,10 @@
 
 	race = /datum/species/human/northern
 	gender = MALE
-	bodyparts = list(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
-					 /obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg)
+	bodyparts = list(
+		/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
+		/obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg,
+	)
 	faction = list("undead")
 	var/skel_outfit = /datum/outfit/job/roguetown/npc/skeleton
 	var/skel_fragile = FALSE
@@ -30,7 +32,7 @@
 	mode = NPC_AI_IDLE
 	wander = FALSE
 
-/mob/living/carbon/human/species/skeleton/Initialize()
+/mob/living/carbon/human/species/skeleton/Initialize(mapload)
 	. = ..()
 	cut_overlays()
 	spawn(10)

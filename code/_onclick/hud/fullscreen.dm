@@ -266,7 +266,7 @@
 	show_when_dead = TRUE
 
 /atom/movable/screen/fullscreen/dreaming
-	icon = 'icons/roguetown/maniac/fullscreen_wakeup.dmi'
+	icon = 'icons/roguetown/maniac/fullscreen_wakeup_lossy_compression.dmi'
 	icon_state = "dream"
 
 /atom/movable/screen/fullscreen/dreaming/waking_up

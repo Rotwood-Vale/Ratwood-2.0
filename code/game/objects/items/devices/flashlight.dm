@@ -17,7 +17,7 @@
 	possible_item_intents = list(INTENT_GENERIC)
 	var/on = FALSE
 
-/obj/item/flashlight/Initialize()
+/obj/item/flashlight/Initialize(mapload)
 	. = ..()
 	if(icon_state == "[initial(icon_state)]-on")
 		on = TRUE
@@ -160,7 +160,7 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/flashlight/flare/torch/Initialize()
+/obj/item/flashlight/flare/torch/Initialize(mapload)
 	GLOB.weather_act_upon_list += src
 	. = ..()
 	if(soundloop)
@@ -266,7 +266,7 @@
 		return FIRE_MINIMUM_TEMPERATURE_TO_SPREAD
 	return ..()
 
-/obj/item/flashlight/flare/torch/prelit/Initialize() //Prelit version, testing to see if it causes less issues with pre_equip dropping stuff in your hands
+/obj/item/flashlight/flare/torch/prelit/Initialize(mapload) //Prelit version, testing to see if it causes less issues with pre_equip dropping stuff in your hands
 	. = ..()
 	spark_act()
 
@@ -287,7 +287,7 @@
 	weather_resistant = TRUE
 	metalizer_result = null
 
-/obj/item/flashlight/flare/torch/metal/prelit/Initialize() //Prelit version
+/obj/item/flashlight/flare/torch/metal/prelit/Initialize(mapload) //Prelit version
 	. = ..()
 	spark_act()
 
@@ -336,7 +336,7 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/flashlight/flare/torch/lantern/prelit/Initialize() //Prelit version
+/obj/item/flashlight/flare/torch/lantern/prelit/Initialize(mapload) //Prelit version
 	. = ..()
 	spark_act()
 

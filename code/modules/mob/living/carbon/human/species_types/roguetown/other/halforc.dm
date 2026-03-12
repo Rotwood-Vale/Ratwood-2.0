@@ -93,6 +93,9 @@
 		/datum/language/orcish
 	)
 
+/datum/species/halforc/check_roundstart_eligible()
+	return TRUE
+
 /datum/species/halforc/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
@@ -118,7 +121,8 @@
 		"Crescent Fang" = SKIN_COLOR_CRESCENT_FANG,
 		"Murkwalker" = SKIN_COLOR_MURKWALKER,
 		"Shatterhorn" = SKIN_COLOR_SHATTERHORN,
-		"Spirit Crusher" = SKIN_COLOR_SPIRITCRUSHER
+		"Spirit Crusher" = SKIN_COLOR_SPIRITCRUSHER,
+		"Underdweller" = SKIN_COLOR_UNDERDWELLER
 	)
 
 /datum/species/halforc/get_hairc_list()

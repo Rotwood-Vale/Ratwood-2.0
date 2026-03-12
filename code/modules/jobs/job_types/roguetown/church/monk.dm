@@ -63,8 +63,8 @@
 		STATKEY_SPD = 1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/staves = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
@@ -74,6 +74,7 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
 	)
 	subclass_stashed_items = list(
@@ -210,7 +211,6 @@
 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
 		H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE)//For the stave. Beat back the dead. +1 from base, like Ravox.
 		H.adjust_skillrank_up_to(/datum/skill/combat/maces, 2, TRUE)//Or the shovel, I guess... loser...
-		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 2, TRUE)//And because you carry bodies or something. I guess.
 		H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
 	if(H.patron?.type == /datum/patron/divine/pestra) // Medicine and Healing - better surgeons and alchemists
 		H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
@@ -227,7 +227,7 @@
 		H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
 	if(H.patron?.type == /datum/patron/divine/ravox) // Justice and Honor - athletics and probably a bit better at handling the horrors of war
-		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 3, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 3, TRUE) //Who even plays Ravoxian acolyte? Whatever, this isn't a huge buff.
 		H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE) //On par with an Adventuring Monk. Seems quite fitting.
 		ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 	if(H.patron?.type == /datum/patron/divine/xylix)  // Trickery and Inspiration - muxic and rogueish skills

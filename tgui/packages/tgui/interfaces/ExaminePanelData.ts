@@ -17,4 +17,5 @@ export type ExaminePanelData = {
   has_song: boolean;
   is_vet: boolean;
   is_naked: boolean;
+  nsfw_examine_always: Boolean;
 };

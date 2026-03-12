@@ -312,7 +312,7 @@
 //The proc below in question is the one causing all the errors apparently
 
 /obj/item/leash/dropped(mob/user, silent)
-	 //Drop the leash, and the leash effects stop
+	//Drop the leash, and the leash effects stop
 	. = ..()
 	if(!leash_pet) //There is no pet. Stop this silliness
 		return

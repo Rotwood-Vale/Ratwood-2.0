@@ -205,6 +205,7 @@
 		"Naledi" = SKIN_COLOR_NALEDI,
 		"Naledi South" = SKIN_COLOR_NALEDI_LIGHT,
 		"Kazengun" = SKIN_COLOR_KAZENGUN,
+		"Czwarteki" = SKIN_COLOR_CZWARTEKI,
 	)
 
 /datum/species/demihuman/on_species_gain(mob/living/carbon/C, datum/species/old_species)

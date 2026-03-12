@@ -137,6 +137,35 @@
 	else
 		return ..()
 
+/*	.................  Spiced Baked Poultry  ................... */
+/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced
+	name = "spiced bird-roast"
+	desc = "A plump bird, roasted perfection, spiced to taste divine."
+	faretype = FARE_LAVISH
+	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "pepperchicken"
+	tastes = list("spicy birdmeat" = 1)
+	eat_effect = /datum/status_effect/buff/mealbuff
+
+/*	.................  Baked Butter Poultry  ................... */
+/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/butter
+	name = "butter bird-roast"
+	desc = "A plump bird, roasted perfection, overflowing with butter from the inside."
+	faretype = FARE_LAVISH
+	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "butterchicken"
+	tastes = list("buttery birdmeat" = 1)
+	eat_effect = /datum/status_effect/buff/mealbuff
+
+/*	.................  Baked Double Poultry  ................... */
+/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/doublestacked
+	name = "bird filled bird-roast"
+	desc = "A plump bird, roasted perfection.. filled with another bird - what compelled you to make this? Psydon Weeps at your hubris."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "stuffedchicken"
+	eat_effect = /datum/status_effect/buff/mealbuff
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE*2)
+
 /*	.................   Wiener & Fried onions   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/wieneronions
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
@@ -197,3 +226,19 @@
 	warming = 3 MINUTES
 	rotprocess = SHELFLIFE_DECENT
 	eat_effect = /datum/status_effect/buff/mealbuff
+
+/*	.................   Frybird Bucket   ................... */
+/obj/item/reagent_containers/food/snacks/rogue/frybirdbucket
+	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE*3)
+	tastes = list("frybird" = 1)
+	name = "frybird bucket"
+	desc = "Hearty, comforting, and rich - Vale frybird is the best on the continent! Now served in a convenient bucket!"
+	faretype = FARE_FINE
+	portable = FALSE
+	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "frybirdbucket"
+	foodtype = VEGETABLES | MEAT
+	warming = 3 MINUTES
+	rotprocess = SHELFLIFE_DECENT
+	eat_effect = /datum/status_effect/buff/mealbuff
+	trash = /obj/item/reagent_containers/glass/bucket

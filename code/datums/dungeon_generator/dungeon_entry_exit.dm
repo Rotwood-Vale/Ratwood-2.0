@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 		GLOB.unlinked_dungeon_entries |= src
 	return ..()
 
-/obj/structure/dungeon_entry/Initialize()
+/obj/structure/dungeon_entry/Initialize(mapload)
 	. = ..()
 	if(dungeon_id)
 		var/linked = FALSE
@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	var/target_exit_id
 	var/obj/structure/dungeon_entry/entry
 
-/obj/structure/dungeon_exit/Initialize()
+/obj/structure/dungeon_exit/Initialize(mapload)
 	. = ..()
 	GLOB.dungeon_exits |= src
 

@@ -621,43 +621,84 @@
 			SEND_SIGNAL(user, COMSIG_MOB_HUGGED, target)
 
 /datum/emote/living/holdbreath
-    key = "hold"
-    key_third_person = "holds"
-    message = null
+	key = "hold"
+	key_third_person = "holds"
+	message = null
 
 /mob/living/carbon/human/verb/emote_hold()
-    set name = "Hold Breath"
-    set category = "Emotes"
-    emote("hold", intentional = TRUE)
+	set name = "Hold Breath"
+	set category = "Emotes"
+	emote("hold", intentional = TRUE)
 
 /datum/emote/living/holdbreath/can_run_emote(mob/living/user, status_check = TRUE, intentional)
-    . = ..()
-    if(!.)
-        return FALSE
-    return TRUE
+	. = ..()
+	if(!.)
+		return FALSE
+	return TRUE
 
 /datum/emote/living/holdbreath/run_emote(mob/user, params, type_override, intentional)
-    if(!ishuman(user))
-        return FALSE
+	if(!ishuman(user))
+		return FALSE
 
-    var/mob/living/carbon/human/H = user
-    var/is_holding = HAS_TRAIT(H, TRAIT_HOLDBREATH)
+	var/mob/living/carbon/human/H = user
+	var/is_holding = HAS_TRAIT(H, TRAIT_HOLDBREATH)
 
-    if(is_holding)
-        REMOVE_TRAIT(H, TRAIT_HOLDBREATH, "[type]")
-        H.visible_message(
-            span_notice("[H] stops holding [H.p_their()] breath."),
-            span_notice("You stop holding your breath.")
-        )
-    else
-        ADD_TRAIT(H, TRAIT_HOLDBREATH, "[type]")
-        H.visible_message(
-            span_notice("[H] begins to hold [H.p_their()] breath."),
-            span_notice("You begin to hold your breath.")
-        )
+	if(is_holding)
+		REMOVE_TRAIT(H, TRAIT_HOLDBREATH, "[type]")
+		H.visible_message(
+			span_notice("[H] stops holding [H.p_their()] breath."),
+			span_notice("You stop holding your breath.")
+		)
+	else
+		ADD_TRAIT(H, TRAIT_HOLDBREATH, "[type]")
+		H.visible_message(
+			span_notice("[H] begins to hold [H.p_their()] breath."),
+			span_notice("You begin to hold your breath.")
+		)
 
-    return TRUE
+	return TRUE
 
+/datum/emote/living/pat
+	key = "pat"
+	key_third_person = "pats"
+	message = ""
+	message_param = "pats %t"
+	emote_type = EMOTE_VISIBLE
+	restraint_check = TRUE
+
+/mob/living/carbon/human/verb/emote_pat()
+	set name = "Pat"
+	set category = "Emotes"
+
+	emote("pat", intentional = TRUE, targetted = TRUE)
+
+/datum/emote/living/pat/adjacentaction(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	. = ..()
+	message_param = initial(message_param)
+	if(!user || !target)
+		return
+	if(!ishuman(user) || !ishuman(target))
+		return
+	playsound(target.loc, pick('sound/body/pat.ogg'), 100, FALSE, -1)
+	if(target.loc != user.loc && user.pulling != target)
+		return
+	switch(user.zone_selected)
+		if(BODY_ZONE_PRECISE_SKULL)
+			message_param = "pats %t on the forehead"
+		if(BODY_ZONE_HEAD)
+			message_param = "pats %t' cheek"
+		if(BODY_ZONE_PRECISE_EARS)
+			message_param = "grabs %t ear and pats it"
+		if(BODY_ZONE_CHEST)
+			message_param = "pats %t on the back"
+		if(BODY_ZONE_L_ARM)
+			message_param = "pats left shoulder of %t"
+		if(BODY_ZONE_R_ARM)
+			message_param = "pats right shoulder of %t"
+		if(BODY_ZONE_PRECISE_STOMACH)
+			message_param = "pats %t' belly"
+		if(BODY_ZONE_PRECISE_GROIN)
+			message_param = "pats %t' ass"
 
 /datum/emote/living/slap
 	key = "slap"
@@ -937,6 +978,17 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+
+/datum/emote/living/paincrit/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(.)
+		for(var/mob/living/carbon/human/L in viewers(7,user))
+			if(L == user)
+				if(L.has_flaw(/datum/charflaw/addiction/masochist))
+					L.sate_addiction(/datum/charflaw/addiction/masochist)
+				continue
+			if(L.has_flaw(/datum/charflaw/addiction/sadist))
+				L.sate_addiction(/datum/charflaw/addiction/sadist)
 
 /datum/emote/living/embed
 	key = "embed"

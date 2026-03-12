@@ -23,6 +23,7 @@
 	beltr = /obj/item/rogueweapon/scabbard/sheath
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	backl = /obj/item/storage/backpack/rogue/satchel
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	H.adjust_skillrank(/datum/skill/combat/crossbows, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
@@ -70,14 +71,14 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backr = /obj/item/storage/backpack/rogue/satchel
 	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 
 	H.change_stat(STATKEY_STR, 1)
 	H.change_stat(STATKEY_CON, 1)
@@ -112,10 +113,11 @@
 	belt = /obj/item/storage/belt/rogue/leather/steel
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	l_hand = /obj/item/rogueweapon/sword/sabre
 	r_hand = /obj/item/rogueweapon/spear/lance
-	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
@@ -171,8 +173,9 @@
 /datum/outfit/job/roguetown/czwarteki/journeyman/pre_equip(mob/living/carbon/human/H)
 	..()
 	l_hand = /obj/item/rogueweapon/sword/sabre
-	armor = /obj/item/clothing/suit/roguetown/armor/chainmail
-	gloves = /obj/item/clothing/gloves/roguetown/leather
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
+	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 	cloak = /obj/item/clothing/cloak/stabard/surcoat
@@ -189,10 +192,10 @@
 		/obj/item/rogueweapon/hammer/iron
 	)
 
-	H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/crossbows, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
@@ -201,14 +204,16 @@
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/armorsmithing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)	
 		
-	H.change_stat(STATKEY_STR, 1)
+	H.change_stat(STATKEY_STR, 2)
 	H.change_stat(STATKEY_CON, 1)
 	H.change_stat(STATKEY_PER, 1)
+	H.change_stat(STATKEY_WIL, 1)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
 	H.cmode_music = 'sound/music/combat_czwarteki.ogg'
 
@@ -228,7 +233,7 @@
 /datum/migrant_role/czwarteki/servant
 	name = "Czwarteki Servant"
 	greet_text = "You are Servants of your Lord. Taken along upon the Journey through the Vale with the Retinue. Your only goals are but to ensure your Lord and his Heir's well being upon the trip."
-	outfit = /datum/outfit/job/roguetown/heartfelt/prior
+	outfit = /datum/outfit/job/roguetown/czwarteki/servant
 	allowed_races = RACES_NO_CONSTRUCT
 	grant_lit_torch = TRUE
 	show_wanderer_examine = FALSE

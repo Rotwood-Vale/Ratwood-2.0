@@ -243,6 +243,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ambiencevol"]		>> ambiencevol
 	S["anonymize"]			>> anonymize
 	S["masked_examine"]		>> masked_examine
+	S["nsfw_examine_always"]>> nsfw_examine_always
 	S["wildshape_name"]		>> wildshape_name
 	S["mute_animal_emotes"]	>> mute_animal_emotes
 	S["autoconsume"]		>> autoconsume
@@ -257,6 +258,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["mastervol"]			>> mastervol
 	S["lastclass"]			>> lastclass
 	S["runmode"]			>> runmode
+	S["compliance_notifs"]  >> compliance_notifs
+	S["skillcap_notifs"]	>> skillcap_notifs
 
 
 	S["default_slot"]		>> default_slot
@@ -370,6 +373,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
+	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
 	WRITE_FILE(S["wildshape_name"], wildshape_name)
 	WRITE_FILE(S["mute_animal_emotes"], mute_animal_emotes)
 	WRITE_FILE(S["autoconsume"], autoconsume)
@@ -425,6 +429,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["runmode"], runmode)
 	WRITE_FILE(S["patreon_say_color"], patreon_say_color)
 	WRITE_FILE(S["patreon_say_color_enabled"], patreon_say_color_enabled)
+	WRITE_FILE(S["compliance_notifs"], compliance_notifs)
+	WRITE_FILE(S["skillcap_notifs"], skillcap_notifs)
 
 	return TRUE
 

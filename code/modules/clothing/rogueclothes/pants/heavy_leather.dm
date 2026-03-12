@@ -52,7 +52,7 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/Initialize()
+/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/Initialize(mapload)
 	..()
 	update_icon()
 
@@ -73,8 +73,8 @@
 /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Grenzelhoft colors") as anything in colorlist
-		var/playerchoice = colorlist[choice]
+		var/choice = input(user, "Choose a color.", "Grenzelhoft colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
 		detail_tag = "_detail"

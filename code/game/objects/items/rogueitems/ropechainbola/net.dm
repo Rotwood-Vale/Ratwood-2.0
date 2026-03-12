@@ -13,7 +13,7 @@
 	throw_speed = 2
 	var/knockdown = 0
 
-/obj/item/net/Initialize()
+/obj/item/net/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 

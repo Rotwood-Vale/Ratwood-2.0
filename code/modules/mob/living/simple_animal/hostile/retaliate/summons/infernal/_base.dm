@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal
 	obj_damage = 75
 
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOFIRE, "[type]")
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)

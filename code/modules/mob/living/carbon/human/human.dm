@@ -87,7 +87,7 @@
 		return TRUE
 #endif
 
-/mob/living/carbon/human/Initialize()
+/mob/living/carbon/human/Initialize(mapload)
 #ifdef MATURESERVER
 	sexcon = new /datum/sex_controller(src)
 #endif
@@ -643,9 +643,6 @@
 				else if(energy > 0)
 					hud_used.energy.icon_state = "energy10"
 
-		if(hud_used.zone_select)
-			hud_used.zone_select.update_icon()
-
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	dna?.species.spec_fully_heal(src)
 	if(admin_revive)
@@ -1027,7 +1024,7 @@
 /mob/living/carbon/human/species
 	var/race = null
 
-/mob/living/carbon/human/species/Initialize()
+/mob/living/carbon/human/species/Initialize(mapload)
 	. = ..()
 	if(race)
 		set_species(race)

@@ -15,6 +15,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
 	muteinmouth = TRUE
+	nudist_approved = TRUE
 	var/cooldown = 60 SECONDS
 	var/on_cooldown = FALSE
 	var/listening = TRUE
@@ -87,7 +88,7 @@
 	lose_hearing_sensitivity()
 	return ..()
 
-/obj/item/scomstone/Initialize()
+/obj/item/scomstone/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	update_icon()

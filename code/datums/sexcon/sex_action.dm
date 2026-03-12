@@ -23,6 +23,8 @@
 	var/user_sex_part = SEX_PART_NULL
 	/// Set which part/oriface the target will be using
 	var/target_sex_part = SEX_PART_NULL
+	/// Only allow select actions to be done subtly
+	var/subtle_supported = FALSE
 	/// Only allow select actions to end with a knot-tie
 	var/knot_on_finish = FALSE
 

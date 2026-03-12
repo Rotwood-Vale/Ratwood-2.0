@@ -88,7 +88,7 @@
 	visible_message(span_warningbig("[src] begins to gnaw on [victim]!"))
 	addtimer(CALLBACK(src, PROC_REF(begin_eat), victim), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
 
-/obj/structure/flora/roguegrass/maneater/real/proc/begin_eat(mob/living/victim, var/chew_factor = 1)
+/obj/structure/flora/roguegrass/maneater/real/proc/begin_eat(mob/living/victim, chew_factor = 1)
 	if(victim.loc != loc)
 		return
 	if(!(has_buckled_mobs() && victim.buckled))
@@ -151,7 +151,7 @@
 		name = "grass"
 		icon_state = "maneater-hidden"
 
-/obj/structure/flora/roguegrass/maneater/real/user_unbuckle_mob(mob/living/M, mob/user, var/break_factor = 1)
+/obj/structure/flora/roguegrass/maneater/real/user_unbuckle_mob(mob/living/M, mob/user, break_factor = 1)
 	if(obj_broken)
 		..()
 		return
@@ -199,10 +199,10 @@
 	var/growth_time = 20 MINUTES
 
 
-/obj/structure/flora/roguegrass/maneater/real/juvenile/Initialize()
+/obj/structure/flora/roguegrass/maneater/real/juvenile/Initialize(mapload)
 	..()
 	transform = transform.Scale(0.5, 0.5)  // Start at half size
-	addtimer(CALLBACK(src, .proc/try_grow), growth_time)
+	addtimer(CALLBACK(src, PROC_REF(try_grow)), growth_time)
 
 /obj/structure/flora/roguegrass/maneater/real/juvenile/Crossed(atom/movable/AM)
 	..()
@@ -228,7 +228,7 @@
 		transform = transform.Scale(1.26, 1.26)
 		visible_message(span_warning("[src] grows bigger!"))
 		playsound(loc, list('sound/vo/mobs/plant/attack (1).ogg','sound/vo/mobs/plant/attack (2).ogg','sound/vo/mobs/plant/attack (3).ogg','sound/vo/mobs/plant/attack (4).ogg'), 100, FALSE, -1)
-		addtimer(CALLBACK(src, .proc/try_grow), growth_time)
+		addtimer(CALLBACK(src, PROC_REF(try_grow)), growth_time)
 		return
 
 	// Replace with adult form

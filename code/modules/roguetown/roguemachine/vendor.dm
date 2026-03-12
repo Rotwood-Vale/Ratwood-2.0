@@ -18,7 +18,7 @@
 	var/will_hawk = TRUE
 	var/max_items = 30
 
-/obj/structure/roguemachine/vendor/proc/get_group_items(var/param)
+/obj/structure/roguemachine/vendor/proc/get_group_items(param)
 	// Accepts either:
 	// - an object/ref (e.g. REF(rep) from attack_hand links), or
 	// - a key string in the form "type_name"
@@ -281,7 +281,7 @@
 	update_icon()
 	icon_state = "streetvendor0"
 
-/obj/structure/roguemachine/vendor/Initialize()
+/obj/structure/roguemachine/vendor/Initialize(mapload)
 	. = ..()
 	update_icon()
 	START_PROCESSING(SSroguemachine, src)
@@ -376,7 +376,7 @@
 /obj/structure/roguemachine/vendor/bathhouse
 	keycontrol = "nightman"
 
-/obj/structure/roguemachine/vendor/inn/Initialize()
+/obj/structure/roguemachine/vendor/inn/Initialize(mapload)
 	. = ..()
 
 	// Add room keys with a price of 20
@@ -398,11 +398,11 @@
 /obj/structure/roguemachine/vendor/innrockhill
 	keycontrol = "tavern"
 
-/obj/structure/roguemachine/vendor/innrockhill/Initialize()
+/obj/structure/roguemachine/vendor/innrockhill/Initialize(mapload)
 	. = ..()
 
 	// Add room keys with a price of 20
-	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi))
+	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomix))
 		var/obj/P = new X(src)
 		held_items[P] = list()
 		held_items[P]["NAME"] = P.name
@@ -422,7 +422,7 @@
 /obj/structure/roguemachine/vendor/merchant
 	keycontrol = "merchant"
 
-/obj/structure/roguemachine/vendor/merchant/Initialize()
+/obj/structure/roguemachine/vendor/merchant/Initialize(mapload)
 	. = ..()
 	for(var/X in list(/obj/item/roguekey/apartments/stall1,/obj/item/roguekey/apartments/stall2,/obj/item/roguekey/apartments/stall3))
 		var/obj/P = new X(src)
@@ -434,7 +434,7 @@
 /obj/structure/roguemachine/vendor/stablemaster
 	keycontrol = "stablemaster"
 
-/obj/structure/roguemachine/vendor/stablemaster/Initialize()
+/obj/structure/roguemachine/vendor/stablemaster/Initialize(mapload)
 	. = ..()
 	for(var/X in list(/obj/item/roguekey/apartments/stablemaster_1,/obj/item/roguekey/apartments/stablemaster_2,/obj/item/roguekey/apartments/stablemaster_3,/obj/item/roguekey/apartments/stablemaster_4,/obj/item/roguekey/apartments/stablemaster_5))
 		var/obj/P = new X(src)

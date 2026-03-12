@@ -60,6 +60,17 @@
 		else
 			to_chat(src, "Your character information will no longer be viewable when masked.")
 
+/client/verb/nsfw_examine_always()
+	set category = "Options"
+	set name = "Toggle NSFW Examine"
+	if(prefs)
+		prefs.nsfw_examine_always = !prefs.nsfw_examine_always
+		prefs.save_preferences()
+		if(prefs.nsfw_examine_always)
+			to_chat(src, "Your character NSFW information will always be visible.")
+		else
+			to_chat(src, "Your character NSFW information will only be visible when nude.")
+
 /client/verb/mute_animal_emotes()
 	set category = "Options"
 	set name = "Toggle Animal Noise Emotes"
@@ -93,9 +104,9 @@
 		else
 			to_chat(src, "Others can't touch you.")
 
-/client/verb/toggle_compliance_notifs() // The messages need to be on-by-default while this is in its early stages.
+/client/verb/toggle_compliance_notifs()
 	set category = "Options"
-	set name = "Compliance Notifs"
+	set name = "Toggle Compliance Notifs"
 	if(prefs)
 		prefs.compliance_notifs = !prefs.compliance_notifs
 		prefs.save_preferences()
@@ -103,6 +114,17 @@
 			to_chat(src, "You will receive chat notifications when enabling or disabling Compliance Mode.")
 		else
 			to_chat(src, "You will no longer be notified in chat when toggling Compliance Mode.")
+
+/client/verb/toggle_skillcap_notifs()
+	set category = "Options"
+	set name = "Toggle Skillcap Notifs"
+	if(prefs)
+		prefs.skillcap_notifs = !prefs.skillcap_notifs
+		prefs.save_preferences()
+		if(prefs.skillcap_notifs)
+			to_chat(src, "You will receive notifications when hitting your character's experience cap in a skill.")
+		else
+			to_chat(src, "You will no longer be notified in chat when hitting your character's experience cap in a skill.")
 
 /client/verb/toggle_examine_blocks()
 	set category = "Options"

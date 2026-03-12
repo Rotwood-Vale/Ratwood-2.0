@@ -30,7 +30,7 @@
 	var/turf/source_turf = get_turf(user)
 	
 	if(T.z != user.z)
-		to_chat(span_warning("You can't cast this spell on a different z-level!"))
+		to_chat(user, span_warning("You can't cast this spell on a different z-level!"))
 		return FALSE
 
 	var/list/affected_turfs = getline(source_turf, T)
@@ -46,7 +46,7 @@
 		addtimer(CALLBACK(src, PROC_REF(strike), affected_turf), wait = tile_delay)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/wither/proc/strike(var/turf/damage_turf)
+/obj/effect/proc_holder/spell/invoked/wither/proc/strike(turf/damage_turf)
 	new /obj/effect/temp_visual/wither_actual(damage_turf)
 	playsound(damage_turf, 'sound/magic/shadowstep_destination.ogg', 50)
 	for(var/mob/living/L in damage_turf.contents)

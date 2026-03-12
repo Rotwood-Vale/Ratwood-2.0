@@ -160,7 +160,6 @@
 	settling down as do you. Still, there is coin to be made on land."))
 			H.set_blindness(0)
 
-	
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
 			H.change_stat(STATKEY_STR, 2)
@@ -177,7 +176,6 @@
 			r_hand = /obj/item/rogueweapon/sword/cutlass
 			beltr = /obj/item/rogueweapon/scabbard/sword
 			beltl = /obj/item/rogueweapon/huntingknife/idagger
-	
 
 			H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -193,3 +191,22 @@
 			H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_JOURNEYMAN, TRUE)
+
+	var/gang = list("Gang Rontz Ratz", "Gang Blortz Volves", "Neverminde")
+	var/gang_choice = input(H, "Want to become a gang member?") as anything in gang
+
+	switch(gang_choice)
+		if("Gang Rontz Ratz")
+			to_chat(H, span_warning("I'm a member of street gang Rontz Ratz, a lot of time has passed and now we have to build up our power again,\
+			those bastards from Blortz Volves will answer for this.\
+			Rontz Rats bite - feel the fight!"))
+			ADD_TRAIT(H, TRAIT_GANG_A, TRAIT_GENERIC)
+			mask = /obj/item/clothing/mask/rogue/ragmask/red
+		if("Gang Blortz Volves")
+			to_chat(H, span_warning("I'm a member of street gang Blortz Volves, a lot of time has passed and now we have to build up our power again,\
+			those bastards from Rontz Ratz will answer for this.\
+			Blortz Wolves howl - enemies cower!"))
+			ADD_TRAIT(H, TRAIT_GANG_B, TRAIT_GENERIC)
+			mask = /obj/item/clothing/mask/rogue/ragmask/azure
+		if("Neverminde")
+			return null

@@ -694,7 +694,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_ARMOR)
 			if(H.wear_armor)
 				return FALSE
-			if(is_nudist)
+			if(is_nudist && !I.nudist_approved)
 				return FALSE
 			if(I.blocking_behavior & BULKYBLOCKS)
 				if(H.cloak)
@@ -715,7 +715,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_GLOVES)
 			if(H.gloves)
 				return FALSE
-			if(is_nudist)
+			if(is_nudist && !I.nudist_approved)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_GLOVES) )
 				return FALSE
@@ -725,7 +725,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_SHOES)
 			if(H.shoes)
 				return FALSE
-			if(is_nudist || is_inhumen || is_lamia || is_harpy)
+			if(is_nudist && !I.nudist_approved)
+				return FALSE
+			if(is_inhumen || is_lamia || is_harpy)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_SHOES) )
 				return FALSE
@@ -771,7 +773,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_PANTS)
 			if(H.wear_pants)
 				return FALSE
-			if(is_nudist)
+			if(is_nudist && !I.nudist_approved)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_PANTS) )
 				return FALSE
@@ -779,7 +781,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_SHIRT)
 			if(H.wear_shirt)
 				return FALSE
-			if(is_nudist)
+			if(is_nudist && !I.nudist_approved)
 				return FALSE
 			if(I.blocking_behavior & BULKYBLOCKS)
 				if(H.cloak)
@@ -824,7 +826,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_WRISTS)
 			if(H.wear_wrists)
 				return FALSE
-			if(is_nudist)
+			if(is_nudist && !I.nudist_approved)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_WRISTS) )
 				return FALSE
@@ -2263,6 +2265,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return
 	var/obj/item/organ/tail/T = H.getorganslot(ORGAN_SLOT_TAIL)
 	if(!T)
+		return
+	if(!T.wagging)
 		return
 	T.wagging = FALSE
 	H.update_body_parts(TRUE)

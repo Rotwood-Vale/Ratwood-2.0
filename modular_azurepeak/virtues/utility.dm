@@ -4,7 +4,7 @@
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
 	added_stashed_items = list("Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
-                                "Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
+								"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
 
 /datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient)
 	SStreasury.noble_incomes[recipient] += 15
@@ -203,7 +203,7 @@
 	added_skills = list(list(/datum/skill/misc/music, 4, 6)) //Allows them uplaod custom music
 
 /datum/virtue/utility/performer/apply_to_human(mob/living/carbon/human/recipient)
-    addtimer(CALLBACK(src, .proc/performer_apply, recipient), 50)
+	addtimer(CALLBACK(src, .proc/performer_apply, recipient), 50)
 
 /datum/virtue/utility/performer/proc/performer_apply(mob/living/carbon/human/recipient)
 	var/list/instruments = list()
@@ -338,7 +338,7 @@
 
 /datum/virtue/utility/woodwalker
 	name = "Woodwalker"
-	desc = "After years of training in the wilds, I've learned to traverse the woods confidently, without breaking any twigs. I can even step lightly on leaves without falling, and I can gather twice as many things from bushes."
+	desc = "After years of training in the wilds, I've learned to traverse the woods confidently, without breaking any twigs. I can even step lightly on leaves without falling, and I can gather twice as many things from bushes. I can also sleep comfortably on a tree branch."
 	added_traits = list(TRAIT_WOODWALKER, TRAIT_OUTDOORSMAN)
 
 /datum/virtue/heretic/zchurch_keyholder

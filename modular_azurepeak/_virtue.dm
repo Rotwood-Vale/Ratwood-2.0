@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(virtues)
 					increase_by = (maximum_skill - our_skill)
 				recipient.adjust_skillrank(the_skill.type, increase_by, TRUE)
 			else
-				to_chat(recipient, span_notice("My Virtue cannot influence my skill with [lowertext(the_skill.name)] any further."))
+				to_chat(recipient, span_notice("My Virtue cannot influence my skill with [LOWER_TEXT(the_skill.name)] any further."))
 
 
 /datum/virtue/proc/handle_stashed_items(mob/living/carbon/human/recipient)

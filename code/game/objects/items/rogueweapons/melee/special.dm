@@ -156,7 +156,7 @@
 			hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	. = ..()
 
-/obj/item/rogueweapon/mace/stunmace/Initialize()
+/obj/item/rogueweapon/mace/stunmace/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -847,7 +847,7 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/rogueweapon/spear/keep_standard/Initialize()
+/obj/item/rogueweapon/spear/keep_standard/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)

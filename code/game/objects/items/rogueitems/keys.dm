@@ -20,7 +20,7 @@
 	grid_height = 32
 	grid_width = 32
 
-/obj/item/roguekey/Initialize()
+/obj/item/roguekey/Initialize(mapload)
 	. = ..()
 	if(lockid)
 		if(GLOB.lockids[lockid])
@@ -106,7 +106,7 @@
 	lockid = "lord"
 	visual_replacement = /obj/item/roguekey/royal
 
-/obj/item/roguekey/lord/Initialize()
+/obj/item/roguekey/lord/Initialize(mapload)
 	. = ..()
 	if(SSroguemachine.key)
 		qdel(src)
@@ -320,9 +320,15 @@
 
 /obj/item/roguekey/roomviii
 	name = "room VIII key"
-	desc = "The key to the eight room."
+	desc = "The key to the eighth room."
 	icon_state = "brownkey"
 	lockid = "roomviii"
+
+/obj/item/roguekey/roomix
+	name = "room IX key"
+	desc = "The key to the ninth room."
+	icon_state = "brownkey"
+	lockid = "roomix"
 
 /obj/item/roguekey/roomhunt
 	name = "HUNT room key"

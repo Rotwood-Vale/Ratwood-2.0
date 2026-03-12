@@ -14,7 +14,7 @@
 /datum/sex_action/spanking/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
 		return FALSE
-	if(!user.Adjacent(target))
+	if(!user.sexcon.Adjacent_Or_Closet(target))
 		return FALSE
 	// No clothing or body zone checks, can always spank
 	return TRUE

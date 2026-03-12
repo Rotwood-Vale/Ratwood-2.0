@@ -16,7 +16,7 @@
 		return FALSE
 	if(!get_dildo_on_belt(target))
 		return FALSE
-	if(!user.Adjacent(target))
+	if(!user.sexcon.Adjacent_Or_Closet(target))
 		return FALSE
 	// No clothing or body zone checks, can always jerk
 	return TRUE

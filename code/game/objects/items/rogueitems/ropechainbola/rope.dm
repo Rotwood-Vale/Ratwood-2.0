@@ -18,8 +18,9 @@
 	sewrepair = TRUE
 	grid_width = 32
 	grid_height = 64
+	nudist_approved = TRUE
 
-/obj/item/rope/Initialize()
+/obj/item/rope/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/ropebelt,

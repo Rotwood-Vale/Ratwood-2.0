@@ -23,6 +23,22 @@
         attach_limb(H)
         user.visible_message(span_notice("[user] attaches [src] to [H]."))
         return 1
+/obj/item/bodypart/proc/prosthetic_attachment(mob/living/carbon/human/H, mob/user)
+	if(!ishuman(H))
+		return
+
+	if(user.zone_selected != body_zone)
+		to_chat(user, span_warning("[src] isn't the right type for [parse_zone(user.zone_selected)]."))
+		return -1
+
+	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
+	if(affecting)
+		return
+
+	if(user.temporarilyRemoveItemFromInventory(src))
+		attach_limb(H)
+		user.visible_message(span_notice("[user] attaches [src] to [H]."))
+		return 1
 
 /obj/item/contraption/bronzeprosthetic
 	name = "bronze prosthetic"

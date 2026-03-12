@@ -365,6 +365,12 @@
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron)
 	created_item = /obj/item/rogueweapon/greatsword/zwei
 
+/datum/anvil_recipe/weapons/iron/handaxe
+	name = "Hatchet, Iron (+1 Stick)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/rogueweapon/stoneaxe/handaxe
+
 /datum/anvil_recipe/weapons/iron/axe
 	name = "Axe, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron

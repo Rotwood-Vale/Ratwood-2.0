@@ -2,7 +2,7 @@
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
 
-/mob/living/Initialize()
+/mob/living/Initialize(mapload)
 	. = ..()
 	update_a_intents()
 	swap_rmb_intent(num=1)
@@ -419,7 +419,6 @@
 
 	if(isliving(AM))
 		var/mob/living/target = AM
-		log_combat(src, target, "grabbed", addition="passive grab")
 		if(!iscarbon(src))
 			target.LAssailant = null
 		else
@@ -472,11 +471,11 @@
 			var/used_limb = C.find_used_grab_limb(src)
 			O.name = "[C]'s [parse_zone(used_limb)]"
 			var/obj/item/bodypart/BP = C.get_bodypart(check_zone(used_limb))
-			C.grabbedby += O
+			LAZYADD(C.grabbedby, O)
 			O.grabbed = C
 			O.grabbee = src
 			O.limb_grabbed = BP
-			BP.grabbedby += O
+			LAZYADD(BP.grabbedby, O)
 			if(item_override)
 				O.sublimb_grabbed = item_override
 			else
@@ -512,7 +511,8 @@
 				return FALSE
 
 		update_pull_movespeed()
-		set_pull_offsets(target, state)
+		if(!target.is_shifted)
+			set_pull_offsets(target, state)
 	else
 		if(!supress_message)
 			var/sound_to_play = 'sound/combat/shove.ogg'
@@ -626,7 +626,8 @@
 		if(ismob(pulling))
 			var/mob/living/M = pulling
 			M.reset_offsets("pulledby")
-			reset_pull_offsets(pulling)
+			if(!M.is_shifted)
+				reset_pull_offsets(pulling)
 			if(HAS_TRAIT(M, TRAIT_GARROTED))
 				var/obj/item/inqarticles/garrote/gcord = src.get_active_held_item()
 				if(!gcord)
@@ -1157,7 +1158,7 @@
 					riding_datum.force_dismount(M)
 			return
 
-/mob/living/proc/submit(var/instant = FALSE)
+/mob/living/proc/submit(instant = FALSE)
 	set name = "Yield"
 	set category = "IC"
 	set hidden = 1
@@ -1397,6 +1398,9 @@
 			return
 		if(L.compliance || L.surrendering)
 			surrender_mod = 0.5
+		else if(HAS_TRAIT(L, TRAIT_NUDE_SLEEPER))
+			if(what.nudist_approved && L.IsSleeping())
+				surrender_mod = 0.5 // concession for letting nude sleepers wear certain items: people can swipe them fast
 
 	if(!who.Adjacent(src))
 		return

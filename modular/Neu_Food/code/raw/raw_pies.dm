@@ -1,7 +1,7 @@
 /* File for raw pie and pie making recipes
- This account for the "BIG PIE", please do not creep this file or the .dmi for small pie.
- Not datumized yet cuz of how difficult it is to account for various pies.
- And I don't wanna copypaste what Vanderlin has
+ * This account for the "BIG PIE", please do not creep this file or the .dmi for small pie.
+ * Not datumized yet cuz of how difficult it is to account for various pies.
+ * And I don't wanna copypaste what Vanderlin has
 */
 
 /*	........   Pie making   ................ */

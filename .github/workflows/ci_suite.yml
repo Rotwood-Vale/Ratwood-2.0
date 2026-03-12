@@ -56,6 +56,14 @@ jobs:
         if: always()
         with:
           outputFile: output-annotations.txt
+
+      - name: Give Linters A Go
+        id: linter-setup
+        run: ":"
+      - name: Run Grep Checks
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: bash tools/ci/check_grep.sh
+
   build:
     runs-on: ubuntu-latest
     steps:

@@ -477,7 +477,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	rune_type = /obj/structure/active_abyssor_rune/tidal
 	upgraded_rune_type = null
 
-/obj/item/abyssal_marker/volatile/Initialize()
+/obj/item/abyssal_marker/volatile/Initialize(mapload)
 	. = ..()
 	creation_time = world.time
 	var/area/A = get_area(src)
@@ -554,7 +554,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 /obj/structure/active_abyssor_rune/greater
 	spire_type = /obj/structure/crystal_spire/greater
 
-/obj/structure/active_abyssor_rune/Initialize()
+/obj/structure/active_abyssor_rune/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/spawn_spire), spawn_time)
 	src.visible_message(span_userdanger("A glowing, pulsating rune etches itself into the ground. Reality cracks visibly around it! Something is coming!"))
@@ -605,7 +605,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	max_fiends = 0
 	turf_to_use = /turf/open/water/ocean/deep
 
-/obj/structure/crystal_spire/Initialize()
+/obj/structure/crystal_spire/Initialize(mapload)
 	. = ..()
 	spawn_fiends(1, initial_fiend)
 

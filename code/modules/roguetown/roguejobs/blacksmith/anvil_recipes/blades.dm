@@ -6,10 +6,10 @@
 	var/datum/anvil_recipe/currecipe
 	var/overlay_color
 
-/obj/item/blade/Initialize()
-    . = ..()
-    if(overlay_color)
-        color = overlay_color
+/obj/item/blade/Initialize(mapload)
+	. = ..()
+	if(overlay_color)
+		color = overlay_color
 
 /obj/item/blade/iron_axe
 	name = "iron axe blade"

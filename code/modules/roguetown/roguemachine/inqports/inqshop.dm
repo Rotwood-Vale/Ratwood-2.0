@@ -36,11 +36,11 @@
 	marquescost = 16
 	maximum = 1
 
-/obj/item/roguecoin/silver/inqpile/Initialize()
+/obj/item/roguecoin/silver/inqpile/Initialize(mapload)
 	. = ..()
 	set_quantity(20)
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/extrafunding/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/supplies/extrafunding/Initialize(mapload)
 	. = ..()
 	new /obj/item/roguecoin/silver/inqpile(src)
 	new /obj/item/roguecoin/silver/inqpile(src)
@@ -57,13 +57,13 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/medical
 	marquescost = 8
 
-/obj/item/natural/bundle/cloth/roll/Initialize()
+/obj/item/natural/bundle/cloth/roll/Initialize(mapload)
 	. = ..()
 	icon_state = "clothroll2"
 	amount = 10
 	grid_width = 64
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/medical/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/supplies/medical/Initialize(mapload)
 	. = ..()
 	new /obj/item/needle(src)
 	new /obj/item/needle(src)
@@ -85,7 +85,7 @@
 	item_type = /obj/item/quiver/holybolts
 	marquescost = 2
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/chains/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/supplies/chains/Initialize(mapload)
 	. = ..()
 	new /obj/item/rope/chain(src)
 	new /obj/item/rope/chain(src)
@@ -95,7 +95,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/redpots
 	marquescost = 6
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/redpots/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/supplies/redpots/Initialize(mapload)
 	. = ..()
 	new /obj/item/reagent_containers/glass/bottle/rogue/healthpot(src)
 	new /obj/item/reagent_containers/glass/bottle/rogue/healthpot(src)
@@ -107,7 +107,7 @@
 	maximum = 1
 	marquescost = 10
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/sredvials/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/supplies/sredvials/Initialize(mapload)
 	. = ..()
 	new /obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew(src)
 	new /obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew(src)
@@ -118,7 +118,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/bluepots
 	marquescost = 8
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/bluepots/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/supplies/bluepots/Initialize(mapload)
 	. = ..()
 	new /obj/item/reagent_containers/glass/bottle/rogue/manapot(src)
 	new /obj/item/reagent_containers/glass/bottle/rogue/manapot(src)
@@ -130,7 +130,7 @@
 	maximum = 1
 	marquescost = 16
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials/Initialize(mapload)
 	. = ..()
 	new /obj/item/reagent_containers/glass/bottle/alchemical/strongmanapot(src)
 	new /obj/item/reagent_containers/glass/bottle/alchemical/strongmanapot(src)
@@ -141,7 +141,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/smokes
 	marquescost = 8
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/smokes/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/supplies/smokes/Initialize(mapload)
 	. = ..()
 	new /obj/item/bomb/smoke(src)
 	new /obj/item/bomb/smoke(src)
@@ -153,7 +153,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/psybuns
 	marquescost = 8
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/psybuns/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/supplies/psybuns/Initialize(mapload)
 	. = ..()
 	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun(src)
 	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun(src)
@@ -181,7 +181,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs
 	marquescost = 12
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize(mapload)
 	. = ..()
 	new /obj/item/bomb(src)
 	new /obj/item/bomb(src)
@@ -192,7 +192,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqreliquary/relic/bullion/
 	marquescost = 16
 
-/obj/structure/closet/crate/chest/inqreliquary/relic/bullion/Initialize()
+/obj/structure/closet/crate/chest/inqreliquary/relic/bullion/Initialize(mapload)
 	. = ..()
 	new /obj/item/ingot/silverblessed/bullion(src)
 	new /obj/item/ingot/silverblessed/bullion(src)
@@ -225,7 +225,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/indexaccused
 	marquescost = 6
 
-/obj/structure/closet/crate/chest/inqcrate/articles/indexaccused/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/articles/indexaccused/Initialize(mapload)
 	. = ..()
 	new /obj/item/inqarticles/indexer(src)
 	new /obj/item/inqarticles/indexer(src)
@@ -240,7 +240,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/indexers
 	marquescost = 4
 
-/obj/structure/closet/crate/chest/inqcrate/articles/indexers/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/articles/indexers/Initialize(mapload)
 	. = ..()
 	new /obj/item/inqarticles/indexer(src)
 	new /obj/item/inqarticles/indexer(src)
@@ -252,7 +252,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/accusations
 	marquescost = 8
 
-/obj/structure/closet/crate/chest/inqcrate/articles/accusations/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/articles/accusations/Initialize(mapload)
 	. = ..()
 	new /obj/item/paper/inqslip/accusation(src)
 	new /obj/item/paper/inqslip/accusation(src)
@@ -264,7 +264,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/confessions
 	marquescost = 12
 
-/obj/structure/closet/crate/chest/inqcrate/articles/confessions/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/articles/confessions/Initialize(mapload)
 	. = ..()
 	new /obj/item/paper/inqslip/confession(src)
 	new /obj/item/paper/inqslip/confession(src)
@@ -275,7 +275,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/psybles
 	marquescost = 6
 
-/obj/structure/closet/crate/chest/inqcrate/articles/psybles/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/articles/psybles/Initialize(mapload)
 	. = ..()
 	new /obj/item/book/rogue/bibble/psy(src)
 	new /obj/item/book/rogue/bibble/psy(src)
@@ -329,7 +329,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/equipment/inqcordage
 	marquescost = 4
 
-/obj/structure/closet/crate/chest/inqcrate/equipment/inqcordage/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/equipment/inqcordage/Initialize(mapload)
 	. = ..()
 	new /obj/item/rope/inqarticles/inquirycord(src)
 	new /obj/item/rope/inqarticles/inquirycord(src)
@@ -339,7 +339,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/equipment/blackbags
 	marquescost = 8
 
-/obj/structure/closet/crate/chest/inqcrate/equipment/blackbags/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/equipment/blackbags/Initialize(mapload)
 	. = ..()
 	new /obj/item/clothing/head/inqarticles/blackbag(src)
 	new /obj/item/clothing/head/inqarticles/blackbag(src)
@@ -352,7 +352,7 @@
 	marquescost = 12
 	maximum = 1
 
-/obj/structure/closet/crate/chest/inqcrate/equipment/psydonhelms/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/equipment/psydonhelms/Initialize(mapload)
 	. = ..()
 	new /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute(src)
 	new /obj/item/clothing/head/roguetown/helmet/heavy/psysallet(src)
@@ -365,7 +365,7 @@
 	marquescost = 16
 	maximum = 1
 
-/obj/structure/closet/crate/chest/inqreliquary/relic/crankbox/Initialize()
+/obj/structure/closet/crate/chest/inqreliquary/relic/crankbox/Initialize(mapload)
 	. = ..()
 	new /obj/item/psydonmusicbox(src)
 
@@ -389,7 +389,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/wardrobe/fencerset
 	marquescost = 12
 
-/obj/structure/closet/crate/chest/inqcrate/wardrobe/fencerset/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/wardrobe/fencerset/Initialize(mapload)
 	. = ..()
 	new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan/inq(src)
 	new /obj/item/clothing/neck/roguetown/fencerguard/inq(src)
@@ -402,7 +402,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/wardrobe/confessionalcombo
 	marquescost = 10
 
-/obj/structure/closet/crate/chest/inqcrate/wardrobe/confessionalcombo/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/wardrobe/confessionalcombo/Initialize(mapload)
 	. = ..()
 	new /obj/item/clothing/head/roguetown/roguehood/psydon/confessor(src)
 	new /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/confessor(src)
@@ -412,7 +412,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/wardrobe/inspectorcoats
 	marquescost = 10
 
-/obj/structure/closet/crate/chest/inqcrate/wardrobe/inspectorcoats/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/wardrobe/inspectorcoats/Initialize(mapload)
 	. = ..()
 	new /obj/item/clothing/head/roguetown/inqhat(src)
 	new /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat(src)
@@ -424,7 +424,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/wardrobe/inspector
 	marquescost = 10
 
-/obj/structure/closet/crate/chest/inqcrate/wardrobe/inspector/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/wardrobe/inspector/Initialize(mapload)
 	. = ..()
 	new /obj/item/clothing/head/roguetown/inqhat(src)
 	new /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat(src)
@@ -436,7 +436,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/wardrobe/fencersthree
 	marquescost = 12
 
-/obj/structure/closet/crate/chest/inqcrate/wardrobe/fencersthree/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/wardrobe/fencersthree/Initialize(mapload)
 	. = ..()
 	new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan/inq(src)
 	new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan/inq(src)
@@ -447,7 +447,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/wardrobe/psydonian
 	marquescost = 10
 
-/obj/structure/closet/crate/chest/inqcrate/wardrobe/psydonian/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/wardrobe/psydonian/Initialize(mapload)
 	. = ..()
 	new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan(src)
 	new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq(src)
@@ -459,7 +459,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/wardrobe/nobledressup
 	marquescost = 18
 
-/obj/structure/closet/crate/chest/inqcrate/wardrobe/nobledressup/Initialize()
+/obj/structure/closet/crate/chest/inqcrate/wardrobe/nobledressup/Initialize(mapload)
 	. = ..()
 	new /obj/item/clothing/cloak/lordcloak/ladycloak(src)
 	new /obj/item/clothing/cloak/lordcloak(src)
