@@ -14,6 +14,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	allowed_patrons = ALL_DIVINE_PATRONS
+	vice_restrictions = list(/datum/charflaw/paraplegic, /datum/charflaw/paraplegic/amputee)
 	outfit = /datum/outfit/job/roguetown/martyr
 	min_pq = 10 //Cus it's a Martyr of the Ten. Get it.
 	max_pq = null

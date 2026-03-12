@@ -8,6 +8,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_patrons = ALL_DIVINE_PATRONS
+	vice_restrictions = list(/datum/charflaw/paraplegic, /datum/charflaw/paraplegic/amputee)
 	outfit = /datum/outfit/job/roguetown/templar
 	min_pq = 3 //Deus vult, but only according to the proper escalation rules
 	max_pq = null
