@@ -317,6 +317,32 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	prefs.save_preferences()
 	to_chat(src, span_notice("OOC Anonymize is now [prefs.anonymize ? "ENABLED (your handle will be randomized)" : "DISABLED (your ckey will be shown)"]."))
 
+/client/verb/toggle_creeper_protection()
+	set name = "Toggle Creeper Protection"
+	set category = "OOC"
+	set desc = "Hide yourself from non-admin ghosts and block their orbiting, vision, and ghost chat visibility."
+	if(!mob)
+		return
+	prefs.creeper_protection = !prefs.creeper_protection
+	prefs.save_preferences()
+	if(prefs.creeper_protection)
+		to_chat(src, span_notice("Creeper protection enabled. Ghosts can no longer orbit or observe you."))
+	else
+		to_chat(src, span_warning("You choose to make yourself vunerable to strangers on the internet."))
+
+/client/verb/toggle_ghost_vision()
+	set name = "Toggle Ghost Vision"
+	set category = "OOC"
+	set desc = "See ghosts without enabling ghost hearing."
+	if(!mob)
+		return
+	prefs.ghost_vision = !prefs.ghost_vision
+	prefs.save_preferences()
+	if(isliving(mob))
+		var/mob/living/living_mob = mob
+		living_mob.update_sight()
+	to_chat(src, span_notice("Ghost vision [prefs.ghost_vision ? "enabled" : "disabled"]."))
+
 //Checks admin notice
 /client/verb/admin_notice()
 	set name = "Adminnotice"

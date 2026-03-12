@@ -293,6 +293,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			continue
 		listening |= M
 		the_dead[M] = TRUE
+	if(has_creeper_protection(src))
+		for(var/mob/M in listening.Copy())
+			if(is_hidden_from_ghosts(src, M))
+				listening -= M
+				the_dead -= M
 	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
 
 	var/eavesdropping
@@ -338,7 +343,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		var/mob/living/carbon/human/H = src
 		mob_color = H.voice_color
 	var/chatmsg = "<font color = #[mob_color]><b>[src]</b></font> " + sign_verb + "."
-	visible_message(chatmsg, runechat_message = sign_verb, log_seen = SEEN_LOG_EMOTE, ignored_mobs = understanders)
+	var/list/ignored_mobs = understanders.Copy()
+	if(has_creeper_protection(src))
+		ignored_mobs += get_hidden_ghosts_for_target(src)
+	visible_message(chatmsg, runechat_message = sign_verb, log_seen = SEEN_LOG_EMOTE, ignored_mobs = ignored_mobs)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
@@ -477,6 +485,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			continue
 		listening |= M
 		the_dead[M] = TRUE
+	if(has_creeper_protection(src))
+		for(var/mob/M in listening.Copy())
+			if(is_hidden_from_ghosts(src, M))
+				listening -= M
+				the_dead -= M
 	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
 
 	var/eavesdropping

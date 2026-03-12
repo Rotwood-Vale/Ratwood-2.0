@@ -242,6 +242,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["lobbymusicvol"]		>> lobbymusicvol
 	S["ambiencevol"]		>> ambiencevol
 	S["anonymize"]			>> anonymize
+	var/loaded_creeper_protection
+	S["creeper_protection"]	>> loaded_creeper_protection
+	if(isnull(loaded_creeper_protection))
+		S["afraid_of_ghosts"] >> loaded_creeper_protection
+	if(!isnull(loaded_creeper_protection))
+		creeper_protection = loaded_creeper_protection
+	var/loaded_ghost_vision
+	S["ghost_vision"]		>> loaded_ghost_vision
+	if(!isnull(loaded_ghost_vision))
+		ghost_vision = loaded_ghost_vision
 	S["masked_examine"]		>> masked_examine
 	S["nsfw_examine_always"]>> nsfw_examine_always
 	S["wildshape_name"]		>> wildshape_name
@@ -372,6 +382,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["lobbymusicvol"], lobbymusicvol)
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["anonymize"], anonymize)
+	WRITE_FILE(S["creeper_protection"], creeper_protection)
+	WRITE_FILE(S["ghost_vision"], ghost_vision)
 	WRITE_FILE(S["masked_examine"], masked_examine)
 	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
 	WRITE_FILE(S["wildshape_name"], wildshape_name)

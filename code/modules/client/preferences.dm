@@ -197,6 +197,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/mastervol = 50
 
 	var/anonymize = TRUE
+	var/creeper_protection = TRUE
+	var/ghost_vision = FALSE
 	var/masked_examine = FALSE
 	var/nsfw_examine_always = FALSE
 	var/mute_animal_emotes = FALSE

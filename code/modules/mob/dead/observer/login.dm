@@ -2,6 +2,7 @@
 	..()
 	if(client)
 		client.update_ooc_verb_visibility()
+	sync_ghost_identity()
 
 	if(client && client.prefs)
 		ghost_accs = client.prefs.ghost_accs

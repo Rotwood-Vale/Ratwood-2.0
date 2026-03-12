@@ -860,6 +860,9 @@
 	if(HAS_TRAIT(src, TRAIT_NOCSIGHT))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_NOCVISION)
 
+	if(client?.prefs?.ghost_vision)
+		see_invisible = max(see_invisible, SEE_INVISIBLE_OBSERVER)
+
 	if(see_override)
 		see_invisible = see_override
 	. = ..()
@@ -1370,4 +1373,3 @@
 	if((cmode) && (mind) && (!handcuffed) && (stat == CONSCIOUS))
 		return 0
 	. = ..()
-

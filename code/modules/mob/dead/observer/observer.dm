@@ -61,6 +61,20 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/ghostize_time = 0
 	move_resist = INFINITY
 
+/mob/dead/observer/proc/get_ghost_display_name()
+	return client?.ckey || ckey || name || "ghost"
+
+/mob/dead/observer/proc/sync_ghost_identity()
+	var/display_name = get_ghost_display_name()
+	deadchat_name = display_name
+	if(mind)
+		mind.ghostname = display_name
+	name = display_name
+	real_name = display_name
+
+/mob/dead/observer/GetVoice()
+	return get_ghost_display_name()
+
 /mob/dead/observer/rogue
 //	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
@@ -187,7 +201,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	if(!name)							//To prevent nameless ghosts
 		name = random_unique_name(gender)
-	real_name = name
+	sync_ghost_identity()
 
 	if(!fun_verbs)
 		verbs -= /mob/dead/observer/verb/boo
@@ -607,7 +621,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = ""
 	set hidden = 1
-	var/list/mobs = getpois(mobs_only=1,skip_mindless=1)
+	var/list/mobs = getpois(mobs_only=1,skip_mindless=1, viewer = src)
 
 	var/input = input("Who?!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
@@ -619,6 +633,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
 	if (!istype(target))
+		return
+	if(is_hidden_from_ghosts(target, src))
 		return
 
 	var/icon/I = icon(target.icon,target.icon_state,target.dir)
@@ -667,7 +683,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/list/dest = list() //List of possible destinations (mobs)
 		var/target = null	   //Chosen target.
 
-		dest += getpois(mobs_only=1) //Fill list, prompt user with list
+		dest += getpois(mobs_only=1, viewer = src) //Fill list, prompt user with list
 		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
 
 		if (!target)//Make sure we actually have a target
@@ -956,10 +972,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!check_rights(R_WATCH))
 		return
 	set_ghost_appearance()
-	if(client && client.prefs)
-		deadchat_name = client.prefs.real_name
-		mind.ghostname = client.prefs.real_name
-		name = client.prefs.real_name
+	sync_ghost_identity()
 
 /mob/dead/observer/proc/set_ghost_appearance()
 	if((!client) || (!client.prefs))
@@ -1021,7 +1034,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set hidden = 1
 	if(!check_rights(R_WATCH))
 		return
-	var/list/creatures = getpois()
+	var/list/creatures = getpois(viewer = src)
 
 	reset_perspective(null)
 
