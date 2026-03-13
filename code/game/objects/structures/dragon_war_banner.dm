@@ -17,7 +17,7 @@
 	var/farchargesound = 'sound/horns/o_charge_distant.ogg'
 	var/hornchannel
 
-/obj/structure/matthios/bandit_banner/Initialize()
+/obj/structure/matthios/bandit_banner/Initialize(mapload)
 	. = ..()
 
 	START_PROCESSING(SSobj, src)
