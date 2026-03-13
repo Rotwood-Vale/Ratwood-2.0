@@ -1079,7 +1079,7 @@
 /datum/status_effect/debuff/freehold_guard_debuff
 	id = "freehold_guard_debuff"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/freehold_guard_debuff
-	effectedstats = list(STATKEY_CON = -3, STATKEY_WIL = -2, STATKEY_SPD = -3, STATKEY_INT = -3, STATKEY_STR = -2, STATKEY_PER = -2) //hire other people to cope with problems (neet mercs). Also not to ruin antag's fun too early.
+	effectedstats = list(STATKEY_CON = -2, STATKEY_SPD = -1, STATKEY_STR = -1) //hire other people to cope with problems (neet mercs). Also not to ruin antag's fun too early.
 	duration = -1
 
 /datum/status_effect/debuff/freehold_guard_debuff/process()
