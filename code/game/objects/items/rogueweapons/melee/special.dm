@@ -78,7 +78,7 @@
 			if("gen")
 				return list("shrink" = 0,"sx" = 0,"sy" = 0,"nx" = 0,"ny" = 0,"wx" = 0,"wy" = 0,"ex" = 0,"ey" = 0,"northabove" = 0,"southabove" = 0,"eastabove" = 0,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
 
-/obj/item/rogueweapon/special/dragonz/Initialize()
+/obj/item/rogueweapon/special/dragonz/Initialize(mapload)
     . = ..()
 
 /obj/item/rogueweapon/special/dragonz/pickup(mob/living/carbon/human/user)
