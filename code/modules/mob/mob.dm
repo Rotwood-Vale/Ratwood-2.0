@@ -461,12 +461,12 @@ GLOBAL_VAR_INIT(mobids, 1)
 	return
 
 /**
-  * Examine a mob
-  *
-  * mob verbs are faster than object verbs. See
-  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
-  * for why this isn't atom/verb/examine()
-  */
+ * Examine a mob
+ *
+ * mob verbs are faster than object verbs. See
+ * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
+ * for why this isn't atom/verb/examine()
+ */
 /mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
@@ -481,87 +481,56 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return
 
 	if(isliving(src) && src.m_intent != MOVE_INTENT_SNEAK && src.stat != DEAD)
-		var/message = "[src] looks at"
 		var/target = "\the [A]"
+		var/message = "[src] looks at"
 		if(!isturf(A))
 			if(A == src)
 				message = "[src] looks over"
 				target = "themselves"
-			else if(A.loc == src)
+			if(A.loc == src)
 				target = "[src.p_their()] [A.name]"
-			else if(A.loc.loc == src)
+			if(A.loc.loc == src)
 				message = "[src] looks into"
 				target = "[src.p_their()] [A.loc.name]"
-			else if(isliving(A) && src.cmode)
+			if(isliving(A))
 				var/mob/living/T = A
-				if(!iscarbon(T))
-					target = "\the [T.name]'s [T.simple_limb_hit(zone_selected)]"
-				if(iscarbon(T) && T != src)
-					target = "[T]'s [parse_zone(zone_selected)]"
-			if(m_intent != MOVE_INTENT_SNEAK)
-				visible_message(span_emote("[message] [target]."))
+				var/hitzone = T.simple_limb_hit(zone_selected)
+				var/behind = FALSE
+				var/grabbing = FALSE
+				var/uncovered = get_location_accessible(T, zone_selected)
+				var/penised = FALSE
+				var/pussied = FALSE
+				var/strcheck = FALSE
+				if((src != T && src.dir == T.dir)  || (src == T && fixedeye))
+					behind = TRUE
+				if(ishuman(src))
+					var/obj/item/grabbing/G = get_active_held_item()
+					if(istype(G))
+						if(G.grabbed == T)
+							if(G.sublimb_grabbed == zone_selected)
+								grabbing = TRUE
+				if(!ishuman(T) && hitzone)
+					target = "\the [T.name]'s [hitzone]"
+				else if(ishuman(T))
+					var/mob/living/carbon/human/target_human = T
+					if(target_human.getorganslot(ORGAN_SLOT_PENIS))
+						penised = TRUE
+					if(target_human.getorganslot(ORGAN_SLOT_VAGINA))
+						pussied = TRUE
+					if(T.STASTR >= 12)
+						strcheck = TRUE
+					if(T == src)
+						var/parsed_zone = parse_zone_fancy(zone_selected, cmode, cmode, Adjacent(T), behind, T.resting, grabbing, fixedeye, uncovered, penised, pussied, strcheck, TRUE)
+						if(parsed_zone)
+							target = "[src.p_their()] [parsed_zone]"
+					else
+						target = "[T]'s [parse_zone_fancy(zone_selected, cmode, T.cmode, Adjacent(T), behind, T.resting, grabbing, fixedeye, uncovered, penised, pussied, strcheck)]"
+			visible_message(span_emote("[message] [target]."))
 
 	var/list/result = A.examine(src)
 	if(result)
-		to_chat(src, result.Join("\n"))
+		to_chat(src, usr.client.prefs.no_examine_blocks ? result.Join("\n") : examine_block(result.Join("\n")))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
-
-/**
- * Point at an atom
- *
- * mob verbs are faster than object verbs. See
- * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
- * for why this isn't atom/verb/pointed()
- *
- * note: ghosts can point, this is intended
- *
- * visible_message will handle invisibility properly
- *
- * overridden here and in /mob/dead/observer for different point span classes and sanity checks
- */
-/mob/verb/pointed(atom/A as mob|obj|turf in view())
-	set name = "Point To"
-	set hidden = 1
-	if(!src || !isturf(src.loc) || !(A in view(client.view, src)))
-		return FALSE
-	if(istype(A, /obj/effect/temp_visual/point))
-		return FALSE
-
-	var/tile = get_turf(A)
-	if (!tile)
-		return FALSE
-
-	new /obj/effect/temp_visual/point(src,invisibility)
-
-	return TRUE
-
-/mob/proc/linepoint(atom/A as mob|obj|turf in view(), params)
-	if(world.time < lastpoint + 50)
-		return FALSE
-
-	if(stat)
-		return FALSE
-
-	if(client)
-		if(!src || !isturf(src.loc) || !(A in view(client.view, src)))
-			return FALSE
-
-	var/turf/tile = get_turf(A)
-	if (!tile)
-		return FALSE
-
-	var/turf/our_tile = get_turf(src)
-	var/obj/visual = new /obj/effect/temp_visual/point/still(our_tile, invisibility)
-	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 2, easing = EASE_OUT)
-
-	lastpoint = world.time
-	var/obj/I = get_active_held_item()
-	if(I)
-		src.visible_message("<span class='info'>[src] points [I] at [A].</span>", "<span class='info'>I point [I] at [A].</span>")
-	else
-		src.visible_message("<span class='info'>[src] points at [A].</span>", "<span class='info'>I point at [A].</span>")
-
-	return TRUE
 
 ///Can this mob resist (default FALSE)
 /mob/proc/can_resist()
@@ -796,8 +765,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/Stat()
 	..()
 	// && check_rights(R_ADMIN,0)
-	var/ticker_time = world.time - SSticker.round_start_time
-	var/time_left = SSgamemode.round_ends_at - ticker_time
+	var/time_left = SSgamemode.round_ends_at - world.time
 	var/days = "TWILIGHT"
 	switch(GLOB.dayspassed)
 		if(1)
@@ -817,24 +785,25 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 	if(client)
 		if(statpanel("RoundInfo"))
-			stat("ROUND ID: [GLOB.rogue_round_id]")
-			stat("ROUND TIME: [time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0)] [world.time - SSticker.round_start_time]")
-			if(SSgamemode.roundvoteend)
-				stat("ROUND END: [DisplayTimeText(time_left)]")
-			stat("DAY OF WEEK: [days]" )
-			if(client?.holder)
-				stat("Round TrueTime: [worldtime2text()] [world.time]")
-			stat("Map: [SSmapping.config?.map_name || "Loading..."]")
+			stat(null, "MAP: [SSmapping.config?.map_name || "Loading..."]")
 			var/datum/map_config/cached = SSmapping.next_map_config
 			if(cached)
-				stat("Next Map: [cached.map_name]")
-			stat("Time of Day: [GLOB.tod]")
+				stat(null, "Next Map: [cached.map_name]")
+			stat(null, "ROUND ID: [GLOB.rogue_round_id ? GLOB.rogue_round_id : "NULL"]")
+			stat(null, "ROUND TIME: [time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0)] [world.time - SSticker.round_start_time]")
+
+			if(SSgamemode.roundvoteend)
+				stat("ROUND END: [DisplayTimeText(time_left)]")
 			if(client?.holder)
-				stat("Real Time: [station_time_timestamp()] [station_time()]")
-			stat("Ping: [round(client?.lastping, 1)]ms (Average: [round(client?.avgping, 1)]ms)")
-			stat("Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG: ([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
-			if(client?.holder)
-				stat(null, "Player count: [GLOB.clients.len]")
+				stat(null, "ROUND TrueTime: [worldtime2text()] [world.time]")
+			stat(null, "STORYTELLER: [SSgamemode.storyteller_name]")
+			stat(null, "TIMEOFDAY: [days] ᛉ [uppertext(GLOB.tod)] ᛉ [station_time_timestamp("hh:mm")]")
+			stat(null, "IC Time: [station_time_timestamp()] [station_time()]")
+			stat(null, "PING: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
+			stat(null, "TIME DILATION: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
+			if(check_rights(R_ADMIN,0))
+				stat(null, SSmigrants.get_status_line())
+				stat(null, "Player count: [GLOB.clients.len]") // If someone deletes this again I will slap your balls
 
 	if(client && client.holder && check_rights(R_DEBUG,0))
 		if(statpanel("MC"))
@@ -858,14 +827,16 @@ GLOBAL_VAR_INIT(mobids, 1)
 				stat(null)
 				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
-		if(statpanel("Tickets"))
-			GLOB.ahelp_tickets.stat_entry()
 		if(length(GLOB.sdql2_queries))
 			if(statpanel("SDQL2"))
 				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
 				for(var/i in GLOB.sdql2_queries)
 					var/datum/SDQL2_query/Q = i
 					Q.generate_stat()
+
+	if(check_rights(R_AHELP, FALSE))
+		if(statpanel("Tickets"))
+			GLOB.ahelp_tickets.stat_entry()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -1332,8 +1303,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Show the language menu for this mob
 /mob/verb/open_language_menu()
 	set name = "Open Language Menu"
-	set category = "IC"
-	set hidden = 1
+	set category = "Memory"
+	set hidden = 0
 
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
@@ -1407,7 +1378,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/say_mod(input, message_mode)
 	var/customsayverb = findtext(input, "*")
 	if(customsayverb)
-		return lowertext(copytext(input, 1, customsayverb))
+		return LOWER_TEXT(copytext(input, 1, customsayverb))
 	. = ..()
 
 /atom/movable/proc/attach_spans(input, list/spans)

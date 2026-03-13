@@ -65,11 +65,11 @@
 			return BODY_ZONE_CHEST
 
 /**
-  * Return the zone or randomly, another valid zone
-  *
-  * probability controls the chance it chooses the passed in zone, or another random zone
-  * defaults to 80
-  */
+ * Return the zone or randomly, another valid zone
+ *
+ * probability controls the chance it chooses the passed in zone, or another random zone
+ * defaults to 80
+ */
 /proc/ran_zone(zone, probability = 80)
 	if(prob(probability))
 		zone = check_zone(zone)
@@ -84,13 +84,13 @@
 			return TRUE
 	return FALSE
 /**
-  * Convert random parts of a passed in message to stars
-  *
-  * * n - the string to convert
-  * * pr - probability any character gets changed
-  *
-  * This proc is dangerously laggy, avoid it or die
-  */
+ * Convert random parts of a passed in message to stars
+ *
+ * * n - the string to convert
+ * * pr - probability any character gets changed
+ *
+ * This proc is dangerously laggy, avoid it or die
+ */
 /proc/stars(n, pr)
 	n = STRIP_HTML_SIMPLE(n, MAX_MESSAGE_LEN)
 	if (pr == null)
@@ -113,8 +113,8 @@
 		t += "..." //signals missing text
 	return t
 /**
-  * Makes you speak like you're drunk
-  */
+ * Makes you speak like you're drunk
+ */
 /proc/slur(n)
 	var/phrase = STRIP_HTML_SIMPLE(n, MAX_MESSAGE_LEN)
 	var/leng = length_char(phrase)
@@ -124,15 +124,15 @@
 	while(counter>=1)
 		newletter=copytext_char(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")
+			if(LOWER_TEXT(newletter)=="o")
 				newletter="u"
-			if(lowertext(newletter)=="s")
+			if(LOWER_TEXT(newletter)=="s")
 				newletter="ch"
-			if(lowertext(newletter)=="a")
+			if(LOWER_TEXT(newletter)=="a")
 				newletter="ah"
-			if(lowertext(newletter)=="u")
+			if(LOWER_TEXT(newletter)=="u")
 				newletter="oo"
-			if(lowertext(newletter)=="c")
+			if(LOWER_TEXT(newletter)=="c")
 				newletter="k"
 		if(rand(1,20)==20)
 			if(newletter==" ")
@@ -161,17 +161,17 @@
 	while(counter>=1)
 		newletter=copytext_char(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(prob(50))
-			if(lowertext(newletter)=="o")
+			if(LOWER_TEXT(newletter)=="o")
 				newletter="u"
-			if(lowertext(newletter)=="t")
+			if(LOWER_TEXT(newletter)=="t")
 				newletter="ch"
-			if(lowertext(newletter)=="a")
+			if(LOWER_TEXT(newletter)=="a")
 				newletter="ah"
-			if(lowertext(newletter)=="u")
+			if(LOWER_TEXT(newletter)=="u")
 				newletter="oo"
-			if(lowertext(newletter)=="c")
+			if(LOWER_TEXT(newletter)=="c")
 				newletter=" NAR "
-			if(lowertext(newletter)=="s")
+			if(LOWER_TEXT(newletter)=="s")
 				newletter=" SIE "
 		if(prob(25))
 			if(newletter==" ")
@@ -237,11 +237,65 @@
 		message = stutter(message)
 	return message
 
+/// Forces the user to speak with only the 1000 most common (English-language) words.
+/// Other words will be replaced with filler or scrambled.
+/proc/simplespeech(message)
+	var/static/list/common_words = world.file2list("strings/1000_most_common.txt")
+
+	if(message)
+		var/list/message_split = splittext(message, " ")
+		var/list/new_message = list()
+
+		for(var/word in message_split)
+			word = html_decode(word)
+
+			// Find all leading and trailing special characters - we'll re-add them to the word later.
+			// This should cover quotes, formatting, and just about any other characters.
+			var/first_letter = findtext(word, regex("\[a-zA-Z\]+"))
+			var/last_letter = findtext(word, regex("\[^a-zA-Z\]+"), first_letter) - 1
+
+			var/suffix = copytext(word, last_letter + 1)
+			var/prefix = copytext(word, 1, first_letter)
+
+			word = copytext(word, first_letter, last_letter + 1)
+
+			// Common words or words of three or fewer characters don't need replacing.
+			if((LOWER_TEXT(word) in common_words) || length(word) <= 3)
+				new_message += prefix + word + suffix
+			else
+				var/chance = rand(0, 99)
+				// 25% chance to add a filler word as the character stumbles over the word
+				if(chance < 30 && message_split.len > 2)
+					new_message += pick("uh...", "um...")
+					// 1/6 chance of giving up on the sentence entirely
+					if (chance < 5)
+						break
+					else if (chance < 10) // 1/6 chance of skipping the word after stumbling
+						continue
+					// 2/3 chance of proceeding to the word (still scrambling it)
+
+				var/list/charlist = splittext(word, "")
+				// Functions like shuffle_inplace but does not touch the first or last characters.
+				// Should allow most words to still be understood (with context) while communicating the idea of struggling with them.
+				// In time, we might refine this somewhat to make words generally more pronounceable...
+				for (var/i = 2; i<charlist.len-1; ++i)
+					charlist.Swap(i,rand(i,charlist.len-1))
+
+				// If we reach this point, 50% chance of stammering a little
+				if (chance < 55)
+					new_message += prefix + charlist[1] + "-" + html_encode(jointext(charlist,"")) + suffix
+				else
+					new_message += prefix + html_encode(jointext(charlist,"")) + suffix
+
+		message = jointext(new_message, " ")
+
+	return trim(message)
+
 /**
-  * Turn text into complete gibberish!
-  *
-  * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
-  */
+ * Turn text into complete gibberish!
+ *
+ * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
+ */
 /proc/Gibberish(text, replace_characters = FALSE, chance = 50)
 	. = ""
 	for(var/i in 1 to length_char(text))
@@ -255,14 +309,14 @@
 
 
 /**
-  * Convert a message into leet non gaijin speak
-  *
-  * The difference with stutter is that this proc can stutter more than 1 letter
-  *
-  * The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
-  *
-  * It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
-  */
+ * Convert a message into leet non gaijin speak
+ *
+ * The difference with stutter is that this proc can stutter more than 1 letter
+ *
+ * The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
+ *
+ * It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
+ */
 /proc/ninjaspeak(n) //NINJACODE
 	var/te = html_decode(n)
 	var/t = ""
@@ -324,10 +378,10 @@
 
 
 /**
-  * change a mob's act-intent.
-  *
-  * Input the intent as a string such as "help" or use "right"/"left
-  */
+ * change a mob's act-intent.
+ *
+ * Input the intent as a string such as "help" or use "right"/"left
+ */
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = 1
@@ -427,6 +481,7 @@
 		hud_used.action_intent.switch_intent(r_index,l_index,oactive)
 
 /mob/proc/update_a_intents()
+	stop_attack()
 	QDEL_LIST(possible_a_intents)
 	QDEL_LIST(possible_offhand_intents)
 	var/list/intents = list()
@@ -551,11 +606,10 @@
 			mmb_intent.glow_color = ranged_ability.glow_color
 			mmb_intent.mob_charge_effect = ranged_ability.mob_charge_effect
 			mmb_intent.update_chargeloop()
-	
-	if(hud_used)		
+
+	if(hud_used)
 		hud_used.quad_intents?.switch_intent(input)
 		hud_used.give_intent?.switch_intent(input)
-	givingto = null
 
 /mob/verb/def_intent_change(input as num)
 	set name = "def-change"
@@ -604,7 +658,7 @@
 			SSdroning.play_combat_music(L.cmode_music_override, client)
 		else if(L.cmode_music)
 			SSdroning.play_combat_music(L.cmode_music, client)
-		if(client && HAS_TRAIT(src, TRAIT_SCHIZO_AMBIENCE))
+		if(client && HAS_TRAIT(src, TRAIT_PSYCHOSIS))
 			animate(client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 			animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
 	if(hud_used)
@@ -741,11 +795,11 @@
 
 // moved out of admins.dm because things other than admin procs were calling this.
 /**
-  * Is this mob special to the gamemode?
-  *
-  * returns 1 for special characters and 2 for heroes of gamemode
-  *
-  */
+ * Is this mob special to the gamemode?
+ *
+ * returns 1 for special characters and 2 for heroes of gamemode
+ *
+ */
 /proc/is_special_character(mob/M)
 	if(!SSticker.HasRoundStarted())
 		return FALSE
@@ -763,23 +817,23 @@
 
 
 /**
-  * Fancy notifications for ghosts
-  *
-  * The kitchen sink of notification procs
-  *
-  * Arguments:
-  * * message
-  * * ghost_sound sound to play
-  * * enter_link Href link to enter the ghost role being notified for
-  * * source The source of the notification
-  * * alert_overlay The alert overlay to show in the alert message
-  * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
-  * * flashwindow Flash the byond client window
-  * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
-  * * header The header of the notifiaction
-  * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
-  * * notify_volume How loud the sound should be to spook the user
-  */
+ * Fancy notifications for ghosts
+ *
+ * The kitchen sink of notification procs
+ *
+ * Arguments:
+ * * message
+ * * ghost_sound sound to play
+ * * enter_link Href link to enter the ghost role being notified for
+ * * source The source of the notification
+ * * alert_overlay The alert overlay to show in the alert message
+ * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
+ * * flashwindow Flash the byond client window
+ * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
+ * * header The header of the notifiaction
+ * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
+ * * notify_volume How loud the sound should be to spook the user
+ */
 /proc/notify_ghosts(message, ghost_sound = null, enter_link = null, atom/source = null, mutable_appearance/alert_overlay = null, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
@@ -813,8 +867,8 @@
 				A.add_overlay(alert_overlay)
 
 /**
-  * Heal a robotic body part on a mob
-  */
+ * Heal a robotic body part on a mob
+ */
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && affecting.status == BODYPART_ROBOTIC)
@@ -847,10 +901,10 @@
 	return TRUE
 
 /**
-  * Offer control of the passed in mob to dead player
-  *
-  * Automatic logging and uses pollCandidatesForMob, how convenient
-  */
+ * Offer control of the passed in mob to dead player
+ *
+ * Automatic logging and uses pollCandidatesForMob, how convenient
+ */
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
@@ -921,7 +975,7 @@
 		else
 			colored_message = "<font color='[color]'>[message]</font>"
 
-    //Removed sorting by message type, now sorts by timestamp regardless of message type
+	//Removed sorting by message type, now sorts by timestamp regardless of message type
 	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (LOG #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
 	logging[smessage_type] += timestamped_message
@@ -936,10 +990,10 @@
 	. = TRUE
 
 /**
-  * Examine text for traits shared by multiple types.
-  *
-  * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
-  */
+ * Examine text for traits shared by multiple types.
+ *
+ * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
+ */
 /mob/proc/common_trait_examine()
 	if(HAS_TRAIT(src, TRAIT_DISSECTED))
 		var/dissectionmsg = ""
@@ -952,18 +1006,18 @@
 		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
 
 /**
-  * Get the list of keywords for policy config
-  *
-  * This gets the type, mind assigned roles and antag datums as a list, these are later used
-  * to send the user relevant headadmin policy config
-  */
+ * Get the list of keywords for policy config
+ *
+ * This gets the type, mind assigned roles and antag datums as a list, these are later used
+ * to send the user relevant headadmin policy config
+ */
 /mob/proc/get_policy_keywords()
 	. = list()
 	. += "[type]"
 	if(mind)
 		. += mind.assigned_role
 		. += mind.special_role //In case there's something special leftover, try to avoid
-		for(var/datum/antagonist/A in mind.antag_datums)
+		for(var/datum/antagonist/A as anything in mind.antag_datums)
 			. += "[A.type]"
 
 ///Can the mob see reagents inside of containers?
@@ -976,16 +1030,24 @@
 		var/datum/migrant_role/migrant = MIGRANT_ROLE(migrant_type)
 		used_title = migrant.name
 		if(migrant.advjob_examine && advjob)
-			used_title = advjob
+			var/datum/advclass/AC = SSrole_class_handler.get_advclass_by_name(advjob)
+			if(AC?.examine_name)
+				used_title = AC.examine_name
+			else
+				used_title = advjob
 	else if(job)
 		var/datum/job/J = SSjob.GetJob(job)
 		if(!J)
 			return "unknown"
-		used_title = J.title
+		used_title =  J.display_title || J.title
 		if(J.f_title && (pronouns == SHE_HER || pronouns == THEY_THEM_F))
 			used_title = J.f_title
-		if(J.advjob_examine)
-			used_title = advjob
+		if(J.advjob_examine && advjob)
+			var/datum/advclass/AC = SSrole_class_handler.get_advclass_by_name(advjob)
+			if(AC?.examine_name)
+				used_title = AC.examine_name
+			else
+				used_title = advjob
 	return used_title
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to

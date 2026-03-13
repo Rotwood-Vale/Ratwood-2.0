@@ -1,5 +1,6 @@
 /datum/advclass/vagabond_deprived
 	name = "Deprived"
+	examine_name = "Beggar"
 	tutorial = "You have nothing left but your trusty shield and club - war took away everything you had but will you manage to reclaim what was yours or succumb to the horrors of Psydonia."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
@@ -7,6 +8,11 @@
 	category_tags = list(CTAG_VAGABOND)
 	subclass_stats = list(
 		STATKEY_LCK = 3
+	)
+	subclass_skills = list(
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/shields = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/vagabond/deprived/pre_equip(mob/living/carbon/human/H)
@@ -17,10 +23,3 @@
 		armor = /obj/item/clothing/suit/roguetown/shirt/rags
 	else if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/loincloth
-
-	if (H.mind)
-		H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
-		H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)

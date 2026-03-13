@@ -26,5 +26,6 @@
 		"etruscan.ttf" = 'interface/fonts/languages/etruscan.ttf',
 		"gronnic.ttf" = 'interface/fonts/languages/gronnic.ttf',
 		"aavnic.ttf" = 'interface/fonts/languages/aavnic.ttf',
-		"merar.ttf" = 'interface/fonts/languages/merar.ttf'
+		"merar.ttf" = 'interface/fonts/languages/merar.ttf',
+		"abyssal.ttf" = 'interface/fonts/languages/abyssal.ttf',
 	)

@@ -10,6 +10,8 @@ T1 Enchantments below here*/
 	icon_state = "enchantment"
 	var/component
 	possible_item_intents = list(/datum/intent/use)
+	grid_width = 64
+	grid_height = 32
 
 /obj/item/enchantmentscroll/attack_obj(obj/item/O, mob/living/user)
 	var/datum/component/magic_item/M = O.GetComponent(/datum/component/magic_item, component)
@@ -347,6 +349,39 @@ T1 Enchantments below here*/
 		qdel(src)
 	else
 		to_chat(user, span_notice("Nothing happens. Perhaps you can't enchant [O] with this?"))
+/obj/item/enchantmentscroll/phoenixguard
+	name = "enchanting scroll of phoenix guard"
+	desc = "A scroll imbued with an enchantment of phoenixguard. Sets those that strike you on fire."
+	component = /datum/magic_item/greater/phoenixguard
+
+/obj/item/enchantmentscroll/phoenixguard/attack_obj(obj/item/O, mob/living/user)
+	.=..()
+	if(istype(O,/obj/item/clothing))
+		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
+		var/magiceffect= new component
+		O.AddComponent(/datum/component/magic_item, magiceffect)
+		O.name += " of phoenix guard"
+		O.filters += filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,255),rand(1,255),rand(1,255)))
+		qdel(src)
+	else
+		to_chat(user, span_notice("Nothing happens. Perhaps you can't enchant [O] with this?"))
+
+/obj/item/enchantmentscroll/woundclosing
+	name = "enchanting scroll of wound closure"
+	desc = "A scroll imbued with an enchantment of wound closure. Allows you to periodically seal wounds."
+	component = /datum/magic_item/greater/woundclosing
+
+/obj/item/enchantmentscroll/woundclosing/attack_obj(obj/item/O, mob/living/user)
+	.=..()
+	if(istype(O,/obj/item/clothing/ring))
+		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
+		var/magiceffect= new component
+		O.AddComponent(/datum/component/magic_item, magiceffect)
+		O.name += " of wound closure"
+		qdel(src)
+		O.filters += filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,255),rand(1,255),rand(1,255)))
+	else
+		to_chat(user, span_notice("Nothing happens. Perhaps you can't enchant [O] with this?"))
 
 /obj/item/enchantmentscroll/phoenixguard
 	name = "enchanting scroll of phoenix guard"
@@ -488,7 +523,6 @@ T1 Enchantments below here*/
 		qdel(src)
 	else
 		to_chat(user, span_notice("Nothing happens. Perhaps you can't enchant [O] with this?"))
-
 
 /obj/item/enchantmentscroll/chaos_storm
 	name = "enchanting scroll of chaos storm"

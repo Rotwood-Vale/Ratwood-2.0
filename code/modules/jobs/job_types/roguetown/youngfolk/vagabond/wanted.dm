@@ -1,5 +1,6 @@
 /datum/advclass/vagabond_wanted
 	name = "Wanted"
+	examine_name = "Beggar"
 	tutorial = "The long arm of the law reaches out for you - are you slippery enough to evade its grip this time, or is your head destined to end up in an Excidium's maw?"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
@@ -9,6 +10,11 @@
 		STATKEY_PER = 2,
 		STATKEY_SPD = 2,
 		STATKEY_INT = -1
+	)
+	subclass_skills = list(
+		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 	)
 	extra_context = "This class starts with a bounty."
 
@@ -29,9 +35,6 @@
 		gloves = /obj/item/clothing/gloves/roguetown/fingerless
 
 	if (H.mind)
-		H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
 		H.change_stat(STATKEY_LCK, rand(-2, 2))
 		var/my_crime = input(H, "What is your crime?", "Crime") as text|null
 		if (!my_crime)
@@ -54,4 +57,4 @@
 				bounty_total = rand(150, 200)
 	
 		add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, "The Justiciary of Rotwood")
-		to_chat(H, span_notice("I'm on the run from the law, and there's a [lowertext(bounty_amount)] sum of mammons out on my head... better lay low."))
+		to_chat(H, span_notice("I'm on the run from the law, and there's a [LOWER_TEXT(bounty_amount)] sum of mammons out on my head... better lay low."))

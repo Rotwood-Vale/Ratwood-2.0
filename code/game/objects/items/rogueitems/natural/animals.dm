@@ -11,7 +11,7 @@
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sellprice = 8
 
-/obj/item/natural/hide/Initialize()
+/obj/item/natural/hide/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/woodshield,
@@ -88,6 +88,12 @@
 	icon_state = "wool2"
 	color = "#cecac4"
 
+/obj/item/natural/fur/raccoon	
+	desc = "from a raccoon."
+	icon_state = "pelt_raccoon"
+	color = null
+	sellprice = 12
+
 //RTD make this a storage item and make clickign on animals with things put it in storage
 /obj/item/natural/saddle
 	name = "saddle"
@@ -101,7 +107,7 @@
 	sellprice = 10
 	var/storage_type = /datum/component/storage/concrete/roguetown/saddle
 
-/obj/item/natural/saddle/Initialize()
+/obj/item/natural/saddle/Initialize(mapload)
 	. = ..()
 	AddComponent(storage_type)
 
@@ -142,7 +148,7 @@
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP
 	bundletype = /obj/item/natural/bundle/bone
 
-/obj/item/natural/bone/Initialize()
+/obj/item/natural/bone/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/recurvepartial,
@@ -161,12 +167,12 @@
 	sellprice = 7
 	bundletype = /obj/item/natural/bundle/curred_hide
 
-/obj/item/natural/hide/cured/Initialize()
+/obj/item/natural/hide/cured/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/heatershield,
 		/datum/crafting_recipe/roguetown/leather/neck/leather_collar,
-    /datum/crafting_recipe/roguetown/leather/neck/leather_leash
+	/datum/crafting_recipe/roguetown/leather/neck/leather_leash
 	)
 
 
@@ -186,7 +192,8 @@
 /obj/item/natural/cured/essence
 	name = "essence of wilderness"
 	icon_state = "wessence"
-	desc = "A large drop of mystical sap said to contain Dendor's own energies, often carried by hunters and other wildsmen as a token of luck."
+	desc = "A large drop of mystical sap said to contain Dendor's own energies, \n\
+	often carried by hunters and other wildsmen as a token of luck. A skilled tailor can imbue it into certain clothing or leather to provide protection."
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20

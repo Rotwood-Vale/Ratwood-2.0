@@ -5,7 +5,7 @@
 
 @font-face {
   font-family: 'Dauphin';
-  src: url('~roguefont/languages/elf.ttf');
+  src: url('~roguefont/languages/elf.ttf') format('truetype');
 }
 
 @font-face {
@@ -66,4 +66,9 @@
 @font-face {
   font-family: 'Romeodn';
   src: url('~roguefont/languages/aavnic.ttf');
+}
+
+@font-face {
+  font-family: 'Rasyideen';
+  src: url('~roguefont/languages/merar.ttf');
 }

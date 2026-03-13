@@ -18,6 +18,7 @@
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	time = 8 SECONDS
 	surgery_flags = SURGERY_BLOODY | SURGERY_INCISED | SURGERY_CLAMPED | SURGERY_RETRACTED | SURGERY_BROKEN
+	surgery_flags_blocked = SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_JOURNEYMAN
 	preop_sound = 'sound/surgery/organ2.ogg'
 	success_sound = 'sound/surgery/organ1.ogg'
@@ -47,9 +48,9 @@
 		display_results(user, target, span_notice("You extract a single dose of lux from [target]'s heart."),
 			"[user] extracts lux from [target]'s innards.",
 			"[user] extracts lux from [target]'s innards.")
-		new /obj/item/reagent_containers/lux(target.loc)
+		new /obj/item/reagent_containers/lux_impure(target.loc)
 		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 		//record_featured_stat(FEATURED_STATS_CRIMINALS, user)	- This.. isn't normally criminal.
-		GLOB.azure_round_stats[STATS_LUX_HARVESTED]++
+		record_round_statistic(STATS_LUX_HARVESTED)
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 	return TRUE

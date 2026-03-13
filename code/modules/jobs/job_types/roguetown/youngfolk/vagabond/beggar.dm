@@ -1,9 +1,11 @@
 /datum/advclass/vagabond_beggar
 	name = "Beggar"
+	examine_name = "Beggar"
 	tutorial = "You are without coin and without worth. The pity of others is your bread, and their mercy is your butter. Having sat by waystones and watched many a traveller pass in the hopes for alms, you've nursed a surprising talent for thievery, and have even cajoled knowledge of lockpicking out of an especially sentimental rogue."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/beggar
+	subclass_languages = list(/datum/language/thievescant)
 	category_tags = list(CTAG_VAGABOND)
 	traits_applied = list(TRAIT_NOSTINK, TRAIT_NASTY_EATER)
 	subclass_stats = list(
@@ -11,6 +13,9 @@
 		STATKEY_CON = -3,
 		STATKEY_WIL = -3,
 		STATKEY_INT = -4
+	)
+	subclass_skills = list(
+		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
 	)
 	extra_context = "Fortune is randomised."
 
@@ -54,9 +59,7 @@
 
 	if (H.mind)
 		H.adjust_skillrank(/datum/skill/misc/sneaking, rand(1,5), TRUE)
-		H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/climbing, rand(1,5), TRUE)
 		H.adjust_skillrank(/datum/skill/misc/lockpicking, pick (1,2,3,4,5), TRUE)
 		H.STALUC = rand(5, 15)
-		H.grant_language(/datum/language/thievescant)
 		

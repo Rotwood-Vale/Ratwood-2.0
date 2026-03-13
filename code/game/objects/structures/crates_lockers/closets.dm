@@ -369,8 +369,7 @@
 					picked = TRUE
 					to_chat(user, "<span class='deadsay'>The locking mechanism gives.</span>")
 					record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-					GLOB.azure_round_stats[STATS_LOCKS_PICKED]++
-					user.log_message("finished lockpicking closet \"[src.name]\" (now [locked ? "unlocked" : "locked"]).", LOG_ATTACK)
+					record_round_statistic(STATS_LOCKS_PICKED)
 					togglelock(user)
 					break
 				else
@@ -432,14 +431,18 @@
 	var/turf/T = get_turf(src)
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
-	user.visible_message(span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."), \
-				 	 	span_warning("I [actuallyismob ? "try to ":""]stuff [O] into [src]."), \
-				 	 	span_hear("I hear clanging."))
+	user.visible_message(
+		span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."),
+		span_warning("I [actuallyismob ? "try to ":""]stuff [O] into [src]."),
+		span_hear("I hear clanging.")
+	)
 	if(actuallyismob)
 		if(do_after_mob(user, targets, 40))
-			user.visible_message(span_notice("[user] stuffs [O] into [src]."), \
-							 	 span_notice("I stuff [O] into [src]."), \
-							 	 span_hear("I hear a loud bang."))
+			user.visible_message(
+				span_notice("[user] stuffs [O] into [src]."),
+				span_notice("I stuff [O] into [src]."),
+				span_hear("I hear a loud bang.")
+			)
 			O.forceMove(T)
 			close()
 	else

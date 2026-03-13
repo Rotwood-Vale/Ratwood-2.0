@@ -28,7 +28,7 @@
 		return
 	if(user.incapacitated() || QDELETED(departing_mob) || (departing_mob != user && departing_mob.client) || get_dist(src, dropping) > 2 || get_dist(src, user) > 2)
 		return //Things have changed since the alert happened.
-	user.visible_message("<span class='warning'>[user] [departing_mob == user ? "is trying to depart from the vale!" : "is trying to send [departing_mob] away!"]</span>", "<span class='notice'>You [departing_mob == user ? "are trying to depart from the vale." : "are trying to send [departing_mob] away."]</span>")
+	user.visible_message("<span class='warning'>[user] [departing_mob == user ? "is trying to depart from [SSticker.realm_name]!" : "is trying to send [departing_mob] away!"]</span>", "<span class='notice'>You [departing_mob == user ? "are trying to depart from [SSticker.realm_name]." : "are trying to send [departing_mob] away."]</span>")
 	in_use = TRUE
 	if(!do_after(user, 50, target = src))
 		in_use = FALSE
@@ -60,7 +60,7 @@
 			if(removing_bounty.target == departing_mob.real_name)
 				GLOB.head_bounties -= removing_bounty
 	GLOB.chosen_names -= departing_mob.real_name
-	LAZYREMOVE(GLOB.actors_list, departing_mob.mobid)
+	LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(mob_job.department_flag, mob_job.obsfuscated_job)], departing_mob.mobid)
 	LAZYREMOVE(GLOB.roleplay_ads, departing_mob.mobid)
 	message_admins(dat)
 	log_admin(dat)
@@ -71,11 +71,12 @@
 		// If departure is a lord, remove them from found_lords to prevent false omen triggers
 	if(departing_mob.mind && departing_mob.ckey)
 		if(departing_mob.mind.assigned_role == "Grand Duke" || departing_mob.mind.assigned_role == "Grand Duchess")
-			if(found_lords[departing_mob.ckey])
-				found_lords -= departing_mob.ckey
+			if(GLOB.found_lords[departing_mob.ckey])
+				GLOB.found_lords -= departing_mob.ckey
 	if(departing_mob.has_embedded_objects())
 		var/list/embeds = departing_mob.get_embedded_objects()
 		for(var/thing in embeds)
 			QDEL_NULL(thing)
+	departing_mob.returntolobby()
 	QDEL_NULL(departing_mob)
 

@@ -10,7 +10,7 @@
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	time = 1.6 SECONDS
 	surgery_flags = SURGERY_BLOODY
-	surgery_flags_blocked = SURGERY_INCISED
+	surgery_flags_blocked = SURGERY_INCISED | SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_NOVICE
 	skill_median = SKILL_LEVEL_APPRENTICE
 	preop_sound = 'sound/surgery/scalpel1.ogg'
@@ -39,7 +39,7 @@
 		TOOL_IMPROVISED_HEMOSTAT = 38,
 	)
 	time = 2.4 SECONDS
-	surgery_flags_blocked = SURGERY_CLAMPED
+	surgery_flags_blocked = SURGERY_CLAMPED | SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_APPRENTICE
 	skill_median = SKILL_LEVEL_JOURNEYMAN
 	preop_sound = 'sound/surgery/hemostat1.ogg'
@@ -68,7 +68,7 @@
 		TOOL_IMPROVISED_RETRACTOR = 38,
 	)
 	time = 2.4 SECONDS
-	surgery_flags_blocked = SURGERY_RETRACTED
+	surgery_flags_blocked = SURGERY_RETRACTED | SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_APPRENTICE
 	skill_median = SKILL_LEVEL_JOURNEYMAN
 	preop_sound = 'sound/surgery/retractor1.ogg'
@@ -97,12 +97,19 @@
 	)
 	time = 2.4 SECONDS
 	surgery_flags = SURGERY_BLOODY
+	surgery_flags_blocked = SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_NOVICE
 	skill_median = SKILL_LEVEL_APPRENTICE
 	preop_sound = 'sound/surgery/cautery1.ogg'
 	success_sound = 'sound/surgery/cautery2.ogg'
 
 /datum/surgery_step/cauterize/validate_bodypart(mob/user, mob/living/carbon/target, obj/item/bodypart/bodypart, target_zone)
+	// If you have medicine expert, you can caut thru armor. Also fails if they're in cmode.
+	if(islist(user.status_traits) && ("Medicine Expert" in user.status_traits) && (target.cmode == 0)) 
+		ignore_clothes = TRUE
+	else // IDK if this is necessary but probably good 4 clarification.
+		ignore_clothes = FALSE
+
 	. = ..()
 	if(!.)
 		return
@@ -154,7 +161,7 @@
 	)
 	time = 5 SECONDS
 	surgery_flags = SURGERY_INCISED | SURGERY_RETRACTED
-	surgery_flags_blocked = SURGERY_BROKEN
+	surgery_flags_blocked = SURGERY_BROKEN | SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_JOURNEYMAN
 	skill_median = SKILL_LEVEL_EXPERT
 	preop_sound = 'sound/surgery/scalpel1.ogg'
@@ -197,7 +204,7 @@
 	)
 	time = 3 SECONDS
 	surgery_flags = SURGERY_BLOODY | SURGERY_INCISED | SURGERY_RETRACTED
-	surgery_flags_blocked = SURGERY_BROKEN
+	surgery_flags_blocked = SURGERY_BROKEN | SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_JOURNEYMAN
 	skill_median = SKILL_LEVEL_EXPERT
 

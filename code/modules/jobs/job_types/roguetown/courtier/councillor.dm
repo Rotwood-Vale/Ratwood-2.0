@@ -6,7 +6,7 @@
 	total_positions = 3
 	spawn_positions = 3
 	allowed_ages = ALL_AGES_LIST
-	allowed_races = RACES_NO_CONSTRUCT		//Nobility, so no constructs.
+	allowed_races = RACES_TOLERATED_UP
 	allowed_sexes = list(MALE, FEMALE)
 	display_order = JDO_COUNCILLOR
 	tutorial = "You may have inherited this position, bought your way into it, or were appointed to it by merit--perish the thought! Whatever the case though, you work as an assistant and agent of the crown in matters of state. Whether this be aiding the steward, the sheriff, or the crown itself, or simply enjoying the free food of the keep, your duties vary day by day. You may be the lowest rung of the ladder, but that rung still towers over everyone else in town."
@@ -20,18 +20,11 @@
 	max_pq = null
 	round_contrib_points = 2
 	cmode_music = 'sound/music/combat_noble.ogg'
+	social_rank = SOCIAL_RANK_NOBLE
 	job_traits = list(TRAIT_NOBLE, TRAIT_SEEPRICES_SHITTY)
 	job_subclasses = list(
 		/datum/advclass/councillor
 	)
-
-/datum/job/roguetown/councillor/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
-	..()
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		H.advsetup = 1
-		H.invisibility = INVISIBILITY_MAXIMUM
-		H.become_blind("advsetup")
 
 /datum/advclass/councillor
 	name = "Councillor"
@@ -44,6 +37,16 @@
 		STATKEY_PER = 2,
 		STATKEY_STR = -1,
 		STATKEY_CON = -1
+	)
+	subclass_skills = list(
+		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/councillor
@@ -61,11 +64,3 @@
 	beltl = /obj/item/storage/keyring/steward // If this turns out to be overbearing re:stewardry bump down to the clerk keyring instead.
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel
 	cloak = /obj/item/clothing/cloak/stabard/surcoat/councillor
-	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)

@@ -1,7 +1,7 @@
 /*****************************Dice Bags********************************/
 
 /obj/item/storage/pill_bottle/dice
-	name = "bag of dice"
+	name = "bag of gaming dice"
 	desc = ""
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
@@ -18,6 +18,7 @@
 				/obj/item/dice/fourdd6,
 				/obj/item/dice/d100
 				)
+	component_type = /datum/component/storage/concrete/roguetown/dice_pouch
 
 /obj/item/storage/pill_bottle/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
@@ -35,6 +36,7 @@
 	return (OXYLOSS)
 
 /obj/item/storage/pill_bottle/dice/farkle
+	name = "bag of farkle dice"
 
 /obj/item/storage/pill_bottle/dice/farkle/PopulateContents()
 	new /obj/item/dice/d6(src)
@@ -67,6 +69,7 @@
 	desc = ""
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
+	dropshrink = 0.75
 	w_class = WEIGHT_CLASS_TINY
 	var/sides = 6
 	var/result = null
@@ -75,12 +78,19 @@
 
 	var/rigged = DICE_NOT_RIGGED
 	var/rigged_value
+	var/dicetype
 
-/obj/item/dice/Initialize()
+/obj/item/dice/examine()
+	. = ..()
+	. += span_notice("It has landed on a [result]")
+
+/obj/item/dice/Initialize(mapload)
 	. = ..()
 	if(!result)
 		result = roll(sides)
 	update_icon()
+	dicetype = name
+	name = "[dicetype] ([result])"
 
 /obj/item/dice/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -142,7 +152,7 @@
 	desc = ""
 	icon_state = "spaced6"
 
-/obj/item/dice/d6/space/Initialize()
+/obj/item/dice/d6/space/Initialize(mapload)
 	. = ..()
 	if(prob(10))
 		name = "spess cube"
@@ -244,10 +254,11 @@
 		result = special_faces[result]
 	if(user != null) //Dice was rolled in someone's hand
 		user.visible_message(span_notice("[user] has thrown [src]. It lands on [result]. [comment]"), \
-							 span_notice("I throw [src]. It lands on [result]. [comment]"), \
-							 span_hear("I hear [src] rolling, it sounds like a [fake_result]."))
+							span_notice("I throw [src]. It lands on [result]. [comment]"), \
+							span_hear("I hear [src] rolling, it sounds like a [fake_result]."))
 	else if(!src.throwing) //Dice was thrown and is coming to rest
 		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
+	name = "[dicetype] ([result])"
 
 /obj/item/dice/update_icon()
 	cut_overlays()

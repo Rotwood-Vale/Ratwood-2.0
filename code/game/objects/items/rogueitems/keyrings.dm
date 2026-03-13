@@ -18,7 +18,7 @@
 	experimental_inhand = FALSE
 	component_type = /datum/component/storage/concrete/roguetown/keyring
 
-/obj/item/storage/keyring/Initialize()
+/obj/item/storage/keyring/Initialize(mapload)
 	. = ..()
 	for(var/X in keys)
 		var/obj/item/key/new_key = new X(loc)
@@ -35,20 +35,20 @@
 		return TRUE
 
 /obj/item/storage/keyring/update_icon()
-    ..()
-    switch(contents.len)
-        if(0)
-            icon_state = "keyring0"
-        if(1)
-            icon_state = "keyring1"
-        if(2)
-            icon_state = "keyring2"
-        if(3)
-            icon_state = "keyring3"
-        if(4)
-            icon_state = "keyring4"
-        else
-            icon_state = "keyring5"
+	..()
+	switch(contents.len)
+		if(0)
+			icon_state = "keyring0"
+		if(1)
+			icon_state = "keyring1"
+		if(2)
+			icon_state = "keyring2"
+		if(3)
+			icon_state = "keyring3"
+		if(4)
+			icon_state = "keyring4"
+		else
+			icon_state = "keyring5"
 
 /obj/item/storage/keyring/proc/update_desc()
 	if(contents.len)
@@ -59,19 +59,19 @@
 		desc = ""
 
 /obj/item/storage/keyring/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-    . = ..()
-    playsound(src, "sound/items/gems (1).ogg", 100, FALSE)
-    update_desc()
+	. = ..()
+	playsound(src, "sound/items/gems (1).ogg", 100, FALSE)
+	update_desc()
 
 /obj/item/storage/keyring/Exited(atom/movable/gone, direction)
-    . = ..()
+	. = ..()
 
 /obj/item/storage/keyring/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list("shrink" = 0.4,	
+				return list("shrink" = 0.4,
 "sx" = -6,
 "sy" = -3,
 "nx" = 13,
@@ -111,7 +111,7 @@
 	experimental_inhand = FALSE
 	dropshrink = 0.7
 
-/obj/item/lockpickring/Initialize()
+/obj/item/lockpickring/Initialize(mapload)
 	. = ..()
 	if(picks.len)
 		for(var/X in picks)
@@ -211,9 +211,6 @@
 /obj/item/lockpickring/one
 	picks = list(/obj/item/lockpick)
 
-/obj/item/storage/keyring/butcher	// Just incase, butcher can at least see to getting farmers incase there are none given he sucks at farming.
-	keys = list(/obj/item/roguekey/farm, /obj/item/roguekey/butcher)
-
 /obj/item/storage/keyring/sheriff
 	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/knight)
 
@@ -238,9 +235,6 @@
 /obj/item/storage/keyring/guardknight
 	keys = list(/obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/knight)
 
-/obj/item/storage/keyring/velder
-	keys = list(/obj/item/roguekey/velder, /obj/item/roguekey/farm, /obj/item/roguekey/butcher)
-
 /obj/item/storage/keyring/vtavern
 	keys = list(/obj/item/roguekey/tavern/village, /obj/item/roguekey/roomvi/village, /obj/item/roguekey/roomv/village, /obj/item/roguekey/roomiv/village, /obj/item/roguekey/roomiii/village, /obj/item/roguekey/roomii/village, /obj/item/roguekey/roomi/village)
 
@@ -257,13 +251,41 @@
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/tower, /obj/item/roguekey/mage)
 
 /obj/item/storage/keyring/innkeep
-	keys = list(/obj/item/roguekey/tavern, /obj/item/roguekey/tavernkeep, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomv, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomii, /obj/item/roguekey/roomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomv)
+	keys = list(/obj/item/roguekey/tavern, /obj/item/roguekey/tavernkeep, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomix, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomv, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomii, /obj/item/roguekey/roomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomv)
+
+/obj/item/storage/keyring/innfancyi // 3 Keys
+	name = "luxury room I keyring"
+	keys = list(/obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomi)
+
+/obj/item/storage/keyring/innfancyii
+	name = "luxury room II keyring"
+	keys = list(/obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomii)
+
+/obj/item/storage/keyring/innfancyiii
+	name = "luxury room III keyring"
+	keys = list(/obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiii)
+
+/obj/item/storage/keyring/innfancyiv
+	name = "luxury room IV keyring"
+	keys = list(/obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomiv)
+
+/obj/item/storage/keyring/innfancyv
+	name = "luxury room V keyring"
+	keys = list(/obj/item/roguekey/fancyroomv, /obj/item/roguekey/fancyroomv, /obj/item/roguekey/fancyroomv)
+
+/obj/item/storage/keyring/innhunt // 4 keys
+	name = "HUNT room keyring"
+	keys = list(/obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt)
+
 
 /obj/item/storage/keyring/priest
 	keys = list(/obj/item/roguekey/priest, /obj/item/roguekey/church, /obj/item/roguekey/graveyard)
 
 /obj/item/storage/keyring/churchie
-	keys = list(/obj/item/roguekey/church, /obj/item/roguekey/graveyard)
+	keys = list(/obj/item/roguekey/church, /obj/item/roguekey/graveyard, /obj/item/roguekey/keeper)
+
+/obj/item/storage/keyring/keeper
+	keys = list(/obj/item/roguekey/keeper)
 
 /obj/item/storage/keyring/puritan
 	keys = list(/obj/item/roguekey/puritan, /obj/item/roguekey/inquisition)
@@ -278,7 +300,7 @@
 	keys = list(/obj/item/roguekey/steward, /obj/item/roguekey/garrison, /obj/item/roguekey/manor)
 
 /obj/item/storage/keyring/dungeoneer
-	keys = list(/obj/item/roguekey/dungeon, /obj/item/roguekey/manor, /obj/item/roguekey/garrison)
+	keys = list(/obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory)
 
 /obj/item/storage/keyring/servant
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/garrison)
@@ -287,7 +309,7 @@
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/archive, /obj/item/roguekey/tower)
 
 /obj/item/storage/keyring/physician
-	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/garrison, /obj/item/roguekey/physician, /obj/item/roguekey/courtphysician)
+	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/garrison, /obj/item/roguekey/physician, /obj/item/roguekey/courtphysician, /obj/item/roguekey/keeper)
 
 /obj/item/storage/keyring/royal
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/royal, /obj/item/roguekey/garrison)
@@ -309,3 +331,6 @@
 
 /obj/item/storage/keyring/tailor
 	keys = list(/obj/item/roguekey/crafterguild, /obj/item/roguekey/tailor)
+
+/obj/item/storage/keyring/vampire
+	keys = list(/obj/item/roguekey/vampire, /obj/item/roguekey/vampire/guest, /obj/item/roguekey/vampire/maid)

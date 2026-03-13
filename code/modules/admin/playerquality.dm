@@ -1,3 +1,5 @@
+#define RCP_CONTRIBUTION_CAP 20 // How much RCP can contribute to PQ gain total.
+
 /proc/get_playerquality(key, text)
 	if(!key)
 		return
@@ -193,7 +195,7 @@
 		return
 	adjust_playerquality(amt2change, theykey, src.ckey, raisin)
 	for(var/client/C in GLOB.clients) // I hate this, but I'm not refactoring the cancer above this point.
-		if(lowertext(C.key) == lowertext(theykey))
+		if(LOWER_TEXT(C.key) == LOWER_TEXT(theykey))
 			to_chat(C, "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">Your PQ has been adjusted by [amt2change] by [key] for reason: [raisin]</span></span>")
 			return
 
@@ -248,7 +250,7 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(json))
 
-	if(curcomm < 100 || get_playerquality(key) < 10)
+	if(curcomm < 100 || get_playerquality(key) < RCP_CONTRIBUTION_CAP)
 		adjust_playerquality(round(amt/10,0.1), ckey(key))
 
 /proc/get_roundpoints(key)

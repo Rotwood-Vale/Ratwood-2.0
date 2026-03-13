@@ -40,7 +40,7 @@
 	var/list/last_used = list()
 
 /datum/magic_item/greater/lightning/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < (src.last_used[source] + (1 MINUTES + 40 SECONDS))) //thanks borbop
+	if(world.time < (src.last_used[source] + (40 SECONDS)))
 		return
 
 	if(isliving(target))
@@ -67,7 +67,7 @@
 	var/last_used
 
 /datum/magic_item/greater/frostveil/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < src.last_used + 10 SECONDS)
+	if(world.time < src.last_used + 20 SECONDS)
 		return
 	if(isliving(target))
 		var/mob/living/targeted = target
@@ -75,8 +75,8 @@
 		targeted.visible_message(span_danger("[source] chills [targeted]!"))
 		src.last_used = world.time
 
-/datum/magic_item/greater/frostveil/on_hit_response(var/obj/item/I, var/mob/living/carbon/human/owner, var/mob/living/carbon/human/attacker)
-	if(world.time < src.last_used + 10 SECONDS)
+/datum/magic_item/greater/frostveil/on_hit_response(obj/item/I, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)
+	if(world.time < src.last_used + 20 SECONDS)
 		return
 	if(isliving(attacker) && attacker != owner)
 		attacker.apply_status_effect(/datum/status_effect/debuff/cold)
@@ -88,12 +88,12 @@
 	description = "It gives off radiant heat."
 	var/last_used
 
-/datum/magic_item/greater/phoenixguard/on_hit_response(var/obj/item/I, var/mob/living/carbon/human/owner, var/mob/living/carbon/human/attacker)
+/datum/magic_item/greater/phoenixguard/on_hit_response(obj/item/I, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)
 	if(world.time < src.last_used + 20 SECONDS)
 		return
 	if(isliving(attacker) && attacker != owner)
 		attacker.adjust_fire_stacks(5)
-		attacker.IgniteMob()
+		attacker.ignite_mob()
 		attacker.visible_message(span_danger("[I] sets [attacker] on fire!"))
 		src.last_used = world.time
 
@@ -102,7 +102,7 @@
 	description = "It pulses with healing magick."
 	var/active_item = FALSE
 
-/datum/magic_item/greater/woundclosing/on_equip(var/obj/item/i, var/mob/living/user, slot)
+/datum/magic_item/greater/woundclosing/on_equip(obj/item/i, mob/living/user, slot)
 	if(slot == ITEM_SLOT_HANDS)
 		return
 	if(active_item)
@@ -112,7 +112,7 @@
 		to_chat(user, span_notice("[i] feels warm against fingers."))
 		active_item = TRUE
 
-/datum/magic_item/greater/woundclosing/on_drop(var/obj/item/i, var/mob/living/user)
+/datum/magic_item/greater/woundclosing/on_drop(obj/item/i, mob/living/user)
 	if(active_item)
 		active_item = FALSE
 		user.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/wound_closure)
@@ -123,7 +123,7 @@
 	description = "It glows with arcane sigils."
 	var/active_item = FALSE
 
-/datum/magic_item/greater/returningweapon/on_equip(var/obj/item/i, var/mob/living/user, slot)
+/datum/magic_item/greater/returningweapon/on_equip(obj/item/i, mob/living/user, slot)
 	if(slot == ITEM_SLOT_HANDS)
 		return
 	if(active_item)
@@ -133,7 +133,7 @@
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonweapon)
 		to_chat(user, span_notice("I feel the magick within [i] resonate with my own."))
 
-/datum/magic_item/greater/returningweapon/on_drop(var/obj/item/i, var/mob/living/user)
+/datum/magic_item/greater/returningweapon/on_drop(obj/item/i, mob/living/user)
 	if(active_item)
 		user.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/summonweapon)
 		to_chat(user, span_notice("the warmth of [i] fades away."))
@@ -150,7 +150,7 @@
 	var/mastersling = FALSE
 	var/legendsling = FALSE
 
-/datum/magic_item/greater/archery/on_equip(var/obj/item/i, var/mob/living/user, slot)
+/datum/magic_item/greater/archery/on_equip(obj/item/i, mob/living/user, slot)
 	if(slot == ITEM_SLOT_HANDS)
 		return
 	if(active_item)
@@ -195,7 +195,7 @@
 		to_chat(user, span_notice("I feel more dexterious!"))
 		active_item = TRUE
 
-/datum/magic_item/greater/archery/on_drop(var/obj/item/i, var/mob/living/user)
+/datum/magic_item/greater/archery/on_drop(obj/item/i, mob/living/user)
 	if(active_item)
 		active_item = FALSE
 		user.change_stat(STATKEY_PER, -2)
@@ -228,10 +228,10 @@
 	var/list/last_used = list()
 
 /datum/magic_item/greater/void/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < (src.last_used[source] + (1 MINUTES + 40 SECONDS)))
+	if(world.time < (src.last_used[source] + 10 SECONDS))
 		return
 
-	if(isliving(target) && prob(15))
+	if(isliving(target) && target != user) //self teleporting might be scary actually
 		var/mob/living/L = target
 		to_chat(L, span_warning("You feel reality warp around you!"))
 		var/list/possible_turfs = list()
@@ -241,4 +241,4 @@
 			possible_turfs += T
 		if(possible_turfs.len)
 			L.forceMove(pick(possible_turfs))
-	last_used[source] = world.time
+		last_used[source] = world.time

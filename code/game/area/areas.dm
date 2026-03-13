@@ -1,8 +1,8 @@
 /**
-  * # area
-  *
-  * A grouping of tiles into a logical space, mostly used by map editors
-  */
+ * # area
+ *
+ * A grouping of tiles into a logical space, mostly used by map editors
+ */
 /area
 	level = null
 	name = "unknown"
@@ -51,7 +51,6 @@
 	var/static_light = 0
 	var/static_environ
 
-	var/has_gravity = 0
 	///Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
 	var/noteleport = FALSE
 	///Hides area from player Teleport function.
@@ -93,7 +92,10 @@
 	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 	var/soundenv = 0
 
+	/// The text displayed on top of the screen the first time a player enter an area in a round
 	var/first_time_text = null
+	/// Detail text. When a player enter an area, a small message appears in chat with a href. see area_detail_txt.dm for style guidee
+	var/detail_text = null
 
 	var/list/firedoors
 	var/list/cameras
@@ -109,28 +111,33 @@
 
 	var/converted_type
 
-	var/threat_region = "" // Key used to look up threat region this area belongs to 
-	var/deathsight_message = "a locale wreathed in enigmatic fog" // Message used for deathsight
-	// Try to be deliberately obtuse but not too obtuse.
+	var/threat_region = "" // Key used to look up threat region this area belongs to
+	/// Message used for deathsight. Try to be deliberately obtuse but not too obtuse.
+	var/deathsight_message = "a locale wreathed in enigmatic fog"
+
+	var/coven_protected = FALSE
+
+	/// If true, speech generated in this area will not propagate to other z-levels, and can only be heard by hearers with a line of sight.
+	var/soundproof = FALSE
 
 
 /**
-  * A list of teleport locations
-  *
-  * Adding a wizard area teleport list because motherfucking lag -- Urist
-  * I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game
-  */
+ * A list of teleport locations
+ *
+ * Adding a wizard area teleport list because motherfucking lag -- Urist
+ * I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game
+ */
 GLOBAL_LIST_EMPTY(teleportlocs)
 
 /**
-  * Generate a list of turfs you can teleport to from the areas list
-  *
-  * Includes areas if they're not a shuttle or not not teleport or have no contents
-  *
-  * The chosen turf is the first item in the areas contents that is a station level
-  *
-  * The returned list of turfs is sorted by name
-  */
+ * Generate a list of turfs you can teleport to from the areas list
+ *
+ * Includes areas if they're not a shuttle or not not teleport or have no contents
+ *
+ * The chosen turf is the first item in the areas contents that is a station level
+ *
+ * The returned list of turfs is sorted by name
+ */
 /proc/process_teleport_locs()
 	for(var/V in GLOB.sortedAreas)
 		var/area/AR = V
@@ -147,28 +154,29 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	sortTim(GLOB.teleportlocs, GLOBAL_PROC_REF(cmp_text_asc))
 
 /**
-  * Called when an area loads
-  *
-  *  Adds the item to the GLOB.areas_by_type list based on area type
-  */
+ * Called when an area loads
+ *
+ *  Adds the item to the GLOB.areas_by_type list based on area type
+ */
 /area/New()
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
 	if (unique)
 		GLOB.areas_by_type[type] = src
+	GLOB.areas += src
 	return ..()
 
 /area/proc/can_craft_here()
 	return TRUE
 
 /**
-  * Initalize this area
-  *
-  * intializes the dynamic area lighting and also registers the area with the z level via
-  * reg_in_areas_in_z
-  *
-  * returns INITIALIZE_HINT_LATELOAD
-  */
+ * Initalize this area
+ *
+ * intializes the dynamic area lighting and also registers the area with the z level via
+ * reg_in_areas_in_z
+ *
+ * returns INITIALIZE_HINT_LATELOAD
+ */
 /area/Initialize()
 	if(!outdoors)
 		plane = INDOOR_PLANE
@@ -206,20 +214,20 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return INITIALIZE_HINT_LATELOAD
 
 /**
-  * Sets machine power levels in the area
-  */
+ * Sets machine power levels in the area
+ */
 /area/LateInitialize()
 	update_beauty()
 
 /**
-  * Register this area as belonging to a z level
-  *
-  * Ensures the item is added to the SSmapping.areas_in_z list for this z
-  *
-  * It also goes through every item in this areas contents and sets the area level z to it
-  * breaking the exat first time it does this, this seems crazy but what would I know, maybe
-  * areas don't have a valid z themself or something
-  */
+ * Register this area as belonging to a z level
+ *
+ * Ensures the item is added to the SSmapping.areas_in_z list for this z
+ *
+ * It also goes through every item in this areas contents and sets the area level z to it
+ * breaking the exat first time it does this, this seems crazy but what would I know, maybe
+ * areas don't have a valid z themself or something
+ */
 /area/proc/reg_in_areas_in_z()
 	if(contents.len)
 		var/list/areas_in_z = SSmapping.areas_in_z
@@ -239,25 +247,26 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		areas_in_z["[z]"] += src
 
 /**
-  * Destroy an area and clean it up
-  *
-  * Removes the area from GLOB.areas_by_type and also stops it processing on SSobj
-  *
-  * This is despite the fact that no code appears to put it on SSobj, but
-  * who am I to argue with old coders
-  */
+ * Destroy an area and clean it up
+ *
+ * Removes the area from GLOB.areas_by_type and also stops it processing on SSobj
+ *
+ * This is despite the fact that no code appears to put it on SSobj, but
+ * who am I to argue with old coders
+ */
 /area/Destroy()
 	if(GLOB.areas_by_type[type] == src)
 		GLOB.areas_by_type[type] = null
+	GLOB.areas -= src
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /**
-  * Update the icon state of the area
-  *
-  * Im not sure what the heck this does, somethign to do with weather being able to set icon
-  * states on areas?? where the heck would that even display?
-  */
+ * Update the icon state of the area
+ *
+ * Im not sure what the heck this does, somethign to do with weather being able to set icon
+ * states on areas?? where the heck would that even display?
+ */
 /area/update_icon_state()
 //	var/weather_icon
 ///	for(var/V in SSweather.curweathers)
@@ -270,18 +279,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return
 
 /**
-  * Update the icon of the area (overridden to always be null for space
-  */
+ * Update the icon of the area (overridden to always be null for space
+ */
 /area/space/update_icon_state()
 	icon_state = null
 
 
 /**
-  * Returns int 1 or 0 if the area has power for the given channel
-  *
-  * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
-  * per channel power_equip, power_light, power_environ
-  */
+ * Returns int 1 or 0 if the area has power for the given channel
+ *
+ * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
+ * per channel power_equip, power_light, power_environ
+ */
 /area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!requires_power)
@@ -299,14 +308,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return 0
 
 /**
-  * Space is not powered ever, so this returns 0
-  */
+ * Space is not powered ever, so this returns 0
+ */
 /area/space/powered(chan) //Nope.avi
 	return 0
 
 /**
-  * Return the usage of power per channel
-  */
+ * Return the usage of power per channel
+ */
 /area/proc/usage(chan)
 	var/used = 0
 	switch(chan)
@@ -327,13 +336,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return used
 
 /**
-  * Add a static amount of power load to an area
-  *
-  * Possible channels
-  * *STATIC_EQUIP
-  * *STATIC_LIGHT
-  * *STATIC_ENVIRON
-  */
+ * Add a static amount of power load to an area
+ *
+ * Possible channels
+ * *STATIC_EQUIP
+ * *STATIC_LIGHT
+ * *STATIC_ENVIRON
+ */
 /area/proc/addStaticPower(value, powerchannel)
 	switch(powerchannel)
 		if(STATIC_EQUIP)
@@ -344,18 +353,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			static_environ += value
 
 /**
-  * Clear all power usage in area
-  *
-  * Clears all power used for equipment, light and environment channels
-  */
+ * Clear all power usage in area
+ *
+ * Clears all power used for equipment, light and environment channels
+ */
 /area/proc/clear_usage()
 	used_equip = 0
 	used_light = 0
 	used_environ = 0
 
 /**
-  * Add a power value amount to the stored used_x variables
-  */
+ * Add a power value amount to the stored used_x variables
+ */
 /area/proc/use_power(amount, chan)
 
 	switch(chan)
@@ -367,12 +376,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			used_environ += amount
 
 /**
-  * Call back when an atom enters an area
-  *
-  * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to the atom)
-  *
-  * If the area has ambience, then it plays some ambience music to the ambience channel
-  */
+ * Call back when an atom enters an area
+ *
+ * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to the atom)
+ *
+ * If the area has ambience, then it plays some ambience music to the ambience channel
+ */
 /area/Entered(atom/movable/M, atom/OldLoc)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
@@ -412,9 +421,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /mob/living/proc/intro_area(area/A)
 	if(!mind)
 		return
-	if(A.first_time_text in mind.areas_entered)
-		return
 	if(!client)
+		return
+	if(A.first_time_text && A.detail_text)
+		to_chat(client, span_info("You enter <a href='?src=[REF(A)];getdescription=1'>[A.name]</a>."))
+	else if (A.first_time_text) // Avoid trivial introduction
+		to_chat(client, span_info("You enter [A.name]."))
+	if(A.first_time_text in mind.areas_entered)
 		return
 	mind.areas_entered += A.first_time_text
 	var/atom/movable/screen/area_text/T = new()
@@ -467,23 +480,23 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 
 /**
-  * Called when an atom exits an area
-  *
-  * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to the atom)
-  */
+ * Called when an atom exits an area
+ *
+ * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to the atom)
+ */
 /area/Exited(atom/movable/M)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
 	SEND_SIGNAL(M, COMSIG_EXIT_AREA, src) //The atom that exits the area
 
 /**
-  * Reset the played var to false on the client
-  */
+ * Reset the played var to false on the client
+ */
 
 /**
-  * Setup an area (with the given name)
-  *
-  * Sets the area name, sets all status var's to false and adds the area to the sorted area list
-  */
+ * Setup an area (with the given name)
+ *
+ * Sets the area name, sets all status var's to false and adds the area to the sorted area list
+ */
 /area/proc/setup(a_name)
 	name = a_name
 	power_equip = FALSE
@@ -494,11 +507,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	blob_allowed = FALSE
 	addSorted()
 /**
-  * Set the area size of the area
-  *
-  * This is the number of open turfs in the area contents, or FALSE if the outdoors var is set
-  *
-  */
+ * Set the area size of the area
+ *
+ * This is the number of open turfs in the area contents, or FALSE if the outdoors var is set
+ *
+ */
 /area/proc/update_areasize()
 	if(outdoors)
 		return FALSE
@@ -507,14 +520,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		areasize++
 
 /**
-  * Causes a runtime error
-  */
+ * Causes a runtime error
+ */
 /area/AllowDrop()
 	CRASH("Bad op: area/AllowDrop() called")
 
 /**
-  * Causes a runtime error
-  */
+ * Causes a runtime error
+ */
 /area/drop_location()
 	CRASH("Bad op: area/drop_location() called")
 
@@ -550,3 +563,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			found = TRUE
 		if(found)
 			SSdroning.play_rain(get_area(boarder.client), boarder.client)
+
+/area/Topic(href, href_list)
+	..()
+	if(href_list["getdescription"])
+		if(detail_text)
+			to_chat(usr, span_info("[detail_text]"))

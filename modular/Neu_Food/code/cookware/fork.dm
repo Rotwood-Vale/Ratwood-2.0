@@ -1,11 +1,21 @@
 /obj/item/kitchen/fork
-	name = "wooden fork"	
+	name = "wooden fork"
 	icon = 'modular/Neu_Food/icons/cookware/fork.dmi'
 	icon_state = "fork_wooden"
 	flags_1 = CONDUCT_1
 	hitsound = 'sound/blank.ogg'
-	force = 0
+	force = 8
+	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
+	max_blade_int = 40
+	max_integrity = 40
+	wbalance = WBALANCE_SWIFT
+	thrown_bclass = BCLASS_STAB
+	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
+	swingsound = list('sound/combat/wooshes/bladed/wooshsmall (1).ogg','sound/combat/wooshes/bladed/wooshsmall (2).ogg','sound/combat/wooshes/bladed/wooshsmall (3).ogg')
+
+/datum/intent/dagger/thrust/fork
+	penfactor = 20
 
 /obj/item/kitchen/fork/aalloy
 	name = "decrepit fork"
@@ -32,3 +42,49 @@
 	name = "silver fork"
 	icon_state = "fork_silver"
 	sellprice = 24
+	is_silver = TRUE
+
+/obj/item/kitchen/fork/carved
+	name = "carved fork"
+	icon_state = "afork"
+	sellprice = 0
+
+/obj/item/kitchen/fork/carved/shell
+	name = "shell fork"
+	icon_state = "fork_shell"
+	sellprice = 15
+
+/obj/item/kitchen/fork/carved/rose
+	name = "rosestone fork"
+	icon_state = "fork_rose"
+	sellprice = 20
+
+/obj/item/kitchen/fork/carved/jade
+	name = "jade fork"
+	icon_state = "fork_jade"
+	sellprice = 55
+
+/obj/item/kitchen/fork/carved/onyxa
+	name = "onyxa fork"
+	icon_state = "fork_onyxa"
+	sellprice = 35
+
+/obj/item/kitchen/fork/carved/turq
+	name = "cerulite fork"
+	icon_state = "fork_turq"
+	sellprice = 80
+
+/obj/item/kitchen/fork/carved/coral
+	name = "heartstone fork"
+	icon_state = "fork_coral"
+	sellprice = 65
+
+/obj/item/kitchen/fork/carved/amber
+	name = "amber fork"
+	icon_state = "fork_amber"
+	sellprice = 55
+
+/obj/item/kitchen/fork/carved/opal
+	name = "opal fork"
+	icon_state = "fork_opal"
+	sellprice = 85

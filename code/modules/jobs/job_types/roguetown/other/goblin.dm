@@ -37,7 +37,8 @@
 		if(M.mind)
 			M.mind.special_role = "goblin"
 			M.mind.assigned_role = "goblin"
-			M.mind.current.job = null
+			if(M.mind.current)
+				M.mind.current.job = null
 		if(H.dna && H.dna.species)
 			H.dna.species.species_traits |= NOBLOOD
 			H.dna.species.soundpack_m = new /datum/voicepack/other/goblin()

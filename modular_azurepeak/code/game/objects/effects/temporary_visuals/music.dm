@@ -32,6 +32,23 @@
 	effect_color = colour
 	return ..()
 
+/datum/status_effect/buff/playing_music/on_remove()
+	. = ..()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	if(!H.inspiration)
+		return
+	for(var/datum/status_effect/buff/playing_dirge/dirges in owner.status_effects)
+		owner.remove_status_effect(dirges)
+	for(var/datum/status_effect/buff/playing_melody/melodies in owner.status_effects)
+		owner.remove_status_effect(melodies)
+	for(var/mob/living/carbon/human/guy in H.inspiration.audience)
+		for(var/datum/status_effect/buff/song/song2remove in guy.status_effects)
+			guy.remove_status_effect(song2remove)
+	return ..()
+	
+
 /datum/status_effect/buff/playing_music/tick()
 	var/obj/effect/temp_visual/music_rogue/M = new /obj/effect/temp_visual/music_rogue(get_turf(owner))
 	M.color = effect_color
@@ -53,3 +70,75 @@
 				H.apply_status_effect(/datum/status_effect/buff/xylix_joy)
 				to_chat(H, span_info("The music brings a smile to my face, and fortune to my steps!"))
 
+////////////////////
+///HARPY SINGING///
+//////////////////
+// i dont wanna refactor how instruments function, so this is how we go about an instrument that can't be dropped bc it's inside of us
+// since stopping playing relies on dropping item to stop unconscious people playing music
+/datum/status_effect/buff/harpy_sing 
+	id = "harpy_sing"
+	alert_type = null
+	tick_interval = 10
+	duration = -1
+	var/mob/living/carbon/human/harpy
+
+/datum/status_effect/buff/harpy_sing/tick()
+	. = ..()
+	harpy = owner
+	if(harpy.has_status_effect(STATUS_EFFECT_UNCONSCIOUS))
+		harpy.remove_status_effect(/datum/status_effect/buff/harpy_sing)
+	if(harpy.has_status_effect(STATUS_EFFECT_SLEEPING))
+		harpy.remove_status_effect(/datum/status_effect/buff/harpy_sing)
+
+/datum/status_effect/buff/harpy_sing/on_remove()
+	. = ..()
+	harpy = owner
+	if(harpy.has_status_effect(/datum/status_effect/buff/playing_music))
+		var/obj/item/organ/vocal_cords/harpy/vocal_cords = harpy.getorganslot(ORGAN_SLOT_VOICE)
+		vocal_cords.vocals.attack_self(harpy)
+
+
+/obj/effect/temp_visual/songs
+	name = "songs"
+	icon = 'icons/mob/actions/bardsong_anims.dmi'
+	duration = 15
+	plane = GAME_PLANE_UPPER
+	layer = ABOVE_ALL_MOB_LAYER
+
+
+/obj/effect/temp_visual/songs/Initialize(mapload)
+	. = ..()
+	alpha = 140
+	pixel_x = rand(-18, 18)
+	pixel_y = rand(-16, 0)
+	var/matrix/m = matrix()
+	m.Scale(0.75, 0.75)
+	transform = m
+
+
+/obj/effect/temp_visual/songs/inspiration_dirget1
+	icon_state = "dirge_t1_base"
+
+/obj/effect/temp_visual/songs/inspiration_dirget2
+	icon_state = "dirge_t2_base"
+
+/obj/effect/temp_visual/songs/inspiration_dirget3
+	icon_state = "dirge_t3_base"
+
+/obj/effect/temp_visual/songs/inspiration_melodyt1
+	icon_state = "melody_t1_base"
+
+/obj/effect/temp_visual/songs/inspiration_melodyt2
+	icon_state = "melody_t2_base"
+
+/obj/effect/temp_visual/songs/inspiration_melodyt3
+	icon_state = "melody_t3_base"
+
+/obj/effect/temp_visual/songs/inspiration_bardsongt1
+	icon_state = "bardsong_t1_base"
+
+/obj/effect/temp_visual/songs/inspiration_bardsongt2
+	icon_state = "bardsong_t2_base"
+
+/obj/effect/temp_visual/songs/inspiration_bardsongt3
+	icon_state = "bardsong_t3_base"

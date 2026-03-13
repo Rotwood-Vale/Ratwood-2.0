@@ -112,7 +112,7 @@
 	category = "Table"
 	result = list(/obj/item/reagent_containers/glass/bottle/revival = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/eoran_aril/auric = 1,
-	 			/obj/item/alch/viscera = 2,
+				/obj/item/alch/viscera = 2,
 				/obj/item/reagent_containers/glass/bottle/alchemical,
 				/obj/item/reagent_containers/spidervenom_inert = 1,
 				/obj/item/alch/horn = 1)
@@ -124,7 +124,7 @@
 	category = "Table"
 	result = list(/obj/item/reagent_containers/glass/bottle/revival = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/eoran_aril/auric = 1,
-	 			/obj/item/alch/viscera = 2,
+				/obj/item/alch/viscera = 2,
 				/obj/item/reagent_containers/glass/bottle/alchemical,
 				/obj/item/reagent_containers/spidervenom_inert = 3)
 	craftdiff = 5
@@ -195,6 +195,14 @@
 	result = list(/obj/item/reagent_containers/food/snacks/grown/apple = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 2)
 	craftdiff = 3
+	verbage_simple = "transmute"
+
+/datum/crafting_recipe/roguetown/alchemy/c2sto
+	name = "clay to stone"
+	category = "Transmutation"
+	result = list(/obj/item/natural/stone = 1)
+	reqs = list(/obj/item/natural/clay = 2)
+	craftdiff = 2
 	verbage_simple = "transmute"
 
 /datum/crafting_recipe/roguetown/alchemy/s2coa
@@ -270,7 +278,7 @@
 	verbage_simple = "transmute"
 
 /datum/crafting_recipe/roguetown/alchemy/frankenbrew
-	name = "Reanimation Elixir"
+	name = "reanimation elixir"
 	category = "Table"
 	result = list(
 		/obj/item/reagent_containers/glass/bottle/frankenbrew,
@@ -285,3 +293,30 @@
 	)
 	craftdiff = 4
 	verbage_simple = "mix"
+
+/datum/crafting_recipe/roguetown/alchemy/frankenbrew_small
+	name = "reanimation elixir (impure lux)"
+	category = "Table"
+	result = list(
+		/obj/item/reagent_containers/glass/bottle/frankenbrew/third
+	)
+	reqs = list(
+		/obj/item/reagent_containers/glass/bottle = 1,
+		/obj/item/reagent_containers/food/snacks/grown/manabloom = 1,
+		/obj/item/reagent_containers/lux_impure = 1,
+		/obj/item/alch/calendula = 1,
+		/datum/reagent/water = 49
+	)
+	craftdiff = 4
+	verbage_simple = "mix"
+	required_tech_node = "LUX_FILTRATION"
+	tech_unlocked = FALSE
+
+/datum/crafting_recipe/roguetown/alchemy/bandage
+	name = "bandages (alchemy)"
+	result = list(/obj/item/natural/cloth/bandage)
+	reqs = list(
+		/obj/item/natural/cloth = 1,
+		/obj/item/alch/bonemeal = 1,
+		)
+	craftdiff = 2

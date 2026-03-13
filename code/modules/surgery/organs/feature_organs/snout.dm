@@ -40,3 +40,8 @@
 
 /obj/item/organ/snout/lizard/psy_vault_guard
 	accessory_type = /datum/sprite_accessory/snout/round
+
+/obj/item/organ/snout/harpy
+	name = "harpy beak"
+	desc = "Thine cruelty knows no bounds, vile cur..."
+	accessory_type = /datum/sprite_accessory/snout/bird

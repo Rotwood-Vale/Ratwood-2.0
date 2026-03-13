@@ -134,7 +134,7 @@
 	worn_x_dimension = 64
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
 	worn_y_dimension = 64
-	rotprocess = 20 MINUTES
+	rotprocess = SHELFLIFE_SHORT
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/fruit/apple_sliced
 	slices_num = 3
 	chopping_sound = TRUE
@@ -268,9 +268,9 @@
 	faretype = FARE_NEUTRAL
 	dropshrink = 0.75
 	var/color_index = "good"
-	rotprocess = 15 MINUTES
+	rotprocess = SHELFLIFE_SHORT
 
-/obj/item/reagent_containers/food/snacks/grown/berries/rogue/Initialize()
+/obj/item/reagent_containers/food/snacks/grown/berries/rogue/Initialize(mapload)
 	if(GLOB.berrycolors[color_index])
 		filling_color = GLOB.berrycolors[color_index]
 	else
@@ -363,7 +363,7 @@
 /*	..................   Sunflower   ................... */
 /obj/item/reagent_containers/food/snacks/grown/sunflower
 	name = "sunflower"
-	desc = "A large, bright yellow flower. Can be worn on the head. Can be roasted directly to make roasted sunflower seeds. Do not attempt to roast its actual seeds."
+	desc = "A large, bright yellow flower. Can be worn on the head."
 	icon_state = "sunflower"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
 	seed = /obj/item/seeds/sunflower
@@ -375,8 +375,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 0)
 	dropshrink = 0.8
 	rotprocess = null
-	cooked_type = /obj/item/reagent_containers/food/snacks/roastseeds // Yeah..
-	fried_type = /obj/item/reagent_containers/food/snacks/roastseeds // Whatever I am not refactoring this yet
 
 //pyroclastic flowers - stonekeep port
 /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius
@@ -407,18 +405,22 @@
 	var/success = FALSE
 	//Logic from funny_attack_effects
 	var/datum/antagonist/werewolf/Were = M.mind.has_antag_datum(/datum/antagonist/werewolf/)
-	var/datum/antagonist/vampirelord/Vamp = M.mind.has_antag_datum(/datum/antagonist/vampirelord/)
+	var/datum/antagonist/vampire/Vamp = M.mind.has_antag_datum(/datum/antagonist/vampire/)
 	if(Were && Were.transformed == TRUE)
 		user.visible_message(span_notice("[user] brings [src] to soak up the ichor of [M]'s wounds."))
 		if(do_after(user, 5 SECONDS, target = M))
-			user.visible_message(span_notice("[user] draws the ichor of Dendor's Curse from [M]'s open wounds into [src]."), \
-								 span_notice("I have captured the ferocity of Dendor's Curse inside [src]."))
+			user.visible_message(
+				span_notice("[user] draws the ichor of Dendor's Curse from [M]'s open wounds into [src]."), \
+				span_notice("I have captured the ferocity of Dendor's Curse inside [src].")
+			)
 			success = TRUE
 	else if(Vamp)
 		user.visible_message(span_notice("[user] brings [src] to soak up the petrified blood of [M]'s wounds."))
 		if(do_after(user, 5 SECONDS, target = M))
-			user.visible_message(span_notice("[user] captures the petrified blood from [M]'s open wounds into [src]."), \
-								 span_notice("I have captured the quizzical properties of the petrified blood inside [src]."))
+			user.visible_message(
+				span_notice("[user] captures the petrified blood from [M]'s open wounds into [src]."), \
+				span_notice("I have captured the quizzical properties of the petrified blood inside [src].")
+			)
 			success = TRUE
 	else
 		to_chat(user, span_warning("Their blood is not robust enough to hold to the warmth of [src]."))
@@ -449,7 +451,7 @@
 	tastes = list("tastes like a burning coal and fire and blood" = 1)
 	bitesize = 1
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/fyritiusnectar = 5)
-	rotprocess = 10 MINUTES
+	rotprocess = SHELFLIFE_SHORT
 
 /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius/bloodied/become_rotten()
 	visible_message(span_danger("[src] burns into ash!"))
@@ -468,7 +470,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/berrypoison = 5)
 	tastes = list("sweet" = 1,"bitterness" = 1)
 	eat_effect = /datum/status_effect/debuff/badmeal
-	rotprocess = 15 MINUTES
+	rotprocess = SHELFLIFE_SHORT
 
 /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed
 	seed = /obj/item/seeds/pipeweed
@@ -482,7 +484,7 @@
 	list_reagents = list(/datum/reagent/drug/nicotine = 2, /datum/reagent/consumable/nutriment = 1, /datum/reagent/berrypoison = 5)
 	grind_results = list(/datum/reagent/drug/nicotine = 5)
 	eat_effect = /datum/status_effect/debuff/badmeal
-	rotprocess = 15 MINUTES
+	rotprocess = SHELFLIFE_SHORT
 
 /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry
 	seed = null
@@ -495,7 +497,7 @@
 	list_reagents = list(/datum/reagent/drug/nicotine = 5, /datum/reagent/consumable/nutriment = 1)
 	grind_results = list(/datum/reagent/drug/nicotine = 10)
 
-/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry/Initialize()
+/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/sigdry,
@@ -519,7 +521,7 @@
 	grind_results = list(/datum/reagent/drug/space_drugs = 5)
 	eat_effect = /datum/status_effect/debuff/badmeal
 
-/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry/Initialize()
+/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/sigsweet,

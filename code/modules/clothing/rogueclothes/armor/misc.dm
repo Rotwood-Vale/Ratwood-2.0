@@ -6,8 +6,10 @@
 	icon_state = "corset"
 	armor_class = ARMOR_CLASS_LIGHT
 	body_parts_covered = CHEST
+	salvage_result = /obj/item/natural/hide/cured
+	salvage_amount = 1
 
-	
+
 /obj/item/clothing/suit/roguetown/armor/longcoat
 	name = "longcoat"
 	desc = "A padded longcoat meant to keep you warm in the frigid winters"
@@ -47,7 +49,7 @@
 	nodismemsleeves = TRUE
 	boobed = TRUE
 
-/obj/item/clothing/suit/roguetown/armor/workervest/Initialize()
+/obj/item/clothing/suit/roguetown/armor/workervest/Initialize(mapload)
 	color = pick("#94b4b6", "#ba8f9e", "#bd978c", "#92bd8c", "#c7c981")
 	..()
 
@@ -74,6 +76,6 @@
 	allowed_race = CLOTHED_RACES_TYPES
 
 
-/obj/item/clothing/suit/roguetown/armor/silkcoat/Initialize()
+/obj/item/clothing/suit/roguetown/armor/silkcoat/Initialize(mapload)
 	. = ..()
 	color = pick(CLOTHING_PURPLE, null,CLOTHING_GREEN, CLOTHING_RED)

@@ -9,7 +9,7 @@
 	dynamic_hair_suffix = ""
 	sewrepair = TRUE
 
-/obj/item/clothing/head/roguetown/priestmask/Initialize()
+/obj/item/clothing/head/roguetown/priestmask/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CHOSEN, "VISAGE")
 
@@ -28,6 +28,8 @@
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDEHAIR
 	dynamic_hair_suffix = ""
 	resistance_flags = FIRE_PROOF // Made of metal
+	salvage_result = /obj/item/natural/silk
+	salvage_amount = 2
 
 /obj/item/clothing/head/roguetown/eoramask/equipped(mob/living/carbon/human/user, slot) //Copying Eora bud pacifism
 	. = ..()

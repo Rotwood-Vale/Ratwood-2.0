@@ -5,7 +5,6 @@
 
 /datum/supply_pack/rogue/blackmarket_tools/chain
 	name = "Length of Chain"
-	desc = "Chain test"
 	cost = 5
 	contains = list(/obj/item/rope/chain)
 
@@ -72,24 +71,14 @@
 /datum/supply_pack/rogue/blackmarket_tools/prarmlbrz
 	name = "Prostethic Bronze Arm (L)"
 	cost = 200
-	contains = list(/obj/item/bodypart/l_arm/prosthetic/bronzeleft)
-
-/datum/supply_pack/rogue/blackmarket_tools/prarmrbrz
-	name = "Prostethic Bronze Arm (R)"
-	cost = 200
-	contains = list(/obj/item/bodypart/r_arm/prosthetic/bronzeright)
-
-/datum/supply_pack/rogue/blackmarket_tools/prleglbrz
-	name = "Prostethic Bronze Leg (L)"
-	cost = 150
-	contains = list(/obj/item/bodypart/l_leg/prosthetic/bronzeleft)
-
-/datum/supply_pack/rogue/blackmarket_tools/prlegrbrz
-	name = "Prostethic Bronze Leg (R)"
-	cost = 150
-	contains = list(/obj/item/bodypart/r_leg/prosthetic/bronzeright)
+	contains = list(/obj/item/contraption/bronzeprosthetic)
 
 /datum/supply_pack/rogue/blackmarket_tools/grapplinghook
 	name =	"Climbing Machine"
 	cost =	250
 	contains = list(/obj/item/grapplinghook)
+
+/datum/supply_pack/rogue/blackmarket_tools/golem_skillcore
+	name ="Golem Skill Exhibitor (Self-Service)"
+	cost = 50
+	contains = list(/obj/item/construct_skill_core/blackmarket)

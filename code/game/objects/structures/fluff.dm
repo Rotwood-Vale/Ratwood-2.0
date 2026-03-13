@@ -112,7 +112,7 @@
 
 /obj/structure/fluff/railing
 	name = "railing"
-	desc = ""
+	desc = "A simple barrier of wood meant to prevent falls."
 	icon = 'icons/obj/railing.dmi'
 	icon_state = "railing"
 	density = FALSE
@@ -120,14 +120,26 @@
 	deconstructible = FALSE
 	flags_1 = ON_BORDER_1
 	climbable = TRUE
-	var/passcrawl = TRUE
 	layer = ABOVE_MOB_LAYER
+	/// Living mobs can lay down to go past
+	var/pass_crawl = TRUE
+	/// Projectiles can go past
+	var/pass_projectile = TRUE
+	/// Throwing atoms can go past
+	var/pass_throwing = TRUE
+	/// Throwing/Flying non mobs can always exit the turf regardless of other flags
+	var/allow_flying_outwards = TRUE
 
-/obj/structure/fluff/railing/Initialize()
+/obj/structure/fluff/railing/Initialize(mapload)
 	. = ..()
+	init_connect_loc_element()
 	var/lay = getwlayer(dir)
 	if(lay)
 		layer = lay
+
+/obj/structure/fluff/railing/proc/init_connect_loc_element()
+	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/fluff/railing/proc/getwlayer(dirin)
 	switch(dirin)
@@ -152,8 +164,10 @@
 		return 1
 	if(isliving(mover))
 		var/mob/living/M = mover
+		if(M.movement_type & FLYING)
+			return 1
 		if(!(M.mobility_flags & MOBILITY_STAND))
-			if(passcrawl)
+			if(pass_crawl)
 				return TRUE
 	if(icon_state == "woodrailing" && (dir in CORNERDIRS))
 		var/list/baddirs = list()
@@ -172,36 +186,31 @@
 		return 0
 	return 1
 
-/obj/structure/fluff/railing/CheckExit(atom/movable/O, turf/target)
-//	if(istype(O) && (O.pass_flags & PASSTABLE))
-//		return 1
-	if(istype(O, /obj/projectile))
-		return 1
-	if(O.throwing)
-		return 1
-	if(isobserver(O))
-		return 1
-	if(isliving(O))
-		var/mob/living/M = O
+/obj/structure/fluff/railing/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+
+	if(dir in CORNERDIRS)
+		return
+
+	if(isobserver(leaving))
+		return
+
+	if(get_dir(leaving.loc, new_location) != dir)
+		return
+
+	if(pass_projectile && istype(leaving, /obj/projectile))
+		return
+
+	if(pass_throwing && leaving.throwing)
+		return
+
+	if(pass_crawl && isliving(leaving))
+		var/mob/living/M = leaving
 		if(!(M.mobility_flags & MOBILITY_STAND))
-			if(passcrawl)
-				return TRUE
-	if(icon_state == "woodrailing" && (dir in CORNERDIRS))
-		var/list/baddirs = list()
-		switch(dir)
-			if(SOUTHEAST)
-				baddirs = list(SOUTHEAST, SOUTH, EAST)
-			if(SOUTHWEST)
-				baddirs = list(SOUTHWEST, SOUTH, WEST)
-			if(NORTHEAST)
-				baddirs = list(NORTHEAST, NORTH, EAST)
-			if(NORTHWEST)
-				baddirs = list(NORTHWEST, NORTH, WEST)
-		if(get_dir(O.loc, target) in baddirs)
-			return 0
-	else if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+			return
+
+	leaving.Bump(src)
+	return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/fluff/railing/OnCrafted(dirin)
 	. = ..()
@@ -222,6 +231,9 @@
 	icon_state = "border"
 	density = FALSE
 	dir = 9
+
+/obj/structure/fluff/railing/corner/init_connect_loc_element()
+	return
 
 /obj/structure/fluff/railing/corner/north_east
 	dir = 5
@@ -255,7 +267,7 @@
 	name = "border"
 	desc = ""
 	icon_state = "border"
-	passcrawl = FALSE
+	pass_crawl = FALSE
 
 /obj/structure/fluff/railing/fence
 	name = "palisade"
@@ -270,10 +282,10 @@
 	layer = 2.91
 	climbable = FALSE
 	max_integrity = 400
-	passcrawl = FALSE
+	pass_crawl = FALSE
 	climb_offset = 6
 
-/obj/structure/fluff/railing/fence/Initialize()
+/obj/structure/fluff/railing/fence/Initialize(mapload)
 	. = ..()
 	smooth_fences()
 
@@ -309,13 +321,6 @@
 
 /obj/structure/fluff/railing/fence/CanPass(atom/movable/mover, turf/target)
 	if(get_dir(loc, target) == dir)
-		return 0
-	return 1
-
-/obj/structure/fluff/railing/fence/CheckExit(atom/movable/O, turf/target)
-	if(istype(O, /obj/projectile))
-		return 1
-	if(get_dir(O.loc, target) == dir)
 		return 0
 	return 1
 
@@ -427,6 +432,43 @@
 	density = FALSE
 	opacity = FALSE
 
+/obj/structure/bars/passage/shutter/hidden/redstone_triggered()
+	if(obj_broken)
+		return
+	if(density)
+		icon_state = "shutter1"
+		density = FALSE
+		opacity = FALSE
+		alpha = 60
+	else
+		icon_state = "shutter0"
+		density = TRUE
+		opacity = TRUE
+		alpha = 255
+
+/obj/structure/bars/passage/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	var/obj/item = user.get_active_held_item()
+	if(user.used_intent.type == /datum/intent/chisel )
+		if (user.get_skill_level(/datum/skill/craft/engineering) <= 3)
+			to_chat(user, span_warning("I need more skill to carve a name into this passage."))
+			return
+		playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
+		user.visible_message("<span class='info'>[user] Carves a name into the passage.</span>")
+		if(do_after(user, 10))
+			var/passagename
+			passagename = input("What name would you like to carve into the passage?")
+			if (passagename)
+				name = passagename + "(passage)"
+				desc = "a passage with a name carved into it"
+			else
+				name = "passage"
+				desc = "a passage with a carving scratched out"
+			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
+		return
+	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
+		to_chat(user, span_warning("You most use both hands to rename the passage."))
+
 /obj/structure/bars/grille
 	name = "grille"
 	desc = ""
@@ -441,7 +483,7 @@
 	var/togg = FALSE
 	redstone_structure = TRUE
 
-/obj/structure/bars/grille/Initialize()
+/obj/structure/bars/grille/Initialize(mapload)
 	AddComponent(/datum/component/squeak, list('sound/foley/footsteps/FTMET_A1.ogg','sound/foley/footsteps/FTMET_A2.ogg','sound/foley/footsteps/FTMET_A3.ogg','sound/foley/footsteps/FTMET_A4.ogg'), 40)
 	dir = pick(GLOB.cardinals)
 	return ..()
@@ -469,6 +511,28 @@
 		icon_state = "floorgrille"
 		obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
+/obj/structure/bars/grille/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	var/obj/item = user.get_active_held_item()
+	if(user.used_intent.type == /datum/intent/chisel )
+		if (user.get_skill_level(/datum/skill/craft/engineering) <= 3)
+			to_chat(user, span_warning("I need more skill to carve a name into this grille."))
+			return
+		playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
+		user.visible_message("<span class='info'>[user] Carves a name into the grille.</span>")
+		if(do_after(user, 10))
+			var/grillename
+			grillename = input("What name would you like to carve into the grille?")
+			if (grillename)
+				name = grillename + "(grille)"
+				desc = "a grille with a name carved into it"
+			else
+				name = "grille"
+				desc = "a grille with a carving scratched out"
+			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
+		return
+	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
+		to_chat(user, span_warning("You most use both hands to rename the grille."))
 
 /obj/structure/bars/pipe
 	name = "bronze pipe"
@@ -483,13 +547,6 @@
 	attacked_sound = list('sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg')
 	var/togg = FALSE
 	smeltresult = /obj/item/ingot/bronze
-
-/obj/structure/bars/pipe/left
-	name = "bronze pipe"
-	desc = ""
-	icon_state = "pipe2"
-	dir = WEST
-	pixel_x = 19
 
 //===========================
 
@@ -513,10 +570,12 @@
 	drag_slowdown = 3
 	metalizer_result = /obj/item/roguegear/bronze
 
-/obj/structure/fluff/clock/Initialize()
+/obj/structure/fluff/clock/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	soundloop.start()
 	. = ..()
+	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/fluff/clock/Destroy()
 	if(soundloop)
@@ -531,17 +590,7 @@
 	..()
 
 /obj/structure/fluff/clock/attack_right(mob/user)
-	if(user.mind && isliving(user))
-		if(user.mind.special_items && user.mind.special_items.len)
-			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
-			if(item)
-				if(user.Adjacent(src))
-					if(user.mind.special_items[item])
-						var/path2item = user.mind.special_items[item]
-						user.mind.special_items -= item
-						var/obj/item/I = new path2item(user.loc)
-						user.put_in_hands(I)
-			return
+	handle_special_items_retrieval(user, src)
 
 /obj/structure/fluff/clock/examine(mob/user)
 	. = ..()
@@ -578,10 +627,11 @@
 		return 0
 	return 1
 
-/obj/structure/fluff/clock/CheckExit(atom/movable/O, turf/target)
-	if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+/obj/structure/fluff/clock/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+	if(get_dir(leaving.loc, new_location) == dir)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/fluff/wallclock
 	name = "clock"
@@ -645,7 +695,7 @@
 //			if(SSshuttle.emergency.timeLeft() < 30 MINUTES)
 //				. += span_warning("The last boat will leave in [round(SSshuttle.emergency.timeLeft()/600)] minutes.")
 
-/obj/structure/fluff/wallclock/Initialize()
+/obj/structure/fluff/wallclock/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	soundloop.start()
 	. = ..()
@@ -752,7 +802,17 @@
 		if(!user.is_literate())
 			to_chat(user, span_warning("I do not know how to write."))
 			return
+		var/can_write = FALSE
 		if((user.used_intent.blade_class == BCLASS_STAB) && (W.wlength == WLENGTH_SHORT))
+			can_write = TRUE
+		if(istype(W, /obj/item/natural/thorn))
+			can_write = TRUE
+		if(istype(W, /obj/item/natural/feather))
+			can_write = TRUE
+		if(istype(W, /obj/item/rogueore/coal))
+			can_write = TRUE
+
+		if(can_write)
 			if(wrotesign)
 				to_chat(user, span_warning("Something is already carved here."))
 				return
@@ -762,7 +822,7 @@
 					wrotesign = inputty
 					icon_state = "signwrote"
 		else
-			to_chat(user, span_warning("Alas, this will not work. I could carve words, if I stabbed at this with something posessing a short, sharp point. A knife comes to mind."))
+			to_chat(user, span_warning("Alas, this will not work. I could carve words, if I stabbed at this with something posessing a short, sharp point. A knife, thorn, feather or even coal comes to mind."))
 			return
 	..()
 
@@ -793,22 +853,17 @@
 	max_integrity = 300
 	dir = SOUTH
 
+/obj/structure/fluff/statue/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/structure/fluff/statue/OnCrafted(dirin, user)
 	dirin = turn(dirin, 180)
 	. = ..()
 
 /obj/structure/fluff/statue/attack_right(mob/user)
-	if(user.mind && isliving(user))
-		if(user.mind.special_items && user.mind.special_items.len)
-			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
-			if(item)
-				if(user.Adjacent(src))
-					if(user.mind.special_items[item])
-						var/path2item = user.mind.special_items[item]
-						user.mind.special_items -= item
-						var/obj/item/I = new path2item(user.loc)
-						user.put_in_hands(I)
-			return
+	handle_special_items_retrieval(user, src)
 
 
 /obj/structure/fluff/statue/CanPass(atom/movable/mover, turf/target)
@@ -821,10 +876,11 @@
 		return FALSE // don't even bother climbing over it
 	return ..()
 
-/obj/structure/fluff/statue/CheckExit(atom/movable/O, turf/target)
-	if(get_dir(O.loc, target) == dir)
-		return 0
-	return !density
+/obj/structure/fluff/statue/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+	if(get_dir(leaving.loc, new_location) == dir)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/fluff/statue/gargoyle
 	icon_state = "gargoyle"
@@ -948,32 +1004,37 @@
 		if(W.associated_skill)
 			if(user.mind)
 				if(isliving(user))
+					if(user.doing)
+						return
 					var/mob/living/L = user
-					var/probby = (L.STALUC / 10) * 100
-					probby = min(probby, 99)
-					user.changeNext_move(CLICK_CD_MELEE)
-					if(W.max_blade_int)
-						W.remove_bintegrity(5)
-					L.stamina_add(rand(4,6))
-					if(!(L.mobility_flags & MOBILITY_STAND))
-						probby = 0
-					if(L.STAINT < 3)
-						probby = 0
-					if(prob(probby) && !user.buckled)
-						user.visible_message(span_info("[user] trains on [src]!"))
-						var/amt2raise = L.STAINT * 0.35
+					user.visible_message(span_notice("[user] begins training on [src]..."))
+					while(do_after(user, 1 SECONDS, target = src))
+						if(!(L.mobility_flags & MOBILITY_STAND))
+							to_chat(user, span_warning("You are knocked down and stop training."))
+							break
+						var/probby = (L.STALUC / 10) * 100
+						probby = min(probby, 99)
+						user.changeNext_move(CLICK_CD_MELEE)
+						if(W.max_blade_int)
+							W.remove_bintegrity(5)
+						L.stamina_add(rand(4,6))
+						if(L.STAINT < 3)
+							probby = 0
 						if(!can_train_combat_skill(user, W.associated_skill, SKILL_LEVEL_APPRENTICE))
 							to_chat(user, span_warning("I've learned all I can from doing this, it's time for the real thing."))
-							amt2raise = 0
-						if(amt2raise > 0)
-							user.mind.add_sleep_experience(W.associated_skill, amt2raise, FALSE)
-						playsound(loc,pick('sound/combat/hits/onwood/education1.ogg','sound/combat/hits/onwood/education2.ogg','sound/combat/hits/onwood/education3.ogg'), rand(50,100), FALSE)
-					else
-						user.visible_message(span_danger("[user] trains on [src], but [src] ripostes!"))
-						L.AdjustKnockdown(1)
-						L.throw_at(get_step(L, get_dir(src,L)), 2, 2, L, spin = FALSE)
-						playsound(loc, 'sound/combat/hits/kick/stomp.ogg', 100, TRUE, -1)
-					flick(pick("p_dummy_smashed","p_dummy_smashedalt"),src)
+							break
+						if(prob(probby) && !user.buckled)
+							user.visible_message(span_info("[user] trains on [src]!"))
+							var/amt2raise = L.STAINT * 0.35
+							if(amt2raise > 0)
+								user.mind.add_sleep_experience(W.associated_skill, amt2raise, FALSE)
+							playsound(loc,pick('sound/combat/hits/onwood/education1.ogg','sound/combat/hits/onwood/education2.ogg','sound/combat/hits/onwood/education3.ogg'), rand(50,100), FALSE)
+						else
+							user.visible_message(span_danger("[user] trains on [src], but [src] ripostes!"))
+							L.AdjustKnockdown(1)
+							L.throw_at(get_step(L, get_dir(src,L)), 2, 2, L, spin = FALSE)
+							playsound(loc, 'sound/combat/hits/kick/stomp.ogg', 100, TRUE, -1)
+						flick(pick("p_dummy_smashed","p_dummy_smashedalt"),src)
 					return
 	..()
 
@@ -997,9 +1058,12 @@
 
 /obj/structure/fluff/statue/evil
 	name = "idol"
-	desc = "A statue built to the robber-god, Matthios, who stole the gift of fire from the underworld. It is said that he grants the wishes of those pagan bandits (free folk) who feed him money and valuable metals."
+	desc = "An idol, built to the many-faced Matthios. Though none can argue his hatred of the Tyrant's Order and nobility, \
+	they certainly can't imagine what he actually looks like. \
+	This is but one of many depictions to the many-faced god, and yet it appears ready to receive tribute all the same."
 	icon_state = "evilidol"
 	icon = 'icons/roguetown/misc/structure.dmi'
+	damage_deflection = INFINITY//We don't want this smashed normally. Prevents items from doing it damage, by mistake, too.
 // What items the idol will accept
 	var/treasuretypes = list(
 		/obj/item/roguecoin,
@@ -1016,7 +1080,7 @@
 		/obj/item/candle/candlestick/gold,
 		/obj/item/kitchen/fork/silver,
 		/obj/item/kitchen/fork/gold,
-        /obj/item/kitchen/spoon/silver,
+		/obj/item/kitchen/spoon/silver,
 		/obj/item/kitchen/spoon/gold,
 		/obj/item/roguestatue,
 		/obj/item/riddleofsteel,
@@ -1039,8 +1103,20 @@
 		/obj/item/rogueweapon/sword/long/judgement, // various unique weapons around from a few roles follows. Don't lose your fancy toys....
 		/obj/item/rogueweapon/sword/long/oathkeeper,
 		/obj/item/rogueweapon/woodstaff/riddle_of_steel/magos, //bit dumb for a bandit mage to toss this toy away but whatever
-		/obj/item/rogueweapon/halberd/psyhalberd, // relic weapons but not standard Inquisition stuff
-		/obj/item/rogueweapon/greatsword/psygsword,
+		/obj/item/clothing/head/roguetown/circlet,
+		/obj/item/carvedgem,  //Some of these aren't particularly worth much, but it'd be REALLY unintuitive for "valuables" to not actually be offerings
+		/obj/item/rogueweapon/huntingknife/stoneknife/kukri,
+		/obj/item/rogueweapon/huntingknife/stoneknife/opalknife,
+		/obj/item/rogueweapon/mace/cudgel/shellrungu,
+		/obj/item/clothing/mask/rogue/facemask/carved,
+		/obj/item/clothing/neck/roguetown/carved,
+		/obj/item/kitchen/fork/carved,
+		/obj/item/kitchen/spoon/carved,
+		/obj/item/clothing/wrists/roguetown/gem,
+		/obj/item/reagent_containers/glass/bowl/carved,
+		/obj/item/reagent_containers/glass/bucket/pot/carved,
+		/obj/item/clothing/mask/rogue/facemask/carved,
+		/obj/item/cooking/platter/carved
 	)
 
 /obj/structure/fluff/statue/evil/attackby(obj/item/W, mob/user, params)
@@ -1067,7 +1143,7 @@
 					if(player.mind)
 						if(player.mind.has_antag_datum(/datum/antagonist/bandit))
 							var/datum/antagonist/bandit/bandit_players = player.mind.has_antag_datum(/datum/antagonist/bandit)
-							GLOB.azure_round_stats[STATS_SHRINE_VALUE] += W.get_real_price()
+							record_round_statistic(STATS_SHRINE_VALUE, W.get_real_price())
 							bandit_players.favor += donatedamnt
 							bandit_players.totaldonated += donatedamnt
 							to_chat(player, ("<font color='yellow'>[user.name] donates [donatedamnt] to the shrine! You now have [bandit_players.favor] favor.</font>"))
@@ -1088,7 +1164,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	layer = BELOW_MOB_LAYER
 	max_integrity = 100
-	sellprice = 40
 	var/chance2hear = 30
 	buckleverb = "crucifie"
 	can_buckle = 1
@@ -1100,9 +1175,11 @@
 	var/divine = TRUE
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
 
-/obj/structure/fluff/psycross/Initialize()
+/obj/structure/fluff/psycross/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
+	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/fluff/psycross/Destroy()
 	lose_hearing_sensitivity()
@@ -1118,8 +1195,10 @@
 	M.reset_offsets("bed_buckle")
 
 /obj/structure/fluff/psycross/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover, /mob/camera))
+		return TRUE
 	if(get_dir(loc, mover) == dir)
-		return 0
+		return FALSE
 	return !density
 
 /obj/structure/fluff/psycross/CanAStarPass(ID, to_dir, caller)
@@ -1127,10 +1206,11 @@
 		return FALSE // don't even bother climbing over it
 	return ..()
 
-/obj/structure/fluff/psycross/CheckExit(atom/movable/O, turf/target)
-	if(get_dir(O.loc, target) == dir)
-		return 0
-	return !density
+/obj/structure/fluff/psycross/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+	if(get_dir(leaving.loc, new_location) == dir)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/fluff/psycross/copper
 	name = "pantheon cross"
@@ -1173,9 +1253,9 @@
 	icon_state = "invertedcross"
 	divine = FALSE
 
-/obj/structure/fluff/psycross/attackby(obj/item/W, mob/user, params)
+/obj/structure/fluff/psycross/attackby(obj/item/W, mob/living/carbon/human/user, params)
 	if(user.mind)
-		if(user.mind.assigned_role == "Bishop")
+		if((user.mind.assigned_role == "Bishop") || (user.mind.assigned_role == "Acolyte"))
 			if(istype(W, /obj/item/reagent_containers/food/snacks/grown/apple))
 				if(!istype(get_area(user), /area/rogue/indoors/town/church/chapel))
 					to_chat(user, span_warning("I need to do this in the chapel."))
@@ -1207,11 +1287,11 @@
 						// Excommunication check for both participants
 						var/excomm_found = FALSE
 						for(var/excomm_name in GLOB.excommunicated_players)
-							var/clean_excomm = lowertext(trim(excomm_name))
-							if(thegroom && clean_excomm == lowertext(trim(thegroom.real_name)))
+							var/clean_excomm = LOWER_TEXT(trim(excomm_name))
+							if(thegroom && clean_excomm == LOWER_TEXT(trim(thegroom.real_name)))
 								excomm_found = TRUE
 								break
-							if(thebride && clean_excomm == lowertext(trim(thebride.real_name)))
+							if(thebride && clean_excomm == LOWER_TEXT(trim(thebride.real_name)))
 								excomm_found = TRUE
 								break
 						if(!excomm_found)
@@ -1219,20 +1299,27 @@
 							var/surname = input(user, "Enter a surname for the couple:", "Marriage Ceremony") as text|null
 							if(!surname || !length(trim(surname)))
 								surname = thegroom.dna.species.random_surname()
-							// Ensure leading space for surname
-							if(!findtext(surname, " "))
-								surname = " [surname]"
+							priority_announce("[thegroom.real_name] has married [thebride.real_name]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
+							var/list/titles = list("Sir", "Ser", "Dame", "Lord", "Lady", "Knight-Captain", "Duke", "Duchess", "Father", "Mother", "Brother", "Sister", "Prelate", "Devotee", "Votary")
 							// Assign surname to groom
 							var/list/groom_name_parts = splittext(thegroom.real_name, " ")
-							var/groom_first_name = groom_name_parts[1]
-							thegroom.real_name = "[groom_first_name] [surname]"
+							var/title_found = (titles.Find(groom_name_parts[1]) != 0)
+							if(title_found)
+								thegroom.real_name = "[groom_name_parts[1]] [groom_name_parts[2]] [surname]"
+							else
+								thegroom.real_name = "[groom_name_parts[1]] [surname]"
 							// Assign surname to bride
 							var/list/bride_name_parts = splittext(thebride.real_name, " ")
-							var/bride_first_name = bride_name_parts[1]
-							thebride.real_name = "[bride_first_name] [surname]"
+							title_found = (titles.Find(bride_name_parts[1]) != 0)
+							if(title_found)
+								thebride.real_name = "[bride_name_parts[1]] [bride_name_parts[2]] [surname]"
+							else
+								thebride.real_name = "[bride_name_parts[1]] [surname]"
 							// Private notification to both
-							if(thegroom) to_chat(thegroom, span_notice("Your new shared surname is [surname]."))
-							if(thebride) to_chat(thebride, span_notice("Your new shared surname is [surname]."))
+							if(thegroom) 
+								to_chat(thegroom, span_notice("Your new shared surname is [surname]."))
+							if(thebride) 
+								to_chat(thebride, span_notice("Your new shared surname is [surname]."))
 							// Set marriedto fields
 							thegroom.marriedto = thebride.real_name
 							thebride.marriedto = thegroom.real_name
@@ -1240,9 +1327,7 @@
 							thebride.adjust_triumphs(1)
 							// After surname is set, have the priest say the wedding line
 							if(user && surname)
-								var/surname_trimmed = copytext(surname, 2) // Remove leading space if present
-								user.say("I hereby wed you [surname_trimmed]s.")
-							priority_announce("[thegroom.real_name] has married [thebride.real_name]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
+								user.say("I hereby wed you as [surname]s.")
 							qdel(A)
 							marriage = TRUE
 						else

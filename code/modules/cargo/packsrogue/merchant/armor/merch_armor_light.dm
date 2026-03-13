@@ -60,3 +60,10 @@
 	name = "Heavy Padded Coif"
 	cost = 35 // Equivalent to a padded gambeson on the head, so pricier
 	contains = list(/obj/item/clothing/neck/roguetown/coif/heavypadding)
+
+/datum/supply_pack/rogue/light_armor/reinforced_hood
+	name = "Reinforced Hood"
+	cost = 40 //It's armour. Quite good, given layering, too. Someone else can adjust this. EDIT: I'm someone else. If it's such good armor, let's make it as expensive as the other good armor in its class, like the padded gambeson. Steel mask is probably better, you're buying this if you want swag.
+	contains = list(
+					/obj/item/clothing/head/roguetown/roguehood/reinforced,
+				)

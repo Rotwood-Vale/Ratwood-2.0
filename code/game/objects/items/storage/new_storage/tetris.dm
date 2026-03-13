@@ -24,7 +24,7 @@
 	var/grid_height
 
 /obj/item/proc/inventory_flip(mob/user, force = FALSE)
-	if(!force && (user && ((!user.Adjacent(src) && !user.DirectAccess(src)) || !isliving(user))))
+	if(!force && (user && ((!user.Adjacent(src) && !user.IsDirectlyAccessible(src)) || !isliving(user))))
 		return
 	var/old_width = grid_width
 	var/old_height = grid_height
@@ -35,7 +35,7 @@
 	var/grid = TRUE
 	var/storage_flags = NONE
 
-/obj/item/storage/Initialize()
+/obj/item/storage/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)
@@ -290,7 +290,7 @@
 	if(isitem(host))
 		var/obj/item/host_item = host
 		var/datum/component/storage/storage_internal = storing.GetComponent(/datum/component/storage)
-		if((storing.w_class >= host_item.w_class) && storage_internal && !allow_big_nesting)
+		if(!allow_big_nesting && (storing.w_class >= host_item.w_class) && storage_internal && !storage_internal.allow_nesting)
 			if(!stop_messages)
 				to_chat(user, span_warning("[host_item] cannot hold [storing] as it's a storage item of the same size!"))
 			return FALSE //To prevent the stacking of same sized storage items
@@ -361,7 +361,7 @@
 		if(istype(attacking_item, /obj/item/needle))
 			var/obj/item/needle/sewer = attacking_item
 			var/obj/item/storage/this_item = parent
-			if(sewer.can_repair && this_item.sewrepair && this_item.max_integrity && !this_item.obj_broken && this_item.obj_integrity < this_item.max_integrity && user.get_skill_level(/datum/skill/misc/sewing) >= 1 && this_item.ontable() && !being_repaired)
+			if(sewer.can_repair && this_item.sewrepair && this_item.max_integrity && !this_item.obj_broken && this_item.obj_integrity < this_item.max_integrity && user.get_skill_level(/datum/skill/craft/sewing) >= 1 && this_item.ontable() && !being_repaired)
 				being_repaired = TRUE
 				return FALSE
 		if(user.used_intent.type == /datum/intent/snip) //This makes it so we can salvage

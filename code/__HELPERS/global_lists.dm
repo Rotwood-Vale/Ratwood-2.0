@@ -71,7 +71,7 @@
 	// Loadout items
 	for (var/path in subtypesof(/datum/loadout_item))
 		var/datum/loadout_item/loadout_item = new path()
-		GLOB.loadout_items[path] = loadout_item
+		GLOB.loadout_items += loadout_item
 
 
 	// Combat Music Overrides
@@ -88,7 +88,9 @@
 		var/datum/inqports/inqports = new path()
 		GLOB.inqsupplies[path] = inqports
 
-
+	//druids menu
+	for(var/mob/living/carbon/human/species/wildshape/shape as anything in subtypesof(/mob/living/carbon/human/species/wildshape))
+		GLOB.wildshapes[shape.name] = shape
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)

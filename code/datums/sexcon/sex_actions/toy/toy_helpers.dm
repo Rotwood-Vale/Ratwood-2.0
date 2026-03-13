@@ -7,3 +7,8 @@
 		return thing
 	return null
 
+/proc/get_dildo_on_belt(mob/living/carbon/human/user)
+	var/obj/item/storage/belt/rogue/belt = user.belt
+	if(istype(belt) && belt?.attached_toy)
+		return belt.attached_toy
+	return null

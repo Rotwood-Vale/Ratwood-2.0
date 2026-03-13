@@ -49,7 +49,9 @@
 
 #define HEALTH_THRESHOLD_NEARDEATH -90 //Not used mechanically, but to determine if someone is so close to death they hear the other side
 
-#define DAMAGE_THRESHOLD_FIRE_CRIT 150
+// Actually a divisor. Where 1 / this * 100% value of burn damage on lethal zones (Chest & Head) causes you to enter hardcrit.
+#define FIRE_HARDCRIT_DIVISOR 106 // 106 = 94.5% burn damage = hardcrit
+#define FIRE_HARDCRIT_DIVISOR_MINDLESS 200 // 200 = 50% burn damage = hardcrit for mindless mobs
 #define STRENGTH_SOFTCAP 14	//STR value past which we get diminishing returns in our damage calculations.
 #define STRENGTH_MULT 0.1	//STR multiplier per STR point up to the softcap. Works as a %-age. 0.1 = 10% per point.
 #define STRENGTH_CAPPEDMULT 0.034	//STR multiplier per STR point past the softcap
@@ -85,6 +87,12 @@
 #define ATTACK_ANIMATION_BONK "bonk"
 #define ATTACK_ANIMATION_SWIPE "swipe"
 #define ATTACK_ANIMATION_THRUST "thrust"
+
+// Intent Effective Range presets
+#define EFF_RANGE_NONE 0
+#define EFF_RANGE_EXACT 1
+#define EFF_RANGE_ABOVE 2
+#define EFF_RANGE_BELOW 3
 
 //Grab levels
 #define GRAB_PASSIVE				0
@@ -161,8 +169,10 @@
 #define AXE_CHOP			/datum/intent/axe/chop
 
 #define SPEAR_THRUST		/datum/intent/spear/thrust
+#define SPEAR_THRUST_1H		/datum/intent/spear/thrust/oneh
 #define SPEAR_BASH			/datum/intent/spear/bash
 #define SPEAR_CUT			/datum/intent/spear/cut
+#define SPEAR_CUT_1H		/datum/intent/spear/cut/oneh
 #define SPEAR_CAST          /datum/intent/spear/cast
 #define PARTIZAN_REND		/datum/intent/rend/reach/partizan
 #define PARTIZAN_PEEL		/datum/intent/partizan/peel
@@ -217,6 +227,7 @@
 #define BCLASS_PEEL			"peel"
 #define BCLASS_PUNISH		"punish"
 #define BCLASS_EFFECT		"effect"
+#define BCLASS_SUNDER       "sunder"
 
 //Material class (what material is striking)
 #define MCLASS_GENERIC		1
@@ -353,6 +364,10 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.1
 
+#define STRONG_STANCE_DMG_BONUS 0.1
+#define STRONG_SHP_BONUS 2
+#define STRONG_INTG_BONUS 2
+
 //bullet_act() return values
 #define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
@@ -361,11 +376,27 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_MISS				"MISS"
 
 //Weapon values
-#define BLUNT_DEFAULT_PENFACTOR		0
+#define BLUNT_DEFAULT_PENFACTOR		-100
+#define NONBLUNT_BLUNT_DAMFACTOR 0.8 // Damage factor when a non blunt weapon is used with blunt intent. Meant to make it worse than a real one.
+#define BLUNT_DEFAULT_INT_DAMAGEFACTOR 1.4 // Universal blunt intent integrity damage factor. Replaces Roguepen
+#define MAUL_DEFAULT_PENFACTOR		-200//So they can nuke armour without issue. A pseudo-rend setup.
+
+// Integrity & Sharpness Value
 #define INTEG_PARRY_DECAY			1	//Default integrity decay on parry.
 #define INTEG_PARRY_DECAY_NOSHARP	5	//Integrity decay on parry for weapons with no sharpness OR for off-hand parries.
 #define SHARPNESS_ONHIT_DECAY		3	//Sharpness decay on parry.
 #define SHARPNESS_TIER1_THRESHOLD	0.8	//%-age threshold when damage starts to fall off -- mainly damfactor and STR factor. NOT base damage value.
-#define SHARPNESS_TIER2_THRESHOLD	0.25//%-age threshold when damage *really* falls off. Base damage value included.
+#define SHARPNESS_TIER1_FLOOR		0.45//%-age threshold when damfactors and STR factors become 0.
+#define SHARPNESS_TIER2_THRESHOLD	0.2 //%-age threshold when damage *really* falls off. Base damage value included.
 
 #define UNARMED_DAMAGE_DEFAULT		12
+
+/// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
+#define SILVER_SIMPLEMOB_DAM_MULT 3
+
+//Damage directly applied to a mob, as a percentage, if struck with blunt against armour.
+//This is to permit beating to death full plate guys with clubs. Or making the lucerne viable again.
+#define BLUNT_CHIP_MINUSCULE 0.10	//A flat 10%, meant for oddities. Staves and the like.
+#define BLUNT_CHIP_WEAK 0.20		//A flat 20%, meant for small clubs.
+#define BLUNT_CHIP_STRONG 0.30		//A flat 30%, meant for larger weapons.
+#define BLUNT_CHIP_ABSURD 0.40		//A flat 40%, meant for mauls and hammers.

@@ -28,8 +28,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PROCESSING_HUMANNPC		(1<<8)
 #define PROCESSING_WATERLEVEL	(1<<9)
 #define PROCESSING_LIGHTING		(1<<10)
-#define PROCESSING_LOBBY	(1<<11)
+#define PROCESSING_LOBBY		(1<<11)
 #define PROCESSING_DAMOVERLAYS	(1<<12)
+#define PROCESSING_ICON_UPDATES	(1<<13)
 
 //FLAGS BITMASK
 
@@ -90,7 +91,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FLYING			(1<<1)
 #define VENTCRAWLING	(1<<2)
 #define FLOATING		(1<<3)
-/// When moving, will Bump()/Cross()/Uncross() everything, but won't be stopped.
+/// When moving, will Bump()/Cross() everything, but won't be stopped.
 #define UNSTOPPABLE		(1<<4)
 
 //Fire and Acid stuff, for resistance_flags

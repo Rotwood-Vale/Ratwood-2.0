@@ -50,11 +50,13 @@
 		OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
 		OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,0), \
 		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
+		OFFSET_BREASTS = list(0,1), \
 		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
 		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
 		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,-1), OFFSET_BACK_F = list(0,-1), \
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		OFFSET_BREASTS_F = list(0,-1), \
 		)
 	inherent_traits = list(TRAIT_SLEUTH)
 	race_bonus = list(STAT_INTELLIGENCE = 1, STAT_CONSTITUTION = 1)
@@ -91,6 +93,7 @@
 		/datum/customizer/organ/tail/lupian,
 		/datum/customizer/organ/snout/lupian,
 		/datum/customizer/organ/ears/lupian,
+		/datum/customizer/organ/horns/anthro,
 		/datum/customizer/organ/neck_feature/anthro,
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
@@ -127,9 +130,10 @@
 		/datum/body_marking/gradient,
 	)
 	descriptor_choices = list(
+		/datum/descriptor_choice/trait,
+		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/height,
 		/datum/descriptor_choice/body,
-		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/face,
 		/datum/descriptor_choice/face_exp,
 		/datum/descriptor_choice/fur,
@@ -171,7 +175,8 @@
 		"Langqan" = "271f2d",
 		"a tangled lineage" = "271f2e",
 		"disputed" = "271f2f",
-		"bastardized" = "271f3a"
+		"bastardized" = "271f3a",
+		"Czwarteki" =  "271f3b",
 	) // This is a dirty hack that stops me using mob defines, the colors do not do anything, it just a var that relates to their pack name on examine
 
 /datum/species/lupian/get_random_features()

@@ -15,7 +15,6 @@
 	possible_mmb_intents = list(INTENT_STEAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE)
 	possible_rmb_intents = list(/datum/rmb_intent/feint, /datum/rmb_intent/swift, /datum/rmb_intent/riposte, /datum/rmb_intent/weak)
 	flee_in_pain = TRUE
-	vitae_pool = 250 // Small, frail creechers with not so much vitality to gain from.
 
 /mob/living/carbon/human/species/goblin/npc
 	aggressive=1
@@ -47,6 +46,10 @@
 	name = "hell goblin"
 	id = "goblin_hell"
 	raceicon = "goblin_hell"
+
+/datum/species/goblin/hell/spec_death(gibbed, mob/living/carbon/human/H)
+	new /obj/item/alch/infernaldust(get_turf(H))
+	H.visible_message("<span class='blue'>Infernal dust falls from [H]!</span>")
 
 /mob/living/carbon/human/species/goblin/cave
 	name = "cave goblin"
@@ -134,14 +137,16 @@
 	H.update_inv_hands()
 	H.update_inv_handcuffed()
 	H.update_inv_legcuffed()
-	H.update_fire()
 	H.update_body()
 	var/mob/living/carbon/human/species/goblin/G = H
 	G.update_wearable()
 	H.update_transform()
 	return TRUE
 
-/mob/living/carbon/human/species/goblin/update_body(redraw = FALSE)
+/mob/living/carbon/human/species/goblin/update_body_parts(redraw)
+	update_body()
+
+/mob/living/carbon/human/species/goblin/update_body()
 	remove_overlay(BODY_LAYER)
 	if(!dna || !dna.species)
 		return
@@ -190,15 +195,16 @@
 
 	apply_overlay(ARMOR_LAYER)
 
-/mob/living/carbon/human/species/goblin/update_inv_head()
+/mob/living/carbon/human/species/goblin/update_inv_head(hide_nonstandard = FALSE)
 	update_wearable()
+
 /mob/living/carbon/human/species/goblin/update_inv_armor()
 	update_wearable()
 
 /datum/species/goblin/update_damage_overlays(mob/living/carbon/human/H)
 	return
 
-/mob/living/carbon/human/species/goblin/Initialize()
+/mob/living/carbon/human/species/goblin/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 
@@ -218,7 +224,7 @@
 		if(headdy)
 			headdy.icon = 'icons/roguetown/mob/monster/goblins.dmi'
 			headdy.icon_state = "[src.dna.species.id]_head"
-			headdy.sellprice = 20
+			headdy.sellprice = 30
 	src.grant_language(/datum/language/orcish)
 	var/obj/item/organ/eyes/eyes = src.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
@@ -236,7 +242,7 @@
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_INFINITE_ENERGY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
 	if(is_species(src, /datum/species/goblin/sea))
 		ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
@@ -340,7 +346,7 @@
 		if(5) //heavy armored sword/flail/shields
 			ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			if(prob(30))
-				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron/goblin
 			else
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/goblin
 			if(prob(80))
@@ -363,7 +369,7 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE) // Trash mob
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-        
+
 //////////////////   INVADER ZIM	//////////////////
 
 /obj/structure/gob_portal
@@ -381,7 +387,7 @@
 	var/moon_goblins = 0
 	attacked_sound = 'sound/vo/mobs/ghost/skullpile_hit.ogg'
 
-/obj/structure/gob_portal/Initialize()
+/obj/structure/gob_portal/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, FALSE)
 	soundloop.start()

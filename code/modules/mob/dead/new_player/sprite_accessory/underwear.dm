@@ -105,6 +105,11 @@
 		return "braies_f"
 	return "braies"
 
+/datum/sprite_accessory/underwear/loinclothunder
+	name = "Small Loincloth"
+	icon_state = "loinclothunder"
+	underwear_type = /obj/item/undies/loinclothunder
+
 /datum/sprite_accessory/legwear
 	abstract_type = /datum/sprite_accessory/legwear
 	icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/stockings.dmi'
@@ -115,18 +120,18 @@
 	var/hides_breasts = FALSE
 
 /datum/sprite_accessory/legwear/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
-    var/tag = icon_state
-    pixel_y = -1
-    if(owner.gender == FEMALE)
-        tag = tag + "_f"
-        pixel_y = 0
-    if(is_species(owner,/datum/species/dwarf))
-        tag = tag + "_dwarf"
-        pixel_y = 0
-    if(is_species(owner,/datum/species/elf) && owner.gender == MALE)
-        tag = tag + "_f"
-        pixel_y = -2
-    return tag
+	var/tag = icon_state
+	pixel_y = -1
+	if(owner.gender == FEMALE)
+		tag = tag + "_f"
+		pixel_y = 0
+	if(is_species(owner,/datum/species/dwarf))
+		tag = tag + "_dwarf"
+		pixel_y = 0
+	if(is_species(owner,/datum/species/elf) && owner.gender == MALE)
+		tag = tag + "_f"
+		pixel_y = -2
+	return tag
 
 /datum/sprite_accessory/legwear/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_PANTS, OFFSET_PANTS_F)
@@ -148,3 +153,13 @@
 	name = "fishnet stockings"
 	icon_state = "fishnet"
 	legwear_type = /obj/item/legwears/fishnet
+
+/datum/sprite_accessory/legwear/stockings/thigh_high
+	name = "thigh-high stockings"
+	icon_state = "thigh"
+	legwear_type = /obj/item/legwears/thigh_high
+
+/datum/sprite_accessory/legwear/stockings/knee_high
+	name = "knee-high stockings"
+	icon_state = "knee"
+	legwear_type = /obj/item/legwears/knee_high

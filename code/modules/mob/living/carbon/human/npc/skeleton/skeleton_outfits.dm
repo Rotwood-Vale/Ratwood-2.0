@@ -20,7 +20,7 @@
 	skel_outfit = /datum/outfit/job/roguetown/skeleton/npc/hard
 
 // For Duke Manor & Zizo Manor - Ground based spread, so no pirate in pool!
-/mob/living/carbon/human/species/skeleton/npc/mediumspread/Initialize()
+/mob/living/carbon/human/species/skeleton/npc/mediumspread/Initialize(mapload)
 	var/outfit = rand(1, 4)
 	switch(outfit)
 		if(1)
@@ -33,8 +33,11 @@
 			skel_outfit = /datum/outfit/job/roguetown/skeleton/npc/hard
 	..()
 
+/mob/living/carbon/human/species/skeleton/npc/mediumspread/lich
+	faction = list("lich")
+
 // for Lich Dungeon
-/mob/living/carbon/human/species/skeleton/npc/hardspread/Initialize()
+/mob/living/carbon/human/species/skeleton/npc/hardspread/Initialize(mapload)
 	var/outfit = rand(1,4)
 	switch(outfit)
 		if(1)
@@ -63,6 +66,14 @@
 		pants = /obj/item/clothing/under/roguetown/tights/random
 	else
 		pants = /obj/item/clothing/under/roguetown/loincloth
+	if(prob(5))
+		belt = /obj/item/storage/belt/rogue/leather/rope
+		if(prob(50))
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		else
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(5))
+		id = /obj/item/clothing/ring/aalloy
 	var/weapon_choice = rand(1, 4)
 	switch(weapon_choice)
 		if(1)
@@ -86,15 +97,23 @@
 
 /datum/outfit/job/roguetown/skeleton/npc/easy/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.STASTR = 14
+	H.STASTR = 9
 	H.STASPD = 8
 	H.STACON = 4 // Same statblock as before easily killed
-	H.STAWIL = 15
+	H.STAWIL = 12
 	H.STAINT = 1
 	name = "Skeleton Footsoldier"
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/aalloy
 	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/aalloy
 	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
+	if(prob(20))
+		belt = /obj/item/storage/belt/rogue/leather/rope
+		if(prob(50))
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		else
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(5))
+		id = /obj/item/clothing/ring/aalloy
 	var/weapon_choice = rand(1, 4)
 	switch(weapon_choice)
 		if(1)
@@ -118,10 +137,10 @@
 
 /datum/outfit/job/roguetown/skeleton/npc/pirate/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.STASTR = 14
+	H.STASTR = 9
 	H.STASPD = 8
 	H.STACON = 4 // Same statblock as before easily killed
-	H.STAWIL = 15
+	H.STAWIL = 12
 	H.STAINT = 1
 	name = "Skeleton Pirate"
 	head =  /obj/item/clothing/head/roguetown/helmet/tricorn
@@ -134,6 +153,14 @@
 		r_hand = /obj/item/rogueweapon/huntingknife/idagger/adagger
 	else
 		r_hand = /obj/item/rogueweapon/knuckles/aknuckles
+	if(prob(20))
+		belt = /obj/item/storage/belt/rogue/leather/rope
+		if(prob(50))
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		else
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(5))
+		id = /obj/item/clothing/ring/aalloy
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
@@ -147,10 +174,10 @@
 
 /datum/outfit/job/roguetown/skeleton/npc/medium/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.STASTR = 14
+	H.STASTR = 11
 	H.STASPD = 8
 	H.STACON = 6 // Slightly tougher now!
-	H.STAWIL = 15
+	H.STAWIL = 10
 	H.STAINT = 1
 	name = "Skeleton Soldier"
 	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard // Ooo Spooky Old Dead MAA
@@ -162,7 +189,16 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron/aalloy
 	gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
-	l_hand = /obj/item/rogueweapon/shield/tower/metal/alloy
+	if(prob(30))
+		belt = /obj/item/storage/belt/rogue/leather/rope
+		if(prob(50))
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		else
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(5))
+		id = /obj/item/clothing/ring/aalloy
+	if(prob(33)) // 33% chance of shield, so ranged don't get screwed over entirely
+		l_hand = /obj/item/rogueweapon/shield/tower/metal/alloy
 	if(prob(33))
 		r_hand = /obj/item/rogueweapon/spear/aalloy
 	else if(prob(33))
@@ -182,9 +218,9 @@
 
 /datum/outfit/job/roguetown/skeleton/npc/hard/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.STASTR = 14
+	H.STASTR = 12
 	H.STACON = 8 // Woe, actual limb health.
-	H.STAWIL = 15
+	H.STAWIL = 12
 	H.STAINT = 1
 	name = "Skeleton Dreadnought"
 	// This combines the khopesh  and withered dreadknight
@@ -198,7 +234,7 @@
 		wrists = /obj/item/clothing/wrists/roguetown/bracers/aalloy
 		pants = /obj/item/clothing/under/roguetown/platelegs/aalloy
 		shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
-		neck = /obj/item/clothing/neck/roguetown/zcross/aalloy
+		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
 		gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
 		r_hand = /obj/item/rogueweapon/sword/sabre/alloy
 		l_hand = /obj/item/rogueweapon/sword/sabre/alloy
@@ -217,9 +253,25 @@
 			r_hand = /obj/item/rogueweapon/greatsword/aalloy
 		else
 			r_hand = /obj/item/rogueweapon/mace/goden/aalloy
-
-
-
+	
+	if(prob(60))
+		belt = /obj/item/storage/belt/rogue/leather/rope
+		if(prob(50))
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		else
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(5))
+		id = /obj/item/clothing/ring/aalloy
+	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/maces, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
 
 // Rockhill style medium skeleton
 /mob/living/carbon/human/species/skeleton/npc/rockhill
@@ -259,6 +311,14 @@
 		r_hand = /obj/item/rogueweapon/sword/short/ashort
 	else
 		r_hand = /obj/item/rogueweapon/flail/aflail
+	if(prob(40))
+		belt = /obj/item/storage/belt/rogue/leather/rope
+		if(prob(50))
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		else
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(5))
+		id = /obj/item/clothing/ring/aalloy
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
@@ -269,8 +329,6 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-
-
 
 /mob/living/carbon/human/species/skeleton/npc/cultist
 	skel_outfit = /datum/outfit/job/roguetown/skeleton/npc/cultist
@@ -296,6 +354,14 @@
 		pants = /obj/item/clothing/under/roguetown/tights/random
 	else
 		pants = /obj/item/clothing/under/roguetown/loincloth
+	if(prob(20))
+		belt = /obj/item/storage/belt/rogue/leather/rope
+		if(prob(50))
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		else
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(5))
+		id = /obj/item/clothing/ring/aalloy
 	var/weapon_choice = rand(1, 4)
 	switch(weapon_choice)
 		if(1)
@@ -316,3 +382,47 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+
+
+/mob/living/carbon/human/species/skeleton/npc/miner
+	skel_outfit = /datum/outfit/job/roguetown/skeleton/npc/miner
+
+/datum/outfit/job/roguetown/skeleton/npc/miner/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.STASTR = 14
+	H.STASPD = 8
+	H.STACON = 6
+	H.STAWIL = 15
+	H.STAINT = 1
+	name = "Skeleton"
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+	pants = /obj/item/clothing/under/roguetown/loincloth/brown
+	if(prob(40))
+		pants =	/obj/item/clothing/under/roguetown/trou
+	if(prob(25))
+		head = /obj/item/clothing/head/roguetown/helmet
+	if(prob(25))
+		head = /obj/item/clothing/head/roguetown/helmet/horned
+	neck = /obj/item/clothing/neck/roguetown/collar/leather
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
+	r_hand = /obj/item/rogueweapon/pick/aalloy
+	if(prob(20))
+		r_hand = /obj/item/rogueweapon/shovel/aalloy
+	if(prob(40))
+		belt = /obj/item/storage/belt/rogue/leather/rope
+		if(prob(50))
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		else
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(5))
+		id = /obj/item/clothing/ring/aalloy
+	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)

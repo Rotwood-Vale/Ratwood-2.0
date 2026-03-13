@@ -36,11 +36,13 @@
 		OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
 		OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,0), \
 		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
+		OFFSET_BREASTS = list(0,1), \
 		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
 		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
 		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,0), OFFSET_BACK_F = list(0,-1), \
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		OFFSET_BREASTS_F = list(0,-1), \
 		)
 	inherent_traits = list(TRAIT_HUMEN_INGENUITY)
 	race_bonus = list(STAT_INTELLIGENCE = 1, STAT_WILLPOWER = 1)
@@ -88,12 +90,13 @@
 		"Otava" = SKIN_COLOR_OTAVA,
 		"Etrusca" = SKIN_COLOR_ETRUSCA,
 		"Gronn" = SKIN_COLOR_GRONN,
-		"North Raneshen (Chorodiaki)" = SKIN_COLOR_GIZA,
-		"West Raneshen (Vrdaqnan)" = SKIN_COLOR_SHALVISTINE,
-		"East Raneshen (Nshkormh)" = SKIN_COLOR_LALVESTINE,
+		"North Zybantium (Chorodiaki)" = SKIN_COLOR_GIZA,
+		"West Zybantium (Vrdaqnan)" = SKIN_COLOR_SHALVISTINE,
+		"East Zybantium (Nshkormh)" = SKIN_COLOR_LALVESTINE,
 		"Naledi" = SKIN_COLOR_NALEDI,
 		"Naledi South" = SKIN_COLOR_NALEDI_LIGHT,
-		"Kazengun" = SKIN_COLOR_KAZENGUN
+		"Kazengun" = SKIN_COLOR_KAZENGUN,
+		"Czwarteki" = SKIN_COLOR_CZWARTEKI,
 	)
 
 /datum/species/human/northern/get_hairc_list()

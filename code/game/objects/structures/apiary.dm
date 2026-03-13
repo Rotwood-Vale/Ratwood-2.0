@@ -44,7 +44,7 @@
 		bee.color = bee_color // Apply genetic color
 		overlays += bee
 
-/obj/effect/bees/Initialize()
+/obj/effect/bees/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	update_overlays()
@@ -200,7 +200,7 @@
 	stored_combs = 0
 	comb_progress = 0
 
-/obj/structure/apiary/starter/Initialize()
+/obj/structure/apiary/starter/Initialize(mapload)
 	. = ..()
 	create_new_queen()
 
@@ -248,7 +248,7 @@
 
 
 
-/obj/structure/apiary/Initialize()
+/obj/structure/apiary/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -664,7 +664,7 @@
 	var/queen_health = 100
 	var/max_queen_age = 30 // Queens live for 30 days
 
-/obj/item/queen_bee/Initialize()
+/obj/item/queen_bee/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -679,24 +679,6 @@
 	if(queen_health <= 0)
 		visible_message(span_warning("[src] dies of old age!"))
 		qdel(src)
-
-
-/*
-/obj/item/clothing/head/beekeeper_head
-	name = "beekeeper hat"
-	desc = "A hat with a mesh veil to protect from angry bees."
-	icon_state = "beekeeper"
-	clothing_flags = THICKMATERIAL
-	flags_cover = HEADCOVERSMOUTH
-
-/obj/item/clothing/armor/beekeeper_suit
-	name = "beekeeper suit"
-	desc = "A suit designed to protect from bee stings."
-	icon_state = "beekeeper"
-	clothing_flags = THICKMATERIAL
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	allowed = list(/obj/item/bee_smoker)
-*/
 
 /obj/item/bee_smoker
 	name = "bee smoker"
@@ -887,25 +869,29 @@
 /obj/item/reagent_containers/food/snacks/rogue/honey/ambrosia
 	name = "relaxing honey"
 	desc = "Sweet honey with subtle relaxing properties."
-	icon_state = "honey_green"
+	icon_state = "greyscale_honey"
+	honey_color = COLOR_GREEN_GRAY
 	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/consumable/nutriment = 3, /datum/reagent/drug/space_drugs = 2)
 
 /obj/item/reagent_containers/food/snacks/rogue/honey/healing
 	name = "medicinal honey"
 	desc = "Sweet honey with healing properties."
-	icon_state = "honey_red"
+	icon_state = "greyscale_honey"
+	honey_color = COLOR_MAROON
 	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/consumable/nutriment = 3)
 
 /obj/item/reagent_containers/food/snacks/rogue/honey/toxic
 	name = "strange honey"
 	desc = "This honey has an unusual smell and appearance."
-	icon_state = "honey_toxic"
+	icon_state = "greyscale_honey"
+	honey_color = "#CF3600"
 	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/toxin = 2)
 
 /obj/item/reagent_containers/food/snacks/rogue/honey/luminescent
 	name = "glowing honey"
 	desc = "This honey gives off a soft bioluminescent glow."
-	icon_state = "honey_glowing"
+	icon_state = "greyscale_honey"
+	honey_color = "#CCFF99"
 	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/consumable/nutriment = 3)
 	light_system = MOVABLE_LIGHT
 	light_outer_range = 2
@@ -926,7 +912,7 @@
 	var/search_time = 0
 	var/established = FALSE
 
-/obj/effect/bee_swarm/Initialize()
+/obj/effect/bee_swarm/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	update_overlays()
@@ -1008,7 +994,7 @@
 	var/aggressiveness = 50 // 0-100 scale
 	var/list/bee_objects = list()
 
-/obj/structure/beehive/wild/Initialize()
+/obj/structure/beehive/wild/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	bee_count = rand(5, max_bees)
@@ -1146,7 +1132,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/honey/wild
 	name = "wild honey"
 	desc = "Sweet wild honey. It has a more complex flavor than regular honey."
-	icon_state = "honey_wild"
+	icon_state = "greyscale_honey"
 	honey_color = "#6d4633"
 	list_reagents = list(/datum/reagent/consumable/honey = 7, /datum/reagent/consumable/nutriment = 3)
 

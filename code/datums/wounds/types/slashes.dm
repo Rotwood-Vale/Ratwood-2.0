@@ -44,13 +44,13 @@
 	bleed_rate = 1
 	sew_threshold = 25
 	woundpain = 5
-	clotting_rate = 0.1
+	clotting_rate = 0.05
 	clotting_threshold = 0.25
 
 	sewn_clotting_threshold = null
 	sewn_clotting_rate = null
 	sewn_bleed_rate = null
-	
+
 	can_sew = TRUE
 	can_cauterize = TRUE
 	severity_names = list(
@@ -73,7 +73,7 @@
 
 /datum/wound/dynamic/slash/upgrade(dam, armor)
 	whp += (dam * SLASH_UPG_WHPRATE)
-	bleed_rate += clamp((dam * SLASH_UPG_BLEEDRATE), 0.1, ((armor > 0) ? SLASH_UPG_CLAMP_ARMORED : SLASH_UPG_CLAMP_RAW))
+	set_bleed_rate(bleed_rate + clamp((dam * SLASH_UPG_BLEEDRATE), 0.1, ((armor > 0) ? SLASH_UPG_CLAMP_ARMORED : SLASH_UPG_CLAMP_RAW)))
 	sew_threshold += (dam * SLASH_UPG_SEWRATE)
 	woundpain += (dam * SLASH_UPG_PAINRATE)
 	armor_check(armor, SLASH_ARMORED_BLEED_CLAMP)
@@ -169,6 +169,13 @@
 	qdel(src)
 	return TRUE
 
+/datum/wound/slash/incision/construct
+	name = "open hatch"
+	check_name = span_bloody("<B>OPEN HATCH</B>")
+	bleed_rate = 0
+	sewn_bleed_rate = 0.0
+	bypass_bloody_wound_check = TRUE
+
 /datum/wound/slash/vein
 	name= "vein"
 	check_name = span_bloody("<B>VEIN</B")
@@ -195,6 +202,12 @@
 	mob_overlay = "cut"
 	can_sew = TRUE
 	can_cauterize = FALSE	//Ouch owie oof
+	severity_names = list(
+		"light" = 5,
+		"deep" = 10,
+		"gnarly" = 15,
+		"lethal" = 20,
+	)
 
 //Lashing (Whip) Omniwounds
 //Vaguely: Painful, huge bleeds, but nearly nothing at all through any armor.
@@ -209,7 +222,7 @@
 
 /datum/wound/dynamic/lashing/upgrade(dam, armor)
 	whp += (dam * LASHING_UPG_WHPRATE)
-	bleed_rate += clamp((dam * LASHING_UPG_BLEEDRATE), 0.1, ((armor > 0) ? LASHING_UPG_CLAMP_ARMORED : LASHING_UPG_CLAMP_RAW))
+	set_bleed_rate(bleed_rate + clamp((dam * LASHING_UPG_BLEEDRATE), 0.1, ((armor > 0) ? LASHING_UPG_CLAMP_ARMORED : LASHING_UPG_CLAMP_RAW)))
 	sew_threshold += (dam * LASHING_UPG_SEWRATE)
 	woundpain += (dam * LASHING_UPG_PAINRATE)
 	armor_check(armor, LASHING_ARMORED_BLEED_CLAMP)
@@ -235,6 +248,12 @@
 	mob_overlay = "cut"
 	can_sew = TRUE
 	can_cauterize = FALSE	//Ouch owie oof
+	severity_names = list(
+		"light" = 5,
+		"deep" = 10,
+		"gnarly" = 15,
+		"lethal" = 20,
+	)
 
 //Special Punish omniwounds for whip (or anything else if desired) intent.
 //Vaguely: Really very giga painful. Not very bleedy. Can still be sewn!
@@ -250,7 +269,7 @@
 
 /datum/wound/dynamic/punish/upgrade(dam, armor)
 	whp += (dam * PUNISH_UPG_WHPRATE)
-	bleed_rate += clamp((dam * PUNISH_UPG_BLEEDRATE), 0.1, ((armor > 0) ? PUNISH_UPG_CLAMP_ARMORED : PUNISH_UPG_CLAMP_RAW))
+	set_bleed_rate(bleed_rate + clamp((dam * PUNISH_UPG_BLEEDRATE), 0.1, ((armor > 0) ? PUNISH_UPG_CLAMP_ARMORED : PUNISH_UPG_CLAMP_RAW)))
 	sew_threshold += (dam * PUNISH_UPG_SEWRATE)
 	woundpain += (dam * PUNISH_UPG_PAINRATE)
 	passive_healing += PUNISH_UPG_SELFHEAL

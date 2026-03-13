@@ -5,7 +5,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF
 	experimental_inhand = FALSE
-	grid_width = 32
+	grid_width = 64
 	grid_height = 32
 
 /obj/item/rogueore/gold
@@ -15,7 +15,7 @@
 	smeltresult = /obj/item/ingot/gold
 	sellprice = 10
 
-/obj/item/rogueore/gold/Initialize()
+/obj/item/rogueore/gold/Initialize(mapload)
 	icon_state = "oregold[rand(1,3)]"
 	..()
 
@@ -27,7 +27,7 @@
 	smeltresult = /obj/item/ingot/silver
 	sellprice = 8
 
-/obj/item/rogueore/silver/Initialize()
+/obj/item/rogueore/silver/Initialize(mapload)
 	icon_state = "oresilv[rand(1,3)]"
 	..()
 
@@ -39,7 +39,7 @@
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 5
 
-/obj/item/rogueore/iron/Initialize()
+/obj/item/rogueore/iron/Initialize(mapload)
 	icon_state = "oreiron[rand(1,3)]"
 	..()
 
@@ -51,7 +51,7 @@
 	smeltresult = /obj/item/ingot/copper
 	sellprice = 3
 
-/obj/item/rogueore/copper/Initialize()
+/obj/item/rogueore/copper/Initialize(mapload)
 	icon_state = "orecop[rand(1,3)]"
 	..()
 
@@ -62,7 +62,7 @@
 	smeltresult = /obj/item/ingot/tin
 	sellprice = 4
 
-/obj/item/rogueore/tin/Initialize()
+/obj/item/rogueore/tin/Initialize(mapload)
 	icon_state = "oretin[rand(1,3)]"
 	..()
 
@@ -97,7 +97,7 @@
 	else
 		return ..()
 
-/obj/item/rogueore/coal/Initialize()
+/obj/item/rogueore/coal/Initialize(mapload)
 	icon_state = "orecoal[rand(1,3)]"
 	..()
 
@@ -182,7 +182,7 @@
 		QDEL_NULL(currecipe)
 	if(istype(loc, /obj/machinery/anvil))
 		var/obj/machinery/anvil/A = loc
-		A.hingot = null
+		A.current_workpiece = null
 		A.update_icon()
 	..()
 
@@ -269,7 +269,7 @@
 
 /obj/item/ingot/silverblessed/
 	name = "blessed silver bar"
-	desc = "This bar radiates a divine purity. Treasured by the realms and commonly found in Otavan weaponry."
+	desc = "This bar radiates a divine purity. Treasured by the realms and commonly found in Psydonic weaponry."
 	icon_state = "ingotsilvblessed"
 	smeltresult = /obj/item/ingot/silver //Smelting it removes the blessing
 	sellprice = 100
@@ -297,6 +297,9 @@
 	smeltresult = /obj/item/ingot/purifiedaalloy
 	sellprice = 111
 
+/obj/item/ingot/purifiedaalloy/eahasir
+	name = "EA-Hasir high-quality gold ingot"
+	desc = "Solid wealth in your hand- Hey wait a minute, this isn't gold."
 
 /obj/item/ingot/aaslag
 	name = "glimmering slag"
@@ -304,3 +307,24 @@
 	icon_state = "ancientslag"
 	smeltresult = /obj/item/ingot/aaslag
 	sellprice = 1
+
+//Anomalous Smeltings
+/obj/item/ingot/weeping
+	name = "enduring ingot"
+	desc = "A slab of metal, aged and bare. You finally know what it is, yet no word can be sired to describe it. </br>'..none will ever know the greatest truths; of Aeon's grasp, of Adonai's presence, of Psydon's fate..' </br>'..but, perhaps, that's for the better. The malaise is gone, but the evils of this world are still very real..' </br>'..find a way to give the remains a new lyfe; a new vessel that may yet make the Archdevil weep..'"
+	icon_state = "ingotsilv"
+	smeltresult = /obj/item/ingot/weeping
+	color = "#CECA9C"
+	sellprice = 222
+
+/obj/item/ingot/weeping/Initialize(mapload)
+	. = ..()
+	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(64,65),rand(1,5),rand(1,5)))
+
+/obj/item/ingot/draconic
+	name = "draconic ingot"
+	desc = "A slab of obsidian, crackling with energy. Your fingers blister from the sheer heat, radiating off of its glassy surface. </br>'..no man, be-they a saint or sinner, can truly withstand such power..' </br>'..but, perhaps, you are different..' </br>'..find a way to give the remains a new lyfe; a new vessel that may yet make the Archdevil weep..'"
+	icon_state = "ingotblacksteel"
+	smeltresult = /obj/item/ingot/draconic
+	color = "#70b8ff"
+	sellprice = 333

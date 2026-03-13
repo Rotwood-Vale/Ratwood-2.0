@@ -16,7 +16,7 @@
 	aggressive = 1
 	wander = TRUE
 
-/mob/living/carbon/human/species/human/northern/mad_touched_treasure_hunter/Initialize()
+/mob/living/carbon/human/species/human/northern/mad_touched_treasure_hunter/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/human/northern)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
@@ -30,8 +30,8 @@
 	ADD_TRAIT(src, TRAIT_INFINITE_STAMINA, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/human/species/human/northern/mad_touched_treasure_hunter)
 	var/obj/item/organ/eyes/organ_eyes = getorgan(/obj/item/organ/eyes)
@@ -39,8 +39,6 @@
 		organ_eyes.eye_color = pick("27becc", "35cc27", "000000")
 	update_hair()
 	update_body()
-	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
-	head.sellprice = 40
 
 /mob/living/carbon/human/species/human/northern/mad_touched_treasure_hunter/npc_idle()
 	if(m_intent == MOVE_INTENT_SNEAK)
@@ -67,8 +65,16 @@
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/light
 	pants = /obj/item/clothing/under/roguetown/platelegs/paalloy
 	belt = /obj/item/storage/belt/rogue/leather
-	if(prob(33))
-		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
+	if(prob(15))
+		beltl = /obj/item/storage/belt/rogue/pouch/medicine
+	if(prob(60))
+		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+	if(prob(20))
+		beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
+	if(prob(30))
+		id = /obj/item/clothing/ring/silver
+	else
+		id = /obj/item/clothing/ring/aalloy
 	head = /obj/item/clothing/head/roguetown/menacing/mad_touched_treasure_hunter
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
 	gloves = /obj/item/clothing/gloves/roguetown/plate/paalloy
@@ -84,12 +90,12 @@
 
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	//carbon ai is still pretty dumb so making them a threat to players requires pretty crazy looking stats. don't think too hard about it.
-	H.STASTR = 18
-	H.STASPD = 18
-	H.STACON = 18
+	H.STASTR = 15
+	H.STASPD = 15
+	H.STACON = 15
 	H.STAWIL = 15
 	H.STAPER = 15
-	H.STAINT = 15
+	H.STAINT = 12
 	H.eye_color = "27becc"
 	H.hair_color = "61310f"
 	H.facial_hair_color = H.hair_color
@@ -114,7 +120,7 @@
 	desc = "A ragged hood of thick jute fibres. The itchiness is unbearable."
 	sewrepair = TRUE
 	color = "#999999"
-	armor = ARMOR_HEAD_HELMET_BAD
+	armor = ARMOR_LEATHER
 
 /obj/item/clothing/mask/rogue/facemask/steel/paalloy/mad_touched
 	name = "eerie ancient mask"

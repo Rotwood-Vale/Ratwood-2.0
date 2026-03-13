@@ -91,6 +91,21 @@
 #define ORGAN_SLOT_BREASTS "breasts"
 #define ORGAN_SLOT_VAGINA "vagina"
 
+#define ORGAN_SLOTS_HEAD_ORGANS list(\
+	ORGAN_SLOT_BRAIN,\
+	ORGAN_SLOT_BREATHING_TUBE,\
+	ORGAN_SLOT_EARS,\
+	ORGAN_SLOT_EYES,\
+	ORGAN_SLOT_TONGUE,\
+	ORGAN_SLOT_VOICE,\
+	ORGAN_SLOT_FRILLS,\
+	ORGAN_SLOT_HORNS,\
+	ORGAN_SLOT_ANTENNAS,\
+	ORGAN_SLOT_NECK_FEATURE,\
+	ORGAN_SLOT_HEAD_FEATURE,\
+	ORGAN_SLOT_SNOUT,\
+)
+
 #define BODYPART_FEATURE_HAIR "hair"
 #define BODYPART_FEATURE_FACIAL_HAIR "facehair"
 #define BODYPART_FEATURE_ACCESSORY "accessory"
@@ -98,6 +113,7 @@
 #define BODYPART_FEATURE_UNDERWEAR "underwear"
 #define BODYPART_FEATURE_CREST "crest"
 #define BODYPART_FEATURE_LEGWEAR "legwear"
+#define BODYPART_FEATURE_BRAND "brand"
 
 //flags for requirements for a surgery step
 #define SURGERY_BLOODY (1<<0)
@@ -108,6 +124,7 @@
 #define SURGERY_BROKEN (1<<5)
 #define SURGERY_DRILLED (1<<6)
 #define SURGERY_CUTVEIN (1<<7)
+#define SURGERY_CONSTRUCT (1<<8)
 
 //flags for the organ_flags var on /obj/item/organ
 /// Synthetic organs, or cybernetic organs. Reacts to EMPs and don't deteriorate or heal

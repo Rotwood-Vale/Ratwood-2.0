@@ -87,7 +87,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/match/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!isliving(M))
 		return
-//	if(lit && M.IgniteMob())
+//	if(lit && M.ignite_mob())
 //		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 //		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
@@ -115,7 +115,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 20 //40 seconds
 	grind_results = list(/datum/reagent/carbon = 2)
 
-/obj/item/match/firebrand/Initialize()
+/obj/item/match/firebrand/Initialize(mapload)
 	. = ..()
 	matchignite()
 
@@ -136,6 +136,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon = 'icons/roguetown/items/lighting.dmi'
 	heat = 1000
 	spitoutmouth = FALSE
+	nudist_approved = TRUE
 	light_outer_range = 1
 	light_system = MOVABLE_LIGHT
 	light_color = "#f5a885"
@@ -161,7 +162,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/cigarette/Initialize()
+/obj/item/clothing/mask/cigarette/Initialize(mapload)
 	. = ..()
 	create_reagents(chem_volume, INJECTABLE | NO_REACT)
 	if(list_reagents)
@@ -274,7 +275,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
 //	if(isliving(loc))
-//		M.IgniteMob()
+//		M.ignite_mob()
 	smoketime--
 	if(smoketime < 1)
 		if(iscarbon(loc))
@@ -340,7 +341,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = null
 	muteinmouth = FALSE
 
-/obj/item/clothing/mask/cigarette/rollie/Initialize()
+/obj/item/clothing/mask/cigarette/rollie/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
@@ -365,6 +366,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = list(/datum/reagent/drug/nicotine = 45)
 
 /obj/item/clothing/mask/cigarette/rollie/trippy
+	name = "trippy zig"
+	desc = "A paper wrapped cartridge of... What?"
 	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/drug/mushroomhallucinogen = 35)
 	starts_lit = TRUE
 
@@ -392,7 +395,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "roach"
 	muteinmouth = FALSE
 
-/obj/item/cigbutt/roach/Initialize()
+/obj/item/cigbutt/roach/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
@@ -478,7 +481,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "longpipeon"  //Note - these are in masks.dmi
 	icon_off = "longpipeoff"
 
-/obj/item/clothing/mask/cigarette/pipe/crafted/Initialize()
+/obj/item/clothing/mask/cigarette/pipe/crafted/Initialize(mapload)
 	. = ..()
 	if(prob(50))
 		name = "westman pipe"
@@ -609,7 +612,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	light_color = LIGHT_COLOR_FIRE
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
 
-/obj/item/lighter/Initialize()
+/obj/item/lighter/Initialize(mapload)
 	. = ..()
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
@@ -678,7 +681,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 					user.apply_damage(5, BURN, hitzone)
 					user.visible_message(span_warning("After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn [user.p_their()] finger in the process."), span_warning("I burn myself while lighting the lighter!"))
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "burnt_thumb", /datum/mood_event/burnt_thumb)
 
 		else
 			set_lit(FALSE)
@@ -690,7 +692,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		. = ..()
 
 /obj/item/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(lit && M.IgniteMob())
+	if(lit && M.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
@@ -745,7 +747,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		COLOR_ASSEMBLY_PURPLE
 		)
 
-/obj/item/lighter/greyscale/Initialize()
+/obj/item/lighter/greyscale/Initialize(mapload)
 	. = ..()
 	if(!lighter_color)
 		lighter_color = pick(color_list)

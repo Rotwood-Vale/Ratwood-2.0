@@ -35,6 +35,8 @@
 	glide_size = 6
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+	///Holds information about any movement loops currently running/waiting to run on the movable. Lazy, will be null if nothing's going on (pulled in from Vanderlin)
+	var/datum/movement_packet/move_packet
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 	var/atom/movable/pulling
 	var/nodirchange = FALSE
@@ -70,7 +72,7 @@
 		target = get_step_multiz(source, direction)
 		if(!target)
 			return FALSE
-	return !(movement_type & FLYING) && has_gravity(source) && !throwing
+	return !(movement_type & FLYING) && !throwing
 
 /atom/movable/proc/onZImpact(turf/T, levels)
 	var/atom/highest = T
@@ -209,11 +211,11 @@
 		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
 			stop_pulling()
 			return FALSE
+		if(L.buckled == src) // Fixes an exploit that lets you travel at mach5 by moving someone buckled to yourself
+			return FALSE
 	if(A == loc && pulling.density)
 		return FALSE
 	var/move_dir = get_dir(pulling.loc, A)
-	if(!Process_Spacemove(move_dir))
-		return FALSE
 	pulling.Move(get_step(pulling.loc, move_dir), move_dir, glide_size)
 	return TRUE
 
@@ -416,7 +418,6 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
-		newtonian_move(Dir)
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
 
@@ -440,7 +441,6 @@
 	return TRUE
 
 /atom/movable/Destroy(force)
-	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 
 	unbuckle_all_mobs(force=1)
@@ -480,16 +480,6 @@
 /atom/movable/Crossed(atom/movable/AM, oldloc)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
-/atom/movable/Uncross(atom/movable/AM, atom/newloc)
-	. = ..()
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSS, AM) & COMPONENT_MOVABLE_BLOCK_UNCROSS)
-		return FALSE
-	if(isturf(newloc) && !CheckExit(AM, newloc))
-		return FALSE
-
-/atom/movable/Uncrossed(atom/movable/AM)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
-
 /atom/movable/Bump(atom/A)
 	if(!A)
 		CRASH("Bump was called with no argument.")
@@ -503,10 +493,13 @@
 	A.Bumped(src)
 
 /atom/movable/proc/forceMove(atom/destination)
+	if(!destination || QDELETED(src))
+		CRASH("[src] No valid destination passed into forceMove")
+
 	var/mob/living/carbon/human/H = null
 	if(ishuman(src.loc))
 		H = src.loc
-	
+
 	. = FALSE
 	if(destination)
 		. = doMove(destination)
@@ -582,39 +575,6 @@
 /atom/movable/proc/setMovetype(newval)
 	movement_type = newval
 
-//Called whenever an object moves and by mobs when they attempt to move themselves through space
-//And when an object or action applies a force on src, see newtonian_move() below
-//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
-//movement_dir == 0 when stopping or any dir when trying to move
-/atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(has_gravity(src))
-		return 1
-
-	if(pulledby)
-		return 1
-
-	if(throwing)
-		return 1
-
-	if(!isturf(loc))
-		return 1
-
-	return 0
-
-
-/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
-	if(!loc || Process_Spacemove(0))
-		inertia_dir = 0
-		return 0
-
-	inertia_dir = direction
-	if(!direction)
-		return 1
-	inertia_last_loc = loc
-	SSspacedrift.processing[src] = src
-	return 1
-
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = 0
 	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
@@ -634,7 +594,7 @@
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, extra = FALSE) //If this returns FALSE then callback will not be called.
 	. = FALSE
-	if (!target || speed <= 0)
+	if (!target || speed <= 0 || move_resist == INFINITY)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
@@ -766,25 +726,6 @@
 /atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
 	return
 
-/atom/movable/proc/get_spacemove_backup()
-	var/atom/movable/dense_object_backup
-	for(var/A in orange(1, get_turf(src)))
-		if(isarea(A))
-			continue
-		else if(isturf(A))
-			var/turf/turf = A
-			if(!turf.density)
-				continue
-			return turf
-		else
-			var/atom/movable/AM = A
-			if(!AM.CanPass(src) || AM.density)
-				if(AM.anchored)
-					return AM
-				dense_object_backup = AM
-				break
-	. = dense_object_backup
-
 //called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
@@ -823,23 +764,31 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = GLOB.pixel_diff_time, easing=LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = GLOB.pixel_diff_time * 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
-/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent, simplified = FALSE)
+/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent = null, simplified = FALSE)
 	if(used_item || !simplified)
 		var/animation_type = item_animation_override || used_intent?.get_attack_animation_type()
-		do_item_attack_animation(A, visual_effect_icon, used_item, animation_type = animation_type)
-		return
+		if(used_intent?.swingdelay)
+			if(isliving(src))
+				var/mob/living/L = src
+				if(L.mind)
+					draw_swingdelay(A, used_intent.custom_swingdelay, used_intent.swingdelay)
+					addtimer(CALLBACK(src, PROC_REF(do_item_attack_animation), A, visual_effect_icon, used_item, animation_type, used_intent), used_intent.swingdelay)
+		else
+			do_item_attack_animation(A, visual_effect_icon, used_item, animation_type = animation_type, used_intent = used_intent)
+			return
 	wiggle(A)
 
 
-/atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, animation_type = ATTACK_ANIMATION_SWIPE)
+
+/atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, animation_type = ATTACK_ANIMATION_SWIPE, datum/intent/used_intent)
 	if(used_item)
 		if(used_item.no_effect)
 			return
+	if(QDELETED(src) || QDELETED(A) || QDELETED(used_item))
+		return
 	if(!visual_effect_icon)
 		return
 	if(A == src)
-		return
-	if (isnull(used_item))
 		return
 	var/dist = get_dist(src, A)
 	if(dist <= 1)
@@ -984,18 +933,63 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 				animate(attack, pixel_y = 3 * y_sign * angle_mult, time = 0.2 SECONDS, easing = CIRCULAR_EASING | EASE_IN, flags = ANIMATION_PARALLEL)
 				animate(pixel_y = y_return, time = 0.2 SECONDS, easing = CIRCULAR_EASING | EASE_OUT)
 	else
-		//Oldschool indicators.
-		var/turf/first_step = get_step(src, get_dir(src, A))
-		var/obj/effect/temp_visual/dir_setting/attack_effect/firstatk = new(first_step, get_dir(src, A))
+		do_attack_animation_simple(A, visual_effect_icon, used_intent = used_intent)
+
+	///Oldschool indicators. Used by non-weapon intents or simple mobs.
+/atom/movable/proc/do_attack_animation_simple(atom/A, visual_effect_icon, wiggle = TRUE, datum/intent/used_intent)
+	var/newdir = get_dir(src, A)
+	var/turf/first_step = get_step(src, newdir)
+	var/obj/effect/temp_visual/dir_setting/attack_effect/firstatk = new(first_step, newdir)
+	firstatk.icon_state = visual_effect_icon
+	firstatk.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/dist = get_dist(src, A)
+	if(dist > 1)	//2+ tiles, we trace a path to the target.
+		for(var/i = 1, i<dist, i++)
+			newdir = get_dir(first_step, A)
+			var/turf/next_step = get_step(first_step, newdir)
+			var/obj/effect/temp_visual/dir_setting/attack_effect/atk = new(next_step, newdir)
+			atk.icon_state = visual_effect_icon
+			atk.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+			if(used_intent?.effective_range)
+				var/draw_eff_range_vfx = FALSE
+				switch(used_intent?.effective_range_type)
+					if(EFF_RANGE_EXACT)
+						if(used_intent?.effective_range == (i + 1))	//We only start this loop if dist is >1 so we start from the second tracer onwards.
+							draw_eff_range_vfx = TRUE
+					if(EFF_RANGE_ABOVE)
+						if(used_intent?.effective_range <= (i + 1))
+							draw_eff_range_vfx = TRUE
+					if(EFF_RANGE_BELOW)
+						if(used_intent?.effective_range >= (i + 1))
+							draw_eff_range_vfx = TRUE
+				if(draw_eff_range_vfx)
+					var/obj/effect/temp_visual/dir_setting/attack_effect/atk_effrange = new(next_step, newdir)
+					atk_effrange.icon_state = "effrange"
+					atk_effrange.layer = (atk.layer + 0.1)	//Should always be on top of the regular indicator.
+			first_step = next_step
+	if(wiggle)
+		wiggle(A)
+
+///Bit of a shoddy copy paste specifically for more static swingdelays
+/atom/movable/proc/draw_swingdelay(atom/A, visual_effect_icon, delay)
+	var/newdir = get_dir(src, A)
+	var/turf/first_step = get_step(src, newdir)
+	var/obj/effect/temp_visual/swingdelay/firstatk = new(first_step, delay)
+	firstatk.duration = delay
+	if(visual_effect_icon)
 		firstatk.icon_state = visual_effect_icon
-		firstatk.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		if(dist > 1)	//2+ tiles, we trace a path to the target.
-			for(var/i = 1, i<dist, i++)
-				var/turf/next_step = get_step(first_step, get_dir(first_step, A))
-				var/obj/effect/temp_visual/dir_setting/attack_effect/atk = new(next_step, get_dir(first_step, A))
+	firstatk.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/dist = get_dist(src, A)
+	if(dist > 1)	//2+ tiles, we trace a path to the target.
+		for(var/i = 1, i<dist, i++)
+			newdir = get_dir(first_step, A)
+			var/turf/next_step = get_step(first_step, newdir)
+			var/obj/effect/temp_visual/swingdelay/atk = new(next_step, delay)
+			atk.duration = delay
+			if(visual_effect_icon)
 				atk.icon_state = visual_effect_icon
-				atk.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-				first_step = next_step
+			atk.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+			first_step = next_step
 
 /obj/effect/temp_visual/dir_setting/attack_effect
 	icon = 'icons/effects/effects.dmi'
@@ -1100,14 +1094,13 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 	var/datum/language/chosen_langtype
 	var/highest_priority
 
-	for(var/lt in H.languages)
-		var/datum/language/langtype = lt
-		if(!can_speak_in_language(langtype))
+	for(var/datum/language/langtype as anything in H.languages)
+		if(!can_speak_in_language(langtype.type))
 			continue
 
 		var/pri = initial(langtype.default_priority)
 		if(!highest_priority || (pri > highest_priority))
-			chosen_langtype = langtype
+			chosen_langtype = langtype.type
 			highest_priority = pri
 
 	H.selected_default_language = .
@@ -1116,7 +1109,7 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 /* End language procs */
 /atom/movable/proc/ConveyorMove(movedir)
 	set waitfor = FALSE
-	if(!anchored && has_gravity())
+	if(!anchored)
 		step(src, movedir)
 
 //Returns an atom's power cell, if it has one. Overload for individual items.

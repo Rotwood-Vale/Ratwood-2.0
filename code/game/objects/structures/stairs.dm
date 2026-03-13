@@ -2,7 +2,6 @@
 #define STAIR_TERMINATOR_NO 1
 #define STAIR_TERMINATOR_YES 2
 
-// dir determines the direction of travel to go upwards (due to lack of sprites, currently only 1 and 2 make sense)
 // stairs require /turf/open/transparent/openspace as the tile above them to work
 // multiple stair objects can be chained together; the Z level transition will happen on the final stair object in the chain
 
@@ -14,6 +13,48 @@
 	layer = 5
 	nomouseover = TRUE
 	plane = FLOOR_PLANE
+
+/obj/structure/stairs/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
+	AddElement(/datum/element/connect_loc, loc_connections)
+	return
+
+/obj/structure/stairs/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+
+	if(isobserver(leaving))
+		return
+
+	if(user_walk_into_target_loc(leaving, get_dir(src, new_location)))
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
+
+/// From a cardinal direction, returns the resulting turf we'll end up at if we're uncrossing the stairs. Used for pathfinding, mostly.
+/obj/structure/stairs/proc/get_transit_destination(dirmove)
+	return get_target_loc(dirmove) || get_step(src, dirmove) // just normal movement if we failed to find a matching stair
+
+/obj/structure/stairs/proc/get_target_loc(dirmove)
+	var/turf/zturf
+	if(dirmove == dir)
+		zturf = GET_TURF_ABOVE(get_turf(src))
+	else if(dirmove == REVERSE_DIR(dir))
+		zturf = GET_TURF_BELOW(get_turf(src))
+	if(!zturf)
+		return	// not moving up or down
+	var/turf/newtarg = get_step(zturf, dirmove)
+	if(!newtarg)
+		return	// nowhere to move to???
+	for(var/obj/structure/stairs/partner in newtarg)
+		if(partner.dir == dir)	//partner matches our dir
+			return newtarg
+
+/obj/structure/stairs/proc/user_walk_into_target_loc(atom/movable/AM, dirmove)
+	var/turf/newtarg = get_target_loc(dirmove)
+	if(newtarg)
+		INVOKE_ASYNC(src, GLOBAL_PROC_REF(movable_travel_z_level), AM, newtarg)
+		return TRUE
+	return FALSE
 
 /obj/structure/stairs/stone
 	name = "stone stairs"
@@ -36,7 +77,7 @@
 /obj/structure/stairs/fancy/l
 	icon_state = "fancy_stairs_l"
 
-/obj/structure/stairs/fancy/Initialize()
+/obj/structure/stairs/fancy/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -83,56 +124,22 @@
 	record_featured_stat(FEATURED_STATS_CRAFTERS, user)
 	record_featured_object_stat(FEATURED_STATS_CRAFTED_ITEMS, name)
 
-/obj/structure/stairs/Initialize(mapload)
-	return ..()
-
-/obj/structure/stairs/Destroy()
-	return ..()
-
-/obj/structure/stairs/Uncross(atom/movable/AM, turf/newloc)
-	if(!newloc || !AM)
-		return ..()
-	var/moved = get_dir(src, newloc)
-	if(user_walk_into_target_loc(AM, moved))
-		return FALSE
-	return ..()
-
-/// From a cardinal direction, returns the resulting turf we'll end up at if we're uncrossing the stairs. Used for pathfinding, mostly.
-/obj/structure/stairs/proc/get_transit_destination(dirmove)
-	return get_target_loc(dirmove) || get_step(src, dirmove) // just normal movement if we failed to find a matching stair
-
-/obj/structure/stairs/proc/get_target_loc(dirmove)
-	var/turf/zturf
-	if(dirmove == dir)
-		zturf = GET_TURF_ABOVE(get_turf(src))
-	else if(dirmove == GLOB.reverse_dir[dir])
-		zturf = GET_TURF_BELOW(get_turf(src))
-	if(!zturf)
-		return	// not moving up or down
-	var/turf/newtarg = get_step(zturf, dirmove)
-	if(!newtarg)
-		return	// nowhere to move to???
-	for(var/obj/structure/stairs/partner in newtarg)
-		if(partner.dir == dir)	//partner matches our dir
-			return newtarg
-
-/obj/structure/stairs/proc/user_walk_into_target_loc(atom/movable/AM, dirmove)
-	var/turf/newtarg = get_target_loc(dirmove)
-	if(newtarg)
-		movable_travel_z_level(AM, newtarg)
-		return TRUE
-	return FALSE
 
 /proc/movable_travel_z_level(atom/movable/AM, turf/newtarg)
 	if(!isliving(AM))
 		AM.forceMove(newtarg)
 		return
 	var/mob/living/L = AM
+	var/prev_z_level = L.z
+	var/new_z_level = newtarg.z
+	var/stamina_cost = (L.mobility_flags & MOBILITY_STAND) ? 10 : 30 // 1/3rd the cost of climbing up a wall.
 	var/atom/movable/pulling = L.pulling
 	var/was_pulled_buckled = FALSE
 	if(pulling)
 		if(pulling in L.buckled_mobs)
 			was_pulled_buckled = TRUE
+	if((prev_z_level < new_z_level)) // Going UP a Z-level (Only applies stamina cost to the person walking up, not the pulled mob)
+		L.stamina_add(stamina_cost)
 	L.forceMove(newtarg)
 	if(pulling)
 		L.stop_pulling()
@@ -140,3 +147,17 @@
 		L.start_pulling(pulling, supress_message = TRUE)
 		if(was_pulled_buckled) // Assume this was a fireman carry since piggybacking is not a thing
 			L.buckle_mob(pulling, TRUE, TRUE, 90, 0, 0)
+		if(isliving(pulling))
+			var/mob/living/P = pulling
+			while(P.pulling && isliving(P.pulling))
+				was_pulled_buckled = FALSE
+				pulling = P.pulling
+				if(pulling in P.buckled_mobs)
+					was_pulled_buckled = TRUE
+				P.stop_pulling()
+				pulling.forceMove(newtarg)
+				P.start_pulling(pulling, supress_message = TRUE)
+				if(was_pulled_buckled) // Assume this was a fireman carry since piggybacking is not a thing
+					P.buckle_mob(pulling, TRUE, TRUE, 90, 0, 0)
+				if(isliving(pulling))
+					P = pulling

@@ -3,6 +3,8 @@
 	var/list/datum/wound/simple_wounds
 	/// Simple embedded objects with no associated bodyparts
 	var/list/obj/item/simple_embedded_objects
+	/// Cached value of simple wound bleeding
+	var/simple_bleeding = 0
 
 /// Returns every embedded object we have, simple or not
 /mob/living/proc/get_embedded_objects()
@@ -46,7 +48,7 @@
 			continue
 		woundies += wound
 	return woundies
-	
+
 /// Loops through our list of wounds and returns the first wound that is of the type specified by the path
 /mob/living/proc/has_wound(path, specific = FALSE)
 	if(!path)
@@ -65,7 +67,7 @@
 		if(isnull(wound))
 			continue
 		if(heal_amount <= 0)
-			continue
+			break
 		if(length(specific_types))
 			var/found = FALSE
 			for(var/woundtype in specific_types)
@@ -191,12 +193,12 @@
 		used = round(max(dam / 3, 1), 1)
 		if(prob(used))
 			attempted_wounds += /datum/wound/artery/chest
-		
+
 	for(var/wound_type in shuffle(attempted_wounds))
 		var/datum/wound/applied = simple_add_wound(wound_type, silent, crit_message)
 		if(applied)
 			if(user?.client)
-				GLOB.azure_round_stats[STATS_CRITS_MADE]++
+				record_round_statistic(STATS_CRITS_MADE)
 			return applied
 	return FALSE
 
@@ -231,5 +233,4 @@
 		qdel(embedder)
 	if(!has_embedded_objects())
 		clear_alert("embeddedobject")
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 	return TRUE

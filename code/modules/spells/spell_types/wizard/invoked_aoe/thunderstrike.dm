@@ -56,7 +56,7 @@
 		addtimer(CALLBACK(src, PROC_REF(thunderstrike_damage), effect_layer_two, 0.25), wait = delay3) // Third layer, halved again
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/thunderstrike/proc/thunderstrike_damage(var/turf/effect_layer, damage_mod)
+/obj/effect/proc_holder/spell/invoked/thunderstrike/proc/thunderstrike_damage(turf/effect_layer, damage_mod)
 	new /obj/effect/temp_visual/thunderstrike_actual(effect_layer)
 	playsound(effect_layer, 'sound/magic/lightning.ogg', 50)
 	for(var/mob/living/L in effect_layer.contents)

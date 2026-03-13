@@ -19,8 +19,6 @@ SUBSYSTEM_DEF(job)
 	SSmapping.HACK_LoadMapConfig()
 	if(!occupations.len)
 		SetupOccupations()
-	if(CONFIG_GET(flag/load_jobs_from_txt))
-		LoadJobs()
 	set_overflow_role(CONFIG_GET(string/overflow_job))
 	return ..()
 
@@ -55,13 +53,12 @@ SUBSYSTEM_DEF(job)
 			continue
 		if(!job.config_check())
 			continue
-		if(!job.map_check())	//Even though we initialize before mapping, this is fine because the config is loaded at new
-			testing("Removed [job.type] due to map config");
-			continue
 		occupations += job
 		name_occupations[job.title] = job
 		type_occupations[J] = job
 
+	if(SSmapping.map_adjustment)
+		SSmapping.map_adjustment.job_change()
 	return 1
 
 
@@ -144,16 +141,18 @@ SUBSYSTEM_DEF(job)
 		if(length(job.virtue_restrictions) && ((player.client.prefs.virtue.type in job.virtue_restrictions) || (player.client.prefs.virtuetwo?.type in job.virtue_restrictions)))
 			JobDebug("FOC incompatible with virtues, Player: [player], Job: [job.title], Virtue 1: [player.client.prefs.virtue.name]")
 			continue
-		if(length(job.vice_restrictions) && (player.client.prefs.charflaw.type in job.vice_restrictions))
-			JobDebug("FOC incompatible with vices, Player: [player], Job: [job.title], Vice: [player.client.prefs.charflaw.name]")
+		if(has_restricted_vice(player.client.prefs, job))
+			JobDebug("FOC incompatible with vices, Player: [player], Job: [job.title]")
 			continue
 		if(job.plevel_req > player.client.patreonlevel())
 			JobDebug("FOC incompatible with PATREON LEVEL, Player: [player], Job: [job.title], Race: [player.client.prefs.pref_species.name]")
 			continue
+		#ifdef USES_PQ
 		if(!isnull(job.min_pq) && (get_playerquality(player.ckey) < job.min_pq))
 			continue
 		if(!isnull(job.max_pq) && (get_playerquality(player.ckey) > job.max_pq))
 			continue
+		#endif
 		if(!(player.client.prefs.gender in job.allowed_sexes))
 			JobDebug("FOC incompatible with sex, Player: [player], Job: [job.title]")
 			continue
@@ -225,8 +224,8 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ incompatible with virtues, Player: [player], Job: [job.title], Virtue 1: [player.client.prefs.virtue.name]")
 			continue
 
-		if(length(job.vice_restrictions) && (player.client.prefs.charflaw.type in job.vice_restrictions))
-			JobDebug("GRJ incompatible with vices, Player: [player], Job: [job.title], Vice: [player.client.prefs.charflaw.name]")
+		if(has_restricted_vice(player.client.prefs, job))
+			JobDebug("GRJ incompatible with vices, Player: [player], Job: [job.title]")
 			continue
 
 		if(job.plevel_req > player.client.patreonlevel())
@@ -241,9 +240,11 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ incompatible with sex, Player: [player], Job: [job.title]")
 			continue
 
+		#ifdef USES_PQ
 		if(!isnull(job.min_pq) && (get_playerquality(player.ckey) < job.min_pq))
 			JobDebug("GRJ incompatible with minPQ, Player: [player], Job: [job.title]")
 			continue
+		#endif
 
 		if(!isnull(job.max_pq) && (get_playerquality(player.ckey) > job.max_pq))
 			JobDebug("GRJ incompatible with maxPQ, Player: [player], Job: [job.title]")
@@ -284,6 +285,34 @@ SUBSYSTEM_DEF(job)
 	unassigned = list()
 	return
 
+/datum/controller/subsystem/job/proc/bitflag_to_department(department_flag, obsfuscated = FALSE)
+	var/key = "Wanderers"
+	if(obsfuscated)
+		return key
+	switch(department_flag) // Omega tier slop.
+		if(NOBLEMEN)
+			key = "Noblemen"
+		if(COURTIERS)
+			key = "Courtiers"
+		if(GARRISON)
+			key = "Garrison"
+		if(CHURCHMEN)
+			key = "Church"
+		if(INQUISITION)
+			key = "Inquisition"
+		if(YEOMEN)
+			key = "Yeomen"
+		if(GUILDSMEN)
+			key = "Guildsmen"
+		if(PEASANTS)
+			key = "Peasants"
+		if(YOUNGFOLK)
+			key = "Sidefolk"
+		if(WANDERERS)
+			key = "Wanderers"
+		else
+			key = "Wanderers"
+	return key
 
 //This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
 //it locates a head or runs out of levels to check
@@ -467,19 +496,20 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO incompatible with virtues, Player: [player], Job: [job.title], Virtue 1: [player.client.prefs.virtue.name]")
 					continue
 
-				if(length(job.vice_restrictions) && (player.client.prefs.charflaw.type in job.vice_restrictions))
-					JobDebug("DO incompatible with vices, Player: [player], Job: [job.title], Vice: [player.client.prefs.charflaw.name]")
+				if(has_restricted_vice(player.client.prefs, job))
+					JobDebug("DO incompatible with vices, Player: [player], Job: [job.title]")
 					continue
 
 				if(job.plevel_req > player.client.patreonlevel())
 					JobDebug("DO incompatible with PATREON LEVEL, Player: [player], Job: [job.title], Race: [player.client.prefs.pref_species.name]")
 					continue
 
+				#ifdef USES_PQ
 				if(!isnull(job.min_pq) && (get_playerquality(player.ckey) < job.min_pq))
 					continue
-
 				if(!isnull(job.max_pq) && (get_playerquality(player.ckey) > job.max_pq))
 					continue
+				#endif
 
 				if((player.client.prefs.lastclass == job.title) && (!job.bypass_lastclass))
 					continue
@@ -572,9 +602,11 @@ SUBSYSTEM_DEF(job)
 
 				if(job.plevel_req > player.client.patreonlevel())
 					continue
-
+					
+				#ifdef USES_PQ
 				if(!isnull(job.min_pq) && (get_playerquality(player.ckey) < job.min_pq) && level != JP_LOW) //since its required people on low can roll for it
 					continue
+				#endif
 
 				if((player.client.prefs.lastclass == job.title) && (!job.bypass_lastclass))
 					continue
@@ -754,13 +786,6 @@ SUBSYSTEM_DEF(job)
 			J.total_positions = officer_positions
 			J.spawn_positions = officer_positions
 
-/datum/controller/subsystem/job/proc/LoadJobs()
-	var/jobstext = file2text("[global.config.directory]/jobs.txt")
-	for(var/datum/job/J in occupations)
-		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
-		jobs.Find(jobstext)
-		J.total_positions = text2num(jobs.group[1])
-		J.spawn_positions = text2num(jobs.group[2])
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
@@ -905,3 +930,25 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/JobDebug(message)
 	log_job_debug(message)
+
+/datum/controller/subsystem/job/proc/has_restricted_vice(datum/preferences/prefs, datum/job/job)
+	if(!length(job.vice_restrictions))
+		return FALSE
+	
+	// Check new vice system (vice1-vice5)
+	if(prefs.vice1?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice2?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice3?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice4?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice5?.type in job.vice_restrictions)
+		return TRUE
+	
+	// Legacy charflaw check
+	if(prefs.charflaw?.type in job.vice_restrictions)
+		return TRUE
+	
+	return FALSE

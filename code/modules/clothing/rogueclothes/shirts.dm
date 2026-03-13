@@ -63,7 +63,7 @@
 /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
 	color = CLOTHING_AZURE
 
-/obj/item/clothing/suit/roguetown/shirt/undershirt/guard/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/undershirt/guard/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -77,7 +77,7 @@
 /obj/item/clothing/suit/roguetown/shirt/undershirt/guardsecond
 	color = CLOTHING_PURPLE
 
-/obj/item/clothing/suit/roguetown/shirt/undershirt/guardsecond/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/undershirt/guardsecond/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -91,7 +91,7 @@
 	GLOB.lordcolor -= src
 	return ..()
 
-/obj/item/clothing/suit/roguetown/shirt/undershirt/random/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/undershirt/random/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f")
 	..()
 
@@ -103,6 +103,8 @@
 	sleeved = 'icons/roguetown/clothing/onmob/shirts.dmi'
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
+	salvage_result = /obj/item/natural/silk
+	salvage_amount = 1
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
 	name = "tinker suit"
@@ -122,6 +124,12 @@
 	r_sleeve_status = SLEEVE_TORN
 	l_sleeve_status = SLEEVE_TORN
 	body_parts_covered = CHEST|VITALS
+
+/obj/item/clothing/suit/roguetown/shirt/shadowshirt/elflock
+	allowed_race = NON_DWARVEN_RACE_TYPES
+	body_parts_covered = COVERAGE_ALL_BUT_ARMS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
+	armor = ARMOR_PADDED
 
 /obj/item/clothing/suit/roguetown/shirt/apothshirt
 	name = "apothecary shirt"
@@ -183,7 +191,7 @@
 	detail_color = primary
 	update_icon()
 
-/obj/item/clothing/suit/roguetown/shirt/dress/royal/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/dress/royal/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -229,6 +237,23 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 
+//Is this terrible, yes, but at this point ehhhhhhhh.
+/obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_m
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	name = "gilded dress shirt"
+	desc = "A gold-embroidered dress shirt tailored for the right hand man."
+	icon_state = "prince"
+	boobed = TRUE
+	detail_color = CLOTHING_AZURE
+
+/obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_f
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	name = "pristine dress"
+	desc = "A flowy, intricate dress made by the finest tailors in the land for the right hand man."
+	icon_state = "princess"
+	boobed = TRUE
+	detail_color = CLOTHING_AZURE
+
 /obj/item/clothing/suit/roguetown/shirt/dress/silkydress
 	name = "silky dress"
 	desc = "Despite not actually being made of silk, the legendary expertise needed to sew this puts the quality on par."
@@ -240,7 +265,7 @@
 	sleeved = null
 	flags_inv = HIDECROTCH|HIDEBOOB
 
-/obj/item/clothing/suit/roguetown/shirt/dress/silkydress/random/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/dress/silkydress/random/Initialize(mapload)
 	color = pick("#e6e5e5", "#249589", "#a32121", "#428138", "#8747b1", "#007fff")
 	..()
 
@@ -267,6 +292,8 @@
 	icon_state = "summergown"
 	boobed = TRUE
 	detail_color = "#e395bb"
+	salvage_result = /obj/item/natural/silk
+	salvage_amount = 2
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gown/fallgown
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
@@ -283,6 +310,8 @@
 	icon_state = "wintergown"
 	boobed = TRUE
 	detail_color = "#45749d"
+	salvage_result = /obj/item/natural/silk
+	salvage_amount = 2
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	icon_state = "sailorblues"
@@ -299,7 +328,7 @@
 	l_sleeve_status = SLEEVE_TORN
 	body_parts_covered = CHEST|ARM_RIGHT|VITALS
 
-/obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f")
 	..()
 
@@ -311,7 +340,7 @@
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 
-/obj/item/clothing/suit/roguetown/shirt/shortshirt/random/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/shortshirt/random/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f")
 	..()
 
@@ -348,6 +377,8 @@
 	item_state = "tribalrag"
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
+	salvage_result = /obj/item/natural/hide
+	salvage_amount = 1
 
 /obj/item/clothing/suit/roguetown/shirt/robe/archivist
 	name = "archivist's robe"
@@ -396,7 +427,7 @@
 /obj/item/clothing/suit/roguetown/shirt/tunic/ucolored
 	color = COLOR_GRAY
 
-/obj/item/clothing/suit/roguetown/shirt/tunic/random/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/tunic/random/Initialize(mapload)
 	color = pick(CLOTHING_PURPLE, CLOTHING_RED, CLOTHING_BLUE, CLOTHING_GREEN, CLOTHING_BLACK, CLOTHING_WHITE, COLOR_GRAY)
 	..()
 /obj/item/clothing/suit/roguetown/shirt/dress
@@ -418,7 +449,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon_state = "dressgen"
 	item_state = "dressgen"
-	color = "#6b5445"
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/black
 	color = CLOTHING_BLACK
@@ -429,7 +459,7 @@
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/purple
 	color = CLOTHING_PURPLE
 
-/obj/item/clothing/suit/roguetown/shirt/dress/gen/random/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/dress/gen/random/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f", CLOTHING_BLUE)
 	..()
 
@@ -443,11 +473,13 @@
 	color = "#e6e5e5"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
 	flags_inv = HIDECROTCH|HIDEBOOB
+	salvage_result = /obj/item/natural/silk
+	salvage_amount = 2
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/princess
 	color = CLOTHING_WHITE
 
-/obj/item/clothing/suit/roguetown/shirt/dress/silkdress/princess/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/dress/silkdress/princess/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -463,7 +495,7 @@
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/green
 	color = CLOTHING_DARK_GREEN
 
-/obj/item/clothing/suit/roguetown/shirt/dress/silkdress/random/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/dress/silkdress/random/Initialize(mapload)
 	. = ..()
 	color = pick("#e6e5e5", "#52BE80", "#C39BD3", "#EC7063","#5DADE2")
 
@@ -477,11 +509,11 @@
 	sleeved = null
 	flags_inv = HIDECROTCH|HIDEBOOB
 
-/obj/item/clothing/suit/roguetown/shirt/dress/gen/sexy/random/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/dress/gen/sexy/random/Initialize(mapload)
 	. = ..()
 	color = pick(CLOTHING_WHITE, CLOTHING_RED, CLOTHING_PURPLE, CLOTHING_MAGENTA, CLOTHING_TEAL, CLOTHING_BLACK)
 
-/obj/item/clothing/suit/roguetown/shirt/dress/gen/sexy/black/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/dress/gen/sexy/black/Initialize(mapload)
 	. = ..()
 	color = CLOTHING_BLACK
 
@@ -494,6 +526,9 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	body_parts_covered = CHEST|ARMS|VITALS
 	color = null
+	color = null
+	salvage_result = /obj/item/natural/silk
+	salvage_amount = 1
 
 /obj/item/clothing/suit/roguetown/shirt/jester
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
@@ -529,7 +564,7 @@
 	color = primary
 	update_icon()
 
-/obj/item/clothing/suit/roguetown/shirt/jester/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/jester/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -553,6 +588,13 @@
 	icon_state = "stewardtunic"
 	item_state = "stewardtunic"
 
+/obj/item/clothing/suit/roguetown/shirt/dress/silkdress/loudmouth
+	color = null
+	name = "crier's garb"
+	desc = "A robe that speaks volumes!"
+	icon_state = "loudmouthrobe"
+	item_state = "loudmouthrobe"
+
 //WEDDING CLOTHES
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/weddingdress
 	name = "wedding silk dress"
@@ -569,6 +611,8 @@
 	sewrepair = TRUE
 	flags_inv = null
 	slot_flags = ITEM_SLOT_SHIRT
+	salvage_result = /obj/item/natural/silk
+	salvage_amount = 2
 
 //................ Noble Dress ............... //
 /obj/item/clothing/suit/roguetown/shirt/dress/noble
@@ -595,7 +639,7 @@
 	detail_color = primary
 	update_icon()
 
-/obj/item/clothing/suit/roguetown/shirt/dress/noble/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/dress/noble/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -617,6 +661,43 @@
 	icon_state = "velvetdress"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
 
+//Servant Clothing:
+//................ Maid Dress   ............... //
+/obj/item/clothing/suit/roguetown/shirt/dress/maid
+	name = "maid dress"
+	desc = "A dress befitting the housekeeper of a lord's staff. While not as intricate as a royal's, it is indicative of the house's status."
+	body_parts_covered = CHEST|GROIN|ARMS|VITALS
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_maids.dmi'
+	r_sleeve_status = SLEEVE_NORMAL
+	l_sleeve_status = SLEEVE_NORMAL
+	boobed = TRUE
+	icon_state = "maiddress"
+	item_state = "maiddress"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	detail_tag = "_detail"
+	detail_color = CLOTHING_BLACK
+
+//................ Servant Gown   ............... //
+/obj/item/clothing/suit/roguetown/shirt/dress/maid/servant
+	name = "servant gown"
+	desc = "A dress worn by those of manors and noble staff. Commonly black, though some estates dye them to their house colors."
+	icon_state = "maidgown"
+	item_state = "maidgown"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	detail_color = CLOTHING_BLACK
+
+/obj/item/clothing/suit/roguetown/shirt/undershirt/formal
+	name = "formal shirt"
+	desc = "A comfortable yet functional dress shirt often worn by the staff of a noble household."
+	icon_state = "butlershirt"
+	item_state = "butlershirt"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_maids.dmi'
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	icon = 'icons/roguetown/clothing/shirts.dmi'
+//End Servant Clothing
 
 //kazengite content
 /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt1
@@ -650,26 +731,52 @@
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 //tattoo code
-/obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/Initialize(mapload)
-	. = ..()
+/obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
 	name = "bouhoi bujeog tattoos"
 	desc = "A mystic style of tattoos adopted by the Ruma Clan, emulating a practice performed by warrior monks of the Xinyi Dynasty. They are your way of identifying fellow clan members, an sign of companionship and secretive brotherhood. These are styled into the shape of clouds, created by a mystical ink which shifts and moves in ripples like a pond to harden where your skin is struck. It's movement causes you to shudder."
 	resistance_flags = FIRE_PROOF
 	icon_state = "easttats"
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-	body_parts_covered = ARMS
+	armor = list("blunt" = 30, "slash" = 50, "stab" = 50, "piercing" = 20, "fire" = 0, "acid" = 0)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
+	body_parts_covered = COVERAGE_FULL
+	body_parts_inherent = COVERAGE_FULL
 	icon = 'icons/roguetown/clothing/shirts.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	allowed_race = NON_DWARVEN_RACE_TYPES
+	max_integrity = 300 //Bad armor protection and very basic crit protection, but hard to break completely
 	flags_inv = null //free the breast
 	surgery_cover = FALSE // cauterize and surgery through it.
+	var/repair_amount = 20 //The amount of integrity the tattoos will repair themselves
+	var/repair_time = 60 SECONDS //The amount of time between each repair
+	var/last_repair //last time the tattoos got repaired
+
+/obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/clothing/suit/roguetown/shirt/easttats/easttats/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(QDELETED(src))
 		return
 	qdel(src)
+
+
+/obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		START_PROCESSING(SSobj, src)
+		return
+
+/obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/process()
+	if(obj_integrity >= max_integrity)
+		STOP_PROCESSING(SSobj, src)
+		src.visible_message(span_notice("The [src] flow more calmly, as they finish resting and regain their strength."), vision_distance = 1)
+		return
+	else if(world.time > src.last_repair + src.repair_time)
+		src.last_repair = world.time
+		obj_integrity = min(obj_integrity + src.repair_amount, src.max_integrity)
+	..()

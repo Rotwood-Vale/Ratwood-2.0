@@ -39,7 +39,7 @@
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fucks [target]'s slit."))
 	else
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] knot-fucks [target]'s slit."))
-	playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
+	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
@@ -50,6 +50,8 @@
 		user.visible_message(span_love("[user] cums into [target]'s slit!"))
 		user.sexcon.cum_into(splashed_user = target)
 		user.virginity = FALSE
+		if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON) && !target.getorganslot(ORGAN_SLOT_VAGINA))
+			user.try_impregnate(target)
 
 	if(user.sexcon.considered_limp())
 		user.sexcon.perform_sex_action(target, 1.2, 3, FALSE)
@@ -87,7 +89,7 @@
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] double-fucks [target]'s slit."))
 	else
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] double-knots [target]'s slit."))
-	playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
+	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
@@ -98,6 +100,8 @@
 		user.visible_message(span_love("[user] cums into [target]'s slit!"))
 		user.sexcon.cum_into(splashed_user = target)
 		user.virginity = FALSE
+		if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON) && !target.getorganslot(ORGAN_SLOT_VAGINA))
+			user.try_impregnate(target)
 
 	if(user.sexcon.considered_limp())
 		user.sexcon.perform_sex_action(target, 1.2, 3, FALSE)

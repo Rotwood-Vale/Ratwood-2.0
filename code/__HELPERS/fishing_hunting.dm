@@ -28,7 +28,7 @@
 		/obj/item/ammo_casing/caseless/rogue/arrow = 1*trashMod,
 		/obj/item/reagent_containers/glass/bottle/rogue = 1*trashMod,
 		/obj/item/reagent_containers/food/snacks/smallrat = 1, //That's not a fish...?
- 		/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab = 30,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab = 30,
 	)
 	return counterlist_ceiling(weightList)
 
@@ -61,7 +61,7 @@
 	)
 	return counterlist_ceiling(weightList)
 
-/proc/createCoastalSeaFishWeightListModlist(list/fishingMods) 
+/proc/createCoastalSeaFishWeightListModlist(list/fishingMods)
 	return createCoastalSeaFishWeightList(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"])
 
 /proc/createDeepSeaFishWeightList(commonMod, rareMod, treasureMod, trashMod, dangerMod, ceruleanMod)
@@ -73,6 +73,7 @@
 		/obj/item/reagent_containers/food/snacks/fish/lobster = 100*rareMod,
 		/obj/item/reagent_containers/food/snacks/fish/bass = 100*commonMod,
 		/obj/item/reagent_containers/food/snacks/fish/clam = 150*rareMod,
+		/obj/item/roguegem/oyster = 40*rareMod + 10*treasureMod,
 		/obj/item/reagent_containers/food/snacks/fish/clownfish = 50*rareMod + 200*ceruleanMod,
 		/obj/item/reagent_containers/food/snacks/fish/creepy_eel = 2*rareMod + 10*ceruleanMod,
 		/obj/item/reagent_containers/food/snacks/fish/creepy_squid = 7*rareMod + 10*ceruleanMod,
@@ -90,16 +91,16 @@
 	)
 	return counterlist_ceiling(weightList)
 
-/proc/createDeepSeaFishWeightListModlist(list/fishingMods) 
+/proc/createDeepSeaFishWeightListModlist(list/fishingMods)
 	return createDeepSeaFishWeightList(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"])
 
 /proc/createMudFishWeightList(commonMod, rareMod, treasureMod, trashMod, dangerMod, ceruleanMod)
 	var/weightList = list (
 		/obj/item/reagent_containers/food/snacks/fish/mudskipper = 790*commonMod,
 		/obj/item/natural/worms/leech = 180*rareMod,
- 		/obj/item/clothing/ring/gold = 1*treasureMod + 30*ceruleanMod,
+		/obj/item/clothing/ring/gold = 1*treasureMod + 30*ceruleanMod,
 		/obj/item/reagent_containers/food/snacks/smallrat = 1, //Thats one dirty... not a fish...?
-		/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab = 30,	
+		/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab = 30,
 	)
 	return counterlist_ceiling(weightList)
 
@@ -113,7 +114,7 @@
 			/obj/item/reagent_containers/food/snacks/fish/crab = 250*rareMod,
 			/obj/item/reagent_containers/food/snacks/fish/lobster = 250*commonMod,
 			/obj/item/reagent_containers/food/snacks/smallrat = 1, //Oh for fucks sake!
-		)	
+		)
 	return counterlist_ceiling(weightList)
 
 /proc/createCageFishWeightListModlist(list/fishingMods)

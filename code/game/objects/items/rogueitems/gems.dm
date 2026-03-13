@@ -58,7 +58,7 @@
 	sellprice = 42
 	desc = "Glints with verdant brilliance."
 
-/obj/item/roguegem/green/Initialize()
+/obj/item/roguegem/green/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/emerald_staff,)
 
@@ -73,7 +73,7 @@
 	sellprice = 88
 	desc = "Pale blue, like a frozen tear."
 
-/obj/item/roguegem/blue/Initialize()
+/obj/item/roguegem/blue/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/quartz_staff,)
 
@@ -88,7 +88,7 @@
 	sellprice = 34
 	desc = "Its amber hues remind you of the sunset."
 
-/obj/item/roguegem/yellow/Initialize()
+/obj/item/roguegem/yellow/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/toper_staff,)
 
@@ -103,7 +103,7 @@
 	sellprice = 56
 	desc = "This gem is admired by many wizards."
 
-/obj/item/roguegem/violet/Initialize()
+/obj/item/roguegem/violet/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/sapphire_staff,)
 
@@ -118,7 +118,7 @@
 	sellprice = 100
 	desc = "Its facets shine so brightly..."
 
-/obj/item/roguegem/ruby/Initialize()
+/obj/item/roguegem/ruby/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/ruby_staff,)
 
@@ -133,7 +133,56 @@
 	sellprice = 121
 	desc = "Beautifully clear, it demands respect."
 
-/obj/item/roguegem/diamond/Initialize()
+/obj/item/roguegem/onyxa
+	name = "onyxa"
+	desc = "A sinister, glimmering stone. Valuable to the drow, it is sometimes used in necromantic rituals. Mirrors made of this are said to never show your own face."
+	icon = 'icons/roguetown/gems/gem_onyxa.dmi'
+	icon_state = "raw_onyxa"
+	sellprice = 30
+
+/obj/item/roguegem/jade
+	name = "jade"
+	desc = "A dull green gem prized in Lingyue and Kazengun alike. Lingyuese tradition holds that jade is the essence of Psydon, protecting both soul and flesh from decay and corruption."
+	icon = 'icons/roguetown/gems/gem_jade.dmi'
+	icon_state = "raw_jade"
+	sellprice = 50
+
+/obj/item/roguegem/oyster
+	name = "fossilized clam"
+	desc = "A fossilized clam shell. It would be a good idea to pry it open with a chisel."
+	icon = 'icons/roguetown/gems/gem_shell.dmi'
+	icon_state = "oyster_closed"
+	sellprice = 5
+
+/obj/item/roguegem/coral
+	name = "heartstone"
+	desc = "Jagged like a hound's tooth. Heartstone is speculated to be the crystalized blood of fallen sailors. It is sacred to Abyssorites and is used in numerous Abyssorites rituals."
+	icon = 'icons/roguetown/gems/gem_coral.dmi'
+	icon_state = "raw_coral"
+	sellprice = 60
+
+/obj/item/roguegem/turq
+	name = "cerulite"
+	desc = "A beautiful teal gem that carves easily. Beloved by mages, its remarkable clarity makes it a favored tool of Naledi’s astrologer-mages in divination."
+	icon = 'icons/roguetown/gems/gem_turq.dmi'
+	icon_state = "raw_turq"
+	sellprice = 75
+
+/obj/item/roguegem/amber
+	name = "amber"
+	desc = "A chunk of fossilized sunlight. Believed to have been shed during the shattering of the First Sun, its remnants are prized among Astratans. Raaneshi sometimes use fragments as currency, instead of mammon."
+	icon = 'icons/roguetown/gems/gem_amber.dmi'
+	icon_state = "raw_amber"
+	sellprice = 50
+
+/obj/item/roguegem/opal
+	name = "opal"
+	desc = "A dazzling gem of great value. Opal is widely speculated to be the crystallized essence left behind by rainbows."
+	icon = 'icons/roguetown/gems/gem_opal.dmi'
+	icon_state = "raw_opal"
+	sellprice = 80
+
+/obj/item/roguegem/diamond/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/diamond_staff,)
 
@@ -147,7 +196,7 @@
 	icon_state = "amethyst"
 	desc = "A deep lavender crystal, it surges with magical energy, yet it's artificial nature means it is worth little."
 
-/obj/item/roguegem/amethyst/Initialize()
+/obj/item/roguegem/amethyst/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/amethyst_staff,)
 
@@ -156,14 +205,18 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
+/obj/item/roguegem/amethyst/naledi
+	name = "naledic amythortz"
+	desc = "A deep lavender crystal, crackling with magical energy. To a Disciple, it might simply be a keepsake from pilgrimages abroad: but to a Sojourner, it is the leyline to their arcyne-enchanted form of martial combat. </br>This gemstone can be applied to a yet-unfinished spelltome by those with arcyne potential, in order to recall more spells."
+
 /obj/item/roguegem/random
 	name = "random gem"
 	desc = "You shouldn't be seeing this."
 	icon_state = null
 
-/obj/item/roguegem/random/Initialize()
+/obj/item/roguegem/random/Initialize(mapload)
 	..()
-	var/newgem = list(/obj/item/roguegem/ruby = 5, /obj/item/roguegem/green = 15, /obj/item/roguegem/blue = 10, /obj/item/roguegem/yellow = 20, /obj/item/roguegem/violet = 10, /obj/item/roguegem/diamond = 5, /obj/item/riddleofsteel = 1, /obj/item/rogueore/silver = 3)
+	var/newgem = list(/obj/item/roguegem/ruby = 5, /obj/item/roguegem/green = 15, /obj/item/roguegem/blue = 10, /obj/item/roguegem/yellow = 20, /obj/item/roguegem/violet = 10, /obj/item/roguegem/diamond = 5, /obj/item/riddleofsteel = 1, /obj/item/rogueore/silver = 3, /obj/item/roguegem/onyxa = 5, /obj/item/roguegem/jade = 3, /obj/item/roguegem/coral = 3, /obj/item/roguegem/turq = 3, /obj/item/roguegem/amber = 3, /obj/item/roguegem/opal = 3)
 	var/pickgem = pickweight(newgem)
 	new pickgem(get_turf(src))
 	qdel(src)
@@ -186,7 +239,7 @@
 	sellprice = 400
 	var/det_chance = 50//Chance that it'll explode violently when eaten.
 
-/obj/item/riddleofsteel/Initialize()
+/obj/item/riddleofsteel/Initialize(mapload)
 	. = ..()
 	set_light(2, 2, 1, l_color = "#ff0d0d")
 
@@ -215,7 +268,7 @@
 					M.adjust_fire_stacks(100)//You will burn. Horribly.
 					M.adjustFireLoss(250)//If you somehow put it out immediately, you still contend with this.
 					M.Paralyze(12 SECONDS, ignore_canstun = TRUE)//You lost the coin toss. Suffer the loss.
-					M.IgniteMob()
+					M.ignite_mob()
 					M.visible_message(span_deadsay("[src] explodes in a shower of arcyne fire and energy, violently engulfing [M]!"))
 					M.add_stress(/datum/stressevent/riddle_munch)//You still get the stress, even if you don't get the heal.
 				else//You won the toss, but you still lose. Because this is a waste of a riddle.
@@ -245,7 +298,7 @@
 	drop_sound = 'sound/items/gem.ogg'
 	sellprice = 20
 
-/obj/item/pearl/Initialize()
+/obj/item/pearl/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/pearlcross,
@@ -262,7 +315,7 @@
 	desc = "A beautiful blue pearl. A bounty of Abyssor. Can be strung up into amulets."
 	sellprice = 60
 
-/obj/item/pearl/blue/Initialize()
+/obj/item/pearl/blue/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/bpearlcross,

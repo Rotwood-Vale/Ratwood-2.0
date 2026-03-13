@@ -58,6 +58,8 @@
 				used = list('sound/vo/male/gen/huh (1).ogg','sound/vo/male/gen/huh (2).ogg','sound/vo/male/gen/huh (3).ogg')
 			if("hum")
 				used = list('sound/vo/male/gen/hum (1).ogg','sound/vo/male/gen/hum (2).ogg','sound/vo/male/gen/hum (3).ogg')
+			if("hmph")
+				used = list('sound/vo/male/gen/hmph (1).ogg', 'sound/vo/male/gen/hmph (2).ogg')
 			if("jump")
 				used = 'sound/vo/male/gen/jump.ogg'
 			if("laugh")
@@ -95,7 +97,7 @@
 			if("attnwhistle")
 				used = 'sound/vo/attn.ogg'
 			if("clap")
-				used = list('sound/body/clap (1).ogg','sound/body/clap (2).ogg','sound/body/clap (3).ogg','sound/body/clap (4).ogg')
+				used = list('sound/vo/clap (1).ogg','sound/vo/clap (2).ogg','sound/vo/clap (3).ogg','sound/vo/clap (4).ogg')
 			if("psst")
 				used = 'sound/vo/psst.ogg'
 			if("meow")
@@ -117,7 +119,9 @@
 			if("snap2")
 				used = list('sound/body/fsnap2.ogg')
 			if("snap3")
-				used = list('sound/body/fsnap3.ogg')
+				used = list('sound/vo/fsnap3.ogg')
+			if("stomp")
+				used = list('sound/foley/brickdrop.ogg')
 			if("blink")
 				used = list('sound/vo/blink.ogg')
 			if("cackle")
@@ -144,8 +148,12 @@
 				used = 'sound/vo/moth/mothchitter.ogg'
 			if("strain")
 				used = 'sound/vo/male/gen/strain.ogg'
+			if("moan")
+				used = list('sound/vo/male/gen/sound_vo_male_gen_moan (1).ogg','sound/vo/male/gen/sound_vo_male_gen_moan (2).ogg','sound/vo/male/gen/sound_vo_male_gen_moan (3).ogg')
 			if("yip")
 				used = list('sound/vo/yip.ogg', 'sound/vo/yip2.ogg', 'sound/vo/yip3.ogg')
+			if("yap")
+				used = list('sound/vo/yap.ogg')
 			if("salute")
 				used = 'sound/vo/salute.ogg'
 			if("crack")
@@ -156,5 +164,5 @@
 				used = 'sound/vo/sniff.ogg'
 			if("sneeze")
 				used = 'sound/vo/male/male_sneeze.ogg'
-			
+
 	return used

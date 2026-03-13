@@ -5,14 +5,15 @@
 
 /mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
 
-/* Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
- category is a text string. Each mob may only have one alert per category; the previous one will be replaced
- path is a type path of the actual alert type to throw
- severity is an optional number that will be placed at the end of the icon_state for this alert
- For example, high pressure's icon_state is "highpressure" and can be serverity 1 or 2 to get "highpressure1" or "highpressure2"
- new_master is optional and sets the alert's icon state to "template" in the ui_style icons with the master as an overlay.
- Clicks are forwarded to master
- Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
+/* 
+ * Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
+ * category is a text string. Each mob may only have one alert per category; the previous one will be replaced
+ * path is a type path of the actual alert type to throw
+ * severity is an optional number that will be placed at the end of the icon_state for this alert
+ * For example, high pressure's icon_state is "highpressure" and can be serverity 1 or 2 to get "highpressure1" or "highpressure2"
+ * new_master is optional and sets the alert's icon state to "template" in the ui_style icons with the master as an overlay.
+ * Clicks are forwarded to master
+ * Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
 
 	if(!category || QDELETED(src))
@@ -239,9 +240,8 @@
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			var/list/msg = list("***\n")
-			for(var/X in H.bodyparts)
-				var/obj/item/bodypart/BP = X
-				for(var/obj/item/I in BP.embedded_objects)
+			for(var/obj/item/bodypart/BP as anything in H.bodyparts)
+				for(var/obj/item/I as anything in BP.embedded_objects)
 					msg += "<a href='?src=[REF(H)];embedded_object=[REF(I)];embedded_limb=[REF(BP)]' class='warning'>[I] - [BP.name]</a>\n"
 			msg += "***"
 			to_chat(H, "[msg.Join()]")
@@ -250,16 +250,6 @@
 	name = "Weightless"
 	desc = ""
 	icon_state = "weightless"
-
-/atom/movable/screen/alert/highgravity
-	name = "High Gravity"
-	desc = ""
-	icon_state = "paralysis"
-
-/atom/movable/screen/alert/veryhighgravity
-	name = "Crushing Gravity"
-	desc = ""
-	icon_state = "paralysis"
 
 /atom/movable/screen/alert/fire
 	name = "On Fire"
@@ -275,6 +265,15 @@
 	if(L.mobility_flags & MOBILITY_MOVE)
 		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
+/atom/movable/screen/alert/fire/sunder
+	name = "Sundered!"
+	desc = ""
+	icon_state = "sunder"
+
+/atom/movable/screen/alert/fire/sunder/blessed
+	name = "Sundered!"
+	desc = ""
+	icon_state = "supersunder"
 
 //BLOBS
 

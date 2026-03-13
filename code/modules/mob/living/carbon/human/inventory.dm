@@ -237,6 +237,10 @@
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
+	if(index)
+		update_a_intents()
+	if(IS_WEAKREF_OF(I, offered_item_ref))
+		stop_offering_item()
 	if(index && !QDELETED(src) && dna.species.mutanthands) //hand freed, fill with claws, skip if we're getting deleted.
 		put_in_hand(new dna.species.mutanthands(), index)
 	if(I == wear_armor)
@@ -466,7 +470,7 @@
 	stored.attack_hand(src) // take out thing from belt
 	return
 
-/mob/living/carbon/human/proc/equip_scabbard(var/obj/item/thing, var/obj/item/equipped, slot_id)
+/mob/living/carbon/human/proc/equip_scabbard(obj/item/thing, obj/item/equipped, slot_id)
 	var/obj/item/use_thing = null
 
 	if(!equipped)

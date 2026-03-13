@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(bum_aggro, world.file2list("strings/rt/bumaggrolines.txt"))
 		return FALSE
 	. = ..()
 
-/mob/living/carbon/human/species/human/northern/bum/Initialize()
+/mob/living/carbon/human/species/human/northern/bum/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/human/northern)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(bum_aggro, world.file2list("strings/rt/bumaggrolines.txt"))
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_INFINITE_ENERGY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/vagrantnpc)
 
 /datum/outfit/job/roguetown/vagrantnpc/pre_equip(mob/living/carbon/human/H)

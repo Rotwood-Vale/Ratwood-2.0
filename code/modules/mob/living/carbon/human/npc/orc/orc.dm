@@ -7,8 +7,10 @@
 
 	race = /datum/species/orc
 	gender = MALE
-	bodyparts = list(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
-					 /obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg)
+	bodyparts = list(
+		/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
+		/obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg,
+	)
 	ambushable = FALSE
 	
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/unarmed/claw)
@@ -16,7 +18,6 @@
 	d_intent = INTENT_PARRY
 	possible_mmb_intents = list(INTENT_STEAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE)
 	possible_rmb_intents = list(/datum/rmb_intent/feint, /datum/rmb_intent/aimed, /datum/rmb_intent/strong, /datum/rmb_intent/weak, /datum/rmb_intent/swift, /datum/rmb_intent/riposte)
-	possible_rmb_intents = list()
 
 /mob/living/carbon/human/species/orc/npc
 	faction = list("orcs", "station")
@@ -26,7 +27,7 @@
 	wander = FALSE
 	cmode_music = FALSE
 
-/mob/living/carbon/human/species/orc/npc/Initialize()
+/mob/living/carbon/human/species/orc/npc/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/orc)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
@@ -44,13 +45,13 @@
 	var/beard = pick(list(/datum/sprite_accessory/hair/facial/viking,
 						/datum/sprite_accessory/hair/facial/manly,
 						/datum/sprite_accessory/hair/facial/longbeard))
-	head.sellprice = 30
+	head.sellprice = 40
 
 	src.set_patron(/datum/patron/inhumen/graggar)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_INFINITE_ENERGY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
 
 	var/datum/bodypart_feature/hair/head/new_hair = new()
 	var/datum/bodypart_feature/hair/facial/new_facial = new()
@@ -98,6 +99,15 @@
 	shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	r_hand = /obj/item/rogueweapon/stoneaxe/boneaxe
 	l_hand = /obj/item/rogueweapon/shield/wood
+	belt = /obj/item/storage/belt/rogue/leather/rope
+	if(prob(5))
+		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
+	if(prob(50))
+		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+	else
+		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(5))
+		id = /obj/item/clothing/ring/gold
 
 	H.STASTR = 16
 	H.STASPD = 8
@@ -109,8 +119,8 @@
 	H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/masonry, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE)
 
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)

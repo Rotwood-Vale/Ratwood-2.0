@@ -1,5 +1,6 @@
 /datum/advclass/busker
 	name = "Busker"
+	examine_name = "Beggar"
 	tutorial = "You've lost pretty much everything - everything but your instrument and an adequate ability to play it. Maybe a jaunty tune will send a few zennies your way - whether through pitied gratitute, or by distracting long enough for you to swipe a coinpurse."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS

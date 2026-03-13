@@ -1,14 +1,13 @@
 /datum/virtue/utility/noble
 	name = "Nobility"
-	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it."
+	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
-	added_stashed_items = list("Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble)
+	added_stashed_items = list("Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
+								"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
 
 /datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient)
 	SStreasury.noble_incomes[recipient] += 15
-	var/obj/item/pouch = new /obj/item/storage/belt/rogue/pouch/coins/virtuepouch(get_turf(recipient))
-	recipient.put_in_hands(pouch, forced = TRUE)
 
 /datum/virtue/utility/socialite
 	name = "Socialite"
@@ -20,9 +19,13 @@
 
 /datum/virtue/utility/socialite/handle_traits(mob/living/carbon/human/recipient)
 	..()
-	if(HAS_TRAIT(recipient, TRAIT_UNSEEMLY))
-		to_chat(recipient, "Your social grace is cancelled out! You become normal.")
+	if(isdullahan(recipient))
 		REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
+		ADD_TRAIT(recipient, TRAIT_BEAUTIFUL_UNCANNY, TRAIT_VIRTUE)
+	if(HAS_TRAIT(recipient, TRAIT_UNSEEMLY))
+		to_chat(recipient, "Your attractiveness is cancelled out! You become normal.")
+		if(HAS_TRAIT(recipient, TRAIT_BEAUTIFUL))
+			REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
 		REMOVE_TRAIT(recipient, TRAIT_UNSEEMLY, TRAIT_VIRTUE)
 
 /datum/virtue/utility/deadened
@@ -110,8 +113,9 @@
 	added_skills = list(list(/datum/skill/misc/reading, 3, 6))
 	added_stashed_items = list(
 		"Quill" = /obj/item/natural/feather,
-		"Scroll" = /obj/item/paper/scroll,
-		"Book" = /obj/item/book/rogue/playerbook
+		"Scroll #1" = /obj/item/paper/scroll,
+		"Scroll #2" = /obj/item/paper/scroll,
+		"Book Crafting Kit" = /obj/item/book_crafting_kit
 	)
 
 /datum/virtue/utility/linguist/apply_to_human(mob/living/carbon/human/recipient)
@@ -161,60 +165,22 @@
 	desc = "Some fell magick has rendered me inwardly unliving - I do not hunger, and I do not breathe."
 	added_traits = list(TRAIT_NOHUNGER, TRAIT_NOBREATH)
 
-/datum/virtue/utility/blacksmith
-	name = "Blacksmith's Apprentice"
-	desc = "In my youth, I worked under a skilled blacksmith, honing my skills with an anvil."
-	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
-						list(/datum/skill/craft/weaponsmithing, 2, 2),
-						list(/datum/skill/craft/armorsmithing, 2, 2),
-						list(/datum/skill/craft/blacksmithing, 2, 2),
-						list(/datum/skill/craft/smelting, 2, 2)
-	)
-
-/datum/virtue/utility/hunter
-	name = "Hunter's Apprentice"
-	desc = "In my youth, I trained under a skilled hunter, learning how to butcher animals and work with leather/hide."
-	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
-						list(/datum/skill/craft/traps, 2, 2),
-						list(/datum/skill/labor/butchering, 2, 2),
-						list(/datum/skill/misc/sewing, 2, 2),
-						list(/datum/skill/craft/tanning, 2, 2),
-						list(/datum/skill/misc/tracking, 2, 2)
-	)
-
-/datum/virtue/utility/artificer
-	name = "Artificer's Apprentice"
-	desc = "In my youth, I worked under a skilled artificer, studying construction and engineering."
-	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
-						list(/datum/skill/craft/carpentry, 2, 2),
-						list(/datum/skill/craft/masonry, 2, 2),
-						list(/datum/skill/craft/engineering, 2, 2),
-						list(/datum/skill/craft/smelting, 2, 2),
-						list(/datum/skill/misc/ceramics, 2, 2)
-	)
-	added_stashed_items = list(
-		"Hammer" = /obj/item/rogueweapon/hammer/wood,
-		"Chisel" = /obj/item/rogueweapon/chisel,
-		"Hand Saw" = /obj/item/rogueweapon/handsaw
-	)
-
-/datum/virtue/utility/physician
-	name = "Physician's Apprentice"
-	desc = "In my youth, I worked under a skilled physician, studying medicine and alchemy."
-	added_stashed_items = list("Medicine Pouch" = /obj/item/storage/belt/rogue/pouch/medicine)
-	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
-						list(/datum/skill/craft/alchemy, 2, 2),
-						list(/datum/skill/misc/medicine, 2, 2)
-	)
-
-/datum/virtue/utility/physician/apply_to_human(mob/living/carbon/human/recipient)
-	if(!recipient.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/diagnose/secular))
-		recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
+/datum/virtue/utility/deathless/handle_traits(mob/living/carbon/human/recipient)
+	..()
+	if(HAS_TRAIT(recipient, TRAIT_HEMOPHAGE))
+		to_chat(recipient, "My reliance on lyfeblood cannot be severed!")
+		REMOVE_TRAIT(recipient, TRAIT_NOHUNGER, TRAIT_VIRTUE)
 
 /datum/virtue/utility/feral_appetite
 	name = "Feral Appetite"
 	desc = "Raw, toxic or spoiled food doesn't bother my superior digestive system."
 	added_traits = list(TRAIT_NASTY_EATER)
+
+/datum/virtue/utility/feral_appetite/handle_traits(mob/living/carbon/human/recipient)
+	..()
+	if(HAS_TRAIT(recipient, TRAIT_HEMOPHAGE))
+		to_chat(recipient, "My reliance on lyfeblood cannot be severed!")
+		REMOVE_TRAIT(recipient, TRAIT_NASTY_EATER, TRAIT_VIRTUE)
 
 /datum/virtue/utility/night_vision
 	name = "Night-eyed"
@@ -234,10 +200,10 @@
 	desc = "Music, artistry and the act of showmanship carried me through life. I've hidden a favorite instrument of mine, know how to please anyone I touch, and how to crack the eggs of hecklers."
 	custom_text = "Comes with a stashed instrument of your choice. You choose the instrument after spawning in."
 	added_traits = list(TRAIT_NUTCRACKER, TRAIT_GOODLOVER)
-	added_skills = list(list(/datum/skill/misc/music, 3, 6))
+	added_skills = list(list(/datum/skill/misc/music, 4, 6)) //Allows them uplaod custom music
 
 /datum/virtue/utility/performer/apply_to_human(mob/living/carbon/human/recipient)
-    addtimer(CALLBACK(src, .proc/performer_apply, recipient), 50)
+	addtimer(CALLBACK(src, .proc/performer_apply, recipient), 50)
 
 /datum/virtue/utility/performer/proc/performer_apply(mob/living/carbon/human/recipient)
 	var/list/instruments = list()
@@ -261,6 +227,7 @@
 
 /datum/virtue/utility/granary
 	name = "Cunning Provisioner"
+	added_traits = list(TRAIT_HOMESTEAD_EXPERT)
 	desc = "You've worked in or around the docks enough to steal away a sack of supplies that no one would surely miss, just in case. You've picked up on some cooking and fishing tips in your spare time, as well."
 	added_stashed_items = list("Bag of Food" = /obj/item/storage/roguebag/food)
 	added_skills = list(list(/datum/skill/craft/cooking, 3, 6),
@@ -268,6 +235,7 @@
 
 /datum/virtue/utility/forester
 	name = "Forester"
+	added_traits = list(TRAIT_HOMESTEAD_EXPERT)
 	desc = "The forest is your home, or at least, it used to be. You always long to return and roam free once again, and you have not forgotten your knowledge on how to be self sufficient."
 	added_stashed_items = list("Trusty hoe" = /obj/item/rogueweapon/hoe)
 	added_skills = list(list(/datum/skill/craft/cooking, 2, 2),
@@ -277,13 +245,23 @@
 						list(/datum/skill/labor/lumberjacking, 2, 2)
 	)
 
-/datum/virtue/utility/mining
-	name = "Miner's Apprentice"
-	desc = "The dark shafts, the damp smells of ichor and the laboring hours are no stranger to me. I keep my pickaxe and lamptern close, and have been taught how to mine well."
+/datum/virtue/utility/homesteader
+	name = "Pilgrim (-3 TRI)"
+	added_traits = list(TRAIT_HOMESTEAD_EXPERT)
+	desc= "As they say, 'hearth is where the heart is'. You are intimately familiar with the labors of lyfe, and have stowed away everything necessary to start anew: a hunting dagger, your trusty hoe, and a sack of assorted supplies."
+	triumph_cost = 3
 	added_stashed_items = list(
-		"Steel Pickaxe" = /obj/item/rogueweapon/pick/steel,
-		"Lamptern" = /obj/item/flashlight/flare/torch/lantern)
-	added_skills = list(list(/datum/skill/labor/mining, 3, 6))
+		"Hoe" = /obj/item/rogueweapon/hoe,
+		"Bag of Food" = /obj/item/storage/roguebag/food,
+		"Hunting Knife" = /obj/item/rogueweapon/huntingknife
+	)
+	added_skills = list(list(/datum/skill/craft/cooking, 3, 3),
+						list(/datum/skill/misc/athletics, 2, 2),
+						list(/datum/skill/labor/farming, 3, 3),
+						list(/datum/skill/labor/fishing, 3, 3),
+						list(/datum/skill/labor/lumberjacking, 2, 2),
+						list(/datum/skill/combat/knives, 2, 2)
+	)
 
 /datum/virtue/utility/ugly
 	name = "Ugly"
@@ -301,7 +279,7 @@
 /datum/virtue/utility/secondvoice
 	name = "Second Voice"
 	desc = "From performance, deception, or by a need to change yourself in uncanny ways, you've acquired a second, perfect voice. You may switch between them at any point."
-	custom_text = "Grants access to a new 'Virtue' tab. It will have the options for setting and changing your voice."
+	custom_text = "Grants access to a new 'Memory' tab. It will have the options for setting and changing your voice."
 
 /datum/virtue/utility/secondvoice/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.verbs += /mob/living/carbon/human/proc/changevoice
@@ -360,13 +338,13 @@
 
 /datum/virtue/utility/woodwalker
 	name = "Woodwalker"
-	desc = "After years of training in the wilds, I've learned to traverse the woods confidently, without breaking any twigs. I can even step lightly on leaves without falling, and I can gather twice as many things from bushes."
+	desc = "After years of training in the wilds, I've learned to traverse the woods confidently, without breaking any twigs. I can even step lightly on leaves without falling, and I can gather twice as many things from bushes. I can also sleep comfortably on a tree branch."
 	added_traits = list(TRAIT_WOODWALKER, TRAIT_OUTDOORSMAN)
 
 /datum/virtue/heretic/zchurch_keyholder
-	name = "Heresiarch"
+	name = "Defiled Keyholder"
 	desc = "The 'Holy' See has their blood-stained grounds, and so do we. Underneath their noses, we pray to the true gods - I know the location of the local heretic conclave. Secrecy is paramount. If found out, I will surely be killed."
-	added_traits = list(TRAIT_HERESIARCH)
+	added_traits = list(TRAIT_ZURCH)
 
 /datum/virtue/utility/mountable
 	name = "Mountable"
@@ -379,4 +357,71 @@
 	custom_text = "Prevents you from experiencing negative stress events when looking at select species."
 	added_traits = list(TRAIT_TOLERANT)
 
+// Apprentice-level virtues - provide broad skill sets without traits or items
+// Max skill level is Apprentice (level 2), allowing varied work without full progression
+
+/datum/virtue/utility/survivalist_novice
+	name = "Novice Survivalist"
+	desc = "I've lived in the wilds and learned to survive off the land. I can hunt, track, fish, trap, and butcher game - all the skills needed to live beyond civilization's walls."
+	added_skills = list(
+		list(/datum/skill/misc/tracking, 1, 2),
+		list(/datum/skill/labor/butchering, 1, 2),
+		list(/datum/skill/craft/tanning, 1, 2),
+		list(/datum/skill/craft/traps, 1, 2),
+		list(/datum/skill/combat/staves, 1, 2),
+		list(/datum/skill/combat/slings, 1, 2),
+		list(/datum/skill/craft/crafting, 1, 2),
+		list(/datum/skill/craft/cooking, 1, 2),
+		list(/datum/skill/labor/lumberjacking, 1, 2),
+		list(/datum/skill/misc/climbing, 1, 2),
+		list(/datum/skill/misc/swimming, 1, 2),
+		list(/datum/skill/misc/sneaking, 1, 2),
+		list(/datum/skill/misc/medicine, 1, 1)
+	)
+
+/datum/virtue/utility/homesteader_novice
+	name = "Novice Homesteader"
+	desc = "I know how to maintain a homestead - farming the land, cooking meals, chopping wood, and all the daily labors needed to be self-sufficient."
+	added_skills = list(
+		list(/datum/skill/labor/farming, 1, 2),
+		list(/datum/skill/craft/cooking, 1, 2),
+		list(/datum/skill/labor/lumberjacking, 1, 2),
+		list(/datum/skill/misc/lockpicking, 1, 2),
+		list(/datum/skill/misc/climbing, 1, 2),
+		list(/datum/skill/misc/athletics, 1, 2),
+		list(/datum/skill/labor/fishing, 1, 2),
+		list(/datum/skill/craft/masonry, 1, 2),
+		list(/datum/skill/craft/carpentry, 1, 2),
+		list(/datum/skill/craft/crafting, 1, 2),
+		list(/datum/skill/combat/maces, 1, 2),
+		list(/datum/skill/combat/axes, 1, 2)
+	)
+
+/datum/virtue/utility/artisan_novice
+	name = "Novice Artisan"
+	desc = "I've learned the fundamentals of crafting - working with metal, fabric, and clay. I'm a jack of all trades in the workshop, though master of none."
+	added_skills = list(
+		list(/datum/skill/craft/crafting, 1, 2),
+		list(/datum/skill/craft/blacksmithing, 1, 2),
+		list(/datum/skill/craft/sewing, 1, 2),
+		list(/datum/skill/craft/smelting, 1, 2),
+		list(/datum/skill/craft/weaponsmithing, 1, 2),
+		list(/datum/skill/craft/armorsmithing, 1, 2),
+		list(/datum/skill/combat/knives, 1, 2),
+		list(/datum/skill/craft/ceramics, 1, 2),
+		list(/datum/skill/craft/engineering, 1, 2)
+	)
+
+/datum/virtue/utility/healer_novice
+	name = "Novice Healer"
+	desc = "I've studied the healing arts - tending wounds, brewing remedies, and understanding the basics of medicine and alchemy."
+	added_skills = list(
+		list(/datum/skill/misc/medicine, 1, 2),
+		list(/datum/skill/craft/alchemy, 1, 2),
+		list(/datum/skill/misc/reading, 1, 2),
+		list(/datum/skill/craft/crafting, 1, 2),
+		list(/datum/skill/craft/sewing, 1, 2),
+		list(/datum/skill/craft/cooking, 1, 2),
+		list(/datum/skill/combat/knives, 1, 2)
+	)
 

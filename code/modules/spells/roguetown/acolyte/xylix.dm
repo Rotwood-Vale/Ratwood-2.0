@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/wheel
 	name = "The Wheel"
 	desc = "Spins the wheel, either buffing or debuffing the targets fortune."
+	overlay_state = "wheel" //Wheel of Fortune
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 3
@@ -26,6 +27,7 @@
 /obj/effect/proc_holder/spell/invoked/mastersillusion
 	name = "Set Decoy"
 	desc = "Creates a body double of yourself and makes you invisible, after a delay your clone explodes into smoke."
+	overlay_state = "decoy" //The Fool
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -74,7 +76,7 @@
 	ai_controller = /datum/ai_controller/mudcrab // doesnt really matter
 
 
-/obj/item/bomb/smoke/decoy/Initialize()
+/obj/item/bomb/smoke/decoy/Initialize(mapload)
 	. = ..()
 	playsound(loc, 'sound/magic/decoylaugh.ogg', 50)
 	explode()
@@ -88,7 +90,8 @@
 
 /obj/effect/proc_holder/spell/invoked/mockery
 	name = "Vicious Mockery"
-	desc = "Mock your target, reducing their INT, SPD, STR and END for a time."
+	desc = "Mock your target, reducing their INT, SPD, STR and WIL for a time."
+	overlay_state = "mockery" //Judgement
 	releasedrain = 50
 	associated_skill = /datum/skill/misc/music
 	recharge_time = 2 MINUTES
@@ -105,7 +108,7 @@
 			return FALSE
 		target.apply_status_effect(/datum/status_effect/debuff/viciousmockery)
 		SEND_SIGNAL(user, COMSIG_VICIOUSLY_MOCKED, target)
-		GLOB.azure_round_stats[STATS_PEOPLE_MOCKED]++
+		record_round_statistic(STATS_PEOPLE_MOCKED)
 		return TRUE
 	revert_cast()
 	return FALSE
@@ -149,12 +152,12 @@
 /atom/movable/screen/alert/status_effect/debuff/viciousmockery
 	name = "Vicious Mockery"
 	desc = "<span class='warning'>THAT ARROGANT BARD! ARGH!</span>\n"
-	icon_state = "muscles"
+	icon_state = "mockery"
 
 /obj/effect/proc_holder/spell/self/xylixslip
 	name = "Xylixian Slip"
 	desc = "Jumps you up to 3 tiles away."
-	overlay_state = "xylix_slip"
+	overlay_state = "slip" //Chariot
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -203,6 +206,20 @@
 		if(prob(50))
 			playsound(H, pick(sounds), 100, TRUE)
 		return TRUE
+
+/obj/effect/proc_holder/spell/invoked/projectile/fetch/miracle
+	name = "Divine Fetch"
+	miracle = TRUE
+	devotion_cost = 10
+	invocations = list()
+	associated_skill = /datum/skill/magic/holy
+
+/obj/effect/proc_holder/spell/invoked/projectile/repel/miracle
+	name = "Divine Repel"
+	miracle = TRUE
+	devotion_cost = 14
+	invocations = list()
+	associated_skill = /datum/skill/magic/holy
 
 #define NOTHING "nothing"
 #define XYLIX "xylix"
@@ -386,7 +403,7 @@
 	var/last_used = 0
 	var/bonus_luck_threshould = 600
 
-/obj/effect/proc_holder/spell/invoked/xylixlian_luck/Initialize()
+/obj/effect/proc_holder/spell/invoked/xylixlian_luck/Initialize(mapload)
 	. = ..()
 
 	last_used = world.time

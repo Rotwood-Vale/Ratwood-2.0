@@ -3,6 +3,34 @@
 	stressadd = 5
 	desc = list(span_boldred("I don't indulge my vice."),span_boldred("I need to sate my vice."))
 
+// Vice-specific stress events for multiple vices support
+/datum/stressevent/vice/nympho
+	desc = list(span_boldred("I'm feeling randy..."),span_boldred("I need to sate my desires."))
+
+/datum/stressevent/vice/sadist
+	desc = list(span_boldred("I need to hear someone whimper."),span_boldred("I crave the suffering of others."))
+
+/datum/stressevent/vice/masochist
+	desc = list(span_boldred("I need someone to HURT me."),span_boldred("I crave the sensation of pain."))
+
+/datum/stressevent/vice/greedy
+	desc = list(span_boldred("I need more mammons..."),span_boldred("What I have is not enough!"))
+
+/datum/stressevent/vice/alcoholic
+	desc = list(span_boldred("Time for a drink."),span_boldred("I need some alcohol."))
+
+/datum/stressevent/vice/kleptomaniac
+	desc = list(span_boldred("I need to STEAL something!"),span_boldred("I'll die if I don't steal!"))
+
+/datum/stressevent/vice/junkie
+	desc = list(span_boldred("Time to get really high."),span_boldred("I need a REAL high."))
+
+/datum/stressevent/vice/smoker
+	desc = list(span_boldred("Time for a flavorful smoke."),span_boldred("I need to smoke something."))
+
+/datum/stressevent/vice/godfearing
+	desc = list(span_boldred("Time to pray to my Patron."),span_boldred("I need to visit my Patron's realm."))
+
 /datum/stressevent/miasmagas
 	timer = 10 SECONDS
 	stressadd = 2
@@ -83,7 +111,7 @@
 	desc = list(span_red("I think I'm bleeding."),span_red("I'm bleeding."))
 
 /datum/stressevent/bleeding/can_apply(mob/living/user)
-	if(user.has_flaw(/datum/charflaw/masochist))
+	if(user.has_flaw(/datum/charflaw/addiction/masochist))
 		return FALSE
 	return TRUE
 
@@ -93,7 +121,7 @@
 	desc = span_red("THE PAIN!")
 
 /datum/stressevent/painmax/can_apply(mob/living/user)
-	if(user.has_flaw(/datum/charflaw/masochist))
+	if(user.has_flaw(/datum/charflaw/addiction/masochist))
 		return FALSE
 	return TRUE
 
@@ -169,11 +197,6 @@
 	timer = 1 MINUTES
 	stressadd = 10
 	desc = span_boldred("What have I done?")
-
-/datum/stressevent/blueb
-	timer = 1 MINUTES
-	stressadd = 2
-	desc = span_red("My loins ache!")
 
 /datum/stressevent/shunned_race
 	timer = 1 MINUTES
@@ -294,7 +317,7 @@
 /datum/stressevent/tortured/on_apply(mob/living/user)
 	. = ..()
 	if(user.client)
-		GLOB.azure_round_stats[STATS_TORTURES]++
+		record_round_statistic(STATS_TORTURES)
 
 /datum/stressevent/noble_bad_manners
 	stressadd = 1
@@ -336,6 +359,25 @@
 	desc = span_red("Their face is unbearable!")
 	timer = 3 MINUTES
 
+/datum/stressevent/unseemly_made_love
+	stressadd = 3
+	desc = span_red("That ugly fiend... Touched me!")
+	timer = 30 MINUTES
+
+/datum/stressevent/unseemly_made_love/beautiful
+	desc = span_red("That ugly thing... RUINED me!")
+	timer = 45 MINUTES
+
+/datum/stressevent/leprosy
+	stressadd = 1
+	desc = span_red("A disgusting leper. Better keep my distance.")
+	timer = 3 MINUTES
+
+/datum/stressevent/uncanny
+	stressadd = 2
+	desc = span_red("Their face is.. wrong!")
+	timer = 3 MINUTES
+
 /datum/stressevent/syoncalamity
 	stressadd = 15
 	desc = span_boldred("By Psydon, the great comet's shard is no more! What will we do now!?")
@@ -370,3 +412,73 @@
 	stressadd = 10
 	desc = span_boldred("Perhaps I shouldn't have done that...")
 	timer = 12 MINUTES
+/datum/stressevent/lostchampion
+	stressadd = 8
+	desc = span_red("I feel I have lost my champion! Oh, my stricken heart!")
+	timer = 25 MINUTES
+
+/datum/stressevent/lostward
+	stressadd = 8
+	desc = span_red("I have failed my ward! My ribbon fades in color!")
+	timer = 25 MINUTES
+
+
+/datum/stressevent/necrarevive
+	stressadd = 15
+	desc = span_boldred("SO CLOSE TO BEING GRASPED, SO COLD!")
+	timer = 15 MINUTES
+
+/datum/stressevent/blessed_weapon
+	stressadd = -3
+	timer = 999 MINUTES
+	desc = span_green("I'm wielding a BLESSED weapon!")
+
+/datum/stressevent/naledimasklost
+	stressadd = 3
+	desc = span_boldred("The mask! Anyone here could be a djinn. I'm exposed.")
+	timer = 999 MINUTES
+
+/datum/stressevent/shamanhoodlost
+	stressadd = 3
+	desc = span_boldred("The hood! My faith wavers without it. I feel ashamed.")
+	timer = 999 MINUTES
+
+/datum/stressevent/headless
+	stressadd = 3
+	desc = span_red("Where is their head? What is that flame?!")
+	timer = 5 MINUTES
+
+/datum/stressevent/hunted // When a hunted character sees someone in a mask
+	timer = 2 MINUTES
+	stressadd = 3
+	desc = span_boldred("I can't see their face! Have they found me!")
+
+/datum/stressevent/profane // When a non-assassin touches a profane dagger
+	timer = 3 MINUTES
+	stressadd = 4
+	desc = span_boldred("I hear the voices of the damned from this cursed blade!")
+
+/datum/stressevent/fermented_crab_bad
+	stressadd = 2
+	desc = span_red("That fermented crab was truly rancid, abhorrent and disgusting.")
+	timer = 3 MINUTES
+
+/datum/stressevent/dimwitted
+	timer = 10 MINUTES
+	stressadd = -4
+	desc = span_green("Everything is nice and simple...")
+
+/datum/stressevent/feebleminded
+	timer = 10 MINUTES
+	stressadd = -10
+	desc = span_green("Heeh...")
+
+/datum/stressevent/arcane_high
+	timer = 10 MINUTES
+	stressadd = -2
+	desc = span_green("Since my magical accident, everything just seems so funny!")
+
+/datum/stressevent/oath_ring_lost
+	stressadd = 2
+	desc = span_boldred("The proof of my oath! It's been stolen!")
+	timer = INFINITY

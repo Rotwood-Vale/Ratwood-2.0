@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(searaider_aggro, world.file2list("strings/rt/searaideraggroline
 		return FALSE
 	. = ..()
 
-/mob/living/carbon/human/species/human/northern/searaider/Initialize()
+/mob/living/carbon/human/species/human/northern/searaider/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/human/northern)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(searaider_aggro, world.file2list("strings/rt/searaideraggroline
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_INFINITE_ENERGY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/human/species/human/northern/searaider)
 	gender = pick(MALE, FEMALE)
 	var/obj/item/organ/eyes/organ_eyes = getorgan(/obj/item/organ/eyes)
@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(searaider_aggro, world.file2list("strings/rt/searaideraggroline
 	var/beard = pick(list(/datum/sprite_accessory/hair/facial/viking,
 						/datum/sprite_accessory/hair/facial/manly,
 						/datum/sprite_accessory/hair/facial/longbeard))
-	head.sellprice = 30 // 50% More than gobbo
+	head.sellprice = 30 // I kinda want to remove head sellprice from all humans but as long as some have it it makes sense that all of the common types do.
 
 	var/datum/bodypart_feature/hair/head/new_hair = new()
 	var/datum/bodypart_feature/hair/facial/new_facial = new()
@@ -139,11 +139,25 @@ GLOBAL_LIST_INIT(searaider_aggro, world.file2list("strings/rt/searaideraggroline
 		neck = /obj/item/clothing/neck/roguetown/gorget
 	if(prob(50))
 		gloves = /obj/item/clothing/gloves/roguetown/leather
+	switch(rand(1, 4))
+		if(1)
+			r_hand = /obj/item/rogueweapon/sword/iron
+			l_hand = /obj/item/rogueweapon/shield/wood
+		if(2)
+			r_hand = /obj/item/rogueweapon/spear
+		if(3)
+			r_hand = /obj/item/rogueweapon/greataxe
+		if(4)
+			r_hand = /obj/item/rogueweapon/greatsword/zwei
 	if(prob(50))
-		r_hand = /obj/item/rogueweapon/sword/iron
-		l_hand = /obj/item/rogueweapon/shield/wood
-	else
-		r_hand = /obj/item/rogueweapon/greataxe
+		belt = /obj/item/storage/belt/rogue/leather/rope
+		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+	if(prob(50))
+		belt = /obj/item/storage/belt/rogue/leather/rope
+		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	if(prob(10))
+		id = /obj/item/clothing/ring/gold
+		
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	H.STASPD = 9
 	H.STACON = rand(10,12) //so their limbs no longer pop off like a skeleton

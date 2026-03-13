@@ -25,7 +25,7 @@
 			return
 	GLOB.chosen_names -= old_name
 	GLOB.chosen_names += real_name
-	if(mind.special_role == "Vampire Lord")
+	if(mind.special_role == "Methuselah")
 		if(gender == FEMALE)
 			real_name = "Lady [real_name]"
 		if(gender == MALE)
@@ -43,5 +43,5 @@
 	GLOB.character_ckey_list[real_name] = ckey
 	log_character("[ckey] - [real_name] - [input]")
 	log_manifest(ckey,mind,src,latejoin = TRUE)
-	for(var/datum/antagonist/A in mind.antag_datums)
+	for(var/datum/antagonist/A as anything in mind.antag_datums)
 		A.after_name_change()

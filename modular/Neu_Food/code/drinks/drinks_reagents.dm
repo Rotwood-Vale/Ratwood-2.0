@@ -71,7 +71,7 @@
 
 /datum/reagent/consumable/poppy_milk/on_mob_life(mob/living/carbon/M)
 	if(M.has_flaw(/datum/charflaw/addiction/junkie))
-		M.sate_addiction()
+		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/ozium)
 	..()
 
@@ -104,7 +104,7 @@
 	..()
 
 /datum/reagent/consumable/soothing_valerian_tea
-	name = "Soothing Valerin Tea"
+	name = "Soothing Valerian Tea"
 	description = "A refreshing tea, great to ease fatigue and relieve stress."
 	color = "#3b9146"
 	quality = DRINK_FANTASTIC

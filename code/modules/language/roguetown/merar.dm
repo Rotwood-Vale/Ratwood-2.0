@@ -8,7 +8,7 @@
 	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 80
 	default_priority = 90
-	icon_state = "asse"
+	icon_state = "beastial"
 	spans = list(SPAN_MERAR)
 	syllables = list(
 	    "za","az","ze","ez","zi","iz","zo","oz","zu","uz","zs","sz","ha","ah","he","eh","hi","ih",

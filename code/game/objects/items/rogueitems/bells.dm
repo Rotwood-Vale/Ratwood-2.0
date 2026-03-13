@@ -71,7 +71,7 @@
 		. = ..()
 		create_barriers()
 
-    // Function to create barriers around the bell
+	// Function to create barriers around the bell
 	/obj/structure/stationary_bell/proc/create_barriers()
 		for(var/direction in GLOB.cardinals)
 			var/turf/adjacent_turf = get_step(src, direction)
@@ -85,9 +85,8 @@
 		return
 	if(istype(used_item, /obj/item/rogueweapon/mace/church))
 		playsound(loc, 'sound/misc/bell.ogg', 50, 1)
-		for(var/mob/M in orange(150, src))
-			if(M.client)
-				to_chat(M, span_notice("The church bell rings, echoing solemnly through the area."))
+		ring_bell()	//sound effect for players within 150 tiles
+		loud_message("The [src] rings, echoing solemnly", hearing_distance = 150)
 		visible_message(span_notice("[user] uses the [used_item] to ring the [src]."))
 		ringing = TRUE
 		sleep(cooldown)
@@ -95,6 +94,22 @@
 	else
 
 		return ..()
+
+/obj/structure/stationary_bell/proc/ring_bell()
+	var/turf/origin_turf = get_turf(src)
+
+	for(var/mob/living/player in GLOB.player_list)
+		if(player.stat == DEAD)
+			continue
+		if(isbrain(player))
+			continue
+
+		var/distance = get_dist(player, origin_turf)
+		if(distance <= 7)
+			continue
+		if(distance <= 150)
+			player.playsound_local(get_turf(player), 'sound/misc/bell.ogg', 35, FALSE, pressure_affected = FALSE)
+			continue
 
 /obj/item/jingle_bells
 	name = "jingling bells"
@@ -107,6 +122,6 @@
 	grid_width = 64
 	grid_height = 32
 
-/obj/item/jingle_bells/Initialize()
+/obj/item/jingle_bells/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_JINGLE_BELLS)

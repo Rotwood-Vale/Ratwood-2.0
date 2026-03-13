@@ -50,7 +50,7 @@
 	var/rock_cd
 	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/ele_quake)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth/Initialize(mapload)
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 	. = ..()
 
@@ -61,6 +61,8 @@
 	new /obj/item/magic/elemental/fragment(deathspot)
 	new /obj/item/magic/elemental/shard(deathspot)
 	new /obj/item/magic/elemental/shard(deathspot)
+	new /obj/item/magic/elemental/mote(deathspot)
+	new /obj/item/magic/elemental/mote(deathspot)
 	new /obj/item/magic/elemental/mote(deathspot)
 	new /obj/item/magic/elemental/mote(deathspot)
 	new /obj/item/magic/melded/t1(deathspot)
@@ -98,9 +100,6 @@
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
-		if(!Process_Spacemove()) //Drifting
-			walk(src,0)
-			return 1
 		if(world.time >= src.rock_cd + 20 SECONDS && !client)//players get a spell
 			quake()
 			src.rock_cd = world.time
@@ -163,6 +162,7 @@
 		shaken.Paralyze(50)
 		var/obj/structure/flora/rock/giant_rock = new(get_turf(shaken))
 		QDEL_IN(giant_rock, 200)
+	return TRUE
 
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth/proc/yeet(target)
 	var/atom/throw_target = get_edge_target_turf(src, get_dir(src, target)) //ill be real I got no idea why this worked.

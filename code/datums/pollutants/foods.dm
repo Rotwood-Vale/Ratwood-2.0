@@ -68,6 +68,14 @@
 	name = "fresh baked prezzel"
 	scent = "fresh baked prezzel"
 
+/datum/pollutant/food/cake
+	name = "fresh baked cake"
+	scent = "fresh baked cake"
+
+/datum/pollutant/food/frosted_cake
+	name = "fresh baked frosted cake"
+	scent = "fresh baked frosted cake"
+
 /datum/pollutant/food/honey_cake
 	name = "fresh baked honey cake"
 	scent = "fresh baked honey cake"
@@ -96,6 +104,10 @@
 	name = "cooked chicken"
 	scent = "cooked chicken"
 
+/datum/pollutant/food/fried_chicken
+	name = "fried chicken"
+	scent = "fried chicken"
+
 /datum/pollutant/food/fried_sausage
 	name = "fried sausage"
 	scent = "fried sausage"
@@ -111,6 +123,10 @@
 /datum/pollutant/food/roasted_seeds
 	name = "roasted seeds"
 	scent = "roasted seeds"
+
+/datum/pollutant/food/muffin
+	name = "fresh baked muffin"
+	scent = "fresh baked muffin"
 
 /datum/pollutant/food/fried_rat
 	name = "fried rats"
@@ -143,3 +159,7 @@
 /datum/pollutant/food/fried_crab_cake
 	name = "fried crab cake"
 	scent = "fried crab cake"
+
+/datum/pollutant/food/roasted_seeds
+	name = "toasted seeds"
+	scent = "toasted seeds"

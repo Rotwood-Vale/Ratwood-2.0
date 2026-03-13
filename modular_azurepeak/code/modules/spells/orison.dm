@@ -20,17 +20,21 @@
 	desc = "The fundamental teachings of theology return to you:\n \
 		<b>Fill</b>: Beseech your Divine to create a small quantity of water in a container that you touch for some devotion.\n \
 		<b>Touch</b>: Direct a sliver of divine thaumaturgy into your being, causing your voice to become LOUD when you next speak. Known to sometimes scare the rats inside the SCOMlines. Can be used on light sources at range, and it will cause them flicker.\n \
-		<b>Use</b>: Issue a prayer for illumination, causing you or another living creature to begin glowing with light for five minutes - this stacks each time you cast it, with no upper limit. Using thaumaturgy on a person will remove this blessing from them, and MMB on your praying hand will remove any light blessings from yourself."
+		<b>Use</b>: Issue a prayer for illumination, causing you or another living creature to begin glowing with light for five minutes - this stacks each time you cast it, with no upper limit. Using thaumaturgy on a person will remove this blessing from them, and MMB on your praying hand will remove any light blessings from yourself.\n \
+		<b>Shove</b>: Lay hands upon an adjacent creature to channel divine restorative power through your touch. Both you and your target must remain still for the channeling to continue."
 	catchphrase = null
-	possible_item_intents = list(/datum/intent/fill, INTENT_HELP, /datum/intent/use)
+	possible_item_intents = list(/datum/intent/fill, INTENT_HELP, /datum/intent/use, INTENT_DISARM)
 	icon = 'icons/mob/roguehudgrabs.dmi'
 	icon_state = "pulling"
 	icon_state = "grabbing_greyscale"
 	color = "#FFFFFF"
+	associated_skill = /datum/skill/magic/holy
 	var/right_click = FALSE
 	var/thaumaturgy_devotion = 10
+	/// The amount of devotion used to apply/add light to a mob
 	var/light_devotion = 5
 	var/water_moisten = 2
+	var/lay_hands_devotion = 10
 
 /obj/item/melee/touch_attack/orison/attack_self()
 	qdel(src)
@@ -59,6 +63,11 @@
 			if (fatigue_used)
 				user.devotion?.update_devotion(-fatigue_used)
 				qdel(src)
+		if (INTENT_DISARM)
+			fatigue_used = lay_hands(target, user)
+			if (fatigue_used)
+				user.devotion?.update_devotion(-fatigue_used)
+				qdel(src)
 
 #define BLESSINGOFLIGHT_FILTER "bol_glow"
 
@@ -74,11 +83,20 @@
 	status_type = STATUS_EFFECT_REFRESH
 	examine_text = "SUBJECTPRONOUN is surrounded by an aura of gentle light."
 	var/outline_colour = "#ffffff"
-	var/list/mobs_affected
+	/// The object attached to the mob that emits light
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+	/// Amount of light our buff emits, can be buffed by someone with higher miracles skill
+	var/holy_light_power = 1
 
-/datum/status_effect/light_buff/refresh()
+/datum/status_effect/light_buff/on_creation(mob/living/new_owner, light_power)
+	if(light_power > holy_light_power)
+		holy_light_power = light_power
+	return ..()
+
+/datum/status_effect/light_buff/refresh(mob/living/owner, light_power)
 	duration += initial(duration) // stack this up as much as we can be bothered to cast it
+	if(holy_light_power > mob_light_obj.light_power)
+		mob_light_obj.light_power = holy_light_power
 
 /datum/status_effect/light_buff/on_apply()
 	. = ..()
@@ -90,6 +108,7 @@
 	if (!filter)
 		owner.add_filter(BLESSINGOFLIGHT_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
 	mob_light_obj = owner.mob_light(7, 7, _color ="#f5edda")
+	mob_light_obj.light_power = holy_light_power
 	return TRUE
 
 /datum/status_effect/light_buff/on_remove()
@@ -105,29 +124,27 @@
 		to_chat(user, span_info("I need to be next to [thing] to channel a blessing of light!"))
 		return
 
-	if (isliving(thing))
-
-		if (thing != user)
-			user.visible_message(span_notice("[user] reaches gently towards [thing], beads of light glimmering at [user.p_their()] fingertips..."), span_notice("Blessed [user.patron.name], I ask but for a light to guide the way..."))
-		else
-			user.visible_message(span_notice("[user] closes [user.p_their()] eyes and places a glowing hand upon [user.p_their()] chest..."), span_notice("Blessed [user.patron.name], I ask but for a light to guide the way..."))
-		
-		if (do_after(user, cast_time, target = thing))
-			var/mob/living/living_thing = thing
-			var/light_power = clamp(4 + (holy_skill - 3), 4, 7)
-			set_light_on()
-
-			if (living_thing.has_status_effect(/datum/status_effect/light_buff))
-				user.visible_message(span_notice("The holy light emanating from [living_thing] becomes brighter!"), span_notice("I feed further devotion into [living_thing]'s blessing of light."))
-			else
-				user.visible_message(span_notice("A gentle illumination suddenly blossoms into being around [living_thing]!"), span_notice("I grant [living_thing] a blessing of light."))
-
-			living_thing.apply_status_effect(/datum/status_effect/light_buff, light_power)
-
-			return light_devotion
-	else
+	if(!isliving(thing))
 		to_chat(user, span_notice("Only living creachers can bear the blessing of [user.patron.name]'s light."))
 		return
+
+	if(thing != user)
+		user.visible_message(span_notice("[user] reaches gently towards [thing], beads of light glimmering at [user.p_their()] fingertips..."), span_notice("Blessed [user.patron.name], I ask but for a light to guide the way..."))
+	else
+		user.visible_message(span_notice("[user] closes [user.p_their()] eyes and places a glowing hand upon [user.p_their()] chest..."), span_notice("Blessed [user.patron.name], I ask but for a light to guide the way..."))
+
+	if(!do_after(user, cast_time, target = thing))
+		return
+	var/mob/living/living_thing = thing
+	if (living_thing.has_status_effect(/datum/status_effect/light_buff))
+		user.visible_message(span_notice("The holy light emanating from [living_thing] becomes brighter!"), span_notice("I feed further devotion into [living_thing]'s blessing of light."))
+	else
+		user.visible_message(span_notice("A gentle illumination suddenly blossoms into being around [living_thing]!"), span_notice("I grant [living_thing] a blessing of light."))
+
+	var/light_power = clamp(4 + (holy_skill - 3), 4, 7)
+	living_thing.apply_status_effect(/datum/status_effect/light_buff, light_power)
+
+	return light_devotion
 
 #undef BLESSINGOFLIGHT_FILTER
 /atom/movable/screen/alert/status_effect/thaumaturgy
@@ -208,21 +225,29 @@
 
 /datum/reagent/water/blessed
 	name = "blessed water"
-	description = "A gift of Devotion. Very slightly heals wounds."
+	description = "A gift of Devotion. Heals the body from within, but not physical wounds."
 
 /datum/reagent/water/blessed/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if (M.mob_biotypes & MOB_UNDEAD)
-		M.adjustFireLoss(0.5*REM)
+		M.adjustFireLoss(1.5*REM)
 	else
-		M.adjustBruteLoss(-0.1*REM)
-		M.adjustFireLoss(-0.1*REM)
-		M.adjustOxyLoss(-0.1, 0)
-		var/list/our_wounds = M.get_wounds()
-		if (LAZYLEN(our_wounds))
-			var/upd = M.heal_wounds(1)
-			if (upd)
-				M.update_damage_overlays()
+		// Heals internal damage very well like potions
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = min(M.blood_volume+10, BLOOD_VOLUME_NORMAL)
+		M.adjustToxLoss(-3*REM, 0)
+		M.adjustOxyLoss(-3*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
+		M.adjustCloneLoss(-3*REM, 0)
+		// Does NOT heal brute or fire damage
+
+/datum/reagent/water/blessed/on_mob_metabolize(mob/living/L)
+	..()
+	if(L.mob_biotypes & MOB_UNDEAD)
+		L.adjust_fire_stacks(2)
+		L.ignite_mob()
+		L.emote("scream")
+		L.visible_message(span_warning("[L] erupts into angry fizzling and hissing!"), span_warning("BLESSED WATER!!! IT BURNS!!!"))
 
 /datum/reagent/water/blessed/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if (!istype(M))
@@ -238,7 +263,7 @@
 
 /datum/reagent/water/cursed
 	name = "cursed water"
-	description = "A gift of Devotion. Very slightly heals wounds of the dead and the enlightened."
+	description = "A gift of Devotion. Heals the body from within, but not physical wounds."
 
 /datum/reagent/water/cursed/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -246,24 +271,94 @@
 	if(istype(M,/mob/living/carbon/human/))
 		M_hum = M
 	if((M.mob_biotypes & MOB_UNDEAD) || (M_hum.patron.undead_hater == FALSE))
-		M.adjustBruteLoss(-0.1*REM)
-		M.adjustFireLoss(-0.1*REM)
-		M.adjustOxyLoss(-0.1, 0)
-		var/list/our_wounds = M.get_wounds()
-		if (LAZYLEN(our_wounds))
-			var/upd = M.heal_wounds(1)
-			if (upd)
-				M.update_damage_overlays()
+		// Heals internal damage very well like potions for undead/dark patrons
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = min(M.blood_volume+10, BLOOD_VOLUME_NORMAL)
+		M.adjustToxLoss(-3*REM, 0)
+		M.adjustOxyLoss(-3*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
+		M.adjustCloneLoss(-3*REM, 0)
+		// Does NOT heal brute or fire damage
 	else
-		M.adjustBruteLoss(-0.1*REM)
-		M.adjustFireLoss(-0.1*REM)
-		M.adjustOxyLoss(-0.1, 0)
-		var/list/our_wounds = M.get_wounds()
-		if (LAZYLEN(our_wounds))
-			var/upd = M.heal_wounds(1)
-			if (upd)
-				M.update_damage_overlays()
-		M.stamina_add(0.5*REM)
+		// Heals less for divine worshippers, but still internal damage only
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = min(M.blood_volume+5, BLOOD_VOLUME_NORMAL)
+		M.adjustToxLoss(-1.5*REM, 0)
+		M.adjustOxyLoss(-1.5*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5*REM)
+		M.adjustCloneLoss(-1.5*REM, 0)
+		// Does NOT heal brute or fire damage
+		M.stamina_add(1*REM)
+
+/obj/item/melee/touch_attack/orison/proc/lay_hands(atom/thing, mob/living/carbon/human/user)
+	var/holy_skill = user.get_skill_level(attached_spell.associated_skill)
+	var/cast_time = 40 - (holy_skill * 4)
+	
+	if (!thing.Adjacent(user))
+		to_chat(user, span_info("I need to be next to [thing] to lay hands upon them!"))
+		return
+	
+	if (!isliving(thing))
+		to_chat(user, span_notice("I can only channel healing through living beings."))
+		return
+	
+	var/mob/living/target = thing
+	
+	if (target.stat == DEAD)
+		to_chat(user, span_warning("The dead are beyond my reach..."))
+		return
+	
+	if (target.has_status_effect(/datum/status_effect/buff/lay_hands))
+		to_chat(user, span_notice("[target] is already receiving the laying of hands."))
+		return
+	
+	user.visible_message(span_notice("[user] places [user.p_their()] hands upon [target], divine power beginning to gather..."), span_notice("I lay my hands upon [target], channeling [user.patron.name]'s restorative power..."))
+	
+	// Initial channel to establish the connection
+	if (do_after(user, cast_time, target = target))
+		// Healing power scales better with holy skill: 0.3 to 0.8
+		var/healing_power = clamp(0.3 + (holy_skill * 0.1), 0.3, 0.8)
+		// Devotion cost per tick scales down with skill: 3 to 1
+		var/devotion_per_tick = clamp(4 - holy_skill, 1, 20)
+		
+		user.visible_message(span_notice("Divine energy suffuses [target] as [user]'s channeling takes hold!"), span_notice("The connection is established - [user.patron.name]'s power flows through me into [target]."))
+		
+		// Continuous healing loop - keeps going as long as both stay still and adjacent
+		var/first_application = TRUE
+		var/tick_time = 50 - (holy_skill * 3) // Faster ticks for more skilled clerics
+		
+		while(do_after(user, tick_time, target = target))
+			// Check if we have enough devotion to continue
+			if (user.devotion?.devotion < devotion_per_tick)
+				to_chat(user, span_warning("My devotion is exhausted - I can no longer maintain the channeling!"))
+				break
+			
+			// Break if target dies
+			if (target.stat == DEAD)
+				to_chat(user, span_warning("[target] has passed beyond my healing touch..."))
+				break
+			
+			// Break if no longer adjacent
+			if (!target.Adjacent(user))
+				to_chat(user, span_warning("I am too far from [target] - the blessing fades!"))
+				break
+			
+			// Apply or refresh the healing effect
+			target.apply_status_effect(/datum/status_effect/buff/lay_hands, healing_power)
+			
+			// Consume devotion for this healing cycle
+			user.devotion?.update_devotion(-devotion_per_tick)
+			
+			if (first_application)
+				to_chat(user, span_notice("I maintain my focus, channeling [user.patron.name]'s restorative power through my hands..."))
+				first_application = FALSE
+		
+		// When the loop ends (player moved or stopped)
+		user.visible_message(span_notice("[user] withdraws [user.p_their()] hands from [target], the divine energy fading."), span_notice("I release my concentration and the channeling ends."))
+		
+		return lay_hands_devotion
+	
+	return
 
 /obj/item/melee/touch_attack/orison/proc/create_water(atom/thing, mob/living/carbon/human/user)
 	// normally we wouldn't use fatigue here to keep in line w/ other holy magic, but we have to since water is a persistent resource

@@ -1,5 +1,5 @@
 /obj/item/organ/dullahan_vision
-	name = "Dullahan Vision"
+	name = "Revenant Vision"
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	slot = ORGAN_SLOT_HUD
 	organ_flags = ORGAN_SURGERY_HIDDEN | ORGAN_INTERNAL_ONLY
@@ -44,14 +44,12 @@
 
 /obj/item/organ/dullahan_vision/ui_action_click(owner)
 	var/mob/living/carbon/human/user = owner
-	
 	if(!isdullahan(user))
 		return
 
 	var/datum/species/dullahan/user_species = user.dna.species
 	if(!user_species.headless)
 		return
-		
 	var/obj/item/bodypart/head/dullahan/head = user_species.my_head
 
 	if(viewing_head)

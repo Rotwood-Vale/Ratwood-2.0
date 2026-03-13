@@ -30,6 +30,7 @@
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	time = 5 SECONDS
 	surgery_flags = SURGERY_CLAMPED
+	surgery_flags_blocked = SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_JOURNEYMAN
 	skill_median = SKILL_LEVEL_EXPERT
 	preop_sound = 'sound/surgery/scalpel1.ogg'
@@ -64,6 +65,7 @@
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	time = 6.4 SECONDS
 	surgery_flags = SURGERY_CUTVEIN
+	surgery_flags_blocked = SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_JOURNEYMAN
 	skill_median = SKILL_LEVEL_EXPERT
 	preop_sound = 'sound/surgery/organ1.ogg'

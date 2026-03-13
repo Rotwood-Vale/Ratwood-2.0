@@ -27,9 +27,9 @@
 		return "[icon_state]_2"
 	else
 		return "[icon_state]_1"
-	
+
 ///Old Azure code
- /*
+/*
 	if(pp.erect_state == ERECT_STATE_HARD)
 		return "[icon_state]_[min(3,pp.penis_size+1)]"
 	else
@@ -37,6 +37,8 @@
 */
 
 /datum/sprite_accessory/penis/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	if(owner.sexcon && owner.sexcon.bottom_exposed == TRUE)
+		return TRUE
 	if(owner.underwear)
 		return FALSE
 	return is_human_part_visible(owner, HIDEJUMPSUIT|HIDECROTCH)
@@ -109,7 +111,7 @@
 /datum/sprite_accessory/testicles
 	icon = 'icons/mob/sprite_accessory/genitals/gonads.dmi'
 	color_key_name = "Sack"
-	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_BEHIND_LAYER)
 
 /datum/sprite_accessory/testicles/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)
@@ -119,10 +121,12 @@
 	return "[icon_state]_[testes.ball_size]"
 
 /datum/sprite_accessory/testicles/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
-	if(owner.underwear)
-		return FALSE
 	var/obj/item/organ/penis/pp = owner.getorganslot(ORGAN_SLOT_PENIS)
 	if(pp && pp.sheath_type == SHEATH_TYPE_SLIT)
+		return FALSE
+	if(owner.sexcon && owner.sexcon.bottom_exposed == TRUE)
+		return TRUE
+	if(owner.underwear)
 		return FALSE
 	return is_human_part_visible(owner, HIDEJUMPSUIT|HIDECROTCH)
 
@@ -141,7 +145,7 @@
 	return "[icon_state]_[badonkers.breast_size]"
 
 /datum/sprite_accessory/breasts/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
-	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_ID, OFFSET_ID_F)
+	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BREASTS, OFFSET_BREASTS_F)
 
 /datum/sprite_accessory/breasts/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	if(owner.underwear && owner.underwear.covers_breasts)
@@ -172,6 +176,8 @@
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)
 
 /datum/sprite_accessory/vagina/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	if(owner.sexcon && owner.sexcon.bottom_exposed == TRUE)
+		return TRUE
 	if(owner.underwear)
 		return FALSE
 	return is_human_part_visible(owner, HIDECROTCH|HIDEJUMPSUIT)
@@ -184,6 +190,11 @@
 /datum/sprite_accessory/vagina/hairy
 	icon_state = "hairy"
 	name = "Hairy"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+/datum/sprite_accessory/vagina/trimmed
+	icon_state = "trimmed"
+	name = "Trimmed"
 	color_key_defaults = list(KEY_HAIR_COLOR)
 
 /datum/sprite_accessory/vagina/spade

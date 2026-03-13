@@ -1,0 +1,52 @@
+{
+    "full": {
+
+    },
+    "start": {
+        "i": "aye",
+		"h": "'",
+        "th": "'",
+		"shit:": "shite",
+		"fuck": "fark",
+		"mercenary": "sellsword",
+		"tailor": "stitcher",
+		"doctor": "shurgeon",
+		"those": "them",
+		"one": "won",
+		"two": "tew",
+		"three": "thryee",
+		"four": "fore",
+		"five": "fayve",
+		"six": "sicks",
+		"seven": "sevenn",
+		"eight": "ayte",
+		"nine": "naeyn",
+		"and": "an'",
+		"penis": "pintle",
+		"ten": "tenn",
+		"archivist": "bookie",
+		"su": "s'",
+		"my ": "m'",
+        "you": "yew",
+        "your": "yous",
+		"butt": "arse",
+		"copper": "coppen",
+		"something": "some'n",
+		"love": "luv",
+		"aren't": "aintch"
+    },
+    "end": {
+		"ing": "in'",
+		"re": "s",
+		"uis": "wyre",
+		"ve": "s'a",
+		"he": "'",
+		"ie": "y",
+		"c": "ck"
+    },
+	"multiword": {
+	},
+    "syllable": {
+
+    }
+}

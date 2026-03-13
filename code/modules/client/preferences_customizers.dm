@@ -31,7 +31,8 @@
 			break
 		var/datum/customizer/customizer = CUSTOMIZER(customizer_type)
 		if(!found)
-			customizer_entries += customizer.make_default_customizer_entry(src, FALSE)
+			if(customizer)
+				customizer_entries += customizer.make_default_customizer_entry(src, FALSE)
 
 	/// Validate the variables within customizer entries
 	for(var/datum/customizer_entry/entry as anything in customizer_entries)
@@ -51,6 +52,8 @@
 	var/iterated_customizers = 0
 	for(var/customizer_type in customizers)
 		var/datum/customizer/customizer = CUSTOMIZER(customizer_type)
+		if(!customizer)
+			continue
 		if(!customizer.is_allowed(src))
 			continue
 		var/datum/customizer_entry/entry = get_customizer_entry_for_customizer_type(customizer_type)
@@ -154,7 +157,7 @@
 			for(var/choice_type in customizer.customizer_choices)
 				var/datum/customizer_choice/iter_choice = CUSTOMIZER_CHOICE(choice_type)
 				choice_list[iter_choice.name] = choice_type
-			var/chosen_input = input(user, "Choose your [lowertext(customizer.name)]:", "Character Preference")  as null|anything in choice_list
+			var/chosen_input = tgui_input_list(user, "Choose your [LOWER_TEXT(customizer.name)]:", "Character Preference", choice_list)
 			if(!chosen_input)
 				return
 			var/choice_type = choice_list[chosen_input]

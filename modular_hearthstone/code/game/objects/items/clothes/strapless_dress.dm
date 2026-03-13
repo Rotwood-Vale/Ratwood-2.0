@@ -4,7 +4,7 @@
 	icon = 'modular_hearthstone/icons/obj/items/clothes/dress.dmi'
 	mob_overlay_icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/dress.dmi'
 	name = "strapless dress"
-	desc = "It barely covers anything at all!"
+	desc = "A form-fitting strapless dress with a high, revealing cut. It hugs every curve and hides almost nothing."
 	flags_inv = HIDEBOOB|HIDECROTCH
 	icon_state = "strapless"
 	sleevetype = null
@@ -24,49 +24,32 @@
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/red
 	color = "#6F0000"
 
-/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/random/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/random/Initialize(mapload)
 	color = pick(CLOTHING_BLACK, CLOTHING_BLUE, "#664357", "#6F0000")
 	..()
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/alt
 	mob_overlay_icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/dress.dmi'
 	name = "strapless dress"
-	desc = "It barely covers anything at all!"
+	desc = "A form-fitting strapless dress with a high, revealing cut. It hugs every curve and hides almost nothing."
 	flags_inv = HIDEBOOB|HIDECROTCH
 	icon_state = "strapless2"
 	icon = 'modular_hearthstone/icons/obj/items/clothes/dress.dmi'
-
+	salvage_result = /obj/item/natural/cloth
+	salvage_amount = 1
 
 //SUPPLY
 
-/datum/supply_pack/rogue/wardrobe/suits/strapless_dress_black
-	name = "Black Strapless Dresses"
+/datum/supply_pack/rogue/wardrobe/suits/strapless_dress //just paint them yourself ffs
+	name = "Strapless Dresses"
 	cost = 10
 	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/black,
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/black,
+					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless,
 				)
 
-/datum/supply_pack/rogue/wardrobe/suits/strapless_dress_blue
-	name = "Blue Strapless Dresses"
+/datum/supply_pack/rogue/wardrobe/suits/strapless_dress_alt
+	name = "Alternative Strapless Dresses"
 	cost = 10
 	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/blue,
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/blue,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/strapless_dress_red
-	name = "Red Strapless Dresses"
-	cost = 10
-	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/red,
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/red,
-				)
-
-/datum/supply_pack/rogue/wardrobe/suits/strapless_dress_purple
-	name = "Purple Strapless Dresses"
-	cost = 10
-	contains = list(
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/purple,
-					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/purple,
+					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/alt,
 				)

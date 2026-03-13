@@ -7,6 +7,7 @@
 	chargedrain = 1
 	chargetime = 1 SECONDS
 	recharge_time = 2 MINUTES
+	human_req = TRUE
 	warnie = "spellwarning"
 	school = "transmutation"
 	overlay_state = "haste" // Temporary icon from RW
@@ -57,7 +58,7 @@
 /datum/status_effect/buff/haste/other
 	duration = 3 MINUTES
 
-/datum/status_effect/buff/haste/on_creation(mob/living/new_owner, var/new_duration = null)
+/datum/status_effect/buff/haste/on_creation(mob/living/new_owner, new_duration = null)
 	if(new_duration)
 		duration = new_duration
 	. = ..()
@@ -66,7 +67,7 @@
 	. = ..()
 	var/filter = owner.get_filter(HASTE_FILTER)
 	if (!filter)
-		owner.add_filter(HASTE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
+		owner.add_filter(HASTE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 25, "size" = 1))
 	to_chat(owner, span_warning("My limbs move with uncanny swiftness."))
 
 /datum/status_effect/buff/haste/on_remove()

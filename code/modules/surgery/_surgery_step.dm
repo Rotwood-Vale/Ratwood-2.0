@@ -57,7 +57,7 @@
 	/// Skill median used to apply success and speed bonuses
 	var/skill_median = SKILL_LEVEL_JOURNEYMAN
 	/// Modifiers to success chance when you're above the median
-	var/list/skill_bonuses = list(
+	var/list/skill_bonuses = alist(
 		1 = 0.5,
 		2 = 1,
 		3 = 1.5,
@@ -66,7 +66,7 @@
 		6 = 3,
 	)
 	/// Modifiers to success chance when you're below the median
-	var/list/skill_maluses = list(
+	var/list/skill_maluses = alist(
 		1 = -0.2,
 		2 = -0.4,
 		3 = -0.6,
@@ -88,6 +88,7 @@
 	var/preop_sound //Sound played when the step is started
 	var/success_sound //Sound played if the step succeeded
 	var/failure_sound //Sound played if the step fails
+	var/visible_required_skill = FALSE //gives you a message about lacking skill, just used for re-adding limbs
 
 /datum/surgery_step/proc/can_do_step(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent, try_to_fail = FALSE)
 	if(!user || !target)
@@ -136,6 +137,8 @@
 		if(!found_intent)
 			return FALSE
 	if(skill_used && skill_min && (user.get_skill_level(skill_used) < skill_min))
+		if(visible_required_skill)
+			to_chat(user, span_warning("I'm not skilled enough to do this!"))
 		return FALSE
 	return TRUE
 
@@ -290,7 +293,7 @@
 	if(success && success(user, target, target_zone, tool, intent))
 		if(ishuman(user))
 			var/mob/living/carbon/human/doctor = user
-			user.mind.add_sleep_experience(/datum/skill/misc/medicine, doctor.STAINT * (skill_min/2))
+			user.mind.add_sleep_experience(skill_used, doctor.STAINT * (skill_min/2))
 		play_success_sound(user, target, target_zone, tool)
 		if(repeating && can_do_step(user, target, target_zone, tool, intent, try_to_fail))
 			initiate(user, target, target_zone, tool, intent, try_to_fail)

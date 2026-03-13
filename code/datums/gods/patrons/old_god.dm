@@ -14,7 +14,10 @@
 	confess_lines = list(
 		"THERE IS ONLY ONE TRUE GOD!",
 		"PSYDON YET LYVES! PSYDON YET ENDURES!",
-		"REBUKE THE HERETICAL- PSYDON ENDURES!",
+		"REBUKE THE HEATHEN, SUNDER THE MONSTER!",
+		"WITH EVERY BROKEN BONE, I SWORE I LYVED!",
+		"FORGIVE THEM, ALLFATHER, FOR THEY KNOW-NOT WHAT THEY DO!",
+		"BARE WITNESS, MY GOD; THE SACRIFICE MADE MANIFEST!",
 	)
 
 
@@ -82,7 +85,7 @@
 		return FALSE
 	var/mob/living/carbon/human/H = user
 	var/obj/item/found_thing
-	if(H.get_stress_amount() > 0 && H.STALUC > 10)
+	if(H.get_stress_amount() < 0 && H.STALUC > 10)
 		found_thing = new /obj/item/roguecoin/gold
 	else if(H.STALUC == 10)
 		found_thing = new /obj/item/roguecoin/silver
@@ -132,7 +135,7 @@
 
 /obj/effect/proc_holder/spell/invoked/psydonendure
 	name = "ENDURE"
-	desc = "Mends the wounds of the target."
+	desc = "At the cost of some lyfe sustaining blood, I can mend the wounds of my target."
 	overlay_state = "ENDURE"
 	releasedrain = 20
 	chargedrain = 0
@@ -169,7 +172,7 @@
 
 		// Bonuses! Flavour! SOVL!
 		for(var/obj/item/clothing/neck/current_item in target.get_equipped_items(TRUE))
-			if(current_item.type in list(/obj/item/clothing/neck/roguetown/zcross/aalloy, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/aalloy, /obj/item/clothing/neck/roguetown/psicross/silver,	/obj/item/clothing/neck/roguetown/psicross/g))
+			if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/aalloy, /obj/item/clothing/neck/roguetown/psicross/silver,	/obj/item/clothing/neck/roguetown/psicross/g))
 				pp += 1
 				if(pp >= 12 & target == user) // A harmless easter-egg. Only applies on self-cast. You'd have to be pretty deliberate to wear 12 of them.
 					target.visible_message(span_danger("[target]'s many psycrosses reverberate with a strange, ephemeral sound..."), span_userdanger("HE must be waking up! I can hear it! I'm ENDURING so much!"))
@@ -198,7 +201,7 @@
 						psicross_bonus = 0.4
 					if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 						psicross_bonus = 0.4
-					if(/obj/item/clothing/neck/roguetown/zcross/aalloy)
+					if(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy)
 						zcross_trigger = TRUE
 
 		if(damtotal >= 300) // ARE THEY ENDURING MUCH, IN ONE WAY OR ANOTHER?
@@ -224,6 +227,7 @@
 			return FALSE
 
 		target.apply_status_effect(/datum/status_effect/buff/psyhealing, psyhealing)
+		user.blood_volume = max(user.blood_volume-30, 0)//We don't care about scaling, for this one.
 		return TRUE
 
 	revert_cast()

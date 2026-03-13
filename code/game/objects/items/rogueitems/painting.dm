@@ -5,7 +5,7 @@
 	desc = ""
 	w_class = WEIGHT_CLASS_NORMAL
 	static_price = TRUE
-	sellprice = 20
+	sellprice = 100
 	icon = 'icons/roguetown/items/misc.dmi'
 	var/deployed_structure = /obj/structure/fluff/walldeco/painting
 
@@ -47,25 +47,36 @@
 	..()
 
 /obj/structure/fluff/walldeco/painting/queen
-	desc = "It's Queen Samantha I of Enigma. Her late husband would be so proud of what she has accomplished in his realm."
+	desc = "It's Queen Alexia I 'the Righteous' Valmont of Ferentia. Twenty years ago she rebelled against her father, King Mattimeo, and had him burned on a cross for heresy after he was seduced by a Baothan succubus."
 	icon_state = "queenpainting_deployed"
 	stolen_painting = /obj/item/rogue/painting/queen
 
 /obj/item/rogue/painting/queen
 	icon_state = "queenpainting"
-	desc = "It's Queen Samantha I of Psydonia. Her late husband would be so proud of what she has accomplished in his realm. These mass-reproduced paintings are unfortunately devalued."
+	desc = "It's Queen Alexia I 'the Righteous' Valmont of Ferentia. Twenty years ago she rebelled against her father, King Mattimeo, and had him burned on a cross for heresy after he was seduced by a Baothan succubus. These mass-reproduced paintings are devalued."
 	dropshrink = 0.5
-	sellprice = 40
+	sellprice = 200
 	deployed_structure = /obj/structure/fluff/walldeco/painting/queen
 
 /obj/item/rogue/painting/seraphina
-	icon_state = "Seraphinapainting"
+	icon_state = "seraphinapainting"
 	desc = "It's holy priest Seraphina, first of her name, blessed be her name."
 	dropshrink = 0.5
-	sellprice = 40
+	sellprice = 200
 	deployed_structure = /obj/structure/fluff/walldeco/painting/seraphina
 
 /obj/structure/fluff/walldeco/painting/seraphina
 	desc = "It's holy priest Seraphina, first of her name, blessed be her name."
 	icon_state = "seraphinapainting_deployed"
 	stolen_painting = /obj/item/rogue/painting/seraphina
+
+/obj/item/rogue/painting/skullzhg
+	icon_state = "skullpainting"
+	desc = "A moody scene depicting a skull and candles on a table. Memento mori."
+	sellprice = 200
+	deployed_structure = /obj/structure/fluff/walldeco/painting/skull
+
+/obj/structure/fluff/walldeco/painting/skull
+	desc = "A moody scene depicting a skull and candles on a table. Memento mori."
+	icon_state = "skullpainting_deployed"
+	stolen_painting = /obj/item/rogue/painting/skullzhg

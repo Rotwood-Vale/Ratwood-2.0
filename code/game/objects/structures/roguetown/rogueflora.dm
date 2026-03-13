@@ -12,7 +12,6 @@
 	blade_dulling = DULLING_CUT
 	pixel_x = -16
 	layer = 4.81
-	plane = GAME_PLANE_UPPER
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	destroy_sound = 'sound/misc/woodhit.ogg'
 	debris = list(/obj/item/grown/log/tree/stick = 2)
@@ -23,30 +22,21 @@
 	smeltresult = /obj/item/rogueore/coal
 
 /obj/structure/flora/roguetree/attack_right(mob/user)
-	if(user.mind && isliving(user))
-		if(user.mind.special_items && user.mind.special_items.len)
-			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
-			if(item)
-				if(user.Adjacent(src))
-					if(user.mind.special_items[item])
-						var/path2item = user.mind.special_items[item]
-						user.mind.special_items -= item
-						var/obj/item/I = new path2item(user.loc)
-						user.put_in_hands(I)
-			return
+	handle_special_items_retrieval(user, src)
 
 /obj/structure/flora/roguetree/attacked_by(obj/item/I, mob/living/user)
 	var/was_destroyed = obj_destroyed
 	. = ..()
 	if(.)
 		if(!was_destroyed && obj_destroyed)
+			SEND_SIGNAL(user, COMSIG_MOB_FELL_TREE)
 			record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
-			GLOB.azure_round_stats[STATS_TREES_CUT]++
+			record_round_statistic(STATS_TREES_CUT)
 
 /obj/structure/flora/roguetree/spark_act()
 	fire_act()
 
-/obj/structure/flora/roguetree/Initialize()
+/obj/structure/flora/roguetree/Initialize(mapload)
 	. = ..()
 
 /*
@@ -86,11 +76,11 @@
 	. = ..()
 
 
-/obj/structure/flora/roguetree/Initialize()
+/obj/structure/flora/roguetree/Initialize(mapload)
 	. = ..()
 	icon_state = "t[rand(1,16)]"
 
-/obj/structure/flora/roguetree/evil/Initialize()
+/obj/structure/flora/roguetree/evil/Initialize(mapload)
 	. = ..()
 	icon_state = "wv[rand(1,2)]"
 	soundloop = new(src, FALSE)
@@ -122,7 +112,7 @@
 		"BEGONE, INTERLOPER!"
 	)
 
-/obj/structure/flora/roguetree/wise/Initialize()
+/obj/structure/flora/roguetree/wise/Initialize(mapload)
 	. = ..()
 	icon_state = "mystical"
 
@@ -159,7 +149,7 @@
 	stump_type = /obj/structure/flora/roguetree/stump/burnt
 	pixel_x = -32
 
-/obj/structure/flora/roguetree/burnt/Initialize()
+/obj/structure/flora/roguetree/burnt/Initialize(mapload)
 	. = ..()
 	icon_state = "t[rand(1,4)]"
 
@@ -172,7 +162,7 @@
 	pixel_x = -32
 	metalizer_result = /obj/machinery/anvil
 
-/obj/structure/flora/roguetree/stump/burnt/Initialize()
+/obj/structure/flora/roguetree/stump/burnt/Initialize(mapload)
 	. = ..()
 	icon_state = "st[rand(1,2)]"
 
@@ -184,7 +174,7 @@
 	stump_type = null
 	pixel_x = -32
 
-/obj/structure/flora/roguetree/stump/pine/Initialize()
+/obj/structure/flora/roguetree/stump/pine/Initialize(mapload)
 	. = ..()
 	icon_state = "dead[rand(4,5)]"
 
@@ -196,7 +186,7 @@
 	opacity = 1
 	density = 1
 
-/obj/structure/flora/roguetree/underworld/Initialize()
+/obj/structure/flora/roguetree/underworld/Initialize(mapload)
 	. = ..()
 	icon_state = "screaming[rand(1,3)]"
 
@@ -221,7 +211,7 @@
 	var/lumber_amount = 1
 	var/lumber = /obj/item/grown/log/tree/small
 
-/obj/structure/flora/roguetree/stump/Initialize()
+/obj/structure/flora/roguetree/stump/Initialize(mapload)
 	. = ..()
 	icon_state = "t[rand(1,4)]stump"
 
@@ -263,7 +253,7 @@
 	climb_offset = 14
 	stump_type = FALSE
 
-/obj/structure/flora/roguetree/stump/log/Initialize()
+/obj/structure/flora/roguetree/stump/log/Initialize(mapload)
 	. = ..()
 	icon_state = "log[rand(1,2)]"
 
@@ -285,7 +275,7 @@
 /obj/structure/flora/roguegrass/spark_act()
 	fire_act()
 
-/obj/structure/flora/roguegrass/Initialize()
+/obj/structure/flora/roguegrass/Initialize(mapload)
 	update_icon()
 	AddComponent(/datum/component/roguegrass)
 	. = ..()
@@ -346,7 +336,7 @@
 	var/list/looty = list()
 	var/bushtype
 
-/obj/structure/flora/roguegrass/bush/Initialize()
+/obj/structure/flora/roguegrass/bush/Initialize(mapload)
 	if(prob(88) && isnull(bushtype))
 		bushtype = pickweight(list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue=5,
 					/obj/item/reagent_containers/food/snacks/grown/berries/rogue/poison=3,
@@ -428,13 +418,6 @@
 		return 0
 	return 1
 
-/obj/structure/flora/roguegrass/bush/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return 1
-	if(get_dir(mover.loc, target) == dir)
-		return 0
-	return 1
-
 /obj/structure/flora/roguegrass/bush/westleach
 	name = "westleach bush"
 	desc = "Large, red leaves peek out of it with an alluring aroma."
@@ -448,7 +431,7 @@
 	if(prob(50))
 		looty += /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed
 
-/obj/structure/flora/roguegrass/bush/westleach/Initialize()
+/obj/structure/flora/roguegrass/bush/westleach/Initialize(mapload)
 	bushtype = /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed
 	return ..()
 
@@ -456,36 +439,19 @@
 	name = "great bush"
 	desc = "A bush. This one’s roots are thick enough to block the way."
 	opacity = TRUE
-	density = 1
+	density = TRUE
 	climbable = FALSE
 	icon_state = "bushwall1"
 	max_integrity = 150
 	debris = list(/obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 1, /obj/item/natural/thorn = 1)
 	attacked_sound = 'sound/misc/woodhit.ogg'
 
-/obj/structure/flora/roguegrass/bush/wall/Initialize()
+/obj/structure/flora/roguegrass/bush/wall/Initialize(mapload)
 	. = ..()
 	icon_state = "bushwall[pick(1,2)]"
 
 /obj/structure/flora/roguegrass/bush/wall/update_icon()
 	return
-
-/obj/structure/flora/roguegrass/bush/wall/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return 1
-	return 0
-
-/obj/structure/flora/roguegrass/bush/wall/CanAStarPass(ID, travel_dir, caller)
-	if(ismovableatom(caller))
-		var/atom/movable/mover = caller
-		if(mover.pass_flags & PASSGRILLE)
-			return TRUE
-	return climbable || !density
-
-/obj/structure/flora/roguegrass/bush/wall/CheckExit(atom/movable/O, turf/target)
-	if(istype(O) && (O.pass_flags & PASSGRILLE))
-		return 1
-	return 0
 
 /obj/structure/flora/roguegrass/bush/wall/tall
 	icon = 'icons/roguetown/misc/foliagetall.dmi'
@@ -495,10 +461,21 @@
 	debris = null
 	static_debris = null
 
-/obj/structure/flora/roguegrass/bush/wall/tall/Initialize()
+/obj/structure/flora/roguegrass/bush/wall/tall/Initialize(mapload)
 	. = ..()
 	icon_state = "tallbush[pick(1,2)]"
 
+
+/obj/structure/flora/roguegrass/bush/winter
+	icon_state = "bush1winter"
+/obj/structure/flora/roguegrass/bush/winter/Initialize(mapload)
+	. = ..()
+	icon_state = "bush[pick(1,2,3,4)]winter"
+/obj/structure/flora/roguegrass/bush/winter/wall
+	icon_state = "bush5winter"
+/obj/structure/flora/roguegrass/bush/wall/winter/Initialize(mapload)
+	. = ..()
+	icon_state = "bush[pick(5,6)]winter"
 
 /obj/structure/flora/rogueshroom
 	name = "mushroom"
@@ -519,25 +496,17 @@
 	dir = SOUTH
 
 /obj/structure/flora/rogueshroom/attack_right(mob/user)
-	if(user.mind && isliving(user))
-		if(user.mind.special_items && user.mind.special_items.len)
-			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
-			if(item)
-				if(user.Adjacent(src))
-					if(user.mind.special_items[item])
-						var/path2item = user.mind.special_items[item]
-						user.mind.special_items -= item
-						var/obj/item/I = new path2item(user.loc)
-						user.put_in_hands(I)
-			return
+	handle_special_items_retrieval(user, src)
 
 
-/obj/structure/flora/rogueshroom/Initialize()
+/obj/structure/flora/rogueshroom/Initialize(mapload)
 	. = ..()
 	icon_state = "mush[rand(1,5)]"
 	if(icon_state == "mush5")
 		static_debris = list(/obj/item/natural/thorn=1, /obj/item/grown/log/tree/small = 1)
 	pixel_x += rand(8,-8)
+	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/flora/rogueshroom/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
@@ -555,12 +524,11 @@
 		return FALSE // just don't even try, not even if you can climb it
 	return ..()
 
-/obj/structure/flora/rogueshroom/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return 1
-	if(get_dir(mover.loc, target) == dir)
-		return 0
-	return 1
+/obj/structure/flora/rogueshroom/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+	if(get_dir(leaving.loc, new_location) == dir)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/flora/rogueshroom/fire_act(added, maxstacks)
 	if(added <= 5)
@@ -594,7 +562,7 @@
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	destroy_sound = 'sound/misc/treefall.ogg'
 
-/obj/structure/flora/shroomstump/Initialize()
+/obj/structure/flora/shroomstump/Initialize(mapload)
 	. = ..()
 	icon_state = "t[rand(1,4)]stump"
 
@@ -618,22 +586,22 @@
 	attacked_sound = 'sound/foley/hit_rock.ogg'
 	static_debris = list(/obj/item/natural/stone = 1)
 
-/obj/structure/roguerock/Initialize()
+/obj/structure/roguerock/Initialize(mapload)
 	. = ..()
 	icon_state = "rock[rand(1,4)]"
 
 //Thorn bush
 
 /obj/structure/flora/roguegrass/thorn_bush
-    name = "thorn bush"
-    desc = "A thorny bush. Watch your step!"
-    icon_state = "thornbush"
-    layer = ABOVE_ALL_MOB_LAYER
-    blade_dulling = DULLING_CUT
-    max_integrity = 35
-    climbable = FALSE
-    dir = SOUTH
-    debris = list(/obj/item/natural/thorn = 3, /obj/item/grown/log/tree/stick = 1)
+	name = "thorn bush"
+	desc = "A thorny bush. Watch your step!"
+	icon_state = "thornbush"
+	layer = ABOVE_ALL_MOB_LAYER
+	blade_dulling = DULLING_CUT
+	max_integrity = 35
+	climbable = FALSE
+	dir = SOUTH
+	debris = list(/obj/item/natural/thorn = 3, /obj/item/grown/log/tree/stick = 1)
 
 /obj/structure/flora/roguegrass/thorn_bush/update_icon()
 	icon_state = "thornbush"
@@ -657,7 +625,7 @@
 /obj/structure/flora/roguegrass/pyroclasticflowers/update_icon()
 	icon_state = "pyroflower[rand(1,3)]"
 
-/obj/structure/flora/roguegrass/pyroclasticflowers/Initialize()
+/obj/structure/flora/roguegrass/pyroclasticflowers/Initialize(mapload)
 	. = ..()
 	if(prob(88))
 		bushtype = pickweight(list(/obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1))
@@ -706,7 +674,7 @@
 	var/bushtype
 	var/res_replenish
 
-/obj/structure/flora/roguegrass/swampweed/Initialize()
+/obj/structure/flora/roguegrass/swampweed/Initialize(mapload)
 	. = ..()
 	icon_state = "swampweed[rand(1,3)]"
 	if(prob(88))
@@ -744,6 +712,48 @@
 			if(!looty.len)
 				to_chat(user, "<span class='warning'>Picked clean... I should try later.</span>")
 
+/obj/structure/flora/roguegrass/pumpkin
+	name = "bunch of wild pumpkins"
+	desc = "Wild pumpkins overgrown with vines."
+	icon_state = "pumpkin1"
+	max_integrity = 1
+	climbable = FALSE
+	dir = SOUTH
+	debris = list(/obj/item/natural/fibers = 2)
+	var/list/looty = list(/obj/item/natural/shellplant/pumpkin, /obj/item/natural/fibers)
+
+/obj/structure/flora/roguegrass/pumpkin/Initialize(mapload)
+	. = ..()
+	icon_state = "pumpkin[rand(1,2)]"
+	if(prob(78))
+		looty += /obj/item/natural/shellplant/pumpkin
+	if(prob(32))
+		looty += /obj/item/natural/shellplant/pumpkin
+	if(prob(24))
+		looty += /obj/item/natural/fibers
+	if(prob(7))
+		looty += /obj/item/natural/shellplant/pumpkin
+	pixel_x += rand(-3,3)
+	pixel_y += rand(0,6)
+
+/obj/structure/flora/roguegrass/pumpkin/attack_hand(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		user.changeNext_move(CLICK_CD_INTENTCAP)
+		playsound(src.loc, "plantcross", 80, FALSE, -1)
+		if(do_after(L, SEARCHTIME, target = src))
+			if(looty.len && prob(75))
+				var/obj/item/B = pick_n_take(looty)
+				if(B)
+					B = new B(user.loc)
+					user.put_in_hands(B)
+					user.visible_message("<span class='notice'>[user] finds [B] in [src].</span>")
+					if(!looty.len)
+						to_chat(user, "<span class='warning'>There is nothing else to find.</span>")
+						qdel(src)
+					return
+			user.visible_message("<span class='warning'>[user] searches through [src].</span>")
+
 // cute underdark mushrooms from dreamkeep
 
 /obj/structure/flora/rogueshroom/happy
@@ -766,7 +776,7 @@
 
 /obj/structure/flora/rogueshroom/happy/random
 
-/obj/structure/flora/rogueshroom/happy/random/Initialize()
+/obj/structure/flora/rogueshroom/happy/random/Initialize(mapload)
 	. = ..()
 	icon_state = "happymush[rand(1,5)]"
 
@@ -802,7 +812,7 @@
 	static_debris = list(/obj/item/grown/log/tree = 2)
 	stump_type = null
 
-/obj/structure/flora/roguetree/pine/Initialize()
+/obj/structure/flora/roguetree/pine/Initialize(mapload)
 	. = ..()
 	icon_state = "pine[rand(1, 4)]"
 
@@ -818,6 +828,6 @@
 	resistance_flags = FIRE_PROOF
 	stump_type = /obj/structure/flora/roguetree/stump/pine
 
-/obj/structure/flora/roguetree/pine/dead/Initialize()
+/obj/structure/flora/roguetree/pine/dead/Initialize(mapload)
 	. = ..()
 	icon_state = "dead[rand(1, 3)]"

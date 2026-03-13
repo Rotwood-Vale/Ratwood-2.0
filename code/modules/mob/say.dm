@@ -60,7 +60,6 @@
 	return me_verb(message)
 
 ///The me emote verb
-///The me emote verb
 /mob/verb/me_verb(message as text)
 	set name = "Me"
 	set category = "IC"
@@ -115,6 +114,48 @@
 		return
 	usr.emote("me",1,message,TRUE, custom_me = TRUE)
 
+///The subtle emote verb
+/mob/verb/subtle_verb()
+	set name = "Subtle"
+	set category = "IC"
+	set hidden = 1
+#ifndef MATURESERVER
+	return
+#endif
+	var/message = input(usr, "", "subtle") as text|null
+	// If they don't type anything just drop the message.
+	if(!length(message))
+		return
+	if(GLOB.say_disabled)
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		return
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
+	if(check_subtler(message, FALSE))
+		return
+	usr.emote("subtle", 1, message, TRUE, custom_me = TRUE)
+
+///The subtle emote verb
+/mob/verb/subtle_big_verb()
+	set name = "Subtle(big)"
+	set category = "IC"
+	set hidden = 1
+#ifndef MATURESERVER
+	return
+#endif
+	var/message = input(usr, "", "subtle") as message|null
+	// If they don't type anything just drop the message.
+	if(!length(message))
+		return
+	if(GLOB.say_disabled)
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		return
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
+	if(check_subtler(message, FALSE))
+		return
+	usr.emote("subtle", 1, message, TRUE, custom_me = TRUE)
+
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(message)
 
@@ -142,13 +183,13 @@
 	return LINGHIVE_NONE
 
 /**
-  * Get the mode of a message
-  *
-  * Result can be
-  * * MODE_WHISPER (Quiet speech)
-  * * MODE_HEADSET (Common radio channel)
-  * * A department radio (lots of values here)
-  */
+ * Get the mode of a message
+ *
+ * Result can be
+ * * MODE_WHISPER (Quiet speech)
+ * * MODE_HEADSET (Common radio channel)
+ * * A department radio (lots of values here)
+ */
 /mob/proc/get_message_mode(message)
 	var/key = copytext_char(message, 1, 2)
 	if(key == "#")
@@ -158,5 +199,5 @@
 	else if(key == "%")
 		return MODE_SING
 	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
-		var/key_symbol = lowertext(copytext_char(message, 2, 3))
+		var/key_symbol = LOWER_TEXT(copytext_char(message, 2, 3))
 		return GLOB.department_radio_keys[key_symbol]

@@ -8,7 +8,7 @@
 	icon_state = "peaceflower"
 	item_state = "peaceflower"
 	dropshrink = 0.9
-	slot_flags = ITEM_SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	body_parts_covered = NONE
 	dynamic_hair_suffix = ""
 	force = 0
@@ -117,7 +117,7 @@
 /datum/component/eora_bond/partner
 	ispartner = TRUE
 
-/datum/component/eora_bond/Initialize(mob/living/partner_mob, mob/living/caster_mob, var/holy_skill)
+/datum/component/eora_bond/Initialize(mob/living/partner_mob, mob/living/caster_mob, holy_skill)
 	if(!isliving(parent) || !isliving(partner_mob))
 		return COMPONENT_INCOMPATIBLE
 
@@ -142,7 +142,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_deletion))
 
 	START_PROCESSING(SSprocessing, src)
-	addtimer(CALLBACK(src, .proc/remove_bond), duration)
+	addtimer(CALLBACK(src, PROC_REF(remove_bond)), duration)
 
 	var/mob/living/L = parent
 	L.apply_status_effect(/datum/status_effect/eora_bond)
@@ -306,7 +306,7 @@
 	// I hate this but let's be consistent.
 	var/datum/patron/patron
 
-/datum/component/blessed_food/Initialize(mob/living/_caster, var/holy_skill, var/patron_init)
+/datum/component/blessed_food/Initialize(mob/living/_caster, holy_skill, patron_init)
 	if(!isitem(parent) || !istype(parent, /obj/item/reagent_containers/food/snacks))
 		return COMPONENT_INCOMPATIBLE
 
@@ -322,7 +322,7 @@
 		F.add_filter(BLESSED_FOOD_FILTER, 1, list("type" = "outline", "color" = "#ff00ff", "size" = 1))
 	else
 		F.add_filter(BLESSED_FOOD_FILTER, 1, list("type" = "outline", "color" = "#f0b000", "size" = 1))
-	RegisterSignal(F, COMSIG_FOOD_EATEN, .proc/on_food_eaten)
+	RegisterSignal(F, COMSIG_FOOD_EATEN, PROC_REF(on_food_eaten))
 
 /datum/component/blessed_food/proc/on_food_eaten(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
@@ -373,6 +373,8 @@
 			recharge_time = 0
 	else
 		recharge_time = base_recharge_time
+
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/effect/proc_holder/spell/invoked/pomegranate
 	name = "Amaranth Sanctuary"
@@ -602,10 +604,11 @@
 				else
 					to_chat(c, span_warning("A divine curse strikes you for destroying the sacred tree!"))
 					c.adjustFireLoss(100)
-					c.IgniteMob()
+					c.ignite_mob()
 					c.add_stress(/datum/stressevent/psycurse)
+			SEND_SIGNAL(user, COMSIG_MOB_FELL_TREE)
 			record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
-			GLOB.azure_round_stats[STATS_TREES_CUT]++
+			record_round_statistic(STATS_TREES_CUT)
 
 /obj/structure/eoran_pomegranate_tree/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
 	if(ash_offered)
@@ -759,7 +762,7 @@
 	fruit = TRUE
 	fruit_ready = FALSE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/ripen_fruit), rand(10 SECONDS, 15 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(ripen_fruit)), rand(10 SECONDS, 15 SECONDS))
 
 /obj/structure/eoran_pomegranate_tree/proc/ripen_fruit()
 	fruit_ready = TRUE
@@ -1147,6 +1150,8 @@
 					continue
 				if(HAS_TRAIT(target, TRAIT_NECRAS_VOW))
 					continue
+				if(HAS_TRAIT(target, TRAIT_DNR))
+					continue
 				if(target.mob_biotypes & MOB_UNDEAD)
 					continue
 				if(target.has_status_effect(/datum/status_effect/debuff/metabolic_acceleration))
@@ -1176,18 +1181,6 @@
 		return FALSE
 
 	var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit()
-
-	if (target.client)
-		if (alert(target, "They are calling for you. Are you ready?", "Revival", "I need to wake up", "Don't let me go") != "I need to wake up")
-			target.visible_message(span_notice("Nothing happens. They are not being let go."))
-			return FALSE
-	else if (underworld_spirit && underworld_spirit.client)
-		if (alert(underworld_spirit, "They are calling for you. Are you ready?", "Revival", "I need to wake up", "Don't let me go") != "I need to wake up")
-			target.visible_message(span_notice("Nothing happens. They are not being let go."))
-			return FALSE
-	else
-		target.visible_message(span_notice("The body shudders, but there's no one to call out to."))
-		return FALSE
 
 	// Perform revival
 	target.adjustOxyLoss(-target.getOxyLoss())
@@ -1277,7 +1270,7 @@
 	desc = "Bestow a person with Eora's calm, if only for a little while."
 	sound = 'sound/magic/eora_bless.ogg'
 	devotion_cost = 80
-	recharge_time = 10 MINUTES
+	recharge_time = 5 MINUTES
 	miracle = TRUE
 	invocation_type = "shout"
 	invocations = list("Let the beauty of lyfe fill you whole.")

@@ -12,6 +12,23 @@
 	foodtype = MEAT
 	drop_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	cooked_smell = /datum/pollutant/food/fried_meat
+	var/fresh_meat = FALSE
+	become_rot_type = /obj/item/reagent_containers/food/snacks/rogue/meat_rotten
+
+/obj/item/reagent_containers/food/snacks/rogue/meat_rotten
+	eat_effect = /datum/status_effect/debuff/rotfood
+	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)
+	name = "meat rotten"
+	desc = "This was edible once... To most it's just a putrid mess now."
+	icon = 'modular/Neu_Food/icons/raw/raw_meat.dmi'
+	icon_state = "meat_rotten"
+
+/obj/item/reagent_containers/food/snacks/rogue/meat_rotten/Initialize(mapload)
+	. = ..()
+	src.become_rotten(FALSE)
+
+/obj/item/reagent_containers/food/snacks/rogue/meat_rotten/can_craft_with()
+	return TRUE
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/attackby(obj/item/I, mob/living/user)
 	update_cooktime(user)
@@ -46,6 +63,7 @@
 	name = "raw pigflesh"
 	icon_state = "pork"
 	color = "#f093c3"
+	fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/fatty/roast
 	slices_num = 2
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/bacon
 	chopping_sound = TRUE
@@ -110,6 +128,21 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/mince/poultry
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/cutlet/fried
 
+/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/cutlet/attackby(obj/item/I, mob/living/user)
+	update_cooktime(user)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	if(istype(I, /obj/item/kitchen/rollingpin))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'modular/Neu_Food/sound/rollingpin.ogg', 100, TRUE, -1)
+			to_chat(user, span_notice("Tenderizing [src]."))
+			if(do_after(user,long_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/chickentender(loc)
+				qdel(src)
+		else
+			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
+	else 
+		return ..()
 /* ............. Crab Meat ................*/
 /obj/item/reagent_containers/food/snacks/rogue/meat/crab
 	name = "crab meat"
@@ -218,6 +251,17 @@
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
 				new /obj/item/reagent_containers/food/snacks/rogue/meat/sausage(loc)
+				qdel(I)
+				qdel(src)
+		else
+			to_chat(user, span_warning("You need to put [src] on a table to work on it."))
+	if(istype(I, /obj/item/reagent_containers/food/snacks/egg))
+		if(isturf(loc)&& (found_table))
+			to_chat(user, span_notice("Preparing a tartar..."))
+			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
+			if(do_after(user,long_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/tartar(loc)
 				qdel(I)
 				qdel(src)
 		else

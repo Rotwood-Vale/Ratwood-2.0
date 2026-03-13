@@ -29,7 +29,7 @@
 	retreat_distance = 3
 	minimum_distance = 0
 	food_type = list()
-	footstep_type = FOOTSTEP_MOB_BAREFOOT
+	movement_type = FLYING
 	pooptype = null
 	STAWIL = 6
 	STACON = 6
@@ -50,7 +50,7 @@
 	var/drug_cd
 
 
-/mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite/Initialize(mapload)
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	. = ..()
 

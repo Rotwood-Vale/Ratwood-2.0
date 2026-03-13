@@ -1,6 +1,28 @@
 /obj/item/bodypart/head/dullahan
 	attach_wound = null
 	var/list/head_items = list()
+	/// List of traits to ADD when the head is taken off. Traits given by this have the tag "dullahan"
+	var/list/traits_to_add = list(
+		TRAIT_CRITICAL_WEAKNESS, // Easy crits.
+		TRAIT_SPELLCOCKBLOCK, // No spell casting.
+		TRAIT_NORUN, // No running
+		TRAIT_EASYDISMEMBER, // They already get EASY DECAP, this is different.
+	)
+	/// Set of traits to REMOVE when the head is taken off. Assumed that traits removed are TRAIT_GENERIC.
+	var/list/traits_to_remove = list( // Keep this list up to date with traits that are unbalanced for Revenants to have.
+		TRAIT_DODGEEXPERT,
+		TRAIT_CRITICAL_RESISTANCE,
+		TRAIT_HARDDISMEMBER,
+		TRAIT_NOPAIN,
+		TRAIT_NOPAINSTUN,
+		TRAIT_HEAVYARMOR,
+		TRAIT_MEDIUMARMOR,
+		TRAIT_BREADY,
+		TRAIT_ZJUMP,
+		TRAIT_SENTINELOFWITS,
+	)
+	/// Stored traits removed by traits_to_remove
+	var/list/traits_removed = list()
 
 /obj/item/bodypart/head/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	. = ..()
@@ -12,7 +34,6 @@
 	if(user.mmb_intent)
 		return ..()
 	// Maybe call target.MiddleMouseDrop_T() instead, may have side effects and so opted not to.
-	
 	if(!istype(dragged))
 		return
 	if(dragged != user)
@@ -40,7 +61,6 @@
 	var/list/acceptable = list()
 	if(!user_species.headless)
 		return FALSE
-	
 	var/datum/sex_controller/target_con = target.sexcon
 	var/check_con = FALSE
 	if(target.is_holding(src))
@@ -49,7 +69,6 @@
 		// However at that point they have bigger problems.
 		acceptable += holding_bodypart.aux_zone
 		check_con = TRUE
-	
 	if(get_turf(src) == get_turf(target))
 		check_con = TRUE
 
@@ -65,7 +84,6 @@
 
 	if(user.cmode || user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
-	
 	var/datum/species/dullahan/target_species = target.dna.species
 	if(!target_species.headless)
 		return ..()
@@ -97,7 +115,7 @@
 // Remove head.
 /datum/species/dullahan/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	// Only do it if the precise selection is the head, to avoid mistakes.
-	if(target != user || user.zone_selected != BODY_ZONE_HEAD) 
+	if(target != user || user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
 	if(headless)
@@ -191,7 +209,6 @@
 		item.attack(original_owner, user)
 	else
 		..()
-	
 // Kills Dullahan if their brain is dropped from the head. Same in organ_manipulation.
 // Could track in forceMove() but this seems more reliable. Change would not take much.
 /obj/item/bodypart/head/dullahan/drop_organs(mob/user, violent_removal)
@@ -204,13 +221,33 @@
 	var/datum/species/dullahan/user_species = user_dullahan.dna.species
 	user_species.soul_light_off()
 	user_species.headless = FALSE
-	
 	for(var/item_slot in head_items)
 		var/obj/item/worn_item = head_items[item_slot]
 		if(worn_item)
 			user_dullahan.equip_to_slot(worn_item, text2num(item_slot))
 	head_items = list()
+	on_head_attached(user)
 	return ..()
+
+/obj/item/bodypart/head/dullahan/proc/on_head_detached(mob/living/carbon/human/user)
+	to_chat(user, span_bad("I feel my strength wane as my head is removed from my body."))
+	for(var/trait_to_add in traits_to_add)
+		ADD_TRAIT(user, trait_to_add, "dullahan")
+	for(var/trait_to_remove in traits_to_remove)
+		if(HAS_TRAIT(user, trait_to_remove))
+			REMOVE_TRAIT(user, trait_to_remove, TRAIT_GENERIC)
+			traits_removed += trait_to_remove
+
+/obj/item/bodypart/head/dullahan/proc/on_head_attached(mob/living/carbon/human/user)
+	to_chat(user, span_good("I feel my strength return as my head sits upon my body once more."))
+	for(var/trait_to_remove in traits_to_add) // I know, awful naming but! We're removing the traits we added.
+		if(HAS_TRAIT(user, trait_to_remove))
+			REMOVE_TRAIT(user, trait_to_remove, "dullahan")
+	for(var/trait_to_add in traits_removed)
+		ADD_TRAIT(user, trait_to_add, TRAIT_GENERIC)
+	traits_removed = list()
+	user.remove_client_colour(/datum/client_colour/monochrome/blind/dullahan)
+	user.clear_fullscreen("dullahan_body_vision")
 
 /obj/item/bodypart/head/dullahan/proc/insert_worn_items()
 	// Sorry. Roguetown hardcodes variables and I don't want to do that.
@@ -268,10 +305,9 @@
 
 		// Clear all grabs if no aggressive grab.
 		grabbedby.Cut()
-	
 	if(!special)
 		insert_worn_items()
-
+	on_head_detached(user)
 	. = ..()
 
 /obj/item/bodypart/head/dullahan/update_icon_dropped()
@@ -297,6 +333,16 @@
 			hidden_slots |= head_item.transparent_protection
 		var/mutable_appearance/head_overlay = head_item.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi')
 		. += head_overlay
+	for(var/obj/item/organ/organ as anything in contents) // Applies organ features to head.
+		if(!isorgan(organ))
+			continue
+		if(!organ.is_visible())
+			continue
+		if(!(organ.slot in ORGAN_SLOTS_HEAD_ORGANS))
+			continue
+		var/mutable_appearance/organ_appearance = organ.get_bodypart_overlay(src)
+		if(organ_appearance)
+			. += organ_appearance
 
 	var/obj/item/wear_mask = head_items["[SLOT_WEAR_MASK]"]
 	if(wear_mask)
@@ -304,7 +350,7 @@
 			var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = MASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 			. += mask_overlay
 
-/obj/item/bodypart/head/dullahan/dismember(dam_type = BRUTE, bclass = BCLASS_CUT, mob/living/user, zone_precise = src.body_zone)
+/obj/item/bodypart/head/dullahan/dismember(dam_type = BRUTE, bclass = BCLASS_CUT, mob/living/user, zone_precise = src.body_zone, damage = 0, vorpal = FALSE)
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/C = owner
@@ -315,18 +361,6 @@
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
-	// Armor can't save you from being decapitated.
-	/*
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		var/obj/item/clothing/checked_armor = H.checkcritarmorreference(src.body_zone, bclass)
-		if(checked_armor && checked_armor.max_integrity != 0)
-			var/int_percent = round(((checked_armor.obj_integrity / checked_armor.max_integrity) * 100), 1) //lifted from examine
-			if(int_percent > 80 && !HAS_TRAIT(H, TRAIT_CRITICAL_WEAKNESS))
-				to_chat(H, span_warning("My [checked_armor.name] just saved me from losing my [src.name]!"))
-				checked_armor.obj_integrity -= checked_armor.max_integrity / 2 //Armor sundered
-				return FALSE
-	*/
 
 	playsound(C, pick(dismemsound), 50, FALSE, -1)
 	C.visible_message(span_danger("<B>[C] is EASILY DECAPITATED!</B>"))
@@ -399,9 +433,9 @@
 		if(user.goodluck(2))
 			dam += 10
 	if((bclass in GLOB.dislocation_bclasses) && (total_dam >= max_damage))
-		used = round(damage_dividend * 20 + (dam / 3) - 10 * resistance, 1)
+		used = round(damage_dividend * 20 + (dam / 3))
 	if(bclass in GLOB.fracture_bclasses)
-		used = round(damage_dividend * 20 + (dam / 3) - 10 * resistance, 1)
+		used = round(damage_dividend * 20 + (dam / 3))
 		if(HAS_TRAIT(src, TRAIT_BRITTLE))
 			used += 20
 		if(user)
@@ -435,7 +469,7 @@
 				attempted_wounds += dislocation_type
 			attempted_wounds += fracture_type
 	if(bclass in GLOB.artery_bclasses)
-		used = round(damage_dividend * 20 + (dam / 3) - 10 * resistance, 1)
+		used = round(damage_dividend * 20 + (dam / 3))
 		if(user)
 			if(bclass == BCLASS_CHOP)
 				if(istype(user.rmb_intent, /datum/rmb_intent/strong))
@@ -586,7 +620,6 @@
 					for(var/mob/living/MH in viewers(world.view, speaker_ceiling))
 						if(M == MH && MH.z == speaker_ceiling?.z)
 							speaker_obstructed = FALSE
-					
 				if(!listener_has_ceiling)
 					for(var/mob/living/ML in viewers(world.view, listener_ceiling))
 						if(ML == src && ML.z == listener_ceiling?.z)
@@ -606,7 +639,6 @@
 			var/mob/living/carbon/human/target = AM
 			var/datum/species/dullahan/target_species = target.dna.species
 			tocheck = target_species.headless ? target_species.my_head : AM
-		
 		if(eavesdrop_range && get_dist(source, tocheck) > message_range+keenears && !(the_dead[AM]))
 			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode, original_message)
 		else if(highlighted_message)
@@ -641,12 +673,10 @@
 		hidden_slots |= head_item.flags_inv
 		if(transparent_protection)
 			hidden_slots |= head_item.transparent_protection
-	
 	var/obj/item/wear_mask = head_items["[SLOT_WEAR_MASK]"]
 	var/list/dat = list()
 
 	dat += "<table>"
-	
 	dat += "<tr><td><A href='?src=[REF(src)];item=[SLOT_HEAD]'>[(head_item && !(head_item.item_flags & ABSTRACT)) ? head_item : "<font color=grey>Head</font>"]</A></td></tr>"
 
 	if(hidden_slots & HIDEMASK)
@@ -703,17 +733,16 @@
 		return
 	if((slot == "[SLOT_WEAR_MASK]" && !(target_item.slot_flags & ITEM_SLOT_MASK)) || (slot == "[SLOT_HEAD]" && !(target_item.slot_flags & ITEM_SLOT_HEAD)))
 		return FALSE
-	
 	if(head_items[slot])
 		return
 
 	var/close = user.is_holding(src) || get_turf(src) == get_turf(user)
 	if(!close)
 		return
-	
+
 	visible_message(span_notice("[user] tries to put [target_item] on [src]."))
 	to_chat(user, span_notice("I try to put [target_item] on [src]..."))
-	
+
 	if(do_after(user, target_item.equip_delay_other, target = src))
 		if(target_item && (user.is_holding(src) || get_turf(src) == get_turf(user)))
 			user.dropItemToGround(target_item, force = TRUE)

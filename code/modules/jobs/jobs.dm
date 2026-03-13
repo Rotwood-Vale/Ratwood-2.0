@@ -69,20 +69,25 @@ GLOBAL_LIST_INIT(noble_positions, list(
 	"Marshal",
 	"Councillor",
 	"Steward",
+	"Clerk",
 	"Knight",
 ))
 
 GLOBAL_LIST_INIT(courtier_positions, list(
 	"Court Magician",
-	"Court Physician",
+	"Magicians Associate",
+	"Head Physician",
+	"Apothecary",
 	"Jester",
 	"Seneschal",
+	"Servant",
 ))
 
 GLOBAL_LIST_INIT(garrison_positions, list(
 	"Watchman",
 	"Warden",
 	"Sergeant",
+	"Veteran",
 	"Man at Arms",
 	"Squire",
 	"Dungeoneer",
@@ -93,6 +98,7 @@ GLOBAL_LIST_INIT(church_positions, list(
 	"Confessor",
 	"Acolyte",
 	"Mortician",
+	"Keeper",
 	"Templar",
 	"Druid",
 	"Martyr",
@@ -110,7 +116,7 @@ GLOBAL_LIST_INIT(yeoman_positions, list(
 	"Innkeeper",
 	"Archivist",
 	"Scribe",
-	"Town Elder",
+	"Town Crier",
 	"Bathmaster",
 	"Guildmaster",
 	"Guildsman",
@@ -126,41 +132,32 @@ GLOBAL_LIST_INIT(peasant_positions, list(
 	"Fisher",
 	"Lumberjack",
 	"Towner",
-	"Grabber",
 	"Nightmaster",
 	"Tapster",
 	"Bathhouse Attendant",
-	"Docker",
 	"Prisoner",
 	"Beggar",
-	"Adventurer",
 	"Refugee",
-	"Bandit",
-	"Court Agent",
-	"Wretch",
+	"Pilgrim",
 ))
 
 GLOBAL_LIST_INIT(mercenary_positions, list(
-	"Mercenary",
 	"Grenzelhoft Mercenary",
 	"Desert Rider Mercenary",
-	"Veteran",
 ))
 
 GLOBAL_LIST_INIT(youngfolk_positions, list(
-	"Clerk",
-	"Apothecary",
-	"Smithy Apprentice",
-	"Magicians Associate",
 	"Churchling",
-	"Servant",
 	"Shophand",
 	"Vagabond",
 ))
 
-GLOBAL_LIST_INIT(allmig_positions, list(
+GLOBAL_LIST_INIT(wanderer_positions, list(
+	"Mercenary",
 	"Adventurer",
-	"Refugee",
+	"Court Agent",
+	"Bandit",
+	"Wretch",
 ))
 
 GLOBAL_LIST_INIT(roguewar_positions, list(
@@ -176,6 +173,18 @@ GLOBAL_LIST_INIT(roguefight_positions, list(
 	"Green Caster",
 	"Green Ranger",
 	"Green Fighter",
+))
+
+//This list is used to prevent the duke from stripping nobility from certain jobs that aren't intrinsically a part of the town.
+GLOBAL_LIST_INIT(foreign_positions, list(
+	"Adventurer",
+	"Mercenary",
+	"Bandit",
+	"Wretch",
+	"Inquisitor",
+	"Suitor",
+	"Orthodoxist",
+	"Migrant",
 ))
 
 GLOBAL_LIST_INIT(test_positions, list(
@@ -248,7 +257,7 @@ GLOBAL_PROTECT(exp_specialmap)
 	var/static/regex/chef_expand = new("chef")
 	var/static/regex/borg_expand = new("(?<!cy)borg")
 
-	job = lowertext(job)
+	job = LOWER_TEXT(job)
 	job = cap_expand.Replace(job, "captain")
 	job = cmo_expand.Replace(job, "chief medical officer")
 	job = hos_expand.Replace(job, "head of security")

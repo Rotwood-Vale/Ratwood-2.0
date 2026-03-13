@@ -2,16 +2,26 @@
 	race = /datum/species/anthromorphsmall
 
 /datum/species/anthromorphsmall
-	name = "Verminvolk"
+	name = "Critterkin"
 	id = "anthromorphsmall"
-	desc = "<b>Verminvolk</b><br>\
+	desc = "<b>Critterkin</b><br>\
 	A race akin to wild-kin, except afflicted with significantly smaller stature. \
-	A bit less respected than their kin due to their closer resemblance to vermin, like the dichotomy between Kobold and Sissean.<br>\
+	Sometimes referred to with the derogatory term 'verminfolk' by those that disrespect the small.<br>\
 	(+1 Speed, Keen Ears Trait)"
 
 	expanded_desc = "A race akin to wild-kin, except afflicted with significantly smaller stature. \
-	A bit less respected than their kin due to their closer resemblance to vermin, like the dichotomy between Kobold and Sissean."
+	Sometimes referred to with the derogatory term 'verminfolk' by those that disrespect the small."
 	default_color = "444"
+
+	use_titles = TRUE
+	race_titles = list(
+	"Catvolk", "Dogvolk", "Volfvolk", "Lionvolk", "Venardvolk", "Tigervolk", "Sheepvolk",
+	"Goatvolk", "Rousvolk", "Possumvolk", "Pigvolk", "Boarvolk", "Rabbitvolk", "Horsevolk",
+	"Donkeyvolk", "Hyenavolk", "Deervolk", "Bearvolk", "Pandavolk", "Coyotevolk", "Moosevolk",
+	"Jackalvolk", "Panthervolk", "Lynxvolk", "Leopardvolk", "Monkeyvolk", "Birdvolk", "Sealvolk", "Frogvolk",
+	"Batvolk", "Ottervolk", "Cowvolk", "Bullvolk", "Beevolk", "Monstervolk", "Chimeravolk"
+	)
+
 	species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,
@@ -37,11 +47,13 @@
 		OFFSET_FACE = list(0,-5), OFFSET_BELT = list(0,-4), OFFSET_BACK = list(0,-4), \
 		OFFSET_NECK = list(0,-4), OFFSET_MOUTH = list(0,-4), OFFSET_PANTS = list(0,0), \
 		OFFSET_SHIRT = list(0,0), OFFSET_ARMOR = list(0,0), OFFSET_HANDS = list(0,-3), OFFSET_UNDIES = list(0,-4), \
+		OFFSET_BREASTS = list(0,-4), \
 		OFFSET_ID_F = list(0,-5), OFFSET_GLOVES_F = list(0,-4), OFFSET_WRISTS_F = list(0,-4), OFFSET_HANDS_F = list(0,-4), \
 		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-5), OFFSET_HEAD_F = list(0,-5), \
 		OFFSET_FACE_F = list(0,-5), OFFSET_BELT_F = list(0,-4), OFFSET_BACK_F = list(0,-5), \
 		OFFSET_NECK_F = list(0,-5), OFFSET_MOUTH_F = list(0,-5), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-4), \
+		OFFSET_BREASTS_F = list(0,-5), \
 		)
 	inherent_traits = list(TRAIT_KEENEARS)
 	race_bonus = list(STAT_SPEED = 1)
@@ -108,12 +120,11 @@
 		/datum/body_marking/small/bangs,
 		/datum/body_marking/small/bun,
 	)
-	stress_examine = TRUE
-	stress_desc = span_red("Filthy vermin...")
 	descriptor_choices = list(
+		/datum/descriptor_choice/trait,
+		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/height,
 		/datum/descriptor_choice/body,
-		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/face,
 		/datum/descriptor_choice/face_exp,
 		/datum/descriptor_choice/skin_all,

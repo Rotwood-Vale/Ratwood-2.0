@@ -8,11 +8,12 @@
 	sleevetype = "skirt"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
 	alternate_worn_layer = (SHIRT_LAYER)
+	salvage_amount = 1
 
 /obj/item/clothing/under/roguetown/skirt/random
 	name = "skirt"
 
-/obj/item/clothing/under/roguetown/skirt/random/Initialize()
+/obj/item/clothing/under/roguetown/skirt/random/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f", CLOTHING_BLUE)
 	..()
 
@@ -27,3 +28,6 @@
 
 /obj/item/clothing/under/roguetown/skirt/brown
 	color = CLOTHING_BROWN
+
+/obj/item/clothing/under/roguetown/skirt/black
+	color = CLOTHING_BLACK

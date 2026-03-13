@@ -69,7 +69,7 @@
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/desertrider
 	name = "desert rider's sash"
-	desc = "A luxuriant golden chain worn about the shoulders or neck, a sign of high honor in distant Raneshan. Some claim these are a testament to the origins of the Desert Riders in distant slave-fighting pits, but \
+	desc = "A luxuriant golden chain worn about the shoulders or neck, a sign of high honor in distant Zybantium. Some claim these are a testament to the origins of the Desert Riders in distant slave-fighting pits, but \
 	others think them marks of favor from the highest echelons of the Empire. The desert riders confirm neither rumour."
 	icon_state = "rider_sash"
 
@@ -128,3 +128,19 @@
 	A fracture of the Great City Naledi which fell; a memory of a thousand wailing generations in their fading, dying breaths as a reminder for who you are."
 	icon_state = "naledian_psycross"//Temp sprite. Just the Astratan Psyscross, with lower limbs removed.
 
+/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/anthrax
+	name = "petrified larvae charm"
+	desc = "The husk of a desiccated beespider larva, passed down within the ranks of those whose names have been struck from dark elven history. The old tyranny's uprooting would be their last act of true valor."
+	icon_state = "spider"
+
+/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/oathmarked
+	name = "writ of service"
+	desc = "An old, decaying scroll of some sort. Marked with odd stains and liable to tear if you're too rough."
+	icon_state = "oathmarked_writ"
+
+/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/oathmarked/examine(mob/user)
+	. = ..()
+	if(isdracon(user))
+		. += "<small>With the destruction of an old empire, came a great sadness. A profound longing for what was lost. \
+		No greater is this felt than by those who'd lyved it, such as the ones who carry this now. A relic of daes gone by. \
+		<br>Where were you, when it all came to an end? Are you not the <b>hero</b>?</small>"

@@ -85,18 +85,26 @@
 		to_chat(L, "*----*")
 		if(ishuman(usr))
 			var/mob/living/carbon/human/M = usr
-			if(M.charflaw)
+			if(length(M.vices))
+				for(var/datum/charflaw/vice in M.vices)
+					to_chat(M, "<span class='info'><small>[vice.desc]</small></span>")
+				to_chat(M, "*----*")
+			else if(M.charflaw)
 				to_chat(M, "<span class='info'>[M.charflaw.desc]</span>")
 				to_chat(M, "*----*")
 			if(M.mind)
 				if(M.mind.language_holder)
 					var/finn
 					for(var/X in M.mind.language_holder.languages)
+						if(!X || !ispath(X, /datum/language))
+							continue
 						var/datum/language/LA = new X()
 						finn = TRUE
 						to_chat(M, "<span class='info'>[LA.name] - ,[LA.key]</span>")
 					if(!finn)
 						to_chat(M, "<span class='warning'>I don't know any languages.</span>")
+					else // open_language_menu
+						to_chat(M, "<a href='?src=[REF(M)];task=open_language_menu;'>Language Menu</a>")
 					to_chat(M, "*----*")
 		for(var/X in GLOB.roguetraits)
 			if(HAS_TRAIT(L, X))
@@ -126,6 +134,10 @@
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if(modifiers["right"])
+			var/area/A = get_area(H)
+			if(!A.can_craft_here())
+				to_chat(H, span_warning("You cannot craft here."))
+				return
 			if(H.craftingthing && (H.mind?.lastrecipe != null))
 				last_craft = world.time
 				var/datum/component/personal_crafting/C = H.craftingthing
@@ -621,12 +633,25 @@
 	var/list/modifiers = params2list(params)
 	if(isliving(usr))
 		var/mob/living/L = usr
-		L.playsound_local(L, 'sound/misc/click.ogg', 100)
 		if(modifiers["right"])
+			L.playsound_local(L, 'sound/misc/click.ogg', 100)
 			L.submit()
 		else if(modifiers["middle"])
+			if(L.mob_timers["complybutton"]) // I am fed up with trying to triage issues that new middle click code has. Here, have hacky workaround. - Zoktiik
+				if(world.time < (L.mob_timers["complybutton"] + 0.5 SECONDS))
+					return
+			L.mob_timers["complybutton"] = world.time
+			L.playsound_local(L, 'sound/misc/click.ogg', 100)
 			L.toggle_compliance()
+		else if(modifiers["shift"] && modifiers["left"])
+			to_chat(usr, span_info("* --- *\n\
+			Combat mode button.\n\
+			<b>Left click:</b> toggles combat mode at-will, allowing you to parry or dodge attacks. Usually costs energy (blue stamina) to keep active. Also allows some more destructive interactions with objects.\n\
+			<b>Right click:</b> makes you visibly surrender, showing a white flag above your head and rendering you temporarily unable to move or fight.\n\
+			<b>Middle click:</b> toggles compliance mode at-will, removing your defense against grapples and tackles. Also makes it faster to restrain and strip you.\n\
+			All of these have configurable keybinds; see the Keybinds settings in your preferences window."))
 		else
+			L.playsound_local(L, 'sound/misc/click.ogg', 100)
 			L.toggle_cmode()
 			update_icon()
 
@@ -905,7 +930,7 @@
 			var/obj/item/flipper = usr.get_active_held_item()
 			if(!flipper)
 				return
-			if((!usr.Adjacent(flipper) && !usr.DirectAccess(flipper)) || !isliving(usr) || usr.incapacitated())
+			if((!usr.Adjacent(flipper) && !usr.IsDirectlyAccessible(flipper)) || !isliving(usr) || usr.incapacitated())
 				return
 			var/old_width = flipper.grid_width
 			var/old_height = flipper.grid_height
@@ -980,6 +1005,7 @@
 	else
 		return set_selected_zone(choice, usr)
 
+/*
 /atom/movable/screen/zone_sel/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
 
@@ -1024,6 +1050,7 @@
 	if(!isobserver(usr) && hovering)
 		vis_contents -= hover_overlays_cache[hovering]
 		hovering = null
+*/
 
 /atom/movable/screen/zone_sel/proc/get_zone_at(icon_x, icon_y, gender = MALE)
 	if(gender == MALE)
@@ -1290,26 +1317,50 @@
 
 	if(hud.mymob.stat != DEAD && ishuman(hud.mymob))
 		var/mob/living/carbon/human/H = hud.mymob
+		var/list/missing_bodyparts_zones = H.get_missing_limbs()
+		// if we have a taur bodypart, treat it as covering both legs
+		if(H.get_bodypart(BODY_ZONE_TAUR))
+			missing_bodyparts_zones -= BODY_ZONE_L_LEG
+			missing_bodyparts_zones -= BODY_ZONE_R_LEG
 		for(var/X in H.bodyparts)
 			var/obj/item/bodypart/BP = X
-			if(BP.body_zone in H.get_missing_limbs())
+			if(BP.body_zone in missing_bodyparts_zones)
 				continue
 			if(HAS_TRAIT(H, TRAIT_NOPAIN))
-				var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]")
-				limby.color = "#78a8ba"
-				. += limby
+				// for taur, show the nopain overlay over both legs as well
+				if(BP.body_zone == BODY_ZONE_TAUR)
+					var/list/_legs = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+					for(var/_z in _legs)
+						var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[_z]")
+						limby.color = "#78a8ba"
+						. += limby
+				else
+					var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]")
+					limby.color = "#78a8ba"
+					. += limby
 				continue
 			var/damage = BP.burn_dam + BP.brute_dam
 			if(damage > BP.max_damage)
 				damage = BP.max_damage
 			var/comparison = (damage/BP.max_damage)
-			. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]") //apply healthy limb
-			var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]w-[BP.body_zone]") //apply wounded overlay
-			limby.alpha = (comparison*255)*2
-			. += limby
-			if(BP.get_bleed_rate())
-				. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]-bleed") //apply healthy limb
-		for(var/X in H.get_missing_limbs())
+			// if taur bodypart, render the healthy/wounded/bleed overlays for both legs
+			if(BP.body_zone == BODY_ZONE_TAUR)
+				var/list/_legs = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+				for(var/_z in _legs)
+					. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[_z]") //healthy limb
+					var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]w-[_z]") //wounded overlay
+					limby.alpha = (comparison*255)*2
+					. += limby
+					if(BP.get_bleed_rate())
+						. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[_z]-bleed") //bleed overlay
+			else
+				. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]") //apply healthy limb
+				var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]w-[BP.body_zone]") //apply wounded overlay
+				limby.alpha = (comparison*255)*2
+				. += limby
+				if(BP.get_bleed_rate())
+					. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]-bleed") //apply bleed overlay
+		for(var/X in missing_bodyparts_zones)
 			var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[X]") //missing limb
 			limby.color = "#2f002f"
 			. += limby
@@ -1602,7 +1653,11 @@
 	if(ishuman(usr))
 		var/mob/living/carbon/human/M = usr
 		if(modifiers["left"])
-			if(M.charflaw)
+			if(length(M.vices))
+				to_chat(M, "*----*")
+				for(var/datum/charflaw/vice in M.vices)
+					to_chat(M, span_info("<small>[vice.desc]</small>"))
+			else if(M.charflaw)
 				to_chat(M, "*----*")
 				to_chat(M, span_info("[M.charflaw.desc]"))
 			to_chat(M, "*--------*")
@@ -1650,10 +1705,12 @@
 				to_chat(M, span_warning("I haven't TRIUMPHED."))
 				return
 			if(alert("Do you want to remember a TRIUMPH?", "", "Yes", "No") == "Yes")
-				if(!M.has_stress_event(/datum/stressevent/triumph))
-					M.add_stress(/datum/stressevent/triumph)
-					M.adjust_triumphs(-1)
-					M.playsound_local(M, 'sound/misc/notice (2).ogg', 100, FALSE)
+				M.add_stress(/datum/stressevent/triumph)
+				M.adjust_triumphs(-1)
+				M.playsound_local(M, 'sound/misc/notice (2).ogg', 100, FALSE)
+				if(M.sexcon)
+					var/datum/sex_controller/sexo = M.sexcon
+					sexo.adjust_charge(SEX_MAX_CHARGE)
 
 
 /atom/movable/screen/rmbintent
@@ -1943,3 +2000,128 @@
 /atom/movable/screen/daynight/New(client/C) //TODO: Make this use INITIALIZE_IMMEDIATE, except its not easy
 	. = ..()
 	icon_state = GLOB.tod
+
+/atom/movable/screen/bloodpool
+	appearance_flags = KEEP_TOGETHER
+	icon_state = "empty"
+	icon = 'icons/mob/rogueheat.dmi'
+	screen_loc = rogueui_vitae
+	var/width = 4
+	var/height = 43
+	var/orientation = NORTH
+	var/atom/movable/screen/bloodpool_maskpart/background
+	var/atom/movable/screen/bloodpool_maskpart/foreground
+	var/atom/movable/screen/bloodpool_maskpart/fill
+	var/atom/movable/screen/bloodpool_maskpart/mask
+
+/atom/movable/screen/bloodpool/Initialize(mapload, ...)
+	. = ..()
+	foreground = new /atom/movable/screen/bloodpool_maskpart/foreground(null, icon, src)
+	background = new /atom/movable/screen/bloodpool_maskpart/background(null, icon, src)
+	fill = new /atom/movable/screen/bloodpool_maskpart/fill(null, icon, src)
+	mask = new /atom/movable/screen/bloodpool_maskpart/mask(null, icon, src)
+
+	background.vis_contents += fill
+	mask.vis_contents += background
+	vis_contents.Add(mask, foreground)
+
+/atom/movable/screen/bloodpool/Destroy()
+	QDEL_NULL(background)
+	QDEL_NULL(foreground)
+	QDEL_NULL(fill)
+	QDEL_NULL(mask)
+	return ..()
+
+/atom/movable/screen/bloodpool/proc/set_fill_color(new_color = "#ffffff")
+	fill.color = new_color
+
+/atom/movable/screen/bloodpool/proc/set_value(ratio = 1.0, duration = 0)
+	//constrain the ratio between 0 and 1
+	ratio = min(max(ratio,0),1)
+
+	//apply orientation factors for fill bar offsets
+	var/fx = 0, fy = 0
+	switch(orientation)
+		if(EAST)
+			fx = -1
+		if(WEST)
+			fx = 1
+		if(SOUTH)
+			fy = 1
+		if(NORTH)
+			fy = -1
+
+	//calculate the offset of the fill bar.
+	var/invratio = 1-ratio
+	var/epx = width * invratio * fx
+	var/epy = height * invratio * fy
+
+	//apply the offset to the fill bar
+	if(duration)
+		//if a time value has been supplied, animate the transition from the current position
+		animate(fill, pixel_w = epx,pixel_z = epy, time = duration)
+	else
+		//if a time value has not been supplied, instantly set to the new position
+		fill.pixel_w = epx
+		fill.pixel_z = epy
+
+	animate(fill, time = duration)
+
+/atom/movable/screen/bloodpool/Click(location,control,params)
+	var/list/modifiers = params2list(params)
+	if(modifiers["left"] && modifiers["shift"])
+		examine_ui(usr)
+		return FALSE
+	if(!modifiers["left"])
+		return
+	if(usr.next_click > world.time)
+		return
+	usr.next_click = world.time + 1
+	if(!ismob(usr))
+		return
+	// If the fill color is the devotion-blue, trigger the cleric prayer verb.
+	var/col = fill.color
+	if(col == "#3C41A4" || col == "#3c41a4")
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			H.clericpray()
+		return TRUE
+	return
+
+/atom/movable/screen/bloodpool_maskpart
+	layer = FLOAT_LAYER
+	plane = FLOAT_PLANE
+	/// Ref to our parent screem, purely for examine purposes
+	var/atom/movable/screen/parent_screen
+
+/atom/movable/screen/bloodpool_maskpart/Initialize(mapload, icon, parent_screen)
+	. = ..()
+	src.icon = icon
+	src.parent_screen = parent_screen
+
+/atom/movable/screen/bloodpool_maskpart/Click(location, control, params)
+	if(parent_screen)
+		return parent_screen.Click(location, control, params)
+	return FALSE
+
+/atom/movable/screen/bloodpool_maskpart/examine_ui(mob/user)
+	return parent_screen?.examine_ui(user)
+
+/atom/movable/screen/bloodpool_maskpart/Destroy()
+	parent_screen = null
+	return ..()
+
+/atom/movable/screen/bloodpool_maskpart/background
+	icon_state = "mana_bg"
+	appearance_flags = KEEP_TOGETHER
+	blend_mode = BLEND_MULTIPLY
+
+/atom/movable/screen/bloodpool_maskpart/foreground
+	icon_state = "mana_fg"
+
+/atom/movable/screen/bloodpool_maskpart/fill
+	icon_state = "mana_fill"
+
+/atom/movable/screen/bloodpool_maskpart/mask
+	icon_state = "mana_mask"
+

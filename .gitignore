@@ -1,5 +1,8 @@
 ###Files and folders specified here will never be tracked.
 
+# Local overrides--you can use this to change the config for your dev environment (like setting up SQL) without worrying about committing it
+/config/dev_overrides.txt
+
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 /tmp/**/*
@@ -197,6 +200,7 @@ Temporary Items
 *.vscode/*
 !/.vscode/extensions.json
 !/.vscode/tasks.json
+!/.vscode/launch.json
 tools/MapAtmosFixer/MapAtmosFixer/obj/*
 tools/MapAtmosFixer/MapAtmosFixer/bin/*
 
@@ -211,6 +215,9 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 /_maps/**/backup/
 /_maps/templates.dm
 
+#fastload and whatnot
+/code/rt.dm
+
 #dmdoc default folder
 /dmdoc
 
@@ -222,6 +229,7 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 /config/*
 !/config/example/
 
+!/config/config.txt
 /config/jukebox_music/sounds/*
 !/config/jukebox_music/sounds/exclude
 /config/title_music/sounds/*

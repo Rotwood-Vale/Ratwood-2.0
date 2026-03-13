@@ -1,9 +1,9 @@
 //supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
 #define RANGE_TURFS(RADIUS, CENTER) \
-  block( \
-    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
-    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
-  )
+	block( \
+		locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
+	)
 
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 #define CULT_POLL_WAIT 2400
@@ -138,18 +138,29 @@
 	. = list()
 	while(processing_list.len)
 		var/atom/A = processing_list[1]
-		if(A.flags_1 & HEAR_1)
+		var/add = TRUE
+		if(isdullahan(A))
+			var/mob/living/carbon/human = A
+			// It's a headless Dullahan, they can't hear. Might have a relay in their inventory.
+			var/datum/species/dullahan/user_species = human.dna.species
+			if(user_species.headless)
+				add = FALSE
+
+		if((A.flags_1 & HEAR_1) && add)
 			. += A
+		else if(istype(A, /obj/item/bodypart/head/dullahan))
+			var/obj/item/bodypart/head/dullahan/head = A
+			. += head.original_owner
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
 /** recursive_organ_check
-  * inputs: O (object to start with)
-  * outputs:
-  * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
-  *				 within 'O', toggling their frozen flag. This check excludes items held within other safe organ
-  *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
-  */
+ * inputs: O (object to start with)
+ * outputs:
+ * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
+ *				 within 'O', toggling their frozen flag. This check excludes items held within other safe organ
+ *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
+ */
 /proc/recursive_organ_check(atom/O)
 
 	var/list/processing_list = list(O)
@@ -261,43 +272,41 @@
 /proc/inLineOfTravel(mob/traveler, atom/target)
 	var/turf/our_turf = get_turf(traveler)
 	var/turf/their_turf = get_turf(target)
+	var/X1 = our_turf.x
+	var/Y1 = our_turf.y
+	var/X2 = their_turf.x
+	var/Y2 = their_turf.y
+	var/Z = our_turf.z
 	var/turf/current_turf = our_turf
-	var/dist_x = their_turf.x-our_turf.x
-	var/dist_y = their_turf.y-our_turf.y
-	var/dir_x = dist_x > 0 ? EAST : WEST
-	var/dir_y = dist_y > 0 ? NORTH : SOUTH
-	dist_x = abs(dist_x)
-	dist_y = abs(dist_y)
-	var/pure_diagonal = dist_x == dist_y
-	var/short_leg
-	var/long_leg
-	var/long_dir
-	if(dist_x < dist_y)
-		short_leg = dist_x
-		long_leg = dist_y
-		long_dir = dir_y
+	var/turf/last_turf
+	if(X1==X2)
+		if(Y1==Y2)
+			return TRUE //you're already on the tile
+		else
+			var/s = SIGN(Y2-Y1)
+			Y1+=s
+			while(Y1!=Y2)
+				last_turf = current_turf
+				current_turf = locate(X1,Y1,Z)
+				if(current_turf.density || last_turf.LinkBlockedWithAccess(current_turf, traveler))
+					return FALSE
+				Y1+=s
 	else
-		long_leg = dist_x
-		long_dir = dir_x
-		short_leg = dist_y
-	var/diagonal_error = (long_leg/2) - short_leg
-	var/dist_travelled = 0
-	var/travel_dir = get_dir(our_turf, their_turf)
-	while(current_turf != their_turf && dist_travelled < 255) // no one should ever be leaping through 255 tiles.
-		if(dist_travelled >= long_leg) // we should've arrived by now, so recalculate our dir
-			travel_dir = get_dir(current_turf, their_turf)
-		var/current_dir = travel_dir
-		if(!pure_diagonal)
-			if(diagonal_error >= 0 && long_leg - dist_travelled != 1) // do a step forward unless we're right next to the target
-				current_dir = long_dir
-			diagonal_error += (diagonal_error < 0) ? long_leg/2 : -short_leg
-		var/turf/next_turf = get_step(current_turf, current_dir)
-		if(!next_turf) // went off the edge of the map
-			return FALSE
-		if(next_turf.density || current_turf.LinkSelfBlocked(current_dir, traveler) || current_turf.LinkBlockedWithAccess(next_turf, traveler))
-			return FALSE
-		dist_travelled++
-		current_turf = next_turf
+		var/m=(Y2-Y1)/(X2-X1) // slope
+		var/b=(Y1+0.5)-m*(X1+0.5) // y axis offset in tiles
+		var/signX = SIGN(X2-X1)
+		var/signY = SIGN(Y2-Y1)
+		if(X1<X2)
+			b+=m
+		while(X1!=X2 || Y1!=Y2)
+			if(round(m*X1+b-Y1))
+				Y1+=signY //Line exits tile vertically
+			else
+				X1+=signX //Line exits tile horizontally
+			last_turf = current_turf
+			current_turf = locate(X1,Y1,Z)
+			if(current_turf.density || last_turf.LinkBlockedWithAccess(current_turf, traveler))
+				return FALSE
 	return TRUE
 
 /proc/isInSight(atom/A, atom/B)
@@ -352,17 +361,39 @@
 	return O
 
 /proc/remove_images_from_clients(image/I, list/show_to)
-	for(var/client/C in show_to)
+	for(var/client/C as anything in show_to)
 		C.images -= I
 
 /proc/flick_overlay(image/I, list/show_to, duration)
-	for(var/client/C in show_to)
+	if(!show_to || !length(show_to))
+		return
+
+	var/expire_time = world.time + duration
+
+	var/list/client_schedule = SSiconupdates.image_removal_schedule[I]
+	if(!client_schedule)
+		client_schedule = list()
+		SSiconupdates.image_removal_schedule[I] = client_schedule
+
+	for(var/client/C as anything in show_to)
+		if(!C || QDELETED(C))
+			continue
+
+		if(client_schedule[C])
+			if(expire_time > client_schedule[C])
+				client_schedule[C] = expire_time
+			continue
+
 		C.images += I
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_images_from_clients), I, show_to), duration, TIMER_CLIENT_TIME)
+
+		client_schedule[C] = expire_time
+
+	if(!length(client_schedule))
+		SSiconupdates.image_removal_schedule -= I
 
 /proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
 	var/list/viewing = list()
-	for(var/m in viewers(target))
+	for(var/m in get_hearers_in_view(world.view, target, RECURSIVE_CONTENTS_CLIENT_MOBS))
 		var/mob/M = m
 		if(M.client)
 			viewing += M.client
@@ -569,3 +600,12 @@
 /// Removes an image from a client's `.images`. Useful as a callback.
 /proc/remove_image_from_client(image/image_to_remove, client/remove_from)
 	remove_from?.images -= image_to_remove
+
+/// Returns this user's display ckey, used in OOC contexts.
+/proc/get_display_ckey(key)
+	var/ckey = ckey(key)
+	if(ckey in GLOB.anonymize)
+		return get_fake_key(ckey)
+	if(!ckey || !istext(ckey))
+		return "some invalid"
+	return ckey

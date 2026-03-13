@@ -26,27 +26,3 @@
 	always_show_on_latechoices = TRUE
 	same_job_respawn_delay = 0
 
-
-	job_subclasses = list(
-		/datum/advclass/scavenger/harvester,
-		/datum/advclass/scavenger/prospector,
-		/datum/advclass/noble,
-		/datum/advclass/trader,
-		/datum/advclass/trader/scholar,
-		/datum/advclass/trader/harlequin,
-		/datum/advclass/trader/peddler,
-		/datum/advclass/trader/brewer,
-		/datum/advclass/trader/cuisiner,
-	)
-
-/datum/job/roguetown/pilgrim/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
-	..()
-	if(L)
-		var/mob/living/carbon/human/H = L
-		H.advsetup = 1
-		H.invisibility = INVISIBILITY_MAXIMUM
-		H.become_blind("advsetup")
-
-		if(GLOB.adventurer_hugbox_duration)
-			///FOR SOME SILLY FUCKING REASON THIS REFUSED TO WORK WITHOUT A FUCKING TIMER IT JUST FUCKED SHIT UP
-			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, adv_hugboxing_start)), 1)

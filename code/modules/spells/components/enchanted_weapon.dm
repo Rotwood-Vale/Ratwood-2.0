@@ -9,11 +9,11 @@
 // I nuked the former Searing Blade. Leaving 1 open for a future replacement
 
 /* Component used for adding enchantment from the enchant weapon spell
- Three types of enchantments are available:
- 1. Force Blade: Increases the force of the weapon by 5.
- 2. Durability: Increases the integrity and max integrity of the weapon by 100.
- The enchantment will lasts for 15 minutes, and will automatically refresh in the hand of an Arcyne user.
- There used to be a concept for a blade to set people on fire - but it was too broken if people didn't insta pat
+ * Three types of enchantments are available:
+ * 1. Force Blade: Increases the force of the weapon by 5.
+ * 2. Durability: Increases the integrity and max integrity of the weapon by 100.
+ * The enchantment will lasts for 15 minutes, and will automatically refresh in the hand of an Arcyne user.
+ * There used to be a concept for a blade to set people on fire - but it was too broken if people didn't insta pat
 */
 
 /datum/component/enchanted_weapon
@@ -59,12 +59,10 @@
 	if(!istype(itemloc, /mob/living))
 		while(!istype(itemloc, /mob/living))
 			if(isnull(itemloc))
-				remove()
 				qdel(src)
 				return // If the item is not in a mob, remove the refresh
 			itemloc = itemloc.loc
 			if(istype(itemloc, /turf))
-				remove()
 				qdel(src)
 				return // If the item is on the ground, remove the refresh
 	var/mob/living/current_user = itemloc
@@ -77,11 +75,10 @@
 			endtime = world.time + DEFAULT_DURATION
 			addtimer(CALLBACK(src, PROC_REF(refresh_check)), DEFAULT_DURATION)
 	else
-		remove()
 		qdel(src)
 		return
 
-/datum/component/enchanted_weapon/proc/apply_enchant(var/obj/item/I, is_fix = FALSE)
+/datum/component/enchanted_weapon/proc/apply_enchant(obj/item/I, is_fix = FALSE)
 	if(enchant_type == FORCE_BLADE_ENCHANT)
 		I.force += FORCE_BLADE_FORCE
 		I.force_wielded += FORCE_BLADE_FORCE

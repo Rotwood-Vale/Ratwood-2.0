@@ -18,6 +18,7 @@
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	time = 10 SECONDS
 	surgery_flags = SURGERY_BLOODY | SURGERY_INCISED | SURGERY_CLAMPED | SURGERY_RETRACTED | SURGERY_BROKEN
+	surgery_flags_blocked = SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_EXPERT
 	preop_sound = 'sound/surgery/organ2.ogg'
 	success_sound = 'sound/surgery/organ1.ogg'
@@ -32,11 +33,7 @@
 	if(!H)
 		to_chat(user, "[target] is missing their heart!")
 		return FALSE
-	if(!target.mind)
-		to_chat(user, "[target]'s heart is inert.")
-		return FALSE
-	if(HAS_TRAIT(target, TRAIT_NECRAS_VOW))
-		to_chat(user, "[target] has pledged a vow to Necra. This will not work.")
+	if(!target.check_revive(user))
 		return FALSE
 
 /datum/surgery_step/infuse_lux/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
@@ -56,8 +53,8 @@
 		var/mob/living/LU = user
 		var/excomm_found = FALSE
 		for(var/excomm_name in GLOB.excommunicated_players)
-			var/clean_excomm = lowertext(trim(excomm_name))
-			var/clean_target = lowertext(trim(target.real_name))
+			var/clean_excomm = LOWER_TEXT(trim(excomm_name))
+			var/clean_target = LOWER_TEXT(trim(target.real_name))
 			if(clean_excomm == clean_target)
 				excomm_found = TRUE
 				break
@@ -91,7 +88,7 @@
 		"[user] works the lux into [target]'s innards.")
 	target.emote("breathgasp")
 	target.Jitter(100)
-	GLOB.azure_round_stats[STATS_LUX_REVIVALS]++
+	record_round_statistic(STATS_LUX_REVIVALS)
 	target.update_body()
 	target.visible_message(span_notice("[target] is dragged back from Necra's hold!"), span_green("I awake from the void."))
 	qdel(tool)

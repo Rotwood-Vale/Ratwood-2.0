@@ -71,9 +71,12 @@
 	name = "Fungal Illumination"
 	desc = "Summons glowing mushrooms that shock people that try moving into them. Dendorites are immune."
 	range = 1
+	action_icon_state = "glowshroom"
+	action_icon = 'icons/mob/actions/genericmiracles.dmi'
 	overlay_state = "blesscrop"
 	releasedrain = 30
 	recharge_time = 30 SECONDS
+	chargetime = 1 SECONDS
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	max_targets = 0
 	cast_without_targets = TRUE
@@ -85,11 +88,48 @@
 
 /obj/effect/proc_holder/spell/targeted/conjure_glowshroom/cast(list/targets, mob/user = usr)
 	. = ..()
+
+	to_chat(user, span_notice("I begin enriching the soil around me!"))
+	if(!do_after(user, 0.5 SECONDS, progress = TRUE))
+		revert_cast()
+		return FALSE
+
 	var/turf/T = user.loc
 	for(var/X in GLOB.cardinals)
 		var/turf/TT = get_step(T, X)
-		if(!isclosedturf(TT) && !locate(/obj/structure/glowshroom) in TT && !locate(/obj/structure/glowshroom/dendorite) in TT)
-			new /obj/structure/glowshroom/dendorite(TT)
+		if(!isclosedturf(TT) && !locate(/obj/structure/glowshroom) in TT)
+			new /obj/structure/glowshroom(TT)
+	return TRUE
+
+/obj/effect/proc_holder/spell/targeted/conjure_vines
+	name = "Vine Sprout"
+	desc = "Summon vines nearby."
+	overlay_state = "blesscrop"
+	releasedrain = 90
+	invocations = list("Treefather, bring forth vines.")
+	invocation_type = "shout"
+	devotion_cost = 30
+	range = 1
+	recharge_time = 30 SECONDS
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	max_targets = 0
+	cast_without_targets = TRUE
+	sound = 'sound/items/dig_shovel.ogg'
+	associated_skill = /datum/skill/magic/holy
+	miracle = TRUE
+
+/obj/effect/proc_holder/spell/targeted/conjure_vines/cast(list/targets, mob/user = usr)
+	. = ..()
+	var/turf/target_turf = get_step(user, user.dir)
+	var/turf/target_turf_two = get_step(target_turf, turn(user.dir, 90))
+	var/turf/target_turf_three = get_step(target_turf, turn(user.dir, -90))
+	if(!locate(/obj/structure/vine/dendor) in target_turf)
+		new /obj/structure/vine/dendor(target_turf)
+	if(!locate(/obj/structure/vine/dendor) in target_turf_two)
+		new /obj/structure/vine/dendor(target_turf_two)
+	if(!locate(/obj/structure/vine/dendor) in target_turf_three)
+		new /obj/structure/vine/dendor(target_turf_three)
+
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/howl/call_of_the_moon
@@ -112,7 +152,7 @@
 	if (!user.has_language(/datum/language/beast))
 		user.grant_language(/datum/language/beast)
 		to_chat(user, span_boldnotice("The vestige of the hidden moon high above reveals His truth: the knowledge of beast-tongue was in me all along."))
-	
+
 	if (!first_cast)
 		to_chat(user, span_boldwarning("So it is murmured in the Earth and Air: the Call of the Moon is sacred, and to share knowledge gleaned from it with those not of Him is a SIN."))
 		to_chat(user, span_boldwarning("Ware thee well, child of Dendor."))

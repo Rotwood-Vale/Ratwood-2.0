@@ -76,10 +76,16 @@
 	dropshrink = 0.5
 	var/textper = 100
 	var/maxlen = 2000
+	///CSS applied to <body> when reading — used by fax letters to show a rim on the window border.
+	var/window_rim_style
 
 	var/cached_mailer
 	var/cached_mailedto
 	var/trapped
+
+/obj/item/paper/examine()
+	. = ..()
+	. += span_info("Use a feather to write on it. You can create a two-page manuscript that can be turned into a book by writing on it and applying it to another piece of paper that also have something written on it.")
 
 /obj/item/paper/get_real_price()
 	if(info)
@@ -112,7 +118,7 @@
 	. = ..()
 	update_icon_state()
 
-/obj/item/paper/Initialize()
+/obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
@@ -145,13 +151,12 @@
 /obj/item/paper/examine(mob/user)
 	. = ..()
 	if(!mailer)
-		. += "<a href='?src=[REF(src)];read=1'>Read</a> (<a href='?src=[REF(src)];Help=1'>Help</a>)"
+		if(info)
+			. += "<a href='?src=[REF(src)];read=1'>Read</a>"
 	else
 		. += "It's from [mailer], addressed to [mailedto].</a>"
 
 /obj/item/paper/proc/read(mob/user)
-//	var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
-//	assets.send(user)
 	if(!user.client || !user.hud_used)
 		return
 	if(!user.hud_used.reads)
@@ -163,30 +168,19 @@
 	if(mailer)
 		return
 	if(in_range(user, src) || isobserver(user))
-//		var/obj/screen/read/R = user.hud_used.reads
+		user << browse_rsc('html/book.png')
+		var/body_border_css = window_rim_style ? "box-sizing:border-box;[window_rim_style]" : ""
 		var/dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 			<html><head><style type=\"text/css\">
-			body { background-image:url('book.png');background-repeat: repeat; }</style></head><body scroll=yes>"}
+			html, body { height:100%; margin:0; padding:0; }
+			body { background-image:url('book.png');background-repeat: repeat;[body_border_css] }</style></head><body scroll=yes>"}
 		dat += info
 		dat += "<br>"
-		dat += "<a href='?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
 		dat += "</body></html>"
-		user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=0;border=0")
+		user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=1;border=0")
 		onclose(user, "reading", src)
 	else
-		return span_warning("I'm too far away to read it.")
-
-/*
-	if(in_range(user, src) || isobserver(user))
-		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[info]<HR></BODY></HTML>", "window=paper[md5(name)]")
-			onclose(user, "paper[md5(name)]")
-		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[stars(info)]<HR></BODY></HTML>", "window=paper[md5(name)]")
-			onclose(user, "paper[md5(name)]")
-	else
-		return "<span class='warning'>You're too far away to read it.</span>"
-*/
+		return span_warning("I'm too far away to read it.") 
 
 /obj/item/paper/proc/format_browse(t, mob/user)
 	user << browse_rsc('html/book.png')
@@ -194,9 +188,8 @@
 			<html><head><style type=\"text/css\">
 			body { background-image:url('book.png');background-repeat: repeat; }</style></head><body scroll=yes>"}
 	dat += "[t]<br>"
-	dat += "<a href='?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
 	dat += "</body></html>"
-	user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=0;border=0")
+	user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=1;border=0")
 
 /obj/item/paper/verb/rename()
 	set name = "Rename paper"
@@ -233,7 +226,7 @@
 		to_chat(user, span_warning("This parchment is full of strange symbols that start to glow. How odd. Wait-"))
 		sleep(5)
 		victim.adjust_fire_stacks(15)
-		victim.IgniteMob()
+		victim.ignite_mob()
 		victim.visible_message(span_danger("[user] bursts into flames upon reading [src]!"))
 	read(user)
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
@@ -374,7 +367,7 @@
 			to_chat(usr, span_warning("This parchment is full of strange symbols that start to glow. How odd. Wait-"))
 			sleep(5)
 			victim.adjust_fire_stacks(15)
-			victim.IgniteMob()
+			victim.ignite_mob()
 			victim.visible_message(span_danger("[usr] bursts into flames upon reading [src]!"))
 		read(usr)
 
@@ -505,7 +498,7 @@
 
 /obj/item/paper/construction
 
-/obj/item/paper/construction/Initialize()
+/obj/item/paper/construction/Initialize(mapload)
 	. = ..()
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
@@ -513,7 +506,7 @@
  * Natural paper
  */
 
-/obj/item/paper/natural/Initialize()
+/obj/item/paper/natural/Initialize(mapload)
 	. = ..()
 	color = "#FFF5ED"
 

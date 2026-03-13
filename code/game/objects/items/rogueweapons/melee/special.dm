@@ -1,5 +1,4 @@
 /// INTENT DATUMS	v
-
 /datum/intent/lordbash
 	name = "bash"
 	blade_class = BCLASS_BLUNT
@@ -7,6 +6,10 @@
 	attack_verb = list("bashes", "strikes")
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	//We want chipping, m'lord.
+	blunt_chipping = TRUE
+	blunt_chip_strength = BLUNT_CHIP_WEAK
 
 /datum/intent/lord_electrocute
 	name = "electrocute"
@@ -32,7 +35,7 @@
 	name = "master's rod"
 	desc = "Bend the knee. Can't be used outside of the manor."
 	icon_state = "scepter"
-	icon = 'icons/roguetown/weapons/32.dmi'
+	icon = 'icons/roguetown/weapons/misc32.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.75
 	wlength = WLENGTH_NORMAL
@@ -113,6 +116,7 @@
 	force = 25
 	force_wielded = 25
 	name = "stunmace"
+	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "stunmace0"
 	desc = "Pain is our currency here."
 	gripped_intents = null
@@ -152,7 +156,7 @@
 			hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	. = ..()
 
-/obj/item/rogueweapon/mace/stunmace/Initialize()
+/obj/item/rogueweapon/mace/stunmace/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -244,7 +248,7 @@
 /obj/item/rogueweapon/woodstaff/militia
 	force = 20
 	force_wielded = 30
-	possible_item_intents = list(SPEAR_BASH, /datum/intent/spear/cut)
+	possible_item_intents = list(SPEAR_BASH, SPEAR_CUT_1H)
 	gripped_intents = list(/datum/intent/pick/ranged, /datum/intent/spear/thrust, SPEAR_BASH)
 	name = "militia goedendag"
 	desc = "Clubs - and their spiked descendants - are older than most languages and civilizations. Tyme hasn't made them any less deadly, however. "
@@ -280,10 +284,48 @@
 	wdefense = 4
 	wbalance = WBALANCE_HEAVY
 
+/obj/item/rogueweapon/greataxe/militia/silver
+	name = "silver militia shovelaxe"
+	desc = "'Do you think Psydon stays in Heaven because He too lives in fear of what He's created?' </br>A silver shovel, improvised - perhaps, by the hands of a particularly desperate gravedigger - to fill a polearm's duty."
+	icon_state = "silvershovelwaraxe"
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
+	force = 15
+	force_wielded = 25
+	minstr = 11
+	max_blade_int = 200
+	anvilrepair = /datum/skill/craft/carpentry
+	smeltresult = /obj/item/ingot/silver
+	wdefense = 6
+	wbalance = WBALANCE_HEAVY
+	is_silver = TRUE
+
+/obj/item/rogueweapon/greataxe/militia/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/greataxe/militia/silver/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_TENNITE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
 /obj/item/rogueweapon/spear/militia
 	force = 18
 	force_wielded = 30
-	possible_item_intents = list(SPEAR_THRUST, SPEAR_BASH)
+	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_CUT_1H)
 	gripped_intents = list(SPEAR_THRUST, SPEAR_CUT, SPEAR_BASH)
 	name = "militia spear"
 	desc = "Pitchforks and hoes traditionally till the soil. In tymes of peril, however, it isn't uncommon for a militiaman to pound them into polearms."
@@ -400,7 +442,7 @@
 			if(isliving(target))
 				var/mob/living/M = target
 				M.adjust_fire_stacks(5)
-				M.IgniteMob()
+				M.ignite_mob()
 				ignited = TRUE
 			if(ignited && single_use)
 				is_active = FALSE
@@ -462,19 +504,20 @@
 	desc = "At the end of the dae, a knight's bascinet isn't much different than a particularly large stone. After all, both tend to rupture with sobering ease when introduced to a sharpened pickend."
 	force = 20
 	force_wielded = 25
-	possible_item_intents = list(/datum/intent/pick)
+	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick, /datum/intent/stab/militia)
 	icon_state = "milpick"
-	icon = 'icons/roguetown/weapons/32.dmi'
+	icon = 'icons/roguetown/weapons/misc32.dmi'
 	sharpness = IS_SHARP
 	wlength = WLENGTH_SHORT
-	max_blade_int = 120
+	max_blade_int = 140
 	max_integrity = 400
 	slot_flags = ITEM_SLOT_HIP
 	associated_skill = /datum/skill/combat/maces
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/iron
-	wdefense = 1
+	wdefense = 2
+	wdefense_wbonus = 4
 	wbalance = WBALANCE_NORMAL
 
 /obj/item/rogueweapon/pick/militia/steel
@@ -483,12 +526,13 @@
 	name = "militia steel warpick"
 	desc = "At the end of the dae, a knight's bascinet isn't much different than a particularly large stone. After all, both tend to rupture with sobering ease when introduced to a sharpened pickend. This one is honed out of steel parts."
 	icon_state = "milsteelpick"
-	max_blade_int = 150
+	max_blade_int = 180
 	max_integrity = 600
 	associated_skill = /datum/skill/combat/maces
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
-	wdefense = 5
+	wdefense = 3
+	wdefense_wbonus = 5
 	wbalance = WBALANCE_HEAVY
 
 /obj/item/rogueweapon/sword/falchion/militia
@@ -503,4 +547,317 @@
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 3
 	wbalance = WBALANCE_HEAVY
-	intdamage_factor = 0.6
+
+/datum/intent/peculate
+	name = "peculate"
+	hitsound = null
+	desc = "Thieve the appearance of another."
+	icon_state = "peculate"
+
+//Unique assassin/antag dagger.
+/obj/item/rogueweapon/huntingknife/idagger/steel/profane
+	name = "profane dagger"
+	desc = "A profane dagger made of cursed black steel. Whispers emanate from the gem on its hilt."
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust, /datum/intent/peculate)
+	sellprice = 250
+	icon_state = "pdagger"
+	embedding = list("embed_chance" = 0) // Embedding the cursed dagger has the potential to cause duping issues. Keep it like this unless you want to do a lot of bug hunting.
+	resistance_flags = INDESTRUCTIBLE
+	stealthy_audio = TRUE
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/profane/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_ASSASSIN))
+		. += "profane dagger whispers, \"[span_danger("Here we are!")]\""
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/profane/pickup(mob/living/M)
+	. = ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if (!HAS_TRAIT(H, TRAIT_ASSASSIN)) // Non-assassins don't like holding the profane dagger.
+			H.add_stress(/datum/stressevent/profane)
+			to_chat(M, "<span class='danger'>Your breath chills as you pick up the dagger. You feel a sense of morbid wrongness!</span>")
+			var/message = pick(
+				"<span class='danger'>Help me...</span>",
+				"<span class='danger'>Save me...</span>",
+				"<span class='danger'>It's cold...</span>",
+				"<span class='danger'>Free us...please...</span>",
+				"<span class='danger'>Necra...deliver...us...</span>")
+//			H.visible_message("profane dagger whispers, \"[message]\"")
+			to_chat(M, "profane dagger whispers, \"[message]\"")
+		else
+			var/message = pick(
+				"<span class='danger'>Why...</span>",
+				"<span class='danger'>...Who sent you?</span>",
+				"<span class='danger'>...You will burn for what you've done...</span>",
+				"<span class='danger'>I hate you...</span>",
+				"<span class='danger'>Someone stop them!</span>",
+				"<span class='danger'>Guards! Help!</span>",
+				"<span class='danger'>...What's that in your hand?</span>",
+				"<span class='danger'>...You love me...don't you?</span>",
+				"<span class='danger'>Wait...don't I know you?</span>",
+				"<span class='danger'>I thought you were...my friend...</span>",
+				"<span class='danger'>How long have I been in here...</span>")
+//			H.visible_message("profane dagger whispers, \"[message]\"")
+			to_chat(M, "profane dagger whispers, \"[message]\"")
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/profane/pre_attack(mob/living/carbon/human/target, mob/living/user = usr, params)
+	if(!istype(target))
+		return FALSE
+	if(target.has_flaw(/datum/charflaw/hunted)) // Check to see if the dagger will do 20 damage or 14
+		force = 20 * 2	//vs trait havers, 2x damage over a steel knife
+	else
+		force = 20 + 4	//vs non-trait havers, 4 more damage over a steel knife
+	return FALSE
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/profane/afterattack(mob/living/carbon/human/target, mob/living/user = usr, proximity)
+	. = ..()
+	if(!ishuman(target))
+		return
+	if(target.stat == DEAD || (target.health < target.crit_threshold)) // Trigger soul steal or identity theft if the target is either dead or in crit
+		if(istype(user.used_intent, /datum/intent/peculate))
+			if(!ishuman(user)) // carbons don't have all features of a human
+				to_chat(user, span_danger("You can't do that!"))
+				return
+			var/obj/item/bodypart/head/target_head = target.get_bodypart(BODY_ZONE_HEAD)
+			if(QDELETED(target_head))
+				to_chat(user, span_notice("I need their head or else I can't confirm the blood-bounty!"))
+				return
+
+			var/datum/beam/transfer_beam = user.Beam(target, icon_state = "drain_life", time = 6 SECONDS)
+
+			playsound(
+				user,
+				get_sfx("changeling_absorb"), //todo: turn sound keys into defines.
+				100,
+			)
+			to_chat(user, span_danger("I start absorbing [target]'s identity."))
+			if(!do_after(user, 3 SECONDS, target = target))
+				qdel(transfer_beam)
+				return
+
+			playsound( // and anotha one
+				user,
+				get_sfx("changeling_absorb"),
+				100,
+			)
+
+			if(!do_after(user, 3 SECONDS, target = target))
+				qdel(transfer_beam)
+				return
+
+			if(!user.client)
+				qdel(transfer_beam)
+				return
+			qdel(transfer_beam)
+
+			var/mob/living/carbon/human/human_user = user
+
+			human_user.copy_physical_features(target)
+			to_chat(user, span_purple("I take on a new face.."))
+			ADD_TRAIT(target, TRAIT_DISFIGURED, TRAIT_GENERIC)
+
+			return
+
+		if(target.has_flaw(/datum/charflaw/hunted)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
+			if(target.client == null) //See if the target's soul has left their body
+				to_chat(user, "<span class='danger'>Your target's soul has already escaped its corpse...you try to call it back!</span>")
+				get_profane_ghost(target,user) //Proc to capture a soul that has left the body.
+			else
+				user.adjust_triumphs(1)
+				init_profane_soul(target, user) //If they are still in their body, send them to the dagger!
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/profane/proc/init_profane_soul(mob/living/carbon/human/target, mob/user)
+	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
+	record_round_statistic(STATS_ASSASSINATIONS)
+	var/mob/dead/observer/profane/S = new /mob/dead/observer/profane(src)
+	S.AddComponent(/datum/component/profaned, src)
+	S.name = "soul of [target.real_name]"
+	S.real_name = "soul of [target.real_name]"
+	S.deadchat_name = target.real_name
+	S.ManualFollow(src)
+	S.key = target.key
+	S.language_holder = target.language_holder.copy(S)
+	target.visible_message("<span class='danger'>[target]'s soul is pulled from their body and sucked into the profane dagger!</span>", "<span class='danger'>My soul is trapped within the profane dagger. Damnation!</span>")
+	playsound(src, 'sound/magic/soulsteal.ogg', 100, extrarange = 5)
+	blade_int = max_blade_int // Stealing a soul successfully sharpens the blade.
+	obj_fix(max_integrity) // And fixes the dagger. No blacksmith required!
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/profane/proc/get_profane_ghost(mob/living/carbon/human/target, mob/user)
+	var/mob/dead/observer/chosen_ghost
+	var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit() //Check if a soul has already gone to the underworld
+	if(underworld_spirit) // If they are in the underworld, pull them back to the real world and make them a normal ghost. Necra can't save you now!
+		var/mob/dead/observer/ghost = underworld_spirit.ghostize()
+		chosen_ghost = ghost.get_ghost(TRUE,TRUE)
+	else //Otherwise, try to get a ghost from the real world
+		chosen_ghost = target.get_ghost(TRUE,TRUE)
+	if(!chosen_ghost || !chosen_ghost.client) // If there is no valid ghost or if that ghost has no active player
+		return FALSE
+	user.adjust_triumphs(1)
+	init_profane_soul(target, user) // If we got the soul, store them in the dagger.
+	qdel(target) // Get rid of that ghost!
+	return TRUE
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/profane/proc/release_profane_souls(mob/user) // For ways to release the souls trapped within a profane dagger, such as a Necrite burial rite. Returns the number of freed souls.
+	var/freed_souls = 0
+	for(var/mob/dead/observer/profane/A in src) // for every trapped soul in the dagger, whether they have left the game or not
+		to_chat(A, "<b>I have been freed from my vile prison, I await Necra's cold grasp. Salvation!</b>")
+		A.returntolobby() //Send the trapped soul back to the lobby
+		user.visible_message("<span class='warning'>The [A.name] flows out from the profane dagger, finally free of its grasp.</span>")
+		freed_souls += 1
+	user.visible_message("<span class='warning'>The profane dagger shatters into putrid smoke!</span>")
+	qdel(src) // Delete the dagger. Forevermore.
+	return freed_souls
+
+/datum/component/profaned
+	var/atom/movable/container
+
+/datum/component/profaned/Initialize(atom/movable/container)
+	if(!istype(parent, /mob/dead/observer/profane))
+		return COMPONENT_INCOMPATIBLE
+	var/mob/dead/observer/profane/S = parent
+
+	src.container = container
+
+	S.forceMove(container)
+
+//Standard of the keep.
+//Big ol' flag that they keep to give bonuses, used by the manorguard standard bearer.
+/obj/item/rogueweapon/spear/keep_standard
+	name = "ducal standard"
+	desc = "The local lord's banner, fashioned to a blacksteel pike and turned into a deadly instrument of war. \
+	The man who wields this is said to bring great fortune to his house, and those who keep him safe. \
+	<small>Runes glow near the head of the pike. A sure sign of the arcyne.</small>"
+	force = 12//Use this in TWO HANDS.
+	force_wielded = 34//+4. +1 from boar spear.
+	throwforce = 32//It'll be funny. Trust.
+	possible_item_intents = list(SPEAR_BASH)
+	gripped_intents = list(SPEAR_THRUST, /datum/intent/spear/bash/ranged, /datum/intent/mace/smash/eaglebeak)//GET THEM OFF OF ME!!! OOOUGH!!!
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "standard_old"
+	max_blade_int = 260
+	max_integrity = 300//+50 from base. Because blacksteel or something.
+	smeltresult = /obj/item/ingot/blacksteel
+	resistance_flags = FIRE_PROOF
+	var/active_item = FALSE
+	var/repair_amount = 20
+	var/repair_time = 3 MINUTES//Quite some time for a full repair.
+	var/last_repair
+	var/secondary_tag = FALSE//Does this have two flag states?
+
+//This is an eagle's beak greataxe combination, basically, with some quirks.
+//Will actual poleaxes function like this? No. But it's a unique fluff weapon right now.
+//At least, when I make them into their own weapon class.
+//May as well make it unique, in some regard, until that point.
+/obj/item/rogueweapon/spear/keep_standard/poleaxe
+	desc = "The local lord's banner, fashioned to a poleaxe and turned into a deadly instrument of war. \
+	The man who wields this is said to bring great fortune to his house, and those who keep him safe. \
+	<small>Runes glow near the head of the weapon, visible for the faintest of moments. A sure sign of the arcyne.</small>"
+	force_wielded = 30//-4. You know why. Look at the intents.
+	minstr = 12//+1 over the eagle's beak.
+	max_blade_int = 200//+20 over the eagle's beak. -60 from the pike.
+	max_integrity = 260//-40 from parent. No longer blacksteel, but great all the same.
+	smeltresult = /obj/item/ingot/steel
+	gripped_intents = list(/datum/intent/spear/thrust/eaglebeak, /datum/intent/spear/bash/eaglebeak, \
+	/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe)//You get special intents, you special guy, you...
+	icon_state = "standard"
+	secondary_tag = TRUE
+
+//This is awful and I apologise.
+/obj/item/rogueweapon/spear/keep_standard/attack_self(mob/living/user)
+	if(secondary_tag)
+		if(wielded)
+			detail_tag = "_det1"
+			update_icon()
+			user.update_inv_hands()
+		else
+			detail_tag = "_det"
+			update_icon()
+			user.update_inv_hands()
+	..()
+
+/obj/item/rogueweapon/spear/keep_standard/equipped(mob/living/user)
+	. = ..()
+	if(secondary_tag)
+		detail_tag = "_det"
+		update_icon()
+	if(active_item)
+		return
+	active_item = TRUE
+	if(user.job == "Man at Arms")
+		to_chat(user, span_suppradio("The standard's runes pulse, accepting me as its <b>master</b>."))
+		user.change_stat(STATKEY_LCK, 3)
+		user.add_stress(/datum/stressevent/keep_standard)
+		ADD_TRAIT(user, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)//KEEP AT IT!!
+		ADD_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)//AND KEEP UP!!!
+		if(HAS_TRAIT(user, TRAIT_STANDARD_BEARER))
+			to_chat(user, span_suppradio("<small>It remains ready for your word. You need only ask.</small>"))
+			user.verbs |= /mob/proc/standard_position
+			user.verbs |= /mob/proc/standard_recuperate
+			user.verbs |= /mob/proc/standard_steady
+			user.verbs |= /mob/proc/standard_rally
+	else
+		to_chat(user, span_suicide("The standard's runes pulse, rejecting me as its <b>master</b>."))
+
+/obj/item/rogueweapon/spear/keep_standard/dropped(mob/living/user)
+	..()
+//	if(secondary_tag)
+//		detail_tag = "_det"
+	if(!active_item)
+		return
+	active_item = FALSE
+	if(user.job == "Man at Arms")
+		to_chat(user, span_monkeyhive("The standard's runes pulse, rhythmically, as if sad to see you release your control."))
+		user.change_stat(STATKEY_LCK, -3)
+		user.remove_stress(/datum/stressevent/keep_standard)
+		REMOVE_TRAIT(user, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)
+		REMOVE_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+		if(HAS_TRAIT(user, TRAIT_STANDARD_BEARER))
+			to_chat(user, span_monkeyhive("<small>You feel ill. Was that a mistake?</small>"))
+			user.verbs -= /mob/proc/standard_position
+			user.verbs -= /mob/proc/standard_recuperate
+			user.verbs -= /mob/proc/standard_steady
+			user.verbs -= /mob/proc/standard_rally
+	else
+		to_chat(user, span_suicide("The standard's runes pulse, as if sighing in relief once I let go."))
+
+/obj/item/rogueweapon/spear/keep_standard/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		START_PROCESSING(SSobj, src)
+		return
+
+/obj/item/rogueweapon/spear/keep_standard/process()
+	if(obj_integrity >= max_integrity)
+		STOP_PROCESSING(SSobj, src)
+		src.visible_message(span_notice("[src] warps and bends, mending as the implement's runes pulse..."), vision_distance = 1)
+		return
+	else if(world.time > src.last_repair + src.repair_time)
+		src.last_repair = world.time
+		obj_integrity = min(obj_integrity + src.repair_amount, src.max_integrity)
+	..()
+
+//Shameless copy of how clothes handle it.
+/obj/item/rogueweapon/spear/keep_standard/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/rogueweapon/spear/keep_standard/Initialize(mapload)
+	. = ..()
+	if(GLOB.lordprimary)
+		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
+	GLOB.lordcolor += src
+
+/obj/item/rogueweapon/spear/keep_standard/lordcolor(primary,secondary)
+	detail_tag = "_det"
+	detail_color = primary
+	update_icon()
+
+/obj/item/rogueweapon/spear/keep_standard/Destroy()
+	GLOB.lordcolor -= src
+	return ..()

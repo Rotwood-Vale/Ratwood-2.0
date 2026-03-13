@@ -37,7 +37,7 @@
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fucks [target]'s cunt."))
 	else
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] knot-fucks [target]'s cunt."))
-	playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
+	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
@@ -87,7 +87,7 @@
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] double-fucks [target]'s cunt."))
 	else
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] double-knots [target]'s cunt."))
-	playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
+	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))

@@ -53,32 +53,7 @@
 	..()
 	user.update_inv_hands()
 
-/obj/item/paper/scroll/read(mob/user)
-	if(!open)
-		to_chat(user, span_info("Open me."))
-		return
-	if(!user.client || !user.hud_used)
-		return
-	if(!user.hud_used.reads)
-		return
-	if(!user.can_read(src))
-		return
-	/*font-size: 125%;*/
-	if(in_range(user, src) || isobserver(user))
-		user.hud_used.reads.icon_state = "scroll"
-		user.hud_used.reads.show()
-		var/dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
-			<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><style type=\"text/css\">
-					body { background-image:url('book.png');background-repeat: repeat; }</style></head><body scroll=yes>"}
-		dat += "[info]<br>"
-		dat += "<a href='?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
-		dat += "</body></html>"
-		user << browse(dat, "window=reading;size=460x300;can_close=0;can_minimize=0;can_maximize=0;can_resize=0;titlebar=0")
-		onclose(user, "reading", src)
-	else
-		return span_warning("I'm too far away to read it.")
-
-/obj/item/paper/scroll/Initialize()
+/obj/item/paper/scroll/Initialize(mapload)
 	open = FALSE
 	update_icon_state()
 	..()
@@ -382,6 +357,9 @@
 /obj/item/paper/inqslip/attacked_by(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/clothing/ring/signet))
 		var/obj/item/clothing/ring/signet/S = I
+		if(waxed)
+			to_chat(user,  span_warning("It's already wax-sealed."))
+			return
 		if(S.tallowed && sealed)
 			waxed = TRUE
 			update_icon()
@@ -492,3 +470,34 @@
 		var/starting_rand  = rand(100, 50)
 		prices[path] = list("[starting_rand]", "[round(starting_rand * 0.5, 1)]")
 	sell_prices = prices
+/obj/item/paper/scroll/writ_of_esteem
+	name = "Writ of Esteem"
+	icon_state = "contractsigned"
+
+/obj/item/paper/scroll/writ_of_esteem/update_icon_state()
+	if(open)
+		icon_state = "contractsigned"
+		name = initial(name)
+	else
+		icon_state = "scroll_closed"
+		name = initial(name)
+
+/obj/item/paper/scroll/writ_of_esteem/zybantine
+	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity. This one bears the signet of the Zybantine Empress."
+	info = "By Imperial Decree of the Calipha, Empress Sayjit Al-Halruik, Premier of Zybantium, Lady of the Gypsum Rose, in the name of PSYDON, the Most Gracious, the Most Merciful.\
+	I, Empress of the Zybantine Empire, sovereign of desert and court, issue this edict. Bearer, my appointed commander of the journey, holds full covenant and safe-conduct to treat,\
+	levy, pledge, and seal on behalf of my dominion and community. Let all governors and lords honor this writ, valid beneath my seal, witnessed by my vizier and scribe. Defiance \
+	invites reckoning; assistance earns favor. Thus is spoken and decreed from the Court of the Empire of Zybantium."
+	icon_state = "contractsigned"
+
+/obj/item/paper/scroll/writ_of_esteem/grenzel
+	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity.This one bears the signet of the Grenzelhoft Holy See."
+	info = "By the command of his Imperial Majesty, through the Council of Electors, does bestow this writ. Let it be known that the bearer of this writ is empowered to negotiate,\
+	speak, and act in the Emperor’s stead as if it were His Majesty’s own words. None shall gainsay this authority, under seal and witness of the Electors assembled.\
+	Verdinand III, Emperor of The Holy See of Grenzelhoft."
+	icon_state = "contractsigned"
+
+/obj/item/paper/scroll/writ_of_esteem/otavan
+	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity. This one bears the seal of the Principality of Otava."
+	info = "By word of the Prince Henri the Silver-Blooded, and with the Seal of Approval by High Inquisitor Archibald, does this writ gain power only given to the men and women truly blessed by PSYDON. The bearer of this writ is empowered to speak, negotiate, and act in the Principality's name, and to act with the full support of the Otavan Holy See. Furthermore, any true believer of PSYDON and HIS name shall provide any aid to its bearer, for they bring forth HIS will and carry HIS strength. Let it be known that should this edict be honored, favor and respect is forever earned. Should any individual wrong the men and women of PSYDON and the Holy See, however, will have HIS wrath driven unto their land."
+	icon_state = "contractsigned"

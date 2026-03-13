@@ -32,5 +32,5 @@
 	H.set_species(/datum/species/human/northern)
 	H.skin_tone = "fff0e9"
 	H.update_body()
-	 // Yeah, you gotta do this after setting species haha! theres an after_creation() proc that goes with set_species and this handles the stats in it.
+	// Yeah, you gotta do this after setting species haha! theres an after_creation() proc that goes with set_species and this handles the stats in it.
 	H.roll_stats()

@@ -1,41 +1,68 @@
 {
     "full": {
-		"duke": "shogun",
-		"duchess": "shoguness",
-		"knight": "kouken",
-		"knights": "kouken",
-		"mercenaries": "hangyaku",
-		"mercenary": "hangyaku",
-		"bandit": "hangyaku",
-		"bandits": "hangyaku",
-		"lord": "daimyo",
-		"lords": "daimyo",
-		"Astrata": "Aisata",
-		"Necra": "Neriko",
-		"Malum": "Mamuke",
-		"Ravox": "Ratake",
-		"Pestra": "Pesiko",
-		"Noc": "Noishi",
-		"Dendor": "Denno",
-		"Abyssor": "Abysawa",
-		"Eora": "Eori",
-		"Xylix": "Xyji",
-		"Psydon": "Saidon",
-		"Graggar": "Gaiyuke",
-		"Matthios": "Matoko",
-		"Boatha": "Baosumi",
-		"Zizo": "Zimiko"
+		"hello":"kon'nichiwa",
+		"goodbye":"sayonara",
+		"farewell":"saraba",
+		"sorry":"gomen'nasai",
+		"thanks":"arigatō",
+		"yes":"hai",
+		"no":"iie",
+		"duke":"daimyo",
+		"duchess":"daimyo",
+		"duchy":"han",
+		"dukedom":"han",
+		"bishop":"shinpu",
+		"prelate":"shinpu",
+		"church":"kyōkai",
+		"inquisition":"itanjinmon",
+		"inquisitor":"itanjimon-kan",
+		"knight":"kishi",
+		"knights":"kishi",
+		"captain":"taichō",
+		"sergeant":"gunsō",
+		"soldier":"ashigaru",
+		"soldiers":"ashigaru",
+		"cavalry":"kihei",
+		"archer":"shashu",
+		"archers":"shashu",
+		"squire":"jūsha",
+		"squires":"jūsha",
+		"maid":"jochū",
+		"maids":"jochū",
+		"butler":"kajū",
+		"butlers":"kajū",
+		"servant":"geboku",
+		"servants":"geboku",
+		"steward":"shitsuji",
+		"idiot":["baka", "aho"],
+		"jerk":"yarō",
+		"asshole":"kusoyarō",
+		"fucker":"kusoyarō",
+		"dumbass":"bakayarō"
 
     },
     "start": {
 
     },
+
     "end": {
 
     },
-	"multiword": {
 
+	"multiword": {
+		"good morning":"ohayō",
+		"good afternoon":"kon'nichiwa",
+		"good evening":"konbanwa",
+		"thank you":"arigatō gozaimasu",
+		"my apologies":["sumimasen", "mōshiwake arimasen", "mōshiwake gozaimasen", "shitsurei itashimasu"],
+		"fuck off":"fuzakeru na",
+		"shut the fuck up":"damare konoyarō",
+		"damn it":["kuso", "chikushō"],
+		"go to hell":"kutabare",
+		"blood brother":"aniki",
+		"blood sister":"aneki"
 	},
+
     "syllable": {
 
     }

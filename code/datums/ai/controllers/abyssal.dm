@@ -243,6 +243,8 @@
 		affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, BODY_ZONE_CHEST)
 	playsound(target, 'sound/combat/hits/kick/kick.ogg', 100, TRUE, -1)
 	target.lastattacker = user.real_name
+	target.lastattackerckey = user.ckey
+	target.lastattacker_weakref = WEAKREF(user)
 	if(target.mind)
 		target.mind.attackedme[user.real_name] = world.time
 	user.stamina_add(15)
@@ -287,7 +289,7 @@
 	ai_movement = /datum/ai_movement/hybrid_pathing
 
 	planning_subtrees = list(
-        /datum/ai_planning_subtree/simple_find_target/closest,
+		/datum/ai_planning_subtree/simple_find_target/closest,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/blink_if_far,
 		/datum/ai_planning_subtree/target_retaliate,

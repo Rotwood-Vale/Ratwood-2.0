@@ -6,7 +6,7 @@
 	var/mob/living/U = user
 	if(H && U)
 		prob2defend = 0
-	
+
 	if(!can_see_cone(user))
 		if(d_intent == INTENT_PARRY)
 			return FALSE
@@ -87,6 +87,10 @@
 
 	if(intenty.masteritem)
 		attacker_skill = U.get_skill_level(intenty.masteritem.associated_skill)
+
+		if(intenty.sharpness_penalty)
+			intenty.masteritem.remove_bintegrity(intenty.sharpness_penalty)
+
 		prob2defend -= (attacker_skill * 20)
 		if((intenty.masteritem.wbalance == WBALANCE_SWIFT) && (user.STASPD > src.STASPD)) //enemy weapon is quick, so get a bonus based on spddiff
 			var/spdmod = ((user.STASPD - src.STASPD) * 10)
@@ -110,7 +114,7 @@
 
 	if(HAS_TRAIT(user, TRAIT_GUIDANCE))
 		prob2defend -= 20
-	
+
 	if(HAS_TRAIT(user, TRAIT_CURSE_RAVOX))
 		prob2defend -= 40
 
@@ -132,52 +136,27 @@
 		drained = drained + 5							//More stamina usage for not being trained in the armor you're using.
 
 	//Dual Wielding
-	var/attacker_dualw
 	var/defender_dualw
-	var/extraattroll
 	var/extradefroll
 
 	//Dual Wielder defense disadvantage
-	if(HAS_TRAIT(src, TRAIT_DUALWIELDER) && istype(offhand, mainhand))
+	if(HAS_TRAIT(src, TRAIT_DUALWIELDER) && (istype(offhand, mainhand) || istype(mainhand, offhand)))
 		extradefroll = prob(prob2defend)
 		defender_dualw = TRUE
 
-	//Dual Wielder attack advantage
-	var/obj/item/mainh = user.get_active_held_item()
-	var/obj/item/offh = user.get_inactive_held_item()
-	if(mainh && offh && HAS_TRAIT(user, TRAIT_DUALWIELDER))
-		if(istype(mainh, offh))
-			extraattroll = prob(prob2defend)
-			attacker_dualw = TRUE
-
 	if(src.client?.prefs.showrolls)
 		var/text = "Roll to parry... [prob2defend]%"
-		if((defender_dualw || attacker_dualw))
-			if(defender_dualw && attacker_dualw)
-				text += " Our dual wielding cancels out!"
-			else//If we're defending against or as a dual wielder, we roll disadv. But if we're both dual wielding it cancels out.
-				text += " Twice! Disadvantage! ([(prob2defend / 100) * (prob2defend / 100) * 100]%)"
+		if(defender_dualw)
+			text += " Twice! Disadvantage! ([(prob2defend / 100) * (prob2defend / 100) * 100]%)"
 		to_chat(src, span_info("[text]"))
-	
-	var/attacker_feedback 
-	if(user.client?.prefs.showrolls && (attacker_dualw || defender_dualw))
-		attacker_feedback = "Attacking with advantage. ([100 - ((prob2defend / 100) * (prob2defend / 100) * 100)]%)"
 
 	var/parry_status = FALSE
-	if((defender_dualw && attacker_dualw) || (!defender_dualw && !attacker_dualw)) //They cancel each other out
-		if(attacker_feedback)
-			attacker_feedback = "Advantage cancelled out!"
-		if(prob(prob2defend))
-			parry_status = TRUE
-	else if(attacker_dualw)
-		if(prob(prob2defend) && extraattroll)
-			parry_status = TRUE
-	else if(defender_dualw)
+	if(defender_dualw)
 		if(prob(prob2defend) && extradefroll)
 			parry_status = TRUE
-
-	if(attacker_feedback)
-		to_chat(user, span_info("[attacker_feedback]"))
+	else
+		if(prob(prob2defend))
+			parry_status = TRUE
 
 	if(parry_status)
 		if(intenty.masteritem)
@@ -190,6 +169,14 @@
 				H.magearmor = 1
 				H.apply_status_effect(/datum/status_effect/buff/magearmor)
 				to_chat(src, span_boldwarning("My mage armor absorbs the hit and dissipates!"))
+				return TRUE
+			else
+				return FALSE
+		if(HAS_TRAIT(src, TRAIT_SCALEARMOR))
+			if(H.scalearmor == 0)
+				H.scalearmor = 1
+				H.apply_status_effect(/datum/status_effect/buff/scalearmor)
+				to_chat(src, span_boldwarning("My scales absorb the hit and dissipate the force!"))
 				return TRUE
 			else
 				return FALSE
@@ -253,10 +240,14 @@
 			var/dam2take = round((get_complex_damage(AB,user,used_weapon.blade_dulling)/2),1)
 			if(dam2take)
 				var/intdam = used_weapon.max_blade_int ? INTEG_PARRY_DECAY : INTEG_PARRY_DECAY_NOSHARP
+				var/sharp_loss = SHARPNESS_ONHIT_DECAY
 				if(used_weapon == offhand)
 					intdam = INTEG_PARRY_DECAY_NOSHARP
+				if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+					sharp_loss += STRONG_SHP_BONUS
+					intdam += STRONG_INTG_BONUS
 				used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
-				used_weapon.remove_bintegrity(SHARPNESS_ONHIT_DECAY, user)
+				used_weapon.remove_bintegrity(sharp_loss, user)
 
 			if(mind && user.mind && HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
 				var/text = "[bodyzone2readablezone(user.zone_selected)]..."
@@ -298,7 +289,7 @@
 			if(W)
 				playsound(get_turf(src), pick(W.parrysound), 100, FALSE)
 			if(src.client)
-				GLOB.azure_round_stats[STATS_PARRIES]++
+				record_round_statistic(STATS_PARRIES)
 			if(istype(rmb_intent, /datum/rmb_intent/riposte))
 				src.visible_message(span_boldwarning("<b>[src]</b> ripostes [user] with [W]!"))
 			else
@@ -325,13 +316,13 @@
 			playsound(get_turf(src), pick(parry_sound), 100, FALSE)
 			src.visible_message(span_warning("<b>[src]</b> parries [user]!"))
 			if(src.client)
-				GLOB.azure_round_stats[STATS_PARRIES]++
+				record_round_statistic(STATS_PARRIES)
 			return TRUE
 		else
 			to_chat(src, span_boldwarning("I'm too tired to parry!"))
 			return FALSE
 	else
 		if(src.client)
-			GLOB.azure_round_stats[STATS_PARRIES]++
+			record_round_statistic(STATS_PARRIES)
 		playsound(get_turf(src), pick(parry_sound), 100, FALSE)
 		return TRUE

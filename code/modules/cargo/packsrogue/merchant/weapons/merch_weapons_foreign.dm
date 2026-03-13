@@ -1,6 +1,6 @@
 // Special Mercenary Weapons, at exorbitant prices
 /datum/supply_pack/rogue/merc_weapons
-	group = "Weapons (Foreign)"
+	group = "Weapons (Exotic)"
 	crate_name = "merchant guild's crate"
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
@@ -74,13 +74,44 @@
 	cost = 409 // 409 because the Flos Duellatorum was written between 1400-1409 & Fiore is part of the reason frei gets an etruscan class
 	contains = list(/obj/item/rogueweapon/sword/long/etruscan)
 
-/datum/supply_pack/rogue/merc_weapons/handclawsiron
-	name = "Iron Claws"
-	cost = 120
+/datum/supply_pack/rogue/merc_weapons/handclaw_iron
+	name = "Gronnic Iron Claw"
+	cost = 150
 	contains = list(/obj/item/rogueweapon/handclaw)
 
-/datum/supply_pack/rogue/merc_weapons/handclawssteel
-	name = "Steel Claws"
-	cost = 180
+/datum/supply_pack/rogue/merc_weapons/handclaw_steel
+	name = "Gronnic Steel Claw"
+	cost = 200
 	contains = list(/obj/item/rogueweapon/handclaw/steel)
 
+/datum/supply_pack/rogue/merc_weapons/grenzelstaff
+	name = "Grenzelhoftian Blacksteel Staff"
+	cost = 100
+	contains = list(/obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff)
+
+//// Elven Weapons
+/datum/supply_pack/rogue/merc_weapons/elfsword
+	name = "Elven Shortsword"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/sword/short/elf)
+	
+/datum/supply_pack/rogue/merc_weapons/elflongsword
+	name = "Elven Longsword"
+	cost = 80
+	contains = list(/obj/item/rogueweapon/sword/long/elf)
+
+/datum/supply_pack/rogue/merc_weapons/elfswordspear
+	name = "Elven Swordspear"
+	cost = 100
+	contains = list(/obj/item/rogueweapon/spear/naginata/elf)
+
+/datum/supply_pack/rogue/merc_weapons/elfcurveblade
+	name = "Elven Curveblade"
+	cost = 120
+	contains = list(/obj/item/rogueweapon/greatsword/elf)
+
+//adding it here because... it's a weapon!
+/datum/supply_pack/rogue/merc_weapons/silverdagger
+	name = "Silver Dagger"
+	cost = 120 //Silver weapons have been made much less powerful but much more common over time
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver)

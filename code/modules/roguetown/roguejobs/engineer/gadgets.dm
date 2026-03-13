@@ -49,3 +49,10 @@
 	to_chat(user, "<span class='notice'>You deploy the folding table.</span>")
 	new /obj/structure/table/wood/folding(location)
 	qdel(src)
+
+/datum/anvil_recipe/engineering/construct_skill_core
+	name = "Golem Skill Exhibitor"
+	created_item = /obj/item/construct_skill_core
+	req_bar = /obj/item/ingot/copper
+	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
+	craftdiff = 3

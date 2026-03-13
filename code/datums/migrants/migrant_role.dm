@@ -23,8 +23,14 @@
 	/// Whether to show wanderer examine like adventurers or pilgrims
 	var/show_wanderer_examine = TRUE
 	var/advjob_examine = TRUE
+	var/horse = FALSE
 
 /datum/migrant_role/proc/after_spawn(mob/living/carbon/human/character)
+	var/turf/TU = get_turf(character)
+	if(TU)
+		if(horse)
+			new horse(TU)
+
 	return
 
 /datum/migrant_role/pilgrim
@@ -40,3 +46,8 @@
 	antag_datum = /datum/antagonist/bandit
 	advclass_cat_rolls = list(CTAG_BANDIT = 20)
 	grant_lit_torch = TRUE
+
+/datum/migrant_role/assassin
+	name = "Assassin"
+	antag_datum = /datum/antagonist/assassin
+	advclass_cat_rolls = list(CTAG_ASSASSIN = 20)

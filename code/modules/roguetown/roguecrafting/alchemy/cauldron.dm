@@ -31,7 +31,7 @@
 			add_overlay(filling)
 	return
 
-/obj/machinery/light/rogue/cauldron/Initialize()
+/obj/machinery/light/rogue/cauldron/Initialize(mapload)
 	create_reagents(500, DRAINABLE | AMOUNT_VISIBLE | REFILLABLE)
 	. = ..()
 
@@ -85,7 +85,7 @@
 						else
 							outcomes[alching.minor_pot] = 1
 				sortTim(outcomes,cmp=/proc/cmp_numeric_dsc,associative = 1)
-				if(outcomes[outcomes[1]] >= 5)
+				if(outcomes.len && (outcomes[outcomes[1]] >= 5))
 					var/result_path = outcomes[1]
 					var/datum/alch_cauldron_recipe/found_recipe = new result_path
 					var/amt2raise = lastuser?.STAINT*2
@@ -118,7 +118,7 @@
 					//handle player perception and reset for next time
 					src.visible_message("<span class='info'>The cauldron finishes boiling with a faint [found_recipe.smells_like] smell.</span>")
 					record_featured_stat(FEATURED_STATS_ALCHEMISTS, lastuser)
-					GLOB.azure_round_stats[STATS_POTIONS_BREWED]++
+					record_round_statistic(STATS_POTIONS_BREWED)
 					//give xp for /datum/skill/craft/alchemy
 					lastuser?.adjust_experience(/datum/skill/craft/alchemy, amt2raise, FALSE)
 					playsound(src, "bubbles", 100, TRUE)

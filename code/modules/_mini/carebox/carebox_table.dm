@@ -40,4 +40,5 @@
 		/datum/carebox_loot/wretch/lantern_bedroll,
 		/datum/carebox_loot/wretch/pouch_medicine,
 		/datum/carebox_loot/wretch/bottle_bomb,
+		/datum/carebox_loot/wretch/zizite_cross,
 	)

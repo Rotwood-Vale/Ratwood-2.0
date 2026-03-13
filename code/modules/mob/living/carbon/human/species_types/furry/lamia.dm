@@ -18,8 +18,11 @@
 	<br><br> \
 	Yet... not all of them have stayed in the depths of the abyss, for some of the clans have moved far away from the coastal regions, settling in swamps, forests and even deserts, having spread themselves far and wide aeons ago."
 
+	skin_tone_wording = "Brood"
+
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR, LIPS, HAIR, LAMIAN_TAIL, OLDGREY, MUTCOLORS)
+	species_traits = list(EYECOLOR, LIPS, HAIR, FACEHAIR, STUBBLE, LAMIAN_TAIL, OLDGREY, MUTCOLORS)
+	use_skintones = 1
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	possible_ages = ALL_AGES_LIST
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mt.dmi' // lips
@@ -36,11 +39,13 @@
 		OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
 		OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,0), \
 		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
+		OFFSET_BREASTS = list(0,1), \
 		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
 		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
 		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,0), OFFSET_BACK_F = list(0,-1), \
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		OFFSET_BREASTS_F = list(0,-1), \
 		)
 	inherent_traits = list(TRAIT_LONGSTRIDER, TRAIT_VENOMOUS, TRAIT_LAMIAN_TAIL, TRAIT_CALTROPIMMUNE)
 	race_bonus = list(STAT_STRENGTH = 1, STAT_SPEED = -1)
@@ -146,7 +151,11 @@
 
 	allowed_taur_types = list(
 		/obj/item/bodypart/taur/lamia,
-		// /obj/item/bodypart/taur/mermaid, ???
+		/obj/item/bodypart/taur/lamiastriped,
+		/obj/item/bodypart/taur/fatlamia,
+		/obj/item/bodypart/taur/mermaid,
+		/obj/item/bodypart/taur/orca,
+		/obj/item/bodypart/taur/tentacle
 	)
 	forced_taur = TRUE
 
@@ -230,38 +239,6 @@
 		"Teal" = SKIN_COLOR_TEAL,
 		"Hadal" = SKIN_COLOR_HADAL,
 		"Bone" = SKIN_COLOR_BONE,
-	)
-
-/datum/species/lamia/get_skin_list_tooltip() // nothing ever matters
-	return list(
-		"Ghost <span style='border: 1px solid #161616; background-color: #ffffff;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>ffffff</b>" = SKIN_COLOR_GHOST,
-		"Grenzel Woods <span style='border: 1px solid #161616; background-color: #fff0e9;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>fff0e9</b>" = SKIN_COLOR_GRENZEL_WOODS,
-		"Dandelion Creek <span style='border: 1px solid #161616; background-color: #ffe0d1;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>ffe0d1</b>" = SKIN_COLOR_DANDELION_CREEK,
-		"Roseveil <span style='border: 1px solid #161616; background-color: #fcccb3;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>fcccb3</b>" = SKIN_COLOR_ROSEVEIL,
-		"Azuregrove <span style='border: 1px solid #161616; background-color: #edc6b3;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>edc6b3</b>" = SKIN_COLOR_AZUREGROVE,
-		"Arborshome <span style='border: 1px solid #161616; background-color: #e2b9a3;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>e2b9a3</b>" = SKIN_COLOR_ARBORSHOME,
-		"Almondvalle <span style='border: 1px solid #161616; background-color: #c9a893;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>c9a893</b>" = SKIN_COLOR_ALMONDVALLE,
-		"Walnut Woods <span style='border: 1px solid #161616; background-color: #ba9882;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>ba9882</b>" = SKIN_COLOR_WALNUT_WOODS,
-		"Lotus Coast <span style='border: 1px solid #161616; background-color: #eae1C8;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>eae1C8</b>" = SKIN_COLOR_LOTUS_COAST,
-		"Etruscan Swamps <span style='border: 1px solid #161616; background-color: #d9a284;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>d9a284</b>" = SKIN_COLOR_ETRUSCAN_SWAMPS,
-		"Shalvine Forests <span style='border: 1px solid #161616; background-color: #ac8369;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>ac8369</b>" = SKIN_COLOR_SHALVINE_FORESTS,
-		"Lalvestine Thickets <span style='border: 1px solid #161616; background-color: #9c6f52;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>9c6f52</b>" = SKIN_COLOR_LALVE_STEPPES,
-		"Timberborn <span style='border: 1px solid #161616; background-color: #5d4c41;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>5d4c41</b>" = SKIN_COLOR_TIMBERBORN,
-		"Ebon Coverts <span style='border: 1px solid #161616; background-color: #4e3729;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>4e3729</b>"	= SKIN_COLOR_NALEDI_COAST,
-		"Ochre <span style='border: 1px solid #161616; background-color: #968127;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>968127</b>" = SKIN_COLOR_OCHRE,
-		"Meadow <span style='border: 1px solid #161616; background-color: #909630;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>909630</b>" = SKIN_COLOR_MEADOW,
-		"Olive <span style='border: 1px solid #161616; background-color: #6b8a08;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>6b8a08</b>" = SKIN_COLOR_OLIVE,
-		"Green <span style='border: 1px solid #161616; background-color: #4c6835;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>4c6835</b>" = SKIN_COLOR_GREEN,
-		"Moss <span style='border: 1px solid #161616; background-color: #43533e;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>43533e</b>" = SKIN_COLOR_MOSS,
-		"Taiga <span style='border: 1px solid #161616; background-color: #373f29;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>373f29</b>" = SKIN_COLOR_TAIGA,
-		"Bronze <span style='border: 1px solid #161616; background-color: #725237;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>725237</b>" = SKIN_COLOR_BRONZE,
-		"Red <span style='border: 1px solid #161616; background-color: #87312a;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>87312a</b>" = SKIN_COLOR_RED,
-		"Frost <span style='border: 1px solid #161616; background-color: #6486b0;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>6486b0</b>" = SKIN_COLOR_FROST,
-		"Abyss <span style='border: 1px solid #161616; background-color: #2a6986;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>2a6986</b>" = SKIN_COLOR_ABYSS,
-		"Abyssal <span style='border: 1px solid #161616; background-color: #22577a;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>22577a</b>" = SKIN_COLOR_ABYSSAL,
-		"Teal <span style='border: 1px solid #161616; background-color: #008080;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>008080</b>" = SKIN_COLOR_TEAL,
-		"Hadal <span style='border: 1px solid #161616; background-color: #24353d;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>24353d</b>" = SKIN_COLOR_HADAL,
-		"Bone <span style='border: 1px solid #161616; background-color: #e3dac9;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <b>e3dac9</b>" = SKIN_COLOR_BONE,
 	)
 
 /datum/species/lamia/random_name(gender,unique,lastname)

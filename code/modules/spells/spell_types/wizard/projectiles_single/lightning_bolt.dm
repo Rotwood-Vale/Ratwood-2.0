@@ -11,6 +11,7 @@
 	chargedrain = 1
 	chargetime = 15
 	recharge_time = 15 SECONDS
+	human_req = TRUE
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	movement_interrupt = FALSE

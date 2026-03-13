@@ -19,6 +19,7 @@
 	light_color = "#ff13d8ff"
 	var/list/held_items = list()
 	locked = FALSE
+	lockid = "nightman"
 	var/budget = 0
 	var/secret_budget = 0
 	var/recent_payments = 0
@@ -28,7 +29,7 @@
 /obj/structure/roguemachine/drugmachine/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/roguekey))
 		var/obj/item/roguekey/K = P
-		if(K.lockid == "nightman")
+		if(K.lockid == lockid)
 			locked = !locked
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 			update_icon()
@@ -37,13 +38,17 @@
 			to_chat(user, span_warning("Wrong key."))
 			return
 	if(istype(P, /obj/item/storage/keyring))
-		var/obj/item/storage/keyring/K = P
-		for(var/obj/item/roguekey/KE in K.keys)
-			if(KE.lockid == "nightman")
+		var/right_key = FALSE
+		for(var/obj/item/roguekey/KE in P.contents)
+			if(KE.lockid == lockid)
+				right_key = TRUE
 				locked = !locked
 				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 				update_icon()
 				return attack_hand(user)
+		if(!right_key)
+			to_chat(user, span_warning("Wrong key."))
+			return
 	if(istype(P, /obj/item/roguecoin/aalloy))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
@@ -65,7 +70,7 @@
 			if(drugrade_flags & DRUGRADE_MONEYB)
 				amt = recent_payments * 0.50
 			recent_payments = 0
-			send_ooc_note("<b>Income from PURITY:</b> [amt]", job = "Nightmaster")
+			send_ooc_note("<b>Income from PURITY:</b> [amt]", job = "Bathmaster")
 			secret_budget += amt
 			last_payout = world.time
 
@@ -85,11 +90,14 @@
 				full_price = held_items[O]["PRICE"]
 			if(budget >= full_price)
 				budget -= full_price
+				record_round_statistic(STATS_PURITY_VALUE_SPENT, full_price)
 				recent_payments += held_items[O]["PRICE"]
 				if(!(drugrade_flags & DRUGRADE_NOTAX))
 					SStreasury.give_money_treasury(tax_amt, "purity import tax")
 					record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, tax_amt)
-					GLOB.azure_round_stats[STATS_TAXES_COLLECTED] += tax_amt
+					record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
+				else
+					record_round_statistic(STATS_TAXES_EVADED, tax_amt)
 			else
 				say("Not enough!")
 				return
@@ -193,7 +201,7 @@
 
 
 	var/mob/living/carbon/human/H = user
-	if(H.job == "Nightmaster")
+	if(H.job == "Bathmaster")
 		if(canread)
 			contents += "<a href='?src=[REF(src)];secrets=1'>Secrets</a><BR>"
 			contents += "Mammon Washing: [recent_payments] -- Your cut, Master! [secret_budget]<BR>"
@@ -242,7 +250,7 @@
 	STOP_PROCESSING(SSroguemachine, src)
 	return ..()
 
-/obj/structure/roguemachine/drugmachine/Initialize()
+/obj/structure/roguemachine/drugmachine/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSroguemachine, src)
 	update_icon()
@@ -253,20 +261,17 @@
 	held_items[/obj/item/clothing/mask/cigarette/rollie/mentha] = list("PRICE" = rand(6,11),"NAME" = "mentha zig")
 	held_items[/obj/item/clothing/mask/cigarette/rollie/nicotine] = list("PRICE" = rand(5,10),"NAME" = "zig")
 	held_items[/obj/item/storage/fancy/shhig] = list("PRICE" = rand(40,60), "NAME" = "Shhig brand premium zigs")
+	held_items[/obj/item/alch/transisdust] = list("PRICE" = rand(80,120), "NAME" = "sui dust")
 	// azure peak addition start - lipstick
 	held_items[/obj/item/azure_lipstick] = list("PRICE" = rand(33,50),"NAME" = "red lipstick")
 	held_items[/obj/item/azure_lipstick/jade] = list("PRICE" = rand(33,50),"NAME" = "jade lipstick")
 	held_items[/obj/item/azure_lipstick/purple] = list("PRICE" = rand(33,50),"NAME" = "purple lipstick")
 	held_items[/obj/item/azure_lipstick/black] = list("PRICE" = rand(33,50),"NAME" = "black lipstick")
+	//azure peak addition - zigbox
+	held_items[/obj/item/quiver/zigs] = list("PRICE" = rand(5,10), "NAME" = "zigbox, empty")
+	held_items[/obj/item/reagent_containers/glass/bottle/alchemical/fermented_crab] = list("PRICE" = rand(50,70), "NAME" = "fermented crab")
 	// azure peak addition end
 	held_items[/obj/item/reagent_containers/glass/bottle/rogue/emberwine] = list("PRICE" = rand(100,140),"NAME" = "unlabeled emberwine")
-/*	held_items[/obj/item/reagent_containers/glass/bottle/rogue/wine] = list("PRICE" = rand(35,77),"NAME" = "vino")
-	held_items[/obj/item/rogueweapon/huntingknife/idagger] = list("PRICE" = rand(20,33),"NAME" = "kinfe")
-	held_items[/obj/item/clothing/cloak/half] = list("PRICE" = rand(103,110),"NAME" = "black halfcloak")
-	held_items[/obj/item/clothing/gloves/roguetown/fingerless] = list("PRICE" = rand(16,31),"NAME" = "gloves with 6 holes")
-	held_items[/obj/item/clothing/head/roguetown/roguehood/black] = list("PRICE" = rand(43,45),"NAME" = "black hood")
-	held_items[/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow] = list("PRICE" = rand(58,88),"NAME" = "crossed bow")
-	held_items[/obj/item/quiver/bolts] = list("PRICE" = rand(33,57),"NAME" = "quiver w/ bolts")*/
 
 #undef DRUGRADE_MONEYA
 #undef DRUGRADE_MONEYB

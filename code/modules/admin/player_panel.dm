@@ -80,7 +80,9 @@
 					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];subtlemessage="+ref+"'>SM</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow="+ref+"'>FLW</a> - "
+					body += "<a href='?_src_=holder;[HrefToken()];cursemenu="+ckey+"'>CRS</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];individuallog="+ref+"'>LOGS</a><br>"
+
 					if(antagonist > 0)
 						body += "<font size='2'><a href='?_src_=holder;[HrefToken()];check_antagonist=1'><font color='red'><b>Antagonist</b></font></a></font>";
 
@@ -247,6 +249,7 @@
 				else
 					M_job = "Ghost"
 
+			M_job = html_encode(M_job) // Encode so name like Magician's Apprentice don't break player panel
 			var/M_name = html_encode(M.name)
 			var/M_rname = html_encode(M.real_name)
 			var/M_key = html_encode(M.key)

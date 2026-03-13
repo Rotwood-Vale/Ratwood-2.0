@@ -33,6 +33,7 @@
 	)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	surgery_flags = SURGERY_DISLOCATED
+	surgery_flags = SURGERY_CONSTRUCT
 	ignore_clothes = TRUE
 	skill_min = SKILL_LEVEL_APPRENTICE
 	skill_median = SKILL_LEVEL_JOURNEYMAN

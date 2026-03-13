@@ -6,16 +6,24 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	var/path
 	var/donoritem			//autoset on new if null
 	var/list/ckeywhitelist
+	var/triumph_cost
+	var/keep_loadout_stats = FALSE	// If TRUE, item keeps default values (not nerfed)
 
 /datum/loadout_item/New()
 	if(isnull(donoritem))
 		if(ckeywhitelist)
 			donoritem = TRUE
+	if (triumph_cost)
+		desc += "Costs [triumph_cost] Points."
 
 /datum/loadout_item/proc/donator_ckey_check(key)
 	if(ckeywhitelist && ckeywhitelist.Find(key))
 		return TRUE
 	return
+
+/datum/loadout_item/proc/nobility_check(client/C)
+	// Override this in subtypes that require nobility
+	return TRUE
 
 //Miscellaneous
 
@@ -27,9 +35,171 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Farkle Dice Container"
 	path = /obj/item/storage/pill_bottle/dice/farkle
 
+/datum/loadout_item/gaming_dice
+	name = "Gaming Dice Container"
+	path = /obj/item/storage/pill_bottle/dice
+
 /datum/loadout_item/tarot_deck
 	name = "Tarot Deck"
 	path = /obj/item/toy/cards/deck/tarot
+
+/datum/loadout_item/custom_book
+	name = "Custom Book"
+	path = /obj/item/book/rogue/loadoutbook
+
+/datum/loadout_item/hand_mirror
+	name = "Hand Mirror"
+	path = /obj/item/handmirror
+
+//TOOLS
+
+/datum/loadout_item/bauernwehr
+	name = "Bauernwehr"
+	path = /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr
+	triumph_cost = 3
+
+/datum/loadout_item/broom
+	name = "broom"
+	path = /obj/item/broom
+	triumph_cost = 1
+
+/datum/loadout_item/soap
+	name = "soap"
+	path = /obj/item/soap
+	triumph_cost = 3
+
+/datum/loadout_item/candle
+	name = "candle"
+	path = /obj/item/candle/yellow
+	triumph_cost = 1
+
+/datum/loadout_item/keyring
+	name = "keyring"
+	path = /obj/item/storage/keyring
+	triumph_cost = 3
+
+/datum/loadout_item/wooden_bowl
+	name = "bowl"
+	path = /obj/item/reagent_containers/glass/bowl
+	triumph_cost = 1
+
+/datum/loadout_item/wooden_cup
+	name = "cup"
+	path = /obj/item/reagent_containers/glass/cup/wooden
+	triumph_cost = 1
+
+/datum/loadout_item/bottle
+	name = "bottle"
+	path = /obj/item/reagent_containers/glass/bottle/rogue
+	triumph_cost = 1
+
+/datum/loadout_item/waterskin
+	name = "Waterskin"
+	path = /obj/item/reagent_containers/glass/bottle/waterskin
+	triumph_cost = 2
+
+/datum/loadout_item/flint
+	name = "Flint"
+	path = /obj/item/flint
+	triumph_cost = 2
+
+/datum/loadout_item/aaneedle
+	name = "Thorn Needle"
+	path = /obj/item/needle/thorn
+	triumph_cost = 2
+
+/datum/loadout_item/bandage_roll
+	name = "Roll of Bandages"
+	path = /obj/item/natural/bundle/cloth/bandage/full
+	triumph_cost = 3
+
+/datum/loadout_item/sack
+	name = "Sack"
+	path = /obj/item/storage/roguebag
+	triumph_cost = 2
+
+//ANCIENT TOOLS (Ancient Alloy)
+
+/datum/loadout_item/ancient_hammer
+	name = "Ancient Hammer"
+	path = /obj/item/rogueweapon/hammer/aalloy
+	triumph_cost = 3
+
+/datum/loadout_item/ancient_tongs
+	name = "Ancient Tongs"
+	path = /obj/item/rogueweapon/tongs/aalloy
+	triumph_cost = 3
+
+/datum/loadout_item/ancient_pick
+	name = "Ancient Pick"
+	path = /obj/item/rogueweapon/pick/aalloy
+	triumph_cost = 3
+
+/datum/loadout_item/ancient_shovel
+	name = "Ancient Shovel"
+	path = /obj/item/rogueweapon/shovel/aalloy
+	triumph_cost = 3
+
+/datum/loadout_item/ancient_hoe
+	name = "Ancient Hoe"
+	path = /obj/item/rogueweapon/hoe/aalloy
+	triumph_cost = 3
+
+/datum/loadout_item/ancient_sickle
+	name = "Ancient Sickle"
+	path = /obj/item/rogueweapon/sickle/aalloy
+	triumph_cost = 3
+
+/datum/loadout_item/ancient_thresher
+	name = "Ancient Thresher"
+	path = /obj/item/rogueweapon/thresher/aalloy
+	triumph_cost = 3
+
+/datum/loadout_item/ancient_pitchfork
+	name = "Ancient Pitchfork"
+	path = /obj/item/rogueweapon/pitchfork/aalloy
+	triumph_cost = 3
+
+//COOKWARE
+/datum/loadout_item/ancient_pan
+	name = "Ancient Pan"
+	path = /obj/item/cooking/pan/aalloy
+	triumph_cost = 2
+
+/datum/loadout_item/ancient_pot
+	name = "Ancient Pot"
+	path = /obj/item/reagent_containers/glass/bucket/pot/aalloy
+	triumph_cost = 2
+
+/datum/loadout_item/ancient_platter
+	name = "Ancient Platter"
+	path = /obj/item/cooking/platter/aalloy
+	triumph_cost = 2
+
+/datum/loadout_item/ancient_bowl
+	name = "Ancient Bowl"
+	path = /obj/item/reagent_containers/glass/bowl/aalloy
+	triumph_cost = 2
+
+/datum/loadout_item/ancient_mug
+	name = "Ancient Mug"
+	path = /obj/item/reagent_containers/glass/cup/aalloymug
+	triumph_cost = 2
+
+/datum/loadout_item/ancient_goblet
+	name = "Ancient Goblet"
+	path = /obj/item/reagent_containers/glass/cup/aalloygob
+	triumph_cost = 2
+
+/datum/loadout_item/ancient_spoon
+	name = "Ancient Spoon"
+	path = /obj/item/kitchen/spoon/aalloy
+	triumph_cost = 2
+
+/datum/loadout_item/ancient_fork
+	name = "Ancient Fork"
+	path = /obj/item/kitchen/fork/aalloy
+	triumph_cost = 2
 
 //HATS
 /datum/loadout_item/shalal
@@ -39,6 +209,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/tricorn
 	name = "Tricorn Hat"
 	path = /obj/item/clothing/head/roguetown/helmet/tricorn
+
+/datum/loadout_item/maidband
+	name = "Maid's Headband"
+	path = /obj/item/clothing/head/roguetown/maidband
 
 /datum/loadout_item/nurseveil
 	name = "Nurse's Veil"
@@ -59,6 +233,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/bardhat
 	name = "Bard Hat"
 	path = /obj/item/clothing/head/roguetown/bardhat
+
+/datum/loadout_item/duelhat
+	name = "Duelist Hat"
+	path = /obj/item/clothing/head/roguetown/duelisthat
 
 /datum/loadout_item/fancyhat
 	name = "Fancy Hat"
@@ -107,6 +285,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/papakha
 	name = "Papakha"
 	path = /obj/item/clothing/head/roguetown/papakha
+
+/datum/loadout_item/rosa_crown
+	name = "Rosa Crown"
+	path = /obj/item/flowercrown/rosa
+
+/datum/loadout_item/salvia_crown
+	name = "Salvia Crown"
+	path = /obj/item/flowercrown/salvia
 
 //CLOAKS
 /datum/loadout_item/tabard
@@ -169,6 +355,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Halfcloak"
 	path = /obj/item/clothing/cloak/half
 
+/datum/loadout_item/duelcape
+	name = "Duelist Cape"
+	path = /obj/item/clothing/cloak/half/duelistcape
+
 /datum/loadout_item/ridercloak
 	name = "Rider Cloak"
 	path = /obj/item/clothing/cloak/half/rider
@@ -204,6 +394,37 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/wicker_cloak
 	name = "Wicker Cloak"
 	path = /obj/item/clothing/cloak/wickercloak
+/datum/loadout_item/tabardscarlet
+	name = "Tabard, Scarlet"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/tabardscarlet
+
+/datum/loadout_item/shroudscarlet
+	name = "Tabard's Shroud, Scarlet"
+	path = /obj/item/clothing/head/roguetown/roguehood/shroudscarlet
+
+/datum/loadout_item/tabardblack
+	name = "Tabard, Black"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/tabardblack
+
+/datum/loadout_item/shroudblack
+	name = "Tabard's Shroud, Black"
+	path = /obj/item/clothing/head/roguetown/roguehood/shroudblack
+
+/datum/loadout_item/tabardwhite
+	name = "Tabard, White"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/tabardwhite
+
+/datum/loadout_item/shroudwhite
+	name = "Tabard's Shroud, White"
+	path = /obj/item/clothing/head/roguetown/roguehood/shroudwhite
+
+/datum/loadout_item/poncho
+	name = "Poncho"
+	path = /obj/item/clothing/cloak/poncho
+
+/datum/loadout_item/guardhood
+	name = "Guard's Hood"
+	path = /obj/item/clothing/cloak/stabard/guardhood
 
 //SHOES
 /datum/loadout_item/darkboots
@@ -250,6 +471,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Raised Sandals"
 	path = /obj/item/clothing/shoes/roguetown/armor/rumaclan
 
+/datum/loadout_item/simpleshoes
+	name = "Simple Shoes"
+	path = /obj/item/clothing/shoes/roguetown/simpleshoes
+
 //SHIRTS
 /datum/loadout_item/longcoat
 	name = "Longcoat"
@@ -258,6 +483,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/robe
 	name = "Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe
+
+/datum/loadout_item/phys_robe
+	name = "Physicker's Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/phys
+
+/datum/loadout_item/feld_robe
+	name = "Feldsher's Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/feld
 
 /datum/loadout_item/formalsilks
 	name = "Formal Silks"
@@ -291,6 +524,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Low-cut Tunic"
 	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/lowcut
 
+/datum/loadout_item/tribalrag
+	name = "Tribal Rag"
+	path = /obj/item/clothing/suit/roguetown/shirt/tribalrag
+
 /datum/loadout_item/tunic
 	name = "Tunic"
 	path = /obj/item/clothing/suit/roguetown/shirt/tunic
@@ -298,6 +535,18 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/stripedtunic
 	name = "Striped Tunic"
 	path = /obj/item/clothing/suit/roguetown/armor/workervest
+
+/datum/loadout_item/formalshirt
+	name = "Formal Shirt"
+	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
+
+/datum/loadout_item/servantdress
+	name = "Dress, Servant"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/maid/servant
+
+/datum/loadout_item/maiddress
+	name = "Dress, Maid"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/maid
 
 /datum/loadout_item/dress
 	name = "Dress"
@@ -379,6 +628,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "White Foreign Shirt"
 	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
 //PANTS
+/datum/loadout_item/loincloth
+	name = "Loincloth"
+	path = /obj/item/clothing/under/roguetown/loincloth
+
 /datum/loadout_item/tights
 	name = "Cloth Tights"
 	path = /obj/item/clothing/under/roguetown/tights/black
@@ -387,6 +640,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Leather Tights"
 	path = /obj/item/clothing/under/roguetown/trou/leathertights
 
+/datum/loadout_item/formalshorts
+	name = "Formal Shorts"
+	path = /obj/item/clothing/under/roguetown/trou/formal/shorts
+
+/datum/loadout_item/formaltrousers
+	name = "Formal Trousers"
+	path = /obj/item/clothing/under/roguetown/trou/formal
+
 /datum/loadout_item/trou
 	name = "Work Trousers"
 	path = /obj/item/clothing/under/roguetown/trou
@@ -394,6 +655,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/leathertrou
 	name = "Leather Trousers"
 	path = /obj/item/clothing/under/roguetown/trou/leather
+
+/datum/loadout_item/leathershorts
+	name = "Leather Shorts"
+	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
 
 /datum/loadout_item/sailorpants
 	name = "Seafaring Pants"
@@ -404,14 +669,13 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/under/roguetown/skirt
 
 //ACCESSORIES
-
 /datum/loadout_item/wrappings
 	name = "Handwraps"
 	path = /obj/item/clothing/wrists/roguetown/wrappings
 
-/datum/loadout_item/loincloth
-	name = "Loincloth"
-	path = /obj/item/clothing/under/roguetown/loincloth
+/datum/loadout_item/allwrappings
+	name = "Cloth Wrappings"
+	path = /obj/item/clothing/wrists/roguetown/allwrappings
 
 /datum/loadout_item/spectacles
 	name = "Spectacles"
@@ -425,9 +689,17 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Fingerless Gloves"
 	path = /obj/item/clothing/gloves/roguetown/fingerless
 
+/datum/loadout_item/bandages
+	name = "Bandages, Gloves"
+	path = /obj/item/clothing/gloves/roguetown/bandages
+
 /datum/loadout_item/exoticsilkbelt
 	name = "Exotic Silk Belt"
 	path = /obj/item/storage/belt/rogue/leather/exoticsilkbelt
+
+/datum/loadout_item/butlersuspenders
+	name = "Suspenders"
+	path = /obj/item/storage/belt/rogue/leather/suspenders/butler
 
 /datum/loadout_item/ragmask
 	name = "Rag Mask"
@@ -437,9 +709,9 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Halfmask"
 	path = /obj/item/clothing/mask/rogue/shepherd
 
-/datum/loadout_item/dendormask
-	name = "Briar Mask"
-	path = /obj/item/clothing/head/roguetown/dendormask
+/datum/loadout_item/golden_half_mask
+	name = "Golden Half-Mask"
+	path = /obj/item/clothing/mask/rogue/lordmask
 
 /datum/loadout_item/exoticsilkmask
 	name = "Exotic Silk Mask"
@@ -469,6 +741,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Cloth Blindfold"
 	path = /obj/item/clothing/mask/rogue/blindfold
 
+/datum/loadout_item/fake_blindfold
+	name = "Fake Blindfold"
+	path = /obj/item/clothing/mask/rogue/blindfold/fake
+
 /datum/loadout_item/bases
 	name = "Cloth military skirt"
 	path = /obj/item/storage/belt/rogue/leather/battleskirt
@@ -476,6 +752,57 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/fauldedbelt
 	name = "Belt with faulds"
 	path = /obj/item/storage/belt/rogue/leather/battleskirt/faulds
+
+/datum/loadout_item/tri_cloth_belt
+	name = "Cloth Belt"
+	path = /obj/item/storage/belt/rogue/leather/cloth
+
+/datum/loadout_item/tri_kazengun_scabbard
+	name = "Kazengun Cerimonial Scabbard"
+	path = /obj/item/rogueweapon/scabbard/sword/kazengun/noparry/loadout
+	triumph_cost = 3
+
+/datum/loadout_item/tri_kazengun_scabbard/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
+/datum/loadout_item/tri_shalal_belt
+	name = "Shalal Belt"
+	path = /obj/item/storage/belt/rogue/leather/shalal
+
+// BELTS
+/datum/loadout_item/leather
+	name = "Leather Belt"
+	path = /obj/item/storage/belt/rogue/leather
+
+/datum/loadout_item/leather_black
+	name = "Black Leather Belt"
+	path = /obj/item/storage/belt/rogue/leather/black
+
+/datum/loadout_item/belt_cloth
+	name = "Cloth Sash"
+	path = /obj/item/storage/belt/rogue/leather/sash
+
+/datum/loadout_item/belt_rope
+	name = "Rope Belt"
+	path = /obj/item/storage/belt/rogue/leather/rope
 
 /datum/loadout_item/psicross
 	name = "Psydonian Cross"
@@ -521,41 +848,37 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Amulet of Eora"
 	path = /obj/item/clothing/neck/roguetown/psicross/eora
 
-/datum/loadout_item/psicross/undivided
-	name = "Amulet of Ten"
-	path = /obj/item/clothing/neck/roguetown/psicross/undivided
-
 /datum/loadout_item/psicross/zizo
-	name = "Decrepit Zcross"
-	path = /obj/item/clothing/neck/roguetown/zcross/aalloy
+	name = "Ancient Zcross"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
 
 /datum/loadout_item/wedding_band
 	name = "silver wedding band"
 	path = /obj/item/clothing/ring/band
 
 /datum/loadout_item/chaperon
-    name = "Chaperon (Normal)"
-    path = /obj/item/clothing/head/roguetown/chaperon
+	name = "Chaperon (Normal)"
+	path = /obj/item/clothing/head/roguetown/chaperon
 
 /datum/loadout_item/chaperon/alt
-    name = "Chaperon (Alt)"
-    path = /obj/item/clothing/head/roguetown/chaperon/greyscale
+	name = "Chaperon (Alt)"
+	path = /obj/item/clothing/head/roguetown/chaperon/greyscale
 
 /datum/loadout_item/chaperon/burgher
-    name = "Noble's Chaperon"
-    path = /obj/item/clothing/head/roguetown/chaperon/noble
+	name = "Noble's Chaperon"
+	path = /obj/item/clothing/head/roguetown/chaperon/noble
 
 /datum/loadout_item/jesterhat
-    name = "Jester's Hat"
-    path = /obj/item/clothing/head/roguetown/jester
+	name = "Jester's Hat"
+	path = /obj/item/clothing/head/roguetown/jester
 
 /datum/loadout_item/jestertunick
-    name = "Jester's Tunick"
-    path = /obj/item/clothing/suit/roguetown/shirt/jester
+	name = "Jester's Tunick"
+	path = /obj/item/clothing/suit/roguetown/shirt/jester
 
 /datum/loadout_item/jestershoes
-    name = "Jester's Shoes"
-    path = /obj/item/clothing/shoes/roguetown/jester
+	name = "Jester's Shoes"
+	path = /obj/item/clothing/shoes/roguetown/jester
 
 /datum/loadout_item/cotehardie
 	name = "Fitted Coat"
@@ -565,7 +888,972 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Zizo Cross"
 	path = /obj/item/clothing/neck/roguetown/zcross/iron
 
+// NECKLACES & AMULETS
+/datum/loadout_item/skull_amulet
+	name = "Skull Amulet"
+	path = /obj/item/clothing/neck/roguetown/skullamulet
+
+/datum/loadout_item/collar_feldcollar
+	name = "Feldcollar"
+	path = /obj/item/clothing/neck/roguetown/collar/feldcollar
+
+/datum/loadout_item/collar_surgcollar
+	name = "Surgcollar"
+	path = /obj/item/clothing/neck/roguetown/collar/surgcollar
+
+/datum/loadout_item/scarf
+	name = "Scarf"
+	path = /obj/item/clothing/head/roguetown/scarf
+
+// MASKS
+/datum/loadout_item/skullmask
+	name = "Skull Mask"
+	path = /obj/item/clothing/mask/rogue/skullmask
+
+/datum/loadout_item/physician_mask
+	name = "Physician Mask"
+	path = /obj/item/clothing/mask/rogue/physician
+
+/datum/loadout_item/kitsune_mask
+	name = "Old Kitsune Mask"
+	path = /obj/item/clothing/mask/rogue/facemask/yoruku_kitsune
+
+/datum/loadout_item/oni_mask
+	name = "Old Oni Mask"
+	path = /obj/item/clothing/mask/rogue/facemask/yoruku_oni
+
+/datum/loadout_item/naledi_lordmask
+	name = "Old Naledi Mask"
+	path = /obj/item/clothing/mask/rogue/lordmask/naledi
+
+// CLOAKS
+/datum/loadout_item/darkcloak
+	name = "Dark Cloak"
+	path = /obj/item/clothing/cloak/darkcloak
+
+/datum/loadout_item/apron
+	name = "Apron"
+	path = /obj/item/clothing/cloak/apron
+
+/datum/loadout_item/apron_blacksmith
+	name = "Blacksmith Apron"
+	path = /obj/item/clothing/cloak/apron/blacksmith
+
+/datum/loadout_item/apron_waist
+	name = "Waist Apron"
+	path = /obj/item/clothing/cloak/apron/waist
+
+/datum/loadout_item/apron_cook
+	name = "Cook's Apron"
+	path = /obj/item/clothing/cloak/apron/cook
+
+/datum/loadout_item/black_cloak
+	name = "Fur Overcloak"
+	path = /obj/item/clothing/cloak/black_cloak
+
+/datum/loadout_item/tribal_cloak
+	name = "Tribal Cloak"
+	path = /obj/item/clothing/cloak/tribal
+
+/datum/loadout_item/maidapron
+	name = "Maid's Apron"
+	path = /obj/item/clothing/cloak/apron/maid
+
+/datum/loadout_item/battlenun_cloak
+	name = "Nun Cloak"
+	path = /obj/item/clothing/cloak/battlenun
+
+/datum/loadout_item/hierophant_cloak
+	name = "Hierophant Cloak"
+	path = /obj/item/clothing/cloak/hierophant
+
+/datum/loadout_item/forrester_snow
+	name = "Snow Forrester Cloak"
+	path = /obj/item/clothing/cloak/forrestercloak/snow
+
+/datum/loadout_item/eastcloak1
+	name = "Eastern Cloak"
+	path = /obj/item/clothing/cloak/eastcloak1
+
+/datum/loadout_item/kazengun_cloak
+	name = "Jinbaori"
+	path = /obj/item/clothing/cloak/kazengun
+
+// SHOES
+/datum/loadout_item/sandals
+	name = "Sandals"
+	path = /obj/item/clothing/shoes/roguetown/sandals
+
+// NECK/GORGETS
+/datum/loadout_item/forlorn_collar
+	name = "Old Forlorn Collar"
+	path = /obj/item/clothing/neck/roguetown/gorget/forlorncollar
+
+// EASTERN CLOTHING
+/datum/loadout_item/captain_robe
+	name = "Eastern Flowery Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe
+
+/datum/loadout_item/mentor_suit
+	name = "Eastern Mentor Suit"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
+
+/datum/loadout_item/crafteast
+	name = "Eastern Craft Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast
+
+/datum/loadout_item/doboeast
+	name = "Eastern Dobo Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast
+
+// HEADWEAR
+/datum/loadout_item/nochood
+	name = "Noc Hood"
+	path = /obj/item/clothing/head/roguetown/nochood
+
+/datum/loadout_item/dendormask
+	name = "Briar Mask"
+	path = /obj/item/clothing/head/roguetown/dendormask
+
+/datum/loadout_item/necrahood
+	name = "Necra Hood"
+	path = /obj/item/clothing/head/roguetown/necrahood
+
+/datum/loadout_item/physhood
+	name = "Pestra Hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/phys
+
+// ROBES - ASTRATA
+
+/datum/loadout_item/eoramask
+	name = "Eora Mask"
+	path = /obj/item/clothing/head/roguetown/eoramask
+
+/datum/loadout_item/antlerhood
+	name = "Antler Hood"
+	path = /obj/item/clothing/head/roguetown/antlerhood
+
+/datum/loadout_item/briarthorns
+	name = "Briar Thorns Headpiece"
+	path = /obj/item/clothing/head/roguetown/padded/briarthorns
+
+/datum/loadout_item/mentorhat
+	name = "conical mentor hat"
+	path = /obj/item/clothing/head/roguetown/mentorhat
+
+// ROBES - ASTRATA
+/datum/loadout_item/robe_astrata
+	name = "Sun Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/astrata
+
+/datum/loadout_item/hood_astrata
+	name = "Sun Hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/astrata
+
+// ROBES - NOC
+/datum/loadout_item/robe_noc
+	name = "Moon Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/noc
+
+// ROBES - DENDOR
+/datum/loadout_item/robe_dendor
+	name = "Briar Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
+
+// ROBES - ABYSSOR
+/datum/loadout_item/robe_abyssor
+	name = "Depths Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
+
+/datum/loadout_item/hood_abyssor
+	name = "Depths Hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/abyssor
+
+// ROBES - NECRA
+/datum/loadout_item/robe_necra
+	name = "Mourning Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/necra
+
+// ROBES - RAVOX
+/datum/loadout_item/hood_ravox
+	name = "Ravox Tabard Gorget"
+	path = /obj/item/clothing/head/roguetown/roguehood/ravoxgorget
+
+// ROBES - EORA
+/datum/loadout_item/robe_eora
+	name = "Eoran Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/eora
+
+//==========================
+// TRIUMPH LOADOUT ITEMS
+//==========================
+//
+// IMPORTANT INFORMATION ABOUT LOADOUT ITEMS:
+// All items selected from the loadout system receive the following automatic modifications:
+// - ARMOR: Set to ARMOR_PADDED_BAD (basic padded values) and ARMOR_INT_CHEST_LIGHT_BASE max integrity
+// - ARMOR CLASS: Set to LIGHT for all armor pieces
+// - SELL PRICE: Set to 0 (cannot be sold for profit)
+// - CRIT PREVENTION: Removed from clothing items (prevent_crits set to null)
+// - WEAPON DAMAGE: Reduced by 30% (force reduced to 70% of original)
+// - WEAPON DEFENSE: Reduced by 50% (wdefense halved)
+// - SMELT RESULT: Set to ash (cannot be smelted for materials)
+// - EXAMINATION: Items show as reproductions when examined
+//
+// These modifications ensure loadout items provide utility and customization
+// without bypassing game progression or economy balance.
+// without bypassing game progression or economy balance.
+//
+//─────────────────────────────────────────────────────────────
+// 2 TRIUMPH - Mundane Tools & Basic Items
+//─────────────────────────────────────────────────────────────
+
+// TOOLS & OBJECTS
+/datum/loadout_item/tri_shovel
+	name = "Shovel"
+	path = /obj/item/rogueweapon/shovel
+	triumph_cost = 2
+
+/datum/loadout_item/tri_sickle
+	name = "Sickle"
+	path = /obj/item/rogueweapon/sickle
+	triumph_cost = 2
+
+// BLUNT WEAPONS
+/datum/loadout_item/tri_woodclub
+	name = "Wooden Club"
+	path = /obj/item/rogueweapon/mace/woodclub
+	triumph_cost = 2
+	keep_loadout_stats = TRUE
+
+// AXES
+/datum/loadout_item/tri_bone_axe
+	name = "Bone Axe"
+	path = /obj/item/rogueweapon/stoneaxe/boneaxe
+	triumph_cost = 2
+	keep_loadout_stats = TRUE
+
+/datum/loadout_item/ancient_axe
+	name = "Ancient Axe"
+	path = /obj/item/rogueweapon/stoneaxe/woodcut/aaxe
+	triumph_cost = 4
+
+// SWORDS
+/datum/loadout_item/tri_stone_sword
+	name = "Stone Sword"
+	path = /obj/item/rogueweapon/sword/stone
+	triumph_cost = 2
+	keep_loadout_stats = TRUE
+
+/datum/loadout_item/ancient_gladius
+	name = "Ancient Gladius"
+	path = /obj/item/rogueweapon/sword/short/gladius/pagladius
+	triumph_cost = 4
+
+/datum/loadout_item/ancient_khopesh
+	name = "Ancient Khopesh"
+	path = /obj/item/rogueweapon/sword/sabre/palloy
+	triumph_cost = 4
+
+// DAGGERS & KNIVES
+/datum/loadout_item/tri_stone_knife
+	name = "Stone Knife"
+	path = /obj/item/rogueweapon/huntingknife/stoneknife
+	triumph_cost = 2
+	keep_loadout_stats = TRUE
+
+// MACES & BLUNT
+/datum/loadout_item/ancient_mace
+	name = "Ancient Mace"
+	path = /obj/item/rogueweapon/mace/goden/steel/paalloy
+	triumph_cost = 4
+
+// POLEARMS & SPEARS
+/datum/loadout_item/tri_stone_spear
+	name = "Stone Spear"
+	path = /obj/item/rogueweapon/spear/stone
+	triumph_cost = 2
+	keep_loadout_stats = TRUE
+
+/datum/loadout_item/tri_bone_spear
+	name = "Bone Spear"
+	path = /obj/item/rogueweapon/spear/bonespear
+	triumph_cost = 2
+	keep_loadout_stats = TRUE
+
+/datum/loadout_item/ancient_spear
+	name = "Ancient Spear"
+	path = /obj/item/rogueweapon/spear/aalloy
+	triumph_cost = 4
+
+// ARMOR & CLOTHING
+/datum/loadout_item/ancient_mask
+	name = "Ancient Mask"
+	path = /obj/item/clothing/mask/rogue/facemask/steel/paalloy
+	triumph_cost = 4
+
+/datum/loadout_item/ancient_kilt
+	name = "Ancient Kilt"
+	path = /obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy
+	triumph_cost = 4
+
+//─────────────────────────────────────────────────────────────
+// 3 TRIUMPH - Wooden Polearms & Noble Clothing
+//─────────────────────────────────────────────────────────────
+
+// POLEARMS & SPEARS
+/datum/loadout_item/tri_quarterstaff
+	name = "Quarterstaff"
+	path = /obj/item/rogueweapon/woodstaff/quarterstaff
+	triumph_cost = 3
+	keep_loadout_stats = TRUE
+
+/datum/loadout_item/tri_woodstaff
+	name = "Woodstaff"
+	path = /obj/item/rogueweapon/woodstaff
+	triumph_cost = 3
+	keep_loadout_stats = TRUE
+
+/datum/loadout_item/tri_scythe
+	name = "Peasant Scythe"
+	path = /obj/item/rogueweapon/scythe
+	triumph_cost = 3
+	keep_loadout_stats = TRUE
+
+// CLOTHING - TABARDS & RELIGIOUS CLOAKS
+/datum/loadout_item/tri_astrata_tabard
+	name = "Astratan Tabard"
+	path = /obj/item/clothing/cloak/templar/astratan
+
+
+/datum/loadout_item/tri_malum_tabard
+	name = "Malumite Tabard"
+	path = /obj/item/clothing/cloak/templar/malumite
+
+/datum/loadout_item/tri_necra_tabard
+	name = "Necran Tabard"
+	path = /obj/item/clothing/cloak/templar/necran
+
+/datum/loadout_item/tri_pestra_tabard
+	name = "Pestran Tabard"
+	path = /obj/item/clothing/cloak/templar/pestran
+
+/datum/loadout_item/tri_eora_tabard
+	name = "Eoran Tabard"
+	path = /obj/item/clothing/cloak/templar/eoran
+
+/datum/loadout_item/tri_xylix_cloak
+	name = "Xylixian Cloak"
+	path = /obj/item/clothing/cloak/templar/xylixian
+
+/datum/loadout_item/tri_psydon_tabard
+	name = "Psydonian Tabard"
+	path = /obj/item/clothing/cloak/psydontabard
+
+/datum/loadout_item/tri_abyssor_tabard
+	name = "Abyssorite Tabard"
+	path = /obj/item/clothing/cloak/abyssortabard
+
+/datum/loadout_item/tri_see_tabard
+	name = "See Tabard"
+	path = /obj/item/clothing/cloak/templar/undivided
+	triumph_cost = 4
+
+/datum/loadout_item/tri_see_cloak
+	name = "See Cloak"
+	path = /obj/item/clothing/cloak/undivided
+	triumph_cost = 4
+
+/datum/loadout_item/tri_justice_tabard
+	name = "Justice Tabard (Ravox)"
+	path = /obj/item/clothing/cloak/templar/ravox
+
+// CLOTHING - DRESSES & ROBES
+/datum/loadout_item/tri_ornate_dress
+	name = "Ornate Dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/steward
+	triumph_cost = 3
+
+/datum/loadout_item/tri_princess_dress/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
+/datum/loadout_item/tri_ornate_tunic
+	name = "Ornate Tunic"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/silktunic
+	triumph_cost = 3
+
+/datum/loadout_item/tri_princess_dress/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
+/datum/loadout_item/tri_princess_dress
+	name = "Princess Dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
+	triumph_cost = 3
+
+/datum/loadout_item/tri_princess_dress/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
+/datum/loadout_item/tri_royal_dress
+	name = "Royal Dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/royal
+	triumph_cost = 3
+
+/datum/loadout_item/tri_royal_dress/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
+/datum/loadout_item/tri_royal_sleeves
+	name = "Royal Sleeves"
+	path = /obj/item/clothing/wrists/roguetown/royalsleeves
+	triumph_cost = 3
+
+/datum/loadout_item/tri_royal_sleeves/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
+/datum/loadout_item/tri_lady_cloak
+	name = "Lady's Cloak"
+	path = /obj/item/clothing/cloak/lordcloak/ladycloak
+	triumph_cost = 3
+
+/datum/loadout_item/tri_lady_cloak/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
+// CLOTHING - HEADWEAR
+/datum/loadout_item/tri_circlet
+	name = "Circlet"
+	path = /obj/item/clothing/head/roguetown/circlet
+	triumph_cost = 3
+
+/datum/loadout_item/tri_circlet/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
+/datum/loadout_item/tri_volfhelm
+	name = "Volf Helm"
+	path = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
+	triumph_cost = 2
+
+/datum/loadout_item/tri_saiga
+	name = "Saiga Helm"
+	path = /obj/item/clothing/head/roguetown/helmet/leather/saiga
+	triumph_cost = 2
+
+// CLOTHING - JEWELRY & ACCESSORIES
+/datum/loadout_item/tri_noble_amulet
+	name = "Noble Amulet"
+	path = /obj/item/clothing/neck/roguetown/ornateamulet/noble
+	triumph_cost = 4
+
+/datum/loadout_item/tri_shell_bracelet
+	name = "Shell Bracelet"
+	path = /obj/item/clothing/neck/roguetown/psicross/shell/bracelet
+	triumph_cost = 2
+
+/datum/loadout_item/tri_shell_necklace
+	name = "oyster shell necklace"
+	path = /obj/item/clothing/neck/roguetown/psicross/shell
+	triumph_cost = 2
+
+// CLOTHING - ARMOR (Alphabetically Ordered)
+/datum/loadout_item/tri_desert_coat
+	name = "Desert Coat"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+	triumph_cost = 3
+
+/datum/loadout_item/tri_duelist_coat
+	name = "Duelist Coat"
+	path = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
+	triumph_cost = 3
+
+/datum/loadout_item/tri_fencing_gambeson
+	name = "Fencing Gambeson (Otavan)"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
+	triumph_cost = 3
+
+/datum/loadout_item/tri_fencing_shirt
+	name = "Fencing Shirt (Padded)"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
+	triumph_cost = 3
+
+/datum/loadout_item/tri_gambeson
+	name = "Gambeson"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson
+	triumph_cost = 3
+
+/datum/loadout_item/tri_gambeson_light
+	name = "Gambeson (Light)"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/light
+	triumph_cost = 2
+
+/datum/loadout_item/tri_gambeson_padded
+	name = "Gambeson (Padded)"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+	triumph_cost = 3
+
+/datum/loadout_item/tri_grenzelhoft_hipshirt
+	name = "Grenzelhoft Hip-Shirt"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
+	triumph_cost = 3
+
+/datum/loadout_item/tri_gronn_byrine_chausses
+	name = "Gronn Byrine Chausses"
+	path = /obj/item/clothing/under/roguetown/splintlegs/iron/gronn
+	triumph_cost = 3
+
+/datum/loadout_item/tri_gronn_byrine_gloves
+	name = "Gronn Byrine Gloves"
+	path = /obj/item/clothing/gloves/roguetown/chain/gronn
+	triumph_cost = 3
+
+/datum/loadout_item/tri_gronn_byrine_hauberk
+	name = "Gronn Byrine"
+	path = /obj/item/clothing/suit/roguetown/armor/brigandine/gronn
+	triumph_cost = 3
+
+/datum/loadout_item/tri_gronn_fur_pants
+	name = "Gronn Fur Pants"
+	path = /obj/item/clothing/under/roguetown/trou/leather/gronn
+	triumph_cost = 3
+
+/datum/loadout_item/tri_gronn_bone_gloves
+	name = "Gronn Bone Gloves"
+	path = /obj/item/clothing/gloves/roguetown/angle/gronnfur
+	triumph_cost = 3
+
+/datum/loadout_item/tri_hierophant_gambeson
+	name = "Hierophant Gambeson"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant
+	triumph_cost = 3
+
+/datum/loadout_item/tri_gronn_ravager_mantle
+	name = "Gronn Ravager Mantle"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn
+	triumph_cost = 3
+
+/datum/loadout_item/tri_huus_quyaq
+	name = "Huus Quyaq (Northern)"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/Huus_quyaq
+	triumph_cost = 3
+
+/datum/loadout_item/tri_kurche
+	name = "Kurche (Gronn)"
+	path = /obj/item/clothing/suit/roguetown/armor/kurche
+	triumph_cost = 3
+
+/datum/loadout_item/tri_leather_cuirass
+	name = "Leather Cuirass"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/cuirass
+	triumph_cost = 3
+
+/datum/loadout_item/tri_leather_corslet
+	name = "Leather Corslet"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/bikini
+	triumph_cost = 3
+
+/datum/loadout_item/corset
+	name = "Corset"
+	path = /obj/item/clothing/suit/roguetown/armor/corset
+
+/datum/loadout_item/tri_moose_hood
+	name = "Moose Hood (Shaman)"
+	path = /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
+	triumph_cost = 4
+
+/datum/loadout_item/tri_newmoon_hood
+	name = "New Moon Hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/reinforced/newmoon
+	triumph_cost = 2
+
+/datum/loadout_item/tri_newmoon_jacket
+	name = "New Moon Jacket"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/newmoon_jacket
+	triumph_cost = 3
+
+/datum/loadout_item/tri_newmoon_tunic
+	name = "New Moon Tunic"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/newmoon
+	triumph_cost = 3
+
+/datum/loadout_item/tri_otavan_gambeson
+	name = "Otavan Gambeson"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
+	triumph_cost = 3
+
+/datum/loadout_item/tri_padded_caftan
+	name = "Padded Caftan"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
+	triumph_cost = 3
+
+/datum/loadout_item/tri_pontifex_gambeson
+	name = "Pontifex Gambeson"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
+	triumph_cost = 3
+
+/datum/loadout_item/tri_psyaltrist_leather
+	name = "Psyaltrist Leather"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
+	triumph_cost = 3
+
+/datum/loadout_item/tri_zyb_coat
+	name = "Desert Coat"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
+	triumph_cost = 3
+
+/datum/loadout_item/tri_zyb_gambeson
+	name = "Desert Gambeson"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+	triumph_cost = 3
+
+/datum/loadout_item/tri_shamanic_coat
+	name = "Shamanic Coat"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi
+	triumph_cost = 3
+
+/datum/loadout_item/tri_spellcaster_hat
+	name = "Spellcaster Hat"
+	path = /obj/item/clothing/head/roguetown/spellcasterhat
+	triumph_cost = 2
+
+/datum/loadout_item/tri_steppe_coat
+	name = "Steppe Coat"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe
+	triumph_cost = 3
+
+// HELMETS AND HEADWEAR (Alphabetically Ordered)
+/datum/loadout_item/tri_grenzelhoft_hat
+	name = "Grenzelhoft Hat"
+	path = /obj/item/clothing/head/roguetown/grenzelhofthat
+	triumph_cost = 2
+
+/datum/loadout_item/tri_hierophant_hood
+	name = "Hierophant Hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/hierophant
+	triumph_cost = 2
+
+/datum/loadout_item/tri_pontifex_hood
+	name = "Pontifex Hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/pontifex
+	triumph_cost = 2
+
+/datum/loadout_item/tri_zyb_hijab
+	name = "Desert Hijab"
+	path = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
+	triumph_cost = 2
+
+
+// GLOVES (Alphabetically Ordered)
+/datum/loadout_item/tri_atgervi_gloves
+	name = "Atgervi Gloves"
+	path = /obj/item/clothing/gloves/roguetown/angle/atgervi
+	triumph_cost = 2
+
+/datum/loadout_item/tri_eastern_gloves
+	name = "Eastern Gloves"
+	path = /obj/item/clothing/gloves/roguetown/eastgloves2
+	triumph_cost = 2
+
+/datum/loadout_item/tri_grenzelhoft_gloves
+	name = "Grenzelhoft Gloves"
+	path = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
+	triumph_cost = 2
+
+/datum/loadout_item/tri_kote_gloves
+	name = "Kote Gauntlets"
+	path = /obj/item/clothing/gloves/roguetown/plate/kote
+	triumph_cost = 2
+
+/datum/loadout_item/tri_otavan_gloves
+	name = "Otavan Gloves"
+	path = /obj/item/clothing/gloves/roguetown/otavan
+	triumph_cost = 2
+
+/datum/loadout_item/tri_pontifex_gloves
+	name = "Pontifex Gloves"
+	path = /obj/item/clothing/gloves/roguetown/angle/pontifex
+	triumph_cost = 2
+
+// BOOTS & SHOES (Alphabetically Ordered)
+/datum/loadout_item/tri_atgervi_boots
+	name = "Atgervi Boots"
+	path = /obj/item/clothing/shoes/roguetown/boots/leather/atgervi
+
+
+/datum/loadout_item/tri_grenzelhoft_boots
+	name = "Grenzelhoft Boots"
+	path = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
+
+
+/datum/loadout_item/tri_kazengun_boots
+	name = "Kazengun Boots"
+	path = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
+
+
+/datum/loadout_item/tri_otavan_boots
+	name = "Otavan Boots"
+	path = /obj/item/clothing/shoes/roguetown/boots/otavan
+
+
+/datum/loadout_item/tri_rumaclan_boots
+	name = "Ruma Clan Boots"
+	path = /obj/item/clothing/shoes/roguetown/armor/rumaclan
+
+
+/datum/loadout_item/tri_shalal_boots
+	name = "Shalal Boots"
+	path = /obj/item/clothing/shoes/roguetown/shalal
+
+
+// PANTS (Alphabetically Ordered)
+/datum/loadout_item/tri_atgervi_pants
+	name = "Atgervi Fur Pants"
+	path = /obj/item/clothing/under/roguetown/trou/leather/atgervi
+	triumph_cost = 2
+
+/datum/loadout_item/tri_eastern_pants_1
+	name = "Eastern Pants (Black)"
+	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
+	triumph_cost = 2
+
+/datum/loadout_item/tri_eastern_pants_2
+	name = "Eastern Pants (White)"
+	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
+	triumph_cost = 2
+
+/datum/loadout_item/tri_grenzelhoft_pants
+	name = "Grenzelhoft Pants"
+	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
+	triumph_cost = 2
+
+/datum/loadout_item/tri_otavan_pants
+	name = "Otavan Pants"
+	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
+	triumph_cost = 2
+
+/datum/loadout_item/tri_otavan_generic_pants
+	name = "Otavan Pants (Generic)"
+	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
+	triumph_cost = 2
+
+/datum/loadout_item/tri_kazengun_pants
+	name = "Kazengun Pants"
+	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun
+	triumph_cost = 2
+
+/datum/loadout_item/tri_pontifex_pants
+	name = "Pontifex Pants"
+	path = /obj/item/clothing/under/roguetown/trou/leather/pontifex
+	triumph_cost = 2
+
+/datum/loadout_item/tri_zyb_pants
+	name = "Zybantine Pants"
+	path = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
+	triumph_cost = 2
+
+
+// CLOAKS & CAPES (Alphabetically Ordered)
+/datum/loadout_item/tri_eastern_cloak_1
+	name = "Eastern Cloak"
+	path = /obj/item/clothing/cloak/eastcloak1
+
+
+/datum/loadout_item/tri_hierophant_cloak
+	name = "Hierophant Cloak"
+	path = /obj/item/clothing/cloak/hierophant
+
+
+/datum/loadout_item/tri_kazengun_cloak
+	name = "Kazengun Cloak"
+	path = /obj/item/clothing/cloak/kazengun
+
+
+// NECK ACCESSORIES (Alphabetically Ordered)
+
+/datum/loadout_item/tri_fencerguard
+	name = "Fencerguard"
+	path = /obj/item/clothing/neck/roguetown/fencerguard
+	triumph_cost = 4
+
+/datum/loadout_item/tri_naledi_cross
+	name = "Naledi Psicross"
+	path = /obj/item/clothing/neck/roguetown/psicross/naledi
+
+// MASKS (Alphabetically Ordered)
+
+// SHIRTS & ROBES (Alphabetically Ordered)
+/datum/loadout_item/tri_hierophant_robe
+	name = "Hierophant Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
+	triumph_cost = 2
+
+/datum/loadout_item/tri_pontifex_robe
+	name = "Pontifex Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
+	triumph_cost = 2
+
+// POLEARMS & STAVES
+/datum/loadout_item/tri_naledi_staff
+	name = "Naledi Staff (Decorative)"
+	path = /obj/item/rogueweapon/woodstaff/decorative
+	triumph_cost = 3
+
+
+//─────────────────────────────────────────────────────────────
+// 10 TRIUMPH - Lord's Cloak
+//─────────────────────────────────────────────────────────────
+
+// CLOTHING - CLOAKS
+/datum/loadout_item/tri_lord_cloak
+	name = "Lord's Cloak"
+	path = /obj/item/clothing/cloak/lordcloak
+	triumph_cost = 10
+
+/datum/loadout_item/tri_lord_cloak/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user selected Nobility virtue
+	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
+		return TRUE
+	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
+
+//==========================
 //Donator Section
+//==========================
 //All these items are stored in the donator_fluff.dm in the azure modular folder for simplicity.
 //All should be subtypes of existing weapons/clothes/armor/gear, whatever, to avoid balance issues I guess. Idk, I'm not your boss.
 
@@ -598,6 +1886,16 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Donator Kit - Gilded Sallet"
 	path = /obj/item/enchantingkit/rebel
 	ckeywhitelist = list("rebel0")
+
+/datum/loadout_item/donator_bigfoot
+	name = "Donator Kit - Gilded Knight Helm"
+	path = /obj/item/enchantingkit/bigfoot
+	ckeywhitelist = list("bigfoot02")
+
+/datum/loadout_item/donator_bigfoot_axe
+	name = "Donator kit - Gilded Greataxe"
+	path = /obj/item/enchantingkit/bigfoot_axe
+	ckeywhitelist = list("bigfoot02")
 
 /datum/loadout_item/donator_zydras
 	name = "Donator Kit - Padded silky dress"
@@ -668,3 +1966,198 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/cooking_recipes
 	name = "Guide to Cooking"
 	path = /obj/item/recipe_book/cooking
+
+//COSMETICS (Perfumes & Lipsticks)
+
+/datum/loadout_item/perfume_lavender
+	name = "Lavender Perfume"
+	path = /obj/item/perfume/lavender
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_cherry
+	name = "Cherry Perfume"
+	path = /obj/item/perfume/cherry
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_rose
+	name = "Rose Perfume"
+	path = /obj/item/perfume/rose
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_jasmine
+	name = "Jasmine Perfume"
+	path = /obj/item/perfume/jasmine
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_mint
+	name = "Mint Perfume"
+	path = /obj/item/perfume/mint
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_vanilla
+	name = "Vanilla Perfume"
+	path = /obj/item/perfume/vanilla
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_pear
+	name = "Pear Perfume"
+	path = /obj/item/perfume/pear
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_strawberry
+	name = "Strawberry Perfume"
+	path = /obj/item/perfume/strawberry
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_cinnamon
+	name = "Cinnamon Perfume"
+	path = /obj/item/perfume/cinnamon
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_frankincense
+	name = "Frankincense Perfume"
+	path = /obj/item/perfume/frankincense
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_sandalwood
+	name = "Sandalwood Perfume"
+	path = /obj/item/perfume/sandalwood
+	triumph_cost = 2
+
+/datum/loadout_item/perfume_myrrh
+	name = "Myrrh Perfume"
+	path = /obj/item/perfume/myrrh
+	triumph_cost = 2
+
+/datum/loadout_item/lipstick_red
+	name = "Red Lipstick"
+	path = /obj/item/azure_lipstick
+	triumph_cost = 2
+
+/datum/loadout_item/lipstick_jade
+	name = "Jade Lipstick"
+	path = /obj/item/azure_lipstick/jade
+	triumph_cost = 2
+
+/datum/loadout_item/lipstick_purple
+	name = "Purple Lipstick"
+	path = /obj/item/azure_lipstick/purple
+	triumph_cost = 2
+
+/datum/loadout_item/lipstick_black
+	name = "Black Lipstick"
+	path = /obj/item/azure_lipstick/black
+	triumph_cost = 2
+
+/datum/loadout_item/hair_dye
+	name = "Hair Dye Cream"
+	path = /obj/item/hair_dye_cream
+	triumph_cost = 2
+
+/datum/loadout_item/branding_stick
+	name = "Crude Branding Stick"
+	path = /obj/item/rogueweapon/surgery/cautery/branding/crude
+	triumph_cost = 1
+
+//ADDITIONAL ITEMS
+
+/datum/loadout_item/satchel
+	name = "Satchel"
+	path = /obj/item/storage/backpack/rogue/satchel
+	triumph_cost = 5
+
+/datum/loadout_item/pouches
+	name = "Pouche"
+	path = /obj/item/storage/belt/rogue/pouch
+	triumph_cost = 3
+
+/datum/loadout_item/swatchbook
+	name = "Tailor's Swatchbook"
+	path = /obj/item/book/rogue/swatchbook
+	triumph_cost = 3
+
+/datum/loadout_item/parasol
+	name = "Paper Parasol"
+	path = /obj/item/rogueweapon/mace/parasol
+	triumph_cost = 3
+
+//INSTRUMENTS
+
+/datum/loadout_item/accordion
+	name = "Accordion"
+	path = /obj/item/rogue/instrument/accord
+	triumph_cost = 1
+
+/datum/loadout_item/bagpipe
+	name = "Bagpipe"
+	path = /obj/item/rogue/instrument/bagpipe
+	triumph_cost = 1
+
+/datum/loadout_item/drum
+	name = "Drum"
+	path = /obj/item/rogue/instrument/drum
+	triumph_cost = 1
+
+/datum/loadout_item/flute
+	name = "Flute"
+	path = /obj/item/rogue/instrument/flute
+	triumph_cost = 1
+
+/datum/loadout_item/guitar
+	name = "Guitar"
+	path = /obj/item/rogue/instrument/guitar
+	triumph_cost = 1
+
+/datum/loadout_item/harp
+	name = "Harp"
+	path = /obj/item/rogue/instrument/harp
+	triumph_cost = 1
+
+/datum/loadout_item/hurdygurdy
+	name = "Hurdy-Gurdy"
+	path = /obj/item/rogue/instrument/hurdygurdy
+	triumph_cost = 1
+
+/datum/loadout_item/jawharp
+	name = "Jaw Harp"
+	path = /obj/item/rogue/instrument/jawharp
+	triumph_cost = 1
+
+/datum/loadout_item/lute
+	name = "Lute"
+	path = /obj/item/rogue/instrument/lute
+	triumph_cost = 1
+
+/datum/loadout_item/psyaltery
+	name = "Psyaltery"
+	path = /obj/item/rogue/instrument/psyaltery
+	triumph_cost = 1
+
+/datum/loadout_item/shamisen
+	name = "Shamisen"
+	path = /obj/item/rogue/instrument/shamisen
+	triumph_cost = 1
+
+/datum/loadout_item/trumpet
+	name = "Trumpet"
+	path = /obj/item/rogue/instrument/trumpet
+	triumph_cost = 1
+
+/datum/loadout_item/viola
+	name = "Viola"
+	path = /obj/item/rogue/instrument/viola
+	triumph_cost = 1
+
+/datum/loadout_item/vocaltalisman
+	name = "Vocal Talisman"
+	path = /obj/item/rogue/instrument/vocals
+	triumph_cost = 1
+
+
+// Unique stuff that doesn't quite fit anywhere else.
+
+/datum/loadout_item/kazengunite_smithing_manual
+	name = "Kajutsu no Densho"
+	desc = "A Kazengunite smithing manual. Unlocks kazengunite armor and weapon recipes at the anvil when read — requires knowledge of Kazengunese. "
+	path = /obj/item/book/granter/trait/kazengunite_smith
+	triumph_cost = 3

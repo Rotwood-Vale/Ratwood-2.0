@@ -1,5 +1,5 @@
 /client/proc/play_sound(S as sound)
-	set category = "-Fun-"
+	set category = "-GameMaster-"
 	set name = "Sound - Global"
 	if(!check_rights(R_SOUND))
 		return
@@ -61,9 +61,12 @@
 		prefs.musicvol = vol
 		prefs.save_preferences()
 
-		mob.update_music_volume(CHANNEL_MUSIC, prefs.musicvol)
-		mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.musicvol)
 		mob.update_music_volume(CHANNEL_ADMIN, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_BUZZ, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_CMUSIC1, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_CMUSIC2, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_CMUSIC3, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_CMUSIC4, prefs.musicvol)
 
 
 /client/verb/show_rolls()
@@ -83,7 +86,7 @@
 	set name = "ChangeVolPower"
 
 	if(prefs)
-		var/vol = input(usr, "Current volume power: [prefs.mastervol]",, 100) as null|num
+		var/vol = input(usr, "Current master volume power (affects all sounds except music and ambience): [prefs.mastervol]",, 100) as null|num
 		if(!vol)
 			if(vol != 0)
 				return
@@ -91,7 +94,38 @@
 		prefs.mastervol = vol
 		prefs.save_preferences()
 
-		mob.update_channel_volume(CHANNEL_AMBIENCE, prefs.mastervol)
+/client/verb/change_ambience_vol()
+	set category = "Options"
+	set name = "ChangeAmbiencePower"
+
+	if(prefs)
+		var/vol = input(usr, "Current ambience power: [prefs.ambiencevol]",, 100) as null|num
+		if(!vol)
+			if(vol != 0)
+				return
+		vol = min(vol, 100)
+		prefs.ambiencevol = vol
+		prefs.save_preferences()
+
+		mob.update_channel_volume(CHANNEL_AMBIENCE, prefs.ambiencevol)
+		mob.update_channel_volume(CHANNEL_MUSIC, prefs.ambiencevol)
+		mob.update_channel_volume(CHANNEL_RAIN, prefs.ambiencevol)
+
+/client/verb/change_lobby_music_vol()
+	set category = "Options"
+	set name = "ChangeLobbyMusicPower"
+
+	if(prefs)
+		var/vol = input(usr, "Current lobby music power: [prefs.lobbymusicvol]",, 100) as null|num
+		if(!vol)
+			if(vol != 0)
+				return
+		vol = min(vol, 100)
+		prefs.lobbymusicvol = vol
+		prefs.save_preferences()
+
+		if(isnewplayer(mob))
+			mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.lobbymusicvol)
 /*
 /client/verb/help_rpguide()
 	set category = "Options"
@@ -107,7 +141,7 @@
 */
 
 /client/proc/play_local_sound(S as sound)
-	set category = "-Fun-"
+	set category = "-GameMaster-"
 	set name = "Sound - Local"
 	if(!check_rights(R_SOUND))
 		return
@@ -118,7 +152,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/play_local_sound_variable(S as sound)
-	set category = "-Fun-"
+	set category = "-GameMaster-"
 	set name = "Sound - Variable Dist"
 	if(!check_rights(R_SOUND))
 		return
@@ -134,7 +168,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/play_web_sound()
-	set category = "-Fun-"
+	set category = "-GameMaster-"
 	set name = "Sound - Internet"
 	if(!check_rights(R_SOUND))
 		return
@@ -144,7 +178,7 @@
 		to_chat(src, span_boldwarning("Youtube-dl was not configured, action unavailable")) //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
 
-	var/web_sound_input = input("Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl") as text|null
+	var/web_sound_input = input("Enter content URL (supported sites only, leave blank to stop playing)", "PASS THE AUX CORD, MILORD.") as text|null
 	if(istext(web_sound_input))
 		var/web_sound_url = ""
 		var/stop_web_sounds = FALSE
@@ -179,10 +213,38 @@
 					music_extra_data["start"] = data["start_time"]
 					music_extra_data["end"] = data["end_time"]
 
-					var/res = alert(usr, "Show the title of and link to this song to the players?\n[title]",, "No", "Yes", "Cancel")
+					var/artist = data["uploader"]
+					var/album = data["album"]
+					var/upload_date = data["upload_date"]
+					var/duration_value = data["duration"]
+					var/link_meta = web_sound_input
+					if (data["webpage_url"])
+						link_meta = "[data["webpage_url"]]"
+
+					// Base metadata for the TGUI media player
+					music_extra_data["title"] = title
+					music_extra_data["link"] = link_meta
+					if(artist)
+						music_extra_data["artist"] = artist
+					if(album)
+						music_extra_data["album"] = album
+					if(upload_date)
+						music_extra_data["upload_date"] = upload_date
+					if(isnum(duration_value))
+						music_extra_data["duration"] = "[duration_value] seconds"
+
+					var/res = alert(usr, "Show the title of and link to this song to the players?\n[title]", "PASS THE AUX CORD, MILORD.", "No", "Yes", "Cancel")
 					switch(res)
 						if("Yes")
 							to_chat(world, span_boldannounce("An admin played: [webpage_url]"))
+						if("No")
+							// Hide detailed metadata in the chat media widget while still playing the song
+							music_extra_data["title"] = null
+							music_extra_data["link"] = "Song Link Hidden"
+							music_extra_data["duration"] = "Song Duration Hidden"
+							music_extra_data["artist"] = "Song Artist Hidden"
+							music_extra_data["album"] = "Song Album Hidden"
+							music_extra_data["upload_date"] = "Song Upload Date Hidden"
 						if("Cancel")
 							return
 
@@ -218,8 +280,231 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
 
+/client/proc/play_music_global_url()
+	set category = "-GameMaster-"
+	set name = "Music - Global URL"
+	if(!check_rights(R_SOUND))
+		return
+
+	var/web_sound_input = input("Enter direct HTTPS audio URL (leave blank to stop playing)", "PASS THE AUX CORD, MILORD.") as text|null
+	if(isnull(web_sound_input))
+		return
+
+	var/web_sound_url = ""
+	var/stop_web_sounds = FALSE
+	var/list/music_extra_data = list()
+
+	if(length(web_sound_input))
+		web_sound_input = trim(web_sound_input)
+		if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
+			to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."))
+			return
+
+		web_sound_url = web_sound_input
+
+		var/title = input(usr, "Optional: song title to display (leave blank for Unknown Track)", "Song Title") as null|text
+		var/artist = input(usr, "Optional: song artist to display (leave blank to hide)", "Song Artist") as null|text
+
+		music_extra_data["title"] = title
+		music_extra_data["link"] = web_sound_input
+		if(artist)
+			music_extra_data["artist"] = artist
+
+		var/res = alert(usr, "Show the title and link of this song to the players?\n[title ? title : web_sound_input]", "PASS THE AUX CORD, MILORD.", "No", "Yes", "Cancel")
+		switch(res)
+			if("Yes")
+				to_chat(world, span_boldannounce("An admin played: [title ? title : web_sound_input]"))
+			if("No")
+				music_extra_data["title"] = null
+				music_extra_data["link"] = "Song Link Hidden"
+				music_extra_data["duration"] = "Song Duration Hidden"
+				music_extra_data["artist"] = "Song Artist Hidden"
+				music_extra_data["album"] = "Song Album Hidden"
+				music_extra_data["upload_date"] = "Song Upload Date Hidden"
+			if("Cancel")
+				return
+	else
+		log_admin("[key_name(src)] stopped global URL music")
+		message_admins("[key_name_admin(src)] stopped global URL music")
+		stop_web_sounds = TRUE
+
+	if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
+		to_chat(src, span_boldwarning("BLOCKED: Content URL not using http(s) protocol"))
+		return
+
+	if(web_sound_url || stop_web_sounds)
+		log_admin("[key_name(src)] played global URL music: [web_sound_input]")
+		message_admins("[key_name(src)] played global URL music: [web_sound_input]")
+		for(var/mob/M in GLOB.player_list)
+			var/client/C = M.client
+			if(!C)
+				continue
+			if(C.prefs.toggles & SOUND_MIDI)
+				SEND_SOUND(C, sound(null, channel = CHANNEL_LOBBYMUSIC))
+				SEND_SOUND(C, sound(null, channel = CHANNEL_ADMIN))
+				if(!stop_web_sounds)
+					C.tgui_panel?.play_music(web_sound_url, music_extra_data)
+				else
+					C.tgui_panel?.stop_music()
+
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Global Music URL")
+
+/client/proc/play_music_local_url()
+	set category = "-GameMaster-"
+	set name = "Music - Local URL"
+	if(!check_rights(R_SOUND))
+		return
+
+	var/web_sound_input = input("Enter direct HTTPS audio URL (leave blank to stop playing)", "Play Local Music (URL)") as text|null
+	if(isnull(web_sound_input))
+		return
+
+	var/web_sound_url = ""
+	var/stop_web_sounds = FALSE
+	var/dist = 0
+	var/list/music_extra_data = list()
+
+	if(length(web_sound_input))
+		web_sound_input = trim(web_sound_input)
+		if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
+			to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."))
+			return
+
+		web_sound_url = web_sound_input
+
+		dist = input(usr, "How far do you want this music to extend?",, 50) as null|num
+		if(!dist)
+			return
+		dist = CLAMP(dist, 1, 100)
+
+		var/title = input(usr, "Optional: song title to display (leave blank for Unknown Track)", "Song Title") as null|text
+		var/artist = input(usr, "Optional: song artist to display (leave blank to hide)", "Song Artist") as null|text
+
+		music_extra_data["title"] = title
+		music_extra_data["link"] = web_sound_input
+		if(artist)
+			music_extra_data["artist"] = artist
+
+		var/res = alert(usr, "Show the title and link of this song to nearby players?\n[title ? title : web_sound_input]", "PASS THE AUX CORD, MILORD.", "No", "Yes", "Cancel")
+		switch(res)
+			if("Yes")
+				to_chat(world, span_boldannounce("An admin played locally: [title ? title : web_sound_input]"))
+			if("No")
+				music_extra_data["title"] = null
+				music_extra_data["link"] = "Song Link Hidden"
+				music_extra_data["duration"] = "Song Duration Hidden"
+				music_extra_data["artist"] = "Song Artist Hidden"
+				music_extra_data["album"] = "Song Album Hidden"
+				music_extra_data["upload_date"] = "Song Upload Date Hidden"
+			if("Cancel")
+				return
+	else
+		log_admin("[key_name(src)] stopped local URL music")
+		message_admins("[key_name_admin(src)] stopped local URL music")
+		stop_web_sounds = TRUE
+
+	if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
+		to_chat(src, span_boldwarning("BLOCKED: Content URL not using http(s) protocol"))
+		return
+
+	if(web_sound_url || stop_web_sounds)
+		log_admin("[key_name(src)] played local URL music: [web_sound_input]")
+		message_admins("[key_name(src)] played local URL music: [web_sound_input]")
+		var/turf/source_turf = get_turf(src.mob)
+		for(var/mob/M in GLOB.player_list)
+			var/client/C = M.client
+			if(!C)
+				continue
+			if(!(C.prefs.toggles & SOUND_MIDI))
+				continue
+			if(get_dist(source_turf, get_turf(M)) > dist)
+				continue
+			SEND_SOUND(C, sound(null, channel = CHANNEL_LOBBYMUSIC))
+			SEND_SOUND(C, sound(null, channel = CHANNEL_ADMIN))
+			if(!stop_web_sounds)
+				C.tgui_panel?.play_music(web_sound_url, music_extra_data)
+			else
+				C.tgui_panel?.stop_music()
+
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Music URL")
+
+/client/proc/play_music_direct_url(mob/M)
+	set category = "-GameMaster-"
+	set name = "Music - Direct URL"
+	if(!check_rights(R_SOUND))
+		return
+
+	if(!M)
+		M = input("Play to whom?", "Active Players") as null|anything in GLOB.player_list
+
+	if(!M)
+		return
+
+	var/client/C = M.client
+	if(!C)
+		return
+
+	var/web_sound_input = input("Enter direct HTTPS audio URL (leave blank to stop playing)", "PASS THE AUX CORD, MILORD.") as text|null
+	if(isnull(web_sound_input))
+		return
+
+	var/web_sound_url = ""
+	var/stop_web_sounds = FALSE
+	var/list/music_extra_data = list()
+
+	if(length(web_sound_input))
+		web_sound_input = trim(web_sound_input)
+		if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
+			to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."))
+			return
+
+		web_sound_url = web_sound_input
+
+		var/title = input(usr, "Optional: song title to display (leave blank for Unknown Track)", "Song Title") as null|text
+		var/artist = input(usr, "Optional: song artist to display (leave blank to hide)", "Song Artist") as null|text
+
+		music_extra_data["title"] = title
+		music_extra_data["link"] = web_sound_input
+		if(artist)
+			music_extra_data["artist"] = artist
+
+		var/res = alert(usr, "Show the title and link of this song to [M]?\n[title ? title : web_sound_input]", "PASS THE AUX CORD, MILORD.", "No", "Yes", "Cancel")
+		switch(res)
+			if("Yes")
+				to_chat(M, span_boldannounce("An admin played: [title ? title : web_sound_input]"))
+			if("No")
+				music_extra_data["title"] = null
+				music_extra_data["link"] = "Song Link Hidden"
+				music_extra_data["duration"] = "Song Duration Hidden"
+				music_extra_data["artist"] = "Song Artist Hidden"
+				music_extra_data["album"] = "Song Album Hidden"
+				music_extra_data["upload_date"] = "Song Upload Date Hidden"
+			if("Cancel")
+				return
+	else
+		log_admin("[key_name(src)] stopped direct URL music for [M]")
+		message_admins("[key_name_admin(src)] stopped direct URL music for [M]")
+		stop_web_sounds = TRUE
+
+	if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
+		to_chat(src, span_boldwarning("BLOCKED: Content URL not using http(s) protocol"))
+		return
+
+	if(web_sound_url || stop_web_sounds)
+		log_admin("[key_name(src)] played direct URL music for [M]: [web_sound_input]")
+		message_admins("[key_name(src)] played direct URL music for [M]: [web_sound_input]")
+		if(C.prefs.toggles & SOUND_MIDI)
+			SEND_SOUND(C, sound(null, channel = CHANNEL_LOBBYMUSIC))
+			SEND_SOUND(C, sound(null, channel = CHANNEL_ADMIN))
+			if(!stop_web_sounds)
+				C.tgui_panel?.play_music(web_sound_url, music_extra_data)
+			else
+				C.tgui_panel?.stop_music()
+
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Music URL")
+
 /client/proc/set_round_end_sound(S as sound)
-	set category = "-Fun-"
+	set category = "-GameMaster-"
 	set name = "Sound - Round End"
 	if(!check_rights(R_SOUND))
 		return
@@ -231,7 +516,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Round End Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/stop_sounds()
-	set category = "-Fun-"
+	set category = "-GameMaster-"
 	set name = "Sound - Stop All Playing"
 	if(!src.holder)
 		return

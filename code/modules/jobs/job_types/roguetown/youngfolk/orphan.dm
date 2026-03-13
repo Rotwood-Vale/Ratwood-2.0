@@ -1,12 +1,12 @@
 /datum/job/roguetown/orphan
 	title = "Vagabond"
 	flag = ORPHAN
-	department_flag = YOUNGFOLK
+	department_flag = PEASANTS
 	faction = "Station"
 	total_positions = 12
 	spawn_positions = 12
 
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT)
 
 	tutorial = "Dozens of people end up down on their luck in the kingdom of Psydonia every day. They sometimes make something of themselves but much more often die in the streets."
@@ -17,6 +17,7 @@
 	min_pq = -30
 	max_pq = null
 	round_contrib_points = 2
+	advjob_examine = TRUE
 
 	cmode_music = 'sound/music/combat_bum.ogg'
 	job_subclasses = list(
@@ -29,7 +30,8 @@
 		/datum/advclass/vagabond_mage,
 		/datum/advclass/vagabond_runner,
 		/datum/advclass/vagabond_scholar,
-		/datum/advclass/vagabond_wanted
+		/datum/advclass/vagabond_wanted,
+		/datum/advclass/vagabond_unraveled
 	)
 
 /datum/job/roguetown/orphan/New()

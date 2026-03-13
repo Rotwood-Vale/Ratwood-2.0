@@ -26,10 +26,42 @@
 	societies that they share blood ties with than other Beastling races."
 	skin_tone_wording = "Ancestry"
 	default_color = "FFFFFF"
+
+	use_titles = TRUE
+	race_titles = list(
+	"Half-Cat", "Half-Dog", "Half-Volf", "Half-Lion", "Half-Venard",
+	"Half-Tiger", "Half-Sheep", "Half-Goat", "Half-Rous", "Half-Possum",
+	"Half-Pig", "Half-Boar", "Half-Rabbit", "Half-Horse", "Half-Donkey",
+	"Half-Hyena", "Half-Deer", "Half-Bear", "Half-Panda", "Half-Coyote",
+	"Half-Moose", "Half-Jackal", "Half-Panther", "Half-Lynx", "Half-Leopard",
+	"Half-Monkey", "Half-Bird", "Half-Seal", "Half-Frog", "Half-Bat", "Half-Otter", "Half-Cow",
+	"Half-Bull", "Half-Bee", "Half-Lizard", "Half-Insect", "Half-Spider", "Half-Monster"
+	)
+
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY,MUTCOLORS_PARTSONLY)
 	allowed_taur_types = list(
-		/obj/item/bodypart/taur/spider,
+		/obj/item/bodypart/taur/otie,
+		/obj/item/bodypart/taur/canine,
+		/obj/item/bodypart/taur/venard,
+		/obj/item/bodypart/taur/drake,
+		/obj/item/bodypart/taur/dragon,
+		/obj/item/bodypart/taur/noodle,
 		/obj/item/bodypart/taur/horse,
+		/obj/item/bodypart/taur/goat,
+		/obj/item/bodypart/taur/deer,
+		/obj/item/bodypart/taur/redpanda,
+		/obj/item/bodypart/taur/rat,
+		/obj/item/bodypart/taur/skunk,
+		/obj/item/bodypart/taur/kitsune,
+		/obj/item/bodypart/taur/feline,
+		/obj/item/bodypart/taur/snep,
+		/obj/item/bodypart/taur/tiger,
+		/obj/item/bodypart/taur/spider,
+		/obj/item/bodypart/taur/centipede,
+		/obj/item/bodypart/taur/sloog,
+		/obj/item/bodypart/taur/ant,
+		/obj/item/bodypart/taur/wasp,
+		/obj/item/bodypart/taur/insect
 	)
 	default_features = MANDATORY_FEATURE_LIST
 	use_skintones = TRUE
@@ -49,11 +81,13 @@
 		OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
 		OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,0), \
 		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
+		OFFSET_BREASTS = list(0,1), \
 		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
 		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
 		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,0), OFFSET_BACK_F = list(0,-1), \
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		OFFSET_BREASTS_F = list(0,-1), \
 		)
 	race_bonus = list(STAT_PERCEPTION = 1, STAT_WILLPOWER = 1)
 	enflamed_icon = "widefire"
@@ -110,9 +144,10 @@
 		/datum/body_marking/gradient,
 	)
 	descriptor_choices = list(
+		/datum/descriptor_choice/trait,
+		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/height,
 		/datum/descriptor_choice/body,
-		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/face,
 		/datum/descriptor_choice/face_exp,
 		/datum/descriptor_choice/skin,
@@ -165,12 +200,13 @@
 		"Otava" = SKIN_COLOR_OTAVA,
 		"Etrusca" = SKIN_COLOR_ETRUSCA,
 		"Gronn" = SKIN_COLOR_GRONN,
-		"North Raneshen (Chorodiaki)" = SKIN_COLOR_GIZA,
-		"West Raneshen (Vrdaqnan)" = SKIN_COLOR_SHALVISTINE,
-		"East Raneshen (Nshkormh)" = SKIN_COLOR_LALVESTINE,
+		"North Zybantium (Chorodiaki)" = SKIN_COLOR_GIZA,
+		"West Zybantium (Vrdaqnan)" = SKIN_COLOR_SHALVISTINE,
+		"East Zybantium (Nshkormh)" = SKIN_COLOR_LALVESTINE,
 		"Naledi" = SKIN_COLOR_NALEDI,
 		"Naledi South" = SKIN_COLOR_NALEDI_LIGHT,
 		"Kazengun" = SKIN_COLOR_KAZENGUN,
+		"Czwarteki" = SKIN_COLOR_CZWARTEKI,
 	)
 
 /datum/species/demihuman/on_species_gain(mob/living/carbon/C, datum/species/old_species)

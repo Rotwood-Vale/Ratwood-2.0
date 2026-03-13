@@ -54,13 +54,80 @@
 	if(client)
 		update_vision_cone()
 
+/// Schedule a deferred icon update - batches multiple calls in the same tick
+/mob/living/carbon/proc/queue_icon_update(update_type)
+	pending_icon_updates |= update_type
+	START_PROCESSING(SSiconupdates, src)
+
+/// Process all pending icon updates in a single batch
+/mob/living/carbon/proc/process_pending_icon_updates()
+	if(!pending_icon_updates)
+		return
+	var/updates = pending_icon_updates
+	pending_icon_updates = NONE
+
+	if(updates & PENDING_UPDATE_BODY)
+		update_body_parts()
+	if(updates & PENDING_UPDATE_HAIR)
+		update_hair()
+	if(updates & PENDING_UPDATE_DAMAGE)
+		update_damage_overlays()
+	if(updates & PENDING_UPDATE_INV_HANDS)
+		update_inv_hands()
+	if(updates & PENDING_UPDATE_INV_GLOVES)
+		update_inv_gloves_real()
+	if(updates & PENDING_UPDATE_INV_SHOES)
+		update_inv_shoes_real()
+	if(updates & PENDING_UPDATE_INV_HEAD)
+		update_inv_head_real()
+	if(updates & PENDING_UPDATE_INV_BELT)
+		update_inv_belt_real()
+	if(updates & PENDING_UPDATE_INV_BACK)
+		update_inv_back_real()
+	if(updates & PENDING_UPDATE_INV_ARMOR)
+		update_inv_armor_real()
+	if(updates & PENDING_UPDATE_INV_SHIRT)
+		update_inv_shirt_real()
+	if(updates & PENDING_UPDATE_INV_PANTS)
+		update_inv_pants_real()
+	if(updates & PENDING_UPDATE_INV_CLOAK)
+		update_inv_cloak_real()
+
+// Base implementations for carbon mobs - these are just stubs in case someone makes a non-human carbon mob some day
+// /mob/living/carbon/human will override these
+/mob/living/carbon/proc/update_inv_gloves_real()
+	return
+
+/mob/living/carbon/proc/update_inv_shoes_real()
+	return
+
+/mob/living/carbon/proc/update_inv_head_real()
+	return
+
+/mob/living/carbon/proc/update_inv_belt_real()
+	return
+
+/mob/living/carbon/proc/update_inv_back_real()
+	return
+
+/mob/living/carbon/proc/update_inv_armor_real()
+	return
+
+/mob/living/carbon/proc/update_inv_shirt_real()
+	return
+
+/mob/living/carbon/proc/update_inv_pants_real()
+	return
+
+/mob/living/carbon/proc/update_inv_cloak_real()
+	return
+
 /mob/living/carbon/regenerate_icons()
 	if(notransform)
 		return 1
 	update_inv_hands()
 	update_inv_handcuffed()
 	update_inv_legcuffed()
-	update_fire()
 
 /*
 /proc/get_inhand_sprite(/obj/item/I, layer)
@@ -88,7 +155,7 @@
 		testing("GDC added [index]")
 		GLOB.dismembered_clothing_icons[index] = dismembered*/
 
-/mob/living/carbon/update_inv_hands()
+/mob/living/carbon/update_inv_hands(hide_experimental = FALSE)
 	remove_overlay(HANDS_LAYER)
 	remove_overlay(HANDS_BEHIND_LAYER)
 	if (handcuffed)
@@ -127,7 +194,7 @@
 
 		var/mutable_appearance/inhand_overlay
 		var/mutable_appearance/behindhand_overlay
-		if(I.experimental_inhand)
+		if(I.experimental_inhand && !hide_experimental)
 			var/used_prop
 			var/list/prop
 			if(I.altgripped)
@@ -203,15 +270,6 @@
 	apply_overlay(HANDS_BEHIND_LAYER)
 	apply_overlay(HANDS_LAYER)
 
-/mob/living/carbon/update_fire(fire_icon = "Generic_mob_burning")
-	remove_overlay(FIRE_LAYER)
-	if(on_fire || islava(loc))
-		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
-		new_fire_overlay.appearance_flags = RESET_COLOR
-		overlays_standing[FIRE_LAYER] = new_fire_overlay
-
-	apply_overlay(FIRE_LAYER)
-
 /mob/living/carbon/update_warning(datum/intent/I)
 	remove_overlay(HALO_LAYER) //yoink
 	if(I)
@@ -238,13 +296,13 @@
 	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER)
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(BP.dmg_overlay_type)
-			if(BP.brutestate)
-				damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_[BP.brutestate]0")	//we're adding icon_states of the base image as overlays
-			if(BP.burnstate)
-				damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_0[BP.burnstate]")
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
+		if(!BP.dmg_overlay_type)
+			continue
+		if(BP.brutestate)
+			damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_[BP.brutestate]0")
+		if(BP.burnstate)
+			damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_0[BP.burnstate]")
 
 	apply_overlay(DAMAGE_LAYER)
 
@@ -293,7 +351,7 @@
 
 	apply_overlay(BACK_LAYER)
 
-/mob/living/carbon/update_inv_head()
+/mob/living/carbon/update_inv_head(hide_nonstandard = FALSE)
 	remove_overlay(HEAD_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -304,6 +362,9 @@
 		inv.update_icon()
 
 	if(head)
+		if(hide_nonstandard && (head.worn_x_dimension != 32 || head.worn_y_dimension != 32))
+			update_hud_head(head)
+			return
 		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi')
 		update_hud_head(head)
 
@@ -402,8 +463,7 @@
 /mob/living/carbon/update_body(redraw = FALSE)
 	update_body_parts(redraw)
 
-/mob/living/carbon/proc/update_body_parts(redraw)
-	//CHECK FOR UPDATE
+/mob/living/carbon/proc/update_body_parts()
 	var/oldkey = icon_render_key
 	icon_render_key = generate_icon_render_key()
 	if(oldkey == icon_render_key)
@@ -411,21 +471,16 @@
 
 	remove_overlay(BODYPARTS_LAYER)
 
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		BP.update_limb()
-
-	//LOAD ICONS
 	if(limb_icon_cache[icon_render_key])
 		load_limb_from_cache()
 		return
 
-	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
+		BP.update_limb()
 		new_limbs += BP.get_limb_icon()
-	if(new_limbs.len)
+
+	if(length(new_limbs))
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 		limb_icon_cache[icon_render_key] = new_limbs
 
@@ -452,8 +507,7 @@
 
 /mob/living/carbon/proc/generate_icon_render_key()
 	. = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		. += BP.body_zone
 		switch(BP.use_digitigrade)
 			if(FULL_DIGITIGRADE)
@@ -462,10 +516,7 @@
 				. += "digitigrade_squashed"
 		if(BP.animal_origin)
 			. += BP.animal_origin
-		if(BP.status == BODYPART_ORGANIC)
-			. += "organic"
-		else
-			. += "robotic"
+		. += (BP.status == BODYPART_ORGANIC) ? "organic" : "robotic"
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "husk"

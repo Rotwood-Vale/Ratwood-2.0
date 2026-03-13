@@ -27,7 +27,6 @@
 	var/inscryption_key
 
 	food_type = /obj/item/reagent_containers/food/snacks/organ/heart
-	sellprice = 25
 
 /obj/item/organ/heart/Destroy()
 	for(var/datum/culling_duel/D in GLOB.graggar_cullings)
@@ -99,7 +98,7 @@
 				testing("heartseaten++")
 				H.hearts_eaten++
 				nothing = TRUE
-				S.eat_effect = /datum/status_effect/buff/foodbuff*/
+				S.eat_effect = /datum/status_effect/buff/snackbuff*/
 	if(!nothing)
 		S.eat_effect = /datum/status_effect/debuff/uncookedfood
 	return S

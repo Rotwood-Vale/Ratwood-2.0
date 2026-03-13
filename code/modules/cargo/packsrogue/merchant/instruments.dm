@@ -64,3 +64,18 @@
 	name = "Trumpet"
 	cost = 30
 	contains = list(/obj/item/rogue/instrument/trumpet)
+
+/datum/supply_pack/rogue/instruments/jawharp
+	name = "Jaw Harp"
+	cost = 30
+	contains = list(/obj/item/rogue/instrument/jawharp)
+
+/datum/supply_pack/rogue/instruments/bagpipe
+	name = "Bagpipe"
+	cost = 30
+	contains = list(/obj/item/rogue/instrument/bagpipe)
+
+/datum/supply_pack/rogue/instruments/psyalter
+	name = "Psyaltery"
+	cost = 30
+	contains = list(/obj/item/rogue/instrument/psyaltery)

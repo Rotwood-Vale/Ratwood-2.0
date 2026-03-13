@@ -35,11 +35,19 @@
 	faction = list("undead")
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 	del_on_death = TRUE
+	var/start_take_damage = FALSE
+	var/damage_check
+	var/wither = 3
+	var/newcolor = rgb(207, 135, 255) //used for livetime code.
 
 	can_have_ai = FALSE //disable native ai
 	AIStatus = AI_OFF
 	ai_controller = /datum/ai_controller/simple_skeleton
 	melee_cooldown = SKELETON_ATTACK_SPEED
+
+/mob/living/simple_animal/hostile/rogue/skeleton/Initialize(mapload, mob/user, cabal_affine, is_summoned)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/axe
 	name = "Skeleton"
@@ -121,20 +129,30 @@
 		else
 			summoner = user.name
 	if (is_summoned || cabal_affine)
-		faction |= "cabal"
+		faction = list("cabal") //No mix undead faction and cabal, summoned skeletons can attack any undead, mark your friends
 	// adds the name of the summoner to the faction, to avoid the hooded "Unknown" bug with Skeleton IDs
 	if(user && user.mind && user.mind.current)
-		faction |= "[user.mind.current.real_name]_faction"
+		faction = list("[user.mind.current.real_name]_faction") //if you summon this, he not affected on cabal. This skeletons can attack any undead and other zizo affected characters
 		// lich also gets to have friendlies, as a treat
 		var/datum/antagonist/lich/lich_antag = user.mind.has_antag_datum(/datum/antagonist/lich)
 		if(lich_antag && user.real_name)
-			faction |= "[user.real_name]_faction"
+			faction = list("undead", "[user.mind.current.real_name]_faction", "[user.real_name]_faction") //no changes. Undead faction + lich_name faction
+	damage_check = world.time
+	if(is_summoned) //check, if it NOT summoned skeleton, he lifetime - infinity. For mapping-spawned skeltons
+		addtimer(CALLBACK(src, PROC_REF(deathtime)), 1 MINUTES)
 
-/mob/living/simple_animal/hostile/rogue/skeleton/Life()
+/mob/living/simple_animal/hostile/rogue/skeleton/proc/deathtime()
+	src.add_atom_colour(newcolor, ADMIN_COLOUR_PRIORITY)
+	start_take_damage = TRUE
+
+/mob/living/simple_animal/hostile/rogue/skeleton/Life(mob/user)
 	. = ..()
 	if(!target)
 		if(prob(60))
 			emote(pick("idle"), TRUE)
+	if(start_take_damage == TRUE)
+		if(world.time > damage_check + 5 SECONDS)
+			src.adjustFireLoss(8) //+- one and a half minutes for 150 HP (any skeleton) and two minute for guard skeleton (200 HP)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/taunted(mob/user)
 	emote("aggro")
@@ -146,7 +164,7 @@
 		return FALSE
 	if (!(user.name in friends))
 		return FALSE
-	
+
 	return TRUE
 
 /mob/living/simple_animal/hostile/rogue/skeleton/beckoned(mob/user)
@@ -189,7 +207,7 @@
 
 /datum/intent/simple/claw/skeleton
 	clickcd = SKELETON_ATTACK_SPEED
-	
+
 /datum/intent/simple/spear/skeleton
 	reach = 2
 	clickcd = SKELETON_ATTACK_SPEED * 1.2
@@ -208,14 +226,14 @@
 	ai_controller = /datum/ai_controller/skeleton_ranged/event
 
 /mob/living/simple_animal/hostile/rogue/skeleton/axe/Initialize(mapload, mob/user, cabal_affine = FALSE, is_summoned = FALSE)
-    . = ..(mapload, user, cabal_affine, is_summoned)
+	. = ..(mapload, user, cabal_affine, is_summoned)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/spear/Initialize(mapload, mob/user, cabal_affine = FALSE, is_summoned = FALSE)
-    . = ..(mapload, user, cabal_affine, is_summoned)
+	. = ..(mapload, user, cabal_affine, is_summoned)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/guard/Initialize(mapload, mob/user, cabal_affine = FALSE, is_summoned = FALSE)
-    . = ..(mapload, user, cabal_affine, is_summoned)
+	. = ..(mapload, user, cabal_affine, is_summoned)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/bow/Initialize(mapload, mob/user, cabal_affine = FALSE, is_summoned = FALSE)
-    . = ..(mapload, user, cabal_affine, is_summoned)
+	. = ..(mapload, user, cabal_affine, is_summoned)
 

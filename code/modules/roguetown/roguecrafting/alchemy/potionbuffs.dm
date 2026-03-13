@@ -72,3 +72,21 @@
 	name = STATKEY_LCK
 	icon_state = "buff"
 
+/datum/status_effect/buff/alch/fire_resist
+	id = "fire resistance"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/fire_resist
+	duration = 15 MINUTES
+
+/datum/status_effect/buff/alch/fire_resist/on_apply()
+	. = ..()
+	if(!HAS_TRAIT(owner, TRAIT_NOFIRE))
+		ADD_TRAIT(owner, TRAIT_NOFIRE, TRAIT_STATUS_EFFECT)
+
+/datum/status_effect/buff/alch/fire_resist/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_NOFIRE, TRAIT_STATUS_EFFECT)
+
+/atom/movable/screen/alert/status_effect/buff/alch/fire_resist
+	name = "Fire Resistance"
+	desc = "My hide toughens to fire."
+	icon_state = "buff"

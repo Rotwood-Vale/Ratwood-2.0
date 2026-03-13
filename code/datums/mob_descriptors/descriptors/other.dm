@@ -30,6 +30,8 @@
 	var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penis)
 		return FALSE
+	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
+		return TRUE
 	if(H.underwear)
 		return FALSE
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))
@@ -48,15 +50,18 @@
 			adjective = "an average"
 		if(3)
 			adjective = "a large"
-	switch(H.sexcon.arousal)
-		if(80 to INFINITY)
-			arousal_modifier = ", throbbing violently"
-		if(50 to 80)
-			arousal_modifier = ", turgid and leaky"
-		if(20 to 50)
-			arousal_modifier = ", stiffened and twitching"
-		else
-			arousal_modifier = ", soft and flaccid"
+	if(H.sexcon)
+		switch(H.sexcon.arousal)
+			if(80 to INFINITY)
+				arousal_modifier = ", throbbing violently"
+			if(50 to 80)
+				arousal_modifier = ", turgid and leaky"
+			if(20 to 50)
+				arousal_modifier = ", stiffened and twitching"
+			else
+				arousal_modifier = ", soft and flaccid"
+	else
+		arousal_modifier = ", soft and flaccid"
 	var/used_name
 	if(penis.erect_state != ERECT_STATE_HARD && penis.sheath_type != SHEATH_TYPE_NONE)
 		switch(penis.sheath_type)
@@ -69,7 +74,10 @@
 				used_name = "a genital slit"
 	else
 		used_name = "[adjective] [penis.name][arousal_modifier]"
-	return "[used_name]"
+	var/branded = ""
+	if(length(penis.branded_writing))
+		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(penis.branded_writing)]</span>"
+	return "[used_name][branded]"
 
 /datum/mob_descriptor/testicles
 	name = "balls"
@@ -82,14 +90,16 @@
 		return FALSE
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/testicles/testes = H.getorganslot(ORGAN_SLOT_TESTICLES)
+	var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
+	if(penis && penis.sheath_type == SHEATH_TYPE_SLIT) //If our penis hides in a slit, dont describe testicles
+		return FALSE
 	if(!testes)
 		return FALSE
+	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
+		return TRUE
 	if(H.underwear)
 		return FALSE
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))
-		return FALSE
-	var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
-	if(penis && penis.sheath_type == SHEATH_TYPE_SLIT) //If our penis hides in a slit, dont describe testicles
 		return FALSE
 	return TRUE
 
@@ -104,7 +114,10 @@
 			adjective = "an average"
 		if(3)
 			adjective = "a large"
-	return "[adjective] pair of balls"
+	var/branded = ""
+	if(length(testes.branded_writing))
+		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(testes.branded_writing)]</span>"
+	return "[adjective] pair of balls[branded]"
 
 /datum/mob_descriptor/vagina
 	name = "vagina"
@@ -119,6 +132,8 @@
 	var/obj/item/organ/vagina/vagina = H.getorganslot(ORGAN_SLOT_VAGINA)
 	if(!vagina)
 		return FALSE
+	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
+		return TRUE
 	if(H.underwear)
 		return FALSE
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))
@@ -135,6 +150,8 @@
 			vagina_type = "plain vagina"
 		if(/datum/sprite_accessory/vagina/hairy)
 			vagina_type = "hairy vagina"
+		if(/datum/sprite_accessory/vagina/trimmed)
+			vagina_type = "trimmed vagina"
 		if(/datum/sprite_accessory/vagina/spade)
 			vagina_type = "spade vagina"
 		if(/datum/sprite_accessory/vagina/furred)
@@ -150,7 +167,10 @@
 			arousal_modifier = ", slickened with arousal"
 		if(20 to 50)
 			arousal_modifier = ", wet with arousal"
-	return "a [vagina_type][arousal_modifier]"
+	var/branded = ""
+	if(length(vagina.branded_writing))
+		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(vagina.branded_writing)]</span>"
+	return "a [vagina_type][arousal_modifier][branded]"
 
 /datum/mob_descriptor/breasts
 	name = "breasts"
@@ -177,7 +197,7 @@
 	var/adjective
 	switch(breasts.breast_size)
 		if(0)
-			adjective = "a flat"
+			adjective = "a flat chest"
 		if(1)
 			adjective = "a slight"
 		if(2)
@@ -202,4 +222,9 @@
 			adjective = "a stomach-hiding"
 		if(12)
 			adjective = "a torso-sized"
-	return "[adjective] pair of breasts"
+	var/branded = ""
+	if(length(breasts.branded_writing))
+		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(breasts.branded_writing)]</span>"
+	if(breasts.breast_size == 0)
+		return "[adjective][branded]"
+	return "[adjective] pair of breasts[branded]"

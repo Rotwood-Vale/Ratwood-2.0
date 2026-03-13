@@ -49,11 +49,11 @@
 	var/food_type = /obj/item/reagent_containers/food/snacks/organ
 	/// Original owner of the organ, the one who had it inside them last
 	var/mob/living/carbon/last_owner = null
+	/// Whether or not this organ should be regenerated at /datum/job/proc/equip() in _job.dm via /mob/living/carbon/proc/apply_organ_stuff()
+	var/should_regenerate = FALSE
 
 	grid_width = 32
 	grid_height = 32
-
-	sellprice = 10
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -84,6 +84,7 @@
 
 //Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	SEND_SIGNAL(owner, COMSIG_MOB_ORGAN_REMOVED, src, special, drop_if_replaced)
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -106,7 +107,6 @@
 		qdel(src)
 		return
 	..()
-	
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
@@ -164,7 +164,7 @@
 
 /obj/item/reagent_containers/food/snacks/organ/On_Consume(mob/living/eater)		//Graggarites looove eating organs, they loooove eating organs!
 	if(HAS_TRAIT(eater, TRAIT_ORGAN_EATER))
-		eat_effect = /datum/status_effect/buff/foodbuff
+		eat_effect = /datum/status_effect/buff/snackbuff
 		check_culling(eater)
 		foodtype = RAW | MEAT
 	else
@@ -172,7 +172,8 @@
 		foodtype = initial(foodtype)
 	if(bitecount >= bitesize)
 		record_featured_stat(FEATURED_STATS_CRIMINALS, eater)
-		GLOB.azure_round_stats[STATS_ORGANS_EATEN]++
+		record_round_statistic(STATS_ORGANS_EATEN)
+		check_culling(eater)
 		SEND_SIGNAL(eater, COMSIG_ORGAN_CONSUMED, src.type)
 	. = ..()
 
@@ -205,7 +206,7 @@
 			D.process_win(winner = eater, loser = challenger)
 			return TRUE
 
-/obj/item/organ/Initialize()
+/obj/item/organ/Initialize(mapload)
 	. = ..()
 	if(accessory_type)
 		set_accessory_type(accessory_type)
@@ -250,11 +251,11 @@
 	applyOrganDamage(d - damage)
 
 /** check_damage_thresholds
-  * input: M (a mob, the owner of the organ we call the proc on)
-  * output: returns a message should get displayed.
-  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
-  *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
-  */
+ * input: M (a mob, the owner of the organ we call the proc on)
+ * output: returns a message should get displayed.
+ * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
+ *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
+ */
 /obj/item/organ/proc/check_damage_thresholds(mob/M)
 	if(damage == prev_damage)
 		return
@@ -403,3 +404,10 @@
 		if(!getorganslot(ORGAN_SLOT_EARS))
 			var/obj/item/organ/ears/ears = new()
 			ears.Insert(src)
+
+/mob/living/carbon/proc/apply_organ_stuff()
+	if(dna?.species)
+		dna.species.apply_organ_stuff_species(src)
+		return
+	else
+		regenerate_organs()

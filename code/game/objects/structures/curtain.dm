@@ -12,6 +12,25 @@
 	opacity = 0
 	density = FALSE
 	var/open = TRUE
+	var/closedir = 0
+	var/directional = FALSE//Do these care about which side you open from in the first place?
+
+/obj/structure/curtain/directional
+	icon_state = "curtaindir"
+	directional = TRUE//Do these care about which side you open from in the first place?
+
+//Because we don't want existing curtains to update on spawn like this.
+/obj/structure/curtain/directional/Initialize(mapload)
+	closedir = dir
+	update_icon()
+	..()
+
+//Crafted directional curtain - only openable from one side
+/obj/structure/curtain/directional/crafted
+
+/obj/structure/curtain/directional/crafted/OnCrafted(dirin)
+	dir = turn(dirin, 180)
+	closedir = dir
 
 /obj/structure/curtain/proc/toggle()
 	open = !open
@@ -53,8 +72,16 @@
 	. = ..()
 	if(.)
 		return
-	playsound(loc, 'sound/foley/doors/curtain.ogg', 50, TRUE)
-	toggle()
+	if(directional)
+		if(get_dir(src,user) == closedir)
+			toggle()
+			playsound(loc, 'sound/foley/doors/curtain.ogg', 50, TRUE)
+		else
+			to_chat(user, span_warning("These curtains can't be manipulated from this side."))
+	else
+		toggle()
+		playsound(loc, 'sound/foley/doors/curtain.ogg', 50, TRUE)
+
 
 /obj/structure/curtain/deconstruct(disassembled = TRUE)
 	qdel(src)
@@ -68,12 +95,6 @@
 				playsound(loc, 'sound/blank.ogg', 50, TRUE)
 		if(BURN)
 			playsound(loc, 'sound/blank.ogg', 80, TRUE)
-
-/obj/structure/curtain/bounty
-	icon_type = "bounty"
-	icon_state = "bounty-open"
-	color = null
-	alpha = 255
 
 /obj/structure/curtain/red
 	color = "#a32121"
@@ -95,3 +116,38 @@
 
 /obj/structure/curtain/black
 	color = "#414143"
+
+/obj/structure/curtain/orange
+	color = "#a3622c"
+
+/obj/structure/curtain/yellow
+	color = "#a18727"
+
+
+//This is awful and I apologise.
+/obj/structure/curtain/directional/red
+	color = "#a32121"
+
+/obj/structure/curtain/directional/blue
+	color = CLOTHING_BLUE
+
+/obj/structure/curtain/directional/green
+	color = CLOTHING_DARK_GREEN
+
+/obj/structure/curtain/directional/brown
+	color = CLOTHING_BROWN
+
+/obj/structure/curtain/directional/purple
+	color = "#8747b1"
+
+/obj/structure/curtain/directional/magenta
+	color = "#962e5c"
+
+/obj/structure/curtain/directional/black
+	color = "#414143"
+
+/obj/structure/curtain/directional/orange
+	color = "#a3622c"
+
+/obj/structure/curtain/directional/yellow
+	color = "#a18727"

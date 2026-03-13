@@ -38,11 +38,11 @@
 
 /datum/sex_action/force_cunnilingus/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to suck [user.p_their()] cunt."))
-	target.make_sucking_noise()
+	user.sexcon.oralcourse_noise(target)
 	target.sexcon.do_thrust_animate(user)
 
 	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
-	user.sexcon.handle_passive_ejaculation()
+	user.sexcon.handle_passive_ejaculation(splashed_user = target)
 
 	user.sexcon.perform_sex_action(target, 0, 2, FALSE)
 	target.sexcon.handle_passive_ejaculation()

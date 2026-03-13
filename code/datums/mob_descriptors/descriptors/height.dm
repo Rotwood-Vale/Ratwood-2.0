@@ -23,6 +23,10 @@
 	name = "Towering"
 	prefix = "a"
 
+/datum/mob_descriptor/height/giant
+	name = "Giant"
+	prefix = "a"
+
 /datum/mob_descriptor/height/tiny
 	name = "Tiny"
 	prefix = "a"

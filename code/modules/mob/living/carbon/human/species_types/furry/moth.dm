@@ -5,14 +5,14 @@
 	name = "Fluvian"
 	id = "moth"
 	desc = "<b>Fluvian</b><br> \
-    Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
-    Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and \
+	Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
+	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and \
 	rituals, not much is known about the moth-kin. These so-called \"mystics\" are rarely seen within humen and \
 	beastkin settlements, but those that find themselves in civilisation are oft ascended to nobility.<br>\
 	(+1 Speed, Blackleg Trait)"
 
 	expanded_desc = "Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
-    Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and rituals, not much \
+	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and rituals, not much \
 	is known about the moth-kin.\ These so-called \"mystics\" are rarely seen within humen and beastkin settlements. \
 	<br><br> \
 	Scholars frequently argue about the patron god of the Fluvian race, erring towards either the twin of Astrata, Noc, or the God-Head \
@@ -29,16 +29,17 @@
 	soundpack_m = /datum/voicepack/male/moth
 	soundpack_f = /datum/voicepack/female/moth
 	offset_features = list(
-		OFFSET_ID = list(0,1), OFFSET_GLOVES = list(0,1), OFFSET_WRISTS = list(0,1),\
-		OFFSET_CLOAK = list(0,1), OFFSET_FACEMASK = list(0,1), OFFSET_HEAD = list(0,1), \
-		OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
-		OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,0), \
-		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
+		OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_WRISTS = list(0,0),\
+		OFFSET_CLOAK = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), \
+		OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), \
+		OFFSET_NECK = list(0,0), OFFSET_MOUTH = list(0,0), OFFSET_PANTS = list(0,0), \
+		OFFSET_SHIRT = list(0,0), OFFSET_ARMOR = list(0,0), OFFSET_HANDS = list(0,0), OFFSET_UNDIES = list(0,0), \
 		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
 		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
 		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,0), OFFSET_BACK_F = list(0,-1), \
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		OFFSET_BREASTS_F = list(0,-1), \
 		)
 	inherent_traits = list(TRAIT_BLACKLEG)
 	race_bonus = list(STAT_SPEED = 1)//This should include fortune. RAAAAAA
@@ -118,9 +119,10 @@
 		/datum/body_marking/nose,
 	)
 	descriptor_choices = list(
+		/datum/descriptor_choice/trait,
+		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/height,
 		/datum/descriptor_choice/body,
-		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/face,
 		/datum/descriptor_choice/face_exp,
 		/datum/descriptor_choice/chitin,

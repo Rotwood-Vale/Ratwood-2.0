@@ -34,7 +34,7 @@
 	else
 		. += "Can be used indefinitely."
 
-/obj/item/needle/Initialize()
+/obj/item/needle/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -62,7 +62,7 @@
 			return
 
 		to_chat(user, "I begin threading the needle with additional fibers...")
-		if(do_after(user, 6 SECONDS - user.get_skill_level(/datum/skill/misc/sewing), target = I))
+		if(do_after(user, 6 SECONDS - user.get_skill_level(/datum/skill/craft/sewing), target = I))
 			var/refill_amount
 			refill_amount = min(5, (maxstring - stringamt))
 			stringamt += refill_amount
@@ -92,7 +92,7 @@
 			/// The chance to damage an item when entirely unskilled.
 			var/const/BASE_FAIL_CHANCE = 60
 			/// The (combined) skill level at or above which repairs can't fail.
-			var/const/SKILL_NO_FAIL = SKILL_LEVEL_JOURNEYMAN
+			var/const/SKILL_NO_FAIL = SKILL_LEVEL_APPRENTICE
 			/// Each level in tanning/sewing reduces the skill chance by this much, so that at SKILL_NO_FAIL you don't fail anymore.
 			var/const/FAIL_REDUCTION_PER_LEVEL = BASE_FAIL_CHANCE / SKILL_NO_FAIL
 			/// The damage done to an item when sewing fails while entirely unskilled.
@@ -122,7 +122,7 @@
 
 			// This is the actual code that applies those constants.
 			// If you want to adjust the balance please try just tweaking the above constants first!
-			var/skill = user.get_skill_level(/datum/skill/misc/sewing) + user.get_skill_level(/datum/skill/craft/tanning)
+			var/skill = user.get_skill_level(/datum/skill/craft/sewing) + user.get_skill_level(/datum/skill/craft/tanning)
 			// The more knowlegeable we are the less chance we damage the object
 			var/failed = prob(BASE_FAIL_CHANCE - (skill * FAIL_REDUCTION_PER_LEVEL))
 			var/sewtime = max(SEW_MIN_TIME, BASE_SEW_TIME - (SEW_TIME_REDUCTION_PER_LEVEL * skill))
@@ -138,7 +138,7 @@
 				user.visible_message(span_info("[user] damages [I] due to a lack of skill!"))
 				playsound(src, 'sound/foley/cloth_rip.ogg', 50, TRUE)
 				if(XP_ON_FAIL > 0)
-					user.mind.add_sleep_experience(/datum/skill/misc/sewing, user.STAINT * XP_ON_FAIL)
+					user.mind.add_sleep_experience(/datum/skill/craft/sewing, user.STAINT * XP_ON_FAIL)
 				if(do_after(user, AUTO_SEW_DELAY, target = I))
 					attack_obj(I, user)
 				return
@@ -149,7 +149,7 @@
 					user.visible_message(span_info("[user] repairs [I]'s coverage!"))
 					I.repair_coverage()
 				if(XP_ON_SUCCESS > 0)
-					user.mind.add_sleep_experience(/datum/skill/misc/sewing, user.STAINT * XP_ON_SUCCESS)
+					user.mind.add_sleep_experience(/datum/skill/craft/sewing, user.STAINT * XP_ON_SUCCESS)
 				I.obj_integrity = min(I.obj_integrity + BASE_SEW_REPAIR + skill * SEW_REPAIR_PER_LEVEL, I.max_integrity)
 				if(I.obj_broken && istype(I, /obj/item/clothing) && I.obj_integrity >= I.max_integrity)
 					var/obj/item/clothing/cloth = I
@@ -164,12 +164,13 @@
 	if(!istype(user))
 		return FALSE
 	var/mob/living/doctor = user
-	var/mob/living/carbon/human/patient = target
+	var/mob/living/patient = target
 	if(stringamt < 1)
 		to_chat(user, span_warning("The needle has no thread left!"))
 		return
 	var/list/sewable
 	var/obj/item/bodypart/affecting
+	var/is_simple_animal = !iscarbon(patient)
 	if(iscarbon(patient))
 		affecting = patient.get_bodypart(check_zone(doctor.zone_selected))
 		if(!affecting)
@@ -186,37 +187,40 @@
 		return FALSE
 
 	var/moveup = 10
-	var/medskill = doctor.get_skill_level(/datum/skill/misc/medicine)
+	var/skill_used = target.construct ? /datum/skill/craft/engineering : /datum/skill/misc/medicine
+	var/doctor_skill = doctor.get_skill_level(skill_used)
 	var/informed = FALSE
-	moveup = (medskill+1) * 4
-	if(medskill > SKILL_LEVEL_EXPERT)
-		if(medskill == SKILL_LEVEL_MASTER)
-			moveup = medskill * 6
-		else if(medskill == SKILL_LEVEL_LEGENDARY)
-			moveup = medskill * 7
+	moveup = (doctor_skill+1) * 4
+	if(doctor_skill > SKILL_LEVEL_EXPERT)
+		if(doctor_skill == SKILL_LEVEL_MASTER)
+			moveup = doctor_skill * 6
+		else if(doctor_skill == SKILL_LEVEL_LEGENDARY)
+			moveup = doctor_skill * 7
 	while(!QDELETED(target_wound) && !QDELETED(src) && \
 		!QDELETED(user) && (target_wound.sew_progress < target_wound.sew_threshold) && \
 		stringamt >= 1)
 		var/sewing_start_delay = 2 SECONDS
-		if(medskill > SKILL_LEVEL_EXPERT)
-			if(medskill == SKILL_LEVEL_MASTER)
+		if(doctor_skill > SKILL_LEVEL_EXPERT)
+			if(doctor_skill == SKILL_LEVEL_MASTER)
 				sewing_start_delay = 1.5 SECONDS
-			else if(medskill == SKILL_LEVEL_LEGENDARY)
+			else if(doctor_skill == SKILL_LEVEL_LEGENDARY)
 				sewing_start_delay = 1 SECONDS
 		if(!do_after(doctor, sewing_start_delay, target = patient))
 			break
 		playsound(loc, 'sound/foley/sewflesh.ogg', 100, TRUE, -2)
 		target_wound.sew_progress = min(target_wound.sew_progress + moveup, target_wound.sew_threshold)
-
-		var/bleedreduction = max((0.5 * medskill), 0.5)
-		if(medskill > SKILL_LEVEL_EXPERT)
-			if(medskill == SKILL_LEVEL_MASTER)
+		var/bleedreduction = max((0.5 * doctor_skill), 0.5)
+		if(doctor_skill > SKILL_LEVEL_EXPERT)
+			if(doctor_skill == SKILL_LEVEL_MASTER)
 				bleedreduction = 3
-			else if(medskill == SKILL_LEVEL_LEGENDARY)
+			else if(doctor_skill == SKILL_LEVEL_LEGENDARY)
 				bleedreduction = 4
-		target_wound.bleed_rate = max( (target_wound.bleed_rate - bleedreduction), 0)
+		target_wound.set_bleed_rate(max( (target_wound.bleed_rate - bleedreduction), 0))
 		if(target_wound.bleed_rate == 0 && !informed)
-			patient.visible_message(span_smallgreen("One last drop of blood trickles from the [(target_wound.name)] on [patient]'s [affecting.name] before it closes."), span_smallgreen("The throbbing warmth coming out of [target_wound] soothes and stops. It no longer bleeds."))
+			if(is_simple_animal)
+				patient.visible_message(span_smallgreen("One last drop of blood trickles from the [(target_wound?.name)] on [patient] before it closes."), span_smallgreen("The throbbing warmth coming out of [target_wound] soothes and stops. It no longer bleeds."))
+			else
+				patient.visible_message(span_smallgreen("One last drop of blood trickles from the [(target_wound?.name)] on [patient]'s [affecting.name] before it closes."), span_smallgreen("The throbbing warmth coming out of [target_wound] soothes and stops. It no longer bleeds."))
 			informed = TRUE
 		if(istype(target_wound, /datum/wound/dynamic))
 			var/datum/wound/dynamic/dynwound = target_wound
@@ -227,13 +231,19 @@
 		if(target_wound.sew_progress < target_wound.sew_threshold)
 			continue
 		if(doctor.mind)
-			doctor.mind.add_sleep_experience(/datum/skill/misc/medicine, doctor.STAINT * 2.5)
-		use(1)
+			doctor.mind.add_sleep_experience(skill_used, doctor.STAINT * 2.5)
+		if(!target.construct)
+			use(1)
 		target_wound.sew_wound()
 		if(patient == doctor)
-			doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [doctor.p_them()]self."), span_notice("I stitch \a [target_wound.name] on my [affecting]."))
+			if(is_simple_animal)
+				doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [doctor.p_them()]self."), span_notice("I stitch \a [target_wound.name] on myself."))
+			else
+				doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [doctor.p_them()]self."), span_notice("I stitch \a [target_wound.name] on my [affecting]."))
 		else
-			if(affecting)
+			if(is_simple_animal)
+				doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [patient]."), span_notice("I stitch \a [target_wound.name] on [patient]."))
+			else if(affecting)
 				doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [patient]'s [affecting]."), span_notice("I stitch \a [target_wound.name] on [patient]'s [affecting]."))
 			else
 				doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [patient]."), span_notice("I stitch \a [target_wound.name] on [patient]."))

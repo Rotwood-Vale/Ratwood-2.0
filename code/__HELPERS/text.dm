@@ -97,6 +97,14 @@
 /proc/sanitize(t,list/repl_chars = null)
 	return html_encode(sanitize_simple(t,repl_chars))
 
+/// Sanitizes text while preserving newlines as HTML &lt;br&gt; tags.
+/// Use this for ticket messages so line breaks survive sanitize() and display correctly in TGUI.
+/proc/sanitize_preserve_newlines(t)
+	var/list/lines = splittext(t, "\n")
+	for(var/i = 1 to lines.len)
+		lines[i] = sanitize(lines[i])
+	return jointext(lines, "<br>")
+
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
 /proc/strip_html(t,limit=MAX_MESSAGE_LEN)
@@ -107,6 +115,12 @@
 /proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
+/proc/remove_color_tags(html_text)
+	var/output = html_text
+	output = replacetext(output, regex("<font\[^>\]*color=\[^>\]*>", "g"), "")
+	output = replacetext(output, "</font>", "")
+	output = replacetext(output, regex("color=\[^ >\]*", "g"), "")
+	return output
 
 //Returns null if there is any bad text in the string
 /proc/reject_bad_text(text, max_length=512)
@@ -571,7 +585,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	return t
 
-/proc/parsemarkdown_basic_step2(t)
+/proc/parsemarkdown_basic_step2(t, hyperlink=FALSE)
 	if(length(t) <= 0)
 		return
 
@@ -593,11 +607,15 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	t = replacetext(t, "$0", "%")
 	t = replacetext(t, "$-", "$")
 
+	if(hyperlink)
+		testing("t is [t]")
+		t = replacetext(t, regex(@"https?:\/\/[^\s$.?#].[^\s]*", "gi"), "<a href=\"$0\">$0</a>")
+
 	return t
 
-/proc/parsemarkdown_basic(t, limited=FALSE, barebones = FALSE)
+/proc/parsemarkdown_basic(t, limited=FALSE, barebones = FALSE, hyperlink=FALSE)
 	t = parsemarkdown_basic_step1(t, limited, barebones)
-	t = parsemarkdown_basic_step2(t)
+	t = parsemarkdown_basic_step2(t, hyperlink)
 	return t
 
 /proc/parsemarkdown(t, mob/user=null, limited=FALSE)
@@ -750,7 +768,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return string
 
 	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
-	var/macro = lowertext(copytext(string, next_backslash + 1, next_space))
+	var/macro = LOWER_TEXT(copytext(string, next_backslash + 1, next_space))
 	var/rest = next_backslash > leng ? "" : copytext(string, next_space + 1)
 
 	//See https://secure.byond.com/docs/ref/info.html#/DM/text/macros
@@ -908,3 +926,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/sanitize_css_class_name(name)
 	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
 	return replacetext(name, regex, "")
+
+/proc/endswith(input_text, ending)
+	var/input_length = LAZYLEN(ending)
+	return !!findtext(input_text, ending, -input_length)

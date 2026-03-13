@@ -33,7 +33,7 @@
 
 //Destroyer of knowledge - for storytellers
 /obj/item/book/fire_act()
-	GLOB.azure_round_stats[STATS_BOOKS_BURNED]++
+	record_round_statistic(STATS_BOOKS_BURNED)
 	..()
 
 
@@ -103,9 +103,8 @@
 		for(var/A in pages)
 			dat += A
 			dat += "<br>"
-		dat += "<a href='?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
 		dat += "</body></html>"
-		user << browse(dat, "window=reading;size=1000x700;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=0;border=0")
+		user << browse(dat, "window=reading;size=1000x700;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=1;border=0")
 		onclose(user, "reading", src)
 	else
 		return span_warning("You're too far away to read it.")

@@ -17,7 +17,6 @@
 	response_help_simple = "pass through"
 	maxHealth = HAUNT_HEALTH
 	health = HAUNT_HEALTH
-	spacewalk = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	speed = 1
@@ -122,7 +121,7 @@
 	var/spawning = FALSE
 	attacked_sound = 'sound/vo/mobs/ghost/skullpile_hit.ogg'
 
-/obj/structure/bonepile/Initialize()
+/obj/structure/bonepile/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, FALSE)
 	soundloop.start()
@@ -177,7 +176,7 @@
 	GiveTarget(user)
 	return
 
-/mob/living/simple_animal/hostile/rogue/haunt/Initialize()
+/mob/living/simple_animal/hostile/rogue/haunt/Initialize(mapload)
 	. = ..()
 	set_light(2, 2, 2, l_color = "#c0523f")
 	ADD_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)

@@ -56,7 +56,7 @@
 
 	var/stomp_cd
 
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/colossus/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/colossus/Initialize(mapload)
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
 	. = ..()
 
@@ -72,9 +72,6 @@
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
-		if(!Process_Spacemove()) //Drifting
-			walk(src,0)
-			return 1
 		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
 				walk_away(src,target,retreat_distance,move_to_delay)
@@ -85,7 +82,7 @@
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				MeleeAction()
-				if(world.time >= stomp_cd + 25 SECONDS && !mind)
+				if(world.time >= stomp_cd + 25 SECONDS && !client)//players get a spell
 					stomp(target)
 			else
 				if(rapid_melee > 1 && target_distance <= melee_queue_distance)
@@ -108,6 +105,8 @@
 	new /obj/item/magic/elemental/fragment(deathspot)
 	new /obj/item/magic/elemental/shard(deathspot)
 	new /obj/item/magic/elemental/shard(deathspot)
+	new /obj/item/magic/elemental/mote(deathspot)
+	new /obj/item/magic/elemental/mote(deathspot)
 	new /obj/item/magic/elemental/mote(deathspot)
 	new /obj/item/magic/elemental/mote(deathspot)
 	new /obj/item/magic/melded/t2(deathspot)
@@ -156,9 +155,11 @@
 
 /obj/projectile/earthenchunk/on_hit(target)
 	. = ..()
-	var/list/spawnLists = list(/mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler,
-	/mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler,
-	 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler)
+	var/list/spawnLists = list(
+		/mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler,
+		/mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler,
+		/mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler,
+	)
 	var/reinforcement_count = 3
 	if(prob(20))
 		src.visible_message(span_notice("[src] breaks apart, scattering minor elementals about!"))

@@ -11,6 +11,8 @@
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_LEG_STEEL_PLATE
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
+	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 	r_sleeve_status = SLEEVE_NOMOD
@@ -66,7 +68,7 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 	armor = ARMOR_ASCENDANT
 
-/obj/item/clothing/under/roguetown/platelegs/matthios/Initialize()
+/obj/item/clothing/under/roguetown/platelegs/matthios/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "ARMOR")
@@ -86,7 +88,7 @@
 	armor = ARMOR_ASCENDANT
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 
-/obj/item/clothing/under/roguetown/platelegs/zizo/Initialize()
+/obj/item/clothing/under/roguetown/platelegs/zizo/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")

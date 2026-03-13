@@ -190,6 +190,25 @@
 	name = "fung-eye"
 	desc = ""
 
+/obj/item/organ/eyes/night_vision/vampire/ui_action_click()
+	sight_flags = initial(sight_flags)
+	var/atom/movable/screen/plane_master/weather_plane = usr.hud_used?.plane_masters?["[WEATHER_EFFECT_PLANE]"]
+	switch(lighting_alpha)
+		if(LIGHTING_PLANE_ALPHA_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			weather_plane?.alpha = 225
+		if(LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			weather_plane?.alpha = 200
+		if(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+			weather_plane?.alpha = 170
+		else
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			weather_plane?.alpha = 255
+			sight_flags &= ~SEE_BLACKNESS
+	owner.update_sight()
+
 /obj/item/organ/eyes/elf
 	name = "elf eyes"
 	desc = ""
@@ -279,7 +298,7 @@
 	var/image/mob_overlay
 	var/datum/component/mobhook
 
-/obj/item/organ/eyes/robotic/glow/Initialize()
+/obj/item/organ/eyes/robotic/glow/Initialize(mapload)
 	. = ..()
 	mob_overlay = image('icons/mob/human_face.dmi', "eyes_glow_gs")
 
@@ -435,7 +454,7 @@
 /obj/effect/abstract/eye_lighting
 	var/obj/item/organ/eyes/robotic/glow/parent
 
-/obj/effect/abstract/eye_lighting/Initialize()
+/obj/effect/abstract/eye_lighting/Initialize(mapload)
 	. = ..()
 	parent = loc
 	if(!istype(parent))
@@ -456,7 +475,7 @@
 	icon_state = "snail_eyeballs"
 
 
-/proc/set_eye_color(var/mob/living/carbon/mob, color_one, color_two)
+/proc/set_eye_color(mob/living/carbon/mob, color_one, color_two)
 	var/obj/item/organ/eyes/eyes = mob.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return

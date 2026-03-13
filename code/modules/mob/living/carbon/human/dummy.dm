@@ -14,6 +14,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/Life()
 	return
 
+/mob/living/carbon/human/dummy/ignite_mob()
+	return FALSE
+
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
 	cut_overlays(TRUE)
@@ -47,3 +50,6 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 	if(istype(D))
 		D.wipe_state()
 		D.in_use = FALSE
+
+// fuck if I know - fill in for unit tests later
+/mob/living/carbon/human/consistent

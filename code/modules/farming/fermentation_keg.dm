@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	var/heat_decay = 0
 	sellprice = 15 // Default price for the keg.
 
-/obj/structure/fermentation_keg/Initialize()
+/obj/structure/fermentation_keg/Initialize(mapload)
 	. = ..()
 	create_reagents(900, OPENCONTAINER | NO_REACT | AMOUNT_VISIBLE | REFILLABLE) //on agv it should be 120u for water then rest can be other needed chemicals
 	recipe_crop_stocks = list()
@@ -246,7 +246,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if(options.len == 0)
 		return
 
-	if(user.get_skill_level(/datum/skill/craft/cooking) < 3)
+	if(user.get_skill_level(/datum/skill/craft/cooking) < SKILL_LEVEL_APPRENTICE)
 		to_chat(user, span_notice("I am not knowledgable enough to brew."))
 		return FALSE
 

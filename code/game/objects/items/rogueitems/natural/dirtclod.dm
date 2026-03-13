@@ -18,6 +18,8 @@
 	..()
 
 /obj/item/natural/dirtclod/Moved(oldLoc, dir)
+	if(QDELETED(src))
+		return
 	..()
 	if(isturf(loc))
 		var/turf/T = loc
@@ -40,7 +42,7 @@
 	user.visible_message(span_warning("[user] scatters [src]."))
 	qdel(src)
 
-/obj/item/natural/dirtclod/Initialize()
+/obj/item/natural/dirtclod/Initialize(mapload)
 	icon_state = "clod[rand(1,2)]"
 	..()
 	var/static/list/slapcraft_recipe_list = list(
@@ -87,6 +89,6 @@
 				return
 	..()
 
-/obj/structure/fluff/clodpile/Initialize()
+/obj/structure/fluff/clodpile/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	..()

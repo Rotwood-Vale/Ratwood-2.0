@@ -28,26 +28,27 @@
 		success = pacify_coffin(hole, user)
 		if(success)
 			user.visible_message("[user] consecrates [hole]!", "My funeral rites have been performed on [hole]!")
+			record_round_statistic(STATS_GRAVES_CONSECRATED)
 			return
 	to_chat(user, span_red("I failed to perform the rites."))
 
 /obj/effect/proc_holder/spell/targeted/churn
 	name = "Churn Undead"
 	desc = "Stuns and explodes undead."
-	range = 4	//Way lower, halved.
-	overlay_state = "necra"
+	range = 8//We return it, up from 4...
+	overlay_state = "necra_ult"//Temp.
 	releasedrain = 30
-	chargetime = 2 SECONDS
-	recharge_time = 60 SECONDS
-	max_targets = 0
+	chargetime = 6 SECONDS//Up from 2.
+	recharge_time = 2 MINUTES//Up from 60.
+	max_targets = 2//... in exchange for max targets...
 	cast_without_targets = TRUE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/churn.ogg'
 	associated_skill = /datum/skill/magic/holy
-	invocations = list("The Undermaiden rebukes!")
-	invocation_type = "shout" //can be none, whisper, emote and shout
+	invocations = list("The Undermaiden rebukes!!")
+	invocation_type = "shout"
 	miracle = TRUE
-	devotion_cost = 50
+	devotion_cost = 150//... with a higher devotion cost, at +100, from 50.
 
 /obj/effect/proc_holder/spell/targeted/churn/cast(list/targets,mob/living/user = usr)
 	var/prob2explode = 100
@@ -61,10 +62,9 @@
 		if(L.stat == DEAD)
 			continue
 		if(L.mind)
-			var/datum/antagonist/vampirelord/lesser/V = L.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser)
-			if(V)
-				if(!V.disguised)
-					isvampire = TRUE
+			var/datum/antagonist/vampire/V = L.mind.has_antag_datum(/datum/antagonist/vampire)
+			if(V && !SEND_SIGNAL(L, COMSIG_DISGUISE_STATUS))
+				isvampire = TRUE
 			if(L.mind.has_antag_datum(/datum/antagonist/zombie))
 				iszombie = TRUE
 			if(L.mind.special_role == "Vampire Lord" || L.mind.special_role == "Lich")	//Won't detonate Lich's or VLs but will fling them away.
@@ -89,290 +89,144 @@
 /*
 	DEATH'S DOOR
 */
-
-
 /obj/effect/proc_holder/spell/invoked/deaths_door
 	name = "Death's Door"
-	desc = "Opens a portal into a realm between lyfe and death, People can be dragged into the portal to be put into stasis, though undead will never return. Casting the portal again while people are trapped inside spits them out of the gates. <br>Necras domain will only hold people for five minutes at a time."
-	range = 7
+	desc = "Opens a one-way portal into a realm on the edge of death, People can be dragged into the portal to prevent their decay. Undead with be set aflame. Those whom enter the domain will find their Will to continue heavily weaken. <br>Necras domain can be left through a portal within to a shrine, or a grave/psycross marked with necra's sight."
+	range = 6
 	no_early_release = TRUE
-	charging_slowdown = 1
-	releasedrain = 20
 	chargedrain = 0
 	overlay_state = "deathdoor"
+	charging_slowdown = 1
 	chargetime = 2 SECONDS
-	chargedloop = null
+	recharge_time = 30 SECONDS
+	antimagic_allowed = TRUE
 	sound = 'sound/misc/deadbell.ogg'
 	invocations = list("Necra, show me my destination!")
 	invocation_type = "shout"
-	associated_skill = /datum/skill/magic/holy
-	antimagic_allowed = TRUE
-	recharge_time = 30 SECONDS
 	miracle = TRUE
 	devotion_cost = 30
 
-
 /obj/effect/proc_holder/spell/invoked/deaths_door/cast(list/targets, mob/living/user)
-	..()
-
 	var/turf/T = get_turf(targets[1])
 	if(!isopenturf(T))
-		to_chat(user, span_warning("The targeted location is blocked. I cannot open a doorway here."))
 		return FALSE
-	for (var/obj/structure/underworld_portal/e_portal in user.contents) // checks if the portal exists, and shits them out
-		if(istype(e_portal))
-			e_portal.dispelled = FALSE //we are recasting after dispelling, its safe to set this as false.
-			e_portal.spitout_mob(user, T)
-			return TRUE
-	if(!locate(/obj/structure/underworld_portal) in T)
-		var/obj/structure/underworld_portal/portal = new /obj/structure/underworld_portal(T)
-		portal.caster = user
-		return TRUE
+
+	if(locate(/obj/structure/deaths_door_portal) in T)
+		to_chat(user, span_warning("A gate already stands here."))
+		return FALSE
+
+	new /obj/structure/deaths_door_portal(T, user)
+	return TRUE
 
 
-/obj/structure/underworld_portal
-	name = "underworld portal"
-	desc = null // see examine
-	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "underworldportal"
-	max_integrity = 50
-	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	anchored = TRUE
-	density = FALSE
-	var/mob/living/caster // stores the caster. obviously.
-	var/mob/living/trapped // stores the trapped.
-	var/time_id
-	var/dispelled = FALSE //Safety check
+//Choosing between skulls/respite
+/obj/effect/proc_holder/spell/self/necra_spirits
+	name = "Necra's Spirits"
+	overlay_state = "consecrateburial"
+	desc = "The undermaiden holds vengefulspirits within her grasp, allowing you to choose between <b>Her</b> allies."
+	miracle = TRUE
+	devotion_cost = 100
+	recharge_time = 10 MINUTES
+	chargetime = 0
+	chargedrain = 0
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	associated_skill = /datum/skill/magic/holy
 
-
-/obj/structure/underworld_portal/examine(mob/living/carbon/user)
+/obj/effect/proc_holder/spell/self/necra_spirits/cast(list/targets, mob/user)
 	. = ..()
-
-	if(user.mob_biotypes & MOB_UNDEAD)
-		. += "A temporary gateway to the underworld. [span_warning("Faintly, you can see clutching fingers in the dark, reaching for you. If you go through, you won't come back.")]"
-	else
-		. += "A temporary gateway to the underworld. You can hear faint whispers through it. [span_warning("It might be possible to step through.")]"
-
-	. += "[span_notice("As the caster, click on GRAB to store the portal, provided there are souls inside. Use HARM to destroy the portal.")]"
-	if(trapped)
-		. += "[span_notice("Right-click on the portal to pull trapped souls out.")]"
-
-
-/obj/structure/underworld_portal/attack_hand(mob/living/carbon/user, list/modifiers)
-	if(user == caster)
-		var/mob/living/carbon/victim = locate(/mob/living/carbon) in contents
-		if(user.used_intent.type == INTENT_GRAB)
-			if(victim)
-				caster.contents.Add(src)
-				user.visible_message(
-					span_revenwarning("[user] dispels the doorway with a touch."),
-					span_purple("I close the gateway.")
-					)
-				return TRUE
-
-		if(user.used_intent.type == INTENT_HARM)
-			if(victim)
-				to_chat(user, span_warning("There are still souls trapped inside!"))
-				return FALSE
-			qdel(src)
-			return TRUE
-		return FALSE
-
-	if(!do_after(user, 2 SECONDS, src))
-		return FALSE
-	gobble_mob(user, caster)
-
-	..()
-
-
-/obj/structure/underworld_portal/Destroy()
-	if(dispelled == FALSE)	//Only do this if we DON'T close it ourselves,that means something ELSE -FUNNY- happend.
-							//As we are already calling qdel on:Right click, if you do not have this is gonna to call spitout mob TWICE
-		spitout_mob(caster, loc)
-	visible_message(span_revenwarning("The portal collapses with an angry hiss."))//will keep this outside the if though, its coo
-	..()
-
-/obj/structure/underworld_portal/attack_right(mob/living/carbon/user, list/modifiers)
-	..()
-
-	if(user != caster)
-		return FALSE
-	spitout_mob(user, loc)
-	user.visible_message(
-				span_revenwarning("[user] gestures their hand at the gateway to expel what is within."),
-				span_purple("I gesture at the gateway to release whatever is inside.")
-			)
-	qdel(src)
-
-	return TRUE
-
-
-/obj/structure/underworld_portal/MouseDrop_T(atom/movable/O, mob/living/user)
-	if(!isliving(O))
-		return
-	if(!istype(user) || user.incapacitated())
-		return
-	if(!Adjacent(user) || !user.Adjacent(O))
-		return
-	if(!do_after_mob(user, O, 5 SECONDS))
-		return
-	if(O == caster)
-		return
-	gobble_mob(O, user)
-	user.visible_message(
-		span_warning("[user] forces [O] into the portal!")
-	)
-
-	return TRUE
-
-
-/obj/structure/underworld_portal/proc/gobble_mob(mob/living/carbon/user, mob/living/carbon/caster)
-	if(user.mob_biotypes & MOB_UNDEAD)
-		user.visible_message(
-			span_warning("[user] is suddenly grabbed by a massive hand-and pulled through!"),
-			span_userdanger("Touching the portal, the Carriageman's hand closes around my own! No! NO!")
-			)
-		playsound(user, 'sound/misc/deadbell.ogg', 50, TRUE, -2, ignore_walls = TRUE)
-		new /obj/effect/gibspawner/generic(get_turf(user))
-		qdel(user)
-		return TRUE
-
-	user.visible_message(
-		span_revenwarning("[user] slips through the portal. Silence follows."),
-		span_purple("I touch the doorway. I slip through, and the world is silent and dark. I hear the distant rattle of a passing carriage.")
-		)
-
-	if(user.mind)
-		if(trapped)
-			to_chat(user, span_warning("There is already a soul trapped inside!"))
-			return FALSE
-		user.forceMove(src)
-		ADD_TRAIT(user, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
-		user.add_client_colour(/datum/client_colour/monochrome)
-		trapped = user
-	contents.Add(user)
-	time_id = addtimer(CALLBACK(src, PROC_REF(spitout_mob), user, null), 5 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE) // 5 mins timer else its spitting you out where the necran is.
-
-	return TRUE
-
-/obj/structure/underworld_portal/proc/spitout_mob(mob/living/carbon/user, turf/T)
-	if(src.loc == user)
-		forceMove(T ? T : user.loc)
-		user.contents.Remove(src)
-
-	if(trapped)
-		if(dispelled == TRUE)//dispelled at the caster, this is the case of we do not recast out dispelled portal and its been five minutes.
-			user.forceMove(caster.loc)//has to be user i tried doing it as trapped before but the TIMER calls user so that can trip it up.
-			dispelled = FALSE
+	var/choice = alert(user, "WHOM ANSWERS THE BELL?", "BRING FORTH SPIRITS", "Skulls", "Respite")
+	switch(choice)
+		if("Skulls")
+			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance))//No stacking.
+				revert_cast()
+			else
+				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance)
+				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_spirit_respite))//No, thanks.
+					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/invoked/raise_spirit_respite)
+		if("Respite")
+			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_spirit_respite))//No stacking. Again. As funny as a dozen of these were.
+				revert_cast()
+			else
+				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_spirit_respite)
+				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance))//Nope.
+					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance)
 		else
-			user.forceMove(src.loc)
-		contents.Remove(user)
-		user.remove_client_colour(/datum/client_colour/monochrome)
-		REMOVE_TRAIT(user, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-		REMOVE_TRAIT(user, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
-		trapped = null
-
-		user.visible_message(
-			span_revenwarning("[trapped] slips out from the whispering portal. Shadow roils off their form like smoke."),
-			span_purple("I am pulled from Necra's realm. Air fills my lungs, my heart starts beating- I live.")
-		)
-
-	for(var/mob/living/thing in contents)
-		if(istype(thing, /mob/living))
-			contents.Remove(thing)
-			thing.forceMove(loc)
-
-	if(time_id)
-		deltimer(time_id)
-
-	return TRUE
-
-
-/obj/structure/underworld_portal/container_resist(mob/living/user)
-	..()
-
-	if(trapped != user)
-		return
-	var/resist_prob = user.STASTR * 2.5
-	if(!prob(resist_prob))
-		return
-	spitout_mob(user)
+			revert_cast()
 
 // Speak with dead
 
 /obj/effect/proc_holder/spell/invoked/speakwithdead
-    name = "Speak with Dead"
-    range = 5
-    overlay_state = "speakwithdead"
-    releasedrain = 30
-    recharge_time = 30 SECONDS
-    req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-    sound = 'sound/magic/churn.ogg'
-    associated_skill = /datum/skill/magic/holy
-    invocations = list("The echoes of the departed stir, speak, O fallen one.")
-    invocation_type = "whisper"
-    miracle = TRUE
-    devotion_cost = 30
+	name = "Speak with Dead"
+	range = 5
+	overlay_state = "speakwithdead"
+	releasedrain = 30
+	recharge_time = 30 SECONDS
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	sound = 'sound/magic/churn.ogg'
+	associated_skill = /datum/skill/magic/holy
+	invocations = list("The echoes of the departed stir, speak, O fallen one.")
+	invocation_type = "whisper"
+	miracle = TRUE
+	devotion_cost = 30
 
 /obj/effect/proc_holder/spell/invoked/speakwithdead/cast(list/targets, mob/user = usr)
-    if(!targets || !length(targets))
-        to_chat(user, "<font color='red'>To perform a miracle, you are supposed to stay next to their fallen body. If there no soul in the body, there will be no responce.</font>")
-        return FALSE
+	if(!targets || !length(targets))
+		to_chat(user, "<font color='red'>To perform a miracle, you are supposed to stay next to their fallen body. If there no soul in the body, there will be no responce.</font>")
+		return FALSE
 
-    var/mob/living/target = targets[1]
+	var/mob/living/target = targets[1]
 
-    if(isliving(target) && target.stat == DEAD)
-        return speakwithdead(user, target)
-    else
-        to_chat(user, "<font color='red'>They are not dead. Yet.</font>")
-        return FALSE
+	if(isliving(target) && target.stat == DEAD)
+		return speakwithdead(user, target)
+	else
+		to_chat(user, "<font color='red'>They are not dead. Yet.</font>")
+		return FALSE
 
 /proc/speakwithdead(mob/user, mob/living/target)
-    if(target.stat == DEAD && target.mind)
-        var/message = input(user, "You speak to the spirit of [target.real_name]. What will you say?", "Speak with the Dead") as text|null
+	if(target.stat == DEAD && target.mind)
+		var/message = input(user, "You speak to the spirit of [target.real_name]. What will you say?", "Speak with the Dead") as text|null
 
-        if(message)
-            if(target.mind.current)
-                to_chat(target.mind.current, "<span style='color:gold'><b>[user.real_name]</b> says: \"[message]\"</span>")
+		if(message)
+			if(target.mind.current)
+				to_chat(target.mind.current, "<span style='color:gold'><b>[user.real_name]</b> says: \"[message]\"</span>")
 
-            var/mob/dead/observer/ghost = null
+			var/mob/dead/observer/ghost = null
 
-            for (var/mob/dead/observer/G in world)
-                if (G.mind == target.mind)
-                    ghost = G
-                    break
+			for (var/mob/dead/observer/G in world)
+				if (G.mind == target.mind)
+					ghost = G
+					break
 
-            if (!ghost && target.mind && target.mind.key)
-                var/expected_ckey = ckey(target.mind.key)
-                for (var/mob/dead/observer/G2 in world)
-                    if (G2.client && ckey(G2.key) == expected_ckey)
-                        ghost = G2
-                        break
+			if (!ghost && target.mind && target.mind.key)
+				var/expected_ckey = ckey(target.mind.key)
+				for (var/mob/dead/observer/G2 in world)
+					if (G2.client && ckey(G2.key) == expected_ckey)
+						ghost = G2
+						break
 
-            if (ghost && ghost != target.mind.current)
-                to_chat(ghost, "<span style='color:gold'><b>[user.real_name]</b> says: \"[message]\"</span>")
+			if (ghost && ghost != target.mind.current)
+				to_chat(ghost, "<span style='color:gold'><b>[user.real_name]</b> says: \"[message]\"</span>")
 
-            to_chat(user, "<span style='color:gold'>You say to the spirit: \"[message]\"</span>")
+			to_chat(user, "<span style='color:gold'>You say to the spirit: \"[message]\"</span>")
 
-            var/mob/replier = null
-            if (ghost && ghost.client)
-                replier = ghost
-            else if (target.mind.current && target.mind.current.client)
-                replier = target.mind.current
+			var/mob/replier = null
+			if (ghost && ghost.client)
+				replier = ghost
+			else if (target.mind.current && target.mind.current.client)
+				replier = target.mind.current
 
-            if(replier)
-                var/spirit_message = input(replier, "An acolyte of Necra named [user.real_name] seeks your attention. What is your reply?", "Spirit's Response") as text|null
-                if(spirit_message)
-                    to_chat(user, "<span style='color:silver'><i>The spirit whispers:</i> \"[spirit_message]\"</span>")
-                else
-                    to_chat(user, "<span style='color:#aaaaaa'><i>The spirit chooses to remain silent...</i></span>")
-            else
-                to_chat(user, "<span style='color:#aaaaaa'><i>The spirit cannot answer right now...</i></span>")
-        else
-            to_chat(user, "<span style='color:#aaaaaa'><i>You choose not to speak.</i></span>")
-    else
-        to_chat(user, "<span style='color:#aaaaaa'><i>No spirit answers your call.</i></span>")
+			if(replier)
+				var/spirit_message = input(replier, "An acolyte of Necra named [user.real_name] seeks your attention. What is your reply?", "Spirit's Response") as text|null
+				if(spirit_message)
+					to_chat(user, "<span style='color:silver'><i>The spirit whispers:</i> \"[spirit_message]\"</span>")
+				else
+					to_chat(user, "<span style='color:#aaaaaa'><i>The spirit chooses to remain silent...</i></span>")
+			else
+				to_chat(user, "<span style='color:#aaaaaa'><i>The spirit cannot answer right now...</i></span>")
+		else
+			to_chat(user, "<span style='color:#aaaaaa'><i>You choose not to speak.</i></span>")
+	else
+		to_chat(user, "<span style='color:#aaaaaa'><i>No spirit answers your call.</i></span>")
 
 // BODY INTO COIN
 
@@ -385,33 +239,33 @@
 	invocation_type = "whisper"
 
 /obj/effect/proc_holder/spell/invoked/fieldburials/cast(list/targets, mob/living/user)
-    . = ..()
+	. = ..()
 
-    if(!isliving(targets[1]))
-        revert_cast()
-        return FALSE
+	if(!isliving(targets[1]))
+		revert_cast()
+		return FALSE
 
-    var/mob/living/target = targets[1]
-    if(target.stat < DEAD)
-        to_chat(user, span_warning("They're still alive!"))
-        revert_cast()
-        return FALSE
+	var/mob/living/target = targets[1]
+	if(target.stat < DEAD)
+		to_chat(user, span_warning("They're still alive!"))
+		revert_cast()
+		return FALSE
 
-    if(world.time <= target.mob_timers["lastdied"] + 15 MINUTES)
-        to_chat(user, span_warning("The body is too fresh for the rite."))
-        revert_cast()
-        return FALSE
+	if(world.time <= target.mob_timers["lastdied"] + 15 MINUTES)
+		to_chat(user, span_warning("The body is too fresh for the rite."))
+		revert_cast()
+		return FALSE
 
-    var/obj/item/roguecoin/silver/C = new(get_turf(target))
-    C.pixel_x = rand(-6, 6)
-    C.pixel_y = rand(-6, 6)
+	var/obj/item/roguecoin/silver/C = new(get_turf(target))
+	C.pixel_x = rand(-6, 6)
+	C.pixel_y = rand(-6, 6)
 
-    to_chat(user, span_notice("You gather coins from [target.real_name]'s remains."))
-    to_chat(target, span_danger("Your worldly wealth slips away with the rite..."))
+	to_chat(user, span_notice("You gather coins from [target.real_name]'s remains."))
+	to_chat(target, span_danger("Your worldly wealth slips away with the rite..."))
 
-    qdel(target)
+	qdel(target)
 
-    return TRUE
+	return TRUE
 
 /*
 	SOUL SPEAK OLD LEGACY
@@ -497,3 +351,110 @@
 	soul.invisibility = initial(soul.invisibility)
 	soul.status_flags &= ~GODMODE
 	soul.density = initial(soul.density) */
+
+/obj/effect/proc_holder/spell/targeted/locate_dead
+	name = "Locate Corpse"
+	desc = "Call upon the Undermaiden to guide you to a lost soul."
+	overlay_state = "necraeye"
+	sound = 'sound/magic/whiteflame.ogg'
+	releasedrain = 30
+	chargedrain = 0.5
+	max_targets = 0
+	cast_without_targets = TRUE
+	miracle = TRUE
+	associated_skill = /datum/skill/magic/holy
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	invocations = list("Undermaiden, guide my hand to those who have lost their way.")
+	invocation_type = "whisper"
+	recharge_time = 15 SECONDS
+	devotion_cost = 35
+
+/obj/effect/proc_holder/spell/targeted/locate_dead/cast(list/targets, mob/living/user = usr)
+	. = ..()
+	var/list/mob/corpses = list()
+	for(var/mob/living/C in GLOB.dead_mob_list)
+		if(!C.mind)
+			continue
+		if(istype(C, /mob/living/carbon/human))
+			var/mob/living/carbon/human/B = C
+			if(B.buried)
+				continue
+		var/time_dead = 0
+		if(C.timeofdeath)
+			time_dead = world.time - C.timeofdeath
+		var/corpse_name
+
+		if(time_dead < 5 MINUTES)
+			corpse_name = "Fresh corpse "
+		else if(time_dead < 10 MINUTES)
+			corpse_name = "Recently deceased "
+		else if(time_dead < 30 MINUTES)
+			corpse_name = "Long dead "
+		else
+			corpse_name = "Forgotten remains of "
+		var/list/d_list = C.get_mob_descriptors()
+		var/trait_desc = "[capitalize(build_coalesce_description_nofluff(d_list, C, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
+		var/stature_desc = "[capitalize(build_coalesce_description_nofluff(d_list, C, list(MOB_DESCRIPTOR_SLOT_STATURE), "%DESC1%"))]"
+		var/descriptor_name = "[trait_desc] [stature_desc]"
+		if(descriptor_name == " ")
+			descriptor_name = "Unknown"
+
+		corpse_name += " of \a [descriptor_name]..."
+		corpses[corpse_name] = C
+
+	if(!length(corpses))
+		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
+		revert_cast()
+		return .
+
+	var/mob/selected = tgui_input_list(user, "Which body shall I seek?", "Available Bodies", corpses)
+
+	if(QDELETED(src) || QDELETED(user) || QDELETED(corpses[selected]))
+		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
+		return .
+
+	var/corpse = corpses[selected]
+
+	var/turf/turf_user = get_turf(user)
+	var/turf/turf_corpse = get_turf(corpse)
+	var/list/directions = list()
+	// Vertical (Z-level) direction
+	if(turf_user.z != turf_corpse.z)
+		if(turf_corpse.z > turf_user.z)
+			directions += "upwards"
+		else
+			directions += "downwards"
+
+	// Horizontal direction (only if we can meaningfully compare)
+	if(turf_user.x != turf_corpse.x || turf_user.y != turf_corpse.y)
+		var/direction = get_dir(turf_user, turf_corpse)
+		switch(direction)
+			if(NORTH)      directions += "north"
+			if(SOUTH)      directions += "south"
+			if(EAST)       directions += "east"
+			if(WEST)       directions += "west"
+			if(NORTHEAST)  directions += "northeast"
+			if(NORTHWEST)  directions += "northwest"
+			if(SOUTHEAST)  directions += "southeast"
+			if(SOUTHWEST)  directions += "southwest"
+	var/dist = get_dist(turf_user, turf_corpse)
+	var/distance_text
+
+	if(dist > 100)
+		distance_text = "Its presence feels distant."
+	else if(dist > 50)
+		distance_text = "The pull grows stronger, yet remains far."
+	else if(dist > 20)
+		distance_text = "You feel the corpse is not far now."
+	else if(dist > 0)
+		distance_text = "The corpse is very near."
+	else
+		distance_text = "It is here."
+
+	var/direction_text
+	if(length(directions))
+		direction_text = english_list(directions, and_text = " and ")
+	else
+		direction_text = "nowhere discernible"
+
+	to_chat(user, span_notice("The Undermaiden pulls on your hand, guiding you [direction_text]. [distance_text]"))

@@ -16,7 +16,7 @@
 	smeltresult = /obj/item/ingot/gold
 	sellprice = 120
 
-/obj/item/roguestatue/gold/Initialize()
+/obj/item/roguestatue/gold/Initialize(mapload)
 	. = ..()
 	icon_state = "gstatue[pick(1,2)]"
 
@@ -26,7 +26,7 @@
 	icon_state = "lstatue1"
 	sellprice = 45
 
-/obj/item/roguestatue/gold/loot/Initialize()
+/obj/item/roguestatue/gold/loot/Initialize(mapload)
 	. = ..()
 	sellprice = rand(45,150)
 	icon_state = "lstatue[pick(1,2,3,4)]"
@@ -38,7 +38,7 @@
 	smeltresult = /obj/item/ingot/silver
 	sellprice = 90
 
-/obj/item/roguestatue/silver/Initialize()
+/obj/item/roguestatue/silver/Initialize(mapload)
 	. = ..()
 	icon_state = "sstatue[pick(1,2)]"
 
@@ -49,7 +49,7 @@
 	smeltresult = /obj/item/ingot/steel
 	sellprice = 40
 
-/obj/item/roguestatue/steel/Initialize()
+/obj/item/roguestatue/steel/Initialize(mapload)
 	. = ..()
 	icon_state = "ststatue[pick(1,2)]"
 
@@ -61,7 +61,7 @@
 	sellprice = 77
 	color = "#bb9696"
 
-/obj/item/roguestatue/aalloy/Initialize()
+/obj/item/roguestatue/aalloy/Initialize(mapload)
 	. = ..()
 	icon_state = "astatue[pick(1,2)]"
 
@@ -72,11 +72,20 @@
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 20
 
-/obj/item/roguestatue/iron/Initialize()
+/obj/item/roguestatue/iron/Initialize(mapload)
 	. = ..()
 	icon_state = "istatue[pick(1,2)]"
 
+/obj/item/roguestatue/blacksteel
+	name = "blacksteel statue"
+	desc = "A dark statue of glimmering, resilient blacksteel."
+	icon_state = "bsstatue1"
+	smeltresult = /obj/item/ingot/blacksteel
+	sellprice = 160
 
+/obj/item/roguestatue/blacksteel/Initialize(mapload)
+	. = ..()
+	icon_state = "bsstatue[pick(1,2)]"
 //000000000000000000000000000--
 
 /obj/item/var/polished = FALSE
@@ -138,6 +147,15 @@
 	grid_width = 32
 	grid_height = 64
 	var/roughness = 0 // 0  for a fine brush, 1 for a coarse brush
+
+/obj/item/armor_brush/examine()
+	. = ..()
+	. += span_info("To polish a weapon or a piece of armor, you must have the knowledge of a squire or how to repair the item. Follow the following steps:")
+	. += span_info("I. Apply polishing cream to the item.")
+	. += span_info("II. Use the coarse side (use the item to flip it) to scrub the item roughly.")
+	. += span_info("III. Use the fine side to gently polish the item.")
+	. += span_info("IV. Wash the item in a wooden bin with water to polish it.")
+	. += span_info("A fully polished item will be slightly stronger and or more durable.")
 
 /obj/item/armor_brush/attack_self(mob/user)
 	roughness = 1 - roughness
@@ -214,7 +232,7 @@
 	duration = 13
 	plane = -1
 
-/obj/effect/temp_visual/armor_glint/Initialize(mapload, var/extra_rand = 1)
+/obj/effect/temp_visual/armor_glint/Initialize(mapload, extra_rand = 1)
 	. = ..()
 	pixel_x = extra_rand * rand(-5,5)
 	pixel_y = extra_rand * rand(-5,5)

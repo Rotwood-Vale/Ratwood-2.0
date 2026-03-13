@@ -1,7 +1,7 @@
 /obj/item/rogueweapon/pick
 	force = 17
 	force_wielded = 21
-	possible_item_intents = list(/datum/intent/pick)
+	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick)
 	name = "iron pick"
 	desc = "This tool is essential to mine in the dark depths."
@@ -23,29 +23,11 @@
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list("shrink" = 0.6,
-"sx" = -15,
-"sy" = -12,
-"nx" = 9,
-"ny" = -11,
-"wx" = -11,
-"wy" = -11,
-"ex" = 1,
-"ey" = -12,
-"northabove" = 0,
-"southabove" = 1,
-"eastabove" = 1,
-"westabove" = 0,
-"nturn" = 90,
-"sturn" = -90,
-"wturn" = -90,
-"eturn" = 90,
-"nflip" = 0,
-"sflip" = 8,
-"wflip" = 8,
-"eflip" = 0)
+				return list("shrink" = 0.6,"sx" = -11,"sy" = -8,"nx" = 12,"ny" = -8,"wx" = -5,"wy" = -8,"ex" = 6,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.7,"sx" = 5,"sy" = -4,"nx" = -5,"ny" = -4,"wx" = -5,"wy" = -3,"ex" = 7,"ey" = -4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -45,"sturn" = 45,"wturn" = -45,"eturn" = 45,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
-				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+				return list("shrink" = 0.5,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogueweapon/pick/steel
 	name = "steel pick"
@@ -53,10 +35,22 @@
 	force = 21
 	force_wielded = 28
 	icon_state = "steelpick"
-	possible_item_intents = list(/datum/intent/pick)
+	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick)
 	max_integrity = 600
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/pick/blacksteel
+	name = "blacksteel pick"
+	desc = "Glimmering with silver-y black, this is a pretigious tool for miners delving in the darkness."
+	force_wielded = 30
+	icon_state = "blacksteelpick1"
+	item_state = "blacksteelpick1"
+	possible_item_intents = list(/datum/intent/pick)
+	gripped_intents = list(/datum/intent/pick)
+	max_integrity = 800
+	smeltresult = /obj/item/ingot/blacksteel
+
 
 /obj/item/rogueweapon/pick/stone
 	name = "stone pick"
@@ -64,7 +58,7 @@
 	force = 12
 	force_wielded = 17
 	icon_state = "stonepick"
-	possible_item_intents = list(/datum/intent/pick)
+	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick)
 	max_integrity = 250
 	smeltresult = null
@@ -75,7 +69,7 @@
 	force = 12
 	force_wielded = 17
 	icon_state = "apick"
-	possible_item_intents = list(/datum/intent/pick)
+	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick)
 	max_integrity = 150
 	smeltresult = /obj/item/ingot/aaslag

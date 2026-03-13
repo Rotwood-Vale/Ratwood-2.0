@@ -12,7 +12,7 @@
 	var/current_cat = "1"
 
 
-/obj/structure/roguemachine/Hoardmaster/Initialize()
+/obj/structure/roguemachine/Hoardmaster/Initialize(mapload)
 	. = ..()
 	update_icon()
 	var/namechance = rand(1,6)
@@ -68,6 +68,13 @@
 			var/pathi = pick(PA.contains)
 			var/atom/hmasteritem = new pathi(get_turf(M))
 			hmasteritem.flags_1 |= HOARDMASTER_SPAWNED_1
+			if(istype(hmasteritem, /obj/item))
+				var/obj/item/newitem = hmasteritem
+				newitem.sellprice = 0
+				if(newitem.smeltresult)
+					newitem.smeltresult = /obj/item/ash
+				if(newitem.salvage_result)
+					newitem.salvage_result = /obj/item/ash
 	if(href_list["changecat"])
 		current_cat = href_list["changecat"]
 	return attack_hand(usr)
@@ -87,7 +94,7 @@
 	contents += "<a href='?src=[REF(src)];change=1'>Your favor:</a> [B.favor]<BR>"
 
 
-	var/list/unlocked_cats = list("Things")
+	var/list/unlocked_cats = list("Supplies", "Medicaments", "Clothing")
 	switch(usr.advjob)
 		if("Brigand")
 			unlocked_cats+="Brigand"
@@ -103,7 +110,12 @@
 			unlocked_cats+="Knave"
 		if("Iconoclast")
 			unlocked_cats+="Iconoclast"
-   
+		if("Pioneer")
+			unlocked_cats+="Pioneer"
+
+	if(!(current_cat in unlocked_cats))
+		current_cat = "1"
+
 	if(current_cat == "1")
 		contents += "<center>"
 		for(var/X in unlocked_cats)

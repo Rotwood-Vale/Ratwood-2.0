@@ -2,6 +2,9 @@ GLOBAL_LIST_EMPTY(classic_keybinding_list_by_key)
 GLOBAL_LIST_EMPTY(hotkey_keybinding_list_by_key)
 GLOBAL_LIST_EMPTY(keybindings_by_name)
 
+// Temporary storage for loadout selection
+GLOBAL_VAR(temp_loadout_selection)
+
 // This is a mapping from JS keys to Byond - ref: https://keycode.info/
 GLOBAL_LIST_INIT(_kbMap, list(
 	"UP" = "North",
@@ -11,7 +14,7 @@ GLOBAL_LIST_INIT(_kbMap, list(
 	"INSERT" = "Insert",
 	"HOME" = "Northwest",
 	"PAGEUP" = "Northeast",
-	"DEL" = "Delete",
+	"DELETE" = "Delete",
 	"END" = "Southwest",
 	"PAGEDOWN" = "Southeast",
 	" " = "Space",

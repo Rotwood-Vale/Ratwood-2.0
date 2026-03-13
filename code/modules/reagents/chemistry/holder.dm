@@ -367,11 +367,7 @@
 						if(30 to 40)
 							need_mob_update += R.addiction_act_stage4(C)
 						if(40 to INFINITY)
-							if(!R.addiction_permanent)
-								remove_addiction(R)
-							else R.addiction_stage = 30
-						else
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+							remove_addiction(R)
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
@@ -381,7 +377,6 @@
 
 /datum/reagents/proc/remove_addiction(datum/reagent/R)
 	to_chat(my_atom, "<span class='notice'>I feel like you've gotten over your need for [R.name].</span>")
-	SEND_SIGNAL(my_atom, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 	addiction_list.Remove(R)
 	qdel(R)
 
@@ -913,5 +908,5 @@
 /proc/get_chem_id(chem_name)
 	for(var/X in GLOB.chemical_reagents_list)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-		if(ckey(chem_name) == ckey(lowertext(R.name)))
+		if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
 			return X

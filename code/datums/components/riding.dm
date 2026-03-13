@@ -3,6 +3,7 @@
 	var/last_move_diagonal = FALSE
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/keytype
+	var/riding_xp_move_counter = 0 //counter to reduce XP spam - award XP every 5 moves
 
 	var/slowed = FALSE
 	var/slowvalue = 1
@@ -13,7 +14,6 @@
 	var/list/allowed_turf_typecache
 	var/list/forbid_turf_typecache					//allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
 	var/allow_one_away_from_valid_turf = TRUE		//allow moving one tile away from a valid turf but not more.
-	var/override_allow_spacemove = FALSE
 	var/drive_verb = "drive"
 	var/ride_check_rider_incapacitated = FALSE
 	var/ride_check_rider_restrained = FALSE
@@ -59,8 +59,23 @@
 	var/atom/movable/AM = parent
 	AM.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 	for(var/mob/M in AM.buckled_mobs)
+		if(!istype(M, /mob/living))
+			continue
+		var/mob/living/rider = M
 		ride_check(M)
 		M.set_glide_size(AM.glide_size)
+		// Award riding XP if the RIDER is in run intent while moving on mount
+		// Only award XP every 5 moves to avoid spam
+		if(rider.m_intent == MOVE_INTENT_RUN)
+			riding_xp_move_counter++
+			if(riding_xp_move_counter >= 5)
+				// Scale XP with rider's STAINT stat, like all other skills do
+				// Award every 5 moves, so multiply by 5 to match movement-based XP frequency
+				var/xp_amt = rider.STAINT * 0.1
+				rider.mind && rider.mind.add_sleep_experience(/datum/skill/misc/riding, xp_amt)
+				riding_xp_move_counter = 0
+		else
+			riding_xp_move_counter = 0 //reset counter if not running
 	handle_vehicle_offsets()
 	handle_vehicle_layer()
 
@@ -179,7 +194,7 @@
 		if(!turf_check(next, current))
 			to_chat(user, span_warning("My [AM] can not go onto [next]!"))
 			return
-		if(!Process_Spacemove(direction) || !isturf(AM.loc))
+		if(!isturf(AM.loc))
 			return
 		step(AM, direction)
 
@@ -196,10 +211,6 @@
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, TYPE_PROC_REF(/atom/movable, unbuckle_mob), M), 0, TIMER_UNIQUE)
-
-/datum/component/riding/proc/Process_Spacemove(direction)
-	var/atom/movable/AM = parent
-	return override_allow_spacemove || AM.has_gravity()
 
 /datum/component/riding/proc/account_limbs(mob/living/M)
 	if(M.get_num_legs() < 2 && !slowed)
@@ -264,6 +275,8 @@
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 6), TEXT_WEST = list(0, 6))
 	else if(istype(parent, /mob/living/carbon/human/species/wildshape)) //Snowflake druid travel
 		return list(TEXT_NORTH = list(8, 6), TEXT_SOUTH = list(8, 6), TEXT_EAST = list(8, 6), TEXT_WEST = list(8, 6))
+	else if(H.has_status_effect(/datum/status_effect/debuff/harpy_flight))
+		return list(TEXT_NORTH = list(0, -24), TEXT_SOUTH = list(0, -24), TEXT_EAST = list(0, -24), TEXT_WEST = list(0, -24))
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list(6, 4))
 
@@ -272,8 +285,8 @@
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
 	user.Paralyze(60)
-	user.visible_message(span_warning("[AM] pushes [user] off of [AM.p_them()]!"), \
-						span_warning("[AM] pushes me off of [AM.p_them()]!"))
+	user.visible_message(span_warning("[user] is knocked off of [AM]!"), span_danger("I am knocked off of [AM]!"))
+	playsound(AM.loc, 'sound/combat/grabbreak.ogg', 50, TRUE, -1)
 
 /datum/component/riding/cyborg
 	del_on_unbuckle_all = TRUE

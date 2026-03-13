@@ -20,7 +20,7 @@
 	var/lumber_amount = 1
 	metalizer_result = /obj/item/rogueore/iron
 
-/obj/item/grown/log/tree/Initialize()
+/obj/item/grown/log/tree/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/woodstaff,
@@ -63,16 +63,16 @@
 		if(skill_level > 0) // If skill level is 1 or higher, we get more minimum wood!
 			minimum = 2
 		lumber_amount = rand(minimum, max(round(skill_level), minimum))
-		var/essence_sound_played = FALSE //This is here so the sound wont play multiple times if the essence itself spawns multiple times
+		var/sound_played = FALSE
 		for(var/i = 0; i < lumber_amount; i++)
+			new lumber(get_turf(src))
+				// Scaling is less steep than tanning as lumberjacking is easier to level and get
 			if(prob(skill_level + user.goodluck(2)))
-				new /obj/item/grown/log/tree/small/essence(get_turf(src))
-				if(!essence_sound_played)
-					essence_sound_played = TRUE
-					to_chat(user, span_warning("Dendor watches over us..."))
+				new /obj/item/natural/cured/essence(get_turf(user))
+				if(!sound_played)
+					sound_played = TRUE
+					to_chat(user, span_warning("Dendor weeps..."))
 					playsound(src,pick('sound/items/gem.ogg'), 100, FALSE)
-			else
-				new lumber(get_turf(src))
 		if(!skill_level)
 			to_chat(user, span_info("Due to inexperience, I ruin some of the timber..."))
 		user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
@@ -98,7 +98,7 @@
 	lumber_amount = 0
 	metalizer_result = /obj/item/rogueore/copper
 
-/obj/item/grown/log/tree/small/Initialize()
+/obj/item/grown/log/tree/small/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/stoneaxe,
@@ -157,14 +157,34 @@
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	var/skill_level = user.get_skill_level(/datum/skill/craft/carpentry)
 	var/planking_time = (45 - (skill_level * 5))
+	var/woodtotal = 1
+	switch (skill_level) //how many planks you get is random, but higher with more carpentry skill
+		if (0)
+			woodtotal = 1
+		if (1)
+			woodtotal = 1
+		if (2)
+			woodtotal = pick(1,2)
+		if (3)
+			woodtotal = pick(1,2,3)
+		if (4)
+			woodtotal = pick(2,3)
+		if (5)
+			woodtotal = pick(2,3,4)
+		if (6)
+			woodtotal = pick(3,4)
+		else
+			woodtotal = 1
+	if(HAS_TRAIT(user, TRAIT_MASTER_CARPENTER)) //we give extra to those in the role
+		woodtotal += pick(1,2)
 	if(I.tool_behaviour == TOOL_SAW)
 		playsound(get_turf(src.loc), 'sound/foley/sawing.ogg', 100)
 		user.visible_message("<span class='notice'>[user] starts sawing planks from [src].</span>")
 		if(do_after(user, planking_time))
-			var/obj/item/natural/wood/plank/S = new /obj/item/natural/wood/plank(get_turf(src.loc))
 			if(user.is_holding(src))
 				user.dropItemToGround(src)
-				user.put_in_hands(S)
+			for(var/i=1, i<=woodtotal, ++i)
+				new /obj/item/natural/wood/plank(get_turf(src.loc))
 			user.mind.add_sleep_experience(/datum/skill/craft/carpentry, (user.STAINT*0.5))
 			new /obj/effect/decal/cleanable/debris/woody(get_turf(src))
 			qdel(src)
@@ -184,7 +204,7 @@
 	lumber_amount = 0
 	metalizer_result = null
 
-/obj/item/grown/log/tree/bowpartial/Initialize()
+/obj/item/grown/log/tree/bowpartial/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/bow,
@@ -201,7 +221,7 @@
 	icon = 'icons/roguetown/items/64x.dmi'
 	icon_state = "recurve_bowstave"
 
-/obj/item/grown/log/tree/bowpartial/recurve/Initialize()
+/obj/item/grown/log/tree/bowpartial/recurve/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/recurvebow,
@@ -213,7 +233,7 @@
 	icon = 'icons/roguetown/items/64x.dmi'
 	icon_state = "long_bowstave"
 
-/obj/item/grown/log/tree/bowpartial/longbow/Initialize()
+/obj/item/grown/log/tree/bowpartial/longbow/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/longbow,
@@ -254,7 +274,7 @@
 			if(!HAS_TRAIT(L, TRAIT_WOODWALKER))
 				L.consider_ambush()
 
-/obj/item/grown/log/tree/stick/Initialize()
+/obj/item/grown/log/tree/stick/Initialize(mapload)
 	icon_state = "stick[rand(1,2)]"
 	..()
 	var/static/list/slapcraft_recipe_list = list(
@@ -302,9 +322,9 @@
 				stackcount--
 			else if(stackcount >= 2)
 				var/obj/item/natural/bundle/stick/B = new(get_turf(user))
-				B.amount = clamp(stackcount, 2, 4)
+				B.amount = clamp(stackcount, 2, 10)
 				B.update_bundle()
-				stackcount -= clamp(stackcount, 2, 4)
+				stackcount -= clamp(stackcount, 2, 10)
 				user.put_in_hands(B)
 		for(var/obj/item/grown/log/tree/stick/F in get_turf(src))
 			playsound(get_turf(user.loc), 'sound/foley/dropsound/wooden_drop.ogg', 100)
@@ -367,7 +387,7 @@
 	lumber_amount = 0
 	metalizer_result = /obj/item/ammo_casing/caseless/rogue/arrow/iron
 
-/obj/item/grown/log/tree/stake/Initialize()
+/obj/item/grown/log/tree/stake/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/whetstone,

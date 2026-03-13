@@ -101,11 +101,6 @@
 	icon_state = "ffluff"
 	relevant_layers = list(BODY_FRONT_LAYER)
 
-/datum/sprite_accessory/neck_feature/mammal_fluff/fluff_neck
-	name = "Fluff (Top_Under_Hair)"
-	icon_state = "ffluff"
-	relevant_layers = list(NECK_LAYER)
-
 /datum/sprite_accessory/neck_feature/mammal_fluff/fluff_dual
 	name = "Fluff Dual"
 	icon_state = "fluffdual"
@@ -116,13 +111,6 @@
 	name = "Fluff Dual (Top)"
 	icon_state = "ffluffdual"
 	relevant_layers = list(BODY_FRONT_LAYER)
-	color_keys = 2
-	color_key_names = list("Fluff", "Front")
-
-/datum/sprite_accessory/neck_feature/mammal_fluff/fluff_dual_neck
-	name = "Fluff Dual (Top_Under_Hair)"
-	icon_state = "ffluffdual"
-	relevant_layers = list(NECK_LAYER)
 	color_keys = 2
 	color_key_names = list("Fluff", "Front")
 

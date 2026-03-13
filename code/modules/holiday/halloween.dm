@@ -2,23 +2,6 @@
 ///////////HALLOWEEN CONTENT///////////
 ///////////////////////////////////////
 
-
-//spooky recipes
-
-/datum/recipe/sugarcookie/spookyskull
-	reagents_list = list(/datum/reagent/consumable/flour = 5, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/milk = 5)
-	items = list(
-		/obj/item/reagent_containers/food/snacks/egg,
-	)
-	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
-
-/datum/recipe/sugarcookie/spookycoffin
-	reagents_list = list(/datum/reagent/consumable/flour = 5, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/coffee = 5)
-	items = list(
-		/obj/item/reagent_containers/food/snacks/egg,
-	)
-	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin
-
 //////////////////////////////
 //Spookoween trapped closets//
 //////////////////////////////
@@ -34,7 +17,7 @@
 	var/trapped = 0
 	var/mob/trapped_mob
 
-/obj/structure/closet/Initialize()
+/obj/structure/closet/Initialize(mapload)
 	. = ..()
 	if(prob(30))
 		set_spooky_trap()
@@ -129,7 +112,7 @@
 	layer = 4
 	var/timer = 0
 
-/mob/living/simple_animal/shade/howling_ghost/Initialize()
+/mob/living/simple_animal/shade/howling_ghost/Initialize(mapload)
 	. = ..()
 	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
 	icon_living = icon_state
@@ -195,7 +178,7 @@
 	unsuitable_atmos_damage = 0
 	var/timer
 
-/mob/living/simple_animal/hostile/clown_insane/Initialize()
+/mob/living/simple_animal/hostile/clown_insane/Initialize(mapload)
 	. = ..()
 	status_flags |= GODMODE //Slightly easier to maintain.
 

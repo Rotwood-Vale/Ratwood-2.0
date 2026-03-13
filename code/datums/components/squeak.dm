@@ -66,6 +66,8 @@
 		var/mob/M = AM
 		if(M.movement_type & (FLYING|FLOATING))
 			return
+		if(M.m_intent == MOVE_INTENT_SNEAK && prob(90))
+			return
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
 		play_squeak()

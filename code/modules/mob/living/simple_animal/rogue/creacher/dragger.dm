@@ -18,7 +18,6 @@
 	response_help_simple = "pass through"
 	maxHealth = DRAGGER_HEALTH
 	health = DRAGGER_HEALTH
-	spacewalk = FALSE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	speed = 1
@@ -104,11 +103,12 @@
 	GiveTarget(user)
 	return
 
-/mob/living/simple_animal/hostile/rogue/dragger/Initialize()
+/mob/living/simple_animal/hostile/rogue/dragger/Initialize(mapload)
 	. = ..()
 	set_light(2, 2, 2, l_color = "#c0523f")
 	ADD_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
 
 /mob/living/simple_animal/hostile/rogue/dragger/death(gibbed)

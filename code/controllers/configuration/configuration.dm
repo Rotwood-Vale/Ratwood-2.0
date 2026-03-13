@@ -47,6 +47,8 @@
 				for(var/J in legacy_configs)
 					LoadEntries(J)
 				break
+	if (fexists("[directory]/dev_overrides.txt"))
+		LoadEntries("dev_overrides.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 	LoadPolicy()
@@ -99,7 +101,7 @@
 	if(IsAdminAdvancedProcCall())
 		return
 
-	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
+	var/filename_to_test = world.system_type == MS_WINDOWS ? LOWER_TEXT(filename) : filename
 	if(filename_to_test in stack)
 		log_config("Warning: Config recursion detected ([english_list(stack)]), breaking!")
 		return
@@ -126,10 +128,10 @@
 		var/value = null
 
 		if(pos)
-			entry = lowertext(copytext(L, 1, pos))
+			entry = LOWER_TEXT(copytext(L, 1, pos))
 			value = copytext(L, pos + 1)
 		else
-			entry = lowertext(L)
+			entry = LOWER_TEXT(L)
 
 		if(!entry)
 			continue
@@ -234,9 +236,9 @@ special keywords defined in _DEFINES/admin.dm
 
 Example config:
 {
-    "Assistant" : "Don't kill everyone",
-    "/datum/antagonist/highlander" : "<b>Kill everyone</b>",
-    "Ash Walker" : "Kill all spacemans"
+	"Assistant" : "Don't kill everyone",
+	"/datum/antagonist/highlander" : "<b>Kill everyone</b>",
+	"Ash Walker" : "Kill all spacemans"
 }
 
 */
@@ -272,10 +274,10 @@ Example config:
 		var/data = null
 
 		if(pos)
-			command = lowertext(copytext(t, 1, pos))
+			command = LOWER_TEXT(copytext(t, 1, pos))
 			data = copytext(t, pos + 1)
 		else
-			command = lowertext(t)
+			command = LOWER_TEXT(t)
 
 		if(!command)
 			continue

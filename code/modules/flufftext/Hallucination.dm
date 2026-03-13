@@ -8,14 +8,18 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/chat = 100,
 	/datum/hallucination/message = 60,
 	/datum/hallucination/sounds = 50,
+	/datum/hallucination/voices = 40,
 	/datum/hallucination/battle = 20,
 	/datum/hallucination/dangerflash = 15,
 //	/datum/hallucination/hudscrew = 12,
 	/datum/hallucination/fake_alert = 12,
+	/datum/hallucination/floor_shift = 10,
 	/datum/hallucination/weird_sounds = 8,
 	/datum/hallucination/townannouncement = 7,
 //	/datum/hallucination/items_other = 7,
 	/datum/hallucination/husks = 7,
+	/datum/hallucination/fake_heartattack = 5,
+	/datum/hallucination/chasing_mob = 4,
 	/datum/hallucination/items = 4,
 	/datum/hallucination/fire = 3,
 	/datum/hallucination/self_delusion = 3,
@@ -26,7 +30,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 
 /mob/living/carbon/proc/handle_hallucinations()
-	if(!hallucination)
+	if(!hallucination || !client || stat)
 		return
 
 	hallucination--
@@ -838,11 +842,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					target.halitem.icon_state = "serpcrown"
 					target.halitem.name = "Crown of Rotwood Vale"
 				if(4) //clawl
-					target.halitem.icon = 'icons/roguetown/weapons/32.dmi'
+					target.halitem.icon = 'icons/roguetown/weapons/unarmed32.dmi'
 					target.halitem.icon_state = "claw_l"
 					target.halitem.name = "ravager claws"
 				if(5) //clawr
-					target.halitem.icon = 'icons/roguetown/weapons/32.dmi'
+					target.halitem.icon = 'icons/roguetown/weapons/unarmed32.dmi'
 					target.halitem.icon_state = "claw_r"
 					target.halitem.name = "ravager claws"
 			feedback_details += "Type: [target.halitem.name]"
@@ -927,7 +931,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/danger/anomaly
 	name = "him."
 
-/obj/effect/hallucination/danger/anomaly/Initialize()
+/obj/effect/hallucination/danger/anomaly/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -985,7 +989,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/fire/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE
 	..()
-	target.fire_stacks = max(target.fire_stacks, 0.1) //Placebo flammability
 	fire_overlay = image('icons/mob/OnFire.dmi', target, "Standing", ABOVE_MOB_LAYER)
 	if(target.client)
 		target.client.images += fire_overlay
@@ -993,16 +996,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	target.throw_alert("fire", /atom/movable/screen/alert/fire, override = TRUE)
 	sleep(20)
 	for(var/i in 1 to 3)
-		if(target.fire_stacks <= 0)
-			clear_fire()
-			return
 		stage++
 		update_temp()
 		sleep(30)
 	for(var/i in 1 to rand(5, 10))
-		if(target.fire_stacks <= 0)
-			clear_fire()
-			return
 		target.adjustStaminaLoss(15)
 		sleep(20)
 	clear_fire()
@@ -1110,3 +1107,185 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				target.client.images -= target.halbody
 			QDEL_NULL(target.halbody)
 	qdel(src)
+
+/datum/hallucination/voices
+	var/static/list/messages = list(
+		"YOUR FATE IS SEALED IN BLOOD AND ASHES!",
+		"SHE CALLS YOUR NAME, FOOL!",
+		"THE GODS SPIT ON YOUR WORTHLESS SOUL!",
+		"YOUR HEART BEATS FOR THEIR ASCENSION!",
+		"CLAWS TEAR AT YOUR MIND FROM WITHIN!",
+		"NO ONE WILL MOURN YOUR BROKEN CORPSE!",
+		"THEIR EYES WATCH FROM EVERY WOUND!",
+		"THE SWAMP WILL SWALLOW YOUR HOPE!",
+		"PAIN IS YOUR ONLY TRUE COMPANION!",
+		"THE CHAINS OF FATE BIND YOUR BONES!",
+		"THEY LAUGH AS YOUR MIND CRUMBLES!",
+		"THE STARS MOCK YOUR FUTILE STRUGGLE!",
+		"THE GROUND WEEPS BLOOD WHERE YOU TREAD!",
+		"THEIR WHISPERS CARVE YOUR FLESH TO DUST!",
+		"THE BEASTS SMELL YOUR FEAR AND HUNGER!",
+		"YOUR VEINS PULSE WITH THEIR MALICE!",
+		"DEATH IS TOO MERCIFUL FOR YOUR SINS!",
+		"THE BOG CLAIMS YOUR HOPELESS BONES!",
+		"THE GODS HAVE MARKED YOU FOR TORMENT!",
+		"YOUR CRIES ECHO IN AN EMPTY ABYSS!",
+		"THE SHADOWS BIND YOUR WRETCHED FATE!",
+		"YOUR MIND IS A PRISON OF THEIR DESIGN!",
+		"THE FLAMES OF YOUR GUILT CONSUME YOU!",
+		"YOUR HEART IS A TROPHY FOR HER GLORY!",
+		"THE STORM SINGS OF YOUR DOOMED PATH!",
+		"THEIR CLAWS SCRATCH YOUR NAME IN STONE!",
+		"YOUR BREATH FEEDS HIS ENDLESS HUNGER!",
+		"THE GODS LAUGH AT YOUR BROKEN DREAMS!",
+		"YOUR SHADOW BETRAYS YOU TO THE DARK!",
+		"THE SWAMP WHISPERS YOUR FINAL MOMENTS!",
+		"YOUR FLESH IS A CANVAS FOR HIS WRATH!",
+	)
+
+/datum/hallucination/voices/New(mob/living/carbon/carbon, forced = TRUE)
+	set waitfor = FALSE
+	..()
+
+	var/list/objs = list()
+
+	for(var/obj/obj in oview(3, carbon))
+		objs += obj
+	
+	var/obj/obj = safepick(objs)
+
+	if(!obj)
+		qdel(src)
+		return
+
+	var/lang = carbon.get_default_language()
+	var/picked_message = pick(messages)
+	var/composed = obj.compose_message(obj, carbon.get_default_language(), picked_message)
+
+	carbon.Hear(composed, obj, lang, picked_message)
+
+	if(prob(20))
+		carbon.emote("whimper")
+
+	qdel(src)
+
+/datum/hallucination/chasing_mob
+	var/image/hallucinated_image
+
+/datum/hallucination/chasing_mob/New(mob/living/carbon/victim, forced = TRUE)
+	set waitfor = FALSE
+	..()
+
+	var/message = pick("It's mom!", "I have to HURRY UP!", "They are CLOSE!", "They are NEAR!")
+	var/icon_state = pick("M3", "deepone", "mom")
+
+	var/turf/start_turf = pick(RANGE_TURFS(7, victim) - RANGE_TURFS(3, victim))
+	if(!start_turf)
+		qdel(src)
+		return
+
+	hallucinated_image = image('icons/roguetown/maniac/dreamer_mobs.dmi', start_turf, icon_state, FLOAT_LAYER, get_dir(start_turf, victim))
+	hallucinated_image.plane = GAME_PLANE_UPPER
+	victim.client.images += hallucinated_image
+
+	to_chat(victim, span_userdanger("<span class='big'>[message]</span>"))
+	addtimer(CALLBACK(src, PROC_REF(begin_chase), victim), 5)
+
+/datum/hallucination/chasing_mob/proc/begin_chase(mob/living/carbon/victim)
+	if(!victim.client || QDELETED(hallucinated_image))
+		qdel(src)
+		return
+
+	var/static/list/attack_sounds = list(
+		'sound/villain/hall_attack1.ogg',
+		'sound/villain/hall_attack2.ogg',
+		'sound/villain/hall_attack3.ogg',
+		'sound/villain/hall_attack4.ogg'
+	)
+	victim.playsound_local(victim, pick(attack_sounds), 100)
+
+	chase_step(victim, get_turf(hallucinated_image), 7, rand(4, 6))
+
+/datum/hallucination/chasing_mob/proc/chase_step(mob/living/carbon/victim, turf/current_turf, tiles_remaining, delay_time)
+	if(!victim.client || QDELETED(src) || QDELETED(hallucinated_image))
+		qdel(src)
+		return
+
+	if(tiles_remaining <= 0)
+		qdel(src)
+		return
+
+	var/direction = get_dir(current_turf, victim)
+	var/turf/next_turf = get_step(current_turf, direction)
+	if(!next_turf)
+		qdel(src)
+		return
+
+	hallucinated_image.dir = direction
+	hallucinated_image.loc = next_turf
+
+	if(next_turf == get_turf(victim))
+		victim.Stun(rand(2 SECONDS, 4 SECONDS))
+		to_chat(victim, span_userdanger(pick("NO!", "THEY GOT ME!", "AGH!")))
+		qdel(src)
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(chase_step), victim, next_turf, tiles_remaining - 1, delay_time), delay_time)
+
+/datum/hallucination/chasing_mob/Destroy()
+	if(target.client && hallucinated_image)
+		target.client.images -= hallucinated_image
+	
+	QDEL_NULL(hallucinated_image)
+
+	return ..()
+
+/datum/hallucination/floor_shift
+
+/datum/hallucination/floor_shift/New(mob/living/carbon/dreamer, forced = TRUE)
+	set waitfor = FALSE
+	..()
+	for(var/turf/open/floor/floor in view(dreamer))
+		if(prob(40)) 
+			continue
+
+		var/mutable_appearance/appearance = image(floor.icon, floor, floor.icon_state, floor.layer + 0.01)
+		dreamer.client.images += appearance
+		var/offset = pick(-3, -2, -1, 1, 2, 3)
+		var/raise_duration = rand(1 SECONDS, 3 SECONDS) * abs(offset)
+		var/lower_duration = rand(1 SECONDS, 3 SECONDS) * abs(offset)
+		animate(appearance, pixel_y = offset, time = raise_duration, flags = ANIMATION_RELATIVE)
+		addtimer(CALLBACK(src, PROC_REF(floor_back), dreamer, appearance, offset, lower_duration), raise_duration)
+
+	to_chat(dreamer, span_userdanger(pick("WOAH!", "WHERE IS THE FLOOR?", "MOVE!", "HOW!?")))
+	dreamer.adjustStaminaLoss(10)
+
+	qdel(src)
+
+/datum/hallucination/floor_shift/proc/floor_back(mob/living/carbon/dreamer, mutable_appearance/appearance, offset, lower_duration)	
+	animate(appearance, pixel_y = -offset, time = lower_duration, flags = ANIMATION_RELATIVE)
+	addtimer(CALLBACK(src, PROC_REF(floor_remove), dreamer, appearance), lower_duration)
+
+/datum/hallucination/floor_shift/proc/floor_remove(mob/living/carbon/dreamer, mutable_appearance/appearance)
+	if(dreamer?.client)
+		dreamer.client.images -= appearance
+
+	qdel(appearance)
+
+/datum/hallucination/fake_heartattack
+
+/datum/hallucination/fake_heartattack/New(mob/living/carbon/victim, forced = TRUE)
+	set waitfor = FALSE
+	..()
+
+	to_chat(victim, span_userdanger(pick("MY HEART STOPS BEATING!", "I CAN'T FEEL MY HEART!", "WHERE IS MY HEART?")))
+
+	victim.freakout_hud_skew()
+	victim.emote("scream")
+	victim.flash_fullscreen("stressflash")
+	victim.Jitter(10)
+	victim.energy_add(-2)
+
+	qdel(src)
+ 
+#undef HAL_LINES_FILE

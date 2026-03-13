@@ -15,8 +15,6 @@
 	now_fixed = "<span class='warning'>My lungs seem to once again be able to hold air.</span>"
 	high_threshold_cleared = "<span class='info'>The constriction around my chest loosens as my breathing calms down.</span>"
 
-	sellprice = 20
-
 /obj/item/organ/lungs/on_life()
 	..()
 	if((!failed) && ((organ_flags & ORGAN_FAILING)))

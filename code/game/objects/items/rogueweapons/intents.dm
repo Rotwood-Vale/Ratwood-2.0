@@ -54,7 +54,17 @@
 	var/glow_color = null // The color of the glow. Used for spells
 	var/mob_light = null // tracking mob_light
 	var/obj/effect/mob_charge_effect = null // The effect to be added (on top) of the mob while it is charging
-
+	var/custom_swingdelay = null	//Custom icon for its swingdelay.
+	/// Effective range for penfactor to apply fully.
+	var/effective_range = null
+	///	Effective range type. Can be Exact, Below or Above. Be sure to set this if you use effective_range!
+	/// Only use this with reach is >1 because otherwise like... why.
+	var/effective_range_type = EFF_RANGE_NONE
+	/// Extra sharpness drain per successful & parried hit.
+	var/sharpness_penalty = 0
+	//The below is for chipping on intents. Damage applied through armour, as a mechanic.
+	var/blunt_chipping = FALSE//Is this even capable of it?
+	var/blunt_chip_strength = null//How strong?
 
 	var/list/static/bonk_animation_types = list(
 		BCLASS_BLUNT,
@@ -89,7 +99,19 @@
 	if(desc)
 		inspec += "\n[desc]"
 	if(reach != 1)
-		inspec += "\n<b>Reach:</b> [reach]"
+		inspec += "\n<b>Reach:</b> [reach] paces"
+	if(effective_range)
+		var/suffix
+		switch(effective_range_type)
+			if(EFF_RANGE_EXACT)
+				suffix = "exactly"
+			if(EFF_RANGE_ABOVE)
+				suffix = "at and beyond"
+			if(EFF_RANGE_BELOW)
+				suffix = "at and within"
+			else
+				CRASH("effective_range found without a valid effective_range_type on [src] intent by [user]")
+		inspec += "\n<b>Effective Range:</b> [suffix] [effective_range] paces"
 	if(damfactor != 1)
 		inspec += "\n<b>Damage:</b> [damfactor]"
 	if(penfactor)
@@ -128,6 +150,20 @@
 	if(intent_intdamage_factor != 1)
 		var/percstr = abs(intent_intdamage_factor - 1) * 100
 		inspec += "\nThis intent deals [percstr]% [intent_intdamage_factor > 1 ? "more" : "less"] damage to integrity."
+	if(sharpness_penalty)
+		inspec += "\nThis intent will cost some sharpness for every attack made."
+	if(blunt_chipping)
+		var/chip_strength
+		switch(blunt_chip_strength)
+			if(BLUNT_CHIP_MINUSCULE)
+				chip_strength = "minuscule"
+			if(BLUNT_CHIP_WEAK)
+				chip_strength = "middling"
+			if(BLUNT_CHIP_STRONG)
+				chip_strength = "considerable"
+			if(BLUNT_CHIP_ABSURD)
+				chip_strength = "significant"
+		inspec += "\nA [chip_strength] sum of damage will bypass armour, if the target has no padded protection."
 	inspec += "<br>----------------------"
 
 	to_chat(user, "[inspec.Join()]")
@@ -159,7 +195,7 @@
 /datum/intent/proc/rmb_ranged(atom/target, mob/user)
 	return
 
-/datum/intent/proc/can_charge()
+/datum/intent/proc/can_charge(atom/clicked_object)
 	return TRUE
 
 /datum/intent/proc/afterchange()
@@ -220,7 +256,7 @@
 		chargedloop.start(chargedloop.parent)
 		mastermob.curplaying = src
 	if(glow_color && glow_intensity)
-		mob_light = mastermob.mob_light(glow_color, glow_intensity)
+		mob_light = mastermob.mob_light(glow_color, glow_intensity, FLASH_LIGHT_SPELLGLOW)
 	if(mob_charge_effect)
 		mastermob.vis_contents += mob_charge_effect
 
@@ -234,8 +270,11 @@
 	if(mob_charge_effect)
 		mastermob?.vis_contents -= mob_charge_effect
 
-
 /datum/intent/proc/on_mmb(atom/target, mob/living/user, params)
+	return
+
+// Do something special when this intent is applied to a living target, H being the receiver and user being the attacker
+/datum/intent/proc/spec_on_apply_effect(mob/living/H, mob/living/user, params)
 	return
 
 /datum/intent/use
@@ -332,6 +371,19 @@
 	clickcd = 14 // Just like knife pick!
 	swingdelay = 12
 
+/datum/intent/pick/bad	//One-handed intents
+	name = "sluggish pick"
+	icon_state = "inpick"
+	attack_verb = list("picks","impales")
+	hitsound = list('sound/combat/hits/pick/genpick (1).ogg', 'sound/combat/hits/pick/genpick (2).ogg')
+	penfactor = 60
+	animname = "strike"
+	item_d_type = "stab"
+	blade_class = BCLASS_PICK
+	chargetime = 0
+	clickcd = 16 // Just like knife pick!
+	swingdelay = 16
+
 /datum/intent/pick/ranged
 	name = "ranged pick"
 	icon_state = "inpick"
@@ -374,7 +426,7 @@
 	charging_slowdown = 3
 	warnoffset = 20
 	var/strength_check = FALSE //used when we fire HEAVY bows
-	
+
 /datum/intent/proc/arc_check()
 	return FALSE
 
@@ -457,7 +509,7 @@
 	miss_text = "claw at the air"
 	miss_sound = "punchwoosh"
 	item_d_type = "slash"
-	
+
 
 /datum/intent/unarmed/shove
 	name = "shove"
@@ -636,6 +688,7 @@
 	item_d_type = "blunt"
 	intent_effect = /datum/status_effect/debuff/dazed
 	target_parts = list(BODY_ZONE_HEAD)
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
 /*/datum/intent/effect/daze/shield
 	intent_effect = /datum/status_effect/debuff/dazed/shield

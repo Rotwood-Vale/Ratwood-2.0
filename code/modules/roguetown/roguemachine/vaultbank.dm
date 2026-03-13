@@ -21,7 +21,7 @@
 	var/knockedoffbefore = 0
 	var/drillgoal = 100
 
-/obj/structure/roguemachine/vaultbank/Initialize()
+/obj/structure/roguemachine/vaultbank/Initialize(mapload)
 	..()
 	var/area/A = GLOB.areas_by_type[/area/rogue/indoors/town/vault]
 	var/obj/structure/roguemachine/RM = src

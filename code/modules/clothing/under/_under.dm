@@ -48,7 +48,7 @@
 	if(has_sensor > NO_SENSORS)
 		has_sensor = BROKEN_SENSORS
 
-/obj/item/clothing/under/Initialize()
+/obj/item/clothing/under/Initialize(mapload)
 	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
@@ -78,7 +78,6 @@
 
 	if(slot == SLOT_PANTS && freshly_laundered)
 		freshly_laundered = FALSE
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
 
 	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user

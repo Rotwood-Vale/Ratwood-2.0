@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
+	var/datum/map_adjustment/map_adjustment
 
 	var/map_voted = FALSE
 
@@ -37,12 +38,11 @@ SUBSYSTEM_DEF(mapping)
 	///list of all z level indices that form multiz connections and whether theyre linked up or down
 	///list of lists, inner lists are of the form: list("up or down link direction" = TRUE)
 	var/list/multiz_levels = list()
-	///shows the default gravity value for each z level. recalculated when gravity generators change.
-	///associative list of the form: list("[z level num]" = max generator gravity in that z level OR the gravity level trait)
-	var/list/gravity_by_z_level = list()
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
 	var/num_of_res_levels = 1
+	/// True when in the process of adding a new Z-level, global locking
+	var/adding_new_zlevel = FALSE
 
 	///this is a list of all the world_traits we have from things like god interventions
 	var/list/active_world_traits = list()
@@ -58,8 +58,20 @@ SUBSYSTEM_DEF(mapping)
 		config = load_map_config(error_if_missing = FALSE)
 #endif
 
-/datum/controller/subsystem/mapping/Initialize(timeofday)
+/datum/controller/subsystem/mapping/PreInit()
 	HACK_LoadMapConfig()
+	// After assigning a config datum to var/config, we check which map ajudstment fits the current config
+	if(islist(config.map_file) && length(config.map_file))
+		config.map_file = config.map_file[1]
+	for(var/datum/map_adjustment/each_adjust as anything in subtypesof(/datum/map_adjustment))
+		if(config.map_file && initial(each_adjust.map_file_name) != config.map_file)
+			continue
+		map_adjustment = new each_adjust() // map_adjustment has multiple procs that'll be called from needed places (i.e. job_change)
+		log_world("Loaded '[config.map_file]' map adjustment.")
+		break
+	return ..()
+
+/datum/controller/subsystem/mapping/Initialize(timeofday)
 	retainer = new
 	if(initialized)
 		return
@@ -67,38 +79,22 @@ SUBSYSTEM_DEF(mapping)
 		var/old_config = config
 		config = global.config.defaultmap
 		if(!config || config.defaulted)
-			to_chat(world, "<span class='boldannounce'>Unable to load next or default map config, defaulting to Box Station</span>")
+			to_chat(world, "<span class='boldannounce'>Unable to load next or default map config, defaulting to Vanderlin</span>")
 			config = old_config
+	if(map_adjustment)
+		map_adjustment.on_mapping_init()
+		SSregionthreat?.on_map_ready()
+		log_world("Applied '[map_adjustment.map_file_name]' map adjustment: on_mapping_init()")
 	loadWorld()
 	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
-#ifndef LOWMEMORYMODE
-	// Create space ruin levels
-	while (space_levels_so_far < config.space_ruin_levels)
-		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
-	// and one level with no ruins
-	for (var/i in 1 to config.space_empty_levels)
-		++space_levels_so_far
-		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
-
-	// Pick a random away mission.
-	if(CONFIG_GET(flag/roundstart_away))
-		createRandomZlevel()
-
-#endif
 	// Add the transit level
 	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
 	repopulate_sorted_areas()
 	initialize_reserved_level(transit.z_value)
 	generate_z_level_linkages()
-	calculate_default_z_level_gravities()
 	return ..()
-
-/datum/controller/subsystem/mapping/proc/calculate_default_z_level_gravities()
-	for(var/z_level in 1 to length(z_list))
-		calculate_z_level_gravity(z_level)
 
 /datum/controller/subsystem/mapping/proc/generate_z_level_linkages()
 	for(var/z_level in 1 to length(z_list))
@@ -118,16 +114,6 @@ SUBSYSTEM_DEF(mapping)
 	multiz_levels[z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
 	multiz_levels[z_level][Z_LEVEL_UP] = !!z_above
 	multiz_levels[z_level][Z_LEVEL_DOWN] = !!z_below
-
-/datum/controller/subsystem/mapping/proc/calculate_z_level_gravity(z_level_number)
-	if(!isnum(z_level_number) || z_level_number < 1)
-		return FALSE
-
-	var/max_gravity = 0
-
-	max_gravity = max_gravity || level_trait(z_level_number, ZTRAIT_GRAVITY) || 0//just to make sure no nulls
-	gravity_by_z_level["[z_level_number]"] = max_gravity
-	return max_gravity
 
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
@@ -214,9 +200,13 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/otherZ = list()
 
-	#ifdef ROGUEWORLD
-	otherZ += load_map_config("_maps/map_files/otherz/rogueworld.json")
+	#ifndef NO_DUNGEON
+	otherZ += load_map_config("_maps/map_files/otherz/dungeon.json")
 	#endif
+
+	for(var/map_json in config.other_z)
+		otherZ += load_map_config(map_json)
+
 	if(otherZ.len)
 		for(var/datum/map_config/OtherZ in otherZ)
 			LoadGroup(FailedZs, OtherZ.map_name, OtherZ.map_path, OtherZ.map_file, OtherZ.map_folder, OtherZ.traits, ZTRAITS_STATION)
@@ -234,11 +224,6 @@ SUBSYSTEM_DEF(mapping)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
-	// load mining
-	if(config.minetype == "lavaland")
-		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", "_maps", default_traits = ZTRAITS_LAVALAND)
-	else if (!isnull(config.minetype))
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 	#endif
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen

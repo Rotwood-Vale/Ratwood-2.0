@@ -1,0 +1,67 @@
+{
+    "full": {
+		"hello":"nǐ hǎo",
+		"goodbye":"zàijiàn",
+		"farewell":"wǒ xiān gào cí le",
+		"sorry":"wǒ hěn bàoqiàn",
+		"thanks":"xièxiè",
+		"yes":"shì",
+		"no":"bù",
+		"duke":"mín gōng",
+		"duchess":"mín gōng",
+		"duchy":"gōngguó",
+		"dukedom":"gōngguó",
+		"bishop":"shénfù",
+		"prelate":"shénfù",
+		"church":"jiàohuì",
+		"inquisition":"diàocháguān",
+		"inquisitor":"zōngjiào cáipànsuǒ",
+		"knight":"qíshì",
+		"knights":"qíshì",
+		"captain":"duìzhǎng",
+		"sergeant":"jūnshì",
+		"soldier":"shìbīng",
+		"soldiers":"shìbīng",
+		"cavalry":"qíbīng",
+		"archer":"shèshǒu",
+		"archers":"shèshǒu",
+		"squire":"xiāngshēn",
+		"squires":"xiāngshēn",
+		"maid":"nǚ yōng",
+		"maids":"nǚ yōng",
+		"butler":"guǎnjiā",
+		"butlers":"guǎnjiā",
+		"servant":"pú rén",
+		"servants":"pú rén",
+		"idiot":["báichī", "bèndàn"],
+		"jerk":"zhū tóu",
+		"asshole":"shǎbī",
+		"fucker":"shǎbī",
+		"dumbass":"fàntǒng"
+
+    },
+    "start": {
+
+    },
+
+    "end": {
+
+    },
+
+	"multiword": {
+		"good morning":"zǎoshang hǎo",
+		"good afternoon":"xiàwǔ hǎo",
+		"good evening":"wǎnshàng hǎo",
+		"thank you":"xièxiè",
+		"fuck off":"cào nǐ mā",
+		"shut the fuck up":"xiā jī bā chě",
+		"damn it":"tā mā de",
+		"go to hell":"gǔn kā",
+		"blood brother":"yìxiōngdì",
+		"blood sister":"yìjiě"
+	},
+
+    "syllable": {
+
+    }
+}

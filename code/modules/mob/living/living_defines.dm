@@ -11,6 +11,7 @@
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null
+	var/datum/weakref/lastattacker_weakref = null
 
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
@@ -29,6 +30,7 @@
 
 	var/resting = FALSE
 	var/wallpressed = FALSE
+	var/climbing = FALSE
 
 	var/pixelshift_layer = 0
 
@@ -44,9 +46,14 @@
 
 	var/infected = FALSE //Used to tell if the mob is in progress of turning into deadite
 
-	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
-	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
-								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
+	/**
+	 * Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
+	 * FALSE is off
+	 * INCORPOREAL_MOVE_BASIC is normal
+	 * INCORPOREAL_MOVE_SHADOW is for ninjas
+	 * INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
+	 */
+	var/incorporeal_move = FALSE
 
 	var/list/roundstart_quirks
 
@@ -58,9 +65,12 @@
 
 	var/tod = null // Time of death
 
-	var/on_fire = 0 //The "Are we on fire?" var
-	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
-	var/divine_fire_stacks = 0	//Same as regular firestacks but has less properties to avoid firespreading and other mechanics. Meant to ONLY harm the target.
+	/// The boolean "Are we on fire?" var. 
+	var/on_fire = FALSE
+	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
+	var/fire_stacks = 0
+	/// Rate at which fire stacks should decay from this mob
+	var/fire_stack_decay_rate = -0.05
 
 	var/bloodcrawl = 0 //0 No blood crawling, BLOODCRAWL for bloodcrawling, BLOODCRAWL_EAT for crawling+mob devour
 	var/holder = null //The holder for blood crawling
@@ -137,8 +147,11 @@
 
 	var/ambushable = 0
 
+	// Tracks whether mob is in surrendering state (right-click combat button)
 	var/surrendering = 0
-	var/compliance = 0 // whether we are choosing to auto-resist grabs and stuff
+
+	// Tracks whether mob is in compliance mode (middle-click combat button)
+	var/compliance = 0
 
 	var/defprob = 50 //base chance to defend against this mob's attacks, for simple mob combat
 	var/encumbrance = 0
@@ -186,3 +199,7 @@
 
 	var/cmode_music_override = list() // set by prefs or the verb, ignored if empty
 	var/cmode_music_override_name // solely for autoselecting as a spawned-in mob
+	var/last_heard_raw_message //to prevent repeated messages from spamming
+
+	/// If the character has prominent mob descriptors, they'll make extra noise
+	var/loud_sneaking = FALSE

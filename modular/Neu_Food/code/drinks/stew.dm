@@ -4,8 +4,7 @@
 /datum/reagent/consumable/soup/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			H.adjust_hydration(hydration)
+		H.adjust_hydration(hydration)
 		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
 			M.blood_volume = min(M.blood_volume+10, BLOOD_VOLUME_NORMAL)
 	..()
@@ -120,7 +119,7 @@
 /datum/reagent/consumable/soup/stew/garlick_soup
 	name = "garlick soup"
 	color = "#FAF9F6"
-	taste_description = "clear sinuses"
+	taste_description = "strong garlick"
 
 /datum/reagent/consumable/soup/stew/cucumber_soup
 	name = "cucumber soup"
@@ -130,7 +129,7 @@
 /datum/reagent/consumable/soup/stew/eggplant_soup
 	name = "eggplant soup"
 	color = "#fff8e3"
-	taste_description = "tasty eggplant"
+	taste_description = "subtle eggplant"
 
 /datum/reagent/consumable/soup/stew/carrot_stew
 	name = "carrot stew"
@@ -145,11 +144,11 @@
 /datum/reagent/consumable/soup/stew/tomato_soup
 	name = "tomato soup"
 	color = "#db5230"
-	taste_description = "home"
-	metabolization_rate = 0.5 // half as fast as normal, last twice as long - it is the best soup after all
+	taste_description = "rich tomato"
+	metabolization_rate = 0.5 // half as fast as normal, last twice as long - it is one of the best soups after all
 
 /datum/reagent/consumable/soup/stew/plum_soup
-	name = "plum soup"
+	name = "plum jam"
 	color = "#9c305b"
 	taste_description = "sweet plums"
 
@@ -157,6 +156,12 @@
 	name = "tangerine marmalade"
 	color = "#f0935d"
 	taste_description = "extremely sweet tangerine"
+
+/datum/reagent/consumable/soup/stew/pumpkin_soup
+	name = "pumpkin soup"
+	color = "#702e08"
+	taste_description = "roasted squash"
+	metabolization_rate = 0.5 // half as fast as normal, last twice as long - it is one of the best soups after all
 
 // Copy pasted from berry poison, but stew metabolizes much faster so it is less deadly. You CAN use it as a source of hydration / nutrition if you are desperate enough???
 /datum/reagent/consumable/soup/stew/berry_poisoned/on_mob_life(mob/living/carbon/M)

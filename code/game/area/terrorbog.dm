@@ -1,5 +1,5 @@
 /area/rogue/outdoors/bog
-	name = "terrorbog"
+	name = "The Terrorbog"
 	icon_state = "bog"
 	warden_area = TRUE
 	ambientsounds = AMB_BOGDAY
@@ -26,12 +26,14 @@
 	converted_type = /area/rogue/indoors/shelter/bog
 	threat_region = THREAT_REGION_TERRORBOG
 	deathsight_message = "a wretched, fetid bog"
+	detail_text = DETAIL_TEXT_TERRORBOG
 
 /area/rogue/indoors/shelter/bog
 	icon_state = "bog"
 	droning_sound = 'sound/music/area/bog.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
+	deathsight_message = "a wretched, fetid bog"
 
 /area/rogue/outdoors/bog/north
 	name = "Northern Terrorbog"

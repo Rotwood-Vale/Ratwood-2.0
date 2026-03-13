@@ -11,6 +11,7 @@
 	slot_flags = ITEM_SLOT_NECK
 	body_parts_covered = NECK
 	resistance_flags = INDESTRUCTIBLE
+	nudist_approved = TRUE
 	var/mob/living/carbon/human/victim = null
 	var/datum/mind/collar_master = null
 	var/silenced = FALSE
@@ -35,7 +36,7 @@
 		return
 
 	var/surrender_mod = 1
-	if(C.surrendering)
+	if(C.surrendering || C.compliance)
 		surrender_mod = 0.5
 
 	applying = TRUE
@@ -132,12 +133,12 @@
 	. = ..()
 
 /obj/item/clothing/neck/roguetown/cursed_collar/proc/send_collar_signal(mob/living/carbon/human/user)
-    if(!collar_master) // Don't send signal if no master
-        SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)
-        return
-    SEND_SIGNAL(user, COMSIG_CARBON_GAIN_COLLAR, src)
+	if(!collar_master) // Don't send signal if no master
+		SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)
+		return
+	SEND_SIGNAL(user, COMSIG_CARBON_GAIN_COLLAR, src)
 
 /obj/item/clothing/neck/roguetown/cursed_collar/dropped(mob/living/carbon/human/user)
-    . = ..()
-    if(istype(user))
-        SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)
+	. = ..()
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)

@@ -45,10 +45,16 @@
 			return strings("valley_replacement.json", type, convert_HTML = TRUE)
 		if("Kazengun accent")
 			return strings("kazengun_replacement.json", type, convert_HTML = TRUE)
+		if("Xinyi accent")
+			return strings("xinyi_replacement.json", type, convert_HTML = TRUE)
+		if("Pui-Maen accent")
+			return strings("puimaen_replacement.json", type, convert_HTML = TRUE)
 		if("Avar accent")
 			return strings("russian_replacement.json", type, convert_HTML = TRUE)
 		if("Pirate accent")
 			return strings("axian_replacement.json", type, convert_HTML = TRUE)
+		if("Low-Town accent")
+			return strings("poor_replacement.json", type, convert_HTML = TRUE)
 
 /datum/species/proc/get_accent(mob/living/carbon/human/H)
 	return get_accent_list(H,"full")
@@ -70,7 +76,7 @@
 #define REGEX_ENDWORD 3
 #define REGEX_ANY 4
 
-/datum/species/proc/handle_speech(datum/source, mob/speech_args)
+/datum/species/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 
 	//message = treat_message_accent(message, strings("accent_universal.json", "universal"), REGEX_FULLWORD)
@@ -92,7 +98,7 @@
 		return
 	var/value = accent_list[key]
 	if (!value)
-		value = accent_list[lowertext(key)]
+		value = accent_list[LOWER_TEXT(key)]
 	if (!value)
 		value = accent_list[uppertext(key)]
 	if (!value)

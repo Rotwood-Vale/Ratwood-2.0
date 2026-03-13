@@ -6,6 +6,10 @@
 /datum/status_effect/incapacitating/off_balanced
 	id = "off_balanced"
 	alert_type = /atom/movable/screen/alert/status_effect/off_balanced
+	mob_effect_icon = 'icons/mob/mob_effects.dmi'
+	mob_effect_icon_state = "eff_offbalanced"
+	mob_effect_offset_y = -4	//We want this shown UNDER the feet of the mob.
+	mob_effect_layer = MOB_EFFECT_LAYER_OFFBALANCED
 
 /atom/movable/screen/alert/status_effect/off_balanced
 	name = "Off Balanced"
@@ -176,8 +180,9 @@
 
 /atom/movable/screen/alert/status_effect/compliance
 	name = "Compliant"
-	desc = "I am currently not resisting any grabs or breakout attempts against me."
-	icon_state = "buckled" // this really needs its own icon
+	desc = "I am currently not resisting any attempts to grab me, or to break free from my grasp. It is also effortless to restrain, subdue, and rob me.\n"\
+	+ span_info("Left click the icon to deactivate. Suppress messages under Options tab.")
+	icon_state = "compliance"
 
 // Sadly we can't rely on /atom/movable/screen/Click() to return TRUE at all.
 // We MUST use the shitcode method of copypasting if both examine and toggle are to work properly.
@@ -198,6 +203,7 @@
 /datum/status_effect/compliance
 	id = "compliance"
 	alert_type = /atom/movable/screen/alert/status_effect/compliance
+	needs_processing = FALSE
 
 /datum/status_effect/carebox
 	id = "carebox"

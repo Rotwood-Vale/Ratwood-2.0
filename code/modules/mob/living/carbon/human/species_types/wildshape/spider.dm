@@ -4,6 +4,8 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/spider_chitin
+	wildshape_icon = 'icons/roguetown/mob/monster/spider.dmi'
+	wildshape_icon_state = "honeys"
 	// Someone else balance this, I am here for code, not numbers
 
 /mob/living/carbon/human/species/wildshape/spider/gain_inherent_skills()
@@ -16,17 +18,20 @@
 		src.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
 		src.adjust_skillrank(/datum/skill/misc/climbing, 5, TRUE)
 
-		src.STASTR = 12
+		src.STASTR = 10
 		src.STACON = 6
-		src.STAWIL = 7
+		src.STAWIL = 10
 		src.STAPER = 12
 		src.STASPD = 14
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/spiderfangs)
 		AddSpell(new /obj/effect/proc_holder/spell/self/createhoney)
 		AddSpell(new /obj/effect/proc_holder/spell/self/weaveweb)
-		real_name = "Beespider ([stored_mob.real_name])"
 		faction += "spiders" // It IS a spider
+		if (src.client.prefs?.wildshape_name)
+			real_name = "beespider ([stored_mob.real_name])"
+		else
+			real_name = "beespider"
 
 // CAT SPECIES DATUM //
 /datum/species/shapespider
@@ -44,7 +49,8 @@
 		TRAIT_BREADY, //Ambusher
 		TRAIT_ORGAN_EATER,
 		TRAIT_PIERCEIMMUNE, //Prevents weapon dusting and caltrop effects when killed/stepping on shards, also 8 legs.
-		TRAIT_LONGSTRIDER
+		TRAIT_LONGSTRIDER,
+		TRAIT_DODGEEXPERT,
 	)
 	inherent_biotypes = MOB_HUMANOID
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE)
@@ -121,7 +127,7 @@
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
-	icon = 'icons/roguetown/weapons/32.dmi'
+	icon = 'icons/roguetown/weapons/misc32.dmi'
 	max_blade_int = 400
 	max_integrity = 400
 	force = 25 //More than the volf, more fragile, hits slower
@@ -146,7 +152,7 @@
 /obj/item/rogueweapon/spider_fang/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/spider_fang/Initialize()
+/obj/item/rogueweapon/spider_fang/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)

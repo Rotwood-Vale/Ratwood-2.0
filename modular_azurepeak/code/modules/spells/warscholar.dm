@@ -13,6 +13,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	hand_path = /obj/item/melee/touch_attack/rogueweapon/bladeofpsydon
+	req_items = list(/obj/item/clothing/mask/rogue/lordmask/naledi)
 
 /obj/item/melee/touch_attack/rogueweapon/bladeofpsydon
 	name = "\improper arcyne push dagger"
@@ -32,8 +33,9 @@
 	swingsound = list('sound/combat/wooshes/bladed/wooshsmall (1).ogg','sound/combat/wooshes/bladed/wooshsmall (2).ogg','sound/combat/wooshes/bladed/wooshsmall (3).ogg')
 	associated_skill = /datum/skill/combat/unarmed
 	pickup_sound = 'sound/foley/equip/swordsmall2.ogg'
-	wdefense = 4
+	wdefense = 0 // Like other katar meant to be used with unarmed parry
 	wbalance = WBALANCE_SWIFT
+	can_parry = TRUE
 
 /obj/item/melee/touch_attack/rogueweapon/attack_self()
 	attached_spell.remove_hand()

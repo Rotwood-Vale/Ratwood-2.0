@@ -31,7 +31,7 @@
 		TRAIT_STABLEHEART,
 		TRAIT_STABLELIVER,
 		TRAIT_ANTIMAGIC,
-		TRAIT_SCHIZO_AMBIENCE,
+		TRAIT_PSYCHOSIS,
 		TRAIT_BLOODLOSS_IMMUNE,
 	)
 	/// Traits that only get applied in the final sequence
@@ -274,7 +274,7 @@
 				traitorwin = FALSE
 			count += objective.triumph_count
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(!considered_alive(owner))
 		traitorwin = FALSE

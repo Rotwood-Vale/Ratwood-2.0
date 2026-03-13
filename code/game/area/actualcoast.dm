@@ -8,6 +8,8 @@
 	droning_sound = 'sound/music/area/harbor.ogg'
 	converted_type = /area/rogue/under/lake
 	first_time_text = "CENTRAL COAST"
+	deathsight_message = "a windswept shore"
+	detail_text = DETAIL_TEXT_ACTUAL_COAST
 
 /area/rogue/outdoors/beach/harbor
 	name = "harbor"
@@ -15,9 +17,12 @@
 	warden_area = TRUE
 	ambientsounds = AMB_BEACH
 	ambientnight = AMB_BEACH
+	ambush_times = null
+	ambush_mobs = null
 	droning_sound = 'sound/music/area/harbor.ogg'
 	converted_type = /area/rogue/under/lake
 	first_time_text = "Rockhill Harbor"
+	deathsight_message = "a bustling, windswept harbor"
 
 /area/rogue/outdoors/beach/north
 	name = "Northern Coast"
@@ -39,3 +44,4 @@
 		new /datum/ambush_config/deepone_party = 20,
 	)
 	first_time_text = "SOUTHERN COAST"
+	detail_text = DETAIL_TEXT_CITY_COAST

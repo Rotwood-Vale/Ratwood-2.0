@@ -6,7 +6,6 @@
 	roundend_category = "traitors"
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
-	antag_moodlet = /datum/mood_event/focused
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 	var/special_role = ROLE_TRAITOR
@@ -215,7 +214,7 @@
 
 	result += objectives_text
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"

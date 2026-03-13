@@ -109,13 +109,13 @@
 	max_integrity = 40
 	smeltresult = /obj/item/natural/glass
 
-/obj/item/natural/glass_shard/Initialize()
+/obj/item/natural/glass_shard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, force)
 	AddComponent(/datum/component/butchering, 150, 65)
 
 /obj/item/natural/glass_shard/Crossed(mob/living/L)
-	if(istype(L) && has_gravity(loc))
+	if(istype(L))
 		playsound(loc, 'sound/foley/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 	return ..()
 

@@ -60,7 +60,7 @@
 	accessory_type =  /datum/sprite_accessory/tail/tiefling
 
 /obj/item/organ/tail/dullahan
-	name = "dullahan tail"
+	name = "revenant tail"
 	accessory_type =  /datum/sprite_accessory/tail/dullahan
 
 /obj/item/organ/tail/akula
@@ -78,3 +78,7 @@
 	desc = ""
 	color = "#116611"
 	accessory_type =  /datum/sprite_accessory/tail/lizard/kobold
+
+/obj/item/organ/tail/harpy
+	name = "harpy plumage"
+	desc = "Why?"

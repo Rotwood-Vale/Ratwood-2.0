@@ -37,7 +37,7 @@
 	var/ignore_los = TRUE
 	var/glow_intensity = 0 // How much does the user glow when using the ability
 	var/glow_color = null // The color of the glow
-	var/hide_charge_effect = FALSE // If true, will not show the spell's icon when charging 
+	var/hide_charge_effect = FALSE // If true, will not show the spell's icon when charging
 	/// This spell holder's cooldown does not scale with any stat
 	var/is_cdr_exempt = FALSE
 	var/obj/effect/mob_charge_effect = null
@@ -45,7 +45,7 @@
 	/// This "spell" (miracle) is excluded from Priest's round-start selection.
 	var/priest_excluded = FALSE
 
-/obj/effect/proc_holder/Initialize()
+/obj/effect/proc_holder/Initialize(mapload)
 	. = ..()
 	if(has_action)
 		action = new base_action(src)
@@ -178,6 +178,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/gesture_required = FALSE // Can it be cast while cuffed? Rule of thumb: Offensive spells + Mobility cannot be cast
 	var/spell_tier = 1 // Tier of the spell, used to determine whether you can learn it based on your spell. Starts at 1.
 	var/refundable = FALSE // If true, the spell can be refunded. This is modified at the point it is added to the user's mind by learnspell.
+	var/zizo_spell = FALSE // If this spell is fucked up & evil and can only be learned by heretics.
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
@@ -278,7 +279,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	if(!antimagic_allowed)
 		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
-		if(antimagic)
+		if(antimagic && !HAS_TRAIT(user, TRAIT_SPELL_DISPERSION))
 			if(isatom(antimagic))
 				to_chat(user, span_notice("[antimagic] is interfering with my magic."))
 			else
@@ -294,8 +295,14 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if((invocation_type == "whisper" || invocation_type == "shout") && (!H.can_speak_vocal() || !H.getorganslot(ORGAN_SLOT_TONGUE)))
 			to_chat(user, span_warning("I can't get the words out!"))
 			return FALSE
+		// Spells cannot be cast using sign language (check specifically for SIGNLANG flag)
+		if((invocation_type == "whisper" || invocation_type == "shout"))
+			var/datum/language/default_lang = H.get_default_language()
+			if(default_lang && (initial(default_lang.flags) & SIGNLANG))
+				to_chat(user, span_warning("I cannot cast spells using [initial(default_lang.name)]! I need to speak the words aloud!"))
+				return FALSE
 
-		if(HAS_TRAIT(H, TRAIT_PARALYSIS))
+		if(HAS_TRAIT(H, TRAIT_PARALYSIS) && !stat_allowed)
 			to_chat(user, span_warning("My body is paralyzed!"))
 			return FALSE
 
@@ -351,6 +358,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				adjust_var(user, holder_var_type, holder_var_amount)
 	if(action)
 		action.UpdateButtonIcon()
+	START_PROCESSING(SSfastprocess, src)
 	record_featured_stat(FEATURED_STATS_MAGES, user)
 	return TRUE
 
@@ -384,7 +392,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			else
 				user.whisper(chosen_invocation)
 		if("emote")
-			user.visible_message(chosen_invocation, invocation_emote_self) //same style as in mob/living/emote.dm
+			var/emote_incantation = "<b>[usr.real_name]</b> [chosen_invocation]"
+			user.visible_message(emote_incantation, emote_incantation) //this is stupid, but it works.
 
 /obj/effect/proc_holder/spell/proc/playMagSound()
 	var/ss = sound
@@ -392,7 +401,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		ss = pick(sound)
 	playsound(get_turf(usr), ss,100,FALSE)
 
-/obj/effect/proc_holder/spell/Initialize()
+/obj/effect/proc_holder/spell/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -424,12 +433,15 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			var/diff2 = SPELL_SCALING_THRESHOLD - ranged_ability_user.STAINT
 			recharge_time = initial(recharge_time) + (initial(recharge_time) * (diff2 * COOLDOWN_REDUCTION_PER_INT))
 
+	START_PROCESSING(SSfastprocess, src)
+
 /obj/effect/proc_holder/spell/process()
 	if(charge_counter <= recharge_time) // Edge case when charge counter is set
 		charge_counter += 2	//processes 5 times per second instead of 10.
 		if(charge_counter >= recharge_time)
 			action.UpdateButtonIcon()
 			charge_counter = recharge_time
+			STOP_PROCESSING(SSfastprocess, src)
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	if(!ignore_los)
@@ -462,7 +474,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	before_cast(targets, user = user)
 	if(user && user.ckey)
 		user.log_message(span_danger("cast the spell [name]."), LOG_ATTACK)
-	if(user.mob_timers[MT_INVISIBILITY] > world.time)			
+	if(user.mob_timers[MT_INVISIBILITY] > world.time)
 		user.mob_timers[MT_INVISIBILITY] = world.time
 		user.update_sneak_invis(reset = TRUE)
 	if(cast(targets, user = user))
@@ -498,6 +510,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		QDEL_IN(spell, overlay_lifespan)
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets, mob/user = usr)
+	SEND_SIGNAL(user, COMSIG_MOB_CAST_SPELL)
+	record_featured_object_stat(FEATURED_STATS_SPELLS, name)
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets, mob/user = usr)
@@ -532,6 +546,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	/* if(xp_gain)
 		adjust_experience(usr, associated_skill, round(get_fatigue_drain() * MAGIC_XP_MULTIPLIER)) */
 
+	START_PROCESSING(SSfastprocess, src) // ensure we always end up reprocessing after casting
+
 /obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
 	switch(type)
 		if("view")
@@ -540,6 +556,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			. = range(distance,center)
 
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
+	start_recharge()
 	switch(charge_type)
 		if("recharge")
 			charge_counter = recharge_time
@@ -547,6 +564,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			charge_counter++
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
+	START_PROCESSING(SSfastprocess, src)
 	if(action)
 		action.UpdateButtonIcon()
 
@@ -702,7 +720,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return FALSE
 
 	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
-		return FALSE
+		if(!HAS_TRAIT(user, TRAIT_SPELL_DISPERSION))
+			return FALSE
 
 	if(!ishuman(user))
 		if(clothes_req || human_req)
@@ -717,7 +736,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				return FALSE
 			if(!H.has_active_hand())
 				return FALSE
-	
+
 	if((invocation_type == "whisper" || invocation_type == "shout") && isliving(user))
 		var/mob/living/living_user = user
 		if(!living_user.can_speak_vocal())
@@ -725,7 +744,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if(ishuman(user) && !living_user.getorganslot(ORGAN_SLOT_TONGUE)) // Shapeshifter has no tongue yeah
 			return FALSE
 
-	if(HAS_TRAIT(user, TRAIT_PARALYSIS))
+	if(HAS_TRAIT(user, TRAIT_PARALYSIS) && !stat_allowed)
 		return FALSE
 
 	return TRUE

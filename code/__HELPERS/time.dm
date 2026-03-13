@@ -84,6 +84,7 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 			if(GLOB.dayspassed == 8)
 				GLOB.dayspassed = 1
 			SStreasury.distribute_estate_incomes()
+			SStreasury.distribute_daily_payments()
 		for(var/mob/living/player in GLOB.mob_list)
 			if(player.stat != DEAD && player.client)
 				player.do_time_change()
@@ -138,7 +139,7 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 		var/time_change_tips_random = pick(GLOB.time_change_tips)
 		to_chat(client, span_notice("<b>[time_change_tips_random]</b>"))
 
-		if(mind.current.construct)//hackslop so golems can do their daily stuff without sleeping
+		if(HAS_TRAIT(mind.current, TRAIT_NOSLEEP)) // new hackslop to allow anything that cannot sleep to do their daily stuff 
 			if(mind.has_changed_spell)
 				mind.has_changed_spell = FALSE
 				to_chat(mind.current, span_smallnotice("I feel like I can change my spells again."))

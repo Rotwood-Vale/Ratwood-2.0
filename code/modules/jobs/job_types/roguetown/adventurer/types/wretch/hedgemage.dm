@@ -5,14 +5,27 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/hedgemage
+	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
+	class_select_category = CLASS_CAT_MAGE
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT)
 	// Same stat spread as necromancer, same reasoning
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 2,
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1
+	)
+	subclass_spellpoints = 27 // Unlike Rogue Mage, who gets 6 but DExpert, this one don't have DExpert but have more spell points than anyone but the CM.
+	subclass_skills = list(
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
+		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 	)
 
 // Hedge Mage on purpose has nearly the same fit as a Adv Mage / Mage Associate who cast conjure armor roundstart. Call it meta disguise.
@@ -30,12 +43,11 @@
 	beltr = /obj/item/reagent_containers/glass/bottle/rogue/manapot
 	neck = /obj/item/clothing/neck/roguetown/leather // No iron gorget vs necro. They will have to acquire one in round.
 	beltl = /obj/item/storage/magebag
-	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/woodstaff/ruby
+	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
-		/obj/item/spellbook_unfinished/pre_arcyne = 1, 
+		/obj/item/spellbook_unfinished/pre_arcyne = 1,
 		/obj/item/roguegem/amethyst = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/chalk = 1,
@@ -43,27 +55,32 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 	)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/alchemy, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/magic/arcane, 4, TRUE)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
-	H.cmode_music = 'sound/music/combat_bandit_mage.ogg'
 	if(H.age == AGE_OLD)
-		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_MASTER, TRUE)
 		H.mind?.adjust_spellpoints(6)
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-	var/classes = list("Hedge Mage","Rogue Mage")
-	var/classchoice = input("Choose your archetypes", "Available archetypes") as anything in classes
-	switch(classchoice)
-		if("Hedge Mage")
-			H?.mind.adjust_spellpoints(27)
-		if("Rogue Mage")
-			H?.mind.adjust_spellpoints(21)
-			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-	wretch_select_bounty(H)
+		wretch_select_bounty(H)
+
+	var/staffs = list(
+		"ronts-focused staff",
+		"blortz-focused staff",
+		"saffira-focused staff",
+		"gemerald-focused staff",
+		"amethyst-focused staff",
+		"toper-focused staff",
+	)
+	var/staffchoice = input(H, H, "Choose your staff", "Available staffs") as anything in staffs
+	switch(staffchoice)
+		if("ronts-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/ruby
+		if("blortz-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/quartz
+		if("saffira-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/sapphire
+		if("gemerald-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/emerald
+		if("amethyst-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/amethyst
+		if("toper-focused staff")
+			backr = /obj/item/rogueweapon/woodstaff/toper

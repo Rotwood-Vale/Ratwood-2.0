@@ -110,7 +110,9 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/mapGeneratorModule/mod in modules)
-		INVOKE_ASYNC(mod, TYPE_PROC_REF(/datum/mapGeneratorModule, generate))
+		//Hi. It's Francinum. This used to be an async call.
+		//It was fistfighting the MC for ticktime. I made that Not Happen.
+		mod.generate()
 
 
 //Requests the mapGeneratorModule(s) to (re)generate this one turf

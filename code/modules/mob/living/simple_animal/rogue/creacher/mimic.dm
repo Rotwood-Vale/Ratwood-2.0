@@ -105,7 +105,6 @@
 	// Drop loot onto tile.
 	for(var/obj/O in src)
 		O.forceMove(loc)
-	QDEL_NULL(proximity_monitor)
 	..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mimic/get_sound(input)
@@ -146,7 +145,7 @@
 	var/mimic_type = /mob/living/simple_animal/hostile/retaliate/rogue/mimic
 	var/chest_type = /obj/structure/closet/crate/chest
 
-/obj/effect/landmark/chest_or_mimic/Initialize()
+/obj/effect/landmark/chest_or_mimic/Initialize(mapload)
 	..()
 	var/C = pick(mimic_type, chest_type)
 	new C(loc)

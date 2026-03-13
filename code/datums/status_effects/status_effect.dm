@@ -2,17 +2,52 @@
 //This file contains their code, plus code for applying and removing them.
 //When making a new status effect, add a define to status_effects.dm in __DEFINES for ease of use!
 
+/mob/living
+	/// ass list [id] = /datum/status_effect. ATTENTION THE CODER IS A RETARD THIS IS NOT SUPPOSED TO BE HERE I REPEART!!!!!!
+	var/list/status_effects_by_id
+
 /datum/status_effect
-	var/id = "effect" //Used for screen alerts.
-	var/duration = -1 //How long the status effect lasts in DECISECONDS. Enter -1 for an effect that never ends unless removed through some means.
-	var/tick_interval = 10 //How many deciseconds between ticks, approximately. Leave at 10 for every second.
-	var/mob/living/owner //The mob affected by the status effect.
-	var/status_type = STATUS_EFFECT_UNIQUE //How many of the effect can be on one mob, and what happens when you try to add another
-	var/on_remove_on_mob_delete = FALSE //if we call on_remove() when the mob is deleted
-	var/examine_text //If defined, this text will appear when the mob is examined - to use he, she etc. use "SUBJECTPRONOUN" and replace it in the examines themselves
-	var/alert_type = /atom/movable/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
-	var/atom/movable/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
+	/// The ID of the effect. ID is used in adding and removing effects to check for duplicates, among other things.
+	var/id = "effect"
+	/// When set initially / in on_creation, this is how long the status effect lasts in deciseconds.
+	/// While processing, this becomes the world.time when the status effect will expire.
+	/// -1 = infinite duration.
+	var/duration = -1
+	/// When set initially / in on_creation, this is how long between [proc/tick] calls in deciseconds.
+	/// Note that this cannot be faster than the processing subsystem you choose to fire the effect on. (See: [var/processing_speed])
+	/// While processing, this becomes the world.time when the next tick will occur.
+	/// -1 = will prevent ticks, and if duration is also unlimited (-1), stop processing wholesale.
+	var/tick_interval = 1 SECONDS
+	/// The mob affected by the status effect.
+	var/mob/living/owner
+	/// How many of the effect can be on one mob, and/or what happens when you try to add a duplicate.
+	var/status_type = STATUS_EFFECT_UNIQUE
+	/// If TRUE, we call [proc/on_remove] when owner is deleted. Otherwise, we call [proc/be_replaced].
+	var/on_remove_on_mob_delete = FALSE
+	/// If defined, this text will appear when the mob is examined - to use he, she etc.
+	/// use "SUBJECTPRONOUN" and replace it in the examines themselves
+	var/examine_text
+	/// The typepath to the alert thrown by the status effect when created.
+	/// Status effect "name"s and "description"s are shown to the owner here.
+	var/alert_type = /atom/movable/screen/alert/status_effect
+	/// The alert itself, created in [proc/on_creation] (if alert_type is specified).
+	var/atom/movable/screen/alert/status_effect/linked_alert = null
+	/// Each entry defines a stat affected by the status effect during its duration.
 	var/list/effectedstats = list()
+	/// if TRUE, we will be entered into SSfastprocess for ticking. if the effect is cleared/managed by another source, this should be FALSE.
+	var/needs_processing = TRUE
+
+	///Icon path for this effect's on-mob effect.
+	var/mob_effect_icon = 'icons/mob/mob_effects.dmi'
+	var/mob_effect_icon_state
+	///How long the effect is meant to last. Will default to the duration otherwise.
+	var/mob_effect_dur
+	///The layer for the mob effect, keeping this unique (even by a 0.01) will ensure it gets deleted properly.
+	var/mob_effect_layer = ABOVE_MOB_LAYER
+	var/mob_effect_offset_x
+	var/mob_effect_offset_y
+	///A direct reference to the generated mob effect post-creation. Used for manipulation (or deletion) of the effect. Normally expires.
+	var/mutable_appearance/mob_effect
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -22,10 +57,21 @@
 	if(new_owner)
 		owner = new_owner
 	if(owner)
+		// ass list
+		LAZYINITLIST(owner.status_effects)
+		LAZYINITLIST(owner.status_effects_by_id)
 		LAZYADD(owner.status_effects, src)
+		owner.status_effects_by_id[id] = src
+
 	if(!owner || !on_apply())
 		qdel(src)
 		return
+
+	if(mob_effect_icon_state)
+		if(!mob_effect_dur)
+			mob_effect_dur = (duration - 1)	//-1 tick juuust in case something goes wrong between status effect deletion and the callback of the appearance itself.
+		mob_effect = owner.play_overhead_indicator_flick(mob_effect_icon, mob_effect_icon_state, mob_effect_dur, mob_effect_layer, null, mob_effect_offset_y, mob_effect_offset_x)
+	
 	if(duration != -1)
 		duration = world.time + duration
 	tick_interval = world.time + tick_interval
@@ -33,26 +79,36 @@
 		var/atom/movable/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
 		A?.attached_effect = src //so the alert can reference us, if it needs to
 		linked_alert = A //so we can reference the alert, if we need to
-	START_PROCESSING(SSfastprocess, src)
+
+	if(needs_processing)
+		START_PROCESSING(SSfastprocess, src)
 	return TRUE
 
 /datum/status_effect/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
+	if(needs_processing)
+		STOP_PROCESSING(SSfastprocess, src)
 	if(owner)
 		linked_alert = null
 		owner.clear_alert(id)
+
+		// Remove+remove probably twice
 		LAZYREMOVE(owner.status_effects, src)
+		if(owner.status_effects_by_id && owner.status_effects_by_id[id] == src)
+			owner.status_effects_by_id -= id
+
 		on_remove()
 		owner = null
-	effectedstats = list()
-	return ..()
 
-/datum/status_effect/process()
-	if(!owner)
+	effectedstats = null
+	. = ..()
+	return QDEL_HINT_IWILLGC
+
+/datum/status_effect/process(wait)
+	if(QDELETED(owner))
 		qdel(src)
 		return
 	if(tick_interval < world.time)
-		tick()
+		tick(wait)
 		tick_interval = world.time + initial(tick_interval)
 	if(duration != -1 && duration < world.time)
 		qdel(src)
@@ -76,13 +132,20 @@
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed; do note that at the point this is called, it is out of the owner's status_effects but owner is not yet null
 	for(var/S in effectedstats)
 		owner.change_stat(S, -(effectedstats[S]))
+	if(mob_effect)
+		owner.clear_overhead_indicator(mob_effect, mob_effect_layer)
 
 /datum/status_effect/proc/be_replaced() //Called instead of on_remove when a status effect is replaced by itself or when a status effect with on_remove_on_mob_delete = FALSE has its mob deleted
 	for(var/S in effectedstats)
 		owner.change_stat(S, -(effectedstats[S]))
 	owner.clear_alert(id)
-	LAZYREMOVE(owner.status_effects, src)
-	owner = null
+
+	if(owner)
+		LAZYREMOVE(owner.status_effects, src)
+		if(owner.status_effects_by_id && owner.status_effects_by_id[id] == src)
+			owner.status_effects_by_id -= id
+		owner = null
+
 	qdel(src)
 
 /datum/status_effect/proc/refresh()
@@ -131,49 +194,71 @@
 // HELPER PROCS //
 //////////////////
 
-/mob/living/proc/apply_status_effect(effect, ...) //applies a given status effect to this mob, returning the effect if it was successful
+// applies a given status effect to this mob, returning the effect if it was successful
+/mob/living/proc/apply_status_effect(effect, ...)
 	. = FALSE
-	var/datum/status_effect/S1 = effect
 	LAZYINITLIST(status_effects)
-	for(var/datum/status_effect/S in status_effects)
-		if(S.id == initial(S1.id) && S.status_type)
-			if(S.status_type == STATUS_EFFECT_REPLACE)
-				S.be_replaced()
-			else if(S.status_type == STATUS_EFFECT_REFRESH)
-				S.refresh()
-				return
-			else
-				return
+	LAZYINITLIST(status_effects_by_id)
+
+	var/datum/status_effect/template = effect
+	var/effect_id = initial(template.id)
+
 	var/list/arguments = args.Copy()
 	arguments[1] = src
-	S1 = new effect(arguments)
-	. = S1
 
-/mob/living/proc/remove_status_effect(effect) //removes all of a given status effect from this mob, returning TRUE if at least one was removed
+	// ID CHECK
+	var/datum/status_effect/current = status_effects_by_id[effect_id]
+
+	if(current && current.status_type)
+		if(current.status_type == STATUS_EFFECT_REPLACE)
+			// Remove old create one
+			current.be_replaced(arglist(arguments))
+		else if(current.status_type == STATUS_EFFECT_REFRESH)
+			// Refresh update current's timer if we already have the effect
+			current.refresh(arglist(arguments))
+			return
+		else
+			// STATUS_EFFECT_UNIQUE we need only 1 per time
+			return
+
+	// No old effect or its been removed (apply brand new)
+	var/datum/status_effect/new_effect = new effect(arguments)
+	. = new_effect
+
+// removes all of a given status effect from this mob, returning TRUE if at least one was removed
+/mob/living/proc/remove_status_effect(effect)
 	. = FALSE
-	if(status_effects)
-		var/datum/status_effect/S1 = effect
-		for(var/datum/status_effect/S in status_effects)
-			if(initial(S1.id) == S.id)
-				qdel(S)
-				. = TRUE
+	if(!status_effects_by_id)
+		return
+
+	var/datum/status_effect/template = effect
+	var/effect_id = initial(template.id)
+
+	var/datum/status_effect/S = status_effects_by_id[effect_id]
+	if(S)
+		qdel(S)
+		. = TRUE
 
 /mob/living/proc/has_status_effect(datum/status_effect/checked_effect)
 	RETURN_TYPE(/datum/status_effect)
 
-	for(var/datum/status_effect/present_effect as anything in status_effects)
-		if(present_effect.id == initial(checked_effect.id))
-			return present_effect
+	if(!status_effects_by_id)
+		return null
 
-	return null
+	var/effect_id = initial(checked_effect.id)
+	return status_effects_by_id[effect_id]
 
 /mob/living/proc/has_status_effect_list(datum/status_effect/checked_effect)
 	RETURN_TYPE(/list)
 
 	var/list/effects_found = list()
-	for(var/datum/status_effect/present_effect as anything in status_effects)
-		if(present_effect.id == initial(checked_effect.id))
-			effects_found += present_effect
+	if(!status_effects_by_id)
+		return effects_found
+
+	var/effect_id = initial(checked_effect.id)
+	var/datum/status_effect/S = status_effects_by_id[effect_id]
+	if(S)
+		effects_found += S
 
 	return effects_found
 

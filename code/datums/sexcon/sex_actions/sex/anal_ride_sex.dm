@@ -30,7 +30,7 @@
 
 /datum/sex_action/anal_ride_sex/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rides [target]."))
-	playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
+	user.sexcon.intercourse_noise(user)
 	user.sexcon.do_thrust_animate(target)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
@@ -41,6 +41,8 @@
 		target.visible_message(span_love("[target] cums into [user]'s butt!"))
 		target.sexcon.cum_into(splashed_user = user)
 		target.virginity = FALSE
+		if(HAS_TRAIT(user, TRAIT_BAOTHA_FERTILITY_BOON) && !user.getorganslot(ORGAN_SLOT_VAGINA))
+			target.try_impregnate(user)
 
 	if(target.sexcon.considered_limp())
 		target.sexcon.perform_sex_action(user, 1.2, 4, FALSE)

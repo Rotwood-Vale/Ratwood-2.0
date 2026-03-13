@@ -6,9 +6,10 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	desc = "A bottle with a cork."
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "clear_bottle1"
-	amount_per_transfer_from_this = 6
-	possible_transfer_amounts = list(6)
-	volume = 48
+	amount_per_transfer_from_this = 10
+	amount_per_gulp = 5
+	possible_transfer_amounts = list(10)
+	volume = 50
 	fill_icon_thresholds = list(0, 25, 50, 75, 100)
 	dropshrink = 0.8
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
@@ -27,7 +28,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	var/glass_on_impact = FALSE // If TRUE, bottle will generate glass shard on impact. Otherwise it won't.
 
 /obj/item/reagent_containers/glass/bottle/update_icon(dont_fill=FALSE)
-	if(!fill_icon_thresholds || dont_fill)
+	if(!fill_icon_thresholds || dont_fill || !reagents)
 		return
 
 	cut_overlays()
@@ -87,7 +88,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 			desc = "An open bottle. Hopefully a cork is nearby."
 	update_icon()
 
-/obj/item/reagent_containers/glass/bottle/Initialize()
+/obj/item/reagent_containers/glass/bottle/Initialize(mapload)
 	. = ..()
 	if(!icon_state)
 		icon_state = "clear_bottle1"

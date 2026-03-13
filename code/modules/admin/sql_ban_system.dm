@@ -240,6 +240,7 @@
 							"Church" = GLOB.church_positions,
 							"Inquisition" = GLOB.inquisition_positions,
 							"Mercenaries" = GLOB.mercenary_positions,
+							"WANDERERS" = GLOB.wanderer_positions,
 							"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC", "LOOC"))
 		for(var/department in headless_job_lists)
 			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
@@ -455,7 +456,7 @@
 	duration = text2num(duration)
 	if (!(interval in list("SECOND", "MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR")))
 		interval = "MINUTE"
-	var/time_message = "[duration] [lowertext(interval)]" //no DisplayTimeText because our duration is of variable interval type
+	var/time_message = "[duration] [LOWER_TEXT(interval)]" //no DisplayTimeText because our duration is of variable interval type
 	if(duration > 1) //pluralize the interval if necessary
 		time_message += "s"
 	var/note_reason = "Banned from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"] [isnull(duration) ? "permanently" : "for [time_message]"] - [reason]"

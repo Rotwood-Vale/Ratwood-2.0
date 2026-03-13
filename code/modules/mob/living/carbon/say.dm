@@ -6,7 +6,7 @@
 		var/obj/item/bodypart/head/dullahan/head = dullahan.my_head
 		if(dullahan.headless && head.tongue)
 			return
-			
+		
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/static/regex/tongueless_lower = new("\[gdntke]+", "g")
 	var/static/regex/tongueless_upper = new("\[GDNTKE]+", "g")

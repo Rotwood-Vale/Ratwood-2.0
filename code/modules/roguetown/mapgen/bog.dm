@@ -8,7 +8,7 @@
 
 
 /datum/mapGenerator/bog
-	modules = list(/datum/mapGeneratorModule/ambushing,/datum/mapGeneratorModule/boggrassturf,/datum/mapGeneratorModule/bog,/datum/mapGeneratorModule/bogroad,/datum/mapGeneratorModule/boggrass)
+	modules = list(/datum/mapGeneratorModule/boggrassturf,/datum/mapGeneratorModule/bog,/datum/mapGeneratorModule/bogroad,/datum/mapGeneratorModule/boggrass)
 
 
 /datum/mapGeneratorModule/bog
@@ -61,7 +61,8 @@
 							/obj/structure/flora/roguegrass/bush = 10,
 							/obj/structure/flora/roguegrass = 44,
 							/obj/structure/flora/roguegrass/maneater = 15,
-							/obj/structure/flora/roguegrass/maneater/real/juvenile = 10,
+							/obj/structure/flora/roguegrass/maneater/real = 10,
+							/obj/structure/flora/roguegrass/pumpkin = 2,
 							/obj/item/natural/stone = 6,
 							/obj/item/natural/rock = 1,
 							/obj/item/grown/log/tree/stick = 3,

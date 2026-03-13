@@ -1,8 +1,8 @@
 /area/rogue/under/cavewet
-	name = "Southern Caves"
+	name = "The Undergrove"
 	icon_state = "cavewet"
 	warden_area = TRUE
-	first_time_text = "The Undersea"
+	first_time_text = "The Undergrove"
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
 	spookysounds = SPOOKY_CAVE
@@ -18,7 +18,8 @@
 				/mob/living/carbon/human/species/human/northern/highwayman/ambush = 20,
 				/mob/living/simple_animal/hostile/retaliate/rogue/troll = 15)
 	converted_type = /area/rogue/outdoors/caves
-	deathsight_message = "root-bound caverns"
+	deathsight_message = "wet root-bound caverns"
+	detail_text = DETAIL_TEXT_UNDERGROVE
 
 /area/rogue/under/cavewet/bogcaves
 	name = "The Undergrove"
@@ -35,6 +36,7 @@
 /area/rogue/under/cavewet/bogcaves/camp
 	name = "Undergrove Camp"
 	first_time_text = "Undergrove Camp"
+	detail_text = DETAIL_TEXT_UNDERGROVE_CAMP
 
 /area/rogue/under/cavewet/bogcaves/south
 	name = "Southern Undergrove"
@@ -49,7 +51,7 @@
 	first_time_text = "South Coast Caves"
 
 /area/rogue/under/cave/goblindungeon
-	name = "goblindungeon"
+	name = "Goblin Camp"
 	icon_state = "under"
 	first_time_text = "GOBLIN CAMP"
 	droning_sound = 'sound/music/area/dungeon.ogg'
@@ -58,9 +60,35 @@
 	converted_type = /area/rogue/outdoors/dungeon1
 	ceiling_protected = TRUE
 	deathsight_message = "root-bound caverns"
+	detail_text = DETAIL_TEXT_GOBLIN_CAMP
+
+
+/area/rogue/under/cave/rhgoblinencampment
+	name = "goblin encampment"
+	icon_state = "under"
+	first_time_text = "Lost Encampment"
+	ambientsounds = AMB_BASEMENT
+	ambientnight = AMB_BASEMENT
+	droning_sound = 'sound/music/area/gobcamp.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	ceiling_protected = TRUE
+	deathsight_message = "A hidden goblin-stained fortress"
+	
+/area/rogue/under/cave/inferno
+	name = "inferno"
+	icon_state = "fire_chamber"
+	first_time_text = "Another Place"
+	ambientsounds = AMB_CAVELAVA
+	ambientnight = AMB_CAVELAVA
+	droning_sound = 'sound/music/area/inferno.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	ceiling_protected = TRUE
+	deathsight_message = "A blistering realm beyond this mortal sphere"
 
 /area/rogue/under/cave/skeletoncrypt
-	name = "skeletoncrypt"
+	name = "Skeleton Crypt"
 	icon_state = "under"
 	first_time_text = "SKELETON CRYPT"
 	droning_sound = 'sound/music/area/dungeon.ogg'
@@ -71,6 +99,7 @@
 	converted_type = /area/rogue/outdoors/dungeon1
 	ceiling_protected = TRUE
 	deathsight_message = "root-bound caverns"
+	detail_text = DETAIL_TEXT_SKELETON_CRYPT
 
 /area/rogue/under/cavewet/wizarddungeon
 	name = "Abandoned Wizard Tower"

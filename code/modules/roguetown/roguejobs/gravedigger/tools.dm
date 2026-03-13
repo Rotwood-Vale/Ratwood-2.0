@@ -12,7 +12,8 @@
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	tool_behaviour = TOOL_SHOVEL
-	slot_flags = ITEM_SLOT_BACK
+	associated_skill = /datum/skill/combat/maces
+	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
 	swingsound = list('sound/combat/wooshes/blunt/shovel_swing.ogg','sound/combat/wooshes/blunt/shovel_swing2.ogg')
 	drop_sound = 'sound/foley/dropsound/shovel_drop.ogg'
 	var/obj/item/natural/dirtclod/heldclod
@@ -63,6 +64,7 @@
 	if(user.used_intent.type == /datum/intent/shovelscoop)
 		if(istype(T, /turf/open/floor/rogue/dirt))
 			var/turf/open/floor/rogue/dirt/D = T
+			
 			if(heldclod)
 				if(D.holie && D.holie.stage < 4)
 					D.holie.attackby(src, user)
@@ -103,6 +105,64 @@
 			return
 		return
 	. = ..()
+
+/obj/item/rogueweapon/shovel/proc/start_autodig(mob/living/L, turf/T)
+	if(!isliving(L) || !istype(T, /turf/open/floor/rogue/dirt))
+		return FALSE
+	
+	var/turf/open/floor/rogue/dirt/D = T
+	var/start_digging = !heldclod && !D.holie
+	
+	if(!start_digging)
+		return FALSE
+	
+	L.visible_message(span_notice("[L] begins digging on [T]..."))
+	// Do the first dig
+	if(!heldclod)
+		if(istype(T, /turf/open/floor/rogue/dirt/road))
+			new /obj/structure/closet/dirthole(T)
+		else
+			T.ChangeTurf(/turf/open/floor/rogue/dirt/road, flags = CHANGETURF_INHERIT_AIR)
+		heldclod = new(src)
+		playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)
+		update_icon()
+	
+	// Start the continuous loop
+	while(do_after(L, 1 SECONDS, target = T))
+		D = get_turf(T)
+		if(!(istype(D, /turf/open/floor/rogue/dirt)))
+			break
+		if(!(L.mobility_flags & MOBILITY_STAND))
+			to_chat(L, span_warning("You are knocked down and stop digging."))
+			break
+		
+		L.changeNext_move(L.used_intent.clickcd)
+		if(max_blade_int)
+			remove_bintegrity(2)
+		
+		// Fill the hole with the clod we have
+		if(heldclod && D.holie)
+			D.holie.attackby(src, L)
+			playsound(D,'sound/items/empty_shovel.ogg', 100, TRUE)
+		
+		// Dig a new hole on the same tile
+		D = get_turf(T)
+		if(istype(D, /turf/open/floor/rogue/dirt))
+			if(!D.holie)  // Only dig if there's no existing hole
+				if(istype(D, /turf/open/floor/rogue/dirt/road))
+					new /obj/structure/closet/dirthole(D)
+				else
+					D.ChangeTurf(/turf/open/floor/rogue/dirt/road, flags = CHANGETURF_INHERIT_AIR)
+				if(!heldclod)
+					heldclod = new(src)
+				playsound(D,'sound/items/dig_shovel.ogg', 100, TRUE)
+				update_icon()
+			else
+				break
+		else
+			break
+	
+	return TRUE
 
 /obj/item/rogueweapon/shovel/getonmobprop(tag)
 	. = ..()
@@ -179,6 +239,37 @@
 	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"
 	sellprice = 15
+
+/obj/item/rogueweapon/shovel/silver
+	force = 25
+	name = "silver shovel"
+	desc = "The only trait that distinguishes a man from a beast is their empathy. To mutilate the dead, regardless of what they've done in lyfe, is to invoke divine wrath. See them buried beneath crossed soil; ferry their spirit to the world beyond Psydonia, and towards their final judgement."
+	icon_state = "silvershovel"
+	icon = 'icons/roguetown/weapons/misc32.dmi'
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/shovel/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/shovel/silver/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_TENNITE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
 
 /obj/item/burial_shroud
 	name = "winding sheet"
@@ -345,3 +436,128 @@
 		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)
 		qdel(src)
+
+/obj/item/rogueweapon/shovel/saperka
+	name = "Saperka"
+	desc = "A compact, steel-headed spade favored by pioneers. \
+	Scarred by a hundred fieldworks, its socket is nicked from prying and the edge has been honed to bite through roots-or armor-in a pinch."
+	force = 12//It has a gripped state. USE IT!!!!!
+	force_wielded = 28//It's not just a better battleaxe, now. God I hate this thing.
+	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash, /datum/intent/shovelscoop)
+	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash)
+	icon_state = "saperka"//Temp sprite. Why was this just the shovel icon? I HATE YOU!!!!
+	icon = 'icons/roguetown/weapons/tools.dmi'
+	sharpness = 100
+	max_blade_int = 260
+	blade_dulling = DULLING_SHAFT_WOOD
+	wlength = WLENGTH_SHORT
+	gripped_intents = null
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_NORMAL
+	smeltresult = /obj/item/ingot/steel
+	minstr = 9
+	wdefense = 5
+	swingsound = BLADEWOOSH_MED
+	associated_skill = /datum/skill/combat/axes
+	demolition_mod = 2.5//Woodcutter axe level. A whole 1.0 lower than what it was before. I hate you. - Carl
+	resistance_flags = FLAMMABLE
+	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
+
+/obj/item/rogueweapon/shovel/saperka/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,
+"sx" = 0,
+"sy" = -10,
+"nx" = 2,
+"ny" = -8,
+"wx" = -9,
+"wy" = -8,
+"ex" = 5,
+"ey" = -11,
+"northabove" = 0,
+"southabove" = 1,
+"eastabove" = 1,
+"westabove" = 0,
+"nturn" = 105,
+"sturn" = -90,
+"wturn" = 0,
+"eturn" = 90,
+"nflip" = 0,
+"sflip" = 8,
+"wflip" = 8,
+"eflip" = 1)
+			if("wielded")
+				return list("shrink" = 0.8,
+"sx" = 3,
+"sy" = -5,
+"nx" = -8,
+"ny" = -5,
+"wx" = 0,
+"wy" = -5,
+"ex" = 5,
+"ey" = -5,
+"northabove" = 0,
+"southabove" = 1,
+"eastabove" = 1,
+"westabove" = 1,
+"nturn" = 135,
+"sturn" = -135,
+"wturn" = 240,
+"eturn" = 30,
+"nflip" = 0,
+"sflip" = 8,
+"wflip" = 8,
+"eflip" = 1)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+//This is effectively an iron quarterstaff, with silver quality, arc intent and chopping. It's a weird thing, but fluff and soulful for Necrans.
+/obj/item/rogueweapon/shovel/mort_staff
+	name = "\improper mortician's staff"
+	desc = "A heavy, silver shovel's head, paired with a length of silver and boswellia wood. \
+	As with standard Necran practice in the many sects, it has been anointed in censer soot, permitting it to act as a focus."
+	force = 16//Iron quarterstaff level.
+	force_wielded = 22//See above.
+	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)//One hand lets you arc divine blast and such.
+	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff,
+	/datum/intent/axe/chop/stone, /datum/intent/shovelscoop)//Two hands to let you shovel and chop.
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "mortstaff"//Temp sprite.
+	associated_skill = /datum/skill/combat/staves
+	wdefense = 3
+	wdefense_wbonus = 3//Bless this, m'lord.
+	max_integrity = 200
+	resistance_flags = FLAMMABLE
+	sharpness = IS_BLUNT
+	slot_flags = ITEM_SLOT_BACK
+	walking_stick = TRUE
+	smeltresult = /obj/item/ingot/silver
+	bigboy = TRUE
+	anvilrepair = /datum/skill/craft/carpentry
+	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
+	is_silver = TRUE
+
+/obj/item/rogueweapon/shovel/mort_staff/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/shovel/mort_staff/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -6,"sy" = -1,"nx" = 8,"ny" = 0,"wx" = -4,"wy" = 0,"ex" = 2,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 32,"eturn" = -23,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 4,"sy" = -2,"nx" = -3,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)

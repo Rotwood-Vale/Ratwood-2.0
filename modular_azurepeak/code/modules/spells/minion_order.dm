@@ -1,6 +1,8 @@
 /obj/effect/proc_holder/spell/invoked/minion_order
 	name = "Order Minions"
-	desc = "Cast on turf to head in that direction ignoring all else. Cast on a minion to set to aggressive, cast on self to passive and follow, cast on target to focus them."
+	desc = "Cast on turf to head in that direction ignoring all else. \
+	Cast on a minion to set to aggressive, cast on self to passive and follow, cast on target to focus them. \
+	Does not work on greater skeletons."
 	range = 12
 	associated_skill = /datum/skill/misc/athletics
 	chargedrain = 1
@@ -49,7 +51,7 @@
 		revert_cast()
 		return
 
-/obj/effect/proc_holder/spell/invoked/minion_order/proc/process_minions(var/order_type, turf/target_location = null, mob/living/target = null, var/faction_tag = null)
+/obj/effect/proc_holder/spell/invoked/minion_order/proc/process_minions(order_type, turf/target_location = null, mob/living/target = null, faction_tag = null)
 	var/mob/caster = usr
 	var/count = 0
 	var/msg = ""

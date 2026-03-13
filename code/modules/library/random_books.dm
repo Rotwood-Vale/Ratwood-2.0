@@ -1,11 +1,8 @@
 /obj/item/book/manual/random
 	icon_state = "random_book"
 
-/obj/item/book/manual/random/Initialize()
+/obj/item/book/manual/random/Initialize(mapload)
 	..()
-	var/static/banned_books = list(/obj/item/book/manual/random)
-	var/newtype = pick(subtypesof(/obj/item/book/manual) - banned_books)
-	new newtype(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/book/random
@@ -13,7 +10,7 @@
 	var/amount = 1
 	var/category = null
 
-/obj/item/book/random/Initialize()
+/obj/item/book/random/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 

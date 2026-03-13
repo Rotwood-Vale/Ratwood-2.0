@@ -1,9 +1,9 @@
-/mob/living/carbon/human/getarmor(def_zone, type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor)
+/mob/living/carbon/human/getarmor(def_zone, type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
 	var/armorval = 0
 	var/organnum = 0
 
 	if(def_zone)
-		return checkarmor(def_zone, type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor)
+		return checkarmor(def_zone, type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL my bodyparts for protection, and averages out the values
@@ -14,7 +14,7 @@
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(def_zone, d_type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor = 1)
+/mob/living/carbon/human/proc/checkarmor(def_zone, d_type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor = 1, obj/item/used_weapon)
 	if(!d_type)
 		return 0
 	if(isbodypart(def_zone))
@@ -30,6 +30,8 @@
 		if(blade_dulling == BCLASS_PEEL)	//Peel shouldn't be dealing any damage through armor, or to armor itself.
 			used.peel_coverage(def_zone, peeldivisor, src)
 			damage = 0
+			if(def_zone == BODY_ZONE_CHEST)
+				purge_peel(99)
 		if(used.blocksound)
 			playsound(loc, get_armor_sound(used.blocksound, blade_dulling), 100)
 		var/intdamage = damage
@@ -42,6 +44,12 @@
 			if(used.armor?.getRating("blunt") > 0)
 				var/bluntrating = used.armor.getRating("blunt")
 				intdamage -= intdamage * ((bluntrating / 2) / 100)	//Half of the blunt rating reduces blunt damage taken by %-age.
+		if(istype(used_weapon) && used_weapon.is_silver && ((used.smeltresult in list(/obj/item/ingot/aaslag, /obj/item/ingot/aalloy, /obj/item/ingot/purifiedaalloy)) || used.GetComponent(/datum/component/cursed_item)))
+			// Blessed silver delivers more int damage against "cursed" alloys, see component for multiplier values
+			var/datum/component/silverbless/bless = used_weapon.GetComponent(/datum/component/silverbless)
+			if(bless.is_blessed)
+				// Apply multiplier if the blessing is active.
+				intdamage = round(intdamage * bless.cursed_item_intdamage)
 		used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 	if(physiology)
 		protection += physiology.armor.getRating(d_type)
@@ -49,7 +57,7 @@
 
 /mob/living/carbon/human/proc/checkcritarmor(def_zone, d_type)
 	if(!d_type)
-		return 0
+		return FALSE
 	if(isbodypart(def_zone))
 		var/obj/item/bodypart/CBP = def_zone
 		def_zone = CBP.body_zone
@@ -86,11 +94,6 @@
 
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone = BODY_ZONE_CHEST)
-	if(istype(P, /obj/projectile/bullet))
-		if((P.damage_type == BURN) || (P.damage_type == BRUTE))
-			if(!P.nodamage && P.damage < src.health && isliving(P.firer))
-				retaliate(P.firer)
-
 	if(dna && dna.species)
 		var/spec_return = dna.species.bullet_act(P, src, def_zone)
 		if(spec_return)
@@ -104,7 +107,6 @@
 				return martial_art_result
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		retaliate(P.firer)
 		if(P.reflectable & REFLECT_NORMAL)
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 				visible_message(span_danger("The [P.name] gets reflected by [src]!"), \
@@ -135,25 +137,27 @@
 		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armor_penetration))
 			P.on_hit(src, 100, def_zone)
 			return BULLET_ACT_HIT
+
+	retaliate(P.firer)
 	return ..(P, def_zone)
 
 /mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in my l_hand, r_hand, or wear_armor based on the reflection chance of the object
-	if(wear_armor)
-		if(wear_armor.IsReflect(def_zone) == 1)
-			return 1
-	for(var/obj/item/I in held_items)
-		if(I.IsReflect(def_zone) == 1)
+	if(wear_armor?.IsReflect(def_zone) == 1)
+		return 1
+	for(var/obj/item/I as anything in held_items)
+		if(I?.IsReflect(def_zone) == 1)
 			return 1
 	return 0
 
 /mob/living/carbon/human/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armor_penetration = 0)
 	var/block_chance_modifier = round(damage / -3)
 
-	for(var/obj/item/I in held_items)
-		if(!istype(I, /obj/item/clothing))
-			var/final_block_chance = I.block_chance - (CLAMP((armor_penetration-I.armor_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-				return TRUE
+	for(var/obj/item/I as anything in held_items)
+		if(!I || istype(I, /obj/item/clothing))
+			continue
+		var/final_block_chance = I.block_chance - (CLAMP((armor_penetration-I.armor_penetration)/2,0,100)) + block_chance_modifier
+		if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+			return TRUE
 	if(head)
 		var/final_block_chance = head.block_chance - (CLAMP((armor_penetration-head.armor_penetration)/2,0,100)) + block_chance_modifier
 		if(head.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
@@ -170,7 +174,7 @@
 		var/final_block_chance = wear_neck.block_chance - (CLAMP((armor_penetration-wear_neck.armor_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
-  return FALSE
+	return FALSE
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
@@ -185,8 +189,6 @@
 			return spec_return
 	var/obj/item/I
 	var/throwpower = 30
-	if(has_status_effect(/datum/status_effect/buff/clash))
-		bad_guard(span_warning("The thrown object ruins my focus!"))
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = I.throwforce
@@ -208,7 +210,6 @@
 				emote("embed")
 				L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
 //					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='danger'>[I] embeds itself in my [L.name]!</span>")
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 				hitpush = FALSE
 				skipcatch = TRUE //can't catch the now embedded item
 
@@ -250,6 +251,15 @@
 	return dna.species.spec_attacked_by(I, user, affecting, used_intent, src, useder)
 
 /mob/living/carbon/human/attack_hand(mob/user)
+	// Check if this person is offering an item to the user
+	if(ishuman(user) && offered_item_ref)
+		var/mob/living/carbon/human/H = user
+		var/obj/offered_item = offered_item_ref.resolve()
+		if(offered_item && H.used_intent.type != INTENT_HARM)
+			var/stealthy = (m_intent == MOVE_INTENT_SNEAK)
+			if(H.try_accept_offered_item(src, offered_item, stealthy))
+				return TRUE
+	
 	if(..())	//to allow surgery to return properly.
 		return
 	retaliate(user)
@@ -588,8 +598,8 @@
 
 		inventory_items_to_kill += held_items
 
-	for(var/obj/item/I in inventory_items_to_kill)
-		I.acid_act(acidpwr, acid_volume)
+	for(var/obj/item/I as anything in inventory_items_to_kill)
+		I?.acid_act(acidpwr, acid_volume)
 	return 1
 
 /mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
@@ -765,7 +775,7 @@
 		if(leg_clothes)
 			torn_items |= leg_clothes
 
-	for(var/obj/item/I in torn_items)
+	for(var/obj/item/I as anything in torn_items)
 		I.take_damage(damage_amount, damage_type, damage_flag, 0)
 
 /// Helper proc that returns the worn item ref that has the highest rating covering the def_zone (targeted zone) for the d_type (damage type)
@@ -790,3 +800,68 @@
 						protection = val
 						used = C
 	return used
+
+/mob/living/carbon/human/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	//SEND_SIGNAL(src, COMSIG_HUMAN_BURNING)
+	burn_clothing(seconds_per_tick, fire_handler.stacks)
+	var/no_protection = FALSE
+	fire_handler.harm_human(seconds_per_tick, no_protection)
+
+/**
+ * Used by fire code to damage worn items.
+ *
+ * Arguments:
+ * - seconds_per_tick
+ * - times_fired
+ * - stacks: Current amount of firestacks
+ *
+ */
+
+/mob/living/carbon/human/proc/burn_clothing(seconds_per_tick, stacks)
+	//the fire tries to damage the exposed clothes and items
+	var/list/burning_items = list()
+	var/list/obscured = check_obscured_slots(TRUE)
+	//HEAD//
+
+	if(glasses && !(SLOT_GLASSES in obscured))
+		burning_items += glasses
+	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
+		burning_items += wear_mask
+	if(wear_neck && !(SLOT_NECK in obscured))
+		burning_items += wear_neck
+	if(head && !(SLOT_HEAD in obscured))
+		burning_items += head
+
+	//CHEST//
+	if(wear_pants && !(SLOT_PANTS in obscured))
+		burning_items += wear_pants
+	if(wear_shirt && !(SLOT_SHIRT in obscured))
+		burning_items += wear_shirt
+	if(wear_armor && !(SLOT_ARMOR in obscured))
+		burning_items += wear_armor
+
+	//ARMS & HANDS//
+	var/obj/item/clothing/arm_clothes = null
+	if(gloves && !(SLOT_GLOVES in obscured))
+		arm_clothes = gloves
+	else if(wear_armor && ((wear_armor.body_parts_covered & HANDS) || (wear_armor.body_parts_covered & ARMS)))
+		arm_clothes = wear_armor
+	else if(wear_pants && ((wear_pants.body_parts_covered & HANDS) || (wear_pants.body_parts_covered & ARMS)))
+		arm_clothes = wear_pants
+	if(arm_clothes)
+		burning_items |= arm_clothes
+
+	//LEGS & FEET//
+	var/obj/item/clothing/leg_clothes = null
+	if(shoes && !(SLOT_SHOES in obscured))
+		leg_clothes = shoes
+	else if(wear_armor && ((wear_armor.body_parts_covered & FEET) || (wear_armor.body_parts_covered & LEGS)))
+		leg_clothes = wear_armor
+	else if(wear_pants && ((wear_pants.body_parts_covered & FEET) || (wear_pants.body_parts_covered & LEGS)))
+		leg_clothes = wear_pants
+	if(leg_clothes)
+		burning_items |= leg_clothes
+
+	for(var/X in burning_items)
+		var/obj/item/I = X
+		I.fire_act(stacks * 25 * seconds_per_tick) //damage taken is reduced to 2% of this value by fire_act()

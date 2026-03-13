@@ -22,7 +22,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 	/area/rogue/outdoors/woods,
 	/area/rogue/indoors/shelter/woods,
-	/area/rogue/outdoors/river,
 	/area/rogue/outdoors/bog,
 	/area/rogue/indoors/shelter/bog,
 	/area/rogue/outdoors/rtfield,
@@ -60,6 +59,8 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 
 #define istransparentturf(A) (istype(A, /turf/open/transparent) || istype(A, /turf/closed/transparent))
 
+#define isopenspace(A) (istype(A, /turf/open/transparent/openspace))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
@@ -94,8 +95,8 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 #define ishalfkin(A) (is_species(A, /datum/species/demihuman))
 #define iswildkin(A) (is_species(A, /datum/species/anthromorph))
 #define isconstruct(A) (is_species(A, /datum/species/construct/metal))	//Specified 'M' due to redefine lower
-#define isdoll(A) (is_species(A, /datum/species/construct/porcelain))
-#define isvermin(A) (is_species(A, /datum/species/anthromorphsmall))
+#define isdoll(A) (is_species(A, /datum/species/construct/metal/porcelain))
+#define iscritter(A) (is_species(A, /datum/species/anthromorphsmall))
 #define isaxian(A) (is_species(A, /datum/species/akula))
 #define islamia(A) (is_species(A, /datum/species/lamia))
 #define isdracon(A) (is_species(A, /datum/species/dracon))
@@ -103,6 +104,7 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 #define ismoth(A) (is_species(A, /datum/species/moth))
 #define istabaxi(A) (is_species(A, /datum/species/tabaxi))
 #define isvulp(A) (is_species(A, /datum/species/vulpkanin))
+#define isharpy(A) (is_species(A, /datum/species/harpy))
 
 
 //more carbon mobs
@@ -191,3 +193,8 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 #define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
 
 #define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
+
+GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom
+#define isimage(thing) (istype(thing, /image))
+#define isappearance(thing) (!isimage(thing) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
+#define isappearance_or_image(thing) (isimage(thing) || (!ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing)))
