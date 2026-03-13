@@ -378,7 +378,7 @@
 	wdefense_wbonus = 4
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rogueweapon/sword/long/Initialize()
+/obj/item/rogueweapon/sword/long/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/skill_blessed, TRAIT_LONGSWORDSMAN, /datum/skill/combat/swords, SKILL_LEVEL_MASTER)
 
@@ -1236,7 +1236,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 
-/obj/item/rogueweapon/sword/sabre/freifechter/Initialize()
+/obj/item/rogueweapon/sword/sabre/freifechter/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/skill_blessed, TRAIT_SABRIST, /datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
