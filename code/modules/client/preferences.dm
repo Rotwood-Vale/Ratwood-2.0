@@ -112,6 +112,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/shake = TRUE
 	var/sexable = FALSE
 	var/compliance_notifs = TRUE
+	var/skillcap_notifs = TRUE
 	var/restricted_species_pref = null
 	var/wildshape_name = TRUE
 	var/xenophobe_pref = 1

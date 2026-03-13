@@ -160,7 +160,6 @@
 	settling down as do you. Still, there is coin to be made on land."))
 			H.set_blindness(0)
 
-
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
 			H.change_stat(STATKEY_STR, 2)
@@ -177,7 +176,6 @@
 			r_hand = /obj/item/rogueweapon/sword/cutlass
 			beltr = /obj/item/rogueweapon/scabbard/sword
 			beltl = /obj/item/rogueweapon/huntingknife/idagger
-
 
 			H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
