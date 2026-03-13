@@ -41,8 +41,7 @@
 /// INTENT DATUMS	^
 
 /obj/item/rogueweapon/special/dragonz
-	var/obj/effect/proc_holder/spell/invoked/order/retreat/bandit/banner_spell
-	var/item_icon = attachment.icon_state
+	var/obj/effect/proc_holder/spell/invoked/banner/banner_spell
 	force = 25
 	thrown_bclass = BCLASS_STAB
 	throwforce = 35
@@ -50,10 +49,9 @@
 	name = "dragon's zeal"
 	desc = "A purple flag with the characteristics of a dragon, you cannot help but feel it is alive..."
 	icon_state = "d_banner"
-	item_state = "d_banner"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	item = 'icons/roguetown/weapons/roguegiant_72.dmi'
-	name = "dragon banner"
+	lefthand_file = 'icons/roguetown/weapons/roguegiant_72.dmi'
+	righthand_file = 'icons/roguetown/weapons/roguegiant_72.dmi'
 
 
 	pixel_y = -16
@@ -83,9 +81,10 @@
 /obj/item/rogueweapon/special/dragonz/Initialize()
     . = ..()
 
-/obj/item/rogueweapon/special/dragonz/pickup(mob/living/user)
+/obj/item/rogueweapon/special/dragonz/pickup(mob/living/carbon/human/user)
 	. = ..()
 
+	update_icon()
 	if(!ishuman(user))
 		return
 
@@ -104,14 +103,15 @@
 
 		to_chat(user, span_suppradio("The Hoardmaster's focus is now drawn to you, you are bolstered by a strange sense of purpose."))
 
-		banner_spell = new (/obj/effect/proc_holder/spell/invoked/banner, /obj/effect/proc_holder/spell/self/convertrole/bandit)
+		banner_spell = new /obj/effect/proc_holder/spell/invoked/banner || /obj/effect/proc_holder/spell/self/convertrole/bandit
 		banner_spell.attached_banner = src
 
 		user.AddSpell(banner_spell)
 
-/obj/item/rogueweapon/special/dragonz/dropped(mob/living/user)
+/obj/item/rogueweapon/special/dragonz/dropped(mob/living/carbon/human/user)
 	. = ..()
 
+	update_icon()
 	lose_hearing_sensitivity()
 	SSroguemachine.scomm_machines -= src
 
@@ -166,46 +166,52 @@
 
 		//flag wave/rally code
 
-/obj/item/rogueweapon/special/dragonz/attack_self(mob/living/user)
-	. = ..()
+/obj/item/rogueweapon/special/dragonz/proc/wave_banner(mob/living/carbon/human/user)
 
 	if(user.advjob != "Iconoclast")
 		to_chat(user, span_danger("The dragon scoffs at your arrogance."))
 		return FALSE
 
-	user.visible_message(user, span_warning("[user] is about to wave the [src]!"))
+	user.visible_message(span_warning("[user] is about to wave the [src]!"))
 
-	user.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS) // We don't want them to spam the message.
+	user.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS)
 
-	if(do_after(user, 5 SECONDS))
-		user.visible_message(user, span_danger("[user] waved the [src]!"))
-		bandit_rally(user)
+	if(!do_after(user, 5 SECONDS))
+		return FALSE
 
-/obj/item/rogueweapon/special/dragonz/proc/deploy(mob/living/user)
+	return TRUE
 
+/obj/item/rogueweapon/special/dragonz/attack_self(mob/living/carbon/human/user)
+	. = ..()
+
+	return wave_banner(user)
+
+
+/obj/item/rogueweapon/special/dragonz/proc/deploy_banner(mob/living/user)
 	var/turf/T = get_step(user, user.dir)
 
-	if(get_dist(user, T) > 1)
-		return
-
-	if(!T)
-		return
-
-	if(!istype(T, /turf/open))
-		to_chat(user, span_warning("You cannot deploy here!"))
-		return
-
 	for(var/obj/object in T)
+
+		if(get_dist(user, T) > 1)
+			return
+
+		if(!T)
+			return
+
+		if(!istype(T, /turf/open))
+			to_chat(user, span_warning("You cannot deploy here!"))
+			return FALSE
+
 		if(object.density)
 			to_chat(user, span_warning("You need a clear area to deploy [src]!"))
-			return
+			return FALSE
 
 	user.visible_message(user, span_warning("[user] starts planting [src] into the ground..."))
 
 	playsound(user, 'sound/foley/Building-01.ogg', 50)
 
 	if(!do_after(user, 6 SECONDS))
-		return
+		return FALSE
 
 	user.visible_message(user, span_warning("[user] plants [src] into the ground!"))
 
@@ -213,23 +219,27 @@
 
 	qdel(src)
 
+	return TRUE
+
 	//banner message code
 
 /obj/item/rogueweapon/special/dragonz/attack_right(mob/living/carbon/human/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	var/input_text = input(user, "Enter your message:", "Message")
+
 	if(input_text)
-		var/usedcolor = user.voice_color
+
 		if(user.voicecolor_override)
-			usedcolor = user.voicecolor_override
+			user.voice_color = user.voicecolor_override
+
 		user.whisper(input_text)
 		var/list/tspans = list()
+
 		if(user.client.patreonlevel() >= GLOB.patreonsaylevel)
 			tspans |= SPAN_PATREON_SAY
+
 		if(length(input_text) > 100)
 			input_text = "<large>[input_text]</large>"
-		for(var/obj/item/rogueweapon/special/dragonz/S in SSroguemachine.scomm_machines)
-			S.repeat_message(input_text, src, usedcolor, tspans = tspans)
 
 /obj/item/rogueweapon/special/dragonz/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!can_speak())

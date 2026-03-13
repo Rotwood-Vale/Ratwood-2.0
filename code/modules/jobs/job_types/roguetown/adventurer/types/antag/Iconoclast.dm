@@ -50,7 +50,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
 	backr = /obj/item/storage/backpack/rogue/satchel
-	backl = /obj/item/rogueweapon/dragonz
+	backl = /obj/item/rogueweapon/special/dragonz
 
 	backpack_contents = list(
 					/obj/item/needle/thorn = 1,
