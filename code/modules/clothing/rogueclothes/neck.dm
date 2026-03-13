@@ -410,6 +410,7 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	grid_width = 32
 	grid_height = 32
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/psicross/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	..()
@@ -659,6 +660,7 @@
 	resistance_flags = FIRE_PROOF
 	sellprice = 100
 	anvilrepair = /datum/skill/craft/armorsmithing
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/psicross/naledi
 	name = "naledian psy-bracelet"
@@ -679,6 +681,7 @@
 	bellsound = FALSE
 	bell = FALSE
 	salvage_result = null
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/collar/leather
 	name = "leather collar"
@@ -736,6 +739,7 @@
 	dropshrink = 0.5
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_MASK
 	body_parts_covered = NECK|FACE
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/collar/surgcollar
 	name = "surgcollar"
@@ -748,6 +752,7 @@
 	dropshrink = 0.5
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_MASK
 	body_parts_covered = NECK|FACE
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/luckcharm
 	name = "luck charm"
@@ -761,6 +766,7 @@
 	var/goodluckactivated = FALSE
 	salvage_result = /obj/item/natural/fibers
 	salvage_result = 1
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/luckcharm/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -1031,6 +1037,7 @@
 	sellprice = 0
 	salvage_result = null
 	smeltresult = null
+	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/carved/jadeamulet
 	name = "jade amulet"

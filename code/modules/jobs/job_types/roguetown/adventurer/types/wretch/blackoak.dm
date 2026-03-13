@@ -10,6 +10,7 @@
 	)
 	outfit = /datum/outfit/job/roguetown/wretch/blackoak
 	cmode_music = 'sound/music/combat_blackoak.ogg'
+	class_select_category = CLASS_CAT_RACIAL
 	maximum_possible_slots = 1
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_AZURENATIVE, TRAIT_OUTDOORSMAN, TRAIT_RACISMISBAD, TRAIT_DODGEEXPERT, TRAIT_ARCYNE_T2)

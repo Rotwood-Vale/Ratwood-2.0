@@ -106,6 +106,11 @@
 	var/const/MEDIUM_XP_GAIN = 0.05
 	if(!isliving(swimmer))
 		return 0
+	if(!isnull(swimmer.grabbedby))
+		for(var/obj/item/grabbing/active_grab in swimmer.grabbedby)
+			if(active_grab.grabbed == active_grab.grabbee)
+				continue
+			return 0
 	if(!swim_skill)
 		return 0 // no stam cost
 	if(swimmer.is_floor_hazard_immune())

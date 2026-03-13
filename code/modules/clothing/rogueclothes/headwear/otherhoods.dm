@@ -15,6 +15,7 @@
 	anvilrepair = null
 	sewrepair = TRUE
 	blocksound = SOFTHIT
+	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/hide
 	salvage_amount = 1
 
@@ -48,6 +49,7 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/necrahood
 	name = "death shroud"
@@ -58,6 +60,8 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
 	sewrepair = TRUE
+	nudist_approved = TRUE
+
 /obj/item/clothing/head/roguetown/necramask
 	name = "death mask"
 	desc = "A hood with a decorated jaw bone at the chin, normally worn by some followers of Necra as a form of devotion"
@@ -72,6 +76,7 @@
 	dynamic_hair_suffix = ""
 	sewrepair = TRUE
 	mask_override = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/dendormask
 	name = "briarmask"
@@ -87,6 +92,7 @@
 	dynamic_hair_suffix = ""
 	sewrepair = TRUE
 	mask_override = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/necromhood
 	name = "necromancers hood"
@@ -106,6 +112,7 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
 	sewrepair = TRUE
+	nudist_approved = TRUE
 	color = "#999999"
 	//dropshrink = 0.75
 
@@ -125,6 +132,7 @@
 	detail_color = CLOTHING_WHITE
 	color = CLOTHING_AZURE
 	altdetail_color = CLOTHING_WHITE
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/jester/update_icon()
 	cut_overlays()

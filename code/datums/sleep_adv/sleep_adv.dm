@@ -150,6 +150,17 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	if(trait_capped_level && enough_sleep_xp_to_advance(skill, trait_capped_level - mind.current.get_skill_level(skill)))
 		amt = 0
 
+		if(L.client?.prefs.skillcap_notifs)
+			// Notifying you on a cooldown if you actually hit the cap
+			var/skillname = skillref.name ? skillref.name : "ERROR"
+			var/captimer = LAZYACCESS(L.mob_timers, "skillcap_[skillname]")
+
+			if(!captimer || world.time > (captimer + SKILLCAP_NOTIF_COOLDOWN))
+				L.mob_timers["skillcap_[skillname]"] = world.time
+				to_chat(L, span_warning("I can't learn anything more about [skillname]."))
+				if(show_xp)
+					L.balloon_alert(L, "<font color = '#bb2b2b'>Skill cap!</font>")
+
 	var/capped_pre = enough_sleep_xp_to_advance(skill, 2)
 	var/can_advance_pre = enough_sleep_xp_to_advance(skill, 1)
 
@@ -174,9 +185,10 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 			COOLDOWN_START(src, level_up, XP_SHOW_COOLDOWN)
 		show_xp = FALSE
 	if(!capped_pre && capped_post && !silent)
-		to_chat(mind.current, span_nicegreen(pick(list(
-			"My [LOWER_TEXT(skillref.name)] can no longer improve without some rest and meditation...",
-		))))
+		if(mind.current.construct)
+			to_chat(mind.current, span_nicegreen("My [LOWER_TEXT(skillref.name)] cannot improve without a skill exhibitor."))
+			return
+		to_chat(mind.current, span_nicegreen("My [LOWER_TEXT(skillref.name)] can no longer improve without some rest and meditation..."))
 		if(!COOLDOWN_FINISHED(src, level_up))
 			if((L.client?.prefs.floating_text_toggles & XP_TEXT))
 				L.balloon_alert(L, "<font color = '#9BCCD0'>Level up...</font>")

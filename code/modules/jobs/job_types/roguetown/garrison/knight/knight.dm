@@ -7,7 +7,7 @@
 	spawn_positions = 2
 	allowed_races = RACES_TOLERATED_UP
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED)
+	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	tutorial = "Having proven yourself both loyal and capable, you have been knighted to serve the realm as the royal family's sentry. \
 	You listen to your Liege, the Marshal, and the Knight Captain, defending your Lord and realm - the last beacon of chivalry in these dark times. \
 	You're wholly dedicated to the standing Regent and their safety. Do not fail."

@@ -71,7 +71,7 @@
 	var/tugging_knot_blocked = FALSE
 	var/mob/living/carbon/knotted_owner = null // whom has the knot
 	var/mob/living/carbon/knotted_recipient = null // whom took the knot
-
+	/// Allow crotch to be exposed and bypass clothes check
 	var/bottom_exposed = FALSE
 
 /datum/sex_controller/New(mob/living/carbon/human/owner)
@@ -183,9 +183,9 @@
 // any new sex commands that target new locations, will need to be added here, and given a unique bitflag define
 /datum/sex_controller/proc/update_all_accessible_body_zones()
 	access_zone_bitfield = SEX_ZONE_NULL
-	if(get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = FALSE, skipundies = TRUE))
+	if(bottom_exposed || get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = FALSE, skipundies = TRUE))
 		access_zone_bitfield |= SEX_ZONE_GROIN
-	if(get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = TRUE, skipundies = TRUE))
+	if(bottom_exposed || get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = TRUE, skipundies = TRUE))
 		access_zone_bitfield |= SEX_ZONE_GROIN_GRAB
 	if(get_location_accessible(user, BODY_ZONE_PRECISE_L_FOOT, grabs = FALSE, skipundies = TRUE))
 		access_zone_bitfield |= SEX_ZONE_L_FOOT
@@ -203,9 +203,9 @@
 	switch(body_zone)
 		if(BODY_ZONE_PRECISE_GROIN)
 			if(grabs)
-				if((access_zone_bitfield&SEX_ZONE_GROIN_GRAB) && !get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = TRUE, skipundies = TRUE))
+				if((access_zone_bitfield&SEX_ZONE_GROIN_GRAB) && !bottom_exposed && !get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = TRUE, skipundies = TRUE))
 					access_zone_bitfield &= ~SEX_ZONE_GROIN_GRAB
-			else if((access_zone_bitfield&SEX_ZONE_GROIN) && !get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = FALSE, skipundies = TRUE))
+			else if((access_zone_bitfield&SEX_ZONE_GROIN) && !bottom_exposed && !get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = FALSE, skipundies = TRUE))
 				access_zone_bitfield &= ~SEX_ZONE_GROIN
 		if(BODY_ZONE_PRECISE_L_FOOT)
 			if((access_zone_bitfield&SEX_ZONE_L_FOOT) && !get_location_accessible(user, BODY_ZONE_PRECISE_L_FOOT, grabs = FALSE, skipundies = TRUE))
@@ -424,7 +424,7 @@
 		owner.remove_status_effect(src)
 
 /datum/status_effect/creampie_leak/tick()
-	if(!get_location_accessible(owner, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+	if(!owner?.sexcon?.bottom_exposed && !get_location_accessible(owner, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
 		return
 	var/cur_loc = get_turf(owner)
 	if(!cur_loc || !isturf(cur_loc))
@@ -799,12 +799,18 @@
 	var/force_name = get_force_string()
 	var/speed_name = get_speed_string()
 	var/manual_arousal_name = get_manual_arousal_string()
+	var/obj/item/organ/penis/got_cock = user.getorganslot(ORGAN_SLOT_PENIS)
+	var/obj/item/organ/vagina/got_pussy = user.getorganslot(ORGAN_SLOT_VAGINA)
 	dat += "<center><a href='?src=[REF(src)];task=speed_down'>\<</a> [speed_name] <a href='?src=[REF(src)];task=speed_up'>\></a> ~|~ <a href='?src=[REF(src)];task=force_down'>\<</a> [force_name] <a href='?src=[REF(src)];task=force_up'>\></a>"
-	if(user.getorganslot(ORGAN_SLOT_PENIS))
+	if(got_cock)
 		dat += " ~|~ <a href='?src=[REF(src)];task=manual_arousal_down'>\<</a> [manual_arousal_name] <a href='?src=[REF(src)];task=manual_arousal_up'>\></a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
-	if(user.getorganslot(ORGAN_SLOT_PENIS))
+	if(got_cock && !got_pussy)
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PINTLE EXPOSED" : "PINTLE CONCEALED"]</a>"
+	else if(!got_cock && got_pussy)
+		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PUSSY EXPOSED" : "PUSSY CONCEALED"]</a>"
+	else
+		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "CROTCH EXPOSED" : "CROTCH CONCEALED"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
 		if(action.subtle_supported)
@@ -833,7 +839,7 @@
 	var/i = 0
 	var/user_is_incapacitated = user.incapacitated()
 	user.sexcon.update_all_accessible_body_zones()
-	if(target != user)
+	if(target && target != user)
 		target.sexcon.update_all_accessible_body_zones()
 	for(var/action_type in GLOB.sex_actions)
 		var/datum/sex_action/action = SEX_ACTION(action_type)

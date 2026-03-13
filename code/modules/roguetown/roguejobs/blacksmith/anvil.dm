@@ -181,6 +181,8 @@
 	var/datum/asset/spritesheet/spritesheet = get_asset_datum(/datum/asset/spritesheet/anvil_recipes)
 
 	for(var/datum/anvil_recipe/R in GLOB.anvil_recipes)
+		if(R.req_trait && !HAS_TRAIT(user, R.req_trait))
+			continue
 		var/valid_recipe = FALSE
 
 		if(current_workpiece)
@@ -219,6 +221,9 @@
 				has_required_item = TRUE
 
 			if(!has_required_item)
+				return TRUE
+
+			if(recipe.req_trait && !HAS_TRAIT(user, recipe.req_trait))
 				return TRUE
 
 			var/smith_exp = user.get_skill_level(recipe.appro_skill)

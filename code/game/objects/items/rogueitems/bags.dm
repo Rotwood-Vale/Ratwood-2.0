@@ -10,6 +10,7 @@
 	resistance_flags = NONE
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	max_integrity = 300
+	nudist_approved = TRUE
 	component_type = /datum/component/storage/concrete/roguetown/sack
 	grid_width = 32
 	grid_height = 64

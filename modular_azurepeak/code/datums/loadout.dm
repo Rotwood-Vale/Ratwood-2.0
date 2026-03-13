@@ -2152,3 +2152,12 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Vocal Talisman"
 	path = /obj/item/rogue/instrument/vocals
 	triumph_cost = 1
+
+
+// Unique stuff that doesn't quite fit anywhere else.
+
+/datum/loadout_item/kazengunite_smithing_manual
+	name = "Kajutsu no Densho"
+	desc = "A Kazengunite smithing manual. Unlocks kazengunite armor and weapon recipes at the anvil when read — requires knowledge of Kazengunese. "
+	path = /obj/item/book/granter/trait/kazengunite_smith
+	triumph_cost = 3

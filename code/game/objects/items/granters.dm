@@ -143,6 +143,55 @@
 		user.mind.teach_crafting_recipe(crafting_recipe_type)
 		to_chat(user,span_notice("I learned how to make [initial(R.name)]."))
 
+
+/obj/item/book/granter/trait
+	var/granted_trait = null
+	var/required_language = null
+
+/obj/item/book/granter/trait/attack_self(mob/living/user)
+	if(required_language && !user.has_language(required_language))
+		to_chat(user, span_warning("I can't make heads or tails of the writing in this book."))
+		return FALSE
+	return ..()
+
+/obj/item/book/granter/trait/already_known(mob/user)
+	if(!granted_trait)
+		return TRUE
+	if(HAS_TRAIT(user, granted_trait))
+		to_chat(user, span_warning("I already know these techniques!"))
+		return TRUE
+	return FALSE
+
+/obj/item/book/granter/trait/on_reading_start(mob/user)
+	to_chat(user, span_notice("I start studying the diagrams and written techniques within..."))
+
+/obj/item/book/granter/trait/on_reading_finished(mob/user)
+	to_chat(user, span_notice("I feel I have grasped the techniques described in [name]."))
+	ADD_TRAIT(user, granted_trait, TRAIT_GENERIC)
+	onlearned(user)
+
+
+/obj/item/book/granter/trait/kazengunite_smith
+	name = "Kajutsu no Densho"
+	desc = "A worn manual of Kazengunite smithing techniques, dense with diagrams and characters. The cover bears the mark of the Kouken order. Requires knowledge of Kazengunese to decipher."
+	icon = 'icons/roguetown/items/books.dmi'
+	icon_state = "basic_book_0"
+	granted_trait = TRAIT_KAZENGUNITE_SMITH
+	required_language = /datum/language/kazengunese
+	pages_to_mastery = 10
+	remarks = list(
+		"The opening chapter describes the smelting of tamahagane — a bloom steel drawn from iron-rich sand fed slowly into a clay furnace over three days of unbroken fire. Only from this is true Kazengunite steel born.",
+		"A dense passage explains tanren: the bloom is broken apart, sorted by carbon content, then folded repeatedly under the hammer. Each fold doubles the layers. The text warns against over-folding — too many passes burns away the very quality one seeks.",
+		"The kobuse method is illustrated at length: a jacket of harder steel is wrapped around a softer core, then welded shut by hammer. The hard edge holds; the soft spine absorbs. Neither alone would suffice.",
+		"Several pages are devoted to tsuchioki — the application of a clay and charcoal paste before quenching. Thick along the spine, thin along the edge. The differential cooling shapes the hardened zone, the yakiba.",
+		"A vivid account of yaki-ire: the blade is heated until it no longer draws a magnet, then plunged edge-first into water. The author warns the smith to trust the colour of the steel, not the count of heartbeats.",
+		"The armor chapters begin with kozane — individual scales no larger than a thumb, each pierced and lacquered many times over before assembly. The text emphasises that the lacquer is not decoration; it is armour against rust.",
+		"Detailed instructions on odoshi follow: the silk or leather cords that lace the kozane together in offset rows. The pattern distributes force across the surface. An improperly laced row, the author notes, collapses under a single good blow.",
+		"The kabuto section describes the shaping of the hachi — the bowl — from triangular plates riveted at their edges and finished with a turned peak. Each rivet must be peened flush, then lacquered over. A proud rivet will catch a blade.",
+		"A short but precise section covers the kote — gauntlet construction. Chain segments are riveted between small rectangular plates along the back of the hand and fingers. The inside of the wrist is lined with padded fabric; the steel protects only what needs protecting.",
+		"The final chapter addresses the nodowa, or gorget: rings of small chain, backed by a stiffened collar, fastened at the throat with a silk drawcord. The author notes that the gorget is the most often neglected piece, and the most often fatal omission.",
+	)
+
 //! --BLACKSTONE SCROLLS-- !/
 /obj/item/book/granter/spell/blackstone/
 	desc = "A scroll of potential known only to those that can decipher its secrets."

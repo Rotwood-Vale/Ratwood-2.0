@@ -62,6 +62,7 @@
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = EYES
+	nudist_approved = TRUE
 	anvilrepair = /datum/skill/craft/armorsmithing
 //	block2add = FOV_BEHIND
 
@@ -185,6 +186,7 @@
 	block2add = FOV_RIGHT
 	body_parts_covered = EYES
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/eyepatch/left
 	desc = "An eyepatch, fitted for the left eye."
@@ -520,6 +522,7 @@
 	toggle_icon_state = TRUE
 	experimental_onhip = TRUE
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/shepherd/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
@@ -542,6 +545,7 @@
 	sewrepair = TRUE
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/skullmask
 	name = "skull mask"
@@ -562,6 +566,7 @@
 	smeltresult = /obj/item/natural/bone
 	salvage_result = /obj/item/natural/bone
 	salvage_amount = 1
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/ragmask
 	name = "rag mask"
@@ -573,6 +578,7 @@
 	experimental_onhip = TRUE
 	sewrepair = TRUE
 	cansnout = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/ragmask/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
@@ -616,6 +622,7 @@
 	sewrepair = TRUE
 	adjustable = CAN_CADJUST
 	toggle_icon_state = FALSE
+	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/silk
 	salvage_amount = 2
 
@@ -630,6 +637,7 @@
 	body_parts_covered = EYES
 	sewrepair = TRUE
 	tint = 3
+	nudist_approved = TRUE
 	mob_overlay_icon = 'icons/mob/clothing/eyes.dmi'
 	icon = 'icons/obj/clothing/glasses.dmi'
 
@@ -648,6 +656,7 @@
 	detail_tag = "_detail"
 	detail_color = COLOR_SILVER
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/hblinders
 	name = "head blinders"

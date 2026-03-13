@@ -397,12 +397,16 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CLASS_CAT_TRADER "Trader"
 #define CLASS_CAT_NOMAD "Nomad"
 
+//Wretch categories
+#define CLASS_CAT_ACCURSED "Accursed"
+
 //Mercenary categories
 #define CLASS_CAT_ETRUSCA "Etrusca"
 #define CLASS_CAT_GRENZELHOFT "Grenzelhoft"
 #define CLASS_CAT_NALEDI "Naledi"
 #define CLASS_CAT_ZYBANTU "Zybantu"
 #define CLASS_CAT_AAVNR "Aavnr"
+#define CLASS_CAT_HAMMERHOLD "Hammerhold"
 #define CLASS_CAT_GRONN "Gronn"
 #define CLASS_CAT_OTAVA "Otava"
 #define CLASS_CAT_KAZENGUN "Kazengun"

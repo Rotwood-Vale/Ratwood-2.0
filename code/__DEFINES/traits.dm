@@ -52,6 +52,7 @@
 #define TRAIT_SEEDKNOW "Seed Knower"
 #define TRAIT_SQUIRE_REPAIR "Squire Knowledge"
 #define TRAIT_TRAINED_SMITH "Trained Smith"
+#define TRAIT_KAZENGUNITE_SMITH "Kazengunite Knowledge"
 #define TRAIT_CAUTIOUS_FISHER "Cautious Fisher"
 #define TRAIT_POLYTHEIST "Polytheist"
 #define TRAIT_MONOTHEIST "Monotheist"
@@ -369,6 +370,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_ABYSSOR_SWIM = span_info("I get far less tired when swimming than my peers."),
 	TRAIT_LONGSTRIDER = span_info("Each of my steps finds it's footing no matter how treacherous the terrain is."),
 	TRAIT_TRAINED_SMITH = span_info("I've spent long training, and with some more, I will be able to smith legendary items."),
+	TRAIT_KAZENGUNITE_SMITH = span_info("I have studied the old Kazengunite smithing traditions — the folding of tamahagane, the shaping of kozane, the tempering of the yakiba. I can now craft their arms and armour at the anvil."),
 	TRAIT_CAUTIOUS_FISHER = span_info("I know my way around the dangers of fishing, and know how to avoid unwanted attention from the depths."),
 	TRAIT_DEATHSIGHT = span_info("I can feel when someone nearby draws the Undermaiden's attention."),
 	TRAIT_FORGEBLESSED = span_info("Countless long nights spent forging metal have honed my endurance, allowing me to work an anvil far longer than most without tiring."),

@@ -143,3 +143,113 @@
 
 	))
 
+/datum/species/construct/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.construct = TRUE
+
+/datum/species/construct/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.construct = FALSE
+
+
+//construct upgrade item so they can gain skills
+/obj/item/construct_skill_core
+	icon = 'icons/roguetown/items/misc.dmi'
+	name = "construct skill exhibitor"
+	desc = "A series of gears joined around a copper rod. When inserted into a Construct's head, it will allow them to grow their skills beyond their original design."
+	icon_state = "construct_upgrade"
+	w_class = WEIGHT_CLASS_SMALL
+	smeltresult = /obj/item/ingot/bronze
+	///allow construct to use it on themselves without skill reqs, exclusively used for the black market ver
+	var/self_usable = FALSE
+	///to avoid situations where the dialog box is open but you click the golem again with it
+	var/in_use = FALSE 
+
+/obj/item/construct_skill_core/blackmarket
+	name = "modified construct skill exhibitor"
+	desc = "A series of gears joined around a copper rod. When inserted into a Golem's head, it will allow them to grow their skills beyond their original design. This one looks like it was purposefully altered to allow Golems to use it themselves."
+	self_usable = TRUE
+
+/obj/item/construct_skill_core/examine(mob/user)
+	. = ..()
+	if(in_use)
+		. += span_warning("It's spinning and whirring.")
+
+/obj/item/construct_skill_core/attack(mob/living/T, mob/U)
+	if(!ishuman(U))
+		return
+	var/mob/living/user = U
+	if(!ishuman(T))
+		to_chat(user, span_warning("[T] is not a Construct. It will have no effect."))
+		return
+
+	var/mob/living/carbon/human/M = T
+	if(!M.construct)
+		if(user == M)
+			to_chat(user, span_warning("I am not a Construct. It will have no effect."))//Golems can't upgrade themselves anyway, but I think it's at least somewhat useful to say something when an organic tries to use it on themselves
+		else
+			to_chat(user, span_warning("[M] is not a Construct. It will have no effect."))
+		return
+	if(user.construct && !self_usable)
+		to_chat(user, span_warning("I am unable to modify Constructs. I must ask another."))//Golems NEED to ask organics to modify them.
+		return
+	if(user.get_skill_level(/datum/skill/craft/engineering) < 3 && !self_usable) //need to be at least level 3 skill level in engineering to use this
+		to_chat(user, span_warning("I fiddle around trying to properly insert [src] into [M], but I'm not skilled enough."))
+		return
+	if(in_use)
+		to_chat(user, span_warning("I can't- [src] is still working."))
+		return
+
+	var/list/learnable_skills = list()
+	var/list/skill_datums = list()
+	if(!M.mind)
+		return
+	for(var/skill_type in SSskills.all_skills)
+		var/datum/skill/skill = GetSkillRef(skill_type)
+		if(skill in M.skills?.known_skills)
+			if(M?.mind?.sleep_adv.enough_sleep_xp_to_advance(skill_type, 1))
+				LAZYADD(learnable_skills, skill)//we need the actual names of the skill_types so the dialog boxes say "Skill" rather than the type path
+				LAZYADD(skill_datums,skill_type)//hold the skill datums so we can reference them later to use in our leveling up procs
+
+	if(!length(learnable_skills))//don't waste the core if we can't use it
+		to_chat(user, span_warning("[M] has no new skills to develop."))
+		return
+
+	in_use = TRUE
+	smeltresult = null //edge case where you'd fully activate it and then smelt it before the golem selects their skill to level, I like denying the smelt more than denying the skill up
+	var/time_to_upgrade = 130
+	time_to_upgrade -= (user.get_skill_level(/datum/skill/craft/engineering) * 10)//starts at 10 seconds normally, reduced by 1 second per each engineering skill level above 3
+
+	user.visible_message(span_notice("[user] presses [src] against [M]'s head."), span_notice("I begin to insert [src] into [M]'s head."))
+	if(!do_mob(user, M, time_to_upgrade))
+		disable()
+		return
+
+	var/skill_choice = input(M, "Improve yourself.","Skills") as null|anything in learnable_skills
+	if(!skill_choice)
+		return
+	for(var/real_skill in skill_datums)//really ugly but I can't think of a way to implement this to show the skill names properly in the dialog box. real_skill is the actual datum for the skill rather than the "Skill" string
+		if(skill_choice == GetSkillRef(real_skill))
+			if(!M?.mind?.sleep_adv.enough_sleep_xp_to_advance(real_skill, 1))//this should only ever happen if you try and install two knowledge cores at the same time for the same skill, which we don't want to happen
+				user.visible_message(span_notice("[src] fizzles in [user]'s hand."), span_notice("[src] fizzles and returns to a resting state."))
+				disable()
+				return
+			M.mind.sleep_adv.adjust_sleep_xp(real_skill, -M.mind.sleep_adv.get_requried_sleep_xp_for_skill(real_skill, 1))
+			M.adjust_skillrank(real_skill, 1, FALSE)
+			//GLOB.scarlet_round_stats[STATS_SKILLS_DREAMED]++ //up for debate whether golems gaining skills like this should count
+			M.visible_message(span_notice("[M] absorbs [src]."), span_notice("I absorb [src] into myself, becoming more skilled."))
+			if(M.get_skill_level(real_skill) >= 4)//if our skill is now expert or more, gain a triumph
+				to_chat(M, span_boldgreen("Gaining such exquisite expertise in [LOWER_TEXT(skill_choice)] is a true TRIUMPH."))
+				M.adjust_triumphs(1)
+			M.allmig_reward++//we also need to do this for RCP and endround triumphs- it's the closest thing Golems have to sleeping.
+			qdel(src)
+			return
+		else //if you click "cancel" in the dialog
+			user.visible_message(span_notice("[src] deactivates in [user]'s hand."), span_notice("[src] turns off. Perhaps [M] does not yet wish to improve?"))
+			disable()
+			return
+
+/obj/item/construct_skill_core/proc/disable() //reset it to inactive mode to be paired later on
+	in_use = FALSE
+	smeltresult = /obj/item/ingot/bronze
+	

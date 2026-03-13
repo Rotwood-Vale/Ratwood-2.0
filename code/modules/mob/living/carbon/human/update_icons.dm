@@ -627,7 +627,7 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
-	var/icon/c_mask = taur?.clip_mask
+	var/icon/c_mask = taur?.clip_mask_legs || taur?.clip_mask
 
 	if(shoes)
 		shoes.screen_loc = rogueui_shoes					//move the item to the appropriate screen loc
@@ -1389,7 +1389,7 @@ There are several things that need to be remembered:
 	remove_overlay(LEGSLEEVE_LAYER)
 
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
-	var/icon/c_mask = taur?.clip_mask
+	var/icon/c_mask = taur?.clip_mask_legs || taur?.clip_mask
 
 	var/icon/clip_mask_init
 
