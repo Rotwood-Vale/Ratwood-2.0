@@ -1062,7 +1062,6 @@
 #include "code\game\objects\items\courtroom.dm"
 #include "code\game\objects\items\debug_items.dm"
 #include "code\game\objects\items\dice.dm"
-#include "code\game\objects\items\farkle.dm"
 #include "code\game\objects\items\etherealdiscoball.dm"
 #include "code\game\objects\items\granters.dm"
 #include "code\game\objects\items\hot_potato.dm"

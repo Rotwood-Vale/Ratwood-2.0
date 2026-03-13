@@ -132,8 +132,6 @@
 	var/obj/item/organ/vagina/vagina = H.getorganslot(ORGAN_SLOT_VAGINA)
 	if(!vagina)
 		return FALSE
-	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
-		return TRUE
 	if(H.underwear)
 		return FALSE
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))

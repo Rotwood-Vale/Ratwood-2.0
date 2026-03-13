@@ -50,6 +50,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
+	gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/special
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
@@ -65,6 +66,8 @@
 	)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 6, TRUE)
+	if(istype (H.patron, /datum/patron/inhumen/zizo))
+		H.mind?.current.faction += "[H.name]_faction"
 
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
@@ -144,11 +147,6 @@
 			t0.Remove(t0_choice)
 			t0_count--
 
-	if(H.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle))
-		H.mind?.current.faction += "[H.name]_faction"
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
-
 /mob/living/carbon/human/proc/completesermon_evil()
 	set name = "Inhumen Sermon"
 	set category = "Antipope"
@@ -179,7 +177,7 @@
 		if (!H.patron)
 			continue
 		//We invert the sermon positives and negatives. Wild how that works.
-		if (istype(H.patron, /datum/patron/divine) && !HAS_TRAIT(H, TRAIT_HERESIARCH)) //Tennite Wretches won't be affected for the sake of convenience.
+		if (istype(H.patron, /datum/patron/divine))
 			H.apply_status_effect(/datum/status_effect/debuff/hereticsermon)
 			H.add_stress(/datum/stressevent/heretic_on_sermon)
 			to_chat(H, span_warning("Your patron seethes with disapproval."))

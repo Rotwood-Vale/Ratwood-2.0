@@ -16,17 +16,12 @@
 	cost = 13
 	contains = list(/obj/item/reagent_containers/glass/bottle/waterskin)
 
-/datum/supply_pack/rogue/adventure_supplies/saddle
-	name = "Saddle"
-	cost = 15
-	contains = list(/obj/item/natural/saddle)
-
 /datum/supply_pack/rogue/adventure_supplies/satchel
 	name = "Satchel"
 	cost = 13
 	contains = list(/obj/item/storage/backpack/rogue/satchel)
 
-/datum/supply_pack/rogue/adventure_supplies/satchelshort
+/datum/supply_pack/rogue/adventure_supplies/satchel
 	name = "Satchel, Short"
 	cost = 13
 	contains = list(/obj/item/storage/backpack/rogue/satchel/short)
@@ -65,13 +60,6 @@
 	cost = 15
 	contains = list(
 					/obj/item/rogueweapon/scabbard/sword
-				)
-
-/datum/supply_pack/rogue/adventure_supplies/gwstrap
-	name = "Great Weapon Strap"
-	cost = 25
-	contains = list(
-					/obj/item/rogueweapon/scabbard/gwstrap
 				)
 
 /datum/supply_pack/rogue/adventure_supplies/ropes
