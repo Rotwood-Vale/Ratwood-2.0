@@ -94,37 +94,37 @@
 	if(!ishuman(user))
 		return
 
-		if(user.mind?.special_role == "Bandit")
-			user.visible_message(span_warning("[user] begins pulling the dragon banner from the ground!"))
+	if(user.mind?.special_role == "Bandit")
+		user.visible_message(span_warning("[user] begins pulling the dragon banner from the ground!"))
 
-		do_after(user, 3 SECONDS, target = src)
+	do_after(user, 3 SECONDS, target = src)
 
-		user.visible_message(span_warning("[user] pulls the dragon banner free!"))
-		playsound(src, 'sound/items/empty_shovel.ogg', 70)
+	user.visible_message(span_warning("[user] pulls the dragon banner free!"))
+	playsound(src, 'sound/items/empty_shovel.ogg', 70)
 
-		var/obj/item/rogueweapon/special/dragonz/banner = new(user.loc)
+	var/obj/item/rogueweapon/special/dragonz/banner = new(user.loc)
 
-		user.put_in_active_hand(banner)
-		banner.pickup(user)
-		banner.update_icon()
-		user.update_inv_hands()
+	user.put_in_active_hand(banner)
+	banner.pickup(user)
+	banner.update_icon()
+	user.update_inv_hands()
 
-		qdel(src)
+	qdel(src)
 
-	else
+else
 
-		user.visible_message(span_warning("[user] attempts to kick the banner over!"))
-		playsound(src, 'sound/misc/woodhit.ogg', 70)
+	user.visible_message(span_warning("[user] attempts to kick the banner over!"))
+	playsound(src, 'sound/misc/woodhit.ogg', 70)
 
-		do_after(user, 15 SECONDS, target = src)
+	do_after(user, 15 SECONDS, target = src)
 		return
 
-		user.visible_message(span_warning("[user] kicks the banner over!"))
-		playsound(src, 'sound/misc/treefall.ogg', 70)
+	user.visible_message(span_warning("[user] kicks the banner over!"))
+	playsound(src, 'sound/misc/treefall.ogg', 70)
 
-		new /obj/item/rogueweapon/special/dragonz(loc)
+	new /obj/item/rogueweapon/special/dragonz(loc)
 
-		qdel(src)
+	qdel(src)
 
 
 		//banner rally/hold commands
