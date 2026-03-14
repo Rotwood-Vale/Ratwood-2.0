@@ -1,5 +1,5 @@
 /obj/item/reagent_containers/glass/bucket/pot
-	force = 10
+	force = 20//FUCKIN HEAVY!
 	name = "pot"
 	desc = "A pot made out of iron. It can hold a lot of liquid."
 	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
@@ -13,7 +13,7 @@
 	drop_sound = 'sound/foley/dropsound/shovel_drop.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	reagent_flags = OPENCONTAINER
-	throwforce = 10
+	throwforce = 20
 	dropshrink = 1 // Override for bucket
 	volume = 240
 
