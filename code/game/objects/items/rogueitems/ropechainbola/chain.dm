@@ -20,6 +20,8 @@
 	slipouttime = 2 MINUTES
 	cuffsound = 'sound/misc/chains.ogg'
 	possible_item_intents = list(/datum/intent/tie, /datum/intent/whips)
+	force = 15
+	associated_skill = "whipsflails"
 	firefuel = null
 	smeltresult = /obj/item/ingot/iron
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
