@@ -463,7 +463,7 @@
 
 /obj/item/rogueweapon/scythe
 	force = 15
-	force_wielded = 25
+	force_wielded = 30
 	possible_item_intents = list(SPEAR_BASH)
 	gripped_intents = list(/datum/intent/spear/cut/scythe, SPEAR_BASH, MACE_STRIKE)
 	name = "scythe"

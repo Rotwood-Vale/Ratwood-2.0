@@ -192,7 +192,7 @@
 
 /obj/item/rogueweapon/mace/woodclub
 	force = 15
-	force_wielded = 18
+	force_wielded = 20
 	name = "wooden club"
 	desc = "A primitive cudgel carved of a stout piece of treefall."
 	icon_state = "club1"

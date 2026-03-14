@@ -1,12 +1,10 @@
 /obj/item/rogueweapon/thresher
-	force = 10
-	force_wielded = 15
-	possible_item_intents = list(MACE_STRIKE)
-	gripped_intents = list(/datum/intent/flailthresh,MACE_STRIKE)
 	name = "thresher"
-	desc = "A shredding tool for farmers."
-	icon_state = "flail"
-	icon = 'icons/roguetown/weapons/tools.dmi'
+	desc = "A shredding tool for farmers, one that makes a mighty tool of combat in the right hands."
+	// icon_state = "flail"
+	// icon = 'icons/roguetown/weapons/tools.dmi'
+	icon = 'icons/roguetown/weapons/blunt32.dmi'
+	icon_state = "milflail"
 	item_state = "mace_greyscale"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -18,6 +16,13 @@
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/whipsflails
+	possible_item_intents = list(MACE_STRIKE, /datum/intent/mace/smash/flail/militia)
+	gripped_intents = list(/datum/intent/flailthresh, MACE_STRIKE)
+	force = 25
+	force_wielded = 27
+	wdefense = 3
+	wbalance = WBALANCE_HEAVY
+
 
 /datum/intent/flailthresh
 	name = "thresh"
@@ -288,8 +293,8 @@
 */
 /obj/item/rogueweapon/pitchfork
 
-	force = 10
-	force_wielded = 15
+	force = 17
+	force_wielded = 28
 	possible_item_intents = list(SPEAR_BASH)
 	gripped_intents = list(SPEAR_BASH,SPEAR_THRUST,DUMP_INTENT)
 	name = "pitchfork"
