@@ -19,7 +19,7 @@
 //	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD)//For later, maybe. But they're like lobsters.
 	outfit = /datum/outfit/job/roguetown/mercenary/oathmarked
 	class_select_category = CLASS_CAT_RACIAL
-	category_tags = list(CTAG_MERCENARY)
+	category_tags = list(CTAG_DISABLED)
 	traits_applied = list(TRAIT_XENOPHOBIC, TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_SCALEARMOR)
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	cmode_music = 'sound/music/cmode/nobility/combat_courtmage.ogg'
