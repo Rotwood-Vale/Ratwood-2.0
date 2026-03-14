@@ -162,15 +162,6 @@
 		)
 	craftdiff = 1
 
-/datum/crafting_recipe/roguetown/survival/peasantry/warflail
-	name = "militia flail"
-	result = /obj/item/rogueweapon/flail/militia
-	reqs = list(
-		/obj/item/natural/whetstone = 2,
-		/obj/item/rogueweapon/thresher = 1,
-		)
-	craftdiff = 2
-
 /datum/crafting_recipe/roguetown/survival/peasantry/warpick
 	name = "militia warpick"
 	result = /obj/item/rogueweapon/pick/militia

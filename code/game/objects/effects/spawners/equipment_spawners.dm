@@ -145,7 +145,7 @@
 	lootcount = 1
 	loot = list(
 		/obj/item/rogueweapon/flail/peasantwarflail = 3,
-		/obj/item/rogueweapon/flail/militia = 2,
+		/obj/item/rogueweapon/flail/ = 2,
 		/obj/item/rogueweapon/woodstaff/militia = 2,
 		/obj/item/rogueweapon/greataxe/militia = 2,
 		/obj/item/rogueweapon/spear/militia = 2,

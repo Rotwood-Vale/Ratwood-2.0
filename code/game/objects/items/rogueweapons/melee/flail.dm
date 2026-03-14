@@ -268,12 +268,3 @@
 /obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "FLAIL")
-
-/obj/item/rogueweapon/flail/militia
-	name = "militia flail"
-	desc = "In another lyfe, this humble thresher was used to pound stalks into grain. Under a militiaman's grasp, however, it has found a new purpose: to humble overconfident bandits with crippling blows."
-	icon_state = "milflail"
-	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flail/militia)
-	force = 27
-	wdefense = 3
-	wbalance = WBALANCE_HEAVY
