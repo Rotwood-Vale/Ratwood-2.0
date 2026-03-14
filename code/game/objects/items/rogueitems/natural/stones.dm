@@ -190,7 +190,6 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		/datum/crafting_recipe/roguetown/survival/peasantry/pitchfork/whetstone,
 		/datum/crafting_recipe/roguetown/survival/peasantry/goedendag,
 		/datum/crafting_recipe/roguetown/survival/peasantry/scythe,
-		/datum/crafting_recipe/roguetown/survival/peasantry/warflail,
 		/datum/crafting_recipe/roguetown/survival/peasantry/warpick,
 		/datum/crafting_recipe/roguetown/survival/peasantry/warpick_steel,
 		/datum/crafting_recipe/roguetown/survival/peasantry/maciejowski_knife,
