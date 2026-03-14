@@ -39,6 +39,11 @@
 /obj/item/reagent_containers/glass/bottle/rogue/berrypoison
 	list_reagents = list(/datum/reagent/berrypoison = 15)
 
+/obj/item/reagent_containers/glass/bottle/alchemical/berrypoison
+	list_reagents = list(/datum/reagent/berrypoison = 10)
+	name = "Rat Poison (DO NOT DRINK)"
+	desc = "for pest control use only"
+
 /obj/item/reagent_containers/glass/bottle/rogue/strongpoison
 	list_reagents = list(/datum/reagent/strongpoison = 15)
 
