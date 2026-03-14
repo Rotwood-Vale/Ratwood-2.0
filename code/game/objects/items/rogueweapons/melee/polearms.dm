@@ -73,7 +73,7 @@
 	damfactor = 1.2
 
 /datum/intent/spear/cut/scythe
-	reach = 3
+	reach = 2
 	damfactor = 1
 	effective_range = 2
 	effective_range_type = EFF_RANGE_ABOVE
