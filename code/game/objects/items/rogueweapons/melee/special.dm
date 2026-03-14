@@ -42,23 +42,26 @@
 
 /obj/item/rogueweapon/special/dragonz
 	var/obj/effect/proc_holder/spell/invoked/banner/banner_spell
+	var/list/banner_spells
+	var/listening = TRUE
+	var/speaking = TRUE
+
 	force = 25
 	thrown_bclass = BCLASS_STAB
 	throwforce = 35
 	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_BASH, /datum/intent/special/bandit_punish, /datum/intent/special/deploy)
 	name = "dragon's zeal"
 	desc = "A purple flag with the characteristics of a dragon, you cannot help but feel it is alive..."
-	icon_state = "d_banner"
-	icon = 'icons/roguetown/weapons/64.dmi'
-	lefthand_file = 'icons/roguetown/weapons/roguegiant_72.dmi'
-	righthand_file = 'icons/roguetown/weapons/roguegiant_72.dmi'
+	icon_state = "pole"
+	icon = 'icons/roguetown/weapons/roguegiant_72.dmi'
+	var/wings_state = "wings"
 
 
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	layer = MOB_LAYER - 0.1
+	layer = ABOVE_MOB_LAYER
 	wlength_LONG
 	minstr = 8
 	max_blade_int = 300
@@ -76,9 +79,16 @@
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list("shrink" = 0,"sx" = 0,"sy" = 0,"nx" = 0,"ny" = 0,"wx" = 0,"wy" = 0,"ex" = 0,"ey" = 0,"northabove" = 0,"southabove" = 0,"eastabove" = 0,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
+				return list("shrink" = 0,"sx" = 0,"sy" = 0,"nx" = 0,"ny" = 0,"wx" = 0,"wy" = 0,"ex" = 0,"ey" = 0,"northabove" = 1,"southabove" = 1,"eastabove" = 1,"westabove" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
 
-/obj/item/rogueweapon/special/dragonz/Initialize(mapload)
+				// create wings overlay
+			if("extra")
+				var/image/wings = image(icon, wings_state)
+				wings.layer = BELOW_MOB_LAYER
+
+				return
+
+/obj/item/rogueweapon/special/dragonz/Initialize()
 	. = ..()
 
 /obj/item/rogueweapon/special/dragonz/pickup(mob/living/carbon/human/user)
@@ -103,10 +113,21 @@
 
 		to_chat(user, span_suppradio("The Hoardmaster's focus is now drawn to you, you are bolstered by a strange sense of purpose."))
 
-		banner_spell = new /obj/effect/proc_holder/spell/invoked/banner || /obj/effect/proc_holder/spell/self/convertrole/bandit
-		banner_spell.attached_banner = src
+		// create spells
+		var/obj/effect/proc_holder/spell/invoked/banner/retreat/retreat_spell = new
+		var/obj/effect/proc_holder/spell/invoked/banner/charge/charge_spell = new
+		var/obj/effect/proc_holder/spell/self/convertrole/bandit/recruit_spell = new
 
-		user.AddSpell(banner_spell)
+		retreat_spell.attached_banner = src
+		charge_spell.attached_banner = src
+		recruit_spell.attached_banner = src
+
+		// store them
+		banner_spells = list(retreat_spell, charge_spell, recruit_spell)
+
+		// give to user
+		for(var/obj/effect/proc_holder/spell/S in banner_spells)
+			user.AddSpell(S)
 
 /obj/item/rogueweapon/special/dragonz/dropped(mob/living/carbon/human/user)
 	. = ..()
@@ -117,51 +138,54 @@
 
 	user.change_stat(STATKEY_CON, -2)
 
-	if(banner_spell)
-		user.RemoveSpell(banner_spell)
-		qdel(banner_spell)
-		banner_spell = null
+	if(banner_spells)
+		for(var/obj/effect/proc_holder/spell/S in banner_spells)
+			user.RemoveSpell(S)
+			qdel(S)
+
+	banner_spells = null
 
 		//punish code
 
 /obj/item/rogueweapon/special/dragonz/afterattack(atom/target, mob/user, flag)
 
-	if(!istype(user.used_intent, /datum/intent/special/bandit_punish))
-		return
-
-	. = ..()
-
 	if(get_dist(user, target) > 7)
 		return
 
-	if(ishuman(user))
+	user.changeNext_move(CLICK_CD_MELEE)
 
-		if(user.advjob != "Iconoclast")
-			to_chat(user, span_danger("The dragon doesn't support me."))
+	if(ishuman(user))
+		var/mob/living/carbon/human/HU = user
+
+		if(HU.advjob != "Iconoclast")
+			to_chat(user, span_danger("The rod doesn't obey me."))
 			return
 
 		if(ishuman(target))
-
-			if(target == user)
-				to_chat(user, span_danger("The dragon dosen't like masochists.."))
-				return
-
 			var/mob/living/carbon/human/H = target
+
+			if(H == HU)
+				to_chat(user, span_danger("The dragon does not like masochists.."))
+				return
 
 			if(!COOLDOWN_FINISHED(src, dragonz))
 				to_chat(user, span_danger("The [src] is not ready yet! [round(COOLDOWN_TIMELEFT(src, dragonz) / 10, 1)] seconds left!"))
 				return
 
-			if(H.job != "bandit")
-				to_chat(user, span_danger("You cannot punish those who do not serve the dragon."))
+			if(H.anti_magic_check())
+				to_chat(user, span_danger("Something is disrupting the rod's power!"))
+				return
+
+			if(!HAS_TRAIT(user, TRAIT_COMMIE))
+				to_chat(user, span_danger("The dragon has no influence over them."))
 				return
 
 			if(istype(user.used_intent, /datum/intent/special/bandit_punish))
-				user.visible_message(user, span_danger("[user] punished [target] with the [src]."))
+				HU.visible_message(span_warning("[HU] electrocutes [H] with the [src]."))
 				user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 				H.electrocute_act(5, src)
-				COOLDOWN_START(src, dragonz, 30 SECONDS)
-				to_chat(target, span_danger("I'm punished by the dragon!"))
+				COOLDOWN_START(src, dragonz, 20 SECONDS)
+				to_chat(H, span_danger("I'm electrocuted by the scepter!"))
 				return
 
 		//flag wave/rally code
@@ -179,43 +203,40 @@
 	if(!do_after(user, 5 SECONDS))
 		return FALSE
 
+	banner.sound_banner_announcement(user, null, /obj/item/rogueweapon/special/dragonz/proc/wave_banner)
+
 	return TRUE
-
-/obj/item/rogueweapon/special/dragonz/attack_self(mob/living/carbon/human/user)
-	. = ..()
-
-	return wave_banner(user)
-
 
 /obj/item/rogueweapon/special/dragonz/proc/deploy_banner(mob/living/user)
 	var/turf/T = get_step(user, user.dir)
 
+	if(get_dist(user, T) > 2)
+		return
+
+	user.changeNext_move(CLICK_CD_MELEE)
+
+	if(!istype(T, /turf/open))
+		to_chat(user, span_warning("You cannot deploy here!"))
+		return FALSE
+
+	// check if space is clear
 	for(var/obj/object in T)
-
-		if(get_dist(user, T) > 1)
-			return
-
-		if(!T)
-			return
-
-		if(!istype(T, /turf/open))
-			to_chat(user, span_warning("You cannot deploy here!"))
-			return FALSE
-
 		if(object.density)
 			to_chat(user, span_warning("You need a clear area to deploy [src]!"))
 			return FALSE
 
-	user.visible_message(user, span_warning("[user] starts planting [src] into the ground..."))
+	user.visible_message(span_warning("[user] starts planting [src] into the ground..."))
 
 	playsound(user, 'sound/foley/Building-01.ogg', 50)
 
 	if(!do_after(user, 6 SECONDS))
 		return FALSE
 
-	user.visible_message(user, span_warning("[user] plants [src] into the ground!"))
+	user.visible_message(span_warning("[user] plants [src] into the ground!"))
 
 	new /obj/structure/matthios/bandit_banner(T)
+
+	banner.sound_banner_announcement(user, null, /obj/item/rogueweapon/special/dragonz/proc/deploy_banner)
 
 	qdel(src)
 
@@ -226,20 +247,41 @@
 /obj/item/rogueweapon/special/dragonz/attack_right(mob/living/carbon/human/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	var/input_text = input(user, "Enter your message:", "Message")
-
 	if(input_text)
-
+		var/usedcolor = user.voice_color
 		if(user.voicecolor_override)
-			user.voice_color = user.voicecolor_override
-
+			usedcolor = user.voicecolor_override
 		user.whisper(input_text)
 		var/list/tspans = list()
-
 		if(user.client.patreonlevel() >= GLOB.patreonsaylevel)
 			tspans |= SPAN_PATREON_SAY
-
 		if(length(input_text) > 100)
-			input_text = "<large>[input_text]</large>"
+			input_text = "<big>[input_text]</big>"
+		for(var/obj/item/rogueweapon/special/dragonz/S in SSroguemachine.scomm_machines)
+			S.repeat_message(input_text, src, usedcolor, tspans = tspans)
+
+/obj/item/rogueweapon/special/dragonz/MiddleClick(mob/user)
+	if(.)
+		return
+	user.changeNext_move(CLICK_CD_INTENTCAP)
+	playsound(loc, 'sound/misc/coindispense.ogg', 100, FALSE, -1)
+	listening = !listening
+	speaking = !speaking
+	to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the Matthian-DRAGONstone"))
+	update_icon()
+
+/obj/item/rogueweapon/special/dragonz/proc/repeat_message(message, atom/A, tcolor, message_language, list/tspans = list())
+	if(A == src)
+		return
+	if(!ismob(loc))
+		return
+	if(tcolor)
+		voicecolor_override = tcolor
+	if(speaking && message)
+		playsound(loc, 'sound/foley/coins1.ogg', 20, TRUE, -1)
+		say(message, spans = tspans, language = message_language)
+	voicecolor_override = null
+
 
 /obj/item/rogueweapon/special/dragonz/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!can_speak())
@@ -254,7 +296,6 @@
 		I.send_speech(message, 0, I, , spans, message_language=language)
 	else
 		send_speech(message, 0, src, , spans, message_language=language)
-
 
 /obj/item/rogueweapon/lordscepter
 	force = 20

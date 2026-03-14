@@ -45,12 +45,11 @@
 		H.set_patron(/datum/patron/inhumen/matthios)
 	belt = /obj/item/storage/belt/rogue/leather
 	pants = /obj/item/clothing/under/roguetown/trou/leather
-	r_hand = /obj/item/rogueweapon/woodstaff
+	r_hand = /obj/item/rogueweapon/special/dragonz
 	shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt/random
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
 	backr = /obj/item/storage/backpack/rogue/satchel
-	backl = /obj/item/rogueweapon/special/dragonz
 
 	backpack_contents = list(
 					/obj/item/needle/thorn = 1,

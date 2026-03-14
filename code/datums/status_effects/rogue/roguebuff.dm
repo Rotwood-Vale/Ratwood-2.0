@@ -1795,3 +1795,66 @@
 /atom/movable/screen/alert/status_effect/buff/oath_ring
 	name = "Oathmarked"
 	desc = "The oath drives me forward, so long as the reminder is kept near."
+
+#define DRAGONS_GRACE_FILTER "dragons_grace"
+
+/datum/status_effect/dragons_grace
+	id = "dragons_grace"
+	var/outline_colour = "#990e0e"
+	duration = -1
+	tick_interval = -1
+	examine_text = span_love("SUBJECTPRONOUN is blessed with the dragon's strength!")
+	alert_type = null
+
+/datum/status_effect/dragons_grace/on_apply()
+	. = ..()
+
+	owner.visible_message(span_userdanger("A veil of deep crimson bathes [owner], carrying with it, the heavy scent of blood!"))
+
+	to_chat(owner, span_notice("You feel the strength of the dragon flow into your body."))
+
+	owner.change_stat(STATKEY_STR, 1)
+	owner.change_stat(STATKEY_PER, 1)
+	owner.change_stat(STATKEY_WIL, 1)
+	owner.change_stat(STATKEY_CON, 1)
+	owner.change_stat(STATKEY_INT, 1)
+	owner.change_stat(STATKEY_SPD, 1)
+	owner.change_stat(STATKEY_LCK, 1)
+
+	var/filter = owner.get_filter(DRAGONS_GRACE_FILTER)
+	if(!filter)
+		owner.add_filter(DRAGONS_GRACE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 2))
+
+	var/mutable_appearance/effect = mutable_appearance('icons/effects/effects.dmi', "mist", -DRAGONS_GRACE_LAYER, alpha = 128)
+	effect.appearance_flags = RESET_COLOR
+	effect.blend_mode = BLEND_ADD
+	effect.color = "#800808"
+
+	owner.overlays_standing[DRAGONS_GRACE_LAYER] = effect
+	owner.apply_overlay(DRAGONS_GRACE_LAYER)
+
+	RegisterSignal(owner, COMSIG_LIVING_LIFE)
+
+/datum/status_effect/dragons_grace/on_remove()
+	. = ..()
+
+	to_chat(owner, span_notice("The dragon's strength fades."))
+
+	owner.change_stat(STATKEY_STR, -1)
+	owner.change_stat(STATKEY_PER, -1)
+	owner.change_stat(STATKEY_WIL, -1)
+	owner.change_stat(STATKEY_CON, -1)
+	owner.change_stat(STATKEY_INT, -1)
+	owner.change_stat(STATKEY_SPD, -1)
+	owner.change_stat(STATKEY_LCK, -1)
+
+	owner.remove_filter(DRAGONS_GRACE_FILTER)
+	owner.remove_overlay(DRAGONS_GRACE_LAYER)
+
+	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
+
+/datum/status_effect/dragons_grace/tick()
+
+	if(owner) owner.energy_add(1)
+
+#undef DRAGONS_GRACE_FILTER

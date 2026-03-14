@@ -17,7 +17,7 @@
 	var/farchargesound = 'sound/horns/o_charge_distant.ogg'
 	var/hornchannel
 
-/obj/structure/matthios/bandit_banner/Initialize(mapload)
+/obj/structure/matthios/bandit_banner/Initialize()
 	. = ..()
 
 	START_PROCESSING(SSobj, src)
@@ -26,7 +26,7 @@
 /obj/structure/matthios/bandit_banner/Destroy()
 	for(var/mob/living/carbon/human/user in buffed)
 		if(user)
-			user.remove_status_effect(/datum/status_effect/buff/bandit_banner)
+			user.remove_status_effect(/datum/status_effect/dragons_grace)
 
 	buffed.Cut()
 
@@ -45,49 +45,14 @@
 	current.Add(user)
 
 	if(!(user in buffed))
-		user.apply_status_effect(/datum/status_effect/buff/bandit_banner)
-		buffed.Add(user) // remove buff from those who left range
+		user.apply_status_effect(/datum/status_effect/dragons_grace)
+		buffed.Add(user)
 
 	for(user in buffed.Copy())
 
 	if(!(user in current))
-		user.remove_status_effect(/datum/status_effect/buff/bandit_banner)
+		user.remove_status_effect(/datum/status_effect/dragons_grace)
 		buffed.Remove(user)
-
-/datum/status_effect/buff/bandit_banner
-
-	id = "bandit_banner"
-	mob_effect_icon_state = "buff"
-	examine_text = "SUBJECTPRONOUN fights with the fury of the dragon."
-	alert_type = /atom/movable/screen/alert/status_effect
-
-/datum/status_effect/buff/bandit_banner/on_apply()
-
-	to_chat(owner, span_notice("You feel the strength of the dragon flow into your body."))
-
-	owner.change_stat(STATKEY_STR, 1)
-	owner.change_stat(STATKEY_PER, 1)
-	owner.change_stat(STATKEY_WIL, 1)
-	owner.change_stat(STATKEY_CON, 1)
-	owner.change_stat(STATKEY_INT, 1)
-	owner.change_stat(STATKEY_SPD, 1)
-	owner.change_stat(STATKEY_LCK, 1)
-
-/datum/status_effect/buff/bandit_banner/on_remove()
-
-	to_chat(owner, span_notice("The dragon's strength fades."))
-
-	owner.change_stat(STATKEY_STR, -1)
-	owner.change_stat(STATKEY_PER, -1)
-	owner.change_stat(STATKEY_WIL, -1)
-	owner.change_stat(STATKEY_CON, -1)
-	owner.change_stat(STATKEY_INT, -1)
-	owner.change_stat(STATKEY_SPD, -1)
-	owner.change_stat(STATKEY_LCK, -1)
-
-/datum/status_effect/buff/bandit_banner/tick()
-
-	if(owner) owner.energy_add(1)
 
 /obj/structure/matthios/bandit_banner/attack_hand(mob/living/user)
 
@@ -126,9 +91,9 @@
 
 	if(spell_path == /obj/effect/proc_holder/spell/invoked/banner/retreat) //retreat
 		playsound(src, retreatsound, 100, TRUE, channel = hornchannel)
-	if(proc_type == /obj/item/rogueweapon/special/dragonz/proc/wave_banner == TRUE) //rally here
+	if(proc_type == /obj/item/rogueweapon/special/dragonz/proc/wave_banner) //rally here
 		playsound(src, rallysound, 100, TRUE, channel = hornchannel)
-	if(proc_type == /obj/item/rogueweapon/special/dragonz/proc/deploy_banner == TRUE) //hold
+	if(proc_type == /obj/item/rogueweapon/special/dragonz/proc/deploy_banner) //hold
 		playsound(src, holdsound, 100, TRUE, channel = hornchannel)
 	if(spell_path == /obj/effect/proc_holder/spell/invoked/banner/charge) //charge
 		playsound(src, chargesound, 100, TRUE, channel = hornchannel)
@@ -199,6 +164,7 @@
 
 /obj/effect/proc_holder/spell/invoked/banner
 	var/obj/item/rogueweapon/special/dragonz/attached_banner
+	var/status_effect_path
 	name = ""
 	range = 10
 	associated_skill = /datum/skill/misc/athletics
@@ -206,39 +172,47 @@
 	chargedrain = 0
 	chargetime = 0
 	releasedrain = 80
-	recharge_time = 4 MINUTES
 	miracle = FALSE
+	COOLDOWN_DECLARE(banner_spell)
 
-/obj/effect/proc_holder/spell/invoked/banner/cast(mob/living/user)
+/obj/effect/proc_holder/spell/invoked/banner/cast(list/targets, mob/living/user)
 	. = ..()
 
-	if(!user.mind?.special_role == "Bandit")
-		return FALSE
+	for(var/mob/living/target in range(10, user))
+
+		if(!COOLDOWN_FINISHED (src, banner_spell))
+			to_chat(user, span_danger("The [src] is not ready yet! [round(COOLDOWN_TIMELEFT(src, banner_spell) / 10, 1)] seconds left!"))
+			continue
+		if(target.stat == DEAD)
+			continue
+		if(!(target.faction[1] in user.faction))
+			continue
+
+		target.apply_status_effect(status_effect_path)
+
+
+		if(status_effect_path == /datum/status_effect/buff/order/retreat)
+			banner.sound_banner_announcement(user, null, /obj/effect/proc_holder/spell/invoked/banner/retreat)
+
+		else
+			banner.sound_banner_announcement(user, null, /obj/effect/proc_holder/spell/invoked/banner/charge)
+
+	return TRUE
+
+		//retreat
 
 /obj/effect/proc_holder/spell/invoked/banner/retreat
+	status_effect_path = /datum/status_effect/buff/order/retreat
 	name = "Tactical Retreat!"
-	chargedrain = 0
-	chargetime = 0
 	desc = "Gives 3 SPD 3 WILL to your compatriots!"
 	overlay_state = "movemovemove"
-
-/obj/effect/proc_holder/spell/invoked/banner/retreat/cast(list/targets, mob/living/user)
-	. = ..()
-	if(isliving(targets))
-		var/mob/living/target = targets
-		target.apply_status_effect(/datum/status_effect/buff/order/retreat)
-		return TRUE
-	revert_cast()
-	return FALSE
-
-/datum/status_effect/buff/banner/retreat/nextmove_modifier()
-	return
+	recharge_time = 5 MINUTES
 
 /datum/status_effect/buff/banner/retreat
 	id = "movemovemove"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/order/retreat
 	effectedstats = list(STATKEY_SPD = 3, STATKEY_WIL = 3)
-	duration = 4 MINUTES
+	duration = 3 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/banner/retreat
 	name = "Tactical Retreat!!"
@@ -249,30 +223,21 @@
 	. = ..()
 	to_chat(owner, span_blue("The dragon orders me to fall back!"))
 
+
+		//charge
+
 /obj/effect/proc_holder/spell/invoked/banner/charge
+	status_effect_path = /datum/status_effect/buff/order/charge
 	name = "Charge!"
 	desc = "Gives 2 STR and 2 PER to your compatriots!"
 	overlay_state = "hold"
-	chargedrain = 0
-	chargetime = 0
-
-/obj/effect/proc_holder/spell/invoked/banner/charge/cast(list/targets, mob/living/user)
-	. = ..()
-	if(isliving(targets))
-		var/mob/living/target = targets
-		var/msg = user.mind.holdtext
-		user.say("[msg]")
-		target.apply_status_effect(/datum/status_effect/buff/order/charge)
-		return TRUE
-	revert_cast()
-	return FALSE
-
+	recharge_time = 5 MINUTES
 
 /datum/status_effect/buff/banner/charge
 	id = "hold"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/order/charge
 	effectedstats = list(STATKEY_STR = 2, STATKEY_PER = 2)
-	duration = 4 MINUTES
+	duration = 3 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/order/charge
 	name = "Charge!"
@@ -284,7 +249,11 @@
 	to_chat(owner, span_blue("My commander orders me to charge! For the dragon!"))
 
 
+		//convert
+
+
 /obj/effect/proc_holder/spell/self/convertrole/bandit
+	var/obj/item/rogueweapon/special/dragonz/attached_banner
 	name = "Recruit bandit"
 	new_role = "Bandit"
 	overlay_state = "recruit_bog"
