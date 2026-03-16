@@ -280,6 +280,18 @@
 	. = ..()
 	set_quantity(rand(8,12))
 
+/obj/item/roguecoin/copper/pile/banditsmall/Initialize(mapload)
+	. = ..()
+	set_quantity(50)
+
+/obj/item/roguecoin/silver/pile/banditmedium/Initialize(mapload)
+	. = ..()
+	set_quantity(30)
+
+/obj/item/roguecoin/gold/pile/banditrich/Initialize(mapload)
+	. = ..()
+	set_quantity(30)
+
 #undef CTYPE_GOLD
 #undef CTYPE_SILV
 #undef CTYPE_COPP

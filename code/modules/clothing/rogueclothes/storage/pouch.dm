@@ -97,3 +97,24 @@
 
 /obj/item/storage/belt/rogue/pouch/treasure/lucky/PopulateContents()
 	new /obj/effect/spawner/lootdrop/mobtreasure/lucky(src)
+
+/obj/item/storage/belt/rogue/pouch/coins/bribesmall/Initialize(mapload)
+	. = ..()
+	var/obj/item/roguecoin/copper/pile/banditsmall/H = new(loc)
+	if(istype(H))
+		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
+			qdel(H)
+
+/obj/item/storage/belt/rogue/pouch/coins/bribemedium/Initialize(mapload)
+	. = ..()
+	var/obj/item/roguecoin/silver/pile/banditmedium/H = new(loc)
+	if(istype(H))
+		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
+			qdel(H)
+
+/obj/item/storage/belt/rogue/pouch/coins/briberich/Initialize(mapload)
+	. = ..()
+	var/obj/item/roguecoin/gold/pile/banditrich/H = new(loc)
+	if(istype(H))
+		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
+			qdel(H)

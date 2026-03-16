@@ -133,6 +133,21 @@
 	cost = 10	// Hahaha why not
 	contains = list(/obj/item/soap)
 
+/datum/supply_pack/rogue/Supplies/bribesmall
+	name = "Light Pouch of Mammons"
+	cost = 65 // ~25%'ish' markup, to avoid infinite money glitch.
+	contains = list(/obj/item/storage/belt/rogue/pouch/coins/bribesmall)
+
+/datum/supply_pack/rogue/Supplies/bribemedium
+	name = "Fair Pouch of Mammons"
+	cost = 190
+	contains = list(/obj/item/storage/belt/rogue/pouch/coins/bribemedium)
+
+/datum/supply_pack/rogue/Supplies/bribelarge
+	name = "Considerable Pouch of Mammons"
+	cost = 380
+	contains = list(/obj/item/storage/belt/rogue/pouch/coins/bribelarge)
+
 //////////////
 // UTILITY //
 //////////////
