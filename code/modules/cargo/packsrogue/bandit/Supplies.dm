@@ -145,7 +145,7 @@
 
 /datum/supply_pack/rogue/Supplies/bribelarge
 	name = "Considerable Pouch of Mammons"
-	cost = 380
+	cost = 375
 	contains = list(/obj/item/storage/belt/rogue/pouch/coins/briberich)
 
 //////////////
