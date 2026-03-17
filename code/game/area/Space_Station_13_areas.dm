@@ -36,7 +36,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/misc/testroom
 	requires_power = FALSE
-	
+	// Mobs should be able to see inside the testroom
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	name = "Test Room"
 	icon_state = "test_room"
 

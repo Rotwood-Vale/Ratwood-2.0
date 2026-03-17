@@ -6,7 +6,7 @@
 GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 /datum/unit_test/create_and_destroy/Run()
 	//We'll spawn everything here
-	var/turf/spawn_at = run_loc_bottom_left
+	var/turf/spawn_at = run_loc_floor_bottom_left
 	var/list/ignore = list(
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,

@@ -82,3 +82,8 @@ GLOBAL_PROTECT(picture_logging_id)
 GLOBAL_VAR(picture_logging_prefix)
 GLOBAL_PROTECT(picture_logging_prefix)
 /////
+
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
+GLOBAL_VAR(test_log)
+GLOBAL_PROTECT(test_log)
+#endif

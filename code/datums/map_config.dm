@@ -23,9 +23,6 @@
 	var/space_ruin_levels = 7
 	var/space_empty_levels = 1
 
-	/// List of unit tests that are skipped when running this map
-	var/list/skipped_tests
-
 	var/custom_area_sound = null
 	var/list/other_z
 
@@ -35,6 +32,9 @@
 		"ferry" = "ferry_fancy",
 		"whiteship" = "whiteship_box",
 		"emergency" = "emergency_rogue")
+
+	/// List of unit tests that are skipped when running this map
+	var/list/skipped_tests
 
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	testing("loading map config [filename]")
@@ -148,6 +148,7 @@
 			continue
 		LAZYADD(skipped_tests, path_real)
 #endif
+
 	var/list/other_z = json["other_z"]
 	if(!islist(other_z) || !other_z.len)
 		defaulted = FALSE
