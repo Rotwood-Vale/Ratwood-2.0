@@ -13,7 +13,10 @@
 	body_parts_covered = HEAD|HAIR|EARS|EYES|NOSE
 	worn_x_dimension = 32
 	worn_y_dimension = 32
-
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn
 	name = "gronnic ravager mantle"
@@ -24,6 +27,10 @@
 	icon_state = "gronnleatherarmor"
 	item_state = "gronnleatherarmor"
 	armor = ARMOR_GRONN_LIGHT
+	cold_protection = CHEST
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/under/roguetown/trou/leather/gronn
 	name = "gronnic fur pants"
@@ -36,7 +43,12 @@
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	
+	armor = ARMOR_GRONN_LIGHT
+	cold_protection = GROIN
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
+
 /obj/item/clothing/gloves/roguetown/angle/gronn
 	name = "gronnic fur-lined leather gloves"
 	desc = "Thick, padded gloves made for the harshest of climates, and wildest of beasts encountered in the untamed lands."
@@ -45,6 +57,10 @@
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	color = "#ffffff"
+	cold_protection = HAND_LEFT | HAND_RIGHT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/gloves/roguetown/angle/gronnfur
 	name = "gronnic fur-lined bone gloves"
@@ -58,6 +74,10 @@
 	unarmed_bonus = 1.25
 	max_integrity = 250
 	color = "#ffffff"
+	cold_protection = HAND_LEFT | HAND_RIGHT
+	min_cold_protection_temperature = 50
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
@@ -161,7 +181,7 @@
 			update_icon()
 		qdel(I)
 	. = ..()
-	
+
 
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/AdjustClothes(mob/user)
 	if(loc == user)

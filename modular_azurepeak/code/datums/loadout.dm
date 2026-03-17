@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/custom_book
 	name = "Custom Book"
-	path = /obj/item/book/rogue/loadoutbook
+	path = /obj/item/paper/scroll/custom
 
 /datum/loadout_item/hand_mirror
 	name = "Hand Mirror"

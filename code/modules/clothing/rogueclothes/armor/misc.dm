@@ -22,6 +22,10 @@
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	allowed_sex = list(MALE, FEMALE)
+	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/longcoat/brown
 	color = "#997C4F"
@@ -48,6 +52,10 @@
 	sleeved = null
 	nodismemsleeves = TRUE
 	boobed = TRUE
+	cold_protection = CHEST | GROIN
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = CHEST | GROIN
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/workervest/Initialize(mapload)
 	color = pick("#94b4b6", "#ba8f9e", "#bd978c", "#92bd8c", "#c7c981")
@@ -74,6 +82,10 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = CLOTHED_RACES_TYPES
+	cold_protection = CHEST | GROIN
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = CHEST | GROIN
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 
 /obj/item/clothing/suit/roguetown/armor/silkcoat/Initialize(mapload)

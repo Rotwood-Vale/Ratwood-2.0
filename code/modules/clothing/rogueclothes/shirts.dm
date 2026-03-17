@@ -110,6 +110,10 @@
 	name = "tinker suit"
 	desc = "Typical fashion of the best engineers."
 	icon_state = "artishirt"
+	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/lowcut
 	name = "low cut tunic"
@@ -124,6 +128,10 @@
 	r_sleeve_status = SLEEVE_TORN
 	l_sleeve_status = SLEEVE_TORN
 	body_parts_covered = CHEST|VITALS
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/shadowshirt/elflock
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -294,6 +302,10 @@
 	detail_color = "#e395bb"
 	salvage_result = /obj/item/natural/silk
 	salvage_amount = 2
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gown/fallgown
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
@@ -312,6 +324,10 @@
 	detail_color = "#45749d"
 	salvage_result = /obj/item/natural/silk
 	salvage_amount = 2
+	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	icon_state = "sailorblues"
@@ -475,6 +491,10 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 	salvage_result = /obj/item/natural/silk
 	salvage_amount = 2
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/princess
 	color = CLOTHING_WHITE

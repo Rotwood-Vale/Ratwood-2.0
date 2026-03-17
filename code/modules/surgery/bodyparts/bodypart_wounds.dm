@@ -56,6 +56,7 @@
 	for(var/datum/wound/wound as anything in wounds)
 		if(heal_amount <= 0)
 			continue
+
 		var/amount_healed = wound.heal_wound(heal_amount)
 		heal_amount -= amount_healed
 		healed_any = TRUE

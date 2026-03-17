@@ -25,6 +25,10 @@
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
 	nudist_approved = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = HEAD
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/roguehood/ComponentInitialize()
 	. = ..()
@@ -64,6 +68,10 @@
 	max_integrity = 120//+20 over base. -30 from previous value.
 	blocksound = SOFTHIT
 	nudist_approved = FALSE // armored
+	cold_protection = HEAD
+	min_cold_protection_temperature = 50
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/head/roguetown/roguehood/shalal
 	name = "keffiyeh"
@@ -92,6 +100,10 @@
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
 	nudist_approved = TRUE
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = HEAD
+	max_heat_protection_temperature = 600
 
 /obj/item/clothing/neck/roguetown/roguehood/shalal/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, HEAD|EARS|NECK|HAIR, HIDEHAIR|HIDEFACE, null, null, null, (UPD_HEAD|UPD_MASK|UPD_NECK))
@@ -137,6 +149,10 @@
 	icon_state = "heavyhood"
 	hidesnoutADJ = FALSE
 	nudist_approved = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = 50
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/yoruku
 	name = "shadowed hood"

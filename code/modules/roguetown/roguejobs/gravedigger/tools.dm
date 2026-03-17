@@ -64,7 +64,7 @@
 	if(user.used_intent.type == /datum/intent/shovelscoop)
 		if(istype(T, /turf/open/floor/rogue/dirt))
 			var/turf/open/floor/rogue/dirt/D = T
-			
+
 			if(heldclod)
 				if(D.holie && D.holie.stage < 4)
 					D.holie.attackby(src, user)
@@ -103,19 +103,22 @@
 		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold))
 			to_chat(user, span_warning("There is grass in the way."))
 			return
+		if(istype(T, /turf/open/floor/rogue/snow))
+			T.ChangeTurf(/turf/open/floor/rogue/dirt, flags = CHANGETURF_INHERIT_AIR)
+			to_chat(user, span_warning("You scoop away the snow!"))
 		return
 	. = ..()
 
 /obj/item/rogueweapon/shovel/proc/start_autodig(mob/living/L, turf/T)
 	if(!isliving(L) || !istype(T, /turf/open/floor/rogue/dirt))
 		return FALSE
-	
+
 	var/turf/open/floor/rogue/dirt/D = T
 	var/start_digging = !heldclod && !D.holie
-	
+
 	if(!start_digging)
 		return FALSE
-	
+
 	L.visible_message(span_notice("[L] begins digging on [T]..."))
 	// Do the first dig
 	if(!heldclod)
@@ -126,7 +129,7 @@
 		heldclod = new(src)
 		playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)
 		update_icon()
-	
+
 	// Start the continuous loop
 	while(do_after(L, 1 SECONDS, target = T))
 		D = get_turf(T)
@@ -135,16 +138,16 @@
 		if(!(L.mobility_flags & MOBILITY_STAND))
 			to_chat(L, span_warning("You are knocked down and stop digging."))
 			break
-		
+
 		L.changeNext_move(L.used_intent.clickcd)
 		if(max_blade_int)
 			remove_bintegrity(2)
-		
+
 		// Fill the hole with the clod we have
 		if(heldclod && D.holie)
 			D.holie.attackby(src, L)
 			playsound(D,'sound/items/empty_shovel.ogg', 100, TRUE)
-		
+
 		// Dig a new hole on the same tile
 		D = get_turf(T)
 		if(istype(D, /turf/open/floor/rogue/dirt))
@@ -161,7 +164,7 @@
 				break
 		else
 			break
-	
+
 	return TRUE
 
 /obj/item/rogueweapon/shovel/getonmobprop(tag)

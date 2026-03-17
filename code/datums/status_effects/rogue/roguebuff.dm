@@ -604,6 +604,78 @@
 	examine_text = null
 	duration = 10 SECONDS
 
+/atom/movable/screen/alert/status_effect/buff/campfire_stamina
+	name = "Camp Rest"
+	desc = "A break by the fire restores some of my energy."
+	icon_state = "campfire"
+
+/atom/movable/screen/alert/status_effect/buff/fireplace_stamina
+	name = "Warming Respite"
+	desc = "The warmth of a fire restores some of my energy."
+	icon_state = "fireplace"
+
+#define CAMPFIRE_BASE_FILTER "campfire_stamina"
+
+/datum/status_effect/buff/campfire_stamina
+	id = "stamina_campfire"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/campfire_stamina
+	duration = 5 SECONDS
+	examine_text = "SUBJECTPRONOUN is enjoying a brief respite."
+	var/healing_on_tick = 5
+	var/outline_colour = "#7e6a3e"
+	var/tech_healing_modifier = 1
+
+/datum/status_effect/buff/campfire_stamina/on_apply()
+	var/filter = owner.get_filter(CAMPFIRE_BASE_FILTER)
+	if (!filter)
+		owner.add_filter(CAMPFIRE_BASE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
+	return TRUE
+
+/datum/status_effect/buff/campfire_stamina/tick()
+	if(owner.construct)
+		return
+	var/stamheal = healing_on_tick
+	if(!owner.cmode)
+		stamheal *= 2
+	owner.energy_add(stamheal)
+	if(owner.bodytemperature < 300)	//Apply heat to player if below certain normal
+		owner.adjust_bodytemperature(5)
+
+/datum/status_effect/buff/campfire_stamina/on_remove()
+	owner.remove_filter(CAMPFIRE_BASE_FILTER)
+
+/datum/status_effect/buff/campfire_stamina/fireplace
+	alert_type = /atom/movable/screen/alert/status_effect/buff/fireplace_stamina
+
+/datum/status_effect/buff/campfire
+	id = "healing_campfire"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/campfire
+	examine_text = null
+	var/healing_on_tick = 2
+	duration = 6 SECONDS
+
+/datum/status_effect/buff/campfire/tick()
+	if(owner.cmode)
+		return
+	if(owner.construct)
+		return
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue/campfire(get_turf(owner))
+	H.color = "#c7aa5c"
+	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
+		owner.blood_volume = min(owner.blood_volume+healing_on_tick, BLOOD_VOLUME_OKAY)
+	var/list/wCount = owner.get_wounds()
+	if(length(wCount))
+		owner.heal_wounds(healing_on_tick, list(/datum/wound/slash, /datum/wound/puncture, /datum/wound/bite, /datum/wound/bruise, /datum/wound/dynamic, /datum/wound/dislocation))
+		owner.update_damage_overlays()
+	owner.adjustBruteLoss(-healing_on_tick, 0)
+	owner.adjustFireLoss(-healing_on_tick, 0)
+	owner.adjustOxyLoss(-healing_on_tick, 0)
+	owner.adjustToxLoss(-healing_on_tick, 0)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
+	owner.adjustCloneLoss(-healing_on_tick, 0)
+
+#undef CAMPFIRE_BASE_FILTER
+
 //Self healing for Martyr.
 /datum/status_effect/buff/healing/prayer
 	id = "healing_prayers"
@@ -1361,7 +1433,7 @@
 	mob_effect_icon_state = "eff_riposte"
 	mob_effect_layer = MOB_EFFECT_LAYER_GUARD
 
-//We have a lot of signals as the ability is meant to be interrupted by or interact with a lot of mechanics. 
+//We have a lot of signals as the ability is meant to be interrupted by or interact with a lot of mechanics.
 /datum/status_effect/buff/clash/on_creation(mob/living/new_owner, ...)
 	//!Danger! Zone!
 	//These signals use OVERRIDES and can OVERLAP with anything else using them.
@@ -1398,7 +1470,7 @@
 	if(ishuman(target) && target.get_active_held_item() && !bad_guard)
 		var/mob/living/carbon/human/HM = target
 		var/obj/item/IM = target.get_active_held_item()
-		var/obj/item/IU 
+		var/obj/item/IU
 		if(user.used_intent.masteritem)
 			IU = user.used_intent.masteritem
 		HM.process_clash(user, IM, IU)

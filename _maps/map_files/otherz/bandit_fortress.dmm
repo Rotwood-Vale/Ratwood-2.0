@@ -4,9 +4,7 @@
 	pixel_x = -16;
 	pixel_y = -6
 	},
-/turf/open/floor/rogue/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/rogue/tile,
 /area/rogue/indoors/banditcamp)
 "ad" = (
 /turf/open/transparent/openspace,
@@ -55,8 +53,7 @@
 	dir = 8
 	},
 /obj/structure/fluff/railing/fence{
-	dir = 4;
-	icon_state = "fence"
+	dir = 4
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
@@ -66,7 +63,7 @@
 /area/rogue/indoors/cave)
 "aG" = (
 /obj/structure/toilet,
-/obj/machinery/light/rogue/wallfire/candle/r,
+/obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/banditcamp)
 "aI" = (
@@ -92,8 +89,8 @@
 	pixel_y = 32
 	},
 /obj/item/candle/skull/lit{
-	pixel_y = 4;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 4
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
@@ -173,16 +170,6 @@
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/banditcamp)
-"ez" = (
-/obj/structure/fluff/railing/fence{
-	dir = 1
-	},
-/obj/structure/fluff/railing/fence{
-	dir = 4;
-	icon_state = "fence"
-	},
-/turf/open/floor/rogue/grasscold,
-/area/rogue/outdoors/banditcamp)
 "eK" = (
 /obj/structure/fluff/railing/fence{
 	dir = 1
@@ -198,9 +185,7 @@
 /area/rogue/outdoors/banditcamp)
 "fg" = (
 /obj/structure/fluff/statue/gargoyle,
-/turf/open/floor/rogue/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/rogue/tile,
 /area/rogue/indoors/banditcamp)
 "fo" = (
 /obj/structure/fluff/traveltile/bandit{
@@ -233,8 +218,7 @@
 /area/rogue/outdoors/banditcamp)
 "fS" = (
 /obj/structure/stairs{
-	dir = 1;
-	icon_state = "stairs"
+	dir = 1
 	},
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/dirt/road,
@@ -249,9 +233,7 @@
 /obj/structure/fluff/railing/border/north,
 /obj/structure/fluff/railing/border/west,
 /obj/structure/chair/stool/rogue,
-/obj/effect/landmark/start/bandit{
-	icon_state = "arrow"
-	},
+/obj/effect/landmark/start/bandit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
 "gK" = (
@@ -320,8 +302,7 @@
 /area/rogue/indoors/banditcamp)
 "ib" = (
 /obj/structure/fluff/railing/fence{
-	dir = 1;
-	icon_state = "fence"
+	dir = 1
 	},
 /obj/structure/fluff/railing/fence{
 	dir = 8
@@ -348,8 +329,7 @@
 /area/rogue/indoors/banditcamp)
 "io" = (
 /obj/structure/stairs{
-	dir = 1;
-	icon_state = "stairs"
+	dir = 1
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
@@ -373,8 +353,7 @@
 "jd" = (
 /obj/structure/chair/stool/rogue,
 /obj/effect/landmark/start/bandit{
-	dir = 8;
-	icon_state = "arrow"
+	dir = 8
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
@@ -419,9 +398,9 @@
 /area/rogue/indoors/banditcamp)
 "kk" = (
 /obj/structure/mineral_door/swing_door{
-	lockid = "bandit";
 	keylock = 1;
-	locked = 1
+	locked = 1;
+	lockid = "bandit"
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/indoors/banditcamp)
@@ -501,8 +480,7 @@
 /area/rogue/outdoors/banditcamp)
 "mt" = (
 /obj/structure/stairs{
-	dir = 1;
-	icon_state = "stairs"
+	dir = 1
 	},
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/naturalstone,
@@ -552,9 +530,9 @@
 /obj/structure/fluff/railing/border/east,
 /obj/structure/fluff/railing/border/west,
 /obj/machinery/light/rogue/campfire/densefire{
-	pixel_y = 3;
+	fueluse = 108000;
 	pixel_x = 1;
-	fueluse = 108000
+	pixel_y = 3
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
@@ -564,20 +542,9 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/transparent/openspace,
 /area/rogue/indoors/banditcamp)
-"nN" = (
-/obj/structure/fluff/railing/fence{
-	dir = 1;
-	icon_state = "fence"
-	},
-/obj/structure/fluff/railing/fence{
-	dir = 4
-	},
-/turf/open/floor/rogue/grasscold,
-/area/rogue/outdoors/banditcamp)
 "nR" = (
 /obj/structure/stairs{
-	dir = 1;
-	icon_state = "stairs"
+	dir = 1
 	},
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/dirt,
@@ -602,9 +569,7 @@
 /area/rogue/indoors/banditcamp)
 "oC" = (
 /obj/structure/chair/wood/rogue/chair3,
-/obj/effect/landmark/start/bandit{
-	icon_state = "arrow"
-	},
+/obj/effect/landmark/start/bandit,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
 "oD" = (
@@ -722,8 +687,7 @@
 /area/rogue/indoors/banditcamp)
 "ry" = (
 /obj/structure/stairs{
-	dir = 1;
-	icon_state = "stairs"
+	dir = 1
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/banditcamp)
@@ -743,8 +707,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/bandit{
-	dir = 8;
-	icon_state = "arrow"
+	dir = 8
 	},
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
@@ -784,9 +747,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/mountains)
 "sN" = (
-/turf/open/floor/rogue/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/rogue/tile,
 /area/rogue/indoors/banditcamp)
 "sS" = (
 /obj/structure/closet/crate/chest/crate,
@@ -806,16 +767,6 @@
 /obj/structure/fluff/railing/wood/north,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
-"th" = (
-/obj/structure/fluff/railing/fence{
-	dir = 1;
-	icon_state = "fence"
-	},
-/obj/structure/fluff/railing/fence{
-	dir = 8
-	},
-/turf/open/floor/rogue/grasscold,
-/area/rogue/outdoors/banditcamp)
 "tp" = (
 /obj/item/roguekey/walls{
 	lockid = "bandit";
@@ -850,13 +801,6 @@
 /obj/structure/closet/crate/chest/neu,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
-"tu" = (
-/obj/structure/fluff/railing/fence{
-	dir = 1;
-	icon_state = "fence"
-	},
-/turf/open/floor/rogue/grasscold,
-/area/rogue/outdoors/banditcamp)
 "tw" = (
 /obj/machinery/light/rogue/firebowl/standing,
 /turf/open/floor/rogue/dirt/road,
@@ -952,9 +896,7 @@
 /obj/effect/decal/carpet/kover_darkred{
 	pixel_y = 7
 	},
-/obj/effect/landmark/start/bandit{
-	icon_state = "arrow"
-	},
+/obj/effect/landmark/start/bandit,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
 "wd" = (
@@ -1031,7 +973,7 @@
 /area/rogue/outdoors/mountains)
 "xM" = (
 /obj/structure/closet/crate/chest,
-/obj/machinery/light/rogue/wallfire/candle/r,
+/obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/banditcamp)
 "xU" = (
@@ -1074,16 +1016,14 @@
 /area/rogue/indoors/banditcamp)
 "Ag" = (
 /obj/structure/stairs{
-	dir = 1;
-	icon_state = "stairs"
+	dir = 1
 	},
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
 "Ak" = (
 /obj/structure/stairs{
-	dir = 1;
-	icon_state = "stairs"
+	dir = 1
 	},
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/twig,
@@ -1123,8 +1063,7 @@
 /area/rogue/outdoors/banditcamp)
 "BK" = (
 /obj/structure/stairs{
-	dir = 1;
-	icon_state = "stairs"
+	dir = 1
 	},
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/dirt,
@@ -1179,13 +1118,12 @@
 "Cw" = (
 /obj/structure/chair/stool/rogue,
 /obj/effect/decal/carpet/square{
+	dir = 4;
 	pixel_x = 32;
-	pixel_y = -16;
-	dir = 4
+	pixel_y = -16
 	},
 /obj/effect/landmark/start/bandit{
-	dir = 4;
-	icon_state = "arrow"
+	dir = 4
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
@@ -1227,7 +1165,6 @@
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/glass/bucket/pot{
-	pixel_x = 0;
 	pixel_y = -1
 	},
 /turf/open/floor/rogue/cobble,
@@ -1237,9 +1174,7 @@
 	pixel_x = -16
 	},
 /obj/structure/chair/wood/rogue/fancy,
-/obj/effect/landmark/start/bandit{
-	icon_state = "arrow"
-	},
+/obj/effect/landmark/start/bandit,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
 "Dh" = (
@@ -1262,8 +1197,8 @@
 "DE" = (
 /obj/structure/table/wood/poor,
 /obj/item/reagent_containers/glass/cup/skull{
-	name = "Ser Jebediah Gillie";
-	desc = "The skull of Ser Jebediah Gillie, prior commander of the wardens, hard to believe you're drinking from his skull."
+	desc = "The skull of Ser Jebediah Gillie, prior commander of the wardens, hard to believe you're drinking from his skull.";
+	name = "Ser Jebediah Gillie"
 	},
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
@@ -1302,7 +1237,7 @@
 /area/rogue/indoors/banditcamp)
 "EC" = (
 /obj/structure/closet/crate/chest,
-/obj/machinery/light/rogue/wallfire/candle/l,
+/obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/banditcamp)
 "EF" = (
@@ -1323,9 +1258,9 @@
 /area/rogue/outdoors/banditcamp)
 "Gb" = (
 /obj/structure/mineral_door/swing_door{
-	lockid = "bandit";
 	keylock = 1;
-	locked = 1
+	locked = 1;
+	lockid = "bandit"
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
@@ -1367,8 +1302,7 @@
 	dir = 1
 	},
 /obj/structure/fluff/railing/fence{
-	dir = 4;
-	icon_state = "fence"
+	dir = 4
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/banditcamp)
@@ -1379,8 +1313,7 @@
 "HJ" = (
 /obj/structure/chair/stool/rogue,
 /obj/effect/landmark/start/bandit{
-	dir = 8;
-	icon_state = "arrow"
+	dir = 8
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
@@ -1408,8 +1341,7 @@
 /obj/structure/chair/stool/rogue,
 /obj/machinery/light/rogue/torchholder/r,
 /obj/effect/landmark/start/bandit{
-	dir = 8;
-	icon_state = "arrow"
+	dir = 8
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
@@ -1446,8 +1378,7 @@
 "JS" = (
 /obj/structure/chair/stool/rogue,
 /obj/effect/landmark/start/bandit{
-	dir = 1;
-	icon_state = "arrow"
+	dir = 1
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
@@ -1467,7 +1398,7 @@
 /area/rogue/indoors/banditcamp)
 "KA" = (
 /obj/structure/closet/crate/chest/gold,
-/obj/machinery/light/rogue/wallfire/candle,
+/obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/banditcamp)
 "KL" = (
@@ -1502,15 +1433,12 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
 "LI" = (
-/obj/structure/chair/freedomchair{
-	color = "#F75D59"
-	},
+/obj/structure/chair/freedomchair,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/banditcamp)
 "LL" = (
 /obj/structure/stairs{
-	dir = 1;
-	icon_state = "stairs"
+	dir = 1
 	},
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/dirt/road,
@@ -1717,13 +1645,6 @@
 /obj/machinery/light/rogue/torchholder/r,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
-"QY" = (
-/obj/structure/fluff/railing/fence{
-	dir = 4;
-	icon_state = "fence"
-	},
-/turf/open/floor/rogue/grasscold,
-/area/rogue/outdoors/banditcamp)
 "Rd" = (
 /obj/structure/fluff/railing/wood,
 /obj/effect/decal/remains/bigrat,
@@ -1741,9 +1662,9 @@
 /obj/structure/fluff/railing/border/west,
 /obj/structure/fluff/railing/border/east,
 /obj/machinery/light/rogue/campfire/densefire{
-	pixel_y = 3;
+	fueluse = 108000;
 	pixel_x = 1;
-	fueluse = 108000
+	pixel_y = 3
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/banditcamp)
@@ -1757,8 +1678,7 @@
 "Sl" = (
 /obj/structure/chair/stool/rogue,
 /obj/effect/landmark/start/bandit{
-	dir = 4;
-	icon_state = "arrow"
+	dir = 4
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
@@ -1789,8 +1709,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/bandit{
-	dir = 4;
-	icon_state = "arrow"
+	dir = 4
 	},
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
@@ -1884,13 +1803,6 @@
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods)
-"VJ" = (
-/obj/structure/fluff/railing/fence{
-	dir = 4;
-	icon_state = "fence"
-	},
-/turf/open/floor/rogue/dirt,
-/area/rogue/outdoors/banditcamp)
 "VK" = (
 /obj/effect/decal/remains/bobcat,
 /turf/open/floor/rogue/grasscold,
@@ -1916,8 +1828,7 @@
 /area/rogue/indoors/cave)
 "Wn" = (
 /obj/structure/stairs{
-	dir = 1;
-	icon_state = "stairs"
+	dir = 1
 	},
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/twig,
@@ -1951,9 +1862,9 @@
 /area/rogue/outdoors/mountains)
 "Xm" = (
 /obj/effect/decal/carpet/square{
+	dir = 4;
 	pixel_x = 14;
-	pixel_y = -16;
-	dir = 4
+	pixel_y = -16
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/banditcamp)
@@ -2040,9 +1951,7 @@
 /turf/open/floor/rogue/rooftop/green/east,
 /area/rogue/outdoors/mountains)
 "Zs" = (
-/obj/structure/mirror{
-	pixel_y = 32
-	},
+/obj/structure/mirror,
 /turf/open/floor/rogue/hay,
 /area/rogue/indoors/banditcamp)
 "ZA" = (
@@ -10474,7 +10383,7 @@ NT
 Qm
 Qm
 ty
-ez
+eK
 WK
 WK
 WK
@@ -10557,8 +10466,8 @@ YK
 YK
 YK
 WK
-ez
-QY
+eK
+wI
 WK
 WK
 YK
@@ -10968,7 +10877,7 @@ Qm
 Qm
 Qm
 ty
-ez
+eK
 WK
 PY
 Qm
@@ -11135,10 +11044,10 @@ Qm
 Qm
 Qm
 Hv
-VJ
-VJ
-QY
-th
+fH
+fH
+wI
+MN
 WK
 PY
 WK
@@ -11220,7 +11129,7 @@ nj
 nj
 PY
 WK
-tu
+JX
 WK
 WK
 WK
@@ -11877,7 +11786,7 @@ Qm
 Qm
 WK
 WK
-tu
+JX
 WK
 WK
 wG
@@ -11959,7 +11868,7 @@ Qm
 Qm
 WK
 WK
-tu
+JX
 WK
 WK
 Sw
@@ -12041,7 +11950,7 @@ Qm
 Qm
 WK
 WK
-tu
+JX
 WK
 Si
 Sw
@@ -12123,7 +12032,7 @@ Qm
 Qm
 WK
 jC
-tu
+JX
 WK
 WK
 Sw
@@ -12205,7 +12114,7 @@ Qm
 Qm
 jC
 jC
-tu
+JX
 WK
 ty
 wG
@@ -12943,7 +12852,7 @@ Qm
 jC
 WK
 WK
-tu
+JX
 WK
 WK
 jC
@@ -13025,7 +12934,7 @@ Qm
 Qm
 WK
 WK
-nN
+eK
 wI
 WK
 WK
@@ -13109,7 +13018,7 @@ Qm
 WK
 WK
 WK
-nN
+eK
 wI
 aQ
 WK
