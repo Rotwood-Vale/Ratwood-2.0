@@ -24,7 +24,7 @@ At least, it should. Fingers crossed.
 	name = "powderflask"
 	icon = 'modular_helmsguard/icons/obj/items/arquebus_items.dmi'
 	desc = "For the layman, smokepowder is an arcyne bit of trickery. \
-	Its creation is an art lost within most of Grimoria, only seen in the likes of Zybantu. \
+	Its creation is an art lost within most of Grimoria, only seen in the likes of Zybantium. \
 	And yet? You've a flask of it. Guard it well."
 	icon_state = "powderflask"
 	item_state = "powderflask"

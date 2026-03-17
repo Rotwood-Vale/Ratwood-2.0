@@ -2,6 +2,25 @@
 	desc = "Power rushes through your veins."
 	icon_state = "buff"
 
+/datum/status_effect/buff/alch/temperaturepot
+	id = "temppot"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/temperaturepot
+	effectedstats = list()
+	duration = 15 SECONDS
+
+/atom/movable/screen/alert/status_effect/buff/alch/temperaturepot
+	name = "Temperature Equilibrium"
+	desc = "Power rushes through your veins."
+	icon_state = "buff"
+
+/datum/status_effect/buff/alch/temperaturepot/process()
+
+	.=..()
+	if(owner.bodytemperature > BODYTEMP_NORMAL_MAX)
+		owner.adjust_bodytemperature(-5)
+	if(owner.bodytemperature < BODYTEMP_NORMAL_MIN)
+		owner.adjust_bodytemperature(-5)
+
 /datum/status_effect/buff/alch/strengthpot
 	id = "strpot"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/strengthpot

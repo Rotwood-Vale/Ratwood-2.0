@@ -1,0 +1,422 @@
+/proc/is_openspace(atom/A)
+	if(!A) return FALSE
+	var/turf/T = get_turf(A)
+	return istype(T, /turf/open/transparent/openspace)
+
+// === BASE TENT COMPONENT ===
+/obj/structure/tent_component
+    var/obj/item/tent_kit/parent_tent = null
+    anchored = TRUE
+    invisibility = 0
+
+// === TENT KIT ITEM ===
+/obj/item/tent_kit
+    name = "small tent kit"
+    desc = "A compact kit containing everything needed to set up a weatherproof tent. The tent will be oriented based on the direction you're facing when assembling."
+    icon = 'icons/roguetown/misc/structure.dmi'
+    icon_state = "tent_kit"
+    w_class = WEIGHT_CLASS_NORMAL
+    grid_width = 32
+    grid_height = 96
+    var/assembled = FALSE
+    var/list/obj/structure/tent_wall/tent_walls = list()
+    var/list/obj/structure/roguetent/tent_doors = list()
+    var/list/turf/roof_tiles = list()
+    var/list/turf/roof_turfs = list()
+    
+    var/tent_width = 3 
+    var/tent_length = 4 
+    var/roof_width = 1
+    var/roof_length = 4
+    var/door_style = "both"
+    var/setup_time = 10 SECONDS
+    var/roof_covers_doors = FALSE
+
+    var/setup_cooldown_end = 0
+    var/cooldown_duration = 600
+
+    // Repair & Damage vars
+    var/repair_debt_cloth = 0
+    var/repair_debt_silk = 0
+    var/parts_destroyed_count = 0
+    var/collapse_threshold = 1 
+
+/obj/item/tent_kit/proc/get_max_doors()
+    return (door_style == "both") ? 2 : 1
+
+/obj/item/tent_kit/proc/get_max_walls()
+    var/list/ground_coords = get_wall_coordinates(null, NORTH)
+    var/list/upper_coords = get_upper_wall_coordinates(null, NORTH)
+    return ground_coords.len + upper_coords.len
+
+/obj/item/tent_kit/Initialize(mapload)
+    . = ..()
+    create_tent_components()
+
+/obj/item/tent_kit/proc/create_tent_components()
+    var/max_walls = get_max_walls()
+    var/max_doors = get_max_doors()
+    for(var/i = 1 to max_walls)
+        var/obj/structure/tent_wall/wall = new(src)
+        wall.parent_tent = src
+        tent_walls += wall
+    for(var/i = 1 to max_doors)
+        var/obj/structure/roguetent/door = new(src)
+        door.parent_tent = src
+        tent_doors += door
+
+/obj/item/tent_kit/Destroy()
+    for(var/obj/structure/tent_wall/wall in tent_walls)
+        if(wall) qdel(wall)
+    for(var/obj/structure/roguetent/door in tent_doors)
+        if(door) qdel(door)
+    return ..()
+
+/obj/item/tent_kit/proc/clean_components()
+    for(var/i = tent_walls.len to 1 step -1)
+        if(!tent_walls[i] || QDELETED(tent_walls[i]))
+            tent_walls.Cut(i, i+1)
+    for(var/i = tent_doors.len to 1 step -1)
+        if(!tent_doors[i] || QDELETED(tent_doors[i]))
+            tent_doors.Cut(i, i+1)
+
+/obj/item/tent_kit/attack_self(mob/user)
+    if(assembled) return
+    if(world.time < setup_cooldown_end)
+        var/remaining = round((setup_cooldown_end - world.time) / 10)
+        to_chat(user, span_warning("This tent was recently packed up. You must wait [remaining] second\s before setting it up again."))
+        return
+    var/turf/setup_turf = get_turf(user)
+    if(!setup_turf) return
+    var/assembly_dir = user.dir
+    
+    if(!check_assembly_space(setup_turf, user, assembly_dir)) return
+
+    to_chat(user, span_notice("You begin assembling the [name]..."))
+    if(!do_after(user, setup_time, target = src))
+        return
+    assemble_tent(setup_turf, user, assembly_dir)
+
+/obj/item/tent_kit/proc/check_assembly_space(turf/center_turf, mob/user, assembly_dir)
+    var/list/wall_coords = get_wall_coordinates(center_turf, assembly_dir)
+    var/list/door_coords = get_door_coordinates(center_turf, assembly_dir)
+    var/list/perimeter = wall_coords + door_coords
+
+    for(var/turf/check_turf in perimeter)
+        if(!check_turf || check_turf.density)
+            to_chat(user, span_warning("There is a wall or floor blocking where the tent walls should go!"))
+            return FALSE
+        for(var/obj/O in check_turf.contents)
+            if(O.density)
+                to_chat(user, span_warning("[O] is blocking the tent perimeter!"))
+                return FALSE
+
+    var/list/upper_coords = get_upper_floor_coordinates(center_turf, assembly_dir)
+    for(var/turf/check_turf in upper_coords)
+        if(!check_turf) continue
+        if(check_turf.density) return FALSE
+    return TRUE
+
+/obj/item/tent_kit/proc/get_wall_coordinates(turf/center_turf, assembly_dir)
+    var/list/coords = list()
+    var/list/door_coords = (center_turf) ? get_door_coordinates(center_turf, assembly_dir) : list()
+    var/x_start = -round((tent_width - 1) / 2)
+    var/x_end = round(tent_width / 2)
+    var/y_start = -round((tent_length - 1) / 2)
+    var/y_end = round(tent_length / 2)
+
+    for(var/x = x_start to x_end)
+        for(var/y = y_start to y_end)
+            if(x == x_start || x == x_end || y == y_start || y == y_end)
+                if(tent_width >= 5 && tent_length >= 5)
+                    if((x == x_start || x == x_end) && (y == y_start || y == y_end))
+                        continue
+                
+                if(!center_turf) 
+                    coords += null
+                    continue
+
+                var/turf/T
+                if(assembly_dir in list(NORTH, SOUTH))
+                    T = locate(center_turf.x + x, center_turf.y + y, center_turf.z)
+                else
+                    T = locate(center_turf.x + y, center_turf.y + x, center_turf.z)
+                
+                if(T && !(T in door_coords)) coords += T
+    return coords
+
+/obj/item/tent_kit/proc/get_upper_wall_coordinates(turf/center_turf, assembly_dir)
+    var/list/coords = list()
+    var/rx_start = -round((roof_width - 1) / 2)
+    var/rx_end = round(roof_width / 2)
+    var/ry_start = -round((roof_length - 1) / 2)
+    var/ry_end = round(roof_length / 2)
+
+    for(var/x = rx_start to rx_end)
+        for(var/y = ry_start to ry_end)
+            if(x == rx_start || x == rx_end || y == ry_start || y == ry_end)
+                if(!center_turf)
+                    coords += null
+                    continue
+                var/turf/T
+                if(assembly_dir in list(NORTH, SOUTH))
+                    T = locate(center_turf.x + x, center_turf.y + y, center_turf.z)
+                else
+                    T = locate(center_turf.x + y, center_turf.y + x, center_turf.z)
+                var/turf/upper_T = GET_TURF_ABOVE(T)
+                if(upper_T) coords += upper_T
+    return coords
+
+/obj/item/tent_kit/proc/get_upper_floor_coordinates(turf/center_turf, assembly_dir)
+    var/list/coords = list()
+    var/list/wall_coords = get_wall_coordinates(center_turf, assembly_dir)
+
+    for(var/turf/wall_turf in wall_coords)
+        var/turf/upper_turf = GET_TURF_ABOVE(wall_turf)
+        if(upper_turf)
+            coords += upper_turf
+
+    if(roof_covers_doors)
+        var/list/door_coords = get_door_coordinates(center_turf, assembly_dir)
+        for(var/turf/door_turf in door_coords)
+            var/turf/upper_turf = GET_TURF_ABOVE(door_turf)
+            if(upper_turf)
+                coords += upper_turf
+
+    return coords
+
+/obj/item/tent_kit/proc/get_wall_dir(turf/center_turf, turf/wall_turf)
+	var/dx = wall_turf.x - center_turf.x
+	var/dy = wall_turf.y - center_turf.y
+	if(abs(dx) >= abs(dy))
+		return (dx > 0) ? EAST : WEST
+	return (dy > 0) ? NORTH : SOUTH
+
+/obj/item/tent_kit/proc/get_tent_coordinates(turf/center_turf, assembly_dir)
+    var/list/coords = list()
+    var/x_start = -round((tent_width - 1) / 2)
+    var/x_end = round(tent_width / 2)
+    var/y_start = -round((tent_length - 1) / 2)
+    var/y_end = round(tent_length / 2)
+
+    for(var/x = x_start to x_end)
+        for(var/y = y_start to y_end)
+            var/turf/T
+            if(assembly_dir in list(NORTH, SOUTH))
+                T = locate(center_turf.x + x, center_turf.y + y, center_turf.z)
+            else
+                T = locate(center_turf.x + y, center_turf.y + x, center_turf.z)
+            if(T) coords += T
+    return coords
+
+/obj/item/tent_kit/proc/get_door_coordinates(turf/center_turf, assembly_dir)
+    var/list/coords = list()
+    var/y_start = -round((tent_length - 1) / 2)
+    var/y_end = round(tent_length / 2)
+
+    switch(assembly_dir)
+        if(NORTH)
+            coords += locate(center_turf.x, center_turf.y + y_end, center_turf.z) 
+            if(door_style == "both") coords += locate(center_turf.x, center_turf.y + y_start, center_turf.z) 
+        if(SOUTH)
+            coords += locate(center_turf.x, center_turf.y + y_start, center_turf.z) 
+            if(door_style == "both") coords += locate(center_turf.x, center_turf.y + y_end, center_turf.z) 
+        if(EAST)
+            coords += locate(center_turf.x + y_end, center_turf.y, center_turf.z) 
+            if(door_style == "both") coords += locate(center_turf.x + y_start, center_turf.y, center_turf.z) 
+        if(WEST)
+            coords += locate(center_turf.x + y_start, center_turf.y, center_turf.z)
+            if(door_style == "both") coords += locate(center_turf.x + y_end, center_turf.y, center_turf.z) 
+    return coords
+
+/obj/item/tent_kit/proc/assemble_tent(turf/center_turf, mob/user, assembly_dir)
+    clean_components()
+    parts_destroyed_count = 0 
+    
+    if(repair_debt_cloth > 0 || repair_debt_silk > 0)
+        to_chat(user, span_warning("This kit is too damaged! Repair it with cloth and silk first."))
+        return
+
+    var/list/door_coords = get_door_coordinates(center_turf, assembly_dir)
+    var/list/wall_coords = get_wall_coordinates(center_turf, assembly_dir)
+    var/list/roof_floor_coords = get_upper_floor_coordinates(center_turf, assembly_dir)
+    var/list/upper_wall_coords = get_upper_wall_coordinates(center_turf, assembly_dir)
+
+    var/list/available_walls = tent_walls.Copy()
+    var/list/available_doors = tent_doors.Copy()
+
+    // --- WALLS ---
+    for(var/turf/wall_turf in wall_coords)
+        if(!available_walls.len) break
+        var/obj/structure/tent_wall/wall = available_walls[1]
+        available_walls.Cut(1, 2)
+        wall.forceMove(wall_turf)
+        wall.dir = get_wall_dir(center_turf, wall_turf)
+        wall.invisibility = 0
+        wall.alpha = 255
+        RegisterSignal(wall, COMSIG_PARENT_QDELETING, PROC_REF(part_destroyed))
+
+    // --- ROOF TILES (The Flooring) ---
+    for(var/turf/roof_floor_turf in roof_floor_coords)
+        if(!is_openspace(roof_floor_turf)) continue
+
+        var/turf/new_roof_turf = roof_floor_turf.ChangeTurf(/turf/open/floor/rogue/twig, flags = CHANGETURF_INHERIT_AIR)
+        roof_turfs += new_roof_turf
+
+    // --- ROOF WALLS ---
+    for(var/turf/upper_wall_turf in upper_wall_coords)
+        if(!available_walls.len) break
+
+        var/obj/structure/tent_wall/wall = available_walls[1]
+        available_walls.Cut(1, 2)
+        wall.forceMove(upper_wall_turf)
+        wall.dir = get_wall_dir(center_turf, upper_wall_turf)
+        wall.name = "tent roof wall"
+        wall.invisibility = 0
+        wall.alpha = 255
+        RegisterSignal(wall, COMSIG_PARENT_QDELETING, PROC_REF(part_destroyed))
+
+    // --- DOORS ---
+    for(var/turf/door_turf in door_coords)
+        if(!available_doors.len) break
+        var/obj/structure/roguetent/door = available_doors[1]
+        available_doors.Cut(1, 2)
+        door.forceMove(door_turf)
+        door.invisibility = 0
+        door.alpha = 255
+        door.density = TRUE
+        door.update_icon()
+        RegisterSignal(door, COMSIG_PARENT_QDELETING, PROC_REF(part_destroyed))
+
+    // --- INTERNAL ROOF LOGIC ---
+    var/list/internal_coords = get_tent_coordinates(center_turf, assembly_dir)
+    for(var/turf/T in internal_coords)
+        T.pseudo_roof = TRUE
+        roof_tiles += T
+
+    assembled = TRUE
+    forceMove(center_turf)
+    anchored = TRUE
+    invisibility = INVISIBILITY_MAXIMUM 
+    mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/item/tent_kit/proc/disassemble_tent(mob/user, instant = FALSE)
+    if(!assembled) return
+
+    if(user && !instant)
+        to_chat(user, span_notice("You begin packing away the [name]..."))
+        if(!do_after(user, 8 SECONDS, target = src)) return
+
+    for(var/obj/structure/tent_wall/wall in tent_walls)
+        UnregisterSignal(wall, COMSIG_PARENT_QDELETING)
+        wall.forceMove(src)
+        wall.name = initial(wall.name)
+        wall.alpha = initial(wall.alpha)
+    for(var/obj/structure/roguetent/door in tent_doors)
+        UnregisterSignal(door, COMSIG_PARENT_QDELETING)
+        door.forceMove(src)
+    for(var/turf/T in roof_tiles)
+        T.pseudo_roof = FALSE
+    
+    // CLEANUP ROOF TURFS: Revert twig floors back to openspace
+    for(var/turf/RT in roof_turfs)
+        RT.ChangeTurf(/turf/open/transparent/openspace, flags = CHANGETURF_INHERIT_AIR)
+    roof_turfs.Cut()
+    roof_tiles.Cut()
+
+    assembled = FALSE
+    anchored = FALSE
+    invisibility = initial(invisibility)
+    mouse_opacity = initial(mouse_opacity)
+    if(user) forceMove(get_turf(user))
+    setup_cooldown_end = world.time + cooldown_duration
+
+/obj/item/tent_kit/proc/part_destroyed(obj/source)
+    parts_destroyed_count++
+    
+    if(istype(source, /obj/structure/tent_wall))
+        repair_debt_cloth += 2
+        repair_debt_silk += 1
+    else
+        repair_debt_cloth += 2
+
+    if(parts_destroyed_count >= collapse_threshold)
+        visible_message(span_warning("The [name] collapses from damage!"))
+        disassemble_tent(null, TRUE)
+    else
+        visible_message(span_danger("A support on the [name] was destroyed! It's leaning heavily..."))
+
+// === TENT WALL ===
+/obj/structure/tent_wall
+    parent_type = /obj/structure/tent_component // Inherits from base
+    name = "tent wall"
+    desc = "A sturdy fabric wall. Shift-click from the inside to pack the tent."
+    icon = 'icons/turf/roguewall.dmi'
+    icon_state = "tent"
+    density = TRUE
+    opacity = TRUE 
+
+/obj/structure/tent_wall/ShiftClick(mob/user)
+    if(!parent_tent || !parent_tent.assembled) return ..()
+    
+    var/turf/T = get_turf(user)
+    if(!T || !T.pseudo_roof)
+        to_chat(user, span_warning("You can only dismantle the tent from the inside!"))
+        return TRUE
+
+    if(get_dist(user, src) > 1) 
+        to_chat(user, span_warning("You are too far away!"))
+        return TRUE
+
+    var/confirm = alert(user, "Are you sure you want to pack up the [parent_tent.name]?", "Dismantle", "Yes", "No")
+    if(confirm == "Yes" && get_dist(user, src) <= 1)
+        parent_tent.disassemble_tent(user)
+    return TRUE
+
+// === GER KIT ===
+/obj/item/tent_kit/ger
+    name = "ger kit"
+    desc = "A large circular tent kit bundled together. Very durable and often used by nomadic travellers of the steppes."
+    icon_state = "tent_kit"
+    tent_width = 5
+    tent_length = 5
+    roof_width = 3
+    roof_length = 3
+    door_style = "front"
+    setup_time = 20 SECONDS
+    collapse_threshold = 3 
+    roof_covers_doors = TRUE
+
+// === YURT KIT ===
+/obj/item/tent_kit/yurt
+    name = "yurt kit"
+    desc = "A very large circular tent kit bundled together. Spacious and durable, and often used by nomadic families of the steppes."
+    icon_state = "tent_kit"
+    tent_width = 7
+    tent_length = 7
+    roof_width = 5
+    roof_length = 5
+    door_style = "front"
+    setup_time = 30 SECONDS
+    collapse_threshold = 5 
+    roof_covers_doors = TRUE
+    cooldown_duration = 1200
+
+// === CRAFTING ===
+/datum/crafting_recipe/roguetown/sewing/tentkit
+    name = "Small Tent Kit"
+    result = list(/obj/item/tent_kit)
+    reqs = list(/obj/item/natural/cloth = 10, /obj/item/natural/fibers = 6, /obj/item/natural/silk = 6, /obj/item/grown/log/tree/stick = 10)
+    craftdiff = 2
+
+/datum/crafting_recipe/roguetown/sewing/gerkit
+    name = "Ger Kit"
+    result = list(/obj/item/tent_kit/ger)
+    reqs = list(/obj/item/natural/cloth = 20, /obj/item/natural/fibers = 12, /obj/item/natural/silk = 12, /obj/item/grown/log/tree/stick = 20)
+    craftdiff = 3
+
+/datum/crafting_recipe/roguetown/sewing/yurtkit
+    name = "Yurt Kit"
+    result = list(/obj/item/tent_kit/yurt)
+    reqs = list(/obj/item/natural/cloth = 30, /obj/item/natural/fibers = 18, /obj/item/natural/silk = 18, /obj/item/grown/log/tree/stick = 30)
+    craftdiff = 5

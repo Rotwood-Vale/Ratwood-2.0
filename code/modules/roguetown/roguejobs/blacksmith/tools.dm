@@ -413,7 +413,7 @@
 
 /obj/item/rogueweapon/tongs/aalloy
 	name = "decrepit tongs"
-	desc = "Wrought bronze pincers the molten alloy, putting it before the anvil and hammer. Soon, it will fashion a new legacy; one unmarred by this dogmatic millenia."
+	desc = "Wrought bronze pincers the molten alloy, putting it before the anvil and hammer. Soon, it will fashion a new legacy; one unmarred by this dogmatic millennia."
 	icon_state = "atongs"
 	force = 5
 	smeltresult = null

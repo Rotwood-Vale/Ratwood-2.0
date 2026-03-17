@@ -845,6 +845,18 @@
 		remove_client_colour(/datum/client_colour/nocshaded)
 		clear_fullscreen("inqvision")
 
+	if(HAS_TRAIT(src, TRAIT_SANDSTORMED))
+		if(!HAS_TRAIT(src, TRAIT_SANDSTORM_GOGGLES))
+			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/nearsight)
+		else
+			clear_fullscreen("nearsighted")
+		if(HAS_TRAIT(src, TRAIT_SANDSTORM_GOGGLES))
+			overlay_fullscreen("dust", /atom/movable/screen/fullscreen/dustoverlay_light)
+		else
+			overlay_fullscreen("dust", /atom/movable/screen/fullscreen/dustoverlay)
+	else
+		clear_fullscreen("nearsighted")
+		clear_fullscreen("dust")
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		sight |= (SEE_MOBS)
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)

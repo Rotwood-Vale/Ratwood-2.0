@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/outdoors/rtfield/rockhill
 	first_time_text = "Rockhill Basin"
 	threat_region = THREAT_REGION_ROCKHILL_BASIN
-	town_area = TRUE
+	town_area = FALSE //might spread out the action a little if townies keep to town.
 
 /area/rogue/outdoors/rtfield/rockhill/above
 	ambientsounds = AMB_MOUNTAIN

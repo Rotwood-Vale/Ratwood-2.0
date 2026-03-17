@@ -1,3 +1,7 @@
+#define BODYTEMP_EQUILIBRIUM 315
+
+// Kelvin per second (10 K per minute)
+#define TEMP_RECOVERY_RATE (10.0 / 60.0)
 /mob/living/carbon/Life(seconds, times_fired)
 	set invisibility = 0
 
@@ -375,18 +379,29 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			adjustToxLoss(5) //Let's be honest you shouldn't be alive by now
 
 //used in human and monkey handle_environment()
+//Temperature system design note:
+//Unlike standard SS13, We don't want a 'realistic' homeostasis. Ideally we will have 5 main 'states' of temperature that are hit and have effects.
+//These states should linger long enough that players will want to effect their temperature through means that aren't simply waiting around somewhere.
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
-	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
-	switch(bodytemperature)
-		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT) //Cold damage limit is 50 below the default, the temperature where you start to feel effects.
-			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_NORMAL)
-			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT) // Heat damage limit is 50 above the default, the temperature where you start to feel effects.
-			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
-			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+	var/delta = BODYTEMP_EQUILIBRIUM - bodytemperature
+	if(delta == 0)
+		return 0
 
+	var/abs_temp = bodytemperature
+	var/rate
+
+	if(abs_temp < 300)
+		rate = TEMP_RECOVERY_RATE
+	else if(abs_temp > 330)
+		rate = TEMP_RECOVERY_RATE
+	else
+		rate = TEMP_RECOVERY_RATE * 0.2
+
+	// Convert to per-call adjustment
+	var/seconds = world.tick_lag / 10
+	var/max_change = rate * seconds
+
+	return clamp(delta, -max_change, max_change)
 /////////
 //LIVER//
 /////////

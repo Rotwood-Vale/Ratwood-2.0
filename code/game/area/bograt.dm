@@ -51,7 +51,7 @@
 	deathsight_message = "a waterlogged mire bridging civilization and the wretched, fetid bog"
 
 /area/rogue/outdoors/bograt/south
-	name = "Southern Terrorbog"
+	name = "Central Terrorbog"
 	threat_region = THREAT_REGION_ROCKHILL_BOG_SOUTH
 	ambush_mobs = list(
 		/mob/living/carbon/human/species/skeleton/npc/ambush = 30,

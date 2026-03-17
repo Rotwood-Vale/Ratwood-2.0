@@ -67,6 +67,9 @@
 		if(!(affected_turf in view(source_turf)))
 			continue
 		for(var/mob/living/L in affected_turf.contents)
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.apply_weather_temperature(-35)	//checks for cold protection before applying temp
 			if(L.anti_magic_check())
 				visible_message(span_warning("The ice fades away around you. [L] "))  //antimagic needs some testing
 				playsound(get_turf(L), 'sound/magic/magic_nulled.ogg', 100)

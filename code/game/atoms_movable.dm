@@ -211,6 +211,8 @@
 		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
 			stop_pulling()
 			return FALSE
+		if(L.buckled == src) // Fixes an exploit that lets you travel at mach5 by moving someone buckled to yourself
+			return FALSE
 	if(A == loc && pulling.density)
 		return FALSE
 	var/move_dir = get_dir(pulling.loc, A)

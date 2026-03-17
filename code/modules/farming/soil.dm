@@ -336,12 +336,12 @@ GLOBAL_LIST_EMPTY(soil_list)
 
 /obj/structure/soil/Initialize(mapload)
 	START_PROCESSING(SSprocessing, src)
-	GLOB.weather_act_upon_list += src
+//	GLOB.weather_act_upon_list += src
 	. = ..()
 
 /obj/structure/soil/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
-	GLOB.weather_act_upon_list -= src
+//	GLOB.weather_act_upon_list -= src
 	. = ..()
 
 /obj/structure/soil/process()
@@ -351,6 +351,13 @@ GLOBAL_LIST_EMPTY(soil_list)
 	process_soil(dt)
 	if(soil_decay_time <= 0)
 		decay_soil()
+	var/turf/obj_turf = get_turf(src)
+	if(!obj_turf)
+		return
+	if(obj_turf.outdoor_effect?.weatherproof)
+		return
+	if(SSParticleWeather?.runningWeather?.target_trait == PARTICLEWEATHER_RAIN)
+		water = min(MAX_PLANT_WATER, water + min(5, 30 / 4))
 
 /obj/structure/soil/weather_act_on(weather_trait, severity)
 	if(weather_trait != PARTICLEWEATHER_RAIN)

@@ -636,22 +636,38 @@
 	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		appears_dead = TRUE
 
-	var/temp = getBruteLoss() + getFireLoss() //no need to calculate each of these twice
-
 	if (get_bodypart(BODY_ZONE_HEAD)?.grievously_wounded)
 		msg += span_bloody("<b>[p_their(TRUE)] neck is a ghastly ruin of blood and bone, barely hanging on!</b>")
 
+	var/temp = getBruteLoss()
 	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
-		// Damage
-		switch(temp)
-			if(5 to 25)
-				msg += "[m1] a little wounded."
-			if(25 to 50)
-				msg += "[m1] wounded."
-			if(50 to 100)
-				msg += "<B>[m1] severely wounded.</B>"
-			if(100 to INFINITY)
-				msg += span_danger("[m1] gravely wounded.")
+		if(temp)
+			if (temp < 25)
+				msg += "[m3] some bruises.\n"
+			else if (temp < 50)
+				msg += "[m3] a lot of bruises!\n"
+			else
+				msg += "<B>[m1] black and blue!!</B>\n"
+
+		temp = getFireLoss()
+		if(temp)
+			if (temp < 25)
+				msg += "[m3] some burns.\n"
+			else if (temp < 50)
+				msg += "[m3] many burns!\n"
+			else
+				msg += "<B>[m1] dragon food!!</B>\n"
+
+	//body temp
+	switch(bodytemperature)
+		if(0 to BODYTEMP_COLD_LEVEL_ONE_MAX)
+			msg += span_biginfo("<font color='#023E8A'> [m1] shivering uncontrollably</font>")
+		if(BODYTEMP_COLD_LEVEL_ONE_MAX to BODYTEMP_NORMAL_MIN)
+			msg += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
+		if(BODYTEMP_NORMAL_MAX to BODYTEMP_HEAT_LEVEL_ONE_MAX)
+			msg += span_biginfo("<font color='#ffff00'> [m1] sweating</font>")
+		if(BODYTEMP_HEAT_LEVEL_ONE_MAX to 600)
+			msg += span_biginfo("<font color='#DC143C?'> [m1] sweating greatly</font>")
 
 	// Blood volume
 	switch(blood_volume)
@@ -730,6 +746,10 @@
 			missing_limb_message = span_danger("[missing_limb_message]")
 		msg += missing_limb_message
 
+	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
+		msg += "[t_He] [t_is] covered in something flammable.\n"
+	if(has_status_effect(/datum/status_effect/fire_handler/wet_stacks))
+		msg += "[t_He] look[p_s()] a little soaked.\n"
 	//Grabbing
 	if(pulledby && pulledby.grab_state)
 		msg += "[m1] being grabbed by [pulledby]."

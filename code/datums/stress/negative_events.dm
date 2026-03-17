@@ -130,6 +130,11 @@
 	stressadd = 2
 	desc = span_red("I'm panicking!")
 
+/datum/stressevent/bloodrain
+	timer = 1 MINUTES
+	stressadd = 4
+	desc = span_red("It's raining blood! I'm covered in it!")
+
 /datum/stressevent/felldown
 	timer = 1 MINUTES
 	stressadd = 1

@@ -13,6 +13,8 @@
 		added = round(-10 + (added * - 40))
 		if(src.climbing) // no stam regen while climbing guh
 			added = 0
+		if (bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)	//being max heat(level 2) makes you regen half as much stamina
+			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
 			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MONK_ROBE))
@@ -76,6 +78,11 @@
 		if (amt == 2 && prob(STACON * 5)) // only sprinting knocks off 2 stamina at a time, so test this vs our con to see if we drop it
 			return 0
 
+	//Temperature effects- cold makes you hungrier
+	if (ishuman(src))
+		if (bodytemperature < 250)
+			nutrition_amount *= 1.3
+
 	var/tox_damage = getToxLoss()
 	if (tox_damage >= (maxHealth * 0.2)) // if we have over 20% of our health as toxin damage, add 10% of our toxin damage as base loss
 		nutrition_amount += (tox_damage * 0.1)
@@ -110,6 +117,8 @@
 		added = added * 0.5
 	if(added < 0 && HAS_TRAIT(src, TRAIT_FROZEN_STAMINA))
 		added = 0
+	if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX && added >=1)	//being max heat(level 2) makes you regen half as much stamina
+		added = round(added * 1.5, 1)
 	stamina = CLAMP(stamina+added, 0, max_stamina)
 	if(added > 0)
 		energy_add(added * -1)

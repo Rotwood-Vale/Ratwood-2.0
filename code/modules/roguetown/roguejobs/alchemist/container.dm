@@ -172,7 +172,7 @@
 	icon = 'icons/obj/alcohol.dmi'
 	icon_state = "red_wine"
 	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 50)
-	desc = "A bottle that contains a generic red-wine, likely from Raneshen. It has a red-clay cork-seal."
+	desc = "A bottle that contains a generic red-wine, likely from Zybantium. It has a red-clay cork-seal."
 
 /obj/item/reagent_containers/glass/bottle/rogue/wine/sourwine
 	name = "Bottle of Grenzelhoft Sour"
@@ -236,7 +236,7 @@
 	icon = 'icons/obj/alcohol.dmi'
 	icon_state = "ale"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rtoper = 50)
-	desc = "A bottle with the Lirvas-crest cork-seal. An especially tart cider from the petty kingdom of Lirvas. Myths say the brewers let the barrels age in the bog, which results in that especially stong flavour."
+	desc = "A bottle with the Lirvas-crest cork-seal. An especially tart cider from the petty kingdom of Lirvas. Myths say the brewers let the barrels age in the bog, which results in that especially strong flavour."
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/nred
 	name = "Bottle of Norwandine Ale"
@@ -340,7 +340,7 @@
 
 /obj/item/reagent_containers/glass/bottle/claybottle/wine
 	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 75)
-	desc = "A clay bottle that contains a generic red-wine, likely from Raneshen. It has a red-clay cork-seal."
+	desc = "A clay bottle that contains a generic red-wine, likely from Zybantium. It has a red-clay cork-seal."
 
 /obj/item/reagent_containers/glass/bottle/claybottle/water
 	list_reagents = list(/datum/reagent/water = 75)
@@ -364,4 +364,4 @@
 
 /obj/item/reagent_containers/glass/bottle/rogue/emberwine
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/emberwine = 24)
-	desc = "A bottle with an unmarked, tannin-tinted cork-seal. Zybantu red or another such cheap wine, in all likelihood."
+	desc = "A bottle with an unmarked, tannin-tinted cork-seal. Zybantine red or another such cheap wine, in all likelihood."

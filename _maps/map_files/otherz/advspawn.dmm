@@ -85,10 +85,13 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/underworld/adventurespawn)
 "mH" = (
-/obj/structure/fluff/traveltile/rockhillentrance{
-	aportalgoesto = "rockhill4";
-	name = "Southern path to Rockhill"
+/obj/effect/wisp/prestidigitation{
+	color = "#ff75b1";
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
 	},
+/obj/structure/flora/roguetree/underworld,
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
 "mM" = (
@@ -214,11 +217,8 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/underworld/adventurespawn)
 "yt" = (
-/obj/structure/fluff/traveltile/rockhillentrance{
-	aportalgoesto = "rockhill5";
-	name = "Southeastern path to Rockhill"
-	},
-/turf/open/floor/rogue/underworld/road,
+/obj/machinery/gear_painter,
+/turf/open/floor/rogue/churchrough,
 /area/rogue/underworld/adventurespawn)
 "yF" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
@@ -325,7 +325,7 @@
 "Mq" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
 	aportalgoesto = "rockhill1";
-	name = "Western path to Rockhill"
+	name = "North-Western path to Rockhill"
 	},
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
@@ -346,7 +346,7 @@
 	name = "conveniently placed statue";
 	pixel_y = 13
 	},
-/turf/open/floor/rogue/underworld/road,
+/turf/open/floor/rogue/churchrough,
 /area/rogue/underworld/adventurespawn)
 "Pk" = (
 /obj/structure/underworld/barrier,
@@ -400,10 +400,10 @@
 /area/rogue/underworld/adventurespawn)
 "UT" = (
 /obj/structure/fluff/traveltile/rockhillentrance{
-	aportalgoesto = "rockhill6";
+	aportalgoesto = "rockhill4";
 	name = "Eastern path to Rockhill"
 	},
-/turf/open/floor/rogue/underworld/road,
+/turf/open/floor/rogue/churchrough,
 /area/rogue/underworld/adventurespawn)
 "VA" = (
 /turf/closed/wall/mineral/rogue/decowood,
@@ -610,7 +610,7 @@ MR
 Ta
 MR
 Xc
-MR
+Xc
 Aa
 Ta
 Ta
@@ -639,7 +639,7 @@ Ta
 MR
 Xc
 Xc
-ec
+mH
 Aa
 MR
 Ta
@@ -662,13 +662,13 @@ ec
 MR
 Ta
 Ta
-Ta
-Ta
+MR
+MR
 Ta
 MR
 Xc
-MR
-vv
+Xc
+Xc
 Aa
 Ta
 MR
@@ -695,9 +695,9 @@ Ta
 Ta
 Ta
 MR
+Xc
 MR
-Ta
-MR
+Xc
 Aa
 Ta
 Ta
@@ -724,9 +724,9 @@ Xc
 MR
 Ta
 MR
-Ta
-Ta
-ec
+MR
+MR
+mH
 Aa
 VB
 VB
@@ -782,7 +782,7 @@ MR
 RB
 Ta
 Oi
-MR
+Ta
 MR
 Xc
 Aa
@@ -810,8 +810,8 @@ aQ
 JE
 MR
 Ta
-Tz
-MR
+yt
+Ta
 MR
 MR
 LF
@@ -837,9 +837,9 @@ MR
 BX
 Xw
 pO
-MR
 Ta
-MR
+Ta
+Ta
 MR
 VD
 MR
@@ -1009,7 +1009,7 @@ MR
 MR
 Xc
 Xc
-Ta
+MR
 MR
 Ta
 Ta
@@ -1073,7 +1073,7 @@ Xc
 Xc
 MR
 Ta
-Ta
+MR
 MR
 Xc
 VB
@@ -1102,7 +1102,7 @@ MR
 Ta
 Ta
 Ta
-Ta
+MR
 MR
 Xc
 MR
@@ -1131,7 +1131,7 @@ Ta
 Ta
 MR
 MR
-Ta
+ec
 MR
 Xc
 MR
@@ -1155,13 +1155,13 @@ UT
 ec
 Xc
 Xc
-Ta
+MR
 Ta
 MR
 Xc
 Xc
-Ta
 MR
+Xc
 Xc
 MR
 Ta
@@ -1183,14 +1183,14 @@ Xc
 Xc
 Xc
 Xc
-ec
-Ta
-Ta
-MR
 Xc
 MR
 Ta
 MR
+MR
+Xc
+Xc
+Xc
 Xc
 MR
 Ta
@@ -1212,13 +1212,13 @@ fM
 fM
 fM
 Xc
-yt
-Ta
-Ta
-MR
 Xc
 ec
-mH
+MR
+vv
+MR
+Xc
+Xc
 ec
 Xc
 Ta

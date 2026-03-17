@@ -647,7 +647,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 							X = "pick"
 						inspec += ("\n<b>[capitalize(X)]</b>")
 				inspec += "<br>"
-
+			var/thermal_text = C.thermal_examine_text()
+			if(thermal_text)
+				inspec += thermal_text
+				inspec += "<br>"
 //**** General durability
 
 		if(max_integrity)
@@ -676,7 +679,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/output = "[inspec.Join()]"
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
-		to_chat(usr, output)	
+		to_chat(usr, output)
 
 /obj/item
 	var/simpleton_price = FALSE
@@ -1579,6 +1582,70 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		else
 			str += "NO DEFENSE"
 	return str
+
+/obj/item/proc/temp_to_cold_tier(temp)
+	if(isnull(temp))
+		return "None"
+
+	if(temp < BODYTEMP_COLD_LEVEL_ONE_MAX)
+		return "<font color='#023E8A'>Very Cold</font>"
+	if(temp < BODYTEMP_NORMAL_MIN)
+		return "<font color='#99e6ff'>Cold</font>"
+
+	return "None"
+
+/obj/item/proc/temp_to_heat_tier(temp)
+	if(isnull(temp))
+		return "None"
+
+	if(temp > BODYTEMP_HEAT_LEVEL_ONE_MAX)
+		return "<font color='#DC143C?'>Very Hot</font>"
+	if(temp > BODYTEMP_NORMAL_MAX)
+		return "<font color='#ffff00'>Hot</font>"
+
+	return "None"
+
+/obj/item/proc/thermal_flags_to_zone_text(flags)
+	if(!flags)
+		return "None"
+
+	var/list/parts = list()
+
+	if(flags & HEAD) parts += "Head"
+	if(flags & CHEST) parts += "Chest"
+	if(flags & GROIN) parts += "Groin"
+	if(flags & ARMS) parts += "Arms"
+	if(flags & LEGS) parts += "Legs"
+	if(flags & HANDS) parts += "Hands"
+	if(flags & FEET) parts += "Feet"
+
+	if(!length(parts))
+		return "Unknown"
+
+	return english_list(parts)
+/obj/item/clothing/proc/thermal_examine_text()
+	var/list/out = list()
+
+	// --- Cold ---
+	if(src.cold_protection && src.min_cold_protection_temperature)
+		var/tier = temp_to_cold_tier(src.min_cold_protection_temperature)
+		var/covers = thermal_flags_to_zone_text(src.cold_protection)
+
+		out += "<b>COLD RESISTANCE:</b> [tier]"
+		out += " | Insulates: [covers]"
+
+	// --- Heat ---
+	if(src.heat_protection && src.max_heat_protection_temperature)
+		var/tier = temp_to_heat_tier(src.max_heat_protection_temperature)
+		var/covers = thermal_flags_to_zone_text(src.heat_protection)
+
+		out += "<b>HEAT RESISTANCE:</b> [tier]"
+		out += " | Insulates: [covers]"
+
+	if(!length(out))
+		return null
+
+	return "<br><b><u>THERMAL RESISTANCE:</u></b><br>" + jointext(out, "<br>")
 
 /obj/item/obj_break(damage_flag)
 	..()

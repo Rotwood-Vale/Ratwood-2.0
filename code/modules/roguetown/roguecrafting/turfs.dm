@@ -36,6 +36,24 @@
 	reqs = list(/obj/item/natural/wood/plank = 2)
 	craftdiff = 2
 
+/datum/crafting_recipe/roguetown/turfs/wood/floorhw
+	name = "floor (herringbone weathered)"
+	result = /turf/open/floor/rogue/ruinedwood/herringbone
+	reqs = list(/obj/item/natural/wood/plank = 1)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/turfs/wood/floorhs
+	name = "floor (herringbone stamped)"
+	result = /turf/open/floor/rogue/ruinedwood/chevron
+	reqs = list(/obj/item/natural/wood/plank = 1)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/turfs/wood/floorslanted
+	name = "floor (slanted)"
+	result = /turf/open/floor/rogue/ruinedwood/spiral
+	reqs = list(/obj/item/natural/wood/plank = 1)
+	craftdiff = 3
+
 //Platform has unique turf-check vs normal turf.
 /datum/crafting_recipe/roguetown/turfs/wood/platform/TurfCheck(mob/user, turf/T)
 	if(isclosedturf(T))
@@ -177,6 +195,82 @@
 	result = /turf/open/floor/rogue/blocks/platform
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/turfs/stone/redstone
+	name = "floor (red stone)"
+	result = /turf/open/floor/rogue/blocks/stonered
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/turfs/stone/tinyredstone
+	name = "floor (tiny red stone)"
+	result = /turf/open/floor/rogue/blocks/stonered/tiny
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/turfs/stone/marblefloor
+	name = "Marble Floor (stone)"
+	result = /turf/open/floor/rogue/churchmarble
+	reqs = list(/obj/item/natural/stoneblock = 4)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/turfs/stone/bluestone2
+	name = "Bluestone Slabs"
+	result = /turf/open/floor/rogue/blocks/bluestone
+	reqs = list(/obj/item/natural/stoneblock = 3)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/stone/concreteslab
+	name = "Large Stone Slabs"
+	result = /turf/open/floor/rogue/concrete
+	reqs = list(/obj/item/natural/stoneblock = 2)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/turfs/stone/masonic
+	name = "Masonic Decorative Floor"
+	result = /turf/open/floor/rogue/tile/masonic
+	reqs = list(/obj/item/natural/stoneblock = 2)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/stone/masonicalt
+	name = "Masonic Inverse Decorative Floor"
+	result = /turf/open/floor/rogue/tile/masonic/inverted
+	reqs = list(/obj/item/natural/stoneblock = 2)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/stone/masonicspiral
+	name = "Masonic Spiral Decorative Floor"
+	result = /turf/open/floor/rogue/tile/masonic/spiral
+	reqs = list(/obj/item/natural/stoneblock = 2)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/stone/bluelargetile
+	name = "Blue Large Tiles"
+	result = /turf/open/floor/rogue/tile/bfloorz
+	reqs = list(/obj/item/natural/stoneblock = 2)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/stone/churchredbrick
+	name = "Large Red Masonic Bricks"
+	result = /turf/open/floor/rogue/churchbrick
+	reqs = list(/obj/item/natural/stoneblock = 2)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/stone/haremgreenbricks
+	name = "Harem Green Bricks"
+	result = /turf/open/floor/rogue/tile/harem1
+	reqs = list(/obj/item/natural/stoneblock = 2)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/stone/haremredbricks
+	name = "Harem Red Bricks"
+	result = /turf/open/floor/rogue/tile/harem
+	reqs = list(/obj/item/natural/stoneblock = 2)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/stone/harempink
+	name = "Harem Pink Bricks"
+	result = /turf/open/floor/rogue/tile/harem2
+	reqs = list(/obj/item/natural/stoneblock = 2)
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/platform/TurfCheck(mob/user, turf/T)
 	if(isclosedturf(T))
@@ -432,4 +526,24 @@
 	name = "reinforced glass window (2 small logs, 1 iron, 1 glass)"
 	result = /obj/structure/roguewindow/openclose/reinforced
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/natural/glass = 1, /obj/item/ingot/iron = 1)
+	craftdiff = 3
+
+// Dark Wood Walls
+
+/datum/crafting_recipe/roguetown/turfs/wood/darkwoodwall
+	name = "Dark Wood Wall"
+	result = /turf/closed/wall/mineral/rogue/wooddark
+	reqs = list(/obj/item/natural/wood/plank = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/wood/darkwoodwindow
+	name =	"Dark Wood Murderhole"
+	result = /turf/closed/wall/mineral/rogue/wooddark/window
+	reqs = list(/obj/item/natural/wood/plank = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
 	craftdiff = 3

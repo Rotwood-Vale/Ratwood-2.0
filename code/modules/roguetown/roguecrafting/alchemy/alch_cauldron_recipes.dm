@@ -68,6 +68,12 @@
 	output_reagents = list(/datum/reagent/medicine/stampot = 100,/datum/reagent/additive = 100)
 
 //S.P.E.C.I.A.L. potions - Expert or above (roundstart Witch etc.)
+/datum/alch_cauldron_recipe/temp_potion
+	name = "Potion of Equilibrium"
+	smells_like = "spring time"
+	skill_required = SKILL_LEVEL_EXPERT
+	output_reagents = list(/datum/reagent/buff/temperature_normalize = 30)
+
 /datum/alch_cauldron_recipe/str_potion
 	name = "Potion of Mountain Muscles"
 	smells_like = "petrichor"

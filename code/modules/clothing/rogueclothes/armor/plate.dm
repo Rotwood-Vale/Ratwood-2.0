@@ -196,7 +196,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/ornate
 	name = "psydonic half-plate"
-	desc = "A beautiful steel cuirass, fitted with tassets and pauldrons for additional coverage. Lesser clerics of Psydon oft-decorate these sets with dyed cloths, so that those who're wounded can still find salvation in the madness of battle. </br>'..the thrumbing of madness, to think that your suffering was all-for-naught to Adonai's sacrifical lamb..' </br>... </br>With some blessed silver and a blacksmith's assistance, I can turn this half-plate into a set of full-plate armor."
+	desc = "A beautiful steel cuirass, fitted with tassets and pauldrons for additional coverage. Lesser clerics of Psydon oft-decorate these sets with dyed cloths, so that those who're wounded can still find salvation in the madness of battle. </br>'..the thrumbing of madness, to think that your suffering was all-for-naught to Adonai's sacrificial lamb..' </br>... </br>With some blessed silver and a blacksmith's assistance, I can turn this half-plate into a set of full-plate armor."
 	icon_state = "ornatehalfplate"
 	smeltresult = /obj/item/ingot/silverblessed
 	body_parts_covered = COVERAGE_FULL // Less durability than proper plate, more expensive to manufacture, and accurate to the sprite.
@@ -642,3 +642,22 @@
 /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/armored/ComponentInitialize()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 	return
+
+
+//----------------- INFAREDBARON SPRITEWORK/ARMOR.DM ---------------------
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch
+	slot_flags = ITEM_SLOT_ARMOR
+	name = "citywatch armor"
+	desc = "Heavy, well worn armour. Incredibly resilient to all forms of damage. Issued to the Citywatch."
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon_state = "citywatch"
+	item_state = "citywatch"
+	blocksound = PLATEHIT
+	body_parts_covered = CHEST|GROIN|VITALS
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
+	armor_class = ARMOR_CLASS_MEDIUM
+	smelt_bar_num = 2
+	sewrepair = FALSE
+	allowed_sex = list(MALE, FEMALE)
+	equip_delay_self = 4 SECONDS

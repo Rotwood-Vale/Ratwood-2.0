@@ -27,7 +27,6 @@
 
 /datum/outfit/job/roguetown/adventurer/witch/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguetown/witchhat
 	mask = /obj/item/clothing/head/roguetown/roguehood/black
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/phys
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
@@ -47,6 +46,15 @@
 						/obj/item/recipe_book/magic = 1,
 						/obj/item/chalk = 1
 						)
+
+	var/hats = list(
+		"Witch Hat" 		= /obj/item/clothing/head/roguetown/witchhat,
+		"Witch Hat (Old)"	= /obj/item/clothing/head/roguetown/witchhat/old,
+		"None"
+	)
+	var/hatchoice = input(H, "Choose your hat.", "WITCH ATTIRE") as anything in hats
+	if(hatchoice != "None")
+		head = hats[hatchoice]
 
 	var/classes = list("Old Magick", "Godsblood", "Mystagogue")
 	var/classchoice = input("How do your powers manifest?", "THE OLD WAYS") as anything in classes

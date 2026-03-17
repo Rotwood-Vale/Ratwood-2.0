@@ -2,7 +2,7 @@
 //They choose between shield + spear, or miraclist flagellant. Flagellant stuff isn't done, but, whatever...
 /datum/advclass/foreigner/dunewell
 	name = "Dunewell Nomad"
-	tutorial = "Dunewell, deep in the Zybantu deserts, is a place of madness. A region of faith and heresy alike. \
+	tutorial = "Dunewell, deep in the Zybantine deserts, is a place of madness. A region of faith and heresy alike. \
 	For yils, many have fought over the riches and ruins of the old Psydonian holdout. Those who come from it are typically nomads of either party. \
 	Missionary and killer, one in the same. To have ventured as far as Ferentia, you've either escaped the cycle, or intend to repeat it."
 	allowed_races = RACES_ALL_KINDS

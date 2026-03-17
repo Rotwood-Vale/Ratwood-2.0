@@ -31,11 +31,11 @@
 	race_titles = list(
 	"Half-Cat", "Half-Dog", "Half-Volf", "Half-Lion", "Half-Venard",
 	"Half-Tiger", "Half-Sheep", "Half-Goat", "Half-Rous", "Half-Possum",
-	"Half-Pig", "Half-Boar", "Half-Rabbit", "Half-Horse", "Half-Donkey",
+	"Half-Pig", "Half-Boar", "Half-Cabbit", "Half-Rabbit", "Half-Horse", "Half-Donkey",
 	"Half-Hyena", "Half-Deer", "Half-Bear", "Half-Panda", "Half-Coyote",
 	"Half-Moose", "Half-Jackal", "Half-Panther", "Half-Lynx", "Half-Leopard",
 	"Half-Monkey", "Half-Bird", "Half-Seal", "Half-Frog", "Half-Bat", "Half-Otter", "Half-Cow",
-	"Half-Bull", "Half-Bee", "Half-Lizard", "Half-Insect", "Half-Spider", "Half-Monster"
+	"Half-Bull", "Half-Bee", "Half-Lizard", "Half-Insect", "Half-Spider", "Half-Monster", "Half-Drakian"
 	)
 
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY,MUTCOLORS_PARTSONLY)
@@ -47,6 +47,7 @@
 		/obj/item/bodypart/taur/dragon,
 		/obj/item/bodypart/taur/noodle,
 		/obj/item/bodypart/taur/horse,
+		/obj/item/bodypart/taur/goat,
 		/obj/item/bodypart/taur/deer,
 		/obj/item/bodypart/taur/redpanda,
 		/obj/item/bodypart/taur/rat,
@@ -199,9 +200,9 @@
 		"Otava" = SKIN_COLOR_OTAVA,
 		"Etrusca" = SKIN_COLOR_ETRUSCA,
 		"Gronn" = SKIN_COLOR_GRONN,
-		"North Raneshen (Chorodiaki)" = SKIN_COLOR_GIZA,
-		"West Raneshen (Vrdaqnan)" = SKIN_COLOR_SHALVISTINE,
-		"East Raneshen (Nshkormh)" = SKIN_COLOR_LALVESTINE,
+		"North Zybantium (Chorodiaki)" = SKIN_COLOR_GIZA,
+		"West Zybantium (Vrdaqnan)" = SKIN_COLOR_SHALVISTINE,
+		"East Zybantium (Nshkormh)" = SKIN_COLOR_LALVESTINE,
 		"Naledi" = SKIN_COLOR_NALEDI,
 		"Naledi South" = SKIN_COLOR_NALEDI_LIGHT,
 		"Kazengun" = SKIN_COLOR_KAZENGUN,

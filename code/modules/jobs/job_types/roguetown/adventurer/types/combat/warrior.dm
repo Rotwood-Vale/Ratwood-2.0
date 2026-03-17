@@ -63,7 +63,7 @@
 				r_hand = /obj/item/rogueweapon/sword/saber/iron
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				backr = /obj/item/rogueweapon/shield/wood
-		var/armors = list("Chainmaille Set","Iron Breastplate","Gambeson & Helmet","Light Raneshi Armor")
+		var/armors = list("Chainmaille Set","Iron Breastplate","Gambeson & Helmet","Light Zybantine Armor")
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
 		switch(armor_choice)
 			if("Chainmaille Set")
@@ -88,9 +88,9 @@
 				pants = /obj/item/clothing/under/roguetown/trou/leather
 				head = /obj/item/clothing/head/roguetown/helmet/kettle
 				gloves = /obj/item/clothing/gloves/roguetown/angle
-			if("Light Raneshi Armor")
-				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
-				pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
+			if("Light Zybantine Armor")
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+				pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
 				head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab
 				gloves = /obj/item/clothing/gloves/roguetown/angle
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
@@ -329,7 +329,7 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Executioner's Sword","Warhammer + Shield","Flail + Shield","Lucerne","Greataxe")
+		var/weapons = list("Executioner's Sword","Warhammer + Shield","Flail + Shield","Lucerne","Greataxe","DEFENSE IS ALL THAT MATTERS")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Executioner's Sword")
@@ -353,6 +353,9 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/greataxe
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
+			if("DEFENSE IS ALL THAT MATTERS")
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
+				l_hand = /obj/item/rogueweapon/shield/atgervi
 
 /datum/advclass/sfighter/mhunter
 	name = "Exorcist"

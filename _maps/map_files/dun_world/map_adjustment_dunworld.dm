@@ -7,11 +7,14 @@
 /datum/map_adjustment/template/dunworld
 	map_file_name = "dun_world.dmm"
 	realm_name = "Rotwood Vale"
-	blacklist = list()
-	// slot_adjust = list(
-	// 	/datum/job/roguetown/villager = 42,
-	// // 	/datum/job/roguetown/adventurer = 69
-	// )
+	blacklist = list(
+		/datum/job/roguetown/vanguard,
+		/datum/job/roguetown/guardsman,
+		/datum/job/roguetown/rookie
+	)
+	slot_adjust = list(
+		/datum/job/roguetown/warden = 6,
+	)
 	title_adjust = list(
 	)
 	tutorial_adjust = list(
