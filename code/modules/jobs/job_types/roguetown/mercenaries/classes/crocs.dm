@@ -193,10 +193,10 @@
 			H.put_in_hands(new /obj/item/bait/spider, TRUE)
 		if("I'm a foot-soldier")
 			H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
-	var/weapons = list("Slurbow","Shortbow","Dual Daggers")
+	var/weapons = list("Hand Crossbow","Shortbow","Dual Daggers")
 	var/weapon_choice = input(H, "Choose your weapon.", "How do you kill?") as anything in weapons
 	switch(weapon_choice)
-		if("Slurbow")
+		if("Hand Crossbow")
 			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/bolts/, SLOT_BACK_R, TRUE)
