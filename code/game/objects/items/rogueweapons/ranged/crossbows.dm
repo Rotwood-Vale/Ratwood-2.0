@@ -188,10 +188,10 @@
 
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
-	name = "slurbow"
+	name = "hand crossbow"
 	desc = "A lighter weight crossbow with a distinct barrel shroud holding the bolt in place. Light enough to arm by hand. <br>They're popular among among highwaymen and the patrolling lamplighters of Otava."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
-	icon_state = "slurbow0"
+	icon_state = "slurbow"
 	item_state = "slurbow"
 	possible_item_intents = list(/datum/intent/shoot/crossbow/slurbow, /datum/intent/arc/crossbow/slurbow, INTENT_GENERIC)
 	chargingspeed = 20

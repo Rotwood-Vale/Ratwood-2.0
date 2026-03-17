@@ -173,7 +173,7 @@
 	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow)
 
 /datum/supply_pack/rogue/Knave/slurbow
-	name = "Slurbow"
+	name = "Hand Crossbow"
 	cost = 40
 	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow)
 
