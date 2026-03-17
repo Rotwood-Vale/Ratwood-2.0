@@ -281,7 +281,6 @@
 		
 		// 2. Check Job / Class Restrictions
 		var/list/restricted_jobs = list(
-			/datum/job/roguetown/bogguardsman,
 			/datum/job/roguetown/knight,
 			/datum/advclass/manorguard,
 			/datum/job/roguetown/martyr,
