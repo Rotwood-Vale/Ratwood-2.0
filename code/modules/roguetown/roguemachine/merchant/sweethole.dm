@@ -111,6 +111,9 @@
 	. += span_notice("Here the willing may be bound into the people of the Freehold.")
 	. += span_notice("It takes blood in token of the oath.")
 	. += span_notice("Those already sworn cannot be marked anew.")
+	. += span_notice("Any guardsman who takes the oath shall forfeit his former station.")
+	. += span_notice("Those so marked are counted among the outlanders.")
+
 
 /obj/structure/roguemachine/freeholdinvite/attack_hand(mob/user)
 	if(!ishuman(user))
@@ -128,8 +131,12 @@
 	icon_state = "atm-b"
 	H.flash_fullscreen("redflash3")
 	playsound(H, 'sound/combat/hits/bladed/genstab (1).ogg', 100, FALSE, -1)
+	if(HAS_TRAIT(H, TRAIT_GUARDSMAN))
+		REMOVE_TRAIT(H, TRAIT_GUARDSMAN, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_FREEHOLDER, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_OUTLANDER, TRAIT_GENERIC)
 	spawn(5)
 		say("Blood accepted. The mark is yours.")
 		playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+
 	return
