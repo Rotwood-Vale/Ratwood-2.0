@@ -291,6 +291,7 @@
 			"Kettle Helmet"		= /obj/item/clothing/head/roguetown/helmet/kettle/iron,
 			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket/iron,
 			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/iron,
+			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
 			"None"
 			)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
