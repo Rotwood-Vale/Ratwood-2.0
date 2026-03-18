@@ -641,17 +641,26 @@
 		var/mob/living/simple_animal/animal_mount = H.get_buckled_animal_mount()
 		if(animal_mount)
 			is_mounted = TRUE
+			var/riding_skill = H.get_skill_level(/datum/skill/misc/riding)
+			var/mounted_intent_swap_time = 45
+			switch(riding_skill)
+				if(SKILL_LEVEL_LEGENDARY)
+					mounted_intent_swap_time = 10
+				if(SKILL_LEVEL_EXPERT to SKILL_LEVEL_MASTER)
+					mounted_intent_swap_time = 15
+				if(SKILL_LEVEL_APPRENTICE to SKILL_LEVEL_JOURNEYMAN)
+					mounted_intent_swap_time = 30
 			switch(intent)
 				if(MOVE_INTENT_RUN)
 					if(H.m_intent != MOVE_INTENT_RUN)
 						H.visible_message(span_notice("[H] steadies atop [animal_mount], preparing to break into a run."))
 						animal_mount.emote("aggro")
-						if(do_after(H, 30))
+						if(do_after(H, mounted_intent_swap_time))
 							H.m_intent = MOVE_INTENT_RUN
 				if(MOVE_INTENT_SNEAK)
 					if(H.m_intent != MOVE_INTENT_SNEAK)
 						H.visible_message(span_notice("[H] reins in [animal_mount], slowing into a cautious gait."))
-						if(do_after(H, 30))
+						if(do_after(H, mounted_intent_swap_time))
 							H.m_intent = MOVE_INTENT_SNEAK
 							H.update_sneak_invis()
 				if(MOVE_INTENT_WALK)
