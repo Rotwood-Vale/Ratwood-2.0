@@ -58,6 +58,29 @@
 	else
 		to_chat(user, span_warning("You need to put [src] on a table to knead in the spice."))
 
+/obj/item/reagent_containers/food/snacks/rogue/peppersteak/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	if(!experimental_inhand)
+		return
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/veg/garlick_clove))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,3 SECONDS, target = src))
+				user.adjust_experience(/datum/skill/craft/cooking, user.STAINT * 0.8)
+				new /obj/item/reagent_containers/food/snacks/rogue/peppersteak/ducal(loc)
+				qdel(I)
+				qdel(src)
+	else
+		return ..()
+
+/obj/item/reagent_containers/food/snacks/rogue/peppersteak/ducal
+	tastes = list("steak" = 1, "pepper" = 1, "garlick" = 1)
+	name = "ducal steak"
+	desc = "Roasted meat flanked with a generous coating of ground pepper for intense flavor and scribbled in with garlick. Said to have been favorite meal of the Mad Duke."
+	faretype = FARE_LAVISH
+	icon_state = "ducalsteak"
+	eat_effect = /datum/status_effect/buff/greatmealbuff
+
 /* .............   Roast Pork   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/fatty/roast
 	name = "roast pork"
@@ -84,6 +107,28 @@
 	rotprocess = SHELFLIFE_DECENT
 	fried_type = null
 	cooked_type = null
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/bacon/fried/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	update_cooktime(user)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausage))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,short_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausagebacon(loc)
+				qdel(I)
+				qdel(src)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/friedegg))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,short_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/bacon(loc)
+				qdel(I)
+				qdel(src)
+	else
+		return ..()
 
 /*	.............   Fryspider   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/spider/fried
@@ -143,18 +188,25 @@
 		else
 			mill.icon_state = "peppermill"
 	else
+		var/found_table = locate(/obj/structure/table) in (loc)
+		update_cooktime(user)
+		if(istype(I, /obj/item/reagent_containers/food/snacks/butter))
+			if(isturf(loc)&& (found_table))
+				playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+				to_chat(user, "You start shoving butter into the roasted bird.")
+				if(do_after(user,short_cooktime, target = src))
+					new /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/butter(loc)
+					qdel(I)
+					qdel(src)
+		if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked))
+			if(isturf(loc)&& (found_table))
+				playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+				to_chat(user, "You start shoving another bird into the roasted bird - are you sure you want to do this?")
+				if(do_after(user,short_cooktime, target = src))
+					new /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/doublestacked(loc)
+					qdel(I)
+					qdel(src)
 		return ..()
-
-/*	.................  Spiced Baked Poultry  ................... */
-// Leaving it here instead of meal cuz it has no sprite
-/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced
-	name = "spiced bird-roast"
-	desc = "A plump bird, roasted perfection, spiced to taste divine."
-	faretype = FARE_LAVISH
-	portable = FALSE
-	color = "#ffc0c0"
-	tastes = list("spicy birdmeat" = 1)
-	eat_effect = /datum/status_effect/buff/mealbuff
 
 /*	.............   Frybird   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/cutlet/fried
@@ -192,6 +244,30 @@
 	else
 		return ..()
 
+/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	if(!experimental_inhand)
+		return
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/veg/garlick_clove))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,3 SECONDS, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced/ducal(loc)
+				qdel(I)
+				qdel(src)
+	else
+		return ..()
+
+/*	.................  Ducal Spiced Baked Poultry  ................... */
+/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced/ducal
+	name = "ducal bird-roast"
+	desc = "A plump bird, roasted perfection, spiced to taste divine with touch of garlick to top it all off. Perfect to feast on while your son is dying in battle..."
+	faretype = FARE_LAVISH
+	icon_state = "ducalchicken"
+	tastes = list("spicy birdmeat" = 1, "garlick" = 1)
+	eat_effect = /datum/status_effect/buff/greatmealbuff
+
 /* ............. Fried Crab ................*/
 /obj/item/reagent_containers/food/snacks/rogue/meat/crab/fried
 	eat_effect = null
@@ -222,6 +298,20 @@
 	fried_type = null
 	cooked_type = null
 
+/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	update_cooktime(user)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/veg/garlick_clove))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,short_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT * 0.5)
+				new /obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlick(loc)
+				qdel(I)
+				qdel(src)
+	else
+		return ..()
+
 /* .............   Fried Volf   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried
 	eat_effect = null
@@ -235,6 +325,20 @@
 	rotprocess = SHELFLIFE_DECENT
 	fried_type = null
 	cooked_type = null
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	update_cooktime(user)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/veg/garlick_clove))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,short_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT * 0.5)
+				new /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick(loc)
+				qdel(I)
+				qdel(src)
+	else
+		return ..()
 
 /* .............   Fried Filet    ................ */
 // This is seafood but is one of the "simple cooked meat" so I put it here.
@@ -302,3 +406,65 @@
 	fried_type = null
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
 	rotprocess = SHELFLIFE_EXTREME
+
+/* .............   Fried Cabbit w/ Garlick  ................ */
+/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlick
+	name = "garlick cabbit"
+	desc = "A slab of cabbit, fried to a perfect crispy texture - coated over in glove of garlick."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "frycabbit_garlick"
+	tastes = list("warm cabbit" = 1, "garlick" = 1)
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlick/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	update_cooktime(user)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/veg/cucumber_sliced))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,short_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT * 0.5)
+				new /obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlickcucumber(loc)
+				qdel(I)
+				qdel(src)
+	else
+		return ..()
+
+/* .............   Fried Cabbit w/ Garlick & Cucumber ................ */
+/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlickcucumber
+	name = "elven cabbit roast"
+	desc = "A slab of cabbit, fried to a perfect crispy texture - coated over in glove of garlick and served with side of cucumber. Thought to bring good luck by rangers!"
+	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "frycabbit_garlick_cucumber"
+	tastes = list("warm cabbit" = 1, "garlick" = 1, "cucumber" = 1)
+	eat_effect = /datum/status_effect/buff/mealbuff
+
+/* .............  Garlicked Fried Volf   ................ */
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick
+	name = "garlick volf"
+	desc = "A slab of volf, fried to a perfect medium rare. A bit gamey and chewy, but tasty. This piece has been coated over in glove of garlick."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "fryvolf_garlick"
+	tastes = list("gamey volf" = 1, "garlick" = 1)
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	update_cooktime(user)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/veg/cucumber_sliced))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+			if(do_after(user,short_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT * 0.5)
+				new /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlickcucumber(loc)
+				qdel(I)
+				qdel(src)
+	else
+		return ..()
+
+/* .............  Garlicked Fried Volf w/ Cucumber  ................ */
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlickcucumber
+	name = "hunter's feast"
+	desc = "A slab of volf, fried to a perfect medium rare. A bit gamey and chewy, but tasty. This piece has been coated over in glove of garlick and served with side of cucumber."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "fryvolf_garlick_cucumber"
+	tastes = list("gamey volf" = 1, "garlick" = 1, "cucumber" = 1)
+	eat_effect = /datum/status_effect/buff/mealbuff

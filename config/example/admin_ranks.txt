@@ -50,7 +50,7 @@ Exclude =
 Edit =
 
 Name = Trial Admin
-Include = @ SPAWN VAREDIT BAN
+Include = @ SPAWN VAREDIT BAN AHELP
 Exclude =
 Edit =
 
@@ -60,7 +60,7 @@ Exclude =
 Edit =
 
 Name = Game Admin
-Include = @ STEALTH SOUND DEBUG
+Include = @ STEALTH SOUND DEBUG AHELP
 Exclude =
 Edit =
 

@@ -75,6 +75,10 @@
 	..()
 
 /obj/item/restraints/legcuffs/beartrap/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/natural/dirtclod) && armed)
+		var/skill = user.get_skill_level(/datum/skill/craft/traps)
+		alpha = (90 - skill * 5)
+		qdel(W)
 	if(W.force && armed)
 		user.visible_message("<span class='warning'>[user] triggers \the [src] with [W].</span>", \
 				"<span class='danger'>I trigger \the [src] with [W]!</span>")
@@ -100,7 +104,7 @@
 	grid_width = 256
 	grid_height = 256
 
-/obj/item/restraints/legcuffs/beartrap/Initialize()
+/obj/item/restraints/legcuffs/beartrap/Initialize(mapload)
 	. = ..()
 	update_icon()
 

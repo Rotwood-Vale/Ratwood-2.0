@@ -178,6 +178,7 @@
 	icon_state = "gladiator"
 	item_state = "gladiator"
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/sandals
 	name = "sandals"
@@ -186,12 +187,14 @@
 	icon_state = "sandals"
 	item_state = "sandals"
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/sandals/aalloy
 	name = "decrepit sandals"
 	desc = "Frayed bronze platforms, curled about to cradle the feet. The beaches that these sandals once treaded are no more; pearly sands, long since turnt to glass from the Comet Syon's impact."
 	icon_state = "ancientsandals"
 	color = "#bb9696"
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/shalal
 	name = "babouche"
@@ -200,7 +203,11 @@
 	icon_state = "shalal"
 	item_state = "shalal"
 	sewrepair = TRUE
-	armor = list("blunt" = 25, "slash" = 20, "stab" = 25, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 25, "slash" = 20, "stab" = 25,"fire" = 0, "acid" = 0)
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = FOOT_LEFT | FOOT_RIGHT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/shoes/roguetown/boots/leather
 	name = "leather boots"
@@ -223,6 +230,10 @@
 	max_integrity = 100			//Half that of iron boots
 	armor = ARMOR_LEATHER_GOOD			//Better than regular leather.
 	color = null
+	cold_protection = FOOT_LEFT | FOOT_RIGHT
+	min_cold_protection_temperature = 50
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
 	name = "dress boots"
@@ -245,14 +256,13 @@
 	salvage_result = /obj/item/natural/hide/cured
 	sewrepair = TRUE
 
-/obj/item/clothing/shoes/roguetown/grenzelhoft
+/obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	name = "grenzelhoft boots"
 	icon_state = "grenzelboots"
 	item_state = "grenzelboots"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_LEATHER_GOOD
-	allowed_race = NON_DWARVEN_RACE_TYPES
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 	sewrepair = TRUE
@@ -292,7 +302,7 @@
 	armor = ARMOR_ASCENDANT
 	icon_state = "graggarplateboots"
 
-/obj/item/clothing/shoes/roguetown/boots/armor/graggar/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/graggar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
 
@@ -304,7 +314,7 @@
 	icon_state = "matthiosboots"
 	armor = ARMOR_ASCENDANT
 
-/obj/item/clothing/shoes/roguetown/boots/armor/matthios/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/matthios/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -321,7 +331,7 @@
 	icon_state = "zizoboots"
 	armor = ARMOR_ASCENDANT
 
-/obj/item/clothing/shoes/roguetown/boots/armor/zizo/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/zizo/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -358,8 +368,8 @@
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in colorlist
-		var/playerchoice = colorlist[choice]
+		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
 		detail_tag = "_detail"
@@ -402,7 +412,7 @@
 	color = primary
 	update_icon()
 
-/obj/item/clothing/shoes/roguetown/jester/Initialize()
+/obj/item/clothing/shoes/roguetown/jester/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_JINGLE_BELLS, 2)
 	if(GLOB.lordprimary)
@@ -425,6 +435,10 @@
 	armor = ARMOR_CLOTHING
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/fur
+	cold_protection = FOOT_LEFT | FOOT_RIGHT
+	min_cold_protection_temperature = 50
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/shoes/roguetown/boots/furlinedanklets
 	name = "fur lined anklets"
@@ -438,6 +452,10 @@
 	is_barefoot = TRUE
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/fur
+	cold_protection = FOOT_LEFT | FOOT_RIGHT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/shoes/roguetown/boots/clothlinedanklets
 	name = "cloth lined anklets"
@@ -448,6 +466,10 @@
 	is_barefoot = TRUE
 	sewrepair = TRUE
 	armor = ARMOR_CLOTHING
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = FOOT_LEFT | FOOT_RIGHT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/shoes/roguetown/boots/otavan/inqboots
 	name = "inquisitorial boots"
@@ -505,6 +527,11 @@
 	is_barefoot = TRUE
 	sewrepair = TRUE
 	armor = ARMOR_CLOTHING
+	nudist_approved = TRUE
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = FOOT_LEFT | FOOT_RIGHT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 //kazen update
 /obj/item/clothing/shoes/roguetown/armor/rumaclan
@@ -514,6 +541,7 @@
 	item_state = "eastsandals"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
 	armor = ARMOR_LEATHER_GOOD
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/armor/hlegs
 	name = "leg harness"

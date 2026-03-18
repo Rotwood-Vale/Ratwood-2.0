@@ -15,6 +15,10 @@
 	if(ft_reset)
 		flavortext = null
 		nsfwflavortext = null
+		ooc_extra_img = null
+		ooc_extra_img_link = null
+		nsfw_ooc_extra_img = null
+		nsfw_ooc_extra_img_link = null
 		erpprefs = null
 		ooc_notes = null
 		ooc_extra = null
@@ -66,6 +70,9 @@
 		mannequin.patron = selected_patron
 		preview_subclass.equipme(mannequin, dummy = TRUE)
 
+	mannequin.regenerate_clothes()
+	mannequin.update_body()
+	mannequin.update_hair()
 	mannequin.rebuild_obscured_flags()
 	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))

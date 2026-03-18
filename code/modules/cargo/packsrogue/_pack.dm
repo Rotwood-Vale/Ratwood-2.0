@@ -12,6 +12,8 @@
 	var/crate_type = /obj/structure/closet/crate
 	var/no_name_quantity = FALSE // If TRUE, do not display the name as "[Name] x [Amount]".
 	var/not_in_public = FALSE // If true, this pack will not be listed in the public goldface.
+	var/mandated_public_profit = 0 // If set, this pack will always additional cost this much percentage on top of the base cost when in the public vendor. All of the forced profit
+	// can be withdrawn by the owner.
 	var/dangerous = FALSE // Should we message admins?
 	var/special = FALSE //Event/Station Goals/Admin enabled packs
 	var/special_enabled = FALSE

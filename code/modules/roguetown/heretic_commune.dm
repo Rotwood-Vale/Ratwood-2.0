@@ -177,7 +177,7 @@
 		trigger_omen(src, H)
 		return
 		
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/interrupt_chant)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(interrupt_chant))
 
 /mob/living/carbon/human/proc/interrupt_chant()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)

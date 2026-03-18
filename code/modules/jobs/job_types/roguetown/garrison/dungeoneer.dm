@@ -95,6 +95,7 @@
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/clothing/neck/roguetown/psicross/silver = 1,
+		/obj/item/rogueweapon/surgery/cautery/branding = 1,
 		) //No armoury access
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	//Torture victim is for inquisition - doesn't even work without a psicross anymore so maybe come up with a variant for him specifically?

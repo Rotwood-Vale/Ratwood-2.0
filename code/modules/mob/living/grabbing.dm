@@ -21,16 +21,13 @@
 	var/chokehold = FALSE
 
 /obj/item/grabbing/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
-    . = ..()
-    . |= FALL_NO_MESSAGE
+	. = ..()
+	. |= FALL_NO_MESSAGE
 
 /atom/movable //reference to all obj/item/grabbing
-	var/list/grabbedby = list()
+	var/list/grabbedby
 
-/turf
-	var/list/grabbedby = list()
-
-/obj/item/grabbing/Initialize()
+/obj/item/grabbing/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -38,7 +35,9 @@
 	valid_check()
 
 /obj/item/grabbing/proc/valid_check()
-	// We require adjacency to count the grab as valid
+	if(!grabbee || !grabbed)
+		qdel(src)
+		return FALSE
 	if(grabbee.Adjacent(grabbed))
 		return TRUE
 	grabbee.stop_pulling(FALSE)
@@ -88,10 +87,10 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	if(isobj(grabbed))
 		var/obj/I = grabbed
-		I.grabbedby -= src
+		LAZYREMOVE(I.grabbedby, src)
 	if(ismob(grabbed))
 		var/mob/M = grabbed
-		M.grabbedby -= src
+		LAZYREMOVE(M.grabbedby, src)
 		if(iscarbon(M) && sublimb_grabbed)
 			var/mob/living/carbon/carbonmob = M
 			var/obj/item/bodypart/part = carbonmob.get_bodypart(sublimb_grabbed)
@@ -100,12 +99,9 @@
 			// In this case, grabbed will be the mob, and sublimb_grabbed will be the weapon, rather than a bodypart
 			// This means we should skip any further processing for the bodypart
 			if(part)
-				part.grabbedby -= src
+				LAZYREMOVE(part.grabbedby, src)
 				part = null
 				sublimb_grabbed = null
-	if(isturf(grabbed))
-		var/turf/T = grabbed
-		T.grabbedby -= src
 	if(grabbee)
 		if(grabbee.r_grab == src)
 			grabbee.r_grab = null
@@ -113,6 +109,7 @@
 			grabbee.l_grab = null
 		if(grabbee.mouth == src)
 			grabbee.mouth = null
+		grabbee = null
 	for(var/datum/D in dependents)
 		D.grabdropped(src)
 	return ..()
@@ -437,7 +434,13 @@
 			return
 	playsound(C.loc, "genblunt", 100, FALSE, -1)
 	C.next_attack_msg.Cut()
-	C.apply_damage(damage, BRUTE, limb_grabbed, armor_block)
+	if(isdoll(C)) 
+		armor_block = C.getarmor(sublimb_grabbed, "blunt")
+		if(armor_block > 1)
+			C.apply_damage(damage, BRUTE, limb_grabbed, armor_block)
+	else 
+		armor_block = C.run_armor_check(limb_grabbed, "blunt")
+		C.apply_damage(damage, BRUTE, limb_grabbed, armor_block)
 	limb_grabbed.bodypart_attacked_by(BCLASS_TWIST, damage, user, sublimb_grabbed, crit_message = TRUE)
 	limb_grabbed.bodypart_attacked_by(BCLASS_TWIST, damage, user, sublimb_grabbed, crit_message = TRUE)
 	C.visible_message(span_danger("[user] twists [C]'s [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), \
@@ -454,6 +457,35 @@
 		var/text = "[bodyzone2readablezone(user.zone_selected)]..."
 		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
 
+	if(limb_grabbed.body_zone == sublimb_grabbed && isdoll(C))
+		var/mob/living/carbon/human/target = C
+		armor_block = target.getarmor(sublimb_grabbed, "slash")
+		
+		if(armor_block >= 1)
+			target.visible_message(span_danger("[target]'s [parse_zone(sublimb_grabbed)] fails to be twisted off!"), \
+				span_danger("[user] tries to twist my [parse_zone(sublimb_grabbed)] out of it's socket but the armor keeps it in place!"))
+			to_chat(user, span_warning("[target]'s [parse_zone(sublimb_grabbed)] stays in it's socket because of [target]'s armor!"))
+			return
+
+		target.visible_message(span_danger("[target]'s [parse_zone(sublimb_grabbed)] is being forcefully popped out of socket!"), \
+			span_danger("My [parse_zone(sublimb_grabbed)] is being forcefully popped out of socket!"))
+		to_chat(user, span_warning("I begin popping [target]'s [parse_zone(sublimb_grabbed)] out of socket."))
+
+		var/delay = (sublimb_grabbed == BODY_ZONE_HEAD) ? 100 : 6
+		
+		if(do_after(user, delay, target = target))
+			target.visible_message(span_danger("[target]'s [parse_zone(sublimb_grabbed)] has been popped out of socket!"), \
+				span_userdanger("My [parse_zone(sublimb_grabbed)] has been popped out of socket!"))
+			to_chat(user, span_warning("I pop [target]'s [parse_zone(sublimb_grabbed)] out of socket."))
+
+			limb_grabbed.drop_limb(FALSE)
+
+			if(QDELETED(limb_grabbed))
+				return
+
+			qdel(src)
+			user.put_in_active_hand(limb_grabbed)
+
 	// Dealing damage to the head beforehand is intentional.
 	if(limb_grabbed.body_zone == BODY_ZONE_HEAD && isdullahan(C))
 		var/mob/living/carbon/human/target = C
@@ -461,7 +493,7 @@
 		var/obj/item/equipped_nodrop = target_species.get_nodrop_head()
 		if(equipped_nodrop)
 			target.visible_message(span_danger("[target]'s head fails to be twisted off!"), \
-				span_danger("[user] Tries to twist my head off but the [equipped_nodrop.name] keeps it bound to my neck!"))
+				span_danger("[user] tries to twist my head off but the [equipped_nodrop.name] keeps it bound to my neck!"))
 			to_chat(user, span_warning("[target]'s head stays bound to their neck because of the [equipped_nodrop.name]!"))
 			return
 

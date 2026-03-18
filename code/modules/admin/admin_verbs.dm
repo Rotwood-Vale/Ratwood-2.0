@@ -15,6 +15,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/datum/admins/proc/start_vote,
 	/datum/admins/proc/show_player_panel,
 	/datum/admins/proc/admin_heal,
+	/datum/admins/proc/admin_show_inventory,
 	/datum/admins/proc/admin_revive,
 	/datum/admins/proc/admin_sleep,
 	/client/proc/jumptoarea,
@@ -111,6 +112,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/sleep_view,
 	/datum/admins/proc/wake_view,
 	/datum/admins/proc/extend_round,
+	/client/proc/open_fax_panel,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(
 	/client/proc/unban_panel,
@@ -126,7 +128,10 @@ GLOBAL_LIST_INIT(admin_verbs_sounds, list(
 	/client/proc/play_local_sound,
 	/client/proc/play_local_sound_variable,
 	/client/proc/play_sound,
-	/client/proc/set_round_end_sound
+	/client/proc/set_round_end_sound,
+	/client/proc/play_music_global_url,
+	/client/proc/play_music_local_url,
+	/client/proc/play_music_direct_url
 	))
 GLOBAL_PROTECT(admin_verbs_sounds)
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
@@ -138,6 +143,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/cinematic,
 //	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/object_say,
+	/client/proc/force_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
@@ -215,7 +221,9 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/datum/admins/proc/create_or_modify_area,
 	/client/proc/returntolobby,
 	/client/proc/set_tod_override,
-	/client/proc/stresstest_chat
+	/client/proc/stresstest_chat,
+	/client/proc/performance_stress_test, // Uncomment these if you tick the performance stress test .dm file
+	/client/proc/cleanup_stress_test_mobs
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, GLOBAL_PROC_REF(release)))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -247,6 +255,9 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/play_local_sound_variable,
 	/client/proc/play_sound,
 	/client/proc/set_round_end_sound,
+	/client/proc/play_music_global_url,
+	/client/proc/play_music_local_url,
+	/client/proc/play_music_direct_url,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -609,7 +620,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_bomb()
-	set category = "-Fun-"
+	set category = "-GameMaster-"
 	set name = "Bomb..."
 	set desc = ""
 
@@ -651,7 +662,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_dynex_bomb()
-	set category = "-Fun-"
+	set category = "-GameMaster-"
 	set name = "Bomb - DynEx..."
 	set desc = ""
 
@@ -698,7 +709,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
 /client/proc/give_spell(mob/T in GLOB.mob_list)
-	set category = "-Fun-"
+	set category = "-GameMaster-"
 	set name = "Give Spell"
 	set desc = ""
 
@@ -722,7 +733,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		message_admins(span_danger("Spells given to mindless mobs will not be transferred in mindswap or cloning!"))
 
 /client/proc/remove_spell(mob/T in GLOB.mob_list)
-	set category = "-Fun-"
+	set category = "-GameMaster-"
 	set name = "Remove Spell"
 	set desc = ""
 
@@ -745,6 +756,33 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	log_admin("[key_name(usr)] made [O] at [AREACOORD(O)] say \"[message]\"")
 	message_admins(span_adminnotice("[key_name_admin(usr)] made [O] at [AREACOORD(O)]. say \"[message]\""))
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Object Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/force_say(mob/living/L in GLOB.mob_list)
+	set category = "-Special Verbs-"
+	set name = "Force Speech"
+	set desc = ""
+	
+	if(!L)
+		to_chat(usr, span_warning("No mob selected."))
+		return
+	
+	if(!isliving(L))
+		to_chat(usr, span_warning("Target must be a living mob."))
+		return
+	
+	if(!L.loc)
+		to_chat(usr, span_warning("Target mob has no location."))
+		return
+	
+	var/message = input(usr, "What do you want them to say?", "Force Say") as text | null
+	if(!message)
+		return
+	
+	L.say(message)
+	log_admin("[key_name(usr)] forced [key_name(L)] at [AREACOORD(L)] to say \"[message]\"")
+	message_admins(span_adminnotice("[key_name_admin(usr)] forced [key_name_admin(L)] at [AREACOORD(L)] to say \"[message]\""))
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Force Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode"
 	set category = "-Special Verbs-"

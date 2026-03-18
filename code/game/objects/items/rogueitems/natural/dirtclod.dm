@@ -6,6 +6,15 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/natural/dirtclod/snow
+	name = "packed snow"
+	desc = "A handful of snow"
+	icon_state = "snow1"
+
+/obj/item/natural/dirtclod/snow/Initialize(mapload)
+	..()
+	icon_state = "snow[rand(1,2)]"
+
 /obj/item/natural/dirtclod/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rogueweapon/shovel))
 		var/obj/item/rogueweapon/shovel/S = W
@@ -18,6 +27,8 @@
 	..()
 
 /obj/item/natural/dirtclod/Moved(oldLoc, dir)
+	if(QDELETED(src))
+		return
 	..()
 	if(isturf(loc))
 		var/turf/T = loc
@@ -28,21 +39,19 @@
 		var/dirtcount = 1
 		var/list/dirts = list()
 		for(var/obj/item/natural/dirtclod/D in T)
-			if(D != src)
-				dirtcount++
-				dirts += D
+			dirtcount++
+			dirts += D
 		if(dirtcount >=5)
 			for(var/obj/item/I in dirts)
 				qdel(I)
-			new /obj/structure/fluff/clodpile(T)
 			qdel(src)
-			return
+			new /obj/structure/fluff/clodpile(T)
 
 /obj/item/natural/dirtclod/attack_self(mob/living/user)
 	user.visible_message(span_warning("[user] scatters [src]."))
 	qdel(src)
 
-/obj/item/natural/dirtclod/Initialize()
+/obj/item/natural/dirtclod/Initialize(mapload)
 	icon_state = "clod[rand(1,2)]"
 	..()
 	var/static/list/slapcraft_recipe_list = list(
@@ -89,6 +98,6 @@
 				return
 	..()
 
-/obj/structure/fluff/clodpile/Initialize()
+/obj/structure/fluff/clodpile/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	..()

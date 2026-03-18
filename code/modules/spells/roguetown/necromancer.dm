@@ -301,6 +301,7 @@
 			else
 				target.mind.current.faction += faction_tag
 				user.say("Amicus declaratus es.")
+				target.notify_faction_change()
 		else if(istype(target, /mob/living/simple_animal))
 			if (faction_tag in target.faction)
 				target.faction -= faction_tag
@@ -308,6 +309,7 @@
 			else
 				target.faction |= faction_tag
 				user.say("Amicus declaratus es.")
+				target.notify_faction_change()
 		return TRUE
 	return FALSE
 
@@ -415,7 +417,7 @@
 	to_chat(user, "<span class='notice'>You issue an order to your minions.</span>")
 
 //AI processing orders for simple mob undead
-/obj/effect/proc_holder/spell/invoked/command_undead/proc/process_minions(var/order_type, turf/target_location = null, mob/living/target = null, var/faction_tag = null)
+/obj/effect/proc_holder/spell/invoked/command_undead/proc/process_minions(order_type, turf/target_location = null, mob/living/target = null, faction_tag = null)
 	var/mob/caster = usr
 	var/count = 0
 

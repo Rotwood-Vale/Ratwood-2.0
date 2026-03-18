@@ -28,8 +28,8 @@
 	"Cat-Kin", "Dog-Kin", "Volf-Kin", "Lion-Kin", "Venard-Kin", "Tiger-Kin", "Sheep-Kin",
 	"Goat-Kin", "Rous-Kin", "Possum-Kin", "Pig-Kin", "Boar-Kin", "Rabbit-Kin", "Horse-Kin",
 	"Donkey-Kin", "Hyena-Kin", "Deer-Kin", "Bear-Kin", "Panda-Kin", "Coyote-Kin", "Moose-Kin",
-	"Jackal-Kin", "Panther-Kin", "Lynx-Kin", "Leopard-Kin", "Monkey-Kin", "Bird-Kin", "Seal-Kin",
-	"Bat-Kin", "Otter-Kin", "Cow-Kin", "Bull-Kin", "Bee-Kin", "Lizard-Kin", "Monster-Kin", "Chimera"
+	"Jackal-Kin", "Panther-Kin", "Lynx-Kin", "Leopard-Kin", "Monkey-Kin", "Bird-Kin", "Seal-Kin", "Frog-Kin",
+	"Bat-Kin", "Otter-Kin", "Cow-Kin", "Bull-Kin", "Bee-Kin", "Lizard-Kin", "Insect-Kin", "Spider-Kin", "Monster-Kin", "Chimera"
 	)
 
 	default_color = "444"
@@ -48,6 +48,7 @@
 		/obj/item/bodypart/taur/dragon,
 		/obj/item/bodypart/taur/noodle,
 		/obj/item/bodypart/taur/horse,
+		/obj/item/bodypart/taur/goat,
 		/obj/item/bodypart/taur/deer,
 		/obj/item/bodypart/taur/redpanda,
 		/obj/item/bodypart/taur/rat,
@@ -60,7 +61,8 @@
 		/obj/item/bodypart/taur/centipede,
 		/obj/item/bodypart/taur/sloog,
 		/obj/item/bodypart/taur/ant,
-		/obj/item/bodypart/taur/wasp
+		/obj/item/bodypart/taur/wasp,
+		/obj/item/bodypart/taur/insect
 	)
 
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID

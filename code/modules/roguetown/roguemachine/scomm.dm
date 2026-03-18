@@ -20,7 +20,7 @@
 	var/spawned_rat = FALSE
 	var/garrisonline = FALSE
 
-/obj/structure/roguemachine/scomm/Initialize()
+/obj/structure/roguemachine/scomm/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 
@@ -206,7 +206,7 @@
 	update_icon()
 	icon_state = "[icon_state]-br"
 
-/obj/structure/roguemachine/scomm/Initialize()
+/obj/structure/roguemachine/scomm/Initialize(mapload)
 	. = ..()
 //	icon_state = "scomm[rand(1,2)]"
 	START_PROCESSING(SSroguemachine, src)
@@ -391,7 +391,7 @@
 	lose_hearing_sensitivity()
 	return ..()
 
-/obj/item/scomstone/Initialize()
+/obj/item/scomstone/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	update_icon()
@@ -470,7 +470,7 @@
 	else
 		icon_state = "listenstone_act"
 
-/obj/item/listenstone/Initialize()
+/obj/item/listenstone/Initialize(mapload)
 	. = ..()
 	update_icon()
 	SSroguemachine.scomm_machines += src//dont know what this is for
@@ -525,7 +525,7 @@
 	grid_width = 32
 	grid_height = 32
 
-/obj/item/mattcoin/Initialize()
+/obj/item/mattcoin/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	update_icon()
@@ -578,7 +578,7 @@
 	SSroguemachine.scomm_machines -= src
 	return ..()
 
-/obj/item/mattcoin/Initialize()
+/obj/item/mattcoin/Initialize(mapload)
 	. = ..()
 	update_icon()
 	SSroguemachine.scomm_machines += src
@@ -682,7 +682,7 @@
 	SSroguemachine.scomm_machines -= src
 	return ..()
 
-/obj/item/speakerinq/Initialize()
+/obj/item/speakerinq/Initialize(mapload)
 	. = ..()
 	icon_state = "scomite_active"
 	update_icon()
@@ -729,7 +729,7 @@
 	else
 		desc = initial(desc)
 
-/obj/item/listeningdevice/Initialize()
+/obj/item/listeningdevice/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	inqdesc = "An ever-attentive ear... [span_notice("This ear hasn't been bent. It's unlabelled.")]"

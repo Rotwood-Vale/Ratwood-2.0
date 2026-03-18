@@ -110,7 +110,7 @@
 	armor = ARMOR_PADDED	//Equal to gamby
 	color = null
 
-/obj/item/clothing/suit/roguetown/shirt/robe/priest/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/robe/priest/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CHOSEN, "VESTMENTS")
 
@@ -142,6 +142,10 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)	 //Ensures that this inherits the padded gambeson's resistances, too.
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MAX
+	heat_protection = CHEST
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 //This is for templars/psydonites. Gives a boon for wearing it to counter-act giving up plate and such.
 /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
@@ -170,7 +174,7 @@
 /obj/item/clothing/suit/roguetown/shirt/robe/courtmage
 	color = "#6c6c6c"
 
-/obj/item/clothing/suit/roguetown/shirt/robe/mage/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/robe/mage/Initialize(mapload)
 	color = pick("#4756d8", "#759259", "#bf6f39", "#c1b144", "#b8252c")
 	. = ..()
 
@@ -289,6 +293,10 @@
 	icon_state = "desertgown"
 	item_state = "desertgown"
 	color = null
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = CHEST | GROIN
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
 	name = "pointfex's qaba"
@@ -300,6 +308,10 @@
 	color = null
 	r_sleeve_status = SLEEVE_NOMOD
 	l_sleeve_status = SLEEVE_NOMOD
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/robe/feld
 	name = "feldsher's robe"
@@ -321,6 +333,7 @@
 	color = null
 	icon_state = "feldrobe"
 	item_state = "feldrobe"
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 
 /obj/item/clothing/suit/roguetown/shirt/robe/tabardblack
 	name = "black tabard"
@@ -328,3 +341,12 @@
 	color = null
 	icon_state = "surgrobe"
 	item_state = "surgrobe"
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
+
+/obj/item/clothing/suit/roguetown/shirt/robe/tabardwhite
+	name = "white tabard"
+	desc = "Sleeveless robes, white like bone."
+	color = null
+	icon_state = "whiterobe"
+	item_state = "whiterobe"
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK

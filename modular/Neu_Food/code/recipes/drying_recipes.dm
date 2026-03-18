@@ -51,3 +51,25 @@
 	verbage = "drys"
 	craftdiff = 0
 	subtype_reqs = TRUE
+
+/datum/crafting_recipe/roguetown/cooking/fish
+	name = "dried fish filet"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/fish = 1,
+		/obj/item/reagent_containers/powder/salt = 1)
+	result = /obj/item/reagent_containers/food/snacks/rogue/meat/driedfishfilet
+	craftdiff = 0
+	skillcraft = /datum/skill/craft/cooking
+	verbage_simple = "dry"
+	verbage = "drys"	
+	structurecraft = /obj/machinery/tanningrack
+	req_table = FALSE
+
+/datum/crafting_recipe/roguetown/cooking/frybirdbucket
+	name = "frybird bucket"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/cutlet/fried = 3,
+		/obj/item/reagent_containers/glass/bucket = 1,
+		/obj/item/reagent_containers/powder/salt = 1)
+	result = /obj/item/reagent_containers/food/snacks/rogue/frybirdbucket
+	craftdiff = 0

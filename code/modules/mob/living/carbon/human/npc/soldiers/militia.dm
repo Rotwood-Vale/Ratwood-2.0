@@ -26,7 +26,7 @@
 		return FALSE
 	. = ..()
 
-/mob/living/carbon/human/species/human/northern/militia/Initialize()
+/mob/living/carbon/human/species/human/northern/militia/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/human/northern)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)

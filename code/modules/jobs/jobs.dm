@@ -69,22 +69,29 @@ GLOBAL_LIST_INIT(noble_positions, list(
 	"Marshal",
 	"Councillor",
 	"Steward",
+	"Clerk",
 	"Knight",
 ))
 
 GLOBAL_LIST_INIT(courtier_positions, list(
 	"Court Magician",
+	"Magicians Associate",
 	"Head Physician",
+	"Apothecary",
 	"Jester",
 	"Seneschal",
+	"Servant",
 ))
 
 GLOBAL_LIST_INIT(garrison_positions, list(
-	"Watchman",
+	"City Guard",
+	"Rookie",
 	"Warden",
 	"Sergeant",
+	"Veteran",
 	"Man at Arms",
 	"Squire",
+	"Vanguard",
 	"Dungeoneer",
 ))
 
@@ -142,22 +149,16 @@ GLOBAL_LIST_INIT(mercenary_positions, list(
 ))
 
 GLOBAL_LIST_INIT(youngfolk_positions, list(
-	"Clerk",
-	"Apothecary",
-	"Smithy Apprentice",
-	"Magicians Associate",
 	"Churchling",
-	"Servant",
 	"Shophand",
 	"Vagabond",
 ))
 
 GLOBAL_LIST_INIT(wanderer_positions, list(
-	"Veteran",
-	"Adventurer",
 	"Mercenary",
-	"Bandit",
+	"Adventurer",
 	"Court Agent",
+	"Bandit",
 	"Wretch",
 ))
 
@@ -258,7 +259,7 @@ GLOBAL_PROTECT(exp_specialmap)
 	var/static/regex/chef_expand = new("chef")
 	var/static/regex/borg_expand = new("(?<!cy)borg")
 
-	job = lowertext(job)
+	job = LOWER_TEXT(job)
 	job = cap_expand.Replace(job, "captain")
 	job = cmo_expand.Replace(job, "chief medical officer")
 	job = hos_expand.Replace(job, "head of security")

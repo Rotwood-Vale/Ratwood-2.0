@@ -84,6 +84,18 @@
 	name = "Rousley"
 	prefix = "is very"
 
+/datum/mob_descriptor/trait/pale
+	name = "Pale"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/tanned
+	name = "Tanned"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/dusky
+	name = "Dusky"
+	prefix = "is very"
+
 /datum/mob_descriptor/trait/blessed
 	name = "Blessed"
 	prefix = "is very"
@@ -96,6 +108,89 @@
 	name = "Aquatic"
 	prefix = "is very"
 
+/datum/mob_descriptor/trait/volfish
+	name = "Volfish"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/graceful
+	name = "Graceful"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/lapine
+	name = "Lapine"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/scrappy
+	name = "Scrappy"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/curious
+	name = "Curious"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/craven
+	name = "Craven"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/grinning
+	name = "Grinning"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/crestfallen
+	name = "Crestfallen"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/dour
+	name = "Dour"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/cheery
+	name = "Cheery"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/simian
+	name = "Simian"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/bovine
+	name = "Bovine"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/cervine
+	name = "Cervine"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/ursine
+	name = "Ursine"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/stern
+	name = "Stern"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/jaunty
+	name = "Jaunty"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/meek
+	name = "Meek"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/sly
+	name = "Sly"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/fervent
+	name = "Fervent"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/coy
+	name = "Coy"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/harrowed
+	name = "Harrowed"
+	prefix = "is very"
 
 /datum/mob_descriptor/trait/horned
 	name = "Horned"
@@ -148,6 +243,3 @@
 /datum/mob_descriptor/trait/amber
 	name = "Amber"
 	prefix = "is very"
-
-
-

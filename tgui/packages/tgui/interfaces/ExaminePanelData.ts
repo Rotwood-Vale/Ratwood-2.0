@@ -11,8 +11,11 @@ export type ExaminePanelData = {
   ooc_notes_nsfw: string;
   img_gallery: string[];
   nsfw_img_gallery: string[];
+  ooc_extra_image: string;
+  nsfw_ooc_extra_image: string;
   is_playing: boolean;
   has_song: boolean;
   is_vet: boolean;
   is_naked: boolean;
+  nsfw_examine_always: Boolean;
 };

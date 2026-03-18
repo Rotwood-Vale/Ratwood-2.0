@@ -80,6 +80,8 @@
 			new horse(TU)
 
 	for(var/trait in traits_applied)
+		if(trait in H.dna.species.banned_traits)
+			continue
 		ADD_TRAIT(H, trait, ADVENTURER_TRAIT)
 
 	if(noble_income)

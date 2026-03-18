@@ -57,7 +57,6 @@
 			return FALSE
 	return TRUE
 
-
 /datum/intent/shoot/crossbow/get_chargetime()
 	if(mastermob && chargetime)
 		var/newtime = chargetime
@@ -80,8 +79,6 @@
 	chargetime = 1
 	basetime = 20
 	chargedrain = 0
-
-
 
 /datum/intent/arc/crossbow/can_charge(atom/clicked_object)
 	if(mastermob)

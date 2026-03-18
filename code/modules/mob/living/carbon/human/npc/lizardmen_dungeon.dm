@@ -42,7 +42,7 @@
 		return FALSE
 	. = ..()
 
-/mob/living/carbon/human/species/lizardfolk/psy_vault_guard/Initialize()
+/mob/living/carbon/human/species/lizardfolk/psy_vault_guard/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/lizardfolk)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)

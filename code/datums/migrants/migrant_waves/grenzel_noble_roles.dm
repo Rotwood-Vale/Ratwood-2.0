@@ -7,7 +7,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	greet_text = "You are a Grenzelhoftian envoy, traveling with bodyguards and a priest to represent your homeland.\
-	 What exactly you have been sent here to speak about- only you know."
+	What exactly you have been sent here to speak about- only you know."
 	advclass_cat_rolls = list(CTAG_GRENZEL_ENVOY = 20)
 
 /datum/advclass/grenzel_envoy
@@ -49,13 +49,15 @@
 	id = /obj/item/clothing/ring/gold
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
-	shoes = /obj/item/clothing/shoes/roguetown/grenzelhoft
+	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	backl = /obj/item/storage/backpack/rogue/satchel/short
 	l_hand = /obj/item/rogueweapon/sword/long
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
+		/obj/item/storage/belt/pouch/coins/veryrich = 2,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/paper/scroll/writ_of_esteem/grenzel = 1,
@@ -66,13 +68,13 @@
 	H.grant_language(/datum/language/grenzelhoftian)
 
 /datum/migrant_role/grenzel/bodyguard
-	name = "Leibwachter"
+	name = "Leibwächter"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_GRENZEL_GUARD = 20)
 
 /datum/advclass/grenzel_guard
-	name = "Leibwachter"
+	name = "Leibwächter"
 	tutorial = "You are a dilligent soldier in employ of the Envoy for protection and to assure that their mission goes as planned."
 	outfit = /datum/outfit/job/roguetown/grenzel/doppel
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
@@ -111,15 +113,17 @@
 	head = /obj/item/clothing/head/roguetown/grenzelhofthat
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
-	shoes = /obj/item/clothing/shoes/roguetown/grenzelhoft
+	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	r_hand = /obj/item/rogueweapon/greatsword/grenz
 	backpack_contents = list(
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
+		/obj/item/natural/bundle/cloth/bandage/full = 1,
 		)
 	H.cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	H.grant_language(/datum/language/grenzelhoftian)
@@ -142,7 +146,7 @@
 		STATKEY_WIL = 3,
 		STATKEY_SPD = -1,
 	)
-	subclass_stats = list(
+	subclass_skills = list(
 		/datum/skill/combat/wrestling= SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed= SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/polearms= SKILL_LEVEL_JOURNEYMAN,
@@ -163,7 +167,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
+	beltr = /obj/item/storage/belt/pouch/coins/veryrich
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/priest
 	cloak = /obj/item/clothing/cloak/chasuble
 	backl = /obj/item/storage/backpack/rogue/satchel

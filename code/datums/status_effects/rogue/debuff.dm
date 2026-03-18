@@ -8,6 +8,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hungryt1
 	effectedstats = list(STATKEY_CON = -1)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hungryt1
 	name = "Hungry"
@@ -19,6 +20,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hungryt2
 	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_WIL = -1)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hungryt2
 	name = "Hungry"
@@ -30,6 +32,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hungryt3
 	effectedstats = list(STATKEY_STR = -5, STATKEY_CON = -3, STATKEY_WIL = -2)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hungryt3
 	name = "Hungry"
@@ -41,6 +44,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/thirstyt1
 	effectedstats = list(STATKEY_WIL = -1)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/thirstyt1
 	name = "Thirsty"
@@ -52,6 +56,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/thirstyt2
 	effectedstats = list(STATKEY_SPD = -1, STATKEY_WIL = -2)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/thirstyt2
 	name = "Thirsty"
@@ -63,6 +68,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/thirstyt3
 	effectedstats = list(STATKEY_STR = -1, STATKEY_SPD = -2, STATKEY_WIL = -3)
 	duration = 100
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/thirstyt3
 	name = "Thirsty"
@@ -126,6 +132,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	effectedstats = list(STATKEY_SPD = -1)
 	duration = -1
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	name = "Dizzy"
@@ -137,6 +144,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	effectedstats = list(STATKEY_STR = -1, STATKEY_SPD = -2)
 	duration = -1
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	name = "Faint"
@@ -148,6 +156,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt3
 	effectedstats = list(STATKEY_STR = -3, STATKEY_SPD = -4)
 	duration = -1
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt3
 	name = "Drained"
@@ -157,6 +166,7 @@
 /datum/status_effect/debuff/sleepytime
 	id = "sleepytime"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/sleepytime
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/netted
 	name = "Net"
@@ -210,6 +220,7 @@
 /datum/status_effect/debuff/vamp_dreams
 	id = "sleepytime"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/vamp_dreams
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/vamp_dreams
 	name = "Insight"
@@ -529,41 +540,26 @@
 	id = "Necran Deathly calm!"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/necranwilloss
 	effectedstats = list(STATKEY_WIL = -4)
-	var/blimmune = FALSE
-	var/nobreath = FALSE
+	tick_interval = 5 SECONDS
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_apply()
 	. = ..()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
-		if(HAS_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE))
-			blimmune = TRUE
-		else
-			ADD_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-		if(HAS_TRAIT(H, TRAIT_NOBREATH))
-			nobreath = TRUE
-		else
-			ADD_TRAIT(H, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	owner.add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_remove()
 	. = ..()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
-		if(!blimmune)
-			REMOVE_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-		if(!nobreath)
-			REMOVE_TRAIT(H, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	owner.remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/process()
 	.=..()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.energy_add(-1)	//being in death's edge drains energy from people
-		var/area/rogue/our_area = get_area(H)
-		if(!(our_area.necra_area))
-			owner.remove_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)
+	owner.energy_add(-1)	//being in death's edge drains energy from people
+	var/area/rogue/our_area = get_area(owner)
+	if(isnull(our_area) || !(our_area.necra_area))
+		owner.remove_status_effect(src)
 
 /atom/movable/screen/alert/status_effect/debuff/necranwilloss
 	name = "Necran Deathly calm!"
@@ -575,33 +571,24 @@
 	id = "Deathly calm!"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/deathdoorwilloss
 	effectedstats = list(STATKEY_WIL = -8)
-	var/blimmune = FALSE
-	var/nobreath = FALSE
+	tick_interval = 5 SECONDS
 
 /datum/status_effect/debuff/deathdoorwilloss/on_apply()
 	. = ..()
-	if(HAS_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE))
-		blimmune = TRUE
-	else
-		ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	if(HAS_TRAIT(owner, TRAIT_NOBREATH))
-		nobreath = TRUE
-	else
-		ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/deathdoorwilloss/on_remove()
 	. = ..()
-	if(!blimmune)
-		REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, id)
-	if(!nobreath)
-		REMOVE_TRAIT(owner, TRAIT_NOBREATH, id)
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/deathdoorwilloss/process()
 	.=..()
 	owner.energy_add(-1)	//being in death's edge drains energy from people
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.necra_area))
-		owner.remove_status_effect(/datum/status_effect/debuff/deathdoorwilloss)
+	if(isnull(our_area) || !(our_area.necra_area))
+		owner.remove_status_effect(src)
 
 /atom/movable/screen/alert/status_effect/debuff/deathdoorwilloss
 	name = "Deathly calm!"
@@ -734,8 +721,8 @@
 	var/mob/living/carbon/human/climber
 
 /datum/status_effect/debuff/climbing_lfwb/on_creation(mob/living/new_owner, new_stamcost)
-    stamcost = new_stamcost
-    return ..()
+	stamcost = new_stamcost
+	return ..()
 
 /datum/status_effect/debuff/climbing_lfwb/on_apply()
 	. = ..()
@@ -795,7 +782,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/mesmerised
 	name = "Mesmerised"
-	desc = span_warning("Their beauty is otherwordly..")
+	desc = span_warning("Their beauty is otherworldly..")
 	icon_state = "acid"
 
 /////////////////////////
@@ -910,19 +897,19 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
 
 /datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source) // rewritten by @tmyqlfpir
-    SIGNAL_HANDLER
+	SIGNAL_HANDLER
 
-    var/turf/cur_turf = get_turf(owner)
-    if(!cur_turf)
-        return
-    if(!shadow)
-        shadow = new /obj/effect/flyer_shadow(cur_turf, owner)
-    while(isopenspace(cur_turf))
-        var/turf/temp_turf = GET_TURF_BELOW(cur_turf)
-        if(!temp_turf || isclosedturf(temp_turf))
-            break
-        cur_turf = temp_turf
-    shadow.forceMove(cur_turf)
+	var/turf/cur_turf = get_turf(owner)
+	if(!cur_turf)
+		return
+	if(!shadow)
+		shadow = new /obj/effect/flyer_shadow(cur_turf, owner)
+	while(isopenspace(cur_turf))
+		var/turf/temp_turf = GET_TURF_BELOW(cur_turf)
+		if(!temp_turf || isclosedturf(temp_turf))
+			break
+		cur_turf = temp_turf
+	shadow.forceMove(cur_turf)
 
 /datum/status_effect/debuff/harpy_flight/proc/remove_signals()
 	UnregisterSignal(owner, list(
@@ -1083,3 +1070,56 @@
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+
+/datum/status_effect/debuff/freezing
+	id = "freezing"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/freezing
+	effectedstats = list(STATKEY_CON = -1)
+	duration = 100
+
+/atom/movable/screen/alert/status_effect/debuff/freezing
+	name = "Freezing"
+	desc = "It's so cold!"
+	icon_state = "chilled"
+
+/datum/status_effect/debuff/brittle
+	id = "brittle cold"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/brittle
+	duration = 10 SECONDS
+
+/datum/status_effect/debuff/brittle/on_apply()
+	. = ..()
+	var/mob/living/carbon/C = owner
+	to_chat(C, span_warning("My joints stiffen as the cold hardens my frame."))
+	ADD_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
+	message_admins("debuff applied")
+/datum/status_effect/debuff/brittle/on_remove()
+	. = ..()
+	var/mob/living/carbon/C = owner
+	to_chat(C, span_notice("My frame loosens as warmth returns."))
+	REMOVE_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
+
+/atom/movable/screen/alert/status_effect/debuff/brittle
+	name = "brittle cold"
+	desc = "My frame is so cold it's brittle!"
+	icon_state = "chilled"
+
+/datum/status_effect/debuff/overheat
+	id = "overheating"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/overheat
+	duration = 10 SECONDS
+	effectedstats = list(STATKEY_SPD = 2, STATKEY_WIL = -4)
+/datum/status_effect/debuff/overheat/on_apply()
+	. = ..()
+	var/mob/living/carbon/C = owner
+	to_chat(C, span_userdanger("My core temperature rises, overheating my frame."))
+	message_admins("debuff applied")
+/datum/status_effect/debuff/overheat/on_remove()
+	. = ..()
+	var/mob/living/carbon/C = owner
+	to_chat(C, span_userdanger("My core temperature returns to normal."))
+
+/atom/movable/screen/alert/status_effect/debuff/overheat
+	name = "overheating"
+	desc = "My frame is overheating!"
+	icon_state = "fire"

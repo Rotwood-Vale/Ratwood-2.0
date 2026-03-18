@@ -28,7 +28,7 @@
 		/obj/item/ammo_casing/caseless/rogue/arrow = 1*trashMod,
 		/obj/item/reagent_containers/glass/bottle/rogue = 1*trashMod,
 		/obj/item/reagent_containers/food/snacks/smallrat = 1, //That's not a fish...?
- 		/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab = 30,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab = 30,
 	)
 	return counterlist_ceiling(weightList)
 
@@ -98,7 +98,7 @@
 	var/weightList = list (
 		/obj/item/reagent_containers/food/snacks/fish/mudskipper = 790*commonMod,
 		/obj/item/natural/worms/leech = 180*rareMod,
- 		/obj/item/clothing/ring/gold = 1*treasureMod + 30*ceruleanMod,
+		/obj/item/clothing/ring/gold = 1*treasureMod + 30*ceruleanMod,
 		/obj/item/reagent_containers/food/snacks/smallrat = 1, //Thats one dirty... not a fish...?
 		/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab = 30,
 	)

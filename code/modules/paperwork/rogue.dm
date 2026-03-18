@@ -53,32 +53,7 @@
 	..()
 	user.update_inv_hands()
 
-/obj/item/paper/scroll/read(mob/user)
-	if(!open)
-		to_chat(user, span_info("Open me."))
-		return
-	if(!user.client || !user.hud_used)
-		return
-	if(!user.hud_used.reads)
-		return
-	if(!user.can_read(src))
-		return
-	/*font-size: 125%;*/
-	if(in_range(user, src) || isobserver(user))
-		user.hud_used.reads.icon_state = "scroll"
-		user.hud_used.reads.show()
-		var/dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
-			<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><style type=\"text/css\">
-					body { background-image:url('book.png');background-repeat: repeat; }</style></head><body scroll=yes>"}
-		dat += "[info]<br>"
-		dat += "<a href='?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
-		dat += "</body></html>"
-		user << browse(dat, "window=reading;size=460x300;can_close=0;can_minimize=0;can_maximize=0;can_resize=0;titlebar=0")
-		onclose(user, "reading", src)
-	else
-		return span_warning("I'm too far away to read it.")
-
-/obj/item/paper/scroll/Initialize()
+/obj/item/paper/scroll/Initialize(mapload)
 	open = FALSE
 	update_icon_state()
 	..()
@@ -147,6 +122,79 @@
 		slot_flags |= ITEM_SLOT_HIP
 		open = FALSE
 		playsound(loc, 'sound/items/book_close.ogg', 100, FALSE, -1)
+	update_icon_state()
+	user.update_inv_hands()
+
+/obj/item/paper/scroll/custom
+	name = "custom book"
+	desc = "A writable book appearance. Use in hand to customize."
+	icon = 'icons/roguetown/items/books.dmi'
+	icon_state = "book_0"
+	maxlen = 10000
+	var/stage = 0
+	var/base_icon_state = "book"
+	var/customized = FALSE
+
+/obj/item/paper/scroll/custom/attack_self(mob/user)
+	if(stage == 0)
+		var/name_input = stripped_input(user, "Name your book - Leave empty for default.", "Book", max_length = MAX_NAME_LEN)
+		if(name_input)
+			name = name_input
+		stage++
+		return
+
+	if(stage == 1)
+		var/desc_input = stripped_input(user, "Describe your book - Leave empty for default.", "Book", max_length = MAX_BROADCAST_LEN)
+		if(desc_input)
+			desc = desc_input
+		stage++
+		return
+
+	if(stage == 2)
+		var/icon/J = new('icons/roguetown/items/books.dmi')
+		var/list/istates = J.IconStates()
+		var/list/icon_choice = list()
+		for(var/icon_s in istates)
+			if(icon_s == icon_state)
+				continue
+			if(!findtext(icon_s, "_0"))
+				continue
+			icon_choice += list(
+				"[icon_s]" = icon(icon = 'icons/roguetown/items/books.dmi', icon_state = icon_s)
+			)
+
+		var/icon_input = show_radial_menu(user, src, icon_choice, require_near = TRUE, tooltips = FALSE)
+		if(icon_input)
+			icon_state = icon_input
+			base_icon_state = replacetextEx(icon_input, regex(@"_[0-1]"), "")
+			if(alert(user, "Are you happy with this?", "Book Cover", "Yes", "No") != "Yes")
+				icon_state = initial(icon_state)
+				base_icon_state = initial(base_icon_state)
+				return
+		stage++
+		customized = TRUE
+		to_chat(user, span_notice("The book is ready. Right-click to open, use a feather to write."))
+		return
+
+	..()
+
+/obj/item/paper/scroll/custom/update_icon_state()
+	if(!customized)
+		return
+	if(open)
+		icon_state = "[base_icon_state]_1"
+	else
+		icon_state = "[base_icon_state]_0"
+
+/obj/item/paper/scroll/custom/attack_right(mob/user)
+	if(open)
+		slot_flags |= ITEM_SLOT_HIP
+		open = FALSE
+		playsound(src, 'sound/items/book_close.ogg', 100, FALSE)
+	else
+		slot_flags &= ~ITEM_SLOT_HIP
+		open = TRUE
+		playsound(src, 'sound/items/book_open.ogg', 100, FALSE)
 	update_icon_state()
 	user.update_inv_hands()
 
@@ -508,15 +556,21 @@
 		name = initial(name)
 
 /obj/item/paper/scroll/writ_of_esteem/zybantine
-	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity.This one bears the signet of the Zybantine Empress."
+	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity. This one bears the signet of the Zybantine Empress."
 	info = "By Imperial Decree of the Calipha, Empress Sayjit Al-Halruik, Premier of Zybantium, Lady of the Gypsum Rose, in the name of PSYDON, the Most Gracious, the Most Merciful.\
-	 I, Empress of the Zybantine Empire, sovereign of desert and court, issue this edict. Bearer, my appointed commander of the journey, holds full covenant and safe-conduct to treat,\
-	 levy, pledge, and seal on behalf of my dominion and community. Let all governors and lords honor this writ, valid beneath my seal, witnessed by my vizier and scribe. Defiance \
-	 invites reckoning; assistance earns favor. Thus is spoken and decreed from the Court of the Empire of Zybantium."
+	I, Empress of the Zybantine Empire, sovereign of desert and court, issue this edict. Bearer, my appointed commander of the journey, holds full covenant and safe-conduct to treat,\
+	levy, pledge, and seal on behalf of my dominion and community. Let all governors and lords honor this writ, valid beneath my seal, witnessed by my vizier and scribe. Defiance \
+	invites reckoning; assistance earns favor. Thus is spoken and decreed from the Court of the Empire of Zybantium."
 	icon_state = "contractsigned"
+
 /obj/item/paper/scroll/writ_of_esteem/grenzel
 	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity.This one bears the signet of the Grenzelhoft Holy See."
 	info = "By the command of his Imperial Majesty, through the Council of Electors, does bestow this writ. Let it be known that the bearer of this writ is empowered to negotiate,\
-	 speak, and act in the Emperor’s stead as if it were His Majesty’s own words. None shall gainsay this authority, under seal and witness of the Electors assembled.\
-	 Verdinand III, Emperor of The Holy See of Grenzelhoft."
+	speak, and act in the Emperor’s stead as if it were His Majesty’s own words. None shall gainsay this authority, under seal and witness of the Electors assembled.\
+	Verdinand III, Emperor of The Holy See of Grenzelhoft."
+	icon_state = "contractsigned"
+
+/obj/item/paper/scroll/writ_of_esteem/otavan
+	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity. This one bears the seal of the Principality of Otava."
+	info = "By word of the Prince Henri the Silver-Blooded, and with the Seal of Approval by High Inquisitor Archibald, does this writ gain power only given to the men and women truly blessed by PSYDON. The bearer of this writ is empowered to speak, negotiate, and act in the Principality's name, and to act with the full support of the Otavan Holy See. Furthermore, any true believer of PSYDON and HIS name shall provide any aid to its bearer, for they bring forth HIS will and carry HIS strength. Let it be known that should this edict be honored, favor and respect is forever earned. Should any individual wrong the men and women of PSYDON and the Holy See, however, will have HIS wrath driven unto their land."
 	icon_state = "contractsigned"

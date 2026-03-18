@@ -1,7 +1,7 @@
 /datum/patron/inhumen/graggar
 	name = "Graggar"
 	domain = "Conquest, Cruelty, Kinslaying, Slaughter, Cannibalism, Rape"
-	desc = "The Gorebound Star was a half-orc warlord who sought to strike Ravox down in rage at the cruel fate of His lover. He was decapitated, and His head revived as a mutilated abberation of blue flesh and sickening tendrils. Gazing upon the Star will drive anyone mad."
+	desc = "The Gorebound Star was a half-orc warlord who sought to strike Ravox down in rage at the cruel fate of His lover. He was decapitated, and His head revived as a mutilated aberration of blue flesh and sickening tendrils. Gazing upon the Star will drive anyone mad."
 	worshippers = "Fallen Warriors, Cannibals, Serial Killers, The Cruel"
 	mob_traits = list(TRAIT_HORDE, TRAIT_ORGAN_EATER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
@@ -20,12 +20,12 @@
 	storyteller = /datum/storyteller/graggar
 
 /datum/patron/inhumen/graggar/on_lesser_heal(
-    mob/living/user,
-    mob/living/target,
-    message_out,
-    message_self,
-    conditional_buff,
-    situational_bonus,
+	mob/living/user,
+	mob/living/target,
+	message_out,
+	message_self,
+	conditional_buff,
+	situational_bonus,
 	is_inhumen
 )
 	*is_inhumen = TRUE

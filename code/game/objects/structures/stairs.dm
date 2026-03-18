@@ -77,7 +77,7 @@
 /obj/structure/stairs/fancy/l
 	icon_state = "fancy_stairs_l"
 
-/obj/structure/stairs/fancy/Initialize()
+/obj/structure/stairs/fancy/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -130,11 +130,16 @@
 		AM.forceMove(newtarg)
 		return
 	var/mob/living/L = AM
+	var/prev_z_level = L.z
+	var/new_z_level = newtarg.z
+	var/stamina_cost = (L.mobility_flags & MOBILITY_STAND) ? 10 : 30 // 1/3rd the cost of climbing up a wall.
 	var/atom/movable/pulling = L.pulling
 	var/was_pulled_buckled = FALSE
 	if(pulling)
 		if(pulling in L.buckled_mobs)
 			was_pulled_buckled = TRUE
+	if((prev_z_level < new_z_level)) // Going UP a Z-level (Only applies stamina cost to the person walking up, not the pulled mob)
+		L.stamina_add(stamina_cost)
 	L.forceMove(newtarg)
 	if(pulling)
 		L.stop_pulling()
@@ -142,3 +147,56 @@
 		L.start_pulling(pulling, supress_message = TRUE)
 		if(was_pulled_buckled) // Assume this was a fireman carry since piggybacking is not a thing
 			L.buckle_mob(pulling, TRUE, TRUE, 90, 0, 0)
+		if(isliving(pulling))
+			var/mob/living/P = pulling
+			while(P.pulling && isliving(P.pulling))
+				was_pulled_buckled = FALSE
+				pulling = P.pulling
+				if(pulling in P.buckled_mobs)
+					was_pulled_buckled = TRUE
+				P.stop_pulling()
+				pulling.forceMove(newtarg)
+				P.start_pulling(pulling, supress_message = TRUE)
+				if(was_pulled_buckled) // Assume this was a fireman carry since piggybacking is not a thing
+					P.buckle_mob(pulling, TRUE, TRUE, 90, 0, 0)
+				if(isliving(pulling))
+					P = pulling
+
+
+//purely cosmetic curved stairs (kinda confusing to set up right, compare the DIR to regular chairs. Correct version depends on if it's going up or down)
+
+/obj/structure/stairs/cw
+	name = "curved stairs"
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "woodCW"
+
+/obj/structure/stairs/cwdown
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "woodCWdown"
+
+/obj/structure/stairs/ccw
+	name = "curved stairs"
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "woodCCW"
+	
+/obj/structure/stairs/ccwdown
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "woodCCWdown"
+
+/obj/structure/stairs/stone/ccw
+	name = "curved stairs"
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "stoneCCW"
+
+/obj/structure/stairs/stone/ccwdown
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "stoneCCWdown"
+
+/obj/structure/stairs/stone/cw
+	name = "curved stairs"
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "stoneCW"
+
+/obj/structure/stairs/stone/cwdown
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "stoneCWdown"

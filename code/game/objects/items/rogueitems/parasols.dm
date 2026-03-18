@@ -19,6 +19,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	grid_width = 32
 	grid_height = 64
+	dropshrink = 0.8
 
 /obj/item/rogueweapon/mace/parasol/New()
 	..()
@@ -40,6 +41,9 @@
 	sellprice = 45 // Takes master sewing and silk to create
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
+	pixel_x = -16
+	pixel_y = -16
+	dropshrink = 0.8
 
 /obj/item/rogueweapon/mace/parasol/noble/New()
 	..()

@@ -12,10 +12,10 @@
 	jitteriness = max(jitteriness,amount,0)
 
 /**
-  * Set the dizzyness of a mob to a passed in amount
-  *
-  * Except if dizziness is already higher in which case it does nothing
-  */
+ * Set the dizzyness of a mob to a passed in amount
+ *
+ * Except if dizziness is already higher in which case it does nothing
+ */
 /mob/proc/Dizzy(amount)
 	dizziness = max(dizziness,amount,0)
 
@@ -28,18 +28,18 @@
 	adjust_blindness(amount)
 
 /**
-  * Adjust a mobs blindness by an amount
-  *
-  * Will apply the blind alerts if needed
-  */
+ * Adjust a mobs blindness by an amount
+ *
+ * Will apply the blind alerts if needed
+ */
 /mob/proc/adjust_blindness(amount)
 	var/old_eye_blind = eye_blind
 	eye_blind = max(0, eye_blind + amount)
 	if(!old_eye_blind || !eye_blind && !HAS_TRAIT(src, TRAIT_BLIND))
 		update_blindness()
 /**
-  * Force set the blindness of a mob to some level
-  */
+ * Force set the blindness of a mob to some level
+ */
 /mob/proc/set_blindness(amount)
 	var/old_eye_blind = eye_blind
 	eye_blind = max(amount, 0)
@@ -61,8 +61,8 @@
 		clear_fullscreen("blind")
 //		remove_client_colour(/datum/client_colour/monochrome/blind)
 /**
-  * Make the mobs vision blurry
-  */
+ * Make the mobs vision blurry
+ */
 /mob/proc/blur_eyes(amount)
 	if(amount>0)
 		eye_blurry = max(amount, eye_blurry)
@@ -75,8 +75,8 @@
 	clear_fullscreen("LYVES")
 
 /**
-  * Adjust the current blurriness of the mobs vision by amount
-  */
+ * Adjust the current blurriness of the mobs vision by amount
+ */
 /mob/proc/adjust_blurriness(amount)
 	eye_blurry = max(eye_blurry+amount, 0)
 	update_eye_blur()
@@ -120,6 +120,13 @@
 	return
 
 ///Adjust the body temperature of a mob, with min/max settings
-/mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
+/mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=600)
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)
+		var/mob/living/L = src
+
+//non-small temperature changes apply a notice effect
+		if(amount < -20)
+			to_chat(src, span_notice("You feel yourself cooling down."))
+		else if(L && amount > 20 && !L.on_fire)
+			to_chat(src, span_notice("You feel yourself warming up."))

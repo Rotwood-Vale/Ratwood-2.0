@@ -19,7 +19,7 @@
 	start_lit = TRUE
 	icon_state = "candle1_lit"
 
-/obj/item/candle/Initialize()
+/obj/item/candle/Initialize(mapload)
 	. = ..()
 	if(start_lit)
 		light()
@@ -189,6 +189,7 @@
 
 /obj/item/candle/gold
 	name = "gold candle"
+	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "gcandle"
 	sellprice = 30
 

@@ -1,9 +1,12 @@
-/datum/preferences/proc/open_loadout_menu(mob/user)
+/datum/preferences/proc/open_loadout_menu(mob/user, slot = 1)
 	if(!user || !user.client)
 		return
 	
 	// Redirect to unified character customization menu
-	open_vices_menu(user)
+	if(!loadout_menu)
+		loadout_menu = new(src)
+	loadout_menu.ui_interact(user)
+	loadout_menu.current_slot = slot
 
 /datum/preferences/proc/generate_loadout_html(mob/user)
 	var/total_triumphs = usr.get_triumphs()

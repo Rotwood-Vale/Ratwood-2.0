@@ -18,7 +18,7 @@
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/ingot/iron = 1,
 				/obj/item/natural/glass = 1,
-				/obj/item/roguegear = 1)
+				/obj/item/roguegear/bronze = 1)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
@@ -48,6 +48,7 @@
 	reqs = list(/obj/item/ingot/iron = 1)
 	verbage_simple = "engineer"
 	verbage = "engineers"
+	ignoredensity = TRUE
 	skillcraft = /datum/skill/craft/engineering
 
 /datum/crafting_recipe/roguetown/engineering/shopbars
@@ -99,7 +100,7 @@
 	name = "shutters"
 	result = /obj/structure/bars/passage/shutter
 	reqs = list(/obj/item/ingot/iron = 1,
-					/obj/item/roguegear = 1)
+					/obj/item/roguegear/bronze = 1)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
@@ -372,3 +373,83 @@
 	reqs =  list(/obj/item/roguegear/bronze = 1, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/alch/irondust =1, /obj/item/alch/magicdust =1)
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 6
+
+// ----------- Explosive grenades and gas belchers -----------
+// Mostly here to avoid having to use spark-generating 6 step recipes around impact grenades and other instant explosives
+
+/datum/crafting_recipe/roguetown/engineering/impactexplosive
+	name = "impact grenades (x3)"
+	category = "Explosives"
+	result = list(/obj/item/impact_grenade/explosion,
+				  /obj/item/impact_grenade/explosion,
+				  /obj/item/impact_grenade/explosion)
+	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 1, /obj/item/alch/firedust = 1, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/impactsmoke
+	name = "smoke grenades (x3)"
+	category = "Explosives"
+	result = list(/obj/item/impact_grenade/smoke, 
+				  /obj/item/impact_grenade/smoke,
+				  /obj/item/impact_grenade/smoke,)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /datum/reagent/water = 48)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/impactpoisonsmoke
+	name = "smoke grenades, poisonous (x3)"
+	category = "Explosives"
+	result = list(/obj/item/impact_grenade/smoke/poison_gas,
+				  /obj/item/impact_grenade/smoke/poison_gas,
+				  /obj/item/impact_grenade/smoke/poison_gas)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /datum/reagent/berrypoison = 5, /obj/item/alch/airdust = 1, /datum/reagent/water = 48)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/impactfiresmoke
+	name = "smoke grenades, incendiary (x3)"
+	category = "Explosives"
+	result = list(/obj/item/impact_grenade/smoke/fire_gas,
+				  /obj/item/impact_grenade/smoke/fire_gas,
+				  /obj/item/impact_grenade/smoke/fire_gas)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 2, /obj/item/ash = 1, /obj/item/alch/firedust = 1, /obj/item/alch/solardust = 1, /datum/reagent/water = 48)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/impactblindingsmoke
+	name = "smoke grenades, blinding (x3)"
+	category = "Explosives"
+	result = list(/obj/item/impact_grenade/smoke/blind_gas,
+				  /obj/item/impact_grenade/smoke/blind_gas,
+				  /obj/item/impact_grenade/smoke/blind_gas)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced = 1, /obj/item/natural/dirtclod = 1, /datum/reagent/water = 48)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/impactmutesmoke
+	name = "smoke grenades, muting (x3)"
+	category = "Explosives"
+	result = list(/obj/item/impact_grenade/smoke/mute_gas,
+				  /obj/item/impact_grenade/smoke/mute_gas,
+				  /obj/item/impact_grenade/smoke/mute_gas)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/alch/irondust = 1, /obj/item/rogueore/cinnabar = 1, /datum/reagent/water = 48)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/impacthealingsmoke
+	name = "smoke grenades, healing (x3)"
+	category = "Explosives"
+	result = list(/obj/item/impact_grenade/smoke/healing_gas,
+				  /obj/item/impact_grenade/smoke/healing_gas,
+				  /obj/item/impact_grenade/smoke/healing_gas)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/alch/viscera = 1, /obj/item/alch/bonemeal = 1, /datum/reagent/water = 48)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4 

@@ -152,4 +152,4 @@ Even though they are of mixed blood and smaller than typical dwarves, most gnome
 	return randname
 
 /datum/species/dwarf/gnome/random_surname()
-	return " [pick(world.file2list("strings/rt/names/elf/elfwlast.txt"))]"
+	return "[pick(world.file2list("strings/rt/names/elf/elfwlast.txt"))]"

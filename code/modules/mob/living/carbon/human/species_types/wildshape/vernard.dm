@@ -4,6 +4,8 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/wolf_skin
+	wildshape_icon = 'icons/roguetown/mob/monster/fox.dmi'
+	wildshape_icon_state = "fox"
 	//This is basically just Wolf & Cat form combined, think rogue form
 
 /mob/living/carbon/human/species/wildshape/fox/gain_inherent_skills()
@@ -21,8 +23,11 @@
 		src.STASPD = 16
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/foxclaws)
-		real_name = "Vernard" //So we don't get a random name
 		faction += "wolfs" // Foxes have the same faction code-wise so leaving it for now
+		if (src.client.prefs?.wildshape_name)
+			real_name = "vernard ([stored_mob.real_name])"
+		else
+			real_name = "vernard"
 
 // FOX SPECIES DATUM //
 /datum/species/shapefox
@@ -145,7 +150,7 @@
 /obj/item/rogueweapon/fox_claw/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/fox_claw/Initialize()
+/obj/item/rogueweapon/fox_claw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)

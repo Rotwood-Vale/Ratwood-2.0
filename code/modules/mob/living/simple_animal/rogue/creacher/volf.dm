@@ -81,7 +81,7 @@
 	icon_state = "bones"
 	icon = 'icons/roguetown/mob/monster/vol.dmi'
 
-/mob/living/simple_animal/hostile/retaliate/rogue/wolf/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/wolf/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, 0.75, 0.4)

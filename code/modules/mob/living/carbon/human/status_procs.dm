@@ -48,3 +48,27 @@
 //			grant_language(/datum/language/beachbum)
 //		else
 //			remove_language(/datum/language/beachbum)
+
+/mob/living/carbon/human/proc/get_temp_modifier()
+	var/modifier = 0
+
+	// Map-specific adjustments
+	if(SSmapping.config.map_name == "Rockhill")	//rockhill temperatures are moderate and wet climate
+	// Time-of-day adjustments
+		if(time_flags & TIME_OF_DAY_BIT_DAY)
+			modifier += 20
+		else if(time_flags & TIME_OF_DAY_BIT_NIGHT)
+			modifier -= 20
+
+	else if(SSmapping.config.map_name == "Desert Town")	//desert map has wild temperature swings
+		if(time_flags & TIME_OF_DAY_BIT_DAY)
+			modifier += 100							//300+100 is 400, in the middle of the 'hot' temperature range
+		else if(time_flags & TIME_OF_DAY_BIT_NIGHT)
+			modifier -= 100							//300-100 is 200, in the middle of the 'cold' temperature range
+
+	else if(SSmapping.config.map_name == "Dun World")//Dunworld is colder then the other two maps
+		if(time_flags & TIME_OF_DAY_BIT_DAY)
+			modifier += 0							//No bonus for day time temperatures
+		else if(time_flags & TIME_OF_DAY_BIT_NIGHT)
+			modifier -= 120							//300-120 is 180, a bit further towards cold in the 'cold' temperature range
+	return modifier

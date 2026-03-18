@@ -29,6 +29,10 @@
 #define MOVE_INTENT_RUN  "run"
 #define MOVE_INTENT_SNEAK "sneak"
 
+//time of day bitflags for mobs
+#define TIME_OF_DAY_BIT_DAY		(1 << 0)
+#define TIME_OF_DAY_BIT_NIGHT	(1 << 1)
+
 //resist
 #define RESIST_INTENT 0
 #define SUBMIT_INTENT 1
@@ -42,7 +46,7 @@
 #define BLOOD_VOLUME_BAD 224
 #define BLOOD_VOLUME_SURVIVE 122
 
-/// Blood pool regeneration in non-vampiric living mobs per SSmobs tick. 
+/// Blood pool regeneration in non-vampiric living mobs per SSmobs tick.
 #define BLOODPOL_REGEN 2
 
 //Sizes of mobs, used by mob/living/var/mob_size
@@ -373,6 +377,22 @@
 // /obj/item/bodypart on_mob_life() retval flag
 #define BODYPART_LIFE_UPDATE_HEALTH (1<<0)
 
+// Pending icon update bitflags for deferred batching
+#define PENDING_UPDATE_BODY       (1<<0)
+#define PENDING_UPDATE_HAIR       (1<<1)
+#define PENDING_UPDATE_DAMAGE     (1<<2)
+#define PENDING_UPDATE_INV_HANDS  (1<<3)
+#define PENDING_UPDATE_INV_GLOVES (1<<4)
+#define PENDING_UPDATE_INV_SHOES  (1<<5)
+#define PENDING_UPDATE_INV_HEAD   (1<<6)
+#define PENDING_UPDATE_INV_BELT   (1<<7)
+#define PENDING_UPDATE_INV_BACK   (1<<8)
+#define PENDING_UPDATE_INV_ARMOR  (1<<9)
+#define PENDING_UPDATE_INV_SHIRT  (1<<10)
+#define PENDING_UPDATE_INV_PANTS  (1<<11)
+#define PENDING_UPDATE_INV_CLOAK  (1<<12)
+#define PENDING_UPDATE_INV_ALL    (PENDING_UPDATE_INV_HANDS|PENDING_UPDATE_INV_GLOVES|PENDING_UPDATE_INV_SHOES|PENDING_UPDATE_INV_HEAD|PENDING_UPDATE_INV_BELT|PENDING_UPDATE_INV_BACK|PENDING_UPDATE_INV_ARMOR|PENDING_UPDATE_INV_SHIRT|PENDING_UPDATE_INV_PANTS|PENDING_UPDATE_INV_CLOAK)
+
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
@@ -468,6 +488,7 @@
 #define SKIN_COLOR_NALEDI "4e3729"
 #define SKIN_COLOR_KAZENGUN "dbcca9"
 #define SKIN_COLOR_NALEDI_LIGHT "5d4c41"
+#define SKIN_COLOR_CZWARTEKI "fcede6"
 
 //DULLAHAN SKIN TONES
 #define SKIN_COLOR_PALE_GRENZELHOFT "ebdad2"
@@ -477,6 +498,7 @@
 
 //AASIMAR SKIN TONES
 #define SKIN_COLOR_CULTOR "b5a4a4"
+#define SKIN_COLOR_ARCHON "feddcd"
 #define SKIN_COLOR_SPIRITUS "f0eded"
 #define SKIN_COLOR_PLANETAR "ffd859"
 #define SKIN_COLOR_DEVA "b6f1f2"
@@ -514,6 +536,7 @@
 #define SKIN_COLOR_MURKWALKER "716646"
 #define SKIN_COLOR_SHATTERHORN "D6D5E2"
 #define SKIN_COLOR_SPIRITCRUSHER "9D4D62"
+#define SKIN_COLOR_UNDERDWELLER "4C5A65"
 
 //TIEFLING SKIN TONES
 #define SKIN_COLOR_NESSYSS "C62D4C"
@@ -530,6 +553,12 @@
 #define SKIN_COLOR_DREMA "D16A51"
 #define SKIN_COLOR_CHIR "549ab6"
 #define SKIN_COLOR_VESYL "7A2525"
+#define SKIN_COLOR_ASZA "7a5497"
+#define SKIN_COLOR_KRIZZSHA "a191cc"
+#define SKIN_COLOR_TOSIZ "5b7343"
+#define SKIN_COLOR_VELOTHEL "87a665"
+#define SKIN_COLOR_KROSEC "f9f9f9"
+#define SKIN_COLOR_ASHOL "9D807A"
 
 //GOBLIN SKIN TONES
 #define SKIN_COLOR_OCHRE "968127"
@@ -545,6 +574,7 @@
 #define SKIN_COLOR_ABYSS "2a6986"
 #define SKIN_COLOR_HADAL "24353d"
 #define SKIN_COLOR_BONE "e3dac9"
+#define SKIN_COLOR_PALE "c9c9c9"
 
 //ARGONIAN SKIN TONES
 #define SKIN_COLOR_AQUARELA "ffff88"
@@ -603,6 +633,11 @@
 //DOLL PAINT COLOR
 #define DOLL_PORCELAIN "ffffff"
 #define DOLL_SIENNA "a0522d"
+#define DOLL_KAZENGUN "dbcca9"
+#define DOLL_SCARLET_REACH "daa99c"
+#define DOLL_WALNUT "ba9882"
+#define DOLL_GLOOMHAVEN "897489"
+#define DOLL_EBON "4e3729"
 
 // Pixel shifting
 #define PIXEL_SHIFT_MAXIMUM 16

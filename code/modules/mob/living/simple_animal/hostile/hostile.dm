@@ -65,7 +65,7 @@
 
 
 
-/mob/living/simple_animal/hostile/Initialize()
+/mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()
 	last_aggro_loss = world.time //so we delete even if we never found a target
 	if(!targets_from)
@@ -405,6 +405,17 @@
 	in_melee = FALSE
 	walk(src, 0)
 	LoseAggro()
+
+/mob/living/simple_animal/hostile/proc/revalidate_target_on_faction_change()
+	if(!target || !isliving(target))
+		return
+	if(faction_check_mob(target))
+		LoseTarget()
+
+/mob/living/proc/notify_faction_change()
+	for(var/mob/living/simple_animal/hostile/H in orange(7, src))
+		if(H.target == src)
+			H.revalidate_target_on_faction_change()
 
 //////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
 

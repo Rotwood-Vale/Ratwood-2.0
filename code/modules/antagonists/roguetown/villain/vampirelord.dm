@@ -610,7 +610,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		var/obj/structure/vampire/portal/sending/P = new(S.loc)
 		P.visible_message(span_boldnotice("A sickening tear is heard as a sinister portal emerges."))
 
-/obj/structure/vampire/portal/Initialize()
+/obj/structure/vampire/portal/Initialize(mapload)
 	. = ..()
 	set_light(3, 3, 20, l_color = LIGHT_COLOR_BLOOD_MAGIC)
 	playsound(loc, 'sound/misc/portalopen.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -622,7 +622,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		PM.sending = FALSE
 	. = ..()
 
-/obj/structure/vampire/bloodpool/Initialize()
+/obj/structure/vampire/bloodpool/Initialize(mapload)
 	. = ..()
 	set_light(3, 3, 20, l_color = LIGHT_COLOR_BLOOD_MAGIC)
 
@@ -902,7 +902,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 				to_chat(owner, "<B>Goal #[count]</B>: [objective.explanation_text] <span class='redtext'>Failure.</span>")
 				traitorwin = FALSE
 			count += objective.triumph_count
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 	if(traitorwin)
 		if(count)
 			if(owner)
@@ -1017,7 +1017,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 					traitorwin = FALSE
 				count += objective.triumph_count
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 	if(traitorwin)
 		if(count)
 			if(owner)
@@ -1037,7 +1037,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon = 'icons/roguetown/clothing/neck.dmi'
 	var/uses = 3
 
-/obj/item/clothing/neck/roguetown/portalamulet/Initialize()
+/obj/item/clothing/neck/roguetown/portalamulet/Initialize(mapload)
 	GLOB.vampire_objects |= src
 	. = ..()
 
@@ -1050,7 +1050,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	var/unlocked = FALSE
 	density = TRUE
 
-/obj/structure/vampire/Initialize()
+/obj/structure/vampire/Initialize(mapload)
 	GLOB.vampire_objects |= src
 	. = ..()
 
@@ -1102,7 +1102,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon_state = "arrow"
 	delete_after_roundstart = FALSE
 
-/obj/effect/landmark/start/vampirelord/Initialize()
+/obj/effect/landmark/start/vampirelord/Initialize(mapload)
 	. = ..()
 	GLOB.vlord_starts += loc
 
@@ -1117,7 +1117,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	jobspawn_override = list("Death Knight")
 	delete_after_roundstart = FALSE
 
-/obj/effect/landmark/start/vampirespawn/Initialize()
+/obj/effect/landmark/start/vampirespawn/Initialize(mapload)
 	. = ..()
 	GLOB.vspawn_starts += loc
 
@@ -1192,7 +1192,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	usr.forceMove(pick(L))
 	update_parallax_contents()
 
-/mob/dead/observer/rogue/arcaneeye/Initialize()
+/mob/dead/observer/rogue/arcaneeye/Initialize(mapload)
 	. = ..()
 	set_invisibility(GLOB.observer_default_invisibility)
 	verbs += list(

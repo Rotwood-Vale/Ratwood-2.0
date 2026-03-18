@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(virtues)
 					increase_by = (maximum_skill - our_skill)
 				recipient.adjust_skillrank(the_skill.type, increase_by, TRUE)
 			else
-				to_chat(recipient, span_notice("My Virtue cannot influence my skill with [lowertext(the_skill.name)] any further."))
+				to_chat(recipient, span_notice("My Virtue cannot influence my skill with [LOWER_TEXT(the_skill.name)] any further."))
 
 
 /datum/virtue/proc/handle_stashed_items(mob/living/carbon/human/recipient)
@@ -82,7 +82,11 @@ GLOBAL_LIST_EMPTY(virtues)
 	if (!recipient.mind)
 		return FALSE
 
-	// we should check to see if they have triumphs first but i can't be fucked
+	// Check if they have enough triumphs
+	var/current_triumphs = recipient.get_triumphs()
+	if(current_triumphs < triumph_cost)
+		return FALSE
+	
 	recipient.adjust_triumphs(-triumph_cost, FALSE)
 	return TRUE
 

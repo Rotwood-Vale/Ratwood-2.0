@@ -251,32 +251,32 @@
 	base_type = CTYPE_ANCIENT
 	plural_name = "psila"
 
-/obj/item/roguecoin/inqcoin/pile/Initialize()
+/obj/item/roguecoin/inqcoin/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 
-/obj/item/roguecoin/aalloy/pile/Initialize()
+/obj/item/roguecoin/aalloy/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 
-/obj/item/roguecoin/copper/pile/Initialize()
+/obj/item/roguecoin/copper/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 
-/obj/item/roguecoin/silver/pile/Initialize()
+/obj/item/roguecoin/silver/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 
 
-/obj/item/roguecoin/silver/pile/readyuppile/Initialize()
+/obj/item/roguecoin/silver/pile/readyuppile/Initialize(mapload)
 	. = ..()
 	set_quantity(4) // 20 mammons combine with starting pouch to buy something
 
-/obj/item/roguecoin/gold/pile/Initialize()
+/obj/item/roguecoin/gold/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 
-/obj/item/roguecoin/gold/virtuepile/Initialize()
+/obj/item/roguecoin/gold/virtuepile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(8,12))
 

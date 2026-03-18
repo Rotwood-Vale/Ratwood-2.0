@@ -72,7 +72,7 @@
 	return TRUE
 
 
-/obj/item/rogueweapon/scabbard/proc/eat_sword(mob/living/user, obj/A)
+/obj/item/rogueweapon/scabbard/proc/eat_sword(mob/living/user, obj/A, sheathing_from_belt = FALSE)
 	if(!weapon_check(user, A))
 		return FALSE
 	if(obj_broken)
@@ -90,10 +90,11 @@
 	sheathed = A
 	update_icon(user)
 
-	user.visible_message(
-		span_notice("[user] sheathes [A] into [src]."),
-		span_notice("I sheathe [A] into [src].")
-	)
+	if(!sheathing_from_belt)
+		user.visible_message(
+			span_notice("[user] sheathes [A] into [src]."),
+			span_notice("I sheathe [A] into [src].")
+		)
 
 	playsound(src, sheathe_sound, 100, TRUE)
 	return TRUE

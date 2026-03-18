@@ -68,6 +68,39 @@
 	charging_slowdown = 3
 	chargedloop = /datum/looping_sound/invokegen
 	devotion_cost = 80
+	/// Structural damage the spell does
+	var/const/structure_damage = 1000
+	/// Radius of the spell
+	var/const/radius = 1
+	/// Radius of the quake
+	var/const/shakeradius = 7
+	/// Delay between the ground marking appearing and the effect playing
+	var/const/delay = 2 SECONDS
+
+/obj/effect/proc_holder/spell/invoked/hammerfall/cast(list/targets, mob/user = usr)
+	var/turf/fallzone = null
+	fallzone = get_turf(targets[1])
+	if(!fallzone)
+		return
+	show_visible_message(usr, "[usr] raises their arm, conjuring a hammer wreathed in molten fire. As they hurl it toward the ground, the earth trembles under its impact, shaking its very foundations!", "You raise your arm, conjuring a hammer wreathed in molten fire. As you hurl it toward the ground, the earth trembles under its impact, shaking its very foundations!")
+	for(var/turf/open/visual in view(radius, fallzone))
+		var/obj/effect/temp_visual/lavastaff/Lava = new /obj/effect/temp_visual/lavastaff(visual)
+		animate(Lava, alpha = 255, time = 5)
+	sleep(delay)
+	for(var/mob/living/carbon/screenshaken in view(shakeradius, fallzone))
+		shake_camera(screenshaken, 5, 5)
+	for(var/mob/living/carbon/shaken in view(radius, fallzone))
+		shaken.apply_effect(1 SECONDS, EFFECT_KNOCKDOWN, 0)
+		show_visible_message(shaken, null, "The ground quakes, making me fall over.")
+	for(var/obj/structure/damaged in view(radius, fallzone))
+		if(istype(damaged, /obj/structure/flora/newbranch))
+			continue
+		damaged.take_damage(structure_damage, BRUTE,"blunt",1)
+	for(var/turf/closed/wall/damagedwalls in view(radius, fallzone))
+		damagedwalls.take_damage(structure_damage, BRUTE,"blunt",1)
+	for(var/turf/closed/mineral/aoemining in view(radius, fallzone))
+		aoemining.lastminer = usr
+		aoemining.take_damage(structure_damage, BRUTE,"blunt",1)
 
 /obj/effect/proc_holder/spell/invoked/craftercovenant
 	name = "The Crafter’s Covenant"
@@ -118,8 +151,8 @@
 	if (!target.smeltresult) return
 	var/obj/item/itemtospawn = target.smeltresult
 	show_visible_message(user, "After [user]'s incantation, [target] glows brightly and melts into an ingot.", null)
-	new itemtospawn(target.loc)
-	sparks.set_up(1, 1, target.loc)
+	new itemtospawn(get_turf(target))
+	sparks.set_up(1, 1, get_turf(target))
 	sparks.start()
 	qdel(target)
 
@@ -136,46 +169,46 @@
 		handle_heating_equipped(target, targeteditem, user)
 
 /proc/get_targeted_item(mob/user, mob/target)
-    var/target_item
-    switch(user.zone_selected)
-        if (BODY_ZONE_PRECISE_R_HAND)
-            target_item = target.held_items[2]
-        if (BODY_ZONE_PRECISE_L_HAND)
-            target_item = target.held_items[1]
-        if (BODY_ZONE_HEAD)
-            target_item = target.get_item_by_slot(SLOT_HEAD)
-        if (BODY_ZONE_PRECISE_EARS)
-            target_item = target.get_item_by_slot(SLOT_HEAD)
-        if (BODY_ZONE_CHEST)
-            if(target.get_item_by_slot(SLOT_ARMOR))
-                target_item = target.get_item_by_slot(SLOT_ARMOR)
-            else if (target.get_item_by_slot(SLOT_SHIRT))
-                target_item = target.get_item_by_slot(SLOT_SHIRT)    
-        if (BODY_ZONE_PRECISE_NECK)
-            target_item = target.get_item_by_slot(SLOT_NECK)
-        if (BODY_ZONE_PRECISE_R_EYE)
-            target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
-        if ( BODY_ZONE_PRECISE_L_EYE)
-            target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
-        if (BODY_ZONE_PRECISE_NOSE)
-            target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
-        if (BODY_ZONE_PRECISE_MOUTH)
-            target_item = target.get_item_by_slot(ITEM_SLOT_MOUTH)
-        if (BODY_ZONE_L_ARM)
-            target_item = target.get_item_by_slot(ITEM_SLOT_WRISTS)
-        if (BODY_ZONE_R_ARM)
-            target_item = target.get_item_by_slot(ITEM_SLOT_WRISTS)
-        if (BODY_ZONE_L_LEG)
-            target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
-        if (BODY_ZONE_R_LEG)
-            target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
-        if (BODY_ZONE_PRECISE_GROIN)
-            target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
-        if (BODY_ZONE_PRECISE_R_FOOT)
-            target_item = target.get_item_by_slot(ITEM_SLOT_SHOES)
-        if (BODY_ZONE_PRECISE_L_FOOT)
-            target_item = target.get_item_by_slot(ITEM_SLOT_SHOES)
-    return target_item
+	var/target_item
+	switch(user.zone_selected)
+		if (BODY_ZONE_PRECISE_R_HAND)
+			target_item = target.held_items[2]
+		if (BODY_ZONE_PRECISE_L_HAND)
+			target_item = target.held_items[1]
+		if (BODY_ZONE_HEAD)
+			target_item = target.get_item_by_slot(SLOT_HEAD)
+		if (BODY_ZONE_PRECISE_EARS)
+			target_item = target.get_item_by_slot(SLOT_HEAD)
+		if (BODY_ZONE_CHEST)
+			if(target.get_item_by_slot(SLOT_ARMOR))
+				target_item = target.get_item_by_slot(SLOT_ARMOR)
+			else if (target.get_item_by_slot(SLOT_SHIRT))
+				target_item = target.get_item_by_slot(SLOT_SHIRT)    
+		if (BODY_ZONE_PRECISE_NECK)
+			target_item = target.get_item_by_slot(SLOT_NECK)
+		if (BODY_ZONE_PRECISE_R_EYE)
+			target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
+		if ( BODY_ZONE_PRECISE_L_EYE)
+			target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
+		if (BODY_ZONE_PRECISE_NOSE)
+			target_item = target.get_item_by_slot(ITEM_SLOT_MASK)
+		if (BODY_ZONE_PRECISE_MOUTH)
+			target_item = target.get_item_by_slot(ITEM_SLOT_MOUTH)
+		if (BODY_ZONE_L_ARM)
+			target_item = target.get_item_by_slot(ITEM_SLOT_WRISTS)
+		if (BODY_ZONE_R_ARM)
+			target_item = target.get_item_by_slot(ITEM_SLOT_WRISTS)
+		if (BODY_ZONE_L_LEG)
+			target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
+		if (BODY_ZONE_R_LEG)
+			target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
+		if (BODY_ZONE_PRECISE_GROIN)
+			target_item = target.get_item_by_slot(ITEM_SLOT_PANTS)
+		if (BODY_ZONE_PRECISE_R_FOOT)
+			target_item = target.get_item_by_slot(ITEM_SLOT_SHOES)
+		if (BODY_ZONE_PRECISE_L_FOOT)
+			target_item = target.get_item_by_slot(ITEM_SLOT_SHOES)
+	return target_item
 
 /proc/handle_tongs(obj/item/rogueweapon/tongs/T, mob/user) //Stole the code from smithing.
 	if (!T.hingot) return
@@ -191,8 +224,8 @@
 	target.dropItemToGround(targeteditem)
 	show_visible_message(target, "[target]'s [targeteditem.name] glows brightly, searing their flesh.", "Your [targeteditem.name] glows brightly, It burns!")
 	target.emote("painscream")
-	playsound(target.loc, 'sound/misc/frying.ogg', 100, FALSE, -1)
-	sparks.set_up(1, 1, target.loc)
+	playsound(get_turf(target), 'sound/misc/frying.ogg', 100, FALSE, -1)
+	sparks.set_up(1, 1, get_turf(target))
 	sparks.start()
 
 /proc/should_heat_in_hand(mob/user, mob/target, obj/item/targeteditem, list/nosmeltore)
@@ -225,7 +258,7 @@
 	apply_damage_if_covered(target, list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), targeteditem, GROIN|LEGS|FEET, damage_to_apply)
 	apply_damage_if_covered(target, list(BODY_ZONE_HEAD), targeteditem, HEAD|HAIR|NECK|NOSE|MOUTH|EARS|EYES, damage_to_apply)
 	show_visible_message(target, "[target]'s [targeteditem.name] glows brightly, searing their flesh.", "My [targeteditem.name] glows brightly, It burns!")
-	playsound(target.loc, 'sound/misc/frying.ogg', 100, FALSE, -1)
+	playsound(get_turf(target), 'sound/misc/frying.ogg', 100, FALSE, -1)
 
 /proc/apply_damage_if_covered(mob/living/carbon/target, list/body_zones, obj/item/clothing/targeteditem, mask, damage)
 	var/datum/effect_system/spark_spread/sparks = new()
@@ -236,7 +269,7 @@
 			affecting = target.get_bodypart(zone)
 		if (affecting)
 			affecting.receive_damage(0, damage)
-			sparks.set_up(1, 1, target.loc)
+			sparks.set_up(1, 1, get_turf(target))
 			sparks.start()
 	}
 
@@ -275,7 +308,7 @@
 		qdel(sacrifice)
 	}
 	buyprice = tithe / divine_tax
-	for (var/list/entry in anvil_recipe_prices)
+	for (var/list/entry in GLOB.anvil_recipe_prices)
 	{
 		var/obj/item/tentative_item = entry[1] // The recipe
 		var/total_sellprice = entry[2] // The precompiled material price
@@ -302,8 +335,9 @@
 			sparks.start()
 			show_visible_message(usr, "A wave of heat washes over the pile as [user] speaks Malum's name. The pile of valuables crumble into dust, only for the dust to reform into an item as if reborn from the flames. Malum has accepted the offering.", "A wave of heat washes over the pile as you speak Malum's name. The pile of valuables crumble into dust, only for the dust to reform into an item as if reborn from the flames. Malum has accepted the offering.")
 
-var/global/list/anvil_recipe_prices[][]
-/proc/add_recipe_to_global(var/datum/anvil_recipe/recipe)
+GLOBAL_LIST_EMPTY(anvil_recipe_prices)
+
+/proc/add_recipe_to_global(datum/anvil_recipe/recipe)
 	var/total_sellprice = 0
 	var/obj/item/ingot/bar = recipe.req_bar
 	var/obj/item/itemtosend = null
@@ -313,14 +347,14 @@ var/global/list/anvil_recipe_prices[][]
 	if (recipe.additional_items)
 		for (var/obj/additional_item in recipe.additional_items)
 			total_sellprice += additional_item.sellprice
-	if (istype(recipe.created_item, /list))
+	if (islist(recipe.created_item))
 		var/list/itemlist = recipe.created_item
 		total_sellprice = total_sellprice/itemlist.len
-		itemtosend = recipe.created_item[1]
+		itemtosend = itemlist[1]
 	if (!istype(recipe.created_item, /list))
 		itemtosend = recipe.created_item
 	if (total_sellprice > 0)
-		global.anvil_recipe_prices += list(list(itemtosend, total_sellprice))
+		GLOB.anvil_recipe_prices += list(list(itemtosend, total_sellprice))
 
 /proc/initialize_anvil_recipe_prices()
 	for (var/datum/anvil_recipe/armor/recipe)
@@ -335,56 +369,20 @@ var/global/list/anvil_recipe_prices[][]
 	{
 		add_recipe_to_global(recipe)
 	}
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/flute, 10))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/drum, 10))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/harp, 20))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/trumpet, 20))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/lute, 20))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/guitar, 30))
-	global.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/accord, 30))
-	global.anvil_recipe_prices += list(list(new /obj/item/riddleofsteel, 400))
-	global.anvil_recipe_prices += list(list(new /obj/item/dmusicbox, 500))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/flute, 10))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/drum, 10))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/harp, 20))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/trumpet, 20))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/lute, 20))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/guitar, 30))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/rogue/instrument/accord, 30))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/riddleofsteel, 400))
+	GLOB.anvil_recipe_prices += list(list(new /obj/item/dmusicbox, 500))
 	// Add any other recipe types if needed
 
 /world/New()
 	..()
 	initialize_anvil_recipe_prices() // Precompute recipe prices on startup
-
-/obj/effect/proc_holder/spell/invoked/hammerfall/cast(list/targets, mob/user = usr)
-	var/turf/fallzone = null
-	var/const/damage = 250 //Structural damage the spell does. At 250, it would take 4 casts (8 minutes and 320 devotion) to destroy a normal door.
-	var/const/radius = 1 //Radius of the spell
-	var/const/shakeradius = 7 //Radius of the quake
-	var/diceroll = 0
-	var/const/dc = 42 //Code will roll 2d20 and add target's perception and Speed then compare to this to see if they fall down or not. 42 Means they need to roll 2x 20 with Speed and Perception at I
-	var/const/delay = 2 SECONDS // Delay between the ground marking appearing and the effect playing.
-	fallzone = get_turf(targets[1])
-	if(!fallzone)
-		return
-	else
-		show_visible_message(usr, "[usr] raises their arm, conjuring a hammer wreathed in molten fire. As they hurl it toward the ground, the earth trembles under its impact, shaking its very foundations!", "You raise your arm, conjuring a hammer wreathed in molten fire. As you hurl it toward the ground, the earth trembles under its impact, shaking its very foundations!")
-	for (var/turf/open/visual in view(radius, fallzone))
-		var/obj/effect/temp_visual/lavastaff/Lava = new /obj/effect/temp_visual/lavastaff(visual)
-		animate(Lava, alpha = 255, time = 5)
-	sleep(delay)
-	for (var/mob/living/carbon/screenshaken in view(shakeradius, fallzone))
-		shake_camera(screenshaken, 5, 5)
-	for (var/mob/living/carbon/shaken in view(radius, fallzone))
-		diceroll = roll(2,20) + shaken.STAPER + shaken.STASPD
-		if (diceroll > dc)
-			shaken.apply_effect(1 SECONDS, EFFECT_IMMOBILIZE, 0)
-			show_visible_message(shaken, null, "The ground quakes but I manage to keep my footing.")
-		else
-			shaken.apply_effect(1 SECONDS, EFFECT_KNOCKDOWN, 0)		
-			show_visible_message(shaken, null, "The ground quakes, making me fall over.")
-	for (var/obj/structure/damaged in view(radius, fallzone))
-		if(!istype(damaged, /obj/structure/flora/newbranch))
-			damaged.take_damage(damage,BRUTE,"blunt",1)
-	for (var/turf/closed/wall/damagedwalls in view(radius, fallzone))
-		damagedwalls.take_damage(damage,BRUTE,"blunt",1)
-	for (var/turf/closed/mineral/aoemining in view(radius, fallzone))
-		aoemining.lastminer = usr
-		aoemining.take_damage(damage,BRUTE,"blunt",1)
 
 /obj/effect/proc_holder/spell/invoked/malum_flame_rogue
 	name = "Malum's Fire"

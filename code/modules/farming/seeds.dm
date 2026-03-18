@@ -17,7 +17,7 @@
 	var/cooked_smell = /datum/pollutant/food/roasted_seeds
 	var/cooked_type = /obj/item/reagent_containers/food/snacks/roastseeds
 
-/obj/item/seeds/Initialize()
+/obj/item/seeds/Initialize(mapload)
 	. = ..()
 	if(plant_def_type)
 		var/datum/plant_def/def = GLOB.plant_defs[plant_def_type]
@@ -218,8 +218,8 @@
 	plant_def_type = /datum/plant_def/potato
 
 /obj/item/seeds/fyritius
-    seed_identity = "fyritius seeds"
-    plant_def_type = /datum/plant_def/fyritiusflower
+	seed_identity = "fyritius seeds"
+	plant_def_type = /datum/plant_def/fyritiusflower
 
 /obj/item/seeds/poppy
 	seed_identity = "poppy seeds"

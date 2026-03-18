@@ -39,13 +39,13 @@
 	detail_text = DETAIL_TEXT_MELTED_UNDERCITY
 
 /area/rogue/under/underdark/rockhill
-	name = "The Underdark"
-	first_time_text = "The Deep"
+	name = "Central Underdark"
+	first_time_text = "The UnderDeep"
 	spookysounds = SPOOKY_MYSTICAL
 	spookynight = SPOOKY_MYSTICAL
 	droning_sound = 'sound/music/area/underdark.ogg'
 	droning_sound_dusk = null
-	droning_sound_night = null	
+	droning_sound_night = null
 	ambush_mobs = list(
 		/mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated = 20,
 		/mob/living/simple_animal/hostile/retaliate/rogue/spider = 15,
@@ -53,3 +53,10 @@
 		/mob/living/simple_animal/hostile/retaliate/rogue/minotaur = 15,
 		/mob/living/carbon/human/species/goblin/npc/ambush/moon = 40,
 		/mob/living/simple_animal/hostile/retaliate/rogue/troll = 15)
+	deathsight_message = "spiders and mushroom filled caverns"
+	
+/area/rogue/under/underdark/rockhill/east
+	name = "Eastern Underdark"
+
+/area/rogue/under/underdark/rockhill/west
+	name = "Western Underdark"

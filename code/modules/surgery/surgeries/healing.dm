@@ -24,6 +24,7 @@
 	repeating = TRUE
 	repeatingonfail = TRUE
 	surgery_flags = SURGERY_BLOODY | SURGERY_CLAMPED
+	surgery_flags_blocked = SURGERY_CONSTRUCT
 	skill_min = SKILL_LEVEL_APPRENTICE
 	skill_median = SKILL_LEVEL_APPRENTICE
 	success_sound = 'sound/surgery/retractor2.ogg'

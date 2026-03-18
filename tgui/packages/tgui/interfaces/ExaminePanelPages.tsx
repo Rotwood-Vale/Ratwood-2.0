@@ -14,6 +14,9 @@ export const FlavorTextPage = (props) => {
     ooc_notes_nsfw,
     headshot,
     is_naked,
+    ooc_extra_image,
+    nsfw_ooc_extra_image,
+    nsfw_examine_always,
   } = data;
   const [oocNotesIndex, setOocNotesIndex] = useState('SFW');
   const [flavorTextIndex, setFlavorTextIndex] = useState('SFW');
@@ -114,7 +117,7 @@ export const FlavorTextPage = (props) => {
                   </Button>
                   <Button
                     selected={flavorTextIndex === 'NSFW'}
-                    disabled={!flavor_text_nsfw|| !is_naked}
+                    disabled={!flavor_text_nsfw || (!is_naked && !nsfw_examine_always)}
                     bold={flavorTextIndex === 'NSFW'}
                     onClick={() => setFlavorTextIndex('NSFW')}
                     textAlign="center"
@@ -126,6 +129,7 @@ export const FlavorTextPage = (props) => {
               }
             >                  
               {flavorTextIndex === 'SFW' && (
+                <>
                 <Box
               dangerouslySetInnerHTML={{
                 __html: flavor_text
@@ -133,11 +137,30 @@ export const FlavorTextPage = (props) => {
                   : "<i>No flavor text provided.</i>",
               }}
                 />
+                {ooc_extra_image && (
+                  <Box
+                    mt={1}
+                    dangerouslySetInnerHTML={{
+                      __html: ooc_extra_image,
+                    }}
+                  />
+                )}
+                </>
               )}
               {flavorTextIndex === 'NSFW' && (
+                <>
                 <Box
                 dangerouslySetInnerHTML={nsfwHTML}
                 />
+                {nsfw_ooc_extra_image && (
+                  <Box
+                    mt={1}
+                    dangerouslySetInnerHTML={{
+                      __html: nsfw_ooc_extra_image,
+                    }}
+                  />
+                )}
+                </>
               )} 
             </Section>
           </Stack.Item>
@@ -148,7 +171,7 @@ export const FlavorTextPage = (props) => {
 
 export const ImageGalleryPage = () => {
   const { data } = useBackend<ExaminePanelData>();
-  const { img_gallery, nsfw_img_gallery, is_naked } = data;
+  const { img_gallery, nsfw_img_gallery, is_naked, nsfw_examine_always } = data;
 
   const [galleryMode, setGalleryMode] = useState<'SFW' | 'NSFW'>('SFW');
 
@@ -173,7 +196,7 @@ export const ImageGalleryPage = () => {
           </Button>
           <Button
             selected={galleryMode === 'NSFW'}
-            disabled={!is_naked || !nsfw_img_gallery}
+            disabled={!nsfw_img_gallery || (!is_naked && !nsfw_examine_always)}
             bold={galleryMode === 'NSFW'}
             onClick={() => setGalleryMode('NSFW')}
             textAlign="center"

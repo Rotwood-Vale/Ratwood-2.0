@@ -32,7 +32,7 @@
 
 /datum/crafting_recipe/roguetown/leather/unique/grenzelboots
 	name = "grenzelhoftian boots"
-	result = list(/obj/item/clothing/shoes/roguetown/grenzelhoft)
+	result = list(/obj/item/clothing/shoes/roguetown/boots/grenzelhoft)
 	reqs = list(/obj/item/natural/hide/cured = 1,
 	            /obj/item/reagent_containers/food/snacks/tallow = 1,
 				/obj/item/natural/fur = 1,

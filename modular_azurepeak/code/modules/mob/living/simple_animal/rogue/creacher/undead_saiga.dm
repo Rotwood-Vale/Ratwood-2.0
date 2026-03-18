@@ -111,7 +111,7 @@
 			move_to_delay += 10
 			visible_message(span_notice("[src] slows down, its broken legs dragging."))
 
-/mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead/Initialize(mapload)
 	. = ..()
 	REMOVE_TRAIT(src, TRAIT_SIMPLE_WOUNDS, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_RIGIDMOVEMENT, TRAIT_GENERIC)

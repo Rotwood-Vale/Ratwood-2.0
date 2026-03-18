@@ -90,6 +90,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/inherent_traits = list()
 	/// Associative list of skills to adjustments
 	var/list/inherent_skills = list()
+	///traits a species can't get given by jobs
+	var/list/banned_traits = list()
+
 
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.
@@ -258,7 +261,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return randname
 
 /datum/species/proc/random_surname()
-	return " [pick(world.file2list("strings/rt/names/human/humnorlast.txt"))]"
+	return "[pick(world.file2list("strings/rt/names/human/humnorlast.txt"))]"
 
 /datum/species/proc/regenerate_icons(mob/living/carbon/human/H)
 	return FALSE
@@ -691,7 +694,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_ARMOR)
 			if(H.wear_armor)
 				return FALSE
-			if(is_nudist)
+			if(is_nudist && !I.nudist_approved)
 				return FALSE
 			if(I.blocking_behavior & BULKYBLOCKS)
 				if(H.cloak)
@@ -712,7 +715,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_GLOVES)
 			if(H.gloves)
 				return FALSE
-			if(is_nudist)
+			if(is_nudist && !I.nudist_approved)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_GLOVES) )
 				return FALSE
@@ -722,7 +725,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_SHOES)
 			if(H.shoes)
 				return FALSE
-			if(is_nudist || is_inhumen || is_lamia || is_harpy)
+			if(is_nudist && !I.nudist_approved)
+				return FALSE
+			if(is_inhumen || is_lamia || is_harpy)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_SHOES) )
 				return FALSE
@@ -768,7 +773,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_PANTS)
 			if(H.wear_pants)
 				return FALSE
-			if(is_nudist)
+			if(is_nudist && !I.nudist_approved)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_PANTS) )
 				return FALSE
@@ -776,7 +781,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_SHIRT)
 			if(H.wear_shirt)
 				return FALSE
-			if(is_nudist)
+			if(is_nudist && !I.nudist_approved)
 				return FALSE
 			if(I.blocking_behavior & BULKYBLOCKS)
 				if(H.cloak)
@@ -821,7 +826,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_WRISTS)
 			if(H.wear_wrists)
 				return FALSE
-			if(is_nudist)
+			if(is_nudist && !I.nudist_approved)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_WRISTS) )
 				return FALSE
@@ -979,6 +984,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if (H.nutrition > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
+		if (H.bodytemperature < BODYTEMP_NORMAL_MIN)	//Hunger increased by 50% when cold
+			hunger_rate *= 1.5
 /*		if(H.satiety > MAX_SATIETY)
 			H.satiety = MAX_SATIETY
 		else if(H.satiety > 0)
@@ -1008,6 +1015,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if (H.hydration > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
+		if (H.bodytemperature > BODYTEMP_NORMAL_MAX)	//thirst increased by 50% when hot
+			hunger_rate *= 1.5
 //		hunger_rate *= H.physiology.hunger_mod
 		H.adjust_hydration(-hunger_rate)
 
@@ -1055,20 +1064,32 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(NUTRITION_LEVEL_FAT to INFINITY)
 			H.add_stress(/datum/stressevent/stuffed)
 			H.remove_stress_list(list(/datum/stressevent/peckish,/datum/stressevent/hungry,/datum/stressevent/starving))
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt1)
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt2)
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt3)
 		if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_FAT)
 			H.remove_stress_list(list(/datum/stressevent/peckish,/datum/stressevent/hungry,/datum/stressevent/starving))
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt1)
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt2)
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt3)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
 			H.add_stress(/datum/stressevent/peckish)
 			H.remove_stress_list(list(/datum/stressevent/stuffed,/datum/stressevent/hungry,/datum/stressevent/starving))
 			H.apply_status_effect(/datum/status_effect/debuff/hungryt1)
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt2)
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt3)
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 			H.add_stress(/datum/stressevent/hungry)
 			H.remove_stress_list(list(/datum/stressevent/stuffed,/datum/stressevent/peckish,/datum/stressevent/starving))
 			H.apply_status_effect(/datum/status_effect/debuff/hungryt2)
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt1)
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt3)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			H.add_stress(/datum/stressevent/starving)
 			H.remove_stress_list(list(/datum/stressevent/stuffed,/datum/stressevent/peckish,/datum/stressevent/hungry))
 			H.apply_status_effect(/datum/status_effect/debuff/hungryt3)
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt1)
+			H.remove_status_effect(/datum/status_effect/debuff/hungryt2)
 			if(prob(3))
 				playsound(get_turf(H), pick('sound/body/hungry1.ogg','sound/body/hungry2.ogg','sound/body/hungry3.ogg'), 100, TRUE, -1)
 
@@ -1077,8 +1098,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //			H.apply_status_effect(/datum/status_effect/debuff/waterlogged)
 		if(HYDRATION_LEVEL_HYDRATED to INFINITY)
 			H.add_stress(/datum/stressevent/hydrated)
+			H.remove_status_effect(/datum/status_effect/debuff/thirstyt1)
+			H.remove_status_effect(/datum/status_effect/debuff/thirstyt2)
+			H.remove_status_effect(/datum/status_effect/debuff/thirstyt3)
 		if(HYDRATION_LEVEL_SMALLTHIRST to HYDRATION_LEVEL_HYDRATED)
 			H.remove_stress_list(list(/datum/stressevent/drym,/datum/stressevent/thirst,/datum/stressevent/parched))
+			H.remove_status_effect(/datum/status_effect/debuff/thirstyt1)
+			H.remove_status_effect(/datum/status_effect/debuff/thirstyt2)
+			H.remove_status_effect(/datum/status_effect/debuff/thirstyt3)
 		if(HYDRATION_LEVEL_THIRSTY to HYDRATION_LEVEL_SMALLTHIRST)
 			H.add_stress(/datum/stressevent/drym)
 			H.remove_stress_list(list(/datum/stressevent/parched,/datum/stressevent/thirst))
@@ -1087,10 +1114,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.add_stress(/datum/stressevent/thirst)
 			H.remove_stress_list(list(/datum/stressevent/parched,/datum/stressevent/drym))
 			H.apply_status_effect(/datum/status_effect/debuff/thirstyt2)
+			H.remove_status_effect(/datum/status_effect/debuff/thirstyt1)
+			H.remove_status_effect(/datum/status_effect/debuff/thirstyt3)
 		if(0 to HYDRATION_LEVEL_DEHYDRATED)
 			H.add_stress(/datum/stressevent/parched)
 			H.remove_stress_list(list(/datum/stressevent/thirst,/datum/stressevent/drym))
 			H.apply_status_effect(/datum/status_effect/debuff/thirstyt3)
+			H.remove_status_effect(/datum/status_effect/debuff/thirstyt1)
+			H.remove_status_effect(/datum/status_effect/debuff/thirstyt2)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return 0
@@ -1217,6 +1248,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				user.adjust_blurriness(2)
 				user.adjustBruteLoss(rand(5, 10))
 				user.apply_status_effect(/datum/status_effect/churned, target)
+
+		if(user.mob_biotypes & MOB_UNDEAD)//This and necra's vow need a better way of handling this. But I'm too lazy to do that.
+			if(target.has_status_effect(/datum/status_effect/buff/inviolability))
+				if(isnull(user.mind))
+					user.adjust_fire_stacks(1)
+					user.ignite_mob()
+				else
+					if(prob(30))
+						to_chat(user, span_warning("Some matter of force harms us!"))
+				user.adjust_blurriness(2)
+				user.adjustBruteLoss(rand(10, 15))
+
 /*		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
 			if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided my species deals more than 0 damage)
@@ -1773,6 +1816,27 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			Iforce = 0
 	var/bladec = user.used_intent.blade_class
 
+	// Effective range check. Attacking a prone target doesn't apply a penalty at any range.
+	if(user.used_intent?.effective_range && H.mobility_flags & MOBILITY_STAND)
+		var/dist = get_dist(H, user)
+		var/range = user.used_intent?.effective_range
+		var/apply_penalty = FALSE
+		switch(user.used_intent?.effective_range_type)
+			if(EFF_RANGE_EXACT)
+				if(dist != range)
+					apply_penalty = TRUE
+			if(EFF_RANGE_ABOVE)
+				if(dist < range)
+					apply_penalty = TRUE
+			if(EFF_RANGE_BELOW)
+				if(dist > range)
+					apply_penalty = TRUE
+			else
+				CRASH("Invalid effective_range_type used by [user] with effective_range! Please set an effective_range_type on [user.used_intent?.type]")
+		if(apply_penalty)
+			pen = BLUNT_DEFAULT_PENFACTOR
+			Iforce *= 0.5
+
 	// No self-peeling. Useful for debug, though.
 	if(H == user && bladec == BCLASS_PEEL)
 		bladec = BCLASS_BLUNT
@@ -1805,10 +1869,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.next_attack_msg.Cut()
 		if(!apply_damage(Iforce * weakness, I.damtype, def_zone, armor_block, H))
 			nodmg = TRUE
-			H.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+			H.next_attack_msg += " <span class='warning'>The armor yet remains...</span>"
 			if(I)
 				I.remove_bintegrity(1)
 				I.take_damage(1, BRUTE, I.d_type)
+				//Blunt chipping, no matter what. Assuming it has damage. This is done after armour damage.
+				if(user.used_intent.blunt_chipping)//We won't check for blunt. Just that it's able. For funny reasons.
+					var/blunt_chip_block = H.run_armor_check(selzone, "blunt", armor_penetration = 80)//I hate this. So much.
+					H.apply_damage(Iforce * user.used_intent.blunt_chip_strength, BRUTE, def_zone, blunt_chip_block)//, spread_damage = TRUE)
+					H.next_attack_msg += " <span class='warning'>and yet the force punches through!</span>"//But sometimes it lies!
 		if(!nodmg)
 			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, (Iforce * weakness) * ((100-(armor_block+armor))/100), user, selzone, crit_message = TRUE, weapon = I)
 			if(should_embed_weapon(crit_wound, I))
@@ -2029,52 +2098,93 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		return TRUE
 
+///////////////
+//Temperature//
+///////////////
+GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
+	icon = 'icons/roguetown/mob/coldbreath.dmi',
+	icon_state = "breath_m",
+	layer = MOB_LAYER + 0.1
+))
+
+//This has been redesigned for new Temperature system. We have 5 temperature 'blocks' signifying Very Cold, Cold, Normal, Hot, and Very hot.
+//Homeostasis effect has been removed entirely, simplifying temperature. Tiles have set temperatures, and mobs will slowly move towards those temperatures when on those tiles.
+//Base temperature of tiles is 300, with some tiles like snow and sand having uniquely set higher and lower.
+//Temperature effects are adjusted up and down dependant on Time of Day, and map to account for climate.
+//Weather affects temperature of mobs independantly of handle_environment and does not touch turf temperatures.
+//Cold/heat protection are taken into effect in differing circumstances.
+//It takes 6.6 minutes to shift 100'points' of temperature by defacto, increased or reduced depending on situation and protection levels. A maximum of 9.9 and a minimum of 3.3.
+//When the environment is hot, we check if the players temp is above or below 'Normal', and apply protection to increase, or reduce the gradual shift to being hotter from exposure.
+//Functionally this does the same thing for when the environment is cold.
+//When in level 1 of cold, mobs will become hungrier faster. shiver occasionally.
+//Level 2 of cold will shiver more frequently, provide movement slowdown, minor con reduction and after 2 minutes of exposure to cold, A hypothermia wound will be applied if body temp still at level 2. one minute later, hypothermia transforms into frostbite
+//When in level 1 of heat, mobs will become thirstier faster.
+//Level 2 of heat will cause more stamina use per action, half stamina regen and heatexhaustion will be applied if body temp still at level 2. after a minute, heat exhaustion transforms into heatstroke
 
 /datum/species/proc/handle_environment(mob/living/carbon/human/H)
 
 	//ATMO/TURF/TEMPERATURE
 	var/turf/cur_turf = get_turf(H)
+	if(!cur_turf)
+		return
 	var/loc_temp = cur_turf.temperature
 
-	//Body temperature is adjusted in two parts: first there my body tries to naturally preserve homeostasis (shivering/sweating), then it reacts to the surrounding environment
-	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places)
-	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
-		var/natural = 0
-		if(H.stat != DEAD)
-			natural = H.natural_bodytemperature_stabilization()
-		var/thermal_protection = 1
-		if(loc_temp < H.bodytemperature) //Place is colder than we are
-			thermal_protection -= H.get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(H.bodytemperature < BODYTEMP_NORMAL) //we're cold, insulation helps us retain body heat and will reduce the heat we lose to the environment
-				H.adjust_bodytemperature((thermal_protection+1)*natural + max(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX))
-			else //we're sweating, insulation hinders our ability to reduce heat - and it will reduce the amount of cooling you get from the environment
-				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + max((thermal_protection * (loc_temp - H.bodytemperature) + BODYTEMP_NORMAL - H.bodytemperature) / BODYTEMP_COLD_DIVISOR , BODYTEMP_COOLING_MAX)) //Extra calculation for hardsuits to bleed off heat
-	if (loc_temp > H.bodytemperature) //Place is hotter than we are
-		var/natural = 0
-		if(H.stat != DEAD)
-			natural = H.natural_bodytemperature_stabilization()
-		var/thermal_protection = 1
-		thermal_protection -= H.get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-		if(H.bodytemperature < BODYTEMP_NORMAL) //and we're cold, insulation enhances our ability to retain body heat but reduces the heat we get from the environment
-			H.adjust_bodytemperature((thermal_protection+1)*natural + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX))
-		else //we're sweating, insulation hinders out ability to reduce heat - but will reduce the amount of heat we get from the environment
-			H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX))
+	if(cur_turf.outdoor_effect)	//We check if our turf is outdoors before applying map/ToD modifiers
+		loc_temp += H.get_temp_modifier()	//Refer to human/statusprocs.dm, This lets us add modifier temperatures based on map and ToD relying on bitflags
 
-	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
-		//Body temperature is too hot.
+	if(!H.on_fire)
+		var/env_adjust = 0
+		var/protection = 0
 
-		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
-		//FIRE_STACKS Human damage taken from fire is determined here.
-		var/burn_damage
-		var/datum/status_effect/fire_handler/fire_stacks/pure_stacks = H.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
-		var/firemodifier = pure_stacks?.stacks / 50
-		if(pure_stacks?.on_fire)
-			burn_damage = 10 + pure_stacks?.stacks * 3 // Minimum of 10 damage if you are on fire. Applies 3 additional per stack.
+		if(loc_temp > H.bodytemperature)	//environment is hotter then us
+			// Environment is heating us
+			if(H.bodytemperature < BODYTEMP_NORMAL_MIN)
+				// Heating is GOOD (we are colder then norm)
+				protection = (0.25 * H.get_cold_protection(loc_temp))
+			else
+				// Heating is BAD (we are hotter then norm)
+				protection = (-0.125 * (1 - H.get_heat_protection(loc_temp)))	//a maximum of 9.9 minutes of time to move 100 points of temp (one level)
+
+			var/step = 0.25 + (protection)
+			env_adjust = step
+
+		else if(loc_temp < H.bodytemperature)	//environment is colder then us
+			// Environment is cooling us
+			if(H.bodytemperature > BODYTEMP_NORMAL_MAX)
+				// Cooling is GOOD (we are hotter then norm)
+				protection = (0.25 * H.get_heat_protection(loc_temp))
+			else
+				// Cooling is BAD (we are colder then norm)
+				protection = (-0.125 * (1 - H.get_cold_protection(loc_temp)))	//a maximum of 9.9 minutes of time to move 100 points of temp (one level)
+
+			var/step = 0.25 + (protection)
+			env_adjust = -step
+		if(loc_temp <= BODYTEMP_NORMAL_MIN && !istype(cur_turf, /turf/open/water))
+			if(!(GLOB.cold_breath_overlay in H.overlays))
+				H.add_overlay(GLOB.cold_breath_overlay)
 		else
-			firemodifier = min(firemodifier, 0)
-			burn_damage = round(max(log(2-firemodifier,(H.bodytemperature-BODYTEMP_NORMAL))-5,0)) // this can go below 5 at log 2.5
-		if (burn_damage)
+			if(GLOB.cold_breath_overlay in H.overlays)
+				H.cut_overlay(GLOB.cold_breath_overlay)
+
+		if(env_adjust)
+			H.adjust_bodytemperature(env_adjust)
+	if(H.on_fire && !HAS_TRAIT(H, TRAIT_RESISTHEAT))	//fire damage
+		var/burn_damage = 0
+
+		var/datum/status_effect/fire_handler/fire_stacks/pure_stacks = H.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
+
+		if(pure_stacks)
+			var/firemodifier = pure_stacks.stacks / 50
+
+			if(pure_stacks.on_fire)
+				// Classic "you're actively burning" damage
+				burn_damage = 10 + (pure_stacks.stacks * 3)
+			else
+				// Residual heat damage scaling with temp
+				firemodifier = min(firemodifier, 0)
+				burn_damage = round(max(log(2-firemodifier,(H.bodytemperature-BODYTEMP_NORMAL))-5,0))
+
+		if(burn_damage > 0)
 			switch(burn_damage)
 				if(0 to 2)
 					H.throw_alert("temp", /atom/movable/screen/alert/hot, 1)
@@ -2082,29 +2192,69 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					H.throw_alert("temp", /atom/movable/screen/alert/hot, 2)
 				else
 					H.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
-		burn_damage = burn_damage * heatmod * H.physiology.heat_mod
-		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
-			H.emote("pain")
-		H.apply_damage(burn_damage, BURN, spread_damage = TRUE)
 
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
-		//Sorry for the nasty oneline but I don't want to assign a variable on something run pretty frequently
-		H.add_movespeed_modifier(MOVESPEED_ID_COLD, override = TRUE, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR), blacklisted_movetypes = FLOATING)
-		switch(H.bodytemperature)
-			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
-				H.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod, BURN)
-			if(120 to 200)
-				H.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod*H.physiology.cold_mod, BURN)
-			else
-				H.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
-				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod, BURN)
+			burn_damage *= heatmod * H.physiology.heat_mod
 
+			if(H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4)
+				H.emote("pain")
+
+			H.apply_damage(burn_damage, BURN, spread_damage = TRUE)
+
+	if(H.bodytemperature > BODYTEMP_NORMAL_MAX && !HAS_TRAIT(H, TRAIT_RESISTHEAT))	//either level one or level two heat
+		if(H.hypothermia_timer_id)
+			deltimer(H.hypothermia_timer_id)
+			H.hypothermia_timer_id = null
+		//Body temperature is too hot.
+		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
+		if(H.construct)
+			if(H.bodytemperature >= BODYTEMP_HEAT_LEVEL_ONE_MAX)
+				H.apply_status_effect(/datum/status_effect/debuff/overheat)
+				H.update_health_hud()
+			return
+		if(H.bodytemperature >= BODYTEMP_HEAT_LEVEL_ONE_MAX)
+			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, heat_warn)),20 SECONDS,TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_NO_HASH_WAIT)
+			if(!H.heatstroke_timer_id)
+				H.heatstroke_timer_id = addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, apply_heatexhaust)),2 MINUTES ,TIMER_STOPPABLE)
+
+		else	//level 1 heat
+			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, heat_warn)),20 SECONDS,TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_NO_HASH_WAIT)
+			H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
+
+
+	else if(H.bodytemperature < BODYTEMP_NORMAL_MIN && !HAS_TRAIT(H, TRAIT_RESISTCOLD))	//either level one or level two cold
+		if(H.heatstroke_timer_id)
+			deltimer(H.heatstroke_timer_id)
+			H.heatstroke_timer_id = null
+		if(H.construct)
+			if(H.bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX)
+				H.apply_status_effect(/datum/status_effect/debuff/brittle)
+				H.update_health_hud()
+			return
+		if(H.bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX)	//Level 2 cold - con punishment, frostbite, speed reduction
+			if(prob(15))
+				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, emote), "shiver"), (rand(2,6)SECONDS),TIMER_UNIQUE | TIMER_STOPPABLE)
+			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, cold_warn)),20 SECONDS,TIMER_UNIQUE)
+			if(!H.hypothermia_timer_id)
+				H.hypothermia_timer_id = addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, apply_hypothermia)),2 MINUTES, TIMER_STOPPABLE)
+			H.add_movespeed_modifier(MOVESPEED_ID_COLD, override = TRUE, multiplicative_slowdown = ((BODYTEMP_COLD_LEVEL_ONE_MAX - H.bodytemperature) / 35), blacklisted_movetypes = FLOATING)
+			H.apply_status_effect(/datum/status_effect/debuff/freezing)	//con debuff
+			H.relieve_heatstroke_from_cold()	//if you somehow bypass level 1, straight to level 2, still fix heatstroke
+		else	//level 1 cold
+			H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
+			if(prob(5))
+				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, emote), "shiver"), (rand(2,6)SECONDS),TIMER_UNIQUE | TIMER_STOPPABLE)
+			H.relieve_heatstroke_from_cold()	//if has heatstroke, body chill fixes it
+			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, cold_warn)),20 SECONDS,TIMER_UNIQUE)
 	else
+		if(H.hypothermia_timer_id)
+			deltimer(H.hypothermia_timer_id)
+			H.hypothermia_timer_id = null
+		if(H.heatstroke_timer_id)
+			deltimer(H.heatstroke_timer_id)
+			H.heatstroke_timer_id = null
 		H.clear_alert("temp")
 		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
-
+	H.update_health_hud()
 // A general-purpose proc used to centralise checks to skip turf, movement, step, etc.
 // For if a mob is floating, flying, intangible, etc.
 /datum/species/proc/is_floor_hazard_immune(mob/living/carbon/human/owner)
@@ -2126,7 +2276,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
 		H.adjust_bodytemperature(11)
 	else
-		H.adjust_bodytemperature(BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
+		H.adjust_bodytemperature(20)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes
 
 /datum/species/proc/Canignite_mob(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))
@@ -2200,6 +2350,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return
 	var/obj/item/organ/tail/T = H.getorganslot(ORGAN_SLOT_TAIL)
 	if(!T)
+		return
+	if(!T.wagging)
 		return
 	T.wagging = FALSE
 	H.update_body_parts(TRUE)

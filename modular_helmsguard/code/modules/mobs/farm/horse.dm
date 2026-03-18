@@ -227,13 +227,13 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/horse/white/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/white/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/white/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S
 	update_icon()
 
-/mob/living/simple_animal/hostile/retaliate/rogue/horse/white/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/white/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S
@@ -245,13 +245,13 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/horse/brown/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/brown/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/brown/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S
 	update_icon()
 
-/mob/living/simple_animal/hostile/retaliate/rogue/horse/brown/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/brown/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S
@@ -263,13 +263,13 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/horse/black/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/black/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/black/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S
 	update_icon()
 
-/mob/living/simple_animal/hostile/retaliate/rogue/horse/black/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/black/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S
@@ -302,7 +302,7 @@
 		if("idle")
 			return pick('sound/vo/mobs/saiga/idle (1).ogg','sound/vo/mobs/saiga/idle (2).ogg','sound/vo/mobs/saiga/idle (3).ogg','sound/vo/mobs/saiga/idle (4).ogg','sound/vo/mobs/saiga/idle (5).ogg','sound/vo/mobs/saiga/idle (6).ogg','sound/vo/mobs/saiga/idle (7).ogg')
 
-/mob/living/simple_animal/hostile/retaliate/rogue/horse/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/Initialize(mapload)
 	..()
 	if(tame)
 		tamed()

@@ -243,6 +243,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ambiencevol"]		>> ambiencevol
 	S["anonymize"]			>> anonymize
 	S["masked_examine"]		>> masked_examine
+	S["nsfw_examine_always"]>> nsfw_examine_always
+	S["wildshape_name"]		>> wildshape_name
 	S["mute_animal_emotes"]	>> mute_animal_emotes
 	S["autoconsume"]		>> autoconsume
 	S["no_examine_blocks"]	>> no_examine_blocks
@@ -256,6 +258,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["mastervol"]			>> mastervol
 	S["lastclass"]			>> lastclass
 	S["runmode"]			>> runmode
+	S["compliance_notifs"]  >> compliance_notifs
+	S["skillcap_notifs"]	>> skillcap_notifs
 
 
 	S["default_slot"]		>> default_slot
@@ -369,6 +373,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
+	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
+	WRITE_FILE(S["wildshape_name"], wildshape_name)
 	WRITE_FILE(S["mute_animal_emotes"], mute_animal_emotes)
 	WRITE_FILE(S["autoconsume"], autoconsume)
 	WRITE_FILE(S["no_examine_blocks"], no_examine_blocks)
@@ -423,6 +429,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["runmode"], runmode)
 	WRITE_FILE(S["patreon_say_color"], patreon_say_color)
 	WRITE_FILE(S["patreon_say_color_enabled"], patreon_say_color_enabled)
+	WRITE_FILE(S["compliance_notifs"], compliance_notifs)
+	WRITE_FILE(S["skillcap_notifs"], skillcap_notifs)
 
 	return TRUE
 
@@ -458,7 +466,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		charflaw = pick(GLOB.character_flaws)
 		charflaw = GLOB.character_flaws[charflaw]
 		charflaw = new charflaw()
-	
+
 	// Load new vice system
 	var/vice1_type, vice2_type, vice3_type, vice4_type, vice5_type
 	S["vice1"] >> vice1_type
@@ -466,7 +474,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["vice3"] >> vice3_type
 	S["vice4"] >> vice4_type
 	S["vice5"] >> vice5_type
-	
+
 	// Vice1 is required - use charflaw as fallback for old characters, only randomize if both are missing
 	if(vice1_type && ispath(vice1_type))
 		vice1 = new vice1_type()
@@ -478,7 +486,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/random_vice = pick(GLOB.character_flaws)
 		var/random_vice_path = GLOB.character_flaws[random_vice]
 		vice1 = new random_vice_path()
-	
+
 	// Other vices are optional
 	vice2 = (vice2_type && ispath(vice2_type)) ? new vice2_type() : null
 	vice3 = (vice3_type && ispath(vice3_type)) ? new vice3_type() : null
@@ -509,7 +517,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/virtuetwo_type
 	S["virtue"] >> virtue_type
 	S["virtuetwo"] >> virtuetwo_type
-	
+
 	// Only instantiate if valid type path exists, otherwise use none
 	if (virtue_type && ispath(virtue_type))
 		virtue = new virtue_type()
@@ -578,7 +586,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["loadout_preset_1"] >> preset1_json
 	S["loadout_preset_2"] >> preset2_json
 	S["loadout_preset_3"] >> preset3_json
-	
+
 	// Load and validate preset 1
 	if(preset1_json)
 		var/decoded = json_decode(preset1_json)
@@ -588,7 +596,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			loadout_preset_1 = null
 	else
 		loadout_preset_1 = null
-	
+
 	// Load and validate preset 2
 	if(preset2_json)
 		var/decoded = json_decode(preset2_json)
@@ -598,7 +606,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			loadout_preset_2 = null
 	else
 		loadout_preset_2 = null
-	
+
 	// Load and validate preset 3
 	if(preset3_json)
 		var/decoded = json_decode(preset3_json)
@@ -615,12 +623,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		WRITE_FILE(S["loadout_preset_1"], json_encode(loadout_preset_1))
 	else
 		WRITE_FILE(S["loadout_preset_1"], null)
-	
+
 	if(loadout_preset_2)
 		WRITE_FILE(S["loadout_preset_2"], json_encode(loadout_preset_2))
 	else
 		WRITE_FILE(S["loadout_preset_2"], null)
-	
+
 	if(loadout_preset_3)
 		WRITE_FILE(S["loadout_preset_3"], json_encode(loadout_preset_3))
 	else
@@ -699,6 +707,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_color"]			>> hair_color
 	S["facial_hair_color"]	>> facial_hair_color
 	S["eye_color"]			>> eye_color
+	S["family"]				>> family
+	S["gender_choice"] 		>> gender_choice
+	S["setspouse"] 			>> setspouse
+	S["xenophobe_pref"]		>> xenophobe_pref
+	S["restricted_species_pref"]	>> restricted_species_pref
 	S["extra_language"]		>> extra_language
 	S["selected_title"]		>> selected_title
 	S["extra_language_1"]	>> extra_language_1
@@ -722,6 +735,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_ethcolor"]	>> features["ethcolor"]
 	S["pronouns"]			>> pronouns
 	S["voice_type"]			>> voice_type
+	S["voice_pack"]			>> voice_pack
 	S["nickname"]			>> nickname
 	S["highlight_color"]	>> highlight_color
 	S["taur_type"]			>> taur_type
@@ -843,11 +857,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["flavortext"]			>> flavortext
 	S["ooc_notes"]			>> ooc_notes
 	S["ooc_extra"]			>> ooc_extra
+	S["ooc_extra_img"]		>> ooc_extra_img
+	S["ooc_extra_img_link"]	>> ooc_extra_img_link
+	if(!valid_headshot_link(null, ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
+		ooc_extra_img = null
+		ooc_extra_img_link = null
 	S["rumour"]				>> rumour
 	S["noble_gossip"]		>> noble_gossip
 	S["song_artist"]		>> song_artist
 	S["song_title"]			>> song_title
 	S["nsfwflavortext"]	>> nsfwflavortext
+	S["nsfw_ooc_extra_img"]		>> nsfw_ooc_extra_img
+	S["nsfw_ooc_extra_img_link"]	>> nsfw_ooc_extra_img_link
+	if(!valid_headshot_link(null, nsfw_ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
+		nsfw_ooc_extra_img = null
+		nsfw_ooc_extra_img_link = null
 	S["erpprefs"]			>> erpprefs
 	S["img_gallery"]	>> img_gallery
 	img_gallery = SANITIZE_LIST(img_gallery)
@@ -860,6 +884,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["pronouns"] >> pronouns
 	S["voice_type"] >> voice_type
+	S["voice_pack"] >> voice_pack
 	S["body_size"] >> features["body_size"]
 	if (!features["body_size"])
 		features["body_size"] = BODY_SIZE_NORMAL
@@ -894,6 +919,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	age				= sanitize_inlist(age, pref_species.possible_ages)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
+	family 			= family
+	gender_choice 	= gender_choice
+	setspouse 		= setspouse
+	xenophobe_pref 	= xenophobe_pref
+	restricted_species_pref = restricted_species_pref
 	extra_language  = extra_language
 	selected_title  = selected_title
 	voice_color		= voice_color
@@ -983,6 +1013,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["randomise"]			, randomise)
 	WRITE_FILE(S["species"]				, pref_species?.name)
 	WRITE_FILE(S["charflaw"]				, preferences_typepath_or_null(charflaw))
+	WRITE_FILE(S["family"], family)
+	WRITE_FILE(S["gender_choice"], gender_choice)
+	WRITE_FILE(S["setspouse"], setspouse)
+	WRITE_FILE(S["xenophobe_pref"], xenophobe_pref)
+	WRITE_FILE(S["restricted_species_pref"], restricted_species_pref)
 	// Save new vice system
 	WRITE_FILE(S["vice1"], preferences_typepath_or_null(vice1))
 	WRITE_FILE(S["vice2"], preferences_typepath_or_null(vice2))
@@ -1039,12 +1074,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["flavortext"] , html_decode(flavortext))
 	WRITE_FILE(S["ooc_notes"] , html_decode(ooc_notes))
 	WRITE_FILE(S["ooc_extra"] ,	ooc_extra)
+	WRITE_FILE(S["ooc_extra_img"] , ooc_extra_img)
+	WRITE_FILE(S["ooc_extra_img_link"] , ooc_extra_img_link)
 	WRITE_FILE(S["rumour"] , html_decode(rumour))
 	WRITE_FILE(S["noble_gossip"] , html_decode(noble_gossip))
 	WRITE_FILE(S["song_artist"] , song_artist)
 	WRITE_FILE(S["song_title"] , song_title)
 	WRITE_FILE(S["char_accent"] , char_accent)
 	WRITE_FILE(S["voice_type"] , voice_type)
+	WRITE_FILE(S["voice_pack"] , voice_pack)
 	WRITE_FILE(S["pronouns"] , pronouns)
 	WRITE_FILE(S["statpack"] , preferences_typepath_or_null(statpack))
 	// Save virtues with explicit null-safety
@@ -1060,6 +1098,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["combat_music"], preferences_typepath_or_null(combat_music))
 	WRITE_FILE(S["body_size"] , features["body_size"])
 	WRITE_FILE(S["nsfwflavortext"] , html_decode(nsfwflavortext))
+	WRITE_FILE(S["nsfw_ooc_extra_img"] , nsfw_ooc_extra_img)
+	WRITE_FILE(S["nsfw_ooc_extra_img_link"] , nsfw_ooc_extra_img_link)
 	WRITE_FILE(S["erpprefs"] , html_decode(erpprefs))
 	WRITE_FILE(S["img_gallery"] , img_gallery)
 	WRITE_FILE(S["nsfw_img_gallery"] , nsfw_img_gallery)
