@@ -356,6 +356,7 @@
 	item_state = "duchess"
 	sleevetype = null
 	sleeved = null
+	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
 
 /obj/item/clothing/suit/roguetown/armor/leather/duke
 	name = "ducal uniform"
@@ -368,6 +369,7 @@
 	body_parts_covered = CHEST|VITALS|ARMS
 	sleevetype = null
 	sleeved = null
+	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
 
 /obj/item/clothing/suit/roguetown/armor/leather/hand
 	name = "Hand's Jacket"
@@ -381,6 +383,7 @@
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	sleevetype = null
 	sleeved = null
+	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
 
 /obj/item/clothing/suit/roguetown/armor/leather/heir
 	name = "Heir's uniform"
@@ -393,6 +396,7 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	sleevetype = null
 	sleeved = null
+	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
 
 /obj/item/clothing/suit/roguetown/armor/leather/heiress
 	name = "Heiress's uniform"
@@ -405,6 +409,7 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	sleevetype = null
 	sleeved = null
+	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
 
 /obj/item/clothing/suit/roguetown/armor/councillor
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -418,6 +423,7 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	sleevetype = null
 	sleeved = null
+	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
 
 /obj/item/clothing/suit/roguetown/armor/leather/magos
 	name = "Magos' Robes"
@@ -429,6 +435,7 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	sleevetype = null
 	sleeved = null
+	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
 
 /obj/item/clothing/suit/roguetown/armor/leather/steward
 	name = "Steward's Vest"
@@ -441,6 +448,7 @@
 	armor = ARMOR_PADDED
 	sleevetype = null
 	sleeved = null
+	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
 	
 /obj/item/clothing/head/roguetown/duchess_hood
 	name = "duchess hood"
@@ -452,3 +460,4 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	sleevetype = null
 	sleeved = null
+	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
