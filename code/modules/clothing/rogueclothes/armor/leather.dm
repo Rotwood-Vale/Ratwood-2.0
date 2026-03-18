@@ -346,14 +346,14 @@
 
 
 /obj/item/clothing/suit/roguetown/armor/leather/duchess
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_ARMOR //ugly hack to make it render over the head
 	name = "duchess dress"
 	desc = ""
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|VITALS
 	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
 	icon_state = "duchess"
 	item_state = "duchess"
-	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_ARMOR
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|VITALS
 	sleevetype = null
 	sleeved = null
 
@@ -427,7 +427,6 @@
 	icon_state = "magos"
 	item_state = "magos"
 	slot_flags = ITEM_SLOT_ARMOR
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	sleevetype = null
 	sleeved = null
 
@@ -438,9 +437,8 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
 	icon_state = "steward"
 	item_state = "steward"
-	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	armor = ARMOR_PADDED_BAD
+	slot_flags = ITEM_SLOT_ARMOR
+	armor = ARMOR_PADDED
 	sleevetype = null
 	sleeved = null
 	
@@ -452,6 +450,5 @@
 	item_state = "duchess_hood"
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	armor = ARMOR_PADDED_BAD
 	sleevetype = null
 	sleeved = null
