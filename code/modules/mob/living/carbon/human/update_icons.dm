@@ -1263,9 +1263,6 @@ There are several things that need to be remembered:
 		if(dna && dna.species.sexes)
 			var/mutable_appearance/shirt_overlay
 			var/armsindex = get_limbloss_index(ARM_RIGHT, ARM_LEFT)
-			var/target_layer = SHIRT_LAYER
-			if(wear_shirt.ignore_sleeves_code)
-				target_layer = HANDS_PART_LAYER // Cursed, but much of clothing, that uses this varible, doesn't mean to use it with armor
 			var/racecustom
 			if(dna.species.custom_clothes)
 				racecustom = dna.species.clothes_id
