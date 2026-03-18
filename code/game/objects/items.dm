@@ -172,6 +172,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	/// %-age of our raw damage that is dealt to armor or weapon on hit / parry / clip.
 	var/intdamage_factor = 1
 
+	var/ignore_sleeves_code = FALSE // Use for clothing which has cropped parts for hands and doesn't use sleeved system. They will have layer under gloves
 	var/sleeved = null
 	var/sleevetype = null
 	var/nodismemsleeves = FALSE
