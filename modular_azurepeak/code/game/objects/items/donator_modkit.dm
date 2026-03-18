@@ -2,7 +2,7 @@
 //Tl;dr - Click the assigned modkit to the object type's parent, it'll change it into the child. Modkits, aka enchanting kits, are what you get.
 /obj/item/enchantingkit
 	name = "morphing elixir"
-	desc = "A small container of special morphing dust, perfect to make a specifc item."
+	desc = "A small container of special morphing dust, perfect to make a specific item."
 	icon = 'modular_azurepeak/icons/obj/items/donor_objects.dmi'	//We default to here just to avoid tons of uneeded sprites.
 	icon_state = "enchanting_kit"
 	w_class = WEIGHT_CLASS_SMALL	//So can fit in a bag, we don't need these large. They're just used to apply to items.

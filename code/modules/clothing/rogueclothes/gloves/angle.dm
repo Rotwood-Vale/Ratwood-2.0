@@ -15,6 +15,10 @@
 	sewrepair = TRUE
 	salvage_result = /obj/item/natural/fur
 	color = "#4d4d4d"
+	cold_protection = HAND_LEFT | HAND_RIGHT
+	min_cold_protection_temperature = 50
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
 	name = "grenzelhoft gloves"

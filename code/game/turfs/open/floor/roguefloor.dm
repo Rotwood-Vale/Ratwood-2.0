@@ -243,13 +243,49 @@
 	canSmoothWith = list(/turf/open/floor/rogue/snow,)
 	neighborlay = "snowedge"
 	spread_chance = 0
-
+	temperature = 100
 /turf/open/floor/rogue/snow/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
 /turf/open/floor/rogue/snow/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
+
+/turf/open/floor/rogue/snow/attack_right(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.stat != CONSCIOUS)
+			return
+		var/obj/item/I = new /obj/item/natural/dirtclod/snow(src)
+		if(L.put_in_active_hand(I))
+			L.visible_message(span_warning("[L] picks up some snow."))
+			ChangeTurf(/turf/open/floor/rogue/snowpatchy, flags = CHANGETURF_INHERIT_AIR)
+		else
+			qdel(I)
+
+	. = ..()
+
+/turf/open/floor/rogue/snow/attackby(obj/item/C, mob/user, params)
+	if(istype(C, /obj/item/natural/dirtclod/snow))
+		for(var/elements in contents)
+			if(!istype(elements, /obj/effect/decal/cleanable/blood/footprints/mud))
+				continue
+			QDEL_NULL(elements)
+			to_chat(user, span_notice("You pad out any footprints in [src].."))
+			qdel(C)
+
+	. = ..()
+
+/turf/open/floor/rogue/snow/Crossed(atom/movable/O)
+	..()
+	if(!ishuman(O))
+		return
+	var/mob/living/carbon/human/H = O
+	if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
+		return
+	update_icon()
+	if(water_level)
+		START_PROCESSING(SSwaterlevel, src)
 
 /turf/open/floor/rogue/snowrough
 	name = "rough snow"
@@ -266,6 +302,7 @@
 	canSmoothWith = list(/turf/open/floor/rogue/snowrough,)
 	neighborlay = "snowroughedge"
 	spread_chance = 0
+	temperature = 100
 
 /turf/open/floor/rogue/snowrough/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -289,6 +326,7 @@
 	canSmoothWith = list(/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "snowpatchy_grassedge"
+	temperature = 100
 
 /turf/open/floor/rogue/snowpatchy/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
@@ -309,6 +347,7 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_coldedge"
+	temperature = 160
 
 /turf/open/floor/rogue/grasscold/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -316,7 +355,7 @@
 
 /turf/open/floor/rogue/grasscold/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
-	
+
 /turf/open/floor/rogue/grasspurple
 	name = "fungal 'grass'"
 	desc = "Thin fungal strands rising from the ground. Spongey to walk on."
@@ -343,7 +382,7 @@
 
 /turf/open/floor/rogue/grasspurple/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
-	
+
 /turf/open/floor/rogue/grassgrey
 	name = "dead grass"
 	desc = "Pale, like a bloated corpse."
@@ -547,24 +586,24 @@
 	. = ..()
 	if(!isliving(user))
 		return
-	
+
 	var/mob/living/L = user
 	if(L.stat != CONSCIOUS)
 		return
-	
+
 	// Check if the user is holding a shovel
 	var/obj/item/rogueweapon/shovel/S = L.get_active_held_item()
 	if(!istype(S))
 		return
-	
+
 	// Check if in scoop intent
 	if(L.used_intent.type != /datum/intent/shovelscoop)
 		return
-	
+
 	// Call the shovel's autodig proc
 	if(S.start_autodig(L, src))
 		return TRUE
-	
+
 	return FALSE
 
 /turf/open/floor/rogue/dirt/Destroy()
@@ -832,6 +871,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/rogue/dirt/road,/turf/open/floor/rogue/dirt)
 	neighborlay = "lavedge"
+	temperature = 500
 
 /turf/open/floor/rogue/volcanic/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -1603,6 +1643,43 @@
 	landsound = 'sound/foley/jumpland/grassland.wav'
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/rogue, /turf/open/floor/rogue/underworld)
+	temperature = 100
 
 /turf/open/floor/rogue/dark_ice/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
+
+/turf/open/floor/rogue/dark_ice/regular
+	name = "ice"
+	desc = "Cold, cold ice. Don't you want to look further within?"
+
+/turf/open/floor/rogue/dark_ice/regular/turf_destruction(damage_flag)
+	. = ..()
+	visible_message(span_danger("[src] splinters and breaks away!"))
+	playsound(src, 'sound/foley/waterenter.ogg', 100, FALSE)
+	ChangeTurf(/turf/open/water/pond, flags = CHANGETURF_INHERIT_AIR)
+
+/turf/open/floor/rogue/dark_ice/regular/Entered(atom/movable/AM)
+	..()
+	if(!ishuman(AM))
+		return
+	var/mob/living/carbon/human/H = AM
+	if(HAS_TRAIT(H, TRAIT_LIGHT_STEP) || H.m_intent == MOVE_INTENT_SNEAK)
+		return
+	if(prob(25))
+		to_chat(H, span_warning("[src] under you begins to crack!"))
+		addtimer(CALLBACK(src, PROC_REF(ice_crack)), 2 SECONDS, TIMER_UNIQUE)
+		return
+	if(prob(40))
+		var/list/possible_turfs = list()
+		for(var/turf/T in range(1, H))
+			if(T.density)
+				continue
+			possible_turfs += T
+		H.forceMove(pick(possible_turfs))
+		to_chat(H, span_warning("You slip on [src]!"))
+
+/turf/open/floor/rogue/dark_ice/regular/proc/ice_crack()
+	for(var/mob/living/target in contents)
+		target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+	turf_destruction("blunt")
+	return

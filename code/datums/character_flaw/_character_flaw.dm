@@ -739,7 +739,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/mind_broken
 	name = "Asundered Mind (+1 TRI)"
-	desc = "My mind is asundered, wether it was by own means or an unfortunate accident. Nothing seems real to me..."
+	desc = "My mind is asundered, whether it was by my own means or an unfortunate accident. Nothing seems real to me..."
 
 /datum/charflaw/mind_broken/apply_post_equipment(mob/living/carbon/human/insane_fool)
 	insane_fool.hallucination = INFINITY

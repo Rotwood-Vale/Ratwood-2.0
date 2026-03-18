@@ -60,7 +60,10 @@
 
 	//messages to send at different severities
 	var/list/weather_messages = list()
-
+	//warning message that plays when weather is picked
+	var/warning_message
+	//warning message just before weather fires
+	var/late_warning_message = span_greenannounce("The realms wind blows as weather begins to turn.")
 	// Sounds to play at different severities - order from lowest to highest
 	var/list/weather_sounds = list()
 	var/list/indoor_weather_sounds = list()
@@ -123,6 +126,9 @@
 	var/blend_type
 	var/filter_type
 	var/secondary_filter_type
+	var/forecast_tag
+
+	var/datum/weather_effect/weather_special_effect
 
 /datum/particle_weather/proc/severityMod()
 	return max(0.3, severity / maxSeverity)
@@ -134,6 +140,19 @@
 	return
 
 /datum/particle_weather/Destroy()
+
+	// Remove particle effect if it exists
+	if(SSParticleWeather?.particleEffect)
+		qdel(SSParticleWeather.particleEffect)
+		SSParticleWeather.particleEffect = null
+
+	// Clear subsystem references
+	if(SSParticleWeather?.runningWeather == src)
+		SSParticleWeather.runningWeather = null
+
+	if(SSParticleWeather?.queued_weather == src)
+		SSParticleWeather.queued_weather = null
+
 	for(var/S in currentSounds)
 		var/datum/looping_sound/looping_sound = currentSounds[S]
 		if(istype(looping_sound))
@@ -149,6 +168,11 @@
  *
  */
 /datum/particle_weather/proc/start(color)
+	var/datum/controller/subsystem/ParticleWeather/PW = SSParticleWeather
+
+	if(PW.queued_weather == src)	//We want to clear weather from the subsystem 'queued_weather' on start
+		PW.queued_weather = null
+		PW.queued_weather_start_time = null
 	if(running)
 		return //some cheeky git has started you early
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
@@ -160,7 +184,8 @@
 
 	//Always step severity to start
 	ChangeSeverity()
-
+	// Once weather actually starts, forecast is consumed
+	GLOB.forecast = null
 
 /datum/particle_weather/proc/ChangeSeverity()
 	if(!running)
@@ -195,6 +220,8 @@
  *
  */
 /datum/particle_weather/proc/wind_down()
+	if(QDELETED(src))
+		return
 	severity = 0
 	if(SSParticleWeather.particleEffect)
 		SSParticleWeather.particleEffect.animateSeverity(severityMod())
@@ -255,15 +282,16 @@
 /datum/particle_weather/proc/try_weather_act(mob/living/L)
 	if(!L.mind)
 		return
-	if(can_weather(L))
-		weather_sound_effect(L)
-		if(can_weather_effect(L))
-			weather_act(L)
-			if(!messagedMobs[L] || world.time > messagedMobs[L])
-				weather_message(L) //Try not to spam
-	else
-		stop_weather_sound_effect(L)
+	if(!can_weather(L))
+		weather_sound_effect(L, FALSE)
 		messagedMobs[L] = 0 //resend a message next time they go outside
+		return
+
+	weather_sound_effect(L)
+	if(can_weather_effect(L))
+		weather_act(L)
+		if(!messagedMobs[L] || world.time > messagedMobs[L])
+			weather_message(L) //Try not to spam
 
 //Overload with weather effects
 /datum/particle_weather/proc/weather_act(mob/living/L)
@@ -281,7 +309,7 @@
 		L.weather = FALSE
 
 //Not using looping_sounds properly. somebody smart should fix this //actually this kind of works, just done a bit backwards
-/datum/particle_weather/proc/weather_sound_effect(mob/living/L)
+/datum/particle_weather/proc/weather_sound_effect(mob/living/L, outside = TRUE)
 	var/datum/looping_sound/currentSound = currentSounds[L]
 	if(currentSound)
 		//SET VOLUME
@@ -290,7 +318,14 @@
 		if(!currentSound.loop_started) //don't restart already playing sounds
 			currentSound.start()
 		return
-	var/tempSound = scale_range_pick(minSeverity, maxSeverity, severity, weather_sounds)
+
+	var/tempSound
+
+	if(!outside)
+		tempSound = scale_range_pick(minSeverity, maxSeverity, severity, indoor_weather_sounds)
+	else
+		tempSound = scale_range_pick(minSeverity, maxSeverity, severity, weather_sounds)
+
 	if(tempSound)
 		currentSound = new tempSound(L, FALSE, TRUE, CHANNEL_WEATHER)
 		currentSounds[L] = currentSound
@@ -375,3 +410,69 @@
 	message_admins("[key_name_admin(usr)] started weather of type [weather_type].")
 	log_admin("[key_name(usr)] started weather of type [weather_type].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Run Custom Particle Weather")
+
+
+
+/datum/weather_effect
+	var/name = "effect"
+	var/probability = 0
+	var/datum/particle_weather/initiator_ref
+
+/datum/weather_effect/proc/effect_affect(turf/target_turf)
+	return FALSE
+
+/turf/Exit(atom/movable/AM, atom/newLoc)
+	. = ..()
+
+	if(!isturf(newLoc))
+		return
+	if(!ishuman(AM))
+		return
+
+	var/mob/living/victim = AM
+
+	if(!victim.mind)
+		return
+	if(!SSParticleWeather.runningWeather)
+		return
+	if(!SSParticleWeather.runningWeather.running)
+		return
+
+	var/turf/current_turfarea = loc
+	var/turf/next_turfarea = newLoc.loc
+
+	if(current_turfarea.type == next_turfarea.type)
+		return
+
+	if(
+		istype(current_turfarea, /area/rogue/indoors) && istype(next_turfarea, /area/rogue/outdoors) || \
+		istype(next_turfarea, /area/rogue/indoors) && istype(current_turfarea, /area/rogue/outdoors)
+	)
+		SSParticleWeather.runningWeather.stop_weather_sound_effect(victim)
+
+/datum/particle_weather/proc/send_warning()
+	if(!warning_message)
+		return
+
+	for(var/mob/living/M in GLOB.player_list)
+		if(!M.client)
+			continue
+		if(can_weather(M))
+			to_chat(M, warning_message)
+	notify_queued()
+
+/datum/particle_weather/proc/notify_queued()
+	for (var/obj/item/barometer/B in GLOB.weather_observers)
+		if (QDELETED(B))
+			continue
+		B.on_weather_queued(src)
+
+/datum/particle_weather/proc/send_late_warning()
+	if(!late_warning_message)
+		return
+
+	for(var/mob/living/M in GLOB.player_list)
+		if(!M.client)
+			continue
+		if(can_weather(M))
+			to_chat(M, late_warning_message)

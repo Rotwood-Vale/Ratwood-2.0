@@ -1,4 +1,4 @@
-/datum/job/roguetown/bogguardsman
+/datum/job/roguetown/warden
 	title = "Warden"
 	flag = BOGGUARD
 	department_flag = GARRISON
@@ -16,22 +16,22 @@
 	display_order = JDO_TOWNGUARD
 	whitelist_req = TRUE
 
-	outfit = /datum/outfit/job/roguetown/bogguardsman
+	outfit = /datum/outfit/job/roguetown/warden
 	advclass_cat_rolls = list(CTAG_WARDEN = 20)
 
 	give_bank_account = 16
 	min_pq = 0
 	max_pq = null
 	round_contrib_points = 2
-	cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg'
+	cmode_music = 'sound/music/combat_blackoak.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
 	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT)
 	job_subclasses = list(
-		/datum/advclass/bogguardsman/ranger,
-		/datum/advclass/bogguardsman/forester
+		/datum/advclass/warden/ranger,
+		/datum/advclass/warden/forester
 	)
 
-/datum/outfit/job/roguetown/bogguardsman
+/datum/outfit/job/roguetown/warden
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
 	cloak = /obj/item/clothing/cloak/wardencloak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
@@ -41,10 +41,10 @@
 	id = /obj/item/scomstone/bad/garrison
 	job_bitflag = BITFLAG_GARRISON
 
-/datum/advclass/bogguardsman/ranger
+/datum/advclass/warden/ranger
 	name = "Ranger"
 	tutorial = "You are a ranger, a hunter who volunteered to become a part of the wardens. You have great experience using bows."
-	outfit = /datum/outfit/job/roguetown/bogguardsman/ranger
+	outfit = /datum/outfit/job/roguetown/warden/ranger
 	category_tags = list(CTAG_WARDEN)
 	traits_applied = list(TRAIT_DODGEEXPERT)
 	subclass_stats = list(
@@ -74,7 +74,7 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE, // This should let them fry meat on fires.
 	)
 
-/datum/outfit/job/roguetown/bogguardsman/ranger/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/warden/ranger/pre_equip(mob/living/carbon/human/H)
 	..()
 	neck = /obj/item/clothing/neck/roguetown/coif
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
@@ -95,10 +95,10 @@
 
 	if(H.mind)
 		var/helmets = list(
-			"Path of the Antelope" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/antler,
-			"Path of the Volf"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf,
-			"Path of the Ram"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat,
-			"Path of the Bear"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear,
+			"Antlers of the Antelope" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/antler,
+			"Skull of the Volf"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf,
+			"Skull of the Ram"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat,
+			"Skull of the Bear"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear,
 			"None"
 		)
 		var/helmchoice = input(H, "Choose your Path.", "HELMET SELECTION") as anything in helmets
@@ -114,10 +114,10 @@
 		if(helmchoice != "None")
 			mask = hoods[hoodchoice]
 
-/datum/advclass/bogguardsman/forester
+/datum/advclass/warden/forester
 	name = "Forester"
-	tutorial = "You are a forester, a woodsman who volunteered to become a part of the wardens. You have servicable training in melee weapons."
-	outfit = /datum/outfit/job/roguetown/bogguardsman/forester
+	tutorial = "You are a forester, a woodsman who volunteered to become a part of the wardens. You have experience in the axe and the spear."
+	outfit = /datum/outfit/job/roguetown/warden/forester
 	category_tags = list(CTAG_WARDEN)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
@@ -128,11 +128,11 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/shields = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/slings = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/bows = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/crossbows = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
@@ -150,7 +150,7 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE, // This should let them fry meat on fires.
 	)
 
-/datum/outfit/job/roguetown/bogguardsman/forester/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/warden/forester/pre_equip(mob/living/carbon/human/H)
 	..()
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
@@ -171,10 +171,10 @@
 
 	if(H.mind)
 		var/helmets = list(
-			"Path of the Antelope" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/antler,
-			"Path of the Volf"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf,
-			"Path of the Ram"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat,
-			"Path of the Bear"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear,
+			"Antlers of the Antelope" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/antler,
+			"Skull of the Volf"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf,
+			"Skull of the Ram"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat,
+			"Skull of the Bear"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear,
 			"None"
 		)
 		var/helmchoice = input(H, "Choose your Path.", "HELMET SELECTION") as anything in helmets

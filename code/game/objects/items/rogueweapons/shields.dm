@@ -494,7 +494,7 @@
 
 /obj/item/rogueweapon/shield/steam
 	name = "steam shield"
-	desc = "A sturdy wood shield thats been highly modified by an artificer. It seems to have several pipes and gears built into it."
+	desc = "A sturdy wood shield that's been highly modified by an artificer. It seems to have several pipes and gears built into it."
 	icon_state = "artificershield"
 	force = 15
 	throwforce = 10

@@ -259,7 +259,7 @@
 			var/stealthy = (m_intent == MOVE_INTENT_SNEAK)
 			if(H.try_accept_offered_item(src, offered_item, stealthy))
 				return TRUE
-	
+
 	if(..())	//to allow surgery to return properly.
 		return
 	retaliate(user)
@@ -650,7 +650,17 @@
 			examination += "[m1] [IsSleeping() ? "asleep" : "unconscious"]."
 	else
 		examination += span_dead("[m1] dead.")
-
+	switch(bodytemperature)
+		if(0 to BODYTEMP_COLD_LEVEL_ONE_MAX)
+			examination += span_biginfo("<font color='#023E8A'> [m1] shivering greatly</font>")
+		if(BODYTEMP_COLD_LEVEL_ONE_MAX to BODYTEMP_NORMAL_MIN)
+			examination += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
+		if(BODYTEMP_NORMAL_MIN to BODYTEMP_NORMAL_MAX)
+			examination += span_biginfo("<B>[m1] average temperature.</B>")
+		if(BODYTEMP_NORMAL_MAX to BODYTEMP_HEAT_LEVEL_ONE_MAX)
+			examination += span_biginfo("<font color='#ffff00'> [m1] sweating</font>")
+		if(BODYTEMP_HEAT_LEVEL_ONE_MAX to 600)
+			examination += span_biginfo("<font color='#DC143C?'> [m1] sweating greatly</font>")
 	switch(blood_volume)
 		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
 			examination += span_artery("<B>[m1] extremely anemic.</B>")
@@ -717,6 +727,71 @@
 	examination += "ø ------------ ø</span>"
 	if(!silent)
 		to_chat(user, examination.Join("\n"))
+	return examination
+
+/mob/living/carbon/human/proc/get_temperature_state()
+
+	var/atom/movable/screen/temperature/T = hud_used.temperature
+	if(!T)
+		return TEMP_STATE_NORMAL
+
+	switch(T.icon_state)
+		if("tempverycold") return TEMP_STATE_VERY_COLD
+		if("tempcold") return TEMP_STATE_COLD
+		if("tempnormal") return TEMP_STATE_NORMAL
+		if("temphot") return TEMP_STATE_HOT
+		if("tempveryhot") return TEMP_STATE_VERY_HOT
+
+	return TEMP_STATE_NORMAL
+
+/mob/living/carbon/human/proc/check_temperature_state(mob/user = src, silent = FALSE)
+
+	var/list/examination = list("<span class='info'>ø ------------ ø")
+
+	var/m1
+	if(user == src)
+		m1 = "I am"
+		examination += span_notice("Let's see how my body temperature feels.")
+	else
+		m1 = "[p_they(TRUE)] [p_are()]"
+		examination += span_notice("Let's see how [src]'s temperature looks.")
+
+	// Get temperature state
+	var/temp_state = get_temperature_state()
+
+	switch(temp_state)
+
+		if(TEMP_STATE_VERY_COLD)
+			examination += span_danger("<B>[m1] extremely cold!</B>")
+			examination += span_biginfo("- Severe shivering")
+			examination += span_biginfo("- Movement speed reduced")
+			examination += span_biginfo("- Constitution reduced")
+			examination += span_danger("- Risk of frostbite after prolonged exposure")
+
+		if(TEMP_STATE_COLD)
+			examination += span_danger("[m1] cold.")
+			examination += span_biginfo("- Hunger increases faster")
+			examination += span_biginfo("- Occasional shivering")
+
+		if(TEMP_STATE_NORMAL)
+			examination += span_biginfo("[m1] at a comfortable temperature.")
+
+		if(TEMP_STATE_HOT)
+			examination += span_danger("[m1] hot.")
+			examination += span_biginfo("- Thirst increases faster")
+			examination += span_biginfo("- Occasional sweating")
+
+		if(TEMP_STATE_VERY_HOT)
+			examination += span_danger("<B>[m1] extremely hot!</B>")
+			examination += span_biginfo("- Actions take more stamina")
+			examination += span_biginfo("- Stamina recovery takes twice as long")
+			examination += span_danger("- Risk of heatstroke after prolonged exposure")
+
+	examination += "ø ------------ ø</span>"
+
+	if(!silent)
+		to_chat(user, examination.Join("\n"))
+
 	return examination
 
 /mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
