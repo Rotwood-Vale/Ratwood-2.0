@@ -1334,9 +1334,6 @@ There are several things that need to be remembered:
 			var/mutable_appearance/armor_overlay
 			if(dna.species.custom_clothes)
 				racecustom = dna.species.clothes_id
-			var/target_layer = ARMOR_LAYER
-			if(wear_armor.ignore_sleeves_code)
-				target_layer = HANDS_PART_LAYER
 			var/desired_gender_render = gender
 			if(dna.species.use_f)
 				desired_gender_render = FEMALE
