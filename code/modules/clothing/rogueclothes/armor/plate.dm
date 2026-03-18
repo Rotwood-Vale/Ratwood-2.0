@@ -661,3 +661,5 @@
 	sewrepair = FALSE
 	allowed_sex = list(MALE, FEMALE)
 	equip_delay_self = 4 SECONDS
+	sleevetype = null
+	sleeved = null
