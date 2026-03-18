@@ -3067,5 +3067,12 @@
 #include "modular_rmh\code\modules\clothing\vladegeg\formal.dm"
 #include "modular_rmh\code\modules\clothing\vladegeg\heels.dm"
 #include "modular_rmh\code\modules\clothing\vladegeg\leo_robe.dm"
+#include "modular_rmh\code\modules\clothing\vladegeg\nightie.dm"
+#include "modular_rmh\code\modules\clothing\vladegeg\selune.dm"
+#include "modular_rmh\code\modules\clothing\vladegeg\skyrim_mage.dm"
+#include "modular_rmh\code\modules\clothing\vladegeg\skyrim_tavern.dm"
+#include "modular_rmh\code\modules\clothing\vladegeg\sophisticated.dm"
+#include "modular_rmh\code\modules\clothing\vladegeg\wintercoat.dm"
+#include "modular_rmh\code\modules\clothing\vladegeg\armor\druid.dm"
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
 // END_INCLUDE
