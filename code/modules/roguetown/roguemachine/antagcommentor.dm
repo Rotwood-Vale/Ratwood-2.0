@@ -1,17 +1,18 @@
 /datum/mind
-	var/freehold_token_touched = FALSE // I need to test it before mob/living/carbon/human because druids shitters going to abuse shit out of their ass broken spell
+	/// Tracks whether this mind has already used the Karmic eye to receive a karmic token. Druids can drop TRAIT so it prevents them to abuse it.
+	var/freehold_token_touched = FALSE
 
-/obj/structure/roguemachine/freeholdpress/proc/target_apply_normal_reward(mob/living/carbon/human/H, reward_type) //helper help me
-	if(!H || !reward_type)
+/obj/structure/roguemachine/freeholdpress/proc/target_apply_normal_reward(mob/living/carbon/human/target_human, reward_type)
+	if(!target_human || !reward_type)
 		return
 	if(reward_type == /datum/status_effect/buff/freehold_normal_faith_spdper)
-		H.apply_status_effect(/datum/status_effect/buff/freehold_normal_faith_spdper)
+		target_human.apply_status_effect(/datum/status_effect/buff/freehold_normal_faith_spdper)
 		return
 	if(reward_type == /datum/status_effect/buff/freehold_normal_faith_strcon)
-		H.apply_status_effect(/datum/status_effect/buff/freehold_normal_faith_strcon)
+		target_human.apply_status_effect(/datum/status_effect/buff/freehold_normal_faith_strcon)
 		return
 	if(reward_type == /datum/status_effect/buff/freehold_normal_faith_intwil)
-		H.apply_status_effect(/datum/status_effect/buff/freehold_normal_faith_intwil)
+		target_human.apply_status_effect(/datum/status_effect/buff/freehold_normal_faith_intwil)
 		return
 
 /obj/structure/roguemachine/freeholdpress
@@ -22,7 +23,7 @@
 	density = FALSE
 	blade_dulling = DULLING_BASH
 	pixel_y = 32
-	
+
 /obj/structure/roguemachine/freeholdpress/examine(mob/user)
 	. = ..()
 	. += span_notice("A non-Freeholder may press a karmic token from it only once in their life.")
@@ -35,28 +36,28 @@
 	. += span_notice("A Freeholder bearing a blessing is supposed to touch the machine to claim a reward.")
 
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
+		var/mob/living/carbon/human/human_user = user
 
-		if(HAS_TRAIT(H, TRAIT_FREEHOLDER))
+		if(HAS_TRAIT(human_user, TRAIT_FREEHOLDER))
 			. += span_info("As a Freeholder, a lesser blessing lets me choose a temporary reward.")
 			. += span_info("As a Freeholder, a greater blessing lets me choose a permanent reward.")
 		else
-			if(H.mind?.freehold_token_touched)
+			if(human_user.mind?.freehold_token_touched)
 				. += span_warning("It has nothing more to grant me.")
 			else
 				. += span_info("It may still grant me a karmic token.")
 
-
 /obj/structure/roguemachine/freeholdpress/attack_hand(mob/user)
+	. = ..()
 	if(!ishuman(user))
-		return
+		return .
 	if(!Adjacent(user))
-		return
+		return .
 
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/human_user = user
 
-	if(HAS_TRAIT(H, TRAIT_FREEHOLDER))
-		if(H.has_status_effect(/datum/status_effect/buff/freehold_great_faith))
+	if(HAS_TRAIT(human_user, TRAIT_FREEHOLDER))
+		if(human_user.has_status_effect(/datum/status_effect/buff/freehold_great_faith))
 			var/list/great_choices = list(
 				"Strength",
 				"Constitution",
@@ -66,82 +67,90 @@
 				"Willpower"
 			)
 
-			var/great_choice = input(H, "Choose your permanent reward to claim.", src.name) as null|anything in great_choices
+			var/great_choice = input(human_user, "Choose your permanent reward to claim.", src.name) as null|anything in great_choices
 			if(!great_choice)
-				return
-			if(QDELETED(src) || QDELETED(H))
-				return
-			if(!Adjacent(H))
-				return
-			if(!H.has_status_effect(/datum/status_effect/buff/freehold_great_faith))
-				to_chat(H, span_warning("The greater blessing has already faded."))
+				return .
+			if(QDELETED(src) || QDELETED(human_user))
+				return .
+			if(!Adjacent(human_user))
+				return .
+			if(!human_user.has_status_effect(/datum/status_effect/buff/freehold_great_faith))
+				to_chat(human_user, span_warning("The greater blessing has already faded."))
 				playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-				return
+				return .
 
 			switch(great_choice)
 				if("Strength")
-					H.STASTR += 1
+					human_user.STASTR += 1
 				if("Constitution")
-					H.STACON += 1
+					human_user.STACON += 1
 				if("Speed")
-					H.STASPD += 1
+					human_user.STASPD += 1
 				if("Perception")
-					H.STAPER += 1
+					human_user.STAPER += 1
 				if("Intelligence")
-					H.STAINT += 1
+					human_user.STAINT += 1
 				if("Willpower")
-					H.STAWIL += 1
+					human_user.STAWIL += 1
 
-			H.remove_status_effect(/datum/status_effect/buff/freehold_great_faith)
-			to_chat(H, span_notice("I'm accepting a great reward from the machine."))
+			human_user.remove_status_effect(/datum/status_effect/buff/freehold_great_faith)
+			to_chat(human_user, span_notice("I'm accepting a great reward from the machine."))
 			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
-			return
+			return .
 
-		if(H.has_status_effect(/datum/status_effect/buff/freehold_normal_faith))
+		if(human_user.has_status_effect(/datum/status_effect/buff/freehold_normal_faith))
 			var/list/normal_choices = list(
 				"Speed and Perception",
 				"Strength and Constitution",
 				"Intelligence and Willpower"
 			)
 
-			var/normal_choice = input(H, "Choose your temporary reward to claim.", src.name) as null|anything in normal_choices
+			var/normal_choice = input(human_user, "Choose your temporary reward to claim.", src.name) as null|anything in normal_choices
 			if(!normal_choice)
-				return
-			if(QDELETED(src) || QDELETED(H))
-				return
-			if(!Adjacent(H))
-				return
-			if(!H.has_status_effect(/datum/status_effect/buff/freehold_normal_faith))
-				to_chat(H, span_warning("The blessing has already faded."))
+				return .
+			if(QDELETED(src) || QDELETED(human_user))
+				return .
+			if(!Adjacent(human_user))
+				return .
+			if(!human_user.has_status_effect(/datum/status_effect/buff/freehold_normal_faith))
+				to_chat(human_user, span_warning("The blessing has already faded."))
 				playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-				return
+				return .
+
 			switch(normal_choice)
 				if("Speed and Perception")
-					target_apply_normal_reward(H, /datum/status_effect/buff/freehold_normal_faith_spdper)
+					target_apply_normal_reward(human_user, /datum/status_effect/buff/freehold_normal_faith_spdper)
 				if("Strength and Constitution")
-					target_apply_normal_reward(H, /datum/status_effect/buff/freehold_normal_faith_strcon)
+					target_apply_normal_reward(human_user, /datum/status_effect/buff/freehold_normal_faith_strcon)
 				if("Intelligence and Willpower")
-					target_apply_normal_reward(H, /datum/status_effect/buff/freehold_normal_faith_intwil)
-			H.remove_status_effect(/datum/status_effect/buff/freehold_normal_faith)
-			to_chat(H, span_notice("I'm accepting a lesser reward from the machine."))
+					target_apply_normal_reward(human_user, /datum/status_effect/buff/freehold_normal_faith_intwil)
+
+			human_user.remove_status_effect(/datum/status_effect/buff/freehold_normal_faith)
+			to_chat(human_user, span_notice("I'm accepting a lesser reward from the machine."))
 			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
-			return
-		to_chat(H, span_warning("Im supposed to be marked by another person to claim anything from here."))
+			return .
+
+		to_chat(human_user, span_warning("Im supposed to be marked by another person to claim anything from here."))
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		return
-	if(H.mind?.freehold_token_touched)
-		to_chat(H, span_warning("This machine will grant me no further token. Only once per my life."))
+		return .
+
+	if(human_user.mind?.freehold_token_touched)
+		to_chat(human_user, span_warning("This machine will grant me no further token. Only once per my life."))
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		return
-	for(var/obj/item/freehold_token/T in H.contents)
-		to_chat(H, span_warning("I already carry such a token."))
+		return .
+
+	for(var/obj/item/freehold_token in human_user.contents)
+		to_chat(human_user, span_warning("I already carry such a token."))
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		return
-	if(H.mind)
-		H.mind.freehold_token_touched = TRUE
-	to_chat(H, span_notice("The machine presses a fleeting token into my hand."))
+		return .
+
+	if(human_user.mind)
+		human_user.mind.freehold_token_touched = TRUE
+
+	to_chat(human_user, span_notice("The machine presses a fleeting token into my hand."))
 	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
-	new /obj/item/freehold_token(get_turf(H), H)
+	new /obj/item/freehold_token(get_turf(human_user), human_user)
+	return .
 
 /obj/item/freehold_token
 	name = "A karmic token"
@@ -165,8 +174,8 @@
 	if(QDELETED(src))
 		return
 	if(ismob(loc))
-		var/mob/M = loc
-		to_chat(M, span_warning("[src] crumbles into nothing. Its not supposed to last long."))
+		var/mob/holder_mob = loc
+		to_chat(holder_mob, span_warning("[src] crumbles into nothing. Its not supposed to last long."))
 	qdel(src)
 
 /obj/item/freehold_token/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -184,91 +193,93 @@
 		to_chat(user, span_warning("This token may only be offered to a Freeholder."))
 		return
 
-	var/mob/living/carbon/human/U = user
-	var/mob/living/carbon/human/H = target
+	var/mob/living/carbon/human/offering_user = user
+	var/mob/living/carbon/human/target_human = target
 
-	if(U == H)
-		to_chat(U, span_warning("I cannot offer this token to myself."))
+	if(offering_user == target_human)
+		to_chat(offering_user, span_warning("I cannot offer this token to myself."))
 		return
 
-	if(!HAS_TRAIT(H, TRAIT_FREEHOLDER))
-		to_chat(user, span_warning("[H] is not a Freeholder."))
+	if(!HAS_TRAIT(target_human, TRAIT_FREEHOLDER))
+		to_chat(offering_user, span_warning("[target_human] is not a Freeholder."))
 		return
 
-	if(get_dist(U, H) > 1)
+	if(get_dist(offering_user, target_human) > 1)
 		return
 
 	in_use = TRUE
-	U.visible_message(span_notice("[U] begins offering [src] to [H]..."))
+	offering_user.visible_message(span_notice("[offering_user] begins offering [src] to [target_human]..."))
 
-	if(!do_after(U, 10 SECONDS, target = H))
+	if(!do_after(offering_user, 10 SECONDS, target = target_human))
 		in_use = FALSE
-		U.visible_message(span_warning("[U] fails to complete the offering."))
+		offering_user.visible_message(span_warning("[offering_user] fails to complete the offering."))
 		return
-	if(QDELETED(src) || QDELETED(U) || QDELETED(H))
+	if(QDELETED(src) || QDELETED(offering_user) || QDELETED(target_human))
 		qdel(src)
 		return
-	if(get_dist(U, H) > 1)
-		to_chat(U, span_warning("[H] is too far away now."))
+	if(get_dist(offering_user, target_human) > 1)
+		to_chat(offering_user, span_warning("[target_human] is too far away now."))
 		in_use = FALSE
 		return
-	open_offer_window(U, H)
 
-/obj/item/freehold_token/proc/open_offer_window(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(QDELETED(src) || QDELETED(user) || QDELETED(target))
+	open_offer_window(offering_user, target_human)
+
+/obj/item/freehold_token/proc/open_offer_window(mob/living/carbon/human/offering_user, mob/living/carbon/human/target_human)
+	if(QDELETED(src) || QDELETED(offering_user) || QDELETED(target_human))
 		qdel(src)
 		return
-	if(get_dist(user, target) > 1)
+	if(get_dist(offering_user, target_human) > 1)
 		in_use = FALSE
 		return
 
 	var/list/choices = list("Bad", "Normal", "Great", "Nevermind")
-	var/secret_choice = input(user, "Choose the token's intent.", src.name) as null|anything in choices
+	var/secret_choice = input(offering_user, "Choose the token's intent.", src.name) as null|anything in choices
 	if(secret_choice == "Nevermind" || !secret_choice)
 		in_use = FALSE
 		return
 
-	to_chat(target, span_notice("[user] offers you their desigion."))
-	to_chat(user, span_notice("[target] now considers your offering."))
+	to_chat(target_human, span_notice("[offering_user] offers you their desigion."))
+	to_chat(offering_user, span_notice("[target_human] now considers your offering."))
 
-	var/accept_choice = alert(target, "Accept this offering?", src.name, "Accept", "Refuse")
+	var/accept_choice = alert(target_human, "Accept this offering?", src.name, "Accept", "Refuse")
 
-	if(QDELETED(src) || QDELETED(user) || QDELETED(target))
+	if(QDELETED(src) || QDELETED(offering_user) || QDELETED(target_human))
 		qdel(src)
 		return
 
 	if(accept_choice != "Accept")
-		to_chat(user, span_warning("[target] refuses the token."))
-		to_chat(target, span_notice("You refuse the token."))
-		in_use = FALSE
-		return
-	target.visible_message(span_notice("[target] begins accepting their fate..."))
-	if(!do_after(target, 10 SECONDS, target = target))
-		to_chat(user, span_warning("[target] does not complete the process."))
-		to_chat(target, span_warning("You fail to complete the process."))
+		to_chat(offering_user, span_warning("[target_human] refuses the token."))
+		to_chat(target_human, span_notice("You refuse the token."))
 		in_use = FALSE
 		return
 
-	if(QDELETED(src) || QDELETED(user) || QDELETED(target))
-		qdel(src)
-		return
-	if(get_dist(user, target) > 1)
-		to_chat(user, span_warning("The process is broken by distance."))
-		to_chat(target, span_warning("The process is broken."))
+	target_human.visible_message(span_notice("[target_human] begins accepting their fate..."))
+	if(!do_after(target_human, 10 SECONDS, target = target_human))
+		to_chat(offering_user, span_warning("[target_human] does not complete the process."))
+		to_chat(target_human, span_warning("You fail to complete the process."))
 		in_use = FALSE
 		return
-	if(!HAS_TRAIT(target, TRAIT_FREEHOLDER))
-		to_chat(user, span_warning("[target] is no longer a Freeholder."))
+
+	if(QDELETED(src) || QDELETED(offering_user) || QDELETED(target_human))
+		qdel(src)
+		return
+	if(get_dist(offering_user, target_human) > 1)
+		to_chat(offering_user, span_warning("The process is broken by distance."))
+		to_chat(target_human, span_warning("The process is broken."))
+		in_use = FALSE
+		return
+	if(!HAS_TRAIT(target_human, TRAIT_FREEHOLDER))
+		to_chat(offering_user, span_warning("[target_human] is no longer a Freeholder."))
 		in_use = FALSE
 		return
 
 	switch(secret_choice)
 		if("Bad")
-			apply_bad_faith(user, target)
+			apply_bad_faith(offering_user, target_human)
 		if("Normal")
-			apply_normal_faith(user, target)
+			apply_normal_faith(offering_user, target_human)
 		if("Great")
-			apply_great_faith(user, target)
+			apply_great_faith(offering_user, target_human)
 
 /obj/item/freehold_token/proc/apply_bad_faith(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	target.remove_status_effect(/datum/status_effect/buff/freehold_normal_faith)
@@ -296,7 +307,6 @@
 	to_chat(target, span_notice("A lesser blessing settles upon you. I should claim it at the machine."))
 	playsound(target, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 	qdel(src)
-
 
 /obj/item/freehold_token/proc/apply_great_faith(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.has_status_effect(/datum/status_effect/debuff/freehold_bad_faith))
@@ -327,7 +337,6 @@
 	duration = 30 MINUTES
 	effectedstats = list(STATKEY_STR = -3, STATKEY_CON = -3, STATKEY_WIL = -3, STATKEY_SPD = -3, STATKEY_PER = -3, STATKEY_INT = -3)
 
-
 /atom/movable/screen/alert/status_effect/buff/freehold_normal_faith_spdper
 	name = "Normal Faith"
 	desc = "A small reward for my efforts."
@@ -338,7 +347,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/freehold_normal_faith_spdper
 	duration = 30 MINUTES
 	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 1)
-
 
 /atom/movable/screen/alert/status_effect/buff/freehold_normal_faith_strcon
 	name = "Normal Faith"
@@ -351,7 +359,6 @@
 	duration = 30 MINUTES
 	effectedstats = list(STATKEY_STR = 1, STATKEY_CON = 1)
 
-
 /atom/movable/screen/alert/status_effect/buff/freehold_normal_faith_intwil
 	name = "Normal Faith"
 	desc = "A small reward for my efforts."
@@ -362,7 +369,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/freehold_normal_faith_intwil
 	duration = 30 MINUTES
 	effectedstats = list(STATKEY_INT = 1, STATKEY_WIL = 1)
-
 
 /atom/movable/screen/alert/status_effect/buff/freehold_great_faith
 	name = "Great Faith"
