@@ -19730,7 +19730,7 @@
 /obj/structure/bars,
 /obj/structure/table/wood,
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/under/cave)
+/area/rogue/indoors/shelter/freehold)
 "eRu" = (
 /obj/structure/roguewindow/openclose{
 	dir = 1
@@ -27061,7 +27061,7 @@
 /obj/structure/bars,
 /obj/structure/table/wood,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave)
+/area/rogue/indoors/shelter/freehold)
 "gJs" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -28464,7 +28464,7 @@
 /obj/item/natural/worms/leech,
 /obj/item/natural/worms/leech,
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/under/cave)
+/area/rogue/indoors/shelter/freehold)
 "haS" = (
 /obj/structure/glowshroom{
 	icon_state = "glowshroom2"
@@ -43820,7 +43820,7 @@
 "kZF" = (
 /obj/structure/pillory,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave)
+/area/rogue/indoors/shelter/freehold)
 "kZP" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -45717,7 +45717,7 @@
 	pixel_x = -1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave)
+/area/rogue/indoors/shelter/freehold)
 "lAw" = (
 /obj/structure/bed/rogue/inn/wooldouble{
 	dir = 1
@@ -64177,7 +64177,7 @@
 /obj/item/paper/scroll,
 /obj/item/paper/scroll,
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/under/cave)
+/area/rogue/indoors/shelter/freehold)
 "qhA" = (
 /obj/structure/mineral_door/wood/violet{
 	locked = 1;
@@ -65850,7 +65850,7 @@
 /obj/structure/table/wood/poor,
 /obj/item/clothing/neck/roguetown/collar/leather,
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/under/cave)
+/area/rogue/indoors/shelter/freehold)
 "qBX" = (
 /obj/structure/lever/wall{
 	dir = 8;
@@ -66221,12 +66221,6 @@
 	icon_state = "rockwd"
 	},
 /area/rogue/under/cavewet)
-"qGI" = (
-/obj/effect/wisp/prestidigitation{
-	pixel_x = 0
-	},
-/turf/open/floor/rogue/cobble,
-/area/rogue/under/cave)
 "qGJ" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/dirt/road,
@@ -66476,7 +66470,7 @@
 	},
 /obj/structure/pillory/double,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave)
+/area/rogue/indoors/shelter/freehold)
 "qJX" = (
 /obj/structure/flora/roguetree,
 /obj/structure/flora/roguegrass/water/reeds,
@@ -74455,7 +74449,7 @@
 "sQD" = (
 /obj/structure/bed/rogue/inn,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave)
+/area/rogue/indoors/shelter/freehold)
 "sQL" = (
 /obj/structure/chair/wood/rogue,
 /obj/structure/fluff/walldeco/customflag/rockhill{
@@ -75278,7 +75272,7 @@
 	},
 /obj/structure/table/wood,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave)
+/area/rogue/indoors/shelter/freehold)
 "tck" = (
 /obj/structure/table/wood{
 	dir = 5;
@@ -84334,9 +84328,6 @@
 	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/shop)
-"vsu" = (
-/turf/open/floor/rogue/cobble,
-/area/rogue/under/cave)
 "vsz" = (
 /obj/structure/fluff/alch,
 /obj/machinery/light/rogue/candle,
@@ -85482,9 +85473,6 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/bath)
-"vHX" = (
-/turf/open/floor/rogue/churchmarble,
-/area/rogue/under/cave)
 "vIa" = (
 /turf/closed/mineral/rogue,
 /area/rogue/indoors/shelter/mountains)
@@ -228365,16 +228353,16 @@ vRu
 vRu
 bMj
 bMj
-fyP
+iRq
 haR
 qhy
-vsu
-qGI
-vsu
-vsu
-vHX
+qIm
+mPa
+qIm
+qIm
+qDW
 qBV
-bMj
+eQC
 bMj
 bMj
 bMj
@@ -228797,16 +228785,16 @@ vRu
 vRu
 vRu
 bMj
-hln
+vdI
 eRq
 eRq
-bMj
-fKe
-bMj
+eQC
+gov
+eQC
 tcj
 gJr
-hln
-bMj
+vdI
+eQC
 vRu
 vRu
 bMj
@@ -229229,16 +229217,16 @@ vRu
 vRu
 vRu
 bMj
-hln
+vdI
 sQD
-vsu
-vsu
-vsu
-vsu
-vsu
+qIm
+qIm
+qIm
+qIm
+qIm
 sQD
-hln
-pKo
+vdI
+cHC
 vRu
 vRu
 bMj
@@ -229661,16 +229649,16 @@ vRu
 vRu
 vRu
 jeE
-bMj
+eQC
 qJS
 lAv
-qGI
-vsu
-vsu
+mPa
+qIm
+qIm
 lAv
 kZF
-bMj
-pKo
+eQC
+cHC
 vRu
 vRu
 bMj
@@ -230093,16 +230081,16 @@ vRu
 vRu
 vRu
 vRu
-bMj
-bMj
-pKo
-pKo
-bMj
-bMj
-pKo
-pKo
-jeE
-tQZ
+eQC
+eQC
+cHC
+cHC
+eQC
+eQC
+cHC
+cHC
+ilK
+rnM
 vRu
 vRu
 bMj

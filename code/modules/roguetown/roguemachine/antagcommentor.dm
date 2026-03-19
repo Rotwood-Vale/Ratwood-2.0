@@ -139,7 +139,7 @@
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return .
 
-	for(var/obj/item/freehold_token in human_user.contents)
+	if(locate(/obj/item/freehold_token) in human_user.contents)
 		to_chat(human_user, span_warning("I already carry such a token."))
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return .
@@ -151,7 +151,7 @@
 	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 	new /obj/item/freehold_token(get_turf(human_user), human_user)
 	return .
-
+	
 /obj/item/freehold_token
 	name = "A karmic token"
 	desc = "A fleeting token, warm from the press. It will not last long."
