@@ -268,7 +268,7 @@
 
 	take_overall_damage(brute_loss,burn_loss)
 
-/mob/living/simple_animal/do_attack_animation(atom/A, visual_effect_icon, used_item, no_effect, used_intent = null, simplified = TRUE)
+/mob/living/simple_animal/do_attack_animation(atom/A, visual_effect_icon, used_item, no_effect, item_animation_override = null, used_intent = null, simplified = TRUE)
 	if(!no_effect && !visual_effect_icon && melee_damage_upper)
 		if(melee_damage_upper < 10)
 			visual_effect_icon = ATTACK_EFFECT_PUNCH

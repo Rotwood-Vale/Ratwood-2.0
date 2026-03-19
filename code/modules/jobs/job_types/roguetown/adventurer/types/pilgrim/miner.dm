@@ -8,6 +8,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	traits_applied = list(TRAIT_DARKVISION, TRAIT_SMITHING_EXPERT) // Smithing Expert, because from what I observe of miner players they tend to do smithing far more than farming etc.
+	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_CON = 2,

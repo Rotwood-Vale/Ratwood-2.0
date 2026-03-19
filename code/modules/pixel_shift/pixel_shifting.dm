@@ -83,6 +83,6 @@
 	if(!mover)	//On rare occasions, there isn't a mover present.
 		return ..()
 	// Make sure to not allow projectiles of any kind past where they normally wouldn't.
-	if(!istype(mover, /obj/projectile) && !mover.throwing && passthroughable & get_dir(src, mover))
+	if(!istype(mover, /obj/projectile) && !mover?.throwing && passthroughable & get_dir(src, mover))
 		return TRUE
 	return ..()

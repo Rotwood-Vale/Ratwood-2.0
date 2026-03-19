@@ -37,12 +37,18 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 			return FALSE
 		if(world.time > last_client_interact + 0.3 SECONDS)
 			return FALSE // unmoving afks can't trigger random ambushes i.e. when being pulled/kicked/etc
-	if(get_will_block_ambush())
+	if(get_will_block_ambush(always))
 		return FALSE
 	if(mob_timers["ambush_check"] && !ignore_cooldown)
 		if(world.time < mob_timers["ambush_check"] + GLOB.ambush_mobconsider_cooldown)
 			return FALSE
 	mob_timers["ambush_check"] = world.time
+#ifdef MATURESERVER
+	if(ishuman(src))
+		var/mob/living/carbon/human/M = src
+		if(M?.sexcon.current_action && !M?.sexcon.desire_stop) // if we're fucking in the bushes, don't spawn ambush
+			return FALSE
+#endif
 	var/victims = 1
 	var/list/victimsa = list()
 	for(var/mob/living/V in view(5, src))
@@ -149,7 +155,8 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 		return TURF_WET_PERMAFROST
 
 // Return whether a mob is blocked from being ambushed
-/mob/living/proc/get_will_block_ambush()
+// induced: If TRUE, this is an intentional ambush (like signal horn) and should bypass wilderness guide protection
+/mob/living/proc/get_will_block_ambush(induced = FALSE)
 	if(!ambushable())
 		return TRUE
 	var/campfires = 0
@@ -158,6 +165,12 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 			campfires++
 	if(campfires > 0)
 		return TRUE
+	// Check for nearby wilderness guides providing protection from natural ambushes
+	// Induced ambushes (signal horn) bypass this protection
+	if(!induced)
+		for(var/mob/living/carbon/human/H in view(10, src))
+			if(HAS_TRAIT(H, TRAIT_WILDERNESSGUIDE))
+				return TRUE
 
 /mob/living/proc/get_possible_ambush_spawn(min_dist = 2, max_dist = 7)
 	var/list/possible_targets = list()

@@ -11,9 +11,9 @@
 					/obj/effect/proc_holder/spell/invoked/blood_heal				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/avert						= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/speakwithdead				= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/deaths_door				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/targeted/abrogation				= CLERIC_T2,
 					/obj/effect/proc_holder/spell/self/necra_spirits				= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/deaths_door				= CLERIC_T3,//This was bad enough at T1. No, thanks. Cool as it is.
 					/obj/effect/proc_holder/spell/targeted/churn					= CLERIC_T4,//Priest/Acolytes only. Thanks.
 	)
 	confess_lines = list(
@@ -42,12 +42,12 @@
 	return FALSE
 
 /datum/patron/divine/necra/on_lesser_heal(
-    mob/living/user,
-    mob/living/target,
-    message_out,
-    message_self,
-    conditional_buff,
-    situational_bonus
+	mob/living/user,
+	mob/living/target,
+	message_out,
+	message_self,
+	conditional_buff,
+	situational_bonus
 )
 	*message_out = span_info("A sense of quiet respite radiates from [target]!")
 	*message_self = span_notice("I feel the Undermaiden's gaze turn from me for now!")

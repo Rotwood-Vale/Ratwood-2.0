@@ -41,6 +41,6 @@
 	if(prob(10))
 		r_hand = /obj/item/rogue/instrument/flute
 
-/mob/living/simple_animal/hostile/retaliate/rogue/goat/tame/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/goat/tame/Initialize(mapload)
 	..()
 	tamed()

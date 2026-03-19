@@ -5,7 +5,7 @@
 	icon_state = "ash"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/ash/Initialize()
+/obj/item/ash/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/boat,

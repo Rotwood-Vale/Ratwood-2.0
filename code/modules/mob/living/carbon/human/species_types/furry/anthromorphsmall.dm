@@ -12,6 +12,16 @@
 	expanded_desc = "A race akin to wild-kin, except afflicted with significantly smaller stature. \
 	Sometimes referred to with the derogatory term 'verminfolk' by those that disrespect the small."
 	default_color = "444"
+
+	use_titles = TRUE
+	race_titles = list(
+	"Catvolk", "Dogvolk", "Volfvolk", "Lionvolk", "Venardvolk", "Tigervolk", "Sheepvolk",
+	"Goatvolk", "Rousvolk", "Possumvolk", "Pigvolk", "Boarvolk", "Rabbitvolk", "Horsevolk",
+	"Donkeyvolk", "Hyenavolk", "Deervolk", "Bearvolk", "Pandavolk", "Coyotevolk", "Moosevolk",
+	"Jackalvolk", "Panthervolk", "Lynxvolk", "Leopardvolk", "Monkeyvolk", "Birdvolk", "Sealvolk", "Frogvolk",
+	"Batvolk", "Ottervolk", "Cowvolk", "Bullvolk", "Beevolk", "Monstervolk", "Chimeravolk"
+	)
+
 	species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,

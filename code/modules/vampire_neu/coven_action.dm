@@ -57,7 +57,7 @@
 
 /datum/action/coven/UpdateButtonIcon(status_only, force)
 	button.icon = icon_icon
-	if(coven)
+	if(coven && coven.current_power)
 		name = coven.current_power.name
 		button.name = name
 		desc = coven.current_power.desc

@@ -229,6 +229,7 @@
 				user.update_inv_hands()
 				var/turf/location = get_turf(src)
 				add_splatter_floor(location)
+				add_splatter_wall(location, force = statforce)
 				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 				var/splatter_dir = get_dir(user, src)
@@ -330,8 +331,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	for(var/X in internal_organs)
-		var/obj/item/organ/O = X
+	for(var/obj/item/organ/O as anything in internal_organs)
 		O.emp_act(severity)
 
 ///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.

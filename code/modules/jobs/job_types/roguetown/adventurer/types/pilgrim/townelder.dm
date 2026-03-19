@@ -10,6 +10,7 @@
 	cmode_music = 'sound/music/cmode/towner/combat_retired.ogg'
 	category_tags = list(CTAG_TOWNER)
 	traits_applied = list(TRAIT_SEEPRICES_SHITTY, TRAIT_EMPATH, TRAIT_MEDICINE_EXPERT, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_SMITHING_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_SURVIVAL_EXPERT)
+	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_PER = 2,

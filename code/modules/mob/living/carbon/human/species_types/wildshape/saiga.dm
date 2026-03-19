@@ -4,6 +4,8 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/saiga_skin
+	wildshape_icon = 'icons/roguetown/mob/monster/saiga.dmi'
+	wildshape_icon_state = "saiga"
 	// Someone else balance this, I am here for code, not numbers
 
 //BUCKLING
@@ -24,8 +26,11 @@
 		src.STASPD = 15
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/saigahoofs)
-		real_name = "Saiga" //So we don't get a random name
 		faction += "saiga" // It IS a saiga
+		if (src.client.prefs?.wildshape_name)
+			real_name = "saiga ([stored_mob.real_name])"
+		else
+			real_name = "saiga"
 
 // SAIGA SPECIES DATUM //
 /datum/species/shapesaiga
@@ -148,7 +153,7 @@
 /obj/item/rogueweapon/saiga_hoof/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/saiga_hoof/Initialize()
+/obj/item/rogueweapon/saiga_hoof/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)

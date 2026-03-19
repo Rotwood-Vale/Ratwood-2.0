@@ -284,12 +284,12 @@
 	tools = list(/obj/item/rogueweapon/huntingknife = 1)
 
 /datum/crafting_recipe/hair_dye
-    name = "hair dye cream"
-    result = /obj/item/hair_dye_cream
-    reqs = list(
-        /obj/item/reagent_containers/glass/bowl = 1,
-        /obj/item/reagent_containers/food/snacks/grown/berries/rogue = 3,
-    )
+	name = "hair dye cream"
+	result = /obj/item/hair_dye_cream
+	reqs = list(
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 3,
+	)
 
 // DIE
 

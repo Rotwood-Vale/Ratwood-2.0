@@ -1,24 +1,40 @@
+#define BODYTEMP_EQUILIBRIUM 315
+
+// Kelvin per second (10 K per minute)
+#define TEMP_RECOVERY_RATE (10.0 / 60.0)
 /mob/living/carbon/Life(seconds, times_fired)
 	set invisibility = 0
 
 	if(notransform)
 		return
-
-	if(damageoverlaytemp)
-		damageoverlaytemp = 0
-		update_damage_hud()
-
-	//Reagent processing needs to come before breathing, to prevent edge cases.
-	handle_organs()
+	if(isnull(loc))
+		return
 
 	. = ..()
 
-	if (QDELETED(src))
-		return
+	if(times_fired % 2 == 0) // every 2nd (other) tick, update damage hud.
+		if(damageoverlaytemp)
+			damageoverlaytemp = 0
+			update_damage_hud()
+	if(!client) // Clientless? Handle organs and wounds every THIRD tick. (carbon AI as well, we'll see how this goes.)
+		if(times_fired % 3 == 0)
+			handle_organs()
+			handle_wounds()
+			handle_blood()
+	else
+		handle_organs()
+		handle_blood()
+		handle_wounds()
 
-	handle_wounds()
+	//Funny thing here, however. If they ARE skullcracked, we throw them a bone. In direct opposition to the above.
+	//Passive heals until they get out of skullcrack state. Just so they're not perma skullcracked without doctors.
+	//You can still break legs and the like without it passive healing. Do that instead.
+	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
+		var/list/wounds = get_wounds()
+		if(wounds.len > 0)
+			heal_wounds(0.3, list(/datum/wound/fracture/head, /datum/wound/fracture/head/brain, /datum/wound/fracture/neck))
+
 	handle_embedded_objects()
-	handle_blood()
 	handle_roguebreath()
 	var/bprv = handle_bodyparts()
 	if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
@@ -149,6 +165,7 @@
 
 /mob/living/carbon/proc/get_complex_pain()
 	. = 0
+	var/has_adrenaline = HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH)
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb.status == BODYPART_ROBOTIC || limb.skeletonized)
 			continue
@@ -156,10 +173,9 @@
 		for(var/datum/wound/wound in limb.wounds)
 			bodypart_pain += wound.woundpain
 		bodypart_pain = min(bodypart_pain, limb.max_pain_damage)
-		if(HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH))
-			bodypart_pain = bodypart_pain * 0.5
+		if(has_adrenaline)
+			bodypart_pain *= 0.5
 		. += bodypart_pain
-	.
 
 /mob/living/carbon/human/get_complex_pain()
 	. = ..()
@@ -176,25 +192,21 @@
 	return FALSE
 
 /mob/living/carbon/proc/handle_bodyparts()
-	var/stam_regen = FALSE
-	if(stam_regen_start_time <= world.time)
-		stam_regen = TRUE
-		if(stam_paralyzed)
-			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
-	for(var/I in bodyparts)
-		var/obj/item/bodypart/BP = I
-		if(BP.needs_processing)
-			. |= BP.on_life(stam_regen)
+	var/stam_regen = stam_regen_start_time <= world.time
+	if(stam_regen && stam_paralyzed)
+		. |= BODYPART_LIFE_UPDATE_HEALTH
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
+		if(!BP.needs_processing)
+			continue
+		. |= BP.on_life(stam_regen)
 
 /mob/living/carbon/proc/handle_organs()
 	if(stat != DEAD)
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
+		for(var/obj/item/organ/O as anything in internal_organs)
 			O.on_life()
 	else
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
-			O.on_death() //Needed so organs decay while inside the body.
+		for(var/obj/item/organ/O as anything in internal_organs)
+			O.on_death()
 
 /mob/living/carbon/handle_embedded_objects()
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
@@ -367,18 +379,29 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			adjustToxLoss(5) //Let's be honest you shouldn't be alive by now
 
 //used in human and monkey handle_environment()
+//Temperature system design note:
+//Unlike standard SS13, We don't want a 'realistic' homeostasis. Ideally we will have 5 main 'states' of temperature that are hit and have effects.
+//These states should linger long enough that players will want to effect their temperature through means that aren't simply waiting around somewhere.
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
-	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
-	switch(bodytemperature)
-		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT) //Cold damage limit is 50 below the default, the temperature where you start to feel effects.
-			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_NORMAL)
-			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT) // Heat damage limit is 50 above the default, the temperature where you start to feel effects.
-			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
-			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+	var/delta = BODYTEMP_EQUILIBRIUM - bodytemperature
+	if(delta == 0)
+		return 0
 
+	var/abs_temp = bodytemperature
+	var/rate
+
+	if(abs_temp < 300)
+		rate = TEMP_RECOVERY_RATE
+	else if(abs_temp > 330)
+		rate = TEMP_RECOVERY_RATE
+	else
+		rate = TEMP_RECOVERY_RATE * 0.2
+
+	// Convert to per-call adjustment
+	var/seconds = world.tick_lag / 10
+	var/max_change = rate * seconds
+
+	return clamp(delta, -max_change, max_change)
 /////////
 //LIVER//
 /////////
@@ -607,8 +630,27 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						armor_blocked = TRUE
 					if(H.wear_armor && (H.wear_armor.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM)))
 						armor_blocked = TRUE
+					// Check nude sleeper trait
+					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
+						var/list/worn_items = H.get_equipped_items()
+						for(var/obj/item/I in worn_items)
+							// Skip abstract items
+							if(HAS_TRAIT(I, ABSTRACT_ITEM_TRAIT))
+								continue
+							// Allow NODROP items (body modifications like skin_armor)
+							if(HAS_TRAIT(I, TRAIT_NODROP))
+								continue
+							// Allow items approved for nude sleepers
+							if(I.nudist_approved)
+								continue
+							// Found clothing that blocks sleeping
+							armor_blocked = TRUE
+							break
 					if(armor_blocked && !fallingas)
-						to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
+						if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
+							to_chat(src, span_warning("I can't sleep while wearing clothes!"))
+						else
+							to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
 						fallingas = TRUE
 				if(!armor_blocked)
 					if(!fallingas)
@@ -625,16 +667,23 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		else if(!(mobility_flags & MOBILITY_STAND))
 			if(eyesclosed)
 				var/armor_blocked = FALSE
+				var/trait_blocked = FALSE
 				if(ishuman(src) && stat == CONSCIOUS)
 					var/mob/living/carbon/human/H = src
 					if(H.head && H.head.armor?.stab > 70)
 						armor_blocked = TRUE
 					if(H.wear_armor && (H.wear_armor.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM)))
 						armor_blocked = TRUE
-					if(armor_blocked && !fallingas)
+					// Nude sleepers are forbidden from sleeping uncomfortably.
+					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
+						trait_blocked = TRUE
+					if(trait_blocked && !fallingas)
+						to_chat(src, span_warning("I need to rest on something more comfortable!"))
+						fallingas = TRUE
+					else if(armor_blocked && !fallingas)
 						to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
 						fallingas = TRUE
-				if(!armor_blocked)
+				if(!armor_blocked && !trait_blocked)
 					if(!fallingas)
 						to_chat(src, span_warning("I'll fall asleep soon, although a bed would be more comfortable..."))
 					fallingas++

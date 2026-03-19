@@ -38,5 +38,4 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/black
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	backpack_contents = list(/obj/item/recipe_book/survival = 1,
-						/obj/item/rogueweapon/huntingknife = 1)
+	backpack_contents = list(/obj/item/rogueweapon/huntingknife = 1)

@@ -111,10 +111,10 @@
 	. = 1
 
 /** Design Note: Antidotes are meant to last as long as the poison, and purge them much quicker
- Having a 1 to 1 antidote to poison where you have to tailor defense to an increasing amount of attack
- is a bad idea, since that just means no one will use antidotes and the weapon win the race vs defense.
- This means pre ingesting antidote when expecting poison is a viable strategy.
- Previously, antidote did not have a dylovene-like effect and just purged toxin damage while poison will outlast them.
+ * Having a 1 to 1 antidote to poison where you have to tailor defense to an increasing amount of attack
+ * is a bad idea, since that just means no one will use antidotes and the weapon win the race vs defense.
+ * This means pre ingesting antidote when expecting poison is a viable strategy.
+ * Previously, antidote did not have a dylovene-like effect and just purged toxin damage while poison will outlast them.
 **/
 /datum/reagent/medicine/antidote
 	name = "Antidote"
@@ -181,6 +181,15 @@
 			// Rapidly purge stacking buffs
 	..()
 
+/datum/reagent/buff/temperature_normalize
+	name = "temperature"
+	color = "#ff9000"
+	taste_description = "like water"
+
+/datum/reagent/buff/temperature_normalize/on_mob_life(mob/living/carbon/M)
+	M.apply_status_effect(/datum/status_effect/buff/alch/temperaturepot)
+	return ..()
+
 /datum/reagent/buff/strength
 	name = STATKEY_STR
 	color = "#ff9000"
@@ -192,7 +201,7 @@
 
 /datum/reagent/buff/perception
 	name = STATKEY_PER
-	color = "#ffff00"
+	color = "#e9e98c"
 	taste_description = "cat piss"
 	metabolization_rate = REAGENTS_METABOLISM * 0.05
 
@@ -221,7 +230,7 @@
 
 /datum/reagent/buff/endurance
 	name = STATKEY_WIL
-	color = "#ffff00"
+	color = "#e2c3e1"
 	taste_description = "oversweetened milk"
 
 /datum/reagent/buff/endurance/on_mob_life(mob/living/carbon/M)
@@ -230,7 +239,7 @@
 
 /datum/reagent/buff/speed
 	name = STATKEY_SPD
-	color = "#ffff00"
+	color = "#cea63a"
 	taste_description = "raw egg yolk"
 
 /datum/reagent/buff/speed/on_mob_life(mob/living/carbon/M)

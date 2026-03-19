@@ -56,6 +56,7 @@
 	for(var/datum/wound/wound as anything in wounds)
 		if(heal_amount <= 0)
 			continue
+
 		var/amount_healed = wound.heal_wound(heal_amount)
 		heal_amount -= amount_healed
 		healed_any = TRUE
@@ -196,7 +197,7 @@
 				var/datum/wound/newwound = add_wound(woundtype)
 				dynwound = newwound
 				if(newwound && !isnull(newwound))	//don't even ask - Free
-					owner.visible_message(span_red("A new [newwound.name] appears on [owner]'s [lowertext(bodyzone2readablezone(bodypart_to_zone(newwound.bodypart_owner)))]!"))
+					owner.visible_message(span_red("A new [newwound.name] appears on [owner]'s [LOWER_TEXT(bodyzone2readablezone(bodypart_to_zone(newwound.bodypart_owner)))]!"))
 					newwound.upgrade(dam, armor)
 	return dynwound
 
@@ -643,6 +644,13 @@
 			continue
 		returned_flags |= SURGERY_INCISED
 		break
+	if(owner?.construct) // Construct snowflake check.
+		for(var/datum/wound/slash/incision/construct/incision in wounds)
+			if(incision.is_sewn())
+				continue
+			returned_flags |= SURGERY_INCISED
+			break
+		returned_flags |= SURGERY_CONSTRUCT
 	var/static/list/retracting_behaviors = list(
 		TOOL_RETRACTOR,
 		TOOL_CROWBAR,

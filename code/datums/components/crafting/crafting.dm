@@ -160,9 +160,10 @@
 	return TRUE
 
 /atom/proc/OnCrafted(dirin, mob/user)
-	SEND_SIGNAL(user, COMSIG_ITEM_CRAFTED, user, type)
+	if(user)
+		SEND_SIGNAL(user, COMSIG_ITEM_CRAFTED, user, type)
+		record_featured_stat(FEATURED_STATS_CRAFTERS, user)
 	dir = dirin
-	record_featured_stat(FEATURED_STATS_CRAFTERS, user)
 	record_featured_object_stat(FEATURED_STATS_CRAFTED_ITEMS, name)
 	return
 
@@ -246,7 +247,7 @@
 				continue
 			if(R.structurecraft && istype(S, R.structurecraft))
 				continue
-			if(S.density)
+			if(S.density && !R.ignoredensity)
 				to_chat(user, span_warning("Something is in the way."))
 				return
 		for(var/obj/machinery/M in T)
@@ -535,8 +536,8 @@
 			continue
 		var/category
 		if(R.skillcraft)
-			var/datum/skill/S = new R.skillcraft()
-			category = S.name
+			var/datum/skill/S = R.skillcraft
+			category = initial(S.name)
 		else
 			category = "Other"
 		if(isnull(crafting_recipes[category]))

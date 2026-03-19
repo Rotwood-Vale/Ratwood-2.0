@@ -61,7 +61,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/greatsnackbuff
 	name = "Great Snack!"
-	desc = "Nothing like a great and nutritious snack to help you on that final strech. I feel invigorated."
+	desc = "Nothing like a great and nutritious snack to help you on that final stretch. I feel invigorated."
 	icon_state = "foodbuff"
 
 /datum/status_effect/buff/greatsnackbuff/on_apply()
@@ -78,7 +78,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/mealbuff
 	name = "Good meal"
-	desc = "A meal a day keeps the barber away, or at least it makes it slighly easier."
+	desc = "A meal a day keeps the barber away, or at least it makes it slightly easier."
 	icon_state = "foodbuff"
 
 /datum/status_effect/buff/mealbuff/on_apply()
@@ -604,6 +604,78 @@
 	examine_text = null
 	duration = 10 SECONDS
 
+/atom/movable/screen/alert/status_effect/buff/campfire_stamina
+	name = "Camp Rest"
+	desc = "A break by the fire restores some of my energy."
+	icon_state = "campfire"
+
+/atom/movable/screen/alert/status_effect/buff/fireplace_stamina
+	name = "Warming Respite"
+	desc = "The warmth of a fire restores some of my energy."
+	icon_state = "fireplace"
+
+#define CAMPFIRE_BASE_FILTER "campfire_stamina"
+
+/datum/status_effect/buff/campfire_stamina
+	id = "stamina_campfire"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/campfire_stamina
+	duration = 5 SECONDS
+	examine_text = "SUBJECTPRONOUN is enjoying a brief respite."
+	var/healing_on_tick = 5
+	var/outline_colour = "#7e6a3e"
+	var/tech_healing_modifier = 1
+
+/datum/status_effect/buff/campfire_stamina/on_apply()
+	var/filter = owner.get_filter(CAMPFIRE_BASE_FILTER)
+	if (!filter)
+		owner.add_filter(CAMPFIRE_BASE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
+	return TRUE
+
+/datum/status_effect/buff/campfire_stamina/tick()
+	if(owner.construct)
+		return
+	var/stamheal = healing_on_tick
+	if(!owner.cmode)
+		stamheal *= 2
+	owner.energy_add(stamheal)
+	if(owner.bodytemperature < 300)	//Apply heat to player if below certain normal
+		owner.adjust_bodytemperature(5)
+
+/datum/status_effect/buff/campfire_stamina/on_remove()
+	owner.remove_filter(CAMPFIRE_BASE_FILTER)
+
+/datum/status_effect/buff/campfire_stamina/fireplace
+	alert_type = /atom/movable/screen/alert/status_effect/buff/fireplace_stamina
+
+/datum/status_effect/buff/campfire
+	id = "healing_campfire"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/campfire
+	examine_text = null
+	var/healing_on_tick = 2
+	duration = 6 SECONDS
+
+/datum/status_effect/buff/campfire/tick()
+	if(owner.cmode)
+		return
+	if(owner.construct)
+		return
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue/campfire(get_turf(owner))
+	H.color = "#c7aa5c"
+	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
+		owner.blood_volume = min(owner.blood_volume+healing_on_tick, BLOOD_VOLUME_OKAY)
+	var/list/wCount = owner.get_wounds()
+	if(length(wCount))
+		owner.heal_wounds(healing_on_tick, list(/datum/wound/slash, /datum/wound/puncture, /datum/wound/bite, /datum/wound/bruise, /datum/wound/dynamic, /datum/wound/dislocation))
+		owner.update_damage_overlays()
+	owner.adjustBruteLoss(-healing_on_tick, 0)
+	owner.adjustFireLoss(-healing_on_tick, 0)
+	owner.adjustOxyLoss(-healing_on_tick, 0)
+	owner.adjustToxLoss(-healing_on_tick, 0)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
+	owner.adjustCloneLoss(-healing_on_tick, 0)
+
+#undef CAMPFIRE_BASE_FILTER
+
 //Self healing for Martyr.
 /datum/status_effect/buff/healing/prayer
 	id = "healing_prayers"
@@ -629,6 +701,56 @@
 	name = "Blessed Respite"
 	desc = "By faith, I lyve."
 	icon_state = "buff"
+
+// Lay hands orison effect - gentle, slow healing
+#define LAY_HANDS_FILTER "lay_hands_glow"
+
+/atom/movable/screen/alert/status_effect/buff/lay_hands
+	name = "Laying of Hands"
+	desc = "Divine power flows through me, knitting my wounds."
+	icon_state = "buff"
+
+/datum/status_effect/buff/lay_hands
+	id = "lay_hands"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/lay_hands
+	duration = 10 SECONDS // Short duration - continuously refreshed while channeling
+	examine_text = "SUBJECTPRONOUN is suffused with divine energy."
+	var/healing_on_tick = 0.3 // Very weak healing compared to normal miracles
+	var/outline_colour = "#FFD700" // Golden color instead of red
+
+/datum/status_effect/buff/lay_hands/on_creation(mob/living/new_owner, new_healing_on_tick)
+	healing_on_tick = new_healing_on_tick
+	return ..()
+
+/datum/status_effect/buff/lay_hands/on_apply()
+	var/filter = owner.get_filter(LAY_HANDS_FILTER)
+	if (!filter)
+		owner.add_filter(LAY_HANDS_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 50, "size" = 1))
+	playsound(owner, 'sound/magic/churn.ogg', 50, FALSE)
+	to_chat(owner, span_notice("Divine energy suffuses my body..."))
+	return TRUE
+
+/datum/status_effect/buff/lay_hands/tick()
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
+	H.color = "#FFD700" // Golden healing particles
+	var/list/wCount = owner.get_wounds()
+	if(!owner.construct)
+		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
+			owner.blood_volume = min(owner.blood_volume+(healing_on_tick * 0.5), BLOOD_VOLUME_NORMAL)
+		if(wCount.len > 0)
+			owner.heal_wounds(healing_on_tick)
+			owner.update_damage_overlays()
+		owner.adjustBruteLoss(-healing_on_tick, 0)
+		owner.adjustFireLoss(-healing_on_tick, 0)
+		owner.adjustOxyLoss(-healing_on_tick * 0.5, 0)
+		owner.adjustToxLoss(-healing_on_tick * 0.5, 0)
+		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick * 0.5)
+
+/datum/status_effect/buff/lay_hands/on_remove()
+	owner.remove_filter(LAY_HANDS_FILTER)
+	to_chat(owner, span_notice("The divine energy fades from my body."))
+
+#undef LAY_HANDS_FILTER
 
 #define BLOODHEAL_DUR_SCALE_PER_LEVEL 3 SECONDS
 #define BLOODHEAL_RESTORE_DEFAULT 5
@@ -1311,7 +1433,7 @@
 	mob_effect_icon_state = "eff_riposte"
 	mob_effect_layer = MOB_EFFECT_LAYER_GUARD
 
-//We have a lot of signals as the ability is meant to be interrupted by or interact with a lot of mechanics. 
+//We have a lot of signals as the ability is meant to be interrupted by or interact with a lot of mechanics.
 /datum/status_effect/buff/clash/on_creation(mob/living/new_owner, ...)
 	//!Danger! Zone!
 	//These signals use OVERRIDES and can OVERLAP with anything else using them.
@@ -1348,7 +1470,7 @@
 	if(ishuman(target) && target.get_active_held_item() && !bad_guard)
 		var/mob/living/carbon/human/HM = target
 		var/obj/item/IM = target.get_active_held_item()
-		var/obj/item/IU 
+		var/obj/item/IU
 		if(user.used_intent.masteritem)
 			IU = user.used_intent.masteritem
 		HM.process_clash(user, IM, IU)
@@ -1461,11 +1583,11 @@
 /datum/status_effect/buff/psydonic_endurance/on_apply()
 	. = ..()
 	if(HAS_TRAIT(owner, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(owner, TRAIT_HEAVYARMOR))
-		ADD_TRAIT(owner, TRAIT_HEAVYARMOR, src)
+		ADD_TRAIT(owner, TRAIT_HEAVYARMOR, TRAIT_STATUS_EFFECT)
 
 /datum/status_effect/buff/psydonic_endurance/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_HEAVYARMOR, src)
+	REMOVE_TRAIT(owner, TRAIT_HEAVYARMOR, TRAIT_STATUS_EFFECT)
 
 /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
 	name = "Psydonic Endurance"
@@ -1493,12 +1615,12 @@
 /datum/status_effect/buff/griefflower/on_apply()
 	. = ..()
 	to_chat(owner, span_notice("The Rosa’s ring draws blood, but it’s the memories that truly wound. Failure after failure surging through you like thorns blooming inward."))
-	ADD_TRAIT(owner, TRAIT_CRACKHEAD, src)
+	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT)
 
 /datum/status_effect/buff/griefflower/on_remove()
 	. = ..()
 	to_chat(owner, span_notice("You part from the Rosa’s touch. The ache retreats..."))
-	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, src)
+	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT)
 
 /atom/movable/screen/alert/status_effect/buff/griefflower
 	name = "Rosa Ring"

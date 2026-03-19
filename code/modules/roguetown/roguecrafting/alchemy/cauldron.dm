@@ -31,7 +31,7 @@
 			add_overlay(filling)
 	return
 
-/obj/machinery/light/rogue/cauldron/Initialize()
+/obj/machinery/light/rogue/cauldron/Initialize(mapload)
 	create_reagents(500, DRAINABLE | AMOUNT_VISIBLE | REFILLABLE)
 	. = ..()
 
@@ -85,7 +85,7 @@
 						else
 							outcomes[alching.minor_pot] = 1
 				sortTim(outcomes,cmp=/proc/cmp_numeric_dsc,associative = 1)
-				if(outcomes[outcomes[1]] >= 5)
+				if(outcomes.len && (outcomes[outcomes[1]] >= 5))
 					var/result_path = outcomes[1]
 					var/datum/alch_cauldron_recipe/found_recipe = new result_path
 					var/amt2raise = lastuser?.STAINT*2

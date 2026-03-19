@@ -25,6 +25,7 @@
 	var/buildsame = FALSE //allows palisades to be built on top of each other just not the same dir
 	var/wallcraft = FALSE
 	var/diagonal = FALSE //allows diagonal structures to have their direction chosen.
+	var/ignoredensity = FALSE //if TRUE, allows crafting on top of dense structures (for curtains on walls/windows)
 	var/craftdiff = 1
 	var/sellprice = 0
 	/// Whether this recipe will be hidden from recipe books

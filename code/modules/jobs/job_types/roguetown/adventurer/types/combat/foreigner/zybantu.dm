@@ -2,7 +2,7 @@
 //They choose between shield + spear, or miraclist flagellant. Flagellant stuff isn't done, but, whatever...
 /datum/advclass/foreigner/dunewell
 	name = "Dunewell Nomad"
-	tutorial = "Dunewell, deep in the Zybantu deserts, is a place of madness. A region of faith and heresy alike. \
+	tutorial = "Dunewell, deep in the Zybantine deserts, is a place of madness. A region of faith and heresy alike. \
 	For yils, many have fought over the riches and ruins of the old Psydonian holdout. Those who come from it are typically nomads of either party. \
 	Missionary and killer, one in the same. To have ventured as far as Ferentia, you've either escaped the cycle, or intend to repeat it."
 	allowed_races = RACES_ALL_KINDS
@@ -51,8 +51,7 @@
 	cloak = /obj/item/clothing/cloak/cape/nomad
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	beltr = /obj/item/reagent_containers/glass/bottle/waterskin
-	backpack_contents = list(/obj/item/recipe_book/survival = 1,
-							/obj/item/rogueweapon/huntingknife = 1,
+	backpack_contents = list(/obj/item/rogueweapon/huntingknife = 1,
 							/obj/item/rogueweapon/scabbard/sheath = 1)
 
 	if(H.mind)

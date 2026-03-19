@@ -151,6 +151,19 @@
 			user.put_in_hands(sammich)
 			qdel(I)
 			qdel(src)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausagebacon))
+		playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+		if(do_after(user,short_cooktime, target = src))
+			new /obj/item/reagent_containers/food/snacks/rogue/friedegg/hammerhold(loc)
+			qdel(I)
+			qdel(src)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/tartar))
+		playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
+		if(do_after(user,short_cooktime, target = src))
+			var/obj/item/reagent_containers/food/snacks/rogue/sandwich/tartar/sammich= new(get_turf(user))
+			user.put_in_hands(sammich)
+			qdel(I)
+			qdel(src)
 	else
 		return ..()
 
@@ -214,7 +227,7 @@
 	tastes = list("salty fat" = 1)
 	name = "salo bread"
 	desc = "The salo's smooth consistency helps soften the rough grainy bread."
-	faretype = FARE_IMPOVERISHED
+	faretype = FARE_POOR
 	icon_state = "bread_salo"
 	foodtype = GRAIN | MEAT
 
@@ -222,9 +235,16 @@
 	tastes = list("bacon" = 1)
 	name = "bacon bread"
 	desc = "A slice of bread with crispy bacon on top for the perfect breakfast. Why does it look like a salo?"
-	icon_state = "bread_salo" // Someone forgot the sprite for this one
+	icon_state = "toast_bacon"
 	foodtype = GRAIN | MEAT
 
+/obj/item/reagent_containers/food/snacks/rogue/sandwich/tartar
+	tastes = list("dissapointment" = 1)
+	name = "tartar bread"
+	desc = "A slice of bread with tartar on top for the perfect breakfast. What's that stench?"
+	faretype = FARE_FINE
+	icon_state = "toast_tartar"
+	foodtype = GRAIN | MEAT
 
 /*	.................   Bread bun   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/bun

@@ -50,7 +50,6 @@
 	backpack_contents = list(
 		/obj/item/bait = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
@@ -112,7 +111,6 @@
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	H.set_blindness(0)
@@ -158,7 +156,6 @@
 	backpack_contents = list(
 		/obj/item/bomb = 4,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	H.set_blindness(0)

@@ -1,7 +1,7 @@
 /*
- FUN ZONE OF ADMIN LISTINGS
- Try to keep this in sync with __DEFINES/traits.dm
- quirks have it's own panel so we don't need them here.
+ * FUN ZONE OF ADMIN LISTINGS
+ * Try to keep this in sync with __DEFINES/traits.dm
+ * quirks have it's own panel so we don't need them here.
 */
 GLOBAL_LIST_INIT(traits_by_type, list(
 	/mob = list(
@@ -26,6 +26,8 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		TRAIT_NIGHT_OWL,
 		TRAIT_BEAUTIFUL,
 		TRAIT_BEAUTIFUL_UNCANNY,
+		TRAIT_UNSETTLING_BEAUTY,
+		TRAIT_SCARRED,
 		TRAIT_BAD_MOOD,
 		TRAIT_LEAPER,
 		TRAIT_NUTCRACKER,
@@ -87,6 +89,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		TRAIT_ABYSSOR_SWIM,
 		TRAIT_LONGSTRIDER,
 		TRAIT_TRAINED_SMITH,
+		TRAIT_KAZENGUNITE_SMITH,
 		TRAIT_DEATHSIGHT,
 		TRAIT_FORGEBLESSED,
 		TRAIT_PSYDONITE,
@@ -102,6 +105,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		TRAIT_SEA_DRINKER,
 		TRAIT_BIGGUY,
 		TRAIT_OUTDOORSMAN,
+		TRAIT_WILDERNESSGUIDE,
 		TRAIT_STUDENT,
 		TRAIT_LEGENDARY_ALCHEMIST,
 		TRAIT_INTELLECTUAL,
@@ -159,7 +163,10 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		TRAIT_DEATHBYSNUSNU,
 		TRAIT_DRUNK_HEALING,
 		TRAIT_ENGINEERING_GOGGLES,
-		TRAIT_EQUESTRIAN
+		TRAIT_EQUESTRIAN,
+		TRAIT_FUSILIER,
+		TRAIT_GANG_A,
+		TRAIT_GANG_B
 	),
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS

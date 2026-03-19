@@ -16,12 +16,17 @@
 	cost = 13
 	contains = list(/obj/item/reagent_containers/glass/bottle/waterskin)
 
+/datum/supply_pack/rogue/adventure_supplies/saddle
+	name = "Saddle"
+	cost = 15
+	contains = list(/obj/item/natural/saddle)
+
 /datum/supply_pack/rogue/adventure_supplies/satchel
 	name = "Satchel"
 	cost = 13
 	contains = list(/obj/item/storage/backpack/rogue/satchel)
 
-/datum/supply_pack/rogue/adventure_supplies/satchel
+/datum/supply_pack/rogue/adventure_supplies/satchelshort
 	name = "Satchel, Short"
 	cost = 13
 	contains = list(/obj/item/storage/backpack/rogue/satchel/short)
@@ -62,6 +67,13 @@
 					/obj/item/rogueweapon/scabbard/sword
 				)
 
+/datum/supply_pack/rogue/adventure_supplies/gwstrap
+	name = "Great Weapon Strap"
+	cost = 25
+	contains = list(
+					/obj/item/rogueweapon/scabbard/gwstrap
+				)
+
 /datum/supply_pack/rogue/adventure_supplies/ropes
 	name = "Ropes"
 	cost = 10
@@ -72,12 +84,12 @@
 				)
 
 /datum/supply_pack/rogue/adventure_supplies/woodstaff
-	name = "Six Foot Pole"
+	name = "Six Foot Pole (Wooden Staff)"
 	cost = 6
 	contains = list(/obj/item/rogueweapon/woodstaff)
 
 /datum/supply_pack/rogue/adventure_supplies/quarterstaff
-	name = "Eight Foot Pole"
+	name = "Eight Foot Pole "
 	cost = 12
 	contains = list(/obj/item/rogueweapon/woodstaff/quarterstaff)
 
@@ -115,3 +127,18 @@
 	name = "Roll of bandages"
 	cost = 25
 	contains = list(/obj/item/natural/bundle/cloth/bandage/full)
+
+/datum/supply_pack/rogue/adventure_supplies/small_tent
+	name = "Small Tent Kit"
+	cost = 50
+	contains = list(/obj/item/tent_kit)
+
+/datum/supply_pack/rogue/adventure_supplies/ger
+	name = "Ger Kit"
+	cost = 100
+	contains = list(/obj/item/tent_kit/ger)
+
+/datum/supply_pack/rogue/adventure_supplies/yurt
+	name = "Yurt Kit"
+	cost = 200
+	contains = list(/obj/item/tent_kit/yurt)

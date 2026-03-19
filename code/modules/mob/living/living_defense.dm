@@ -12,6 +12,9 @@
 	else if(armor >= 100)
 		if(absorb_text)
 			to_chat(src, span_notice("[absorb_text]"))
+		var/obj/item/blocked_weapon = used_weapon
+		if(blocked_weapon)
+			SEND_SIGNAL(blocked_weapon, COMSIG_ITEM_ARMOR_BLOCKED)
 //		else
 //			to_chat(src, span_notice("My armor absorbs the blow!"))
 	else if(armor > 0)
@@ -265,7 +268,8 @@
 	if(user != src)
 		if(pulling != user) // If the person we're pulling aggro grabs us don't break the grab
 			stop_pulling()
-		user.set_pull_offsets(src, user.grab_state)
+		if(!is_shifted)
+			user.set_pull_offsets(src, user.grab_state)
 	log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 	return 1
 

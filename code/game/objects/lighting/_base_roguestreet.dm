@@ -86,7 +86,7 @@
 	else
 		GLOB.fires_list -= src
 
-/obj/machinery/light/roguestreet/Initialize()
+/obj/machinery/light/roguestreet/Initialize(mapload)
 	GLOB.streetlamp_list += src
 	lights_on()
 	update_icon()
@@ -98,7 +98,7 @@
 
 /obj/machinery/light/oldlight
 	name = "ancyent lightbar"
-	desc = "Two frustrums hold a glaring death-light. Solid and unyielding."
+	desc = "Two frustums hold a glaring death-light. Solid and unyielding."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "celestial_light"
 	brightness = 10
@@ -135,7 +135,7 @@
 	else
 		GLOB.fires_list -= src
 
-/obj/machinery/light/oldlight/Initialize()
+/obj/machinery/light/oldlight/Initialize(mapload)
 	lights_on()
 	GLOB.streetlamp_list += src
 	update_icon()

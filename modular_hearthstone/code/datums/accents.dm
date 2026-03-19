@@ -22,7 +22,8 @@ GLOBAL_LIST_INIT(character_accents, list("No accent",
 	"Xinyi accent",
 	"Pui-Maen accent",
 	"Avar accent",
-	"Pirate accent"))
+	"Pirate accent",
+	"Low-Town accent"))
 
 // Global mapping of accent names to their font span lists
 GLOBAL_LIST_INIT(accent_spans, list(

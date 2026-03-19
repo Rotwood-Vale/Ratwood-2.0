@@ -6,7 +6,7 @@ GLOBAL_VAR_INIT(adventurer_hugbox_duration_still, 3 MINUTES)
 /datum/job/roguetown/adventurer
 	title = "Adventurer"
 	flag = ADVENTURER
-	department_flag = PEASANTS
+	department_flag = WANDERERS
 	faction = "Station"
 	total_positions = 20
 	spawn_positions = 20
@@ -40,6 +40,7 @@ GLOBAL_VAR_INIT(adventurer_hugbox_duration_still, 3 MINUTES)
 		/datum/advclass/cleric/paladin,
 		/datum/advclass/cleric/cantor,
 		/datum/advclass/cleric/missionary,
+		/datum/advclass/cleric/stigmata,
 		/datum/advclass/sfighter,
 		/datum/advclass/sfighter/duelist,
 		/datum/advclass/sfighter/mhunter,
@@ -66,6 +67,9 @@ GLOBAL_VAR_INIT(adventurer_hugbox_duration_still, 3 MINUTES)
 		/datum/advclass/foreigner/slaver,
 		/datum/advclass/foreigner/dunewell,
 		/datum/advclass/foreigner/gronn,
+		/datum/advclass/foreigner/nostromo,
+		/datum/advclass/foreigner/aavnik,
+		/datum/advclass/foreigner/bluthund,
 	)
 
 /mob/living/carbon/human/proc/adv_hugboxing_start()

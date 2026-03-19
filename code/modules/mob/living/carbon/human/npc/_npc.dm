@@ -56,7 +56,7 @@
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
-/mob/living/carbon/human/Initialize()
+/mob/living/carbon/human/Initialize(mapload)
 	. = ..()
 	our_cells = new(interesting_dist, interesting_dist, 1)
 	set_new_cells()
@@ -428,12 +428,12 @@
 			pathing_frustration++
 			NPC_THINK("MOVEMENT TURN [movement_turn]: Move failed! Strike [pathing_frustration]!")
 			sleep(1)
-		else if(loc == myPath[1]) // if we made it to the right part of our path
+		else if(length(myPath) && loc == myPath[1]) // if we made it to the right part of our path
 			.++
 			pathing_frustration = 0
 			myPath -= myPath[1]
 			NPC_THINK("MOVEMENT TURN [movement_turn]: Movement on cooldown for [movespeed/10] seconds!")
-			sleep(movespeed) // wait until next move	
+			sleep(movespeed) // wait until next move
 // blocks, but only while path is being calculated
 /mob/living/carbon/human/proc/start_pathing_to(new_target)
 	if(!new_target)
@@ -625,7 +625,6 @@
 				if(my_turf.Distance_cardinal_3d(target_turf, src) > 1)
 					if(!length(myPath)) // create a new path to the target
 						start_pathing_to(target)
-
 			// Flee before trying to pick up a weapon.
 			if(flee_in_pain && target && (target.stat == CONSCIOUS))
 				var/paine = get_complex_pain()
@@ -990,7 +989,7 @@
 
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(length(grid.client_contents))
-			if(mode != NPC_AI_SLEEP || mode != NPC_AI_IDLE)
+			if(mode != NPC_AI_SLEEP && mode != NPC_AI_IDLE)
 				return TRUE
 			mode = NPC_AI_IDLE
 			return TRUE

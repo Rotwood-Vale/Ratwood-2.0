@@ -156,7 +156,7 @@
 /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants{
 	pixel_x = 10
 	},
-/obj/item/clothing/shoes/roguetown/grenzelhoft{
+/obj/item/clothing/shoes/roguetown/boots/grenzelhoft{
 	pixel_x = -12;
 	pixel_y = -13
 	},

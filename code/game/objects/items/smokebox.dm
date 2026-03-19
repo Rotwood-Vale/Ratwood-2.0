@@ -5,6 +5,7 @@
 	icon_state = "smokebox"
 	item_state = "smokebox"
 	icon_type = "smoke"
+	dropshrink = 0.7
 
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0

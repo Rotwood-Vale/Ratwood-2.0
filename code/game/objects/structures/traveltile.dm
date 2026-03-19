@@ -9,7 +9,7 @@
 	max_integrity = 0
 	var/aportalloc = "a"
 
-/obj/structure/fluff/testportal/Initialize()
+/obj/structure/fluff/testportal/Initialize(mapload)
 	name = aportalloc
 	..()
 
@@ -42,7 +42,7 @@
 	var/aallmig
 	var/required_trait = null
 
-/obj/structure/fluff/traveltile/Initialize()
+/obj/structure/fluff/traveltile/Initialize(mapload)
 	GLOB.traveltiles += src
 	. = ..()
 
@@ -188,7 +188,7 @@
 	required_trait = TRAIT_ZURCH //I'd tie this to trait_outlaw but unfortunately the heresiarch virtue exists so we're making a new trait instead.
 /obj/structure/fluff/traveltile/dungeon
 	name = "gate"
-	desc = "This gate's enveloping darkness is so opressive you dread to step through it."
+	desc = "This gate's enveloping darkness is so oppressive you dread to step through it."
 	icon = 'icons/roguetown/misc/portal.dmi'
 	icon_state = "portal"
 	density = FALSE

@@ -9,11 +9,16 @@
 	alpha = 150
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = NO_CLIENT_COLOR
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/coom/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
+	if(prob(75))
+		var/matrix/M = new
+		M.Turn(90 * rand(1, 3)) // turn by 90 degrees
+		transform = M
 
 /obj/effect/decal/cleanable/blood
 	name = "blood"
@@ -277,7 +282,7 @@
 		return TRUE
 
 
-//BLOODY FOOTPRINTS
+//BLOODY/MUDDY/SNOWY FOOTPRINTS
 /obj/effect/decal/cleanable/blood/footprints
 	name = "footprints"
 	desc = ""
@@ -290,6 +295,10 @@
 	alpha = 140
 	bloodiness = 0
 	var/list/shoe_types = list()
+
+/obj/effect/decal/cleanable/blood/footprints/mud
+	icon_state = "mud1"
+	blood_state = BLOOD_STATE_MUD
 
 /obj/effect/decal/cleanable/blood/footprints/Initialize(mapload)
 	. = ..()
@@ -384,3 +393,28 @@
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return 1
 	return 0
+
+//For fancy wall messes...
+/obj/effect/decal/cleanable/blood/splatter/walls
+	icon_state = "splatter1"
+	plane = GAME_PLANE
+	layer = BULLET_HOLE_LAYER //For obvious reasons.
+	random_icon_states = list("splatter1", "splatter2", "splatter3", "splatter4", "splatter5", "splatter6")
+
+/obj/effect/decal/cleanable/blood/splatter/walls/Initialize(mapload)
+	. = ..()
+	auto_turn_destructive()
+	dir = GLOB.reverse_dir[dir]
+	if(dir == NORTH)
+		src.pixel_y = -32
+	if(dir == EAST)
+		src.pixel_x = -32
+	if(dir == SOUTH)
+		src.pixel_y = 32
+	if(dir == WEST)
+		src.pixel_x = 32
+	pixel_x += rand(-5,5)
+	pixel_y += rand(-5,5)
+
+/obj/effect/decal/cleanable/blood/splatter/walls/replace_decal(obj/effect/decal/cleanable/C)
+	return //We don't want to replace decals for wall turfs since these are unique. May be changed in the future if it's too much.

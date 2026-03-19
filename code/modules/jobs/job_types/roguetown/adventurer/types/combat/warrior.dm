@@ -63,7 +63,7 @@
 				r_hand = /obj/item/rogueweapon/sword/saber/iron
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				backr = /obj/item/rogueweapon/shield/wood
-		var/armors = list("Chainmaille Set","Iron Breastplate","Gambeson & Helmet","Light Raneshi Armor")
+		var/armors = list("Chainmaille Set","Iron Breastplate","Gambeson & Helmet","Light Zybantine Armor")
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
 		switch(armor_choice)
 			if("Chainmaille Set")
@@ -88,21 +88,20 @@
 				pants = /obj/item/clothing/under/roguetown/trou/leather
 				head = /obj/item/clothing/head/roguetown/helmet/kettle
 				gloves = /obj/item/clothing/gloves/roguetown/angle
-			if("Light Raneshi Armor")
-				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
-				pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
+			if("Light Zybantine Armor")
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+				pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
 				head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab
 				gloves = /obj/item/clothing/gloves/roguetown/angle
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
-	shoes = /obj/item/clothing/shoes/roguetown/boots
+	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 
@@ -146,15 +145,15 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
 				beltr = /obj/item/rogueweapon/scabbard/sheath
-	armor = /obj/item/clothing/suit/roguetown/armor/leather
-	head = /obj/item/clothing/head/roguetown/duelhat
+	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
+	head = /obj/item/clothing/head/roguetown/duelisthat
 	mask = /obj/item/clothing/mask/rogue/duelmask
-	cloak = /obj/item/clothing/cloak/half
+	cloak = /obj/item/clothing/cloak/half/duelistcape
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
-	shoes = /obj/item/clothing/shoes/roguetown/boots
+	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -163,8 +162,8 @@
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
-		/obj/item/recipe_book/survival = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/clothing/ring/duelist = 2
 		)
 
 /datum/advclass/sfighter/barbarian
@@ -252,7 +251,6 @@
 		backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/rogueweapon/huntingknife/bronze = 1,
@@ -293,6 +291,7 @@
 			"Kettle Helmet"		= /obj/item/clothing/head/roguetown/helmet/kettle/iron,
 			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket/iron,
 			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/iron,
+			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
 			"None"
 			)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
@@ -327,12 +326,11 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/recipe_book/survival = 1,
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Executioner's Sword","Warhammer + Shield","Flail + Shield","Lucerne","Greataxe")
+		var/weapons = list("Executioner's Sword","Warhammer + Shield","Flail + Shield","Lucerne","Greataxe","DEFENSE IS ALL THAT MATTERS")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Executioner's Sword")
@@ -356,6 +354,9 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/greataxe
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
+			if("DEFENSE IS ALL THAT MATTERS")
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
+				l_hand = /obj/item/rogueweapon/shield/atgervi
 
 /datum/advclass/sfighter/mhunter
 	name = "Exorcist"
@@ -432,7 +433,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/silver
 			if("Silver Poleaxe")
-				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/greataxe/silver
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Silver Spear")
@@ -523,7 +524,6 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/metal = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/rogueweapon/huntingknife = 1, //Ensures that Exorcists who take the Shovel can still butcher wildlife. Minor oversight on my part.

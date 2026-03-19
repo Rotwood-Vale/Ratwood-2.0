@@ -5,6 +5,7 @@
 	icon_state = "stockings"
 	slot_flags = ITEM_SLOT_MOUTH
 	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_TINY
 	obj_flags = CAN_BE_HIT
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	blade_dulling = DULLING_CUT
@@ -17,6 +18,7 @@
 	var/covers_breasts = FALSE
 	sewrepair = TRUE
 	salvage_result = /obj/item/natural/cloth
+	throw_speed = 0.5
 	var/sprite_acc = /datum/sprite_accessory/legwear/stockings
 
 /obj/item/legwears/attack(mob/M, mob/user, def_zone)
@@ -44,7 +46,7 @@
 	legwears_feature = null
 	return ..()
 
-/obj/item/legwears/random/Initialize()
+/obj/item/legwears/random/Initialize(mapload)
 	. = ..()
 	color = pick("#e6e5e5", CLOTHING_BLACK, CLOTHING_BLUE, "#6F0000", "#664357")
 
@@ -70,7 +72,7 @@
 	desc = "A legwear made just for the pure aesthetics. Made out of thin silk. Popular among nobles."
 	icon_state = "silk"
 
-/obj/item/legwears/silk/random/Initialize()
+/obj/item/legwears/silk/random/Initialize(mapload)
 	. = ..()
 	color = pick("#e6e5e5", CLOTHING_BLACK, CLOTHING_BLUE, "#6F0000", "#664357")
 
@@ -96,7 +98,7 @@
 	desc = "A legwear popular among wenches."
 	icon_state = "fishnet"
 
-/obj/item/legwears/fishnet/random/Initialize()
+/obj/item/legwears/fishnet/random/Initialize(mapload)
 	. = ..()
 	color = pick("#e6e5e5", CLOTHING_BLACK, CLOTHING_BLUE, "#6F0000", "#664357")
 
@@ -120,7 +122,7 @@
 	desc = "A legwear popular among those who plan to venture into colder climates."
 	icon_state = "thigh"
 
-/obj/item/legwears/thigh_high/random/Initialize()
+/obj/item/legwears/thigh_high/random/Initialize(mapload)
 	. = ..()
 	color = pick("#e6e5e5", CLOTHING_BLACK, CLOTHING_BLUE, "#6F0000", "#664357")
 
@@ -132,7 +134,7 @@
 	desc = "A legwear popular among those who enjoy taller boots."
 	icon_state = "knee"
 
-/obj/item/legwears/knee_high/random/Initialize()
+/obj/item/legwears/knee_high/random/Initialize(mapload)
 	. = ..()
 	color = pick("#e6e5e5", CLOTHING_BLACK, CLOTHING_BLUE, "#6F0000", "#664357")
 

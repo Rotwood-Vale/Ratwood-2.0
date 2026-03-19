@@ -137,3 +137,16 @@
 	"...cattle thieves descend upon the homestead. You have no sword, only a sturdy branch. One by one they fall, the staff cracking through bone and flesh alike. Violence, you realize, is a language spoken in every tongue..."
 	)
 	expert_name = "Quarterstaffer"
+
+/datum/skill/combat/firearms
+	name = "Firearms"
+	desc = "Alongside perception, increases the speed you ready a firearm and have it prepared to shoot. Does not influence damage or chance to hit. \
+	Additionally, it reduces the chances for failure of the weapon."
+	dreams = list(
+	"...he tells you to stand straight, the stock to your shoulder. When it kicks, by the Ten, it hurts like hell. But the target? Well, the target is no more...",
+	"...measuring the powder isn't an exact science, the grizzled mercenary explains. It's by eye and ear, once you've the understanding. His nub of an arm argues otherwise..."
+	)
+	expert_name = "Gunner"
+	randomable_dream_xp = FALSE
+	max_untraited_level = SKILL_LEVEL_JOURNEYMAN//Minimum to use these properly.
+	trait_uncap = list(TRAIT_FUSILIER = SKILL_LEVEL_LEGENDARY)

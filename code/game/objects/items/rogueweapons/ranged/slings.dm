@@ -5,7 +5,10 @@
 	chargedrain = 2
 	charging_slowdown = 3
 
-/datum/intent/swing/sling/can_charge() //checks for arms and spare empty hand removed since it can fire with one hand
+/datum/intent/swing/sling/can_charge(atom/clicked_object)
+	if(istype(clicked_object, /obj/item/quiver) && istype(mastermob?.get_active_held_item(), /obj/item/gun/ballistic))
+		return FALSE
+
 	return TRUE
 
 /datum/intent/swing/sling/prewarning()
@@ -32,7 +35,10 @@
 	chargedrain = 2
 	charging_slowdown = 3
 
-/datum/intent/arc/sling/can_charge() //checks for arms and spare empty hand removed since it can fire with one hand
+/datum/intent/arc/sling/can_charge(atom/clicked_object)
+	if(istype(clicked_object, /obj/item/quiver) && istype(mastermob?.get_active_held_item(), /obj/item/gun/ballistic))
+		return FALSE
+
 	return TRUE
 
 /datum/intent/arc/sling/prewarning()
@@ -150,7 +156,7 @@
 			user.transferItemToLoc(A, temp_stone) //off to stone purgatory you go
 			A = new /obj/item/ammo_casing/caseless/rogue/sling_bullet //putting a temporary sling bullet in its place. bonus force is kept on the sling and set to 0 if shot or stone is ejected
 		..()
-		
+
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling/attack_self(mob/user) //more unholy code
 	if (temp_stone != null) //if there's a 'stone' in the sling, drop it and delete the temporary ammo inside
 		user.dropItemToGround(temp_stone) //pulling the stone from stone purgatory and dropping it

@@ -26,6 +26,18 @@
 	societies that they share blood ties with than other Beastling races."
 	skin_tone_wording = "Ancestry"
 	default_color = "FFFFFF"
+
+	use_titles = TRUE
+	race_titles = list(
+	"Half-Cat", "Half-Dog", "Half-Volf", "Half-Lion", "Half-Venard",
+	"Half-Tiger", "Half-Sheep", "Half-Goat", "Half-Rous", "Half-Possum",
+	"Half-Pig", "Half-Boar", "Half-Cabbit", "Half-Rabbit", "Half-Horse", "Half-Donkey",
+	"Half-Hyena", "Half-Deer", "Half-Bear", "Half-Panda", "Half-Coyote",
+	"Half-Moose", "Half-Jackal", "Half-Panther", "Half-Lynx", "Half-Leopard",
+	"Half-Monkey", "Half-Bird", "Half-Seal", "Half-Frog", "Half-Bat", "Half-Otter", "Half-Cow",
+	"Half-Bull", "Half-Bee", "Half-Lizard", "Half-Insect", "Half-Spider", "Half-Monster", "Half-Drakian"
+	)
+
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY,MUTCOLORS_PARTSONLY)
 	allowed_taur_types = list(
 		/obj/item/bodypart/taur/otie,
@@ -35,6 +47,7 @@
 		/obj/item/bodypart/taur/dragon,
 		/obj/item/bodypart/taur/noodle,
 		/obj/item/bodypart/taur/horse,
+		/obj/item/bodypart/taur/goat,
 		/obj/item/bodypart/taur/deer,
 		/obj/item/bodypart/taur/redpanda,
 		/obj/item/bodypart/taur/rat,
@@ -47,7 +60,8 @@
 		/obj/item/bodypart/taur/centipede,
 		/obj/item/bodypart/taur/sloog,
 		/obj/item/bodypart/taur/ant,
-		/obj/item/bodypart/taur/wasp
+		/obj/item/bodypart/taur/wasp,
+		/obj/item/bodypart/taur/insect
 	)
 	default_features = MANDATORY_FEATURE_LIST
 	use_skintones = TRUE
@@ -186,12 +200,13 @@
 		"Otava" = SKIN_COLOR_OTAVA,
 		"Etrusca" = SKIN_COLOR_ETRUSCA,
 		"Gronn" = SKIN_COLOR_GRONN,
-		"North Raneshen (Chorodiaki)" = SKIN_COLOR_GIZA,
-		"West Raneshen (Vrdaqnan)" = SKIN_COLOR_SHALVISTINE,
-		"East Raneshen (Nshkormh)" = SKIN_COLOR_LALVESTINE,
+		"North Zybantium (Chorodiaki)" = SKIN_COLOR_GIZA,
+		"West Zybantium (Vrdaqnan)" = SKIN_COLOR_SHALVISTINE,
+		"East Zybantium (Nshkormh)" = SKIN_COLOR_LALVESTINE,
 		"Naledi" = SKIN_COLOR_NALEDI,
 		"Naledi South" = SKIN_COLOR_NALEDI_LIGHT,
 		"Kazengun" = SKIN_COLOR_KAZENGUN,
+		"Czwarteki" = SKIN_COLOR_CZWARTEKI,
 	)
 
 /datum/species/demihuman/on_species_gain(mob/living/carbon/C, datum/species/old_species)

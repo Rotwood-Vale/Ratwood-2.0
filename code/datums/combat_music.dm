@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_type)
 GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 
 // People make mistakes. This should help catch when that happens.
-/proc/cmode_track_to_namelist(var/datum/combat_music/track)
+/proc/cmode_track_to_namelist(datum/combat_music/track)
 	if(!track)
 		return
 	if(!track.name)
@@ -271,6 +271,13 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Graggar"
 	credits = "T87-Sulfurhead - Black Powder (https://www.youtube.com/@T87-Sulfurhead)"
 	musicpath = list('sound/music/combat_graggar.ogg')
+
+/datum/combat_music/heretic_graggar_2
+	name = "Heretic - Graggar (Alt)"
+	desc = "Perhaps this time, you will finally feel powerful. Might be loud, so be careful."
+	shortname = "Graggar Alt"
+	credits = "Devil's Meat Grinder - OTXO OST"
+	musicpath = list('sound/music/combat_graggar_new.ogg')
 
 /datum/combat_music/heretic_baotha
 	name = "Heretic - Baotha"
@@ -566,3 +573,10 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Zybantine"
 	credits = "Hakan Glante - Crusader Kings 3 Fate of Iberia OST - War \"Short\""
 	musicpath = list('sound/music/combat_zybantine.ogg')
+
+/datum/combat_music/czwarteki
+	name = "Czwarteki Hussars"
+	desc = "For God, Honor, Homeland."
+	shortname = "Czwarteki"
+	credits = " Andrius Klimka & Andrey Kulik - World of Tanks Original Soundtrack: Studzianki "
+	musicpath = list('sound/music/combat_czwarteki.ogg')

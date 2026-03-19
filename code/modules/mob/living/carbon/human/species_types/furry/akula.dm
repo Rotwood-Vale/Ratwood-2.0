@@ -86,6 +86,7 @@
 		/datum/customizer/organ/snout/akula,
 		/datum/customizer/organ/tail/axian,
 		/datum/customizer/organ/ears/axian,
+		/datum/customizer/organ/horns/anthro,
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,

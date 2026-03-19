@@ -11,10 +11,9 @@
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
 		STATKEY_INT = 3,
-		STATKEY_WIL = 3,
+		STATKEY_WIL = 2,
 		STATKEY_PER = 2, // Adv mage get 2 perception so whatever. It is useful for aiming body parts but have no direct synergy with spells.
 		STATKEY_LCK = 2,
-		STATKEY_SPD = 1,
 		STATKEY_CON = 1,
 	)
 	subclass_skills = list(
@@ -70,3 +69,10 @@
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
 		H.mind?.adjust_spellpoints(6)
+
+/datum/outfit/job/roguetown/bandit/roguemage/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	for(var/datum/bounty/b in GLOB.head_bounties)
+		if(b.target == H.real_name || b.target_hidden == H.real_name)
+			H.change_stat(STATKEY_WIL, 1)
+			H.change_stat(STATKEY_SPD, 1)

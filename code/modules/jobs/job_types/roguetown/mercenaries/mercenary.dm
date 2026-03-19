@@ -37,6 +37,7 @@
 		/datum/advclass/mercenary/grenzelhoft/halberdier,
 		/datum/advclass/mercenary/grenzelhoft/crossbowman,
 		/datum/advclass/mercenary/grenzelhoft/mage,
+	    /datum/advclass/mercenary/gronnheavy,
 		/datum/advclass/mercenary/routier,
 		/datum/advclass/mercenary/rumaclan,
 		/datum/advclass/mercenary/rumaclan/sasu,

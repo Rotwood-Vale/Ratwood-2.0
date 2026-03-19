@@ -25,7 +25,7 @@
 	climbable = FALSE
 	climb_time = 0
 
-/obj/structure/arcyne_wall/Initialize()
+/obj/structure/arcyne_wall/Initialize(mapload)
 	. = ..()
 
 /obj/structure/arcyne_wall/caster
@@ -169,7 +169,7 @@
 	var/time_between_uses = 12000
 	var/last_process = 0
 
-/obj/structure/leyline/Initialize()
+/obj/structure/leyline/Initialize(mapload)
 	.=..()
 	last_process = world.time
 

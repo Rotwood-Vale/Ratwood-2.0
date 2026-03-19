@@ -46,7 +46,7 @@
 			user.original_icon_living = user.icon_living
 			user.original_name = user.name
 
-		 user.visible_message(
+		user.visible_message(
 			span_notice("[user.name] becomes utterly still, their body taking on the appearance of a stone."),
 			span_notice("You become utterly still, blending into your surroundings like a stone.")
 		)
@@ -398,7 +398,7 @@
 
 	return TRUE
 
-/proc/delete_illusory_fam(var/mob/living/simple_animal/pet/familiar/ripplefox/illusory_familiar, var/mob/user)
+/proc/delete_illusory_fam(mob/living/simple_animal/pet/familiar/ripplefox/illusory_familiar, mob/user)
 	if(illusory_familiar && !QDELETED(illusory_familiar))
 		user.visible_message(span_notice("[illusory_familiar.name] flickers and vanishes into nothingness."))
 		qdel(illusory_familiar)

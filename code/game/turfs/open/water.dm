@@ -43,12 +43,27 @@
 	var/swim_skill = FALSE
 	nomouseover = FALSE
 	var/swimdir = FALSE
+	temperature = 200
 
-/turf/open/water/Initialize()
+/turf/open/water/Initialize(mapload)
 	.  = ..()
 	water_overlay = new(src)
 	water_top_overlay = new(src)
 	update_icon()
+
+/turf/open/water/attack_hand(mob/user)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
+		to_chat(H, span_info("You gaze at your reflection in the water, concentrating on the glamoring magicks..."))
+		if(do_after(H, 3 SECONDS, src))
+			perform_mirror_transform(H)
+		return
+	else
+		to_chat(H, span_notice("You see your reflection in the water."))
+		return
 
 /turf/open/water/update_icon()
 	if(water_overlay)
@@ -92,6 +107,11 @@
 	var/const/MEDIUM_XP_GAIN = 0.05
 	if(!isliving(swimmer))
 		return 0
+	if(!isnull(swimmer.grabbedby))
+		for(var/obj/item/grabbing/active_grab in swimmer.grabbedby)
+			if(active_grab.grabbed == active_grab.grabbee)
+				continue
+			return 0
 	if(!swim_skill)
 		return 0 // no stam cost
 	if(swimmer.is_floor_hazard_immune())
@@ -202,6 +222,10 @@
 						if(AM.loc == src)
 							water_overlay.layer = ABOVE_MOB_LAYER
 							water_overlay.plane = GAME_PLANE_HIGHEST
+
+			if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
+				L.adjust_bodytemperature(-10)
+				L.update_health_hud()
 		if(!istype(L, /mob/living/carbon/human/species/skeleton))
 			return
 		if(!istype(src, /turf/open/water/sewer))
@@ -227,6 +251,12 @@
 					var/obj/item/reagent_containers/glass/bottle/waterskin/purifier/P = C
 					P.cleanwater(user)
 			return
+
+	if(ishuman(user) && istype(C, /obj/item/handmirror))
+		var/mob/living/carbon/human/H = user
+		if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
+			to_chat(H, span_notice("To change yourself via water reflection, use your bare hands on the water."))
+			return
 	. = ..()
 
 /turf/open/water/attack_right(mob/user)
@@ -248,6 +278,16 @@
 					wash_atom(user, CLEAN_STRONG)
 					user.remove_stress(/datum/stressevent/sewertouched)
 				playsound(user, pick(wash), 100, FALSE)
+				if(temperature < 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 75)	//washing yourself helps to cool you off.
+					L.adjust_bodytemperature(-75)
+					L.update_health_hud()
+				if(temperature >= 300)	//bathhouses, predominantly
+					if(L.bodytemperature < BODYTEMP_NORMAL_MIN)	//washing yourself helps to warm you up.
+						L.adjust_bodytemperature(75)
+						L.update_health_hud()
+					if(L.bodytemperature > BODYTEMP_NORMAL_MAX)	//washing yourself helps to cool you off.
+						L.adjust_bodytemperature(-75)
+						L.update_health_hud()
 				if(istype(src,/turf/open/water/sewer) || istype(src,/turf/open/water/swamp) || istype(src, /turf/open/water/sewer))
 					if (istype(src, /turf/open/water/sewer))
 						user.add_stress(/datum/stressevent/sewertouched)
@@ -354,8 +394,9 @@
 	water_color = "#FFFFFF"
 	slowdown = 3
 	water_reagent = /datum/reagent/water/bathwater
+	temperature = 300
 
-/turf/open/water/bath/Initialize()
+/turf/open/water/bath/Initialize(mapload)
 	.  = ..()
 	icon_state = "bathtile"
 
@@ -369,10 +410,11 @@
 	slowdown = 3
 	wash_in = FALSE
 	water_reagent = /datum/reagent/water/gross/sewage
+	temperature = 300
 
-/turf/open/water/sewer/Initialize()
+/turf/open/water/sewer/Initialize(mapload)
 	icon_state = "paving"
-	water_color = pick("#705a43","#697043")
+	water_color = pick("#705a43","#697043", "#6C6543")
 	.  = ..()
 
 /turf/open/water/swamp
@@ -385,6 +427,7 @@
 	slowdown = 3
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water/gross
+	temperature = 275
 
 /turf/open/water/bloody
 	name = "blood"
@@ -396,14 +439,15 @@
 	slowdown = 3
 	wash_in = FALSE
 	water_reagent = /datum/reagent/blood/shitty
+	temperature = 300
 
-/turf/open/water/swamp/Initialize()
+/turf/open/water/swamp/Initialize(mapload)
 	icon_state = "dirt"
 	dir = pick(GLOB.cardinals)
 	water_color = pick("#705a43")
 	.  = ..()
 
-/turf/open/water/bloody/Initialize()
+/turf/open/water/bloody/Initialize(mapload)
 	icon_state = "dirt"
 	dir = pick(GLOB.cardinals)
 	water_color = pick("#880808")
@@ -494,7 +538,7 @@
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water
 
-/turf/open/water/cleanshallow/Initialize()
+/turf/open/water/cleanshallow/Initialize(mapload)
 	icon_state = "rock"
 	dir = pick(GLOB.cardinals)
 	.  = ..()
@@ -510,6 +554,13 @@
 	swim_skill = TRUE
 	var/river_processing
 	swimdir = TRUE
+
+/turf/open/water/river/muddy
+	water_color = "#705a43"
+	water_reagent = /datum/reagent/water/gross
+	icon_state = "rockwd"
+	name = "muddy river"
+	desc = "A river of thick, silt-laden sludge lurches languidly through the land."
 
 /turf/open/water/river/flow
 	icon_state = "rockwd"
@@ -533,7 +584,7 @@
 		water_top_overlay.icon_state = "rivertop"
 		water_top_overlay.dir = dir
 
-/turf/open/water/river/Initialize()
+/turf/open/water/river/Initialize(mapload)
 	icon_state = "rock"
 	.  = ..()
 
@@ -601,6 +652,19 @@
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water
 
+/turf/open/water/bath/fakepond
+	name = "fake pond"
+	desc = "Soothing water, with soapy bubbles on the surface. Dyed green to mimic gently floating duckwater."
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "pond"
+	water_level = 2
+	water_color = "#367e94"
+	slowdown = 3
+	swim_skill = TRUE
+	wash_in = TRUE
+	water_reagent = /datum/reagent/water/bathwater
+	temperature = 300
+
 //Healing springs.
 //Intended for deep dungeon / hidden areas.
 /turf/open/water/ocean/deep/thermalwater
@@ -613,8 +677,9 @@
 	var/heal_interval = 5 SECONDS
 	var/heal_amount = 20
 	var/last_heal = 0
+	temperature = 300
 
-/turf/open/water/ocean/deep/thermalwater/Initialize()
+/turf/open/water/ocean/deep/thermalwater/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

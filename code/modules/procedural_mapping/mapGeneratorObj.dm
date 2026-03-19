@@ -20,5 +20,5 @@
 		endTurfZ = z
 	mapGenerator = new mapGeneratorType()
 	mapGenerator.defineRegion(locate(startTurfX,startTurfY,startTurfZ), locate(endTurfX,endTurfY,endTurfZ))
-	mapGenerator.generate()
+	SSmap_procgen.queue_map_generator(mapGenerator) //Queue these things instead of running them in LateInit. ...*WHY* do these lateinit actually?? Consider fixing tomorrow.
 	qdel(src)

@@ -89,6 +89,8 @@ GLOBAL_PROTECT(protected_ranks)
 				flag = R_WATCH
 			if("DBRANKS")
 				flag = R_DBRANKS
+			if("AHELP")
+				flag = R_AHELP
 			if("@")
 				if(previous_rank)
 					switch(group_count)

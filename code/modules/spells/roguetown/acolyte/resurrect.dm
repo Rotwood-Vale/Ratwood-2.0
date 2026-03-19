@@ -215,7 +215,7 @@
 		if(/mob/living/simple_animal/hostile/rogue/dreamfiend/major)
 			linked_alert.icon_state = "dreamfiend_major"
 			linked_alert.name = "Major Abyssal Curse."
-			linked_alert.desc = "A great deamon is sapping my mind, a dangerous foe which I must summon to regain my faculties."
+			linked_alert.desc = "A great daemon is sapping my mind, a dangerous foe which I must summon to regain my faculties."
 		if(/mob/living/simple_animal/hostile/rogue/dreamfiend)
 			linked_alert.icon_state = "dreamfiend"
 
@@ -554,13 +554,11 @@
 	//Herbs that have to do with intelligence mostly. Easier to remember.
 	required_items = list(
 		/obj/item/reagent_containers/food/snacks/grown/manabloom = 3,
-        /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 3,
 		/obj/item/alch/mentha = 3,
 		/obj/item/reagent_containers/food/snacks/grown/rogue/swampweed = 3
 	)
 	alt_required_items = list(
 		/obj/item/reagent_containers/food/snacks/grown/manabloom = 3,
-        /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1,
 		/obj/item/reagent_containers/food/snacks/grown/rogue/swampweed = 1
 	)
 	debuff_type = /datum/status_effect/debuff/dendor_revival

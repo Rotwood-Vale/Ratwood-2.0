@@ -88,6 +88,7 @@
 		/datum/customizer/bodypart_feature/face_detail,
 		/datum/customizer/bodypart_feature/underwear,
 		/datum/customizer/organ/ears/harpy,
+		/datum/customizer/organ/horns/anthro,
 		/datum/customizer/organ/tail/harpy,
 		/datum/customizer/organ/wings/harpy,
 		/datum/customizer/organ/testicles/anthro,
@@ -117,12 +118,13 @@
 		/datum/body_marking/bun,
 	)
 	descriptor_choices = list(
+		/datum/descriptor_choice/trait,
+		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/height,
 		/datum/descriptor_choice/body,
-		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/face,
 		/datum/descriptor_choice/face_exp,
-		/datum/descriptor_choice/skin_harpy,
+		/datum/descriptor_choice/skin_all,
 		/datum/descriptor_choice/voice,
 		/datum/descriptor_choice/prominent_one_wild,
 		/datum/descriptor_choice/prominent_two_wild,

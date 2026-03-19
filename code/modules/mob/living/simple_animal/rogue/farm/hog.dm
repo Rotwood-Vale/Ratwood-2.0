@@ -127,7 +127,6 @@
 	gender = MALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	emote_see = list("eyes the surroundings.", "flicks its ears.")
-	stop_automated_movement_when_pulled = TRUE
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -225,7 +224,7 @@
 	STASPD = 2
 	adult_growth = /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog
 
-/mob/living/simple_animal/hostile/retaliate/rogue/swine/test/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/swine/test/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_type)
@@ -264,7 +263,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S

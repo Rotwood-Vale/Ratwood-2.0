@@ -3,7 +3,7 @@
 //Retains frost bolt's damage. Gets a HORRID arced shot for applying slowdown through groups.
 /obj/effect/proc_holder/spell/invoked/projectile/ice_shard
 	name = "Ice Shard"
-	desc = "A spell to conjure a shard of ice. Wickedly sharp. The bane of creechurs from Zybantu to the lands of the Naledi. A lost art."
+	desc = "A spell to conjure a shard of ice. Wickedly sharp. The bane of creechurs from Zybantium to the lands of the Naledi. A lost art."
 	range = 12
 	projectile_type = /obj/projectile/energy/ice_shard
 	overlay_state = "ice_shard"//temp

@@ -38,7 +38,6 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/flashlight/flare/torch/lantern,
 		)
 	H.set_blindness(0)
@@ -95,7 +94,6 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/bomb/smoke = 3,
 		)
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/kazengun

@@ -128,7 +128,7 @@
 	name = "binding shackles (T5)"
 	result = /obj/item/rope/chain/bindingshackles/t5
 	reqs = list(/obj/item/rope/chain/bindingshackles/t4 = 1,
-				/obj/item/magic/melded/t5 = 1)
+				/obj/item/magic/voidstone = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/arcana/forge
@@ -328,4 +328,18 @@
 	result = /obj/item/book/granter/spell/blackstone/familiar
 	reqs = list(/obj/item/magic/manacrystal = 1,
 				/obj/item/paper/scroll = 1)
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/arcana/circuitus_scroll
+	name = "circuitus scroll"
+	result = /obj/item/circuitus_scroll
+	reqs = list(/obj/item/magic/manacrystal = 1,
+				/obj/item/paper/scroll = 1)
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/arcana/memory_string
+	name = "memory string"
+	result = /obj/item/circuitus_scroll
+	reqs = list(/datum/reagent/medicine/manapot = 15,
+				/obj/item/natural/fibers = 1)
 	craftdiff = 1

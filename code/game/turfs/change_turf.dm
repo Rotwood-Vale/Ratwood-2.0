@@ -282,11 +282,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			if(!istype(src, /turf/closed))
 				old_baseturfs += type
 			newT = ChangeTurf(fake_turf_type, null, flags)
-			newT.assemble_baseturfs(initial(fake_turf_type.baseturfs)) // The baseturfs list is created like roundstart
-			if(!length(newT.baseturfs))
-				newT.baseturfs = list(baseturfs)
-			newT.baseturfs -= GLOB.blacklisted_automated_baseturfs
-			newT.baseturfs.Insert(1, old_baseturfs) // The old baseturfs are put underneath
+			if(newT)
+				newT.assemble_baseturfs(initial(fake_turf_type.baseturfs)) // The baseturfs list is created like roundstart
+				if(!length(newT.baseturfs))
+					newT.baseturfs = list(baseturfs)
+				newT.baseturfs -= GLOB.blacklisted_automated_baseturfs
+				newT.baseturfs.Insert(1, old_baseturfs) // The old baseturfs are put underneath
 			return newT
 		if(!length(baseturfs))
 			baseturfs = list(baseturfs)

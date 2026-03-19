@@ -7,8 +7,10 @@
 
 	race = /datum/species/orc
 	gender = MALE
-	bodyparts = list(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
-					 /obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg)
+	bodyparts = list(
+		/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
+		/obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg,
+	)
 	ambushable = FALSE
 	
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/unarmed/claw)
@@ -25,7 +27,7 @@
 	wander = FALSE
 	cmode_music = FALSE
 
-/mob/living/carbon/human/species/orc/npc/Initialize()
+/mob/living/carbon/human/species/orc/npc/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/orc)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)

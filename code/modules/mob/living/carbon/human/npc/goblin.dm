@@ -143,7 +143,10 @@
 	H.update_transform()
 	return TRUE
 
-/mob/living/carbon/human/species/goblin/update_body(redraw = FALSE)
+/mob/living/carbon/human/species/goblin/update_body_parts(redraw)
+	update_body()
+
+/mob/living/carbon/human/species/goblin/update_body()
 	remove_overlay(BODY_LAYER)
 	if(!dna || !dna.species)
 		return
@@ -201,7 +204,7 @@
 /datum/species/goblin/update_damage_overlays(mob/living/carbon/human/H)
 	return
 
-/mob/living/carbon/human/species/goblin/Initialize()
+/mob/living/carbon/human/species/goblin/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 
@@ -366,7 +369,7 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE) // Trash mob
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-        
+
 //////////////////   INVADER ZIM	//////////////////
 
 /obj/structure/gob_portal
@@ -384,7 +387,7 @@
 	var/moon_goblins = 0
 	attacked_sound = 'sound/vo/mobs/ghost/skullpile_hit.ogg'
 
-/obj/structure/gob_portal/Initialize()
+/obj/structure/gob_portal/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, FALSE)
 	soundloop.start()

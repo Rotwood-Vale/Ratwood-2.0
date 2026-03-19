@@ -1,4 +1,4 @@
-/obj/item/bodypart/proc/prosthetic_attachment(var/mob/living/carbon/human/H, var/mob/user)
+/obj/item/bodypart/proc/prosthetic_attachment(mob/living/carbon/human/H, mob/user)
 	if(!ishuman(H))
 		return
 
@@ -15,6 +15,133 @@
 		user.visible_message(span_notice("[user] attaches [src] to [H]."))
 		return 1
 
+/obj/item/contraption/bronzeprosthetic
+	name = "bronze prosthetic"
+	desc = "A prosthetic made of bronze. Use it in your hand to determine what limb it will function as."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "prb_blank"
+
+/obj/item/contraption/ironprosthetic
+	name = "iron prosthetic"
+	desc = "A prosthetic made of iron. Use it in your hand to determine what limb it will function as."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "pri_blank"
+	smeltresult = /obj/item/ingot/iron
+
+/obj/item/contraption/steelprosthetic
+	name = "steel prosthetic"
+	desc = "A prosthetic made of steel. Use it in your hand to determine what limb it will function as."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "prs_blank"
+	smeltresult = /obj/item/ingot/steel
+
+/obj/item/contraption/goldprosthetic
+	name = "golden prosthetic"
+	desc = "A prosthetic made of gold. Use it in your hand to determine what limb it will function as."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "prc_blank"
+	smeltresult = /obj/item/ingot/gold
+
+/obj/item/contraption/bronzeprosthetic/attack_self(mob/user)
+	. = ..()
+	var/choice = input(user, "Choose the side and the limb") as null|anything in list("Left Arm", "Right Arm", "Left Leg", "Right Leg", "Cancel")
+	switch(choice)
+		if("Cancel")
+			return
+		if(null)
+			return
+		if("Left Arm")
+			new /obj/item/bodypart/l_arm/prosthetic/bronzeleft(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Right Arm")
+			new /obj/item/bodypart/r_arm/prosthetic/bronzeright(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Left Leg")
+			new /obj/item/bodypart/l_leg/prosthetic/bronzeleft(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Right Leg")
+			new /obj/item/bodypart/r_leg/prosthetic/bronzeright(get_turf(src.loc))
+			qdel(src)
+			return
+
+/obj/item/contraption/ironprosthetic/attack_self(mob/user)
+	. = ..()
+	var/choice = input(user, "Choose the side and the limb") as null|anything in list("Left Arm", "Right Arm", "Left Leg", "Right Leg", "Cancel")
+	switch(choice)
+		if("Cancel")
+			return
+		if(null)
+			return
+		if("Left Arm")
+			new /obj/item/bodypart/l_arm/prosthetic/iron(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Right Arm")
+			new /obj/item/bodypart/r_arm/prosthetic/iron(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Left Leg")
+			new /obj/item/bodypart/l_leg/prosthetic/iron(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Right Leg")
+			new /obj/item/bodypart/r_leg/prosthetic/iron(get_turf(src.loc))
+			qdel(src)
+			return
+
+/obj/item/contraption/steelprosthetic/attack_self(mob/user)
+	. = ..()
+	var/choice = input(user, "Choose the side and the limb") as null|anything in list("Left Arm", "Right Arm", "Left Leg", "Right Leg", "Cancel")
+	switch(choice)
+		if("Cancel")
+			return
+		if(null)
+			return
+		if("Left Arm")
+			new /obj/item/bodypart/l_arm/prosthetic/steel(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Right Arm")
+			new /obj/item/bodypart/r_arm/prosthetic/steel(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Left Leg")
+			new /obj/item/bodypart/l_leg/prosthetic/steel(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Right Leg")
+			new /obj/item/bodypart/r_leg/prosthetic/steel(get_turf(src.loc))
+			qdel(src)
+			return
+
+/obj/item/contraption/goldprosthetic/attack_self(mob/user)
+	. = ..()
+	var/choice = input(user, "Choose the side and the limb") as null|anything in list("Left Arm", "Right Arm", "Left Leg", "Right Leg", "Cancel")
+	switch(choice)
+		if("Cancel")
+			return
+		if(null)
+			return
+		if("Left Arm")
+			new /obj/item/bodypart/l_arm/prosthetic/gold(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Right Arm")
+			new /obj/item/bodypart/r_arm/prosthetic/gold(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Left Leg")
+			new /obj/item/bodypart/l_leg/prosthetic/gold(get_turf(src.loc))
+			qdel(src)
+			return
+		if("Right Leg")
+			new /obj/item/bodypart/r_leg/prosthetic/gold(get_turf(src.loc))
+			qdel(src)
+			return
+
 /////     ARMS     /////
 
 /obj/item/bodypart/l_arm/prosthetic/woodleft
@@ -23,6 +150,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pr_arm"
 	item_state = "pr_arm"
+	limb_material = "wood"
 	resistance_flags = FLAMMABLE
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC	//allows removals
@@ -81,6 +209,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bp_arm"
 	prosthetic_prefix = "prs"
+	limb_material = "bronze"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -122,6 +251,7 @@
 	desc = "A right arm of wood."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pr_arm"
+	limb_material = "wood"
 	resistance_flags = FLAMMABLE
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -180,6 +310,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bp_arm"
 	prosthetic_prefix = "prs"
+	limb_material = "bronze" // still need a different onmob sprite for bronze limbs brah
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -282,6 +413,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bp_leg"
 	prosthetic_prefix = "prs"
+	limb_material = "bronze"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -378,6 +510,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bp_leg"
 	prosthetic_prefix = "prs"
+	limb_material = "bronze"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC

@@ -301,7 +301,7 @@
 	var/mob/living/carbon/human/H = user
 
 	if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
-		to_chat(H, span_info("You tilt your jaw from side to side, concentrating on the glamoring magicks limning your form..."))
+		to_chat(H, span_info("You gaze into the mirror, concentrating on the glamoring magicks limning your form..."))
 		if(do_after(H, 3 SECONDS))
 			perform_mirror_transform(H)
 		return

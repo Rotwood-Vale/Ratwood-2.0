@@ -22,7 +22,7 @@
 	density = TRUE
 	anchored = TRUE
 
-/obj/structure/roguemachine/noticeboard/Initialize()
+/obj/structure/roguemachine/noticeboard/Initialize(mapload)
 	. = ..()
 	SSroguemachine.noticeboards += src
 	input_point = locate(x, y - 1, z)

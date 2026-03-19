@@ -2,7 +2,7 @@
 /datum/job/roguetown/wretch
 	title = "Wretch"
 	flag = WRETCH
-	department_flag = PEASANTS
+	department_flag = WANDERERS
 	faction = "Station"
 	total_positions = 5
 	spawn_positions = 5
@@ -16,6 +16,7 @@
 	max_pq = null
 
 	obsfuscated_job = TRUE
+	class_categories = TRUE
 
 	advclass_cat_rolls = list(CTAG_WRETCH = 20)
 	PQ_boost_divider = 10

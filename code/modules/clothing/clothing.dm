@@ -229,7 +229,7 @@
 			return TRUE
 		return FALSE
 
-/obj/item/clothing/Initialize()
+/obj/item/clothing/Initialize(mapload)
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
 		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
@@ -356,7 +356,7 @@ SEE_MOBS  // can see all mobs, no matter what
 SEE_OBJS  // can see all objs, no matter what
 SEE_TURFS // can see all turfs (and areas), no matter what
 SEE_PIXELS// if an object is located on an unlit area, but some of its pixels are
-          // in a lit area (via pixel_x,y or smooth movement), can see those pixels
+		  // in a lit area (via pixel_x,y or smooth movement), can see those pixels
 BLIND     // can't see anything
 */
 

@@ -137,7 +137,8 @@
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	feel_turf(user)
+	if(locate(/obj/structure/lever/hidden, src))
+		feel_turf(user)
 	playsound(src, 'sound/blank.ogg', 25, TRUE)
 	add_fingerprint(user)
 
@@ -207,7 +208,7 @@
 					var/inputty = stripped_input(user, "What would you like to engrave here?", "ENGRAVE THE CANT", null, 200)
 					if(inputty && !thiefmessage)
 						playsound(src, 'sound/items/wood_sharpen.ogg', 100)
-						var/obj/effect/track/thievescant/new_track = new(src)
+						var/obj/effect/track/thievescant/new_track = SStracks.get_track(/obj/effect/track/thievescant, src)
 						new_track.handle_creation(user, inputty)
 						thiefmessage = new_track
 						new_track.add_knower(user)

@@ -62,6 +62,7 @@
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = EYES
+	nudist_approved = TRUE
 	anvilrepair = /datum/skill/craft/armorsmithing
 //	block2add = FOV_BEHIND
 
@@ -135,6 +136,7 @@
 	if(active_item)
 		return
 	else if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, "[type]")
 		if (user.get_skill_level(/datum/skill/craft/engineering) >= 2)
 			ADD_TRAIT(user, TRAIT_ENGINEERING_GOGGLES, "[type]")
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/engineeranalyze)
@@ -149,17 +151,17 @@
 
 
 
-
-
 /obj/item/clothing/mask/rogue/spectacles/golden/dropped(mob/user, slot)
 	..()
+	if(HAS_TRAIT(src, TRAIT_SANDSTORM_GOGGLES))
+		REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, "[type]")
 	if(active_item)
 		active_item = FALSE
 		REMOVE_TRAIT(user, TRAIT_ENGINEERING_GOGGLES, "[type]")
 		user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineeranalyze)
 		to_chat(user, span_notice("Time to stop working"))
 
-/obj/item/clothing/mask/rogue/spectacles/Initialize()
+/obj/item/clothing/mask/rogue/spectacles/Initialize(mapload)
 	..()
 	AddComponent(/datum/component/spill, null, 'sound/blank.ogg')
 
@@ -168,12 +170,28 @@
 		take_damage(11, BRUTE, "blunt", 1)
 	..()
 
-/obj/item/clothing/mask/rogue/equipped(mob/user, slot)
+/obj/item/clothing/mask/rogue/spectacles/goggles
+	name = "sand goggles"
+	icon_state = "goggles_sandstorm"
+	desc = "A set of goggles of an older design, made to protect the wearer from sandstorms."
+	break_sound = "glassbreak"
+	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
+	max_integrity = 35
+	integrity_failure = 0.5
+	resistance_flags = FIRE_PROOF
+	body_parts_covered = EYES
+	anvilrepair = /datum/skill/craft/armorsmithing
+
+/obj/item/clothing/mask/rogue/spectacles/goggles/equipped(mob/user, slot)
 	..()
+	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, "generic")
 	user.update_fov_angles()
 
-/obj/item/clothing/mask/rogue/dropped(mob/user)
+/obj/item/clothing/mask/rogue/spectacles/goggles/dropped(mob/user)
 	..()
+	if(HAS_TRAIT(user, TRAIT_SANDSTORM_GOGGLES))
+		REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, "generic")
 	user.update_fov_angles()
 
 /obj/item/clothing/mask/rogue/eyepatch
@@ -185,6 +203,7 @@
 	block2add = FOV_RIGHT
 	body_parts_covered = EYES
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/eyepatch/left
 	desc = "An eyepatch, fitted for the left eye."
@@ -223,6 +242,8 @@
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	armor = ARMOR_PADDED
 	sewrepair = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/mask/rogue/sack/psy
 	name = "psydonic sack mask"
@@ -385,7 +406,7 @@
 	var/bounty_amount
 	cansnout = TRUE
 
-/obj/item/clothing/mask/rogue/facemask/prisoner/Initialize()
+/obj/item/clothing/mask/rogue/facemask/prisoner/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -520,6 +541,7 @@
 	toggle_icon_state = TRUE
 	experimental_onhip = TRUE
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/shepherd/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
@@ -542,6 +564,16 @@
 	sewrepair = TRUE
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	nudist_approved = TRUE
+
+/obj/item/clothing/mask/rogue/physician/equipped(mob/living/carbon/user, slot)
+	. = ..()
+	if(slot == SLOT_WEAR_MASK)
+		ADD_TRAIT(user, TRAIT_NOSTINK, "[type]")
+
+/obj/item/clothing/mask/rogue/physician/dropped(mob/living/carbon/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_NOSTINK, "[type]")
 
 /obj/item/clothing/mask/rogue/skullmask
 	name = "skull mask"
@@ -562,6 +594,7 @@
 	smeltresult = /obj/item/natural/bone
 	salvage_result = /obj/item/natural/bone
 	salvage_amount = 1
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/ragmask
 	name = "rag mask"
@@ -573,12 +606,16 @@
 	experimental_onhip = TRUE
 	sewrepair = TRUE
 	cansnout = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/ragmask/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
 
 /obj/item/clothing/mask/rogue/ragmask/red //predyed mask for NPCs
 	color = CLOTHING_RED
+
+/obj/item/clothing/mask/rogue/ragmask/azure  //predyed mask for gang
+	color = CLOTHING_AZURE
 
 /obj/item/clothing/mask/rogue/ragmask/black
 	color = CLOTHING_BLACK
@@ -613,6 +650,7 @@
 	sewrepair = TRUE
 	adjustable = CAN_CADJUST
 	toggle_icon_state = FALSE
+	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/silk
 	salvage_amount = 2
 
@@ -627,6 +665,7 @@
 	body_parts_covered = EYES
 	sewrepair = TRUE
 	tint = 3
+	nudist_approved = TRUE
 	mob_overlay_icon = 'icons/mob/clothing/eyes.dmi'
 	icon = 'icons/obj/clothing/glasses.dmi'
 
@@ -645,6 +684,7 @@
 	detail_tag = "_detail"
 	detail_color = COLOR_SILVER
 	sewrepair = TRUE
+	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/hblinders
 	name = "head blinders"
@@ -656,3 +696,79 @@
 	armor = list("blunt" = 80, "slash" = 90, "stab" = 80, "piercing" = 80, "fire" = 0, "acid" = 0)
 	armor_class = ARMOR_CLASS_LIGHT
 	sewrepair = TRUE
+
+//gemcarved masks from Vanderlin
+
+/obj/item/clothing/mask/rogue/facemask/carved
+	name = "carved mask"
+	icon_state = "ancientmask"
+	desc = "You shouldn't be seeing this."
+	max_integrity = 50
+	blocksound = PLATEHIT
+	break_sound = 'sound/foley/breaksound.ogg'
+	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
+	armor = ARMOR_PLATE
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
+	flags_inv = HIDEFACE
+	body_parts_covered = FACE
+	block2add = FOV_BEHIND
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
+	anvilrepair = /datum/skill/craft/armorsmithing //Maybe these shouldn't be repairable, someone else can do that if they want.
+	clothing_flags = CANT_SLEEP_IN
+	sellprice = 70
+	smeltresult = null
+	salvage_result = null
+
+/obj/item/clothing/mask/rogue/facemask/carved/jademask
+	name = "jade mask "
+	icon_state = "mask_jade"
+	desc = "A jade mask that both conceals and protects the face."
+	sellprice = 70
+
+/obj/item/clothing/mask/rogue/facemask/carved/jademask
+	name = "jade mask"
+	icon_state = "mask_jade"
+	desc = "A jade mask that both conceals and protects the face."
+	sellprice = 70
+
+/obj/item/clothing/mask/rogue/facemask/carved/turqmask
+	name = "cerulite mask"
+	icon_state = "mask_turq"
+	desc = "A cerulite mask that both conceals and protects the face."
+	sellprice = 95
+
+/obj/item/clothing/mask/rogue/facemask/carved/rosemask
+	name = "rosestone mask"
+	icon_state = "mask_rose"
+	desc = "A rosestone mask that both conceals and protects the face."
+	sellprice = 35
+
+/obj/item/clothing/mask/rogue/facemask/carved/shellmask
+	name = "shell mask"
+	icon_state = "mask_shell"
+	desc = "A shell mask that both conceals and protects the face."
+	sellprice = 30
+
+/obj/item/clothing/mask/rogue/facemask/carved/coralmask
+	name = "heartstone mask"
+	icon_state = "mask_coral"
+	desc = "An heartstone mask that both conceals and protects the face."
+	sellprice = 80
+
+/obj/item/clothing/mask/rogue/facemask/carved/ambermask
+	name = "amber mask"
+	icon_state = "mask_amber"
+	desc = "A amber mask that both conceals and protects the face."
+	sellprice = 70
+
+/obj/item/clothing/mask/rogue/facemask/carved/onyxamask
+	name = "onyxa mask"
+	icon_state = "mask_onyxa"
+	desc = "An onyxa mask that both conceals and protects the face."
+	sellprice = 50
+
+/obj/item/clothing/mask/rogue/facemask/carved/opalmask
+	name = "opal mask"
+	icon_state = "mask_opal"
+	desc = "An opal mask that both conceals and protects the face."
+	sellprice = 100

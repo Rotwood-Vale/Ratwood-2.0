@@ -30,7 +30,8 @@
 		if(M.mind)
 			M.mind.special_role = "Death Knight"
 			M.mind.assigned_role = "Death Knight"
-			M.mind.current.job = null
+			if(M.mind.current)
+				M.mind.current.job = null
 		if(H.dna && H.dna.species)
 			H.dna.species.species_traits |= NOBLOOD
 			H.dna.species.soundpack_m = new /datum/voicepack/skeleton()

@@ -35,9 +35,9 @@
 /// You would need it if you are doing something like removing the target from a processing list.
 #define ELEMENT_DETACH_ON_HOST_DESTROY (1 << 0)
 /**
-  * Only elements created with the same arguments given after `id_arg_index` share an element instance
-  * The arguments are the same when the text and number values are the same and all other values have the same ref
-  */
+ * Only elements created with the same arguments given after `id_arg_index` share an element instance
+ * The arguments are the same when the text and number values are the same and all other values have the same ref
+ */
 #define ELEMENT_BESPOKE		(1 << 1)
 /// Causes all detach arguments to be passed to detach instead of only being used to identify the element
 /// When this is used your Detach proc should have the same signature as your Attach proc
@@ -530,3 +530,4 @@
 //Roguetown-specific
 #define  COMSIG_MOB_ON_KICK	"mob_on_kick"	//from /mob/living/proc/try_kick(atom/A). This is for when the src has done a kick.
 #define  COMSIG_MOB_KICKED	"mob_kicked"	//from /datum/species/proc/kicked(mob/living/carbon/human/user, mob/living/carbon/human/target). This is for when the mob has BEEN kicked.
+#define COMSIG_ITEM_ARMOR_BLOCKED "item_armor_blocked"	//from /mob/living/proc/run_armor_check(): sent to used_weapon when armor fully absorbs a hit

@@ -50,7 +50,6 @@
 	backpack_contents = list(
 		/obj/item/lockpick = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
@@ -117,7 +116,6 @@
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
 		/obj/item/lockpickring/mundane = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 
@@ -165,19 +163,19 @@
 	cloak = /obj/item/clothing/cloak/half/red
 	backpack_contents = list(
 		/obj/item/lockpick = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T3)
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
-		var/weapons = list("Accordion","Drum","Flute","Guitar","Harp","Hurdy-Gurdy","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
+		var/weapons = list("Accordion","Bagpipe","Drum","Flute","Guitar","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
 		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Accordion")
 				backr = /obj/item/rogue/instrument/accord
+			if("Bagpipe")
+				backr = /obj/item/rogue/instrument/bagpipe
 			if("Drum")
 				backr = /obj/item/rogue/instrument/drum
 			if("Flute")
@@ -188,6 +186,8 @@
 				backr = /obj/item/rogue/instrument/harp
 			if("Hurdy-Gurdy")
 				backr = /obj/item/rogue/instrument/hurdygurdy
+			if("Jaw Harp")
+				backr = /obj/item/rogue/instrument/jawharp
 			if("Lute")
 				backr = /obj/item/rogue/instrument/lute
 			if("Psyaltery")
@@ -246,6 +246,5 @@
 		/obj/item/bomb = 1,
 		/obj/item/lockpick = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)

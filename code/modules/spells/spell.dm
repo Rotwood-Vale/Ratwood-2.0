@@ -45,7 +45,7 @@
 	/// This "spell" (miracle) is excluded from Priest's round-start selection.
 	var/priest_excluded = FALSE
 
-/obj/effect/proc_holder/Initialize()
+/obj/effect/proc_holder/Initialize(mapload)
 	. = ..()
 	if(has_action)
 		action = new base_action(src)
@@ -295,6 +295,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if((invocation_type == "whisper" || invocation_type == "shout") && (!H.can_speak_vocal() || !H.getorganslot(ORGAN_SLOT_TONGUE)))
 			to_chat(user, span_warning("I can't get the words out!"))
 			return FALSE
+		// Spells cannot be cast using sign language (check specifically for SIGNLANG flag)
+		if((invocation_type == "whisper" || invocation_type == "shout"))
+			var/datum/language/default_lang = H.get_default_language()
+			if(default_lang && (initial(default_lang.flags) & SIGNLANG))
+				to_chat(user, span_warning("I cannot cast spells using [initial(default_lang.name)]! I need to speak the words aloud!"))
+				return FALSE
 
 		if(HAS_TRAIT(H, TRAIT_PARALYSIS) && !stat_allowed)
 			to_chat(user, span_warning("My body is paralyzed!"))
@@ -352,6 +358,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				adjust_var(user, holder_var_type, holder_var_amount)
 	if(action)
 		action.UpdateButtonIcon()
+	START_PROCESSING(SSfastprocess, src)
 	record_featured_stat(FEATURED_STATS_MAGES, user)
 	return TRUE
 
@@ -394,7 +401,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		ss = pick(sound)
 	playsound(get_turf(usr), ss,100,FALSE)
 
-/obj/effect/proc_holder/spell/Initialize()
+/obj/effect/proc_holder/spell/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -426,12 +433,15 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			var/diff2 = SPELL_SCALING_THRESHOLD - ranged_ability_user.STAINT
 			recharge_time = initial(recharge_time) + (initial(recharge_time) * (diff2 * COOLDOWN_REDUCTION_PER_INT))
 
+	START_PROCESSING(SSfastprocess, src)
+
 /obj/effect/proc_holder/spell/process()
 	if(charge_counter <= recharge_time) // Edge case when charge counter is set
 		charge_counter += 2	//processes 5 times per second instead of 10.
 		if(charge_counter >= recharge_time)
 			action.UpdateButtonIcon()
 			charge_counter = recharge_time
+			STOP_PROCESSING(SSfastprocess, src)
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	if(!ignore_los)
@@ -536,6 +546,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	/* if(xp_gain)
 		adjust_experience(usr, associated_skill, round(get_fatigue_drain() * MAGIC_XP_MULTIPLIER)) */
 
+	START_PROCESSING(SSfastprocess, src) // ensure we always end up reprocessing after casting
+
 /obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
 	switch(type)
 		if("view")
@@ -544,6 +556,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			. = range(distance,center)
 
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
+	start_recharge()
 	switch(charge_type)
 		if("recharge")
 			charge_counter = recharge_time
@@ -551,6 +564,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			charge_counter++
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
+	START_PROCESSING(SSfastprocess, src)
 	if(action)
 		action.UpdateButtonIcon()
 

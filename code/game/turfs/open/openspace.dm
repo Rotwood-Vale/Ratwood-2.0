@@ -13,7 +13,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	//I don't know why the others are aligned but I shall do the same.
 	vis_flags		= VIS_INHERIT_ID
 
-/atom/movable/openspace_backdrop/Initialize()
+/atom/movable/openspace_backdrop/Initialize(mapload)
 	. = ..()
 //	filters += filter(type = "blur", size = 3)
 
@@ -53,7 +53,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/transparent/openspace/show_bottom_level()
 	return FALSE
 
-/turf/open/transparent/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
+/turf/open/transparent/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
 	dynamic_lighting = 1
 	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
@@ -277,21 +277,46 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 
 /turf/open/transparent/openspace/attackby(obj/item/C, mob/user, params)
 	..()
+	if(C.type == /obj/item/rope && isliving(user))
+		var/mob/living/living_user = user
+		living_user.visible_message(span_notice("[living_user] begins to lay down a rope for climbing..."), span_notice("I begin to lay down a rope for climbing..."))
+		if(do_after(living_user, 3 SECONDS, TRUE, target = src))
+			var/turf/target = get_step_multiz(src, DOWN)
+			if(!target)
+				to_chat(living_user, span_warning("There's nowhere to tie the rope here."))
+				return
+			var/obj/structure/rope_ladder/rope = new(target)
+			if(living_user.wallpressed)
+				rope.dir = living_user.dir
+			else
+				rope.dir = get_dir(src, living_user)
+				if(!(rope.dir in GLOB.cardinals))
+					rope.dir = living_user.dir
+			switch(rope.dir)
+				if(NORTH)
+					rope.pixel_y = 20
+				if(SOUTH)
+					rope.layer = ABOVE_MOB_LAYER
+				if(WEST)
+					rope.pixel_x = -12
+				if(EAST)
+					rope.pixel_x = 12
+			living_user.visible_message(span_notice("[living_user] secures the rope to the surface below."), span_notice("I secure the rope to the surface below."))
+			playsound(living_user, 'sound/foley/trap.ogg', 100, TRUE)
+			qdel(C)
+		return
 	if(!CanBuildHere())
 		return
 
 /turf/open/transparent/openspace/bullet_act(obj/projectile/P)
 	if(!P.arcshot)
 		return ..()
-	var/turf/target = get_step_multiz(src, DOWN)
-	if(target)
-		testing("canztrav")
-//		if(can_zFall(P, 2, target))
-//			testing("canztrue")
-//			P.zfalling = TRUE
-		P.forceMove(target)
-//			P.zfalling = FALSE
-		P.original = target
-		P.process_hit(target, P.select_target(target))
-		//bump
-		return BULLET_ACT_TURF
+	if(P.original && (P.x == P.original.x && P.y == P.original.y))
+		var/turf/target = get_step_multiz(src, DOWN)
+		if(target)
+			testing("canztrav")
+			P.forceMove(target)
+			P.original = target
+			P.process_hit(target, P.select_target(target))
+			return BULLET_ACT_TURF
+	return ..()

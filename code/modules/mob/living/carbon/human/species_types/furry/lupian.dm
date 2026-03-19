@@ -93,6 +93,7 @@
 		/datum/customizer/organ/tail/lupian,
 		/datum/customizer/organ/snout/lupian,
 		/datum/customizer/organ/ears/lupian,
+		/datum/customizer/organ/horns/anthro,
 		/datum/customizer/organ/neck_feature/anthro,
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
@@ -174,7 +175,8 @@
 		"Langqan" = "271f2d",
 		"a tangled lineage" = "271f2e",
 		"disputed" = "271f2f",
-		"bastardized" = "271f3a"
+		"bastardized" = "271f3a",
+		"Czwarteki" =  "271f3b",
 	) // This is a dirty hack that stops me using mob defines, the colors do not do anything, it just a var that relates to their pack name on examine
 
 /datum/species/lupian/get_random_features()

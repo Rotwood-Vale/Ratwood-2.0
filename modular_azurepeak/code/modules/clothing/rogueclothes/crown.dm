@@ -19,7 +19,7 @@
 	var/hearrange = 0 // Only hearable by wearer
 	is_important = TRUE
 
-/obj/item/clothing/head/roguetown/crown/serpcrown/Initialize()
+/obj/item/clothing/head/roguetown/crown/serpcrown/Initialize(mapload)
 	. = ..()
 	if(SSroguemachine.crown)
 		qdel(src)

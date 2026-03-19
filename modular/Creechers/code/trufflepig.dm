@@ -1,7 +1,7 @@
-/*  * * * * * * * * * * * * * * * * * * * * * * * * *
+/* * * * * * * * * * * * * * * * * * * * * * * * * *
  *													*		Animal that can locate hidden truffles in bog area dirt turf
  *					TRUFFLE PIG						*		Dig them up with a shovel, pig will demand truffles eventually or stop working
- *					 								*		Meant to help locate some extra food in the wilderness
+ *													*		Meant to help locate some extra food in the wilderness
  *													*
  * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -11,7 +11,7 @@
 	var/hidden_truffles
 	var/hidden_toxicshrooms
 
-/turf/open/floor/rogue/dirt/Initialize()
+/turf/open/floor/rogue/dirt/Initialize(mapload)
 	. = ..()
 	if(istype(loc, /area/rogue/outdoors/woods))
 		if(!((locate(/obj/structure) in src) || (locate(/obj/machinery) in src)))
@@ -57,7 +57,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	color = "#835b4f"
 	tastes = list("succulent truffles" = 1)
-/obj/item/reagent_containers/food/snacks/rogue/truffles/Initialize()
+/obj/item/reagent_containers/food/snacks/rogue/truffles/Initialize(mapload)
 	icon_state = pick("mushroom1_full","mushroom1_full","mushroom1_full")
 	. = ..()
 
@@ -73,7 +73,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/toxicshrooms/cooked
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	color = "#835b4f"
-/obj/item/reagent_containers/food/snacks/rogue/toxicshrooms/Initialize()
+/obj/item/reagent_containers/food/snacks/rogue/toxicshrooms/Initialize(mapload)
 	icon_state = pick("mushroom1_full","mushroom1_full","mushroom1_full")
 	. = ..()
 
@@ -89,7 +89,6 @@
 	gender = MALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	emote_see = list("eyes the surroundings.", "flicks its ears.")
-	stop_automated_movement_when_pulled = TRUE
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6

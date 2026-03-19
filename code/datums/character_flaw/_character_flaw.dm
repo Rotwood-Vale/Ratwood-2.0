@@ -1,42 +1,45 @@
 
 GLOBAL_LIST_INIT(character_flaws, list(
 	"Alcoholic"=/datum/charflaw/addiction/alcoholic,
-	"Devout Follower"=/datum/charflaw/addiction/godfearing,
-	"Colorblind (+1 TRI)"=/datum/charflaw/colorblind,
-	"Smoker"=/datum/charflaw/addiction/smoker,
-	"Junkie"=/datum/charflaw/addiction/junkie,
-	"Unintelligible (+1 TRI)"=/datum/charflaw/unintelligible,
-	"Greedy"=/datum/charflaw/greedy,
-	"Narcoleptic (+1 TRI)"=/datum/charflaw/narcoleptic,
-	"Nymphomaniac"=/datum/charflaw/addiction/lovefiend,
-	"Sadist"=/datum/charflaw/addiction/sadist,
-	"Masochist"=/datum/charflaw/addiction/masochist,
-	"Paranoid"=/datum/charflaw/paranoid,
-	"Clingy"=/datum/charflaw/clingy,
-	"Isolationist"=/datum/charflaw/isolationist,
-	"Bad Sight (+1 TRI)"=/datum/charflaw/badsight,
-	"Cyclops (R) (+1 TRI)"=/datum/charflaw/noeyer,
-	"Cyclops (L) (+1 TRI)"=/datum/charflaw/noeyel,
-	"Blindness (+1 TRI)"=/datum/charflaw/noeyeall,
-	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
-	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
-	"Sleepless (+1 TRI)"=/datum/charflaw/sleepless,
-	"Mute (+1 TRI)"=/datum/charflaw/mute,
-	"Critical Weakness (+1 TRI)"=/datum/charflaw/critweakness,
-	"Silver Weakness"=/datum/charflaw/silverweakness,
-	"Hunted (+1 TRI)"=/datum/charflaw/hunted,
-	"Ugly"=/datum/charflaw/ugly,
-	"Nudist"=/datum/charflaw/nudist,
-	"Missing Nose"=/datum/charflaw/missing_nose,
-	"Disfigured"=/datum/charflaw/disfigured,
-	"Pacifism"=/datum/charflaw/pacifism,
 	"Annoying Face"=/datum/charflaw/annoying_face,
-	"Eerie Beauty"=/datum/charflaw/eerie_beauty,
-	"Nude Sleeper"=/datum/charflaw/nude_sleeper,
 	"Asundered Mind (+1 TRI)"=/datum/charflaw/mind_broken,
-	"Random or No Flaw"=/datum/charflaw/randflaw,
-	"No Flaw (-3 TRIUMPHS)"=/datum/charflaw/noflaw,
+	"Bad Sight (+1 TRI)"=/datum/charflaw/badsight,
+	"Blindness (+1 TRI)"=/datum/charflaw/noeyeall,
+	"Clingy"=/datum/charflaw/clingy,
+	"Colorblind (+1 TRI)"=/datum/charflaw/colorblind,
+	"Critical Weakness (+1 TRI)"=/datum/charflaw/critweakness,
+	"Cyclops (L) (+1 TRI)"=/datum/charflaw/noeyel,
+	"Cyclops (R) (+1 TRI)"=/datum/charflaw/noeyer,
+	"Devout Follower"=/datum/charflaw/addiction/godfearing,
+	"Greedy"=/datum/charflaw/greedy,
+	"Hunted (+1 TRI)"=/datum/charflaw/hunted,
+	"Isolationist"=/datum/charflaw/isolationist,
+	"Junkie"=/datum/charflaw/addiction/junkie,
 	"Leper (+1 TRIUMPHS)"=/datum/charflaw/leprosy,
+	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
+	"Leper (+1 TRI)"=/datum/charflaw/leprosy,
+	"Masochist"=/datum/charflaw/addiction/masochist,
+	"Missing Nose"=/datum/charflaw/missing_nose,
+	"Mute (+1 TRI)"=/datum/charflaw/mute,
+	"Narcoleptic (+1 TRI)"=/datum/charflaw/narcoleptic,
+	"No Flaw (-3 TRI)"=/datum/charflaw/noflaw,
+	"Nude Sleeper"=/datum/charflaw/nude_sleeper,
+	"Nudist"=/datum/charflaw/nudist,
+	"Nymphomaniac"=/datum/charflaw/addiction/lovefiend,
+	"Pacifism"=/datum/charflaw/pacifism,
+	"Paranoid"=/datum/charflaw/paranoid,
+	"Random or No Flaw"=/datum/charflaw/randflaw,
+	"Sadist"=/datum/charflaw/addiction/sadist,
+	"Scarred"=/datum/charflaw/scarred,
+	"Silver Weakness"=/datum/charflaw/silverweakness,
+	"Sleepless (+1 TRI)"=/datum/charflaw/sleepless,
+	"Smoker"=/datum/charflaw/addiction/smoker,
+	"Ugly"=/datum/charflaw/ugly,
+	"Unintelligible (+1 TRI)"=/datum/charflaw/unintelligible,
+	"Unsettling Beauty"=/datum/charflaw/unsettling_beauty,
+	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
+	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
+	"Hemophage (+1 TRI)"=/datum/charflaw/hemophage,
 	))
 
 /datum/charflaw
@@ -169,7 +172,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/spectacles(H), SLOT_WEAR_MASK)
 	else
 		new /obj/item/clothing/mask/rogue/spectacles(get_turf(H))
-	
+
 	// we don't seem to have a mind when on_mob_creation fires, so set up a timer to check when we probably will
 	addtimer(CALLBACK(src, PROC_REF(apply_reading_skill), H), 5 SECONDS)
 
@@ -352,7 +355,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/nudist
 	name = "Nudist"
-	desc = "I refuse to wear clothes. They are a hindrance to my freedom."
+	desc = "I refuse to wear clothes. They are a hindrance to my freedom. I can tolerate certain accessories."
 
 /datum/charflaw/nudist/on_mob_creation(mob/user)
 	..()
@@ -464,7 +467,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/nude_sleeper
 	name = "Nude Sleeper"
-	desc = "I can't fall asleep unless I'm nude and in bed."
+	desc = "I can't fall asleep unless I'm nude and in bed. I cannot sleep while wearing equipment. (Unremovable clothing and certain accessories are allowed.)"
 
 /datum/charflaw/nude_sleeper/on_mob_creation(mob/user)
 	..()
@@ -477,6 +480,38 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		REMOVE_TRAIT(H, TRAIT_NUDE_SLEEPER, TRAIT_GENERIC)
+
+/datum/charflaw/unsettling_beauty
+	name = "Unsettling Beauty"
+	desc = "My appearance is deeply unsettling to most. There's something profoundly wrong about my features that disturbs those who look upon me. Incompatible with Socialite virtue."
+
+/datum/charflaw/unsettling_beauty/on_mob_creation(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		ADD_TRAIT(H, TRAIT_UNSETTLING_BEAUTY, TRAIT_GENERIC)
+
+/datum/charflaw/unsettling_beauty/on_removal(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		REMOVE_TRAIT(H, TRAIT_UNSETTLING_BEAUTY, TRAIT_GENERIC)
+
+/datum/charflaw/scarred
+	name = "Scarred"
+	desc = "My face bears terrible scars that make identification difficult, but not impossible."
+
+/datum/charflaw/scarred/on_mob_creation(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		ADD_TRAIT(H, TRAIT_SCARRED, TRAIT_GENERIC)
+
+/datum/charflaw/scarred/on_removal(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		REMOVE_TRAIT(H, TRAIT_SCARRED, TRAIT_GENERIC)
 
 /datum/charflaw/hunted/flaw_on_life(mob/user)
 	if(!ishuman(user))
@@ -493,11 +528,11 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/unintelligible/on_mob_creation(mob/user)
 	var/mob/living/carbon/human/recipient = user
-	addtimer(CALLBACK(src, .proc/unintelligible_apply, recipient), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(unintelligible_apply), recipient), 5 SECONDS)
 
 /datum/charflaw/unintelligible/proc/unintelligible_apply(mob/living/carbon/human/user)
 	if(user.advsetup)
-		addtimer(CALLBACK(src, .proc/unintelligible_apply, user), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(unintelligible_apply), user), 5 SECONDS)
 		return
 	user.remove_language(/datum/language/common)
 	user.adjust_skillrank(/datum/skill/misc/reading, -6, TRUE)
@@ -704,9 +739,46 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/mind_broken
 	name = "Asundered Mind (+1 TRI)"
-	desc = "My mind is asundered, wether it was by own means or an unfortunate accident. Nothing seems real to me..."
+	desc = "My mind is asundered, whether it was by my own means or an unfortunate accident. Nothing seems real to me..."
 
 /datum/charflaw/mind_broken/apply_post_equipment(mob/living/carbon/human/insane_fool)
 	insane_fool.hallucination = INFINITY
 	ADD_TRAIT(insane_fool, TRAIT_PSYCHOSIS, TRAIT_GENERIC)
 	insane_fool.adjust_triumphs(1)
+
+/datum/charflaw/marked_by_baotha
+	name = "Marked by Baotha"
+	desc = "Whether through intentionally seeking out heretical ritualists or against my will, I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this. I will need to sate my new urges often to avoid stress..."
+
+/datum/charflaw/marked_by_baotha/on_mob_creation(mob/user)
+
+	var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[user.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+	user.add_overlay(marking_overlay)
+
+	spawn(40)
+
+	ADD_TRAIT(user, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
+
+	var/obj/item/organ/vagina/vagina = user.getorganslot(ORGAN_SLOT_VAGINA)
+	if(vagina && !vagina.fertility)
+		vagina.fertility = TRUE
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+
+		// Add the adjusted Nymphomaniac addiction flaw
+		if(!H.has_flaw(/datum/charflaw/addiction/lovefiend))
+			var/datum/charflaw/addiction/lovefiend/L = new
+			L.time = 45
+			H.vices += L
+			L.on_mob_creation(H)
+
+/datum/charflaw/hemophage
+	name = "Hemophage (+1 TRI)"
+	desc = "Whether by curse or my people, blood is the only thing to keep me alive. Normal sources of nutrition and hydration will make me ill. <br>\
+	<small>Any element of a virtue that modifies eating will be canceled out by Hemophage.</small>"
+
+/datum/charflaw/hemophage/on_mob_creation(mob/living/carbon/human/vamp_wannabe)
+	ADD_TRAIT(vamp_wannabe, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
+	ADD_TRAIT(vamp_wannabe, TRAIT_VAMPBITE, TRAIT_GENERIC)
+	vamp_wannabe.adjust_triumphs(1)

@@ -96,6 +96,16 @@
 	///Default pixel y shifting for the atom's icon.
 	var/base_pixel_y = 0
 
+	///Icon to use for smoothing, only required for secret doors
+	var/smoothing_icon
+	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as
+	///defined in icon_smoothing.dm, instead of the BYOND flags.
+	var/smoothing_junction = null //This starts as null for us to know when it's first set, but after that it will hold a 8-bit mask ranging from 0 to 255.
+	///What smoothing groups does this atom belongs to, to match smoothing_list. If null, nobody can smooth with it.
+	var/list/smoothing_groups = null
+	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
+	var/list/smoothing_list = null
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -457,7 +467,7 @@
 /atom/proc/vand_update_desc(updates = ALL)
 	SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_DESC, updates)
-	
+
 /// Updates the icon of the atom
 /atom/proc/update_icon()
 	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
@@ -1087,7 +1097,7 @@
 
 	if(log_seen)
 		log_seen_viewers(user, target, message, SEEN_LOG_ATTACK)
-	
+
 	if(user != target)
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
 		target?.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
@@ -1161,7 +1171,7 @@
 
 /atom/movable/proc/update_filters() //Determine which filter comes first
 	filters = null                  //note, the cmp_filter is a little flimsy.
-	sortTim(filter_data, /proc/cmp_filter_priority_desc, associative = TRUE) 
+	sortTim(filter_data, /proc/cmp_filter_priority_desc, associative = TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()
@@ -1236,3 +1246,29 @@
 		location = location.loc
 	if(our_turf && include_turf) //At this point, only the turf is left, provided it exists.
 		. += our_turf
+
+
+//Automatically turns based on nearby walls, destroys if not valid.
+/atom/proc/auto_turn_destructive()
+	var/turf/closed/T = null
+	var/gotdir = 0
+	var/list/dir_list = list()
+	for(var/i = 1, i <= 8, i += i)
+		T = get_ranged_target_turf(src, i, 1)
+
+		if(istype(T))
+			//If someone knows a better way to do this, let me know. -Giacom
+			switch(i)
+				if(NORTH)
+					dir_list += NORTH
+				if(SOUTH)
+					dir_list += SOUTH
+				if(WEST)
+					dir_list += WEST
+				if(EAST)
+					dir_list += EAST
+			gotdir = dir
+	if(!gotdir || dir_list.len == 0)
+		qdel(src)
+	else
+		src.dir = pick(dir_list) //Random directions are fun :)

@@ -24,10 +24,10 @@
 	var/total_deposit = 0
 	var/list/excluded_jobs = list("Wretch","Vagabond","Adventurer")
 	var/current_category = "Raw Materials"
-	var/list/categories = list("Raw Materials", "Foodstuffs", "Fruits")
+	var/list/categories = list("Raw Materials", "Foodstuffs", "Fruits", "Seafood")
 	var/list/daily_payments = list() // Associative list: job name -> payment amount
 
-/obj/structure/roguemachine/steward/Initialize()
+/obj/structure/roguemachine/steward/Initialize(mapload)
 	. = ..()
 	if(SStreasury.steward_machine == null) //The "only one" mapped in Nerve Master at map start
 		SStreasury.steward_machine = src
@@ -38,8 +38,11 @@
 /obj/structure/roguemachine/steward/proc/setup_default_payments()
 	daily_payments["Sergeant"] = 40 //Garrison
 	daily_payments["Man at Arms"] = 30
+	daily_payments["Rookie"] = 20//paid more than squires because they don't get to live in a castle with maids cooking them dinner
+	daily_payments["City Guard"] = 30
 	daily_payments["Dungeoneer"] = 30
 	daily_payments["Warden"] = 25
+	daily_payments["Vanguard"] = 15
 	daily_payments["Veteran"] = 30
 	daily_payments["Squire"] = 10
 	daily_payments["Seneschal"] = 40 //Manor-House

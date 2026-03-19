@@ -447,7 +447,7 @@
 
 /obj/item/contraption/lock_imprinter
 	name = "lock imprinter"
-	desc = "A useful contraption that facilitates a locksmiths job on alreay instaled locks."
+	desc = "A useful contraption that facilitates a locksmith's job on already installed locks."
 	icon_state = "imprinter"
 	on_icon = "imprinter_flick"
 	off_icon = "imprinter_off"

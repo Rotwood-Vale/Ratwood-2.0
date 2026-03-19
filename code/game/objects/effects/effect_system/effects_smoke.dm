@@ -30,7 +30,7 @@
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
-/obj/effect/particle_effect/smoke/Initialize()
+/obj/effect/particle_effect/smoke/Initialize(mapload)
 	. = ..()
 	create_reagents(500)
 	START_PROCESSING(SSobj, src)
@@ -256,8 +256,8 @@
 
 
 /obj/effect/particle_effect/smoke/healing_gas
-  color = "#da4011"
-  lifetime = 15
+	color = "#da4011"
+	lifetime = 15
 
 /obj/effect/particle_effect/smoke/healing_gas/smoke_mob(mob/living/carbon/M)
 	if(..())
@@ -379,7 +379,7 @@ Zizo Bane sleep powder
 	amount = 4
 	lifetime = 8
 	density = 0
-	opaque =  0 //whether the smoke can block the view when in enough amount
+	opaque = 0 //whether the smoke can block the view when in enough amount
 
 
 /////////////////////////////////////////////
@@ -514,7 +514,7 @@ Zizo Bane sleep powder
 	amount = 4
 	lifetime = 1
 	density = 0
-	opaque =  0 //whether the smoke can block the view when in enough amount
+	opaque = 0 //whether the smoke can block the view when in enough amount
 
 /obj/effect/particle_effect/smoke/necra_censer/New(loc, ...)
 	. = ..()

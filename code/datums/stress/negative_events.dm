@@ -130,6 +130,11 @@
 	stressadd = 2
 	desc = span_red("I'm panicking!")
 
+/datum/stressevent/bloodrain
+	timer = 1 MINUTES
+	stressadd = 4
+	desc = span_red("It's raining blood! I'm covered in it!")
+
 /datum/stressevent/felldown
 	timer = 1 MINUTES
 	stressadd = 1
@@ -197,11 +202,6 @@
 	timer = 1 MINUTES
 	stressadd = 10
 	desc = span_boldred("What have I done?")
-
-/datum/stressevent/blueb
-	timer = 1 MINUTES
-	stressadd = 2
-	desc = span_red("My loins ache!")
 
 /datum/stressevent/shunned_race
 	timer = 1 MINUTES
@@ -363,6 +363,15 @@
 	stressadd = 3
 	desc = span_red("Their face is unbearable!")
 	timer = 3 MINUTES
+
+/datum/stressevent/unseemly_made_love
+	stressadd = 3
+	desc = span_red("That ugly fiend... Touched me!")
+	timer = 30 MINUTES
+
+/datum/stressevent/unseemly_made_love/beautiful
+	desc = span_red("That ugly thing... RUINED me!")
+	timer = 45 MINUTES
 
 /datum/stressevent/leprosy
 	stressadd = 1

@@ -65,26 +65,36 @@
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T1)
 	if(H.mind)
-		var/weapons = list("Harp","Lute","Accordion","Guitar","Hurdy-Gurdy","Viola","Vocal Talisman","Flute", "Psyaltery")
+		var/weapons = list("Accordion","Bagpipe","Drum","Flute","Guitar","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
 		var/weapon_choice = input(H, "Choose your instrument.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Harp")
-				backr = /obj/item/rogue/instrument/harp
-			if("Lute")
-				backr = /obj/item/rogue/instrument/lute
 			if("Accordion")
 				backr = /obj/item/rogue/instrument/accord
+			if("Bagpipe")
+				backr = /obj/item/rogue/instrument/bagpipe
+			if("Drum")
+				backr = /obj/item/rogue/instrument/drum
+			if("Flute")
+				backr = /obj/item/rogue/instrument/flute
 			if("Guitar")
 				backr = /obj/item/rogue/instrument/guitar
+			if("Harp")
+				backr = /obj/item/rogue/instrument/harp
 			if("Hurdy-Gurdy")
 				backr = /obj/item/rogue/instrument/hurdygurdy
+			if("Jaw Harp")
+				backr = /obj/item/rogue/instrument/jawharp
+			if("Lute")
+				backr = /obj/item/rogue/instrument/lute
+			if("Psyaltery")
+				backr = /obj/item/rogue/instrument/psyaltery
+			if("Shamisen")
+				backr = /obj/item/rogue/instrument/shamisen
+			if("Trumpet")
+				backr = /obj/item/rogue/instrument/trumpet
 			if("Viola")
 				backr = /obj/item/rogue/instrument/viola
 			if("Vocal Talisman")
 				backr = /obj/item/rogue/instrument/vocals
-			if("Flute")
-				backr = /obj/item/rogue/instrument/flute
-			if("Psyaltery")
-				backr = /obj/item/rogue/instrument/psyaltery
 	H.merctype = 13

@@ -173,6 +173,8 @@ SUBSYSTEM_DEF(gamemode)
 	/// Calculated effective pop after weighing garrison & holy warriors at 2x
 	var/effective_pop = 0
 
+	var/storyteller_name = "Unknown"
+
 	/// Is storyteller secret or not
 	var/secret_storyteller = FALSE
 
@@ -735,6 +737,7 @@ SUBSYSTEM_DEF(gamemode)
 	var/datum/storyteller/storytypecasted = selected_storyteller
 	to_chat(world, span_notice("<b>Storyteller is [initial(storytypecasted.name)]!</b>"))
 	to_chat(world, span_notice("[initial(storytypecasted.vote_desc)]"))
+	storyteller_name = initial(storytypecasted.name)
 
 ///return a weighted list of all storytellers that are currently valid to roll, if return_types is set then we will return types instead of instances
 /datum/controller/subsystem/gamemode/proc/get_valid_storytellers(return_types = FALSE)
@@ -763,6 +766,9 @@ SUBSYSTEM_DEF(gamemode)
 	if(!secret_storyteller)
 		send_to_playing_players(span_notice("<b>Storyteller is [current_storyteller.name]!</b>"))
 		send_to_playing_players(span_notice("[current_storyteller.welcome_text]"))
+		storyteller_name = current_storyteller.name
+	else
+		storyteller_name = initial(storyteller_name)
 
 /// Panel containing information, variables and controls about the gamemode and scheduled event
 /datum/controller/subsystem/gamemode/proc/admin_panel(mob/user)
@@ -1151,48 +1157,48 @@ SUBSYSTEM_DEF(gamemode)
 
 	var/list/statistics_to_clear = list(
 		STATS_TOTAL_POPULATION,
-        STATS_PSYCROSS_USERS,
-        STATS_ALIVE_NOBLES,
-        STATS_ALIVE_GARRISON,
-        STATS_ALIVE_CLERGY,
-        STATS_ALIVE_TRADESMEN,
-        STATS_WEREVOLVES,
-        STATS_BANDITS,
-        STATS_VAMPIRES,
-        STATS_DEADITES_ALIVE,
-        STATS_CLINGY_PEOPLE,
-        STATS_ALCOHOLICS,
-        STATS_JUNKIES,
+		STATS_PSYCROSS_USERS,
+		STATS_ALIVE_NOBLES,
+		STATS_ALIVE_GARRISON,
+		STATS_ALIVE_CLERGY,
+		STATS_ALIVE_TRADESMEN,
+		STATS_WEREVOLVES,
+		STATS_BANDITS,
+		STATS_VAMPIRES,
+		STATS_DEADITES_ALIVE,
+		STATS_CLINGY_PEOPLE,
+		STATS_ALCOHOLICS,
+		STATS_JUNKIES,
 		STATS_KLEPTOMANIACS,
-        STATS_GREEDY_PEOPLE,
-        STATS_PLEASURES,
-        STATS_MALE_POPULATION,
-        STATS_FEMALE_POPULATION,
-        STATS_OTHER_GENDER,
-        STATS_ADULT_POPULATION,
-        STATS_MIDDLEAGED_POPULATION,
-        STATS_ELDERLY_POPULATION,
-        STATS_ALIVE_NORTHERN_HUMANS,
-        STATS_ALIVE_DWARVES,
-        STATS_ALIVE_DARK_ELVES,
-        STATS_ALIVE_WOOD_ELVES,
-        STATS_ALIVE_HALF_ELVES,
-        STATS_ALIVE_HALF_ORCS,
-        STATS_ALIVE_GOBLINS,
-        STATS_ALIVE_KOBOLDS,
-        STATS_ALIVE_LIZARDS,
-        STATS_ALIVE_AASIMAR,
-        STATS_ALIVE_TIEFLINGS,
-        STATS_ALIVE_HALFKIN,
-        STATS_ALIVE_WILDKIN,
-        STATS_ALIVE_CONSTRUCTS,
-        STATS_ALIVE_CRITTERKIN,
-        STATS_ALIVE_DRACON,
-        STATS_ALIVE_AXIAN,
-        STATS_ALIVE_TABAXI,
-        STATS_ALIVE_VULPS,
-        STATS_ALIVE_LUPIANS,
-        STATS_ALIVE_MOTHS,
+		STATS_GREEDY_PEOPLE,
+		STATS_PLEASURES,
+		STATS_MALE_POPULATION,
+		STATS_FEMALE_POPULATION,
+		STATS_OTHER_GENDER,
+		STATS_ADULT_POPULATION,
+		STATS_MIDDLEAGED_POPULATION,
+		STATS_ELDERLY_POPULATION,
+		STATS_ALIVE_NORTHERN_HUMANS,
+		STATS_ALIVE_DWARVES,
+		STATS_ALIVE_DARK_ELVES,
+		STATS_ALIVE_WOOD_ELVES,
+		STATS_ALIVE_HALF_ELVES,
+		STATS_ALIVE_HALF_ORCS,
+		STATS_ALIVE_GOBLINS,
+		STATS_ALIVE_KOBOLDS,
+		STATS_ALIVE_LIZARDS,
+		STATS_ALIVE_AASIMAR,
+		STATS_ALIVE_TIEFLINGS,
+		STATS_ALIVE_HALFKIN,
+		STATS_ALIVE_WILDKIN,
+		STATS_ALIVE_CONSTRUCTS,
+		STATS_ALIVE_CRITTERKIN,
+		STATS_ALIVE_DRACON,
+		STATS_ALIVE_AXIAN,
+		STATS_ALIVE_TABAXI,
+		STATS_ALIVE_VULPS,
+		STATS_ALIVE_LUPIANS,
+		STATS_ALIVE_MOTHS,
 		STATS_ALIVE_HARPIES,
 	)
 

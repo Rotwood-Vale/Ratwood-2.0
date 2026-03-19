@@ -45,7 +45,7 @@
 
 /obj/effect/proc_holder/spell/invoked/transact
 	name = "Transact"
-	desc = "Sacrifice an item in your hand, applying a heal over time to yourself with strenght depending on its value."
+	desc = "Sacrifice an item in your hand, applying a heal over time to yourself with strength depending on its value."
 	overlay_state = "transact"
 	releasedrain = 30
 	chargedrain = 0
@@ -129,7 +129,7 @@
 	return FALSE
 
 
- // buff
+// buff
 /datum/status_effect/buff/equalizebuff
 	id = "equalize"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/equalized
@@ -152,7 +152,7 @@
 	to_chat(owner, "<font color='yellow'>My link wears off, their stolen fire returns to them</font>")
 
 
- // debuff
+// debuff
 /datum/status_effect/debuff/equalizedebuff
 	id = "equalize"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/equalized
@@ -296,4 +296,3 @@
 
 			target.death()
 			return
-

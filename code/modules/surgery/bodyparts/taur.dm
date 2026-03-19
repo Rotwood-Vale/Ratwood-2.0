@@ -37,14 +37,19 @@
 	// Specifically: update_inv_cloak, update_inv_shirt, update_inv_armor, and update_inv_pants.
 	var/icon/clip_mask_icon = 'icons/mob/taurs.dmi'
 	var/clip_mask_state = "taur_clip_mask_def"
+	// Separate clip mask for legs only (shoes and pants) - used for digitigrade legs that don't need body clipping
+	var/clip_mask_legs_state = null
 	// Instantiated at runtime for speed
 	var/tmp/icon/clip_mask
+	var/tmp/icon/clip_mask_legs
 
 /obj/item/bodypart/taur/New()
 	. = ..()
 
 	if(clip_mask_state)
 		clip_mask = icon(icon = (clip_mask_icon || icon), icon_state = clip_mask_state)
+	if(clip_mask_legs_state)
+		clip_mask_legs = icon(icon = (clip_mask_icon || icon), icon_state = clip_mask_legs_state)
 
 /obj/item/bodypart/taur/get_limb_icon(dropped, hideaux = FALSE)
 	// List of overlays
@@ -85,7 +90,7 @@
 	. += tertiary
 
 /*********************************/
-/* TAUR TYPES                    */
+/* TAUR TYPES                   */
 /*********************************/
 GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
@@ -221,6 +226,17 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	has_taur_color = TRUE
 
+/obj/item/bodypart/taur/goat
+	name = "Goat Legs"
+
+	offset_x = -16
+	taur_icon_state = "goat_s"
+	taur_markings_state = "goat_markings"
+	clip_mask_state = null
+	clip_mask_legs_state = "clip_mask_goat"
+
+	has_taur_color = TRUE
+
 /obj/item/bodypart/taur/redpanda
 	name = "Red Panda Body"
 
@@ -294,6 +310,8 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "spider_s"
+	taur_markings_state = "spider_markings"
+	taur_tertiary_state = "spider_markings_2"
 
 	has_taur_color = TRUE
 
@@ -331,5 +349,15 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	offset_x = -16
 	taur_icon_state = "wasp_s"
 	taur_markings_state = "wasp_markings"
+
+	has_taur_color = TRUE
+
+/obj/item/bodypart/taur/insect
+	name = "Insect Body"
+
+	offset_x = -16
+	taur_icon_state = "insect_s"
+	taur_markings_state = "insect_markings"
+	taur_tertiary_state = "insect_markings_2"
 
 	has_taur_color = TRUE

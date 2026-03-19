@@ -33,7 +33,6 @@
 	var/obj/item/udder/udder = null
 	footstep_type = FOOTSTEP_MOB_SHOE
 	var/milkies = FALSE
-	stop_automated_movement_when_pulled = 0
 	tame_chance = 0
 	retreat_distance = 10
 	minimum_distance = 10
@@ -173,7 +172,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/Initialize(mapload)
 	. = ..()
 	if(milkies)
 		udder = new()

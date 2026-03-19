@@ -11,7 +11,7 @@
 	obj_flags = null
 	w_class = WEIGHT_CLASS_TINY
 	var/cooked_type = /obj/item/natural/stone // What does this item turn into when glazed in a kiln?
-											  // A regular clay lump just becomes an ordinary stone.
+					// A regular clay lump just becomes an ordinary stone.
 					// ...Possibly used to make bricks in a separate PR? Interesting way to integrate
 					// the mason's construction work with the new Potter profession. - SunriseOYH
 
@@ -25,14 +25,14 @@
 /obj/item/natural/clay/glassbatch
 	name = "glass batch"
 	icon_state = "glassBatch"
-	desc = "A mixture of finely ground silica, flux and a stablizer. It glistens against the light, and could be turned into precious glass by a competent potter."
+	desc = "A mixture of finely ground silica, flux and a stabilizer. It glistens against the light, and could be turned into precious glass by a competent potter."
 	smeltresult = /obj/item/natural/glass 	// Smelted in a furnace, like a ore.
 	grind_results = list(/datum/reagent/iron = 15)
 	sellprice = 5
 	cooktime = 0
 	burntime = 0
 
-/obj/item/natural/clay/Initialize()
+/obj/item/natural/clay/Initialize(mapload)
 	if(cooked_type)
 		cooktime = 30 SECONDS
 	..() // The ..() refers to calling the parent class's (obj/item/natural) Initialize() proc.

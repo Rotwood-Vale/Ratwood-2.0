@@ -931,7 +931,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/danger/anomaly
 	name = "him."
 
-/obj/effect/hallucination/danger/anomaly/Initialize()
+/obj/effect/hallucination/danger/anomaly/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

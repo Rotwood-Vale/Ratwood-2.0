@@ -80,55 +80,15 @@
 
 
 /obj/item/rogueweapon/stoneaxe/getonmobprop(tag)
+	. = ..()
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list("shrink" = 0.6,
-"sx" = -15,
-"sy" = -12,
-"nx" = 9,
-"ny" = -11,
-"wx" = -11,
-"wy" = -11,
-"ex" = 1,
-"ey" = -12,
-"northabove" = 0,
-"southabove" = 1,
-"eastabove" = 1,
-"westabove" = 0,
-"nturn" = 90,
-"sturn" = -90,
-"wturn" = -90,
-"eturn" = 90,
-"nflip" = 0,
-"sflip" = 8,
-"wflip" = 8,
-"eflip" = 0)
+				return list("shrink" = 0.6,"sx" = -11,"sy" = -8,"nx" = 12,"ny" = -8,"wx" = -5,"wy" = -8,"ex" = 6,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("wielded")
-				return list("shrink" = 0.6,
-"sx" = -15,
-"sy" = -1,
-"nx" = 10,
-"ny" = 0,
-"wx" = -13,
-"wy" = -1,
-"ex" = 2,
-"ey" = -1,
-"northabove" = 0,
-"southabove" = 1,
-"eastabove" = 1,
-"westabove" = 0,
-"nturn" = 0,
-"sturn" = 0,
-"wturn" = 0,
-"eturn" = 0,
-"nflip" = 0,
-"sflip" = 8,
-"wflip" = 8,
-"eflip" = 0)
+				return list("shrink" = 0.7,"sx" = 5,"sy" = -4,"nx" = -5,"ny" = -4,"wx" = -5,"wy" = -3,"ex" = 7,"ey" = -4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -45,"sturn" = 45,"wturn" = -45,"eturn" = 45,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
-				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
-	return ..()
+				return list("shrink" = 0.5,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 // Battle Axe
 /obj/item/rogueweapon/stoneaxe/battle
@@ -145,17 +105,6 @@
 	gripped_intents = list(/datum/intent/axe/cut/battle ,/datum/intent/axe/chop/battle, /datum/intent/axe/bash, /datum/intent/sword/peel)
 	minstr = 9
 	wdefense = 4
-
-/obj/item/rogueweapon/stoneaxe/battle/getonmobprop(tag)
-	if(tag)
-		switch(tag)
-			if("gen")
-				return list("shrink" = 0.5,"sx" = -9,"sy" = -8,"nx" = 9,"ny" = -7,"wx" = -7,"wy" = -8,"ex" = 3,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
-			if("wielded")
-				return list("shrink" = 0.6,"sx" = 3,"sy" = -7,"nx" = -6,"ny" = -3,"wx" = 3,"wy" = -4,"ex" = 4,"ey" = -3,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -44,"sturn" = 45,"wturn" = 47,"eturn" = 33,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0)
-			if("onbelt")
-				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
-	return ..()
 
 /obj/item/rogueweapon/stoneaxe/oath
 	force = 30
@@ -292,7 +241,7 @@
 	smeltresult = /obj/item/ingot/copper
 
 /obj/item/rogueweapon/stoneaxe/handaxe
-	force = 19
+	force = 18
 	possible_item_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop, /datum/intent/sword/peel)
 	name = "hatchet"
 	desc = "An iron hand axe."
@@ -302,6 +251,10 @@
 	smeltresult = /obj/item/ingot/iron
 	gripped_intents = null
 	wdefense = 2
+	wlength = WLENGTH_SHORT
+	w_class = WEIGHT_CLASS_NORMAL
+	grid_width = 32
+	grid_height = 96
 
 /obj/item/rogueweapon/stoneaxe/woodcut/bronze
 	name = "bronze axe"
@@ -389,17 +342,6 @@
 	pickup_sound = 'sound/foley/equip/rummaging-03.ogg'
 	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
 	resistance_flags = FLAMMABLE
-
-/obj/item/rogueweapon/stoneaxe/boneaxe/getonmobprop(tag)
-	if(tag)
-		switch(tag)
-			if("gen")
-				return list("shrink" = 0.5,"sx" = -9,"sy" = -8,"nx" = 9,"ny" = -7,"wx" = -7,"wy" = -8,"ex" = 3,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
-			if("wielded")
-				return list("shrink" = 0.6,"sx" = 3,"sy" = -7,"nx" = -6,"ny" = -3,"wx" = 3,"wy" = -4,"ex" = 4,"ey" = -3,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -44,"sturn" = 45,"wturn" = 47,"eturn" = 33,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0)
-			if("onbelt")
-				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
-	return ..()
 
 /obj/item/rogueweapon/stoneaxe/woodcut/silver
 	name = "silver war axe"
@@ -511,9 +453,12 @@
 			if("gen")
 				return list("shrink" = 0.6,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("wielded")
-				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 5,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+			if("altgrip") // for poleaxe alt grip
+				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 5,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 187,"sturn" = -7,"wturn" = 196,"eturn" = -22,"nflip" = 0,"sflip" = 2,"wflip" = 0,"eflip" = 2)
+
 
 /obj/item/rogueweapon/greataxe/steel
 	force = 15
@@ -540,17 +485,33 @@
 	walking_stick = TRUE
 	vorpal = TRUE // snicker snack this shit cuts heads off effortlessly (DO NOT PUT THIS ON ANYTHING ELSE UNLESS IT'S SUPER FUCKING RARE!!!)
 
+/datum/intent/spear/bash/poleaxe
+	name = "poleaxe bash"
+	damfactor = 0.8 // worse than dedicated mace
+	reach = 2
+	blunt_chipping = TRUE
+	blunt_chip_strength = BLUNT_CHIP_STRONG
+
+/datum/intent/mace/smash/poleaxe
+	name = "poleaxe smash"
+	damfactor = 0.8 // worse than dedicated mace
+	reach = 2
+	clickcd = CLICK_CD_HEAVY // longer because of range
+	blunt_chip_strength = BLUNT_CHIP_STRONG // eagle's beak uses BLUNT_CHIP_ABSURD instead
+
 /obj/item/rogueweapon/greataxe/silver
 	force = 15
 	force_wielded = 25
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike) //When possible, add the longsword's 'alternate grip' mechanic to let people flip this around into a Mace-scaling weapon with swapped damage.
-	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/mace/rangedthrust, /datum/intent/mace/strike) //Axe-equivalent to the Godendag or Grand Mace.
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike)
+	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/mace/rangedthrust)
+	alt_intents = list(/datum/intent/spear/bash/poleaxe, /datum/intent/mace/smash/poleaxe, /datum/intent/mace/rangedthrust)
 	name = "silver poleaxe"
 	desc = "A poleaxe, fitted with a reinforced shaft and a beaked axhead of pure silver. It may not stop the darkness; but it will halt its march, long enough, to shepherd away the defenseless. </br>'O'er the Horizon, the stars and spirals I see; and below it, the horrors that've been felled by me. Through the darkness, I see my home and its beautiful light; and it will continue to shimmer, as long as I fight. Forever I stand, forever I'll hold - 'til the Horizon grows still, and my spirit trails home..'"
 	icon_state = "silverpolearm"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 12
 	max_blade_int = 350
+	associated_skill = /datum/skill/combat/polearms // yes it is located in the axe folder and uses axe subtypes it is a polearm
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
@@ -566,16 +527,16 @@
 	)
 
 /obj/item/rogueweapon/greataxe/psy
-	force = 15
-	force_wielded = 25
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike) //When possible, add the longsword's 'alternate grip' mechanic to let people flip this around into a Mace-scaling weapon with swapped damage.
-	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/mace/rangedthrust, /datum/intent/mace/strike) //Axe-equivalent to the Godendag or Grand Mace.
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike)
+	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/mace/rangedthrust)
+	alt_intents = list(/datum/intent/spear/bash/poleaxe, /datum/intent/mace/smash/poleaxe, /datum/intent/mace/rangedthrust)
 	name = "psydonic poleaxe"
 	desc = "A poleaxe, fitted with a reinforced shaft and a beaked axhead of alloyed silver. As the fragility of swords've become more apparent, the Psydonic Orders - following the disastrous Massacre of Blastenghyll - have shifted their focus towards arming their paladins with longer-lasting greatweapons."
 	icon_state = "silverpolearm"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 12
 	max_blade_int = 350
+	associated_skill = /datum/skill/combat/polearms // yes it is located in the axe folder and uses axe subtypes it is a polearm
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
@@ -622,7 +583,7 @@
 	max_blade_int = 250
 	icon = 'icons/roguetown/weapons/64.dmi'
 
-/obj/item/rogueweapon/greataxe/steel/doublehead/graggar/Initialize()
+/obj/item/rogueweapon/greataxe/steel/doublehead/graggar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "AXE", "RENDERED ASUNDER")
 

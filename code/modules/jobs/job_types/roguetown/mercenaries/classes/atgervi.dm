@@ -1,6 +1,6 @@
 /datum/advclass/mercenary/atgervi
 	name = "Atgervi"
-	tutorial = "You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Raneshen Empire will be forever remembered by historians."
+	tutorial = "You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Zybantine Empire will be forever remembered by historians."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/atgervi
@@ -39,8 +39,9 @@
 
 /datum/outfit/job/roguetown/mercenary/atgervi/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Raneshen Empire will be forever remembered by historians."))
-	H.mind.current.faction += "[H.name]_faction"
+	to_chat(H, span_warning("You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Zybantine Empire will be forever remembered by historians."))
+	if(H.mind?.current)
+		H.mind.current.faction += "[H.name]_faction"
 	head = /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi
 	gloves = /obj/item/clothing/gloves/roguetown/angle/atgervi
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/atgervi
@@ -98,7 +99,8 @@
 	..()
 	H.set_blindness(0)
 	to_chat(H, span_warning("You are a Shaman of the Fjall, The Northern Empty. Savage combatants who commune with the Ecclesical Beast gods through ritualistic violence, rather than idle prayer."))
-	H.mind.current.faction += "[H.name]_faction"
+	if(H.mind?.current)
+		H.mind.current.faction += "[H.name]_faction"
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 
 	head = /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood

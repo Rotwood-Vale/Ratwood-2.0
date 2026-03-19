@@ -9,9 +9,9 @@ on:
       - main
 
 env:
-  BYOND_MAJOR: 515
-  BYOND_MINOR: 1636
-  SPACEMAN_DMM_VERSION: suite-1.9
+  BYOND_MAJOR: 516
+  BYOND_MINOR: 1673
+  SPACEMAN_DMM_VERSION: suite-1.11
 
 jobs:
   run-linters:
@@ -56,6 +56,14 @@ jobs:
         if: always()
         with:
           outputFile: output-annotations.txt
+
+      - name: Give Linters A Go
+        id: linter-setup
+        run: ":"
+      - name: Run Grep Checks
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: bash tools/ci/check_grep.sh
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -70,8 +78,9 @@ jobs:
       
       - name: Install BYOND
         run: |
+          sudo dpkg --add-architecture i386
           sudo apt-get update -qq
-          sudo apt-get install -y make gcc unzip
+          sudo apt-get install -y make gcc unzip libcurl4:i386
           bash tools/ci/install_byond.sh
 
       - name: Compile BYOND project
