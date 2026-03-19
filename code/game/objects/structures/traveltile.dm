@@ -216,7 +216,7 @@
 	name = "hidden ladder"
 	desc = "A hidden route known only to the Freeholders."
 	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "ladder11" 
+	icon_state = "ladder11"
 	density = FALSE
 	anchored = TRUE
 	layer = ABOVE_OPEN_TURF_LAYER
@@ -226,19 +226,16 @@
 	var/portal_goesto = null
 	var/travel_delay = 10 SECONDS
 
-/obj/structure/fluff/freehold_ladder_portal/Initialize(mapload)
-	. = ..()
-
 /obj/structure/fluff/freehold_ladder_portal/proc/find_destination()
 	if(!portal_goesto)
 		return null
 
-	for(var/obj/structure/fluff/freehold_ladder_portal/P in world)
-		if(P == src)
+	for(var/obj/structure/fluff/freehold_ladder_portal/destination_portal in world)
+		if(destination_portal == src)
 			continue
-		if(P.portal_id != portal_goesto)
+		if(destination_portal.portal_id != portal_goesto)
 			continue
-		return P
+		return destination_portal
 
 	return null
 
@@ -246,36 +243,36 @@
 	. = ..()
 
 	if(!isliving(user))
-		return .
+		return
 
-	var/mob/living/L = user
+	var/mob/living/living_user = user
 
-	if(!HAS_TRAIT(L, TRAIT_FREEHOLDER))
-		to_chat(L, span_warning("I do not know the way through this hidden passage."))
-		return .
+	if(!HAS_TRAIT(living_user, TRAIT_FREEHOLDER))
+		to_chat(living_user, span_warning("I do not know the way through this hidden passage."))
+		return
 
 	var/obj/structure/fluff/freehold_ladder_portal/target_portal = find_destination()
 	if(!target_portal)
-		to_chat(L, span_warning("This ladder leads nowhere."))
-		return .
+		to_chat(living_user, span_warning("This ladder leads nowhere."))
+		return
 
-	to_chat(L, span_notice("I begin moving through the hidden passage..."))
+	to_chat(living_user, span_notice("I begin moving through the hidden passage..."))
 
-	if(!do_after(L, travel_delay, needhand = FALSE, target = src))
-		return .
+	if(!do_after(living_user, travel_delay, needhand = FALSE, target = src))
+		return
 
-	if(QDELETED(src) || QDELETED(target_portal) || QDELETED(L))
-		return .
+	if(QDELETED(src) || QDELETED(target_portal) || QDELETED(living_user))
+		return
 
-	if(!HAS_TRAIT(L, TRAIT_FREEHOLDER))
-		to_chat(L, span_warning("I lose my way."))
-		return .
+	if(!HAS_TRAIT(living_user, TRAIT_FREEHOLDER))
+		to_chat(living_user, span_warning("I lose my way."))
+		return
 
 	playsound(src, 'sound/misc/portal_enter.ogg', 100, TRUE)
-	L.forceMove(get_turf(target_portal))
+	living_user.forceMove(get_turf(target_portal))
 	playsound(target_portal, 'sound/misc/portal_enter.ogg', 100, TRUE)
-	to_chat(L, span_notice("I arrive at the other end of the passage."))
-	return .
+	to_chat(living_user, span_notice("I arrive at the other end of the passage."))
+	return
 
 /obj/structure/fluff/freehold_ladder_portal/one
 	name = "hidden ladder"
