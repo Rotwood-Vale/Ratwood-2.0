@@ -421,3 +421,13 @@
 	timer = 1 MINUTES
 	stressadd = -2
 	desc = list(span_blue("A covered stroll in the rain is quite pleasant."))
+
+/datum/stressevent/bloodrevel
+	timer = 1 MINUTES
+	stressadd = 4
+	desc = span_red("It's raining blood! Blessed be my Patron!")
+
+/datum/stressevent/fireflies
+	timer = 10 MINUTES
+	stressadd = -5
+	desc = span_boldgreen("What wonderious fireflies...")

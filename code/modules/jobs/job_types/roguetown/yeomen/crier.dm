@@ -81,7 +81,8 @@
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	id = /obj/item/scomstone
 	backpack_contents = list(
-		/obj/item/recipe_book/alchemy
+		/obj/item/recipe_book/alchemy,
+		/obj/item/barometer,
 	)
 	if (H && H.mind)
 		H.mind.adjust_spellpoints(6)

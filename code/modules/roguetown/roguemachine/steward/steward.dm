@@ -38,8 +38,11 @@
 /obj/structure/roguemachine/steward/proc/setup_default_payments()
 	daily_payments["Sergeant"] = 40 //Garrison
 	daily_payments["Man at Arms"] = 30
+	daily_payments["Rookie"] = 20//paid more than squires because they don't get to live in a castle with maids cooking them dinner
+	daily_payments["City Guard"] = 30
 	daily_payments["Dungeoneer"] = 30
 	daily_payments["Warden"] = 25
+	daily_payments["Vanguard"] = 15
 	daily_payments["Veteran"] = 30
 	daily_payments["Squire"] = 10
 	daily_payments["Seneschal"] = 40 //Manor-House

@@ -15,7 +15,7 @@
 	// This shouldn't be modified directly, use the helper procs.
 	var/list/baseturfs = /turf/open/transparent/openspace
 
-	var/temperature = T20C
+	var/temperature = 300
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 

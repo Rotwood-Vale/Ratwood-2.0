@@ -11,6 +11,10 @@
 	blocksound = SOFTHIT
 	max_integrity = 200
 	anvilrepair = /datum/skill/craft/carpentry
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = HAND_LEFT | HAND_RIGHT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/gloves/roguetown/bandages
 	name = "bandages"
@@ -33,6 +37,10 @@
 	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/cloth
 	unarmed_bonus = 1.125 //Sublight armor with minimal durability, but a greater unarmed damage multiplier. More damage than leather, less than maille. Loadout-selectable.
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = HAND_LEFT | HAND_RIGHT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/gloves/roguetown/bandages/weighted
 	name = "weighted bandages"
@@ -42,4 +50,4 @@
 /obj/item/clothing/gloves/roguetown/bandages/pugilist
 	name = "pugilistic bandages"
 	desc = "Thickly-woven bandages that've been wrapped around the hands, fitted with alloyed knuckleweights. It soaks up the sweat from your palm, strengthens your fists, and protects your knuckles from dislodged teeth."
-	unarmed_bonus = 1.3 //Non-craftable. Restricted to Monks who've specialized in unarmed combat, and nothing else. 
+	unarmed_bonus = 1.3 //Non-craftable. Restricted to Monks who've specialized in unarmed combat, and nothing else.

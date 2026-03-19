@@ -930,7 +930,7 @@
 	force = 14
 	max_integrity = 150
 	name = "steel scissors"
-	desc = "Scissors made of solid steel that may be used to salvage usable materials from clothing, more durable and a tad more deadly than their iron conterpart."
+	desc = "Scissors made of solid steel that may be used to salvage usable materials from clothing, more durable and a tad more deadly than their iron counterpart."
 	icon_state = "sscissors"
 	smeltresult = /obj/item/ingot/steel
 

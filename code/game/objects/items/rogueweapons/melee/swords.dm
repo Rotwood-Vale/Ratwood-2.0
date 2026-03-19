@@ -564,7 +564,7 @@
 
 /obj/item/rogueweapon/sword/long/zizo
 	name = "avantyne longsword"
-	desc = "A wicked, unconventional, and otherwordly blade that was created by no swordsmith - a manifestation of hate for the state of this world that follows no design principles but spite and anger."
+	desc = "A wicked, unconventional, and otherworldly blade that was created by no swordsmith - a manifestation of hate for the state of this world that follows no design principles but spite and anger."
 	icon_state = "zizosword"
 	sheathe_icon = "zizosword"
 	force = 30
@@ -1164,7 +1164,7 @@
 
 /obj/item/rogueweapon/sword/sabre/shamshir
 	name = "shamshir"
-	desc = "A curved one-handed longsword. This type of scimitar is the quintessential armament of Ranesheni horsemen, its name derived from Sama'glos for \"Tiger's claw\"."
+	desc = "A curved one-handed longsword. This type of scimitar is the quintessential armament of Zybantine horsemen, its name derived from Sama'glos for \"Tiger's claw\"."
 	force = 24
 	wdefense = 6	//Has chop mode, so slightly less defense. Slightly.
 	icon_state = "tabi"
@@ -2081,7 +2081,7 @@
 	name = "steel shotel"
 	icon_state = "shotel_steel"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	desc = "A long curved blade of Ranesheni Design."
+	desc = "A long curved blade of Zybantine Design."
 	possible_item_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/long) //Shotels get 2 tile reach.
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/long)
 	swingsound = BLADEWOOSH_LARGE

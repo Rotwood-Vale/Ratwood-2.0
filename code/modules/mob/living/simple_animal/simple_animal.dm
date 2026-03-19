@@ -327,12 +327,25 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
 	if(!stop_automated_movement && wander && !doing)
-		if(ssaddle && has_buckled_mobs())
+		if(ssaddle)
 			return 0
 		if(binded)
 			return FALSE
+		if(AIStatus == AI_OFF || AIStatus == AI_IDLE)
+			return 0
+		if(pulledby && stop_automated_movement_when_pulled)
+			return 0
 		if((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
-			turns_since_move++
+			if(turns_since_move < turns_per_move)
+				turns_since_move++
+				return 0
+			if(prob(50))
+				var/turf/T = get_step(loc, pick(GLOB.cardinals))
+				if(T && T.can_traverse_safely(src)) // Don't wander into lava or open space unless we're immune to it/can't fall.
+					step_towards(src, T, cached_multiplicative_slowdown)
+			else
+				setDir(turn(dir, pick(90, -90)))
+			turns_since_move = 0
 			return 1
 
 /mob/living/simple_animal/proc/handle_automated_speech(override)
@@ -924,8 +937,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			toggle_ai(AI_ON)
 			return TRUE
 
-	toggle_ai(AI_OFF)
-	return FALSE
+	toggle_ai(AI_IDLE)
+	return TRUE
 
 /mob/living/simple_animal/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

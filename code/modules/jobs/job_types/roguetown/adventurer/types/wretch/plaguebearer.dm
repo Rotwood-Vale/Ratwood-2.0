@@ -6,7 +6,7 @@
 	cmode_music = 'sound/music/combat_physician.ogg'
 	class_select_category = CLASS_CAT_TRADER
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list( TRAIT_CICERONE, TRAIT_NOSTINK, TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_CICERONE, TRAIT_NOSTINK, TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
 	maximum_possible_slots = 1 //They spawn with killer's ice lol I'm limiting this shit 
 	subclass_stats = list(
 		STATKEY_INT = 4,
@@ -24,9 +24,9 @@
 		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN, //Build your gooncave 
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT, //Disgraced medicine man. 
+		/datum/skill/misc/medicine = SKILL_LEVEL_LEGENDARY, //Disgraced medicine man. 
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_MASTER, // This is literally their whole thing
+		/datum/skill/craft/alchemy = SKILL_LEVEL_LEGENDARY, // This is literally their whole thing
 		/datum/skill/labor/farming = SKILL_LEVEL_JOURNEYMAN, // Farm ingredients so you have something to do that isn't grinding skills
 	)
 

@@ -642,6 +642,21 @@
 					hud_used.energy.icon_state = "energy20"
 				else if(energy > 0)
 					hud_used.energy.icon_state = "energy10"
+		if(hud_used.temperature)
+			if(stat != DEAD)
+				. = 1
+				if(bodytemperature >= BODYTEMP_NORMAL_MIN && bodytemperature <= BODYTEMP_NORMAL_MAX)
+					hud_used.temperature.icon_state = "tempnormal"
+				else if(bodytemperature < BODYTEMP_NORMAL_MIN && bodytemperature >= BODYTEMP_COLD_LEVEL_ONE_MAX)
+					hud_used.temperature.icon_state = "tempcold"
+				else if(bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX)
+					hud_used.temperature.icon_state = "tempverycold"
+				else if(bodytemperature >= BODYTEMP_NORMAL_MAX && bodytemperature <= BODYTEMP_HEAT_LEVEL_ONE_MAX)
+					hud_used.temperature.icon_state = "temphot"
+				else if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
+					hud_used.temperature.icon_state = "tempveryhot"
+		if(hud_used.zone_select)
+			hud_used.zone_select.update_icon()
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	dna?.species.spec_fully_heal(src)
@@ -1056,6 +1071,129 @@
 	if(!(mobility_flags & MOBILITY_CANSTAND) && mouth?.spitoutmouth)
 		visible_message(span_warning("[src] spits out [mouth]."))
 		dropItemToGround(mouth, silent = FALSE)
+
+/mob/living/carbon/human/proc/cold_warn()
+	if(src.bodytemperature <= BODYTEMP_COLD_LEVEL_ONE_MAX)
+		to_chat(src, span_danger("I feel so cold and numb, I can't stop shivering."))
+	else
+		to_chat(src, span_warning("Everything is cold."))
+	return
+/mob/living/carbon/human/proc/heat_warn()
+	if(src.bodytemperature >= BODYTEMP_HEAT_LEVEL_ONE_MAX)
+		to_chat(src, span_danger("My lips feel cracked and dry, and it is unbearably hot."))
+	else
+		to_chat(src, span_warning("Sweat drips down my brow."))
+	return
+
+/mob/living/carbon/human/proc/apply_hypothermia()
+	if(bodytemperature >= BODYTEMP_COLD_LEVEL_ONE_MAX)
+		return
+	src.hypothermia_timer_id = null
+	var/list/zones = list(
+		BODY_ZONE_HEAD,
+		BODY_ZONE_CHEST,
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_LEG,
+		BODY_ZONE_L_LEG
+	)
+
+	var/list/valid = list()
+
+	for(var/zone in zones)
+		var/obj/item/bodypart/BP = get_bodypart(zone)
+		if(!BP)
+			continue
+
+		var/has_hypo = FALSE
+		for(var/datum/wound/W in BP.wounds)
+			if(istype(W, /datum/wound/hypothermia) || istype(W, /datum/wound/frostbite))
+				has_hypo = TRUE
+
+		if(!has_hypo)
+			valid += zone
+
+	if(!length(valid))
+		return
+
+	var/def_zone = pick(valid)
+	var/obj/item/bodypart/BP = get_bodypart(def_zone)
+
+	if(BP)
+		to_chat(src, span_warning("I feel painfully cold in my [BP]..."))
+		BP.add_wound(/datum/wound/hypothermia)
+
+
+/mob/living/carbon/human/proc/apply_heatexhaust()
+	var/mob/living/carbon/human/H = src
+	if(H.bodytemperature <= BODYTEMP_HEAT_LEVEL_ONE_MAX)	//if not hot enough after timer, kill
+		return
+	H.heatstroke_timer_id = null
+	var/def_zone = BODY_ZONE_HEAD
+	var/obj/item/bodypart/BP = H.get_bodypart(def_zone)
+	for(var/datum/wound/W in BP.wounds)
+		if(istype(W, /datum/wound/heatexhaustion)||istype(W, /datum/wound/heatstroke))
+			return
+	if(BP)
+		to_chat(H, span_userdanger("My head is spinning and I feel terrible!"))
+		BP.add_wound(/datum/wound/heatexhaustion)
+		BP.update_disabled()
+
+/mob/living/carbon/human/proc/relieve_heatstroke_from_cold()
+	var/found = FALSE
+	clear_fullscreen("heatstroke")
+	for(var/obj/item/bodypart/BP in bodyparts)
+		if(!length(BP.wounds))
+			continue
+
+		for(var/datum/wound/W in BP.wounds)
+			if(istype(W, /datum/wound/heatstroke))
+				W.remove_from_bodypart()
+				found = TRUE
+
+	if(found)
+		visible_message(
+			span_notice("[src]'s breathing steadies as the heat leaves their body."),
+			span_notice("The cold helps draw the heat out of your body.")
+		)
+
+/mob/living/carbon/human/proc/apply_weather_temperature(base_delta, exposure_temp = null)
+
+	if(!base_delta)
+		return 0
+
+	var/current_temp = bodytemperature
+	var/new_temp = current_temp + base_delta
+
+	// If caller didn't supply exposure temp, assume resulting temp
+	if(isnull(exposure_temp))
+		exposure_temp = new_temp
+
+	var/protection = 0
+
+	if(base_delta > 0)
+		// Only apply protection if:
+		// Normal temperature to overheating
+		if(current_temp >= BODYTEMP_NORMAL_MIN || new_temp > BODYTEMP_NORMAL_MIN)
+			protection = get_heat_protection(exposure_temp)
+
+	else if(base_delta < 0)
+		// Only apply protection if:
+		// Normal temperature to cold
+		if(current_temp <= BODYTEMP_NORMAL_MAX || new_temp < BODYTEMP_NORMAL_MAX)
+			protection = get_cold_protection(exposure_temp)
+
+	// ---------------------------
+	// APPLY PROTECTION SCALING
+	// ---------------------------
+	var/final_delta = base_delta
+	var/three_quarter_delta = (base_delta * 0.75)
+	if(protection > 0)
+		(final_delta -= (three_quarter_delta * protection))
+
+	adjust_bodytemperature(final_delta)
+
+	return final_delta
 
 /*/mob/living/carbon/human/proc/update_heretic_commune()
 	if(HAS_TRAIT(src, TRAIT_COMMIE) || HAS_TRAIT(src, TRAIT_CABAL) || HAS_TRAIT(src, TRAIT_HORDE) || HAS_TRAIT(src, TRAIT_DEPRAVED))

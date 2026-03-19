@@ -15,6 +15,10 @@
 	sewrepair = TRUE
 	unarmed_bonus = 1.1
 	color = "#66584c"
+	cold_protection = HAND_LEFT | HAND_RIGHT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/gloves/roguetown/leather/black
 	color = CLOTHING_BLACK
@@ -37,6 +41,10 @@
 	desc = "Cloth gloves to absorb palm sweat while leaving the fingers free for fine manipulation."
 	icon_state = "shadowgloves"
 	allowed_race = NON_DWARVEN_RACE_TYPES
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = HAND_LEFT | HAND_RIGHT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves/elflock
 	name = "fingerless gloves"
@@ -79,6 +87,10 @@
 	anvilrepair = null
 	sewrepair = TRUE
 	allowed_race = NON_DWARVEN_RACE_TYPES
+	cold_protection = HAND_LEFT | HAND_RIGHT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/gloves/roguetown/otavan/inqgloves
 	name = "inquisitorial leather gloves"

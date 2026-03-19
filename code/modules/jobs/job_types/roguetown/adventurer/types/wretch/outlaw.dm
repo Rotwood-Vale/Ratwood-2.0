@@ -15,7 +15,7 @@
 		STATKEY_PER = 1
 	)
 	subclass_skills = list(
-		/datum/skill/misc/tracking = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
@@ -30,7 +30,7 @@
 		/datum/skill/misc/sneaking = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/stealing = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/traps = SKILL_LEVEL_MASTER,
+		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,		//why did these guys not even have SOME crafting experience?
 	)
 

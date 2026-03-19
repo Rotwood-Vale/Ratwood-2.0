@@ -127,7 +127,6 @@
 	gender = MALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	emote_see = list("eyes the surroundings.", "flicks its ears.")
-	stop_automated_movement_when_pulled = TRUE
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
