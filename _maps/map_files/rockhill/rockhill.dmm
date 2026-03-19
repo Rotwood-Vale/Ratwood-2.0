@@ -11366,6 +11366,7 @@
 /obj/structure/stairs{
 	dir = 8
 	},
+/obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/freehold)
 "cSf" = (
@@ -31477,6 +31478,7 @@
 /obj/structure/stairs{
 	dir = 4
 	},
+/obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/freehold)
 "hUo" = (
@@ -60747,6 +60749,7 @@
 	name = "Will-o'-the-wisp";
 	pixel_x = 0
 	},
+/obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/shelter/freehold)
 "pzV" = (
@@ -65292,6 +65295,14 @@
 	icon_state = "stonewindow"
 	},
 /area/rogue/indoors/town/garrison)
+"qGc" = (
+/obj/machinery/light/rogue/candle/blue{
+	pixel_x = -32;
+	pixel_y = 0;
+	status = 1
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/indoors/shelter/freehold)
 "qGj" = (
 /obj/structure/chair/stool/rogue{
 	pixel_x = 14;
@@ -98384,16 +98395,16 @@ whb
 whb
 whb
 whb
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
 whb
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
 whb
 whb
 whb
@@ -98816,7 +98827,6 @@ whb
 whb
 whb
 whb
-whb
 dFT
 jFy
 rFx
@@ -98826,6 +98836,7 @@ vJI
 ryD
 qQL
 dFT
+whb
 whb
 whb
 whb
@@ -99248,7 +99259,6 @@ whb
 whb
 whb
 whb
-whb
 dFT
 dFT
 rFx
@@ -99258,6 +99268,7 @@ ryD
 ryD
 fUE
 dFT
+whb
 whb
 whb
 whb
@@ -99680,7 +99691,6 @@ whb
 whb
 whb
 whb
-whb
 dFT
 klA
 rFx
@@ -99690,6 +99700,7 @@ uPd
 ryD
 gsz
 dFT
+whb
 whb
 whb
 whb
@@ -100112,7 +100123,6 @@ whb
 whb
 whb
 whb
-whb
 dFT
 dFT
 ryD
@@ -100122,6 +100132,7 @@ bAC
 ryD
 rUm
 dFT
+whb
 whb
 whb
 whb
@@ -100544,7 +100555,6 @@ whb
 whb
 whb
 whb
-whb
 dFT
 vqg
 ryD
@@ -100554,6 +100564,7 @@ sUe
 rFx
 gNI
 dFT
+whb
 whb
 whb
 whb
@@ -100976,7 +100987,6 @@ whb
 whb
 whb
 whb
-whb
 dFT
 xmr
 rFx
@@ -100986,6 +100996,7 @@ yfU
 rFx
 dFT
 dFT
+whb
 whb
 whb
 whb
@@ -101408,7 +101419,6 @@ whb
 whb
 whb
 whb
-whb
 dFT
 ura
 rFx
@@ -101417,6 +101427,7 @@ rFx
 urQ
 rFx
 dFT
+whb
 whb
 whb
 whb
@@ -101840,7 +101851,6 @@ whb
 whb
 whb
 whb
-whb
 dFT
 sCv
 ryD
@@ -101849,6 +101859,7 @@ rFx
 bda
 ryD
 dFT
+whb
 whb
 whb
 whb
@@ -102272,7 +102283,6 @@ whb
 whb
 whb
 whb
-whb
 dFT
 dKL
 rFx
@@ -102281,6 +102291,7 @@ ryD
 ryD
 ryD
 dFT
+whb
 whb
 whb
 whb
@@ -102704,7 +102715,6 @@ whb
 whb
 whb
 whb
-whb
 dFT
 oLK
 rFx
@@ -102713,6 +102723,7 @@ qSx
 mCF
 quj
 dFT
+whb
 whb
 whb
 whb
@@ -103136,15 +103147,15 @@ whb
 whb
 whb
 whb
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
 whb
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
 whb
 whb
 whb
@@ -103566,16 +103577,16 @@ whb
 whb
 whb
 whb
+oNE
+oNE
+oNE
+oNE
+oNE
+oNE
+oNE
+oNE
+oNE
 whb
-oNE
-oNE
-oNE
-oNE
-oNE
-oNE
-oNE
-oNE
-oNE
 whb
 whb
 whb
@@ -103997,18 +104008,18 @@ whb
 whb
 whb
 whb
+oNE
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+oNE
 whb
-oNE
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-oNE
 whb
 whb
 whb
@@ -104430,7 +104441,6 @@ whb
 whb
 oNE
 oNE
-oNE
 dFT
 snd
 snd
@@ -104442,6 +104452,7 @@ snd
 dFT
 oNE
 oNE
+whb
 whb
 whb
 whb
@@ -104862,7 +104873,6 @@ whb
 whb
 oNE
 oNE
-oNE
 dFT
 snd
 ryD
@@ -104874,6 +104884,7 @@ snd
 dFT
 oNE
 oNE
+whb
 whb
 whb
 whb
@@ -105288,7 +105299,6 @@ whb
 whb
 whb
 whb
-whb
 wQS
 whb
 oNE
@@ -105306,6 +105316,7 @@ snd
 dFT
 oNE
 oNE
+whb
 whb
 whb
 whb
@@ -105719,7 +105730,6 @@ whb
 whb
 whb
 whb
-whb
 wQS
 aXU
 wQS
@@ -105738,6 +105748,7 @@ snd
 dFT
 oNE
 oNE
+whb
 whb
 whb
 whb
@@ -106152,7 +106163,6 @@ whb
 whb
 whb
 whb
-whb
 wQS
 oNE
 oNE
@@ -106170,6 +106180,7 @@ snd
 dFT
 oNE
 oNE
+whb
 whb
 whb
 whb
@@ -106590,7 +106601,6 @@ oNE
 oNE
 oNE
 oNE
-oNE
 dFT
 snd
 ryD
@@ -106602,6 +106612,7 @@ snd
 dFT
 oNE
 oNE
+whb
 whb
 whb
 whb
@@ -107022,16 +107033,16 @@ oNE
 oNE
 oNE
 oNE
+dFT
+snd
+snd
+snd
+snd
+snd
+snd
+snd
+dFT
 oNE
-dFT
-snd
-snd
-snd
-snd
-snd
-snd
-snd
-dFT
 oNE
 oNE
 oNE
@@ -107454,16 +107465,16 @@ oNE
 oNE
 oNE
 oNE
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
+dFT
 oNE
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
-dFT
 oNE
 oNE
 oNE
@@ -112216,10 +112227,10 @@ vTW
 vTW
 oNE
 whb
+jxS
+jxS
+jxS
 whb
-jxS
-jxS
-jxS
 whb
 whb
 vTW
@@ -112648,10 +112659,10 @@ vTW
 vTW
 whb
 whb
-whb
 jxS
 ilY
 jxS
+whb
 whb
 whb
 vTW
@@ -113080,10 +113091,10 @@ vTW
 vTW
 whb
 whb
-whb
 jxS
 ilY
 jxS
+whb
 whb
 whb
 vTW
@@ -113512,10 +113523,10 @@ vTW
 vTW
 iad
 whb
-whb
 jxS
 ilY
 jxS
+whb
 whb
 whb
 vTW
@@ -113944,10 +113955,10 @@ vTW
 iad
 iad
 whb
+jxS
+jxS
+jxS
 whb
-jxS
-jxS
-jxS
 whb
 whb
 whb
@@ -213299,7 +213310,7 @@ lni
 pzP
 web
 vVI
-vVI
+qGc
 dlO
 gcC
 web
@@ -219770,7 +219781,7 @@ fCH
 kzS
 fCH
 fCH
-cXj
+tBr
 nbC
 web
 oXN
