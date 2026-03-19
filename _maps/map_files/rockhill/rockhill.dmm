@@ -92476,8 +92476,8 @@
 /turf/closed/wall/mineral/rogue/roofwall/middle,
 /area/rogue/indoors/town/manor/rockhill)
 "xMq" = (
-/obj/structure/stairs/stone/ccwdown{
-	dir = 4
+/obj/structure/stairs/stone/cw{
+	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
