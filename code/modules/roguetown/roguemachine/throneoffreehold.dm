@@ -20,12 +20,10 @@ GLOBAL_VAR(announcement_throne)
 /obj/structure/roguemachine/freeholdthrone/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
-	if(GLOB.announcement_throne == null)
-		GLOB.announcement_throne = src
+	GLOB.announcement_throne = src
 
 /obj/structure/roguemachine/freeholdthrone/Destroy()
-	if(GLOB.announcement_throne == src)
-		GLOB.announcement_throne = null
+	GLOB.announcement_throne = null
 	lose_hearing_sensitivity()
 	return ..()
 
