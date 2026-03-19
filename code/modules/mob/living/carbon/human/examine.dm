@@ -1200,7 +1200,7 @@
 			return span_notice("A fellow legionnarie from Roguetown. They are part of the raid.")
 		if(HAS_TRAIT(H, TRAIT_FREEHOLDER))
 			return span_notice("A friend of the Roguetown, though for now obeying the call to raid.")
-		return span_userdanger("RAIDER! They are NOT going to be your friend, they are going to kill and eat you!")
+		return span_userdanger("RAIDER!")
 
 	if(HAS_TRAIT(TH, TRAIT_FREEHOLDER))
 		if(HAS_TRAIT(H, TRAIT_RAIDER))

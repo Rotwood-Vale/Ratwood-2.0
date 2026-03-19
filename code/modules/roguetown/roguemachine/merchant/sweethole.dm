@@ -27,74 +27,84 @@
 	return TRUE
 
 /obj/structure/roguemachine/cashface/attack_hand(mob/user)
+	. = ..()
 	if(!can_use_cashface(user))
-		return
+		return .
 	if(!Adjacent(user))
-		return
+		return .
 	if(stored_mammon < 1)
 		say("Nothing is stored within.")
-		return
-	var/list/choicez = list()
+		return .
+
+	var/list/choices = list()
 	if(stored_mammon > 10)
-		choicez += "GOLD"
+		choices += "GOLD"
 	if(stored_mammon > 5)
-		choicez += "SILVER"
-	choicez += "BRONZE"
-	var/selection = input(user, "There are [stored_mammon] mammon stored within. Choose which currency you'd like to withdraw.", src) as null|anything in choicez
+		choices += "SILVER"
+	choices += "BRONZE"
+
+	var/selection = input(user, "There are [stored_mammon] mammon stored within. Choose which currency you'd like to withdraw.", src) as null|anything in choices
 	if(!selection)
-		return
+		return .
 	if(QDELETED(src) || QDELETED(user))
-		return
+		return .
 	if(!Adjacent(user))
-		return
+		return .
+
 	var/mod = 1
 	if(selection == "GOLD")
 		mod = 10
 	if(selection == "SILVER")
 		mod = 5
+
 	var/coin_amt = input(user, "There are [stored_mammon] mammon stored within. You may withdraw [floor(stored_mammon / mod)] [selection] COINS.", src) as null|num
 	coin_amt = round(coin_amt)
 	if(coin_amt < 1)
-		return
+		return .
 	if(QDELETED(src) || QDELETED(user))
-		return
+		return .
 	if(!Adjacent(user))
-		return
+		return .
+
 	var/max_coins = 20
 	if(coin_amt > max_coins)
 		to_chat(user, span_warning("Maximum withdrawal limit exceeded. You can only withdraw up to [max_coins] coins at once."))
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		return
+		return .
 	if((coin_amt * mod) > stored_mammon)
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		return
+		return .
+
 	stored_mammon -= (coin_amt * mod)
 	playsound(src, 'sound/misc/coindispense.ogg', 100, FALSE, -1)
 	budget2change(coin_amt * mod, user, selection)
-	return
+	return .
 
-/obj/structure/roguemachine/cashface/attackby(obj/item/P, mob/user, params)
+/obj/structure/roguemachine/cashface/attackby(obj/item/item_used, mob/user, params)
+	. = ..()
 	if(!anchored)
-		return ..()
+		return .
 	if(!can_use_cashface(user))
-		return
-	if(istype(P, /obj/item/roguecoin))
+		return .
+	if(istype(item_used, /obj/item/roguecoin))
 		to_chat(user, span_warning("[src] rejects coin."))
-		return
-	if(P.anchored)
-		return ..()
-	if(istype(P, /obj/structure/handcart))
-		return ..()
-	var/prize = round(P.get_real_price())
+		return .
+	if(item_used.anchored)
+		return .
+	if(istype(item_used, /obj/structure/handcart))
+		return .
+
+	var/prize = round(item_used.get_real_price())
 	if(prize < 1)
-		to_chat(user, span_warning("[P] is worthless to [src]."))
-		return
-	user.visible_message(span_warning("[user] feeds [P] into [src]!"))
-	qdel(P)
+		to_chat(user, span_warning("[item_used] is worthless to [src]."))
+		return .
+
+	user.visible_message(span_warning("[user] feeds [item_used] into [src]!"))
+	qdel(item_used)
 	stored_mammon += prize
 	playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 	say("[prize] mammon stored.")
-	return
+	return .
 
 /obj/structure/roguemachine/freeholdinvite
 	name = "Oathmarker"
@@ -114,29 +124,34 @@
 	. += span_notice("Any guardsman who takes the oath shall forfeit his former station.")
 	. += span_notice("Those so marked are counted among the outlanders.")
 
-
 /obj/structure/roguemachine/freeholdinvite/attack_hand(mob/user)
+	. = ..()
 	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(HAS_TRAIT(H, TRAIT_FREEHOLDER))
+		return .
+
+	var/mob/living/carbon/human/human_user = user
+	if(HAS_TRAIT(human_user, TRAIT_FREEHOLDER))
 		say("The mark is already upon you.")
-		return
-	var/choice = alert(user, "The machine offers to bind you with the mark of the Freehold. Will you accept it?", src.name, "Accept", "Decline")
+		return .
+
+	var/choice = alert(human_user, "The machine offers to bind you with the mark of the Freehold. Will you accept it?", src.name, "Accept", "Decline")
 	if(choice != "Accept")
-		return
-	if(!Adjacent(user))
-		return
-	to_chat(user, span_warning("The machine bites my finger."))
+		return .
+	if(!Adjacent(human_user))
+		return .
+
+	to_chat(human_user, span_warning("The machine bites my finger."))
 	icon_state = "atm-b"
-	H.flash_fullscreen("redflash3")
-	playsound(H, 'sound/combat/hits/bladed/genstab (1).ogg', 100, FALSE, -1)
-	if(HAS_TRAIT(H, TRAIT_GUARDSMAN))
-		REMOVE_TRAIT(H, TRAIT_GUARDSMAN, JOB_TRAIT)
-	ADD_TRAIT(H, TRAIT_FREEHOLDER, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_OUTLANDER, TRAIT_GENERIC)
+	human_user.flash_fullscreen("redflash3")
+	playsound(human_user, 'sound/combat/hits/bladed/genstab (1).ogg', 100, FALSE, -1)
+
+	if(HAS_TRAIT(human_user, TRAIT_GUARDSMAN))
+		REMOVE_TRAIT(human_user, TRAIT_GUARDSMAN, JOB_TRAIT)
+	ADD_TRAIT(human_user, TRAIT_FREEHOLDER, TRAIT_GENERIC)
+	ADD_TRAIT(human_user, TRAIT_OUTLANDER, TRAIT_GENERIC)
+
 	spawn(5)
 		say("Blood accepted. The mark is yours.")
 		playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 
-	return
+	return .

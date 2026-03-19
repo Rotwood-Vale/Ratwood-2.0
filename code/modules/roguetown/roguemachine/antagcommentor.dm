@@ -1,5 +1,4 @@
 /datum/mind
-	/// Tracks whether this mind has already used the Karmic eye to receive a karmic token. Druids can drop TRAIT so it prevents them to abuse it.
 	var/freehold_token_touched = FALSE
 
 /obj/structure/roguemachine/freeholdpress/proc/target_apply_normal_reward(mob/living/carbon/human/target_human, reward_type)
@@ -35,17 +34,21 @@
 	. += span_notice("A blessing lasts only 3 minutes and must be claimed here before it fades.")
 	. += span_notice("A Freeholder bearing a blessing is supposed to touch the machine to claim a reward.")
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
+	if(!ishuman(user))
+		return .
 
-		if(HAS_TRAIT(human_user, TRAIT_FREEHOLDER))
-			. += span_info("As a Freeholder, a lesser blessing lets me choose a temporary reward.")
-			. += span_info("As a Freeholder, a greater blessing lets me choose a permanent reward.")
-		else
-			if(human_user.mind?.freehold_token_touched)
-				. += span_warning("It has nothing more to grant me.")
-			else
-				. += span_info("It may still grant me a karmic token.")
+	var/mob/living/carbon/human/human_user = user
+	if(HAS_TRAIT(human_user, TRAIT_FREEHOLDER))
+		. += span_info("As a Freeholder, a lesser blessing lets me choose a temporary reward.")
+		. += span_info("As a Freeholder, a greater blessing lets me choose a permanent reward.")
+		return .
+
+	if(human_user.mind?.freehold_token_touched)
+		. += span_warning("It has nothing more to grant me.")
+		return .
+
+	. += span_info("It may still grant me a karmic token.")
+	return .
 
 /obj/structure/roguemachine/freeholdpress/attack_hand(mob/user)
 	. = ..()
@@ -151,7 +154,7 @@
 	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 	new /obj/item/freehold_token(get_turf(human_user), human_user)
 	return .
-	
+
 /obj/item/freehold_token
 	name = "A karmic token"
 	desc = "A fleeting token, warm from the press. It will not last long."
@@ -328,7 +331,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/freehold_bad_faith
 	name = "Bad Faith"
-	desc = "You are COAL."
+	desc = "You are a COAL."
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/freehold_bad_faith
