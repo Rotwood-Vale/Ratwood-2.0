@@ -1126,7 +1126,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/freehold_guard_debuff
 	name = "Wrong district"
-	desc = "You dont belong to this place, little keepy.."
+	desc = "You don't belong to this place..."
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/freehold_guard_debuff
