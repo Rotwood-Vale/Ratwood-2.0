@@ -144,10 +144,12 @@ SUBSYSTEM_DEF(capturepoints)
 	return FALSE
 
 /obj/structure/roguemachine/capturepoint/attack_hand(mob/user)
+	. = ..()
 	if(!ishuman(user))
-		return
+		return .
 	if(!Adjacent(user))
-		return
+		return .
+
 
 	var/list/options = list("Swear", "Collect Tribute")
 	var/choice = input(user, "Choose an action.", src.name) as null|anything in options
