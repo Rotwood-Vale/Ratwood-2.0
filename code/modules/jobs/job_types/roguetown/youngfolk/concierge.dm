@@ -1,5 +1,5 @@
 //A mostly harmless but supernatural assistant for Wretches.
-/datum/job/roguetown/wretch
+/datum/job/roguetown/concierge
 	title = "Concierge"
 	flag = CONCIERGE
 	department_flag = WANDERERS
@@ -53,7 +53,6 @@
 	TRAIT_PACIFISM,
 	TRAIT_ANTISCRYING,
 	TRAIT_DARKVISION,
-	TRAIT_UNSETTLING_BEAUTY,
 	TRAIT_TOLERANT,
 	TRAIT_SEEPRICES,
 	TRAIT_CICERONE,
