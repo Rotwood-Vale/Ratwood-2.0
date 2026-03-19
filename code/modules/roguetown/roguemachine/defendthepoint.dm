@@ -24,7 +24,7 @@
 	last_tick_time = world.time
 
 /datum/mind
-	var/list/capture_withdrawals = list()
+	var/list/capture_withdrawals
 
 SUBSYSTEM_DEF(capturepoints)
 	name = "capture points"
@@ -106,7 +106,7 @@ SUBSYSTEM_DEF(capturepoints)
 	if(!user?.mind)
 		return FALSE
 	var/datum/job/target_job = SSjob.GetJob(user.mind.assigned_role)
-	if(target_job && (target_job.type in list(CHURCH_ROLES)))
+	if(target_job?.type in list(CHURCH_ROLES))
 		return TRUE
 	return FALSE
 

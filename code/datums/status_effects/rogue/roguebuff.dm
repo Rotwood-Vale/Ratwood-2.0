@@ -1876,7 +1876,7 @@
 /datum/status_effect/buff/freeholdbuff
 	id = "freeholdbuff"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/freeholdbuff
-	effectedstats = list(STATKEY_CON = 1, STATKEY_INT = 2, STATKEY_SPD = 1, STATKEY_STR = 1) //to make it harder for free looters and bored keepoids
+	effectedstats = list(STATKEY_CON = 1, STATKEY_INT = 2, STATKEY_SPD = 1, STATKEY_STR = 1)
 	duration = -1
 
 /datum/status_effect/buff/freeholdbuff/process()
