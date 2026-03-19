@@ -652,6 +652,19 @@
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water
 
+/turf/open/water/bath/fakepond
+	name = "fake pond"
+	desc = "Soothing water, with soapy bubbles on the surface. Dyed green to mimic gently floating duckwater."
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "pond"
+	water_level = 2
+	water_color = "#367e94"
+	slowdown = 3
+	swim_skill = TRUE
+	wash_in = TRUE
+	water_reagent = /datum/reagent/water/bathwater
+	temperature = 300
+
 //Healing springs.
 //Intended for deep dungeon / hidden areas.
 /turf/open/water/ocean/deep/thermalwater
