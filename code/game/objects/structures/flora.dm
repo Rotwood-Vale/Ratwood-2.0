@@ -459,16 +459,3 @@
 
 /obj/structure/flora/tree/freehold/tree12
 	icon_state = "freeholdtree12"
-
-
-
-
-
-
-
-
-
-
-
-
-
