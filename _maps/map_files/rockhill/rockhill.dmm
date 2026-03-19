@@ -1049,6 +1049,10 @@
 /mob/living/carbon/human/species/skeleton/npc/rockhill,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
+"anl" = (
+/obj/structure/roguemachine/capturepoint/lowtown,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/rtfield/rockhill)
 "anm" = (
 /obj/structure/flora/newleaf,
 /obj/structure/fluff/railing/wood{
@@ -43406,6 +43410,10 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cavewet)
+"kTz" = (
+/obj/structure/roguemachine/capturepoint/hightown,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/town/rockhill)
 "kTB" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -50818,6 +50826,10 @@
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/shelter/freehold)
+"mLP" = (
+/obj/structure/roguemachine/capturepoint/church,
+/turf/closed/wall/mineral/rogue/decostone/center,
+/area/rogue/indoors/town/church/chapel)
 "mLT" = (
 /obj/structure/flora/ausbushes/reedbush,
 /obj/structure/flora/roguegrass/herb/salvia,
@@ -67758,6 +67770,10 @@
 	},
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/bath)
+"rcA" = (
+/obj/structure/roguemachine/capturepoint/keep,
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/exposed/town/keep)
 "rcC" = (
 /obj/structure/fluff/railing/border{
 	dir = 9;
@@ -266850,7 +266866,7 @@ lYn
 qvR
 qvR
 fxx
-fxx
+anl
 qvR
 sjP
 qvR
@@ -385941,7 +385957,7 @@ eYs
 pOf
 nbR
 eYs
-pOf
+rcA
 nbR
 eYs
 pOf
@@ -388571,7 +388587,7 @@ apn
 csd
 mxY
 evo
-aOv
+kTz
 aOv
 pjT
 aOv
@@ -519462,7 +519478,7 @@ fZJ
 fZJ
 fZJ
 fZJ
-tja
+mLP
 bPW
 nhW
 tkX
