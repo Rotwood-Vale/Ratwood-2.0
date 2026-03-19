@@ -106,7 +106,7 @@ SUBSYSTEM_DEF(capturepoints)
 	if(!user?.mind)
 		return FALSE
 	var/datum/job/target_job = SSjob.GetJob(user.mind.assigned_role)
-	if(target_job && (target_job.type in list(CHURCH_ROLES)))
+	if(target_job?.type in list(CHURCH_ROLES))
 		return TRUE
 	return FALSE
 
