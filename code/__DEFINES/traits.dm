@@ -249,9 +249,12 @@
 #define TRAIT_SPELL_DISPERSION "Barrier Dispersion"
 #define TRAIT_CONVICTION "Conviction" //Can hear Tennite prayers. Praying heals and provides nutrition.
 #define TRAIT_STANDARD_BEARER "Standard Bearer"//Can use the keep's standard to provide buffs and rally the retinue.
-#define TRAIT_FREEHOLDER "Freeholder" //A member of antag village (my lil roguetown)
-#define TRAIT_RAIDER "Raider" //Murder murder kill kill. Freeholder's throne triggers it
-#define TRAIT_TOKEN_TOUCHED "Token Touched" //you can comment your antag only once, habibi
+/// A member of antag village
+#define TRAIT_FREEHOLDER "Freeholder" 
+/// Triggered by Freeholder's throne, used to identify allies
+#define TRAIT_RAIDER "Raider" 
+/// you can comment your antag only once
+#define TRAIT_TOKEN_TOUCHED "Token Touched" 
 
 // Economic Roles Traits
 // Most of these should NOT be given to any true combat roles (I.E. anything with Dexpert or Miracle / Good Magic) with very few exceptions
