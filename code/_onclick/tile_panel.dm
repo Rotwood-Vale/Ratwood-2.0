@@ -42,7 +42,6 @@
 		return FALSE
 
 	listed_turf = T
-	client.statpanel = T.name
 
 	var/datum/tile_panel/P = get_tile_panel()
 	return P.open(T)

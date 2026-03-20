@@ -685,7 +685,6 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	var/turf/T = get_turf(A)
 	if(T && user.TurfAdjacent(T))
 		user.listed_turf = T
-		user.client.statpanel = T.name
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
