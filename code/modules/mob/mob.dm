@@ -784,6 +784,9 @@ GLOBAL_VAR_INIT(mobids, 1)
 			days = "SUN'S DAE"
 
 	if(client)
+		if(!client.statpanel)
+			client.statpanel = "RoundInfo"
+
 		if(statpanel("RoundInfo"))
 			stat(null, "MAP: [SSmapping.config?.map_name || "Loading..."]")
 			var/datum/map_config/cached = SSmapping.next_map_config
@@ -837,26 +840,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(check_rights(R_AHELP, FALSE))
 		if(statpanel("Tickets"))
 			GLOB.ahelp_tickets.stat_entry()
-
-	if(listed_turf && client)
-		if(!TurfAdjacent(listed_turf))
-			listed_turf = null
-		else
-			statpanel(listed_turf.name, null, listed_turf)
-			var/list/overrides = list()
-			for(var/image/I in client.images)
-				if(I.loc && I.loc.loc == listed_turf && I.override)
-					overrides += I.loc
-			for(var/atom/A in listed_turf)
-				if(!A.mouse_opacity)
-					continue
-				if(A.invisibility > see_invisible)
-					continue
-				if(overrides.len && (A in overrides))
-					continue
-				if(A.IsObscured())
-					continue
-				statpanel(listed_turf.name, null, A)
 
 
 //	if(mind)
