@@ -43,7 +43,7 @@
 	var/swim_skill = FALSE
 	nomouseover = FALSE
 	var/swimdir = FALSE
-	temperature = 200
+	temperature = 210
 
 /turf/open/water/Initialize(mapload)
 	.  = ..()
@@ -224,7 +224,7 @@
 							water_overlay.plane = GAME_PLANE_HIGHEST
 
 			if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
-				L.adjust_bodytemperature(-10)
+				L.adjust_bodytemperature(-5)
 				L.update_health_hud()
 		if(!istype(L, /mob/living/carbon/human/species/skeleton))
 			return
@@ -651,6 +651,19 @@
 	swim_skill = TRUE
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water
+
+/turf/open/water/bath/fakepond
+	name = "fake pond"
+	desc = "Soothing water, with soapy bubbles on the surface. Dyed green to mimic gently floating duckwater."
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "pond"
+	water_level = 2
+	water_color = "#367e94"
+	slowdown = 3
+	swim_skill = TRUE
+	wash_in = TRUE
+	water_reagent = /datum/reagent/water/bathwater
+	temperature = 300
 
 //Healing springs.
 //Intended for deep dungeon / hidden areas.

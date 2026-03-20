@@ -2143,7 +2143,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 				protection = (0.25 * H.get_cold_protection(loc_temp))
 			else
 				// Heating is BAD (we are hotter then norm)
-				protection = (-0.125 * (1 - H.get_heat_protection(loc_temp)))	//a maximum of 9.9 minutes of time to move 100 points of temp (one level)
+				protection = (-0.1 * H.get_heat_protection(loc_temp))	//a maximum of 9.9 minutes of time to move 100 points of temp (one level)
 
 			var/step = 0.25 + (protection)
 			env_adjust = step
@@ -2155,7 +2155,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 				protection = (0.25 * H.get_heat_protection(loc_temp))
 			else
 				// Cooling is BAD (we are colder then norm)
-				protection = (-0.125 * (1 - H.get_cold_protection(loc_temp)))	//a maximum of 9.9 minutes of time to move 100 points of temp (one level)
+				protection = (-0.1 * H.get_cold_protection(loc_temp))	//a maximum of 9.9 minutes of time to move 100 points of temp (one level)
 
 			var/step = 0.25 + (protection)
 			env_adjust = -step
@@ -2211,7 +2211,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 				H.apply_status_effect(/datum/status_effect/debuff/overheat)
 				H.update_health_hud()
 			return
-		if(H.bodytemperature >= BODYTEMP_HEAT_LEVEL_ONE_MAX)
+		if(H.bodytemperature >= BODYTEMP_HEAT_LEVEL_ONE_MAX && !HAS_TRAIT (H, TRAIT_EXTREME_TEMPERATURE_IMMUNE))
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, heat_warn)),20 SECONDS,TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_NO_HASH_WAIT)
 			if(!H.heatstroke_timer_id)
 				H.heatstroke_timer_id = addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, apply_heatexhaust)),2 MINUTES ,TIMER_STOPPABLE)
@@ -2230,7 +2230,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 				H.apply_status_effect(/datum/status_effect/debuff/brittle)
 				H.update_health_hud()
 			return
-		if(H.bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX)	//Level 2 cold - con punishment, frostbite, speed reduction
+		if(H.bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX && !HAS_TRAIT(H, TRAIT_EXTREME_TEMPERATURE_IMMUNE))	//Level 2 cold - con punishment, frostbite, speed reduction
 			if(prob(15))
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, emote), "shiver"), (rand(2,6)SECONDS),TIMER_UNIQUE | TIMER_STOPPABLE)
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, cold_warn)),20 SECONDS,TIMER_UNIQUE)

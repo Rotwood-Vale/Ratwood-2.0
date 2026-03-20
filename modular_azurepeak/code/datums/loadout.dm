@@ -2077,10 +2077,25 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 //ADDITIONAL ITEMS
 
+/datum/loadout_item/backpack
+	name = "Backpack"
+	path = /obj/item/storage/backpack/rogue/backpack
+	triumph_cost = 6
+
 /datum/loadout_item/satchel
 	name = "Satchel"
 	path = /obj/item/storage/backpack/rogue/satchel
 	triumph_cost = 5
+
+/datum/loadout_item/otavansatchel
+	name = "Otavan Satchel"
+	path = /obj/item/storage/backpack/rogue/satchel/otavan
+	triumph_cost = 5
+
+/datum/loadout_item/shortsatchel
+	name = "Short Satchel"
+	path = /obj/item/storage/backpack/rogue/satchel/short
+	triumph_cost = 4
 
 /datum/loadout_item/pouches
 	name = "Pouche"
@@ -2096,6 +2111,16 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Paper Parasol"
 	path = /obj/item/rogueweapon/mace/parasol
 	triumph_cost = 3
+
+/datum/loadout_item/scabbard
+	name = "Scabbard"
+	path = /obj/item/rogueweapon/scabbard/sword
+	triumph_cost = 1
+
+/datum/loadout_item/greatweaponstrap
+	name = "Great Weapon Strap"
+	path = /obj/item/rogueweapon/scabbard/gwstrap
+	triumph_cost = 2
 
 //INSTRUMENTS
 

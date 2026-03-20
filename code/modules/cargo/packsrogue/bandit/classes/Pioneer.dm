@@ -100,6 +100,13 @@
 	cost = 30
 	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/parrying)
 
+/datum/supply_pack/rogue/Pioneer/axepick
+	name = "Pulaski Axe"
+	cost = 25
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/pick)
+
+/datum/supply_pack/rogue/Pioneer/
+
 //Tools of the trade.
 
 /datum/supply_pack/rogue/Pioneer/Mancatcher
@@ -116,6 +123,22 @@
 	name = "Smith tongs"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/tongs)
+
+/datum/supply_pack/rogue/Pioneer/chiselset
+
+	name = "Chisel and Hammer"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/chisel/assembly/hammer)
+
+/datum/supply_pack/rogue/Pioneer/handsaw
+	name = "Handsaw"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/handsaw)
+
+/datum/supply_pack/rogue/Pioneer/linker
+	name = "Artificer's Wrench"
+	cost = 20 
+	contains = list(/obj/item/contraption/linker)
 
 /datum/supply_pack/rogue/Pioneer/cogs
 	name = "Cogs"

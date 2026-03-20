@@ -514,7 +514,10 @@
 		if(R.required_tech_node && !R.tech_unlocked)
 			continue
 
-		craftability[R.name] = check_contents(R, surroundings)
+		var/can_craft_recipe = check_contents(R, surroundings)
+		// Multiple recipe paths can intentionally share a display name (e.g. log/plank alternates).
+		// Keep the entry craftable if any variant with that name is craftable.
+		craftability[R.name] = craftability[R.name] || can_craft_recipe
 
 	data["craftability"] = craftability
 	data["showonlycraftable"] = showonlycraftable

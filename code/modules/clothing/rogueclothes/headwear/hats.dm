@@ -7,8 +7,6 @@
 	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/fibers
 	salvage_amount = 2 // Minor materials loss
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
@@ -44,8 +42,6 @@
 	icon_state = "bardhat"
 	sewrepair = TRUE
 	nudist_approved = TRUE
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
@@ -80,8 +76,6 @@
 	nudist_approved = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50
-	heat_protection = null
-	max_heat_protection_temperature = 350
 
 /obj/item/clothing/head/roguetown/papakha
 	name = "papakha"
@@ -95,8 +89,6 @@
 	salvage_amount = 1
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50
-	heat_protection = null
-	max_heat_protection_temperature = 350
 
 /obj/item/clothing/head/roguetown/hatblu
 	name = "fur hat"
@@ -106,8 +98,6 @@
 	nudist_approved = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50
-	heat_protection = null
-	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/head/roguetown/fisherhat
 	name = "straw hat"
@@ -118,8 +108,6 @@
 	nudist_approved = TRUE
 //	color = "#fbc588"
 	//dropshrink = 0.75
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
@@ -129,8 +117,6 @@
 	item_state = "flathat"
 	sewrepair = TRUE
 	nudist_approved = TRUE
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
@@ -468,8 +454,6 @@
 	desc = "A simple brimmed hat that provides some relief from the sun."
 	icon_state = "brimmed"
 	nudist_approved = TRUE
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 // azure addition - random wizard hats

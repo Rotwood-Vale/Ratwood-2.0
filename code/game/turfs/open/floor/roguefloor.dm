@@ -243,7 +243,7 @@
 	canSmoothWith = list(/turf/open/floor/rogue/snow,)
 	neighborlay = "snowedge"
 	spread_chance = 0
-	temperature = 100
+	temperature = 110
 /turf/open/floor/rogue/snow/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
@@ -302,7 +302,7 @@
 	canSmoothWith = list(/turf/open/floor/rogue/snowrough,)
 	neighborlay = "snowroughedge"
 	spread_chance = 0
-	temperature = 100
+	temperature = 110
 
 /turf/open/floor/rogue/snowrough/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -326,7 +326,7 @@
 	canSmoothWith = list(/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "snowpatchy_grassedge"
-	temperature = 100
+	temperature = 110
 
 /turf/open/floor/rogue/snowpatchy/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
