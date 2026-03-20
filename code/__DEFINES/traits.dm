@@ -253,8 +253,6 @@
 #define TRAIT_FREEHOLDER "Freeholder" 
 /// Triggered by Freeholder's throne, used to identify allies
 #define TRAIT_RAIDER "Raider" 
-/// you can comment your antag only once
-#define TRAIT_TOKEN_TOUCHED "Token Touched" 
 
 // Economic Roles Traits
 // Most of these should NOT be given to any true combat roles (I.E. anything with Dexpert or Miracle / Good Magic) with very few exceptions
@@ -507,7 +505,6 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
 	TRAIT_FREEHOLDER = span_warning("I renounce ye city and bind myself by oath unto mountain village and its folk."),
 	TRAIT_RAIDER = span_userdanger("I am part of the raid."),
-	TRAIT_TOKEN_TOUCHED = span_warning("I have taken my freehold token, and the press shall yield me no second."),
 	TRAIT_GANG_A = span_info("I belong to the Rontz Ratz gang"),
 	TRAIT_GANG_B = span_info("I belong to the Blortz Volves gang")
 ))
