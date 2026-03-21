@@ -218,10 +218,12 @@ Hotkey-Mode: (hotkey-mode must be on)
 
 /client/verb/toggle_tile_panel_embed()
 	set category = "Options"
-	set name = "ToggleTilePanelEmbed"
+	set name = "Toggle TilePanel Embed"
 	if(!prefs)
 		return
 	prefs.tile_panel_embedded = !prefs.tile_panel_embedded
+	if(prefs.tile_panel_embedded)
+		prefs.tile_panel_legacy = FALSE
 	prefs.save_preferences()
 	if(mob?.tile_panel)
 		mob.tile_panel.close()
@@ -232,6 +234,25 @@ Hotkey-Mode: (hotkey-mode must be on)
 		if(statpanel == "TilePanel")
 			statpanel = "RoundInfo"
 		to_chat(src, "Tile panel will now open in a popup window.")
+
+/client/verb/toggle_tile_panel_legacy()
+	set category = "Options"
+	set name = "Toggle TilePanel Legacy"
+	if(!prefs)
+		return
+	prefs.tile_panel_legacy = !prefs.tile_panel_legacy
+	if(prefs.tile_panel_legacy)
+		prefs.tile_panel_embedded = FALSE
+	prefs.save_preferences()
+	if(mob?.tile_panel)
+		mob.tile_panel.close()
+	show_tile_panel_browser(FALSE)
+	if(prefs.tile_panel_legacy)
+		to_chat(src, "Tile panel will now use the legacy statpanel listing.")
+	else
+		if(statpanel == "TilePanel" || statpanel == mob?.listed_turf?.name)
+			statpanel = "RoundInfo"
+		to_chat(src, "Tile panel legacy mode disabled.")
 
 /client/verb/triggercommend()
 	set category = "OOC"

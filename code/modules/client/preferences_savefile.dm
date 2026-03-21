@@ -254,6 +254,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["crt"]				>> crt
 	S["grain"]				>> grain
 	S["tile_panel_embedded"]	>> tile_panel_embedded
+	S["tile_panel_legacy"]	>> tile_panel_legacy
 	S["sexable"]			>> sexable
 	S["shake"]				>> shake
 	S["mastervol"]			>> mastervol
@@ -335,6 +336,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_islist(key_bindings, list())
 	tile_panel_embedded = sanitize_integer(tile_panel_embedded, 0, 1, initial(tile_panel_embedded))
+	tile_panel_legacy = sanitize_integer(tile_panel_legacy, 0, 1, initial(tile_panel_legacy))
 
 	//ROGUETOWN
 	parallax = PARALLAX_INSANE
@@ -385,6 +387,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["no_language_icon"], no_language_icon)
 	WRITE_FILE(S["crt"], crt)
 	WRITE_FILE(S["tile_panel_embedded"], tile_panel_embedded)
+	WRITE_FILE(S["tile_panel_legacy"], tile_panel_legacy)
 	WRITE_FILE(S["sexable"], sexable)
 	WRITE_FILE(S["shake"], shake)
 	WRITE_FILE(S["lastclass"], lastclass)

@@ -43,6 +43,13 @@
 		return FALSE
 
 	listed_turf = T
+	if(client.prefs?.tile_panel_legacy)
+		if(tile_panel?._is_open())
+			tile_panel.close()
+		client.show_tile_panel_browser(FALSE)
+		client.statpanel = T.name
+		return TRUE
+
 	var/datum/tile_panel/P = get_tile_panel()
 	if(P._is_open())
 		P.close()
@@ -129,6 +136,8 @@
 	return UI_INTERACTIVE
 
 /datum/tile_panel/ui_interact(mob/user, datum/tgui/ui)
+	if(user.client?.prefs?.tile_panel_legacy)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, TILE_PANEL_UI_ID, TILE_PANEL_UI_NAME)

@@ -844,6 +844,23 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(listed_turf && client)
 		if(!can_open_tile_panel_turf(listed_turf))
 			listed_turf = null
+		else if(client.prefs?.tile_panel_legacy)
+			statpanel(listed_turf.name, null, listed_turf)
+			var/list/overrides = list()
+			for(var/image/I in client.images)
+				if(I.loc && I.loc.loc == listed_turf && I.override)
+					overrides += I.loc
+			for(var/atom/A in listed_turf)
+				if(!A.mouse_opacity)
+					continue
+				if(A.invisibility > see_invisible)
+					continue
+				if(overrides.len && (A in overrides))
+					continue
+				if(A.IsObscured())
+					continue
+				statpanel(listed_turf.name, null, A)
+			client.show_tile_panel_browser(FALSE)
 		else if(client.prefs?.tile_panel_embedded)
 			var/tile_panel_active = statpanel("TilePanel")
 			client.show_tile_panel_browser(tile_panel_active)
