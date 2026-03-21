@@ -616,7 +616,7 @@
 	if (!isturf(T))
 		return FALSE
 
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_sensory_effect, source, T, duration, icon_state, dir, ignore_self), 0.5 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, PROC_REF(display_sensory_effect), source, T, duration, icon_state, dir, ignore_self), 0.5 SECONDS)
 
 /proc/display_sensory_effect(atom/source, turf/T, duration, icon_state, dir, ignore_self)
 	for(var/mob/M in range(7, T))

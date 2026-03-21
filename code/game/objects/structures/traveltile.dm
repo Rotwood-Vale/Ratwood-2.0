@@ -180,6 +180,8 @@
 		else
 			to_chat(L, "<b>It is a dead end.</b>")
 			return FALSE
+/obj/structure/fluff/traveltile/dungeoneer
+	required_trait = TRAIT_DUNGEONMASTER_LABOR_CAMP
 /obj/structure/fluff/traveltile/bandit
 	required_trait = TRAIT_BANDITCAMP
 /obj/structure/fluff/traveltile/vampire

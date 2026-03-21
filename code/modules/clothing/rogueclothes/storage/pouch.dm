@@ -59,7 +59,7 @@
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 				qdel(H)
 
-/obj/item/storage/belt/pouch/coins/veryrich/Initialize(mapload)
+/obj/item/storage/belt/rogue/pouch/coins/veryrich/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/gold/pile/H = new(loc)
 	if(istype(H))

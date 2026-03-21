@@ -1415,6 +1415,14 @@
 /obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/woodsafe)
+"ats" = (
+/obj/structure/fluff/traveltile{
+	aportalgoesto = "EscapeDieTroyt1";
+	aportalid = "EscapeDieTroyt2"
+	},
+/obj/machinery/light/rogue/candle/red/r,
+/turf/open/floor/rogue/blocks,
+/area/rogue/dietroyt/nomagic)
 "atu" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
@@ -8465,10 +8473,13 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/grove)
 "clS" = (
-/obj/structure/bed/rogue/shit,
-/obj/effect/landmark/start/prisonerr,
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/indoors/town/cell)
+/obj/structure/mineral_door/bars{
+	locked = 1;
+	lockid = "dungeon";
+	name = "Lucky Winner Cell"
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/dietroyt/nomagic)
 "clV" = (
 /obj/structure/roguemachine/bounty,
 /obj/structure/table/wood{
@@ -25628,9 +25639,6 @@
 /area/rogue/outdoors/beach/harbor)
 "gIa" = (
 /obj/structure/bed/rogue/shit,
-/obj/effect/landmark/start/prisonerr{
-	dir = 4
-	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/cell)
 "gIc" = (
@@ -63425,12 +63433,8 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/shelter/mountains)
 "qQQ" = (
-/obj/structure/roguemachine/mail{
-	mailtag = "Dungeoneer's Office"
-	},
-/obj/effect/landmark/start/dungeoneer,
-/turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/cell)
+/turf/open/floor/rogue/blocks,
+/area/rogue/dietroyt/nomagic)
 "qQV" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/headless,
 /turf/open/water/swamp/deep,
@@ -67828,12 +67832,11 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/Academy)
 "sei" = (
-/obj/structure/bed/rogue/shit,
-/obj/effect/landmark/start/prisonerr{
-	dir = 1
+/obj/structure/bars/nopassthrow{
+	max_integrity = 2000
 	},
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/indoors/town/cell)
+/turf/open/floor/rogue/blocks,
+/area/rogue/dietroyt/nomagic)
 "sej" = (
 /obj/item/carvedgem/turq/statue{
 	pixel_x = -1;
@@ -72537,6 +72540,14 @@
 "tsU" = (
 /turf/closed/wall/mineral/rogue/decostone/cand,
 /area/rogue/indoors/town/shop)
+"tsV" = (
+/obj/structure/mineral_door/wood/donjon{
+	locked = 1;
+	lockid = "dungeon";
+	name = "backdoor"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/cavewet)
 "tsY" = (
 /obj/structure/chair/wood/rogue{
 	dir = 8
@@ -72839,7 +72850,6 @@
 	locked = 1;
 	lockid = "dungeon"
 	},
-/obj/item/rogueweapon/sword/long/exe/cloth,
 /obj/item/rogueweapon/whip,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell)
@@ -89239,6 +89249,13 @@
 /area/rogue/under/cave/rhgoblinencampment)
 "xTZ" = (
 /obj/item/reagent_containers/food/snacks/smallrat,
+/obj/structure/fluff/traveltile/dungeoneer{
+	aportalgoesto = "siberia1";
+	aportalid = "siberia2"
+	},
+/obj/structure/stairs/stone{
+	dir = 4
+	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cavewet)
 "xUa" = (
@@ -152307,8 +152324,8 @@ aad
 gQh
 gQh
 gQh
-whb
-whb
+gQh
+gQh
 whb
 whb
 whb
@@ -152738,9 +152755,9 @@ eQK
 sqG
 kNr
 eQK
+tsV
+xzn
 gQh
-whb
-whb
 whb
 whb
 whb
@@ -153162,16 +153179,16 @@ aad
 aad
 aad
 gQh
-xks
-aad
-gQh
+sei
+clS
+sei
 gQh
 aad
 xks
 xks
 tTs
 gQh
-whb
+xzn
 xYv
 lOc
 lOc
@@ -153593,17 +153610,17 @@ aad
 aad
 aad
 aad
-aad
-aad
-aad
-aad
-aad
+gQh
+qQQ
+qQQ
+qQQ
+gQh
 aad
 aad
 xks
 xks
 gQh
-whb
+xzn
 xYv
 cVf
 uxq
@@ -154025,17 +154042,17 @@ aad
 aad
 aad
 aad
-aad
-aad
-aad
-aad
-whb
+gQh
+qQQ
+qQQ
+qQQ
+gQh
 xYv
 xYv
 xYv
 xYv
 lOc
-xYv
+iQm
 rae
 lzY
 wCU
@@ -154457,11 +154474,11 @@ rBg
 rBg
 rBg
 rBg
-aad
-whb
-whb
-whb
-whb
+gQh
+qQQ
+ats
+qQQ
+gQh
 xYv
 hmx
 ryK
@@ -154889,11 +154906,11 @@ aad
 aad
 aad
 aad
-aad
-whb
-whb
-whb
-whb
+gQh
+gQh
+gQh
+gQh
+gQh
 xYv
 jBg
 nXm
@@ -282810,14 +282827,14 @@ lrs
 lrs
 pUC
 pUC
-clS
+gIa
 utV
 utV
 pUC
 fXK
 pOm
 pOm
-sei
+gIa
 pUC
 uiZ
 pOm
@@ -284113,7 +284130,7 @@ vqG
 muA
 pOm
 utV
-sei
+gIa
 vqG
 pOm
 qLn
@@ -287132,7 +287149,7 @@ lOc
 lOc
 ckt
 pUC
-qQQ
+iRO
 iRO
 twk
 pUC

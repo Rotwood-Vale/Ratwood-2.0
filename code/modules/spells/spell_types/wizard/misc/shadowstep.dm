@@ -50,6 +50,10 @@
 	for(var/i = 0, i <= dist, i++)
 		last_dir = get_dir(last_step, Tt)
 		var/turf/Tstep = get_step(last_step, last_dir)
+		var/area/Tarea = get_area(Tstep)
+		if(Tarea?.noteleport)
+			success = FALSE
+			return success
 		if(!Tstep.density)
 			success = TRUE
 			var/list/cont = Tstep.GetAllContents(/obj/structure/roguewindow)

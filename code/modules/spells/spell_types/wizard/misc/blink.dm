@@ -87,6 +87,10 @@
 		turf_list.len--
 	
 	for(var/turf/turf in turf_list)
+		var/area/turf_area = get_area(turf)
+		if(turf_area?.noteleport)
+			to_chat(user, span_warning("This area won't let me teleport!"))
+			return
 		if(turf.density)
 			to_chat(user, span_warning("I cannot blink through walls!"))
 			revert_cast()

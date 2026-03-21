@@ -561,6 +561,15 @@
 	skillcraft = /datum/skill/craft/carpentry
 	buildsame = TRUE
 
+/datum/crafting_recipe/roguetown/structure/mineshaft_support
+	name = "mineshaft support"
+	result = /obj/structure/barricade/mineshaft
+	reqs = list(/obj/item/grown/log/tree/small = 1)
+	ontile = TRUE
+	verbage_simple = "set up"
+	verbage = "sets up"
+	buildsame = TRUE
+
 /datum/crafting_recipe/roguetown/structure/fence
 	name = "palisade (stakes)"
 	result = /obj/structure/fluff/railing/fence

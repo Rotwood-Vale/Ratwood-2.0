@@ -96,3 +96,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	if(icon_state == "clear_bottle1")
 		icon_state = "clear_bottle[rand(1,4)]"
 	update_icon()
+
+/obj/item/reagent_containers/glass/bottle/attack_self(mob/user)
+	. = ..()
+	rmb_self(user)
