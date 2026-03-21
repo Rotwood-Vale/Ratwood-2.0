@@ -1074,7 +1074,7 @@
 /datum/status_effect/debuff/killersice
 	id = "burningveins"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/killersice
-	effectedstats = list(STATKEY_CON = -10)
+	effectedstats = list(STATKEY_CON = -19)
 	duration = 5 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/killersice
