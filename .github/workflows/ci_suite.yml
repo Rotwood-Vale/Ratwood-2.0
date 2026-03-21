@@ -59,7 +59,7 @@ jobs:
 
       - name: Give Linters A Go
         id: linter-setup
-        run: ":"
+        uses: ./.github/workflows/run_linters.yml
       - name: Run Grep Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_grep.sh
