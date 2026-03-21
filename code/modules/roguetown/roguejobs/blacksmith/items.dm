@@ -90,6 +90,11 @@
 
 /obj/item/var/polished = FALSE
 /obj/item/var/polish_bonus = 0
+/obj/item/var/pottery_quality = 0
+/obj/item/var/creator_skill = 0
+/obj/item/var/pottery_fragile = FALSE
+/obj/item/var/pottery_baked_at = 0
+/obj/item/var/pottery_shatter_chance = 100
 
 /obj/item/examine(mob/user)
 	. = ..()

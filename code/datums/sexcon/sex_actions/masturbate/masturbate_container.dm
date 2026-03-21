@@ -1,13 +1,21 @@
 /datum/sex_action/masturbate_container
 	name = "Masturbate into container"
 	category = SEX_CATEGORY_HANDS
+	/// Self-action: signal resolver reads user_sex_part as receiver_part. Set so modular_emit_received_sex_action_signal fires correctly.
+	user_sex_part = SEX_PART_COCK | SEX_PART_CUNT
+	/// Bespoke per-genital chastity checks live in shows_on_menu/can_perform — skip the generic validate signal to avoid double-blocking.
+	intimate_check_flags = SEX_ACTION_INTIMATE_CHECK_NONE
 
 /datum/sex_action/masturbate_container/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user != target)
 		return FALSE
 	if(!user.getorganslot(ORGAN_SLOT_PENIS) && !user.getorganslot(ORGAN_SLOT_VAGINA))
 		return FALSE
-	return TRUE
+	if(user.getorganslot(ORGAN_SLOT_PENIS) && !user.sexcon.has_chastity_penis())
+		return TRUE
+	if(user.getorganslot(ORGAN_SLOT_VAGINA) && !user.sexcon.has_chastity_vagina())
+		return TRUE
+	return FALSE
 
 /datum/sex_action/masturbate_container/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/holding = user.get_active_held_item()
@@ -19,9 +27,11 @@
 		return FALSE
 	if(!user.getorganslot(ORGAN_SLOT_PENIS) && !user.getorganslot(ORGAN_SLOT_VAGINA))
 		return FALSE
-	//if(!user.sexcon.can_use_penis())
-	//	return
-	return TRUE
+	if(user.getorganslot(ORGAN_SLOT_PENIS) && !user.sexcon.has_chastity_penis())
+		return TRUE
+	if(user.getorganslot(ORGAN_SLOT_VAGINA) && !user.sexcon.has_chastity_vagina())
+		return TRUE
+	return FALSE
 
 /datum/sex_action/masturbate_container/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts masturbating over [user.get_active_held_item()]..."))

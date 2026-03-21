@@ -105,6 +105,14 @@
 	med_pot = /datum/alch_cauldron_recipe/end_potion
 	minor_pot = /datum/alch_cauldron_recipe/str_potion
 
+/obj/item/alch/stonedust
+	name = "stone dust"
+	desc = "Finely ground mineral dust used for glass clay refinement."
+	icon_state = "coaldust"
+	major_pot = null
+	med_pot = null
+	minor_pot = null
+
 /obj/item/alch/silverdust
 	name = "silver dust"
 	icon_state = "silverdust"

@@ -330,7 +330,7 @@
 	slot_flags = ITEM_SLOT_HIP
 	tool_behaviour = TOOL_IMPROVISED_HEMOSTAT
 	associated_skill = /datum/skill/craft/blacksmithing	//Tongs don't do a lot of damage and have 3 defense. This associated skill should be alright.
-	var/obj/item/ingot/hingot = null
+	var/obj/item/hingot = null
 	var/hott = FALSE
 	smeltresult = /obj/item/ingot/iron
 	grid_width = 32
@@ -374,6 +374,26 @@
 			hingot = null
 			hott = FALSE
 			update_icon()
+
+/obj/item/rogueweapon/tongs/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/natural/glass/heated))
+		var/obj/item/natural/glass/heated/G = I
+		if (loc in user.contents)
+			to_chat(user, span_warning("I can't take out the heated glass from inside."))
+			return
+		if(!hingot)
+			if(!user.transferItemToLoc(G, src) && G.loc != src)
+				G.forceMove(src)
+			hingot = G
+			hott = world.time  // Mark as hot
+			addtimer(CALLBACK(src, PROC_REF(make_unhot), world.time), 10 SECONDS)
+			update_icon()
+			to_chat(user, span_notice("I carefully grasp the heated glass with the tongs."))
+			return TRUE
+		else
+			to_chat(user, span_warning("The tongs are already holding something!"))
+			return TRUE
+	return ..()
 
 /obj/item/rogueweapon/tongs/dropped()
 	. = ..()

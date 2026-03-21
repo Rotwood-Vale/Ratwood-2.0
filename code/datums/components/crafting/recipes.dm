@@ -30,6 +30,8 @@
 	var/sellprice = 0
 	/// Whether this recipe will be hidden from recipe books
 	var/hides_from_books = FALSE 
+	/// Whether this recipe will be hidden from the generic crafting menu UI.
+	var/hides_from_crafting_menu = FALSE
 	/// Whether this recipe will transmit a message in a 7x7 column around the source.
 	var/loud = FALSE
 	//crafting diff, every diff removes 25% chance to craft
