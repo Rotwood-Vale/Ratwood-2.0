@@ -12179,6 +12179,10 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/warden)
+"cYS" = (
+/obj/structure/roguemachine/capturepoint/church,
+/turf/closed/wall/mineral/rogue/decostone/center,
+/area/rogue/indoors/town/church/chapel)
 "cYU" = (
 /obj/structure/chair/wood/rogue{
 	dir = 4
@@ -16085,6 +16089,10 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/dwarfin/rockhill)
+"dVk" = (
+/obj/structure/roguemachine/capturepoint/lowtown,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield/rockhill)
 "dVm" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
@@ -54434,6 +54442,7 @@
 	icon_state = "borderfall"
 	},
 /obj/machinery/light/rogue/firebowl/stump,
+/obj/structure/roguemachine/capturepoint/keep,
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/town/rockhill)
 "nvM" = (
@@ -63677,6 +63686,10 @@
 /obj/structure/flora/roguegrass/bush/wall,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/exposed/town/keep)
+"pKX" = (
+/obj/structure/roguemachine/capturepoint/hightown,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/town/rockhill)
 "pLf" = (
 /turf/open/floor/rogue/rooftop/green{
 	dir = 1
@@ -268313,7 +268326,7 @@ qvR
 qvR
 fxx
 fxx
-qvR
+dVk
 sjP
 qvR
 ppN
@@ -390033,7 +390046,7 @@ apn
 csd
 mxY
 evo
-aOv
+pKX
 aOv
 pjT
 aOv
@@ -520924,7 +520937,7 @@ fZJ
 fZJ
 fZJ
 fZJ
-tja
+cYS
 bPW
 nhW
 tkX
