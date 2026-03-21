@@ -23,19 +23,19 @@
 		STATKEY_SPD = 1,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/swords= SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/maces= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/knives= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling= SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed= SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/swimming= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/athletics= SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/shields= SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/shields = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
-		/datum/skill/misc/medicine= SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/stealing= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/riding= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/stealing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/grenzel/envoy/pre_equip(mob/living/carbon/human/H)
@@ -56,7 +56,7 @@
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
-		/obj/item/storage/belt/pouch/coins/veryrich = 2,
+		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -87,27 +87,27 @@
 		STATKEY_SPD = 1,
 	)
 	subclass_skills = list(
-		/datum/skill/misc/swimming= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/sneaking= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/maces= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/crossbows= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling= SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/swords= SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/shields= SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/polearms= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/whipsflails= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/knives= SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/reading= SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/athletics= SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/shields = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/grenzel/doppel/pre_equip(mob/living/carbon/human/H)
 	..()
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
-	beltl = /obj/item/flashlight/flare/torch
+	beltl = /obj/item/flashlight/flare/torch/lantern
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
 	head = /obj/item/clothing/head/roguetown/grenzelhofthat
@@ -127,6 +127,24 @@
 		)
 	H.cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	H.grant_language(/datum/language/grenzelhoftian)
+	var/weapons = list("Zweihander","Kriegmesser & Buckler","Halberd","Partizan")
+	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+	H.set_blindness(0)
+	switch(weapon_choice)
+		if("Zweihander")
+			r_hand = /obj/item/rogueweapon/greatsword/grenz
+			backl = /obj/item/rogueweapon/scabbard/gwstrap
+		if("Kriegmesser & Buckler") // Buckler cuz they have no shield skill.
+			beltr = /obj/item/rogueweapon/scabbard/sword
+			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
+			backl = /obj/item/rogueweapon/shield/buckler
+		if("Halberd")
+			r_hand = /obj/item/rogueweapon/halberd
+			backl = /obj/item/rogueweapon/scabbard/gwstrap
+		if("Partizan")
+			r_hand = /obj/item/rogueweapon/spear/partizan
+			backl = /obj/item/rogueweapon/scabbard/gwstrap
+
 
 /datum/migrant_role/grenzel/priest
 	name = "Envoy Priest"
@@ -137,8 +155,8 @@
 
 /datum/advclass/grenzel_priest
 	name = "Envoy Priest"
-	outfit = /datum/outfit/job/roguetown/grenzel/doppel
-	traits_applied = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_GRAVEROBBER)
+	outfit = /datum/outfit/job/roguetown/grenzel/priest
+	traits_applied = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_SOUL_EXAMINE, TRAIT_GRAVEROBBER, TRAIT_HOMESTEAD_EXPERT, TRAIT_MEDICINE_EXPERT)
 	category_tags = list(CTAG_GRENZEL_PRIEST)
 	subclass_stats = list(
 		STATKEY_STR = -1,
@@ -147,13 +165,18 @@
 		STATKEY_SPD = -1,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/wrestling= SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/unarmed= SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/polearms= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/craft/alchemy= SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/medicine= SKILL_LEVEL_EXPERT,
-		/datum/skill/magic/holy= SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
+		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/grenzel/priest/pre_equip(mob/living/carbon/human/H)
@@ -167,14 +190,16 @@
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr = /obj/item/storage/belt/pouch/coins/veryrich
+	beltr = /obj/item/storage/belt/rogue/pouch/coins/veryrich
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/priest
 	cloak = /obj/item/clothing/cloak/chasuble
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/needle/pestra = 1,
+		/obj/item/ritechalk = 1,
 	)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+	H.grant_language(/datum/language/grenzelhoftian)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
 
 #undef CTAG_GRENZEL_ENVOY
