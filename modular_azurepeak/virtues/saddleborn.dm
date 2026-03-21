@@ -19,16 +19,16 @@
 	// neatly handles everything, when we want it, when we need it.
 	recipient.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/goatmale/tame/saddled/Initialize()
-	. = ..()
+/mob/living/simple_animal/hostile/retaliate/rogue/goatmale/tame/saddled/Initialize(mapload)
+	. = ..(mapload)
 	ssaddle = new /obj/item/natural/saddle(src)
 	update_icon()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/goat/tame/saddled/Initialize()
-	. = ..()
+/mob/living/simple_animal/hostile/retaliate/rogue/goat/tame/saddled/Initialize(mapload)
+	. = ..(mapload)
 	ssaddle = new /obj/item/natural/saddle(src)
 	// excuse me please fucking compile again thank you
 	update_icon()
