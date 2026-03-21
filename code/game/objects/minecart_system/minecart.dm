@@ -358,6 +358,7 @@
 			obj_flags &= ~BLOCK_Z_OUT_DOWN
 			momentum = 0
 			return
+
 		check_powered()
 		momentum -= 1
 

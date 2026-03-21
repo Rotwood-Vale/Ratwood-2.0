@@ -189,7 +189,7 @@
 				thing.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 				thing.add_atom_colour("#cccccc", FIXED_COLOUR_PRIORITY)
 
-/obj/item/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
+/obj/item/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
 	. = ..()
 	if(obj_integrity <= max_integrity * 0.25)
 		if(polished == 4)

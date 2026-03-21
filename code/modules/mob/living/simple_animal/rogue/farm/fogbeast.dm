@@ -199,7 +199,6 @@ GLOBAL_LIST_INIT(valid_fogbeast_colors, list("White" = COLOR_WHITE, "Gray" = COL
 /// If we're a mount and are hit while sprinting, throw our rider off
 /// Also called if the rider is hit
 /mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/proc/check_sprint_dismount()
-	SIGNAL_HANDLER
 	for(var/mob/living/carbon/human/rider in buckled_mobs)
 		if(rider.m_intent != MOVE_INTENT_RUN)
 			continue
