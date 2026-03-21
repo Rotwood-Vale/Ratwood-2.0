@@ -40,8 +40,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 		guy.apply_status_effect(/datum/status_effect/buff/dungeoneerbuff)
 	if((src.freehold_area == TRUE) && HAS_TRAIT(guy, TRAIT_FREEHOLDER) && !guy.has_status_effect(/datum/status_effect/buff/freeholdbuff)) // Freeholder in Freehold
 		guy.apply_status_effect(/datum/status_effect/buff/freeholdbuff)
-	if((src.freehold_area == TRUE) && HAS_TRAIT(guy, TRAIT_GUARDSMAN) && !guy.has_status_effect(/datum/status_effect/debuff/freehold_guard_debuff)) // Keepoids will suffer in Freehold but not mercs and other adventurers
-		guy.apply_status_effect(/datum/status_effect/debuff/freehold_guard_debuff)
 	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_VOTARY)) //Top Church guys get a buff. Opposite to overt heretics.
 		guy.add_stress(/datum/stressevent/seeblessed)
 	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_OVERTHERETIC)) //Heretics are punished for walking in the Church with rites buffs.
