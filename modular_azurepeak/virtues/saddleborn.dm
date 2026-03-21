@@ -9,6 +9,13 @@
 	)
 
 /datum/virtue/utility/riding/apply_to_human(mob/living/carbon/human/recipient)
+	// Do not grant a duplicate chooser if their class already gave it.
+	if(recipient.mind?.has_spell(/obj/effect/proc_holder/spell/self/choose_riding_virtue_mount))
+		return
+	for(var/obj/effect/proc_holder/spell/existing_spell in recipient.mob_spell_list)
+		if(istype(existing_spell, /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount))
+			return
+
 	// neatly handles everything, when we want it, when we need it.
 	recipient.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
