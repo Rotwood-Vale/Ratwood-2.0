@@ -97,9 +97,11 @@
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
 	var/was_mounted = FALSE
 	var/mount_prev_pixel_z
+	var/mount_prev_pass_flags
 	var/prev_layer
 	if(animal_mount)
 		mount_prev_pixel_z = animal_mount.pixel_z
+		mount_prev_pass_flags = animal_mount.pass_flags
 		prev_layer = layer
 		layer = animal_mount.layer + 0.1
 		var/datum/component/riding/mount_riding = animal_mount.GetComponent(/datum/component/riding)
@@ -139,18 +141,45 @@
 			jump_movable.throw_at(A, jrange, 1, jump_movable, spin = FALSE)
 			while(jump_movable.throwing)
 				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
-					animal_mount.forceMove(get_turf(src))
+					var/turf/current_jump_turf = get_turf(src)
+					var/mount_was_zfalling = animal_mount.zfalling
+					animal_mount.pass_flags = mount_prev_pass_flags
+					if(istype(current_jump_turf, /turf/open/transparent/openspace))
+						animal_mount.pass_flags |= LETPASSTHROW
+						animal_mount.zfalling = TRUE
+					animal_mount.forceMove(current_jump_turf)
+					animal_mount.step_x = step_x
+					animal_mount.step_y = step_y
+					animal_mount.zfalling = mount_was_zfalling
 				sleep(1)
 			jump_movable.throw_at(get_step(jump_movable, jump_movable.dir), 1, 1, jump_movable, spin = FALSE)
 			while(jump_movable.throwing)
 				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
-					animal_mount.forceMove(get_turf(src))
+					var/turf/current_jump_turf = get_turf(src)
+					var/mount_was_zfalling = animal_mount.zfalling
+					animal_mount.pass_flags = mount_prev_pass_flags
+					if(istype(current_jump_turf, /turf/open/transparent/openspace))
+						animal_mount.pass_flags |= LETPASSTHROW
+						animal_mount.zfalling = TRUE
+					animal_mount.forceMove(current_jump_turf)
+					animal_mount.step_x = step_x
+					animal_mount.step_y = step_y
+					animal_mount.zfalling = mount_was_zfalling
 				sleep(1)
 		else
 			jump_movable.throw_at(A, jrange, 1, jump_movable, spin = FALSE)
 			while(jump_movable.throwing)
 				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
-					animal_mount.forceMove(get_turf(src))
+					var/turf/current_jump_turf = get_turf(src)
+					var/mount_was_zfalling = animal_mount.zfalling
+					animal_mount.pass_flags = mount_prev_pass_flags
+					if(istype(current_jump_turf, /turf/open/transparent/openspace))
+						animal_mount.pass_flags |= LETPASSTHROW
+						animal_mount.zfalling = TRUE
+					animal_mount.forceMove(current_jump_turf)
+					animal_mount.step_x = step_x
+					animal_mount.step_y = step_y
+					animal_mount.zfalling = mount_was_zfalling
 				sleep(1)
 		if(!HAS_TRAIT(src, TRAIT_ZJUMP) && (m_intent == MOVE_INTENT_RUN))	//Jesters and werewolves don't get immobilized at all
 			Immobilize((HAS_TRAIT(src, TRAIT_LEAPER) ? 5 : 10))	//Acrobatics get half the time
@@ -172,6 +201,8 @@
 
 	if(was_mounted && !isnull(prev_layer))
 		layer = prev_layer
+	if(was_mounted && animal_mount && !QDELETED(animal_mount))
+		animal_mount.pass_flags = mount_prev_pass_flags
 
 	if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
 		animal_mount.forceMove(get_turf(src))

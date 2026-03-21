@@ -937,7 +937,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
 	if(!animal_mount && !(mobility_flags & MOBILITY_MOVE))
 		return FALSE
-	if(world.time < last_dir_change + 5)
+	var/turn_cooldown = animal_mount ? 2 : 5
+	if(world.time < last_dir_change + turn_cooldown)
 		return
 	if(A && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE) //the reason this isn't a mobility_flags check is because you want them to be able to change dir if you're passively grabbing them
 		// get_cardinal_dir is inconsistent, reuse face_atom code
@@ -981,7 +982,12 @@ GLOBAL_VAR_INIT(mobids, 1)
 	set hidden = TRUE
 	if(!canface())
 		return FALSE
-	apply_face_direction(EAST)
+	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
+	if(animal_mount)
+		rider_look_dir = EAST
+		setDir(EAST)
+	else
+		apply_face_direction(EAST)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
@@ -990,7 +996,12 @@ GLOBAL_VAR_INIT(mobids, 1)
 	set hidden = TRUE
 	if(!canface())
 		return FALSE
-	apply_face_direction(WEST)
+	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
+	if(animal_mount)
+		rider_look_dir = WEST
+		setDir(WEST)
+	else
+		apply_face_direction(WEST)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
@@ -999,7 +1010,12 @@ GLOBAL_VAR_INIT(mobids, 1)
 	set hidden = TRUE
 	if(!canface())
 		return FALSE
-	apply_face_direction(NORTH)
+	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
+	if(animal_mount)
+		rider_look_dir = NORTH
+		setDir(NORTH)
+	else
+		apply_face_direction(NORTH)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
@@ -1008,7 +1024,12 @@ GLOBAL_VAR_INIT(mobids, 1)
 	set hidden = TRUE
 	if(!canface())
 		return FALSE
-	apply_face_direction(SOUTH)
+	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
+	if(animal_mount)
+		rider_look_dir = SOUTH
+		setDir(SOUTH)
+	else
+		apply_face_direction(SOUTH)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
@@ -1093,10 +1114,13 @@ GLOBAL_VAR_INIT(mobids, 1)
 	M.pixel_y = initial(M.pixel_y) + height
 	if(M.layer < layer)
 		M.layer = layer + 0.1
+	candodge = FALSE
+
 ///Call back post unbuckle from a mob, (reset your visual height here)
 /mob/post_unbuckle_mob(mob/living/M)
 	M.layer = initial(M.layer)
 	M.pixel_y = initial(M.pixel_y)
+	candodge = initial(M.candodge)
 
 ///returns the height in pixel the mob should have when buckled to another mob.
 /mob/proc/get_mob_buckling_height(mob/seat)

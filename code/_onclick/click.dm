@@ -765,6 +765,9 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	var/olddir = dir
 	..()
 	if(dir != olddir)
+		// Keep mounted facing in sync when fixed-eye users click to turn without moving.
+		if(get_buckled_animal_mount())
+			apply_face_direction(dir)
 		last_dir_change = world.time
 		sprinted_tiles = 0
 

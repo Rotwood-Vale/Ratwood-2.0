@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/custom_book
 	name = "Custom Book"
-	path = /obj/item/paper/scroll/custom
+	path = /obj/item/book/rogue/loadoutbook
 
 /datum/loadout_item/hand_mirror
 	name = "Hand Mirror"
@@ -229,10 +229,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/witchhat
 	name = "Witch Hat"
 	path = /obj/item/clothing/head/roguetown/witchhat
-
-/datum/loadout_item/witchhat/old
-	name = "Witch Hat (Old)"
-	path = /obj/item/clothing/head/roguetown/witchhat/old
 
 /datum/loadout_item/bardhat
 	name = "Bard Hat"
@@ -799,10 +795,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/leather_black
 	name = "Black Leather Belt"
 	path = /obj/item/storage/belt/rogue/leather/black
-
-/datum/loadout_item/doublebelt
-	name = "Paired slim belts"
-	path = /obj/item/storage/belt/rogue/leather/double
 
 /datum/loadout_item/belt_cloth
 	name = "Cloth Sash"
@@ -1808,10 +1800,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Naledi Psicross"
 	path = /obj/item/clothing/neck/roguetown/psicross/naledi
 
-/datum/loadout_item/woolencollar
-	name = "Woolen Collar"
-	path = /obj/item/clothing/neck/roguetown/collar/woolen
-
 // MASKS (Alphabetically Ordered)
 
 // SHIRTS & ROBES (Alphabetically Ordered)
@@ -1824,10 +1812,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Pontifex Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
 	triumph_cost = 2
-
-/datum/loadout_item/slitteddress
-	name = "Slitted dress"
-	path = /obj/item/clothing/suit/roguetown/shirt/dress/slit
 
 // POLEARMS & STAVES
 /datum/loadout_item/tri_naledi_staff
@@ -2077,25 +2061,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 //ADDITIONAL ITEMS
 
-/datum/loadout_item/backpack
-	name = "Backpack"
-	path = /obj/item/storage/backpack/rogue/backpack
-	triumph_cost = 6
-
 /datum/loadout_item/satchel
 	name = "Satchel"
 	path = /obj/item/storage/backpack/rogue/satchel
 	triumph_cost = 5
-
-/datum/loadout_item/otavansatchel
-	name = "Otavan Satchel"
-	path = /obj/item/storage/backpack/rogue/satchel/otavan
-	triumph_cost = 5
-
-/datum/loadout_item/shortsatchel
-	name = "Short Satchel"
-	path = /obj/item/storage/backpack/rogue/satchel/short
-	triumph_cost = 4
 
 /datum/loadout_item/pouches
 	name = "Pouche"
@@ -2111,16 +2080,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Paper Parasol"
 	path = /obj/item/rogueweapon/mace/parasol
 	triumph_cost = 3
-
-/datum/loadout_item/scabbard
-	name = "Scabbard"
-	path = /obj/item/rogueweapon/scabbard/sword
-	triumph_cost = 1
-
-/datum/loadout_item/greatweaponstrap
-	name = "Great Weapon Strap"
-	path = /obj/item/rogueweapon/scabbard/gwstrap
-	triumph_cost = 2
 
 //INSTRUMENTS
 
@@ -2194,7 +2153,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/rogue/instrument/vocals
 	triumph_cost = 1
 
-
 // Unique stuff that doesn't quite fit anywhere else.
 
 /datum/loadout_item/kazengunite_smithing_manual
@@ -2202,3 +2160,33 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	desc = "A Kazengunite smithing manual. Unlocks kazengunite armor and weapon recipes at the anvil when read — requires knowledge of Kazengunese. "
 	path = /obj/item/book/granter/trait/kazengunite_smith
 	triumph_cost = 3
+
+//CAPARISONS
+
+/datum/loadout_item/caparison
+	name = "Caparison"
+	path = /obj/item/caparison
+
+/datum/loadout_item/caparison/psy
+	name = "Psydonite Caparison"
+	path = /obj/item/caparison/psy
+
+/datum/loadout_item/caparison/astrata
+	name = "Astratan Caparison"
+	path = /obj/item/caparison/astrata
+
+/datum/loadout_item/caparison/eora
+	name = "Eoran Caparison"
+	path = /obj/item/caparison/eora
+
+/datum/loadout_item/caparison/azure
+	name = "Ducal Caparison"
+	path = /obj/item/caparison/azure
+
+/datum/loadout_item/caparison/fogbeast
+	name = "Fogbeast Caparison"
+	path = /obj/item/caparison/fogbeast
+
+/datum/loadout_item/caparison/fogbeast/azure
+	name = "Ducal Caparison (Fogbeast)"
+	path = /obj/item/caparison/fogbeast/azure

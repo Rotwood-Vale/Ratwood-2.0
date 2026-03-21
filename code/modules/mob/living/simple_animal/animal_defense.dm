@@ -1,5 +1,3 @@
-
-
 /mob/living/simple_animal/proc/try_pull_secondary_rider(mob/living/carbon/human/M)
 	if(!can_buckle)
 		return FALSE
@@ -42,9 +40,91 @@
 	visible_message(span_notice("[M] pulls [grab_target] onto [src]."), span_notice("[M] pulls [grab_target] onto me."))
 	return TRUE
 
+/mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
+	if(I.force_dynamic < force_threshold || I.damtype == STAMINA)
+		playsound(loc, 'sound/blank.ogg', I.get_clamped_volume(), TRUE, -1)
+	else
+		var/hitlim = simple_limb_hit(user.zone_selected)
+		I.funny_attack_effects(src, user)
+		if(I.force_dynamic)
+			var/newforce = get_complex_damage(I, user)
+			var/haha = user.used_intent.blade_class
+			var/armor = run_armor_check(null, haha, armor_penetration = I.armor_penetration, damage = newforce, used_weapon = I)
+			var/nodmg = FALSE
+			next_attack_msg.Cut()
+			if(armor > 0)
+				nodmg = TRUE
+				next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+			apply_damage(newforce, I.damtype, hitlim, armor)
+			I.remove_bintegrity(1)
+			if(I.damtype == BRUTE && !nodmg)
+				if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
+					if(I.is_silver && HAS_TRAIT(src, TRAIT_SILVER_WEAK))
+						newforce *= SILVER_SIMPLEMOB_DAM_MULT
+					simple_woundcritroll(user.used_intent.blade_class, newforce, user, hitlim)
+				if(newforce > 5)
+					if(haha != BCLASS_BLUNT)
+						I.add_mob_blood(src)
+						var/turf/location = get_turf(src)
+						add_splatter_floor(location)
+						add_splatter_wall(location, force = newforce)
+						if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
+							user.add_mob_blood(src)
+				if(newforce > 15)
+					if(haha == BCLASS_BLUNT)
+						I.add_mob_blood(src)
+						var/turf/location = get_turf(src)
+						add_splatter_floor(location)
+						add_splatter_wall(location, force = newforce)
+						if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
+							user.add_mob_blood(src)
+		send_item_attack_message(I, user, hitlim)
+		next_attack_msg.Cut()
+		if(I.force_dynamic)
+			return TRUE
+		I.do_special_attack_effect(user, null, null, src, null)
+
+/mob/living/simple_animal/getarmor(def_zone, type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor = 1, used_weapon)
+	if(!type)
+		return 0
+	var/armorval = 0
+	if(bbarding && !bbarding.obj_broken)
+		armorval = bbarding.armor.getRating(type)
+		var/intdamage = damage
+		if(type != "blunt")
+			if((damage + armor_penetration) > armorval)
+				intdamage = (damage + armor_penetration) - armorval
+
+			if(intdamfactor != 1)
+				intdamage *= intdamfactor
+
+			bbarding.take_damage(intdamage, damage_flag = type, sound_effect = FALSE, armor_penetration = 100)
+		else
+			if(mind)
+				if(armorval > 0)
+					intdamage -= intdamage * ((armorval / 1.66) / 100)	//Reduces it up to 60% (100 dmg -> 40 dmg at Blunt S armor (100))
+			if(intdamfactor != 1)
+				intdamage *= intdamfactor
+
+			bbarding.take_damage(intdamage, damage_flag = type, sound_effect = FALSE, armor_penetration = 100)
+
+	return armorval
+
+/mob/living/simple_animal/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+	if(damage_type != BRUTE && damage_type != BURN)
+		return
+	if(!bbarding)
+		return
+	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
+	bbarding.take_damage(damage_amount, damage_type, damage_flag, 0)
+
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
 	if(try_pull_secondary_rider(M))
 		return TRUE
+	// Permit mounting tame saddled mounts even in combat mode.
+	if(M.cmode && tame && ssaddle && can_buckle && !M.buckled)
+		if(user_buckle_mob(M, M))
+			return TRUE
 	..()
 	switch(M.used_intent.type)
 		if(INTENT_HELP)
@@ -71,10 +151,14 @@
 			playsound(loc, attacked_sound, 25, TRUE, -1)
 			var/damage = M.get_punch_dmg()
 			next_attack_msg.Cut()
-			attack_threshold_check(damage)
+			var/hitlim = simple_limb_hit(M.zone_selected)
+			var/haha = M.used_intent.item_d_type
+			var/armor = run_armor_check(null, haha, armor_penetration = M.used_intent.penfactor, damage = damage)
+			if(armor > 0)
+				next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+			attack_threshold_check(damage, hitlim, armorcheck = armor)
 			log_combat(M, src, "attacked")
 			updatehealth()
-			var/hitlim = simple_limb_hit(M.zone_selected)
 			simple_woundcritroll(M.used_intent.blade_class, damage, M, hitlim)
 			visible_message(span_danger("[M] [atk_verb] [src]![next_attack_msg.Join()]"),\
 							span_danger("[M] [atk_verb] me![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
@@ -160,10 +244,14 @@
 		playsound(loc, attacked_sound, 25, TRUE, -1)
 		var/damage = M.get_punch_dmg()
 		next_attack_msg.Cut()
-		attack_threshold_check(damage)
+		var/hitlim = simple_limb_hit(M.zone_selected)
+		var/haha = M.used_intent.item_d_type
+		var/armor = run_armor_check(null, haha, armor_penetration = M.used_intent.penfactor, damage = damage)
+		if(armor > 0)
+			next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+		attack_threshold_check(damage, hitlim, armorcheck = armor)
 		log_combat(M, src, "attacked")
 		updatehealth()
-		var/hitlim = simple_limb_hit(M.zone_selected)
 		simple_woundcritroll(M.used_intent.blade_class, damage, M, hitlim)
 		visible_message(span_danger("[M] [atk_verb] [src]![next_attack_msg.Join()]"),\
 						span_danger("[M] [atk_verb] me![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
@@ -174,8 +262,10 @@
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
-			attack_threshold_check(damage)
-			return 1
+			var/hitlim = simple_limb_hit(M.zone_selected)
+			var/haha = M.used_intent.item_d_type
+			var/armor = run_armor_check(null, haha, armor_penetration = M.used_intent.penfactor, damage = damage)
+			attack_threshold_check(damage, hitlim, armorcheck = armor)
 	if (M.used_intent.type == INTENT_HELP)
 		if (health > 0)
 			visible_message(span_notice("[M.name] [response_help_continuous] [src]."), \
@@ -188,9 +278,13 @@
 	. = ..()
 	if(.)
 		next_attack_msg.Cut()
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/hitlim = simple_limb_hit(M.zone_selected)
-		attack_threshold_check(damage, M.melee_damage_type)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/haha = M.d_type
+		var/armor = run_armor_check(null, haha, armor_penetration = M.armor_penetration, damage = damage)
+		if(armor > 0)
+			next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+		attack_threshold_check(damage, hitlim, M.melee_damage_type, armor)
 		simple_woundcritroll(M.a_intent.blade_class, damage, M, hitlim)
 		visible_message(span_danger("\The [M] [pick(M.a_intent.attack_verb)] [src]![next_attack_msg.Join()]"), \
 					span_danger("\The [M] [pick(M.a_intent.attack_verb)] me![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
@@ -217,11 +311,16 @@
 			user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 15)
 			gib()
 		return
-	if(src.apply_damage(damage, BRUTE))
+	var/hitlim = simple_limb_hit(user.zone_selected)
+	var/armor = run_armor_check(null, "stab", armor_penetration = 0, damage = damage)
+	if(armor > 0)
+		user.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+	if(src.apply_damage(damage, BRUTE, hitlim, armor))
 		if(istype(user, /mob/living/carbon/human/species/werewolf))
 			visible_message(span_danger("The werewolf bites into [src] and thrashes!"))
 		else
 			visible_message(span_danger("[user] bites [src]! What is wrong with them?"))
+	user.next_attack_msg.Cut()
 
 /mob/living/simple_animal/onkick(mob/M)
 	var/mob/living/simple_animal/target = src
@@ -263,7 +362,7 @@
 			target.mind.attackedme[user.real_name] = world.time
 		user.stamina_add(15)
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = d_type)
+/mob/living/simple_animal/proc/attack_threshold_check(damage, bodypart = null, damagetype = BRUTE, armorcheck = 0)
 	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
 		temp_damage = 0
@@ -274,7 +373,7 @@
 		visible_message(span_warning("[src] looks unharmed!"))
 		return FALSE
 	else
-		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
+		apply_damage(damage, damagetype, bodypart, armorcheck)
 		return TRUE
 
 /mob/living/simple_animal/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)

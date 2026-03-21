@@ -145,4 +145,37 @@
 					/obj/item/clothing/mask/rogue/exoticsilkmask,
 				)
 
+/datum/supply_pack/rogue/wardrobe/caparison/caparison
+	name = "Caparison"
+	cost = 25
+	contains = list(
+					/obj/item/caparison,
+				)
 
+/datum/supply_pack/rogue/wardrobe/caparison/caparison_psy
+	name = "Psydonic Caparison"
+	cost = 25
+	contains = list(
+					/obj/item/caparison/psy,
+				)
+
+/datum/supply_pack/rogue/wardrobe/caparison/caparison_astrata
+	name = "Astratan Caparison"
+	cost = 25
+	contains = list(
+					/obj/item/caparison/astrata,
+				)
+
+/datum/supply_pack/rogue/wardrobe/caparison/caparison_eora
+	name = "Eoran Caparison"
+	cost = 25
+	contains = list(
+					/obj/item/caparison/eora
+				)
+
+/datum/supply_pack/rogue/wardrobe/caparison/caparison_fogbeast
+	name = "Fogbeast Caparison"
+	cost = 25
+	contains = list(
+					/obj/item/caparison/fogbeast,
+				)

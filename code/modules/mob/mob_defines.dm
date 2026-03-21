@@ -255,6 +255,7 @@
 	var/temptarget = FALSE
 	var/fixedeye = FALSE
 	var/tempfixeye = FALSE //targetting
+	var/rider_look_dir = 0 // Independent facing direction for a rider; overrides mount-synced facing until movement clears it
 	var/image/targeti
 	var/image/swingi
 	var/rautoaiming = FALSE //targets any mob on a turf with rmb or lmb

@@ -135,7 +135,19 @@
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return TRUE
 
-	if(!M.buckled && !M.has_buckled_mobs())
+	// If this bump is a potential mounted charge attempt, don't early-return through mob-swap/push.
+	var/skip_mob_swap_for_charge = FALSE
+	if(m_intent == MOVE_INTENT_RUN && dir == get_dir(src, M) && isliving(M))
+		var/mob/living/charger_probe = src
+		if(istype(src, /mob/living/simple_animal))
+			var/mob/living/simple_animal/src_mount_probe = src
+			for(var/mob/living/rider_probe in src_mount_probe.buckled_mobs)
+				charger_probe = rider_probe
+				break
+		if(charger_probe?.cmode)
+			skip_mob_swap_for_charge = TRUE
+
+	if(!skip_mob_swap_for_charge && !M.buckled && !M.has_buckled_mobs())
 		var/mob_swap = FALSE
 		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
 		if(istype(M,/mob/living/simple_animal/hostile/retaliate))
@@ -181,6 +193,461 @@
 
 			if(!move_failed)
 				return TRUE
+
+	// LANCE / TWO-HANDED SPEAR CHARGE
+	// Triggered by: rider or mount run bump + combat mode + intent-gated weapon use.
+	if(isliving(M))
+		var/mob/living/charger = src
+		var/mob/living/simple_animal/charger_mount = null
+		if(istype(src, /mob/living/simple_animal))
+			var/mob/living/simple_animal/src_mount = src
+			for(var/mob/living/rider in src_mount.buckled_mobs)
+				charger = rider
+				charger_mount = src_mount
+				break
+		else
+			charger_mount = charger.get_buckled_animal_mount()
+
+		var/mob/living/defender = M
+		var/mob/living/simple_animal/defender_mount = null
+		if(istype(M, /mob/living/simple_animal))
+			var/mob/living/simple_animal/target_mount = M
+			for(var/mob/living/rider in target_mount.buckled_mobs)
+				defender = rider
+				defender_mount = target_mount
+				break
+		else
+			defender_mount = defender.get_buckled_animal_mount()
+
+		var/is_charge_bump = FALSE
+		if(src.m_intent == MOVE_INTENT_RUN && src.dir == get_dir(src, M))
+			is_charge_bump = TRUE
+		else if(charger && defender && charger.m_intent == MOVE_INTENT_RUN && charger.dir == get_dir(charger, defender))
+			is_charge_bump = TRUE
+
+		if(!is_charge_bump)
+			return FALSE
+		if(!charger || !defender)
+			return FALSE
+		if(!charger.cmode)
+			return FALSE
+		if(HAS_TRAIT(charger, TRAIT_PACIFISM))
+			return FALSE
+		var/mob/living/charge_runner = charger
+		if(charger_mount && charger_mount.sprinted_tiles >= charger.sprinted_tiles)
+			charge_runner = charger_mount
+
+		var/obj/item/charge_weapon = null
+		// Use a_intent (live HUD intent) — used_intent is only set on LMB click and is stale during movement bumps
+		var/datum/intent/charger_intent = charger.a_intent
+		var/lance_charge_intent = istype(charger_intent, /datum/intent/lance) || istype(charger_intent, /datum/intent/spear/thrust/lance)
+		var/spear_charge_intent = istype(charger_intent, /datum/intent/spear/thrust) || istype(charger_intent, /datum/intent/stab) || (charger_intent?.blade_class == BCLASS_STAB)
+		var/obj/item/active_weapon = charger.get_active_held_item()
+		var/spearclass_charge_weapon = istype(active_weapon, /obj/item/rogueweapon/spear) || istype(active_weapon, /obj/item/rogueweapon/halberd)
+		if(istype(active_weapon, /obj/item/rogueweapon/spear/lance))
+			if(lance_charge_intent)
+				charge_weapon = active_weapon
+		else if(spearclass_charge_weapon && !istype(active_weapon, /obj/item/rogueweapon/spear/lance))
+			if(spear_charge_intent)
+				charge_weapon = active_weapon
+		if(!charge_weapon)
+			for(var/obj/item/cw in charger.held_items)
+				var/spearclass_held_weapon = istype(cw, /obj/item/rogueweapon/spear) || istype(cw, /obj/item/rogueweapon/halberd)
+				if(istype(cw, /obj/item/rogueweapon/spear/lance))
+					if(lance_charge_intent)
+						charge_weapon = cw
+						break
+				else if(spearclass_held_weapon && !istype(cw, /obj/item/rogueweapon/spear/lance))
+					if(spear_charge_intent)
+						charge_weapon = cw
+						break
+
+		if(charge_weapon)
+			var/base_damage = max(round(get_complex_damage(charge_weapon, charger)), 1)
+			var/charger_sprinted_tiles = charger.sprinted_tiles
+			var/charger_sprint_dir = charger.sprint_dir
+			var/runner_sprinted_tiles = charge_runner.sprinted_tiles
+			var/runner_sprint_dir = charge_runner.sprint_dir
+			// Force walk intent immediately, bypassing the mounted do_after delay in toggle_rogmove_intent
+			charger.m_intent = MOVE_INTENT_WALK
+			charger.sprinted_tiles = 0
+			charger.sprint_dir = charger.dir
+			charger.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+			if(charger.hud_used?.static_inventory)
+				for(var/atom/movable/screen/rogmove/S in charger.hud_used.static_inventory)
+					S.update_icon()
+			if(charger_mount)
+				charger_mount.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+			var/has_charger_shield = FALSE
+			for(var/obj/item/my_item in charger.held_items)
+				if(istype(my_item, /obj/item/rogueweapon/shield))
+					has_charger_shield = TRUE
+					break
+			var/has_defender_shield = FALSE
+			var/obj/item/defender_shield_item = null
+			for(var/obj/item/def_item in defender.held_items)
+				if(istype(def_item, /obj/item/rogueweapon/shield))
+					has_defender_shield = TRUE
+					defender_shield_item = def_item
+					break
+
+			if(!charger_mount)
+				// Keep unmounted lance/spear charge behavior aligned with the legacy on-foot contest logic
+				var/sprint_distance = charger_sprinted_tiles
+				var/instafail_foot = FALSE
+				var/self_points = FLOOR((charger.STACON + charger.STASTR) / 2, 1)
+				var/target_points = FLOOR((defender.STACON + defender.STASTR) / 2, 1)
+				var/foot_target_zone = charger.zone_selected
+				if(!foot_target_zone)
+					foot_target_zone = BODY_ZONE_CHEST
+
+				switch(sprint_distance)
+					if(0 to 1)
+						self_points -= 99
+						instafail_foot = TRUE
+					if(2 to 3)
+						self_points -= 2
+					if(6 to INFINITY)
+						self_points += 1
+
+				if(defender.dir == get_dir(charger, defender))
+					self_points += 2
+
+				self_points += rand(-1, 1)
+
+				if(charger.dir != charger_sprint_dir)
+					self_points -= 99
+					instafail_foot = TRUE
+					to_chat(charger, span_warning("I changed direction too late!"))
+
+				var/clash_blocked_foot = FALSE
+				if(defender.has_status_effect(/datum/status_effect/buff/clash) && !instafail_foot)
+					self_points -= 99
+					defender.remove_status_effect(/datum/status_effect/buff/clash)
+					to_chat(charger, span_warning("[defender] was ready for me!"))
+					if(prob(10))
+						playsound(charger, 'sound/combat/clash_charge_meme.ogg', 100)
+					else
+						playsound(charger, 'sound/combat/clash_charge.ogg', 100)
+					clash_blocked_foot = TRUE
+
+				if(self_points > target_points)
+					defender.Knockdown(1)
+				if(self_points < target_points)
+					charger.Knockdown(30)
+				if(self_points == target_points)
+					defender.Knockdown(1)
+					charger.Knockdown(30)
+
+				if(instafail_foot || clash_blocked_foot || self_points <= target_points)
+					// On-foot failed spear/lance charge: mounted fail stun plus one extra second.
+					charger.Stun(25)
+
+				charger.Immobilize(10)
+
+				var/hit_sound = FALSE
+				var/foot_effective_str = charger.STASTR + (charge_weapon.wielded ? 1 : 0)
+				var/foot_charge_damage = max(base_damage + max(round(sprint_distance / 2), 0) + FLOOR(foot_effective_str / 5, 1), 1)
+				if(foot_target_zone != BODY_ZONE_CHEST)
+					foot_charge_damage += 2
+				var/foot_penetration = 35
+				var/foot_armor_block = defender.run_armor_check(foot_target_zone, "stab", armor_penetration = foot_penetration, damage = foot_charge_damage)
+				var/effective_foot_block = min(foot_armor_block, max(foot_charge_damage - 5, 0))
+				if(defender.apply_damage(foot_charge_damage, BRUTE, foot_target_zone, effective_foot_block))
+					hit_sound = TRUE
+
+				if(self_points >= target_points && !instafail_foot && !clash_blocked_foot)
+					var/foot_wound_chance = 35
+					if(sprint_distance > 5)
+						foot_wound_chance += 15
+					if(iscarbon(defender))
+						var/mob/living/carbon/CF = defender
+						var/obj/item/bodypart/foot_part = CF.get_bodypart(foot_target_zone)
+						if(!foot_part && (foot_target_zone in list(BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)))
+							foot_part = CF.get_bodypart(BODY_ZONE_HEAD)
+						if(!foot_part)
+							foot_part = CF.get_bodypart(BODY_ZONE_CHEST)
+						if(foot_part)
+							foot_part.try_crit(BCLASS_STAB, foot_charge_damage + 12, charger, foot_target_zone, FALSE, TRUE)
+						if(prob(foot_wound_chance))
+							if(foot_part)
+								foot_part.add_wound(/datum/wound/puncture/large)
+						if((defender.mob_biotypes & MOB_UNDEAD) && prob(35))
+							var/obj/item/bodypart/foot_fracture_part = CF.get_bodypart(foot_target_zone)
+							if(!foot_fracture_part)
+								foot_fracture_part = CF.get_bodypart(BODY_ZONE_HEAD)
+							if(!foot_fracture_part)
+								foot_fracture_part = CF.get_bodypart(BODY_ZONE_CHEST)
+							if(foot_fracture_part)
+								foot_fracture_part.add_wound((foot_target_zone in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)) ? /datum/wound/fracture/head : /datum/wound/fracture)
+								defender.Knockdown(40)
+								defender.Stun(25)
+								defender.Immobilize(20)
+					else if((defender.mob_biotypes & MOB_UNDEAD) && HAS_TRAIT(defender, TRAIT_SIMPLE_WOUNDS))
+						if(prob(foot_wound_chance))
+							defender.simple_add_wound(/datum/wound/puncture/large, silent = FALSE, crit_message = TRUE)
+							defender.simple_woundcritroll(BCLASS_STAB, foot_charge_damage + 12, charger, foot_target_zone, silent = FALSE, crit_message = TRUE)
+							defender.Knockdown(40)
+							defender.Stun(25)
+							defender.Immobilize(20)
+
+				if(instafail_foot)
+					if(charger.apply_damage(15, BRUTE, "head", charger.run_armor_check("head", "blunt", damage = 20)))
+						hit_sound = TRUE
+
+				if(hit_sound)
+					playsound(charger, "genblunt", 100, TRUE)
+
+				if(instafail_foot || clash_blocked_foot)
+					if(instafail_foot)
+						visible_message(span_crit("<big><b>[charger] smashes into [defender] with no headstart!</b></big>"), span_crit("<big><b>I charge into [defender] too early!</b></big>"))
+					if(clash_blocked_foot)
+						visible_message(span_crit("<big><b>[charger] gets tripped by [defender]!</b></big>"), span_crit("<big><b>I get tripped by [defender]!</b></big>"))
+				else
+					if(self_points >= target_points)
+						defender.Knockdown(35)
+						defender.Stun(15)
+					visible_message(span_crit("<big><b>[charger] drives [charge_weapon] into [defender]!</b></big>"), span_crit("<big><b>I drive [charge_weapon] into [defender]!</b></big>"))
+
+				return TRUE
+
+			// CON scaling — +2 bonus while mounted, representing the stability of a horse
+			var/effective_con = charger.STACON + (charger_mount ? 2 : 0)
+
+			var/charge_distance = runner_sprinted_tiles
+			if(charger_mount)
+				charge_distance = max(charge_distance, charger_sprinted_tiles)
+			var/effective_str = charger.STASTR + (charge_weapon.wielded ? 1 : 0)
+			var/charge_damage_bonus = max(round(charge_distance / 4), 0) + FLOOR(effective_str / 5, 1)
+			var/charge_damage = max(base_damage + charge_damage_bonus, 1)
+			var/charge_points = effective_con + charge_distance
+			var/instafail = FALSE
+			switch(charge_distance)
+				if(0 to 1)
+					if(charger_mount)
+						charge_points -= 2
+					else
+						charge_points -= 99
+						instafail = TRUE
+				if(2 to 3)
+					charge_points -= 2
+				if(5 to INFINITY)
+					charge_points += 2
+			if(charge_distance > 0)
+				var/valid_charge_direction = FALSE
+				if(runner_sprint_dir && charge_runner.dir == runner_sprint_dir)
+					valid_charge_direction = TRUE
+				else if(charger_mount && charger_sprint_dir && charger.dir == charger_sprint_dir)
+					valid_charge_direction = TRUE
+				if(!valid_charge_direction)
+					charge_points -= 99
+					instafail = TRUE
+					to_chat(charger, span_warning("I changed direction too late!"))
+
+			// Mounted head-on charges can resolve as a joust clash where one rider is unhorsed.
+			if(charger_mount && defender_mount && !instafail)
+				var/obj/item/defender_charge_weapon = null
+				var/datum/intent/defender_intent = defender.a_intent
+				var/defender_lance_charge_intent = istype(defender_intent, /datum/intent/lance) || istype(defender_intent, /datum/intent/spear/thrust/lance)
+				var/defender_spear_charge_intent = istype(defender_intent, /datum/intent/spear/thrust) || istype(defender_intent, /datum/intent/stab) || (defender_intent?.blade_class == BCLASS_STAB)
+				var/obj/item/defender_active_item = defender.get_active_held_item()
+				var/defender_spearclass_charge_weapon = istype(defender_active_item, /obj/item/rogueweapon/spear) || istype(defender_active_item, /obj/item/rogueweapon/halberd)
+				if(istype(defender_active_item, /obj/item/rogueweapon/spear/lance))
+					if(defender_lance_charge_intent)
+						defender_charge_weapon = defender_active_item
+				else if(defender_spearclass_charge_weapon && !istype(defender_active_item, /obj/item/rogueweapon/spear/lance))
+					if(defender_spear_charge_intent)
+						defender_charge_weapon = defender_active_item
+
+				if(defender_charge_weapon && defender.cmode && defender.m_intent == MOVE_INTENT_RUN && defender.dir == get_dir(defender, charger))
+					var/mob/living/def_charge_runner = defender
+					if(defender_mount && defender_mount.sprinted_tiles >= defender.sprinted_tiles)
+						def_charge_runner = defender_mount
+					var/def_effective_con = defender.STACON
+					var/def_charge_distance = def_charge_runner.sprinted_tiles
+					if(defender_mount)
+						def_charge_distance = max(def_charge_distance, defender.sprinted_tiles)
+					var/def_charge_points = def_effective_con + def_charge_distance
+					switch(def_charge_distance)
+						if(0 to 1)
+							if(defender_mount)
+								def_charge_points -= 2
+							else
+								def_charge_points -= 99
+						if(2 to 3)
+							def_charge_points -= 2
+						if(5 to INFINITY)
+							def_charge_points += 2
+					if(def_charge_runner.sprinted_tiles > 0)
+						var/valid_def_charge_direction = FALSE
+						if(def_charge_runner.sprint_dir && def_charge_runner.dir == def_charge_runner.sprint_dir)
+							valid_def_charge_direction = TRUE
+						else if(defender_mount && defender.sprint_dir && defender.dir == defender.sprint_dir)
+							valid_def_charge_direction = TRUE
+						if(!valid_def_charge_direction)
+							def_charge_points -= 99
+					if(istype(charge_weapon, /obj/item/rogueweapon/spear/lance) && has_charger_shield)
+						charge_points += 2
+					if(istype(defender_charge_weapon, /obj/item/rogueweapon/spear/lance) && has_defender_shield)
+						def_charge_points += 2
+					charge_points += rand(-1, 1)
+					def_charge_points += rand(-1, 1)
+
+					var/mob/living/unhorsed_rider = null
+					if(charge_points > def_charge_points)
+						unhorsed_rider = defender
+					else if(charge_points < def_charge_points)
+						unhorsed_rider = charger
+					else
+						unhorsed_rider = prob(50) ? defender : charger
+
+					var/mob/living/simple_animal/unhorsed_mount = unhorsed_rider?.get_buckled_animal_mount()
+					if(unhorsed_mount)
+						unhorsed_mount.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+					if(unhorsed_rider?.buckled)
+						unhorsed_rider.buckled.unbuckle_mob(unhorsed_rider, TRUE)
+					// Force walk intent for the unhorsed rider immediately
+					unhorsed_rider.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+					unhorsed_rider.Knockdown(40)
+					unhorsed_rider.Stun(20)
+					unhorsed_rider.Immobilize(20)
+					playsound(charger, 'sound/combat/clash_charge.ogg', 100)
+					visible_message(span_crit("<big><b>[charger] and [defender] collide in a brutal joust clash! [unhorsed_rider] is thrown from their mount!</b></big>"), span_crit("<big><b>Our charges crash together and [unhorsed_rider == charger ? "I am" : "[defender] is"] thrown from [unhorsed_rider == charger ? "my" : "their"] mount!</b></big>"))
+					return TRUE
+
+			// Target braced with defensive stance: likely to stop the charge via CON contest.
+			if(defender.has_status_effect(/datum/status_effect/buff/clash) && !instafail)
+				var/block_points = defender.STACON
+				if(has_defender_shield)
+					block_points += 2
+				var/stance_block_chance = 45 + ((block_points - charge_points) * 8)
+				if(charge_distance >= 4)
+					stance_block_chance -= 15
+				if(stance_block_chance < 10)
+					stance_block_chance = 10
+				if(stance_block_chance > 85)
+					stance_block_chance = 85
+				if(prob(stance_block_chance))
+					defender.remove_status_effect(/datum/status_effect/buff/clash)
+					if(defender_shield_item)
+						defender_shield_item.take_damage(max(round(base_damage * 2), 1), BRUTE, "blunt", TRUE, armor_penetration = 100)
+					if(charger_mount)
+						charger_mount.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+					if(charger.buckled)
+						charger.buckled.unbuckle_mob(charger, TRUE)
+					charger.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+					charger.Knockdown(40)
+					charger.Stun(20)
+					charger.Immobilize(10)
+					if(ishuman(charger))
+						var/mob/living/carbon/human/HS = charger
+						HS.bad_guard(span_danger("I charged straight into a braced defender! My momentum is completely shattered!"))
+					playsound(charger, 'sound/combat/clash_charge.ogg', 100)
+					visible_message(span_crit("<big><b>[charger] is stopped dead by [defender]'s braced stance!</b></big>"), span_crit("<big><b>I charge headlong into [defender]'s braced stance and am thrown to the ground!</b></big>"))
+					return TRUE
+
+			// Shield-only reactive block without defensive stance.
+			if(has_defender_shield && !defender.has_status_effect(/datum/status_effect/buff/clash) && !instafail)
+				var/shield_block_points = defender.STACON + 2
+				var/shield_block_chance = 20 + ((shield_block_points - charge_points) * 8)
+				if(charge_distance >= 4)
+					shield_block_chance -= 20
+				if(shield_block_chance < 5)
+					shield_block_chance = 5
+				if(shield_block_chance > 55)
+					shield_block_chance = 55
+				if(prob(shield_block_chance))
+					defender_shield_item.take_damage(max(round(base_damage * 2), 1), BRUTE, "blunt", TRUE, armor_penetration = 100)
+					if(charger_mount)
+						charger_mount.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+					if(charger.buckled)
+						charger.buckled.unbuckle_mob(charger, TRUE)
+					charger.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+					charger.Knockdown(30)
+					charger.Stun(15)
+					charger.Immobilize(8)
+					playsound(charger, 'sound/combat/clash_charge.ogg', 100)
+					visible_message(span_crit("<big><b>[defender] absorbs [charger]'s charge on [defender.p_their()] shield!</b></big>"), span_crit("<big><b>My charge is turned aside by [defender]'s shield!</b></big>"))
+					return TRUE
+
+			if(!instafail)
+				// Successful charge: armor-penetrating strike and knockdown
+				var/target_zone = charger.zone_selected
+				if(!target_zone)
+					target_zone = BODY_ZONE_CHEST
+				var/armor_block = defender.run_armor_check(target_zone, "stab", armor_penetration = 40, damage = charge_damage)
+				// Mounted charge impacts should always transfer some force, even through heavy armor.
+				var/effective_armor_block = min(armor_block, max(charge_damage - 10, 0))
+				defender.apply_damage(charge_damage, BRUTE, target_zone, effective_armor_block)
+				if(defender_mount && defender.buckled)
+					defender_mount.unbuckle_mob(defender, TRUE)
+					defender.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+				defender.Knockdown(35)
+				defender.Stun(15)
+				charger.Immobilize(10)
+				// Mounted spear/lance charges are much more likely to create severe puncture trauma
+				if(iscarbon(defender))
+					var/mob/living/carbon/C = defender
+					var/obj/item/bodypart/target_part = C.get_bodypart(target_zone)
+					if(!target_part && (target_zone in list(BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)))
+						target_part = C.get_bodypart(BODY_ZONE_HEAD)
+					if(!target_part)
+						target_part = C.get_bodypart(BODY_ZONE_CHEST)
+					if(target_part)
+						target_part.try_crit(BCLASS_STAB, charge_damage + 15, charger, target_zone, FALSE, TRUE)
+					var/puncture_chance = 20
+					if(charge_distance > 5)
+						puncture_chance += 10
+					if(prob(puncture_chance))
+						var/obj/item/bodypart/pierced_part = C.get_bodypart(target_zone)
+						if(!pierced_part)
+							pierced_part = C.get_bodypart(BODY_ZONE_CHEST)
+						if(pierced_part)
+							pierced_part.add_wound(/datum/wound/puncture/large)
+							to_chat(defender, span_danger("A deep puncture tears through me!"))
+
+					// Higher fracture chance on long charges; significantly higher against undead
+					var/crit_chance = 10
+					if(charge_distance > 5)
+						crit_chance += 15 + min((charge_distance - 5) * 2, 12)
+					if(defender.mob_biotypes & MOB_UNDEAD)
+						crit_chance += 10
+					if(prob(crit_chance))
+						var/obj/item/bodypart/BP = C.get_bodypart(target_zone)
+						if(!BP)
+							BP = C.get_bodypart(BODY_ZONE_HEAD)
+						if(!BP)
+							BP = C.get_bodypart(BODY_ZONE_CHEST)
+						if(BP)
+							BP.add_wound((target_zone in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)) ? /datum/wound/fracture/head : /datum/wound/fracture)
+							if(defender.mob_biotypes & MOB_UNDEAD)
+								defender.Knockdown(45)
+								defender.Stun(30)
+								defender.Immobilize(20)
+							to_chat(defender, span_danger("I hear a sickening crack — something broke!"))
+
+				// Undead that are not carbon mobs should still receive wound crit attempts from mounted lance/spear impacts.
+				if((defender.mob_biotypes & MOB_UNDEAD) && !iscarbon(defender))
+					defender.simple_add_wound(/datum/wound/puncture/large, silent = FALSE, crit_message = TRUE)
+					defender.simple_woundcritroll(BCLASS_STAB, charge_damage + 18, charger, target_zone, silent = FALSE, crit_message = TRUE)
+					defender.Knockdown(45)
+					defender.Stun(30)
+					defender.Immobilize(20)
+				playsound(charger, 'sound/combat/hits/bladed/genstab (1).ogg', 100, TRUE)
+				visible_message(span_crit("<big><b>[charger] drives [charge_weapon] into [defender]!</b></big>"), span_crit("<big><b>I drive [charge_weapon] into [defender]!</b></big>"))
+			else
+				// No run-up: fumbled charge, charger takes the brunt
+				if(charger_mount)
+					charger_mount.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+				if(charger.buckled)
+					charger.buckled.unbuckle_mob(charger, TRUE)
+				charger.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+				charger.apply_damage(15, BRUTE, "head", charger.run_armor_check("head", "blunt", damage = 15))
+				charger.Knockdown(30)
+				charger.Stun(15)
+				visible_message(span_crit("<big><b>[charger] fumbles a charge into [defender]!</b></big>"), span_crit("<big><b>I fumble my charge into [defender]!</b></big>"))
+
+			return TRUE
 
 	if(m_intent == MOVE_INTENT_RUN && dir == get_dir(src, M))
 		if(isliving(M))
@@ -1664,7 +2131,7 @@
  */
 
 /mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick)
+	adjust_bodytemperature(((fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
 
 /**
  * Adjust the amount of fire stacks on a mob

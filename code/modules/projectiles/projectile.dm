@@ -222,7 +222,9 @@
 	var/mob/living/L = target
 
 	if(!L.mind)
-		damage *= npc_simple_damage_mult // bonus damage against NPCs.
+		var/datum/component/precious_creature/saddleborn = L.GetComponent(/datum/component/precious_creature)
+		if(!saddleborn)
+			damage *= npc_simple_damage_mult // bonus damage against NPCs.
 	if(blocked != 100) // not completely blocked
 		if(damage && L.blood_volume && damage_type == BRUTE)
 			var/splatter_dir = dir
@@ -633,6 +635,8 @@
 				return FALSE
 	return TRUE
 
+#define BUCKLE_PENALTY 0.5
+
 //Spread is FORCED!
 /obj/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
 	var/turf/curloc = get_turf(source)
@@ -658,6 +662,14 @@
 	trajectory_ignore_forcemove = FALSE
 	starting = start_loc
 	original = target
+
+	// mounted penalty
+	if(isliving(source))
+		var/mob/living/shooter = source
+		if(shooter.buckled)
+			accuracy = max(5, accuracy * BUCKLE_PENALTY)
+			bonus_accuracy = max(0, bonus_accuracy * BUCKLE_PENALTY)
+
 	if(targloc || !params)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
@@ -676,6 +688,8 @@
 	else
 		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
 		qdel(src)
+
+#undef BUCKLE_PENALTY
 
 /proc/calculate_projectile_angle_and_pixel_offsets(mob/user, params)
 	var/list/mouse_control = params2list(params)

@@ -66,31 +66,30 @@
 
 /datum/component/riding/proc/vehicle_moved(datum/source)
 	var/atom/movable/AM = parent
+	var/mob/living/current_driver = driver
 	AM.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 	for(var/mob/M in AM.buckled_mobs)
 		if(!istype(M, /mob/living))
 			continue
-		var/mob/living/rider = M
 		ride_check(M)
 		M.set_glide_size(AM.glide_size)
-		// Award riding XP if the RIDER is in run intent while moving on mount
-		// Only award XP every 5 moves to avoid spam
-		if(rider.m_intent == MOVE_INTENT_RUN)
+	// Award riding XP only to the driver, once per completed mount move.
+	if(current_driver && !QDELETED(current_driver) && (current_driver in AM.buckled_mobs))
+		if(current_driver.m_intent == MOVE_INTENT_RUN)
 			riding_xp_move_counter++
 			if(riding_xp_move_counter >= 5)
-				// Scale XP with rider's STAINT stat, like other movement-based skill gains.
-				var/xp_amt = rider.STAINT * 0.1
-				var/riding_level = rider.get_skill_level(/datum/skill/misc/riding)
-				// At apprentice and above, gains are slowed to half speed.
+				var/xp_amt = current_driver.STAINT * 0.1
+				var/riding_level = current_driver.get_skill_level(/datum/skill/misc/riding)
 				if(riding_level >= SKILL_LEVEL_APPRENTICE)
 					xp_amt *= 0.5
-				// At zero riding skill, gains are doubled to help reach apprentice faster.
 				else if(riding_level == SKILL_LEVEL_NONE)
 					xp_amt *= 2
-				rider.mind && rider.mind.add_sleep_experience(/datum/skill/misc/riding, xp_amt)
+				current_driver.mind && current_driver.mind.add_sleep_experience(/datum/skill/misc/riding, xp_amt)
 				riding_xp_move_counter = 0
 		else
-			riding_xp_move_counter = 0 //reset counter if not running
+			riding_xp_move_counter = 0
+	else
+		riding_xp_move_counter = 0
 	handle_vehicle_offsets()
 	handle_vehicle_layer()
 
@@ -123,7 +122,7 @@
 			var/list/offsets = get_offsets(passindex)
 			var/rider_dir = get_rider_dir(passindex)
 			if(!has_fixedeye)
-				buckled_mob.setDir(rider_dir)
+				buckled_mob.setDir(buckled_mob.rider_look_dir || rider_dir)
 				dir_loop:
 					for(var/offsetdir in offsets)
 						if(offsetdir == AM_dir)
@@ -192,9 +191,22 @@
 	return TRUE
 
 /datum/component/riding/proc/handle_ride(mob/user, direction)
+	user.rider_look_dir = 0 // Cancel any rider look override when movement is attempted
 	var/atom/movable/AM = parent
+	var/fixedeye_driver = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.fixedeye)
+			fixedeye_driver = TRUE
+			if(AM.dir != H.dir)
+				AM.setDir(H.dir)
+				handle_vehicle_layer()
+				handle_vehicle_offsets()
 	if(user.incapacitated())
 		Unbuckle(user)
+		return
+
+	if(driver && user != driver) // only the designated driver/first rider can steer
 		return
 
 	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
@@ -258,6 +270,10 @@
 		else
 			last_move_diagonal = FALSE
 
+		if(fixedeye_driver)
+			// Fixed-eye riders can strafe, so movement direction and facing direction can differ.
+			// Force the mount to visually face where the driver is looking.
+			AM.setDir(user.dir)
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else

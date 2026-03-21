@@ -189,6 +189,11 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
+	var/obj/item/caparison/ccaparison
+	var/obj/item/clothing/barding/bbarding
+	var/caparison_over_barding = FALSE
+	var/barding_speed_mult = 1
+
 /mob/living/simple_animal/Initialize(mapload)
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
@@ -219,12 +224,118 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		QDEL_NULL(ssaddle)
 		ssaddle = null
 
+	if(ccaparison)
+		QDEL_NULL(ccaparison)
+		ccaparison = null
+
+	if(bbarding)
+		QDEL_NULL(bbarding)
+		bbarding = null
+
 	var/turf/T = get_turf(src)
 	if (T && AIStatus == AI_Z_OFF)
 		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
 
 	. = ..()
 	our_cells = null
+
+/mob/living/simple_animal/examine(mob/user)
+	. = ..()
+	if(tame)
+		. += span_notice("This animal appears to be tamed.")
+		if(owner && !QDELETED(owner))
+			. += span_notice("It is tamed to [owner.name].")
+	if(ssaddle)
+		. += "This animal is saddled: [ssaddle.name]."
+	if(ccaparison)
+		. += "This animal is wearing a caparison: [ccaparison.name]."
+	if(bbarding)
+		. += "This animal is wearing a bard: [bbarding.name]."
+
+/mob/living/simple_animal/attack_right(mob/user, params)
+	if(ccaparison)
+		user.visible_message(span_notice("[user] is removing the caparison from [src]..."), span_notice("I start removing the caparison from [src]..."))
+		if(!do_after(user, 10 SECONDS, TRUE, src))
+			return
+		playsound(loc, 'sound/foley/saddledismount.ogg', 100, FALSE)
+		user.visible_message(span_notice("[user] removes the caparison from [src]."), span_notice("I remove the caparison from [src]."))
+		var/obj/item/caparison/C = ccaparison
+		ccaparison = null
+		C.forceMove(get_turf(src))
+		user.put_in_hands(C)
+		update_icon()
+		return
+	else if(bbarding)
+		user.visible_message(span_notice("[user] is removing the bard from [src]..."), span_notice("I start removing the bard from [src]..."))
+		if(!do_after(user, 10 SECONDS, TRUE, src))
+			return
+		playsound(loc, 'sound/foley/saddledismount.ogg', 100, FALSE)
+		user.visible_message(span_notice("[user] removes the bard from [src]."), span_notice("I remove the bard from [src]."))
+		var/obj/item/clothing/barding/B = bbarding
+		bbarding = null
+		// Reset any movement slowdown from barding when it is removed
+		barding_speed_mult = 1
+		updatehealth()
+		B.forceMove(get_turf(src))
+		user.put_in_hands(B)
+		update_icon()
+		return
+	else if(ssaddle)
+		user.visible_message(span_notice("[user] is removing the saddle from [src]..."), span_notice("I start removing the saddle from [src]..."))
+		if(!do_after(user, 5 SECONDS, TRUE, src))
+			return
+		playsound(loc, 'sound/foley/saddledismount.ogg', 100, FALSE)
+		user.visible_message(span_notice("[user] removes the saddle from [src]."), span_notice("I remove the saddle from [src]."))
+		var/obj/item/natural/saddle/S = ssaddle
+		ssaddle = null
+		S.forceMove(get_turf(src))
+		user.put_in_hands(S)
+		update_icon()
+		return
+	return ..()
+
+/mob/living/simple_animal/update_icon()
+	cut_overlays()
+	. = ..()
+	var/barding_layer = 6
+	var/caparison_layer = 5
+	if(caparison_over_barding)
+		caparison_layer = 6
+		barding_layer = 5
+	if(stat == CONSCIOUS && !resting)
+		if(ccaparison)
+			var/caparison_overlay_string = ccaparison.female_caparison_state && gender == FEMALE ? ccaparison.female_caparison_state : ccaparison.caparison_state
+
+			var/mutable_appearance/caparison_overlay = mutable_appearance(ccaparison.caparison_icon, caparison_overlay_string, caparison_layer)
+			caparison_overlay.color = ccaparison.color
+			caparison_overlay.appearance_flags = RESET_ALPHA|RESET_COLOR
+			add_overlay(caparison_overlay)
+			if(ccaparison.detail_state)
+				var/mutable_appearance/detail_overlay = mutable_appearance(ccaparison.caparison_icon, caparison_overlay_string + "_" + ccaparison.detail_state, caparison_layer)
+				detail_overlay.color = ccaparison.detail_color
+				detail_overlay.appearance_flags = RESET_ALPHA|RESET_COLOR
+				add_overlay(detail_overlay)
+
+			var/mutable_appearance/caparison_above_overlay = mutable_appearance(ccaparison.caparison_icon, caparison_overlay_string + "-above", caparison_layer - 0.69)
+			caparison_above_overlay.color = ccaparison.color
+			caparison_above_overlay.appearance_flags = RESET_ALPHA|RESET_COLOR
+			add_overlay(caparison_above_overlay)
+			if(ccaparison.detail_state)
+				var/mutable_appearance/detail_above_overlay = mutable_appearance(ccaparison.caparison_icon, caparison_overlay_string + "_" + ccaparison.detail_state + "-above", caparison_layer - 0.69)
+				detail_above_overlay.color = ccaparison.detail_color
+				detail_above_overlay.appearance_flags = RESET_ALPHA|RESET_COLOR
+				add_overlay(detail_above_overlay)
+
+		if(bbarding)
+			var/barding_overlay = bbarding.female_barding_state && gender == FEMALE ? bbarding.female_barding_state : bbarding.barding_state
+			var/mutable_appearance/barding_base_overlay = mutable_appearance(bbarding.barding_icon, barding_overlay, barding_layer)
+			barding_base_overlay.color = null
+			barding_base_overlay.appearance_flags = RESET_ALPHA|RESET_COLOR
+			var/mutable_appearance/barding_above_overlay = mutable_appearance(bbarding.barding_icon, barding_overlay + "-above", barding_layer - 0.69)
+			barding_above_overlay.color = null
+			barding_above_overlay.appearance_flags = RESET_ALPHA|RESET_COLOR
+			add_overlay(barding_base_overlay)
+			add_overlay(barding_above_overlay)
 
 /mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
 	if(!is_type_in_list(O, food_type))
@@ -297,13 +408,16 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	if(HAS_TRAIT(src, TRAIT_RIGIDMOVEMENT))
 		return
 	if(HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
-		move_to_delay = initial(move_to_delay)
+		var/base_delay = initial(move_to_delay)
+		move_to_delay = base_delay * barding_speed_mult
 		return
 	var/health_deficiency = getBruteLoss() + getFireLoss()
 	if(health <= round(maxHealth * 0.5) || health_deficiency >= round(maxHealth * 0.5))
-		move_to_delay = initial(move_to_delay) + 2
+		var/damaged_delay = initial(move_to_delay) + 2
+		move_to_delay = damaged_delay * barding_speed_mult
 	else
-		move_to_delay = initial(move_to_delay)
+		var/normal_delay = initial(move_to_delay)
+		move_to_delay = normal_delay * barding_speed_mult
 
 /mob/living/simple_animal/hostile/forceMove(turf/T)
 	var/list/BM = list()
@@ -338,25 +452,12 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
 	if(!stop_automated_movement && wander && !doing)
-		if(ssaddle)
+		if(ssaddle && has_buckled_mobs())
 			return 0
 		if(binded)
 			return FALSE
-		if(AIStatus == AI_OFF || AIStatus == AI_IDLE)
-			return 0
-		if(pulledby && stop_automated_movement_when_pulled)
-			return 0
 		if((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
-			if(turns_since_move < turns_per_move)
-				turns_since_move++
-				return 0
-			if(prob(50))
-				var/turf/T = get_step(loc, pick(GLOB.cardinals))
-				if(T && T.can_traverse_safely(src)) // Don't wander into lava or open space unless we're immune to it/can't fall.
-					step_towards(src, T, cached_multiplicative_slowdown)
-			else
-				setDir(turn(dir, pick(90, -90)))
-			turns_since_move = 0
+			turns_since_move++
 			return 1
 
 /mob/living/simple_animal/proc/handle_automated_speech(override)
@@ -445,6 +546,40 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 				if(used_time <= 0 || do_after(user, used_time, target = src))
 					butcher(user, on_meathook)
 
+	else if (stat != DEAD && istype(ssaddle, /obj/item/natural/saddle) && bbarding && ccaparison)
+		var/list/modifiers = params2list(params)
+		var/is_shift_middle = modifiers["shift"] || user?.client?.keys_held["Shift"]
+		if(is_shift_middle)
+			if(has_buckled_mobs())
+				to_chat(user, span_warning("I can't remove [src]'s saddle while someone is mounted."))
+				return
+			user.visible_message(span_notice("[user] starts undoing [src]'s saddle."), span_notice("I start undoing [src]'s saddle."))
+			if(do_after(user, 30, target = src))
+				var/obj/item/natural/saddle/saddle_item = ssaddle
+				ssaddle = null
+				saddle_item.forceMove(get_turf(src))
+				user.put_in_hands(saddle_item)
+				playsound(src, 'sound/foley/saddledismount.ogg', 100, TRUE)
+				user.visible_message(span_notice("[user] removes [src]'s saddle."), span_notice("I remove [src]'s saddle."))
+				update_icon()
+		else
+			var/pick = alert(user, "What would you like to do?", "[src.name]", "Adjust caparison", "Look through the saddle bags")
+			if(!pick)
+				pick = "Look through the saddle bags"
+			switch(pick)
+				if("Adjust caparison")
+					caparison_over_barding = !caparison_over_barding
+					to_chat(user, span_info("I [caparison_over_barding ? "adjust [ccaparison] to cover [bbarding]" : "adjust [ccaparison] to be under [bbarding]"]."))
+					update_icon()
+				if("Look through the saddle bags")
+					var/datum/component/storage/saddle_storage = ssaddle.GetComponent(/datum/component/storage)
+					var/access_time = (user in buckled_mobs) ? 10 : 30
+					if (do_after(user, access_time, target = src))
+						saddle_storage.show_to(user)
+	else if(bbarding && ccaparison)
+		caparison_over_barding = !caparison_over_barding
+		to_chat(user, span_info("I [caparison_over_barding ? "adjust [ccaparison] to cover [bbarding]" : "adjust [ccaparison] to be under [bbarding]"]."))
+		update_icon()
 	else if (stat != DEAD && istype(ssaddle, /obj/item/natural/saddle))		//Fallback saftey for saddles
 		var/list/modifiers = params2list(params)
 		var/is_shift_middle = modifiers["shift"] || user?.client?.keys_held["Shift"]
@@ -869,6 +1004,10 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 /mob/living/simple_animal/hostile/user_buckle_mob(mob/living/M, mob/user)
 	if(user != M)
 		return
+	if(!in_range(user, src) || !isturf(user.loc) || user.incapacitated() || M.anchored)
+		return FALSE
+	if(!(M.mobility_flags & MOBILITY_STAND))
+		return FALSE
 	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 	if(riding_datum)
 		var/time2mount = 12
@@ -889,9 +1028,18 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 //			if(A != src && A != M && A.density)
 //				return
 		M.forceMove(get_turf(src))
+		var/force_buckle = (M == user && M.cmode)
+		if(!buckle_mob(M, force_buckle, FALSE))
+			return FALSE
+		if(M == user)
+			M.visible_message(span_notice("[M] [buckleverb]s on [src]."), span_notice("I [buckleverb] on [src]."))
+		else
+			M.visible_message(span_warning("[user] [buckleverb]s [M] on [src]!"), span_warning("[user] [buckleverb]s me on [src]!"))
+		add_fingerprint(user)
 		if(ssaddle)
 			playsound(src, 'sound/foley/saddlemount.ogg', 100, TRUE)
-	..()
+	else
+		return ..()
 	if(ishuman(M) && buckled_mobs && buckled_mobs.len < max_buckled_mobs)
 		var/mob/living/carbon/human/primary_rider = M
 		for(var/mob/living/passenger in primary_rider.buckled_mobs.Copy())
@@ -902,6 +1050,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			primary_rider.unbuckle_mob(passenger, TRUE)
 			buckle_mob(passenger, TRUE, FALSE)
 	update_icon()
+	return TRUE
 
 /mob/living/simple_animal/hostile
 	var/do_footstep = FALSE
@@ -940,8 +1089,36 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			var/health_deficiency = getBruteLoss() + getFireLoss()
 			if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN) && (health <= round(maxHealth * 0.5) || health_deficiency >= round(maxHealth * 0.5)))
 				new_delay = max(new_delay, initial(move_to_delay) + 2)
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(H.cmode)
+					var/combat_delay_mult
+					if(H.fixedeye || H.tempfixeye)
+						// Fixed-eye combat should stay mobile while still paying a smaller combat tax.
+						combat_delay_mult = (H.m_intent == MOVE_INTENT_RUN) ? 1.06 : 1.03
+					else
+						// Non fixed-eye mounted running in combat should be slower.
+						combat_delay_mult = (H.m_intent == MOVE_INTENT_RUN) ? 1.15 : 1.05
+					new_delay *= combat_delay_mult
+					if(H.fixedeye || H.tempfixeye)
+						// In fixed-eye strafe movement, riding reductions can otherwise nullify the combat penalty.
+						var/base_delay = (H.m_intent == MOVE_INTENT_RUN) ? (move_to_delay - 1) : move_to_delay
+						new_delay = max(new_delay, base_delay * combat_delay_mult)
+				else
+					var/backward_dir = turn(H.dir, 180)
+					var/moving_backward = (direction & backward_dir)
+					if(moving_backward && (H.fixedeye || H.tempfixeye))
+						// Non-combat backpedal on mounts mirrors fixed-eye combat slowdown strength.
+						var/backpedal_delay_mult = (H.m_intent == MOVE_INTENT_RUN) ? 1.06 : 1.03
+						new_delay *= backpedal_delay_mult
+						var/base_delay = (H.m_intent == MOVE_INTENT_RUN) ? (move_to_delay - 1) : move_to_delay
+						new_delay = max(new_delay, base_delay * backpedal_delay_mult)
 			riding_datum.vehicle_move_delay = max(1, new_delay)
 			if(loc != oldloc)
+				for(var/mob/living/carbon/human/rider in buckled_mobs)
+					rider.vars["last_mount_move_time"] = world.time
+					rider.update_action_buttons_icon()
+					addtimer(CALLBACK(rider, TYPE_PROC_REF(/mob, update_action_buttons_icon)), 2 SECONDS)
 				var/obj/structure/mineral_door/MD = locate() in loc
 				if(MD && !MD.ridethrough)
 					if(!HAS_TRAIT(user, TRAIT_EQUESTRIAN))
@@ -985,8 +1162,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			toggle_ai(AI_ON)
 			return TRUE
 
-	toggle_ai(AI_IDLE)
-	return TRUE
+	toggle_ai(AI_OFF)
+	return FALSE
 
 /mob/living/simple_animal/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

@@ -105,7 +105,8 @@
 	virtue_restrictions = list(
 		/datum/virtue/utility/riding
 	)
-	extra_context = "This class gains Master skill in their weapon of choice."
+	subclass_stashed_items = list("Caparison (Saiga)" = /obj/item/caparison, "Caparison (Fogbeast)" = /obj/item/caparison/fogbeast)
+	extra_context = "This class gains Master skill in their weapon of choice. This subclass receives a caparison in its stash. Use the Saiga or Fogbeast version depending on your mount."
 
 /datum/outfit/job/roguetown/captain/infantry/pre_equip(mob/living/carbon/human/H)
 	..()

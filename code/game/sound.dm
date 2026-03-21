@@ -90,6 +90,7 @@
 		return
 	I.pixel_y = 6
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	I.appearance_flags = RESET_COLOR
 	flick_overlay(I, GLOB.clients, 6)
 
 /proc/ping_sound_through_walls(turf/T)

@@ -193,8 +193,9 @@
 		if(user.IsImmobilized() || user.IsOffBalanced()) //Not usable while we're offbalanced or immobilized
 			return
 		if(user.m_intent == MOVE_INTENT_RUN)
-			to_chat(user, span_warning("I can't focus on this while running."))
-			return
+			if(!user.get_buckled_animal_mount())
+				to_chat(user, span_warning("I can't focus on this while running."))
+				return
 		if(user.magearmor == FALSE && HAS_TRAIT(user, TRAIT_MAGEARMOR))	//The magearmor is ACTIVE, so we can't Guard. (Yes, it's active while FALSE / 0.)
 			to_chat(user, span_warning("I'm already focusing on my mage armor!"))
 			return
