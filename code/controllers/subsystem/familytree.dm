@@ -173,8 +173,6 @@ SUBSYSTEM_DEF(familytree)
 			AssignNewlyWed(H)
 
 		if(FAMILY_FULL)
-			if(H.virginity)
-				return
 			AssignToFamily(H)
 
 /datum/controller/subsystem/familytree/proc/AddRoyal(mob/living/carbon/human/H, status)
@@ -420,33 +418,19 @@ SUBSYSTEM_DEF(familytree)
 
 /// Human Helper proc to check gender choice based on pronouns
 
-/mob/living/carbon/human/proc/pronouns_match(mob/living/carbon/human/H, mob/living/carbon/human/other)
-	if(!H.gender_choice_pref)
-		H.gender_choice_pref = ANY_GENDER
-	if(!other.gender_choice_pref)
-		other.gender_choice_pref = ANY_GENDER
-	var/our_gender = H.pronouns
-	var/other_gender = other.pronouns
-	if(H.gender_choice_pref == ANY_GENDER && other.gender_choice_pref == ANY_GENDER)
-		return TRUE
-	if(H.gender_choice_pref == ANY_GENDER)
-		if(other.gender_choice_pref == SAME_GENDER)
-			return our_gender == other_gender
-		if(other.gender_choice_pref == DIFFERENT_GENDER)
-			return our_gender != other_gender
-		return TRUE
-	if(other.gender_choice_pref == ANY_GENDER)
-		if(H.gender_choice_pref == SAME_GENDER)
-			return our_gender == other_gender
-		if(H.gender_choice_pref == DIFFERENT_GENDER)
-			return our_gender != other_gender
-		return TRUE
-	if(H.gender_choice_pref == SAME_GENDER)
-		return our_gender == other_gender
-	if(H.gender_choice_pref == DIFFERENT_GENDER)
-		return our_gender != other_gender
-
-	return FALSE
+/mob/living/carbon/human/proc/pronouns_match(mob/living/carbon/human/other)
+	var/a_pref = gender_choice_pref || ANY_GENDER
+	var/b_pref = other.gender_choice_pref || ANY_GENDER
+	var/same = (pronouns == other.pronouns)
+	if(a_pref == SAME_GENDER && !same)
+		return FALSE
+	if(a_pref == DIFFERENT_GENDER && same)
+		return FALSE
+	if(b_pref == SAME_GENDER && !same)
+		return FALSE
+	if(b_pref == DIFFERENT_GENDER && same)
+		return FALSE
+	return TRUE
 /datum/controller/subsystem/familytree/proc/AssignToFamily(mob/living/carbon/human/H)
 	if(!H)
 		return
@@ -472,9 +456,11 @@ SUBSYSTEM_DEF(familytree)
 				else if(!H.setspouse)
 
 					if(!member.person.setspouse || member.person.setspouse == H.real_name)
-						var/ok_gender_H = H.pronouns_match(H, member.person)
-						var/ok_gender_M = member.person.pronouns_match(member.person, H)
-						if((member.person.xenophobe == 1 || H.xenophobe == 1) && member.person.dna.species.name != our_race)
+						if(!H.pronouns_match(member.person))
+							continue
+						if(H.xenophobe == 1 && member.person.dna.species.name != our_race)
+							continue
+						if(member.person.xenophobe == 1 && H.dna.species.name != member.person.dna.species.name)
 							continue
 						if(member.person.xenophobe == 2 && member.person.restricted_species && our_race != member.person.restricted_species)
 							continue
@@ -484,10 +470,9 @@ SUBSYSTEM_DEF(familytree)
 							continue
 						if(member.person.mind?.assigned_role in nomarry_jobs)
 							continue
-						if(ok_gender_H && ok_gender_M && abs(H.social_rank - member.person.social_rank) <= 1)
-							eligible_houses += house
-							has_single_adult = TRUE
-							break
+						eligible_houses += house
+						has_single_adult = TRUE
+						break
 
 
 		if(!has_single_adult && !house.housename)
@@ -507,11 +492,19 @@ SUBSYSTEM_DEF(familytree)
 				else if(!H.setspouse)
 					if(!member.person.setspouse || member.person.setspouse == H.real_name)
 						// Pronouns matching according to Gender Preference
-						var/ok_gender_H = H.pronouns_match(H, member.person)
-						var/ok_gender_M = member.person.pronouns_match(member.person, H)
+						if(!H.pronouns_match(member.person))
+							continue
+						var/their_race = member.person.dna.species.name
+						if(H.xenophobe == 1 && their_race != our_race)
+							break
+						if(member.person.xenophobe == 1 && our_race != their_race)
+							break
+						if(member.person.xenophobe == 2 && member.person.restricted_species && our_race != member.person.restricted_species)
+							break
+						if(H.xenophobe == 2 && H.restricted_species && their_race != H.restricted_species)
+							break
 
-						if(ok_gender_H && ok_gender_M)
-							compatible = TRUE
+						compatible = TRUE
 
 				if(compatible)
 					var/datum/family_member/new_member = house.CreateFamilyMember(H)
@@ -538,54 +531,48 @@ SUBSYSTEM_DEF(familytree)
 	var/list/potential_matches = list()
 
 	for(var/mob/living/carbon/human/potential_spouse in viable_spouses)
-		if(!potential_spouse || potential_spouse == H || potential_spouse.spouse_mob)
+		if(!potential_spouse || potential_spouse == H)
 			continue
-		if(potential_spouse.stat == DEAD || !potential_spouse.client)
+		if(potential_spouse.stat == DEAD)
 			continue
-		// Check if they are mutually setspouse
-		var/mutual_setspouse = (H.setspouse == potential_spouse.real_name) && (potential_spouse.setspouse == H.real_name)
-		if(!mutual_setspouse)
-			if(!H.pronouns_match(H, potential_spouse) || !potential_spouse.pronouns_match(potential_spouse, H))
-				continue // skip if gender preferences incompatible
-		if(abs(H.social_rank - potential_spouse.social_rank) > 1)
+		if(potential_spouse.spouse_mob)
 			continue
-		if((potential_spouse.xenophobe == 1 || H.xenophobe == 1) && potential_spouse.dna.species.name != H.dna.species.name)
+		if(!H.pronouns_match(potential_spouse))
+			continue
+		if(H.xenophobe == 1 && potential_spouse.dna.species.name != H.dna.species.name)
+			continue
+		if(potential_spouse.xenophobe == 1 && H.dna.species.name != potential_spouse.dna.species.name)
 			continue
 		if(potential_spouse.xenophobe == 2 && potential_spouse.restricted_species && H.dna.species.name != potential_spouse.restricted_species)
 			continue
 		if(H.xenophobe == 2 && H.restricted_species && potential_spouse.dna.species.name != H.restricted_species)
 			continue
-		// Check setspouse compatibility
 		var/priority = 0
-		if(mutual_setspouse)
-			priority = 3 // Perfect match
-		else if(potential_spouse.setspouse == H.real_name)
-			priority = 1 // Decent match
-		else if(!H.setspouse && !potential_spouse.setspouse)
-			priority = 0 // Random match
-		else
-			continue // Incompatible
-
+		if(H.setspouse == potential_spouse.real_name && potential_spouse.setspouse == H.real_name)
+			priority = 3
+		else if(potential_spouse.setspouse == H.real_name || H.setspouse == potential_spouse.real_name)
+			priority = 1
+		else if(H.setspouse && H.setspouse != potential_spouse.real_name)
+			continue
+		else if(potential_spouse.setspouse && potential_spouse.setspouse != H.real_name)
+			continue
 		potential_matches += list(list(potential_spouse, priority))
 
-	// Sort by priority and pick best match
-	if(potential_matches.len)
-		var/best_priority = -1
-		var/list/best_matches = list()
-
-		for(var/list/match_data in potential_matches)
-			var/match_priority = match_data[2]
-			if(match_priority > best_priority)
-				best_priority = match_priority
-				best_matches = list(match_data[1])
-			else if(match_priority == best_priority)
-				best_matches += match_data[1]
-
-		if(best_matches.len)
-			var/mob/living/carbon/human/chosen_spouse = pick(best_matches)
-			viable_spouses -= chosen_spouse
-			viable_spouses -= H
-			H.MarryTo(chosen_spouse)
+	if(!potential_matches.len)
+		return
+	var/best_priority = -1
+	var/list/best_matches = list()
+	for(var/list/match_data in potential_matches)
+		var/p = match_data[2]
+		if(p > best_priority)
+			best_priority = p
+			best_matches = list(match_data[1])
+		else if(p == best_priority)
+			best_matches += match_data[1]
+	var/mob/living/carbon/human/chosen_spouse = pick(best_matches)
+	viable_spouses -= chosen_spouse
+	viable_spouses -= H
+	H.MarryTo(chosen_spouse)
 
 /datum/controller/subsystem/familytree/proc/AssignAuntUncle(mob/living/carbon/human/H)
 	var/base_species = H.dna.species.name

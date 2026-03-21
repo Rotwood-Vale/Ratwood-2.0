@@ -450,6 +450,9 @@
 		span_hear("I hear a heavy electrical crack.") \
 	)
 	playsound(get_turf(src), pick('sound/misc/elec (1).ogg', 'sound/misc/elec (2).ogg', 'sound/misc/elec (3).ogg'), 100, FALSE)
+	// Home alone 2 Marv scream on electrocution — rare easter egg, 5% chance so it's not common but not impossibly rare.
+	if(ishuman(src) && prob(5))
+		playsound(get_turf(src), 'modular/sound/masomoans/agony/electroscreammarv.ogg', 80, FALSE, 2)
 	return shock_damage
 
 /mob/living/emp_act(severity)

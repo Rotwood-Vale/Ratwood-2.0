@@ -904,13 +904,38 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return FALSE
 	if(restrained())
 		return FALSE
-	if( buckled || stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
+		return FALSE
+	if(buckled && !get_buckled_animal_mount())
 		return FALSE
 	return TRUE
 
+/mob/proc/get_buckled_animal_mount()
+	if(!buckled)
+		return null
+	if(!istype(buckled, /mob/living/simple_animal))
+		return null
+	var/mob/living/simple_animal/animal_mount = buckled
+	if(!animal_mount.GetComponent(/datum/component/riding))
+		return null
+	return animal_mount
+
+/mob/proc/apply_face_direction(direction)
+	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
+	if(animal_mount)
+		animal_mount.setDir(direction)
+		setDir(direction)
+		var/datum/component/riding/riding_datum = animal_mount.GetComponent(/datum/component/riding)
+		if(riding_datum)
+			riding_datum.handle_vehicle_offsets()
+			riding_datum.handle_vehicle_layer()
+		return
+	setDir(direction)
+
 ///Checks mobility move as well as parent checks
 /mob/living/canface(atom/A)
-	if(!(mobility_flags & MOBILITY_MOVE))
+	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
+	if(!animal_mount && !(mobility_flags & MOBILITY_MOVE))
 		return FALSE
 	if(world.time < last_dir_change + 5)
 		return
@@ -944,7 +969,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		for(var/obj/item/grabbing/G in grabbedby) // only chokeholds prevent turning
 			if(G.chokehold)
 				return FALSE
-	if(IsImmobilized())
+	if(!animal_mount && IsImmobilized())
 		return FALSE
 	return ..()
 
@@ -956,7 +981,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	set hidden = TRUE
 	if(!canface())
 		return FALSE
-	setDir(EAST)
+	apply_face_direction(EAST)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
@@ -965,7 +990,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	set hidden = TRUE
 	if(!canface())
 		return FALSE
-	setDir(WEST)
+	apply_face_direction(WEST)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
@@ -974,7 +999,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	set hidden = TRUE
 	if(!canface())
 		return FALSE
-	setDir(NORTH)
+	apply_face_direction(NORTH)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
@@ -983,7 +1008,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	set hidden = TRUE
 	if(!canface())
 		return FALSE
-	setDir(SOUTH)
+	apply_face_direction(SOUTH)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 

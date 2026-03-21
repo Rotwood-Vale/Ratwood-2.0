@@ -132,6 +132,8 @@
 					wash_atom(user, CLEAN_STRONG)
 					playsound(user, pick(wash), 100, FALSE)
 					user.remove_stress(/datum/stressevent/sewertouched)
+					if(user.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 50)
+						user.adjust_bodytemperature(-50) // washing yourself helps you cool down, not as much as a water tile though
 			else
 				user.visible_message(span_info("[user] starts to wash [item2wash] in [src]."))
 				if(do_after(L, 30, target = src))

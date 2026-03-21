@@ -585,6 +585,13 @@
 		if(wCount.len > 0)
 			owner.heal_wounds(healing_on_tick)
 			owner.update_damage_overlays()
+		if(HAS_TRAIT(owner, TRAIT_SIMPLE_WOUNDS))
+			if(wCount.len > 0)
+				owner.heal_wounds(healing_on_tick * 2)
+			owner.bleed_rate = owner.get_bleed_rate()
+			if(!length(owner.get_wounds()) && !length(owner.get_embedded_objects()))
+				owner.simple_bleeding = 0
+				owner.bleed_rate = 0
 		owner.adjustBruteLoss(-healing_on_tick, 0)
 		owner.adjustFireLoss(-healing_on_tick, 0)
 		owner.adjustOxyLoss(-healing_on_tick, 0)
@@ -740,6 +747,9 @@
 		if(wCount.len > 0)
 			owner.heal_wounds(healing_on_tick)
 			owner.update_damage_overlays()
+		if(HAS_TRAIT(owner, TRAIT_SIMPLE_WOUNDS) && !length(owner.get_wounds()) && !length(owner.get_embedded_objects()))
+			owner.simple_bleeding = 0
+			owner.bleed_rate = 0
 		owner.adjustBruteLoss(-healing_on_tick, 0)
 		owner.adjustFireLoss(-healing_on_tick, 0)
 		owner.adjustOxyLoss(-healing_on_tick * 0.5, 0)
@@ -876,6 +886,13 @@
 			owner.update_damage_overlays()
 		owner.adjustOxyLoss(-healing_on_tick, 0)
 		owner.adjustToxLoss(-healing_on_tick, 0)
+		if(HAS_TRAIT(owner, TRAIT_SIMPLE_WOUNDS))
+			if(wCount.len > 0)
+				owner.heal_wounds(healing_on_tick * 2)
+			owner.bleed_rate = owner.get_bleed_rate()
+			if(!length(owner.get_wounds()) && !length(owner.get_embedded_objects()))
+				owner.simple_bleeding = 0
+				owner.bleed_rate = 0
 		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
 		owner.adjustCloneLoss(-healing_on_tick, 0)
 
@@ -982,6 +999,25 @@
 	name = "Sated"
 	desc = "I've devoured a stone."
 	icon_state = "buff"
+
+/datum/status_effect/buff/mount_apple_healing
+	id = "mount_apple_healing"
+	duration = 8 SECONDS
+	var/healing_on_tick = 1
+
+/datum/status_effect/buff/mount_apple_healing/on_creation(mob/living/new_owner, new_healing_on_tick)
+	healing_on_tick = new_healing_on_tick
+	return ..()
+
+/datum/status_effect/buff/mount_apple_healing/tick()
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
+	H.color = "#FF6666"
+	owner.adjustBruteLoss(-healing_on_tick, 0)
+	owner.adjustFireLoss(-healing_on_tick, 0)
+	owner.adjustOxyLoss(-healing_on_tick, 0)
+	owner.adjustToxLoss(-healing_on_tick, 0)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
+	owner.adjustCloneLoss(-healing_on_tick, 0)
 
 /datum/status_effect/buff/healing/on_remove()
 	owner.remove_filter(MIRACLE_HEALING_FILTER)

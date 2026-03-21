@@ -315,7 +315,28 @@
 	set_target(new_target)
 	show_ui()
 
+// Try to resist orgasm, returns TRUE if we resisted, FALSE if we didn't. ENDVRE. EDGE. WEEP.
+/datum/sex_controller/proc/try_resist_orgasm()
+	if(!HAS_TRAIT(user, TRAIT_PSYDONIAN_GRIT) || !prob(40))
+		return FALSE
+	if(user.client.prefs.edging == FALSE)
+		return FALSE
+	var/resist_msg = pick(
+		"[user] trembles and hisses, \"With every broken bone, I swore I lyved... HE hath gifted me the strength to ENDURE!\"",
+		"[user] bows [user.p_their()] head and forces the urge back, clinging to faith as the night closes in.",
+		"[user] gasps, \"PSYDON yet LYVES and PSYDON yet ENDURES,\" and denies [user.p_them()]self release.",
+		"[user] clenches hard and steadies [user.p_their()] breathing, choosing the Saints' discipline over indulgence.",
+		"[user] shudders and whispers a penitent prayer, meeting suffering with patience instead of surrender.",
+	)
+	user.visible_message(span_boldwarning(resist_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+	to_chat(user, span_notice("PSYDON, grant me silence and endurance; I will not yield."))
+	set_arousal(60)
+	user.emote("groan", forced = TRUE)
+	return TRUE
+
 /datum/sex_controller/proc/cum_onto(mob/living/carbon/human/splashed_user = null)
+	if(try_resist_orgasm())
+		return
 	log_combat(user, target, "Came onto the target")
 	playsound(target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
@@ -416,9 +437,25 @@
 	cum_chalice.reagents.add_reagent(contents_to_drip,1)
 
 /datum/sex_controller/proc/ejaculate()
+	if(try_resist_orgasm())
+		return
 	SEND_SIGNAL(user, COMSIG_MOB_EJACULATED)
 	log_combat(user, user, "Ejaculated")
-	user.visible_message(span_love("[user] makes a mess!"), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+	if(modular_try_handle_chastity_ejaculation())
+		return
+	if((has_chastity_cage() || has_chastity_anal()) && prob(50))
+		var/self_mess_msg = "[user] spills over [user.p_their()] own chastity!"
+		user.visible_message(span_love(self_mess_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+		cum_onto(user)
+		return
+	var/climax_msg = "[user] makes a mess!"
+	var/modular_climax_msg = modular_get_chastity_climax_message(climax_msg)
+	if(istext(modular_climax_msg))
+		climax_msg = modular_climax_msg
+	else
+		if(has_chastity_cage() || has_chastity_anal())
+			climax_msg = "[user] climaxes and makes a mess in their chastity device!"
+	user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	add_cum_floor(get_turf(user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
@@ -436,6 +473,8 @@
 		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum,2)
 
 /datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
+	if(try_resist_orgasm())
+		return
 	if(C && istype(C))
 		log_combat(user, user, "Ejaculated into a container")
 		user.visible_message(span_love("[user] spills into [C]!"))
@@ -573,7 +612,15 @@
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 			pain_amt *= 2
+	var/list/modular_adjustments = modular_adjust_action_for_target_chastity(action_target, arousal_amt, pain_amt)
+	if(islist(modular_adjustments) && modular_adjustments.len >= 2)
+		arousal_amt = modular_adjustments[1]
+		pain_amt = modular_adjustments[2]
 	action_target.sexcon.receive_sex_action(arousal_amt, pain_amt, giving, force, speed)
+	/// modular signal to let other systems know about the sex action, currently used for chastity course to track arousal and apply pain, but can be used for other things in the future
+	modular_emit_received_sex_action_signal(action_target, arousal_amt, pain_amt, giving)
+	if(modular_should_play_chastitycourse_noise(action_target))
+		chastitycourse_noise(action_target)
 
 /datum/sex_controller/proc/receive_sex_action(arousal_amt, pain_amt, giving, applied_force, applied_speed)
 	arousal_amt *= get_force_pleasure_multiplier(applied_force, giving)
@@ -589,7 +636,7 @@
 
 	damage_from_pain(pain_amt)
 	try_do_moan(arousal_amt, pain_amt, applied_force, giving)
-	try_do_pain_effect(pain_amt, giving)
+	try_do_pain_effect(pain_amt, giving, TRUE)
 
 /datum/sex_controller/proc/damage_from_pain(pain_amt)
 	if(pain_amt < PAIN_MINIMUM_FOR_DAMAGE)
@@ -636,7 +683,14 @@
 	last_moan = world.time
 	user.emote(chosen_emote, forced = TRUE)
 
-/datum/sex_controller/proc/try_do_pain_effect(pain_amt, giving)
+/datum/sex_controller/proc/is_masochist_in_spiked_chastity()
+	var/modular_result = modular_is_masochist_in_spiked_chastity()
+	if(!isnull(modular_result))
+		return modular_result
+
+	return FALSE
+
+/datum/sex_controller/proc/try_do_pain_effect(pain_amt, giving, allow_intimate_item_reaction = FALSE)
 	if(pain_amt < PAIN_MILD_EFFECT)
 		return
 	if(last_pain + PAIN_COOLDOWN >= world.time)
@@ -644,6 +698,8 @@
 	if(prob(50))
 		return
 	last_pain = world.time
+	if(allow_intimate_item_reaction && user?.chastity_device && HAS_TRAIT(user, TRAIT_CHASTITY_SPIKED))
+		return
 	if(pain_amt >= PAIN_HIGH_EFFECT)
 		var/pain_msg = pick(list("IT HURTS!!!", "IT NEEDS TO STOP!!!", "I CAN'T TAKE IT ANYMORE!!!"))
 		to_chat(user, span_boldwarning(pain_msg))
@@ -656,7 +712,7 @@
 		user.flash_fullscreen("redflash1")
 		if(prob(40) && user.stat == CONSCIOUS)
 			user.visible_message(span_warning("[user] shudders in pain!"))
-	else
+	else if(pain_amt >= PAIN_MILD_EFFECT)
 		var/pain_msg = pick(list("It hurts a little...", "It stings...", "I'm aching..."))
 		to_chat(user, span_warning(pain_msg))
 
@@ -737,7 +793,13 @@
 	ejaculate_container(milker.get_active_held_item())
 
 /datum/sex_controller/proc/can_use_penis()
+	var/modular_result = modular_can_use_penis()
+	if(!isnull(modular_result))
+		return modular_result
+
 	if(HAS_TRAIT(user, TRAIT_LIMPDICK))
+		return FALSE
+	if(has_chastity_penis())
 		return FALSE
 	var/obj/item/organ/penis/penor = user.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penor)
@@ -745,6 +807,45 @@
 	if(!penor.functional)
 		return FALSE
 	return TRUE
+
+/datum/sex_controller/proc/can_use_vagina()
+	var/modular_result = modular_can_use_vagina()
+	if(!isnull(modular_result))
+		return modular_result
+
+	if(has_chastity_vagina())
+		return FALSE
+	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
+		return FALSE
+	return TRUE
+
+/// Returns TRUE if the user's penis is currently blocked by a chastity device.
+/// Base implementation checks TRAIT_CHASTITY_CAGE, TRAIT_CHASTITY_FULL, and TRAIT_CHASTITY_PENIS_BLOCKED.
+/// Overridden in chastity_helpers.dm to handle cursed device modes before falling through to ..().
+/datum/sex_controller/proc/has_chastity_penis()
+	return HAS_TRAIT(user, TRAIT_CHASTITY_FULL) || HAS_TRAIT(user, TRAIT_CHASTITY_CAGE) || HAS_TRAIT(user, TRAIT_CHASTITY_PENIS_BLOCKED)
+
+/// Returns TRUE if the user's vagina is currently blocked by a chastity device.
+/// Base implementation checks TRAIT_CHASTITY_FULL and TRAIT_CHASTITY_VAGINA_BLOCKED.
+/// Overridden in chastity_helpers.dm to handle cursed device modes before falling through to ..().
+/datum/sex_controller/proc/has_chastity_vagina()
+	return HAS_TRAIT(user, TRAIT_CHASTITY_FULL) || HAS_TRAIT(user, TRAIT_CHASTITY_VAGINA_BLOCKED)
+
+/// Returns TRUE if any front anatomy (penis OR vagina) is blocked by chastity.
+/// Delegates to has_chastity_penis() and has_chastity_vagina() so cursed device overrides apply automatically.
+/datum/sex_controller/proc/has_chastity_cage()
+	return has_chastity_penis() || has_chastity_vagina()
+
+/// Returns TRUE if the user's chastity device is a flat-style cage (/obj/item/chastity/chastity_cage/flat).
+/// Base always returns FALSE — flat detection requires device access; overridden in chastity_helpers.dm.
+/datum/sex_controller/proc/has_chastity_flat()
+	return FALSE
+
+/// Returns TRUE if the user's anal access is currently blocked by a chastity device.
+/// Base implementation checks TRAIT_CHASTITY_ANAL and TRAIT_CHASTITY_FULL.
+/// Overridden in chastity_helpers.dm to handle cursed device modes before falling through to ..().
+/datum/sex_controller/proc/has_chastity_anal()
+	return HAS_TRAIT(user, TRAIT_CHASTITY_ANAL) || HAS_TRAIT(user, TRAIT_CHASTITY_FULL)
 
 /datum/sex_controller/proc/considered_limp()
 	if(arousal >= AROUSAL_HARD_ON_THRESHOLD)
@@ -824,7 +925,11 @@
 		var/datum/sex_action/action = SEX_ACTION(action_type)
 		if(!(action_category&action.category))
 			continue
+		if(istype(action, /datum/sex_action/chastityplay) && !chastity_content_enabled_for_pair())
+			continue
 		if(!action.shows_on_menu(user, target))
+			continue
+		if(action_blocked_by_intimate_state(action, TRUE))
 			continue
 		dat += "<td>"
 		var/link = ""
@@ -982,9 +1087,53 @@
 	if(!action_type)
 		return FALSE
 	var/datum/sex_action/action = SEX_ACTION(action_type)
+	if(istype(action, /datum/sex_action/chastityplay) && !chastity_content_enabled_for_pair())
+		return FALSE
 	if(!inherent_perform_check(action_type, incapacitated))
 		return FALSE
+	if(action_blocked_by_intimate_state(action))
+		return FALSE
 	if(!action.can_perform(user, target))
+		return FALSE
+	return TRUE
+/// Checks if the action is blocked by an intimate state, such as chastity. If menu_check is TRUE, this is being called for the purpose of showing the action in the menu, and certain checks that would be redundant to do on every menu open (like checking for orgasm immunity from a collar) can be skipped.
+/datum/sex_controller/proc/action_blocked_by_intimate_state(datum/sex_action/action, menu_check = FALSE)
+	if(!action || !user)
+		return FALSE
+	if(action.intimate_check_flags == SEX_ACTION_INTIMATE_CHECK_NONE)
+		return FALSE
+
+	var/user_part = action.user_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
+	if((action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_USER) && user_part)
+		if(SEND_SIGNAL(user, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, target, user_part, TRUE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
+			return TRUE
+
+	var/target_part = action.target_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
+	if(target && (action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_TARGET) && target_part)
+		if(SEND_SIGNAL(target, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, user, target_part, FALSE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
+			return TRUE
+
+	return FALSE
+
+/datum/sex_controller/proc/chastity_content_enabled_for(mob/living/carbon/human/H)
+	var/modular_result = modular_chastity_content_enabled_for(H)
+	if(!isnull(modular_result))
+		return modular_result
+
+	if(!H)
+		return FALSE
+	if(!H.client?.prefs)
+		return TRUE
+	return !!H.client.prefs.chastenable
+
+/datum/sex_controller/proc/chastity_content_enabled_for_pair()
+	var/modular_result = modular_chastity_content_enabled_for_pair()
+	if(!isnull(modular_result))
+		return modular_result
+
+	if(!chastity_content_enabled_for(user))
+		return FALSE
+	if(target && target != user && !chastity_content_enabled_for(target))
 		return FALSE
 	return TRUE
 

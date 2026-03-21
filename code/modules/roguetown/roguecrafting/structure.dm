@@ -38,6 +38,78 @@
 		return FALSE
 	return TRUE
 
+/datum/crafting_recipe/roguetown/structure/wooden_horse
+	name = "static wooden horse"
+	result = /obj/structure/wooden_horse
+	reqs = list(/obj/item/natural/wood/plank = 2)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/wooden_horse/mobile
+	name = "mobile wooden horse"
+	result = /obj/structure/wooden_horse/mobile
+	reqs = list(/obj/item/natural/wood/plank = 2)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/torture_table
+	name = "torture table"
+	result = /obj/structure/bondage/torture_table
+	reqs = list(
+		/obj/item/natural/wood/plank = 3,
+		/obj/item/ingot/iron = 1,
+	)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/torture_table/lever
+	name = "torture table lever"
+	result = /obj/structure/bondage/torture_table/lever
+	reqs = list(
+		/obj/item/natural/wood/plank = 3,
+		/obj/item/ingot/iron = 1,
+	)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/x_pillory
+	name = "x-pillory"
+	result = /obj/structure/bondage/x_pillory
+	reqs = list(
+		/obj/item/grown/log/tree/small = 2,
+		/obj/item/ingot/iron = 1,
+	)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/gloryhole
+	name = "gloryhole"
+	result = /obj/structure/bondage/gloryhole
+	reqs = list(/obj/item/natural/wood/plank = 2)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/chains
+	name = "chains"
+	result = /obj/structure/bondage/chains
+	reqs = list(/obj/item/rope/chain = 2)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 1
+
 /datum/crafting_recipe/roguetown/structure/psycrss
 	name = "wooden cross"
 	result = /obj/structure/fluff/psycross/crafted
@@ -487,6 +559,15 @@
 	verbage_simple = "construct"
 	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
+	buildsame = TRUE
+
+/datum/crafting_recipe/roguetown/structure/mineshaft_support
+	name = "mineshaft support"
+	result = /obj/structure/barricade/mineshaft
+	reqs = list(/obj/item/grown/log/tree/small = 1)
+	ontile = TRUE
+	verbage_simple = "set up"
+	verbage = "sets up"
 	buildsame = TRUE
 
 /datum/crafting_recipe/roguetown/structure/fence

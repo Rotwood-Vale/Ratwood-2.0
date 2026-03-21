@@ -70,5 +70,5 @@
 		if(time_flags & TIME_OF_DAY_BIT_DAY)
 			modifier += 0							//No bonus for day time temperatures
 		else if(time_flags & TIME_OF_DAY_BIT_NIGHT)
-			modifier -= 120							//300-120 is 180, a bit further towards cold in the 'cold' temperature range
+			modifier -= 60							//300-60 is 240, just enough for cold temperature outside, but not cold enough to cause hypothermia on water and other problems
 	return modifier

@@ -124,6 +124,12 @@
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
+	// Mounted movement should be relayed before grab logic, otherwise pull checks can block riding.
+	if(mob.buckled)
+		var/mob/buckled_mob = mob
+		if(buckled_mob.get_buckled_animal_mount())
+			return mob.buckled.relaymove(mob, direct)
+
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
 
@@ -630,22 +636,30 @@
 ///Checked whenever a mob tries to change their movement intent
 /mob/proc/toggle_rogmove_intent(intent, silent = FALSE)
 	var/is_mounted = FALSE
-	if(buckled && intent != MOVE_INTENT_SNEAK)
-		if(istype(buckled, /mob/living/simple_animal/hostile/retaliate/rogue/saiga))
-			if(ishuman(src))
-				var/mob/living/carbon/human/H = src
-				var/mob/living/simple_animal/hostile/retaliate/rogue/saiga/S = buckled
-				is_mounted = TRUE
-				if(H.m_intent == MOVE_INTENT_WALK)
-					H.visible_message(span_notice("[H] digs their heels into \the [S], preparing to gallop!"))
-					S.emote("aggro")
-					if(do_after(H, 20))
-						H.m_intent = MOVE_INTENT_RUN
-				else
-					H.visible_message(span_notice("\The [S] calms, slowing its gait."))
-					S.emote("idle")
-					if(do_after(H, 15))
-						H.m_intent = MOVE_INTENT_WALK
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/mob/living/simple_animal/animal_mount = H.get_buckled_animal_mount()
+		if(animal_mount)
+			is_mounted = TRUE
+			switch(intent)
+				if(MOVE_INTENT_RUN)
+					if(H.m_intent != MOVE_INTENT_RUN)
+						H.visible_message(span_notice("[H] steadies atop [animal_mount], preparing to break into a run."))
+						animal_mount.emote("aggro")
+						if(do_after(H, 30))
+							H.m_intent = MOVE_INTENT_RUN
+				if(MOVE_INTENT_SNEAK)
+					if(H.m_intent != MOVE_INTENT_SNEAK)
+						H.visible_message(span_notice("[H] reins in [animal_mount], slowing into a cautious gait."))
+						if(do_after(H, 30))
+							H.m_intent = MOVE_INTENT_SNEAK
+							H.update_sneak_invis()
+				if(MOVE_INTENT_WALK)
+					if(H.m_intent != MOVE_INTENT_WALK)
+						H.visible_message(span_notice("[animal_mount] calms, returning to a steady pace."))
+						animal_mount.emote("idle")
+						if(do_after(H, 15))
+							H.m_intent = MOVE_INTENT_WALK
 	// If we're becoming sprinting from non-sprinting, reset the counter
 	if(!(m_intent == MOVE_INTENT_RUN && intent == MOVE_INTENT_RUN))
 		sprinted_tiles = 0

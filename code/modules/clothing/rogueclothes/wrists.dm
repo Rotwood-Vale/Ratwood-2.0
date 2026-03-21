@@ -129,8 +129,6 @@
 	color = "#4d4d4d"
 	cold_protection =  ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = 50
-	heat_protection = null
-	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/wrists/roguetown/bracers/copper
 	name = "copper bracers"

@@ -667,7 +667,7 @@
 	created_item = /obj/item/clothing/neck/roguetown/gorget/steel
 
 /datum/anvil_recipe/armor/iron/cursed_collar
-	name = "Cursed Collar"
+	name = "Lesser Cursed Collar"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_plate
 	created_item = /obj/item/clothing/neck/roguetown/gorget/cursed_collar

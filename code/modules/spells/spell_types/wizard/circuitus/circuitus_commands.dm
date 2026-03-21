@@ -158,6 +158,19 @@
 		to_chat(data.caster, span_warning("Cannot teleport into a gate!"))
 		return FALSE
 
+	var/area/area_check = get_area(caster_spot)
+	if(area_check?.noteleport)
+		to_chat(data.caster, span_warning("This area won't let me teleport!"))
+		return FALSE
+	area_check = get_area(start_spot)
+	if(area_check?.noteleport)
+		to_chat(data.caster, span_warning("This area won't let me teleport!"))
+		return FALSE
+	area_check = get_area(end_spot)
+	if(area_check?.noteleport)
+		to_chat(data.caster, span_warning("This area won't let me teleport!"))
+		return FALSE
+
 	data.caster.stamina_add(fatiguecost)
 
 	new /obj/effect/temp_visual/spell_visual/blink_warning(start_spot)

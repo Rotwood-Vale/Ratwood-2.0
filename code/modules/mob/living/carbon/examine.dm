@@ -48,22 +48,14 @@
 	var/list/msg = list("<span class='warning'>")
 	var/temp = getBruteLoss()
 	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
-		if(temp)
-			if (temp < 25)
-				msg += "[m3] some bruises.\n"
-			else if (temp < 50)
-				msg += "[m3] a lot of bruises!\n"
-			else
-				msg += "<B>[m1] black and blue!!</B>\n"
+		var/brute_text = get_damage_descriptor_text(temp, "[m3] some bruises.\n", "[m3] a lot of bruises!\n", "<B>[m1] black and blue!!</B>\n")
+		if(brute_text)
+			msg += brute_text
 
 		temp = getFireLoss()
-		if(temp)
-			if (temp < 25)
-				msg += "[m3] some burns.\n"
-			else if (temp < 50)
-				msg += "[m3] many burns!\n"
-			else
-				msg += "<B>[m1] dragon food!!</B>\n"
+		var/fire_text = get_damage_descriptor_text(temp, "[m3] some burns.\n", "[m3] many burns!\n", "<B>[m1] dragon food!!</B>\n")
+		if(fire_text)
+			msg += fire_text
 
 		temp = getCloneLoss()
 		if(temp)
@@ -76,6 +68,10 @@
 
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
+	
+	var/list/modular_lines = carbon_modular_examine_lines(user, t_He, m1, m2, m3)
+	if(length(modular_lines))
+		msg += modular_lines
 
 	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
 		msg += "[t_He] [t_is] covered in something flammable.\n"
@@ -112,3 +108,36 @@
 	. += "✠ ------------ ✠</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+
+// Helper for generating damage description text based on thresholds, used by both examine and condition summary on cursed collar UI.
+/mob/living/carbon/proc/get_damage_descriptor_text(damage_amount, minor_text, moderate_text, severe_text)
+	if(!damage_amount)
+		return null
+	if(damage_amount < 25)
+		return minor_text
+	if(damage_amount < 50)
+		return moderate_text
+	return severe_text
+
+/mob/living/carbon/proc/get_damage_condition_summary()
+	var/list/conditions = list()
+
+	var/brute_condition = get_damage_descriptor_text(getBruteLoss(), "some bruises", "a lot of bruises", "black and blue")
+	if(brute_condition)
+		conditions += brute_condition
+
+	var/fire_condition = get_damage_descriptor_text(getFireLoss(), "some burns", "many burns", "dragon food")
+	if(fire_condition)
+		conditions += fire_condition
+
+	if(!length(conditions))
+		return "No obvious bruises or burns"
+
+	return capitalize(jointext(conditions, "; "))
+
+/mob/living/carbon/proc/carbon_modular_examine_lines(mob/user, t_He, m1, m2, m3)
+	var/list/lines = list()
+	var/list/ext_lines = carbon_modular_examine_extension(user, t_He, m1, m2, m3)
+	if(length(ext_lines))
+		lines += ext_lines
+	return lines

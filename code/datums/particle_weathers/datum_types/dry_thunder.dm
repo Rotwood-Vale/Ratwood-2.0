@@ -31,7 +31,6 @@
 	severitySteps = 50
 	immunity_type = TRAIT_RAINSTORM_IMMUNE
 	probability = 40
-	target_trait = PARTICLEWEATHER_RAIN
 	forecast_tag = "rain"
 
 	COOLDOWN_DECLARE(thunder)

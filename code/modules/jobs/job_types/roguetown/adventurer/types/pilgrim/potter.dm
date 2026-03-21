@@ -10,10 +10,10 @@
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	subclass_stats = list(
-		STATKEY_PER = 2,
+		STATKEY_PER = 1,
 		STATKEY_WIL = 2,
 		STATKEY_CON = 1,
-		STATKEY_SPD = -1
+		STATKEY_STR = 1
 	)
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN, // Potters are fairly active, having to source their own clay.
@@ -25,7 +25,7 @@
 		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE, // They probably have some insight in carpentry and masonry.
 		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE, // They probably have some insight in carpentry and masonry.
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/ceramics = SKILL_LEVEL_MASTER,
+		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/adventurer/potter/pre_equip(mob/living/carbon/human/H)
@@ -46,14 +46,15 @@
 	backr = /obj/item/rogueweapon/shovel  // For getting clay
 
 	backpack_contents = list(
-		/obj/item/natural/clay = 3,
-		/obj/item/natural/clay/glassbatch = 1,
+		/obj/item/natural/clay = 8,
+		/obj/item/natural/clay/glassbatch = 2,
 		/obj/item/rogueore/coal = 1,
-		/obj/item/roguegear/bronze = 1,
 		/obj/item/dye_brush = 1,
+		/obj/item/storage/roguebag,
 		/obj/item/recipe_book/ceramics = 1)
 	// Clay and glassBatch are raw materials
 	// Coal so he can build an ore furnace for glass blowing
 	// Coggers so he can build a potter's wheel.
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/digclay)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice)
