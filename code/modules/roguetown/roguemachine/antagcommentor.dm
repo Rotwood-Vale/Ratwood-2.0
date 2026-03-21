@@ -159,7 +159,7 @@
 	name = "A karmic token"
 	desc = "A fleeting token, warm from the press. It will not last long."
 	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = "karmacoin"
+	icon_state = "gear"
 	w_class = WEIGHT_CLASS_SMALL
 	var/owner_ckey
 	var/owner_name
