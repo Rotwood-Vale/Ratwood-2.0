@@ -841,6 +841,19 @@ GLOBAL_VAR_INIT(mobids, 1)
 		if(statpanel("Tickets"))
 			GLOB.ahelp_tickets.stat_entry()
 
+	if(listed_turf && client)
+		if(!can_open_tile_panel_turf(listed_turf))
+			listed_turf = null
+		else if(client.prefs?.tile_panel_embedded)
+			var/tile_panel_active = statpanel("TilePanel")
+			client.show_tile_panel_browser(tile_panel_active)
+			if(tile_panel_active)
+				stat(null)
+		else
+			client.show_tile_panel_browser(FALSE)
+	else if(client)
+		client.show_tile_panel_browser(FALSE)
+
 
 //	if(mind)
 //		add_spells_to_statpanel(mind.spell_list)

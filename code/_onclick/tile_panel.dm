@@ -1,5 +1,6 @@
 #define TILE_PANEL_UI_ID "TilePanel"
 #define TILE_PANEL_UI_NAME "TilePanel"
+#define TILE_PANEL_EMBEDDED_WINDOW_ID "statwindow.tilepanel_browser"
 #define TILEPANEL_ACT_CLOSE "close"
 #define TILEPANEL_ACT_INTERACT "interact"
 #define TILEPANEL_ACT_DROP "drop"
@@ -42,8 +43,14 @@
 		return FALSE
 
 	listed_turf = T
-
 	var/datum/tile_panel/P = get_tile_panel()
+	if(P._is_open())
+		P.close()
+	if(client.prefs?.tile_panel_embedded)
+		client.statpanel = "TilePanel"
+		return P.open(T)
+
+	client.show_tile_panel_browser(FALSE)
 	return P.open(T)
 
 /datum/tile_panel
@@ -93,6 +100,8 @@
 	return TRUE
 
 /datum/tile_panel/proc/close()
+	if(owner?.client)
+		owner.client.show_tile_panel_browser(FALSE)
 	if(owner)
 		SStgui.close_uis(src)
 
@@ -123,10 +132,15 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, TILE_PANEL_UI_ID, TILE_PANEL_UI_NAME)
-		ui.open()
+		if(user.client?.prefs?.tile_panel_embedded)
+			ui.open_window(TILE_PANEL_EMBEDDED_WINDOW_ID, FALSE)
+			user.client.show_tile_panel_browser(user.client.statpanel == "TilePanel")
+		else
+			ui.open()
 
 /datum/tile_panel/ui_data(mob/user)
 	. = list()
+	.["embedded"] = !!user?.client?.prefs?.tile_panel_embedded
 
 	if(!target_turf)
 		.["has_target"] = FALSE
@@ -372,6 +386,7 @@
 
 #undef TILE_PANEL_UI_ID
 #undef TILE_PANEL_UI_NAME
+#undef TILE_PANEL_EMBEDDED_WINDOW_ID
 #undef TILEPANEL_ACT_CLOSE
 #undef TILEPANEL_ACT_INTERACT
 #undef TILEPANEL_ACT_DROP

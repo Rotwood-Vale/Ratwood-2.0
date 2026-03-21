@@ -244,6 +244,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/crt = FALSE
 	var/grain = TRUE
+	var/tile_panel_embedded = FALSE
 	var/dnr_pref = FALSE
 
 	var/list/customizer_entries = list()

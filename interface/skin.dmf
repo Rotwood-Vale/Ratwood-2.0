@@ -206,6 +206,15 @@ window "statwindow"
 		tab-font-size = 20
 		prefix-color = #f9bb00
 		suffix-color = #d6dbd5
+	elem "tilepanel_browser"
+		type = BROWSER
+		pos = 0,58
+		size = 640x422
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = #000000
+		is-visible = false
+		saved-params = ""
 
 window "popupwindow"
 	elem "popupwindow"

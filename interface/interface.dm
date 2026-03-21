@@ -216,6 +216,23 @@ Hotkey-Mode: (hotkey-mode must be on)
 		for(var/atom/movable/screen/grain/S in screen)
 			S.alpha = 55
 
+/client/verb/toggle_tile_panel_embed()
+	set category = "Options"
+	set name = "ToggleTilePanelEmbed"
+	if(!prefs)
+		return
+	prefs.tile_panel_embedded = !prefs.tile_panel_embedded
+	prefs.save_preferences()
+	if(mob?.tile_panel)
+		mob.tile_panel.close()
+	show_tile_panel_browser(FALSE)
+	if(prefs.tile_panel_embedded)
+		to_chat(src, "Tile panel will now open in the statpanel.")
+	else
+		if(statpanel == "TilePanel")
+			statpanel = "RoundInfo"
+		to_chat(src, "Tile panel will now open in a popup window.")
+
 /client/verb/triggercommend()
 	set category = "OOC"
 	set name = "Commend Someone"
@@ -275,6 +292,16 @@ Hotkey-Mode: (hotkey-mode must be on)
 
 /client/proc/refocus_map()
 	winset(src, "mapwindow.map", "focus=true")
+
+/client
+	var/tile_panel_browser_visible = null // null = never sent; TRUE/FALSE tracks last sent state
+
+/client/proc/show_tile_panel_browser(show)
+	var/want = !!show
+	if(tile_panel_browser_visible == want)
+		return
+	tile_panel_browser_visible = want
+	winset(src, "statwindow.tilepanel_browser", "is-visible=[want ? "true" : "false"]")
 
 /client/verb/tgui_refocus_map()
 	set name = "tgui_refocus_map"

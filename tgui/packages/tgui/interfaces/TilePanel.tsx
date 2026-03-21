@@ -1,8 +1,8 @@
 import type React from 'react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useBackend } from 'tgui/backend';
-import { Window } from 'tgui/layouts';
-import { Icon, Input, NoticeBox } from 'tgui-core/components';
+import { Pane, Window } from 'tgui/layouts';
+import { Icon, Input } from 'tgui-core/components';
 
 type TileAtom = {
   name: string;
@@ -12,6 +12,7 @@ type TileAtom = {
 };
 
 type Data = {
+  embedded?: boolean;
   has_target: boolean;
   name?: string;
   atoms?: TileAtom[];
@@ -52,6 +53,92 @@ const defaultDrag: DragState = {
   startY: 0,
   pointerId: null,
 };
+
+const EmptyState = ({ children }: { children: React.ReactNode }) => (
+  <div
+    style={{
+      width: '100%',
+      minHeight: '96px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '12px',
+      border: '1px solid var(--input-border-color, rgba(255,255,255,0.12))',
+      borderRadius: '4px',
+      background: 'rgba(255,255,255,0.03)',
+      color: 'var(--color-text, #897472)',
+      fontSize: '12px',
+      fontStyle: 'italic',
+      textAlign: 'center',
+      boxSizing: 'border-box',
+    }}
+  >
+    {children}
+  </div>
+);
+
+const TilePanelBody = ({
+  data,
+  query,
+  setQuery,
+  searchFocused,
+  setSearchFocused,
+  turfAtom,
+  filtered,
+  renderCard,
+}: any) => (
+  <div
+    style={{
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: 0,
+      padding: data.embedded ? '6px' : 0,
+      boxSizing: 'border-box',
+    }}
+  >
+    {!data.has_target ? (
+      <EmptyState>No turf selected.</EmptyState>
+    ) : (
+      <>
+        <div
+          style={{ flex: '0 0 auto' }}
+          onFocusCapture={() => setSearchFocused(true)}
+          onBlurCapture={() => setSearchFocused(false)}
+        >
+          <Input
+            autoFocus
+            fluid
+            placeholder="Search..."
+            value={query}
+            onChange={setQuery}
+          />
+        </div>
+
+        <div
+          style={{
+            marginTop: '6px',
+            flex: '1 1 auto',
+            minHeight: 0,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignContent: 'flex-start',
+            gap: '8px',
+            padding: '6px',
+            WebkitOverflowScrolling: 'touch',
+          }}
+        >
+          {turfAtom && renderCard(turfAtom)}
+          {filtered.length > 0 ? (
+            filtered.map((a) => renderCard(a))
+          ) : null}
+        </div>
+      </>
+    )}
+  </div>
+);
 
 export const TilePanel = () => {
   const { act, data } = useBackend<Data>();
@@ -195,9 +282,9 @@ export const TilePanel = () => {
         flexDirection: 'column',
         alignItems: 'center',
         padding: '6px',
-        border: '1px solid rgba(255,255,255,0.12)',
+        border: '1px solid var(--input-border-color, rgba(255,255,255,0.12))',
         borderRadius: '4px',
-        background: 'rgba(0,0,0,0.15)',
+        background: 'rgba(255,255,255,0.03)',
         cursor: 'pointer',
         userSelect: 'none',
         touchAction: 'none',
@@ -245,60 +332,38 @@ export const TilePanel = () => {
     </div>
   );
 
+  if (data.embedded) {
+    return (
+      <Pane theme="azure_default">
+        <Pane.Content fitted>
+          <TilePanelBody
+            data={data}
+            query={query}
+            setQuery={setQuery}
+            searchFocused={searchFocused}
+            setSearchFocused={setSearchFocused}
+            turfAtom={turfAtom}
+            filtered={filtered}
+            renderCard={renderCard}
+          />
+        </Pane.Content>
+      </Pane>
+    );
+  }
+
   return (
     <Window width={300} height={400} title={title}>
       <Window.Content>
-        <div
-          style={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: 0,
-          }}
-        >
-          {!data.has_target ? (
-            <NoticeBox>No turf selected.</NoticeBox>
-          ) : (
-            <>
-              <div
-                style={{ flex: '0 0 auto' }}
-                onFocusCapture={() => setSearchFocused(true)}
-                onBlurCapture={() => setSearchFocused(false)}
-              >
-                <Input
-                  autoFocus
-                  fluid
-                  placeholder="Search..."
-                  value={query}
-                  onChange={setQuery}
-                />
-              </div>
-
-              <div
-                style={{
-                  marginTop: '6px',
-                  flex: '1 1 auto',
-                  minHeight: 0,
-                  overflowY: 'auto',
-                  overflowX: 'hidden',
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignContent: 'flex-start',
-                  gap: '8px',
-                  padding: '6px',
-                  WebkitOverflowScrolling: 'touch',
-                }}
-              >
-                {turfAtom && renderCard(turfAtom)}
-                {filtered.length === 0 ? (
-                  <NoticeBox>Nothing to show.</NoticeBox>
-                ) : (
-                  filtered.map((a) => renderCard(a))
-                )}
-              </div>
-            </>
-          )}
-        </div>
+        <TilePanelBody
+          data={data}
+          query={query}
+          setQuery={setQuery}
+          searchFocused={searchFocused}
+          setSearchFocused={setSearchFocused}
+          turfAtom={turfAtom}
+          filtered={filtered}
+          renderCard={renderCard}
+        />
       </Window.Content>
     </Window>
   );

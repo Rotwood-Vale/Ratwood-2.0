@@ -115,6 +115,41 @@
 
 	return TRUE
 
+/datum/tgui/proc/open_window(window_id, fancy = TRUE)
+	if(!user.client)
+		return FALSE
+	if(window)
+		return FALSE
+	process_status()
+	if(status < UI_UPDATE)
+		return FALSE
+
+	var/datum/tgui_window/fixed_window = user.client.tgui_windows[window_id]
+	if(!fixed_window)
+		fixed_window = new(user.client, window_id, pooled = FALSE)
+	else if(fixed_window.locked && fixed_window.locked_by != src)
+		return FALSE
+
+	window = fixed_window
+	opened_at = world.time
+	window.acquire_lock(src)
+	if(!window.is_ready())
+		window.initialize(
+			strict_mode = TRUE,
+			fancy = fancy,
+			assets = list(
+				get_asset_datum(/datum/asset/simple/tgui),
+			))
+	else
+		window.send_message("ping")
+	send_assets()
+	window.send_message("update", get_payload(
+		with_data = TRUE,
+		with_static_data = TRUE))
+	SStgui.on_open(src)
+
+	return TRUE
+
 /datum/tgui/proc/send_assets()
 	var/flush_queue = window.send_asset(get_asset_datum(
 		/datum/asset/simple/namespaced/fontawesome))
