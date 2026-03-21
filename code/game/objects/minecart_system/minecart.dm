@@ -275,8 +275,6 @@
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(decay_momentum))
 
 /obj/structure/closet/crate/miningcar/proc/check_rail(datum/move_loop/move/source)
-	SIGNAL_HANDLER
-
 	if(momentum <= 0)
 		stack_trace("Mine cart moving on 0 momentum!")
 		SSmove_manager.stop_looping(src, SSminecarts)
@@ -337,7 +335,7 @@
 	obj_flags &= ~BLOCK_Z_OUT_DOWN
 	if(momentum >= 12)
 		visible_message(span_warning("[src] comes to a violent halt!"))
-		throw_contents()
+		INVOKE_ASYNC(src, PROC_REF(throw_contents))
 	else
 		visible_message(span_notice("[src] comes to a slow stop."))
 	momentum = 0
