@@ -503,6 +503,7 @@
 
 	var/datum/spell_value/backup_iota = data.current_iota
 
+	data.spoken_so_far += "ITERATIO"
 	var/list/loop_words = list()
 	for(var/wi = loop_start, wi <= length(data.words), wi++)
 		var/lw = data.words[wi]
@@ -868,14 +869,14 @@
 	else
 		return FALSE
 
-	var/how_far = 1
+	var/range = 1
 	var/datum/spell_value/number/range_iota = data.peek_stack(0)
 	if(range_iota && range_iota.value_type == "number")
-		how_far = range_iota.num
+		range = range_iota.num
 		data.pop_iota()
 
 	var/datum/spell_value/coord_list/coords = new()
-	for(var/turf/T in range(how_far, center_spot))
+	for(var/turf/T in range(range, center_spot))
 		coords.add(new /datum/spell_value/position(T.x, T.y, T.z))
 
 	data.current_iota = coords
@@ -896,14 +897,14 @@
 	if(!search_spot)
 		return FALSE
 
-	var/how_far = 7
+	var/range = 7
 	var/datum/spell_value/number/range_iota = data.peek_stack(0)
 	if(range_iota && range_iota.value_type == "number")
-		how_far = min(max(range_iota.num, 0), 7)
+		range = min(max(range_iota.num, 0), 7)
 		data.pop_iota()
 
 	var/datum/spell_value/people/victims = new()
-	for(var/mob/living/carbon/human/L in hearers(how_far, search_spot))
+	for(var/mob/living/carbon/human/L in hearers(range, search_spot))
 		if(L == data.caster)
 			continue
 		if(L.stat == DEAD)

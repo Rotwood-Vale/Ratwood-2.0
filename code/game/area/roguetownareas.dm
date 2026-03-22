@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	var/ceiling_protected = FALSE //Prevents tunneling into these from above
 	var/hoardmaster_protected = FALSE//If a player enters, it ashes them. Your greed will consume you.
 	var/necra_area = FALSE
+	var/no_special_item_retrieval = FALSE//we want in rare cases for loadouts to be inaccessible
 
 /area/rogue/Entered(mob/living/carbon/human/guy)
 	. = ..()
@@ -507,6 +508,26 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	cell_area = TRUE
 	soundproof = TRUE
 	deathsight_message = "cells of pain and suffering"
+
+/area/rogue/dietroyt //dungeon labor camp
+	name = "die troyt"
+	icon_state = "cell"
+	ambientsounds = AMB_CAVEWATER
+	ambientnight = AMB_CAVEWATER
+	spookysounds = SPOOKY_CAVE
+	spookynight = SPOOKY_CAVE
+	droning_sound = 'sound/music/area/underdark.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	cell_area = TRUE
+	town_area = TRUE
+	no_special_item_retrieval = TRUE
+	deathsight_message = "the drone of pickaxes and penance"
+	first_time_text = "DIE TROYT"
+	detail_text = DETAIL_TEXT_DIETROYT
+
+/area/rogue/dietroyt/nomagic
+	noteleport = TRUE
 
 /area/rogue/indoors/town/tavern
 	name = "tavern"

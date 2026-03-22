@@ -453,25 +453,6 @@ GLOBAL_LIST_EMPTY(collar_masters)
 	playsound(pet, 'sound/misc/vampirespell.ogg', 50, TRUE)
 	return TRUE
 
-/datum/component/collar_master/proc/check_pet_status(mob/living/carbon/human/pet)
-	if(!pet || !(pet in my_pets))
-		return FALSE
-
-	var/status_text = "<span class='notice'><b>[pet.real_name] Status:</b>\n"
-	status_text += "Health: [pet.health]/[pet.maxHealth]\n"
-	status_text += "Location: [get_area(pet)]\n"
-	status_text += "Mental State: [pet.stat >= UNCONSCIOUS ? "Unconscious" : "Conscious"]\n"
-	status_text += "Active Traits: "
-
-	var/list/active_traits = list()
-	if(speech_altered)
-		active_traits += "Speech Altered"
-
-	status_text += active_traits.len ? english_list(active_traits) : "None"
-	status_text += "</span>"
-
-	return status_text
-
 /datum/component/collar_master/proc/mass_command(command_type, list/targets, ...)
 	if(!length(targets))
 		return FALSE
@@ -509,7 +490,7 @@ GLOBAL_LIST_EMPTY(collar_masters)
 		return
 
 	if(user == mindparent?.current)
-		to_chat(user, span_notice("\n[check_pet_status(pet)]"))
+		to_chat(user, span_notice("\nThe collar recognizes you as [pet.real_name]'s master. Use Collar Control (TGUI) for live status."))
 	else if(user != pet)
 		to_chat(user, span_warning("\nThey wear a strange collar around their neck."))
 

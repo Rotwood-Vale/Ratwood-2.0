@@ -20,6 +20,8 @@
 		return FALSE
 	if(!user.sexcon.can_use_penis())
 		return FALSE
+	if(!user.Adjacent(target))
+		return FALSE
 	if(!user.sexcon.Adjacent_Or_Closet(target))
 		return FALSE
 	return TRUE

@@ -36,16 +36,16 @@
 	var/has_simple_wounds = HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS)
 	if(has_simple_wounds)
 		// Blood volume
-		switch(blood_volume)
-			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-				msg += span_artery("<B>[m1] extremely pale and sickly.</B>")
-			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-				msg += span_artery("<B>[m1] very pale.</B>")
-			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-				msg += span_artery("[m1] pale.")
-			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-				msg += span_artery("[m1] a little pale.")
-	
+		if(blood_volume <= BLOOD_VOLUME_SURVIVE)
+			msg += span_artery("<B>[m1] extremely pale and sickly.</B>")
+		else if(blood_volume <= BLOOD_VOLUME_BAD)
+			msg += span_artery("<B>[m1] very pale.</B>")
+		else if(blood_volume <= BLOOD_VOLUME_OKAY)
+			msg += span_artery("[m1] pale.")
+		else if(blood_volume <= BLOOD_VOLUME_SAFE)
+			msg += span_artery("[m1] a little pale.")
+
+		bleed_rate = get_bleed_rate()
 		// Bleeding
 		if(bleed_rate)
 			var/bleed_wording = "bleeding"

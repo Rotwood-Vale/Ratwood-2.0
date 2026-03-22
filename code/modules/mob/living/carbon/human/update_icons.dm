@@ -894,11 +894,15 @@ There are several things that need to be remembered:
 				if(istype(belt, /obj/item/storage/belt/rogue)) // check if belt has dildo attached
 					var/obj/item/storage/belt/rogue/belt_with_dildo = belt
 					if(istype(belt_with_dildo.attached_toy, /obj/item/dildo)) // draw dildo in correct position
-						var/mutable_appearance/mbeltoverlaydildo = mutable_appearance('modular/icons/obj/lewd/dildo.dmi', "dildo_belt_[belt_with_dildo.attached_toy.dildo_size]")
+						var/mutable_appearance/mbeltoverlaydildo = mutable_appearance('modular/icons/obj/lewd/dildo.dmi', "dildo_belt_[belt_with_dildo.attached_toy.dildo_size]", layer = -ABOVE_BODY_FRONT_LAYER)
 						mbeltoverlaydildo.color = belt_with_dildo.attached_toy.color // get material color
 						mbeltoverlaydildo.pixel_x = mbeltoverlay.pixel_x
 						mbeltoverlaydildo.pixel_y = mbeltoverlay.pixel_y
 						standing_front += mbeltoverlaydildo
+
+	var/mutable_appearance/modular_chastity_overlay = modular_chastity_attached_toy_overlay()
+	if(modular_chastity_overlay)
+		standing_front += modular_chastity_overlay
 
 	overlays_standing[BELT_LAYER] = standing_front
 	overlays_standing[BELT_BEHIND_LAYER] = standing_behind

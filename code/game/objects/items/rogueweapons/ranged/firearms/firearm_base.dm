@@ -63,7 +63,7 @@ At least, it should. Fingers crossed.
 	cartridge_wording = "musketball"
 	load_sound = list('modular_helmsguard/sound/arquebus/musketload.ogg')
 	fire_sound = list('modular_helmsguard/sound/arquebus/arquefire.ogg')
-	anvilrepair = /datum/skill/craft/blacksmithing
+	anvilrepair = /datum/skill/craft/engineering
 	smeltresult = /obj/item/ingot/steel
 	bolt_type = BOLT_TYPE_NO_BOLT
 	casing_ejector = FALSE

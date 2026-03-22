@@ -95,7 +95,7 @@
 	var/probability = 0
 
 	/// The map weather type to target
-	var/target_trait = PARTICLEWEATHER_RAIN
+	var/target_trait
 
 	// ==== Dont modify these ====
 

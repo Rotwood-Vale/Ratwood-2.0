@@ -72,6 +72,8 @@
 	var/skip_until_else = FALSE
 	var/list/spoken_so_far = list()
 	var/suppress_runechat = FALSE
+	var/datum/chatmessage/active_message = null
+	var/list/viewer_messages = null
 	var/in_conditional = FALSE
 	var/spell_command_used = FALSE
 	var/obj/effect/proc_holder/spell/spell_holder = null
@@ -147,7 +149,7 @@
 					caster.Immobilize(chant_delay SECONDS)
 					sleep(chant_delay SECONDS)
 
-				if(!pause_active)
+				if(!pause_active && word != "iteratio")
 					spoken_so_far += uppertext(word)
 					if(!suppress_runechat)
 						show_runechat(spoken_so_far.Join(" "))
@@ -156,7 +158,10 @@
 
 				if(!do_operation(word))
 					to_chat(caster, span_warning("Your incantation fizzles!"))
+					clear_runechat()
 					return FALSE
+				if(word == "iteratio")
+					return TRUE
 
 				if(start_pause)
 					var/next_word = (word_num < length(words)) ? words[word_num + 1] : null
@@ -165,11 +170,13 @@
 						to_chat(caster, span_warning("Mora must come before a spell command or iteratio!"))
 						return FALSE
 					start_pause = FALSE
+					clear_runechat()
 					start_mora_pause()
 					return TRUE
 
 				if(!caster.can_speak_vocal())
 					to_chat(caster, span_warning("You can't speak the words!"))
+					clear_runechat()
 					return FALSE
 
 				first_word = FALSE
@@ -180,14 +187,57 @@
 		word_num++
 
 	to_chat(caster, span_warning("No spell command!"))
+	clear_runechat()
 	return FALSE
 
+/datum/incantation_data/proc/make_chant_message(mob/owner, text)
+	if(!owner.client)
+		return null
+	var/datum/chatmessage/msg = new()
+	msg.owned_by = owner.client
+	msg.message_loc = caster
+	var/image/img = image(loc = caster, layer = ABOVE_HUD_LAYER)
+	img.plane = ABOVE_HUD_PLANE
+	img.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
+	img.alpha = 150
+	img.pixel_y = owner.bound_height * 0.95
+	img.maptext_width = 96
+	img.maptext_height = 44
+	img.maptext_x = (96 - owner.bound_width) * -0.5
+	img.maptext = text
+	msg.message = img
+	LAZYADDASSOC(owner.client.seen_messages, caster, msg)
+	owner.client.images |= img
+	addtimer(CALLBACK(msg, TYPE_PROC_REF(/datum/chatmessage, end_of_life)), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	return msg
+
 /datum/incantation_data/proc/show_runechat(text)
+	var/tgt_color = "#adadad"
+	var/formatted = "<span class='center maptext emote italics' style='color: [tgt_color]; font-size:7pt; font-family:\"Pterra\"; text-shadow:0 0 5px #000,0 0 5px #000,0 0 5px #000,0 0 5px #000;'>[text]</span>"
+	if(active_message && !QDELETED(active_message))
+		active_message.message.maptext = formatted
+		if(viewer_messages)
+			for(var/datum/chatmessage/vm in viewer_messages)
+				if(!QDELETED(vm))
+					vm.message.maptext = formatted
+		return
+	if(!viewer_messages)
+		viewer_messages = list()
 	for(var/mob/M in oview(7, caster))
-		if(M.client)
-			M.create_chat_message(caster, null, text, list("emote", "italics"))
-	if(caster.client)
-		caster.create_chat_message(caster, null, text, list("emote", "italics"))
+		var/datum/chatmessage/vm = make_chant_message(M, formatted)
+		if(vm)
+			viewer_messages += vm
+	active_message = make_chant_message(caster, formatted)
+
+/datum/incantation_data/proc/clear_runechat()
+	if(active_message && !QDELETED(active_message))
+		qdel(active_message)
+	active_message = null
+	if(viewer_messages)
+		for(var/datum/chatmessage/vm in viewer_messages)
+			if(!QDELETED(vm))
+				qdel(vm)
+		viewer_messages = null
 
 /datum/incantation_data/proc/start_mora_pause()
 	var/obj/item/melee/touch_attack/mora_focus/focus = new /obj/item/melee/touch_attack/mora_focus(

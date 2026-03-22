@@ -361,6 +361,8 @@
 				buckle_cd += 10 SECONDS
 			else
 				buckle_cd += S.breakoutextra
+			if(istype(S, /obj/structure/bondage/torture_table) && !handcuffed)
+				buckle_cd = 3 MINUTES
 		visible_message("<span class='warning'>[src] attempts to struggle free!</span>", \
 					"<span class='notice'>I attempt to struggle free...</span>")
 		if(do_after(src, buckle_cd, 0, target = src))

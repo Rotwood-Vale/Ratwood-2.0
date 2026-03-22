@@ -369,9 +369,9 @@
 	max_integrity = ARMOR_INT_SIDE_STEEL
 	smeltresult = /obj/item/ingot/aaslag
 
-/obj/item/clothing/neck/roguetown/gorget/cursed_collar
-	name = "cursed collar"
-	desc = "A metal collar that seems to radiate an ominous aura."
+/obj/item/clothing/neck/roguetown/gorget/cursed_collar // minor flavor swap so people know it's a scam shitty knockoff.
+	name = "lesser cursed collar"
+	desc = "A metal collar that seems to radiate an ominous aura. A pale imitation of it's artificed counterpart."
 	icon_state = "cursed_collar"
 	item_state = "cursed_collar"
 	armor = ARMOR_CLOTHING

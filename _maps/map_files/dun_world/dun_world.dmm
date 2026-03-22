@@ -13257,6 +13257,12 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault)
+"dkL" = (
+/obj/structure/bars/nopassthrow{
+	max_integrity = 2000
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/dietroyt/nomagic)
 "dkM" = (
 /obj/structure/table/wood/long_table,
 /obj/item/candle/skull/lit,
@@ -34039,9 +34045,6 @@
 "ige" = (
 /obj/structure/bed/rogue,
 /obj/item/bedsheet/rogue/cloth,
-/obj/effect/landmark/start/dungeoneer{
-	dir = 8
-	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/cell)
 "igk" = (
@@ -61186,6 +61189,16 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/orcdungeon)
+"oAO" = (
+/obj/structure/fluff/traveltile/dungeoneer{
+	aportalgoesto = "siberia1";
+	aportalid = "siberia2"
+	},
+/obj/structure/stairs/stone{
+	dir = 4
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/indoors/cave/southern)
 "oAP" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4
@@ -61930,12 +61943,13 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault)
 "oJV" = (
-/obj/structure/closet/crate/chest{
-	name = "Evidence Storage"
+/obj/structure/fluff/traveltile{
+	aportalgoesto = "EscapeDieTroyt1";
+	aportalid = "EscapeDieTroyt2"
 	},
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/cell)
+/area/rogue/dietroyt/nomagic)
 "oJW" = (
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/mountains)
@@ -62805,6 +62819,15 @@
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town)
+"oUB" = (
+/obj/structure/mineral_door/wood/donjon{
+	dir = 4;
+	locked = 1;
+	lockid = "dungeon";
+	name = "oubliette"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/indoors/town/cell)
 "oUH" = (
 /obj/machinery/light/rogue/candle/weak/l,
 /turf/open/floor/rogue/cobble,
@@ -75416,12 +75439,9 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/shelter/mountains/decap)
 "rUL" = (
-/obj/structure/closet/crate/chest{
-	name = "Evidence Storage"
-	},
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/cell)
+/area/rogue/dietroyt/nomagic)
 "rUQ" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/cobble/mossy,
@@ -82674,9 +82694,8 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town)
 "tFU" = (
-/obj/structure/fermentation_keg/water,
 /turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/cell)
+/area/rogue/dietroyt/nomagic)
 "tGa" = (
 /obj/item/grown/log/tree/small,
 /turf/open/floor/rogue/dirt/road,
@@ -100356,7 +100375,6 @@
 /area/rogue/outdoors/bog/south)
 "xOb" = (
 /obj/structure/table/wood/poor/alt,
-/obj/item/rogueweapon/sword/long/exe/cloth,
 /obj/item/natural/stone,
 /obj/item/storage/belt/rogue/surgery_bag/full,
 /turf/open/floor/rogue/wood,
@@ -100727,6 +100745,14 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/magician)
+"xSP" = (
+/obj/structure/mineral_door/bars{
+	locked = 1;
+	lockid = "dungeon";
+	name = "Lucky Winner Cell"
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/dietroyt/nomagic)
 "xSX" = (
 /obj/structure/fluff/wallclock,
 /obj/machinery/light/rogue/candle/l,
@@ -180802,11 +180828,11 @@ tjf
 tjf
 tjf
 tjf
-tjf
-tjf
-tjf
-cak
-aYF
+yhQ
+yhQ
+yhQ
+yhQ
+yhQ
 aYF
 aYF
 aYF
@@ -181254,11 +181280,11 @@ tjf
 tjf
 tjf
 tjf
-tjf
-tjf
-tjf
-tjf
-aYF
+yhQ
+wXy
+oAO
+wXy
+yhQ
 aYF
 aYF
 aYF
@@ -181707,9 +181733,9 @@ yhQ
 yhQ
 yhQ
 yhQ
-yhQ
-yhQ
-yhQ
+wXy
+wXy
+wXy
 yhQ
 yhQ
 aYF
@@ -182160,7 +182186,7 @@ urh
 urh
 urh
 urh
-urh
+oUB
 urh
 urh
 yhQ
@@ -186233,7 +186259,7 @@ uuS
 wjm
 uuS
 uuS
-uuS
+dkL
 oJV
 eOF
 yhQ
@@ -186685,7 +186711,7 @@ uuS
 uuS
 uuS
 uuS
-uuS
+xSP
 tFU
 dRQ
 yhQ
@@ -187137,7 +187163,7 @@ dvr
 qnP
 uuS
 uuS
-uuS
+dkL
 rUL
 eOF
 yhQ

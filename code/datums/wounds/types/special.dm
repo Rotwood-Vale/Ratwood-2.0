@@ -480,7 +480,7 @@
 	bypass_bloody_wound_check = TRUE
 
 	var/start_time
-	var/duration = 1 MINUTES
+	var/duration = 2 MINUTES
 
 /datum/wound/heatexhaustion/on_mob_gain(mob/living/affected)
 	. = ..()
@@ -508,7 +508,7 @@
 	if(!C.stat && prob(5))
 		to_chat(C, span_warning("My vision swims from the heat..."))
 
-	// After 1 minute, convert to heatstroke
+	// After 2 minute, convert to heatstroke
 	if(world.time >= start_time + duration)
 		var/obj/item/bodypart/BP = bodypart_owner
 		if(BP)
@@ -697,7 +697,7 @@
 	bypass_bloody_wound_check = TRUE
 
 	var/start_time
-	var/duration = 1 MINUTES
+	var/duration = 2 MINUTES
 
 /datum/wound/hypothermia/on_mob_gain(mob/living/affected)
 	. = ..()
@@ -723,10 +723,11 @@
 	if(!C.stat && prob(5))
 		to_chat(C, span_warning("I can't stop shivering..."))
 
-	// After 1 minute, convert to frostbite
+	// After 2 minutes, convert to frostbite
 	if(world.time >= start_time + duration)
 		var/obj/item/bodypart/BP = bodypart_owner
 		if(BP)
 			to_chat(C, span_userdanger("I feel pins and needles in [BP]!"))
 			BP.add_wound(/datum/wound/frostbite)
+			C.clear_fullscreen("hypothermia") 
 		qdel(src)

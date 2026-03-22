@@ -114,6 +114,8 @@
 	update_sneak_invis()
 	if(istype(loc, /turf/open/water))
 		handle_inwater(loc)
+	if(GLOB.cold_breath_overlay in overlays)
+		cut_overlay(GLOB.cold_breath_overlay)
 
 /mob/living/proc/handle_random_events(additional = 0)
 	//random painstun

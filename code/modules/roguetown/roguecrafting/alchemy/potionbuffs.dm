@@ -19,7 +19,7 @@
 	if(owner.bodytemperature > BODYTEMP_NORMAL_MAX)
 		owner.adjust_bodytemperature(-5)
 	if(owner.bodytemperature < BODYTEMP_NORMAL_MIN)
-		owner.adjust_bodytemperature(-5)
+		owner.adjust_bodytemperature(5)
 
 /datum/status_effect/buff/alch/strengthpot
 	id = "strpot"

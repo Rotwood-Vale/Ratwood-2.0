@@ -265,8 +265,7 @@
 	if(istype(H, /mob/living/carbon/human))
 		var/mob/living/carbon/human/Hu = H
 		if(Hu.familytree_pref != FAMILY_NONE && !Hu.family_datum)
-			var/timer = rand(60, 180)
-			addtimer(CALLBACK(SSfamilytree, TYPE_PROC_REF(/datum/controller/subsystem/familytree, AddLocal), H, Hu.familytree_pref), timer SECONDS)
+			addtimer(CALLBACK(SSfamilytree, TYPE_PROC_REF(/datum/controller/subsystem/familytree, AddLocal), H, Hu.familytree_pref), 5 SECONDS)
 
 	var/department = SSjob.bitflag_to_department(department_flag, obsfuscated_job)
 	if (!hidden_job)

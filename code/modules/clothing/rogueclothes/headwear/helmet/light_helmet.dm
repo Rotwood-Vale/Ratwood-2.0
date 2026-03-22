@@ -41,8 +41,6 @@
 	item_state = "volfhead"
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50
-	heat_protection = null
-	max_heat_protection_temperature = 350
 
 /obj/item/clothing/head/roguetown/helmet/leather/saiga
 	name = "saiga skull"

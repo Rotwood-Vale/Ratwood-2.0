@@ -17,8 +17,6 @@
 	salvage_amount = 1
 	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
-	heat_protection = null
-	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/under/roguetown/trou/leather
 	name = "leather trousers"
@@ -79,8 +77,6 @@
 	detail_color = CLOTHING_BLACK
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	heat_protection = null
-	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/under/roguetown/trou/formal/shorts
 	name = "trouser shorts"
