@@ -88,7 +88,6 @@
 #define ARMOR_PADDED_BAD list("blunt" = 50, "slash" = 30, "stab" = 20, "piercing" = 40, "fire" = 0, "acid" = 0)
 #define ARMOR_PADDED list("blunt" = 70, "slash" = 40, "stab" = 30, "piercing" = 50, "fire" = 0, "acid" = 0)
 #define ARMOR_PADDED_GOOD list("blunt" = 90, "slash" = 50, "stab" = 50, "piercing" = 80, "fire" = 0, "acid" = 0)
-#define ARMOR_PADDED_GOOD_PLUS_FIRE list("blunt" = 90, "slash" = 50, "stab" = 50, "piercing" = 80, "fire" = 15, "acid" = 0)
 
 // Leather should always be 10 less than their padded counterparts for piercing but is good vs arrows still.
 #define ARMOR_LEATHER list("blunt" = 60, "slash" = 50, "stab" = 40, "piercing" = 30, "fire" = 0, "acid" = 0)

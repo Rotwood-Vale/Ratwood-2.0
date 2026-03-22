@@ -49,6 +49,7 @@
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	sewrepair = TRUE
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/neck/roguetown/coif/padded
 	name = "padded coif"
@@ -76,7 +77,7 @@
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HEAD
 	blocksound = SOFTHIT
 	body_parts_covered = NECK|HAIR|EARS|HEAD|MOUTH
-	armor = ARMOR_PADDED_GOOD_PLUS_FIRE //full padded gambeson basically
+	armor = ARMOR_PADDED_GOOD //full padded gambeson basically
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
