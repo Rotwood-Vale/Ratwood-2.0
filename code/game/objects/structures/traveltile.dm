@@ -228,18 +228,29 @@
 	var/portal_goesto = null
 	var/travel_delay = 10 SECONDS
 
+	var/static/list/portals_by_id = list()
+
+/obj/structure/fluff/freehold_ladder_portal/Initialize(mapload)
+	. = ..()
+
+	if(portal_id)
+		portals_by_id[portal_id] = src
+
+/obj/structure/fluff/freehold_ladder_portal/Destroy()
+	if(portal_id && portals_by_id[portal_id] == src)
+		portals_by_id -= portal_id
+
+	return ..()
+
 /obj/structure/fluff/freehold_ladder_portal/proc/find_destination()
 	if(!portal_goesto)
 		return null
 
-	for(var/obj/structure/fluff/freehold_ladder_portal/destination_portal in world)
-		if(destination_portal == src)
-			continue
-		if(destination_portal.portal_id != portal_goesto)
-			continue
-		return destination_portal
+	var/obj/structure/fluff/freehold_ladder_portal/destination_portal = portals_by_id[portal_goesto]
+	if(QDELETED(destination_portal))
+		return null
 
-	return null
+	return destination_portal
 
 /obj/structure/fluff/freehold_ladder_portal/attack_hand(mob/user)
 	. = ..()

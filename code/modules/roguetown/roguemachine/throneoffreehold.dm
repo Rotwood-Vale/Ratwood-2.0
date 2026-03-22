@@ -31,7 +31,7 @@ GLOBAL_VAR(announcement_throne)
 	. = ..()
 	. += span_notice("Those seated upon it may speak to it.")
 	. += span_notice("Say 'secrets of the throne' to hear its commands.")
-	. += span_notice("Say 'make announcement' to address the realm.")
+	. += span_notice("Say 'make announcement' to address the realm. Once per 20 minutes")
 	. += span_notice("Say 'announce raid' to call the freeholders to raid.")
 	. += span_notice("Say 'nevermind' to cancel.")
 
@@ -110,7 +110,7 @@ GLOBAL_VAR(announcement_throne)
 	if(!raw_message || !length(trim(raw_message)))
 		return
 
-	next_announcement_time = world.time + 10 MINUTES
+	next_announcement_time = world.time + 20 MINUTES
 	priority_announce(raw_message, "ROGUETOWN", 'sound/misc/royal_decree.ogg', "Roguetown")
 
 /obj/structure/roguemachine/freeholdthrone/proc/make_raid_announcement(mob/living/user, raw_message)
