@@ -15,7 +15,6 @@
 #include "_maps\templates\smalldungeons.dm"
 #include "code\__byond_version_compat.dm"
 #include "code\_compile_options.dm"
-#include "code\genesis_call.dm"
 #include "code\rt.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
