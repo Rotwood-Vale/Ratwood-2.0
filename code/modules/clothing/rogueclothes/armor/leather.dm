@@ -160,6 +160,16 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
 
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/renegade
+	name = "gunslinger's coat"
+	desc = "A worn-out coat with thin metal plates sewn in. It's missing the inner pockets, violently torn off."
+	icon_state = "renegadecoat"
+	item_state = "renegadecoat"
+	body_parts_covered = COVERAGE_FULL
+	sleeved = 'icons/roguetown/clothing/onmob/armor.dmi'
+	armor = ARMOR_LEATHER_STUDDED
+	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT | LEG_LEFT | LEG_RIGHT
+
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 	name = "megarmach scale coat"
 	desc = "A set of lightweight armor fashioned from the scales of the Zybantine \'megarmach\', an armored reptilian creacher that ambushes prey by the riverside, and drags them deep into Abyssor's domain."

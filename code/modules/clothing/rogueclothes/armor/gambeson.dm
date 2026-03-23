@@ -92,6 +92,9 @@
 					H.update_inv_armor()
 			return
 
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/black
+	color = "#404040"
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 	name = "royal gambeson"
 	desc = "A fancy gambeson for royalty. Adorned with extra details and padded for extra protection."

@@ -297,6 +297,12 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	sewrepair = TRUE
 
+// /obj/item/clothing/head/roguetown/inqhat/renegade
+//	name = "gunslinger's hat"
+//	desc = "A weathered leather hat, decorated with spitzer bullets and fitted with a hidden steel skull cap. It serves as a reminder that fashion comes and goes, but style lasts forever. </br>'Shield your eyes from the Orthodoxy's irradiance, and see the truth for yourself.'"
+//	icon_state = "renegadehat"
+//	item_state = "renegadehat"
+
 /obj/item/clothing/head/roguetown/headband/red
 	color = CLOTHING_RED
 
