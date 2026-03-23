@@ -8,19 +8,19 @@ PURPLE='\033[00;35m'
 # Docker entrypoint
 # =================
 # What this will do:
-# 1) Copy the default config/ files from the read-only volume to /tgstation/config/
-# 2) Override files under /tgstation/config/ with files present in /gamecfg/
-# 3) Process environment variables passed to the container into /tgstation/config/
+# 1) Copy the default config/ files from the read-only volume to /roguetown/config/
+# 2) Override files under /roguetown/config/ with files present in /gamecfg/
+# 3) Process environment variables passed to the container into /roguetown/config/
 # 4) Finally start the DreamDaemon
 
 # Override game config files
 echo -e "${PURPLE}[${YELLOW}---${PURPLE}]${RS} Copying default configuration files..."
-cp -frv /gamecfg_ro/* /tgstation/config
+cp -frv /gamecfg_ro/* /roguetown/config
 echo -e "${PURPLE}[${GREEN}---${PURPLE}]${RS} ${GREEN}Copy complete!${RS}"
 
 # Override game config files
 echo -e "${PURPLE}[${YELLOW}---${PURPLE}]${RS} Overriding config files"
-cp -frv /gamecfg/* /tgstation/config
+cp -frv /gamecfg/* /roguetown/config
 echo -e "${PURPLE}[${GREEN}---${PURPLE}]${RS} ${GREEN}Override complete!${RS}"
 
 # Override common game options using variables
@@ -31,9 +31,9 @@ DB_HOST="${DB_HOST:-db}"
 DB_USER="${DB_USER:-gamelord}"
 DB_PASS="${DB_PASS:-gamelord}"
 
-sed -i -r 's/(#|^)ADDRESS .*/ADDRESS '"$DB_HOST"'/' /tgstation/config/dbconfig.txt
-sed -i -r 's/(#|^)FEEDBACK_LOGIN .*/FEEDBACK_LOGIN '"$DB_USER"'/' /tgstation/config/dbconfig.txt
-sed -i -r 's/(#|^)FEEDBACK_PASSWORD .*/FEEDBACK_PASSWORD '"$DB_PASS"'/' /tgstation/config/dbconfig.txt
+sed -i -r 's/(#|^)ADDRESS .*/ADDRESS '"$DB_HOST"'/' /roguetown/config/dbconfig.txt
+sed -i -r 's/(#|^)FEEDBACK_LOGIN .*/FEEDBACK_LOGIN '"$DB_USER"'/' /roguetown/config/dbconfig.txt
+sed -i -r 's/(#|^)FEEDBACK_PASSWORD .*/FEEDBACK_PASSWORD '"$DB_PASS"'/' /roguetown/config/dbconfig.txt
 
 function envvar_override () {
   ### FUNCTION for overriding options in a file using the exported environment variables
@@ -59,18 +59,18 @@ function envvar_override () {
   done
 }
 # Overriding game options
-envvar_override "TG_GAME_" "/tgstation/config/game_options.txt"
+envvar_override "TG_GAME_" "/roguetown/config/game_options.txt"
 
 
 # Setting ranks
 export IFS=","
 if [[ ! -z "${CKEYRANKS}" ]]; then
   echo -e "${PURPLE}[${YELLOW}---${PURPLE}]${RS} Inserting ranks..."
-  echo "" > /tgstation/config/admins.txt
+  echo "" > /roguetown/config/admins.txt
   echo -e "${RED}admins.txt has been reset!${RS}"
   for RANK in $CKEYRANKS; do
     echo "$( echo $RANK | cut -d '=' -f 1 )is now$( echo $RANK | cut -d '=' -f 2 )"
-    printf "${RANK}\n" >> /tgstation/config/admins.txt
+    printf "${RANK}\n" >> /roguetown/config/admins.txt
   done
   echo -e "${PURPLE}[${GREEN}---${PURPLE}]${RS} ${GREEN}CKEY Ranks set.${RS}"
 fi
@@ -81,5 +81,5 @@ echo -e "${PURPLE}[${GREEN}---${PURPLE}]${RS} ${GREEN}Override complete!${RS}"
 # Start DreamDaemon
 echo -e "${PURPLE}[${GREEN}---${PURPLE}]${RS} ${GREEN}Starting DreamDaemon ...${RS}"
 echo -e "${PURPLE}[${GREEN}---${PURPLE}]${RS} ${YELLOW}Enjoy! <3${RS}"
-cd /tgstation
-DreamDaemon tgstation.dmb -port 1337 -trusted -close -verbose
+cd /roguetown
+DreamDaemon roguetown.dmb -port 1337 -trusted -close -verbose

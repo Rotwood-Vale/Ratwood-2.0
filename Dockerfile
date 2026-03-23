@@ -65,7 +65,7 @@ FROM dm_base as build
 
 COPY . .
 
-RUN DreamMaker -max_errors 0 tgstation.dme && tools/deploy.sh /deploy
+RUN DreamMaker -max_errors 0 roguetown.dme && tools/deploy.sh /deploy
 
 FROM dm_base
 
@@ -89,8 +89,8 @@ COPY --from=bsql /bsql/artifacts/src/BSQL/libBSQL.so ./
 COPY --from=build /deploy ./
 
 #bsql fexists memes
-RUN ln -s /tgstation/libBSQL.so /root/.byond/bin/libBSQL.so
+RUN ln -s /roguetown/libBSQL.so /root/.byond/bin/libBSQL.so
 
-VOLUME [ "/tgstation/config", "/tgstation/data" ]
+VOLUME [ "/roguetown/config", "/roguetown/data" ]
 
-ENTRYPOINT [ "DreamDaemon", "tgstation.dmb", "-port", "1337", "-trusted", "-close", "-verbose" ]
+ENTRYPOINT [ "DreamDaemon", "roguetown.dmb", "-port", "1337", "-trusted", "-close", "-verbose" ]

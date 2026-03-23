@@ -1,8 +1,8 @@
 2023-11-12T08:57:50.1971985Z Requested labels: ubuntu-latest
-2023-11-12T08:57:50.1972288Z Job defined at: tgstation/tgstation/.github/workflows/run_integration_tests.yml@refs/pull/79384/merge
+2023-11-12T08:57:50.1972288Z Job defined at: roguetown/roguetown/.github/workflows/run_integration_tests.yml@refs/pull/79384/merge
 2023-11-12T08:57:50.1972523Z Reusable workflow chain:
-2023-11-12T08:57:50.1972632Z tgstation/tgstation/.github/workflows/ci_suite.yml@refs/pull/79384/merge (0f52a54577af8e336ee4407c83bc6d3bfedd1d11)
-2023-11-12T08:57:50.1972727Z -> tgstation/tgstation/.github/workflows/run_integration_tests.yml@refs/pull/79384/merge (0f52a54577af8e336ee4407c83bc6d3bfedd1d11)
+2023-11-12T08:57:50.1972632Z roguetown/roguetown/.github/workflows/ci_suite.yml@refs/pull/79384/merge (0f52a54577af8e336ee4407c83bc6d3bfedd1d11)
+2023-11-12T08:57:50.1972727Z -> roguetown/roguetown/.github/workflows/run_integration_tests.yml@refs/pull/79384/merge (0f52a54577af8e336ee4407c83bc6d3bfedd1d11)
 2023-11-12T08:57:50.1972819Z Waiting for a runner to pick up this job...
 2023-11-12T08:59:41.2590058Z Job is waiting for a hosted runner to come online.
 2023-11-12T08:59:44.1017042Z Job is about to start running on the hosted runner: GitHub Actions 11 (hosted)
@@ -43,8 +43,8 @@
 2023-11-12T08:59:46.4989409Z Download action repository 'actions/checkout@v3' (SHA:f43a0e5ff2bd294095638e18286ca9a3d1956744)
 2023-11-12T08:59:46.6372596Z Download action repository 'actions/cache@v3' (SHA:704facf57e6136b1bc63b828d79edcd491f0ee84)
 2023-11-12T08:59:46.7365405Z Download action repository 'actions/upload-artifact@v3' (SHA:a8a3f3ad30e3422c9c7b888a15615d19a852ae32)
-2023-11-12T08:59:46.7793243Z Download action repository 'tgstation/byond-client-compatibility-check@v3' (SHA:d9fac1c9713569fa6681906325ddce115bb53365)
-2023-11-12T08:59:47.0659791Z Uses: tgstation/tgstation/.github/workflows/run_integration_tests.yml@refs/pull/79384/merge (0f52a54577af8e336ee4407c83bc6d3bfedd1d11)
+2023-11-12T08:59:46.7793243Z Download action repository 'roguetown/byond-client-compatibility-check@v3' (SHA:d9fac1c9713569fa6681906325ddce115bb53365)
+2023-11-12T08:59:47.0659791Z Uses: roguetown/roguetown/.github/workflows/run_integration_tests.yml@refs/pull/79384/merge (0f52a54577af8e336ee4407c83bc6d3bfedd1d11)
 2023-11-12T08:59:47.0662504Z ##[group] Inputs
 2023-11-12T08:59:47.0663016Z   map: tramstation
 2023-11-12T08:59:47.0663530Z   major:
@@ -146,7 +146,7 @@
 2023-11-12T09:00:11.5894520Z ##[endgroup]
 2023-11-12T09:00:11.6253438Z ##[group]Run actions/checkout@v3
 2023-11-12T09:00:11.6253862Z with:
-2023-11-12T09:00:11.6254192Z   repository: tgstation/tgstation
+2023-11-12T09:00:11.6254192Z   repository: roguetown/roguetown
 2023-11-12T09:00:11.6254857Z   token: ***
 2023-11-12T09:00:11.6255173Z   ssh-strict: true
 2023-11-12T09:00:11.6255558Z   persist-credentials: true
@@ -158,18 +158,18 @@
 2023-11-12T09:00:11.6257739Z   submodules: false
 2023-11-12T09:00:11.6258160Z   set-safe-directory: true
 2023-11-12T09:00:11.6258498Z ##[endgroup]
-2023-11-12T09:00:11.7905131Z Syncing repository: tgstation/tgstation
+2023-11-12T09:00:11.7905131Z Syncing repository: roguetown/roguetown
 2023-11-12T09:00:11.7906924Z ##[group]Getting Git version info
-2023-11-12T09:00:11.7907608Z Working directory is '/home/runner/work/tgstation/tgstation'
+2023-11-12T09:00:11.7907608Z Working directory is '/home/runner/work/roguetown/roguetown'
 2023-11-12T09:00:11.7908545Z [command]/usr/bin/git version
 2023-11-12T09:00:11.7926430Z git version 2.42.0
 2023-11-12T09:00:11.7950009Z ##[endgroup]
 2023-11-12T09:00:11.7969428Z Temporarily overriding HOME='/home/runner/work/_temp/36501371-137a-461b-978e-be8cc4242865' before making global git config changes
 2023-11-12T09:00:11.7971339Z Adding repository directory to the temporary git global config as a safe directory
-2023-11-12T09:00:11.7973813Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tgstation/tgstation
-2023-11-12T09:00:11.8018133Z Deleting the contents of '/home/runner/work/tgstation/tgstation'
+2023-11-12T09:00:11.7973813Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/roguetown/roguetown
+2023-11-12T09:00:11.8018133Z Deleting the contents of '/home/runner/work/roguetown/roguetown'
 2023-11-12T09:00:11.8021715Z ##[group]Initializing the repository
-2023-11-12T09:00:11.8024938Z [command]/usr/bin/git init /home/runner/work/tgstation/tgstation
+2023-11-12T09:00:11.8024938Z [command]/usr/bin/git init /home/runner/work/roguetown/roguetown
 2023-11-12T09:00:11.8167504Z hint: Using 'master' as the name for the initial branch. This default branch name
 2023-11-12T09:00:11.8168867Z hint: is subject to change. To configure the initial branch name to use in all
 2023-11-12T09:00:11.8170077Z hint: of your new repositories, which will suppress this warning, call:
@@ -180,8 +180,8 @@
 2023-11-12T09:00:11.8173070Z hint: 'development'. The just-created branch can be renamed via this command:
 2023-11-12T09:00:11.8173978Z hint:
 2023-11-12T09:00:11.8174325Z hint: 	git branch -m <name>
-2023-11-12T09:00:11.8177381Z Initialized empty Git repository in /home/runner/work/tgstation/tgstation/.git/
-2023-11-12T09:00:11.8185891Z [command]/usr/bin/git remote add origin https://github.com/tgstation/tgstation
+2023-11-12T09:00:11.8177381Z Initialized empty Git repository in /home/runner/work/roguetown/roguetown/.git/
+2023-11-12T09:00:11.8185891Z [command]/usr/bin/git remote add origin https://github.com/roguetown/roguetown
 2023-11-12T09:00:11.8237650Z ##[endgroup]
 2023-11-12T09:00:11.8238368Z ##[group]Disabling automatic garbage collection
 2023-11-12T09:00:11.8241714Z [command]/usr/bin/git config --local gc.auto 0
@@ -610,7 +610,7 @@
 2023-11-12T09:00:18.2774732Z Resolving deltas:  99% (1632/1648)
 2023-11-12T09:00:18.2776965Z Resolving deltas: 100% (1648/1648)
 2023-11-12T09:00:18.2777617Z Resolving deltas: 100% (1648/1648), done.
-2023-11-12T09:00:18.4151233Z From https://github.com/tgstation/tgstation
+2023-11-12T09:00:18.4151233Z From https://github.com/roguetown/roguetown
 2023-11-12T09:00:18.4152324Z  * [new ref]         0f52a54577af8e336ee4407c83bc6d3bfedd1d11 -> pull/79384/merge
 2023-11-12T09:00:18.4174692Z ##[endgroup]
 2023-11-12T09:00:18.4175546Z ##[group]Determining the checkout info
@@ -684,15 +684,15 @@
 2023-11-12T09:00:19.9618460Z   lookup-only: false
 2023-11-12T09:00:19.9618822Z ##[endgroup]
 2023-11-12T09:00:20.2859595Z Cache Size: ~4 MB (4090426 B)
-2023-11-12T09:00:20.2888527Z [command]/usr/bin/tar -xf /home/runner/work/_temp/edb2b23d-361f-4c19-b676-33998159e0b8/cache.tzst -P -C /home/runner/work/tgstation/tgstation --use-compress-program unzstd
+2023-11-12T09:00:20.2888527Z [command]/usr/bin/tar -xf /home/runner/work/_temp/edb2b23d-361f-4c19-b676-33998159e0b8/cache.tzst -P -C /home/runner/work/roguetown/roguetown --use-compress-program unzstd
 2023-11-12T09:00:20.3193378Z Cache restored successfully
 2023-11-12T09:00:20.3317264Z Cache restored from key: Linux-byond-
 2023-11-12T09:00:20.3451434Z ##[group]Run sudo systemctl start mysql
 2023-11-12T09:00:20.3452154Z [36;1msudo systemctl start mysql[0m
 2023-11-12T09:00:20.3452715Z [36;1mmysql -u root -proot -e 'CREATE DATABASE tg_ci;'[0m
-2023-11-12T09:00:20.3453355Z [36;1mmysql -u root -proot tg_ci < SQL/tgstation_schema.sql[0m
+2023-11-12T09:00:20.3453355Z [36;1mmysql -u root -proot tg_ci < SQL/roguetown_schema.sql[0m
 2023-11-12T09:00:20.3454118Z [36;1mmysql -u root -proot -e 'CREATE DATABASE tg_ci_prefixed;'[0m
-2023-11-12T09:00:20.3454828Z [36;1mmysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql[0m
+2023-11-12T09:00:20.3454828Z [36;1mmysql -u root -proot tg_ci_prefixed < SQL/roguetown_schema_prefixed.sql[0m
 2023-11-12T09:00:20.3513329Z shell: /usr/bin/bash -e {0}
 2023-11-12T09:00:20.3513775Z ##[endgroup]
 2023-11-12T09:00:23.5982676Z mysql: [Warning] Using a password on the command line interface can be insecure.
@@ -834,12 +834,12 @@
 2023-11-12T09:00:25.3377241Z => Starting 'dm'
 2023-11-12T09:00:25.3385788Z :: Using defines: CBT, CIBUILDING, ANSICOLORS
 2023-11-12T09:00:25.6662719Z DM compiler version 514.1588
-2023-11-12T09:00:25.6663169Z loading tgstation.m.dme
+2023-11-12T09:00:25.6663169Z loading roguetown.m.dme
 2023-11-12T09:00:25.9197564Z code/__DEFINES/qdel.dm:22:warning: #warn TG0001 qdel REFERENCE_TRACKING enabled
 2023-11-12T09:00:36.5749452Z loading interface/skin.dmf
 2023-11-12T09:01:29.5751892Z loading map_files/generic/CentCom.dmm
-2023-11-12T09:01:29.9653644Z saving tgstation.m.dmb (DEBUG mode)
-2023-11-12T09:01:30.6467137Z tgstation.m.dmb - 0 errors, 1 warning (11/12/23 9:01 am)
+2023-11-12T09:01:29.9653644Z saving roguetown.m.dmb (DEBUG mode)
+2023-11-12T09:01:30.6467137Z roguetown.m.dmb - 0 errors, 1 warning (11/12/23 9:01 am)
 2023-11-12T09:01:30.6468251Z Total time: 1:05
 2023-11-12T09:01:31.6898602Z => Finished 'dm' in 66.352s
 2023-11-12T09:01:31.6901009Z => Done in 66.578s
@@ -2298,17 +2298,17 @@
 2023-11-12T09:08:25.5000590Z Note: The size of downloaded zips can differ significantly from the reported size. For more information see: https://github.com/actions/upload-artifact#zipped-artifact-downloads
 2023-11-12T09:08:25.5002432Z
 2023-11-12T09:08:25.5002844Z Artifact test_artifacts_tramstation has been successfully uploaded!
-2023-11-12T09:08:25.5131976Z ##[group]Run tgstation/byond-client-compatibility-check@v3
+2023-11-12T09:08:25.5131976Z ##[group]Run roguetown/byond-client-compatibility-check@v3
 2023-11-12T09:08:25.5132416Z with:
-2023-11-12T09:08:25.5132646Z   dmb-location: tgstation.dmb
+2023-11-12T09:08:25.5132646Z   dmb-location: roguetown.dmb
 2023-11-12T09:08:25.5132971Z   max-required-client-version: 514
 2023-11-12T09:08:25.5133284Z ##[endgroup]
 2023-11-12T09:08:25.5322365Z ##[group]Run (( 514 ))
 2023-11-12T09:08:25.5322641Z [36;1m(( 514 ))[0m
 2023-11-12T09:08:25.5367699Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
 2023-11-12T09:08:25.5368129Z ##[endgroup]
-2023-11-12T09:08:25.5463568Z ##[group]Run echo "required-client-version=$(( $( head -n2 tgstation.dmb | tail -n1 | cut -d " " -f 4 ) ))" >> $GITHUB_OUTPUT
-2023-11-12T09:08:25.5464593Z [36;1mecho "required-client-version=$(( $( head -n2 tgstation.dmb | tail -n1 | cut -d " " -f 4 ) ))" >> $GITHUB_OUTPUT[0m
+2023-11-12T09:08:25.5463568Z ##[group]Run echo "required-client-version=$(( $( head -n2 roguetown.dmb | tail -n1 | cut -d " " -f 4 ) ))" >> $GITHUB_OUTPUT
+2023-11-12T09:08:25.5464593Z [36;1mecho "required-client-version=$(( $( head -n2 roguetown.dmb | tail -n1 | cut -d " " -f 4 ) ))" >> $GITHUB_OUTPUT[0m
 2023-11-12T09:08:25.5503899Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
 2023-11-12T09:08:25.5504317Z ##[endgroup]
 2023-11-12T09:08:25.5643709Z ##[group]Run (( 514 <= 514 ))
@@ -2320,7 +2320,7 @@
 2023-11-12T09:08:25.6698640Z git version 2.42.0
 2023-11-12T09:08:25.6737360Z Temporarily overriding HOME='/home/runner/work/_temp/8c7eca89-05a8-49f5-91d4-2ad2b8c1f35c' before making global git config changes
 2023-11-12T09:08:25.6738762Z Adding repository directory to the temporary git global config as a safe directory
-2023-11-12T09:08:25.6742986Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tgstation/tgstation
+2023-11-12T09:08:25.6742986Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/roguetown/roguetown
 2023-11-12T09:08:25.6784154Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
 2023-11-12T09:08:25.6822086Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
 2023-11-12T09:08:25.7132368Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
