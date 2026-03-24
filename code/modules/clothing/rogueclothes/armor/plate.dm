@@ -655,7 +655,7 @@
 	item_state = "citywatch"
 	blocksound = PLATEHIT
 	body_parts_covered = CHEST|GROIN|VITALS
-	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
 	armor_class = ARMOR_CLASS_MEDIUM
 	smelt_bar_num = 2
 	sewrepair = FALSE
