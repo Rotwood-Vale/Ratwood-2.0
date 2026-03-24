@@ -87,6 +87,12 @@
 	sewrepair = TRUE
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/head/roguetown/helmet/leather/advanced/renegadetricorn
+	name = "gunslinger's tricorn"
+	desc = "A waterproof black leather hat with a shaped brim that has been folded to form three points, fitted with a hidden steel skull cap. It serves as a reminder that fashion comes and goes, but style lasts forever. </br>'Shield your eyes from HIS sorrowful downpour, and see the truth for yourself.'"
+	icon_state = "renegadetricorn"
+	item_state = "renegadetricorn"
+
 // Grenzel unique drip head. Pretend it is a secrete (A type of hat with a hidden helmet underneath). Same stats as kettle
 /obj/item/clothing/head/roguetown/grenzelhofthat
 	name = "grenzelhoft plume hat"

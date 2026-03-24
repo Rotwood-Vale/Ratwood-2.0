@@ -162,7 +162,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/renegade
 	name = "gunslinger's coat"
-	desc = "A worn-out coat with thin metal plates sewn in. It's missing the inner pockets, violently torn off."
+	desc = "A worn-out leather coat with capelets. It's missing the inner pockets, violently torn off."
 	icon_state = "renegadecoat"
 	item_state = "renegadecoat"
 	body_parts_covered = COVERAGE_FULL

@@ -182,6 +182,13 @@
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	cansnout = TRUE
 
+/obj/item/clothing/neck/roguetown/chaincoif/chainmantle/renegade
+	name = "high mantle"
+	desc = "A tough leather collar concealing linked steel rings, meant to be paired with its jacket. This one also covers not only the neck and mouth, but also the nose and ears."
+	icon_state = "renegadecollar"
+	body_parts_covered = NECK|EARS|MOUTH|NOSE
+	cansnout = FALSE
+
 /obj/item/clothing/neck/roguetown/chaincoif/chainmantle/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (NECK), null, null, 'sound/foley/equip/equip_armor_chain.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK))	//Chain coif.
 

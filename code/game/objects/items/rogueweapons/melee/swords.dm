@@ -1413,6 +1413,21 @@
 	force = 25 // Same statline as the cup hilted etruscan rapier
 	wdefense = 8
 
+/obj/item/rogueweapon/sword/rapier/evil
+	name = "Matrimony"
+	desc = "A profane rapier made of an alloy of avantyne darksteel and sanctified silver. Sacrilegious to Zizoists and Psydonics alike, this blade \
+	isn't as effective against the monstrous as pure silver, but it rends faith itself, baneful to the aforementioned zealots. \
+	</br>'This world could not have been the work of an all-loving being, but that of a devil, who had brought creatures into existence in order to delight in the sight of their sufferings.'"
+	icon_state = "evilrapier"
+	sheathe_icon = "rapier"
+	max_integrity = 225
+	max_blade_int = 225
+	force = 25 // On par with Vaquero's basket-hilt rapier
+	force_wielded = 25
+	minstr = 8
+	wdefense = 8
+	smeltresult = /obj/item/ingot/aaslag // You ruined it!
+
 /obj/item/rogueweapon/sword/cutlass
 	name = "cutlass"
 	desc = "The mariner's special: A short, broad sabre with a slightly curved blade optimized for slashing."
