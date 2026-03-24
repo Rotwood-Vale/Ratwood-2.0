@@ -740,6 +740,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/cursed_collar
 	name = "Cursed Collar"
 	path = /obj/item/clothing/neck/roguetown/cursed_collar
+	triumph_cost = 4
 
 /datum/loadout_item/chastity_belt
 	name = "Chastity Belt"
