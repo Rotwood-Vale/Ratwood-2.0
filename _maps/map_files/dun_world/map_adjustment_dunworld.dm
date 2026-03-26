@@ -12,7 +12,7 @@
 		/datum/job/roguetown/guardsman,//MAA do double duty here
 		/datum/job/roguetown/watchcaptain,//sergeant does the job here
 		/datum/job/roguetown/wardenmaster,//wardens get to be more independent here!
-    /datum/job/roguetown/scadu,
+		/datum/job/roguetown/scadu,
 	)
 	slot_adjust = list(
 		/datum/job/roguetown/warden = 6,
