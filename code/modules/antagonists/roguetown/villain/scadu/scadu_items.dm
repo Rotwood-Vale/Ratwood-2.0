@@ -28,10 +28,12 @@
 			owner_datum.add_lux(1)
 			obj_integrity = min(obj_integrity + 10, max_integrity)
 			var/mob/dead/observer/rogue/scadu/SM = owner_datum.scadu_mob
-			if(!SM?.client)
-				continue
 			for(var/mob/living/carbon/human/H in range(7, src))
 				if(!H.client || !H.mind || HAS_TRAIT(H, TRAIT_ANTISCRYING))
+					continue
+				if(get_dist(H, src) <= 5)
+					H.apply_status_effect(/datum/status_effect/buff/scadu_presence)
+				if(!SM?.client)
 					continue
 				var/area/A = get_area(H)
 				to_chat(SM, span_warning("A soul lingers near your monument. <b>[H.real_name]</b> in [A.name]. <a href='byond://?src=[REF(SM)];scadu_tp=[REF(src)]'>Go</a>"))
@@ -116,65 +118,6 @@
 	visible_message(span_notice("The bog mist slowly thins and fades."))
 	qdel(src)
 
-/datum/status_effect/buff/scadu_frightened
-	id = "scadu_frightened"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/scadu_frightened
-	duration = 12 SECONDS
-	status_type = STATUS_EFFECT_UNIQUE
-
-/atom/movable/screen/alert/status_effect/buff/scadu_frightened
-	name = "Frightened"
-	desc = "An unseen dread has gripped me."
-	icon_state = "debuff"
-	color = "#6b3a8c"
-
-/datum/status_effect/buff/scadu_frightened/on_creation(mob/living/target)
-	. = ..()
-	target.add_movespeed_modifier("scadu_frightened", update = TRUE, priority = 100, multiplicative_slowdown = 0.5, movetypes = GROUND)
-
-/datum/status_effect/buff/scadu_frightened/on_remove()
-	owner.remove_movespeed_modifier("scadu_frightened", TRUE)
-	. = ..()
-
-
-/datum/status_effect/buff/scadu_curse
-	id = "scadu_curse"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/scadu_curse
-	duration = 3 MINUTES
-	status_type = STATUS_EFFECT_UNIQUE
-	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_SPD = -1)
-	var/tick_damage = 5
-
-/atom/movable/screen/alert/status_effect/buff/scadu_curse
-	name = "Cursed"
-	desc = "A creeping darkness has settled over my soul."
-	icon_state = "debuff"
-	color = "#3d1f5e"
-
-/datum/status_effect/buff/scadu_curse/on_creation(mob/living/target)
-	. = ..()
-	to_chat(target, span_userdanger("You feel a creeping darkness settle over you like a second skin."))
-	var/newcolor = rgb(61, 31, 94)
-	target.add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
-	addtimer(CALLBACK(target, TYPE_PROC_REF(/atom, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, newcolor), 3 MINUTES)
-	INVOKE_ASYNC(src, PROC_REF(curse_tick_loop))
-	if(!target.get_client_color(/atom/movable/screen/fullscreen/curse))
-		target.add_client_colour(/atom/movable/screen/fullscreen/curse)
-
-/datum/status_effect/buff/scadu_curse/proc/curse_tick_loop()
-	while(!QDELETED(src) && owner && !QDELETED(owner))
-		sleep(20 SECONDS)
-		if(QDELETED(src) || !owner || QDELETED(owner))
-			break
-		owner.adjustBruteLoss(tick_damage)
-		to_chat(owner, span_danger("The Scadu's curse gnaws at your body."))
-
-/datum/status_effect/buff/scadu_curse/on_remove()
-	to_chat(owner, span_notice("The dark weight on your spirit finally lifts."))
-	owner.remove_client_colour(/atom/movable/screen/fullscreen/curse)
-	. = ..()
-
-
 /datum/status_effect/buff/scadu_snared
 	id = "scadu_snared"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/scadu_snared
@@ -186,7 +129,7 @@
 	desc = "My ankle is caught fast!"
 	icon_state = "debuff"
 
-/datum/status_effect/buff/scadu_snared/on_creation(mob/living/target)
+/datum/status_effect/buff/scadu_snared/on_apply(mob/living/target)
 	. = ..()
 	target.add_movespeed_modifier("scadu_snared", update = TRUE, priority = 100, multiplicative_slowdown = 5, movetypes = GROUND)
 	to_chat(target, span_userdanger("Your leg is caught fast!"))
@@ -194,6 +137,30 @@
 /datum/status_effect/buff/scadu_snared/on_remove()
 	owner.remove_movespeed_modifier("scadu_snared", TRUE)
 	to_chat(owner, span_notice("You wrench yourself free."))
+	. = ..()
+
+
+/datum/status_effect/buff/scadu_terrored
+	id = "scadu_terrored"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/scadu_terrored
+	duration = 15 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/buff/scadu_terrored
+	name = "Terrored"
+	desc = "An unseen horror grips my mind."
+	icon_state = "debuff"
+	color = "#1a0a2e"
+
+/datum/status_effect/buff/scadu_terrored/on_apply(mob/living/target)
+	. = ..()
+	owner.add_movespeed_modifier("scadu_terrored", update = TRUE, priority = 100, multiplicative_slowdown = 0.4, movetypes = GROUND)
+	owner.confused = 15
+	ADD_TRAIT(owner, TRAIT_PSYCHOSIS, "scadu_terrored")
+
+/datum/status_effect/buff/scadu_terrored/on_remove()
+	owner.remove_movespeed_modifier("scadu_terrored", TRUE)
+	REMOVE_TRAIT(owner, TRAIT_PSYCHOSIS, "scadu_terrored")
 	. = ..()
 
 /datum/stressevent/scadu_terror
@@ -280,8 +247,12 @@
 
 /obj/item/divination_rod/attack_self(mob/living/carbon/human/user)
 	if(!target || QDELETED(target))
+		var/datum/antagonist/scadu/antag = GLOB.scadu_persistent_datum
+		if(!antag || QDELETED(antag) || !antag.monuments.len)
+			to_chat(user, span_warning("The rod finds no monument to seek."))
+			return
 		var/list/found = list()
-		for(var/obj/structure/scadu_monument/M in world)
+		for(var/obj/structure/scadu_monument/M in antag.monuments)
 			if(!QDELETED(M) && M.standing)
 				found += M
 		if(!found.len)
@@ -302,9 +273,37 @@
 
 	var/dir_text
 	if(prob(chance))
-		dir_text = get_precise_direction_between(user, target)
+		dir_text = dir2text(get_dir(user, target))
 	else
 		var/turf/random_target = locate(rand(1, world.maxx), rand(1, world.maxy), user.z)
-		dir_text = get_precise_direction_between(user, random_target)
+		dir_text = dir2text(get_dir(user, random_target))
 
 	to_chat(user, span_notice("The rod strains toward the [dir_text]."))
+
+/atom/movable/screen/fullscreen/scadu_presence
+	icon_state = "oxydamageoverlay2"
+	layer = UI_DAMAGE_LAYER
+	plane = FULLSCREEN_PLANE
+
+/datum/status_effect/buff/scadu_presence
+	id = "scadu_presence"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/scadu_presence
+	duration = 15 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/buff/scadu_presence
+	name = "Watched"
+	desc = "Something unseen presses close."
+	icon_state = "debuff"
+	color = "#2a1a3e"
+
+/datum/status_effect/buff/scadu_presence/on_apply(mob/living/target)
+	. = ..()
+	if(!.)
+		return
+	owner.overlay_fullscreen("scadu_presence", /atom/movable/screen/fullscreen/scadu_presence)
+	owner.playsound_local(get_turf(owner), pick('sound/vo/mobs/ghost/whisper (1).ogg','sound/vo/mobs/ghost/whisper (2).ogg','sound/vo/mobs/ghost/whisper (3).ogg'), 10, TRUE)
+
+/datum/status_effect/buff/scadu_presence/on_remove()
+	owner.clear_fullscreen("scadu_presence")
+	. = ..()

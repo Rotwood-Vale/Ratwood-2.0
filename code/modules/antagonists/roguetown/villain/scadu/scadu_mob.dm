@@ -41,6 +41,17 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	set_invisibility(INVISIBILITY_MAXIMUM)
 	movement_type = GROUND | FLYING
 	GLOB.active_scadu_mobs += src
+	INVOKE_ASYNC(src, PROC_REF(presence_loop))
+
+/mob/dead/observer/rogue/scadu/proc/presence_loop()
+	while(!QDELETED(src))
+		sleep(100)
+		if(QDELETED(src) || !client)
+			continue
+		for(var/mob/living/carbon/human/H in range(5, src))
+			if(!H.client || !H.mind || HAS_TRAIT(H, TRAIT_ANTISCRYING))
+				continue
+			H.apply_status_effect(/datum/status_effect/buff/scadu_presence)
 
 /mob/dead/observer/rogue/scadu/Destroy()
 	GLOB.active_scadu_mobs -= src
@@ -55,7 +66,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		for(var/atom/movable/screen/backhudl/ghost/S in client.screen)
 			client.screen -= S
 			to_chat(src, span_notice("You are the <b>Scadu</b>. Select an ability verb, then click a target to use it."))
-	to_chat(src, span_notice("You are bound to <b>The Terrorbog</b>. You cannot leave its borders."))
+	to_chat(src, span_notice("You are bound to <b>The Terrorbog</b>. You cannot leave its borders. Place your monuments to gain lux to fuel your abilities. Abilities used near monuments are halved in cost."))
 
 /mob/dead/observer/rogue/scadu/Move(NewLoc, direct)
 	if(istype(get_area(src), /area/rogue/outdoors/bograt))
@@ -79,19 +90,18 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	switch(active_ability)
 		if(SCADU_ABILITY_MONUMENT)
 			ability_place_monument(T)
-		if(SCADU_ABILITY_SUMMON)
-			ability_summon_guardian(T)
+		if(SCADU_ABILITY_SUMMON_SKEL)
+			ability_summon_skeleton(T)
+		if(SCADU_ABILITY_SUMMON_TROLL)
+			ability_summon_troll(T)
 		if(SCADU_ABILITY_GOBLIN)
 			ability_summon_goblin(T)
 		if(SCADU_ABILITY_WEEPVINE)
 			ability_summon_weepvine(T)
 		if(SCADU_ABILITY_TERROR)
 			ability_terror_pulse(T)
-		if(SCADU_ABILITY_CURSE)
-			if(isliving(A))
-				ability_curse(A)
-			else
-				to_chat(src, span_warning("I must target a living soul to curse."))
+		if(SCADU_ABILITY_SNUFF_LIGHTS)
+			ability_snuff_lights(T)
 		if(SCADU_ABILITY_MIASMA)
 			ability_place_miasma(T)
 		if(SCADU_ABILITY_BOGTRAP)
@@ -108,6 +118,13 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 				ability_send_message(A)
 			else
 				to_chat(src, span_warning("I must target a living soul to speak to."))
+		if(SCADU_ABILITY_HALLUCINATE)
+			if(isliving(A))
+				ability_hallucinate(A)
+			else
+				to_chat(src, span_warning("I must target a living soul to afflict."))
+		if(SCADU_ABILITY_WEB)
+			ability_summon_web(T)
 
 /mob/dead/observer/rogue/scadu/proc/check_placement(turf/T)
 	if(istype(T, /turf/open/transparent/openspace))
@@ -147,35 +164,55 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	set_cooldown(SCADU_CD_MONUMENT)
 	active_ability = SCADU_ABILITY_NONE
 
-/mob/dead/observer/rogue/scadu/proc/ability_summon_guardian(turf/T)
-	if(!antag_datum.spend_lux(SCADU_COST_SUMMON))
-		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_SUMMON], have [antag_datum.lux])"))
+/mob/dead/observer/rogue/scadu/proc/ability_summon_skeleton(turf/T)
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_SUMMON_SKEL / 2) : SCADU_COST_SUMMON_SKEL
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That location is blocked."))
-		antag_datum.add_lux(SCADU_COST_SUMMON)
+		antag_datum.add_lux(cost)
 		return
-	if(!check_summon(T))
-		antag_datum.add_lux(SCADU_COST_SUMMON)
+	if(!nearest_monument_in_range(T) && !check_summon(T))
+		antag_datum.add_lux(cost)
 		return
-	var/guardian_type = pick(/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog, /mob/living/carbon/human/species/skeleton/npc/bogguard, /mob/living/carbon/human/species/skeleton/npc/bogguard)
-	var/mob/living/G = new guardian_type(T)
+	var/mob/living/G = new /mob/living/carbon/human/species/skeleton/npc/bogguard(T)
 	G.faction = list("scadu_servants")
 	new /obj/effect/temp_visual/bluespace_fissure(T)
-	visible_message_at(T, span_danger("Something claws its way up from the dark water..."))
+	visible_message_at(T, span_danger("Bones claw their way up from the dark water..."))
+	set_cooldown(SCADU_CD_SUMMON)
+	active_ability = SCADU_ABILITY_NONE
+
+/mob/dead/observer/rogue/scadu/proc/ability_summon_troll(turf/T)
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_SUMMON_TROLL / 2) : SCADU_COST_SUMMON_TROLL
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
+		return
+	if(!isopenturf(T))
+		to_chat(src, span_warning("That location is blocked."))
+		antag_datum.add_lux(cost)
+		return
+	if(!nearest_monument_in_range(T) && !check_summon(T))
+		antag_datum.add_lux(cost)
+		return
+	var/mob/living/G = new /mob/living/simple_animal/hostile/retaliate/rogue/troll/bog(T)
+	G.faction = list("scadu_servants")
+	new /obj/effect/temp_visual/bluespace_fissure(T)
+	visible_message_at(T, span_danger("Something massive tears itself out of the bog..."))
 	set_cooldown(SCADU_CD_SUMMON)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_goblin(turf/T)
-	if(!antag_datum.spend_lux(SCADU_COST_GOBLIN))
-		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_GOBLIN], have [antag_datum.lux])"))
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_GOBLIN / 2) : SCADU_COST_GOBLIN
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That location is blocked."))
-		antag_datum.add_lux(SCADU_COST_GOBLIN)
+		antag_datum.add_lux(cost)
 		return
-	if(!check_summon(T))
-		antag_datum.add_lux(SCADU_COST_GOBLIN)
+	if(!nearest_monument_in_range(T) && !check_summon(T))
+		antag_datum.add_lux(cost)
 		return
 	var/mob/living/G = new /mob/living/carbon/human/species/goblin/npc(T)
 	G.faction = list("scadu_servants", "orcs")
@@ -185,15 +222,16 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_weepvine(turf/T)
-	if(!antag_datum.spend_lux(SCADU_COST_WEEPVINE))
-		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_WEEPVINE], have [antag_datum.lux])"))
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_WEEPVINE / 2) : SCADU_COST_WEEPVINE
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That ground cannot root a vine."))
-		antag_datum.add_lux(SCADU_COST_WEEPVINE)
+		antag_datum.add_lux(cost)
 		return
-	if(!check_summon(T))
-		antag_datum.add_lux(SCADU_COST_WEEPVINE)
+	if(!nearest_monument_in_range(T) && !check_summon(T))
+		antag_datum.add_lux(cost)
 		return
 	new /datum/vine_controller(T)
 	visible_message_at(T, span_danger("Weepvines tear through the bog floor!"))
@@ -201,60 +239,79 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_terror_pulse(turf/T)
-	if(!antag_datum.spend_lux(SCADU_COST_TERROR))
-		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_TERROR], have [antag_datum.lux])"))
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_TERROR / 2) : SCADU_COST_TERROR
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
 	var/affected = 0
 	for(var/mob/living/carbon/human/H in range(5, T))
 		if(!H.mind || !H.client)
 			continue
 		H.add_stress(/datum/stressevent/scadu_terror)
-		H.apply_status_effect(/datum/status_effect/buff/scadu_frightened)
+		H.apply_status_effect(/datum/status_effect/buff/scadu_terrored)
+		H.emote("scream")
 		to_chat(H, span_userdanger("An unseen presence presses in around you. Your breath comes short."))
 		affected++
 	if(!affected)
 		to_chat(src, span_notice("No souls were close enough to terror."))
-		antag_datum.add_lux(SCADU_COST_TERROR)
+		antag_datum.add_lux(cost)
 		return
 	playsound(T, 'sound/magic/antimagic.ogg', 80, TRUE)
 	visible_message_at(T, span_danger("The air turns cold and still..."))
 	set_cooldown(SCADU_CD_TERROR)
 	active_ability = SCADU_ABILITY_NONE
 
-/mob/dead/observer/rogue/scadu/proc/ability_curse(mob/living/carbon/human/target)
-	if(!target || QDELETED(target))
+/mob/dead/observer/rogue/scadu/proc/ability_snuff_lights(turf/T)
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_SNUFF_LIGHTS / 2) : SCADU_COST_SNUFF_LIGHTS
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
-	if(!antag_datum.spend_lux(SCADU_COST_CURSE))
-		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_CURSE], have [antag_datum.lux])"))
-		return
-	target.apply_status_effect(/datum/status_effect/buff/scadu_curse)
-	to_chat(target, span_userdanger("Something brushes against your soul. Cold, hungry, watching..."))
-	target.visible_message(span_warning("[target] shudders violently!"))
-	playsound(target, 'sound/magic/whiteflame.ogg', 60, TRUE)
-	set_cooldown(SCADU_CD_CURSE)
+	var/range = 7
+	for(var/obj/O in range(range, T))
+		O.extinguish()
+	for(var/mob/living/carbon/human/H in range(range, T))
+		for(var/obj/O in H.contents)
+			O.extinguish()
+		to_chat(H, span_notice("<i>The lights go out.</i>"))
+	playsound(T, 'sound/magic/zizo_snuff.ogg', 70, TRUE)
+	visible_message_at(T, span_warning("The lights gutter and die..."))
+	set_cooldown(SCADU_CD_SNUFF_LIGHTS)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_place_miasma(turf/T)
-	if(!antag_datum.spend_lux(SCADU_COST_MIASMA))
-		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_MIASMA], have [antag_datum.lux])"))
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_MIASMA / 2) : SCADU_COST_MIASMA
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
 	new /obj/effect/scadu_miasma(T)
+	playsound(T, 'sound/misc/evilevent.ogg', 60, TRUE)
+	visible_message_at(T, span_warning("A creeping mist rises from the bog..."))
 	set_cooldown(SCADU_CD_MIASMA)
 	active_ability = SCADU_ABILITY_NONE
 
+/mob/dead/observer/rogue/scadu/proc/nearest_monument_in_range(turf/T, range = 5)
+	if(!antag_datum)
+		return null
+	for(var/obj/structure/scadu_monument/M in antag_datum.monuments)
+		if(!QDELETED(M) && M.standing && get_dist(T, M) <= range)
+			return M
+	return null
+
 /mob/dead/observer/rogue/scadu/proc/ability_place_bogtrap(turf/T)
-	if(!antag_datum.spend_lux(SCADU_COST_BOGTRAP))
-		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_BOGTRAP], have [antag_datum.lux])"))
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_BOGTRAP / 2) : SCADU_COST_BOGTRAP
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That ground cannot hide a trap."))
-		antag_datum.add_lux(SCADU_COST_BOGTRAP)
+		antag_datum.add_lux(cost)
 		return
-	if(!check_summon(T))
-		antag_datum.add_lux(SCADU_COST_BOGTRAP)
+	if(!nearest_monument_in_range(T) && !check_summon(T))
+		antag_datum.add_lux(cost)
 		return
 	new /obj/structure/trap/bogtrap/kneestingers(T)
-	to_chat(src, span_notice("A trap sinks into the murk."))
+	playsound(T, pick('sound/misc/sting1.ogg','sound/misc/sting2.ogg'), 50, TRUE)
+	visible_message_at(T, span_warning("The murk stirs..."))
 	set_cooldown(SCADU_CD_BOGTRAP)
 	active_ability = SCADU_ABILITY_NONE
 
@@ -324,6 +381,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	if(!msg || !length(msg))
 		return
 	to_chat(target, span_userdanger("<i>A voice rises from the bog...</i> \"[msg]\""))
+	target.playsound_local(get_turf(target), 'sound/vo/mobs/ghost/aggro (2).ogg', 50, TRUE)
 	to_chat(src, span_notice("Your words reach [target.real_name]."))
 	set_cooldown(SCADU_CD_MESSAGE)
 	active_ability = SCADU_ABILITY_NONE
@@ -443,13 +501,16 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 
 	var/list/abilities = list(
 		"Place Monument (free, limit [antag_datum.monument_limit])" = SCADU_ABILITY_MONUMENT,
-		"Summon Skeleton ([SCADU_COST_SUMMON] lux)"                 = SCADU_ABILITY_SUMMON,
+		"Summon Skeleton ([SCADU_COST_SUMMON_SKEL] lux)"            = SCADU_ABILITY_SUMMON_SKEL,
+		"Summon Bog Troll ([SCADU_COST_SUMMON_TROLL] lux)"          = SCADU_ABILITY_SUMMON_TROLL,
 		"Summon Goblin ([SCADU_COST_GOBLIN] lux)"                   = SCADU_ABILITY_GOBLIN,
 		"Summon Weepvine ([SCADU_COST_WEEPVINE] lux)"               = SCADU_ABILITY_WEEPVINE,
+		"Summon Web ([SCADU_COST_WEB] lux)"                         = SCADU_ABILITY_WEB,
 		"Terror Pulse ([SCADU_COST_TERROR] lux)"                    = SCADU_ABILITY_TERROR,
-		"Curse ([SCADU_COST_CURSE] lux)"                            = SCADU_ABILITY_CURSE,
+		"Snuff Lights ([SCADU_COST_SNUFF_LIGHTS] lux)"              = SCADU_ABILITY_SNUFF_LIGHTS,
 		"Miasma ([SCADU_COST_MIASMA] lux)"                          = SCADU_ABILITY_MIASMA,
 		"Bog Trap ([SCADU_COST_BOGTRAP] lux)"                       = SCADU_ABILITY_BOGTRAP,
+		"Hallucinate ([SCADU_COST_HALLUCINATE] lux)"                = SCADU_ABILITY_HALLUCINATE,
 		"Absorb Corpse ([SCADU_COST_ABSORB] lux)"                   = SCADU_ABILITY_ABSORB,
 		"Send Message (free)"                                        = SCADU_ABILITY_MESSAGE,
 	)
@@ -498,3 +559,47 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	for(var/mob/living/carbon/human/H in found)
 		var/area/A = get_area(H)
 		to_chat(src, span_notice("<b>[H.real_name]</b> [A.name] <a href='byond://?src=[REF(src)];scadu_tp=[REF(H)]'>Go</a>"))
+
+/mob/dead/observer/rogue/scadu/proc/ability_hallucinate(mob/living/carbon/H)
+	if(!H || QDELETED(H) || !istype(H, /mob/living/carbon))
+		to_chat(src, span_warning("I must target a living soul."))
+		return
+	var/cost = nearest_monument_in_range(get_turf(H)) ? round(SCADU_COST_HALLUCINATE / 2) : SCADU_COST_HALLUCINATE
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
+		return
+	var/carbon = H
+	var/hal_type = pick(
+		/datum/hallucination/chasing_mob,
+		/datum/hallucination/battle,
+		/datum/hallucination/delusion,
+		/datum/hallucination/voices,
+		/datum/hallucination/fake_heartattack,
+		/datum/hallucination/floor_shift,
+		/datum/hallucination/weird_sounds,
+	)
+	new hal_type(carbon, TRUE)
+	playsound(get_turf(H), pick('sound/misc/carriage1.ogg','sound/misc/carriage3.ogg','sound/misc/zizo.ogg'), 50, TRUE)
+	to_chat(src, span_notice("Your will reaches into [H.real_name]'s mind."))
+	set_cooldown(SCADU_CD_HALLUCINATE)
+	active_ability = SCADU_ABILITY_NONE
+
+
+/mob/dead/observer/rogue/scadu/proc/ability_summon_web(turf/T)
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_WEB / 2) : SCADU_COST_WEB
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
+		return
+	if(!isopenturf(T))
+		to_chat(src, span_warning("That ground cannot hold a web."))
+		antag_datum.add_lux(cost)
+		return
+	if(!nearest_monument_in_range(T) && !check_summon(T))
+		antag_datum.add_lux(cost)
+		return
+	new /obj/structure/spider/stickyweb(T)
+	playsound(T, pick('sound/misc/sting1.ogg','sound/misc/sting2.ogg'), 45, TRUE)
+	visible_message_at(T, span_warning("Silken threads weave up from the dark..."))
+	set_cooldown(SCADU_CD_WEB)
+	active_ability = SCADU_ABILITY_NONE
+

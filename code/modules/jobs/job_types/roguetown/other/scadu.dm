@@ -33,28 +33,41 @@ GLOBAL_VAR_INIT(scadu_slot_closed, FALSE)
 /datum/job/roguetown/scadu/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	..()
+	if(latejoin)
+		return
+	if(!istype(H, /mob/living/carbon/human))
+		return
 	var/mob/living/carbon/human/body = H
-	var/datum/mind/player_mind = M.mind
-	spawn(2)
+	var/datum/mind/player_mind = body.mind
+	spawn(30)
 		do_scadu_transform(body, player_mind)
+
+/datum/job/roguetown/scadu/override_latejoin_spawn(mob/living/carbon/human/H)
+	var/datum/mind/player_mind = H.mind
+	spawn(30)
+		do_scadu_transform(H, player_mind)
+	return TRUE
 
 /datum/job/roguetown/scadu/proc/do_scadu_transform(mob/living/carbon/human/H, datum/mind/player_mind)
 	if(!player_mind || QDELETED(H) || GLOB.scadu_slot_closed)
 		return
 
 	var/turf/spawn_turf = null
+
 	if(length(GLOB.jobspawn_overrides["Scadu"]))
 		spawn_turf = get_turf(pick(GLOB.jobspawn_overrides["Scadu"]))
+
 	if(!spawn_turf)
 		for(var/turf/T in get_area_turfs(/area/rogue/outdoors/bograt))
 			if(isopenturf(T))
 				spawn_turf = T
 				break
+
 	if(!spawn_turf)
 		spawn_turf = get_turf(H)
 
-	var/saved_key = H.key
-	H.forceMove(spawn_turf)
+	var/saved_key = player_mind.key
+
 	H.ghostize(can_reenter_corpse = FALSE)
 	qdel(H)
 
@@ -70,10 +83,10 @@ GLOBAL_VAR_INIT(scadu_slot_closed, FALSE)
 	antag.scadu_mob = SM
 	SM.antag_datum = antag
 
-	for(var/obj/structure/scadu_monument/M in antag.monuments)
-		if(!QDELETED(M) && M.standing)
-			M.owner_datum = antag
-			M.start_lux_loop()
+	for(var/obj/structure/scadu_monument/Mon in antag.monuments)
+		if(!QDELETED(Mon) && Mon.standing)
+			Mon.owner_datum = antag
+			Mon.start_lux_loop()
 
 	SM.key = saved_key
 
@@ -87,9 +100,6 @@ GLOBAL_VAR_INIT(scadu_slot_closed, FALSE)
 		return
 	to_chat(player, span_userdanger("You are the <b>Scadu</b>, a spirit of the bog without form or mercy."))
 	to_chat(player, span_notice(tutorial))
-
-/datum/job/roguetown/scadu/override_latejoin_spawn(mob/living/carbon/human/H)
-	return TRUE
 
 /datum/advclass/scadu_void
 	name = "Scadu"
