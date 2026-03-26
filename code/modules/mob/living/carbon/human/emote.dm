@@ -89,26 +89,26 @@
 /mob/living/carbon/human
 	COOLDOWN_DECLARE(sex_moaning)
 
-	verb/sex_moan()
-		set name = "Moan"
-		set category = "Noises"
+/mob/living/carbon/human/verb/sex_moan()
+	set name = "Moan"
+	set category = "Noises"
 
-		if(!COOLDOWN_FINISHED(src, sex_moaning))
-			return
+	if(!COOLDOWN_FINISHED(src, sex_moaning))
+		return
 
-		COOLDOWN_START(src, sex_moaning, 3 SECONDS)
+	COOLDOWN_START(src, sex_moaning, 3 SECONDS)
 
-		if(!can_speak())
-			emote("sexmoangag", forced = TRUE)
-		else
-			var/datum/sex_controller/S = sexcon
-			switch(S.arousal)
-				if(0 to 40)
-					emote("sexmoanlight", forced = TRUE)
-				if(41 to 75)
-					emote("sexmoanmed", forced = TRUE)
-				if(76 to INFINITY)
-					emote("sexmoanhvy", forced = TRUE)
+	if(!can_speak())
+		emote("sexmoangag", forced = TRUE)
+	else
+		var/datum/sex_controller/S = sexcon
+		switch(S.arousal)
+			if(0 to 40)
+				emote("sexmoanlight", forced = TRUE)
+			if(41 to 75)
+				emote("sexmoanmed", forced = TRUE)
+			if(76 to INFINITY)
+				emote("sexmoanhvy", forced = TRUE)
 
 /datum/emote/living/carbon/human/eyebrow
 	key = "eyebrow"
