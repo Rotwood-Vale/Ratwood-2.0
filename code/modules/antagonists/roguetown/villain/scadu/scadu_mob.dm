@@ -118,6 +118,16 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		return FALSE
 	return TRUE
 
+/mob/dead/observer/rogue/scadu/proc/check_summon(turf/T)
+	if(!T.can_see_sky())
+		to_chat(src, span_warning("My power cannot reach into enclosed spaces."))
+		return FALSE
+	for(var/mob/living/carbon/human/H in range(5, T))
+		if(H.mind)
+			to_chat(src, span_warning("A soul stands too close. I cannot summon there."))
+			return FALSE
+	return TRUE
+
 /mob/dead/observer/rogue/scadu/proc/ability_place_monument(turf/T)
 	if(antag_datum.monuments_placed >= antag_datum.monument_limit)
 		to_chat(src, span_warning("I have raised all [antag_datum.monument_limit] monuments I am capable of."))
@@ -145,6 +155,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		to_chat(src, span_warning("That location is blocked."))
 		antag_datum.add_lux(SCADU_COST_SUMMON)
 		return
+	if(!check_summon(T))
+		antag_datum.add_lux(SCADU_COST_SUMMON)
+		return
 	var/guardian_type = pick(/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog, /mob/living/carbon/human/species/skeleton/npc/bogguard, /mob/living/carbon/human/species/skeleton/npc/bogguard)
 	var/mob/living/G = new guardian_type(T)
 	G.faction = list("scadu_servants")
@@ -161,6 +174,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		to_chat(src, span_warning("That location is blocked."))
 		antag_datum.add_lux(SCADU_COST_GOBLIN)
 		return
+	if(!check_summon(T))
+		antag_datum.add_lux(SCADU_COST_GOBLIN)
+		return
 	var/mob/living/G = new /mob/living/carbon/human/species/goblin/npc(T)
 	G.faction = list("scadu_servants", "orcs")
 	new /obj/effect/temp_visual/bluespace_fissure(T)
@@ -174,6 +190,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That ground cannot root a vine."))
+		antag_datum.add_lux(SCADU_COST_WEEPVINE)
+		return
+	if(!check_summon(T))
 		antag_datum.add_lux(SCADU_COST_WEEPVINE)
 		return
 	new /datum/vine_controller(T)
@@ -231,12 +250,18 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		to_chat(src, span_warning("That ground cannot hide a trap."))
 		antag_datum.add_lux(SCADU_COST_BOGTRAP)
 		return
+	if(!check_summon(T))
+		antag_datum.add_lux(SCADU_COST_BOGTRAP)
+		return
 	new /obj/structure/trap/bogtrap/kneestingers(T)
 	to_chat(src, span_notice("A trap sinks into the murk."))
 	set_cooldown(SCADU_CD_BOGTRAP)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_goblin_portal(turf/T)
+	if(antag_datum.portal_used)
+		to_chat(src, span_warning("Can only use once."))
+		return
 	if(!antag_datum.spend_lux(SCADU_COST_GOBLIN_PORTAL))
 		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_GOBLIN_PORTAL], have [antag_datum.lux])"))
 		return
@@ -245,6 +270,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 			to_chat(src, span_warning("That location is blocked."))
 		antag_datum.add_lux(SCADU_COST_GOBLIN_PORTAL)
 		return
+	antag_datum.portal_used = TRUE
 	SSmapping.add_world_trait(/datum/world_trait/goblin_siege, 8 MINUTES)
 	for(var/mob/dead/observer/O in GLOB.player_list)
 		addtimer(CALLBACK(O, TYPE_PROC_REF(/mob/dead/observer, horde_respawn)), 1)
@@ -424,10 +450,11 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		"Curse ([SCADU_COST_CURSE] lux)"                            = SCADU_ABILITY_CURSE,
 		"Miasma ([SCADU_COST_MIASMA] lux)"                          = SCADU_ABILITY_MIASMA,
 		"Bog Trap ([SCADU_COST_BOGTRAP] lux)"                       = SCADU_ABILITY_BOGTRAP,
-		"Goblin Portal ([SCADU_COST_GOBLIN_PORTAL] lux)"            = SCADU_ABILITY_GOBLIN_PORTAL,
 		"Absorb Corpse ([SCADU_COST_ABSORB] lux)"                   = SCADU_ABILITY_ABSORB,
 		"Send Message (free)"                                        = SCADU_ABILITY_MESSAGE,
 	)
+	if(!antag_datum.portal_used)
+		abilities["Goblin Portal ([SCADU_COST_GOBLIN_PORTAL] lux)"] = SCADU_ABILITY_GOBLIN_PORTAL
 
 	var/choice = input(src, "Select an ability to ready:", "Scadu Abilities") as null|anything in abilities
 	if(!choice)

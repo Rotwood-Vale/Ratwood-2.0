@@ -12,6 +12,7 @@
 	var/monuments_placed = 0
 	var/monument_limit = 3
 	var/corpses_absorbed = 0
+	var/portal_used = FALSE
 	var/mob/dead/observer/rogue/scadu/scadu_mob = null
 
 /datum/antagonist/scadu/on_gain()
