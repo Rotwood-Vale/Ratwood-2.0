@@ -34,15 +34,7 @@
 				if(show_message && user)
 					to_chat(user, span_warning("Well Off virtue (Beautiful choice) conflicts with Eerie Beauty vice!"))
 				return TRUE
-	
-	// Giant virtue or Sturdy Giant pack vs Lumbering Giant vice
-	if(virtue_type == /datum/virtue/size/giant || virtue_type == /datum/virtue/pack/sturdygiant)
-		for(var/datum/charflaw/vice in vice_list)
-			if(vice && vice.type == /datum/charflaw/lumbering_giant)
-				if(show_message && user)
-					to_chat(user, span_warning("Giant-related virtues conflict with Lumbering Giant vice!"))
-				return TRUE
-	
+
 	// Deathless (no hunger/breath) vs any food/breathing related vices
 	// Deathless conflicts with nothing currently, but kept for future reference
 	
