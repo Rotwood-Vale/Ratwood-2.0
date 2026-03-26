@@ -42,6 +42,7 @@
 	/// If this person has a collar that rings on
 	var/collar_bell_user = FALSE
 	var/collar_bell_target = FALSE
+	var/list/collar_sounds = SFX_COLLARJINGLE
 	/// Arousal won't change if active.
 	var/arousal_frozen = FALSE
 	var/last_arousal_increase_time = 0
@@ -152,7 +153,7 @@
 		SEND_SIGNAL(grassy_knoll, COMSIG_MOVABLE_CROSSED, user)
 	
 	if((collar_bell_user || collar_bell_target) && (force > SEX_FORCE_MID))
-		playsound(collar_bell_target && target ? target : user, SFX_COLLARJINGLE, 50, TRUE, ignore_walls = FALSE)
+		playsound(collar_bell_target && target ? target : user, collar_sounds, 50, TRUE, ignore_walls = FALSE)
 
 /datum/sex_controller/proc/is_spent()
 	if(charge < CHARGE_FOR_CLIMAX)
@@ -1165,12 +1166,24 @@
 /datum/sex_controller/proc/find_ringing_collar()
 	var/obj/item/clothing/neck/roguetown/collar/collar
 	collar = user.get_item_by_slot(SLOT_NECK)
-	collar_bell_user = collar && istype(collar) && collar.bellsound
+	if(collar && istype(collar) && collar.bellsound)
+		collar_bell_user = TRUE
+		var/datum/component/squeak/bell = collar.GetComponent(/datum/component/squeak)
+		if(bell && LAZYLEN(bell.override_squeak_sounds))
+			collar_sounds = bell.override_squeak_sounds
+		else
+			collar_sounds = SFX_COLLARJINGLE
 	if(!target)
 		collar_bell_target = FALSE
 		return
 	collar = target.get_item_by_slot(SLOT_NECK)
-	collar_bell_target = collar && istype(collar) && collar.bellsound
+	if(collar && istype(collar) && collar.bellsound)
+		collar_bell_target = TRUE
+		var/datum/component/squeak/bell = collar.GetComponent(/datum/component/squeak)
+		if(bell && LAZYLEN(bell.override_squeak_sounds))
+			collar_sounds = bell.override_squeak_sounds
+		else
+			collar_sounds = SFX_COLLARJINGLE
 
 /datum/sex_controller/proc/inherent_perform_check(action_type, incapacitated)
 	var/datum/sex_action/action = SEX_ACTION(action_type)

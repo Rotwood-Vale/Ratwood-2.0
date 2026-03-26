@@ -335,3 +335,81 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	sleevetype = null
+	sleeved = null
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	sellprice = 50
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/duchess
+	name = "duchess dress"
+	desc = ""
+	icon_state = "duchess"
+	item_state = "duchess"
+	slot_flags = ITEM_SLOT_CLOAK|ITEM_SLOT_ARMOR
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|VITALS
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/duke
+	name = "ducal uniform"
+	desc = ""
+	icon_state = "duke"
+	item_state = "duke"
+	body_parts_covered = CHEST|VITALS|ARMS
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/hand
+	name = "Hand's Jacket"
+	desc = "A heavy coat of fine, yet rugged fabric. Reinforced, because one never knows."
+	icon_state = "hand"
+	item_state = "hand"
+	armor = ARMOR_LEATHER_STUDDED
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
+	name = "Heir's uniform"
+	desc = ""
+	icon_state = "heir"
+	item_state = "heir"
+	body_parts_covered = BELOW_HEAD
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
+	name = "Heiress's uniform"
+	desc = ""
+	icon_state = "heiress"
+	item_state = "heiress"
+	body_parts_covered = BELOW_HEAD
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/councillor
+	name = "councillorial uniform"
+	desc = ""
+	icon_state = "councillor"
+	item_state = "councillor"
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/magos
+	name = "Magos' Robes"
+	desc = ""
+	icon_state = "magos"
+	item_state = "magos"
+	slot_flags = ITEM_SLOT_ARMOR
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/steward
+	name = "Steward's Vest"
+	desc = "Smart and modern garb, embroidered with real gold"
+	icon_state = "steward"
+	item_state = "steward"
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	armor = ARMOR_PADDED_BAD
+	
+/obj/item/clothing/head/roguetown/duchess_hood
+	name = "duchess hood"
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/head.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/head.dmi'
+	icon_state = "duchess_hood"
+	item_state = "duchess_hood"
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	armor = ARMOR_PADDED_BAD

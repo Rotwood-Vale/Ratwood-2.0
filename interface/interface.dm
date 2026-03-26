@@ -89,16 +89,6 @@
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 	return
 
-/client/verb/changelog()
-	set name = "Changelog"
-	set category = "OOC"
-	set hidden = 1
-	src << browse('html/changelog.html', "window=changes;size=675x650")
-	if(prefs.lastchangelog != GLOB.changelog_hash)
-		prefs.lastchangelog = GLOB.changelog_hash
-		prefs.save_preferences()
-		winset(src, "infowindow.changelog", "font-style=;")
-
 /client/verb/recent_changelog()
 	set name = "Recent Changes"
 	set category = "OOC"
@@ -272,6 +262,19 @@ Hotkey-Mode: (hotkey-mode must be on)
 			to_chat(src, "Headshot in chat Enabled")
 		else
 			to_chat(src, "Headshot in chat Disabled")
+
+/client/verb/changelog()
+	set name = "Changelog"
+	set category = "OOC"
+
+	if(!GLOB.changelog_tgui)
+		GLOB.changelog_tgui = new /datum/changelog()
+
+	GLOB.changelog_tgui.ui_interact(mob)
+	if(prefs.lastchangelog != GLOB.changelog_hash)
+		prefs.lastchangelog = GLOB.changelog_hash
+		prefs.save_preferences()
+		winset(src, "infobuttons.changelog", "font-style=;")
 
 /*
 /client/verb/set_blur()
