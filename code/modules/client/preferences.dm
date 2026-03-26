@@ -80,6 +80,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/voice_pack = "Default"
 	var/voice_type = VOICE_TYPE_MASC	// LETHALSTONE EDIT: the type of soundpack the mob should use
 	var/moan_selection = MOANPACK_TYPE_DEF	//RMH EDIT: choose moanpack
+	var/datum/moan_pack/temp_mp	//RMH EDIT: mp preview
 	var/datum/statpack/statpack	= new /datum/statpack/wildcard/fated // LETHALSTONE EDIT: the statpack we're giving our char instead of racial bonuses
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
 	var/datum/virtue/virtuetwo = new /datum/virtue/none
@@ -537,9 +538,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			// LETHALSTONE EDIT END
 			dat += "<b>Voice Pack</b>: <a href='?_src_=prefs;preference=voicepack;task=input'>[voice_pack]</a><BR>"
 			// RMH EDIT
-			dat += "<b>Moanpack Type</b>: <a href='?_src_=prefs;preference=moanselection;task=input'>[moan_selection]</a><BR>"
-			dat += "<b><a href='?_src_=prefs;preference=moanpreview;task=input'>Preview Moans</a></b><br>"
-
+			dat += "<b>Moanpack Type</b>: <a href='?_src_=prefs;preference=moanselection;task=input'>[moan_selection]</a> <a href='?_src_=prefs;preference=moanpreview;task=input'>(Preview)</a><BR>"
 			dat += "<BR>"
 			dat += "<b>Race:</b> <a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a>[spec_check(user) ? "" : " (!)"]<BR>"
 			if(pref_species.use_titles)
@@ -2043,6 +2042,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					if(!moan_selection)
 						to_chat(user, "<span class='warning'>No moanpack selected!</span>")
 						return
+
 					var/atom/movable/moanbox = new(get_turf(parent.mob))
 					var/type = GLOB.selectable_moanpacks[moan_selection]
 					var/datum/moan_pack/MP
@@ -2053,11 +2053,14 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							MP = new /datum/moan_pack/female
 					else
 						MP = new type
+
 					var/list/moan_types = list("sexmoanlight", "sexmoanmed", "sexmoanhvy")
 					var/moan_key = moan_types[rand(1, length(moan_types))]
 					var/soundin = MP.get_moans(moan_key)
+
 					if(soundin)
-						addtimer(CALLBACK(GLOBAL_PROC, /proc/playsound, moanbox, soundin, 70, 0, 7), 0)
+						parent.mob.playsound_local(get_turf(parent.mob), soundin, 70, 0, 0, 7)
+
 					QDEL_IN(moanbox, 10 TICKS)
 					qdel(MP)
 

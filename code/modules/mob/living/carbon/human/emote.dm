@@ -87,28 +87,28 @@
 			message = "makes a noise."
 
 /mob/living/carbon/human
-	var/next_sex_moan = 0
+	COOLDOWN_DECLARE(sex_moaning)
 
-/mob/living/carbon/human/verb/sex_moan()
-	set name = "Moan"
-	set category = "Noises"
+	verb/sex_moan()
+		set name = "Moan"
+		set category = "Noises"
 
-	if(world.time < next_sex_moan)
-		return
+		if(!COOLDOWN_FINISHED(src, sex_moaning))
+			return
 
-	var/datum/sex_controller/S = sexcon
-	if(!can_speak())
-		emote("sexmoangag", forced = TRUE)
-	else
-		switch(S.arousal)
-			if(0 to 40)
-				emote("sexmoanlight", forced = TRUE)
-			if(41 to 75)
-				emote("sexmoanmed", forced = TRUE)
-			if(76 to INFINITY)
-				emote("sexmoanhvy", forced = TRUE)
+		COOLDOWN_START(src, sex_moaning, 3 SECONDS)
 
-	next_sex_moan = world.time + 3 SECONDS
+		if(!can_speak())
+			emote("sexmoangag", forced = TRUE)
+		else
+			var/datum/sex_controller/S = sexcon
+			switch(S.arousal)
+				if(0 to 40)
+					emote("sexmoanlight", forced = TRUE)
+				if(41 to 75)
+					emote("sexmoanmed", forced = TRUE)
+				if(76 to INFINITY)
+					emote("sexmoanhvy", forced = TRUE)
 
 /datum/emote/living/carbon/human/eyebrow
 	key = "eyebrow"
