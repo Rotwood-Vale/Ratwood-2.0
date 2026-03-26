@@ -23,7 +23,7 @@ GLOBAL_VAR_INIT(scadu_slot_closed, FALSE)
 	advclass_cat_rolls = list("CTAG_SCADU" = 1)
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	tutorial = "You are the Scadu. Move through the bog as an invisible presence. Use the 'Select Ability' verb and click targets to spend lux on abilities. Place monuments to grow your power."
+	tutorial = "A malice of the bog, the spirit with no form. The Scadu is a harbinger of the end times. Rot spreads."
 	job_greet_text = TRUE
 	social_rank = SOCIAL_RANK_DIRT
 
