@@ -84261,6 +84261,10 @@
 /obj/item/grown/log/tree/small,
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/indoors)
+"wCz" = (
+/obj/effect/landmark/start/scadu,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/bograt/south)
 "wCA" = (
 /obj/structure/chair/wood/rogue{
 	dir = 8
@@ -247226,7 +247230,7 @@ lGy
 lGy
 dux
 aJn
-dux
+wCz
 uWK
 qrc
 uWK

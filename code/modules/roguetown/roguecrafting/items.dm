@@ -494,3 +494,14 @@
 		/obj/item/ash = 1)
 	skillcraft = /datum/skill/misc/medicine
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/survival/divination_rod
+	name = "divination rod"
+	result = list(
+		/obj/item/divination_rod
+	)
+	reqs = list(
+		/obj/item/grown/log/tree/stick = 1,
+		/datum/reagent/water/blessed = 25)
+	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	craftdiff = 1

@@ -36,7 +36,7 @@
 		H.set_species(/datum/species/goblin/cave)
 		if(M.mind)
 			M.mind.special_role = "goblin"
-			M.mind.assigned_role = "goblin"
+			M.mind.assigned_role = "Goblin"
 			if(M.mind.current)
 				M.mind.current.job = null
 		if(H.dna && H.dna.species)
