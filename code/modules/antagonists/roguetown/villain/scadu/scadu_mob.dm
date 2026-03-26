@@ -376,6 +376,18 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		return
 	forceMove(get_turf(M))
 
+/mob/dead/observer/rogue/scadu/verb/scadu_move_up()
+	set name = "Move Up"
+	set category = "Scadu"
+	set hidden = FALSE
+	ghost_up()
+
+/mob/dead/observer/rogue/scadu/verb/scadu_move_down()
+	set name = "Move Down"
+	set category = "Scadu"
+	set hidden = FALSE
+	ghost_down()
+
 /mob/dead/observer/rogue/scadu/verb/scadu_return_underworld()
 	set name = "Go Dormant"
 	set category = "Scadu"
