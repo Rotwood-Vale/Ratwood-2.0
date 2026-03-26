@@ -123,10 +123,6 @@
 				if(show_message && user)
 					to_chat(user, span_warning("Lumbering Giant vice conflicts with Giant virtue!"))
 				return TRUE
-			if(virt && virt.type == /datum/virtue/pack/sturdygiant)
-				if(show_message && user)
-					to_chat(user, span_warning("Lumbering Giant vice conflicts with Sturdy Giant virtue pack!"))
-				return TRUE
 	
 	return FALSE
 
