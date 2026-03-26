@@ -28,6 +28,16 @@ GLOBAL_LIST_EMPTY(virtues)
 	var/list/blocked_feats = list()
 	/// List of origin item type paths that this origin blocks from being selected. Supports both specific types and general parent paths.
 	var/list/blocked_items = list()
+	
+	// VIRTUE CHOICE/BONUS SYSTEM
+	/// Associative list of bonus choices available for this virtue. Format: "Display Name" = list("traits" = list(...), "skills" = list(...), "items" = list(...), "languages" = list(...), "stats" = list(...), "cost" = #, "desc" = "text")
+	var/list/virtue_choices = list()
+	/// Number of choices that are free before triumph costs kick in
+	var/free_choices = 0
+	/// Maximum number of choices that can be selected (0 = no limit beyond costs)
+	var/max_choices = 0
+	/// Base triumph cost for choices beyond free ones. Progressive cost formula: base_cost * (choices_made - free_choices)
+	var/choice_triumph_cost = 1
 
 /datum/virtue/New()
 	. = ..()
@@ -101,7 +111,76 @@ GLOBAL_LIST_EMPTY(virtues)
 	recipient.adjust_triumphs(-triumph_cost, FALSE)
 	return TRUE
 
-/proc/apply_virtue(mob/living/carbon/human/recipient, datum/virtue/virtue_type)
+/// Handle virtue bonus choices - applies pre-selected choices from preferences
+/datum/virtue/proc/handle_virtue_choices(mob/living/carbon/human/recipient, list/selected_choice_names)
+	if(!LAZYLEN(virtue_choices) || !recipient.mind)
+		return TRUE
+	
+	if(!LAZYLEN(selected_choice_names))
+		return TRUE // No choices selected, skip
+	
+	var/triumph_spent = 0
+	var/choices_made = 0
+	
+	// Apply all selected choices
+	for(var/choice_name in selected_choice_names)
+		if(!(choice_name in virtue_choices))
+			continue // Invalid choice name
+		
+		var/list/choice_data = virtue_choices[choice_name]
+		var/individual_cost = choice_data["cost"] || 0
+		
+		// Calculate triumph cost for this choice
+		var/triumph_cost_for_choice = individual_cost
+		if(choices_made >= free_choices && choice_triumph_cost > 0)
+			triumph_cost_for_choice += choice_triumph_cost * (choices_made - free_choices + 1)
+		
+		triumph_spent += triumph_cost_for_choice
+		choices_made++
+		
+		// Apply traits
+		if(LAZYLEN(choice_data["traits"]))
+			for(var/trait in choice_data["traits"])
+				ADD_TRAIT(recipient, trait, TRAIT_VIRTUE)
+		
+		// Apply skills
+		if(LAZYLEN(choice_data["skills"]))
+			for(var/skill in choice_data["skills"])
+				if(!islist(skill))
+					recipient.adjust_skillrank(skill, choice_data["skills"][skill], TRUE)
+				else
+					var/list/skill_block = skill
+					var/datum/skill/the_skill = skill_block[1]
+					var/increase_by = skill_block[2]
+					var/maximum_skill = skill_block[3]
+					var/our_skill = recipient.get_skill_level(the_skill)
+					if(our_skill < maximum_skill)
+						if((our_skill + increase_by) > maximum_skill)
+							increase_by = (maximum_skill - our_skill)
+						recipient.adjust_skillrank(the_skill.type, increase_by, TRUE)
+		
+		// Apply stashed items
+		if(LAZYLEN(choice_data["items"]))
+			for(var/item_name in choice_data["items"])
+				recipient.mind?.special_items[item_name] = choice_data["items"][item_name]
+		
+		// Apply languages
+		if(LAZYLEN(choice_data["languages"]))
+			for(var/language in choice_data["languages"])
+				recipient.grant_language(language)
+		
+		// Apply stats
+		if(LAZYLEN(choice_data["stats"]))
+			for(var/stat in choice_data["stats"])
+				recipient.change_stat(stat, choice_data["stats"][stat])
+	
+	// Deduct total triumph cost
+	if(triumph_spent > 0)
+		recipient.adjust_triumphs(-triumph_spent, FALSE)
+	
+	return TRUE
+
+/proc/apply_virtue(mob/living/carbon/human/recipient, datum/virtue/virtue_type, list/selected_choices = null)
 	if (!virtue_type.check_triumphs(recipient))
 		return
 	virtue_type.apply_to_human(recipient)
@@ -110,6 +189,7 @@ GLOBAL_LIST_EMPTY(virtues)
 	virtue_type.handle_stashed_items(recipient)
 	virtue_type.handle_added_languages(recipient)
 	virtue_type.handle_stats(recipient)
+	virtue_type.handle_virtue_choices(recipient, selected_choices) // Handle bonus choices
 	if(HAS_TRAIT(recipient, TRAIT_RESIDENT))
 		if(recipient in SStreasury.bank_accounts)
 			SStreasury.generate_money_account(20, recipient)

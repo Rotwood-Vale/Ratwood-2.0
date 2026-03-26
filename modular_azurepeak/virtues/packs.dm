@@ -25,7 +25,7 @@
 
 // Enchanting Performer Pack: Socialite + Performer + Second Voice
 // For entertainers, bards, and charismatic performers
-/datum/virtue/pack/enchanter
+/*datum/virtue/pack/enchanter
 	name = "Enchanting Performer"
 	desc = "I am a master of the stage and salon alike - beautiful, talented, and able to become anyone through voice and charm. My performances captivate audiences, and my social graces open every door."
 	virtue_cost = 10
@@ -125,3 +125,4 @@
 	- Ugly: Unseemly appearance, immune to corpse stink (UNSEEMLY + NOSTINK traits)\n\
 	- Tolerant: No stress from certain species, broad acceptance\n\
 	- Deadened: Completely emotionless (NOMOOD trait)"
+*/

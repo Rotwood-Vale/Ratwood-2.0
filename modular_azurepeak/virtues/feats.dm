@@ -37,6 +37,88 @@
 			recipient.mind?.adjust_spellpoints(3)
 	else
 		recipient.mind?.adjust_spellpoints(3) // 3 extra spellpoints since you don't get any spell point from the skill anymore
+
+/datum/virtue/combat/trained_and_ready
+	name = "Trained & Ready"
+	desc = "I've trained with various weapons and kept them close at hand. I can select my proficiencies and stashed weapons."
+	category = "feats"
+	virtue_cost = 5
+	custom_text = "Pick up to 3 weapon proficiencies for free. Additional selections cost Triumphs. Each grants Journeyman skill and a stashed weapon."
+	
+	// Virtue choice system configuration
+	free_choices = 3
+	max_choices = 6
+	choice_triumph_cost = 1
+
+/datum/virtue/combat/trained_and_ready/New()
+	. = ..()
+	virtue_choices = list(
+		"Swords" = list(
+			"skills" = list(list(/datum/skill/combat/swords, 2, 3)),
+			"items" = list("Iron Messer" = /obj/item/rogueweapon/sword/short/messer/iron/virtue),
+			"cost" = 0,
+			"desc" = "Journeyman with swords + Iron Messer"
+		),
+		"Axes" = list(
+			"skills" = list(list(/datum/skill/combat/axes, 2, 3)),
+			"items" = list("Iron Axe" = /obj/item/rogueweapon/stoneaxe/woodcut),
+			"cost" = 0,
+			"desc" = "Journeyman with axes + Iron Axe"
+		),
+		"Maces" = list(
+			"skills" = list(list(/datum/skill/combat/maces, 2, 3)),
+			"items" = list("Iron Mace" = /obj/item/rogueweapon/mace),
+			"cost" = 0,
+			"desc" = "Journeyman with maces + Iron Mace"
+		),
+		"Polearms" = list(
+			"skills" = list(list(/datum/skill/combat/polearms, 2, 3)),
+			"items" = list("Wooden Spear" = /obj/item/rogueweapon/spear),
+			"cost" = 0,
+			"desc" = "Journeyman with polearms + Wooden Spear"
+		),
+		"Knives" = list(
+			"skills" = list(list(/datum/skill/combat/knives, 2, 3)),
+			"items" = list("Bronze Hunting Knife" = /obj/item/rogueweapon/huntingknife/bronze),
+			"cost" = 0,
+			"desc" = "Journeyman with knives + Bronze Hunting Knife"
+		),
+		"Bows" = list(
+			"skills" = list(list(/datum/skill/combat/bows, 2, 3)),
+			"items" = list("Recurve Bow" = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve, "Quiver of Arrows" = /obj/item/quiver/arrows),
+			"cost" = 0,
+			"desc" = "Journeyman with bows + Recurve Bow & Quiver"
+		),
+		"Crossbows" = list(
+			"skills" = list(list(/datum/skill/combat/crossbows, 2, 3)),
+			"items" = list("Crossbow" = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow, "Quiver of Bolts" = /obj/item/quiver/bolts),
+			"cost" = 0,
+			"desc" = "Journeyman with crossbows + Crossbow & Bolts"
+		),
+		"Wrestling" = list(
+			"skills" = list(list(/datum/skill/combat/wrestling, 2, 3)),
+			"cost" = 0,
+			"desc" = "Journeyman with wrestling"
+		),
+		"Unarmed" = list(
+			"skills" = list(list(/datum/skill/combat/unarmed, 2, 3)),
+			"items" = list("Bronze Knuckles" = /obj/item/rogueweapon/knuckles/bronzeknuckles, "Bronze Knuckles #2" = /obj/item/rogueweapon/knuckles/bronzeknuckles),
+			"cost" = 0,
+			"desc" = "Journeyman unarmed + Pair of Bronze Knuckles"
+		),
+		"Whips & Flails" = list(
+			"skills" = list(list(/datum/skill/combat/whipsflails, 2, 3)),
+			"items" = list("Leather Whip" = /obj/item/rogueweapon/whip),
+			"cost" = 0,
+			"desc" = "Journeyman with whips/flails + Leather Whip"
+		),
+		"Shields" = list(
+			"skills" = list(list(/datum/skill/combat/shields, 2, 3)),
+			"items" = list("Wooden Shield" = /obj/item/rogueweapon/shield/wood),
+			"cost" = 0,
+			"desc" = "Journeyman with shields + Wooden Shield"
+		)
+	)
 	
 /datum/virtue/combat/devotee
 	name = "Devotee"
@@ -121,95 +203,12 @@
 /datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient)
 	SStreasury.noble_incomes[recipient] += 15
 
-/datum/virtue/utility/socialite
-	name = "Socialite"
-	desc = "I thrive in social settings, easily reading the emotions of others and charming those around me. My presence is always felt at any gathering."
-	category = "feats"
-	virtue_cost = 5
-	custom_text = "Incompatible with Ugly virtue. Grants empathic insight."
-	added_traits = list(TRAIT_BEAUTIFUL, TRAIT_GOODLOVER, TRAIT_EMPATH)
-	added_stashed_items = list(
-		"Hand Mirror" = /obj/item/handmirror)
-
-/datum/virtue/utility/socialite/handle_traits(mob/living/carbon/human/recipient)
-	..()
-	if(isdullahan(recipient))
-		REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
-		ADD_TRAIT(recipient, TRAIT_BEAUTIFUL_UNCANNY, TRAIT_VIRTUE)
-	if(HAS_TRAIT(recipient, TRAIT_UNSEEMLY))
-		to_chat(recipient, "Your attractiveness is cancelled out! You become normal.")
-		if(HAS_TRAIT(recipient, TRAIT_BEAUTIFUL))
-			REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
-		REMOVE_TRAIT(recipient, TRAIT_UNSEEMLY, TRAIT_VIRTUE)
-
 /datum/virtue/utility/deadened
 	name = "Deadened"
 	desc = "Some terrible incident colours my past, and now, I feel nothing."
 	category = "feats"
 	virtue_cost = 5
 	added_traits = list(TRAIT_NOMOOD)
-
-/datum/virtue/utility/light_steps
-	name = "Light Steps"
-	desc = "Years of skulking about have left my steps quiet, and my hunched gait quicker."
-	category = "feats"
-	virtue_cost = 5
-	added_traits = list(TRAIT_LIGHT_STEP)
-	added_skills = list(list(/datum/skill/misc/sneaking, 3, 6))
-
-/datum/virtue/utility/resident
-	name = "Resident"
-	desc = "I'm a resident of the vale. I have an account in the city's treasury and a home in the city."
-	category = "feats"
-	virtue_cost = 2
-	added_traits = list(TRAIT_RESIDENT)
-
-/datum/virtue/utility/resident/apply_to_human(mob/living/carbon/human/recipient)
-	var/mapswitch = 0
-	if(SSmapping.config.map_name == "Dun Manor")
-		mapswitch = 1
-	else if(SSmapping.config.map_name == "Dun World")
-		mapswitch = 2
-
-	if(mapswitch == 0)
-		return
-	if(recipient.mind?.assigned_role == "Adventurer" || recipient.mind?.assigned_role == "Mercenary" || recipient.mind?.assigned_role == "Court Agent")
-		// Find tavern area for spawning
-		var/area/spawn_area
-		for(var/area/A in world)
-			if(istype(A, /area/rogue/indoors/town/tavern))
-				spawn_area = A
-				break
-
-		if(spawn_area)
-			var/target_z = 3 //ground floor of tavern for dun manor / world
-			var/target_y = 70 //dun manor
-			var/list/possible_chairs = list()
-
-			if(mapswitch == 2)
-				target_y = 234 //dun world huge
-
-			for(var/obj/structure/chair/C in spawn_area)
-				//z-level 3, wooden chair, and Y > north of tavern backrooms
-				var/turf/T = get_turf(C)
-				if(T && T.z == target_z && T.y > target_y && istype(C, /obj/structure/chair/wood/rogue) && !T.density && !T.is_blocked_turf(FALSE))
-					possible_chairs += C
-
-			if(length(possible_chairs))
-				var/obj/structure/chair/chosen_chair = pick(possible_chairs)
-				recipient.forceMove(get_turf(chosen_chair))
-				chosen_chair.buckle_mob(recipient)
-				to_chat(recipient, span_notice("As a resident of the vale, you find yourself seated at a chair in the local tavern."))
-			else
-				var/list/possible_spawns = list()
-				for(var/turf/T in spawn_area)
-					if(T.z == target_z && T.y > (target_y + 4) && !T.density && !T.is_blocked_turf(FALSE))
-						possible_spawns += T
-
-				if(length(possible_spawns))
-					var/turf/spawn_loc = pick(possible_spawns)
-					recipient.forceMove(spawn_loc)
-					to_chat(recipient, span_notice("As a resident of the vale, you find yourself in the local tavern."))
 
 /datum/virtue/utility/failed_squire
 	name = "Failed Squire"
@@ -232,7 +231,7 @@
 	desc = "I've spent my life surrounded by various books or sophisticated foreigners, be it through travel or other fortunes beset on my life. I've picked up several tongues and wits, and keep a journal closeby. I can tell people's exact prowess."
 	category = "feats"
 	virtue_cost = 10
-	custom_text = "Maximizes Assess benefits with a bonus of the target's Stats. Allows the choice of 3 languages to learn upon joining. +1 INT."
+	custom_text = "Maximizes Assess benefits with a bonus of the target's Stats. Allows the choice of up to 6 languages to learn upon joining. First 3 languages are free, additional ones cost Triumphs. +1 INT."
 	added_traits = list(TRAIT_INTELLECTUAL)
 	added_skills = list(list(/datum/skill/misc/reading, 3, 6))
 	added_stashed_items = list(
@@ -241,48 +240,59 @@
 		"Scroll #2" = /obj/item/paper/scroll,
 		"Book Crafting Kit" = /obj/item/book_crafting_kit
 	)
+	
+	// Virtue choice system configuration
+	free_choices = 3
+	max_choices = 6
+	choice_triumph_cost = 1
+
+/datum/virtue/utility/linguist/New()
+	. = ..()
+	// Build language choices dynamically
+	var/static/list/selectable_languages = list(
+		"Elvish" = /datum/language/elvish,
+		"Dwarvish" = /datum/language/dwarvish,
+		"Orcish" = /datum/language/orcish,
+		"Hellspeak" = /datum/language/hellspeak,
+		"Draconic" = /datum/language/draconic,
+		"Celestial" = /datum/language/celestial,
+		"Grenzelhoftian" = /datum/language/grenzelhoftian,
+		"Canilunzt" = /datum/language/canilunzt,
+		"Kazengunese" = /datum/language/kazengunese,
+		"Otavan" = /datum/language/otavan,
+		"Etruscan" = /datum/language/etruscan,
+		"Gronnic" = /datum/language/gronnic,
+		"Aavnic" = /datum/language/aavnic,
+		"Abyssal" = /datum/language/abyssal,
+		"Merar" = /datum/language/merar
+	)
+	
+	virtue_choices = list()
+	for(var/lang_name in selectable_languages)
+		virtue_choices[lang_name] = list(
+			"languages" = list(selectable_languages[lang_name]),
+			"cost" = 0,
+			"desc" = "Learn [lang_name]"
+		)
 
 /datum/virtue/utility/linguist/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.change_stat(STATKEY_INT, 1)
-	addtimer(CALLBACK(src, .proc/linguist_apply, recipient), 50)
-
-/datum/virtue/utility/linguist/proc/linguist_apply(mob/living/carbon/human/recipient)
-	var/static/list/selectable_languages = list(
-		/datum/language/elvish,
-		/datum/language/dwarvish,
-		/datum/language/orcish,
-		/datum/language/hellspeak,
-		/datum/language/draconic,
-		/datum/language/celestial,
-		/datum/language/grenzelhoftian,
-		/datum/language/canilunzt,
-		/datum/language/kazengunese,
-		/datum/language/otavan,
-		/datum/language/etruscan,
-		/datum/language/gronnic,
-		/datum/language/aavnic,
-		/datum/language/abyssal,
-		/datum/language/merar
-	)
-
-	var/list/choices = list()
-	for(var/language_type in selectable_languages)
-		if(recipient.has_language(language_type))
-			continue
-		var/datum/language/a_language = new language_type()
-		choices[a_language.name] = language_type
-
-	if(length(choices))	//If this isn't true then we have no new languages learn -- we probably picked archivist
-		var/lang_count = 3
-		var/count = lang_count
-		for(var/i in 1 to lang_count)
-			var/chosen_language = input(recipient, "Choose your extra spoken language.", "VIRTUE: [count] LEFT") as null|anything in choices
-			if(chosen_language)
-				var/language_type = choices[chosen_language]
-				recipient.grant_language(language_type)
-				choices -= chosen_language
-				to_chat(recipient, span_info("I recall my knowledge of [chosen_language]..."))
-				count--
+	// Filter out languages the character already knows before showing choices
+	if(LAZYLEN(virtue_choices))
+		var/list/filtered_choices = list()
+		for(var/choice_name in virtue_choices)
+			var/list/choice_data = virtue_choices[choice_name]
+			if(LAZYLEN(choice_data["languages"]))
+				var/language_type = choice_data["languages"][1]
+				if(!recipient.has_language(language_type))
+					filtered_choices[choice_name] = choice_data
+		
+		// Temporarily swap in filtered choices
+		var/list/original_choices = virtue_choices
+		virtue_choices = filtered_choices
+		// Call parent to handle choices (will be picked up by handle_virtue_choices)
+		. = ..()
+		virtue_choices = original_choices
 
 /datum/virtue/utility/deathless
 	name = "Deathless"
@@ -366,17 +376,6 @@
 		REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
 		REMOVE_TRAIT(recipient, TRAIT_UNSEEMLY, TRAIT_VIRTUE)
 
-/datum/virtue/utility/secondvoice
-	name = "Second Voice"
-	desc = "From performance, deception, or by a need to change yourself in uncanny ways, you've acquired a second, perfect voice. You may switch between them at any point."
-	category = "feats"
-	virtue_cost = 2
-	custom_text = "Grants access to a new 'Memory' tab. It will have the options for setting and changing your voice."
-
-/datum/virtue/utility/secondvoice/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.verbs += /mob/living/carbon/human/proc/changevoice
-	recipient.verbs += /mob/living/carbon/human/proc/swapvoice
-
 /datum/virtue/utility/keenears
 	name = "Keen Ears"
 	desc = "Cowering from authorities, loved ones or by a generous gift of the gods, you've adapted a keen sense of hearing, and can identify the speakers even when they are out of sight, their whispers ringing louder."
@@ -438,14 +437,6 @@
 	)
 
 // Additional feats - these combine skills, traits, and items
-/datum/virtue/utility/larcenous
-	name = "Larcenous"
-	desc = "Whether it was asked of you, or by a calling for the rush deep within your hollow heart, you seek things that don't belong you. You know how to work a lock, and have stashed a ring of them, for just the occasion."
-	category = "feats"
-	virtue_cost = 5
-	added_stashed_items = list("Lockpick Ring" = /obj/item/lockpickring/mundane)
-	added_skills = list(list(/datum/skill/misc/lockpicking, 3, 6))
-
 /datum/virtue/utility/granary
 	name = "Cunning Provisioner"
 	desc = "You've worked in or around the docks enough to steal away a sack of supplies that no one would surely miss, just in case. You've picked up on some cooking and fishing tips in your spare time, as well."
@@ -488,19 +479,6 @@
 						list(/datum/skill/labor/lumberjacking, 2, 2),
 						list(/datum/skill/combat/knives, 2, 2)
 	)
-
-/datum/virtue/items/rich
-	name = "Rich and Shrewd"
-	desc = "Through a stroke of luck or shrewd planning, I've come into a considerable amount of mammon. I can tell the value of those I speak to, and what they offer. I've also stowed away some coinage for a rainy dae."
-	category = "feats"
-	virtue_cost = 5
-	added_traits = list(TRAIT_SEEPRICES)
-	added_skills = list(list(/datum/skill/misc/reading, 1, 6))	//So the spell would work
-	custom_text = "Grants Secular Appraise -- a spell that allows you to tell how much wealth someone has on them, and in their Nervelock."
-	added_stashed_items = list("Weighty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
-
-/datum/virtue/items/rich/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 
 /datum/virtue/items/arsonist
 	name = "Arsonist"
@@ -783,86 +761,239 @@
 	var/obj/effect/proc_holder/spell/self/feral_claws/claw_ability = new(recipient)
 	recipient.mind.AddSpell(claw_ability)
 
-// Crafter Feats - Apprenticeships that grant crafting expertise
+// ============ COMBINED VIRTUES ============
+// These virtues combine multiple individual virtues into one with selectable bonuses
 
-/datum/virtue/utility/blacksmith/trait
-	name = "Blacksmith's Apprentice"
-	desc = "In my youth, I worked under a skilled blacksmith, honing my skills with an anvil."
+/datum/virtue/utility/prowler
+	name = "Prowler"
+	desc = "I've spent years in the shadows - skulking, stealing, and surviving. I can pick locks, move silently, see in the dark, and even disguise my voice when needed."
 	category = "feats"
-	virtue_cost = 6
-	added_traits = list(TRAIT_SMITHING_EXPERT)
-	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
-						list(/datum/skill/craft/weaponsmithing, 2, 2),
-						list(/datum/skill/craft/armorsmithing, 2, 2),
-						list(/datum/skill/craft/blacksmithing, 2, 2),
-						list(/datum/skill/craft/smelting, 2, 2))
+	virtue_cost = 5
+	custom_text = "Pick 2 prowler skills for free. Additional selections cost Triumphs. Choose from: Light Steps (quiet movement), Night Vision (see in dark), Second Voice (voice changing), or Lockpicking (open locks)."
+	
+	// Virtue choice system configuration
+	free_choices = 2
+	max_choices = 4
+	choice_triumph_cost = 1
 
-/datum/virtue/utility/tailor/trait
-	name = "Tailor's Apprentice"
-	desc = "In my youth, I worked under a skilled tailor, studying fabric and design."
+/datum/virtue/utility/prowler/New()
+	. = ..()
+	virtue_choices = list(
+		"Light Steps" = list(
+			"traits" = list(TRAIT_LIGHT_STEP),
+			"skills" = list(list(/datum/skill/misc/sneaking, 3, 6)),
+			"cost" = 0,
+			"desc" = "Quiet steps and faster hunched movement"
+		),
+		"Night Vision" = list(
+			"traits" = list(TRAIT_DARKVISION),
+			"cost" = 0,
+			"desc" = "See through darkness"
+		),
+		"Second Voice" = list(
+			"cost" = 0,
+			"desc" = "Change and swap your voice"
+		),
+		"Lockpicking" = list(
+			"skills" = list(list(/datum/skill/misc/lockpicking, 3, 6)),
+			"items" = list("Lockpick Ring" = /obj/item/lockpickring/mundane),
+			"cost" = 0,
+			"desc" = "Expert lockpicking + lockpick ring"
+		)
+	)
+
+/datum/virtue/utility/prowler/apply_to_human(mob/living/carbon/human/recipient)
+	. = ..()
+	// Add special abilities based on selections - must happen after handle_virtue_choices
+	// This will be called after parent completes
+
+/datum/virtue/utility/prowler/handle_virtue_choices(mob/living/carbon/human/recipient, list/selected_choice_names)
+	. = ..()
+	// After parent handles choices, add special abilities for Second Voice
+	if("Second Voice" in selected_choice_names)
+		recipient.verbs |= /mob/living/carbon/human/proc/changevoice
+		recipient.verbs |= /mob/living/carbon/human/proc/swapvoice
+		to_chat(recipient, span_notice("Gained voice-changing abilities."))
+
+/datum/virtue/utility/well_off
+	name = "Well Off"
+	desc = "Through fortune, charm, or shrewd dealings, I've secured a comfortable position in society. I can choose to be beautiful, wealthy, or a resident of the vale."
 	category = "feats"
-	virtue_cost = 6
-	added_traits = list(TRAIT_SEWING_EXPERT)
-	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
-						list(/datum/skill/labor/butchering, 2, 2),
-						list(/datum/skill/craft/sewing, 2, 2),
-						list(/datum/skill/craft/tanning, 2, 2))
-	added_stashed_items = list(
-		"Needle" = /obj/item/needle,
-		"Scissors" = /obj/item/rogueweapon/huntingknife/scissors)
+	virtue_cost = 5
+	custom_text = "Pick 2 benefits for free. Additional selections cost Triumphs. Choose from: Beautiful (attractive & good lover), Resident (vale citizenship), Wealthy (see prices, appraise spell, coin purse), or Empathic Reading."
+	
+	// Virtue choice system configuration
+	free_choices = 2
+	max_choices = 4
+	choice_triumph_cost = 1
 
-/datum/virtue/utility/physician/trait
-	name = "Physician's Apprentice"
-	desc = "In my youth, I worked under a skilled physician, studying medicine and alchemy."
+/datum/virtue/utility/well_off/New()
+	. = ..()
+	virtue_choices = list(
+		"Beautiful" = list(
+			"traits" = list(TRAIT_BEAUTIFUL, TRAIT_GOODLOVER),
+			"items" = list("Hand Mirror" = /obj/item/handmirror),
+			"cost" = 0,
+			"desc" = "Attractive appearance and skilled lover"
+		),
+		"Resident" = list(
+			"traits" = list(TRAIT_RESIDENT),
+			"cost" = 0,
+			"desc" = "Resident of the vale with treasury account"
+		),
+		"Wealthy" = list(
+			"traits" = list(TRAIT_SEEPRICES),
+			"skills" = list(list(/datum/skill/misc/reading, 1, 6)),
+			"items" = list("Weighty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch),
+			"cost" = 0,
+			"desc" = "See prices, appraise wealth, large coinpurse"
+		),
+		"Empathic" = list(
+			"traits" = list(TRAIT_EMPATH),
+			"cost" = 0,
+			"desc" = "Read emotions and social cues"
+		)
+	)
+
+/datum/virtue/utility/well_off/apply_to_human(mob/living/carbon/human/recipient)
+	. = ..()
+	// Special handling will occur in handle_virtue_choices
+
+/datum/virtue/utility/well_off/handle_virtue_choices(mob/living/carbon/human/recipient, list/selected_choice_names)
+	. = ..()
+	// After parent handles choices, add special abilities
+	if("Wealthy" in selected_choice_names)
+		if(!recipient.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/appraise/secular))
+			recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
+		to_chat(recipient, span_notice("Gained appraise spell."))
+	// Resident trait is handled globally in apply_virtue proc
+
+/datum/virtue/utility/skilled_apprentice
+	name = "Skilled Apprentice"
+	desc = "I've apprenticed under various master craftsmen, learning diverse trades. I can select which crafts I've studied."
 	category = "feats"
-	virtue_cost = 6
-	added_traits = list(TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
-	added_stashed_items = list("Medicine Pouch" = /obj/item/storage/belt/rogue/pouch/medicine)
-	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
-						list(/datum/skill/craft/alchemy, 2, 2),
-						list(/datum/skill/misc/medicine, 2, 2))
+	virtue_cost = 5
+	custom_text = "Pick 2 trade skills for free. Additional selections cost Triumphs. Each grants Journeyman-level skills and relevant tools."
+	
+	// Virtue choice system configuration
+	free_choices = 2
+	max_choices = 5
+	choice_triumph_cost = 1
+	
+/datum/virtue/utility/skilled_apprentice/New()
+	. = ..()
+	virtue_choices = list(
+		"Blacksmithing" = list(
+			"traits" = list(TRAIT_SMITHING_EXPERT),
+			"skills" = list(
+				list(/datum/skill/craft/crafting, 2, 2),
+				list(/datum/skill/craft/weaponsmithing, 2, 2),
+				list(/datum/skill/craft/armorsmithing, 2, 2),
+				list(/datum/skill/craft/blacksmithing, 2, 2),
+				list(/datum/skill/craft/smelting, 2, 2)
+			),
+			"cost" = 0,
+			"desc" = "Smithing expertise + metalworking skills"
+		),
+		"Tailoring" = list(
+			"traits" = list(TRAIT_SEWING_EXPERT),
+			"skills" = list(
+				list(/datum/skill/craft/crafting, 2, 2),
+				list(/datum/skill/labor/butchering, 2, 2),
+				list(/datum/skill/craft/sewing, 2, 2),
+				list(/datum/skill/craft/tanning, 2, 2)
+			),
+			"items" = list("Needle" = /obj/item/needle, "Scissors" = /obj/item/rogueweapon/huntingknife/scissors),
+			"cost" = 0,
+			"desc" = "Sewing expertise + tailoring skills & tools"
+		),
+		"Medicine" = list(
+			"traits" = list(TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT),
+			"skills" = list(
+				list(/datum/skill/craft/crafting, 2, 2),
+				list(/datum/skill/craft/alchemy, 2, 2),
+				list(/datum/skill/misc/medicine, 2, 2)
+			),
+			"items" = list("Medicine Pouch" = /obj/item/storage/belt/rogue/pouch/medicine),
+			"cost" = 0,
+			"desc" = "Medicine & alchemy expertise + diagnose spell"
+		),
+		"Hunting" = list(
+			"traits" = list(TRAIT_SURVIVAL_EXPERT),
+			"skills" = list(
+				list(/datum/skill/craft/crafting, 2, 2),
+				list(/datum/skill/craft/traps, 2, 2),
+				list(/datum/skill/labor/butchering, 2, 2),
+				list(/datum/skill/craft/sewing, 2, 2),
+				list(/datum/skill/craft/tanning, 2, 2),
+				list(/datum/skill/misc/tracking, 2, 2)
+			),
+			"cost" = 0,
+			"desc" = "Survival expertise + hunting & tracking skills"
+		),
+		"Engineering" = list(
+			"traits" = list(TRAIT_SMITHING_EXPERT),
+			"skills" = list(
+				list(/datum/skill/craft/crafting, 2, 2),
+				list(/datum/skill/craft/carpentry, 2, 2),
+				list(/datum/skill/craft/masonry, 2, 2),
+				list(/datum/skill/craft/engineering, 2, 2),
+				list(/datum/skill/craft/smelting, 2, 2),
+				list(/datum/skill/craft/ceramics, 2, 2)
+			),
+			"items" = list(
+				"Hammer" = /obj/item/rogueweapon/hammer/wood,
+				"Chisel" = /obj/item/rogueweapon/chisel,
+				"Hand Saw" = /obj/item/rogueweapon/handsaw
+			),
+			"cost" = 0,
+			"desc" = "Smithing expertise + construction & engineering skills"
+		)
+	)
 
-/datum/virtue/utility/physician/apply_to_human(mob/living/carbon/human/recipient)
-	if(!recipient.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/diagnose/secular))
-		recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
+/datum/virtue/utility/skilled_apprentice/apply_to_human(mob/living/carbon/human/recipient)
+	. = ..()
+	// Special abilities handled in handle_virtue_choices
 
-/datum/virtue/utility/hunter/trait
-	name = "Hunter's Apprentice"
-	desc = "In my youth, I trained under a skilled hunter, learning how to butcher animals and work with leather/hide."
+/datum/virtue/utility/skilled_apprentice/handle_virtue_choices(mob/living/carbon/human/recipient, list/selected_choice_names)
+	. = ..()
+	// After parent handles choices, add special abilities
+	if("Medicine" in selected_choice_names)
+		if(!recipient.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/diagnose/secular))
+			recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
+		to_chat(recipient, span_notice("Gained diagnose spell."))
+
+/datum/virtue/utility/laborious_apprentice
+	name = "Laborious Apprentice"
+	desc = "I've worked hard labor in my youth - mining ores from deep shafts or felling trees in the forest. I've kept my tools close."
 	category = "feats"
-	virtue_cost = 6
-	added_traits = list(TRAIT_SURVIVAL_EXPERT)
-	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
-						list(/datum/skill/craft/traps, 2, 2),
-						list(/datum/skill/labor/butchering, 2, 2),
-						list(/datum/skill/craft/sewing, 2, 2),
-						list(/datum/skill/craft/tanning, 2, 2),
-						list(/datum/skill/misc/tracking, 2, 2))
+	virtue_cost = 3
+	custom_text = "Pick 2 labor skills for free. Additional selections cost Triumphs. Choose from: Mining (pickaxe & lantern) or Lumberjacking (axe & wood skills)."
+	
+	// Virtue choice system configuration
+	free_choices = 2
+	max_choices = 2
+	choice_triumph_cost = 0  // Can't pick more than 2 anyway
 
-/datum/virtue/utility/artificer/trait
-	name = "Artificer's Apprentice"
-	desc = "In my youth, I worked under a skilled artificer, studying construction and engineering."
-	category = "feats"
-	virtue_cost = 6
-	added_traits = list(TRAIT_SMITHING_EXPERT)
-	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
-						list(/datum/skill/craft/carpentry, 2, 2),
-						list(/datum/skill/craft/masonry, 2, 2),
-						list(/datum/skill/craft/engineering, 2, 2),
-						list(/datum/skill/craft/smelting, 2, 2),
-						list(/datum/skill/craft/ceramics, 2, 2))
-	added_stashed_items = list(
-		"Hammer" = /obj/item/rogueweapon/hammer/wood,
-		"Chisel" = /obj/item/rogueweapon/chisel,
-		"Hand Saw" = /obj/item/rogueweapon/handsaw)
+/datum/virtue/utility/laborious_apprentice/New()
+	. = ..()
+	virtue_choices = list(
+		"Mining" = list(
+			"traits" = list(TRAIT_SMITHING_EXPERT),
+			"skills" = list(list(/datum/skill/labor/mining, 3, 6)),
+			"items" = list(
+				"Steel Pickaxe" = /obj/item/rogueweapon/pick/steel,
+				"Lamptern" = /obj/item/flashlight/flare/torch/lantern
+			),
+			"cost" = 0,
+			"desc" = "Expert mining + pickaxe & lantern"
+		),
+		"Lumberjacking" = list(
+			"skills" = list(list(/datum/skill/labor/lumberjacking, 3, 6)),
+			"items" = list("Iron Axe" = /obj/item/rogueweapon/stoneaxe/woodcut),
+			"cost" = 0,
+			"desc" = "Expert lumberjacking + iron axe"
+		)
+	)
 
-/datum/virtue/utility/mining/trait
-	name = "Miner's Apprentice"
-	desc = "The dark shafts, the damp smells of ichor and the laboring hours are no stranger to me. I keep my pickaxe and lamptern close, and have been taught how to mine well."
-	category = "feats"
-	virtue_cost = 6
-	added_traits = list(TRAIT_SMITHING_EXPERT)
-	added_stashed_items = list(
-		"Steel Pickaxe" = /obj/item/rogueweapon/pick/steel,
-		"Lamptern" = /obj/item/flashlight/flare/torch/lantern)
-	added_skills = list(list(/datum/skill/labor/mining, 3, 6))
+// Crafter Feats - Apprenticeships removed and consolidated into Skilled Apprentice and Laborious Apprentice choice-based virtues

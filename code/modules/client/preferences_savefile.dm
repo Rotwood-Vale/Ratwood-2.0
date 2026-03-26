@@ -631,6 +631,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!isnum(custom_origin_points_spent))
 		custom_origin_points_spent = 0
 	
+	// Load virtue choice selections
+	virtue_choice_selections = list()
+	S["virtue_choice_selections"] >> virtue_choice_selections
+	if(!islist(virtue_choice_selections))
+		virtue_choice_selections = list()
+	
 	// Sanitize virtue lists to remove any null or invalid entries
 	sanitize_virtue_lists()
 
@@ -1229,6 +1235,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(feat_typepath)
 				feat_types += feat_typepath
 	WRITE_FILE(S["feats"], feat_types)
+	// Save virtue choice selections
+	WRITE_FILE(S["virtue_choice_selections"], virtue_choice_selections)
 	// Save custom origin skills (Build Your Own Origin system)
 	WRITE_FILE(S["custom_origin_skills"], custom_origin_skills)
 	WRITE_FILE(S["custom_origin_levels"], custom_origin_levels)

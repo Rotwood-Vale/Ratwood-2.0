@@ -1,5 +1,5 @@
 
-/datum/virtue/utility/blacksmith
+/*/datum/virtue/utility/blacksmith
 	name = "Forged in Fire"
 	desc = "In my youth, I worked under a skilled blacksmith, learning the ways of the forge and anvil."
 	category = "origin"
@@ -224,3 +224,4 @@
 
 
 
+*/
