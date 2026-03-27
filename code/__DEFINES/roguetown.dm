@@ -313,6 +313,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_COURTAGENT		"CAT_COURTAGENT"	// Court agent classes
 #define CTAG_WRETCH			"CAT_WRETCH"		// Wretch classes untethered from adventurer
 #define CTAG_LSKELETON		"CAT_LSKELETON"		// Lich Fortified Skeleton classes
+#define CTAG_PSYWIGHT		"CAT_PSYWIGHT"		// Renegade Inquisitr Psydonic Wight classes
 #define CTAG_NSKELETON		"CAT_NSKELETON"		// Necromancer Greater Skeleton classes
 #define CTAG_LICKER_WRETCH  "CAT_LICKER_WRETCH" // Licker wretch. Nuff said.
 

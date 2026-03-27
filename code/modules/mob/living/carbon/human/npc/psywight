@@ -1,0 +1,82 @@
+/mob/living/carbon/human/species/wight
+	name = "wight"
+
+	race = /datum/species/human/northern
+	gender = MALE
+	bodyparts = list(
+		/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
+		/obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg,
+	)
+	var/wight_outfit = /datum/outfit/job/roguetown/npc/wight
+	var/wight_fragile = FALSE
+	ambushable = FALSE
+	rot_type = null
+	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
+	a_intent = INTENT_HELP
+	d_intent = INTENT_PARRY
+	possible_mmb_intents = list(INTENT_STEAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE)
+	cmode_music = 'sound/music/combat_veteran.ogg'
+
+
+/mob/living/carbon/human/species/wight/npc
+	aggressive = 1
+	mode = NPC_AI_IDLE
+	wander = FALSE
+	skel_fragile = TRUE
+	npc_jump_chance = 0 // no jumping skeletons
+	rude = TRUE
+
+/mob/living/carbon/human/species/wight/npc/ambush
+	aggressive = 1
+	mode = NPC_AI_IDLE
+	wander = FALSE
+
+/mob/living/carbon/human/species/wight/Initialize(mapload)
+	. = ..()
+	cut_overlays()
+	spawn(10)
+		after_creation()
+
+/mob/living/carbon/human/species/wight/after_creation()
+	..()
+	if(src.dna && src.dna.species)
+		src.dna.species.soundpack_m = new /datum/voicepack/male/knight()
+		src.dna.species.soundpack_f = new /datum/voicepack/female/haughty()
+	if(src.charflaw)
+		QDEL_NULL(src.charflaw)
+	name = "Wight"
+	real_name = "Wight"
+	voice_type = VOICE_TYPE_MASC //So that "Unknown Man" properly substitutes in with face cover
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_EASYDISMEMBER, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC) // You feel pain but you ENDURE!
+	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_EXTREME_TEMPERATURE_IMMUNE, TRAIT_GENERIC)
+	if(wight_fragile)
+		ADD_TRAIT(src, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+	else
+		ADD_TRAIT(src, TRAIT_SELF_SUSTENANCE, TRAIT_GENERIC) // If not fragile, then you're summoned by a real antag
+		// Therefore you get the trait to grind up to Jman.
+	if(wight_outfit)
+		var/datum/outfit/OU = new wight_outfit
+		if(OU)
+			equipOutfit(OU)
+
+/mob/living/carbon/human/species/wight/npc/no_equipment
+	wight_outfit = null
+
+/mob/living/carbon/human/species/wight/no_equipment
+	wight_outfit = null
+	var/datum/weakref/crystal
+
+/mob/living/carbon/human/species/wight/no_equipment/death(gibbed, nocutscene = FALSE)
+	..()
+	var/obj/item/renegade_relics/life_crystal/active_crystal = crystal.resolve()
+	for(var/datum/weakref/W in active_crystal.active_wights)
+		if(W.resolve() == src)
+			active_crystal.active_wights -= W
+	active_crystal = null
+	gib(no_brain = TRUE, no_organs = TRUE)

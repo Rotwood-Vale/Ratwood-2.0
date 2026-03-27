@@ -101,4 +101,6 @@
 				relics.Remove("Skeleton Key")
 				relic_count--
 			if("Cerulean Tear (Player Minion)")
-				new /obj/item
+				new /obj/item/renegade_relics/life_crystal
+				relics.Remove("Cerulean Tear (Player Minion)")
+				relic_count--
