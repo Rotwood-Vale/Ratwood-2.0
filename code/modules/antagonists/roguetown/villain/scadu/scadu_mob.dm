@@ -289,7 +289,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	set_cooldown(SCADU_CD_MIASMA)
 	active_ability = SCADU_ABILITY_NONE
 
-/mob/dead/observer/rogue/scadu/proc/nearest_monument_in_range(turf/T, range = 5)
+/mob/dead/observer/rogue/scadu/proc/nearest_monument_in_range(turf/T, range = 7)
 	if(!antag_datum)
 		return null
 	for(var/obj/structure/scadu_monument/M in antag_datum.monuments)
