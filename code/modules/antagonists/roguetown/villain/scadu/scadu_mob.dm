@@ -133,6 +133,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	for(var/turf/closed/mineral/CT in range(2, T))
 		to_chat(src, span_warning("Too close to rock walls."))
 		return FALSE
+	for(var/obj/structure/S in T)
+		to_chat(src, span_warning("Something already stands there."))
+		return FALSE
 	return TRUE
 
 /mob/dead/observer/rogue/scadu/proc/check_summon(turf/T)
