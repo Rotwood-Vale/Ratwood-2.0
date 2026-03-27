@@ -508,6 +508,19 @@
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/rapier
 
+/datum/anvil_recipe/weapons/steel/rapier/vaquero
+	name = "Cup-hilt Rapier, Steel"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_sword
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/sword/rapier/vaquero
+
+/datum/anvil_recipe/weapons/steel/sabrehook
+	name = "Hook Sword, Steel"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_sword
+	created_item = /obj/item/rogueweapon/sword/sabre/hook
+
 /datum/anvil_recipe/weapons/steel/cutlass
 	name = "Cutlass, Steel"
 	req_bar = /obj/item/ingot/steel
@@ -623,6 +636,13 @@
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/greatsword/grenz/flamberge
 
+/datum/anvil_recipe/weapons/steel/grenz
+	name = "Steel Zweihander, Steel (+2 Steel)"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_sword
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/greatsword/grenz
+
 /datum/anvil_recipe/weapons/steel/estoc
 	name = "Estoc, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
@@ -672,6 +692,13 @@
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/halberd
+
+/datum/anvil_recipe/weapons/steel/glaive
+	name = "Glaive, Steel (+1 Steel, +1 Small Log)"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_polearm
+	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/halberd/glaive
 
 /datum/anvil_recipe/weapons/steel/eaglebeak
 	name = "Eagle's Beak (+1 Steel, +1 Small Log)"
