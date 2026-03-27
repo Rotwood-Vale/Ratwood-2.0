@@ -16,9 +16,9 @@
 #define SCADU_ABILITY_HALLUCINATE   "hallucinate"
 #define SCADU_ABILITY_WEB           "web"
 
-#define SCADU_COST_SUMMON_SKEL      15
-#define SCADU_COST_SUMMON_TROLL     25
-#define SCADU_COST_GOBLIN           8
+#define SCADU_COST_SUMMON_SKEL      20
+#define SCADU_COST_SUMMON_TROLL     30
+#define SCADU_COST_GOBLIN           10
 #define SCADU_COST_WEEPVINE         20
 #define SCADU_COST_TERROR           15
 #define SCADU_COST_SNUFF_LIGHTS     15
