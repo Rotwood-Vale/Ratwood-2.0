@@ -68,6 +68,35 @@ GLOBAL_LIST_EMPTY(selectable_moanpacks)
 	sounds_sexmoangag = null
 	sounds_sexmoangag_org = null
 
+/datum/moan_pack/male/foppish
+	name = "MALE FOPPISH"
+	sounds_sexmoanlight = list(
+		'sound/vo/male/foppish/moan (1).ogg',
+		'sound/vo/male/foppish/moan (2).ogg',
+		'sound/vo/male/foppish/moan (3).ogg',
+		'sound/vo/male/foppish/moan (4).ogg',
+		'sound/vo/male/foppish/moan (5).ogg',
+		'sound/vo/male/foppish/moan (6).ogg',
+		'sound/vo/male/foppish/moan (7).ogg')
+	sounds_sexmoanmed = list(
+		'sound/vo/male/foppish/moan (1).ogg',
+		'sound/vo/male/foppish/moan (2).ogg',
+		'sound/vo/male/foppish/moan (3).ogg',
+		'sound/vo/male/foppish/moan (4).ogg',
+		'sound/vo/male/foppish/moan (5).ogg',
+		'sound/vo/male/foppish/moan (6).ogg',
+		'sound/vo/male/foppish/moan (7).ogg')
+	sounds_sexmoanhvy = list(
+		'sound/vo/male/foppish/moan (1).ogg',
+		'sound/vo/male/foppish/moan (2).ogg',
+		'sound/vo/male/foppish/moan (3).ogg',
+		'sound/vo/male/foppish/moan (4).ogg',
+		'sound/vo/male/foppish/moan (5).ogg',
+		'sound/vo/male/foppish/moan (6).ogg',
+		'sound/vo/male/foppish/moan (7).ogg')
+	sounds_sexmoangag = null
+	sounds_sexmoangag_org = null
+
 /datum/moan_pack/male/human_pleasure
 	name = "MALE HUMAN PLEASURE"
 	sounds_sexmoanlight = list('modular_rmh/sound/vo/male/moans/MALE HUMAN PLEASURE/mild/1.ogg','modular_rmh/sound/vo/male/moans/MALE HUMAN PLEASURE/mild/2.ogg','modular_rmh/sound/vo/male/moans/MALE HUMAN PLEASURE/mild/3.ogg','modular_rmh/sound/vo/male/moans/MALE HUMAN PLEASURE/mild/4.ogg','modular_rmh/sound/vo/male/moans/MALE HUMAN PLEASURE/mild/5.ogg','modular_rmh/sound/vo/male/moans/MALE HUMAN PLEASURE/mild/6.ogg','modular_rmh/sound/vo/male/moans/MALE HUMAN PLEASURE/mild/7.ogg','modular_rmh/sound/vo/male/moans/MALE HUMAN PLEASURE/mild/8.ogg')
