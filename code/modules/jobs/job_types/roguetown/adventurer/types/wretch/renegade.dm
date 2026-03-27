@@ -42,6 +42,7 @@
 	has_loadout = TRUE
 
 /datum/outfit/job/roguetown/wretch/renegade/pre_equip(mob/living/carbon/human/H)
+	H.set_patron(/datum/patron/old_god)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1) //Piss-weak Devotion, just for ENDURE miracle and TRAIT_PSYDONITE.
 	head = /obj/item/clothing/head/roguetown/helmet/leather/advanced/renegadetricorn // Hardened leather helmet reskin.
@@ -81,26 +82,52 @@
 			if("Handgonne")
 				l_hand = /obj/item/gun/ballistic/firearm/handgonne
 				beltl = /obj/item/quiver/bullet/lead
-		H.set_patron(/datum/patron/old_god)
 		wretch_select_bounty(H)
 
 /datum/outfit/job/roguetown/wretch/renegade/choose_loadout(mob/living/carbon/human/H)
-	. = ..()
-	var/turf/TU = get_turf(H) // We'll spawning the chosen relics on the character's tile. Let them figure out inventory management on their own.
-	var/relic_count = 2
-	var/relics = list("Matrimony (Rapier)", "Skeleton Key", "Cerulean Tear (Player Minion)", "Ring of Chameleon", "Moon's Tongue", "Vial of Eoran Balm (x3)", "Bombdolier & Grenades",  "PSYDON's Music Box (Replica)")
-	if(TU) // Safety.
-		for(var/i in 1 to relic_count) //This is really messy and unoptimised. Please, somebody come up with a better solution.
-			var/relic_choice = input(H,"Choose your relic.", "[relic_count] CHOICES REMAIN)") as anything in relic_count
-			if("Matrimony (Rapier)")
-				new /obj/item/rogueweapon/sword/rapier/evil(TU)
-				relics.Remove("Matrimony (Rapier)")
-				relic_count--
-			if("Skeleton Key")
-				new /obj/item/skeleton_key(TU)
-				relics.Remove("Skeleton Key")
-				relic_count--
-			if("Cerulean Tear (Player Minion)")
-				new /obj/item/renegade_relics/life_crystal
-				relics.Remove("Cerulean Tear (Player Minion)")
-				relic_count--
+	if(H.mind)
+		var/turf/TU = get_turf(H) // We'll spawning the chosen relics on the character's tile. Let them figure out inventory management on their own.
+		var/relic_count = 2
+		var/relics = list("Matrimony (Rapier)", "Skeleton Key", "Cerulean Tear (Player Minion)", "Ring of Chameleon", "Vial of Eoran Balm (x3)", "Bombdolier & Grenades", "Drow Screaming Bell", "PSYDON's Music Box (Replica)")
+		if(TU) // Safety.
+			for(var/i in 1 to relic_count) //This is really messy and unoptimised. Please, somebody come up with a better solution.
+				var/relic_choice = input(H, "Choose your relic.", "[relic_count] CHOICES REMAIN") as anything in relics
+				switch(relic_choice)
+					if("Matrimony (Rapier)")
+						new /obj/item/rogueweapon/sword/rapier/evil(TU)
+						new /obj/item/rogueweapon/scabbard/sword(TU)
+						relics -= "Matrimony (Rapier)"
+						relic_count--
+					if("Skeleton Key")
+						new /obj/item/skeleton_key(TU)
+						relics -= "Skeleton Key"
+						relic_count--
+					if("Cerulean Tear (Player Minion)")
+						new /obj/item/renegade_relics/life_crystal(TU)
+						relics -= "Cerulean Tear (Player Minion)"
+						relic_count--
+					if("Ring of Chameleon")
+						new /obj/item/clothing/ring/chameleon_ring(TU)
+						relics -= "Ring of Chameleon"
+						relic_count--
+					if("Vial of Eoran Balm (x3)")
+						new /obj/item/reagent_containers/glass/bottle/revival(TU)
+						relics -= "Vial of Eoran Balm (x3)"
+						relic_count--
+					if("Bombdolier & Grenades")
+						new /obj/item/bmbstrap(TU)
+						new /obj/item/impact_grenade/smoke/blind_gas(TU)
+						new /obj/item/impact_grenade/smoke/fire_gas(TU)
+						new /obj/item/impact_grenade/smoke/poison_gas(TU)
+						new /obj/item/impact_grenade/explosion(TU)
+						new /obj/item/impact_grenade/explosion(TU)
+						relics -= "Bombdolier & Grenades"
+						relic_count--
+					if("Drow Screaming Bell")
+						new /obj/item/renegade_relics/screaming_bell(TU)
+						relics -= "Drow Screaming Bell"
+						relic_count--
+					if("PSYDON's Music Box (Replica)") // Highly valuable relic for TRUE WARRIORS OF PSYDON.
+						new /obj/item/dmusicbox(TU)
+						relics -= "PSYDON's Music Box (Replica)"
+						relic_count--

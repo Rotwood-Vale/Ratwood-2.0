@@ -62,6 +62,22 @@
 	if(skill_multiplier && can_train_combat_skill(L, /datum/skill/combat/firearms, SKILL_LEVEL_EXPERT))
 		L.mind.add_sleep_experience(/datum/skill/combat/firearms, L.STAINT * skill_multiplier)
 
+////
+//magicbullet for conjured arcyne pistols
+////
+/obj/item/ammo_casing/caseless/bullet/magicbullet
+	name = "arcyne bullet"
+	desc = "YOU ARE NOT SUPPOSEDTO SEE THIS! YELL AT KIMESIK!!!"
+	projectile_type = /obj/projectile/bullet/firearm/magicbullet
+	caliber = "magicbullet"
+	icon_state = "musketball"
+
+/obj/projectile/bullet/firearm/magicbullet
+	name = "arcyne bullet"
+	damage = 40 // It's almost on par with Arcyne Bolt
+	armor_penetration = 60
+	embedchance = 0 // These bullets are supposed to disappear after messing up your target.
+	npc_simple_damage_mult = 1.2 // So that it isn't better against NPCs than actual arcyne bolt.
 /**
  * Now, actual grapeshot, for the proper blunderbuss.
  */

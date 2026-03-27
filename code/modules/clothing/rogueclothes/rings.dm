@@ -527,6 +527,32 @@
 
 ///
 
+/obj/item/clothing/ring/chameleon_ring
+	name = "ring of chameleon"
+	icon_state = "chameleonring"
+	desc = "An avantyne darksteel ring with unintelligible inscriptions on its inner surface. It's imbued with particularly potent dark magic, allowing its user to turn invisible for a short amount of time."
+	smeltresult = /obj/item/ash
+	sellprice = 0 // So that Renegade doesn't sell it for roundstart money.
+	var/active_item
+
+/obj/item/clothing/ring/chameleon_ring/equipped(mob/living/user, slot)
+	. = ..()
+	if(active_item)
+		return
+	else if(slot == SLOT_RING)
+		active_item = TRUE
+		to_chat(user, span_blue("My own finger begins to look a bit blurry to me."))
+		user.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/invisibility/chameleon)
+	return
+
+/obj/item/clothing/ring/chameleon_ring/dropped(mob/living/user)
+	..()
+	if(active_item)
+		to_chat(user, span_blue("My finger looks normal again."))
+		user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/invoked/invisibility/chameleon)
+		active_item = FALSE
+	return
+
 /obj/item/clothing/ring/dragon_ring
 	name = "dragonstone ring"
 	icon_state = "dragonring"
@@ -545,16 +571,6 @@
 		user.change_stat(STATKEY_STR, 2)
 		user.change_stat(STATKEY_CON, 2)
 		user.change_stat(STATKEY_WIL, 2)
-	return
-
-/obj/item/clothing/ring/dragon_ring/dropped(mob/living/user)
-	..()
-	if(active_item)
-		to_chat(user, span_suicide("A chilling sensation courses through my body, and the ring's heat remains oh-so-alluring.. </br>..yet, one must wonder.. could such fiery strength withstand a forge's heat?"))
-		user.change_stat(STATKEY_STR, -2)
-		user.change_stat(STATKEY_CON, -2)
-		user.change_stat(STATKEY_WIL, -2)
-		active_item = FALSE
 	return
 
 //Oathmarked's fluff ring. Don't lose this!!!

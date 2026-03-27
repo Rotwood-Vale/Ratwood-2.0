@@ -1903,3 +1903,13 @@
 /atom/movable/screen/alert/status_effect/buff/oath_ring
 	name = "Oathmarked"
 	desc = "The oath drives me forward, so long as the reminder is kept near."
+
+/datum/status_effect/buff/drowbell
+	id = "drow_bell_buff"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/drowbell
+	effectedstats = list(STATKEY_WIL = -3)
+	duration = 3 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/drowbell
+	name = "Terrified"
+	desc = "WHAT WAS THAT SOUND?!"

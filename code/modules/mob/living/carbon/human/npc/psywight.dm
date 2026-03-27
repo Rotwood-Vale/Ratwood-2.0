@@ -7,7 +7,7 @@
 		/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
 		/obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg,
 	)
-	var/wight_outfit = /datum/outfit/job/roguetown/npc/wight
+	var/wight_outfit = /datum/outfit/job/roguetown/renpsywight/crusader
 	var/wight_fragile = FALSE
 	ambushable = FALSE
 	rot_type = null
@@ -22,7 +22,7 @@
 	aggressive = 1
 	mode = NPC_AI_IDLE
 	wander = FALSE
-	skel_fragile = TRUE
+	wight_fragile = TRUE
 	npc_jump_chance = 0 // no jumping skeletons
 	rude = TRUE
 
@@ -53,7 +53,6 @@
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC) // You feel pain but you ENDURE!
 	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_EXTREME_TEMPERATURE_IMMUNE, TRAIT_GENERIC)
 	if(wight_fragile)
 		ADD_TRAIT(src, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
@@ -68,11 +67,10 @@
 /mob/living/carbon/human/species/wight/npc/no_equipment
 	wight_outfit = null
 
-/mob/living/carbon/human/species/wight/no_equipment
-	wight_outfit = null
+/mob/living/carbon/human/species/wight/summoned
 	var/datum/weakref/crystal
 
-/mob/living/carbon/human/species/wight/no_equipment/death(gibbed, nocutscene = FALSE)
+/mob/living/carbon/human/species/wight/summoned/death(gibbed, nocutscene = FALSE)
 	..()
 	var/obj/item/renegade_relics/life_crystal/active_crystal = crystal.resolve()
 	for(var/datum/weakref/W in active_crystal.active_wights)

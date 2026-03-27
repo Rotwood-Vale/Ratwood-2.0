@@ -55,6 +55,7 @@
 	antimagic_allowed = TRUE
 	hide_charge_effect = TRUE
 	cost = 3 // Very useful
+	var/dur_bonus = 0
 
 /obj/effect/proc_holder/spell/invoked/invisibility/miracle
 	miracle = TRUE
@@ -65,13 +66,22 @@
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
 
+
+/obj/effect/proc_holder/spell/invoked/invisibility/chameleon // For the ring of chameleon item.
+	name = "Chameleon"
+	desc = "Make yourself or somebody adjacent to you invisible for 15 seconds. Casting, attacking or being attacked will cancel the duration."
+	cost = 0 // Should prevent mages from learning it. Hopefully.
+	range = 2 // Can be used only on self or somebody standing right next to you.
+	associated_skill = null
+	dur_bonus = 15 // Equivalent to having JMan in Arcyne or Miracles when using the normal spell/miracle version.
+
 /obj/effect/proc_holder/spell/invoked/invisibility/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(target.anti_magic_check(TRUE, TRUE))
 			return FALSE
 		target.visible_message(span_warning("[target] starts to fade into thin air!"), span_notice("You start to become invisible!"))
-		var/dur = max((5 * (user.get_skill_level(associated_skill))), 5)
+		var/dur = max((5 * (user.get_skill_level(associated_skill))), 5, dur_bonus)
 		if(dur >= recharge_time)
 			recharge_time = dur + 5 SECONDS
 		animate(target, alpha = 0, time = 1 SECONDS, easing = EASE_IN)

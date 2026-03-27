@@ -1419,11 +1419,11 @@
 	isn't as effective against the monstrous as pure silver, but it rends faith itself, baneful to the aforementioned zealots. \
 	</br>'This world could not have been the work of an all-loving being, but that of a devil, who had brought creatures into existence in order to delight in the sight of their sufferings.'"
 	icon_state = "evilrapier"
-	sheathe_icon = "rapier"
+	sheathe_icon = "evilrapier" //PLACEHOLDER SPRITE!!!
 	max_integrity = 225
 	max_blade_int = 225
-	force = 25 // On par with Vaquero's basket-hilt rapier
-	force_wielded = 25
+	force = 30 // On par with avantyne longsword
+	force_wielded = 30
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/aaslag // You ruined it!
