@@ -302,7 +302,7 @@
 	if(!.)
 		return
 	owner.overlay_fullscreen("scadu_presence", /atom/movable/screen/fullscreen/scadu_presence)
-	owner.playsound_local(get_turf(owner), pick('sound/vo/mobs/ghost/whisper (1).ogg','sound/vo/mobs/ghost/whisper (2).ogg','sound/vo/mobs/ghost/whisper (3).ogg'), 10, TRUE)
+	owner.playsound_local(get_turf(owner), pick('sound/vo/mobs/ghost/whisper (1).ogg','sound/vo/mobs/ghost/whisper (2).ogg','sound/vo/mobs/ghost/whisper (3).ogg'), 3, TRUE)
 
 /datum/status_effect/buff/scadu_presence/on_remove()
 	owner.clear_fullscreen("scadu_presence")
