@@ -47,6 +47,10 @@
 	abstract_type = /datum/anvil_recipe/weapons/blacksteel
 	craftdiff = SKILL_LEVEL_MASTER
 
+/datum/anvil_recipe/weapons/exotic // For steel weapons that are more powerful and were import exclusive before.
+	abstract_type = /datum/anvil_recipe/weapons/exotic
+	craftdiff = SKILL_LEVEL_LEGENDARY
+
 
 // DECREPIT/ANCIENT ALLOY
 
@@ -508,19 +512,6 @@
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/rapier
 
-/datum/anvil_recipe/weapons/steel/rapier/vaquero
-	name = "Cup-hilt Rapier, Steel"
-	req_bar = /obj/item/ingot/steel
-	req_blade = /obj/item/blade/steel_sword
-	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/sword/rapier/vaquero
-
-/datum/anvil_recipe/weapons/steel/sabrehook
-	name = "Hook Sword, Steel"
-	req_bar = /obj/item/ingot/steel
-	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/sabre/hook
-
 /datum/anvil_recipe/weapons/steel/cutlass
 	name = "Cutlass, Steel"
 	req_bar = /obj/item/ingot/steel
@@ -636,13 +627,6 @@
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/greatsword/grenz/flamberge
 
-/datum/anvil_recipe/weapons/steel/grenz
-	name = "Steel Zweihander, Steel (+2 Steel)"
-	req_bar = /obj/item/ingot/steel
-	req_blade = /obj/item/blade/steel_sword
-	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/greatsword/grenz
-
 /datum/anvil_recipe/weapons/steel/estoc
 	name = "Estoc, Steel (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
@@ -692,13 +676,6 @@
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/halberd
-
-/datum/anvil_recipe/weapons/steel/glaive
-	name = "Glaive, Steel (+1 Steel, +1 Small Log)"
-	req_bar = /obj/item/ingot/steel
-	req_blade = /obj/item/blade/steel_polearm
-	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/halberd/glaive
 
 /datum/anvil_recipe/weapons/steel/eaglebeak
 	name = "Eagle's Beak (+1 Steel, +1 Small Log)"
@@ -1147,6 +1124,8 @@
 	created_item = /obj/item/rogueweapon/sword/decorated/blacksteel
 	craftdiff = 5
 
+
+
 //Church Weapons forged from Holy Steel
 
 // HOLY STEEL
@@ -1353,3 +1332,34 @@
 	created_item = /obj/item/rogueweapon/whip/psywhip_lesser
 	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
 	i_type = "Weapons"
+
+
+/// Exotic steel weapon, used to be import exclusive, now craftable but requires legendary smithing to forge
+
+/datum/anvil_recipe/weapons/exotic/glaive
+	name = "Glaive, Steel (+2 Steel, +1 Small Log)"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_polearm
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/halberd/glaive
+
+/datum/anvil_recipe/weapons/exotic/rapier/vaquero
+	name = "Cup-hilt Rapier, +1 Steel, +1 Iron"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_sword
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/sword/rapier/vaquero
+
+/datum/anvil_recipe/weapons/exotic/sabrehook
+	name = "Hook Sword, +1 Steel, +1 Iron"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_sword
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/sword/sabre/hook
+
+/datum/anvil_recipe/weapons/exotic/grenz
+	name = "Steel Zweihander, Steel (+3 Steel)"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_sword
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/greatsword/grenz
