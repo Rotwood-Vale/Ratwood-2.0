@@ -79,6 +79,12 @@
 				wash_atom(user, CLEAN_STRONG)
 				user.remove_stress(/datum/stressevent/sewertouched)
 				playsound(user, pick(wash), 100, FALSE)
+				if(user.bodytemperature < BODYTEMP_NORMAL_MIN)	//washing yourself helps to warm you up.
+					user.adjust_bodytemperature(75)
+					user.update_health_hud()
+				if(user.bodytemperature > BODYTEMP_NORMAL_MAX)	//washing yourself helps to cool you off.
+					user.adjust_bodytemperature(-75)
+					user.update_health_hud()
 		else
 			user.visible_message(span_info("[user] starts to wash [item2wash] in [src]."))
 			if(do_after(L, 30, target = src))

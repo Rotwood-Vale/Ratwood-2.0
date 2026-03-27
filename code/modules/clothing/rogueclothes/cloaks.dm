@@ -877,6 +877,12 @@
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 3
 
+/obj/item/clothing/cloak/darkcloak/bear/wardenmaster
+	name = "Warden trophy-cloak"
+	desc = "Made from the mightiest, most ferocious black direbear pelt. The mark of a distinguished huntsman."
+	sellprice = 80
+	color = "#99a39d"
+
 /obj/item/clothing/cloak/apron/maid
 	name = "maid apron"
 	desc = "The frilly apron of a housemaster. It has pockets to store small things."
@@ -1283,7 +1289,7 @@
 	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
-	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	max_heat_protection_temperature = 600
 
 /obj/item/clothing/cloak/half/ComponentInitialize()
 	. = ..()
@@ -2180,6 +2186,34 @@
 	AddComponent(/datum/component/storage/concrete/roguetown/cloak)
 
 /obj/item/clothing/cloak/citywatch/dropped(mob/living/carbon/human/user)
+	..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	if(STR)
+		var/list/things = STR.contents()
+		for(var/obj/item/I in things)
+			STR.remove_from_storage(I, get_turf(src))
+
+/obj/item/clothing/cloak/citywatchcaptain
+	name = "citywatch captain's cloak"
+	desc = "A most handsome cloak, denoting a certain superlative cosmipolitan authority"
+	color = null
+	icon_state = "shortcloak"
+	item_state = "shortcloak"
+	alternate_worn_layer = CLOAK_BEHIND_LAYER
+	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
+	boobed = TRUE
+	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	sleevetype = "shirt"
+	nodismemsleeves = TRUE
+	inhand_mod = TRUE
+	detail_tag = "_detail"
+	detail_color = CLOTHING_BLACK
+
+/obj/item/clothing/cloak/citywatchcaptain/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/storage/concrete/roguetown/cloak)
+
+/obj/item/clothing/cloak/citywatchcaptain/dropped(mob/living/carbon/human/user)
 	..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)
