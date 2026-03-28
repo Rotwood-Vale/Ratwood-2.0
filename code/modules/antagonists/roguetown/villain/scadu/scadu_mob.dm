@@ -624,7 +624,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	G.color = "#000000"
 	G.real_name = "Shade"
 	G.name = "Shade"
-	G.origin = "Unknown"
 	if(G.dna?.species)
 		G.dna.species.name = "???"
 		G.dna.species.id = "unknown"
