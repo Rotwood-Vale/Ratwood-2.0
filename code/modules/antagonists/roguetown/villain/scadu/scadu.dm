@@ -14,6 +14,7 @@
 	var/corpses_absorbed = 0
 	var/portal_used = FALSE
 	var/mob/dead/observer/rogue/scadu/scadu_mob = null
+	var/manifest_revert_time = 0
 
 /datum/antagonist/scadu/on_gain()
 	. = ..()

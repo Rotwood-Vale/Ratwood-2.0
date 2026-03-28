@@ -42,3 +42,7 @@
 #define SCADU_CD_MESSAGE            (2 SECONDS)
 #define SCADU_CD_HALLUCINATE        (10 SECONDS)
 #define SCADU_CD_WEB                (2 SECONDS)
+
+#define SCADU_ABILITY_MANIFEST      "manifest"
+#define SCADU_COST_MANIFEST         10
+#define SCADU_CD_MANIFEST           (60 SECONDS)

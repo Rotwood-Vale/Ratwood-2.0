@@ -59,6 +59,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 
 /mob/dead/observer/rogue/scadu/Login()
 	. = ..()
+	if(antag_datum?.manifest_revert_time > world.time)
+		ability_cooldown = antag_datum.manifest_revert_time
+		antag_datum.manifest_revert_time = 0
 	client?.verbs -= GLOB.ghost_verbs
 	if(client)
 		for(var/atom/movable/screen/ghost/orbit/rogue/S in client.screen)
@@ -125,6 +128,8 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 				to_chat(src, span_warning("I must target a living soul to afflict."))
 		if(SCADU_ABILITY_WEB)
 			ability_summon_web(T)
+		if(SCADU_ABILITY_MANIFEST)
+			ability_manifest(T)
 
 /mob/dead/observer/rogue/scadu/proc/check_placement(turf/T)
 	if(istype(T, /turf/open/transparent/openspace))
@@ -513,9 +518,10 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		"Snuff Lights ([SCADU_COST_SNUFF_LIGHTS] lux)"              = SCADU_ABILITY_SNUFF_LIGHTS,
 		"Miasma ([SCADU_COST_MIASMA] lux)"                          = SCADU_ABILITY_MIASMA,
 		"Bog Trap ([SCADU_COST_BOGTRAP] lux)"                       = SCADU_ABILITY_BOGTRAP,
-		"Hallucinate ([SCADU_COST_HALLUCINATE] lux)"                = SCADU_ABILITY_HALLUCINATE,
+		"Hallucinate (free)"                                        = SCADU_ABILITY_HALLUCINATE,
 		"Absorb Corpse ([SCADU_COST_ABSORB] lux)"                   = SCADU_ABILITY_ABSORB,
 		"Send Message (free)"                                        = SCADU_ABILITY_MESSAGE,
+		"Manifest (10 lux)"                                         = SCADU_ABILITY_MANIFEST,
 	)
 	if(!antag_datum.portal_used)
 		abilities["Goblin Portal ([SCADU_COST_GOBLIN_PORTAL] lux)"] = SCADU_ABILITY_GOBLIN_PORTAL
@@ -567,11 +573,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	if(!H || QDELETED(H) || !istype(H, /mob/living/carbon))
 		to_chat(src, span_warning("I must target a living soul."))
 		return
-	var/cost = nearest_monument_in_range(get_turf(H)) ? round(SCADU_COST_HALLUCINATE / 2) : SCADU_COST_HALLUCINATE
-	if(!antag_datum.spend_lux(cost))
-		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
-		return
-	var/carbon = H
+
 	var/hal_type = pick(
 		/datum/hallucination/chasing_mob,
 		/datum/hallucination/battle,
@@ -581,7 +583,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		/datum/hallucination/floor_shift,
 		/datum/hallucination/weird_sounds,
 	)
-	new hal_type(carbon, TRUE)
+	new hal_type(H, TRUE)
 	playsound(get_turf(H), pick('sound/misc/carriage1.ogg','sound/misc/carriage3.ogg','sound/misc/zizo.ogg'), 50, TRUE)
 	to_chat(src, span_notice("Your will reaches into [H.real_name]'s mind."))
 	set_cooldown(SCADU_CD_HALLUCINATE)
@@ -606,3 +608,148 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	set_cooldown(SCADU_CD_WEB)
 	active_ability = SCADU_ABILITY_NONE
 
+/mob/dead/observer/rogue/scadu/proc/ability_manifest(turf/T)
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_MANIFEST / 2) : SCADU_COST_MANIFEST
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
+		return
+	if(!isopenturf(T))
+		to_chat(src, span_warning("That location is blocked."))
+		antag_datum.add_lux(cost)
+		return
+	if(!nearest_monument_in_range(T) && !check_summon(T))
+		antag_datum.add_lux(cost)
+		return
+	var/mob/living/carbon/human/species/human/northern/scadu_manifest/G = new(T)
+	G.color = "#000000"
+	G.real_name = "Shade"
+	G.name = "Shade"
+	G.origin = "Unknown"
+	if(G.dna?.species)
+		G.dna.species.name = "???"
+		G.dna.species.id = "unknown"
+	if(G.dna && G.dna.species)
+		G.dna.species.species_traits |= NOBLOOD
+	ADD_TRAIT(G, TRAIT_MUTE, "scadu_manifest")
+	G.adjust_skillrank(/datum/skill/misc/sneaking, 6, TRUE)
+	var/obj/item/scadu_drain_touch/D1 = new(G)
+	var/obj/item/scadu_drain_touch/D2 = new(G)
+	D1.antag_datum = antag_datum
+	D2.antag_datum = antag_datum
+	G.put_in_hands(D1)
+	G.put_in_hands(D2)
+	G.ckey = ckey
+	visible_message_at(T, span_danger("A shadow tears itself free from the dark..."))
+	set_cooldown(SCADU_CD_MANIFEST)
+	active_ability = SCADU_ABILITY_NONE
+
+/mob/living/carbon/human/species/human/northern/scadu_manifest
+	var/reverting = FALSE
+
+/mob/living/carbon/human/species/human/northern/scadu_manifest/proc/revert()
+	if(reverting)
+		return
+	reverting = TRUE
+	var/datum/antagonist/scadu/antag = GLOB.scadu_persistent_datum
+	if(antag && !QDELETED(antag))
+		antag.manifest_revert_time = world.time + 30 SECONDS
+	var/datum/job/roguetown/scadu/J = SSjob.GetJob("Scadu")
+	if(J && mind)
+		J.do_scadu_transform(src, mind)
+
+/mob/living/carbon/human/species/human/northern/scadu_manifest/Life(seconds_per_tick, delta_time)
+	if(reverting)
+		return
+	if(getBruteLoss() > 0 || getFireLoss() > 0)
+		revert()
+		return
+	if(!istype(get_area(src), /area/rogue/outdoors/bograt))
+		revert()
+		return
+	. = ..()
+
+/mob/living/carbon/human/species/human/northern/scadu_manifest/death(gibbed, nocutscene = FALSE)
+	revert()
+
+/mob/living/carbon/human/species/human/northern/scadu_manifest/verb/return_to_shadow()
+	set name = "Return to Shadow"
+	set category = "Scadu"
+	set hidden = FALSE
+	revert()
+
+/mob/living/carbon/human/species/human/northern/scadu_manifest/verb/whisper_mind()
+	set name = "Whisper"
+	set category = "Scadu"
+	set hidden = FALSE
+	var/mob/living/target = null
+	var/list/candidates = list()
+	for(var/mob/living/carbon/human/H in oview(7, src))
+		if(H.client && H.mind)
+			candidates += H
+	if(!candidates.len)
+		to_chat(src, span_warning("No souls are close enough to hear me."))
+		return
+	target = input(src, "Speak into whose mind?", "Whisper") as null|anything in candidates
+	if(!target || QDELETED(target) || !target.client)
+		return
+	var/msg = html_decode(input(src, "Speak to [target.real_name]:", "Speak") as null|text)
+	if(!msg || !length(msg))
+		return
+	to_chat(target, span_userdanger("<i>A voice whispers into your mind...</i> \"[msg]\""))
+	target.playsound_local(get_turf(target), 'sound/vo/mobs/ghost/aggro (2).ogg', 50, TRUE)
+	to_chat(src, span_notice("Your thought reaches [target.real_name]."))
+
+/obj/item/scadu_drain_touch
+	name = "hollow grasp"
+	desc = "A darkness coils around these hands. Click a player to drain their essence."
+	icon = 'icons/mob/roguehudgrabs.dmi'
+	icon_state = "grabbing_greyscale"
+	color = "#000000"
+	w_class = WEIGHT_CLASS_TINY
+	slot_flags = NONE
+	var/datum/antagonist/scadu/antag_datum = null
+	var/drain_speed = 4 SECONDS
+
+/obj/item/scadu_drain_touch/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+/obj/item/scadu_drain_touch/attack(mob/living/carbon/human/target, mob/living/carbon/human/user)
+	if(!antag_datum || QDELETED(antag_datum))
+		return
+	if(!target || QDELETED(target) || target == user)
+		return
+	if(!target.mind)
+		to_chat(user, span_warning("This soul holds nothing worth consuming."))
+		return
+	if(!target.client)
+		to_chat(user, span_warning("Their soul is not currently present."))
+		return
+	if(target.has_status_effect(/datum/status_effect/debuff/devitalised))
+		to_chat(user, span_warning("Their essence is already spent."))
+		return
+	user.visible_message(
+		span_danger("[user]'s hands darken as they reach for [target]..."),
+		span_notice("I reach into [target.real_name], seeking their essence...")
+	)
+	playsound(user, pick('sound/misc/carriage1.ogg','sound/misc/carriage3.ogg'), 40, TRUE)
+	if(!do_after(user, drain_speed, target = target))
+		return
+	if(!target || QDELETED(target))
+		return
+	if(target.has_status_effect(/datum/status_effect/debuff/devitalised))
+		to_chat(user, span_warning("Their essence is already spent."))
+		return
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	target.emote("scream")
+	to_chat(target, span_userdanger("Something cold tears through you, drinking deep of your vitality!"))
+	target.playsound_local(get_turf(target), 'sound/magic/antimagic.ogg', 70, TRUE)
+	user.visible_message(
+		span_danger("[user] wrenches something vital from [target]!"),
+		span_notice("I drink deep of [target.real_name]'s essence.")
+	)
+	playsound(user, 'sound/magic/whiteflame.ogg', 50, TRUE)
+	antag_datum.corpses_absorbed += 0.5
+	antag_datum.monument_limit = 3 + (antag_datum.corpses_absorbed / 2)
+	antag_datum.lux_max = 100 + (antag_datum.corpses_absorbed * 20)
+	to_chat(user, span_notice("Essence consumed. Lux cap: [antag_datum.lux_max] | Monument limit: [antag_datum.monument_limit]"))
