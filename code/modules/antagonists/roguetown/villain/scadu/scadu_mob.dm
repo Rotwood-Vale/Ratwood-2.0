@@ -250,7 +250,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_mirelurker(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_SUMMON_LURKER / 2) : SCADU_COST_SUMMON_LURKER
+	var/cost = SCADU_COST_SUMMON_LURKER
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
@@ -269,7 +269,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_mirecrawler(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_SUMMON_CRAWLER / 2) : SCADU_COST_SUMMON_CRAWLER
+	var/cost = SCADU_COST_SUMMON_CRAWLER
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
@@ -288,7 +288,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_goblin(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_GOBLIN / 2) : SCADU_COST_GOBLIN
+	var/cost = SCADU_COST_GOBLIN
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
@@ -307,7 +307,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_weepvine(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_WEEPVINE / 2) : SCADU_COST_WEEPVINE
+	var/cost = SCADU_COST_WEEPVINE
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_terror_pulse(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_TERROR / 2) : SCADU_COST_TERROR
+	var/cost = SCADU_COST_TERROR
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_snuff_lights(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_SNUFF_LIGHTS / 2) : SCADU_COST_SNUFF_LIGHTS
+	var/cost = SCADU_COST_SNUFF_LIGHTS
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
@@ -365,7 +365,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_place_miasma(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_MIASMA / 2) : SCADU_COST_MIASMA
+	var/cost = SCADU_COST_MIASMA
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
@@ -376,7 +376,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_place_bogtrap(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_BOGTRAP / 2) : SCADU_COST_BOGTRAP
+	var/cost = SCADU_COST_BOGTRAP
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
@@ -453,7 +453,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_web(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_WEB / 2) : SCADU_COST_WEB
+	var/cost = SCADU_COST_WEB
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
@@ -472,7 +472,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_manifest(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_MANIFEST / 2) : SCADU_COST_MANIFEST
+	var/cost = SCADU_COST_MANIFEST
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
@@ -588,7 +588,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	to_chat(src, span_notice("<b>THE SCADU</b>"))
 	to_chat(src, span_notice("You are a malevolent spirit bound to the Terrorbog. You cannot leave its borders. Your goal is to defend the bog and destroy those who would topple your monuments."))
 	to_chat(src, span_notice("<b>LUX</b>"))
-	to_chat(src, span_notice("Lux is your resource. Monuments generate lux over time passively. Your lux cap and monument limit both increase when you absorb corpses via the Hollow Grasp while manifested. Using any ability near a standing monument halves its lux cost."))
+	to_chat(src, span_notice("Lux is your resource. Monuments generate lux over time passively. Your lux cap and monument limit both increase when you absorb corpses via the Hollow Grasp while manifested."))
 	to_chat(src, span_notice("<b>MONUMENTS</b>"))
 	to_chat(src, span_notice("Monuments are your foundation. Place them with the Place Monument ability. You start with a limit of 3 and gain more by absorbing corpses. If all your placed monuments are destroyed and you have no placements remaining, you are banished."))
 	to_chat(src, span_notice("<b>TOTEMS</b>"))
@@ -763,12 +763,12 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 
 /mob/living/carbon/human/species/goblin/npc/scadu_goblin/after_creation()
 	..()
-	faction |= list("scadu_servants", "spiders")
+	faction = list("scadu_servants")
 
 /mob/living/simple_animal/hostile/rogue/mirespider_lurker/scadu/Initialize(mapload)
 	. = ..()
-	faction |= list("scadu_servants")
+	faction = list("scadu_servants")
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mirespider/scadu/Initialize(mapload)
 	. = ..()
-	faction |= list("scadu_servants")
+	faction = list("scadu_servants")

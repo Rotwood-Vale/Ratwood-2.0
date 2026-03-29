@@ -21,7 +21,7 @@
 							/obj/item/natural/silk = 3, 
 							/obj/item/alch/viscera = 1, 
 							/obj/item/natural/head/honeyspider = 1)
-	faction = list("spiders")
+	faction = list("spiders", "scadu_servants")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	attack_sound = 'sound/combat/wooshes/punch/punchwoosh (2).ogg'
 	health = HONEYSPIDER_HEALTH

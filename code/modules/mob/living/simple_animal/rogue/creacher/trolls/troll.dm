@@ -44,6 +44,7 @@
 		/obj/item/alch/viscera = 3,
 		/obj/item/natural/head/troll = 1,
 		)
+	faction = list("spiders", "scadu_servants")
 	health = TROLL_HEALTH * 1.1
 	maxHealth = TROLL_HEALTH
 	food_type = list(

@@ -32,7 +32,7 @@
 						/obj/item/natural/fur/wolf = 2, 
 						/obj/item/natural/bone = 4,
 						/obj/item/natural/head/volf = 1)
-	faction = list("wolfs", "zombie")
+	faction = list("wolfs", "zombie", "scadu_servants")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	health = WOLF_HEALTH
 	maxHealth = WOLF_HEALTH

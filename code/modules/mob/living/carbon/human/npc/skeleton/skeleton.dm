@@ -7,7 +7,7 @@
 		/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
 		/obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg,
 	)
-	faction = list("undead")
+	faction = list("undead", "scadu_servants")
 	var/skel_outfit = /datum/outfit/job/roguetown/npc/skeleton
 	var/skel_fragile = FALSE
 	ambushable = FALSE
