@@ -15,6 +15,8 @@
 	var/portal_used = FALSE
 	var/mob/dead/observer/rogue/scadu/scadu_mob = null
 	var/manifest_revert_time = 0
+	var/list/obj/structure/scadu_totem/active_totems = list()
+	var/list/hollow_grasp_drained = list()
 
 /datum/antagonist/scadu/on_gain()
 	. = ..()
@@ -24,8 +26,19 @@
 	for(var/obj/structure/scadu_monument/M in monuments)
 		if(!QDELETED(M))
 			M.go_dormant()
+	for(var/obj/structure/scadu_totem/T in active_totems)
+		if(!QDELETED(T))
+			qdel(T)
+	active_totems = list()
 	scadu_mob = null
 	..()
+
+/datum/antagonist/scadu/proc/count_active_totems()
+	var/count = 0
+	for(var/obj/structure/scadu_totem/T in active_totems)
+		if(!QDELETED(T))
+			count++
+	return count
 
 /datum/antagonist/scadu/proc/add_lux(amount)
 	lux = min(lux + amount, lux_max)

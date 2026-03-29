@@ -80,6 +80,11 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	. = ..()
 	scadu_return_to_bog()
 
+/mob/dead/observer/rogue/scadu/proc/near_psycross(turf/T)
+	for(var/obj/structure/fluff/psycross/P in range(5, T))
+		return TRUE
+	return FALSE
+
 /mob/dead/observer/rogue/scadu/ClickOn(atom/A, list/modifiers)
 	if(!antag_datum || active_ability == SCADU_ABILITY_NONE)
 		return
@@ -90,13 +95,20 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	if(!T || !istype(get_area(T), /area/rogue/outdoors/bograt))
 		to_chat(src, span_warning("My reach does not extend beyond the bog."))
 		return
+	if(near_psycross(T))
+		to_chat(src, span_warning("A holy ward repels my power. I cannot act here."))
+		return
 	switch(active_ability)
 		if(SCADU_ABILITY_MONUMENT)
 			ability_place_monument(T)
-		if(SCADU_ABILITY_SUMMON_SKEL)
-			ability_summon_skeleton(T)
-		if(SCADU_ABILITY_SUMMON_TROLL)
-			ability_summon_troll(T)
+		if(SCADU_ABILITY_PLACE_TOTEM)
+			ability_place_totem(T)
+		if(SCADU_ABILITY_DESTROY_TOTEM)
+			ability_destroy_totem(A)
+		if(SCADU_ABILITY_SUMMON_LURKER)
+			ability_summon_mirelurker(T)
+		if(SCADU_ABILITY_SUMMON_CRAWLER)
+			ability_summon_mirecrawler(T)
 		if(SCADU_ABILITY_GOBLIN)
 			ability_summon_goblin(T)
 		if(SCADU_ABILITY_WEEPVINE)
@@ -111,11 +123,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 			ability_place_bogtrap(T)
 		if(SCADU_ABILITY_GOBLIN_PORTAL)
 			ability_goblin_portal(T)
-		if(SCADU_ABILITY_ABSORB)
-			if(isliving(A))
-				ability_absorb_corpse(A)
-			else
-				to_chat(src, span_warning("I must target a corpse to absorb."))
 		if(SCADU_ABILITY_MESSAGE)
 			if(isliving(A))
 				ability_send_message(A)
@@ -153,6 +160,25 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 			return FALSE
 	return TRUE
 
+/mob/dead/observer/rogue/scadu/proc/nearest_monument_in_range(turf/T, range = 7)
+	if(!antag_datum)
+		return null
+	for(var/obj/structure/scadu_monument/M in antag_datum.monuments)
+		if(!QDELETED(M) && M.standing && get_dist(T, M) <= range)
+			return M
+	return null
+
+/mob/dead/observer/rogue/scadu/proc/nearest_anchor_in_range(turf/T, range = 7)
+	if(!antag_datum)
+		return null
+	for(var/obj/structure/scadu_monument/M in antag_datum.monuments)
+		if(!QDELETED(M) && M.standing && get_dist(T, M) <= range)
+			return M
+	for(var/obj/structure/scadu_totem/totem in antag_datum.active_totems)
+		if(!QDELETED(totem) && get_dist(T, totem) <= SCADU_TOTEM_RANGE)
+			return totem
+	return null
+
 /mob/dead/observer/rogue/scadu/proc/ability_place_monument(turf/T)
 	if(antag_datum.monuments_placed >= antag_datum.monument_limit)
 		to_chat(src, span_warning("I have raised all [antag_datum.monument_limit] monuments I am capable of."))
@@ -172,42 +198,93 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	set_cooldown(SCADU_CD_MONUMENT)
 	active_ability = SCADU_ABILITY_NONE
 
-/mob/dead/observer/rogue/scadu/proc/ability_summon_skeleton(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_SUMMON_SKEL / 2) : SCADU_COST_SUMMON_SKEL
-	if(!antag_datum.spend_lux(cost))
-		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
+/mob/dead/observer/rogue/scadu/proc/ability_place_totem(turf/T)
+	var/totem_limit = floor(antag_datum.count_standing_monuments() / 2)
+	if(totem_limit < 1)
+		to_chat(src, span_warning("I need at least 2 standing monuments to place a totem."))
 		return
-	if(!isopenturf(T))
-		to_chat(src, span_warning("That location is blocked."))
-		antag_datum.add_lux(cost)
+	if(antag_datum.count_active_totems() >= totem_limit)
+		to_chat(src, span_warning("I cannot place more than [totem_limit] totem\s with [antag_datum.count_standing_monuments()] standing monuments."))
 		return
-	if(!nearest_monument_in_range(T) && !check_summon(T))
-		antag_datum.add_lux(cost)
+	if(!antag_datum.spend_lux(SCADU_COST_PLACE_TOTEM))
+		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_PLACE_TOTEM], have [antag_datum.lux])"))
 		return
-	var/mob/living/G = new /mob/living/carbon/human/species/skeleton/npc/bogguard(T)
-	G.faction = list("scadu_servants")
-	new /obj/effect/temp_visual/bluespace_fissure(T)
-	visible_message_at(T, span_danger("Bones claw their way up from the dark water..."))
-	set_cooldown(SCADU_CD_SUMMON)
+	if(!isopenturf(T) || !check_placement(T))
+		antag_datum.add_lux(SCADU_COST_PLACE_TOTEM)
+		if(isopenturf(T))
+			return
+		to_chat(src, span_warning("That ground will not accept a totem."))
+		return
+	var/obj/structure/scadu_totem/totem = new(T)
+	totem.owner_datum = antag_datum
+	antag_datum.active_totems += totem
+	visible_message_at(T, span_warning("Dark energy coalesces into a pulsing totem..."))
+	playsound(T, 'sound/magic/antimagic.ogg', 60, TRUE)
+	to_chat(src, span_notice("Totem placed ([antag_datum.count_active_totems()]/[totem_limit]). Mob summons must be within [SCADU_TOTEM_RANGE] tiles of it (or any standing monument)."))
+	set_cooldown(SCADU_CD_PLACE_TOTEM)
 	active_ability = SCADU_ABILITY_NONE
 
-/mob/dead/observer/rogue/scadu/proc/ability_summon_troll(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_SUMMON_TROLL / 2) : SCADU_COST_SUMMON_TROLL
+/mob/dead/observer/rogue/scadu/proc/ability_destroy_totem(atom/A)
+	var/obj/structure/scadu_totem/totem = null
+	if(istype(A, /obj/structure/scadu_totem))
+		totem = A
+	else
+		var/turf/T = isturf(A) ? A : get_turf(A)
+		for(var/obj/structure/scadu_totem/candidate in T)
+			totem = candidate
+			break
+	if(!totem || QDELETED(totem))
+		to_chat(src, span_warning("I must click directly on one of my totems to destroy it."))
+		active_ability = SCADU_ABILITY_NONE
+		return
+	if(totem.owner_datum != antag_datum)
+		to_chat(src, span_warning("That totem is not mine."))
+		active_ability = SCADU_ABILITY_NONE
+		return
+	var/area/area = get_area(totem)
+	visible_message_at(get_turf(totem), span_warning("The totem shudders and collapses into dark mist..."))
+	playsound(get_turf(totem), 'sound/magic/antimagic.ogg', 60, TRUE)
+	antag_datum.active_totems -= totem
+	qdel(totem)
+	to_chat(src, span_notice("Your totem in [area.name] has been reclaimed."))
+	active_ability = SCADU_ABILITY_NONE
+
+/mob/dead/observer/rogue/scadu/proc/ability_summon_mirelurker(turf/T)
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_SUMMON_LURKER / 2) : SCADU_COST_SUMMON_LURKER
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
+		return
+	if(!nearest_anchor_in_range(T))
+		to_chat(src, span_warning("Summons must be within range of a monument or totem."))
+		antag_datum.add_lux(cost)
 		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That location is blocked."))
 		antag_datum.add_lux(cost)
 		return
-	if(!nearest_monument_in_range(T) && !check_summon(T))
+	new /mob/living/simple_animal/hostile/rogue/mirespider_lurker/scadu(T)
+	new /obj/effect/temp_visual/bluespace_fissure(T)
+	visible_message_at(T, span_danger("Something massive lurches out of the black water..."))
+	set_cooldown(SCADU_CD_SUMMON_LURKER)
+	active_ability = SCADU_ABILITY_NONE
+
+/mob/dead/observer/rogue/scadu/proc/ability_summon_mirecrawler(turf/T)
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_SUMMON_CRAWLER / 2) : SCADU_COST_SUMMON_CRAWLER
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
+		return
+	if(!nearest_anchor_in_range(T))
+		to_chat(src, span_warning("Summons must be within range of a monument or totem."))
 		antag_datum.add_lux(cost)
 		return
-	var/mob/living/G = new /mob/living/simple_animal/hostile/retaliate/rogue/troll/bog(T)
-	G.faction = list("scadu_servants")
+	if(!isopenturf(T))
+		to_chat(src, span_warning("That location is blocked."))
+		antag_datum.add_lux(cost)
+		return
+	new /mob/living/simple_animal/hostile/retaliate/rogue/mirespider/scadu(T)
 	new /obj/effect/temp_visual/bluespace_fissure(T)
-	visible_message_at(T, span_danger("Something massive tears itself out of the bog..."))
-	set_cooldown(SCADU_CD_SUMMON)
+	visible_message_at(T, span_danger("A mire crawler scrabbles out of the dark water..."))
+	set_cooldown(SCADU_CD_SUMMON_CRAWLER)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_goblin(turf/T)
@@ -215,15 +292,15 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
+	if(!nearest_anchor_in_range(T))
+		to_chat(src, span_warning("Summons must be within range of a monument or totem."))
+		antag_datum.add_lux(cost)
+		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That location is blocked."))
 		antag_datum.add_lux(cost)
 		return
-	if(!nearest_monument_in_range(T) && !check_summon(T))
-		antag_datum.add_lux(cost)
-		return
-	var/mob/living/G = new /mob/living/carbon/human/species/goblin/npc(T)
-	G.faction = list("scadu_servants", "orcs")
+	new /mob/living/carbon/human/species/goblin/npc/scadu_goblin(T)
 	new /obj/effect/temp_visual/bluespace_fissure(T)
 	visible_message_at(T, span_danger("A goblin claws its way up from the murk!"))
 	set_cooldown(SCADU_CD_GOBLIN)
@@ -234,11 +311,12 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
 		return
-	if(!isopenturf(T))
-		to_chat(src, span_warning("That ground cannot root a vine."))
+	if(!nearest_anchor_in_range(T))
+		to_chat(src, span_warning("Summons must be within range of a monument or totem."))
 		antag_datum.add_lux(cost)
 		return
-	if(!nearest_monument_in_range(T) && !check_summon(T))
+	if(!isopenturf(T))
+		to_chat(src, span_warning("That ground cannot root a vine."))
 		antag_datum.add_lux(cost)
 		return
 	new /datum/vine_controller(T)
@@ -297,14 +375,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	set_cooldown(SCADU_CD_MIASMA)
 	active_ability = SCADU_ABILITY_NONE
 
-/mob/dead/observer/rogue/scadu/proc/nearest_monument_in_range(turf/T, range = 7)
-	if(!antag_datum)
-		return null
-	for(var/obj/structure/scadu_monument/M in antag_datum.monuments)
-		if(!QDELETED(M) && M.standing && get_dist(T, M) <= range)
-			return M
-	return null
-
 /mob/dead/observer/rogue/scadu/proc/ability_place_bogtrap(turf/T)
 	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_BOGTRAP / 2) : SCADU_COST_BOGTRAP
 	if(!antag_datum.spend_lux(cost))
@@ -312,9 +382,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That ground cannot hide a trap."))
-		antag_datum.add_lux(cost)
-		return
-	if(!nearest_monument_in_range(T) && !check_summon(T))
 		antag_datum.add_lux(cost)
 		return
 	new /obj/structure/trap/bogtrap/kneestingers(T)
@@ -353,34 +420,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	if(!QDELETED(L))
 		qdel(L)
 
-/mob/dead/observer/rogue/scadu/proc/ability_absorb_corpse(mob/living/carbon/human/target)
-	if(!target || QDELETED(target))
-		return
-	if(target.stat < DEAD && !target.InCritical())
-		to_chat(src, span_warning("They're not dead enough yet!"))
-		return
-	if(!target.mind)
-		to_chat(src, span_warning("This body holds no lux to consume."))
-		return
-	if(!antag_datum.spend_lux(SCADU_COST_ABSORB))
-		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_ABSORB], have [antag_datum.lux])"))
-		return
-	target.blood_volume = BLOOD_VOLUME_NORMAL
-	target.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
-	target.setToxLoss(0, updating_health = FALSE, forced = TRUE)
-	target.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
-	target.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
-	target.heal_wounds(INFINITY)
-	target.zombie_check_can_convert()
-	var/datum/antagonist/zombie/Z = target.mind.has_antag_datum(/datum/antagonist/zombie)
-	if(Z)
-		Z.wake_zombie(TRUE)
-	target.emote("scream")
-	antag_datum.absorb_corpse()
-	visible_message_at(get_turf(target), span_userdanger("[target] convulses as the Scadu drinks deep of their lux!"))
-	set_cooldown(SCADU_CD_ABSORB)
-	active_ability = SCADU_ABILITY_NONE
-
 /mob/dead/observer/rogue/scadu/proc/ability_send_message(mob/living/target)
 	if(!target?.client)
 		to_chat(src, span_warning("No conscious soul to speak to."))
@@ -392,6 +431,78 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	target.playsound_local(get_turf(target), 'sound/vo/mobs/ghost/aggro (2).ogg', 50, TRUE)
 	to_chat(src, span_notice("Your words reach [target.real_name]."))
 	set_cooldown(SCADU_CD_MESSAGE)
+	active_ability = SCADU_ABILITY_NONE
+
+/mob/dead/observer/rogue/scadu/proc/ability_hallucinate(mob/living/carbon/H)
+	if(!H || QDELETED(H) || !istype(H, /mob/living/carbon))
+		to_chat(src, span_warning("I must target a living soul."))
+		return
+	var/hal_type = pick(
+		/datum/hallucination/chasing_mob,
+		/datum/hallucination/battle,
+		/datum/hallucination/delusion,
+		/datum/hallucination/voices,
+		/datum/hallucination/fake_heartattack,
+		/datum/hallucination/floor_shift,
+		/datum/hallucination/weird_sounds,
+	)
+	new hal_type(H, TRUE)
+	playsound(get_turf(H), pick('sound/misc/carriage1.ogg','sound/misc/carriage3.ogg','sound/misc/zizo.ogg'), 50, TRUE)
+	to_chat(src, span_notice("Your will reaches into [H.real_name]'s mind."))
+	set_cooldown(SCADU_CD_HALLUCINATE)
+	active_ability = SCADU_ABILITY_NONE
+
+/mob/dead/observer/rogue/scadu/proc/ability_summon_web(turf/T)
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_WEB / 2) : SCADU_COST_WEB
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
+		return
+	if(!nearest_anchor_in_range(T))
+		to_chat(src, span_warning("Summons must be within range of a monument or totem."))
+		antag_datum.add_lux(cost)
+		return
+	if(!isopenturf(T))
+		to_chat(src, span_warning("That ground cannot hold a web."))
+		antag_datum.add_lux(cost)
+		return
+	new /obj/structure/spider/stickyweb(T)
+	playsound(T, pick('sound/misc/sting1.ogg','sound/misc/sting2.ogg'), 45, TRUE)
+	visible_message_at(T, span_warning("Silken threads weave up from the dark..."))
+	set_cooldown(SCADU_CD_WEB)
+	active_ability = SCADU_ABILITY_NONE
+
+/mob/dead/observer/rogue/scadu/proc/ability_manifest(turf/T)
+	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_MANIFEST / 2) : SCADU_COST_MANIFEST
+	if(!antag_datum.spend_lux(cost))
+		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
+		return
+	if(!isopenturf(T))
+		to_chat(src, span_warning("That location is blocked."))
+		antag_datum.add_lux(cost)
+		return
+	if(!nearest_anchor_in_range(T) && !check_summon(T))
+		antag_datum.add_lux(cost)
+		return
+	var/mob/living/carbon/human/species/human/northern/scadu_manifest/G = new(T)
+	G.color = "#000000"
+	G.real_name = "Shade"
+	G.name = "Shade"
+	if(G.dna?.species)
+		G.dna.species.name = "???"
+		G.dna.species.id = "unknown"
+	if(G.dna && G.dna.species)
+		G.dna.species.species_traits |= NOBLOOD
+	ADD_TRAIT(G, TRAIT_MUTE, "scadu_manifest")
+	G.adjust_skillrank(/datum/skill/misc/sneaking, 6, TRUE)
+	var/obj/item/scadu_drain_touch/D1 = new(G)
+	var/obj/item/scadu_drain_touch/D2 = new(G)
+	D1.antag_datum = antag_datum
+	D2.antag_datum = antag_datum
+	G.put_in_hands(D1)
+	G.put_in_hands(D2)
+	G.ckey = ckey
+	visible_message_at(T, span_danger("A shadow tears itself free from the dark..."))
+	set_cooldown(SCADU_CD_MANIFEST)
 	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/scadu_return_to_bog()
@@ -444,29 +555,47 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	set category = "Scadu"
 	set hidden = FALSE
 
-	if(!antag_datum?.monuments.len)
-		to_chat(src, span_notice("No monuments stand."))
-		return
-
 	var/list/choices = list()
-	for(var/obj/structure/scadu_monument/M in antag_datum.monuments)
+	for(var/obj/structure/scadu_monument/M in antag_datum?.monuments)
 		if(QDELETED(M) || !M.standing)
 			continue
 		var/area/A = get_area(M)
-		choices["[A.name] ([M.x],[M.y])"] = M
+		choices["Monument: [A.name] ([M.x],[M.y])"] = M
+	for(var/obj/structure/scadu_totem/T in antag_datum?.active_totems)
+		if(QDELETED(T))
+			continue
+		var/area/A = get_area(T)
+		choices["Totem: [A.name] ([T.x],[T.y])"] = T
 
 	if(!choices.len)
-		to_chat(src, span_notice("No standing monuments."))
+		to_chat(src, span_notice("No monuments or totems are standing."))
 		return
 
-	var/choice = input(src, "Select a monument to travel to:", "Go to Monument") as null|anything in choices
+	var/choice = input(src, "Select a destination:", "Go to Monument or Totem") as null|anything in choices
 	if(!choice)
 		return
-	var/obj/structure/scadu_monument/M = choices[choice]
-	if(QDELETED(M))
-		to_chat(src, span_warning("That monument no longer stands."))
+	var/atom/dest = choices[choice]
+	if(QDELETED(dest))
+		to_chat(src, span_warning("That structure no longer stands."))
 		return
-	forceMove(get_turf(M))
+	forceMove(get_turf(dest))
+
+/mob/dead/observer/rogue/scadu/verb/scadu_guide()
+	set name = "Scadu Guide"
+	set category = "Scadu"
+	set hidden = FALSE
+
+	to_chat(src, span_notice("<b>THE SCADU</b>"))
+	to_chat(src, span_notice("You are a malevolent spirit bound to the Terrorbog. You cannot leave its borders. Your goal is to defend the bog and destroy those who would topple your monuments."))
+	to_chat(src, span_notice("<b>LUX</b>"))
+	to_chat(src, span_notice("Lux is your resource. Monuments generate lux over time passively. Your lux cap and monument limit both increase when you absorb corpses via the Hollow Grasp while manifested. Using any ability near a standing monument halves its lux cost."))
+	to_chat(src, span_notice("<b>MONUMENTS</b>"))
+	to_chat(src, span_notice("Monuments are your foundation. Place them with the Place Monument ability. You start with a limit of 3 and gain more by absorbing corpses. If all your placed monuments are destroyed and you have no placements remaining, you are banished."))
+	to_chat(src, span_notice("<b>TOTEMS</b>"))
+	to_chat(src, span_notice("Totems allow you to summon mobs in areas not covered by a monument. You may place one totem for every two standing monuments, rounded down. Totems cost [SCADU_COST_PLACE_TOTEM] lux each. All mob summons must be placed within [SCADU_TOTEM_RANGE] tiles of either a monument or a totem."))
+	to_chat(src, span_notice("<b>MANIFEST</b>"))
+	to_chat(src, span_notice("Manifest lets you take physical form as a Shade. While manifested you can use the Hollow Grasp to drain living souls for 0.5 corpse progress each, or fully consume a dead body for 1 full corpse. Each person can only be drained or consumed once. Taking any damage or leaving the bog immediately reverts you. Getting within 5 tiles of a psycross while manifested also forces a revert."))
+
 
 /mob/dead/observer/rogue/scadu/verb/scadu_move_up()
 	set name = "Move Up"
@@ -508,21 +637,23 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		return
 
 	var/list/abilities = list(
-		"Place Monument (free, limit [antag_datum.monument_limit])" = SCADU_ABILITY_MONUMENT,
-		"Summon Skeleton ([SCADU_COST_SUMMON_SKEL] lux)"            = SCADU_ABILITY_SUMMON_SKEL,
-		"Summon Bog Troll ([SCADU_COST_SUMMON_TROLL] lux)"          = SCADU_ABILITY_SUMMON_TROLL,
-		"Summon Goblin ([SCADU_COST_GOBLIN] lux)"                   = SCADU_ABILITY_GOBLIN,
-		"Summon Weepvine ([SCADU_COST_WEEPVINE] lux)"               = SCADU_ABILITY_WEEPVINE,
-		"Summon Web ([SCADU_COST_WEB] lux)"                         = SCADU_ABILITY_WEB,
-		"Terror Pulse ([SCADU_COST_TERROR] lux)"                    = SCADU_ABILITY_TERROR,
-		"Snuff Lights ([SCADU_COST_SNUFF_LIGHTS] lux)"              = SCADU_ABILITY_SNUFF_LIGHTS,
-		"Miasma ([SCADU_COST_MIASMA] lux)"                          = SCADU_ABILITY_MIASMA,
-		"Bog Trap ([SCADU_COST_BOGTRAP] lux)"                       = SCADU_ABILITY_BOGTRAP,
-		"Hallucinate (free)"                                        = SCADU_ABILITY_HALLUCINATE,
-		"Absorb Corpse ([SCADU_COST_ABSORB] lux)"                   = SCADU_ABILITY_ABSORB,
-		"Send Message (free)"                                        = SCADU_ABILITY_MESSAGE,
-		"Manifest (10 lux)"                                         = SCADU_ABILITY_MANIFEST,
+		"Place Monument (free, limit [antag_datum.monument_limit])"   = SCADU_ABILITY_MONUMENT,
+		"Place Totem ([SCADU_COST_PLACE_TOTEM] lux)"                         = SCADU_ABILITY_PLACE_TOTEM,
+		"Destroy Totem (free)"                                                = SCADU_ABILITY_DESTROY_TOTEM,
+		"Summon Mire Lurker ([SCADU_COST_SUMMON_LURKER] lux)"            = SCADU_ABILITY_SUMMON_LURKER,
+		"Summon Mire Crawler ([SCADU_COST_SUMMON_CRAWLER] lux)"          = SCADU_ABILITY_SUMMON_CRAWLER,
+		"Summon Goblin ([SCADU_COST_GOBLIN] lux)"                     = SCADU_ABILITY_GOBLIN,
+		"Summon Weepvine ([SCADU_COST_WEEPVINE] lux)"                 = SCADU_ABILITY_WEEPVINE,
+		"Summon Web ([SCADU_COST_WEB] lux)"                           = SCADU_ABILITY_WEB,
+		"Terror Pulse ([SCADU_COST_TERROR] lux)"                      = SCADU_ABILITY_TERROR,
+		"Snuff Lights ([SCADU_COST_SNUFF_LIGHTS] lux)"                = SCADU_ABILITY_SNUFF_LIGHTS,
+		"Miasma ([SCADU_COST_MIASMA] lux)"                            = SCADU_ABILITY_MIASMA,
+		"Bog Trap ([SCADU_COST_BOGTRAP] lux)"                         = SCADU_ABILITY_BOGTRAP,
+		"Hallucinate (free)"                                          = SCADU_ABILITY_HALLUCINATE,
+		"Send Message (free)"                                         = SCADU_ABILITY_MESSAGE,
+		"Manifest ([SCADU_COST_MANIFEST] lux)"                        = SCADU_ABILITY_MANIFEST,
 	)
+
 	if(!antag_datum.portal_used)
 		abilities["Goblin Portal ([SCADU_COST_GOBLIN_PORTAL] lux)"] = SCADU_ABILITY_GOBLIN_PORTAL
 
@@ -544,6 +675,8 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	to_chat(src, span_notice("Lux: <b>[antag_datum.lux]/[antag_datum.lux_max]</b>"))
 	to_chat(src, span_notice("Monuments: <b>[antag_datum.count_standing_monuments()] standing</b>, [antag_datum.monuments_placed]/[antag_datum.monument_limit] placed"))
 	to_chat(src, span_notice("Corpses absorbed: <b>[antag_datum.corpses_absorbed]</b>"))
+	var/totem_limit = floor(antag_datum.count_standing_monuments() / 2)
+	to_chat(src, span_notice("Totems: <b>[antag_datum.count_active_totems()]/[totem_limit]</b> placed"))
 	to_chat(src, span_notice("Active ability: <b>[active_ability]</b>"))
 	if(world.time < ability_cooldown)
 		to_chat(src, span_warning("Cooldown: [round((ability_cooldown - world.time) / 10, 1)]s remaining"))
@@ -569,79 +702,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		var/area/A = get_area(H)
 		to_chat(src, span_notice("<b>[H.real_name]</b> [A.name] <a href='byond://?src=[REF(src)];scadu_tp=[REF(H)]'>Go</a>"))
 
-/mob/dead/observer/rogue/scadu/proc/ability_hallucinate(mob/living/carbon/H)
-	if(!H || QDELETED(H) || !istype(H, /mob/living/carbon))
-		to_chat(src, span_warning("I must target a living soul."))
-		return
-
-	var/hal_type = pick(
-		/datum/hallucination/chasing_mob,
-		/datum/hallucination/battle,
-		/datum/hallucination/delusion,
-		/datum/hallucination/voices,
-		/datum/hallucination/fake_heartattack,
-		/datum/hallucination/floor_shift,
-		/datum/hallucination/weird_sounds,
-	)
-	new hal_type(H, TRUE)
-	playsound(get_turf(H), pick('sound/misc/carriage1.ogg','sound/misc/carriage3.ogg','sound/misc/zizo.ogg'), 50, TRUE)
-	to_chat(src, span_notice("Your will reaches into [H.real_name]'s mind."))
-	set_cooldown(SCADU_CD_HALLUCINATE)
-	active_ability = SCADU_ABILITY_NONE
-
-
-/mob/dead/observer/rogue/scadu/proc/ability_summon_web(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_WEB / 2) : SCADU_COST_WEB
-	if(!antag_datum.spend_lux(cost))
-		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
-		return
-	if(!isopenturf(T))
-		to_chat(src, span_warning("That ground cannot hold a web."))
-		antag_datum.add_lux(cost)
-		return
-	if(!nearest_monument_in_range(T) && !check_summon(T))
-		antag_datum.add_lux(cost)
-		return
-	new /obj/structure/spider/stickyweb(T)
-	playsound(T, pick('sound/misc/sting1.ogg','sound/misc/sting2.ogg'), 45, TRUE)
-	visible_message_at(T, span_warning("Silken threads weave up from the dark..."))
-	set_cooldown(SCADU_CD_WEB)
-	active_ability = SCADU_ABILITY_NONE
-
-/mob/dead/observer/rogue/scadu/proc/ability_manifest(turf/T)
-	var/cost = nearest_monument_in_range(T) ? round(SCADU_COST_MANIFEST / 2) : SCADU_COST_MANIFEST
-	if(!antag_datum.spend_lux(cost))
-		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
-		return
-	if(!isopenturf(T))
-		to_chat(src, span_warning("That location is blocked."))
-		antag_datum.add_lux(cost)
-		return
-	if(!nearest_monument_in_range(T) && !check_summon(T))
-		antag_datum.add_lux(cost)
-		return
-	var/mob/living/carbon/human/species/human/northern/scadu_manifest/G = new(T)
-	G.color = "#000000"
-	G.real_name = "Shade"
-	G.name = "Shade"
-	if(G.dna?.species)
-		G.dna.species.name = "???"
-		G.dna.species.id = "unknown"
-	if(G.dna && G.dna.species)
-		G.dna.species.species_traits |= NOBLOOD
-	ADD_TRAIT(G, TRAIT_MUTE, "scadu_manifest")
-	G.adjust_skillrank(/datum/skill/misc/sneaking, 6, TRUE)
-	var/obj/item/scadu_drain_touch/D1 = new(G)
-	var/obj/item/scadu_drain_touch/D2 = new(G)
-	D1.antag_datum = antag_datum
-	D2.antag_datum = antag_datum
-	G.put_in_hands(D1)
-	G.put_in_hands(D2)
-	G.ckey = ckey
-	visible_message_at(T, span_danger("A shadow tears itself free from the dark..."))
-	set_cooldown(SCADU_CD_MANIFEST)
-	active_ability = SCADU_ABILITY_NONE
-
 /mob/living/carbon/human/species/human/northern/scadu_manifest
 	var/reverting = FALSE
 
@@ -663,6 +723,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		revert()
 		return
 	if(!istype(get_area(src), /area/rogue/outdoors/bograt))
+		revert()
+		return
+	for(var/obj/structure/fluff/psycross/P in range(5, src))
 		revert()
 		return
 	. = ..()
@@ -698,57 +761,14 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	target.playsound_local(get_turf(target), 'sound/vo/mobs/ghost/aggro (2).ogg', 50, TRUE)
 	to_chat(src, span_notice("Your thought reaches [target.real_name]."))
 
-/obj/item/scadu_drain_touch
-	name = "hollow grasp"
-	desc = "A darkness coils around these hands. Click a player to drain their essence."
-	icon = 'icons/mob/roguehudgrabs.dmi'
-	icon_state = "grabbing_greyscale"
-	color = "#000000"
-	w_class = WEIGHT_CLASS_TINY
-	slot_flags = NONE
-	var/datum/antagonist/scadu/antag_datum = null
-	var/drain_speed = 4 SECONDS
+/mob/living/carbon/human/species/goblin/npc/scadu_goblin/after_creation()
+	..()
+	faction |= list("scadu_servants", "spiders")
 
-/obj/item/scadu_drain_touch/Initialize(mapload)
+/mob/living/simple_animal/hostile/rogue/mirespider_lurker/scadu/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	faction |= list("scadu_servants")
 
-/obj/item/scadu_drain_touch/attack(mob/living/carbon/human/target, mob/living/carbon/human/user)
-	if(!antag_datum || QDELETED(antag_datum))
-		return
-	if(!target || QDELETED(target) || target == user)
-		return
-	if(!target.mind)
-		to_chat(user, span_warning("This soul holds nothing worth consuming."))
-		return
-	if(!target.client)
-		to_chat(user, span_warning("Their soul is not currently present."))
-		return
-	if(target.has_status_effect(/datum/status_effect/debuff/devitalised))
-		to_chat(user, span_warning("Their essence is already spent."))
-		return
-	user.visible_message(
-		span_danger("[user]'s hands darken as they reach for [target]..."),
-		span_notice("I reach into [target.real_name], seeking their essence...")
-	)
-	playsound(user, pick('sound/misc/carriage1.ogg','sound/misc/carriage3.ogg'), 40, TRUE)
-	if(!do_after(user, drain_speed, target = target))
-		return
-	if(!target || QDELETED(target))
-		return
-	if(target.has_status_effect(/datum/status_effect/debuff/devitalised))
-		to_chat(user, span_warning("Their essence is already spent."))
-		return
-	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-	target.emote("scream")
-	to_chat(target, span_userdanger("Something cold tears through you, drinking deep of your vitality!"))
-	target.playsound_local(get_turf(target), 'sound/magic/antimagic.ogg', 70, TRUE)
-	user.visible_message(
-		span_danger("[user] wrenches something vital from [target]!"),
-		span_notice("I drink deep of [target.real_name]'s essence.")
-	)
-	playsound(user, 'sound/magic/whiteflame.ogg', 50, TRUE)
-	antag_datum.corpses_absorbed += 0.5
-	antag_datum.monument_limit = 3 + (antag_datum.corpses_absorbed / 2)
-	antag_datum.lux_max = 100 + (antag_datum.corpses_absorbed * 20)
-	to_chat(user, span_notice("Essence consumed. Lux cap: [antag_datum.lux_max] | Monument limit: [antag_datum.monument_limit]"))
+/mob/living/simple_animal/hostile/retaliate/rogue/mirespider/scadu/Initialize(mapload)
+	. = ..()
+	faction |= list("scadu_servants")

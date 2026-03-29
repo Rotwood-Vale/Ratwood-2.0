@@ -83,6 +83,43 @@
 	owner_datum = null
 	return ..()
 
+/obj/structure/scadu_totem
+	name = "scadu totem"
+	desc = "A pulsing marker of dark power."
+	icon = 'icons/roguetown/maniac/creations.dmi'
+	icon_state = "creation4"
+	density = FALSE
+	anchored = TRUE
+	max_integrity = 120
+	light_system = STATIC_LIGHT
+	light_outer_range = SCADU_TOTEM_RANGE
+	light_color = "#200030"
+
+	var/datum/antagonist/scadu/owner_datum = null
+
+/obj/structure/scadu_totem/attack_hand(mob/living/user)
+	to_chat(user, span_warning("The totem emanates an oppressive, cold energy."))
+
+/obj/structure/scadu_totem/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	var/mob/dead/observer/rogue/scadu/SM = owner_datum?.scadu_mob
+	if(SM?.client)
+		to_chat(SM, span_danger("Your totem is under attack! <a href='byond://?src=[REF(SM)];scadu_tp=[REF(src)]'>Go</a>"))
+	. = ..()
+
+/obj/structure/scadu_totem/deconstruct(disassembled)
+	visible_message(span_danger("The totem shatters with a hollow crack!"))
+	playsound(src, 'sound/magic/antimagic.ogg', 70, TRUE)
+	if(owner_datum && !QDELETED(owner_datum))
+		owner_datum.active_totems -= src
+		to_chat(owner_datum.scadu_mob, span_userdanger("Your totem has been destroyed! ([owner_datum.count_active_totems()] remaining)"))
+	qdel(src)
+
+/obj/structure/scadu_totem/Destroy()
+	if(owner_datum && !QDELETED(owner_datum))
+		owner_datum.active_totems -= src
+	owner_datum = null
+	return ..()
+
 /obj/effect/scadu_miasma
 	name = "bog miasma"
 	desc = "A thick, foul mist that clings to the ground."
@@ -139,7 +176,6 @@
 	to_chat(owner, span_notice("You wrench yourself free."))
 	. = ..()
 
-
 /datum/status_effect/buff/scadu_terrored
 	id = "scadu_terrored"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/scadu_terrored
@@ -167,7 +203,6 @@
 	timer = 3 MINUTES
 	stressadd = 8
 	desc = span_boldred("An unseen darkness watches me from the bog.")
-
 
 /obj/item/scadu_stat_potion
 	icon = 'icons/obj/structures/heart_items.dmi'
@@ -307,3 +342,95 @@
 /datum/status_effect/buff/scadu_presence/on_remove()
 	owner.clear_fullscreen("scadu_presence")
 	. = ..()
+
+/obj/item/scadu_drain_touch
+	name = "hollow grasp"
+	desc = "A darkness coils around these hands. Click a living soul to drain their essence. Click a corpse to fully consume it."
+	icon = 'icons/mob/roguehudgrabs.dmi'
+	icon_state = "grabbing_greyscale"
+	color = "#000000"
+	w_class = WEIGHT_CLASS_TINY
+	slot_flags = NONE
+	var/datum/antagonist/scadu/antag_datum = null
+	var/drain_speed = 4 SECONDS
+	var/corpse_drain_speed = 3 SECONDS
+
+/obj/item/scadu_drain_touch/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+/obj/item/scadu_drain_touch/attack(mob/living/carbon/human/target, mob/living/carbon/human/user)
+	if(!antag_datum || QDELETED(antag_datum))
+		return
+	if(!target || QDELETED(target) || target == user)
+		return
+	if(!target.mind)
+		to_chat(user, span_warning("This soul holds nothing worth consuming."))
+		return
+
+	if(target.stat == DEAD)
+		var/target_key = REF(target)
+		if(target_key in antag_datum.hollow_grasp_drained)
+			to_chat(user, span_warning("This corpse has already been consumed."))
+			return
+		user.visible_message(
+			span_danger("[user]'s hands darken as they press against [target]'s still form..."),
+			span_notice("I reach into [target.real_name]'s remains, drinking what lingers...")
+		)
+		playsound(user, pick('sound/misc/carriage1.ogg','sound/misc/carriage3.ogg'), 40, TRUE)
+		if(!do_after(user, corpse_drain_speed, target = target))
+			return
+		if(!target || QDELETED(target) || target.stat != DEAD)
+			return
+		if(target_key in antag_datum.hollow_grasp_drained)
+			to_chat(user, span_warning("This corpse has already been consumed."))
+			return
+		antag_datum.hollow_grasp_drained += target_key
+		antag_datum.corpses_absorbed++
+		antag_datum.monument_limit = 3 + (antag_datum.corpses_absorbed / 2)
+		antag_datum.lux_max = 100 + (antag_datum.corpses_absorbed * 20)
+		target.emote("gasp")
+		user.visible_message(
+			span_danger("[user] wrenches the last light from [target]'s husk!"),
+			span_notice("I consume [target.real_name]'s remaining soul entirely.")
+		)
+		playsound(user, 'sound/magic/whiteflame.ogg', 50, TRUE)
+		to_chat(user, span_notice("Soul consumed. Lux cap: [antag_datum.lux_max] | Monument limit: [antag_datum.monument_limit]"))
+		return
+
+	var/target_key = REF(target)
+	if(target_key in antag_datum.hollow_grasp_drained)
+		to_chat(user, span_warning("This soul has already been drained."))
+		return
+	if(target.has_status_effect(/datum/status_effect/debuff/devitalised))
+		to_chat(user, span_warning("Their essence is already spent."))
+		return
+	user.visible_message(
+		span_danger("[user]'s hands darken as they reach for [target]..."),
+		span_notice("I reach into [target.real_name], seeking their essence...")
+	)
+	playsound(user, pick('sound/misc/carriage1.ogg','sound/misc/carriage3.ogg'), 40, TRUE)
+	if(!do_after(user, drain_speed, target = target))
+		return
+	if(!target || QDELETED(target))
+		return
+	if(target_key in antag_datum.hollow_grasp_drained)
+		to_chat(user, span_warning("This soul has already been drained."))
+		return
+	if(target.has_status_effect(/datum/status_effect/debuff/devitalised))
+		to_chat(user, span_warning("Their essence is already spent."))
+		return
+	antag_datum.hollow_grasp_drained += target_key
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	target.emote("scream")
+	to_chat(target, span_userdanger("Something cold tears through you, drinking deep of your vitality!"))
+	target.playsound_local(get_turf(target), 'sound/magic/antimagic.ogg', 70, TRUE)
+	user.visible_message(
+		span_danger("[user] wrenches something vital from [target]!"),
+		span_notice("I drink deep of [target.real_name]'s essence.")
+	)
+	playsound(user, 'sound/magic/whiteflame.ogg', 50, TRUE)
+	antag_datum.corpses_absorbed += 0.5
+	antag_datum.monument_limit = 3 + (antag_datum.corpses_absorbed / 2)
+	antag_datum.lux_max = 100 + (antag_datum.corpses_absorbed * 20)
+	to_chat(user, span_notice("Essence consumed. Lux cap: [antag_datum.lux_max] | Monument limit: [antag_datum.monument_limit]"))
