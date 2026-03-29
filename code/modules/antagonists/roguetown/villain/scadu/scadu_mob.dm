@@ -527,6 +527,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	if(G.dna && G.dna.species)
 		G.dna.species.species_traits |= NOBLOOD
 	ADD_TRAIT(G, TRAIT_MUTE, "scadu_manifest")
+	G.faction |= list("scadu_servants")
 	G.adjust_skillrank(/datum/skill/misc/sneaking, 6, TRUE)
 	var/obj/item/scadu_drain_touch/D1 = new(G)
 	var/obj/item/scadu_drain_touch/D2 = new(G)
