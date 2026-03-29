@@ -275,12 +275,17 @@
 	icon_state = "stick1"
 	grid_width = 32
 	grid_height = 32
-	color = "#fffcef"
+	color = "#FFD700"
 	w_class = WEIGHT_CLASS_SMALL
 
 	var/obj/structure/scadu_monument/target = null
+	var/next_use = 0
 
 /obj/item/divination_rod/attack_self(mob/living/carbon/human/user)
+	if(world.time < next_use)
+		to_chat(user, span_warning("The rod is still settling..."))
+		return
+
 	if(!target || QDELETED(target))
 		var/datum/antagonist/scadu/antag = GLOB.scadu_persistent_datum
 		if(!antag || QDELETED(antag) || !antag.monuments.len)
@@ -293,12 +298,25 @@
 		if(!found.len)
 			to_chat(user, span_warning("The rod finds no monument to seek."))
 			return
+		to_chat(user, span_notice("You hold the rod still and feel for something..."))
+		if(!do_after(user, 3 SECONDS, src))
+			return
 		target = pick(found)
 		to_chat(user, span_notice("The rod quivers and locks onto something."))
+		next_use = world.time + 10 SECONDS
 		return
 
 	var/turf/T = get_turf(target)
 	if(!T)
+		to_chat(user, span_warning("The rod goes still. Its mark is lost."))
+		target = null
+		return
+
+	to_chat(user, span_notice("You hold the rod aloft and concentrate..."))
+	if(!do_after(user, 2 SECONDS, src))
+		return
+
+	if(!target || QDELETED(target))
 		to_chat(user, span_warning("The rod goes still. Its mark is lost."))
 		target = null
 		return
@@ -314,6 +332,7 @@
 		dir_text = dir2text(get_dir(user, random_target))
 
 	to_chat(user, span_notice("The rod strains toward the [dir_text]."))
+	next_use = world.time + 10 SECONDS
 
 /atom/movable/screen/fullscreen/scadu_presence
 	icon_state = "oxydamageoverlay2"
