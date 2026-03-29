@@ -191,7 +191,7 @@
 /datum/status_effect/buff/scadu_terrored/on_apply(mob/living/target)
 	. = ..()
 	owner.add_movespeed_modifier("scadu_terrored", update = TRUE, priority = 100, multiplicative_slowdown = 0.4, movetypes = GROUND)
-	owner.confused = 15
+	owner.confused = 5
 	ADD_TRAIT(owner, TRAIT_PSYCHOSIS, "scadu_terrored")
 
 /datum/status_effect/buff/scadu_terrored/on_remove()
