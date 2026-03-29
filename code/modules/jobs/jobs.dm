@@ -158,11 +158,11 @@ GLOBAL_LIST_INIT(youngfolk_positions, list(
 
 GLOBAL_LIST_INIT(wanderer_positions, list(
 	"Mercenary",
+	"Scadu",
 	"Adventurer",
 	"Court Agent",
 	"Bandit",
 	"Wretch",
-	"Scadu",
 ))
 
 GLOBAL_LIST_INIT(roguewar_positions, list(
