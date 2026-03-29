@@ -728,6 +728,10 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	for(var/obj/structure/fluff/psycross/P in range(5, src))
 		revert()
 		return
+	for(var/mob/living/carbon/human/H in range(5, src))
+		if(!H.client || !H.mind || HAS_TRAIT(H, TRAIT_ANTISCRYING))
+			continue
+		H.apply_status_effect(/datum/status_effect/buff/scadu_presence)
 	. = ..()
 
 /mob/living/carbon/human/species/human/northern/scadu_manifest/death(gibbed, nocutscene = FALSE)
