@@ -532,7 +532,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		to_chat(src, span_warning("That location is blocked."))
 		antag_datum.add_lux(cost)
 		return
-	if(!nearest_anchor_in_range(T) && !check_summon(T))
+	if(!check_summon(T))
 		antag_datum.add_lux(cost)
 		return
 	var/mob/living/carbon/human/species/human/northern/scadu_manifest/G = new(T)
