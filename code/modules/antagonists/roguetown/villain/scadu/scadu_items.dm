@@ -20,24 +20,25 @@
 	dormant = FALSE
 	name = initial(name)
 	obj_integrity = max_integrity
-	spawn(0)
-		while(!QDELETED(src) && standing && !dormant)
-			sleep(100)
-			if(QDELETED(src) || !standing || dormant || !owner_datum || QDELETED(owner_datum))
-				break
-			owner_datum.add_lux(1)
-			obj_integrity = min(obj_integrity + 10, max_integrity)
-			var/mob/dead/observer/rogue/scadu/SM = owner_datum.scadu_mob
-			for(var/mob/living/carbon/human/H in range(7, src))
-				if(!H.client || !H.mind || HAS_TRAIT(H, TRAIT_ANTISCRYING))
-					continue
-				if(get_dist(H, src) <= 5)
-					H.apply_status_effect(/datum/status_effect/buff/scadu_presence)
-				if(!SM?.client)
-					continue
-				var/area/A = get_area(H)
-				to_chat(SM, span_warning("A soul lingers near your monument. <b>[H.real_name]</b> in [A.name]. <a href='byond://?src=[REF(SM)];scadu_tp=[REF(src)]'>Go</a>"))
-				break
+	addtimer(CALLBACK(src, PROC_REF(lux_tick)), 100, TIMER_STOPPABLE)
+
+/obj/structure/scadu_monument/proc/lux_tick()
+	if(QDELETED(src) || !standing || dormant || !owner_datum || QDELETED(owner_datum))
+		return
+	owner_datum.add_lux(1)
+	obj_integrity = min(obj_integrity + 10, max_integrity)
+	var/mob/dead/observer/rogue/scadu/SM = owner_datum.scadu_mob
+	for(var/mob/living/carbon/human/H in range(7, src))
+		if(!H.client || !H.mind || HAS_TRAIT(H, TRAIT_ANTISCRYING))
+			continue
+		if(get_dist(H, src) <= 5)
+			H.apply_status_effect(/datum/status_effect/buff/scadu_presence)
+		if(!SM?.client)
+			continue
+		var/area/A = get_area(H)
+		to_chat(SM, span_warning("A soul lingers near your monument. <b>[H.real_name]</b> in [A.name]. <a href='byond://?src=[REF(SM)];scadu_tp=[REF(src)]'>Go</a>"))
+		break
+	addtimer(CALLBACK(src, PROC_REF(lux_tick)), 100, TIMER_STOPPABLE)
 
 /obj/structure/scadu_monument/proc/go_dormant()
 	dormant = TRUE
