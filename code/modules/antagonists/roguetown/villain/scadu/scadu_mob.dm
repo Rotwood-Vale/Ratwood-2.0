@@ -128,6 +128,11 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 				ability_send_message(A)
 			else
 				to_chat(src, span_warning("I must target a living soul to speak to."))
+		if(SCADU_ABILITY_BOGMARK)
+			if(isliving(A))
+				ability_bogmark(A)
+			else
+				to_chat(src, span_warning("I must target a living soul to mark."))
 		if(SCADU_ABILITY_HALLUCINATE)
 			if(isliving(A))
 				ability_hallucinate(A)
@@ -433,6 +438,35 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	set_cooldown(SCADU_CD_MESSAGE)
 	active_ability = SCADU_ABILITY_NONE
 
+/mob/dead/observer/rogue/scadu/proc/ability_bogmark(mob/living/target)
+	if(!target || QDELETED(target))
+		return
+	var/faction_tag = "scadu_servants"
+	var/has_mark = FALSE
+	if(istype(target, /mob/living/simple_animal))
+		var/mob/living/simple_animal/SA = target
+		has_mark = (faction_tag in SA.faction)
+		if(has_mark)
+			SA.faction -= faction_tag
+			to_chat(src, span_notice("[target.name] is no longer marked as a servant."))
+		else
+			SA.faction |= list(faction_tag)
+			to_chat(src, span_notice("[target.name] is now marked as a servant. Your summons will not attack them."))
+	else if(target.mind && target.mind.current)
+		has_mark = (faction_tag in target.mind.current.faction)
+		if(has_mark)
+			target.mind.current.faction -= faction_tag
+			to_chat(src, span_notice("[target.name] is no longer marked as a servant."))
+		else
+			target.mind.current.faction |= list(faction_tag)
+			to_chat(target, span_userdanger("Something in the dark claims you as its own."))
+			to_chat(src, span_notice("[target.name] is now marked as a servant. Your summons will not attack them."))
+	else
+		to_chat(src, span_warning("[target.name] cannot be marked."))
+		return
+	set_cooldown(SCADU_CD_BOGMARK)
+	active_ability = SCADU_ABILITY_NONE
+
 /mob/dead/observer/rogue/scadu/proc/ability_hallucinate(mob/living/carbon/H)
 	if(!H || QDELETED(H) || !istype(H, /mob/living/carbon))
 		to_chat(src, span_warning("I must target a living soul."))
@@ -651,6 +685,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		"Bog Trap ([SCADU_COST_BOGTRAP] lux)"                         = SCADU_ABILITY_BOGTRAP,
 		"Hallucinate (free)"                                          = SCADU_ABILITY_HALLUCINATE,
 		"Send Message (free)"                                         = SCADU_ABILITY_MESSAGE,
+		"Bogmark (free)"                                              = SCADU_ABILITY_BOGMARK,
 		"Manifest ([SCADU_COST_MANIFEST] lux)"                        = SCADU_ABILITY_MANIFEST,
 	)
 

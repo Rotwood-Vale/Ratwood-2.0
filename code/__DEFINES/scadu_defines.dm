@@ -17,6 +17,7 @@
 #define SCADU_ABILITY_HALLUCINATE   "hallucinate"
 #define SCADU_ABILITY_WEB           "web"
 #define SCADU_ABILITY_MANIFEST      "manifest"
+#define SCADU_ABILITY_BOGMARK       "bogmark"
 
 #define SCADU_COST_SUMMON_LURKER    30
 #define SCADU_COST_SUMMON_CRAWLER   10
@@ -44,6 +45,7 @@
 #define SCADU_CD_BOGTRAP            (15 SECONDS)
 #define SCADU_CD_GOBLIN_PORTAL      (10 SECONDS)
 #define SCADU_CD_MESSAGE            (2 SECONDS)
+#define SCADU_CD_BOGMARK            (2 SECONDS)
 #define SCADU_CD_HALLUCINATE        (10 SECONDS)
 #define SCADU_CD_WEB                (2 SECONDS)
 #define SCADU_CD_MANIFEST           (30 SECONDS)
