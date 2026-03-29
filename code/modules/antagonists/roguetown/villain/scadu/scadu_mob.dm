@@ -263,6 +263,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		to_chat(src, span_warning("Summons must be within range of a monument or totem."))
 		antag_datum.add_lux(cost)
 		return
+	if(!nearest_monument_in_range(T) && !check_summon(T))
+		antag_datum.add_lux(cost)
+		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That location is blocked."))
 		antag_datum.add_lux(cost)
@@ -280,6 +283,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		return
 	if(!nearest_anchor_in_range(T))
 		to_chat(src, span_warning("Summons must be within range of a monument or totem."))
+		antag_datum.add_lux(cost)
+		return
+	if(!nearest_monument_in_range(T) && !check_summon(T))
 		antag_datum.add_lux(cost)
 		return
 	if(!isopenturf(T))
@@ -301,6 +307,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		to_chat(src, span_warning("Summons must be within range of a monument or totem."))
 		antag_datum.add_lux(cost)
 		return
+	if(!nearest_monument_in_range(T) && !check_summon(T))
+		antag_datum.add_lux(cost)
+		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That location is blocked."))
 		antag_datum.add_lux(cost)
@@ -318,6 +327,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		return
 	if(!nearest_anchor_in_range(T))
 		to_chat(src, span_warning("Summons must be within range of a monument or totem."))
+		antag_datum.add_lux(cost)
+		return
+	if(!check_summon(T))
 		antag_datum.add_lux(cost)
 		return
 	if(!isopenturf(T))
@@ -384,6 +396,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	var/cost = SCADU_COST_BOGTRAP
 	if(!antag_datum.spend_lux(cost))
 		to_chat(src, span_warning("Insufficient lux. (Need [cost], have [antag_datum.lux])"))
+		return
+	if(!check_summon(T))
+		antag_datum.add_lux(cost)
 		return
 	if(!isopenturf(T))
 		to_chat(src, span_warning("That ground cannot hide a trap."))
@@ -493,6 +508,9 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		return
 	if(!nearest_anchor_in_range(T))
 		to_chat(src, span_warning("Summons must be within range of a monument or totem."))
+		antag_datum.add_lux(cost)
+		return
+	if(!check_summon(T))
 		antag_datum.add_lux(cost)
 		return
 	if(!isopenturf(T))
