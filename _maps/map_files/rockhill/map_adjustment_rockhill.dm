@@ -11,7 +11,7 @@
 		/datum/job/roguetown/sergeant,
 		)
 	slot_adjust = list(
-		/datum/job/roguetown/manorguard = 4,//split with watchmen
+		/datum/job/roguetown/manorguard = 6,//split with watchmen
 		/datum/job/roguetown/warden = 4,//split with vanguard
 	)
 	title_adjust = list(
@@ -42,7 +42,7 @@
 		/datum/job/roguetown/rookie = "Odd-jobs, running messages, fixing dents and talking to locals; the City Watch can always use a spare pair of hands, eyes and ears. Assist your fellow city watchmen in dealing with threats - both within and without. \
 				Given a brief introduction in weapons and guardwork, the rest of your training is to be picked up on the job. \
 				Obey your superiors (everyone who isn't you) and show the nobles your respect. Keep an eye out, try to learn a thing or two, then one day you might live to make an adequate soldier."
-	
+
 	)
 	// species_adjust = list()
 	// sexes_adjust = list()
