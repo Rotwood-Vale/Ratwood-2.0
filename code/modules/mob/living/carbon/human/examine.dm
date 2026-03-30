@@ -126,7 +126,7 @@
 			if(J.lowlife_examine)
 				display_as_lowlife = TRUE
 		var/rank_color = "#725D4C"
-		if(HAS_TRAIT(src, TRAIT_NOBLE) && social_rank < 4)
+		if((HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_VIRTUENOBLE)) && social_rank < 4)
 			social_rank = SOCIAL_RANK_MINOR_NOBLE
 		switch(social_rank)
 			if(SOCIAL_RANK_PEASANT)
@@ -165,7 +165,7 @@
 		. = list("[display1] [display2]")
 
 		if(HAS_TRAIT(src, TRAIT_WITCH))
-			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_WITCH))
+			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_VIRTUENOBLE) || HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_WITCH))
 				. += span_warning("A witch! Their presence brings an unsettling aura.")
 			else if(HAS_TRAIT(user, TRAIT_COMMIE) || HAS_TRAIT(user, TRAIT_CABAL) || HAS_TRAIT(user, TRAIT_HORDE) || HAS_TRAIT(user, TRAIT_DEPRAVED))
 				. += span_notice("A practitioner of the old ways.")
@@ -175,8 +175,8 @@
 		if(GLOB.lord_titles[name])
 			. += span_notice("[m3] been granted the title of \"[GLOB.lord_titles[name]]\".")
 
-		if(HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_DEFILED_NOBLE))
-			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE))
+		if(HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_DEFILED_NOBLE) || HAS_TRAIT(user, TRAIT_VIRTUENOBLE))
+			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE) || HAS_TRAIT(user, TRAIT_VIRTUENOBLE))
 				. += span_notice("A fellow noble.")
 			else
 				. += span_notice("A noble!")
@@ -224,7 +224,7 @@
 			. += span_phobia("A foreigner...")
 
 		if(HAS_TRAIT(src, TRAIT_DISGRACED_NOBLE))
-			if(HAS_TRAIT(user, TRAIT_NOBLE))
+			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_VIRTUENOBLE))
 				. += span_phobia("A disgraced member of the nobility...")
 			else
 				. += span_notice("A disgraced noble.")

@@ -54,8 +54,8 @@
 					H.adjustToxLoss(10)
 					H.Dizzy(5)
 				if(/datum/patron/inhumen/matthios)
-					if(HAS_TRAIT(H, TRAIT_NOBLE))
-						damage += 10 
+					if(HAS_TRAIT(H, TRAIT_NOBLE) || HAS_TRAIT(H, TRAIT_VIRTUENOBLE))
+						damage += 10
 						H.adjust_fire_stacks(4)
 					H.adjust_fire_stacks(2)
 					H.ignite_mob()

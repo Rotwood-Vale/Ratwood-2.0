@@ -122,8 +122,8 @@
 		return NON_TOWNER_BROADCAST_COST
 	if(user_job.department_flag & (NOBLEMEN|YEOMEN|GARRISON|CHURCHMEN|COURTIERS))
 		return TOWNER_BROADCAST_COST
-	if(HAS_TRAIT(user, TRAIT_NOBLE))
-		// Noble privilege! 
+	if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_VIRTUENOBLE))
+		// Noble privilege!
 		return TOWNER_BROADCAST_COST
 	return NON_TOWNER_BROADCAST_COST
 

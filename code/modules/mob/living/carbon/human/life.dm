@@ -184,8 +184,8 @@
 			if(!is_holding_item_of_type(/obj/item/rogueweapon/mace/parasol))
 				if(!isaxian(src) && !islamia(src))//if you aren't an abyssor spawn creature
 					add_stress(/datum/stressevent/coldhead)
-	if(HAS_TRAIT(src, TRAIT_NOBLE)) // Allows nobles who are holding a parasol & its raining to get a mood buff
-		if(is_holding_item_of_type(/obj/item/rogueweapon/mace/parasol/noble)) 
+	if(HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_NOBLE)) // Allows nobles who are holding a parasol & its raining to get a mood buff
+		if(is_holding_item_of_type(/obj/item/rogueweapon/mace/parasol/noble))
 			add_stress(/datum/stressevent/parasolrain)
 //	if(locations & FEET)
 //		if(!coverfeet && patron?.type != /datum/patron/divine/abyssor)

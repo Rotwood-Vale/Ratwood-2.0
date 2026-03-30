@@ -206,7 +206,7 @@
 	if(beast.language_tier < 2)
 		return effects
 
-	if(!HAS_TRAIT(speaker, TRAIT_NOBLE))
+	if(!HAS_TRAIT(speaker, TRAIT_NOBLE) || !HAS_TRAIT(speaker, TRAIT_VIRTUENOBLE))
 		effects["score_penalty"] = 25
 		effects["happiness_multiplier"] = 0.75
 		var/feedback_chance = beast.language_tier * 20

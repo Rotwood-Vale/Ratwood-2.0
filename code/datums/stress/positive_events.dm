@@ -328,7 +328,7 @@
 	desc = span_green("Someone showed me the respect I deserve as a noble.")
 
 /datum/stressevent/noble_bowed_to/can_apply(mob/living/user)
-	return HAS_TRAIT(user, TRAIT_NOBLE)
+	return (HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_VIRTUENOBLE))
 
 /datum/stressevent/perfume
 	stressadd = -1

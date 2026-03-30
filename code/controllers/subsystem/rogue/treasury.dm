@@ -319,7 +319,7 @@ SUBSYSTEM_DEF(treasury)
 
 /// Returns correct tax (0, 100) for a living mob based on its traits & job
 /datum/controller/subsystem/treasury/proc/get_tax_value_for(mob/living/person)
-	if(HAS_TRAIT(person, TRAIT_NOBLE))
+	if(HAS_TRAIT(person, TRAIT_NOBLE) || HAS_TRAIT(person, TRAIT_VIRTUENOBLE))
 		return taxation_cat_settings[TAX_CAT_NOBLE]["taxAmount"] / 100
 	else if(HAS_TRAIT(person, TRAIT_RESIDENT) || (person.job in GLOB.yeoman_positions))
 		return taxation_cat_settings[TAX_CAT_YEOMEN]["taxAmount"] / 100
@@ -330,7 +330,7 @@ SUBSYSTEM_DEF(treasury)
 
 /// Checks if a given mob can be fined, based on its traits & job. TRUE if can be fined, FALSE if protected by decrees
 /datum/controller/subsystem/treasury/proc/check_fine_exemption(mob/living/person)
-	if(HAS_TRAIT(person, TRAIT_NOBLE))
+	if(HAS_TRAIT(person, TRAIT_NOBLE) || HAS_TRAIT(person, TRAIT_VIRTUENOBLE))
 		return taxation_cat_settings[TAX_CAT_NOBLE]["fineExemption"]
 	else if(HAS_TRAIT(person, TRAIT_RESIDENT) || (person.job in GLOB.yeoman_positions))
 		return taxation_cat_settings[TAX_CAT_YEOMEN]["fineExemption"]

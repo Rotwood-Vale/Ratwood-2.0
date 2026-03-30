@@ -100,7 +100,7 @@
 		var/mob/target = get_target(L, split_params)
 		if(target && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			if(HAS_TRAIT(H, TRAIT_NOBLE))
+			if(HAS_TRAIT(H, TRAIT_NOBLE) || HAS_TRAIT(H, TRAIT_VIRTUENOBLE))
 				H.add_stress(/datum/stressevent/noble_bowed_to)
 
 /mob/living/carbon/human/verb/emote_bow()

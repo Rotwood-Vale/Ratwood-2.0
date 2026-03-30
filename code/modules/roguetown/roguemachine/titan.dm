@@ -263,7 +263,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 					say("The true lord is already present in the realm.")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				if(!(HAS_TRAIT(H, TRAIT_NOBLE)))
+				if(!(HAS_TRAIT(H, TRAIT_NOBLE) || HAS_TRAIT(H, TRAIT_VIRTUENOBLE)))
 					say("You have not the noble blood to be regent.")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return

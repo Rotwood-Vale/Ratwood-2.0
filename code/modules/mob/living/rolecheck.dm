@@ -2,7 +2,7 @@
 	var/noble = FALSE
 	if (job in GLOB.noble_positions)
 		noble = TRUE
-	if (HAS_TRAIT(src, TRAIT_NOBLE))
+	if (HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_VIRTUENOBLE))
 		noble = TRUE
 	if(HAS_TRAIT(src, TRAIT_DEFILED_NOBLE))
 		noble = FALSE

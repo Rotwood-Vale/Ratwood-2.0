@@ -120,7 +120,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		if(social_rank && !HAS_TRAIT(src, TRAIT_OUTLANDER))
 			var/examiner_rank = usr.social_rank
 			var/rank_name
-			if(HAS_TRAIT(src, TRAIT_NOBLE) && social_rank < 4) //anyone with the noble trait that wasn't a noble is now at least a minor noble
+			if((HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_VIRTUENOBLE)) && social_rank < 4) //anyone with the noble trait that wasn't a noble is now at least a minor noble
 				social_rank = SOCIAL_RANK_MINOR_NOBLE
 			switch(social_rank)
 				if(SOCIAL_RANK_DIRT)
@@ -511,7 +511,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			rumour_display = html_encode(rumour_display)
 			rumour_display = parsemarkdown_basic(rumour_display, hyperlink = TRUE)
 			msg += "<b>You recall what you heard around Town about [src]...</b><br>[rumour_display]"
-		if(((HAS_TRAIT(usr, TRAIT_NOBLE)) || observer_privilege) && length(noble_gossip))
+		if(((HAS_TRAIT(usr, TRAIT_NOBLE) || HAS_TRAIT(usr, TRAIT_VIRTUENOBLE)) || observer_privilege) && length(noble_gossip))
 			if(msg)
 				msg += "<br><br>"
 			var/gossip_display = noble_gossip

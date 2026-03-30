@@ -290,7 +290,7 @@
 
 	user.changeNext_move(CLICK_CD_MELEE)
 
-	if(!(HAS_TRAIT(user, TRAIT_NOBLE)))
+	if(!(HAS_TRAIT(user, TRAIT_NOBLE)) || (HAS_TRAIT(user, TRAIT_VIRTUENOBLE)))
 		playsound(src, 'sound/misc/machineno.ogg', 100, TRUE, -1)
 		say("REMOVE THINE HAND FROM THE ALARM, CREATURE!")
 		return
@@ -332,7 +332,7 @@
 			next_yap = world.time + 6 SECONDS
 			return
 
-		if(HAS_TRAIT(user, TRAIT_NOBLE))
+		if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_VIRTUENOBLE))
 			say("Salut, [user.real_name] de Sommet. Thirty-breths silence period active por votre grace.")
 			playsound(loc, 'sound/misc/gold_menu.ogg', 100, TRUE, -1)
 			next_yap = world.time + 30 SECONDS
