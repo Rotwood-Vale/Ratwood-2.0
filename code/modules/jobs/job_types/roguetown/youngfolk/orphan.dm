@@ -3,8 +3,8 @@
 	flag = ORPHAN
 	department_flag = PEASANTS
 	faction = "Station"
-	total_positions = 12
-	spawn_positions = 12
+	total_positions = 99
+	spawn_positions = 99
 
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT)

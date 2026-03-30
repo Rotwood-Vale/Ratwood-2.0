@@ -3,8 +3,8 @@
 	flag = LUNATIC
 	department_flag = PEASANTS
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 99
+	spawn_positions = 99
 	round_contrib_points = 2
 	var/list/traits_applied
 	traits_applied = list(TRAIT_PSYCHOSIS, TRAIT_NOSTINK, TRAIT_MANIAC_AWOKEN, TRAIT_HOMESTEAD_EXPERT) // Maniac_Awoken no longer has any function other than the flavor text and trait

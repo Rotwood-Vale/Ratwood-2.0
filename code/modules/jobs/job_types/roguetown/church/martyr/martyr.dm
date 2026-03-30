@@ -18,8 +18,8 @@
 	min_pq = 10 //Cus it's a Martyr of the Ten. Get it.
 	max_pq = null
 	round_contrib_points = 4
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 99
+	spawn_positions = 99
 	display_order = JDO_MARTYR
 	social_rank = SOCIAL_RANK_NOBLE
 	give_bank_account = TRUE

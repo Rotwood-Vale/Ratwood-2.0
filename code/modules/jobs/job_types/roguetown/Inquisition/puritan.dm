@@ -3,8 +3,8 @@
 	flag = PURITAN
 	department_flag = INQUISITION
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 99
+	spawn_positions = 99
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT		//Would you trust a machine to handle a role that requires non-logical intuition and commanding? Maybe. Could undo this if the community likes it. Purpose-built supermachines sound cool, too.
 	allowed_patrons = list(/datum/patron/old_god) //Requires your character's patron to be Psydon. This role is explicitly designed to be played by Psydonites, only, and almost everything they have - down to the equipment and statblock - is rooted in Psydonism. Do NOT make this accessable to other faiths, unless you go through the efforts of redesigning it from the ground up.

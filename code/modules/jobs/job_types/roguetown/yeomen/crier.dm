@@ -6,8 +6,8 @@
 	flag = CRIER
 	department_flag = YEOMEN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 99
+	spawn_positions = 99
 	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	allowed_races = ALL_RACES_TYPES
 	allowed_ages = ALL_AGES_LIST

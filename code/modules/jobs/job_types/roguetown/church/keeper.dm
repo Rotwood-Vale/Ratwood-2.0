@@ -10,8 +10,8 @@
 	flag = KEEPER
 	department_flag = CHURCHMEN
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 99
+	spawn_positions = 99
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = ALL_AGES_LIST
 	allowed_patrons = list(/datum/patron/divine/pestra)

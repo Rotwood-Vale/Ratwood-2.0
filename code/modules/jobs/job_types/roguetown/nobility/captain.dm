@@ -3,8 +3,8 @@
 	flag = GUARD_CAPTAIN
 	department_flag = NOBLEMEN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 99
+	spawn_positions = 99
 	allowed_races = RACES_TOLERATED_UP
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)

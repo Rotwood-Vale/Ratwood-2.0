@@ -3,8 +3,8 @@
 	flag = APOTHECARY
 	department_flag = COURTIERS
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 99
+	spawn_positions = 99
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED)

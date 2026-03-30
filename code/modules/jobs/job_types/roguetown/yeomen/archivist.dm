@@ -4,8 +4,8 @@
 	flag = ARCHIVIST
 	department_flag = YEOMEN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 99
+	spawn_positions = 99
 	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	vice_restrictions = list(/datum/charflaw/unintelligible)
 	allowed_races = ACCEPTED_RACES

@@ -4,8 +4,8 @@
 	flag = PRINCE
 	department_flag = NOBLEMEN
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 99
+	spawn_positions = 99
 	f_title = "Princess"
 	allowed_races = RACES_TOLERATED_UP //the duke isn't giving up their throne to a goblin
 	allowed_sexes = list(MALE, FEMALE)

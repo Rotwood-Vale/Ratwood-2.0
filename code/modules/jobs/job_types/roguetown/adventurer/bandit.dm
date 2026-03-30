@@ -3,8 +3,8 @@
 	flag = BANDIT
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 5	//bare minimum of five on round start, regardless of garrison/holywarrior count
-	spawn_positions = 5
+	total_positions = 99
+	spawn_positions = 99
 	antag_job = TRUE
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "At some point in your lyfe, you'd fallen to the wrong side of the carriage. Whether by butchery or finesse, you're known throughout the land. \

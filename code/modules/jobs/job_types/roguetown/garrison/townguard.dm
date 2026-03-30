@@ -3,8 +3,8 @@
 	flag = GUARDSMAN
 	department_flag = GARRISON
 	faction = "Station"
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 99
+	spawn_positions = 99
 	selection_color = JCOLOR_SOLDIER
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES

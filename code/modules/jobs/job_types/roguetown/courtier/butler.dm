@@ -3,8 +3,8 @@
 	flag = BUTLER
 	department_flag = COURTIERS
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 99
+	spawn_positions = 99
 
 	allowed_races = ACCEPTED_RACES
 

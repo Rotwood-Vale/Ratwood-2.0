@@ -3,8 +3,8 @@
 	flag = BOGMASTER
 	department_flag = GARRISON
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 99
+	spawn_positions = 99
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)//I like the idea of making it set you to middle aged, but having the requirement removes it from the latejoin menu which I think is bad for visibility

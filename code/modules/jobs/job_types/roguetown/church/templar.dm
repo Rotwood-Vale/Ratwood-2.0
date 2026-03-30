@@ -12,8 +12,8 @@
 	min_pq = 3 //Deus vult, but only according to the proper escalation rules
 	max_pq = null
 	round_contrib_points = 2
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 99
+	spawn_positions = 99
 	advclass_cat_rolls = list(CTAG_TEMPLAR = 20)
 	display_order = JDO_TEMPLAR
 	social_rank = SOCIAL_RANK_MINOR_NOBLE

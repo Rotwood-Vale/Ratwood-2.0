@@ -5,8 +5,8 @@
 	flag = GUILDMASTER
 	department_flag = YEOMEN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 99
+	spawn_positions = 99
 	min_pq = 0
 	selection_color = JCOLOR_YEOMAN
 	social_rank = SOCIAL_RANK_YEOMAN

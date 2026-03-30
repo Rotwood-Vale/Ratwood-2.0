@@ -3,8 +3,8 @@
 	flag = COUNCILLOR
 	department_flag = NOBLEMEN
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 99
+	spawn_positions = 99
 	allowed_ages = ALL_AGES_LIST
 	allowed_races = RACES_TOLERATED_UP
 	allowed_sexes = list(MALE, FEMALE)

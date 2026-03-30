@@ -4,8 +4,8 @@
 	flag = KNAVEWENCH
 	department_flag = PEASANTS
 	faction = "Station"
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 99
+	spawn_positions = 99
 
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "You have a simple role at the Vale's Pint; please. You wait tables and help guests, clean the rooms, grow and brew more drink, and assist in the kitchens as need be. Bring a smile to the masses--and those cheapsake townsfolk and adventures might just give you an extra coin...assuming you've not already pilfered their pouch while they're in a drunken stupor off your latest brew."

@@ -3,8 +3,8 @@
 	flag = MAGEASSOCIATE
 	department_flag = COURTIERS
 	faction = "Station"
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 99
+	spawn_positions = 99
 
 	allowed_races = ACCEPTED_RACES
 	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)

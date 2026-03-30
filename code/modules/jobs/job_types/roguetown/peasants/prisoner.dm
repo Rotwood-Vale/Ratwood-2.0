@@ -3,8 +3,8 @@
 	flag = PRISONERR
 	department_flag = PEASANTS
 	faction = "Station"
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 99
+	spawn_positions = 99
 
 
 	allowed_sexes = list(MALE, FEMALE)

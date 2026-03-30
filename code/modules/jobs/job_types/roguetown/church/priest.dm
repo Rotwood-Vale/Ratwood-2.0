@@ -14,8 +14,8 @@ GLOBAL_LIST_EMPTY(heretical_players)
 	flag = PRIEST
 	department_flag = CHURCHMEN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 99
+	spawn_positions = 99
 	selection_color = JCOLOR_CHURCH
 	f_title = "Bishop"
 	allowed_races = RACES_NO_CONSTRUCT		//Too recent arrivals to ascend to priesthood.
