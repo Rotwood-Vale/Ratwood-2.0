@@ -76,6 +76,7 @@
 			if("Disgraced Warden") //Warden's antlered shroud and warden's cloak. Marginally better protection but makes you look a lot more suspicious.
 				head = /obj/item/clothing/head/roguetown/roguehood/poacher
 				cloak = /obj/item/clothing/cloak/poachercloak
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden //I lied about this being purely cosmetic. You get what is essentially downgrade to hardened leather coat: you get arm coverage but lose leg coverage.
 		var/weapons = list("Dagger", "Axe", "Cudgel")
 		var/weapon_choice = input(H, "Choose your melee weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
@@ -94,7 +95,10 @@
 			if("Recurve Bow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 5, TRUE)
 				beltl = /obj/item/quiver/arrows
-				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+				if(fashion_choice == "Disgraced Warden") //If you picked Disgraced Warden previously, get a cosmetic variant of the recurve bow.
+					backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden
+				else
+					backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			if("Crossbow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
 				beltl = /obj/item/quiver/bolts

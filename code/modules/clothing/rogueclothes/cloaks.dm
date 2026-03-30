@@ -1904,6 +1904,18 @@
 	heat_protection =  CHEST | GROIN | ARM_LEFT | ARM_RIGHT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
+/obj/item/clothing/cloak/wardencloak/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/storage/concrete/roguetown/cloak)
+
+/obj/item/clothing/cloak/wardencloak/dropped(mob/living/carbon/human/user)
+	..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	if(STR)
+		var/list/things = STR.contents()
+		for(var/obj/item/I in things)
+			STR.remove_from_storage(I, get_turf(src))
+
 /obj/item/clothing/cloak/poachercloak
 	name = "weathered warden cloak"
 	desc = "A worn-out cloak, which once kept its wearer warm and dry, now merely keeps blood off their clothes."
@@ -1914,10 +1926,22 @@
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
 	inhand_mod = TRUE
+	cold_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
+	min_cold_protection_temperature = 50
+	heat_protection =  CHEST | GROIN | ARM_LEFT | ARM_RIGHT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
-/obj/item/clothing/cloak/wardencloak/ComponentInitialize()
+/obj/item/clothing/cloak/poachercloak/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/storage/concrete/roguetown/cloak)
+
+/obj/item/clothing/cloak/poachercloak/dropped(mob/living/carbon/human/user)
+	..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	if(STR)
+		var/list/things = STR.contents()
+		for(var/obj/item/I in things)
+			STR.remove_from_storage(I, get_turf(src))
 
 /obj/item/clothing/cloak/graggar
 	name = "vicious cloak"
