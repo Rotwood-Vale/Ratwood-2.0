@@ -332,7 +332,23 @@
 		var/turf/random_target = locate(rand(1, world.maxx), rand(1, world.maxy), user.z)
 		dir_text = dir2text(get_dir(user, random_target))
 
-	to_chat(user, span_notice("The rod strains toward the [dir_text]."))
+	var/dist = get_dist(user, target)
+	var/proximity_text
+	if(dist <= 5)
+		proximity_text = "very close"
+	else if(dist <= 15)
+		proximity_text = "nearby"
+	else
+		proximity_text = "far away"
+
+	var/z_text = ""
+	var/zdiff = target.z - user.z
+	if(zdiff > 0)
+		z_text = ", somewhere above"
+	else if(zdiff < 0)
+		z_text = ", somewhere below"
+
+	to_chat(user, span_notice("The rod strains toward the [dir_text]. It feels [proximity_text][z_text]."))
 	next_use = world.time + 10 SECONDS
 
 /atom/movable/screen/fullscreen/scadu_presence
