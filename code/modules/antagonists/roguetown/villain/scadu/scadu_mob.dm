@@ -201,7 +201,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	antag_datum.register_monument(M)
 	visible_message_at(T, span_warning("The earth groans as dark stone erupts from the bog..."))
 	set_cooldown(SCADU_CD_MONUMENT)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_place_totem(turf/T)
 	var/totem_limit = floor(antag_datum.count_standing_monuments() / 2)
@@ -227,7 +226,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	playsound(T, 'sound/magic/antimagic.ogg', 60, TRUE)
 	to_chat(src, span_notice("Totem placed ([antag_datum.count_active_totems()]/[totem_limit]). Mob summons must be within [SCADU_TOTEM_RANGE] tiles of it (or any standing monument)."))
 	set_cooldown(SCADU_CD_PLACE_TOTEM)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_destroy_totem(atom/A)
 	var/obj/structure/scadu_totem/totem = null
@@ -240,21 +238,14 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 			break
 	if(!totem || QDELETED(totem))
 		to_chat(src, span_warning("I must click directly on one of my totems to destroy it."))
-		active_ability = SCADU_ABILITY_NONE
-		return
-	if(totem.owner_datum != antag_datum)
-		to_chat(src, span_warning("That totem is not mine."))
-		active_ability = SCADU_ABILITY_NONE
 		return
 	if(!antag_datum.spend_lux(SCADU_COST_DESTROY_TOTEM))
 		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_DESTROY_TOTEM], have [antag_datum.lux])"))
-		active_ability = SCADU_ABILITY_NONE
 		return
 	var/area/area = get_area(totem)
 	antag_datum.active_totems -= totem
 	totem.deconstruct(FALSE)
 	to_chat(src, span_notice("Your totem in [area.name] has been reclaimed."))
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_mirelurker(turf/T)
 	var/cost = SCADU_COST_SUMMON_LURKER
@@ -276,7 +267,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	new /obj/effect/temp_visual/bluespace_fissure(T)
 	visible_message_at(T, span_danger("Something massive lurches out of the black water..."))
 	set_cooldown(SCADU_CD_SUMMON_LURKER)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_mirecrawler(turf/T)
 	var/cost = SCADU_COST_SUMMON_CRAWLER
@@ -298,7 +288,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	new /obj/effect/temp_visual/bluespace_fissure(T)
 	visible_message_at(T, span_danger("A mire crawler scrabbles out of the dark water..."))
 	set_cooldown(SCADU_CD_SUMMON_CRAWLER)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_goblin(turf/T)
 	var/cost = SCADU_COST_GOBLIN
@@ -320,7 +309,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	new /obj/effect/temp_visual/bluespace_fissure(T)
 	visible_message_at(T, span_danger("A goblin claws its way up from the murk!"))
 	set_cooldown(SCADU_CD_GOBLIN)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_weepvine(turf/T)
 	var/cost = SCADU_COST_WEEPVINE
@@ -341,7 +329,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	new /datum/vine_controller(T)
 	visible_message_at(T, span_danger("Weepvines tear through the bog floor!"))
 	set_cooldown(SCADU_CD_WEEPVINE)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_terror_pulse(turf/T)
 	var/cost = SCADU_COST_TERROR
@@ -364,7 +351,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	playsound(T, 'sound/magic/antimagic.ogg', 80, TRUE)
 	visible_message_at(T, span_danger("The air turns cold and still..."))
 	set_cooldown(SCADU_CD_TERROR)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_snuff_lights(turf/T)
 	var/cost = SCADU_COST_SNUFF_LIGHTS
@@ -381,7 +367,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	playsound(T, 'sound/magic/zizo_snuff.ogg', 70, TRUE)
 	visible_message_at(T, span_warning("The lights gutter and die..."))
 	set_cooldown(SCADU_CD_SNUFF_LIGHTS)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_place_miasma(turf/T)
 	var/cost = SCADU_COST_MIASMA
@@ -392,7 +377,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	playsound(T, 'sound/misc/evilevent.ogg', 60, TRUE)
 	visible_message_at(T, span_warning("A creeping mist rises from the bog..."))
 	set_cooldown(SCADU_CD_MIASMA)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_place_bogtrap(turf/T)
 	var/cost = SCADU_COST_BOGTRAP
@@ -410,7 +394,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	playsound(T, pick('sound/misc/sting1.ogg','sound/misc/sting2.ogg'), 50, TRUE)
 	visible_message_at(T, span_warning("The murk stirs..."))
 	set_cooldown(SCADU_CD_BOGTRAP)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_goblin_portal(turf/T)
 	if(antag_datum.portal_used)
@@ -434,7 +417,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	visible_message_at(T, span_danger("A foul portal tears open in the bog! Goblins pour through!"))
 	addtimer(CALLBACK(src, PROC_REF(close_goblin_portal), P, L), 8 MINUTES)
 	set_cooldown(SCADU_CD_GOBLIN_PORTAL)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/close_goblin_portal(obj/structure/gob_portal/P, obj/effect/landmark/L)
 	if(!QDELETED(P))
@@ -453,7 +435,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	target.playsound_local(get_turf(target), 'sound/vo/mobs/ghost/aggro (2).ogg', 50, TRUE)
 	to_chat(src, span_notice("Your words reach [target.real_name]."))
 	set_cooldown(SCADU_CD_MESSAGE)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_bogmark(mob/living/target)
 	if(!target || QDELETED(target))
@@ -482,7 +463,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		to_chat(src, span_warning("[target.name] cannot be marked."))
 		return
 	set_cooldown(SCADU_CD_BOGMARK)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_hallucinate(mob/living/carbon/H)
 	if(!H || QDELETED(H) || !istype(H, /mob/living/carbon))
@@ -501,7 +481,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	playsound(get_turf(H), pick('sound/misc/carriage1.ogg','sound/misc/carriage3.ogg','sound/misc/zizo.ogg'), 50, TRUE)
 	to_chat(src, span_notice("Your will reaches into [H.real_name]'s mind."))
 	set_cooldown(SCADU_CD_HALLUCINATE)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_summon_web(turf/T)
 	var/cost = SCADU_COST_WEB
@@ -523,7 +502,6 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	playsound(T, pick('sound/misc/sting1.ogg','sound/misc/sting2.ogg'), 45, TRUE)
 	visible_message_at(T, span_warning("Silken threads weave up from the dark..."))
 	set_cooldown(SCADU_CD_WEB)
-	active_ability = SCADU_ABILITY_NONE
 
 /mob/dead/observer/rogue/scadu/proc/ability_manifest(turf/T)
 	var/cost = SCADU_COST_MANIFEST
