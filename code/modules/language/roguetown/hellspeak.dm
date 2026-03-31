@@ -13,6 +13,6 @@
 		"ad", "al", "an", "ar", "as", "ci", "co", "de", "do", "el", "en", "er", "es", "ie",
 		"in", "la", "lo", "me", "na", "no", "nt", "on", "or", "os", "pa", "qu", "ra", "re",
 		"ro", "se", "st", "ta", "te", "to", "ue", "un", "aci", "ada", "ado", "ant", "ara",
-		"ci�", "com", "con", "des", "dia", "dos", "ent", "era", "ero", "est", "ido", "ien",
-		"ier", "i�n", "las", "los", "men", "nte", "nto", "par", "per", "por", "que", "res",
+		"cie", "com", "con", "des", "dia", "dos", "ent", "era", "ero", "est", "ido", "ien",
+		"ier", "ien", "las", "los", "men", "nte", "nto", "par", "per", "por", "que", "res",
 		"sta", "ste", "ten", "tra", "una", "ver")
