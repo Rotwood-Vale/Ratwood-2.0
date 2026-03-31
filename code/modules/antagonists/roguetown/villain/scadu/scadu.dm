@@ -74,8 +74,8 @@
 
 /datum/antagonist/scadu/proc/absorb_corpse()
 	corpses_absorbed++
-	monument_limit = 3 + (corpses_absorbed / 2)
-	lux_max = 100 + (corpses_absorbed * 20)
+	monument_limit = 3 + floor(log(corpses_absorbed + 2) / log(2) - 1)
+	lux_max = 100 + (corpses_absorbed * 10)
 	to_chat(scadu_mob, span_userdanger("You consume the remnant soul. Lux cap: [lux_max] | Monument limit: [monument_limit]"))
 
 /datum/antagonist/scadu/antag_panel_data()

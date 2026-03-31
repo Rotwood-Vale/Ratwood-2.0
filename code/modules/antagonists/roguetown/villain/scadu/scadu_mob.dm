@@ -246,11 +246,13 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 		to_chat(src, span_warning("That totem is not mine."))
 		active_ability = SCADU_ABILITY_NONE
 		return
+	if(!antag_datum.spend_lux(SCADU_COST_DESTROY_TOTEM))
+		to_chat(src, span_warning("Insufficient lux. (Need [SCADU_COST_DESTROY_TOTEM], have [antag_datum.lux])"))
+		active_ability = SCADU_ABILITY_NONE
+		return
 	var/area/area = get_area(totem)
-	visible_message_at(get_turf(totem), span_warning("The totem shudders and collapses into dark mist..."))
-	playsound(get_turf(totem), 'sound/magic/antimagic.ogg', 60, TRUE)
 	antag_datum.active_totems -= totem
-	qdel(totem)
+	totem.deconstruct(FALSE)
 	to_chat(src, span_notice("Your totem in [area.name] has been reclaimed."))
 	active_ability = SCADU_ABILITY_NONE
 
@@ -702,7 +704,7 @@ GLOBAL_LIST_EMPTY(active_scadu_mobs)
 	var/list/abilities = list(
 		"Place Monument (free, limit [antag_datum.monument_limit])"   = SCADU_ABILITY_MONUMENT,
 		"Place Totem ([SCADU_COST_PLACE_TOTEM] lux)"                         = SCADU_ABILITY_PLACE_TOTEM,
-		"Destroy Totem (free)"                                                = SCADU_ABILITY_DESTROY_TOTEM,
+		"Destroy Totem ([SCADU_COST_DESTROY_TOTEM] lux)"                     = SCADU_ABILITY_DESTROY_TOTEM,
 		"Summon Mire Lurker ([SCADU_COST_SUMMON_LURKER] lux)"            = SCADU_ABILITY_SUMMON_LURKER,
 		"Summon Mire Crawler ([SCADU_COST_SUMMON_CRAWLER] lux)"          = SCADU_ABILITY_SUMMON_CRAWLER,
 		"Summon Goblin ([SCADU_COST_GOBLIN] lux)"                     = SCADU_ABILITY_GOBLIN,

@@ -98,6 +98,16 @@
 
 	var/datum/antagonist/scadu/owner_datum = null
 
+/obj/structure/scadu_totem/Initialize(mapload)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(drain_lux)), 100, TIMER_STOPPABLE)
+
+/obj/structure/scadu_totem/proc/drain_lux()
+	if(QDELETED(src) || !owner_datum || QDELETED(owner_datum))
+		return
+	owner_datum.spend_lux(1)
+	addtimer(CALLBACK(src, PROC_REF(drain_lux)), 100, TIMER_STOPPABLE)
+
 /obj/structure/scadu_totem/attack_hand(mob/living/user)
 	to_chat(user, span_warning("The totem emanates an oppressive, cold energy."))
 
@@ -110,6 +120,13 @@
 /obj/structure/scadu_totem/deconstruct(disassembled)
 	visible_message(span_danger("The totem shatters with a hollow crack!"))
 	playsound(src, 'sound/magic/antimagic.ogg', 70, TRUE)
+	var/turf/drop_turf = get_turf(src)
+	new /obj/item/roguegem/onyxa(drop_turf)
+	new /obj/item/alch/viscera(drop_turf)
+	new /obj/item/alch/viscera(drop_turf)
+	new /obj/item/alch/viscera(drop_turf)
+	new /obj/item/natural/bone(drop_turf)
+	new /obj/item/natural/bone(drop_turf)
 	if(owner_datum && !QDELETED(owner_datum))
 		owner_datum.active_totems -= src
 		to_chat(owner_datum.scadu_mob, span_userdanger("Your totem has been destroyed! ([owner_datum.count_active_totems()] remaining)"))
@@ -423,8 +440,8 @@
 			return
 		antag_datum.hollow_grasp_drained += target_key
 		antag_datum.corpses_absorbed++
-		antag_datum.monument_limit = 3 + (antag_datum.corpses_absorbed / 2)
-		antag_datum.lux_max = 100 + (antag_datum.corpses_absorbed * 20)
+		antag_datum.monument_limit = 3 + floor(log(antag_datum.corpses_absorbed + 2) / log(2) - 1)
+		antag_datum.lux_max = 100 + (antag_datum.corpses_absorbed * 10)
 		target.emote("gasp")
 		user.visible_message(
 			span_danger("[user] wrenches the last light from [target]'s husk!"),
@@ -467,6 +484,6 @@
 	)
 	playsound(user, 'sound/magic/whiteflame.ogg', 50, TRUE)
 	antag_datum.corpses_absorbed += 0.5
-	antag_datum.monument_limit = 3 + (antag_datum.corpses_absorbed / 2)
-	antag_datum.lux_max = 100 + (antag_datum.corpses_absorbed * 20)
+	antag_datum.monument_limit = 3 + floor(log(antag_datum.corpses_absorbed + 2) / log(2) - 1)
+	antag_datum.lux_max = 100 + (antag_datum.corpses_absorbed * 10)
 	to_chat(user, span_notice("Essence consumed. Lux cap: [antag_datum.lux_max] | Monument limit: [antag_datum.monument_limit]"))
