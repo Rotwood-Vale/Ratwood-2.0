@@ -117,7 +117,7 @@
 /obj/item/rogueweapon/eaglebeak/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>An oathmarked's polehammer. Designed in an earlier era, under the direction of Hadr鹡zhar. \
+		. += "<small>An oathmarked's polehammer. Designed in an earlier era, under the direction of Hadr没nzhar. \
 		A lord lost to centuries. The original keeper of the oath. The purpose was simple: <br>\
 		A hammer to break the rabble. A pick to slay the traitors. A head to pierce both.</small>"
 
@@ -143,7 +143,7 @@
 /obj/item/rogueweapon/greatsword/grenz/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>An oathmarked's flamberge. Designed in an earlier era, under the direction of Hadr鹡zhar. \
+		. += "<small>An oathmarked's flamberge. Designed in an earlier era, under the direction of Hadr没nzhar. \
 		A lord lost to centuries. The original keeper of the oath. The purpose was simple: <br>\
 		A blade fit for a king, to bear the oath's violence in place of the lordling's hand.</small>"
 
@@ -206,7 +206,7 @@
 /obj/item/clothing/neck/roguetown/psicross/silver/astrata/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>Hadr鹡zhar, the best of his house. A drakian that stood above the squabbles of inter-drakian conflict. \
+		. += "<small>Hadr没nzhar, the best of his house. A drakian that stood above the squabbles of inter-drakian conflict. \
 		He'd given his Oathmarked a singular purpose: <br>\
 		To destroy all that would harm Astrata's noble order. To eradicate the taint of left-handed magyks from the world.</small>"
 
@@ -221,7 +221,7 @@
 /obj/item/clothing/cloak/cape/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>Hadr鹡zhar was known for his showboating and sudden violent outbursts. \
+		. += "<small>Hadr没nzhar was known for his showboating and sudden violent outbursts. \
 		Once meant to be a symbol of mockery, for resentful Oathmarked, this cape now represents something greater. \
 		Hope. Hope that one dae he may return. \
 		For just as he'd vanished into Eressioth's demesne, all drakian, knowing or otherwise, pray for his return.</small>"
@@ -237,6 +237,6 @@
 /obj/item/book/rogue/secret/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>Ancient, written by Hadr鹡zhar's closest after he'd vanished. \
+		. += "<small>Ancient, written by Hadr没nzhar's closest after he'd vanished. \
 		It sets out the guidelines that all Oathmarked are doomed to follow. \
-		Just as Hadr鹡zhar had in another era, before he'd slipped out of the knowing world.</small>"
+		Just as Hadr没nzhar had in another era, before he'd slipped out of the knowing world.</small>"
