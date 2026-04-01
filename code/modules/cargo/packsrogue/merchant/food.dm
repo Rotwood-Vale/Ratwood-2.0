@@ -150,3 +150,31 @@
 					/obj/item/reagent_containers/food/snacks/fish/clownfish,
 					/obj/item/reagent_containers/food/snacks/fish/clownfish,
 				)
+
+/datum/supply_pack/rogue/food/chocolate_dark
+	name = "Dark Chocolate"
+	cost = 40
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/rogue/chocolate,
+				)
+
+/datum/supply_pack/rogue/food/chocolate_milk
+	name = "Milk Chocolate"
+	cost = 60
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/rogue/chocolate_milk,
+				)
+
+/datum/supply_pack/rogue/food/chocolate_raisin
+	name = "Raisin Chocolate"
+	cost = 60
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/rogue/chocolate_raisin,
+				)
+
+/datum/supply_pack/rogue/food/chocolate_royal
+	name = "Honey nut chocolate"
+	cost = 120
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/rogue/chocolate_honeynut,
+				)
