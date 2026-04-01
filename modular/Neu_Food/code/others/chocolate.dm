@@ -131,11 +131,11 @@
 				qdel(src)
 	return TRUE
 
-/obj/item/reagent_containers/food/snakcs/rogue/cocoa_sugar/slut
+/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/slut
 	name = "cocoa-rosa petal mix."
 	desc = "A fine mix of sugar, cocoa, and petals of an Eoran bud. Love is ready to grow, it only needs warmth."
 	icon_state = "cocoa_e"
-	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate_slut
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/slut
 
 //Chocolate bars.
 
@@ -199,10 +199,10 @@
 	extra_eat_effect = /datum/status_effect/buff/sweet
 	list_reagents = list(/datum/reagent/consumable/honey = 2, /datum/reagent/consumable/nutriment = SNACK_DECENT)
 
-/obj/item/reagent_containers/food/snacks/rogue/chocolate_slut // This is MY code, I get to do my childish hate upon the zapebait divine inside of it. 
+/obj/item/reagent_containers/food/snacks/rogue/chocolate/slut // This is MY code, I get to do my childish hate upon the zapebait divine inside of it. 
 	name = "peace chocolate bar"
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
-	icon_state = "chocolate_r"
+	icon_state = "chocolate_s"
 	desc = "A bar of chocolate with petals of an Eoran bud mixed in. A symbol of love and longing, favored by those devoted to the Lady of The Hearth."
 	faretype = FARE_FINE
 	rotprocess = SHELFLIFE_EXTREME
