@@ -57,7 +57,7 @@ number_of_defines = 0
 if not on_github:
     print(blue(f"Running define sanity check outside of Github Actions.\nFor assistance, a '{output_file_name}' file will be generated at the root of your directory if any errors are detected."))
 
-for parent_directory in parent_directories
+for parent_directory in parent_directories:
     for code_file in glob.glob(parent_directory, recursive=True):
         exempt_file = False
         for exempt_directory in excluded_files:
