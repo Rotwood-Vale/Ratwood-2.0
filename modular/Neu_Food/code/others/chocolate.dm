@@ -180,7 +180,7 @@
 	extra_eat_effect = /datum/status_effect/buff/sweet
 	list_reagents = list(/datum/reagent/consumable/honey = 2, /datum/reagent/consumable/nutriment = SNACK_DECENT)
 
-/obj/item/reagent_containers/food/snacks/rogue/chocolate/slut // This is MY code, I get to do my childish hate upon the zapebait divine inside of it. 
+/obj/item/reagent_containers/food/snacks/rogue/chocolate/slut
 	name = "rosa chocolate bar"
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
 	icon_state = "chocolate_e"
