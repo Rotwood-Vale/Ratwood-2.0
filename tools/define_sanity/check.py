@@ -4,7 +4,17 @@ import os
 import re
 import sys
 
-parent_directory = "code/**/*.dm"
+parent_directories = [
+    "code/**/*.dm",
+    "modular/**/*.dm"
+    "modular_azurepeak/**/*.dm"
+    "modular_causticcove/**/*.dm"
+    "modular_hearthstone/**/*.dm"
+    "modular_helmsguard/**/*.dm"
+    "modular_rmh/**/*.dm"
+    "modular_stonehedge/**/*.dm"
+    "modular_twilight_axis/**/*.dm"
+]
 
 output_file_name = "define_sanity_output.txt"
 how_to_fix_message = "Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."
@@ -47,21 +57,22 @@ number_of_defines = 0
 if not on_github:
     print(blue(f"Running define sanity check outside of Github Actions.\nFor assistance, a '{output_file_name}' file will be generated at the root of your directory if any errors are detected."))
 
-for code_file in glob.glob(parent_directory, recursive=True):
-    exempt_file = False
-    for exempt_directory in excluded_files:
-        if fnmatch.fnmatch(code_file, exempt_directory):
-            exempt_file = True
-            break
+for parent_directory in parent_directories
+    for code_file in glob.glob(parent_directory, recursive=True):
+        exempt_file = False
+        for exempt_directory in excluded_files:
+            if fnmatch.fnmatch(code_file, exempt_directory):
+                exempt_file = True
+                break
 
-    if exempt_file:
-        continue
+        if exempt_file:
+            continue
 
-    # If the "base path" of the file starts with an underscore, it's assumed to be an encapsulated file holding references to the other files in its folder and is exempt from the checks.
-    if os.path.basename(code_file)[0] == "_":
-        continue
+        # If the "base path" of the file starts with an underscore, it's assumed to be an encapsulated file holding references to the other files in its folder and is exempt from the checks.
+        if os.path.basename(code_file)[0] == "_":
+            continue
 
-    files_to_scan.append(code_file)
+        files_to_scan.append(code_file)
 
 located_error_tuples = []
 
