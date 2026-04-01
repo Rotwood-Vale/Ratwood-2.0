@@ -38,10 +38,11 @@
 	else
 		return ..()
 	return TRUE
+
 // I hate coding I hate coding. I. HATE. CODING. 
 
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar
-	name = "cocoa-sugar mix"
+	name = "Chocolate mass"
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
 	icon_state = "cocoa_s"
 	desc = "A fine mix of sugar and cocoa. Either nothing but the very first step on your new, sweet destiny, or, already the pan-ultimate step."
@@ -67,7 +68,7 @@
         to_chat(user, span_notice("Adding milk and mixing..."))
         if(do_after(user, short_cooktime, target = src))
             add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_milk(loc)
+            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/milk(loc)
             qdel(I)
             qdel(src)
         return TRUE
@@ -78,43 +79,45 @@
         to_chat(user, span_notice("Adding raisins and mixing..."))
         if(do_after(user, short_cooktime, target = src))
             add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_raisins(loc)
+            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/raisins(loc)
             qdel(I)
             qdel(src)
         return TRUE
     
     // Handle peaceflower
-    if(istype(I, /obj/item/clothing/head/peaceflower))
-        playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
-        to_chat(user, span_notice("Adding petals and forming a mix..."))
-        if(do_after(user, short_cooktime, target = src))
-            add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_slut(loc)
-            qdel(I)
-            qdel(src)
+	if(istype(I, /obj/item/clothing/head/peaceflower)) 
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
+			to_chat(user, span_notice("Mixing the petals of the bud with the chocolate mass..."))
+			if(do_after(user,long_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/slut(loc)
+				qdel(I)
+				qdel(src)
         return TRUE
     
     return ..()
 
-/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_milk
-	name = "cocoa-sugar-milk mix"
+//Apparently this can only handle one /attackby/ at a time? woe. Well there goes half an hour of my life that I will literally never get back. Woe.
+//I cry. ZIZO laughs.
+
+/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/milk
+	name = "Chocolate mass with milk"
 	desc = "A fine mix of sugar, cocoa and milk. You stand at the verge of greatness."
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/milk
-
 	icon_state = "cocoa_s"
-	
-//I cry. ZIZO laughs.
-/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_raisins
-	name = "cocoa-raisins mix"
-	desc = "A fine mix of sugar, cocoa, and raisins. Either nothing but the very first step on your new, sweet destiny, or, already the pan-ultimate step." //my fucking code, my fucking tastes.
+
+/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/raisins
+	name = "Chocolate mass with raisins"
+	desc = "A fine mix of sugar, cocoa, and raisins. You stand the precipe of your fall.."
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/raisin
 	icon_state = "cocoa_r"
 
-/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_slut
-	name = "cocoa-rosa petal mix."
+/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/slut
+	name = "Chocolate mass with petals"
 	desc = "A fine mix of sugar, cocoa, and petals of an Eoran bud. Love is ready to grow, it only needs warmth."
-	icon_state = "cocoa_e"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/slut
+	icon_state = "cocoa_e"
 
 //Chocolate bars.
 
