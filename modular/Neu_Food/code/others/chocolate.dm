@@ -192,4 +192,4 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 6
 	eat_effect = /datum/status_effect/buff/snackbuff
-	extra_eat_effect = /datum/status_effect/buff/peacecake 
+	extra_eat_effect = /datum/status_effect/buff/sweet
