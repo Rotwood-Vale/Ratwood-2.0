@@ -18,8 +18,8 @@
 	if(user.check_arm_grabbed(user.active_hand_index))
 		to_chat(user, span_notice("I can't move my arm!"))
 		return
-	if(!user.has_hand_for_held_index(user.active_hand_index, TRUE)) //we obviously have a hadn, but we need to check for fingers/prosthetics
-		to_chat(user, span_warning("I can't move the fingers."))
+	if(!user.has_hand_for_held_index(user.active_hand_index, TRUE)) //we obviously have a hand, but we need to check for fingers/prosthetics
+		to_chat(user, "<span class='warning'>I can't move the fingers of my [user.active_hand_index == 1 ? "left" : "right"] hand.</span>")
 		return
 	if(!istype(src, /obj/item/grabbing))
 		if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
