@@ -15,7 +15,6 @@
 	icon_state = "cocoa_p"
 	desc = "Cocoa powder, used for making chocolate, both solid and liquid. Needs sugar if you wish to make a chocolate bar."
 
-
 /obj/item/reagent_containers/powder/cocoa_powder/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
 	var/obj/item/reagent_containers/R = I
@@ -53,85 +52,65 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate
 
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/attackby(obj/item/I, mob/living/user, params)
-	var/found_table = locate(/obj/structure/table) in (loc)
-	var/obj/item/reagent_containers/R = I
-	update_cooktime(user)
-	if(!istype(R))
-		return ..()
-	if(isturf(loc)&& (!found_table))
-		to_chat(user, span_notice("Need a table..."))
-		return ..()
-	if(!R.reagents.has_reagent(/datum/reagent/consumable/milk, 10))
-		to_chat(user, span_notice("Needs either milk or raisins."))
-		return TRUE
-	to_chat(user, span_notice("Adding milk and mixing.."))
-	playsound(get_turf(user), 'modular/Neu_Food/sound/splishy.ogg', 100, TRUE, -1)
-	if(do_after(user, short_cooktime, target = src))
-		add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-		new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/milk(loc)
-		qdel(I)
-		qdel(src)
+    var/found_table = locate(/obj/structure/table) in (loc)
+    var/obj/item/reagent_containers/R = I
+    update_cooktime(user)
+    if(!istype(R) && !istype(I, /obj/item/reagent_containers/food/snacks/rogue/raisins) && !istype(I, /obj/item/clothing/head/peaceflower))
+        return ..()
+    if(isturf(loc) && (!found_table))
+        to_chat(user, span_notice("Need a table..."))
+        return ..()
+    
+    // Handle milk
+    if(R && R.reagents.has_reagent(/datum/reagent/consumable/milk, 10))
+        playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
+        to_chat(user, span_notice("Adding milk and mixing..."))
+        if(do_after(user, short_cooktime, target = src))
+            add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_milk(loc)
+            qdel(I)
+            qdel(src)
+        return TRUE
+    
+    // Handle raisins
+    if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/raisins))
+        playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
+        to_chat(user, span_notice("Adding raisins and mixing..."))
+        if(do_after(user, short_cooktime, target = src))
+            add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_raisins(loc)
+            qdel(I)
+            qdel(src)
+        return TRUE
+    
+    // Handle peaceflower
+    if(istype(I, /obj/item/clothing/head/peaceflower))
+        playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
+        to_chat(user, span_notice("Adding petals and forming a mix..."))
+        if(do_after(user, short_cooktime, target = src))
+            add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_slut(loc)
+            qdel(I)
+            qdel(src)
+        return TRUE
+    
+    return ..()
 
-	return TRUE
-
-/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/milk
+/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_milk
 	name = "cocoa-sugar-milk mix"
 	desc = "A fine mix of sugar, cocoa and milk. You stand at the verge of greatness."
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/milk
-	color = "#9e9a9e" // so it, at least a LITTLE stands out from the normal sugar-cocoa mix. 
-	icon_state = "cocoa_s"
 
-/obj/item/reagent_containers/powder/cocoa_sugar/attackby(obj/item/I, mob/living/user, params)
-	var/found_table = locate(/obj/structure/table) in (loc)
-	var/obj/item/reagent_containers/R = I
-	update_cooktime(user)
-	if(!istype(R))
-		return ..()
-	if(isturf(loc)&& (!found_table))
-		to_chat(user, span_notice("Need a table..."))
-		return ..()
-	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/raisins))
-		if(isturf(loc)&& (found_table))
-			playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
-			to_chat(user, span_notice("Adding raisins and mixing..."))
-			if(do_after(user,short_cooktime, target = src))
-				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/raisins(loc) // yes yes, bloat, blah-blah, I KNOW. I'M FIGHTING FOR MY LIFE, MY SANITY HERE. I AM NOT A (GOOD) CODER. FORGIVE ME!
-				qdel(I)
-				qdel(src)
-		else
-			to_chat(user, span_warning("You need to put [src] on a table to work it."))
-	else
-		return ..()
-	return TRUE
+	icon_state = "cocoa_s"
+	
 //I cry. ZIZO laughs.
-/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/raisins
+/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_raisins
 	name = "cocoa-raisins mix"
 	desc = "A fine mix of sugar, cocoa, and raisins. Either nothing but the very first step on your new, sweet destiny, or, already the pan-ultimate step." //my fucking code, my fucking tastes.
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/raisin
 	icon_state = "cocoa_r"
 
-/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/attackby(obj/item/I, mob/living/user, params)
-	var/found_table = locate(/obj/structure/table) in (loc)
-	var/obj/item/reagent_containers/R = I
-	update_cooktime(user)
-	if(!istype(R))
-		return ..()
-	if(isturf(loc)&& (!found_table))
-		to_chat(user, span_notice("Need a table..."))
-		return ..()
-	if(istype(I, /obj/item/clothing/head/peaceflower))
-		if(isturf(loc)&& (found_table))
-			playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
-			to_chat(user, span_notice("Adding sugar and forming a mix..."))
-			if(do_after(user,short_cooktime, target = src))
-				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/slut(loc)
-				qdel(I)
-				qdel(src)
-	return TRUE
-
-/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/slut
+/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_slut
 	name = "cocoa-rosa petal mix."
 	desc = "A fine mix of sugar, cocoa, and petals of an Eoran bud. Love is ready to grow, it only needs warmth."
 	icon_state = "cocoa_e"
@@ -202,7 +181,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/chocolate/slut // This is MY code, I get to do my childish hate upon the zapebait divine inside of it. 
 	name = "peace chocolate bar"
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
-	icon_state = "chocolate_s"
+	icon_state = "chocolate_e"
 	desc = "A bar of chocolate with petals of an Eoran bud mixed in. A symbol of love and longing, favored by those devoted to the Lady of The Hearth."
 	faretype = FARE_FINE
 	rotprocess = SHELFLIFE_EXTREME

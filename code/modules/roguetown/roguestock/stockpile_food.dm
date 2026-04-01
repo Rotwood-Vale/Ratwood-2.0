@@ -378,3 +378,17 @@
 	stockpile_limit = 50
 	passive_generation = 2
 	category = "Foodstuffs"
+
+/datum/roguestock/stockpile/cocoa
+	name = "Cocoa Beans"
+	desc = "The beans of the cocoa tree, used to make chocolate."
+	item_type = /obj/item/reagent_containers/food/snacks/rogue/cocoa_bean
+	held_items = list(0, 0)
+	payout_price = 3
+	withdraw_price = 3
+	transport_fee = 1
+	export_price = 3
+	importexport_amt = 10
+	stockpile_limit = 50
+	passive_generation = 2
+	category = "Foodstuffs"
