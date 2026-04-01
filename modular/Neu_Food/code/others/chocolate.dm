@@ -17,29 +17,23 @@
 
 /obj/item/reagent_containers/powder/cocoa_powder/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
-	var/obj/item/reagent_containers/R = I
+	var/obj/item/reagent_containers/container = I
 	update_cooktime(user)
-	if(!istype(R))
+	if(!istype(container))
 		return ..()
 	if(isturf(loc)&& (!found_table))
 		to_chat(user, span_notice("Need a table..."))
 		return ..()
-	if(istype(I, /obj/item/reagent_containers/food/snacks/sugar))
-		if(isturf(loc)&& (found_table))
-			playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
-			to_chat(user, span_notice("Adding sugar and forming a mix..."))
-			if(do_after(user,short_cooktime, target = src))
-				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar(loc)
-				qdel(I)
-				qdel(src)
-		else
-			to_chat(user, span_warning("You need to put [src] on a table to work it."))
-	else
-		return ..()
-	return TRUE
+	if(istype(container, /obj/item/reagent_containers/food/snacks/sugar))
+		playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
+		to_chat(user, span_notice("Adding sugar and forming a mix..."))
+		if(do_after(user,short_cooktime, target = src))
+			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+			new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar(loc)
+			qdel(container)
+			qdel(src)
+		return TRUE
 
-// I hate coding I hate coding. I. HATE. CODING. 
 
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar
 	name = "Chocolate mass"
@@ -54,22 +48,22 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/attackby(obj/item/I, mob/living/user, params)
     var/found_table = locate(/obj/structure/table) in (loc)
-    var/obj/item/reagent_containers/R = I
+    var/obj/item/reagent_containers/container = I
     update_cooktime(user)
-    if(!istype(R) && !istype(I, /obj/item/reagent_containers/food/snacks/rogue/raisins) && !istype(I, /obj/item/clothing/head/peaceflower))
+    if(!istype(container) && !istype(I, /obj/item/reagent_containers/food/snacks/rogue/raisins) && !istype(I, /obj/item/clothing/head/peaceflower))
         return ..()
     if(isturf(loc) && (!found_table))
         to_chat(user, span_notice("Need a table..."))
         return ..()
     
     // Handle milk
-    if(R && R.reagents.has_reagent(/datum/reagent/consumable/milk, 10))
+    if(container && container.reagents.has_reagent(/datum/reagent/consumable/milk, 10))
         playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
         to_chat(user, span_notice("Adding milk and mixing..."))
         if(do_after(user, short_cooktime, target = src))
             add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
             new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/milk(loc)
-            qdel(I)
+            qdel(container)
             qdel(src)
         return TRUE
     
@@ -97,7 +91,6 @@
 
     return ..()
 
-//Apparently this can only handle one /attackby/ at a time? woe. Well there goes half an hour of my life that I will literally never get back. Woe.
 //I cry. ZIZO laughs.
 
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/milk
@@ -126,7 +119,7 @@
 	icon_state = "chocolate_d"
 	desc = "A bar of dark chocolate. Bitter, but still delicious."
 	faretype = FARE_NEUTRAL
-	rotprocess = SHELFLIFE_EXTREME
+	rotprocess = null
 	foodtype = SUGAR 
 	tastes = list("bitterness" = 1,)
 	w_class = WEIGHT_CLASS_NORMAL
@@ -140,7 +133,7 @@
 	icon_state = "chocolate_l"
 	desc = "A bar of milk chocolate. Sweet and delicious."
 	faretype = FARE_FINE
-	rotprocess = SHELFLIFE_EXTREME
+	rotprocess = null
 	foodtype = SUGAR | DAIRY
 	tastes = list("sweetness" = 2)
 	w_class = WEIGHT_CLASS_NORMAL
@@ -155,7 +148,7 @@
 	icon_state = "chocolate_r"
 	desc = "A bar of chocolate with raisins. Damning crime against good taste." // my code, my preferences.
 	faretype = FARE_FINE
-	rotprocess = SHELFLIFE_EXTREME
+	rotprocess = null
 	foodtype = SUGAR | FRUIT 
 	tastes = list("sweetness" = 2, "tartness" = 1)
 	w_class = WEIGHT_CLASS_NORMAL
@@ -171,7 +164,7 @@
 	icon_state = "chocolate_h"
 	desc = "A glorious bar of milk chocolate mixed with honey and rocknut, crafted with utmost care by Malumite Chocolatemaker Guilds of mountainous regions of Grenzelhoft. Snack worthy of a King, or a Grand Duke."
 	faretype = FARE_LAVISH
-	rotprocess = SHELFLIFE_EXTREME
+	rotprocess = null
 	foodtype = SUGAR | DAIRY 
 	tastes = list("sweetness" = 2, "nuttiness" = 1)
 	w_class = WEIGHT_CLASS_NORMAL
@@ -186,10 +179,11 @@
 	icon_state = "chocolate_e"
 	desc = "A bar of chocolate with petals of a rosa flower mixed in. A symbol of love and longing, favored by those devoted to the Lady of The Hearth."
 	faretype = FARE_FINE
-	rotprocess = SHELFLIFE_EXTREME
+	rotprocess = null
 	foodtype = SUGAR | FRUIT
 	tastes = list("sweetness" = 2, "rosa" = 1, "loving" = 1)
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 6
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
+
