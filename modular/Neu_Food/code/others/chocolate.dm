@@ -85,7 +85,7 @@
         return TRUE
     
     // Handle rosa
-    if(istype(I, /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals)) // originally meant to be peaceflower. doesn't want to work. Woe.
+    if(istype(I, /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals))
         playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
         to_chat(user, span_notice("Adding the petals and mixing..."))
         if(do_after(user, short_cooktime, target = src))
