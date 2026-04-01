@@ -14,14 +14,13 @@
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
 	icon_state = "cocoa_p"
 	desc = "Cocoa powder, used for making chocolate, both solid and liquid. Needs sugar to be processed further."
-	var/sugar_added
-	var/cooked_type
+	var/wa
 
 /obj/item/reagent_containers/powder/cocoa_powder/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
 	var/obj/item/reagent_containers/R = I
 	update_cooktime(user)
-	if(!istype(R) || sugar_added)
+	if(!istype(R))
 		return ..()
 	if(isturf(loc)&& (!found_table))
 		to_chat(user, span_notice("Need a table..."))
@@ -32,10 +31,9 @@
 			to_chat(user, span_notice("Adding sugar..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				name = "cocoa-sugar mix"
-				desc = "A fine mix of sugar and cocoa. Either nothing but the very first step on your new, sweet destiny, or, already the pan-ultimate step."
-				set cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate // You will live WITHOUT a different fucking sprite for each and every possible combination and you VILL LIKE IT. 
-				sugar_added = TRUE
+				new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar(loc)
+				qdel(I)
+				qdel(src)
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to work it."))
 	else
@@ -43,6 +41,16 @@
 	return TRUE
 // I hate coding I hate coding. I. HATE. CODING. 
 
+/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar
+	name = "cocoa-sugar mix"
+	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
+	icon_state = "cocoa_p"
+	desc = "A fine mix of sugar and cocoa. Either nothing but the very first step on your new, sweet destiny, or, already the pan-ultimate step."
+	tastes = list("bitterness" = 1, "sweetness" = 1)
+	bitesize = 1
+	faretype = FARE_POOR
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate
 
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -69,7 +77,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_milk
 	name = "cocoa-sugar-milk mix"
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
-	icon_state = "cocoa_s"
+	icon_state = "cocoa_p"
 	desc = "A fine mix of sugar, cocoa, and milk. Either nothing but the very first step on your new, sweet destiny, or, already the pan-ultimate step."
 	tastes = list("bitterness" = 1, "sweetness" = 1)
 	bitesize = 1
@@ -104,7 +112,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar_raisins
 	name = "cocoa-sugar-raisins mix"
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
-	icon_state = "cocoa_s"
+	icon_state = "cocoa_p"
 	desc = "A fine mix of sugar, cocoa, and raisins. Either nothing but the very first step on your new, sweet destiny, or, already the pan-ultimate step." //my fucking code, my fucking tastes.
 	tastes = list("bitterness" = 1, "sweetness" = 1)
 	bitesize = 1
