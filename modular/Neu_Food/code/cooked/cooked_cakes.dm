@@ -292,6 +292,17 @@
 				qdel(src)
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to work it."))
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/chocolate)) //chocolate cake! 
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
+			to_chat(user, span_notice("Melting and covering the cake with delicious chocolate..."))
+			if(do_after(user,long_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/chocolatecake(loc)
+				qdel(I)
+				qdel(src)
+		else
+			to_chat(user, span_warning("You need to put [src] on a table to work it."))
 	//(We could add generic cakes here, using the filling overlays)
 	else
 		return ..()
@@ -888,6 +899,44 @@
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
 	rotprocess = SHELFLIFE_LONG
+
+//	..................   Chocolate cake   ..................
+/obj/item/reagent_containers/food/snacks/rogue/chocolatecake
+	name = "chocolate cake"
+	desc = "A rich chocolate cake with a decadent chocolate frosting."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_cakes.dmi'
+	icon_state = "chocolatecake"
+	slices_num = 8
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/chocolatecakeslice
+	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("cake"=1,"chocolate frosting"=1)
+	foodtype = GRAIN | DAIRY | SUGAR
+	faretype = FARE_FINE
+	slice_batch = TRUE
+	slice_sound = TRUE
+	rotprocess = SHELFLIFE_LONG
+	eat_effect = /datum/status_effect/buff/snackbuff
+	extra_eat_effect = /datum/status_effect/buff/sweet
+	bitesize = 16
+
+/obj/item/reagent_containers/food/snacks/rogue/chocolatecakeslice
+	name = "chocolate cake slice"
+	desc = "A slice of rich chocolate cake with a decadent chocolate frosting."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_cakes.dmi'
+	icon_state = "chocolatecake_slice"
+	slices_num = 0
+	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
+	faretype = FARE_FINE
+	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("cake"=1,"chocolate frosting"=1)
+	cooked_type = null
+	foodtype = GRAIN | DAIRY | SUGAR
+	bitesize = 3
+	eat_effect = /datum/status_effect/buff/snackbuff
+	extra_eat_effect = /datum/status_effect/buff/sweet
+	rotprocess = SHELFLIFE_LONG
+
 
 //	..................   Honey cake (Zybantu)   ..................
 //	..................           Raw            ..................
