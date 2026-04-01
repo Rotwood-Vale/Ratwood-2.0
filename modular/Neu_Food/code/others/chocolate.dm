@@ -44,7 +44,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar
 	name = "cocoa-sugar mix"
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
-	icon_state = "cocoa_p"
+	icon_state = "cocoa_s"
 	desc = "A fine mix of sugar and cocoa. Either nothing but the very first step on your new, sweet destiny, or, already the pan-ultimate step."
 	tastes = list("bitterness" = 1, "sweetness" = 1)
 	bitesize = 1
@@ -79,6 +79,7 @@
 	desc = "A fine mix of sugar, cocoa and milk. You stand at the verge of greatness."
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/milk
 	color = "#9e9a9e" // so it, at least a LITTLE stands out from the normal sugar-cocoa mix. 
+	icon_state = "cocoa_s"
 
 /obj/item/reagent_containers/powder/cocoa_sugar/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -108,6 +109,7 @@
 	name = "cocoa-raisins mix"
 	desc = "A fine mix of sugar, cocoa, and raisins. Either nothing but the very first step on your new, sweet destiny, or, already the pan-ultimate step." //my fucking code, my fucking tastes.
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/raisin
+	icon_state = "cocoa_r"
 
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -132,6 +134,7 @@
 /obj/item/reagent_containers/food/snakcs/rogue/cocoa_sugar/slut
 	name = "cocoa-rosa petal mix."
 	desc = "A fine mix of sugar, cocoa, and petals of an Eoran bud. Love is ready to grow, it only needs warmth."
+	icon_state = "cocoa_e"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate_slut
 
 //Chocolate bars.

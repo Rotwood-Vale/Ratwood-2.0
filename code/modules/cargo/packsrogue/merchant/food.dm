@@ -162,14 +162,14 @@
 	name = "Milk Chocolate"
 	cost = 60
 	contains = list(
-					/obj/item/reagent_containers/food/snacks/rogue/chocolate_milk,
+					/obj/item/reagent_containers/food/snacks/rogue/chocolate/milk,
 				)
 
 /datum/supply_pack/rogue/food/chocolate_raisin
 	name = "Raisin Chocolate"
 	cost = 60
 	contains = list(
-					/obj/item/reagent_containers/food/snacks/rogue/chocolate_raisin,
+					/obj/item/reagent_containers/food/snacks/rogue/chocolate/raisin,
 				)
 
 /datum/supply_pack/rogue/food/chocolate_royal
