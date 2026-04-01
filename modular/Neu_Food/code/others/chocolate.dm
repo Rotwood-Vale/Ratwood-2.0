@@ -84,18 +84,17 @@
             qdel(src)
         return TRUE
     
-    // Handle peaceflower
-	if(istype(I, /obj/item/clothing/head/peaceflower)) 
-		if(isturf(loc)&& (found_table))
-			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
-			to_chat(user, span_notice("Mixing the petals of the bud with the chocolate mass..."))
-			if(do_after(user,long_cooktime, target = src))
-				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/slut(loc)
-				qdel(I)
-				qdel(src)
+    // Handle rosa
+    if(istype(I, /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals)) // originally meant to be peaceflower. doesn't want to work. Woe.
+        playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
+        to_chat(user, span_notice("Adding the petals and mixing..."))
+        if(do_after(user, short_cooktime, target = src))
+            add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/slut(loc)
+            qdel(I)
+            qdel(src)
         return TRUE
-    
+
     return ..()
 
 //Apparently this can only handle one /attackby/ at a time? woe. Well there goes half an hour of my life that I will literally never get back. Woe.
@@ -154,7 +153,7 @@
 	name = "raisin chocolate bar"
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
 	icon_state = "chocolate_r"
-	desc = "A bar of chocolate with raisins. Sweet and chewy."
+	desc = "A bar of chocolate with raisins. Damning crime against good taste." // my code, my preferences.
 	faretype = FARE_FINE
 	rotprocess = SHELFLIFE_EXTREME
 	foodtype = SUGAR | FRUIT 
@@ -182,10 +181,10 @@
 	list_reagents = list(/datum/reagent/consumable/honey = 2, /datum/reagent/consumable/nutriment = SNACK_DECENT)
 
 /obj/item/reagent_containers/food/snacks/rogue/chocolate/slut // This is MY code, I get to do my childish hate upon the zapebait divine inside of it. 
-	name = "peace chocolate bar"
+	name = "rosa chocolate bar"
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
 	icon_state = "chocolate_e"
-	desc = "A bar of chocolate with petals of an Eoran bud mixed in. A symbol of love and longing, favored by those devoted to the Lady of The Hearth."
+	desc = "A bar of chocolate with petals of a rosa flower mixed in. A symbol of love and longing, favored by those devoted to the Lady of The Hearth."
 	faretype = FARE_FINE
 	rotprocess = SHELFLIFE_EXTREME
 	foodtype = SUGAR | FRUIT
