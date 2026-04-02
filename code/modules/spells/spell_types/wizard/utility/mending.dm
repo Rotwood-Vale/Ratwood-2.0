@@ -13,8 +13,8 @@
 	sound = 'sound/magic/whiteflame.ogg'
 	cost = 2
 	spell_tier = 1 // Utility. For repair
-	glow_color = GLOW_COLOR_ARCANE
-	glow_intensity = GLOW_INTENSITY_LOW
+	glow_color = null
+	glow_intensity = 0
 
 	miracle = FALSE
 
