@@ -3,7 +3,8 @@
 /obj/item/reagent_containers/food/snacks/fish/crab
 	name = "crab"
 	desc = "A defensive shellfish that's a real hassle to crack open, they taste great when made into cakes with butterdough slice."
-	icon_state = "crab"
+	icon_state = "crabcom"
+	rarity_icon_states = list("com" = "crabcom", "rare" = "crabrare", "ultra" = "crabultra", "gold" = "crabgold")
 	sellprice = 10
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/crab
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/crab
@@ -33,33 +34,49 @@
 	sellprice = 15
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/clam
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/clam
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish
 	cooked_smell = /datum/pollutant/food/fried_shellfish
 
 /obj/item/reagent_containers/food/snacks/fish/lobster
 	name = "lobster"
 	desc = "A hard-shelled cretin, barely fit for eating."
-	icon_state = "lobster"
+	icon_state = "lobstercom"
 	faretype = FARE_NEUTRAL
-	no_rarity_sprite = TRUE
+	rarity_icon_states = list("com" = "lobstercom", "rare" = "lobsterrare", "ultra" = "lobsterultra", "gold" = "lobstergold")
 	sellprice = 5
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/lobster
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/lobster
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish
 	cooked_smell = /datum/pollutant/food/fried_shellfish
 
+/obj/item/reagent_containers/food/snacks/fish/crawfish
+	name = "crawfish"
+	desc = "A muddy little river crustacean. It looks like a meaner, smaller lobster."
+	icon_state = "crawfish"
+	faretype = FARE_NEUTRAL
+	no_rarity_sprite = TRUE
+	sellprice = 4
+	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/crawfish
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/crawfish
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish
+	cooked_smell = /datum/pollutant/food/fried_shellfish
+
 /obj/item/reagent_containers/food/snacks/fish/shrimp
 	name = "shrimp"
 	desc = "A tiny shellfish, little bigger than your thumb. Often nicknamed butterflies of the sea."
-	icon_state = "shrimp"
+	icon_state = "shrimpcom"
+	rarity_icon_states = list("com" = "shrimpcom", "rare" = "shrimprare", "ultra" = "shrimpultra", "gold" = "shrimpgold")
 	sellprice = 5
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/shrimp
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/shrimp
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish
 	cooked_smell = /datum/pollutant/food/fried_shellfish
 
 /obj/item/reagent_containers/food/snacks/fish/oyster
 	name = "oyster"
 	desc = "A stubborn shellfish that MIGHT hide a prize within, can be opened with a knife to reveal the flesh within."
-	icon_state = "oyster"
+	icon_state = "oystercom"
+	rarity_icon_states = list("com" = "oystercom", "rare" = "oysterrare", "ultra" = "oysterultra", "gold" = "oystergold")
 	sellprice = 5
 	var/closed
 	var/obj/item/pearl
@@ -121,6 +138,8 @@
 /obj/item/reagent_containers/food/snacks/fish/oyster/fossilized
 	name = "fossilized oyster"
 	desc = "A calcified old oyster. The shell is ancient, but it still might hide a prize within."
+	icon = 'icons/roguetown/gems/gem_shell.dmi'
+	icon_state = "oyster_closed"
 	sellprice = 10
 
 /obj/item/reagent_containers/food/snacks/fish/oyster/fossilized/Initialize(mapload)
@@ -138,7 +157,7 @@
 
 /obj/item/oystershell
 	name = "oyster shell"
-	icon = 'modular/Neu_food/icons/raw/raw_fish.dmi'
+	icon = 'modular/Neu_Food/icons/raw/raw_fish.dmi'
 	icon_state = "oyster_shell"
 	desc = ""
 	dropshrink = 0.5

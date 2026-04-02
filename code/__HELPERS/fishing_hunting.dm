@@ -18,6 +18,65 @@
 		return FALSE
 	return !!findtext("[I.type]", "/cheese")
 
+/proc/get_fish_size_scale(size_tag)
+	switch(size_tag)
+		if("tiny")
+			return 0.75
+		if("small")
+			return 0.9
+		if("large")
+			return 1.15
+		if("huge")
+			return 1.3
+		if("prize")
+			return 1.45
+		else
+			return 1
+
+// Tracks chum-enhanced water tiles with original properties as: turf -> list(expiry_time, orig_color, orig_name)
+/var/global/list/chummed_fishing_tiles = list()
+
+/proc/apply_chum_to_turf(turf/T, duration = 2 MINUTES)
+	if(!T)
+		return
+	var/world_time_expiry = world.time + duration
+	var/orig_color = T.color
+	var/orig_name = T.name
+	
+	// Store expiry and original properties
+	chummed_fishing_tiles[T] = list(world_time_expiry, orig_color, orig_name)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(expire_chum_turf), T), duration)
+	
+	// Visual effect: turn water red/bloody
+	T.color = "#8B0000"  // Dark red/blood color
+	T.name = "[T.name] (chummed)"
+
+/proc/expire_chum_turf(turf/T)
+	if(!T)
+		return
+	var/expiry_data = chummed_fishing_tiles[T]
+	if(!expiry_data)
+		return
+	var/expiry = expiry_data[1]
+	if(world.time < expiry)
+		return
+	T.color = expiry_data[2]
+	T.name = expiry_data[3]
+	chummed_fishing_tiles -= T
+
+/proc/is_chummed_fishing_turf(turf/T)
+	if(!T)
+		return FALSE
+	var/expiry_data = chummed_fishing_tiles[T]
+	if(!expiry_data)
+		return FALSE
+	
+	var/expiry = expiry_data[1]
+	if(world.time > expiry)
+		expire_chum_turf(T)
+		return FALSE
+	return TRUE
+
 /proc/createFreshWaterFishWeightList(commonMod, rareMod, treasureMod, trashMod, dangerMod, ceruleanMod, cheeseMod)
 	var/list/weightList = list(
 		/obj/item/reagent_containers/food/snacks/fish/carp = 270*commonMod,
@@ -122,8 +181,10 @@
 /proc/createMudFishWeightListModlist(list/fishingMods)
 	return createMudFishWeightList(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"],fishingMods["cheeseFishingMod"])
 
-/proc/createCageFishWeightList(commonMod, rareMod, treasureMod, trashMod, dangerMod, ceruleanMod, cheeseMod)
-	var/weightList = list(
+/proc/createCageFishWeightList(commonMod, rareMod, treasureMod, trashMod, dangerMod, ceruleanMod, cheeseMod, turf/target)
+	var/list/weightList
+	if(istype(target, /turf/open/water/ocean) || istype(target, /turf/open/water/ocean/deep))
+		weightList = list(
 			/obj/item/reagent_containers/food/snacks/fish/oyster = 250*commonMod,
 			/obj/item/reagent_containers/food/snacks/fish/oyster/fossilized = 450*rareMod,
 			/obj/item/reagent_containers/food/snacks/fish/clam = 300*commonMod,
@@ -131,11 +192,93 @@
 			/obj/item/reagent_containers/food/snacks/fish/crab = 250*rareMod,
 			/obj/item/reagent_containers/food/snacks/fish/lobster = 250*commonMod,
 			/obj/item/reagent_containers/food/snacks/fish/octopus = 15*rareMod,
-			/obj/item/reagent_containers/food/snacks/smallrat = 1 + 15*cheeseMod, //Oh for fucks sake!
+			/obj/item/reagent_containers/food/snacks/smallrat = 1 + 15*cheeseMod,
 			/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 1*cheeseMod,
-			/obj/item/grown/log/tree/stick =  100*trashMod,
+			/obj/item/grown/log/tree/stick = 100*trashMod,
 		)
+	else
+		weightList = list(
+			/obj/item/reagent_containers/food/snacks/fish/clam = 300*commonMod,
+			/obj/item/reagent_containers/food/snacks/fish/crab = 250*rareMod,
+			/obj/item/reagent_containers/food/snacks/smallrat = 1 + 15*cheeseMod,
+			/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 1*cheeseMod,
+			/obj/item/grown/log/tree/stick = 100*trashMod,
+		)
+		if(istype(target, /turf/open/water/swamp) || istype(target, /turf/open/water/swamp/deep) || istype(target, /turf/open/water/river/muddy))
+			weightList[/obj/item/reagent_containers/food/snacks/fish/crawfish] = 250*commonMod
 	return counterlist_ceiling(weightList)
 
-/proc/createCageFishWeightListModlist(list/fishingMods)
-	return createCageFishWeightList(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"],fishingMods["cheeseFishingMod"])
+/proc/createCageFishWeightListModlist(list/fishingMods, turf/target)
+	return createCageFishWeightList(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"],fishingMods["cheeseFishingMod"], target)
+
+/proc/apply_fishing_quality_to_fish(obj/item/reagent_containers/food/snacks/fish/F, list/modlist, list/size_weights_override = null)
+	if(!F)
+		return
+
+	var/list/rarity_weights = list("com" = 70, "rare" = 20, "ultra" = 9, "gold" = 1)
+	var/list/size_weights = list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "huge" = 4, "prize" = 1)
+	if(islist(size_weights_override))
+		size_weights = size_weights_override.Copy()
+
+	if(islist(modlist))
+		rarity_weights["com"] = max(1, round(rarity_weights["com"] * max(0.1, modlist["commonFishingMod"] || 1)))
+		rarity_weights["rare"] = max(1, round(rarity_weights["rare"] * max(0.1, modlist["rareFishingMod"] || 1)))
+		rarity_weights["ultra"] = max(1, round(rarity_weights["ultra"] * max(0.1, modlist["rareFishingMod"] || 1)))
+		rarity_weights["gold"] = max(1, round(rarity_weights["gold"] * max(0.1, modlist["ceruleanFishingMod"] || 1)))
+
+	var/fishrarity = pickweightAllowZero(rarity_weights)
+	var/fishsize = pickweightAllowZero(size_weights)
+
+	var/raritydesc = "common"
+	var/costmod = 1
+	switch(fishrarity)
+		if("rare")
+			raritydesc = "rare"
+			costmod *= 2
+		if("ultra")
+			raritydesc = "ultra-rare"
+			costmod *= 4
+		if("gold")
+			raritydesc = "legendary"
+			costmod *= 10
+
+	if(!initial(F.no_rarity_sprite) && islist(F.rarity_icon_states) && F.rarity_icon_states[fishrarity])
+		F.icon_state = F.rarity_icon_states[fishrarity]
+
+	if(fishrarity != "com")
+		switch(F.type)
+			if(/obj/item/reagent_containers/food/snacks/fish/carp)
+				F.fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/carp/rare
+				F.cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/carp/rare
+			if(/obj/item/reagent_containers/food/snacks/fish/eel)
+				F.fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/eel/rare
+				F.cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/eel/rare
+			if(/obj/item/reagent_containers/food/snacks/fish/angler)
+				F.fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/angler/rare
+				F.cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/angler/rare
+			if(/obj/item/reagent_containers/food/snacks/fish/clownfish)
+				F.fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/clownfish/rare
+				F.cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/clownfish/rare
+
+	switch(fishsize)
+		if("tiny")
+			F.sizemod = list("tiny" = -999)
+			costmod *= 0.5
+		if("small")
+			F.sizemod = list("tiny" = -999, "small" = -999)
+			costmod *= 0.75
+		if("large")
+			F.vars["fishloot"] = null
+			costmod *= 1.5
+		if("huge")
+			F.vars["fishloot"] = null
+			costmod *= 3
+		if("prize")
+			F.vars["fishloot"] = null
+			costmod *= 5
+		else
+			F.vars["fishloot"] = null
+
+	F.apply_fishing_size(fishsize)
+	F.name = "[fishsize] [raritydesc] [F.name]"
+	F.sellprice *= costmod

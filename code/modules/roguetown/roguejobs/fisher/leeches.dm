@@ -171,6 +171,12 @@
 		return
 	return ..()
 
+/obj/item/natural/worms/leech/attack_self(mob/user)
+	if(!ishuman(user))
+		return ..()
+	var/mob/living/carbon/human/H = user
+	return eat_gross_bait(H)
+
 /// LEECH LORE... Collect em all!
 /obj/item/natural/worms/leech/proc/leech_lore()
 	if(consistent)
@@ -270,7 +276,6 @@
 	) // the humble cheele is gentle. so gentle.
 
 /obj/item/natural/worms/leech/cheele/attack_self(mob/user)
-	. = ..()
 	giving = !giving
 	if(giving)
 		user.visible_message(span_notice("[user] squeezes [src]."),\

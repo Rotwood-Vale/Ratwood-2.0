@@ -49,34 +49,92 @@
 		shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 		neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 		head = /obj/item/clothing/head/roguetown/fisherhat
-		mouth = /obj/item/rogueweapon/huntingknife
 		armor = /obj/item/clothing/suit/roguetown/armor/workervest
 		backl = /obj/item/storage/backpack/rogue/satchel
 		belt = /obj/item/storage/belt/rogue/leather
 		backr = /obj/item/fishingrod/fisher
 		beltr = /obj/item/cooking/pan
-		beltl = /obj/item/flint
+		beltl = null
 		backpack_contents = list(
 							/obj/item/natural/worms = 2,
 							/obj/item/rogueweapon/shovel/small = 1,
 							/obj/item/flashlight/flare/torch = 1,
+							/obj/item/flint = 1,
 							/obj/item/recipe_book/survival = 1,
-							/obj/item/rogueweapon/scabbard/sheath = 1
 							)
 	else
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
 		shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 		neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 		head = /obj/item/clothing/head/roguetown/fisherhat
-		mouth = /obj/item/rogueweapon/huntingknife
 		backl = /obj/item/storage/backpack/rogue/satchel
 		belt = /obj/item/storage/belt/rogue/leather
 		backr = /obj/item/fishingrod/fisher
 		beltr = /obj/item/cooking/pan
-		beltl = /obj/item/flint
+		beltl = null
 		backpack_contents = list(
 							/obj/item/natural/worms = 2,
 							/obj/item/rogueweapon/shovel/small = 1,
 							/obj/item/flashlight/flare/torch = 1,
-							/obj/item/rogueweapon/scabbard/sheath = 1
+							/obj/item/flint = 1
 							)
+
+/datum/outfit/job/roguetown/adventurer/fisher/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	if(visualsOnly)
+		return
+	if(H?.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/digworms)
+	var/obj/item/rogueweapon/scabbard/sheath/S = new /obj/item/rogueweapon/scabbard/sheath(H)
+	H.equip_to_slot_or_del(S, SLOT_BELT_L, TRUE)
+	if(!QDELETED(S))
+		var/obj/item/rogueweapon/huntingknife/K = new /obj/item/rogueweapon/huntingknife(S)
+		S.sheathed = K
+		S.update_icon(H)
+
+/obj/effect/proc_holder/spell/invoked/digworms
+	name = "Dig Bait"
+	desc = "Dig around wet mud for worms, grubs, and leeches."
+	overlay_state = "dig"
+	releasedrain = 50
+	chargedrain = 0
+	chargetime = 0
+	recharge_time = 30 SECONDS
+	antimagic_allowed = TRUE
+
+/obj/effect/proc_holder/spell/invoked/digworms/cast(list/targets, mob/user = usr)
+	var/turf/T = get_turf(user)
+	var/atom/target_atom = user
+	if(length(targets))
+		target_atom = targets[1]
+	var/turf/target_turf = get_turf(target_atom)
+	if(!target_turf)
+		target_turf = T
+	if(get_dist(user, target_turf) > 1)
+		to_chat(user, span_warning("I need to dig on mud right beside me."))
+		return FALSE
+	var/valid_tile = FALSE
+	if(istype(target_turf, /turf/open/water/river/muddy))
+		valid_tile = TRUE
+	else if(istype(target_turf, /turf/open/floor/rogue/dirt) && target_turf:muddy)
+		valid_tile = TRUE
+	if(!valid_tile)
+		to_chat(user, span_warning("I need to do this on wet mud."))
+		return FALSE
+	var/digtime = pick(10 SECONDS, 15 SECONDS, 20 SECONDS, 25 SECONDS, 30 SECONDS)
+	var/digamount = pick(2, 3, 4, 5)
+	playsound(target_turf, 'sound/items/dig_shovel.ogg', 25, TRUE)
+	to_chat(user, span_warning("I start to dig through the wet mud..."))
+	if(!do_after(user, digtime, target = target_turf))
+		to_chat(user, span_warning("I need to stay still to dig for bait!"))
+		return FALSE
+	for(var/i = 1, i <= digamount, i++)
+		var/spawn_type = pickweight(list(
+			/obj/item/natural/worms = 5,
+			/obj/item/natural/worms/grubs = 3,
+			/obj/item/natural/worms/leech = 2,
+		))
+		var/obj/item/I = new spawn_type(target_turf)
+		user.dropItemToGround(I)
+	to_chat(user, span_notice("I dig up some bait from the mud!"))
+	return TRUE

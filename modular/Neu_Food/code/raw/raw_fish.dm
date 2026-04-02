@@ -2,13 +2,16 @@
 	name = "fish"
 	desc = "Fresh blood stains its silvery skin. Silver-coloured scales shimmering softly.."
 	icon_state = "carp"
-	icon = 'modular/Neu_food/icons/raw/raw_fish.dmi'
+	icon = 'modular/Neu_Food/icons/raw/raw_fish.dmi'
 	verb_say = "glubs"
 	verb_yell = "glubs"
 	obj_flags = CAN_BE_HIT
 	var/dead = TRUE
 	var/no_rarity_sprite = FALSE // Whether this fish has rarity based sprites. If not, don't change icon states
+	var/list/rarity_icon_states = null
 	var/sinkable = TRUE
+	var/fish_size_tag = "normal"
+	var/fish_size_scale = 1
 	max_integrity = 50
 	sellprice = 10
 	dropshrink = 0.6
@@ -79,6 +82,27 @@
 /obj/item/reagent_containers/food/snacks/fish/after_throw(datum/callback/callback)
 	. = ..()
 	sinkable = TRUE
+	update_transform()
+
+/obj/item/reagent_containers/food/snacks/fish/proc/apply_fishing_size(size_tag)
+	fish_size_tag = size_tag || "normal"
+	fish_size_scale = get_fish_size_scale(fish_size_tag)
+	// Keep fish chop yield aligned with visual tiering.
+	if(fish_size_tag == "tiny" || fish_size_tag == "small")
+		slices_num = 1
+	else if(fish_size_tag == "huge" || fish_size_tag == "prize")
+		slices_num = 4
+	else
+		slices_num = initial(slices_num)
+	update_transform()
+
+/obj/item/reagent_containers/food/snacks/fish/update_transform()
+	..()
+	if(!fish_size_scale || fish_size_scale == 1)
+		return
+	var/matrix/M = transform ? matrix(transform) : matrix()
+	M.Scale(fish_size_scale, fish_size_scale)
+	transform = M
 
 /obj/item/reagent_containers/food/snacks/fish/salmon
 	name = "salmon"
@@ -134,14 +158,16 @@
 	name = "carp"
 	desc = "A mudraking creacher of the river-depths, barely fit for food."
 	faretype = FARE_IMPOVERISHED
-	icon_state = "carp"
+	icon_state = "carpcom"
+	rarity_icon_states = list("com" = "carpcom", "rare" = "carprare", "ultra" = "carpultra", "gold" = "carpgold")
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/carp
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/carp
 
 /obj/item/reagent_containers/food/snacks/fish/clownfish
 	name = "clownfish"
 	desc = "This fish brings vibrant hues to the dark world of the vale."
-	icon_state = "clownfish"
+	icon_state = "clownfishcom"
+	rarity_icon_states = list("com" = "clownfishcom", "rare" = "clownfishrare", "ultra" = "clownfishultra", "gold" = "clownfishgold")
 	faretype = FARE_NEUTRAL
 	sellprice = 40
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/clownfish
@@ -151,7 +177,8 @@
 	name = "anglerfish"
 	desc = "A menacing abyssal predator."
 	faretype = FARE_NEUTRAL
-	icon_state = "angler"
+	icon_state = "anglercom"
+	rarity_icon_states = list("com" = "anglercom", "rare" = "anglerrare", "ultra" = "anglerultra", "gold" = "anglergold")
 	sellprice = 15
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/angler
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/angler
@@ -159,7 +186,8 @@
 /obj/item/reagent_containers/food/snacks/fish/eel
 	name = "eel"
 	desc = "A sinuous eel that slithers through the dark waters."
-	icon_state = "eel"
+	icon_state = "eelcom"
+	rarity_icon_states = list("com" = "eelcom", "rare" = "eelrare", "ultra" = "eelultra", "gold" = "eelgold")
 	faretype = FARE_NEUTRAL
 	sellprice = 5
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/eel
@@ -225,9 +253,9 @@
 /obj/item/reagent_containers/food/snacks/fish/octopus
 	name = "octopus"
 	desc = "A many-armed deepwater hunter. Its flesh is chewy but rich once cooked."
-	icon_state = "creepy_squid"
+	icon_state = "octopuscom"
 	faretype = FARE_NEUTRAL
-	no_rarity_sprite = TRUE
+	rarity_icon_states = list("com" = "octopuscom", "rare" = "octopusrare", "ultra" = "octopusultra", "gold" = "octopusgold")
 	sellprice = 25
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
@@ -331,6 +359,7 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/swamp_shrimp
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/swamp_shrimp
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish
 	sellprice = 5
 
 /obj/item/reagent_containers/food/snacks/fish/swamp_mother

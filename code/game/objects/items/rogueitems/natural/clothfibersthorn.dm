@@ -625,6 +625,10 @@
 	stackname = "worms"
 	bundling_time = 1 SECONDS
 
+/obj/item/natural/bundle/worms/update_bundle()
+	. = ..()
+	icon_state = "worm[clamp(amount, 1, 6)]"
+
 /obj/item/natural/worms/attack_right(mob/user)
 	to_chat(user, span_warning("I start to collect [src]..."))
 	if(move_after(user, bundling_time, target = src))
@@ -637,9 +641,9 @@
 				wormcount--
 			else if(wormcount >= 2)
 				var/obj/item/natural/bundle/worms/B = new(user.drop_location())
-				B.amount = clamp(wormcount, 2, 12)
+				B.amount = clamp(wormcount, 2, B.maxamount)
 				B.update_bundle()
-				wormcount -= clamp(wormcount, 2, 12)
+				wormcount -= clamp(wormcount, 2, B.maxamount)
 				user.put_in_hands(B)
 		for(var/obj/item/natural/worms/F in get_turf(src))
 			qdel(F)

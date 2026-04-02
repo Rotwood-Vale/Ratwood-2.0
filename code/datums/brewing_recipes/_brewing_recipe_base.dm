@@ -34,6 +34,8 @@
 	var/list/age_times = list()
 	///the heat we need to be kept at
 	var/heat_required
+	///if true, this recipe can be selected without cooking skill
+	var/skip_cooking_skill_check = FALSE
 	// The name & description on the bottle, if any. Lowercase for the name. 
 	var/bottle_name = "generic brew"
 	var/bottle_desc = null

@@ -2,7 +2,7 @@
 	force = 12
 	possible_item_intents = list(ROD_AUTO, ROD_CAST, SPEAR_BASH)
 	name = "fishing rod"
-	desc = "Made from weathered wood and coarse twine. The tool of the battle against the dark waters below."
+	desc = "Made from weathered wood and coarse twine. Use in hand to reel catches in, and right-click in your off-hand to manage rod attachments."
 	icon_state = "rod"
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = IS_BLUNT
@@ -60,6 +60,12 @@
 
 	///our clients average ping
 	var/average_ping = 0
+	/// Auto-fishing pending pull state, consumed by use-in-hand reeling.
+	var/auto_reel_ready = FALSE
+	var/auto_reel_deadline = 0
+	var/auto_pending_catch = null
+	var/list/auto_pending_modlist = null
+	var/turf/auto_pending_target = null
 	COOLDOWN_DECLARE(ping_delay)
 
 /datum/intent/cast
@@ -69,6 +75,7 @@
 	misscost = 0
 	icon_state = "cast"
 	no_attack = TRUE
+	reach = 8
 
 /datum/intent/auto
 	name = "auto reel"
@@ -77,63 +84,273 @@
 	misscost = 0
 	icon_state = "auto"
 	no_attack = TRUE
+	reach = 8
 
 /obj/item/fishingrod/attack_self(mob/user)
 	if(user.doing)
-		user.doing = 0
-	else
-		..()
+		to_chat(user, "<span class='warning'>I'm busy right now.</span>")
+		return
+	if(!try_reel_auto_catch(user))
+		to_chat(user, "<span class='notice'>I need a fish tug first. Right-click in your off-hand [src] to manage attachments.</span>")
 
+/obj/item/fishingrod/proc/show_attachment_menu(mob/user)
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return
+
+	if(!baited && !hook && !line && !reel)
+		to_chat(user, "<span class='notice'>There's nothing on this fishing rod!</span>")
+		return
+
+	var/list/choices = list()
+	if(baited)
+		choices["Remove Bait"] = image(icon = baited.icon, icon_state = baited.icon_state)
+	if(hook)
+		choices["Remove Hook"] = image(icon = hook.icon, icon_state = hook.icon_state)
+	if(line)
+		choices[line.bobber ? "Remove Bobber" : "Remove Sinker"] = image(icon = line.icon, icon_state = line.icon_state)
+	// Show reel/line status - can only be removed if nothing else is attached
+	if(reel)
+		if(!hook && !line && !baited)
+			choices["Remove Line"] = image(icon = reel.icon, icon_state = reel.icon_state)
+		else
+			choices["Fishing Line (Attached)"] = image(icon = reel.icon, icon_state = reel.icon_state)
+
+	var/choice = show_radial_menu(user, src, choices, require_near = TRUE, tooltips = TRUE)
+	if(!choice)
+		return
+
+	switch(choice)
+		if("Remove Bait")
+			if(baited)
+				drop_attachment(baited, user)
+				baited = null
+				to_chat(user, "<span class='notice'>I remove the bait from [src].</span>")
+		if("Remove Hook")
+			if(hook)
+				drop_attachment(hook, user)
+				hook = null
+				to_chat(user, "<span class='notice'>I remove the hook from [src].</span>")
+		if("Remove Bobber")
+			if(line)
+				drop_attachment(line, user)
+				line = null
+				to_chat(user, "<span class='notice'>I remove the bobber from [src].</span>")
+		if("Remove Sinker")
+			if(line)
+				drop_attachment(line, user)
+				line = null
+				to_chat(user, "<span class='notice'>I remove the sinker from [src].</span>")
+		if("Remove Line")
+			if(reel)
+				drop_attachment(reel, user)
+				reel = null
+				to_chat(user, "<span class='notice'>I remove the line from [src].</span>")
+		if("Fishing Line (Attached)")
+			to_chat(user, "<span class='warning'>I need to remove the bait, hook, and bobber or sinker first.</span>")
+
+	update_icon()
+	return
+
+/obj/item/fishingrod/proc/get_auto_catch_weight(catch_path)
+	if(!ispath(catch_path))
+		return 1
+	var/weight = 1
+	if(ispath(catch_path, /mob/living))
+		weight += 4
+	if(ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/octopus))
+		weight += 3
+	else if(ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/angler))
+		weight += 2
+	else if(ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/lobster))
+		weight += 2
+	else if(ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/crab))
+		weight += 1
+	return weight
+
+/obj/item/fishingrod/proc/reset_auto_pending_catch()
+	auto_reel_ready = FALSE
+	auto_reel_deadline = 0
+	auto_pending_catch = null
+	auto_pending_modlist = null
+	auto_pending_target = null
+
+/obj/item/fishingrod/proc/try_reel_auto_catch(mob/user)
+	if(!auto_reel_ready)
+		return FALSE
+	if(world.time > auto_reel_deadline)
+		to_chat(user, "<span class='warning'>Too slow. The fish slips free.</span>")
+		if(baited && getbaitlife(user.get_skill_level(/datum/skill/labor/fishing), baited, 100))
+			to_chat(user, "<span class='warning'>...And it took my bait, too.</span>")
+			qdel(baited)
+			baited = null
+			update_icon()
+		reset_auto_pending_catch()
+		return TRUE
+
+	if(!auto_pending_catch)
+		reset_auto_pending_catch()
+		return TRUE
+
+	var/sl = user.get_skill_level(/datum/skill/labor/fishing)
+	var/str_score = 10
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		str_score = H.STASTR
+	var/catch_weight = get_auto_catch_weight(auto_pending_catch)
+	var/base_speed = get_skill_delay(sl, 1, slowest = 7)
+	var/reel_speed = max(1, base_speed + (catch_weight * 0.5) - max(0, str_score - 10) * 0.2)
+	var/turf/reel_anchor = auto_pending_target
+
+	playsound(user.loc, 'sound/misc/reeling.ogg', 70, FALSE)
+	user.visible_message("<span class='notice'>[user] starts reeling the line in.</span>", "<span class='notice'>I start reeling the line in.</span>")
+	var/reel_end_time = world.time + reel_speed
+	while(world.time < reel_end_time)
+		if(reel_anchor && get_dist(user, reel_anchor) > 8)
+			playsound(user.loc, 'sound/items/pickbreak.ogg', 80, FALSE)
+			to_chat(user, "<span class='warning'>I stray too far and the line snaps!</span>")
+			QDEL_NULL(line)
+			if(baited)
+				qdel(baited)
+				baited = null
+			update_icon()
+			reset_auto_pending_catch()
+			return TRUE
+		sleep(1)
+
+	var/reel_roll = rand(1, 20) + str_score + (sl * 2)
+	var/reel_target = 10 + (catch_weight * 3)
+	if(reel_roll < reel_target)
+		var/snap_chance = clamp((catch_weight * 12) - (sl * 2) - max(0, str_score - 10), 5, 60)
+		if(prob(snap_chance))
+			playsound(user.loc, 'sound/items/pickbreak.ogg', 80, FALSE)
+			to_chat(user, "<span class='warning'>The line snaps!</span>")
+			QDEL_NULL(line)
+			if(baited)
+				qdel(baited)
+				baited = null
+			update_icon()
+		else
+			to_chat(user, "<span class='warning'>The fish tears free!</span>")
+		if(baited && getbaitlife(sl, baited, 100))
+			to_chat(user, "<span class='warning'>...And it took my bait, too.</span>")
+			qdel(baited)
+			baited = null
+			update_icon()
+		reset_auto_pending_catch()
+		return TRUE
+
+	if(auto_pending_catch in subtypesof(/mob/living))
+		var/mob/M = auto_pending_catch
+		new M(auto_pending_target || get_turf(user))
+		if(!(M.type == /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab))
+			user.playsound_local(src, pick('sound/misc/jumpscare (1).ogg','sound/misc/jumpscare (2).ogg','sound/misc/jumpscare (3).ogg','sound/misc/jumpscare (4).ogg'), 100)
+	else
+		if(ispath(auto_pending_catch, /obj/item/reagent_containers/food/snacks/fish))
+			var/obj/item/reagent_containers/food/snacks/fish/caughtfish = new auto_pending_catch(user.loc)
+			apply_fishing_quality_to_fish(caughtfish, auto_pending_modlist)
+		else
+			new auto_pending_catch(user.loc)
+
+	playsound(user.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
+	if(user.mind)
+		var/mob/living/carbon/human/fisherman = user
+		user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE)
+		record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
+		record_round_statistic(STATS_FISH_CAUGHT)
+	if(baited && getbaitlife(sl, baited))
+		to_chat(user, "<span class='warning'>Damn, it ate my bait.</span>")
+		qdel(baited)
+		baited = null
+		update_icon()
+	reset_auto_pending_catch()
+	return TRUE
 /obj/item/fishingrod/attackby(obj/item/I, mob/user, params)
 	if(baited && reel && hook && line)
 		return  ..()
 
 	if(istype(I, /obj/item/fishing/bait) || istype(I, /obj/item/natural/worms) || istype(I, /obj/item/natural/bundle/worms) || istype(I, /obj/item/reagent_containers/food/snacks))
-		if(istype(I, /obj/item/fishing/bait) || istype(I, /obj/item/natural/worms))
-			if(!baited)
-				I.forceMove(src)
-				baited = I
-				user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [I] to my line.</span>")
-				playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
-		else if(istype(I, /obj/item/natural/bundle/worms))
-			if(!baited)
-				var/obj/item/natural/bundle/worms/W = I
-				baited = new W.stacktype(src)
-				W.amount--
-				if(W.amount == 1)
-					new W.stacktype(get_turf(user))
-					qdel(W)
-				user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [W.stacktype] to my line.</span>")
-				playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
-		else
-			if(!baited)
-				var/list/snack_fishloot = I.vars["fishloot"]
-				if(snack_fishloot)
-					I.forceMove(src)
-					baited = I
-					user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [I] to my line.</span>")
-					playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
+		try_attach_bait_item(I, user)
 
 	else if(istype(I, /obj/item/fishing)) //bait has a null attachtype and is accounted for in the previous check so i don't have to worry about it
 		var/obj/item/fishing/T = I
 		switch(T.attachtype)
 			if("line")
-				if(!line)
+				if(T.type == /obj/item/fishing/line)
+					to_chat(user, "<span class='warning'>This tackle piece is deprecated. Use a bobber or sinker.</span>")
+				else if(!reel)
+					to_chat(user, "<span class='warning'>I need to add fishing line first.</span>")
+				else if(!hook)
+					to_chat(user, "<span class='warning'>I need a hook before adding this.</span>")
+				else if(baited)
+					to_chat(user, "<span class='warning'>I should remove the bait first.</span>")
+				else if(!line)
 					attach_tackle(T)
 					line = T
 					to_chat(user, "<span class='notice'>I add [I] to [src]...</span>")
 			if("hook")
-				if(!hook)
+				if(!reel)
+					to_chat(user, "<span class='warning'>I need to add fishing line first.</span>")
+				else if(baited)
+					to_chat(user, "<span class='warning'>I should remove the bait first.</span>")
+				else if(!hook)
 					attach_tackle(T)
 					hook = T
 					to_chat(user, "<span class='notice'>I add [I] to [src]...</span>")
 			if("reel")
-				if(!reel)
+				if(hook || line || baited)
+					to_chat(user, "<span class='warning'>The line should go on. Remove the rest of the rig first.</span>")
+				else if(!reel)
 					attach_tackle(T)
 					reel = T
 					to_chat(user, "<span class='notice'>I add [I] to [src]...</span>")
 	update_icon()
 	return
+
+/obj/item/fishingrod/proc/try_attach_bait_item(obj/item/I, mob/user)
+	if(!I || !user || baited)
+		return FALSE
+	if(I.anchored)
+		return FALSE
+	if(!reel)
+		to_chat(user, "<span class='warning'>I need to add fishing line first.</span>")
+		return FALSE
+	if(!hook)
+		to_chat(user, "<span class='warning'>I need a hook before I can bait the rod.</span>")
+		return FALSE
+
+	if(istype(I, /obj/item/fishing/bait) || istype(I, /obj/item/natural/worms))
+		I.forceMove(src)
+		baited = I
+		user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [I] to my line.</span>")
+		playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
+		update_icon()
+		return TRUE
+
+	if(istype(I, /obj/item/natural/bundle/worms))
+		var/obj/item/natural/bundle/worms/W = I
+		baited = new W.stacktype(src)
+		var/worm_name = "worm"
+		W.amount--
+		if(W.amount == 1)
+			new W.stacktype(get_turf(user))
+			qdel(W)
+		user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [worm_name] to my line.</span>")
+		playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
+		update_icon()
+		return TRUE
+
+	if(istype(I, /obj/item/reagent_containers/food/snacks))
+		var/list/snack_fishloot = I.vars["fishloot"]
+		if(!snack_fishloot)
+			return FALSE
+		I.forceMove(src)
+		baited = I
+		user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [I] to my line.</span>")
+		playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
+		update_icon()
+		return TRUE
+
+	return FALSE
 
 /obj/item/fishingrod/proc/attach_tackle(obj/item/fishing/I)
 	I.forceMove(src)
@@ -153,7 +370,7 @@
 	if(hook)
 		drop_attachment(hook, user)
 		hook = null
-	if(line?.bobber)
+	if(line)
 		drop_attachment(line, user)
 		line = null
 
@@ -173,46 +390,15 @@
 	update_icon()
 
 /obj/item/fishingrod/attack_right(mob/user)
-	if(!user.canUseTopic(src, be_close=TRUE))
-		return
-
-	var/has_rig = (baited || hook || (line && line.bobber))
-	if(!has_rig && !line && !reel)
-		to_chat(user, "<span class='notice'>There's nothing on this fishing rod!</span>")
-		return
-
-	var/list/choices = list()
-	if(has_rig)
-		choices["Remove Rig (bait/hook/bobber)"] = image(icon = 'icons/roguetown/items/fishing.dmi', icon_state = "bobber")
-	if(line && !line.bobber)
-		choices["Remove Line"] = image(icon = line.icon, icon_state = line.icon_state)
-	if(reel)
-		choices["Remove Tackle"] = image(icon = reel.icon, icon_state = reel.icon_state)
-
-	var/choice = show_radial_menu(user, src, choices, require_near = TRUE, tooltips = TRUE)
-	if(!choice)
-		return
-
-	switch(choice)
-		if("Remove Rig (bait/hook/bobber)")
-			remove_rig(user)
-			to_chat(user, "<span class='notice'>I remove the rig from [src].</span>")
-		if("Remove Line")
-			if(line)
-				drop_attachment(line, user)
-				line = null
-				to_chat(user, "<span class='notice'>I remove the line from [src].</span>")
-		if("Remove Tackle")
-			if(reel)
-				drop_attachment(reel, user)
-				reel = null
-				to_chat(user, "<span class='notice'>I remove the tackle from [src].</span>")
-
-	update_icon()
-	return
+	show_attachment_menu(user)
 
 /obj/item/fishingrod/AltClick(mob/user)
-	if(!user.canUseTopic(src, be_close=TRUE))
+	return ..()
+
+/obj/item/fishingrod/AltRightClick(mob/user)
+	if(!user)
+		return
+	if(user.get_active_held_item() != src && !Adjacent(user))
 		return
 	if(!baited && !hook && !line && !reel)
 		to_chat(user, "<span class='notice'>There's nothing to remove.</span>")
@@ -236,6 +422,7 @@
 
 	if(line)
 		to_chat(user, "<span class='info'>There's a [line.name] on this rod.</span>")
+	to_chat(user, "<span class='notice'>Use in hand to reel in a hooked catch. Right-click in your off-hand to manage attachments. Alt-Right-Click strips all attachments.</span>")
 
 /obj/item/fishingrod/getonmobprop(tag)
 	. = ..()
@@ -249,16 +436,21 @@
 /obj/item/fishingrod/update_icon()
 	cut_overlays()
 	if(baited)
-		var/obj/item/I = baited
-		I.pixel_x = 6
-		I.pixel_y = -6
-		add_overlay(new /mutable_appearance(I))
+		var/bait_overlay_x = 11
+		var/bait_overlay_y = -10
+		if(ismob(loc))
+			bait_overlay_x = 6
+			bait_overlay_y = -6
+		var/mutable_appearance/bait_overlay = mutable_appearance(baited.icon, baited.icon_state)
+		bait_overlay.pixel_x = bait_overlay_x
+		bait_overlay.pixel_y = bait_overlay_y
+		add_overlay(bait_overlay)
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_hands()
 
 #define FISHRARITYWEIGHTS = list("com" = 70, "rare" = 20, "ultra" = 9, "gold" = 1)
-#define FISHSIZEWEIGHTS = list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "prize" = 1)
+#define FISHSIZEWEIGHTS = list("tiny" = 4, "small" = 5, "normal" = 4, "large" = 3, "huge" = 2, "prize" = 1)
 
 /obj/item/fishingrod/proc/checkreqs(mob/living/user)
 	. = FALSE
@@ -321,9 +513,57 @@
 	currentstate = null
 	currentlyfishing = FALSE
 
-/obj/item/fishingrod/afterattack(obj/target, mob/user, proximity, params)
+/obj/item/fishingrod/proc/get_targeted_water_turf(atom/target)
+	var/turf/T = get_turf(target)
+	if(!T)
+		return null
+	if(istype(T, /turf/open/water))
+		return T
+	if(!istype(T, /turf/open/transparent/openspace))
+		return null
+	var/turf/downcheck = T
+	for(var/i in 1 to 12)
+		downcheck = get_step_multiz(downcheck, DOWN)
+		if(!downcheck)
+			return null
+		if(istype(downcheck, /turf/open/water))
+			return downcheck
+		if(!istype(downcheck, /turf/open/transparent/openspace))
+			return null
+	return null
+
+/obj/item/fishingrod/proc/get_shore_distance(turf/open/water/W, max_scan = 6)
+	if(!W)
+		return 0
+	var/closest_dist = max_scan + 1
+	var/start_x = max(1, W.x - max_scan)
+	var/end_x = min(world.maxx, W.x + max_scan)
+	var/start_y = max(1, W.y - max_scan)
+	var/end_y = min(world.maxy, W.y + max_scan)
+	for(var/turf/T in block(locate(start_x, start_y, W.z), locate(end_x, end_y, W.z)))
+		if(istype(T, /turf/open/water))
+			continue
+		if(!is_shoreline_fishing_turf(T))
+			continue
+		closest_dist = min(closest_dist, get_dist(W, T))
+	return closest_dist
+
+/obj/item/fishingrod/proc/is_shoreline_fishing_turf(turf/T)
+	if(!T)
+		return FALSE
+	var/type_string = "[T.type]"
+	if(findtext(type_string, "/turf/open/floor/rogue/dirt"))
+		return TRUE
+	if(findtext(type_string, "/turf/open/floor/rogue/grass"))
+		return TRUE
+	if(findtext(type_string, "/turf/open/floor/rogue/sand"))
+		return TRUE
+	if(findtext(type_string, "/mud"))
+		return TRUE
+	return FALSE
+
+/obj/item/fishingrod/afterattack(atom/target, mob/user, proximity, params)
 	if(!check_allowed_items(target,target_self=1) \
-	|| (user.used_intent.type != ROD_CAST && user.used_intent.type != ROD_AUTO) \
 	|| user.doing \
 	|| !isliving(user) \
 	|| !user.loc
@@ -331,32 +571,39 @@
 
 		return
 
+	// Allow attaching bait by clicking bait items regardless of active intent.
+	if(get_dist(user, target) <= 1 && istype(target, /obj/item))
+		if(try_attach_bait_item(target, user))
+			return
+
+	if(user.used_intent.type != ROD_CAST && user.used_intent.type != ROD_AUTO && user.used_intent.type != SPEAR_BASH)
+		return
+
+	if(user.used_intent.type == SPEAR_BASH)
+		if(get_dist(user, target) > 1)
+			to_chat(user, "<span class='warning'>It's too far away...</span>")
+			return
+		if(istype(target, /obj/item))
+			if(try_attach_bait_item(target, user))
+				return
+		var/turf/T = get_turf(target)
+		if(!T)
+			return
+		for(var/obj/item/I in T)
+			if(try_attach_bait_item(I, user))
+				return
+		to_chat(user, "<span class='warning'>I can't find usable bait there.</span>")
+		return
+
 	if(user.client)
 		average_ping = user.client.avgping * 0.01
 
-	if(get_dist(user, target) > 5)
+	if(get_dist(user, target) > 8)
 		to_chat(user, "<span class='warning'>It's too far away...</span>")
 		return
 
-	var/turf/targeted
-	if(istype(target, /turf/open/transparent/openspace))
-		var/turf/downcheck = get_step_multiz(target, DOWN)
-		if(istype(downcheck, /turf/open/water))
-			targeted = downcheck
-		else
-			to_chat(user, "<span class='warning'>I can't fish here...</span>")
-			return
-	else if(istype(target, /turf/open/water))
-		targeted = target
-	else
-		to_chat(user, "<span class='warning'>I can't fish here...</span>")
-		return
-
-	var/localwater = 0
-	for(var/turf/open/W in block(get_step(targeted, SOUTHWEST), get_step(targeted, NORTHEAST)))
-		if(istype(W, /turf/open/water))
-			localwater++
-	if(localwater < 5)
+	var/turf/open/water/targeted = get_targeted_water_turf(target)
+	if(!targeted)
 		to_chat(user, "<span class='warning'>I can't fish here...</span>")
 		return
 
@@ -364,6 +611,14 @@
 		to_chat(user, "<span class='warning'>I can't fish here...</span>")
 
 		return
+
+	var/cast_distance = clamp(get_dist(user, targeted), 1, 8)
+	var/shore_distance = get_shore_distance(targeted, 6)
+	var/cast_depth_bonus = max(cast_distance - 2, 0)
+	var/offshore_penalty = max(shore_distance - 2, 0)
+	var/chummed_spot = is_chummed_fishing_turf(targeted)
+	if(istype(targeted, /turf/open/water/cleanshallow))
+		offshore_penalty = max(offshore_penalty, 1)
 
 	if(!baited || !hook || !line)
 		to_chat(user, "<span class='warning'>I'm missing something...</span>")
@@ -375,7 +630,7 @@
 	//initialize fishing modifiers
 	var/deepmod = 0
 	var/list/raritypicker = list("com" = 70, "rare" = 20, "ultra" = 9, "gold" = 1)
-	var/list/sizepicker = list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "prize" = 1)
+	var/list/sizepicker = list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "huge" = 4, "prize" = 1)
 	var/obj/item/fishing/bait/B = null
 	fisher = user
 	var/specialcatchprob = 0
@@ -394,15 +649,18 @@
 	linehealth = skillmod + 6
 	hookwindow = skillmod*3 + 4 + average_ping
 
-	for(var/obj/item/fishing/A in attacheditems)
-		deepmod += A.deepfishingweight
-		linehealth += A.linehealth
-		hookwindow += A.hookmod
-		difficulty += A.difficultymod
-		if(A.raritymod)
-			pickweightmerge(raritypicker, A.raritymod)
-		if(A.sizemod)
-			pickweightmerge(sizepicker, A.sizemod)
+	for(var/obj/item/A in attacheditems)
+		if(!istype(A, /obj/item/fishing))
+			continue
+		var/obj/item/fishing/F = A
+		deepmod += F.deepfishingweight
+		linehealth += F.linehealth
+		hookwindow += F.hookmod
+		difficulty += F.difficultymod
+		if(F.raritymod)
+			pickweightmerge(raritypicker, F.raritymod)
+		if(F.sizemod)
+			pickweightmerge(sizepicker, F.sizemod)
 
 
 	if(!targeted.can_see_sky())
@@ -436,12 +694,16 @@
 			fishpicker = pickweightmerge(fishpicker, list(/obj/item/reagent_containers/food/snacks/fish/octopus = 20))
 			deepfishlist = pickweightmerge(deepfishlist, list(/obj/item/reagent_containers/food/snacks/fish/octopus = 12))
 	else if(istype(baited, /obj/item/natural/worms))
-		var/list/worm_fishloot = baited.vars["fishloot"]
+		var/list/worm_fishloot = null
+		if("fishloot" in baited.vars)
+			worm_fishloot = baited.vars["fishloot"]
 		if(worm_fishloot)
 			fishpicker = pickweightmerge(fishpicker, worm_fishloot)
 	else if(istype(baited, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/food/snacks/S = baited
-		var/list/snack_fishloot = S.vars["fishloot"]
+		var/list/snack_fishloot = null
+		if("fishloot" in S.vars)
+			snack_fishloot = S.vars["fishloot"]
 		if(snack_fishloot)
 			fishpicker = pickweightmerge(fishpicker, snack_fishloot)
 		if(S.sizemod)
@@ -454,6 +716,24 @@
 			/obj/item/reagent_containers/food/snacks/smallrat = 20,
 			/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 3,
 		))
+
+	if(cast_depth_bonus)
+		deepmod += cast_depth_bonus
+		for(var/i in 1 to cast_depth_bonus)
+			raritypicker = pickweightmerge(raritypicker, list("com" = -1, "rare" = 1))
+			if(i >= 2)
+				raritypicker = pickweightmerge(raritypicker, list("ultra" = 1))
+			sizepicker = pickweightmerge(sizepicker, list("tiny" = -1, "small" = -1, "large" = 1, "huge" = 1, "prize" = 1))
+
+	if(offshore_penalty)
+		deepmod = max(0, deepmod - offshore_penalty)
+		for(var/i in 1 to offshore_penalty)
+			raritypicker = pickweightmerge(raritypicker, list("com" = 2, "rare" = -1, "ultra" = -1, "gold" = -1))
+			sizepicker = pickweightmerge(sizepicker, list("tiny" = 2, "small" = 1, "large" = -1, "huge" = -2, "prize" = -3))
+
+	if(chummed_spot)
+		deepmod += 1
+		raritypicker = pickweightmerge(raritypicker, list("com" = -2, "rare" = 2, "ultra" = 1, "gold" = 1))
 
 	while(deepmod > 0)
 		fishpicker = pickweightmerge(fishpicker, deepfishlist)
@@ -524,15 +804,16 @@
 			acceleration += clamp(sizepicker.Find(fishsize) - 3, 0, 2) + clamp(raritypicker.Find(fishrarity) - 1, 0, 3)
 			maxvelocity = 3 + clamp(raritypicker.Find(fishrarity) - 1, 0, 3) + clamp(sizepicker.Find(fishsize) - 3, -1, 2)
 			fishhealth =  9 + sizepicker.Find(fishsize)*6 + raritypicker.Find(fishrarity)*6
-			switch(fishsize)
-				if("tiny")
-					costmod *= 0.5
-				if("small")
-					costmod *= 0.75
-				if("large")
-					costmod *= 1.5
-				if("prize")
-					costmod *= 3
+			if(fishsize == "tiny")
+				costmod *= 0.5
+			else if(fishsize == "small")
+				costmod *= 0.75
+			else if(fishsize == "large")
+				costmod *= 1.5
+			else if(fishsize == "huge")
+				costmod *= 3
+			else if(fishsize == "prize")
+				costmod *= 5
 			switch(fishrarity)
 				if("rare")
 					costmod *= 2
@@ -549,25 +830,28 @@
 	var/fpp =  100 - (40 + (sl * 10)) // Fishing power penalty based on fishing skill level
 	var/caught = FALSE
 	var/list/modlist
-	if(user.used_intent.type == SPEAR_BASH)
-		return ..()
-
 	if(!check_allowed_items(target,target_self=1))
 		return ..()
 
 	if(user.used_intent.type != ROD_CAST)
 		if(user.used_intent.type == ROD_AUTO && !user.doing)
-			if(target in range(user,5))
+			if(auto_reel_ready && world.time > auto_reel_deadline)
+				to_chat(user, "<span class='warning'>Too slow. The fish slips free.</span>")
+				reset_auto_pending_catch()
+			if(target in range(user,8))
 				user.visible_message("<span class='warning'>[user] casts a line!</span>", \
 									"<span class='notice'>I cast a line.</span>")
 				playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
-				ft -= (sl * 1 SECONDS) //every skill lvl is -1 seconds
-				ft = max(20,ft) //min of 2 seconds
-				if(do_after(user,ft, target = target))
+				ft = max(3, (1 SECONDS) - sl)
+				if(do_after(user,ft, target = targeted))
 					if(baited)
 						var/bp = baited.baitpenalty // Penalty to fishing chance based on how good bait is. Lower is better.
 						var/fishchance = 100 // Total fishing chance, deductions applied below
 						fishchance -= (difficulty * 15) ///based on the fishes difficulty means better fishing rods can be given to shit fishers
+						fishchance += cast_depth_bonus * 8
+						fishchance -= offshore_penalty * 80
+						if(chummed_spot)
+							fishchance += 20
 						if(has_world_trait(/datum/world_trait/fishing_decrease))
 							fishchance -= 25
 						if(has_world_trait(/datum/world_trait/fishing_increase))
@@ -594,37 +878,17 @@
 						if(is_cheese_bait(baited))
 							modlist["cheeseFishingMod"] = 1
 						if(prob(fishchance)) // Finally, roll the dice to see if we fish.
-							var/A = getfishingloot(user, modlist, target)
+							var/A = getfishingloot(user, modlist, targeted)
 							if(A)
 								var/ow = 30 + (sl * 10) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
-								to_chat(user, "<span class='notice'>Something tugs the line! Time to pull it out.</span>")
-								target.balloon_alert_to_viewers("Tug!")
+								to_chat(user, "<span class='notice'>Something tugs the line! Use [src] in hand to reel it in!</span>")
+								targeted.balloon_alert_to_viewers("Tug!")
 								playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
-								if(!do_after(user,ow, target = target, same_direction = TRUE))
-									if(A in subtypesof(/mob/living))
-										var/mob/M = A
-										new M(target)
-										if(!(M.type == /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab))
-											user.playsound_local(src, pick('sound/misc/jumpscare (1).ogg','sound/misc/jumpscare (2).ogg','sound/misc/jumpscare (3).ogg','sound/misc/jumpscare (4).ogg'), 100)
-										user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT * 2) // High risk high reward
-									else
-										new A(user.loc)
-										to_chat(user, "<span class='warning'>Reel 'em in!</span>")
-										teleport_to_dream(user, 10000, 1)
-										user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE) // Level up!
-										record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
-										record_round_statistic(STATS_FISH_CAUGHT)
-										playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
-									if(getbaitlife(sl, baited)) // Higher skill levels make you less likely to lose your bait
-										to_chat(user, "<span class='warning'>Damn, it ate my bait.</span>")
-										qdel(baited)
-										baited = null
-								else
-									to_chat(user, "<span class='warning'>Damn, it got away... I should <b>pull away</b> next time.</span>")
-									if(getbaitlife(sl, baited, 100)) // Higher chance for it to flee with your bait.
-										to_chat(user, "<span class='warning'>...And took my bait, too.</span>")
-										qdel(baited)
-										baited = null
+								auto_reel_ready = TRUE
+								auto_pending_catch = A
+								auto_pending_modlist = islist(modlist) ? modlist.Copy() : null
+								auto_pending_target = targeted
+								auto_reel_deadline = world.time + ow
 						else
 							to_chat(user, "<span class='warning'>Not even a nibble...</span>")
 							user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT / 2) // Pity XP.
@@ -633,7 +897,14 @@
 				else
 					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			update_icon()
+			return
 	else
+		var/cast_bite_chance = clamp(70 + (cast_depth_bonus * 10) - (offshore_penalty * 60) + (sl * 3) + (chummed_spot ? 20 : 0), 3, 95)
+		if(!prob(cast_bite_chance))
+			to_chat(user, "<span class='warning'>No bite... I should cast farther from shore.</span>")
+			update_icon()
+			return
+
 		//the actual game
 		currentlyfishing = TRUE
 		currentstate = "wait"
@@ -646,11 +917,15 @@
 		var/initialline = linehealth //these last two are for the face
 		var/initialfish = fishhealth
 		var/facestate = 1
+		var/next_reel_sfx = world.time
 		createui(fisher)
 		fisher.doing = TRUE
 		fishtarget = 90
 
 		while(currentlyfishing)
+			if(world.time >= next_reel_sfx)
+				playsound(loc, 'sound/misc/reeling.ogg', 45, FALSE)
+				next_reel_sfx = world.time + (3 SECONDS)
 			if(user.client)
 				average_ping = user.client.avgping * 0.01
 
@@ -752,8 +1027,11 @@
 	else
 		to_chat(user, "<span class = 'notice'>I pull something out of the water!</span>")
 		playsound(loc, 'sound/items/Fish_out.ogg', 100, TRUE)
-		fisher.adjust_experience(/datum/skill/labor/fishing, clamp(difficulty, 1, 3) * fisher.STAINT)
-		if(ispath(fishtype, /obj/item/reagent_containers/food/snacks/fish))
+		var/base_cast_xp = clamp(difficulty, 1, 3) * fisher.STAINT
+		fisher.adjust_experience(/datum/skill/labor/fishing, round(base_cast_xp * 1.3, 0.1))
+		if(!ispath(fishtype))
+			to_chat(user, "<span class='warning'>The line comes up empty.</span>")
+		else if(ispath(fishtype, /obj/item/reagent_containers/food/snacks/fish))
 			var/obj/item/reagent_containers/food/snacks/caughtfish = new fishtype(get_turf(fisher))
 			var/raritydesc
 			var/sizedesc
@@ -772,7 +1050,11 @@
 							caughtfish.raritymod = list("com"= -70, "rare" = -20)
 						else
 							raritydesc = "common"
-					caughtfish.icon_state = "[caughtfish.icon_state][fishrarity]"
+				// Only apply rarity suffix if the fish type has the property and doesn't set no_rarity_sprite
+				if(istype(caughtfish, /obj/item/reagent_containers/food/snacks/fish))
+					var/obj/item/reagent_containers/food/snacks/fish/F = caughtfish
+					if(!initial(F.no_rarity_sprite) && islist(F.rarity_icon_states) && F.rarity_icon_states[fishrarity])
+						caughtfish.icon_state = F.rarity_icon_states[fishrarity]
 					if(fishrarity != "com")
 						switch(fishtype)
 							if(/obj/item/reagent_containers/food/snacks/fish/carp)
@@ -791,19 +1073,17 @@
 					raritydesc = fishrarity
 
 				if(!specialsize)
+					caughtfish.vars["fishloot"] = null
 					switch(fishsize)
 						if("tiny")
 							caughtfish.sizemod = list("tiny" = -999)//fish can't swallow a fish of the same size
 						if("small")
 							caughtfish.sizemod = list("tiny" = -999, "small" = -999)
 						if("large")
-							caughtfish.slices_num = 2
 							caughtfish.vars["fishloot"] = null//can't use fish larger than normal size as bait
-						if("prize")
-							caughtfish.slices_num = 3
-							caughtfish.vars["fishloot"] = null
-						else
-							caughtfish.vars["fishloot"] = null
+				if(istype(caughtfish, /obj/item/reagent_containers/food/snacks/fish))
+					var/obj/item/reagent_containers/food/snacks/fish/F = caughtfish
+					F.apply_fishing_size(fishsize)
 				sizedesc = fishsize
 				if(specialcatching)
 					var/obj/item/fishing/bait/specialmaker = baited
@@ -823,10 +1103,21 @@
 					var/obj/item/fishing/bait/specialmaker = baited
 					specialmaker.makespecial(caughtthing2)
 
+	if(!caught)
+		if(baited && getbaitlife(sl, baited, 100))
+			to_chat(user, "<span class='warning'>...And it took my bait, too.</span>")
+			qdel(baited)
+			baited = null
+			update_icon()
+	else
+		if(baited && getbaitlife(sl, baited))
+			to_chat(user, "<span class='warning'>Damn, it ate my bait.</span>")
+			qdel(baited)
+			baited = null
+			update_icon()
+
 	fisher.doing = FALSE
 	stopgame(fisher)
-	qdel(baited)
-	baited = null
 	update_icon()
 
 /obj/item/fishingrod/fisher

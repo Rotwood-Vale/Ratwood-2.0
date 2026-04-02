@@ -62,7 +62,7 @@
 	icon_state = "gorgehook"
 	difficultymod = 2
 	hookmod = -1
-	sizemod = list("normal" = -1, "large" = -1, "prize" = -1)
+	sizemod = list("normal" = -1, "large" = -1, "huge" = -1, "prize" = -2)
 	deepfishingweight = -1
 
 /obj/item/fishing/hook/thorn
@@ -82,13 +82,16 @@
 	desc = "A small wooden lure, painted to look like a small fish. Tends to scare off smaller fish."
 	icon_state = "deluxehook"
 	raritymod = list("gold" = 1, "ultra" = 1, "rare"= 1, "com"= -3)
-	sizemod = list("tiny" = -3, "small" = -2, "normal" = -1, "large" = 1, "prize" = 1)
+	sizemod = list("tiny" = -3, "small" = -2, "normal" = -1, "large" = 1, "huge" = 1, "prize" = 1)
 
 /obj/item/fishing/line //short for line attachment
-	attachtype = "line"
+	name = "deprecated tackle line"
+	desc = "A deprecated base tackle item. Use a bobber or sinker instead."
+	attachtype = null
 	var/bobber = FALSE
 
 /obj/item/fishing/line/bobber
+	attachtype = "line"
 	name = "wooden bobber"
 	desc = "A wooden bobber. Keeps the hook floating in the water and helps you reel in fish."
 	icon_state = "bobber"
@@ -97,11 +100,12 @@
 	bobber = TRUE
 
 /obj/item/fishing/line/sinker
+	attachtype = "line"
 	name = "stone sinker"
 	desc = "A stone sinker. Keeps the hook low to catch fish that lurk at the bottom of the water."
 	icon_state = "sinker"
 	deepfishingweight = 1
-
+	sizemod = list("normal" = -1, "large" = -1, "huge" = -1, "prize" = -2)
 /obj/item/fishing/bait
 	baitpenalty = 0
 	fishingMods = list(
@@ -115,7 +119,7 @@
 	)
 
 	var/list/fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/eel = 2)
-	//default is one anglerfish
+	sizemod = list("tiny" = -2, "small" = -2, "normal" = -1, "large" = 1, "huge" = 1, "prize" = 0)
 	var/deeplist
 	//whether or not this bait has a special catch behaviour
 	var/specialcatch
@@ -172,7 +176,7 @@
 	name = "speckled bait"
 	desc = "A complex blend of meat, flour, and berries rolled into a ball. Its smell scares off smaller fish."
 	icon_state = "speckledbait"
-	sizemod = list("tiny" = -2, "small" = -2, "normal" = -1, "large" = 1, "prize" = 1)
+	sizemod = list("tiny" = -2, "small" = -2, "normal" = -1, "large" = 1, "huge" = 1, "prize" = 1)
 	fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/carp = 1,
 					/obj/item/reagent_containers/food/snacks/fish/eel = 1)
 	deeplist = list(/obj/item/reagent_containers/food/snacks/fish/angler = 2,
@@ -183,7 +187,7 @@
 	desc = "A ball of unknown ingredients, formulated by Abyssorian priests." //waiting for more fishing content
 	icon_state = "deluxebait"
 	raritymod = list("gold" = 1, "ultra" = 1, "rare"= 1, "com"= -3)
-	sizemod = list("tiny" = -2, "small" = -2, "normal" = -1, "large" = 1, "prize" = 1)
+	sizemod = list("tiny" = -2, "small" = -2, "normal" = -1, "large" = 1, "huge" = 1, "prize" = 2)
 	deepfishingweight = 1
 	fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/carp = 1,
 					/obj/item/reagent_containers/food/snacks/fish/angler = 1)

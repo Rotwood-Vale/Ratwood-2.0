@@ -591,6 +591,46 @@
 // Stew + Deep Frying code - refactored!!
 		else if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			var/obj/item/reagent_containers/glass/bucket/pot = attachment
+			if(istype(W, /obj/item/natural/worms/grub_silk))
+				if(!pot.reagents.has_reagent(/datum/reagent/water, 10))
+					to_chat(user, span_warning("There needs to be water in the pot first."))
+					return
+				if(pot.reagents.chem_temp < MIN_STEW_TEMPERATURE)
+					to_chat(user, span_notice("The pot must be boiling on the hearth first."))
+					return
+				if(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
+					user.visible_message(span_info("[user] places [W] into the pot.</span>"))
+					qdel(W)
+					add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+					sleep(30 SECONDS / cooktime_divisor)
+					playsound(src, "bubbles", 30, TRUE)
+					new /obj/item/reagent_containers/food/snacks/cooked_silkworm(get_turf(src))
+				return
+			if(istype(W, /obj/item/natural/bundle/worms/silkgrubs))
+				if(!pot.reagents.has_reagent(/datum/reagent/water, 10))
+					to_chat(user, span_warning("There needs to be water in the pot first."))
+					return
+				if(pot.reagents.chem_temp < MIN_STEW_TEMPERATURE)
+					to_chat(user, span_notice("The pot must be boiling on the hearth first."))
+					return
+				var/obj/item/natural/bundle/worms/silkgrubs/B = W
+				if(B.amount <= 0)
+					to_chat(user, span_warning("There are no silk grubs left in that bundle."))
+					return
+				if(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
+					user.visible_message(span_info("[user] places a silk grub into the pot.</span>"))
+					B.amount--
+					if(B.amount <= 1)
+						if(B.amount == 1)
+							new B.stacktype(user.drop_location())
+						qdel(B)
+					else
+						B.update_bundle()
+					add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+					sleep(30 SECONDS / cooktime_divisor)
+					playsound(src, "bubbles", 30, TRUE)
+					new /obj/item/reagent_containers/food/snacks/cooked_silkworm(get_turf(src))
+				return
 			if(istype(W, /obj/item/reagent_containers/food/snacks))
 				var/obj/item/reagent_containers/food/snacks/S = W
 				if(S.fat_yield)

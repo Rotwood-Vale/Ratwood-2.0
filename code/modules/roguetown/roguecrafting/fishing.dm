@@ -1,6 +1,8 @@
 /datum/crafting_recipe/roguetown/fishing
 	req_table = TRUE
 
+/obj/item/fishingnet
+
 /datum/crafting_recipe/roguetown/fishing/bait
 	verbage = "rolls"
 
@@ -11,8 +13,8 @@
 
 /datum/crafting_recipe/roguetown/fishing/bait/dough
 	name = "doughy bait"
-	result = list(/obj/item/fishing/bait/dough)
-	reqs = list(/obj/item/reagent_containers/powder/flour = 2)
+	result = list(/obj/item/fishing/bait/dough, /obj/item/fishing/bait/dough)
+	reqs = list(/obj/item/reagent_containers/food/snacks/rogue/doughslice = 1)
 
 /datum/crafting_recipe/roguetown/fishing/bait/gray
 	name = "gray bait"
@@ -94,3 +96,8 @@
 	name = "stone sinker"
 	result = list(/obj/item/fishing/line/sinker)
 	reqs = list(/obj/item/natural/fibers = 2, /obj/item/natural/stone = 1)
+
+/datum/crafting_recipe/roguetown/fishing/net
+	name = "fishing net"
+	result = list(/obj/item/fishingnet)
+	reqs = list(/obj/item/rope = 6)

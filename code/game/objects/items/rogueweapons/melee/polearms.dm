@@ -362,6 +362,10 @@
 
 /obj/item/rogueweapon/spear/trident/afterattack(obj/target, mob/user, proximity)
 	var/sl = user.get_skill_level(/datum/skill/labor/fishing)
+	var/speed_mod = 1
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		speed_mod = clamp(H.get_stat(STATKEY_SPD), 1, 20)
 	var/ft = 150
 	var/fpp =  130 - (40 + (sl * 15))
 	if(istype(target, /turf/open/water))
@@ -371,9 +375,11 @@
 									"<span class='notice'>I begin looking for a fish to spear.</span>")
 				playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 				ft -= (sl * 20)
+				ft -= (speed_mod * 2)
 				ft = max(20,ft)
 				if(do_after(user,ft, target = target))
 					var/fishchance = 100
+					fishchance += speed_mod
 					if(user.mind)
 						if(!sl)
 							fishchance -= 50
@@ -630,7 +636,7 @@
 	var/speed_mod = 1
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		speed_mod = clamp(H.STASPD, 1, 20)
+		speed_mod = clamp(H.get_stat(STATKEY_SPD), 1, 20)
 	var/ft = 160 //Time to get a catch, in ticks
 	var/fpp =  130 - (40 + (sl * 15)) // Fishing power penalty based on fishing skill level
 	if(istype(target, /turf/open/water))

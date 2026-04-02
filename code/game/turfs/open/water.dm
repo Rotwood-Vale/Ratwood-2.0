@@ -44,6 +44,7 @@
 	nomouseover = FALSE
 	var/swimdir = FALSE
 	temperature = 210
+	var/last_fish_release_splash = 0
 
 /turf/open/water/Initialize(mapload)
 	.  = ..()
@@ -190,6 +191,9 @@
 	if(istype(AM, /obj/item/reagent_containers/food/snacks/fish))
 		var/obj/item/reagent_containers/food/snacks/fish/F = AM
 		if (F.sinkable)
+			if(world.time > last_fish_release_splash + 2)
+				last_fish_release_splash = world.time
+				playsound(src, 'sound/items/fishing_plouf.ogg', 55, FALSE)
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_FISH_RELEASED, F.type, F.rarity_rank)
 			F.visible_message("<span class='warning'>[F] dives into \the [src] and disappears!</span>")
 			qdel(F)

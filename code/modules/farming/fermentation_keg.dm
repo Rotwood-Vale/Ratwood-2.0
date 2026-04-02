@@ -131,10 +131,10 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 		var/obj/item/bottle_kit/kit = I
 		bottle(kit.glass_colour)
 
-	if(I.type in selected_recipe?.needed_items)
+	if(find_matching_requirement(I, selected_recipe?.needed_items))
 		produce_list |= I
 
-	if(I.type in selected_recipe?.needed_crops)
+	if(find_matching_requirement(I, selected_recipe?.needed_crops))
 		produce_list |= I
 
 	if(istype(I, /obj/item/storage))
@@ -143,22 +143,26 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 
 	var/dumps = FALSE
 	for(var/obj/item/reagent_containers/food/G in produce_list)
-		if(G.type in selected_recipe?.needed_crops)
-			if(recipe_crop_stocks[G.type] >= selected_recipe?.needed_crops[G.type])
+		var/needed_crop = find_matching_requirement(G, selected_recipe?.needed_crops)
+		if(needed_crop)
+			if(recipe_crop_stocks[needed_crop] >= selected_recipe?.needed_crops[needed_crop])
 				continue
-			recipe_crop_stocks[G.type]++
+			recipe_crop_stocks[needed_crop] = (recipe_crop_stocks[needed_crop] || 0) + 1
 			if(G in storage_list)
 				dumps = TRUE
 				SEND_SIGNAL(G.loc, COMSIG_TRY_STORAGE_TAKE, G, get_turf(src), TRUE)
 			qdel(G)
 
 	for(var/obj/item/item in produce_list)
-		if(item.type in selected_recipe?.needed_items)
-			if(recipe_crop_stocks[item.type] >= selected_recipe?.needed_items[item.type])
+		if(!item || QDELETED(item))
+			continue
+		var/needed_item = find_matching_requirement(item, selected_recipe?.needed_items)
+		if(needed_item)
+			if(recipe_crop_stocks[needed_item] >= selected_recipe?.needed_items[needed_item])
 				continue
-			var/amount = recipe_crop_stocks[item.type] || 0
+			var/amount = recipe_crop_stocks[needed_item] || 0
 			var/added_item = 1
-			recipe_crop_stocks[item.type] = amount + added_item
+			recipe_crop_stocks[needed_item] = amount + added_item
 			if(item in storage_list)
 				dumps = TRUE
 				SEND_SIGNAL(item.loc, COMSIG_TRY_STORAGE_TAKE, item, get_turf(src), TRUE)
@@ -246,10 +250,6 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if(options.len == 0)
 		return
 
-	if(user.get_skill_level(/datum/skill/craft/cooking) < SKILL_LEVEL_APPRENTICE)
-		to_chat(user, span_notice("I am not knowledgable enough to brew."))
-		return FALSE
-
 	options = sortList(options)
 	var/choice = input(user,"What brew do you want to make?", name) as null|anything in options
 
@@ -257,6 +257,11 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 		return
 
 	var/choice_to_spawn = options[choice]
+	var/datum/brewing_recipe/chosen_recipe = new choice_to_spawn
+	if(user.get_skill_level(/datum/skill/craft/cooking) < SKILL_LEVEL_APPRENTICE && !chosen_recipe.skip_cooking_skill_check)
+		to_chat(user, span_notice("I am not knowledgable enough to brew."))
+		qdel(chosen_recipe)
+		return FALSE
 
 	/*
 	if(istype(choice_to_spawn, /datum/brewing_recipe/custom_recipe))
@@ -264,7 +269,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	else
 		selected_recipe = new choice_to_spawn
 	*/
-	selected_recipe = new choice_to_spawn
+	selected_recipe = chosen_recipe
 	selecting_recipe = FALSE
 
 	//Second stage brewing gives no refunds! - This is intented design to help make it so folks dont quit halfway through and still get a rebate
@@ -280,6 +285,14 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if(reagents)
 		//consume consume consume consume
 		reagents.clear_reagents()
+
+/obj/structure/fermentation_keg/proc/find_matching_requirement(obj/item/I, list/requirements)
+	if(!I || !islist(requirements))
+		return null
+	for(var/path in requirements)
+		if(istype(I, path))
+			return path
+	return null
 
 //Remove and reset
 /obj/structure/fermentation_keg/proc/clear_keg(force = FALSE)

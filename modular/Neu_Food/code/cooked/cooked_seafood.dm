@@ -266,6 +266,13 @@
 	faretype = FARE_NEUTRAL
 	tastes = list("octopus" = 1)
 
+/obj/item/reagent_containers/food/snacks/rogue/fryfish/crawfish
+	name = "cooked crawfish"
+	desc = "A cooked crawfish. Small, muddy, and rich with briny flavor. Remember to suck the head!"
+	icon_state = "crawfishcooked"
+	faretype = FARE_NEUTRAL
+	tastes = list("crawfish" = 1)
+
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon/black_headed
 	name = "black-headed salmon"
 	icon_state = "salmon_black"

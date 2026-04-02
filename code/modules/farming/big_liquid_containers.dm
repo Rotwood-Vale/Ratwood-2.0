@@ -30,6 +30,14 @@
 	. = ..()
 	reagents.add_reagent(/datum/reagent/water,900)
 
+/obj/structure/fermentation_keg/chum
+	name = "chum barrel"
+	desc = "A barrel of pungent chum slurry. Perfect for baiting fishing nets and fouling waters."
+
+/obj/structure/fermentation_keg/chum/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/chum,900)
+
 /obj/structure/fermentation_keg/beer
 	desc = "A barrel containing a generic housebrewed small-beer."
 

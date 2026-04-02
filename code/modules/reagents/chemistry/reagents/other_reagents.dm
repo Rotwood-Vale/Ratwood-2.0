@@ -85,6 +85,39 @@
 		return
 	H.add_nausea(18) //Do not drink dirty blood!
 
+/datum/reagent/chum
+	name = "Chum"
+	description = "A pink-red slurry of minced meat used to blood the water and draw fish in."
+	color = "#d86f86"
+	taste_description = "fishy blood"
+	glass_icon_state = "glass_red"
+	glass_name = "glass of chum"
+	glass_desc = "A sludgy pink-red bait slurry."
+	shot_glass_icon_state = "shotglassred"
+	harmful = TRUE
+
+/datum/reagent/chum/on_mob_life(mob/living/carbon/M)
+	..()
+	if(HAS_TRAIT(M, TRAIT_NASTY_EATER) || HAS_TRAIT(M, TRAIT_WILD_EATER))
+		return
+	M.adjustToxLoss(1)
+	M.add_nausea(16)
+	if(prob(20))
+		M.vomit()
+
+/datum/reagent/chum/reaction_turf(turf/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume < 3)
+		return
+
+	var/obj/effect/decal/cleanable/blood/B = locate() in T
+	if(!B)
+		B = new(T)
+
+	if(istype(T, /turf/open/water))
+		apply_chum_to_turf(T, 2 MINUTES)
+
 /datum/reagent/blood/green
 	color = "#05af01"
 

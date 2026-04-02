@@ -10,8 +10,11 @@
 	var/deployed = 0
 	var/obj/item/caught
 	var/obj/item/bait
+	var/bait_bundle_uses = 0
+	var/list/caught_modlist
 	var/mob/fisherperson
 	var/time2catch = 40 SECONDS // RW had this at 20 seconds, but if you produce more than 3 - 4 cages you would be limited only by the rate you get worm, so a slight nerf.
+	var/static/list/cage_size_weights = list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1)
 
 /obj/item/fishingcage/attack_self(mob/user)
 	. = ..()
@@ -52,8 +55,12 @@
 				add_sleep_experience(user, /datum/skill/labor/fishing, 20)
 				record_featured_stat(FEATURED_STATS_FISHERS, user)
 				record_round_statistic(STATS_FISH_CAUGHT)
-				new caught(user.loc)
+				var/obj/item/new_caught = new caught(user.loc)
+				if(istype(new_caught, /obj/item/reagent_containers/food/snacks/fish))
+					var/obj/item/reagent_containers/food/snacks/fish/F = new_caught
+					apply_fishing_quality_to_fish(F, caught_modlist, cage_size_weights)
 				caught = null
+				caught_modlist = null
 				if(!bait)
 					desc = initial(desc)
 					icon_state = "fishingcage_deployed"
@@ -71,6 +78,8 @@
 				STOP_PROCESSING(SSobj, src)
 				deployed = 0
 				QDEL_NULL(bait) //you lose the bait if you take out the cage without catching anything
+				bait_bundle_uses = 0
+				caught_modlist = null
 				desc = initial(desc)
 				icon_state = initial(icon_state)
 				anchored = 0
@@ -83,6 +92,25 @@
 		to_chat(user, span_warning("There's bait already on the cage."))
 		return
 	fisherperson = user
+	if(istype(I, /obj/item/natural/bundle/worms))
+		var/obj/item/natural/bundle/worms/W = I
+		if(W.amount <= 0)
+			to_chat(user, span_warning("There are no worms left in that bundle."))
+			return
+		user.visible_message(span_notice("[user] starts adding bait to the fishing cage..."), \
+							span_notice("I start to add bait to the fishing cage..."))
+		if(do_after(user, 3 SECONDS, target = src))
+			playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
+			var/obj/item/new_bait = new W.stacktype(src)
+			bait = new_bait
+			bait_bundle_uses = clamp(W.amount, 1, W.maxamount)
+			qdel(W)
+			check_counter = world.time
+			time2catch = get_skill_delay(user.get_skill_level(/datum/skill/labor/fishing), 5, slowest = 40) //in seconds
+			icon_state = "fishingcage_ready"
+			START_PROCESSING(SSobj, src)
+			return
+		return
 	if(I.baitpenalty != 100) // We use baitpenalty instead of baitchance so let's just exclude anything with 100
 		user.visible_message(span_notice("[user] starts adding the bait to the fishing cage..."), \
 							span_notice("I start to add [I] to the fishing cage..."))
@@ -90,6 +118,7 @@
 			playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
 			I.forceMove(src)
 			bait = I
+			bait_bundle_uses = 0
 			check_counter = world.time
 			time2catch = get_skill_delay(user.get_skill_level(/datum/skill/labor/fishing), 5, slowest = 40) //in seconds
 			icon_state = "fishingcage_ready"
@@ -120,10 +149,21 @@
 			if(!QDELETED(fisherperson))
 				fishingmodlist = upgradecagemodlist(fisherperson, fishingmodlist)
 				fishingskill = fisherperson.get_skill_level(/datum/skill/labor/fishing)
-			caught = pickweightAllowZero(createCageFishWeightListModlist(fishingmodlist))
+			caught = pickweightAllowZero(createCageFishWeightListModlist(fishingmodlist, get_turf(src)))
+			caught_modlist = fishingmodlist.Copy()
 			icon_state = "fishingcage_caught"
-			if(getbaitlife(fishingskill, bait, 100))
+			var/consume_bait = FALSE
+			if(istype(bait, /obj/item/natural/worms))
+				if(bait_bundle_uses > 0)
+					bait_bundle_uses--
+					consume_bait = (bait_bundle_uses <= 0)
+				else
+					consume_bait = TRUE
+			else
+				consume_bait = getbaitlife(fishingskill, bait, 100)
+			if(consume_bait)
 				QDEL_NULL(bait)
+				bait_bundle_uses = 0
 				fisherperson = null
 			STOP_PROCESSING(SSobj, src)
 	..()
@@ -132,4 +172,16 @@
 	. = ..()
 	if(icon_state == "fishingcage_caught")
 		. += span_warning("Something seems to be inside...")
+	if(bait)
+		if(bait_bundle_uses > 1 && istype(bait, /obj/item/natural/worms))
+			var/bait_label = "worms"
+			if(istype(bait, /obj/item/natural/worms/leech))
+				bait_label = "leeches"
+			else if(istype(bait, /obj/item/natural/worms/grubs) || istype(bait, /obj/item/natural/worms/grub_silk))
+				bait_label = "grubs"
+			. += span_notice("Baited with [bait_bundle_uses] [bait_label].")
+		else
+			. += span_notice("Baited with a [bait.name].")
+	else
+		. += span_warning("It has no bait inside.")
 	
