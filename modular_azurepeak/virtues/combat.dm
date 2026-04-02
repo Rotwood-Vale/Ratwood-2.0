@@ -13,6 +13,11 @@
 			ADD_TRAIT(recipient, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 			recipient.mind?.adjust_spellpoints(3)
 	else
+		// Grant T1 arcyne access for subclasses that already have arcane skill (e.g. Miscreant Magic Bricks)
+		// so they can actually pick spells from learnspell — without this, spell tier stays at 0
+		if (!HAS_TRAIT(recipient, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(recipient, TRAIT_HEAVYARMOR) && !HAS_TRAIT(recipient, TRAIT_DODGEEXPERT) && !HAS_TRAIT(recipient, TRAIT_CRITICAL_RESISTANCE))
+			if (!HAS_TRAIT(recipient, TRAIT_ARCYNE_T1) && !HAS_TRAIT(recipient, TRAIT_ARCYNE_T2) && !HAS_TRAIT(recipient, TRAIT_ARCYNE_T3) && !HAS_TRAIT(recipient, TRAIT_ARCYNE_T4))
+				ADD_TRAIT(recipient, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 		recipient.mind?.adjust_spellpoints(3) // 3 extra spellpoints since you don't get any spell point from the skill anymore
 	
 /datum/virtue/combat/devotee
@@ -171,13 +176,10 @@
 	added_traits = list(TRAIT_SENTINELOFWITS)
 
 /datum/virtue/combat/combat_aware
-	name = "Combat Aware"
-	desc = "The opponent's flick of their wrist. The sound of maille snapping. The desperate breath as the opponent's stamina wanes. All of this is made more clear to you through intuition or experience."
-	custom_text = "Shows a lot more combat information via floating text. Has a toggle."
-	added_traits = list(TRAIT_COMBAT_AWARE)
-
-/datum/virtue/combat/combat_aware/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.verbs += /mob/living/carbon/human/proc/togglecombatawareness
+	name = "Combat Reflexes"
+	desc = "Through years of sparring, brawling, or sheer survival instinct, I've honed my ability to recover from baits and defensive stances far faster than most fighters."
+	custom_text = "Reduces the cooldown of Bait and Guard (Defend) right-click actions by 10 seconds."
+	added_traits = list(TRAIT_COMBAT_REFLEXES)
 
 /datum/virtue/combat/tough_hide
 	name = "Natural Armor"
