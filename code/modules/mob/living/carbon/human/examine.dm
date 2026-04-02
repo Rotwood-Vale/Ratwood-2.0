@@ -1046,9 +1046,9 @@
 		if(isliving(user))
 			var/mob/living/L = user
 			if(L.STAINT > 9 && L.STAPER > 9)
-				if(HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
+				if(HAS_TRAIT(src, TRAIT_COMBAT_REFLEXES))
 					. += span_warning("<i>They look battle-aware.</i>")
-				if(HAS_TRAIT(user, TRAIT_COMBAT_AWARE))
+				if(HAS_TRAIT(user, TRAIT_STEELHEARTED))
 					var/userheld = user.get_active_held_item()
 					var/srcheld = get_active_held_item()
 					var/datum/skill/user_skill = /datum/skill/combat/unarmed	//default
