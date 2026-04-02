@@ -175,12 +175,6 @@
 	desc = "Whether it's by having an annoying sibling that kept prodding me with a stick, or years of study and observation, I've become adept at both parrying and dodging stronger opponents, by learning their moves and studying them."
 	added_traits = list(TRAIT_SENTINELOFWITS)
 
-/datum/virtue/combat/combat_aware
-	name = "Combat Reflexes"
-	desc = "Through years of sparring, brawling, or sheer survival instinct, I've honed my ability to recover from baits and defensive stances far faster than most fighters."
-	custom_text = "Reduces the cooldown of Bait and Guard (Defend) right-click actions by 10 seconds."
-	added_traits = list(TRAIT_COMBAT_REFLEXES)
-
 /datum/virtue/combat/tough_hide
 	name = "Natural Armor"
 	desc = "Whether by natural means or other means, my skin is strong enough to resist being pierced and cut."
