@@ -2501,6 +2501,7 @@
 #include "code\modules\roguetown\roguejobs\engineer\items.dm"
 #include "code\modules\roguetown\roguejobs\engineer\prosthetic.dm"
 #include "code\modules\roguetown\roguejobs\engineer\anvil_recipes\mechanical.dm"
+#include "code\modules\roguetown\roguejobs\fisher\fishing.dm"
 #include "code\modules\roguetown\roguejobs\fisher\leeches.dm"
 #include "code\modules\roguetown\roguejobs\fisher\rod.dm"
 #include "code\modules\roguetown\roguejobs\fisher\tackle.dm"

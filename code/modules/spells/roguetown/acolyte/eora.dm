@@ -1081,7 +1081,9 @@
 		"trashFishingMod" = 0,
 		"dangerFishingMod" = 0,
 		"ceruleanFishingMod" = 1, // 1 on cerulean aril, 0 on everything else
+		"cheeseFishingMod" = 0 // Just for the funny gimmick of a chance for rats and rouses.
 	)
+	baitresilience = 5
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/fractal
 	name = "fractal aril"
