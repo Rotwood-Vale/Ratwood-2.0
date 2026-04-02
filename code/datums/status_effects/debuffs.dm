@@ -1015,17 +1015,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/clashcd
 	duration = 30 SECONDS
 
-/// Combat Reflexes trait reduces bait cooldown by 10 seconds
-/datum/status_effect/debuff/baitcd/on_creation(mob/living/new_owner)
-	if(HAS_TRAIT(new_owner, TRAIT_COMBAT_REFLEXES))
-		duration = 20 SECONDS
-	return ..()
-
-/// Combat Reflexes trait reduces guard/defend cooldown by 10 seconds
-/datum/status_effect/debuff/clashcd/on_creation(mob/living/new_owner)
-	if(HAS_TRAIT(new_owner, TRAIT_COMBAT_REFLEXES))
-		duration = 20 SECONDS
-	return ..()
 
 /datum/status_effect/debuff/specialcd
 	id = "specialcd"
