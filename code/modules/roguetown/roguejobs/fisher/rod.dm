@@ -67,6 +67,17 @@
 	var/list/auto_pending_modlist = null
 	var/turf/auto_pending_target = null
 	COOLDOWN_DECLARE(ping_delay)
+	/// Cast minigame top-zone reel mechanic.
+	var/topzone_hold = 0    // ticks spent continuously with fishstate near top-center
+	var/reel_ready = FALSE  // TRUE once fish is tired enough to haul in
+	var/reel_expire = 0    // world.time deadline for the reel opportunity window
+	var/reel_input = FALSE  // set by attack_self during minigame when reel_ready
+	var/reel_successes = 0
+	var/early_reel_streak = 0
+	/// Zone-tracking for the fish position in the top-arc minigame.
+	var/red_zone_visits = 0     // times fish has entered the red zone this hooked phase
+	var/fish_was_red = FALSE    // previous-tick red zone state, for entry detection
+	var/current_fish_zone = "none"  // "green", "blue", or "red"
 
 /datum/intent/cast
 	name = "cast"
@@ -87,6 +98,23 @@
 	reach = 8
 
 /obj/item/fishingrod/attack_self(mob/user)
+	// During the cast minigame, intercept to allow the player to reel the fish in.
+	if(currentlyfishing && fisher == user)
+		if(reel_ready)
+			early_reel_streak = 0
+			reel_input = TRUE
+		else if(current_fish_zone == "red")
+			to_chat(user, "<span class='warning'>I yanked the line sideways and lost the fish!</span>")
+			currentlyfishing = FALSE
+		else
+			topzone_hold = 0
+			early_reel_streak++
+			if(early_reel_streak >= 2)
+				to_chat(user, "<span class='warning'>I keep yanking too early and lose the fish!</span>")
+				currentlyfishing = FALSE
+			else
+				to_chat(user, "<span class='warning'>Too early! I lose my progress and need to steady the line again.</span>")
+		return
 	if(user.doing)
 		to_chat(user, "<span class='warning'>I'm busy right now.</span>")
 		return
@@ -167,6 +195,22 @@
 		weight += 1
 	return weight
 
+/obj/item/fishingrod/proc/get_cast_junk_reward_path()
+	return pickweight(list(
+		/obj/item/natural/fibers = 4,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 3,
+		/obj/item/clothing/shoes/roguetown/boots/leather = 2,
+		/obj/item/clothing/head/roguetown/fisherhat = 1,
+		/obj/structure/fermentation_keg = 1,
+	))
+
+/obj/item/fishingrod/proc/get_fishing_stamina_drain(mob/living/user, multiplier = 1)
+	if(!user)
+		return 0
+	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
+	var/drain = round((10 - athletics_skill) * multiplier, 1)
+	return max(1, drain)
+
 /obj/item/fishingrod/proc/reset_auto_pending_catch()
 	auto_reel_ready = FALSE
 	auto_reel_deadline = 0
@@ -203,19 +247,20 @@
 
 	playsound(user.loc, 'sound/misc/reeling.ogg', 70, FALSE)
 	user.visible_message("<span class='notice'>[user] starts reeling the line in.</span>", "<span class='notice'>I start reeling the line in.</span>")
-	var/reel_end_time = world.time + reel_speed
-	while(world.time < reel_end_time)
-		if(reel_anchor && get_dist(user, reel_anchor) > 8)
-			playsound(user.loc, 'sound/items/pickbreak.ogg', 80, FALSE)
-			to_chat(user, "<span class='warning'>I stray too far and the line snaps!</span>")
-			QDEL_NULL(line)
-			if(baited)
-				qdel(baited)
-				baited = null
-			update_icon()
-			reset_auto_pending_catch()
-			return TRUE
-		sleep(1)
+	if(!do_after(user, reel_speed, target = reel_anchor || user))
+		to_chat(user, "<span class='warning'>I lose my grip on the reel!</span>")
+		return TRUE
+
+	if(reel_anchor && get_dist(user, reel_anchor) > 8)
+		playsound(user.loc, 'sound/items/pickbreak.ogg', 80, FALSE)
+		to_chat(user, "<span class='warning'>I stray too far and the line snaps!</span>")
+		QDEL_NULL(line)
+		if(baited)
+			qdel(baited)
+			baited = null
+		update_icon()
+		reset_auto_pending_catch()
+		return TRUE
 
 	var/reel_roll = rand(1, 20) + str_score + (sl * 2)
 	var/reel_target = 10 + (catch_weight * 3)
@@ -230,13 +275,8 @@
 				baited = null
 			update_icon()
 		else
-			to_chat(user, "<span class='warning'>The fish tears free!</span>")
-		if(baited && getbaitlife(sl, baited, 100))
-			to_chat(user, "<span class='warning'>...And it took my bait, too.</span>")
-			qdel(baited)
-			baited = null
-			update_icon()
-		reset_auto_pending_catch()
+			to_chat(user, "<span class='warning'>The fish is persistent! I need to keep reeling!</span>")
+			auto_reel_deadline = world.time + clamp(25 + (sl * 8) - (catch_weight * 3), 20, 80)
 		return TRUE
 
 	if(auto_pending_catch in subtypesof(/mob/living))
@@ -252,6 +292,9 @@
 			new auto_pending_catch(user.loc)
 
 	playsound(user.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
+	var/auto_stamina_drain = get_fishing_stamina_drain(user, 2)
+	if(auto_stamina_drain)
+		user.stamina_add(auto_stamina_drain)
 	if(user.mind)
 		var/mob/living/carbon/human/fisherman = user
 		user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE)
@@ -512,6 +555,15 @@
 	hookwindow = 0
 	currentstate = null
 	currentlyfishing = FALSE
+	topzone_hold = 0
+	reel_ready = FALSE
+	reel_expire = 0
+	reel_input = FALSE
+	reel_successes = 0
+	early_reel_streak = 0
+	red_zone_visits = 0
+	fish_was_red = FALSE
+	current_fish_zone = "none"
 
 /obj/item/fishingrod/proc/get_targeted_water_turf(atom/target)
 	var/turf/T = get_turf(target)
@@ -617,8 +669,11 @@
 	var/cast_depth_bonus = max(cast_distance - 2, 0)
 	var/offshore_penalty = max(shore_distance - 2, 0)
 	var/chummed_spot = is_chummed_fishing_turf(targeted)
+	var/shallow_excluded_junk_zone = FALSE
 	if(istype(targeted, /turf/open/water/cleanshallow))
 		offshore_penalty = max(offshore_penalty, 1)
+		if(shore_distance <= 2)
+			shallow_excluded_junk_zone = TRUE
 
 	if(!baited || !hook || !line)
 		to_chat(user, "<span class='warning'>I'm missing something...</span>")
@@ -917,15 +972,21 @@
 		var/initialline = linehealth //these last two are for the face
 		var/initialfish = fishhealth
 		var/facestate = 1
-		var/next_reel_sfx = world.time
+		var/hooked_ticks = 0
+		var/next_stamina_tick = world.time + (5 SECONDS)
+		reel_successes = 0
+		early_reel_streak = 0
 		createui(fisher)
 		fisher.doing = TRUE
 		fishtarget = 90
 
 		while(currentlyfishing)
-			if(world.time >= next_reel_sfx)
-				playsound(loc, 'sound/misc/reeling.ogg', 45, FALSE)
-				next_reel_sfx = world.time + (3 SECONDS)
+			if(world.time >= next_stamina_tick)
+				var/stamina_drain = get_fishing_stamina_drain(fisher, 1.5)
+				if(stamina_drain && !fisher.stamina_add(stamina_drain))
+					to_chat(fisher, "<span class='warning'>I'm too exhausted to keep fighting the fish.</span>")
+					currentlyfishing = FALSE
+				next_stamina_tick = world.time + (5 SECONDS)
 			if(user.client)
 				average_ping = user.client.avgping * 0.01
 
@@ -971,6 +1032,7 @@
 						directionstate = 1
 					hookwindow -= 1
 				if("hooked")
+					hooked_ticks++
 					if(currentmouse > 180)
 						fishhealth -= round(abs(currentmouse - 180)/90, 0.1)
 
@@ -992,7 +1054,10 @@
 						if(COOLDOWN_FINISHED(src, ping_delay))
 							linehealth--
 							COOLDOWN_START(src, ping_delay, average_ping) ///this gives users the average ping free time between damages incase of lag spikes you don't instantly lose
-					velocity = clamp(velocity + ((acceleration*directionstate)/5), -maxvelocity, maxvelocity)
+					var/fatigue_step = min(round(hooked_ticks / (8 SECONDS)), 3)
+					var/effective_acceleration = max(1, acceleration - fatigue_step)
+					var/effective_maxvelocity = max(1, maxvelocity - fatigue_step)
+					velocity = clamp(velocity + ((effective_acceleration*directionstate)/5), -effective_maxvelocity, effective_maxvelocity)
 					fishtarget = clamp(fishtarget + velocity, 0, 180)
 
 					switch(linehealth / initialline)
@@ -1019,6 +1084,64 @@
 
 					facestate = clamp(facestate, 1, 5)
 
+					// Top-zone reel mechanic: keep fishstate centered (targetdif near 0) to tire the fish.
+					// Bigger/rarer fish fight harder due to higher velocity and acceleration.
+					var/skill_tired_bonus = clamp(skillmod, 0, 6)
+					var/fight_tired_bonus = min(round(hooked_ticks / (5 SECONDS)), 4)
+					var/hold_needed = max((0.6 SECONDS), (1 SECONDS) - skill_tired_bonus - fight_tired_bonus)
+					// Zone margins (adjustable): green = hold zone, blue = progress-reset zone, red = danger zone.
+					var/green_zone_margin = 26
+					var/blue_zone_margin = 60
+					var/abs_tdf = abs(targetdif)
+					if(abs_tdf <= green_zone_margin)
+						current_fish_zone = "green"
+						topzone_hold++
+						if(topzone_hold >= hold_needed && !reel_ready)
+							reel_ready = TRUE
+							early_reel_streak = 0
+							reel_expire = world.time + (2 SECONDS)
+							to_chat(fisher, "<span class='notice'>The fish is tiring! Use the rod to reel it in!</span>")
+					else if(abs_tdf <= blue_zone_margin)
+						current_fish_zone = "blue"
+						if(!reel_ready)
+							topzone_hold = 0
+					else
+						current_fish_zone = "red"
+						if(!reel_ready)
+							topzone_hold = 0
+						if(!fish_was_red)
+							red_zone_visits++
+							if(red_zone_visits >= 2)
+								early_reel_streak++
+								red_zone_visits = 0
+								to_chat(fisher, "<span class='warning'>The fish fights into the danger zone again!</span>")
+							else
+								to_chat(fisher, "<span class='warning'>The fish pulls hard to the side — steady the line!</span>")
+					fish_was_red = (abs_tdf > blue_zone_margin)
+
+					if(reel_ready && world.time > reel_expire)
+						reel_ready = FALSE
+						topzone_hold = 0
+						to_chat(fisher, "<span class='warning'>The fish recovers! Keep the rod steady in front of you to tire it again!</span>")
+
+					if(reel_input && reel_ready)
+						reel_input = FALSE
+						reel_ready = FALSE
+						early_reel_streak = 0
+						topzone_hold = 0
+						reel_expire = 0
+						playsound(loc, 'sound/misc/reeling.ogg', 80, FALSE)
+						reel_successes++
+						if(reel_successes >= 2)
+							to_chat(fisher, "<span class='notice'>I haul back hard and pull it in!</span>")
+							caught = TRUE
+							currentlyfishing = FALSE
+						else
+							// After each successful reel, the fish surges back to full speed.
+							hooked_ticks = 0
+							red_zone_visits = 0
+							fish_was_red = FALSE
+							to_chat(fisher, "<span class='notice'>I gain line, but the fish surges back! One more strong reel should do it.</span>")
 			lastmouse = currentmouse
 			sleep(1)
 
@@ -1029,8 +1152,12 @@
 		playsound(loc, 'sound/items/Fish_out.ogg', 100, TRUE)
 		var/base_cast_xp = clamp(difficulty, 1, 3) * fisher.STAINT
 		fisher.adjust_experience(/datum/skill/labor/fishing, round(base_cast_xp * 1.3, 0.1))
+		if(shallow_excluded_junk_zone && ispath(fishtype, /obj/item/reagent_containers/food/snacks/fish) && prob(90))
+			fishtype = get_cast_junk_reward_path()
+			to_chat(user, "<span class='notice'>The shallow waters cough up mostly junk.</span>")
 		if(!ispath(fishtype))
-			to_chat(user, "<span class='warning'>The line comes up empty.</span>")
+			fishtype = get_cast_junk_reward_path()
+			to_chat(user, "<span class='notice'>I still dredge up some junk for my trouble.</span>")
 		else if(ispath(fishtype, /obj/item/reagent_containers/food/snacks/fish))
 			var/obj/item/reagent_containers/food/snacks/caughtfish = new fishtype(get_turf(fisher))
 			var/raritydesc
