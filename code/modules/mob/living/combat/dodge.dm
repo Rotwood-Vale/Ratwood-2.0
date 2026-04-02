@@ -267,7 +267,7 @@
 			user.visible_message(span_warning("<b>[user]</b> clips [src]'s weapon!"))
 			playsound(user, 'sound/misc/weapon_clip.ogg', 100)
 
-	if(mind && user.mind && HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
+	if(mind && user.mind && HAS_TRAIT(src, TRAIT_STEELHEARTED))
 		var/text = "[bodyzone2readablezone(user.zone_selected)]..."
 		if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
 			if(prob(10))
