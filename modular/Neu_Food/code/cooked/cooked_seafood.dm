@@ -259,6 +259,13 @@
 	name = "cooked crab"
 	tastes = list("crab" = 1)
 
+/obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
+	name = "cooked octopus"
+	desc = "A cooked octopus. Tenderized and richly savory."
+	icon_state = "octopuscooked"
+	faretype = FARE_NEUTRAL
+	tastes = list("octopus" = 1)
+
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon/black_headed
 	name = "black-headed salmon"
 	icon_state = "salmon_black"

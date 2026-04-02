@@ -345,9 +345,15 @@
 	pixel_x += rand(-3,3)
 	return ..()
 
+/obj/structure/flora/roguegrass/bush/proc/is_bog_bush()
+	var/area/A = get_area(src)
+	return istype(A, /area/rogue/outdoors/bog) || istype(A, /area/rogue/outdoors/bograt) || istype(A, /area/rogue/indoors/shelter/bog) || istype(A, /area/rogue/indoors/shelter/bograt)
+
 /obj/structure/flora/roguegrass/bush/proc/loot_replenish()
 	if(bushtype)
 		looty += bushtype
+	if(is_bog_bush() && prob(25))
+		looty += /obj/item/natural/worms/grub_silk
 	if(prob(66))
 		looty += /obj/item/natural/thorn
 	looty += /obj/item/natural/fibers

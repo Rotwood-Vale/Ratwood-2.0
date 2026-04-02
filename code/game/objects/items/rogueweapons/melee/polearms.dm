@@ -627,6 +627,10 @@
 
 /obj/item/rogueweapon/fishspear/afterattack(obj/target, mob/user, proximity)
 	var/sl = user.get_skill_level(/datum/skill/labor/fishing) // User's skill level
+	var/speed_mod = 1
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		speed_mod = clamp(H.STASPD, 1, 20)
 	var/ft = 160 //Time to get a catch, in ticks
 	var/fpp =  130 - (40 + (sl * 15)) // Fishing power penalty based on fishing skill level
 	if(istype(target, /turf/open/water))
@@ -636,9 +640,11 @@
 									"<span class='notice'>I begin looking for a fish to spear.</span>")
 				playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 				ft -= (sl * 20) //every skill lvl is -2 seconds
+				ft -= (speed_mod * 2)
 				ft = max(20,ft) //min of 2 seconds
 				if(do_after(user,ft, target = target))
 					var/fishchance = 100 // Total fishing chance, deductions applied below
+					fishchance += speed_mod
 					if(user.mind)
 						if(!sl) // If we have zero fishing skill...
 							fishchance -= 50 // 50% chance to fish base

@@ -39,6 +39,20 @@
 	if(dead)
 		..()
 	else
+		var/fishing_skill = 0
+		var/speed_stat = 1
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			fishing_skill = H.get_skill_level(/datum/skill/labor/fishing)
+			speed_stat = max(1, H.STASPD)
+		var/catch_chance = clamp(8 + (fishing_skill * 10) + (speed_stat * 3), 5, 95)
+		if(prob(catch_chance))
+			if(user.put_in_hands(src))
+				to_chat(user, span_notice("I snatch [src] by hand!"))
+			else
+				src.forceMove(user.drop_location())
+				to_chat(user, span_notice("I catch [src], but it slips to the ground."))
+			return
 		if(isturf(user.loc))
 			src.forceMove(user.loc)
 		to_chat(user, span_warning("Too slippery!"))
@@ -205,6 +219,18 @@
 	faretype = FARE_IMPOVERISHED
 	no_rarity_sprite = TRUE
 	dropshrink = 0
+	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
+
+/obj/item/reagent_containers/food/snacks/fish/octopus
+	name = "octopus"
+	desc = "A many-armed deepwater hunter. Its flesh is chewy but rich once cooked."
+	icon_state = "creepy_squid"
+	faretype = FARE_NEUTRAL
+	no_rarity_sprite = TRUE
+	sellprice = 25
+	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
 
 /obj/item/reagent_containers/food/snacks/fish/creepy_squid/examine(mob/user)
 	. = ..()

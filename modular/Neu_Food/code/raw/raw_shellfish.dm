@@ -118,6 +118,24 @@
 		var/mutable_appearance/pearl = mutable_appearance(icon, "pearl")
 		add_overlay(pearl)
 
+/obj/item/reagent_containers/food/snacks/fish/oyster/fossilized
+	name = "fossilized oyster"
+	desc = "A calcified old oyster. The shell is ancient, but it still might hide a prize within."
+	sellprice = 10
+
+/obj/item/reagent_containers/food/snacks/fish/oyster/fossilized/Initialize(mapload)
+	. = ..()
+	var/pearl_weight = pickweight(list("bpearl" = 120, "pearl" = 160, "nopearl" = 60))
+	switch(pearl_weight)
+		if("nopearl")
+			pearl = null
+		if("pearl")
+			QDEL_NULL(pearl)
+			pearl = new /obj/item/pearl(src)
+		if("bpearl")
+			QDEL_NULL(pearl)
+			pearl = new /obj/item/pearl/blue(src)
+
 /obj/item/oystershell
 	name = "oyster shell"
 	icon = 'modular/Neu_food/icons/raw/raw_fish.dmi'

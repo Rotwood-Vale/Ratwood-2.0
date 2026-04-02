@@ -101,7 +101,21 @@
 	if(deployed && bait)
 		if(world.time > check_counter + time2catch)
 			check_counter = world.time
-			var/list/fishingmodlist = bait.fishingMods
+			var/list/fishingmodlist
+			if(islist(bait.fishingMods))
+				fishingmodlist = bait.fishingMods.Copy()
+			else
+				fishingmodlist = list(
+					"commonFishingMod" = 1,
+					"rareFishingMod" = 1,
+					"treasureFishingMod" = 1,
+					"trashFishingMod" = 1,
+					"dangerFishingMod" = 1,
+					"ceruleanFishingMod" = 0,
+					"cheeseFishingMod" = 0,
+				)
+			if(is_cheese_bait(bait))
+				fishingmodlist["cheeseFishingMod"] = 1
 			var/fishingskill = 0
 			if(!QDELETED(fisherperson))
 				fishingmodlist = upgradecagemodlist(fisherperson, fishingmodlist)

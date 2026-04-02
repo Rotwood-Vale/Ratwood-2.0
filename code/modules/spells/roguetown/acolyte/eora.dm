@@ -1080,8 +1080,8 @@
 		"treasureFishingMod" = 1,
 		"trashFishingMod" = 0,
 		"dangerFishingMod" = 0,
-		"ceruleanFishingMod" = 1, // 1 on cerulean aril, 0 on everything else
-		"cheeseFishingMod" = 0 // Just for the funny gimmick of a chance for rats and rouses.
+		"ceruleanFishingMod" = 1,
+		"cheeseFishingMod" = 0
 	)
 	baitresilience = 5
 

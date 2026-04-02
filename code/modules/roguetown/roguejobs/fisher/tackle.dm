@@ -104,6 +104,15 @@
 
 /obj/item/fishing/bait
 	baitpenalty = 0
+	fishingMods = list(
+		"commonFishingMod" = 1,
+		"rareFishingMod" = 1,
+		"treasureFishingMod" = 1,
+		"trashFishingMod" = 1,
+		"dangerFishingMod" = 1,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0
+	)
 
 	var/list/fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/eel = 2)
 	//default is one anglerfish
@@ -125,9 +134,25 @@
 	return
 
 /obj/item/fishing/bait/meat
-	name = "red bait"
+	name = "chum bait"
 	desc = "A small amount of meat, rolled into a ball. Tends to attract eels."
 	icon_state = "meatbait"
+	fishinglist = list(
+		/obj/item/reagent_containers/food/snacks/fish/eel = 2,
+		/obj/item/reagent_containers/food/snacks/fish/salmon = 1,
+		/obj/item/reagent_containers/food/snacks/fish/bass = 1,
+	)
+
+/obj/item/fishing/bait/fly
+	name = "fly bait"
+	desc = "A feathered lure for fly fishing. Great for aggressive freshwater fish."
+	icon = 'icons/roguetown/items/natural.dmi'
+	icon_state = "feather"
+	fishinglist = list(
+		/obj/item/reagent_containers/food/snacks/fish/salmon = 3,
+		/obj/item/reagent_containers/food/snacks/fish/salmon/black_headed = 2,
+		/obj/item/reagent_containers/food/snacks/fish/bass = 3,
+	)
 
 /obj/item/fishing/bait/dough
 	name = "doughy bait"

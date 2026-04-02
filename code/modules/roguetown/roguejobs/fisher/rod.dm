@@ -1,6 +1,6 @@
 /obj/item/fishingrod
 	force = 12
-	possible_item_intents = list(ROD_AUTO, ROD_CAST,SPEAR_BASH)
+	possible_item_intents = list(ROD_AUTO, ROD_CAST, SPEAR_BASH)
 	name = "fishing rod"
 	desc = "Made from weathered wood and coarse twine. The tool of the battle against the dark waters below."
 	icon_state = "rod"
@@ -242,7 +242,7 @@
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list("shrink" = 0.7,"sx" = -14,"sy" = 3,"nx" = 14,"ny" = 3,"wx" = -12,"wy" = 4,"ex" = 6,"ey" = 5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+				return list("shrink" = 0.7,"sx" = -13,"sy" = 3,"nx" = 14,"ny" = 3,"wx" = -12,"wy" = 4,"ex" = 6,"ey" = 5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
@@ -432,6 +432,9 @@
 			deepfishlist = B.deeplist
 		if(B.specialchance)
 			specialcatchprob = B.specialchance
+		if(istype(B, /obj/item/fishing/bait/meat) && hook && (istype(hook, /obj/item/fishing/hook/iron) || istype(hook, /obj/item/fishing/hook/deluxe)))
+			fishpicker = pickweightmerge(fishpicker, list(/obj/item/reagent_containers/food/snacks/fish/octopus = 20))
+			deepfishlist = pickweightmerge(deepfishlist, list(/obj/item/reagent_containers/food/snacks/fish/octopus = 12))
 	else if(istype(baited, /obj/item/natural/worms))
 		var/list/worm_fishloot = baited.vars["fishloot"]
 		if(worm_fishloot)
@@ -445,6 +448,12 @@
 			sizepicker = pickweightmerge(sizepicker, S.sizemod)
 		if(S.raritymod)
 			raritypicker = pickweightmerge(raritypicker, S.raritymod)
+
+	if(is_cheese_bait(baited))
+		fishpicker = pickweightmerge(fishpicker, list(
+			/obj/item/reagent_containers/food/snacks/smallrat = 20,
+			/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 3,
+		))
 
 	while(deepmod > 0)
 		fishpicker = pickweightmerge(fishpicker, deepfishlist)
@@ -570,21 +579,34 @@
 								fishchance -= bp // Deduct penalties from bait quality, if any
 								fishchance -= fpp // Deduct a penalty the lower our fishing level is (-0 at legendary)
 						var/mob/living/carbon/human/fisherman = user
-						modlist = baited.fishingMods.Copy()
+						if(islist(baited.fishingMods))
+							modlist = baited.fishingMods.Copy()
+						else
+							modlist = list(
+								"commonFishingMod" = 1,
+								"rareFishingMod" = 1,
+								"treasureFishingMod" = 1,
+								"trashFishingMod" = 1,
+								"dangerFishingMod" = 1,
+								"ceruleanFishingMod" = 0,
+								"cheeseFishingMod" = 0,
+							)
+						if(is_cheese_bait(baited))
+							modlist["cheeseFishingMod"] = 1
 						if(prob(fishchance)) // Finally, roll the dice to see if we fish.
 							var/A = getfishingloot(user, modlist, target)
 							if(A)
 								var/ow = 30 + (sl * 10) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
-								to_chat(user, "<span class='notice'>Something tugs the line!</span>")
+								to_chat(user, "<span class='notice'>Something tugs the line! Time to pull it out.</span>")
 								target.balloon_alert_to_viewers("Tug!")
 								playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 								if(!do_after(user,ow, target = target, same_direction = TRUE))
 									if(A in subtypesof(/mob/living))
 										var/mob/M = A
 										new M(target)
-										if (!(M.type == /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab))
+										if(!(M.type == /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab))
 											user.playsound_local(src, pick('sound/misc/jumpscare (1).ogg','sound/misc/jumpscare (2).ogg','sound/misc/jumpscare (3).ogg','sound/misc/jumpscare (4).ogg'), 100)
-										user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT*2) // High risk high reward
+										user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT * 2) // High risk high reward
 									else
 										new A(user.loc)
 										to_chat(user, "<span class='warning'>Reel 'em in!</span>")
@@ -605,7 +627,7 @@
 										baited = null
 						else
 							to_chat(user, "<span class='warning'>Not even a nibble...</span>")
-							user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT/2) // Pity XP.
+							user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT / 2) // Pity XP.
 					else
 						to_chat(user, "<span class='warning'>This seems pointless without bait.</span>")
 				else
