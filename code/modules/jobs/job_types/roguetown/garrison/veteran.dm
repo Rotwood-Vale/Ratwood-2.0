@@ -28,7 +28,7 @@
 		/datum/advclass/veteran/scout,
 		/datum/advclass/veteran/spy
 	)
-	job_traits = list(TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_STEELHEARTED)
 
 /datum/job/roguetown/veteran/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
