@@ -1310,7 +1310,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		log_combat(user, target, "punched")
 		if(ishuman(user) && user.mind)
 			var/text = "[bodyzone2readablezone(selzone)]..."
-			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+			user.filtered_balloon_alert(TRAIT_STEELHEARTED, text)
 
 		if(!nodmg)
 			if(user.limb_destroyer)
@@ -1586,7 +1586,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 			if(ishuman(user) && user.mind)
 				var/text = "[bodyzone2readablezone(selzone)]..."
-				user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+				user.filtered_balloon_alert(TRAIT_STEELHEARTED, text)
 
 			user.do_attack_animation_simple(target, ATTACK_EFFECT_KICK, TRUE)
 			if(!nodmg)
@@ -1854,9 +1854,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
 			if(prob(10))
 				text = "<i>I can't tell...</i>"
-				user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+				user.filtered_balloon_alert(TRAIT_STEELHEARTED, text)
 		else
-			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+			user.filtered_balloon_alert(TRAIT_STEELHEARTED, text)
 
 	var/armor_block = H.run_armor_check(selzone, I.d_type, "", "",pen, damage = Iforce, blade_dulling=bladec, peeldivisor = user.used_intent.peel_divisor, intdamfactor = used_intfactor, used_weapon = I)
 
