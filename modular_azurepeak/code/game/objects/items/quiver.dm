@@ -79,7 +79,7 @@
 					B.attackby(AR, loc, params)
 					if(ismob(loc))
 						var/mob/M = loc
-						if(HAS_TRAIT(M, TRAIT_COMBAT_AWARE))
+						if(HAS_TRAIT(M, TRAIT_STEELHEARTED))
 							M.balloon_alert(M, "[length(arrows)] left...")
 					break
 		return
