@@ -78,16 +78,25 @@
 					/obj/item/clothing/mask/cigarette/pipe/westman
 				)
 
+/datum/supply_pack/rogue/tools/fishingrod
+	name = "Fishing Rod"
+	cost = 12
+	contains = list(/obj/item/fishingrod)
+
 /datum/supply_pack/rogue/tools/bait
-	name = "Premium Fishing Bait"
-	cost = 15
-	contains = list(
-					/obj/item/natural/worms/grubs,
-					/obj/item/natural/worms/grubs,
-					/obj/item/natural/worms/leech,
-					/obj/item/natural/worms/leech,
-					/obj/item/natural/worms/leech,
-				)
+	name = "Fishing Grub"
+	cost = 6
+	contains = /obj/item/fishing/bait/deluxe
+
+/datum/supply_pack/rogue/tools/fishingline
+	name = "Premium Fishing line"
+	cost = 25
+	contains = /obj/item/fishing/reel/deluxe
+
+/datum/supply_pack/rogue/tools/fishinghook
+	name = "Premium Fishing hook"
+	cost = 25
+	contains = /obj/item/fishing/hook/deluxe
 
 /datum/supply_pack/rogue/tools/prarml
 	name = "Prosthetic Wood Arm (L)"

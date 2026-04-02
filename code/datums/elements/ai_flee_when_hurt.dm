@@ -54,7 +54,6 @@
 
 /datum/element/ai_flee_while_injured/proc/cancel_flee(mob/living/source)
 	if(!QDELETED(source))
-		source.ai_controller.CancelActions()
 		source.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
 
 #undef FLEE_TIME
