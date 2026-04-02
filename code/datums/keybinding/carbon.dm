@@ -320,7 +320,13 @@
 		return FALSE
 	var/mob/living/carbon/C = user.mob
 	var/list/datum/action/actions = C.actions
-	if(actions.len < action_taken) // Dodge a runtime
+	// First, check if any action has been manually bound to this slot via middle-click
+	for(var/datum/action/A in actions)
+		if(A.slot == action_taken)
+			A.Trigger()
+			return TRUE
+	// Fallback: use index-based lookup if no slot binding was found
+	if(actions.len < action_taken)
 		return FALSE
 	var/datum/action/action = actions[action_taken]
 	if(!action)
