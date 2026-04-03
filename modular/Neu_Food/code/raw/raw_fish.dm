@@ -5,9 +5,6 @@
 	var/hand_fishing_reel_until = 0
 	var/hand_fishing_reel_loot = null
 	var/hand_fishing_reel_size_tag = null
-	var/turf/hand_fishing_minigame_turf = null
-	var/hand_fishing_minigame_until = 0
-	var/hand_fishing_minigame_loot = null
 	/// Temp fishingrod used for the cast hand-fishing minigame UI. Null when not in minigame.
 	var/obj/item/fishingrod/hand_fishing_cast_rod = null
 
@@ -95,9 +92,6 @@
 			living_user.hand_fishing_reel_until = 0
 			living_user.hand_fishing_reel_loot = null
 			living_user.hand_fishing_reel_size_tag = null
-			living_user.hand_fishing_minigame_turf = null
-			living_user.hand_fishing_minigame_until = 0
-			living_user.hand_fishing_minigame_loot = null
 			to_chat(user, span_warning("I need cast or auto intent to hand-fish."))
 			return
 
@@ -118,13 +112,18 @@
 			return
 
 		var/turf/src_turf = get_turf(src)
-		if(!src_turf || get_dist(user, src_turf) > 1)
+		if(!src_turf || user.z != src_turf.z || get_dist(user, src_turf) > 1)
 			to_chat(user, span_warning("It's out of reach. I can only fish by hand in water close to me!"))
 			return
 		if(istype(src_turf, /turf/open/water/bath) || istype(src_turf, /turf/open/water/sewer))
 			to_chat(user, span_warning("I can't fish here..."))
 			return
 
+		if(hand_reel_user && QDELETED(hand_reel_user))
+			hand_reel_user = null
+			hand_reel_turf = null
+			hand_reel_until = 0
+			hand_reel_loot = null
 		if(hand_reel_user == user)
 			if(world.time > hand_reel_until || !hand_reel_turf)
 				hand_reel_user = null
@@ -140,7 +139,7 @@
 				hand_reel_loot = null
 				to_chat(user, span_warning("It slips to another tile before I can haul it in!"))
 				return
-			if(get_dist(user, hand_reel_turf) > 1)
+			if(user.z != hand_reel_turf.z || get_dist(user, hand_reel_turf) > 1)
 				to_chat(user, span_warning("I lose leverage. I need to stay within close proximity to reel by hand."))
 				hand_reel_user = null
 				hand_reel_turf = null

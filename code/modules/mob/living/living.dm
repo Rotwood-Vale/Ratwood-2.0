@@ -44,15 +44,6 @@
 		QDEL_NULL(craftingthing)
 	return ..()
 
-/mob/living/proc/attack_self()
-	// Hand-fishing minigame: allow bare hands to reel via in-hand key
-	if(!hand_fishing_cast_rod)
-		return
-	if(QDELETED(hand_fishing_cast_rod) || !hand_fishing_cast_rod.currentlyfishing)
-		hand_fishing_cast_rod = null
-		return
-	hand_fishing_cast_rod.reel_input = TRUE
-
 /mob/living/onZImpact(turf/T, levels)
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE2))
 		return

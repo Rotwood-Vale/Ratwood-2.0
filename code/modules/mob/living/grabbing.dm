@@ -67,9 +67,7 @@
 		living_user.hand_fishing_reel_turf = null
 		living_user.hand_fishing_reel_until = 0
 		living_user.hand_fishing_reel_loot = null
-		living_user.hand_fishing_minigame_turf = null
-		living_user.hand_fishing_minigame_until = 0
-		living_user.hand_fishing_minigame_loot = null
+		living_user.hand_fishing_reel_size_tag = null
 		return
 	var/turf/open/water/target_water = null
 	if(istype(target, /turf/open/water))
