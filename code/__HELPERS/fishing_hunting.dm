@@ -21,17 +21,87 @@
 /proc/get_fish_size_scale(size_tag)
 	switch(size_tag)
 		if("tiny")
-			return 0.75
+			return 0.39
 		if("small")
-			return 0.9
+			return 0.492
 		if("large")
-			return 1.15
+			return 1.105
 		if("huge")
-			return 1.3
+			return 1.21
 		if("prize")
-			return 1.45
+			return 1.315
 		else
 			return 1
+
+/proc/get_fishing_size_feel_text(size_tag, catch_path = null)
+	if(ispath(catch_path, /mob/living))
+		return "Something vicious thrashes on the line!"
+	switch(size_tag)
+		if("tiny", "small")
+			return "This one feels pretty small."
+		if("normal")
+			return "This feels like a fair-sized fish."
+		if("large")
+			return "This feels like a big one!"
+		if("huge")
+			return "This feels enormous!"
+		if("prize")
+			return "Gods... this feels monstrous!"
+	return "I can't quite read the weight of it yet."
+
+/proc/get_fishing_path_challenge(catch_path)
+	if(!ispath(catch_path))
+		return 0
+	var/challenge = 0
+	if(ispath(catch_path, /mob/living))
+		challenge += 5
+	if(ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/octopus))
+		challenge += 4
+	else if(ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/angler))
+		challenge += 3
+	else if(ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/creepy_squid) || ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/creepy_shark))
+		challenge += 4
+	else if(ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/sturgeon) || ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/lobster) || ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/swamp_mother))
+		challenge += 2
+	else if(ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/crab) || ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/beaksnapper) || ispath(catch_path, /obj/item/reagent_containers/food/snacks/fish/zizo_abberation))
+		challenge += 1
+	return clamp(challenge, 0, 6)
+
+/proc/apply_fishing_bite_injury(mob/living/user, atom/source)
+	if(!user)
+		return FALSE
+	var/source_name = source ? "[source]" : "the fish"
+	var/list/public_messages = list(
+		"[user] recoils as [source_name] bites into [user.p_their()] hand!",
+		"[user] jerks back as a crab nicks [user.p_their()] fingers!",
+		"[user] winces as something sharp cuts across [user.p_their()] hand!",
+		"[user] grunts as [user.p_their()] hand scrapes against a jagged rock!"
+	)
+	var/list/self_messages = list(
+		"[source_name] snaps at my hand and bites down!",
+		"A crab catches my fingers and nicks me!",
+		"Something sharp cuts across my hand!",
+		"My hand scrapes against a jagged rock!"
+	)
+	var/message_index = rand(1, length(public_messages))
+	if(!ishuman(user))
+		user.visible_message(span_danger(public_messages[message_index]), span_danger(self_messages[message_index]))
+		user.apply_damage(rand(4, 8), BRUTE)
+		return TRUE
+	var/mob/living/carbon/human/H = user
+	var/hand_zone = (H.active_hand_index == 1) ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND
+	var/arm_zone = (hand_zone == BODY_ZONE_PRECISE_L_HAND) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+	var/obj/item/bodypart/BP = H.get_bodypart(hand_zone)
+	if(!BP)
+		BP = H.get_bodypart(arm_zone)
+	if(!BP)
+		BP = H.get_bodypart(BODY_ZONE_CHEST)
+	playsound(get_turf(H), pick('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg'), 60, TRUE)
+	H.visible_message(span_danger(replacetext(public_messages[message_index], "[user]", "[H]")), span_danger(self_messages[message_index]))
+	H.apply_damage(rand(4, 8), BRUTE, BP)
+	if(prob(60))
+		BP.add_wound(/datum/wound/bite/small)
+	return TRUE
 
 // Tracks chum-enhanced water tiles with original properties as: turf -> list(expiry_time, orig_color, orig_name)
 /var/global/list/chummed_fishing_tiles = list()
@@ -215,7 +285,7 @@
 	if(!F)
 		return
 
-	var/list/rarity_weights = list("com" = 70, "rare" = 20, "ultra" = 9, "gold" = 1)
+	var/list/rarity_weights = list("com" = 140, "rare" = 40, "ultra" = 18, "gold" = 1)
 	var/list/size_weights = list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "huge" = 4, "prize" = 1)
 	if(islist(size_weights_override))
 		size_weights = size_weights_override.Copy()
@@ -225,6 +295,25 @@
 		rarity_weights["rare"] = max(1, round(rarity_weights["rare"] * max(0.1, modlist["rareFishingMod"] || 1)))
 		rarity_weights["ultra"] = max(1, round(rarity_weights["ultra"] * max(0.1, modlist["rareFishingMod"] || 1)))
 		rarity_weights["gold"] = max(1, round(rarity_weights["gold"] * max(0.1, modlist["ceruleanFishingMod"] || 1)))
+		var/ultra_boost = max(0.1, modlist["net_cage_ultra_boost"] || 1)
+		var/prize_boost = max(0.1, modlist["net_cage_prize_boost"] || 1)
+		rarity_weights["ultra"] = max(1, round(rarity_weights["ultra"] * ultra_boost))
+		size_weights["prize"] = max(1, round((size_weights["prize"] || 1) * prize_boost))
+		if(modlist["size_large_mult"])
+			size_weights["large"] = max(1, round((size_weights["large"] || 1) * max(0.1, modlist["size_large_mult"])))
+		if(modlist["size_huge_mult"])
+			size_weights["huge"] = max(1, round((size_weights["huge"] || 1) * max(0.1, modlist["size_huge_mult"])))
+		if(modlist["size_prize_mult"])
+			size_weights["prize"] = max(1, round((size_weights["prize"] || 1) * max(0.1, modlist["size_prize_mult"])))
+		if(modlist["force_common_rarity"])
+			rarity_weights["com"] = max(1, rarity_weights["com"])
+			rarity_weights["rare"] = 0
+			rarity_weights["ultra"] = 0
+			rarity_weights["gold"] = 0
+		if(modlist["force_nonprize_size"])
+			size_weights["large"] = 0
+			size_weights["huge"] = 0
+			size_weights["prize"] = 0
 
 	var/fishrarity = pickweightAllowZero(rarity_weights)
 	var/fishsize = pickweightAllowZero(size_weights)
@@ -269,13 +358,13 @@
 			costmod *= 0.75
 		if("large")
 			F.vars["fishloot"] = null
-			costmod *= 1.5
+			costmod *= 1.05
 		if("huge")
 			F.vars["fishloot"] = null
-			costmod *= 3
+			costmod *= 2.1
 		if("prize")
 			F.vars["fishloot"] = null
-			costmod *= 5
+			costmod *= 3.5
 		else
 			F.vars["fishloot"] = null
 

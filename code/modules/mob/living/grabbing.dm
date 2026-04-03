@@ -56,6 +56,24 @@
 			return 1
 	return ..()
 
+/obj/item/grabbing/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!isliving(user))
+		return
+	var/mob/living/living_user = user
+	if(!living_user.hand_fishing_mode || world.time > living_user.hand_fishing_mode_until)
+		return
+	var/turf/open/water/target_water = null
+	if(istype(target, /turf/open/water))
+		target_water = target
+	else if(istype(target, /turf/open/transparent/openspace))
+		var/turf/below = get_step_multiz(target, DOWN)
+		if(istype(below, /turf/open/water))
+			target_water = below
+	if(!target_water)
+		return
+	target_water.attack_hand(user)
+
 /obj/item/grabbing/proc/update_hands(mob/user)
 	if(!user)
 		return
@@ -159,6 +177,20 @@
 	if(!valid_check())
 		return FALSE
 	if(M == user) // Self-grab attempt
+		if(sublimb_grabbed == BODY_ZONE_PRECISE_L_HAND || sublimb_grabbed == BODY_ZONE_PRECISE_R_HAND)
+			var/acting_hand_zone = (user.used_hand == 1) ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND
+			if(sublimb_grabbed == acting_hand_zone)
+				to_chat(user, span_warning("I need to aggressively brace my opposite hand, not the same one if I want to hand-fish."))
+				return FALSE
+			user.hand_fishing_mode = (sublimb_grabbed == BODY_ZONE_PRECISE_L_HAND) ? ROD_CAST : ROD_AUTO
+			user.hand_fishing_mode_until = world.time + (20 SECONDS)
+			possible_item_intents = list(/datum/intent/grab/upgrade, ROD_CAST, ROD_AUTO)
+			user.update_a_intents()
+			if(user.hand_fishing_mode == ROD_CAST)
+				to_chat(user, span_notice("I brace my opposite hand and ready myself to cast out and hand-fish."))
+			else
+				to_chat(user, span_notice("I brace my opposite hand and ready myself to haul a fish out of the water by hand."))
+			return FALSE
 		var/signal_result = SEND_SIGNAL(user, COMSIG_LIVING_GRAB_SELF_ATTEMPT, user, M, sublimb_grabbed, null)
 		if(signal_result & COMPONENT_CANCEL_GRAB_ATTACK)
 			return FALSE

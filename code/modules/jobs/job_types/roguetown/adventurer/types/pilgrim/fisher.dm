@@ -60,6 +60,7 @@
 							/obj/item/rogueweapon/shovel/small = 1,
 							/obj/item/flashlight/flare/torch = 1,
 							/obj/item/flint = 1,
+							/obj/item/recipe_book/fishing = 1,
 							/obj/item/recipe_book/survival = 1,
 							)
 	else
@@ -76,7 +77,8 @@
 							/obj/item/natural/worms = 2,
 							/obj/item/rogueweapon/shovel/small = 1,
 							/obj/item/flashlight/flare/torch = 1,
-							/obj/item/flint = 1
+							/obj/item/flint = 1,
+							/obj/item/recipe_book/fishing = 1,
 							)
 
 /datum/outfit/job/roguetown/adventurer/fisher/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

@@ -53,6 +53,17 @@
 	update_icon()
 
 /turf/open/water/attack_hand(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.hand_fishing_mode && world.time <= L.hand_fishing_mode_until)
+			if(L.used_intent && (L.used_intent.type == ROD_CAST || L.used_intent.type == ROD_AUTO))
+				L.hand_fishing_mode = L.used_intent.type
+			if(L.hand_fishing_mode == ROD_CAST || L.hand_fishing_mode == ROD_AUTO)
+				for(var/obj/item/reagent_containers/food/snacks/fish/F in src)
+					if(!F.dead)
+						return F.attack_hand(user)
+				to_chat(user, span_warning("I don't spot any fish close enough to snatch by hand."))
+				return
 	. = ..()
 	if(!ishuman(user))
 		return
@@ -199,6 +210,7 @@
 			qdel(F)
 	if(isliving(AM) && !AM.throwing)
 		var/mob/living/L = AM
+		var/in_dinghy = istype(L.buckled, /obj/vehicle/ridden/dinghy)
 		if(HAS_TRAIT(L, TRAIT_CURSE_ABYSSOR))
 			L.freak_out()
 			L.visible_message(span_warning("[L] spasms violently upon touching the water!"), span_danger("The water... it burns me!"))
@@ -207,7 +219,7 @@
 		if (istype(src,/turf/open/water/bloody))
 			L.add_mob_blood(L)
 
-		if(!(L.movement_type & FLYING))
+		if(!(L.movement_type & FLYING) && !in_dinghy)
 			if(!(L.mobility_flags & MOBILITY_STAND) || water_level == 3)
 				L.SoakMob(FULL_BODY)
 			else

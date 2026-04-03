@@ -350,7 +350,7 @@
 	max_blade_int = 175
 	max_integrity = 225
 	throwforce = 30
-	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_BASH, SPEAR_CAST)
+	possible_item_intents = list(SPEAR_THRUST_1H, ROD_AUTO)
 	fishingMods=list(
 		"commonFishingMod" = 0.8,
 		"rareFishingMod" = 1.4,
@@ -359,57 +359,132 @@
 		"dangerFishingMod" = 0.9,
 		"ceruleanFishingMod" = 0, // 1 on cerulean aril, 0 on everything else
 	)
+	var/mob/reel_user
+	var/turf/reel_turf
+	var/reel_until = 0
+	var/reel_loot
+	var/static/list/virtual_fishing_mods = list(
+		"commonFishingMod" = 1,
+		"rareFishingMod" = 1,
+		"treasureFishingMod" = 1,
+		"trashFishingMod" = 1,
+		"dangerFishingMod" = 1,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0,
+	)
+	var/static/list/spear_fishing_size_weights = list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1)
+
+/obj/item/rogueweapon/spear/trident/examine(mob/user)
+	. = ..()
+
+/obj/item/rogueweapon/spear/trident/proc/get_auto_style_stamina_drain(mob/living/user, base_percent = 25)
+	if(!user)
+		return 0
+	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), 0)
+	var/strength_bonus = max(0, user.STASTR - 10)
+	var/effective_percent = max(1, base_percent - athletics_skill - strength_bonus)
+	return max(1, round((user.max_stamina * effective_percent) / 100, 1))
 
 /obj/item/rogueweapon/spear/trident/afterattack(obj/target, mob/user, proximity)
 	var/sl = user.get_skill_level(/datum/skill/labor/fishing)
+	var/per_mod = 1
 	var/speed_mod = 1
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		per_mod = clamp(H.get_stat(STATKEY_PER), 1, 20)
 		speed_mod = clamp(H.get_stat(STATKEY_SPD), 1, 20)
 	var/ft = 150
 	var/fpp =  130 - (40 + (sl * 15))
 	if(istype(target, /turf/open/water))
-		if(user.used_intent.type == SPEAR_CAST && !user.doing)
-			if(target in range(user,3))
+		if(istype(target, /turf/open/water/bath) || istype(target, /turf/open/water/sewer))
+			to_chat(user, "<span class='warning'>I can't fish here...</span>")
+			return
+		if((user.used_intent.type == ROD_AUTO || user.used_intent.type == ROD_CAST) && !user.doing)
+			if(target in range(user,2))
+				var/turf/open/water/targeted_water = target
+				var/shore_distance = get_fishing_excluded_turf_distance(targeted_water, 6)
+				var/near_shore_penalty = max(3 - shore_distance, 0)
+				if(reel_user == user)
+					if(world.time > reel_until || !reel_turf || !reel_loot)
+						reel_user = null
+						reel_turf = null
+						reel_until = 0
+						reel_loot = null
+						to_chat(user, "<span class='warning'>I lose the fish's trail.</span>")
+						return
+					if(target != reel_turf)
+						to_chat(user, "<span class='warning'>I need to thrust into the same area to reel it in!</span>")
+						return
+					playsound(src.loc, pick('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg'), 80, TRUE)
+					var/reel_time = round(max(10, 45 - (sl * 3) - (speed_mod * 2)) * 1.5)
+					if(!do_after(user, reel_time, target = target))
+						return
+					var/reel_result = reel_loot
+					var/reel_challenge = get_fishing_path_challenge(reel_result)
+					var/reel_chance = clamp(30 + (sl * 8) + (speed_mod * 3) - (reel_challenge * 8), 5, 98)
+					reel_user = null
+					reel_turf = null
+					reel_until = 0
+					reel_loot = null
+					if(!prob(reel_chance))
+						to_chat(user, "<span class='warning'>Damn, it slips away as I pull!</span>")
+						return
+					var/mob/living/fisherman = user
+					if(ismob(reel_result))
+						var/mob/M = reel_result
+						if(M.type in subtypesof(/mob/living/simple_animal/hostile))
+							new M(target)
+						else
+							new M(user.loc)
+						user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT*2)
+					else
+						var/obj/item/new_catch = new reel_result(user.loc)
+						if(istype(new_catch, /obj/item/reagent_containers/food/snacks/fish))
+							var/obj/item/reagent_containers/food/snacks/fish/F = new_catch
+							apply_fishing_quality_to_fish(F, virtual_fishing_mods, spear_fishing_size_weights)
+						teleport_to_dream(user, 10000, 1)
+						to_chat(user, "<span class='warning'>Pull 'em in!</span>")
+						user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE)
+						record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
+						GLOB.azure_round_stats[STATS_FISH_CAUGHT]++
+						playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
+					var/stamina_drain = get_auto_style_stamina_drain(user, 25)
+					if(stamina_drain)
+						user.stamina_add(stamina_drain)
+					return
+
 				user.visible_message("<span class='warning'>[user] searches for a fish!</span>", \
 									"<span class='notice'>I begin looking for a fish to spear.</span>")
 				playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 				ft -= (sl * 20)
-				ft -= (speed_mod * 2)
+				ft -= (per_mod * 2)
+				ft = round(ft * 1.5)
 				ft = max(20,ft)
 				if(do_after(user,ft, target = target))
 					var/fishchance = 100
-					fishchance += speed_mod
+					fishchance += per_mod
+					fishchance += 10
+					if(shore_distance <= 3)
+						fishchance += 20
+						fishchance = round(fishchance * 2)
+					fishchance -= near_shore_penalty * 20
 					if(user.mind)
 						if(!sl)
 							fishchance -= 50
 						else
 							fishchance -= fpp
+					fishchance = clamp(fishchance, 2, 98)
 					var/mob/living/fisherman = user
 					if(prob(fishchance))
-						var/A = getfishingloot(user, fishingMods, target)
+						var/A = getfishingloot(user, virtual_fishing_mods, target)
 						if(A)
-							var/ow = 30 + (sl * 10)
-							to_chat(user, "<span class='notice'>You see something!</span>")
+							reel_user = user
+							reel_turf = target
+							reel_until = world.time + max(20, 35 + (sl * 6) + (speed_mod * 2))
+							reel_loot = A
+							to_chat(user, "<span class='notice'>You see something! Click the same tile again to reel it in.</span>")
 							playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
-							if(!do_after(user,ow, target = target))
-								if(ismob(A))
-									var/mob/M = A
-									if(M.type in subtypesof(/mob/living/simple_animal/hostile))
-										new M(target)
-									else
-										new M(user.loc)
-									user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT*2)
-								else
-									new A(user.loc)
-									teleport_to_dream(user, 10000, 1)
-									to_chat(user, "<span class='warning'>Pull 'em in!</span>")
-									user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE)
-									record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
-									GLOB.azure_round_stats[STATS_FISH_CAUGHT]++
-									playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
-							else
-								to_chat(user, "<span class='warning'>Damn, it got away... I should <b>pull away</b> next time.</span>")
+							return
 					else
 						to_chat(user, "<span class='warning'>Not a single fish...</span>")
 						user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT/2)
@@ -584,7 +659,7 @@
 
 /obj/item/rogueweapon/fishspear
 	force = 20
-	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_BASH, SPEAR_CAST) //bash is for nonlethal takedowns, only targets limbs
+	possible_item_intents = list(ROD_AUTO, SPEAR_THRUST_1H) // auto is first so this starts in auto intent for fishing spear
 	name = "fishing spear"
 	desc = "This two-pronged and barbed spear was made to catch those pesky fish."
 	icon_state = "fishspear"
@@ -615,6 +690,31 @@
 		"dangerFishingMod" = 1,
 		"ceruleanFishingMod" = 0, // 1 on cerulean aril, 0 on everything else
 	)
+	var/mob/reel_user
+	var/turf/reel_turf
+	var/reel_until = 0
+	var/reel_loot
+	var/static/list/virtual_fishing_mods = list(
+		"commonFishingMod" = 1,
+		"rareFishingMod" = 1,
+		"treasureFishingMod" = 1,
+		"trashFishingMod" = 1,
+		"dangerFishingMod" = 1,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0,
+	)
+	var/static/list/spear_fishing_size_weights = list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1)
+
+/obj/item/rogueweapon/fishspear/examine(mob/user)
+	. = ..()
+
+/obj/item/rogueweapon/fishspear/proc/get_auto_style_stamina_drain(mob/living/user, base_percent = 25)
+	if(!user)
+		return 0
+	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), 0)
+	var/strength_bonus = max(0, user.STASTR - 10)
+	var/effective_percent = max(1, base_percent - athletics_skill - strength_bonus)
+	return max(1, round((user.max_stamina * effective_percent) / 100, 1))
 
 /obj/item/rogueweapon/fishspear/depthseek //DO NOT ADD RECIPE. MEANT TO BE AN ABYSSORITE RELIC. IDEA COURTESY OF LORDINQPLAS
 	force = 45
@@ -627,59 +727,108 @@
 	throwforce = 50
 
 /obj/item/rogueweapon/fishspear/attack_self(mob/user)
-	if(user.used_intent.type == SPEAR_CAST)
+	if(user.used_intent.type == ROD_AUTO)
 		if(user.doing)
 			user.doing = 0
 
 /obj/item/rogueweapon/fishspear/afterattack(obj/target, mob/user, proximity)
 	var/sl = user.get_skill_level(/datum/skill/labor/fishing) // User's skill level
+	var/per_mod = 1
 	var/speed_mod = 1
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		per_mod = clamp(H.get_stat(STATKEY_PER), 1, 20)
 		speed_mod = clamp(H.get_stat(STATKEY_SPD), 1, 20)
 	var/ft = 160 //Time to get a catch, in ticks
 	var/fpp =  130 - (40 + (sl * 15)) // Fishing power penalty based on fishing skill level
 	if(istype(target, /turf/open/water))
-		if(user.used_intent.type == SPEAR_CAST && !user.doing)
-			if(target in range(user,3))
+		if(istype(target, /turf/open/water/bath) || istype(target, /turf/open/water/sewer))
+			to_chat(user, "<span class='warning'>I can't fish here...</span>")
+			return
+		if(user.used_intent.type == ROD_AUTO && !user.doing)
+			if(target in range(user,2))
+				var/turf/open/water/targeted_water = target
+				var/shore_distance = get_fishing_excluded_turf_distance(targeted_water, 6)
+				var/near_shore_penalty = max(3 - shore_distance, 0)
+				if(reel_user == user)
+					if(world.time > reel_until || !reel_turf || !reel_loot)
+						reel_user = null
+						reel_turf = null
+						reel_until = 0
+						reel_loot = null
+						to_chat(user, "<span class='warning'>I lose the fish's trail.</span>")
+						return
+					if(target != reel_turf)
+						to_chat(user, "<span class='warning'>I need to thrust into the same area to reel it in!</span>")
+						return
+					playsound(src.loc, pick('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg'), 80, TRUE)
+					var/reel_time = round(max(10, 45 - (sl * 3) - (speed_mod * 2)) * 1.5)
+					if(!do_after(user, reel_time, target = target))
+						return
+					var/reel_chance = clamp(30 + (sl * 8) + (speed_mod * 3), 5, 98)
+					var/reel_result = reel_loot
+					reel_user = null
+					reel_turf = null
+					reel_until = 0
+					reel_loot = null
+					if(!prob(reel_chance))
+						to_chat(user, "<span class='warning'>Damn, it slips away as I pull!</span>")
+						return
+					var/mob/living/fisherman = user
+					if(reel_result in subtypesof(/mob/living))
+						var/mob/M = reel_result
+						new M(target)
+						if (!(M.type == /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab))
+							user.playsound_local(src, pick('sound/misc/jumpscare (1).ogg','sound/misc/jumpscare (2).ogg','sound/misc/jumpscare (3).ogg','sound/misc/jumpscare (4).ogg'), 100)
+						user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT*2)
+					else
+						var/obj/item/new_catch = new reel_result(user.loc)
+						if(istype(new_catch, /obj/item/reagent_containers/food/snacks/fish))
+							var/obj/item/reagent_containers/food/snacks/fish/F = new_catch
+							apply_fishing_quality_to_fish(F, virtual_fishing_mods, spear_fishing_size_weights)
+						teleport_to_dream(user, 10000, 1)
+						to_chat(user, "<span class='warning'>Pull 'em in!</span>")
+						user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE)
+						record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
+						record_round_statistic(STATS_FISH_CAUGHT)
+						playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
+					var/stamina_drain = get_auto_style_stamina_drain(user, 25)
+					if(stamina_drain)
+						user.stamina_add(stamina_drain)
+					return
+
 				user.visible_message("<span class='warning'>[user] searches for a fish!</span>", \
 									"<span class='notice'>I begin looking for a fish to spear.</span>")
 				playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 				ft -= (sl * 20) //every skill lvl is -2 seconds
-				ft -= (speed_mod * 2)
+				ft -= (per_mod * 2)
+				ft = round(ft * 1.5)
 				ft = max(20,ft) //min of 2 seconds
 				if(do_after(user,ft, target = target))
 					var/fishchance = 100 // Total fishing chance, deductions applied below
-					fishchance += speed_mod
+					fishchance += per_mod
+					fishchance += 10
+					if(shore_distance <= 3)
+						fishchance += 20
+						fishchance = round(fishchance * 2)
+					fishchance -= near_shore_penalty * 20
 					if(user.mind)
 						if(!sl) // If we have zero fishing skill...
 							fishchance -= 50 // 50% chance to fish base
 						else
 							fishchance -= fpp // Deduct a penalty the lower our fishing level is (-0 at legendary)
+					fishchance = clamp(fishchance, 2, 98)
 					var/mob/living/fisherman = user
 					if(prob(fishchance)) // Finally, roll the dice to see if we fish.
-						var/A = getfishingloot(user, fishingMods, target)
+						var/A = getfishingloot(user, virtual_fishing_mods, target)
 						if(A)
-							var/ow = 30 + (sl * 10) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
-							to_chat(user, "<span class='notice'>You see something!</span>")
+							reel_user = user
+							reel_turf = target
+							reel_until = world.time + max(20, 35 + (sl * 6) + (speed_mod * 2))
+							reel_loot = A
+							to_chat(user, "<span class='notice'>You see something! Click the same tile again to reel it in.</span>")
 							playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
-							if(!do_after(user,ow, target = target))
-								if(A in subtypesof(/mob/living))
-									var/mob/M = A
-									new M(target)
-									if (!(M.type == /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab))
-										user.playsound_local(src, pick('sound/misc/jumpscare (1).ogg','sound/misc/jumpscare (2).ogg','sound/misc/jumpscare (3).ogg','sound/misc/jumpscare (4).ogg'), 100)
-									user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT*2) // High risk high reward
-								else
-									new A(user.loc)
-									teleport_to_dream(user, 10000, 1)
-									to_chat(user, "<span class='warning'>Pull 'em in!</span>")
-									user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE) // Level up!
-									record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
-									record_round_statistic(STATS_FISH_CAUGHT)
-									playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
-							else
-								to_chat(user, "<span class='warning'>Damn, it got away... I should <b>pull away</b> next time.</span>")
+							return
 					else
 						to_chat(user, "<span class='warning'>Not a single fish...</span>")
 						user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT/2) // Pity XP.

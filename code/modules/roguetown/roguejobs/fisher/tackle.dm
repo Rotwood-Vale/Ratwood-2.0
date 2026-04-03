@@ -18,9 +18,51 @@
 	//affects how long the window is to hook a fish
 	var/hookmod
 	var/attachtype
+	var/max_durability = 100
+	var/durability = 100
 
 /obj/item/fishing/Initialize()
 	. = ..()
+	max_durability = max(1, max_durability)
+	max_integrity = max_durability
+	obj_integrity = clamp(durability, 0, max_integrity)
+	durability = obj_integrity
+
+/obj/item/fishing/proc/get_durability_percent()
+	if(max_integrity <= 0)
+		return 0
+	return round((obj_integrity / max_integrity) * 100)
+
+/obj/item/fishing/proc/adjust_durability(amount)
+	if(amount <= 0)
+		return FALSE
+	obj_integrity = max(0, obj_integrity - amount)
+	durability = obj_integrity
+	return obj_integrity <= 0
+
+/obj/item/fishing/examine(mob/user)
+	. = ..()
+	var/durability_percent = get_durability_percent()
+	if(durability_percent >= 75)
+		. += span_notice("Durability: [durability_percent]% (sturdy)")
+	else if(durability_percent >= 40)
+		. += span_warning("Durability: [durability_percent]% (worn)")
+	else
+		. += span_danger("Durability: [durability_percent]% (fragile)")
+	if(attachtype)
+		. += span_notice("Attachment type: [attachtype].")
+	if(linehealth)
+		. += span_notice("Line Toughness: [format_fishing_signed_value(linehealth)] (line strength modifier).")
+	if(hookmod)
+		. += span_notice("Bite Modifier: [format_fishing_signed_value(hookmod)] (hook timing modifier).")
+	if(difficultymod)
+		. += span_notice("Fight Ease: [format_fishing_signed_value(difficultymod)] (handling difficulty modifier).")
+	if(deepfishingweight)
+		. += span_notice("Depth Pull: [format_fishing_signed_value(deepfishingweight)] (depth pull modifier).")
+	if(islist(raritymod) && length(raritymod))
+		. += span_notice("Rarity Chance: [format_fishing_mod_list(raritymod)] (rarity bias).")
+	if(islist(sizemod) && length(sizemod))
+		. += span_notice("Size Bias: [format_fishing_mod_list(sizemod)].")
 
 /obj/item/fishing/reel
 	attachtype = "reel"
@@ -30,6 +72,8 @@
 	desc = "A simple fishing line made out of woven fibers. Cheap, but breaks easily."
 	linehealth = 5
 	difficultymod = 1
+	max_durability = 50
+	durability = 50
 
 /obj/item/fishing/reel/leather
 	name = "leather fishing line"
@@ -37,6 +81,8 @@
 	icon_state = "leatherreel"
 	linehealth = 8
 	hookmod = -3
+	max_durability = 100
+	durability = 100
 
 /obj/item/fishing/reel/silk
 	name = "silk fishing line"
@@ -44,6 +90,8 @@
 	icon_state = "silkreel"
 	linehealth = 10
 	difficultymod = -1
+	max_durability = 120
+	durability = 120
 
 /obj/item/fishing/reel/deluxe
 	name = "deluxe fishing line"
@@ -52,6 +100,8 @@
 	linehealth = 14
 	hookmod = 3
 	difficultymod = -2
+	max_durability = 150
+	durability = 150
 
 /obj/item/fishing/hook
 	attachtype = "hook"
@@ -60,29 +110,49 @@
 	name = "wooden fishing hook"
 	desc = "A fishing hook consisting of a small piece of wood, carved to points on both ends. More likely to fall out."
 	icon_state = "gorgehook"
-	difficultymod = 2
+	difficultymod = 1
 	hookmod = -1
 	sizemod = list("normal" = -1, "large" = -1, "huge" = -1, "prize" = -2)
 	deepfishingweight = -1
+	max_durability = 75
+	durability = 75
 
 /obj/item/fishing/hook/thorn
 	name = "thorn fishing hook"
 	desc = "A fishing hook carved out of a thorn. Effective, but fragile."
 	icon_state = "thornhook"
+	difficultymod = 2
 	linehealth = -2
+	max_durability = 50
+	durability = 50
 
 /obj/item/fishing/hook/iron
 	name = "iron fishing hook"
 	desc = "An iron fishing hook. Reliable."
 	icon_state = "ironhook"
 	linehealth = 2
+	max_durability = 120
+	durability = 120
+
+/obj/item/fishing/hook/steel
+	name = "steel fishing hook"
+	desc = "A high-end steel hook with excellent bite control and reinforced shank."
+	icon_state = "ironhook"
+	linehealth = 3
+	hookmod = 1
+	difficultymod = -1
+	max_durability = 150
+	durability = 150
 
 /obj/item/fishing/hook/deluxe
-	name = "wooden lure"
-	desc = "A small wooden lure, painted to look like a small fish. Tends to scare off smaller fish."
+	name = "deluxe wooden lure hook"
+	desc = "A small wooden lure, painted to look like a small fish. It functions as a hook and tends to scare off smaller fish. It has two hooks, giving it a chance to hook in another fish."
 	icon_state = "deluxehook"
+	difficultymod = 2
 	raritymod = list("gold" = 1, "ultra" = 1, "rare"= 1, "com"= -3)
-	sizemod = list("tiny" = -3, "small" = -2, "normal" = -1, "large" = 1, "huge" = 1, "prize" = 1)
+	sizemod = list("tiny" = -4, "small" = -3, "normal" = -2, "large" = 2, "huge" = 3, "prize" = 4)
+	max_durability = 150
+	durability = 150
 
 /obj/item/fishing/line //short for line attachment
 	name = "deprecated tackle line"
@@ -98,6 +168,8 @@
 	hookmod = 4
 	deepfishingweight = -2
 	bobber = TRUE
+	max_durability = 100
+	durability = 100
 
 /obj/item/fishing/line/sinker
 	attachtype = "line"
@@ -106,7 +178,10 @@
 	icon_state = "sinker"
 	deepfishingweight = 1
 	sizemod = list("normal" = -1, "large" = -1, "huge" = -1, "prize" = -2)
+	max_durability = 100
+	durability = 100
 /obj/item/fishing/bait
+	isbait = TRUE
 	baitpenalty = 0
 	fishingMods = list(
 		"commonFishingMod" = 1,
@@ -137,10 +212,34 @@
 /obj/item/fishing/bait/proc/makespecial(obj/item/specialify)//put in the new item caught and this should change it in some way, change color, give it a glow and increased size, unique icon, whatever
 	return
 
+/obj/item/fishing/bait/Initialize()
+	. = ..()
+	sync_bait_durability()
+
+/obj/item/fishing/bait/examine(mob/user)
+	. = ..()
+	sync_bait_durability()
+	. += span_notice("Durability: [get_bait_durability_percent()]% ([baitresilience]/[bait_max_durability]).")
+	. += span_notice("Lure Chance: [baitpenalty] (bite penalty — lower is better).")
+	if(islist(fishingMods) && length(fishingMods))
+		. += span_notice("Fish Pulls: [format_fishing_mod_list(fishingMods)] (catch table modifiers).")
+	if(islist(sizemod) && length(sizemod))
+		. += span_notice("Size Bias: [format_fishing_mod_list(sizemod)].")
+	if(islist(raritymod) && length(raritymod))
+		. += span_notice("Rarity Chance: [format_fishing_mod_list(raritymod)] (rarity bias).")
+	if("deepfishingweight" in vars && vars["deepfishingweight"])
+		. += span_notice("Depth Pull: [format_fishing_signed_value(vars["deepfishingweight"])] (depth pull modifier).")
+	if(islist(deeplist) && length(deeplist))
+		. += span_notice("Deep Lures: [length(deeplist)] entries.")
+	if(specialcatch)
+		. += span_notice("Special Chance: [specialchance || 0]%.")
+
 /obj/item/fishing/bait/meat
 	name = "chum bait"
 	desc = "A small amount of meat, rolled into a ball. Tends to attract eels."
 	icon_state = "meatbait"
+	baitresilience = 90
+	bait_max_durability = 90
 	fishinglist = list(
 		/obj/item/reagent_containers/food/snacks/fish/eel = 2,
 		/obj/item/reagent_containers/food/snacks/fish/salmon = 1,
@@ -152,6 +251,8 @@
 	desc = "A feathered lure for fly fishing. Great for aggressive freshwater fish."
 	icon = 'icons/roguetown/items/natural.dmi'
 	icon_state = "feather"
+	baitresilience = 90
+	bait_max_durability = 90
 	fishinglist = list(
 		/obj/item/reagent_containers/food/snacks/fish/salmon = 3,
 		/obj/item/reagent_containers/food/snacks/fish/salmon/black_headed = 2,
@@ -161,6 +262,8 @@
 /obj/item/fishing/bait/dough
 	name = "doughy bait"
 	desc = "A small amount of dough, rolled into a ball. Tends to attract carps."
+	baitresilience = 90
+	bait_max_durability = 90
 	fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/carp = 2)
 	icon = 'icons/roguetown/items/food.dmi'
 	icon_state = "doughslice"
@@ -169,6 +272,8 @@
 	name = "gray bait"
 	desc = "A small amount of dough and meat, rolled into a ball. Attracts a little bit of everything."
 	icon_state = "mixedbait"
+	baitresilience = 90
+	bait_max_durability = 90
 	fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/carp = 1,
 					/obj/item/reagent_containers/food/snacks/fish/eel = 1)
 
@@ -176,6 +281,8 @@
 	name = "speckled bait"
 	desc = "A complex blend of meat, flour, and berries rolled into a ball. Its smell scares off smaller fish."
 	icon_state = "speckledbait"
+	baitresilience = 90
+	bait_max_durability = 90
 	sizemod = list("tiny" = -2, "small" = -2, "normal" = -1, "large" = 1, "huge" = 1, "prize" = 1)
 	fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/carp = 1,
 					/obj/item/reagent_containers/food/snacks/fish/eel = 1)
@@ -186,6 +293,8 @@
 	name = "enchanted bait"
 	desc = "A ball of unknown ingredients, formulated by Abyssorian priests." //waiting for more fishing content
 	icon_state = "deluxebait"
+	baitresilience = 120
+	bait_max_durability = 120
 	raritymod = list("gold" = 1, "ultra" = 1, "rare"= 1, "com"= -3)
 	sizemod = list("tiny" = -2, "small" = -2, "normal" = -1, "large" = 1, "huge" = 1, "prize" = 2)
 	deepfishingweight = 1
@@ -239,6 +348,25 @@
 			returner[add[addlength]] = add[add[addlength]]
 		addlength--
 	return returner
+
+/proc/format_fishing_signed_value(value)
+	if(!isnum(value))
+		return "0"
+	if(value > 0)
+		return "+[value]"
+	return "[value]"
+
+/proc/format_fishing_mod_list(list/mods)
+	if(!islist(mods) || !length(mods))
+		return "none"
+	var/list/parts = list()
+	for(var/key in mods)
+		var/value = mods[key]
+		if(isnum(value))
+			parts += "[key] [format_fishing_signed_value(value)]"
+		else
+			parts += "[key]: [value]"
+	return english_list(parts)
 
 /proc/removenegativeweights(list/L)
 	var/list/R = L

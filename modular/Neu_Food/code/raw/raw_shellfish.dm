@@ -4,6 +4,7 @@
 	name = "crab"
 	desc = "A defensive shellfish that's a real hassle to crack open, they taste great when made into cakes with butterdough slice."
 	icon_state = "crabcom"
+	fish_normal_size_scale = 0.9
 	rarity_icon_states = list("com" = "crabcom", "rare" = "crabrare", "ultra" = "crabultra", "gold" = "crabgold")
 	sellprice = 10
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/crab
@@ -29,6 +30,7 @@
 	name = "clam"
 	desc = "A beastye built by Abyssor in the image of a knight. Hard shell, squishy interior."
 	icon_state = "clam"
+	fish_normal_size_scale = 0.9
 	faretype = FARE_NEUTRAL
 	no_rarity_sprite = TRUE
 	sellprice = 15
@@ -140,20 +142,34 @@
 	desc = "A calcified old oyster. The shell is ancient, but it still might hide a prize within."
 	icon = 'icons/roguetown/gems/gem_shell.dmi'
 	icon_state = "oyster_closed"
+	fish_normal_size_scale = 0.9
+	no_rarity_sprite = TRUE
 	sellprice = 10
 
 /obj/item/reagent_containers/food/snacks/fish/oyster/fossilized/Initialize(mapload)
 	. = ..()
-	var/pearl_weight = pickweight(list("bpearl" = 120, "pearl" = 160, "nopearl" = 60))
-	switch(pearl_weight)
-		if("nopearl")
-			pearl = null
-		if("pearl")
-			QDEL_NULL(pearl)
-			pearl = new /obj/item/pearl(src)
-		if("bpearl")
-			QDEL_NULL(pearl)
-			pearl = new /obj/item/pearl/blue(src)
+	QDEL_NULL(pearl)
+	pearl = null
+
+/obj/item/reagent_containers/food/snacks/fish/oyster/fossilized/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/rogueweapon/huntingknife))
+		if(closed)
+			user.visible_message("<span class='notice'>[user] pries open the fossilized oyster with the knife.</span>")
+			closed = FALSE
+			icon_state = "oyster_open"
+			update_icon()
+		else
+			user.visible_message("<span class='notice'>[user] splits the fossilized oyster into shell pieces.</span>")
+			new /obj/item/carvedgem/shell/rawshell(user.loc)
+			new /obj/item/carvedgem/shell/rawshell(user.loc)
+			var/reward_roll = rand(1, 100)
+			if(reward_roll <= 50)
+				new /obj/item/carvedgem/rose/rawrose(user.loc)
+			else if(reward_roll <= 75)
+				new /obj/item/pearl(user.loc)
+			qdel(src)
+		return
+	. = ..()
 
 /obj/item/oystershell
 	name = "oyster shell"

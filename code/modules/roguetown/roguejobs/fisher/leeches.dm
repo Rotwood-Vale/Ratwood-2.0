@@ -15,7 +15,8 @@
 		"ceruleanFishingMod" = 0,
 		"cheeseFishingMod" = 0
 	)
-	baitresilience = 3
+	baitresilience = 50
+	bait_max_durability = 50
 
 	embedding = list(
 		"embed_chance" = 100,

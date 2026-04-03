@@ -1,8 +1,31 @@
 /obj/item
 	var/baitpenalty = 100 // Using this as bait will incurr a penalty to fishing chance. 100 makes it useless as bait. Lower values are better, but Never make it past 10.
-	var/baitresilience = 0 // How resilient bait is. Decreases by 2 for every catch, decreases by 1 when used by a master or better. Bait cannot be consumed whilst it has resilience left.
+	var/baitresilience = 0 // Current bait durability.
+	var/bait_max_durability = 0 // Maximum bait durability.
 	var/isbait = FALSE	// Is the item in question bait to be used?
 	var/list/fishingMods = null
+
+/obj/item/proc/sync_bait_durability()
+	if(!isbait)
+		return FALSE
+	if(!bait_max_durability)
+		bait_max_durability = max(1, baitresilience)
+	baitresilience = clamp(baitresilience, 0, bait_max_durability)
+	max_integrity = bait_max_durability
+	obj_integrity = baitresilience
+	if(istype(src, /obj/item/fishing))
+		var/obj/item/fishing/fishing_item = src
+		fishing_item.max_durability = bait_max_durability
+		fishing_item.durability = baitresilience
+	return TRUE
+
+/obj/item/proc/get_bait_durability_percent()
+	if(!isbait)
+		return 0
+	sync_bait_durability()
+	if(bait_max_durability <= 0)
+		return 0
+	return round((baitresilience / bait_max_durability) * 100)
 
 /obj/item/natural/worms
 	name = "worm"
@@ -13,7 +36,8 @@
 	isbait = TRUE
 	color = "#985544"
 	w_class = WEIGHT_CLASS_TINY
-	baitresilience = 1
+	baitresilience = 50
+	bait_max_durability = 50
 	
 	drop_sound = 'sound/foley/dropsound/food_drop.ogg'
 
@@ -43,7 +67,8 @@
 	baitpenalty = 5
 	isbait = TRUE
 	color = null
-	baitresilience = 2
+	baitresilience = 50
+	bait_max_durability = 50
 
 /obj/item/natural/bundle/worms/grubs
 	name = "grubs"

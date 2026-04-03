@@ -15,6 +15,35 @@
 	var/mob/fisherperson
 	var/time2catch = 40 SECONDS // RW had this at 20 seconds, but if you produce more than 3 - 4 cages you would be limited only by the rate you get worm, so a slight nerf.
 	var/static/list/cage_size_weights = list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1)
+	var/max_durability = 100
+	var/durability = 100
+
+/obj/item/fishingcage/Initialize(mapload)
+	. = ..()
+	max_durability = max(1, max_durability)
+	max_integrity = max_durability
+	obj_integrity = clamp(durability, 0, max_integrity)
+	durability = obj_integrity
+
+/obj/item/fishingcage/proc/get_durability_percent()
+	if(max_integrity <= 0)
+		return 0
+	return round((obj_integrity / max_integrity) * 100)
+
+/obj/item/fishingcage/proc/adjust_durability(amount)
+	if(amount <= 0)
+		return FALSE
+	obj_integrity = max(0, obj_integrity - amount)
+	durability = obj_integrity
+	return obj_integrity <= 0
+
+/obj/item/fishingcage/proc/repair_durability(amount)
+	if(amount <= 0)
+		return FALSE
+	var/old_durability = obj_integrity
+	obj_integrity = min(max_integrity, obj_integrity + amount)
+	durability = obj_integrity
+	return obj_integrity > old_durability
 
 /obj/item/fishingcage/attack_self(mob/user)
 	. = ..()
@@ -59,6 +88,16 @@
 				if(istype(new_caught, /obj/item/reagent_containers/food/snacks/fish))
 					var/obj/item/reagent_containers/food/snacks/fish/F = new_caught
 					apply_fishing_quality_to_fish(F, caught_modlist, cage_size_weights)
+				if(adjust_durability(10))
+					visible_message(span_warning("[src] falls apart after one catch too many!"))
+					QDEL_NULL(bait)
+					caught = null
+					caught_modlist = null
+					deployed = 0
+					anchored = 0
+					STOP_PROCESSING(SSobj, src)
+					qdel(src)
+					return
 				caught = null
 				caught_modlist = null
 				if(!bait)
@@ -88,8 +127,26 @@
 		..()
 
 /obj/item/fishingcage/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/rogueweapon/hammer))
+		if(durability >= max_durability)
+			to_chat(user, span_warning("The fishing cage doesn't need repairs."))
+			return
+		if(user.get_skill_level(/datum/skill/craft/crafting) <= 0)
+			to_chat(user, span_warning("I don't know how to repair this cage."))
+			return
+		user.visible_message(span_notice("[user] begins repairing [src] with [I]..."), span_notice("I begin repairing [src] with [I]..."))
+		var/repair_time = max(2 SECONDS, (6 SECONDS) - (user.get_skill_level(/datum/skill/craft/crafting) * 1 SECONDS))
+		if(!do_after(user, repair_time, target = src))
+			return
+		var/repair_amount = min(30, max_durability - durability)
+		if(repair_durability(repair_amount))
+			playsound(src.loc, 'sound/items/bsmith3.ogg', 70, FALSE)
+			if(user.mind)
+				user.mind.add_sleep_experience(/datum/skill/craft/crafting, max(1, repair_amount / 5), FALSE)
+		return
+
 	if(bait)
-		to_chat(user, span_warning("There's bait already on the cage."))
+		to_chat(user, span_warning("There's bait already in the cage."))
 		return
 	fisherperson = user
 	if(istype(I, /obj/item/natural/bundle/worms))
@@ -142,13 +199,25 @@
 					"dangerFishingMod" = 1,
 					"ceruleanFishingMod" = 0,
 					"cheeseFishingMod" = 0,
+					"net_cage_ultra_boost" = 2,
+					"net_cage_prize_boost" = 2,
 				)
+			if(!fishingmodlist["net_cage_ultra_boost"])
+				fishingmodlist["net_cage_ultra_boost"] = 2
+			if(!fishingmodlist["net_cage_prize_boost"])
+				fishingmodlist["net_cage_prize_boost"] = 2
 			if(is_cheese_bait(bait))
 				fishingmodlist["cheeseFishingMod"] = 1
 			var/fishingskill = 0
 			if(!QDELETED(fisherperson))
 				fishingmodlist = upgradecagemodlist(fisherperson, fishingmodlist)
 				fishingskill = fisherperson.get_skill_level(/datum/skill/labor/fishing)
+			fishingmodlist["rareFishingMod"] *= clamp(0.70 + (fishingskill * 0.05), 0.70, 1.05)
+			fishingmodlist["net_cage_ultra_boost"] = min(fishingmodlist["net_cage_ultra_boost"], clamp(0.35 + (fishingskill * 0.14), 0.35, 1.15))
+			fishingmodlist["net_cage_prize_boost"] = min(fishingmodlist["net_cage_prize_boost"], clamp(0.20 + (fishingskill * 0.09), 0.20, 0.75))
+			fishingmodlist["size_large_mult"] = clamp(0.80 + (fishingskill * 0.04), 0.70, 1.05)
+			fishingmodlist["size_huge_mult"] = clamp(0.55 + (fishingskill * 0.05), 0.40, 0.90)
+			fishingmodlist["size_prize_mult"] = clamp(0.25 + (fishingskill * 0.05), 0.20, 0.70)
 			caught = pickweightAllowZero(createCageFishWeightListModlist(fishingmodlist, get_turf(src)))
 			caught_modlist = fishingmodlist.Copy()
 			icon_state = "fishingcage_caught"
@@ -170,6 +239,7 @@
 
 /obj/item/fishingcage/examine(mob/user)
 	. = ..()
+	. += span_notice("Durability: [get_durability_percent()]%")
 	if(icon_state == "fishingcage_caught")
 		. += span_warning("Something seems to be inside...")
 	if(bait)

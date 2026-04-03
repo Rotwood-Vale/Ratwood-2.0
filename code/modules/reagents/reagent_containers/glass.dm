@@ -305,3 +305,10 @@
 		slot_equipment_priority.Insert(index, SLOT_HEAD)
 		return
 	return ..()
+
+/obj/item/reagent_containers/glass/bucket/afterattack(obj/target, mob/user, proximity)
+	if(user?.used_intent?.type == INTENT_SPLASH && isturf(target) && istype(target, /turf/open/water) && reagents?.get_reagent_amount(/datum/reagent/chum))
+		if(reagents.total_volume < reagents.maximum_volume || reagents.get_reagent_amount(/datum/reagent/chum) < reagents.maximum_volume)
+			to_chat(user, span_warning("I need a full bucket of chum to bloody up the water."))
+			return
+	return ..()

@@ -1,8 +1,9 @@
 /proc/getfishingloot(var/mob/living/carbon/human/fisherman, var/list/modlist, turf/target, var/skill_power = 1)
-	var/frwt = list(/turf/open/water/river, /turf/open/water/cleanshallow, /turf/open/water/pond)
-	var/salwt_coast = list(/turf/open/water/ocean)
-	var/salwt_deep = list(/turf/open/water/ocean/deep)
-	var/mud = list(/turf/open/water/swamp, /turf/open/water/swamp/deep)
+	if(!istype(target, /turf/open/water))
+		return null
+	var/is_abyssor_fisher = FALSE
+	if(ishuman(fisherman) && fisherman.patron?.type == /datum/patron/divine/abyssor)
+		is_abyssor_fisher = TRUE
 	if(ishuman(fisherman))
 		if(fisherman.patron.type == /datum/patron/divine/abyssor)
 			modlist["dangerFishingMod"] *= 1.10  // +10% danger
@@ -18,16 +19,58 @@
 			modlist["rareFishingMod"] *= (1 + total_bonus)
 			modlist["treasureFishingMod"] *= (1 + total_bonus)
 			modlist["dangerFishingMod"] *= (1 - (trait_bonus * 3))
+		else if(fisherman.STALUC < 10)
+			// Unlucky fishers attract more dangerous encounters (5% more per point under 10).
+			var/bad_luck = 10 - fisherman.STALUC
+			modlist["dangerFishingMod"] *= (1 + bad_luck * 0.05)
 	var/fishingloot
-	if(target.type in frwt)
+	if(istype(target, /turf/open/water/river) || istype(target, /turf/open/water/cleanshallow) || istype(target, /turf/open/water/pond))
 		fishingloot = pickweightAllowZero(createFreshWaterFishWeightListModlist(modlist))
-	else if(target.type in salwt_coast)
-		fishingloot = pickweightAllowZero(createCoastalSeaFishWeightListModlist(modlist))
-	else if(target.type in salwt_deep)
+	else if(istype(target, /turf/open/water/ocean/deep))
 		fishingloot = pickweightAllowZero(createDeepSeaFishWeightListModlist(modlist))
-	else if(target.type in mud)
+	else if(istype(target, /turf/open/water/ocean))
+		fishingloot = pickweightAllowZero(createCoastalSeaFishWeightListModlist(modlist))
+	else if(istype(target, /turf/open/water/swamp/deep) || istype(target, /turf/open/water/swamp))
 		fishingloot = pickweightAllowZero(createMudFishWeightListModlist(modlist))
+	if(!is_abyssor_fisher)
+		if(fishingloot == /obj/item/reagent_containers/food/snacks/fish/creepy_squid || fishingloot == /obj/item/reagent_containers/food/snacks/fish/creepy_shark)
+			if(istype(target, /turf/open/water/ocean/deep))
+				var/list/deep_weights = createDeepSeaFishWeightListModlist(modlist)
+				deep_weights -= /obj/item/reagent_containers/food/snacks/fish/creepy_squid
+				deep_weights -= /obj/item/reagent_containers/food/snacks/fish/creepy_shark
+				fishingloot = pickweightAllowZero(deep_weights)
+			else if(istype(target, /turf/open/water/ocean))
+				var/list/coast_weights = createCoastalSeaFishWeightListModlist(modlist)
+				coast_weights -= /obj/item/reagent_containers/food/snacks/fish/creepy_squid
+				coast_weights -= /obj/item/reagent_containers/food/snacks/fish/creepy_shark
+				fishingloot = pickweightAllowZero(coast_weights)
 	return fishingloot
+
+/proc/is_excluded_fishing_border_turf(turf/T)
+	if(!T)
+		return FALSE
+	var/type_string = "[T.type]"
+	if(findtext(type_string, "/turf/open/floor/rogue/dirt"))
+		return TRUE
+	if(findtext(type_string, "/turf/open/floor/rogue/grass"))
+		return TRUE
+	if(findtext(type_string, "/turf/open/floor/rogue/sand"))
+		return TRUE
+	if(findtext(type_string, "/turf/open/floor/rogue/mud"))
+		return TRUE
+	return FALSE
+
+/proc/get_fishing_excluded_turf_distance(turf/open/water/W, max_scan = 6)
+	if(!W)
+		return 0
+	var/closest_dist = max_scan + 1
+	for(var/turf/T in spiral_range_turfs(max_scan, W))
+		if(!is_excluded_fishing_border_turf(T))
+			continue
+		closest_dist = min(closest_dist, get_dist(W, T))
+	if(closest_dist > max_scan)
+		return max_scan + 1
+	return closest_dist
 
 /proc/upgradecagemodlist(var/mob/living/carbon/human/fisherman, var/list/modlist, var/skill_power = 1)
 	if(ishuman(fisherman))
@@ -45,15 +88,22 @@
 			modlist["rareFishingMod"] *= (1 + total_bonus)
 			modlist["treasureFishingMod"] *= (1 + total_bonus)
 			modlist["dangerFishingMod"] *= (1 - (trait_bonus * 3))
+		else if(fisherman.STALUC < 10)
+			var/bad_luck = 10 - fisherman.STALUC
+			modlist["dangerFishingMod"] *= (1 + bad_luck * 0.05)
 	return modlist
 
 /proc/getbaitlife(var/fishing_skill, var/obj/item/bait, var/basechance = 80)
-	if(bait.baitresilience > 0)
-		if(fishing_skill >= SKILL_LEVEL_MASTER)
-			bait.baitresilience = max(0, bait.baitresilience - 1)
-		else
-			bait.baitresilience = max(0, bait.baitresilience - 2)
+	if(!bait)
 		return FALSE
+	if(bait.isbait)
+		bait.sync_bait_durability()
+		if(bait.baitresilience > 0)
+			var/durability_loss = max(1, round(bait.bait_max_durability * 0.30, 1))
+			bait.baitresilience = max(0, bait.baitresilience - durability_loss)
+			bait.sync_bait_durability()
+			return (bait.baitresilience <= 0)
+		return TRUE
 	if(prob(basechance - (fishing_skill * 10)))
 		return TRUE
 	return FALSE

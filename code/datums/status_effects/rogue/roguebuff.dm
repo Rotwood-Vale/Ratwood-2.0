@@ -317,6 +317,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/fermented_crab
 	effectedstats = list(STATKEY_WIL = 2, STATKEY_CON = -2)
 	duration = 5 MINUTES
+	needs_processing = TRUE
 	/// TRUE if the user had TRAIT_LIMPDICK and we have to reapply if after the trait expires
 	var/had_limpdick = FALSE
 	/// TRUE if the user had disfunctional pintle and we have to make it disfunctional again on trait expiration
@@ -342,6 +343,10 @@
 	if(had_disfunctional_pintle)
 		var/obj/item/organ/penis/pintle = owner.getorganslot(ORGAN_SLOT_PENIS)
 		pintle.functional = FALSE
+
+/datum/status_effect/buff/fermented_crab/tick()
+	if(owner?.sexcon)
+		owner.sexcon.adjust_charge(8)
 
 /atom/movable/screen/alert/status_effect/buff/fermented_crab
 	name = "INVIGORATED"

@@ -1,6 +1,6 @@
 /datum/brewing_recipe/fermentedcrab
 	name = "Crab, Fermented"
-	category = "Other"
+	category = "Brewing"
 	bottle_name = "fermented crab" // magical penis wine
 	bottle_desc = "Fermented. Crab. One barrel of this triples the brothel's earnings for the week. A man thinks he's done, drinks a mouthful of this. Five minutes later he's back in the race."
 	reagent_to_brew = /datum/reagent/fermented_crab
@@ -17,7 +17,7 @@
 
 /datum/brewing_recipe/chum
 	name = "Chum"
-	category = "Other"
+	category = "Brewing"
 	bottle_name = "chum"
 	bottle_desc = "A barrel of chum slurry. Best splashed on water to stir fish into a frenzy."
 	reagent_to_brew = /datum/reagent/chum

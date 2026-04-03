@@ -108,7 +108,7 @@
 /datum/reagent/chum/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))
 		return
-	if(reac_volume < 3)
+	if(reac_volume < 120)
 		return
 
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
