@@ -43,7 +43,7 @@
 
 /obj/item/reagent_containers/glass/bucket/pot/aalloy
 	name = "decrepit pot"
-	desc = "A kettle of wrought bronze. One could only imagine what the stews of millenia prior must've tasted like; do you suppose they knew of seasonings-and-spices, too?"
+	desc = "A kettle of wrought bronze. One could only imagine what the stews of millennia prior must've tasted like; do you suppose they knew of seasonings-and-spices, too?"
 	icon_state = "apote"
 	volume = 120
 	color = "#bb9696"
@@ -73,6 +73,7 @@
 	desc = "A teapot made out of ceramic. Used to serve tea, it can hold a lot of liquid. It can still spill, however."
 	dropshrink = 0.7
 	icon_state = "teapot"
+	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	volume = 120
 	sellprice = 20
 

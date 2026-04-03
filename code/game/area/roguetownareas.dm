@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	var/ceiling_protected = FALSE //Prevents tunneling into these from above
 	var/hoardmaster_protected = FALSE//If a player enters, it ashes them. Your greed will consume you.
 	var/necra_area = FALSE
+	var/no_special_item_retrieval = FALSE//we want in rare cases for loadouts to be inaccessible
 
 /area/rogue/Entered(mob/living/carbon/human/guy)
 	. = ..()
@@ -91,7 +92,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/indoors/ravoxarena/can_craft_here()
 	return FALSE
 
-/area/rogue/indoors/ravoxarena/proc/cleanthearena(var/turf/returnzone)
+/area/rogue/indoors/ravoxarena/proc/cleanthearena(turf/returnzone)
 	for(var/obj/item/trash in src)
 		do_teleport(trash, returnzone)
 	GLOB.arenafolks.len = list()
@@ -211,7 +212,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/outdoors/rtfield/rockhill
 	first_time_text = "Rockhill Basin"
 	threat_region = THREAT_REGION_ROCKHILL_BASIN
-	town_area = TRUE
+	town_area = FALSE //might spread out the action a little if townies keep to town.
 
 /area/rogue/outdoors/rtfield/rockhill/above
 	ambientsounds = AMB_MOUNTAIN
@@ -460,7 +461,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = null
 	deathsight_message = "the rustle of heavy books"
 
-/area/rogue/indoors/town/bath
+/area/rogue/indoors/town/bath/vault
 	name = "Baths"
 	icon_state = "bath"
 	droning_sound = 'sound/music/area/bath.ogg'
@@ -469,11 +470,15 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	converted_type = /area/rogue/outdoors/exposed/bath
 	deathsight_message = "a den of pleasure and gluttony"
 
+/area/rogue/indoors/town/bath
+	name = "Bathmaster vault"
+	icon_state = "bathvault"
+
 /area/rogue/outdoors/exposed/bath
 	icon_state = "bath"
 	droning_sound = 'sound/music/area/bath.ogg'
 
-/area/rogue/outdoors/exposed/bath/vault
+/area/rogue/outdoors/exposed/bath/vault//Note that this DOESN'T WORK!! The mechanic is actually keyed to the particular type of floor-tile instead of area tile. Weird, I know. Also there's no reason for it to be Exposed, no idea why that's been the case.
 	name = "Bathmaster vault"
 	icon_state = "bathvault"
 	ceiling_protected = TRUE
@@ -503,6 +508,26 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	cell_area = TRUE
 	soundproof = TRUE
 	deathsight_message = "cells of pain and suffering"
+
+/area/rogue/dietroyt //dungeon labor camp
+	name = "die troyt"
+	icon_state = "cell"
+	ambientsounds = AMB_CAVEWATER
+	ambientnight = AMB_CAVEWATER
+	spookysounds = SPOOKY_CAVE
+	spookynight = SPOOKY_CAVE
+	droning_sound = 'sound/music/area/underdark.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	cell_area = TRUE
+	town_area = TRUE
+	no_special_item_retrieval = TRUE
+	deathsight_message = "the drone of pickaxes and penance"
+	first_time_text = "DIE TROYT"
+	detail_text = DETAIL_TEXT_DIETROYT
+
+/area/rogue/dietroyt/nomagic
+	noteleport = TRUE
 
 /area/rogue/indoors/town/tavern
 	name = "tavern"

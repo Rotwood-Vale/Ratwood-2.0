@@ -42,11 +42,14 @@
 	var/headshot = ""
 	var/list/img_gallery = list()
 	var/list/nsfw_img_gallery = list()
+	var/ooc_extra_image = ""
+	var/nsfw_ooc_extra_image = ""
 	var/char_name
 	var/song_url
 	var/has_song = FALSE
 	var/is_vet = FALSE
 	var/is_naked = FALSE
+	var/nsfw_examine_always = FALSE
 
 	if(ishuman(holder))
 		var/mob/living/carbon/human/holder_human = holder
@@ -55,6 +58,7 @@
 		obscured = ((!isobserver(user)) && !holder_human.client?.prefs?.masked_examine) && ((holder_human.wear_mask && (holder_human.wear_mask.flags_inv & HIDEFACE)) || (holder_human.head && (holder_human.head.flags_inv & HIDEFACE)))
 		flavor_text = obscured ? "Obscured" : holder.flavortext
 		flavor_text_nsfw = obscured ? "Obscured" : holder.nsfwflavortext
+		nsfw_examine_always = holder_human.client?.prefs?.nsfw_examine_always
 		ooc_notes += holder.ooc_notes
 		ooc_notes_nsfw += holder.erpprefs
 		char_name = holder.name
@@ -64,6 +68,8 @@
 			headshot += holder.headshot_link
 			img_gallery = holder.img_gallery
 			nsfw_img_gallery = holder.nsfw_img_gallery
+			ooc_extra_image = holder.ooc_extra_img
+			nsfw_ooc_extra_image = holder.nsfw_ooc_extra_img
 		if(!holder.headshot_link)
 			headshot = "headshot_red.png"
 
@@ -72,11 +78,14 @@
 		obscured = FALSE
 		flavor_text = pref.flavortext
 		flavor_text_nsfw = pref.nsfwflavortext
+		nsfw_examine_always = FALSE
 		ooc_notes = pref.ooc_notes
 		ooc_notes_nsfw = pref.erpprefs
 		headshot = pref.headshot_link
 		img_gallery = pref.img_gallery
 		nsfw_img_gallery = pref.nsfw_img_gallery
+		ooc_extra_image = pref.ooc_extra_img
+		nsfw_ooc_extra_image = pref.nsfw_ooc_extra_img
 		char_name = pref.real_name
 		song_url = pref.ooc_extra
 		if(viewing)
@@ -109,10 +118,13 @@
 		"ooc_notes_nsfw" = ooc_notes_nsfw,
 		"img_gallery" = img_gallery,
 		"nsfw_img_gallery" = nsfw_img_gallery,
+		"ooc_extra_image" = ooc_extra_image,
+		"nsfw_ooc_extra_image" = nsfw_ooc_extra_image,
 		"is_playing" = is_playing,
 		"has_song" = has_song,
 		"is_vet" = is_vet,
 		"is_naked" = is_naked,
+		"nsfw_examine_always" = nsfw_examine_always,
 	)
 	return data
 
@@ -169,7 +181,6 @@
 			return TRUE
 
 /datum/examine_panel/ui_close()
-	viewing.client?.tgui_panel?.stop_music()
 	QDEL_NULL(src)
 
 /datum/examine_panel/ui_assets(mob/user)

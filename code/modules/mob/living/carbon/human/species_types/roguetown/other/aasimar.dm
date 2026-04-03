@@ -13,12 +13,12 @@
 	Because of their upbringing, they make for natural conduits for godly powers. \
 	The vale's populace holds them with a mixture of uneasy mixture of fear and respect. \
 	Due to their celestial nature, it is widely believed that an Aasimar's death is a bad omen...<br>\
-	(+1 Stat of their choice, or Lack of Hunger & Thirst)"
+	(+1 Stat of their choice, Lack of Hunger & Thirst)"
 
 	skin_tone_wording = "Craft"
 
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY)
-	inherent_traits = list(TRAIT_NOMOBSWAP)
+	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_NOHUNGER)
 	default_features = MANDATORY_FEATURE_LIST
 	use_skintones = 1
 	disliked_food = NONE
@@ -79,12 +79,13 @@
 	)
 
 	custom_selection = list(
+		"+1 STR" = STATKEY_STR,
 		"+1 FOR" = STATKEY_LCK,
 		"+1 INT" = STATKEY_INT,
 		"+1 CON" = STATKEY_CON,
 		"+1 WIL" = STATKEY_WIL,
 		"+1 PER" = STATKEY_PER,
-		"No Hunger & Thirst" = TRAIT_NOHUNGER
+		"+1 SPD" = STATKEY_SPD
 	)
 
 /datum/species/aasimar/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -103,6 +104,7 @@
 /datum/species/aasimar/get_skin_list()
 	return list(
 		"Cultor" = SKIN_COLOR_CULTOR,
+		"Archon" = SKIN_COLOR_ARCHON,
 		"Spiritus" = SKIN_COLOR_SPIRITUS,
 		"Planetar" = SKIN_COLOR_PLANETAR,
 		"Deva"	   = SKIN_COLOR_DEVA,

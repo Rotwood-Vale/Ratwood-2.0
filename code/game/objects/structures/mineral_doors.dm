@@ -135,7 +135,7 @@
 	update_icon()
 	isSwitchingStates = FALSE
 
-/obj/structure/mineral_door/Initialize()
+/obj/structure/mineral_door/Initialize(mapload)
 	. = ..()
 	if(!base_state)
 		base_state = icon_state
@@ -210,7 +210,12 @@
 		to_chat(human, span_notice("They're just where I left them..."))
 	else
 		to_chat(human, span_notice("It's just where I left it..."))
-	name = "[user.real_name] the [human.advjob ? human.advjob : human.job]'s house"
+	var/owner_title = human.job  // If you somehow have no job at all, it'll just be "Name's house"
+	if(human.mind && human.mind.cosmetic_class_title)
+		owner_title = human.mind.cosmetic_class_title
+	else if(human.advjob)
+		owner_title = human.advjob		
+	name = "[user.real_name][owner_title ? " the [owner_title]" : ""]'s house"
 	return TRUE
 
 /obj/structure/mineral_door/Move()
@@ -314,7 +319,7 @@
 	else
 		Open(silent)
 
-/obj/structure/mineral_door/proc/Open(silent = FALSE)
+/obj/structure/mineral_door/proc/Open(silent = FALSE, mob/user)
 	isSwitchingStates = TRUE
 	if(!silent)
 		playsound(src, openSound, 100)
@@ -332,7 +337,7 @@
 	if(close_delay != -1)
 		addtimer(CALLBACK(src, PROC_REF(Close)), close_delay)
 
-/obj/structure/mineral_door/proc/Close(silent = FALSE, autobump = FALSE)
+/obj/structure/mineral_door/proc/Close(silent = FALSE, autobump = FALSE, mob/user)
 	if(isSwitchingStates || !door_opened)
 		return
 	var/turf/T = get_turf(src)
@@ -838,7 +843,7 @@
 	smashable = TRUE
 	metalizer_result = /obj/structure/mineral_door/wood/donjon
 
-/obj/structure/mineral_door/wood/Initialize()
+/obj/structure/mineral_door/wood/Initialize(mapload)
 	if(icon_state =="woodhandle")
 		if(icon_state != "wcv")
 			if(prob(10))
@@ -940,7 +945,7 @@
 	dir = turn(dirin, 180)
 	lockdir = dir
 
-/obj/structure/mineral_door/wood/deadbolt/Initialize()
+/obj/structure/mineral_door/wood/deadbolt/Initialize(mapload)
 	. = ..()
 	lockdir = dir
 	icon_state = base_state
@@ -1072,7 +1077,7 @@
 		to_chat(user, span_warning("The viewport doesn't toggle from this side."))
 		return
 
-/obj/structure/mineral_door/wood/donjon/Initialize()
+/obj/structure/mineral_door/wood/donjon/Initialize(mapload)
 	viewportdir = dir
 	icon_state = base_state
 	..()
@@ -1118,7 +1123,7 @@
 	obj_broken = 1
 	repairable = FALSE
 
-/obj/structure/mineral_door/wood/donjon/stone/broken/Initialize()
+/obj/structure/mineral_door/wood/donjon/stone/broken/Initialize(mapload)
 	..()
 	icon_state = "stonebr" // Weird override otherwise
 
@@ -1155,7 +1160,7 @@
 	desc = ""
 	icon_state = "barsold"
 
-/obj/structure/mineral_door/bars/Initialize()
+/obj/structure/mineral_door/bars/Initialize(mapload)
 	. = ..()
 	add_overlay(mutable_appearance(icon, "barsopen", ABOVE_MOB_LAYER))
 
@@ -1188,13 +1193,21 @@
 	resident_role = /datum/job/roguetown/villager
 	lockid = null //Will be randomized
 
+/obj/structure/mineral_door/wood/mercenary
+	locked = TRUE
+	keylock = TRUE
+	grant_resident_key = TRUE
+	resident_key_type = /obj/item/roguekey/townie
+	resident_role = /datum/job/roguetown/mercenary
+	lockid = null //Will be randomized
+
 /obj/structure/mineral_door/wood/towner/generic
 
 /obj/structure/mineral_door/wood/towner/generic/two_keys
 	resident_key_amount = 2
 
 /obj/structure/mineral_door/wood/towner/blacksmith
-	resident_advclass = list(/datum/advclass/blacksmith)
+	resident_advclass = list(/datum/advclass/blacksmith, /datum/advclass/masterblacksmith)
 	lockid = "towner_blacksmith"
 
 /obj/structure/mineral_door/wood/towner/cheesemaker

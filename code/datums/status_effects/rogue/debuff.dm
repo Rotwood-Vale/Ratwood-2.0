@@ -721,8 +721,8 @@
 	var/mob/living/carbon/human/climber
 
 /datum/status_effect/debuff/climbing_lfwb/on_creation(mob/living/new_owner, new_stamcost)
-    stamcost = new_stamcost
-    return ..()
+	stamcost = new_stamcost
+	return ..()
 
 /datum/status_effect/debuff/climbing_lfwb/on_apply()
 	. = ..()
@@ -782,7 +782,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/mesmerised
 	name = "Mesmerised"
-	desc = span_warning("Their beauty is otherwordly..")
+	desc = span_warning("Their beauty is otherworldly..")
 	icon_state = "acid"
 
 /////////////////////////
@@ -897,19 +897,19 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
 
 /datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source) // rewritten by @tmyqlfpir
-    SIGNAL_HANDLER
+	SIGNAL_HANDLER
 
-    var/turf/cur_turf = get_turf(owner)
-    if(!cur_turf)
-        return
-    if(!shadow)
-        shadow = new /obj/effect/flyer_shadow(cur_turf, owner)
-    while(isopenspace(cur_turf))
-        var/turf/temp_turf = GET_TURF_BELOW(cur_turf)
-        if(!temp_turf || isclosedturf(temp_turf))
-            break
-        cur_turf = temp_turf
-    shadow.forceMove(cur_turf)
+	var/turf/cur_turf = get_turf(owner)
+	if(!cur_turf)
+		return
+	if(!shadow)
+		shadow = new /obj/effect/flyer_shadow(cur_turf, owner)
+	while(isopenspace(cur_turf))
+		var/turf/temp_turf = GET_TURF_BELOW(cur_turf)
+		if(!temp_turf || isclosedturf(temp_turf))
+			break
+		cur_turf = temp_turf
+	shadow.forceMove(cur_turf)
 
 /datum/status_effect/debuff/harpy_flight/proc/remove_signals()
 	UnregisterSignal(owner, list(
@@ -986,6 +986,22 @@
 /////////////////////////////
 ///HARPY FLIGHT STUFF END///
 ///////////////////////////
+
+/datum/status_effect/debuff/specialcd
+	id = "specialcd"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/specialcd
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+
+/datum/status_effect/debuff/specialcd/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/specialcd
+	name = "Special Manouevre Cooldown"
+	desc = "I used it. I must wait."
+	icon_state = "debuff"
 
 /datum/status_effect/debuff/liver_failure
 	id = "liver_failure"
@@ -1070,3 +1086,56 @@
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+
+/datum/status_effect/debuff/freezing
+	id = "freezing"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/freezing
+	effectedstats = list(STATKEY_CON = -1)
+	duration = 100
+
+/atom/movable/screen/alert/status_effect/debuff/freezing
+	name = "Freezing"
+	desc = "It's so cold!"
+	icon_state = "chilled"
+
+/datum/status_effect/debuff/brittle
+	id = "brittle cold"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/brittle
+	duration = 10 SECONDS
+
+/datum/status_effect/debuff/brittle/on_apply()
+	. = ..()
+	var/mob/living/carbon/C = owner
+	to_chat(C, span_warning("My joints stiffen as the cold hardens my frame."))
+	ADD_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
+	message_admins("debuff applied")
+/datum/status_effect/debuff/brittle/on_remove()
+	. = ..()
+	var/mob/living/carbon/C = owner
+	to_chat(C, span_notice("My frame loosens as warmth returns."))
+	REMOVE_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
+
+/atom/movable/screen/alert/status_effect/debuff/brittle
+	name = "brittle cold"
+	desc = "My frame is so cold it's brittle!"
+	icon_state = "chilled"
+
+/datum/status_effect/debuff/overheat
+	id = "overheating"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/overheat
+	duration = 10 SECONDS
+	effectedstats = list(STATKEY_SPD = 2, STATKEY_WIL = -4)
+/datum/status_effect/debuff/overheat/on_apply()
+	. = ..()
+	var/mob/living/carbon/C = owner
+	to_chat(C, span_userdanger("My core temperature rises, overheating my frame."))
+	message_admins("debuff applied")
+/datum/status_effect/debuff/overheat/on_remove()
+	. = ..()
+	var/mob/living/carbon/C = owner
+	to_chat(C, span_userdanger("My core temperature returns to normal."))
+
+/atom/movable/screen/alert/status_effect/debuff/overheat
+	name = "overheating"
+	desc = "My frame is overheating!"
+	icon_state = "fire"

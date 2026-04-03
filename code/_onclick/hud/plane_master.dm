@@ -84,7 +84,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = "lighting"
 
-/atom/movable/screen/plane_master/lighting/Initialize()
+/atom/movable/screen/plane_master/lighting/Initialize(mapload)
 	. = ..()
 	filters += filter(type="alpha", render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE)
 	filters += filter(type="alpha", render_source = EMISSIVE_UNBLOCKABLE_RENDER_TARGET, flags = MASK_INVERSE)
@@ -288,7 +288,7 @@
 	screen_loc = "CENTER-2:-16, CENTER"
 	//render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/weather_effect/Initialize()
+/atom/movable/screen/plane_master/weather_effect/Initialize(mapload)
 	. = ..()
 	//filters += filter(type="alpha", render_source=WEATHER_RENDER_TARGET)
 	SSoutdoor_effects.weather_planes_need_vis |= src
@@ -296,9 +296,11 @@
 /atom/movable/screen/plane_master/weather_effect/Destroy()
 	. = ..()
 	SSoutdoor_effects.weather_planes_need_vis -= src
-/* Our sunlight planemaster mashes all of our sunlight overlays together into one             */
-/* The fullscreen then grabs the plane_master with a layer filter, and colours it             */
-/* We do this so the sunlight fullscreen acts as a big lighting object, in our lighting plane */
+/*
+ * Our sunlight planemaster mashes all of our sunlight overlays together into one
+ * The fullscreen then grabs the plane_master with a layer filter, and colours it
+ * We do this so the sunlight fullscreen acts as a big lighting object, in our lighting plane
+*/
 /atom/movable/screen/fullscreen/lighting_backdrop/sunlight
 	icon_state  = ""
 	screen_loc = "CENTER-2:-16, CENTER"
@@ -307,7 +309,7 @@
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE
 
-/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Initialize()
+/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Initialize(mapload)
 	. = ..()
 	filters += filter(type="layer", render_source=SUNLIGHTING_RENDER_TARGET)
 	SSoutdoor_effects.sunlighting_planes |= src

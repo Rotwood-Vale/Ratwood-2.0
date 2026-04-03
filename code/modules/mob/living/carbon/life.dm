@@ -1,3 +1,7 @@
+#define BODYTEMP_EQUILIBRIUM 315
+
+// Kelvin per second (10 K per minute)
+#define TEMP_RECOVERY_RATE (10.0 / 60.0)
 /mob/living/carbon/Life(seconds, times_fired)
 	set invisibility = 0
 
@@ -375,18 +379,29 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			adjustToxLoss(5) //Let's be honest you shouldn't be alive by now
 
 //used in human and monkey handle_environment()
+//Temperature system design note:
+//Unlike standard SS13, We don't want a 'realistic' homeostasis. Ideally we will have 5 main 'states' of temperature that are hit and have effects.
+//These states should linger long enough that players will want to effect their temperature through means that aren't simply waiting around somewhere.
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
-	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
-	switch(bodytemperature)
-		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT) //Cold damage limit is 50 below the default, the temperature where you start to feel effects.
-			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_NORMAL)
-			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT) // Heat damage limit is 50 above the default, the temperature where you start to feel effects.
-			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
-			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+	var/delta = BODYTEMP_EQUILIBRIUM - bodytemperature
+	if(delta == 0)
+		return 0
 
+	var/abs_temp = bodytemperature
+	var/rate
+
+	if(abs_temp < 300)
+		rate = TEMP_RECOVERY_RATE
+	else if(abs_temp > 330)
+		rate = TEMP_RECOVERY_RATE
+	else
+		rate = TEMP_RECOVERY_RATE * 0.2
+
+	// Convert to per-call adjustment
+	var/seconds = world.tick_lag / 10
+	var/max_change = rate * seconds
+
+	return clamp(delta, -max_change, max_change)
 /////////
 //LIVER//
 /////////
@@ -567,6 +582,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					var/obj/structure/flora/newbranch/branch = locate() in loc
 					if(branch)
 						sleepy_mod = 1.6 // little worse than a bedroll
+		if(sleepy_mod >= 2 && bodytemperature < BODYTEMP_NORMAL_MIN) // if we're sleeping on a bedroll or better
+			adjust_bodytemperature(0.5) // not exactly the best way to regain heat but it'll keep you from freezing to death, won't protect you from a snowstorm though
 		if(nutrition > 0 || doesnt_hunger)
 			energy_add(sleepy_mod * 15)
 		if(hydration > 0 || doesnt_hunger)
@@ -625,6 +642,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 							// Allow NODROP items (body modifications like skin_armor)
 							if(HAS_TRAIT(I, TRAIT_NODROP))
 								continue
+							// Allow items approved for nude sleepers
+							if(I.nudist_approved)
+								continue
 							// Found clothing that blocks sleeping
 							armor_blocked = TRUE
 							break
@@ -649,32 +669,23 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		else if(!(mobility_flags & MOBILITY_STAND))
 			if(eyesclosed)
 				var/armor_blocked = FALSE
+				var/trait_blocked = FALSE
 				if(ishuman(src) && stat == CONSCIOUS)
 					var/mob/living/carbon/human/H = src
 					if(H.head && H.head.armor?.stab > 70)
 						armor_blocked = TRUE
 					if(H.wear_armor && (H.wear_armor.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM)))
 						armor_blocked = TRUE
-					// Check nude sleeper trait
+					// Nude sleepers are forbidden from sleeping uncomfortably.
 					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
-						var/list/worn_items = H.get_equipped_items()
-						for(var/obj/item/I in worn_items)
-							// Skip abstract items
-							if(HAS_TRAIT(I, ABSTRACT_ITEM_TRAIT))
-								continue
-							// Allow NODROP items (body modifications like skin_armor)
-							if(HAS_TRAIT(I, TRAIT_NODROP))
-								continue
-							// Found clothing that blocks sleeping
-							armor_blocked = TRUE
-							break
-					if(armor_blocked && !fallingas)
-						if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
-							to_chat(src, span_warning("I can't sleep while wearing clothes!"))
-						else
-							to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
+						trait_blocked = TRUE
+					if(trait_blocked && !fallingas)
+						to_chat(src, span_warning("I need to rest on something more comfortable!"))
 						fallingas = TRUE
-				if(!armor_blocked)
+					else if(armor_blocked && !fallingas)
+						to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
+						fallingas = TRUE
+				if(!armor_blocked && !trait_blocked)
 					if(!fallingas)
 						to_chat(src, span_warning("I'll fall asleep soon, although a bed would be more comfortable..."))
 					fallingas++

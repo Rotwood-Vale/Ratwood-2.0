@@ -113,13 +113,15 @@
 #define GARRISON		(1<<1)
 
 #define GUARDSMAN	(1<<0)
-#define MANATARMS	(1<<1)
-#define DUNGEONEER	(1<<2)
-#define SQUIRE		(1<<3)
-#define BOGGUARD	(1<<4)
-#define SERGEANT	(1<<5)
-#define SHERIFF		(1<<6)
-#define VETERAN		(1<<7)
+#define ROOKIE		(1<<1)
+#define MANATARMS	(1<<2)
+#define DUNGEONEER	(1<<3)
+#define SQUIRE		(1<<4)
+#define BOGGUARD	(1<<5)
+#define SERGEANT	(1<<6)
+#define SHERIFF		(1<<7)
+#define VETERAN		(1<<8)
+#define BOGMASTER	(1<<9)
 
 #define CHURCHMEN		(1<<2)
 
@@ -270,6 +272,7 @@
 #define JDO_TOWNGUARD 8.7
 #define JDO_DUNGEONEER 8.8
 #define JDO_VET 8.9
+#define JDO_BOGMASTER 9.0
 #define JDO_BOGGUARD 9.1
 
 #define JDO_PRIEST 10
@@ -403,14 +406,17 @@
 	/datum/job/roguetown/wretch
 
 #define GARRISON_ROLES \
-	/datum/job/roguetown/bogguardsman,\
+	/datum/job/roguetown/warden,\
+	/datum/job/roguetown/vanguard,\
+	/datum/job/roguetown/watchcaptain,\
+	/datum/job/roguetown/wardenmaster,\
 	/datum/job/roguetown/sergeant,\
 	/datum/job/roguetown/veteran,\
 	/datum/job/roguetown/dungeoneer,\
 	/datum/job/roguetown/gatemaster,\
 	/datum/job/roguetown/manorguard,\
-	/datum/job/roguetown/sheriff,\
 	/datum/job/roguetown/squire,\
+	/datum/job/roguetown/rookie,\
 	/datum/job/roguetown/guardsman
 
 #define INQUISITION_ROLES \

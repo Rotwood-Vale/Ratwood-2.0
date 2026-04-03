@@ -9,7 +9,7 @@
 		/datum/migrant_role/gronn/shaman = 1,
 		/datum/migrant_role/gronn/warrior = 2,
 		/datum/migrant_role/gronn/tribal = 4,
-		/datum/migrant_role/gronn/slave = 2
+		/datum/migrant_role/gronn/slave = 4
 	)
 	greet_text = "You're a scouting party sent directly from the steppes of Gronn itself. Without the main support of your warband, on this odd place, could you hope to survive, and, perhaps, thrive?"
 
@@ -23,7 +23,7 @@
 		/datum/migrant_role/gronn/shaman = 1,
 		/datum/migrant_role/gronn/warrior = 2,
 		/datum/migrant_role/gronn/tribal = 2,
-		/datum/migrant_role/gronn/slave = 1
+		/datum/migrant_role/gronn/slave = 2
 	)
 	greet_text = "You're a scouting party sent directly from the steppes of Gronn itself. Without the main support of your warband, on this odd place, you've lost a handful of men. Things are starting to look sour."
 

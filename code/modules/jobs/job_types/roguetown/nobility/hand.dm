@@ -86,6 +86,10 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_f
 	else if(should_wear_masc_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_m
+	if(SSmapping.config.map_name == "Rockhill")
+		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/hand
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
+		head = null
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,//You don't get killer's ice for this because you're the gross swordsmaster and I HATE YOU!!!!
 		/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -154,6 +158,10 @@
 		H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/stealing, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, 6, TRUE)
+	if(SSmapping.config.map_name == "Rockhill")
+		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/hand
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
+		cloak = null
 
 //Advisor Start
 /datum/advclass/hand/advisor
@@ -199,6 +207,10 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_f
 	else if(should_wear_masc_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_m
+	if(SSmapping.config.map_name == "Rockhill")
+		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/hand
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
+		cloak = null
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -223,7 +235,7 @@
 ///SPELLS & VERBS///
 ////////////////////
 
-/datum/job/roguetown/hand/proc/know_agents(var/mob/living/carbon/human/H)
+/datum/job/roguetown/hand/proc/know_agents(mob/living/carbon/human/H)
 	if(!GLOB.court_agents.len)
 		to_chat(H, span_boldnotice("You begun the week with no agents."))
 	else

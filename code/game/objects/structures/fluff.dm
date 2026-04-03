@@ -130,7 +130,7 @@
 	/// Throwing/Flying non mobs can always exit the turf regardless of other flags
 	var/allow_flying_outwards = TRUE
 
-/obj/structure/fluff/railing/Initialize()
+/obj/structure/fluff/railing/Initialize(mapload)
 	. = ..()
 	init_connect_loc_element()
 	var/lay = getwlayer(dir)
@@ -285,7 +285,7 @@
 	pass_crawl = FALSE
 	climb_offset = 6
 
-/obj/structure/fluff/railing/fence/Initialize()
+/obj/structure/fluff/railing/fence/Initialize(mapload)
 	. = ..()
 	smooth_fences()
 
@@ -371,6 +371,12 @@
 /obj/structure/bars/tough
 	max_integrity = 9000
 	damage_deflection = 40
+
+/obj/structure/bars/nopassthrow
+	desc = "The bars are too thick to throw anything through the gaps."
+
+/obj/structure/bars/nopassthrow/CanPass(atom/movable/mover, turf/target)
+	return isobserver(mover)
 
 /*
 /obj/structure/bars/CheckExit(atom/movable/O, turf/target)
@@ -483,7 +489,7 @@
 	var/togg = FALSE
 	redstone_structure = TRUE
 
-/obj/structure/bars/grille/Initialize()
+/obj/structure/bars/grille/Initialize(mapload)
 	AddComponent(/datum/component/squeak, list('sound/foley/footsteps/FTMET_A1.ogg','sound/foley/footsteps/FTMET_A2.ogg','sound/foley/footsteps/FTMET_A3.ogg','sound/foley/footsteps/FTMET_A4.ogg'), 40)
 	dir = pick(GLOB.cardinals)
 	return ..()
@@ -570,7 +576,7 @@
 	drag_slowdown = 3
 	metalizer_result = /obj/item/roguegear/bronze
 
-/obj/structure/fluff/clock/Initialize()
+/obj/structure/fluff/clock/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	soundloop.start()
 	. = ..()
@@ -653,6 +659,9 @@
 
 /obj/structure/fluff/wallclock/attack_right(mob/user)
 	if(user.mind && isliving(user))
+		var/area/rogue/user_area = get_area(user)
+		if(user_area?.no_special_item_retrieval) //area does not allow fetching special items, return
+			return
 		if(user.mind.special_items && user.mind.special_items.len)
 			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
 			if(item)
@@ -695,7 +704,7 @@
 //			if(SSshuttle.emergency.timeLeft() < 30 MINUTES)
 //				. += span_warning("The last boat will leave in [round(SSshuttle.emergency.timeLeft()/600)] minutes.")
 
-/obj/structure/fluff/wallclock/Initialize()
+/obj/structure/fluff/wallclock/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	soundloop.start()
 	. = ..()
@@ -853,7 +862,7 @@
 	max_integrity = 300
 	dir = SOUTH
 
-/obj/structure/fluff/statue/Initialize()
+/obj/structure/fluff/statue/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -1175,7 +1184,7 @@
 	var/divine = TRUE
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
 
-/obj/structure/fluff/psycross/Initialize()
+/obj/structure/fluff/psycross/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
@@ -1255,7 +1264,7 @@
 
 /obj/structure/fluff/psycross/attackby(obj/item/W, mob/living/carbon/human/user, params)
 	if(user.mind)
-		if((user.mind.assigned_role == "Bishop") || ((user.mind.assigned_role == "Acolyte") && (user.patron.type == /datum/patron/divine/eora)))
+		if((user.mind.assigned_role == "Bishop") || (user.mind.assigned_role == "Acolyte"))
 			if(istype(W, /obj/item/reagent_containers/food/snacks/grown/apple))
 				if(!istype(get_area(user), /area/rogue/indoors/town/church/chapel))
 					to_chat(user, span_warning("I need to do this in the chapel."))
@@ -1287,11 +1296,11 @@
 						// Excommunication check for both participants
 						var/excomm_found = FALSE
 						for(var/excomm_name in GLOB.excommunicated_players)
-							var/clean_excomm = lowertext(trim(excomm_name))
-							if(thegroom && clean_excomm == lowertext(trim(thegroom.real_name)))
+							var/clean_excomm = LOWER_TEXT(trim(excomm_name))
+							if(thegroom && clean_excomm == LOWER_TEXT(trim(thegroom.real_name)))
 								excomm_found = TRUE
 								break
-							if(thebride && clean_excomm == lowertext(trim(thebride.real_name)))
+							if(thebride && clean_excomm == LOWER_TEXT(trim(thebride.real_name)))
 								excomm_found = TRUE
 								break
 						if(!excomm_found)
@@ -1299,14 +1308,22 @@
 							var/surname = input(user, "Enter a surname for the couple:", "Marriage Ceremony") as text|null
 							if(!surname || !length(trim(surname)))
 								surname = thegroom.dna.species.random_surname()
+							priority_announce("[thegroom.real_name] has married [thebride.real_name]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
+							var/list/titles = list("Sir", "Ser", "Dame", "Lord", "Lady", "Knight-Captain", "Duke", "Duchess", "Father", "Mother", "Brother", "Sister", "Prelate", "Devotee", "Votary")
 							// Assign surname to groom
 							var/list/groom_name_parts = splittext(thegroom.real_name, " ")
-							var/groom_first_name = groom_name_parts[1]
-							thegroom.real_name = "[groom_first_name] [surname]"
+							var/title_found = (titles.Find(groom_name_parts[1]) != 0)
+							if(title_found)
+								thegroom.real_name = "[groom_name_parts[1]] [groom_name_parts[2]] [surname]"
+							else
+								thegroom.real_name = "[groom_name_parts[1]] [surname]"
 							// Assign surname to bride
 							var/list/bride_name_parts = splittext(thebride.real_name, " ")
-							var/bride_first_name = bride_name_parts[1]
-							thebride.real_name = "[bride_first_name] [surname]"
+							title_found = (titles.Find(bride_name_parts[1]) != 0)
+							if(title_found)
+								thebride.real_name = "[bride_name_parts[1]] [bride_name_parts[2]] [surname]"
+							else
+								thebride.real_name = "[bride_name_parts[1]] [surname]"
 							// Private notification to both
 							if(thegroom) 
 								to_chat(thegroom, span_notice("Your new shared surname is [surname]."))
@@ -1319,10 +1336,7 @@
 							thebride.adjust_triumphs(1)
 							// After surname is set, have the priest say the wedding line
 							if(user && surname)
-								if(copytext(surname, 1, 2) == " ")
-									surname = copytext(surname, 2) // Remove leading space if present
 								user.say("I hereby wed you as [surname]s.")
-							priority_announce("[thegroom.real_name] has married [thebride.real_name]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
 							qdel(A)
 							marriage = TRUE
 						else

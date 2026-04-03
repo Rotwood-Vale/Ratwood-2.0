@@ -201,6 +201,7 @@
 	if(can_buckle)
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+		D.set_riding_offsets(2, list(TEXT_NORTH = list(0, 0), TEXT_SOUTH = list(0, 16), TEXT_EAST = list(-10, 8), TEXT_WEST = list(10, 8)))
 		D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -307,13 +308,13 @@
 	tame = TRUE
 
 
-/mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S
 	update_icon()
 
-/mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S

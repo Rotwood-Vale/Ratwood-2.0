@@ -1,6 +1,6 @@
 /obj/item/flint
-	name = "flint"
-	desc = "A jagged piece of flint, witness to the dances of fire and stone."
+	name = "flint sparker"
+	desc = "A piece of flint and an iron striker, witness to the dances of fire and stone."
 	icon_state = "flint"
 	gripped_intents = null
 	//dropshrink = 0.75
@@ -21,7 +21,6 @@
 		return
 	flintcd = world.time
 	playsound(user, 'sound/items/flint.ogg', 100, FALSE)
-	flick("flintstrike", src)
 	if(prob(80))
 		user.flash_fullscreen("whiteflash")
 		var/datum/effect_system/spark_spread/S = new()
@@ -37,7 +36,6 @@
 		return
 	flintcd = world.time
 	playsound(user, 'sound/items/flint.ogg', 100, FALSE)
-	flick("flintstrike", src)
 	if(prob(50))
 		A.spark_act()
 		user.flash_fullscreen("whiteflash")

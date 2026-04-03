@@ -27,7 +27,6 @@
 
 /datum/outfit/job/roguetown/adventurer/witch/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguetown/witchhat
 	mask = /obj/item/clothing/head/roguetown/roguehood/black
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/phys
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
@@ -48,10 +47,19 @@
 						/obj/item/chalk = 1
 						)
 
+	var/hats = list(
+		"Witch Hat" 		= /obj/item/clothing/head/roguetown/witchhat,
+		"Witch Hat (Old)"	= /obj/item/clothing/head/roguetown/witchhat/old,
+		"None"
+	)
+	var/hatchoice = input(H, "Choose your hat.", "WITCH ATTIRE") as anything in hats
+	if(hatchoice != "None")
+		head = hats[hatchoice]
+
 	var/classes = list("Old Magick", "Godsblood", "Mystagogue")
 	var/classchoice = input("How do your powers manifest?", "THE OLD WAYS") as anything in classes
 
-	var/shapeshifts = list("Zad", "Cat", "Cat (Black)", "Bat", "Cabbit", "Small Rous", "Lesser Venard", "Lesser Volf")
+	var/shapeshifts = list("Zad", "Cat", "Cat (Black)", "Bat", "Cabbit", "Small Rous", "Lesser Venard", "Lesser Volf", "Frog")
 	var/shapeshiftchoice = input("What form does your second skin take?", "THE OLD WAYS") as anything in shapeshifts
 
 	switch (classchoice)
@@ -96,6 +104,8 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/rous)
 			if("Cabbit")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/cabbit)
+			if("Frog")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/frog)
 
 		switch (classchoice)
 			if("Old Magick")
@@ -308,3 +318,21 @@
 	show_true_name = FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat/crow
 	sound = 'sound/vo/mobs/bird/birdfly.ogg'
+
+/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog
+	name = "frog"
+	desc = "Slimy creature of the bogs."
+	icon_state = "frog"
+	icon_living = "frog"
+	icon_dead = "frog_dead"
+	speak = list("ribbit", "croak")
+	speak_emote = list("ribbit", "croak")
+	emote_hear = list("ribbits.", "croaks.")
+	emote_see = list("hops in a circle.", "shakes.")
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/witch/frog
+	name = "Frog Form"
+	desc = ""
+	overlay_state = "blindness"
+	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog
+	do_gib = FALSE

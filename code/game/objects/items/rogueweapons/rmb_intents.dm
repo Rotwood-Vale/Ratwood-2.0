@@ -2,6 +2,8 @@
 	var/name = "intent"
 	var/desc = ""
 	var/icon_state = ""
+	/// Whether the rclick will try to get turfs as target.
+	var/prioritize_turfs = FALSE
 	/// Whether this intent requires user to be adjacent to their target or not
 	var/adjacency = TRUE
 	/// Determines whether this intent can be used during click cd
@@ -107,6 +109,30 @@
 	name = "strong"
 	desc = "Your attacks have +1 STR extra damage that ignores limits. Your attacks will cost the enemy more sharpness and integrity to defend against. Higher critrate with brutal attacks. Intentionally fails surgery steps.\nCosts more stamina per hit."
 	icon_state = "rmbstrong"
+	adjacency = FALSE
+	prioritize_turfs = TRUE
+
+/datum/rmb_intent/strong/special_attack(mob/living/user, atom/target)
+	if(!user)
+		return
+	if(user.incapacitated())
+		return
+	if(!user.mind)
+		return
+	if(user.has_status_effect(/datum/status_effect/debuff/specialcd))
+		return
+
+	var/obj/item/rogueweapon/W = user.get_active_held_item()
+	if(istype(W, /obj/item/rogueweapon) && W.special)
+		var/skillreq = W.associated_skill
+		if(W.special.custom_skill)
+			skillreq = W.special.custom_skill
+		if(user.get_skill_level(skillreq) < SKILL_LEVEL_JOURNEYMAN)
+			to_chat(user, span_info("I'm not knowledgeable enough in the arts of this weapon to use this."))
+			return
+		if(W.special.check_range(user, target))
+			if(W.special.apply_cost(user))
+				W.special.deploy(user, W, target)
 
 /datum/rmb_intent/swift
 	name = "swift"

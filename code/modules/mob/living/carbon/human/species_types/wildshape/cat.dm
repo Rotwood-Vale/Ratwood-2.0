@@ -4,6 +4,8 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/cat_skin
+	wildshape_icon = 'icons/mob/pets.dmi'
+	wildshape_icon_state = "cat2"
 	// Someone else balance this, I am here for code, not numbers
 
 /mob/living/carbon/human/species/wildshape/cat/gain_inherent_skills()
@@ -144,7 +146,7 @@
 /obj/item/rogueweapon/cat_claw/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/cat_claw/Initialize()
+/obj/item/rogueweapon/cat_claw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)

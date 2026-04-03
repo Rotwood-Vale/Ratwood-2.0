@@ -14,7 +14,7 @@
 /turf/open/floor/rogue/burn_tile()
 	return //unburnable
 
-/turf/open/floor/rogue/Initialize()
+/turf/open/floor/rogue/Initialize(mapload)
 	if(smooth_icon)
 		icon = smooth_icon
 	. = ..()
@@ -33,7 +33,7 @@
 //	canSmoothWith = list(/turf/closed/mineral/rogue, /turf/closed/mineral, /turf/closed/wall/mineral/rogue/stonebrick, /turf/closed/wall/mineral/rogue/wood, /turf/closed/wall/mineral/rogue/wooddark, /turf/closed/wall/mineral/rogue/decowood, /turf/closed/wall/mineral/rogue/decostone, /turf/closed/wall/mineral/rogue/stone, /turf/closed/wall/mineral/rogue/stone/moss, /turf/open/floor/rogue/cobble, /turf/open/floor/rogue/dirt, /turf/open/floor/rogue/grass)
 	neighborlay = "dirtedge"
 
-/turf/open/floor/rogue/ruinedwood/Initialize()
+/turf/open/floor/rogue/ruinedwood/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
@@ -82,7 +82,7 @@
 	landsound = 'sound/foley/jumpland/grassland.wav'
 	slowdown = 0
 
-/turf/open/floor/rogue/twig/Initialize()
+/turf/open/floor/rogue/twig/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
@@ -154,14 +154,14 @@
 	dir = 8
 
 
-/turf/open/floor/rogue/rooftop/Initialize()
+/turf/open/floor/rogue/rooftop/Initialize(mapload)
 	. = ..()
 	icon_state = "roof"
 
 /turf/open/floor/rogue/rooftop/green
 	icon_state = "roofg-arw"
 
-/turf/open/floor/rogue/rooftop/green/Initialize()
+/turf/open/floor/rogue/rooftop/green/Initialize(mapload)
 	. = ..()
 	icon_state = "roofg"
 
@@ -177,7 +177,7 @@
 /turf/open/floor/rogue/rooftop/green/corner1
 	icon_state = "roofgc1-arw"
 
-/turf/open/floor/rogue/rooftop/green/corner1/Initialize()
+/turf/open/floor/rogue/rooftop/green/corner1/Initialize(mapload)
 	. = ..()
 	icon_state = "roofgc1"
 
@@ -221,7 +221,7 @@
 	canSmoothWith = list(/turf/open/floor/rogue/AzureSand,)
 	neighborlay = "grimshartedge"
 
-/turf/open/floor/rogue/AzureSand/Initialize()
+/turf/open/floor/rogue/AzureSand/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
@@ -243,13 +243,49 @@
 	canSmoothWith = list(/turf/open/floor/rogue/snow,)
 	neighborlay = "snowedge"
 	spread_chance = 0
-
-/turf/open/floor/rogue/snow/Initialize()
+	temperature = 110
+/turf/open/floor/rogue/snow/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
 /turf/open/floor/rogue/snow/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
+
+/turf/open/floor/rogue/snow/attack_right(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.stat != CONSCIOUS)
+			return
+		var/obj/item/I = new /obj/item/natural/dirtclod/snow(src)
+		if(L.put_in_active_hand(I))
+			L.visible_message(span_warning("[L] picks up some snow."))
+			ChangeTurf(/turf/open/floor/rogue/snowpatchy, flags = CHANGETURF_INHERIT_AIR)
+		else
+			qdel(I)
+
+	. = ..()
+
+/turf/open/floor/rogue/snow/attackby(obj/item/C, mob/user, params)
+	if(istype(C, /obj/item/natural/dirtclod/snow))
+		for(var/elements in contents)
+			if(!istype(elements, /obj/effect/decal/cleanable/blood/footprints/mud))
+				continue
+			QDEL_NULL(elements)
+			to_chat(user, span_notice("You pad out any footprints in [src].."))
+			qdel(C)
+
+	. = ..()
+
+/turf/open/floor/rogue/snow/Crossed(atom/movable/O)
+	..()
+	if(!ishuman(O))
+		return
+	var/mob/living/carbon/human/H = O
+	if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
+		return
+	update_icon()
+	if(water_level)
+		START_PROCESSING(SSwaterlevel, src)
 
 /turf/open/floor/rogue/snowrough
 	name = "rough snow"
@@ -266,8 +302,9 @@
 	canSmoothWith = list(/turf/open/floor/rogue/snowrough,)
 	neighborlay = "snowroughedge"
 	spread_chance = 0
+	temperature = 110
 
-/turf/open/floor/rogue/snowrough/Initialize()
+/turf/open/floor/rogue/snowrough/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
@@ -289,6 +326,7 @@
 	canSmoothWith = list(/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "snowpatchy_grassedge"
+	temperature = 110
 
 /turf/open/floor/rogue/snowpatchy/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
@@ -309,14 +347,15 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_coldedge"
+	temperature = 160
 
-/turf/open/floor/rogue/grasscold/Initialize()
+/turf/open/floor/rogue/grasscold/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
 /turf/open/floor/rogue/grasscold/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
-	
+
 /turf/open/floor/rogue/grasspurple
 	name = "fungal 'grass'"
 	desc = "Thin fungal strands rising from the ground. Spongey to walk on."
@@ -337,13 +376,13 @@
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_purpleedge"
 
-/turf/open/floor/rogue/grasspurple/Initialize()
+/turf/open/floor/rogue/grasspurple/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
 /turf/open/floor/rogue/grasspurple/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
-	
+
 /turf/open/floor/rogue/grassgrey
 	name = "dead grass"
 	desc = "Pale, like a bloated corpse."
@@ -364,7 +403,7 @@
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_greyedge"
 
-/turf/open/floor/rogue/grassgrey/Initialize()
+/turf/open/floor/rogue/grassgrey/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
@@ -391,7 +430,7 @@
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_rededge"
 
-/turf/open/floor/rogue/grassred/Initialize()
+/turf/open/floor/rogue/grassred/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
@@ -416,7 +455,7 @@
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_yeledge"
 
-/turf/open/floor/rogue/grassyel/Initialize()
+/turf/open/floor/rogue/grassyel/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
@@ -448,7 +487,7 @@
 	spread_chance = 15
 	burn_power = 6
 
-/turf/open/floor/rogue/grass/Initialize()
+/turf/open/floor/rogue/grass/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 //	GLOB.dirt_list += src
 	. = ..()
@@ -547,24 +586,24 @@
 	. = ..()
 	if(!isliving(user))
 		return
-	
+
 	var/mob/living/L = user
 	if(L.stat != CONSCIOUS)
 		return
-	
-	// Check if the user is holding a shovel
+
 	var/obj/item/rogueweapon/shovel/S = L.get_active_held_item()
 	if(!istype(S))
+		S = L.get_inactive_held_item()
+	if(!istype(S))
+		for(var/obj/item/rogueweapon/shovel/shovel in L.held_items)
+			S = shovel
+			break
+	if(!istype(S))
 		return
-	
-	// Check if in scoop intent
-	if(L.used_intent.type != /datum/intent/shovelscoop)
-		return
-	
-	// Call the shovel's autodig proc
+
 	if(S.start_autodig(L, src))
 		return TRUE
-	
+
 	return FALSE
 
 /turf/open/floor/rogue/dirt/Destroy()
@@ -596,7 +635,7 @@
 /turf/open/floor/rogue/dirt/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
-/turf/open/floor/rogue/dirt/Initialize()
+/turf/open/floor/rogue/dirt/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 	update_water()
@@ -697,11 +736,88 @@
 	landsound = 'sound/foley/jumpland/dirtland.wav'
 	baseturfs = /turf/open/floor/rogue/sand
 	slowdown = 0
+	var/sand_amt = 3
 
 /turf/open/floor/rogue/sand/Initialize(mapload)
 	. = ..()
 	if(prob(15))
 		icon_state = "sand[rand(1,4)]"
+
+/turf/open/floor/rogue/sand/attack_right(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.stat != CONSCIOUS)
+			return
+		if(sand_amt <= 0)
+			to_chat(L, span_warning("There's no loose sand left to scoop here."))
+			return
+		var/obj/item/I = new /obj/item/natural/dirtclod/sand(src)
+		if(L.put_in_active_hand(I))
+			L.visible_message(span_warning("[L] scoops up some sand."))
+			sand_amt--
+		else
+			qdel(I)
+	. = ..()
+
+/turf/open/floor/rogue/sand/MiddleClick(mob/user, params)
+	. = ..()
+	if(!isliving(user))
+		return
+
+	var/mob/living/L = user
+	if(L.stat != CONSCIOUS)
+		return
+
+	var/obj/item/rogueweapon/shovel/S = L.get_active_held_item()
+	if(!istype(S))
+		S = L.get_inactive_held_item()
+	if(!istype(S))
+		for(var/obj/item/rogueweapon/shovel/shovel in L.held_items)
+			S = shovel
+			break
+	if(!istype(S))
+		return
+
+	if(S.start_autodig(L, src))
+		return TRUE
+
+	return FALSE
+
+/turf/open/floor/rogue/AzureSand/attack_right(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.stat != CONSCIOUS)
+			return
+		var/obj/item/I = new /obj/item/natural/dirtclod/sand(src)
+		if(L.put_in_active_hand(I))
+			L.visible_message(span_warning("[L] scoops up some sand."))
+		else
+			qdel(I)
+	. = ..()
+
+/turf/open/floor/rogue/AzureSand/MiddleClick(mob/user, params)
+	. = ..()
+	if(!isliving(user))
+		return
+
+	var/mob/living/L = user
+	if(L.stat != CONSCIOUS)
+		return
+
+	var/obj/item/rogueweapon/shovel/S = L.get_active_held_item()
+	if(!istype(S))
+		S = L.get_inactive_held_item()
+	if(!istype(S))
+		for(var/obj/item/rogueweapon/shovel/shovel in L.held_items)
+			S = shovel
+			break
+	if(!istype(S))
+		return
+
+	if(S.start_autodig(L, src))
+		return TRUE
+
+	return FALSE
 
 /turf/open/floor/rogue/hay
 	name = "hay"
@@ -814,7 +930,7 @@
 	canSmoothWith = list(/turf/open/floor/rogue, /turf/closed/mineral, /turf/closed/wall/mineral)
 	slowdown = 0
 
-/turf/open/floor/rogue/underworld/road/Initialize()
+/turf/open/floor/rogue/underworld/road/Initialize(mapload)
 	. = ..()
 	dir = rand(0,8)
 
@@ -832,8 +948,9 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/rogue/dirt/road,/turf/open/floor/rogue/dirt)
 	neighborlay = "lavedge"
+	temperature = 500
 
-/turf/open/floor/rogue/volcanic/Initialize()
+/turf/open/floor/rogue/volcanic/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
@@ -864,7 +981,7 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 
-/turf/open/floor/rogue/blocks/Initialize()
+/turf/open/floor/rogue/blocks/Initialize(mapload)
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
@@ -968,7 +1085,7 @@
 /turf/open/floor/rogue/hexstone/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
-/turf/open/floor/rogue/hexstone/Initialize()
+/turf/open/floor/rogue/hexstone/Initialize(mapload)
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
@@ -1005,7 +1122,7 @@
 /turf/open/floor/rogue/churchmarble/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
-/turf/open/floor/rogue/churchmarble/Initialize()
+/turf/open/floor/rogue/churchmarble/Initialize(mapload)
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
@@ -1040,7 +1157,7 @@
 /turf/open/floor/rogue/church/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
-/turf/open/floor/rogue/church/Initialize()
+/turf/open/floor/rogue/church/Initialize(mapload)
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
@@ -1073,7 +1190,7 @@
 /turf/open/floor/rogue/churchbrick/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
-/turf/open/floor/rogue/churchbrick/Initialize()
+/turf/open/floor/rogue/churchbrick/Initialize(mapload)
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
@@ -1106,7 +1223,7 @@
 /turf/open/floor/rogue/churchrough/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
-/turf/open/floor/rogue/churchrough/Initialize()
+/turf/open/floor/rogue/churchrough/Initialize(mapload)
 	. = ..()
 	dir = pick(GLOB.cardinals)
 //
@@ -1135,7 +1252,7 @@
 /turf/open/floor/rogue/herringbone/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
-/turf/open/floor/rogue/herringbone/Initialize()
+/turf/open/floor/rogue/herringbone/Initialize(mapload)
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
@@ -1215,7 +1332,7 @@
 /turf/open/floor/rogue/cobble/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
-/turf/open/floor/rogue/cobble/Initialize()
+/turf/open/floor/rogue/cobble/Initialize(mapload)
 	. = ..()
 	icon_state = "cobblestone[rand(1,3)]"
 
@@ -1242,7 +1359,7 @@
 /turf/open/floor/rogue/cobble/mossy/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
-/turf/open/floor/rogue/cobble/mossy/Initialize()
+/turf/open/floor/rogue/cobble/mossy/Initialize(mapload)
 	. = ..()
 	icon_state = "mossystone[rand(1,3)]"
 
@@ -1451,7 +1568,7 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 
-/turf/open/floor/rogue/concrete/Initialize()
+/turf/open/floor/rogue/concrete/Initialize(mapload)
 	. = ..()
 	icon_state = "concretefloor[rand(1,2)]"
 	dir = pick(GLOB.cardinals)
@@ -1486,7 +1603,7 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 
-/turf/open/floor/rogue/metal/Initialize()
+/turf/open/floor/rogue/metal/Initialize(mapload)
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
@@ -1524,7 +1641,7 @@
 /turf/open/floor/rogue/carpet/lord
 	icon_state = ""
 
-/turf/open/floor/rogue/carpet/lord/Initialize()
+/turf/open/floor/rogue/carpet/lord/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -1544,7 +1661,7 @@
 /turf/open/floor/rogue/carpet/lord/center
 	icon_state = "carpet_c"
 
-/turf/open/floor/rogue/carpet/lord/center/Initialize()
+/turf/open/floor/rogue/carpet/lord/center/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	..()
 
@@ -1570,7 +1687,7 @@
 		if(istype(oldLoc, type))
 			playsound(AM, "plantcross", 100, TRUE)
 
-/turf/open/floor/rogue/shroud/Initialize()
+/turf/open/floor/rogue/shroud/Initialize(mapload)
 	. = ..()
 	icon_state = "treetop[rand(1,2)]"
 	dir = pick(GLOB.cardinals)
@@ -1603,6 +1720,43 @@
 	landsound = 'sound/foley/jumpland/grassland.wav'
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/rogue, /turf/open/floor/rogue/underworld)
+	temperature = 100
 
 /turf/open/floor/rogue/dark_ice/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
+
+/turf/open/floor/rogue/dark_ice/regular
+	name = "ice"
+	desc = "Cold, cold ice. Don't you want to look further within?"
+
+/turf/open/floor/rogue/dark_ice/regular/turf_destruction(damage_flag)
+	. = ..()
+	visible_message(span_danger("[src] splinters and breaks away!"))
+	playsound(src, 'sound/foley/waterenter.ogg', 100, FALSE)
+	ChangeTurf(/turf/open/water/pond, flags = CHANGETURF_INHERIT_AIR)
+
+/turf/open/floor/rogue/dark_ice/regular/Entered(atom/movable/AM)
+	..()
+	if(!ishuman(AM))
+		return
+	var/mob/living/carbon/human/H = AM
+	if(HAS_TRAIT(H, TRAIT_LIGHT_STEP) || H.m_intent == MOVE_INTENT_SNEAK)
+		return
+	if(prob(25))
+		to_chat(H, span_warning("[src] under you begins to crack!"))
+		addtimer(CALLBACK(src, PROC_REF(ice_crack)), 2 SECONDS, TIMER_UNIQUE)
+		return
+	if(prob(40))
+		var/list/possible_turfs = list()
+		for(var/turf/T in range(1, H))
+			if(T.density)
+				continue
+			possible_turfs += T
+		H.forceMove(pick(possible_turfs))
+		to_chat(H, span_warning("You slip on [src]!"))
+
+/turf/open/floor/rogue/dark_ice/regular/proc/ice_crack()
+	for(var/mob/living/target in contents)
+		target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+	turf_destruction("blunt")
+	return

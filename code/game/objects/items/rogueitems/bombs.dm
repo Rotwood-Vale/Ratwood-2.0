@@ -14,7 +14,7 @@
 	grid_width = 32
 	grid_height = 64
 
-/obj/item/bomb/Initialize()
+/obj/item/bomb/Initialize(mapload)
 	..()
 	fuze = rand(40,60)
 
@@ -70,6 +70,7 @@
 
 /obj/item/bomb/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
+	sleep(1)
 	explode()
 
 /obj/item/bomb/process()
@@ -131,12 +132,31 @@
 	fuze = 2 SECONDS
 	grid_width = 32
 	grid_height = 64
-	var/obj/item/bomb/b_type
+	var/obj/item/bomb/b_type = /obj/item/bomb
 	var/list/obj/item/tripwire/wire_trigger = list()
 
-/obj/item/bomb/tripbomb/Initialize()
+/obj/item/bomb/tripbomb/Initialize(mapload)
 	..()
-	
+	icon_state = b_type.icon_state
+
+/obj/item/bomb/tripbomb/attackby(obj/item/I, mob/user, params)
+	if(user.used_intent.blade_class == BCLASS_CUT && I.wlength == WLENGTH_SHORT)
+		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
+			to_chat(user, span_warning("I stop slicing [src]."))
+			if(!prob(user.get_skill_level(/datum/skill/craft/traps) * 10))
+				to_chat(user, span_warningbig("Oh no."))
+				light()
+		for(var/list/obj/item/tripwire/t_wire in wire_trigger)
+			QDEL_NULL(t_wire)
+		new b_type(loc)
+		QDEL_NULL(src)
+		return ..()
+	if(istype(I, /obj/item/natural/dirtclod))
+		var/skill = user.get_skill_level(/datum/skill/craft/traps)
+		alpha = (90 - skill * 5)
+		qdel(I)
+	..()
+
 /obj/item/bomb/tripbomb/Destroy()
 	..()
 
@@ -176,9 +196,14 @@
 		QDEL_NULL(payload)
 		return ..()
 	
+	if(istype(I, /obj/item/natural/dirtclod))
+		var/skill = user.get_skill_level(/datum/skill/craft/traps)
+		alpha = (90 - skill * 5)
+		qdel(I)
+
 	if(istype(I, /obj/item/natural/fibers))
 		if(payload.wire_trigger.len == 2)
-			to_chat(span_warning("I can not extend [src] anymore."))
+			to_chat(user, span_warning("I can not extend [src] anymore."))
 			return ..()
 		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
 			to_chat(user, span_warning("I stop extending [src]."))
@@ -227,8 +252,8 @@
 	var/radius = 3
 
 /obj/item/bomb/smoke/attack_self(mob/user)
-    ..()
-    light()
+	..()
+	light()
 
 /obj/item/bomb/smoke/ex_act()
 	if(!QDELETED(src))
@@ -260,7 +285,7 @@
 	qdel(src)
 
 /obj/item/grenade/smokebomb
-    parent_type = /obj/item/bomb/smoke
+	parent_type = /obj/item/bomb/smoke
 
 
 /obj/item/tntstick
@@ -357,9 +382,9 @@
 	light()
 
 /obj/item/satchel_bomb/ex_act()
-    if(!QDELETED(src))
-        lit = TRUE
-        explode(TRUE)
+	if(!QDELETED(src))
+		lit = TRUE
+		explode(TRUE)
 
 /obj/item/satchel_bomb/proc/light()
 	if(!lit)
@@ -421,7 +446,7 @@
 	grid_width = 32
 	grid_height = 32
 
-/obj/item/impact_grenade/Initialize()
+/obj/item/impact_grenade/Initialize(mapload)
 	. = ..()
 
 // Define a base explodes() proc that subtypes can override because its now explodes proc
@@ -431,6 +456,7 @@
 
 /obj/item/impact_grenade/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
+	sleep(1)
 	explodes()
 
 /obj/item/impact_grenade/attack_self(mob/user)

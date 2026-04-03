@@ -183,6 +183,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/twohands_required = FALSE
 
+	var/from_stockpile = FALSE
+
 	var/bloody_icon = 'icons/effects/blood.dmi'
 	var/bloody_icon_state = "itemblood"
 	var/dam_icon = 'icons/effects/item_damage32.dmi'
@@ -254,7 +256,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/no_use_cd = FALSE //if true, no cooldown when interacting with it
 	var/vorpal = FALSE // does this item/weapon circumvent two-stage death during dismemberment? (do not add this to anything but ultra rare shit)
 
-/obj/item/Initialize()
+	/// Item is compatible with Nudist and Nude Sleeper vice traits. Nudists can equip these (where they otherwise couldn't), and nude sleepers can fall asleep while wearing these.
+	/// Mainly intended for small accessories and things that don't cover much, or for resolving unimmersive situations. See other examples of nudist-friendly items.
+	/// Stripping these items from nude sleepers is 2x faster while they are unconscious.
+	var/nudist_approved = FALSE
+
+/obj/item/Initialize(mapload)
 	. = ..()
 	if(!pixel_x && !pixel_y && !bigboy)
 		pixel_x = rand(-5,5)
@@ -315,7 +322,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if (obj_broken)
 				update_damaged_state()
 
-/obj/item/Initialize()
+/obj/item/Initialize(mapload)
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
 
@@ -593,6 +600,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(associated_skill && associated_skill.name)
 			inspec += "\n<b>SKILL:</b> [associated_skill.name] <span class='info'><a href='?src=[REF(src)];explainskill=1'>{?}</a></span>"
 
+		if(istype(src, /obj/item/rogueweapon))
+			var/obj/item/rogueweapon/W = src
+			if(W.special)
+				inspec += "[W.special.get_examine()]"
+
 		if(intdamage_factor != 1 && force >= 5)
 			inspec += "\n<b>INTEGRITY DAMAGE:</b> [intdamage_factor * 100]% <span class='info'><a href='?src=[REF(src)];explainintdamage=1'>{?}</a></span>"
 
@@ -640,7 +652,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 							X = "pick"
 						inspec += ("\n<b>[capitalize(X)]</b>")
 				inspec += "<br>"
-
+			var/thermal_text = C.thermal_examine_text()
+			if(thermal_text)
+				inspec += thermal_text
+				inspec += "<br>"
 //**** General durability
 
 		if(max_integrity)
@@ -669,7 +684,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/output = "[inspec.Join()]"
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
-		to_chat(usr, output)	
+		to_chat(usr, output)
 
 /obj/item
 	var/simpleton_price = FALSE
@@ -1274,13 +1289,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/grind_requirements() //Used to check for extra requirements for grinding an object
 	return TRUE
 
- //Called BEFORE the object is ground up - use this to change grind results based on conditions
- //Use "return -1" to prevent the grinding from occurring
+//Called BEFORE the object is ground up - use this to change grind results based on conditions
+//Use "return -1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
 
 /obj/item/proc/on_juice()
 
-/obj/item/proc/get_force_string(var/force)
+/obj/item/proc/get_force_string(force)
 	switch(force)
 		if(0 to 9)
 			return "Puny"
@@ -1498,7 +1513,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	altgripped = TRUE
 	update_transform()
-	to_chat(user, span_notice("I wield [src] with an alternate grip"))
+	to_chat(user, span_notice("I wield [src] with an alternate grip."))
+	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 100, TRUE)
 	if(user.get_active_held_item() == src)
 		if(alt_intents)
 			user.update_a_intents()
@@ -1572,6 +1588,70 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		else
 			str += "NO DEFENSE"
 	return str
+
+/obj/item/proc/temp_to_cold_tier(temp)
+	if(isnull(temp))
+		return "None"
+
+	if(temp < BODYTEMP_COLD_LEVEL_ONE_MAX)
+		return "<font color='#023E8A'>Very Cold</font>"
+	if(temp < BODYTEMP_NORMAL_MIN)
+		return "<font color='#99e6ff'>Cold</font>"
+
+	return "None"
+
+/obj/item/proc/temp_to_heat_tier(temp)
+	if(isnull(temp))
+		return "None"
+
+	if(temp > BODYTEMP_HEAT_LEVEL_ONE_MAX)
+		return "<font color='#DC143C?'>Very Hot</font>"
+	if(temp > BODYTEMP_NORMAL_MAX)
+		return "<font color='#ffff00'>Hot</font>"
+
+	return "None"
+
+/obj/item/proc/thermal_flags_to_zone_text(flags)
+	if(!flags)
+		return "None"
+
+	var/list/parts = list()
+
+	if(flags & HEAD) parts += "Head"
+	if(flags & CHEST) parts += "Chest"
+	if(flags & GROIN) parts += "Groin"
+	if(flags & ARMS) parts += "Arms"
+	if(flags & LEGS) parts += "Legs"
+	if(flags & HANDS) parts += "Hands"
+	if(flags & FEET) parts += "Feet"
+
+	if(!length(parts))
+		return "Unknown"
+
+	return english_list(parts)
+/obj/item/clothing/proc/thermal_examine_text()
+	var/list/out = list()
+
+	// --- Cold ---
+	if(src.cold_protection && src.min_cold_protection_temperature)
+		var/tier = temp_to_cold_tier(src.min_cold_protection_temperature)
+		var/covers = thermal_flags_to_zone_text(src.cold_protection)
+
+		out += "<b>COLD RESISTANCE:</b> [tier]"
+		out += " | Insulates: [covers]"
+
+	// --- Heat ---
+	if(src.heat_protection && src.max_heat_protection_temperature)
+		var/tier = temp_to_heat_tier(src.max_heat_protection_temperature)
+		var/covers = thermal_flags_to_zone_text(src.heat_protection)
+
+		out += "<b>HEAT RESISTANCE:</b> [tier]"
+		out += " | Insulates: [covers]"
+
+	if(!length(out))
+		return null
+
+	return "<br><b><u>THERMAL RESISTANCE:</u></b><br>" + jointext(out, "<br>")
 
 /obj/item/obj_break(damage_flag)
 	..()
@@ -1747,4 +1827,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/update_force_dynamic()
 	force_dynamic = (wielded ? force_wielded : force)
+
+/obj/item/proc/has_customized_identity()
+	if(renamedByPlayer)
+		return TRUE
+	if(original_name && original_name != name)
+		return TRUE
+	if(desc != initial(desc))
+		return TRUE
+	return FALSE
 

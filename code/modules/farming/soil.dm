@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 	///The time remaining in which the soil was given special fertilizer, effect is similar to being blessed but with less beneficial effects
 	var/fertilized_time = 0
 
-/obj/structure/soil/Initialize()
+/obj/structure/soil/Initialize(mapload)
 	. = ..()
 	GLOB.soil_list += src
 
@@ -92,6 +92,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 	record_round_statistic(STATS_PLANTS_HARVESTED)
 	to_chat(user, span_notice(feedback))
 	yield_produce(modifier, is_legendary)
+	update_icon()
 
 /obj/structure/soil/proc/try_handle_harvest(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/rogueweapon/sickle))
@@ -107,6 +108,10 @@ GLOBAL_LIST_EMPTY(soil_list)
 	if(istype(attacking_item, /obj/item/seeds))
 		var/obj/item/seeds/seeds = attacking_item
 		seeds.try_plant_seed(user, src)
+		return TRUE
+	else if(istype(attacking_item, /obj/item/herbseed))
+		var/obj/item/herbseed/herbseed = attacking_item
+		herbseed.try_plant_seed(user, src)
 		return TRUE
 	return FALSE
 
@@ -135,6 +140,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 			to_chat(user, span_notice("I till the soil."))
 			playsound(src,'sound/items/dig_shovel.ogg', 100, TRUE)
 			user_till_soil(user)
+			update_icon()
 		return TRUE
 	return FALSE
 
@@ -159,6 +165,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 		playsound(user, pick_n_take(wash), 100, FALSE)
 		to_chat(user, span_notice("I water the soil."))
 		adjust_water(water_amount)
+		update_icon()
 		return TRUE
 	return FALSE
 
@@ -174,6 +181,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 		to_chat(user, span_notice("You mix the fertilizer into the soil..."))
 		fertilize_soil()
 		qdel(attacking_item)
+		update_icon()
 		return TRUE
 	if(fertilize_amount > 0)
 		if(nutrition >= MAX_PLANT_NUTRITION * 0.8)
@@ -182,6 +190,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 			to_chat(user, span_notice("I fertilize the soil."))
 			adjust_nutrition(fertilize_amount)
 			qdel(attacking_item)
+			update_icon()
 		return TRUE
 	return FALSE
 
@@ -194,11 +203,13 @@ GLOBAL_LIST_EMPTY(soil_list)
 			apply_farming_fatigue(user, 20)
 			to_chat(user, span_notice("I rip out the weeds."))
 			deweed()
+			update_icon()
 		return TRUE
 	if(istype(attacking_item, /obj/item/rogueweapon/hoe))
 		apply_farming_fatigue(user, 10)
 		to_chat(user, span_notice("I rip out the weeds with the [attacking_item]"))
 		deweed()
+		update_icon()
 		return TRUE
 	return FALSE
 
@@ -311,15 +322,12 @@ GLOBAL_LIST_EMPTY(soil_list)
 
 /obj/structure/soil/proc/adjust_water(adjust_amount)
 	water = clamp(water + adjust_amount, 0, MAX_PLANT_WATER)
-	update_icon()
 
 /obj/structure/soil/proc/adjust_nutrition(adjust_amount)
 	nutrition = clamp(nutrition + adjust_amount, 0, MAX_PLANT_NUTRITION)
-	update_icon()
 
 /obj/structure/soil/proc/adjust_weeds(adjust_amount)
 	weeds = clamp(weeds + adjust_amount, 0, MAX_PLANT_WEEDS)
-	update_icon()
 
 /obj/structure/soil/proc/adjust_plant_health(adjust_amount)
 	if(!plant || plant_dead)
@@ -328,16 +336,16 @@ GLOBAL_LIST_EMPTY(soil_list)
 	if(plant_health <= 0)
 		plant_dead = TRUE
 		produce_ready = FALSE
-	update_icon()
+		update_icon()
 
-/obj/structure/soil/Initialize()
+/obj/structure/soil/Initialize(mapload)
 	START_PROCESSING(SSprocessing, src)
-	GLOB.weather_act_upon_list += src
+//	GLOB.weather_act_upon_list += src
 	. = ..()
 
 /obj/structure/soil/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
-	GLOB.weather_act_upon_list -= src
+//	GLOB.weather_act_upon_list -= src
 	. = ..()
 
 /obj/structure/soil/process()
@@ -345,9 +353,15 @@ GLOBAL_LIST_EMPTY(soil_list)
 	process_weeds(dt)
 	process_plant(dt)
 	process_soil(dt)
-	update_icon()
 	if(soil_decay_time <= 0)
 		decay_soil()
+	var/turf/obj_turf = get_turf(src)
+	if(!obj_turf)
+		return
+	if(obj_turf.outdoor_effect?.weatherproof)
+		return
+	if(SSParticleWeather?.runningWeather?.target_trait == PARTICLEWEATHER_RAIN)
+		water = min(MAX_PLANT_WATER, water + min(5, 30 / 4))
 
 /obj/structure/soil/weather_act_on(weather_trait, severity)
 	if(weather_trait != PARTICLEWEATHER_RAIN)
@@ -588,11 +602,13 @@ GLOBAL_LIST_EMPTY(soil_list)
 	if(!matured)
 		if(growth_time >= plant.maturation_time)
 			matured = TRUE
+			update_icon()
 	else
 		produce_time += added_growth
 		if(produce_time >= plant.produce_time)
 			produce_time -= plant.produce_time
 			produce_ready = TRUE
+			update_icon()
 
 
 #define SOIL_WATER_DECAY_RATE 0.5 / (1 MINUTES)

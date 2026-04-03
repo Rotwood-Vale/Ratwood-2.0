@@ -111,10 +111,15 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/phobia = "spiders"
 	var/shake = TRUE
 	var/sexable = FALSE
+	var/chastenable = FALSE
+	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
+	var/extreme_erp = FALSE
+	var/edging = FALSE
 	var/compliance_notifs = TRUE
+	var/skillcap_notifs = TRUE
 	var/restricted_species_pref = null
 	var/wildshape_name = TRUE
-	var/xenophobe_pref = 1
+	var/xenophobe_pref = 0
 
 	var/list/custom_names = list()
 	var/preferred_ai_core_display = "Blue"
@@ -197,6 +202,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/anonymize = TRUE
 	var/masked_examine = FALSE
+	var/nsfw_examine_always = FALSE
 	var/mute_animal_emotes = FALSE
 	var/autoconsume = FALSE
 	var/runmode = FALSE
@@ -251,6 +257,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/headshot_link
 	var/chatheadshot = FALSE
 	var/ooc_extra
+	var/ooc_extra_img
+	var/ooc_extra_img_link
 	var/song_artist
 	var/song_title
 	var/list/descriptor_entries = list()
@@ -329,6 +337,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/noble_gossip
 
 	var/nsfwflavortext
+
+	var/nsfw_ooc_extra_img
+	var/nsfw_ooc_extra_img_link
 
 	var/erpprefs
 
@@ -538,7 +549,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				if(family == FAMILY_PARTIAL)
 					spousename = "Preferred Parent"
 				dat += "<b>[spousename]:</b> <a href='?_src_=prefs;preference=setspouse'>[setspouse ? setspouse : "None"]</a><BR>"
-				if(family == FAMILY_NEWLYWED || family == FAMILY_FULL)
+				if(family != FAMILY_NONE)
 					dat += "<b>Preferred Gender:</b> <a href='?_src_=prefs;preference=gender_choice'>[gender_choice ? gender_choice : "Any Gender"]</a><BR>"
 					var/species_text
 					if(xenophobe_pref == 1)
@@ -699,6 +710,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<br><b>Song:</b> <a href='?_src_=prefs;preference=ooc_extra;task=input'>Change URL</a>"
 			dat += "<a href='?_src_=prefs;preference=change_title;task=input'>Change Title</a>"
 			dat += "<a href='?_src_=prefs;preference=change_artist;task=input'>Change Artist</a>"
+			dat += "<br><b>OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=prefs;preference=ooc_extra_img;task=input'>Change</a>"
+			if(ooc_extra_img_link != null)
+				dat += "<br><img src='[ooc_extra_img_link]' width='100px' height='100px'>"
+			dat += "<br><b>NSFW OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=prefs;preference=nsfw_ooc_extra_img;task=input'>Change</a>"
+			if(nsfw_ooc_extra_img_link != null)
+				dat += "<br><img src='[nsfw_ooc_extra_img_link]' width='100px' height='100px'>"
 			dat += "<br><B>Image Gallery:</b> <a href='?_src_=prefs;preference=img_gallery;task=input'>Add</a>"
 			dat+= "<a href='?_src_=prefs;preference=clear_gallery;task=input'>Clear Gallery</a>"
 			dat += "<br><B>Nsfw Image Gallery:</b> <a href='?_src_=prefs;preference=nsfw_img_gallery;task=input'>Add</a>"
@@ -963,7 +980,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<a class='linkOff' href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
 			dat += " - <a href='?_src_=prefs;preference=migrants'>MIGRATION</a>"
 			dat += "<br><a href='?_src_=prefs;preference=manifest'>ACTORS</a>"
-			dat += " - <a href='?_src_=prefs;preference=observe'>VOYEUR</a>"
+			// Check the git blame for why this was removed.
+			//dat += " - <a href='?_src_=prefs;preference=observe'>VOYEUR</a>"
 	else
 		dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
 
@@ -1692,7 +1710,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							ghost_others = GHOST_OTHERS_SIMPLE
 
 				if("name")
-					var/new_name = tgui_input_text(user, "The name of this vessel?", "IDENTITY", encode = FALSE)
+					var/new_name = tgui_input_text(user, "The name of this vessel?", "IDENTITY", real_name, encode = FALSE)
 					if(new_name)
 						new_name = reject_bad_name(new_name)
 						if(new_name)
@@ -1701,7 +1719,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ', . and ,.</font>")
 
 				if("nickname")
-					var/new_name = tgui_input_text(user, "Choose your character's nickname (For Highlighting):", "NICKNAME",  encode = FALSE)
+					var/new_name = tgui_input_text(user, "Choose your character's nickname (For Highlighting):", "NICKNAME", nickname, encode = FALSE)
 					if(new_name)
 						new_name = reject_bad_name(new_name)
 						if(new_name)
@@ -1774,14 +1792,14 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					var voicetype_input = tgui_input_list(user, "Choose your character's voice type", "VOICE TYPE", GLOB.voice_types_list)
 					if(voicetype_input)
 						voice_type = voicetype_input
-						to_chat(user, "<font color='red'>Your character will now vocalize with a [lowertext(voice_type)] affect.</font>")
+						to_chat(user, "<font color='red'>Your character will now vocalize with a [LOWER_TEXT(voice_type)] affect.</font>")
 
 				if ("voicepack")
 					var/voicepack_input = tgui_input_list(user, "Choose your character's emote voice pack", "VOICE PACK", GLOB.voice_packs_list)
 					if(voicepack_input)
 						voice_pack = voicepack_input
 						if(voicepack_input != "Default")
-							to_chat(user, span_red("<font color='red'>Your character will now audibly emote with a [lowertext(voicepack_input)] affect.") + span_notice("<br>This will override your Voice Identity and Class-specific voice packs.</font>"))
+							to_chat(user, span_red("<font color='red'>Your character will now audibly emote with a [LOWER_TEXT(voicepack_input)] affect.") + span_notice("<br>This will override your Voice Identity and Class-specific voice packs.</font>"))
 						else
 							to_chat(user, "<font color='red'>Your character will now audibly emote in accordance to their Voice Identity and any Racial / Class-specific voice packs.</font>")
 
@@ -2290,6 +2308,78 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					to_chat(user, "<span class='notice'>Successfully updated song title.</span>")
 					log_game("[user] has set their song title.")
 
+				if("ooc_extra_img")
+					to_chat(user, "<span class='notice'>Add a link to images/videos (jpg, png, gif, mp4) that will be displayed in your Flavor Text.</span>")
+					to_chat(user, "<span class='notice'>Images/videos will be constrained by width but have limitless height. Suitable hosts: catbox, discord, gyazo, lensdump, imgbox.</span>")
+					to_chat(user, "<font color='#d6d6d6'>Leave a single space to delete it.</font>")
+					to_chat(user, "<font color='red'>Abuse of this will get you banned.</font>")
+					var/link = tgui_input_text(user, "Input the image/video link (https):", "OOC Extra Image", ooc_extra_img_link, encode = FALSE)
+					if(link == null)
+						return
+					if(link == "")
+						link = null
+						ShowChoices(user)
+						return
+					if(link == " ")
+						ooc_extra_img = null
+						ooc_extra_img_link = null
+						to_chat(user, "<span class='notice'>Successfully deleted OOC Extra Image.</span>")
+						ShowChoices(user)
+						return
+					var/static/list/valid_ext = list("jpg", "jpeg", "png", "gif", "mp4")
+					if(!valid_headshot_link(user, link, FALSE, valid_ext))
+						link = null
+						ShowChoices(user)
+						return
+					ooc_extra_img_link = link
+					var/ext = LOWER_TEXT(splittext(link, ".")[length(splittext(link, "."))])
+					var/info
+					switch(ext)
+						if("jpg", "jpeg", "png", "gif")
+							ooc_extra_img = "<div align='center'><br><img src='[link]' style='max-width: 100%;'/></div>"
+							info = "an image."
+						if("mp4")
+							ooc_extra_img = "<div align='center'><br><video style='max-width: 100%;' controls><source src='[link]' type='video/mp4'></video></div>"
+							info = "a video."
+					to_chat(user, "<span class='notice'>Successfully updated OOC Extra Image with [info]</span>")
+					log_game("[user] has set their OOC Extra Image to '[link]'.")
+
+				if("nsfw_ooc_extra_img")
+					to_chat(user, "<span class='notice'>Add a link to NSFW images/videos (jpg, png, gif, mp4) that will be displayed in your NSFW Flavor Text.</span>")
+					to_chat(user, "<span class='notice'>Images/videos will be constrained by width but have limitless height. Suitable hosts: catbox, discord, gyazo, lensdump, imgbox.</span>")
+					to_chat(user, "<font color='#d6d6d6'>Leave a single space to delete it.</font>")
+					to_chat(user, "<font color='red'>Abuse of this will get you banned.</font>")
+					var/link = tgui_input_text(user, "Input the image/video link (https):", "NSFW OOC Extra Image", nsfw_ooc_extra_img_link, encode = FALSE)
+					if(link == null)
+						return
+					if(link == "")
+						link = null
+						ShowChoices(user)
+						return
+					if(link == " ")
+						nsfw_ooc_extra_img = null
+						nsfw_ooc_extra_img_link = null
+						to_chat(user, "<span class='notice'>Successfully deleted NSFW OOC Extra Image.</span>")
+						ShowChoices(user)
+						return
+					var/static/list/valid_ext = list("jpg", "jpeg", "png", "gif", "mp4")
+					if(!valid_headshot_link(user, link, FALSE, valid_ext))
+						link = null
+						ShowChoices(user)
+						return
+					nsfw_ooc_extra_img_link = link
+					var/ext = LOWER_TEXT(splittext(link, ".")[length(splittext(link, "."))])
+					var/info
+					switch(ext)
+						if("jpg", "jpeg", "png", "gif")
+							nsfw_ooc_extra_img = "<div align='center'><br><img src='[link]' style='max-width: 100%;'/></div>"
+							info = "an image."
+						if("mp4")
+							nsfw_ooc_extra_img = "<div align='center'><br><video style='max-width: 100%;' controls><source src='[link]' type='video/mp4'></video></div>"
+							info = "a video."
+					to_chat(user, "<span class='notice'>Successfully updated NSFW OOC Extra Image with [info]</span>")
+					log_game("[user] has set their NSFW OOC Extra Image to '[link]'.")
+
 				if("familiar_prefs")
 					familiar_prefs.fam_show_ui()
 
@@ -2544,7 +2634,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						family = new_family
 						setspouse = null
 						gender_choice = ANY_GENDER
-						xenophobe_pref = 1
+						xenophobe_pref = 0
 				//Setspouse is part of the family subsystem. It will check existing families for this character and attempt to place you in this family.
 				if("setspouse")
 					var/newspouse = tgui_input_text(user, "INPUT THE IDENTITY OF ANOTHER HERO", "TIL DEATH DO US PART")
@@ -2565,8 +2655,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							gender_choice = new_gender_choice
 				if("species_choice")
 					var/list/restriction_options = list("Unrestricted", "Same Race", "Select Specific Race")
-					if(family == FAMILY_FULL)
-						restriction_options -= "Unrestricted"
 					var/choice = tgui_input_list(user, "SELECT SPOUSE SPECIES RESTRICTION", "SPECIES RESTRICTION", restriction_options)
 					if(choice == "Unrestricted")
 						xenophobe_pref = 0
@@ -2786,10 +2874,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					parent.view_actors_manifest()
 					return
 
-				if("observe")
-					var/mob/dead/new_player/P = user
-					P.make_me_an_observer()
-					return
+				// Check the git blame for why this was removed.
+				// if("observe")
+				// 	var/mob/dead/new_player/P = user
+				// 	P.make_me_an_observer()
+				// 	return
 
 				if("finished")
 					user << browse(null, "window=latechoices") //closes late choices window
@@ -3044,6 +3133,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	character.nsfwflavortext = nsfwflavortext
 
+	character.nsfw_ooc_extra_img = nsfw_ooc_extra_img
+
+	character.nsfw_ooc_extra_img_link = nsfw_ooc_extra_img_link
+
 	character.erpprefs = erpprefs
 
 	character.img_gallery = img_gallery
@@ -3051,6 +3144,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.nsfw_img_gallery = nsfw_img_gallery
 
 	character.ooc_extra = ooc_extra
+
+	character.ooc_extra_img = ooc_extra_img
+
+	character.ooc_extra_img_link = ooc_extra_img_link
 
 	character.song_title = song_title
 

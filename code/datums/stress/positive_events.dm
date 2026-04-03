@@ -3,6 +3,21 @@
 	stressadd = -2
 	desc = span_green("The Gods smile upon me.")
 
+/datum/stressevent/chastity_devout
+	timer = 999 MINUTES
+	stressadd = -1
+	desc = span_green("This restraint steadies my spirit.")
+
+/datum/stressevent/chastity_masochist
+	timer = 999 MINUTES
+	stressadd = -1
+	desc = span_green("The spikes keep me pleasantly focused.")
+
+/datum/stressevent/chastity_church
+	timer = 999 MINUTES
+	stressadd = -1
+	desc = span_green("My vows feel stronger in this restraint.")
+
 /datum/stressevent/seeblessed
 	timer = 30 MINUTES
 	stressadd = -2
@@ -287,14 +302,14 @@
 	desc = span_green("My meditations were rewarding.")
 
 /datum/stressevent/bathcleaned
-    timer = 20 MINUTES
-    stressadd = -3
-    desc = span_green("I feel immaculate!")
+	timer = 20 MINUTES
+	stressadd = -3
+	desc = span_green("I feel immaculate!")
 
 /datum/stressevent/bath
-    timer = 10 MINUTES
-    stressadd = -1
-    desc = span_green("I'm just a bit cleaner.")
+	timer = 10 MINUTES
+	stressadd = -1
+	desc = span_green("I'm just a bit cleaner.")
 
 
 /datum/stressevent/pacified
@@ -421,3 +436,13 @@
 	timer = 1 MINUTES
 	stressadd = -2
 	desc = list(span_blue("A covered stroll in the rain is quite pleasant."))
+
+/datum/stressevent/bloodrevel
+	timer = 1 MINUTES
+	stressadd = 4
+	desc = span_red("It's raining blood! Blessed be my Patron!")
+
+/datum/stressevent/fireflies
+	timer = 10 MINUTES
+	stressadd = -5
+	desc = span_boldgreen("What wonderious fireflies...")

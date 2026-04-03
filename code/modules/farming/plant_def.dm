@@ -322,6 +322,33 @@
 	maturation_time = SLOW_GROWING
 	produce_time = 3 MINUTES
 
+/datum/plant_def/carrot
+	name = "carrot tops"
+	icon = 'icons/roguetown/misc/crops.dmi'
+	icon_state = "carrot"
+	produce_type = /obj/item/reagent_containers/food/snacks/grown/carrot
+	produce_amount_min = 1
+	produce_amount_max = 3
+	maturation_nutrition = HUNGRINESS_TINY
+	maturation_time = SLOW_GROWING
+
+/datum/plant_def/cucumber
+	name = "cucumber vines"
+	icon = 'icons/roguetown/misc/crops.dmi'
+	icon_state = "cucumber"
+	produce_type = /obj/item/reagent_containers/food/snacks/grown/cucumber
+	produce_amount_min = 2
+	produce_amount_max = 3
+
+/datum/plant_def/eggplant
+	name = "eggplant stalk"
+	icon = 'icons/roguetown/misc/crops.dmi'
+	icon_state = "eggplant"
+	produce_type = /obj/item/reagent_containers/food/snacks/grown/eggplant
+	produce_amount_min = 2
+	produce_amount_max = 4
+	maturation_nutrition = HUNGRINESS_DEMANDING
+
 #undef SLOW_GROWING
 #undef FAST_GROWING
 #undef VERY_FAST_GROWING

@@ -25,13 +25,13 @@ SUBSYSTEM_DEF(chimeric_tech)
 		var/datum/chimeric_tech_node/new_node = new T()
 		all_tech_nodes[new_node.string_id] = new_node
 
-/datum/controller/subsystem/chimeric_tech/proc/get_node_status(var/node_path)
+/datum/controller/subsystem/chimeric_tech/proc/get_node_status(node_path)
 	var/datum/chimeric_tech_node/node = all_tech_nodes[node_path]
 	if(node)
 		return node.unlocked
 	return FALSE
 
-/datum/controller/subsystem/chimeric_tech/proc/get_available_choices(var/current_tier, var/current_points, var/max_choices = 3)
+/datum/controller/subsystem/chimeric_tech/proc/get_available_choices(current_tier, current_points, max_choices = 3)
 	if(cached_choices.len)
 		return cached_choices
 
@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(chimeric_tech)
 
 	return final_choices
 
-/datum/controller/subsystem/chimeric_tech/proc/unlock_node(var/string_id, var/datum/component/chimeric_heart_beast/beast_component)
+/datum/controller/subsystem/chimeric_tech/proc/unlock_node(string_id, datum/component/chimeric_heart_beast/beast_component)
 	var/datum/chimeric_tech_node/node = all_tech_nodes[string_id]
 
 	if(!node)
@@ -104,7 +104,7 @@ SUBSYSTEM_DEF(chimeric_tech)
 
 	return "Successfully unlocked [node.name]!"
 
-/datum/controller/subsystem/chimeric_tech/proc/update_recipes_for_tech(var/tech_id)
+/datum/controller/subsystem/chimeric_tech/proc/update_recipes_for_tech(tech_id)
 	var/list/recipes_to_unlock = tech_recipe_index[tech_id]
 	var/datum/chimeric_tech_node/node = all_tech_nodes[tech_id]
 

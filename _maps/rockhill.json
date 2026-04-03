@@ -3,6 +3,9 @@
     "map_path": "map_files/rockhill",
     "map_file": "rockhill.dmm",
 	"traits": [{"Up": true}, {"Up": true, "Down": true}, {"Up": true, "Down": true}, {"Up": true, "Down": true}, {"Down": true}],
+	"other_z": [
+		"_maps/map_files/otherz/advspawn.json"
+	],
 	"space_empty_levels": 0,
 	"space_ruin_levels": 0,
 	"shuttles": {

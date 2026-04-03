@@ -25,7 +25,7 @@
 /turf/open/lava/nosmooth
 	smooth = SMOOTH_FALSE
 
-/turf/open/lava/Initialize()
+/turf/open/lava/Initialize(mapload)
 	. = ..()
 	dir = pick(GLOB.cardinals)
 

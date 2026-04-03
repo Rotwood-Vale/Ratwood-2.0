@@ -4,6 +4,8 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/wolf_skin
+	wildshape_icon = 'icons/roguetown/mob/monster/vol.dmi'
+	wildshape_icon_state = "vv"
 	// Someone else balance this, I am here for code, not numbers
 
 //BUCKLING
@@ -154,7 +156,7 @@
 /obj/item/rogueweapon/wolf_claw/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/wolf_claw/Initialize()
+/obj/item/rogueweapon/wolf_claw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)

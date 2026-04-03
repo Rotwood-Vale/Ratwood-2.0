@@ -24,7 +24,7 @@ At least, it should. Fingers crossed.
 	name = "powderflask"
 	icon = 'modular_helmsguard/icons/obj/items/arquebus_items.dmi'
 	desc = "For the layman, smokepowder is an arcyne bit of trickery. \
-	Its creation is an art lost within most of Grimoria, only seen in the likes of Zybantu. \
+	Its creation is an art lost within most of Grimoria, only seen in the likes of Zybantium. \
 	And yet? You've a flask of it. Guard it well."
 	icon_state = "powderflask"
 	item_state = "powderflask"
@@ -63,7 +63,7 @@ At least, it should. Fingers crossed.
 	cartridge_wording = "musketball"
 	load_sound = list('modular_helmsguard/sound/arquebus/musketload.ogg')
 	fire_sound = list('modular_helmsguard/sound/arquebus/arquefire.ogg')
-	anvilrepair = /datum/skill/craft/blacksmithing
+	anvilrepair = /datum/skill/craft/engineering
 	smeltresult = /obj/item/ingot/steel
 	bolt_type = BOLT_TYPE_NO_BOLT
 	casing_ejector = FALSE
@@ -86,7 +86,7 @@ At least, it should. Fingers crossed.
 			if("onback")
 				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/gun/ballistic/firearm/Initialize()
+/obj/item/gun/ballistic/firearm/Initialize(mapload)
 	. = ..()
 	myrod = new /obj/item/ramrod(src)
 

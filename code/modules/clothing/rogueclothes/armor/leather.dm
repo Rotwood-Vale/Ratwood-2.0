@@ -23,6 +23,8 @@
 	detail_tag = "_detail"
 	color = CLOTHING_WHITE
 	detail_color = CLOTHING_BLACK
+	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = 50
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/winterjacket/update_icon()
 	cut_overlays()
@@ -37,7 +39,7 @@
 	detail_color = primary
 	update_icon()
 
-/obj/item/clothing/suit/roguetown/armor/leather/vest/winterjacket/Initialize()
+/obj/item/clothing/suit/roguetown/armor/leather/vest/winterjacket/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -65,6 +67,8 @@
 	name = "artificer jacket"
 	icon_state = "artijacket"
 	desc = "A thick leather jacket adorned with fur and cog decals. The height of Heartfelt fashion."
+	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = 50
 
 /obj/item/clothing/suit/roguetown/armor/leather/cuirass
 	name = "leather cuirass"
@@ -77,6 +81,8 @@
 	desc = "A light armor of wildbeast hide. Far more durable than leather."
 	icon_state = "hidearmor"
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
+	cold_protection = CHEST
+	min_cold_protection_temperature = 50
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
 	name = "forester's armor"
@@ -85,6 +91,8 @@
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "forestleather"
+	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/upgraded
 	name = "forester's brigandine"
@@ -108,7 +116,7 @@
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 25
 	armor_class = ARMOR_CLASS_LIGHT
-	
+
 /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
 	name = "cuir-bouilli armor"
 	desc = "Treated, water-boiled and composite-layered leather armor of fine Otavan make."
@@ -125,6 +133,8 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 20
+	cold_protection = CHEST
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 	name = "hardened leather coat"
@@ -136,6 +146,8 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 25
+	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/confessor
 	name = "confessional coat"
@@ -146,13 +158,17 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	armor = ARMOR_LEATHER_STUDDED
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
-	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE	
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
 
-/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/raneshen
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 	name = "megarmach scale coat"
-	desc = "A set of lightweight armor fashioned from the scales of the Ranesheni \'megarmach\', an armored reptilian creacher that ambushes prey by the riverside, and drags them deep into Abyssor's domain."
+	desc = "A set of lightweight armor fashioned from the scales of the Zybantine \'megarmach\', an armored reptilian creacher that ambushes prey by the riverside, and drags them deep into Abyssor's domain."
 	icon_state = "pangolin"
 	item_state = "pangolin"
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe
 	name = "fur-woven hatanga coat"
@@ -180,6 +196,10 @@
 	detail_tag = "_detail"
 	color = "#5E4440"
 	detail_color = "#c08955"
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter/update_icon()
 	cut_overlays()
@@ -190,7 +210,7 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter/Initialize()
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter/Initialize(mapload)
 	..()
 	update_icon()
 
@@ -203,6 +223,8 @@
 	prevent_crits = list(BCLASS_STAB, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK, BCLASS_TWIST)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 100
+	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/bikini
 	name = "leather corslet"
@@ -270,7 +292,8 @@
 	sleeved = 'icons/roguetown/clothing/onmob/armor.dmi'
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = NON_DWARVEN_RACE_TYPES
-
+	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/hand
 	name = "hand's vest"
@@ -312,3 +335,81 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	sleevetype = null
+	sleeved = null
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	sellprice = 50
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/duchess
+	name = "duchess dress"
+	desc = ""
+	icon_state = "duchess"
+	item_state = "duchess"
+	slot_flags = ITEM_SLOT_CLOAK|ITEM_SLOT_ARMOR
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|VITALS
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/duke
+	name = "ducal uniform"
+	desc = ""
+	icon_state = "duke"
+	item_state = "duke"
+	body_parts_covered = CHEST|VITALS|ARMS
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/hand
+	name = "Hand's Jacket"
+	desc = "A heavy coat of fine, yet rugged fabric. Reinforced, because one never knows."
+	icon_state = "hand"
+	item_state = "hand"
+	armor = ARMOR_LEATHER_STUDDED
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
+	name = "Heir's uniform"
+	desc = ""
+	icon_state = "heir"
+	item_state = "heir"
+	body_parts_covered = BELOW_HEAD
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
+	name = "Heiress's uniform"
+	desc = ""
+	icon_state = "heiress"
+	item_state = "heiress"
+	body_parts_covered = BELOW_HEAD
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/councillor
+	name = "councillorial uniform"
+	desc = ""
+	icon_state = "councillor"
+	item_state = "councillor"
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/magos
+	name = "Magos' Robes"
+	desc = ""
+	icon_state = "magos"
+	item_state = "magos"
+	slot_flags = ITEM_SLOT_ARMOR
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+
+/obj/item/clothing/suit/roguetown/armor/leather/newkeep/steward
+	name = "Steward's Vest"
+	desc = "Smart and modern garb, embroidered with real gold"
+	icon_state = "steward"
+	item_state = "steward"
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	armor = ARMOR_PADDED_BAD
+	
+/obj/item/clothing/head/roguetown/duchess_hood
+	name = "duchess hood"
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/head.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/head.dmi'
+	icon_state = "duchess_hood"
+	item_state = "duchess_hood"
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	armor = ARMOR_PADDED_BAD

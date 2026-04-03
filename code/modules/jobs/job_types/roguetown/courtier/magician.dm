@@ -112,6 +112,9 @@
 	id = /obj/item/clothing/ring/gold
 	r_hand = /obj/item/rogueweapon/woodstaff/riddle_of_steel/magos
 	backl = /obj/item/storage/backpack/rogue/satchel
+	if(SSmapping.config.map_name == "Rockhill")
+		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/magos
+		cloak = null
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/poison,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,

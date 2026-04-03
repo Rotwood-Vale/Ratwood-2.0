@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	roundend_category = "Vampires"
 	antagpanel_category = "Vampire"
 	job_rank = ROLE_VAMPIRE
-	var/list/inherent_traits = list(TRAIT_STRONGBITE, TRAIT_NOBLE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_STEELHEARTED, TRAIT_NOSLEEP, TRAIT_VAMPMANSION, TRAIT_VAMP_DREAMS, TRAIT_INFINITE_STAMINA, TRAIT_GRABIMMUNE, TRAIT_HEAVYARMOR, TRAIT_COUNTERCOUNTERSPELL, TRAIT_STRENGTH_UNCAPPED, TRAIT_CRITICAL_WEAKNESS)
+	var/list/inherent_traits = list(TRAIT_STRONGBITE, TRAIT_NOBLE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_STEELHEARTED, TRAIT_NOSLEEP, TRAIT_VAMPMANSION, TRAIT_VAMP_DREAMS, TRAIT_INFINITE_STAMINA, TRAIT_GRABIMMUNE, TRAIT_HEAVYARMOR, TRAIT_COUNTERCOUNTERSPELL, TRAIT_STRENGTH_UNCAPPED, TRAIT_CRITICAL_WEAKNESS, TRAIT_EXTREME_TEMPERATURE_IMMUNE)
 	antag_hud_type = ANTAG_HUD_VAMPIRE
 	antag_hud_name = "Vlord"
 	confess_lines = list(
@@ -490,7 +490,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 /datum/antagonist/vampirelord/lesser
 	name = "Vampire Spawn"
 	antag_hud_name = "Vspawn"
-	inherent_traits = list(TRAIT_STRONGBITE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_STEELHEARTED, TRAIT_NOSLEEP, TRAIT_VAMPMANSION, TRAIT_VAMP_DREAMS, TRAIT_INFINITE_ENERGY, TRAIT_CRITICAL_WEAKNESS)
+	inherent_traits = list(TRAIT_STRONGBITE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_STEELHEARTED, TRAIT_NOSLEEP, TRAIT_VAMPMANSION, TRAIT_VAMP_DREAMS, TRAIT_INFINITE_ENERGY, TRAIT_CRITICAL_WEAKNESS, TRAIT_EXTREME_TEMPERATURE_IMMUNE)
 	confess_lines = list(
 		"THE CRIMSON CALLS!",
 		"MY MASTER COMMANDS",
@@ -610,7 +610,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		var/obj/structure/vampire/portal/sending/P = new(S.loc)
 		P.visible_message(span_boldnotice("A sickening tear is heard as a sinister portal emerges."))
 
-/obj/structure/vampire/portal/Initialize()
+/obj/structure/vampire/portal/Initialize(mapload)
 	. = ..()
 	set_light(3, 3, 20, l_color = LIGHT_COLOR_BLOOD_MAGIC)
 	playsound(loc, 'sound/misc/portalopen.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -622,7 +622,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		PM.sending = FALSE
 	. = ..()
 
-/obj/structure/vampire/bloodpool/Initialize()
+/obj/structure/vampire/bloodpool/Initialize(mapload)
 	. = ..()
 	set_light(3, 3, 20, l_color = LIGHT_COLOR_BLOOD_MAGIC)
 
@@ -902,7 +902,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 				to_chat(owner, "<B>Goal #[count]</B>: [objective.explanation_text] <span class='redtext'>Failure.</span>")
 				traitorwin = FALSE
 			count += objective.triumph_count
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 	if(traitorwin)
 		if(count)
 			if(owner)
@@ -1017,7 +1017,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 					traitorwin = FALSE
 				count += objective.triumph_count
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 	if(traitorwin)
 		if(count)
 			if(owner)
@@ -1037,7 +1037,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon = 'icons/roguetown/clothing/neck.dmi'
 	var/uses = 3
 
-/obj/item/clothing/neck/roguetown/portalamulet/Initialize()
+/obj/item/clothing/neck/roguetown/portalamulet/Initialize(mapload)
 	GLOB.vampire_objects |= src
 	. = ..()
 
@@ -1050,7 +1050,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	var/unlocked = FALSE
 	density = TRUE
 
-/obj/structure/vampire/Initialize()
+/obj/structure/vampire/Initialize(mapload)
 	GLOB.vampire_objects |= src
 	. = ..()
 
@@ -1102,7 +1102,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon_state = "arrow"
 	delete_after_roundstart = FALSE
 
-/obj/effect/landmark/start/vampirelord/Initialize()
+/obj/effect/landmark/start/vampirelord/Initialize(mapload)
 	. = ..()
 	GLOB.vlord_starts += loc
 
@@ -1117,7 +1117,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	jobspawn_override = list("Death Knight")
 	delete_after_roundstart = FALSE
 
-/obj/effect/landmark/start/vampirespawn/Initialize()
+/obj/effect/landmark/start/vampirespawn/Initialize(mapload)
 	. = ..()
 	GLOB.vspawn_starts += loc
 
@@ -1192,7 +1192,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	usr.forceMove(pick(L))
 	update_parallax_contents()
 
-/mob/dead/observer/rogue/arcaneeye/Initialize()
+/mob/dead/observer/rogue/arcaneeye/Initialize(mapload)
 	. = ..()
 	set_invisibility(GLOB.observer_default_invisibility)
 	verbs += list(

@@ -414,6 +414,21 @@
 	color_keys = 3
 	color_key_names = list("Tail", "Tail Fluff", "Tail Barb")
 
+/datum/sprite_accessory/tail/scorpian
+	icon = 'modular/icons/mob/tails/manticore_tail.dmi'
+	name = "Scorpian"
+	icon_state = "scorpian"
+	color_keys = 2
+	color_key_names = list("Tail", "Stinger")
+
+/datum/sprite_accessory/tail/manticore
+	icon = 'modular/icons/mob/tails/manticore_tail.dmi'
+	name = "Manticore"
+	icon_state = "manticore"
+	color_keys = 3
+	color_key_names = list("Tail", "Innerds", "Spikes")
+	can_wag = TRUE
+
 //From Caustic Cove
 /datum/sprite_accessory/tail/large_snake
 	icon = 'modular_causticcove/icons/mob/tails/large_snake.dmi'

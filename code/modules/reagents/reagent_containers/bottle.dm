@@ -74,6 +74,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 		to_chat(user, span_notice("You carefully press the cork back into the mouth of [src]."))
 		spillable = FALSE
 		GLOB.weather_act_upon_list -= src
+		desc = initial(desc)
 		if(!fancy)
 			desc = "A bottle with a cork."
 	else
@@ -81,17 +82,21 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 		reagents.flags = reagent_flags
 		playsound(user.loc,'sound/items/uncork.ogg', 100, TRUE)
 		to_chat(user, span_notice("You thumb off the cork from [src]."))
-		desc = desc_uncorked
+		desc += desc_uncorked
 		spillable = TRUE
 		GLOB.weather_act_upon_list |= src
 		if(!fancy)
 			desc = "An open bottle. Hopefully a cork is nearby."
 	update_icon()
 
-/obj/item/reagent_containers/glass/bottle/Initialize()
+/obj/item/reagent_containers/glass/bottle/Initialize(mapload)
 	. = ..()
 	if(!icon_state)
 		icon_state = "clear_bottle1"
 	if(icon_state == "clear_bottle1")
 		icon_state = "clear_bottle[rand(1,4)]"
 	update_icon()
+
+/obj/item/reagent_containers/glass/bottle/attack_self(mob/user)
+	. = ..()
+	rmb_self(user)

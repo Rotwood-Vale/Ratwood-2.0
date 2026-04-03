@@ -34,7 +34,7 @@
 	else
 		. += "Can be used indefinitely."
 
-/obj/item/needle/Initialize()
+/obj/item/needle/Initialize(mapload)
 	. = ..()
 	update_icon()
 

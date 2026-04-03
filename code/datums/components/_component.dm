@@ -11,31 +11,31 @@
  */
 /datum/component
 	/**
-	  * Defines how duplicate existing components are handled when added to a datum
-	  *
-	  * See [COMPONENT_DUPE_*][COMPONENT_DUPE_ALLOWED] definitions for available options
-	  */
+	 * Defines how duplicate existing components are handled when added to a datum
+	 *
+	 * See [COMPONENT_DUPE_*][COMPONENT_DUPE_ALLOWED] definitions for available options
+	 */
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
 	/**
-	  * The type to check for duplication
-	  *
-	  * `null` means exact match on `type` (default)
-	  *
-	  * Any other type means that and all subtypes
-	  */
+	 * The type to check for duplication
+	 *
+	 * `null` means exact match on `type` (default)
+	 *
+	 * Any other type means that and all subtypes
+	 */
 	var/dupe_type
 
 	/// The datum this components belongs to
 	var/datum/parent
 
 	/**
-	  * Only set to true if you are able to properly transfer this component
-	  *
-	  * At a minimum [RegisterWithParent][/datum/component/proc/RegisterWithParent] and [UnregisterFromParent][/datum/component/proc/UnregisterFromParent] should be used
-	  *
-	  * Make sure you also implement [PostTransfer][/datum/component/proc/PostTransfer] for any post transfer handling
-	  */
+	 * Only set to true if you are able to properly transfer this component
+	 *
+	 * At a minimum [RegisterWithParent][/datum/component/proc/RegisterWithParent] and [UnregisterFromParent][/datum/component/proc/UnregisterFromParent] should be used
+	 *
+	 * Make sure you also implement [PostTransfer][/datum/component/proc/PostTransfer] for any post transfer handling
+	 */
 	var/can_transfer = FALSE
 
 /**
@@ -359,17 +359,17 @@
  */
 /datum/proc/GetExactComponent(datum/component/c_type)
 	RETURN_TYPE(c_type)
-	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
+	var/initial_type_mode = initial(c_type.dupe_mode)
+	if(initial_type_mode == COMPONENT_DUPE_ALLOWED || initial_type_mode == COMPONENT_DUPE_SELECTIVE)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
-	var/list/dc = datum_components
-	if(!dc)
+	var/list/all_components = datum_components
+	if(!all_components)
 		return null
-	var/datum/component/C = dc[c_type]
-	if(C)
-		if(length(C))
-			C = C[1]
-		if(C.type == c_type)
-			return C
+	var/datum/component/potential_component
+	if(length(all_components))
+		potential_component = all_components[c_type]
+	if(potential_component?.type == c_type)
+		return potential_component
 	return null
 
 /**

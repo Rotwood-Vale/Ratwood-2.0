@@ -126,6 +126,20 @@
 	foodtype = GRAIN | FRUIT
 	tastes = list("apple" = 1)
 
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/potato
+	name = "raw potato handpie"
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/potato
+	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/potato
+	foodtype = GRAIN | VEGETABLES
+	tastes = list("potato" = 1)
+
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/cabbage//These two are classics no idea how it didn't already exist.
+	name = "raw cabbage handpie"
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/cabbage
+	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/cabbage
+	foodtype = GRAIN | VEGETABLES
+	tastes = list("cabbage" = 1)
+
 /obj/item/reagent_containers/food/snacks/rogue/handpie
 	name = "handpie"
 	desc = "The dwarves call this 'pierogi' in their dialect. It'll stay fresh for a good long while until the crust is bitten."
@@ -148,6 +162,12 @@
 /obj/item/reagent_containers/food/snacks/rogue/handpie/meat
 	name = "meat handpie"
 
+/obj/item/reagent_containers/food/snacks/rogue/handpie/potato
+	name = "potato handpie"
+
+/obj/item/reagent_containers/food/snacks/rogue/handpie/cabbage
+	name = "cabbage handpie"
+
 /obj/item/reagent_containers/food/snacks/rogue/handpie/crab
 	name = "crab handpie"
 
@@ -166,3 +186,144 @@
 	if(bitecount == 1)
 		rotprocess = SHELFLIFE_DECENT
 		addtimer(CALLBACK(src, PROC_REF(begin_rotting)), 20, TIMER_CLIENT_TIME)
+
+/*	.................   Muffins   ................... */
+/obj/item/reagent_containers/food/snacks/rogue/muffin
+	name = "muffin"
+	desc = "Simple to prepare and enjoyed by everyone. Treat in a mushroom shaped package. Could do with something on top."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "muffin"
+	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION)
+	tastes = list("crispy butterdough" = 1)
+	faretype = FARE_NEUTRAL
+	w_class = WEIGHT_CLASS_NORMAL
+	bitesize = 3
+	rotprocess = SHELFLIFE_DECENT
+	eat_effect = /datum/status_effect/buff/snackbuff
+
+/obj/item/reagent_containers/food/snacks/rogue/muffin/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	update_cooktime(user)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/cheese))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
+			to_chat(user, span_notice("You start to glaze the muffin with cheese..."))
+			if(do_after(user,long_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/muffin/cheese(loc)
+				qdel(I)
+				qdel(src)
+		else
+			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
+	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/honey))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
+			to_chat(user, span_notice("You start to glaze the muffin with honey..."))
+			if(do_after(user,short_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/muffin/honey(loc)
+				qdel(I)
+				qdel(src)
+		else
+			to_chat(user, span_warning("You need to put [src] on a table to prepare it!"))
+	else
+		return ..()
+
+/obj/item/reagent_containers/food/snacks/rogue/muffin/cheese
+	name = "raw cheese muffin"
+	desc = "A mushroom shaped treat for whole topped off with cheese. Still needs to be baked!"
+	icon_state = "muffin_cheese_raw"
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/muffin/cheese/baked
+	cooked_smell = /datum/pollutant/food/muffin
+
+/obj/item/reagent_containers/food/snacks/rogue/muffin/cheese/baked
+	name = "cheese muffin"
+	desc = "A mushroom shaped treat for whole topped off with cheese. Fit for a yeoman."
+	icon_state = "muffin_cheese"
+	list_reagents = list(/datum/reagent/consumable/nutriment = BUTTERDOUGH_NUTRITION)
+	tastes = list("crispy butterdough" = 1, "cheese" = 1)
+	faretype = FARE_FINE
+	cooked_type = null
+
+/obj/item/reagent_containers/food/snacks/rogue/muffin/honey
+	name = "raw honey muffin"
+	desc = "A mushroom shaped treat for whole topped off with honey. Still needs to be baked!"
+	icon_state = "muffin_honey_raw"
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/muffin/honey/baked
+	cooked_smell = /datum/pollutant/food/muffin
+
+/obj/item/reagent_containers/food/snacks/rogue/muffin/honey/baked
+	name = "honey muffin"
+	desc = "A mushroom shaped treat for whole topped off with honey. Fit for a burgher."
+	icon_state = "muffin_honey"
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/muffin/cheese/baked
+	cooked_smell = /datum/pollutant/food/muffin
+	faretype = FARE_FINE
+	cooked_type = null
+
+/*	.................   Strudel   ................... */
+/obj/item/reagent_containers/food/snacks/rogue/strudel
+	name = "strudel"
+	desc = "The peak of Grenzelhoftian peasant food - an elongated pastry filled with apple paste and nuts is sure to keep the hunger cramps away."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "strudel"
+	list_reagents = list(/datum/reagent/consumable/nutriment = BUTTERDOUGH_NUTRITION*2)
+	tastes = list("crispy apples" = 1, "rocknut" = 1)
+	foodtype = GRAIN | FRUIT
+	faretype = FARE_FINE
+	w_class = WEIGHT_CLASS_NORMAL
+	bitesize = 3
+	rotprocess = SHELFLIFE_EXTREME
+	eat_effect = /datum/status_effect/buff/snackbuff
+	slices_num = 6
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/strudelslice
+	slice_batch = TRUE
+	slice_sound = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/strudelslice
+	name = "strudel slice"
+	desc = "A slice of tasty apple goodness - just looking at it makes your mouth wet."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "strudel_slice"
+	slices_num = 0
+	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
+	tastes = list("crispy apples" = 1, "rocknut" = 1)
+	foodtype = GRAIN | FRUIT
+	faretype = FARE_FINE
+	w_class = WEIGHT_CLASS_NORMAL
+	cooked_type = null
+	bitesize = 3
+	eat_effect = /datum/status_effect/buff/snackbuff
+	rotprocess = SHELFLIFE_LONG
+
+/obj/item/reagent_containers/food/snacks/rogue/strudel/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in (loc)
+	update_cooktime(user)
+	if(istype(I,  /obj/item/reagent_containers/food/snacks/sugar))
+		if(isturf(loc)&& (found_table))
+			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
+			to_chat(user, span_notice("You start to coat the strudel in sugar..."))
+			if(do_after(user,long_cooktime, target = src))
+				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+				new /obj/item/reagent_containers/food/snacks/rogue/strudel/sugar(loc)
+				qdel(I)
+				qdel(src)
+		else
+			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
+	else
+		return ..()
+
+/obj/item/reagent_containers/food/snacks/rogue/strudel/sugar
+	name = "coated strudel"
+	desc = "The peak of Grenzelhoftian peasant food - an elongated pastry filled with apple paste and nuts is sure to keep the hunger cramps away. This one even has sugar coating!"
+	icon_state = "strudel_sugar"
+	tastes = list("crispy apples" = 1, "rocknut" = 1 ,"sugar" = 1)
+	faretype = FARE_LAVISH
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/strudelslice/sugar
+
+/obj/item/reagent_containers/food/snacks/rogue/strudelslice/sugar
+	name = "coated strudel slice"
+	desc = "A slice of tasty apple goodness - just looking at it makes your mouth wet. If you had some cream this would make it a perfect gift to an inquisitor."
+	icon_state = "strudel_sugar_slice"
+	tastes = list("crispy apples" = 1, "rocknut" = 1 ,"sugar" = 1)
+	faretype = FARE_LAVISH

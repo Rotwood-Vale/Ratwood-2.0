@@ -2,6 +2,7 @@
 	name = "Force them to nuzzle"
 	require_grab = TRUE
 	stamina_cost = 1.0
+	user_sex_part = SEX_PART_COCK|SEX_PART_CUNT
 	target_sex_part = SEX_PART_JAWS
 
 /datum/sex_action/force_crotch_nuzzle/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -33,6 +34,7 @@
 
 /datum/sex_action/force_crotch_nuzzle/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to nuzzle [user.p_their()] crotch."))
+	target.sexcon.make_sucking_noise()
 
 	user.sexcon.perform_sex_action(user, 0.5, 0, TRUE)
 	user.sexcon.handle_passive_ejaculation(target)

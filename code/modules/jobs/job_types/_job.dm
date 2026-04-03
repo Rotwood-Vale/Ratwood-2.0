@@ -112,6 +112,9 @@
 	/// This job is a "wanderer" on examine
 	var/wanderer_examine = FALSE
 
+	/// This job is a "lowlife" on examine
+	var/lowlife_examine = FALSE
+
 	/// This job uses adventurer classes on examine
 	var/advjob_examine = FALSE
 
@@ -184,7 +187,7 @@
 		used_name = f_title
 	return used_name
 
-/client/proc/job_greet(var/datum/job/greeting_job)
+/client/proc/job_greet(datum/job/greeting_job)
 	if(mob.job == greeting_job.title)
 		greeting_job.greet(mob)
 
@@ -268,8 +271,7 @@
 	if(istype(H, /mob/living/carbon/human))
 		var/mob/living/carbon/human/Hu = H
 		if(Hu.familytree_pref != FAMILY_NONE && !Hu.family_datum)
-			var/timer = rand(60, 180)
-			addtimer(CALLBACK(SSfamilytree, TYPE_PROC_REF(/datum/controller/subsystem/familytree, AddLocal), H, Hu.familytree_pref), timer SECONDS)
+			addtimer(CALLBACK(SSfamilytree, TYPE_PROC_REF(/datum/controller/subsystem/familytree, AddLocal), H, Hu.familytree_pref), 5 SECONDS)
 
 	var/department = SSjob.bitflag_to_department(department_flag, obsfuscated_job)
 	if (!hidden_job)
@@ -337,7 +339,7 @@
 	return TRUE
 
 /datum/job/proc/GetAntagRep()
-	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]
+	. = CONFIG_GET(keyed_list/antag_rep)[LOWER_TEXT(title)]
 	if(. == null)
 		return antag_rep
 

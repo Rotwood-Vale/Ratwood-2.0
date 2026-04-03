@@ -127,7 +127,6 @@
 	gender = MALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	emote_see = list("eyes the surroundings.", "flicks its ears.")
-	stop_automated_movement_when_pulled = TRUE
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -225,7 +224,7 @@
 	STASPD = 2
 	adult_growth = /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog
 
-/mob/living/simple_animal/hostile/retaliate/rogue/swine/test/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/swine/test/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_type)
@@ -242,6 +241,7 @@
 	if(can_buckle)
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-2, 6), TEXT_WEST = list(2, 6)))
+		D.set_riding_offsets(2, list(TEXT_NORTH = list(0, -2), TEXT_SOUTH = list(0, 14), TEXT_EAST = list(-10, 6), TEXT_WEST = list(10, 6)))
 		D.set_vehicle_dir_layer(SOUTH, MOB_LAYER+0.1)
 		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -264,7 +264,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/tame/saddled/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/tame/saddled/Initialize(mapload)
 	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S

@@ -12,19 +12,20 @@
 /datum/mapGeneratorModule/forestratnospawngrass
 	clusterCheckFlags = CLUSTER_CHECK_NONE
 	allowed_turfs = list(/turf/open/floor/rogue/grass)
-	spawnableTurfs = list(/turf/open/floor/rogue/grass/nospawn = 40)
+	spawnableTurfs = list(/turf/open/floor/rogue/grass/nospawn = 20)
 	allowed_areas = list(/area/rogue/outdoors/woodsrat)
 
 /datum/mapGeneratorModule/forestratnospawndirt
 	clusterCheckFlags = CLUSTER_CHECK_NONE
 	allowed_turfs = list(/turf/open/floor/rogue/dirt)
-	spawnableTurfs = list(/turf/open/floor/rogue/dirt/nospawn = 40)
+	spawnableTurfs = list(/turf/open/floor/rogue/dirt/nospawn = 20)
 	allowed_areas = list(/area/rogue/outdoors/woodsrat)
 
 /datum/mapGeneratorModule/forestrat
 	clusterCheckFlags = CLUSTER_CHECK_NONE
 	allowed_turfs = list(/turf/open/floor/rogue/dirt,/turf/open/floor/rogue/grass, /turf/open/floor/rogue/grassred, /turf/open/floor/rogue/grassyel, /turf/open/floor/rogue/grasscold, /turf/open/floor/rogue/grassgrey)
 	excluded_turfs = list(/turf/open/floor/rogue/dirt/road)
+	excluded_turfs = list(/turf/open/floor/rogue/dirt/road, /turf/open/floor/rogue/dirt/nospawn, /turf/open/floor/rogue/grass/nospawn)
 	spawnableAtoms = list(/obj/structure/flora/newtree = 1,
 							/obj/structure/flora/roguetree/wise = 0.4,
 							/obj/structure/flora/roguetree = 8,
@@ -38,8 +39,8 @@
 							/obj/item/natural/stone = 3,
 							/obj/item/natural/rock = 3,
 							/obj/item/grown/log/tree/stick = 3,
-							/obj/structure/flora/roguetree/stump/log = 4,
-							/obj/structure/flora/roguetree/stump = 0.5,
+							/obj/structure/flora/roguetree/stump/log = 3,
+							/obj/structure/flora/roguetree/stump = 1,
 							/obj/structure/closet/dirthole/closed/loot=1,
 							/obj/structure/flora/roguegrass/maneater/real/juvenile=1,
 							/obj/item/reagent_containers/food/snacks/smallrat = 0.3)

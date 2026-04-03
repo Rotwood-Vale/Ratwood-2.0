@@ -156,6 +156,11 @@
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull)
 
+/datum/supply_pack/rogue/armor_steel/helmet_volfplate
+	name = "Helmet, Volfplate"
+	cost = 90 // 2 Steel
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/volfplate)
+
 /datum/supply_pack/rogue/armor_steel/helmet_bascinet
 	name = "Helmet, Bascinet"
 	cost = 90 // 2 Steel
@@ -185,6 +190,11 @@
 	name = "Helmet, Barred"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/sheriff)
+
+/datum/supply_pack/rogue/armor_steel/helmet_beak
+	name = "Helmet, Beak"
+	cost = 90 // 2 Steel
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/beakhelm)
 
 /datum/supply_pack/rogue/armor_steel/bevor
 	name = "Bevor"

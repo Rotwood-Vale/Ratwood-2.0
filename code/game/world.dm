@@ -19,21 +19,21 @@ GLOBAL_VAR(restart_counter)
 	//Zirok was here
 
 /**
-  * World creation
-  *
-  * Here is where a round itself is actually begun and setup, lots of important config changes happen here
-  * * db connection setup
-  * * config loaded from files
-  * * loads admins
-  * * Sets up the dynamic menu system
-  * * and most importantly, calls initialize on the master subsystem, starting the game loop that causes the rest of the game to begin processing and setting up
-  *
-  * Note this happens after the Master subsystem is created (as that is a global datum), this means all the subsystems exist,
-  * but they have not been Initialized at this point, only their New proc has run
-  *
-  * Nothing happens until something moves. ~Albert Einstein
-  *
-  */
+ * World creation
+ *
+ * Here is where a round itself is actually begun and setup, lots of important config changes happen here
+ * * db connection setup
+ * * config loaded from files
+ * * loads admins
+ * * Sets up the dynamic menu system
+ * * and most importantly, calls initialize on the master subsystem, starting the game loop that causes the rest of the game to begin processing and setting up
+ *
+ * Note this happens after the Master subsystem is created (as that is a global datum), this means all the subsystems exist,
+ * but they have not been Initialized at this point, only their New proc has run
+ *
+ * Nothing happens until something moves. ~Albert Einstein
+ *
+ */
 
 /world/New()
 
@@ -103,6 +103,10 @@ GLOBAL_VAR(restart_counter)
 
 	if(NO_INIT_PARAMETER in params)
 		return
+
+	//Scramble the coords obsfucator
+	GLOB.obfs_x = rand(-2500, 2500)
+	GLOB.obfs_y = rand(-2500, 2500)
 
 	Master.Initialize(10, FALSE, TRUE)
 
@@ -195,7 +199,9 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.tgui_log)
 	start_log(GLOB.character_list_log)
 
-	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
+	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM", TIMEZONE_UTC) + ".yml")
+	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
+
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)

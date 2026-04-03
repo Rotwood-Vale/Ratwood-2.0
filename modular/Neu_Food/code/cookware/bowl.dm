@@ -38,6 +38,7 @@
 	icon_state = "bowl_silver"
 	sellprice = 96
 	is_silver = TRUE
+
 /obj/item/reagent_containers/glass/bowl/carved
 	name = "carved bowl"
 	desc = "You shouldn't be seeing this."
@@ -79,7 +80,6 @@
 	desc = "A bowl carved out of shell."
 	icon_state = "bowl_shell"
 	sellprice = 15
-
 
 /obj/item/reagent_containers/glass/bowl/carved/coral
 	name = "heartstone bowl"

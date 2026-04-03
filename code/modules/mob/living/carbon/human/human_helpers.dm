@@ -60,6 +60,8 @@
 		return if_no_face		//Likewise for hats
 	if( wear_neck && (wear_neck.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
+	if( istype(buckled, /obj/structure/bondage/gloryhole) ) // gloryhole buckled mobs should always remain masked/anonymous
+		return if_no_face
 	if( istype(src, /mob/living/carbon/human/species/skeleton)) //SPOOKY BONES
 		return real_name
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)

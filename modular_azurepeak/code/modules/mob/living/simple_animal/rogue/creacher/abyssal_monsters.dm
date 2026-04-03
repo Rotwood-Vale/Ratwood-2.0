@@ -71,17 +71,17 @@
 	attack_sound = list('modular_azurepeak/sound/mobs/abyssal/abyssal_attack.ogg','modular_azurepeak/sound/mobs/abyssal/abyssal_attack2.ogg')
 
 /mob/living/simple_animal/hostile/rogue/dreamfiend/get_sound(input)
-    switch(input)
-        if("aggro")
-            return pick('modular_azurepeak/sound/mobs/abyssal/abyssal_aggro.ogg')
-        if("pain")
-            return pick('modular_azurepeak/sound/mobs/abyssal/abyssal_pain.ogg')
-        if("death")
-            return pick('modular_azurepeak/sound/mobs/abyssal/abyssal_pain.ogg')
-        if("idle")
-            return pick('modular_azurepeak/sound/mobs/abyssal/abyssal_idle.ogg')
+	switch(input)
+		if("aggro")
+			return pick('modular_azurepeak/sound/mobs/abyssal/abyssal_aggro.ogg')
+		if("pain")
+			return pick('modular_azurepeak/sound/mobs/abyssal/abyssal_pain.ogg')
+		if("death")
+			return pick('modular_azurepeak/sound/mobs/abyssal/abyssal_pain.ogg')
+		if("idle")
+			return pick('modular_azurepeak/sound/mobs/abyssal/abyssal_idle.ogg')
 
-/mob/living/simple_animal/hostile/rogue/dreamfiend/Initialize()
+/mob/living/simple_animal/hostile/rogue/dreamfiend/Initialize(mapload)
 	AddElement(/datum/element/ai_retaliate)
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_GENERIC)
@@ -89,7 +89,7 @@
 	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC) //Dreamfiends fall into the 'eldritch' category. Technically not 'unholy', but certainly monstrous.
 	. = ..()
 
-/mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/Initialize()
+/mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/Initialize(mapload)
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_INFINITE_STAMINA, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
@@ -107,7 +107,7 @@
 	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
 	. = ..()
 
-/mob/living/simple_animal/hostile/rogue/dreamfiend/proc/blink_to_target(var/mob/target)
+/mob/living/simple_animal/hostile/rogue/dreamfiend/proc/blink_to_target(mob/target)
 	if(world.time < next_blink || QDELETED(target) || target.stat == DEAD)
 		return FALSE
 

@@ -2,6 +2,25 @@
 	desc = "Power rushes through your veins."
 	icon_state = "buff"
 
+/datum/status_effect/buff/alch/temperaturepot
+	id = "temppot"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/temperaturepot
+	effectedstats = list()
+	duration = 15 SECONDS
+
+/atom/movable/screen/alert/status_effect/buff/alch/temperaturepot
+	name = "Temperature Equilibrium"
+	desc = "Power rushes through your veins."
+	icon_state = "buff"
+
+/datum/status_effect/buff/alch/temperaturepot/process()
+
+	.=..()
+	if(owner.bodytemperature > BODYTEMP_NORMAL_MAX)
+		owner.adjust_bodytemperature(-5)
+	if(owner.bodytemperature < BODYTEMP_NORMAL_MIN)
+		owner.adjust_bodytemperature(5)
+
 /datum/status_effect/buff/alch/strengthpot
 	id = "strpot"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/alch/strengthpot
@@ -80,11 +99,11 @@
 /datum/status_effect/buff/alch/fire_resist/on_apply()
 	. = ..()
 	if(!HAS_TRAIT(owner, TRAIT_NOFIRE))
-		ADD_TRAIT(owner, TRAIT_NOFIRE, src)
+		ADD_TRAIT(owner, TRAIT_NOFIRE, TRAIT_STATUS_EFFECT)
 
 /datum/status_effect/buff/alch/fire_resist/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_NOFIRE, src)
+	REMOVE_TRAIT(owner, TRAIT_NOFIRE, TRAIT_STATUS_EFFECT)
 
 /atom/movable/screen/alert/status_effect/buff/alch/fire_resist
 	name = "Fire Resistance"

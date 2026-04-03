@@ -1,4 +1,4 @@
-//Why is this not in the Zybantu file? We'll be expanding this to other groups.
+//Why is this not in the Zybantium file? We'll be expanding this to other groups.
 /datum/advclass/foreigner/slaver
 	name = "Zybantine Slaver"
 	tutorial = "In parts of Psydonia, the practice of slavery is still a common sight. \

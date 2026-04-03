@@ -417,7 +417,7 @@
 	to_chat(user, "<span class='notice'>You issue an order to your minions.</span>")
 
 //AI processing orders for simple mob undead
-/obj/effect/proc_holder/spell/invoked/command_undead/proc/process_minions(var/order_type, turf/target_location = null, mob/living/target = null, var/faction_tag = null)
+/obj/effect/proc_holder/spell/invoked/command_undead/proc/process_minions(order_type, turf/target_location = null, mob/living/target = null, faction_tag = null)
 	var/mob/caster = usr
 	var/count = 0
 

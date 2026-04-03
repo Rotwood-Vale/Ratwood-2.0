@@ -24,6 +24,11 @@
 	block2add = FOV_BEHIND
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	nudist_approved = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = HEAD
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/roguehood/ComponentInitialize()
 	. = ..()
@@ -48,11 +53,11 @@
 /obj/item/clothing/head/roguetown/roguehood/darkgreen
 	color = "#264d26"
 
-/obj/item/clothing/head/roguetown/roguehood/random/Initialize()
+/obj/item/clothing/head/roguetown/roguehood/random/Initialize(mapload)
 	color = pick("#544236", "#435436", "#543836", "#79763f")
 	..()
 
-/obj/item/clothing/head/roguetown/roguehood/mage/Initialize()
+/obj/item/clothing/head/roguetown/roguehood/mage/Initialize(mapload)
 	color = pick("#4756d8", "#759259", "#bf6f39", "#c1b144", "#b8252c")
 	..()
 
@@ -62,6 +67,11 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	max_integrity = 120//+20 over base. -30 from previous value.
 	blocksound = SOFTHIT
+	nudist_approved = FALSE // armored
+	cold_protection = HEAD
+	min_cold_protection_temperature = 50
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/head/roguetown/roguehood/shalal
 	name = "keffiyeh"
@@ -89,6 +99,11 @@
 	overarmor = FALSE
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
+	nudist_approved = TRUE
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = HEAD
+	max_heat_protection_temperature = 600
 
 /obj/item/clothing/neck/roguetown/roguehood/shalal/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, HEAD|EARS|NECK|HAIR, HIDEHAIR|HIDEFACE, null, null, null, (UPD_HEAD|UPD_MASK|UPD_NECK))
@@ -112,7 +127,7 @@
 /obj/item/clothing/neck/roguetown/roguehood/shalal/hijab/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, null, null, (UPD_HEAD|UPD_MASK|UPD_NECK))
 
-/obj/item/clothing/head/roguetown/roguehood/shalal/hijab/raneshen
+/obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
 	name = "padded headscarf"
 	desc = "A common sight amongst those travelling the long desert routes, it offers protection from the heat and a modicum of it against the beasts that prowl its more comfortable nites."
 	max_integrity = 100
@@ -122,6 +137,7 @@
 	item_state = "hijab"
 	icon_state = "deserthood"
 	naledicolor = TRUE
+	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood
 	name = "heavy hood"
@@ -132,12 +148,43 @@
 	item_state = "heavyhood"
 	icon_state = "heavyhood"
 	hidesnoutADJ = FALSE
+	nudist_approved = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = 50
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/yoruku
 	name = "shadowed hood"
 	desc = "It sits just so, obscuring the face just enough to spoil recognition."
 	color = CLOTHING_BLACK
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK
+
+/obj/item/clothing/head/roguetown/roguehood/poacher
+	name = "weathered warden's hood"
+	desc = "A leather hood, sewn larger than usual to accommodate a helmet. There's dried blood on its broken left antler. The price for true freedom, paid with someone else's life."
+	color = null
+	icon_state = "poacherhood"
+	item_state = "poacherhood"
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	bloody_icon = 'icons/effects/blood64.dmi'
+	body_parts_covered = NECK
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	dynamic_hair_suffix = ""
+	edelay_type = 1
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	max_integrity = 200
+
+	name = "weathered warden's hood"
+	desc = "A leather hood, sewn larger than usual to accommodate a helmet. There's some dried blood on its broken left antler. The price for true freedom, paid with someone else's life."
+	icon_state = "poacherhood"
+	item_state = "poacherhood"
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
 
 // Holy Hoods
 
@@ -265,6 +312,7 @@
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	max_integrity = 200
+	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/roguehood/psydon/confessor
 	name = "confessional hood"
@@ -294,6 +342,7 @@
 	icon_state = "deserthood"
 	item_state = "deserthood"
 	naledicolor = TRUE
+	nudist_approved = FALSE // armored
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
 
@@ -308,6 +357,7 @@
 	naledicolor = TRUE
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
+	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/roguehood/sojourner
 	name = "sojourner's shroud"
@@ -328,3 +378,4 @@
 	max_integrity = ARMOR_INT_SIDE_STEEL //High leather-tier protection and critical resistances, steel-tier integrity. Integrity boost encourages hand-to-hand parrying. Weaker than the Psydonic Thorns.
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
+	nudist_approved = FALSE // armored

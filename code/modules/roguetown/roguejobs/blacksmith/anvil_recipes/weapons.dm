@@ -365,6 +365,12 @@
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron)
 	created_item = /obj/item/rogueweapon/greatsword/zwei
 
+/datum/anvil_recipe/weapons/iron/handaxe
+	name = "Hatchet, Iron (+1 Stick)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/rogueweapon/stoneaxe/handaxe
+
 /datum/anvil_recipe/weapons/iron/axe
 	name = "Axe, Iron (+1 Stick)"
 	req_bar = /obj/item/ingot/iron
@@ -1154,6 +1160,13 @@
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/stick)
 	i_type = "Weapons"
 
+/datum/anvil_recipe/weapons/psy/poleaxe
+	name = "Psydonic Poleaxe (+2 Blessed Silver, +1 Small Log)"
+	req_bar = /obj/item/ingot/silverblessed
+	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/greataxe/psy
+	i_type = "Weapons"
+
 /datum/anvil_recipe/weapons/psy/mace
 	name = "Psydonic Mace (+1 Blessed Silver, +1 Stick)"
 	req_bar = /obj/item/ingot/silverblessed
@@ -1233,6 +1246,13 @@
 	req_bar = /obj/item/ingot/silverblessed/bullion
 	created_item = /obj/item/rogueweapon/stoneaxe/battle/psyaxe
 	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/stick)
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/psy/poleaxe/inq
+	name = "Psydonic Poleaxe (+2 Blessed Silver, +1 Small Log)"
+	req_bar = /obj/item/ingot/silverblessed/bullion
+	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/greataxe/psy
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/mace/inq

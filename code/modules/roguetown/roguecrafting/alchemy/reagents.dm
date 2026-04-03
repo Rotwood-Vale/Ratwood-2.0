@@ -111,10 +111,10 @@
 	. = 1
 
 /** Design Note: Antidotes are meant to last as long as the poison, and purge them much quicker
- Having a 1 to 1 antidote to poison where you have to tailor defense to an increasing amount of attack
- is a bad idea, since that just means no one will use antidotes and the weapon win the race vs defense.
- This means pre ingesting antidote when expecting poison is a viable strategy.
- Previously, antidote did not have a dylovene-like effect and just purged toxin damage while poison will outlast them.
+ * Having a 1 to 1 antidote to poison where you have to tailor defense to an increasing amount of attack
+ * is a bad idea, since that just means no one will use antidotes and the weapon win the race vs defense.
+ * This means pre ingesting antidote when expecting poison is a viable strategy.
+ * Previously, antidote did not have a dylovene-like effect and just purged toxin damage while poison will outlast them.
 **/
 /datum/reagent/medicine/antidote
 	name = "Antidote"
@@ -156,7 +156,7 @@
 	Previously, it would apply a status effect to the mob lasting for 93 / 300 seconds and remove everything
 	However it meant that putting it in an alchemical vial was a trap as it sipped 9 units instead of 5 units that is the required minimum.
 	And removed any excessive potion inside the body. This has been changed to apply a 3 seconds buff to the mob, but have much lower
-	metabolization rate, so that the duration of the buff depends on how long you last. 
+	metabolization rate, so that the duration of the buff depends on how long you last.
 	Roughly tested. At Metabolization Rate 1. 10 units sip (1/3 of a vial) last 20 seconds.
 	To make this somewhat equal to the old system, base metabolization rate is 0.1 - making it last 200 seconds - 600 seconds if you sip an entire vial.
 	This is 2x on weaker potions (Intelligence, Fortune). However, overdose threshold is now 30 units so you can only drink one vial at once.
@@ -181,6 +181,15 @@
 			// Rapidly purge stacking buffs
 	..()
 
+/datum/reagent/buff/temperature_normalize
+	name = "temperature"
+	color = "#ff9000"
+	taste_description = "like water"
+
+/datum/reagent/buff/temperature_normalize/on_mob_life(mob/living/carbon/M)
+	M.apply_status_effect(/datum/status_effect/buff/alch/temperaturepot)
+	return ..()
+
 /datum/reagent/buff/strength
 	name = STATKEY_STR
 	color = "#ff9000"
@@ -192,7 +201,7 @@
 
 /datum/reagent/buff/perception
 	name = STATKEY_PER
-	color = "#ffff00"
+	color = "#e9e98c"
 	taste_description = "cat piss"
 	metabolization_rate = REAGENTS_METABOLISM * 0.05
 
@@ -221,7 +230,7 @@
 
 /datum/reagent/buff/endurance
 	name = STATKEY_WIL
-	color = "#ffff00"
+	color = "#e2c3e1"
 	taste_description = "oversweetened milk"
 
 /datum/reagent/buff/endurance/on_mob_life(mob/living/carbon/M)
@@ -230,7 +239,7 @@
 
 /datum/reagent/buff/speed
 	name = STATKEY_SPD
-	color = "#ffff00"
+	color = "#cea63a"
 	taste_description = "raw egg yolk"
 
 /datum/reagent/buff/speed/on_mob_life(mob/living/carbon/M)
@@ -307,12 +316,12 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	if(volume > 0.09)
 		if(isdwarf(M))
 			M.add_nausea(5.5)
-			M.adjustToxLoss(7.5) 
+			M.adjustToxLoss(7.5)
 			to_chat(M, span_userdanger("MY HEART! I'VE BEEN POISONED."))
 			M.playsound_local('sound/magic/heartbeat.ogg', 50)
 		else
-			M.add_nausea(6.5) 
-			M.adjustToxLoss(8.5) 
+			M.add_nausea(6.5)
+			M.adjustToxLoss(8.5)
 			to_chat(M, span_userdanger("MY HEART! I'VE BEEN POISONED."))
 			M.playsound_local('sound/magic/heartbeat.ogg', 50)
 	return ..()
@@ -488,7 +497,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 		M.reagents.add_reagent(src, rand(1,3))
 		to_chat(M, span_small("I feel even worse..."))
 	return ..()
-	
+
 
 /datum/reagent/medicine/vitae_essence
 	name = "Vitae Decoction"

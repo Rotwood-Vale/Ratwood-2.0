@@ -6,13 +6,9 @@
 	charging_slowdown = 3
 
 /datum/intent/swing/sling/can_charge(atom/clicked_object)
-	if(mastermob?.next_move > world.time)
-		if(mastermob.client.last_cooldown_warn + 10 < world.time)
-			to_chat(mastermob, span_warning("I'm not ready to do that yet!"))
-			mastermob.client.last_cooldown_warn = world.time
-			return FALSE
-		if(istype(clicked_object, /obj/item/quiver) && istype(mastermob?.get_active_held_item(), /obj/item/gun/ballistic))
-			return FALSE
+	if(istype(clicked_object, /obj/item/quiver) && istype(mastermob?.get_active_held_item(), /obj/item/gun/ballistic))
+		return FALSE
+
 	return TRUE
 
 /datum/intent/swing/sling/prewarning()
@@ -40,13 +36,9 @@
 	charging_slowdown = 3
 
 /datum/intent/arc/sling/can_charge(atom/clicked_object)
-	if(mastermob?.next_move > world.time)
-		if(mastermob.client.last_cooldown_warn + 10 < world.time)
-			to_chat(mastermob, span_warning("I'm not ready to do that yet!"))
-			mastermob.client.last_cooldown_warn = world.time
-			return FALSE
-		if(istype(clicked_object, /obj/item/quiver) && istype(mastermob?.get_active_held_item(), /obj/item/gun/ballistic))
-			return FALSE
+	if(istype(clicked_object, /obj/item/quiver) && istype(mastermob?.get_active_held_item(), /obj/item/gun/ballistic))
+		return FALSE
+
 	return TRUE
 
 /datum/intent/arc/sling/prewarning()
@@ -191,7 +183,7 @@
 		BB.bonus_accuracy += (user.get_skill_level(/datum/skill/combat/slings) * 5) // +5 per Sling level.
 		BB.damage *= damfactor
 		if(user.client.chargedprog < 100)
-			BB.damage = BB.damage - (BB.damage * (user.client.chargedprog / 100))
+			BB.damage -= BB.damage - (BB.damage * (user.client.chargedprog / 100))
 		else
 			BB.damage = BB.damage
 		BB.damage = BB.damage * (((user.STAPER / 1.25) + (user.STASTR / 5)) / 10) * damfactor + bonus_stone_force

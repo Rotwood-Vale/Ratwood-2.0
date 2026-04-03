@@ -78,7 +78,7 @@
 					/obj/item/rogueweapon/flail/sflail,
 				)
 
-/datum/supply_pack/rogue/steel_weapons/flail
+/datum/supply_pack/rogue/steel_weapons/warhammer
 	name = "Warhammer"
 	cost = 40 // 1 Steel Ingot
 	contains = list(

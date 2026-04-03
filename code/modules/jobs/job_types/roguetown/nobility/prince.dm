@@ -65,9 +65,12 @@
 /datum/outfit/job/roguetown/heir/daring/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/circlet
+	if(should_wear_masc_clothes(H))
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
+	if(should_wear_femme_clothes(H))
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
 	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	pants = /obj/item/clothing/under/roguetown/tights
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	belt = /obj/item/storage/belt/rogue/leather
 	l_hand = /obj/item/rogueweapon/sword/sabre
@@ -102,10 +105,12 @@
 	..()
 	if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights/random
-		armor = /obj/item/clothing/suit/roguetown/armor/longcoat
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
+		cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
 	if(should_wear_femme_clothes(H))
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
 	head = /obj/item/clothing/head/roguetown/circlet
 	belt = /obj/item/storage/belt/rogue/leather/cloth/lady
 	beltr = /obj/item/storage/keyring/heir
@@ -201,14 +206,16 @@
 		/obj/item/pestle = 1)
 	if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
 		belt = /obj/item/storage/belt/rogue/leather/cloth/lady
 		shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	if(should_wear_femme_clothes(H))
 		belt = /obj/item/storage/belt/rogue/leather/cloth/lady
 		head = /obj/item/clothing/head/roguetown/hennin
 		armor = /obj/item/clothing/suit/roguetown/armor/silkcoat
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
 
 
@@ -253,9 +260,12 @@
 	beltr = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 	backr = /obj/item/storage/backpack/rogue/satchel
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/lowcut
+	if(should_wear_masc_clothes(H))
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
+	if(should_wear_femme_clothes(H))
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor/nightman
+	armor = /obj/item/clothing/suit/roguetown/armor/longcoat
 	cloak = /obj/item/clothing/cloak/half/shadowcloak
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,

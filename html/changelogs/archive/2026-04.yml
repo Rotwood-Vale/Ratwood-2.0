@@ -1,0 +1,29 @@
+2026-04-03:
+  NotGoldenglow:
+  - balance: All squires have their skills equalized.
+  - balance: Lancers get polearms&swords at Journeyman.
+  - balance: ' Lancers get knives, maces, and whips/flails at Apprentice.'
+  - balance: ' Footman gets sword&maces at Journeyman.'
+  - balance: ' Footman gets knives, polearms and whips/flails at Apprentice.'
+  - balance: Irregular gains wrestling up to Apprentice, from Novice.
+  - balance: Irregular gains sling proficiency.
+  - balance: Irregular gets knives&all ranged weapons at Journeyman.
+  - balance: Irregular gets maces, swords, and polearms at Apprentice.
+  - bugfix: Fixed churn undead affecting vampires harder than expected
+  Xander3359:
+  - bugfix: Fix auto changelog not generating changelogs
+  - bugfix: Fixed changelog writing to the wrong branch
+  - bugfix: Fix money pouches having more coins than expected.
+  kimesik:
+  - rscadd: Reformist Psycross
+  - rscadd: Three fashion options for Psydonic Heretic Spy
+  - balance: Psydonic Heretic Spy (Orthodoxist option) gets nocshaded gas mask.
+  - bugfix: Heretic & Heretic Spy bracer fix
+  ophaq:
+  - rscadd: One line change, makes it so you can emote while unconscious.
+  zeroisthebiggay:
+  - bugfix: most shields being unsmeltable
+  zoktiik:
+  - spellcheck: Renamed dried westleach and dried swampweed leaves to distinguish
+      them from fresh leaves. This fixes the confusing moondust and ozium crafting
+      requirements.

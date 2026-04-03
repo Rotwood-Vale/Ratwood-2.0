@@ -13,7 +13,7 @@
 	var/timerid
 	var/harvested = FALSE
 
-/obj/structure/flora/roguegrass/herb/Initialize()
+/obj/structure/flora/roguegrass/herb/Initialize(mapload)
 	. = ..()
 	desc = "An herb. This one looks like [name]."
 	GLOB.herb_locations |= src
@@ -65,7 +65,7 @@
 	name = "random herb"
 	desc = "Haha, im in danger."
 
-/obj/structure/flora/roguegrass/herb/random/Initialize()
+/obj/structure/flora/roguegrass/herb/random/Initialize(mapload)
 	var/type = pick(list(/obj/structure/flora/roguegrass/herb/atropa,
 	/obj/structure/flora/roguegrass/herb/matricaria,
 	/obj/structure/flora/roguegrass/herb/symphitum,
