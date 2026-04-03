@@ -12,11 +12,32 @@
 		// /datum/job/roguetown/adventurer = 69
 	)
 	title_adjust = list(
-		/datum/job/roguetown/lord = list(display_title = "Viceroy", f_title = "Vicereine"),
-		/datum/job/roguetown/bandit = "Pirate", //couldn't get these to work
-		// /datum/antagonist/bandit = "Pirate",
+		/datum/job/roguetown/lord = list(display_title = "Baron", f_title = "Baroness"),
+		/datum/job/roguetown/bandit = "Pirate",
 		/datum/job/roguetown/orphan = "Stowaway",
 		/datum/job/roguetown/beggar = "Stowaway",
+		
+		/datum/job/roguetown/hand = list(display_title = "Adjutant", f_title = "Adjutant"),
+		/datum/job/roguetown/steward = list(display_title = "Seneschal", f_title = "Seneschal"),
+		/datum/job/roguetown/butler = list(display_title = "Majordomo", f_title = "Majordomo"),
+		/datum/job/roguetown/councillor = list(display_title = "Adviser", f_title = "Adviser"),
+		
+		// Military & Guards
+		/datum/job/roguetown/marshal = list(display_title = "Sheriff", f_title = "Sheriff"),
+		/datum/job/roguetown/sergeant = list(display_title = "Watch Sergeant", f_title = "Watch Sergeant"),
+		/datum/job/roguetown/manorguard = list(display_title = "House Guard", f_title = "House Guard"),
+		/datum/job/roguetown/guardsman = list(display_title = "Watchman", f_title = "Watchwoman"),
+		/datum/job/roguetown/bogguardsman = list(display_title = "Harbor Guard", f_title = "Harbor Guard"),
+		
+		// Clergy
+		/datum/job/roguetown/priest = list(display_title = "Chaplain", f_title = "Chaplain"),
+		
+		// Merchants & Crafters
+		/datum/job/roguetown/merchant = list(display_title = "Trader", f_title = "Trader"),
+
+		// Common Folk
+		/datum/job/roguetown/villager = list(display_title = "Colonist", f_title = "Colonist"),
+		/datum/job/roguetown/farmer = list(display_title = "Settler", f_title = "Settler"),
 	)
 	tutorial_adjust = list(
 		/datum/job/roguetown/lord = "You have been sent by the queen to oversee the colony of New Kingsfield. CHANGE THIS LATER.",
@@ -31,18 +52,17 @@
 		// /datum/job/roguetown/adventurer//Adventurers
 		// /datum/job/roguetown/wretch,
 		// /datum/job/roguetown/bandit,
-		/datum/job/roguetown/pilgrim,
-		// /datum/job/roguetown/trader,
+		// /datum/job/roguetown/pilgrim,
 		// /datum/job/roguetown/assassin,
 
 		// /datum/job/roguetown/lord,
 		// /datum/job/roguetown/knight,
 		// /datum/job/roguetown/hand,
 		// /datum/job/roguetown/suitor, //long walks on the beach?
-		/datum/job/roguetown/steward,
+		// /datum/job/roguetown/steward,
 		// /datum/job/roguetown/consort,
-		// /datum/job/roguetown/captain,
-		/datum/job/roguetown/marshal, //nyeah fuck you
+		/datum/job/roguetown/captain,
+		// /datum/job/roguetown/marshal, //nyeah fuck you
 
 		//church. 
 		/datum/job/roguetown/keeper, //no beast
@@ -80,11 +100,11 @@
 		
 		// /datum/job/roguetown/villager,
 		// /datum/job/roguetown/farmer,
-		// /datum/job/roguetown/prisonerb,
-		// /datum/job/roguetown/prisonerr,
-		// /datum/job/roguetown/hostage,
+		/datum/job/roguetown/prisonerb,
+		/datum/job/roguetown/prisonerr,
+		/datum/job/roguetown/hostage,
 		/datum/job/roguetown/nightmaiden,
-		// /datum/job/roguetown/cook,
+		/datum/job/roguetown/cook,
 		/datum/job/roguetown/knavewench,
 		// /datum/job/roguetown/lunatic,
 
