@@ -250,13 +250,15 @@
 				used_weapon.remove_bintegrity(sharp_loss, user)
 
 			if(mind && user.mind && HAS_TRAIT(src, TRAIT_STEELHEARTED))
-				var/text = "[bodyzone2readablezone(user.zone_selected)]..."
-				if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
-					if(prob(10))
-						text = "<i>Somewhere...</i>"
+				var/mob/living/carbon/human/steeled = src
+				if(!istype(steeled) || !steeled.combat_bubbles_disabled)
+					var/text = "[bodyzone2readablezone(user.zone_selected)]..."
+					if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
+						if(prob(10))
+							text = "<i>Somewhere...</i>"
+							user.balloon_alert(src, text)
+					else
 						user.balloon_alert(src, text)
-				else
-					user.balloon_alert(src, text)
 			return TRUE
 		else
 			return FALSE
