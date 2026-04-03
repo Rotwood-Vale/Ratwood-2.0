@@ -23,7 +23,6 @@
 	minstr = 4
 	grid_width = 32
 	grid_height = 96
-	special = /datum/special_intent/flail_sweep
 
 /datum/intent/flail/strike
 	name = "strike"

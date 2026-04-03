@@ -19,7 +19,6 @@
 	minstr = 6
 	grid_width = 32
 	grid_height = 64
-	special = /datum/special_intent/whip_coil
 
 /obj/item/rogueweapon/whip/getonmobprop(tag)
 	. = ..()
