@@ -1,5 +1,5 @@
-/datum/job/roguetown/vanguard
-	title = "Vanguard"
+/datum/job/roguetown/bogguardsman
+	title = "Bog Guard"
 	flag = BOGGUARD
 	department_flag = GARRISON
 	faction = "Station"
@@ -10,15 +10,13 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "Either a fresh lowborn recruit with something to prove or paying off your crimes with a mandated tour of duty, you have been assigned to the lowtown bastion. \
-	You have a roof over your head, meagre coin in your pocket, and a thankless job protecting the outskirts of town against what lurks beyond.\
-	You are subordinate to the aloof Master Warden and his cadre of Wardens above you, and may be called upon as members of the garrison by the Marshal and Crown. \
-	Serve their will as the first line of defence from threats beyond the borders of civilisation, hold the vanguard bastion, and try to survive another day. Maybe you'll make it into the Wardens some day."
+	tutorial = "You've handed your resume, which mostly consisted of showing up, and in exchange you have a spot among the Bog Guards. \
+	You have a roof over your head, coin in your pocket, and a thankless job protecting the outskirts of town against bandits and volfs."
 	display_order = JDO_TOWNGUARD
 	whitelist_req = TRUE
 
-	outfit = /datum/outfit/job/roguetown/vanguard
-	advclass_cat_rolls = list(CTAG_VANGUARD = 20)
+	outfit = /datum/outfit/job/roguetown/bogguardsman
+	advclass_cat_rolls = list(CTAG_BOGGUARDSMAN = 20)
 
 	give_bank_account = 8
 	min_pq = 0
@@ -28,16 +26,16 @@
 	social_rank = SOCIAL_RANK_PEASANT
 	job_traits = list(TRAIT_SURVIVAL_EXPERT)
 	job_subclasses = list(
-		/datum/advclass/vanguard/footman,
-		/datum/advclass/vanguard/archer
+		/datum/advclass/bogguardsman/footman,
+		/datum/advclass/bogguardsman/archer
 	)
 
-/datum/outfit/job/roguetown/vanguard
+/datum/outfit/job/roguetown/bogguardsman
 	backr = /obj/item/storage/backpack/rogue/satchel
 	head = /obj/item/clothing/head/roguetown/helmet/skullcap
-	cloak = /obj/item/clothing/cloak/half/shadowcloak
+	cloak = /obj/item/clothing/cloak/stabard/bog
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	gloves = /obj/item/clothing/gloves/roguetown/leather/black
+	gloves = /obj/item/clothing/gloves/roguetown/leather
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	pants = /obj/item/clothing/under/roguetown/trou/leather
@@ -45,12 +43,10 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	job_bitflag = BITFLAG_GARRISON
 
-/datum/advclass/vanguard/archer
-	name = "Vanguard Archer"
-	tutorial = "You are well versed in the ways of handling a bow. \
-	You will stand in the back, and protect the front with arrows."	
-	outfit = /datum/outfit/job/roguetown/vanguard/archer
-	category_tags = list(CTAG_VANGUARD)
+/datum/advclass/bogguardsman/archer
+	name = "Bog Archer"
+	outfit = /datum/outfit/job/roguetown/bogguardsman/archer
+	category_tags = list(CTAG_bogguardsman)
 	traits_applied = list(TRAIT_DODGEEXPERT)
 	subclass_stats = list(
 		STATKEY_PER = 3,//9 points but no buff
@@ -78,7 +74,7 @@
 		/datum/skill/craft/cooking = 1, // This should let them fry meat on fires.
 	)
 
-/datum/outfit/job/roguetown/vanguard/archer/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/bogguardsman/archer/pre_equip(mob/living/carbon/human/H)
 	..()
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
@@ -96,12 +92,10 @@
 	H.set_blindness(0)
 
 
-/datum/advclass/vanguard/footman
-	name = "Vanguard Footman"
-	tutorial = "You are adequately briefed on the ways of wielding pointy sticks. \
-	You will stand in the front, and protect."
-	outfit = /datum/outfit/job/roguetown/vanguard/footman
-	category_tags = list(CTAG_VANGUARD)
+/datum/advclass/bogguardsman/footman
+	name = "Bog Guard Footman"
+	outfit = /datum/outfit/job/roguetown/bogguardsman/footman
+	category_tags = list(CTAG_bogguardsman)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
 		STATKEY_STR = 2,//No special superbuffs!
@@ -134,7 +128,7 @@
 		/datum/skill/craft/cooking = 1, // This should let them fry meat on fires.
 	)
 
-/datum/outfit/job/roguetown/vanguard/footman/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/bogguardsman/footman/pre_equip(mob/living/carbon/human/H)
 	..()
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
