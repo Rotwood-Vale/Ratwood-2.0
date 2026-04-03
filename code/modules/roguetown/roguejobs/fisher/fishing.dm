@@ -46,6 +46,31 @@
 				fishingloot = pickweightAllowZero(coast_weights)
 	return fishingloot
 
+/proc/get_handfishingloot(var/mob/living/carbon/human/fisherman, var/list/modlist, turf/target, var/skill_power = 1, var/cage_roll_chance = 30)
+	if(!istype(target, /turf/open/water))
+		return null
+	if(!islist(modlist))
+		modlist = list(
+			"commonFishingMod" = 1,
+			"rareFishingMod" = 1,
+			"treasureFishingMod" = 1,
+			"trashFishingMod" = 1,
+			"dangerFishingMod" = 1,
+			"ceruleanFishingMod" = 0,
+			"cheeseFishingMod" = 0,
+		)
+
+	var/list/base_mods = modlist.Copy()
+	var/base_loot = getfishingloot(fisherman, base_mods, target, skill_power)
+	if(cage_roll_chance <= 0 || !prob(cage_roll_chance))
+		return base_loot
+
+	var/list/cage_mods = upgradecagemodlist(fisherman, modlist.Copy(), skill_power)
+	var/cage_loot = pickweightAllowZero(createCageFishWeightListModlist(cage_mods, target))
+	if(cage_loot)
+		return cage_loot
+	return base_loot
+
 /proc/is_excluded_fishing_border_turf(turf/T)
 	if(!T)
 		return FALSE

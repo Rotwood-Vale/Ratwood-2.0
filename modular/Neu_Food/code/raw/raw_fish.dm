@@ -1,6 +1,15 @@
 /mob/living
 	var/hand_fishing_mode = null
 	var/hand_fishing_mode_until = 0
+	var/turf/hand_fishing_reel_turf = null
+	var/hand_fishing_reel_until = 0
+	var/hand_fishing_reel_loot = null
+	var/hand_fishing_reel_size_tag = null
+	var/turf/hand_fishing_minigame_turf = null
+	var/hand_fishing_minigame_until = 0
+	var/hand_fishing_minigame_loot = null
+	/// Temp fishingrod used for the cast hand-fishing minigame UI. Null when not in minigame.
+	var/obj/item/fishingrod/hand_fishing_cast_rod = null
 
 /obj/item/reagent_containers/food/snacks/fish
 	name = "fish"
@@ -77,6 +86,19 @@
 			living_user = user
 
 		if(!living_user)
+			return
+
+		if(!living_user.used_intent || (living_user.used_intent.type != ROD_CAST && living_user.used_intent.type != ROD_AUTO))
+			living_user.hand_fishing_mode = null
+			living_user.hand_fishing_mode_until = 0
+			living_user.hand_fishing_reel_turf = null
+			living_user.hand_fishing_reel_until = 0
+			living_user.hand_fishing_reel_loot = null
+			living_user.hand_fishing_reel_size_tag = null
+			living_user.hand_fishing_minigame_turf = null
+			living_user.hand_fishing_minigame_until = 0
+			living_user.hand_fishing_minigame_loot = null
+			to_chat(user, span_warning("I need cast or auto intent to hand-fish."))
 			return
 
 		if(living_user.used_intent)

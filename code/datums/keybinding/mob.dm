@@ -17,7 +17,7 @@
 
 
 /datum/keybinding/mob/face_east
-	hotkey_keys = list("CtrlD", "CtrlEast")
+	hotkey_keys = list("CtrlD", "CtrlE", "CtrlEast")
 	classic_keys = list("CtrlEast")
 	name = "face_east"
 	full_name = "Face East"

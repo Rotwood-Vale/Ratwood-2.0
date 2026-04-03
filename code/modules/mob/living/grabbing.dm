@@ -61,18 +61,34 @@
 	if(!isliving(user))
 		return
 	var/mob/living/living_user = user
-	if(!living_user.hand_fishing_mode || world.time > living_user.hand_fishing_mode_until)
+	if(!living_user.used_intent || (living_user.used_intent.type != ROD_CAST && living_user.used_intent.type != ROD_AUTO))
+		living_user.hand_fishing_mode = null
+		living_user.hand_fishing_mode_until = 0
+		living_user.hand_fishing_reel_turf = null
+		living_user.hand_fishing_reel_until = 0
+		living_user.hand_fishing_reel_loot = null
+		living_user.hand_fishing_minigame_turf = null
+		living_user.hand_fishing_minigame_until = 0
+		living_user.hand_fishing_minigame_loot = null
 		return
 	var/turf/open/water/target_water = null
 	if(istype(target, /turf/open/water))
 		target_water = target
-	else if(istype(target, /turf/open/transparent/openspace))
-		var/turf/below = get_step_multiz(target, DOWN)
-		if(istype(below, /turf/open/water))
-			target_water = below
 	if(!target_water)
 		return
 	target_water.attack_hand(user)
+
+/obj/item/grabbing/attack_self(mob/user)
+	. = ..()
+	if(!isliving(user))
+		return
+	var/mob/living/L = user
+	if(!L.hand_fishing_cast_rod)
+		return
+	if(QDELETED(L.hand_fishing_cast_rod) || !L.hand_fishing_cast_rod.currentlyfishing)
+		L.hand_fishing_cast_rod = null
+		return
+	L.hand_fishing_cast_rod.reel_input = TRUE
 
 /obj/item/grabbing/proc/update_hands(mob/user)
 	if(!user)

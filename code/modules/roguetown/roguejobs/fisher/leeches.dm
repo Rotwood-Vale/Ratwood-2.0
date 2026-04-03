@@ -7,11 +7,11 @@
 	icon_state = "leech"
 	baitpenalty = 0
 	fishingMods=list(
-		"commonFishingMod" = 0.7,
-		"rareFishingMod" = 1.3,
-		"treasureFishingMod" = 1,
-		"trashFishingMod" = 1,
-		"dangerFishingMod" = 1.1,
+		"commonFishingMod" = 1.2,
+		"rareFishingMod" = 0.65,
+		"treasureFishingMod" = 0.70,
+		"trashFishingMod" = 1.2,
+		"dangerFishingMod" = 1.2,
 		"ceruleanFishingMod" = 0,
 		"cheeseFishingMod" = 0
 	)

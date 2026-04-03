@@ -540,15 +540,11 @@
 	else
 		var/turf/safe_drop_turf = get_safe_catch_drop_turf(user, auto_pending_target)
 		if(ispath(auto_pending_catch, /obj/item/reagent_containers/food/snacks/fish))
-			var/obj/item/reagent_containers/food/snacks/fish/caughtfish = new auto_pending_catch(user)
-			if(!user.put_in_hands(caughtfish))
-				caughtfish.forceMove(safe_drop_turf)
+			var/obj/item/reagent_containers/food/snacks/fish/caughtfish = new auto_pending_catch(safe_drop_turf)
 			apply_fishing_quality_to_fish(caughtfish, auto_pending_modlist, rod_size_weights)
 			try_spawn_deluxe_bonus_fish(user, auto_pending_modlist, auto_pending_target, auto_pending_catch)
 		else
-			var/obj/item/misc_catch = new auto_pending_catch(user)
-			if(!user.put_in_hands(misc_catch))
-				misc_catch.forceMove(safe_drop_turf)
+			new auto_pending_catch(safe_drop_turf)
 	apply_tackle_wear(user, 4 + catch_weight, 2 + catch_weight, 2)
 
 	playsound(user.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
@@ -728,14 +724,20 @@
 	if(baited)
 		to_chat(user, "<span class='info'>There's a [baited.name] stuck on here.</span>")
 		if(baited.isbait)
-			baited.sync_bait_durability()
-			to_chat(user, "<span class='notice'>Bait durability: [baited.get_bait_durability_percent()]% ([baited.baitresilience]/[baited.bait_max_durability])</span>")
+			for(var/line in baited.get_bait_modifier_lines())
+				to_chat(user, "<span class='notice'>[line]</span>")
 	if(reel)
 		to_chat(user, "<span class='info'>There's a [reel.name] strung on this rod.</span>")
+		if(istype(reel, /obj/item/fishing))
+			var/obj/item/fishing/reel_item = reel
+			to_chat(user, "<span class='notice'>[reel_item.name] durability: [reel_item.get_durability_percent()]%</span>")
 	else
 		to_chat(user, "<span class='warning'>I'm missing the fishing line.</span>")
 	if(hook)
 		to_chat(user, "<span class='info'>There's a [hook.name] on this rod.</span>")
+		if(istype(hook, /obj/item/fishing))
+			var/obj/item/fishing/hook_item = hook
+			to_chat(user, "<span class='notice'>[hook_item.name] durability: [hook_item.get_durability_percent()]%</span>")
 	else
 		to_chat(user, "<span class='warning'>I'm missing the hook.</span>")
 	if(line)
@@ -883,6 +885,298 @@
 	fish_was_red = FALSE
 	current_fish_zone = "none"
 
+/**
+ * Hand-fishing cast minigame: runs the standard fishing UI/loop without a rod in-hand.
+ * Called by water.dm via spawn() after a successful Stage 2 reel (CAST intent only).
+ * The player advances the minigame by clicking the water turf (sets reel_input = TRUE).
+ * Cleans up user.hand_fishing_cast_rod and qdel's itself when done.
+ */
+/obj/item/fishingrod/proc/begin_hand_fishing_cast_minigame(mob/living/carbon/human/user, catch_path, turf/open/water/water_turf)
+	if(!user || QDELETED(user) || !catch_path)
+		qdel(src)
+		return
+
+	// Anchor the player to where they are now.
+	fisher = user
+	startingturf = get_turf(user)
+	startingdir = user.dir
+
+	// Derive fish stats from the path challenge + skill (no tackle bonuses for hand-fishing).
+	fishtype = catch_path
+	var/sl = user.get_skill_level(/datum/skill/labor/fishing)
+	var/speed_mod = clamp(user.get_stat(STATKEY_SPD), 1, 20)
+	var/path_challenge = get_fishing_path_challenge(catch_path)
+	var/shore_distance = water_turf ? get_fishing_excluded_turf_distance(water_turf, 6) : 7
+	var/near_shore_penalty = max(3 - shore_distance, 0)
+	if(istype(water_turf, /turf/open/water/cleanshallow))
+		near_shore_penalty = max(near_shore_penalty, 1)
+	if(shore_distance <= 3)
+		near_shore_penalty = max(near_shore_penalty, 3)
+
+	// Base this cast minigame on auto-style hand formula, then handicap it as "worst gear".
+	var/auto_style_reel = clamp(30 + (sl * 8) + (speed_mod * 3) - (path_challenge * 8), 5, 98)
+	auto_style_reel = clamp(auto_style_reel - 12 - (near_shore_penalty * 8) - (shore_distance <= 3 ? 10 : 0), 5, 98)
+	var/worst_gear_penalty = 20
+	var/expected_reel = clamp(auto_style_reel - worst_gear_penalty, 2, 95)
+	var/failure_pressure = clamp(round((100 - expected_reel) / 10), 1, 9)
+
+	if(failure_pressure >= 8)
+		fishsize = "prize"
+		fishrarity = "gold"
+	else if(failure_pressure >= 6)
+		fishsize = "huge"
+		fishrarity = "ultra"
+	else if(failure_pressure >= 4)
+		fishsize = "large"
+		fishrarity = "rare"
+	else
+		fishsize = "normal"
+		fishrarity = "com"
+
+	difficulty = clamp(2 + path_challenge + round(failure_pressure / 2) - max(0, sl - 1), 1, 6)
+	linehealth = max(4, sl + 2 - round(failure_pressure / 2))
+	hookwindow = clamp(sl * 2 + 4 - round(failure_pressure / 2), (1 SECONDS), 4 SECONDS)
+	acceleration = max(2, 1 + round(path_challenge / 2.0) + round(failure_pressure / 3.0))
+	maxvelocity = max(2, 2 + round(path_challenge / 2.0) + round(failure_pressure / 3.0))
+	fishhealth = 18 + path_challenge * 6 + failure_pressure * 2
+
+	var/initialline = linehealth
+	var/initialfish = fishhealth
+	var/fish_challenge_mg = get_fish_total_challenge()
+	var/skillmod = sl
+	var/challenge_load = max(0, fish_challenge_mg - max(0, skillmod - 4))
+
+	// Reset minigame state.
+	reel_successes = 0
+	failed_reel_attempts = 0
+	early_reel_streak = 0
+	red_zone_visits = 0
+	fish_was_red = FALSE
+	current_fish_zone = "none"
+	reel_ready = FALSE
+	reel_input = FALSE
+	topzone_hold = 0
+	reel_expire = 0
+	currentstate = "hooked"
+	currentlyfishing = TRUE
+	directionstate = 1
+	fishtarget = 90
+
+	// NPC/headless: skip minigame and just give the catch.
+	if(!user.client)
+		if(user.hand_fishing_cast_rod == src)
+			user.hand_fishing_cast_rod = null
+		user.hand_fishing_mode = null
+		user.hand_fishing_mode_until = 0
+		user.hand_fishing_reel_size_tag = null
+		var/obj/item/npc_catch = new catch_path(user.drop_location())
+		if(istype(npc_catch, /obj/item/reagent_containers/food/snacks/fish))
+			var/obj/item/reagent_containers/food/snacks/fish/FC = npc_catch
+			apply_fishing_quality_to_fish(FC, list("commonFishingMod" = 1, "rareFishingMod" = 1, "treasureFishingMod" = 1, "trashFishingMod" = 1, "dangerFishingMod" = 1, "ceruleanFishingMod" = 0, "cheeseFishingMod" = 0), list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1))
+		qdel(src)
+		return
+
+	createui(fisher)
+	user.doing = TRUE
+
+	var/caught = FALSE
+	var/hooked_ticks = 0
+	var/velocity = 0
+	var/currentmouse = 0
+	var/targetdif = 0
+	var/facestate = 1
+	var/next_stamina_tick = world.time + (5 SECONDS)
+	var/hold_needed = clamp(1 + round(failure_pressure / 3), 1, 3)
+
+	while(currentlyfishing)
+		if(QDELETED(user) || !user.client)
+			currentlyfishing = FALSE
+			break
+		if(is_far_from_cast_anchor(fisher))
+			to_chat(fisher, span_warning("I stray too far and the fish slips free!"))
+			currentlyfishing = FALSE
+			break
+		if(world.time >= next_stamina_tick)
+			var/stamina_drain = get_fishing_stamina_drain(fisher, 18.75)
+			if(stamina_drain && !fisher.stamina_add(stamina_drain))
+				to_chat(fisher, span_warning("I'm too exhausted to keep fighting the fish."))
+				currentlyfishing = FALSE
+			next_stamina_tick = world.time + (5 SECONDS)
+		if(user.IsStun() || user.IsParalyzed())
+			to_chat(fisher, span_warning("I lose my grip!"))
+			currentlyfishing = FALSE
+		if(user.client)
+			average_ping = user.client.avgping * 0.01
+
+		currentmouse = clamp(backdrop.pointdir, 90, 270)
+		reelstate.transform = 0
+		var/matrix/M = matrix()
+		M.Turn(currentmouse)
+		reelstate.transform = M
+
+		fishstate.transform = 0
+		var/matrix/F = matrix()
+		F.Turn(targetdif)
+		fishstate.transform = F
+
+		face.icon_state = "stress[facestate]"
+
+		hooked_ticks++
+		if(currentmouse > 180)
+			fishhealth -= round(abs(currentmouse - 180) / 90, 0.1)
+		fishhealth = max(1, fishhealth)
+		if(linehealth <= 0)
+			currentlyfishing = FALSE
+
+		if(fishtarget > 90 && directionstate == 1)
+			if(prob(fishtarget - 90))
+				directionstate = -1
+		else if(fishtarget < 90 && directionstate == -1)
+			if(prob(abs(fishtarget - 90)))
+				directionstate = 1
+
+		targetdif = clamp((-currentmouse + fishtarget + 90) * difficulty, -90, 90)
+		if(targetdif >= 90 || targetdif <= -90)
+			if(COOLDOWN_FINISHED(src, ping_delay))
+				linehealth--
+				COOLDOWN_START(src, ping_delay, average_ping)
+
+		var/fatigue_step = min(round(hooked_ticks / (8 SECONDS)), 3)
+		var/effective_acceleration = max(1, acceleration - fatigue_step)
+		var/effective_maxvelocity = max(1, maxvelocity - fatigue_step)
+		velocity = clamp(velocity + ((effective_acceleration * directionstate) / 5), -effective_maxvelocity, effective_maxvelocity)
+		fishtarget = clamp(fishtarget + velocity, 0, 180)
+
+		switch(linehealth / initialline)
+			if(0.81 to 1)
+				facestate = 1
+			if(0.61 to 0.8)
+				facestate = 2
+			if(0.41 to 0.6)
+				facestate = 3
+			if(0.21 to 0.4)
+				facestate = 4
+			else
+				facestate = 5
+
+		switch(fishhealth / initialfish)
+			if(0.61 to 0.8)
+				facestate -= 1
+			if(0.41 to 0.6)
+				facestate -= 2
+			if(0.21 to 0.4)
+				facestate -= 3
+			if(0 to 0.2)
+				facestate -= 4
+
+		facestate = clamp(facestate, 1, 5)
+
+		var/green_zone_margin = max(4, 18 - challenge_load * 2 - round(failure_pressure / 3))
+		var/blue_zone_margin = 80
+		var/abs_tdf = abs(targetdif)
+		if(abs_tdf <= green_zone_margin)
+			current_fish_zone = "green"
+			topzone_hold++
+			if(topzone_hold >= hold_needed && !reel_ready)
+				reel_ready = TRUE
+				reel_expire = world.time + (2 SECONDS)
+				to_chat(fisher, span_notice("The fish is tiring! Click the water to reel it in!"))
+		else if(abs_tdf <= blue_zone_margin)
+			current_fish_zone = "blue"
+			topzone_hold = 0
+			reel_ready = FALSE
+			reel_expire = 0
+		else
+			current_fish_zone = "red"
+			topzone_hold = 0
+			reel_ready = FALSE
+			reel_expire = 0
+			linehealth = max(0, linehealth - 2)
+			if(!fish_was_red)
+				red_zone_visits++
+				if(red_zone_visits >= 2)
+					early_reel_streak++
+					red_zone_visits = 0
+					to_chat(fisher, span_warning("The fish fights into the danger zone again!"))
+				else
+					to_chat(fisher, span_warning("The fish pulls hard — I need to steady my hand!"))
+		fish_was_red = (abs_tdf > blue_zone_margin)
+
+		if(reel_ready && world.time > reel_expire)
+			reel_ready = FALSE
+			topzone_hold = 0
+			to_chat(fisher, span_warning("The fish recovers! Keep my hand centered to tire it again!"))
+
+		if(reel_input && reel_ready)
+			reel_input = FALSE
+			reel_ready = FALSE
+			var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
+			if(reel_stamina_drain && !fisher.stamina_add(reel_stamina_drain))
+				to_chat(fisher, span_warning("I'm too exhausted to haul against the fish."))
+				currentlyfishing = FALSE
+				sleep(1)
+				continue
+			topzone_hold = 0
+			reel_expire = 0
+			playsound(water_turf ? water_turf : get_turf(fisher), 'sound/items/fishing_plouf.ogg', 90, TRUE)
+			reel_successes++
+			if(reel_successes >= 2)
+				to_chat(fisher, span_notice("I haul back hard and pull it in!"))
+				caught = TRUE
+				currentlyfishing = FALSE
+			else
+				hooked_ticks = 0
+				red_zone_visits = 0
+				fish_was_red = FALSE
+				to_chat(fisher, span_userdanger("I GAIN GROUND! But the fish surges back. One more strong pull!"))
+
+		sleep(1)
+
+	// Cleanup
+	if(!QDELETED(user))
+		user.doing = FALSE
+		if(user.hand_fishing_cast_rod == src)
+			user.hand_fishing_cast_rod = null
+		user.hand_fishing_mode = null
+		user.hand_fishing_mode_until = 0
+		user.hand_fishing_reel_size_tag = null
+		if(user.client)
+			deleteui(fisher)
+
+	if(!caught || QDELETED(user))
+		if(!QDELETED(user))
+			var/injury_chance = clamp(25 + (failure_pressure * 5), 25, 65)
+			if(prob(injury_chance))
+				apply_fishing_bite_injury(user, water_turf ? water_turf : src)
+			to_chat(user, span_warning("Damn, it slips free!"))
+		qdel(src)
+		return
+
+	to_chat(user, span_notice("I pull it out of the water!"))
+	playsound(water_turf, 'sound/items/Fish_out.ogg', 100, TRUE)
+	user.adjust_experience(/datum/skill/labor/fishing, 1)
+	var/static/list/hand_quality_mods = list(
+		"commonFishingMod" = 1,
+		"rareFishingMod" = 1,
+		"treasureFishingMod" = 1,
+		"trashFishingMod" = 1,
+		"dangerFishingMod" = 1,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0,
+	)
+	var/static/list/hand_size_weights = list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1)
+	var/turf/drop_turf = get_safe_catch_drop_turf(user, water_turf)
+	if(ispath(catch_path, /mob/living/simple_animal/hostile))
+		new catch_path(water_turf)
+	else if(ispath(catch_path, /mob))
+		new catch_path(get_turf(user))
+	else
+		var/obj/item/new_catch = new catch_path(drop_turf)
+		if(istype(new_catch, /obj/item/reagent_containers/food/snacks/fish))
+			var/obj/item/reagent_containers/food/snacks/fish/FQ = new_catch
+			apply_fishing_quality_to_fish(FQ, hand_quality_mods, hand_size_weights)
+	qdel(src)
+
 /obj/item/fishingrod/proc/get_targeted_water_turf(atom/target)
 	var/turf/T = get_turf(target)
 	if(!T)
@@ -955,6 +1249,12 @@
 		return
 
 	var/turf/open/water/targeted = get_targeted_water_turf(target)
+	if(!targeted)
+		// If target is openspace, try to find water below for casting from above
+		if(istype(target, /turf/open/transparent/openspace))
+			var/turf/below = get_step_multiz(target, DOWN)
+			if(istype(below, /turf/open/water))
+				targeted = below
 	if(!targeted)
 		to_chat(user, "<span class='warning'>I can't fish here...</span>")
 		return
@@ -1217,86 +1517,88 @@
 			if(auto_reel_ready && world.time > auto_reel_deadline)
 				to_chat(user, "<span class='warning'>Too slow. The fish slips free.</span>")
 				reset_auto_pending_catch()
-			if(target in range(user,8))
-				user.visible_message("<span class='warning'>[user] casts a line!</span>", \
-									"<span class='notice'>I cast a line.</span>")
-				playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
-				ft = max(18, ((1 SECONDS) - sl) * 8)
-				ft = round(ft * get_cast_time_multiplier())
-				if(do_after(user,ft, target = targeted))
-					if(baited)
-						var/bite_bonus = get_bite_chance_bonus(targeted, shore_distance)
-						var/bite_mult = get_bite_chance_multiplier(shore_distance)
-						var/bp = baited.baitpenalty // Penalty to fishing chance based on how good bait is. Lower is better.
-						var/fishchance = 100 // Total fishing chance, deductions applied below
-						fishchance -= (difficulty * 15) ///based on the fishes difficulty means better fishing rods can be given to shit fishers
-						fishchance += cast_depth_bonus * 8
-						fishchance -= near_shore_penalty * 20
-						if(shallow_excluded_junk_zone)
-							fishchance -= 55
-						fishchance += bite_bonus
-						if(chummed_spot)
-							fishchance += 20
-						if(has_world_trait(/datum/world_trait/fishing_decrease))
-							fishchance -= 25
-						if(has_world_trait(/datum/world_trait/fishing_increase))
-							fishchance += 40
-						if(user.mind)
-							if(!sl) // If we have zero fishing skill...
-								fishchance -= 50 // 50% chance to fish base
-							else
-								fishchance -= bp // Deduct penalties from bait quality, if any
-								fishchance -= fpp // Deduct a penalty the lower our fishing level is (-0 at legendary)
-						fishchance = round(fishchance * bite_mult)
-						fishchance = clamp(fishchance, 2, 98)
-						if(islist(baited.fishingMods))
-							modlist = baited.fishingMods.Copy()
+			user.visible_message("<span class='warning'>[user] casts a line!</span>", \
+								"<span class='notice'>I cast a line.</span>")
+			playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+			ft = max(18, ((1 SECONDS) - sl) * 8)
+			ft = round(ft * get_cast_time_multiplier())
+			if(do_after(user,ft, target = user))
+				if(baited)
+					var/bite_bonus = get_bite_chance_bonus(targeted, shore_distance)
+					var/bite_mult = get_bite_chance_multiplier(shore_distance)
+					var/bp = baited.baitpenalty // Penalty to fishing chance based on how good bait is. Lower is better.
+					var/fishchance = 100 // Total fishing chance, deductions applied below
+					fishchance -= (difficulty * 15) ///based on the fishes difficulty means better fishing rods can be given to shit fishers
+					fishchance += cast_depth_bonus * 8
+					fishchance -= near_shore_penalty * 20
+					if(shallow_excluded_junk_zone)
+						fishchance -= 55
+					fishchance += bite_bonus
+					if(chummed_spot)
+						fishchance += 20
+					if(has_world_trait(/datum/world_trait/fishing_decrease))
+						fishchance -= 25
+					if(has_world_trait(/datum/world_trait/fishing_increase))
+						fishchance += 40
+					if(user.mind)
+						if(!sl) // If we have zero fishing skill...
+							fishchance -= 50 // 50% chance to fish base
 						else
-							modlist = list(
-								"commonFishingMod" = 1,
-								"rareFishingMod" = 1,
-								"treasureFishingMod" = 1,
-								"trashFishingMod" = 1,
-								"dangerFishingMod" = 1,
-								"ceruleanFishingMod" = 0,
-								"cheeseFishingMod" = 0,
-							)
-						if(is_cheese_bait(baited))
-							modlist["cheeseFishingMod"] = 1
-						if(shallow_excluded_junk_zone)
-							modlist["force_common_rarity"] = TRUE
-							modlist["force_nonprize_size"] = TRUE
-						if(prob(fishchance)) // Finally, roll the dice to see if we fish.
-							var/A = getfishingloot(user, modlist, targeted)
-							if(shallow_excluded_junk_zone && prob(96))
-								A = get_cast_junk_reward_path()
-							if(is_shellfish_catch_path(A))
-								A = istype(targeted, /turf/open/water/ocean) || istype(targeted, /turf/open/water/ocean/deep) ? /obj/item/reagent_containers/food/snacks/fish/cod : /obj/item/reagent_containers/food/snacks/fish/carp
-							if(A)
-								var/ow = 30 + (sl * 10) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
-								to_chat(user, "<span class='notice'>Something tugs the line! Use [src] in hand to reel it in!</span>")
-								targeted.balloon_alert_to_viewers("Tug!")
-								playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
-								auto_reel_ready = TRUE
-								auto_pending_catch = A
-								auto_pending_modlist = islist(modlist) ? modlist.Copy() : null
-								auto_pending_target = targeted
-								auto_reel_deadline = world.time + ow
-								apply_tackle_wear(user, 1, 1, 1)
-						else
-							to_chat(user, "<span class='warning'>Not even a nibble...</span>")
-							apply_tackle_wear(user, 1, 0, 1)
-							user.mind.add_sleep_experience(/datum/skill/labor/fishing, 1) // Pity XP.
+							fishchance -= bp // Deduct penalties from bait quality, if any
+							fishchance -= fpp // Deduct a penalty the lower our fishing level is (-0 at legendary)
+					fishchance = round(fishchance * bite_mult)
+					fishchance = clamp(fishchance, 2, 98)
+					if(islist(baited.fishingMods))
+						modlist = baited.fishingMods.Copy()
 					else
-						to_chat(user, "<span class='warning'>This seems pointless without bait.</span>")
+						modlist = list(
+							"commonFishingMod" = 1,
+							"rareFishingMod" = 1,
+							"treasureFishingMod" = 1,
+							"trashFishingMod" = 1,
+							"dangerFishingMod" = 1,
+							"ceruleanFishingMod" = 0,
+							"cheeseFishingMod" = 0,
+						)
+					if(is_cheese_bait(baited))
+						modlist["cheeseFishingMod"] = 1
+					if(shallow_excluded_junk_zone)
+						modlist["force_common_rarity"] = TRUE
+						modlist["force_nonprize_size"] = TRUE
+					if(prob(fishchance)) // Finally, roll the dice to see if we fish.
+						var/A = getfishingloot(user, modlist, targeted)
+						if(shallow_excluded_junk_zone && prob(96))
+							A = get_cast_junk_reward_path()
+						if(is_shellfish_catch_path(A))
+							A = istype(targeted, /turf/open/water/ocean) || istype(targeted, /turf/open/water/ocean/deep) ? /obj/item/reagent_containers/food/snacks/fish/cod : /obj/item/reagent_containers/food/snacks/fish/carp
+						if(A)
+							var/ow = 30 + (sl * 10) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
+							to_chat(user, "<span class='notice'>Something tugs the line! Use [src] in hand to reel it in!</span>")
+							targeted.balloon_alert_to_viewers("Tug!")
+							playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+							auto_reel_ready = TRUE
+							auto_pending_catch = A
+							auto_pending_modlist = islist(modlist) ? modlist.Copy() : null
+							auto_pending_target = targeted
+							auto_reel_deadline = world.time + ow
+							apply_tackle_wear(user, 1, 1, 1)
+					else
+						to_chat(user, "<span class='warning'>Not even a nibble...</span>")
+						apply_tackle_wear(user, 1, 0, 1)
+						user.mind.add_sleep_experience(/datum/skill/labor/fishing, 1) // Pity XP.
 				else
-					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
+					to_chat(user, "<span class='warning'>This seems pointless without bait.</span>")
+			else
+				to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			update_icon()
 			return
 	else
+		user.visible_message("<span class='warning'>[user] casts a line!</span>", \
+							"<span class='notice'>I cast a line.</span>")
+		playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 		var/ft_cast = max(9, ((1 SECONDS) - sl) * 4)
 		ft_cast = round(ft_cast * get_cast_time_multiplier())
-		if(!do_after(user, ft_cast, target = targeted))
+		if(!do_after(user, ft_cast, target = user))
 			to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			return
 		var/cast_bite_chance = 70 + (cast_depth_bonus * 10) - (near_shore_penalty * 20) + (sl * 3) + get_bite_chance_bonus(targeted, shore_distance) + (chummed_spot ? 20 : 0)
@@ -1491,9 +1793,7 @@
 
 					// Top-zone reel mechanic: keep fishstate centered (targetdif near 0) to tire the fish.
 					// Bigger/rarer fish fight harder due to higher velocity and acceleration.
-					var/skill_tired_bonus = clamp(skillmod, 0, 6)
-					var/fight_tired_bonus = min(round(hooked_ticks / (5 SECONDS)), 4)
-					var/hold_needed = max((0.5 SECONDS), (0.5 SECONDS) - skill_tired_bonus - fight_tired_bonus + challenge_load)
+					var/hold_needed = 1
 					// Zone margins: green zone narrows for rarer/bigger fish; skill partially offsets it.
 					var/green_zone_margin = max(6, 20 - challenge_load * 2)
 					var/blue_zone_margin = 80
@@ -1573,9 +1873,7 @@
 			to_chat(user, "<span class='notice'>I still dredge up some junk for my trouble.</span>")
 		else if(ispath(fishtype, /obj/item/reagent_containers/food/snacks/fish))
 			try_spawn_deluxe_bonus_fish(fisher, modlist, targeted, fishtype)
-			var/obj/item/reagent_containers/food/snacks/caughtfish = new fishtype(fisher)
-			if(!fisher.put_in_hands(caughtfish))
-				caughtfish.forceMove(safe_drop_turf)
+			var/obj/item/reagent_containers/food/snacks/caughtfish = new fishtype(safe_drop_turf)
 			var/raritydesc
 			var/sizedesc
 
@@ -1643,10 +1941,7 @@
 			else
 				var/atom/caughtthing2
 				if(ispath(fishtype, /obj/item))
-					var/obj/item/caught_item = new fishtype(fisher)
-					if(!fisher.put_in_hands(caught_item))
-						caught_item.forceMove(safe_drop_turf)
-					caughtthing2 = caught_item
+					caughtthing2 = new fishtype(safe_drop_turf)
 				else
 					caughtthing2 = new fishtype(safe_drop_turf || fisher.loc)
 				if(specialcatching)

@@ -55,14 +55,210 @@
 /turf/open/water/attack_hand(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user
-		if(L.hand_fishing_mode && world.time <= L.hand_fishing_mode_until)
-			if(L.used_intent && (L.used_intent.type == ROD_CAST || L.used_intent.type == ROD_AUTO))
-				L.hand_fishing_mode = L.used_intent.type
-			if(L.hand_fishing_mode == ROD_CAST || L.hand_fishing_mode == ROD_AUTO)
-				for(var/obj/item/reagent_containers/food/snacks/fish/F in src)
-					if(!F.dead)
-						return F.attack_hand(user)
-				to_chat(user, span_warning("I don't spot any fish close enough to snatch by hand."))
+
+		// Stage 3 (CAST minigame running): forward reel input regardless of current intent.
+		if(L.hand_fishing_cast_rod)
+			if(!QDELETED(L.hand_fishing_cast_rod) && L.hand_fishing_cast_rod.currentlyfishing)
+				if(L.z == src.z)
+					L.hand_fishing_cast_rod.reel_input = TRUE
+			else
+				L.hand_fishing_cast_rod = null
+				L.hand_fishing_mode = null
+				L.hand_fishing_mode_until = 0
+				L.hand_fishing_reel_size_tag = null
+			return
+
+		var/using_hand_intent = L.used_intent && (L.used_intent.type == ROD_CAST || L.used_intent.type == ROD_AUTO)
+		if(!using_hand_intent)
+			L.hand_fishing_mode = null
+			L.hand_fishing_mode_until = 0
+			L.hand_fishing_reel_turf = null
+			L.hand_fishing_reel_until = 0
+			L.hand_fishing_reel_loot = null
+			L.hand_fishing_reel_size_tag = null
+		else
+			// Stage 1 (no pending reel): always read current intent so switching between cast/auto works.
+			// Stage 2+: use the intent locked when the bite was found.
+			var/active_mode
+			if(L.hand_fishing_reel_loot)
+				active_mode = L.hand_fishing_mode
+			else
+				active_mode = L.used_intent.type
+			if(active_mode == ROD_CAST || active_mode == ROD_AUTO)
+				if(!ishuman(user))
+					to_chat(user, span_warning("I can't fish by hand like this."))
+					return
+				if(istype(src, /turf/open/water/bath) || istype(src, /turf/open/water/sewer))
+					to_chat(user, span_warning("I can't fish here..."))
+					return
+				if(user.z != src.z || get_dist(user, src) > 1)
+					to_chat(user, span_warning("It's out of reach. I can only fish by hand in water close to me!"))
+					return
+				var/mob/living/carbon/human/H = user
+				var/sl = H.get_skill_level(/datum/skill/labor/fishing)
+				var/per_mod = clamp(H.get_stat(STATKEY_PER), 1, 20)
+				var/speed_mod = clamp(H.get_stat(STATKEY_SPD), 1, 20)
+				var/fpp = 130 - (40 + (sl * 15))
+				var/shore_distance = get_fishing_excluded_turf_distance(src, 6)
+				var/near_shore_penalty = max(3 - shore_distance, 0)
+				var/shallow_excluded_junk_zone = FALSE
+				if(istype(src, /turf/open/water/cleanshallow))
+					near_shore_penalty = max(near_shore_penalty, 1)
+					if(shore_distance <= 3)
+						shallow_excluded_junk_zone = TRUE
+				if(shore_distance <= 3)
+					shallow_excluded_junk_zone = TRUE
+					near_shore_penalty = max(near_shore_penalty, 3)
+
+				// Stage 2: reel click after stage 1 found a bite.
+				if(H.hand_fishing_reel_loot)
+					if(world.time > H.hand_fishing_reel_until || !H.hand_fishing_reel_turf)
+						H.hand_fishing_mode = null
+						H.hand_fishing_mode_until = 0
+						H.hand_fishing_reel_turf = null
+						H.hand_fishing_reel_until = 0
+						H.hand_fishing_reel_loot = null
+						H.hand_fishing_reel_size_tag = null
+						to_chat(user, span_warning("I lose the fish's trail."))
+						return
+					if(src != H.hand_fishing_reel_turf)
+						to_chat(user, span_warning("I need to strike the same area of water to reel it in!"))
+						return
+					playsound(src, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+					var/reel_time = round(max(10, 45 - (sl * 3) - (speed_mod * 2)) * 1.5)
+					if(!do_after(user, reel_time, target = user))
+						return
+					var/reel_result = H.hand_fishing_reel_loot
+					to_chat(user, span_notice("[get_fishing_size_feel_text(H.hand_fishing_reel_size_tag, reel_result)]"))
+					var/reel_challenge = get_fishing_path_challenge(reel_result)
+					var/reel_chance = clamp(30 + (sl * 8) + (speed_mod * 3) - (reel_challenge * 8), 5, 98)
+					if(active_mode == ROD_AUTO)
+						reel_chance = clamp(reel_chance - 12 - (near_shore_penalty * 8) - (shallow_excluded_junk_zone ? 10 : 0), 5, 98)
+					else
+						reel_chance = clamp(reel_chance - 6 - (near_shore_penalty * 4), 5, 98)
+					H.hand_fishing_reel_turf = null
+					H.hand_fishing_reel_until = 0
+					H.hand_fishing_reel_loot = null
+					H.hand_fishing_reel_size_tag = null
+					if(!prob(reel_chance))
+						H.hand_fishing_mode = null
+						H.hand_fishing_mode_until = 0
+						if(prob(active_mode == ROD_CAST ? 45 : 35))
+							apply_fishing_bite_injury(H, src)
+						to_chat(user, span_warning("Damn, it slips away as I pull!"))
+						return
+					if(active_mode == ROD_AUTO)
+						// Auto: direct catch with no minigame.
+						var/auto_hand_stamina = get_hand_fishing_stamina_drain(H, 48.75)
+						if(auto_hand_stamina && !H.stamina_add(auto_hand_stamina))
+							H.hand_fishing_mode = null
+							H.hand_fishing_mode_until = 0
+							H.hand_fishing_reel_turf = null
+							H.hand_fishing_reel_until = 0
+							H.hand_fishing_reel_loot = null
+							H.hand_fishing_reel_size_tag = null
+							to_chat(user, span_warning("I'm too exhausted to haul it in."))
+							return
+						if(ispath(reel_result, /mob/living/simple_animal/hostile))
+							new reel_result(src)
+						else if(ispath(reel_result, /mob))
+							new reel_result(user.loc)
+						else
+							var/obj/item/new_catch_auto = new reel_result(user.drop_location())
+							if(istype(new_catch_auto, /obj/item/reagent_containers/food/snacks/fish))
+								var/obj/item/reagent_containers/food/snacks/fish/F_auto = new_catch_auto
+								apply_fishing_quality_to_fish(F_auto, list(
+									"commonFishingMod" = 1,
+									"rareFishingMod" = 1,
+									"treasureFishingMod" = 1,
+									"trashFishingMod" = 1,
+									"dangerFishingMod" = 1,
+									"ceruleanFishingMod" = 0,
+									"cheeseFishingMod" = 0,
+								), list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1))
+						playsound(src, 'sound/items/Fish_out.ogg', 100, TRUE)
+						to_chat(user, span_notice("Pull 'em in!"))
+						H.hand_fishing_mode = null
+						H.hand_fishing_mode_until = 0
+						return
+					// Cast: spawn the fishing UI minigame. Subsequent water clicks set reel_input.
+					var/obj/item/fishingrod/temp_rod = new /obj/item/fishingrod(null)
+					H.hand_fishing_cast_rod = temp_rod
+					H.hand_fishing_mode = null
+					H.hand_fishing_mode_until = 0
+					playsound(src, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+					to_chat(user, span_notice("I've got something! Strike the same area of water to haul it in!"))
+					var/turf/water_turf_ref = src
+					spawn()
+						temp_rod.begin_hand_fishing_cast_minigame(H, reel_result, water_turf_ref)
+					return
+
+				// Stage 1: cast/search by hand.
+				user.visible_message("<span class='warning'>[user] strikes their hand into the water!</span>", \
+								"<span class='notice'>I strike into the water.</span>")
+				playsound(src, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+				var/ft = 150
+				ft -= (sl * 20)
+				ft -= (per_mod * 2)
+				if(active_mode == ROD_AUTO)
+					ft += 20
+				ft = round(ft * 1.5)
+				ft = max(20, ft)
+				if(do_after(user, ft, target = user))
+					var/thrust_drain_pct = (active_mode == ROD_AUTO) ? 32.5 : 25
+					var/thrust_stamina_drain = get_hand_fishing_stamina_drain(H, thrust_drain_pct)
+					if(thrust_stamina_drain && !H.stamina_add(thrust_stamina_drain))
+						to_chat(user, span_warning("I'm too exhausted to thrust into the water."))
+						return
+					var/fishchance = 100
+					fishchance += per_mod
+					fishchance += 10
+					if(shore_distance <= 3)
+						fishchance += 20
+						fishchance = round(fishchance * 2)
+					fishchance -= near_shore_penalty * 20
+					if(user.mind)
+						if(!sl)
+							fishchance -= 50
+						else
+							fishchance -= fpp
+					if(active_mode == ROD_AUTO)
+						fishchance -= 20
+					if(shallow_excluded_junk_zone)
+						fishchance -= 15
+					fishchance = clamp(fishchance, 2, 98)
+					if(prob(fishchance))
+						var/list/hand_mods = list(
+							"commonFishingMod" = 1,
+							"rareFishingMod" = 1,
+							"treasureFishingMod" = 1,
+							"trashFishingMod" = 1,
+							"dangerFishingMod" = 1,
+							"ceruleanFishingMod" = 0,
+							"cheeseFishingMod" = 0,
+						)
+						if(shallow_excluded_junk_zone)
+							hand_mods["force_common_rarity"] = TRUE
+							hand_mods["force_nonprize_size"] = TRUE
+							hand_mods["trashFishingMod"] = 2
+							hand_mods["rareFishingMod"] = 0
+							hand_mods["treasureFishingMod"] = 0
+						var/A = get_handfishingloot(H, hand_mods, src)
+						if(A)
+							H.hand_fishing_reel_turf = src
+							H.hand_fishing_reel_until = world.time + max(20, 35 + (sl * 6) + (speed_mod * 2))
+							H.hand_fishing_reel_loot = A
+							H.hand_fishing_reel_size_tag = get_fishing_size_tag_from_catch_path(A)
+							H.hand_fishing_mode = active_mode
+							to_chat(user, span_notice("Something tugs at my hand! Strike the same area of water to reel."))
+							to_chat(user, span_notice("[get_fishing_size_feel_text(H.hand_fishing_reel_size_tag, A)]"))
+							src.balloon_alert_to_viewers("Tug!")
+							playsound(src, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+							return
+					else
+						to_chat(user, span_warning("Not a single fish..."))
+				else
+					to_chat(user, span_warning("I must stand still to fish."))
 				return
 	. = ..()
 	if(!ishuman(user))

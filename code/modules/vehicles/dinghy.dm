@@ -44,6 +44,20 @@
 			buckled_mob.setDir(direct)
 	return TRUE
 
+/obj/vehicle/ridden/dinghy/Click(location, control, params)
+	var/list/modifiers = params2list(params)
+	if(modifiers["ctrl"])
+		var/mob/user = usr
+		if(!isliving(user))
+			return
+		if(user.buckled != src)
+			return
+		// Ctrl+click to face a direction based on click location
+		var/new_dir = get_dir(src, location)
+		if(new_dir)
+			user.setDir(new_dir)
+		return TRUE
+
 /obj/item/rogueweapon/mace/oar
 	name = "oar"
 	desc = "A wooden club with a flattened head for paddling boats about."

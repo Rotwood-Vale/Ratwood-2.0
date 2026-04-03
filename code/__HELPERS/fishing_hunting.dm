@@ -49,6 +49,33 @@
 			return "Gods... this feels monstrous!"
 	return "I can't quite read the weight of it yet."
 
+/proc/get_fishing_size_tag_from_catch_path(catch_path)
+	if(!ispath(catch_path))
+		return "normal"
+	if(ispath(catch_path, /mob/living))
+		return "prize"
+	var/challenge = get_fishing_path_challenge(catch_path)
+	switch(challenge)
+		if(0)
+			return "small"
+		if(1)
+			return "normal"
+		if(2)
+			return "large"
+		if(3)
+			return "huge"
+		else
+			return "prize"
+
+/proc/get_hand_fishing_stamina_drain(mob/living/user, base_percent = 25)
+	if(!user)
+		return 0
+	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), 0)
+	var/strength_bonus = max(0, user.STASTR - 10)
+	var/effective_percent = max(1, base_percent - athletics_skill - strength_bonus)
+	var/drain = round((user.max_stamina * effective_percent) / 100, 1)
+	return max(1, drain)
+
 /proc/get_fishing_path_challenge(catch_path)
 	if(!ispath(catch_path))
 		return 0

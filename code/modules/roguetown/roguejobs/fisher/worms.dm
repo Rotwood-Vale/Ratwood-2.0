@@ -158,10 +158,10 @@
 /obj/item/natural/worms/Initialize(mapload)
 	. = ..()
 	fishingMods = list(
-		"commonFishingMod" = 1,
-		"rareFishingMod" = 1,
-		"treasureFishingMod" = 1,
-		"trashFishingMod" = 1,
+		"commonFishingMod" = 1.15,
+		"rareFishingMod" = 0.70,
+		"treasureFishingMod" = 0.70,
+		"trashFishingMod" = 0.9,
 		"dangerFishingMod" = 1,
 		"ceruleanFishingMod" = 0
 	)
@@ -170,10 +170,10 @@
 /obj/item/natural/worms/grubs/Initialize(mapload)
 	. = ..()
 	fishingMods = list(
-		"commonFishingMod" = 0.85,
-		"rareFishingMod" = 1.15,
-		"treasureFishingMod" = 1,
-		"trashFishingMod" = 1,
+		"commonFishingMod" = 1.25,
+		"rareFishingMod" = 0.60,
+		"treasureFishingMod" = 0.60,
+		"trashFishingMod" = 1.1,
 		"dangerFishingMod" = 1,
 		"ceruleanFishingMod" = 0
 	)

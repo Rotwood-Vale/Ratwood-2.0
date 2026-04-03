@@ -42,13 +42,6 @@
 
 /obj/item/fishing/examine(mob/user)
 	. = ..()
-	var/durability_percent = get_durability_percent()
-	if(durability_percent >= 75)
-		. += span_notice("Durability: [durability_percent]% (sturdy)")
-	else if(durability_percent >= 40)
-		. += span_warning("Durability: [durability_percent]% (worn)")
-	else
-		. += span_danger("Durability: [durability_percent]% (fragile)")
 	if(attachtype)
 		. += span_notice("Attachment type: [attachtype].")
 	if(linehealth)
@@ -218,28 +211,55 @@
 
 /obj/item/fishing/bait/examine(mob/user)
 	. = ..()
+	for(var/line in get_bait_modifier_lines())
+		. += span_notice(line)
+
+/obj/item/proc/get_bait_modifier_lines()
+	var/list/lines = list()
+	if(!isbait)
+		return lines
 	sync_bait_durability()
-	. += span_notice("Durability: [get_bait_durability_percent()]% ([baitresilience]/[bait_max_durability]).")
-	. += span_notice("Lure Chance: [baitpenalty] (bite penalty — lower is better).")
+	lines += "Bait durability: [get_bait_durability_percent()]%"
+	var/bite_modifier = -baitpenalty
+	if(bite_modifier)
+		lines += "Bite Modifier: [format_fishing_signed_value(bite_modifier)] (from bait quality)."
 	if(islist(fishingMods) && length(fishingMods))
-		. += span_notice("Fish Pulls: [format_fishing_mod_list(fishingMods)] (catch table modifiers).")
-	if(islist(sizemod) && length(sizemod))
-		. += span_notice("Size Bias: [format_fishing_mod_list(sizemod)].")
-	if(islist(raritymod) && length(raritymod))
-		. += span_notice("Rarity Chance: [format_fishing_mod_list(raritymod)] (rarity bias).")
+		lines += "Catch Bias: [format_fishing_pull_mod_list(fishingMods)]."
+	if("sizemod" in vars && islist(vars["sizemod"]) && length(vars["sizemod"]))
+		lines += "Size Bias: [format_fishing_mod_list(vars["sizemod"])]."
+	if("raritymod" in vars && islist(vars["raritymod"]) && length(vars["raritymod"]))
+		lines += "Rarity Chance: [format_fishing_mod_list(vars["raritymod"])] (rarity bias)."
 	if("deepfishingweight" in vars && vars["deepfishingweight"])
-		. += span_notice("Depth Pull: [format_fishing_signed_value(vars["deepfishingweight"])] (depth pull modifier).")
-	if(islist(deeplist) && length(deeplist))
-		. += span_notice("Deep Lures: [length(deeplist)] entries.")
-	if(specialcatch)
-		. += span_notice("Special Chance: [specialchance || 0]%.")
+		lines += "Depth Pull: [format_fishing_signed_value(vars["deepfishingweight"])] (depth pull modifier)."
+	if("deeplist" in vars && islist(vars["deeplist"]) && length(vars["deeplist"]))
+		lines += "Deep Lures: [length(vars["deeplist"])] entries."
+	if("specialcatch" in vars && vars["specialcatch"])
+		lines += "Special Chance: [vars["specialchance"] || 0]%."
+	return lines
 
 /obj/item/fishing/bait/meat
 	name = "chum bait"
-	desc = "A small amount of meat, rolled into a ball. Tends to attract eels."
+	desc = "A small amount of meat, rolled into a ball. Attracts predators and dangerous prey from the waters."
 	icon_state = "meatbait"
 	baitresilience = 90
 	bait_max_durability = 90
+	fishingMods = list(
+		"commonFishingMod" = 1.2,
+		"rareFishingMod" = 0.5,
+		"treasureFishingMod" = 0.4,
+		"trashFishingMod" = 1.3,
+		"dangerFishingMod" = 1.6,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0
+	)
+	sizemod = list(
+		"tiny" = 0,
+		"small" = 0,
+		"normal" = 1,
+		"large" = 1,
+		"huge" = 0,
+		"prize" = -1
+	)
 	fishinglist = list(
 		/obj/item/reagent_containers/food/snacks/fish/eel = 2,
 		/obj/item/reagent_containers/food/snacks/fish/salmon = 1,
@@ -248,11 +268,29 @@
 
 /obj/item/fishing/bait/fly
 	name = "fly bait"
-	desc = "A feathered lure for fly fishing. Great for aggressive freshwater fish."
+	desc = "A feathered lure for fly fishing. Attracts smaller, aggressive and rarer freshwater fish."
 	icon = 'icons/roguetown/items/natural.dmi'
 	icon_state = "feather"
+	baitpenalty = -3
 	baitresilience = 90
 	bait_max_durability = 90
+	fishingMods = list(
+		"commonFishingMod" = 0.8,
+		"rareFishingMod" = 1.2,
+		"treasureFishingMod" = 0.6,
+		"trashFishingMod" = 0.6,
+		"dangerFishingMod" = 0.9,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0
+	)
+	sizemod = list(
+		"tiny" = 2,
+		"small" = 2,
+		"normal" = 1,
+		"large" = -2,
+		"huge" = -2,
+		"prize" = -1
+	)
 	fishinglist = list(
 		/obj/item/reagent_containers/food/snacks/fish/salmon = 3,
 		/obj/item/reagent_containers/food/snacks/fish/salmon/black_headed = 2,
@@ -261,29 +299,65 @@
 
 /obj/item/fishing/bait/dough
 	name = "doughy bait"
-	desc = "A small amount of dough, rolled into a ball. Tends to attract carps."
+	desc = "A small amount of dough, rolled into a ball. A general-purpose bait for all your fishing needs."
 	baitresilience = 90
 	bait_max_durability = 90
+	fishingMods = list(
+		"commonFishingMod" = 1.05,
+		"rareFishingMod" = 1.0,
+		"treasureFishingMod" = 1.0,
+		"trashFishingMod" = 1.0,
+		"dangerFishingMod" = 1.0,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0
+	)
 	fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/carp = 2)
 	icon = 'icons/roguetown/items/food.dmi'
 	icon_state = "doughslice"
 
 /obj/item/fishing/bait/gray
 	name = "gray bait"
-	desc = "A small amount of dough and meat, rolled into a ball. Attracts a little bit of everything."
+	desc = "A small amount of dough and meat, rolled into a ball. Attracts more common fish with ease. Water dwelling predators hate it."
 	icon_state = "mixedbait"
+	baitpenalty = -2
 	baitresilience = 90
 	bait_max_durability = 90
+	fishingMods = list(
+		"commonFishingMod" = 1.2,
+		"rareFishingMod" = 1.0,
+		"treasureFishingMod" = 1.0,
+		"trashFishingMod" = 1.0,
+		"dangerFishingMod" = 0.8,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0
+	)
 	fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/carp = 1,
 					/obj/item/reagent_containers/food/snacks/fish/eel = 1)
 
 /obj/item/fishing/bait/speckled
 	name = "speckled bait"
-	desc = "A complex blend of meat, flour, and berries rolled into a ball. Its smell scares off smaller fish."
+	desc = "A complex blend of meat, flour, and berries rolled into a ball. Attracts deep-water and large fish."
 	icon_state = "speckledbait"
 	baitresilience = 90
 	bait_max_durability = 90
-	sizemod = list("tiny" = -2, "small" = -2, "normal" = -1, "large" = 1, "huge" = 1, "prize" = 1)
+	fishingMods = list(
+		"commonFishingMod" = 0.8,
+		"rareFishingMod" = 1.15,
+		"treasureFishingMod" = 1.1,
+		"trashFishingMod" = 0.5,
+		"dangerFishingMod" = 1.0,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0
+	)
+	sizemod = list(
+		"tiny" = -3,
+		"small" = -2,
+		"normal" = 0,
+		"large" = 1,
+		"huge" = 2,
+		"prize" = 2
+	)
+	deepfishingweight = 1
 	fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/carp = 1,
 					/obj/item/reagent_containers/food/snacks/fish/eel = 1)
 	deeplist = list(/obj/item/reagent_containers/food/snacks/fish/angler = 2,
@@ -291,11 +365,20 @@
 
 /obj/item/fishing/bait/deluxe
 	name = "enchanted bait"
-	desc = "A ball of unknown ingredients, formulated by Abyssorian priests." //waiting for more fishing content
+	desc = "A ball of unknown ingredients, formulated by Abyssorian priests. Attracts the rarest and largest fish." //waiting for more fishing content
 	icon_state = "deluxebait"
+	baitpenalty = -2
 	baitresilience = 120
 	bait_max_durability = 120
-	raritymod = list("gold" = 1, "ultra" = 1, "rare"= 1, "com"= -3)
+	fishingMods = list(
+		"commonFishingMod" = 0.8,
+		"rareFishingMod" = 1.25,
+		"treasureFishingMod" = 1.25,
+		"trashFishingMod" = 0.6,
+		"dangerFishingMod" = 1.0,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0
+	)
 	sizemod = list("tiny" = -2, "small" = -2, "normal" = -1, "large" = 1, "huge" = 1, "prize" = 2)
 	deepfishingweight = 1
 	fishinglist = list(/obj/item/reagent_containers/food/snacks/fish/carp = 1,
@@ -366,6 +449,37 @@
 			parts += "[key] [format_fishing_signed_value(value)]"
 		else
 			parts += "[key]: [value]"
+	return english_list(parts)
+
+/proc/format_fishing_pull_mod_list(list/mods)
+	if(!islist(mods) || !length(mods))
+		return "neutral"
+	var/list/label_map = list(
+		"commonFishingMod" = "Common",
+		"rareFishingMod" = "Rare",
+		"treasureFishingMod" = "Treasure",
+		"trashFishingMod" = "Trash",
+		"dangerFishingMod" = "Danger",
+		"ceruleanFishingMod" = "Cerulean",
+		"cheeseFishingMod" = "Cheese",
+	)
+	var/list/parts = list()
+	for(var/key in label_map)
+		if(!(key in mods))
+			continue
+		var/value = mods[key]
+		if(!isnum(value))
+			continue
+		var/neutral = (key == "ceruleanFishingMod" || key == "cheeseFishingMod") ? 0 : 1
+		if(value == neutral)
+			continue
+		if(neutral == 1)
+			var/pct = round((value - 1) * 100)
+			parts += "[label_map[key]] [format_fishing_signed_value(pct)]%"
+		else
+			parts += "[label_map[key]] [format_fishing_signed_value(value)]"
+	if(!length(parts))
+		return "neutral"
 	return english_list(parts)
 
 /proc/removenegativeweights(list/L)

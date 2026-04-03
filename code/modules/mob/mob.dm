@@ -581,6 +581,13 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(I)
 		I.attack_self(src)
 		update_inv_hands()
+	else if(isliving(src))
+		var/mob/living/L = src
+		if(L.hand_fishing_cast_rod)
+			if(!QDELETED(L.hand_fishing_cast_rod) && L.hand_fishing_cast_rod.currentlyfishing)
+				L.hand_fishing_cast_rod.reel_input = TRUE
+			else
+				L.hand_fishing_cast_rod = null
 
 /**
  * Get the notes of this mob
@@ -906,7 +913,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return FALSE
 	if(stat != CONSCIOUS)
 		return FALSE
-	if(buckled && !get_buckled_animal_mount())
+	if(buckled && !get_buckled_animal_mount() && !istype(buckled, /obj/vehicle/ridden/dinghy))
 		return FALSE
 	return TRUE
 
@@ -935,7 +942,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Checks mobility move as well as parent checks
 /mob/living/canface(atom/A)
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
-	if(!animal_mount && !(mobility_flags & MOBILITY_MOVE))
+	var/is_dinghy_buckled = istype(buckled, /obj/vehicle/ridden/dinghy)
+	if(!animal_mount && !(mobility_flags & MOBILITY_MOVE) && !is_dinghy_buckled)
 		return FALSE
 	if(world.time < last_dir_change + 5)
 		return
@@ -969,7 +977,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		for(var/obj/item/grabbing/G in grabbedby) // only chokeholds prevent turning
 			if(G.chokehold)
 				return FALSE
-	if(!animal_mount && IsImmobilized())
+	if(!animal_mount && IsImmobilized() && !is_dinghy_buckled)
 		return FALSE
 	return ..()
 
