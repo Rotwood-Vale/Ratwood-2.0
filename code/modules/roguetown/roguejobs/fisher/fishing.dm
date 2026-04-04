@@ -1,4 +1,4 @@
-/proc/getfishingloot(var/mob/living/carbon/human/fisherman, var/list/modlist, turf/target, var/skill_power = 1)
+/proc/getfishingloot(mob/living/carbon/human/fisherman, list/modlist, turf/target, skill_power = 1)
 	if(!istype(target, /turf/open/water))
 		return null
 	var/is_abyssor_fisher = FALSE
@@ -46,7 +46,7 @@
 				fishingloot = pickweightAllowZero(coast_weights)
 	return fishingloot
 
-/proc/get_handfishingloot(var/mob/living/carbon/human/fisherman, var/list/modlist, turf/target, var/skill_power = 1, var/cage_roll_chance = 30)
+/proc/get_handfishingloot(mob/living/carbon/human/fisherman, list/modlist, turf/target, skill_power = 1, cage_roll_chance = 30)
 	if(!istype(target, /turf/open/water))
 		return null
 	if(!islist(modlist))
@@ -97,7 +97,7 @@
 		return max_scan + 1
 	return closest_dist
 
-/proc/upgradecagemodlist(var/mob/living/carbon/human/fisherman, var/list/modlist, var/skill_power = 1)
+/proc/upgradecagemodlist(mob/living/carbon/human/fisherman, list/modlist, skill_power = 1)
 	if(ishuman(fisherman))
 		if(fisherman.patron.type == /datum/patron/divine/abyssor)
 			modlist["dangerFishingMod"] *= 1.10  // +10% danger
@@ -118,7 +118,7 @@
 			modlist["dangerFishingMod"] *= (1 + bad_luck * 0.05)
 	return modlist
 
-/proc/getbaitlife(var/fishing_skill, var/obj/item/bait, var/basechance = 80)
+/proc/getbaitlife(fishing_skill, obj/item/bait, basechance = 80)
 	if(!bait)
 		return FALSE
 	if(bait.isbait)

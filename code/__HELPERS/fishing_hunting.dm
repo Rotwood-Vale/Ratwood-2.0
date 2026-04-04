@@ -132,7 +132,7 @@
 	return TRUE
 
 // Tracks chum-enhanced water tiles with original properties as: turf -> list(expiry_time, orig_color, orig_name)
-/var/global/list/chummed_fishing_tiles = list()
+GLOBAL_LIST_INIT(chummed_fishing_tiles, list())
 
 /proc/apply_chum_to_turf(turf/T, duration = 2 MINUTES)
 	if(!T)
@@ -142,7 +142,7 @@
 	var/orig_name = T.name
 	
 	// Store expiry and original properties
-	chummed_fishing_tiles[T] = list(world_time_expiry, orig_color, orig_name)
+	GLOB.chummed_fishing_tiles[T] = list(world_time_expiry, orig_color, orig_name)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(expire_chum_turf), T), duration)
 	
 	// Visual effect: turn water red/bloody
@@ -152,7 +152,7 @@
 /proc/expire_chum_turf(turf/T)
 	if(!T)
 		return
-	var/expiry_data = chummed_fishing_tiles[T]
+	var/expiry_data = GLOB.chummed_fishing_tiles[T]
 	if(!expiry_data)
 		return
 	var/expiry = expiry_data[1]
@@ -160,12 +160,12 @@
 		return
 	T.color = expiry_data[2]
 	T.name = expiry_data[3]
-	chummed_fishing_tiles -= T
+	GLOB.chummed_fishing_tiles -= T
 
 /proc/is_chummed_fishing_turf(turf/T)
 	if(!T)
 		return FALSE
-	var/expiry_data = chummed_fishing_tiles[T]
+	var/expiry_data = GLOB.chummed_fishing_tiles[T]
 	if(!expiry_data)
 		return FALSE
 	
