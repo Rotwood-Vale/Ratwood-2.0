@@ -143,8 +143,7 @@
 					if(!prob(reel_chance))
 						H.hand_fishing_mode = null
 						H.hand_fishing_mode_until = 0
-						if(prob(active_mode == ROD_CAST ? 45 : 35))
-							apply_fishing_bite_injury(H, src)
+						apply_fishing_bite_injury(H, src)
 						to_chat(user, span_warning("Damn, it slips away as I pull!"))
 						return
 					if(active_mode == ROD_AUTO)

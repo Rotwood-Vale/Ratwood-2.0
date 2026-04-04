@@ -105,7 +105,7 @@
 		"[user] grunts as [user.p_their()] hand scrapes against a jagged rock!"
 	)
 	var/list/self_messages = list(
-		"[source_name] snaps at my hand and bites down!",
+		"[source_name] catches my hand and something bites down!",
 		"A crab catches my fingers and nicks me!",
 		"Something sharp cuts across my hand!",
 		"My hand scrapes against a jagged rock!"

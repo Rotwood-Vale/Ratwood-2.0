@@ -30,6 +30,7 @@
 /obj/item/natural/worms
 	name = "worm"
 	desc = "The favorite bait of the courageous fishermen who venture these dark waters."
+	possible_item_intents = list(/datum/intent/use, /datum/intent/food)
 	icon_state = "worm1"
 	throwforce = 0
 	baitpenalty = 10
@@ -45,13 +46,13 @@
 	if(!user)
 		return FALSE
 	user.visible_message(span_warning("[user] reluctantly swallows [src]."), span_warning("I force [src] down."))
+	playsound(user.loc, 'sound/misc/eat.ogg', rand(30,60), TRUE)
 	user.adjust_nutrition(1)
+	user.adjust_disgust(25)
 	if(!HAS_TRAIT(user, TRAIT_NOMOOD))
 		user.add_stress(/datum/stressevent/rotfood)
 	if(!HAS_TRAIT(user, TRAIT_NASTY_EATER) && !HAS_TRAIT(user, TRAIT_WILD_EATER))
-		user.add_nausea(25)
-		if(prob(55))
-			user.vomit()
+		user.add_nausea(12)
 	qdel(src)
 	return TRUE
 
@@ -60,6 +61,12 @@
 		return ..()
 	var/mob/living/carbon/human/H = user
 	return eat_gross_bait(H)
+
+/obj/item/natural/worms/attack(mob/living/M, mob/living/user)
+	if(user?.used_intent?.type == /datum/intent/food && M == user && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		return eat_gross_bait(H)
+	return ..()
 
 /obj/item/natural/worms/grubs
 	name = "grub"

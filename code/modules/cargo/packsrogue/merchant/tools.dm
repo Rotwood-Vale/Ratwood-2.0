@@ -79,24 +79,14 @@
 				)
 
 /datum/supply_pack/rogue/tools/fishingrod
-	name = "Fishing Rod"
+	name = "Iron Fishing Rod"
 	cost = 12
-	contains = list(/obj/item/fishingrod)
+	contains = list(/obj/item/fishingrod/aalloy/iron)
 
-/datum/supply_pack/rogue/tools/bait
-	name = "Fishing Grub"
-	cost = 6
-	contains = /obj/item/fishing/bait/deluxe
-
-/datum/supply_pack/rogue/tools/fishingline
-	name = "Premium Fishing line"
-	cost = 25
-	contains = /obj/item/fishing/reel/deluxe
-
-/datum/supply_pack/rogue/tools/fishinghook
-	name = "Premium Fishing hook"
-	cost = 25
-	contains = /obj/item/fishing/hook/deluxe
+/datum/supply_pack/rogue/tools/tacklebag
+	name = "Tackle Bag"
+	cost = 60
+	contains = list(/obj/item/storage/roguebag/tackle)
 
 /datum/supply_pack/rogue/tools/prarml
 	name = "Prosthetic Wood Arm (L)"

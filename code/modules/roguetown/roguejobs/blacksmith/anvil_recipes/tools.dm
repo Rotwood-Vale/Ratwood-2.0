@@ -316,6 +316,13 @@
 	created_item = /obj/item/storage/hip/headhook
 	i_type = "Tools"
 
+/datum/anvil_recipe/tools/iron/fishingrod
+	name = "Fishing Rod, Iron (+1 Iron)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/fishingrod/aalloy/iron
+	i_type = "Tools"
+
 /datum/anvil_recipe/tools/scissors
 	name = "Scissors"
 	req_bar = /obj/item/ingot/iron

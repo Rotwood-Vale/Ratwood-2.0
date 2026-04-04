@@ -111,6 +111,22 @@
 	/obj/item/cooking/pan
 	)
 
+/obj/item/storage/roguebag/tackle
+	name = "tackle bag"
+	desc = "A fisher's supply sack filled with basic tackle and bait."
+	populate_contents = list(
+		/obj/item/fishingrod/fisher,
+		/obj/item/fishing/hook/iron,
+		/obj/item/fishing/bait/dough,
+		/obj/item/fishing/bait/dough,
+		/obj/item/fishing/bait/gray,
+		/obj/item/fishing/bait/gray,
+		/obj/item/fishing/bait/meat,
+		/obj/item/fishing/bait/speckled,
+		/obj/item/fishing/bait/fly,
+		/obj/item/fishing/line/sinker,
+	)
+
 /obj/item/storage/roguebag/ash
 	populate_contents = list(
 		/obj/item/ash,
