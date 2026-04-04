@@ -354,13 +354,12 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	if(isspawn)
 		V.vampire_disguise()
 
-/datum/antagonist/vampirelord/on_life(mob/user)
+/datum/antagonist/vampirelord/on_life(mob/living/carbon/human/user)
 	if(!user)
 		return
-	var/mob/living/carbon/human/H = user
-	if(H.stat == DEAD)
+	if(user.stat == DEAD)
 		return
-	if(H.advsetup)
+	if(user.advsetup)
 		return
 	if(!isspawn)
 		vitae = mypool.current
@@ -368,38 +367,38 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		return
 	if(world.time % 5)
 		if(GLOB.tod != "night")
-			if(isturf(H.loc))
-				var/turf/T = H.loc
+			if(isturf(user.loc))
+				var/turf/T = user.loc
 				if(T.can_see_sky())
 					if(T.get_lumcount() > 0.15)
 						if(!isspawn)
 							if(!disguised)
-								to_chat(H, span_warning("Astrata spurns me! I must get out of her rays!")) // VLord is more punished for daylight excursions.
-								var/turf/N = H.loc
+								to_chat(user, span_warning("Astrata spurns me! I must get out of her rays!")) // VLord is more punished for daylight excursions.
+								var/turf/N = user.loc
 								if(N.can_see_sky())
 									if(N.get_lumcount() > 0.15)
-										H.fire_act(3)
+										user.fire_act(3)
 										handle_vitae(-300)
-								to_chat(H, span_warning("That was too close. I must avoid the sun."))
+								to_chat(user, span_warning("That was too close. I must avoid the sun."))
 						else if (isspawn && !disguised)
-							H.fire_act(1,5)
+							user.fire_act(1,5)
 							handle_vitae(-10)
-	if(H.on_fire)
+	if(user.on_fire)
 		if(disguised)
 			last_transform = world.time
-			H.vampire_undisguise(src)
-		H.freak_out()
+			user.vampire_undisguise(src)
+		user.freak_out()
 
-	if(H.stat)
-		if(istype(H.loc, /obj/structure/closet/crate/coffin))
-			H.fully_heal()
+	if(user.stat)
+		if(istype(user.loc, /obj/structure/closet/crate/coffin))
+			user.fully_heal()
 
 	if(vitae > 0)
-		H.blood_volume = BLOOD_VOLUME_NORMAL
+		user.blood_volume = BLOOD_VOLUME_NORMAL
 		if(vitae < 200)
 			if(disguised)
-				to_chat(H, span_warning("My disguise fails!"))
-				H.vampire_undisguise(src)
+				to_chat(user, span_warning("My disguise fails!"))
+				user.vampire_undisguise(src)
 
 /datum/antagonist/vampirelord/proc/handle_vitae(change, tribute)
 	var/tempcurrent = vitae
@@ -508,9 +507,9 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	if(SSmapping.retainer.king_submitted)
 		to_chat(src, "I am already the Master of the vale.")
 		return
-	for(var/mob/living/carbon/human/H in oview(1))
-		if(SSticker.rulermob == H)
-			H.receive_submission(src)
+	for(var/mob/living/carbon/human/given_human in oview(1))
+		if(SSticker.rulermob == user)
+			given_human.receive_submission(src)
 
 /mob/living/carbon/human/proc/receive_submission(mob/living/carbon/human/lord)
 	if(stat)

@@ -69,6 +69,6 @@
 	LAZYADD(SSmapping.turf_reservations, src)
 
 /datum/turf_reservation/Destroy()
-	Release()
+	INVOKE_ASYNC(src, PROC_REF(Release))
 	LAZYREMOVE(SSmapping.turf_reservations, src)
 	return ..()

@@ -120,35 +120,40 @@
 /datum/antagonist/vampire/proc/finalize_vampire()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/music/vampintro.ogg', 80, FALSE, pressure_affected = FALSE)
 
-
-
-/datum/antagonist/vampire/on_life(mob/user)
+/datum/antagonist/vampire/on_life(mob/living/carbon/human/user)
 	if(!user)
-		return
-	var/mob/living/carbon/human/H = user
-	if(H.stat == DEAD)
-		return
-	if(H.advsetup)
+		CRASH("Our user was null. What's going on here?")
+	var/datum/antagonist/vampire/assured_datum = user.mind?.has_antag_datum(/datum/antagonist/vampire)
+	if(!assured_datum) // shouldn't happen, but if it does, we should clean up
+		// nulling out any possible datum references to avoid hard lookups in GC
+		src.owner = null
+		src.default_clan = null
+		src.selected_covens = null
+		src.forcing_clan = null
+		qdel(src)
+		// crashing this proc -- WITH NO SURVIVORS
+		CRASH("Our user wasn't a vampire!") // they expect tracebacks in the wreckage, brother
+	if(user.advsetup)
 		return
 
 	if(world.time % 5)
 		if(GLOB.tod != "night")
-			if(isturf(H.loc))
-				var/turf/T = H.loc
+			if(isturf(user.loc))
+				var/turf/T = user.loc
 				if(T.can_see_sky())
 					if(T.get_lumcount() > 0.15)
 						if(!disguised)
 							H.fire_act(1,5)
 
-	if(H.on_fire)
+	if(user.on_fire)
 		if(disguised)
 			last_transform = world.time
-			H.vampire_undisguise(src)
-		H.freak_out()
+			user.vampire_undisguise(src)
+		user.freak_out()
 
-	if(H.stat)
-		if(istype(H.loc, /obj/structure/closet/crate/coffin))
-			H.fully_heal()
+	if(user.stat)
+		if(istype(user.loc, /obj/structure/closet/crate/coffin))
+			user.fully_heal()
 
 	vitae = CLAMP(vitae, 0, 1666)
 
@@ -337,16 +342,16 @@
 /datum/status_effect/buff/fortitude/on_apply()
 	. = ..()
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		QDEL_NULL(H.skin_armor)
-		H.skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/vampire_fortitude(H)
+		var/mob/living/carbon/human/user = owner
+		QDEL_NULL(user.skin_armor)
+		user.skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/vampire_fortitude(user)
 	owner.add_stress(/datum/stressevent/weed)
 
 /datum/status_effect/buff/fortitude/on_remove()
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(istype(H.skin_armor, /obj/item/clothing/suit/roguetown/armor/skin_armor/vampire_fortitude))
-			QDEL_NULL(H.skin_armor)
+		var/mob/living/carbon/human/user = owner
+		if(istype(user.skin_armor, /obj/item/clothing/suit/roguetown/armor/skin_armor/vampire_fortitude))
+			QDEL_NULL(user.skin_armor)
 	. = ..()
 
 /obj/item/clothing/suit/roguetown/armor/skin_armor/vampire_fortitude
