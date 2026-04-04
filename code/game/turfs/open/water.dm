@@ -60,6 +60,7 @@
 		if(L.hand_fishing_cast_rod)
 			if(!QDELETED(L.hand_fishing_cast_rod) && L.hand_fishing_cast_rod.currentlyfishing)
 				if(L.z == src.z)
+					L.hand_fishing_cast_rod.reel_input_zone = L.hand_fishing_cast_rod.current_fish_zone
 					L.hand_fishing_cast_rod.reel_input = TRUE
 			else
 				L.hand_fishing_cast_rod = null

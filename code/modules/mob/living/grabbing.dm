@@ -86,6 +86,7 @@
 	if(QDELETED(L.hand_fishing_cast_rod) || !L.hand_fishing_cast_rod.currentlyfishing)
 		L.hand_fishing_cast_rod = null
 		return
+	L.hand_fishing_cast_rod.reel_input_zone = L.hand_fishing_cast_rod.current_fish_zone
 	L.hand_fishing_cast_rod.reel_input = TRUE
 
 /obj/item/grabbing/proc/update_hands(mob/user)

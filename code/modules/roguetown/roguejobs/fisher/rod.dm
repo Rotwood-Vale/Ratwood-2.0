@@ -85,12 +85,9 @@
 	var/reel_ready = FALSE  // TRUE once fish is tired enough to haul in
 	var/reel_expire = 0    // world.time deadline for the reel opportunity window
 	var/reel_input = FALSE  // set by attack_self during minigame when reel_ready
+	var/reel_input_zone = null
 	var/reel_successes = 0
-	var/early_reel_streak = 0
 	var/failed_reel_attempts = 0
-	/// Zone-tracking for the fish position in the minigame.
-	var/red_zone_visits = 0     // times fish has entered the red zone this hooked phase
-	var/fish_was_red = FALSE    // previous-tick red zone state, for entry detection
 	var/current_fish_zone = "none"  // "green", "blue", or "red"
 
 /obj/item/fishingrod/Initialize()
@@ -135,27 +132,9 @@
 			snap_line_from_anchor_drift(user)
 			currentlyfishing = FALSE
 			return
-		if(reel_ready)
+		reel_input_zone = current_fish_zone
+		if(reel_ready || current_fish_zone == "green" || current_fish_zone == "blue")
 			reel_input = TRUE
-		else if(current_fish_zone == "red")
-			if(line && (prob(50) || !baited))
-				playsound(user.loc, 'sound/items/pickbreak.ogg', 80, FALSE)
-				to_chat(user, span_userdanger("LINE SNAPPED! The fish twists violently and breaks my line!"))
-				apply_line_snap_consequences(user)
-			else if(baited)
-				playsound(user.loc, 'sound/items/fishing_plouf.ogg', 90, TRUE)
-				to_chat(user, span_userdanger("BAIT LOST! The fish tears my bait clean off the hook!"))
-				QDEL_NULL(baited)
-				baited = null
-				update_icon()
-			to_chat(user, "<span class='warning'>I yanked the line sideways and lost the fish!</span>")
-			currentlyfishing = FALSE
-		else
-			topzone_hold = 0
-			reel_successes = 0
-			failed_reel_attempts = min(failed_reel_attempts + 1, 10)
-			difficulty = min(difficulty + 1, 6) // Fish surges harder from the premature yank.
-			to_chat(user, span_userdanger("TOO EARLY! The fish surges with renewed energy. Wait until it truly tires!"))
 		return
 	// Cast-intent pending: player uses rod in-hand to start the reel and launch the minigame.
 	if(cast_reel_pending && fisher == user)
@@ -416,7 +395,7 @@
 	if(!QDELETED(src) && user)
 		to_chat(user, "<span class='warning'>The snap over-stresses [src], wearing down the rod's integrity.</span>")
 
-/obj/item/fishingrod/proc/apply_line_snap_consequences(mob/user)
+/obj/item/fishingrod/proc/apply_line_snap_consequences(mob/user, reason = null)
 	var/reel_name = null
 	var/line_name = null
 	if(reel)
@@ -444,12 +423,13 @@
 	if(line)
 		drop_attachment(line, user)
 		line = null
+	var/extra = reason ? " [reason]" : ""
 	if(reel_name && line_name)
-		to_chat(user, span_userdanger("THE LINE SNAPPED! My [reel_name] tears off and the [line_name] drops to my feet!"))
+		to_chat(user, span_userdanger("THE LINE SNAPPED![extra] My [reel_name] tears off and the [line_name] drops to my feet."))
 	else if(reel_name)
-		to_chat(user, span_userdanger("THE LINE SNAPPED! My [reel_name] tears off the rod!"))
+		to_chat(user, span_userdanger("THE LINE SNAPPED![extra] My [reel_name] tears off the rod."))
 	else if(line_name)
-		to_chat(user, span_userdanger("THE LINE SNAPPED! My [line_name] tears free and drops to my feet!"))
+		to_chat(user, span_userdanger("THE LINE SNAPPED![extra] My [line_name] tears free and drops to my feet."))
 	if(hook)
 		to_chat(user, span_userdanger("The hook tears free with my line, lost in the water!"))
 		QDEL_NULL(hook)
@@ -477,8 +457,7 @@
 	if(!user)
 		return
 	playsound(user.loc, 'sound/items/pickbreak.ogg', 80, FALSE)
-	to_chat(user, span_userdanger("THE LINE SNAPPED! I stray too far from my casting spot and the line breaks!"))
-	apply_line_snap_consequences(user)
+	apply_line_snap_consequences(user, "I stray too far from my casting spot and the line snaps!")
 	cast_reel_pending = FALSE
 	cast_reel_pending_deadline = 0
 	reset_auto_pending_catch()
@@ -962,10 +941,8 @@
 	reel_ready = FALSE
 	reel_expire = 0
 	reel_input = FALSE
+	reel_input_zone = null
 	reel_successes = 0
-	early_reel_streak = 0
-	red_zone_visits = 0
-	fish_was_red = FALSE
 	current_fish_zone = "none"
 
 /**
@@ -1037,12 +1014,10 @@
 	// Reset minigame state.
 	reel_successes = 0
 	failed_reel_attempts = 0
-	early_reel_streak = 0
-	red_zone_visits = 0
-	fish_was_red = FALSE
 	current_fish_zone = "none"
 	reel_ready = FALSE
 	reel_input = FALSE
+	reel_input_zone = null
 	topzone_hold = 0
 	reel_expire = 0
 	currentstate = "hooked"
@@ -1145,17 +1120,17 @@
 
 		facestate = clamp(facestate, 1, 5)
 
-		var/gz_min; var/gz_base
+		var/gz_min
 		if(sl >= SKILL_LEVEL_LEGENDARY)
-			gz_min = 14; gz_base = 29
+			gz_min = 42
 		else if(sl == SKILL_LEVEL_MASTER)
-			gz_min = 11; gz_base = 26
+			gz_min = 32
 		else if(sl == SKILL_LEVEL_EXPERT)
-			gz_min = 9; gz_base = 24
+			gz_min = 24
 		else if(sl == SKILL_LEVEL_JOURNEYMAN)
-			gz_min = 7; gz_base = 22
+			gz_min = 13
 		else
-			gz_min = 5; gz_base = 20
+			gz_min = 11
 		var/green_zone_margin = gz_min
 		var/blue_zone_margin = 80
 		var/abs_tdf = abs(targetdif)
@@ -1165,7 +1140,7 @@
 				failed_reel_attempts = 0
 				reel_ready = TRUE
 				reel_expire = world.time + (2 SECONDS)
-				to_chat(fisher, span_notice("The fish is tiring! Click the water to reel it in!"))
+				to_chat(fisher, span_notice("The fish is tiring! Strike the water once more to haul it in!"))
 		else if(abs_tdf <= blue_zone_margin)
 			current_fish_zone = "blue"
 			topzone_hold = 0
@@ -1178,16 +1153,17 @@
 			reel_expire = 0
 			to_chat(fisher, span_warning("I lose the fish in the water!"))
 			currentlyfishing = FALSE
-		fish_was_red = (abs_tdf > blue_zone_margin)
 
 		if(reel_ready && world.time > reel_expire)
 			reel_ready = FALSE
 			topzone_hold = 0
-			to_chat(fisher, span_warning("The fish recovers! Keep my hand centered to tire it again!"))
+			to_chat(fisher, span_userdanger("THE FISH PULLS BACK! Keep my hand centered to tire it again!"))
 
-		if(reel_input)
+		if(reel_input && currentlyfishing)
+			var/input_zone = reel_input_zone || current_fish_zone
 			reel_input = FALSE
-			if(reel_ready)
+			reel_input_zone = null
+			if(reel_ready || input_zone == "green")
 				reel_ready = FALSE
 				failed_reel_attempts = 0
 				var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
@@ -1196,7 +1172,6 @@
 					currentlyfishing = FALSE
 					sleep(1)
 					continue
-				topzone_hold = 0
 				reel_expire = 0
 				playsound(water_turf ? water_turf : get_turf(fisher), 'sound/items/fishing_plouf.ogg', 90, TRUE)
 				reel_successes++
@@ -1206,18 +1181,15 @@
 					currentlyfishing = FALSE
 				else
 					hooked_ticks = 0
-					red_zone_visits = 0
-					fish_was_red = FALSE
 					to_chat(fisher, span_userdanger("I GAIN GROUND! But the fish surges back. One more strong pull!"))
-			else if(current_fish_zone == "red")
-				to_chat(fisher, span_warning("I yanked too hard to the side and lose the fish!"))
-				currentlyfishing = FALSE
-			else
+			else if(input_zone == "blue")
 				topzone_hold = 0
+				reel_ready = FALSE
+				reel_expire = 0
 				reel_successes = 0
 				failed_reel_attempts = min(failed_reel_attempts + 1, 10)
-				difficulty = min(difficulty + 1, 6) // Fish surges harder from the premature pull.
-				to_chat(fisher, span_userdanger("TOO EARLY! The fish surges with renewed energy. Wait until it truly tires!"))
+				hooked_ticks = 0
+				to_chat(fisher, span_userdanger("BAD TIMING! The fish pulls back and surges with renewed energy!"))
 
 		sleep(1)
 
@@ -1791,7 +1763,6 @@
 		var/next_stamina_tick = world.time + (5 SECONDS)
 		reel_successes = 0
 		failed_reel_attempts = 0
-		early_reel_streak = 0
 		// Pre-compute fish challenge for the minigame: skill partially offsets it, but hard fish always pressure the player.
 		var/fish_challenge_minigame = get_fish_total_challenge()
 		var/challenge_load = max(0, fish_challenge_minigame - max(0, skillmod - 4))
@@ -1911,28 +1882,25 @@
 
 					facestate = clamp(facestate, 1, 5)
 
-					// Top-zone reel mechanic: keep fishstate centered (targetdif near 0) to tire the fish.
-					// Bigger/rarer fish fight harder due to higher velocity and acceleration.
-					var/hold_needed = 1
-					// Zone margins: green zone width is fixed per skill tier; challenge_load narrows it from the base.
-					var/gz_min; var/gz_base
+					// Zone margins: green zone width is fixed per skill tier.
+					var/gz_min
 					if(sl >= SKILL_LEVEL_LEGENDARY)
-						gz_min = 14; gz_base = 29
+						gz_min = 42
 					else if(sl == SKILL_LEVEL_MASTER)
-						gz_min = 11; gz_base = 26
+						gz_min = 32
 					else if(sl == SKILL_LEVEL_EXPERT)
-						gz_min = 9; gz_base = 24
+						gz_min = 24
 					else if(sl == SKILL_LEVEL_JOURNEYMAN)
-						gz_min = 7; gz_base = 22
+						gz_min = 13
 					else
-						gz_min = 5; gz_base = 20
+						gz_min = 11
 					var/green_zone_margin = gz_min
 					var/blue_zone_margin = 80
 					var/abs_tdf = abs(targetdif)
 					if(abs_tdf <= green_zone_margin)
 						current_fish_zone = "green"
 						topzone_hold++
-						if(topzone_hold >= hold_needed && !reel_ready)
+						if(topzone_hold >= 1 && !reel_ready)
 							failed_reel_attempts = 0
 							reel_ready = TRUE
 							reel_expire = world.time + (2 SECONDS)
@@ -1949,8 +1917,7 @@
 						reel_expire = 0
 						if(line && (prob(30) || !baited))
 							playsound(fisher.loc, 'sound/items/pickbreak.ogg', 80, FALSE)
-							to_chat(fisher, span_userdanger("THE LINE SNAPPED! The fish surges and breaks my line instantly!"))
-							apply_line_snap_consequences(fisher)
+							apply_line_snap_consequences(fisher, "The fish surges and breaks it!")
 							line_snapped = TRUE
 						else if(baited)
 							playsound(fisher.loc, 'sound/items/fishing_plouf.ogg', 90, TRUE)
@@ -1960,36 +1927,43 @@
 							update_icon()
 						to_chat(fisher, "<span class='warning'>I lose the fish in the water!</span>")
 						currentlyfishing = FALSE
-					fish_was_red = (abs_tdf > blue_zone_margin)
 
 					if(reel_ready && world.time > reel_expire)
 						reel_ready = FALSE
 						topzone_hold = 0
-						to_chat(fisher, "<span class='warning'>The fish recovers! Keep the rod steady in front of you to tire it again!</span>")
+						to_chat(fisher, span_userdanger("THE FISH PULLS BACK! Keep the rod steady in front of you to tire it again!"))
 
-					if(reel_input && reel_ready)
+					if(reel_input && currentlyfishing)
+						var/input_zone = reel_input_zone || current_fish_zone
 						reel_input = FALSE
-						reel_ready = FALSE
-						failed_reel_attempts = 0
-						var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
-						if(reel_stamina_drain && !fisher.stamina_add(reel_stamina_drain))
-							to_chat(fisher, "<span class='warning'>I'm too exhausted to haul against the fish.</span>")
-							currentlyfishing = FALSE
-							continue
-						topzone_hold = 0
-						reel_expire = 0
-						playsound(loc, 'sound/misc/reeling.ogg', 80, FALSE)
-						reel_successes++
-						if(reel_successes >= 2)
-							to_chat(fisher, "<span class='notice'>I haul back hard and pull it in!</span>")
-							caught = TRUE
-							currentlyfishing = FALSE
-						else
-							// After each successful reel, the fish surges back to full speed.
+						reel_input_zone = null
+						if(reel_ready || input_zone == "green")
+							reel_ready = FALSE
+							failed_reel_attempts = 0
+							var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
+							if(reel_stamina_drain && !fisher.stamina_add(reel_stamina_drain))
+								to_chat(fisher, "<span class='warning'>I'm too exhausted to fight against the fish.</span>")
+								currentlyfishing = FALSE
+								continue
+							reel_expire = 0
+							playsound(loc, 'sound/misc/reeling.ogg', 80, FALSE)
+							reel_successes++
+							if(reel_successes >= 2)
+								to_chat(fisher, "<span class='notice'>I tug back hard and reel it in!</span>")
+								caught = TRUE
+								currentlyfishing = FALSE
+							else
+								// After each successful reel, the fish surges back to full speed.
+								hooked_ticks = 0
+								to_chat(fisher, span_userdanger("I GAIN LINE! But the fish surges back. One more strong reel should do it!"))
+						else if(input_zone == "blue")
+							topzone_hold = 0
+							reel_ready = FALSE
+							reel_expire = 0
+							reel_successes = 0
+							failed_reel_attempts = min(failed_reel_attempts + 1, 10)
 							hooked_ticks = 0
-							red_zone_visits = 0
-							fish_was_red = FALSE
-							to_chat(fisher, span_userdanger("I GAIN LINE! But the fish surges back. One more strong reel should do it!"))
+							to_chat(fisher, span_userdanger("BAD TIMING! The fish pulls back and surges with renewed energy!"))
 
 			lastmouse = currentmouse
 			sleep(1)
