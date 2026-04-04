@@ -97,6 +97,18 @@
 
 /obj/item/fishingrod/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	if(baited)
+		drop_attachment(baited, null)
+		baited = null
+	if(hook)
+		drop_attachment(hook, null)
+		hook = null
+	if(line)
+		drop_attachment(line, null)
+		line = null
+	if(reel)
+		drop_attachment(reel, null)
+		reel = null
 	. = ..()
 
 /obj/item/fishingrod/process()
@@ -105,7 +117,7 @@
 	if(!(auto_reel_ready || cast_reel_pending || currentlyfishing))
 		return
 	if(currentlyfishing)
-		if(is_far_from_cast_anchor(fisher, 3))
+		if(is_far_from_cast_anchor(fisher, 2))
 			snap_line_from_anchor_drift(fisher)
 			currentlyfishing = FALSE
 	else if(auto_reel_ready && is_far_from_cast_anchor(fisher))
@@ -133,7 +145,7 @@
 /obj/item/fishingrod/attack_self(mob/user)
 	// During the cast minigame, intercept to allow the player to reel the fish in.
 	if(currentlyfishing && fisher == user)
-		if(is_far_from_cast_anchor(user, 3))
+		if(is_far_from_cast_anchor(user, 2))
 			snap_line_from_anchor_drift(user)
 			currentlyfishing = FALSE
 			return
@@ -374,8 +386,11 @@
 		var/line_integrity_before = line_item.obj_integrity
 		if(line_item.adjust_durability(line_damage))
 			apply_rod_damage_from_line_break(line_integrity_before, user)
+			if(QDELETED(src))
+				return
 			to_chat(user, "<span class='warning'>My [line_item.name] gives out!</span>")
-			QDEL_NULL(line)
+			remove_all_attachments(user)
+			return
 	if(hook && istype(hook, /obj/item/fishing))
 		var/obj/item/fishing/hook_item = hook
 		if(hook_item.adjust_durability(hook_damage))
@@ -395,6 +410,12 @@
 		return
 	var/rod_damage = max(1, round(line_integrity_lost * 0.5))
 	take_damage(rod_damage, BRUTE, "blunt", FALSE)
+	if(!QDELETED(src) && obj_integrity <= 0)
+		if(user)
+			to_chat(user, "<span class='warning'>My [src] splinters apart from the strain!</span>")
+		remove_all_attachments(user)
+		qdel(src)
+		return
 	if(!QDELETED(src) && user)
 		to_chat(user, "<span class='warning'>The snap over-stresses [src], wearing down the rod's integrity.</span>")
 
@@ -733,7 +754,9 @@
 	if(!I)
 		return
 	I.alpha = initial(I.alpha)
-	I.forceMove(get_turf(user))
+	var/turf/drop_turf = get_turf(user ? user : src)
+	if(drop_turf)
+		I.forceMove(drop_turf)
 
 /obj/item/fishingrod/proc/remove_rig(mob/user)
 	if(baited)
@@ -914,7 +937,6 @@
 	fishstate = new /atom/movable/fishingoverlay/pointer2
 	face = new /atom/movable/fishingoverlay/face
 	faceframe = new /atom/movable/fishingoverlay/face/frame
-	backdrop.owner = user.client
 	user.client.screen += backdrop
 	user.client.screen += reelstate
 	user.client.screen += fishstate
@@ -922,21 +944,17 @@
 	user.client.screen += faceframe
 
 /obj/item/fishingrod/proc/deleteui(mob/living/user)
-	user.client.screen -= backdrop
-	user.client.screen -= reelstate
-	user.client.screen -= fishstate
-	user.client.screen -= face
-	user.client.screen -= faceframe
-	qdel(backdrop)
-	qdel(reelstate)
-	qdel(fishstate)
-	qdel(face)
-	qdel(faceframe)
-	backdrop = null
-	reelstate = null
-	fishstate = null
-	face = null
-	faceframe = null
+	if(user?.client)
+		user.client.screen -= backdrop
+		user.client.screen -= reelstate
+		user.client.screen -= fishstate
+		user.client.screen -= face
+		user.client.screen -= faceframe
+	QDEL_NULL(backdrop)
+	QDEL_NULL(reelstate)
+	QDEL_NULL(fishstate)
+	QDEL_NULL(face)
+	QDEL_NULL(faceframe)
 
 /obj/item/fishingrod/proc/stopgame(mob/living/user)
 	src.deleteui(user)
@@ -957,9 +975,11 @@
 	topzone_hold = 0
 	reel_ready = FALSE
 	reel_expire = 0
+	reel_cooldown_until = 0
 	reel_input = FALSE
 	reel_input_zone = null
 	reel_successes = 0
+	failed_reel_attempts = 0
 	current_fish_zone = "none"
 
 /**
@@ -1088,7 +1108,7 @@
 		if(user.client)
 			average_ping = user.client.avgping * 0.01
 
-		currentmouse = clamp(backdrop.pointdir, 90, 270)
+		currentmouse = clamp(backdrop.pointdir + 2, 90, 270);
 		reelstate.transform = 0
 		var/matrix/M = matrix()
 		M.Turn(currentmouse)
@@ -1182,9 +1202,9 @@
 			reel_input = FALSE
 			reel_input_zone = null
 			if(world.time < reel_cooldown_until)
-				to_chat(fisher, span_warning("I need to ready myself for two seconds before reeling again!"))
+				to_chat(fisher, span_warning("I need to catch my breath for a second before reeling again!"))
 			else if(reel_ready || input_zone == "green")
-				reel_cooldown_until = world.time + (2 SECONDS)
+				reel_cooldown_until = world.time + (1 SECONDS)
 				reel_ready = FALSE
 				failed_reel_attempts = 0
 				var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
@@ -1204,12 +1224,15 @@
 					hooked_ticks = 0
 					to_chat(fisher, span_userdanger("I GAIN GROUND! But the fish surges back. One more strong pull!"))
 			else if(input_zone == "blue")
-				reel_cooldown_until = world.time + (2 SECONDS)
+				reel_cooldown_until = world.time + (1 SECONDS)
 				topzone_hold = 0
 				reel_ready = FALSE
 				reel_expire = 0
 				reel_successes = 0
 				failed_reel_attempts = min(failed_reel_attempts + 1, 10)
+				difficulty = clamp(difficulty + 1, 1, 6)
+				acceleration = min(acceleration + 1, 12)
+				maxvelocity = min(maxvelocity + 1, 12)
 				hooked_ticks = 0
 				to_chat(fisher, span_userdanger("BAD TIMING! The fish pulls back and surges with renewed energy!"))
 
@@ -1235,7 +1258,10 @@
 
 	to_chat(user, span_notice("I pull it out of the water!"))
 	playsound(water_turf, 'sound/items/Fish_out.ogg', 100, TRUE)
-	user.adjust_experience(/datum/skill/labor/fishing, 20)
+	if(user.mind)
+		user.mind.add_sleep_experience(/datum/skill/labor/fishing, 20, FALSE)
+	else
+		user.adjust_experience(/datum/skill/labor/fishing, 20)
 	var/static/list/hand_quality_mods = list(
 		"commonFishingMod" = 1,
 		"rareFishingMod" = 1,
@@ -1796,7 +1822,7 @@
 		fishtarget = 90
 
 		while(currentlyfishing)
-			if(is_far_from_cast_anchor(fisher, 3))
+			if(is_far_from_cast_anchor(fisher, 2))
 				snap_line_from_anchor_drift(fisher)
 				line_snapped = TRUE
 				currentlyfishing = FALSE
@@ -1809,11 +1835,7 @@
 				next_stamina_tick = world.time + (5 SECONDS)
 			if(user.client)
 				average_ping = user.client.avgping * 0.01
-
-			if(!checkreqs(fisher))
-				currentlyfishing = FALSE
-
-			currentmouse = clamp(backdrop.pointdir, 90, 270)
+			currentmouse = clamp(backdrop.pointdir + 2, 90, 270);
 			reelstate.transform = 0
 			var/matrix/M = matrix()
 			M.Turn(currentmouse)
@@ -1959,9 +1981,9 @@
 						reel_input = FALSE
 						reel_input_zone = null
 						if(world.time < reel_cooldown_until)
-							to_chat(fisher, "<span class='warning'>I need to ready myself for two seconds before reeling again.</span>")
+							to_chat(fisher, "<span class='warning'>I need to catch my breath for a second before reeling again.</span>")
 						else if(reel_ready || input_zone == "green")
-							reel_cooldown_until = world.time + (2 SECONDS)
+							reel_cooldown_until = world.time + (1 SECONDS)
 							reel_ready = FALSE
 							failed_reel_attempts = 0
 							var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
@@ -1981,12 +2003,15 @@
 								hooked_ticks = 0
 								to_chat(fisher, span_userdanger("I GAIN LINE! But the fish surges back. One more strong reel should do it!"))
 						else if(input_zone == "blue")
-							reel_cooldown_until = world.time + (2 SECONDS)
+							reel_cooldown_until = world.time + (1 SECONDS)
 							topzone_hold = 0
 							reel_ready = FALSE
 							reel_expire = 0
 							reel_successes = 0
 							failed_reel_attempts = min(failed_reel_attempts + 1, 10)
+							difficulty = clamp(difficulty + 1, 1, 6)
+							acceleration = min(acceleration + 1, 12)
+							maxvelocity = min(maxvelocity + 1, 12)
 							hooked_ticks = 0
 							to_chat(fisher, span_userdanger("BAD TIMING! The fish pulls back and surges with renewed energy!"))
 
@@ -1998,7 +2023,10 @@
 	else
 		to_chat(user, "<span class = 'notice'>I pull something out of the water!</span>")
 		playsound(loc, 'sound/items/Fish_out.ogg', 100, TRUE)
-		fisher.adjust_experience(/datum/skill/labor/fishing, 10)
+		if(fisher.mind)
+			fisher.mind.add_sleep_experience(/datum/skill/labor/fishing, 10, FALSE)
+		else
+			fisher.adjust_experience(/datum/skill/labor/fishing, 10)
 		var/turf/safe_drop_turf = get_safe_catch_drop_turf(fisher, targeted)
 		if(shallow_excluded_junk_zone && ispath(fishtype, /obj/item/reagent_containers/food/snacks/fish) && prob(98))
 			fishtype = get_cast_junk_reward_path()
