@@ -92,7 +92,7 @@
 	var/failed_reel_attempts = 0
 	var/current_fish_zone = "none"  // "green", "blue", or "red"
 
-/obj/item/fishingrod/Initialize()
+/obj/item/fishingrod/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -2150,7 +2150,7 @@
 
 /obj/item/fishingrod/fisher
 
-/obj/item/fishingrod/fisher/Initialize()
+/obj/item/fishingrod/fisher/Initialize(mapload)
 	. = ..()
 	reel = new /obj/item/fishing/reel/silk(src)
 	reel.alpha = 0
