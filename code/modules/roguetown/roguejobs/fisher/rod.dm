@@ -13,6 +13,7 @@
 	grid_width = 32
 	max_integrity = 100
 	anvilrepair = /datum/skill/craft/crafting
+	break_sound = 'sound/foley/breaksound.ogg'
 	/// Rod-level challenge modifier (negative = easier, positive = harder).
 	var/rod_difficultymod = 0
 	/// Rod-level rarity bias merged into raritypicker.
@@ -408,13 +409,15 @@
 /obj/item/fishingrod/proc/apply_rod_damage_from_line_break(line_integrity_lost, mob/user)
 	if(line_integrity_lost <= 0 || max_integrity <= 0)
 		return
-	var/rod_damage = max(1, round(line_integrity_lost * 0.5))
+	var/rod_damage = max(1, round(line_integrity_lost * 0.25))
 	take_damage(rod_damage, BRUTE, "blunt", FALSE)
 	if(!QDELETED(src) && obj_integrity <= 0)
+		obj_integrity = 0
 		if(user)
 			to_chat(user, "<span class='warning'>My [src] splinters apart from the strain!</span>")
 		remove_all_attachments(user)
-		qdel(src)
+		if(!obj_broken)
+			obj_break(BRUTE)
 		return
 	if(!QDELETED(src) && user)
 		to_chat(user, "<span class='warning'>The snap over-stresses [src], wearing down the rod's integrity.</span>")
@@ -803,6 +806,16 @@
 
 /obj/item/fishingrod/examine(mob/user)
 	. = ..()
+	if(obj_broken)
+		. += span_warning("It's broken! It needs to be repaired before it can be used for fishing.")
+	else if(max_integrity > 0)
+		var/integrity_percent = (obj_integrity / max_integrity) * 100
+		if(integrity_percent < 25)
+			. += span_warning("It looks severely damaged - it may not hold up much longer!")
+		else if(integrity_percent < 50)
+			. += span_warning("It appears heavily damaged.")
+		else if(integrity_percent < 75)
+			. += span_warning("It looks slightly worn.")
 	if(baited)
 		. += span_info("There's a [baited.name] stuck on here.")
 		if(baited.isbait)
@@ -1108,7 +1121,7 @@
 		if(user.client)
 			average_ping = user.client.avgping * 0.01
 
-		currentmouse = clamp(backdrop.pointdir + 2, 90, 270);
+		currentmouse = clamp(backdrop.pointdir, 90, 270);
 		reelstate.transform = 0
 		var/matrix/M = matrix()
 		M.Turn(currentmouse)
@@ -1171,7 +1184,7 @@
 			gz_min = 11
 		var/green_zone_margin = gz_min
 		var/blue_zone_margin = 80
-		var/abs_tdf = abs(targetdif)
+		var/abs_tdf = abs(targetdif + 3)
 		if(abs_tdf <= green_zone_margin)
 			current_fish_zone = "green"
 			if(!reel_ready)
@@ -1330,6 +1343,10 @@
 			to_chat(user, "<span class='warning'>There's a bite waiting! Use [src] in hand to start reeling!</span>")
 		else
 			to_chat(user, "<span class='warning'>I already have a fish on the line! I need to reel it in first.</span>")
+		return
+
+	if(obj_broken && (user.used_intent.type == ROD_AUTO || user.used_intent.type == ROD_CAST))
+		to_chat(user, "<span class='warning'>My [src] is broken and can't be used for fishing. I need to repair it first.</span>")
 		return
 
 	if(user.used_intent.type == SPEAR_BASH)
@@ -1835,7 +1852,7 @@
 				next_stamina_tick = world.time + (5 SECONDS)
 			if(user.client)
 				average_ping = user.client.avgping * 0.01
-			currentmouse = clamp(backdrop.pointdir + 2, 90, 270);
+			currentmouse = clamp(backdrop.pointdir, 90, 270);
 			reelstate.transform = 0
 			var/matrix/M = matrix()
 			M.Turn(currentmouse)
@@ -1939,7 +1956,7 @@
 						gz_min = 11
 					var/green_zone_margin = gz_min
 					var/blue_zone_margin = 80
-					var/abs_tdf = abs(targetdif)
+					var/abs_tdf = abs(targetdif + 3)
 					if(abs_tdf <= green_zone_margin)
 						current_fish_zone = "green"
 						topzone_hold++
