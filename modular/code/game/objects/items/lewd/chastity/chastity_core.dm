@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	nudist_approved = TRUE
 
 // Ensure each chastity item has a unique lockhash used by matching keys.
-/obj/item/chastity/Initialize()
+/obj/item/chastity/Initialize(mapload)
 	. = ..()
 	if(!lockhash)
 		lockhash = rand(100000,999999)

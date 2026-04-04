@@ -21,7 +21,7 @@
 	var/max_durability = 100
 	var/durability = 100
 
-/obj/item/fishing/Initialize()
+/obj/item/fishing/Initialize(mapload)
 	. = ..()
 	max_durability = max(1, max_durability)
 	max_integrity = max_durability
@@ -205,7 +205,7 @@
 /obj/item/fishing/bait/proc/makespecial(obj/item/specialify)//put in the new item caught and this should change it in some way, change color, give it a glow and increased size, unique icon, whatever
 	return
 
-/obj/item/fishing/bait/Initialize()
+/obj/item/fishing/bait/Initialize(mapload)
 	. = ..()
 	sync_bait_durability()
 
