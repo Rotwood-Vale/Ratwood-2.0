@@ -97,8 +97,6 @@
 
     return ..()
 
-//Apparently this can only handle one /attackby/ at a time? woe. Well there goes half an hour of my life that I will literally never get back. Woe.
-//I cry. ZIZO laughs.
 
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/milk
 	name = "Chocolate mass with milk"
