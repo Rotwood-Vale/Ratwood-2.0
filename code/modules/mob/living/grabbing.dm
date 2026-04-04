@@ -85,6 +85,9 @@
 		return
 	if(QDELETED(L.hand_fishing_cast_rod) || !L.hand_fishing_cast_rod.currentlyfishing)
 		L.hand_fishing_cast_rod = null
+		L.hand_fishing_mode = null
+		L.hand_fishing_mode_until = 0
+		L.hand_fishing_reel_size_tag = null
 		return
 	L.hand_fishing_cast_rod.reel_input_zone = L.hand_fishing_cast_rod.current_fish_zone
 	L.hand_fishing_cast_rod.reel_input = TRUE

@@ -100,6 +100,10 @@
 	user.visible_message(span_notice("[user] starts setting a fishing net..."), span_notice("I start setting the fishing net..."))
 	if(!do_after(user, deploy_speed, target = src))
 		return
+	var/cast_stamina_drain = get_hand_fishing_stamina_drain(user, 25)
+	if(cast_stamina_drain && !user.stamina_add(cast_stamina_drain))
+		to_chat(user, span_warning("I'm too exhausted to cast the net properly."))
+		return
 	if(QDELETED(src))
 		return
 	var/obj/structure/fishing_net/deployed/N = new(T)
@@ -348,9 +352,12 @@
 /obj/item/rope/netline/proc/get_haul_stamina_drain(mob/living/user, fish_count)
 	if(!user)
 		return 0
-	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
-	var/base_drain = round((10 - athletics_skill) * 0.8, 1)
-	var/load_bonus = round(max(fish_count, 1) * 0.35, 1)
+	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), 0)
+	var/fishing_skill = max(user.get_skill_level(/datum/skill/labor/fishing), 0)
+	var/strength_bonus = max(0, user.STASTR - 10)
+	var/effective_percent = max(1, 30 - athletics_skill - fishing_skill - strength_bonus)
+	var/base_drain = round((user.max_stamina * effective_percent) / 100, 1)
+	var/load_bonus = round(max(fish_count, 1) * 0.25, 1)
 	return max(1, base_drain + load_bonus)
 
 /obj/item/rope/netline/process()

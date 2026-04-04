@@ -483,6 +483,7 @@
 							reel_until = world.time + max(20, 35 + (sl * 6) + (speed_mod * 2))
 							reel_loot = A
 							to_chat(user, "<span class='notice'>You see something! Click the same tile again to reel it in.</span>")
+							target.balloon_alert_to_viewers("Tug!")
 							playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 							return
 					else
@@ -827,6 +828,7 @@
 							reel_until = world.time + max(20, 35 + (sl * 6) + (speed_mod * 2))
 							reel_loot = A
 							to_chat(user, "<span class='notice'>You see something! Click the same tile again to reel it in.</span>")
+							target.balloon_alert_to_viewers("Tug!")
 							playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 							return
 					else

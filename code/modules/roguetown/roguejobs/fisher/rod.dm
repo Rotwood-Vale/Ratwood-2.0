@@ -84,6 +84,7 @@
 	var/topzone_hold = 0    // ticks spent continuously with fishstate near top-center
 	var/reel_ready = FALSE  // TRUE once fish is tired enough to haul in
 	var/reel_expire = 0    // world.time deadline for the reel opportunity window
+	var/reel_cooldown_until = 0
 	var/reel_input = FALSE  // set by attack_self during minigame when reel_ready
 	var/reel_input_zone = null
 	var/reel_successes = 0
@@ -103,7 +104,11 @@
 		return
 	if(!(auto_reel_ready || cast_reel_pending || currentlyfishing))
 		return
-	if(is_far_from_cast_anchor(fisher))
+	if(currentlyfishing)
+		if(is_far_from_cast_anchor(fisher, 3))
+			snap_line_from_anchor_drift(fisher)
+			currentlyfishing = FALSE
+	else if(auto_reel_ready && is_far_from_cast_anchor(fisher))
 		snap_line_from_anchor_drift(fisher)
 		currentlyfishing = FALSE
 
@@ -128,7 +133,7 @@
 /obj/item/fishingrod/attack_self(mob/user)
 	// During the cast minigame, intercept to allow the player to reel the fish in.
 	if(currentlyfishing && fisher == user)
-		if(is_far_from_cast_anchor(user))
+		if(is_far_from_cast_anchor(user, 3))
 			snap_line_from_anchor_drift(user)
 			currentlyfishing = FALSE
 			return
@@ -138,9 +143,6 @@
 		return
 	// Cast-intent pending: player uses rod in-hand to start the reel and launch the minigame.
 	if(cast_reel_pending && fisher == user)
-		if(is_far_from_cast_anchor(user))
-			snap_line_from_anchor_drift(user)
-			return
 		if(world.time > cast_reel_pending_deadline)
 			cast_reel_pending = FALSE
 			to_chat(user, "<span class='warning'>Too slow. The fish wriggled free.</span>")
@@ -320,8 +322,9 @@
 	if(!user)
 		return 0
 	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), 0)
+	var/fishing_skill = max(user.get_skill_level(/datum/skill/labor/fishing), 0)
 	var/strength_bonus = max(0, user.STASTR - 10)
-	var/effective_percent = max(1, base_percent - athletics_skill - strength_bonus)
+	var/effective_percent = max(1, base_percent - athletics_skill - fishing_skill - strength_bonus)
 	var/drain = round((user.max_stamina * effective_percent) / 100, 1)
 	return max(1, drain)
 
@@ -396,6 +399,8 @@
 		to_chat(user, "<span class='warning'>The snap over-stresses [src], wearing down the rod's integrity.</span>")
 
 /obj/item/fishingrod/proc/apply_line_snap_consequences(mob/user, reason = null)
+	if(!line)
+		return
 	var/reel_name = null
 	var/line_name = null
 	if(reel)
@@ -425,11 +430,11 @@
 		line = null
 	var/extra = reason ? " [reason]" : ""
 	if(reel_name && line_name)
-		to_chat(user, span_userdanger("THE LINE SNAPPED![extra] My [reel_name] tears off and the [line_name] drops to my feet."))
+		to_chat(user, "<span class='warning'>THE LINE SNAPPED![extra] My [reel_name] tears off and the [line_name] drops to my feet.</span>")
 	else if(reel_name)
-		to_chat(user, span_userdanger("THE LINE SNAPPED![extra] My [reel_name] tears off the rod."))
+		to_chat(user, "<span class='warning'>THE LINE SNAPPED![extra] My [reel_name] tears off the rod.</span>") 
 	else if(line_name)
-		to_chat(user, span_userdanger("THE LINE SNAPPED![extra] My [line_name] tears free and drops to my feet."))
+		to_chat(user, "<span class='warning'>THE LINE SNAPPED![extra] My [line_name] tears free and drops to my feet.</span>")
 	if(hook)
 		to_chat(user, span_userdanger("The hook tears free with my line, lost in the water!"))
 		QDEL_NULL(hook)
@@ -497,6 +502,8 @@
 		to_chat(user, "<span class='warning'>I lose my grip on the reel!</span>")
 		apply_tackle_wear(user, 2, 1, 1)
 		return TRUE
+	if(auto_reel_successes <= 0 && user.mind)
+		user.mind.add_sleep_experience(/datum/skill/labor/fishing, 1, FALSE)
 
 	if(reel_anchor && get_dist(user, reel_anchor) > 8)
 		playsound(user.loc, 'sound/items/pickbreak.ogg', 80, FALSE)
@@ -508,6 +515,11 @@
 	var/auto_pull_stamina_drain = get_fishing_stamina_drain(user, 37.5)
 	if(auto_pull_stamina_drain && !user.stamina_add(auto_pull_stamina_drain))
 		to_chat(user, "<span class='warning'>I'm too exhausted to keep reeling.</span>")
+		if(baited && getbaitlife(sl, baited))
+			to_chat(user, span_userdanger("DAMN! It ate my bait."))
+			qdel(baited)
+			baited = null
+			update_icon()
 		reset_auto_pending_catch()
 		return TRUE
 
@@ -543,6 +555,11 @@
 				apply_tackle_wear(user, 1, 1, 1)
 				return TRUE
 			to_chat(user, "<span class='warning'>I lose the fish after the final pull.</span>")
+			if(baited && getbaitlife(sl, baited))
+				to_chat(user, span_userdanger("DAMN! It ate my bait."))
+				qdel(baited)
+				baited = null
+				update_icon()
 			apply_tackle_wear(user, 2, 1, 1)
 		reset_auto_pending_catch()
 		update_icon()
@@ -567,7 +584,7 @@
 
 	playsound(user.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
 	if(user.mind)
-		user.mind.add_sleep_experience(/datum/skill/labor/fishing, 1, FALSE)
+		user.mind.add_sleep_experience(/datum/skill/labor/fishing, 10, FALSE)
 		record_featured_stat(FEATURED_STATS_FISHERS, user)
 		record_round_statistic(STATS_FISH_CAUGHT)
 	if(baited && getbaitlife(sl, baited))
@@ -870,7 +887,7 @@
 		return
 	if(user.IsStun() || user.IsParalyzed())
 		return
-	if(user.loc != startingturf)
+	if(is_far_from_cast_anchor(user, 3))
 		return
 	if(user.dir != startingdir)
 		return
@@ -1016,6 +1033,7 @@
 	failed_reel_attempts = 0
 	current_fish_zone = "none"
 	reel_ready = FALSE
+	reel_cooldown_until = 0
 	reel_input = FALSE
 	reel_input_zone = null
 	topzone_hold = 0
@@ -1163,7 +1181,10 @@
 			var/input_zone = reel_input_zone || current_fish_zone
 			reel_input = FALSE
 			reel_input_zone = null
-			if(reel_ready || input_zone == "green")
+			if(world.time < reel_cooldown_until)
+				to_chat(fisher, span_warning("I need to ready myself for two seconds before reeling again!"))
+			else if(reel_ready || input_zone == "green")
+				reel_cooldown_until = world.time + (2 SECONDS)
 				reel_ready = FALSE
 				failed_reel_attempts = 0
 				var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
@@ -1183,6 +1204,7 @@
 					hooked_ticks = 0
 					to_chat(fisher, span_userdanger("I GAIN GROUND! But the fish surges back. One more strong pull!"))
 			else if(input_zone == "blue")
+				reel_cooldown_until = world.time + (2 SECONDS)
 				topzone_hold = 0
 				reel_ready = FALSE
 				reel_expire = 0
@@ -1213,7 +1235,7 @@
 
 	to_chat(user, span_notice("I pull it out of the water!"))
 	playsound(water_turf, 'sound/items/Fish_out.ogg', 100, TRUE)
-	user.adjust_experience(/datum/skill/labor/fishing, 1)
+	user.adjust_experience(/datum/skill/labor/fishing, 20)
 	var/static/list/hand_quality_mods = list(
 		"commonFishingMod" = 1,
 		"rareFishingMod" = 1,
@@ -1669,7 +1691,6 @@
 					else
 						to_chat(user, "<span class='warning'>Not even a nibble...</span>")
 					apply_tackle_wear(user, 1, 0, 1)
-					user.mind.add_sleep_experience(/datum/skill/labor/fishing, 1) // Pity XP.
 			else
 				to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			update_icon()
@@ -1706,10 +1727,6 @@
 		playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 		to_chat(user, "<span class='notice'>There's a bite! Use [src] in hand to start reeling!</span>")
 		while(cast_reel_pending && world.time <= cast_reel_pending_deadline)
-			if(is_far_from_cast_anchor(fisher))
-				snap_line_from_anchor_drift(user)
-				update_icon()
-				return
 			sleep(1)
 		if(cast_reel_pending) // Deadline expired before player triggered.
 			cast_reel_pending = FALSE
@@ -1729,6 +1746,8 @@
 			apply_tackle_wear(user, 1, 1, 1)
 			update_icon()
 			return
+		if(user.mind)
+			user.mind.add_sleep_experience(/datum/skill/labor/fishing, 1, FALSE)
 		// Strength + fishing level check: harder fish can tear free before the hook sets.
 		var/fish_challenge_hook = get_fish_total_challenge()
 		if(fish_challenge_hook > 0)
@@ -1739,7 +1758,7 @@
 			var/hook_roll = rand(1, 10) + str_hook + sl
 			var/hook_target = 8 + fish_challenge_hook * 4
 			if(hook_roll < hook_target)
-				to_chat(user, "<span class='warning'>The fish fights viciously — it tears free before I can secure the line!</span>")
+				to_chat(user, "<span class='warning'>I get a nibble — but the fish tears free before I can secure the line!</span>")
 				apply_tackle_wear(user, 1, 1, 1)
 				update_icon()
 				return
@@ -1763,6 +1782,7 @@
 		var/next_stamina_tick = world.time + (5 SECONDS)
 		reel_successes = 0
 		failed_reel_attempts = 0
+		reel_cooldown_until = 0
 		// Pre-compute fish challenge for the minigame: skill partially offsets it, but hard fish always pressure the player.
 		var/fish_challenge_minigame = get_fish_total_challenge()
 		var/challenge_load = max(0, fish_challenge_minigame - max(0, skillmod - 4))
@@ -1776,10 +1796,11 @@
 		fishtarget = 90
 
 		while(currentlyfishing)
-			if(is_far_from_cast_anchor(fisher))
+			if(is_far_from_cast_anchor(fisher, 3))
 				snap_line_from_anchor_drift(fisher)
 				line_snapped = TRUE
 				currentlyfishing = FALSE
+				continue
 			if(world.time >= next_stamina_tick)
 				var/stamina_drain = get_fishing_stamina_drain(fisher, 18.75)
 				if(stamina_drain && !fisher.stamina_add(stamina_drain))
@@ -1937,7 +1958,10 @@
 						var/input_zone = reel_input_zone || current_fish_zone
 						reel_input = FALSE
 						reel_input_zone = null
-						if(reel_ready || input_zone == "green")
+						if(world.time < reel_cooldown_until)
+							to_chat(fisher, "<span class='warning'>I need to ready myself for two seconds before reeling again.</span>")
+						else if(reel_ready || input_zone == "green")
+							reel_cooldown_until = world.time + (2 SECONDS)
 							reel_ready = FALSE
 							failed_reel_attempts = 0
 							var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
@@ -1957,6 +1981,7 @@
 								hooked_ticks = 0
 								to_chat(fisher, span_userdanger("I GAIN LINE! But the fish surges back. One more strong reel should do it!"))
 						else if(input_zone == "blue")
+							reel_cooldown_until = world.time + (2 SECONDS)
 							topzone_hold = 0
 							reel_ready = FALSE
 							reel_expire = 0
@@ -1973,7 +1998,7 @@
 	else
 		to_chat(user, "<span class = 'notice'>I pull something out of the water!</span>")
 		playsound(loc, 'sound/items/Fish_out.ogg', 100, TRUE)
-		fisher.adjust_experience(/datum/skill/labor/fishing, 1)
+		fisher.adjust_experience(/datum/skill/labor/fishing, 10)
 		var/turf/safe_drop_turf = get_safe_catch_drop_turf(fisher, targeted)
 		if(shallow_excluded_junk_zone && ispath(fishtype, /obj/item/reagent_containers/food/snacks/fish) && prob(98))
 			fishtype = get_cast_junk_reward_path()

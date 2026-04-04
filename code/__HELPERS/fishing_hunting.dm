@@ -71,8 +71,9 @@
 	if(!user)
 		return 0
 	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), 0)
+	var/fishing_skill = max(user.get_skill_level(/datum/skill/labor/fishing), 0)
 	var/strength_bonus = max(0, user.STASTR - 10)
-	var/effective_percent = max(1, base_percent - athletics_skill - strength_bonus)
+	var/effective_percent = max(1, base_percent - athletics_skill - fishing_skill - strength_bonus)
 	var/drain = round((user.max_stamina * effective_percent) / 100, 1)
 	return max(1, drain)
 

@@ -589,6 +589,9 @@ GLOBAL_VAR_INIT(mobids, 1)
 				L.hand_fishing_cast_rod.reel_input = TRUE
 			else
 				L.hand_fishing_cast_rod = null
+				L.hand_fishing_mode = null
+				L.hand_fishing_mode_until = 0
+				L.hand_fishing_reel_size_tag = null
 
 /**
  * Get the notes of this mob

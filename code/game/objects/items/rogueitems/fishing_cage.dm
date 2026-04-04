@@ -45,6 +45,16 @@
 	durability = obj_integrity
 	return obj_integrity > old_durability
 
+/obj/item/fishingcage/proc/get_harvest_stamina_drain(mob/living/user, base_percent = 18.75)
+	if(!user)
+		return 0
+	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), 0)
+	var/fishing_skill = max(user.get_skill_level(/datum/skill/labor/fishing), 0)
+	var/strength_bonus = max(0, user.STASTR - 10)
+	var/effective_percent = max(1, base_percent - athletics_skill - fishing_skill - strength_bonus)
+	var/drain = round((user.max_stamina * effective_percent) / 100, 1)
+	return max(1, drain)
+
 /obj/item/fishingcage/attack_self(mob/user)
 	. = ..()
 
@@ -81,6 +91,10 @@
 			user.visible_message(span_notice("[user] begins to harvest from the cage..."), \
 								span_notice("I begin harvesting the from the cage..."))
 			if(do_after(user, deploy_speed, target = src))
+				var/harvest_stamina_drain = get_harvest_stamina_drain(user)
+				if(harvest_stamina_drain && !user.stamina_add(harvest_stamina_drain))
+					to_chat(user, span_warning("I'm too exhausted to pull out the cage's catch right now."))
+					return
 				add_sleep_experience(user, /datum/skill/labor/fishing, 20)
 				record_featured_stat(FEATURED_STATS_FISHERS, user)
 				record_round_statistic(STATS_FISH_CAUGHT)

@@ -129,6 +129,8 @@
 					var/reel_time = round(max(10, 45 - (sl * 3) - (speed_mod * 2)) * 1.5)
 					if(!do_after(user, reel_time, target = user))
 						return
+					if(user.mind)
+						user.mind.add_sleep_experience(/datum/skill/labor/fishing, 1, FALSE)
 					var/reel_result = H.hand_fishing_reel_loot
 					to_chat(user, span_notice("[get_fishing_size_feel_text(H.hand_fishing_reel_size_tag, reel_result)]"))
 					var/reel_challenge = get_fishing_path_challenge(reel_result)
@@ -176,6 +178,7 @@
 									"ceruleanFishingMod" = 0,
 									"cheeseFishingMod" = 0,
 								), list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1))
+						H.adjust_experience(/datum/skill/labor/fishing, 20)
 						playsound(src, 'sound/items/Fish_out.ogg', 100, TRUE)
 						to_chat(user, span_notice("Pull 'em in!"))
 						H.hand_fishing_mode = null
