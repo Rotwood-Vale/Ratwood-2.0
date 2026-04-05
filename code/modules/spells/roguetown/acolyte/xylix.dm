@@ -402,6 +402,11 @@
 	var/used_times = 0
 	var/last_used = 0
 	var/bonus_luck_threshould = 600
+	if(HAS_TRAIT(user, TRAIT_GODLESS))
+		to_chat(user, span_warning("Nothing happens. Xylix has no patron to call upon for this one."))
+		to_chat(target, span_warning("You're pretty sure you hear a faint laughter, out in the distance."))
+		revert_cast()
+		return FALSE
 
 /obj/effect/proc_holder/spell/invoked/xylixlian_luck/Initialize(mapload)
 	. = ..()

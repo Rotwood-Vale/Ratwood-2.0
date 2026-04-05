@@ -50,6 +50,12 @@
 		to_chat(user, span_warning("They are already under the effects of a healing aura!"))
 		revert_cast()
 		return FALSE
+	
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		target.visible_message(span_info("[target] shudders violently, the miracle quickly vanishes."), span_notice("A hopeful feeling of warmth appears in my heart. It is quickly replaced with an overbearing feeling of disgust."))
+		user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+		playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+		return FALSE
 
 	var/conditional_buff = FALSE
 	var/situational_bonus = 1
@@ -124,6 +130,11 @@
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			target.visible_message(span_info("[target] shudders violently, the miracle quickly vanishes."), span_notice("A hopeful feeling of warmth appears in my heart. It is quickly replaced with an overbearing feeling of disgust."))
+			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+		return FALSE
 		if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD)) //positive energy harms the undead
 			target.visible_message(span_danger("[target] is burned by holy light!"), span_userdanger("I'm burned by holy light!"))
 			target.adjustFireLoss(25)
@@ -433,6 +444,12 @@
 
 		if(HAS_TRAIT(target, TRAIT_PSYDONITE))
 			target.visible_message(span_info("[target] stirs for a moment, the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
+			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+			return FALSE
+		
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			target.visible_message(span_info("[target] shudders violently, the miracle quickly vanishes."), span_notice("A hopeful feeling of warmth appears in my heart. It is quickly replaced with an overbearing feeling of disgust."))
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE

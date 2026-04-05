@@ -217,6 +217,11 @@
 			target.visible_message(span_danger("[target] is crushed by divine pressure!"), span_userdanger("I'm crushed by divine pressure!"))
 			target.adjustBruteLoss(30)			
 			return TRUE
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			target.visible_message(span_info("[target] shudders violently, the miracle quickly vanishes."), span_notice("A hopeful feeling of warmth appears in my heart. It is quickly replaced with an overbearing feeling of disgust."))
+			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+			return FALSE
 
 		var/conditional_buff = FALSE
 		var/situational_bonus = 0

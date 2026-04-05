@@ -90,6 +90,11 @@
 			to_chat(user, span_warning("Nothing happens."))
 			revert_cast()
 			return FALSE
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			target.visible_message(span_info("[target] remains deathly still. Nothing happens."))
+			to_chat(user, span_warning("I feel a wave of disgust wash over me."))
+			revert_cast()
+			return FALSE
 		target.emote("breathgasp")
 		target.Jitter(100)
 		target.update_body()
@@ -173,6 +178,15 @@
 	//This will be Abyssor's statue soon.
 	required_structure = /turf/open/water/ocean
 	overlay_state = "terrors"
+
+/obj/effect/proc_holder/spell/invoked/resurrect/abyssor/cast(list/targets, mob/living/user)
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("I feel a tidal wave of disgust wash over me. Abyssor shall not help this one"))
+			revert_cast()
+			return FALSE
+	return ..(targets, user)
 
 /datum/status_effect/debuff/dreamfiend_curse
 	id = "dreamfiend_curse"
@@ -273,6 +287,16 @@
 	action_icon = 'icons/mob/actions/pestraspells.dmi'
 	overlay_state = "resurrect"
 
+/obj/effect/proc_holder/spell/invoked/resurrect/pestra/cast(list/targets, mob/living/user)
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			target.visible_message(span_info("[target] remains deathly still. Nothing happens."))
+			to_chat(user, span_warning("I feel a wave of disgust wash over me. Pestra abhors this one. She shall grant no reprieve."))
+			revert_cast()
+			return FALSE
+	return ..(targets, user)
+
 /obj/effect/proc_holder/spell/invoked/resurrect/eora
 	//Does heartfelt even exist?
 	name = "Heartfelt Revival"
@@ -286,6 +310,15 @@
 	debuff_type = /datum/status_effect/debuff/metabolic_acceleration
 	sound = 'sound/magic/heartbeat.ogg'
 	overlay_state = "eora_revive"
+
+/obj/effect/proc_holder/spell/invoked/resurrect/eora/cast(list/targets, mob/living/user)
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("I feel a tidal wave of disgust wash over me. Abyssor shall not help this"))
+			revert_cast()
+			return FALSE
+	return ..(targets, user)
 
 /atom/movable/screen/alert/status_effect/nutrition_drain
 	name = "Metabolic Acceleration"
@@ -324,9 +357,19 @@
 	name = "Anastasis?"
 	desc = "Revives the target? Grants them a random debuff from other revivals, small change to be worse or better."
 	debuff_type = /datum/status_effect/debuff/random_revival
-	alt_required_items = list(
-		/obj/item/clothing/neck/roguetown/psicross/wood = 1
-	)
+	alt_required_items = list(/obj/item/clothing/neck/roguetown/psicross/wood = 1)
+
+/obj/effect/proc_holder/spell/invoked/resurrect/xylix/cast(list/targets, mob/living/user)
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			if(prob(10))
+				to_chat(user, span_warning("They rise. Xylix laughs with me."))
+			else
+				to_chat(user, span_warning("I feel a wave of disgust wash over me. Xylix laughs at me."))
+				revert_cast()
+				return FALSE
+	return ..(targets, user)
 
 /datum/status_effect/debuff/random_revival
 	id = "random_revival_debuff"
@@ -532,6 +575,11 @@
 	alt_required_items = list(
 		/obj/item/ingot/copper = 1
 	)
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		to_chat(user, span_warning("I feel a wave of disgust wash over me. Malum shall not help rebuild this one."))
+		revert_cast()
+		return FALSE
+	debuff_type = /datum/status_effect/debuff/ravox_revival
 	debuff_type = /datum/status_effect/debuff/malum_revival
 	sound = 'sound/magic/clang.ogg'
 
@@ -546,6 +594,10 @@
 	alt_required_items = list(
 		/obj/item/natural/bone = 7
 	)
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		to_chat(user, span_warning("I feel a wave of disgust wash over me. Ravox shall not extend a helping hand upon this one."))
+		revert_cast()
+		return FALSE
 	debuff_type = /datum/status_effect/debuff/ravox_revival
 
 /obj/effect/proc_holder/spell/invoked/resurrect/dendor
@@ -561,6 +613,11 @@
 		/obj/item/reagent_containers/food/snacks/grown/manabloom = 3,
 		/obj/item/reagent_containers/food/snacks/grown/rogue/swampweed = 1
 	)
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		to_chat(user, span_warning("I feel a wave of disgust wash over me. Dendor shall not return this one upon nature's womb.")) //if Dendor is the god of nature, does this mean that Nature here is personified as male? I dunno.
+		revert_cast()
+		return FALSE
+	debuff_type = /datum/status_effect/debuff/ravox_revival
 	debuff_type = /datum/status_effect/debuff/dendor_revival
 	required_structure = /obj/structure/flora/roguetree/wise
 	sound = 'sound/magic/birdsong.ogg'
@@ -574,6 +631,11 @@
 	alt_required_items = list(
 		/obj/item/paper = 15
 	)
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		to_chat(user, span_warning("I feel a wave of disgust wash over me. Noc remains silent."))
+		revert_cast()
+		return FALSE
+	debuff_type = /datum/status_effect/debuff/ravox_revival
 	debuff_type = /datum/status_effect/debuff/noc_revival
 	overlay_state = "noc_revive"
 	sound = 'sound/magic/owlhoot.ogg'

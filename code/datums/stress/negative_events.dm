@@ -497,3 +497,9 @@
 	stressadd = 2
 	desc = span_boldred("The proof of my oath! It's been stolen!")
 	timer = INFINITY
+
+/datum/stressevent/godless
+	stressadd = 7 // Mechanical inclination of actually hating the godless.
+	desc = span_boldred("Godless Heathen. I should keep my distance, lest they... infect me.")
+	timer = 3 MINUTES
+

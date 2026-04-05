@@ -86,6 +86,10 @@
 		to_chat(user, span_warning("The spell can only be cast on humans!"))
 		revert_cast()
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		to_chat(user, span_warning("Pestra abhors them!"))
+		revert_cast()
+		return FALSE
 
 	var/mob/living/carbon/human/human_target = target
 	var/same_owner = FALSE
@@ -386,6 +390,10 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("Pestra abhors them! She shall grant this one no reprieve."))
+			return FALSE
+
 		var/obj/item/black_rose/rose = user.get_active_held_item()
 		// Check if the user is holding a black rose and the target follows Pestra.
 		if(istype(rose) && target.patron?.type == /datum/patron/divine/pestra)
@@ -462,6 +470,10 @@
 
 /obj/effect/proc_holder/spell/invoked/pestra_leech/cast(list/targets, mob/living/user)
 	if(iscarbon(targets[1]))
+		if(HAS_TRAIT(targets[1], TRAIT_GODLESS))
+			to_chat(user, span_warning("Pestra abhors them! She shall grant this one no reprieve."))
+			revert_cast()
+			return FALSE
 		var/mob/living/carbon/C = targets[1]
 		if(C.cmode)
 			to_chat(user, span_warning("They're too tense for the delicate arts!"))
@@ -535,6 +547,10 @@
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("Pestra abhors them! She shall grant this one no reprieve."))
+			revert_cast()
+			return FALSE
 		// Keep in mind this is 7.5 per tick with fortify!
 		// Double the power of miracle
 		var/healing = 5
@@ -586,6 +602,10 @@
 // You can't resist Pestra's most divine gift.
 /obj/effect/proc_holder/spell/invoked/divine_rebirth/cast(list/targets, mob/living/user)
 	. = ..()
+	if(HAS_TRAIT(targets[1], TRAIT_GODLESS)) // What if Pestra herself hates them? 
+		to_chat(user, span_warning("Pestra abhors them! She shall grant this one no reprieve."))
+		revert_cast()
+		return FALSE
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		target.visible_message(span_info("An ethereal, mushroom infested arm carresses [target]!"), span_notice("I feel a caring touch!"))

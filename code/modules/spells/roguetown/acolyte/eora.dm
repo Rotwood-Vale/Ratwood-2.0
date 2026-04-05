@@ -243,6 +243,11 @@
 		to_chat(user, span_warning("You are already bonded!"))
 		revert_cast()
 		return FALSE
+	
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		to_chat(user, span_warning("I recoil in abhorrence as Eora herself denies me acceptance of this bond."))
+		revert_cast()
+		return FALSE
 
 	if(!istype(target, /mob/living/carbon) || target == user)
 		revert_cast()
@@ -1152,6 +1157,8 @@
 					continue
 				if(HAS_TRAIT(target, TRAIT_DNR))
 					continue
+				if(HAS_TRAIT(target, TRAIT_GODLESS))
+					continue
 				if(target.mob_biotypes & MOB_UNDEAD)
 					continue
 				if(target.has_status_effect(/datum/status_effect/debuff/metabolic_acceleration))
@@ -1283,6 +1290,9 @@
 		var/assocskill = L.get_skill_level(associated_skill)
 		L.apply_status_effect(/datum/status_effect/eora_blessing, assocskill)
 		return TRUE
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		to_chat(user, span_warning("Even Eora scorns the godless."))
+		return FALSE
 	revert_cast()
 	return FALSE
 
