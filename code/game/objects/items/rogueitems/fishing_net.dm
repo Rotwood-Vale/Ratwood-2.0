@@ -6,6 +6,7 @@
 	layer = ABOVE_OPEN_TURF_LAYER
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 5
+	break_sound = 'sound/foley/cloth_rip.ogg'
 	var/chum_baited = FALSE
 	var/max_durability = 100
 	var/durability = 100
@@ -28,7 +29,15 @@
 	var/old_durability = obj_integrity
 	obj_integrity = min(max_integrity, obj_integrity + amount)
 	durability = obj_integrity
+	if(obj_integrity > 0 && obj_broken)
+		obj_fix(null, FALSE)
 	return obj_integrity > old_durability
+
+/obj/item/fishingnet/proc/set_broken_state()
+	obj_integrity = 0
+	durability = 0
+	if(!obj_broken)
+		obj_break(BRUTE)
 
 /obj/item/fishingnet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/needle))
@@ -76,13 +85,25 @@
 
 /obj/item/fishingnet/examine(mob/user)
 	. = ..()
-	. += span_notice("Durability: [get_durability_percent()]%")
+	if(obj_broken)
+		. += span_warning("It's torn! It needs mending with a needle before it can be used.")
+	else if(max_integrity > 0)
+		var/integrity_percent = (obj_integrity / max_integrity) * 100
+		if(integrity_percent < 25)
+			. += span_warning("Its cords are badly frayed.")
+		else if(integrity_percent < 50)
+			. += span_warning("Its weave is worn and strained.")
+		else if(integrity_percent < 75)
+			. += span_notice("It looks a bit worn.")
 	if(chum_baited)
 		. += span_notice("It reeks of chum and is ready to throw.")
 
 /obj/item/fishingnet/afterattack(obj/target, mob/user, proximity, params)
 	if(!isliving(user) || user.doing)
 		return ..()
+	if(obj_broken)
+		to_chat(user, span_warning("The net is torn. I need to mend it with a needle before it can be casted."))
+		return
 	if(get_dist(user, target) > 6)
 		to_chat(user, span_warning("It's too far away..."))
 		return
@@ -146,6 +167,24 @@
 	var/durability = 100
 	var/max_catch_capacity = 15
 
+/obj/structure/fishing_net/deployed/proc/spawn_broken_net(drop_fish = TRUE)
+	if(drop_fish)
+		caught_fish = list()
+	var/turf/drop_turf = null
+	if(linked_line && !QDELETED(linked_line))
+		drop_turf = get_turf(linked_line)
+	if(!drop_turf)
+		drop_turf = get_turf(src)
+	var/obj/item/fishingnet/N = new(drop_turf)
+	N.max_durability = max_durability
+	N.max_integrity = N.max_durability
+	N.set_broken_state()
+	N.chum_baited = FALSE
+	playsound(drop_turf, 'sound/foley/cloth_rip.ogg', 70, FALSE)
+	if(linked_line)
+		qdel(linked_line)
+	qdel(src)
+
 /obj/structure/fishing_net/deployed/proc/get_durability_percent()
 	if(max_integrity <= 0)
 		return 0
@@ -205,13 +244,17 @@
 		user.visible_message(span_notice("[user] starts cutting [src] free from the water..."), span_notice("I start cutting the net loose."))
 		if(!do_after(user, 2 SECONDS, target = src))
 			return
+		playsound(src.loc, 'sound/foley/cloth_rip.ogg', 70, FALSE)
 		STOP_PROCESSING(SSobj, src)
 		caught_fish = list()
 		var/obj/item/fishingnet/N = new(user)
 		N.max_durability = max_durability
-		N.durability = durability
+		var/cut_wear = max(1, round(N.max_durability * 0.2))
+		N.durability = max(0, durability - cut_wear)
 		N.max_integrity = N.max_durability
 		N.obj_integrity = N.durability
+		if(N.obj_integrity <= 0)
+			N.set_broken_state()
 		if(!user.put_in_hands(N))
 			N.forceMove(user.drop_location())
 		if(linked_line)
@@ -240,7 +283,15 @@
 
 /obj/structure/fishing_net/deployed/examine(mob/user)
 	. = ..()
-	. += span_notice("Durability: [get_durability_percent()]%")
+	. += span_notice("Durability: [get_durability_percent()]% ([obj_integrity]/[max_integrity])")
+	if(max_integrity > 0)
+		var/integrity_percent = (obj_integrity / max_integrity) * 100
+		if(integrity_percent < 25)
+			. += span_warning("The net's weave looks close to tearing.")
+		else if(integrity_percent < 50)
+			. += span_warning("The net is wearing thin.")
+		else if(integrity_percent < 75)
+			. += span_notice("The net looks a little worn.")
 	if(chum_baited)
 		. += span_notice("The cords are soaked in chum.")
 	. += span_notice("It seems to be holding [catch_count()]/[max_catch_capacity] fish.")
@@ -266,11 +317,8 @@
 
 /obj/structure/fishing_net/deployed/process()
 	if(catch_count() > max_catch_capacity)
-		drop_residual_rope()
-		if(linked_line)
-			qdel(linked_line)
 		visible_message(span_warning("[src] tears apart under the weight of too many fish, spilling away its haul!"))
-		qdel(src)
+		spawn_broken_net()
 		return
 	if(world.time < next_check + catch_interval)
 		return
@@ -316,12 +364,9 @@
 			/obj/item/natural/feather = 1,
 		))
 	if(ispath(loot, /obj/item/reagent_containers/food/snacks/fish))
-		if(adjust_durability(5))
-			drop_residual_rope()
-			if(linked_line)
-				qdel(linked_line)
+		if(adjust_durability(1))
 			visible_message(span_warning("[src] tears apart as its worn cords finally give out!"))
-			qdel(src)
+			spawn_broken_net(FALSE)
 			return
 		caught_fish += list(list("type" = loot, "mods" = modlist.Copy()))
 	else if(ispath(loot, /obj/item))
@@ -408,6 +453,8 @@
 	else
 		haul_actions = max(1, round((max(fish_count, 1) + 2) / 4))
 	var/overload = max(0, fish_count - 10)
+	var/haul_wear = max(1, round(linked_net.max_durability * 0.01))
+	var/failed_haul_wear = max(1, round(haul_wear * 1.5))
 	for(var/i in 1 to haul_actions)
 		if(get_dist(user, linked_net) > 5)
 			to_chat(user, span_warning("I wander too far from the net and drop the line."))
@@ -418,6 +465,11 @@
 		if(strength_roll < strength_target)
 			var/fail_chance = clamp(5 + (fish_count * 3) + (overload * 4) - max(0, str_score - 10), 3, 35)
 			if(prob(fail_chance))
+				if(linked_net.adjust_durability(failed_haul_wear))
+					linked_net.visible_message(span_warning("[linked_net] tears apart under the strain of a failed haul!"))
+					linked_net.spawn_broken_net()
+					qdel(src)
+					return
 				user.visible_message(span_warning("[user] strains against the net line but loses grip."), span_userdanger("The haul is too heavy right now! I LOSE MY GRIP!"))
 				return
 		user.visible_message(span_notice("[user] hauls on the rope net ([i]/[haul_actions])..."), span_notice("I haul on the rope net ([i]/[haul_actions])..."))
@@ -429,7 +481,17 @@
 		var/heavy_mult = 1 + (min(max(fish_count - 8, 0), 7) / 7)
 		stamina_drain = round(stamina_drain * heavy_mult, 0.1)
 		if(stamina_drain && !user.stamina_add(stamina_drain))
+			if(linked_net.adjust_durability(failed_haul_wear))
+				linked_net.visible_message(span_warning("[linked_net] tears apart under the strain of a failed haul!"))
+				linked_net.spawn_broken_net()
+				qdel(src)
+				return
 			to_chat(user, span_warning("I'm too exhausted to keep hauling the net."))
+			return
+		if(linked_net.adjust_durability(haul_wear))
+			linked_net.visible_message(span_warning("[linked_net] tears apart as its cords fray during hauling!"))
+			linked_net.spawn_broken_net()
+			qdel(src)
 			return
 	var/fish_hauled = 0
 	for(var/entry in linked_net.caught_fish)
@@ -469,4 +531,5 @@
 	if(!linked_net || QDELETED(linked_net))
 		. += span_warning("It isn't attached to a net anymore.")
 		return
+	. += span_notice("Net durability: [linked_net.get_durability_percent()]% ([linked_net.obj_integrity]/[linked_net.max_integrity])")
 	. += span_notice("The net feels heavy with [linked_net.catch_count()]/[linked_net.max_catch_capacity] fish.")
