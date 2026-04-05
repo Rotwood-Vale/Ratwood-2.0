@@ -637,6 +637,17 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	prefs.save_preferences()
 	to_chat(src, span_notice("Ghost orbit protection is now [prefs.ghost_orbit_protection ? "ENABLED (Ghosts can no longer orbit you)" : "DISABLED (Ghosts can now orbit you)"]."))
 
+/client/verb/toggle_player_visibility_to_ghosts()
+	set name = "Toggle Player Visibility To Ghosts"
+	set category = "OOC"
+	set desc = "Permit or forbid ghosts from seeing your character."
+	if(!mob)
+		return
+	// Flip preference
+	prefs.player_visibility_to_ghosts = !prefs.player_visibility_to_ghosts
+	prefs.save_preferences()
+	to_chat(src, span_notice("Player visibility to ghosts is now [prefs.player_visibility_to_ghosts ? "ENABLED (Ghosts can no longer see your character)" : "DISABLED (Ghosts can now see your character)"]."))
+
 // Currently ghost sprite not displaying
 // Can't return to afterlife or use for teleporting 
 // Need to add hide emotes, etc

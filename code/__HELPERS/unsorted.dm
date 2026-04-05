@@ -246,6 +246,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return FALSE
 	return has_ghost_chat_protection(target)
 
+// Whether a protected living target should have their location and movements hidden from this observer.
 /proc/get_hidden_ghosts_for_target(atom/target)
 	. = list()
 	if(!has_ghost_chat_protection(target))
@@ -253,6 +254,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 	for(var/mob/dead/observer/observer in GLOB.player_list)
 		if(is_hidden_from_ghosts(target, observer))
 			. += observer
+
+// Whether a protected living target should have their character model visible to ghosts.
+/proc/is_character_visible_to_ghosts(atom/target)
+	if(!isliving(target))
+		return FALSE
+	var/mob/living/living_target = target
+	return !living_target.client?.prefs?.player_visibility_to_ghosts
 
 //Whether a protected living target should have their location and movements hidden from this observer.
 /proc/has_ghost_orbit_protection(atom/target)
