@@ -41,6 +41,14 @@
 				if(show_message && user)
 					to_chat(user, span_warning("Socialite virtue conflicts with Eerie Beauty vice!"))
 				return TRUE
+
+	// Godless vs Devotee. 
+	if(virtue_type == /datum/virtue/combat/devotee)
+		for(var/datum/charflaw/vice in vice_list)
+			if(vice && vice.type == /datum/charflaw/godless)
+				if(show_message && user)
+					to_chat(user, span_warning("Devotee virtue conflicts with Godless vice!"))
+				return TRUE
 	
 	// Deathless (no hunger/breath) vs any food/breathing related vices
 	// Deathless conflicts with nothing currently, but kept for future reference
