@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		listening |= M
 		the_dead[M] = TRUE
 	var/list/hidden_ghosts = null
-	if(has_ghost_protection(src))
+	if(has_ghost_chat_protection(src))
 		hidden_ghosts = get_hidden_ghosts_for_target(src)
 		for(var/mob/dead/observer/ghost in hidden_ghosts)
 			if(ghost in listening)
@@ -492,7 +492,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			continue
 		listening |= M
 		the_dead[M] = TRUE
-	if(has_ghost_protection(src))
+	if(has_ghost_chat_protection(src))
 		hidden_ghosts = get_hidden_ghosts_for_target(src)
 		for(var/mob/dead/observer/ghost in hidden_ghosts)
 			if(ghost in listening)

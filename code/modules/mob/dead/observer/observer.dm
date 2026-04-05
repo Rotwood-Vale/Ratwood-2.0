@@ -618,7 +618,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			if(current_mob.client)
 				// check if the player is has ghost protection
 				var/datum/preferences/current_prefs = current_mob.client.prefs
-				if(!current_prefs.ghost_protection)
+				if(!current_prefs.ghost_orbit_protection)
 					allowed_mobs[current_name] = current_mob
 	else
 		allowed_mobs += all_mobs

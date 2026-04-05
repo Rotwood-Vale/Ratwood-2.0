@@ -187,7 +187,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
 	var/list/hidden_ghosts = null
-	if(has_ghost_protection(src))
+	if(has_ghost_chat_protection(src))
 		hidden_ghosts = get_hidden_ghosts_for_target(src)
 		if(length(hidden_ghosts))
 			ignored_mobs += hidden_ghosts

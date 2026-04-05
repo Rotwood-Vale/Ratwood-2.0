@@ -615,16 +615,27 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	usr << browse(policytext.Join(""),"window=policy")
 
-/client/verb/toggle_ghost_protection()
-	set name = "Toggle Ghost Protection"
+/client/verb/toggle_ghost_chat_protection()
+	set name = "Toggle Ghost Chat Protection"
 	set category = "OOC"
-	set desc = "Permit or forbid ghosts from orbiting or seeing you."
+	set desc = "Permit or forbid ghosts from seeing your messages or actions."
 	if(!mob)
 		return
 	// Flip preference
-	prefs.ghost_protection = !prefs.ghost_protection
+	prefs.ghost_chat_protection = !prefs.ghost_chat_protection
 	prefs.save_preferences()
-	to_chat(src, span_notice("Ghost protection is now [prefs.ghost_protection ? "ENABLED (Ghosts can no longer see or orbit you)" : "DISABLED (Ghosts can now see and orbit you)"]."))
+	to_chat(src, span_notice("Ghost chat protection is now [prefs.ghost_chat_protection ? "ENABLED (Ghosts can no longer see your messages or actions)" : "DISABLED (Ghosts can now see your messages and actions)"]."))
+
+/client/verb/toggle_ghost_orbit_protection()
+	set name = "Toggle Ghost Orbit Protection"
+	set category = "OOC"
+	set desc = "Permit or forbid ghosts from orbiting you."
+	if(!mob)
+		return
+	// Flip preference
+	prefs.ghost_orbit_protection = !prefs.ghost_orbit_protection
+	prefs.save_preferences()
+	to_chat(src, span_notice("Ghost orbit protection is now [prefs.ghost_orbit_protection ? "ENABLED (Ghosts can no longer orbit you)" : "DISABLED (Ghosts can now orbit you)"]."))
 
 // Currently ghost sprite not displaying
 // Can't return to afterlife or use for teleporting 
