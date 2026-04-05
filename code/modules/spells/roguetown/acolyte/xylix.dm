@@ -402,18 +402,18 @@
 	var/used_times = 0
 	var/last_used = 0
 	var/bonus_luck_threshould = 600
-	if(HAS_TRAIT(user, TRAIT_GODLESS))
-		to_chat(user, span_warning("Nothing happens. Xylix has no patron to call upon for this one."))
-		to_chat(target, span_warning("You're pretty sure you hear a faint laughter, out in the distance."))
-		revert_cast()
-		return FALSE
 
 /obj/effect/proc_holder/spell/invoked/xylixlian_luck/Initialize(mapload)
 	. = ..()
 
 	last_used = world.time
 
-/obj/effect/proc_holder/spell/invoked/xylixlian_luck/cast(list/targets,mob/living/carbon/human/user = usr)
+/obj/effect/proc_holder/spell/invoked/xylixlian_luck/cast(list/targets, mob/living/carbon/human/user = usr)
+	if(HAS_TRAIT(user, TRAIT_GODLESS))
+		to_chat(user, span_warning("Xylix laughs. No patron heeds the call."))
+		revert_cast()
+		return FALSE
+	
 	user.play_overhead_indicator('modular_twilight_axis/icons/mob/overhead_effects.dmi', "xylix_fortune", 30, MUTATIONS_LAYER, soundin = 'modular_twilight_axis/sound/slotmachine.ogg', y_offset = 24)
 
 	to_chat(user, span_danger("Xylix gives you a chance to use one of his favors"))

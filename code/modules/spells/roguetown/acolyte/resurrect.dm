@@ -575,10 +575,16 @@
 	alt_required_items = list(
 		/obj/item/ingot/copper = 1
 	)
-	if(HAS_TRAIT(target, TRAIT_GODLESS))
-		to_chat(user, span_warning("I feel a wave of disgust wash over me. Malum shall not help rebuild this one."))
-		revert_cast()
-		return FALSE
+
+/obj/effect/proc_holder/spell/invoked/resurrect/malum/cast(list/targets, mob/living/user)
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("I feel a wave of disgust wash over me. Malum shall not help in rebuilding this one."))
+			revert_cast()
+			return FALSE
+	return ..(targets, user)
+	
 	debuff_type = /datum/status_effect/debuff/ravox_revival
 	debuff_type = /datum/status_effect/debuff/malum_revival
 	sound = 'sound/magic/clang.ogg'
@@ -594,11 +600,15 @@
 	alt_required_items = list(
 		/obj/item/natural/bone = 7
 	)
-	if(HAS_TRAIT(target, TRAIT_GODLESS))
-		to_chat(user, span_warning("I feel a wave of disgust wash over me. Ravox shall not extend a helping hand upon this one."))
-		revert_cast()
-		return FALSE
-	debuff_type = /datum/status_effect/debuff/ravox_revival
+
+/obj/effect/proc_holder/spell/invoked/resurrect/ravox/cast(list/targets, mob/living/user)
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("I feel a wave of disgust wash over me. Ravox shall not grant his mercy to this one"))
+			revert_cast()
+			return FALSE
+	return ..(targets, user)
 
 /obj/effect/proc_holder/spell/invoked/resurrect/dendor
 	name = "Wild Revival"
@@ -613,10 +623,16 @@
 		/obj/item/reagent_containers/food/snacks/grown/manabloom = 3,
 		/obj/item/reagent_containers/food/snacks/grown/rogue/swampweed = 1
 	)
-	if(HAS_TRAIT(target, TRAIT_GODLESS))
-		to_chat(user, span_warning("I feel a wave of disgust wash over me. Dendor shall not return this one upon nature's womb.")) //if Dendor is the god of nature, does this mean that Nature here is personified as male? I dunno.
-		revert_cast()
-		return FALSE
+
+/obj/effect/proc_holder/spell/invoked/resurrect/dendor/cast(list/targets, mob/living/user)
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("I feel a wave of disgust wash over me. Dendor shall not help this one"))
+			revert_cast()
+			return FALSE
+	return ..(targets, user)
+
 	debuff_type = /datum/status_effect/debuff/ravox_revival
 	debuff_type = /datum/status_effect/debuff/dendor_revival
 	required_structure = /obj/structure/flora/roguetree/wise
@@ -631,10 +647,15 @@
 	alt_required_items = list(
 		/obj/item/paper = 15
 	)
-	if(HAS_TRAIT(target, TRAIT_GODLESS))
-		to_chat(user, span_warning("I feel a wave of disgust wash over me. Noc remains silent."))
-		revert_cast()
-		return FALSE
+/obj/effect/proc_holder/spell/invoked/resurrect/noc/cast(list/targets, mob/living/user)
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("I feel a tidal wave of disgust wash over me. Noc remains silent."))
+			revert_cast()
+			return FALSE
+	return ..(targets, user)
+
 	debuff_type = /datum/status_effect/debuff/ravox_revival
 	debuff_type = /datum/status_effect/debuff/noc_revival
 	overlay_state = "noc_revive"

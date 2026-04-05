@@ -1285,14 +1285,14 @@
 	associated_skill = /datum/skill/magic/holy
 
 /obj/effect/proc_holder/spell/invoked/eora_blessing/cast(list/targets, mob/living/user)
+	if(HAS_TRAIT(targets[1], TRAIT_GODLESS))
+		to_chat(user, span_warning("Even Eora scorns the godless."))
+		return FALSE
 	if(ishuman(targets[1]))
 		var/mob/living/L = targets[1]
 		var/assocskill = L.get_skill_level(associated_skill)
 		L.apply_status_effect(/datum/status_effect/eora_blessing, assocskill)
 		return TRUE
-	if(HAS_TRAIT(target, TRAIT_GODLESS))
-		to_chat(user, span_warning("Even Eora scorns the godless."))
-		return FALSE
 	revert_cast()
 	return FALSE
 
