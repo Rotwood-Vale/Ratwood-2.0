@@ -766,6 +766,9 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
 
+	if(GLOB.player_visibility_to_ghosts_active)
+		see_invisible = SEE_INVISIBLE_OBSERVER
+
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.

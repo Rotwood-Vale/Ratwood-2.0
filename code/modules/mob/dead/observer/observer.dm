@@ -11,7 +11,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	layer = GHOST_LAYER
 	stat = DEAD
 	density = FALSE
-	see_invisible = SEE_INVISIBLE_OBSERVER
+	see_invisible = SEE_INVISIBLE_LIVING
 	see_in_dark = 100
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	invisibility = INVISIBILITY_OBSERVER
@@ -780,6 +780,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if (!ghostvision)
 		see_invisible = SEE_INVISIBLE_LIVING
+	if(client?.holder)
+		see_invisible = SEE_INVISIBLE_OBSERVER
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
 

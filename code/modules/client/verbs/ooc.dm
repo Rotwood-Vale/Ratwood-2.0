@@ -638,16 +638,33 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	to_chat(src, span_notice("Ghost orbit protection is now [prefs.ghost_orbit_protection ? "ENABLED (Ghosts can no longer orbit you)" : "DISABLED (Ghosts can now orbit you)"]."))
 
 /client/verb/toggle_player_visibility_to_ghosts()
-	set name = "Toggle Player Visibility To Ghosts"
+	set name = "Toggle Player Visibility to Ghosts"
 	set category = "OOC"
-	set desc = "Permit or forbid ghosts from seeing your character."
+	set desc = "Permit or forbid ghosts from seeing you."
 	if(!mob)
 		return
-	// Flip preference
 	prefs.player_visibility_to_ghosts = !prefs.player_visibility_to_ghosts
 	prefs.save_preferences()
-	to_chat(src, span_notice("Player visibility to ghosts is now [prefs.player_visibility_to_ghosts ? "ENABLED (Ghosts can no longer see your character)" : "DISABLED (Ghosts can now see your character)"]."))
+	to_chat(mob, span_notice("Player visibility to ghosts is now [prefs.player_visibility_to_ghosts ? "ENABLED (You are now invisible to ghosts)" : "DISABLED (You are now visible to ghosts)"]."))
 
-// Currently ghost sprite not displaying
-// Can't return to afterlife or use for teleporting 
-// Need to add hide emotes, etc
+	var/active = FALSE
+	for(var/mob/living/L in GLOB.alive_mob_list)
+		if(L.client?.prefs.player_visibility_to_ghosts)
+			active = TRUE
+			break
+	GLOB.player_visibility_to_ghosts_active = active
+
+	// Update all living mobs' sight
+	for(var/mob/living/L in GLOB.alive_mob_list)
+		L.update_sight()
+	// Update all observers' see_invisible
+	update_observer_visibility_for_toggle()
+
+/// Helper proc to update all observers' see_invisible based on toggle state and admin status
+/proc/update_observer_visibility_for_toggle()
+	for(var/mob/dead/observer/O in GLOB.dead_mob_list)
+		if(O.client?.holder)
+			O.see_invisible = SEE_INVISIBLE_OBSERVER
+		else
+			O.see_invisible = SEE_INVISIBLE_LIVING
+
