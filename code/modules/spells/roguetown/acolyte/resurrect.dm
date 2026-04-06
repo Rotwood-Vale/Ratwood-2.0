@@ -315,7 +315,7 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			to_chat(user, span_warning("I feel a tidal wave of disgust wash over me. Abyssor shall not help this"))
+			to_chat(user, span_warning("I feel a tidal wave of disgust wash over me. Eora shall not extend her love upon this one."))
 			revert_cast()
 			return FALSE
 	return ..(targets, user)
@@ -359,12 +359,12 @@
 	debuff_type = /datum/status_effect/debuff/random_revival
 	alt_required_items = list(/obj/item/clothing/neck/roguetown/psicross/wood = 1)
 
-/obj/effect/proc_holder/spell/invoked/resurrect/xylix/cast(list/targets, mob/living/user)
+/obj/effect/proc_holder/spell/invoked/resurrect/xylix/cast(list/targets, mob/living/user) //1 in 10 chance Xylix revives them, SOVL?
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
 			if(prob(10))
-				to_chat(user, span_warning("They rise. Xylix laughs with me."))
+				to_chat(user, span_warning("They stirr. Xylix laughs with me."))
 			else
 				to_chat(user, span_warning("I feel a wave of disgust wash over me. Xylix laughs at me."))
 				revert_cast()
@@ -605,7 +605,7 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			to_chat(user, span_warning("I feel a wave of disgust wash over me. Ravox shall not grant his mercy to this one"))
+			to_chat(user, span_warning("I feel a wave of disgust wash over me. Ravox shall not grant his mercy to this one."))
 			revert_cast()
 			return FALSE
 	return ..(targets, user)
@@ -628,7 +628,7 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			to_chat(user, span_warning("I feel a wave of disgust wash over me. Dendor shall not help this one"))
+			to_chat(user, span_warning("I feel a wave of disgust wash over me. Dendor shall not help this one."))
 			revert_cast()
 			return FALSE
 	return ..(targets, user)
@@ -651,7 +651,7 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			to_chat(user, span_warning("I feel a tidal wave of disgust wash over me. Noc remains silent."))
+			to_chat(user, span_warning("I feel a wave of disgust wash over me. Noc remains silent."))
 			revert_cast()
 			return FALSE
 	return ..(targets, user)

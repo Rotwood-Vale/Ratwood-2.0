@@ -87,7 +87,7 @@
 		revert_cast()
 		return FALSE
 	if(HAS_TRAIT(target, TRAIT_GODLESS))
-		to_chat(user, span_warning("Pestra abhors them!"))
+		to_chat(user, span_warning("Pestra abhors them! She shall lend no assistance to this one!"))
 		revert_cast()
 		return FALSE
 

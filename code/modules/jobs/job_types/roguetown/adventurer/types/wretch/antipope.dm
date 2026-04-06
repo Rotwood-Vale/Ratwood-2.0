@@ -9,6 +9,7 @@
 	But this change will be resisted. Crush the dissent. Show them why it is better to rule in Gehenna than serve under the Firmament."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS //The Inhumen discriminate not.
+	vice_restrictions = list(/datum/charflaw/godless)
 	outfit = /datum/outfit/job/roguetown/wretch/antipope
 	cmode_music = 'sound/music/combat_cult.ogg'
 	class_select_category = CLASS_CAT_CLERIC

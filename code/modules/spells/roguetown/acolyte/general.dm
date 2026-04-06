@@ -131,10 +131,11 @@
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			target.visible_message(span_info("[target] shudders violently, the miracle quickly vanishes."), span_notice("A hopeful feeling of warmth appears in my heart. It is quickly replaced with an overbearing feeling of disgust."))
-			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-		return FALSE
+			target.visible_message(span_info("[target] is burned by holy light!"), span_notice("A hopeful feeling of warmth appears in my heart. It quickly grows unbearable."))
+			to_chat(user, span_warning("My patron scolds me for wasting their time upon a Godless heathen."))
+			target.adjustFireLoss(25)
+			target.fire_act(1,10) // woe, fire be upon ye.
+			return FALSE
 		if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD)) //positive energy harms the undead
 			target.visible_message(span_danger("[target] is burned by holy light!"), span_userdanger("I'm burned by holy light!"))
 			target.adjustFireLoss(25)
@@ -365,6 +366,13 @@
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
+
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			target.visible_message(span_info("[target] is burned by holy light!"), span_notice("A hopeful feeling of warmth appears in my heart. It quickly grows unbearable."))
+			to_chat(user, span_warning("My patron scolds me for wasting their time upon a Godless heathen."))
+			target.adjustFireLoss(25)
+			target.fire_act(1,10) // woe, fire be upon ye.
+			return FALSE	
 
 		if(!affecting)
 			revert_cast()

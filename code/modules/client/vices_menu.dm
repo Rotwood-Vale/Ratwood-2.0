@@ -257,6 +257,12 @@
 			if(show_message && user)
 				to_chat(user, span_warning("Unintelligible vice conflicts with Mute vice - you can't have both speech impediments!"))
 			return TRUE
+	
+	if(vice_type == /datum/charflaw/godless)
+		if(/datum/charflaw/addiction/godfearing in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("WARNING: While technically, the Scorned Vice and Devout Follower do NOT conflict with each other, due to the way that Scorned is coded, your prayers will not go through to your patron. Meaning that you will never be able to get rid of the stress debuff associated with Devout Follower. Combine at your own risk."))
+			return FALSE // Gives the user a fair warning, still lets them do it for RP/Masochism reasons. Not like they get any sort of advantage here.
 
 	return FALSE
 

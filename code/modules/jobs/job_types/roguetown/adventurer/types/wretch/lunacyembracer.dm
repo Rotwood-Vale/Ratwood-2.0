@@ -3,6 +3,7 @@
 	tutorial = "You have rejected and terrorized civilization in the name of nature. You run wild under the moon, a terror to the townsfolk and a champion of Dendor's wild domain."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
+	vice_restrictions = list(/datum/charflaw/godless) // you get miracles? you get restricted.
 	outfit = /datum/outfit/job/roguetown/wretch/lunacyembracer
 	// category_tags = list(CTAG_WRETCH)
 	category_tags = list(CTAG_DISABLED)

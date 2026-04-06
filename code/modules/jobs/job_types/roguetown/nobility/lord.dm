@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	cmode_music = 'sound/music/combat_noble.ogg'
 	social_rank = SOCIAL_RANK_ROYAL
 	// Can't use the Throat when you can't talk properly or.. at all for that matter.
-	vice_restrictions = list(/datum/charflaw/mute, /datum/charflaw/unintelligible)
+	vice_restrictions = list(/datum/charflaw/mute, /datum/charflaw/unintelligible, /datum/charflaw/godless) // GODLESS PR: added to specifically prevent hour zero Church V. Keep hyperwars. 
 
 	job_subclasses = list(
 		/datum/advclass/lord/warrior,

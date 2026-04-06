@@ -790,5 +790,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Scorned"
 	desc = "For whatever reason or sin, both the Divine and Profane scorn me and my existence. I stand alone in this rotted world and shall experience no grace or assistance from the Powers That Be."
 
-/datum/charflaw/godless/on_mob_creation(mob/user)
-	ADD_TRAIT(user, TRAIT_GODLESS, TRAIT_GENERIC)
+/datum/charflaw/ugly/on_mob_creation(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		ADD_TRAIT(H, TRAIT_GODLESS, TRAIT_GENERIC)

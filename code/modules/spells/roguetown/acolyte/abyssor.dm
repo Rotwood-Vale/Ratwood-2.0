@@ -218,11 +218,11 @@
 			target.adjustBruteLoss(30)			
 			return TRUE
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			target.visible_message(span_info("[target] shudders violently, the miracle quickly vanishes."), span_notice("A hopeful feeling of warmth appears in my heart. It is quickly replaced with an overbearing feeling of disgust."))
-			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+			target.visible_message(span_info("[target] is crushed by divine pressure!"), span_notice("I'm crushed by a tidal wave of disgust."))
+			to_chat(user, span_warning("My patron scolds me for wasting their time upon a Godless heathen."))
+			target.adjustBruteLoss(30)	// woe, brute be upon ye.
 			return FALSE
-
+		
 		var/conditional_buff = FALSE
 		var/situational_bonus = 0
 		target.visible_message(span_info("A wave of divine energy crashes over [target]!"), span_notice("I'm crushed by healing energies!"))

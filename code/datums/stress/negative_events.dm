@@ -499,7 +499,7 @@
 	timer = INFINITY
 
 /datum/stressevent/godless
-	stressadd = 7 // Mechanical inclination of actually hating the godless.
-	desc = span_boldred("Godless Heathen. I should keep my distance, lest they... infect me.")
+	stressadd = 4 // Mechanical inclination of actually hating the godless.
+	desc = span_boldred("Godless Heathen. I need to keep my distance, lest they... infect me.")
 	timer = 3 MINUTES
 

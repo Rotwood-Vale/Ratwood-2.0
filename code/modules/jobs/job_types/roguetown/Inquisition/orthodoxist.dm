@@ -12,6 +12,7 @@
 	allowed_patrons = list(/datum/patron/old_god) //Requires your character's patron to be Psydon. This role is explicitly designed to be played by Psydonites, only, and almost everything they have - down to the equipment and statblock - is rooted in Psydonism. Do NOT make this accessable to other faiths, unless you go through the efforts of redesigning it from the ground up.
 	tutorial = "Praise. Atone. Mourn. A hundred different paths across a hundred different lyves, all ending the same; with you swearing fealty to Psydon, and your admittance into the Inquisitor's retinue. Root the abberants out from wherever they dwell, and - whether with a clenched fist or open palm - bring them back to the light."
 	selection_color = JCOLOR_INQUISITION
+	vice_restrictions = list(/datum/charflaw/godless) // while teeechnically PSYDON LOVES YOU! still as a Godless, I do NOT trust people to not cause issues here. Safety check.
 	outfit = null
 	outfit_female = null
 	display_order = JDO_ORTHODOXIST
