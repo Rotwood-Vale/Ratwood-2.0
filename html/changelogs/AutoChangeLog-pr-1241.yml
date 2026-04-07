@@ -1,4 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - spellcheck: "Renamed dried westleach and dried swampweed leaves to distinguish them from fresh leaves. This fixes the confusing moondust and ozium crafting requirements."

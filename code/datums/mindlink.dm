@@ -26,8 +26,8 @@ GLOBAL_LIST_EMPTY(mindlinks)
 	if(!message)
 		return
 	
-	// Check for the ,y prefix
-	if(findtext(message, ",y", 1, 3))
+	// Check for the ,m prefix
+	if(findtext(message, ",m", 1, 3))
 		message = trim(copytext(message, 3))
 		var/mob/living/recipient = (speaker == owner ? target : owner)
 		

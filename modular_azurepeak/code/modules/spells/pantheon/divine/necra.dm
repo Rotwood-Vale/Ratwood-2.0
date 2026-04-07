@@ -114,7 +114,7 @@
 			for(var/mob/living/thing in things_to_churn)
 				thing.apply_status_effect(/datum/status_effect/churned, user, debuff_power)
 		if(LAZYLEN(things_to_stun))
-			for(var/mob/living/thing in things_to_stun)
+			for(var/mob/living/thing in things_to_churn)
 				thing.Stun(100)
 				thing.Knockdown(50)
 				thing.emote("scream")

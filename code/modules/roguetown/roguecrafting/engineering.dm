@@ -57,6 +57,7 @@
 	reqs = list(/obj/item/ingot/iron = 1)
 	verbage_simple = "engineer"
 	verbage = "engineers"
+	ignoredensity = TRUE
 	skillcraft = /datum/skill/craft/engineering
 
 /datum/crafting_recipe/roguetown/engineering/distiller

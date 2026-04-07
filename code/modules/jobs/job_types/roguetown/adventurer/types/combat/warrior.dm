@@ -148,7 +148,7 @@
 	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	head = /obj/item/clothing/head/roguetown/duelisthat
 	mask = /obj/item/clothing/mask/rogue/duelmask
-	cloak = /obj/item/clothing/cloak/half/duelistcape
+	cloak = /obj/item/clothing/cloak/duelistcape
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
 	pants = /obj/item/clothing/under/roguetown/trou/leather

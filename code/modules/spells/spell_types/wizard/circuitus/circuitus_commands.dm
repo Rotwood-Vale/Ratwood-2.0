@@ -442,7 +442,7 @@
 
 /datum/spell_command/make_wall
 	word = "murus"
-	fatiguecost = 10
+	fatiguecost = 15
 	needs_spell = /obj/effect/proc_holder/spell/invoked/forcewall
 
 /datum/spell_command/make_wall/do_spell(datum/incantation_data/data)
@@ -464,6 +464,8 @@
 		to_chat(data.caster, span_warning("Cannot see through walls!"))
 		return FALSE
 
+	var/strength = data.get_staff_power()
+
 	data.caster.stamina_add(fatiguecost)
 
 	var/list/wall_turfs = list(wall_spot)
@@ -478,12 +480,13 @@
 
 	for(var/turf/T in wall_turfs)
 		new /obj/effect/temp_visual/spell_visual/wall_warning(T)
-		addtimer(CALLBACK(src, PROC_REF(make_wall_piece), T, data.caster), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(make_wall_piece), T, data.caster, strength), 1 SECONDS)
 
 	return TRUE
 
-/datum/spell_command/make_wall/proc/make_wall_piece(turf/T, mob/caster)
-	new /obj/structure/forcefield_weak(T, caster)
+/datum/spell_command/make_wall/proc/make_wall_piece(turf/T, mob/caster, strength = 3)
+	var/obj/structure/forcefield_weak/W = new(T, caster)
+	W.obj_integrity = max(1, round(50 * (strength / 3)))
 
 /datum/spell_command/buff_strength
 	word = "vis"

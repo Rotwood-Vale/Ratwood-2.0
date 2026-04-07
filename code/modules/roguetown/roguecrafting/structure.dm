@@ -151,7 +151,7 @@
 	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/zizo_shrine
-	name = "profane shrine"
+	name = "wooden inverse cross"
 	reqs = list(
 		/obj/item/grown/log/tree/small = 1,
 		/obj/item/natural/stone = 2,
@@ -561,6 +561,16 @@
 	skillcraft = /datum/skill/craft/carpentry
 	buildsame = TRUE
 
+/datum/crafting_recipe/roguetown/structure/wallshelf
+	name = "wall shelf (1 plank)"
+	result = /obj/structure/rack/rogue/shelf
+	reqs = list(/obj/item/natural/wood/plank = 1)
+	wallcraft = TRUE
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 2
+
 /datum/crafting_recipe/roguetown/structure/mineshaft_support
 	name = "mineshaft support"
 	result = /obj/structure/barricade/mineshaft
@@ -750,7 +760,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/structure/doublebed
-	name = "bed, double"
+	name = "bed, double nice"
 	result = /obj/structure/bed/rogue/inn/double
 	reqs = list(/obj/item/grown/log/tree/small = 3,
 				/obj/item/natural/cloth = 4)
@@ -1371,11 +1381,21 @@
 /datum/crafting_recipe/roguetown/structure/floorclock
 	name = "Floor Clock"
 	result = /obj/structure/fluff/clock
-	reqs = list(/obj/item/natural/wood/plank = 2,/obj/item/roguegear = 1, /obj/item/ingot/iron = 1)
+	reqs = list(/obj/item/natural/wood/plank = 2,/obj/item/roguegear/bronze = 1, /obj/item/ingot/iron = 1)
 	verbage_simple = "construst"
 	verbage = "constructs"
-	skillcraft = /datum/skill/craft/carpentry
+	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/wallclock
+	name = "Wall Clock (North)"
+	result = /obj/structure/fluff/wallclock
+	reqs = list(/obj/item/natural/wood/plank = 2,/obj/item/roguegear/bronze = 1, /obj/item/ingot/iron = 1)
+	verbage_simple = "construst"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 2
+	wallcraft = TRUE
 
 /datum/crafting_recipe/roguetown/structure/drawer1// oh boy time to add drawers for all five of them, drawers are randomized and theres five different sprites that are all unique enough
 	name = "Long Dresser"
@@ -1457,3 +1477,124 @@
 	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
+
+// hanging chains
+
+/datum/crafting_recipe/roguetown/structure/hangingchains
+	name = "Hanging Chains"
+	result = /obj/structure/fluff/walldeco/chains
+	reqs = list(/obj/item/ingot/iron = 1, /obj/item/rope/chain = 2)
+	verbage_simple = "construst"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 1
+
+// floor candles
+
+/datum/crafting_recipe/roguetown/structure/floorcandle
+	name = "floor candles"
+	result = /obj/machinery/light/rogue/candle/floorcandle
+	reqs = list(/obj/item/candle/yellow = 2)
+	verbage_simple = "build"
+	verbage = "builds"
+	skillcraft = /datum/skill/craft/masonry
+	wallcraft = FALSE
+	craftdiff = 0
+
+
+/datum/crafting_recipe/roguetown/structure/floorcandlealt
+	name = "alt floor candles"
+	result = /obj/machinery/light/rogue/candle/floorcandle/alt
+	reqs = list(/obj/item/candle/yellow = 2)
+	verbage_simple = "build"
+	verbage = "builds"
+	skillcraft = /datum/skill/craft/masonry
+	wallcraft = FALSE
+	craftdiff = 0
+
+
+/datum/crafting_recipe/roguetown/structure/floorcandlepink
+	name = "eoran floor candles"
+	result = /obj/machinery/light/rogue/candle/floorcandle/pink
+	reqs = list(/obj/item/candle/eora = 2)
+	verbage_simple = "build"
+	verbage = "builds"
+	skillcraft = /datum/skill/craft/masonry
+	wallcraft = FALSE
+	craftdiff = 0
+
+
+/datum/crafting_recipe/roguetown/structure/floorcandlealtpink
+	name = "alt eoran floor candles"
+	result = /obj/machinery/light/rogue/candle/floorcandle/alt/pink
+	reqs = list(/obj/item/candle/eora = 2)
+	verbage_simple = "build"
+	verbage = "builds"
+	skillcraft = /datum/skill/craft/masonry
+	wallcraft = FALSE
+	craftdiff = 0
+
+// floor pillows
+
+/datum/crafting_recipe/roguetown/structure/redpillows
+	name = "red pillows (2 cloth)"
+	result = /obj/structure/fluff/pillow/red
+	reqs = list(/obj/item/natural/cloth = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/bluepillows
+	name = "blue pillows (2 cloth)"
+	result = /obj/structure/fluff/pillow/blue
+	reqs = list(/obj/item/natural/cloth = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/greenpillows
+	name = "green pillows (2 cloth)"
+	result = /obj/structure/fluff/pillow/green
+	reqs = list(/obj/item/natural/cloth = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/brownpillows
+	name = "brown pillows (2 cloth)"
+	result = /obj/structure/fluff/pillow/brown
+	reqs = list(/obj/item/natural/cloth = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/magentapillows
+	name = "magenta pillows (2 cloth)"
+	result = /obj/structure/fluff/pillow/magenta
+	reqs = list(/obj/item/natural/cloth = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/purplepillows
+	name = "purple pillows (2 cloth)"
+	result = /obj/structure/fluff/pillow/purple
+	reqs = list(/obj/item/natural/cloth = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/blackpillows
+	name = "black pillows (2 cloth)"
+	result = /obj/structure/fluff/pillow/black
+	reqs = list(/obj/item/natural/cloth = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 2

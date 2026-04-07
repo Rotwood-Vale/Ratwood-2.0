@@ -71,15 +71,7 @@
 
 		// this is a *HACK* to force an layering render update, as when the mob faces the same direction as the gloryhole, they'll appear over it (remove this in the future when that bug is fixed)
 		if(istype(src, /obj/structure/bondage/gloryhole) && user?.client && (dir == user.dir))
-			switch(dir)
-				if(NORTH)
-					user.southface()
-				if(EAST)
-					user.westface()
-				if(SOUTH)
-					user.northface()
-				if(WEST)
-					user.eastface()
+			user.setDir(dir)
 
 	return ..(M, force, FALSE)
 

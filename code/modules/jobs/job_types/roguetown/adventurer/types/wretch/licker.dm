@@ -17,6 +17,7 @@
 	..()
 	if(H.mind)
 		H.adjust_blindness(-3)
+		wretch_select_bounty(H)
 		var/list/possible_classes = list()
 		for(var/datum/advclass/CHECKS in SSrole_class_handler.sorted_class_categories[CTAG_LICKER_WRETCH])
 			possible_classes += CHECKS

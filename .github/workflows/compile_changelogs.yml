@@ -50,7 +50,7 @@ jobs:
         run: |
           git config --local user.name "ratwood-ci[bot]"
           git config --local user.email "179393467+ratwood-ci[bot]@users.noreply.github.com"
-          git pull origin master
+          git pull origin main
           git add html/changelogs
           git commit -m "Automatic changelog compile [ci skip]" -a || true
 

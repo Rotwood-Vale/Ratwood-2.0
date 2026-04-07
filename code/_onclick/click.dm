@@ -756,11 +756,6 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 		else
 			setDir(WEST)
 
-/mob/face_atom(atom/A)
-	if(!canface())
-		return FALSE
-	..()
-
 /mob/living/face_atom(atom/A)
 	var/olddir = dir
 	..()

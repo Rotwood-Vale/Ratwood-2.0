@@ -104,6 +104,8 @@
 	var/display_craftable_only = TRUE
 	var/display_compact = TRUE
 	var/showonlycraftable = TRUE
+	var/craftability_next_update = 0
+	var/list/cached_craftability = list()
 
 
 
@@ -587,24 +589,26 @@
 	var/list/data = list()
 	data["busy"] = busy
 
-	var/list/surroundings = get_surroundings(user)
-	var/list/craftability = list()
-	for(var/rec in GLOB.crafting_recipes)
-		var/datum/crafting_recipe/R = rec
+	if(world.time >= craftability_next_update)
+		craftability_next_update = world.time + 10
+		var/list/surroundings = get_surroundings(user)
+		cached_craftability = list()
+		for(var/rec in GLOB.crafting_recipes)
+			var/datum/crafting_recipe/R = rec
 
-		if(R.hides_from_crafting_menu)
-			continue
-		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
-			continue
-		if(R.required_tech_node && !R.tech_unlocked)
-			continue
+			if(R.hides_from_crafting_menu)
+				continue
+			if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+				continue
+			if(R.required_tech_node && !R.tech_unlocked)
+				continue
 
-		var/can_craft_recipe = check_contents(R, surroundings)
-		// Multiple recipe paths can intentionally share a display name (e.g. log/plank alternates).
-		// Keep the entry craftable if any variant with that name is craftable.
-		craftability[R.name] = craftability[R.name] || can_craft_recipe
+			var/can_craft_recipe = check_contents(R, surroundings)
+			// Multiple recipe paths can intentionally share a display name (e.g. log/plank alternates).
+			// Keep the entry craftable if any variant with that name is craftable.
+			cached_craftability[R.name] = cached_craftability[R.name] || can_craft_recipe
 
-	data["craftability"] = craftability
+	data["craftability"] = cached_craftability
 	data["showonlycraftable"] = showonlycraftable
 	return data
 
@@ -748,8 +752,7 @@
 			if(R.name)
 				data += R
 				if(R.skillcraft)
-					var/datum/skill/S = new R.skillcraft()
-					catty |= S.name
+					catty |= initial(R.skillcraft:name)
 				else
 					catty |= "Other"
 	if(!data.len)
@@ -766,8 +769,7 @@
 		var/list/realdata = list()
 		for(var/datum/crafting_recipe/X in data)
 			if(X.skillcraft)
-				var/datum/skill/S = new X.skillcraft()
-				if(t == S.name)
+				if(t == initial(X.skillcraft:name))
 					realdata += X
 			else
 				if(t == "Other")

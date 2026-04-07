@@ -77,7 +77,7 @@
 	pickup_sound = 'sound/foley/equip/rummaging-03.ogg'
 	gripped_intents = list(/datum/intent/axe/chop/stone)
 	resistance_flags = FLAMMABLE
-
+	special = /datum/special_intent/axe_swing
 
 /obj/item/rogueweapon/stoneaxe/getonmobprop(tag)
 	. = ..()

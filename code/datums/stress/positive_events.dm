@@ -4,17 +4,17 @@
 	desc = span_green("The Gods smile upon me.")
 
 /datum/stressevent/chastity_devout
-	timer = 999 MINUTES
+	timer = INFINITY
 	stressadd = -1
 	desc = span_green("This restraint steadies my spirit.")
 
 /datum/stressevent/chastity_masochist
-	timer = 999 MINUTES
+	timer = INFINITY
 	stressadd = -1
 	desc = span_green("The spikes keep me pleasantly focused.")
 
 /datum/stressevent/chastity_church
-	timer = 999 MINUTES
+	timer = INFINITY
 	stressadd = -1
 	desc = span_green("My vows feel stronger in this restraint.")
 
@@ -330,6 +330,14 @@
 /datum/stressevent/noble_bowed_to/can_apply(mob/living/user)
 	return HAS_TRAIT(user, TRAIT_NOBLE)
 
+/datum/stressevent/noble_bowed_at
+	timer = 10 MINUTES
+	stressadd = -5
+	desc = span_green("A noble bowed to me! I am truly respected!")
+
+/datum/stressevent/noble_bowed_at/can_apply(mob/living/user)
+	return !HAS_TRAIT(user, TRAIT_NOBLE)
+
 /datum/stressevent/perfume
 	stressadd = -1
 	desc = span_green("A soothing fragrance envelops me.")
@@ -363,7 +371,7 @@
 /datum/stressevent/gazeuponme
 	stressadd = -5
 	desc = span_green("I am a heretic under Ten's gaze... My patron is proud of me!")
-	timer = 999 MINUTES
+	timer = INFINITY
 
 /datum/stressevent/sermon
 	stressadd = -5
@@ -399,7 +407,7 @@
 
 /datum/stressevent/blessed_weapon
 	stressadd = -3
-	timer = 999 MINUTES
+	timer = INFINITY
 	desc = span_green("I'm wielding a BLESSED weapon!")
 
 /datum/stressevent/hand_fed_fruit

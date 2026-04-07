@@ -112,7 +112,7 @@
 		to_chat(caster, span_warning("Empty incantation!"))
 		return FALSE
 
-	chant_delay = 0.6 - (caster.get_skill_level(/datum/skill/magic/arcane) * 0.05)
+	chant_delay = 0.6 - (caster.get_skill_level(/datum/skill/magic/arcane) * 0.025)
 
 	return do_sequence()
 
@@ -294,7 +294,9 @@
 		return 3
 	if(power >= 0.2)
 		return 2
-	return 1
+	if(power > 0)
+		return 1
+	return 0
 
 /datum/incantation_data/proc/push_iota(datum/spell_value/val)
 	if(current_iota)

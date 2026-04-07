@@ -2396,16 +2396,16 @@
 	pixel_x = 1;
 	pixel_y = 7
 	},
-/obj/item/clothing/cloak/half/shadowcloak{
+/obj/item/clothing/cloak/shadowcloak{
 	desc = "A nightly cloak worn by those that protect the citizenry from what lurks beyond."
 	},
-/obj/item/clothing/cloak/half/shadowcloak{
+/obj/item/clothing/cloak/shadowcloak{
 	desc = "A nightly cloak worn by those that protect the citizenry from what lurks beyond."
 	},
-/obj/item/clothing/cloak/half/shadowcloak{
+/obj/item/clothing/cloak/shadowcloak{
 	desc = "A nightly cloak worn by those that protect the citizenry from what lurks beyond."
 	},
-/obj/item/clothing/cloak/half/shadowcloak{
+/obj/item/clothing/cloak/shadowcloak{
 	desc = "A nightly cloak worn by those that protect the citizenry from what lurks beyond."
 	},
 /turf/open/floor/rogue/concrete,
@@ -46789,11 +46789,9 @@
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/outdoors/bograt/above)
 "mdd" = (
-/obj/structure/mineral_door/wood/deadbolt{
-	dir = 1;
-	keylock = 1;
+/obj/structure/mineral_door/wood{
 	locked = 1;
-	name = "Blacksmith Backdoor"
+	lockid = "towner_blacksmith"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)

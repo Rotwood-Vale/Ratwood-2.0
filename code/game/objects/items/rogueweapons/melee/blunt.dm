@@ -103,6 +103,7 @@
 	wdefense = 2
 	wbalance = WBALANCE_HEAVY
 	icon_angle_wielded = 50
+	special = /datum/special_intent/ground_smash
 
 /obj/item/rogueweapon/mace/getonmobprop(tag)
 	. = ..()
