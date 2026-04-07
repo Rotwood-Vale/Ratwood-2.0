@@ -142,3 +142,13 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 5
 
+/datum/crafting_recipe/roguetown/leather/unique/captainrobe
+	name = "eastern flowery robe"
+	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe)
+	reqs = list(
+		/obj/item/natural/hide/cured = 4,
+		/obj/item/reagent_containers/food/snacks/tallow = 2,
+		/obj/item/natural/fibers = 4,
+		/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 5

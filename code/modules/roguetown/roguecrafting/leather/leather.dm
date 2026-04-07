@@ -40,6 +40,22 @@
 	sellprice = 15
 	craftdiff = 2
 
+/datum/crafting_recipe/roguetown/leather/eastgloves1
+	name = "eastern black gloves"
+	result = list(/obj/item/clothing/gloves/roguetown/eastgloves1,
+	/obj/item/clothing/gloves/roguetown/eastgloves1)
+	reqs = list(/obj/item/natural/hide/cured = 1)
+	sellprice = 10
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/leather/eastgloves2
+	name = "eastern stylish black gloves"
+	result = list(/obj/item/clothing/gloves/roguetown/eastgloves2,
+	/obj/item/clothing/gloves/roguetown/eastgloves2)
+	reqs = list(/obj/item/natural/hide/cured = 1)
+	sellprice = 10
+	craftdiff = 2
+
 /datum/crafting_recipe/roguetown/leather/gloves
 	name = "leather gloves"
 	result = list(/obj/item/clothing/gloves/roguetown/leather,
@@ -47,6 +63,7 @@
 	reqs = list(/obj/item/natural/hide/cured = 1)
 	sellprice = 10
 	craftdiff = 2
+
 
 /datum/crafting_recipe/roguetown/leather/heavygloves
 	name = "heavy leather gloves"

@@ -39,7 +39,6 @@
 	H.adjust_blindness(-3)
 	has_loadout = TRUE
 	to_chat(H, span_warning("Rebel. Outlaw. Failure. Once, you served the upper echelons of Kazengun society as more than just a 'knight'- you were a champion, a beacon of virtue, a legend in the making. Now you wander distant Psydonia, seeking a fresh start... or fresh coin, at least."))
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/kabuto
 	belt = /obj/item/storage/belt/rogue/leather/cloth
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
 	cloak = /obj/item/clothing/cloak/kazengun
@@ -82,11 +81,13 @@
 	switch(armor_choice)
 		if("Heavy Armor")
 			ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/kabuto, SLOT_HEAD, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/full/samsibsa, SLOT_ARMOR, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk, SLOT_SHIRT, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs, SLOT_PANTS, TRUE)
 		if("Medium Armor")
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/kettle/jingasa, SLOT_HEAD, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/brigandine/haraate, SLOT_ARMOR, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy, SLOT_SHIRT, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun, SLOT_PANTS, TRUE)

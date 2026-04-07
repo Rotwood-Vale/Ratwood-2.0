@@ -21,6 +21,20 @@
 				/obj/item/natural/fur = 1)
 	craftdiff = 3	//Same as the heavy leather gloves.
 
+/datum/crafting_recipe/roguetown/leather/footwear/boots_heavy/kazengun
+	name = "kazengun boots"
+	result = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
+	reqs = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fur = 1)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/leather/footwear/boots_heavy/kazengunsandals
+	name = "kazengun sandals"
+	result = /obj/item/clothing/shoes/roguetown/armor/rumaclan
+	reqs = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fur = 1)
+	craftdiff = 3
+
 /datum/crafting_recipe/roguetown/leather/footwear/boots_heavy_b
 	name = "dress boots"
 	result = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
