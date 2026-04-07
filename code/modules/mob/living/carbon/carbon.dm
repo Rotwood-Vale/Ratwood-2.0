@@ -802,8 +802,6 @@
 //		see_invisible = SEE_INVISIBLE_OBSERVER
 //		return
 
-	see_override = GLOB.player_visibility_to_ghosts_active ? SEE_INVISIBLE_OBSERVER : 0
-
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
 	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
