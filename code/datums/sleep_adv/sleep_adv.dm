@@ -417,6 +417,8 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	if(HAS_TRAIT(mind.current, TRAIT_STUDENT))
 		REMOVE_TRAIT(mind.current, TRAIT_STUDENT, TRAIT_GENERIC)
 		to_chat(mind.current, span_nicegreen("I feel that I can be educated in a skill once more."))
+	if(mind.aquatic_compulsion_uses)
+		mind.aquatic_compulsion_uses = 0
 	close_ui()
 
 /datum/sleep_adv/Topic(href, list/href_list)

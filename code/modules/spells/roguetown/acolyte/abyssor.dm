@@ -128,7 +128,7 @@
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	recharge_time = 30 SECONDS
+	recharge_time = 10 SECONDS
 	miracle = TRUE
 	devotion_cost = 10
 	//Horrendous carry-over from fishing code
@@ -145,8 +145,15 @@
 		"ceruleanFishingMod" = 0 // 1 on cerulean aril, 0 on everything else
 	)
 
+/datum/mind
+	var/aquatic_compulsion_uses = 0
+
 /obj/effect/proc_holder/spell/invoked/aquatic_compulsion/cast(list/targets, mob/user = usr)
 	. = ..()
+	if(user.mind.aquatic_compulsion_uses >= 12)
+		to_chat(user, span_warning("The fishes recognize my call and reject it... perhaps I should rest and let some time pass."))
+		revert_cast()
+		return FALSE
 	if(isturf(targets[1]))
 		var/turf/T = targets[1]
 		var/A
@@ -171,6 +178,7 @@
 			playsound(T, 'sound/foley/footsteps/FTWAT_1.ogg', 100)
 			teleport_to_dream(user, 10000, 1)
 			user.visible_message("<font color='yellow'>[user] makes a beckoning gesture at [T]!</font>")
+			user.mind.aquatic_compulsion_uses++
 			return TRUE
 		else
 			revert_cast()
