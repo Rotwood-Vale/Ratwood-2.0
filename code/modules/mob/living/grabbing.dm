@@ -1,4 +1,23 @@
 ///////////OFFHAND///////////////
+/obj/item/pregrab // "Grab" Item that exists until you manage to land a grab
+	name = "grab"
+	icon_state = "grabbing"
+	icon = 'icons/mob/roguehudgrabs.dmi'
+	possible_item_intents = list(/datum/intent/grab/pre_grab)
+	w_class = WEIGHT_CLASS_HUGE
+	item_flags = ABSTRACT | DROPDEL
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	no_effect = TRUE
+	force = 1
+	experimental_inhand = FALSE
+
+/obj/item/pregrab/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!proximity_flag || !ismob(target) || !user.Adjacent(target))
+		return
+	qdel(src)
+	user.start_pulling(target)
+
 /obj/item/grabbing
 	name = "pulling"
 	icon_state = "grabbing"
@@ -674,6 +693,38 @@
 	no_attack = TRUE
 	misscost = 2
 	releasedrain = 2
+
+/datum/intent/grab/pre_grab
+	name = "try grab"
+	desc = "try to grab something"
+	icon_state = "ingrab"
+	attack_verb = list("grabs")
+	damfactor = 0.01
+	chargetime = 0
+	noaa = FALSE
+	rmb_ranged = TRUE
+	releasedrain = 10
+	misscost = 8
+	swingdelay = 15
+	clickcd = 15
+	candodge = TRUE
+	canparry = TRUE
+	no_attack = FALSE
+	item_d_type = "blunt"
+
+/datum/intent/grab/pre_grab/rmb_ranged(atom/target, mob/user)
+	if(user.stat >= UNCONSCIOUS)
+		return
+	if(ismob(target))
+		var/mob/M = target
+		var/list/targetl = list(target)
+		user.visible_message(span_green("[user] beckons [M] to come closer."), span_green("I beckon [M] to come closer."), ignored_mobs = targetl)
+		if(M.client)
+			if(M.can_see_cone(user))
+				to_chat(M, span_green("[user] beckons me to come closer."))
+		else
+			M.beckoned(user)
+	return
 
 /datum/intent/grab/move
 	name = "grab move"

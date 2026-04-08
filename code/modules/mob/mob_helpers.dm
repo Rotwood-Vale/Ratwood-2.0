@@ -453,7 +453,7 @@
 				l_index = numb
 			o_intent = null
 		if(o_intent)
-			o_intent.afterchange()
+			o_intent.afterchange(src)
 	else
 		if(numb)
 			if(numb > possible_a_intents.len)
@@ -475,7 +475,7 @@
 				r_index = numb
 			a_intent = null
 		if(a_intent)
-			a_intent.afterchange()
+			a_intent.afterchange(src)
 		used_intent = a_intent
 	if(hud_used?.action_intent)
 		hud_used.action_intent.switch_intent(r_index,l_index,oactive)

@@ -198,7 +198,7 @@
 /datum/intent/proc/can_charge(atom/clicked_object)
 	return TRUE
 
-/datum/intent/proc/afterchange()
+/datum/intent/proc/afterchange(mob/user)
 	if(masteritem)
 		masteritem.d_type = item_d_type
 		var/list/benis = hitsound
@@ -538,29 +538,14 @@
 /datum/intent/unarmed/grab
 	name = "grab"
 	icon_state = "ingrab"
-	attack_verb = list("grabs")
-	chargetime = 0
-	noaa = TRUE
-	rmb_ranged = TRUE
-	releasedrain = 10
-	misscost = 8
-	candodge = TRUE
-	canparry = TRUE
-	item_d_type = "blunt"
+	/// The grab item that is attached to this intent
+	var/obj/item/pregrab/grab_item
 
-/datum/intent/unarmed/grab/rmb_ranged(atom/target, mob/user)
-	if(user.stat >= UNCONSCIOUS)
-		return
-	if(ismob(target))
-		var/mob/M = target
-		var/list/targetl = list(target)
-		user.visible_message(span_green("[user] beckons [M] to come closer."), span_green("I beckon [M] to come closer."), ignored_mobs = targetl)
-		if(M.client)
-			if(M.can_see_cone(user))
-				to_chat(M, span_green("[user] beckons me to come closer."))
-		else
-			M.beckoned(user)
-	return
+/datum/intent/unarmed/grab/afterchange(mob/user)
+	. = ..()
+	if(!grab_item)
+		grab_item = new(user.loc)
+		user.put_in_active_hand(grab_item)
 
 /datum/intent/unarmed/help
 	name = "touch"
