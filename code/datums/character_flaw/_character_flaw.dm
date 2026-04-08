@@ -809,7 +809,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/giant
 	name = "Weak giant"
-	desc = "My size's always been bigger than the average person, but my muscles didn't exactly grow to be as bug as I am appear... I hit my head constantly on doorways and I'm the first to catch a stray hit when a fight starts."
+	desc = "My size has always been bigger than the average person, however my muscles didn't exactly grow to match... I constantly hit my head on doorways, and I'm the first to catch a stray hit when a fight starts."
 
 /datum/charflaw/giant/on_mob_creation(mob/living/carbon/human/giant_wannabe)
 	giant_wannabe.transform = giant_wannabe.transform.Scale(1.25, 1.25)
