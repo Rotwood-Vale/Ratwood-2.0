@@ -459,7 +459,7 @@
 			playsound(user, 'sound/foley/drawwater.ogg', 100, FALSE)
 			if(do_after(user, 8, target = src))
 				user.changeNext_move(CLICK_CD_MELEE)
-				C.reagents.add_reagent(water_reagent, 200)
+				C.reagents.add_reagent(water_reagent, 300)
 				to_chat(user, span_notice("I fill [C] from [src]."))
 				// If the user is filling a water purifier and the water isn't already clean...
 				if (istype(C, /obj/item/reagent_containers/glass/bottle/waterskin/purifier) && water_reagent != water_reagent_purified)
@@ -493,6 +493,7 @@
 					wash_atom(user, CLEAN_STRONG)
 					user.remove_stress(/datum/stressevent/sewertouched)
 				playsound(user, pick(wash), 100, FALSE)
+				L.adjust_fire_stacks(-100)
 				if(temperature < 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 75)	//washing yourself helps to cool you off.
 					L.adjust_bodytemperature(-75)
 					L.update_health_hud()

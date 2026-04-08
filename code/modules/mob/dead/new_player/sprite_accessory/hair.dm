@@ -417,6 +417,10 @@
 	name = "Long Side Part"
 	icon_state = "longsidepart"
 
+/datum/sprite_accessory/hair/head/lizbeth
+	name = "Lizbeth"
+	icon_state = "lizbeth"
+
 /datum/sprite_accessory/hair/head/mediumbraid
 	name = "Medium Braid"
 	icon_state = "mediumbraid"
@@ -722,6 +726,10 @@
 	name = "Swept Back Hair 2"
 	icon_state = "swept2"
 
+/datum/sprite_accessory/hair/head/taro
+	name = "Taro"
+	icon_state = "taro"
+
 /datum/sprite_accessory/hair/head/thinning
 	name = "Thinning"
 	icon_state = "thinning"
@@ -805,6 +813,10 @@
 /datum/sprite_accessory/hair/head/wisp
 	name = "Wisp"
 	icon_state = "wisp"
+
+/datum/sprite_accessory/hair/head/wispy
+	name = "Wispy"
+	icon_state = "wispy"
 
 /datum/sprite_accessory/hair/head/hyenamane
 	name = "Hyena Mane"
@@ -1180,23 +1192,23 @@
 
 /datum/sprite_accessory/hair/head/mcsqueeb
 	name = "Ye Old McSqueeb"
-	icon_state = "mcsqueeb"	
+	icon_state = "mcsqueeb"
 
 /datum/sprite_accessory/hair/head/highlander
 	name = "Highlander"
-	icon_state = "highlander"	
+	icon_state = "highlander"
 
 /datum/sprite_accessory/hair/head/royalcurls
 	name = "Royal Curls"
-	icon_state = "royalcurls"	
+	icon_state = "royalcurls"
 
 /datum/sprite_accessory/hair/head/dreadlocksmessy
 	name = "Dreadlocks Messy"
-	icon_state = "dreadlong"	
+	icon_state = "dreadlong"
 
 /datum/sprite_accessory/hair/head/suave
 	name = "Suave"
-	icon_state = "suave"	
+	icon_state = "suave"
 
 /datum/sprite_accessory/hair/head/kusanagi_alt
 	name = "Kusanagi (Alt)"
@@ -1609,7 +1621,7 @@
 /datum/sprite_accessory/hair/head/lakkaribun
 	name = "Lakkaribun"
 	icon_state = "lakkaribun"
-	
+
 /datum/sprite_accessory/hair/head/lakkaricut
 	name = "Lakkaricut"
 	icon_state = "lakkaricut"
