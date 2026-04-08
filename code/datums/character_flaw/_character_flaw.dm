@@ -815,7 +815,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	giant_wannabe.transform = giant_wannabe.transform.Scale(1.25, 1.25)
 	giant_wannabe.transform = giant_wannabe.transform.Translate(0, (0.25 * 16))
 	giant_wannabe.update_transform() //all of the big size, none of the big size perks
-  
+
 /datum/charflaw/silverweakness/on_removal(mob/user)
 	..()
 	REMOVE_TRAIT(user, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
