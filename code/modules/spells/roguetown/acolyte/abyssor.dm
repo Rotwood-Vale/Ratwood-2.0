@@ -128,7 +128,7 @@
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	recharge_time = 10 SECONDS
+	recharge_time = 30 SECONDS
 	miracle = TRUE
 	devotion_cost = 10
 	//Horrendous carry-over from fishing code
