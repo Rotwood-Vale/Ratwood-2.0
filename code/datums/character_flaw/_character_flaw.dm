@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
 	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
 	"Hemophage (+1 TRI)"=/datum/charflaw/hemophage,
+	"Weak Giant"=/datum/charflaw/giant
 	))
 
 /datum/charflaw
@@ -785,3 +786,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	ADD_TRAIT(vamp_wannabe, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
 	ADD_TRAIT(vamp_wannabe, TRAIT_VAMPBITE, TRAIT_GENERIC)
 	vamp_wannabe.adjust_triumphs(1)
+
+/datum/charflaw/giant
+	name = "Weak giant"
+	desc = "My size's always been bigger than the average person, but my muscles didn't exactly grow to be as bug as I am appear... I hit my head constantly on doorways and I'm the first to catch a stray hit when a fight starts."
+
+/datum/charflaw/giant/on_mob_creation(mob/living/carbon/human/giant_wannabe)
+	giant_wannabe.transform = giant_wannabe.transform.Scale(1.25, 1.25)
+	giant_wannabe.transform = giant_wannabe.transform.Translate(0, (0.25 * 16))
+	giant_wannabe.update_transform() //all of the big size, none of the big size perks
