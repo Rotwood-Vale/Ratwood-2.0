@@ -302,7 +302,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 	update_icon()
 
 /obj/structure/soil/proc/bless_soil()
-	blessed_time = 15 MINUTES
+	blessed_time = 5 MINUTES //average growth + produce time, without accounting for faster growth, lets you practically forget about the plant
 	// It's a miracle! Plant comes back to life when blessed by Dendor
 	if(plant && plant_dead)
 		plant_dead = FALSE

@@ -5,7 +5,7 @@
 	range = 5
 	overlay_state = "blesscrop"
 	releasedrain = 30
-	recharge_time = 30 SECONDS
+	recharge_time = 5 MINUTES
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	max_targets = 0
 	cast_without_targets = TRUE
@@ -20,12 +20,13 @@
 	. = ..()
 	var/growed = FALSE
 	var/amount_blessed = 0
-	for(var/obj/structure/soil/soil in view(4))
+	var/caster_skill = user.get_skill_level(/datum/skill/magic/holy)
+	for(var/obj/structure/soil/soil in view(3))
 		soil.bless_soil()
 		growed = TRUE
 		amount_blessed++
-		// Blessed only up to 5 crops
-		if(amount_blessed >= 5)
+		// Blessed only up to the caster's skill level
+		if(amount_blessed >= caster_skill)
 			break
 	if(growed)
 		visible_message(span_green("[usr] blesses the nearby crops with Dendor's Favour!"))
