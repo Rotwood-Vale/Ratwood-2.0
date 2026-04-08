@@ -20,7 +20,7 @@
 	. = ..()
 	var/growed = FALSE
 	var/amount_blessed = 0
-	var/caster_skill = user.get_skill_level(/datum/skill/magic/holy)
+	var/caster_skill = max(user.get_skill_level(/datum/skill/magic/holy), 3)
 	for(var/obj/structure/soil/soil in view(3))
 		soil.bless_soil()
 		growed = TRUE
