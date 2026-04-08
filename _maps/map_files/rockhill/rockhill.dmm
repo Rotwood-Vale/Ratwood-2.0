@@ -2396,16 +2396,16 @@
 	pixel_x = 1;
 	pixel_y = 7
 	},
-/obj/item/clothing/cloak/half/shadowcloak{
+/obj/item/clothing/cloak/shadowcloak{
 	desc = "A nightly cloak worn by those that protect the citizenry from what lurks beyond."
 	},
-/obj/item/clothing/cloak/half/shadowcloak{
+/obj/item/clothing/cloak/shadowcloak{
 	desc = "A nightly cloak worn by those that protect the citizenry from what lurks beyond."
 	},
-/obj/item/clothing/cloak/half/shadowcloak{
+/obj/item/clothing/cloak/shadowcloak{
 	desc = "A nightly cloak worn by those that protect the citizenry from what lurks beyond."
 	},
-/obj/item/clothing/cloak/half/shadowcloak{
+/obj/item/clothing/cloak/shadowcloak{
 	desc = "A nightly cloak worn by those that protect the citizenry from what lurks beyond."
 	},
 /turf/open/floor/rogue/concrete,

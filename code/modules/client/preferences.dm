@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/no_autopunctuate = FALSE
 	var/no_language_fonts = FALSE
 	var/no_language_icon = FALSE
-
+	var/ghost_protection = FALSE
 	var/lastclass
 
 	var/uplink_spawn_loc = UPLINK_PDA
@@ -980,8 +980,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<a class='linkOff' href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
 			dat += " - <a href='?_src_=prefs;preference=migrants'>MIGRATION</a>"
 			dat += "<br><a href='?_src_=prefs;preference=manifest'>ACTORS</a>"
-			// Check the git blame for why this was removed.
-			//dat += " - <a href='?_src_=prefs;preference=observe'>VOYEUR</a>"
+			dat += " - <a href='?_src_=prefs;preference=observe'>SPECTATE</a>"
 	else
 		dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
 
@@ -2872,11 +2871,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					parent.view_actors_manifest()
 					return
 
-				// Check the git blame for why this was removed.
-				// if("observe")
-				// 	var/mob/dead/new_player/P = user
-				// 	P.make_me_an_observer()
-				// 	return
+				if("observe")
+					var/mob/dead/new_player/P = user
+					P.make_me_an_observer()
+					return
 
 				if("finished")
 					user << browse(null, "window=latechoices") //closes late choices window

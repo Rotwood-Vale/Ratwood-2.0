@@ -1,0 +1,5 @@
+author: "Jamdrawers"
+delete-after: True
+changes:
+  - bugfix: "shadowcloak and duelist cloak will no longer turn invisible when right-clicked"
+  - refactor: "reorganised the Cloaks folder, making the baseline cloak have an inventory instead of applying an inventory to every specific type of cloak"

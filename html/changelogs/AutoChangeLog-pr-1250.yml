@@ -1,0 +1,5 @@
+author: "gatorceres"
+delete-after: True
+changes:
+  - rscadd: "plaguebearer (now \"malpractitioner\") can pick between the old loadout options, or starting with only a rapier and dodge expert"
+  - rscadd: "malpractitioner starts with a cheele"

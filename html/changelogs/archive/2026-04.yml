@@ -27,3 +27,6 @@
   - spellcheck: Renamed dried westleach and dried swampweed leaves to distinguish
       them from fresh leaves. This fixes the confusing moondust and ozium crafting
       requirements.
+2026-04-06:
+  Xander3359:
+  - bugfix: Fixed mindlink by setting it to ,m

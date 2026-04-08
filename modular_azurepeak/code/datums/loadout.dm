@@ -361,7 +361,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/duelcape
 	name = "Duelist Cape"
-	path = /obj/item/clothing/cloak/half/duelistcape
+	path = /obj/item/clothing/cloak/duelistcape
 
 /datum/loadout_item/ridercloak
 	name = "Rider Cloak"

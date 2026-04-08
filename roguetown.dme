@@ -3122,5 +3122,6 @@
 #include "modular_rmh\code\modules\clothing\vladegeg\sophisticated.dm"
 #include "modular_rmh\code\modules\clothing\vladegeg\wintercoat.dm"
 #include "modular_rmh\code\modules\clothing\vladegeg\armor\druid.dm"
+#include "modular_rmh\code\modules\mob\dead\body_markings\body_markings.dm"
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
 // END_INCLUDE

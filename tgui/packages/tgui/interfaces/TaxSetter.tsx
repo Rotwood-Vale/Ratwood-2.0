@@ -53,7 +53,7 @@ export const TaxSetter = (props: any, context: any) => {
   };
 
   return (
-    <Window width={300} height={535}>
+    <Window width={300} height={660}>
       <Window.Content>
         <Stack vertical>
           <Stack.Item>
