@@ -485,19 +485,20 @@
 
 // Normal, non-openable window
 /datum/crafting_recipe/roguetown/turfs/roguewindow
-	name = "static glass window (2 small logs, 1 glass)"
+	name = "static glass window (2 small logs)"
 	result = /obj/structure/roguewindow
-	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/natural/glass = 1)
+	reqs = list(/obj/item/grown/log/tree/small = 2)
 	skillcraft = /datum/skill/craft/carpentry
 	verbage_simple = "build"
 	verbage = "builds"
-	craftdiff = 3
+	craftdiff = 4
 
 	/*
 	By the way, glass windows needing Masonry and Carpentry instead of Ceramics isn't an oversight.
 	The Mason and the Carpenter are the ones who will build the window itself from wood and
 	an already prepared pane of glass. The potter has nothing to do with this part of the process.
 	*/// - SunriseOYH
+	// Glass requirement removed from the wooden windows due to the sheer annoyance of actually getting glass - annikaRU
 
 /datum/crafting_recipe/roguetown/turfs/roguewindow/TurfCheck(mob/user, turf/T)
 	if(isclosedturf(T))
@@ -508,10 +509,10 @@
 
 // The windows you can open and close
 /datum/crafting_recipe/roguetown/turfs/roguewindow/dynamic
-	name = "openable glass window (2 small logs, 1 glass)"
+	name = "openable glass window (2 small logs)"
 	result = /obj/structure/roguewindow/openclose
-	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/natural/glass = 1)
-	craftdiff = 3
+	reqs = list(/obj/item/grown/log/tree/small = 2)
+	craftdiff = 4
 
 // The 'windows' of the church that almost no one knows exists.
 /datum/crafting_recipe/roguetown/turfs/roguewindow/stone

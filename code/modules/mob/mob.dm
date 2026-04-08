@@ -887,37 +887,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
 
-#define MOB_FACE_DIRECTION_DELAY 1
-
-// facing verbs
-/**
- * Returns true if a mob can turn to face things
- *
- * Conditions:
- * * client.last_turn > world.time
- * * not dead or unconcious
- * * not anchored
- * * no transform not set
- * * we are not restrained
- */
-/mob/proc/canface(atom/A)
-	if(client)
-		if(world.time < client.last_turn)
-			return FALSE
-	if(stat == DEAD || stat == UNCONSCIOUS)
-		return FALSE
-	if(anchored)
-		return FALSE
-	if(notransform)
-		return FALSE
-	if(restrained())
-		return FALSE
-	if(stat != CONSCIOUS)
-		return FALSE
-	if(buckled && !get_buckled_animal_mount())
-		return FALSE
-	return TRUE
-
 /mob/proc/get_buckled_animal_mount()
 	if(!buckled)
 		return null
@@ -927,98 +896,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(!animal_mount.GetComponent(/datum/component/riding))
 		return null
 	return animal_mount
-
-/mob/proc/apply_face_direction(direction)
-	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
-	if(animal_mount)
-		animal_mount.setDir(direction)
-		setDir(direction)
-		var/datum/component/riding/riding_datum = animal_mount.GetComponent(/datum/component/riding)
-		if(riding_datum)
-			riding_datum.handle_vehicle_offsets()
-			riding_datum.handle_vehicle_layer()
-		return
-	setDir(direction)
-
-///Checks mobility move as well as parent checks
-/mob/living/canface(atom/A)
-	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
-	if(!animal_mount && !(mobility_flags & MOBILITY_MOVE))
-		return FALSE
-	if(world.time < last_dir_change + 5)
-		return
-	if(A && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE) //the reason this isn't a mobility_flags check is because you want them to be able to change dir if you're passively grabbing them
-		// get_cardinal_dir is inconsistent, reuse face_atom code
-		var/dx = A.x - src.x
-		var/dy = A.y - src.y
-		var/dir
-		if(!dx && !dy) // Wall items are graphically shifted but on the floor
-			if(A.pixel_y > 16)
-				dir = NORTH
-			else if(A.pixel_y < -16)
-				dir = SOUTH
-			else if(A.pixel_x > 16)
-				dir = EAST
-			else if(A.pixel_x < -16)
-				dir = WEST
-		else
-			if(abs(dx) < abs(dy))
-				if(dy > 0)
-					dir = NORTH
-				else
-					dir = SOUTH
-			else
-				if(dx > 0)
-					dir = EAST
-				else
-					dir = WEST
-		if(dir == pulledby.dir) // can never face away from the person grabbing you
-			return FALSE
-		for(var/obj/item/grabbing/G in grabbedby) // only chokeholds prevent turning
-			if(G.chokehold)
-				return FALSE
-	if(!animal_mount && IsImmobilized())
-		return FALSE
-	return ..()
-
-/mob/dead/observer/canface()
-	return TRUE
-
-///Hidden verb to turn east
-/mob/verb/eastface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	apply_face_direction(EAST)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
-///Hidden verb to turn west
-/mob/verb/westface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	apply_face_direction(WEST)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
-///Hidden verb to turn north
-/mob/verb/northface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	apply_face_direction(NORTH)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
-///Hidden verb to turn south
-/mob/verb/southface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	apply_face_direction(SOUTH)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
 
 ///This might need a rename but it should replace the can this mob use things check
 /mob/proc/IsAdvancedToolUser()

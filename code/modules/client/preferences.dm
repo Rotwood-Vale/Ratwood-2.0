@@ -1021,8 +1021,17 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		var ctrl = e.ctrlKey ? 1 : 0;
 		var shift = e.shiftKey ? 1 : 0;
 		var numpad = (95 < e.keyCode && e.keyCode < 112) ? 1 : 0;
+		var main_key = e.key;
+		switch (main_key){
+			case '#':main_key = '%23';
+			break;
+			case '&':main_key = '%26';
+			break;
+			case '=':main_key = '%3D';
+			break;
+		};
 		var escPressed = e.keyCode == 27 ? 1 : 0;
-		var url = 'byond://?_src_=prefs;preference=keybinds;task=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+e.key+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
+		var url = 'byond://?_src_=prefs;preference=keybinds;task=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+main_key+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
 		window.location=url;
 		deedDone = true;
 	}
