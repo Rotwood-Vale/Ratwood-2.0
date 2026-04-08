@@ -152,6 +152,8 @@
 	var/movement_blocked = FALSE
 	/// Are we locking our movement input? This holds you in place so you can turn on the spot
 	var/movement_locked = FALSE
+	/// World time cooldown before the mob can turn again
+	var/last_turn = 0
 
 	/// A rolling buffer of any keys held currently
 	var/list/keys_held = list()
