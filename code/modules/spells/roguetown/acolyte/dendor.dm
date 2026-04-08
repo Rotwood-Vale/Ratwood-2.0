@@ -5,7 +5,7 @@
 	range = 5
 	overlay_state = "blesscrop"
 	releasedrain = 30
-	recharge_time = 5 MINUTES
+	recharge_time = 3 MINUTES
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	max_targets = 0
 	cast_without_targets = TRUE
