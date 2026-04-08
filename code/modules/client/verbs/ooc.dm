@@ -638,6 +638,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	to_chat(src, span_notice("Ghost orbit protection is now [prefs.ghost_orbit_protection ? "ENABLED (Ghosts can no longer orbit you)" : "DISABLED (Ghosts can now orbit you)"]."))
 
 /client/verb/toggle_player_visibility_to_ghosts()
+	set name = "Toggle Hide From Ghosts"
 	set category = "OOC"
 	set desc = "Permit or forbid non-admin ghosts from seeing you."
 	if(!mob)
@@ -646,10 +647,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	prefs.save_preferences()
 	if(prefs.player_visibility_to_ghosts)
 		mob.invisibility = INVISIBILITY_TO_GHOSTS
-		to_chat(mob, span_adminnotice("<b>You are now invisible to non-admin ghosts.</b>"))
+		to_chat(src, span_notice("Hide from ghosts is now ENABLED (Ghosts can no longer see you)"))
 	else
 		mob.invisibility = initial(mob.invisibility)
-		to_chat(mob, span_boldannounce("You are now visible to observers."))
+		to_chat(src, span_notice("Hide from ghosts is now DISABLED (Ghosts can now see you)"))
 
 	var/active = FALSE
 	for(var/mob/living/L in GLOB.alive_mob_list)
@@ -658,13 +659,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			break
 	GLOB.player_visibility_to_ghosts_active = active
 
-	// Update all living mobs' sight
+	// Update all living mobs' sight so they can see hidden players
 	for(var/mob/living/L in GLOB.alive_mob_list)
 		L.update_sight()
-	// Update all observers' see_invisible
+	// Update all observers' sight based on admin status
 	for(var/mob/dead/observer/O in GLOB.dead_mob_list)
-		if(O.client?.holder)
-			O.see_invisible = SEE_INVISIBLE_OBSERVER
-		else
-			O.see_invisible = SEE_INVISIBLE_LIVING
-
+		O.update_sight()

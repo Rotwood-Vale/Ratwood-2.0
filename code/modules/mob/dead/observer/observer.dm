@@ -780,8 +780,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if (!ghostvision)
 		see_invisible = SEE_INVISIBLE_LIVING
-	if(client?.holder)
+	else if(client?.holder)
 		see_invisible = SEE_INVISIBLE_OBSERVER
+	else if(GLOB.player_visibility_to_ghosts_active)
+		see_invisible = SEE_INVISIBLE_LIVING
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
 

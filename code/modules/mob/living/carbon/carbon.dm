@@ -876,6 +876,10 @@
 
 	if(see_override)
 		see_invisible = see_override
+
+	if(GLOB.player_visibility_to_ghosts_active)
+		see_invisible = max(see_invisible, SEE_INVISIBLE_TO_GHOSTS)
+
 	. = ..()
 
 

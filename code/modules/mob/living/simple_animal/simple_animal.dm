@@ -767,7 +767,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	sight = initial(sight)
 
 	if(GLOB.player_visibility_to_ghosts_active)
-		see_invisible = SEE_INVISIBLE_OBSERVER
+		see_invisible = max(see_invisible, SEE_INVISIBLE_TO_GHOSTS)
 
 	if(client.eye != src)
 		var/atom/A = client.eye

@@ -812,6 +812,10 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	message_admins("[src] deadmined themself.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Deadmin")
 
+	// Update vision for observers who lose admin status
+	if(isobserver(mob))
+		mob.update_sight()
+
 /client/proc/readmin()
 	set name = "Readmin"
 	set category = "-Admin-"
@@ -837,6 +841,10 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	log_admin("[src] re-adminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Readmin")
 	update_ooc_verb_visibility()
+
+	// Update vision for observers who regain admin status
+	if(isobserver(mob))
+		mob.update_sight()
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"
