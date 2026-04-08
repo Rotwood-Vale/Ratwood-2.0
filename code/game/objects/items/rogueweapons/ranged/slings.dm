@@ -183,7 +183,7 @@
 		BB.bonus_accuracy += (user.get_skill_level(/datum/skill/combat/slings) * 5) // +5 per Sling level.
 		BB.damage *= damfactor
 		if(user.client.chargedprog < 100)
-			BB.damage = BB.damage - (BB.damage * (user.client.chargedprog / 100))
+			BB.damage -= BB.damage - (BB.damage * (user.client.chargedprog / 100))
 		else
 			BB.damage = BB.damage
 		BB.damage = BB.damage * (((user.STAPER / 1.25) + (user.STASTR / 5)) / 10) * damfactor + bonus_stone_force

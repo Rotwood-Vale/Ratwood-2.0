@@ -122,6 +122,9 @@
 			GLOB.footstep[T.footstep][2],
 			FALSE,
 			GLOB.footstep[T.footstep][3] + e_range)
+		if(ismob(parent) || isobj(parent))
+			var/dir = H.dir
+			show_sensory_effect(parent, 5, "footstep", dir, ignore_self = TRUE)
 //	if(!islamia(H))
 	else
 		//SANITY CHECK, WILL NOT PLAY A SOUND IF THE LIST IS INVALID
@@ -141,6 +144,9 @@
 				GLOB.barefootstep[T.barefootstep][2],
 				TRUE,
 				GLOB.barefootstep[T.barefootstep][3] + e_range)
+			if(ismob(parent) || isobj(parent))
+				var/dir = H.dir
+				show_sensory_effect(parent, 5, "footstep", dir, ignore_self = TRUE)
 		else
 			used_footsteps = list(
 				'sound/foley/footsteps/lamia_slither (1).ogg',
@@ -157,3 +163,7 @@
 			volume = rand(40, 85)
 			e_range = rand(1, 3)
 			playsound(T, used_sound, "vol" = volume, "extrarange" = e_range)
+
+			if(ismob(parent) || isobj(parent))
+				var/dir = H.dir
+				show_sensory_effect(parent, 5, "footstep", dir, ignore_self = TRUE)

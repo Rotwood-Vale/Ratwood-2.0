@@ -31,7 +31,7 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
-	
+	minbodytemp = 0
 
 	can_have_ai = FALSE //disable native ai
 	AIStatus = AI_OFF
@@ -41,7 +41,7 @@
 	..()
 	AddElement(/datum/element/ai_retaliate)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_type)
-	
+
 /mob/living/simple_animal/mudcrabcrab/Life()
 	..()
 	//CRAB movement

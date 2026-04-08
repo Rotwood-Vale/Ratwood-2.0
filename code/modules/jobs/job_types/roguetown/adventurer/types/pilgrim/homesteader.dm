@@ -24,7 +24,7 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/sneaking = SKILL_LEVEL_NOVICE,  //They don't get massive skilll list anymore aside of journeyman in crafting.
+		/datum/skill/misc/sneaking = SKILL_LEVEL_NOVICE,  //They don't get massive skilll list anymore aside of journeyman in few key areas.
 	)
 
 /datum/outfit/job/roguetown/homesteader/pre_equip(mob/living/carbon/human/H)
@@ -48,23 +48,30 @@
 	"Homesteader", "Homesteadress",
 	"Housekeeper",
 	"Householder", "Househusband", "Housewife",
+	"Hunter",
 	"Laborer",
+	"Lordling",
 	"Mason",
 	"Nurse", "Nun",
+	"Patrician",
 	"Pioneer",
 	"Prospector",
 	"Scholar",
 	"Scribe",
+	"Scion",
 	"Settler",
 	"Shepherd",
 	"Smith",
 	"Town Doctor",
 	"Town Ranger",
 	"Tradesman", "Tradewoman",
+	"Varlet",
 	"Villager",
 	"Weaver",
+	"Wench",
 	"Woodsman", "Woodswoman",
-	"Chirurgeon")
+	"Chirurgeon",
+	"Wench", "Varlet")
 	var/cosmetic_choice = input(H, "Select your cosmetic title.", "Cosmetic Titles") as anything in cosmetic_titles
 
 	switch(cosmetic_choice)
@@ -120,10 +127,18 @@
 			to_chat(H, span_notice("You are a Housewife, a keeper of dwelling and family."))
 			H.mind.cosmetic_class_title = "Housewife"
 			H.social_rank = SOCIAL_RANK_PEASANT
+		if("Hunter")
+			to_chat(H, span_notice("You are a Hunter, skilled in tracking and game."))
+			H.mind.cosmetic_class_title = "Hunter"
+			H.social_rank = SOCIAL_RANK_PEASANT
 		if("Laborer")
 			to_chat(H, span_notice("You are a Laborer, a hard worker and commoner."))
 			H.mind.cosmetic_class_title = "Laborer"
 			H.social_rank = SOCIAL_RANK_PEASANT
+		if("Lordling")
+			to_chat(H, span_notice("You are a Lordling, a young noble of minor standing."))
+			H.mind.cosmetic_class_title = "Lordling"
+			H.social_rank = SOCIAL_RANK_MINOR_NOBLE
 		if("Laboress")
 			to_chat(H, span_notice("You are a Laboress, a hard worker and commoner."))
 			H.mind.cosmetic_class_title = "Laboress"
@@ -144,6 +159,14 @@
 			to_chat(H, span_notice("You are an Artisana, skilled in your craft and trade."))
 			H.mind.cosmetic_class_title = "Artisana"
 			H.social_rank = SOCIAL_RANK_YEOMAN
+		if("Patrician")
+			to_chat(H, span_notice("You are a Patrician, a member of the wealthy class."))
+			H.mind.cosmetic_class_title = "Patrician"
+			H.social_rank = SOCIAL_RANK_MINOR_NOBLE
+		if("Scion")
+			to_chat(H, span_notice("You are a Scion, a descendant of noble blood."))
+			H.mind.cosmetic_class_title = "Scion"
+			H.social_rank = SOCIAL_RANK_MINOR_NOBLE
 		if("Pioneer")
 			to_chat(H, span_notice("You are a Pioneer, a brave settler of new lands."))
 			H.mind.cosmetic_class_title = "Pioneer"
@@ -168,6 +191,26 @@
 			to_chat(H, span_notice("You are a Tradewoman, skilled in commerce and craft."))
 			H.mind.cosmetic_class_title = "Tradewoman"
 			H.social_rank = SOCIAL_RANK_YEOMAN
+		if("Varlet")
+			to_chat(H, span_notice("You are a Varlet, a servant and attendant."))
+			H.mind.cosmetic_class_title = "Varlet"
+			H.social_rank = SOCIAL_RANK_PEASANT
+		if("Villager")
+			to_chat(H, span_notice("You are a Villager, common folk of the settlement."))
+			H.mind.cosmetic_class_title = "Villager"
+			H.social_rank = SOCIAL_RANK_PEASANT
+		if("Villagewoman")
+			to_chat(H, span_notice("You are a Villagewoman, common folk of the settlement."))
+			H.mind.cosmetic_class_title = "Villagewoman"
+			H.social_rank = SOCIAL_RANK_PEASANT
+		if("Weaver")
+			to_chat(H, span_notice("You are a Weaver, skilled in textiles and cloth."))
+			H.mind.cosmetic_class_title = "Weaver"
+			H.social_rank = SOCIAL_RANK_YEOMAN
+		if("Wench")
+			to_chat(H, span_notice("You are a Wench, a working girl of the commons."))
+			H.mind.cosmetic_class_title = "Wench"
+			H.social_rank = SOCIAL_RANK_PEASANT
 		if("Woodsman")
 			to_chat(H, span_notice("You are a Woodsman, at home in forest and timber."))
 			H.mind.cosmetic_class_title = "Woodsman"
@@ -240,6 +283,10 @@
 			to_chat(H, span_notice("You are a Scribe, keeper of records and letters."))
 			H.mind.cosmetic_class_title = "Scribe"
 			H.social_rank = SOCIAL_RANK_YEOMAN
+		if("Scion")
+			to_chat(H, span_notice("You are a Scion, heir of a noble house."))
+			H.mind.cosmetic_class_title = "Scion"
+			H.social_rank = SOCIAL_RANK_MINOR_NOBLE
 		if("Scholar")
 			to_chat(H, span_notice("You are a Scholar, learned in books and knowledge."))
 			H.mind.cosmetic_class_title = "Scholar"
@@ -260,7 +307,14 @@
 			to_chat(H, span_notice("You are a Smith, forger of metal and tools."))
 			H.mind.cosmetic_class_title = "Smith"
 			H.social_rank = SOCIAL_RANK_YEOMAN
-
+		if("Wench")
+			to_chat(H, span_notice("You are a Wench, a common girl of humble birth."))
+			H.mind.cosmetic_class_title = "Wench"
+			H.social_rank = SOCIAL_RANK_PEASANT
+		if("Varlet")
+			to_chat(H, span_notice("You are a Varlet, a low-born fellow accustomed to errands."))
+			H.mind.cosmetic_class_title = "Varlet"
+			H.social_rank = SOCIAL_RANK_PEASANT
 
 	// STAT PACK SELECTION
 	var/stat_packs = list("Agile - SPD +2, CON +1, STR -1, WIL -1", "Bookworm - INT +1, PER +1, WIL +1, STR -2, CON -2", "Toned - STR +1, CON +1, WIL +1, INT -1", "All-Rounded - No Changes")
@@ -316,13 +370,71 @@
 			/obj/item/rogueweapon/pick,
 			/obj/item/rogueweapon/huntingknife/scissors,
 			/obj/item/rogueweapon/scabbard/gwstrap
+		),
+		"Blacksmith Set" = list(
+			/obj/item/rogueweapon/hammer/copper,
+			/obj/item/rogueweapon/tongs,
+			/obj/item/rogueweapon/huntingknife/bronze,
+			/obj/item/ingot/iron,
+			/obj/item/ingot/iron,
+			/obj/item/rogueore/coal
+		),
+		"Carpenter Set" = list(
+			/obj/item/rogueweapon/stoneaxe/woodcut/bronze,
+			/obj/item/rogueweapon/handsaw,
+			/obj/item/rogueweapon/hammer/copper,
+			/obj/item/folding_table_stored
+		),
+		"Hunter Set" = list(
+			/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short,
+			/obj/item/quiver/arrows,
+			/obj/item/rogueweapon/huntingknife/bronze,
+			/obj/item/storage/meatbag,
+			/obj/item/natural/worms,
+			/obj/item/natural/worms
+		),
+		"Fisher Set" = list(
+			/obj/item/fishingrod,
+			/obj/item/natural/worms,
+			/obj/item/natural/worms,
+			/obj/item/natural/worms,
+			/obj/item/rogueweapon/huntingknife/bronze,
+			/obj/item/storage/roguebag/crafted
+		),
+		"Tailor Set" = list(
+			/obj/item/rogueweapon/huntingknife/scissors,
+			/obj/item/needle,
+			/obj/item/natural/cloth,
+			/obj/item/natural/cloth,
+			/obj/item/natural/cloth,
+			/obj/item/natural/bundle/fibers
+		),
+		"Scribe Set" = list(
+			/obj/item/paper,
+			/obj/item/paper,
+			/obj/item/paper,
+			/obj/item/paper/scroll,
+			/obj/item/natural/feather
+		),
+		"Mason Set" = list(
+			/obj/item/rogueweapon/chisel,
+			/obj/item/rogueweapon/hammer/copper,
+			/obj/item/natural/stone,
+			/obj/item/natural/stone,
+			/obj/item/natural/stone,
+			/obj/item/folding_table_stored
 		)
 	)
 
 	// Daily Tools - basic combination
 	var/daily_tools_combos = list(
 		"Bronze Axe + Bronze Knife + Sheath" = list(/obj/item/rogueweapon/stoneaxe/woodcut/bronze, /obj/item/rogueweapon/huntingknife/bronze, /obj/item/rogueweapon/scabbard/sheath),
-		"Simple Bow + Quiver" = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow, /obj/item/quiver/arrows)
+		"Simple Bow + Quiver" = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short, /obj/item/quiver/arrows),
+		"Iron Spear + Backup Dagger" = list(/obj/item/rogueweapon/spear, /obj/item/rogueweapon/huntingknife/bronze, /obj/item/rogueweapon/scabbard/gwstrap),
+		"Fishing Rod + Worms" = list(/obj/item/fishingrod, /obj/item/natural/worms, /obj/item/natural/worms),
+		"Sickle + Farming Hoe" = list(/obj/item/rogueweapon/sickle, /obj/item/rogueweapon/hoe),
+		"Mining Pick + Copper Hammer" = list(/obj/item/rogueweapon/pick, /obj/item/rogueweapon/hammer/copper),
+		"Cudgel + Rope" = list(/obj/item/rogueweapon/mace/cudgel, /obj/item/rope, /obj/item/rope)
 	)
 
 	if(H.mind)
@@ -337,8 +449,9 @@
 						// Handle spells - add directly to mind
 						H.AddSpell(new item_path)
 					else
-						// Handle regular items - add to special_items
-						var/unique_key = "[profession_set_name] [counter] [i]"
+						// Handle regular items - add to special_items with actual item name
+						var/item_name = initial(item_path:name)
+						var/unique_key = "[item_name] ([profession_set_name] [counter])"
 						H.mind.special_items[unique_key] = item_path
 					counter++
 				if(profession_set_name in profession_sets)
@@ -350,7 +463,8 @@
 			var/combo_list = daily_tools_combos[combo_name]
 			var/counter = 1
 			for(var/item_path in combo_list)
-				var/unique_key = "[combo_name] [counter]"
+				var/item_name = initial(item_path:name)
+				var/unique_key = "[item_name] ([combo_name] [counter])"
 				H.mind.special_items[unique_key] = item_path
 				counter++
 
@@ -369,13 +483,13 @@
 		"Modest Scholar - Spectacles, tunic, chaperon",
 		"Countryside - Straw hat, chemise, shortboots"
 	)
-	
+
 	var/outfit_choice = input(H, "Choose your outfit style.", "Outfit Selection") as anything in outfit_styles
-	
+
 	// Set base items
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
-	
+
 	switch(outfit_choice)
 		if("Laborer - Worker vest, trou, boots")
 			if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
@@ -388,7 +502,7 @@
 				shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 				head = /obj/item/clothing/head/roguetown/armingcap
-		
+
 		if("Field Hand - Straw hat, shortshirt, trou")
 			if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 				armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
@@ -398,7 +512,7 @@
 				pants = /obj/item/clothing/under/roguetown/trou
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 			head = /obj/item/clothing/head/roguetown/strawhat
-		
+
 		if("Woodsman - Hood, workervest, bracers")
 			if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 				armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
@@ -410,7 +524,7 @@
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 			head = /obj/item/clothing/head/roguetown/roguehood
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
-		
+
 		if("Fisher - Fisherhat, shortshirt, work vest")
 			if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 				armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
@@ -420,14 +534,14 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/workervest
 			shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 			head = /obj/item/clothing/head/roguetown/fisherhat
-		
+
 		if("Artisan - Tunic, tights, furcloak")
 			shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/white
 			pants = /obj/item/clothing/under/roguetown/tights/random
 			shoes = /obj/item/clothing/shoes/roguetown/shortboots
 			cloak = /obj/item/clothing/cloak/raincloak/furcloak
 			head = /obj/item/clothing/head/roguetown/hatblu
-		
+
 		if("Seamster - Armordress, white tunic, cloth belt")
 			armor = /obj/item/clothing/suit/roguetown/armor/armordress
 			shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/white
@@ -435,7 +549,7 @@
 			shoes = /obj/item/clothing/shoes/roguetown/shortboots
 			cloak = /obj/item/clothing/cloak/raincloak/furcloak
 			belt = /obj/item/storage/belt/rogue/leather/cloth/lady
-		
+
 		if("Traveler - Half cloak, undershirt, boots")
 			if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 				armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
@@ -446,7 +560,7 @@
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 			cloak = /obj/item/clothing/cloak/half
 			head = /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood
-		
+
 		if("Rustic - Fur hat, shortshirt, leather boots")
 			if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 				armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
@@ -455,7 +569,7 @@
 				pants = /obj/item/clothing/under/roguetown/trou
 			shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 			head = /obj/item/clothing/head/roguetown/hatfur
-		
+
 		if("Miner - Arming cap, trou, work vest")
 			if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 				armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
@@ -466,7 +580,7 @@
 				shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
 			head = /obj/item/clothing/head/roguetown/armingcap
 			shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-		
+
 		if("Entertainer - Fancy hat, tunic, half cloak")
 			shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/white
 			pants = /obj/item/clothing/under/roguetown/tights/random
@@ -474,14 +588,14 @@
 			cloak = /obj/item/clothing/cloak/half
 			head = /obj/item/clothing/head/roguetown/fancyhat
 			belt = /obj/item/storage/belt/rogue/leather/cloth
-		
+
 		if("Modest Scholar - Spectacles, tunic, chaperon")
 			shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/white
 			pants = /obj/item/clothing/under/roguetown/tights/random
 			shoes = /obj/item/clothing/shoes/roguetown/shortboots
 			head = /obj/item/clothing/head/roguetown/chaperon
 			mask = /obj/item/clothing/mask/rogue/spectacles
-		
+
 		if("Countryside - Straw hat, chemise, shortboots")
 			if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 				armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
@@ -507,6 +621,8 @@
 						/obj/item/rogueweapon/shovel/small = 1,
 						/obj/item/rogueweapon/chisel = 1,
 	)
+
+
 
 	if(H.mind)
 		// Skill selection with readable names

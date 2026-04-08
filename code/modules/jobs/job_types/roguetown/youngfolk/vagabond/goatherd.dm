@@ -1,5 +1,5 @@
 /datum/advclass/vagabond_goatherd
-	name = "Lone Goatherd"
+	name = "Lone Herder"
 	examine_name = "Beggar"
 	tutorial = "Having lost your idyllic pastoral existence, only a solitary member of your herd now remains as a reminder of what was. Is your sole charge a friend, or is it food? You decide."
 	allowed_sexes = list(MALE, FEMALE)
@@ -8,7 +8,6 @@
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
 	category_tags = list(CTAG_VAGABOND)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	horse = /mob/living/simple_animal/hostile/retaliate/rogue/goatmale/tame
 	subclass_stats = list(
 		STATKEY_WIL = 2,
 		STATKEY_INT = -1,
@@ -20,6 +19,10 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+	)
+
+	virtue_restrictions = list(
+		/datum/virtue/utility/riding
 	)
 
 /datum/outfit/job/roguetown/vagabond/goatherd/pre_equip(mob/living/carbon/human/H)
@@ -40,6 +43,9 @@
 
 	if(prob(10))
 		r_hand = /obj/item/rogue/instrument/flute
+
+	if (H.mind)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat/tame/Initialize(mapload)
 	..()

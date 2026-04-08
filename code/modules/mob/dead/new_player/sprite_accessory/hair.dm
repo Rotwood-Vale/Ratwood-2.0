@@ -1523,7 +1523,7 @@
 	icon_state = "queenly_f"
 
 /datum/sprite_accessory/hair/head/zybantu
-	name = "Zybantu"
+	name = "Zybantine"
 	icon_state = "zybantu"
 
 /datum/sprite_accessory/hair/head/chair_ponytail6

@@ -43,10 +43,13 @@
 
 	if(length(keys_held) > MAX_HELD_KEYS)
 		keys_held.Cut(1,2)
+
 	keys_held[_key] = TRUE
 	var/movement = movement_keys[_key]
-	if(!(next_move_dir_sub & movement) && !keys_held["Ctrl"])
-		next_move_dir_add |= movement
+	if(movement)
+		calculate_move_dir()
+		if(!movement_locked && !(next_move_dir_sub & movement))
+			next_move_dir_add |= movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time
 	// Things like taking screenshots, hitting tab, and adminhelps.
@@ -108,9 +111,12 @@
 		return
 
 	keys_held -= _key
+
 	var/movement = movement_keys[_key]
-	if(!(next_move_dir_add & movement))
-		next_move_dir_sub |= movement
+	if(movement)
+		calculate_move_dir()
+		if(!movement_locked && !(next_move_dir_add & movement))
+			next_move_dir_sub |= movement
 
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically
@@ -122,12 +128,6 @@
 	holder?.key_up(_key, src)
 	mob.focus?.key_up(_key, src)
 	mob.update_mouse_pointer()
-
-// Called every game tick
-/client/keyLoop()
-	holder?.keyLoop(src)
-	if(mob)
-		mob.focus?.keyLoop(src)
 
 /client/verb/activeInput()
 	set hidden = 1

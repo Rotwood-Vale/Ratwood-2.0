@@ -124,6 +124,8 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 	color = "#4d4d4d"
+	cold_protection =  ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = 50
 
 /obj/item/clothing/wrists/roguetown/bracers/copper
 	name = "copper bracers"

@@ -1,4 +1,9 @@
+/// Assoc list mapping /datum/charflaw typepaths to detached instances. Mainly for getting stuff like names from the typepath.
+/// Initialized at runtime. Should remain stable if nobody's calling procs on New().
+GLOBAL_LIST_EMPTY(charflaw_singletons)
 
+/// Associative list mapping the "menu name" of each vice in the list to its typepath. This list is all of the vices you can choose. 
+/// Used primarily for adding a vice, but also for randomly picking a vice from the selectable space. Try pick_assoc().
 GLOBAL_LIST_INIT(character_flaws, list(
 	"Alcoholic"=/datum/charflaw/addiction/alcoholic,
 	"Annoying Face"=/datum/charflaw/annoying_face,
@@ -15,7 +20,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Hunted (+1 TRI)"=/datum/charflaw/hunted,
 	"Isolationist"=/datum/charflaw/isolationist,
 	"Junkie"=/datum/charflaw/addiction/junkie,
-	"Leper (+1 TRIUMPHS)"=/datum/charflaw/leprosy,
 	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
 	"Leper (+1 TRI)"=/datum/charflaw/leprosy,
 	"Masochist"=/datum/charflaw/addiction/masochist,
@@ -307,6 +311,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
+	var/obj/item/woodstaff = new /obj/item/rogueweapon/woodstaff(get_turf(H))
+	H.put_in_hands(woodstaff, forced = TRUE)
+
 	if(!H.wear_mask)
 		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/blindfold(H), SLOT_WEAR_MASK)
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
@@ -418,7 +425,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		REMOVE_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 /datum/charflaw/pacifism
-	name = "Pacifism"
+	name = "Pacifist"
 	desc = "I cannot harm another living being."
 
 /datum/charflaw/pacifism/on_mob_creation(mob/user)
@@ -693,6 +700,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		var/mob/living/carbon/human/H = user
 		H.adjust_triumphs(1)
 
+/datum/charflaw/sleepless/on_removal(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_NOSLEEP, TRAIT_GENERIC)
+
 /datum/charflaw/mute
 	name = "Mute"
 	desc = "I was born without the ability to speak."
@@ -702,6 +713,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.adjust_triumphs(1)
+
+/datum/charflaw/mute/on_removal(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_PERMAMUTE, TRAIT_GENERIC)
 
 /datum/charflaw/critweakness
 	name = "Critical Weakness"
@@ -713,6 +728,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		var/mob/living/carbon/human/H = user
 		H.adjust_triumphs(1)
 
+/datum/charflaw/critweakness/on_removal(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+
 /datum/charflaw/silverweakness
 	name = "Silver Weakness"
 	desc = "I'm sensitive to silver — it burns and injures me more than it should."
@@ -720,8 +739,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/silverweakness/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
+/datum/charflaw/silverweakness/on_removal(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
+
 /datum/charflaw/leprosy
-	name = "Leper (+1 TRI)"
+	name = "Leper"
 	desc = "I am cursed with leprosy! Too poor to afford treatment, my skin now lays violated by lesions, my extremities are numb, and my presence disturbs even the most stalwart men."
 
 /datum/charflaw/leprosy/apply_post_equipment(mob/user)
@@ -738,8 +761,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	H.adjust_triumphs(1)
 
 /datum/charflaw/mind_broken
-	name = "Asundered Mind (+1 TRI)"
-	desc = "My mind is asundered, wether it was by own means or an unfortunate accident. Nothing seems real to me..."
+	name = "Asundered Mind"
+	desc = "My mind is asundered, whether it was by my own means or an unfortunate accident. Nothing seems real to me..."
 
 /datum/charflaw/mind_broken/apply_post_equipment(mob/living/carbon/human/insane_fool)
 	insane_fool.hallucination = INFINITY
@@ -774,7 +797,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			L.on_mob_creation(H)
 
 /datum/charflaw/hemophage
-	name = "Hemophage (+1 TRI)"
+	name = "Hemophage"
 	desc = "Whether by curse or my people, blood is the only thing to keep me alive. Normal sources of nutrition and hydration will make me ill. <br>\
 	<small>Any element of a virtue that modifies eating will be canceled out by Hemophage.</small>"
 
@@ -782,3 +805,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	ADD_TRAIT(vamp_wannabe, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
 	ADD_TRAIT(vamp_wannabe, TRAIT_VAMPBITE, TRAIT_GENERIC)
 	vamp_wannabe.adjust_triumphs(1)
+
+/datum/charflaw/silverweakness/on_removal(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
+	REMOVE_TRAIT(user, TRAIT_VAMPBITE, TRAIT_GENERIC)

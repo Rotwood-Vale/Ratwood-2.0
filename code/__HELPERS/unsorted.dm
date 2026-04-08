@@ -227,6 +227,33 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return TRUE
 	return FALSE
 
+//Whether a living mob's client prefs currently hide them from non-admin ghosts.
+/proc/has_ghost_protection(atom/target)
+	if(!isliving(target))
+		return FALSE
+	var/mob/living/living_target = target
+	return !!living_target.client?.prefs?.ghost_protection
+
+//Admins keep their existing observer tooling even when a target has ghost protection.
+/proc/ghost_bypasses_ghost_protection(mob/viewer)
+	return !!check_rights_for(viewer?.client, R_ADMIN)
+
+//Whether a protected living target should be hidden from this observer.
+/proc/is_hidden_from_ghosts(atom/target, mob/viewer)
+	if(!isobserver(viewer))
+		return FALSE
+	if(ghost_bypasses_ghost_protection(viewer))
+		return FALSE
+	return has_ghost_protection(target)
+
+/proc/get_hidden_ghosts_for_target(atom/target)
+	. = list()
+	if(!has_ghost_protection(target))
+		return
+	for(var/mob/dead/observer/observer in GLOB.player_list)
+		if(is_hidden_from_ghosts(target, observer))
+			. += observer
+
 
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0,skip_mindless=0,team=null)

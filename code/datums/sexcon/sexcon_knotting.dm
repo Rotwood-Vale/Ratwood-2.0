@@ -331,6 +331,7 @@
 				btm.apply_status_effect(/datum/status_effect/facial/internal)
 			else
 				creampie.refresh_cum()
+			modular_record_collar_receive_event(btm, top)
 			if(!btm.has_status_effect(/datum/status_effect/knot_gaped))
 				var/obj/item/organ/testicles/testes = top.getorganslot(ORGAN_SLOT_TESTICLES)
 				if(testes?.ball_size > DEFAULT_TESTICLES_SIZE)
@@ -343,6 +344,7 @@
 				btm.apply_status_effect(/datum/status_effect/facial)
 			else
 				facial.refresh_cum()
+			modular_record_collar_receive_event(btm, top)
 	knot_exit(keep_top_status, keep_btm_status)
 
 /datum/sex_controller/proc/knot_exit(keep_top_status = FALSE, keep_btm_status = FALSE)
@@ -383,6 +385,7 @@
 /mob/living/carbon/human/werewolf_transform() // needed to ensure that we safely remove the tie before transitioning
 	if(istype(sexcon) && sexcon.knotted_status)
 		sexcon.knot_remove()
+	modular_handle_werewolf_transform_chastity()
 	return ..()
 
 /mob/living/carbon/human/werewolf_untransform(dead,gibbed) // needed to ensure that we safely remove the tie after transitioning

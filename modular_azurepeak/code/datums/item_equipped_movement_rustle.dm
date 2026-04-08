@@ -10,6 +10,8 @@ with light edits to work with roguecode */
 
 	///what move are we on.
 	var/move_counter = 0
+	///Prevents double-counting when movement signals fire more than once in a single tick.
+	var/last_move_tick = -1
 	///how many moves to take before playing the sound.
 	var/move_delay = 4
 
@@ -56,6 +58,9 @@ with light edits to work with roguecode */
 
 /datum/component/item_equipped_movement_rustle/proc/try_step(obj/item/clothing/source)//(mob/source)
 	SIGNAL_HANDLER
+	if(last_move_tick == world.time)
+		return
+	last_move_tick = world.time
 	/*if (source.moving_diagonally == FIRST_DIAG_STEP)   //you can uncomment these if someone ever implements diagonal movement
 		return*/
 	move_counter++

@@ -128,7 +128,7 @@
 
 /obj/item/rogueweapon/katar/punchdagger
 	name = "punch dagger"
-	desc = "A weapon that combines the ergonomics of the Ranesheni katar with the capabilities of the Western Psydonian \"knight-killers\". It can be tied around the wrist."
+	desc = "A weapon that combines the ergonomics of the Zybantine katar with the capabilities of the Western Psydonian \"knight-killers\". It can be tied around the wrist."
 	slot_flags = ITEM_SLOT_WRISTS
 	max_integrity = 120		//Steel dagger -30
 	force = 15		//Steel dagger -5
@@ -225,6 +225,7 @@
 	smeltresult = /obj/item/ingot/steel
 	grid_width = 64
 	grid_height = 32
+	special = /datum/special_intent/upper_cut
 
 /obj/item/rogueweapon/knuckles/getonmobprop(tag)
 	. = ..()

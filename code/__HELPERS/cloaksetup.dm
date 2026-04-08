@@ -10,6 +10,7 @@
 			allowed_cloaks = list(
 			"Jupon" = 			/obj/item/clothing/cloak/stabard/surcoat/guard,
 			"Knight tabard" = 	/obj/item/clothing/cloak/tabard/retinue,
+			"Short tabard" = 	/obj/item/clothing/cloak/stabard/guard,
 			"Cape" = 			/obj/item/clothing/cloak/cape/guard,
 			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood)
 		if("Squire")

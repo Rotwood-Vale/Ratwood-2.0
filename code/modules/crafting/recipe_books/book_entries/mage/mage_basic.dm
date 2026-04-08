@@ -153,8 +153,7 @@
 	return {"
 	<div>
 	<h2>Signum</h2>
-	This command receives a coordinate iota and provides a coordinate of the difference between it and the location which the spell was cast toward.
-	(The tile clicked upon when casting the spell.)
+	This command provides the coordinate where the spell was cast.
 	</div>
 	"}
 
@@ -616,8 +615,7 @@
 	REQUIRES KNOWLEDGE OF FIREBALL TO USE.
 	<BR>
 	<BR>
-	This spell command receives an (optional) number and coordinate. The number must precede the coordinate. It creates an explosion at the specified
-	coordinate, its power modified by the number.
+	This spell command receives a coordinate. It creates an explosion at the specified coordinate, its power modified by staff held.
 	</div>
 	"}
 
@@ -632,8 +630,7 @@
 	REQUIRES KNOWLEDGE OF THUNDERSTRIKE TO USE.
 	<BR>
 	<BR>
-	This spell command receives an (optional) number and coordinate. The number must precede the coordinate. It creates a lightning bolt at the specified
-	coordinate, its power modified by the number.
+	This spell command receives a coordinate. It creates a lightning bolt at the specified coordinate, its power modified by staff held.
 	</div>
 	"}
 
@@ -663,8 +660,7 @@
 	REQUIRES KNOWLEDGE OF GRAVITY TO USE.
 	<BR>
 	<BR>
-	This spell command receives an (optional) number and coordinate. The number must precede the coordinate. It creates crushing gravity at the specified
-	coordinate, its power modified by the number.
+	This spell command receives a coordinate. It creates crushing gravity at the specified coordinate, its power modified by staff held.
 	</div>
 	"}
 
@@ -679,7 +675,7 @@
 	REQUIRES KNOWLEDGE OF MENDING TO USE.
 	<BR>
 	<BR>
-	This spell command receives an (optional) number and item iota. The number must precede the item. The item is mended, amount mended modified by number iota.
+	This spell command receives an item iota. The item is mended, amount mended modified by staff held.
 	</div>
 	"}
 
@@ -741,7 +737,7 @@
 	REQUIRES KNOWLEDGE OF GIANT'S STRENGTH TO USE.
 	<BR>
 	<BR>
-	This spell command receives (optionally) a number and an iota of a creature. The creature's strength will be enhanced by number given, to a limit of 3.
+	This spell command receives (optionally) a number and an iota of a creature. The creature's strength will be enhanced by staff held, to a limit of 3.
 	Lasts for 20 seconds.
 	</div>
 	"}
@@ -757,7 +753,7 @@
 	REQUIRES KNOWLEDGE OF STONESKIN TO USE.
 	<BR>
 	<BR>
-	This spell command receives (optionally) a number and an iota of a creature. The creature's constitution will be enhanced by number given, to a limit of 3.
+	This spell command receives (optionally) a number and an iota of a creature. The creature's constitution will be enhanced by staff held, to a limit of 3.
 	Lasts for 20 seconds.
 	</div>
 	"}
@@ -773,7 +769,7 @@
 	REQUIRES KNOWLEDGE OF HASTE TO USE.
 	<BR>
 	<BR>
-	This spell command receives (optionally) a number and an iota of a creature. The creature's speed will be enhanced by number given, to a limit of 3.
+	This spell command receives (optionally) a number and an iota of a creature. The creature's speed will be enhanced by staff held, to a limit of 3.
 	Lasts for 20 seconds.
 	</div>
 	"}
@@ -789,7 +785,7 @@
 	REQUIRES KNOWLEDGE OF HAWK'S EYE TO USE.
 	<BR>
 	<BR>
-	This spell command receives (optionally) a number and an iota of a creature. The creature's perception will be enhanced by number given, to a limit of 3.
+	This spell command receives (optionally) a number and an iota of a creature. The creature's perception will be enhanced by staff held, to a limit of 3.
 	Lasts for 20 seconds.
 	</div>
 	"}
@@ -805,7 +801,7 @@
 	REQUIRES KNOWLEDGE OF FORTITUDE TO USE.
 	<BR>
 	<BR>
-	This spell command receives (optionally) a number and an iota of a creature. The creature's endurance will be enhanced by number given, to a limit of 3.
+	This spell command receives (optionally) a number and an iota of a creature. The creature's endurance will be enhanced by staff held, to a limit of 3.
 	Lasts for 20 seconds.
 	</div>
 	"}
@@ -822,5 +818,84 @@
 	<BR>
 	<BR>
 	This spell command receives any iota and then an iota of an item. The item must be a memory string. It will store the first iota into the memory string.
+	</div>
+	"}
+
+/datum/book_entry/glacies
+	name = "Glacies!"
+	category = "Circuitus"
+
+/datum/book_entry/glacies/inner_book_html(mob/user)
+	return {"
+	<div>
+	<h2>Glacies!</h2>
+	REQUIRES KNOWLEDGE OF SNAP FREEZE TO USE.
+	<BR>
+	<BR>
+	This spell command receives a coordinate. It creates a freezing cloud at the specified coordinate, its power modified by staff held.
+	</div>
+	"}
+
+/datum/book_entry/glaciei
+	name = "Glaciei!"
+	category = "Circuitus"
+
+/datum/book_entry/glaciei/inner_book_html(mob/user)
+	return {"
+	<div>
+	<h2>Glaciei!</h2>
+	REQUIRES KNOWLEDGE OF FROST BOLT TO USE.
+	<BR>
+	<BR>
+	This spell command receives two coordinates. It creates a freezing projectile at the first coordinate, propelling it towards the second coordinate.
+	Its power is modified by staff held.
+	</div>
+	"}
+
+/datum/book_entry/sagitta
+	name = "Sagitta!"
+	category = "Circuitus"
+
+/datum/book_entry/sagitta/inner_book_html(mob/user)
+	return {"
+	<div>
+	<h2>Sagitta!</h2>
+	REQUIRES KNOWLEDGE OF ARCYNE BOLT TO USE.
+	<BR>
+	<BR>
+	This spell command receives two coordinates. It creates an arcyne projectile at the first coordinate, propelling it towards the second coordinate.
+	Its power is modified by staff held.
+	</div>
+	"}
+
+/datum/book_entry/flammas
+	name = "Flammas!"
+	category = "Circuitus"
+
+/datum/book_entry/flammas/inner_book_html(mob/user)
+	return {"
+	<div>
+	<h2>Flammas!</h2>
+	REQUIRES KNOWLEDGE OF SPITFIRE TO USE.
+	<BR>
+	<BR>
+	This spell command receives two coordinates. It creates a flaming projectile at the first coordinate, propelling it towards the second coordinate.
+	Its power is modified by staff held.
+	</div>
+	"}
+
+/datum/book_entry/tabificus
+	name = "Tabificus!"
+	category = "Circuitus"
+
+/datum/book_entry/tabificus/inner_book_html(mob/user)
+	return {"
+	<div>
+	<h2>Tabificus!</h2>
+	REQUIRES KNOWLEDGE OF ACID SPLASH TO USE.
+	<BR>
+	<BR>
+	This spell command receives two coordinates. It creates an acidic projectile at the first coordinate, propelling it towards the second coordinate.
+	Its power is modified by staff held.
 	</div>
 	"}

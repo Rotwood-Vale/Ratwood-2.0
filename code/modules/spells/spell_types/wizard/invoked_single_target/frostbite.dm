@@ -31,3 +31,7 @@
 		target.adjustFireLoss(12) //damage
 		target.adjustBruteLoss(12)
 		playsound(get_turf(target), 'sound/misc/bamf.ogg', 100, TRUE)
+		if(ishuman(target))
+			var/mob/living/carbon/human/human_target = target
+			human_target.apply_weather_temperature(-35)
+		playsound(get_turf(target), 'sound/misc/bamf.ogg', 100, TRUE)

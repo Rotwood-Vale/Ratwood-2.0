@@ -228,18 +228,27 @@
 	if(wear_armor)
 		if(wear_armor.max_heat_protection_temperature && wear_armor.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= wear_armor.heat_protection
+	if(wear_shirt)
+		if(wear_shirt.max_heat_protection_temperature && wear_shirt.max_heat_protection_temperature >= temperature)
+			thermal_protection_flags |= wear_shirt.heat_protection
 	if(wear_pants)
 		if(wear_pants.max_heat_protection_temperature && wear_pants.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= wear_pants.heat_protection
 	if(shoes)
 		if(shoes.max_heat_protection_temperature && shoes.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= shoes.heat_protection
+	if(wear_wrists)
+		if(wear_wrists.max_heat_protection_temperature && wear_wrists.max_heat_protection_temperature >= temperature)
+			thermal_protection_flags |= wear_wrists.heat_protection
 	if(gloves)
 		if(gloves.max_heat_protection_temperature && gloves.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= gloves.heat_protection
 	if(wear_mask)
 		if(wear_mask.max_heat_protection_temperature && wear_mask.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= wear_mask.heat_protection
+	if(cloak)
+		if(cloak.max_heat_protection_temperature && cloak.max_heat_protection_temperature >= temperature)
+			thermal_protection_flags |= cloak.heat_protection
 
 	return thermal_protection_flags
 
@@ -285,18 +294,27 @@
 	if(wear_armor)
 		if(wear_armor.min_cold_protection_temperature && wear_armor.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= wear_armor.cold_protection
+	if(wear_shirt)
+		if(wear_shirt.min_cold_protection_temperature && wear_shirt.min_cold_protection_temperature <= temperature)
+			thermal_protection_flags |= wear_shirt.cold_protection
 	if(wear_pants)
 		if(wear_pants.min_cold_protection_temperature && wear_pants.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= wear_pants.cold_protection
 	if(shoes)
 		if(shoes.min_cold_protection_temperature && shoes.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= shoes.cold_protection
+	if(wear_wrists)
+		if(wear_wrists.min_cold_protection_temperature && wear_wrists.min_cold_protection_temperature <= temperature)
+			thermal_protection_flags |= wear_wrists.cold_protection
 	if(gloves)
 		if(gloves.min_cold_protection_temperature && gloves.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= gloves.cold_protection
 	if(wear_mask)
 		if(wear_mask.min_cold_protection_temperature && wear_mask.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= wear_mask.cold_protection
+	if(cloak)
+		if(cloak.min_cold_protection_temperature && cloak.min_cold_protection_temperature <= temperature)
+			thermal_protection_flags |= cloak.cold_protection
 
 	return thermal_protection_flags
 

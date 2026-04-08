@@ -485,7 +485,7 @@
 
 			qdel(src)
 			user.put_in_active_hand(limb_grabbed)
-	  
+
 	// Dealing damage to the head beforehand is intentional.
 	if(limb_grabbed.body_zone == BODY_ZONE_HEAD && isdullahan(C))
 		var/mob/living/carbon/human/target = C

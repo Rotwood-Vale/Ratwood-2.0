@@ -43,6 +43,7 @@
 	var/swim_skill = FALSE
 	nomouseover = FALSE
 	var/swimdir = FALSE
+	temperature = 210
 
 /turf/open/water/Initialize(mapload)
 	.  = ..()
@@ -106,6 +107,11 @@
 	var/const/MEDIUM_XP_GAIN = 0.05
 	if(!isliving(swimmer))
 		return 0
+	if(!isnull(swimmer.grabbedby))
+		for(var/obj/item/grabbing/active_grab in swimmer.grabbedby)
+			if(active_grab.grabbed == active_grab.grabbee)
+				continue
+			return 0
 	if(!swim_skill)
 		return 0 // no stam cost
 	if(swimmer.is_floor_hazard_immune())
@@ -216,6 +222,10 @@
 						if(AM.loc == src)
 							water_overlay.layer = ABOVE_MOB_LAYER
 							water_overlay.plane = GAME_PLANE_HIGHEST
+
+			if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
+				L.adjust_bodytemperature(-5)
+				L.update_health_hud()
 		if(!istype(L, /mob/living/carbon/human/species/skeleton))
 			return
 		if(!istype(src, /turf/open/water/sewer))
@@ -268,6 +278,16 @@
 					wash_atom(user, CLEAN_STRONG)
 					user.remove_stress(/datum/stressevent/sewertouched)
 				playsound(user, pick(wash), 100, FALSE)
+				if(temperature < 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 75)	//washing yourself helps to cool you off.
+					L.adjust_bodytemperature(-75)
+					L.update_health_hud()
+				if(temperature >= 300)	//bathhouses, predominantly
+					if(L.bodytemperature < BODYTEMP_NORMAL_MIN)	//washing yourself helps to warm you up.
+						L.adjust_bodytemperature(75)
+						L.update_health_hud()
+					if(L.bodytemperature > BODYTEMP_NORMAL_MAX)	//washing yourself helps to cool you off.
+						L.adjust_bodytemperature(-75)
+						L.update_health_hud()
 				if(istype(src,/turf/open/water/sewer) || istype(src,/turf/open/water/swamp) || istype(src, /turf/open/water/sewer))
 					if (istype(src, /turf/open/water/sewer))
 						user.add_stress(/datum/stressevent/sewertouched)
@@ -374,6 +394,7 @@
 	water_color = "#FFFFFF"
 	slowdown = 3
 	water_reagent = /datum/reagent/water/bathwater
+	temperature = 300
 
 /turf/open/water/bath/Initialize(mapload)
 	.  = ..()
@@ -389,6 +410,7 @@
 	slowdown = 3
 	wash_in = FALSE
 	water_reagent = /datum/reagent/water/gross/sewage
+	temperature = 300
 
 /turf/open/water/sewer/Initialize(mapload)
 	icon_state = "paving"
@@ -405,6 +427,7 @@
 	slowdown = 3
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water/gross
+	temperature = 275
 
 /turf/open/water/bloody
 	name = "blood"
@@ -416,6 +439,7 @@
 	slowdown = 3
 	wash_in = FALSE
 	water_reagent = /datum/reagent/blood/shitty
+	temperature = 300
 
 /turf/open/water/swamp/Initialize(mapload)
 	icon_state = "dirt"
@@ -628,6 +652,19 @@
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water
 
+/turf/open/water/bath/fakepond
+	name = "fake pond"
+	desc = "Soothing water, with soapy bubbles on the surface. Dyed green to mimic gently floating duckwater."
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "pond"
+	water_level = 2
+	water_color = "#367e94"
+	slowdown = 3
+	swim_skill = TRUE
+	wash_in = TRUE
+	water_reagent = /datum/reagent/water/bathwater
+	temperature = 300
+
 //Healing springs.
 //Intended for deep dungeon / hidden areas.
 /turf/open/water/ocean/deep/thermalwater
@@ -640,6 +677,7 @@
 	var/heal_interval = 5 SECONDS
 	var/heal_amount = 20
 	var/last_heal = 0
+	temperature = 300
 
 /turf/open/water/ocean/deep/thermalwater/Initialize(mapload)
 	. = ..()

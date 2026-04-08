@@ -1,0 +1,6 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - code_imp: "Optimizes keyloop to have less loops"
+  - bugfix: "You can now pixel shift diagonally"
+  - refactor: "Replace the 4 direction facing keybinds with 1 block movement keybind"

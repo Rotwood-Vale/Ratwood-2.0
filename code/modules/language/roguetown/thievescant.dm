@@ -67,7 +67,7 @@
 /datum/language/thievescant/signlanguage
 	name = "Grimorian Sign Speak"
 	desc = "A common sign language used across Psydonia. While regional variations exist from continent to continent, the basic signs are universal enough that most people can understand simple communications through gestures and hand movements alone."
-	key = "xx"
+	key = "y"
 	signlang_verb = list(
 		"gestures with their hands",
 		"signs carefully",

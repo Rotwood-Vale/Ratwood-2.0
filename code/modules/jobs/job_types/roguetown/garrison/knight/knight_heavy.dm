@@ -8,9 +8,9 @@
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list(
 		STATKEY_STR = 3,//Heavy hitters. Less con/end, high strength.
-		STATKEY_INT = 3,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
+		STATKEY_INT = 1,
+		STATKEY_CON = 2,
+		STATKEY_WIL = 2,
 		STATKEY_SPD = -1,
 	)
 	subclass_skills = list(
@@ -81,6 +81,7 @@
 			"Hounskull Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
 			"Etruscan Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
 			"Slitted Kettle" = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
+			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
 			"None"
 		)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets

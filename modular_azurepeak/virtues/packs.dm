@@ -58,12 +58,12 @@
 	granted_virtues = list(
 		/datum/virtue/utility/linguist,
 		/datum/virtue/items/rich,
-		/datum/virtue/movement/equestrian
+		/datum/virtue/utility/riding
 	)
 	custom_text = "Grants three virtues for the worldly traveler:\n\
 	- Intellectual: +1 INT, +3 Reading, choose 3 languages, assess with stats, book crafting kit stashed (INTELLECTUAL)\n\
 	- Rich and Shrewd: Appraise spell, see prices, coinpurse stashed (SEEPRICES)\n\
-	- Equestrian: Tame goat mount, +1 Riding, saddle stashed, navigate doors while mounted (EQUESTRIAN)"
+	- Equestrian: Call and bond with a treasured mount, Apprentice Riding, saddle stashed, navigate doors while mounted (EQUESTRIAN)"
 
 // Scrappy Survivor Pack: Cunning Provisioner + Forester + Feral Appetite
 /datum/virtue/pack/scrappysurvivor

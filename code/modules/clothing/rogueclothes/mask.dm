@@ -136,6 +136,7 @@
 	if(active_item)
 		return
 	else if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, "[type]")
 		if (user.get_skill_level(/datum/skill/craft/engineering) >= 2)
 			ADD_TRAIT(user, TRAIT_ENGINEERING_GOGGLES, "[type]")
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/engineeranalyze)
@@ -150,10 +151,10 @@
 
 
 
-
-
 /obj/item/clothing/mask/rogue/spectacles/golden/dropped(mob/user, slot)
 	..()
+	if(HAS_TRAIT(src, TRAIT_SANDSTORM_GOGGLES))
+		REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, "[type]")
 	if(active_item)
 		active_item = FALSE
 		REMOVE_TRAIT(user, TRAIT_ENGINEERING_GOGGLES, "[type]")
@@ -169,12 +170,28 @@
 		take_damage(11, BRUTE, "blunt", 1)
 	..()
 
-/obj/item/clothing/mask/rogue/equipped(mob/user, slot)
+/obj/item/clothing/mask/rogue/spectacles/goggles
+	name = "sand goggles"
+	icon_state = "goggles_sandstorm"
+	desc = "A set of goggles of an older design, made to protect the wearer from sandstorms."
+	break_sound = "glassbreak"
+	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
+	max_integrity = 35
+	integrity_failure = 0.5
+	resistance_flags = FIRE_PROOF
+	body_parts_covered = EYES
+	anvilrepair = /datum/skill/craft/armorsmithing
+
+/obj/item/clothing/mask/rogue/spectacles/goggles/equipped(mob/user, slot)
 	..()
+	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, "generic")
 	user.update_fov_angles()
 
-/obj/item/clothing/mask/rogue/dropped(mob/user)
+/obj/item/clothing/mask/rogue/spectacles/goggles/dropped(mob/user)
 	..()
+	if(HAS_TRAIT(user, TRAIT_SANDSTORM_GOGGLES))
+		REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, "generic")
 	user.update_fov_angles()
 
 /obj/item/clothing/mask/rogue/eyepatch
@@ -225,6 +242,8 @@
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	armor = ARMOR_PADDED
 	sewrepair = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/mask/rogue/sack/psy
 	name = "psydonic sack mask"
@@ -546,6 +565,15 @@
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
 	nudist_approved = TRUE
+
+/obj/item/clothing/mask/rogue/physician/equipped(mob/living/carbon/user, slot)
+	. = ..()
+	if(slot == SLOT_WEAR_MASK)
+		ADD_TRAIT(user, TRAIT_NOSTINK, "[type]")
+
+/obj/item/clothing/mask/rogue/physician/dropped(mob/living/carbon/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_NOSTINK, "[type]")
 
 /obj/item/clothing/mask/rogue/skullmask
 	name = "skull mask"

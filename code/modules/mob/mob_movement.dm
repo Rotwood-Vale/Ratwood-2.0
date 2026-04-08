@@ -29,8 +29,11 @@
 		else
 			mob.control_object.forceMove(get_step(mob.control_object,direct))
 
-#define MOVEMENT_DELAY_BUFFER 0.75
-#define MOVEMENT_DELAY_BUFFER_DELTA 1.25
+/atom/movable
+	var/facepull = TRUE
+
+/mob
+	facepull = FALSE
 
 /**
  * Move a client in a direction
@@ -43,7 +46,7 @@
  * Things that stop you moving as a mob:
  * * world time being less than your next move_delay
  * * not being in a mob, or that mob not having a loc
- * * missing the n and direction parameters
+ * * missing the new_loc and direction parameters
  * * being in remote control of an object (calls Moveobject instead)
  * * being dead (it ghosts you instead)
  *
@@ -68,30 +71,23 @@
  * (if you ask me, this should be at the top of the move so you don't dance around)
  *
  */
-/atom/movable
-	var/facepull = TRUE
-
-/mob
-	facepull = FALSE
-
-/client/Move(n, direct)
+/client/Move(new_loc, direct)
 	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
-	else
-		next_move_dir_add = 0
-		next_move_dir_sub = 0
+	next_move_dir_add = NONE
+	next_move_dir_sub = NONE
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
-	if(!mob || !mob.loc)
+	if(!direct || !new_loc)
 		return FALSE
-	if(!n || !direct)
+	if(!mob?.loc)
 		return FALSE
 	if(mob.notransform)
 		return FALSE	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
 	if(!isliving(mob))
-		return mob.Move(n, direct)
+		return mob.Move(new_loc, direct)
 	else if(HAS_TRAIT(mob, TRAIT_IN_FRENZY) || HAS_TRAIT(mob, TRAIT_MOVEMENT_BLOCKED))
 		return FALSE
 	if(mob.stat == DEAD)
@@ -124,6 +120,12 @@
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
+	// Mounted movement should be relayed before grab logic, otherwise pull checks can block riding.
+	if(mob.buckled)
+		var/mob/buckled_mob = mob
+		if(buckled_mob.get_buckled_animal_mount())
+			return mob.buckled.relaymove(mob, direct)
+
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
 
@@ -139,7 +141,7 @@
 
 	//We are now going to move
 	var/add_delay = mob.cached_multiplicative_slowdown
-	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
+	if(old_move_delay + world.tick_lag > world.time)
 		move_delay = old_move_delay
 	else
 		move_delay = world.time
@@ -154,9 +156,9 @@
 			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
 		if(newdir)
 			direct = newdir
-			n = get_step(L, direct)
+			new_loc = get_step(L, direct)
 
-	var/target_dir = get_dir(L, n)
+	var/target_dir = get_dir(L, new_loc)
 
 	//backpedal and strafe slowdown for quick intent
 	if(L.fixedeye || L.tempfixeye)
@@ -178,7 +180,7 @@
 
 	. = ..()
 
-	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
+	if((direct & (direct - 1)) && mob.loc == new_loc) //moved diagonally successfully
 		add_delay *= 2
 	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
 	move_delay += add_delay
@@ -630,22 +632,30 @@
 ///Checked whenever a mob tries to change their movement intent
 /mob/proc/toggle_rogmove_intent(intent, silent = FALSE)
 	var/is_mounted = FALSE
-	if(buckled && intent != MOVE_INTENT_SNEAK)
-		if(istype(buckled, /mob/living/simple_animal/hostile/retaliate/rogue/saiga))
-			if(ishuman(src))
-				var/mob/living/carbon/human/H = src
-				var/mob/living/simple_animal/hostile/retaliate/rogue/saiga/S = buckled
-				is_mounted = TRUE
-				if(H.m_intent == MOVE_INTENT_WALK)
-					H.visible_message(span_notice("[H] digs their heels into \the [S], preparing to gallop!"))
-					S.emote("aggro")
-					if(do_after(H, 20))
-						H.m_intent = MOVE_INTENT_RUN
-				else
-					H.visible_message(span_notice("\The [S] calms, slowing its gait."))
-					S.emote("idle")
-					if(do_after(H, 15))
-						H.m_intent = MOVE_INTENT_WALK
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/mob/living/simple_animal/animal_mount = H.get_buckled_animal_mount()
+		if(animal_mount)
+			is_mounted = TRUE
+			switch(intent)
+				if(MOVE_INTENT_RUN)
+					if(H.m_intent != MOVE_INTENT_RUN)
+						H.visible_message(span_notice("[H] steadies atop [animal_mount], preparing to break into a run."))
+						animal_mount.emote("aggro")
+						if(do_after(H, 30))
+							H.m_intent = MOVE_INTENT_RUN
+				if(MOVE_INTENT_SNEAK)
+					if(H.m_intent != MOVE_INTENT_SNEAK)
+						H.visible_message(span_notice("[H] reins in [animal_mount], slowing into a cautious gait."))
+						if(do_after(H, 30))
+							H.m_intent = MOVE_INTENT_SNEAK
+							H.update_sneak_invis()
+				if(MOVE_INTENT_WALK)
+					if(H.m_intent != MOVE_INTENT_WALK)
+						H.visible_message(span_notice("[animal_mount] calms, returning to a steady pace."))
+						animal_mount.emote("idle")
+						if(do_after(H, 15))
+							H.m_intent = MOVE_INTENT_WALK
 	// If we're becoming sprinting from non-sprinting, reset the counter
 	if(!(m_intent == MOVE_INTENT_RUN && intent == MOVE_INTENT_RUN))
 		sprinted_tiles = 0

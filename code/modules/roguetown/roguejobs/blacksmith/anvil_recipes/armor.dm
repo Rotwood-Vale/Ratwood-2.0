@@ -667,7 +667,7 @@
 	created_item = /obj/item/clothing/neck/roguetown/gorget/steel
 
 /datum/anvil_recipe/armor/iron/cursed_collar
-	name = "Cursed Collar"
+	name = "Lesser Cursed Collar"
 	req_bar = /obj/item/ingot/iron
 	req_blade = /obj/item/blade/iron_plate
 	created_item = /obj/item/clothing/neck/roguetown/gorget/cursed_collar
@@ -760,6 +760,13 @@
 	req_blade = /obj/item/blade/steel_plate
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff
+
+/datum/anvil_recipe/armor/steel/beakhelm
+	name = "Beak Helmet, Steel (+1 Steel)"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_plate
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/beakhelm
 
 /datum/anvil_recipe/armor/helmetvolf
 	name = "Volf Face Helmet, Steel (+1 Steel)"

@@ -84,7 +84,7 @@
 		return 0
 
 /mob/living/simple_animal/hostile/handle_automated_action()
-	if(AIStatus == NPC_AI_OFF)
+	if(AIStatus == NPC_AI_OFF || AIStatus == AI_OFF)
 		return 0
 	if(del_on_deaggro && last_aggro_loss && (world.time >= last_aggro_loss + del_on_deaggro))
 		if(deaggrodel())
@@ -103,8 +103,7 @@
 			DestroyPathToTarget()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
-				toggle_ai(AI_IDLE)			// otherwise we go idle
-				return 1
+				consider_wakeup() //If no clients are nearby, we idle - otherwise, we stay on
 	return 1
 
 /mob/living/simple_animal/hostile/proc/deaggrodel()
@@ -620,8 +619,8 @@
 			toggle_ai(AI_ON)
 			return TRUE
 
-	toggle_ai(AI_OFF)
-	return FALSE
+	toggle_ai(AI_IDLE)
+	return TRUE
 
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(_Z)//Step 1, find out what we can see
 	. = list()

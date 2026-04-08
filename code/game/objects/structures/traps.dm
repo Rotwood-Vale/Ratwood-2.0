@@ -225,7 +225,7 @@
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>You're frozen solid!</B>"))
 	L.Paralyze(20)
-	L.adjust_bodytemperature(-400)
+	L.adjust_bodytemperature(-100)
 	L.apply_status_effect(/datum/status_effect/freon)
 
 /obj/structure/trap/damage
@@ -570,7 +570,7 @@
 /obj/structure/trap/bogtrap/freeze/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>You're frozen solid!</B>"))
 	L.Paralyze(50)
-	L.adjust_bodytemperature(-300)
+	L.adjust_bodytemperature(-100)
 	playsound(src, 'sound/misc/explode/bottlebomb (1).ogg', 60, TRUE)
 
 

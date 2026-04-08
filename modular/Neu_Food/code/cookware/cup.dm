@@ -247,6 +247,7 @@
 	desc = "A tea cup made out of ceramic. Used to serve tea."
 	dropshrink = 0.7
 	icon_state = "cup"
+	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	sellprice = 10
 	force = 5
 	throwforce = 10

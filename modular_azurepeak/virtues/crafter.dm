@@ -65,7 +65,8 @@
 	added_stashed_items = list(
 		"Hammer" = /obj/item/rogueweapon/hammer/wood,
 		"Chisel" = /obj/item/rogueweapon/chisel,
-		"Hand Saw" = /obj/item/rogueweapon/handsaw
+		"Hand Saw" = /obj/item/rogueweapon/handsaw,
+		"Blowing Pipe" = /obj/item/rogueweapon/blowrod
 	)
 
 /datum/virtue/utility/mining

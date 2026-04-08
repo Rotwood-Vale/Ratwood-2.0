@@ -372,6 +372,12 @@
 	max_integrity = 9000
 	damage_deflection = 40
 
+/obj/structure/bars/nopassthrow
+	desc = "The bars are too thick to throw anything through the gaps."
+
+/obj/structure/bars/nopassthrow/CanPass(atom/movable/mover, turf/target)
+	return isobserver(mover)
+
 /*
 /obj/structure/bars/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGRILLE))
@@ -653,6 +659,9 @@
 
 /obj/structure/fluff/wallclock/attack_right(mob/user)
 	if(user.mind && isliving(user))
+		var/area/rogue/user_area = get_area(user)
+		if(user_area?.no_special_item_retrieval) //area does not allow fetching special items, return
+			return
 		if(user.mind.special_items && user.mind.special_items.len)
 			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
 			if(item)

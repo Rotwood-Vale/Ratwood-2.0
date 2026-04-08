@@ -40,6 +40,9 @@
 		if(SEX_PART_SLIT_SHEATH)
 			pleasure_target = 2
 			zone_text = "sheath"
+		else
+			pleasure_target = 2
+			zone_text = "holes"
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] grinds [user.p_their()] knot inside [target]'s [zone_text]..."))
 	user.sexcon.make_sucking_noise()
 	user.sexcon.do_thrust_animate(target, pixels = 2, time = 1.5)

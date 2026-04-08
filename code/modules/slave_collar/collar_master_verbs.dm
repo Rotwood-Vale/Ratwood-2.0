@@ -2,50 +2,8 @@
 	set name = "Collar Control"
 	set category = "Collar Tab"
 
-	var/datum/component/collar_master/CM = mind?.GetComponent(/datum/component/collar_master)
-	if(!CM)
-		return
-
-	var/list/valid_pets = list()
-	for(var/mob/living/carbon/human/pet in CM.my_pets)
-		if(!pet || !pet.mind || !pet.client)
-			continue
-		valid_pets[pet.real_name] = pet
-
-	if(!length(valid_pets))
-		to_chat(src, span_warning("No valid pets available!"))
-		return
-
-	var/list/selected = input(src, "Select pets to command:", "Pet Selection") as null|anything in valid_pets
-	if(!selected || !CM)
-		return
-
-	CM.temp_selected_pets = list(valid_pets[selected])
-
-	var/list/options = list(
-		"Select pets" = /mob/proc/collar_master_select_pets,
-		"Listen to Pets" = /mob/proc/collar_master_listen,
-		"Shock Pets" = /mob/proc/collar_master_shock,
-		"Send Message" = /mob/proc/collar_master_send_message,
-		"Force Surrender" = /mob/proc/collar_master_force_surrender,
-		"Force Strip" = /mob/proc/collar_master_force_strip,
-		"Forbid/permit Clothing" = /mob/proc/collar_master_clothing,
-		"Toggle Pet Speech" = /mob/proc/collar_master_toggle_speech,
-		"Force Action" = /mob/proc/collar_master_force_action,
-		"Force Love" = /mob/proc/collar_master_force_love,
-		"Toggle Arousal" = /mob/proc/collar_master_force_arousal,
-		"Toggle Orgasm Denial" = /mob/proc/collar_master_toggle_denial,
-		"Toggle Pet Hallucinations" = /mob/proc/collar_master_toggle_hallucinate,
-		"Impose Will" = /mob/proc/collar_master_illusion,
-		"Free Pet" = /mob/proc/collar_master_release_pet,
-	)
-
-	var/choice = input(src, "Choose a command:", "Collar Control") as null|anything in options
-	if(!choice || !CM || !length(CM.temp_selected_pets))
-		return
-
-	var/proc_path = options[choice]
-	call(src, proc_path)()
+	// Legacy verb wrapper: route to the TGUI controller.
+	return collar_master_control_ui()
 
 /mob/proc/collar_master_listen()
 	set name = "Listen to Pets"

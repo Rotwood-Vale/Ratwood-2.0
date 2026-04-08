@@ -1,5 +1,7 @@
 /obj/item
 	var/allow_self_unequip = TRUE
+	/// If TRUE, this item will always appear as a clickable link in examine, even without a custom name or description.
+	var/always_show_examine_link = FALSE
 
 /obj/item/allow_attack_hand_drop(mob/user)
 	if(ishuman(user))

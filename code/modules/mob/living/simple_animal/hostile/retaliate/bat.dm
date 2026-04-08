@@ -49,7 +49,34 @@
 /mob/living/simple_animal/hostile/retaliate/bat/Initialize(mapload)
 	. = ..()
 	verbs += list(/mob/living/simple_animal/hostile/retaliate/bat/proc/fly_up,
-	/mob/living/simple_animal/hostile/retaliate/bat/proc/fly_down) 
+	/mob/living/simple_animal/hostile/retaliate/bat/proc/fly_down,
+	/mob/living/simple_animal/hostile/retaliate/bat/crow/proc/emote_caw,
+	/mob/living/simple_animal/hostile/retaliate/bat/crow/proc/change_stance)
+
+
+/mob/living/simple_animal/hostile/retaliate/bat/crow/proc/change_stance()
+	set category = "Winged Form"
+	set name = "Change Stance"
+	sitting = !sitting
+	update_icon()
+
+/mob/living/simple_animal/hostile/retaliate/bat/crow/update_icon_state()
+	icon_state = sitting ? "crow" : "crow_flying"
+
+/mob/living/simple_animal/hostile/retaliate/bat/crow/Move()
+	if(sitting)
+		return FALSE
+	return ..()
+
+
+/mob/living/simple_animal/hostile/retaliate/bat/crow/proc/emote_caw()
+	set category = "Winged Form"
+	set name = "Caw"
+	emote("caw", intentional = TRUE, animal = TRUE)
+
+/mob/living/simple_animal/hostile/retaliate/bat/crow/get_sound(input)
+	if(input == "caw")
+		return pick('sound/vo/mobs/bird/CROW_01.ogg', 'sound/vo/mobs/bird/CROW_02.ogg', 'sound/vo/mobs/bird/CROW_03.ogg')
 
 /mob/living/simple_animal/hostile/retaliate/bat/proc/fly_up()
 	set category = "Winged Form"
@@ -96,6 +123,7 @@
 	melee_damage_upper = 0
 	remains_type = /obj/effect/decal/remains/crow
 	fly_time = 3 SECONDS // slowing down crow for witches
+	var/sitting = FALSE
 
 /obj/effect/decal/remains/crow
 	name = "zad remains"

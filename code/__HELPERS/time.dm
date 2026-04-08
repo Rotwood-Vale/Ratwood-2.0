@@ -46,37 +46,8 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 //		testing("set [tod]")
 	if(GLOB.todoverride)
 		GLOB.tod = GLOB.todoverride
-	if((GLOB.tod != oldtod) && !GLOB.todoverride && (GLOB.dayspassed>1)) //weather check on tod changes
-		if(!GLOB.forecast)
-			switch(GLOB.tod)
-				if("dawn")
-					if(prob(25))
-						GLOB.forecast = "rain"
-				if("day")
-					if(prob(5))
-						GLOB.forecast = "rain"
-				if("dusk")
-					if(prob(33))
-						GLOB.forecast = "rain"
-				if("night")
-					if(prob(40))
-						GLOB.forecast = "rain"
-
-			if(GLOB.forecast == "rain")
-				var/foundnd
-				if(SSParticleWeather?.runningWeather?.target_trait == PARTICLEWEATHER_RAIN)
-					foundnd = TRUE
-				if(!foundnd)
-					SSParticleWeather?.run_weather(pick(/datum/particle_weather/rain_gentle, /datum/particle_weather/rain_storm))
-		else
-			switch(GLOB.forecast) //end the weather now
-				if("rain")
-					if(GLOB.tod == "day")
-						GLOB.forecast = "rainbow"
-					else
-						GLOB.forecast = null
-				if("rainbow")
-					GLOB.forecast = null
+	if((GLOB.tod != oldtod) && !GLOB.todoverride) //&& (GLOB.dayspassed>1)) //weather check on tod changes, disabled first day weather block
+		SSParticleWeather.check_forecast(GLOB.tod)
 
 	if(GLOB.tod != oldtod)
 		if(GLOB.tod == "dawn")
@@ -138,8 +109,11 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 		addtimer(CALLBACK(src, PROC_REF(clear_area_text), T), 35)
 		var/time_change_tips_random = pick(GLOB.time_change_tips)
 		to_chat(client, span_notice("<b>[time_change_tips_random]</b>"))
-
-		if(HAS_TRAIT(mind.current, TRAIT_NOSLEEP)) // new hackslop to allow anything that cannot sleep to do their daily stuff 
+		var/mob/living/carbon/human/H = src
+		if(H)
+			H.time_flags &= ~(TIME_OF_DAY_BIT_DAY | TIME_OF_DAY_BIT_NIGHT)	//temperature bitflag clear
+			H.time_flags |= TIME_OF_DAY_BIT_DAY								//not actually day, but gives 'dawn, day, and dusk' as warmer time periods, given day is short
+		if(HAS_TRAIT(mind.current, TRAIT_NOSLEEP)) // new hackslop to allow anything that cannot sleep to do their daily stuff
 			if(mind.has_changed_spell)
 				mind.has_changed_spell = FALSE
 				to_chat(mind.current, span_smallnotice("I feel like I can change my spells again."))
@@ -159,7 +133,10 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 		playsound_local(src, 'sound/misc/midday.ogg', 100, FALSE)
 	else if(GLOB.tod == "night")
 		playsound_local(src, 'sound/misc/nightfall.ogg', 100, FALSE)
-
+		var/mob/living/carbon/human/H = src
+		if(H)
+			H.time_flags &= ~(TIME_OF_DAY_BIT_DAY | TIME_OF_DAY_BIT_NIGHT)
+			H.time_flags |= TIME_OF_DAY_BIT_NIGHT
 	var/atom/movable/screen/daynight/D = new()
 	D.alpha = 0
 	client.screen += D

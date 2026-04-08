@@ -30,6 +30,8 @@ SUBSYSTEM_DEF(nightshift)
 /datum/controller/subsystem/nightshift/Initialize()
 	if(!CONFIG_GET(flag/enable_night_shifts))
 		can_fire = FALSE
+	if(SSmapping?.config?.map_name == "Desert Town")
+		apply_desert_times()
 	current_tod = settod()
 	return ..()
 
@@ -71,6 +73,13 @@ SUBSYSTEM_DEF(nightshift)
 	for(var/mob/living/M in GLOB.mob_list)
 		M.update_tod(GLOB.tod)
 
+/datum/controller/subsystem/nightshift/proc/apply_desert_times()
+	// 50% day during desert map, 50% night
+	nightshift_start_time = 648000
+	nightshift_dawn_start = 216000
+	nightshift_day_start = 252000
+	nightshift_dusk_start = 612000
+
 /obj/proc/update_tod(todd)
 	return
 
@@ -109,7 +118,7 @@ SUBSYSTEM_DEF(nightshift)
 			else
 				apply_status_effect(/datum/status_effect/debuff/sleepytime)
 				add_stress(/datum/stressevent/sleepytime)
-		
+
 
 
 /mob/living/carbon/human/proc/handle_sleep_triumphs()
