@@ -150,14 +150,14 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/eastshirt1
-	name = "kazengun black shirt"
+	name = "eastern black shirt"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt1)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/eastshirt2
-	name = "kazengun white shirt"
+	name = "eastern white shirt"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
@@ -818,7 +818,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/eastcloak1
-	name = "cloudcutter's cloak"
+	name = "eastern cloudcutter's cloak"
 	result = /obj/item/clothing/cloak/eastcloak1
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 1,
@@ -826,7 +826,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/eastcloak2
-	name = "leather cloak"
+	name = "eastern leather cloak"
 	result = /obj/item/clothing/cloak/eastcloak2
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 1,
@@ -855,7 +855,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/hijab/kazengun
-	name = "kazengun shadowed hood"
+	name = "eastern shadowed hood"
 	result = list(/obj/item/clothing/head/roguetown/roguehood/shalal/hijab/yoruku)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
@@ -1344,13 +1344,13 @@
 /datum/crafting_recipe/roguetown/sewing/eastsuit2to1
 	name = "decorated to old dobo robe"
 	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit)
-	reqs = list(/obj/item/clothing/suit/roguetown/armor/crafteast)
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast)
 	craftdiff = 0
 	
-/datum/crafting_recipe/roguetown/sewing/eastsuit2to1
+/datum/crafting_recipe/roguetown/sewing/eastsuit1to2
 	name = "old to decorated dobo robe"
 	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast)
-	reqs = list(/obj/item/clothing/suit/roguetown/armor/mentorsuit)
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit)
 	craftdiff = 0
 	
 

@@ -30,7 +30,7 @@
 	sellprice = 10
 	craftdiff = 2
 
-	/datum/crafting_recipe/roguetown/leather/armor/pants/eastern
+/datum/crafting_recipe/roguetown/leather/armor/pants/eastern
 	name = "eastern leather pants"
 	result = /obj/item/clothing/under/roguetown/trou/leather/eastern
 	reqs = list(/obj/item/natural/hide/cured = 2)
@@ -69,7 +69,7 @@
 	sellprice = 20
 	craftdiff = 4
 
-	/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants/eastpants1
+/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants/eastpants1
 	name = "eastern hardened leather black pants"
 	result = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1)
 	reqs = list(
@@ -80,7 +80,7 @@
 	sellprice = 20
 	craftdiff = 4
 
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants/eastpants2
+/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants/eastpants2
 	name = "eastern hardened leather white pants"
 	result = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2)
 	reqs = list(

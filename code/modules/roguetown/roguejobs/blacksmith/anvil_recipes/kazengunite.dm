@@ -21,7 +21,7 @@
 /datum/anvil_recipe/kazengunite/jingasa
 	name = "Jingasa"
 	req_bar = /obj/item/ingot/steel
-	created_item=/obj/clothing/head/roguetown/helmet/kettle/jingasa
+	created_item = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
 
 /datum/anvil_recipe/kazengunite/halfmask
 	name = "Soldier's Half-Mask"
@@ -37,13 +37,13 @@
 	name = "Oni Mask (+1 Small Log)"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list (/obj/item/grown/log/tree/small)
-	/obj/item/clothing/mask/rogue/facemask/yoruku_oni
+	created_item = /obj/item/clothing/mask/rogue/facemask/yoruku_oni
 
 /datum/anvil_recipe/kazengunite/kitsunemask
 	name = "Kitsune Mask (+1 Small Log)"
 	req_bar = /obj/item/ingot/iron
-additional_items = list (/obj/item/grown/log/tree/small)
-	/obj/item/clothing/mask/rogue/facemask/yoruku_kitsune
+	additional_items = list (/obj/item/grown/log/tree/small)
+	created_item = /obj/item/clothing/mask/rogue/facemask/yoruku_kitsune
 
 /datum/anvil_recipe/kazengunite/gorget
 	name = "Kazengunite Gorget"
@@ -88,23 +88,11 @@ additional_items = list (/obj/item/grown/log/tree/small)
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/short/kazengun
 
-/datum/anvil_recipe/kazenguniteweapons/hwando
-	name = "Hwando"
-	req_bar = /obj/item/ingot/steel
-	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/sabre/mulyeog
-
 /datum/anvil_recipe/kazenguniteweapons/ssangsudo
 	name = "Ssangsudo"
 	req_bar = /obj/item/ingot/steel
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
-
-/datum/anvil_recipe/kazenguniteweapons/hooksword
-	name = "Hook Sword"
-	req_bar = /obj/item/ingot/steel
-	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/sabre/hook
 
 /datum/anvil_recipe/kazenguniteweapons/kanabo
 	name = "Kanabo (+1 Small Log)"
@@ -113,12 +101,6 @@ additional_items = list (/obj/item/grown/log/tree/small)
 	additional_items = list(/obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/mace/goden/kanabo
 
-
-/datum/anvil_recipe/kazenguniteweapons/scabbard
-	name = "Simple Kazengun Scabbard (+1 Small Log)"
-	req_bar = /obj/item/ingot/steel
-	additional_items = list (/obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/scabbard/sword/kazengun
 
 /datum/anvil_recipe/kazenguniteweapons/kodachiscabbard
 	name = "Plain Lacquer Scabbard (+1 Small Log)"
