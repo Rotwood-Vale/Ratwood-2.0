@@ -54,7 +54,7 @@
 	if(!mind || mind.assigned_role != "Squire")
 		return
 
-	var/list/gameplay_preferences = list("RP", "Combat", "No Preference")
+	var/list/gameplay_preferences = list("RP", "Combat", "Role Training/I'm New", "No Preference")
 	var/selected_preference = input(src, "Choose your preferred Squire Experience", "SQUIRE PREFERENCE") as null|anything in gameplay_preferences
 	if(!(selected_preference in gameplay_preferences))
 		selected_preference = "No Preference"
