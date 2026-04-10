@@ -1286,7 +1286,7 @@
 
 /obj/effect/proc_holder/spell/invoked/eora_blessing/cast(list/targets, mob/living/user)
 	if(HAS_TRAIT(targets[1], TRAIT_GODLESS))
-		to_chat(user, span_warning("Eora rejects them."))
+		to_chat(user, span_warning("Their soul is ugly. Eora rejects them."))
 		return FALSE
 	if(ishuman(targets[1]))
 		var/mob/living/L = targets[1]

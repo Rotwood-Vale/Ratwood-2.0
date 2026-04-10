@@ -131,8 +131,8 @@
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			target.visible_message(span_info("[target] is burned by holy light!"), span_notice("A hopeful feeling of warmth appears in my heart. It quickly grows unbearable."))
-			to_chat(user, span_warning("My patron scolds me for wasting their time upon a Godless heathen."))
+			target.visible_message(span_info("[target] is burned by holy light!"), span_notice("A hopeful feeling of warmth appears in my heart. It quickly grows malignant and unbearable."))
+			to_chat(user, span_warning("My patron scolds me for wasting their time upon a heathen."))
 			target.adjustFireLoss(25)
 			target.fire_act(1,10) // woe, fire be upon ye.
 			return FALSE
@@ -368,8 +368,8 @@
 			return FALSE
 
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			target.visible_message(span_info("[target] is burned by holy light!"), span_notice("A hopeful feeling of warmth appears in my heart. It quickly grows unbearable."))
-			to_chat(user, span_warning("My patron scolds me for wasting their time upon a Godless heathen."))
+			target.visible_message(span_info("[target] is burned by holy light!"), span_notice("A hopeful feeling of warmth appears in my heart. It quickly grows malignant and unbearable."))
+			to_chat(user, span_warning("My patron scolds me for wasting their time upon a heathen."))
 			target.adjustFireLoss(25)
 			target.fire_act(1,10) // woe, fire be upon ye.
 			return FALSE	

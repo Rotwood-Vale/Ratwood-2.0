@@ -141,7 +141,7 @@
 	target.grab_ghost(force = TRUE) // even suicides
 	if(HAS_TRAIT(target, TRAIT_GODLESS))
 		target.visible_message(span_info("[target] remains deathly still. Nothing happens."))
-		to_chat(user, span_warning("My patron chastises me for wasting their time and attention for a heathen."))
+		to_chat(user, span_warning("My patron scolds me for wasting their time upon a heathen."))
 		revert_cast()
 		return FALSE
 	if(!target.mind.active)

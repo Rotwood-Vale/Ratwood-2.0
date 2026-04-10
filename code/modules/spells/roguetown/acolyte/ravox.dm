@@ -143,7 +143,7 @@
 				return ..()
 			return FALSE
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			to_chat(user, span_warning("Ravox denies your request."))
+			to_chat(user, span_warning("Ravox is silent! He shall not extend his mercy upon the Heathens..."))
 			return FALSE
 		target.visible_message(span_info("Warmth radiates from [target] as their wounds seal over!"), span_notice("The pain from my wounds fade as warmth radiates from my soul!"))
 		var/situational_bonus = 0.25

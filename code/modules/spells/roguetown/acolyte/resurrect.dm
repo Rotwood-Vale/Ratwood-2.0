@@ -183,7 +183,7 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			to_chat(user, span_warning("I feel a tidal wave of disgust wash over me. Abyssor shall not help this one"))
+			to_chat(user, span_warning("I feel a tidal wave of disgust wash over me. Abyssor shall not help this one."))
 			revert_cast()
 			return FALSE
 	return ..(targets, user)
@@ -315,7 +315,7 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
-			to_chat(user, span_warning("I feel a tidal wave of disgust wash over me. Eora shall not extend her love upon this one."))
+			to_chat(user, span_warning("I feel a wave of disgust wash over me. Eora shall not extend her love upon this one."))
 			revert_cast()
 			return FALSE
 	return ..(targets, user)
@@ -366,7 +366,7 @@
 			if(prob(10))
 				to_chat(user, span_warning("They stirr. Xylix laughs with me."))
 			else
-				to_chat(user, span_warning("I feel a wave of disgust wash over me. Xylix laughs at me."))
+				to_chat(user, span_warning("They remain still. Xylix laughs at me."))
 				revert_cast()
 				return FALSE
 	return ..(targets, user)
