@@ -37,6 +37,10 @@
 	id = /obj/item/scomstone/bad/garrison
 	job_bitflag = BITFLAG_GARRISON		//Move this role to garrison section later. Shouldn't be under youngroles for transparancy they are garrison.
 
+/datum/outfit/job/roguetown/squire/pre_equip(mob/living/carbon/human/H)
+	. = ..()
+	H.verbs |= /mob/living/carbon/human/proc/end_squire_connection
+
 /datum/job/roguetown/squire/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
 	if(ishuman(L))

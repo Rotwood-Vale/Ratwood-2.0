@@ -66,6 +66,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/mob/living/carbon/knight = null
 	var/mob/living/carbon/squire = null
 	var/squire_gameplay_preference = "No Preference"
+	var/squire_bond_cooldown_until = 0
+	var/suppress_next_squire_bond_loss_stress = FALSE
 
 	var/linglink
 	var/datum/martial_art/martial_art

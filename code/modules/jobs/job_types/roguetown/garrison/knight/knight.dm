@@ -70,6 +70,7 @@
 /datum/outfit/job/roguetown/knight/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/carbon/human/proc/take_squire
+	H.verbs |= /mob/living/carbon/human/proc/end_squire_connection
 
 /mob/living/carbon/human/proc/take_squire()
 	set name = "Take Squire"
@@ -79,12 +80,18 @@
 		return
 	if(!mind)
 		return
+	if(mind.squire_bond_cooldown_until > world.time)
+		to_chat(src, span_warning("I must wait [DisplayTimeText(mind.squire_bond_cooldown_until - world.time)] before taking another squire."))
+		return
 
 	if(!src.mind.squire)
 		var/list/folksnearby = list()
 		for(var/mob/living/carbon/human/potential_squires in (view(1)))
 			if(potential_squires.job == "Squire")
 				folksnearby += potential_squires
+		if(!length(folksnearby))
+			to_chat(src, span_warning("No eligible squires are close enough to take into service."))
+			return
 		var/target = input(src, "Take as Squire") as null|anything in folksnearby
 		if(istype(target, /mob/living/carbon))
 			var/mob/living/carbon/guy = target
@@ -94,6 +101,12 @@
 				return
 			if(!guy.mind)
 				return
+			if(guy.mind.knight)
+				to_chat(src, span_warning("[guy] is already sworn to a knight."))
+				return
+			if(guy.mind.squire_bond_cooldown_until > world.time)
+				to_chat(src, span_warning("[guy] must wait [DisplayTimeText(guy.mind.squire_bond_cooldown_until - world.time)] before swearing a new oath."))
+				return
 			src.say("Are you not my squire, [guy]?")
 
 			var/prompt = alert(guy, "Do wish to be [src]'s squire?", "Squire", "Aye, m'lord!", "Nae, m'lord!")
@@ -102,6 +115,8 @@
 				return
 
 			else
+				if(src.mind.squire || guy.mind.knight)
+					return
 				guy.say("It is as you say, [src], I am your squire.")
 				guy.mind.knight = src
 				src.mind.squire = guy
@@ -110,6 +125,69 @@
 				new_squire.knight = src
 				new_knight.squire = guy
 				src.verbs -= /mob/living/carbon/human/proc/take_squire//You get one chance at actually retaining this guy. Sorry, buddy.
+
+/mob/living/carbon/human/proc/end_squire_connection()
+	set name = "End Squire Bond"
+	set category = "Noble"
+	var/static/squire_bond_cooldown_duration = 5 MINUTES
+
+	if(stat)
+		return
+	if(!mind)
+		return
+	if(mind.assigned_role != "Knight" && mind.assigned_role != "Squire")
+		return
+
+	var/mob/living/carbon/human/linked = null
+	if(ishuman(mind.squire))
+		linked = mind.squire
+	else if(ishuman(mind.knight))
+		linked = mind.knight
+
+	if(!linked)
+		to_chat(src, span_warning("I am not bound by oath to a knight or squire."))
+		return
+
+	if(alert(src, "End your oath with [linked]?", "Oath of Service", "End Bond", "Keep Bond") != "End Bond")
+		return
+	if(mind)
+		mind.suppress_next_squire_bond_loss_stress = TRUE
+		mind.squire_bond_cooldown_until = world.time + squire_bond_cooldown_duration
+	if(linked.mind)
+		linked.mind.suppress_next_squire_bond_loss_stress = TRUE
+		linked.mind.squire_bond_cooldown_until = world.time + squire_bond_cooldown_duration
+
+	if(mind.assigned_role == "Knight")
+		if(!has_status_effect(/datum/status_effect/buff/knight_prox))
+			mind.squire = null
+			if(linked.mind)
+				linked.mind.knight = null
+			if(linked.has_status_effect(/datum/status_effect/buff/squire_prox))
+				linked.remove_status_effect(/datum/status_effect/buff/squire_prox)
+			else
+				mind.suppress_next_squire_bond_loss_stress = FALSE
+				if(linked.mind)
+					linked.mind.suppress_next_squire_bond_loss_stress = FALSE
+		remove_status_effect(/datum/status_effect/buff/knight_prox)
+		verbs |= /mob/living/carbon/human/proc/take_squire
+		to_chat(src, span_notice("I release [linked] from my service."))
+		if(linked != src)
+			to_chat(linked, span_notice("[src] has ended your oath of service."))
+	else
+		if(!has_status_effect(/datum/status_effect/buff/squire_prox))
+			mind.knight = null
+			if(linked.mind)
+				linked.mind.squire = null
+			if(linked.has_status_effect(/datum/status_effect/buff/knight_prox))
+				linked.remove_status_effect(/datum/status_effect/buff/knight_prox)
+			else
+				mind.suppress_next_squire_bond_loss_stress = FALSE
+				if(linked.mind)
+					linked.mind.suppress_next_squire_bond_loss_stress = FALSE
+		remove_status_effect(/datum/status_effect/buff/squire_prox)
+		to_chat(src, span_notice("I am no longer in [linked]'s service."))
+		if(linked != src)
+			to_chat(linked, span_notice("[src] has ended their oath of service."))
 
 /*
 Firstly, the squire's buffs and boons or whatever.
@@ -137,7 +215,10 @@ Firstly, the squire's buffs and boons or whatever.
 
 /datum/status_effect/buff/squire_prox/on_remove()
 	owner.mind.knight = null
-	owner.add_stress(/datum/stressevent/lost_knight)
+	if(owner.mind?.suppress_next_squire_bond_loss_stress)
+		owner.mind.suppress_next_squire_bond_loss_stress = FALSE
+	else
+		owner.add_stress(/datum/stressevent/lost_knight)
 	owner.remove_status_effect(/datum/status_effect/buff/squire_prox)
 	if(knight && knight.mind)
 		knight.mind.squire = null
@@ -179,8 +260,14 @@ Now, the knight's.
 
 /datum/status_effect/buff/knight_prox/on_remove()
 	owner.mind.squire = null
-	owner.add_stress(/datum/stressevent/lost_squire)
+	if(owner.mind?.suppress_next_squire_bond_loss_stress)
+		owner.mind.suppress_next_squire_bond_loss_stress = FALSE
+	else
+		owner.add_stress(/datum/stressevent/lost_squire)
 	owner.remove_status_effect(/datum/status_effect/buff/knight_prox)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.verbs |= /mob/living/carbon/human/proc/take_squire
 	if(squire && squire.mind)
 		squire.mind.knight = null
 		squire.remove_status_effect(/datum/status_effect/buff/squire_prox)
