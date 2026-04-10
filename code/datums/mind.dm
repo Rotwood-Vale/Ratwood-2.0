@@ -65,6 +65,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	//Knight squire vars.
 	var/mob/living/carbon/knight = null
 	var/mob/living/carbon/squire = null
+	var/squire_gameplay_preference = "No Preference"
 
 	var/linglink
 	var/datum/martial_art/martial_art

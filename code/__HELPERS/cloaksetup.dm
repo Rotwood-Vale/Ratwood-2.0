@@ -46,3 +46,16 @@
 	else
 		cloak_choice.name = "[name_index] [cloak_choice.name] ([namesplit[1]])"
 	src.equip_to_slot_or_del(cloak_choice, SLOT_CLOAK)
+
+/mob/proc/squire_gameplay_preference_setup()
+	if(!client)
+		addtimer(CALLBACK(src, PROC_REF(squire_gameplay_preference_setup)), 50)
+		return
+	if(!mind || mind.assigned_role != "Squire")
+		return
+
+	var/list/gameplay_preferences = list("RP", "Combat", "No Preference")
+	var/selected_preference = input(src, "Choose your preferred Squire Experience", "SQUIRE PREFERENCE") as null|anything in gameplay_preferences
+	if(!(selected_preference in gameplay_preferences))
+		selected_preference = "No Preference"
+	mind.squire_gameplay_preference = selected_preference

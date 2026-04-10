@@ -41,6 +41,7 @@
 	. = ..()
 	if(ishuman(L))
 		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
+		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, squire_gameplay_preference_setup)), 60)
 
 /datum/advclass/squire/lancer
 	name = "Lancer Squire"

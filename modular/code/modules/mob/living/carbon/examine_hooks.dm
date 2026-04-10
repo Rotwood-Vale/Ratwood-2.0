@@ -46,6 +46,14 @@
 		else if(perception_level >= 15)
 			lines += span_aiprivradio("[m1] wearing a chastity device under [m2] clothes.")
 
+	var/user_can_view_squire_preference = check_rights_for(user?.client, R_ADMIN)
+	if(!user_can_view_squire_preference && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		user_can_view_squire_preference = H.mind?.assigned_role == "Knight" || H.mind?.assigned_role == "Knight Captain"
+	if(user_can_view_squire_preference && src.mind?.assigned_role == "Squire")
+		var/squire_preference = src.mind?.squire_gameplay_preference || "No Preference"
+		lines += span_notice("Squire preference: [squire_preference].")
+
 	return lines
 
 /mob/living/carbon/human/proc/human_modular_chastity_toy_examine_line(mob/user, m2, m3)
