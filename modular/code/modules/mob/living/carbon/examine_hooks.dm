@@ -50,7 +50,7 @@
 	if(!user_can_view_squire_preference && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		user_can_view_squire_preference = H.mind?.assigned_role == "Knight" || H.mind?.assigned_role == "Knight Captain"
-	if(user_can_view_squire_preference && src.mind?.assigned_role == "Squire")
+	if(user != src && user_can_view_squire_preference && src.mind?.assigned_role == "Squire")
 		var/squire_preference = src.mind?.squire_gameplay_preference || "No Preference"
 		lines += span_notice("Squire preference: [squire_preference].")
 
