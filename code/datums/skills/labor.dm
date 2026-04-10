@@ -44,7 +44,8 @@
 	max_untraited_level = SKILL_LEVEL_APPRENTICE
 	trait_uncap = list(TRAIT_HOMESTEAD_EXPERT = SKILL_LEVEL_LEGENDARY,
 	TRAIT_SURVIVAL_EXPERT = SKILL_LEVEL_LEGENDARY,
-	TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)
+	TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN,
+	TRAIT_ABYSSOR_SWIM = SKILL_LEVEL_JOURNEYMAN) // so abyssorites that REALLY need the fish can get them after a bit of training
 
 /datum/skill/labor/butchering
 	name = "Butchering"
