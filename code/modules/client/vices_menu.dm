@@ -126,6 +126,14 @@
 				if(show_message && user)
 					to_chat(user, span_warning("Unintelligible vice conflicts with Second Voice virtue!"))
 				return TRUE
+			
+	// Godless vs Devotee
+	if(vice_type == /datum/charflaw/godless)
+		for(var/datum/virtue/virt in virtue_list)
+			if(virt && virt.type == /datum/virtue/combat/devotee)
+				if(show_message && user)
+					to_chat(user, span_warning("Scorned vice conflicts with Devotee virtue!"))
+				return TRUE
 	
 	return FALSE
 

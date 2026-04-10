@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Random or No Flaw"=/datum/charflaw/randflaw,
 	"Sadist"=/datum/charflaw/addiction/sadist,
 	"Scarred"=/datum/charflaw/scarred,
+	"Scorned"=/datum/charflaw/godless,
 	"Silver Weakness"=/datum/charflaw/silverweakness,
 	"Sleepless (+1 TRI)"=/datum/charflaw/sleepless,
 	"Smoker"=/datum/charflaw/addiction/smoker,
@@ -790,8 +791,5 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Scorned"
 	desc = "For whatever reason or sin, both the Divine and Profane scorn me and my existence. I stand alone in this rotted world and shall experience no grace or assistance from the Powers That Be."
 
-/datum/charflaw/ugly/on_mob_creation(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		ADD_TRAIT(H, TRAIT_GODLESS, TRAIT_GENERIC)
+/datum/charflaw/godless/on_mob_creation(mob/user)
+	ADD_TRAIT(user, TRAIT_GODLESS, TRAIT_GENERIC)

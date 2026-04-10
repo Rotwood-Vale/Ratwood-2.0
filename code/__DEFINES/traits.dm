@@ -391,7 +391,11 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_HORDE = span_info("BY BLOOD AND BONE, I AM OF GRAGGAR'S ANOINTED!"),
 	TRAIT_PSYDONITE = span_info("Divine contempt leaves me unable to receive most miracles."),
 	TRAIT_PSYDONIAN_GRIT = span_info("While I still stand, there is yet hope for mankind. The stronger my willpower is, the better I can struggle through crippling wounds."),
+<<<<<<< Updated upstream
 	TRAIT_GODLESS = span_info("I'm Scorned by the Ten and the Four. I shall know no grace, nor mercy from the Divine and the Unholy."),
+=======
+	TRAIT_GODLESS = span_info("Divine scorn leaves me unable to receive any miracles."),
+>>>>>>> Stashed changes
 	TRAIT_BLACKBAGGER = span_info("I've been trained to properly abduct individuals through the use of seizing garrotes and blackbags."),
 	TRAIT_FORTITUDE = span_info("The typical drain I feel from day to day life is lessened, my athleticism greater."),
 	TRAIT_GUIDANCE = span_info("The arcyne aides me in battle."),
