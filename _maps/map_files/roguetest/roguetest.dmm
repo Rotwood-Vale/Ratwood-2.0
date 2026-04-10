@@ -338,6 +338,10 @@
 /obj/item/inhand_tester,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors)
+"mO" = (
+/obj/structure/roguemachine/minister_archive,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors)
 "mW" = (
 /obj/structure/curtain/red,
 /turf/open/floor/rogue/concrete,
@@ -2938,7 +2942,7 @@ zo
 wQ
 yK
 vq
-vq
+mO
 vq
 vq
 eg
