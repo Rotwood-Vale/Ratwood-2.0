@@ -58,6 +58,9 @@
 			return BULLET_ACT_BLOCK
 		if(isliving(target))
 			var/mob/living/L = target
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.apply_weather_temperature(-23)	//checks for cold protection before applying temp
 			if(L.has_status_effect(/datum/status_effect/buff/frostbite))
 				return
 			else

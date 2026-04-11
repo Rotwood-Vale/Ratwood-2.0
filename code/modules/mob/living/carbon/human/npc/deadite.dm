@@ -10,7 +10,7 @@
 	wander = TRUE
 	infected = TRUE
 
-/mob/living/carbon/human/species/npc/deadite/Initialize()
+/mob/living/carbon/human/species/npc/deadite/Initialize(mapload)
 	. = ..()
 	var/species = list(
 		/datum/species/human/northern,
@@ -156,6 +156,8 @@
 	if(mind.has_antag_datum(/datum/antagonist/vampire))
 		return
 	if(mind.has_antag_datum(/datum/antagonist/werewolf))
+		return
+	if(mind.has_antag_datum(/datum/antagonist/gnoll))
 		return
 	if(mind.has_antag_datum(/datum/antagonist/skeleton))
 		return

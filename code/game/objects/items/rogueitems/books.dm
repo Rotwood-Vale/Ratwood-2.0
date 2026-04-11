@@ -239,7 +239,7 @@
 
 /obj/item/book/rogue/bibble/psy
 	name = "Tome of Psydon"
-	desc = "'And HE WEEPS. Not for you, not for me, but for it all.' </br>A leatherbound tome, chronicling the beliefs held by the Orthodoxy; the largest Psydonic denomination in the world. The 'Harlaus Press', a recent invention by Otava's clergymen, has ensured that no corner of Psydonia would remain unlit by His teachings. Inside are three seperate testaments, each marked with a velvet strap.. </br>PSALMS - TESTAMENTS OF CLERICAL WISDOM, COMMANDING INTERPRETATION. </br>GENESIS - TESTAMENTS OF PSYDONIA'S CREATION, FOR WHAT ONCE WAS. </br>INVOCATIONS - TESTAMENTS OF WILL, TO EXORCISE AND CHANT."
+	desc = "'And HE WEEPS. Not for you, not for me, but for it all.' </br>A leatherbound tome, chronicling the beliefs held by the Orthodoxy; the largest Psydonic denomination in the world. The 'Harlaus Press', a recent invention by Otava's clergymen, has ensured that no corner of Psydonia would remain unlit by His teachings. Inside are three separate testaments, each marked with a velvet strap.. </br>PSALMS - TESTAMENTS OF CLERICAL WISDOM, COMMANDING INTERPRETATION. </br>GENESIS - TESTAMENTS OF PSYDONIA'S CREATION, FOR WHAT ONCE WAS. </br>INVOCATIONS - TESTAMENTS OF WILL, TO EXORCISE AND CHANT."
 	icon_state = "psyble_0"
 	base_icon_state = "psyble"
 	title = "psyble"
@@ -501,7 +501,7 @@
 	base_icon_state = "basic_book"
 	override_find_book = TRUE
 
-/obj/item/book/rogue/playerbook/Initialize(loc, in_round_player_generated, mob/living/in_round_player_mob, text)
+/obj/item/book/rogue/playerbook/Initialize(mapload, loc, in_round_player_generated, mob/living/in_round_player_mob, text)
 	. = ..()
 	is_in_round_player_generated = in_round_player_generated
 	if(is_in_round_player_generated)
@@ -544,54 +544,6 @@
 	icon_state = "[player_book_icon]_0"
 	base_icon_state = "[player_book_icon]"
 	pages = list("<b3><h3>Title: [player_book_title]<br>Author: [player_book_author]</b><h3>[player_book_text]")
-
-
-/obj/item/book/rogue/loadoutbook
-	name = "book"
-	desc = "A bound book. Use in hand to edit name, description and sprite."
-	var/stage = 0
-
-/obj/item/book/rogue/loadoutbook/attack_self(mob/user)
-	if(stage == 0)
-		var/name_input = stripped_input(user, "Name your book - Leave empty for default.", "Book", max_length = MAX_NAME_LEN)
-		if(name_input)
-			name = name_input
-		stage++
-
-	if(stage == 1)
-		var/desc_input = stripped_input(user, "Describe your book - Leave empty for default.", "Book", max_length = MAX_BROADCAST_LEN)
-		if(desc_input)
-			desc = desc_input
-		stage++
-
-	if(stage == 2)
-		var/icon/J = new('icons/roguetown/items/books.dmi')
-		var/list/istates = J.IconStates()
-		var/list/icon_choice = list()
-		for(var/icon_s in istates)
-			if(icon_s == icon_state)
-				continue
-			if(!findtext(icon_s, "book", 1, 5))
-				continue
-			if(findtext(icon_s, "_1"))
-				continue
-			icon_choice += list(
-				"[icon_s]" = icon(icon = 'icons/roguetown/items/books.dmi', icon_state = icon_s)
-			)
-
-		var/icon_input = show_radial_menu(user, src, icon_choice, require_near = TRUE, tooltips = FALSE)
-		if(icon_input)
-			icon_state = icon_input
-			base_icon_state = replacetextEx(icon_input, regex(@"_[0-1]"), "")
-			if(alert(user, "Are you happy with this?", "Book Cover", "Yes", "No") != "Yes")
-				icon_state = initial(icon_state)
-				base_icon_state = initial(base_icon_state)
-				return
-		stage++
-		return
-
-	if(stage > 2)
-		..()
 
 
 /obj/item/manuscript
@@ -769,3 +721,35 @@
 			updateUsrDialog()
 	else
 		return
+
+/obj/item/book/rogue/bibble/zizo
+	name = "Lexicon of Her Truth"
+	desc = "By learning Her teachings, we will one day walk in Her footsteps.' A volume forbidden to be read by the Holy See, containing a retelling of the mortal life and ascension of Zizo, the Lady of Darkness - or at least the version of them held by the cultists of her 'Salvation'. Smells suspiciously of dried blood."
+	icon = 'icons/roguetown/items/bookszizo.dmi'
+	icon_state = "zizoble_0"
+	base_icon_state = "zizoble"
+	title = "Lexicon of Her Truth"
+	dat = "gott.json"
+
+/obj/item/book/rogue/bibble/zizo/attack(mob/living/M, mob/user)
+	return
+
+/obj/item/book/rogue/bibble/zizo/MiddleClick(mob/user, params)
+	return
+
+/obj/item/book/rogue/bibble/zizo/read(mob/living/carbon/human/user)
+	if(!open)
+		to_chat(user, span_info("Open it first."))
+		return FALSE
+	if(!user.client || !user.hud_used)
+		return
+	if(!user.hud_used.reads)
+		return
+	if(!user.can_read(src))
+		return
+	if(in_range(user, src) || isobserver(user))
+		user.changeNext_move(CLICK_CD_MELEE)
+		var/m
+		var/list/verses = world.file2list("strings/zizobibble.txt")
+		m = pick(verses)
+		user.say(m)

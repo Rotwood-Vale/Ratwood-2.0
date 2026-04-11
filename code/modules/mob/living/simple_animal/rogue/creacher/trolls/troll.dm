@@ -81,7 +81,7 @@
 
 	var/critvuln = FALSE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/troll/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/troll/Initialize(mapload)
 	. = ..()
 	if(critvuln)
 		ADD_TRAIT(src, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)

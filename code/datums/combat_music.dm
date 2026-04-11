@@ -272,6 +272,13 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = "T87-Sulfurhead - Black Powder (https://www.youtube.com/@T87-Sulfurhead)"
 	musicpath = list('sound/music/combat_graggar.ogg')
 
+/datum/combat_music/heretic_graggar_2
+	name = "Heretic - Graggar (Alt)"
+	desc = "Perhaps this time, you will finally feel powerful. Might be loud, so be careful."
+	shortname = "Graggar Alt"
+	credits = "Devil's Meat Grinder - OTXO OST"
+	musicpath = list('sound/music/combat_graggar_new.ogg')
+
 /datum/combat_music/heretic_baotha
 	name = "Heretic - Baotha"
 	desc = "Fuck tomorrow."

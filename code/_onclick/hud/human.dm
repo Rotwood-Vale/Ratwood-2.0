@@ -125,6 +125,11 @@
 	bloods.screen_loc = rogueui_blood
 	static_inventory += bloods
 
+	temperature = new /atom/movable/screen/temperature()
+	temperature.hud = src
+	temperature.screen_loc = rogueui_temperature
+	infodisplay += temperature
+
 	quad_intents = new /atom/movable/screen/quad_intents
 	quad_intents.hud = src
 	static_inventory += quad_intents
@@ -148,6 +153,10 @@
 	hsover =  new /atom/movable/screen/heatstamover()
 	hsover.hud = src
 	static_inventory += hsover
+
+	tempover =  new /atom/movable/screen/tempbase()
+	tempover.hud = src
+	static_inventory += tempover
 
 	fov = new /atom/movable/screen/fov()
 	fov.hud = src
@@ -410,7 +419,6 @@
 
 	energy = new /atom/movable/screen/energy()
 	infodisplay += energy
-
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src

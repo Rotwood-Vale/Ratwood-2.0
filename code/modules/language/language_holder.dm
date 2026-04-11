@@ -36,7 +36,7 @@
 		dt = replacetext(dt, "/datum/language/", "")
 		for(var/ld in GLOB.all_languages)
 			var/datum/language/LD = ld
-			if(dt == lowertext(initial(LD.name)))
+			if(dt == LOWER_TEXT(initial(LD.name)))
 				dt = LD
 				break
 	if(shadow)

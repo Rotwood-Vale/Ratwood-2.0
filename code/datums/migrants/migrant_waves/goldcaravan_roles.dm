@@ -6,7 +6,7 @@
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_EA_MERCHANT = 20)
 	greet_text = "The esteemed EA-Hasir owns your gold company, Promising only the finest quality gold in grimoria\
-	 You've been sent with your caravan to sell golden riches and wonders- at a high price."
+	You've been sent with your caravan to sell golden riches and wonders- at a high price."
 
 /datum/advclass/merchant
 	name = "EA Hasir-ian Merchant"
@@ -64,7 +64,7 @@
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_EA_GUARD = 20)
 	greet_text = "The esteemed EA Hasir owns your gold company, Promising only the finest quality gold in grimoria\
-	 You've been sent to guard his caravans and earn a tidy profit as you do."
+	You've been sent to guard his caravans and earn a tidy profit as you do."
 
 /datum/advclass/guard
 	name = "EA Hasir-ian Guard"

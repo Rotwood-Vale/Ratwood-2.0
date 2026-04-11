@@ -36,7 +36,7 @@
 	chair_skill_level = 2
 	current_brew = 48
 
-/obj/structure/chair/frankenstein/Initialize()
+/obj/structure/chair/frankenstein/Initialize(mapload)
 	. = ..()
 	update_icon()
 

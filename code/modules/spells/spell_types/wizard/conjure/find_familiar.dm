@@ -26,7 +26,7 @@
 	var/mob/living/simple_animal/pet/familiar/fam
 	var/familiars = list()
 
-/obj/effect/proc_holder/spell/self/findfamiliar/Initialize()
+/obj/effect/proc_holder/spell/self/findfamiliar/Initialize(mapload)
 	. = ..()
 	familiars = GLOB.familiar_types.Copy()
 

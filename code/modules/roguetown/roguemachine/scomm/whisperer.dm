@@ -12,7 +12,7 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
-	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP|ITEM_SLOT_RING
+	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP|ITEM_SLOT_RING|ITEM_SLOT_HANDS
 	possible_item_intents = list(INTENT_GENERIC)
 	sleeved = 'icons/roguetown/clothing/onmob/neck.dmi'
 	grid_width = 32
@@ -66,7 +66,7 @@
 	SSroguemachine.scomm_machines -= src
 	return ..()
 
-/obj/item/speakerinq/Initialize()
+/obj/item/speakerinq/Initialize(mapload)
 	. = ..()
 	icon_state = "scomite_active"
 	update_icon()

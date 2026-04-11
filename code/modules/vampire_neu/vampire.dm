@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon = 'icons/roguetown/topadd/death/vamp-lord.dmi'
 	density = TRUE
 
-/obj/structure/vampire/Initialize()
+/obj/structure/vampire/Initialize(mapload)
 	GLOB.vampire_objects |= src
 	. = ..()
 
@@ -187,7 +187,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon_state = "arrow"
 	delete_after_roundstart = FALSE
 
-/obj/effect/landmark/start/vampirelord/Initialize()
+/obj/effect/landmark/start/vampirelord/Initialize(mapload)
 	. = ..()
 	GLOB.vlord_starts += loc
 
@@ -196,7 +196,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon_state = "arrow"
 	delete_after_roundstart = FALSE
 
-/obj/effect/landmark/start/vampirespawn/Initialize()
+/obj/effect/landmark/start/vampirespawn/Initialize(mapload)
 	. = ..()
 	GLOB.vspawn_starts += loc
 

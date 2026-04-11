@@ -59,7 +59,7 @@
 		reagents.clear_reagents()
 		return
 	else if(user.used_intent.type == INTENT_POUR)
-		if(!canconsume(M, user))
+		if(!canconsume(M, user) || !is_drainable())
 			return
 		if(M != user)
 			M.visible_message(span_danger("[user] attempts to feed [M] something."), \

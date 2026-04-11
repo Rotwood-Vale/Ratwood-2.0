@@ -103,7 +103,7 @@
 	GiveTarget(user)
 	return
 
-/mob/living/simple_animal/hostile/rogue/dragger/Initialize()
+/mob/living/simple_animal/hostile/rogue/dragger/Initialize(mapload)
 	. = ..()
 	set_light(2, 2, 2, l_color = "#c0523f")
 	ADD_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)

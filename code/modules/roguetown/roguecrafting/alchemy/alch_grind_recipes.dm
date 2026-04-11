@@ -99,6 +99,12 @@
 	valid_outputs = list(/obj/item/alch/seeddust = 1)
 	bonus_chance_outputs = list(/obj/item/alch/airdust =25,/obj/item/alch/earthdust = 25)
 
+/datum/alch_grind_recipe/stone_dust
+	name = "Stone"
+	valid_input = /obj/item/natural/stone
+	valid_outputs = list(/obj/item/alch/stonedust = 1)
+	bonus_chance_outputs = list(/obj/item/alch/stonedust = 50)
+
 /datum/alch_grind_recipe/seedsherb
 	name = "Herb Seeds"
 	picky = FALSE

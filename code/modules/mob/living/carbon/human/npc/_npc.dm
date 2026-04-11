@@ -56,7 +56,7 @@
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
-/mob/living/carbon/human/Initialize()
+/mob/living/carbon/human/Initialize(mapload)
 	. = ..()
 	our_cells = new(interesting_dist, interesting_dist, 1)
 	set_new_cells()

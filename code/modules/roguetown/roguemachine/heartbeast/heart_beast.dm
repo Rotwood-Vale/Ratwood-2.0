@@ -127,7 +127,7 @@
 		return
 	SEND_SIGNAL(src, COMSIG_HEART_BEAST_HEAR, speaker, raw_message)
 
-/obj/structure/roguemachine/chimeric_heart_beast/Initialize()
+/obj/structure/roguemachine/chimeric_heart_beast/Initialize(mapload)
 	. = ..()
 	initialize_personality()
 	AddComponent(/datum/component/chimeric_heart_beast)

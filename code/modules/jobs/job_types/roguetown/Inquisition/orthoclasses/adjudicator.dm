@@ -120,7 +120,7 @@
 			H.put_in_hands(new /obj/item/rogueweapon/greataxe/psy(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/sword/short/psy, SLOT_BELT_L, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Psydonic Halberd + Shortsword")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)

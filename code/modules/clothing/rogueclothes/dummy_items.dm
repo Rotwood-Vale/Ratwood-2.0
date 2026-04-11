@@ -127,7 +127,7 @@
 		passenger.remove_status_effect(/datum/status_effect/debuff/harpy_passenger)
 		return
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/Initialize()
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
 
@@ -184,7 +184,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	no_effect = TRUE
 
-/obj/item/harpy_leg/Initialize()
+/obj/item/harpy_leg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 

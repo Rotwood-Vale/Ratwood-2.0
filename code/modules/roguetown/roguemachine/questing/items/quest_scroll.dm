@@ -13,8 +13,10 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | INDESTRUCTIBLE | UNACIDABLE
 	max_integrity = 1000
 	armor = list("blunt" = 100, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 100, "acid" = 100)
+	/// Weakref to the quest owner
+	var/datum/weakref/quester_ref
 
-/obj/item/paper/scroll/quest/Initialize()
+/obj/item/paper/scroll/quest/Initialize(mapload)
 	. = ..()
 	if(assigned_quest)
 		assigned_quest.quest_scroll = src

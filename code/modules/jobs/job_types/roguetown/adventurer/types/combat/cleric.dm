@@ -209,7 +209,7 @@
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
 	)
 	extra_context = "This subclass can choose to take one of two holy items to take along: a potion of lifeblood and Novice skills in Medicine, \
-	or a silver longsword that gives Journeyman skills in Swordsmanship."
+	or a silver longsword that gives Journeyman skills in Swordsmanship. Psydonics choose between two denominations instead."
 
 /datum/outfit/job/roguetown/adventurer/paladin/pre_equip(mob/living/carbon/human/H)
 	to_chat(H, span_warning("You are a holy knight, clad in maille and armed with steel. \
@@ -232,20 +232,17 @@
 		if(/datum/patron/old_god)
 			cloak = /obj/item/clothing/cloak/psydontabard
 			if(H.mind)
-				var/helmets = list("Armet","Buckethelm")
+				var/helmets = list("Barbute", "Sallet", "Armet","Buckethelm")
 				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HIS LIGHT.") as anything in helmets
 				switch(helmet_choice)
+					if("Barbute")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute
+					if("Sallet")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/psysallet
 					if("Armet")
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm
 					if("Buckethelm")
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
-				var/armors = list("Hauberk","Cuirass")
-				var/armor_choice = input(H, "Choose your MAILLE.", "STAND AGAINST HER DARKNESS.") as anything in armors
-				switch(armor_choice)
-					if("Hauberk")
-						armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
-					if("Cuirass")
-						armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate
 		if(/datum/patron/divine/astrata)
 			cloak = /obj/item/clothing/cloak/templar/astrata
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
@@ -292,51 +289,63 @@
 			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T1 miracles.
 	if(H.mind)
-		var/oaths = list("Cleric - Medicine & Mirth","Crusader - Silver Longsword")
-		var/oath_choice = input(H, "Choose your OATH.", "PROFESS YOUR BLESSINGS.") as anything in oaths
-		switch(oath_choice)
-			if("Cleric - Medicine & Mirth")
-				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_NOVICE, TRUE)
-				beltl = /obj/item/reagent_containers/glass/bottle/rogue/healthpot //No needles or cloth, but a basic potion of lifeblood - similar to the Sorcerer's manna potion. Take the 'Physician's Apprentice' virtue for that, uncapped skills, and more.
-				var/weapons = list("Longsword","Mace","Flail","Whip","Spear","Axe")
-				var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP YOUR GOD'S ARMS.") as anything in weapons
-				switch(weapon_choice)
-					if("Longsword")
-						if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-							beltr = /obj/item/rogueweapon/sword/long/oldpsysword
-						else
-							beltr = /obj/item/rogueweapon/sword/long
-						r_hand = /obj/item/rogueweapon/scabbard/sword
-						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-					if("Mace")
-						H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
-						if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-							beltr = /obj/item/rogueweapon/mace/cudgel/psy/old
-						else
-							beltr = /obj/item/rogueweapon/mace
-					if("Flail")
-						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-						beltr = /obj/item/rogueweapon/flail
-					if("Whip")
-						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-						beltr = /obj/item/rogueweapon/whip
-					if("Spear")
-						H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-						if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-							r_hand = /obj/item/rogueweapon/spear/psyspear/old
-						else
-							r_hand = /obj/item/rogueweapon/spear
-						l_hand = /obj/item/rogueweapon/scabbard/gwstrap
-					if("Axe")
-						H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-						r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
-			if("Crusader - Silver Longsword")
-				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				l_hand = /obj/item/rogueweapon/sword/long/silver //Turns the Paladin into a pre-Exorcist version of the Monster Hunter. Differences are +1 CON / -1 INT, access to minor miracles, and more limb coverage.
-				beltl = /obj/item/rogueweapon/scabbard/sword //Functionally, inflicts silverbane at the cost of -5 damage. Likely won't be a balancing issue, unless we start seeing +5-10 Clerics overnight.
-
+		if(!istype(H?.patron, /datum/patron/old_god)) //Psydonics are special.
+			C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1) //Capped to T1 miracles.
+			var/oaths = list("Cleric - Medicine & Mirth","Crusader - Silver Longsword")
+			var/oath_choice = input(H, "Choose your OATH.", "PROFESS YOUR BLESSINGS.") as anything in oaths
+			switch(oath_choice)
+				if("Cleric - Medicine & Mirth")
+					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
+					beltl = /obj/item/reagent_containers/glass/bottle/rogue/healthpot //No needles or cloth, but a basic potion of lifeblood - similar to the Sorcerer's manna potion. Take the 'Physician's Apprentice' virtue for that, uncapped skills, and more.
+				if("Crusader - Silver Longsword")
+					H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					l_hand = /obj/item/rogueweapon/sword/long/silver //Turns the Paladin into a pre-Exorcist version of the Monster Hunter. Differences are +1 CON / -1 INT, access to minor miracles, and more limb coverage.
+					beltl = /obj/item/rogueweapon/scabbard/sword //Functionally, inflicts silverbane at the cost of -5 damage. Likely won't be a balancing issue, unless we start seeing +5-10 Clerics overnight.
+		else
+			var/denominations = list("ENDURING, AS HE DOES - FAITH", "VEYLED, LIKE HIS MARTYRS - ARMOUR")
+			var/denomination_choice = input("Choose your DENOMINATION.", "YOUR FAITH IN HIM.") as anything in denominations
+			switch(denomination_choice)
+				if("ENDURING, AS HE DOES - FAITH")
+					C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+					H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate
+				if("VEYLED, LIKE HIS MARTYRS - ARMOUR")
+					C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)
+					ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC) //Basically a bit more flavourful Knight Errant, so may as very well give HEAVYARMOR
+					armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate
+	var/weapons = list("Longsword","Mace","Flail","Whip","Spear","Axe")
+	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP YOUR GOD'S ARMS.") as anything in weapons
+	switch(weapon_choice)
+		if("Longsword")
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+				beltr = /obj/item/rogueweapon/sword/long/oldpsysword
+			else
+				beltr = /obj/item/rogueweapon/sword/long
+			r_hand = /obj/item/rogueweapon/scabbard/sword
+		if("Mace")
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+				beltr = /obj/item/rogueweapon/mace/cudgel/psy/old
+			else
+				beltr = /obj/item/rogueweapon/mace
+		if("Flail")
+			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			beltr = /obj/item/rogueweapon/flail
+		if("Whip")
+			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			beltr = /obj/item/rogueweapon/whip
+		if("Spear")
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+				r_hand = /obj/item/rogueweapon/spear/psyspear/old
+			else
+				r_hand = /obj/item/rogueweapon/spear
+			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+		if("Axe")
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
 	H.set_blindness(0)
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
@@ -455,6 +464,10 @@
 			cloak = /obj/item/clothing/cloak/templar/xylix
 		if (/datum/patron/divine/pestra)
 			cloak = /obj/item/clothing/cloak/templar/pestra
+		if(/datum/patron/inhumen/zizo)
+			cloak = /obj/item/clothing/cloak/cape/crusader
+			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
+			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 		else
 			cloak = /obj/item/clothing/cloak/cape/crusader
 	if(H.mind)
@@ -671,3 +684,67 @@
 		if(/datum/patron/divine/xylix)
 			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
 			H.cmode_music = 'sound/music/combat_jester.ogg'
+
+/datum/advclass/cleric/stigmata
+	name = "Stigmata"
+	tutorial = "PSYDON weeps. You are a devout cleric of the Allfather whom takes the suffering of others upon themselves. You have eschewn violence. You will suffer. You will endure."
+	outfit = /datum/outfit/job/roguetown/adventurer/stigmata
+	allowed_races = RACES_NO_CONSTRUCT
+
+	traits_applied = list(
+		TRAIT_PACIFISM,
+		TRAIT_EMPATH,
+		TRAIT_CRITICAL_RESISTANCE,
+		TRAIT_STEELHEARTED
+	)
+	subclass_stats = list(
+		STATKEY_CON = 5,
+		STATKEY_WIL = 3,
+		STATKEY_SPD = 1,
+		STATKEY_STR = -2,
+	)
+	subclass_skills = list(
+		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/fishing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
+	)
+	subclass_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+	)
+	extra_context = "This is a psydonite only subclass, it will force you to be one if it is not set. You will be a pacifist and are able to draw upon a weaker version of the abilities known by a Psydonic Absolver."
+
+/datum/outfit/job/roguetown/adventurer/stigmata
+	allowed_patrons = list(/datum/patron/old_god)
+
+/datum/outfit/job/roguetown/adventurer/stigmata/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	H.adjust_blindness(-3)
+	pants = /obj/item/clothing/under/roguetown/tights/black
+	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/black
+	neck = /obj/item/clothing/neck/roguetown/psicross/silver
+	shoes = /obj/item/clothing/shoes/roguetown/boots
+	backl = /obj/item/storage/backpack/rogue/satchel
+	belt = /obj/item/storage/belt/rogue/leather
+	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
+	backpack_contents = list(
+		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
+		/obj/item/storage/belt/rogue/pouch/medicine = 1
+		)
+
+	if (H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonlux_tamper) // absolver's bleed transfer
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonamend) // nerfed no-rez version of absolver's absolve
+
+	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = (CLERIC_REGEN_ABSOLVER / 2), start_maxed = TRUE)
+

@@ -7,7 +7,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	traits_applied = list(TRAIT_DEATHSIGHT, TRAIT_WITCH, TRAIT_ARCYNE_T1, TRAIT_ALCHEMY_EXPERT)
-	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
+	maximum_possible_slots = 5 // really I want to say 3 but 5 is PRETTY roomy
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 2,
@@ -27,7 +27,6 @@
 
 /datum/outfit/job/roguetown/adventurer/witch/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguetown/witchhat
 	mask = /obj/item/clothing/head/roguetown/roguehood/black
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/phys
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
@@ -43,10 +42,22 @@
 						/obj/item/pestle = 1,
 						/obj/item/candle/yellow = 2,
 						/obj/item/recipe_book/alchemy = 1,
-						/obj/item/recipe_book/survival = 1,
 						/obj/item/recipe_book/magic = 1,
 						/obj/item/chalk = 1
 						)
+	if(H.age == AGE_MIDDLEAGED)
+		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 5, TRUE)
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 6, TRUE)
+
+	var/hats = list(
+		"Witch Hat" 		= /obj/item/clothing/head/roguetown/witchhat,
+		"Witch Hat (Old)"	= /obj/item/clothing/head/roguetown/witchhat/old,
+		"None"
+	)
+	var/hatchoice = input(H, "Choose your hat.", "WITCH ATTIRE") as anything in hats
+	if(hatchoice != "None")
+		head = hats[hatchoice]
 
 	var/classes = list("Old Magick", "Godsblood", "Mystagogue")
 	var/classchoice = input("How do your powers manifest?", "THE OLD WAYS") as anything in classes

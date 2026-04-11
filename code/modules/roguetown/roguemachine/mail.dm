@@ -29,7 +29,7 @@
 	var/mailtag
 	var/obfuscated = FALSE
 
-/obj/structure/roguemachine/mail/Initialize()
+/obj/structure/roguemachine/mail/Initialize(mapload)
 	. = ..()
 	SSroguemachine.hermailers += src
 	ournum = SSroguemachine.hermailers.len
@@ -661,7 +661,7 @@
 		CP.rmb_show(user)
 		return TRUE
 
-/obj/item/roguemachine/mastermail/Initialize()
+/obj/item/roguemachine/mastermail/Initialize(mapload)
 	. = ..()
 	SSroguemachine.hermailermaster = src
 	update_icon()

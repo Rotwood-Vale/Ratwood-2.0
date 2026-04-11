@@ -117,7 +117,7 @@
 	if(stakes.len)
 		. += span_notice("[stakes.len] inside.")
 
-/obj/item/storage/belt/rogue/leather/stakebelt/Initialize()
+/obj/item/storage/belt/rogue/leather/stakebelt/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy/K = new()

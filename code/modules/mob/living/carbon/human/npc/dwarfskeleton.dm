@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(dwarfskeleton_aggro, world.file2list("strings/rt/dskeletonaggro
 		say(pick(GLOB.dwarfskeleton_aggro))
 		linepoint(target)
 
-/mob/living/carbon/human/species/dwarfskeleton/Initialize()
+/mob/living/carbon/human/species/dwarfskeleton/Initialize(mapload)
 	. = ..()
 	cut_overlays()
 	spawn(10)
@@ -56,6 +56,7 @@ GLOBAL_LIST_INIT(dwarfskeleton_aggro, world.file2list("strings/rt/dskeletonaggro
 	ADD_TRAIT(src, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_EXTREME_TEMPERATURE_IMMUNE, TRAIT_GENERIC)
 	var/obj/item/organ/eyes/eyes = src.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
 		eyes.Remove(src,1)

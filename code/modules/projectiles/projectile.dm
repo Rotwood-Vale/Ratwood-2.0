@@ -129,7 +129,7 @@
 /obj/projectile/proc/handle_drop()
 	return
 
-/obj/projectile/Initialize()
+/obj/projectile/Initialize(mapload)
 	. = ..()
 	permutated = list()
 	decayedRange = range

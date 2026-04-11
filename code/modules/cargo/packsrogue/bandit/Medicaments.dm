@@ -37,6 +37,11 @@
 	cost = 200
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure)
 
+/datum/supply_pack/rogue/Medicaments/frankenbrew
+	name = "Frankenbrew"
+	cost = 200
+	contains = list(/obj/item/reagent_containers/glass/bottle/frankenbrew)
+
 /datum/supply_pack/rogue/Medicaments/emberwine
 	name = "Emberwine"
 	cost =	150	// It makes a good poison but its moreso to goon with. 

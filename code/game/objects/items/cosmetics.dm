@@ -25,7 +25,7 @@
 	name = "lipstick"
 	icon_state = "random_lipstick"
 
-/obj/item/lipstick/random/Initialize()
+/obj/item/lipstick/random/Initialize(mapload)
 	. = ..()
 	icon_state = "lipstick"
 	colour = pick("red","purple","lime","black","green","blue","white")
@@ -59,17 +59,23 @@
 			to_chat(user, span_warning("I need to wipe off the old lipstick first!"))
 			return
 		if(H == user)
-			user.visible_message(span_notice("[user] does [user.p_their()] lips with \the [src]."), \
-								 span_notice("I take a moment to apply \the [src]. Perfect!"))
+			user.visible_message(
+				span_notice("[user] does [user.p_their()] lips with \the [src]."),
+				span_notice("I take a moment to apply \the [src]. Perfect!")
+			)
 			H.lip_style = "lipstick"
 			H.lip_color = colour
 			H.update_body()
 		else
-			user.visible_message(span_warning("[user] begins to do [H]'s lips with \the [src]."), \
-								 span_notice("I begin to apply \the [src] on [H]'s lips..."))
+			user.visible_message(
+				span_warning("[user] begins to do [H]'s lips with \the [src]."),
+				span_notice("I begin to apply \the [src] on [H]'s lips...")
+			)
 			if(do_after(user, 20, target = H))
-				user.visible_message(span_notice("[user] does [H]'s lips with \the [src]."), \
-									 span_notice("I apply \the [src] on [H]'s lips."))
+				user.visible_message(
+					span_notice("[user] does [H]'s lips with \the [src]."),
+					span_notice("I apply \the [src] on [H]'s lips.")
+				)
 				H.lip_style = "lipstick"
 				H.lip_color = colour
 				H.update_body()
@@ -91,11 +97,15 @@
 				H.lip_style = null
 				H.update_body()
 			else
-				user.visible_message(span_warning("[user] begins to wipe [H]'s lipstick off with \the [src]."), \
-								 	 span_notice("I begin to wipe off [H]'s lipstick..."))
+				user.visible_message(
+					span_warning("[user] begins to wipe [H]'s lipstick off with \the [src]."),
+					span_notice("I begin to wipe off [H]'s lipstick...")
+				)
 				if(do_after(user, 10, target = H))
-					user.visible_message(span_notice("[user] wipes [H]'s lipstick off with \the [src]."), \
-										 span_notice("I wipe off [H]'s lipstick."))
+					user.visible_message(
+						span_notice("[user] wipes [H]'s lipstick off with \the [src]."),
+						span_notice("I wipe off [H]'s lipstick.")
+					)
 					H.lip_style = null
 					H.update_body()
 	else

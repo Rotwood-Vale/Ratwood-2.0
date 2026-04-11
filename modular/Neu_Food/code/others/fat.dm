@@ -57,7 +57,7 @@
 	bitesize = 1
 	dropshrink = 0.75
 
-/obj/item/reagent_containers/food/snacks/tallow/Initialize()
+/obj/item/reagent_containers/food/snacks/tallow/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/soap,

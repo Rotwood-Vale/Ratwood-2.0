@@ -1,1 +1,2 @@
 GLOBAL_LIST_EMPTY(sky_z)
+GLOBAL_LIST_EMPTY(weather_observers)

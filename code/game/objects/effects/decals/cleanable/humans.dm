@@ -9,11 +9,16 @@
 	alpha = 150
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = NO_CLIENT_COLOR
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/coom/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
+	if(prob(75))
+		var/matrix/M = new
+		M.Turn(90 * rand(1, 3)) // turn by 90 degrees
+		transform = M
 
 /obj/effect/decal/cleanable/blood
 	name = "blood"
@@ -276,8 +281,28 @@
 		P.update_icon()
 		return TRUE
 
+/obj/effect/decal/cleanable/blood/puddle/attack_hand(mob/living/user)
+	. = ..()
+	if(!ishuman(user) || blood_vol <= 0)
+		return
 
-//BLOODY FOOTPRINTS
+	var/mob/living/carbon/human/H = user
+	if(H.dna?.species?.id != "gnoll")
+		return
+
+	if(!H.gnoll_bloodpool_feed())
+		return
+
+	playsound(loc, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
+	H.changeNext_move(CLICK_CD_MELEE)
+	blood_vol = max(blood_vol - 25, 0)
+	if(blood_vol <= 0)
+		qdel(src)
+	else
+		update_icon()
+
+
+//BLOODY/MUDDY/SNOWY FOOTPRINTS
 /obj/effect/decal/cleanable/blood/footprints
 	name = "footprints"
 	desc = ""
@@ -290,6 +315,10 @@
 	alpha = 140
 	bloodiness = 0
 	var/list/shoe_types = list()
+
+/obj/effect/decal/cleanable/blood/footprints/mud
+	icon_state = "mud1"
+	blood_state = BLOOD_STATE_MUD
 
 /obj/effect/decal/cleanable/blood/footprints/Initialize(mapload)
 	. = ..()

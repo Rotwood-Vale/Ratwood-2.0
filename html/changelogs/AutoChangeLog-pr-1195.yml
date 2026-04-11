@@ -1,0 +1,5 @@
+author: "Jamdrawers"
+delete-after: True
+changes:
+  - bugfix: "stops skeletons spawning double chain gloves"
+  - balance: "gives leg clothing to the bulwark which otherwise had nothing in the leg slot\n-changes the cloak from a half-cloak to a black rapscallion's shawl\n-gives the sword-users scabbards\n-adds a shield to the bulwark's 'spear' option\n-gives all skeletons equal weapon skill in their possible weapons rather than their weapon skill depending on what they selected at spawn."

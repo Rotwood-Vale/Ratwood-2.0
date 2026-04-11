@@ -52,11 +52,10 @@
 		if(!vampyr)
 			return "werewolf"
 
-
-var/global/list/found_lords = list() 
+GLOBAL_LIST_EMPTY(found_lords)
 
 /proc/reset_found_lords()
-	found_lords.Cut()
+	GLOB.found_lords.Cut()
 
 /proc/cleanup_found_lords()
 	// Only clean up if we have a functional living lord (meaning the crisis is over)
@@ -73,9 +72,9 @@ var/global/list/found_lords = list()
 			if(H.ckey)
 				valid_ckeys += H.ckey
 		
-		for(var/ckey in found_lords)
+		for(var/ckey in GLOB.found_lords)
 			if(ckey && !(ckey in valid_ckeys))
-				found_lords -= ckey
+				GLOB.found_lords -= ckey
 
 /proc/check_for_lord(forced = FALSE)
 	if(!SSticker.next_lord_check || world.time < SSticker.next_lord_check)
@@ -88,7 +87,7 @@ var/global/list/found_lords = list()
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
 		if(H.mind && (H.mind.assigned_role == "Grand Duke" || H.mind.assigned_role == "Grand Duchess"))
 			if(H.ckey)
-				found_lords[H.ckey] = TRUE
+				GLOB.found_lords[H.ckey] = TRUE
 			
 			// Check if the lord is actually functional
 			if(H.stat != DEAD && !isbrain(H) && H.get_bodypart(BODY_ZONE_HEAD))
@@ -98,8 +97,8 @@ var/global/list/found_lords = list()
 				break
 	
 	// Check for dead/missing lords if no living ones found and omen doesn't exist
-	if(!living_lord_found && found_lords.len > 0 && !hasomen(OMEN_NOLORD))
-		for(var/ckey in found_lords)
+	if(!living_lord_found && GLOB.found_lords.len > 0 && !hasomen(OMEN_NOLORD))
+		for(var/ckey in GLOB.found_lords)
 			var/mob/living/carbon/human/dead_lord = locate(ckey) in GLOB.human_list
 			if(!dead_lord || dead_lord.stat == DEAD || dead_lord.stat == 3 || !dead_lord.get_bodypart(BODY_ZONE_HEAD))
 				// Found a dead/missing lord, handle missing lord logic

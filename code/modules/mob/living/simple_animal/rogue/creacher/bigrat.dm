@@ -79,7 +79,7 @@
 	pixel_x = -16
 	pixel_y = -8
 
-/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/Initialize(mapload)
 	. = ..()
 	gender = MALE
 	AddElement(/datum/element/ai_flee_while_injured, 0.75, 0.3)

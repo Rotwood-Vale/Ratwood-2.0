@@ -157,8 +157,10 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/pestilent_plague
 	duration = 60 SECONDS
 	tick_interval = 3 SECONDS
-	effectedstats = list(STATKEY_CON = -1,
-						 STATKEY_STR = -3)
+	effectedstats = list(
+		STATKEY_CON = -1,
+		STATKEY_STR = -3,
+	)
 	var/outline_colour = "#095000"
 
 /datum/status_effect/debuff/pestilent_plague/on_apply()
@@ -294,7 +296,7 @@
 						break
 		else
 			if((owner.get_stat(S) + effectedstats[S]) > 20)
-				effectedstats[S] = max(((owner.get_stat(S) + effectedstats[S]) - 20), 0)
+				effectedstats[S] = 20 - owner.get_stat(S)
 		owner.change_stat(S, effectedstats[S])
 
 /datum/status_effect/black_rot/tick()

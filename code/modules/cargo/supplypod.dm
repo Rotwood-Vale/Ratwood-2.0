@@ -69,7 +69,7 @@
 /obj/structure/closet/supplypod/proc/specialisedPod()
 	return 1
 
-/obj/structure/closet/supplypod/Initialize()
+/obj/structure/closet/supplypod/Initialize(mapload)
 	. = ..()
 	setStyle(style, TRUE) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
@@ -258,7 +258,7 @@
 	layer = FLY_LAYER//that wasnt flying, that was falling with style!
 	icon_state = ""
 
-/obj/effect/DPfall/Initialize(dropLocation, obj/structure/closet/supplypod/pod)
+/obj/effect/DPfall/Initialize(mapload, dropLocation, obj/structure/closet/supplypod/pod)
 	if (pod.style == STYLE_SEETHROUGH)
 		pixel_x = -16
 		pixel_y = 0

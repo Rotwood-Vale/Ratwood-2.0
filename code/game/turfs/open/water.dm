@@ -43,8 +43,9 @@
 	var/swim_skill = FALSE
 	nomouseover = FALSE
 	var/swimdir = FALSE
+	temperature = 210
 
-/turf/open/water/Initialize()
+/turf/open/water/Initialize(mapload)
 	.  = ..()
 	water_overlay = new(src)
 	water_top_overlay = new(src)
@@ -55,6 +56,16 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
+	if(H.dna?.species?.id == "gnoll" && ispath(water_reagent, /datum/reagent/blood))
+		if(!H.gnoll_bloodpool_feed())
+			return
+		playsound(src, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
+		H.changeNext_move(CLICK_CD_MELEE)
+		if(!mapped)
+			water_volume = max(water_volume - 2, 0)
+			if(water_volume <= 0)
+				water_reagent = water_reagent_purified
+		return
 	if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
 		to_chat(H, span_info("You gaze at your reflection in the water, concentrating on the glamoring magicks..."))
 		if(do_after(H, 3 SECONDS, src))
@@ -106,6 +117,11 @@
 	var/const/MEDIUM_XP_GAIN = 0.05
 	if(!isliving(swimmer))
 		return 0
+	if(!isnull(swimmer.grabbedby))
+		for(var/obj/item/grabbing/active_grab in swimmer.grabbedby)
+			if(active_grab.grabbed == active_grab.grabbee)
+				continue
+			return 0
 	if(!swim_skill)
 		return 0 // no stam cost
 	if(swimmer.is_floor_hazard_immune())
@@ -216,6 +232,10 @@
 						if(AM.loc == src)
 							water_overlay.layer = ABOVE_MOB_LAYER
 							water_overlay.plane = GAME_PLANE_HIGHEST
+
+			if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
+				L.adjust_bodytemperature(-5)
+				L.update_health_hud()
 		if(!istype(L, /mob/living/carbon/human/species/skeleton))
 			return
 		if(!istype(src, /turf/open/water/sewer))
@@ -234,7 +254,7 @@
 			playsound(user, 'sound/foley/drawwater.ogg', 100, FALSE)
 			if(do_after(user, 8, target = src))
 				user.changeNext_move(CLICK_CD_MELEE)
-				C.reagents.add_reagent(water_reagent, 200)
+				C.reagents.add_reagent(water_reagent, 300)
 				to_chat(user, span_notice("I fill [C] from [src]."))
 				// If the user is filling a water purifier and the water isn't already clean...
 				if (istype(C, /obj/item/reagent_containers/glass/bottle/waterskin/purifier) && water_reagent != water_reagent_purified)
@@ -268,6 +288,17 @@
 					wash_atom(user, CLEAN_STRONG)
 					user.remove_stress(/datum/stressevent/sewertouched)
 				playsound(user, pick(wash), 100, FALSE)
+				L.adjust_fire_stacks(-100)
+				if(temperature < 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 75)	//washing yourself helps to cool you off.
+					L.adjust_bodytemperature(-75)
+					L.update_health_hud()
+				if(temperature >= 300)	//bathhouses, predominantly
+					if(L.bodytemperature < BODYTEMP_NORMAL_MIN)	//washing yourself helps to warm you up.
+						L.adjust_bodytemperature(75)
+						L.update_health_hud()
+					if(L.bodytemperature > BODYTEMP_NORMAL_MAX)	//washing yourself helps to cool you off.
+						L.adjust_bodytemperature(-75)
+						L.update_health_hud()
 				if(istype(src,/turf/open/water/sewer) || istype(src,/turf/open/water/swamp) || istype(src, /turf/open/water/sewer))
 					if (istype(src, /turf/open/water/sewer))
 						user.add_stress(/datum/stressevent/sewertouched)
@@ -321,6 +352,17 @@
 		return
 
 	if(do_after(L, 25, target = src))
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.dna?.species?.id == "gnoll" && ispath(water_reagent, /datum/reagent/blood))
+				if(!H.gnoll_bloodpool_feed())
+					return
+				playsound(src, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
+				if(!mapped)
+					water_volume = max(water_volume - 2, 0)
+					if(water_volume <= 0)
+						water_reagent = water_reagent_purified
+				return
 		if (istype(src,/turf/open/water/sewer))
 			to_chat(user, span_userdanger("Have I gone mad!? Why am I drinking sewage!?"))
 		var/list/waterl = list(src.water_reagent = 5)
@@ -374,8 +416,9 @@
 	water_color = "#FFFFFF"
 	slowdown = 3
 	water_reagent = /datum/reagent/water/bathwater
+	temperature = 300
 
-/turf/open/water/bath/Initialize()
+/turf/open/water/bath/Initialize(mapload)
 	.  = ..()
 	icon_state = "bathtile"
 
@@ -389,8 +432,9 @@
 	slowdown = 3
 	wash_in = FALSE
 	water_reagent = /datum/reagent/water/gross/sewage
+	temperature = 300
 
-/turf/open/water/sewer/Initialize()
+/turf/open/water/sewer/Initialize(mapload)
 	icon_state = "paving"
 	water_color = pick("#705a43","#697043", "#6C6543")
 	.  = ..()
@@ -405,6 +449,7 @@
 	slowdown = 3
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water/gross
+	temperature = 275
 
 /turf/open/water/bloody
 	name = "blood"
@@ -416,14 +461,15 @@
 	slowdown = 3
 	wash_in = FALSE
 	water_reagent = /datum/reagent/blood/shitty
+	temperature = 300
 
-/turf/open/water/swamp/Initialize()
+/turf/open/water/swamp/Initialize(mapload)
 	icon_state = "dirt"
 	dir = pick(GLOB.cardinals)
 	water_color = pick("#705a43")
 	.  = ..()
 
-/turf/open/water/bloody/Initialize()
+/turf/open/water/bloody/Initialize(mapload)
 	icon_state = "dirt"
 	dir = pick(GLOB.cardinals)
 	water_color = pick("#880808")
@@ -514,7 +560,7 @@
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water
 
-/turf/open/water/cleanshallow/Initialize()
+/turf/open/water/cleanshallow/Initialize(mapload)
 	icon_state = "rock"
 	dir = pick(GLOB.cardinals)
 	.  = ..()
@@ -560,7 +606,7 @@
 		water_top_overlay.icon_state = "rivertop"
 		water_top_overlay.dir = dir
 
-/turf/open/water/river/Initialize()
+/turf/open/water/river/Initialize(mapload)
 	icon_state = "rock"
 	.  = ..()
 
@@ -628,6 +674,19 @@
 	wash_in = TRUE
 	water_reagent = /datum/reagent/water
 
+/turf/open/water/bath/fakepond
+	name = "fake pond"
+	desc = "Soothing water, with soapy bubbles on the surface. Dyed green to mimic gently floating duckwater."
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "pond"
+	water_level = 2
+	water_color = "#367e94"
+	slowdown = 3
+	swim_skill = TRUE
+	wash_in = TRUE
+	water_reagent = /datum/reagent/water/bathwater
+	temperature = 300
+
 //Healing springs.
 //Intended for deep dungeon / hidden areas.
 /turf/open/water/ocean/deep/thermalwater
@@ -640,8 +699,9 @@
 	var/heal_interval = 5 SECONDS
 	var/heal_amount = 20
 	var/last_heal = 0
+	temperature = 300
 
-/turf/open/water/ocean/deep/thermalwater/Initialize()
+/turf/open/water/ocean/deep/thermalwater/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

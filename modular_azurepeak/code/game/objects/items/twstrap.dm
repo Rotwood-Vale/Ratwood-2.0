@@ -73,5 +73,5 @@
 		else
 			icon_state = "twstrap0"
 
-/obj/item/twstrap/Initialize()
+/obj/item/twstrap/Initialize(mapload)
 	. = ..()

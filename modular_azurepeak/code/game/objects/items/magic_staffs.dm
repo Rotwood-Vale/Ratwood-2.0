@@ -11,7 +11,7 @@
 /obj/item/rogueweapon/woodstaff
 	var/cast_time_reduction = null
 
-/obj/item/rogueweapon/woodstaff/Initialize()
+/obj/item/rogueweapon/woodstaff/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/gemstaff/toper_staff,

@@ -9,7 +9,7 @@
 	layer = ABOVE_MOB_LAYER
 	var/input_point
 
-/obj/structure/roguemachine/contractledger/Initialize()
+/obj/structure/roguemachine/contractledger/Initialize(mapload)
 	. = ..()
 	input_point = locate(x, y - 1, z)
 	var/obj/effect/decal/marker_export/marker = new(get_turf(input_point))
@@ -147,6 +147,7 @@
 	log_quest(user.ckey, user.mind, user, "Take [attached_quest.quest_type]")
 	spawned_scroll.base_icon_state = attached_quest.get_scroll_icon()
 	spawned_scroll.assigned_quest = attached_quest
+	spawned_scroll.quester_ref = WEAKREF(user)
 	attached_quest.quest_scroll = spawned_scroll
 	attached_quest.quest_scroll_ref = WEAKREF(spawned_scroll)
 
@@ -243,10 +244,11 @@
 		reward += deposit_return
 		original_reward += deposit_return
 
-		if(user.mind.active_quest >= 1)
-			user.mind.active_quest -= 1
-			to_chat(span_notice("You now have [user.mind.active_quest] active quests."))
-			log_quest(user.ckey, user.mind, user, "Finish [scroll.assigned_quest.quest_type]")
+		var/mob/quester = scroll.quester_ref.resolve()
+		if(quester?.mind?.active_quest >= 1)
+			quester.mind.active_quest -= 1
+			to_chat(quester, span_notice("You now have [quester.mind.active_quest] active quests."))
+			log_quest(quester.ckey, quester.mind, quester, "Finish [scroll.assigned_quest.quest_type]")
 
 		qdel(scroll.assigned_quest)
 		qdel(scroll)

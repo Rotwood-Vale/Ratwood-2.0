@@ -61,7 +61,7 @@
 	var/curvol = 50 // The current volume at which audio is played. MAPPERS MAY TOUCH THIS.
 	var/playuponspawn = FALSE // Does the music box start playing music when it first spawns in? MAPPERS MAY TOUCH THIS.
 
-/obj/structure/roguemachine/musicbox/Initialize()
+/obj/structure/roguemachine/musicbox/Initialize(mapload)
 	. = ..()
 	curfile = pick(init_curfile)
 	soundloop = new(src, FALSE)
@@ -170,7 +170,7 @@
 	curvol = 65
 	playuponspawn = TRUE
 /* The fuck is this
-/obj/structure/roguemachine/musicbox/Initialize()
+/obj/structure/roguemachine/musicbox/Initialize(mapload)
 	. = ..()
 	soundloop.extra_range = 12
 	soundloop.falloff = 6

@@ -76,7 +76,7 @@
 #define REGEX_ENDWORD 3
 #define REGEX_ANY 4
 
-/datum/species/proc/handle_speech(datum/source, mob/speech_args)
+/datum/species/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 
 	//message = treat_message_accent(message, strings("accent_universal.json", "universal"), REGEX_FULLWORD)
@@ -98,7 +98,7 @@
 		return
 	var/value = accent_list[key]
 	if (!value)
-		value = accent_list[lowertext(key)]
+		value = accent_list[LOWER_TEXT(key)]
 	if (!value)
 		value = accent_list[uppertext(key)]
 	if (!value)

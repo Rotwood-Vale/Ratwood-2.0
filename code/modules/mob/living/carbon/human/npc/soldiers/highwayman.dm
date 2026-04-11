@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(highwayman_aggro, world.file2list("strings/rt/highwaymanaggroli
 		return FALSE
 	. = ..()
 
-/mob/living/carbon/human/species/human/northern/highwayman/Initialize()
+/mob/living/carbon/human/species/human/northern/highwayman/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/human/northern)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)

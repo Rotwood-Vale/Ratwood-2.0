@@ -1,0 +1,4 @@
+author: "Shadow-Quill"
+delete-after: True
+changes:
+  - qol: "You can now remove an object from your Necra's Sight list by re-casting the spell on the object."

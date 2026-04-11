@@ -420,8 +420,37 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] healed / revived [key_name(M)]")
 	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
 	message_admins(msg)
-	admin_ticket_log(M, msg)
+	// Friendlier ticket-log line for the player
+	admin_ticket_log(M, "<font color='green'>[key_name_admin(usr)] has fully healed you in relation to this ticket.</font>")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Rejuvinate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/admin_spawn_cake(mob/living/M in GLOB.mob_list)
+	set category = "-GameMaster-"
+	set name = "Give Cake Slice"
+
+	if(!check_rights(R_ADMIN))
+		return
+	if(!M)
+		return
+
+	var/turf/T = get_turf(M)
+	if(!T)
+		return
+
+	var/list/cake_types = list(
+		/obj/item/reagent_containers/food/snacks/rogue/cakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/frostedcakeslice,
+	)
+	var/cake_type = pick(cake_types)
+	new cake_type(T)
+
+	log_admin("[key_name(usr)] gave a cake slice ([cake_type]) to [key_name(M)].")
+	var/msg = span_adminnotice("[key_name_admin(usr)] gave a cake slice to [ADMIN_LOOKUPFLW(M)].")
+	message_admins(msg)
+	// Tell the player (and ticket) in a friendly way
+	to_chat(M, span_notice("[key_name_admin(usr)] has given you a cake slice. How nice!"))
+	admin_ticket_log(M, "<font color='green'>[key_name_admin(usr)] has given you a cake slice. How nice!</font>")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Cake Slice") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_create_centcom_report()
 	set category = "-Server-"

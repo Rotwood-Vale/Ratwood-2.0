@@ -1,4 +1,4 @@
-var/global/list/colorlist = list(
+GLOBAL_LIST_INIT(colorlist, list(
 	"Swan White"="#ffffff",
 	"Chalk White" = "#f4ecde",
 	"Cream" = "#fffdd0",
@@ -42,12 +42,12 @@ var/global/list/colorlist = list(
 	"Royal Magenta" = "#962e5c",
 	"Blacksteel Grey"="#404040",
 	"Dark Grey" = "#505050",
-	"Darkest Night" = "#414143"
-	)
+	"Darkest Night" = "#414143",
+))
 
-var/global/list/pridelist = list(
+GLOBAL_LIST_INIT(pridelist, list(
 	"RAINBOW" = "#fcfcfc"
-)
+))
 
 // DYE BIN
 
@@ -71,13 +71,21 @@ var/global/list/pridelist = list(
 			/obj/item/bedroll,
 			/obj/item/flowercrown,
 			/obj/item/legwears,
-			/obj/item/undies
+			/obj/item/undies,
+			/obj/item/reagent_containers/glass/bottle/clayvase,
+			/obj/item/reagent_containers/glass/bottle/clayfancyvase,
+			/obj/item/reagent_containers/glass/cup/claycup,
+			/obj/item/reagent_containers/glass/bottle/claybottle,
+			/obj/item/roguestatue/clay,
+			/obj/item/roguestatue/glass,
+			/obj/item/reagent_containers/glass/bottle/blown,
+			/obj/item/reagent_containers/glass/bottle/alchemical/blown
 			)
 	var/list/used_colors
 
-/obj/machinery/gear_painter/Initialize()
+/obj/machinery/gear_painter/Initialize(mapload)
 	..()
-	used_colors = colorlist
+	used_colors = GLOB.colorlist
 
 /obj/machinery/gear_painter/Destroy()
 	if(inserted)
@@ -272,7 +280,7 @@ var/global/list/pridelist = list(
 					activecolor = "#FFFFFF"
 			interact(usr)
 		else
-			var/choice_list = colorlist.Copy()
+			var/choice_list = GLOB.colorlist.Copy()
 			choice_list["Ducal Scheme"] = "#DUCAL"
 			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
 			if(!choice)
@@ -281,7 +289,7 @@ var/global/list/pridelist = list(
 				ducal_scheme = TRUE
 				activecolor = GLOB.lordprimary ? GLOB.lordprimary : "#264d26"
 			else
-				activecolor = colorlist[choice]
+				activecolor = GLOB.colorlist[choice]
 			interact(usr)
 
 	if(href_list["select_detail"])
@@ -303,7 +311,7 @@ var/global/list/pridelist = list(
 					activecolor_detail = "#FFFFFF"
 			interact(usr)
 		else
-			var/choice_list = colorlist.Copy()
+			var/choice_list = GLOB.colorlist.Copy()
 			choice_list["Ducal Scheme"] = "#DUCAL"
 			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
 			if(!choice)
@@ -312,7 +320,7 @@ var/global/list/pridelist = list(
 				ducal_scheme_detail = TRUE
 				activecolor_detail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
 			else
-				activecolor_detail = colorlist[choice]
+				activecolor_detail = GLOB.colorlist[choice]
 			interact(usr)
 
 	if(href_list["select_altdetail"])
@@ -334,7 +342,7 @@ var/global/list/pridelist = list(
 					activecolor_altdetail = "#FFFFFF"
 			interact(usr)
 		else
-			var/choice_list = colorlist.Copy()
+			var/choice_list = GLOB.colorlist.Copy()
 			choice_list["Ducal Scheme"] = "#DUCAL"
 			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
 			if(!choice)
@@ -343,7 +351,7 @@ var/global/list/pridelist = list(
 				ducal_scheme_altdetail = TRUE
 				activecolor_altdetail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
 			else
-				activecolor_altdetail = colorlist[choice]
+				activecolor_altdetail = GLOB.colorlist[choice]
 			interact(usr)
 
 	if(href_list["paint_primary"])

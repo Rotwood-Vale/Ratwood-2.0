@@ -47,7 +47,7 @@
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	icon_state = "graggarplategloves"
 
-/obj/item/clothing/gloves/roguetown/plate/graggar/Initialize()
+/obj/item/clothing/gloves/roguetown/plate/graggar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
 
@@ -57,7 +57,7 @@
 	icon_state = "matthiosgloves"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 
-/obj/item/clothing/gloves/roguetown/plate/matthios/Initialize()
+/obj/item/clothing/gloves/roguetown/plate/matthios/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -74,7 +74,7 @@
 	icon_state = "zizogauntlets"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 
-/obj/item/clothing/gloves/roguetown/plate/zizo/Initialize()
+/obj/item/clothing/gloves/roguetown/plate/zizo/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -105,8 +105,8 @@
 /obj/item/clothing/gloves/roguetown/plate/kote/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in colorlist
-		var/playerchoice = colorlist[choice]
+		var/choice = input(user, "Choose a color.", "Uniform colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
 		detail_tag = "_detail"

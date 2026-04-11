@@ -26,7 +26,7 @@
 	anchored = TRUE
 	density = TRUE
 	var/toll = FALSE
-/obj/structure/underworld/carriageman/Initialize()
+/obj/structure/underworld/carriageman/Initialize(mapload)
 	. = ..()
 	set_light(5, 4, 30, l_color = LIGHT_COLOR_BLUE)
 
@@ -99,7 +99,7 @@
 	anchored = TRUE
 	density = TRUE
 
-/obj/structure/underworld/carriage_normal/Initialize()
+/obj/structure/underworld/carriage_normal/Initialize(mapload)
 	. = ..()
 	set_light(5, 3, 30, l_color = LIGHT_COLOR_WHITE)
 
@@ -114,7 +114,7 @@
 	density = TRUE
 
 
-/obj/structure/underworld/carriage/Initialize()
+/obj/structure/underworld/carriage/Initialize(mapload)
 	. = ..()
 	set_light(5, 3, 30, l_color = LIGHT_COLOR_BLUE)
 
@@ -138,7 +138,7 @@ GLOBAL_VAR_INIT(underworld_coins, 0)
 	icon_state = "soultoken_floor"
 	var/should_track = TRUE
 
-/obj/item/underworld/coin/Initialize()
+/obj/item/underworld/coin/Initialize(mapload)
 	. = ..()
 	if(should_track)
 		GLOB.underworld_coins += 1
@@ -170,4 +170,8 @@ GLOBAL_VAR_INIT(underworld_coins, 0)
 		for(var/obj/effect/landmark/underworldcoin/B in GLOB.landmarks_list)
 			new /obj/item/underworld/coin(B.loc)
 
-
+/obj/item/detroyt_toll
+	name = "Ticket"
+	desc = "This is more than just compressed salt."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "ticket_detroyt"

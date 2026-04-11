@@ -297,6 +297,14 @@
 	created_item =  /obj/item/storage/backpack/rogue/artibackpack
 	additional_items = list(/obj/item/roguegear/bronze, /obj/item/storage/backpack/rogue/backpack)
 	skill_level = 5
+
+/datum/artificer_recipe/contraptions/cursed_collar // lets people make the actual cursed collar, but gates it behind semi rare mats and engineering 
+	name = "True Cursed Collar (+1 Bronze Cog, +1 Essence of Wilderness)"
+	required_item = /obj/item/ingot/steel
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/natural/cured/essence)
+	created_item = /obj/item/clothing/neck/roguetown/cursed_collar
+	hammers_per_item = 14
+	skill_level = 5
 // --------- WEAPON -----------
 
 /datum/artificer_recipe/wood/weapons //Again, a bit silly, but is important
@@ -581,8 +589,8 @@
 							/obj/item/alch/coaldust,
 							/obj/item/alch/airdust,
 							/obj/item/alch/airdust,
-						 	/obj/item/alch/firedust,
-						 	/obj/item/alch/firedust)
+							/obj/item/alch/firedust,
+							/obj/item/alch/firedust)
 	created_item = /obj/item/tntstick
 	hammers_per_item = 5
 	skill_level = 4

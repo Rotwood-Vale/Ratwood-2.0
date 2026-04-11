@@ -112,7 +112,7 @@
 	category = "Table"
 	result = list(/obj/item/reagent_containers/glass/bottle/revival = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/eoran_aril/auric = 1,
-	 			/obj/item/alch/viscera = 2,
+				/obj/item/alch/viscera = 2,
 				/obj/item/reagent_containers/glass/bottle/alchemical,
 				/obj/item/reagent_containers/spidervenom_inert = 1,
 				/obj/item/alch/horn = 1)
@@ -124,7 +124,7 @@
 	category = "Table"
 	result = list(/obj/item/reagent_containers/glass/bottle/revival = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/eoran_aril/auric = 1,
-	 			/obj/item/alch/viscera = 2,
+				/obj/item/alch/viscera = 2,
 				/obj/item/reagent_containers/glass/bottle/alchemical,
 				/obj/item/reagent_containers/spidervenom_inert = 3)
 	craftdiff = 5
@@ -320,3 +320,25 @@
 		/obj/item/alch/bonemeal = 1,
 		)
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/alchemy/glut
+	name = "glut (from gnoll flesh)"
+	craftdiff = 4
+	result = list(
+		/obj/item/roguegem/blood_diamond
+		)
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll = 2,
+		)
+	subtype_reqs = TRUE
+
+/datum/crafting_recipe/roguetown/alchemy/gnoll_flesh
+	name = "gnoll flesh (from glut)"
+	craftdiff = 4
+	result = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll
+		)
+	reqs = list(
+		/obj/item/roguegem/blood_diamond = 2,
+		)
+	subtype_reqs = TRUE

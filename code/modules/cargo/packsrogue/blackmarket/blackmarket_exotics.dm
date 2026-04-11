@@ -17,3 +17,8 @@
 	name = "Riddle of Steel"
 	cost = 1000
 	contains = list(/obj/item/riddleofsteel)
+
+/datum/supply_pack/rogue/blackmarket_exotics/luxwine
+	name = "Luxintenebre (Wine)"
+	cost = 150
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/luxwine)

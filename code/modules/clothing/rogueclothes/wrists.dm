@@ -124,6 +124,8 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 	color = "#4d4d4d"
+	cold_protection =  ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = 50
 
 /obj/item/clothing/wrists/roguetown/bracers/copper
 	name = "copper bracers"
@@ -147,7 +149,7 @@
 	icon_state = "nocwrappings"
 	item_state = "nocwrappings"
 	sewrepair = TRUE
-	nudist_approved = TRUE //Simple cloth wrappings, not real clothing
+	nudist_approved = TRUE
 
 /obj/item/clothing/wrists/roguetown/allwrappings
 	name = "wrappings"
@@ -156,7 +158,7 @@
 	icon_state = "nocwrappings" //Greyscale. Accessable in the loadout.
 	item_state = "nocwrappings"
 	sewrepair = TRUE
-	nudist_approved = TRUE //Simple cloth wrappings, not real clothing
+	nudist_approved = TRUE
 
 /obj/item/clothing/wrists/roguetown/bracers/cloth
 	name = "cloth bracers"
@@ -207,7 +209,7 @@
 	detail_color = primary
 	update_icon()
 
-/obj/item/clothing/wrists/roguetown/royalsleeves/Initialize()
+/obj/item/clothing/wrists/roguetown/royalsleeves/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)

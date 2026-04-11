@@ -84,6 +84,7 @@ Rusted metals distantly grind in anoxic pus-condensate in-tune with the Signal. 
 #define DETAIL_TEXT_WRETCHED_GHROTTO "\"This place was once a small encampment of refugees; their fate was said to have met with a terrible end. Slowly, it was claimed by those who otherwise had no home. \n\
 The buildings here have seen many uses; though the main camp is where most of the wretches huddle. \n\ The Eastern side lies an old shoppe, turned into a triage for their wretched health. \n\ The north held the ruins of an old church; with an odd gloom hanging about it. \n\ The west seemed to creak with frogs and cicada-- holding a pocket of ruined buildings between the cliffs."
 #define DETAIL_TEXT_WRETCHED_CAMP ""
+#define DETAIL_TEXT_GNOLL_CAVERN "The air is thick with the stench of rot and decay. The walls are slick with moss and slime, and the ground is littered with bones and refuse. The gnolls that call this place home are vicious and territorial, and will attack anyone who dares to enter their domain."
 
 // Town
 #define DETAIL_TEXT_AZURE_PEAK ""
@@ -93,6 +94,8 @@ The buildings here have seen many uses; though the main camp is where most of th
 #define DETAIL_TEXT_CHAPEL "Narthex of faith, roosting the Flock."
 #define DETAIL_TEXT_INQUISITION_HQ ""
 #define DETAIL_TEXT_AZUREAN_GUILD_OF_CRAFT "\"We had a name fer it, eh? Called it the Dwarven Quarter. Forges an' 'ammers, underground an' wrapped in stone. Joos' like 'ome! Bu' then tha bloody bluebloods started complainin' aboot tha' dirt whenever they visited. Bloody brash-polishers! Well, we 'ad to move tha shop topside. \n\ \n\ Not as charmin, no moor.\""
+#define DETAIL_TEXT_DIETROYT "You deserve to be here, don't you?" // Well it's technically a town location right? To be expanded properly.
+
 
 
 // Tomb of Alotheos

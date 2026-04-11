@@ -5,6 +5,8 @@
 	var/keytype
 	var/riding_xp_move_counter = 0 //counter to reduce XP spam - award XP every 5 moves
 
+	var/mob/living/driver = null //the first rider — only they can steer
+
 	var/slowed = FALSE
 	var/slowvalue = 1
 
@@ -35,11 +37,18 @@
 	M.updating_glide_size = TRUE
 	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
 		qdel(src)
+	if(driver == M)
+		driver = null
+		for(var/mob/living/rider in AM.buckled_mobs.Copy())
+			rider.visible_message(span_warning("[rider] is left without a driver and tumbles off [AM]!"), span_warning("Without a driver, I fall off [AM]!"))
+			AM.unbuckle_mob(rider, TRUE)
 
 /datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	var/atom/movable/AM = parent
 	M.set_glide_size(AM.glide_size)
 	M.updating_glide_size = FALSE
+	if(!driver || QDELETED(driver))
+		driver = M
 	handle_vehicle_offsets()
 
 /datum/component/riding/proc/handle_vehicle_layer()
@@ -69,9 +78,15 @@
 		if(rider.m_intent == MOVE_INTENT_RUN)
 			riding_xp_move_counter++
 			if(riding_xp_move_counter >= 5)
-				// Scale XP with rider's STAINT stat, like all other skills do
-				// Award every 5 moves, so multiply by 5 to match movement-based XP frequency
+				// Scale XP with rider's STAINT stat, like other movement-based skill gains.
 				var/xp_amt = rider.STAINT * 0.1
+				var/riding_level = rider.get_skill_level(/datum/skill/misc/riding)
+				// At apprentice and above, gains are slowed to half speed.
+				if(riding_level >= SKILL_LEVEL_APPRENTICE)
+					xp_amt *= 0.5
+				// At zero riding skill, gains are doubled to help reach apprentice faster.
+				else if(riding_level == SKILL_LEVEL_NONE)
+					xp_amt *= 2
 				rider.mind && rider.mind.add_sleep_experience(/datum/skill/misc/riding, xp_amt)
 				riding_xp_move_counter = 0
 		else
@@ -196,7 +211,47 @@
 			return
 		if(!isturf(AM.loc))
 			return
+		var/stair_transit_pending = FALSE
+		for(var/obj/structure/stairs/stair in current)
+			if(stair.get_target_loc(direction))
+				stair_transit_pending = TRUE
+				break
 		step(AM, direction)
+		if(AM.loc != next)
+			if(stair_transit_pending)
+				handle_vehicle_layer()
+				handle_vehicle_offsets()
+				return TRUE
+			var/can_force = !next.density
+			if(can_force && (!current.CanPass(AM, next) || !next.CanPass(AM, current)))
+				can_force = FALSE
+			if(can_force)
+				for(var/atom/movable/blocker in current)
+					if((blocker.flags_1 & ON_BORDER_1) && blocker.dir == direction && !blocker.CanPass(AM, next))
+						can_force = FALSE
+						break
+			if(can_force)
+				for(var/atom/movable/blocker in next)
+					if((blocker.flags_1 & ON_BORDER_1) && blocker.dir == turn(direction, 180) && !blocker.CanPass(AM, current))
+						can_force = FALSE
+						break
+			if(can_force)
+				for(var/atom/movable/blocker in current)
+					if(blocker.density && (blocker.flags_1 & ON_BORDER_1) && blocker.dir == direction)
+						can_force = FALSE
+						break
+			if(can_force)
+				for(var/atom/movable/blocker in next)
+					if(blocker.density)
+						can_force = FALSE
+						break
+			if(can_force)
+				for(var/atom/movable/blocker in next)
+					if(blocker.density && (blocker.flags_1 & ON_BORDER_1) && blocker.dir == turn(direction, 180))
+						can_force = FALSE
+						break
+			if(can_force)
+				AM.forceMove(next)
 
 		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
 			last_move_diagonal = TRUE

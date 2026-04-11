@@ -1,7 +1,7 @@
 {
     "map_name": "Rogueworld",
-    "map_path": "map_files/Rogueworld",
-    "map_file": "Rogueworld.dmm",
+    "map_path": "map_files/rogueworld",
+    "map_file": "rogueworld.dmm",
 	"traits": [{"Up": true}, {"Up": true, "Down": true}, {"Up": true, "Down": true}, {"Up": true, "Down": true}, {"Down": true}],
 	"minetype": null,
 	"space_empty_levels": 0,

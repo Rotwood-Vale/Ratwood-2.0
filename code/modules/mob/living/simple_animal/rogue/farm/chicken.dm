@@ -108,7 +108,7 @@
 			return "wing"
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/rogue/chicken/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/chicken/Initialize(mapload)
 	. = ..()
 	if(!body_color)
 		body_color = pick(validColors)

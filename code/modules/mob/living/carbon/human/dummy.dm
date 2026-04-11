@@ -50,3 +50,6 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 	if(istype(D))
 		D.wipe_state()
 		D.in_use = FALSE
+
+// fuck if I know - fill in for unit tests later
+/mob/living/carbon/human/consistent

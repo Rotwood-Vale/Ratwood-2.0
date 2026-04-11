@@ -27,7 +27,7 @@
 	stat_attack = UNCONSCIOUS
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
-/mob/living/simple_animal/hostile/rogue/werewolf/Initialize()
+/mob/living/simple_animal/hostile/rogue/werewolf/Initialize(mapload)
 	. = ..()
 	regenerate_icons()
 	ADD_TRAIT(src, TRAIT_SIMPLE_WOUNDS, TRAIT_GENERIC)
@@ -38,7 +38,7 @@
 	icon_living = "wwolf_f"
 	gender = FEMALE
 
-/mob/living/simple_animal/hostile/rogue/werewolf/f/Initialize()
+/mob/living/simple_animal/hostile/rogue/werewolf/f/Initialize(mapload)
 	. = ..()
 	regenerate_icons()
 	ADD_TRAIT(src, TRAIT_SIMPLE_WOUNDS, TRAIT_GENERIC)

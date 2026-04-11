@@ -9,7 +9,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	greet_text = "You are an Otavan Emissary, traveling with a small retinue and a Psydonite preacher to represent your homeland.\
-	 What exactly you have been sent here to speak about- only you know."
+	What exactly you have been sent here to speak about- only you know."
 	advclass_cat_rolls = list(CTAG_OTAVAN_ENVOY = 20)
 
 /datum/advclass/otavan_envoy

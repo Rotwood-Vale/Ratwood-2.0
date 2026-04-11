@@ -51,7 +51,7 @@
 	can_have_ai = FALSE
 	ai_controller = /datum/ai_controller/mirespider
 
-/mob/living/simple_animal/hostile/retaliate/rogue/mirespider/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/mirespider/Initialize(mapload)
 	. = ..()
 	update_icon()
 	AddElement(/datum/element/ai_retaliate)
@@ -192,7 +192,41 @@
 
 	var/list/mob/living/simple_animal/hostile/retaliate/rogue/mirespider/followers = list()
 
-/mob/living/simple_animal/hostile/rogue/mirespider_lurker/Initialize()
+/mob/living/simple_animal/hostile/rogue/mirespider_lurker/mushroom
+	icon = 'icons/mob/mirespider_shroom.dmi'
+	desc = "While recognizable as a mire lurker, this specimen appears to suffer a gigantic \
+	fungal growth over its rear end. It reeks of the smell of mold, and tar-like secretions \
+	drip from its mandibles. Something here is horribly wrong."
+	name = "mire lurker?"
+	icon_state = "mushroom"
+	icon_living = "mushroom"
+	icon_dead = "mushroom_dead"
+	health = MIRESPIDER_MUSHROOM_HEALTH
+	maxHealth = MIRESPIDER_MUSHROOM_HEALTH
+	pixel_x = -8
+
+	projectiletype = /obj/projectile/bullet/spider_shroom
+	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 2,
+						/obj/item/natural/hide = 2,
+						/obj/item/natural/silk = 1, 
+						/obj/item/reagent_containers/powder/ozium = 1,
+						/obj/item/alch/viscera = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 4,
+						/obj/item/natural/hide = 3,
+						/obj/item/natural/silk = 3,
+						/obj/item/reagent_containers/powder/ozium = 2,
+						/obj/item/reagent_containers/food/snacks/rogue/honey/spider = 1,
+						/obj/item/alch/viscera = 4)
+	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 4,
+						/obj/item/natural/hide = 4,
+						/obj/item/natural/silk = 5, // You killed the mire lurker. You get all the figgy pudding . . .
+						/obj/item/reagent_containers/powder/ozium = 2,
+						/obj/item/reagent_containers/powder/herozium = 1,
+						/obj/item/reagent_containers/food/snacks/rogue/honey/spider = 1,
+						/obj/item/alch/viscera = 4,
+						/obj/item/natural/head/mirelurker)
+
+/mob/living/simple_animal/hostile/rogue/mirespider_lurker/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_KNEESTINGER_IMMUNITY, INNATE_TRAIT)
@@ -280,7 +314,7 @@
 	desc = "YOU SHOULD NOT BE SEEING THIS, GO YELL AT KETRAI."
 	icon_state = "crawler"
 
-/obj/random/spider/Initialize()
+/obj/random/spider/Initialize(mapload)
 	. = ..()
 	spawn_random_spider_at(loc)
 	qdel(src)

@@ -7,7 +7,7 @@
 
 /datum/outfit/job/roguetown/slaver/master/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguetown/helmet/sallet/raneshen		// thematic as it is the same helmet jannisaries use. Maybe a retired soldier with hired goons?
+	head = /obj/item/clothing/head/roguetown/helmet/sallet/zyb		// thematic as it is the same helmet jannisaries use. Maybe a retired soldier with hired goons?
 	mask = /obj/item/clothing/head/roguetown/roguehood/shalal/purple
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	shoes = /obj/item/clothing/shoes/roguetown/shalal

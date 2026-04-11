@@ -206,4 +206,9 @@
 		/datum/book_entry/festinatio,
 		/datum/book_entry/oculi,
 		/datum/book_entry/tenax,
+		/datum/book_entry/glacies,
+		/datum/book_entry/glaciei,
+		/datum/book_entry/sagitta,
+		/datum/book_entry/flammas,
+		/datum/book_entry/tabificus
 		)

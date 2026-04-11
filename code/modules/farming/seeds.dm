@@ -17,7 +17,7 @@
 	var/cooked_smell = /datum/pollutant/food/roasted_seeds
 	var/cooked_type = /obj/item/reagent_containers/food/snacks/roastseeds
 
-/obj/item/seeds/Initialize()
+/obj/item/seeds/Initialize(mapload)
 	. = ..()
 	if(plant_def_type)
 		var/datum/plant_def/def = GLOB.plant_defs[plant_def_type]
@@ -241,3 +241,15 @@
 	seed_identity = "pumpkin seeds"
 	plant_def_type = /datum/plant_def/pumpkin
 	cooked_type = /obj/item/reagent_containers/food/snacks/roastseeds/pumpkin
+
+/obj/item/seeds/carrot
+	seed_identity = "carrot seeds"
+	plant_def_type = /datum/plant_def/carrot
+
+/obj/item/seeds/cucumber
+	seed_identity = "cucumber seeds"
+	plant_def_type = /datum/plant_def/cucumber
+
+/obj/item/seeds/eggplant
+	seed_identity = "eggplant seeds"
+	plant_def_type = /datum/plant_def/eggplant

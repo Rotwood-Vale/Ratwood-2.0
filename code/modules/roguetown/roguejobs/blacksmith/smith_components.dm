@@ -26,11 +26,11 @@
 		set_recipe(recipe_path)
 
 	// Register signals from the anvil and hammer that will act on this component
-	RegisterSignal(parent, COMSIG_ITEM_PLACED_ON_ANVIL, .proc/on_placed_on_anvil)
-	RegisterSignal(parent, COMSIG_ITEM_REMOVED_FROM_ANVIL, .proc/on_removed_from_anvil)
-	RegisterSignal(parent, COMSIG_ITEM_HAMMERED_ON_ANVIL, .proc/on_hammered_on_anvil)
-	RegisterSignal(parent, COMSIG_ITEM_ADDED_TO_FORGING, .proc/on_item_added_to_forging)
-	RegisterSignal(parent, COMSIG_ITEM_QUENCHED, .proc/on_quenched)
+	RegisterSignal(parent, COMSIG_ITEM_PLACED_ON_ANVIL, PROC_REF(on_placed_on_anvil))
+	RegisterSignal(parent, COMSIG_ITEM_REMOVED_FROM_ANVIL, PROC_REF(on_removed_from_anvil))
+	RegisterSignal(parent, COMSIG_ITEM_HAMMERED_ON_ANVIL, PROC_REF(on_hammered_on_anvil))
+	RegisterSignal(parent, COMSIG_ITEM_ADDED_TO_FORGING, PROC_REF(on_item_added_to_forging))
+	RegisterSignal(parent, COMSIG_ITEM_QUENCHED, PROC_REF(on_quenched))
 
 /datum/component/forging/proc/on_quenched(obj/item/source, mob/living/user, turf/used_turf)
 	SIGNAL_HANDLER

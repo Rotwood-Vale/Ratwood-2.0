@@ -25,6 +25,7 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/masonry = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,//Point of the class.
 		/datum/skill/craft/engineering = SKILL_LEVEL_JOURNEYMAN,//Contraptions, explosives, etc.
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,

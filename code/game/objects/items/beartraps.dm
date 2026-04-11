@@ -104,7 +104,7 @@
 	grid_width = 256
 	grid_height = 256
 
-/obj/item/restraints/legcuffs/beartrap/Initialize()
+/obj/item/restraints/legcuffs/beartrap/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -119,10 +119,12 @@
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
 	..()
+	var/skill = user.get_skill_level(/datum/skill/craft/traps)
+	var/chance_to_arm = (10 +(skill * 15))
 	if(ishuman(user) && !user.stat && !user.restrained())
 		var/mob/living/L = user
 		if(do_after(user, 50 - (L.STASTR*2), target = user))
-			if(prob(50))
+			if(prob(chance_to_arm))
 				armed = !armed
 				if(armed)
 					w_class = WEIGHT_CLASS_BULKY

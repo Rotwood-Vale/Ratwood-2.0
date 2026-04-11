@@ -56,22 +56,43 @@
 /datum/outfit/job/roguetown/shophand/basic/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	if(should_wear_femme_clothes(H))
-		pants = /obj/item/clothing/under/roguetown/tights
-		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/blue
-		shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
-		belt = /obj/item/storage/belt/rogue/leather
-		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
-		beltl = /obj/item/storage/keyring/merchant
-		backr = /obj/item/storage/backpack/rogue/satchel
-	else if(should_wear_masc_clothes(H))
-		pants = /obj/item/clothing/under/roguetown/tights
-		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
-		shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
-		belt = /obj/item/storage/belt/rogue/leather
-		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
-		beltl = /obj/item/storage/keyring/merchant
-		backr = /obj/item/storage/backpack/rogue/satchel
+	if(SSmapping.config.map_name == "Desert Town")
+		if(should_wear_femme_clothes(H))
+			pants = /obj/item/clothing/under/roguetown/tights
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+			armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/open/random
+			shoes = /obj/item/clothing/shoes/roguetown/shalal
+			belt = /obj/item/storage/belt/rogue/leather/cloth/sash/random
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
+			beltl = /obj/item/storage/keyring/merchant
+			backr = /obj/item/storage/backpack/rogue/satchel
+		else if(should_wear_masc_clothes(H))
+			pants = /obj/item/clothing/under/roguetown/sirwal/fancy/random
+			belt = /obj/item/storage/belt/rogue/leather/cloth/sash/random
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+			armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/open/random
+			shoes = /obj/item/clothing/shoes/roguetown/shalal
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
+			beltl = /obj/item/storage/keyring/merchant
+			backr = /obj/item/storage/backpack/rogue/satchel
+			head = /obj/item/clothing/head/roguetown/turban/random
+	else
+		if(should_wear_femme_clothes(H))
+			pants = /obj/item/clothing/under/roguetown/tights
+			armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/blue
+			shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
+			belt = /obj/item/storage/belt/rogue/leather
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
+			beltl = /obj/item/storage/keyring/merchant
+			backr = /obj/item/storage/backpack/rogue/satchel
+		else if(should_wear_masc_clothes(H))
+			pants = /obj/item/clothing/under/roguetown/tights
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+			shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
+			belt = /obj/item/storage/belt/rogue/leather
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
+			beltl = /obj/item/storage/keyring/merchant
+			backr = /obj/item/storage/backpack/rogue/satchel
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 	if(prob(33))

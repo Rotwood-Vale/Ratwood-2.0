@@ -169,7 +169,7 @@
 
 	..()
 
-/obj/structure/broadcast_horn/Initialize()
+/obj/structure/broadcast_horn/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	SSroguemachine.broadcaster_machines += src

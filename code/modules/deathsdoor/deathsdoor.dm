@@ -189,7 +189,7 @@ GLOBAL_VAR_INIT(underworld_strands, 0)
 /obj/effect/landmark/underworldstrands
 	var/spawn_timer
 
-/obj/effect/landmark/underworldstrands/Initialize()
+/obj/effect/landmark/underworldstrands/Initialize(mapload)
 	. = ..()
 	start_timer()
 
@@ -232,7 +232,7 @@ GLOBAL_VAR_INIT(underworld_strands, 0)
 	desc = "Eerie glowing thread, cometh from the grave"
 	var/should_track = TRUE
 
-/obj/item/soulthread/deathsdoor/Initialize()
+/obj/item/soulthread/deathsdoor/Initialize(mapload)
 	. = ..()
 	if(should_track)
 		GLOB.underworld_strands += 1

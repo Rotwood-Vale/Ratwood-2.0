@@ -2,6 +2,7 @@
 /obj/effect/statclick
 	name = "Initializing..."
 	var/target
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 

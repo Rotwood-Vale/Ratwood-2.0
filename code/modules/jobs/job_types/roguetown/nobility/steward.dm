@@ -65,11 +65,16 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
 		pants = /obj/item/clothing/under/roguetown/tights/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/silktunic
+		if(SSmapping.config.map_name == "Desert Town")
+			head = /obj/item/clothing/head/roguetown/turban/red
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold/steward
 	beltr = /obj/item/storage/keyring/steward
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone
+	if(SSmapping.config.map_name == "Rockhill")
+		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/steward
+		// shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/red//actually dress under overshirt doesn't look too bad
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 	H.verbs |= /mob/living/carbon/human/proc/adjust_taxes

@@ -64,7 +64,7 @@
 			playsound(src, 'sound/foley/bodyfall (3).ogg', 90, TRUE)
 			user.visible_message(span_warning("[user] emerges from [src]!"),span_alert("I emerge from [src]!"))
 
-/obj/structure/closet/dirthole/closed/loot/Initialize()
+/obj/structure/closet/dirthole/closed/loot/Initialize(mapload)
 	. = ..()
 	lootroll = rand(1,4)
 
@@ -247,14 +247,18 @@
 		return
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
-	user.visible_message(span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."), \
-				 	 	span_warning("I [actuallyismob ? "try to ":""]stuff [O] into [src]."), \
-				 	 	span_hear("I hear clanging."))
+	user.visible_message(
+		span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."),
+		span_warning("I [actuallyismob ? "try to ":""]stuff [O] into [src]."),
+		span_hear("I hear clanging.")
+	)
 	if(actuallyismob)
 		if(do_after_mob(user, targets, 40))
-			user.visible_message(span_notice("[user] stuffs [O] into [src]."), \
-							 	 span_notice("I stuff [O] into [src]."), \
-							 	 span_hear("I hear a loud bang."))
+			user.visible_message(
+				span_notice("[user] stuffs [O] into [src]."),
+				span_notice("I stuff [O] into [src]."),
+				span_hear("I hear a loud bang.")
+			)
 			O.forceMove(T)
 			user_buckle_mob(O, user)
 	else
@@ -320,7 +324,7 @@
 			can_buckle = FALSE
 	update_abovemob()
 
-/obj/structure/closet/dirthole/Initialize()
+/obj/structure/closet/dirthole/Initialize(mapload)
 	abovemob = mutable_appearance('icons/turf/roguefloor.dmi', "grave_above")
 	abovemob.layer = ABOVE_MOB_LAYER
 	update_icon()

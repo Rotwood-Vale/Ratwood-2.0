@@ -49,7 +49,7 @@
 	dodgetime = 30
 	aggressive = 1
 
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 

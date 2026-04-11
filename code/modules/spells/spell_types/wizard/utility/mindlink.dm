@@ -81,8 +81,8 @@
 	var/datum/mindlink/link = new(first_target, second_target)
 	GLOB.mindlinks += link
 
-	to_chat(first_target, span_notice("A mindlink has been established with [second_target]! Use ,y before a message to communicate telepathically."))
-	to_chat(second_target, span_notice("A mindlink has been established with [first_target]! Use ,y before a message to communicate telepathically."))
+	to_chat(first_target, span_notice("A mindlink has been established with [second_target]! Use ,m before a message to communicate telepathically."))
+	to_chat(second_target, span_notice("A mindlink has been established with [first_target]! Use ,m before a message to communicate telepathically."))
 
 	addtimer(CALLBACK(src, PROC_REF(break_link), link), 3 MINUTES)
 	return TRUE

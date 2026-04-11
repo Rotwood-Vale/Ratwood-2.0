@@ -1,5 +1,6 @@
 /mob/living/simple_animal/hostile/retaliate
 	var/list/enemies = list()
+	stop_automated_movement_when_pulled = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/attack_hand(mob/living/carbon/human/M)
 	. = ..()

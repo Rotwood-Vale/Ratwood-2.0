@@ -312,7 +312,7 @@
 //The proc below in question is the one causing all the errors apparently
 
 /obj/item/leash/dropped(mob/user, silent)
-	 //Drop the leash, and the leash effects stop
+	//Drop the leash, and the leash effects stop
 	. = ..()
 	if(!leash_pet) //There is no pet. Stop this silliness
 		return
@@ -420,11 +420,14 @@
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_TINY
 	var/last_ring
+	/// Sounds that this bell can make when it jingles
+	var/list/jingle_sounds = SFX_COLLARJINGLE
 
 /obj/item/catbell/cow
 	name = "cowbell"
 	desc = "A small jingly cowbell"
 	icon_state = "cowbell"
+	jingle_sounds = SFX_CBJINGLE
 
 /obj/item/catbell/attack_self(mob/living/user)
 	if(world.time < last_ring + 15)
@@ -452,7 +455,7 @@
 	user.visible_message(span_warning("[target] has had \a [src] clipped onto [target.p_their()] [collar.name] by [user]!"), span_warning("I clip \a [src] onto [target]'s [collar.name]!"))
 	collar.bell = TRUE
 	collar.bellsound = TRUE
-	collar.AddComponent(/datum/component/squeak, SFX_COLLARJINGLE, 50, 100, 1)
+	collar.AddComponent(/datum/component/squeak, jingle_sounds, 50, 100, 1)
 	if(istype(src, /obj/item/catbell/cow))
 		collar.icon_state = /obj/item/clothing/neck/roguetown/collar/cowbell::icon_state
 		collar.desc = "A leather collar with a jingly cowbell attached."

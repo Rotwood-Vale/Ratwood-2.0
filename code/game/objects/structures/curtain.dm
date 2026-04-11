@@ -20,7 +20,7 @@
 	directional = TRUE//Do these care about which side you open from in the first place?
 
 //Because we don't want existing curtains to update on spawn like this.
-/obj/structure/curtain/directional/Initialize()
+/obj/structure/curtain/directional/Initialize(mapload)
 	closedir = dir
 	update_icon()
 	..()
@@ -117,6 +117,8 @@
 /obj/structure/curtain/black
 	color = "#414143"
 
+/obj/structure/curtain/drab
+	color = CLOTHING_DRAB
 /obj/structure/curtain/orange
 	color = "#a3622c"
 

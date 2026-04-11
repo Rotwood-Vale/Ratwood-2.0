@@ -60,5 +60,5 @@
 		else
 			icon_state = "bombdolier1"
 
-/obj/item/bmbstrap/Initialize()
+/obj/item/bmbstrap/Initialize(mapload)
 	. = ..()

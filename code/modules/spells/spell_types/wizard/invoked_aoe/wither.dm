@@ -30,7 +30,7 @@
 	var/turf/source_turf = get_turf(user)
 	
 	if(T.z != user.z)
-		to_chat(span_warning("You can't cast this spell on a different z-level!"))
+		to_chat(user, span_warning("You can't cast this spell on a different z-level!"))
 		return FALSE
 
 	var/list/affected_turfs = getline(source_turf, T)

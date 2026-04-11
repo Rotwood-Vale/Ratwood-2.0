@@ -54,7 +54,7 @@
 	inherent_spells = list(/obj/effect/proc_holder/spell/self/call_infernals,
 	/obj/effect/proc_holder/spell/invoked/fiend_meteor)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 

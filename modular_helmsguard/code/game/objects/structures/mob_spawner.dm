@@ -40,7 +40,7 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 	var/list/objfaction = list("test")
 	var/list/mymobs = list()
 
-/obj/structure/mobspawner/Initialize()
+/obj/structure/mobspawner/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 6)
 	ready = TRUE
@@ -174,7 +174,7 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 	var/list/objfaction = list("test")
 	var/list/mymobs = list()
 
-/obj/effect/mobspawner/Initialize()
+/obj/effect/mobspawner/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 6)
 	ready = TRUE
@@ -276,7 +276,7 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 	var/filltoseal = 3
 
 
-/obj/effect/mobspawner/hole/Initialize()
+/obj/effect/mobspawner/hole/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 6)
 	ready = TRUE

@@ -3,8 +3,8 @@
 	flag = BANDIT
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 3	//bare minimum of three on round start, regardless of garrison/holywarrior count
-	spawn_positions = 3
+	total_positions = 5	//bare minimum of five on round start, regardless of garrison/holywarrior count
+	spawn_positions = 5
 	antag_job = TRUE
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "At some point in your lyfe, you'd fallen to the wrong side of the carriage. Whether by butchery or finesse, you're known throughout the land. \
@@ -20,7 +20,7 @@
 	min_pq = 3
 	max_pq = null
 	round_contrib_points = 5
-	allowed_patrons = ALL_INHUMEN_PATRONS//YEAH!!! MURDER!!!
+	allowed_patrons = list(/datum/patron/inhumen/matthios) // Bandits bro, they rob you blind
 
 	advclass_cat_rolls = list(CTAG_BANDIT = 20)
 	PQ_boost_divider = 10
@@ -117,15 +117,15 @@
 		return
 
 	var/player_count = length(GLOB.joined_player_list)
-	var/slots = 3
+	var/slots = 5
 
 	//Add 1 slot for every 12 players over 30.
 	if(player_count > 42)
 		var/extra = floor((player_count - 42) / 12)
 		slots += extra
 
-	//3 slots minimum, 7 maximum.
-	slots = min(slots, 7)
+	//5 slots minimum, 7 maximum.
+	slots = min(slots, 9)
 
 	bandit_job.total_positions = slots
 	bandit_job.spawn_positions = slots

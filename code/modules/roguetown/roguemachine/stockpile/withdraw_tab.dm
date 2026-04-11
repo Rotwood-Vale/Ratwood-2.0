@@ -19,6 +19,9 @@
 	contents += "--------------<BR>"
 	contents += "<a href='?src=[REF(parent_structure)];change=1'>Stored Mammon: [budget]</a><BR>"
 	contents += "<a href='?src=[REF(parent_structure)];compact=1'>Compact Mode: [compact ? "ENABLED" : "DISABLED"]</a></center><BR>"
+	var/mob/living/user = usr
+	if (user && HAS_TRAIT(user, TRAIT_FOOD_STIPEND))
+		contents += "<center><b>TREASURY-LINE ACTIVE.</b></center><BR>"
 	var/selection = "Categories: "
 	for(var/category in categories)
 		if(category == current_category)
@@ -75,7 +78,21 @@
 		if(D.held_items[source_stockpile] <= 0)
 			parent_structure.say("Insufficient stock.")
 		else if(total_price > budget)
-			parent_structure.say("Insufficient mammon.")
+			var/mob/living/user = usr
+			if (user && HAS_TRAIT(user, TRAIT_FOOD_STIPEND))
+				if (SStreasury.treasury_value >= total_price)
+					D.held_items[source_stockpile]--
+					SStreasury.log_to_steward("-[D.withdraw_price]m worth of goods withdrawn direct from vomitorium (keep stipend)")
+					var/obj/item/I = new D.item_type(parent_structure.loc)
+					I.from_stockpile = TRUE
+					to_chat(user, span_info("[parent_structure] chitters and squeaks into the treasury ratlines."))
+					if(!user.put_in_hands(I))
+						I.forceMove(get_turf(user))
+					playsound(parent_structure.loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+				else
+					parent_structure.say("The treasury is barren. Please insert coinage.")
+			else
+				parent_structure.say("Insufficient mammon.")
 		else
 			D.held_items[source_stockpile]--
 			budget -= total_price
@@ -83,6 +100,7 @@
 			SStreasury.give_money_treasury(D.withdraw_price, "stockpile withdraw")
 			record_round_statistic(STATS_STOCKPILE_REVENUE, D.withdraw_price)
 			var/obj/item/I = new D.item_type(parent_structure.loc)
+			I.from_stockpile = TRUE
 			var/mob/user = usr
 			if(!user.put_in_hands(I))
 				I.forceMove(get_turf(user))

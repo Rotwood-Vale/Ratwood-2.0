@@ -22,6 +22,8 @@
 		return FALSE
 	if(!user.Adjacent(target))
 		return FALSE
+	if(!user.sexcon.Adjacent_Or_Closet(target))
+		return FALSE
 	return TRUE
 
 /datum/sex_action/masturbate_penis_over/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)

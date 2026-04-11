@@ -402,3 +402,83 @@
 	to_chat(H, span_notice("[user] absolves you of your injuries!"))
 
 	return TRUE
+
+// Weaker absolve for the Stigmata adventurer
+/obj/effect/proc_holder/spell/invoked/psydonamend	
+	name = "AMEND"
+	overlay_state = "ABSOLVE"
+	desc = "A lesser form of the mighty art of ABSOLUTION, bereft of its means to revive. Transfers the wounds from your target to you. Use carefully."
+	releasedrain = 20
+	chargedrain = 0
+	chargetime = 0
+	range = 5
+	warnie = "sydwarning"
+	movement_interrupt = FALSE
+	sound = 'sound/magic/psyabsolution.ogg'
+	invocations = list("BE AMENDED!")
+	invocation_type = "none"
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = FALSE
+	recharge_time = 30 SECONDS // 60 seconds cooldown
+	miracle = TRUE
+	devotion_cost = 80
+
+/obj/effect/proc_holder/spell/invoked/psydonamend/cast(list/targets, mob/living/user)
+
+	if(!ishuman(targets[1]))
+		to_chat(user, span_warning("AMENDMENT is for those who walk in HIS image!"))
+		revert_cast()
+		return FALSE
+	
+	var/mob/living/carbon/human/H = targets[1]
+	
+	if(H == user)
+		to_chat(user, span_warning("You cannot AMEND yourself!"))
+		revert_cast()
+		return FALSE
+
+	// THE LESSER ART OF AMENDMENT CANNOT RETURN THE DEAD.
+	
+	// Transfer afflictions from the target to the caster
+	
+	// Transfer damage
+	var/brute_transfer = H.getBruteLoss()
+	var/burn_transfer = H.getFireLoss()
+	var/tox_transfer = H.getToxLoss()
+	var/oxy_transfer = H.getOxyLoss()
+	var/clone_transfer = H.getCloneLoss()
+
+	if (oxy_transfer >= 150)
+		if (alert(user, "THEY ARE ASHEN WITH STILLED BREATH. AMENDMENT MAY INSTANTLY KILL YOU, STIGMATA. PROCEED?", "SELF-PRESERVATION", "YES", "NO") != "YES")
+			revert_cast()
+			return
+	
+	// Heal the target
+	H.adjustBruteLoss(-brute_transfer)
+	H.adjustFireLoss(-burn_transfer)
+	H.adjustToxLoss(-tox_transfer)
+	H.adjustOxyLoss(-oxy_transfer)
+	H.adjustCloneLoss(-clone_transfer)
+	
+	// Apply damage to the caster
+	user.adjustBruteLoss(brute_transfer)
+	user.adjustFireLoss(burn_transfer)
+	user.adjustToxLoss(tox_transfer)
+	user.adjustOxyLoss(oxy_transfer)
+	user.adjustCloneLoss(clone_transfer)
+
+	// Visual effects
+	user.visible_message(span_danger("[user] takes [H]'s suffering upon themselves!"))
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
+
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717") 
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717") 
+	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717") 
+	
+	// Notify the user and target
+	to_chat(user, span_warning("You amend [H] of their agony, taking it upon yourself!"))
+	to_chat(H, span_notice("[user] amends you of your agony!"))
+	
+	return TRUE

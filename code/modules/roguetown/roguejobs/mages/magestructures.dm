@@ -25,7 +25,7 @@
 	climbable = FALSE
 	climb_time = 0
 
-/obj/structure/arcyne_wall/Initialize()
+/obj/structure/arcyne_wall/Initialize(mapload)
 	. = ..()
 
 /obj/structure/arcyne_wall/caster
@@ -70,6 +70,22 @@
 		if(M.anti_magic_check(chargecost = 0) || structureclimber == M)
 			return TRUE
 	return FALSE
+
+//A non-deadbolt version. Wowsers!!!
+/obj/structure/mineral_door/wood/arcyne
+	desc = "arcyne door"
+	icon_state = "arcyne"
+	base_state = "arcyne"
+	max_integrity = 2000
+	over_state = "arcyneopen"
+	openSound = 'sound/magic/cosmic_expansion.ogg'
+	closeSound = 'sound/magic/cosmic_expansion.ogg'
+	destroy_sound = 'sound/magic/antimagic.ogg'
+	break_sound = 'sound/magic/antimagic.ogg'
+	locksound = 'sound/magic/teleport_diss.ogg'
+	unlocksound = 'sound/magic/repulse.ogg'
+	rattlesound = 'sound/magic/magic_nulled.ogg'
+
 
 /obj/structure/mineral_door/wood/deadbolt/arcyne
 	desc = "arcyne door"
@@ -169,7 +185,7 @@
 	var/time_between_uses = 12000
 	var/last_process = 0
 
-/obj/structure/leyline/Initialize()
+/obj/structure/leyline/Initialize(mapload)
 	.=..()
 	last_process = world.time
 

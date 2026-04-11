@@ -190,7 +190,7 @@
 
 
 		GLOB.dead_mob_list -= zombie // Remove it from global dead/alive mob list here here, if they're a zombie they probably died.
-									 // There is a better way to maintain it but needs overhaul. Will cover the two methods of zombie
+		// There is a better way to maintain it but needs overhaul. Will cover the two methods of zombie
 		GLOB.alive_mob_list += zombie// in both cure rot and medicine.
 
 		zombie.cmode_music = cmode_music
@@ -333,7 +333,7 @@
 		qdel(src)
 		return
 
-	zombie.can_do_sex = FALSE	//no fuck off
+	
 
 	zombie.blood_volume = BLOOD_VOLUME_NORMAL
 	zombie.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
@@ -429,6 +429,8 @@
 		return
 	if(mind.has_antag_datum(/datum/antagonist/skeleton))
 		return
+	if(mind.has_antag_datum(/datum/antagonist/gnoll))
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
 		return
 	return mind.add_antag_datum(/datum/antagonist/zombie)

@@ -13,7 +13,7 @@
 	canSmoothWith = null
 	neighborlay = null
 
-/turf/open/floor/rogue/ruinedwood/nosmooth/Initialize()
+/turf/open/floor/rogue/ruinedwood/nosmooth/Initialize(mapload)
 //	dir = pick(GLOB.cardinals)
 //	. = ..()
 
@@ -43,7 +43,7 @@
 /turf/open/floor/rogue/twig/nospin
 	icon_state = "twig"
 
-/turf/open/floor/rogue/twig/nospin/Initialize()
+/turf/open/floor/rogue/twig/nospin/Initialize(mapload)
 //	dir = pick(GLOB.cardinals)			Replaces the initialize in the parent.
 //	. = ..()
 
@@ -171,7 +171,7 @@
 	canSmoothWith = null
 	neighborlay = null
 
-/turf/open/floor/rogue/blocks/nosmooth/Initialize()
+/turf/open/floor/rogue/blocks/nosmooth/Initialize(mapload)
 
 /turf/open/floor/rogue/hexstone/nosmooth
 	smooth = SMOOTH_FALSE
@@ -179,7 +179,7 @@
 	neighborlay = null
 
 
-/turf/open/floor/rogue/hexstone/nosmooth/Initialize()
+/turf/open/floor/rogue/hexstone/nosmooth/Initialize(mapload)
 
 
 //Church floors
@@ -201,7 +201,7 @@
 	canSmoothWith = null
 	neighborlay = null
 									// Disable smoothing
-/turf/open/floor/rogue/church/nosmooth/Initialize()			// Remove random dir initialize() in parent object.
+/turf/open/floor/rogue/church/nosmooth/Initialize(mapload)			// Remove random dir initialize() in parent object.
 
 /turf/open/floor/rogue/churchbrick
 	icon = 'modular_helmsguard/icons/turf/roguefloor.dmi'	// Flipped so highlights are from NW
@@ -212,7 +212,7 @@
 	neighborlay = null
 										// Disable smoothing
 
-/turf/open/floor/rogue/churchbrick/nosmooth/Initialize()	// Remove random dir initialize() in parent object.
+/turf/open/floor/rogue/churchbrick/nosmooth/Initialize(mapload)	// Remove random dir initialize() in parent object.
 
 /turf/open/floor/rogue/churchrough
 	icon = 'modular_helmsguard/icons/turf/roguefloor.dmi'	// Generated alternate stone directions
@@ -223,7 +223,7 @@
 	canSmoothWith = null
 	neighborlay = null
 
-/turf/open/floor/rogue/churchrough/nosmooth/Initialize()	// Remove random dir initialize() in parent object.
+/turf/open/floor/rogue/churchrough/nosmooth/Initialize(mapload)	// Remove random dir initialize() in parent object.
 
 
 // End of attempted nosmooth / norand turfs.
@@ -242,21 +242,21 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
-/turf/open/floor/rogue/rooftop/Initialize()
+/turf/open/floor/rogue/rooftop/Initialize(mapload)
 	. = ..()
 	icon_state = "roof"
 
 /turf/open/floor/rogue/rooftop/green
 	icon_state = "roofg-arw"
 
-/turf/open/floor/rogue/rooftop/green/Initialize()
+/turf/open/floor/rogue/rooftop/green/Initialize(mapload)
 	. = ..()
 	icon_state = "roofg"
 
 /turf/open/floor/rogue/rooftop/green/corner1
 	icon_state = "roofgc1-arw"
 
-/turf/open/floor/rogue/rooftop/green/corner1/Initialize()
+/turf/open/floor/rogue/rooftop/green/corner1/Initialize(mapload)
 	. = ..()
 	icon_state = "roofgc1"
 

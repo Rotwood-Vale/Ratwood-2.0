@@ -303,6 +303,11 @@
 	cost = 60
 	contains = list(/obj/item/rogueweapon/sword/long/silver)
 
+/datum/supply_pack/rogue/Knight/silverwaraxe
+	name = "Silver War Axe"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/silver)
+
 /datum/supply_pack/rogue/Knight/silverpoleaxe
 	name = "Silver Poleaxe"
 	cost = 60
@@ -328,6 +333,6 @@
 
 // The hedge-knight can buy tamed saigas now to make use of their riding skill.
 
-/obj/structure/closet/crate/chest/saigabuck/Initialize()
+/obj/structure/closet/crate/chest/saigabuck/Initialize(mapload)
 	. = ..()
 	new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled(src)

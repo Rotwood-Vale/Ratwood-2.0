@@ -77,7 +77,7 @@
 /obj/structure/stairs/fancy/l
 	icon_state = "fancy_stairs_l"
 
-/obj/structure/stairs/fancy/Initialize()
+/obj/structure/stairs/fancy/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
@@ -161,3 +161,42 @@
 					P.buckle_mob(pulling, TRUE, TRUE, 90, 0, 0)
 				if(isliving(pulling))
 					P = pulling
+
+
+//purely cosmetic curved stairs (kinda confusing to set up right, compare the DIR to regular chairs. Correct version depends on if it's going up or down)
+
+/obj/structure/stairs/cw
+	name = "curved stairs"
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "woodCW"
+
+/obj/structure/stairs/cwdown
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "woodCWdown"
+
+/obj/structure/stairs/ccw
+	name = "curved stairs"
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "woodCCW"
+	
+/obj/structure/stairs/ccwdown
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "woodCCWdown"
+
+/obj/structure/stairs/stone/ccw
+	name = "curved stairs"
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "stoneCCW"
+
+/obj/structure/stairs/stone/ccwdown
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "stoneCCWdown"
+
+/obj/structure/stairs/stone/cw
+	name = "curved stairs"
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "stoneCW"
+
+/obj/structure/stairs/stone/cwdown
+	icon = 'icons/obj/stairscurve.dmi'
+	icon_state = "stoneCWdown"

@@ -1,4 +1,9 @@
+/// Assoc list mapping /datum/charflaw typepaths to detached instances. Mainly for getting stuff like names from the typepath.
+/// Initialized at runtime. Should remain stable if nobody's calling procs on New().
+GLOBAL_LIST_EMPTY(charflaw_singletons)
 
+/// Associative list mapping the "menu name" of each vice in the list to its typepath. This list is all of the vices you can choose. 
+/// Used primarily for adding a vice, but also for randomly picking a vice from the selectable space. Try pick_assoc().
 GLOBAL_LIST_INIT(character_flaws, list(
 	"Illiterate"=/datum/charflaw/illiterate,
 	"Light Sensitivity"=/datum/charflaw/light_sensitive,
@@ -418,6 +423,9 @@ GLOBAL_LIST_INIT(averse_factions, list(
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
+	var/obj/item/woodstaff = new /obj/item/rogueweapon/woodstaff(get_turf(H))
+	H.put_in_hands(woodstaff, forced = TRUE)
+
 	if(!H.wear_mask)
 		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/blindfold(H), SLOT_WEAR_MASK)
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
@@ -515,9 +523,7 @@ GLOBAL_LIST_INIT(averse_factions, list(
 
 /datum/charflaw/nudist
 	name = "Nudist"
-	desc = "I refuse to wear clothes. I'm compelled to remain unclothed and will automatically remove clothing. Others can dress me, but I'll try to remove it and suffer stress while clothed. I can tolerate certain accessories."
-	needs_life_tick = TRUE
-	var/next_removal_attempt = 0
+	desc = "I refuse to wear clothes. They are a hindrance to my freedom. I can tolerate certain accessories."
 
 /datum/charflaw/nudist/on_mob_creation(mob/user)
 	..()
@@ -678,7 +684,7 @@ GLOBAL_LIST_INIT(averse_factions, list(
 
 /datum/charflaw/nude_sleeper
 	name = "Nude Sleeper"
-	desc = "I can only fall asleep if I'm completely nude and in a bed. I cannot sleep while wearing equipment. (Unremovable clothing and certain accessories are allowed.)"
+	desc = "I can't fall asleep unless I'm nude and in bed. I cannot sleep while wearing equipment. (Unremovable clothing and certain accessories are allowed.)"
 
 /datum/charflaw/nude_sleeper/on_mob_creation(mob/user)
 	..()
@@ -730,11 +736,11 @@ GLOBAL_LIST_INIT(averse_factions, list(
 
 /datum/charflaw/unintelligible/on_mob_creation(mob/user)
 	var/mob/living/carbon/human/recipient = user
-	addtimer(CALLBACK(src, .proc/unintelligible_apply, recipient), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(unintelligible_apply), recipient), 5 SECONDS)
 
 /datum/charflaw/unintelligible/proc/unintelligible_apply(mob/living/carbon/human/user)
 	if(user.advsetup)
-		addtimer(CALLBACK(src, .proc/unintelligible_apply, user), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(unintelligible_apply), user), 5 SECONDS)
 		return
 	user.remove_language(/datum/language/common)
 	user.adjust_skillrank(/datum/skill/misc/reading, -6, TRUE)
@@ -916,6 +922,10 @@ GLOBAL_LIST_INIT(averse_factions, list(
 		var/mob/living/carbon/human/H = user
 		H.adjust_triumphs(1)
 
+/datum/charflaw/sleepless/on_removal(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_NOSLEEP, TRAIT_GENERIC)
+
 /datum/charflaw/mute
 	name = "Mute"
 	desc = "I cannot speak at all. I am permanently mute and cannot vocalize. +1 TRI"
@@ -925,6 +935,10 @@ GLOBAL_LIST_INIT(averse_factions, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.adjust_triumphs(1)
+
+/datum/charflaw/mute/on_removal(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_PERMAMUTE, TRAIT_GENERIC)
 
 /datum/charflaw/critweakness
 	name = "Critical Weakness"
@@ -936,6 +950,10 @@ GLOBAL_LIST_INIT(averse_factions, list(
 		var/mob/living/carbon/human/H = user
 		H.adjust_triumphs(1)
 
+/datum/charflaw/critweakness/on_removal(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+
 /datum/charflaw/silverweakness
 	name = "Silver Weakness"
 	desc = "Silver weapons deal triple damage to me. Silver burns and wounds me far more severely than normal."
@@ -943,9 +961,13 @@ GLOBAL_LIST_INIT(averse_factions, list(
 /datum/charflaw/silverweakness/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
+/datum/charflaw/silverweakness/on_removal(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
+
 /datum/charflaw/leprosy
-	name = "Leper (+1 TRI)"
-	desc = "I am afflicted with leprosy. All my stats are reduced by 1 (STR, INT, PER, CON, WIL, SPD, LCK). My appearance disturbs others. +1 TRI"
+	name = "Leper"
+	desc = "I am cursed with leprosy! Too poor to afford treatment, my skin now lays violated by lesions, my extremities are numb, and my presence disturbs even the most stalwart men."
 
 /datum/charflaw/leprosy/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -961,8 +983,8 @@ GLOBAL_LIST_INIT(averse_factions, list(
 	H.adjust_triumphs(1)
 
 /datum/charflaw/mind_broken
-	name = "Asundered Mind (+1 TRI)"
-	desc = "My mind is shattered. I suffer permanent, infinite hallucinations and psychosis. Reality is a twisted nightmare. +1 TRI"
+	name = "Asundered Mind"
+	desc = "My mind is asundered, whether it was by my own means or an unfortunate accident. Nothing seems real to me..."
 
 /datum/charflaw/mind_broken/apply_post_equipment(mob/living/carbon/human/insane_fool)
 	insane_fool.hallucination = INFINITY
@@ -1050,8 +1072,9 @@ GLOBAL_LIST_INIT(averse_factions, list(
 	H.update_body()
 
 /datum/charflaw/hemophage
-	name = "Hemophage (+1 TRI)"
-	desc = "I can only sustain myself on blood. Normal food and drink make me ill and provide no nutrition. I can bite others to drink blood. Any eating-related virtue benefits are negated. +1 TRI"
+	name = "Hemophage"
+	desc = "Whether by curse or my people, blood is the only thing to keep me alive. Normal sources of nutrition and hydration will make me ill. <br>\
+	<small>Any element of a virtue that modifies eating will be canceled out by Hemophage.</small>"
 
 /datum/charflaw/hemophage/on_mob_creation(mob/living/carbon/human/vamp_wannabe)
 	ADD_TRAIT(vamp_wannabe, TRAIT_HEMOPHAGE, TRAIT_GENERIC)

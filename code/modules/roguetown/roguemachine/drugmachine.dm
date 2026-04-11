@@ -250,7 +250,7 @@
 	STOP_PROCESSING(SSroguemachine, src)
 	return ..()
 
-/obj/structure/roguemachine/drugmachine/Initialize()
+/obj/structure/roguemachine/drugmachine/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSroguemachine, src)
 	update_icon()
@@ -261,6 +261,7 @@
 	held_items[/obj/item/clothing/mask/cigarette/rollie/mentha] = list("PRICE" = rand(6,11),"NAME" = "mentha zig")
 	held_items[/obj/item/clothing/mask/cigarette/rollie/nicotine] = list("PRICE" = rand(5,10),"NAME" = "zig")
 	held_items[/obj/item/storage/fancy/shhig] = list("PRICE" = rand(40,60), "NAME" = "Shhig brand premium zigs")
+	held_items[/obj/item/alch/transisdust] = list("PRICE" = rand(80,120), "NAME" = "sui dust")
 	// azure peak addition start - lipstick
 	held_items[/obj/item/azure_lipstick] = list("PRICE" = rand(33,50),"NAME" = "red lipstick")
 	held_items[/obj/item/azure_lipstick/jade] = list("PRICE" = rand(33,50),"NAME" = "jade lipstick")

@@ -5,7 +5,7 @@
 	var/quest_difficulty = list(QUEST_DIFFICULTY_EASY, QUEST_DIFFICULTY_MEDIUM, QUEST_DIFFICULTY_HARD)
 	var/quest_type = list(QUEST_RETRIEVAL, QUEST_COURIER, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_KILL_EASY, QUEST_BEACON, QUEST_OUTLAW)
 
-/obj/effect/landmark/quest_spawner/Initialize()
+/obj/effect/landmark/quest_spawner/Initialize(mapload)
 	. = ..()
 	GLOB.quest_landmarks_list += src
 

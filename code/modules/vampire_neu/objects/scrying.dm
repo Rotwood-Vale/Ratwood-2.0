@@ -51,7 +51,7 @@
 
 	usr.forceMove(pick(L))
 
-/mob/dead/observer/rogue/arcaneeye/Initialize()
+/mob/dead/observer/rogue/arcaneeye/Initialize(mapload)
 	. = ..()
 	set_invisibility(GLOB.observer_default_invisibility)
 	verbs += list(

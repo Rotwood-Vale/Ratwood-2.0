@@ -32,7 +32,7 @@
 	var/list/overlay_to_index = list()
 	var/current_overlays = 0
 
-/obj/item/canvas/Initialize()
+/obj/item/canvas/Initialize(mapload)
 	. = ..()
 	used_canvas = new
 	used_canvas.host = src
@@ -218,7 +218,7 @@
 /* /obj/item/canvas/random_painting
 	loads_painting = TRUE
 
-/obj/item/canvas/random_painting/Initialize()
+/obj/item/canvas/random_painting/Initialize(mapload)
 	. = ..()
 	icon = SSpaintings.get_random_painting("32x32")
 	var/icon/new_icon = getFlatIcon(src)
@@ -341,7 +341,7 @@
 	var/list/colors = list()
 
 
-/obj/item/paint_palette/Initialize()
+/obj/item/paint_palette/Initialize(mapload)
 	. = ..()
 	update_overlays()
 

@@ -19,7 +19,7 @@
 	name = "black lipstick"
 	colour = "black"
 
-/obj/item/azure_lipstick/Initialize()
+/obj/item/azure_lipstick/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -45,8 +45,10 @@
 				H.update_body()
 				return
 			
-			user.visible_message(span_notice("[user] does [user.p_their()] lips with \the [src]."), \
-								 span_notice("I take a moment to apply \the [src]. Perfect!"))
+			user.visible_message(
+				span_notice("[user] does [user.p_their()] lips with \the [src]."),
+				span_notice("I take a moment to apply \the [src]. Perfect!")
+			)
 			if(H.getorganslot(ORGAN_SLOT_SNOUT))
 				H.lip_style = "lipstick_nosides"
 			else
@@ -55,20 +57,28 @@
 			H.update_body()
 		else
 			if(H.lip_style) // if they already have lipstick on
-				user.visible_message(span_warning("[user] begins to wipe [H]'s lipstick off with \the [src]."), \
-								 	 span_notice("I begin to wipe off [H]'s lipstick..."))
+				user.visible_message(
+					span_warning("[user] begins to wipe [H]'s lipstick off with \the [src]."),
+					span_notice("I begin to wipe off [H]'s lipstick...")
+				)
 				if(do_after(user, 10, target = H))
-					user.visible_message(span_notice("[user] wipes [H]'s lipstick off with \the [src]."), \
-										 span_notice("I wipe off [H]'s lipstick."))
+					user.visible_message(
+						span_notice("[user] wipes [H]'s lipstick off with \the [src]."),
+						span_notice("I wipe off [H]'s lipstick.")
+					)
 					H.lip_style = null
 					H.update_body()
 				return
 			
-			user.visible_message(span_warning("[user] begins to do [H]'s lips with \the [src]."), \
-								 span_notice("I begin to apply \the [src] on [H]'s lips..."))
+			user.visible_message(
+				span_warning("[user] begins to do [H]'s lips with \the [src]."),
+				span_notice("I begin to apply \the [src] on [H]'s lips...")
+			)
 			if(do_after(user, 20, target = H))
-				user.visible_message(span_notice("[user] does [H]'s lips with \the [src]."), \
-									 span_notice("I apply \the [src] on [H]'s lips."))
+				user.visible_message(
+					span_notice("[user] does [H]'s lips with \the [src]."),
+					span_notice("I apply \the [src] on [H]'s lips.")
+				)
 				if(H.getorganslot(ORGAN_SLOT_SNOUT))
 					H.lip_style = "lipstick_nosides"
 				else

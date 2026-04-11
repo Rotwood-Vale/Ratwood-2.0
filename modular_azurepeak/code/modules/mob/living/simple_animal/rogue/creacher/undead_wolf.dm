@@ -69,7 +69,7 @@
 	can_have_ai = FALSE
 	ai_controller = /datum/ai_controller/undead/wolf
 
-/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead/Initialize(mapload)
 	. = ..()
 	REMOVE_TRAIT(src, TRAIT_SIMPLE_WOUNDS, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_RIGIDMOVEMENT, TRAIT_GENERIC)

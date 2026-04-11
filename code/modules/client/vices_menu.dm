@@ -3113,7 +3113,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				
 				// Use dye bin colors for more variety
 				var/list/color_choices = list("None")
-				for(var/color_name in colorlist)
+				for(var/color_name in GLOB.colorlist)
 					color_choices += color_name
 				
 				var/new_color = tgui_input_list(usr, "Choose a color for this item:", "Item Color", color_choices, vars["loadout_[slot]_hex"])

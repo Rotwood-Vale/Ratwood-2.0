@@ -56,7 +56,7 @@
 
 	var/stomp_cd
 
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/colossus/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/colossus/Initialize(mapload)
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
 	. = ..()
 
@@ -155,9 +155,11 @@
 
 /obj/projectile/earthenchunk/on_hit(target)
 	. = ..()
-	var/list/spawnLists = list(/mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler,
-	/mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler,
-	 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler)
+	var/list/spawnLists = list(
+		/mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler,
+		/mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler,
+		/mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler,
+	)
 	var/reinforcement_count = 3
 	if(prob(20))
 		src.visible_message(span_notice("[src] breaks apart, scattering minor elementals about!"))

@@ -17,6 +17,11 @@
 				playsound(user, pick('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg'), 100, FALSE, ignore_walls = FALSE)
 				user.visible_message("<span class='love'>[user] cleaned [src] dilligently.</span>")
 				qdel(C)
+				var/datum/status_effect/facial/facial = L.has_status_effect(/datum/status_effect/facial)
+				if(!facial)
+					L.apply_status_effect(/datum/status_effect/facial)
+				else
+					facial.refresh_cum()
 			return
 		return
 	..()

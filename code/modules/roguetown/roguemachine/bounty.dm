@@ -195,20 +195,20 @@
 	new_bounty.reason = reason
 	new_bounty.employer = employer_name
 	new_bounty.target_race = race
-	new_bounty.target_height = lowertext(descriptor_height)
-	new_bounty.target_body = lowertext(descriptor_body)
+	new_bounty.target_height = LOWER_TEXT(descriptor_height)
+	new_bounty.target_body = LOWER_TEXT(descriptor_body)
 	if(descriptor_body == "Average" || descriptor_body == "Athletic")
 		var/bro_unreal = "an "
-		new_bounty.target_body_prefix = lowertext(bro_unreal += descriptor_body)
+		new_bounty.target_body_prefix = LOWER_TEXT(bro_unreal += descriptor_body)
 	else
 		var/bro_real = "a "
-		new_bounty.target_body_prefix = lowertext(bro_real += descriptor_body)
+		new_bounty.target_body_prefix = LOWER_TEXT(bro_real += descriptor_body)
 	if(descriptor_voice == "Ordinary" || descriptor_voice == "Androgynous")
 		var/bro_unreal = "an "
-		new_bounty.target_voice_prefix = lowertext(bro_unreal += descriptor_voice)
+		new_bounty.target_voice_prefix = LOWER_TEXT(bro_unreal += descriptor_voice)
 	else
 		var/bro_real = "a "
-		new_bounty.target_voice_prefix = lowertext(bro_real += descriptor_voice)
+		new_bounty.target_voice_prefix = LOWER_TEXT(bro_real += descriptor_voice)
 	if(gender == MALE)
 		new_bounty.target_body_type = "masculine"
 	else
@@ -225,22 +225,22 @@
 		new_bounty_noface.target_body_type = "masculine"
 	else
 		new_bounty_noface.target_body_type = "feminine"
-	new_bounty_noface.target_height = lowertext(descriptor_height)
+	new_bounty_noface.target_height = LOWER_TEXT(descriptor_height)
 	if(descriptor_body == "Average" || descriptor_body == "Athletic")
 		var/bro_unreal = "an "
-		new_bounty_noface.target_body_prefix = lowertext(bro_unreal += descriptor_body)
+		new_bounty_noface.target_body_prefix = LOWER_TEXT(bro_unreal += descriptor_body)
 	else
 		var/bro_real = "a "
-		new_bounty_noface.target_body_prefix = lowertext(bro_real += descriptor_body)
+		new_bounty_noface.target_body_prefix = LOWER_TEXT(bro_real += descriptor_body)
 	if(descriptor_voice == "Ordinary" || descriptor_voice == "Anrdogynous")
 		var/bro_unreal = "an "
-		new_bounty_noface.target_voice_prefix = lowertext(bro_unreal += descriptor_voice)
+		new_bounty_noface.target_voice_prefix = LOWER_TEXT(bro_unreal += descriptor_voice)
 	else
 		var/bro_real = "a "
-		new_bounty_noface.target_voice_prefix = lowertext(bro_real += descriptor_voice)
-	new_bounty_noface.target_voice = lowertext(descriptor_voice)
-	new_bounty_noface.target_body = lowertext(descriptor_body)
-	//new_bounty_noface.target_voice = lowertext(descriptor_voice)
+		new_bounty_noface.target_voice_prefix = LOWER_TEXT(bro_real += descriptor_voice)
+	new_bounty_noface.target_voice = LOWER_TEXT(descriptor_voice)
+	new_bounty_noface.target_body = LOWER_TEXT(descriptor_body)
+	//new_bounty_noface.target_voice = LOWER_TEXT(descriptor_voice)
 	new_bounty_noface.bandit = bandit_status
 	new_bounty_noface.reason = reason
 	new_bounty_noface.employer = employer_name
@@ -257,22 +257,22 @@
 		new_bounty_obscure.target_body_type = "masculine"
 	else
 		new_bounty_obscure.target_body_type = "feminine"
-	new_bounty_obscure.target_height = lowertext(descriptor_height)
+	new_bounty_obscure.target_height = LOWER_TEXT(descriptor_height)
 	if(descriptor_body == "Average" || descriptor_body == "Athletic")
 		var/bro_unreal = "an "
-		new_bounty_obscure.target_body_prefix = lowertext(bro_unreal += descriptor_body)
+		new_bounty_obscure.target_body_prefix = LOWER_TEXT(bro_unreal += descriptor_body)
 	else
 		var/bro_real = "a "
-		new_bounty_obscure.target_body_prefix = lowertext(bro_real += descriptor_body)
+		new_bounty_obscure.target_body_prefix = LOWER_TEXT(bro_real += descriptor_body)
 	if(descriptor_voice == "Ordinary" || descriptor_voice == "Anrdogynous")
 		var/bro_unreal = "an "
-		new_bounty_obscure.target_hidden_voice_prefix = lowertext(bro_unreal += descriptor_voice)
+		new_bounty_obscure.target_hidden_voice_prefix = LOWER_TEXT(bro_unreal += descriptor_voice)
 	else
 		var/bro_real = "a "
-		new_bounty_obscure.target_hidden_voice_prefix = lowertext(bro_real += descriptor_voice)
-	new_bounty_obscure.target_hidden_voice = lowertext(descriptor_voice)
-	new_bounty_obscure.target_body = lowertext(descriptor_body)
-	//new_bounty_obscure.target_voice = lowertext(descriptor_voice)
+		new_bounty_obscure.target_hidden_voice_prefix = LOWER_TEXT(bro_real += descriptor_voice)
+	new_bounty_obscure.target_hidden_voice = LOWER_TEXT(descriptor_voice)
+	new_bounty_obscure.target_body = LOWER_TEXT(descriptor_body)
+	//new_bounty_obscure.target_voice = LOWER_TEXT(descriptor_voice)
 	new_bounty_obscure.bandit = bandit_status
 	new_bounty_obscure.reason = reason
 	new_bounty_obscure.employer = employer_name

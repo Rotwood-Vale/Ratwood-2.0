@@ -302,7 +302,7 @@
 	if(ishuman(btm) && !QDELETED(btm) && ishuman(top) && !QDELETED(top))
 		if(forceful_removal)
 			var/damage = top.sexcon.knotted_part_partner&SEX_PART_JAWS ? 10 : 30 // base damage value
-			if (top.sexcon.arousal > MAX_AROUSAL / 3) // considered still hard, let it rip like a beyblade
+			if (top.sexcon.arousal > MAX_AROUSAL / 4 || top.sexcon.manual_arousal > SEX_MANUAL_AROUSAL_PARTIAL) // considered still hard, let it rip like a beyblade
 				damage *= 2
 				btm.Knockdown(10)
 				if(notify && !keep_btm_status && !btm.has_status_effect(/datum/status_effect/knot_gaped)) // apply gaped status if extra forceful pull (only if we're not reknotting target)
@@ -331,12 +331,22 @@
 				btm.apply_status_effect(/datum/status_effect/facial/internal)
 			else
 				creampie.refresh_cum()
+			if(top?.dna?.species?.id == "gnoll")
+				btm.has_gnoll_scent_this_round = TRUE
+			modular_record_collar_receive_event(btm, top)
+			if(!btm.has_status_effect(/datum/status_effect/knot_gaped))
+				var/obj/item/organ/testicles/testes = top.getorganslot(ORGAN_SLOT_TESTICLES)
+				if(testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+					btm.apply_status_effect(/datum/status_effect/creampie_leak/long)
+				else
+					btm.apply_status_effect(/datum/status_effect/creampie_leak)
 		if(top.sexcon.knotted_part_partner&SEX_PART_JAWS)
 			var/datum/status_effect/facial/facial = btm.has_status_effect(/datum/status_effect/facial)
 			if(!facial)
 				btm.apply_status_effect(/datum/status_effect/facial)
 			else
 				facial.refresh_cum()
+			modular_record_collar_receive_event(btm, top)
 	knot_exit(keep_top_status, keep_btm_status)
 
 /datum/sex_controller/proc/knot_exit(keep_top_status = FALSE, keep_btm_status = FALSE)
@@ -377,6 +387,7 @@
 /mob/living/carbon/human/werewolf_transform() // needed to ensure that we safely remove the tie before transitioning
 	if(istype(sexcon) && sexcon.knotted_status)
 		sexcon.knot_remove()
+	modular_handle_werewolf_transform_chastity()
 	return ..()
 
 /mob/living/carbon/human/werewolf_untransform(dead,gibbed) // needed to ensure that we safely remove the tie after transitioning
@@ -434,6 +445,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/knot_gaped
 	effectedstats = list("strength" = -1, "speed" = -2, "intelligence" = -1)
 	var/last_loc
+	var/contents_to_drip = /datum/reagent/erpjuice/cum
 
 /datum/status_effect/knot_gaped/on_apply()
 	last_loc = get_turf(owner)
@@ -447,9 +459,13 @@
 	var/cur_loc = get_turf(owner)
 	if(get_dist(cur_loc, last_loc) <= 5) // too close, don't spawn a puddle
 		return
-	add_cum_floor(get_turf(owner))
+	add_cum_floor(cur_loc)
 	playsound(owner, pick('sound/misc/bleed (1).ogg', 'sound/misc/bleed (2).ogg', 'sound/misc/bleed (3).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
 	last_loc = cur_loc
+	var/obj/item/reagent_containers/glass/cum_chalice = locate() in cur_loc
+	if(!cum_chalice?.spillable) // leak contents underneath the first found open container
+		return
+	cum_chalice.reagents.add_reagent(contents_to_drip,1)
 
 /atom/movable/screen/alert/status_effect/knot_gaped
 	name = "Gaped"
@@ -471,7 +487,7 @@
 	if(!istype(L) || !L.sexcon)
 		return FALSE
 	if(L.sexcon.knotted_status == KNOTTED_AS_TOP)
-		var/do_forceful_removal = L.cmode || L.sexcon.arousal > MAX_AROUSAL / 3 // combat mode, or considered still hard, let it rip like a beyblade
+		var/do_forceful_removal = L.cmode || L.sexcon.arousal > MAX_AROUSAL / 4 || L.sexcon.manual_arousal > SEX_MANUAL_AROUSAL_PARTIAL // combat mode, or considered still hard, let it rip like a beyblade
 		L.sexcon.knot_remove(forceful_removal = do_forceful_removal)
 	return FALSE
 

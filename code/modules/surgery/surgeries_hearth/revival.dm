@@ -53,8 +53,8 @@
 		var/mob/living/LU = user
 		var/excomm_found = FALSE
 		for(var/excomm_name in GLOB.excommunicated_players)
-			var/clean_excomm = lowertext(trim(excomm_name))
-			var/clean_target = lowertext(trim(target.real_name))
+			var/clean_excomm = LOWER_TEXT(trim(excomm_name))
+			var/clean_target = LOWER_TEXT(trim(target.real_name))
 			if(clean_excomm == clean_target)
 				excomm_found = TRUE
 				break

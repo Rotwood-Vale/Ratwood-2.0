@@ -113,7 +113,7 @@
 
 /obj/item/jingle_bells
 	name = "jingling bells"
-	desc = "A set of little bells that make a satifying ring when jostled."
+	desc = "A set of little bells that make a satisfying ring when jostled."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bells"
 	throwforce = 5
@@ -122,6 +122,6 @@
 	grid_width = 64
 	grid_height = 32
 
-/obj/item/jingle_bells/Initialize()
+/obj/item/jingle_bells/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_JINGLE_BELLS)

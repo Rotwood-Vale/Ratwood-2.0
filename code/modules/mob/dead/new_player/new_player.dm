@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	//Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
 	var/ineligible_for_roles = FALSE
 
-/mob/dead/new_player/Initialize()
+/mob/dead/new_player/Initialize(mapload)
 //	if(client && SSticker.state == GAME_STATE_STARTUP)
 //		var/atom/movable/screen/splash/S = new(client, TRUE, TRUE)
 //		S.Fade(TRUE)
@@ -162,11 +162,11 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 			if(ready != tready)
 				ready = tready
 		//if it's post initialisation and they're trying to observe we do the needful
-		// Check the git blame for why this was removed.
-		// if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
-		// 	ready = tready
-		// 	make_me_an_observer()
-		// 	return
+		
+		if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
+			ready = tready
+			make_me_an_observer()
+			return
 
 	if(href_list["refresh"])
 		winshow(src, "preferencess_window", FALSE)
@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		ready = PLAYER_NOT_READY
 		return FALSE
 
-	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? Playing is a lot more fun.","VOYEUR","Yes","No")
+	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? Playing is a lot more fun.","SPECTATE","Yes","No")
 
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
@@ -710,8 +710,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	var/is_antag
 	if(mind in GLOB.pre_setup_antags)
 		is_antag = TRUE
+	var/is_gnoll = (mind?.assigned_role == "Gnoll")
 
-	client.prefs.copy_to(H, antagonist = is_antag)
+	client.prefs.copy_to(H, antagonist = is_antag, skip_normal_prefs = is_gnoll)
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)
@@ -719,7 +720,13 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
 
-	H.name = real_name
+	if(is_gnoll)
+		var/gnoll_name = client?.prefs?.gnoll_prefs?.ensure_gnoll_name() || H.real_name
+		H.real_name = gnoll_name
+		H.name = gnoll_name
+		H.dna.real_name = gnoll_name
+	else
+		H.name = real_name
 
 	. = H
 	new_character = .

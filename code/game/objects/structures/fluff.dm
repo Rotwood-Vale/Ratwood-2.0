@@ -130,7 +130,7 @@
 	/// Throwing/Flying non mobs can always exit the turf regardless of other flags
 	var/allow_flying_outwards = TRUE
 
-/obj/structure/fluff/railing/Initialize()
+/obj/structure/fluff/railing/Initialize(mapload)
 	. = ..()
 	init_connect_loc_element()
 	var/lay = getwlayer(dir)
@@ -285,7 +285,7 @@
 	pass_crawl = FALSE
 	climb_offset = 6
 
-/obj/structure/fluff/railing/fence/Initialize()
+/obj/structure/fluff/railing/fence/Initialize(mapload)
 	. = ..()
 	smooth_fences()
 
@@ -371,6 +371,12 @@
 /obj/structure/bars/tough
 	max_integrity = 9000
 	damage_deflection = 40
+
+/obj/structure/bars/nopassthrow
+	desc = "The bars are too thick to throw anything through the gaps."
+
+/obj/structure/bars/nopassthrow/CanPass(atom/movable/mover, turf/target)
+	return isobserver(mover)
 
 /*
 /obj/structure/bars/CheckExit(atom/movable/O, turf/target)
@@ -483,7 +489,7 @@
 	var/togg = FALSE
 	redstone_structure = TRUE
 
-/obj/structure/bars/grille/Initialize()
+/obj/structure/bars/grille/Initialize(mapload)
 	AddComponent(/datum/component/squeak, list('sound/foley/footsteps/FTMET_A1.ogg','sound/foley/footsteps/FTMET_A2.ogg','sound/foley/footsteps/FTMET_A3.ogg','sound/foley/footsteps/FTMET_A4.ogg'), 40)
 	dir = pick(GLOB.cardinals)
 	return ..()
@@ -534,6 +540,12 @@
 	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to rename the grille."))
 
+/obj/structure/bars/grille/rusty
+	name = "rusty grille"
+	desc = "A few good hits ought to smash it open."
+	max_integrity = 70
+	color = "#d9c8c1"
+
 /obj/structure/bars/pipe
 	name = "bronze pipe"
 	desc = ""
@@ -570,7 +582,7 @@
 	drag_slowdown = 3
 	metalizer_result = /obj/item/roguegear/bronze
 
-/obj/structure/fluff/clock/Initialize()
+/obj/structure/fluff/clock/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	soundloop.start()
 	. = ..()
@@ -653,6 +665,9 @@
 
 /obj/structure/fluff/wallclock/attack_right(mob/user)
 	if(user.mind && isliving(user))
+		var/area/rogue/user_area = get_area(user)
+		if(user_area?.no_special_item_retrieval) //area does not allow fetching special items, return
+			return
 		if(user.mind.special_items && user.mind.special_items.len)
 			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
 			if(item)
@@ -695,7 +710,7 @@
 //			if(SSshuttle.emergency.timeLeft() < 30 MINUTES)
 //				. += span_warning("The last boat will leave in [round(SSshuttle.emergency.timeLeft()/600)] minutes.")
 
-/obj/structure/fluff/wallclock/Initialize()
+/obj/structure/fluff/wallclock/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	soundloop.start()
 	. = ..()
@@ -853,7 +868,7 @@
 	max_integrity = 300
 	dir = SOUTH
 
-/obj/structure/fluff/statue/Initialize()
+/obj/structure/fluff/statue/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -1175,7 +1190,7 @@
 	var/divine = TRUE
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
 
-/obj/structure/fluff/psycross/Initialize()
+/obj/structure/fluff/psycross/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
@@ -1253,6 +1268,62 @@
 	icon_state = "invertedcross"
 	divine = FALSE
 
+/obj/structure/fluff/psycross/zizocross/stone
+	name = "stone inverted cross"
+	desc = "An unholy symbol, the knowledge that something so sturdy was able to be put up in reverence of the dark star, completely unattended... is a difficult anchovy to swallow for many."
+	icon_state = "cross_zizo"
+	divine = FALSE
+	max_integrity = 200
+
+/obj/structure/fluff/psycross/zizocross/golden
+	name = "golden inverted cross"
+	desc = "An unholy symbol meticilously plated with leaf gold. It stands in defiance to order. The dead will rise."
+	icon_state = "cross_zizo_u"
+	divine = FALSE
+	max_integrity = 350
+	
+/obj/structure/fluff/psycross/graggar
+	name = "vicious cross"
+	desc = "An unholy symbol wrought from stone. It promises glory to the conqueror and chains to the conquered."
+	icon_state = "cross_graggar"
+	divine = FALSE
+	max_integrity = 200
+
+/obj/structure/fluff/psycross/graggar/decorated
+	name = "revered vicious cross"
+	desc = "An unholy symbol wrought from stone. Meat impaled on spikes and flesh dangling like ribbons off hooks, an offering, proof of conquest, but does he listen?"
+	icon_state = "cross_graggar_u"
+	divine = FALSE
+	max_integrity = 350
+
+/obj/structure/fluff/psycross/matthios
+	name = "grinning cross"
+	desc = "An unholy stone cross bearing the likeness of drawn daggers and a grinning visage."
+	icon_state = "cross_matthios"
+	divine = FALSE
+	max_integrity = 200
+
+/obj/structure/fluff/psycross/matthios/decorated
+	name = "ornate cross"
+	desc = "Golden scales dangle from rags and balance the scales. A monument to wealth."
+	icon_state = "cross_matthios_u"
+	divine = FALSE
+	max_integrity = 350
+
+/obj/structure/fluff/psycross/baotha
+	name = "spider cross"
+	desc = "A gnarled stone cross from which carved spider legs unfurl. You feel like you're being beckoned faintly, like a whisper in your ear."
+	icon_state = "cross_baotha"
+	divine = FALSE
+	max_integrity = 200
+
+/obj/structure/fluff/psycross/baotha/decorated
+	name = "webbed spider cross"
+	desc = "The spider spreads its legs, the web unfurls. Just looking at it makes bad memories surface."
+	icon_state = "cross_baotha_u"
+	divine = FALSE
+	max_integrity = 350
+
 /obj/structure/fluff/psycross/attackby(obj/item/W, mob/living/carbon/human/user, params)
 	if(user.mind)
 		if((user.mind.assigned_role == "Bishop") || (user.mind.assigned_role == "Acolyte"))
@@ -1287,11 +1358,11 @@
 						// Excommunication check for both participants
 						var/excomm_found = FALSE
 						for(var/excomm_name in GLOB.excommunicated_players)
-							var/clean_excomm = lowertext(trim(excomm_name))
-							if(thegroom && clean_excomm == lowertext(trim(thegroom.real_name)))
+							var/clean_excomm = LOWER_TEXT(trim(excomm_name))
+							if(thegroom && clean_excomm == LOWER_TEXT(trim(thegroom.real_name)))
 								excomm_found = TRUE
 								break
-							if(thebride && clean_excomm == lowertext(trim(thebride.real_name)))
+							if(thebride && clean_excomm == LOWER_TEXT(trim(thebride.real_name)))
 								excomm_found = TRUE
 								break
 						if(!excomm_found)
@@ -1478,3 +1549,25 @@
 	stake.forceMove(drop_location())
 	stake = null
 	qdel(src)
+
+/obj/structure/fluff/statue/noc
+	name = "noc statue"
+	desc = "Wisdom and calm."
+	icon_state = "noc"
+	icon = 'icons/roguetown/misc/statues/statue_noc.dmi'
+
+/obj/structure/fluff/statue/noc/guard
+	name = "active noc statue"
+	icon_state = "noc_guard"
+
+/obj/structure/fluff/statue/eora
+	name = "eora statue"
+	desc = "Beauty and Charm"
+	icon_state = "eora"
+	icon = 'icons/roguetown/misc/statues/statue_eora.dmi'
+
+/obj/structure/fluff/statue/zizo
+	name = "dubious statue"
+	desc = "Blasphemy... unless...?"
+	icon_state = "zaelorian_crynsaris"
+	icon = 'icons/roguetown/misc/statues/statue_zizo.dmi'

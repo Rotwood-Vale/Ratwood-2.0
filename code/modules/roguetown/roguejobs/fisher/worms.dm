@@ -42,6 +42,6 @@
 /obj/item/natural/worms/grubs/attack_right(mob/user)
 	return
 
-/obj/item/natural/worms/Initialize()
+/obj/item/natural/worms/Initialize(mapload)
 	. = ..()
 	dir = rand(0,8)

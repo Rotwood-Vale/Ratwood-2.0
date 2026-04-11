@@ -68,7 +68,7 @@
 	health = 130
 	maxHealth = 130
 
-/mob/living/simple_animal/hostile/retaliate/rogue/spider/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/spider/Initialize(mapload)
 	. = ..()
 	gender = MALE
 	if(prob(33))

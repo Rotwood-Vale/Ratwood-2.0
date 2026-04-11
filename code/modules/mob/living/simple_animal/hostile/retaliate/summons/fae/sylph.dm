@@ -56,7 +56,7 @@
 	range = 6
 	speed = 6 //higher is slower
 
-/mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/Initialize(mapload)
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
 	. = ..()
 

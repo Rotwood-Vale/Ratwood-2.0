@@ -28,7 +28,7 @@
 	)
 	var/sunstolen = FALSE
 
-/obj/structure/vampire/bloodpool/Initialize()
+/obj/structure/vampire/bloodpool/Initialize(mapload)
 	. = ..()
 	set_light(3, 3, 20, l_color = LIGHT_COLOR_BLOOD_MAGIC)
 

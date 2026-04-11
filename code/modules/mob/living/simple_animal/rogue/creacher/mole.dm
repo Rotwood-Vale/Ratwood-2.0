@@ -73,7 +73,7 @@
 	icon_state = "mole_bones"
 	icon = 'icons/roguetown/mob/monster/mole.dmi'
 
-/mob/living/simple_animal/hostile/retaliate/rogue/mole/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/mole/Initialize(mapload)
 	. = ..()
 	gender = MALE
 	AddElement(/datum/element/ai_retaliate)

@@ -32,7 +32,7 @@
 	should_regenerate = TRUE
 	var/obj/item/rogue/instrument/vocals/harpy_vocals/vocals
 
-/obj/item/organ/vocal_cords/harpy/Initialize()
+/obj/item/organ/vocal_cords/harpy/Initialize(mapload)
 	. = ..()
 	vocals = new(src)  //okay, i think it'll be tied to the organ
 
@@ -181,7 +181,7 @@
 
 	user.say(message, spans = span_list, sanitize = FALSE)
 
-	message = lowertext(message)
+	message = LOWER_TEXT(message)
 	var/list/mob/living/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)

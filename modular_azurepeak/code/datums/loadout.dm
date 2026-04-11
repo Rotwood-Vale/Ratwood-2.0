@@ -35,13 +35,17 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Farkle Dice Container"
 	path = /obj/item/storage/pill_bottle/dice/farkle
 
+/datum/loadout_item/gaming_dice
+	name = "Gaming Dice Container"
+	path = /obj/item/storage/pill_bottle/dice
+
 /datum/loadout_item/tarot_deck
 	name = "Tarot Deck"
 	path = /obj/item/toy/cards/deck/tarot
 
 /datum/loadout_item/custom_book
 	name = "Custom Book"
-	path = /obj/item/book/rogue/loadoutbook
+	path = /obj/item/paper/scroll/custom
 
 /datum/loadout_item/hand_mirror
 	name = "Hand Mirror"
@@ -226,6 +230,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Witch Hat"
 	path = /obj/item/clothing/head/roguetown/witchhat
 
+/datum/loadout_item/witchhat/old
+	name = "Witch Hat (Old)"
+	path = /obj/item/clothing/head/roguetown/witchhat/old
+
 /datum/loadout_item/bardhat
 	name = "Bard Hat"
 	path = /obj/item/clothing/head/roguetown/bardhat
@@ -353,7 +361,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/duelcape
 	name = "Duelist Cape"
-	path = /obj/item/clothing/cloak/half/duelistcape
+	path = /obj/item/clothing/cloak/duelistcape
 
 /datum/loadout_item/ridercloak
 	name = "Rider Cloak"
@@ -466,6 +474,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/rumaclanshoes
 	name = "Raised Sandals"
 	path = /obj/item/clothing/shoes/roguetown/armor/rumaclan
+
+/datum/loadout_item/simpleshoes
+	name = "Simple Shoes"
+	path = /obj/item/clothing/shoes/roguetown/simpleshoes
 
 //SHIRTS
 /datum/loadout_item/longcoat
@@ -623,7 +635,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/loincloth
 	name = "Loincloth"
 	path = /obj/item/clothing/under/roguetown/loincloth
-	
+
 /datum/loadout_item/tights
 	name = "Cloth Tights"
 	path = /obj/item/clothing/under/roguetown/tights/black
@@ -729,6 +741,86 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Cursed Collar"
 	path = /obj/item/clothing/neck/roguetown/cursed_collar
 
+/datum/loadout_item/chastity_belt
+	name = "Chastity Belt"
+	path = /obj/item/chastity
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage
+	name = "Chastity Cage"
+	path = /obj/item/chastity/chastity_cage
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_anal
+	name = "Chastity Cage with Anal Shield"
+	path = /obj/item/chastity/chastity_cage/anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_spiked
+	name = "Spiked Chastity Cage"
+	path = /obj/item/chastity/chastity_cage/spiked
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_spiked_anal
+	name = "Spiked Chastity Cage with Anal Shield"
+	path = /obj/item/chastity/chastity_cage/spiked_anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_flat
+	name = "Flat Chastity Cage"
+	path = /obj/item/chastity/chastity_cage/flat
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_flat_anal
+	name = "Flat Chastity Cage with Anal Shield"
+	path = /obj/item/chastity/chastity_cage/flat/anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_flat_spiked
+	name = "Spiked Flat Chastity Cage"
+	path = /obj/item/chastity/chastity_cage/flat/spiked
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_flat_spiked_anal
+	name = "Spiked Flat Chastity Cage with Anal Shield"
+	path = /obj/item/chastity/chastity_cage/flat/spiked_anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_insertable
+	name = "Chastity Insertable"
+	path = /obj/item/chastity/chastity_belt
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_insertable_anal
+	name = "Chastity Insertable with Anal Shield"
+	path = /obj/item/chastity/chastity_belt/anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_insertable_spiked
+	name = "Spiked Chastity Insertable"
+	path = /obj/item/chastity/chastity_belt/spiked
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_insertable_spiked_anal
+	name = "Spiked Chastity Insertable with Anal Shield"
+	path = /obj/item/chastity/chastity_belt/spiked_anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_combination
+	name = "Combination Chastity Device"
+	path = /obj/item/chastity/intersex
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_combination_spiked
+	name = "Spiked Combination Chastity Device"
+	path = /obj/item/chastity/intersex/spiked
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cursed
+	name = "Cursed Chastity Device"
+	path = /obj/item/chastity/cursed
+	triumph_cost = 4
+
 /datum/loadout_item/cloth_blindfold
 	name = "Cloth Blindfold"
 	path = /obj/item/clothing/mask/rogue/blindfold
@@ -780,6 +872,18 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/storage/belt/rogue/leather/shalal
 
 // BELTS
+/datum/loadout_item/leather
+	name = "Leather Belt"
+	path = /obj/item/storage/belt/rogue/leather
+
+/datum/loadout_item/leather_black
+	name = "Black Leather Belt"
+	path = /obj/item/storage/belt/rogue/leather/black
+
+/datum/loadout_item/doublebelt
+	name = "Paired slim belts"
+	path = /obj/item/storage/belt/rogue/leather/double
+
 /datum/loadout_item/belt_cloth
 	name = "Cloth Sash"
 	path = /obj/item/storage/belt/rogue/leather/sash
@@ -791,6 +895,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/psicross
 	name = "Psydonian Cross"
 	path = /obj/item/clothing/neck/roguetown/psicross
+
+/datum/loadout_item/psicross_reform
+	name = "Reformist Psycross"
+	path = /obj/item/clothing/neck/roguetown/psicross/reform
 
 /datum/loadout_item/psicross/astrata
 	name = "Amulet of Astrata"
@@ -1071,7 +1179,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 //==========================
 // TRIUMPH LOADOUT ITEMS
 //==========================
-// 
+//
 // IMPORTANT INFORMATION ABOUT LOADOUT ITEMS:
 // All items selected from the loadout system receive the following automatic modifications:
 // - ARMOR: Set to ARMOR_PADDED_BAD (basic padded values) and ARMOR_INT_CHEST_LIGHT_BASE max integrity
@@ -1082,7 +1190,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 // - WEAPON DEFENSE: Reduced by 50% (wdefense halved)
 // - SMELT RESULT: Set to ash (cannot be smelted for materials)
 // - EXAMINATION: Items show as reproductions when examined
-// 
+//
 // These modifications ensure loadout items provide utility and customization
 // without bypassing game progression or economy balance.
 // without bypassing game progression or economy balance.
@@ -1464,7 +1572,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 // CLOTHING - ARMOR (Alphabetically Ordered)
 /datum/loadout_item/tri_desert_coat
 	name = "Desert Coat"
-	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	triumph_cost = 3
 
 /datum/loadout_item/tri_duelist_coat
@@ -1557,6 +1665,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/suit/roguetown/armor/leather/bikini
 	triumph_cost = 3
 
+/datum/loadout_item/corset
+	name = "Corset"
+	path = /obj/item/clothing/suit/roguetown/armor/corset
+
 /datum/loadout_item/tri_moose_hood
 	name = "Moose Hood (Shaman)"
 	path = /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
@@ -1597,14 +1709,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
 	triumph_cost = 3
 
-/datum/loadout_item/tri_raneshen_coat
-	name = "Raneshen Coat"
-	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/raneshen
+/datum/loadout_item/tri_zyb_coat
+	name = "Desert Coat"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 	triumph_cost = 3
 
-/datum/loadout_item/tri_raneshen_gambeson
-	name = "Raneshen Gambeson"
-	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+/datum/loadout_item/tri_zyb_gambeson
+	name = "Desert Gambeson"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	triumph_cost = 3
 
 /datum/loadout_item/tri_shamanic_coat
@@ -1638,9 +1750,9 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/head/roguetown/roguehood/pontifex
 	triumph_cost = 2
 
-/datum/loadout_item/tri_raneshen_hijab
-	name = "Raneshen Hijab"
-	path = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/raneshen
+/datum/loadout_item/tri_zyb_hijab
+	name = "Desert Hijab"
+	path = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
 	triumph_cost = 2
 
 
@@ -1747,9 +1859,9 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/under/roguetown/trou/leather/pontifex
 	triumph_cost = 2
 
-/datum/loadout_item/tri_raneshen_pants
-	name = "Raneshen Pants"
-	path = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
+/datum/loadout_item/tri_zyb_pants
+	name = "Zybantine Pants"
+	path = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
 	triumph_cost = 2
 
 
@@ -1780,6 +1892,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Naledi Psicross"
 	path = /obj/item/clothing/neck/roguetown/psicross/naledi
 
+/datum/loadout_item/woolencollar
+	name = "Woolen Collar"
+	path = /obj/item/clothing/neck/roguetown/collar/woolen
+
 // MASKS (Alphabetically Ordered)
 
 // SHIRTS & ROBES (Alphabetically Ordered)
@@ -1792,6 +1908,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Pontifex Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
 	triumph_cost = 2
+
+/datum/loadout_item/slitteddress
+	name = "Slitted dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/slit
 
 // POLEARMS & STAVES
 /datum/loadout_item/tri_naledi_staff
@@ -2041,10 +2161,25 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 //ADDITIONAL ITEMS
 
+/datum/loadout_item/backpack
+	name = "Backpack"
+	path = /obj/item/storage/backpack/rogue/backpack
+	triumph_cost = 6
+
 /datum/loadout_item/satchel
 	name = "Satchel"
 	path = /obj/item/storage/backpack/rogue/satchel
 	triumph_cost = 5
+
+/datum/loadout_item/otavansatchel
+	name = "Otavan Satchel"
+	path = /obj/item/storage/backpack/rogue/satchel/otavan
+	triumph_cost = 5
+
+/datum/loadout_item/shortsatchel
+	name = "Short Satchel"
+	path = /obj/item/storage/backpack/rogue/satchel/short
+	triumph_cost = 4
 
 /datum/loadout_item/pouches
 	name = "Pouche"
@@ -2060,6 +2195,16 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Paper Parasol"
 	path = /obj/item/rogueweapon/mace/parasol
 	triumph_cost = 3
+
+/datum/loadout_item/scabbard
+	name = "Scabbard"
+	path = /obj/item/rogueweapon/scabbard/sword
+	triumph_cost = 1
+
+/datum/loadout_item/greatweaponstrap
+	name = "Great Weapon Strap"
+	path = /obj/item/rogueweapon/scabbard/gwstrap
+	triumph_cost = 2
 
 //INSTRUMENTS
 
@@ -2132,3 +2277,12 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Vocal Talisman"
 	path = /obj/item/rogue/instrument/vocals
 	triumph_cost = 1
+
+
+// Unique stuff that doesn't quite fit anywhere else.
+
+/datum/loadout_item/kazengunite_smithing_manual
+	name = "Kajutsu no Densho"
+	desc = "A Kazengunite smithing manual. Unlocks kazengunite armor and weapon recipes at the anvil when read — requires knowledge of Kazengunese. "
+	path = /obj/item/book/granter/trait/kazengunite_smith
+	triumph_cost = 3

@@ -50,7 +50,7 @@
 	var/rock_cd
 	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/ele_quake)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth/Initialize(mapload)
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 	. = ..()
 

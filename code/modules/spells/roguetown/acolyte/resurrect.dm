@@ -215,7 +215,7 @@
 		if(/mob/living/simple_animal/hostile/rogue/dreamfiend/major)
 			linked_alert.icon_state = "dreamfiend_major"
 			linked_alert.name = "Major Abyssal Curse."
-			linked_alert.desc = "A great deamon is sapping my mind, a dangerous foe which I must summon to regain my faculties."
+			linked_alert.desc = "A great daemon is sapping my mind, a dangerous foe which I must summon to regain my faculties."
 		if(/mob/living/simple_animal/hostile/rogue/dreamfiend)
 			linked_alert.icon_state = "dreamfiend"
 

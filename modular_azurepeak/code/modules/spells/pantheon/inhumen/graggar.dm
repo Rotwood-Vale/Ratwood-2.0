@@ -46,25 +46,19 @@
 	name = "viceral organ net"
 	icon_state = "tentacle_end"
 	nodamage = TRUE
+	knockdown = 3 SECONDS
 
 /obj/projectile/magic/unholy_grasp/on_hit(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(..() || !iscarbon(hit_atom))
+	. = ..()
+	if(. == BULLET_ACT_MISS || . == BULLET_ACT_BLOCK || !iscarbon(hit_atom))
 		return
-	
 	ensnare(hit_atom)
 
 /obj/projectile/magic/unholy_grasp/proc/ensnare(mob/living/carbon/carbon)
-	if(carbon.legcuffed || carbon.get_num_legs(FALSE) < 2)
-		return
-
 	visible_message(span_danger("\The [src] ensnares [carbon] in vicera!"))
-	carbon.legcuffed = src
-	forceMove(carbon)
-	carbon.update_inv_legcuffed()
-	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 	to_chat(carbon, span_danger("\The [src] ensnares you!"))
 	carbon.Knockdown(knockdown)
-	carbon.apply_status_effect(/datum/status_effect/debuff/netted)
+	carbon.apply_status_effect(/datum/status_effect/debuff/netted, 30 SECONDS)
 	playsound(src, 'sound/combat/caught.ogg', 50, TRUE)
 
 /obj/effect/proc_holder/spell/invoked/revel_in_slaughter

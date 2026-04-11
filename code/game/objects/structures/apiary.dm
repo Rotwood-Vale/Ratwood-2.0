@@ -44,7 +44,7 @@
 		bee.color = bee_color // Apply genetic color
 		overlays += bee
 
-/obj/effect/bees/Initialize()
+/obj/effect/bees/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	update_overlays()
@@ -200,7 +200,7 @@
 	stored_combs = 0
 	comb_progress = 0
 
-/obj/structure/apiary/starter/Initialize()
+/obj/structure/apiary/starter/Initialize(mapload)
 	. = ..()
 	create_new_queen()
 
@@ -248,7 +248,7 @@
 
 
 
-/obj/structure/apiary/Initialize()
+/obj/structure/apiary/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -664,7 +664,7 @@
 	var/queen_health = 100
 	var/max_queen_age = 30 // Queens live for 30 days
 
-/obj/item/queen_bee/Initialize()
+/obj/item/queen_bee/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -912,7 +912,7 @@
 	var/search_time = 0
 	var/established = FALSE
 
-/obj/effect/bee_swarm/Initialize()
+/obj/effect/bee_swarm/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	update_overlays()
@@ -994,7 +994,7 @@
 	var/aggressiveness = 50 // 0-100 scale
 	var/list/bee_objects = list()
 
-/obj/structure/beehive/wild/Initialize()
+/obj/structure/beehive/wild/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	bee_count = rand(5, max_bees)

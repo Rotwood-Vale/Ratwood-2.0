@@ -56,7 +56,7 @@
 	patron = /datum/patron/inhumen/zizo		//So they can be hurt by holy fire/healing
 
 
-/mob/living/simple_animal/hostile/rogue/ghost/wraith/Initialize()
+/mob/living/simple_animal/hostile/rogue/ghost/wraith/Initialize(mapload)
 	. = ..()
 	icon_state = "wraith[rand(1, 3)]"
 

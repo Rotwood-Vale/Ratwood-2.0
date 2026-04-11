@@ -13,7 +13,7 @@
 	var/functional = TRUE
 	var/branded_writing = ""
 
-/obj/item/organ/penis/Initialize()
+/obj/item/organ/penis/Initialize(mapload)
 	. = ..()
 
 /obj/item/organ/penis/proc/update_erect_state()

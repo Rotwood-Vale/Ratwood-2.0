@@ -106,7 +106,7 @@
 	pixel_y = -218
 
 /*
-/obj/effect/temp_visual/soundping/Initialize()
+/obj/effect/temp_visual/soundping/Initialize(mapload)
 	. = ..()
 	animate(src, alpha = 0, time = duration, easing = EASE_IN)
 */

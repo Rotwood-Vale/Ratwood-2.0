@@ -76,7 +76,7 @@
 	ai_controller = /datum/ai_controller/mudcrab // doesnt really matter
 
 
-/obj/item/bomb/smoke/decoy/Initialize()
+/obj/item/bomb/smoke/decoy/Initialize(mapload)
 	. = ..()
 	playsound(loc, 'sound/magic/decoylaugh.ogg', 50)
 	explode()
@@ -403,7 +403,7 @@
 	var/last_used = 0
 	var/bonus_luck_threshould = 600
 
-/obj/effect/proc_holder/spell/invoked/xylixlian_luck/Initialize()
+/obj/effect/proc_holder/spell/invoked/xylixlian_luck/Initialize(mapload)
 	. = ..()
 
 	last_used = world.time

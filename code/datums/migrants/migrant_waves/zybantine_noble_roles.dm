@@ -9,7 +9,7 @@
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_ZYBANTINE_EMIR = 20)
 	greet_text = "You are an envoy from the zybantine Empire, traveling with bodyguards and your personal advisor to represent your homeland.\
-	 What exactly you have been sent here to speak about- only you know."
+	What exactly you have been sent here to speak about- only you know."
 
 /datum/advclass/zybantine_emir
 	name = "Emir"
@@ -34,8 +34,8 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	id = /obj/item/clothing/ring/gold
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
-	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	backl = /obj/item/storage/backpack/rogue/satchel/short
@@ -47,7 +47,9 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/paper/scroll/writ_of_esteem/zybantine = 1,
 		/obj/item/natural/feather = 1,
-		/obj/item/paper/scroll = 2
+		/obj/item/paper/scroll = 2,
+		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
 	H.grant_language(/datum/language/celestial)
@@ -105,7 +107,9 @@
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/natural/feather = 1,
-		/obj/item/paper/scroll = 2
+		/obj/item/paper/scroll = 2,
+		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 	)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
 	H.grant_language(/datum/language/celestial)
@@ -142,26 +146,28 @@
 
 /datum/outfit/job/roguetown/zybantine/janissary/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguetown/helmet/sallet/raneshen
+	head = /obj/item/clothing/head/roguetown/helmet/sallet/zyb
 	mask = /obj/item/clothing/mask/rogue/facemask/steel
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 	cloak = /obj/item/clothing/cloak/half/rider/red
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/leather
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 	backl = /obj/item/storage/backpack/rogue/satchel/short
-	backr = /obj/item/rogueweapon/shield/tower/raneshen
+	backr = /obj/item/rogueweapon/shield/tower/zyb
 	l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
+		/obj/item/natural/bundle/cloth/bandage/full = 1,
 		)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
 	H.grant_language(/datum/language/celestial)
@@ -203,7 +209,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/leather
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/shalal
@@ -216,7 +222,9 @@
 		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1
+		/obj/item/paper/scroll = 2,
+		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		)
 	H.cmode_music = 'sound/music/combat_desertrider.ogg'
 	H.grant_language(/datum/language/celestial)

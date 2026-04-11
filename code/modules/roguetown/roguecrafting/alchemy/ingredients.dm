@@ -23,7 +23,7 @@
 	var/med_name
 	var/minor_name
 
-/obj/item/alch/Initialize()
+/obj/item/alch/Initialize(mapload)
 	. = ..()
 	if(!isnull(major_pot))
 		var/datum/alch_cauldron_recipe/rec = locate(major_pot) in GLOB.alch_cauldron_recipes
@@ -105,6 +105,14 @@
 	med_pot = /datum/alch_cauldron_recipe/end_potion
 	minor_pot = /datum/alch_cauldron_recipe/str_potion
 
+/obj/item/alch/stonedust
+	name = "stone dust"
+	desc = "Finely ground mineral dust used for glass clay refinement."
+	icon_state = "coaldust"
+	major_pot = null
+	med_pot = null
+	minor_pot = null
+
 /obj/item/alch/silverdust
 	name = "silver dust"
 	icon_state = "silverdust"
@@ -152,7 +160,7 @@
 /obj/item/alch/swampdust
 	name = "swampweed dust"
 	icon_state = "swampdust"
-	major_pot = /datum/alch_cauldron_recipe/berrypoison
+	major_pot = /datum/alch_cauldron_recipe/temp_potion
 	med_pot = /datum/alch_cauldron_recipe/aphrodisiac
 	minor_pot = /datum/alch_cauldron_recipe/end_potion
 
@@ -255,7 +263,7 @@
 
 /obj/item/alch/puresalt
 	name = "purified salts"
-	desc = "Salts that have been finely sifted to enchance their healing properties and to bolster its connection to the arcyne."
+	desc = "Salts that have been finely sifted to enhance their healing properties and to bolster their connection to the arcyne."
 	icon_state = "puresalt"
 
 	major_pot = /datum/alch_cauldron_recipe/antidote
@@ -447,6 +455,9 @@
 	muteinmouth = FALSE
 	alternate_worn_layer  = 8.9 //On top of helmet
 	mill_result = /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals
+	major_pot = /datum/alch_cauldron_recipe/temp_potion
+	med_pot = /datum/alch_cauldron_recipe/aphrodisiac
+	minor_pot = /datum/alch_cauldron_recipe/stamina_potion
 
 /obj/item/alch/rosa/equipped(mob/living/carbon/human/user, slot)
 	. = ..()

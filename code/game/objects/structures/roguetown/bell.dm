@@ -9,7 +9,7 @@
 	var/last_ring
 	var/datum/looping_sound/boatloop/soundloop
 
-/obj/structure/boatbell/Initialize()
+/obj/structure/boatbell/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	soundloop.start()
 	. = ..()
@@ -40,7 +40,7 @@
 	var/on_cooldown = FALSE
 	var/area/localarea
 
-/obj/structure/standingbell/Initialize()
+/obj/structure/standingbell/Initialize(mapload)
 	. = ..()
 	localarea = get_area_name(src)
 

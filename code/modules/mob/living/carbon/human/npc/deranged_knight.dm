@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(hedgeknight_aggro, world.file2list("strings/rt/hedgeknightaggro
 		return FALSE
 	. = ..()
 
-/mob/living/carbon/human/species/human/northern/deranged_knight/Initialize()
+/mob/living/carbon/human/species/human/northern/deranged_knight/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 	is_silent = TRUE

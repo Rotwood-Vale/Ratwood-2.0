@@ -1009,6 +1009,7 @@
 	else
 		return set_selected_zone(choice, usr)
 
+/*
 /atom/movable/screen/zone_sel/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
 
@@ -1053,6 +1054,7 @@
 	if(!isobserver(usr) && hovering)
 		vis_contents -= hover_overlays_cache[hovering]
 		hovering = null
+*/
 
 /atom/movable/screen/zone_sel/proc/get_zone_at(icon_x, icon_y, gender = MALE)
 	if(gender == MALE)
@@ -1893,6 +1895,26 @@
 	icon = 'icons/mob/rogueheat.dmi'
 	screen_loc = rogueui_fat
 	layer = HUD_LAYER+0.1
+
+/atom/movable/screen/tempbase
+	name = ""
+	mouse_opacity = 0
+	icon_state = "tempbase"
+	icon = 'icons/mob/rogueheat.dmi'
+	screen_loc = rogueui_temperature
+
+
+/atom/movable/screen/temperature
+	name = "Temperature"
+	icon_state = "tempnormal"
+	icon = 'icons/mob/rogueheat.dmi'
+	screen_loc = rogueui_temperature
+	layer = HUD_LAYER+0.1
+
+/atom/movable/screen/temperature/Click(location, control, params)
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.check_temperature_state(H)
 
 /atom/movable/screen/grain
 	icon = 'icons/grain.dmi'

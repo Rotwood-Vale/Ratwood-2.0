@@ -45,6 +45,13 @@ dreaming. Still have to go to sleep to learn skills. Also gives healing tickrate
 			src.visible_message(span_info("[src] washes off the grime."), span_info("The warm water cleanses me."))
 			first_clean = FALSE
 
+		if(bodytemperature < BODYTEMP_NORMAL_MIN)	//washing yourself helps to warm you up.
+			adjust_bodytemperature(75)
+			update_health_hud()
+		if(bodytemperature > BODYTEMP_NORMAL_MAX)	//washing yourself helps to cool you off.
+			adjust_bodytemperature(-75)
+			update_health_hud()
+
 		soak_count++
 
 		// Soap buff makes you bathe faster

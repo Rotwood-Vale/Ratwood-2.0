@@ -29,6 +29,10 @@
 #define MOVE_INTENT_RUN  "run"
 #define MOVE_INTENT_SNEAK "sneak"
 
+//time of day bitflags for mobs
+#define TIME_OF_DAY_BIT_DAY		(1 << 0)
+#define TIME_OF_DAY_BIT_NIGHT	(1 << 1)
+
 //resist
 #define RESIST_INTENT 0
 #define SUBMIT_INTENT 1
@@ -42,7 +46,7 @@
 #define BLOOD_VOLUME_BAD 224
 #define BLOOD_VOLUME_SURVIVE 122
 
-/// Blood pool regeneration in non-vampiric living mobs per SSmobs tick. 
+/// Blood pool regeneration in non-vampiric living mobs per SSmobs tick.
 #define BLOODPOL_REGEN 2
 
 //Sizes of mobs, used by mob/living/var/mob_size
@@ -494,6 +498,7 @@
 
 //AASIMAR SKIN TONES
 #define SKIN_COLOR_CULTOR "b5a4a4"
+#define SKIN_COLOR_ARCHON "feddcd"
 #define SKIN_COLOR_SPIRITUS "f0eded"
 #define SKIN_COLOR_PLANETAR "ffd859"
 #define SKIN_COLOR_DEVA "b6f1f2"
@@ -548,6 +553,12 @@
 #define SKIN_COLOR_DREMA "D16A51"
 #define SKIN_COLOR_CHIR "549ab6"
 #define SKIN_COLOR_VESYL "7A2525"
+#define SKIN_COLOR_ASZA "7a5497"
+#define SKIN_COLOR_KRIZZSHA "a191cc"
+#define SKIN_COLOR_TOSIZ "5b7343"
+#define SKIN_COLOR_VELOTHEL "87a665"
+#define SKIN_COLOR_KROSEC "f9f9f9"
+#define SKIN_COLOR_ASHOL "9D807A"
 
 //GOBLIN SKIN TONES
 #define SKIN_COLOR_OCHRE "968127"
@@ -563,6 +574,7 @@
 #define SKIN_COLOR_ABYSS "2a6986"
 #define SKIN_COLOR_HADAL "24353d"
 #define SKIN_COLOR_BONE "e3dac9"
+#define SKIN_COLOR_PALE "c9c9c9"
 
 //ARGONIAN SKIN TONES
 #define SKIN_COLOR_AQUARELA "ffff88"

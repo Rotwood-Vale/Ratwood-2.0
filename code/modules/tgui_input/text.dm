@@ -14,8 +14,9 @@
  * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * encode - Toggling this determines if input is filtered via html_encode. Setting this to FALSE gives raw input.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Set to zero for no timeout.
+ * * disable_paste - If TRUE, the TGUI textbox will suppress paste/drop input into the field.
  */
-/proc/tgui_input_text(mob/user, message = "", title = "Text Input", default, max_length = MAX_TGUI_INPUT, multiline = FALSE, encode = TRUE, timeout = 0, prevent_enter = FALSE, ui_state = GLOB.tgui_always_state, bigmodal = FALSE) // 130k limit due to chunking limit... if we need longer that needs fixing
+/proc/tgui_input_text(mob/user, message = "", title = "Text Input", default, max_length = MAX_TGUI_INPUT, multiline = FALSE, encode = TRUE, timeout = 0, prevent_enter = FALSE, ui_state = GLOB.tgui_always_state, bigmodal = FALSE, disable_paste = FALSE) // 130k limit due to chunking limit... if we need longer that needs fixing
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -41,7 +42,7 @@
 			else
 				return input(user, message, title, default) as text|null
 
-	var/datum/tgui_input_text/text_input = new(user, message, title, default, max_length, multiline, encode, timeout, ui_state, bigmodal)
+	var/datum/tgui_input_text/text_input = new(user, message, title, default, max_length, multiline, encode, timeout, ui_state, bigmodal, disable_paste)
 	text_input.ui_interact(user)
 	text_input.wait()
 	if (text_input)
@@ -77,10 +78,12 @@
 	var/title
 	// Whether to use a big modal variant for very large text input
 	var/bigmodal
+	/// Whether TGUI should suppress paste/drop input into the field.
+	var/disable_paste
 	/// The TGUI UI state that will be returned in ui_state(). Default: always_state
 	var/datum/ui_state/state
 
-/datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, encode, timeout, ui_state, bigmodal)
+/datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, encode, timeout, ui_state, bigmodal, disable_paste)
 	src.default = default
 	src.encode = encode
 	src.max_length = max_length
@@ -89,6 +92,7 @@
 	src.title = title
 	src.state = ui_state
 	src.bigmodal = bigmodal
+	src.disable_paste = disable_paste
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
@@ -131,6 +135,7 @@
 	data["title"] = title
 	data["spellcheck"] = FALSE // user.read_preference(/datum/preference/toggle/tgui_use_spellcheck)
 	data["bigmodal"] = bigmodal
+	data["disable_paste"] = disable_paste
 	return data
 
 /datum/tgui_input_text/ui_data(mob/user)

@@ -10,13 +10,16 @@
 #define CHANNEL_BICYCLE 1016
 #define CHANNEL_RAIN 1015
 #define CHANNEL_MUSIC 1014
-#define CHANNEL_CMUSIC 1013
-#define CHANNEL_WEATHER 1012
+#define CHANNEL_WEATHER 1013
+#define CHANNEL_CMUSIC4 1012
+#define CHANNEL_CMUSIC3 1011
+#define CHANNEL_CMUSIC2 1010
+#define CHANNEL_CMUSIC1 1009
 
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-#define CHANNEL_HIGHEST_AVAILABLE 1011
+#define CHANNEL_HIGHEST_AVAILABLE 1008
 
 
 #define SOUND_MINIMUM_PRESSURE 10
@@ -201,6 +204,9 @@
 							'sound/items/jinglebell4.ogg',\
 							'sound/items/jinglebell5.ogg',\
 							'sound/items/jinglebell6.ogg')
+#define SFX_CBJINGLE list('sound/items/cbjingle1.ogg',\
+							'sound/items/cbjingle2.ogg',\
+							'sound/items/cbjingle3.ogg')
 
 #define INTERACTION_SOUND_RANGE_MODIFIER 0
 #define EQUIP_SOUND_VOLUME 100

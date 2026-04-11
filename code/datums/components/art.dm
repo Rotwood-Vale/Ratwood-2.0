@@ -13,8 +13,10 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(apply_moodlet))
 
 /datum/component/art/proc/apply_moodlet(mob/M, impress)
-	M.visible_message(span_notice("[M] stops and looks intently at [parent]."), \
-						 span_notice("I stop to take in [parent]."))
+	M.visible_message(
+		span_notice("[M] stops and looks intently at [parent]."),
+		span_notice("I stop to take in [parent].")
+	)
 
 /datum/component/art/proc/on_other_examine(datum/source, mob/M)
 	apply_moodlet(M, impressiveness)
@@ -32,5 +34,7 @@
 /datum/component/art/rev
 
 /datum/component/art/rev/apply_moodlet(mob/M, impress)
-	M.visible_message(span_notice("[M] stops to inspect [parent]."), \
-						 span_notice("I take in [parent], inspecting the fine craftsmanship of the proletariat."))
+	M.visible_message(
+		span_notice("[M] stops to inspect [parent]."),
+		span_notice("I take in [parent], inspecting the fine craftsmanship of the proletariat."),
+	)

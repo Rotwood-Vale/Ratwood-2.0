@@ -132,6 +132,8 @@
 	var/obj/item/organ/vagina/vagina = H.getorganslot(ORGAN_SLOT_VAGINA)
 	if(!vagina)
 		return FALSE
+	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
+		return TRUE
 	if(H.underwear)
 		return FALSE
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))
@@ -148,6 +150,8 @@
 			vagina_type = "plain vagina"
 		if(/datum/sprite_accessory/vagina/hairy)
 			vagina_type = "hairy vagina"
+		if(/datum/sprite_accessory/vagina/trimmed)
+			vagina_type = "trimmed vagina"
 		if(/datum/sprite_accessory/vagina/spade)
 			vagina_type = "spade vagina"
 		if(/datum/sprite_accessory/vagina/furred)
@@ -222,5 +226,5 @@
 	if(length(breasts.branded_writing))
 		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(breasts.branded_writing)]</span>"
 	if(breasts.breast_size == 0)
-		return "[adjective][branded]" 
+		return "[adjective][branded]"
 	return "[adjective] pair of breasts[branded]"

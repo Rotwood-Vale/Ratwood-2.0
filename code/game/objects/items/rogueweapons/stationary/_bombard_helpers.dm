@@ -9,6 +9,3 @@ GLOBAL_VAR(obfs_y) //A number between -2500 and 2500
 #define deobfuscate_x(x) (x - GLOB.obfs_x)
 //Deoffuscate y for coord system
 #define deobfuscate_y(y) (y - GLOB.obfs_y)
-//Used to prevent coords collection/prefiring.
-var/global/obfs_x = 0 //A number between -500 and 500
-var/global/obfs_y = 0 //A number between -500 and 500

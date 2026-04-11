@@ -1,0 +1,6 @@
+author: "Loosenail"
+delete-after: True
+changes:
+  - image: "New hairstyle - \"Hyena Mane Short\""
+  - image: "Moved the new Taro and Lizbeth hairstyles into alphabetical order, like most of the selection."
+  - rscdel: "Removed hairstyles - \"Scout, Long Straight Ponytail, Ponytail (Yeager), Newyou, Neuter, Female\""

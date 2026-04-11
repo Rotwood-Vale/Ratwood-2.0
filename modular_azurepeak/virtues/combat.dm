@@ -78,13 +78,27 @@
 	)
 	
 	if(alert(recipient, "Would you like to change the name or description of your skin?", "TOUGH HIDE", "MAKE IT SO", "I RESCIND") == "MAKE IT SO") // Query user
-		addtimer(CALLBACK(src, .proc/customize_skin, recipient), 5 SECONDS)
+		addtimer(CALLBACK(src, .proc/customize_skin, recipient), 1 SECONDS)
 
 /datum/virtue/combat/tough_hide/proc/customize_skin(mob/living/carbon/human/recipient)
 	var/obj/item/clothing/hide = recipient.wear_shirt
-	var/inputty = stripped_input(recipient, "What would you like to name your hide?", "TOUGH HIDE", null, 200)
-	if(inputty)
-		hide.name = inputty
-	inputty = stripped_input(recipient, "How would you describe your hide?", "TOUGH HIDE", null, 200)
-	if(inputty)
-		hide.desc = inputty
+	var/vanished_hide = FALSE
+	if(!QDELETED(hide))
+		var/inputty = stripped_input(recipient, "What would you like to name your hide?", "TOUGH HIDE", null, 200)
+		if(!QDELETED(hide))
+			if(inputty)
+				hide.name = inputty
+		else
+			vanished_hide = TRUE
+		inputty = stripped_input(recipient, "How would you describe your hide?", "TOUGH HIDE", null, 200)
+		if(!QDELETED(hide))
+			if(inputty)
+				hide.desc = inputty
+		else
+			vanished_hide = TRUE
+	else
+		vanished_hide = TRUE
+
+	if(vanished_hide) //failsafe
+		to_chat(recipient, span_warning("My natural armor vanished! Perhaps some divine intervention might sort things out..."))
+
