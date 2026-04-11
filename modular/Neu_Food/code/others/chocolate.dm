@@ -63,7 +63,7 @@
         return ..()
     
     // Handle milk
-    if(R.reagents.has_reagent(/datum/reagent/consumable/milk, 10))
+    if(R?.reagents.has_reagent(/datum/reagent/consumable/milk, 10))
         playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
         to_chat(user, span_notice("Adding milk and mixing..."))
         if(do_after(user, short_cooktime, target = src))
