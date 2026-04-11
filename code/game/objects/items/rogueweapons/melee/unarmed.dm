@@ -36,7 +36,7 @@
 	swingdelay = 0
 	icon_state = "inpunch"
 	item_d_type = "blunt"
-	intent_intdamage_factor = 1
+	intent_intdamage_factor = NONBLUNT_BLUNT_DAMFACTOR // -20% nerf  to INTEGRITY damage to knuckles.
 	//We want chipping, m'lord.
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_WEAK
