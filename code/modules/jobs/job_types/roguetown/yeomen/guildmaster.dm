@@ -24,7 +24,6 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/cmode/towner/combat_retired.ogg'
 
-	vice_restrictions = list(/datum/charflaw/illiterate, /datum/charflaw/unintelligible)
 	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SEEPRICES, TRAIT_SMITHING_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_HOMESTEAD_EXPERT)
 	// Guildmaster get way less gate due to their role
 

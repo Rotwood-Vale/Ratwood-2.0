@@ -19,7 +19,6 @@
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
-	vice_restrictions = list(/datum/charflaw/nudist, /datum/charflaw/pacifism, /datum/charflaw/noeyeall, /datum/charflaw/illiterate, /datum/charflaw/unintelligible)
 	cmode_music = 'sound/music/combat_veteran.ogg'
 	job_subclasses = list(
 		/datum/advclass/veteran/battlemaster,

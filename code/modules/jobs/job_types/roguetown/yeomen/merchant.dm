@@ -19,7 +19,6 @@
 	required = TRUE
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_noble.ogg'
-	vice_restrictions = list(/datum/charflaw/silverweakness, /datum/charflaw/mute, /datum/charflaw/unintelligible, /datum/charflaw/illiterate)
 
 	job_traits = list(TRAIT_SEEPRICES, TRAIT_CICERONE)
 

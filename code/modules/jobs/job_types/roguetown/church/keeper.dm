@@ -22,7 +22,6 @@
 	min_pq = 10
 	max_pq = null
 	round_contrib_points = 5
-	vice_restrictions = list(/datum/charflaw/nudist)
 
 	job_traits = list(
 		TRAIT_MEDICINE_EXPERT, TRAIT_HOMESTEAD_EXPERT,

@@ -24,7 +24,6 @@
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_YEOMAN
-	vice_restrictions = list(/datum/charflaw/nudist, /datum/charflaw/pacifism, /datum/charflaw/noeyeall)
 	cmode_music = 'sound/music/combat_ManAtArms.ogg'
 	job_subclasses = list(
 		/datum/advclass/manorguard/footsman,

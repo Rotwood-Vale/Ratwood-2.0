@@ -21,7 +21,6 @@
 	give_bank_account = 50
 	min_pq = 6
 	max_pq = null
-	vice_restrictions = list(/datum/charflaw/nudist, /datum/charflaw/pacifism, /datum/charflaw/noeyeall, /datum/charflaw/illiterate, /datum/charflaw/unintelligible)
 	cmode_music = 'sound/music/combat_ManAtArms.ogg'
 	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR)
 	job_subclasses = list(

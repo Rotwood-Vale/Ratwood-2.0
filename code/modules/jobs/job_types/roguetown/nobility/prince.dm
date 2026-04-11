@@ -22,7 +22,6 @@
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_ROYAL
 	cmode_music = 'sound/music/combat_noble.ogg'
-	vice_restrictions = list(/datum/charflaw/nudist)
 	job_traits = list(TRAIT_NOBLE)
 	job_subclasses = list(
 		/datum/advclass/heir/daring,

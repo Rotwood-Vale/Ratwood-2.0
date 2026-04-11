@@ -21,7 +21,6 @@
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_PEASANT
-	vice_restrictions = list(/datum/charflaw/nudist, /datum/charflaw/pacifism, /datum/charflaw/noeyeall, /datum/charflaw/illiterate, /datum/charflaw/unintelligible)
 
 	cmode_music = 'sound/music/combat_squire.ogg'
 	job_subclasses = list(

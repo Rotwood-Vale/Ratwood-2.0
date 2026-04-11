@@ -25,7 +25,6 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_knight.ogg'
 	social_rank = SOCIAL_RANK_NOBLE
-	vice_restrictions = list(/datum/charflaw/nudist, /datum/charflaw/pacifism, /datum/charflaw/noeyeall, /datum/charflaw/illiterate, /datum/charflaw/unintelligible)
 	job_traits = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_GUARDSMAN)
 	job_subclasses = list(
 		/datum/advclass/captain/infantry

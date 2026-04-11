@@ -20,7 +20,6 @@
 	round_contrib_points = 2
 	advclass_cat_rolls = list(CTAG_CLERK = 2)
 	social_rank = SOCIAL_RANK_YEOMAN
-	vice_restrictions = list(/datum/charflaw/nudist, /datum/charflaw/silverweakness, /datum/charflaw/illiterate, /datum/charflaw/unintelligible)
 	job_traits = list(TRAIT_SEEPRICES)
 	job_subclasses = list(
 		/datum/advclass/clerk
