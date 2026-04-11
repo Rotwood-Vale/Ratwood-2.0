@@ -3234,7 +3234,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	if(LAZYLEN(origin_items))
 		for(var/datum/virtue/item in origin_items)
 			var/datum/virtue/origin_item = new item.type()
-			var/list/choices = virtue_choice_selections?[origin_item.type]
+			var/list/choices = virtue_choice_selections?["[origin_item.type]"]
 			apply_virtue(character, origin_item, choices)
 
 	// Apply feats (new virtue system)
@@ -3245,7 +3245,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			if(!feat)
 				continue
 			var/datum/virtue/char_feat = new feat.type()
-			var/list/choices = virtue_choice_selections?[char_feat.type]
+			var/list/choices = virtue_choice_selections?["[char_feat.type]"]
 			apply_virtue(character, char_feat, choices)
 	
 	// Apply Virtuous statpack bonus virtue (virtuetwo)
@@ -3260,7 +3260,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				to_chat(character, "Incorrect Second Virtue parameters! (Heretic virtue on a non-heretic) It will not be applied.")
 			else
 				var/datum/virtue/bonus_virtue = new virtuetwo.type()
-				var/list/choices = virtue_choice_selections?[bonus_virtue.type]
+				var/list/choices = virtue_choice_selections?["[bonus_virtue.type]"]
 				apply_virtue(character, bonus_virtue, choices)
 
 /datum/preferences/proc/get_default_name(name_id)

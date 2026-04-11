@@ -17,8 +17,8 @@ GLOBAL_LIST_EMPTY(virtues)
 	var/list/added_languages = list()
 	/// An associative list containing any extra stats we need to add to the mob. NOTE: virtues should GENERALLY NOT add stats unless they impose serious downsides.
 	var/list/added_stats = list()
-	/// The cost of the virtue to apply in TRIUMPH points, if any.
-	var/triumph_cost = 0
+	/// The cost of the virtue to apply in virtue points, if any.
+	var/virtue_point_cost = 0
 	/// The cost of the virtue in virtue points. 5 = major combat, 4 = impactful, 2 = minor, 1 = origin items
 	var/virtue_cost = 0
 	/// A custom addendum that explains what the virtue does outside of the traits / skill adjustments.
@@ -32,17 +32,17 @@ GLOBAL_LIST_EMPTY(virtues)
 	// VIRTUE CHOICE/BONUS SYSTEM
 	/// Associative list of bonus choices available for this virtue. Format: "Display Name" = list("traits" = list(...), "skills" = list(...), "items" = list(...), "languages" = list(...), "stats" = list(...), "cost" = #, "desc" = "text")
 	var/list/virtue_choices = list()
-	/// Number of choices that are free before triumph costs kick in
+	/// Number of choices that are free before virtue point costs kick in
 	var/free_choices = 0
 	/// Maximum number of choices that can be selected (0 = no limit beyond costs)
 	var/max_choices = 0
-	/// Base triumph cost for choices beyond free ones. Progressive cost formula: base_cost * (choices_made - free_choices)
-	var/choice_triumph_cost = 1
+	/// Base virtue point cost for choices beyond free ones. Progressive cost formula: base_cost * (choices_made - free_choices)
+	var/choice_virtue_point_cost = 1
 
 /datum/virtue/New()
 	. = ..()
-	if (triumph_cost)
-		desc += "<b>Costs [triumph_cost] TRIUMPH.</b>"
+	if (virtue_point_cost)
+		desc += "<b>Costs [virtue_point_cost] Virtue Points.</b>"
 	if (virtue_cost)
 		desc += " <b>([virtue_cost] point\s)</b>"
 
@@ -96,19 +96,19 @@ GLOBAL_LIST_EMPTY(virtues)
 		var/value = added_stats[stat]
 		recipient.change_stat(stat, value)
 
-/datum/virtue/proc/check_triumphs(mob/living/carbon/human/recipient)
-	if (!triumph_cost)
+/datum/virtue/proc/check_virtue_points(mob/living/carbon/human/recipient)
+	if (!virtue_point_cost)
 		return TRUE
 
 	if (!recipient.mind)
 		return FALSE
 
-	// Check if they have enough triumphs
-	var/current_triumphs = recipient.get_triumphs()
-	if(current_triumphs < triumph_cost)
+	// Check if they have enough virtue points (uses triumph system internally)
+	var/current_points = recipient.get_triumphs()
+	if(current_points < virtue_point_cost)
 		return FALSE
 	
-	recipient.adjust_triumphs(-triumph_cost, FALSE)
+	recipient.adjust_triumphs(-virtue_point_cost, FALSE)
 	return TRUE
 
 /// Handle virtue bonus choices - applies pre-selected choices from preferences
@@ -119,7 +119,9 @@ GLOBAL_LIST_EMPTY(virtues)
 	if(!LAZYLEN(selected_choice_names))
 		return TRUE // No choices selected, skip
 	
-	var/triumph_spent = 0
+	to_chat(recipient, span_notice("Applying [length(selected_choice_names)] choice(s) for [name]..."))
+	
+	var/points_spent = 0
 	var/choices_made = 0
 	
 	// Apply all selected choices
@@ -130,13 +132,15 @@ GLOBAL_LIST_EMPTY(virtues)
 		var/list/choice_data = virtue_choices[choice_name]
 		var/individual_cost = choice_data["cost"] || 0
 		
-		// Calculate triumph cost for this choice
-		var/triumph_cost_for_choice = individual_cost
-		if(choices_made >= free_choices && choice_triumph_cost > 0)
-			triumph_cost_for_choice += choice_triumph_cost * (choices_made - free_choices + 1)
+		// Calculate virtue point cost for this choice
+		var/cost_for_choice = individual_cost
+		if(choices_made >= free_choices && choice_virtue_point_cost > 0)
+			cost_for_choice += choice_virtue_point_cost * (choices_made - free_choices + 1)
 		
-		triumph_spent += triumph_cost_for_choice
+		points_spent += cost_for_choice
 		choices_made++
+		
+		to_chat(recipient, span_notice("• [choice_name] ([cost_for_choice] VP)"))
 		
 		// Apply traits
 		if(LAZYLEN(choice_data["traits"]))
@@ -174,14 +178,16 @@ GLOBAL_LIST_EMPTY(virtues)
 			for(var/stat in choice_data["stats"])
 				recipient.change_stat(stat, choice_data["stats"][stat])
 	
-	// Deduct total triumph cost
-	if(triumph_spent > 0)
-		recipient.adjust_triumphs(-triumph_spent, FALSE)
+	// Deduct total virtue point cost
+	if(points_spent > 0)
+		recipient.adjust_triumphs(-points_spent, FALSE)
+		to_chat(recipient, span_notice("Spent [points_spent] Virtue Points for [name] choices."))
 	
+	to_chat(recipient, span_notice("Successfully applied all choices for [name]."))
 	return TRUE
 
 /proc/apply_virtue(mob/living/carbon/human/recipient, datum/virtue/virtue_type, list/selected_choices = null)
-	if (!virtue_type.check_triumphs(recipient))
+	if (!virtue_type.check_virtue_points(recipient))
 		return
 	virtue_type.apply_to_human(recipient)
 	virtue_type.handle_traits(recipient)

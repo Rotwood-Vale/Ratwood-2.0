@@ -16,13 +16,7 @@
 				return TRUE
 	
 	// Night-eyed vs Colorblind
-	if(virtue_type == /datum/virtue/utility/night_vision)
-		for(var/datum/charflaw/vice in vice_list)
-			if(vice && vice.type == /datum/charflaw/colorblind)
-				if(show_message && user)
-					to_chat(user, span_warning("Night-eyed virtue conflicts with Colorblind vice!"))
-				return TRUE
-	
+
 	// Well Off (Beautiful choice) vs Ugly
 	if(virtue_type == /datum/virtue/utility/well_off)
 		for(var/datum/charflaw/vice in vice_list)
@@ -76,13 +70,7 @@
 					to_chat(user, span_warning("Wood Arm vice conflicts with Prosthetic Limbs virtue!"))
 				return TRUE
 	
-	// Colorblind vs Night-eyed
-	if(vice_type == /datum/charflaw/colorblind)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/night_vision)
-				if(show_message && user)
-					to_chat(user, span_warning("Colorblind vice conflicts with Night-eyed virtue!"))
-				return TRUE
+
 	
 	// Ugly vs Well Off (Beautiful choice)
 	if(vice_type == /datum/charflaw/ugly)
@@ -367,6 +355,12 @@
 	// Count origin virtue
 	if(origin_virtue && istype(origin_virtue, /datum/virtue) && origin_virtue.virtue_cost)
 		total += origin_virtue.virtue_cost
+		// Add choice costs for origin virtue
+		var/virtue_key = "[origin_virtue.type]"
+		var/list/choices = virtue_choice_selections?[virtue_key]
+		if(LAZYLEN(choices))
+			var/choice_cost = calculate_choice_cost(origin_virtue, choices)
+			total += choice_cost
 	
 	// Count origin items (with null filtering)
 	if(LAZYLEN(origin_items))
@@ -375,6 +369,12 @@
 				continue
 			if(V.virtue_cost)
 				total += V.virtue_cost
+			// Add choice costs
+			var/virtue_key = "[V.type]"
+			var/list/choices = virtue_choice_selections?[virtue_key]
+			if(LAZYLEN(choices))
+				var/choice_cost = calculate_choice_cost(V, choices)
+				total += choice_cost
 	
 	// Count feats (with null filtering)
 	if(LAZYLEN(feats))
@@ -383,6 +383,12 @@
 				continue
 			if(V.virtue_cost)
 				total += V.virtue_cost
+			// Add choice costs
+			var/virtue_key = "[V.type]"
+			var/list/choices = virtue_choice_selections?[virtue_key]
+			if(LAZYLEN(choices))
+				var/choice_cost = calculate_choice_cost(V, choices)
+				total += choice_cost
 	
 	// Count legacy virtues for backwards compatibility
 	if(virtue && istype(virtue, /datum/virtue) && virtue.virtue_cost)
@@ -391,6 +397,29 @@
 		total += virtuetwo.virtue_cost
 	
 	return total
+
+/datum/preferences/proc/calculate_choice_cost(datum/virtue/V, list/selected_choices)
+	if(!V || !LAZYLEN(selected_choices) || !LAZYLEN(V.virtue_choices))
+		return 0
+	
+	var/total_cost = 0
+	var/choice_index = 0
+	for(var/choice_name in selected_choices)
+		var/list/choice_data = V.virtue_choices[choice_name]
+		if(!choice_data)
+			continue
+		
+		var/individual_cost = choice_data["cost"] || 0
+		var/effective_cost = individual_cost
+		
+		// Add progressive cost for choices beyond free ones
+		if(choice_index >= V.free_choices && V.choice_virtue_point_cost > 0)
+			effective_cost += V.choice_virtue_point_cost * (choice_index - V.free_choices + 1)
+		
+		total_cost += effective_cost
+		choice_index++
+	
+	return total_cost
 
 /datum/preferences/proc/get_remaining_virtue_points()
 	return get_max_virtue_points() - get_spent_virtue_points()
@@ -668,7 +697,7 @@
 		else
 			html += "<em style='color: #f44336;'>No choices selected yet!</em><br>"
 		
-		html += "<a class='btn btn-customize' style='margin-top: 4px; display: inline-block;' href='byond://?src=\ref[src];select_virtue_choices=[V.type]'>Configure Choices</a>"
+		html += "<a class='btn btn-customize' style='margin-top: 4px; display: inline-block;' href='byond://?src=\ref[src];virtue_action=select_virtue_choices;virtue_type=[V.type]'>Configure Choices</a>"
 		html += "</div>"
 	
 	// Display traits granted
@@ -2517,9 +2546,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				var/datum/virtue/V = GLOB.virtues[path]
 				if(V.category != "feats")
 					continue
-				// Exclude packs - they can only be selected via Virtuous statpack's virtuetwo
-				if(istype(V, /datum/virtue/pack))
-					continue
 				// Skip if already selected
 				if(V in feats)
 					continue
@@ -2589,9 +2615,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			for(var/path as anything in GLOB.virtues)
 				var/datum/virtue/V = GLOB.virtues[path]
 				if(V.category != "feats")
-					continue
-				// Exclude packs - they can only be selected via Virtuous statpack's virtuetwo
-				if(istype(V, /datum/virtue/pack))
 					continue
 				// Skip if already selected in another slot
 				if(V in feats)
@@ -2665,8 +2688,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			if(!virtue_type_path || !ispath(virtue_type_path, /datum/virtue))
 				return
 			
-			save_to_history()
-			
 			var/datum/virtue/V = GLOB.virtues[virtue_type_path]
 			if(!V || !LAZYLEN(V.virtue_choices))
 				to_chat(usr, span_warning("This virtue has no bonus choices available."))
@@ -2674,120 +2695,116 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				return
 			
 			// Get current selections for this virtue
-			var/list/current_selections = virtue_choice_selections?[virtue_type_path]
-			if(!current_selections)
-				current_selections = list()
+			var/virtue_key = "[virtue_type_path]"
+			var/list/working_selections = list()
+			if(virtue_choice_selections?[virtue_key])
+				var/list/current = virtue_choice_selections[virtue_key]
+				working_selections = current.Copy()
 			
-			// Calculate current triumph cost
-			var/spent_triumphs = 0
-			var/choices_made = length(current_selections)
-			for(var/i = 1 to choices_made)
-				if(i > V.free_choices && V.choice_triumph_cost > 0)
-					spent_triumphs += V.choice_triumph_cost * (i - V.free_choices)
-			
-			// Build selection menu
-			var/list/menu_options = list()
-			menu_options["--- VIEW SELECTED ([choices_made] chosen) ---"] = null
-			
-			// Show currently selected choices
-			if(LAZYLEN(current_selections))
-				for(var/choice_name in current_selections)
-					menu_options["    [choice_name] (SELECTED)"] = "deselect:[choice_name]"
-			else
-				menu_options["    (none selected yet)"] = null
-			
-			menu_options["--- AVAILABLE CHOICES ---"] = null
-			
-			// Show available choices
-			for(var/choice_name in V.virtue_choices)
-				if(choice_name in current_selections)
-					continue // Already selected
+			// Build and show selection menu in a loop until done
+			while(TRUE)
+				// Calculate current costs
+				var/spent_points = calculate_choice_cost(V, working_selections)
+				var/choices_made = length(working_selections)
 				
-				var/list/choice_data = V.virtue_choices[choice_name]
-				var/individual_cost = choice_data["cost"] || 0
+				// Build selection menu
+				var/list/menu_options = list()
+				menu_options[">>> DONE (save changes)"] = "done"
+				menu_options["─────────────────"] = null
 				
-				// Calculate cost if this choice were selected now
-				var/effective_cost = individual_cost
-				if(choices_made >= V.free_choices && V.choice_triumph_cost > 0)
-					effective_cost += V.choice_triumph_cost * (choices_made - V.free_choices + 1)
-				
-				var/cost_text = ""
-				if(choices_made < V.free_choices && individual_cost == 0)
-					cost_text = " (FREE)"
-				else if(effective_cost > 0)
-					cost_text = " ([effective_cost] TRI)"
-				
-				var/desc_text = choice_data["desc"] ? " - [choice_data["desc"]]" : ""
-				var/choice_display = "[choice_name][cost_text][desc_text]"
-				
-				// Check if max choices reached
-				if(V.max_choices > 0 && choices_made >= V.max_choices)
-					choice_display += " (MAX REACHED)"
-					menu_options[choice_display] = null
+				// Show currently selected choices
+				if(LAZYLEN(working_selections))
+					menu_options["SELECTED ([choices_made]):"] = null
+					for(var/choice_name in working_selections)
+						menu_options["  ✓ [choice_name] (remove)"] = "deselect:[choice_name]"
 				else
-					menu_options[choice_display] = "select:[choice_name]"
-			
-			menu_options["--- DONE SELECTING ---"] = "done"
-			
-			var/prompt = "Select bonus choices for [V.name]\n"
-			prompt += "[choices_made] selected"
-			if(V.free_choices > 0)
-				var/free_remaining = max(0, V.free_choices - choices_made)
-				prompt += ", [free_remaining] free remaining"
-			if(V.max_choices > 0)
-				prompt += ", max [V.max_choices]"
-			prompt += "\nTriumphs spent: [spent_triumphs]"
-			
-			var/choice = tgui_input_list(usr, prompt, "[V.name] Bonuses", menu_options)
-			
-			if(!choice || menu_options[choice] == "done")
-				save_character()
-				open_vices_menu(usr)
-				return
-			
-			var/action_data = menu_options[choice]
-			if(!action_data)
-				// Just a display item, try again
-				href_list["virtue_action"] = "select_virtue_choices"
-				.() // Recurse
-				return
-			
-			// Parse action
-			var/list/action_parts = splittext(action_data, ":")
-			var/sub_action = action_parts[1]
-			var/choice_name = action_parts[2]
-			
-			if(sub_action == "select")
-				// Add choice
-				if(!virtue_choice_selections)
-					virtue_choice_selections = list()
-				if(!virtue_choice_selections[virtue_type_path])
-					virtue_choice_selections[virtue_type_path] = list()
+					menu_options["(none selected)"] = null
 				
-				virtue_choice_selections[virtue_type_path] += choice_name
-				to_chat(usr, span_notice("Selected: [choice_name]"))
+				menu_options["─────────────────"] = null
+				menu_options["AVAILABLE:"] = null
 				
-				// Recurse to show menu again
-				href_list["virtue_action"] = "select_virtue_choices"
-				.()
-				return
+				// Show available choices
+				for(var/choice_name in V.virtue_choices)
+					if(choice_name in working_selections)
+						continue
+					
+					var/list/choice_data = V.virtue_choices[choice_name]
+					var/individual_cost = choice_data["cost"] || 0
+					
+					// Calculate cost if this choice were selected now
+					var/effective_cost = individual_cost
+					if(choices_made >= V.free_choices && V.choice_virtue_point_cost > 0)
+						effective_cost += V.choice_virtue_point_cost * (choices_made - V.free_choices + 1)
+					
+					var/cost_text = ""
+					if(choices_made < V.free_choices && individual_cost == 0)
+						cost_text = " (FREE)"
+					else if(effective_cost > 0)
+						cost_text = " (+" + "[effective_cost]" + " VP)"
+					
+					var/desc_text = choice_data["desc"] ? " - [choice_data["desc"]]" : ""
+					var/choice_display = "  [choice_name][cost_text][desc_text]"
+					
+					// Check if max choices reached
+					if(V.max_choices > 0 && choices_made >= V.max_choices)
+						choice_display += " (MAX)"
+						menu_options[choice_display] = null
+					else
+						menu_options[choice_display] = "select:[choice_name]"
 				
-			else if(sub_action == "deselect")
-				// Remove choice
-				if(virtue_choice_selections?[virtue_type_path])
-					virtue_choice_selections[virtue_type_path] -= choice_name
-					if(!length(virtue_choice_selections[virtue_type_path]))
-						virtue_choice_selections.Remove(virtue_type_path)
-					to_chat(usr, span_notice("Deselected: [choice_name]"))
+				var/prompt = "[V.name] - Select Bonus Choices\n\n"
+				prompt += "Selected: [choices_made]"
+				if(V.free_choices > 0)
+					var/free_remaining = max(0, V.free_choices - choices_made)
+					prompt += " | Free: [free_remaining]"
+				if(V.max_choices > 0)
+					prompt += " | Max: [V.max_choices]"
+				prompt += "\n\n"
+				prompt += "Base: [V.virtue_point_cost] VP | Choices: +[spent_points] VP | Total: [V.virtue_point_cost + spent_points] VP\n\n"
+				prompt += "Click DONE to save, or NO to discard."
 				
-				// Recurse to show menu again
-				href_list["virtue_action"] = "select_virtue_choices"
-				.()
-				return
-			
-			save_character()
-			open_vices_menu(usr)
-			return
+				var/choice = tgui_input_list(usr, prompt, "Configure [V.name]", menu_options)
+				
+				if(!choice)
+					// NO button or window closed - ask to confirm discard
+					var/confirm = tgui_alert(usr, "Discard changes?", "Confirm", list("Yes", "No"))
+					if(confirm == "Yes")
+						open_vices_menu(usr)
+						return
+					else
+						continue // Go back to menu
+				
+				var/action_data = menu_options[choice]
+				if(!action_data)
+					// Clicked a header/separator - refresh menu
+					continue
+				
+				if(action_data == "done")
+					// Save changes
+					save_to_history()
+					if(!virtue_choice_selections)
+						virtue_choice_selections = list()
+					if(LAZYLEN(working_selections))
+						virtue_choice_selections[virtue_key] = working_selections
+					else
+						virtue_choice_selections.Remove(virtue_key)
+					save_character()
+					to_chat(usr, span_notice("Saved [choices_made] choice(s) for [V.name]."))
+					open_vices_menu(usr)
+					return
+				
+				// Parse select/deselect action
+				var/list/action_parts = splittext(action_data, ":")
+				var/sub_action = action_parts[1]
+				var/choice_name = action_parts[2]
+				
+				if(sub_action == "select")
+					working_selections += choice_name
+					
+				else if(sub_action == "deselect")
+					working_selections -= choice_name
+				
+				// Loop continues - menu refreshes with new selections
 		
 		// Legacy handlers (kept for compatibility if needed, but can be removed eventually)
 		if(action == "change_primary")

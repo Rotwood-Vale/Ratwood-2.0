@@ -209,7 +209,6 @@
 #define BELOW_CHEST	(GROIN | VITALS | LEGS | FEET) //for water
 #define FULL_BODY	(FULL_HEAD | NECK | BELOW_HEAD)
 
-
 //defines for the index of hands
 #define LEFT_HANDS 1
 #define RIGHT_HANDS 2
