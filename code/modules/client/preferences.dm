@@ -1131,6 +1131,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 							name = vice.name
 				if(!isnull(name))
 					HTML += "<font color='#a561a5'>[used_name] (Disallowed by Virtues / Vice: [name])</font></td> <td> </td></tr>"
+					continue
 			if(length(job.virtue_restrictions))
 				var/name
 				if(virtue.type in job.virtue_restrictions)
