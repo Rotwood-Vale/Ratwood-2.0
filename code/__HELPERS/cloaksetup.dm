@@ -55,7 +55,7 @@
 		return
 
 	var/list/gameplay_preferences = list("RP", "Combat", "Role Training/I'm New", "No Preference")
-	var/selected_preference = input(src, "Choose your preferred Squire Experience", "SQUIRE PREFERENCE") as null|anything in gameplay_preferences
+	var/selected_preference = input(src, "Choose your preferred playstyle\n\nPlease note this is not guaranteed, it is just to indicate to knights what sort of experience you prefer. You will still be expected to fulfill all of the duties of a Squire!", "SQUIRE PREFERENCE") as null|anything in gameplay_preferences
 	if(!(selected_preference in gameplay_preferences))
 		selected_preference = "No Preference"
 	mind.squire_gameplay_preference = selected_preference
