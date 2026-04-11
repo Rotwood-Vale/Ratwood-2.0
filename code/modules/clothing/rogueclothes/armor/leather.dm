@@ -259,7 +259,7 @@
 	icon_state = "vest"
 	item_state = "vest"
 	color = "#514339"
-	armor = ARMOR_CLOTHING
+	armor = ARMOR_LEATHER_BAD
 	prevent_crits = list(BCLASS_CUT)
 	blocksound = SOFTHIT
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT

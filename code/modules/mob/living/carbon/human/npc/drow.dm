@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 						/datum/sprite_accessory/hair/head/countryponytailalt, 
 						/datum/sprite_accessory/hair/head/stacy, 
 						/datum/sprite_accessory/hair/head/kusanagi_alt))
-	var/hairm = pick(list(/datum/sprite_accessory/hair/head/ponytailyeager, 
+	var/hairm = pick(list(/datum/sprite_accessory/hair/head/ponytailwitcher, 
 						/datum/sprite_accessory/hair/head/dave, 
 						/datum/sprite_accessory/hair/head/emo, 
 						/datum/sprite_accessory/hair/head/sabitsuki,

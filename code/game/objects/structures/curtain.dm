@@ -117,6 +117,8 @@
 /obj/structure/curtain/black
 	color = "#414143"
 
+/obj/structure/curtain/drab
+	color = CLOTHING_DRAB
 /obj/structure/curtain/orange
 	color = "#a3622c"
 

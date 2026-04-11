@@ -488,7 +488,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry
 	seed = null
-	name = "westleach leaf"
+	name = "dried westleach"
 	desc = "A dried pipeweed, ready to smoke."
 	icon_state = "westleachd"
 	dry = TRUE
@@ -512,7 +512,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry
 	seed = null
-	name = "swampweed"
+	name = "dried swampweed"
 	desc = "A prepared pipeweed prized for its foggy effects."
 	icon_state = "swampweedd"
 	dry = TRUE

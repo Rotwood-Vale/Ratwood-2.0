@@ -34,24 +34,11 @@
 	hides_breasts = TRUE
 
 /datum/sprite_accessory/underwear/bikini/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
-	if(owner.getorganslot(ORGAN_SLOT_BREASTS))
-		var/obj/item/organ/breasts/breasts = owner.getorganslot(ORGAN_SLOT_BREASTS)
-		var/tag = "bikini_f"
-		if(breasts.breast_size == 0)
-			tag = tag + "_0"
-		if(breasts.breast_size == 1)
-			tag = tag + "_1"
-		if(breasts.breast_size == 2)
-			tag = tag + "_2"
-		if(breasts.breast_size == 3)
-			tag = tag + "_3"
-		if(breasts.breast_size == 4)
-			tag = tag + "_4"
-		if(breasts.breast_size == 5)
-			tag = tag + "_5"
-		return tag
-	else
+	var/obj/item/organ/breasts/breasts = owner.getorganslot(ORGAN_SLOT_BREASTS)
+	if(!breasts || breasts.breast_size < 0 || breasts.breast_size > 9)
 		return "bikini_f_0"
+
+	return "bikini_f_" + "[breasts.breast_size]"
 
 /datum/sprite_accessory/underwear/panties
 	name = "Panties"

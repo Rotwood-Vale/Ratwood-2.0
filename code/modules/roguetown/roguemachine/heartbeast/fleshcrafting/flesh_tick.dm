@@ -12,6 +12,7 @@
 	name = "bloated leech tick"
 	desc = "This leechtick has feasted on lux and digested it. A crazy person might use this for revival..."
 	sellprice = 40
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/leechtick/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

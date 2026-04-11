@@ -331,6 +331,8 @@
 				btm.apply_status_effect(/datum/status_effect/facial/internal)
 			else
 				creampie.refresh_cum()
+			if(top?.dna?.species?.id == "gnoll")
+				btm.has_gnoll_scent_this_round = TRUE
 			modular_record_collar_receive_event(btm, top)
 			if(!btm.has_status_effect(/datum/status_effect/knot_gaped))
 				var/obj/item/organ/testicles/testes = top.getorganslot(ORGAN_SLOT_TESTICLES)

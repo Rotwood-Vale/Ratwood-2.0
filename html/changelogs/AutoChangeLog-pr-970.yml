@@ -1,0 +1,4 @@
+author: "PPooch"
+delete-after: True
+changes:
+  - bugfix: "Fix being able to pick more bardic inspirations than intended"

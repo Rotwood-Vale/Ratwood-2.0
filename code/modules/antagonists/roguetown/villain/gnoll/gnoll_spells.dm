@@ -1,0 +1,355 @@
+#define GNOLL_STEALTH_TIMER 60 SECONDS
+#define GNOLL_ABDUCT_TIMER 20 SECONDS
+#define GNOLL_ABDUCT_DAMAGE_THRESHOLD 100
+/obj/effect/proc_holder/spell/self/claws/gnoll
+	name = "Gnoll claws"
+	claw_type = /obj/item/rogueweapon/werewolf_claw/gnoll
+
+/obj/effect/proc_holder/spell/self/howl/gnoll
+	howl_sounds = list('sound/vo/mobs/gnoll/yeen_howl.ogg')
+	howl_sounds_far = list('sound/vo/mobs/hyena/gnoll_distant.ogg')
+	howl_antag_type = /datum/antagonist/gnoll
+	howl_channels = list(HOWL_CHANNEL_GNOLL) // gnolls only — separate channel from werewolves/druids
+	howl_distance_limit = 50
+	howl_distance_volume = 25
+	howl_prompt_text = "Howl at the bloodied sky..."
+	howl_prompt_title = "GORESPAWN"
+	howl_announcement_target = "bloodied sky"
+
+/obj/effect/proc_holder/spell/invoked/gnoll_sniff
+	name = "Track"
+	desc = "Graggar has some worthy folks for you, hunt them down! Cast on self to set target, cast to track target, cast on a person to remember their scent temporarily"
+	recharge_time = 0.5 SECONDS
+	chargetime = 0.1 SECONDS
+	breaks_invisibility = FALSE
+	overlay_icon = 'icons/mob/actions/gnollmiracles.dmi'
+	action_icon = 'icons/mob/actions/gnollmiracles.dmi'
+	overlay_state = "sniff"
+	invocation_type = "none"
+	action_icon_state = "sniff"
+	var/datum/weakref/tracked_target_ref = null
+	var/list/target_warning_next_by_ref = list()
+	var/shown_hunt_disclaimer = FALSE
+	var/last_selection
+
+/obj/effect/proc_holder/spell/invoked/gnoll_sniff/proc/sync_antag_tracked_target(mob/user, mob/living/target)
+	var/datum/antagonist/gnoll/gnoll_antag = user?.mind?.has_antag_datum(/datum/antagonist/gnoll)
+	if(!gnoll_antag)
+		return
+	gnoll_antag.set_tracked_target(target)
+
+/obj/effect/proc_holder/spell/invoked/gnoll_sniff/cast(list/targets, mob/user)
+	var/mob/living/target = targets[1]
+	var/mob/living/tracked_target = tracked_target_ref?.resolve()
+
+	if(!tracked_target || QDELETED(tracked_target) || tracked_target.stat == DEAD || target == user)
+		select_new_target(user)
+	else
+		give_tracking_directions(user)
+
+	if(is_valid_hunted(target) && target != user)
+		tracked_target_ref = WEAKREF(target)
+		sync_antag_tracked_target(user, target)
+		to_chat(user, span_notice("You catch the scent of [target.real_name]. The hunt begins!"))
+		notify_tracked_target(target)
+		user.playsound_local(get_turf(user), 'sound/vo/mobs/wwolf/sniff.ogg', 50, TRUE)
+	else if(!tracked_target_ref?.resolve())
+		sync_antag_tracked_target(user, null)
+		to_chat(user, span_warning("[target] isn't something you can hunt."))
+		revert_cast()
+		return FALSE
+	
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/gnoll_sniff/proc/select_new_target(mob/user)
+	var/list/hunted_targets = list()
+	var/list/combat_targets = list()
+	var/list/combat_roles = get_gnoll_tracking_combat_roles()
+	var/list/name_counts = list()
+	//Allows a fallback, if no hunted targets are available, we can track worthy prey (combat roles) instead. 
+	for(var/mob/living/carbon/human/human in GLOB.player_list)
+		if(human == user || QDELETED(human) || human.stat == DEAD || istype(human, /mob/living/carbon/human/dummy) || !human.mind)
+			continue
+		if(human.advsetup || !human.class_equip_finished) // they haven't gotten their true class name yet
+			continue
+		if(human.has_flaw(/datum/charflaw/hunted))
+			add_target_to_list(human, hunted_targets, name_counts)
+		else if(human.job in combat_roles)
+			add_target_to_list(human, combat_targets, name_counts)
+
+	var/list/possible_targets = length(hunted_targets) ? hunted_targets : combat_targets
+
+	if(!length(possible_targets))
+		to_chat(user, span_warning("The air is stale. No worthy prey walks these lands."))
+		return
+
+	var/selection = tgui_input_list(user, "Whose scent shall we follow?", "The Great Hunt", possible_targets, last_selection)
+	if(!selection)
+		return
+
+	if(!shown_hunt_disclaimer)
+		to_chat(user, span_notice("You have chosen your first quarry. ") + span_biginfo("Go and see if this one is worthy of your attention. \
+									If not, you can always seek out another."))
+		shown_hunt_disclaimer = TRUE
+
+	var/mob/living/selected_target = possible_targets[selection]
+	if(!is_valid_hunted(selected_target))
+		to_chat(user, span_warning("That scent slips away before you can lock onto it."))
+		return
+
+	last_selection = selection
+	tracked_target_ref = WEAKREF(selected_target)
+	sync_antag_tracked_target(user, selected_target)
+	notify_tracked_target(selected_target)
+	to_chat(user, span_notice("You focus your senses on [selected_target.real_name]."))
+	give_tracking_directions(user)
+
+/obj/effect/proc_holder/spell/invoked/gnoll_sniff/proc/add_target_to_list(mob/living/carbon/human/human, list/target_list, list/name_counts)
+	var/base_name = "[human.real_name]"
+	var/name_count = (name_counts[base_name] || 0) + 1
+	name_counts[base_name] = name_count
+	var/class = human.get_class_title()
+	// Names will display in the format "Urist McDwarf (2) - Grudgebearer Soldier"
+	var/entry_name = (name_count > 1) ? "[base_name] ([name_count])[length(class) ? " - [class]" : ""]" : "[base_name][length(class) ? " - [class]" : ""]"
+	
+	target_list[entry_name] = human
+	return
+
+/obj/effect/proc_holder/spell/invoked/gnoll_sniff/proc/give_tracking_directions(mob/user)
+	var/mob/living/tracked_target = tracked_target_ref?.resolve()
+	if(!tracked_target || QDELETED(tracked_target) || tracked_target.stat == DEAD)
+		to_chat(user, span_warning("The scent has gone cold... your target is no more."))
+		tracked_target_ref = null
+		sync_antag_tracked_target(user, null)
+		return
+
+	var/turf/user_turf = get_turf(user)
+	var/turf/target_turf = get_turf(tracked_target)
+
+	if(user_turf.z != target_turf.z)
+		to_chat(user, span_notice("The scent of [tracked_target.real_name] drifts from [user_turf.z > target_turf.z ? "below" : "above"] you."))
+	else
+		var/dist = get_dist(user, tracked_target)
+		var/dir_text = dir2text(get_dir(user, tracked_target))
+		
+		if(dist <= 1)
+			to_chat(user, span_boldnotice("The prey is right here! Blood and steel!"))
+		else if(dist < 10)
+			to_chat(user, span_notice("The scent is thick to the [dir_text]. They are very close."))
+		else
+			to_chat(user, span_notice("You catch a faint whiff of [tracked_target.real_name] to the [dir_text]."))
+
+/obj/effect/proc_holder/spell/invoked/gnoll_sniff/proc/notify_tracked_target(mob/living/target)
+	if(!is_valid_hunted(target))
+		return
+
+	var/target_ref = "\ref[target]"
+	var/next_warning_time = target_warning_next_by_ref[target_ref]
+	if(isnull(next_warning_time))
+		target_warning_next_by_ref[target_ref] = world.time + 10 MINUTES
+		to_chat(target, span_warning("Faint cackles ride the wind. I need to be careful which shadows I tread through lest I find myself hunted!"))
+		return
+
+	if(world.time < next_warning_time)
+		return
+
+	target_warning_next_by_ref[target_ref] = world.time + 10 MINUTES
+	to_chat(target, span_warning("I feel the gaze of a hunter, they are after me!"))
+
+/obj/effect/proc_holder/spell/invoked/gnoll_sniff/proc/is_valid_hunted(atom/A)
+	if(!isliving(A))
+		return FALSE
+	var/mob/living/L = A
+	if(!L || QDELETED(L) || L.stat == DEAD)
+		return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/abduct
+	name = "Abduct"
+	desc = "Cast on self to set a destination. Cast on an aggressively grabbed human to teleport them and nearby Gnolls to that destination. Much faster on hunted targets. There is a small blood tax for all gnolls involved, be careful. Pursuers may be able to follow. Can't be cast if damaged severely recently."
+	var/turf/destination_turf
+	var/blood_loss = 75
+	recharge_time = 5 MINUTES
+	invocation_type = "emote"
+	invocation_emote_self = "<span class='notice'>I rip a tear in reality with my claw!</span>"
+	overlay_icon = 'icons/mob/actions/gnollmiracles.dmi'
+	action_icon = 'icons/mob/actions/gnollmiracles.dmi'
+	overlay_state = "abduct"
+	action_icon_state = "abduct"
+
+/obj/effect/proc_holder/spell/invoked/abduct/cast(list/targets, mob/user)
+	if(targets[1] == user)
+		to_chat(user, span_notice("You begin setting your anchor for abduction."))
+		if(do_after(user, 10 SECONDS, target = user))
+			destination_turf = get_turf(user)
+			to_chat(user, span_notice("You anchor your connection to graggar's plane here. Any abducted will be fetched here."))
+		// We are reverting cast because we're only setting the destination.
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/target = targets[1]
+	if(!ishuman(target))
+		to_chat(user, span_warning("This spell only works on humans or yourself!"))
+		revert_cast()
+		return FALSE
+
+	if(user.pulling != target || user.grab_state < GRAB_AGGRESSIVE)
+		to_chat(user, span_warning("You must have an aggressive grab on [target] to begin the ritual!"))
+		revert_cast()
+		return FALSE
+
+	// Shouldn't ever prop up, but sanity check!
+	if(!destination_turf)
+		to_chat(user, span_warning("You haven't set a destination anchor yet!"))
+		revert_cast()
+		return FALSE
+
+	var/datum/component/gnoll_combat_tracker/tracker = user.GetComponent(/datum/component/gnoll_combat_tracker)
+	if(!tracker)
+		tracker = user.AddComponent(/datum/component/gnoll_combat_tracker)
+
+	if(tracker.get_recent_damage() > GNOLL_ABDUCT_DAMAGE_THRESHOLD)
+		to_chat(user, span_warning("You've taken too much punishment recently to focus on the abduction, you flinch!"))
+		revert_cast()
+		return FALSE
+
+	// Determine Channel Time
+	var/channel_time = 15 SECONDS
+	if(target.has_flaw(/datum/charflaw/hunted))
+		channel_time = 6 SECONDS
+
+	to_chat(user, span_notice("You begin pulling [target] into graggar's plane"))
+	to_chat(target, span_userdanger("The world around you begins to dissolve into a blood scented nightmare!"))
+	user.visible_message(span_userdanger("[user] tears a blood red rift into space with a claw, and begins dragging [target] into it!"))
+	tracker.channeling_abduction = TRUE
+
+	if(!do_after(user, channel_time, target = target))
+		tracker.channeling_abduction = FALSE
+		revert_cast()
+		return FALSE
+
+	// Extra safety check
+	if(tracker.get_recent_damage() > GNOLL_ABDUCT_DAMAGE_THRESHOLD)
+		tracker.channeling_abduction = FALSE
+		to_chat(user, span_warning("The pain of your wounds disrupts the abduction at the last moment!"))
+		revert_cast()
+		return FALSE
+
+	// Ritual Execution
+	var/turf/origin_turf = get_turf(target)
+	var/gnoll_hitchhikers = 0
+
+	do_teleport(user, destination_turf)
+	do_teleport(target, destination_turf)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/userashuman = user
+		userashuman.blood_volume = max(0, userashuman.blood_volume - blood_loss)
+	for(var/mob/living/carbon/human/H in range(7, origin_turf))
+		if(H.dna?.species?.id == "gnoll" && H != user)
+			gnoll_hitchhikers++
+			H.blood_volume = max(0, H.blood_volume - blood_loss)
+			do_teleport(H, destination_turf)
+			to_chat(H, span_notice("You are swept along in the wake of the blood abduction!"))
+
+	// Basically, if a gnoll is badass enough to abduct his target alone, no one can follow
+	if(gnoll_hitchhikers)
+		var/obj/structure/portal_jaunt/portal = new(origin_turf)
+		portal.linked_turf = destination_turf
+		portal.safe_passage = TRUE
+		portal.name = "fading blood rift"
+		portal.color = "#570f04"
+		portal.max_uses = 1
+	new /obj/effect/gibspawner/human/bodypartless(origin_turf, target)
+
+	to_chat(user, span_warning("The ritual is complete. You have brought them to your anchor."))
+	tracker.channeling_abduction = FALSE
+	return TRUE
+
+/datum/component/gnoll_combat_tracker
+	var/damage_taken = 0
+	var/last_damage_time = 0
+	var/death_loot_given = FALSE
+	var/channeling_abduction = FALSE
+
+/datum/component/gnoll_combat_tracker/Initialize()
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
+	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMGE, PROC_REF(on_damage))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+
+/datum/component/gnoll_combat_tracker/proc/on_damage(datum/source, damage, damagetype, def_zone)
+	SIGNAL_HANDLER
+	last_damage_time = world.time
+	damage_taken += damage
+
+	if(channeling_abduction && ishuman(parent) && get_recent_damage() >= GNOLL_ABDUCT_DAMAGE_THRESHOLD)
+		var/mob/living/carbon/human/H = parent
+		// micro stun to break any do_afters
+		// asynchronous as to not mess with signal behavior!
+		spawn(0)
+			H.Stun(1)
+		to_chat(H, span_userdanger("The pain interrupts your concentration!"))
+		channeling_abduction = FALSE // Reset channel flag
+
+/datum/component/gnoll_combat_tracker/proc/on_death()
+	SIGNAL_HANDLER
+	if(!death_loot_given)
+		var/obj/item/loot = pick(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll, /obj/item/roguegem/blood_diamond)
+		var/mob/living/gnoll = parent
+		new loot(gnoll.loc)
+		gnoll.visible_message(span_notice("A piece of [loot.name] is put down by a bloody ethereal hand, poised neatly by the gnoll's corpse."))
+		death_loot_given = TRUE
+
+/datum/component/gnoll_combat_tracker/proc/can_cast_stealth()
+	// Returns TRUE if 1 minute has passed
+	return (world.time >= last_damage_time + GNOLL_STEALTH_TIMER)
+
+/datum/component/gnoll_combat_tracker/proc/get_recent_damage()
+	if(world.time >= last_damage_time + GNOLL_ABDUCT_TIMER)
+		damage_taken = 0
+	return damage_taken
+
+/obj/effect/proc_holder/spell/invoked/invisibility/gnoll
+	name = "Stalk"
+	desc = "Fade from view. Lasts until you attack. Taking damage makes it impossible to go invisible for a minute."
+	recharge_time = 2 MINUTES
+	overlay_icon = 'icons/mob/actions/gnollmiracles.dmi'
+	action_icon = 'icons/mob/actions/gnollmiracles.dmi'
+	overlay_state = "stalk"
+	action_icon_state = "stalk"
+
+/obj/effect/proc_holder/spell/invoked/invisibility/gnoll/cast(list/targets, mob/living/user)
+	var/mob/living/target = user
+	if(!isliving(target))
+		revert_cast()
+		return FALSE
+
+	// Check Damage Tracker Component
+	var/datum/component/gnoll_combat_tracker/tracker = user.GetComponent(/datum/component/gnoll_combat_tracker)
+	if(tracker && !tracker.can_cast_stealth())
+		var/wait = (tracker.last_damage_time + 60 SECONDS - world.time) / 10
+		to_chat(user, span_warning("Your blood is pumping too fast to use it to shroud yourself! Wait [round(wait)] seconds."))
+		revert_cast()
+		return FALSE
+
+	if(target.anti_magic_check(TRUE, TRUE))
+		revert_cast()
+		return FALSE
+
+	// Practically indefinite
+	var/base_dur = 999 MINUTES
+
+	target.visible_message(span_warning("[target] vanishes into the scent of the hunt!"), span_notice("You vanish, the hunt guides your shadows."))
+
+	animate(target, alpha = 0, time = 1 SECONDS, easing = EASE_IN)
+	target.mob_timers[MT_INVISIBILITY] = world.time + base_dur
+
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, update_sneak_invis), TRUE), base_dur)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[target] lunges out of the shadows!"), span_notice("Your invisibility fades.")), base_dur)
+
+	return TRUE
+
+#undef GNOLL_STEALTH_TIMER
+#undef GNOLL_ABDUCT_TIMER
+#undef GNOLL_ABDUCT_DAMAGE_THRESHOLD

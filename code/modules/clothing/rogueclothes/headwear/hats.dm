@@ -129,6 +129,9 @@
 	nudist_approved = TRUE
 	//dropshrink = 0.75
 
+/obj/item/clothing/head/roguetown/chaperon/brown
+	color = CLOTHING_BROWN
+
 /obj/item/clothing/head/roguetown/cookhat
 	name = "cook hat"
 	desc = "A hat which designates one as well-versed in the arts of cooking."

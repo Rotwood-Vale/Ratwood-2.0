@@ -56,6 +56,16 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
+	if(H.dna?.species?.id == "gnoll" && ispath(water_reagent, /datum/reagent/blood))
+		if(!H.gnoll_bloodpool_feed())
+			return
+		playsound(src, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
+		H.changeNext_move(CLICK_CD_MELEE)
+		if(!mapped)
+			water_volume = max(water_volume - 2, 0)
+			if(water_volume <= 0)
+				water_reagent = water_reagent_purified
+		return
 	if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
 		to_chat(H, span_info("You gaze at your reflection in the water, concentrating on the glamoring magicks..."))
 		if(do_after(H, 3 SECONDS, src))
@@ -244,7 +254,7 @@
 			playsound(user, 'sound/foley/drawwater.ogg', 100, FALSE)
 			if(do_after(user, 8, target = src))
 				user.changeNext_move(CLICK_CD_MELEE)
-				C.reagents.add_reagent(water_reagent, 200)
+				C.reagents.add_reagent(water_reagent, 300)
 				to_chat(user, span_notice("I fill [C] from [src]."))
 				// If the user is filling a water purifier and the water isn't already clean...
 				if (istype(C, /obj/item/reagent_containers/glass/bottle/waterskin/purifier) && water_reagent != water_reagent_purified)
@@ -278,6 +288,7 @@
 					wash_atom(user, CLEAN_STRONG)
 					user.remove_stress(/datum/stressevent/sewertouched)
 				playsound(user, pick(wash), 100, FALSE)
+				L.adjust_fire_stacks(-100)
 				if(temperature < 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 75)	//washing yourself helps to cool you off.
 					L.adjust_bodytemperature(-75)
 					L.update_health_hud()
@@ -341,6 +352,17 @@
 		return
 
 	if(do_after(L, 25, target = src))
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.dna?.species?.id == "gnoll" && ispath(water_reagent, /datum/reagent/blood))
+				if(!H.gnoll_bloodpool_feed())
+					return
+				playsound(src, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
+				if(!mapped)
+					water_volume = max(water_volume - 2, 0)
+					if(water_volume <= 0)
+						water_reagent = water_reagent_purified
+				return
 		if (istype(src,/turf/open/water/sewer))
 			to_chat(user, span_userdanger("Have I gone mad!? Why am I drinking sewage!?"))
 		var/list/waterl = list(src.water_reagent = 5)

@@ -41,6 +41,10 @@
 	pants = /obj/item/clothing/under/roguetown/trou
 	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
 	backl = /obj/item/storage/backpack/rogue/backpack
+	if(SSmapping.config.map_name == "Desert Town")
+		head = /obj/item/clothing/head/roguetown/turban
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb
+
 	backpack_contents = list(
 						/obj/item/natural/worms/leech/cheele = 1,
 						/obj/item/natural/cloth = 2,
@@ -54,6 +58,8 @@
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
+		H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 6, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 4, TRUE)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 

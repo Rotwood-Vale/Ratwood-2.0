@@ -9,7 +9,7 @@
 	category_tags = list(CTAG_ROYALGUARD)
 	subclass_stats = list(
 		STATKEY_STR = 1,
-		STATKEY_INT = 1,
+		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
 		STATKEY_SPD = 2,
 	)

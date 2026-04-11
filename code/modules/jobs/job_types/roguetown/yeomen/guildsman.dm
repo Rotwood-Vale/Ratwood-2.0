@@ -200,6 +200,7 @@
 /datum/outfit/job/roguetown/guildsman/architect/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/hatblu
+	mask = /obj/item/clothing/mask/rogue/spectacles/golden
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
 	cloak = /obj/item/clothing/cloak/apron/waist/bar
 	pants = /obj/item/clothing/under/roguetown/trou

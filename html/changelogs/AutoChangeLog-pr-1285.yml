@@ -1,0 +1,4 @@
+author: "john-pawson"
+delete-after: True
+changes:
+  - balance: "Bushes inside town no longer give berries"

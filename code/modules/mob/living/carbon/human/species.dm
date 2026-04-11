@@ -176,8 +176,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/gender_swapping = FALSE
 	var/stress_examine = FALSE
 	var/stress_desc = null
+	var/examine_stress_event = /datum/stressevent/shunned_race
+	var/examine_stress_event_xenophobic = /datum/stressevent/shunned_race_xenophobic
+	var/examine_stress_always = FALSE
+	var/examine_stress_ignores_tolerant = FALSE
+	var/examine_relief_patron = null
+	var/examine_relief_event = null
 
 	var/punch_damage
+	/// WARNING - This is a very simple implementation. Not meant for carbons composed of limbs!
+	var/custom_rotation_icon = null
+	var/custom_base_icon = null
 
 //Used for expanded lore blurbs on species.
 	var/expanded_desc

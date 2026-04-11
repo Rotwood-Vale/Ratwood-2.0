@@ -65,7 +65,6 @@
 	GLOB.lordcolor -= src
 	return ..()
 
-
 /obj/item/clothing/suit/roguetown/armor/brigandine/heartfelt
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "heartfelt brigandine"
@@ -109,6 +108,7 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+
 /obj/item/clothing/suit/roguetown/armor/brigandine/coatplates
 	name = "coat of plates"
 	desc = "A leather coat with plates attached to increase protection while retaining mobility. The leather below might stop a dagger."

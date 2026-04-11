@@ -114,10 +114,8 @@
 	if(now_pushing)
 		return TRUE
 
-	var/they_can_move = TRUE
 	if(isliving(M))
 		var/mob/living/L = M
-		they_can_move = L.mobility_flags & MOBILITY_MOVE
 
 		//Should stop you pushing a restrained person out of the way
 		if(L.pulledby && L.pulledby != src && L.pulledby != L && L.restrained())
@@ -134,53 +132,6 @@
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return TRUE
-
-	if(!M.buckled && !M.has_buckled_mobs())
-		var/mob_swap = FALSE
-		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
-		if(istype(M,/mob/living/simple_animal/hostile/retaliate))
-			if(!M:aggressive)
-				mob_swap = TRUE
-		if(!they_can_move) //we have to physically move them
-			if(!too_strong)
-				mob_swap = FALSE
-		else
-			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
-			if(M.pulledby == src && !too_strong)
-				mob_swap = FALSE
-			else if(
-				!( HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP) ) &&\
-				( (M.restrained() && !too_strong) ) &&\
-				( restrained() )
-				)
-				mob_swap = FALSE
-		if(mob_swap)
-			//switch our position with M
-			if(loc && !loc.Adjacent(M.loc))
-				return TRUE
-			now_pushing = 1
-			var/oldloc = loc
-			var/oldMloc = M.loc
-
-			var/M_passmob = (M.pass_flags & PASSMOB) // we give PASSMOB to both mobs to avoid bumping other mobs during swap.
-			var/src_passmob = (pass_flags & PASSMOB)
-			M.pass_flags |= PASSMOB
-			pass_flags |= PASSMOB
-
-			var/move_failed = FALSE
-			if(!M.Move(oldloc) || !Move(oldMloc))
-				M.forceMove(oldMloc)
-				forceMove(oldloc)
-				move_failed = TRUE
-			if(!src_passmob)
-				pass_flags &= ~PASSMOB
-			if(!M_passmob)
-				M.pass_flags &= ~PASSMOB
-
-			now_pushing = 0
-
-			if(!move_failed)
-				return TRUE
 
 	if(m_intent == MOVE_INTENT_RUN && dir == get_dir(src, M))
 		if(isliving(M))

@@ -368,6 +368,8 @@
 			splashed_user.apply_status_effect(status_type)
 		else
 			splashed_type.refresh_cum()
+		if(!oral && user?.dna?.species?.id == "gnoll")
+			splashed_user.has_gnoll_scent_this_round = TRUE
 		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)

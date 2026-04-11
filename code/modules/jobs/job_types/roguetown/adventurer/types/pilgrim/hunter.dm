@@ -58,11 +58,19 @@
 				/obj/item/rogueweapon/huntingknife = 1,
 				/obj/item/flashlight/flare/torch = 1,
 				/obj/item/flashlight/flare/torch/lantern = 1,
-				/obj/item/recipe_book/survival = 1,
-				/obj/item/recipe_book/leatherworking = 1,
 				/obj/item/rogueweapon/scabbard/sheath = 1
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+	if(SSmapping.config.map_name == "Desert Town")
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
+		armor = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/bluegrey
+		head = /obj/item/clothing/head/roguetown/tagelmust
+	if(H.age == AGE_MIDDLEAGED)
+		H.adjust_skillrank_up_to(/datum/skill/labor/butchering, 5, TRUE)
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank_up_to(/datum/skill/labor/butchering, 6, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/craft/tanning, 4, TRUE)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/huntersyell)
 
@@ -116,11 +124,19 @@
 				/obj/item/flint = 1,
 				/obj/item/bait = 1,
 				/obj/item/rogueweapon/huntingknife = 1,
-				/obj/item/recipe_book/survival = 1,
-				/obj/item/recipe_book/leatherworking = 1,
 				/obj/item/rogueweapon/scabbard/sheath = 1
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+	if(SSmapping.config.map_name == "Desert Town")
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
+		armor = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/bluegrey
+		head = /obj/item/clothing/head/roguetown/tagelmust
+	if(H.age == AGE_MIDDLEAGED)
+		H.adjust_skillrank_up_to(/datum/skill/labor/butchering, 5, TRUE)
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank_up_to(/datum/skill/labor/butchering, 6, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/craft/tanning, 4, TRUE)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/huntersyell)
 	return

@@ -14,7 +14,7 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
-	color = "#ad977d"
+	color = "#c5ab8c"
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	armor_class = ARMOR_CLASS_LIGHT
@@ -55,7 +55,7 @@
 	armor = ARMOR_PADDED_GOOD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 25
-	color = "#976E6B"
+	color = "#b49679"
 	sewrepair = TRUE
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
@@ -265,6 +265,12 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/zyb
+	name = "desert coat"
+	desc = "A slim-fitting sherwani, a Zybantine-styled coat meant to endure in the desert's climate."
+	icon_state = "sherwani"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	name = "padded desert coat"

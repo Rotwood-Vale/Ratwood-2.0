@@ -72,6 +72,33 @@
 	req_bar = /obj/item/ingot/copper
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/copper
 
+// BRONZE
+
+/datum/anvil_recipe/armor/bronze/protector
+	name = "Heart Protector, Bronze (+1 Cured Leather)"
+	req_bar = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/natural/hide/cured)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/bronze/light
+
+/datum/anvil_recipe/armor/bronze/cuirass
+	name = "Cuirass, Bronze (+1 Bronze, +1 Cured Leather)"
+	req_bar = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/natural/hide/cured)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/bronze
+
+/datum/anvil_recipe/armor/bronze/halfplate
+	name = "Panoply Assembly, Halved, Bronze (+2 Bronze, +1 Cured Leather, +1 Fur)"
+	req_bar = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/ingot/bronze, /obj/item/ingot/bronze, /obj/item/natural/hide/cured, /obj/item/natural/fur)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full/bronze/alt
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/bronze/fullplate
+	name = "Panoply Assembly, Full, Bronze (+3 Bronze, +1 Cured Leather, +1 Fur)"
+	req_bar = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/ingot/bronze, /obj/item/ingot/bronze, /obj/item/natural/hide/cured, /obj/item/natural/fur)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full/bronze
+	craftdiff = 3
 
 // DECREPIT/ANCIENT ALLOY
 
@@ -760,6 +787,13 @@
 	req_blade = /obj/item/blade/steel_plate
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff
+
+/datum/anvil_recipe/armor/steel/beakhelm
+	name = "Beak Helmet, Steel (+1 Steel)"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_plate
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/beakhelm
 
 /datum/anvil_recipe/armor/helmetvolf
 	name = "Volf Face Helmet, Steel (+1 Steel)"

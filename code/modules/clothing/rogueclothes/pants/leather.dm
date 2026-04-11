@@ -104,6 +104,7 @@
 	name = "baggy desert pants"
 	desc = "A handmade pair of baggy, thin leather pants. Keeps sand out of your boots, sun off your legs, and a creacher's fangs from piercing your ankles."
 	naledicolor = FALSE
+	color = CLOTHING_DARKDRAB
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT

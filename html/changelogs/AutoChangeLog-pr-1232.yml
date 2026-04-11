@@ -1,0 +1,4 @@
+author: "Jamdrawers"
+delete-after: True
+changes:
+  - balance: "gives towners scaling skills (lumberjack for woodcutter, mining for miner, farming for farmer, etc) based on age (master at middleaged, legend at Old)\nCaps witches at 5\nBuffs towner farmer\nTones down refugee Harvester\nbuffs Minstrel with rogue-ish skills"

@@ -66,6 +66,8 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
 		pants = /obj/item/clothing/under/roguetown/tights/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/silktunic
+		if(SSmapping.config.map_name == "Desert Town")
+			head = /obj/item/clothing/head/roguetown/turban/red
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold/steward
 	beltr = /obj/item/storage/keyring/steward

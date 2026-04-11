@@ -24,3 +24,6 @@ map rockhill
 	default
 	votable
 endmap
+
+map deserttown
+endmap

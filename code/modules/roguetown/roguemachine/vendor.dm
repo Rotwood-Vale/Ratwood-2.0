@@ -374,7 +374,7 @@
 	will_hawk = FALSE
 
 /obj/structure/roguemachine/vendor/bathhouse
-	keycontrol = "nightman"
+	keycontrol = "nightmaiden"//used to be nightman but it's nice for them to be able to stock the shelves too when the master isn't around
 
 /obj/structure/roguemachine/vendor/inn/Initialize(mapload)
 	. = ..()
