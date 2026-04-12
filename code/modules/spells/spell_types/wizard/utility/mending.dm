@@ -13,8 +13,8 @@
 	sound = 'sound/magic/whiteflame.ogg'
 	cost = 2
 	spell_tier = 1 // Utility. For repair
-	glow_color = GLOW_COLOR_ARCANE
-	glow_intensity = GLOW_INTENSITY_LOW
+	glow_color = null
+	glow_intensity = 0
 
 	miracle = FALSE
 
@@ -38,6 +38,15 @@
 		return
 	if(I.obj_integrity >= I.max_integrity && I.body_parts_covered_dynamic == I.body_parts_covered)
 		to_chat(user, span_info("[I] appears to be in perfect condition."))
+		revert_cast()
+		return
+
+	user.visible_message(
+			span_warning("[user] begins to concentrate on [I]!"),
+			span_notice("I begin to concentrate on [I]..")
+	)
+	if(!do_after(user, 4 SECONDS, TRUE, I, TRUE))
+		to_chat(user, span_warning("My concentration breaks! I could not repair [I]."))
 		revert_cast()
 		return
 

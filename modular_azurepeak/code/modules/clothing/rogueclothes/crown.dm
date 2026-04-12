@@ -18,6 +18,7 @@
 	var/messagereceivedsound = 'sound/misc/scom.ogg'
 	var/hearrange = 0 // Only hearable by wearer
 	is_important = TRUE
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP|ITEM_SLOT_MASK
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/Initialize(mapload)
 	. = ..()

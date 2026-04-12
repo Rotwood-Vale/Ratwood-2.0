@@ -203,3 +203,10 @@
 
 	/// If the character has prominent mob descriptors, they'll make extra noise
 	var/loud_sneaking = FALSE
+
+	/// If TRUE, denotes that the character (a human) has not finished picking their subclass yet (if applicable).
+	var/advsetup = FALSE
+
+	/// If TRUE, denotes that the character (a human) has received their class equipment via equip() proc.
+	/// Usually, this also means that they've made all their choices after spawning.
+	var/class_equip_finished = FALSE

@@ -92,22 +92,24 @@
 	restraint_check = TRUE
 	emote_type = EMOTE_VISIBLE
 
-/datum/emote/living/bow/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/bow/adjacentaction(mob/user, mob/target)
 	. = ..()
-	if(. && params && isliving(user))
-		var/mob/living/L = user
-		var/list/split_params = splittext(params, " ")
-		var/mob/target = get_target(L, split_params)
-		if(target && ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(HAS_TRAIT(H, TRAIT_NOBLE))
-				H.add_stress(/datum/stressevent/noble_bowed_to)
+	if(!user || !target)
+		return
+	if(ishuman(user) && ishuman(target))
+		var/mob/living/carbon/human/L = user
+		var/mob/living/carbon/human/H = target
+		if(HAS_TRAIT(H, TRAIT_NOBLE))
+			H.add_stress(/datum/stressevent/noble_bowed_to)
+		if(HAS_TRAIT(L, TRAIT_NOBLE) && !HAS_TRAIT(H, TRAIT_NOBLE))
+			H.add_stress(/datum/stressevent/noble_bowed_at)
+			L.add_stress(/datum/stressevent/bowedasnoble)
 
 /mob/living/carbon/human/verb/emote_bow()
 	set name = "Bow"
 	set category = "Emotes"
 
-	emote("bow", intentional = TRUE)
+	emote("bow", intentional = TRUE, targetted = TRUE)
 
 /datum/emote/living/burp
 	key = "burp"
@@ -1618,7 +1620,7 @@
 	message_muffled = "makes a muffled sound!"
 	vary = TRUE
 	show_runechat = FALSE
-	is_animal = TRUE	
+	is_animal = TRUE
 
 /mob/living/carbon/human/verb/emote_dove()
 	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
@@ -2444,3 +2446,33 @@
 	set category = "Emotes"
 
 	emote("fortune", intentional = TRUE)
+
+/datum/emote/living/praysuicide
+	key = "praysuicide"
+	key_third_person = "utters their last words"
+	message = ""
+	emote_type = EMOTE_AUDIBLE
+	stat_allowed = UNCONSCIOUS
+	show_runechat = FALSE
+
+/mob/living/carbon/human/verb/emote_praysuicide()
+	set name = "Suicidal pray"
+	set category = "Emotes"
+	emote("praysuicide", intentional = TRUE)
+
+/datum/emote/living/praysuicide/run_emote(mob/user, params, type_override, intentional)
+	if(!user)
+		return FALSE
+
+	var/mob/living/L = user
+	to_chat(L, span_danger("I pray to my patron for my death... and I am heard."))
+	var/lastmsg = params
+	if(!lastmsg)
+		lastmsg = input("Whisper your final words:", "Last Words") as text|null
+	if(!lastmsg)
+		return FALSE
+	L.whisper(lastmsg)
+	sleep(50)
+	L.death()
+
+	return TRUE

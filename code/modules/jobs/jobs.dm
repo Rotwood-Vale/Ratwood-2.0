@@ -71,6 +71,11 @@ GLOBAL_LIST_INIT(noble_positions, list(
 	"Steward",
 	"Clerk",
 	"Knight",
+	//Desert
+	// "Sultan",
+	// "Amir",
+	"Sheikh",
+	"Vizier",
 ))
 
 GLOBAL_LIST_INIT(courtier_positions, list(
@@ -81,6 +86,8 @@ GLOBAL_LIST_INIT(courtier_positions, list(
 	"Jester",
 	"Seneschal",
 	"Servant",
+	//Desert
+	"Head Slave",
 ))
 
 GLOBAL_LIST_INIT(garrison_positions, list(
@@ -95,6 +102,13 @@ GLOBAL_LIST_INIT(garrison_positions, list(
 	"Dungeoneer",
 	"Master Warden",
 	"Watch Captain",
+	//desert
+	"Cataphract",
+	"Janissary",
+	"Janissary Sergeant",
+	"Azeb",
+	"Azeb Agha",
+	"Slave Master",
 ))
 
 GLOBAL_LIST_INIT(church_positions, list(
@@ -124,7 +138,7 @@ GLOBAL_LIST_INIT(yeoman_positions, list(
 	"Bathmaster",
 	"Guildmaster",
 	"Guildsman",
-	"Tailor"
+	"Tailor",
 ))
 
 GLOBAL_LIST_INIT(peasant_positions, list(
@@ -154,14 +168,18 @@ GLOBAL_LIST_INIT(youngfolk_positions, list(
 	"Churchling",
 	"Shophand",
 	"Vagabond",
+	//Desert
+	"Palace Slave",
 ))
 
 GLOBAL_LIST_INIT(wanderer_positions, list(
 	"Mercenary",
 	"Adventurer",
 	"Court Agent",
+	"Enslaved Adventurer",
 	"Bandit",
 	"Wretch",
+	"Gnoll",
 ))
 
 GLOBAL_LIST_INIT(roguewar_positions, list(

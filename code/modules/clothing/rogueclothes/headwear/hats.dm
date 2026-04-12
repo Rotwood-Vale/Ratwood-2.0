@@ -29,6 +29,8 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 	nudist_approved = FALSE // armored
+	heat_protection = HEAD
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/nightman
 	name = "teller's hat"
@@ -129,6 +131,9 @@
 	nudist_approved = TRUE
 	//dropshrink = 0.75
 
+/obj/item/clothing/head/roguetown/chaperon/brown
+	color = CLOTHING_BROWN
+
 /obj/item/clothing/head/roguetown/cookhat
 	name = "cook hat"
 	desc = "A hat which designates one as well-versed in the arts of cooking."
@@ -214,6 +219,8 @@
 	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/hide/cured
 	//dropshrink = 0.75
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/knitcap
 	name = "knit cap"
@@ -222,6 +229,8 @@
 	sewrepair = TRUE
 	nudist_approved = TRUE
 	//dropshrink = 0.75
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/armingcap/dwarf
 	color = "#cb3434"
@@ -296,6 +305,10 @@
 	body_parts_covered = HEAD|HAIR|EARS
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	sewrepair = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = HEAD
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/headband/red
 	color = CLOTHING_RED

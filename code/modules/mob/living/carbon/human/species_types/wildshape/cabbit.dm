@@ -10,26 +10,38 @@
 
 /mob/living/carbon/human/species/wildshape/cabbit/gain_inherent_skills()
 	. = ..()
-	if(src.mind)
-		src.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
-		src.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
-		src.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-		src.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
-		src.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE) //Run and hide if you can
+	if(!mind)
+		return
 
-		src.STASTR = 2
-		src.STACON = 2
-		src.STAWIL = 7
-		src.STAPER = 12
-		src.STASPD = 20 //May be overtuned with dodge expert, but this thing is so fragile
-		src.STALUC = 15 //Xylyx's critters
+	adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
+	adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+	adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
+	adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
+	adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE) //Run and hide if you can
 
-		AddSpell(new /obj/effect/proc_holder/spell/self/cabbitclaws)
-		faction += "cabbits"
-		if (src.client.prefs?.wildshape_name)
-			real_name = "cabbit ([stored_mob.real_name])"
-		else
-			real_name = "cabbit"
+	STASTR = 2
+	STACON = 2
+	STAWIL = 7
+	STAPER = 12
+	STASPD = 20 //May be overtuned with dodge expert, but this thing is so fragile
+	STALUC = 15 //Xylyx's critters
+
+	AddSpell(new /obj/effect/proc_holder/spell/self/cabbitclaws)
+	faction += "cabbits"
+	if(client.prefs?.wildshape_name)
+		real_name = "cabbit ([stored_mob.real_name])"
+	else
+		real_name = "cabbit"
+
+	// Let cabbits walk through people
+	pass_flags = PASSMOB
+
+	update_move_intent_slowdown()
+
+/mob/living/carbon/human/species/wildshape/cabbit/CanPass(atom/movable/mover, turf/target)
+	if(!ismob(mover))
+		return ..()
+	return TRUE // Mobs can always pass through cabbits
 
 // CABBIT SPECIES DATUM //
 /datum/species/shapecabbit
@@ -42,7 +54,8 @@
 		TRAIT_HARDDISMEMBER, //Decapping wildshapes causes them to bug out, badly, and need admin intervention to fix. Bandaid fix.
 		TRAIT_DODGEEXPERT,
 		TRAIT_BRITTLE,
-		TRAIT_LEAPER
+		TRAIT_LEAPER,
+		TRAIT_UNCAPPED_SPEED,
 	)
 	inherent_biotypes = MOB_HUMANOID
 	armor = 5

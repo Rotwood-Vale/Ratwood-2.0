@@ -468,20 +468,30 @@
 	desc = "I've sworn an oath to defend this castle. My resolve will not waver."
 	icon_state = "guardsman"
 
-/atom/movable/screen/alert/status_effect/buff/wardenbuff
-	name = "Woodsman"
-	desc = "I've trekked these woods for some time now. I find traversal easier here."
-	icon_state = "guardsman"
-
 /atom/movable/screen/alert/status_effect/buff/dungeoneerbuff
 	name = "Ruthless Jailor"
 	desc = "This is my sanctuary. I can overpower any opposition that dares breach it."
 	icon_state = "buff"
 
+/atom/movable/screen/alert/status_effect/buff/wardenbuff
+	name = "Woodsman"
+	desc = "I've trekked these woods for some time now. I find traversal easier here."
+	icon_state = "guardsman"
+
 /datum/status_effect/buff/wardenbuff
 	id = "wardenbuff"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/wardenbuff
 	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 3)
+
+/atom/movable/screen/alert/status_effect/buff/viewingbuff
+	name = "Good View"
+	desc = "This area is built to give a better view."
+	icon_state = "guardsman"
+
+/datum/status_effect/buff/viewingbuff
+	id = "viewingbuff"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/viewingbuff
+	effectedstats = list(STATKEY_PER = 2)
 
 /datum/status_effect/buff/barkeepbuff
 	id = "barkeepbuff"
@@ -547,6 +557,13 @@
 	name = "Healing Miracle"
 	desc = "Divine intervention relieves me of my ailments."
 	icon_state = "lesser_heal"
+
+/datum/status_effect/buff/viewingbuff/process()
+
+	.=..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!(our_area.viewing_area))
+		owner.remove_status_effect(/datum/status_effect/buff/viewingbuff)
 
 #define MIRACLE_HEALING_FILTER "miracle_heal_glow"
 
@@ -1677,6 +1694,10 @@
 	var/blood_restore = 30
 
 /datum/status_effect/buff/adrenaline_rush/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.dna?.species?.type == /datum/species/gnoll)
+			return FALSE
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_ADRENALINE_RUSH, INNATE_TRAIT)
 	if(ishuman(owner))

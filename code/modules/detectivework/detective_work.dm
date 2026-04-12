@@ -91,6 +91,13 @@
 	return TRUE //we bloodied the floor
 
 /mob/living/carbon/human/add_blood_DNA(list/blood_dna)
+	if(dna?.species?.id == "gnoll")
+		if(length(blood_dna))
+			AddComponent(/datum/component/forensics, null, null, blood_dna)
+		bloody_hands = 0
+		update_inv_gloves()
+		return TRUE
+
 	if(cloak)
 		cloak.add_blood_DNA(blood_dna)
 		update_inv_cloak()

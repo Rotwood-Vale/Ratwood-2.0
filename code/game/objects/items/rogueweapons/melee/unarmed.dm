@@ -36,7 +36,7 @@
 	swingdelay = 0
 	icon_state = "inpunch"
 	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR // This might be a mistake
+	intent_intdamage_factor = 1
 	//We want chipping, m'lord.
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_WEAK
@@ -225,6 +225,7 @@
 	smeltresult = /obj/item/ingot/steel
 	grid_width = 64
 	grid_height = 32
+	special = /datum/special_intent/upper_cut
 
 /obj/item/rogueweapon/knuckles/getonmobprop(tag)
 	. = ..()

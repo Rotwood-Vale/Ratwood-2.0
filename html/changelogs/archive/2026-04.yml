@@ -1,0 +1,130 @@
+2026-04-03:
+  NotGoldenglow:
+  - balance: All squires have their skills equalized.
+  - balance: Lancers get polearms&swords at Journeyman.
+  - balance: ' Lancers get knives, maces, and whips/flails at Apprentice.'
+  - balance: ' Footman gets sword&maces at Journeyman.'
+  - balance: ' Footman gets knives, polearms and whips/flails at Apprentice.'
+  - balance: Irregular gains wrestling up to Apprentice, from Novice.
+  - balance: Irregular gains sling proficiency.
+  - balance: Irregular gets knives&all ranged weapons at Journeyman.
+  - balance: Irregular gets maces, swords, and polearms at Apprentice.
+  - bugfix: Fixed churn undead affecting vampires harder than expected
+  Xander3359:
+  - bugfix: Fix auto changelog not generating changelogs
+  - bugfix: Fixed changelog writing to the wrong branch
+  - bugfix: Fix money pouches having more coins than expected.
+  kimesik:
+  - rscadd: Reformist Psycross
+  - rscadd: Three fashion options for Psydonic Heretic Spy
+  - balance: Psydonic Heretic Spy (Orthodoxist option) gets nocshaded gas mask.
+  - bugfix: Heretic & Heretic Spy bracer fix
+  ophaq:
+  - rscadd: One line change, makes it so you can emote while unconscious.
+  zeroisthebiggay:
+  - bugfix: most shields being unsmeltable
+  zoktiik:
+  - spellcheck: Renamed dried westleach and dried swampweed leaves to distinguish
+      them from fresh leaves. This fixes the confusing moondust and ozium crafting
+      requirements.
+2026-04-06:
+  Xander3359:
+  - bugfix: Fixed mindlink by setting it to ,m
+2026-04-12:
+  Jamdrawers:
+  - qol: can carry a pouch in your cloak slot
+  - balance: 'gives towners scaling skills (lumberjack for woodcutter, mining for
+      miner, farming for farmer, etc) based on age (master at middleaged, legend at
+      Old)
+
+      Caps witches at 5
+
+      Buffs towner farmer
+
+      Tones down refugee Harvester
+
+      buffs Minstrel with rogue-ish skills'
+  - bugfix: stops skeletons spawning double chain gloves
+  - balance: 'gives leg clothing to the bulwark which otherwise had nothing in the
+      leg slot
+
+      -changes the cloak from a half-cloak to a black rapscallion''s shawl
+
+      -gives the sword-users scabbards
+
+      -adds a shield to the bulwark''s ''spear'' option
+
+      -gives all skeletons equal weapon skill in their possible weapons rather than
+      their weapon skill depending on what they selected at spawn.'
+  - bugfix: shadowcloak and duelist cloak will no longer turn invisible when right-clicked
+  - refactor: reorganised the Cloaks folder, making the baseline cloak have an inventory
+      instead of applying an inventory to every specific type of cloak
+  - rscadd: Adds craftable bronze armour
+  - bugfix: fixed a misaligned floor
+  - bugfix: missing merchant nervelock
+  Kroto-Ker:
+  - bugfix: Reduce crafting menu lag.
+  Loosenail:
+  - image: New hairstyle - "Hyena Mane Short"
+  - image: Moved the new Taro and Lizbeth hairstyles into alphabetical order, like
+      most of the selection.
+  - rscdel: Removed hairstyles - "Scout, Long Straight Ponytail, Ponytail (Yeager),
+      Newyou, Neuter, Female"
+  PPooch:
+  - bugfix: Fix being able to pick more bardic inspirations than intended
+  RadiantFlash7:
+  - balance: Desert Map Temperature changes
+  - balance: Desert Map Day/night cycle now 50/50 compared to rest of the maps 25/75
+  - bugfix: You can now wash off flammable ash and alcohol
+  Shadow-Quill:
+  - qol: You can now remove an object from your Necra's Sight list by re-casting the
+      spell on the object.
+  Teragenic:
+  - bugfix: HF Lord and Brigandine missing onmob icons
+  UntoldTactics:
+  - balance: Knuckles punch intent no longer recieves a 40% bonus integrity damage
+      modifier.
+  Xander3359:
+  - balance: Bloated leech tick is now small (1x1) since it can't be used as a weapon
+  - balance: Buffed surgeon's bag to be able to hold impure lux and leech ticks
+  - bugfix: Fixes active quests not going down if someone else turns in your quest.
+  - bugfix: Bandits can only follow Matthios
+  - qol: Votes now automatically open the prompt when started,
+  - image: Adds a missing icon for the thorn crown when worn.
+  - code_imp: Optimizes keyloop to have less loops
+  - bugfix: You can now pixel shift diagonally
+  - refactor: Replace the 4 direction facing keybinds with 1 block movement keybind
+  - code_imp: Deletes a lot of the unused files
+  - balance: Cabbit form now has actual 20 speed instead of pretend 20 speed
+  - balance: Cabbit form is no longer blocked by mobs, it is tiny and can slip through
+      people's legs
+  gatorceres:
+  - rscadd: plaguebearer (now "malpractitioner") can pick between the old loadout
+      options, or starting with only a rapier and dodge expert
+  - rscadd: malpractitioner starts with a cheele
+  john-pawson:
+  - bugfix: rivers now give 300 drams of water when filling
+  - balance: Bushes inside town no longer give berries
+  technotuna:
+  - bugfix: shift+1, etc. can now be set as keybinds
+  zeroisthebiggay:
+  - bugfix: corrects psydonic sword forces
+  - rscadd: three brand new hairs, Taro, Lizbeth, and Wispy, wahoo Yippee very exciting!!!!!!!!!!
+  - balance: wretches get a plus one to all stats, universally, upon spawning
+  - balance: wretch heretics, the armored ones, get plus two willpower to be on par
+      with templars
+  zoktiik:
+  - bugfix: Baothan "Tell Vice" T0 miracle now supports multiple vices.
+  - bugfix: Tell Vices now has fixed styling, and the vice names now show up in a
+      proper font size.
+  - rscadd: If you have the Deceiving Meekness trait, Tell Vices can technically lie
+      about any number of the vices you have, provided the miracle caster is Novice
+      level. Beware, however, that a "fake" generation is not purely random, and can
+      still reveal some or all of your vices based on certain rules.
+  - refactor: Tell Vice received a massive refactor in order to support all the new
+      behaviors, along with a lot of comment documentation talking about how the new
+      implementation works.
+  - spellcheck: Removed (+1 TRI) language from the base names of a few vices, with
+      the exception of "No Flaw (-3 TRI)". (For now.)
+  - bugfix: Added "on_removal" proc overrides for the simple "trait-granter" procs
+      that were lacking them.

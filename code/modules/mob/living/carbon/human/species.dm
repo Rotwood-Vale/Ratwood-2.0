@@ -176,8 +176,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/gender_swapping = FALSE
 	var/stress_examine = FALSE
 	var/stress_desc = null
+	var/examine_stress_event = /datum/stressevent/shunned_race
+	var/examine_stress_event_xenophobic = /datum/stressevent/shunned_race_xenophobic
+	var/examine_stress_always = FALSE
+	var/examine_stress_ignores_tolerant = FALSE
+	var/examine_relief_patron = null
+	var/examine_relief_event = null
 
 	var/punch_damage
+	/// WARNING - This is a very simple implementation. Not meant for carbons composed of limbs!
+	var/custom_rotation_icon = null
+	var/custom_base_icon = null
 
 //Used for expanded lore blurbs on species.
 	var/expanded_desc
@@ -2231,7 +2240,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 				H.update_health_hud()
 			return
 		if(H.bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX && !HAS_TRAIT(H, TRAIT_EXTREME_TEMPERATURE_IMMUNE))	//Level 2 cold - con punishment, frostbite, speed reduction
-			if(prob(15) && !(H.m_intent == MOVE_INTENT_SNEAK))
+			if(prob(15) && !(H.m_intent == MOVE_INTENT_SNEAK || H.alpha <= 120)) //if we're sneaking or invisible, no shivering
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, emote), "shiver"), (rand(2,6)SECONDS),TIMER_UNIQUE | TIMER_STOPPABLE)
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, cold_warn)),20 SECONDS,TIMER_UNIQUE)
 			if(!H.hypothermia_timer_id)
@@ -2241,7 +2250,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 			H.relieve_heatstroke_from_cold()	//if you somehow bypass level 1, straight to level 2, still fix heatstroke
 		else	//level 1 cold
 			H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
-			if(prob(5) && !(H.m_intent == MOVE_INTENT_SNEAK))
+			if(prob(5) && !(H.m_intent == MOVE_INTENT_SNEAK || H.alpha <= 120)) //if we're sneaking or invisible, no shivering
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, emote), "shiver"), (rand(2,6)SECONDS),TIMER_UNIQUE | TIMER_STOPPABLE)
 			H.relieve_heatstroke_from_cold()	//if has heatstroke, body chill fixes it
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, cold_warn)),20 SECONDS,TIMER_UNIQUE)
@@ -2254,7 +2263,6 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 			H.heatstroke_timer_id = null
 		H.clear_alert("temp")
 		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
-	H.update_health_hud()
 // A general-purpose proc used to centralise checks to skip turf, movement, step, etc.
 // For if a mob is floating, flying, intangible, etc.
 /datum/species/proc/is_floor_hazard_immune(mob/living/carbon/human/owner)

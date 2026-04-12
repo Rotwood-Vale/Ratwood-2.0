@@ -415,6 +415,12 @@
 /datum/job/proc/config_check()
 	return TRUE
 
+
+/datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)//gives the desert language to all the desert people!
+	. = ..()
+	if(SSmapping.config.map_name == "Desert Town" && !(HAS_TRAIT(H, TRAIT_OUTLANDER)))
+		H.grant_language(/datum/language/celestial)
+
 /datum/outfit/job
 	name = "Standard Gear"
 

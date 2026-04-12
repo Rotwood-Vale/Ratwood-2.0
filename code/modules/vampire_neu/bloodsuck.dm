@@ -144,6 +144,9 @@
 	if(sire.stat == DEAD) // If you accept the prompt as a corpse, you get turned into a corpse vampire, which RR's you pretty much
 		return FALSE
 
+	if(HAS_TRAIT_FROM(sire, TRAIT_UNLYCKERABLE, REF(src))) // Cannot turn Gnolls to Sires
+		return FALSE
+
 	fully_heal(TRUE, FALSE)
 	visible_message(span_danger("Some dark energy begins to flow from [sire] into [src]..."))
 	visible_message(span_red("[src] rises as a new spawn!"))
