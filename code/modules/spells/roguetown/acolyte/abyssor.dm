@@ -219,7 +219,7 @@
 			return TRUE
 		if(HAS_TRAIT(target, TRAIT_GODLESS))
 			target.visible_message(span_info("[target] is crushed by divine pressure!"), span_notice("I'm crushed by a tidal wave of disgust."))
-			to_chat(user, span_warning("My patron scolds me for wasting their time upon a Godless heathen."))
+			to_chat(user, span_warning("My patron scolds me for wasting their time upon a heathen."))
 			target.adjustBruteLoss(30)	// woe, brute be upon ye.
 			return FALSE
 		
