@@ -100,12 +100,11 @@
 #define BALLOON_Y_OFFSET_TIER3 25
 
 ///Proc for creating a balloon alert that only someone with a specific trait would see.
-/// Humans who have toggled combat_bubbles_disabled are treated as if they lack the trait.
 /atom/proc/filtered_balloon_alert(trait, text, x_offset, y_offset)
 	var/list/candidates = get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
-	if(trait)
+	if(trait)	
 		for(var/mob/living/carbon/human/H in candidates)
-			if(HAS_TRAIT(H, trait) && !H.combat_bubbles_disabled)
+			if(HAS_TRAIT(H, trait))
 				candidates -= H
 	else
 		CRASH("filtered_balloon_alert called without a trait, either it's an error or use balloon_alert instead.")
