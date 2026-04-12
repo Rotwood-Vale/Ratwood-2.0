@@ -55,9 +55,11 @@
     if(isturf(loc) && (!found_table))
         to_chat(user, span_notice("Need a table..."))
         return ..()
-    
+
     // Handle milk
+
     if(container && container.reagents.has_reagent(/datum/reagent/consumable/milk, 10))
+    if(R?.reagents.has_reagent(/datum/reagent/consumable/milk, 10))
         playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
         to_chat(user, span_notice("Adding milk and mixing..."))
         if(do_after(user, short_cooktime, target = src))
@@ -66,7 +68,7 @@
             qdel(container)
             qdel(src)
         return TRUE
-    
+
     // Handle raisins
     if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/raisins))
         playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
@@ -77,9 +79,9 @@
             qdel(I)
             qdel(src)
         return TRUE
-    
+
     // Handle rosa
-    if(istype(I, /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals)) // originally meant to be peaceflower. doesn't want to work. Woe.
+    if(istype(I, /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals))
         playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
         to_chat(user, span_notice("Adding the petals and mixing..."))
         if(do_after(user, short_cooktime, target = src))
@@ -90,6 +92,7 @@
         return TRUE
 
     return ..()
+
 
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/milk
 	name = "Chocolate mass with milk"
@@ -118,10 +121,10 @@
 	desc = "A bar of dark chocolate. Bitter, but still delicious."
 	faretype = FARE_NEUTRAL
 	rotprocess = null
-	foodtype = SUGAR 
+	foodtype = SUGAR
 	tastes = list("bitterness" = 1,)
 	w_class = WEIGHT_CLASS_NORMAL
-	bitesize = 6 
+	bitesize = 6
 	eat_effect = /datum/status_effect/buff/snackbuff
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)
 
@@ -147,7 +150,7 @@
 	desc = "A bar of chocolate with raisins. Damning crime against good taste." // my code, my preferences.
 	faretype = FARE_FINE
 	rotprocess = null
-	foodtype = SUGAR | FRUIT 
+	foodtype = SUGAR | FRUIT
 	tastes = list("sweetness" = 2, "tartness" = 1)
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 6
@@ -163,7 +166,7 @@
 	desc = "A glorious bar of milk chocolate mixed with honey and rocknut, crafted with utmost care by Malumite Chocolatemaker Guilds of mountainous regions of Grenzelhoft. Snack worthy of a King, or a Grand Duke."
 	faretype = FARE_LAVISH
 	rotprocess = null
-	foodtype = SUGAR | DAIRY 
+	foodtype = SUGAR | DAIRY
 	tastes = list("sweetness" = 2, "nuttiness" = 1)
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 6
