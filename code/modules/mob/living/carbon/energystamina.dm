@@ -150,11 +150,11 @@
 			y_offset = BALLOON_Y_OFFSET_TIER3
 		if(text)
 			if(!HAS_TRAIT(H, TRAIT_DECEIVING_MEEKNESS))
-				H.filtered_balloon_alert(TRAIT_STEELHEARTED, text, x_offset, y_offset)
+				H.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, x_offset, y_offset)
 			else
 				if(prob(10))
 					text = "<i>Tired...?</i>"
-					H.filtered_balloon_alert(TRAIT_STEELHEARTED, text, x_offset, y_offset)
+					H.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, x_offset, y_offset)
 
 	if(stamina >= max_stamina)
 		stamina = max_stamina
@@ -174,7 +174,7 @@
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			var/balloon_text = "<font color = '#bb2b2b'>Exhausted... </font>"
-			H.filtered_balloon_alert(TRAIT_STEELHEARTED, balloon_text)
+			H.balloon_alert_to_viewers(balloon_text, balloon_text, DEFAULT_MESSAGE_RANGE)
 
 		if(energy <= 0)
 			addtimer(CALLBACK(src, PROC_REF(Knockdown), 30), 1 SECONDS)
