@@ -536,7 +536,7 @@ BLIND     // can't see anything
 		text = "Armor <br><font color = '#a8705a'>sundered</font>"
 		y_offset = 30
 	if(text)
-		filtered_balloon_alert(TRAIT_STEELHEARTED, text, -20, y_offset)
+		filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, -20, y_offset)
 	. = ..()
 
 /obj/proc/generate_tooltip(examine_text, showcrits)
