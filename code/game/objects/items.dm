@@ -600,6 +600,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(associated_skill && associated_skill.name)
 			inspec += "\n<b>SKILL:</b> [associated_skill.name] <span class='info'><a href='?src=[REF(src)];explainskill=1'>{?}</a></span>"
 
+		if(istype(src, /obj/item/rogueweapon))
+			var/obj/item/rogueweapon/W = src
+			if(W.special)
+				inspec += "[W.special.get_examine()]"
+
 		if(intdamage_factor != 1 && force >= 5)
 			inspec += "\n<b>INTEGRITY DAMAGE:</b> [intdamage_factor * 100]% <span class='info'><a href='?src=[REF(src)];explainintdamage=1'>{?}</a></span>"
 
@@ -1733,11 +1738,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			var/balloon_msg = "Peel! \Roman[ROUND_UP(peel_count)] <br><font color = '#8b7330'>[peeledpart[1]]!</font>"
 			var/has_guarded = HAS_TRAIT(owner, TRAIT_DECEIVING_MEEKNESS)
 			if(length(peeledpart) && !has_guarded)
-				filtered_balloon_alert(TRAIT_STEELHEARTED, balloon_msg)
+				filtered_balloon_alert(TRAIT_COMBAT_AWARE, balloon_msg)
 			else if(length(peeledpart) && has_guarded)
 				if(prob(10))
 					balloon_msg = "<i>Guarded...</i>"
-					filtered_balloon_alert(TRAIT_STEELHEARTED, balloon_msg)
+					filtered_balloon_alert(TRAIT_COMBAT_AWARE, balloon_msg)
 	else
 		last_peeled_limb = coveragezone
 		reset_peel()
@@ -1831,4 +1836,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(desc != initial(desc))
 		return TRUE
 	return FALSE
-
