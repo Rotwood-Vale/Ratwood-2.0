@@ -246,25 +246,6 @@
 		to_chat(src, span_info("I've returned to my natural voice."))
 	return TRUE
 
-/// Whether this human has disabled combat awareness floating text bubbles.
-/// Toggled via the "Toggle Combat Awareness" verb. Does NOT remove TRAIT_STEELHEARTED —
-/// only suppresses the visual balloon alerts (target zone, armor status, stamina thresholds).
-/mob/living/carbon/human
-	var/combat_bubbles_disabled = FALSE
-
-/mob/living/carbon/human/proc/togglecombatawareness()
-	set name = "Toggle Combat Awareness"
-	set category = "Options"
-
-	if(!HAS_TRAIT(src, TRAIT_STEELHEARTED))
-		to_chat(src, span_warning("I lack the hardened nerves needed for combat awareness."))
-		return
-	combat_bubbles_disabled = !combat_bubbles_disabled
-	if(combat_bubbles_disabled)
-		to_chat(src, span_notice("I quiet my senses, the din of battle fades from my awareness."))
-	else
-		to_chat(src, span_notice("I sharpen my focus, every strike and opening becomes clear again."))
-
 /mob/living/carbon/human/proc/toggleblindness()
 	set name = "Toggle Colorblindness"
 	set category = "Memory"
@@ -273,3 +254,13 @@
 		add_client_colour(/datum/client_colour/monochrome)
 	else
 		remove_client_colour(/datum/client_colour/monochrome)
+
+/mob/living/carbon/human/proc/togglecombatawareness()
+	set name = "Toggle Combat Awareness"
+	set category = "Memory"
+
+	if(HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
+		REMOVE_TRAIT(src, TRAIT_COMBAT_AWARE, TRAIT_VIRTUE)
+	else
+		ADD_TRAIT(src, TRAIT_COMBAT_AWARE, TRAIT_VIRTUE)
+	to_chat(src, "I will see [HAS_TRAIT(src, TRAIT_COMBAT_AWARE) ? "more" : "less"] combat information now.")
