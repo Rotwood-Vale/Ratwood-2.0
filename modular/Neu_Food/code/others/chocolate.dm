@@ -84,14 +84,12 @@
         to_chat(user, span_notice("Adding the petals and mixing..."))
         if(do_after(user, short_cooktime, target = src))
             add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/slut(loc)
+            new /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/eora(loc)
             qdel(I)
             qdel(src)
         return TRUE
 
     return ..()
-
-//I cry. ZIZO laughs.
 
 /obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/milk
 	name = "Chocolate mass with milk"
@@ -105,10 +103,10 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/raisin
 	icon_state = "cocoa_r"
 
-/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/slut
+/obj/item/reagent_containers/food/snacks/rogue/cocoa_sugar/eora
 	name = "Chocolate mass with petals"
 	desc = "A fine mix of sugar, cocoa, and petals of an Eoran bud. Love is ready to grow, it only needs warmth."
-	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/slut
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/chocolate/eora
 	icon_state = "cocoa_e"
 
 //Chocolate bars.
@@ -173,7 +171,7 @@
 	extra_eat_effect = /datum/status_effect/buff/sweet
 	list_reagents = list(/datum/reagent/consumable/honey = 2, /datum/reagent/consumable/nutriment = SNACK_DECENT)
 
-/obj/item/reagent_containers/food/snacks/rogue/chocolate/slut // This is MY code, I get to do my childish hate upon the zapebait divine inside of it. 
+/obj/item/reagent_containers/food/snacks/rogue/chocolate/eora
 	name = "rosa chocolate bar"
 	icon = 'modular/Neu_Food/icons/others/chocolate.dmi'
 	icon_state = "chocolate_e"
