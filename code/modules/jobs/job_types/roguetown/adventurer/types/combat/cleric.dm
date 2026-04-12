@@ -4,10 +4,10 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	vampcompat = FALSE
-	vice_restrictions = list(/datum/charflaw/godless)
 	outfit = /datum/outfit/job/roguetown/adventurer/cleric
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	class_select_category = CLASS_CAT_CLERIC
+	vice_restrictions = list(/datum/charflaw/godless)
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
 	subclass_stats = list(

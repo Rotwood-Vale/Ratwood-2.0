@@ -4,7 +4,6 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/crusader
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_MEDIUMARMOR)
-	vice_restrictions = list(/datum/charflaw/godless)
 
 	maximum_possible_slots = 1 // Disabled Role
 

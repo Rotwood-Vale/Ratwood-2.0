@@ -149,6 +149,8 @@
 /datum/devotion/proc/grant_miracles(mob/living/carbon/human/H, cleric_tier = CLERIC_T0, passive_gain = 0, devotion_limit, start_maxed = FALSE)
 	if(!H || !H.mind || !patron)
 		return
+	if(HAS_TRAIT(H, TRAIT_GODLESS))
+		return // No miracles for you
 	level = cleric_tier
 	if(devotion_limit) //Upper devotion limit - Limits gain to that tier's miracles. Mostly used by Templars / Paladins.
 		max_devotion = devotion_limit
