@@ -788,8 +788,11 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	vamp_wannabe.adjust_triumphs(1)
 
 /datum/charflaw/godless
-	name = "Scorned"
+	name = "Scorned (+2 TRI)"
 	desc = "For whatever reason or sin, both the Divine and Profane scorn me and my existence. I stand alone in this rotted world and shall experience no grace or assistance from the Powers That Be."
 
 /datum/charflaw/godless/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_GODLESS, TRAIT_GENERIC)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.adjust_triumphs(2)

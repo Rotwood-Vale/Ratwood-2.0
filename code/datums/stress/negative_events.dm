@@ -500,6 +500,6 @@
 
 /datum/stressevent/godless
 	stressadd = 4 // Mechanical inclination of actually hating the godless.
-	desc = span_boldred("Godless Heathen. I need to keep my distance, lest they... infect me.")
+	desc = span_boldred("Godless Heathen. I must keep my distance.")
 	timer = 3 MINUTES
 

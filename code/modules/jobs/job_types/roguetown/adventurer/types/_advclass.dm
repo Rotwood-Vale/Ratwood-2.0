@@ -164,12 +164,12 @@
 		if(total_slots_occupied >= maximum_possible_slots)
 			return FALSE
 
-	// Check virtue restrictions
+	// Check virtue restrictions - Scorned PR addition
 	if(length(virtue_restrictions) && H.client?.prefs)
 		if((H.client.prefs.virtue?.type in virtue_restrictions) || (H.client.prefs.virtuetwo?.type in virtue_restrictions))
 			return FALSE
 
-	// Check vice restrictions
+	// Check vice restrictions - Scorned PR addition
 	if(length(vice_restrictions) && H.client?.prefs)
 		for(var/datum/charflaw/vice in list(H.client.prefs.vice1, H.client.prefs.vice2, H.client.prefs.vice3, H.client.prefs.vice4, H.client.prefs.vice5, H.client.prefs.charflaw))
 			if(vice?.type in vice_restrictions)
