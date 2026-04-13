@@ -27,9 +27,9 @@
 	if(islist(sound_to_play))
 		if(!length(sound_to_play))
 			return FALSE
-		playsound(get_turf(target), pick(sound_to_play), volume, vary, frequency)
+		playsound(get_turf(target), pick(sound_to_play), volume, vary, extrarange = -1, frequency = frequency, ignore_walls = FALSE)
 		return TRUE
-	playsound(get_turf(target), sound_to_play, volume, vary, frequency)
+	playsound(get_turf(target), sound_to_play, volume, vary, extrarange = -1, frequency = frequency, ignore_walls = FALSE)
 	return TRUE
 
 /mob/living/carbon/human/proc/modular_handle_werewolf_transform_chastity()

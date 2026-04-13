@@ -332,7 +332,7 @@
 	user.visible_message(span_boldwarning(resist_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	to_chat(user, span_notice("PSYDON, grant me silence and endurance; I will not yield."))
 	set_arousal(60)
-	user.emote("groan", forced = TRUE)
+	user.emote("sexgroan", forced = TRUE)
 	return TRUE
 
 /datum/sex_controller/proc/cum_onto(mob/living/carbon/human/splashed_user = null)
@@ -539,7 +539,7 @@
 				target.add_stress(/datum/stressevent/unseemly_made_love)
 			user.add_stress(/datum/stressevent/cummax)
 	if(!oral && force >= SEX_FORCE_HIGH && user.has_flaw(/datum/charflaw/addiction/sadist)) // force pain emote if top is a sadist
-		target.emote("paincrit", forced = TRUE)
+		target.emote("sexpaincrit", forced = TRUE)
 
 /datum/sex_controller/proc/just_ejaculated()
 	return (last_ejaculation_time + 2 SECONDS >= world.time)
@@ -673,17 +673,17 @@
 	if(pain_amt >= PAIN_MILD_EFFECT)
 		if(giving)
 			if(prob(30))
-				chosen_emote = "groan"
+				chosen_emote = "sexgroan"
 		else
 			if(prob(40))
-				chosen_emote = "painmoan"
+				chosen_emote = "sexpainmoan"
 	if(pain_amt >= PAIN_MED_EFFECT)
 		if(giving)
 			if(prob(50))
-				chosen_emote = "groan"
+				chosen_emote = "sexgroan"
 		else
 			if(prob(60))
-				chosen_emote = "painmoan"
+				chosen_emote = "sexpainmoan"
 
 	last_moan = world.time
 	user.emote(chosen_emote, forced = TRUE)

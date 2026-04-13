@@ -22,6 +22,7 @@
 	var/only_forced_audio = FALSE //can only code call this event instead of the player.
 	var/nomsg = FALSE
 	var/soundping = TRUE
+	var/sound_ignore_walls = TRUE
 	var/ignore_silent = FALSE
 	var/snd_vol = 100
 	var/snd_range = -1
@@ -118,7 +119,7 @@
 			else// if(!vision.viewing_head)
 				emotelocation = user
 
-		playsound(emotelocation, tmp_sound, snd_vol, FALSE, snd_range, soundping = soundping, animal_pref = animal)
+		playsound(emotelocation, tmp_sound, snd_vol, FALSE, snd_range, soundping = soundping, animal_pref = animal, ignore_walls = sound_ignore_walls)
 	if(!nomsg)
 		user.log_message(msg, LOG_EMOTE)
 		var/pre_color_msg = msg

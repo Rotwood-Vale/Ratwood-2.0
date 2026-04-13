@@ -429,6 +429,14 @@
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
 
+/datum/emote/living/groan/sexgroan
+	key = "sexgroan"
+	only_forced_audio = TRUE
+	sound_ignore_walls = FALSE
+
+/datum/emote/living/groan/sexgroan/get_sound(mob/living/user)
+	return user.get_sound("groan")
+
 /mob/living/carbon/human/verb/emote_groan()
 	set name = "Groan"
 	set category = "Noises"
@@ -855,6 +863,14 @@
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
 
+/datum/emote/living/scream/sexscream
+	key = "sexscream"
+	only_forced_audio = TRUE
+	sound_ignore_walls = FALSE
+
+/datum/emote/living/scream/sexscream/get_sound(mob/living/user)
+	return user.get_sound("scream")
+
 /mob/living/carbon/human/verb/emote_scream()
 	set name = "Scream"
 	set category = "Noises"
@@ -981,6 +997,13 @@
 	only_forced_audio = TRUE
 	show_runechat = FALSE
 
+/datum/emote/living/paincrit/sexpaincrit
+	key = "sexpaincrit"
+	sound_ignore_walls = FALSE
+
+/datum/emote/living/paincrit/sexpaincrit/get_sound(mob/living/user)
+	return user.get_sound("paincrit")
+
 /datum/emote/living/paincrit/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(.)
@@ -1005,6 +1028,13 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+
+/datum/emote/living/painmoan/sexpainmoan
+	key = "sexpainmoan"
+	sound_ignore_walls = FALSE
+
+/datum/emote/living/painmoan/sexpainmoan/get_sound(mob/living/user)
+	return user.get_sound("painmoan")
 
 /datum/emote/living/groin
 	key = "groin"

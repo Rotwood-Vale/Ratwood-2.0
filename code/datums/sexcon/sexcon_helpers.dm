@@ -3,36 +3,42 @@
 	mid_length = 470
 	volume = 20
 	extra_range = -4
+	ignore_walls = FALSE
 
 /datum/looping_sound/femhornylitealt
 	mid_sounds = list('sound/vo/female/gen/se/horny1loop (2).ogg')
 	mid_length = 360
 	volume = 20
 	extra_range = -4
+	ignore_walls = FALSE
 
 /datum/looping_sound/femhornymed
 	mid_sounds = list('sound/vo/female/gen/se/horny2loop (1).ogg')
 	mid_length = 420
 	volume = 20
 	extra_range = -4
+	ignore_walls = FALSE
 
 /datum/looping_sound/femhornymedalt
 	mid_sounds = list('sound/vo/female/gen/se/horny2loop (2).ogg')
 	mid_length = 350
 	volume = 20
 	extra_range = -4
+	ignore_walls = FALSE
 
 /datum/looping_sound/femhornyhvy
 	mid_sounds = list('sound/vo/female/gen/se/horny3loop (1).ogg')
 	mid_length = 440
 	volume = 20
 	extra_range = -4
+	ignore_walls = FALSE
 
 /datum/looping_sound/femhornyhvyalt
 	mid_sounds = list('sound/vo/female/gen/se/horny3loop (2).ogg')
 	mid_length = 390
 	volume = 20
 	extra_range = -4
+	ignore_walls = FALSE
 
 /mob/living
 	var/can_do_sex = TRUE
@@ -173,9 +179,9 @@
 	// Male masochists moan in pleasure rather than screaming in pure agony.
 	// Masochism is a charflaw addiction, not a trait — use has_flaw() instead of HAS_TRAIT().
 	if(action_target.has_flaw(/datum/charflaw/addiction/masochist) && action_target.gender == MALE)
-		playsound(get_turf(action_target), pick('modular/sound/masomoans/masomoan1.ogg', 'modular/sound/masomoans/masomoan2.ogg', 'modular/sound/masomoans/masomoan3.ogg', 'modular/sound/masomoans/masomoan4.ogg', 'modular/sound/masomoans/masomoan5.ogg', 'modular/sound/masomoans/masomoan6.ogg'), 70, TRUE, 1)
+		playsound(get_turf(action_target), pick('modular/sound/masomoans/masomoan1.ogg', 'modular/sound/masomoans/masomoan2.ogg', 'modular/sound/masomoans/masomoan3.ogg', 'modular/sound/masomoans/masomoan4.ogg', 'modular/sound/masomoans/masomoan5.ogg', 'modular/sound/masomoans/masomoan6.ogg'), 70, TRUE, 1, ignore_walls = FALSE)
 		return
-	action_target.emote("scream", forced = TRUE)
+	action_target.emote("sexscream", forced = TRUE)
 	
 /mob/living/carbon/human/proc/try_impregnate(mob/living/carbon/human/wife)
 	var/obj/item/organ/testicles/testes = getorganslot(ORGAN_SLOT_TESTICLES)

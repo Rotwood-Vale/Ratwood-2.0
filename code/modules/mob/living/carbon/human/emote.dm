@@ -26,6 +26,7 @@
 	emote_type = EMOTE_AUDIBLE
 	nomsg = TRUE
 	only_forced_audio = TRUE
+	sound_ignore_walls = FALSE
 
 /datum/emote/living/carbon/human/sexmoanlight/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
@@ -39,6 +40,7 @@
 	emote_type = EMOTE_AUDIBLE
 	nomsg = TRUE
 	only_forced_audio = TRUE
+	sound_ignore_walls = FALSE
 
 /datum/emote/living/carbon/human/sexmoanhvy/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
