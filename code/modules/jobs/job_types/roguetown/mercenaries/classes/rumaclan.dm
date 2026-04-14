@@ -127,7 +127,7 @@
 	)
 	extra_context = "This subclass is race-limited from: Dwarves."
 
-/datum/outfit/job/roguetown/mercenary/rumaclan/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/mercenary/rumaclan_enforcer/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You are well versed and experienced in swordfighting, you have no problem in taking up most jobs so long as the coin is good, for either yourself or the clan and the seonjang."))
 	belt = /obj/item/storage/belt/rogue/leather
