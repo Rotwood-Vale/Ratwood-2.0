@@ -13,7 +13,7 @@
 		STATKEY_SPD = 2
 		STATKEY_CON = 2,
 		STATKEY_WIL = 2,  
-		STATKEY_STR = 1 // 7 extra points, compareable to Hangyaku
+		STATKEY_STR = 1 // 7 extra points, compareable to Hangyaku. Get
 	)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
@@ -100,7 +100,7 @@
 
 	/datum/advclass/mercenary/rumaclan/enforcer
 	name = "Ruma Clan Enforcer"
-	tutorial = "Stripped of either your position or tattoos, potentially both, you are on a quest to regain your status you once held. Along the way, you resorted to a new technique utilizing the famous hook sabers from the main land. Good luck."
+	tutorial = "Stripped of either your position or tattoos, potentially both, you are on a quest to regain your status you once held. Along the way, you resorted to a new technique utilizing the famous hook blades from the main land. Good luck."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = NON_DWARVEN_RACE_TYPES //no dwarf sprites
 	outfit = /datum/outfit/job/roguetown/mercenary/rumaclan_enforcer
