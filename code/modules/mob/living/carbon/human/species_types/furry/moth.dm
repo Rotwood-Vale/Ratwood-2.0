@@ -117,6 +117,12 @@
 		/datum/body_marking/moth/grayscale/witchwing,
 		/datum/body_marking/moth/grayscale/lovers,
 		/datum/body_marking/nose,
+		/datum/body_marking/womb_tattoo,
+		/datum/body_marking/butterfly,
+		/datum/body_marking/waist,
+		/datum/body_marking/diagonal_eyes,
+		/datum/body_marking/wide_eyes,
+		/datum/body_marking/stripes,
 	)
 	descriptor_choices = list(
 		/datum/descriptor_choice/trait,

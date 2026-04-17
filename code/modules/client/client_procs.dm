@@ -192,6 +192,13 @@ GLOBAL_LIST_EMPTY(respawncounts)
 			. = prefs.familiar_prefs.fam_process_link(usr,href_list)
 			inprefs = FALSE
 			return
+		if("gnoll_prefs")
+			if (inprefs)
+				return
+			inprefs = TRUE
+			. = prefs.gnoll_prefs.gnoll_process_link(usr,href_list)
+			inprefs = FALSE
+			return
 
 	switch(href_list["action"])
 		if("openLink")

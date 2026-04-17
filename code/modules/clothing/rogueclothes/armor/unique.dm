@@ -13,6 +13,10 @@
 	color = null
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
+	cold_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/basiceast
 	name = "simple dobo robe"

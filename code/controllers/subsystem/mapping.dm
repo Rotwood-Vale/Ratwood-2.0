@@ -206,6 +206,7 @@ SUBSYSTEM_DEF(mapping)
 
 	for(var/map_json in config.other_z)
 		otherZ += load_map_config(map_json)
+		log_world("Loaded '[config.other_z]' ")
 
 	if(otherZ.len)
 		for(var/datum/map_config/OtherZ in otherZ)

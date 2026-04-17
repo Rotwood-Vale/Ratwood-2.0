@@ -6,6 +6,27 @@
 
 /mob/living/carbon/human/proc/human_modular_examine_extension(mob/user, observer_privilege, m1, m2, m3)
 	var/list/lines = list()
+	var/user_is_gnoll = FALSE
+	var/user_is_clergy = FALSE
+	var/user_is_inquisition = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		user_is_gnoll = H.dna?.species?.id == "gnoll"
+		user_is_inquisition = HAS_TRAIT(H, TRAIT_INQUISITION) || (H.mind?.assigned_role in GLOB.inquisition_positions)
+		user_is_clergy = user_is_inquisition || (H.mind?.assigned_role in GLOB.church_positions)
+		if(user_is_gnoll)
+			var/datum/antagonist/gnoll/gnoll_antag = H.mind?.has_antag_datum(/datum/antagonist/gnoll)
+			if(gnoll_antag?.is_examine_marked_target(src))
+				lines += span_cultsmall("Graggar has marked them!")
+			if(src.has_gnoll_scent_this_round)
+				lines += span_cultsmall("They have gnoll scent, a breeder!")
+	if(src.has_gnoll_scent_this_round && !user_is_gnoll)
+		if(user_is_inquisition)
+			lines += span_warning("They reek of profane beast-taint. This demands scrutiny.")
+		else if(user_is_clergy)
+			lines += span_warning("A profane, feral scent clings to them.")
+		else
+			lines += span_warning("They have a strange scent about them...")
 	var/perception_level = 15
 	if(isliving(user))
 		var/mob/living/L = user

@@ -203,6 +203,7 @@
 #define VAMPIRE_SERVANT (1<<4)
 #define VAMPIRE_GUARD (1<<5)
 #define VAMPIRE_SPAWN (1<<6)
+#define GNOLL		  (1<<7)
 
 #define INQUISITION (1<<10)
 
@@ -310,8 +311,9 @@
 #define JDO_BANDIT 31.3
 #define JDO_COURTAGENT 30.3
 #define JDO_WRETCH 30.4
-#define JDO_ASSASSIN 30.5
-#define JDO_TRADER 30.5
+#define JDO_GNOLL 30.5
+#define JDO_ASSASSIN 30.6
+#define JDO_TRADER 30.7
 
 #define JDO_MERCENARY 31
 #define JDO_GRENZELHOFT 31.1
@@ -345,7 +347,9 @@
 	/datum/job/roguetown/servant,\
 	/datum/job/roguetown/butler,\
 	/datum/job/roguetown/apothecary,\
-	/datum/job/roguetown/magician
+	/datum/job/roguetown/magician,\
+	/datum/job/roguetown/headslave,\
+	/datum/job/roguetown/slave,\
 
 #define NOBLE_ROLES \
 	/datum/job/roguetown/prince,\
@@ -357,7 +361,9 @@
 	/datum/job/roguetown/knight,\
 	/datum/job/roguetown/lady,\
 	/datum/job/roguetown/lord,\
-	/datum/job/roguetown/steward
+	/datum/job/roguetown/steward,\
+	/datum/job/roguetown/dtprince,\
+	/datum/job/roguetown/cataphract,\
 
 #define KING_QUEEN_ROLES \
 	/datum/job/roguetown/lady,\
@@ -416,6 +422,11 @@
 	/datum/job/roguetown/gatemaster,\
 	/datum/job/roguetown/manorguard,\
 	/datum/job/roguetown/squire,\
+	/datum/job/roguetown/guardsman,\
+	/datum/job/roguetown/janissary,\
+	/datum/job/roguetown/janissarysergeant,\
+	/datum/job/roguetown/azeb,\
+	/datum/job/roguetown/slavemaster,\
 	/datum/job/roguetown/rookie,\
 	/datum/job/roguetown/guardsman
 

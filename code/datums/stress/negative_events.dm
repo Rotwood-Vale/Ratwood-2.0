@@ -32,12 +32,12 @@
 	desc = list(span_boldred("Time to pray to my Patron."),span_boldred("I need to visit my Patron's realm."))
 
 /datum/stressevent/chastity_frustration
-	timer = 999 MINUTES
+	timer = INFINITY
 	stressadd = 1
 	desc = span_red("This restraint is maddening.")
 
 /datum/stressevent/chastity_flat_cramped
-	timer = 999 MINUTES
+	timer = INFINITY
 	stressadd = 1
 	desc = span_red("This cage is too cramped for me.")
 
@@ -166,7 +166,7 @@
 	desc = span_boldred("Oh no! I've received divine punishment!")
 
 /datum/stressevent/virginchurch
-	timer = 999 MINUTES
+	timer = INFINITY
 	stressadd = 10
 	desc = span_boldred("I have broken my oath of chastity to The Gods!")
 
@@ -222,6 +222,11 @@
 	timer = 2 MINUTES
 	stressadd = 5
 	desc = span_red("Better stay away.")
+
+/datum/stressevent/gnoll_examine
+	timer = 1 MINUTES
+	stressadd = 2
+	desc = span_red("Gods above... a Gnoll!!")
 
 /datum/stressevent/paracrowd
 	timer = 15 SECONDS
@@ -288,12 +293,12 @@
 /datum/stressevent/saw_wonder
 	stressadd = 4
 	desc = span_boldred("<B>I have seen something nightmarish, and I fear for my life!</B>")
-	timer = 999 MINUTES
+	timer = INFINITY
 
 /datum/stressevent/maniac_woke_up
 	stressadd = 10
 	desc = span_boldred("No... I want to go back...")
-	timer = 999 MINUTES
+	timer = INFINITY
 
 /datum/stressevent/drankrat
 	stressadd = 1
@@ -313,6 +318,14 @@
 	stressadd = 1
 	desc = list(span_red("I wasted my time on that foolish box."),span_red("Damned jester-box."))
 	timer = 5 MINUTES
+
+/datum/stressevent/bowedasnoble
+	stressadd = 5
+	desc = list(span_boldred("I bowed to a lesser as a noble! How humiliating!"), span_boldred("I bowed my head to a lesser! The shame!"))
+	timer = 10 MINUTES
+
+/datum/stressevent/bowedasnoble/can_apply(mob/living/user)
+	return HAS_TRAIT(user, TRAIT_NOBLE)
 
 /datum/stressevent/noble_impoverished_food
 	stressadd = 2
@@ -406,17 +419,17 @@
 /datum/stressevent/psycurse
 	stressadd = 3
 	desc = span_boldred("Oh no! I've received divine punishment!")
-	timer = 999 MINUTES
+	timer = INFINITY
 
 /datum/stressevent/excommunicated
 	stressadd = 5
 	desc = span_boldred("The Ten have forsaken me!")
-	timer = 999 MINUTES
+	timer = INFINITY
 
 /datum/stressevent/apostasy
 	stressadd = 3
 	desc = span_boldred("The apostasy's mark is upon me!")
-	timer = 999 MINUTES
+	timer = INFINITY
 
 /datum/stressevent/heretic_on_sermon
 	stressadd = 5
@@ -445,18 +458,18 @@
 
 /datum/stressevent/blessed_weapon
 	stressadd = -3
-	timer = 999 MINUTES
+	timer = INFINITY
 	desc = span_green("I'm wielding a BLESSED weapon!")
 
 /datum/stressevent/naledimasklost
 	stressadd = 3
 	desc = span_boldred("The mask! Anyone here could be a djinn. I'm exposed.")
-	timer = 999 MINUTES
+	timer = INFINITY
 
 /datum/stressevent/shamanhoodlost
 	stressadd = 3
 	desc = span_boldred("The hood! My faith wavers without it. I feel ashamed.")
-	timer = 999 MINUTES
+	timer = INFINITY
 
 /datum/stressevent/headless
 	stressadd = 3

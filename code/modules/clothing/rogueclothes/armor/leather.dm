@@ -15,6 +15,8 @@
 	sellprice = 20
 	armor_class = ARMOR_CLASS_LIGHT
 	salvage_result = /obj/item/natural/hide/cured
+	cold_protection = CHEST
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/winterjacket
 	name = "winter jacket"
@@ -185,6 +187,7 @@
 	armor = ARMOR_LEATHER_GOOD
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	cold_protection = CHEST | ARM_LEFT | ARM_RIGHT
 	sellprice = 25
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter
@@ -196,9 +199,7 @@
 	detail_tag = "_detail"
 	color = "#5E4440"
 	detail_color = "#c08955"
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	heat_protection = CHEST
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter/update_icon()
@@ -224,7 +225,7 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 100
 	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
-	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	min_cold_protection_temperature = 50
 
 /obj/item/clothing/suit/roguetown/armor/leather/bikini
 	name = "leather corslet"
@@ -259,7 +260,7 @@
 	icon_state = "vest"
 	item_state = "vest"
 	color = "#514339"
-	armor = ARMOR_CLOTHING
+	armor = ARMOR_LEATHER_BAD
 	prevent_crits = list(BCLASS_CUT)
 	blocksound = SOFTHIT
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT

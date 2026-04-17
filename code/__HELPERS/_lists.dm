@@ -709,6 +709,26 @@ GLOBAL_LIST_EMPTY(string_lists)
 ///Remove an untyped item to a list, taking care to handle list items by wrapping them in a list to remove the footgun
 #define UNTYPED_LIST_REMOVE(list, item) (list -= LIST_VALUE_WRAP_LISTS(item))
 
+///Copies a list, and all lists inside it recusively
+///Does not copy any other reference type
+/proc/deep_copy_list(list/inserted_list)
+	if(!islist(inserted_list))
+		return inserted_list
+	. = inserted_list.Copy()
+	for(var/i in 1 to inserted_list.len)
+		var/key = .[i]
+		if(isnum(key))
+			// numbers cannot ever be associative keys
+			continue
+		var/value = .[key]
+		if(islist(value))
+			value = deep_copy_list(value)
+			.[key] = value
+		if(islist(key))
+			key = deep_copy_list(key)
+			.[i] = key
+			.[key] = value
+
 /// A version of deep_copy_list that actually supports associative list nesting: list(list(list("a" = "b"))) will actually copy correctly.
 /proc/deep_copy_list_alt(list/inserted_list)
 	if(!islist(inserted_list))

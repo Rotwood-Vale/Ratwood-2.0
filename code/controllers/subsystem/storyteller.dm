@@ -763,6 +763,9 @@ SUBSYSTEM_DEF(gamemode)
 	chosen_storyteller.times_chosen++
 	GLOB.featured_stats[FEATURED_STATS_STORYTELLERS]["entries"][initial(chosen_storyteller.name)] = chosen_storyteller.times_chosen
 	current_storyteller = chosen_storyteller
+	if(SSgnoll_scaling)
+		SSgnoll_scaling.apply_storyteller_mode(current_storyteller.preferred_gnoll_mode, current_storyteller.name)
+		SSgnoll_scaling.unlock_gnoll_scaling()
 	if(!secret_storyteller)
 		send_to_playing_players(span_notice("<b>Storyteller is [current_storyteller.name]!</b>"))
 		send_to_playing_players(span_notice("[current_storyteller.welcome_text]"))

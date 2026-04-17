@@ -28,3 +28,6 @@ endmap
 map byos
 	votable
 endmap
+
+map deserttown
+endmap

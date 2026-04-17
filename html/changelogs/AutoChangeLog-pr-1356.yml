@@ -1,0 +1,4 @@
+author: "MickDick1"
+delete-after: True
+changes:
+  - bugfix: "fixed mob path find bug related to mineshaft support beams"

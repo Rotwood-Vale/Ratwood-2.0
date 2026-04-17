@@ -36,7 +36,7 @@
 	swingdelay = 0
 	icon_state = "inpunch"
 	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR // This might be a mistake
+	intent_intdamage_factor = 1
 	//We want chipping, m'lord.
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_WEAK

@@ -90,6 +90,11 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/hand
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
 		head = null
+	if(SSmapping.config.map_name == "Desert Town")
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		r_hand = /obj/item/rogueweapon/sword/sabre/dec
+		head = /obj/item/clothing/head/roguetown/turban/fancypurple
+		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,//You don't get killer's ice for this because you're the gross swordsmaster and I HATE YOU!!!!
 		/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -144,7 +149,7 @@
 	)
 	if(H.dna.species.type in NON_DWARVEN_RACE_TYPES)
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
-		cloak = /obj/item/clothing/cloak/half/shadowcloak
+		cloak = /obj/item/clothing/cloak/shadowcloak
 		gloves = /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves
 		mask = /obj/item/clothing/mask/rogue/shepherd/shadowmask
 		pants = /obj/item/clothing/under/roguetown/trou/shadowpants
@@ -162,6 +167,10 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/hand
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
 		cloak = null
+	if(SSmapping.config.map_name == "Desert Town")
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		head = /obj/item/clothing/head/roguetown/turban/fancypurple
+		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 
 //Advisor Start
 /datum/advclass/hand/advisor
@@ -211,6 +220,10 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/hand
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
 		cloak = null
+	if(SSmapping.config.map_name == "Desert Town")
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		head = /obj/item/clothing/head/roguetown/turban/fancypurple
+		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,

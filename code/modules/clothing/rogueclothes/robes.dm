@@ -142,7 +142,9 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)	 //Ensures that this inherits the padded gambeson's resistances, too.
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	heat_protection = CHEST
+	cold_protection = CHEST | GROIN
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = CHEST | GROIN
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 //This is for templars/psydonites. Gives a boon for wearing it to counter-act giving up plate and such.
