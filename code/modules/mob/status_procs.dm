@@ -49,10 +49,12 @@
 /// proc that adds and removes blindness overlays when necessary
 /mob/proc/update_blindness()
 	if(stat == UNCONSCIOUS || HAS_TRAIT(src, TRAIT_BLIND) || eye_blind) // UNCONSCIOUS or has blind trait, or has temporary blindness
-		if(stat == CONSCIOUS)
+		if(stat == CONSCIOUS && HAS_TRAIT(src, TRAIT_BLIND_VICE))
+			// People with the Blind vice get the impaired overlay (can sense nearby shapes)
 //			throw_alert("blind", /atom/movable/screen/alert/blind)
-			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
+			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/impaired_2)
 		else
+			// Everyone else (sleeping, blindfolded, eyes missing without vice, etc) gets full blackscreen
 			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blackimageoverlay)
 		// You are blind why should you be able to make out details like color, only shapes near you
 //		add_client_colour(/datum/client_colour/monochrome/blind)

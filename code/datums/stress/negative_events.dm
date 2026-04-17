@@ -31,6 +31,60 @@
 /datum/stressevent/vice/godfearing
 	desc = list(span_boldred("Time to pray to my Patron."),span_boldred("I need to visit my Patron's realm."))
 
+/datum/stressevent/vice/caffiend
+	desc = list(span_boldred("I need a hot brew."),span_boldred("I can't function without coffee or tea."))
+
+/datum/stressevent/vice/clamorous
+	desc = list(span_boldred("I need to hear some noise, some action..."),span_boldred("This silence is suffocating!"))
+
+/datum/stressevent/vice/thrillseeker
+	desc = list(span_boldred("I need to feel the thrill of battle..."),span_boldred("I crave the rush of danger!"))
+
+/datum/stressevent/vice/paranoid
+	desc = list(span_boldred("I need to see one of my own..."),span_boldred("I can't trust anyone else."))
+
+/datum/stressevent/vice/voyeur
+	desc = list(span_boldred("I need to see someone indulge..."),span_boldred("I crave witnessing others' satisfaction."))
+
+/datum/stressevent/debt
+	timer = 5 MINUTES
+	stressadd = 3
+	desc = list(span_boldred("My debts weigh heavily on me..."),span_boldred("I owe so much money!"))
+
+/datum/stressevent/averse
+	timer = 30 SECONDS
+	stressadd = 3
+	desc = list(span_boldred("I can't stand these people!"),span_boldred("Too many of them around..."))
+
+/datum/stressevent/paracrowd
+	timer = 30 SECONDS
+	stressadd = 3
+	desc = list(span_boldred("I can't trust these people!"),span_boldred("Too many strangers around..."))
+
+/datum/stressevent/vice/big_ears
+	timer = 30 SECONDS
+	stressadd = 2
+	desc = list(span_boldred("All this noise is maddening!"),span_boldred("I can't stand all this chatter!"))
+
+/datum/stressevent/vice/light_sensitive
+	timer = 10 SECONDS
+	stressadd = 2
+	desc = list(span_boldred("This brightness is agonizing."),span_boldred("The light is blinding me!"))
+
+/datum/stressevent/vice/astrata_scorched
+	timer = 10 SECONDS
+	stressadd = 3
+	desc = list(span_boldred("Astrata's light sears through me!"),span_boldred("The sun burns me to the marrow!"),span_boldred("Get me out of the light!"))
+
+/datum/stressevent/vice/nudist_clothed
+	timer = 10 SECONDS
+	stressadd = 3
+	desc = list(span_boldred("These clothes are suffocating me!"),span_boldred("I need to be free of these garments!"),span_boldred("I can't breathe in these clothes!"))
+
+/datum/stressevent/vice/hunted
+	timer = 10 SECONDS
+	stressadd = 2
+	desc = list(span_boldred("I feel like I'm being watched..."),span_boldred("They could be anywhere..."),span_boldred("I'm not safe here!"))
 /datum/stressevent/chastity_frustration
 	timer = INFINITY
 	stressadd = 1
@@ -252,6 +306,11 @@
 	timer = 2 MINUTES
 	stressadd = 2
 	desc = "<span class='red'>Why is everyone here...? Are they trying to kill me?!</span>"
+
+/datum/stressevent/nocrowd
+	timer = 2 MINUTES
+	stressadd = 3
+	desc = span_red("No one around... It's making me nervous.")
 
 /datum/stressevent/nopeople
 	timer = 2 MINUTES

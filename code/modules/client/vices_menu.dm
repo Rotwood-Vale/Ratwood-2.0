@@ -1,47 +1,34 @@
 /datum/preferences/proc/check_virtue_vice_conflict(virtue_type, show_message = FALSE, mob/user = null)
 	// Check if selected virtue conflicts with any selected vice
 	var/list/vice_list = list()
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 8)
 		var/datum/charflaw/v = vars["vice[i]"]
 		if(v)
 			vice_list += v
 	
-	// Bronze Arm (R) vs Wood Arm (R)
-	if(virtue_type == /datum/virtue/utility/bronzearm_r)
+	// Prosthetic Limbs vs Wood Arms
+	if(virtue_type == /datum/virtue/prosthetics/prosthetic_specialist)
+		// Note: Can't check selected limbs during selection, but wood arm vices shouldn't be selectable with prosthetic virtue
 		for(var/datum/charflaw/vice in vice_list)
-			if(vice && vice.type == /datum/charflaw/limbloss/arm_r)
+			if(vice && (vice.type == /datum/charflaw/limbloss/arm_r || vice.type == /datum/charflaw/limbloss/arm_l))
 				if(show_message && user)
-					to_chat(user, span_warning("Bronze Arm (R) virtue conflicts with Wood Arm (R) vice!"))
-				return TRUE
-	
-	// Bronze Arm (L) vs Wood Arm (L)
-	if(virtue_type == /datum/virtue/utility/bronzearm_l)
-		for(var/datum/charflaw/vice in vice_list)
-			if(vice && vice.type == /datum/charflaw/limbloss/arm_l)
-				if(show_message && user)
-					to_chat(user, span_warning("Bronze Arm (L) virtue conflicts with Wood Arm (L) vice!"))
+					to_chat(user, span_warning("Prosthetic Limbs virtue conflicts with Wood Arm vice!"))
 				return TRUE
 	
 	// Night-eyed vs Colorblind
-	if(virtue_type == /datum/virtue/utility/night_vision)
-		for(var/datum/charflaw/vice in vice_list)
-			if(vice && vice.type == /datum/charflaw/colorblind)
-				if(show_message && user)
-					to_chat(user, span_warning("Night-eyed virtue conflicts with Colorblind vice!"))
-				return TRUE
-	
-	// Socialite (Beautiful) vs Ugly
-	if(virtue_type == /datum/virtue/utility/socialite)
+
+	// Well Off (Beautiful choice) vs Ugly
+	if(virtue_type == /datum/virtue/utility/well_off)
 		for(var/datum/charflaw/vice in vice_list)
 			if(vice && vice.type == /datum/charflaw/ugly)
 				if(show_message && user)
-					to_chat(user, span_warning("Socialite virtue conflicts with Ugly vice!"))
+					to_chat(user, span_warning("Well Off virtue (Beautiful choice) conflicts with Ugly vice!"))
 				return TRUE
 			if(vice && vice.type == /datum/charflaw/eerie_beauty)
 				if(show_message && user)
-					to_chat(user, span_warning("Socialite virtue conflicts with Eerie Beauty vice!"))
+					to_chat(user, span_warning("Well Off virtue (Beautiful choice) conflicts with Eerie Beauty vice!"))
 				return TRUE
-	
+
 	// Deathless (no hunger/breath) vs any food/breathing related vices
 	// Deathless conflicts with nothing currently, but kept for future reference
 	
@@ -50,73 +37,79 @@
 /datum/preferences/proc/check_virtue_virtue_conflict(virtue_type, other_virtue_type, show_message = FALSE, mob/user = null)
 	if(!virtue_type || !other_virtue_type)
 		return FALSE
-	if(virtue_type == /datum/virtue/utility/bronzearm_r && other_virtue_type == /datum/virtue/utility/bronzearm_l)
-		if(show_message && user)
-			to_chat(user, span_warning("Bronze Arm (R) virtue conflicts with Bronze Arm (L) virtue - you can't have both bronze arms!"))
-		return TRUE
-	if(virtue_type == /datum/virtue/utility/bronzearm_l && other_virtue_type == /datum/virtue/utility/bronzearm_r)
-		if(show_message && user)
-			to_chat(user, span_warning("Bronze Arm (L) virtue conflicts with Bronze Arm (R) virtue - you can't have both bronze arms!"))
-		return TRUE
+	// Note: Prosthetic specialist handles its own zone conflicts internally during selection
+	return FALSE
 
 /datum/preferences/proc/check_vice_virtue_conflict(vice_type, show_message = FALSE, mob/user = null)
 	// Check if selected vice conflicts with any selected virtue
-	var/list/virtue_list = list(virtue, virtuetwo)
+	var/list/virtue_list = list()
 	
-	// Wood Arm (R) vs Bronze Arm (R)
-	if(vice_type == /datum/charflaw/limbloss/arm_r)
+	// Add origin virtue
+	if(origin_virtue)
+		virtue_list += origin_virtue
+	
+	// Add origin items
+	if(LAZYLEN(origin_items))
+		virtue_list += origin_items
+	
+	// Add feats
+	if(LAZYLEN(feats))
+		virtue_list += feats
+	
+	// Also check legacy virtues for backwards compatibility
+	if(virtue)
+		virtue_list += virtue
+	if(virtuetwo)
+		virtue_list += virtuetwo
+	
+	// Wood Arm (R/L) vs Prosthetic Limbs
+	if(vice_type == /datum/charflaw/limbloss/arm_r || vice_type == /datum/charflaw/limbloss/arm_l)
 		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/bronzearm_r)
+			if(virt && virt.type == /datum/virtue/prosthetics/prosthetic_specialist)
 				if(show_message && user)
-					to_chat(user, span_warning("Wood Arm (R) vice conflicts with Bronze Arm (R) virtue!"))
+					to_chat(user, span_warning("Wood Arm vice conflicts with Prosthetic Limbs virtue!"))
 				return TRUE
 	
-	// Wood Arm (L) vs Bronze Arm (L)
-	if(vice_type == /datum/charflaw/limbloss/arm_l)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/bronzearm_l)
-				if(show_message && user)
-					to_chat(user, span_warning("Wood Arm (L) vice conflicts with Bronze Arm (L) virtue!"))
-				return TRUE
+
 	
-	// Colorblind vs Night-eyed
-	if(vice_type == /datum/charflaw/colorblind)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/night_vision)
-				if(show_message && user)
-					to_chat(user, span_warning("Colorblind vice conflicts with Night-eyed virtue!"))
-				return TRUE
-	
-	// Ugly vs Socialite (Beautiful)
+	// Ugly vs Well Off (Beautiful choice)
 	if(vice_type == /datum/charflaw/ugly)
 		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/socialite)
+			if(virt && virt.type == /datum/virtue/utility/well_off)
 				if(show_message && user)
-					to_chat(user, span_warning("Ugly vice conflicts with Socialite virtue!"))
+					to_chat(user, span_warning("Ugly vice conflicts with Well Off virtue (Beautiful choice)!"))
 				return TRUE
 	
-	// Eerie Beauty vs Socialite (Beautiful)
+	// Eerie Beauty vs Well Off (Beautiful choice)
 	if(vice_type == /datum/charflaw/eerie_beauty)
 		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/socialite)
+			if(virt && virt.type == /datum/virtue/utility/well_off)
 				if(show_message && user)
-					to_chat(user, span_warning("Eerie Beauty vice conflicts with Socialite virtue!"))
+					to_chat(user, span_warning("Eerie Beauty vice conflicts with Well Off virtue (Beautiful choice)!"))
 				return TRUE
 	
-	// Mute vs Second Voice (can't have second voice if you're mute)
+	// Mute vs Prowler (Second Voice choice)
 	if(vice_type == /datum/charflaw/mute)
 		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/secondvoice)
+			if(virt && virt.type == /datum/virtue/utility/prowler)
 				if(show_message && user)
-					to_chat(user, span_warning("Mute vice conflicts with Second Voice virtue - you can't have a second voice if you're mute!"))
+					to_chat(user, span_warning("Mute vice conflicts with Prowler virtue (Second Voice choice) - you can't have a second voice if you're mute!"))
 				return TRUE
 	
-	// Unintelligible vs Second Voice (second voice won't help if you're unintelligible)
+	// Unintelligible vs Prowler (Second Voice choice)
 	if(vice_type == /datum/charflaw/unintelligible)
 		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/secondvoice)
+			if(virt && virt.type == /datum/virtue/utility/prowler)
 				if(show_message && user)
-					to_chat(user, span_warning("Unintelligible vice conflicts with Second Voice virtue!"))
+					to_chat(user, span_warning("Unintelligible vice conflicts with Prowler virtue (Second Voice choice)!"))
+				return TRUE
+	
+	// Lumbering Giant vs Giant virtue or Sturdy Giant pack
+	if(vice_type == /datum/charflaw/lumbering_giant)
+		for(var/datum/virtue/virt in virtue_list)
+			if(virt && virt.type == /datum/virtue/size/giant)
+				if(show_message && user)
+					to_chat(user, span_warning("Lumbering Giant vice conflicts with Giant virtue!"))
 				return TRUE
 	
 	return FALSE
@@ -250,7 +243,493 @@
 				to_chat(user, span_warning("Unintelligible vice conflicts with Mute vice - you can't have both speech impediments!"))
 			return TRUE
 
+	// === DIET-RELATED CONFLICTS ===
+	// Carnivore conflicts with: Herbivore, Hemophage, Lithovore
+	if(vice_type == /datum/charflaw/carnivore)
+		if(/datum/charflaw/herbivore in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Carnivore vice conflicts with Herbivore vice - you can't have multiple diet types!"))
+			return TRUE
+		if(/datum/charflaw/hemophage in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Carnivore vice conflicts with Hemophage vice - you can't have multiple diet types!"))
+			return TRUE
+		if(/datum/charflaw/lithovore in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Carnivore vice conflicts with Lithovore vice - you can't have multiple diet types!"))
+			return TRUE
+
+	// Herbivore conflicts with: Carnivore, Hemophage, Lithovore
+	if(vice_type == /datum/charflaw/herbivore)
+		if(/datum/charflaw/carnivore in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Herbivore vice conflicts with Carnivore vice - you can't have multiple diet types!"))
+			return TRUE
+		if(/datum/charflaw/hemophage in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Herbivore vice conflicts with Hemophage vice - you can't have multiple diet types!"))
+			return TRUE
+		if(/datum/charflaw/lithovore in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Herbivore vice conflicts with Lithovore vice - you can't have multiple diet types!"))
+			return TRUE
+
+	// Hemophage conflicts with: Carnivore, Herbivore, Lithovore
+	if(vice_type == /datum/charflaw/hemophage)
+		if(/datum/charflaw/carnivore in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Hemophage vice conflicts with Carnivore vice - you can't have multiple diet types!"))
+			return TRUE
+		if(/datum/charflaw/herbivore in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Hemophage vice conflicts with Herbivore vice - you can't have multiple diet types!"))
+			return TRUE
+		if(/datum/charflaw/lithovore in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Hemophage vice conflicts with Lithovore vice - you can't have multiple diet types!"))
+			return TRUE
+
+	// Lithovore conflicts with: Carnivore, Herbivore, Hemophage
+	if(vice_type == /datum/charflaw/lithovore)
+		if(/datum/charflaw/carnivore in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Lithovore vice conflicts with Carnivore vice - you can't have multiple diet types!"))
+			return TRUE
+		if(/datum/charflaw/herbivore in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Lithovore vice conflicts with Herbivore vice - you can't have multiple diet types!"))
+			return TRUE
+		if(/datum/charflaw/hemophage in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Lithovore vice conflicts with Hemophage vice - you can't have multiple diet types!"))
+			return TRUE
+
+	// === ASTRATA-SCORCHED CONFLICTS ===
+	// NOTE: Astrata-Scorched is now a virtue, not a vice
+	// The conflict check is handled in the virtue's apply_to_human proc
+	// Hemophage is still a vice and incompatible with the Astrata-Scorched virtue
+
 	return FALSE
+
+// Helper functions for category-based virtue system
+/datum/preferences/proc/count_selected_vices()
+	var/count = 0
+	for(var/i = 1 to 8)
+		if(vars["vice[i]"])
+			count++
+	return count
+
+/datum/preferences/proc/get_max_feats()
+	// No longer limited by slots - feats are only limited by virtue points
+	// Keeping this for backward compatibility with presets
+	return 999
+
+/datum/preferences/proc/enforce_feat_limit(mob/user = null)
+	var/max_feats = get_max_feats()
+	var/current_feats = LAZYLEN(feats)
+	if(current_feats <= max_feats)
+		return FALSE
+
+	var/disabled_count = current_feats - max_feats
+	feats.Cut(max_feats + 1)
+	if(!LAZYLEN(feats))
+		feats = null
+
+	if(user)
+		to_chat(user, span_warning("[disabled_count] feat[disabled_count > 1 ? "s were" : " was"] disabled because you no longer have enough vices."))
+
+	return TRUE
+
+// Virtue point system helpers
+/datum/preferences/proc/get_max_virtue_points()
+	// Base 15 points for all characters	
+	var/points = 15
+	// Virtuous statpack grants +5 additional virtue points
+	if(statpack && statpack.name == "Virtuous")
+		points += 5
+	return points
+
+/datum/preferences/proc/get_spent_virtue_points()
+	var/total = 0
+	
+	// Count origin virtue
+	if(origin_virtue && istype(origin_virtue, /datum/virtue) && origin_virtue.virtue_cost)
+		total += origin_virtue.virtue_cost
+		// Add choice costs for origin virtue
+		var/virtue_key = "[origin_virtue.type]"
+		var/list/choices = virtue_choice_selections?[virtue_key]
+		if(LAZYLEN(choices))
+			var/choice_cost = calculate_choice_cost(origin_virtue, choices)
+			total += choice_cost
+	
+	// Count origin items (with null filtering)
+	if(LAZYLEN(origin_items))
+		for(var/datum/virtue/V in origin_items)
+			if(!V || !istype(V, /datum/virtue))
+				continue
+			if(V.virtue_cost)
+				total += V.virtue_cost
+			// Add choice costs
+			var/virtue_key = "[V.type]"
+			var/list/choices = virtue_choice_selections?[virtue_key]
+			if(LAZYLEN(choices))
+				var/choice_cost = calculate_choice_cost(V, choices)
+				total += choice_cost
+	
+	// Count feats (with null filtering)
+	if(LAZYLEN(feats))
+		for(var/datum/virtue/V in feats)
+			if(!V || !istype(V, /datum/virtue))
+				continue
+			if(V.virtue_cost)
+				total += V.virtue_cost
+			// Add choice costs
+			var/virtue_key = "[V.type]"
+			var/list/choices = virtue_choice_selections?[virtue_key]
+			if(LAZYLEN(choices))
+				var/choice_cost = calculate_choice_cost(V, choices)
+				total += choice_cost
+	
+	// Count legacy virtues for backwards compatibility
+	if(virtue && istype(virtue, /datum/virtue) && virtue.virtue_cost)
+		total += virtue.virtue_cost
+	if(virtuetwo && istype(virtuetwo, /datum/virtue) && virtuetwo.virtue_cost)
+		total += virtuetwo.virtue_cost
+	
+	return total
+
+/datum/preferences/proc/calculate_choice_cost(datum/virtue/V, list/selected_choices)
+	if(!V || !LAZYLEN(selected_choices) || !LAZYLEN(V.virtue_choices))
+		return 0
+	
+	var/total_cost = 0
+	var/choice_index = 0
+	for(var/choice_name in selected_choices)
+		var/list/choice_data = V.virtue_choices[choice_name]
+		if(!choice_data)
+			continue
+		
+		var/individual_cost = choice_data["cost"] || 0
+		var/effective_cost = individual_cost
+		
+		// Add progressive cost for choices beyond free ones
+		if(choice_index >= V.free_choices && V.choice_virtue_point_cost > 0)
+			effective_cost += V.choice_virtue_point_cost * (choice_index - V.free_choices + 1)
+		
+		total_cost += effective_cost
+		choice_index++
+	
+	return total_cost
+
+/datum/preferences/proc/get_remaining_virtue_points()
+	return get_max_virtue_points() - get_spent_virtue_points()
+
+/datum/preferences/proc/can_afford_virtue(datum/virtue/V)
+	if(!V || !V.virtue_cost)
+		return TRUE // Free virtues are always affordable
+	return get_remaining_virtue_points() >= V.virtue_cost
+
+/datum/preferences/proc/can_select_virtue(category)
+	switch(category)
+		if("origin")
+			// Can only select 1 origin virtue
+			return !origin_virtue
+		if("origin_items")
+			// Can select 1 origin item (heirloom)
+			return LAZYLEN(origin_items) < 1
+		if("feats")
+			// No slot limit - only limited by virtue points
+			return TRUE
+	return FALSE
+
+/// Sanitize virtue lists by removing null or invalid entries
+/datum/preferences/proc/sanitize_virtue_lists()
+	var/changed = FALSE
+	
+	// Clean origin_items
+	if(LAZYLEN(origin_items))
+		var/list/cleaned_items = list()
+		for(var/datum/virtue/V in origin_items)
+			if(V && istype(V, /datum/virtue))
+				cleaned_items += V
+			else
+				changed = TRUE
+		origin_items = cleaned_items.len ? cleaned_items : null
+	
+	// Clean feats
+	if(LAZYLEN(feats))
+		var/list/cleaned_feats = list()
+		for(var/datum/virtue/V in feats)
+			if(V && istype(V, /datum/virtue))
+				cleaned_feats += V
+			else
+				changed = TRUE
+		feats = cleaned_feats.len ? cleaned_feats : null
+	
+	// Validate origin_virtue
+	if(origin_virtue && !istype(origin_virtue, /datum/virtue))
+		origin_virtue = null
+		changed = TRUE
+	
+	return changed
+
+/// Reset all virtues and vices to default state
+/datum/preferences/proc/reset_virtues_and_vices()
+	// Clear new virtue system
+	origin_virtue = null
+	origin_items = null
+	feats = null
+	virtue_choice_selections = list()
+	
+	// Clear custom origin system
+	custom_origin_skills = null
+	custom_origin_levels = null
+	custom_origin_points_spent = 0
+	
+	// Reset legacy virtues
+	virtue = GLOB.virtues[/datum/virtue/none]
+	virtuetwo = GLOB.virtues[/datum/virtue/none]
+	
+	// Clear all vices
+	for(var/i = 1 to 8)
+		vars["vice[i]"] = null
+	
+	// Legacy vice
+	charflaw = null
+	
+	save_character()
+
+/// Reset all loadout items and languages to default state
+/datum/preferences/proc/reset_loadout_and_languages()
+	// Clear languages
+	extra_language = "None"
+	extra_language_1 = "None"
+	extra_language_2 = "None"
+	
+	// Clear loadout items
+	loadout = null
+	loadout2 = null
+	loadout3 = null
+	loadout4 = null
+	loadout5 = null
+	loadout6 = null
+	loadout7 = null
+	loadout8 = null
+	loadout9 = null
+	loadout10 = null
+	
+	// Clear loadout names
+	loadout_1_name = null
+	loadout_2_name = null
+	loadout_3_name = null
+	loadout_4_name = null
+	loadout_5_name = null
+	loadout_6_name = null
+	loadout_7_name = null
+	loadout_8_name = null
+	loadout_9_name = null
+	loadout_10_name = null
+	
+	// Clear loadout descriptions
+	loadout_1_desc = null
+	loadout_2_desc = null
+	loadout_3_desc = null
+	loadout_4_desc = null
+	loadout_5_desc = null
+	loadout_6_desc = null
+	loadout_7_desc = null
+	loadout_8_desc = null
+	loadout_9_desc = null
+	loadout_10_desc = null
+	
+	// Clear loadout colors
+	loadout_1_hex = null
+	loadout_2_hex = null
+	loadout_3_hex = null
+	loadout_4_hex = null
+	loadout_5_hex = null
+	loadout_6_hex = null
+	loadout_7_hex = null
+	loadout_8_hex = null
+	loadout_9_hex = null
+	loadout_10_hex = null
+	
+	save_character()
+
+/datum/preferences/proc/get_selected_stashed_item_types(datum/virtue/exclude_virtue = null)
+	var/list/item_types = list()
+	var/list/selected_virtues = list()
+
+	if(origin_virtue && origin_virtue != exclude_virtue)
+		selected_virtues += origin_virtue
+
+	if(LAZYLEN(origin_items))
+		for(var/datum/virtue/V in origin_items)
+			if(V && V != exclude_virtue)
+				selected_virtues += V
+
+	if(LAZYLEN(feats))
+		for(var/datum/virtue/V in feats)
+			if(V && V != exclude_virtue)
+				selected_virtues += V
+
+	if(virtue && virtue != exclude_virtue)
+		selected_virtues += virtue
+
+	if(virtuetwo && virtuetwo != exclude_virtue)
+		selected_virtues += virtuetwo
+
+	for(var/datum/virtue/V in selected_virtues)
+		if(!LAZYLEN(V.added_stashed_items))
+			continue
+		for(var/item_name in V.added_stashed_items)
+			var/item_type = V.added_stashed_items[item_name]
+			if(item_type)
+				item_types[item_type] = TRUE
+
+	return item_types
+
+/datum/preferences/proc/has_stashed_item_conflict(datum/virtue/candidate, datum/virtue/exclude_virtue = null, show_message = FALSE, mob/user = null)
+	if(!candidate || !LAZYLEN(candidate.added_stashed_items))
+		return FALSE
+
+	var/list/existing_item_types = get_selected_stashed_item_types(exclude_virtue)
+	var/list/conflicts = list()
+
+	for(var/item_name in candidate.added_stashed_items)
+		var/item_type = candidate.added_stashed_items[item_name]
+		if(item_type in existing_item_types)
+			conflicts += item_name
+
+	if(!LAZYLEN(conflicts))
+		return FALSE
+
+	if(show_message && user)
+		to_chat(user, span_warning("This selection conflicts with an already selected stash item: [conflicts.Join(", ")]."))
+
+	return TRUE
+
+/datum/preferences/proc/is_blocked_by_origin(datum/virtue/candidate, show_message = FALSE, mob/user = null)
+	// Check if the candidate virtue/item is blocked by the selected origin
+	if(!candidate || !origin_virtue)
+		return FALSE
+	
+	// Check if this feat is blocked by the origin
+	if(candidate.category == "feats" && LAZYLEN(origin_virtue.blocked_feats))
+		for(var/blocked_path in origin_virtue.blocked_feats)
+			// Support both exact type matching and general path matching
+			if(candidate.type == blocked_path || ispath(candidate.type, blocked_path))
+				if(show_message && user)
+					to_chat(user, span_warning("[candidate.name] is incompatible with your [origin_virtue.name] origin!"))
+				return TRUE
+	
+	// Check if this item is blocked by the origin
+	if(candidate.category == "origin_items" && LAZYLEN(origin_virtue.blocked_items))
+		for(var/blocked_path in origin_virtue.blocked_items)
+			// Support both exact type matching and general path matching
+			if(candidate.type == blocked_path || ispath(candidate.type, blocked_path))
+				if(show_message && user)
+					to_chat(user, span_warning("[candidate.name] is incompatible with your [origin_virtue.name] origin!"))
+				return TRUE
+	
+	return FALSE
+
+/datum/preferences/proc/add_virtue_to_category(datum/virtue/V)
+	if(!V || !V.category)
+		return FALSE
+	
+	switch(V.category)
+		if("origin")
+			if(origin_virtue)
+				return FALSE  // Already have an origin virtue
+			origin_virtue = V
+			return TRUE
+		if("origin_items")
+			if(LAZYLEN(origin_items) >= 1)
+				return FALSE  // Already have 1 heirloom
+			LAZYADD(origin_items, V)
+			return TRUE
+		if("feats")
+			// No slot limit - only limited by virtue points
+			LAZYADD(feats, V)
+			return TRUE
+	return FALSE
+
+/datum/preferences/proc/remove_virtue_from_category(datum/virtue/V)
+	if(!V || !V.category)
+		return FALSE
+	
+	switch(V.category)
+		if("origin")
+			if(origin_virtue == V)
+				origin_virtue = null
+				return TRUE
+		if("origin_items")
+			if(V in origin_items)
+				origin_items -= V
+				return TRUE
+		if("feats")
+			if(V in feats)
+				feats -= V
+				return TRUE
+	return FALSE
+
+/datum/preferences/proc/generate_virtue_display_html(datum/virtue/V)
+	var/html = ""
+	if(!V)
+		return html
+	
+	html += "<div class='vice-name'>[V.name]</div>"
+	html += "<div class='vice-desc'>[V.desc]</div>"
+	
+	if(V.custom_text)
+		html += "<div class='statpack-stats' style='margin-top: 4px;'>[V.custom_text]</div>"
+	
+	// Display selected choices for virtues with choice systems
+	if(LAZYLEN(V.virtue_choices))
+		var/list/selected_choices = virtue_choice_selections["[V.type]"]
+		html += "<div class='statpack-stats' style='margin-top: 8px; font-size: 0.7em; padding: 6px; background: rgba(76, 175, 80, 0.15); border-left: 2px solid #4CAF50;'>"
+		html += "<strong>Selected Choices:</strong><br>"
+		
+		if(LAZYLEN(selected_choices))
+			for(var/choice_name in selected_choices)
+				html += "• [choice_name]<br>"
+		else
+			html += "<em style='color: #f44336;'>No choices selected yet!</em><br>"
+		
+		html += "<a class='btn btn-customize' style='margin-top: 4px; display: inline-block;' href='byond://?src=\ref[src];virtue_action=select_virtue_choices;virtue_type=[V.type]'>Configure Choices</a>"
+		html += "</div>"
+	
+	// Display traits granted
+	if(LAZYLEN(V.added_traits))
+		html += "<div class='statpack-stats' style='margin-top: 8px; font-size: 0.65em;'><strong>Traits:</strong><br>"
+		for(var/trait in V.added_traits)
+			html += "• [trait]<br>"
+		html += "</div>"
+	
+	// Display skills granted
+	if(LAZYLEN(V.added_skills))
+		html += "<div class='statpack-stats' style='margin-top: 8px; font-size: 0.65em;'><strong>Skills:</strong><br>"
+		for(var/skill in V.added_skills)
+			if(!islist(skill))
+				var/datum/skill/S = skill
+				var/skill_name = initial(S.name)
+				html += "• [skill_name]: +[V.added_skills[skill]]<br>"
+			else
+				var/list/skill_block = skill
+				var/datum/skill/S = skill_block[1]
+				var/skill_name = initial(S.name)
+				html += "• [skill_name]: +[skill_block[2]] (max [skill_block[3]])<br>"
+		html += "</div>"
+	
+	// Display stashed items
+	if(LAZYLEN(V.added_stashed_items))
+		html += "<div class='statpack-stats' style='margin-top: 8px; font-size: 0.65em;'><strong>Items:</strong><br>"
+		for(var/item_name in V.added_stashed_items)
+			html += "• [item_name]<br>"
+		html += "</div>"
+	
+	return html
 
 // Global cache for loadout item icons to prevent memory leaks
 GLOBAL_LIST_EMPTY(cached_loadout_icons)
@@ -265,11 +744,21 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"statpack" = statpack,
 		"virtue" = virtue,
 		"virtuetwo" = virtuetwo,
+		"origin_virtue" = origin_virtue,
+		"origin_items" = origin_items ? origin_items.Copy() : null,
+		"feats" = feats ? feats.Copy() : null,
+		"virtue_choice_selections" = virtue_choice_selections ? virtue_choice_selections.Copy() : null,
+		"custom_origin_skills" = custom_origin_skills ? custom_origin_skills.Copy() : null,
+		"custom_origin_levels" = custom_origin_levels ? custom_origin_levels.Copy() : null,
+		"custom_origin_points_spent" = custom_origin_points_spent,
 		"vice1" = vice1,
 		"vice2" = vice2,
 		"vice3" = vice3,
 		"vice4" = vice4,
 		"vice5" = vice5,
+		"vice6" = vice6,
+		"vice7" = vice7,
+		"vice8" = vice8,
 		"loadout" = loadout,
 		"loadout2" = loadout2,
 		"loadout3" = loadout3,
@@ -333,11 +822,41 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	statpack = snapshot["statpack"]
 	virtue = snapshot["virtue"]
 	virtuetwo = snapshot["virtuetwo"]
+	origin_virtue = snapshot["origin_virtue"]
+	var/list/stored_items = snapshot["origin_items"]
+	if(stored_items)
+		origin_items = stored_items.Copy()
+	else
+		origin_items = null
+	var/list/stored_feats = snapshot["feats"]
+	if(stored_feats)
+		feats = stored_feats.Copy()
+	else
+		feats = null
+	var/list/stored_virtue_choices = snapshot["virtue_choice_selections"]
+	if(stored_virtue_choices)
+		virtue_choice_selections = stored_virtue_choices.Copy()
+	else
+		virtue_choice_selections = list()
+	var/list/stored_custom_skills = snapshot["custom_origin_skills"]
+	if(stored_custom_skills)
+		custom_origin_skills = stored_custom_skills.Copy()
+	else
+		custom_origin_skills = null
+	var/list/stored_custom_levels = snapshot["custom_origin_levels"]
+	if(stored_custom_levels)
+		custom_origin_levels = stored_custom_levels.Copy()
+	else
+		custom_origin_levels = null
+	custom_origin_points_spent = snapshot["custom_origin_points_spent"]
 	vice1 = snapshot["vice1"]
 	vice2 = snapshot["vice2"]
 	vice3 = snapshot["vice3"]
 	vice4 = snapshot["vice4"]
 	vice5 = snapshot["vice5"]
+	vice6 = snapshot["vice6"]
+	vice7 = snapshot["vice7"]
+	vice8 = snapshot["vice8"]
 	loadout = snapshot["loadout"]
 	loadout2 = snapshot["loadout2"]
 	loadout3 = snapshot["loadout3"]
@@ -390,16 +909,40 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 /datum/preferences/proc/save_preset(preset_slot)
 	if(preset_slot < 1 || preset_slot > 3)
 		return FALSE
+
+	var/list/preset_origin_items = null
+	if(LAZYLEN(origin_items))
+		preset_origin_items = list()
+		for(var/datum/virtue/item_virtue in origin_items)
+			if(item_virtue)
+				preset_origin_items += item_virtue.type
+
+	var/list/preset_feats = null
+	if(LAZYLEN(feats))
+		preset_feats = list()
+		for(var/datum/virtue/feat_virtue in feats)
+			if(feat_virtue)
+				preset_feats += feat_virtue.type
 	
 	var/list/preset = list(
 		"statpack" = statpack?.type,
 		"virtue" = virtue?.type,
 		"virtuetwo" = virtuetwo?.type,
+		"origin_virtue" = origin_virtue?.type,
+		"origin_items" = preset_origin_items,
+		"feats" = preset_feats,
+		"virtue_choice_selections" = virtue_choice_selections ? virtue_choice_selections.Copy() : null,
+		"custom_origin_skills" = custom_origin_skills ? custom_origin_skills.Copy() : null,
+		"custom_origin_levels" = custom_origin_levels ? custom_origin_levels.Copy() : null,
+		"custom_origin_points_spent" = custom_origin_points_spent,
 		"vice1" = vice1?.type,
 		"vice2" = vice2?.type,
 		"vice3" = vice3?.type,
 		"vice4" = vice4?.type,
 		"vice5" = vice5?.type,
+		"vice6" = vice6?.type,
+		"vice7" = vice7?.type,
+		"vice8" = vice8?.type,
 		"loadout" = loadout?.type,
 		"loadout2" = loadout2?.type,
 		"loadout3" = loadout3?.type,
@@ -478,6 +1021,65 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		virtuetwo = new virtuetwo_type()
 	else
 		virtuetwo = new /datum/virtue/none()
+
+	var/origin_virtue_type = string_to_typepath(preset["origin_virtue"])
+	if(origin_virtue_type && ispath(origin_virtue_type, /datum/virtue))
+		origin_virtue = GLOB.virtues[origin_virtue_type]
+	else
+		origin_virtue = null
+
+	origin_items = null
+	var/list/preset_origin_items = preset["origin_items"]
+	if(islist(preset_origin_items))
+		for(var/item_entry in preset_origin_items)
+			var/item_type = string_to_typepath(item_entry)
+			if(!item_type)
+				item_type = string_to_typepath(preset_origin_items[item_entry])
+			if(!item_type || !ispath(item_type, /datum/virtue))
+				continue
+			var/datum/virtue/item_virtue = GLOB.virtues[item_type]
+			if(item_virtue)
+				LAZYADD(origin_items, item_virtue)
+	if(LAZYLEN(origin_items) > 2)
+		origin_items.Cut(3)
+	if(!LAZYLEN(origin_items))
+		origin_items = null
+
+	feats = null
+	var/list/preset_feats = preset["feats"]
+	if(islist(preset_feats))
+		for(var/feat_entry in preset_feats)
+			var/feat_type = string_to_typepath(feat_entry)
+			if(!feat_type)
+				feat_type = string_to_typepath(preset_feats[feat_entry])
+			if(!feat_type || !ispath(feat_type, /datum/virtue))
+				continue
+			var/datum/virtue/feat_virtue = GLOB.virtues[feat_type]
+			if(feat_virtue)
+				LAZYADD(feats, feat_virtue)
+	if(LAZYLEN(feats) > get_max_feats())
+		feats.Cut(get_max_feats() + 1)
+	if(!LAZYLEN(feats))
+		feats = null
+	
+	// Restore virtue choice selections
+	virtue_choice_selections = list()
+	var/list/preset_choices = preset["virtue_choice_selections"]
+	if(islist(preset_choices))
+		virtue_choice_selections = preset_choices.Copy()
+	
+	// Restore custom origin skills
+	var/list/preset_custom_skills = preset["custom_origin_skills"]
+	if(islist(preset_custom_skills))
+		custom_origin_skills = preset_custom_skills.Copy()
+	else
+		custom_origin_skills = null
+	var/list/preset_custom_levels = preset["custom_origin_levels"]
+	if(islist(preset_custom_levels))
+		custom_origin_levels = preset_custom_levels.Copy()
+	else
+		custom_origin_levels = null
+	custom_origin_points_spent = preset["custom_origin_points_spent"] || 0
 	
 	var/vice1_type = string_to_typepath(preset["vice1"])
 	if(vice1_type && ispath(vice1_type, /datum/charflaw))
@@ -508,6 +1110,24 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		vice5 = new vice5_type()
 	else
 		vice5 = null
+
+	var/vice6_type = string_to_typepath(preset["vice6"])
+	if(vice6_type && ispath(vice6_type, /datum/charflaw))
+		vice6 = new vice6_type()
+	else
+		vice6 = null
+
+	var/vice7_type = string_to_typepath(preset["vice7"])
+	if(vice7_type && ispath(vice7_type, /datum/charflaw))
+		vice7 = new vice7_type()
+	else
+		vice7 = null
+
+	var/vice8_type = string_to_typepath(preset["vice8"])
+	if(vice8_type && ispath(vice8_type, /datum/charflaw))
+		vice8 = new vice8_type()
+	else
+		vice8 = null
 	
 	// Load loadout types and instantiate them if valid
 	var/loadout_type = string_to_typepath(preset["loadout"])
@@ -671,17 +1291,17 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	fix_duplicate_vices()
 	
 	var/html_content = generate_vices_html(user)
-	user << browse(html_content, "window=character_custom;size=750x500")
+	user << browse(html_content, "window=character_custom;size=1050x720")
 
 /datum/preferences/proc/fix_duplicate_vices()
 	// Remove duplicate vices across slots
 	var/list/seen_vices = list()
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 8)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			if(vice.type in seen_vices)
 				// Duplicate found, clear this slot
-				vars["vice[i]"] = null
+				vars["	[i]"] = null
 			else
 				seen_vices += vice.type
 
@@ -705,6 +1325,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		<style>
 			body {
 				font-family: Verdana, Arial, sans-serif;
+				font-size: 12px;
 				background: #100000 url('flowers.png') repeat;
 				color: [theme["text"]];
 				margin: 0;
@@ -762,7 +1383,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			}
 			.vices-grid {
 				display: grid;
-				grid-template-columns: repeat(2, 1fr);
+				grid-template-columns: repeat(3, 1fr);
 				gap: 5px;
 			}
 			.vice-slot {
@@ -977,8 +1598,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			<div class="header">
 				<h1>Character Customization</h1>
 				<p>Configure all your character features</p>
-				<div style="margin-top: 10px;">
+				<div style="margin-top: 10px; display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">
 					<a class='btn' href='byond://?src=\ref[src];undo_action=undo' style='font-size: 0.85em;'>⟲ Undo Last Change ([customization_history.len] available)</a>
+					<a class='btn btn-clear' href='byond://?src=\ref[src];virtue_action=reset_virtues_vices' style='font-size: 0.85em;'>⚠ Reset Virtues/Vices</a>
+					<a class='btn btn-clear' href='byond://?src=\ref[src];loadout_action=reset_loadout_languages' style='font-size: 0.85em;'>⚠ Reset Loadout/Languages</a>
 				</div>
 			</div>
 			
@@ -1011,104 +1634,170 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		</div>
 	</div>
 		<div class="statpack-section">
-			<h2>Virtue Selection</h2>
-			<div class="statpack-current">"}
+			<h2>Build Your Own Destiny</h2>
+			<p style='font-size: 0.75em; margin: 4px 0; color: [theme["label"]];'>Select skills to represent your early training and experience. Choose up to 10 points worth of skills. Novice costs 1 point, Apprentice costs 3 points total.</p>"}
 	
-	var/virtue_name = virtue ? virtue.name : "None"
-	var/virtue_desc = virtue ? virtue.desc : ""
-	html += "<div class=\"statpack-name\">Primary Virtue: [virtue_name]</div>"
-	html += "<div class=\"statpack-desc\">[virtue_desc]</div>"
+	// Calculate custom origin points
+	var/origin_points_spent = 0
+	var/origin_points_max = 10
+	if(LAZYLEN(custom_origin_skills))
+		for(var/i = 1 to length(custom_origin_skills))
+			var/level = custom_origin_levels[i]
+			if(level == 1)  // Novice
+				origin_points_spent += 1
+			else if(level == 2)  // Apprentice
+				origin_points_spent += 3
+	var/origin_points_remaining = origin_points_max - origin_points_spent
 	
-	if(virtue && virtue.custom_text)
-		html += "<div class='statpack-stats' style='margin-top: 4px;'>" + virtue.custom_text + "</div>"
+	// Point tracker
+	html += "<p style='font-size: 0.85em; margin: 6px 0; padding: 6px; background: rgba(0,0,0,0.2); border-left: 3px solid [origin_points_remaining > 0 ? theme["accent"] : (origin_points_remaining == 0 ? "#28a745" : "#dc3545")]; color: [origin_points_remaining >= 0 ? theme["text"] : "#dc3545"];'>"
+	html += "<strong>Origin Points:</strong> [origin_points_spent]/[origin_points_max] spent | <strong>[origin_points_remaining]</strong> remaining"
+	html += "<br><span style='font-size: 0.9em;'>Novice = 1 point | Apprentice = 3 points total</span></p>"
 	
-	// Display traits granted
-	if(virtue && LAZYLEN(virtue.added_traits))
-		html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Traits granted:</strong><br>"
-		for(var/trait in virtue.added_traits)
-			html += "• [trait]<br>"
-		html += "</div>"
-	
-	// Display skills granted
-	if(virtue && LAZYLEN(virtue.added_skills))
-		html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Skills granted:</strong><br>"
-		for(var/skill in virtue.added_skills)
-			if(!islist(skill))
-				var/datum/skill/S = skill
-				var/skill_name = initial(S.name)
-				html += "• [skill_name]: +[virtue.added_skills[skill]]<br>"
-			else
-				var/list/skill_block = skill
-				var/datum/skill/S = skill_block[1]
-				var/skill_name = initial(S.name)
-				html += "• [skill_name]: +[skill_block[2]] (max [skill_block[3]])<br>"
-		html += "</div>"
-	
-	// Display stashed items
-	if(virtue && LAZYLEN(virtue.added_stashed_items))
-		html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Stashed items:</strong><br>"
-		for(var/item_name in virtue.added_stashed_items)
-			html += "• [item_name]<br>"
-		html += "</div>"
-	
+	// Display selected skills
+	html += "<div class='statpack-current'>"
+	if(LAZYLEN(custom_origin_skills))
+		for(var/i = 1 to length(custom_origin_skills))
+			var/skill_path = custom_origin_skills[i]
+			var/level = custom_origin_levels[i]
+			var/datum/skill/S = skill_path  // This will be the path type
+			var/skill_name = initial(S.name)
+			var/skill_desc = initial(S.desc)
+			var/level_name = (level == 1) ? "Novice" : "Apprentice"
+			var/point_cost = (level == 1) ? 1 : 3
+			
+			html += "<div style='margin-bottom: 8px; padding: 6px; background: rgba(0,0,0,0.15); border-left: 2px solid [theme["accent"]];'>"
+			html += "<div style='font-weight: bold; color: [theme["text"]];'>[skill_name] ([level_name] - [point_cost] pt\s)</div>"
+			html += "<div style='font-size: 0.8em; color: [theme["label"]]; margin-top: 2px;'>[skill_desc]</div>"
+			html += "<div class='actions' style='margin-top: 4px;'>"
+			html += "<a class='btn btn-clear' style='font-size: 0.8em; padding: 3px 8px;' href='byond://?src=\ref[src];custom_origin_action=remove_skill;index=[i]'>Remove</a>"
+			html += "</div>"
+			html += "</div>"
+	else
+		html += "<div class='vice-name'>No Skills Selected</div>"
+		html += "<div class='vice-desc' style='font-style: italic;'>Add skills to build your custom origin background.</div>"
 	html += "</div>"
 	
-	if(statpack && statpack.name == "Virtuous" && virtuetwo)
-		html += {"
-		<div class=\"statpack-current\" style='margin-top: 10px;'>
-			<div class=\"statpack-name\">Second Virtue: [virtuetwo.name]</div>
-			<div class=\"statpack-desc\">[virtuetwo.desc]</div>
-		</div>"}
-		
-		if(virtuetwo.custom_text)
-			html += "<div class='statpack-stats' style='margin-top: 4px;'>" + virtuetwo.custom_text + "</div>"
-		
-		// Display traits granted for second virtue
-		if(LAZYLEN(virtuetwo.added_traits))
-			html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Traits granted:</strong><br>"
-			for(var/trait in virtuetwo.added_traits)
-				html += "• [trait]<br>"
-			html += "</div>"
-		
-		// Display skills granted for second virtue
-		if(LAZYLEN(virtuetwo.added_skills))
-			html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Skills granted:</strong><br>"
-			for(var/skill in virtuetwo.added_skills)
-				if(!islist(skill))
-					var/datum/skill/S = skill
-					var/skill_name = initial(S.name)
-					html += "• [skill_name]: +[virtuetwo.added_skills[skill]]<br>"
-				else
-					var/list/skill_block = skill
-					var/datum/skill/S = skill_block[1]
-					var/skill_name = initial(S.name)
-					html += "• [skill_name]: +[skill_block[2]] (max [skill_block[3]])<br>"
-			html += "</div>"
-		
-		// Display stashed items for second virtue
-		if(LAZYLEN(virtuetwo.added_stashed_items))
-			html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Stashed items:</strong><br>"
-			for(var/item_name in virtuetwo.added_stashed_items)
-				html += "• [item_name]<br>"
-			html += "</div>"
-	
 	html += {"
-			<div class="actions">
-				<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_primary'>Change Primary Virtue</a>"}
+			<div class="actions">"}
 	
-	if(statpack.name == "Virtuous")
-		html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_secondary'>Change Second Virtue</a>"
+	if(origin_points_remaining > 0)
+		html += "<a class='btn btn-select' href='byond://?src=\ref[src];custom_origin_action=add_skill'>+ Add Skill ([origin_points_remaining] points remaining)</a>"
+	else
+		html += "<a class='btn btn-select' style='opacity: 0.5; cursor: not-allowed;' title='No points remaining'>+ Add Skill (0 points remaining)</a>"
+	
+	if(LAZYLEN(custom_origin_skills))
+		html += "<a class='btn btn-clear' href='byond://?src=\ref[src];custom_origin_action=clear_all'>Clear All</a>"
 	
 	html += {"
 			</div>
-		</div>
+		</div>"}
+	
+	/* HIDDEN: Origin Heirloom section - code preserved but not displayed in UI
+	   Uncomment this block to re-enable origin items in the UI
+	
+	html += {"
+		<div class="statpack-section">
+			<h2>Upbringing: Origin Heirloom</h2>
+			<p style='font-size: 0.75em; margin: 4px 0; color: [theme["label"]];'>Select ONE origin heirloom. This is an item from your past.</p>"}
+	
+	// Display origin items
+	var/item_count = LAZYLEN(origin_items)
+	for(var/i = 1 to 1)
+		html += "<div class='statpack-current' style='margin-top: 8px;'>"
+		
+		if(i <= item_count)
+			var/datum/virtue/item = origin_items[i]
+			html += generate_virtue_display_html(item)
+			html += "<div class='actions' style='margin-top: 6px;'>"
+			html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_item;slot=[i]'>Change Item</a>"
+			html += "<a class='btn btn-clear' href='byond://?src=\ref[src];virtue_action=clear_item;slot=[i]'>Clear</a>"
+			html += "</div>"
+		else
+			html += "<div class='vice-name'>Heirloom Slot [i]: Empty</div>"
+			html += "<div class='vice-desc' style='font-style: italic;'>Empty heirloom slot</div>"
+			html += "<div class='actions' style='margin-top: 6px;'>"
+			html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=select_item;slot=[i]'>Select Heirloom</a>"
+			html += "</div>"
+		
+		html += "</div>"
+	
+	html += {"
+		</div>"}
+	*/ // End of hidden origin items section
+	
+	html += {"
+		<div class="statpack-section">
+			<h2>Upbringing: Feats</h2>"}
+	
+	var/remaining_points = get_remaining_virtue_points()
+	var/max_points = get_max_virtue_points()
+	var/spent_points = get_spent_virtue_points()
+	
+	html += "<p style='font-size: 0.75em; margin: 4px 0; color: [theme["label"]];'>Select as many feats as you can afford. These are extraordinary abilities limited only by your virtue points.</p>"
+	html += "<p style='font-size: 0.85em; margin: 6px 0; padding: 6px; background: rgba(0,0,0,0.2); border-left: 3px solid [remaining_points > 0 ? theme["accent"] : "#dc3545"]; color: [remaining_points > 0 ? theme["text"] : "#dc3545"];'>"
+	html += "<strong>Virtue Points:</strong> [spent_points]/[max_points] spent | <strong>[remaining_points]</strong> remaining"
+	html += "<br><span style='font-size: 0.9em;'>The points vary from most impactful virtues 7 - 5 points to least impactful ones 1 - 0 points.</span></p>"
+	
+	// Display feats
+	var/feat_count = LAZYLEN(feats)
+	if(feat_count > 0)
+		for(var/i = 1 to feat_count)
+			var/datum/virtue/feat = feats[i]
+			html += "<div class='statpack-current' style='margin-top: 8px;'>"
+			html += generate_virtue_display_html(feat)
+			html += "<div class='actions' style='margin-top: 6px;'>"
+			html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_feat;slot=[i]'>Change Feat</a>"
+			html += "<a class='btn btn-clear' href='byond://?src=\ref[src];virtue_action=clear_feat;slot=[i]'>Remove</a>"
+			html += "</div>"
+			html += "</div>"
+	
+	// Show add button if we have points remaining
+	if(remaining_points > 0)
+		html += "<div class='actions' style='margin-top: 8px;'>"
+		html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=add_feat' style='padding: 6px 12px;'>+ Add Feat ([remaining_points] points remaining)</a>"
+		html += "</div>"
+	else if(feat_count == 0)
+		html += "<div class='actions' style='margin-top: 8px;'>"
+		html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=add_feat' style='padding: 6px 12px;'>+ Add Feat (browse free options)</a>"
+		html += "</div>"
+	else
+		html += "<p style='font-size: 0.7em; margin-top: 8px; color: [theme["label"]]; font-style: italic;'>No remaining points. Remove feats or select vices to gain more points.</p>"
+	
+	html += {"
+		</div>"}
+	
+	// Virtuous statpack bonus virtue section
+	if(statpack && statpack.name == "Virtuous")
+		html += {"
+		<div class="statpack-section">
+			<h2>Virtuous Bonus Virtue</h2>
+			<p style='font-size: 0.75em; margin: 4px 0; color: [theme["label"]];'><strong>Special:</strong> As a Virtuous character, you can select ANY additional virtue from ANY category, including virtue packs!</p>
+			<div class="statpack-current">"}
+		
+		// Display virtuetwo
+		if(virtuetwo && virtuetwo.type != /datum/virtue/none)
+			html += generate_virtue_display_html(virtuetwo)
+			html += "<div class='actions' style='margin-top: 6px;'>"
+			html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_secondary'>Change Bonus Virtue</a>"
+			html += "</div>"
+		else
+			html += "<div class='vice-name'>No Bonus Virtue Selected</div>"
+			html += "<div class='actions' style='margin-top: 6px;'>"
+			html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_secondary'>Select Bonus Virtue</a>"
+			html += "</div>"
+		
+		html += {"		</div>
+		</div>"}
+	
+	html += {"
 		
 		<h2 style='color: [theme["text"]]; padding: 0 20px; margin: 20px 0 10px 0; border-bottom: 1px solid [theme["border"]]; padding-bottom: 10px;'>Vice Selection</h2>
-		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>Select up to 5 vices (at least 1 required). Each selected vice grants +1 point. Points are shared between languages and loadout.</p>			<div class="vices-grid">
+		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>Select up to 8 vices (at least 1 required).</p>			<div class="vices-grid">
 	"}
 	
-	// Generate 5 vice slots
-	for(var/i = 1 to 5)
+	// Generate 8 vice slots
+	for(var/i = 1 to 8)
 		var/slot_var = "vice[i]"
 		var/datum/charflaw/current_vice = vars[slot_var]
 		var/is_required = (i == 1)
@@ -1132,10 +1821,37 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			html += "<div class='vice-info'>"
 			html += "<div class='vice-name'>[current_vice.name]</div>"
 			html += "<div class='vice-desc'>[current_vice.desc]</div>"
+			
+			// Show faction info for Averse and Paranoid vices
+			if(istype(current_vice, /datum/charflaw/averse))
+				var/faction_name = "None"
+				if(averse_chosen_faction)
+					for(var/fname in GLOB.averse_factions)
+						if(GLOB.averse_factions[fname] == averse_chosen_faction)
+							faction_name = fname
+							break
+				html += "<div style='margin-top: 5px; padding: 3px; background: rgba(200,50,50,0.3); border-left: 2px solid #c83232; font-size: 0.85em;'>"
+				html += "<b>Loathed Faction:</b> [faction_name]</div>"
+			else if(istype(current_vice, /datum/charflaw/addiction/paranoid))
+				var/faction_name = "None"
+				if(paranoid_chosen_faction)
+					for(var/fname in GLOB.averse_factions)
+						if(GLOB.averse_factions[fname] == paranoid_chosen_faction)
+							faction_name = fname
+							break
+				html += "<div style='margin-top: 5px; padding: 3px; background: rgba(50,100,200,0.3); border-left: 2px solid #5090ff; font-size: 0.85em;'>"
+				html += "<b>Trusted Faction:</b> [faction_name]</div>"
+			
 			html += "</div>"
 			html += "</div>"
 			
 			html += "<div class='actions'>"
+			// Add faction selection button for Averse and Paranoid
+			if(istype(current_vice, /datum/charflaw/averse))
+				html += "<a class='btn' style='background: #c83232;' href='byond://?src=\ref[src];vice_action=select_faction;slot=[i];faction_type=averse'>Choose Faction</a>"
+			else if(istype(current_vice, /datum/charflaw/addiction/paranoid))
+				html += "<a class='btn' style='background: #5090ff;' href='byond://?src=\ref[src];vice_action=select_faction;slot=[i];faction_type=paranoid'>Choose Faction</a>"
+			
 			html += "<a class='btn btn-select' href='byond://?src=\ref[src];vice_action=change;slot=[i]'>Change Vice</a>"
 			if(!is_required)
 				html += "<a class='btn btn-clear' href='byond://?src=\ref[src];vice_action=clear;slot=[i]'>Clear</a>"
@@ -1187,7 +1903,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					</div>
 				</div>
 			</div>
-			<div style='display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;'>
+			<div style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;'>
 	"}
 	
 	// Generate loadout slots with original styling
@@ -1286,7 +2002,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					<span>Total Triumphs: [total_triumphs]</span>
 				</div>
 			</div>
-			<div style='display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;'>
+			<div style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;'>
 	"}
 	
 	// FREE LANGUAGE SLOT
@@ -1447,6 +2163,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				return
 		
 		vars[slot_var] = selected
+		save_character()
 		to_chat(usr, span_notice("Selected [selected.name] for slot [slot]."))
 		
 		temp_loadout_selection = null
@@ -1496,9 +2213,600 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				to_chat(usr, span_warning("No more changes to undo!"))
 		return
 	
+	// Handle custom origin actions
+	if(href_list["custom_origin_action"])
+		var/action = href_list["custom_origin_action"]
+		
+		if(action == "add_skill")
+			save_to_history()
+			
+			// Get available skills (non-combat, non-magic)
+			var/list/available_skills = list()
+			
+			// Add craft skills
+			available_skills["Crafting"] = /datum/skill/craft/crafting
+			available_skills["Weaponsmithing"] = /datum/skill/craft/weaponsmithing
+			available_skills["Armorsmithing"] = /datum/skill/craft/armorsmithing
+			available_skills["Blacksmithing"] = /datum/skill/craft/blacksmithing
+			available_skills["Smelting"] = /datum/skill/craft/smelting
+			available_skills["Carpentry"] = /datum/skill/craft/carpentry
+			available_skills["Masonry"] = /datum/skill/craft/masonry
+			available_skills["Trapmaking"] = /datum/skill/craft/traps
+			available_skills["Engineering"] = /datum/skill/craft/engineering
+			available_skills["Cooking"] = /datum/skill/craft/cooking
+			available_skills["Sewing"] = /datum/skill/craft/sewing
+			available_skills["Skincrafting"] = /datum/skill/craft/tanning
+			available_skills["Pottery"] = /datum/skill/craft/ceramics
+			available_skills["Alchemy"] = /datum/skill/craft/alchemy
+			
+			// Add labor skills
+			available_skills["Farming"] = /datum/skill/labor/farming
+			available_skills["Mining"] = /datum/skill/labor/mining
+			available_skills["Fishing"] = /datum/skill/labor/fishing
+			available_skills["Butchering"] = /datum/skill/labor/butchering
+			available_skills["Lumberjacking"] = /datum/skill/labor/lumberjacking
+			
+			// Add misc skills
+			available_skills["Athletics"] = /datum/skill/misc/athletics
+			available_skills["Climbing"] = /datum/skill/misc/climbing
+			available_skills["Literacy"] = /datum/skill/misc/reading
+			available_skills["Swimming"] = /datum/skill/misc/swimming
+			available_skills["Pickpocketing"] = /datum/skill/misc/stealing
+			available_skills["Sneaking"] = /datum/skill/misc/sneaking
+			available_skills["Lockpicking"] = /datum/skill/misc/lockpicking
+			available_skills["Riding"] = /datum/skill/misc/riding
+			available_skills["Music"] = /datum/skill/misc/music
+			available_skills["Medicine"] = /datum/skill/misc/medicine
+			available_skills["Tracking"] = /datum/skill/misc/tracking
+			
+			// Remove already selected skills
+			if(LAZYLEN(custom_origin_skills))
+				for(var/skill_path in custom_origin_skills)
+					for(var/display_name in available_skills)
+						if(available_skills[display_name] == skill_path)
+							available_skills -= display_name
+							break
+			
+			available_skills = sort_list(available_skills)
+			
+			var/skill_choice = tgui_input_list(usr, "Select a skill to add:", "Add Skill", available_skills)
+			if(!skill_choice)
+				open_vices_menu(usr)
+				return
+			
+			var/skill_path = available_skills[skill_choice]
+			
+			// Ask for level
+			var/list/level_options = list()
+			var/origin_points_spent = 0
+			if(LAZYLEN(custom_origin_skills))
+				for(var/i = 1 to length(custom_origin_skills))
+					var/level = custom_origin_levels[i]
+					if(level == 1)
+						origin_points_spent += 1
+					else if(level == 2)
+						origin_points_spent += 3
+			var/origin_points_remaining = 10 - origin_points_spent
+			
+			// Always show all options, but indicate which are affordable
+			if(origin_points_remaining >= 1)
+				level_options["Novice (1 point)"] = 1
+			else
+				level_options["Novice (1 point) - TOO EXPENSIVE"] = -1
+			
+			if(origin_points_remaining >= 3)
+				level_options["Apprentice (3 points)"] = 2
+			else
+				level_options["Apprentice (3 points) - TOO EXPENSIVE"] = -2
+			
+			var/level_choice = tgui_input_list(usr, "Select skill level ([origin_points_remaining] points remaining):", "Skill Level", level_options)
+			if(!level_choice)
+				open_vices_menu(usr)
+				return
+			
+			var/level = level_options[level_choice]
+			
+			// Check if they picked an unaffordable option
+			if(level < 0)
+				to_chat(usr, span_warning("You don't have enough points for that skill level!"))
+				open_vices_menu(usr)
+				return
+			
+			var/point_cost = (level == 1) ? 1 : 3
+			
+			// Add skill
+			if(!custom_origin_skills)
+				custom_origin_skills = list()
+			if(!custom_origin_levels)
+				custom_origin_levels = list()
+			
+			custom_origin_skills += skill_path
+			custom_origin_levels += level
+			
+			save_character()
+			to_chat(usr, span_notice("Added [skill_choice] at [level_choice] ([point_cost] point\s spent)."))
+			open_vices_menu(usr)
+			return
+		
+		if(action == "remove_skill")
+			save_to_history()
+			var/index = text2num(href_list["index"])
+			if(!index || index < 1 || index > length(custom_origin_skills))
+				return
+			
+			var/skill_path = custom_origin_skills[index]
+			var/datum/skill/S = skill_path
+			var/skill_name = initial(S.name)
+			
+			custom_origin_skills.Cut(index, index + 1)
+			custom_origin_levels.Cut(index, index + 1)
+			
+			if(!length(custom_origin_skills))
+				custom_origin_skills = null
+				custom_origin_levels = null
+			
+			save_character()
+			to_chat(usr, span_notice("Removed [skill_name] from your custom origin."))
+			open_vices_menu(usr)
+			return
+		
+		if(action == "clear_all")
+			if(tgalert(usr, "This will remove all selected skills. Are you sure?", "Clear All Skills", "Yes", "No") != "Yes")
+				return
+			save_to_history()
+			custom_origin_skills = null
+			custom_origin_levels = null
+			save_character()
+			to_chat(usr, span_notice("Cleared all custom origin skills."))
+			open_vices_menu(usr)
+			return
+	
 	if(href_list["virtue_action"])
 		var/action = href_list["virtue_action"]
 		
+		// Origin Selection
+		if(action == "select_origin")
+			save_to_history()
+			
+			var/list/origin_available = list()
+			for(var/path as anything in GLOB.virtues)
+				var/datum/virtue/V = GLOB.virtues[path]
+				if(V.category != "origin")
+					continue
+				// Skip if already selected as other virtues
+				if(virtue && V.type == virtue.type)
+					continue
+				if(virtuetwo && V.type == virtuetwo.type)
+					continue
+				if(V in origin_items)
+					continue
+				// Check if already in feats
+				var/already_in_feats = FALSE
+				for(var/datum/virtue/feat in feats)
+					if(feat && V.type == feat.type)
+						already_in_feats = TRUE
+						break
+				if(already_in_feats)
+					continue
+				if(has_stashed_item_conflict(V, null, TRUE, usr))
+					continue
+				// Display name with cost - always show, mark if too expensive
+				var/display_name = V.name
+				var/can_afford = can_afford_virtue(V)
+				if(V.virtue_cost)
+					if(can_afford)
+						display_name = "[V.name] ([V.virtue_cost] point\s)"
+					else
+						display_name = "[V.name] ([V.virtue_cost] point\s) - TOO EXPENSIVE"
+				origin_available[display_name] = V
+		
+			origin_available = sort_list(origin_available)
+			var/choice = tgui_input_list(usr, "Choose your origin:", "Origin Selection", origin_available)
+			
+			if(choice)
+				var/datum/virtue/selected = origin_available[choice]
+				if(has_stashed_item_conflict(selected, null, TRUE, usr))
+					open_vices_menu(usr)
+					return
+				// Final check before adding
+				if(!can_afford_virtue(selected))
+					to_chat(usr, span_warning("You don't have enough virtue points for [choice]!"))
+					open_vices_menu(usr)
+					return
+				origin_virtue = selected
+				save_character()
+				to_chat(usr, span_notice("Selected [choice] as your origin. ([selected.virtue_cost] point\s spent)"))
+				to_chat(usr, "<span class='info'>[selected.desc]</span>")
+			open_vices_menu(usr)
+			return
+		
+		if(action == "clear_origin")
+			save_to_history()
+			origin_virtue = null
+			save_character()
+			enforce_feat_limit(usr)
+			save_character()
+			to_chat(usr, span_notice("Cleared origin selection."))
+			open_vices_menu(usr)
+			return
+		
+		if(action == "reset_virtues_vices")
+			if(tgalert(usr, "This will reset ALL virtues and vices to their default states. This cannot be undone. Are you sure?", "Reset Virtues/Vices", "Yes", "No") != "Yes")
+				return
+			save_to_history()
+			reset_virtues_and_vices()
+			to_chat(usr, span_boldwarning("All virtues and vices have been reset to default."))
+			open_vices_menu(usr)
+			return
+		
+		// Origin items selection
+		if(action == "select_item" || action == "change_item")
+			var/slot = text2num(href_list["slot"])
+			if(!slot || slot < 1 || slot > 1)
+				return
+			
+			save_to_history()
+			
+			// Get the current item at this slot to calculate available points (if changing)
+			var/datum/virtue/current_item = (slot <= LAZYLEN(origin_items)) ? origin_items[slot] : null
+			var/refunded_points = current_item ? current_item.virtue_cost : 0
+			
+			var/list/items_available = list()
+			for(var/path as anything in GLOB.virtues)
+				var/datum/virtue/V = GLOB.virtues[path]
+				if(V.category != "origin_items")
+					continue
+				// Skip if already selected in another slot
+				if(V in origin_items)
+					continue
+				// Skip if already selected as other virtues
+				if(virtue && V.type == virtue.type)
+					continue
+				if(virtuetwo && V.type == virtuetwo.type)
+					continue
+				if(origin_virtue && V.type == origin_virtue.type)
+					continue
+				// Check if already in feats
+				var/already_in_feats = FALSE
+				for(var/datum/virtue/feat in feats)
+					if(feat && V.type == feat.type)
+						already_in_feats = TRUE
+						break
+				if(already_in_feats)
+					continue
+				if(has_stashed_item_conflict(V, current_item, TRUE, usr))
+					continue
+				// Check if blocked by origin
+				if(is_blocked_by_origin(V))
+					continue
+				// Display name with cost - always show, mark if too expensive
+				var/display_name = V.name
+				var/can_afford = (!V.virtue_cost || (get_remaining_virtue_points() + refunded_points) >= V.virtue_cost)
+				if(V.virtue_cost)
+					if(can_afford)
+						display_name = "[V.name] ([V.virtue_cost] point\s)"
+					else
+						display_name = "[V.name] ([V.virtue_cost] point\s) - TOO EXPENSIVE"
+				items_available[display_name] = V
+		
+			items_available = sort_list(items_available)
+			var/message = "Choose your origin heirloom:"
+			if(action == "change_item")
+				message = "Choose a new heirloom to replace the current one:"
+			var/choice = tgui_input_list(usr, message, "Origin Item Selection", items_available)
+			
+			if(choice)
+				var/datum/virtue/selected = items_available[choice]
+				if(has_stashed_item_conflict(selected, current_item, TRUE, usr))
+					open_vices_menu(usr)
+					return
+				// Check if blocked by origin
+				if(is_blocked_by_origin(selected, TRUE, usr))
+					open_vices_menu(usr)
+					return
+				
+				// Final check before adding/changing
+				if(selected.virtue_cost && (get_remaining_virtue_points() + refunded_points) < selected.virtue_cost)
+					to_chat(usr, span_warning("You don't have enough virtue points for [choice]!"))
+					open_vices_menu(usr)
+					return
+				
+				// Replace if changing, or add if new
+				if(slot <= LAZYLEN(origin_items))
+					origin_items[slot] = selected
+				else
+					LAZYADD(origin_items, selected)
+				
+				save_character()
+				to_chat(usr, span_notice("Selected [choice] as heirloom [slot]. ([selected.virtue_cost] point\s)"))
+				to_chat(usr, "<span class='info'>[selected.desc]</span>")
+			open_vices_menu(usr)
+			return
+		
+		if(action == "clear_item")
+			var/slot = text2num(href_list["slot"])
+			if(!slot || slot < 1 || slot > 1)
+				return
+			
+			save_to_history()
+			
+			if(slot <= LAZYLEN(origin_items))
+				origin_items.Cut(slot, slot + 1)
+				save_character()
+				to_chat(usr, span_notice("Cleared heirloom slot [slot]."))
+				open_vices_menu(usr)
+			return
+		
+		// Feats selection
+		if(action == "add_feat")
+			save_to_history()
+			
+			var/list/feats_available = list()
+			for(var/path as anything in GLOB.virtues)
+				var/datum/virtue/V = GLOB.virtues[path]
+				if(V.category != "feats")
+					continue
+				// Skip if already selected
+				if(V in feats)
+					continue
+				// Skip if already selected as other virtues
+				if(virtue && V.type == virtue.type)
+					continue
+				if(virtuetwo && V.type == virtuetwo.type)
+					continue
+				if(origin_virtue && V.type == origin_virtue.type)
+					continue
+				if(V in origin_items)
+					continue
+				if(has_stashed_item_conflict(V, null, TRUE, usr))
+					continue
+				// Check if blocked by origin
+				if(is_blocked_by_origin(V))
+					continue
+				// Check conflicts with virtue and vices
+				if(check_virtue_vice_conflict(V.type, TRUE, usr))
+					continue
+				// Display name with cost - always show, mark if too expensive
+				var/display_name = V.name
+				var/can_afford = can_afford_virtue(V)
+				if(V.virtue_cost)
+					if(can_afford)
+						display_name = "[V.name] ([V.virtue_cost] point\s)"
+					else
+						display_name = "[V.name] ([V.virtue_cost] point\s) - TOO EXPENSIVE"
+				feats_available[display_name] = V
+		
+			feats_available = sort_list(feats_available)
+			var/choice = tgui_input_list(usr, "Choose a feat:", "Feat Selection", feats_available)
+			
+			if(choice)
+				var/datum/virtue/selected = feats_available[choice]
+				if(has_stashed_item_conflict(selected, null, TRUE, usr))
+					open_vices_menu(usr)
+					return
+				// Check if blocked by origin
+				if(is_blocked_by_origin(selected, TRUE, usr))
+					open_vices_menu(usr)
+					return
+				// Final check before adding
+				if(!can_afford_virtue(selected))
+					to_chat(usr, span_warning("You don't have enough virtue points for [choice]! ([selected.virtue_cost] required, [get_remaining_virtue_points()] available)"))
+					open_vices_menu(usr)
+					return
+				LAZYADD(feats, selected)
+				save_character()
+				to_chat(usr, span_notice("Selected [choice] as a feat. ([selected.virtue_cost] point\s spent)"))
+				to_chat(usr, "<span class='info'>[selected.desc]</span>")
+			open_vices_menu(usr)
+			return
+		
+		if(action == "change_feat")
+			var/slot = text2num(href_list["slot"])
+			if(!slot || slot < 1 || slot > LAZYLEN(feats))
+				return
+			
+			save_to_history()
+			
+			// Get the current feat at this slot to calculate available points
+			var/datum/virtue/current_feat = feats[slot]
+			var/refunded_points = current_feat ? current_feat.virtue_cost : 0
+			
+			var/list/feats_available = list()
+			for(var/path as anything in GLOB.virtues)
+				var/datum/virtue/V = GLOB.virtues[path]
+				if(V.category != "feats")
+					continue
+				// Skip if already selected in another slot
+				if(V in feats)
+					continue
+				// Skip if already selected as other virtues
+				if(virtue && V.type == virtue.type)
+					continue
+				if(virtuetwo && V.type == virtuetwo.type)
+					continue
+				if(origin_virtue && V.type == origin_virtue.type)
+					continue
+				if(V in origin_items)
+					continue
+				if(has_stashed_item_conflict(V, current_feat, TRUE, usr))
+					continue
+				// Check if blocked by origin
+				if(is_blocked_by_origin(V))
+					continue
+				// Check conflicts
+				if(check_virtue_vice_conflict(V.type, TRUE, usr))
+					continue
+				// Display name with cost - always show, mark if too expensive
+				var/display_name = V.name
+				var/can_afford = (!V.virtue_cost || (get_remaining_virtue_points() + refunded_points) >= V.virtue_cost)
+				if(V.virtue_cost)
+					if(can_afford)
+						display_name = "[V.name] ([V.virtue_cost] point\s)"
+					else
+						display_name = "[V.name] ([V.virtue_cost] point\s) - TOO EXPENSIVE"
+				feats_available[display_name] = V
+		
+			feats_available = sort_list(feats_available)
+			var/choice = tgui_input_list(usr, "Choose a new feat to replace [current_feat.name]:", "Change Feat", feats_available)
+			
+			if(choice)
+				var/datum/virtue/selected = feats_available[choice]
+				if(has_stashed_item_conflict(selected, current_feat, TRUE, usr))
+					open_vices_menu(usr)
+					return
+				// Check if blocked by origin
+				if(is_blocked_by_origin(selected, TRUE, usr))
+					open_vices_menu(usr)
+					return
+				// Final check before changing
+				if(selected.virtue_cost && (get_remaining_virtue_points() + refunded_points) < selected.virtue_cost)
+					to_chat(usr, span_warning("You don't have enough virtue points for [choice]!"))
+					open_vices_menu(usr)
+					return
+				feats[slot] = selected
+				save_character()
+				to_chat(usr, span_notice("Changed feat slot [slot] to [choice]. ([selected.virtue_cost] point\s)"))
+				to_chat(usr, "<span class='info'>[selected.desc]</span>")
+			open_vices_menu(usr)
+			return
+		
+		if(action == "clear_feat")
+			var/slot = text2num(href_list["slot"])
+			if(!slot || slot < 1 || slot > LAZYLEN(feats))
+				return
+			
+			save_to_history()
+			feats.Cut(slot, slot + 1)
+			save_character()
+			to_chat(usr, span_notice("Removed feat from slot [slot]."))
+			open_vices_menu(usr)
+			return
+		
+		// Virtue choice selection handler
+		if(action == "select_virtue_choices")
+			var/virtue_type_path = text2path(href_list["virtue_type"])
+			if(!virtue_type_path || !ispath(virtue_type_path, /datum/virtue))
+				return
+			
+			var/datum/virtue/V = GLOB.virtues[virtue_type_path]
+			if(!V || !LAZYLEN(V.virtue_choices))
+				to_chat(usr, span_warning("This virtue has no bonus choices available."))
+				open_vices_menu(usr)
+				return
+			
+			// Get current selections for this virtue
+			var/virtue_key = "[virtue_type_path]"
+			var/list/working_selections = list()
+			if(virtue_choice_selections?[virtue_key])
+				var/list/current = virtue_choice_selections[virtue_key]
+				working_selections = current.Copy()
+			
+			// Build and show selection menu in a loop until done
+			while(TRUE)
+				// Calculate current costs
+				var/spent_points = calculate_choice_cost(V, working_selections)
+				var/choices_made = length(working_selections)
+				
+				// Build selection menu
+				var/list/menu_options = list()
+				menu_options[">>> DONE (save changes)"] = "done"
+				menu_options["─────────────────"] = null
+				
+				// Show currently selected choices
+				if(LAZYLEN(working_selections))
+					menu_options["SELECTED ([choices_made]):"] = null
+					for(var/choice_name in working_selections)
+						menu_options["  ✓ [choice_name] (remove)"] = "deselect:[choice_name]"
+				else
+					menu_options["(none selected)"] = null
+				
+				menu_options["─────────────────"] = null
+				menu_options["AVAILABLE:"] = null
+				
+				// Show available choices
+				for(var/choice_name in V.virtue_choices)
+					if(choice_name in working_selections)
+						continue
+					
+					var/list/choice_data = V.virtue_choices[choice_name]
+					var/individual_cost = choice_data["cost"] || 0
+					
+					// Calculate cost if this choice were selected now
+					var/effective_cost = individual_cost
+					if(choices_made >= V.free_choices && V.choice_virtue_point_cost > 0)
+						effective_cost += V.choice_virtue_point_cost * (choices_made - V.free_choices + 1)
+					
+					var/cost_text = ""
+					if(choices_made < V.free_choices && individual_cost == 0)
+						cost_text = " (FREE)"
+					else if(effective_cost > 0)
+						cost_text = " (+" + "[effective_cost]" + " VP)"
+					
+					var/desc_text = choice_data["desc"] ? " - [choice_data["desc"]]" : ""
+					var/choice_display = "  [choice_name][cost_text][desc_text]"
+					
+					// Check if max choices reached
+					if(V.max_choices > 0 && choices_made >= V.max_choices)
+						choice_display += " (MAX)"
+						menu_options[choice_display] = null
+					else
+						menu_options[choice_display] = "select:[choice_name]"
+				
+				var/prompt = "[V.name] - Select Bonus Choices\n\n"
+				prompt += "Selected: [choices_made]"
+				if(V.free_choices > 0)
+					var/free_remaining = max(0, V.free_choices - choices_made)
+					prompt += " | Free: [free_remaining]"
+				if(V.max_choices > 0)
+					prompt += " | Max: [V.max_choices]"
+				prompt += "\n\n"
+				prompt += "Base: [V.virtue_point_cost] VP | Choices: +[spent_points] VP | Total: [V.virtue_point_cost + spent_points] VP\n\n"
+				prompt += "Click DONE to save, or NO to discard."
+				
+				var/choice = tgui_input_list(usr, prompt, "Configure [V.name]", menu_options)
+				
+				if(!choice)
+					// NO button or window closed - ask to confirm discard
+					var/confirm = tgui_alert(usr, "Discard changes?", "Confirm", list("Yes", "No"))
+					if(confirm == "Yes")
+						open_vices_menu(usr)
+						return
+					else
+						continue // Go back to menu
+				
+				var/action_data = menu_options[choice]
+				if(!action_data)
+					// Clicked a header/separator - refresh menu
+					continue
+				
+				if(action_data == "done")
+					// Save changes
+					save_to_history()
+					if(!virtue_choice_selections)
+						virtue_choice_selections = list()
+					if(LAZYLEN(working_selections))
+						virtue_choice_selections[virtue_key] = working_selections
+					else
+						virtue_choice_selections.Remove(virtue_key)
+					save_character()
+					to_chat(usr, span_notice("Saved [choices_made] choice(s) for [V.name]."))
+					open_vices_menu(usr)
+					return
+				
+				// Parse select/deselect action
+				var/list/action_parts = splittext(action_data, ":")
+				var/sub_action = action_parts[1]
+				var/choice_name = action_parts[2]
+				
+				if(sub_action == "select")
+					working_selections += choice_name
+					
+				else if(sub_action == "deselect")
+					working_selections -= choice_name
+				
+				// Loop continues - menu refreshes with new selections
+		
+		// Legacy handlers (kept for compatibility if needed, but can be removed eventually)
 		if(action == "change_primary")
 			// Save state before change
 			save_to_history()
@@ -1510,7 +2818,11 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				if(virtuetwo && V.type == virtuetwo.type)
 					continue
 				// Basic filtering can be added here if needed
-				virtues_available[V.name] = V
+				// Display name with cost
+				var/display_name = V.name
+				if(V.virtue_cost)
+					display_name = "[V.name] ([V.virtue_cost] point\s)"
+				virtues_available[display_name] = V
 			
 			virtues_available = sort_list(virtues_available)
 			var/choice = tgui_input_list(usr, "Choose your primary virtue:", "Virtue Selection", virtues_available)
@@ -1518,9 +2830,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			if(choice)
 				var/datum/virtue/selected = virtues_available[choice]
 				virtue = selected
+				save_character()
 				to_chat(usr, span_notice("Selected [choice] as primary virtue."))
 				to_chat(usr, "<span class='info'>[selected.desc]</span>")
-				open_vices_menu(usr)
+			open_vices_menu(usr)
 			return
 		
 		if(action == "change_secondary")
@@ -1531,7 +2844,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			// Save state before change
 			save_to_history()
 			
-			// Build virtue list
+			// Build virtue list - Virtuous can select from ANY category including packs!
 			var/list/virtues_available = list()
 			for(var/path as anything in GLOB.virtues)
 				var/datum/virtue/V = GLOB.virtues[path]
@@ -1544,23 +2857,48 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				// Skip if already selected as primary virtue
 				if(virtue && V.type == virtue.type)
 					continue
+				// Skip if already selected in origins
+				if(origin_virtue && V.type == origin_virtue.type)
+					continue
+				// Skip if already in origin_items
+				if(V in origin_items)
+					continue
+				// Skip if already in feats (check by type)
+				var/already_in_feats = FALSE
+				for(var/datum/virtue/feat in feats)
+					if(feat && V.type == feat.type)
+						already_in_feats = TRUE
+						break
+				if(already_in_feats)
+					continue
+				if(has_stashed_item_conflict(V, virtuetwo, TRUE, usr))
+					continue
 				// Check for conflicting vices
 				if(check_virtue_vice_conflict(V.type, TRUE, usr))
 					continue
 				// Check for conflicting virtues (with primary virtue)
 				if(virtue && check_virtue_virtue_conflict(V.type, virtue.type, TRUE, usr))
 					continue
-				virtues_available[V.name] = V
+				// Virtuous statpack allows ALL virtues including packs!
+				// Display name with cost
+				var/display_name = V.name
+				if(V.virtue_cost)
+					display_name = "[V.name] ([V.virtue_cost] point\s)"
+				virtues_available[display_name] = V
 			
 			virtues_available = sort_list(virtues_available)
-			var/choice = tgui_input_list(usr, "Choose your second virtue:", "Second Virtue Selection", virtues_available)
+			var/choice = tgui_input_list(usr, "Choose your second virtue (any category including packs!):", "Second Virtue Selection", virtues_available)
 			
 			if(choice)
 				var/datum/virtue/selected = virtues_available[choice]
+				if(has_stashed_item_conflict(selected, virtuetwo, TRUE, usr))
+					open_vices_menu(usr)
+					return
 				virtuetwo = selected
+				save_character()
 				to_chat(usr, span_notice("Selected [choice] as second virtue."))
 				to_chat(usr, "<span class='info'>[selected.desc]</span>")
-				open_vices_menu(usr)
+			open_vices_menu(usr)
 			return
 	
 	if(href_list["statpack_action"])
@@ -1587,6 +2925,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			if(choice)
 				var/datum/statpack/selected = statpacks_available[choice]
 				statpack = selected
+				save_character()
 				to_chat(usr, span_notice("Selected [choice] statpack."))
 				to_chat(usr, "<span class='info'>[selected.description_string()]</span>")
 				
@@ -1595,20 +2934,43 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					// Keep virtuetwo if we have it
 				else
 					virtuetwo = GLOB.virtues[/datum/virtue/none]
+					save_character()
 				
-				open_vices_menu(usr)
+			open_vices_menu(usr)
 			return
 	
 	if(href_list["vice_action"])
 		var/action = href_list["vice_action"]
 		var/slot = text2num(href_list["slot"])
 		
-		if(!slot || slot < 1 || slot > 5)
+		if(!slot || slot < 1 || slot > 8)
 			return
 		
 		var/slot_var = "vice[slot]"
 		
 		switch(action)
+			if("select_faction")
+				var/faction_type = href_list["faction_type"]
+				if(faction_type)
+					var/list/faction_choices = list()
+					for(var/faction_name in GLOB.averse_factions)
+						faction_choices[faction_name] = GLOB.averse_factions[faction_name]
+					
+					var/faction_prompt = (faction_type == "averse") ? "Which faction do you loathe?" : "Which faction do you trust?"
+					var/faction_choice = tgui_input_list(usr, faction_prompt, "Faction Selection", faction_choices)
+					
+					if(faction_choice)
+						if(faction_type == "averse")
+							averse_chosen_faction = GLOB.averse_factions[faction_choice]
+							to_chat(usr, span_notice("You will now loathe the [faction_choice] faction."))
+						else
+							paranoid_chosen_faction = GLOB.averse_factions[faction_choice]
+							to_chat(usr, span_notice("You will now trust the [faction_choice] faction."))
+						
+						save_character()
+				open_vices_menu(usr)
+				return
+			
 			if("select", "change")
 				// Save state before change
 				save_to_history()
@@ -1617,18 +2979,20 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				var/list/vices_available = list()
 				
 				// Get all currently selected vices to prevent duplicates
-				var/list/selected_vices = list()
-				for(var/i = 1 to 5)
+				// Build list of vices in OTHER slots (not the current slot being modified)
+				var/list/selected_in_other_slots = list()
+				for(var/i = 1 to 8)
+					if(i == slot) // Skip the slot we're currently modifying
+						continue
 					var/datum/charflaw/existing_vice = vars["vice[i]"]
 					if(existing_vice)
-						selected_vices += existing_vice.type
+						selected_in_other_slots += existing_vice.type
 				
 				for(var/vice_name in GLOB.character_flaws)
 					var/datum/charflaw/vice_type = GLOB.character_flaws[vice_name]
 					
-					// Skip if already selected in another slot
-					var/datum/charflaw/current_vice = vars[slot_var]
-					if(vice_type in selected_vices && current_vice?.type != vice_type)
+					// PREVENT DUPLICATE VICES: Skip if this vice is already selected in another slot
+					if(vice_type in selected_in_other_slots)
 						continue
 					
 					// Check for conflicting virtues
@@ -1636,7 +3000,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 						continue
 					
 					// Check for conflicting vices (eye-related)
-					if(check_vice_vice_conflict(vice_type, selected_vices, TRUE, usr))
+					if(check_vice_vice_conflict(vice_type, selected_in_other_slots, TRUE, usr))
 						continue
 					
 					vices_available[vice_name] = vice_type
@@ -1653,6 +3017,15 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					// Clear legacy charflaw when using new vice system
 					charflaw = null
 
+					// Save to disk so it persists across character slots
+					save_character()
+
+					// Prompt to choose faction if this is Averse or Paranoid vice
+					if(istype(new_vice, /datum/charflaw/averse))
+						to_chat(usr, span_notice("Vice selected. Click 'Choose Faction' to select which faction you loathe."))
+					else if(istype(new_vice, /datum/charflaw/addiction/paranoid))
+						to_chat(usr, span_notice("Vice selected. Click 'Choose Faction' to select which faction you trust."))
+
 					// Vices are intentionally not hot-applied to a living in-round character.
 					// They are saved to preferences and applied on the next spawn.
 					if(usr && ishuman(usr))
@@ -1663,30 +3036,29 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					to_chat(usr, span_notice("Selected [choice] for vice slot [slot]."))
 					if(new_vice.desc)
 						to_chat(usr, "<span class='info'>[new_vice.desc]</span>")
-					open_vices_menu(usr)
-			
-			if("clear")
-				if(slot == 1)
-					to_chat(usr, span_warning("Vice slot 1 is required and cannot be cleared!"))
-					return
-				
-				// Clear the vice from preferences
-				vars[slot_var] = null
-
-				// Vices are intentionally not hot-applied to a living in-round character.
-				// They are saved to preferences and applied on the next spawn.
-				if(usr && ishuman(usr))
-					var/mob/living/carbon/human/H = usr
-					if(H.real_name == real_name)
-						to_chat(usr, span_notice("Vice changes saved. They will apply next time you spawn."))
 				
 				open_vices_menu(usr)
+			
+			if("clear")
+				vars[slot_var] = null
+				enforce_feat_limit(usr)
+				save_character()
+				to_chat(usr, span_notice("Cleared vice slot [slot]."))
+				open_vices_menu(usr)
+		return
 	
 	if(href_list["loadout_action"])
-		// Save state before any loadout change
-		save_to_history()
-		
 		var/action = href_list["loadout_action"]
+		
+		if(action == "reset_loadout_languages")
+			if(tgalert(usr, "This will reset ALL loadout items and languages to their default states. This cannot be undone. Are you sure?", "Reset Loadout/Languages", "Yes", "No") != "Yes")
+				return
+			save_to_history()
+			reset_loadout_and_languages()
+			to_chat(usr, span_boldwarning("All loadout items and languages have been reset to default."))
+			open_vices_menu(usr)
+			return
+		
 		var/slot = text2num(href_list["slot"])
 		
 		if(!slot || slot < 1 || slot > 10)
@@ -1704,6 +3076,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				vars["loadout_[slot]_name"] = null
 				vars["loadout_[slot]_desc"] = null
 				vars["loadout_[slot]_hex"] = null
+				save_character()
 				open_vices_menu(usr)
 				return
 			
@@ -1716,6 +3089,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				
 				if(new_name != null) // Allow empty string to clear
 					vars["loadout_[slot]_name"] = new_name
+					save_character()
 					open_vices_menu(usr)
 				return
 			
@@ -1728,6 +3102,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				
 				if(new_desc != null) // Allow empty string to clear
 					vars["loadout_[slot]_desc"] = new_desc
+					save_character()
 					open_vices_menu(usr)
 				return
 			
@@ -1747,8 +3122,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					if(new_color == "None")
 						vars["loadout_[slot]_hex"] = null
 					else
-						// Look up the hex value from GLOB.colorlist
-						vars["loadout_[slot]_hex"] = GLOB.colorlist[new_color]
+						// Look up the hex value from colorlist
+						vars["loadout_[slot]_hex"] = colorlist[new_color]
+					save_character()
 					open_vices_menu(usr)
 				return
 	
@@ -1791,6 +3167,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					extra_language = "None"
 				else
 					extra_language = choices[chosen_language]
+				save_character()
 			open_vices_menu(usr)
 			return
 		
@@ -1805,6 +3182,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		switch(action)
 			if("clear")
 				vars[slot_var] = "None"
+				save_character()
 				to_chat(usr, span_notice("Cleared language slot [slot]."))
 				open_vices_menu(usr)
 			if("select", "change")
@@ -1866,5 +3244,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 							to_chat(usr, span_warning("Not enough triumphs! Need [slot_cost], but only have [total_triumphs - spent_points] remaining."))
 							return
 						vars[slot_var] = language_path
+						save_character()
 						to_chat(usr, span_notice("Selected [chosen_language] for language slot [slot] ([slot_cost] Triumphs)."))
 				open_vices_menu(usr)
+

@@ -358,13 +358,15 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			else
 				user.visible_message(span_notice("[user] presses the stone to [M]'s body, and it is absorbed."), span_notice("I press the stone to [M], and it is absorbed."))
 
-		if(iskobold(M))
+		if(iskobold(M) || HAS_TRAIT(M, TRAIT_LITHOVORE))
 			if(M == user)
 				user.visible_message(span_warning("[user] is attempting to eat [src]!"), span_warning("I begin to eat [src]!"))
 			else
 				user.visible_message(span_warning("[user] begins to force [M] to eat [src]!"), span_warning("I attempt to force [M] to eat [src]!"))
 			if(do_after(user, 40))
-				M.reagents.add_reagent(/datum/reagent/consumable/nutriment, magic_power*1.2)
+				// Directly provide nutrition
+				var/nutrition_amount = magic_power * 1.2
+				M.adjust_nutrition(nutrition_amount)
 				var/healydoodle_again = magic_power+1
 				M.apply_status_effect(/datum/status_effect/buff/rockmuncher_lesser, healydoodle_again)
 				playsound(get_turf(src), 'modular_azurepeak/sound/spellbooks/icicle.ogg', 100)
@@ -375,7 +377,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 					user.visible_message(span_danger("[user] forces [M] to eat [src]!"), span_danger("I force [M] to eat [src]!"))
 
 
-		else // if theyre not either a construct or kobold, and we're not in cmode, beat them 2 death with rocks.
+		else // if theyre not either a construct, kobold, or lithovore, and we're not in cmode, beat them 2 death with rocks.
 			return ..()
 	else // if we're in cmode, beat them to death with rocks.
 		return ..()

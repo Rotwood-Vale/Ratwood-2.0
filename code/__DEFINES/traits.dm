@@ -36,6 +36,9 @@
 #define TRAIT_INHUMEN_ANATOMY "Inhumen Anatomy" //can't wear hats and shoes
 #define TRAIT_NASTY_EATER "Inhumen Digestion" //can eat rotten food, organs, poison berries, and drink murky water
 #define TRAIT_WILD_EATER "Beastly Digestion" //can eat raw and rotten food and drink murky water
+#define TRAIT_CARNIVORE "Carnivore" //can only eat meat, gets sick from plant-based foods
+#define TRAIT_HERBIVORE "Herbivore" //can only eat plants, gets sick from meat
+#define TRAIT_LITHOVORE "Lithovore" //can eat rocks and gems for nutrition
 #define INSPIRING_MUSICIAN "Inspiring Musician" // unlocks bardic inspiration stuff
 #define TRAIT_NOFALLDAMAGE1 "Fall Damage Reduction"
 #define TRAIT_NOFALLDAMAGE2 "Fall Damage Immunity"
@@ -118,6 +121,11 @@
 #define TRAIT_DEATHSIGHT "Veiled Whispers" // Is notified when a player character dies, but not told exactly where or how.
 //Hearthstone/Azure end.
 
+// UNIQUE MECHANICAL VIRTUES
+#define TRAIT_FERAL_CLAWS "Feral Claws" //Can extend/retract natural claws
+#define TRAIT_FERAL_BITE "Feral Bite" //Can bite effectively (without STRONGBITE damage multiplier)
+#define TRAIT_TOXRESIST "Poison Resistant" //50% poison resistance (not full immunity)
+
 // ROGUEspecialTRAITS (description when rmb skills button)
 #define TRAIT_CIVILIZEDBARBARIAN "Expert Pugilist"
 #define TRAIT_COMICSANS "Annoying Face"
@@ -197,11 +205,14 @@
 #define TRAIT_IWASHAUNTED "iwashaunted" //prevents spawning a haunt from a decapitated body twice
 #define TRAIT_PSYCHOSIS "Psychosis" //replaces all ambience with creepy shit
 #define TRAIT_SCREENSHAKE "Tremors" //screen will always be shaking, you cannot stop it
+#define TRAIT_TREMORS "Hand Tremors" //periodic tremors causing item drops
+#define TRAIT_WEAK_HEART "Weak Heart" //heart attacks at lower thresholds from stress
 #define TRAIT_NORUN "Decayed Flesh"
 #define TRAIT_PUNISHMENT_CURSE "PunishmentCurse"
 #define TRAIT_LEPROSY "Leprosy"
 #define TRAIT_NUDE_SLEEPER "Nude Sleeper"
 #define TRAIT_SILVER_BLESSED "Silverblessed"
+#define TRAIT_SILVER_CURED "Silvercured"
 #define TRAIT_UNLYCKERABLE "Lycker Immunity"
 #define TRAIT_OUTLANDER "Outlander"
 #define TRAIT_OUTLAW "Outlaw"
@@ -292,6 +303,12 @@
 // If you want description to show up you gotta have the trait name defined BEFORE this lol
 
 GLOBAL_LIST_INIT(roguetraits, list(
+	TRAIT_SPURNED = span_warning("The gods have forsaken me. Healing miracles have no effect on me."),
+	TRAIT_ILLITERATE = span_warning("I never learned to read and never will. The written word is forever beyond me."),
+	TRAIT_ASTRATA_SCORCHED = span_warning("Astrata's light burns through me. Silver cuts deep, the sun drains my resilience, and direct sunlight sears my flesh."),
+	TRAIT_NOC_SCORCHED = span_warning("The moon's curse marks me. Under the night sky I become feral, and the beast within hungers for raw flesh."),
+	TRAIT_NO_REFLECTION = span_warning("I cast no reflection in mirrors or water. A damning sign of my cursed nature."),
+	TRAIT_STAKE_VULNERABLE = span_warning("A wooden stake through my heart would be my end."),
 	TRAIT_STEELHEARTED = span_info("I have hardened nerves, and do not waiver from the sight of violence in battle."),
 	TRAIT_OUTLANDER = span_info("Those of the vale see me as not of their land."),
 	TRAIT_OUTLAW = span_info("This land's nervelocks and castificos reject my touch."),
@@ -345,11 +362,15 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NUDIST = "I <b>refuse</b> to wear clothes. They are a hindrance to my freedom.",
 	TRAIT_CYCLOPS_LEFT = span_warning("My left eye has been poked out..."),
 	TRAIT_CYCLOPS_RIGHT = span_warning("My right eye has been poked out..."),
+	TRAIT_BLIND_VICE = span_info("Though I lost my eyes long ago, my other senses have sharpened, allowing me to perceive nearby shapes and movement."),
 	TRAIT_LEECHIMMUNE = "Leeches are reluctant to bite me.",
 	TRAIT_BITERHELM = "Whether through design or symbiosis, I can now bite into others while wearing a visored helmet.",
 	TRAIT_INHUMEN_ANATOMY = "My anatomy is inhumen, preventing me from wearing hats and shoes.",
 	TRAIT_NASTY_EATER = span_dead("I can eat bad food, and water that would be toxic to humen will not affect me."),
 	TRAIT_WILD_EATER = span_info("I can eat raw food and drink from dirty water."),
+	TRAIT_CARNIVORE = span_warning("I can only digest meat. Plant-based foods make me ill."),
+	TRAIT_HERBIVORE = span_info("I can only digest plants. Meat makes me sick."),
+	TRAIT_LITHOVORE = span_notice("My unique physiology allows me to consume and digest rocks and gems."),
 	TRAIT_NOFALLDAMAGE1 = span_warning("I can easily handle minor falls."),
 	TRAIT_NOFALLDAMAGE2 = span_warning("I can handle a fall from any height."),
 	TRAIT_GRABIMMUNE = span_warning("My great strength, or slippery agility, prevents others from getting ahold of me!"),
@@ -385,6 +406,9 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_KAZENGUNITE_SMITH = span_info("I have studied the old Kazengunite smithing traditions — the folding of tamahagane, the shaping of kozane, the tempering of the yakiba. I can now craft their arms and armour at the anvil."),
 	TRAIT_CAUTIOUS_FISHER = span_info("I know my way around the dangers of fishing, and know how to avoid unwanted attention from the depths."),
 	TRAIT_DEATHSIGHT = span_info("I can feel when someone nearby draws the Undermaiden's attention."),
+	TRAIT_FERAL_CLAWS = span_warning("My hands bear sharp claws that I can extend and retract at will."),
+	TRAIT_FERAL_BITE = span_warning("My bite is fiercer than most, though not as devastating as a true predator's."),
+	TRAIT_TOXRESIST = span_info("My body has adapted to resist poisons, though I am not fully immune."),
 	TRAIT_FORGEBLESSED = span_info("Countless long nights spent forging metal have honed my endurance, allowing me to work an anvil far longer than most without tiring."),
 	TRAIT_XYLIX = span_info("I know how to speak in code that only fellow tricksters can understand."),
 	TRAIT_APRICITY = span_info("Astrata's light blesses and rejuvenates me, allowing me to regain my stamina quicker."),
@@ -398,6 +422,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_GUIDANCE = span_info("The arcyne aides me in battle."),
 	TRAIT_DEPRAVED = span_info("The languid scent of Her debauchery is known to me."),
 	TRAIT_SILVER_BLESSED = span_info("I have been baptized in fire. Blessed silverdust flows through my blood, protecting me from both vampyrism and lycanthropy."),
+	TRAIT_SILVER_CURED = span_info("I was cured with silver poultices. The silver residue in my blood protects me from vampyrism and lycanthropy."),
 	TRAIT_UNLYCKERABLE = span_info("My kind cannot bear the Sun curse for it already has another."),
 	TRAIT_GOODTRAINER = span_info("I am a good teacher, and when it comes to weaponry I can train others to be just as skilled as I am."),
 	TRAIT_BADTRAINER = span_info("I've spent yils studying the art of a single weapon, but unfortunately I've no patience to train anyone else. Everyone learning from me will only learn up to two skill levels below mine."),
@@ -415,6 +440,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_SENTINELOFWITS = span_info("My Intelligence aids in my defense. Every 2 points above 10 INT become an additional 10% chance to dodge or parry. Does not count positive buffs from potions or substances."),
 	TRAIT_KEENEARS = span_info("I've a good pair of ears, and can tell who is speaking, even when they're out of sight. I can also hear whispers from further away."),
 	TRAIT_SCREENSHAKE = span_suicide("I don't feel very steady anymore..."),
+	TRAIT_TREMORS = span_warning("My hands shake uncontrollably at times, causing me to drop what I'm holding."),
+	TRAIT_WEAK_HEART = span_bloody("My heart is weak. Heart attacks at half stress (15 vs 30), chest pains when stressed, increased risk during exhaustion."),
 	TRAIT_GRAVEROBBER = span_info("My experience with 'post-mortem artifact recovery' has allowed me to resist Necra's curse placed upon those who disturb resting places."),
 	TRAIT_PURITAN = span_info("I am an emissary of the Holy Otavan Inquisition, and the one who shepherds the local sect. With a silver psycross, I can force restrained heathens to kneel before a crucifix and proclaim their true allegiance."),
 	TRAIT_PURITAN_ADVENTURER = span_info("With a silver psycross, I can force the restrained to kneel before a crucifix and proclaim their true allegiance."),
@@ -604,11 +631,21 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 //mob traits
 #define TRAIT_BLIND 			"blind"
+#define TRAIT_BLIND_VICE 		"blind_vice" // For people with the Blind character flaw
 #define TRAIT_MUTE				"mute"
 #define TRAIT_ZOMBIE_SPEECH 	"zombie_speech"
 #define TRAIT_GARGLE_SPEECH		"gargle_speech"
 #define TRAIT_EMOTEMUTE			"emotemute"
 #define TRAIT_DEAF				"deaf"
+#define TRAIT_PARTIAL_DEAF		"partial_deaf"
+#define TRAIT_BIG_EARS			"big_ears"
+#define TRAIT_LIGHT_SENSITIVE	"light_sensitive"
+#define TRAIT_SPURNED			"spurned"
+#define TRAIT_ILLITERATE		"illiterate"
+#define TRAIT_ASTRATA_SCORCHED	"astrata_scorched"
+#define TRAIT_NOC_SCORCHED		"noc_scorched"
+#define TRAIT_NO_REFLECTION		"no_reflection"
+#define TRAIT_STAKE_VULNERABLE	"stake_vulnerable"
 #define TRAIT_NEARSIGHT			"nearsighted"
 #define TRAIT_FAT				"fat"
 #define TRAIT_HUSK				"husk"

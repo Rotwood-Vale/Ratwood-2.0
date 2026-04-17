@@ -82,6 +82,16 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/statpack/statpack	= new /datum/statpack/wildcard/fated // LETHALSTONE EDIT: the statpack we're giving our char instead of racial bonuses
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
 	var/datum/virtue/virtuetwo = new /datum/virtue/none
+	// New category-based virtue system
+	var/datum/virtue/origin_virtue = null  // Single origin selection (DEPRECATED - replaced by custom_origin_skills)
+	var/list/origin_items = list()  // Up to 2 origin heirloom items
+	var/list/feats = list()  // Variable number based on vice count
+	// Virtue choice selections - stores selected bonus choices for virtues with options
+	var/list/virtue_choice_selections = list() // Format: list(virtue_type = list("choice1", "choice2"))
+	// Custom origin system - point-buy skill selection
+	var/list/custom_origin_skills = list()  // List of skill paths selected (e.g., /datum/skill/craft/cooking)
+	var/list/custom_origin_levels = list()  // List of skill levels (1=Novice, 2=Apprentice)
+	var/custom_origin_points_spent = 0  // Running total of points spent (max 10)
 	var/selected_title = "None"
 	var/age = AGE_ADULT						//age of character
 	var/origin = "Default"
@@ -95,6 +105,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/facial_hair_color = "000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
+	var/baotha_mark_color = "b967ff"	// Baotha mark color (purple)
 	var/extra_language = "None" // Extra language
 	var/extra_language_1 = "None" // Additional triumph language slot 1
 	var/extra_language_2 = "None" // Additional triumph language slot 2
@@ -229,13 +240,19 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/nickname = "Please Change Me"
 	var/highlight_color = "#FF0000"
 	var/datum/charflaw/charflaw
-	// Multiple vice selection (up to 5, at least 1 required)
+	// Multiple vice selection (up to 8, at least 1 required)
 	var/datum/charflaw/vice1
 	var/datum/charflaw/vice2
 	var/datum/charflaw/vice3
 	var/datum/charflaw/vice4
 	var/datum/charflaw/vice5
+	var/datum/charflaw/vice6
+	var/datum/charflaw/vice7
+	var/datum/charflaw/vice8
 
+	// Faction selections for Averse and Paranoid vices
+	var/averse_chosen_faction
+	var/paranoid_chosen_faction
 
 	var/setspouse = ""
 	var/gender_choice = ANY_GENDER
@@ -539,6 +556,14 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<b>Voice Identity</b>: <a href='?_src_=prefs;preference=voicetype;task=input'>[voice_type]</a><BR>"
 			// LETHALSTONE EDIT END
 			dat += "<b>Voice Pack</b>: <a href='?_src_=prefs;preference=voicepack;task=input'>[voice_pack]</a><BR>"
+			// Only show Baotha mark color if marked by baotha vice is selected
+			var/has_baotha_vice = FALSE
+			for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, vice7, vice8))
+				if(istype(vice, /datum/charflaw/marked_by_baotha))
+					has_baotha_vice = TRUE
+					break
+			if(has_baotha_vice)
+				dat += "<b>Baotha Mark Color</b>: <a href='?_src_=prefs;preference=baotha_mark_color;task=input'><font color='#[baotha_mark_color]'>⬤</font> Change</a><BR>"
 
 			dat += "<BR>"
 			dat += "<b>Race:</b> <a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a>[spec_check(user) ? "" : " (!)"]<BR>"
@@ -1136,7 +1161,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					else
 						name = virtuetwo.name
 				// Check all vices
-				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, vice7, vice8, charflaw))
 					if(vice?.type in job.vice_restrictions)
 						if(name)
 							name += ", "
@@ -1161,7 +1186,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			if(length(job.vice_restrictions))
 				var/list/restricted_vices = list()
 				// Check all vices
-				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, vice7, vice8, charflaw))
 					if(vice?.type in job.vice_restrictions)
 						restricted_vices += vice.name
 				if(length(restricted_vices))
@@ -1903,6 +1928,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							to_chat(user, "<font color='red'>This voice color is too dark for mortals.</font>")
 							return
 						voice_color = sanitize_hexcolor(new_voice)
+
+				if("baotha_mark_color")
+					var/new_mark_color = color_pick_sanitized(user, "Choose your Baotha mark color:", "Character Preference", "#"+baotha_mark_color)
+					if(new_mark_color)
+						baotha_mark_color = sanitize_hexcolor(new_mark_color, 6)
 
 				if("extra_language")
 					var/static/list/selectable_languages = list(
@@ -3129,9 +3159,13 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	character.jumpsuit_style = jumpsuit_style
 
-	// Apply multiple vices system
+	// Remove existing vices first to prevent double-application of effects (e.g. on re-apply preferences)
+	for(var/datum/charflaw/existing_vice in character.vices)
+		existing_vice.on_removal(character)
+
+	// Apply multiple vices system (supports up to 8 vices)
 	character.vices = list()
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 8)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			var/datum/charflaw/new_vice = new vice.type()
@@ -3146,6 +3180,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		character.charflaw = new charflaw.type()
 		character.charflaw.on_mob_creation(character)
 		character.vices += character.charflaw
+
+	// Note: origin_virtue, origin_items, and feats are applied AFTER mind transfer
+	// See apply_origin_virtues_and_feats() which is called after character creation
 
 	character.dna.real_name = character.real_name
 
@@ -3215,6 +3252,52 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	if(culinary_preferences)
 		apply_culinary_preferences(character)
+
+// Apply origin virtues, items, and feats AFTER character has a mind
+// This is called after copy_to() and mind transfer in new_player.dm
+/datum/preferences/proc/apply_origin_virtues_and_feats(mob/living/carbon/human/character)
+	if(!character || !character.mind)
+		return
+
+	// Apply custom origin skills (new point-buy system)
+	if(LAZYLEN(custom_origin_skills))
+		for(var/i = 1 to length(custom_origin_skills))
+			var/skill_path = custom_origin_skills[i]
+			var/skill_level = custom_origin_levels[i]
+			character.adjust_skillrank(skill_path, skill_level, TRUE)
+
+	// Apply origin items (heirlooms)
+	if(LAZYLEN(origin_items))
+		for(var/datum/virtue/item in origin_items)
+			var/datum/virtue/origin_item = new item.type()
+			var/list/choices = virtue_choice_selections?["[origin_item.type]"]
+			apply_virtue(character, origin_item, choices)
+
+	// Apply feats (new virtue system)
+	if(LAZYLEN(feats))
+		var/max_feats = get_max_feats()
+		for(var/i = 1 to min(LAZYLEN(feats), max_feats))
+			var/datum/virtue/feat = feats[i]
+			if(!feat)
+				continue
+			var/datum/virtue/char_feat = new feat.type()
+			var/list/choices = virtue_choice_selections?["[char_feat.type]"]
+			apply_virtue(character, char_feat, choices)
+	
+	// Apply Virtuous statpack bonus virtue (virtuetwo)
+	if(statpack && statpack.name == "Virtuous")
+		if(virtuetwo && virtuetwo.type != /datum/virtue/none)
+			// Check for heretic patron conflict
+			var/heretic = FALSE
+			if(istype(selected_patron, /datum/patron/inhumen))
+				heretic = TRUE
+			
+			if(istype(virtuetwo, /datum/virtue/heretic) && !heretic)
+				to_chat(character, "Incorrect Second Virtue parameters! (Heretic virtue on a non-heretic) It will not be applied.")
+			else
+				var/datum/virtue/bonus_virtue = new virtuetwo.type()
+				var/list/choices = virtue_choice_selections?["[bonus_virtue.type]"]
+				apply_virtue(character, bonus_virtue, choices)
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)

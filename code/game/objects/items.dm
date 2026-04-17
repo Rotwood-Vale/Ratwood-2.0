@@ -952,7 +952,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(M, span_warning("...What?"))
 		return FALSE
 
-	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
+	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, equipper)
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)

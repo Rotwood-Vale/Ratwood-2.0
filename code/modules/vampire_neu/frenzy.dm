@@ -42,8 +42,15 @@
 
 /mob/living/carbon/proc/rollfrenzy()
 	if(client)
-		if(clan)
+		// Message for non-clan cursed beings
+		if(!clan && (HAS_TRAIT(src, TRAIT_ASTRATA_SCORCHED) || HAS_TRAIT(src, TRAIT_NOC_SCORCHED)))
+			if(HAS_TRAIT(src, TRAIT_ASTRATA_SCORCHED))
+				to_chat(src, span_userdanger("The blood-thirst overwhelms me!"))
+			if(HAS_TRAIT(src, TRAIT_NOC_SCORCHED))
+				to_chat(src, span_userdanger("The beast takes control!"))
+		else if(clan)
 			clan.frenzy_message(src)
+		
 		var/check = dice_roll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
 
 		// Modifier for frenzy duration
@@ -103,7 +110,17 @@
 /mob/living/carbon/proc/handle_fear(atom/fear)
 	if(!fear)
 		return FALSE
-	if(!clan?.handle_fear(src, fear))
+	// Check for non-vampire curse fears
+	if(!clan)
+		// Astrata-Scorched and Noc-Scorched fear being on fire
+		if(HAS_TRAIT(src, TRAIT_ASTRATA_SCORCHED) || HAS_TRAIT(src, TRAIT_NOC_SCORCHED))
+			if(on_fire)
+				resist() // Try to extinguish
+				if(prob(50))
+					emote("scream")
+				return TRUE
+		return FALSE
+	if(!clan.handle_fear(src, fear))
 		return FALSE
 	step_away(src,fear,99)
 	if(prob(25))
@@ -116,6 +133,11 @@
 	if(m_intent == MOVE_INTENT_WALK)
 		toggle_move_intent(src)
 	set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
+	// Check if cursed beings are on fire FIRST (panic takes priority)
+	if(!clan && (HAS_TRAIT(src, TRAIT_ASTRATA_SCORCHED) || HAS_TRAIT(src, TRAIT_NOC_SCORCHED)))
+		if(on_fire)
+			handle_fear(src) // Pass self as fear object to trigger resist()
+			return
 	var/atom/fear = clan?.return_fear(src)
 	if(clan)
 		if(!handle_fear(fear))
@@ -126,7 +148,8 @@
 					var/obj/item/grabbing/bite/bite = H.mouth
 					if(istype(bite))
 						qdel(bite)
-					if(L.bloodpool && L.stat != DEAD && last_drinkblood_use + 9.5 SECONDS <= world.time)
+					// Respect cooldowns
+					if(L.bloodpool && L.stat != DEAD && last_drinkblood_use + 9.5 SECONDS <= world.time && world.time >= next_move)
 						if(!H.mouth) // Only bite if mouth is free
 							if(L.pulledby != src)
 								L.grabbedby(src)
@@ -141,20 +164,53 @@
 				frenzy_pathfind_to_target()
 				face_atom(frenzy_target)
 	else
+		// Non-vampire frenzy (for cursed vices)
 		if(get_dist(frenzy_target, src) <= 1)
 			if(isliving(frenzy_target))
 				var/mob/living/L = frenzy_target
 				if(L.stat != DEAD)
-					a_intent = INTENT_HARM
-					if(last_rage_hit+5 < world.time)
-						last_rage_hit = world.time
-						UnarmedAttack(L)
+					// Astrata-Scorched tries to drink blood
+					if(HAS_TRAIT(src, TRAIT_ASTRATA_SCORCHED) && ishuman(src))
+						var/mob/living/carbon/human/H = src
+						if(ishuman(L))
+							var/mob/living/carbon/human/human_target = L
+							// Respect cooldowns
+							if(human_target.blood_volume > 0 && last_drinkblood_use + 9.5 SECONDS <= world.time && world.time >= next_move)
+								if(!H.mouth)
+									if(L.pulledby != src)
+										L.grabbedby(src)
+									L.visible_message(span_warning("[src] desperately bites [L]'s neck!"), \
+										span_warning("[src] bites your neck in a feral frenzy!"))
+									face_atom(L)
+									H.drinksomeblood(L, BODY_ZONE_PRECISE_NECK)
+								else
+									emote("scream")
+							else if(world.time >= next_move)
+								a_intent = INTENT_HARM
+								if(last_rage_hit+5 < world.time)
+									last_rage_hit = world.time
+									UnarmedAttack(L)
+									changeNext_move(CLICK_CD_MELEE)
+						else if(world.time >= next_move)
+							a_intent = INTENT_HARM
+							if(last_rage_hit+5 < world.time)
+								last_rage_hit = world.time
+								UnarmedAttack(L)
+								changeNext_move(CLICK_CD_MELEE)
+					// Noc-Scorched or other frenzied beings just attack
+					else if(world.time >= next_move)
+						a_intent = INTENT_HARM
+						if(last_rage_hit+5 < world.time)
+							last_rage_hit = world.time
+							UnarmedAttack(L)
+							changeNext_move(CLICK_CD_MELEE)
 		else
 			frenzy_pathfind_to_target()
 			face_atom(frenzy_target)
 
-	// Continue the frenzy loop
-	addtimer(CALLBACK(src, PROC_REF(frenzystep)), total_multiplicative_slowdown())
+	// Continue the frenzy loop with a minimum 1 second delay
+	var/frenzy_delay = max(10, total_multiplicative_slowdown()) // Minimum 1 second (10 deciseconds)
+	addtimer(CALLBACK(src, PROC_REF(frenzystep)), frenzy_delay)
 
 /mob/living/carbon/proc/get_frenzy_targets()
 	var/list/targets = list()

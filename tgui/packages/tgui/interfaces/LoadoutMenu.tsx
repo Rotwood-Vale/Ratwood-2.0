@@ -26,7 +26,7 @@ type Data = {
 
 export const LoadoutMenu = (props) => {
   return (
-    <Window width={800} height={600}>
+    <Window width={900} height={700}>
       <Window.Content>
         <ItemDisplay />
       </Window.Content>
@@ -59,7 +59,8 @@ export const ItemDisplay = (props) => {
       } else {
         return true;
       }
-    });
+    })
+    .sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
 
   return (
     <Section
@@ -68,27 +69,43 @@ export const ItemDisplay = (props) => {
       scrollable
       buttons={<SearchBar search={search} setSearch={setSearch} />}
     >
-      {availableItems.map((item) => (
-        <Button
-          key={item.ref}
-          fluid
-          onClick={() => act('choose_item', { ref: item.ref })}
-        >
-          <Stack align="center">
-            <Stack.Item>
-             <Box className={item.icon} mr={2} inline />
-            </Stack.Item>
-            <Stack.Item>
-             {item.name} - {item.triumph_cost}
-            </Stack.Item>
-          </Stack>
-          <Stack align="center">
-            <Stack.Item>
-             {item.desc}
-            </Stack.Item>
-          </Stack>
-        </Button>
-      ))}
+      <Box
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: '0.4rem',
+        }}
+      >
+        {availableItems.map((item) => (
+          <Button
+            key={item.ref}
+            onClick={() => act('choose_item', { ref: item.ref })}
+            tooltip={item.desc}
+            style={{
+              height: '70px',
+              padding: '0.3rem',
+              textAlign: 'center',
+            }}
+          >
+            <Stack vertical align="center">
+              <Stack.Item>
+                <Box className={item.icon} style={{ fontSize: '24px' }} />
+              </Stack.Item>
+              <Stack.Item>
+                <Box bold fontSize="0.75rem">
+                  {item.name}
+                </Box>
+              </Stack.Item>
+              <Stack.Item>
+                <Box fontSize="0.7rem" color="label">
+                  {item.triumph_cost}
+                </Box>
+              </Stack.Item>
+            </Stack>
+          </Button>
+        ))}
+      </Box>
     </Section>
   );
 };
+

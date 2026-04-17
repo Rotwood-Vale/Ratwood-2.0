@@ -264,6 +264,42 @@ All foods are distributed among various categories. Use common sense.
 			to_chat(eater, span_red("I can't lyve off of this..."))
 			human_eater.add_nausea(50)//Take a guess.
 			return//Seriously. We don't care. Drink some blood, instead.
+
+		// Lithovore - can only eat rocks/gems, normal food provides no nutrition
+		if(HAS_TRAIT(human_eater, TRAIT_LITHOVORE))
+			to_chat(eater, span_warning("This food doesn't satisfy me at all..."))
+			return // No nutrition gained from regular food
+
+		// Carnivore dietary check - gets sick from plant-based foods
+		if(HAS_TRAIT(human_eater, TRAIT_CARNIVORE))
+			if(foodtype & (VEGETABLES | FRUIT | GRAIN))
+				// Track how much plant matter they've consumed
+				if(!human_eater.has_status_effect(/datum/status_effect/debuff/plant_sickness))
+					to_chat(eater, span_warning("This plant matter doesn't sit well in my stomach..."))
+					human_eater.add_nausea(30)
+					human_eater.apply_status_effect(/datum/status_effect/debuff/plant_sickness)
+				else
+					// Already sick, eating more makes it worse
+					to_chat(eater, span_danger("My body rejects this! I feel violently ill!"))
+					human_eater.add_nausea(80)
+					human_eater.adjustToxLoss(5) // Poisoning from too much plant matter
+				return
+
+		// Herbivore dietary check - gets sick from meat
+		if(HAS_TRAIT(human_eater, TRAIT_HERBIVORE))
+			if(foodtype & MEAT)
+				// Track how much meat they've consumed
+				if(!human_eater.has_status_effect(/datum/status_effect/debuff/meat_sickness))
+					to_chat(eater, span_warning("This meat churns in my stomach..."))
+					human_eater.add_nausea(30)
+					human_eater.apply_status_effect(/datum/status_effect/debuff/meat_sickness)
+				else
+					// Already sick, eating more makes it worse
+					to_chat(eater, span_danger("My body rejects this flesh! I feel violently ill!"))
+					human_eater.add_nausea(80)
+					human_eater.adjustToxLoss(5) // Poisoning from too much meat
+				return
+
 		if(human_eater.culinary_preferences)
 			var/favorite_food_type = human_eater.culinary_preferences[CULINARY_FAVOURITE_FOOD]
 			if(favorite_food_type == type)
@@ -347,6 +383,35 @@ All foods are distributed among various categories. Use common sense.
 		if(extra_eat_effect)
 			eater.apply_status_effect(extra_eat_effect)
 	eater.taste(reagents)
+	
+	// Noc-Scorched can eat any raw meat to satisfy their bestial hunger
+	// (Skip this if it's a rogue/meat or organ, as they have their own handlers)
+	if(ishuman(eater) && HAS_TRAIT(eater, TRAIT_NOC_SCORCHED))
+		// Check if this food is raw meat (has both RAW and MEAT flags)
+		// And it's not already handled by specific subtypes
+		if((foodtype & RAW) && (foodtype & MEAT) && !istype(src, /obj/item/reagent_containers/food/snacks/rogue/meat) && !istype(src, /obj/item/reagent_containers/food/snacks/organ))
+			var/mob/living/carbon/human/H = eater
+			// Check for Noc-Scorched virtue (trait-based)
+			if(HAS_TRAIT(H, TRAIT_NOC_SCORCHED))
+				// Different amounts based on size/nutrition
+				var/heal_amount = 10
+				
+				// More nutritious items heal more
+				if(list_reagents)
+					var/nutriment_amount = list_reagents[/datum/reagent/consumable/nutriment]
+					if(nutriment_amount)
+						heal_amount = min(20, 5 + (nutriment_amount * 2))
+				
+				to_chat(H, span_green("The raw meat satisfies the beast's hunger..."))
+				
+				// Heal the character
+				H.heal_overall_damage(heal_amount, heal_amount)
+				
+				// Note: The /datum/virtue/noc_scorched manages hunger automatically through SSobj processing
+				// Always remove debuffs when eating raw meat, virtue will handle re-application if needed
+				H.remove_status_effect(/datum/status_effect/debuff/meat_hunger_t1)
+				H.remove_status_effect(/datum/status_effect/debuff/meat_hunger_t2)
+				H.remove_status_effect(/datum/status_effect/debuff/meat_hunger_t3)
 
 	if(!reagents.total_volume)
 		if(eat_effect == /datum/status_effect/debuff/rotfood)

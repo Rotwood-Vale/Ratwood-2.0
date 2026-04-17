@@ -3,8 +3,8 @@
 		return
 	if(user.mind)
 		user.mind.i_know_person(src)
-	if(user.has_flaw(/datum/charflaw/paranoid))	//We hate different species, that are stronger than us, and aren't racist themselves
-		if(dna.species.name != user.dna.species.name && (STASTR - user.STASTR) > 1 && !has_flaw(/datum/charflaw/paranoid))
+	if(user.has_flaw(/datum/charflaw/addiction/paranoid))	//We hate different species, that are stronger than us, and aren't racist themselves
+		if(dna.species.name != user.dna.species.name && (STASTR - user.STASTR) > 1 && !has_flaw(/datum/charflaw/addiction/paranoid))
 			user.add_stress(/datum/stressevent/parastr)
 	if(HAS_TRAIT(user, TRAIT_JESTERPHOBIA) && job == "Jester")
 		user.add_stress(/datum/stressevent/jesterphobia)
@@ -306,7 +306,7 @@
 				. += span_aiprivradio("[m1] as lovesick as I.")
 
 			if(has_flaw(/datum/charflaw/marked_by_baotha) && HAS_TRAIT(user, TRAIT_DEPRAVED))
-				. += span_aiprivradio("[m1] marked by the debauched scent of my patron.")
+				. += span_love("[m1] is marked by a debauched scent.")
 
 			if(has_flaw(/datum/charflaw/addiction/junkie) && user.has_flaw(/datum/charflaw/addiction/junkie))
 				. += span_deadsay("[m1] carrying the same dust marks on their nose as I.")
@@ -317,7 +317,7 @@
 			if(has_flaw(/datum/charflaw/addiction/alcoholic) && user.has_flaw(/datum/charflaw/addiction/alcoholic))
 				. += span_syndradio("[m1] struggling to hide the hangover, and the stench of spirits. We're alike.")
 
-			if(has_flaw(/datum/charflaw/paranoid) && user.has_flaw(/datum/charflaw/paranoid))
+			if(has_flaw(/datum/charflaw/addiction/paranoid) && user.has_flaw(/datum/charflaw/addiction/paranoid))
 				var/mob/living/carbon/human/H = user
 				if(dna.species.name == H.dna.species.name)
 					. += span_nicegreen("[m1] privy to the dangers of all these strangers around us. [m1] just as afraid as I am.")
@@ -339,6 +339,36 @@
 		var/inquisition_text = get_inquisition_text(user)
 		if(inquisition_text)
 			. +=span_notice(inquisition_text)
+		
+		// Show vices when examining yourself
+		if(user == src && ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(length(H.vices) > 0)
+				. += span_info("<b>My Vices:</b>")
+				for(var/datum/charflaw/vice in H.vices)
+					var/vice_info = "• [vice.name]"
+					// Show faction information for Averse and Paranoid vices
+					if(istype(vice, /datum/charflaw/averse))
+						if(user.client && user.client.prefs && user.client.prefs.averse_chosen_faction)
+							var/faction_name = "Unknown"
+							for(var/fname in GLOB.averse_factions)
+								if(GLOB.averse_factions[fname] == user.client.prefs.averse_chosen_faction)
+									faction_name = fname
+									break
+							vice_info += " <i>(Loathes: [faction_name])</i>"
+						else
+							vice_info += " <i>(No faction chosen)</i>"
+					else if(istype(vice, /datum/charflaw/addiction/paranoid))
+						if(user.client && user.client.prefs && user.client.prefs.paranoid_chosen_faction)
+							var/faction_name = "Unknown"
+							for(var/fname in GLOB.averse_factions)
+								if(GLOB.averse_factions[fname] == user.client.prefs.paranoid_chosen_faction)
+									faction_name = fname
+									break
+							vice_info += " <i>(Trusts: [faction_name])</i>"
+						else
+							vice_info += " <i>(No faction chosen)</i>"
+					. += span_info(vice_info)
 
 		if (HAS_TRAIT(src, TRAIT_LEPROSY))
 			. += span_necrosis("A LEPER...")
@@ -496,6 +526,14 @@
 		str += "[wear_shirt.integrity_check(is_smart)]"
 		if(is_stupid)
 			str = "[m3] some kind of shirt!"
+		. += str
+
+	//skin armor (natural armor layer)
+	if(skin_armor)
+		var/str = "[m3] a layer of [skin_armor.get_examine_string(user)]. "
+		str += "[skin_armor.integrity_check(is_smart)]"
+		if(is_stupid)
+			str = "[m3] some weird tough skin!"
 		. += str
 
 	//uniform
@@ -969,16 +1007,25 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/stress = H.get_stress_amount()//stress check for racism
-		if(H.dna.species.name != dna.species.name && dna.species.stress_examine)
-			var/should_apply_species_reaction = dna.species.examine_stress_always
-			if(!should_apply_species_reaction)
-				should_apply_species_reaction = H.has_flaw(/datum/charflaw/paranoid) || stress >= 4
-			if(should_apply_species_reaction)
-				var/is_graggar_follower = (H.patron?.type == dna.species.examine_relief_patron)
-				if(is_graggar_follower)
-					if(dna.species.examine_relief_event)
-						user.add_stress(dna.species.examine_relief_event)
-				else
+		
+		// New Paranoid faction-based logic
+		if(H.has_flaw(/datum/charflaw/addiction/paranoid))
+			var/datum/charflaw/addiction/paranoid/paranoid_flaw = locate(/datum/charflaw/addiction/paranoid) in H.vices
+			if(!paranoid_flaw)
+				paranoid_flaw = locate(/datum/charflaw/addiction/paranoid) in list(H.charflaw)
+			if(paranoid_flaw && ishuman(src))
+				var/mob/living/carbon/human/examined = src
+				if(paranoid_flaw.check_faction(H, examined))
+					// Examining someone of own faction - sate addiction
+					H.sate_addiction(/datum/charflaw/addiction/paranoid)
+				else if(examined.mind?.assigned_role)
+					// Examining someone of different faction - add stress
+					H.add_stress(/datum/stressevent/paracrowd)
+		
+		// Old race-based stress for non-Paranoid or highly stressed individuals
+		if(!H.has_flaw(/datum/charflaw/addiction/paranoid) && stress >= 4)
+			if(H.dna.species.name != dna.species.name)
+				if(dna.species.stress_examine)//some species don't have a stress desc
 					. += dna.species.stress_desc
 					if(dna.species.examine_stress_ignores_tolerant || !HAS_TRAIT(user, TRAIT_TOLERANT))//They're given the stress event if they qualify for racism and aren't tolerant.
 						var/stress_type = dna.species.examine_stress_event

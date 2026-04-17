@@ -21,6 +21,8 @@
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_NOBLE
+	vice_restrictions = list(/datum/charflaw/silverweakness, /datum/charflaw/pacifism, /datum/charflaw/noeyeall)
+	// NOTE: Noc-Scorched and Astrata-Scorched are now virtues, restrictions handled at virtue level
 	job_subclasses = list(
 		/datum/advclass/puritan/inspector,
 		/datum/advclass/puritan/ordinator,

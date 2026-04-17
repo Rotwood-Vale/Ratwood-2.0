@@ -899,6 +899,34 @@
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	stat_allowed = UNCONSCIOUS
+
+/datum/emote/living/scream/nightmare_scream
+	key = "nightmare_scream"
+	message = "screams in their sleep!"
+	emote_type = EMOTE_AUDIBLE
+	only_forced_audio = TRUE
+	show_runechat = TRUE
+	stat_allowed = UNCONSCIOUS
+
+
+/datum/emote/living/moan/nightmare_moan
+	key = "nightmare_moan"
+	key_third_person = "moans"
+	message = "moans in their sleep."
+	emote_type = EMOTE_AUDIBLE
+	only_forced_audio = TRUE
+	show_runechat = TRUE
+	stat_allowed = UNCONSCIOUS
+
+/datum/emote/living/groan/nightmare_groan
+	key = "nightmare_groan"
+	key_third_person = "groans"
+	message = "groans in their sleep."
+	emote_type = EMOTE_AUDIBLE
+	only_forced_audio = TRUE
+	show_runechat = TRUE
+	stat_allowed = UNCONSCIOUS
 
 /datum/emote/living/scream/agony
 	key = "agony"

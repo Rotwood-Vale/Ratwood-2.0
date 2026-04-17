@@ -322,3 +322,40 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 
 /atom/movable/virtualspeaker/GetSource()
 	return source
+
+// TRAIT_PARTIAL_DEAF: Intercept Hear to jumble messages for hard-of-hearing characters
+// TRAIT_BIG_EARS: Yelling within 7 tiles causes stress, adjacent yelling stuns
+/mob/living/carbon/human/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
+	if(!radio_freq && speaker && speaker != src)
+		var/is_yelling = spans && (SPAN_YELL in spans)
+		if(HAS_TRAIT(src, TRAIT_PARTIAL_DEAF))
+			var/distance = get_dist(src, speaker)
+			if(distance > 2 && !is_yelling)
+				raw_message = jumble_message(raw_message)
+		if(HAS_TRAIT(src, TRAIT_BIG_EARS))
+			if(is_yelling && !has_status_effect(/datum/status_effect/bigearsannoy_cd))
+				var/distance = get_dist(src, speaker)
+				if(distance <= 7) // Anyone yelling within 7 tiles causes debuff
+					if(distance <= 1) // Adjacent yelling stuns
+						to_chat(src, span_userdanger("The deafening yell rings through your sensitive ears!"))
+						AdjustStun(20)
+					add_stress(/datum/stressevent/vice/big_ears)
+					apply_status_effect(/datum/status_effect/bigearsannoy_cd)
+	return ..()
+
+// Scrambles speech text for hard-of-hearing characters
+/proc/jumble_message(text)
+	var/static/list/replacement_chars = list(
+		"a","e","i","o","u","n","r","s","t","h","l","d","m","w","f","g","p","b","c","k","j","v","y"
+	)
+	var/result = ""
+	for(var/i = 1 to length(text))
+		var/ch = copytext(text, i, i + 1)
+		// Keep spaces and punctuation intact so sentence structure is apparent
+		if(ch == " " || ch == "." || ch == "," || ch == "!" || ch == "?" || ch == "'" || ch == "\"" || ch == "-")
+			result += ch
+		else if(prob(50))
+			result += pick(replacement_chars)
+		else
+			result += ch
+	return result

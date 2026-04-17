@@ -935,7 +935,7 @@ SUBSYSTEM_DEF(job)
 	if(!length(job.vice_restrictions))
 		return FALSE
 	
-	// Check new vice system (vice1-vice5)
+	// Check new vice system (vice1-vice8)
 	if(prefs.vice1?.type in job.vice_restrictions)
 		return TRUE
 	if(prefs.vice2?.type in job.vice_restrictions)
@@ -945,6 +945,12 @@ SUBSYSTEM_DEF(job)
 	if(prefs.vice4?.type in job.vice_restrictions)
 		return TRUE
 	if(prefs.vice5?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice6?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice7?.type in job.vice_restrictions)
+		return TRUE
+	if(prefs.vice8?.type in job.vice_restrictions)
 		return TRUE
 	
 	// Legacy charflaw check

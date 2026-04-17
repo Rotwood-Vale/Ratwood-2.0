@@ -14,7 +14,7 @@
 
 /datum/charflaw/limbloss/arm_r
 	name = "Wood Arm (R)"
-	desc = "I lost my right arm long ago, but the wooden arm doesn't bleed as much... but it is flammable.<br><i>(Incompatible with Bronze Arm (R) virtue)</i>"
+	desc = "I lost my right arm and replaced it with a wooden prosthetic. The wooden arm doesn't bleed and is immune to pain, but it's highly flammable and weaker than flesh. Incompatible with Bronze/Prosthetic Arm (R) virtue. +1 TRI"
 	lost_zone = BODY_ZONE_R_ARM
 
 /datum/charflaw/limbloss/arm_r/on_mob_creation(mob/user)
@@ -28,7 +28,7 @@
 
 /datum/charflaw/limbloss/arm_l
 	name = "Wood Arm (L)"
-	desc = "I lost my left arm long ago, but the wooden arm doesn't bleed as much... but it is flammable.<br><i>(Incompatible with Bronze Arm (L) virtue)</i>"
+	desc = "I lost my left arm and replaced it with a wooden prosthetic. The wooden arm doesn't bleed and is immune to pain, but it's highly flammable and weaker than flesh. Incompatible with Bronze/Prosthetic Arm (L) virtue. +1 TRI"
 	lost_zone = BODY_ZONE_L_ARM
 
 /datum/charflaw/limbloss/arm_l/on_mob_creation(mob/user)

@@ -597,6 +597,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			standing += bodyhair_overlay
 #endif
 
+	// Apply Baotha mark if present
+	if(H.baotha_mark_overlay)
+		standing += H.baotha_mark_overlay
+
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
 
@@ -637,12 +641,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// handles the equipping of species-specific gear
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, mob/equipper = null)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
 	var/is_nudist = HAS_TRAIT(H, TRAIT_NUDIST)
+	var/is_nudist_self = is_nudist && (!equipper || equipper == H) // Nudist trying to dress themselves
 	var/is_inhumen = HAS_TRAIT(H, TRAIT_INHUMEN_ANATOMY)
 	var/num_arms = H.get_num_arms(FALSE)
 	var/num_legs = H.get_num_legs(FALSE)

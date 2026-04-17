@@ -23,6 +23,8 @@
 	advjob_examine = TRUE
 	give_bank_account = 15
 	social_rank = SOCIAL_RANK_PEASANT
+	vice_restrictions = list(/datum/charflaw/silverweakness, /datum/charflaw/pacifism, /datum/charflaw/noeyeall)
+	// NOTE: Noc-Scorched and Astrata-Scorched are now virtues, restrictions are handled at virtue level
 	job_traits = list(TRAIT_OUTLANDER, TRAIT_STEELHEARTED, TRAIT_INQUISITION)
 	job_subclasses = list(
 		/datum/advclass/psydoniantemplar,

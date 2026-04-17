@@ -8,6 +8,11 @@
 #define SKILL_LEVEL_MASTER 5 //master
 #define SKILL_LEVEL_LEGENDARY 6 //legendary
 
+// Custom origin point-buy system
+#define SKILL_COST_NOVICE 1
+#define SKILL_COST_APPRENTICE 3
+#define CUSTOM_ORIGIN_POINTS 8
+
 #define SKILL_EXP_NOVICE 100
 #define SKILL_EXP_APPRENTICE 250
 #define SKILL_EXP_JOURNEYMAN 500

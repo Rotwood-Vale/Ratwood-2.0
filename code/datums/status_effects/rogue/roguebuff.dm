@@ -575,9 +575,11 @@
 	var/healing_on_tick = 1
 	var/outline_colour = "#c42424"
 	var/tech_healing_modifier = 1
+	var/inhumen_source = FALSE
 
 /datum/status_effect/buff/healing/on_creation(mob/living/new_owner, new_healing_on_tick, is_inhumen = FALSE)
 	healing_on_tick = new_healing_on_tick
+	inhumen_source = is_inhumen
 	tech_healing_modifier = SSchimeric_tech.get_healing_multiplier()
 	if(is_inhumen)
 		// The penalty/benefit of healing tech is halved for inhumen followers
@@ -593,6 +595,10 @@
 	return TRUE
 
 /datum/status_effect/buff/healing/tick()
+	// Check if owner is spurned - healing miracles don't work
+	if(HAS_TRAIT(owner, TRAIT_SPURNED))
+		to_chat(owner, span_warning("The blessing washes over me, but I feel nothing. I am forsaken."))
+		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#FF0000"
 	var/list/wCount = owner.get_wounds()

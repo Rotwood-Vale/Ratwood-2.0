@@ -479,12 +479,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		charflaw = new charflaw()
 
 	// Load new vice system
-	var/vice1_type, vice2_type, vice3_type, vice4_type, vice5_type
+	var/vice1_type, vice2_type, vice3_type, vice4_type, vice5_type, vice6_type, vice7_type, vice8_type
 	S["vice1"] >> vice1_type
 	S["vice2"] >> vice2_type
 	S["vice3"] >> vice3_type
 	S["vice4"] >> vice4_type
 	S["vice5"] >> vice5_type
+	S["vice6"] >> vice6_type
+	S["vice7"] >> vice7_type
+	S["vice8"] >> vice8_type
 
 	// Vice1 is required - use charflaw as fallback for old characters, only randomize if both are missing
 	if(vice1_type && ispath(vice1_type))
@@ -503,6 +506,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vice3 = (vice3_type && ispath(vice3_type)) ? new vice3_type() : null
 	vice4 = (vice4_type && ispath(vice4_type)) ? new vice4_type() : null
 	vice5 = (vice5_type && ispath(vice5_type)) ? new vice5_type() : null
+	vice6 = (vice6_type && ispath(vice6_type)) ? new vice6_type() : null
+	vice7 = (vice7_type && ispath(vice7_type)) ? new vice7_type() : null
+	vice8 = (vice8_type && ispath(vice8_type)) ? new vice8_type() : null
+
+	// Load faction selections for Averse and Paranoid
+	S["averse_chosen_faction"] >> averse_chosen_faction
+	S["paranoid_chosen_faction"] >> paranoid_chosen_faction
 
 /datum/preferences/proc/_load_culinary_preferences(S)
 	var/list/loaded_culinary_preferences
@@ -526,19 +536,124 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/_load_virtue(S)
 	var/virtue_type
 	var/virtuetwo_type
+	var/savefile_version
+	S["version"] >> savefile_version
+	if(!isnum(savefile_version))
+		savefile_version = 0
+
+	// Virtue system rework migration:
+	// pre-v37 savefiles can contain legacy virtue formats, so force a clean reset once.
+	if(savefile_version < 37)
+		virtue = GLOB.virtues[/datum/virtue/none]
+		virtuetwo = GLOB.virtues[/datum/virtue/none]
+		return
+
 	S["virtue"] >> virtue_type
 	S["virtuetwo"] >> virtuetwo_type
 
-	// Only instantiate if valid type path exists, otherwise use none
-	if (virtue_type && ispath(virtue_type))
-		virtue = new virtue_type()
+	if(istype(virtue_type, /datum/virtue))
+		var/datum/virtue/virtue_datum = virtue_type
+		virtue_type = virtue_datum.type
+	virtue_type = string_to_typepath(virtue_type)
+	if(virtue_type && ispath(virtue_type, /datum/virtue) && GLOB.virtues[virtue_type])
+		virtue = GLOB.virtues[virtue_type]
 	else
-		virtue = new /datum/virtue/none
+		virtue = GLOB.virtues[/datum/virtue/none]
 
-	if(virtuetwo_type && ispath(virtuetwo_type))
-		virtuetwo = new virtuetwo_type()
+	if(istype(virtuetwo_type, /datum/virtue))
+		var/datum/virtue/virtuetwo_datum = virtuetwo_type
+		virtuetwo_type = virtuetwo_datum.type
+	virtuetwo_type = string_to_typepath(virtuetwo_type)
+	if(virtuetwo_type && ispath(virtuetwo_type, /datum/virtue) && GLOB.virtues[virtuetwo_type])
+		virtuetwo = GLOB.virtues[virtuetwo_type]
 	else
-		virtuetwo = new /datum/virtue/none
+		virtuetwo = GLOB.virtues[/datum/virtue/none]
+
+/datum/preferences/proc/_load_origin_virtues(S)
+	origin_virtue = null
+	origin_items = list()
+	feats = list()
+
+	var/origin_virtue_type
+	S["origin_virtue"] >> origin_virtue_type
+	if(istype(origin_virtue_type, /datum/virtue))
+		var/datum/virtue/origin_virtue_datum = origin_virtue_type
+		origin_virtue_type = origin_virtue_datum.type
+	origin_virtue_type = string_to_typepath(origin_virtue_type)
+	if(origin_virtue_type && ispath(origin_virtue_type, /datum/virtue))
+		origin_virtue = GLOB.virtues[origin_virtue_type]
+
+	var/list/stored_origin_items
+	S["origin_items"] >> stored_origin_items
+	if(islist(stored_origin_items))
+		for(var/item_entry in stored_origin_items)
+			var/item_type = null
+			if(istype(item_entry, /datum/virtue))
+				var/datum/virtue/item_datum = item_entry
+				item_type = item_datum.type
+			else
+				item_type = string_to_typepath(item_entry)
+			if(!item_type)
+				var/legacy_item_entry = stored_origin_items[item_entry]
+				if(istype(legacy_item_entry, /datum/virtue))
+					var/datum/virtue/legacy_item_datum = legacy_item_entry
+					item_type = legacy_item_datum.type
+				else
+					item_type = string_to_typepath(legacy_item_entry)
+			if(!item_type || !ispath(item_type, /datum/virtue))
+				continue
+			var/datum/virtue/item_virtue = GLOB.virtues[item_type]
+			if(item_virtue)
+				LAZYADD(origin_items, item_virtue)
+
+	var/list/stored_feats
+	S["feats"] >> stored_feats
+	if(islist(stored_feats))
+		for(var/feat_entry in stored_feats)
+			var/feat_type = null
+			if(istype(feat_entry, /datum/virtue))
+				var/datum/virtue/feat_datum = feat_entry
+				feat_type = feat_datum.type
+			else
+				feat_type = string_to_typepath(feat_entry)
+			if(!feat_type)
+				var/legacy_feat_entry = stored_feats[feat_entry]
+				if(istype(legacy_feat_entry, /datum/virtue))
+					var/datum/virtue/legacy_feat_datum = legacy_feat_entry
+					feat_type = legacy_feat_datum.type
+				else
+					feat_type = string_to_typepath(legacy_feat_entry)
+			if(!feat_type || !ispath(feat_type, /datum/virtue))
+				continue
+			var/datum/virtue/feat_virtue = GLOB.virtues[feat_type]
+			if(feat_virtue)
+				LAZYADD(feats, feat_virtue)
+
+	if(!LAZYLEN(origin_items))
+		origin_items = null
+	if(!LAZYLEN(feats))
+		feats = null
+
+	// Load custom origin skills (Build Your Own Origin system)
+	S["custom_origin_skills"] >> custom_origin_skills
+	S["custom_origin_levels"] >> custom_origin_levels
+	S["custom_origin_points_spent"] >> custom_origin_points_spent
+	// Initialize to empty lists if not loaded (for backwards compatibility)
+	if(!custom_origin_skills)
+		custom_origin_skills = list()
+	if(!custom_origin_levels)
+		custom_origin_levels = list()
+	if(!isnum(custom_origin_points_spent))
+		custom_origin_points_spent = 0
+	
+	// Load virtue choice selections
+	virtue_choice_selections = list()
+	S["virtue_choice_selections"] >> virtue_choice_selections
+	if(!islist(virtue_choice_selections))
+		virtue_choice_selections = list()
+	
+	// Sanitize virtue lists to remove any null or invalid entries
+	sanitize_virtue_lists()
 
 /datum/preferences/proc/_load_loadout(S)
 	var/loadout_type
@@ -718,6 +833,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_color"]			>> hair_color
 	S["facial_hair_color"]	>> facial_hair_color
 	S["eye_color"]			>> eye_color
+	S["baotha_mark_color"]	>> baotha_mark_color
 	S["family"]				>> family
 	S["gender_choice"] 		>> gender_choice
 	S["setspouse"] 			>> setspouse
@@ -817,7 +933,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_species(S)
 
 	_load_virtue(S)
+	_load_origin_virtues(S)
 	_load_flaw(S)
+	enforce_feat_limit()
 
 	_load_culinary_preferences(S)
 
@@ -959,6 +1077,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	age				= sanitize_inlist(age, pref_species.possible_ages)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
+	baotha_mark_color = sanitize_hexcolor(baotha_mark_color, 6, 0)
 	family 			= family
 	gender_choice 	= gender_choice
 	setspouse 		= setspouse
@@ -1036,6 +1155,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["hair_color"]			, hair_color)
 	WRITE_FILE(S["facial_hair_color"]	, facial_hair_color)
 	WRITE_FILE(S["eye_color"]			, eye_color)
+	WRITE_FILE(S["baotha_mark_color"]	, baotha_mark_color)
 	WRITE_FILE(S["extra_language"]		, extra_language)
 	WRITE_FILE(S["selected_title"]		, selected_title)
 	WRITE_FILE(S["extra_language_1"]	, extra_language_1)
@@ -1064,6 +1184,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vice3"], preferences_typepath_or_null(vice3))
 	WRITE_FILE(S["vice4"], preferences_typepath_or_null(vice4))
 	WRITE_FILE(S["vice5"], preferences_typepath_or_null(vice5))
+	WRITE_FILE(S["vice6"], preferences_typepath_or_null(vice6))
+	WRITE_FILE(S["vice7"], preferences_typepath_or_null(vice7))
+	WRITE_FILE(S["vice8"], preferences_typepath_or_null(vice8))
+	WRITE_FILE(S["averse_chosen_faction"], averse_chosen_faction)
+	WRITE_FILE(S["paranoid_chosen_faction"], paranoid_chosen_faction)
 	WRITE_FILE(S["feature_mcolor"]		, features["mcolor"])
 	WRITE_FILE(S["feature_mcolor2"]		, features["mcolor2"])
 	WRITE_FILE(S["feature_mcolor3"]		, features["mcolor3"])
@@ -1134,6 +1259,32 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!virtue2_typepath)
 		virtue2_typepath = /datum/virtue/none
 	WRITE_FILE(S["virtuetwo"], virtue2_typepath)
+	var/origin_typepath = preferences_typepath_or_null(origin_virtue)
+	WRITE_FILE(S["origin_virtue"], origin_typepath)
+
+	var/list/origin_item_types = null
+	if(LAZYLEN(origin_items))
+		origin_item_types = list()
+		for(var/datum/virtue/item_virtue in origin_items)
+			var/item_typepath = preferences_typepath_or_null(item_virtue)
+			if(item_typepath)
+				origin_item_types += item_typepath
+	WRITE_FILE(S["origin_items"], origin_item_types)
+
+	var/list/feat_types = null
+	if(LAZYLEN(feats))
+		feat_types = list()
+		for(var/datum/virtue/feat_virtue in feats)
+			var/feat_typepath = preferences_typepath_or_null(feat_virtue)
+			if(feat_typepath)
+				feat_types += feat_typepath
+	WRITE_FILE(S["feats"], feat_types)
+	// Save virtue choice selections
+	WRITE_FILE(S["virtue_choice_selections"], virtue_choice_selections)
+	// Save custom origin skills (Build Your Own Origin system)
+	WRITE_FILE(S["custom_origin_skills"], custom_origin_skills)
+	WRITE_FILE(S["custom_origin_levels"], custom_origin_levels)
+	WRITE_FILE(S["custom_origin_points_spent"], custom_origin_points_spent)
 	WRITE_FILE(S["race_bonus"], race_bonus)
 	WRITE_FILE(S["combat_music"], preferences_typepath_or_null(combat_music))
 	WRITE_FILE(S["body_size"] , features["body_size"])

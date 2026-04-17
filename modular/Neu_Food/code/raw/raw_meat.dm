@@ -15,6 +15,27 @@
 	var/fresh_meat = FALSE
 	become_rot_type = /obj/item/reagent_containers/food/snacks/rogue/meat_rotten
 
+/obj/item/reagent_containers/food/snacks/rogue/meat/On_Consume(mob/living/eater)
+	. = ..()
+	if(!ishuman(eater))
+		return
+	var/mob/living/carbon/human/H = eater
+	
+	// Check if eater has Noc-Scorched virtue
+	if(HAS_TRAIT(H, TRAIT_NOC_SCORCHED))
+		// The virtue manages its own meat_hunger through SSobj processing
+		// We provide the healing benefit here
+		to_chat(H, span_green("The raw flesh sates the beast within. I feel... calmer."))
+		
+		// Heal the character
+		H.heal_overall_damage(15, 15)
+		
+		// Note: The /datum/virtue/noc_scorched will handle hunger restoration automatically
+		// Always remove debuffs when eating, virtue will handle re-application
+		H.remove_status_effect(/datum/status_effect/debuff/meat_hunger_t1)
+		H.remove_status_effect(/datum/status_effect/debuff/meat_hunger_t2)
+		H.remove_status_effect(/datum/status_effect/debuff/meat_hunger_t3)
+
 /obj/item/reagent_containers/food/snacks/rogue/meat_rotten
 	eat_effect = /datum/status_effect/debuff/rotfood
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)

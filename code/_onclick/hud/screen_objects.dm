@@ -87,7 +87,11 @@
 			var/mob/living/carbon/human/M = usr
 			if(length(M.vices))
 				for(var/datum/charflaw/vice in M.vices)
-					to_chat(M, "<span class='info'><small>[vice.desc]</small></span>")
+					var/datum/charflaw/addiction/ad_vice = null
+					if(istype(vice, /datum/charflaw/addiction))
+						ad_vice = vice
+					to_chat(M, span_danger("[vice.name] [ad_vice ? ad_vice.sated ? span_purple("SATED") : "" : ""]"))
+					to_chat(M, span_info("[vice.desc]"))
 				to_chat(M, "*----*")
 			else if(M.charflaw)
 				to_chat(M, "<span class='info'>[M.charflaw.desc]</span>")

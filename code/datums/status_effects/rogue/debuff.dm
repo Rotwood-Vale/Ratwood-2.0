@@ -127,12 +127,21 @@
 		C.add_nausea(200)
 	return ..()
 
+/datum/status_effect/debuff/plant_sickness
+	id = "plant_sickness"
+	effectedstats = list(STATKEY_CON = -1)
+	duration = 5 MINUTES // Lasts 5 minutes before they can eat plants again without immediate sickness
+
+/datum/status_effect/debuff/meat_sickness
+	id = "meat_sickness"
+	effectedstats = list(STATKEY_CON = -1)
+	duration = 5 MINUTES // Lasts 5 minutes before they can eat meat again without immediate sickness
+
 /datum/status_effect/debuff/bleeding
 	id = "bleedingt1"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	effectedstats = list(STATKEY_SPD = -1)
 	duration = -1
-	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	name = "Dizzy"
