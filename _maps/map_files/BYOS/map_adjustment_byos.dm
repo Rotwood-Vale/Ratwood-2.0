@@ -97,8 +97,6 @@
 		// /datum/job/roguetown/bogguardsman,
 		/datum/job/roguetown/dungeoneer,
 		/datum/job/roguetown/rookie,
-		/datum/job/roguetown/masterwarden,
-		/datum/job/roguetown/watchman,
 		/datum/job/roguetown/vanguard,
 		// /datum/job/roguetown/sergeant,
 		// /datum/job/roguetown/squire,

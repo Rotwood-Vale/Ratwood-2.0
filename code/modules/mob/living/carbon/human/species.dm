@@ -647,7 +647,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return FALSE
 
 	var/is_nudist = HAS_TRAIT(H, TRAIT_NUDIST)
-	var/is_nudist_self = is_nudist && (!equipper || equipper == H) // Nudist trying to dress themselves
 	var/is_inhumen = HAS_TRAIT(H, TRAIT_INHUMEN_ANATOMY)
 	var/num_arms = H.get_num_arms(FALSE)
 	var/num_legs = H.get_num_legs(FALSE)

@@ -3110,14 +3110,9 @@
 #include "modular_azurepeak\virtues\weapon_specialist.dm"
 #include "modular_azurepeak\virtues\prosthetics\prosthetic_limbs.dm"
 #include "modular_azurepeak\virtues\prosthetics\prosthetic_specialist.dm"
-#include "modular_azurepeak\virtues\crafter.dm"
-#include "modular_azurepeak\virtues\items.dm"
-#include "modular_azurepeak\virtues\movement.dm"
-#include "modular_azurepeak\virtues\packs.dm"
+
 #include "modular_azurepeak\virtues\saddleborn.dm"
-#include "modular_azurepeak\virtues\size.dm"
-#include "modular_azurepeak\virtues\thief.dm"
-#include "modular_azurepeak\virtues\utility.dm"
+
 #include "modular_deserttown\camel.dm"
 #include "modular_deserttown\desertareas.dm"
 #include "modular_deserttown\desertclothing.dm"

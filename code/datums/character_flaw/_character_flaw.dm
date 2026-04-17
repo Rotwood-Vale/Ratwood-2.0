@@ -530,7 +530,6 @@ GLOBAL_LIST_INIT(averse_factions, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		ADD_TRAIT(H, TRAIT_NUDIST, TRAIT_GENERIC)
-		next_removal_attempt = world.time + rand(30 SECONDS, 60 SECONDS)
 
 /datum/charflaw/nudist/flaw_on_life(mob/user)
 	if(!ishuman(user))
@@ -553,31 +552,6 @@ GLOBAL_LIST_INIT(averse_factions, list(
 		H.add_stress(/datum/stressevent/vice/nudist_clothed)
 	else
 		H.remove_stress(/datum/stressevent/vice/nudist_clothed)
-	
-	// Try to remove clothing periodically
-	if(is_clothed && world.time >= next_removal_attempt)
-		// Remove armor first, then shirt, then pants (skip nudist-approved items)
-		var/obj/item/removed = null
-		if(H.wear_armor)
-			if(!istype(H.wear_armor, /obj/item/clothing) || !H.wear_armor.nudist_approved)
-				removed = H.wear_armor
-				if(H.dropItemToGround(removed))
-					to_chat(H, span_warning("I can't stand wearing [removed]! I need to be free!"))
-		else if(H.wear_shirt)
-			if(!istype(H.wear_shirt, /obj/item/clothing) || !H.wear_shirt.nudist_approved)
-				removed = H.wear_shirt
-				if(H.dropItemToGround(removed))
-					to_chat(H, span_warning("This [removed] is suffocating me! Off it goes!"))
-		else if(H.wear_pants)
-			if(!istype(H.wear_pants, /obj/item/clothing) || !H.wear_pants.nudist_approved)
-				removed = H.wear_pants
-				if(H.dropItemToGround(removed))
-					to_chat(H, span_warning("These [removed] are unbearable! Freedom!"))
-		
-		if(removed)
-			H.visible_message(span_notice("[H] frantically removes [removed]."))
-		
-		next_removal_attempt = world.time + rand(30 SECONDS, 60 SECONDS)
 
 /datum/charflaw/nudist/on_removal(mob/user)
 	..()

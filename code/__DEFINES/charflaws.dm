@@ -25,5 +25,4 @@
 		/datum/charflaw/addiction/junkie,\
 		/datum/charflaw/addiction/smoker,\
 		/datum/charflaw/addiction/alcoholic,\
-		/datum/charflaw/paranoid\
 	)
