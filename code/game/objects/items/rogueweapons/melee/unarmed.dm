@@ -48,7 +48,7 @@
 	hitsound = list('sound/combat/hits/punch/punch_hard (1).ogg', 'sound/combat/hits/punch/punch_hard (2).ogg', 'sound/combat/hits/punch/punch_hard (3).ogg')
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	clickcd = CLICK_CD_MELEE
-	swingdelay = 8
+	swingdelay = 4
 	icon_state = "insmash"
 	item_d_type = "blunt"
 	//We want chipping, m'lord.
@@ -205,7 +205,7 @@
 /obj/item/rogueweapon/knuckles
 	name = "steel knuckles"
 	desc = "A mean looking pair of steel knuckles."
-	force = 25
+	force = 35
 	possible_item_intents = list(/datum/intent/knuckles/strike,/datum/intent/knuckles/smash, /datum/intent/knuckles/strike/wallop, /datum/intent/effect/daze/unarmed)
 	icon = 'icons/roguetown/weapons/unarmed32.dmi'
 	icon_state = "steelknuckle"
@@ -239,7 +239,7 @@
 /obj/item/rogueweapon/knuckles/bronzeknuckles
 	name = "bronze knuckles"
 	desc = "A mean looking pair of bronze knuckles. Mildly heavier than it's steel counterpart, making it a solid defensive option, if less wieldy."
-	force = 22
+	force = 32
 	possible_item_intents = list(/datum/intent/knuckles/strike, /datum/intent/knuckles/smash, /datum/intent/knuckles/strike/wallop)
 	icon = 'icons/roguetown/weapons/unarmed32.dmi'
 	icon_state = "bronzeknuckle"
@@ -261,7 +261,7 @@
 	name = "decrepit knuckles"
 	desc = "a set of knuckles made of ancient metals, Aeon's grasp wither their form."
 	icon_state = "aknuckle"
-	force = 12
+	force = 22
 	max_integrity = 100
 	wdefense = 4
 	smeltresult = /obj/item/ingot/aalloy
@@ -276,7 +276,7 @@
 /obj/item/rogueweapon/knuckles/eora
 	name = "close caress"
 	desc = "Some times call for a more intimate approach."
-	force = 24
+	force = 34
 	icon_state = "eoraknuckle"
 
 //Claws. God, I hate these.
