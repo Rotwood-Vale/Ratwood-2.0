@@ -59,7 +59,8 @@ Balloon Alert / Floating Text defines
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
 	/datum/species/dwarf/gnome,\
-	/datum/species/harpy\
+	/datum/species/harpy,\
+	/datum/species/shadekin\
 )
 
 #define RACES_RESPECTED \
@@ -92,6 +93,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/halforc,\
 	/datum/species/goblinp,\
 	/datum/species/harpy,\
+	/datum/species/shadekin,\
 
 #define RACES_DESPISED \
 	/datum/species/dullahan,\
@@ -317,6 +319,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_LICKER_WRETCH  "CAT_LICKER_WRETCH" // Licker wretch. Nuff said.
 #define CTAG_GNOLL			"CAT_GNOLL"			// Wretch-esque gnolls, graggar's chosen.
 #define CTAG_GNOLL_IMPURE	"CAT_GNOLL_IMPURE"	// Reward for beating enough gnolls.
+#define CTAG_ANOMALY		"CAT_ANOMALY"		// Shadekin anomaly
 
 #define CTAG_WARDEN			"CAT_WARDEN"		// Warden class - Handles warden class selector.
 #define CTAG_VANGUARD		"CAT_VANGUARD"		// Vanguard class - Handles vanguard class selector.
