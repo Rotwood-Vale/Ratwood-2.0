@@ -19,17 +19,9 @@
 		/datum/job/roguetown/slavemaster,
 		/datum/job/roguetown/slave,
 		/datum/job/roguetown/adventurer/courtslave,
-		
-		/datum/job/roguetown/tribalchieftain,
-		/datum/job/roguetown/tribalshaman,
-		/datum/job/roguetown/tribalguard,
-		/datum/job/roguetown/tribalrabble,
-		/datum/job/roguetown/tribalvillager,
-		
-		/datum/job/roguetown/sergeant,
 		)
 	slot_adjust = list(
-		/datum/job/roguetown/manorguard = 4,//split with watchmen
+		/datum/job/roguetown/manorguard = 5,//split with watchmen
 		/datum/job/roguetown/warden = 4,//split with vanguard
 	)
 	title_adjust = list(
@@ -74,4 +66,3 @@
 		THREAT_REGION_ROCKHILL_WOODS_NORTH,
 		THREAT_REGION_ROCKHILL_WOODS_SOUTH
 	)
-d
