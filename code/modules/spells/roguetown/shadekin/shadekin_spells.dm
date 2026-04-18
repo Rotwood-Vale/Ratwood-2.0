@@ -5,12 +5,10 @@
 	name = "Void Walk"
 	desc = "Step into the space between worlds. You become invisible and can pass through any obstacle. Drains energy while active. If energy runs out, you collapse into sleep."
 	action_icon_state = "jaunt"
-	action_icon = 'icons/mob/actions/actions.dmi'
+	//action_icon = 'icons/mob/actions/actions.dmi'
 	recharge_time = 5 SECONDS
 	selection_type = "range"
 	human_req = TRUE
-
-	var/active = FALSE
 
 /obj/effect/proc_holder/spell/self/shadekin_voidwalk/cast(list/targets, mob/living/user)
 	if(!ishuman(user))
@@ -101,7 +99,7 @@
 	name = "Shadow Rest"
 	desc = "Embrace the shadows and fall into a deep sleep. Your energy regenerates much faster while sleeping in darkness. Use again to attempt to wake."
 	action_icon_state = "heal"
-	action_icon = 'icons/mob/actions/actions.dmi'
+	//action_icon = 'icons/mob/actions/actions.dmi'
 	recharge_time = 3 SECONDS
 	selection_type = "range"
 	human_req = TRUE
@@ -145,7 +143,7 @@
 	name = "Shroud of Darkness"
 	desc = "Call forth a cloud of pure shadow that engulfs the area in darkness. The shroud lasts for a short time and blocks vision for those without dark sight."
 	action_icon_state = "yourlivingend"
-	action_icon = 'icons/mob/actions/actions.dmi'
+	//action_icon = 'icons/mob/actions/actions.dmi'
 	recharge_time = 60 SECONDS
 	selection_type = "range"
 	human_req = TRUE

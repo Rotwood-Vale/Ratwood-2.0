@@ -115,6 +115,9 @@
 	var/datum/component/shadekin_energy/comp = C.GetComponent(/datum/component/shadekin_energy)
 	if(comp)
 		qdel(comp)
+		
+/datum/species/shadekin/check_roundstart_eligible()
+	return TRUE
 
 /datum/species/shadekin/qualifies_for_rank(rank, list/features)
 	return TRUE
