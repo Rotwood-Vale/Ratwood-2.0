@@ -462,6 +462,7 @@
 			climax_msg = "[user] climaxes and makes a mess in their chastity device!"
 	user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
+	var/semen_vol = get_semen_volume()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	add_cum_floor(get_turf(user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
 	after_ejaculation()
@@ -475,7 +476,7 @@
 	if(user.getorganslot(ORGAN_SLOT_VAGINA))
 		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum,1)
 	else
-		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum,2)
+		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_vol)
 
 /datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
 	if(try_resist_orgasm())
@@ -485,11 +486,42 @@
 		user.visible_message(span_love("[user] spills into [C]!"))
 		playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 		if(user.getorganslot(ORGAN_SLOT_PENIS))
-			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, testes?.ball_size > DEFAULT_TESTICLES_SIZE ? 6 : 3)
+			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
 		else
 			C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 	after_ejaculation()
+
+/datum/sex_controller/proc/get_semen_volume()
+	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
+	if(!testes)
+		return 0
+	var/volume
+	switch(testes.ball_size)
+		if(MIN_TESTICLES_SIZE)
+			volume = 2
+		if(MAX_TESTICLES_SIZE)
+			volume = 4
+		else
+			volume = 3
+	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+		volume = floor(volume * 1.5)
+
+	var/obj/item/organ/penis/shaft = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(shaft?.penis_type in list(PENIS_TYPE_KNOTTED, PENIS_TYPE_EQUINE, PENIS_TYPE_TAPERED_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED))
+		volume += 1
+		
+	return volume
+
+/datum/sex_controller/proc/get_max_loads()
+	var/con = user.STACON
+	var/loads = 2 + floor(clamp((con - 10) * 2, 0, 99) / 2)
+	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+		loads = floor(loads * 1.5)
+	return loads
+
+/// Returns the max charge based on dynamic load count
+/datum/sex_controller/proc/get_max_charge()
+	return get_max_loads() * CHARGE_FOR_CLIMAX
 
 /datum/sex_controller/proc/after_ejaculation()
 	set_arousal(40)
@@ -546,7 +578,7 @@
 
 /datum/sex_controller/proc/set_charge(amount)
 	var/empty = (charge < CHARGE_FOR_CLIMAX)
-	charge = clamp(amount, 0, SEX_MAX_CHARGE)
+	charge = clamp(amount, 0, get_max_charge())
 	var/after_empty = (charge < CHARGE_FOR_CLIMAX)
 	if(empty && !after_empty)
 		to_chat(user, span_notice("I feel like I'm not so spent anymore"))
