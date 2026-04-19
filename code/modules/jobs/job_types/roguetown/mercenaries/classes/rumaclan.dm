@@ -110,7 +110,7 @@
 	traits_applied = list(TRAIT_DODGEEXPERT) // gets no tats
 	cmode_music = 'sound/music/combat_kazengite.ogg'
 	subclass_stats = list(
-		STATKEY_SPD = 3
+		STATKEY_SPD = 3,
 		STATKEY_INT = 2, 
 		STATKEY_WIL = 2,  // 7 extra points, compareable to other Ruma Class
 	)
