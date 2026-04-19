@@ -86,6 +86,12 @@
 	var/stam_regen_start_time = 0
 	///knocks you down
 	var/stam_paralyzed = FALSE
+	/// Seelie luck aura toggle.
+	var/aura = TRUE
+	/// Seelie personal glow toggle.
+	var/seelie_glow_enabled = TRUE
+	/// Next world.time when Seelie aura may update nearby mobs.
+	var/tmp/seelie_next_aura_tick = 0
 
 	var/next_smell = 0
 

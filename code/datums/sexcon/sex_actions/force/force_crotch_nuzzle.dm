@@ -30,10 +30,22 @@
 	return TRUE
 
 /datum/sex_action/force_crotch_nuzzle/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] forces [target]'s head against [user.p_their()] crotch!"))
+	if(isseelie(user) && !HAS_TRAIT(target, TRAIT_TINY))
+		user.visible_message(span_warning("[user] grabs [target] by the hair and drags their face against [user.p_their()] tiny crotch!"))
+	else if(isseelie(target) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.visible_message(span_warning("[user] snatches up [target] and mashes the tiny fae against [user.p_their()] crotch!"))
+	else
+		user.visible_message(span_warning("[user] forces [target]'s head against [user.p_their()] crotch!"))
 
 /datum/sex_action/force_crotch_nuzzle/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to nuzzle [user.p_their()] crotch."))
+	if(isseelie(target) && !HAS_TRAIT(user, TRAIT_TINY))
+		var/list/seelie_recv_msgs = list(
+			"[user] [user.sexcon.get_generic_force_adjective()] grinds the tiny fae against [user.p_their()] crotch.",
+			"[user] [user.sexcon.get_generic_force_adjective()] smothers [target]'s little body against [user.p_their()] crotch.",
+		)
+		user.visible_message(user.sexcon.spanify_force(pick(seelie_recv_msgs)))
+	else
+		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to nuzzle [user.p_their()] crotch."))
 	target.sexcon.make_sucking_noise()
 
 	user.sexcon.perform_sex_action(user, 0.5, 0, TRUE)

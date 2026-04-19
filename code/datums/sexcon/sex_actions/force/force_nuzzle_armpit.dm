@@ -29,10 +29,20 @@
 	return TRUE
 
 /datum/sex_action/force_armpit_nuzzle/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] forces [target]'s head against [user.p_their()] armpit!"))
+	if(isseelie(target) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.visible_message(span_warning("[user] shoves [target]'s tiny body into [user.p_their()] armpit, the fae practically vanishing inside!"))
+	else
+		user.visible_message(span_warning("[user] forces [target]'s head against [user.p_their()] armpit!"))
 
 /datum/sex_action/force_armpit_nuzzle/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to nuzzle [user.p_their()] armpit."))
+	if(isseelie(target) && !HAS_TRAIT(user, TRAIT_TINY))
+		var/list/seelie_recv_msgs = list(
+			"[user] [user.sexcon.get_generic_force_adjective()] traps [target]'s tiny body in [user.p_their()] armpit.",
+			"[user] [user.sexcon.get_generic_force_adjective()] squeezes [user.p_their()] arm down on [target], the little fae pinned and squirming in [user.p_their()] armpit.",
+		)
+		user.visible_message(user.sexcon.spanify_force(pick(seelie_recv_msgs)))
+	else
+		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to nuzzle [user.p_their()] armpit."))
 	target.sexcon.do_thrust_animate(user)
 
 	user.sexcon.perform_sex_action(user, 0.5, 0, TRUE)
