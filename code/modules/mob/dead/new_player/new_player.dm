@@ -616,8 +616,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 			if(!job_datum)
 				continue
 			// Make sure hiv+ jobs always appear on list, even if unavailable
-			var/is_job_available = (IsJobUnavailable(job_datum.title, TRUE) == JOB_AVAILABLE)
-			if(job_datum.always_show_on_latechoices)
+			var/job_unavailability = IsJobUnavailable(job_datum.title, TRUE)
+			var/is_job_available = (job_unavailability == JOB_AVAILABLE)
+			if(job_datum.always_show_on_latechoices && job_unavailability != JOB_UNAVAILABLE_RACE)
 				is_job_available = TRUE
 			if(is_job_available)
 				available_jobs += job
