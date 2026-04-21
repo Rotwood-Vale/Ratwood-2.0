@@ -1,3 +1,6 @@
+#define ICONOCLAST_BROADCAST_COOLDOWN (5 MINUTES)
+
+
 /datum/advclass/iconoclast //Support Cleric, Heavy armor, unarmed, miracles.
 	name = "Iconoclast"
 	tutorial = "Trained by an Ecclesial sect, you uphold the Ideological purity of the Matthian Creed. Take from the wealthy, give to the worthless, empower. They will look up to you, in search of the God of Robbery's guidance. Be their light in the dark."
@@ -59,7 +62,7 @@
 	head = /obj/item/clothing/head/roguetown/roguehood
 	armor = /obj/item/clothing/suit/roguetown/armor/plate
 	beltr = /obj/item/rogueweapon/katar
-	id = /obj/item/mattcoin
+
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 
@@ -69,3 +72,33 @@
 		if(b.target == H.real_name || b.target_hidden == H.real_name)
 			H.change_stat(STATKEY_STR, 1)
 			H.change_stat(STATKEY_WIL, 1)
+
+	H.verbs += /mob/living/carbon/human/proc/iconoclast_broadcast
+
+/mob/living/carbon/human/proc/iconoclast_broadcast()
+	set name = "Rally Comrades"
+	set category = "Iconoclast"
+	if(stat)
+		return
+	var/announcementinput = input("Speak to your comrades! Be warned you are all free men. They are not obligated to comply.", "Make a rallying cry!") as text|null
+	if(announcementinput)
+		if(!src.can_speak_vocal())
+			to_chat(src, span_warning("I can't speak!"))
+			return FALSE
+		var/area/A = get_area(src)
+		if(!istype(A, /area/rogue/indoors/banditcamp) && !istype(A, /area/rogue/outdoors/banditcamp))
+			to_chat(src, span_warning("I can only speak from within the Bandit Camp."))
+			return FALSE
+		if(!COOLDOWN_FINISHED(src, iconoclast_broadcast))
+			to_chat(src, span_warning("You must wait before speaking again."))
+			return FALSE
+		visible_message(span_warning("[src] takes a deep breath, preparing to make a rallying cry..."))
+		if(do_after(src, 15 SECONDS, target = src))
+			say(announcementinput)
+			for(var/mob/living/carbon/human/M in GLOB.human_list)
+				if(M.mind?.has_antag_datum(/datum/antagonist/bandit))
+					to_chat(M, span_boldnotice("<big><b>The Iconoclast [src.real_name] rallies:</b> [announcementinput]</big>"))
+			COOLDOWN_START(src, iconoclast_broadcast, ICONOCLAST_BROADCAST_COOLDOWN)
+		else
+			to_chat(src, span_warning("Your rallying cry was interrupted!"))
+			return FALSE

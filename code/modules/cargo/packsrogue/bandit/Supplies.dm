@@ -139,7 +139,7 @@
 
 /datum/supply_pack/rogue/Supplies/rubyband
 	name = "Matthian SCOMSTONE"
-	cost = 20
+	cost = 500
 	contains = list(/obj/item/mattcoin)
 
 /datum/supply_pack/rogue/Supplies/Dragonscale

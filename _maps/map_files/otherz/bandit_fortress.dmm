@@ -1403,10 +1403,6 @@
 /area/rogue/indoors/banditcamp)
 "KL" = (
 /obj/structure/table/wood/poor,
-/obj/item/mattcoin,
-/obj/item/mattcoin,
-/obj/item/mattcoin,
-/obj/item/mattcoin,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/banditcamp)
 "KX" = (

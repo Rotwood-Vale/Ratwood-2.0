@@ -53,7 +53,6 @@
 	backr = /obj/item/rogueweapon/shovel/saperka
 	beltl = /obj/item/storage/detpack
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	id = /obj/item/mattcoin
 	backpack_contents = list(
 		/obj/item/restraints/legcuffs/beartrap = 4,
 		/obj/item/flint = 1,

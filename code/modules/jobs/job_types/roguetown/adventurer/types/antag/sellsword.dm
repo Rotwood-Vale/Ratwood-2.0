@@ -54,7 +54,6 @@
 					)
 	mask = /obj/item/clothing/mask/rogue/facemask/steel
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	id = /obj/item/mattcoin
 	H.adjust_blindness(-3)
 	var/weapons = list("The Deserter (Maces, Shields & Crossbows)","The Mercenary (Swords, Shields & Polearms)", "The Hunter (Axes, Archery, Sneaking, Climbing & Athletics)")
 	if(H.mind)
