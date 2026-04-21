@@ -53,7 +53,6 @@
 	neck = /obj/item/clothing/neck/roguetown/coif
 	head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
-	id = /obj/item/mattcoin
 	H.adjust_blindness(-3)
 	var/weapons = list("The Brigand (Axes, Maces & Whips/Flails)","Common Soldiery (Polearms & Swords)", "The Nefarious Dusthead (Knives, Climbing & Athletics)")
 	if(H.mind)

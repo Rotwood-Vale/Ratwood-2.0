@@ -22,7 +22,7 @@
 		)
 	slot_adjust = list(
 		/datum/job/roguetown/manorguard = 5,//split with watchmen
-		/datum/job/roguetown/warden = 4,//split with vanguard
+		/datum/job/roguetown/warden = 5,//split with vanguard
 	)
 	title_adjust = list(
 		/datum/job/roguetown/physician = list(display_title = "Court Physician"),

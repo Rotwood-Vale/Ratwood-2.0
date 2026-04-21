@@ -340,10 +340,12 @@
 	// Update last message time
 	last_message = world.time
 	// Feedback to indicate successful sending
-	playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
+	// playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
+
 	if(raw_message)
 		if(calling)
 			if(calling.calling == src)
+				playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
 				calling.repeat_message(raw_message, src, usedcolor, message_language)
 			return
 		if(length(raw_message) > 100) //When these people talk too much, put that shit in slow motion, yeah
@@ -356,7 +358,11 @@
 		if(message_affix)
 			raw_message = "[raw_message][message_affix]"
 
-		if(garrisonline)
+		/*
+		SCOM repeats the message that it receives. People may still speak to a SCOM, but nothing will happen.
+		if(garrisonline)	
+			// This is for Garrison SCOM messages.
+			playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
 			raw_message = "<span style='color: [GARRISON_SCOM_COLOR]'>[raw_message]</span>" //Prettying up for Garrison line
 			for(var/obj/item/scomstone/garrison/S in SSroguemachine.scomm_machines)
 				S.repeat_message(raw_message, src, usedcolor, message_language)
@@ -368,7 +374,10 @@
 			SSroguemachine.crown?.repeat_message(raw_message, src, usedcolor, message_language)
 			return
 		else
+			// This is for regular SCOM messages.
+			playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
 			addtimer(CALLBACK(src, PROC_REF(repeat_message_scom), raw_message, usedcolor, message_language), NORMAL_SCOM_TRANSMISSION_DELAY)
+		*/
 
 // Repeat message for normal SCOM. Meant to be used in a callback with delay
 /obj/structure/roguemachine/scomm/proc/repeat_message_scom(raw_message, usedcolor, message_language)
