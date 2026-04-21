@@ -34,6 +34,8 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 /proc/apply_character_post_equipment(mob/living/carbon/human/character, client/player)
 	if(!player)
 		player = character.client
+	if(!player)
+		return
 	apply_charflaw_equipment(character, player)
 	apply_prefs_special(character, player)
 	apply_prefs_virtue(character, player)

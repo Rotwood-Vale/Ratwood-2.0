@@ -78,6 +78,8 @@ SUBSYSTEM_DEF(role_class_handler)
 	We will cache it per server session via an assc list with a ckey leading to the datum.
 */
 /datum/controller/subsystem/role_class_handler/proc/setup_class_handler(mob/living/carbon/human/H, advclass_rolls_override = null, register_id = null)
+	if(!H.client)
+		return
 	if(!register_id)
 		if(H.job == "Towner")
 			register_id = "towner"
@@ -89,22 +91,26 @@ SUBSYSTEM_DEF(role_class_handler)
 		GOT_IT.second_step() // And give them a second dose of something they already dosed on
 		return
 
-	var/datum/class_select_handler/XTRA_MEATY = new()
-	XTRA_MEATY.linked_client = H.client
-
-		// Hack for Migrants
+	var/list/resolved_rolls
+	var/has_special_queue = (H.client.ckey in special_session_queue)
+	// Hack for Migrants
 	if(advclass_rolls_override)
-		XTRA_MEATY.class_cat_alloc_attempts = advclass_rolls_override
-		//XTRA_MEATY.PQ_boost_divider = 10
+		resolved_rolls = advclass_rolls_override
 	else
 		var/datum/job/roguetown/RT_JOB = SSjob.GetJob(H.job)
-		if(RT_JOB.advclass_cat_rolls.len)
-			XTRA_MEATY.class_cat_alloc_attempts = RT_JOB.advclass_cat_rolls
+		if(RT_JOB && islist(RT_JOB.advclass_cat_rolls) && RT_JOB.advclass_cat_rolls.len)
+			resolved_rolls = RT_JOB.advclass_cat_rolls
 
-		//if(RT_JOB.PQ_boost_divider)
-			//XTRA_MEATY.PQ_boost_divider = RT_JOB.PQ_boost_divider
+	// If we have no class rolls and no special session queue entries, there's nothing to select
+	if(!resolved_rolls && !has_special_queue)
+		return
+	var/datum/class_select_handler/XTRA_MEATY = new()
+	XTRA_MEATY.linked_client = H.client
+	
+	if(resolved_rolls)
+		XTRA_MEATY.class_cat_alloc_attempts = resolved_rolls
 
-	if(H.client.ckey in special_session_queue)
+	if(has_special_queue)
 		XTRA_MEATY.special_session_queue = list()
 		for(var/funny_key in special_session_queue[H.client.ckey])
 			var/datum/advclass/XTRA_SPECIAL = special_session_queue[H.client.ckey][funny_key]
@@ -114,6 +120,9 @@ SUBSYSTEM_DEF(role_class_handler)
 	XTRA_MEATY.register_id = register_id
 	if(!XTRA_MEATY.initial_setup())
 		return // There was just one advclass that got automatically selected
+	if(!H.client)
+		qdel(XTRA_MEATY)
+		return
 	class_select_handlers[H.client.ckey] = XTRA_MEATY
 
 
