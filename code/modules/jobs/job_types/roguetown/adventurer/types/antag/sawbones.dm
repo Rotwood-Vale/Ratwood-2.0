@@ -43,7 +43,6 @@
 	pants = /obj/item/clothing/under/roguetown/trou
 	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
 	backr = /obj/item/storage/backpack/rogue/satchel
-	id = /obj/item/mattcoin
 	backpack_contents = list(
 					/obj/item/natural/worms/leech/cheele = 1,
 					/obj/item/natural/cloth = 2,
