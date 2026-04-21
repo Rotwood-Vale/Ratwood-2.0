@@ -76,6 +76,10 @@
 	else if(should_wear_masc_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
+	if(SSmapping.config.map_name == "Desert Town")
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
+		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
+		shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	backpack_contents = list(
 		/obj/item/recipe_book/survival,
 		/obj/item/bottle_kit

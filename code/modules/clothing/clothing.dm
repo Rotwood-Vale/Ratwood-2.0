@@ -615,6 +615,43 @@ BLIND     // can't see anything
 		str += "<br><font color = '#808080'>[examine_text]</font>"
 	return str
 
+/obj/item/clothing/show_examine_hover_tooltip()
+	if(..())
+		return TRUE
+	if(slot_flags & ITEM_SLOT_HEAD)
+		return TRUE
+	if(slot_flags & (ITEM_SLOT_BACK | ITEM_SLOT_BACKPACK | ITEM_SLOT_BELT | ITEM_SLOT_HIP | ITEM_SLOT_CLOAK))
+		return FALSE
+	return TRUE
+
+/obj/item/clothing/get_hover_examine_stat_lines(mob/user, self_examine = FALSE)
+	var/list/lines = list()
+	if(armor && (armor.getRating("slash") != 0 || armor.getRating("stab") != 0 || armor.getRating("blunt") != 0 || armor.getRating("piercing") != 0))
+		var/armor_class_text = "None"
+		switch(armor_class)
+			if(ARMOR_CLASS_LIGHT)
+				armor_class_text = "Light"
+			if(ARMOR_CLASS_MEDIUM)
+				armor_class_text = "Medium"
+			if(ARMOR_CLASS_HEAVY)
+				armor_class_text = "Heavy"
+		lines += "<b>ARMOR CLASS:</b> [armor_class_text]"
+		lines += "[colorgrade_rating("🔨 BLUNT", armor.blunt, TRUE)] | [colorgrade_rating("🪓 SLASH", armor.slash, TRUE)]"
+		lines += "[colorgrade_rating("🗡️ STAB", armor.stab, TRUE)] | [colorgrade_rating("🏹 PIERCE", armor.piercing, TRUE)]"
+	if(length(prevent_crits))
+		var/list/prevents = list()
+		for(var/flag in prevent_crits)
+			var/prevent_text = "[flag]"
+			if(flag == BCLASS_PICK)
+				prevent_text = "pick"
+			prevents += capitalize(prevent_text)
+		lines += "<b>PREVENTS CRITS:</b> [prevents.Join(", ")]"
+	if(self_examine)
+		var/true_durability = get_true_durability_percent_text()
+		if(true_durability)
+			lines += "<b>Durability:</b> [true_durability]"
+	return lines
+
 // Handle clicks from chat to show the examine details
 /obj/item/clothing/Topic(href, href_list)
 	if(href_list["show_examine"]) 

@@ -1,4 +1,0 @@
-author: "NotGoldenglow"
-delete-after: True
-changes:
-  - bugfix: "Fixed churn undead affecting vampires harder than expected"

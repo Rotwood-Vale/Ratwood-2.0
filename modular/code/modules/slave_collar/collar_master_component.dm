@@ -439,6 +439,10 @@ GLOBAL_LIST_EMPTY(collar_masters)
 	for(var/obj/item/I in pet.get_equipped_items())
 		if(istype(I, /obj/item/chastity))
 			continue
+		if(HAS_TRAIT(I, TRAIT_NODROP))
+			continue
+		if(I.item_flags & ABSTRACT)
+			continue
 		if(!(I.slot_flags & ITEM_SLOT_NECK))
 			pet.dropItemToGround(I, TRUE)
 	to_chat(pet, span_userdanger("Your collar tingles as it forces you to remove your clothing!"))

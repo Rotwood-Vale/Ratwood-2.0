@@ -27,7 +27,7 @@
 		TRAIT_MEDICINE_EXPERT, TRAIT_HOMESTEAD_EXPERT,
 		TRAIT_ALCHEMY_EXPERT, TRAIT_SEWING_EXPERT,
 		TRAIT_SURVIVAL_EXPERT, TRAIT_NOSTINK,
-		TRAIT_STEELHEARTED,
+		TRAIT_STEELHEARTED, TRAIT_RITUALIST,
 	)
 
 	//You're part of a Pestran sect. Not nobility.
@@ -103,6 +103,7 @@
 							/obj/item/roguekey/keeper = 1,
 							/obj/item/roguekey/keeper_inner = 1,
 							/obj/item/storage/keyring/churchie = 1,
+							/obj/item/ritechalk = 1,
 							/obj/item/rogueweapon/scabbard/sheath = 2)
 	H.put_in_hands(new /obj/item/storage/belt/rogue/surgery_bag/full/physician(H), TRUE)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)

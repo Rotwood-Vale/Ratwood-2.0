@@ -14,11 +14,11 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
-	color = "#ad977d"
+	color = "#c5ab8c"
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	armor_class = ARMOR_CLASS_LIGHT
-	cold_protection = CHEST
+	cold_protection = CHEST | GROIN
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
@@ -29,7 +29,7 @@
 	icon_state = "dgamb"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	allowed_sex = list(MALE, FEMALE)
-	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT 
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
@@ -55,13 +55,13 @@
 	armor = ARMOR_PADDED_GOOD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 25
-	color = "#976E6B"
+	color = "#b49679"
 	sewrepair = TRUE
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	var/shiftable = TRUE
 	var/shifted = FALSE
-	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/attack_right(mob/user)
@@ -266,6 +266,12 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/suit/roguetown/armor/gambeson/zyb
+	name = "desert coat"
+	desc = "A slim-fitting sherwani, a Zybantine-styled coat meant to endure in the desert's climate."
+	icon_state = "sherwani"
+	color = CLOTHING_DARKDRAB
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	name = "padded desert coat"
 	desc = "A slim-fitting sherwani, a Zybantine-styled coat meant to endure in the desert's climate. This one is heavily padded, meant for a warrior to wear."
@@ -274,7 +280,7 @@
 	shiftable = FALSE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
+	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant
@@ -286,7 +292,7 @@
 	shiftable = FALSE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
+	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
@@ -297,7 +303,7 @@
 	shiftable = FALSE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
+	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq

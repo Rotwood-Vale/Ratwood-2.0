@@ -1,0 +1,9567 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/structure/table/wood{
+	icon_state = "largetable"
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"af" = (
+/obj/structure/fluff/railing/border/west,
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"ag" = (
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/banditcamp)
+"aI" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/item/needle,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"bh" = (
+/obj/structure/flora/roguegrass,
+/obj/structure/flora/roguegrass/bush/winter,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"bm" = (
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/indoors/banditcamp)
+"bq" = (
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/outdoors/banditcamp)
+"bs" = (
+/obj/structure/fluff/railing/border{
+	dir = 5
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"bP" = (
+/obj/structure/stairs{
+	dir = 1
+	},
+/obj/structure/fluff/railing/wood/west{
+	pixel_x = -12
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"bY" = (
+/obj/structure/fluff/railing/fence,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/banditcamp)
+"ce" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"cl" = (
+/obj/structure/bars,
+/turf/open/water/river/flow/east,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"cn" = (
+/turf/open/floor/rogue/ruinedwood{
+	dir = 1;
+	icon_state = "vertw"
+	},
+/area/rogue/indoors/banditcamp)
+"cz" = (
+/obj/structure/curtain{
+	color = "#ad885c"
+	},
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"cR" = (
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"cW" = (
+/obj/structure/table/wood{
+	dir = 5;
+	icon_state = "largetable"
+	},
+/obj/item/candle/skull/lit,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"dd" = (
+/obj/structure/table/wood{
+	dir = 1;
+	icon_state = "largetable_mid"
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"dh" = (
+/obj/structure/closet/crate/roguecloset{
+	keylock = 1;
+	lockid = "bandit"
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"dp" = (
+/obj/structure/fluff/railing/fence{
+	pixel_y = -6
+	},
+/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/area/rogue/outdoors/banditcamp)
+"dx" = (
+/obj/structure/flora/roguegrass/bush,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"dP" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"en" = (
+/obj/structure/stairs/d,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"er" = (
+/obj/structure/fluff/railing/wood/east{
+	pixel_x = 8
+	},
+/obj/structure/fluff/railing/wood{
+	pixel_y = -6
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"eA" = (
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/obj/structure/fluff/railing/wood/east{
+	pixel_x = 8
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"eB" = (
+/obj/structure/flora/roguegrass/bush/winter,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"eC" = (
+/obj/effect/landmark/start/bandit{
+	dir = 4
+	},
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"eD" = (
+/obj/structure/bed/rogue,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"eE" = (
+/obj/structure/roguemachine/bounty{
+	color = "#F75D59"
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/outdoors/banditcamp)
+"eK" = (
+/mob/living/simple_animal/pet/cat/rogue/black{
+	name = "Mischief"
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"eM" = (
+/obj/structure/table/wood{
+	dir = 1;
+	icon_state = "largetable"
+	},
+/obj/item/mattcoin,
+/obj/item/mattcoin,
+/obj/item/mattcoin,
+/obj/item/mattcoin,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"fl" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/structure/fluff/walldeco/med6{
+	pixel_x = -32
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
+/obj/structure/fluff/wallclock,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"fm" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood3"
+	},
+/obj/item/candle/skull/lit,
+/obj/structure/fluff/railing/border{
+	dir = 4
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"fC" = (
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/banditcamp)
+"fD" = (
+/obj/structure/fluff/railing/corner/south_west,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"fG" = (
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"fN" = (
+/obj/structure/roguemachine/mail/r{
+	mailtag = "Freemen"
+	},
+/obj/structure/table/wood{
+	dir = 9;
+	icon_state = "largetable"
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"fS" = (
+/obj/effect/landmark/start/bandit,
+/obj/structure/fluff/railing/border{
+	dir = 5
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"ga" = (
+/turf/open/water/cleanshallow,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"gb" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"gc" = (
+/obj/effect/landmark/start/bandit{
+	dir = 4
+	},
+/obj/structure/chair/wood/rogue{
+	dir = 4
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"gt" = (
+/turf/open/transparent/openspace,
+/area/rogue/indoors/banditcamp)
+"gy" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"gO" = (
+/obj/item/reagent_containers/powder/salt,
+/obj/item/reagent_containers/powder/salt,
+/obj/item/reagent_containers/powder/salt,
+/obj/structure/closet/crate/chest,
+/obj/item/reagent_containers/food/snacks/rogue/bread,
+/obj/item/reagent_containers/food/snacks/rogue/bread,
+/obj/item/reagent_containers/food/snacks/rogue/bread,
+/obj/item/reagent_containers/food/snacks/rogue/bread,
+/obj/item/reagent_containers/food/snacks/rogue/friedrat,
+/obj/item/reagent_containers/food/snacks/rogue/friedrat,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/friedrat,
+/obj/item/reagent_containers/food/snacks/rogue/friedrat,
+/obj/item/reagent_containers/food/snacks/rogue/friedrat,
+/obj/item/reagent_containers/food/snacks/rogue/friedrat,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"gS" = (
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"hc" = (
+/obj/structure/stairs/stone{
+	dir = 8
+	},
+/obj/structure/fluff/railing/wood/north{
+	layer = 2.7;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"he" = (
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"hk" = (
+/obj/machinery/light/rogue/candle,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"ho" = (
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"hp" = (
+/obj/machinery/light/rogue/firebowl/stump{
+	pixel_y = 6
+	},
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"hq" = (
+/obj/structure/flora/roguetree/pine{
+	pixel_x = -15
+	},
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"hz" = (
+/obj/structure/fluff/railing/border{
+	dir = 6
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"hG" = (
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"hV" = (
+/obj/structure/flora/rogueshroom/happy/random,
+/turf/open/floor/rogue/dirt,
+/area/rogue/indoors/banditcamp)
+"hX" = (
+/obj/structure/fluff/railing/border{
+	dir = 1
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"hZ" = (
+/obj/structure/rack/rogue,
+/obj/item/clothing/head/roguetown/helmet/leather/volfhelm,
+/obj/item/clothing/head/roguetown/helmet/leather/volfhelm,
+/obj/item/clothing/head/roguetown/helmet/leather/volfhelm,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"ie" = (
+/obj/structure/mineral_door/bars{
+	locked = 1;
+	lockid = "bandit"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/banditcamp)
+"if" = (
+/obj/structure/fluff/railing/corner,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"il" = (
+/obj/machinery/light/rogue/firebowl/standing/green,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"iq" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"ir" = (
+/obj/structure/fluff/railing/wood/north{
+	layer = 2.7;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"iw" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/obj/structure/flora/roguegrass/bush,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"iA" = (
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"iD" = (
+/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/area/rogue/outdoors/banditcamp)
+"jp" = (
+/turf/open/water/river/flow/west,
+/area/rogue/outdoors/banditcamp)
+"jF" = (
+/obj/structure/fluff/railing/wood,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"jP" = (
+/obj/structure/fluff/railing/wood/north{
+	layer = 2.7;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"jS" = (
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"ka" = (
+/obj/structure/table/wood{
+	dir = 10;
+	icon_state = "largetable"
+	},
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"kc" = (
+/turf/closed/wall/mineral/rogue/tent{
+	dir = 8
+	},
+/area/rogue/indoors/banditcamp)
+"kg" = (
+/obj/item/roguegem/random,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave)
+"kh" = (
+/obj/structure/bed/rogue/inn/wool,
+/obj/structure/fluff/walldeco/med3{
+	pixel_y = 32
+	},
+/obj/item/bedsheet/rogue/cloth,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"kn" = (
+/obj/structure/flora/rogueshroom,
+/turf/open/floor/rogue/dirt,
+/area/rogue/indoors/banditcamp)
+"ku" = (
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"ky" = (
+/turf/open/transparent/openspace,
+/area/rogue/under/cave)
+"kL" = (
+/obj/structure/table/wood{
+	dir = 4;
+	icon_state = "largetable"
+	},
+/obj/item/natural/feather,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"kO" = (
+/obj/structure/fluff/statue/knight/r,
+/obj/machinery/light/rogue/candle/red/r,
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/banditcamp)
+"kX" = (
+/obj/structure/fluff/walldeco/med5{
+	pixel_y = 32
+	},
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"lf" = (
+/obj/structure/table/wood{
+	dir = 1;
+	icon_state = "longtable"
+	},
+/obj/item/paper/scroll,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"lh" = (
+/obj/structure/closet/crate/roguecloset,
+/obj/item/flashlight/flare/torch/metal,
+/obj/item/flashlight/flare/torch/metal,
+/obj/item/flashlight/flare/torch/metal,
+/obj/item/flashlight/flare/torch/metal,
+/obj/item/flashlight/flare/torch/metal,
+/obj/item/flashlight/flare/torch/metal,
+/obj/item/flashlight/flare/torch/metal,
+/obj/item/flashlight/flare/torch/metal,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"ll" = (
+/obj/structure/arcyne_wall{
+	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
+	name = "Wall of Greed";
+	max_integrity = 1000
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"ls" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood3"
+	},
+/obj/item/roguekey/walls{
+	lockid = "bandit";
+	name = "old key";
+	pixel_x = -9
+	},
+/obj/item/roguekey/walls{
+	lockid = "bandit";
+	name = "old key";
+	pixel_y = 3
+	},
+/obj/item/roguekey/walls{
+	lockid = "bandit";
+	name = "old key";
+	pixel_x = 12
+	},
+/turf/open/floor/rogue/ruinedwood{
+	dir = 1;
+	icon_state = "vertw"
+	},
+/area/rogue/indoors/banditcamp)
+"lv" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"lF" = (
+/obj/machinery/light/rogue/candle/l,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"lM" = (
+/obj/structure/noose,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"mc" = (
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/banditcamp)
+"me" = (
+/obj/structure/bars,
+/turf/open/water/river/flow,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"mq" = (
+/obj/structure/fluff/railing/border/west{
+	dir = 1
+	},
+/turf/open/transparent/openspace,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"mN" = (
+/obj/structure/table/wood{
+	dir = 1;
+	icon_state = "tablewood1"
+	},
+/obj/structure/table/wood{
+	dir = 1;
+	icon_state = "tablewood1"
+	},
+/obj/item/candle/skull/lit,
+/turf/open/floor/rogue/ruinedwood{
+	dir = 1;
+	icon_state = "vertw"
+	},
+/area/rogue/indoors/banditcamp)
+"mP" = (
+/obj/structure/fluff/railing/border{
+	dir = 1
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"mS" = (
+/obj/structure/flora/rogueshroom/happy/random,
+/turf/open/floor/rogue/grasspurple,
+/area/rogue/indoors/banditcamp)
+"mW" = (
+/obj/structure/toilet,
+/obj/machinery/light/rogue/candle/r,
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/indoors/banditcamp)
+"nb" = (
+/obj/structure/fluff/railing/corner/north_east,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"nd" = (
+/turf/closed/wall/mineral/rogue/stone/window,
+/area/rogue/indoors/banditcamp)
+"nm" = (
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"nX" = (
+/obj/structure/closet/crate/chest,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/natural/feather,
+/turf/open/floor/rogue/ruinedwood{
+	dir = 1;
+	icon_state = "vertw"
+	},
+/area/rogue/indoors/banditcamp)
+"nZ" = (
+/obj/machinery/light/rogue/firebowl/standing/green{
+	pixel_x = 13;
+	pixel_y = 12
+	},
+/obj/machinery/light/rogue/firebowl/standing/green{
+	pixel_x = -11;
+	pixel_y = 12
+	},
+/obj/structure/fluff/statue/evil,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/banditcamp)
+"ob" = (
+/obj/structure/table/wood{
+	dir = 8;
+	icon_state = "largetable"
+	},
+/obj/item/reagent_containers/powder/salt,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"oo" = (
+/obj/machinery/light/rogue/candle/green,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"os" = (
+/obj/item/reagent_containers/glass/bowl,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/banditcamp)
+"oJ" = (
+/obj/structure/bed/rogue/inn/wool,
+/obj/item/bedsheet/rogue/cloth,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"oO" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grasscold,
+/area/rogue)
+"oU" = (
+/obj/structure/rack/rogue,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"pc" = (
+/obj/structure/curtain/brown,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"pn" = (
+/obj/structure/flora/roguegrass/bush,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"px" = (
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/outdoors/banditcamp)
+"pz" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/outdoors/banditcamp)
+"pJ" = (
+/obj/structure/stairs/stone{
+	dir = 4
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/banditcamp)
+"pM" = (
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"pO" = (
+/turf/open/floor/rogue/grasspurple,
+/area/rogue/indoors/banditcamp)
+"pT" = (
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/grasscold,
+/area/rogue)
+"pZ" = (
+/obj/structure/fluff/railing/border/west{
+	dir = 2
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"qe" = (
+/obj/effect/landmark/start/bandit,
+/obj/structure/fluff/railing/border{
+	dir = 9
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"qi" = (
+/obj/structure/stairs/stone{
+	dir = 4
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/banditcamp)
+"ql" = (
+/obj/structure/chair/stool/rogue{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/machinery/light/rogue/torchholder/c{
+	dir = 1;
+	pixel_y = 0
+	},
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"qs" = (
+/obj/structure/fluff/railing/corner/south_west,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"qu" = (
+/obj/structure/arcyne_wall{
+	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
+	name = "Wall of Greed";
+	max_integrity = 1000
+	},
+/obj/machinery/light/rogue/firebowl/standing/red,
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"qC" = (
+/obj/effect/landmark/start/bandit{
+	dir = 8
+	},
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"qE" = (
+/obj/structure/bed/rogue/shit,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/banditcamp)
+"qM" = (
+/obj/structure/fluff/statue/knight/r,
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/indoors/banditcamp)
+"qO" = (
+/obj/structure/fluff/railing/fence{
+	pixel_y = -6
+	},
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"qR" = (
+/obj/structure/rack/rogue,
+/obj/item/coveter,
+/obj/item/coveter,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"qS" = (
+/obj/structure/stairs/stone{
+	dir = 4
+	},
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/banditcamp)
+"qW" = (
+/obj/machinery/light/rogue/torchholder/r,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"rf" = (
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"ri" = (
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/obj/machinery/light/rogue/torchholder/l,
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/banditcamp)
+"rm" = (
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue/under/cave)
+"rz" = (
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"rQ" = (
+/obj/machinery/light/rogue/firebowl/stump{
+	pixel_y = 6
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"sl" = (
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"ss" = (
+/obj/structure/handcart,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"sA" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/banditcamp)
+"sC" = (
+/obj/structure/fluff/railing/border,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"sT" = (
+/obj/structure/fluff/railing/wood/north{
+	layer = 2.7;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"ta" = (
+/obj/structure/stairs/stone,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"th" = (
+/obj/item/needle/thorn,
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/machinery/light/rogue/torchholder/r,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"tn" = (
+/turf/open/transparent/openspace,
+/area/rogue)
+"to" = (
+/obj/structure/roguetent,
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/indoors/banditcamp)
+"tr" = (
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"tx" = (
+/obj/structure/handcart,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"uC" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/item/candle/skull/lit,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"uE" = (
+/turf/closed/wall/mineral/rogue/tent{
+	dir = 4
+	},
+/area/rogue/indoors/banditcamp)
+"uG" = (
+/obj/structure/flora/roguetree/burnt,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"uJ" = (
+/obj/structure/fluff/traveltile/bandit{
+	aportalgoesto = "banditexit3";
+	aportalid = "banditin3"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"uW" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 8
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"ve" = (
+/obj/structure/flora/roguegrass,
+/obj/machinery/gear_painter,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"vv" = (
+/obj/structure/fluff/grindwheel,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"vw" = (
+/obj/effect/landmark/start/banditlate,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"vy" = (
+/obj/structure/stairs/stone{
+	dir = 4
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"vC" = (
+/obj/structure/fluff/psycross/matthios,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"vD" = (
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"vE" = (
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/indoors/banditcamp)
+"vJ" = (
+/turf/closed/wall/mineral/rogue/wooddark,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"vO" = (
+/obj/machinery/light/rogue/hearth,
+/obj/item/reagent_containers/glass/bucket/pot,
+/obj/machinery/light/rogue/oven/south,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors/banditcamp)
+"wp" = (
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/outdoors/banditcamp)
+"wu" = (
+/obj/structure/flora/roguegrass/water/reeds,
+/turf/open/water/cleanshallow,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"wv" = (
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"ww" = (
+/obj/structure/stairs/stone{
+	dir = 8
+	},
+/obj/structure/fluff/railing/wood/north{
+	layer = 2.7;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"wC" = (
+/obj/machinery/light/rogue/torchholder/l,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"wF" = (
+/obj/item/ingot/gold,
+/obj/item/roguecoin/gold/pile,
+/obj/item/gun/ballistic/firearm/arquebus,
+/turf/open/water/cleanshallow,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"wN" = (
+/obj/structure/arcyne_wall{
+	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
+	name = "Wall of Greed";
+	max_integrity = 1000
+	},
+/obj/machinery/light/rogue/firebowl/standing/red,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"wZ" = (
+/turf/open/floor/rogue/grasscold,
+/area/rogue)
+"xd" = (
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/banditcamp)
+"xf" = (
+/obj/structure/fluff/railing/corner/south_east,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"xz" = (
+/obj/structure/fluff/railing/border{
+	dir = 4
+	},
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"xB" = (
+/turf/closed/mineral/random/rogue,
+/area/rogue/indoors/banditcamp)
+"ya" = (
+/obj/structure/fluff/statue/knight,
+/obj/machinery/light/rogue/candle/red/l,
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/banditcamp)
+"yk" = (
+/obj/structure/fluff/railing/border{
+	dir = 6
+	},
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"yr" = (
+/obj/structure/flora/roguetree,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"yu" = (
+/obj/machinery/light/rogue/torchholder/c{
+	dir = 1;
+	pixel_y = 0
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"yy" = (
+/obj/structure/fluff/railing/border/west{
+	dir = 2
+	},
+/turf/open/transparent/openspace,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"yC" = (
+/obj/structure/flora/roguetree/burnt,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"yD" = (
+/obj/structure/flora/roguetree,
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue/outdoors/banditcamp)
+"yF" = (
+/obj/structure/fluff/railing/wood/north{
+	pixel_y = 9
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"yK" = (
+/obj/effect/particle_effect/smoke{
+	lifetime = 14400
+	},
+/turf/open/water/river/flow,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"yM" = (
+/obj/structure/flora/roguegrass/bush/winter,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"yO" = (
+/obj/structure/flora/roguegrass,
+/obj/structure/flora/roguegrass/bush/winter,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"yR" = (
+/turf/closed/wall/mineral/rogue/wooddark,
+/area/rogue/outdoors/banditcamp)
+"zc" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"zp" = (
+/obj/structure/flora/roguetree/burnt,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"zB" = (
+/obj/structure/mineral_door/wood/deadbolt,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"zL" = (
+/obj/structure/table/wood{
+	dir = 10;
+	icon_state = "largetable"
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"zY" = (
+/turf/closed/wall/mineral/rogue/tent{
+	dir = 1
+	},
+/area/rogue/indoors/banditcamp)
+"Aa" = (
+/obj/structure/fluff/railing/wood/east{
+	pixel_x = 8
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Af" = (
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Au" = (
+/obj/structure/fluff/railing/border{
+	dir = 8
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"Ax" = (
+/obj/structure/far_travel,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"AA" = (
+/obj/structure/closet/crate/chest/old_crate,
+/obj/item/reagent_containers/powder/ozium,
+/obj/structure/fluff/walldeco/med{
+	pixel_x = -32
+	},
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"AB" = (
+/obj/structure/closet/crate/chest/gold,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"AE" = (
+/turf/closed,
+/area/rogue)
+"AL" = (
+/obj/structure/flora/roguegrass/bush/winter,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"AM" = (
+/obj/structure/roguemachine/Hoardmaster{
+	pixel_x = -16
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/indoors/banditcamp)
+"AP" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave)
+"Bd" = (
+/turf/open/water/river/flow/east,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Be" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 4
+	},
+/turf/open/floor/rogue/ruinedwood{
+	dir = 1;
+	icon_state = "vertw"
+	},
+/area/rogue/indoors/banditcamp)
+"Bl" = (
+/obj/item/chair/rogue,
+/obj/effect/landmark/start/bandit{
+	dir = 4
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Bo" = (
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/grasscold,
+/area/rogue)
+"Bx" = (
+/obj/structure/fluff/railing/wood{
+	pixel_y = -6
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"BD" = (
+/obj/structure/flora/roguetree/pine{
+	density = 1
+	},
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/banditcamp)
+"BS" = (
+/obj/item/roguecoin/gold/pile,
+/obj/item/roguestatue/gold,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"BW" = (
+/obj/structure/fluff/railing/corner/north_east,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Cp" = (
+/obj/structure/pillory{
+	lockid = list("bandit")
+	},
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/outdoors/banditcamp)
+"Cw" = (
+/obj/structure/fluff/railing/corner/south_east,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"CD" = (
+/obj/structure/fluff/railing/fence{
+	pixel_y = -6
+	},
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/outdoors/banditcamp)
+"Di" = (
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/banditcamp)
+"Do" = (
+/obj/effect/landmark/events/testportal{
+	aportalloc = "bandit"
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"DC" = (
+/obj/structure/flora/rogueshroom,
+/turf/open/floor/rogue/grasspurple,
+/area/rogue/indoors/banditcamp)
+"DK" = (
+/obj/structure/stairs{
+	dir = 1
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"DR" = (
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue/outdoors/banditcamp)
+"En" = (
+/obj/structure/table/wood{
+	icon_state = "tablewood3";
+	pixel_x = 5
+	},
+/obj/structure/fluff/railing/border{
+	dir = 8
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"Ep" = (
+/obj/structure/table/wood{
+	dir = 8;
+	icon_state = "largetable"
+	},
+/obj/item/reagent_containers/glass/cup/skull,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"EA" = (
+/obj/structure/fluff/railing/fence{
+	pixel_y = -6
+	},
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue/outdoors/banditcamp)
+"EF" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 1
+	},
+/turf/open/floor/rogue/ruinedwood{
+	dir = 1;
+	icon_state = "vertw"
+	},
+/area/rogue/indoors/banditcamp)
+"EN" = (
+/obj/structure/table/wood{
+	icon_state = "longtable"
+	},
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Fi" = (
+/obj/structure/fluff/railing/wood/north{
+	layer = 2.7;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Fj" = (
+/obj/structure/fluff/railing/border{
+	dir = 8
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"Fl" = (
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/outdoors/banditcamp)
+"Ft" = (
+/obj/machinery/light/rogue/torchholder/r,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"Fy" = (
+/obj/structure/far_travel,
+/turf/open/water/river/flow/east,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Fz" = (
+/obj/machinery/light/rogue/torchholder/c,
+/turf/open/floor/rogue/ruinedwood{
+	dir = 1;
+	icon_state = "vertw"
+	},
+/area/rogue/indoors/banditcamp)
+"FG" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"FH" = (
+/obj/structure/fluff/railing/wood/west{
+	pixel_x = -12
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"FN" = (
+/obj/item/roguecoin/gold/pile,
+/obj/item/roguegem/green,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"FZ" = (
+/obj/structure/table/optable,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"Gk" = (
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"Gp" = (
+/obj/structure/fluff/railing/border{
+	dir = 5
+	},
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"Gx" = (
+/obj/structure/flora/roguegrass/bush/winter,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/banditcamp)
+"GJ" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"GL" = (
+/obj/item/roguecoin/gold/pile,
+/turf/open/water/cleanshallow,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"GY" = (
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Ha" = (
+/obj/structure/fermentation_keg/random/water,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"Hm" = (
+/turf/open/water/river/flow/west,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Hn" = (
+/obj/structure/fluff/railing/corner,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Hs" = (
+/obj/item/natural/bundle/stick,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"HB" = (
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"HJ" = (
+/obj/structure/table/wood{
+	dir = 1;
+	icon_state = "tablewood1"
+	},
+/obj/item/candle/skull/lit,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"HK" = (
+/obj/item/roguebin/water,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"If" = (
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Ig" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Ik" = (
+/turf/open/water/river/flow,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"In" = (
+/obj/item/rogueweapon/shield/wood,
+/obj/structure/rack/rogue,
+/obj/item/rogueweapon/shield/wood,
+/obj/item/rogueweapon/shield/wood,
+/obj/item/rogueweapon/shield/wood,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"IA" = (
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"IS" = (
+/obj/structure/stairs{
+	dir = 1
+	},
+/turf/open/floor/rogue/ruinedwood{
+	dir = 1;
+	icon_state = "vertw"
+	},
+/area/rogue/indoors/banditcamp)
+"IT" = (
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/banditcamp)
+"IV" = (
+/obj/structure/closet/crate/chest,
+/obj/item/rogue/instrument/accord,
+/obj/item/rogue/instrument/guitar,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"IX" = (
+/obj/structure/table/wood{
+	dir = 4;
+	icon_state = "largetable"
+	},
+/obj/item/reagent_containers/glass/cup/skull,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"Jk" = (
+/obj/structure/arcyne_wall{
+	desc = "A wall of pure arcyne force. Powerful covetous magic protects the dragon's hoard.";
+	name = "Wall of Greed";
+	max_integrity = 1000
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"Jm" = (
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Jt" = (
+/obj/effect/landmark/start/bandit,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"Ju" = (
+/obj/machinery/anvil,
+/obj/item/rogueweapon/hammer/iron,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"JB" = (
+/obj/structure/fluff/railing/fence{
+	pixel_y = -6
+	},
+/turf/closed/wall/mineral/rogue/wooddark,
+/area/rogue/outdoors/banditcamp)
+"JF" = (
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/obj/machinery/light/rogue/torchholder/r,
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/banditcamp)
+"JJ" = (
+/obj/structure/fluff/railing/wood/east{
+	pixel_x = 8
+	},
+/obj/structure/stairs/stone,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"JZ" = (
+/obj/structure/stairs/stone{
+	dir = 8
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Ka" = (
+/obj/structure/fluff/railing/wood/west{
+	pixel_x = -12
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Kb" = (
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/banditcamp)
+"Kn" = (
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/indoors/banditcamp)
+"Ko" = (
+/obj/structure/flora/roguegrass/bush/winter,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"KC" = (
+/obj/structure/chair/frankenstein/zizo,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"KL" = (
+/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/area/rogue/indoors/banditcamp)
+"KZ" = (
+/obj/structure/closet/crate/chest,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"La" = (
+/obj/structure/fermentation_keg/random/beer,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"Lj" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Lm" = (
+/turf/open/floor/rogue/dirt,
+/area/rogue/indoors/banditcamp)
+"Lq" = (
+/obj/structure/fluff/railing/wood/north{
+	layer = 2.7;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Lr" = (
+/obj/structure/fluff/railing/border,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"Lw" = (
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"LD" = (
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave)
+"LM" = (
+/turf/closed/mineral/random/rogue/med,
+/area/rogue/indoors/banditcamp)
+"LT" = (
+/turf/open/water/river/flow,
+/area/rogue/outdoors/banditcamp)
+"LX" = (
+/obj/structure/chair/wood/rogue{
+	dir = 8
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Ma" = (
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"Mb" = (
+/obj/structure/curtain{
+	color = "#ad885c"
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Mk" = (
+/obj/structure/fluff/railing/border{
+	dir = 10
+	},
+/obj/machinery/light/rogue/torchholder/c,
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"Mm" = (
+/turf/closed/mineral/rogue,
+/area/rogue/indoors/banditcamp)
+"Mq" = (
+/obj/structure/fluff/railing/border/east,
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"MA" = (
+/obj/structure/bed/rogue/shit,
+/turf/open/floor/rogue/ruinedwood{
+	dir = 1;
+	icon_state = "vertw"
+	},
+/area/rogue/indoors/banditcamp)
+"MK" = (
+/obj/structure/spider/stickyweb,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"MQ" = (
+/obj/structure/chair/freedomchair,
+/turf/open/floor/rogue/concrete,
+/area/rogue/outdoors/banditcamp)
+"MW" = (
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Nc" = (
+/obj/structure/fluff/railing/border{
+	dir = 4
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"Ne" = (
+/obj/structure/closet/crate/roguecloset{
+	name = "suspicious, squeaking closet";
+	desc = "Is it... breathing?"
+	},
+/mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
+/obj/item/roguegem/random,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave)
+"Nf" = (
+/obj/structure/mineral_door/wood/deadbolt,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Nq" = (
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/obj/structure/fluff/railing/wood/west{
+	pixel_x = -12
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"NQ" = (
+/obj/machinery/light/rogue/candle/r,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"NY" = (
+/obj/structure/stairs/stone{
+	dir = 8
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Oe" = (
+/obj/structure/fluff/railing/fence{
+	pixel_y = -6
+	},
+/turf/closed/wall/mineral/rogue/wooddark,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Of" = (
+/obj/machinery/light/rogue/candle/r,
+/obj/structure/chair/wood/rogue{
+	dir = 8
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"Oj" = (
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue/indoors/banditcamp)
+"Oo" = (
+/obj/structure/table/wood{
+	dir = 6;
+	icon_state = "largetable"
+	},
+/obj/item/paper,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"Oq" = (
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Ou" = (
+/obj/structure/stairs/stone{
+	dir = 4
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Oz" = (
+/turf/closed/mineral/random/rogue/high,
+/area/rogue/under/cave)
+"OB" = (
+/obj/structure/table/wood{
+	dir = 1;
+	icon_state = "tablewood1"
+	},
+/obj/item/candle/skull/lit,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"OG" = (
+/obj/structure/fluff/railing/wood/east{
+	pixel_x = 8
+	},
+/obj/structure/stairs{
+	dir = 1
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"OS" = (
+/turf/closed/wall/mineral/rogue/wooddark,
+/area/rogue/indoors/banditcamp)
+"OV" = (
+/obj/structure/fluff/railing/fence,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"Pd" = (
+/obj/machinery/light/rogue/firebowl/standing,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Pj" = (
+/obj/structure/flora/roguetree/pine,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"PE" = (
+/obj/structure/rack/rogue,
+/obj/item/clothing/cloak/raincloak/blue,
+/obj/item/clothing/cloak/raincloak/brown,
+/obj/item/clothing/cloak/raincloak/red,
+/obj/item/clothing/cloak/raincloak/mortus,
+/obj/item/clothing/mask/rogue/ragmask/red,
+/obj/item/clothing/mask/rogue/ragmask/red,
+/obj/item/clothing/mask/rogue/ragmask/black,
+/obj/item/clothing/mask/rogue/ragmask/black,
+/obj/item/clothing/mask/rogue/sack,
+/obj/item/clothing/mask/rogue/sack,
+/obj/item/clothing/mask/rogue/sack,
+/obj/item/clothing/mask/rogue/sack,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"PF" = (
+/obj/structure/fluff/railing/wood/north{
+	layer = 2.7;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"PN" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"PQ" = (
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"PS" = (
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"PW" = (
+/obj/structure/closet/crate/chest,
+/obj/item/rope/chain,
+/obj/item/rope/chain,
+/obj/item/rope/chain,
+/obj/item/rope/chain,
+/obj/item/rogueweapon/surgery/cautery/branding/slave,
+/turf/open/floor/rogue/ruinedwood{
+	dir = 1;
+	icon_state = "vertw"
+	},
+/area/rogue/indoors/banditcamp)
+"Qa" = (
+/obj/machinery/light/rogue/hearth,
+/obj/item/cooking/pan,
+/obj/machinery/light/rogue/oven/south,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors/banditcamp)
+"Qb" = (
+/obj/structure/flora/roguegrass/water/reeds,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Qc" = (
+/obj/structure/bars,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/banditcamp)
+"Qd" = (
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/banditcamp)
+"Qq" = (
+/obj/machinery/light/rogue/chand,
+/turf/open/transparent/openspace,
+/area/rogue/indoors/banditcamp)
+"Qz" = (
+/obj/structure/fluff/traveltile/bandit{
+	aportalgoesto = "banditexit2";
+	aportalid = "banditin2"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"QC" = (
+/obj/structure/fluff/railing/wood,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"QE" = (
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"QG" = (
+/turf/closed/wall/mineral/rogue/tent,
+/area/rogue/indoors/banditcamp)
+"QI" = (
+/turf/closed/mineral/random/rogue/med,
+/area/rogue/under/cave)
+"QL" = (
+/obj/structure/fluff/railing/border{
+	dir = 9
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"QN" = (
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"QR" = (
+/obj/structure/flora/roguetree{
+	pixel_x = -9
+	},
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"Rr" = (
+/obj/item/reagent_containers/glass/bowl/gold,
+/obj/item/roguecoin/gold/pile,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"Ry" = (
+/obj/machinery/light/rogue/campfire,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"RS" = (
+/obj/structure/table/wood{
+	dir = 9;
+	icon_state = "largetable"
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"RZ" = (
+/obj/effect/landmark/start/bandit{
+	dir = 4
+	},
+/obj/structure/chair/wood/rogue{
+	dir = 8
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Sd" = (
+/obj/structure/stairs{
+	dir = 1
+	},
+/obj/structure/fluff/railing/wood/east{
+	pixel_x = 8
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Sj" = (
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Sk" = (
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Su" = (
+/turf/open/lava,
+/area/rogue/under/cave)
+"SN" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Tf" = (
+/obj/structure/rack/rogue,
+/obj/structure/curtain/red{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"To" = (
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/banditcamp)
+"Tu" = (
+/obj/structure/fluff/railing/border{
+	dir = 9
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"Tv" = (
+/obj/item/roguecoin/gold/pile,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"TJ" = (
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/banditcamp)
+"TN" = (
+/obj/structure/fluff/railing/wood/west{
+	pixel_x = -12
+	},
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"UB" = (
+/obj/structure/flora/roguetree,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"UH" = (
+/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/area/rogue/indoors/banditcamp)
+"UN" = (
+/obj/machinery/light/rogue/candle,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"UT" = (
+/obj/structure/fluff/railing/border{
+	dir = 10
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"UY" = (
+/obj/item/roguecoin/gold/pile,
+/obj/item/candle/candlestick/gold/lit,
+/turf/open/water/cleanshallow,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"UZ" = (
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Vc" = (
+/obj/machinery/light/rogue/candle{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Vd" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 1
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/banditcamp)
+"Vk" = (
+/obj/structure/stairs/stone{
+	dir = 4
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Vl" = (
+/obj/structure/fluff/statue/gargoyle,
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/banditcamp)
+"Vs" = (
+/obj/structure/fluff/traveltile/bandit{
+	aportalgoesto = "banditexit";
+	aportalid = "banditin"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Vt" = (
+/obj/machinery/light/rogue/torchholder/c,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"Vu" = (
+/turf/closed,
+/area/rogue/under/cave)
+"VL" = (
+/obj/structure/fluff/wallclock/r,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"VM" = (
+/obj/machinery/gear_painter,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"VN" = (
+/obj/structure/flora/roguegrass,
+/obj/machinery/light/rogue/torchholder/r,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/banditcamp)
+"We" = (
+/obj/structure/closet/crate/roguecloset,
+/obj/item/clothing/mask/cigarette/rollie/nicotine,
+/obj/item/clothing/mask/cigarette/rollie/nicotine,
+/obj/item/clothing/mask/cigarette/rollie/nicotine,
+/obj/item/clothing/mask/cigarette/rollie/nicotine,
+/obj/item/clothing/mask/cigarette/rollie/nicotine,
+/obj/item/storage/roguebag,
+/obj/item/storage/roguebag,
+/obj/item/storage/roguebag,
+/obj/item/storage/roguebag,
+/obj/item/storage/roguebag,
+/obj/item/storage/belt/rogue/pouch,
+/obj/item/storage/belt/rogue/pouch,
+/obj/item/storage/belt/rogue/pouch,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Wi" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/turf/open/floor/rogue/snowpatchy,
+/area/rogue/outdoors/banditcamp)
+"Wn" = (
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Wo" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"Wq" = (
+/obj/structure/fluff/traveltile/bandit{
+	aportalgoesto = "banditexit2";
+	aportalid = "banditin2"
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"WC" = (
+/obj/structure/stairs/stone{
+	dir = 4
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/banditcamp)
+"WG" = (
+/obj/effect/landmark/start/bandit{
+	dir = 8
+	},
+/obj/structure/chair/wood/rogue{
+	dir = 8
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"WQ" = (
+/obj/machinery/light/rogue/candle/l,
+/obj/structure/fermentation_keg/random/beer,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"WR" = (
+/obj/structure/bed/rogue{
+	dir = 1
+	},
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/banditcamp)
+"WY" = (
+/turf/open/floor/rogue/snowrough,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"Xl" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 1
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Xn" = (
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"XD" = (
+/obj/machinery/light/rogue/torchholder/r,
+/obj/structure/rack/rogue,
+/obj/structure/curtain/red{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"XE" = (
+/obj/structure/flora/roguetree,
+/turf/open/water/river/flow,
+/area/rogue/outdoors/banditcamp)
+"XX" = (
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/indoors/banditcamp)
+"Yc" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/banditcamp)
+"Yp" = (
+/obj/structure/mirror,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"Yt" = (
+/turf/open/transparent/openspace,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"YH" = (
+/obj/machinery/light/rogue/firebowl/standing,
+/turf/open/floor/rogue/twig,
+/area/rogue/indoors/banditcamp)
+"YT" = (
+/obj/item/reagent_containers/glass/cup/golden,
+/obj/item/roguestatue/gold/loot,
+/obj/item/rogueweapon/sword/decorated,
+/obj/item/roguecoin/gold/pile,
+/turf/open/water/cleanshallow,
+/area/rogue/indoors/banditcamp/hoardmaster)
+"YU" = (
+/obj/structure/fermentation_keg/random/water,
+/obj/machinery/light/rogue/torchholder/c,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/banditcamp)
+"YX" = (
+/turf/open/water/cleanshallow,
+/area/rogue/outdoors/banditcamp)
+"Ze" = (
+/obj/item/rogueweapon/pick,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/banditcamp)
+"ZO" = (
+/obj/item/rogueweapon/pick,
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"ZR" = (
+/obj/structure/flora/roguegrass/bush/winter,
+/turf/open/floor/rogue/grasscold,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+"ZS" = (
+/obj/item/candle/skull,
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/banditcamp)
+"ZT" = (
+/obj/structure/spider/stickyweb,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/woods{
+	first_time_text = "Murder Pass";
+	name = "Bandit Woods"
+	})
+
+(1,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(2,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(3,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(4,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+Oj
+Oj
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(5,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+bm
+WR
+dh
+bm
+dh
+WR
+bm
+bm
+bm
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(6,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+Oj
+bm
+pc
+bm
+bm
+bm
+pc
+bm
+dh
+bm
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(7,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+bm
+bm
+hk
+Sj
+lF
+Sj
+Sj
+pc
+WR
+bm
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(8,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+bm
+UZ
+Sj
+PS
+OB
+PS
+Vc
+bm
+bm
+bm
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+Ik
+Ik
+Ik
+Bd
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(9,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+bm
+bm
+Yp
+Sj
+NQ
+Sj
+Sj
+pc
+eD
+bm
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+Ik
+Ik
+vJ
+Ik
+Ik
+Bd
+he
+he
+he
+he
+he
+he
+Oq
+Oq
+Oq
+Oq
+Oq
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(10,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+Oj
+bm
+pc
+bm
+bm
+bm
+pc
+bm
+dh
+bm
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+Ik
+Ik
+Ik
+Ik
+Ik
+Bd
+Bd
+Bd
+he
+he
+he
+Wn
+Oq
+GY
+UB
+GY
+Oq
+Oq
+Oq
+Oq
+Oq
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(11,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+bm
+eD
+dh
+bm
+dh
+eD
+bm
+bm
+bm
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+Ik
+Hm
+he
+Ik
+Ik
+Bd
+Bd
+Bd
+he
+he
+he
+Wn
+QE
+GY
+GY
+GY
+Oq
+GY
+Oq
+Oq
+Oq
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(12,1,1) = {"
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+Oj
+Oj
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+Ik
+Bd
+Bd
+he
+he
+he
+Wn
+QE
+GY
+Oq
+Hs
+MW
+GY
+dP
+GY
+Oq
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(13,1,1) = {"
+AE
+he
+he
+he
+Oz
+Oz
+Oz
+kg
+Oz
+Oz
+Oz
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+ga
+Bd
+Bd
+ga
+he
+he
+Wn
+Oq
+GY
+dP
+MW
+Ry
+MW
+GY
+dP
+pn
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(14,1,1) = {"
+AE
+he
+he
+Oz
+Oz
+Oz
+Oz
+LD
+LD
+Oz
+Oz
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+ga
+Ik
+Bd
+ga
+he
+he
+Wn
+pn
+dP
+ss
+GY
+MW
+Sk
+GY
+GY
+Oq
+Oq
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(15,1,1) = {"
+he
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+wu
+ga
+Bd
+ga
+he
+he
+Wn
+GY
+Oq
+GY
+GY
+GY
+Sk
+GY
+dP
+GY
+GY
+Oq
+iw
+he
+he
+he
+AE
+AE
+"}
+(16,1,1) = {"
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+ga
+Bd
+ga
+he
+he
+Wn
+Lj
+Sk
+Ka
+bP
+FH
+Sk
+Sk
+Sk
+Sk
+Sk
+Sk
+Sk
+Sk
+Vs
+he
+AE
+AE
+"}
+(17,1,1) = {"
+he
+Ne
+LD
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+ga
+Bd
+ga
+he
+he
+Wn
+DK
+Xn
+Xn
+DK
+Xn
+Xn
+Sk
+Sk
+Sk
+Sk
+Sk
+Sk
+Sk
+Vs
+he
+AE
+AE
+"}
+(18,1,1) = {"
+he
+LD
+LD
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+kg
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+ga
+Bd
+ga
+he
+he
+Wn
+OG
+Xn
+Aa
+Sd
+Xn
+Sk
+Sk
+Sk
+Sk
+Sk
+Sk
+Sk
+Sk
+Vs
+he
+AE
+AE
+"}
+(19,1,1) = {"
+he
+Oz
+Oz
+Oz
+Oz
+kg
+Oz
+Oz
+QI
+rm
+rm
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+ga
+Bd
+ga
+he
+he
+Wn
+FG
+GY
+GY
+GY
+GY
+Oq
+GY
+dP
+Lj
+GY
+Oq
+iq
+he
+he
+he
+AE
+AE
+"}
+(20,1,1) = {"
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+QI
+QI
+QI
+QI
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+ga
+Ik
+Bd
+ga
+Wn
+Wn
+dP
+GY
+UB
+GY
+GY
+dP
+GY
+GY
+Oq
+Oq
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(21,1,1) = {"
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+QI
+QI
+LD
+LD
+QI
+rm
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+ga
+ga
+Bd
+ga
+Wn
+Wn
+Wn
+GY
+dP
+pn
+GY
+GY
+GY
+GY
+GY
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(22,1,1) = {"
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+QI
+LD
+LD
+LD
+rm
+rm
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+ga
+Bd
+ga
+Wn
+Wn
+Wn
+Wn
+GY
+GY
+GY
+GY
+Oq
+Oq
+GY
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(23,1,1) = {"
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+QI
+LD
+LD
+rm
+rm
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+ga
+Bd
+ga
+Wn
+Wn
+Wn
+Wn
+dP
+QE
+GY
+Oq
+Oq
+Oq
+GY
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(24,1,1) = {"
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+QI
+LD
+LD
+rm
+rm
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+ga
+Bd
+ga
+Wn
+Wn
+Wn
+Wn
+Wn
+GY
+Oq
+Wn
+Wn
+Wn
+Sk
+Sk
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(25,1,1) = {"
+he
+Oz
+Oz
+kg
+LD
+Oz
+Oz
+QI
+QI
+he
+ZO
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+ga
+Bd
+ga
+Wn
+Wn
+Wn
+Wn
+Wn
+QE
+QE
+UB
+Wn
+Wn
+gy
+Qb
+Sk
+Sk
+Wn
+he
+he
+AE
+AE
+"}
+(26,1,1) = {"
+he
+Oz
+Oz
+AP
+LD
+Oz
+Oz
+Oz
+Oz
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+ga
+Ik
+Bd
+ga
+Wn
+Wn
+Wn
+Wn
+QE
+ga
+ga
+ga
+ga
+ga
+ga
+ga
+Qb
+Sk
+he
+he
+AE
+AE
+"}
+(27,1,1) = {"
+he
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+wu
+ga
+Bd
+ga
+Wn
+Wn
+Wn
+Wn
+ga
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+ga
+Qb
+he
+he
+AE
+AE
+"}
+(28,1,1) = {"
+AE
+he
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+ga
+Bd
+ga
+Wn
+Wn
+Wn
+ga
+Ik
+Ik
+Hm
+Ik
+Ik
+Ik
+Ik
+Ik
+Bd
+ga
+he
+he
+AE
+AE
+"}
+(29,1,1) = {"
+AE
+he
+he
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+ga
+Bd
+Bd
+ga
+Wn
+Wn
+ga
+Hm
+Hm
+ga
+ga
+ga
+ga
+he
+me
+cl
+cl
+he
+he
+AE
+AE
+"}
+(30,1,1) = {"
+AE
+AE
+AE
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+ga
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Hm
+Hm
+he
+he
+he
+he
+he
+he
+Bd
+Bd
+Bd
+he
+AE
+AE
+"}
+(31,1,1) = {"
+AE
+AE
+AE
+he
+Oz
+Oz
+Oz
+Oz
+Oz
+he
+he
+rm
+rm
+rm
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+ga
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Hm
+he
+he
+he
+he
+he
+he
+Bd
+Bd
+Bd
+he
+AE
+AE
+"}
+(32,1,1) = {"
+AE
+AE
+AE
+he
+he
+Oz
+Oz
+Oz
+Oz
+rm
+rm
+rm
+Su
+Su
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+ga
+Ik
+Ik
+Hm
+ga
+ga
+ga
+wu
+he
+he
+he
+he
+he
+he
+Bd
+Bd
+Bd
+he
+AE
+AE
+"}
+(33,1,1) = {"
+AE
+AE
+AE
+he
+he
+he
+Oz
+Oz
+LD
+Su
+Su
+Su
+Su
+rm
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+wu
+ga
+ga
+he
+ga
+ga
+he
+he
+he
+he
+he
+he
+he
+Bd
+Bd
+Bd
+he
+AE
+AE
+"}
+(34,1,1) = {"
+AE
+AE
+AE
+AE
+he
+he
+he
+LD
+LD
+Su
+Su
+rm
+rm
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+Bd
+Bd
+Bd
+he
+AE
+AE
+"}
+(35,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+rm
+Su
+Su
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+Bd
+Bd
+Bd
+he
+AE
+AE
+"}
+(36,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+rm
+Su
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+Fy
+Fy
+Fy
+he
+AE
+AE
+"}
+(37,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+rm
+Su
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(38,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+rm
+Su
+rm
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(39,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+rm
+Su
+Su
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(40,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+rm
+Su
+Su
+rm
+rm
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(41,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+rm
+rm
+Su
+Su
+Su
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Oq
+Oq
+Wn
+Oq
+Oq
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+Wn
+If
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(42,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+rm
+rm
+rm
+rm
+rm
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+Wn
+SN
+Wn
+Wn
+Oq
+Oq
+Ig
+GY
+GY
+dP
+yF
+ta
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+jS
+Sk
+Sk
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(43,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wq
+GY
+GY
+GY
+ta
+GY
+Oq
+dP
+pn
+Ou
+GY
+Sk
+ta
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+JZ
+JZ
+Wn
+yr
+Wn
+Wn
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(44,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Qz
+Sk
+Sk
+Sk
+ta
+Sk
+Sk
+Xn
+ta
+Xn
+Sk
+Sk
+JJ
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+GY
+Sk
+Sk
+Sk
+jS
+GY
+Ax
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(45,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Qz
+GY
+Sk
+Sk
+ta
+Sk
+Sk
+Sk
+ta
+GY
+GY
+iq
+dP
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+dP
+GY
+dP
+Sk
+jS
+Sk
+Ax
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(46,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+Wn
+Ig
+Wn
+Wn
+Ig
+dP
+Oq
+Oq
+Wn
+Oq
+Oq
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+wv
+Wn
+GJ
+Wn
+ZT
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(47,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(48,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(49,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(50,1,1) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+
+(1,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(2,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(3,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+uJ
+uJ
+uJ
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(4,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+Xn
+Xn
+il
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(5,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+Oj
+Oj
+Oj
+Oj
+bm
+bm
+bm
+bm
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+Xn
+Xn
+MK
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(6,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+Oj
+WQ
+Ha
+La
+bm
+qR
+IV
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+MK
+Mb
+Wn
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(7,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+Oj
+Oj
+YU
+Sj
+Sj
+Sj
+Sj
+Sj
+Pd
+bm
+Sj
+bm
+gt
+gt
+gt
+gt
+gt
+bm
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+wZ
+Bo
+xf
+Xn
+nb
+oO
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(8,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+Oj
+EN
+Jt
+Sj
+Sj
+Sj
+Sj
+Sj
+Sj
+Nf
+UZ
+gt
+gt
+gt
+Qq
+gt
+gt
+bm
+he
+he
+he
+Ik
+Ik
+Ik
+he
+yK
+Ik
+Ik
+Ik
+Ik
+Yt
+yy
+Jm
+mq
+wZ
+pT
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(9,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+Oj
+lf
+vw
+Sj
+Sj
+eC
+Bl
+gc
+RZ
+bm
+Sj
+bm
+gt
+gt
+gt
+gt
+gt
+bm
+he
+he
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Ik
+Yt
+yy
+Jm
+mq
+Yt
+Yt
+he
+he
+he
+he
+he
+tn
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(10,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+bm
+fm
+fS
+Sj
+Sj
+RS
+Ep
+ob
+zL
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+kc
+Oj
+Oj
+Oj
+Oj
+Oj
+yK
+Ik
+Ik
+Ik
+Ik
+Yt
+Yt
+yy
+Jm
+mq
+Yt
+Yt
+Yt
+he
+he
+he
+GY
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Oq
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(11,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+bm
+vO
+mP
+eK
+Sj
+eM
+dd
+dd
+ac
+bm
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+QG
+fl
+Lw
+FZ
+AA
+zY
+Wn
+Wn
+Wn
+Ik
+Ik
+Yt
+Yt
+pZ
+Jm
+mq
+Yt
+Yt
+Yt
+IA
+WY
+fG
+fG
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Oq
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(12,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+bm
+Qa
+mP
+Sj
+Sj
+cW
+kL
+IX
+Oo
+bm
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+QG
+oo
+Lw
+Lw
+ql
+zY
+Wn
+Wn
+Wn
+Wn
+gb
+WY
+QE
+qs
+Xn
+if
+Yt
+Yt
+Yt
+WY
+WY
+fG
+gS
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+dP
+Oq
+he
+he
+he
+he
+AE
+AE
+"}
+(13,1,2) = {"
+AE
+AE
+AE
+AE
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+rm
+he
+bm
+En
+qe
+Sj
+Sj
+WG
+WG
+qC
+WG
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+Pj
+AL
+QG
+KC
+Lw
+Lw
+uC
+zY
+DR
+dp
+Wn
+WY
+fG
+QE
+gS
+fG
+Xn
+QE
+Yt
+Yt
+Yt
+Yt
+WY
+ce
+QE
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+dP
+GY
+Oq
+he
+he
+he
+AE
+AE
+"}
+(14,1,2) = {"
+AE
+AE
+AE
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+rm
+he
+Oj
+Ha
+vw
+Sj
+Sj
+Sj
+Sj
+Sj
+Sj
+bm
+In
+VM
+bm
+PE
+ZS
+bm
+bm
+hq
+OS
+OS
+cz
+cz
+kc
+OS
+DR
+dp
+QE
+QE
+QE
+fG
+fG
+fG
+Xn
+QE
+Yt
+Yt
+Yt
+Yt
+fG
+gS
+GY
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+dP
+GY
+Oq
+Oq
+he
+AE
+AE
+"}
+(15,1,2) = {"
+AE
+AE
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+rm
+he
+bm
+gO
+sl
+Sj
+Sj
+VL
+Sj
+Sj
+NQ
+Xl
+Sj
+Sj
+Sj
+Sj
+Sj
+Tf
+PQ
+rz
+rz
+QG
+kX
+Lw
+YH
+zY
+rz
+iD
+JB
+QE
+fG
+WY
+fG
+fG
+Xn
+gS
+Yt
+Yt
+Yt
+Yt
+fG
+ce
+Oq
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+GY
+Oq
+he
+AE
+AE
+"}
+(16,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+rm
+he
+bm
+bm
+Of
+HJ
+LX
+bm
+fN
+ka
+bm
+bm
+Sj
+Sj
+qW
+Sj
+Sj
+XD
+PQ
+rz
+Ma
+OS
+UN
+Lw
+HK
+zY
+Ma
+rz
+dp
+fG
+fG
+fG
+QE
+QE
+Xn
+Lj
+QE
+Yt
+Yt
+Yt
+Lj
+gy
+er
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+AE
+AE
+"}
+(17,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+Vu
+rm
+he
+he
+bm
+bm
+bm
+bm
+bm
+bm
+PQ
+bm
+bm
+lh
+We
+bm
+Sj
+hZ
+bm
+bm
+Ma
+HB
+zB
+Lw
+Lw
+Lw
+zY
+nm
+Ma
+dp
+fG
+fG
+gS
+FG
+TN
+Xn
+fD
+af
+af
+af
+af
+Hn
+Xn
+DK
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+AE
+AE
+"}
+(18,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+rm
+rm
+rm
+rm
+rm
+rm
+rm
+ky
+Oz
+Oz
+fC
+uG
+Ma
+Ma
+Ma
+Ma
+bm
+bm
+PQ
+bm
+uW
+bm
+bm
+ve
+Ma
+HB
+QG
+kh
+aI
+oJ
+zY
+Ma
+yR
+JB
+WY
+WY
+fG
+Sk
+Xn
+Xn
+Cw
+Mq
+Mq
+Mq
+Mq
+BW
+Xn
+Sd
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+AE
+AE
+"}
+(19,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+rm
+rm
+rm
+rm
+rm
+rm
+rm
+Oz
+Oz
+mc
+rz
+rz
+rz
+yk
+xz
+Gp
+Ma
+Ma
+nm
+nm
+HB
+wC
+zc
+Ma
+HB
+HB
+OS
+uE
+hG
+uE
+OS
+rz
+JB
+fG
+WY
+fG
+jF
+vy
+Vk
+Lq
+Lj
+QE
+Yt
+Yt
+Yt
+Lj
+gy
+Bx
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+dP
+Oq
+he
+AE
+AE
+"}
+(20,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+rm
+rm
+rm
+rm
+rm
+rm
+Oj
+UH
+OS
+Kb
+Kb
+OS
+rz
+sC
+MQ
+nm
+Ma
+zp
+nm
+HB
+HB
+nm
+zc
+Ma
+HB
+HB
+zc
+nm
+Ma
+rz
+rz
+rz
+Gk
+Oe
+gS
+fG
+Sk
+Xn
+Sk
+sT
+QE
+QE
+Yt
+Yt
+Yt
+Yt
+fG
+fG
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+dP
+pn
+Oq
+he
+he
+AE
+AE
+"}
+(21,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+rm
+rm
+rm
+ky
+ky
+QI
+LM
+KL
+qE
+os
+ag
+Kb
+rz
+Lr
+bq
+Vt
+nm
+nm
+HB
+HB
+HB
+HB
+HB
+HB
+HB
+HB
+HB
+nm
+nm
+Ma
+rz
+Qd
+Fl
+qO
+fG
+QE
+Xn
+Xn
+jP
+fG
+WY
+fG
+Yt
+Yt
+Yt
+Yt
+IA
+fG
+QE
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+dP
+GY
+Oq
+he
+he
+he
+AE
+AE
+"}
+(22,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+rm
+rm
+ky
+ky
+ky
+xB
+xB
+KL
+ag
+ag
+qE
+Kb
+rz
+Lr
+eE
+Do
+HB
+HB
+HB
+PN
+nm
+Ma
+nm
+HB
+Ma
+Ma
+HB
+HB
+nm
+zc
+Wo
+Fl
+CD
+rQ
+tx
+QC
+vy
+vy
+sT
+WY
+fG
+fG
+QE
+Yt
+Yt
+Yt
+WY
+WY
+ku
+lv
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+dP
+Oq
+he
+he
+he
+he
+AE
+AE
+"}
+(23,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+rm
+rm
+ky
+ky
+QI
+xB
+UH
+UH
+OS
+ie
+Qc
+OS
+bh
+Mk
+Au
+Tu
+HB
+HB
+Yc
+nm
+Ma
+rz
+Ma
+HB
+rz
+rz
+yC
+xd
+HB
+HB
+nm
+OV
+jS
+rf
+Nq
+Sk
+Xn
+Sk
+QN
+WY
+UB
+fG
+QE
+Yt
+Yt
+Yt
+fG
+WY
+fG
+UB
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+dP
+Oq
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(24,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+rm
+rm
+ky
+ky
+QI
+xB
+qE
+ag
+ie
+cn
+cn
+OS
+OS
+nm
+HB
+HB
+hz
+Nc
+bs
+Ma
+yC
+rz
+YX
+IT
+YX
+YX
+rz
+Ma
+xd
+xd
+HB
+Vd
+tr
+Xn
+jS
+Xn
+Xn
+lv
+QE
+WY
+QE
+QE
+fG
+Yt
+Yt
+Yt
+fG
+WY
+QE
+QE
+lv
+Yt
+Yt
+Wn
+Wn
+Wn
+Wn
+he
+he
+he
+he
+he
+he
+AE
+AE
+"}
+(25,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+rm
+rm
+rm
+rm
+KL
+Ze
+ag
+ag
+Qc
+cn
+cn
+EF
+IS
+HB
+HB
+HB
+en
+Cp
+hX
+Ma
+lM
+YX
+YX
+IT
+YX
+YX
+YX
+rz
+xd
+xd
+xd
+Vd
+tr
+Xn
+tr
+Sk
+Sk
+QE
+fG
+WY
+QE
+gS
+fG
+Yt
+Yt
+Yt
+fG
+WY
+gS
+fG
+fG
+Yt
+Yt
+Yt
+Wn
+Wn
+Wn
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+"}
+(26,1,2) = {"
+AE
+Vu
+Vu
+Vu
+Vu
+rm
+rm
+rm
+rm
+OS
+UH
+Qc
+UH
+OS
+Fz
+cn
+OS
+OS
+Vt
+HB
+HB
+en
+px
+hX
+rz
+rz
+YX
+YX
+nZ
+YX
+YX
+YX
+rz
+xd
+nm
+QR
+bY
+jS
+Sk
+eA
+Sk
+Sk
+QE
+QN
+WY
+QE
+QE
+fG
+Yt
+Yt
+Yt
+Yt
+WY
+fG
+Af
+QE
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+he
+AE
+AE
+AE
+AE
+AE
+"}
+(27,1,2) = {"
+AE
+AE
+Vu
+Vu
+Vu
+rm
+rm
+rm
+rm
+Oj
+KL
+qE
+ag
+ie
+cn
+cn
+cn
+Kb
+Ma
+nm
+HB
+en
+Cp
+hX
+Ma
+rz
+YX
+YX
+YX
+YX
+YX
+rz
+nm
+xd
+nm
+Wi
+Fl
+CD
+hp
+QE
+QE
+Xn
+QE
+fG
+WY
+QE
+UB
+WY
+Yt
+Yt
+Yt
+Yt
+WY
+fG
+fG
+Sk
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+he
+AE
+AE
+AE
+AE
+AE
+"}
+(28,1,2) = {"
+AE
+AE
+AE
+Vu
+Vu
+rm
+rm
+rm
+rm
+Oj
+KL
+os
+ag
+Qc
+nX
+PW
+ls
+Kb
+yO
+zc
+nm
+UT
+Fj
+QL
+Ma
+Ma
+YX
+jp
+YX
+YX
+YX
+Ma
+nm
+HB
+nm
+Ma
+rz
+Fl
+JB
+fG
+QE
+Xn
+QE
+fG
+WY
+gS
+fG
+WY
+QE
+Yt
+Yt
+Yt
+gy
+fG
+gy
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+"}
+(29,1,2) = {"
+AE
+AE
+AE
+AE
+Vu
+rm
+rm
+rm
+rm
+Oj
+OS
+ag
+qE
+OS
+UH
+Kb
+UH
+OS
+vC
+Ma
+bq
+nm
+HB
+Yc
+nm
+Ma
+Ma
+jp
+rz
+rz
+uG
+HB
+nm
+HB
+zc
+Ma
+rz
+rz
+iD
+QE
+fG
+Xn
+Sk
+lv
+fG
+WY
+WY
+fG
+lv
+Yt
+Yt
+Yt
+Yt
+If
+Sk
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+"}
+(30,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+rm
+rm
+OS
+UH
+UH
+OS
+wp
+wp
+wp
+Ma
+rz
+Ma
+nm
+nm
+xd
+HB
+HB
+xd
+IT
+IT
+IT
+HB
+HB
+HB
+HB
+yu
+QG
+uE
+uE
+rz
+iD
+gS
+ce
+PF
+Sk
+FG
+fG
+Ko
+WY
+fG
+QE
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+"}
+(31,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+Oz
+Oj
+Oj
+Oj
+XX
+XX
+XX
+sA
+fC
+sA
+BD
+fC
+VN
+nm
+xd
+xd
+xd
+Ft
+Ma
+jp
+Ma
+HB
+HB
+HB
+nm
+nm
+to
+mW
+zY
+rz
+CD
+QE
+fG
+Fi
+Sk
+ZR
+fG
+WY
+WY
+fG
+QE
+gy
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+"}
+(32,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+LD
+Oj
+Oj
+XX
+XX
+gt
+XX
+Lm
+bm
+bm
+bm
+sA
+XX
+qS
+qi
+WC
+WC
+XX
+Ma
+jp
+OS
+Be
+uE
+OS
+Ma
+Ma
+QG
+kc
+kc
+yM
+CD
+lv
+fG
+Fi
+Sk
+ZR
+fG
+WY
+WY
+fG
+QE
+gy
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(33,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+ky
+Oj
+gt
+gt
+kn
+Lm
+wN
+Jk
+Jk
+Vl
+Lm
+XX
+XX
+qM
+pJ
+pJ
+qM
+XX
+LT
+jp
+QG
+cn
+cn
+zY
+Ma
+Ma
+pM
+rz
+rz
+yM
+JB
+WY
+eB
+Sk
+Xn
+sT
+fG
+WY
+WY
+fG
+QE
+rf
+GY
+Yt
+Yt
+Yt
+dP
+Yt
+Yt
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(34,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+ky
+Oj
+gt
+pO
+XX
+Jk
+FN
+UY
+Tv
+ll
+Di
+ya
+ri
+cR
+Di
+Di
+oU
+nd
+jp
+AL
+QG
+cn
+cn
+zY
+Ma
+rz
+rz
+rz
+iA
+DR
+EA
+fG
+jP
+Xn
+Xn
+sT
+fG
+WY
+WY
+WY
+QE
+QE
+dP
+GY
+Oq
+GY
+GY
+Oq
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(35,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+LD
+Oj
+Oj
+XX
+XX
+Jk
+AB
+wF
+GL
+ll
+AM
+Di
+To
+Di
+Di
+Di
+Ju
+XX
+jp
+Ma
+QG
+mN
+MA
+zY
+iA
+Ma
+iA
+Ma
+yM
+DR
+QE
+fG
+hc
+JZ
+JZ
+sT
+WY
+WY
+WY
+WY
+WY
+QE
+QE
+GY
+GY
+GY
+Oq
+he
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(36,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+Oz
+Oj
+Oj
+mS
+Lm
+Jk
+AB
+YT
+GL
+ll
+vE
+Di
+To
+Di
+Di
+Di
+oU
+nd
+jp
+Ma
+OS
+kc
+kc
+OS
+Pj
+rz
+rz
+rz
+Qd
+DR
+Af
+WY
+FG
+Xn
+Xn
+QE
+WY
+ho
+WY
+fG
+QE
+QE
+QE
+QE
+gS
+GY
+he
+he
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(37,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+Oz
+pO
+pO
+pO
+Kn
+Jk
+BS
+GL
+Rr
+ll
+Di
+kO
+JF
+cR
+cR
+cR
+XX
+XX
+jp
+wp
+Ma
+rz
+rz
+Ma
+Ma
+Ma
+Ma
+TJ
+yD
+DR
+Wn
+WY
+vD
+Sk
+Xn
+QE
+fG
+WY
+fG
+fG
+QE
+gS
+QE
+QE
+GY
+Oq
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(38,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+Oz
+pO
+gt
+DC
+bm
+Lm
+qu
+Jk
+Jk
+Vl
+Lm
+XX
+XX
+vv
+th
+KZ
+XX
+XE
+jp
+fC
+pz
+Pj
+fC
+TJ
+Gx
+TJ
+TJ
+TJ
+DR
+DR
+Wn
+WY
+WY
+Fi
+Xn
+Sk
+jP
+WY
+Af
+fG
+fG
+fG
+fG
+fG
+Oq
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(39,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+Oj
+gt
+gt
+pO
+Lm
+bm
+hV
+bm
+Lm
+Lm
+bm
+XX
+XX
+XX
+XX
+XX
+DR
+bq
+bq
+TJ
+TJ
+TJ
+TJ
+TJ
+TJ
+TJ
+TJ
+DR
+DR
+Wn
+Wn
+fG
+ww
+NY
+JZ
+ir
+dx
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(40,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+Oj
+gt
+gt
+DC
+mS
+bm
+pO
+Kn
+Mm
+Mm
+bm
+he
+he
+he
+he
+he
+DR
+DR
+DR
+DR
+DR
+DR
+DR
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Oq
+Oq
+Xn
+Xn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(41,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+Oj
+Oj
+gt
+gt
+gt
+pO
+Kn
+Mm
+Mm
+Mm
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+Yt
+Yt
+Wn
+Yt
+Yt
+Wn
+Wn
+Oq
+dP
+Xn
+Sk
+wv
+wv
+Wn
+Wn
+Yt
+Yt
+Wn
+Wn
+Wn
+Wn
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(42,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+ta
+Xn
+Sk
+Sk
+GY
+GY
+Sk
+jS
+Yt
+Yt
+Yt
+Wn
+Wn
+Wn
+Wn
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(43,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+ta
+Xn
+Xn
+GY
+iq
+Wn
+Wn
+Wn
+Yt
+Yt
+Yt
+Yt
+Yt
+Wn
+Wn
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(44,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+JJ
+GY
+ss
+pn
+Wn
+Wn
+Wn
+Wn
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(45,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+GY
+Oq
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(46,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+tn
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+Yt
+he
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+Wn
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(47,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+he
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(48,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(49,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}
+(50,1,2) = {"
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+AE
+"}

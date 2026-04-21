@@ -649,36 +649,6 @@
 /atom/movable/screen/alert/status_effect/debuff/knockout
 	name = "Drowsy"
 
-//Heretics in rite armour / with rite buffs being punished, for lingering on hallowed ground.
-//If they're captured, it's a moot point.
-/atom/movable/screen/alert/status_effect/overt_punishment
-	name = "Hallowed Ground"
-	desc = "The Ten have taken notice. I should not linger here!"
-	icon_state = "muscles"
-
-/datum/status_effect/debuff/overt_punishment
-	id = "overtpunish"
-	alert_type = /atom/movable/screen/alert/status_effect/overt_punishment
-//Extreme since it's just the cathedral. If you're seeing this frequently, you may be the issue.
-	effectedstats = list(STATKEY_STR = -6, STATKEY_PER = -4, STATKEY_INT = -4, STATKEY_WIL = -4, STATKEY_CON = -4, STATKEY_SPD = -4, STATKEY_LCK = -8)
-
-/datum/status_effect/debuff/overt_punishment/process()
-	.=..()
-	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.holy_area))
-		owner.remove_status_effect(/datum/status_effect/debuff/overt_punishment)
-
-/datum/status_effect/debuff/overt_punishment/on_apply()
-		. = ..()
-		var/mob/living/carbon/C = owner
-		C.add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, multiplicative_slowdown = 1.5)
-
-/datum/status_effect/debuff/overt_punishment/on_remove()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		C.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
-
 /datum/status_effect/debuff/lost_naledi_mask
 	id = "naledimask"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/naledimask
@@ -986,6 +956,22 @@
 /////////////////////////////
 ///HARPY FLIGHT STUFF END///
 ///////////////////////////
+
+/datum/status_effect/debuff/specialcd
+	id = "specialcd"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/specialcd
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+
+/datum/status_effect/debuff/specialcd/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/specialcd
+	name = "Special Manouevre Cooldown"
+	desc = "I used it. I must wait."
+	icon_state = "debuff"
 
 /datum/status_effect/debuff/liver_failure
 	id = "liver_failure"

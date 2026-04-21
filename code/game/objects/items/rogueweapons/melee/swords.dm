@@ -193,6 +193,7 @@
 	unequip_delay_self = 1.5 SECONDS
 	inv_storage_delay = 1.5 SECONDS
 	edelay_type = 1
+	special = /datum/special_intent/shin_swipe
 
 /obj/item/rogueweapon/sword/Initialize(mapload)
 	. = ..()
@@ -305,6 +306,7 @@
 	max_blade_int = 280
 	wdefense_wbonus = 4
 	smeltresult = /obj/item/ingot/steel
+	special = /datum/special_intent/side_sweep
 
 /obj/item/rogueweapon/sword/long/training
 	name = "training sword"
@@ -1166,11 +1168,10 @@
 	name = "shamshir"
 	desc = "A curved one-handed longsword. This type of scimitar is the quintessential armament of Zybantine horsemen, its name derived from Sama'glos for \"Tiger's claw\"."
 	force = 24
-	wdefense = 6	//Has chop mode, so slightly less defense. Slightly.
+	wdefense = 6 // two more force than sabre so let's consider this a fair tradeoff for the damage buff
 	icon_state = "tabi"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/chop)
-	alt_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike, /datum/intent/sword/chop)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike) // whoever gave this chop as a supposed upside is tripping because it's weaker than sabre cut
 	bigboy = TRUE
 	pixel_y = -16
 	pixel_x = -16
@@ -1204,6 +1205,7 @@
 	inhand_y_dimension = 64
 	dropshrink = 0.75
 	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier, /datum/intent/sword/peel)
+	special = /datum/special_intent/piercing_lunge
 	gripped_intents = null
 	parrysound = list(
 		'sound/combat/parry/bladed/bladedthin (1).ogg',

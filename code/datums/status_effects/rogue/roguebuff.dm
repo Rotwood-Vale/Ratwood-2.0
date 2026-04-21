@@ -468,20 +468,30 @@
 	desc = "I've sworn an oath to defend this castle. My resolve will not waver."
 	icon_state = "guardsman"
 
-/atom/movable/screen/alert/status_effect/buff/wardenbuff
-	name = "Woodsman"
-	desc = "I've trekked these woods for some time now. I find traversal easier here."
-	icon_state = "guardsman"
-
 /atom/movable/screen/alert/status_effect/buff/dungeoneerbuff
 	name = "Ruthless Jailor"
 	desc = "This is my sanctuary. I can overpower any opposition that dares breach it."
 	icon_state = "buff"
 
+/atom/movable/screen/alert/status_effect/buff/wardenbuff
+	name = "Woodsman"
+	desc = "I've trekked these woods for some time now. I find traversal easier here."
+	icon_state = "guardsman"
+
 /datum/status_effect/buff/wardenbuff
 	id = "wardenbuff"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/wardenbuff
 	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 3)
+
+/atom/movable/screen/alert/status_effect/buff/viewingbuff
+	name = "Good View"
+	desc = "This area is built to give a better view."
+	icon_state = "guardsman"
+
+/datum/status_effect/buff/viewingbuff
+	id = "viewingbuff"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/viewingbuff
+	effectedstats = list(STATKEY_PER = 2)
 
 /datum/status_effect/buff/barkeepbuff
 	id = "barkeepbuff"
@@ -542,11 +552,42 @@
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_CIVILIZEDBARBARIAN, id)
 
+/atom/movable/screen/alert/status_effect/holy_empowerement
+	name = "Holy Ground"
+	desc = "These grounds are where I feel the most connection to my patron. Their blessing is strongest here!"
+	icon_state = "guardsman"
+
+/datum/status_effect/debuff/holy_blessing
+	id = "holyblessing"
+	alert_type = /atom/movable/screen/alert/status_effect/holy_empowerement
+	effectedstats = list(
+		STATKEY_STR = 2,
+		STATKEY_PER = 2,
+		STATKEY_INT = 2,
+		STATKEY_CON = 2,
+		STATKEY_WIL = 2,
+		STATKEY_SPD = 2,
+		STATKEY_LCK = 2,
+	)
+
+/datum/status_effect/debuff/holy_blessing/process()
+	.=..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!(our_area.holy_area))
+		owner.remove_status_effect(/datum/status_effect/debuff/holy_blessing)
+
 // Lesser Miracle effect
 /atom/movable/screen/alert/status_effect/buff/healing
 	name = "Healing Miracle"
 	desc = "Divine intervention relieves me of my ailments."
 	icon_state = "lesser_heal"
+
+/datum/status_effect/buff/viewingbuff/process()
+
+	.=..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!(our_area.viewing_area))
+		owner.remove_status_effect(/datum/status_effect/buff/viewingbuff)
 
 #define MIRACLE_HEALING_FILTER "miracle_heal_glow"
 
@@ -1344,6 +1385,132 @@
 	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, id)
 	REMOVE_TRAIT(owner, TRAIT_STRONGBITE, id)
 
+/atom/movable/screen/alert/status_effect/buff/xylix_pratfall
+	name = "Blessing of the Pratfall"
+	desc = "My body has become a treacherous obstacle."
+	icon_state = "buff"
+
+/obj/effect/xylix_pratfall_proxy
+	name = ""
+	icon = 'icons/mob/mob.dmi'
+	icon_state = null
+	mouse_opacity = 0
+	layer = ABOVE_MOB_LAYER
+	anchored = TRUE
+	invisibility = INVISIBILITY_ABSTRACT
+
+	var/datum/weakref/owner_ref
+
+/obj/effect/xylix_pratfall_proxy/Initialize(mapload, mob/living/_owner)
+	. = ..()
+	if(istype(_owner))
+		owner_ref = WEAKREF(_owner)
+
+/datum/status_effect/buff/xylix_pratfall
+	id = "xylix_pratfall"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/xylix_pratfall
+	duration = 20 MINUTES
+
+	var/obj/effect/xylix_pratfall_proxy/proxy
+
+/datum/status_effect/buff/xylix_pratfall/on_apply()
+	. = ..()
+
+	if(!isliving(owner))
+		return
+
+	proxy = new(owner.loc, owner)
+
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
+	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_owner_deleted))
+	RegisterSignal(proxy, COMSIG_QDELETING, PROC_REF(on_proxy_deleted))
+
+/datum/status_effect/buff/xylix_pratfall/on_remove()
+	. = ..()
+	cleanup()
+
+/datum/status_effect/buff/xylix_pratfall/proc/on_owner_moved()
+	if(proxy && owner)
+		proxy.loc = owner.loc
+
+/datum/status_effect/buff/xylix_pratfall/proc/on_owner_deleted()
+	cleanup()
+
+/datum/status_effect/buff/xylix_pratfall/proc/on_proxy_deleted()
+	proxy = null
+
+/datum/status_effect/buff/xylix_pratfall/proc/cleanup()
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(owner, COMSIG_QDELETING)
+
+	QDEL_NULL(proxy)
+
+/obj/effect/xylix_pratfall_proxy/Crossed(atom/movable/AM)
+	. = ..()
+
+	if(!isliving(AM))
+		return
+
+	var/mob/living/M = owner_ref?.resolve()
+	if(!M)
+		return
+
+	var/mob/living/L = AM
+
+	if(L.buckled)
+		return
+	if(L.patron?.type == /datum/patron/divine/xylix)
+		return
+
+	var/list/messages = list(
+		"[L] tries to be graceful, but [M] has other plans!",
+		"[L] discovers that stepping on friends is hazardous!",
+		"[L] flails wildly as [M] turns into a slippery obstacle!",
+		"[L] forgets the art of walking thanks to [M]'s treachery!",
+		"[L] meets the floor in a most undignified manner, courtesy of [M]!"
+	)
+
+	L.visible_message(span_warning(pick(messages)))
+
+	var/list/sounds = list(
+		'sound/misc/clownedsitcomlaugh1.ogg',
+		'sound/misc/clownedsitcomlaugh2.ogg',
+		'sound/misc/clownedsitcomlaugh3.ogg'
+	)
+
+	playsound(L, pick(sounds), 50, TRUE)
+
+	L.AdjustKnockdown(2)
+
+/datum/status_effect/buff/stagehands_silence
+	id = "Stagehand"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/stagehands_silence
+	duration = 20 MINUTES
+	var/speed_bonus_applied = FALSE
+
+/atom/movable/screen/alert/status_effect/buff/stagehands_silence
+	name = "Stangehand's Silence"
+	desc = "The slow quicken. My footsteps are quiet and I can move faster while sneaking."
+
+/datum/status_effect/buff/stagehands_silence/on_apply()
+	. = ..()
+	if(owner?.STASPD < 12)
+		owner.change_stat(STATKEY_SPD, 1)
+		speed_bonus_applied = TRUE
+	to_chat(owner, span_warning("My footsteps feel lighter and quieter. What is that droning sound in my head...?"))
+	// inspired by matthiosmuffle
+	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, "xylixboon")
+	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, "xylixboon") 
+
+/datum/status_effect/buff/stagehands_silence/on_remove()
+	. = ..()
+	if(speed_bonus_applied)
+		owner?.change_stat(STATKEY_SPD, -1)
+		speed_bonus_applied = FALSE
+	to_chat(owner, span_warning("The droning quiets. My footsteps are noisy, again."))
+	REMOVE_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, "xylixboon")
+	REMOVE_TRAIT(owner, TRAIT_LIGHT_STEP, "xylixboon")
+
 /atom/movable/screen/alert/status_effect/buff/pacify
 	name = "Blessing of Eora"
 	desc = "I feel my heart as light as feathers. All my worries have washed away."
@@ -1677,6 +1844,10 @@
 	var/blood_restore = 30
 
 /datum/status_effect/buff/adrenaline_rush/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.dna?.species?.type == /datum/species/gnoll)
+			return FALSE
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_ADRENALINE_RUSH, INNATE_TRAIT)
 	if(ishuman(owner))

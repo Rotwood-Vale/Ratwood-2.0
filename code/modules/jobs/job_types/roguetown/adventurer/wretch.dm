@@ -63,7 +63,7 @@
 /proc/wretch_select_bounty(mob/living/carbon/human/H)
 	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of The Vale", "The Grenzelhoftian Holy See", "The Otavan Orthodoxy")
 	// Felinid said we should gate it at 100 or so on at the lowest, so that wretch cannot ezmode it.
-	var/bounty_severity = input(H, "How severe are your crimes?", "Bounty Amount") as anything in list("Misdeed", "Harm towards lyfe", "Horrific atrocities")
+	var/bounty_severity = input(H, "How severe are your crimes?", "Bounty Amount") as anything in list("Misdeed", "Harm towards lyfe (+1 FOR)", "Horrific atrocities (+1 ALL STATS)")
 	var/race = H.dna.species
 	var/gender = H.gender
 	var/list/d_list = H.get_mob_descriptors()
@@ -74,10 +74,18 @@
 	switch(bounty_severity)
 		if("Misdeed")
 			bounty_total = rand(100, 200)
-		if("Harm towards lyfe")
+		if("Harm towards lyfe (+1 FOR)")
 			bounty_total = rand(200, 300)
-		if("Horrific atrocities")
+			H.change_stat("fortune", 1)
+		if("Horrific atrocities (+1 ALL STATS)")
 			bounty_total = rand(300, 400) // Let's not make it TOO profitable
+			H.change_stat("strength", 1)
+			H.change_stat("perception", 1)
+			H.change_stat("intelligence", 1)
+			H.change_stat("constitution", 1)
+			H.change_stat("willpower", 1)
+			H.change_stat("speed", 1)
+			H.change_stat("fortune", 1)
 			if(bounty_poster == "The Justiciary of The Vale")
 				GLOB.outlawed_players += H.real_name
 			else

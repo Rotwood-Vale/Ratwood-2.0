@@ -1537,7 +1537,7 @@
 	pixel_x = 5
 	},
 /obj/machinery/light/rogue/candle,
-/turf/open/water/swamp,
+/turf/open/water/cleanshallow,
 /area/rogue/indoors)
 "Va" = (
 /obj/structure/roguemachine/noticeboard,

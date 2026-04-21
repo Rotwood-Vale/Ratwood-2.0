@@ -131,6 +131,7 @@
 			mask = /obj/item/clothing/head/roguetown/eoramask
 		if (/datum/patron/divine/xylix)
 			cloak = /obj/item/clothing/cloak/templar/xylix
+			mask = /obj/item/clothing/mask/rogue/xylixmask
 		else
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe //placeholder, anyone who doesn't have cool patron drip sprites just gets generic robes
 			mask = /obj/item/clothing/head/roguetown/roguehood
@@ -580,6 +581,10 @@
 	to_chat(H, span_warning("You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith."))
 	if(H.mind?.current)
 		H.mind.current.faction += "[H.name]_faction"
+	// Grant bardic inspiration if Xylix is patron
+	if(istype(H.patron, /datum/patron/divine/xylix))
+		var/datum/inspiration/I = new /datum/inspiration(H)
+		I.grant_inspiration(H, bard_tier = BARD_T2)
 	backl = /obj/item/storage/backpack/rogue/satchel
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
 	pants = /obj/item/clothing/under/roguetown/trou/leather
@@ -590,6 +595,10 @@
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
 		)
+	var/is_non_pantheon_missionary = istype(H.patron, /datum/patron/inhumen/zizo) || istype(H.patron, /datum/patron/inhumen/matthios) || istype(H.patron, /datum/patron/inhumen/baotha) || istype(H.patron, /datum/patron/inhumen/graggar)
+	if(!is_non_pantheon_missionary)
+		backpack_contents[/obj/item/ritechalk] = 1
+		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
@@ -619,6 +628,7 @@
 			backpack_contents[/obj/item/reagent_containers/eoran_seed] = 1
 		if (/datum/patron/divine/xylix)
 			cloak = /obj/item/clothing/cloak/templar/xylix
+			mask = /obj/item/clothing/mask/rogue/xylixmask
 		if(/datum/patron/inhumen/zizo)
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe
 			head = /obj/item/clothing/head/roguetown/roguehood
@@ -628,7 +638,8 @@
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe //placeholder, anyone who doesn't have cool patron drip sprites just gets generic robes
 			head = /obj/item/clothing/head/roguetown/roguehood
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
+	C.update_devotion(C.max_devotion / 4 - 50, C.max_devotion / 4 - 50, silent = TRUE) // Start at ~25% of devotion cap
 	if(H.mind)
 		var/weapons = list("Woodstaff", "Quarterstaff")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons

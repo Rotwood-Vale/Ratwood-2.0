@@ -33,6 +33,7 @@
 	beltr = /obj/item/storage/belt/rogue/pouch
 	beltl = /obj/item/rogue/instrument/drum
 	head = /obj/item/clothing/head/roguetown/jester
+	mask = /obj/item/clothing/mask/rogue/xylixmask
 	neck = /obj/item/clothing/neck/roguetown/coif
 	backpack_contents = list(/obj/item/storage/keyring/servant)
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)

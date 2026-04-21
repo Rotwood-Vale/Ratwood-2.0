@@ -49,6 +49,8 @@
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	sewrepair = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/neck/roguetown/coif/padded
 	name = "padded coif"
@@ -65,6 +67,8 @@
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	sewrepair = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding
 	name = "heavy padded coif"
@@ -81,6 +85,8 @@
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	sewrepair = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding/ComponentInitialize()
 	return
@@ -371,7 +377,7 @@
 
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar // minor flavor swap so people know it's a scam shitty knockoff.
 	name = "lesser cursed collar"
-	desc = "A metal collar that seems to radiate an ominous aura. A pale imitation of it's artificed counterpart."
+	desc = "A metal collar that seems to radiate an ominous aura. A pale imitation of its artificed counterpart. \nLooks like you'd need someone else's help to take it off."
 	icon_state = "cursed_collar"
 	item_state = "cursed_collar"
 	armor = ARMOR_CLOTHING
@@ -387,7 +393,6 @@
 
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar/Initialize(mapload)
 	. = ..()
-	name = "cursed collar"
 	ADD_TRAIT(src, TRAIT_NO_SELF_UNEQUIP, CURSED_ITEM_TRAIT)
 /*
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar/dropped(mob/living/carbon/human/user)
@@ -541,6 +546,12 @@
 	//dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
 	sellprice = 100
+
+/obj/item/clothing/neck/roguetown/psicross/reform
+	name = "reformist psycross"
+	desc = "A psycross with its prongs bent inward. God is dead, but this world HE left is beautiful and worth of loving. ENDURE with every broken bone in your body."
+	sellprice = 0
+	icon_state = "psycross_reform"
 
 /obj/item/clothing/neck/roguetown/psicross/pearl //put it as a psycross so it can be used for miracles
 	name = "pearl amulet"

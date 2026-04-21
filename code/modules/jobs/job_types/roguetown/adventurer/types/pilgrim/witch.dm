@@ -7,7 +7,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	traits_applied = list(TRAIT_DEATHSIGHT, TRAIT_WITCH, TRAIT_ARCYNE_T1, TRAIT_ALCHEMY_EXPERT)
-	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
+	maximum_possible_slots = 5 // really I want to say 3 but 5 is PRETTY roomy
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 2,
@@ -42,10 +42,13 @@
 						/obj/item/pestle = 1,
 						/obj/item/candle/yellow = 2,
 						/obj/item/recipe_book/alchemy = 1,
-						/obj/item/recipe_book/survival = 1,
 						/obj/item/recipe_book/magic = 1,
 						/obj/item/chalk = 1
 						)
+	if(H.age == AGE_MIDDLEAGED)
+		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 5, TRUE)
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 6, TRUE)
 
 	var/hats = list(
 		"Witch Hat" 		= /obj/item/clothing/head/roguetown/witchhat,
@@ -68,13 +71,40 @@
 			ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.mind?.adjust_spellpoints(9) // twelve if you pick arcyne potential
+			neck = null
 		if("Godsblood")
 			//miracle witch: capped at t2 miracles. cannot pray to regain devo, but has high innate regen because of it (2 instead of 1 from major)
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 			D.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_2)
 			D.max_devotion *= 0.5
-			neck = /obj/item/clothing/neck/roguetown/psicross/wood
+			switch(H.patron?.type)
+				if(/datum/patron/divine/astrata)
+					neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+				if(/datum/patron/divine/noc)
+					neck = /obj/item/clothing/neck/roguetown/psicross/noc
+				if(/datum/patron/divine/abyssor)
+					neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
+				if(/datum/patron/divine/dendor)
+					neck = /obj/item/clothing/neck/roguetown/psicross/dendor
+				if(/datum/patron/divine/necra)
+					neck = /obj/item/clothing/neck/roguetown/psicross/necra
+				if(/datum/patron/divine/pestra)
+					neck = /obj/item/clothing/neck/roguetown/psicross/pestra
+				if(/datum/patron/divine/ravox)
+					neck = /obj/item/clothing/neck/roguetown/psicross/ravox
+				if(/datum/patron/divine/malum)
+					neck = /obj/item/clothing/neck/roguetown/psicross/malum
+				if(/datum/patron/divine/eora)
+					neck = /obj/item/clothing/neck/roguetown/psicross/eora
+				if(/datum/patron/divine/xylix)
+					neck = /obj/item/clothing/neck/roguetown/psicross/xylix
+				if(/datum/patron/inhumen/matthios, /datum/patron/inhumen/zizo, /datum/patron/inhumen/baotha, /datum/patron/inhumen/graggar)
+					neck = /obj/item/clothing/neck/roguetown/psicross/wood
+				if(/datum/patron/old_god, /datum/patron/divine/undivided)
+					neck = /obj/item/clothing/neck/roguetown/psicross/wood
+				else
+					neck = /obj/item/clothing/neck/roguetown/psicross/wood
 		if("Mystagogue")
 			// hybrid arcane/holy witch with t1 arcane and t1 miracles, but less spellpoints, lower max devotion and less regen (0.5). Still can't pray.
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
@@ -84,7 +114,33 @@
 			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.mind?.adjust_spellpoints(6) // twelve if you pick arcyne potential
-			neck = /obj/item/clothing/neck/roguetown/psicross/wood
+			switch(H.patron?.type)
+				if(/datum/patron/divine/astrata)
+					neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+				if(/datum/patron/divine/noc)
+					neck = /obj/item/clothing/neck/roguetown/psicross/noc
+				if(/datum/patron/divine/abyssor)
+					neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
+				if(/datum/patron/divine/dendor)
+					neck = /obj/item/clothing/neck/roguetown/psicross/dendor
+				if(/datum/patron/divine/necra)
+					neck = /obj/item/clothing/neck/roguetown/psicross/necra
+				if(/datum/patron/divine/pestra)
+					neck = /obj/item/clothing/neck/roguetown/psicross/pestra
+				if(/datum/patron/divine/ravox)
+					neck = /obj/item/clothing/neck/roguetown/psicross/ravox
+				if(/datum/patron/divine/malum)
+					neck = /obj/item/clothing/neck/roguetown/psicross/malum
+				if(/datum/patron/divine/eora)
+					neck = /obj/item/clothing/neck/roguetown/psicross/eora
+				if(/datum/patron/divine/xylix)
+					neck = /obj/item/clothing/neck/roguetown/psicross/xylix
+				if(/datum/patron/inhumen/matthios, /datum/patron/inhumen/zizo, /datum/patron/inhumen/baotha, /datum/patron/inhumen/graggar)
+					neck = /obj/item/clothing/neck/roguetown/psicross/wood
+				if(/datum/patron/old_god, /datum/patron/divine/undivided)
+					neck = /obj/item/clothing/neck/roguetown/psicross/wood
+				else
+					neck = /obj/item/clothing/neck/roguetown/psicross/wood
 
 	if(H.mind)
 		switch (shapeshiftchoice)

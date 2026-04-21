@@ -3,6 +3,11 @@
     "map_path": "map_files/roguetest",
     "map_file": "roguetest.dmm",
 	"traits": [{"Name": "Roguetest", "Up": true}, {"Down": true}],
+	"other_z": [
+		"_maps/map_files/otherz/banditmountain.json",
+		"_maps/map_files/otherz/vl_manor.json",
+		"_maps/map_files/otherz/wretchfort.json"
+	],
 	"minetype": null,
 	"space_empty_levels": 0,
 	"space_ruin_levels": 0,

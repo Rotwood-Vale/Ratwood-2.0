@@ -613,3 +613,10 @@
 		return
 	new type_to_put(T, floor(zenars_to_put))
 	playsound(T, 'sound/misc/coindispense.ogg', 100, FALSE, -1)
+
+/proc/has_bounty(mob/living/carbon/human/H)
+	for (var/datum/bounty/existing_bounty in GLOB.head_bounties)
+		if (existing_bounty.target == H.real_name)
+			return TRUE
+
+	return FALSE

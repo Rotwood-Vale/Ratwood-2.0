@@ -132,6 +132,7 @@
 #define TRAIT_CHOSEN "Astrata's Chosen"
 #define TRAIT_ABYSSOR_SWIM "Blessing of Abyssor" //less base fatigue drain when swimming
 #define TRAIT_XYLIX "Blessing of Xylix" //secret thieves cant language
+#define TRAIT_XYLIX_DEVOTEE "Xylixian Fateweaver" // fate-weaving and luck-based bonuses
 #define TRAIT_FORGEBLESSED "Blessing of Malum" //Reduces the fatigue cost of smithing a bit.
 #define TRAIT_APRICITY	"Apricity" //Decreased stamina regen time during "day" and less so during night
 #define TRAIT_SHARPER_BLADES "Sharper Blades" //Weapons lose less blade integrity
@@ -141,6 +142,7 @@
 #define TRAIT_LEECHIMMUNE "Unleechable" //leeches wont attach in bog squares + dendor boon.
 #define TRAIT_LONGSTRIDER "Longstrider"
 #define TRAIT_VOTARY "Votary"
+#define TRAIT_HOLYWARRIOR "Holy Warrior"
 #define TRAIT_PSYDONIAN_GRIT "Psydonian Grit" // Pain Tolerance. Through faith, ENDURE.
 #define TRAIT_PSYDONITE "Psydonite's Devotion" // Anti-Miracles on a selective basis, anastasis / cure rot still apply.
 #define TRAIT_BLACKBAGGER "Apprehension Techniques" // Capable of using Garrotes and Blackbags. Apprehension techniques.
@@ -202,6 +204,7 @@
 #define TRAIT_LEPROSY "Leprosy"
 #define TRAIT_NUDE_SLEEPER "Nude Sleeper"
 #define TRAIT_SILVER_BLESSED "Silverblessed"
+#define TRAIT_UNLYCKERABLE "Lycker Immunity"
 #define TRAIT_OUTLANDER "Outlander"
 #define TRAIT_OUTLAW "Outlaw"
 #define TRAIT_KNOWNCRIMINAL "Known Criminal"
@@ -239,6 +242,8 @@
 #define TRAIT_ARCYNE_T4 "Arcyne Training (Master)"
 #define TRAIT_BITERHELM "Helmetbiter" // just use this to get helmets which are bitey.
 #define TRAIT_STRENGTH_UNCAPPED "Strength Unbound"	//ignores the STR softcap.
+/// Allows you to move faster than the speed softcap
+#define TRAIT_UNCAPPED_SPEED "Speed Unbound"
 #define TRAIT_EORAN_CALM "Eoran Calm"
 #define TRAIT_EORAN_SERENE "Eoran Serenity"
 #define TRAIT_NECRAS_VOW "Necra's Vow"
@@ -362,7 +367,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_KNEESTINGER_IMMUNITY = "I am immune to the shock of kneestingers and vines.",
 	TRAIT_SOUL_EXAMINE = span_deadsay("I know when someone's soul has departed."),
 	TRAIT_CRACKHEAD = span_love("I can use drugs as much as I want!"),
-	TRAIT_COMMIE = span_bloody("I can recognize other free men, and they can recognize me too."),
+	TRAIT_COMMIE = span_bloody("I can recognize other free men, and they can recognize me too. I can also speak in thieves' cant and pick locks a bit better than most."),
 	TRAIT_KNOWNCRIMINAL = span_bloody("I am a branded criminal. Nothing can change this."),
 	TRAIT_NORUN = span_warning("My body has atrophied in my state of decay; my leg joints just don't have the strength or durability for running anymore"),
 	TRAIT_GOODLOVER = span_love("It's a lucky thing to share my bed."),
@@ -383,7 +388,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_CAUTIOUS_FISHER = span_info("I know my way around the dangers of fishing, and know how to avoid unwanted attention from the depths."),
 	TRAIT_DEATHSIGHT = span_info("I can feel when someone nearby draws the Undermaiden's attention."),
 	TRAIT_FORGEBLESSED = span_info("Countless long nights spent forging metal have honed my endurance, allowing me to work an anvil far longer than most without tiring."),
-	TRAIT_XYLIX = span_info("I know how to speak in code that only fellow tricksters can understand."),
+	TRAIT_XYLIX = span_info("I know how to speak in code that only fellow tricksters or thieves can understand, and also grants me some talent in music."),
+	TRAIT_XYLIX_DEVOTEE = span_info("Xylix smiles upon me. When there's a juncture in fate, I will be pulled toward the better outcome."),
 	TRAIT_APRICITY = span_info("Astrata's light blesses and rejuvenates me, allowing me to regain my stamina quicker."),
 	TRAIT_SHARPER_BLADES = span_info("My blades go dull slower, ensuring they stay sharp longer."),
 	TRAIT_CABAL = span_info("In secret, I have studied the ways of Her ascension."),
@@ -395,6 +401,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_GUIDANCE = span_info("The arcyne aides me in battle."),
 	TRAIT_DEPRAVED = span_info("The languid scent of Her debauchery is known to me."),
 	TRAIT_SILVER_BLESSED = span_info("I have been baptized in fire. Blessed silverdust flows through my blood, protecting me from both vampyrism and lycanthropy."),
+	TRAIT_UNLYCKERABLE = span_info("My kind cannot bear the Sun curse for it already has another."),
 	TRAIT_GOODTRAINER = span_info("I am a good teacher, and when it comes to weaponry I can train others to be just as skilled as I am."),
 	TRAIT_BADTRAINER = span_info("I've spent yils studying the art of a single weapon, but unfortunately I've no patience to train anyone else. Everyone learning from me will only learn up to two skill levels below mine."),
 	TRAIT_SEA_DRINKER = span_info("As a denizen of the deep, I can drink salty ocean water safely."),
@@ -446,6 +453,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_INFINITE_ENERGY = span_notice ("I don't need rest; I won't ever feel fatigue."),
 	TRAIT_PERMAMUTE = span_notice("I am a mute. I cannot speak."),
 	TRAIT_STRENGTH_UNCAPPED = span_warning("MY STRENGTH IS UNBOUND!"),
+	TRAIT_UNCAPPED_SPEED = span_notice("My movement is swift, my legs carry me like lightning."),
 	TRAIT_MONK_ROBE = span_notice("I feel closer to the gods in my meager robes.. I feel vigorous, empowered by their light!"),
 	TRAIT_EORAN_CALM = span_notice("Eora has touched me, granting me some calm. She protects me from the peaks of my stress."),
 	TRAIT_EORAN_SERENE = span_greentext("Eora has blessed me with all-encompassing serenity. I feel no more stress."),
@@ -610,6 +618,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BADDNA			"baddna"
 #define TRAIT_CLUMSY			"clumsy"
 #define TRAIT_CHUNKYFINGERS		"chunkyfingers" //means that you can't use weapons with normal trigger guards.
+#define TRAIT_GNARLYDIGITS		"gnarlydigits" //less aggressive version of chunky fingers to allow -some- fun.
 #define TRAIT_DUMB				"dumb"
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
 #define TRAIT_NOTIGHTGRABMESSAGE "notightgrabmessage" // Hides grab tightening messages.
@@ -670,7 +679,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CANNOT_OPEN_PRESENTS "cannot-open-presents"
 #define TRAIT_PRESENT_VISION    "present-vision"
 #define TRAIT_DISK_VERIFIER     "disk-verifier"
-#define TRAIT_NOMOBSWAP         "no-mob-swap"
 #define TRAIT_XRAY_VISION       "xray_vision"
 #define TRAIT_THERMAL_VISION    "thermal_vision"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"

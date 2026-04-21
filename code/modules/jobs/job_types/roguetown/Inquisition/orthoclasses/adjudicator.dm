@@ -46,15 +46,13 @@
 	has_loadout = TRUE
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	cloak = /obj/item/clothing/cloak/psydontabard
-	backr = /obj/item/rogueweapon/shield/tower/metal
 	gloves = /obj/item/clothing/gloves/roguetown/chain/psydon
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	pants = /obj/item/clothing/under/roguetown/chainlegs
-	backl = /obj/item/storage/backpack/rogue/satchel/otavan
+	backr = /obj/item/storage/backpack/rogue/satchel/otavan
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	belt = /obj/item/storage/belt/rogue/leather/black
-	beltr = /obj/item/rogueweapon/scabbard/sword
 	id = /obj/item/clothing/ring/signet/silver
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/adju = 1,
@@ -89,45 +87,55 @@
 		if("Cuirass")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate, SLOT_ARMOR, TRUE)
 
-	var/weapons = list("Psydonic Longsword", "Psydonic War Axe", "Psydonic Whip", "Psydonic Flail", "Psydonic Mace",
-	"Psydonic Spear + Handmace", "Psydonic Poleaxe + Shortsword", "Psydonic Halberd + Shortsword", "Psydonic Greatsword + Handmace")
+	var/weapons = list("Psydonic Longsword + Shield", "Psydonic War Axe + Shield", "Psydonic Whip + Shield",
+		"Psydonic Flail + Shield", "Psydonic Grand Mace + Shortsword", "Psydonic Spear + Handmace", "Psydonic Poleaxe + Shortsword",
+		"Psydonic Halberd + Shortsword", "Psydonic Greatsword + Handmace")
 	var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 	switch(weapon_choice)
 		//Typical arms and such.
-		if("Psydonic Longsword")
+		if("Psydonic Longsword + Shield")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/psysword(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/sword(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-		if("Psydonic War Axe")
+		if("Psydonic War Axe + Shield")
 			H.put_in_hands(new /obj/item/rogueweapon/stoneaxe/battle/psyaxe(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-		if("Psydonic Whip")
+		if("Psydonic Whip + Shield")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/psywhip_lesser(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
-		if("Psydonic Flail")
+		if("Psydonic Flail + Shield")
 			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/psyflail(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
-		if("Psydonic Mace")
-			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/psymace(H), TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 		//Polearms and the like.
+		if("Psydonic Grand Mace + Shortsword")
+			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/psy(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 		if("Psydonic Spear + Handmace")
 			H.put_in_hands(new /obj/item/rogueweapon/spear/psyspear(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/mace/cudgel/psy, SLOT_BELT_L, TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel/psy(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Psydonic Poleaxe + Shortsword")
 			H.put_in_hands(new /obj/item/rogueweapon/greataxe/psy(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/sword/short/psy, SLOT_BELT_L, TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Psydonic Halberd + Shortsword")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/sword/short/psy, SLOT_BELT_L, TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Psydonic Greatsword + Handmace")
 			H.put_in_hands(new /obj/item/rogueweapon/greatsword/psygsword(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/mace/cudgel/psy, SLOT_BELT_L, TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel/psy(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)

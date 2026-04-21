@@ -68,10 +68,11 @@
 				)
 
 	if(H.mind)
+		wretch_select_bounty(H)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
-		
+
 		var/weapons = list("Elven Swordspear and Longsword","Elven Curveblade and Shortsword",)
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)

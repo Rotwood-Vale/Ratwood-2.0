@@ -118,11 +118,8 @@
  */
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
-	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+	if(GLOB.use_preloader && src.type == GLOB._preloader_path)//in case the instanciated atom is creating other atoms in New()
 		world.preloader_load(src)
-
-	if(datum_flags & DF_USE_TAG)
-		GenerateTag()
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize != INITIALIZATION_INSSATOMS)
@@ -999,10 +996,6 @@
 ///Analyzer act
 /atom/proc/analyzer_act(mob/living/user, obj/item/I)
 	return SEND_SIGNAL(src, COMSIG_ATOM_ANALYSER_ACT, user, I)
-
-///Generate a tag for this atom
-/atom/proc/GenerateTag()
-	return
 
 /// Generic logging helper
 /atom/proc/log_message(message, message_type, color=null, log_globally=TRUE)

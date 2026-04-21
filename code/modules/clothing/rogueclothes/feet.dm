@@ -26,6 +26,8 @@
 	sewrepair = TRUE
 	salvage_amount = 1
 	armor = ARMOR_CLOTHING
+	cold_protection = FOOT_LEFT | FOOT_RIGHT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	var/atom/movable/holdingknife = null
 	var/atom/movable/holdinglockpick = null
 
@@ -83,6 +85,8 @@
 	max_integrity = 40
 	icon_state = "ancientboots"
 	color = "#bb9696"
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 
 /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	name = "psydonic leather boots"
@@ -290,6 +294,8 @@
 	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 
 /obj/item/clothing/shoes/roguetown/boots/armor/graggar
 	name = "vicious boots"
@@ -350,6 +356,8 @@
 	armor = ARMOR_PLATE
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
+	cold_protection = FOOT_LEFT | FOOT_RIGHT // These are still mostly leather, also at least ONE reason to wear them compared to their full steel counterparts
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
 	name = "armored sandals"
@@ -446,8 +454,6 @@
 	is_barefoot = TRUE
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/fur
-	cold_protection = FOOT_LEFT | FOOT_RIGHT
-	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/shoes/roguetown/boots/clothlinedanklets
 	name = "cloth lined anklets"
@@ -458,8 +464,6 @@
 	is_barefoot = TRUE
 	sewrepair = TRUE
 	armor = ARMOR_CLOTHING
-	heat_protection = FOOT_LEFT | FOOT_RIGHT
-	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/shoes/roguetown/boots/otavan/inqboots
 	name = "inquisitorial boots"
@@ -488,6 +492,8 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/blacksteel
 	resistance_flags = FIRE_PROOF
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 
 /obj/item/clothing/shoes/roguetown/boots/blacksteel/plateboots
 	name = "ancient blacksteel plate boots"
@@ -505,6 +511,8 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/blacksteel
 	resistance_flags = FIRE_PROOF
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 
 // ----------------- BLACKSTEEL END -----------------------
 

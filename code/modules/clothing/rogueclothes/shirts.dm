@@ -391,7 +391,7 @@
 	salvage_amount = 1
 
 /obj/item/clothing/suit/roguetown/shirt/robe/archivist
-	name = "archivist's robe"
+	name = "scholar's robe"
 	desc = "Robes belonging to seekers of knowledge."
 	icon_state = "archivist"
 	icon = 'icons/roguetown/clothing/shirts.dmi'

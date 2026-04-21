@@ -34,6 +34,7 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/satchel
 	head = /obj/item/clothing/head/roguetown/jester
+	mask = /obj/item/clothing/mask/rogue/xylixmask
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid
 	backpack_contents = list(
 		/obj/item/bomb/smoke = 3,

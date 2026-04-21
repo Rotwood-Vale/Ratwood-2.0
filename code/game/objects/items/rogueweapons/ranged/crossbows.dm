@@ -29,6 +29,7 @@
 	obj_flags = UNIQUE_RENAME
 	damfactor = 1.2
 	accfactor = 1.1
+	damage_from_perception = FALSE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/getonmobprop(tag)
 	. = ..()
@@ -161,6 +162,11 @@
 		BB.bonus_accuracy += (user.get_skill_level(/datum/skill/combat/crossbows) * 5) // +5 per XBow level.'
 		BB.armor_penetration *= penfactor
 		BB.damage *= damfactor
+
+		if(damage_from_perception)
+			if(user.STAPER > 10)
+				BB.damage *= (user.STAPER / 10)
+
 	cocked = FALSE
 	..()
 
@@ -202,6 +208,8 @@
 	movingreload = TRUE
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_HIP
 	penfactor = 0.5		//Bolts have 50 pen, this decreases to 25. Should only pen armor with less than 67 protection.
+	damage_from_perception = TRUE
+
 
 //Pseudo-Arbalest. This thing is intended to be fuckhuge, but it's using a temp sprite.
 //Retains an identical damage to the standard crossbow. The pen is what makes this.

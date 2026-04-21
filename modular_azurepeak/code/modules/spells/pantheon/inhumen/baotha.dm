@@ -100,10 +100,10 @@
 		target.apply_status_effect(/datum/status_effect/buff/vitae)					//+2 Fortune and mood buff
 		return TRUE
 
-//T0 that tells the user the person's vice.
+// T0 that tells the user the person's vices. If they have Deceiving Meekness (and you're a low-level cleric), this spell will lie to you instead.
 /obj/effect/proc_holder/spell/invoked/baothavice
-	name = "Tell Vice"
-	desc = "Tells you the targets Vice."
+	name = "Tell Vices"
+	desc = "Attempts to discern the target's vices. Depending on the target and your Miracles skill, some vices could be incorrect."
 	overlay_state = "baotha_vice"
 	releasedrain = 10
 	chargedrain = 0
@@ -117,26 +117,155 @@
 	recharge_time = 5 SECONDS 
 	miracle = TRUE
 	devotion_cost = 10
-	var/list/fake_vices = list()
+	/// Assoc list matching human mobs to a list of faked vice names, for consistency in presentation.
+	var/list/fake_vices_cache = list()
 
 /obj/effect/proc_holder/spell/invoked/baothavice/cast(list/targets, mob/living/user)
-	if(ishuman(targets[1]))
-		var/vice_found
-		var/mob/living/carbon/human/H = targets[1]
-		if(HAS_TRAIT(H, TRAIT_DECEIVING_MEEKNESS) && user.get_skill_level(/datum/skill/magic/holy) <= SKILL_LEVEL_NOVICE)
-			if(!(H in fake_vices))
-				fake_vices[H] = pick(GLOB.character_flaws)
-				vice_found = fake_vices[H]
-			else
-				vice_found = fake_vices[H]
-			if(prob(50 + ((H.STAPER - 10) * 10)))
-				to_chat(H, span_warning("A pair of prying eyes were laid on me..."))
-		if(!vice_found)
-			vice_found = H.charflaw.name
-		to_chat(user, span_info("They are... [span_warning("a [vice_found]")]"))
-		return TRUE
-	revert_cast()
-	return FALSE
+	if(!ishuman(targets[1]))
+		revert_cast()
+		return FALSE
+	var/mob/living/carbon/human/target = targets[1]
+	
+	if(!length(target.vices))
+		to_chat(user, span_warning("They have no vices."))
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/our_human
+	if(ishuman(user))
+		our_human = user
+
+	var/list/vice_names
+
+	// If you fail this check, the spell will try to convincingly lie to you about the vices you don't already know.
+	if(HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && user.get_skill_level(/datum/skill/magic/holy) <= SKILL_LEVEL_NOVICE)
+		if(!fake_vices_cache[target])
+			
+			// Gather up what vices the caster knows to be true, then randomize the rest.
+			var/list/vice_paths = generate_vice_paths(target, our_human)
+
+			// Now convert all the typepaths to presentable names that will be shown and saved.
+			vice_names = list()
+			for(var/vice in vice_paths)
+				var/datum/charflaw/vice_ref = GLOB.charflaw_singletons[vice]
+				vice_names += vice_ref.name
+			vice_names = shuffle(vice_names) // hiding the fact that we copied traits first, in generate_vice_paths
+
+			fake_vices_cache[target] = vice_names.Copy()
+		else
+			var/list/fakey = fake_vices_cache[target]
+			vice_names = fakey.Copy()
+
+		if(prob(50 + ((target.STAPER - 10) * 10)))
+			to_chat(target, span_warning("A pair of prying eyes were laid on me..."))
+
+	if(!vice_names) // if the caster actually passed the check, show real vices instead. 
+		vice_names = list()
+		for(var/datum/charflaw/charflaw in target.vices)
+			vice_names += charflaw.name
+
+	if(!length(vice_names)) // very necessary failsafe, especially if faking one vice and the roll fails FIVE TIMES
+		to_chat(user, span_warning("They have no vices."))
+		revert_cast() // shhh, they do have vices but we don't want you to know that
+		return FALSE
+
+	var/vices_string = english_list(vice_names)
+	var/prefix = "Their vices are... "
+	if(length(vice_names) == 1)
+		prefix = "Their vice is... "
+	to_chat(user, span_info("[prefix]") + span_warning("[vices_string]."))
+	return TRUE
+
+/// Generate a convincing lie (or half-truth) about the target's vices, both to be displayed, and to be saved for later in our copy of the spell.
+/// Returns a list of charflaw datum typepaths.
+/obj/effect/proc_holder/spell/invoked/baothavice/proc/generate_vice_paths(mob/living/carbon/human/target, mob/living/carbon/human/our_human)
+	RETURN_TYPE(/list)
+	var/list/vice_paths = list()
+	var/vices_to_gen = max(length(target.vices), 1) // We decrement this when we're guaranteeed to know a vice. 
+	var/baothamarked_nympho_check = FALSE
+
+	// First, we'll copy vices that are readily apparent to the caster, so as to make the readout convincing. Thankfully, we will only have to do this once per person.
+	for(var/datum/charflaw/vice_to_get in target.vices)
+		// Special cases first, since they're quick to check. These can't just fit in a list.
+		switch(vice_to_get.type)
+			// Sadists and masochists already get messages when they examine *each other*.
+			if(/datum/charflaw/addiction/sadist)
+				if(our_human.has_flaw(/datum/charflaw/addiction/masochist))
+					vice_paths += vice_to_get.type
+					vices_to_gen--
+					continue
+			if(/datum/charflaw/addiction/masochist)
+				if(our_human.has_flaw(/datum/charflaw/addiction/sadist))
+					vice_paths += vice_to_get.type
+					vices_to_gen--
+					continue
+			// Empaths already get messages when they examine mutes.
+			if(/datum/charflaw/mute)
+				if(HAS_TRAIT(our_human, TRAIT_EMPATH))
+					vice_paths += vice_to_get.type
+					vices_to_gen--
+					continue
+			// And Baothans can already tell if someone is Marked by Baotha.
+			// Having it also implies Nymphomaniac, since that vice gets added by Marked if it doesn't already exist.
+			if(/datum/charflaw/marked_by_baotha)
+				if(HAS_TRAIT(our_human, TRAIT_DEPRAVED)) // Just making sure...
+					vice_paths += vice_to_get.type
+					vices_to_gen--
+					// Now to add Nympho, regardless of whether the caster has it themselves.
+					var/nympho_check = FALSE
+					for(var/path in vice_paths)
+						if(path == /datum/charflaw/addiction/lovefiend)
+							nympho_check = TRUE
+							break
+					if(!nympho_check)
+						baothamarked_nympho_check = TRUE
+						vice_paths += /datum/charflaw/addiction/lovefiend
+						vices_to_gen--
+					continue
+			if(/datum/charflaw/addiction/lovefiend)
+				if(baothamarked_nympho_check) // Since we don't have duplicate checking until later.
+					continue
+		// These vices have direct mutually-shared-vice examine messages. We will copy these if the caster shares them.
+		if(vice_to_get.type in CHARFLAWS_MUTUAL_TYPES)
+			for(var/datum/charflaw/vice in our_human.vices)
+				if(istype(vice, vice_to_get.type))
+					vice_paths += vice_to_get.type
+					vices_to_gen--
+					continue
+		// These vices have an obvious physical presence, at least when unmasked.
+		// We will try to copy these if they're on the target, and later skip any fake vices that are on this list.
+		if(vice_to_get.type in CHARFLAWS_PHYSICAL_TYPES)
+			vice_paths += vice_to_get.type
+			vices_to_gen--
+			continue
+
+	// Now generate the rest, if applicable. However many real vices the target has is our maximum.
+	if(vices_to_gen > 0)
+		for(var/i in 1 to vices_to_gen)
+			for(var/t in 1 to 5) // We'll put up with 5 rejections, and it'll otherwise be ok if we just skip this one.
+				var/vice_roll = pick_assoc(GLOB.character_flaws)
+				if(plausible_vice_filter(vice_roll, vice_paths))
+					vice_paths += vice_roll
+					break
+	
+	return vice_paths
+
+/// Filter randomly-picked fake vices that the target could not plausibly have. A false result means the vice will not be picked.
+/obj/effect/proc_holder/spell/invoked/baothavice/proc/plausible_vice_filter(vice_type, list/vice_paths)
+	//No duplicates
+	if(vice_type in vice_paths)
+		return FALSE
+	// Exclude "Random or None" and "No Flaw"
+	if(vice_type in CHARFLAWS_RANDNONE_TYPES)
+		return FALSE
+	// We already grabbed the physical vices the target has.
+	if(vice_type in CHARFLAWS_PHYSICAL_TYPES)
+		return FALSE
+	// We already know if you're marked by Baotha.
+	if(vice_type == /datum/charflaw/marked_by_baotha)
+		return FALSE
+
+	return TRUE
 
 // T0, orison inspired healing spell that pours a drink called Lover's Ruin. Works like a red for baotha blessed, poisons non-blessed.
 /obj/effect/proc_holder/spell/targeted/touch/loversruin
@@ -269,6 +398,9 @@
 	item_state = "peaceflower"
 	icon = 'icons/roguetown/items/produce.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+
+/obj/item/clothing/ring/griefflower/show_examine_hover_tooltip()
+	return FALSE
 
 /obj/item/clothing/ring/griefflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()

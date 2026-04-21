@@ -44,7 +44,6 @@
 
 			if(do_after(H, 15, target = src) && H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
 				H.adjust_bodytemperature(75)
-				H.update_health_hud()
 		return TRUE //fires that are on always have this interaction with lmb unless its a torch
 
 	else
@@ -686,7 +685,6 @@
 
 				if(do_after(H, 15, target = src) && H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
 					H.adjust_bodytemperature(75)
-					H.update_health_hud()
 			return TRUE //fires that are on always have this interaction with lmb unless its a torch
 
 /obj/machinery/light/rogue/hearth/process()
@@ -901,7 +899,6 @@
 			H.visible_message("<span class='info'>[H] warms [user.p_their()] hand near the fire.</span>")
 			if(H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
 				H.adjust_bodytemperature(75)
-				H.update_health_hud()
 			var/first_go = TRUE
 			while(do_after(H, 105, target = src) && on)
 				// Astrata followers get enhanced fire healing

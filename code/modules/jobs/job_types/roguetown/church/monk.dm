@@ -164,6 +164,7 @@
 			backpack_contents = list(/obj/item/ritechalk, /obj/item/book/rogue/law)
 		if(/datum/patron/divine/xylix)
 			head = /obj/item/clothing/head/roguetown/roguehood
+			mask = /obj/item/clothing/mask/rogue/xylixmask
 			neck = /obj/item/clothing/neck/roguetown/psicross/xylix // no more good luck charm,  you wanna cheat gambling? Xylix weeps
 			cloak = /obj/item/clothing/cloak/templar/xylixian
 			wrists = /obj/item/clothing/wrists/roguetown/wrappings

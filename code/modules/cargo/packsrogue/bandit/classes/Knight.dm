@@ -28,6 +28,11 @@
 	cost = 40
 	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface)
 
+/datum/supply_pack/rogue/Knight/hbascinet
+	name = "Hounskull Bascinet"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull)
+
 /datum/supply_pack/rogue/Knight/knighthelm
 	name = "Knight's Helmet"
 	cost = 40

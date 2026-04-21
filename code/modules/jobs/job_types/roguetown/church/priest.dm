@@ -37,7 +37,15 @@ GLOBAL_LIST_EMPTY(heretical_players)
 	social_rank = SOCIAL_RANK_ROYAL
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
 	virtue_restrictions = list(/datum/virtue/utility/noble)
-	job_traits = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_GRAVEROBBER,TRAIT_RESONANCE, TRAIT_VOTARY, TRAIT_HOMESTEAD_EXPERT)
+	job_traits = list(
+		TRAIT_CHOSEN,
+		TRAIT_RITUALIST,
+		TRAIT_GRAVEROBBER,
+		TRAIT_RESONANCE,
+		TRAIT_VOTARY,
+		TRAIT_HOMESTEAD_EXPERT,
+		TRAIT_HOLYWARRIOR,
+	)
 	advclass_cat_rolls = list(CTAG_BISHOP = 2)
 	job_subclasses = list(
 		/datum/advclass/bishop
@@ -173,6 +181,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 /mob/living/carbon/human/proc/coronate_lord()
 	set name = "Coronate"
 	set category = "Priest"
+	to_chat (src, span_warning("The process of crowning a new ruler, and binding his soul to the Throne of the Vale takes a most heavy toil. Any newly coronated Noble Liege will not be able to be revived. You should probably mention this."))
 	if(!mind)
 		return
 	if(world.time < 30 MINUTES)
@@ -203,6 +212,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 		//Coronate new King (or Queen)
 		HU.mind.assigned_role = "Grand Duke"
 		HU.job = "Grand Duke"
+		ADD_TRAIT(HU, TRAIT_DNR, JOB_TRAIT)
 		SSticker.set_ruler_mob(HU)
 		SSticker.regentmob = null
 		var/dispjob = mind.assigned_role

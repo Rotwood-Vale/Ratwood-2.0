@@ -1,0 +1,6 @@
+author: "john-pawson"
+delete-after: True
+changes:
+  - rscadd: "Temporary flavortext, now observable at the bottom of examine panels, separated by a line."
+  - rscadd: "Set temporary flavortext button, can be found on the Memory tab at the top right."
+  - rscadd: "Set temporary flavortext can now be bound to a keybind on the Game Preferences menu."

@@ -61,5 +61,7 @@ GLOBAL_LIST_INIT(learnable_spells, (list(/obj/effect/proc_holder/spell/invoked/p
 		/obj/effect/proc_holder/spell/self/recall,
 		/obj/effect/proc_holder/spell/self/findfamiliar,
 		/obj/effect/proc_holder/spell/invoked/incantation,
+//		/obj/effect/proc_holder/spell/invoked/slick_trick,
+		/obj/effect/proc_holder/spell/invoked/slick_trick_small
 		)
 ))

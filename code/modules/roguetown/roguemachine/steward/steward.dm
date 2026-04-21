@@ -36,6 +36,8 @@
 //	For competence of life I will allow you,
 //	That lack of means enforce you not to evil:
 /obj/structure/roguemachine/steward/proc/setup_default_payments()
+	daily_payments["Knight Captain"] = 40
+	daily_payments["Knight"] = 40
 	daily_payments["Sergeant"] = 40 //Garrison
 	daily_payments["Watch Captain"] = 45 //Don't get to live in a fancy keep with servants. More expenses.
 	daily_payments["Master Warden"] = 35 //Garrison
@@ -55,6 +57,12 @@
 	daily_payments["Archivist"] = 10
 	daily_payments["Magicians Associate"] = 10
 	daily_payments["Jester"] = 6
+	daily_payments["Azeb"] = 20
+	daily_payments["Azeb Agha"] = 40
+	daily_payments["Slave Master"] = 50
+	daily_payments["Janissary"] = 30
+	daily_payments["Janissary Sergeant"] = 40 //Garrison
+	daily_payments["Headslave"] = 20 //Manor-House
 
 /obj/structure/roguemachine/steward/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/roguekey))

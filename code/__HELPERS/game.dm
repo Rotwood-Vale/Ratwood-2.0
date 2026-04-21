@@ -87,8 +87,6 @@
 			turfs += T
 	return turfs
 
-//qdel.dm doesn't compile before this file so uh yeah
-#define QDEL_IN_CLIENT_TIME(item, time) addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), item), time, TIMER_STOPPABLE | TIMER_CLIENT_TIME)
 /**
  * Helper atom that copies an appearance and exists for a period
 */
