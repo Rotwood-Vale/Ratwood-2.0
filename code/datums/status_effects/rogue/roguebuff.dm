@@ -1473,18 +1473,6 @@
 	effectedstats = list(STATKEY_INT = 2, STATKEY_WIL = 4, STATKEY_SPD = -3)
 	duration = 20 SECONDS
 
-/datum/status_effect/buff/seelie/happy
-	id = "Seelie Blessing"
-	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /atom/movable/screen/alert/status_effect/buff/seelie/happy
-	effectedstats = list(STATKEY_LCK = 2)
-	duration = 60 SECONDS
-
-/atom/movable/screen/alert/status_effect/buff/seelie/happy
-	name = "Seelie Blessing"
-	desc = "A nearby Seelie has brought me fortune."
-	icon_state = "stressg"
-
 
 /datum/status_effect/buff/clash
 	id = "clash"

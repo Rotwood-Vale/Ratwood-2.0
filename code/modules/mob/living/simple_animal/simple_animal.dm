@@ -943,7 +943,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			riding_datum.vehicle_move_delay = max(1, new_delay)
 			if(loc != oldloc)
 				var/obj/structure/mineral_door/MD = locate() in loc
-				if(MD && !MD.ridethrough && !isseelie(user))
+				if(MD && !MD.ridethrough)
 					if(!HAS_TRAIT(user, TRAIT_EQUESTRIAN))
 						violent_dismount(user)
 

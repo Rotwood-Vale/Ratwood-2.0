@@ -327,29 +327,6 @@
 	desc = "His voice keeps ringing in your ears, rocking your soul.."
 	icon_state = "call_to_arms"
 
-/datum/status_effect/buff/seelie/sad
-	id = "Seelie Curse"
-	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /atom/movable/screen/alert/status_effect/buff/seelie/sad
-	effectedstats = list(STATKEY_LCK = -2)
-	duration = 60 SECONDS
-
-/atom/movable/screen/alert/status_effect/buff/seelie/sad
-	name = "Seelie Curse"
-	desc = "A nearby Seelie has spread their poor mood unto me."
-	icon_state = "stressb"
-
-/datum/status_effect/debuff/seelie_wing_curse
-	id = "seelie_wing_curse"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/seelie_wing_curse
-	effectedstats = list(STATKEY_LCK = -2)
-	duration = 4 MINUTES
-
-/atom/movable/screen/alert/status_effect/debuff/seelie_wing_curse
-	name = "Curse of the Seelie"
-	desc = "I've been cursed for my horrific deed..."
-	icon_state = "stressb"
-
 /datum/status_effect/debuff/ravox_burden
 	id = "ravox_burden"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/ravox_burden

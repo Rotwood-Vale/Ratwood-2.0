@@ -29,37 +29,16 @@
 	return TRUE
 
 /datum/sex_action/vaginal_sex/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(span_warning("[user] forces [user.p_their()] cock into [target]'s tiny cunt!"))
-		var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/groin = target.get_bodypart(BODY_ZONE_PRECISE_GROIN)
-		chest?.add_wound(/datum/wound/fracture/chest)
-		groin?.add_wound(/datum/wound/fracture/groin)
-		if(chest)
-			target.apply_damage(30, BRUTE, chest)
-	else if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(span_warning("[user] tries and fails to insert [user.p_their()] tiny cock into [target]'s cunt."))
-	else
-		user.visible_message(span_warning("[user] slides [user.p_their()] cock into [target]'s cunt!"))
+	user.visible_message(span_warning("[user] slides [user.p_their()] cock into [target]'s cunt!"))
 	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
 
 /datum/sex_action/vaginal_sex/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] tries to fuck [target]'s cunt, unsuccessfully."))
-		user.sexcon.intercourse_noise(target, TRUE)
-		user.sexcon.do_thrust_animate(target)
-		return FALSE
 	if(!user.sexcon.do_knot_action)
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fucks [target]'s cunt."))
 	else
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] knot-fucks [target]'s cunt."))
-	if(HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
-		return FALSE
 	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
-		target.apply_damage(10, BRUTE, target.get_bodypart(BODY_ZONE_CHEST))
-		target.apply_damage(3, BRUTE, target.get_bodypart(BODY_ZONE_PRECISE_GROIN))
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
 		user.sexcon.try_pelvis_crush(target)
@@ -79,10 +58,7 @@
 	target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/vaginal_sex/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(span_warning("[user] stops trying to insert [user.p_their()] tiny cock into [target]'s cunt."))
-	else
-		user.visible_message(span_warning("[user] pulls [user.p_their()] cock out of [target]'s cunt."))
+	user.visible_message(span_warning("[user] pulls [user.p_their()] cock out of [target]'s cunt."))
 
 /datum/sex_action/vaginal_sex/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())
@@ -103,37 +79,16 @@
 	return ..()
 
 /datum/sex_action/vaginal_sex/double/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(span_warning("[user] forces [user.p_their()] cocks into [target]'s tiny cunt!"))
-		var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/groin = target.get_bodypart(BODY_ZONE_PRECISE_GROIN)
-		chest?.add_wound(/datum/wound/fracture/chest)
-		groin?.add_wound(/datum/wound/fracture/groin)
-		if(chest)
-			target.apply_damage(30, BRUTE, chest)
-	else if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(span_warning("[user] tries and fails to insert [user.p_their()] tiny cocks into [target]'s cunt."))
-	else
-		user.visible_message(span_warning("[user] slides [user.p_their()] cocks into [target]'s cunt!"))
+	user.visible_message(span_warning("[user] slides [user.p_their()] cocks into [target]'s cunt!"))
 	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
 
 /datum/sex_action/vaginal_sex/double/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] tries to double-fuck [target]'s cunt, unsuccessfully."))
-		user.sexcon.intercourse_noise(target, TRUE)
-		user.sexcon.do_thrust_animate(target)
-		return FALSE
 	if(!user.sexcon.do_knot_action)
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] double-fucks [target]'s cunt."))
 	else
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] double-knots [target]'s cunt."))
-	if(HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
-		return FALSE
 	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
-	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
-		target.apply_damage(10, BRUTE, target.get_bodypart(BODY_ZONE_CHEST))
-		target.apply_damage(3, BRUTE, target.get_bodypart(BODY_ZONE_PRECISE_GROIN))
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
 		user.sexcon.try_pelvis_crush(target)
@@ -153,7 +108,4 @@
 	target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/vaginal_sex/double/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!HAS_TRAIT(target, TRAIT_TINY) && HAS_TRAIT(user, TRAIT_TINY))
-		user.visible_message(span_warning("[user] stops trying to insert [user.p_their()] tiny cocks into [target]'s cunt."))
-	else
-		user.visible_message(span_warning("[user] pulls [user.p_their()] cocks out of [target]'s cunt."))
+	user.visible_message(span_warning("[user] pulls [user.p_their()] cocks out of [target]'s cunt."))

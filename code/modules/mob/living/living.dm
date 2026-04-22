@@ -343,9 +343,6 @@
 		return FALSE
 	if(throwing || !(mobility_flags & MOBILITY_PULL))
 		return FALSE
-	if(!isliving(AM) && HAS_TRAIT(src, TRAIT_TINY))
-		to_chat(src, span_warning("My hands are too small to grab that."))
-		return FALSE
 
 	AM.add_fingerprint(src)
 
@@ -717,12 +714,6 @@
 		to_chat(src, span_warning("I'm grabbed!"))
 		return
 	if(resting)
-		if(isseelie(src))
-			var/mob/living/carbon/human/H = src
-			var/datum/species/seelie/seelie = H.dna.species
-			if(!seelie.has_wings(src))
-				to_chat(src, span_warning("I can't stand without my wings!"))
-				return FALSE
 		if(!IsKnockdown() && !IsStun() && !IsParalyzed())
 			src.visible_message(span_notice("[src] stands up."))
 			if(move_after(src, 20, target = src))
@@ -742,12 +733,6 @@
 		to_chat(src, span_warning("I'm grabbed!"))
 		return
 	if(resting)
-		if(isseelie(src))
-			var/mob/living/carbon/human/H = src
-			var/datum/species/seelie/seelie = H.dna.species
-			if(!seelie.has_wings(src))
-				to_chat(src, span_warning("I can't stand without my wings!"))
-				return
 		if(!IsKnockdown() && !IsStun() && !IsParalyzed())
 			src.visible_message(span_info("[src] begins to stand up."))
 			if(move_after(src, 20, target = src))
@@ -766,12 +751,11 @@
 				toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
 	if(!silent)
 		if(rest == resting)
-			var/rest_sound_vol = isseelie(src) ? 30 : 100
 			if(resting)
-				playsound(src, 'sound/foley/toggledown.ogg', rest_sound_vol, FALSE)
+				playsound(src, 'sound/foley/toggledown.ogg', 100, FALSE)
 				src.visible_message(span_info("[src] lays down."))
 			else
-				playsound(src, 'sound/foley/toggleup.ogg', rest_sound_vol, FALSE)
+				playsound(src, 'sound/foley/toggleup.ogg', 100, FALSE)
 		else
 			to_chat(src, span_warning("I fail to get up!"))
 	update_cone_show()
@@ -1129,7 +1113,7 @@
 	set name = "Yield"
 	set category = "IC"
 	set hidden = 1
-	if(surrendering || stat)
+	if(surrendering || stat == DEAD)
 		return
 	if(!instant)
 		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
@@ -1751,12 +1735,6 @@
 			stickstand = TRUE
 
 	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyzed && ( ignore_legs || ((has_legs >= 2) || (has_legs == 1 && stickstand)) ) && !(buckled && buckled.buckle_lying)
-	// Seelies cannot stand without wings.
-	if(isseelie(src))
-		var/mob/living/carbon/human/H = src
-		var/datum/species/seelie/seelie = H.dna.species
-		if(!seelie.has_wings(src))
-			canstand_involuntary = FALSE
 
 	if(canstand_involuntary)
 		mobility_flags |= MOBILITY_CANSTAND
@@ -1767,8 +1745,6 @@
 
 	var/should_be_lying = !canstand
 	if(buckled)
-		if(isseelie(src))
-			src.reset_offsets("pixie_hover")
 		if(buckled.buckle_lying != -1)
 			should_be_lying = buckled.buckle_lying
 
@@ -1779,12 +1755,8 @@
 			if(buckled.buckle_lying != -1)
 				lying = buckled.buckle_lying
 		if(!lying) //force them on the ground
-			if(isseelie(src))
-				src.reset_offsets("pixie_hover")
 			lying = 90
 	else
-		if(isseelie(src) && !buckled)
-			src.set_mob_offsets("pixie_hover", _x = 0, _y = 10)
 		mobility_flags |= MOBILITY_STAND
 		lying = 0
 

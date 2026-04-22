@@ -3,9 +3,6 @@
 	..()
 	if(!user)
 		return
-	if(dna?.species && hascall(dna.species, "on_middle_click"))
-		if(call(dna.species, "on_middle_click")(src, user))
-			return TRUE
 	var/obj/item/held_item = user.get_active_held_item()
 	if(held_item && (user.zone_selected == BODY_ZONE_PRECISE_MOUTH))
 		if(held_item.get_sharpness() && held_item.wlength == WLENGTH_SHORT)
@@ -818,10 +815,6 @@
 /mob/living/carbon/human/MouseDrop_T(atom/dragged, mob/living/user)
 	if(istype(dragged, /mob/living))
 		var/mob/living/target = dragged
-		if(isseelie(target) && !HAS_TRAIT(src, TRAIT_TINY) && istype(user.rmb_intent, /datum/rmb_intent/weak))
-			if(can_piggyback(target))
-				shoulder_ride(target)
-				return TRUE
 		if(pulling == target && stat == CONSCIOUS)
 			//If they dragged themselves and we're currently aggressively grabbing them try to piggyback (not on cmode)
 			if(user == target && can_piggyback(target))
@@ -846,10 +839,6 @@
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
 	return (istype(target) && target.stat == CONSCIOUS)
 
-/mob/living/carbon/human/proc/shoulder_ride(mob/living/carbon/target)
-	buckle_mob(target, TRUE, TRUE, FALSE, 0, 0)
-	visible_message(span_notice("[target] gently sits on [src]'s shoulder."))
-
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
 	return (ishuman(target) && !(target.mobility_flags & MOBILITY_STAND))
 
@@ -862,9 +851,6 @@
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	var/carrydelay = 50 //if you have latex you are faster at grabbing
-	if(HAS_TRAIT(src, TRAIT_TINY))
-		to_chat(src, span_warning("I'm too small to carry [target]."))
-		return
 
 	var/backnotshoulder = FALSE
 	if(r_grab && l_grab)

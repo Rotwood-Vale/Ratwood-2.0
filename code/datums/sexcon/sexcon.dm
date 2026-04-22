@@ -1199,16 +1199,6 @@
 		return FALSE
 	if(action.check_incapacitated && incapacitated)
 		return FALSE
-	if(HAS_TRAIT(user, TRAIT_TINY))
-		if(ispath(action_type, /datum/sex_action/force_footjob) || \
-			ispath(action_type, /datum/sex_action/force_foot_lick) || \
-			ispath(action_type, /datum/sex_action/force_crotch_nuzzle) || \
-			ispath(action_type, /datum/sex_action/force_armpit_nuzzle) || \
-			ispath(action_type, /datum/sex_action/force_cunnilingus) || \
-			ispath(action_type, /datum/sex_action/force_rimming))
-			return FALSE
-	if(ispath(action_type, /datum/sex_action/force_blowjob) && (HAS_TRAIT(user, TRAIT_TINY) || HAS_TRAIT(target, TRAIT_TINY)))
-		return FALSE
 	return TRUE
 
 /*

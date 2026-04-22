@@ -10,8 +10,6 @@
 		return FALSE
 	if(!target.getorganslot(ORGAN_SLOT_VAGINA))
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_TINY) != HAS_TRAIT(user, TRAIT_TINY))
-		return FALSE
 	return TRUE
 
 /datum/sex_action/scissoring/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -24,8 +22,6 @@
 	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
 		return FALSE
 	if(!target.getorganslot(ORGAN_SLOT_VAGINA))
-		return FALSE
-	if(HAS_TRAIT(target, TRAIT_TINY) != HAS_TRAIT(user, TRAIT_TINY))
 		return FALSE
 	return TRUE
 
