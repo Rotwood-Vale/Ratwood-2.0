@@ -46,6 +46,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	backr = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
+	beltr = /obj/item/signal_flare
 	id = /obj/item/scomstone/garrison
 
 //Rare-ish anti-armor two hander sword. Kinda alternative of a bastard sword type. Could be cool.

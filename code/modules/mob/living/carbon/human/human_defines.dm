@@ -190,6 +190,7 @@
 	COOLDOWN_DECLARE(priest_change_miracles)
 	COOLDOWN_DECLARE(evil_priest_sermon)//I apologise.
 	COOLDOWN_DECLARE(iconoclast_broadcast)
+	COOLDOWN_DECLARE(inquisitor_broadcast)
 
 	// bait stacks for aimed intent
 	var/bait_stacks
