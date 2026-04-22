@@ -1,3 +1,5 @@
+#define PURITAN_BROADCAST_COOLDOWN (5 MINUTES)
+
 /datum/job/roguetown/puritan
 	title = "Inquisitor"
 	flag = PURITAN
@@ -8,7 +10,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT		//Would you trust a machine to handle a role that requires non-logical intuition and commanding? Maybe. Could undo this if the community likes it. Purpose-built supermachines sound cool, too.
 	allowed_patrons = list(/datum/patron/old_god) //Requires your character's patron to be Psydon. This role is explicitly designed to be played by Psydonites, only, and almost everything they have - down to the equipment and statblock - is rooted in Psydonism. Do NOT make this accessable to other faiths, unless you go through the efforts of redesigning it from the ground up.
-	tutorial = "You are a puritan of unmatched aptitude, adherent to the Psydonic doctrine and entrusted with the authority to lead a local sect. Otava - the largest Psydonic kingdom left on this world - has seen it fit to treat you like a silver-tipped olive branch, gifted to The Vale to ward off the encroaching darkness. Tread carefully when pursuing your missives, lest the faithless strap you to the pyre as well."
+	tutorial = "You are a puritan of the Psydonic doctrine. You are to be feared, ruthless, and answerable to Psydon alone. Otava has dispatched you to The Vale as an olive branch, silver-tipped and poisoned at the stem. You are an outsider here, and you will be treated as one. Use it. Forge alliances where they serve you, discard them when they do not, and never forget that your loyalty is to the Inquisition's dominion, not to the factions of this foreign land. Beneath your sanctimonious banner, corruption is a tool, cruelty towards 'heretics' is doctrine, and false accusations are merely expedient truths. You are not here to be liked. You are here to be feared and to ensure that fear serves Psydon's will, or at the very least, your own."
 	whitelist_req = TRUE
 	cmode_music = 'sound/music/inquisitorcombat.ogg'
 	selection_color = JCOLOR_INQUISITION
@@ -32,6 +34,10 @@
 	jobtype = /datum/job/roguetown/puritan
 	job_bitflag = BITFLAG_HOLY_WARRIOR	//Counts as church.
 	allowed_patrons = list(/datum/patron/old_god)
+
+/datum/outfit/job/roguetown/puritan/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	H.verbs += /mob/living/carbon/human/proc/inquisitor_broadcast
 
 /obj/item/clothing/gloves/roguetown/chain/blk
 		color = CLOTHING_GREY
@@ -154,3 +160,32 @@
 		qdel(S)
 		return
 	to_chat(src, span_warning("This one is not in a ready state to be questioned..."))
+
+/mob/living/carbon/human/proc/inquisitor_broadcast()
+	set name = "Issue Announcement"
+	set category = "Inquisitor"
+	if(stat)
+		return
+	var/announcementinput = input("Speak to your flock! Issue an announcement unto the Inquisition.", "Issue an announcement!") as text|null
+	if(announcementinput)
+		if(!src.can_speak_vocal())
+			to_chat(src, span_warning("I can't speak!"))
+			return FALSE
+		var/area/A = get_area(src)
+		if(!istype(A, /area/rogue/indoors/inq))
+			to_chat(src, span_warning("I can only speak from within the Inquisition."))
+			return FALSE
+		if(!COOLDOWN_FINISHED(src, inquisitor_broadcast))
+			to_chat(src, span_warning("You must wait before issuing another announcement."))
+			return FALSE
+		visible_message(span_warning("[src] takes a deep breath, preparing to issue an announcement..."))
+		if(do_after(src, 15 SECONDS, target = src))
+			say(announcementinput)
+			for(var/mob/living/carbon/human/M in GLOB.human_list)
+				var/datum/job/J = SSjob.GetJob(M.mind?.assigned_role)
+				if(J?.department_flag == INQUISITION)
+					to_chat(M, span_boldnotice("<big><b>Inquisitor [src.real_name] announces:</b> [announcementinput]</big>"))
+			COOLDOWN_START(src, inquisitor_broadcast, PURITAN_BROADCAST_COOLDOWN)
+		else
+			to_chat(src, span_warning("Your announcement was interrupted!"))
+			return FALSE
