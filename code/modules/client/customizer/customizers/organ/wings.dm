@@ -45,6 +45,23 @@
 		/datum/sprite_accessory/wings/large/harpybat_alt,
 		)
 
+/datum/customizer/organ/wings/seelie
+	name = "Seelie Wings"
+	allows_disabling = FALSE
+	customizer_choices = list(/datum/customizer_choice/organ/wings/seelie)
+
+/datum/customizer_choice/organ/wings/seelie
+	name = "Seelie Wings"
+	organ_type = /obj/item/organ/wings/seelie
+	sprite_accessories = list(
+		/datum/sprite_accessory/wings/seelie,
+		/datum/sprite_accessory/wings/fairy,
+		/datum/sprite_accessory/wings/bee,
+		/datum/sprite_accessory/wings/bat,
+		/datum/sprite_accessory/wings/feathery,
+		/datum/sprite_accessory/wings/featheryv2,
+	)
+
 /datum/customizer/organ/wings/moth
 	name = "Fluvian Wings"
 	allows_disabling = TRUE
