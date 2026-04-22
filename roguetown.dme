@@ -1116,6 +1116,7 @@
 #include "code\game\objects\items\rogueitems\dummy.dm"
 #include "code\game\objects\items\rogueitems\fishing_cage.dm"
 #include "code\game\objects\items\rogueitems\flintsparker.dm"
+#include "code\game\objects\items\rogueitems\signal_flare.dm"
 #include "code\game\objects\items\rogueitems\gem_items.dm"
 #include "code\game\objects\items\rogueitems\gems.dm"
 #include "code\game\objects\items\rogueitems\hair_dye.dm"

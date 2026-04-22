@@ -3,7 +3,7 @@
 
 /datum/advclass/iconoclast //Support Cleric, Heavy armor, unarmed, miracles.
 	name = "Iconoclast"
-	tutorial = "Trained by an Ecclesial sect, you uphold the Ideological purity of the Matthian Creed. Take from the wealthy, give to the worthless, empower. They will look up to you, in search of the God of Robbery's guidance. Be their light in the dark."
+	tutorial = "Trained by an Ecclesial sect, you uphold the ideological purity of the Matthian Creed. Take from the wealthy, give to the worthless, empower the dispossessed. Or don't. You are a free man after all. The Brotherhood will look to you for guidance, but do not mistake that for obedience. These are free men and women, bound by no oath to you, answerable to no rank you hold. Lead by example and by conviction, for you have the weight of Matthios behind your words."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	outfit = /datum/outfit/job/roguetown/bandit/iconoclast
