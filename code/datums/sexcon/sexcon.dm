@@ -349,6 +349,8 @@
 		else
 			facial.refresh_cum()
 		modular_record_collar_receive_event(splashed_user, user)
+	if(target.has_flaw(/datum/charflaw/addiction/lovefiend))
+		target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null)
@@ -377,6 +379,8 @@
 				splashed_user.apply_status_effect(/datum/status_effect/creampie_leak/long)
 			else
 				splashed_user.apply_status_effect(/datum/status_effect/creampie_leak)
+	if(target.has_flaw(/datum/charflaw/addiction/lovefiend))
+		target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	after_ejaculation()
 	after_intimate_climax(oral)
 
