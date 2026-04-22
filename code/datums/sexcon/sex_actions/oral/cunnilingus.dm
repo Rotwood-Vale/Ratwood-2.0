@@ -22,10 +22,16 @@
 	return TRUE
 
 /datum/sex_action/cunnilingus/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] starts sucking [target]'s clit..."))
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.visible_message(span_warning("[user] starts licking [target]'s clit..."))
+	else
+		user.visible_message(span_warning("[user] starts sucking [target]'s clit..."))
 
 /datum/sex_action/cunnilingus/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] sucks [target]'s clit..."))
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] licks [target]'s clit..."))
+	else
+		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] sucks [target]'s clit..."))
 	user.sexcon.oralcourse_noise(target)
 	user.sexcon.do_thrust_animate(target)
 
@@ -35,7 +41,10 @@
 		target.sexcon.cum_into(oral = TRUE)
 
 /datum/sex_action/cunnilingus/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops sucking [target]'s clit ..."))
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.visible_message(span_warning("[user] stops licking [target]'s clit..."))
+	else
+		user.visible_message(span_warning("[user] stops sucking [target]'s clit ..."))
 
 /datum/sex_action/cunnilingus/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

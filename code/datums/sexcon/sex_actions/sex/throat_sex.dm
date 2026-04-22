@@ -11,6 +11,8 @@
 		return FALSE
 	if(!user.getorganslot(ORGAN_SLOT_PENIS))
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_TINY) || HAS_TRAIT(user, TRAIT_TINY))
+		return FALSE
 	if(isdullahan(target) && knot_on_finish)
 		var/datum/species/dullahan/dullahan = target.dna.species
 		if(dullahan.headless)

@@ -396,6 +396,11 @@
 	AdjustSleeping(-100)
 	AdjustParalyzed(-60)
 	AdjustImmobilized(-60)
+	if(isseelie(src))
+		var/datum/species/seelie/seelie = dna.species
+		if(!seelie.has_wings(src))
+			to_chat(M, span_warning("[src] cannot stand without [p_their()] wings!"))
+			return
 	set_resting(FALSE)
 
 	playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)

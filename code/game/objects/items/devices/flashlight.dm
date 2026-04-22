@@ -315,6 +315,10 @@
 	grid_height = 64
 	extinguishable = FALSE
 	weather_resistant = TRUE
+	var/open = TRUE
+	var/list/occupants = list()
+	var/max_occupants = 1 // Hard-cap so a single lamptern can't carry multiple Seelie.
+	var/breakout_time = 20 SECONDS
 	metalizer_result = null
 
 /obj/item/flashlight/flare/torch/lantern/afterattack(atom/movable/A, mob/user, proximity)
@@ -326,6 +330,13 @@
 			A.spark_act()
 		else
 			A.fire_act(3,3)
+
+/obj/item/flashlight/flare/torch/lantern/extinguish()
+	return
+
+/obj/item/flashlight/flare/torch/lantern/attack_self(mob/user)
+	if(on && !length(occupants))
+		turn_off()
 
 /obj/item/flashlight/flare/torch/lantern/process()
 	open_flame(heat)
@@ -356,6 +367,248 @@
 	light_color ="#4ac77e"
 	on = FALSE
 	smeltresult = /obj/item/ingot/bronze
+
+//------------BEGIN LAMPTERN SEELIE CARRYING CODE--------------//
+
+/obj/item/flashlight/flare/torch/lantern/fire_act(added, maxstacks)
+	if(fuel)
+		if(length(occupants))
+			to_chat(loc, span_warning("There is an occupant, you'll burn them!"))
+			return FALSE
+		else if(!on)
+			playsound(src.loc, 'sound/items/firelight.ogg', 100)
+			on = TRUE
+			damtype = BURN
+			update_brightness()
+			force = on_damage
+			if(soundloop)
+				soundloop.start()
+			if(ismob(loc))
+				var/mob/M = loc
+				M.update_inv_hands()
+			START_PROCESSING(SSobj, src)
+			return TRUE
+	return ..()
+
+/obj/item/flashlight/flare/torch/lantern/Exited(atom/movable/occupant)
+	. = ..()
+	if(occupant in occupants && isliving(occupant))
+		occupants -= occupant
+
+/obj/item/flashlight/flare/torch/lantern/examine(mob/user)
+	. = ..()
+	if(length(occupants))
+		for(var/V in occupants)
+			var/mob/living/L = V
+			. += span_notice("It has [L] inside.")
+	else
+		. += span_notice("It has nothing inside.")
+
+/obj/item/flashlight/flare/torch/lantern/rmb_self(mob/living/user)
+	return toggle_door(user)
+
+/obj/item/flashlight/flare/torch/lantern/attack_right(mob/user)
+	. = ..()
+	if(!isliving(user))
+		return .
+	var/mob/living/L = user
+	if(L.loc != src && !L.Adjacent(src))
+		return .
+	return toggle_door(L)
+
+/obj/item/flashlight/flare/torch/lantern/proc/toggle_door(mob/living/user)
+	if(!user)
+		return FALSE
+	if(user in occupants)
+		container_resist(user)
+		return TRUE
+	if(open)
+		to_chat(user, span_notice("I close [src]'s door."))
+		playsound(src, 'sound/blank.ogg', 50, TRUE)
+		open = FALSE
+	else
+		to_chat(user, span_notice("I open [src]'s door."))
+		playsound(src, 'sound/blank.ogg', 50, TRUE)
+		open = TRUE
+	return TRUE
+
+/// Checks if target can be stored in the lamptern.
+/obj/item/flashlight/flare/torch/lantern/proc/can_store_mob(mob/living/target, mob/living/user, do_warning = TRUE)
+	if(!user)
+		do_warning = FALSE
+	if(!open)
+		if(do_warning)
+			to_chat(user, span_warning("I need to open \the [src]'s door!"))
+		return FALSE
+
+	var/they = target.p_they()
+	var/them = target.p_them()
+	var/target_string = "\the [target]"
+	if(target == user)
+		they = "you"
+		them = "yourself"
+		target_string = "you"
+
+	if(!HAS_TRAIT(target, TRAIT_TINY))
+		if(do_warning)
+			to_chat(user, span_warning("How could [they] possibly fit?"))
+		return FALSE
+	if(target.buckled)
+		if(do_warning)
+			to_chat(user, span_warning("Unbuckle [them] first."))
+		return FALSE
+
+	// Check if the lamptern is in a tiny holder's inventory.
+	if(item_flags & IN_INVENTORY)
+		var/mob/living/holder = get(src, /mob/living)
+		if(holder == target)
+			if(do_warning)
+				var/user_string = (target == user) ? "you're" : "they're"
+				to_chat(user, span_warning("\The [src] can't fit [target_string] while [user_string] holding it!"))
+			return FALSE
+		if(isseelie(holder))
+			if(do_warning)
+				to_chat(user, span_warning("\The [src] can't fit [target_string] while it's shrunken by a Seelie!"))
+			return FALSE
+
+	if(on)
+		if(do_warning)
+			to_chat(user, span_warning("[src] is lit, you'll burn [them]!"))
+		return FALSE
+	if(length(occupants) >= max_occupants)
+		if(do_warning)
+			to_chat(user, span_warning("[src] is already carrying a seelie!"))
+		return FALSE
+	return TRUE
+
+/obj/item/flashlight/flare/torch/lantern/attack(mob/living/target, mob/living/user)
+	if(user.pulling != target || user.grab_state < GRAB_AGGRESSIVE)
+		return ..()
+	if(!open)
+		to_chat(user, span_warning("[src]'s door is shut. Open it first."))
+		return
+	if(!can_store_mob(target, user))
+		return
+	load_occupant(user, target)
+
+/obj/item/flashlight/flare/torch/lantern/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/grabbing))
+		var/obj/item/grabbing/G = I
+		if(G.grabbee != user || !isliving(G.grabbed))
+			return TRUE
+		var/mob/living/target = G.grabbed
+		if(user.pulling != target || G.grab_state < GRAB_AGGRESSIVE)
+			to_chat(user, span_warning("I need a stronger grip on [target]."))
+			return TRUE
+		if(!can_store_mob(target, user))
+			return TRUE
+		load_occupant(user, target)
+		return TRUE
+	return ..()
+
+/obj/item/flashlight/flare/torch/lantern/relaymove(mob/living/user, direction)
+	if(open)
+		loc.visible_message(span_notice("[user] climbs out of [src]!"), span_warning("[user] jumps out of [src]!"))
+		remove_occupant(user)
+		return
+
+/obj/item/flashlight/flare/torch/lantern/container_resist(mob/living/user)
+	if(!(user in occupants))
+		return ..()
+	if(open)
+		to_chat(user, span_notice("The door is open; I can move to climb out."))
+		return
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	loc.visible_message(span_warning("[src] starts rattling as something pushes against the door!"), ignored_mobs = user)
+	to_chat(user, span_notice("I start pushing against the door of the [src], trying to force it open... (This will take [DisplayTimeText(breakout_time)].)"))
+	var/turf/start_turf = get_turf(src)
+	var/datum/callback/continue_checks = CALLBACK(src, PROC_REF(can_continue_breakout), user, start_turf)
+	if(do_after(user, breakout_time, needhand = FALSE, target = user, extra_checks = continue_checks) && !open && (user in occupants))
+		loc.visible_message(span_warning("[src]'s door is forced open from the inside!"), ignored_mobs = user)
+		to_chat(user, span_notice("I force open the [src]'s door. I can move to climb out now."))
+		open = TRUE
+	else
+		to_chat(user, span_notice("I fail to break out of [src]..."))
+
+/obj/item/flashlight/flare/torch/lantern/proc/can_continue_breakout(mob/living/user, turf/start_turf)
+	if(QDELETED(src) || QDELETED(user))
+		return FALSE
+	if(!(user in occupants))
+		return FALSE
+	if(open)
+		return FALSE
+	// Moving the lamptern interrupts breakout progress.
+	if(get_turf(src) != start_turf)
+		return FALSE
+	return TRUE
+
+/obj/item/flashlight/flare/torch/lantern/MouseDrop_T(atom/movable/O, mob/living/user)
+	if(isliving(O) && HAS_TRAIT(O, TRAIT_TINY) && O == user && can_store_mob(user, user))
+		loc.visible_message(span_notice("[user] starts climbing into [src]!"), span_warning("[user] starts climbing into [src]!"))
+		if(do_after(user, 12 SECONDS, target = src) && can_store_mob(user, user))
+			add_occupant(O)
+		return TRUE
+	return ..()
+
+/obj/item/flashlight/flare/torch/lantern/MouseDrop(atom/over_atom)
+	. = ..()
+	if(isopenturf(over_atom) && usr.Adjacent(over_atom) && open && length(occupants))
+		usr.visible_message(span_notice("[usr] unloads [src]."), span_notice("I unload [src] onto [over_atom]."))
+		for(var/V in occupants.Copy())
+			remove_occupant(V, over_atom)
+
+/obj/item/flashlight/flare/torch/lantern/proc/load_occupant(mob/living/user, mob/living/target)
+	user.visible_message(span_notice("[user] starts loading [target] into [src]."), span_notice("I start loading [target] into [src]..."), ignored_mobs = target)
+	to_chat(target, span_danger("[user] starts loading you into [user.p_their()] [name]!"))
+	if(!do_mob(user, target, 3 SECONDS))
+		return
+	if(target in occupants)
+		return
+	if(user.pulling != target || user.grab_state < GRAB_AGGRESSIVE)
+		to_chat(user, span_warning("I lose my grip on [target]."))
+		return
+	if(!can_store_mob(target, user))
+		return
+	user.visible_message(span_notice("[user] loads [target] into [src]!"), span_notice("I load [target] into [src]."), ignored_mobs = target)
+	to_chat(target, span_danger("[user] loads you into [user.p_their()] [name]!"))
+	add_occupant(target)
+	open = FALSE
+	user.stop_pulling()
+
+/obj/item/flashlight/flare/torch/lantern/proc/add_occupant(mob/living/occupant)
+	if((occupant in occupants) || !istype(occupant))
+		return
+	occupant.forceMove(src)
+	occupants += occupant
+	icon_state = "lantern_wisp"
+	item_state = initial(item_state)
+	light_color = "#6e55fc"
+	on = TRUE
+	set_light_on(TRUE)
+	if(ismob(src.loc))
+		var/mob/M = src.loc
+		M.update_inv_hands()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/flashlight/flare/torch/lantern/proc/remove_occupant(mob/living/occupant, turf/new_turf)
+	if(!(occupant in occupants) || !istype(occupant))
+		return
+	occupant.forceMove(new_turf ? new_turf : drop_location())
+	occupants -= occupant
+	icon_state = initial(icon_state)
+	item_state = initial(item_state)
+	light_color = initial(light_color)
+	on = FALSE
+	set_light_on(FALSE)
+	STOP_PROCESSING(SSobj, src)
+	if(ismob(src.loc))
+		var/mob/M = src.loc
+		M.update_inv_hands()
+		M.update_inv_belt()
+	occupant.setDir(SOUTH)
+
+//------------END LAMPTERN SEELIE CARRYING CODE--------------//
 
 /obj/item/flashlight/flare/torch/lantern/bronzelamptern/malums_lamptern //unqiue item as a dungeon reward. Functionally a kite shield and a bronze lamptern combined into one
 	name = "ancient lamptern"

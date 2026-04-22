@@ -44,7 +44,8 @@
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 
 	// Seelie-specific grinding messages
-	if(isseelie(user) && !HAS_TRAIT(target, TRAIT_TINY))		var/list/seelie_msgs = list(
+	if(isseelie(user) && !HAS_TRAIT(target, TRAIT_TINY))
+		var/list/seelie_msgs = list(
 			"[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] rubs [user.p_their()] whole tiny body against [target]'s [zone_text]...",
 			"[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] writhes [user.p_their()] little form against [target]'s [zone_text]...",
 		)

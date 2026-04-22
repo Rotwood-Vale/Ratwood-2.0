@@ -114,6 +114,249 @@
 			smoke.set_up(0, t)
 			smoke.start()
 
+/obj/projectile/magic/animate
+	name = "bolt of animation"
+	icon_state = "red_1"
+	damage = 0
+	damage_type = BURN
+	nodamage = TRUE
+
+/obj/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
+	var/mob/living/carbon/human/caster = firer
+	if(caster)
+		caster.energy_add(-120)
+	var/list/atom/candidates = list()
+	if(target)
+		candidates += target
+	if(original && original != target)
+		candidates += original
+	// Some objects are too low-layer to be direct collision targets; scan both impacted and clicked turfs.
+	var/turf/impact_turf = get_turf(target)
+	var/turf/click_turf = get_turf(original)
+	if(impact_turf)
+		for(var/obj/O in impact_turf)
+			candidates += O
+	if(click_turf && click_turf != impact_turf)
+		for(var/obj/O in click_turf)
+			candidates += O
+	for(var/atom/candidate in candidates)
+		if(candidate?.animate_atom_living(firer))
+			break
+	return ..()
+
+/atom/proc/animate_atom_living(mob/living/owner = null)
+	if(isobj(src))
+		var/obj/O = src
+		if(istype(O, /obj/effect) || istype(O, /obj/projectile))
+			return FALSE
+		if(istype(O, /obj/item/gun))
+			new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
+		else
+			new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
+		return TRUE
+
+	if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
+		var/mob/living/simple_animal/hostile/mimic/copy/C = src
+		if(owner)
+			C.ChangeOwner(owner)
+			return TRUE
+	return FALSE
+
+/mob/living/simple_animal/hostile/mimic
+	name = "crate"
+	desc = ""
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "curseblob"
+	icon_living = "curseblob"
+	gender = NEUTER
+	mob_biotypes = NONE
+	speed = 0
+	maxHealth = 250
+	health = 250
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	faction = list("mimic")
+	move_to_delay = 9
+	del_on_death = 1
+
+/mob/living/simple_animal/hostile/mimic/copy
+	health = 100
+	maxHealth = 100
+	gold_core_spawnable = NO_SPAWN
+	var/mob/living/creator = null
+	var/destroy_objects = 0
+	var/knockdown_people = 0
+	var/static/icon/googly_eyes_icon = 'icons/mob/mob.dmi'
+	var/static/googly_eyes_state = "googly_eyes"
+	var/mutable_appearance/active_googly_eyes = null
+	var/overlay_googly_eyes = TRUE
+	var/idledamage = TRUE
+	var/active_animation_until = 0
+
+/mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0, no_googlies = FALSE)
+	. = ..()
+	if(no_googlies)
+		overlay_googly_eyes = FALSE
+	CopyObject(copy, creator, destroy_original)
+	toggle_ai(AI_ON)
+	active_animation_until = world.time + 30 SECONDS
+	addtimer(CALLBACK(src, PROC_REF(ProcessActiveAnimation)), 1)
+
+/mob/living/simple_animal/hostile/mimic/copy/Life()
+	..()
+	if(idledamage && !target && !ckey)
+		adjustBruteLoss(1)
+	for(var/mob/living/M in contents)
+		death()
+
+/mob/living/simple_animal/hostile/mimic/copy/death()
+	for(var/atom/movable/M in src)
+		M.forceMove(get_turf(src))
+	..()
+
+/mob/living/simple_animal/hostile/mimic/copy/ListTargets()
+	. = ..()
+	return . - creator
+
+/mob/living/simple_animal/hostile/mimic/copy/setDir(newdir, ismousemovement)
+	var/olddir = dir
+	. = ..()
+	if(dir != olddir)
+		UpdateGooglyEyes()
+
+/mob/living/simple_animal/hostile/mimic/copy/proc/ProcessActiveAnimation()
+	if(QDELETED(src) || stat == DEAD || AIStatus == NPC_AI_OFF)
+		return
+	if(world.time > active_animation_until)
+		return
+	toggle_ai(AI_ON)
+	var/list/possible_targets = ListTargets()
+	if(FindTarget(possible_targets, TRUE))
+		MoveToTarget(possible_targets)
+	else if(isturf(loc) && !stop_automated_movement && (mobility_flags & MOBILITY_MOVE))
+		step_rand(src)
+	addtimer(CALLBACK(src, PROC_REF(ProcessActiveAnimation)), 5)
+
+/mob/living/simple_animal/hostile/mimic/copy/proc/UpdateGooglyEyes(force = FALSE)
+	if(!overlay_googly_eyes)
+		return
+	if(!force && active_googly_eyes?.dir == dir)
+		return
+	if(active_googly_eyes)
+		cut_overlay(active_googly_eyes)
+	active_googly_eyes = mutable_appearance(googly_eyes_icon, googly_eyes_state)
+	active_googly_eyes.dir = dir
+	add_overlay(active_googly_eyes)
+
+/mob/living/simple_animal/hostile/mimic/copy/proc/ChangeOwner(mob/owner)
+	if(owner != creator)
+		LoseTarget()
+		creator = owner
+		faction |= list("[REF(owner)]")
+
+/mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/O)
+	if((isitem(O) || isstructure(O) || ismachinery(O)))
+		return TRUE
+	return FALSE
+
+/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
+	if(destroy_original || CheckObject(O))
+		O.forceMove(src)
+		name = O.name
+		desc = O.desc
+		icon = O.icon
+		icon_state = O.icon_state
+		icon_living = icon_state
+		copy_overlays(O)
+		if(overlay_googly_eyes)
+			UpdateGooglyEyes(TRUE)
+		if(isstructure(O) || ismachinery(O))
+			health = (O.anchored * 50) + 50
+			destroy_objects = TRUE
+			if(O.density && O.anchored)
+				knockdown_people = TRUE
+				melee_damage_lower *= 2
+				melee_damage_upper *= 2
+		else if(isitem(O))
+			var/obj/item/I = O
+			health = 15 * I.w_class
+			melee_damage_lower = 2 + I.force
+			melee_damage_upper = 2 + I.force
+			move_to_delay = 2 * I.w_class + 1
+		maxHealth = health
+		if(user)
+			creator = user
+			faction += list("[REF(creator)]")
+		if(destroy_original)
+			qdel(O)
+		return TRUE
+	return FALSE
+
+/mob/living/simple_animal/hostile/mimic/copy/DestroySurroundings()
+	if(destroy_objects)
+		..()
+
+/mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
+	. = ..()
+	if(knockdown_people && . && prob(15) && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.Paralyze(40)
+		C.visible_message(span_danger("\The [src] knocks down \the [C]!"), span_danger("\The [src] knocks you down!"))
+
+/mob/living/simple_animal/hostile/mimic/copy/ranged
+	var/obj/item/gun/true_gun = null
+	var/obj/item/gun/ballistic/ballistic_gun = null
+
+/mob/living/simple_animal/hostile/mimic/copy/ranged/CopyObject(obj/O, mob/living/creator, destroy_original = 0)
+	if(..())
+		emote_see = list("aims menacingly")
+		obj_damage = 0
+		environment_smash = ENVIRONMENT_SMASH_NONE
+		ranged = TRUE
+		retreat_distance = 1
+		minimum_distance = 6
+		var/obj/item/gun/G = O
+		melee_damage_upper = max(1, G.force)
+		melee_damage_lower = max(1, G.force - max(0, (G.force / 2)))
+		move_to_delay = 2 * G.w_class + 1
+		projectilesound = G.fire_sound
+		true_gun = G
+		if(istype(G, /obj/item/gun/ballistic))
+			var/obj/item/gun/ballistic/B = G
+			ballistic_gun = B
+			if(B.mag_type)
+				var/obj/item/ammo_box/magazine/M = B.mag_type
+				casingtype = initial(M.ammo_type)
+
+/mob/living/simple_animal/hostile/mimic/copy/ranged/OpenFire(the_target)
+	if(ballistic_gun)
+		if(ballistic_gun.chambered)
+			if(ballistic_gun.chambered.BB)
+				qdel(ballistic_gun.chambered.BB)
+				ballistic_gun.chambered.BB = null
+				ballistic_gun.chambered.update_icon()
+				..()
+			else
+				visible_message(span_danger("The <b>[src]</b> clears a jam!"))
+			ballistic_gun.chambered.forceMove(loc)
+			ballistic_gun.chambered = null
+			if(ballistic_gun.magazine && ballistic_gun.magazine.stored_ammo.len)
+				ballistic_gun.chambered = ballistic_gun.magazine.get_round(0)
+				ballistic_gun.chambered.forceMove(ballistic_gun)
+			ballistic_gun.update_icon()
+		else if(ballistic_gun.magazine && ballistic_gun.magazine.stored_ammo.len)
+			ballistic_gun.chambered = ballistic_gun.magazine.get_round(0)
+			ballistic_gun.chambered.forceMove(ballistic_gun)
+			visible_message(span_danger("The <b>[src]</b> cocks itself!"))
+	else
+		ranged = FALSE
+		retreat_distance = 0
+		minimum_distance = 1
+		return
+	if(true_gun)
+		icon_state = true_gun.icon_state
+		icon_living = true_gun.icon_state
+
 /obj/projectile/magic/spellblade
 	name = "blade energy"
 	icon_state = "lavastaff"
@@ -291,7 +534,6 @@
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		L.throw_at(throw_target, 200, 4)
-		new /datum/magic_throw_slip_watcher(L)
 	else
 		if(isitem(target))
 			var/obj/item/I = target

@@ -126,6 +126,9 @@
 		return
 	if(owner.stat == DEAD)
 		return
+	if(isseelie(owner))
+		to_chat(owner, span_love("Despite the surge of warmth filling me, I can't get pregnant."))
+		return
 	if(pregnant)
 		to_chat(owner, span_love("I feel a surge of warmth in my belly again..."))
 		return
