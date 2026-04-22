@@ -410,6 +410,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 
 //Wretch categories
 #define CLASS_CAT_ACCURSED "Accursed"
+#define CLASS_CAT_TOILER "Wretched Toiler"
 
 //Mercenary categories
 #define CLASS_CAT_ETRUSCA "Etrusca"
