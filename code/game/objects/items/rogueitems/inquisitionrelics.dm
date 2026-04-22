@@ -267,7 +267,7 @@ Inquisitorial armory down here
 	new /obj/item/rogueweapon/flail/sflail/psyflail
 	new /obj/item/rogueweapon/spear/psyspear(src)
 	new /obj/item/rogueweapon/sword/long/psysword(src)
-	new /obj/item/rogueweapon/mace/goden/psymace(src)
+	new /obj/item/rogueweapon/mace/goden/psy(src)
 	new /obj/item/rogueweapon/stoneaxe/battle/psyaxe(src)
 	*/
 
@@ -746,8 +746,8 @@ Inquisitorial armory down here
 		visible_message(span_info("[user] warms [src] with [I]."))
 		update_icon()
 
-	if(istype(I, /obj/item/clothing/ring/signet))	
-		if(tallow && heatedup)	
+	if(istype(I, /obj/item/clothing/ring/signet))
+		if(tallow && heatedup)
 			var/obj/item/clothing/ring/signet/ring = I
 			ring.tallowed = TRUE
 			ring.update_icon()

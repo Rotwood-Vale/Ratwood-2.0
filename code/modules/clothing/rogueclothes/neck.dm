@@ -377,7 +377,7 @@
 
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar // minor flavor swap so people know it's a scam shitty knockoff.
 	name = "lesser cursed collar"
-	desc = "A metal collar that seems to radiate an ominous aura. A pale imitation of it's artificed counterpart."
+	desc = "A metal collar that seems to radiate an ominous aura. A pale imitation of its artificed counterpart. \nLooks like you'd need someone else's help to take it off."
 	icon_state = "cursed_collar"
 	item_state = "cursed_collar"
 	armor = ARMOR_CLOTHING
@@ -393,7 +393,6 @@
 
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar/Initialize(mapload)
 	. = ..()
-	name = "cursed collar"
 	ADD_TRAIT(src, TRAIT_NO_SELF_UNEQUIP, CURSED_ITEM_TRAIT)
 /*
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar/dropped(mob/living/carbon/human/user)

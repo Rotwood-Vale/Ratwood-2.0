@@ -18,6 +18,9 @@
 	experimental_inhand = FALSE
 	component_type = /datum/component/storage/concrete/roguetown/keyring
 
+/obj/item/storage/keyring/show_examine_hover_tooltip()
+	return FALSE
+
 /obj/item/storage/keyring/Initialize(mapload)
 	. = ..()
 	for(var/X in keys)

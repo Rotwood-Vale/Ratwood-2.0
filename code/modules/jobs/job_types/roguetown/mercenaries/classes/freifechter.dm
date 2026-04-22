@@ -16,7 +16,6 @@
 		STATKEY_CON = 2
 	)
 	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -26,24 +25,39 @@
 
 /datum/outfit/job/roguetown/mercenary/freelancer/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a master in the arts of the longsword. Wielder of Psydonia's most versatile and noble weapon, you needn't anything else. You can choose a regional longsword."))
-	l_hand = /obj/item/rogueweapon/scabbard/sword
+	to_chat(H, span_warning("You are a graduate of the Freifechters."))
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer	//Experimental.
-	var/weapons = list("Modified Training Sword !!!CHALLENGE!!!", "Etruscan Longsword", "Kriegsmesser", "Field Longsword")
+	var/weapons = list("Modified Training Sword !!!CHALLENGE!!!", "Etruscan Longsword", "Kriegsmesser", "Field Longsword", "Frypan", "Peasant Scythe")
 	if(H.mind)
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Modified Training Sword !!!CHALLENGE!!!")		//A sharp feder. Less damage, better defense. Definitely not a good choice.
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+				l_hand = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long/frei
 				beltr = /obj/item/rogueweapon/huntingknife/idagger
 			if("Etruscan Longsword")		//A longsword with a compound ricasso. Accompanied by a traditional flip knife.
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+				l_hand = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long/etruscan
 				beltr = /obj/item/rogueweapon/huntingknife/idagger/navaja
 			if("Kriegsmesser")		//Och- eugh- German!
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+				l_hand = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
 				beltr = /obj/item/rogueweapon/huntingknife/idagger
 			if("Field Longsword")		//A common longsword.
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+				l_hand = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long
+				beltr = /obj/item/rogueweapon/huntingknife/idagger
+			if("Frypan")
+				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_LEGENDARY, TRUE)
+				r_hand = /obj/item/cooking/pan
+				beltr = /obj/item/rogueweapon/huntingknife/idagger
+			if("Peasant Scythe")
+				H.adjust_skillrank_up_to(/datum/skill/labor/farming, SKILL_LEVEL_LEGENDARY, TRUE)
+				r_hand = /obj/item/rogueweapon/scythe
 				beltr = /obj/item/rogueweapon/huntingknife/idagger
 	belt = /obj/item/storage/belt/rogue/leather/sash
 	beltl = /obj/item/flashlight/flare/torch/lantern

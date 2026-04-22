@@ -901,7 +901,7 @@
 	sellprice = 30
 
 /datum/crafting_recipe/roguetown/sewing/archivist
-	name = "archivist's robes"
+	name = "scholar's robes"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/archivist)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 2,

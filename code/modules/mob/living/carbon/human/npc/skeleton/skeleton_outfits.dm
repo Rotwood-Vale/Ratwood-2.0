@@ -68,10 +68,13 @@
 		pants = /obj/item/clothing/under/roguetown/loincloth
 	if(prob(5))
 		belt = /obj/item/storage/belt/rogue/leather/rope
-		if(prob(50))
-			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-		else
-			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		switch(rand(1, 100))
+			if(1 to 50)
+				beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+			if(51 to 95)
+				beltr = null
+			if(96 to 100)
+				beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
 		id = /obj/item/clothing/ring/aalloy
 	var/weapon_choice = rand(1, 4)
@@ -108,10 +111,13 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
 	if(prob(20))
 		belt = /obj/item/storage/belt/rogue/leather/rope
-		if(prob(50))
-			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-		else
-			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		switch(rand(1, 100))
+			if(1 to 50)
+				beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+			if(51 to 95)
+				beltr = null
+			if(96 to 100)
+				beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
 		id = /obj/item/clothing/ring/aalloy
 	var/weapon_choice = rand(1, 4)
@@ -155,10 +161,13 @@
 		r_hand = /obj/item/rogueweapon/knuckles/aknuckles
 	if(prob(20))
 		belt = /obj/item/storage/belt/rogue/leather/rope
-		if(prob(50))
-			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-		else
-			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		switch(rand(1, 100))
+			if(1 to 50)
+				beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+			if(51 to 95)
+				beltr = null
+			if(96 to 100)
+				beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
 		id = /obj/item/clothing/ring/aalloy
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
@@ -190,11 +199,13 @@
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron/aalloy
 	gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
 	if(prob(30))
-		belt = /obj/item/storage/belt/rogue/leather/rope
-		if(prob(50))
-			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-		else
-			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		switch(rand(1, 100))
+			if(1 to 50)
+				beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+			if(51 to 95)
+				beltr = null
+			if(96 to 100)
+				beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
 		id = /obj/item/clothing/ring/aalloy
 	if(prob(33)) // 33% chance of shield, so ranged don't get screwed over entirely
@@ -253,13 +264,16 @@
 			r_hand = /obj/item/rogueweapon/greatsword/aalloy
 		else
 			r_hand = /obj/item/rogueweapon/mace/goden/aalloy
-	
+
 	if(prob(60))
 		belt = /obj/item/storage/belt/rogue/leather/rope
-		if(prob(50))
-			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-		else
-			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		switch(rand(1, 100))
+			if(1 to 50)
+				beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+			if(51 to 95)
+				beltr = null
+			if(96 to 100)
+				beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
 		id = /obj/item/clothing/ring/aalloy
 	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
@@ -313,7 +327,7 @@
 		r_hand = /obj/item/rogueweapon/flail/aflail
 	if(prob(40))
 		belt = /obj/item/storage/belt/rogue/leather/rope
-		if(prob(50))
+		if(prob(10))
 			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 		else
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
@@ -356,7 +370,7 @@
 		pants = /obj/item/clothing/under/roguetown/loincloth
 	if(prob(20))
 		belt = /obj/item/storage/belt/rogue/leather/rope
-		if(prob(50))
+		if(prob(20))
 			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 		else
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
@@ -410,7 +424,7 @@
 		r_hand = /obj/item/rogueweapon/shovel/aalloy
 	if(prob(40))
 		belt = /obj/item/storage/belt/rogue/leather/rope
-		if(prob(50))
+		if(prob(10))
 			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 		else
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/

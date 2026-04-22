@@ -3,6 +3,7 @@
 	color_keys = 2
 	color_key_names = list("Member", "Skin")
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER) //Vrell - Yes I know this is hacky but it works for now
+	var/uses_size_sprites = TRUE
 
 /datum/sprite_accessory/penis/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)
@@ -22,19 +23,16 @@
 				else
 					return "slit_2"
 
-///Solaris edit to erection sprites
-	if(pp.erect_state == ERECT_STATE_HARD)
-		return "[icon_state]_2"
+	if(uses_size_sprites)
+		if(pp.erect_state == ERECT_STATE_HARD)
+			return "[icon_state]_2_[min(pp.penis_size, 2)]"
+		else
+			return "[icon_state]_1_[min(pp.penis_size, 2)]"
 	else
-		return "[icon_state]_1"
-
-///Old Azure code
-/*
-	if(pp.erect_state == ERECT_STATE_HARD)
-		return "[icon_state]_[min(3,pp.penis_size+1)]"
-	else
-		return "[icon_state]_[pp.penis_size]"
-*/
+		if(pp.erect_state == ERECT_STATE_HARD)
+			return "[icon_state]_2"
+		else
+			return "[icon_state]_1"
 
 /datum/sprite_accessory/penis/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	if(owner.sexcon && owner.sexcon.bottom_exposed == TRUE)
@@ -57,6 +55,11 @@
 /datum/sprite_accessory/penis/flared
 	icon_state = "flared"
 	name = "Flared"
+	color_key_defaults = list(KEY_CHEST_COLOR, KEY_CHEST_COLOR)
+
+/datum/sprite_accessory/penis/flared_knotted
+	icon_state = "flared"
+	name = "Flared, Knotted"
 	color_key_defaults = list(KEY_CHEST_COLOR, KEY_CHEST_COLOR)
 
 /datum/sprite_accessory/penis/barbknot

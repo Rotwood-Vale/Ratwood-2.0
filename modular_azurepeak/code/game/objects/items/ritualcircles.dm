@@ -111,8 +111,78 @@
 
 /obj/structure/ritualcircle/xylix
 	name = "Rune of Trickery"
+	desc = "A Holy Rune of Xylix. The air feels untrustworthy."
 	icon_state = "xylix_chalky"
-	desc = "A Holy Rune of Xylix. You can hear the wind, and distant bells, in the distance."
+	var/trickeryrites = list("Rite of the Pratfall", "Stagehand's Silence")
+
+/obj/structure/ritualcircle/xylix/attack_hand(mob/living/user)
+	if(!istype(user.patron, /datum/patron/divine/xylix))
+		to_chat(user, span_smallred("I don't know the proper rites for this..."))
+		return
+
+	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
+		to_chat(user, span_smallred("I don't know the proper rites for this..."))
+		return
+
+	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
+		to_chat(user, span_smallred("I have performed enough rituals for the day..."))
+		return
+
+	var/riteselection = input(user, "Rituals of Trickery", src) as null|anything in trickeryrites
+	switch(riteselection)
+		if("Rite of the Pratfall")
+			if(!do_after(user, 40))
+				return
+			user.say("Hehe! Tippy toes and tumbling woes...")
+			playsound(loc, 'sound/misc/clownedhehe.ogg', 90, FALSE)
+
+			if(!do_after(user, 40))
+				return
+			user.say("Hoohoo! Step with care, or embrace the air!")
+			playsound(loc, 'sound/misc/clownedhohoho.ogg', 90, FALSE)
+
+			if(!do_after(user, 30))
+				return
+			user.say("Hahaha! Your slippery fate awaits every move! A pratfall a day keeps the dignity away!")
+			playsound(loc, 'sound/magic/decoylaugh.ogg', 90, FALSE)
+
+			icon_state = "xylix_active"
+			loc.visible_message(span_warning("[user] traces a mocking sigil upon the rune."))
+
+			for(var/mob/living/M in range(1, src))
+				M.apply_status_effect(/datum/status_effect/buff/xylix_pratfall)
+
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			addtimer(CALLBACK(src, PROC_REF(reset_rune)), 120)
+
+		if("Stagehand's Silence")
+			if(!do_after(user, 50))
+				return
+			user.say("I CALL UPON THE MANY-FACED TRAGEDIAN!!")
+			playsound(loc, 'sound/misc/clownedhehe.ogg', 90, FALSE)
+
+			if(!do_after(user, 50))
+				return
+			user.say("PLAY YOUR HARP- LET EACH STRING DEAFEN MY FOES!!")
+			playsound(loc, 'sound/misc/clownedhohoho.ogg', 90, FALSE)
+
+			if(!do_after(user, 50))
+				return
+			user.say("--ON WITH THE SHOW!!")
+			to_chat(user, span_cultsmall("Every play needs its stagehands. Xylix will quicken the slow, speed your sneaking, and quiet your footsteps... for a time."))
+			playsound(loc, 'sound/magic/mockery.ogg', 90, FALSE, -1)
+			icon_state = "xylix_active"
+			stagehands_silence()
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			addtimer(CALLBACK(src, PROC_REF(reset_rune)), 120)
+
+/obj/structure/ritualcircle/xylix/proc/stagehands_silence()
+	var/list/ritualtargets = view(1, loc)
+	for(var/mob/living/carbon/human/target in ritualtargets)
+		target.apply_status_effect(/datum/status_effect/buff/stagehands_silence)
+
+/obj/structure/ritualcircle/xylix/proc/reset_rune()
+	icon_state = "xylix_chalky"
 
 /obj/structure/ritualcircle/ravox
 	name = "Rune of Justice"
@@ -1881,6 +1951,11 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		loc.visible_message(span_cult("[target] moans and shivers on top of the rune. Lashes of purple flame dance across their lower abdomen as a new marking appears against their form."))
 		spawn(20)
 			var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+			if(isdwarf(target) || isgoblinp(target) || iskobold(target) || iscritter(target))
+				if(target.gender == MALE)
+					marking_overlay.pixel_y -= 6
+				else
+					marking_overlay.pixel_y -= 4
 			target.add_overlay(marking_overlay)
 			target.update_body_parts()
 			playsound(target, 'sound/health/fastbeat.ogg', 60)

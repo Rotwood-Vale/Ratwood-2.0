@@ -972,6 +972,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Jester's Shoes"
 	path = /obj/item/clothing/shoes/roguetown/jester
 
+/datum/loadout_item/jestermask
+	name = "Jester's Mask"
+	path = /obj/item/clothing/mask/rogue/xylixmask
+
 /datum/loadout_item/cotehardie
 	name = "Fitted Coat"
 	path = /obj/item/clothing/cloak/cotehardie

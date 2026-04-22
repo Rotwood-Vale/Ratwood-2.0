@@ -177,3 +177,33 @@
   - rscadd: adds crafting recipes for non-unique desert clothing
   - rscadd: crafting recipes for desert walls and floors.
   - rscadd: Adds 'random' seeds in various farms
+2026-04-19:
+  BlindPoet:
+  - rscadd: Vaquero now gets Expert knife skill
+  Guidesu:
+  - rscadd: Some taurs can now have visible clothing based on armour types on their
+      shirt / armour slot and cloak slot (jupon and tabard).
+  Wadelicious:
+  - balance: Makes slurbow's damage scale with Perception
+  Xander3359:
+  - qol: It's always possible to yield as long as you aren't dead
+  - bugfix: Fix combat mode blocking most right click interactions.
+  - bugfix: Natural armor no longer regens while getting hit
+2026-04-21:
+  IronDragoon:
+  - rscadd: Added new dog voice emotes (arf, awuff, dog complain, dog whine, dog growl)
+  Kroto-Ker:
+  - balance: Removes circuitus from learnable spells.
+  Mryourface13:
+  - bugfix: Lesser Cursed Collar is now named properly.
+  - qol: Cursed Collars' descriptions now tell you that you'll need someone else to
+      remove them.
+  Rayforx:
+  - bugfix: Cold weather removes the ability to bleed.
+  - balance: Makes extremely cold weather slow down bleeding by 50% instead of 100%.
+  UntoldTactics:
+  - balance: Martyr shield skill adjusted from journeyman -> expert.
+  Xander3359:
+  - balance: Nerfs natural armor combat tag to 30 seconds
+  yupup123:
+  - bugfix: Fixes Marked By Baotha Sprite Offsets for Small Races

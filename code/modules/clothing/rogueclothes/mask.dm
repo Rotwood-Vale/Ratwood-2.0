@@ -51,8 +51,6 @@
 /obj/item/clothing/mask/rogue/examine()
 	. = ..()
 
-	. += "[span_notice("Alt+RMB while on face to swap sprites between snout and standard variant, if it exists.")]"
-
 /obj/item/clothing/mask/rogue/spectacles
 	name = "spectacles"
 	icon_state = "glasses"
@@ -772,3 +770,108 @@
 	icon_state = "mask_opal"
 	desc = "An opal mask that both conceals and protects the face."
 	sellprice = 100
+
+/obj/item/clothing/mask/rogue/xylixmask
+	name = "jester mask"
+	item_state = "xylixmask"
+	icon_state = "xylixmask"
+	desc = "A ceramic mask, forever stuck with the joyful smile its patron god favors. Alt+RMB changes style, Shift+RMB toggles snout form, and Shift+MMB toggles identity concealment."
+	max_integrity = 50
+	armor = null
+	flags_inv = HIDEFACE|HIDESNOUT
+	body_parts_covered = FACE
+	block2add = null
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
+	smeltresult = null
+	anvilrepair = /datum/skill/craft/ceramics
+	sellprice = 0
+	var/hide_identity = TRUE
+	var/next_honk = 0
+	var/static/list/xylixmask_base_states = list("xylixmask", "xylixmask2", "xylixmask3", "xylixmask4", "xylixmask5", "xylixmask6")
+	var/static/list/xylixmask_snout_states = list("xylixmask_snout", "xylixmask_snout2", "xylixmask_snout3", "xylixmask_snout4", "xylixmask_snout5", "xylixmask_snout6")
+	var/static/list/xylixmask_special_states = list("xylixmask3", "xylixmask4", "xylixmask_snout3", "xylixmask_snout4")
+
+/obj/item/clothing/mask/rogue/xylixmask/proc/is_special_state()
+	return (icon_state in xylixmask_special_states)
+
+/obj/item/clothing/mask/rogue/xylixmask/proc/update_identity_flags(mob/user)
+	flags_inv = hide_identity ? (HIDEFACE|HIDESNOUT) : NONE
+	block2add = hide_identity ? FOV_BEHIND : null
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_wear_mask()
+		H.update_fov_angles()
+		H.update_vision_cone()
+
+/obj/item/clothing/mask/rogue/xylixmask/proc/toggle_identity(mob/user)
+	hide_identity = !hide_identity
+	update_identity_flags(user)
+	to_chat(user, span_notice("I [hide_identity ? "conceal" : "reveal"] my identity with \the [src]."))
+	return TRUE
+
+/obj/item/clothing/mask/rogue/xylixmask/proc/apply_mask_style(style, mob/user)
+	if(!style)
+		return
+	icon_state = style
+	item_state = style
+	update_icon()
+	update_identity_flags(user)
+
+
+/obj/item/clothing/mask/rogue/xylixmask/proc/open_style_menu(mob/user)
+	var/list/states = xylixmask_base_states
+	var/list/radial_choices = list()
+	for(var/state in states)
+		radial_choices[state] = icon(icon = 'icons/roguetown/clothing/masks.dmi', icon_state = state)
+
+	var/choice = show_radial_menu(user, src, radial_choices, require_near = TRUE, tooltips = TRUE)
+	if(!choice)
+		return
+	apply_mask_style(choice, user)
+
+/obj/item/clothing/mask/rogue/xylixmask/AltRightClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	open_style_menu(user)
+
+/obj/item/clothing/mask/rogue/xylixmask/ShiftRightClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(findtext(icon_state, "_snout"))
+		var/snout_index = xylixmask_snout_states.Find(icon_state)
+		if(!snout_index)
+			return ..()
+		var/base_state = xylixmask_base_states[snout_index]
+		apply_mask_style(base_state, user)
+		return
+	var/base_index = xylixmask_base_states.Find(icon_state)
+	if(!base_index)
+		return ..()
+	var/snout_state = xylixmask_snout_states[base_index]
+	apply_mask_style(snout_state, user)
+	return
+
+/obj/item/clothing/mask/rogue/xylixmask/attack_right(mob/user)
+	if(!is_special_state())
+		return ..()
+	if(world.time < next_honk)
+		return
+	next_honk = world.time + 1 SECONDS
+	playsound(src, 'sound/misc/honkmask.ogg', 70, TRUE)
+	to_chat(user, span_notice("The mask's nose is squeezed! It emits a squeaky honk."))
+
+/obj/item/clothing/mask/rogue/xylixmask/MiddleClick(mob/user, params)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	var/list/modifiers = params2list(params)
+	if(modifiers["shift"])
+		if(toggle_identity(user))
+			return
+	return ..()
+
+/obj/item/clothing/mask/rogue/xylixmask/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt+RMB opens the style radial menu.")
+	. += span_notice("Shift+RMB toggles the snout version of the selected style.")
+	. += span_notice("Shift+MMB toggles identity concealment.")
+	. += span_notice("When using the harlequin styles: Right-click to honk.")

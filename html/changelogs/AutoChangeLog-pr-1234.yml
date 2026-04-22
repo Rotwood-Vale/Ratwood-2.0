@@ -1,0 +1,4 @@
+author: "coffeecoffeecoffee"
+delete-after: True
+changes:
+  - balance: "Rebalances pouch loot of common NPCs that carry mammon"

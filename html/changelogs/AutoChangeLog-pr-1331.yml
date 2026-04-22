@@ -1,0 +1,9 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - rscadd: "Archivist now gets the good writer trait."
+  - rscadd: "New archivist spell ported over from other codebases. You can learn a skill from others now! It's the reverse of your teach spell."
+  - rscadd: "Reworks the refugee scholar class into a 'traveling scholar' that is basically a copy of the archivist, but it's a worse version. They are poorer and can't do alchemy too well."
+  - rscadd: "Renamed archivist robes to scholar's robes."
+  - rscadd: "Gives the scholar's robe to the modest scholar outfit for the homesteader class outfit."
+  - bugfix: "Hopefully fixed the student trait after you learn something not resetting on sleep the next day."

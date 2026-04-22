@@ -61,8 +61,8 @@
 	smooth = SMOOTH_TRUE | SMOOTH_MORE
 	smooth_icon = 'modular_deserttown/icons/rock.dmi'
 	canSmoothWith = list(/turf/closed/mineral/random/rogue/sandstone, /turf/closed/mineral/rogue/sandstone)
-	turf_type = /turf/open/floor/rogue/naturalstone
-	baseturfs = /turf/open/floor/rogue/naturalstone
+	turf_type = /turf/open/floor/rogue/naturalstone/sandstone
+	baseturfs = /turf/open/floor/rogue/naturalstone/sandstone
 	above_floor = /turf/open/floor/rogue/naturalstone/sandstone
 
 /turf/closed/mineral/rogue/bedrock/sandstone
@@ -81,8 +81,9 @@
 	smooth = SMOOTH_TRUE | SMOOTH_MORE
 	smooth_icon = 'modular_deserttown/icons/rock.dmi'
 	canSmoothWith = list(/turf/closed/mineral/random/rogue/sandstone, /turf/closed/mineral/rogue/sandstone)
-	turf_type = /turf/open/floor/rogue/naturalstone
-	baseturfs = /turf/open/floor/rogue/naturalstone
+	turf_type = /turf/open/floor/rogue/naturalstone/sandstone
+	baseturfs = /turf/open/floor/rogue/naturalstone/sandstone
+	above_floor = /turf/open/floor/rogue/naturalstone/sandstone
 	mineralSpawnChanceList = list(
 		/turf/closed/mineral/rogue/sandstone/salt = 5,
 		/turf/closed/mineral/rogue/sandstone/iron = 15,

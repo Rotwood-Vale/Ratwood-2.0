@@ -1,0 +1,5 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - rscadd: "Pop up windows on mouse over for armors and such when examining people. Shows the description too. Custom items stay purple instead of blue to let you know it's custom! You can mouse over those too to read their flavor texts at a distance. You can check your exact durability on items too, but other players won't the exact numbers or % if they examine you."
+  - qol: "No more having to click every item on your person with the ? mark to check durability when you can just examine yourself and check item durability states."

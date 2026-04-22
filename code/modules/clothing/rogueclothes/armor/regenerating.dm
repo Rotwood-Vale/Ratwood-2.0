@@ -1,6 +1,6 @@
 // REGENERATING ARMOUR
 
-#define COMBAT_TAG_DURATION 10 SECONDS
+#define COMBAT_TAG_DURATION 30 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating
 	name = "regenerating armour"
@@ -46,10 +46,10 @@
 /// Start repairing the armor
 /obj/item/clothing/suit/roguetown/armor/regenerating/proc/begin_repair()
 	to_chat(loc, span_notice(repairmsg_begin))
-	armour_regen()
+	armour_regen(skip_message = TRUE)
 
 /// Recursive loop that fixes the armor
-/obj/item/clothing/suit/roguetown/armor/regenerating/proc/armour_regen(repair_percent = 0.2 * max_integrity)
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/armour_regen(repair_percent = 0.2 * max_integrity, skip_message = FALSE)
 	obj_integrity = min(obj_integrity + repair_percent, max_integrity)
 	if(obj_broken)
 		obj_fix(full_repair = FALSE)
@@ -59,7 +59,9 @@
 		deltimer(reptimer)
 		return
 
-	to_chat(loc, span_notice(repairmsg_continue))
+	if(!skip_message)
+		to_chat(loc, span_notice(repairmsg_continue))
+
 	reptimer = addtimer(CALLBACK(src, PROC_REF(armour_regen)), repair_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
 
 // SKIN ARMOUR

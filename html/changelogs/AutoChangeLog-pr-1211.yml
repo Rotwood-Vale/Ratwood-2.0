@@ -1,0 +1,13 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - rscadd: "altgripping weapons will make them behave as if they are blunt, ignoring their sharpness and using blunt damage modifiers"
+  - rscadd: "the eagle's beak is now actually considered a blunt weapon"
+  - rscadd: "adjudicators now only spawn with a shield if they're using a one handed weapon"
+  - rscadd: "at the request of someone on discord, ordinators can now choose to equip a psydonic grand mace with a silver dagger when picking their starting weapon and skills"
+  - balance: "the psydonic poleaxe's blunt forces have had their damage penalty removed, and in addition to the altgrip blunt modifiers, they should actually be pretty good at cracking armor"
+  - balance: "the psydonic handmace no longer inexplicably has swift balance, and is now heavy balanced like all other maces"
+  - balance: "grand maces have been given reach on their intents, making them actually grand maces"
+  - balance: "the psydonic mace has been renamed to the psydonic grand mace, as it is a subtype of the grand mace"
+  - balance: "the psydonic grand mace has had its stats normalized, no more inexplicable thirty one handed force on a two handed weapon"
+  - bugfix: "grand maces only fit in greatweapon straps now rather than being able to be belt slotted"

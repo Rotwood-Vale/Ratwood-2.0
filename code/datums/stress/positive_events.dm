@@ -121,32 +121,32 @@
 /datum/stressevent/music
 	timer = 1 MINUTES
 	stressadd = -1
-	desc = span_green("This music is relaxing.")
+	desc = span_green("A pleasant tune relaxes me.")
 
 /datum/stressevent/music/two
 	stressadd = -2
-	desc = span_green("This music is very relaxing.")
+	desc = span_green("The melody brings a gentle calm to my mind.")
 	timer = 2 MINUTES
 
 /datum/stressevent/music/three
 	stressadd = -2
-	desc = span_green("This music drains away my stress.")
+	desc = span_green("A skilled hand plays nearby, soothing my nerves.")
 	timer = 4 MINUTES
 
 /datum/stressevent/music/four
 	stressadd = -3
-	desc = span_green("This music is great.")
+	desc = span_green("Expertly played music makes the world feel lighter.")
 	timer = 6 MINUTES
 
 /datum/stressevent/music/five
 	stressadd = -3
 	timer = 8 MINUTES
-	desc = span_green("This music is wonderful!")
+	desc = span_boldgreen("A masterful performance! I am moved beyond words.")
 
 /datum/stressevent/music/six
 	stressadd = -4
 	timer = 10 MINUTES
-	desc = span_boldgreen("This music is exceptional!")
+	desc = span_boldgreen("Legendary music fills the air. It strikes awe into my soul!")
 
 /datum/stressevent/vblood
 	stressadd = -5
@@ -459,3 +459,8 @@
 	timer = 10 MINUTES
 	stressadd = -5
 	desc = span_boldgreen("What wonderious fireflies...")
+
+/datum/stressevent/xylixian_fate
+	timer = 10 MINUTES
+	stressadd = -2
+	desc = span_green("Xylix spun the thread of fate in my favour! Truly, I am blessed!")
