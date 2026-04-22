@@ -106,7 +106,7 @@ SUBSYSTEM_DEF(role_class_handler)
 		return
 	var/datum/class_select_handler/XTRA_MEATY = new()
 	XTRA_MEATY.linked_client = H.client
-	
+
 	if(resolved_rolls)
 		XTRA_MEATY.class_cat_alloc_attempts = resolved_rolls
 
