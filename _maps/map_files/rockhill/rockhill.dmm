@@ -4562,7 +4562,7 @@
 "beZ" = (
 /obj/structure/bars/passage/shutter{
 	name = "Escape Route";
-	redstone_id = "rd_escape"
+	redstone_id = "night_escape"
 	},
 /turf/open/floor/rogue/greenstone,
 /area/rogue/indoors/town/bath)
@@ -35584,6 +35584,7 @@
 	pixel_y = -4
 	},
 /obj/machinery/light/rogue/candle/l,
+/obj/effect/landmark/start/nightmaiden,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "iBJ" = (
@@ -88344,6 +88345,7 @@
 	pixel_x = 16;
 	pixel_y = -4
 	},
+/obj/effect/landmark/start/nightmaiden,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "vwB" = (
@@ -96680,7 +96682,6 @@
 	lockid = "manor"
 	},
 /obj/item/bottle_kit,
-/obj/item/reagent_containers/peppermill,
 /obj/item/rogueweapon/huntingknife/chefknife{
 	pixel_x = 5;
 	pixel_y = 1
