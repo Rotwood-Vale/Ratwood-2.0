@@ -228,6 +228,9 @@
 	pixel_y = 4;
 	redstone_id = "entrancelockdown"
 	},
+/obj/structure/roguemachine/scomm/l{
+	scom_tag = "Whitevein - Front Office"
+	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "acB" = (
@@ -14646,8 +14649,9 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue)
 "dzn" = (
-/obj/item/roguebin/trash,
-/obj/machinery/light/rogue/candle/r,
+/obj/structure/roguemachine/scomm/r{
+	scom_tag = "Whitevein - Lobby"
+	},
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "dzq" = (
@@ -16048,6 +16052,12 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/grove)
+"dQD" = (
+/obj/structure/roguemachine/scomm/r{
+	scom_tag = "Whitevein - Kitchen"
+	},
+/turf/open/floor/rogue/churchrough,
+/area/rogue/indoors/town/bath)
 "dQH" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -30328,6 +30338,10 @@
 	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/manor/rockhill)
+"hnK" = (
+/obj/structure/roguemachine/drugmachine,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red,
+/area/rogue/indoors/town/bath)
 "hnO" = (
 /obj/machinery/light/rogue/candle,
 /obj/structure/chair/wood/rogue/chair3{
@@ -33587,6 +33601,10 @@
 /obj/structure/closet/crate/roguecloset/inn,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
+"icN" = (
+/obj/structure/roguemachine/atm,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/bath)
 "icW" = (
 /obj/structure/stairs{
 	dir = 8
@@ -37507,7 +37525,7 @@
 /area/rogue/under/underdarker/rockhill)
 "jdl" = (
 /obj/machinery/light/rogue/candle/l,
-/turf/open/floor/rogue/tile/harem2,
+/turf/open/floor/rogue/churchbrick,
 /area/rogue/under/cavewet)
 "jdr" = (
 /obj/structure/stairs/fancy/r{
@@ -40800,10 +40818,6 @@
 /obj/effect/decal/carpet/square/black{
 	dir = 8;
 	pixel_x = 2
-	},
-/obj/structure/fluff/wallclock{
-	pixel_x = -32;
-	pixel_y = 0
 	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
@@ -50497,7 +50511,6 @@
 	lockid = "nightman";
 	name = "Nighmaster's Room"
 	},
-/obj/structure/curtain/magenta,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/bath)
 "mmv" = (
@@ -55573,6 +55586,15 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/physician)
+"nyE" = (
+/obj/machinery/light/rogue/candle/floorcandle/pink{
+	desc = "These candles produces a heady vapor, warding away the less pleasing scents of the sewer.";
+	name = "scented candles";
+	pixel_y = 4;
+	plane = -7
+	},
+/turf/open/floor/rogue/tile/brick,
+/area/rogue/indoors/town/bath)
 "nyI" = (
 /obj/structure/stairs/stone/ccwdown{
 	dir = 4
@@ -57470,7 +57492,7 @@
 "nWH" = (
 /obj/structure/roguemachine/scomm{
 	pixel_y = -32;
-	scom_tag = "Whitevein - Waiting Room"
+	scom_tag = "Whitevein - Lounge"
 	},
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
@@ -72190,6 +72212,15 @@
 /obj/structure/fermentation_keg/beer,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cavewet)
+"rFS" = (
+/obj/structure/fluff/railing/border{
+	dir = 9
+	},
+/obj/structure/roguemachine/mail{
+	mailtag = "Whitevein - Office"
+	},
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/bath)
 "rGf" = (
 /turf/closed/wall/mineral/rogue/stone/window{
 	icon_state = "stonewindow"
@@ -76562,7 +76593,11 @@
 /obj/structure/stairs/stone{
 	dir = 4
 	},
-/obj/structure/curtain/magenta,
+/obj/structure/curtain/magenta{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/bath)
 "sIN" = (
@@ -78948,8 +78983,12 @@
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor/rockhill)
 "tnc" = (
-/obj/structure/curtain/magenta,
 /obj/machinery/light/rogue/candle,
+/obj/structure/curtain/magenta{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "tnd" = (
@@ -79863,7 +79902,6 @@
 	pixel_x = -10;
 	pixel_y = -8
 	},
-/obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "tyA" = (
@@ -84089,6 +84127,38 @@
 /obj/item/paper/scroll,
 /obj/item/paper/scroll,
 /obj/item/natural/feather,
+/obj/item/roguekey/nightmaiden{
+	icon_state = "spikekey";
+	lockid = "punishroom";
+	name = "punishment room key";
+	pixel_y = 4;
+	pixel_x = 10
+	},
+/obj/item/roguekey/nightmaiden{
+	lockid = "lux1";
+	name = "room I key"
+	},
+/obj/item/roguekey/nightmaiden{
+	lockid = "lux2";
+	name = "room II key";
+	pixel_x = 9;
+	pixel_y = -11
+	},
+/obj/item/roguekey/nightmaiden{
+	lockid = "lux3";
+	name = "room III key";
+	pixel_y = 7
+	},
+/obj/item/roguekey/nightmaiden{
+	lockid = "lux4";
+	name = "room IV key";
+	pixel_x = 9;
+	pixel_y = -7
+	},
+/obj/item/roguekey/nightmaiden{
+	lockid = "steam";
+	name = "steam room key"
+	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "uzr" = (
@@ -95975,7 +96045,11 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/underdarker/rockhill)
 "xyu" = (
-/obj/structure/curtain/magenta,
+/obj/structure/curtain/magenta{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
 "xyA" = (
@@ -163557,7 +163631,7 @@ rct
 ufJ
 rct
 bjz
-kdw
+jfX
 tRJ
 tRJ
 gOi
@@ -163968,9 +164042,9 @@ eFJ
 eFJ
 eFJ
 eFJ
-qKT
+icN
 jfX
-qRR
+hnK
 lcD
 lcD
 qRR
@@ -164834,7 +164908,7 @@ kdw
 cGQ
 jfX
 mym
-hnp
+nyE
 cUC
 hnp
 jAb
@@ -166995,7 +167069,7 @@ dbS
 jfX
 kgP
 hnp
-hnp
+kfv
 hnp
 grO
 kFp
@@ -269821,7 +269895,7 @@ cAc
 pQc
 pQc
 sak
-pQc
+dQD
 feE
 bjz
 ctJ
@@ -273262,7 +273336,7 @@ xWK
 xHs
 lyG
 mVl
-oFW
+rFS
 mom
 mom
 mom
@@ -276289,7 +276363,7 @@ dbq
 rUg
 kdw
 thM
-kdw
+vfx
 dzn
 dbq
 fzf
