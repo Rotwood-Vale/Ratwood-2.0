@@ -14183,6 +14183,7 @@
 	pixel_x = 16;
 	pixel_y = -2
 	},
+/obj/effect/landmark/start/nightmaiden,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "drd" = (
@@ -14200,6 +14201,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
+/obj/effect/landmark/start/nightmaiden,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/bath)
 "drA" = (
@@ -18473,6 +18475,7 @@
 /area/rogue/outdoors/town/roofs)
 "ete" = (
 /obj/structure/fluff/pillow/magenta,
+/obj/effect/landmark/start/nightmaiden,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/bath)
 "etg" = (
@@ -26160,6 +26163,10 @@
 "gjI" = (
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/bograt/above)
+"gkh" = (
+/obj/effect/landmark/start/nightmaiden,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/bath)
 "gkj" = (
 /obj/structure/mineral_door/wood/donjon/stone{
 	lockid = "church"
@@ -50749,6 +50756,7 @@
 /area/rogue/under/town/basement)
 "mkY" = (
 /obj/structure/fluff/pillow/magenta,
+/obj/effect/landmark/start/nightmaiden,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "mle" = (
@@ -61471,6 +61479,10 @@
 /obj/item/candle/yellow/lit,
 /turf/open/floor/carpet/red,
 /area/rogue/under/cave)
+"oQr" = (
+/obj/effect/landmark/start/nightman,
+/turf/open/floor/rogue/tile/harem2,
+/area/rogue/indoors/town/bath)
 "oQy" = (
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town)
@@ -64348,6 +64360,12 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/tavern)
+"pzn" = (
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Whitevein - Employee Lounge"
+	},
+/turf/open/floor/rogue/tile/harem2,
+/area/rogue/indoors/town/bath)
 "pzo" = (
 /turf/open/floor/rogue/grassred,
 /area/rogue)
@@ -94631,6 +94649,10 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/bograt/above)
+"xap" = (
+/obj/effect/landmark/start/nightmaiden,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/indoors/town/bath)
 "xas" = (
 /obj/structure/closet/crate/coffin,
 /obj/item/natural/bone,
@@ -156668,7 +156690,7 @@ mVl
 qRR
 bMh
 kdw
-kdw
+oQr
 bJx
 rct
 mVl
@@ -268551,7 +268573,7 @@ jOU
 bWA
 vPK
 nXJ
-kdw
+pzn
 rpV
 vPK
 vUb
@@ -269411,7 +269433,7 @@ osR
 sla
 mVl
 kTh
-pQc
+xap
 qFk
 pkM
 dRw
@@ -270275,7 +270297,7 @@ hSA
 eGj
 mVl
 tpn
-pQc
+xap
 umj
 vPK
 nXJ
@@ -273300,9 +273322,9 @@ lVR
 orb
 mVl
 lwr
+gkh
 jfX
-jfX
-jfX
+gkh
 jfX
 vPK
 vfx
