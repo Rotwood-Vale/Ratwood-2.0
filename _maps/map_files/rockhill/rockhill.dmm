@@ -13398,6 +13398,10 @@
 "dhP" = (
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/bath)
+"dhT" = (
+/obj/structure/roguewindow/harem3,
+/turf/closed/wall/mineral/rogue/stonebrick,
+/area/rogue/under/town/sewer)
 "dif" = (
 /obj/structure/stairs{
 	dir = 1
@@ -294025,7 +294029,7 @@ rRb
 pfC
 kUa
 rHd
-hXj
+dhT
 bnG
 abS
 rRb
