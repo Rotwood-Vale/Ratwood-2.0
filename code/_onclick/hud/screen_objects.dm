@@ -218,7 +218,7 @@
 	..()
 	if(hud)
 		cut_overlay(hud.object_overlay)
-		QDEL_NULL(hud.object_overlay)
+		hud.object_overlay = null
 
 /atom/movable/screen/inventory/update_icon_state()
 	if(!icon_empty)

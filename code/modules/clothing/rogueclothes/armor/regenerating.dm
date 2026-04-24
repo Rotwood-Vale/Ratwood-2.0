@@ -34,7 +34,7 @@
 	SIGNAL_HANDLER
 	if(!combat_taggable) // This means constant in-combat regen
 		if(!reptimer && obj_integrity < max_integrity)
-			begin_repair()
+			reptimer = addtimer(CALLBACK(src, PROC_REF(begin_repair)), repair_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
 		return
 
 	combat_timer = addtimer(CALLBACK(src, PROC_REF(begin_repair)), COMBAT_TAG_DURATION, TIMER_UNIQUE|TIMER_OVERRIDE)

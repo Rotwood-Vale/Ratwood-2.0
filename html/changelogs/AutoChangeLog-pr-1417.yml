@@ -1,0 +1,4 @@
+author: "hugmeorelse"
+delete-after: True
+changes:
+  - bugfix: "Fixes parcel dead drop, so it spawns at range, not just when you're on the same tile. Additionally, parcel spawn is tied to the scroll holder."

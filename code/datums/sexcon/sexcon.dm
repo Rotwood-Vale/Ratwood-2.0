@@ -618,7 +618,7 @@
 		if(prob(10))
 			var/lovermessage = pick("This feels so good!","I am in heaven!","This is too good to be possible!","By the ten!","I can't stop, too good!")
 			to_chat(action_target, span_love(lovermessage))
-	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 			pain_amt *= 2
 	var/list/modular_adjustments = modular_adjust_action_for_target_chastity(action_target, arousal_amt, pain_amt)

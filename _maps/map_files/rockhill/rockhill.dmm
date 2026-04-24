@@ -77311,10 +77311,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "sOu" = (
 /obj/item/storage/roguebag,
-/obj/structure/closet/crate/chest{
-	locked = 1;
-	lockid = "towner_fisher"
-	},
+/obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "sOx" = (
@@ -79294,8 +79291,7 @@
 	dir = 4
 	},
 /obj/structure/closet/crate/roguecloset{
-	keylock = 1;
-	lockid = "towner_fisher"
+	keylock = 1
 	},
 /obj/item/rogueweapon/hoe,
 /turf/open/floor/rogue/dirt/road,
@@ -87051,7 +87047,7 @@
 /area/rogue/outdoors/woodsrat/safe)
 "viI" = (
 /obj/structure/roguemachine/scomm/r{
-	scom_tag = "Manor - Kitchen Captain's Quarters"
+	scom_tag = "Manor - Knight Captain's Quarters"
 	},
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/manor/rockhill)

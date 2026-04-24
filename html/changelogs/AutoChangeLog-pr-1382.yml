@@ -1,0 +1,4 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - rscadd: "baits are now based on regions, rather than targeting specific body parts, for example this means baiting someone's head will bait them if they're targeting your right eye"

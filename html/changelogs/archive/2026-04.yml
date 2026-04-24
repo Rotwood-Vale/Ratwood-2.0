@@ -272,3 +272,6 @@
   - rscadd: lawless vice from SR
   - spellcheck: fixes a possessive it in the description of the lesser cursed collar
   - qol: knights recieve daily pay
+2026-04-23:
+  john-pawson:
+  - bugfix: Birdboat, the admin-spawned goose, can now eat and vomit all of your food.

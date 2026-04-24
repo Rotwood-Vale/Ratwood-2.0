@@ -1,4 +1,0 @@
-author: "john-pawson"
-delete-after: True
-changes:
-  - bugfix: "Birdboat, the admin-spawned goose, can now eat and vomit all of your food."

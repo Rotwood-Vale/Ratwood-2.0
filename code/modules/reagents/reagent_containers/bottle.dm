@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	spillable = FALSE
-	var/closed = TRUE
+	closed = TRUE
 	reagent_flags = TRANSPARENT
 	w_class = WEIGHT_CLASS_NORMAL
 	drinksounds = list('sound/items/drink_bottle (1).ogg','sound/items/drink_bottle (2).ogg')
@@ -66,28 +66,81 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 
 /obj/item/reagent_containers/glass/bottle/rmb_self(mob/user)
 	. = ..()
+	toggle_cork(user)
+
+/obj/item/reagent_containers/glass/bottle/attack_self(mob/user)
+	. = ..()
+	toggle_cork(user)
+
+/obj/item/reagent_containers/glass/bottle/attack_right(mob/user)
+	. = ..()
+	if(item_flags & IN_STORAGE)
+		/*
+		Currently the bottle underlay and the tetris.dm underlay (from Vanderlin inventory) do *not* play nice 
+		if you trigger bottle icon updates. They'll gladly interfere with each other's underlays if you update one or the other.
+
+		This is just a half-assed bandage fix, and certainly not perfect. You can still transfer liquids in stored open bottles,
+		which deletes the inventory's underlay for that item until you refresh the inventory view.
+		*/
+		to_chat(user, span_warning("I need to take [src] out first!"))
+		return
+	toggle_cork(user)
+
+/obj/item/reagent_containers/glass/bottle/proc/toggle_cork(mob/user)
 	closed = !closed
 	user.changeNext_move(CLICK_CD_RAPID, override = TRUE)
 	if(closed)
-		reagent_flags = TRANSPARENT
-		reagents.flags = reagent_flags
-		to_chat(user, span_notice("You carefully press the cork back into the mouth of [src]."))
-		spillable = FALSE
-		GLOB.weather_act_upon_list -= src
-		desc = initial(desc)
-		if(!fancy)
-			desc = "A bottle with a cork."
+		do_close(user)
 	else
-		reagent_flags = OPENCONTAINER
-		reagents.flags = reagent_flags
-		playsound(user.loc,'sound/items/uncork.ogg', 100, TRUE)
-		to_chat(user, span_notice("You thumb off the cork from [src]."))
-		desc += desc_uncorked
-		spillable = TRUE
-		GLOB.weather_act_upon_list |= src
-		if(!fancy)
-			desc = "An open bottle. Hopefully a cork is nearby."
+		do_open(user)
+
+/obj/item/reagent_containers/glass/bottle/proc/do_close(mob/user, no_msg = FALSE, no_snd = FALSE)
+	if(user)
+		if(!no_snd)
+			playsound(user.loc,'sound/items/recork.ogg', 100, TRUE)
+		if(!no_msg)
+			to_chat(user, span_smallnotice("I carefully press the cork back into the mouth of [src]."))
+	reagent_flags = TRANSPARENT
+	reagents.flags = reagent_flags
+	spillable = FALSE
+	GLOB.weather_act_upon_list -= src
+	desc = initial(desc)
+	if(!fancy)
+		desc = "A bottle sealed with a cork."
 	update_icon()
+
+/obj/item/reagent_containers/glass/bottle/proc/do_open(mob/user, no_msg = FALSE, no_snd = FALSE)
+	if(user)
+		if(!no_snd)
+			playsound(user.loc, 'sound/items/uncork.ogg', 100, TRUE)
+		if(!no_msg)
+			to_chat(user, span_smallnotice("I thumb off the cork from [src]."))
+	reagent_flags = OPENCONTAINER
+	reagents.flags = reagent_flags
+	desc += desc_uncorked
+	spillable = TRUE
+	GLOB.weather_act_upon_list |= src
+	if(!fancy)
+		desc = "An open bottle. Hopefully a cork is nearby."
+	update_icon()
+
+/obj/item/reagent_containers/glass/bottle/on_enter_storage(datum/component/storage/concrete/S, mob/M)
+	. = ..()
+	warn_opened(M, S)
+
+/obj/item/reagent_containers/glass/bottle/proc/warn_opened(mob/user, datum/component/storage/concrete/storage)
+	if(closed)
+		return
+	if(storage.does_not_spill)
+		return
+	if(!reagents.total_volume)
+		return
+	
+	if(istype(user))
+		if(!user.mob_timers["bottleopen_warn"] || (world.time > (user.mob_timers["bottleopen_warn"] + 0.3 SECONDS)))
+			to_chat(user, span_info("I store [src] <b>uncorked</b>."))
+			user.mob_timers["bottleopen_warn"] = world.time
+	return
 
 /obj/item/reagent_containers/glass/bottle/Initialize(mapload)
 	. = ..()
@@ -96,7 +149,3 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	if(icon_state == "clear_bottle1")
 		icon_state = "clear_bottle[rand(1,4)]"
 	update_icon()
-
-/obj/item/reagent_containers/glass/bottle/attack_self(mob/user)
-	. = ..()
-	rmb_self(user)

@@ -49,6 +49,7 @@
 	rapid = TRUE
 	projectiletype = /obj/projectile/magic/aoe/fireball/rogue/great
 	ranged_message = "throws fire"
+	ranged_cooldown = 50
 	var/flame_cd = 0
 	var/summon_cd = 0
 	inherent_spells = list(/obj/effect/proc_holder/spell/self/call_infernals,
@@ -172,3 +173,7 @@
 		demonguy.callforbackup()
 		demonguy.say("To me, my minions!")
 		demonguy.summon_cd = world.time
+
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/awaken_summon(mob/living/carbon/human/master, ckey)
+	..()
+	ranged_cooldown = 8 SECONDS
