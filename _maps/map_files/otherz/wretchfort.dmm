@@ -1734,7 +1734,6 @@
 "sa" = (
 /obj/structure/rack/rogue,
 /obj/item/rope,
-/obj/structure/rack/rogue/shelf,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/inhumen/wretch/camp)
 "sc" = (
@@ -4392,6 +4391,7 @@
 /obj/structure/rack/rogue,
 /obj/machinery/light/rogue/candle/r,
 /obj/structure/rack/rogue/shelf,
+/obj/item/rogueweapon/mace/woodclub,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/inhumen/wretch/camp)
 "RV" = (
@@ -5152,7 +5152,6 @@
 /area/rogue/under/cave/inhumen/wretch/camp)
 "YX" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/mace/woodclub,
 /obj/structure/rack/rogue/shelf,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/inhumen/wretch/camp)
@@ -19775,7 +19774,7 @@ CT
 CT
 CT
 YF
-sa
+YX
 fe
 fe
 fe
@@ -20054,7 +20053,7 @@ CT
 YF
 YF
 RP
-Dh
+sa
 YF
 RH
 Kd
