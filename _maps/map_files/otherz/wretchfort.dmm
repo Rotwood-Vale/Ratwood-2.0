@@ -4246,10 +4246,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/inhumen/wretch/camp)
 "QD" = (
-/obj/structure/closet/crate/chest{
-	locked = 1;
-	lockid = "crafterguild"
-	},
+/obj/structure/closet/crate/chest,
 /obj/item/rogueweapon/stoneaxe/woodcut/aaxe,
 /obj/item/roguegear/bronze,
 /obj/item/rogueweapon/handsaw,
