@@ -552,30 +552,6 @@
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_CIVILIZEDBARBARIAN, id)
 
-/atom/movable/screen/alert/status_effect/holy_empowerement
-	name = "Holy Ground"
-	desc = "These grounds are where I feel the most connection to my patron. Their blessing is strongest here!"
-	icon_state = "guardsman"
-
-/datum/status_effect/debuff/holy_blessing
-	id = "holyblessing"
-	alert_type = /atom/movable/screen/alert/status_effect/holy_empowerement
-	effectedstats = list(
-		STATKEY_STR = 2,
-		STATKEY_PER = 2,
-		STATKEY_INT = 2,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
-		STATKEY_LCK = 2,
-	)
-
-/datum/status_effect/debuff/holy_blessing/process()
-	.=..()
-	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.holy_area))
-		owner.remove_status_effect(/datum/status_effect/debuff/holy_blessing)
-
 // Lesser Miracle effect
 /atom/movable/screen/alert/status_effect/buff/healing
 	name = "Healing Miracle"
