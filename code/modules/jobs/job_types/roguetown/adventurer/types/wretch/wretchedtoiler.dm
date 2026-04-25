@@ -18,7 +18,7 @@
 		STATKEY_CON = -2, //AND YOU WILL +TOIL+!!!!!!!!!!!
 		STATKEY_INT = 2, //4 int so you can be a feintbeast with the master swordskill I'm giving yo-HAHAHAHAHA JUST KIDDING! GRIND EXPERT ALCHEMY, WORMS!!!
 		STATKEY_PER = 1, //i like looking into the distance
-		STATKEY_END = 1, //i want this to be lower because i like hearing the stamout sfx but i will allow you ONE point of END
+		STATKEY_WIL = 1, //i want this to be lower because i like hearing the stamout sfx but i will allow you ONE point of END
 	)
 
 	subclass_skills = list(
