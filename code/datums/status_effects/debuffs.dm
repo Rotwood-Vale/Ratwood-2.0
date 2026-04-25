@@ -498,6 +498,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/baitedcd
 	duration = 30 SECONDS
 
+/datum/status_effect/debuff/baitcd/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	. = ..()
+
 /atom/movable/screen/alert/status_effect/debuff/feintcd
 	name = "Feint Cooldown"
 	desc = "I used it. I must wait, or risk a lower chance of success."
@@ -974,6 +979,11 @@
 	id = "clashcd"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/clashcd
 	duration = 30 SECONDS
+
+/datum/status_effect/debuff/clashcd/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
 
 /datum/status_effect/debuff/specialcd
 	id = "specialcd"
