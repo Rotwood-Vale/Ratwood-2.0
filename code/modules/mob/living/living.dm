@@ -832,6 +832,7 @@
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+	return FALSE
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive, break_restraints = admin_revive)
