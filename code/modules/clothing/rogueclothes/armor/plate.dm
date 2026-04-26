@@ -21,6 +21,7 @@
 	unequip_delay_self = 4 SECONDS
 	armor_class = ARMOR_CLASS_MEDIUM // awkard spot as heavy so I moved them down to medium
 	smelt_bar_num = 3
+	
 
 /obj/item/clothing/suit/roguetown/armor/plate/ComponentInitialize()
 	. = ..()
@@ -227,6 +228,7 @@
 	strip_delay = 6 SECONDS
 	smelt_bar_num = 4
 	armor_class = ARMOR_CLASS_HEAVY // full plate should always be heavy armor class
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
 	
 /obj/item/clothing/suit/roguetown/armor/plate/full/iron
 	name = "iron plate armor"
