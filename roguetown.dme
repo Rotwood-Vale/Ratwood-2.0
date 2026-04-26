@@ -2681,6 +2681,7 @@
 #include "code\modules\spells\spell_types\touch_attacks.dm"
 #include "code\modules\spells\spell_types\trigger.dm"
 #include "code\modules\spells\spell_types\turf_teleport.dm"
+#include "code\modules\spells\spell_types\werewolfform.dm"
 #include "code\modules\spells\spell_types\wildshape.dm"
 #include "code\modules\spells\spell_types\bardic\accelerating_akathist.dm"
 #include "code\modules\spells\spell_types\bardic\dirge_misfortune.dm"
