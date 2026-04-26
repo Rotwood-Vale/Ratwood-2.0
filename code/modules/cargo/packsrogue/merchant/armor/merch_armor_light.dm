@@ -56,9 +56,19 @@
 	cost = 20 // No one buying this lmao it costs 1 fur
 	contains = list(/obj/item/clothing/gloves/roguetown/angle)
 
+/datum/supply_pack/rogue/light_armor/coif
+	name = "Light Coif"
+	cost = 20 
+	contains = list(/obj/item/clothing/neck/roguetown/coif)
+
+/datum/supply_pack/rogue/light_armor/padded_coif
+	name = "Medium Padded Coif"
+	cost = 35 // 
+	contains = list(/obj/item/clothing/neck/roguetown/coif/padded)
+
 /datum/supply_pack/rogue/light_armor/heavy_padded_coif
 	name = "Heavy Padded Coif"
-	cost = 35 // Equivalent to a padded gambeson on the head, so pricier
+	cost = 45 // Equivalent to a padded gambeson on the head, so pricier
 	contains = list(/obj/item/clothing/neck/roguetown/coif/heavypadding)
 
 /datum/supply_pack/rogue/light_armor/reinforced_hood

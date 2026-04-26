@@ -18,12 +18,12 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 	blocksound = PLATEHIT
-	max_integrity = ARMOR_INT_HELMET_STEEL
+	max_integrity = ARMOR_INT_HELMET_STEEL - 50 // lowered most of them to pre buff value. compesation for LAC
 	grid_height = 64
 	grid_width = 64
 	experimental_onhip = TRUE
 	experimental_inhand = TRUE
-	armor_class = ARMOR_CLASS_MEDIUM
+	armor_class = ARMOR_CLASS_LIGHT // decidied to individually give armor class to its child objects.
 
 /obj/item/clothing/head/roguetown/helmet/MiddleClick(mob/user)
 	if(!ishuman(user))
@@ -57,7 +57,7 @@
 	icon_state = "lamellar"
 	smeltresult = /obj/item/ingot/copper
 	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_HELMET_LEATHER
+	max_integrity = ARMOR_INT_HELMET_LEATHER + 25
 
 /obj/item/clothing/head/roguetown/helmet/horned
 	name = "horned cap"
@@ -83,6 +83,8 @@
 	icon_state = "kettle"
 	body_parts_covered = HEAD|HAIR|EARS
 	armor = ARMOR_PLATE
+	max_integrity = ARMOR_INT_HELMET_STEEL
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/head/roguetown/helmet/kettle/iron
 	name = "iron kettle helmet"
@@ -90,11 +92,14 @@
 	icon_state = "ikettle"
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_HELMET_IRON
+	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/head/roguetown/helmet/kettle/wide
 	name = "wide kettle helmet"
 	desc = "A steel helmet which protects the top and sides of the head. This one looks wider than others."
 	icon_state = "kettlewide"
+	max_integrity = ARMOR_INT_HELMET_STEEL - 25
+	armor_class = ARMOR_CLASS_LIGHT //lowered this to light class as an option
 
 /obj/item/clothing/head/roguetown/helmet/kettle/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -126,6 +131,7 @@
 	desc = "A steel helmet which protects the ears."
 	smeltresult = /obj/item/ingot/steel
 	body_parts_covered = HEAD|HAIR|EARS
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/head/roguetown/helmet/sallet/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -157,6 +163,7 @@
 	desc = "A iron helmet which protects the ears."
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_HELMET_IRON
+	armor_class = ARMOR_CLASS_LIGHT //lowered this to light class as an option
 
 /obj/item/clothing/head/roguetown/helmet/sallet/visored
 	name = "visored sallet"
@@ -169,7 +176,9 @@
 	block2add = FOV_BEHIND
 	smelt_bar_num = 2
 	armor = ARMOR_PLATE
+	max_integrity = ARMOR_INT_HELMET_STEEL + 50 // buffed for coverage
 	armor_class = ARMOR_CLASS_MEDIUM
+
 
 /obj/item/clothing/head/roguetown/helmet/sallet/shishak
 	name = "steel shishak"
@@ -225,6 +234,7 @@
 	desc = "A iron helmet which protects the ears, nose, and eyes."
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_HELMET_IRON
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/head/roguetown/helmet/sallet/elven
 	desc = "A steel helmet with a thin gold plating designed for Elven woodland guardians."
@@ -248,6 +258,7 @@
 	body_parts_covered = FULL_HEAD
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	block2add = FOV_BEHIND
+	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf
 	name = "warden's volfskull helm"
@@ -284,7 +295,7 @@
 	edelay_type = 1
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
-	max_integrity = 200
+	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 
 /obj/item/clothing/head/roguetown/roguehood/warden/antler
 	name = "warden's antlered hood"
@@ -322,6 +333,7 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
 
 	detail_tag = "_detail"
 	color = "#FFFFFF"
@@ -556,6 +568,7 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	max_integrity = ARMOR_INT_HELMET_STEEL + 50
 	experimental_inhand = FALSE
 	experimental_onhip = FALSE
 

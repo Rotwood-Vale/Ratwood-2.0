@@ -63,12 +63,12 @@
 
 /obj/item/clothing/head/roguetown/helmet/leather/advanced
 	name = "hardened leather helmet"
-	desc = "Sturdy, durable, flexible. A comfortable and reliable hood made of hardened leather."
+	desc = "Sturdy, durable, flexible. A comfortable and reliable hood made of hardened leather. It might stop an arrow"
 	icon_state = "leatherhelm"
 	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 	sellprice = 15
 	body_parts_covered = HEAD|EARS|HAIR|NOSE
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_STAB)
 	armor = ARMOR_LEATHER_GOOD
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
 	anvilrepair = null
@@ -105,7 +105,7 @@
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"
 	dynamic_hair_suffix = ""
-	max_integrity = ARMOR_INT_HELMET_LEATHER
+	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 	body_parts_covered = HEAD|HAIR|EARS
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_SPELLSINGER // spellsinger hat stats
@@ -165,7 +165,7 @@
 	icon_state = "easthat"
 	item_state = "easthat"
 	armor = ARMOR_SPELLSINGER
-	max_integrity = ARMOR_INT_HELMET_LEATHER
+	max_integrity = ARMOR_INT_HELMET_LEATHER + 25
 	blocksound = SOFTHIT
 	sewrepair = TRUE
 	flags_inv = HIDEEARS
@@ -174,6 +174,7 @@
 /obj/item/clothing/head/roguetown/hbit
 	name = "head bit"
 	desc = "A restraining head piece made of reinforced leather."
+	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 	icon_state = "hbit"
 	item_state = "hbit"
 	body_parts_covered = HEAD|FACE

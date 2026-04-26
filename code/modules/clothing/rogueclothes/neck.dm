@@ -36,7 +36,7 @@
 
 /obj/item/clothing/neck/roguetown/coif
 	name = "coif"
-	desc = "Cheap and easy to make. It's better than leaving your neck exposed."
+	desc = "Lightweight and easy to make. It's better than leaving your neck exposed."
 	icon_state = "coif"
 	item_state = "coif"
 	color = CLOTHING_BROWN
@@ -51,10 +51,11 @@
 	sewrepair = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	max_integrity = ARMOR_INT_HELMET_CLOTH + 25 //pesant coif, might as well make it somewhat durable
 
 /obj/item/clothing/neck/roguetown/coif/padded
 	name = "padded coif"
-	desc = "A cheap and simple gambeson coif meant to be worn on its own or under a helmet. It's better than nothing."
+	desc = "A durable gambeson coif meant to be worn on its own or under a helmet."
 	icon_state = "ccoif"
 	item_state = "ccoif"
 	color = "#ad977d"
@@ -69,6 +70,8 @@
 	sewrepair = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	armor_class = ARMOR_CLASS_LIGHT // now has the more integrity as pre buff heavy padded, but it seems like an oversight before with the extremely low integrity
+	max_integrity = ARMOR_INT_HELMET_IRON - 25
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding
 	name = "heavy padded coif"
@@ -87,6 +90,8 @@
 	sewrepair = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	armor_class = ARMOR_CLASS_MEDIUM //giving this to medium and up cuz the pretty sigificant integrity buff
+	max_integrity = ARMOR_INT_HELMET_STEEL - 20//actually treating this as a second layer of armor
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding/ComponentInitialize()
 	return

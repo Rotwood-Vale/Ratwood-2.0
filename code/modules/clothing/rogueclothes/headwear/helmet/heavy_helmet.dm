@@ -115,7 +115,8 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
-	max_integrity = ARMOR_INT_HELMET_STEEL
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
+	armor_class = ARMOR_CLASS_HEAVY
 
 /obj/item/clothing/head/roguetown/helmet/heavy/beakhelm
 	name = "beak helmet"
@@ -128,6 +129,7 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	body_parts_covered = COVERAGE_HEAD_NOSE
 	max_integrity = ARMOR_INT_HELMET_STEEL
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight
@@ -139,7 +141,7 @@
 	emote_environment = 3
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	block2add = FOV_BEHIND
-	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL + 35 //heavy armor class bonus
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL- ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
 	armor_class = ARMOR_CLASS_HEAVY // all visored helms are now heavy class, preventing non plate training user from using it.
@@ -271,6 +273,7 @@
 	icon_state = "topfhelm_gold"
 	item_state = "topfhelm_gold"
 	desc = "A full-head covering helm with the engravings of Ravox. Bravery. Justice. Ever Unyielding."
+	armor_class = ARMOR_CLASS_HEAVY
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/ravox/attackby(obj/item/W, mob/living/user, params)
 	return
@@ -285,6 +288,7 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	armor_class = ARMOR_CLASS_HEAVY
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -604,10 +608,10 @@
 	emote_environment = 3
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	block2add = FOV_BEHIND
+	block2add = FOV_BEHIND | FOV_RIGHT | FOV_LEFT
 	smeltresult = /obj/item/ingot/steel
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
-	armor_class = null	//Needs no armor class, snowflake merc gear.
+	armor_class = ARMOR_CLASS_HEAVY
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
@@ -620,6 +624,7 @@
 	name = "volfskulle bascinet"
 	desc = "A steel bascinet helmet with a snarling visor that protects the entire head and face. Just like the nitebeasts it mimics, so too does the helmet's teeth glisten with flesh-sundering sharpness."
 	armor_class = ARMOR_CLASS_LIGHT //Pseudoantagonist-exclusive. Gives them an edge over traditional pugilists and barbarians.
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - 120 // too strong as it is for being LAC
 	var/active_item = FALSE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/berserker/equipped(mob/living/user, slot)
@@ -670,6 +675,7 @@
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL + ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY // Worst vision. Yes.
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	armor_class = ARMOR_CLASS_HEAVY
 
 /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/attackby(obj/item/W, mob/living/user, params)
 	..()

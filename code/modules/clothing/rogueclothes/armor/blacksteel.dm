@@ -3,7 +3,7 @@
 /obj/item/clothing/suit/roguetown/armor/plate/modern/blacksteel_full_plate
 	name = "blacksteel plate armor"
 	desc = "A suit of Full Plate smithed from durable blacksteel. Using a modern design, the piercing and blunt protection still remain unmatched among its heavy-plated peers."
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_FULL | NECK
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplate"
@@ -24,7 +24,7 @@
 /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_full_plate
 	name = "ancient blacksteel plate armor"
 	desc = "A suit of Full Plate smithed from durable blacksteel. With an internally layered gambeson, the piercing and blunt protection is unmatched among its heavy-plated peers."
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_FULL | NECK
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -45,7 +45,7 @@
 /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate	//This is a cuirass
 	name = "blacksteel cuirass"
 	desc = "A basic cuirass forged from blacksteel. It's somewhat more durable than regular steel."
-	body_parts_covered = COVERAGE_TORSO
+	body_parts_covered = COVERAGE_TORSO | GROIN
 	icon_state = "grenzelcuirass"
 	item_state = "grenzelcuirass"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
@@ -60,21 +60,21 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "blacksteel half-plate"
 	desc = "An exceptionally durable set of blacksteel armor that protects the chest, arms, and groin, fitted with a set of pauldrons."
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS | NECK
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	icon = 'icons/roguetown/clothing/armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
 	icon_state = "bhalfplate"
 	item_state = "bhalfplate"
 	armor = ARMOR_PLATE_BSTEEL
-	max_integrity = ARMOR_INT_CHEST_PLATE_BLACKSTEEL
+	max_integrity = ARMOR_INT_CHEST_PLATE_BLACKSTEEL - 50 // medium armor compensation
 	allowed_race = CLOTHED_RACES_TYPES
 	nodismemsleeves = TRUE
 	blocking_behavior = null
 	smeltresult = /obj/item/ingot/blacksteel
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
-	armor_class = ARMOR_CLASS_HEAVY
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_halfplate/ancient
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'

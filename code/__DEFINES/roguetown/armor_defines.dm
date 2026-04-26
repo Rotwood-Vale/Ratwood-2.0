@@ -14,7 +14,7 @@
 #define ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY 50 // Integrity reduction, if a helmet is adjustable
 #define ARMOR_INT_HELMET_STEEL 350
 #define ARMOR_INT_HELMET_IRON 275
-#define ARMOR_INT_HELMET_HARDLEATHER 250
+#define ARMOR_INT_HELMET_HARDLEATHER 300
 #define ARMOR_INT_HELMET_LEATHER 200
 #define ARMOR_INT_HELMET_CLOTH 100
 
@@ -57,11 +57,11 @@
 #define ARMOR_INT_LEG_CLOTH 10
 
 // SIDE PIECES - Non-Chest armor
-#define ARMOR_INT_SIDE_ANTAG 500 // Integrity for antag pieces
-#define ARMOR_INT_SIDE_BLACKSTEEL 400 // Integrity for blacksteel pieces
-#define ARMOR_INT_SIDE_STEEL 300 // Integrity for steel pieces
-#define ARMOR_INT_SIDE_IRON 225 // Integrity for iron pieces
-#define ARMOR_INT_SIDE_HARDLEATHER 250 // Integrity for hardened leather pieces
+#define ARMOR_INT_SIDE_ANTAG 550 // Integrity for antag pieces
+#define ARMOR_INT_SIDE_BLACKSTEEL 500 // Integrity for blacksteel pieces
+#define ARMOR_INT_SIDE_STEEL 350 // Integrity for steel pieces
+#define ARMOR_INT_SIDE_IRON 275 // Integrity for iron pieces
+#define ARMOR_INT_SIDE_HARDLEATHER 300 // Integrity for hardened leather pieces
 #define ARMOR_INT_SIDE_LEATHER 200 // Integrity for leather / copper pieces
 #define ARMOR_INT_SIDE_DECREPIT 150 // Integrity for decrepit pieces
 #define ARMOR_INT_SIDE_CLOTH 100 // Integrity for cloth / aesthetic oriented pieces
