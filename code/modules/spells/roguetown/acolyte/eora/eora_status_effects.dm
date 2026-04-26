@@ -190,6 +190,7 @@
 
 		M.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
 		M.apply_status_effect(/datum/status_effect/debuff/revived)
+		ADD_TRAIT(M, TRAIT_DNR, "[type]") //you get one revival, value your lyfe.
 		M.remove_status_effect(src)
 
 #define POM_FILTER "pom_aura"
