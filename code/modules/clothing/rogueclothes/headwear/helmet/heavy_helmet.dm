@@ -129,7 +129,7 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
-	body_parts_covered = COVERAGE_HEAD_NOSE
+	body_parts_covered = HEAD|HAIR|EARS|NOSE|EYES
 	max_integrity = ARMOR_INT_HELMET_STEEL
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight
