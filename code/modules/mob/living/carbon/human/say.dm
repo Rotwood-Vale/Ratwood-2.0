@@ -54,6 +54,8 @@
 	return 0
 
 /mob/living/carbon/human/get_alt_name()
+	if(has_flinger_tipped_hat_identity_hidden())
+		return "Unknown"
 	if(name != GetVoice())
 		switch(voice_type)
 			if(VOICE_TYPE_FEM)

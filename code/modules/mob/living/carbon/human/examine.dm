@@ -1115,7 +1115,9 @@
 
 
 	var/list/lines
-	if((get_face_name() != real_name) && !observer_privilege)
+	if(has_flinger_tipped_hat_identity_hidden() && !observer_privilege)
+		lines = list()
+	else if((get_face_name() != real_name) && !observer_privilege)
 		lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src)
 	else
 		lines = build_cool_description(get_mob_descriptors(obscure_name, user), src)

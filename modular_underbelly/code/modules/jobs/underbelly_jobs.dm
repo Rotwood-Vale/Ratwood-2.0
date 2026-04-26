@@ -31,6 +31,30 @@
 	name = "shoddy hat"
 	desc = "Likely stolen from some poor puritan."
 
+/mob/living/carbon/human/proc/has_flinger_tipped_hat_identity_hidden()
+	return istype(head, /obj/item/clothing/head/roguetown/chaperon/flinger)
+
+/obj/item/clothing/head/roguetown/chaperon/flinger
+	name = "Tipped Hat"
+	desc = "A sharply angled hat that swallows every hint of the wearer beneath it."
+	icon_state = "puritan_hat"
+	item_state = "puritan_hat"
+	color = "#1f1f1f"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/head/roguetown/chaperon/flinger/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!ishuman(M))
+		return FALSE
+	var/mob/living/carbon/human/H = M
+	if(H.job == "Flinger")
+		return TRUE
+	if(!disable_warning)
+		to_chat(equipper || M, span_warning("The [src] only suits a Flinger."))
+	return FALSE
+
 // =====================================================
 // GUTTER KING
 // 80 PQ, max 1. Faction head. Medium armour trained.
@@ -68,7 +92,6 @@
 		/datum/advclass/gutterking/kingpin,
 		/datum/advclass/gutterking/fixer,
 	)
-	wanderer_examine = TRUE
 	advjob_examine = TRUE
 	announce_latejoin = FALSE
 	same_job_respawn_delay = 3 MINUTES
@@ -215,7 +238,6 @@
 		/datum/advclass/scum/kidnapper,
 		/datum/advclass/scum/guttersnipe,
 	)
-	wanderer_examine = TRUE
 	advjob_examine = TRUE
 	announce_latejoin = FALSE
 	same_job_respawn_delay = 2 MINUTES
@@ -392,7 +414,6 @@
 		/datum/advclass/fleshtrader/harvester,
 		/datum/advclass/fleshtrader/corruptor,
 	)
-	wanderer_examine = TRUE
 	advjob_examine = TRUE
 	announce_latejoin = FALSE
 	same_job_respawn_delay = 2 MINUTES
@@ -522,7 +543,6 @@
 		/datum/advclass/flinger/fence,
 		/datum/advclass/flinger/dealer,
 	)
-	wanderer_examine = TRUE
 	advjob_examine = TRUE
 	announce_latejoin = FALSE
 
@@ -659,7 +679,6 @@
 		/datum/advclass/ripper/sawbones,
 		/datum/advclass/ripper/chirurgeon,
 	)
-	wanderer_examine = TRUE
 	advjob_examine = TRUE
 	announce_latejoin = FALSE
 
@@ -771,19 +790,44 @@
 	if(wanted == "No, I stay in the shadows")
 		to_chat(H, span_notice("My work has gone unnoticed. I intend to keep it that way."))
 		return
+	var/bounty_poster = input(H, "Who wants your head?", "Bounty Poster") as anything in list("The Justiciary of Rotwood", "The Grenzelhoftian Holy See")
+	var/bounty_severity = input(H, "How severe are your crimes?", "Bounty Amount") as anything in list("Small Game", "Highwayman", "Vale Boogeyman")
+	var/race = H.dna.species
+	var/gender = H.gender
+	var/list/d_list = H.get_mob_descriptors()
+	var/descriptor_height = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_HEIGHT), "%DESC1%")
+	var/descriptor_body = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_BODY), "%DESC1%")
+	var/descriptor_voice = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_VOICE), "%DESC1%")
+	var/bounty_total = rand(200, 600)
+	var/my_crime = input(H, "What are you wanted for?", "Crime") as text|null
+	if(!my_crime)
+		my_crime = "organized criminal activity"
+	switch(bounty_severity)
+		if("Small Game")
+			bounty_total = rand(200, 300)
+		if("Highwayman")
+			bounty_total = rand(300, 400)
+		if("Vale Boogeyman")
+			bounty_total = rand(500, 600)
 	ADD_TRAIT(H, TRAIT_KNOWNCRIMINAL, "underbelly_criminal_record")
-	var/skillbuff = input(H, "Your experience has sharpened you.", "Choose An Attribute") as anything in list("Strength", "Perception", "Intelligence", "Constitution", "Willpower", "Speed")
-	switch(skillbuff)
-		if("Strength")
-			H.change_stat(STATKEY_STR, 1)
-		if("Perception")
-			H.change_stat(STATKEY_PER, 1)
-		if("Intelligence")
-			H.change_stat(STATKEY_INT, 1)
-		if("Constitution")
-			H.change_stat(STATKEY_CON, 1)
-		if("Willpower")
-			H.change_stat(STATKEY_WIL, 1)
-		if("Speed")
-			H.change_stat(STATKEY_SPD, 1)
+	if(bounty_severity == "Small Game")
+		add_bounty_obscure(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, bounty_poster)
+	else if(bounty_severity == "Highwayman")
+		add_bounty_noface(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, bounty_poster)
+	else
+		add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, bounty_poster)
+		var/skillbuff = input(H, "Your experience has sharpened you.", "Choose An Attribute") as anything in list("Strength", "Perception", "Intelligence", "Constitution", "Willpower", "Speed")
+		switch(skillbuff)
+			if("Strength")
+				H.change_stat(STATKEY_STR, 1)
+			if("Perception")
+				H.change_stat(STATKEY_PER, 1)
+			if("Intelligence")
+				H.change_stat(STATKEY_INT, 1)
+			if("Constitution")
+				H.change_stat(STATKEY_CON, 1)
+			if("Willpower")
+				H.change_stat(STATKEY_WIL, 1)
+			if("Speed")
+				H.change_stat(STATKEY_SPD, 1)
 	to_chat(H, span_bloody("I am known. The law has my name. I've survived it this far."))
