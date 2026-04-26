@@ -2635,6 +2635,7 @@
 #include "code\modules\roguetown\roguemachine\scomm\rontzring.dm"
 #include "code\modules\roguetown\roguemachine\scomm\scomm.dm"
 #include "code\modules\roguetown\roguemachine\scomm\scomstone.dm"
+#include "code\game\objects\structures\roguetown\rat_alarm.dm"
 #include "code\modules\roguetown\roguemachine\scomm\whisperer.dm"
 #include "code\modules\roguetown\roguemachine\steward\steward.dm"
 #include "code\modules\roguetown\roguemachine\stockpile\stockpile.dm"
