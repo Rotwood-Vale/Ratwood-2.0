@@ -84,7 +84,7 @@
 	body_parts_covered = HEAD|HAIR|EARS
 	armor = ARMOR_PLATE
 	max_integrity = ARMOR_INT_HELMET_STEEL
-	armor_class = ARMOR_CLASS_MEDIUM
+	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/head/roguetown/helmet/kettle/iron
 	name = "iron kettle helmet"
@@ -98,7 +98,7 @@
 	name = "wide kettle helmet"
 	desc = "A steel helmet which protects the top and sides of the head. This one looks wider than others."
 	icon_state = "kettlewide"
-	max_integrity = ARMOR_INT_HELMET_STEEL - 25
+	max_integrity = ARMOR_INT_HELMET_STEEL
 	armor_class = ARMOR_CLASS_LIGHT //lowered this to light class as an option
 
 /obj/item/clothing/head/roguetown/helmet/kettle/attackby(obj/item/W, mob/living/user, params)
@@ -131,7 +131,7 @@
 	desc = "A steel helmet which protects the ears."
 	smeltresult = /obj/item/ingot/steel
 	body_parts_covered = HEAD|HAIR|EARS
-	armor_class = ARMOR_CLASS_MEDIUM
+	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/head/roguetown/helmet/sallet/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -234,7 +234,7 @@
 	desc = "A iron helmet which protects the ears, nose, and eyes."
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_HELMET_IRON
-	armor_class = ARMOR_CLASS_MEDIUM
+	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/head/roguetown/helmet/sallet/elven
 	desc = "A steel helmet with a thin gold plating designed for Elven woodland guardians."
@@ -334,6 +334,7 @@
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
+	armor_class = ARMOR_CLASS_MEDIUM
 
 	detail_tag = "_detail"
 	color = "#FFFFFF"
@@ -390,7 +391,7 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
-	armor_class = ARMOR_CLASS_MEDIUM
+	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface
 	name = "pigface bascinet"
@@ -405,7 +406,7 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
-	armor_class = ARMOR_CLASS_HEAVY
+	armor_class = ARMOR_CLASS_MEDIUM
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/ComponentInitialize()
@@ -498,7 +499,7 @@
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
-	armor_class = ARMOR_CLASS_HEAVY
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan/attackby(obj/item/W, mob/living/user, params)
 	..()

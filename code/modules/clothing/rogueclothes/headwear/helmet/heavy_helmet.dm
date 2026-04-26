@@ -144,7 +144,7 @@
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL- ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
-	armor_class = ARMOR_CLASS_HEAVY // all visored helms are now heavy class, preventing non plate training user from using it.
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/black
 	color = CLOTHING_GREY
@@ -611,7 +611,7 @@
 	block2add = FOV_BEHIND | FOV_RIGHT | FOV_LEFT
 	smeltresult = /obj/item/ingot/steel
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
-	armor_class = ARMOR_CLASS_HEAVY
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
@@ -624,7 +624,7 @@
 	name = "volfskulle bascinet"
 	desc = "A steel bascinet helmet with a snarling visor that protects the entire head and face. Just like the nitebeasts it mimics, so too does the helmet's teeth glisten with flesh-sundering sharpness."
 	armor_class = ARMOR_CLASS_LIGHT //Pseudoantagonist-exclusive. Gives them an edge over traditional pugilists and barbarians.
-	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - 120 // too strong as it is for being LAC
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY - 50 // too strong as it is for being LAC
 	var/active_item = FALSE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/berserker/equipped(mob/living/user, slot)
