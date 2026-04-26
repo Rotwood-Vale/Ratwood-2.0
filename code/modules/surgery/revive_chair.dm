@@ -277,7 +277,7 @@
 		return
 
 	// Check if occupant is valid
-	if(!occupant.check_revive(user))
+	if(!occupant.check_(user))
 		return
 
 	// Prompt ghost
@@ -314,5 +314,5 @@
 
 		// Apply debuffs
 		occupant.apply_status_effect(/atom/movable/screen/alert/status_effect/debuff/revived)
-		ADD_TRAIT(M, TRAIT_DNR, "[type]") //you get one revival, value your lyfe.
+		ADD_TRAIT(occupant, TRAIT_DNR, "[type]") //you get one revival, value your lyfe.
 	return TRUE
