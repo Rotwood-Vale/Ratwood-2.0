@@ -217,6 +217,14 @@
 #define GUILDSMAN  	(1<<2)
 #define TAILOR		(1<<3)
 
+#define UNDERBELLY	(1<<12)
+
+#define GUTTER_KING		(1<<0)
+#define UB_SCUM			(1<<1)
+#define UB_FLESH_TRADER	(1<<2)
+#define UB_FLINGER		(1<<3)
+#define UB_RIPPER		(1<<4)
+
 #define JCOLOR_NOBLE "#aa83b9"
 #define JCOLOR_COURTIER "#81adc8"
 #define JCOLOR_CHURCH "#c0ba8d"
@@ -226,6 +234,7 @@
 #define JCOLOR_PEASANT "#b09262"
 #define JCOLOR_WANDERER  "#c86e3a"
 #define JCOLOR_INQUISITION "#FF0000"
+#define JCOLOR_UNDERBELLY "#5c6e52"
 
 /// Key value for taking the department's string and getting a color back
 #define JCOLOR_BY_DEPARTMENT list(\
@@ -239,6 +248,7 @@
 	"Peasants" = JCOLOR_PEASANT,\
 	"Sidefolk" = "grey",\
 	"Wanderers" = JCOLOR_WANDERER,\
+	"Underbelly" = JCOLOR_UNDERBELLY,\
 )
 
 // job display orders //
@@ -314,6 +324,11 @@
 #define JDO_GNOLL 30.5
 #define JDO_ASSASSIN 30.6
 #define JDO_TRADER 30.7
+#define JDO_GUTTER_KING 31.5
+#define JDO_UB_SCUM 31.6
+#define JDO_FLESH_TRADER_JOB 31.7
+#define JDO_FLINGER_JOB 31.8
+#define JDO_RIPPER_JOB 31.9
 
 #define JDO_MERCENARY 31
 #define JDO_GRENZELHOFT 31.1

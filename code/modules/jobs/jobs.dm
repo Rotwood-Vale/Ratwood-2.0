@@ -202,10 +202,23 @@ GLOBAL_LIST_INIT(foreign_positions, list(
 	"Suitor",
 	"Orthodoxist",
 	"Migrant",
+	"Gutter King",
+	"Scum",
+	"Flesh Trader",
+	"Flinger",
+	"Ripper",
 ))
 
 GLOBAL_LIST_INIT(test_positions, list(
 	"Tester",
+))
+
+GLOBAL_LIST_INIT(underbelly_positions, list(
+	"Gutter King",
+	"Scum",
+	"Flesh Trader",
+	"Flinger",
+	"Ripper",
 ))
 
 GLOBAL_LIST_INIT(job_assignment_order, get_job_assignment_order())

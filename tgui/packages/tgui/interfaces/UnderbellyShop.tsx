@@ -71,12 +71,21 @@ export const UnderbellyShop = () => {
             {restockLabel}
           </Box>
           <Tabs>
-            <Tabs.Tab selected={tab === 'shared'} onClick={() => setTab('shared')}>
+            <Tabs.Tab
+              selected={tab === 'shared'}
+              onClick={() => {
+                setTab('shared');
+                act('tab_changed', { tab: 'main' });
+              }}
+            >
               Wot I got right now.
             </Tabs.Tab>
             <Tabs.Tab
               selected={tab === 'exclusive'}
-              onClick={() => setTab('exclusive')}
+              onClick={() => {
+                setTab('exclusive');
+                act('tab_changed', { tab: 'exclusive' });
+              }}
             >
               EXCLUSIVES, Just for YOU.
             </Tabs.Tab>

@@ -1,7 +1,4 @@
 GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"))
-GLOBAL_LIST_INIT(trader_purchase_lines, world.file2list("strings/rt/trader_purchase.txt"))
-GLOBAL_LIST_INIT(trader_broke_lines, world.file2list("strings/rt/trader_broke.txt"))
-GLOBAL_LIST_INIT(trader_browsing_lines, world.file2list("strings/rt/trader_browsing.txt"))
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader
 	name = "The Trader"
@@ -18,8 +15,6 @@ GLOBAL_LIST_INIT(trader_browsing_lines, world.file2list("strings/rt/trader_brows
 	var/datum/underbelly_shop/shop
 	/// Whether the trader is currently serving a customer, suppresses idle lines
 	var/shopping = FALSE
-	/// Time of last purchase voice line, cooldown to avoid spam
-	var/last_purchase_line = 0
 	/// Time of last browsing-too-long nag
 	var/last_browse_nag = 0
 	/// When the shop stock next refreshes
@@ -49,6 +44,26 @@ GLOBAL_LIST_INIT(trader_browsing_lines, world.file2list("strings/rt/trader_brows
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/proc/idle_voice_tick()
 	if(!shopping && !QDELETED(src) && stat == CONSCIOUS)
+		var/mood_roll = rand(1, 10)
+		if(mood_roll == 1)
+			visible_message(span_notice("[src] hums gently."))
+			playsound(src, 'modular_underbelly/sound/trader/humming.ogg', 55, FALSE)
+			addtimer(CALLBACK(src, PROC_REF(idle_voice_tick)), rand(25, 50) SECONDS)
+			return
+		if(mood_roll <= 3)
+			var/chatter = rand(1, 3)
+			switch(chatter)
+				if(1)
+					say("What's that? How have we procured these curiosities? Hehehe...you don't wanna know, mate...")
+					playsound(src, 'modular_underbelly/sound/trader/idlechatter1.ogg', 60, FALSE)
+				if(2)
+					say("Ouugh...my back is killing me...yils haven't been kind to us, I suppose...")
+					playsound(src, 'modular_underbelly/sound/trader/idlechatter2.ogg', 60, FALSE)
+				if(3)
+					say("Sigh....I guess everyone needs a hobby...")
+					playsound(src, 'modular_underbelly/sound/trader/idlechatter3.ogg', 60, FALSE)
+			addtimer(CALLBACK(src, PROC_REF(idle_voice_tick)), rand(30, 60) SECONDS)
+			return
 		var/mob/living/carbon/human/nearby = locate(/mob/living/carbon/human) in view(4, src)
 		if(nearby && nearby != src && nearby.dna?.species)
 			var/quip
@@ -226,20 +241,110 @@ GLOBAL_LIST_INIT(trader_browsing_lines, world.file2list("strings/rt/trader_brows
 	next_restock = world.time + (25 MINUTES)
 	addtimer(CALLBACK(src, PROC_REF(restock_tick)), 25 MINUTES)
 
-/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_purchase(mob/user)
-	if(world.time < last_purchase_line + (30 SECONDS))
-		return
-	last_purchase_line = world.time
-	say(pick(GLOB.trader_purchase_lines))
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_purchase(mob/user, sound_key)
+	var/sound_file
+	switch(sound_key)
+		if("biggun")
+			sound_file = pick(
+				'modular_underbelly/sound/trader/purchase_biggun1.ogg',
+				'modular_underbelly/sound/trader/purchase_biggun2.ogg',
+				'modular_underbelly/sound/trader/purchase_biggun3.ogg',
+				'modular_underbelly/sound/trader/purchase_biggun4.ogg',
+				'modular_underbelly/sound/trader/purchase_biggun5.ogg',
+				'modular_underbelly/sound/trader/purchase_biggun6.ogg',
+				'modular_underbelly/sound/trader/purchase_biggun7.ogg',
+				'modular_underbelly/sound/trader/purchase_biggun8.ogg',
+				'modular_underbelly/sound/trader/purchase_biggun9.ogg',
+				'modular_underbelly/sound/trader/purchase_biggun10.ogg',
+			)
+		if("mediumgun")
+			sound_file = pick(
+				'modular_underbelly/sound/trader/purchase_mediumgun1.ogg',
+				'modular_underbelly/sound/trader/purchase_mediumgun2.ogg',
+				'modular_underbelly/sound/trader/purchase_mediumgun3.ogg',
+				'modular_underbelly/sound/trader/purchase_mediumgun4.ogg',
+				'modular_underbelly/sound/trader/purchase_mediumgun5.ogg',
+				'modular_underbelly/sound/trader/purchase_mediumgun6.ogg',
+				'modular_underbelly/sound/trader/purchase_mediumgun7.ogg',
+				'modular_underbelly/sound/trader/purchase_mediumgun8.ogg',
+				'modular_underbelly/sound/trader/purchase_mediumgun9.ogg',
+			)
+		if("smallgun")
+			sound_file = pick(
+				'modular_underbelly/sound/trader/purchase_smallgun1.ogg',
+				'modular_underbelly/sound/trader/purchase_smallgun2.ogg',
+				'modular_underbelly/sound/trader/purchase_smallgun3.ogg',
+				'modular_underbelly/sound/trader/purchase_smallgun4.ogg',
+				'modular_underbelly/sound/trader/purchase_smallgun5.ogg',
+				'modular_underbelly/sound/trader/purchase_smallgun6.ogg',
+				'modular_underbelly/sound/trader/purchase_smallgun7.ogg',
+			)
+		if("spikedknucks")
+			sound_file = 'modular_underbelly/sound/trader/purchase_spikedknucks.ogg'
+		if("deaddrop")
+			sound_file = 'modular_underbelly/sound/trader/purchase_deaddrop.ogg'
+		else
+			sound_file = pick(
+				'modular_underbelly/sound/trader/purchase_allurs.ogg',
+				'modular_underbelly/sound/trader/purchase_anythingelse.ogg',
+				'modular_underbelly/sound/trader/purchase_asuwish.ogg',
+				'modular_underbelly/sound/trader/purchase_chuckle.ogg',
+				'modular_underbelly/sound/trader/purchase_dazzled.ogg',
+				'modular_underbelly/sound/trader/purchase_dealstruck.ogg',
+				'modular_underbelly/sound/trader/purchase_dontalways.ogg',
+				'modular_underbelly/sound/trader/purchase_eye.ogg',
+				'modular_underbelly/sound/trader/purchase_finesse.ogg',
+				'modular_underbelly/sound/trader/purchase_goodtaste.ogg',
+				'modular_underbelly/sound/trader/purchase_grave.ogg',
+				'modular_underbelly/sound/trader/purchase_iknew.ogg',
+				'modular_underbelly/sound/trader/purchase_interesting.ogg',
+				'modular_underbelly/sound/trader/purchase_knack.ogg',
+				'modular_underbelly/sound/trader/purchase_lookatu.ogg',
+				'modular_underbelly/sound/trader/purchase_notbad.ogg',
+				'modular_underbelly/sound/trader/purchase_overprep.ogg',
+				'modular_underbelly/sound/trader/purchase_pleasure.ogg',
+				'modular_underbelly/sound/trader/purchase_sometins.ogg',
+				'modular_underbelly/sound/trader/purchase_stockingup.ogg',
+				'modular_underbelly/sound/trader/purchase_tastes.ogg',
+				'modular_underbelly/sound/trader/purchase_thanku.ogg',
+				'modular_underbelly/sound/trader/purchase_thatcash.ogg',
+				'modular_underbelly/sound/trader/purchase_upgrade1.ogg',
+				'modular_underbelly/sound/trader/purchase_upgrade2.ogg',
+				'modular_underbelly/sound/trader/purchase_upgrade3.ogg',
+				'modular_underbelly/sound/trader/purchase_wisechoice.ogg',
+			)
+	user.playsound_local(user, sound_file, 75, FALSE)
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_no_coin(mob/user)
-	say(pick(GLOB.trader_broke_lines))
+	user.playsound_local(user, pick(
+		'modular_underbelly/sound/trader/urbroke1.ogg',
+		'modular_underbelly/sound/trader/urbroke2.ogg',
+		'modular_underbelly/sound/trader/urbroke3.ogg',
+		'modular_underbelly/sound/trader/urbroke4.ogg',
+		'modular_underbelly/sound/trader/urbroke5.ogg',
+		'modular_underbelly/sound/trader/urbroke6.ogg',
+		'modular_underbelly/sound/trader/urbroke7.ogg',
+		'modular_underbelly/sound/trader/urbroke8.ogg',
+	), 75, FALSE)
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_browse_too_long(mob/user)
 	if(world.time < last_browse_nag + (60 SECONDS))
 		return
 	last_browse_nag = world.time
-	say(pick(GLOB.trader_browsing_lines))
+	var/nag = rand(1, 4)
+	switch(nag)
+		if(1)
+			say("You just gon' stand there or wot?")
+			playsound(src, 'modular_underbelly/sound/trader/nag1.ogg', 65, FALSE)
+		if(2)
+			say("Time is money, mate.")
+			playsound(src, 'modular_underbelly/sound/trader/nag2.ogg', 65, FALSE)
+		if(3)
+			say("Take ALL the time you need...")
+			playsound(src, 'modular_underbelly/sound/trader/nag3.ogg', 65, FALSE)
+		if(4)
+			say("Not seeing anything you like, stranger?")
+			playsound(src, 'modular_underbelly/sound/trader/nag4.ogg', 65, FALSE)
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -268,6 +373,88 @@ GLOBAL_LIST_INIT(trader_browsing_lines, world.file2list("strings/rt/trader_brows
 		return
 	shopping = FALSE
 	wander = TRUE
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_no_stock(mob/user)
+	user.playsound_local(user, pick(
+		'modular_underbelly/sound/trader/shop_nostock.ogg',
+		'modular_underbelly/sound/trader/shop_nostock2.ogg',
+		'modular_underbelly/sound/trader/shop_nostock3.ogg',
+	), 70, FALSE)
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_shop_open(mob/user)
+	user.playsound_local(user, pick(
+		'modular_underbelly/sound/trader/shop_open1.ogg',
+		'modular_underbelly/sound/trader/shop_open2.ogg',
+		'modular_underbelly/sound/trader/shop_open3.ogg',
+		'modular_underbelly/sound/trader/shop_open4.ogg',
+		'modular_underbelly/sound/trader/shop_open5.ogg',
+		'modular_underbelly/sound/trader/shop_open6.ogg',
+		'modular_underbelly/sound/trader/shop_open7.ogg',
+		'modular_underbelly/sound/trader/shop_open8.ogg',
+		'modular_underbelly/sound/trader/shop_open9.ogg',
+		'modular_underbelly/sound/trader/shop_open10.ogg',
+		'modular_underbelly/sound/trader/shop_open11.ogg',
+		'modular_underbelly/sound/trader/shop_open12.ogg',
+		'modular_underbelly/sound/trader/shop_open13.ogg',
+		'modular_underbelly/sound/trader/shop_open14.ogg',
+		'modular_underbelly/sound/trader/shop_open15.ogg',
+	), 70, FALSE)
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_shop_open_newstock(mob/user)
+	user.playsound_local(user, pick(
+		'modular_underbelly/sound/trader/shop_open_newstock.ogg',
+		'modular_underbelly/sound/trader/shop_open_newstock2.ogg',
+		'modular_underbelly/sound/trader/shop_open_newstock3.ogg',
+		'modular_underbelly/sound/trader/shop_open_newstock4.ogg',
+		'modular_underbelly/sound/trader/shop_open_newstock5.ogg',
+		'modular_underbelly/sound/trader/shop_open_newstock6.ogg',
+		'modular_underbelly/sound/trader/shop_open_newstock7.ogg',
+	), 70, FALSE)
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_shop_close(mob/user)
+	user.playsound_local(user, pick(
+		'modular_underbelly/sound/trader/shop_close1.ogg',
+		'modular_underbelly/sound/trader/shop_close2.ogg',
+		'modular_underbelly/sound/trader/shop_close3.ogg',
+		'modular_underbelly/sound/trader/shop_close4.ogg',
+		'modular_underbelly/sound/trader/shop_close8.ogg',
+		'modular_underbelly/sound/trader/shop_close9.ogg',
+	), 70, FALSE)
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_nopurchase_close(mob/user)
+	var/npc = rand(1, 3)
+	switch(npc)
+		if(1)
+			say("Next time, buy something, ey?")
+			playsound(src, 'modular_underbelly/sound/trader/nopurchase_close.ogg', 70, FALSE)
+		if(2)
+			say("Hmph, suit yourself, stranger.")
+			playsound(src, 'modular_underbelly/sound/trader/nopurchase_close2.ogg', 70, FALSE)
+		if(3)
+			say("Oi oi! Where you off to?!")
+			playsound(src, 'modular_underbelly/sound/trader/nopurchase_close3.ogg', 70, FALSE)
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_tab_main(mob/user)
+	user.playsound_local(user, 'modular_underbelly/sound/trader/shop_openmainshop.ogg', 70, FALSE)
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_tab_exclusives(mob/user)
+	user.playsound_local(user, pick(
+		'modular_underbelly/sound/trader/shop_openexclusives1.ogg',
+		'modular_underbelly/sound/trader/shop_openexclusives2.ogg',
+	), 70, FALSE)
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_deaddrop_success(mob/user)
+	user.playsound_local(user, pick(
+		'modular_underbelly/sound/trader/success_deaddrop.ogg',
+		'modular_underbelly/sound/trader/success_deaddrop2.ogg',
+		'modular_underbelly/sound/trader/success_deaddrop3.ogg',
+		'modular_underbelly/sound/trader/success_deaddrop4.ogg',
+		'modular_underbelly/sound/trader/success_deaddrop5.ogg',
+		'modular_underbelly/sound/trader/success_deaddrop6.ogg',
+		'modular_underbelly/sound/trader/success_deaddrop7.ogg',
+		'modular_underbelly/sound/trader/success_deaddrop8.ogg',
+		'modular_underbelly/sound/trader/success_deaddrop9.ogg',
+	), 75, FALSE)
 
 // Outfit
 /datum/outfit/job/roguetown/underbelly_trader_npc

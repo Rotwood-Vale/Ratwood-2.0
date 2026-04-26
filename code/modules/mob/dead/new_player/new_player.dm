@@ -602,6 +602,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	omegalist += list(GLOB.inquisition_positions)
 	omegalist += list(GLOB.yeoman_positions)
 	omegalist += list(GLOB.peasant_positions)
+	omegalist += list(GLOB.underbelly_positions)
 	omegalist += list(GLOB.wanderer_positions)
 	omegalist += list(GLOB.youngfolk_positions)
 
@@ -640,6 +641,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 					cat_name = "Peasants"
 				if (YOUNGFOLK)
 					cat_name = "Sidefolk"
+				if (UNDERBELLY)
+					cat_name = "Underbelly"
 				if (WANDERERS)
 					cat_name = "Wanderers"
 				if (INQUISITION)

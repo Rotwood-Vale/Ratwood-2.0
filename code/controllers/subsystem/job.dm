@@ -308,6 +308,8 @@ SUBSYSTEM_DEF(job)
 			key = "Peasants"
 		if(YOUNGFOLK)
 			key = "Sidefolk"
+		if(UNDERBELLY)
+			key = "Underbelly"
 		if(WANDERERS)
 			key = "Wanderers"
 		else

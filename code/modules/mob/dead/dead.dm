@@ -126,6 +126,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		"Guildsmen" = list(), // Guildsmen
 		"Peasants" = list(), // Pheasants (the birb)
 		"Sidefolk" = list(), // Side strugglers
+		"Underbelly" = list(), // Criminal faction.
 		"Wanderers" = list(), // Nobodies.
 	)
 	for(var/job_name in ready_players_by_job)
