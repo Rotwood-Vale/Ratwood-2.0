@@ -174,7 +174,9 @@
 	var/list/stolen_firearm = list(
 		list("Powder Flask",              "Holds a charge of black powder. Keep it away from sparks.", /obj/item/powderflask,                                          3, 40, 60),
 		list("Lead Ball Pouch",           "Eight lead balls, ready to load.",                          /obj/item/quiver/bullet/lead,                                   2, 50, 50),
+		list("Extended Lead Ball Pouch",  "Sixteen lead balls packed into the same old pouch.",        /obj/item/quiver/bullet/lead/extended,                          1, 90, 20),
 		list("Grapeshot Pouch",           "Eight grapeshot charges. For the bigger guns.",             /obj/item/quiver/bullet/grapeshot,                              1, 90, 25),
+		list("Extended Grapeshot Pouch",  "Sixteen grapeshot charges for anyone expecting a long night.", /obj/item/quiver/bullet/grapeshot/extended,                   1, 160, 15),
 	)
 
 	var/list/stolen_all = stolen_helmets + stolen_armor + stolen_weapons + stolen_firearm

@@ -11,11 +11,25 @@
 // =====================================================
 /datum/outfit/job/roguetown/underbelly
 
+/datum/outfit/job/roguetown/underbelly/pre_equip(mob/living/carbon/human/H)
+	..()
+	belt = /obj/item/storage/belt/rogue/leather/double
+	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/black
+
 /datum/outfit/job/roguetown/underbelly/post_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
+		H << sound('modular_underbelly/sound/scummy.ogg', volume = 35)
 		ADD_TRAIT(H, TRAIT_UNDERBELLY_SCUM, "underbelly_job")
 		H.grant_language(/datum/language/thievescant)
+
+/obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum
+	name = "Mask of Scum"
+	desc = "A mask made out of heartstone, often used by Scum."
+
+/obj/item/clothing/head/roguetown/puritan/scum
+	name = "shoddy hat"
+	desc = "Likely stolen from some poor puritan."
 
 // =====================================================
 // GUTTER KING
@@ -46,9 +60,9 @@
 	min_pq = 80
 	max_pq = null
 	round_contrib_points = 5
-	social_rank = SOCIAL_RANK_PEASANT
+	social_rank = SOCIAL_RANK_SCUM
 	cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg'
-	advclass_cat_rolls = list(CTAG_UNDERBELLY = 3)
+	advclass_cat_rolls = list(CTAG_UNDERBELLY_GUTTERKING = 3)
 	job_traits = list(TRAIT_MEDIUMARMOR, TRAIT_SEEPRICES)
 	job_subclasses = list(
 		/datum/advclass/gutterking/kingpin,
@@ -60,6 +74,16 @@
 	same_job_respawn_delay = 3 MINUTES
 
 /datum/outfit/job/roguetown/underbelly/gutterking
+
+/datum/outfit/job/roguetown/underbelly/gutterking/pre_equip(mob/living/carbon/human/H)
+	..()
+	mask = null
+	head = /obj/item/clothing/head/roguetown/puritan/scum
+	armor = /obj/item/clothing/suit/roguetown/armor/longcoat
+	cloak = /obj/item/clothing/cloak/darkcloak/minotaur
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	belt = /obj/item/storage/belt/rogue/leather/double
+	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 
 /datum/outfit/job/roguetown/underbelly/gutterking/post_equip(mob/living/carbon/human/H)
 	..()
@@ -74,9 +98,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking/kingpin
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_GUTTERKING)
 	cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
 	subclass_stats = list(
@@ -100,12 +124,7 @@
 /datum/outfit/job/roguetown/underbelly/gutterking/kingpin/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	head = /obj/item/clothing/head/roguetown/chaperon/greyscale
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
-	pants = /obj/item/clothing/under/roguetown/trou/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -124,9 +143,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking/fixer
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_GUTTERKING)
 	cmode_music = 'sound/music/combat_noble.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
 		STATKEY_PER = 3,
@@ -148,13 +167,8 @@
 /datum/outfit/job/roguetown/underbelly/gutterking/fixer/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	head = /obj/item/clothing/head/roguetown/chaperon/brown
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
-	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/clothing/neck/roguetown/horus
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -192,9 +206,9 @@
 	min_pq = 55
 	max_pq = null
 	round_contrib_points = 5
-	social_rank = SOCIAL_RANK_PEASANT
+	social_rank = SOCIAL_RANK_SCUM
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
-	advclass_cat_rolls = list(CTAG_UNDERBELLY = 3)
+	advclass_cat_rolls = list(CTAG_UNDERBELLY_SCUM = 3)
 	job_traits = list(TRAIT_MEDIUMARMOR)
 	job_subclasses = list(
 		/datum/advclass/scum/enforcer,
@@ -208,10 +222,19 @@
 
 /datum/outfit/job/roguetown/underbelly/scum
 
+/datum/outfit/job/roguetown/underbelly/scum/pre_equip(mob/living/carbon/human/H)
+	..()
+	mask = /obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum
+	head = /obj/item/clothing/head/roguetown/puritan/scum
+	armor = null
+	cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	belt = /obj/item/storage/belt/rogue/leather/double
+	gloves = /obj/item/clothing/gloves/roguetown/leather/black
+
 /datum/outfit/job/roguetown/underbelly/scum/post_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		H << sound('modular_underbelly/sound/scummy.ogg')
 		scum_select_criminal_record(H)
 
 // Enforcer — the brawler. Hits things until they stop moving.
@@ -221,9 +244,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/scum/enforcer
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_SCUM)
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
@@ -243,11 +266,7 @@
 /datum/outfit/job/roguetown/underbelly/scum/enforcer/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
-	pants = /obj/item/clothing/under/roguetown/trou/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltr = /obj/item/rogueweapon/mace/cudgel
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
@@ -263,9 +282,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/scum/kidnapper
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_SCUM)
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
 		STATKEY_SPD = 2,
@@ -287,11 +306,7 @@
 /datum/outfit/job/roguetown/underbelly/scum/kidnapper/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	armor = /obj/item/clothing/suit/roguetown/armor/leather
-	shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt/random
-	pants = /obj/item/clothing/under/roguetown/trou/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
@@ -308,9 +323,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/scum/guttersnipe
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_SCUM)
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_DODGEEXPERT)
 	subclass_stats = list(
@@ -332,10 +347,7 @@
 /datum/outfit/job/roguetown/underbelly/scum/guttersnipe/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt/random
-	pants = /obj/item/clothing/under/roguetown/tights/random
 	shoes = /obj/item/clothing/shoes/roguetown/boots
-	belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/steel
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/navaja
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -372,9 +384,9 @@
 	min_pq = 65
 	max_pq = null
 	round_contrib_points = 5
-	social_rank = SOCIAL_RANK_PEASANT
+	social_rank = SOCIAL_RANK_SCUM
 	cmode_music = 'sound/music/combat_physician.ogg'
-	advclass_cat_rolls = list(CTAG_UNDERBELLY = 3)
+	advclass_cat_rolls = list(CTAG_UNDERBELLY_FLESHTRADER = 3)
 	job_traits = list(TRAIT_KNOWNCRIMINAL)
 	job_subclasses = list(
 		/datum/advclass/fleshtrader/harvester,
@@ -395,9 +407,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/fleshtrader/harvester
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_FLESHTRADER)
 	cmode_music = 'sound/music/combat_physician.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
 		STATKEY_PER = 2,
@@ -422,10 +434,8 @@
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/physician
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
@@ -443,9 +453,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/fleshtrader/corruptor
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_FLESHTRADER)
 	cmode_music = 'sound/music/combat_physician.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
 		STATKEY_INT = 3,
@@ -466,10 +476,8 @@
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/physician
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -506,9 +514,9 @@
 	min_pq = 55
 	max_pq = null
 	round_contrib_points = 3
-	social_rank = SOCIAL_RANK_PEASANT
+	social_rank = SOCIAL_RANK_SCUM
 	cmode_music = 'sound/music/combat_noble.ogg'
-	advclass_cat_rolls = list(CTAG_UNDERBELLY = 3)
+	advclass_cat_rolls = list(CTAG_UNDERBELLY_FLINGER = 3)
 	job_traits = list(TRAIT_SEEPRICES)
 	job_subclasses = list(
 		/datum/advclass/flinger/fence,
@@ -534,9 +542,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/flinger/fence
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_FLINGER)
 	cmode_music = 'sound/music/combat_noble.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_SEEPRICES, TRAIT_CICERONE)
 	subclass_stats = list(
@@ -560,11 +568,9 @@
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/chaperon/brown
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/clothing/neck/roguetown/horus
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich //fence starts rich
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
@@ -582,9 +588,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/flinger/dealer
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_FLINGER)
 	cmode_music = 'sound/music/combat_noble.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_SEEPRICES)
 	subclass_stats = list(
@@ -607,10 +613,8 @@
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/chaperon/brown
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid //less coin than fence
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list( //more merchandise to start moving
@@ -647,9 +651,9 @@
 	min_pq = 70
 	max_pq = null
 	round_contrib_points = 5
-	social_rank = SOCIAL_RANK_PEASANT
+	social_rank = SOCIAL_RANK_SCUM
 	cmode_music = 'sound/music/combat_physician.ogg'
-	advclass_cat_rolls = list(CTAG_UNDERBELLY = 3)
+	advclass_cat_rolls = list(CTAG_UNDERBELLY_RIPPER = 3)
 	job_traits = list(TRAIT_MEDICINE_EXPERT)
 	job_subclasses = list(
 		/datum/advclass/ripper/sawbones,
@@ -660,6 +664,11 @@
 	announce_latejoin = FALSE
 
 /datum/outfit/job/roguetown/underbelly/ripper
+
+/datum/outfit/job/roguetown/underbelly/ripper/pre_equip(mob/living/carbon/human/H)
+	..()
+	armor = null
+	cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
 
 /datum/outfit/job/roguetown/underbelly/ripper/post_equip(mob/living/carbon/human/H)
 	..()
@@ -674,9 +683,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper/sawbones
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_RIPPER)
 	cmode_music = 'sound/music/combat_physician.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
 		STATKEY_INT = 2,
@@ -697,11 +706,8 @@
 	..()
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/physician
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -719,9 +725,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper/chirurgeon
-	category_tags = list(CTAG_UNDERBELLY)
+	category_tags = list(CTAG_UNDERBELLY_RIPPER)
 	cmode_music = 'sound/music/combat_physician.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
+	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
@@ -742,11 +748,8 @@
 	..()
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/physician
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich //precision costs more
 	backr = /obj/item/storage/backpack/rogue/satchel

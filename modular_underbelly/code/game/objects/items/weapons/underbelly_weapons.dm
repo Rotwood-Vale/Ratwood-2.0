@@ -16,8 +16,8 @@
 	name = "gut spiller"
 	desc = "A squat, scrappy six-shooter with a modified internal body to hold more lead, with a cost. Close range only - past ten paces it's just noise. \
 	Inside ten paces, it lives up to its name."
-	icon_state = "pistol"
-	item_state = "pistol"
+	icon_state = "pistol3"
+	item_state = "pistol3"
 	force = 14
 	spread = 6
 	wlength = WLENGTH_SHORT
@@ -33,6 +33,47 @@
 	gunpowder = TRUE
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/attackby(obj/item/A, mob/user, params)
+	if(istype(A, /obj/item/quiver/bullet/lead))
+		var/obj/item/quiver/bullet/lead/Q = A
+		var/mob/living/carbon/human/H = user
+		if(!istype(H) || H.job != "Scum")
+			to_chat(user, span_warning("Only Scum know how to spin-load the [src]."))
+			return
+		if(!gunpowder)
+			to_chat(user, span_warning("You must fill the [src] with smokepowder first!"))
+			return
+		var/free_rounds = 6 - (pending_rounds + rounds_remaining + (chambered ? 1 : 0))
+		if(free_rounds <= 0)
+			to_chat(user, span_warning("The [src]'s cylinder is already full!"))
+			return
+		if(!length(Q.arrows))
+			to_chat(user, span_warning("There are no lead balls left in [Q]."))
+			return
+		var/firearm_skill = user.get_skill_level(/datum/skill/combat/firearms)
+		user.visible_message(span_notice("[user] flicks [src] into a spin and starts feeding the cylinder from [Q]."))
+		playsound(src, 'modular_helmsguard/sound/arquebus/gunspin.ogg', 80, TRUE)
+		if(do_after(user, max(10, load_time - (firearm_skill * 2)), src))
+			var/loaded = 0
+			while(loaded < free_rounds && length(Q.arrows))
+				var/obj/item/ammo_casing/caseless/bullet/lead/shot = Q.arrows[Q.arrows.len]
+				Q.arrows -= shot
+				qdel(shot)
+				loaded++
+			if(!loaded)
+				to_chat(user, span_warning("There are no lead balls left in [Q]."))
+				return
+			loaded += pending_rounds
+			if(chambered)
+				rounds_remaining += loaded
+			else
+				rounds_remaining = loaded - 1
+				chambered = new /obj/item/ammo_casing/caseless/bullet/lead(src)
+			pending_rounds = 0
+			Q.update_icon()
+			reloaded = TRUE
+			gunpowder = TRUE
+			user.visible_message(span_notice("[user] snaps the [src] shut, fully stuffed with lead."))
+		return
 	if(istype(A, /obj/item/ammo_casing))
 		if(!istype(A, /obj/item/ammo_casing/caseless/bullet/lead))
 			to_chat(user, span_warning("The [src] only fires lead balls."))
@@ -95,8 +136,8 @@
 	name = "venator"
 	desc = "A modified Otavan flintgonne with a hexagonal barrel, it has a bolt racking mechanism. Unreliable, but accurate for its class, and markedly difficult to find. \
 	Someone clearly had it stolen from the Inquisition, and modified it."
-	icon_state = "pistol"
-	item_state = "pistol"
+	icon_state = "flintgonne"
+	item_state = "flintgonne"
 	force = 12
 	spread = 2
 	wlength = WLENGTH_SHORT

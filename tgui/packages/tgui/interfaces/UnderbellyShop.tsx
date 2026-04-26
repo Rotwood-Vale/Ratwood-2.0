@@ -58,7 +58,7 @@ export const UnderbellyShop = () => {
 
   return (
     <Window title={trader_name} width={480} height={560}>
-      <Window.Content>
+      <Window.Content scrollable>
         <Section
           title={trader_name}
           buttons={

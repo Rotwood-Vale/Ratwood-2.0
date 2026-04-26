@@ -37,12 +37,14 @@ export const FlavorTextPage = (props) => {
     __html: `<span className='Chat'>${ooc_notes_nsfw}</span>`,
   }), [ooc_notes_nsfw]);
 
+  const headshotSrc = headshot?.startsWith('http') ? headshot : resolveAsset(headshot);
+
   return (
         <Stack fill>
             <Stack fill vertical>
                 <Stack.Item align="center">
                   <img
-                    src={resolveAsset(headshot)}
+                    src={headshotSrc}
                     width="350px"
                     height="350px"
                     /> 

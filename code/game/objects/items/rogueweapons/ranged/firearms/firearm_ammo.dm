@@ -187,9 +187,17 @@
 		arrows += B
 	update_icon()
 
+/obj/item/quiver/bullet/lead/extended
+	name = "extended lead sphere pouch"
+	max_storage = 16
+
 /obj/item/quiver/bullet/grapeshot/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/bullet/grapeshot/B = new()
 		arrows += B
 	update_icon()
+
+/obj/item/quiver/bullet/grapeshot/extended
+	name = "extended grapeshot pouch"
+	max_storage = 16

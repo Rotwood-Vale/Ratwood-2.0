@@ -3,6 +3,10 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 /mob/living/carbon/human/species/human/northern/underbelly_trader
 	name = "The Trader"
 	real_name = "The Trader"
+	headshot_link = "https://i.gyazo.com/16d387beb13c61d07dee379ebe7b967d.png"
+	voice_type = VOICE_TYPE_MASC
+	flavortext = "A shoddy humen in a black longcoat and a jade mask. They seem to be willing to make some deals with the Scum, but to what extent?"
+	ooc_notes = "Ever seen a NPC with flavortext before? First time for everythin', mate."
 	wander = TRUE
 	aggressive = 0
 	mode = NPC_AI_IDLE
@@ -32,7 +36,13 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
+	delete_equipment()
 	equipOutfit(new /datum/outfit/job/roguetown/underbelly_trader_npc)
+	fully_replace_character_name(null, "The Trader")
+	name_override = "The Trader"
+	social_rank = SOCIAL_RANK_SCUM
+	if(dna)
+		dna.real_name = "The Trader"
 	next_restock = world.time + (25 MINUTES)
 	shop.do_restock()
 	addtimer(CALLBACK(src, PROC_REF(idle_voice_tick)), rand(20, 45) SECONDS)
@@ -355,6 +365,9 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 	var/mob/living/carbon/human/H = user
 	if(!Adjacent(H))
 		return
+	if(stat != CONSCIOUS)
+		to_chat(H, span_warning("[src] isn't in any state to do business."))
+		return
 	if(!HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
 		to_chat(H, span_warning("[src] eyes you up and shakes [src.p_their()] head."))
 		say("Not for you, friend.")
@@ -456,15 +469,24 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 		'modular_underbelly/sound/trader/success_deaddrop9.ogg',
 	), 75, FALSE)
 
+/obj/item/clothing/mask/rogue/facemask/carved/jademask/trader
+	name = "Trader's Visage"
+	desc = "A jade mask worn by the Underbelly's broker, equal parts invitation and warning."
+	flags_inv = NONE
+
 // Outfit
 /datum/outfit/job/roguetown/underbelly_trader_npc
 	name = "Underbelly Trader"
 
 /datum/outfit/job/roguetown/underbelly_trader_npc/pre_equip(mob/living/carbon/human/H)
 	..()
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
-	pants = /obj/item/clothing/under/roguetown/tights/sailor
-	head = /obj/item/clothing/head/roguetown/chaperon/brown
-	belt = /obj/item/storage/belt/rogue/leather/rope
+	mask = /obj/item/clothing/mask/rogue/facemask/carved/jademask/trader
+	head = /obj/item/clothing/head/roguetown/puritan/scum
+	armor = null
+	cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
+	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/black
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	belt = /obj/item/storage/belt/rogue/leather/double
+	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
+	backr = /obj/item/storage/backpack/rogue/backpack

@@ -150,9 +150,11 @@
 			else if(J.lowlife_examine)
 				display_as_lowlife = TRUE
 		var/rank_color = "#725D4C"
-		if(HAS_TRAIT(src, TRAIT_NOBLE) && social_rank < 4)
+		if(HAS_TRAIT(src, TRAIT_NOBLE) && social_rank < SOCIAL_RANK_MINOR_NOBLE)
 			social_rank = SOCIAL_RANK_MINOR_NOBLE
 		switch(social_rank)
+			if(SOCIAL_RANK_SCUM)
+				rank_color = "#6C6C6C"
 			if(SOCIAL_RANK_PEASANT)
 				rank_color = "#91733B"
 			if(SOCIAL_RANK_YEOMAN)
@@ -164,6 +166,8 @@
 			if(SOCIAL_RANK_ROYAL)
 				rank_color = "#FFBF00"
 		var/social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⚜</font></A>"
+		if(social_rank == SOCIAL_RANK_SCUM)
+			social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>☠</font></A>"
 		if(family_datum)
 			social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⛯</font></A>"
 		var/display1
