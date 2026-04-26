@@ -7,9 +7,10 @@
 	icon_state = "halfplate"
 	item_state = "halfplate"
 	armor = ARMOR_PLATE
+	body_parts_covered = CHEST|VITALS|NECK // all plate now comes with neck coverage, going to be the main difference between plate and brig class armor
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	nodismemsleeves = TRUE
-	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL // compensation for medium armor class
 	allowed_sex = list(MALE, FEMALE)
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
@@ -18,7 +19,7 @@
 	smeltresult = /obj/item/ingot/steel
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
-	armor_class = ARMOR_CLASS_HEAVY
+	armor_class = ARMOR_CLASS_MEDIUM // awkard spot as heavy so I moved them down to medium
 	smelt_bar_num = 3
 
 /obj/item/clothing/suit/roguetown/armor/plate/ComponentInitialize()
@@ -178,9 +179,8 @@
 
 	equip_delay_self = 6 SECONDS
 	unequip_delay_self = 6 SECONDS
-
-	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
-	body_parts_covered = COVERAGE_FULL // Less durability than proper plate, more expensive to manufacture, and accurate to the sprite.
+	body_parts_covered = CHEST|ARMS|VITALS|NECK // same integrity as proper fluted plate, less expensive to manufacture, but less coverage.
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 35 //new top tier medium armor, slightly more integrity cuz fluting
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar
 	name = "vicious half-plate"
@@ -201,7 +201,7 @@
 	smeltresult = /obj/item/ingot/silverblessed
 	body_parts_covered = COVERAGE_FULL // Less durability than proper plate, more expensive to manufacture, and accurate to the sprite.
 
-	max_integrity = ARMOR_INT_CHEST_PLATE_PSYDON
+	max_integrity = ARMOR_INT_CHEST_PLATE_PSYDON + 25 // added integrity since its fluted. 
 	is_silver = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/ornate/equipped(mob/living/user, slot)
@@ -220,13 +220,14 @@
 	name = "plate armor"
 	desc = "Full steel plate armor. Slow to don and doff without the aid of a good squire."
 	icon_state = "plate"
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_FULL|NECK
 	equip_delay_self = 12 SECONDS
 	unequip_delay_self = 12 SECONDS
 	equip_delay_other = 3 SECONDS
 	strip_delay = 6 SECONDS
 	smelt_bar_num = 4
-
+	armor_class = ARMOR_CLASS_HEAVY // full plate should always be heavy armor class
+	
 /obj/item/clothing/suit/roguetown/armor/plate/full/iron
 	name = "iron plate armor"
 	icon_state = "ironplate"
@@ -278,6 +279,7 @@
 	name = "fluted plate"
 	desc = "A suit of ornate plate armor, noble in both presentation and protection. Such resplendent maille is traditionally reserved for the higher echelons of nobility; seasoned knights, venerated kings, and pot-bellied councilmen that wish to flaunt their opulence towards the unwashed masses."
 	icon_state = "ornateplate"
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL + 50 // added integrity since its fluted. 
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/fluted/ornate
 	name = "psydonic plate"
@@ -518,7 +520,7 @@
 	desc = "An ornate steel cuirass, fitted with tassets for additional coverage. The intricate fluting not only attracts the maidens, but also strengthens the steel's resistance against repeated impacts."
 
 	body_parts_covered = CHEST | VITALS | LEGS
-	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 25 //added integrity for fluting bonus
 
 /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate
 	name = "psydonic cuirass"

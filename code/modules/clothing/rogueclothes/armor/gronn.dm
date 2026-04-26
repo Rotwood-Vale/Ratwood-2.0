@@ -269,6 +269,7 @@
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
 	smeltresult = /obj/item/ingot/iron
+	armor_class = ARMOR_CLASS_HEAVY
 
 /obj/item/clothing/gloves/roguetown/plate/iron/gronn
 	name = "gronn norsii iron gauntlets"

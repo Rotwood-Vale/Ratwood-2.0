@@ -23,6 +23,7 @@
 	grid_width = 64
 	experimental_onhip = TRUE
 	experimental_inhand = TRUE
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/head/roguetown/helmet/MiddleClick(mob/user)
 	if(!ishuman(user))
@@ -168,6 +169,7 @@
 	block2add = FOV_BEHIND
 	smelt_bar_num = 2
 	armor = ARMOR_PLATE
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/head/roguetown/helmet/sallet/shishak
 	name = "steel shishak"
@@ -376,6 +378,7 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface
 	name = "pigface bascinet"
@@ -390,6 +393,8 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	armor_class = ARMOR_CLASS_HEAVY
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
@@ -480,6 +485,8 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
+	armor_class = ARMOR_CLASS_HEAVY
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan/attackby(obj/item/W, mob/living/user, params)
 	..()

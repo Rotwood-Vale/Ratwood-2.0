@@ -15,6 +15,7 @@
 	smeltresult = /obj/item/ingot/blacksteel
 	smelt_bar_num = 2
 	adjustable = CAN_CADJUST
+	armor_class = ARMOR_CLASS_HEAVY 
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)

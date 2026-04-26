@@ -82,6 +82,7 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	armor_class = ARMOR_CLASS_HEAVY
 
 /obj/item/clothing/head/roguetown/helmet/heavy/guard/bogman
 	name = "steel bogman's helmet"
@@ -97,6 +98,7 @@
 	color = "#bb9696"
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
+	max_integrity = ARMOR_INT_HELMET_HEAVY_DECREPIT
 
 /obj/item/clothing/head/roguetown/helmet/heavy/guard/paalloy
 	name = "ancient savoyard"
@@ -113,6 +115,7 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	max_integrity = ARMOR_INT_HELMET_STEEL
 
 /obj/item/clothing/head/roguetown/helmet/heavy/beakhelm
 	name = "beak helmet"
@@ -125,6 +128,7 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	max_integrity = ARMOR_INT_HELMET_STEEL
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight
 	name = "knight's helmet"
@@ -135,9 +139,10 @@
 	emote_environment = 3
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	block2add = FOV_BEHIND
-	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL + 35 //heavy armor class bonus
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+	armor_class = ARMOR_CLASS_HEAVY // all visored helms are now heavy class, preventing non plate training user from using it.
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/black
 	color = CLOTHING_GREY
