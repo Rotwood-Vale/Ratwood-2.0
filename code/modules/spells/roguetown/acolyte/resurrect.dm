@@ -102,6 +102,7 @@
 		target.apply_status_effect(debuff_type)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
 		//Due to an increased cost and cooldown, these revival types heal quite a bit.
 		target.apply_status_effect(/datum/status_effect/buff/healing, 14)
+		ADD_TRAIT(target, TRAIT_DNR, "[type]") //you get one revival, value your lyfe.
 		consume_items(target)
 		return TRUE
 	revert_cast()
