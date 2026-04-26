@@ -314,5 +314,5 @@
 
 		// Apply debuffs
 		occupant.apply_status_effect(/atom/movable/screen/alert/status_effect/debuff/revived)
-
+		ADD_TRAIT(M, TRAIT_DNR, "[type]") //you get one revival, value your lyfe.
 	return TRUE
