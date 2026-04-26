@@ -277,7 +277,7 @@
 		return
 
 	// Check if occupant is valid
-	if(!occupant.check_(user))
+	if(!occupant.check_revive(user))
 		return
 
 	// Prompt ghost
