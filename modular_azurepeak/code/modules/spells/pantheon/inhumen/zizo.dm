@@ -363,6 +363,7 @@
 		target.apply_status_effect(/datum/status_effect/buff/healing, 14)
 		consume_items(target)
 		return TRUE
+		ADD_TRAIT(M, TRAIT_DNR, "[type]")
 	revert_cast()
 	return FALSE
 
