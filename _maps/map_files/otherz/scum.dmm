@@ -1,0 +1,395 @@
+"ah" = (/obj/effect/decal/cleanable/debris/stony,/obj/item/trash/applecore,/turf/open/floor/rogue/herringbone,/area/rogue)
+"at" = (/turf/open/floor/rogue/citybrick/citybrick1,/area/rogue)
+"az" = (/obj/structure/chair/bench/couchamagenta,/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"aH" = (/obj/structure/closet/crate/drawer{lockid = "royal"; pixel_y = 4; pixel_x = 4},/obj/item/clothing/ring/opal,/obj/item/roguegem/amber,/obj/structure/fluff/railing/border{dir = 1},/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"aQ" = (/obj/structure/bars/tough,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"aS" = (/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"aU" = (/obj/structure/chair/bench/couchablack/r{pixel_y = 10},/turf/open/floor/carpet/inn,/area/rogue)
+"aY" = (/obj/structure/bars/pipe{pixel_x = -1; pixel_y = 7},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"bL" = (/turf/open/floor/rogue/carpet/lord/right,/area/rogue)
+"ch" = (/obj/machinery/light/rogue/candle/green,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"cD" = (/turf/closed/wall/mineral/rogue/stonebrick,/area/rogue)
+"cI" = (/obj/structure/fluff/railing/border{dir = 10},/turf/open/floor/rogue/herringbone,/area/rogue)
+"cL" = (/obj/structure/chair/wood/rogue/fancy{dir = 1; pixel_x = 2; pixel_y = 5},/turf/open/floor/rogue/carpet/lord/left,/area/rogue)
+"cP" = (/obj/structure/fluff/signage,/obj/structure/fluff/signage,/obj/structure/fluff/signage{desc = "ELEVATOR OUT OF SERVICE - ONLY WORKS FOR CARGO."},/turf/open/floor/rogue/citybrick/citybrick5,/area/rogue)
+"dd" = (/turf/closed/wall/mineral/rogue/stone/moss,/area/rogue)
+"de" = (/obj/structure/chair/wood/rogue{dir = 8; pixel_x = -10; pixel_y = 6},/obj/machinery/light/rogue/candle/green,/turf/open/floor/rogue/herringbone,/area/rogue)
+"dh" = (/obj/effect/decal/cleanable/blood,/turf/open/floor/rogue/herringbone,/area/rogue)
+"dk" = (/obj/structure/chair/wood/rogue/fancy{pixel_x = 2},/turf/open/floor/rogue/carpet/lord/left,/area/rogue)
+"dv" = (/obj/structure/fluff/walldeco/church/line,/turf/open/floor/carpet/red,/area/rogue)
+"dA" = (/obj/structure/bars/grille/rusty,/obj/machinery/light/rogue/candle/green,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"dJ" = (/obj/structure/chair/bench/coucha,/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"dK" = (/turf/closed/wall/mineral/rogue/pipe,/area/rogue)
+"dX" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"ee" = (/turf/open/floor/rogue/citybrick/citybrick4,/area/rogue)
+"ep" = (/obj/structure/rack/rogue/shelf/biggest{pixel_x = -8},/turf/open/floor/rogue/herringbone,/area/rogue)
+"ex" = (/obj/structure/fluff/walldeco/church/line{dir = 4; pixel_x = 2},/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals{pixel_x = 5; pixel_y = -2},/obj/structure/fluff/statue/pillar{pixel_x = -16; pixel_y = 24},/turf/open/floor/rogue/tile/harem2,/area/rogue)
+"eN" = (/obj/structure/bars/pipe{dir = 10; layer = 2; pixel_x = 7; pixel_y = 7},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"fb" = (/obj/machinery/light/rogue/candle/floorcandle{pixel_x = 2; pixel_y = -2},/turf/open/floor/carpet/inn,/area/rogue)
+"fh" = (/obj/structure/bars/pipe{dir = 9; layer = 2; pixel_x = 1; pixel_y = 0},/turf/open/water/bath,/area/rogue)
+"ft" = (/obj/structure/chair/wood/rogue/fancy{dir = 4; pixel_x = 5},/obj/machinery/light/rogue/candle/green,/turf/open/floor/rogue/herringbone,/area/rogue)
+"fu" = (/turf/open/floor/rogue/citybrick/citybrick6,/area/rogue)
+"fA" = (/obj/structure/fluff/railing/border{dir = 4},/obj/structure/fluff/pillow/magenta{dir = 8; pixel_x = 1; pixel_y = 1},/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"fR" = (/obj/structure/fluff/statue/small{name = "conviniently placed statue"},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"fS" = (/obj/structure/bars/pipe{pixel_x = 7; pixel_y = 7},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"gp" = (/obj/structure/fluff/walldeco/church/line{dir = 8},/obj/structure/fluff/walldeco/church/line,/turf/open/floor/carpet/red,/area/rogue)
+"gs" = (/obj/structure/fluff/pillow/purple,/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"hn" = (/obj/machinery/light/rogue/campfire/fireplace{pixel_x = -32; pixel_y = 0},/turf/closed/wall/mineral/rogue/stone/moss,/area/rogue)
+"hD" = (/obj/structure/fluff/railing/border{dir = 8},/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"hI" = (/obj/structure/bars/pipe{pixel_x = -12},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"hO" = (/obj/item/roguecoin/gold/pile,/obj/item/roguecoin/gold/pile,/turf/open/floor/carpet/royalblack,/area/rogue)
+"hW" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/obj/structure/fluff/walldeco/church/line{dir = 4},/turf/open/floor/carpet/inn,/area/rogue)
+"it" = (/obj/item/roguestatue/gold/loot,/turf/open/floor/carpet/royalblack,/area/rogue)
+"iI" = (/obj/structure/mineral_door/wood/bath/bathmaid{name = "THE BOSS"; desc = "Smells like stale wine and cheese."; lockid = "underbelly_scum"},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"iM" = (/obj/structure/mineral_door/wood{icon_state = "wcv"; locked = 1; lockid = "underbelly_boss"; name = "Treasury"; desc = "Oh boy, riches!"},/turf/open/floor/rogue/carpet/lord/left,/area/rogue)
+"iW" = (/obj/structure/table/wood{dir = 10; icon_state = "largetable"},/obj/item/cooking/platter/copper,/obj/item/reagent_containers/food/snacks/rogue/wienerpotato,/turf/open/floor/rogue/herringbone,/area/rogue)
+"ji" = (/obj/structure/bars/pipe{dir = 8; pixel_x = 7; pixel_y = 1},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"ks" = (/obj/structure/stairs/stone,/obj/structure/stairs/stone,/obj/structure/stairs/stone,/turf/open/transparent/openspace,/area/rogue)
+"kt" = (/turf/closed/wall/mineral/rogue/pipe/corners,/area/rogue)
+"kC" = (/obj/structure/fluff/walldeco/church/line{dir = 4},/obj/structure/fluff/walldeco/church/line,/turf/open/floor/carpet/inn,/area/rogue)
+"lh" = (/obj/machinery/light/rogue/candle/green/l,/obj/effect/decal/cleanable/debris/stony,/turf/open/floor/rogue/herringbone,/area/rogue)
+"li" = (/obj/structure/stairs/fancy/c{dir = 4},/turf/open/floor/rogue/carpet,/area/rogue)
+"ly" = (/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"lJ" = (/obj/machinery/light/rogue/candle/green/r,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"lS" = (/obj/structure/closet/crate/roguecloset/dark{keylock = 1; locked = 1; lockid = "underbelly_scum"; pixel_x = -4},/obj/item/roguecoin/silver/pile,/obj/item/roguecoin/silver/pile,/obj/item/roguecoin/gold/pile,/turf/open/floor/rogue/herringbone,/area/rogue)
+"mb" = (/obj/machinery/light/rogue/candle/floorcandle{pixel_x = -17; pixel_y = -2},/turf/open/floor/carpet/inn,/area/rogue)
+"mi" = (/obj/structure/table/wood/long_table,/obj/structure/rack/rogue/shelf,/turf/open/floor/rogue/herringbone,/area/rogue)
+"mx" = (/obj/structure/mineral_door/wood/bath/bathmaid{name = "PERSONAL DORMS"; desc = "Make your own room, the way you wished to have it."; lockid = "underbelly_scum"},/turf/open/transparent/openspace,/area/rogue)
+"mz" = (/obj/structure/chair/wood/rogue{dir = 8; pixel_x = -10; pixel_y = 6},/turf/open/floor/rogue/herringbone,/area/rogue)
+"mX" = (/obj/structure/fluff/walldeco/church/line{dir = 4},/turf/open/floor/carpet/inn,/area/rogue)
+"nc" = (/obj/structure/fluff/walldeco/xavo,/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"nj" = (/obj/structure/shisha/hookah,/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"nm" = (/obj/structure/fluff/walldeco/church/line{dir = 8},/obj/structure/fluff/walldeco/church/line{dir = 1},/turf/open/floor/carpet/inn,/area/rogue)
+"nu" = (/obj/effect/decal/cleanable/debris/stony,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"nZ" = (/turf/open/floor/rogue/carpet/lord/left,/area/rogue)
+"oD" = (/obj/structure/chair/bench/coucha/r,/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"oI" = (/turf/open/floor/rogue/carpet,/area/rogue)
+"oL" = (/obj/structure/stairs/stone{dir = 1},/turf/open/water/bath,/area/rogue)
+"pH" = (/turf/closed/wall/mineral/rogue/pipe/joint/one,/area/rogue)
+"pK" = (/obj/effect/decal/carpet/kover_black{pixel_x = 17; pixel_y = -3},/obj/structure/chair/bench/couchablack{pixel_y = 10},/turf/open/floor/carpet/inn,/area/rogue)
+"pQ" = (/turf/closed/wall/mineral/rogue/pipe{desc = "Solid steel made into an impenetrable obstacle. This stretch of wall however seems to have thin hairline cracks in it's bronzed coating."; icon_state = "iron_line"; max_integrity = 2000; name = "suspicious metal wall"; density = 0},/area/rogue)
+"qp" = (/obj/effect/decal/carpet/square{pixel_x = 14; pixel_y = -4},/turf/open/floor/rogue/herringbone,/area/rogue)
+"qF" = (/obj/structure/fluff/walldeco/church/line{dir = 8},/obj/structure/fluff/walldeco/church/line,/turf/open/floor/rogue/carpet,/area/rogue)
+"rI" = (/obj/effect/decal/cleanable/debris/stony,/turf/open/floor/rogue/herringbone,/area/rogue)
+"rO" = (/obj/structure/mineral_door/wood{icon_state = "wcv"; locked = 1; lockid = "underbelly_boss"; name = "Treasury"; desc = "Oh boy, riches!"},/turf/open/floor/rogue/carpet,/area/rogue)
+"sC" = (/obj/structure/shisha/hookah{pixel_x = 9},/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"tB" = (/obj/structure/fluff/walldeco/church/line,/turf/open/floor/rogue/carpet,/area/rogue)
+"tT" = (/obj/structure/mineral_door/wood/bath/bathmaid{name = "PERSONAL DORMS"; desc = "A place to call your own. Pick a room, and claim it as yours. Decorate it as you see fit."; lockid = "underbelly_scum"},/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"uo" = (/turf/open/floor/carpet/inn,/area/rogue)
+"up" = (/obj/structure/stairs/stone,/obj/structure/stairs/stone,/obj/structure/stairs/stone,/obj/structure/stairs/stone,/obj/structure/stairs/stone,/turf/open/transparent/openspace,/area/rogue)
+"vf" = (/obj/structure/bars/grille/rusty,/obj/structure/fluff/signage{desc = "It reads..."LIVINGQUARTERS"."; dir = 8},/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"vn" = (/turf/open/transparent/openspace,/area/rogue)
+"vw" = (/obj/structure/stairs/stone{dir = 4},/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"we" = (/obj/item/soap/bath,/obj/item/reagent_containers/glass/bucket{pixel_x = -5},/obj/item/natural/cloth{pixel_x = -5},/obj/structure/fluff/railing/border{dir = 9},/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"wf" = (/obj/structure/bars/grille/rusty,/obj/structure/fluff/walldeco/sign/merchantsign{name = "THE SMUGGLER TRAIN"},/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"wE" = (/obj/structure/fluff/statue/small{name = "conviniently placed statue"},/turf/open/floor/rogue/herringbone,/area/rogue)
+"wX" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/turf/open/floor/carpet/red,/area/rogue)
+"xt" = (/obj/structure/bed/rogue/inn/double,/obj/item/bedsheet/rogue/fabric_double,/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"xJ" = (/turf/open/floor/rogue/herringbone,/area/rogue)
+"xL" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/rogue/herringbone,/area/rogue)
+"ye" = (/obj/structure/table/wood{dir = 8; icon_state = "largetable"},/obj/item/reagent_containers/glass/cup/tin/small{pixel_x = 00; pixel_y = 12},/turf/open/floor/rogue/herringbone,/area/rogue)
+"yk" = (/obj/structure/hotspring{icon_state = "lilypetals2"},/turf/open/water/bath,/area/rogue)
+"yl" = (/obj/structure/bars/grille/rusty,/obj/machinery/light/rogue/lanternpost,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"ys" = (/obj/structure/fluff/railing/border,/turf/open/floor/carpet/inn,/area/rogue)
+"yH" = (/obj/effect/decal/carpet/kover_darkred{dir = 4; pixel_x = 2},/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"yV" = (/turf/open/floor/rogue/citybrick/citybrick2,/area/rogue)
+"zc" = (/obj/structure/fluff/traveltile/underbelly{aportalgoesto = "scumex1"; aportalid = "scume1"},/turf/open/floor/rogue/metal,/area/rogue)
+"zk" = (/obj/structure/bars/grille/rusty,/obj/machinery/light/rogue/lanternpost{dir = 1},/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"zn" = (/obj/structure/fluff/walldeco/wallshield,/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"zq" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/obj/structure/fluff/walldeco/church/line{dir = 4},/turf/open/floor/rogue/carpet,/area/rogue)
+"zw" = (/obj/structure/bookcase/random,/turf/open/floor/rogue/carpet,/area/rogue)
+"zW" = (/obj/structure/fluff/walldeco/church/line,/turf/open/floor/carpet/inn,/area/rogue)
+"Ab" = (/obj/structure/table/wood{dir = 6; icon_state = "largetable"},/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/turf/open/floor/rogue/herringbone,/area/rogue)
+"Ao" = (/obj/effect/decal/carpet/square{pixel_x = 14; pixel_y = -4; dir = 4},/turf/open/floor/rogue/herringbone,/area/rogue)
+"Ay" = (/obj/structure/table/wood,/obj/item/reagent_containers/glass/cup/golden,/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"AC" = (/turf/open/floor/rogue/metal,/area/rogue)
+"AQ" = (/obj/structure/bars/grille/rusty,/turf/closed,/area/rogue)
+"Bl" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/obj/structure/fluff/walldeco/church/line{dir = 8},/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals{pixel_x = -5; pixel_y = 8},/turf/open/floor/rogue/tile/harem2,/area/rogue)
+"Bx" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/turf/open/floor/rogue/carpet,/area/rogue)
+"Bz" = (/obj/structure/bars/pipe{dir = 8; pixel_x = 7; pixel_y = -9},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"BU" = (/obj/machinery/light/rogue/candle/green/l,/obj/effect/decal/cleanable/debris/stony,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"Cx" = (/obj/effect/decal/cleanable/debris/stony,/obj/item/roguebin/trash,/turf/open/floor/rogue/herringbone,/area/rogue)
+"Cz" = (/turf/open/floor/carpet/purple,/area/rogue)
+"CE" = (/obj/structure/chair/wood/rogue/fancy{dir = 4; pixel_x = 5},/turf/open/floor/rogue/herringbone,/area/rogue)
+"CU" = (/obj/structure/fluff/traveltile/underbelly{aportalgoesto = "scumex2"; aportalid = "scume2"},/turf/open/floor/rogue/metal,/area/rogue)
+"CW" = (/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{pixel_x = 5; pixel_y = 12},/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{pixel_x = -3; pixel_y = 12},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"Da" = (/obj/machinery/light/rogue/lanternpost{dir = 1},/turf/open/transparent/openspace,/area/rogue)
+"De" = (/turf/closed,/area/rogue)
+"Dl" = (/obj/structure/fluff/walldeco/church/line,/obj/structure/fluff/walldeco/church/line{dir = 8},/turf/open/floor/carpet/inn,/area/rogue)
+"Do" = (/obj/structure/mineral_door/wood/bath/bathmaid{name = "THE SMUGGLER'S TRAIN - GOODS ARRIVAL"; desc = "The Smuggler's Train always has goods for us. What will it bring us this time?"},/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"Ds" = (/obj/structure/roguewindow/harem3,/turf/closed,/area/rogue)
+"En" = (/obj/structure/bars/grille/rusty,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"Eo" = (/obj/structure/bars/pipe{pixel_y = 7},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"Ew" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/obj/structure/fluff/walldeco/church/line{dir = 4; pixel_x = 2},/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals{pixel_x = 12; pixel_y = 8},/obj/machinery/light/rogue/candle/floorcandle{pixel_x = -17; pixel_y = -2},/turf/open/floor/rogue/tile/harem2,/area/rogue)
+"EG" = (/obj/effect/decal/carpet/kover_darkred{dir = 4; pixel_x = 2; pixel_y = -5},/obj/effect/decal/carpet/kover_darkred{dir = 4; pixel_x = 2; pixel_y = -5},/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"Fq" = (/obj/structure/bars/grille/rusty{dir = 1},/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"Fw" = (/obj/structure/table/wood{dir = 5; icon_state = "largetable"; pixel_y = -6},/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/turf/open/floor/rogue/herringbone,/area/rogue)
+"FK" = (/turf/open/floor/carpet/red,/area/rogue)
+"FL" = (/obj/structure/closet/crate/chest/crate,/turf/open/floor/rogue/herringbone,/area/rogue)
+"Gq" = (/obj/structure/table/wood{dir = 5; icon_state = "largetable"},/obj/item/cooking/platter/copper,/obj/item/reagent_containers/food/snacks/rogue/carrotsteak,/turf/open/floor/rogue/herringbone,/area/rogue)
+"GG" = (/obj/machinery/light/rogue/candle/green/l,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"GN" = (/obj/structure/bed/rogue/inn,/turf/open/floor/rogue/herringbone,/area/rogue)
+"GY" = (/obj/structure/mineral_door/wood/bath/bathmaid{name = "RELAXATION"; desc = "Even Scum need a break."; lockid = "underbelly_scum"},/obj/structure/fluff/walldeco/maidendrape{pixel_x = 32; pixel_y = 0},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"Hf" = (/obj/structure/fluff/walldeco/xavo,/turf/closed/wall/mineral/rogue/decostone,/area/rogue)
+"Hg" = (/obj/structure/stairs/stone,/turf/open/floor/rogue/herringbone,/area/rogue)
+"Ii" = (/obj/structure/fluff/railing/border{dir = 8},/turf/open/floor/rogue/herringbone,/area/rogue)
+"IT" = (/obj/item/reagent_containers/glass/cup/tin/small{pixel_x = -7; pixel_y = 12},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"Jb" = (/turf/closed/mineral/rogue/bedrock,/area/rogue)
+"JD" = (/obj/structure/rack/rogue/shelf/biggest{pixel_x = -4},/turf/open/floor/rogue/herringbone,/area/rogue)
+"KE" = (/obj/structure/bars/grille/rusty,/turf/open/water/sewer,/area/rogue)
+"KG" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/turf/open/floor/carpet/inn,/area/rogue)
+"Lp" = (/turf/open/water/bath,/area/rogue)
+"LD" = (/obj/structure/fluff/pillow/magenta{dir = 8; pixel_x = 1; pixel_y = 1},/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"LY" = (/obj/structure/vampthrone{name = "The Gutter Throne"; desc = "A big, likely stolen throne."},/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"Mn" = (/obj/effect/decal/cleanable/greenglow,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"MD" = (/obj/structure/table/wood/poker{pixel_x = 2},/turf/open/floor/rogue/carpet/lord/left,/area/rogue)
+"MR" = (/obj/structure/fluff/railing/border{dir = 10},/turf/open/floor/carpet/inn,/area/rogue)
+"Na" = (/obj/structure/fluff/pillow/purple{dir = 1},/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"NN" = (/obj/structure/fluff/walldeco/church/line{dir = 8},/turf/open/floor/rogue/carpet,/area/rogue)
+"NZ" = (/obj/structure/table/wood{dir = 9; icon_state = "largetable"; pixel_y = -6},/obj/item/cooking/platter/copper,/obj/item/reagent_containers/food/snacks/rogue/strudelslice,/turf/open/floor/rogue/herringbone,/area/rogue)
+"OS" = (/obj/structure/fluff/walldeco/maidendrape{pixel_x = 32; pixel_y = 0},/obj/structure/bars/pipe{pixel_y = 7},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"Pp" = (/obj/structure/table/wood,/obj/item/reagent_containers/glass/bottle/rogue/beer/butterhairs,/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"PF" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/rogue/herringbone,/area/rogue)
+"PQ" = (/obj/structure/fluff/walldeco/church/line{dir = 8},/turf/open/floor/carpet/inn,/area/rogue)
+"PX" = (/obj/structure/mineral_door/wood/bath/bathmaid{name = "THE TRADER AND ARMORY"; desc = "The Bandits WISH they had what WE had."; lockid = "underbelly_scum"},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"Qh" = (/turf/closed/wall/mineral/rogue/pipe/corners/four,/area/rogue)
+"Qm" = (/obj/item/roguemachine/navigator{fixed_tax = 0.15; motto = "THE PEDDLER - Your goods, carefully delivered."; name = "THE PEDDLER"; export_time_override = 9000; desc = "The Peddler sends goods up the elevator, to the smuggler's train up on the flipside."},/turf/open/floor/carpet/inn,/area/rogue)
+"Rb" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/obj/structure/fluff/walldeco/church/line{dir = 8},/turf/open/floor/carpet/red,/area/rogue)
+"Rg" = (/obj/structure/bars/grille/rusty,/obj/structure/fluff/walldeco/wantedposter,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"Ri" = (/turf/closed/wall/mineral/rogue/pipe/line,/area/rogue)
+"Rp" = (/obj/structure/bars/pipe{dir = 9; layer = 2; pixel_x = 7; pixel_y = -9},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"RT" = (/obj/machinery/light/rogue/candle/floorcandle/alt/pink{pixel_x = 1; pixel_y = -16},/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"RU" = (/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"Sk" = (/obj/structure/rack/rogue/shelf,/obj/structure/closet/crate/roguecloset{keylock = 1; lockid = "manor"; opacity = 1},/obj/item/rogueweapon/huntingknife/cleaver,/obj/item/kitchen/rollingpin{pixel_x = 0},/obj/item/storage/roguebag,/obj/item/storage/roguebag,/turf/open/floor/rogue/herringbone,/area/rogue)
+"Sw" = (/obj/structure/fluff/walldeco/stone,/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"SE" = (/obj/structure/fluff/walldeco/church/line,/obj/structure/fluff/walldeco/church/line{dir = 4},/turf/open/floor/rogue/carpet,/area/rogue)
+"SG" = (/obj/structure/fluff/walldeco/stone,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"SU" = (/obj/structure/mirror/fancy,/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"Ty" = (/obj/effect/decal/cleanable/blood/old,/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"TF" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/obj/structure/fluff/walldeco/church/line{dir = 8},/turf/open/floor/rogue/carpet,/area/rogue)
+"TU" = (/obj/structure/fluff/walldeco/church/line{dir = 8},/turf/open/floor/carpet/red,/area/rogue)
+"Ua" = (/obj/structure/chair/smallbench,/turf/open/floor/carpet/inn,/area/rogue)
+"Ur" = (/obj/structure/stairs/stone,/turf/open/transparent/openspace,/area/rogue)
+"Uw" = (/obj/structure/fluff/railing/border{dir = 1},/obj/structure/fluff/railing/border{dir = 9},/obj/structure/closet/crate/roguecloset{keylock = 1; locked = 1; lockid = "underbelly_bossl"},/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal,/obj/item/clothing/cloak/lordcloak/ladycloak,/obj/item/clothing/head/roguetown/headdress,/obj/item/storage/backpack/rogue/satchel/short,/obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"UC" = (/obj/structure/chair/bench/couchamagenta/r,/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"UE" = (/obj/structure/bed/rogue/inn{dir = 8},/turf/open/floor/rogue/herringbone,/area/rogue)
+"UQ" = (/obj/structure/closet/crate/chest/gold,/turf/open/floor/rogue/carpet,/area/rogue)
+"UX" = (/obj/effect/decal/carpet/kover_darkred{dir = 4; pixel_x = 2; pixel_y = -10},/turf/open/floor/rogue/carpet/lord/center,/area/rogue)
+"Vr" = (/obj/machinery/light/rogue/hearth{pixel_y = 5},/obj/item/reagent_containers/glass/bucket/pot{pixel_x = -2; pixel_y = 5},/turf/open/floor/rogue/concrete,/area/rogue)
+"Vt" = (/obj/structure/fluff/walldeco/church/line{dir = 8},/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals{pixel_x = -6; pixel_y = -8},/turf/open/floor/rogue/tile/harem2,/area/rogue)
+"VD" = (/obj/structure/rack/rogue/shelf/biggest{density = null; opacity = 1},/obj/item/reagent_containers/glass/cup,/obj/item/reagent_containers/glass/cup,/obj/item/reagent_containers/glass/cup,/obj/item/reagent_containers/glass/cup,/obj/item/kitchen/fork/iron{pixel_x = 5},/obj/item/kitchen/fork/iron{pixel_x = 5},/obj/item/kitchen/fork/iron{pixel_x = 5},/obj/item/kitchen/fork/iron{pixel_x = 5},/obj/item/reagent_containers/glass/bowl/tin,/obj/item/reagent_containers/glass/bowl/tin,/obj/item/reagent_containers/glass/bowl/tin,/obj/item/reagent_containers/glass/bowl/tin,/obj/item/reagent_containers/glass/bowl/tin,/obj/item/cooking/platter/copper,/obj/item/cooking/platter/copper,/obj/item/cooking/platter/copper,/obj/item/cooking/platter/copper,/obj/item/cooking/platter/copper,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"VF" = (/obj/structure/fluff/railing/border,/turf/open/floor/rogue/herringbone,/area/rogue)
+"VH" = (/obj/structure/stairs/stone{dir = 8},/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"Wh" = (/turf/open/water/sewer,/area/rogue)
+"Wu" = (/obj/effect/decal/cleanable/discharge,/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"WC" = (/obj/item/roguecoin/gold/pile,/obj/item/roguecoin/gold/pile,/turf/open/floor/carpet/purple,/area/rogue)
+"Xj" = (/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue)
+"XN" = (/obj/structure/table/wood/long_table/right,/obj/structure/rack/rogue/shelf,/obj/item/cooking/pan{pixel_x = 6; pixel_y = 35},/turf/open/floor/rogue/herringbone,/area/rogue)
+"XR" = (/obj/structure/bars/pipe{dir = 6; layer = 2; pixel_x = -12},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue)
+"XT" = (/obj/structure/bars/pipe{dir = 5; layer = 2; pixel_x = 0; pixel_y = 0},/turf/open/water/bath,/area/rogue)
+"XV" = (/turf/open/floor/rogue/citybrick/citybrick3,/area/rogue)
+"XW" = (/obj/structure/mineral_door/wood/bath/bathmaid{name = "LIVING QUARTERS"; desc = "Where all the scum of the Vale gather."; lockid = "underbelly_scum"},/turf/open/floor/rogue/metal/barograte,/area/rogue)
+"XX" = (/obj/structure/fluff/railing/border{dir = 6},/turf/open/floor/carpet/inn,/area/rogue)
+"Yo" = (/obj/structure/fluff/walldeco/church/line{dir = 4},/turf/open/floor/rogue/carpet,/area/rogue)
+"YH" = (/turf/closed/wall/mineral/rogue/pipe/line/four,/area/rogue)
+"YN" = (/turf/open/floor/carpet/royalblack,/area/rogue)
+"ZE" = (/obj/structure/stairs/stone,/turf/open/water/sewer,/area/rogue)
+
+(1,1,1) = {"
+cDJbJbcDJbJbJbRiJbcDJbJbcDJbJbcDJbcDJbcDcDJbJbcDcDJbJbJbcDJbJbcDJbJbcDcDJbcDJbJbJbJbcDJbcDcDJbJbcDJbJbcDJbcDcDJbJbcDcDcDcDJbJbcD
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhACACWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhACACWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+JbWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhACACWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhACACWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhdKWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+JbWhWhWhWhWhWhdKWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+JbWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+JbWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+YHYHYHYHYHYHYHpHWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDKEKEKEKEKEKEdKKEKEKEKEaSaSaSaSaSaSaSaSKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEACACACACcD
+JbKEKEKEKEKEKEKEKEKEKEKEaSaSaSaSaSaSaSaSKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEACACACACcD
+JbWhWhWhWhWhWhWhWhWhWhWhaSaSaSaSaSaSaSaSWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbWhWhWhWhWhWhWhWhWhWhWhaSaSaSaSaSaSaSaSWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhWhWhWhWhWhZEZEZEWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhWhWhWhWhWhlylylyWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbYHdKYHYHYHYHdKWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhlyWhWhWhWhWhWhWhWhWhWhWhlyWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+JbWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEACACACACJb
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEACACACACJb
+JbWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+JbWhWhWhWhWhWhdKWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+JbWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+JbWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDYHYHYHYHYHYHdKWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhlyWhWhWhWhWhWhWhWhWhWhWhlyWhWhWhWhWhWhWhWhWhcD
+JbKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEcD
+cDKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEKEJb
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbWhWhWhWhWhWhdKWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhdKWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+JbWhWhWhWhWhWhWhWhdKWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+JbWhWhWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDWhWhWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+cDWhWhWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhcD
+JbWhWhWhWhWhWhWhWhRiWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhKEKEWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhWhJb
+cDcDJbcDJbcDJbcDJbRicDcDJbcDJbcDcDJbJbJbJbcDcDJbcDJbJbcDJbcDJbJbcDJbJbJbJbcDJbJbcDJbJbcDJbJbcDJbJbJbJbcDJbcDJbJbcDJbcDcDJbJbcDJb
+"}
+(1,1,2) = {"
+JbcDcDJbcDJbcDJbJbJbJbcDJbcDJbJbcDJbJbcDJbcDJbcDJbJbJbcDJbJbcDJbcDJbJbcDJbcDJbcDJbcDJbcDJbcDJbJbcDJbJbcDJbcDJbJbcDcDcDJbcDJbJbcD
+cDvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnJbJbACACJbJbvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvncD
+cDvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnJbvnACACvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnJb
+JbvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnACACvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvncD
+cDvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnJb
+JbvnvnvnvnvnvndKvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnJb
+cDvnvnvnvnvnvnRiEnzkEnEnEnEnEnzkEnEnEnEnzkEnEnEnEnEnEnzkEnEnEnEnEnEnzkEnEnEnEnFqzkEnEnEnEnEnEnEnzkEnEnEnEnEnEnEnzkEnEnEnEnEnzkcD
+JbvnvnvnvnvnvnRiEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnJb
+cDvnvnvnvnvnvnRiEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnEncD
+JbvnvnvnvnvnvnRiEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnEncD
+cDvnvnvnvnvnvnRiEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnEncD
+JbvnvnvnvnvnvnRiEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnEnJb
+cDvnvnvnvnvnvnRiEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnEnEnJbJb
+cDvnvnvnvnvnvndKEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnACACJb
+JbvnvnvnvnvnvnvnEnEnEnEnEnEnEnEnEnzkEnEnEnEnEnEnEnzkEnEnEnEnEnEnzkEnEnEnEnEnEnEnEnEnEnEnEnEnzkEnEnEnEnEnzkEnEnEnzkEnEnEnEnACACJb
+JbvnvnvnvnvnvnvnEnzkvnvnvnvnvnvnvnvnvnvnvnvnvnlyCWITlylylyDslylylylyncDslylyxJEnzkSwlylylylylylylylylylylySwvnvnvnvnvnvnEnEnzkJb
+cDvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnlySkmiXNddUEFLxJJDeplSxJxJFLGNlyEnEnlyaSaSaSaSaSaSaSaSaSaSaSlyvnvnvnvnvnvnEnEnEnJb
+JbvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnlylhxJxJddxJxJxJxJxJxJxJxJxJxJlyEnEnlyaSaSaSaSaSaSaSaSaSaSaSlyvnvnvnvnvnvnEnEnEncD
+cDvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnlyxJAoxJddUEFLxJqpxJxJqpxJFLGNlyEnEnlyaSaSaSaSaSaSaSaSaSaSaSlyvnvnvnvnvnvnEnEnEnJb
+JbvnvnvnvnvnvnvnEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnlyVDxJxJddxJxJxJxJxJxJxJxJxJxJlyEnEnlyaSaSaSaSaSaSaSaSaSaSaSlyvnvnvnvnvnvnEnEnEncD
+JbvnvnvnvnvnvnvnEnzkvnvnvnvnvnvnvnvnvnvnvnvnvnlyxJxJPFddddddddxJxJddhnddddddlyEnEnlyaSaSaSaSaSaSaSaSaSaSaSlyvnvnvnvnvnvnEnEnEnJb
+cDvnvnvnvnvnvndKEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnlylhxJxJftNZFwdexJxJrIwEPFxJCxlyEnEnlyaSaSaSaSaSaSaSaSaSaSaSlyvnvnvnDavnvnEnEnEncD
+JbvnvnvnvnvnvnRiEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnlyxJxJxJCEyeGqmzxJTFBxBxBxzqahlyEnzklyaSaSaSaSaSaSaSaSaSaSaSlyvnvnvnvnvnvnEnEnEnJb
+cDvnvnvnvnvnvnRiEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnlylyxJxJCEiWAbmzxJNNoIoIoIYoxJlyEnEnlyaSaSaSaSaSaSaSaSaSaSaSlyvnvnvnvnvnvnEnEnEncD
+JbvnvnvnvnvnvnRiEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyVFcIxJxJxJxJqFtBtBtBSExJlyEnEnlyaSaSaSaSaSaSaSaSaSaSaSlyvnvnvnvnvnvnEnEnEnJb
+JbJbJbvnvnvnvnRiEnEnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyVrIixJxJrIxJxJPFxJxJxJxJLpEnEnlyaSaSaSaSaSaSaSaSaSaSaSlyvnvnvnvnvnvnEnEnEncD
+dKYHYHYHYHYHYHQhEnEnvnvnUrUrUrdKYHYHYHYHYHYHYHYHYHdKaYaYdKDsEoznDsTyTylyXWlySwEnEnSwlylylylylylyPXlylylylySwvnvnvnvnvnvnEnzkJbJb
+JbzcACACACACACACEnEnylEnEnEnEnEnEnEnEnwfEnEnEnylEnEnEnEndAEnEnEnEndARgEnEnvfEnEnzkEnEnEnEnEnzkEnEnEnEnEnEnzkEnEnEnzkEnEnACACACJb
+JbCUACACACACACACEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnACACACJb
+JbJbdKYHYHYHYHdKAQAQRpfSfSfSfSfSfSdKaYDoEoEoEoEoEoEoEoEoEoDsEoEoEoDsEoEotTEoSGEnEnSwEoEoEoEoOSlyGYlyEoEoEoSwvnvnvnvnvnvnEnzkJbJb
+cDJbJbvnvnvnvnRiAQAQBzxJrIxJxJxLrIxJxJxJdXxJxJlyaSWuaSchaSaSdXaSchaSaSnuaSchjiEnEnjiXjUaUauouombuofbpKaUXjjivnvnvnvnvnvnEnEnEnJb
+JbvnvnvnvnvnvnRiAQAQBzxJxJaSxJdhxJdXxJaSxJdhaSlyaSaSaSaSaSaSaSaSaSaSaSaSaSaSDsEnzkjiXjuououououououououoXjjivnvnvnvnvnvnEnEnEncD
+JbvnvnvnvnvnvnRiAQAQBzxJxJxJxJxJxJxJxJxJxJlyxJlyaSaSaSaSlyaSaSMnaSaSlyaSnuaSjiEnEnjiXjuououououououououoXjjivnvnvnDavnvnEnEnEnJb
+cDvnvnvnvnvnvnRiAQAQBzxJxJxJxJaSxJxJlylylylyxJlyaSlylylylycPatatatfuaSaSaSlJjiEnEnjiXXysMRuououoXXysysysMRjivnvnvnvnvnvnEnEnEncD
+cDvnvnvnvnvnvnRiAQAQBzxJaSPFaSRbwXwXwXwXwXlyxJlyGGlyaSaSaQyVnmKGhWyVaSaSnuaSjiEnEnjioLLphDLDRTRTfALpLpLpoLjivnvnvnvnvnvnEnEnEnJb
+JbvnvnvnvnvnvndKAQAQBzxJxJxJxJTUFKFKFKFKFKlyxJlyaSlyaSaSaQyVPQQmmXyVaSaSaSaSDsEnzkjiLpLpwegsazUCNaLpLpLpLpjivnvnvnvnvnvnEnEnEncD
+JbvnvnvnvnvnvnaSAQAQBzxJxJxJxJgpdvdvdvdvdvlyxJlyaSlyaSaSaQyVDlzWkCyVaSaSaSaSjiEnEnjiLpLpLpvwXjnjVHLpLpLpLpjivnvnvnvnvnvnEnEnzkJb
+cDvnvnvnvnvnvnaSAQAQBzxJaSxJxJxJxJxJlylylylyxJlyBUlylylylyXVatatateeaSaSaSlJjiEnEnjiLpykLpLpLpLpLpLpLpykLpjivnvnvnvnvnvnEnEnEncD
+cDvnvnvnvnvnvnaSAQAQBzxJaSxJxJxJxJxJaSxJxJlyxJlyaSaSaSaSlyaSaSaSaSaSlyaSaSaSjiEnEnjiLpLpdKLpBlEwLpdKLpLpLpjivnvnvnvnvnvnEnEnEnJb
+cDvnvnvnvnvnvnaSAQAQBzxJxJxJxJaSxJxJxJxJxJxJxJlyaSaSaSaSnuaSnuaSaSaSaSaSnuaSjiEnEnjiLpLppQXTVtexfhpQLpLpLpjivnvnvnvnvnvnEnEnEnJb
+cDvnvnvnvnvnvndKAQAQeNfSfSfSfSfSfSfSfSfSfSfSfSfSfSfSfSdKDsEoEoEoEoDsdKhIhIhIXREnzkSwEoEodKEoEoEoEodKEoEoEoSwvnvnvnvnvnvnEnEnEnJb
+JbvnvnvnvnvnvnRiEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEncD
+JbvnvnvnvnvnvnRiEnEnEnEnzkEnEnEnEnEnEnzkEnEnEnEnEnzkEnEnEnEnEnEnzkEnEnEnEnEnEnEnEnEnEnEnzkEnEnEnEnEnzkEnEnEnEnzkEnEnEnEnEnEnEnJb
+JbvnvnvnvnvnvnRiAQAQlylylylylylylylylylylylylylylylylylylylylylylylylylylylylyEnEnlylylylylylylylylylylylylylylylylylylyEnEnEncD
+JbvnvnvnvnvnvnRiAQAQlyaSaSaSaSaSaSlyaSaSaSaSaSaSlyaSaSaSaSaSlyaSaSaSaSlyaSaSlyEnEnlyoIoIoIiMRURUfRlylylylydJoDlyUQoIUQlyEnEnEncD
+JbvnvnvnvnvnvnRiAQAQlyaSxJxJxJxJxJlyxJxJxJxJxJxJlyxJxJxJxJxJlyxJxJxJxJlyxJaSlyEnEnlyliUwaHlyRURURUPpLYAySUsCRUlyhOCzhOlyEnEnzkcD
+cDvnvnvnvnvnvndKAQAQlyaSxJxJxJxJxJlyxJxJxJxJxJxJlyxJxJxJxJxJlyxJxJxJxJlyxJaSlyEnEnlyliRUxtlyRURURURURURURURURUlyWCYNWClyEnEnEnJb
+cDvnvnvnvnvnvnvnAQAQlyaSxJxJxJxJxJlyxJxJxJxJxJxJlyxJxJxJxJxJlyxJxJxJxJlyxJlylyEnzklylylylylyRUHfRURUUXRURUHfRUlyitCzYNlyEnEnEnJb
+cDvnvnvnvnvnvnvnAQAQlylylylylylyxJlyxJxJxJxJxJxJlylylylylyxJlylylylyxJlyxJaSmxEnEnlyzwoIoIdkRURURURURURURURURUlylyrOlylyEnEnEncD
+cDvnvnvnvnvnvnvnAQAQlyaSxJxJxJxJxJlyxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJaSlyEnEnlyzwoIoIMDRURURURUEGRURURURUbLoIoIoIlyEnEnEnJb
+cDvnvnvnvnvnvnvnAQAQlyaSxJxJxJxJxJlylylylylylylylyxJxJxJxJxJxJxJxJxJxJxJxJaSlyEnEnlyzwoIoIcLRUHfRURURURURUHfRUbLoIoIoIlyEnEnEncD
+cDvnvnvnvnvnvndKAQAQlyaSxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJHgHgHgaSlyEnEnlyzwoIoInZRURURURUyHRURURURUbLoIoIoIlyEnEnEncD
+cDvnvnvnvnvnvnRiAQAQlyaSaSaSaSaSaSlyaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSlylylyaSlyEnEnlyzwoIoInZRURURURURURURURURUbLoIoIoIlyEnEnEncD
+JbvnvnvnvnvnvnRiAQAQlylylylylylylylylylylylylylylylylylylylylylylylylylylylylyEnEnlylylylylylylylylyiIlylylylylylylylylyEnEnEnJb
+JbvnvnvnvnvnvnRiEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEnEncD
+JbvnvnvnvnvnvnRiEnEnEnEnzkEnEnEnEnEnEnEnEnEnEnEnEnzkEnEnEnEnEnEnzkEnEnEnEnEnEnEnzkEnEnEnEnEnEnEnEnEnEnEnzkEnEnEnEnEnEnEnEnEnzkJb
+JbvnvnvnvnvnvnktYHdKvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvncD
+JbvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnJb
+JbvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvncD
+JbvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvncD
+cDvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvncD
+cDvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnJb
+cDvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnJb
+cDJbJbJbJbJbcDJbcDJbcDcDcDJbJbcDJbJbcDJbcDJbcDJbcDJbJbJbcDJbJbJbJbJbJbcDJbcDJbcDJbcDcDJbJbJbcDJbJbcDJbJbcDJbcDcDJbJbcDJbcDJbcDJb
+"}
+(1,1,3) = {"
+DeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlylylylylylylylylylylylylylylylyvnvnaSaSaSaSaSaSaSaSaSaSaSaSaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyDeDeDeDeDeDeDeDeDeDeDeDeDeDelyvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyDeDeDeDeDeDeDeDeDeDeDeDeDeDelyvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyDeDeDeDeDeDeDeDeDeDeDeDeDeDelyvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyDeDeDeDeDeDeDeDeDeDeDeDeDeDelyvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyDeDeDeDeDeDeDeDeDeDeDeDeDeDelyvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyDeDeDeDeDeDeDeDeDeDeDeDeDeDelyvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyDeDeDeDeDeDeDeDeDeDeDeDeDeDelyvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlylyDeDeDeDeDeDeDeDeDeDeDeDeDelyvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyDeDeDeDeDeDeDeDeDeDeDeDelyvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnlyDeDeDeDeDeDeDeDeDeDeDeDelyvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvndKlylylylylylylylylylylylylyvnvnaSaSaSaSaSaSaSaSaSaSaSaSaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSvnvnaSaSaSaSaSaSaSaSaSaSaSaSaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSACACACACACACACACACACACACACACACACACACACACACACACACACACACaSvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSACACACACACACACACACACACACACACACACACACACACACACACACACACACaSvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSACACACACACACACACACACACACACACACACACACACACACACACACACACACaSvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSACACACACACACACACACACACACACACACACACACACACACACACACACACACaSvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSACACACACACACACACACACACACACACACACACACACACACACACACACACACaSvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSACACACACACACACACACACACACACACACACACACACACACACACACACACACaSvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSACACACACACACACACACACACACACACACACACACACACACACACACACACACaSvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSACACACACACACACACACACACACACACACACACACACACACACACACACACACaSvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSACACACACACACACACACACACACACACACACACACACACACACACACACACACaSvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSACACACACACACACACACACACACACACACACACACACACACACACACACACACaSvnvnaSACACACACACACACACACACACaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSvnvnaSaSaSaSaSaSaSaSaSaSaSaSaSvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJvnvnaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJvnvnaSACACACACACACACACACACACACACACACACACaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJvnvnaSACACACACACACACACACACACACACACACACACaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJvnvnaSACACACACACACACACACACACACACACACACACaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJvnvnaSACACACACACACACACACACACACACACACACACaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJvnvnaSACACACACACACACACACACACACACACACACACaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJvnvnaSACACACACACACACACACACACACACACACACACaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJvnvnvnxJxJvnvnaSACACACACACACACACACACACACACACACACACaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJvnvnvnxJxJvnvnaSACACACACACACACACACACACACACACACACACaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJupksksxJxJvnvnaSACACACACACACACACACACACACACACACACACaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJxJvnvnaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DevnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnvnDe
+DeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDeDe
+"}

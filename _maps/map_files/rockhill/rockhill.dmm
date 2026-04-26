@@ -25441,6 +25441,10 @@
 /obj/item/natural/cloth,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement)
+"fQt" = (
+/obj/structure/fluff/statue/scare,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave)
 "fQu" = (
 /obj/structure/bars,
 /turf/open/water/swamp,
@@ -25738,6 +25742,13 @@
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/blocks/platform,
 /area/rogue/indoors/town/manor/rockhill)
+"fTY" = (
+/obj/structure/fluff/traveltile/underbelly{
+	aportalgoesto = "scume1";
+	aportalid = "scumex1"
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave)
 "fTZ" = (
 /turf/open/lava,
 /area/rogue)
@@ -27385,6 +27396,10 @@
 /obj/effect/landmark/start/villager,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/rockhill)
+"gpx" = (
+/obj/structure/bars,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave)
 "gpI" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/town/grove)
@@ -40168,6 +40183,10 @@
 	first_time_text = "Tower of the Magos";
 	name = "Mage's Tower"
 	})
+"jsW" = (
+/obj/structure/plasticflaps,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave)
 "jsX" = (
 /obj/structure/flora/roguegrass,
 /obj/effect/decal/mossy{
@@ -77488,6 +77507,13 @@
 /obj/machinery/light/rogue/firebowl,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
+"sth" = (
+/obj/structure/fluff/traveltile/underbelly{
+	aportalgoesto = "scume2";
+	aportalid = "scumex2"
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave)
 "stk" = (
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/blocks,
@@ -262082,9 +262108,9 @@ vRu
 vRu
 vRu
 vRu
-vRu
-vRu
-vRu
+fTY
+sth
+fQt
 vRu
 bpD
 bpD
@@ -262514,9 +262540,9 @@ jQS
 vRu
 vRu
 vRu
-vRu
-vRu
-vRu
+bGI
+bGI
+bGI
 vRu
 vRu
 bpD
@@ -262946,9 +262972,9 @@ jQS
 vRu
 vRu
 vRu
-vRu
-vRu
-vRu
+bGI
+bGI
+gpx
 vRu
 vRu
 bpD
@@ -263378,8 +263404,8 @@ jQS
 vRu
 vRu
 vRu
-vRu
-vRu
+bGI
+gpx
 kdN
 vRu
 vRu
@@ -263810,9 +263836,9 @@ jQS
 vRu
 vRu
 vRu
-vRu
+jsW
 kdN
-kdN
+gCP
 vRu
 vRu
 bpD
@@ -264243,7 +264269,7 @@ vRu
 vRu
 vRu
 kdN
-kdN
+gCP
 kdN
 vRu
 vRu
@@ -264674,7 +264700,7 @@ uDH
 uDH
 uDH
 uDH
-kdN
+gCP
 kdN
 kdN
 vRu

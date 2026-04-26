@@ -16,10 +16,12 @@
 	var/fixed_tax = 0
 	/// Motto displayed at the top of the vendor interface
 	var/motto = "NAVIGATOR - Your goods, airborne."
+	/// If non-zero, overrides EXPORT_TIME for this instance (in deciseconds)
+	var/export_time_override = 0
 
 /obj/item/roguemachine/navigator/examine()
 	. = ..()
-	var/export_time = EXPORT_TIME
+	var/export_time = export_time_override || EXPORT_TIME
 	#ifdef LOCALTEST
 	export_time = EXPORT_TIME_TESTING
 	#endif
@@ -86,7 +88,7 @@
 /obj/item/roguemachine/navigator/process()
 	if(!anchored)
 		return TRUE
-	var/export_time = EXPORT_TIME
+	var/export_time = export_time_override || EXPORT_TIME
 	#ifdef LOCALTEST
 		export_time = EXPORT_TIME_TESTING
 	#endif

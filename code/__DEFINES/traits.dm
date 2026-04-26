@@ -190,6 +190,7 @@
 #define TRAIT_SCARRED "Scarred"
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
 #define TRAIT_BANDITCAMP "banditcamp"
+#define TRAIT_UNDERBELLY_SCUM "underbelly_scum"
 #define TRAIT_DUNGEONMASTER_LABOR_CAMP "dungeonmasterlaborcamp"
 #define TRAIT_VAMPMANSION "vampiremansion"
 #define TRAIT_VAMP_DREAMS "vamp_dreams"

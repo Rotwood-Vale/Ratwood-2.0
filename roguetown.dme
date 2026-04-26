@@ -3175,4 +3175,9 @@
 #include "modular_rmh\code\modules\clothing\vladegeg\armor\druid.dm"
 #include "modular_rmh\code\modules\mob\dead\body_markings\body_markings.dm"
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
+#include "modular_underbelly\code\game\objects\items\underbelly_keys.dm"
+#include "modular_underbelly\code\game\objects\structures\underbelly_chute.dm"
+#include "modular_underbelly\code\game\objects\structures\underbelly_traveltile.dm"
+#include "modular_underbelly\code\mob\npc\trader.dm"
+#include "modular_underbelly\code\modules\underbelly_shop.dm"
 // END_INCLUDE
