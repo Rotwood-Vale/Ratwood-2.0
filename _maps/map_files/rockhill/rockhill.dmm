@@ -1306,7 +1306,6 @@
 /area/rogue/outdoors/beach/harbor)
 "ark" = (
 /obj/machinery/light/rogue/campfire/fireplace{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -1880,9 +1879,8 @@
 "ayl" = (
 /obj/effect/decal/cleanable/greenglow,
 /obj/structure/fluff/walldeco/med{
-	pixel_x = 0;
-	pixel_y = 32;
-	layer = 2
+	layer = 2;
+	pixel_y = 32
 	},
 /obj/structure/chair/frankenstein{
 	pixel_y = 3
@@ -3207,7 +3205,6 @@
 	},
 /obj/structure/bed/rogue/inn{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /turf/open/floor/rogue/herringbone,
@@ -3665,7 +3662,6 @@
 	pixel_y = 6
 	},
 /obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure{
-	pixel_x = 0;
 	pixel_y = 6
 	},
 /turf/open/floor/rogue/cobble,
@@ -3846,7 +3842,6 @@
 /area/rogue/indoors)
 "aXD" = (
 /obj/structure/fluff/walldeco/church/line{
-	pixel_x = 0;
 	pixel_y = -2
 	},
 /obj/machinery/light/rogue/candle/blue/l,
@@ -5028,9 +5023,9 @@
 	},
 /obj/structure/closet/crate/roguecloset,
 /obj/effect/decal/cobbleedge{
+	dir = 1;
 	icon_state = "borderfall";
-	pixel_y = 8;
-	dir = 1
+	pixel_y = 8
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/bath)
@@ -5232,8 +5227,8 @@
 /area/rogue/outdoors/beach/harbor)
 "bpu" = (
 /obj/machinery/light/rogue/campfire/fireplace{
-	pixel_y = -32;
-	pixel_x = 16
+	pixel_x = 16;
+	pixel_y = -32
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/church)
@@ -6726,13 +6721,6 @@
 /obj/structure/flora/roguegrass/water,
 /turf/open/water/ocean,
 /area/rogue/outdoors/beach/harbor)
-"bJi" = (
-/obj/structure/fluff/railing/border{
-	icon_state = "border";
-	dir = 5
-	},
-/turf/open/transparent/openspace,
-/area/rogue/outdoors/bograt/above)
 "bJj" = (
 /obj/structure/bars/grille{
 	dir = 8
@@ -7030,8 +7018,7 @@
 "bMC" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/item/natural/dirtclod{
-	pixel_x = -4;
-	pixel_y = 0
+	pixel_x = -4
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/dungeon1)
@@ -7584,8 +7571,8 @@
 /obj/effect/decal/cobbleedge{
 	dir = 4;
 	icon_state = "borderfall";
-	pixel_x = 8;
-	layer = 3.1
+	layer = 3.1;
+	pixel_x = 8
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/woodsrat/north)
@@ -8180,11 +8167,6 @@
 /obj/structure/flora/newbranch,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/grove)
-"bZB" = (
-/turf/open/floor/rogue/rooftop/green{
-	dir = 2
-	},
-/area/rogue/outdoors/woodsrat/above)
 "bZQ" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -8724,8 +8706,7 @@
 "chj" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/item/natural/dirtclod{
-	pixel_x = -3;
-	pixel_y = 0
+	pixel_x = -3
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/dungeon1)
@@ -9270,8 +9251,8 @@
 	pixel_y = 32
 	},
 /obj/structure/rack/rogue/shelf/biggest{
-	pixel_y = 4;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 4
 	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/manor/rockhill)
@@ -11560,8 +11541,8 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/lever/wall{
-	pixel_y = 4;
 	pixel_x = 20;
+	pixel_y = 4;
 	redstone_id = "cryptdungeon3"
 	},
 /obj/structure/fluff/walldeco/church/line{
@@ -11965,9 +11946,9 @@
 /area/rogue/under/cavewet)
 "cQQ" = (
 /obj/structure/winch{
+	gid = "ducalcrypt";
 	name = "Ducal Crypt Entrance";
-	redstone_id = "ducalcrypt";
-	gid = "ducalcrypt"
+	redstone_id = "ducalcrypt"
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/dungeon1)
@@ -13450,15 +13431,15 @@
 	icon_state = "spikekey";
 	lockid = "punishroom";
 	name = "punishment room key";
-	pixel_y = 4;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 4
 	},
 /obj/item/roguekey/nightmaiden{
 	icon_state = "spikekey";
 	lockid = "punishroom";
 	name = "punishment room key";
-	pixel_y = 4;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 4
 	},
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/indoors/town/bath)
@@ -13728,8 +13709,7 @@
 	pixel_y = -4
 	},
 /obj/item/roguecoin/aalloy{
-	pixel_x = 9;
-	pixel_y = 0
+	pixel_x = 9
 	},
 /obj/item/roguecoin/aalloy{
 	pixel_x = -8;
@@ -14252,8 +14232,6 @@
 	pixel_y = 6
 	},
 /obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/effect/decal/cobbleedge{
@@ -14337,8 +14315,7 @@
 	pixel_y = 19
 	},
 /obj/item/kitchen/rollingpin{
-	pixel_x = 4;
-	pixel_y = 0
+	pixel_x = 4
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
@@ -14483,8 +14460,8 @@
 /area/rogue/indoors/town/garrison)
 "dtO" = (
 /obj/structure/fluff/railing/border{
-	layer = 4.2;
-	dir = 1
+	dir = 1;
+	layer = 4.2
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a";
@@ -16874,11 +16851,9 @@
 	dir = 1
 	},
 /obj/item/bedsheet/rogue/wool{
-	pixel_x = 0;
 	pixel_y = 9
 	},
 /obj/structure/bed/rogue/inn/wool{
-	pixel_x = 0;
 	pixel_y = 9
 	},
 /turf/open/floor/rogue/herringbone,
@@ -17723,10 +17698,10 @@
 "ehx" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/lever/wall{
-	pixel_y = -2;
+	dir = 1;
 	pixel_x = -20;
-	redstone_id = "cryptdungeon4";
-	dir = 1
+	pixel_y = -2;
+	redstone_id = "cryptdungeon4"
 	},
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
@@ -17802,9 +17777,9 @@
 /area/rogue/indoors/town/dwarfin/rockhill)
 "eii" = (
 /obj/structure/roguemachine/mail/r{
+	mailtag = "Merchant";
 	pixel_x = 0;
-	pixel_y = 32;
-	mailtag = "Merchant"
+	pixel_y = 32
 	},
 /obj/machinery/light/rogue/candle/blue{
 	pixel_x = -32;
@@ -21198,10 +21173,10 @@
 /area/rogue/under/town/basement)
 "eWU" = (
 /obj/structure/lever/wall{
-	pixel_y = 4;
+	dir = 1;
 	pixel_x = -20;
-	redstone_id = "cryptdungeon3";
-	dir = 1
+	pixel_y = 4;
+	redstone_id = "cryptdungeon3"
 	},
 /obj/machinery/light/rogue/candle/blue{
 	pixel_y = -32
@@ -21279,8 +21254,6 @@
 	pixel_y = 52
 	},
 /obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/structure/fluff/statue/gargoyle,
@@ -22101,9 +22074,9 @@
 	icon_state = "churchtable_mid"
 	},
 /obj/structure/fluff/statue/eora{
-	pixel_y = 21;
 	layer = 2.9;
-	pixel_x = -23
+	pixel_x = -23;
+	pixel_y = 21
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/eora)
@@ -23644,7 +23617,6 @@
 	dir = 8
 	},
 /obj/machinery/light/rogue/candle/red{
-	pixel_x = 0;
 	pixel_y = 52
 	},
 /turf/open/floor/rogue/cobblerock,
@@ -25182,7 +25154,6 @@
 "fTB" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/structure/table/wood{
@@ -25194,8 +25165,7 @@
 	pixel_y = 1
 	},
 /obj/item/perfume/random{
-	pixel_x = 5;
-	pixel_y = 0
+	pixel_x = 5
 	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
@@ -25309,10 +25279,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "fUU" = (
-/obj/machinery/light/rogue/campfire/fireplace{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/machinery/light/rogue/campfire/fireplace,
 /turf/closed/wall/mineral/rogue/decostone/fluffstone,
 /area/rogue/indoors)
 "fUX" = (
@@ -28764,8 +28731,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/drip{
-	pixel_x = 10;
-	pixel_y = 0
+	pixel_x = 10
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/dungeon1)
@@ -29093,7 +29059,6 @@
 "gSH" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/structure/chair/wood/rogue/chair5{
@@ -29369,11 +29334,6 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill)
-"gVt" = (
-/turf/open/floor/rogue/rooftop/green/corner1{
-	dir = 2
-	},
-/area/rogue/outdoors/rtfield/rockhill/above)
 "gVx" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/reagent_containers/glass/bottle/rogue,
@@ -33609,7 +33569,6 @@
 "hUz" = (
 /obj/structure/closet/crate/roguecloset,
 /obj/machinery/light/rogue/campfire/fireplace{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/carpet/red,
@@ -35308,8 +35267,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "irB" = (
 /obj/structure/mineral_door/wood/deadbolt{
-	dir = 8;
-	icon_state = "wooddir"
+	dir = 8
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/outdoors/mountains/decap/rockhill)
@@ -37170,8 +37128,7 @@
 	dir = 1
 	},
 /obj/item/rogueweapon/sword/short/messer/copper{
-	pixel_x = 14;
-	pixel_y = 0
+	pixel_x = 14
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/dungeon1)
@@ -38651,8 +38608,7 @@
 	pixel_y = -5
 	},
 /obj/item/grown/log/tree/stake{
-	pixel_x = 3;
-	pixel_y = 0
+	pixel_x = 3
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/dungeon1)
@@ -41586,7 +41542,6 @@
 	},
 /obj/structure/table/wood/poor/alt_alt{
 	color = "#C4A484";
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /obj/machinery/light/rogue/candle/floorcandle/pink{
@@ -41838,10 +41793,7 @@
 /obj/item/natural/cloth{
 	pixel_x = -5
 	},
-/turf/open/floor/rogue/tile/harem2{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "jXo" = (
 /obj/machinery/light/rogue/torchholder{
@@ -42307,7 +42259,6 @@
 "kdm" = (
 /obj/structure/roguemachine/atm{
 	location_tag = "Merchant";
-	pixel_x = 0;
 	pixel_y = 0
 	},
 /turf/closed/wall/mineral/rogue/craftstone,
@@ -42522,9 +42473,9 @@
 "kfp" = (
 /obj/structure/chair/stool/rogue,
 /obj/effect/decal/cobbleedge{
+	dir = 1;
 	icon_state = "borderfall";
-	pixel_y = 8;
-	dir = 1
+	pixel_y = 8
 	},
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/carpet/royalblack,
@@ -43594,10 +43545,10 @@
 /area/rogue/under/town/basement)
 "krc" = (
 /obj/structure/roguemachine/noticeboard{
+	layer = 2;
 	pixel_x = -32;
 	pixel_y = -18;
-	plane = -6;
-	layer = 2
+	plane = -6
 	},
 /turf/closed/wall/mineral/rogue/decostone/cand,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -45868,8 +45819,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 8;
 	layer = 2.05;
-	pixel_x = -7;
-	pixel_y = 0
+	pixel_x = -7
 	},
 /obj/structure/stairs{
 	dir = 1
@@ -47328,12 +47278,6 @@
 	color = "#d4ffcf"
 	},
 /area/rogue/under/cave/skeletoncrypt)
-"lpP" = (
-/turf/open/water/river{
-	icon_state = "rockwd";
-	dir = 8
-	},
-/area/rogue/under/cavewet)
 "lpY" = (
 /obj/item/roguekey/crier,
 /obj/item/roguekey/crier,
@@ -47504,9 +47448,8 @@
 	pixel_y = 10
 	},
 /obj/structure/fluff/walldeco/med{
-	pixel_x = 0;
-	pixel_y = -32;
-	layer = 2
+	layer = 2;
+	pixel_y = -32
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/physician)
@@ -47758,8 +47701,7 @@
 /area/rogue/under/cavewet/wizarddungeon)
 "lvk" = (
 /obj/effect/wisp/prestidigitation{
-	pixel_x = 8;
-	pixel_y = 0
+	pixel_x = 8
 	},
 /obj/item/roguecoin/gold/pile,
 /turf/open/floor/rogue/grasscold,
@@ -50594,18 +50536,6 @@
 	dir = 8
 	},
 /area/rogue/outdoors/bograt/above)
-"mgh" = (
-/obj/structure/closet/crate/roguecloset,
-/obj/machinery/light/rogue/campfire/fireplace{
-	pixel_y = -32
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/closed/wall/mineral/rogue/decowood,
-/area/rogue/indoors)
 "mgi" = (
 /obj/structure/chair/wood/rogue,
 /obj/machinery/light/rogue/candle,
@@ -51275,8 +51205,8 @@
 	dir = 1
 	},
 /obj/structure/lever/wall{
-	pixel_y = -2;
 	pixel_x = 20;
+	pixel_y = -2;
 	redstone_id = "cryptdungeon4"
 	},
 /turf/open/floor/rogue/cobble,
@@ -54354,8 +54284,8 @@
 	dir = 4
 	},
 /obj/structure/fluff/walldeco/med2{
-	pixel_y = 32;
-	layer = 2
+	layer = 2;
+	pixel_y = 32
 	},
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/physician)
@@ -54593,8 +54523,7 @@
 /obj/structure/table/wood/map,
 /obj/structure/giantfur{
 	pixel_x = -16;
-	pixel_y = -21;
-	plane = -7
+	pixel_y = -21
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cavewet)
@@ -54651,22 +54580,6 @@
 /obj/item/reagent_containers/glass/bowl,
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/bograt/sunken)
-"nej" = (
-/obj/structure/fluff/traveltile/magicportal{
-	alpha = 50;
-	aportalgoesto = "wizdununstable2";
-	aportalid = "wizdununstable1";
-	color = "#ff0d00";
-	desc = "flickering, warping magick. Where could it possibly lead?";
-	name = "unstable portal"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/open/transparent/openspace,
-/area/rogue/outdoors/woodsrat/safe)
 "nem" = (
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/grass,
@@ -54792,7 +54705,6 @@
 /area/rogue/under/town/sewer)
 "nfm" = (
 /obj/machinery/light/rogue/firebowl/church{
-	pixel_x = 0;
 	pixel_y = 14
 	},
 /turf/open/floor/rogue/grasscold,
@@ -54871,7 +54783,6 @@
 "ngk" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/structure/chair/wood/rogue/chair5{
@@ -55272,22 +55183,6 @@
 /obj/structure/chair/wood/rogue,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/warden)
-"nlM" = (
-/obj/structure/fluff/traveltile/magicportal{
-	alpha = 50;
-	aportalgoesto = "wizdununstable2";
-	aportalid = "wizdununstable1";
-	color = "#ff0d00";
-	desc = "flickering, warping magick. Where could it possibly lead?";
-	name = "unstable portal"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/open/transparent/openspace,
-/area/rogue/outdoors/rtfield/rockhill/above)
 "nlU" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/walldeco/customflag/rockhill{
@@ -55760,9 +55655,9 @@
 	})
 "nrK" = (
 /obj/structure/fluff/statue/spider{
+	color = "#998f9c";
 	desc = "They watch you breed from the corners of the room.";
-	name = "Broodmother";
-	color = "#998f9c"
+	name = "Broodmother"
 	},
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/indoors/town/bath)
@@ -56833,8 +56728,8 @@
 	pixel_y = 25
 	},
 /obj/structure/fluff/walldeco/med6{
-	pixel_y = 32;
-	layer = 2
+	layer = 2;
+	pixel_y = 32
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/physician)
@@ -56921,7 +56816,6 @@
 /area/rogue/indoors/town/manor/rockhill)
 "nGK" = (
 /obj/machinery/light/rogue/campfire/fireplace{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/twig,
@@ -59540,9 +59434,9 @@
 	dir = 1
 	},
 /obj/effect/decal/carpet/kover_purple{
+	dir = 8;
 	pixel_x = 1;
-	pixel_y = -2;
-	dir = 8
+	pixel_y = -2
 	},
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
@@ -59562,7 +59456,6 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/medical,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/medical,
 /obj/structure/fluff/walldeco/med6{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /obj/structure/table/wood/poor,
@@ -59848,7 +59741,6 @@
 	},
 /obj/structure/bed/rogue/inn{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /turf/open/floor/rogue/herringbone,
@@ -60919,8 +60811,8 @@
 /area/rogue/outdoors/rtfield/rockhill)
 "oGs" = (
 /obj/structure/closet/crate/roguecloset/inn/south{
-	pixel_y = 11;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 11
 	},
 /obj/item/candle/yellow,
 /obj/item/candle/yellow,
@@ -63195,8 +63087,7 @@
 /area/rogue/outdoors/exposed/town/keep)
 "pjp" = (
 /obj/structure/flora/roguetree{
-	pixel_x = -6;
-	pixel_y = 0
+	pixel_x = -6
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -64321,8 +64212,6 @@
 	pixel_y = -16
 	},
 /obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/structure/roguewindow/harem2,
@@ -65725,16 +65614,13 @@
 	},
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/candle/eora{
-	pixel_x = 1;
-	pixel_y = 0
+	pixel_x = 1
 	},
 /obj/item/candle/eora{
-	pixel_x = -4;
-	pixel_y = 0
+	pixel_x = -4
 	},
 /obj/item/candle/eora{
-	pixel_x = -8;
-	pixel_y = 0
+	pixel_x = -8
 	},
 /obj/item/candle/eora{
 	pixel_x = 8;
@@ -65745,7 +65631,6 @@
 	pixel_y = 8
 	},
 /obj/item/candle/eora{
-	pixel_x = 0;
 	pixel_y = 7
 	},
 /obj/item/candle/eora{
@@ -67038,21 +66923,6 @@
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/inq/basement)
-"qhx" = (
-/obj/machinery/light/rogue/campfire/fireplace{
-	pixel_y = 32
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/mineral_door/wood/red{
-	locked = 1;
-	lockid = "farm"
-	},
-/turf/open/floor/rogue/woodturned,
-/area/rogue/indoors)
 "qhA" = (
 /obj/structure/mineral_door/wood/violet{
 	locked = 1;
@@ -69465,9 +69335,9 @@
 /area/rogue)
 "qLg" = (
 /obj/structure/stationary_bell{
+	density = 0;
 	pixel_x = -16;
-	pixel_y = -13;
-	density = 0
+	pixel_y = -13
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/church/chapel)
@@ -71704,7 +71574,6 @@
 /area/rogue/outdoors/beach/harbor)
 "rra" = (
 /obj/structure/fluff/walldeco/church/line{
-	pixel_x = 0;
 	pixel_y = -2
 	},
 /obj/structure/curtain/magenta,
@@ -72897,7 +72766,6 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/effect/spawner/lootdrop/valuable_tableware_spawner,
 /obj/item/book/rogue/bibble/zizo{
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /turf/open/floor/rogue/ruinedwood{
@@ -73273,7 +73141,6 @@
 	pixel_y = 37
 	},
 /obj/machinery/light/rogue/candle/floorcandle{
-	pixel_x = 0;
 	pixel_y = 8
 	},
 /turf/open/floor/rogue/tile/harem1,
@@ -74951,8 +74818,8 @@
 	redstone_id = "prisongate1"
 	},
 /obj/structure/fluff/littlebanners/bluewhite{
-	pixel_y = -6;
-	color = "#adaca8"
+	color = "#adaca8";
+	pixel_y = -6
 	},
 /turf/open/floor/carpet/stellar,
 /area/rogue/under/cave/goblinfort)
@@ -75113,9 +74980,9 @@
 	icon_state = "tablewood3"
 	},
 /obj/effect/decal/cobbleedge{
+	dir = 1;
 	icon_state = "borderfall";
-	pixel_y = 8;
-	dir = 1
+	pixel_y = 8
 	},
 /obj/structure/roguemachine/mail{
 	mailtag = "Whitevein"
@@ -78499,8 +78366,7 @@
 "tap" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
-	pixel_x = -5;
-	pixel_y = 0
+	pixel_x = -5
 	},
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/woodsrat/north)
@@ -78568,12 +78434,12 @@
 	pixel_y = 31
 	},
 /obj/item/storage/roguebag{
-	pixel_y = 36;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 36
 	},
 /obj/item/storage/roguebag{
-	pixel_y = 36;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 36
 	},
 /obj/item/rogueweapon/huntingknife/chefknife{
 	pixel_x = -3;
@@ -78818,8 +78684,7 @@
 	})
 "tdK" = (
 /obj/item/clothing/mask/rogue/sack{
-	pixel_x = -8;
-	pixel_y = 0
+	pixel_x = -8
 	},
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/woodsrat/north)
@@ -80878,18 +80743,6 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/church)
-"tEC" = (
-/obj/machinery/light/rogue/campfire/fireplace{
-	pixel_x = 16;
-	pixel_y = -32
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/town/church)
 "tEG" = (
 /obj/structure/chair/wood/rogue{
 	dir = 8
@@ -81583,8 +81436,7 @@
 	pixel_y = 3
 	},
 /obj/item/ash{
-	pixel_x = 1;
-	pixel_y = 0
+	pixel_x = 1
 	},
 /obj/item/ash{
 	pixel_x = -4;
@@ -81810,8 +81662,7 @@
 	},
 /obj/structure/fluff/railing/wood{
 	dir = 8;
-	pixel_x = -5;
-	pixel_y = 0
+	pixel_x = -5
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/woodsrat/north)
@@ -82461,13 +82312,6 @@
 "tYc" = (
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/woodsafe)
-"tYd" = (
-/obj/structure/fluff/railing/border{
-	icon_state = "border";
-	dir = 9
-	},
-/turf/open/transparent/openspace,
-/area/rogue/outdoors/bograt/above)
 "tYf" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -84002,8 +83846,8 @@
 /obj/structure/fluff/walldeco/church/line,
 /obj/machinery/light/rogue/candle/floorcandle{
 	layer = 1.5;
-	pixel_y = 7;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 7
 	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/bath)
@@ -86358,15 +86202,6 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/grove)
-"uXV" = (
-/obj/machinery/light/rogue/campfire/fireplace,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/closed/wall/mineral/rogue/wooddark,
-/area/rogue/indoors)
 "uYc" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/indoors/town/vault)
@@ -87585,8 +87420,7 @@
 /area/rogue/outdoors/beach/harbor)
 "vnX" = (
 /mob/living/carbon/human/species/skeleton/npc/medium{
-	pixel_x = -2;
-	pixel_y = 0
+	pixel_x = -2
 	},
 /obj/item/chair/stool/bar/rogue{
 	pixel_x = 14;
@@ -88192,8 +88026,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "vuA" = (
 /obj/effect/decal/cleanable/blood/drip{
-	pixel_x = 10;
-	pixel_y = 0
+	pixel_x = 10
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/dungeon1)
@@ -89749,7 +89582,6 @@
 	},
 /obj/structure/fluff/statue/small{
 	pass_flags = 1;
-	pixel_x = 0;
 	pixel_y = 8
 	},
 /turf/open/floor/rogue/blocks/paving,
@@ -90249,7 +90081,6 @@
 /area/rogue/indoors/inq/basement)
 "vUQ" = (
 /obj/machinery/light/rogue/candle/off{
-	pixel_x = 0;
 	pixel_y = -27
 	},
 /obj/structure/bondage/x_pillory,
@@ -90711,8 +90542,7 @@
 "waY" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
-	pixel_x = -5;
-	pixel_y = 0
+	pixel_x = -5
 	},
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -95209,9 +95039,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/bath)
 "xhP" = (
-/obj/structure/roguemachine/vendor/bathhouse{
-	keycontrol = "nightmaiden"
-	},
+/obj/structure/roguemachine/vendor/bathhouse,
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue/end{
 	dir = 4
 	},
@@ -97713,12 +97541,9 @@
 	pixel_y = -2
 	},
 /obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/machinery/light/rogue/candle/floorcandle/alt/pink{
-	pixel_x = 0;
 	pixel_y = -16
 	},
 /turf/open/floor/rogue/tile/harem2,
@@ -267793,7 +267618,7 @@ emH
 acI
 eBN
 eBN
-tEC
+eBN
 gFk
 qvR
 qvR
@@ -330991,7 +330816,7 @@ lqp
 lqp
 kKp
 kKp
-bJi
+ftt
 kKp
 kKp
 kKp
@@ -332719,7 +332544,7 @@ kvl
 xlt
 kKp
 kKp
-tYd
+sdj
 kKp
 kKp
 kKp
@@ -368860,9 +368685,9 @@ bzm
 bzm
 nqU
 xnh
-mgh
 nqU
-qhx
+nqU
+xnh
 nqU
 nqU
 nqU
@@ -486366,7 +486191,7 @@ xlA
 xlA
 vbI
 bTe
-uXV
+ryI
 fUU
 nZV
 oXr
@@ -487670,7 +487495,7 @@ vhF
 nqU
 vhF
 nqU
-gVt
+hJx
 xlA
 xlA
 otC
@@ -528906,7 +528731,7 @@ uhW
 hnj
 pFf
 pFf
-nej
+pFf
 pFf
 pFf
 pFf
@@ -537897,10 +537722,10 @@ whb
 whb
 whb
 whb
-lpP
+kmK
 whb
 whb
-lpP
+kmK
 whb
 whb
 ijj
@@ -538329,10 +538154,10 @@ whb
 whb
 whb
 whb
-lpP
+kmK
 whb
 whb
-lpP
+kmK
 whb
 whb
 kIO
@@ -538761,10 +538586,10 @@ whb
 whb
 whb
 whb
-lpP
+kmK
 whb
 whb
-lpP
+kmK
 whb
 whb
 kIO
@@ -539193,10 +539018,10 @@ whb
 whb
 whb
 whb
-lpP
+kmK
 whb
 whb
-lpP
+kmK
 whb
 whb
 kIO
@@ -564980,7 +564805,7 @@ xlA
 xlA
 xlA
 xlA
-nlM
+xlA
 xlA
 xlA
 xlA
@@ -636337,10 +636162,10 @@ urb
 urb
 urb
 urb
-bZB
-bZB
-bZB
-bZB
+mkv
+mkv
+mkv
+mkv
 gvG
 gvG
 gvG
@@ -636769,7 +636594,7 @@ urb
 urb
 urb
 urb
-bZB
+mkv
 nha
 nha
 nha
@@ -637201,7 +637026,7 @@ urb
 urb
 urb
 urb
-bZB
+mkv
 nha
 nha
 nha
@@ -637633,7 +637458,7 @@ urb
 urb
 urb
 urb
-bZB
+mkv
 nha
 urb
 urb
@@ -638065,7 +637890,7 @@ urb
 urb
 urb
 urb
-bZB
+mkv
 urb
 urb
 urb
