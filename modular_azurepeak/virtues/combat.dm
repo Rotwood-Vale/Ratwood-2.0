@@ -2,7 +2,7 @@
 /datum/virtue/combat/magical_potential
 	name = "Arcyne Potential"
 	desc = "I am talented in the Arcyne arts, expanding my capacity for magic. I have become more intelligent from its studies. Other effects depends on what training I chose to focus on at a later age."
-	custom_text = "You gain +2 spellpoints and T1 Arcyne Potential, which comes with a limited, mostly flavor and non-combat spell list. If you already have skills with magic, you gain +1 level and +3 spell points."
+	custom_text = "You gain T1 Arcyne Potential and prestidigitation. Non-combat classes gain +3 spellpoints, combat classes gain +2. If you already have skills with magic, you gain +1 level and +3 spell points."
 	added_skills = list(list(/datum/skill/magic/arcane, 1, 6))
 
 /datum/virtue/combat/magical_potential/apply_to_human(mob/living/carbon/human/recipient)
@@ -10,7 +10,10 @@
 		if (!recipient.mind?.has_spell(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation))
 			recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		ADD_TRAIT(recipient, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
-		recipient.mind?.adjust_spellpoints(2) // balance. message + darkvision/longstrider is agreee to be too strong, so pick one or the other
+		if (!HAS_TRAIT(recipient, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(recipient, TRAIT_HEAVYARMOR) && !HAS_TRAIT(recipient, TRAIT_DODGEEXPERT) && !HAS_TRAIT(recipient, TRAIT_CRITICAL_RESISTANCE))
+			recipient.mind?.adjust_spellpoints(3) // non-combatants get 3
+		else
+			recipient.mind?.adjust_spellpoints(2) // combatants get 2
 	else
 		recipient.mind?.adjust_spellpoints(3) // everyone else that already has arcane gets their full 3, behavior unchanged
 	
