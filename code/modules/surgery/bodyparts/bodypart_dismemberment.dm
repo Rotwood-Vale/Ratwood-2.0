@@ -347,7 +347,11 @@
 
 	update_icon_dropped()
 	was_owner.update_health_hud() //update the healthdoll
-	was_owner.queue_icon_update(PENDING_UPDATE_BODY)
+	var/datum/hud/hud_used = was_owner.hud_used
+	if(hud_used?.zone_select)
+		hud_used.zone_select.rebuild_limbs()
+	was_owner.update_body()
+	was_owner.update_hair()
 	was_owner.update_mobility()
 
 	// drop_location = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
@@ -540,7 +544,7 @@
 		if(C.hud_used)
 			var/atom/movable/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
-				hand.update_icon()
+				hand.update_hand_vis()
 		C.update_inv_gloves()
 
 	if(special) //non conventional limb attachment
@@ -581,6 +585,8 @@
 	C.updatehealth()
 	C.queue_icon_update(PENDING_UPDATE_BODY | PENDING_UPDATE_HAIR | PENDING_UPDATE_DAMAGE)	
 	C.update_mobility()
+	if(hud_used?.zone_select)
+		hud_used.zone_select.rebuild_limbs()
 	return TRUE
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)

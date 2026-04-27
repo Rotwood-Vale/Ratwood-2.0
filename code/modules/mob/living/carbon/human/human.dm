@@ -660,8 +660,6 @@
 					hud_used.temperature.icon_state = "temphot"
 				else if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
 					hud_used.temperature.icon_state = "tempveryhot"
-		if(hud_used.zone_select)
-			hud_used.zone_select.update_icon()
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	dna?.species.spec_fully_heal(src)
@@ -671,7 +669,9 @@
 	spill_embedded_objects()
 	set_heartattack(FALSE)
 	drunkenness = 0
-	return ..()
+	. = ..()
+	if(hud_used?.zone_select)
+		hud_used.zone_select.rebuild_limbs()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
