@@ -394,7 +394,7 @@
 			. = TRUE
 	consider_processing()
 	update_disabled()
-		. = update_bodypart_damage_state() || .
+	. = update_bodypart_damage_state() || .
 	if(owner)
 		var/datum/hud/hud_used = owner.hud_used
 		if(hud_used?.zone_select)
@@ -734,7 +734,7 @@
 			draw_organ_features = FALSE
 		if(NO_BODYPART_FEATURES in owner_species.species_traits)
 			draw_bodypart_features = FALSE
-	
+
 	// Organ overlays
 	if(!skeletonized && draw_organ_features)
 		for(var/obj/item/organ/organ as anything in get_organs())
