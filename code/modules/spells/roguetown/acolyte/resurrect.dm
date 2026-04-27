@@ -102,11 +102,16 @@
 		target.apply_status_effect(debuff_type)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
 		//Due to an increased cost and cooldown, these revival types heal quite a bit.
 		target.apply_status_effect(/datum/status_effect/buff/healing, 14)
-		ADD_TRAIT(target, TRAIT_DNR, "[type]") //you get one revival, value your lyfe.
+		addtimer(CALLBACK(src, PROC_REF(deathmark), target), 5 MINUTES)
 		consume_items(target)
 		return TRUE
 	revert_cast()
 	return FALSE
+
+/obj/effect/proc_holder/spell/invoked/resurrect/proc/deathmark(mob/victim) // deathmark serves to give a grace period after revival before applying DNR
+	if(victim.stat != DEAD)
+		ADD_TRAIT(victim, TRAIT_DNR, TRAIT_GENERIC)
+		to_chat(victim, span_danger("My resurrection has taken a toll, should I fall again I will never be restored to lyfe"))
 
 /obj/effect/proc_holder/spell/invoked/resurrect/cast_check(skipcharge = 0,mob/user = usr)
 	if(!..())
