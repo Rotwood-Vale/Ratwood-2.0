@@ -1154,14 +1154,15 @@
 			if(proceed_with_offer)
 				playsound(loc,'sound/items/carvty.ogg', 50, TRUE)
 				qdel(W)
-				for(var/mob/player in GLOB.player_list)
-					if(player.mind)
-						if(player.mind.has_antag_datum(/datum/antagonist/bandit))
-							var/datum/antagonist/bandit/bandit_players = player.mind.has_antag_datum(/datum/antagonist/bandit)
-							record_round_statistic(STATS_SHRINE_VALUE, W.get_real_price())
-							bandit_players.favor += donatedamnt
-							bandit_players.totaldonated += donatedamnt
-							to_chat(player, ("<font color='yellow'>[user.name] donates [donatedamnt] to the shrine! You now have [bandit_players.favor] favor.</font>"))
+				var/list/active_bandits = list()
+				for(var/datum/antagonist/bandit/bandit_player in GLOB.antagonists)
+					active_bandits += bandit_player
+				var/share = donatedamnt / max(length(active_bandits) / 2, 1)
+				for(var/datum/antagonist/bandit/bandit_player in active_bandits)
+					record_round_statistic(STATS_SHRINE_VALUE, share)
+					bandit_player.favor += share
+					bandit_player.totaldonated += share
+					to_chat(bandit_player.owner?.current, ("<font color='yellow'>[user.name] donates [donatedamnt] to the shrine! Matthios grants your share: [share]. You now have [bandit_player.favor] favor.</font>"))
 
 			else
 				to_chat(user, span_warning("This item isn't a good offering."))
