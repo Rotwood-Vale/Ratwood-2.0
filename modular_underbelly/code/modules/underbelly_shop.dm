@@ -165,7 +165,7 @@
 	// 25-35 slots drawn at random from the full master pool.
 	// =========================================================
 	var/list/shared_shuffled = shuffle(general_master.Copy())
-	var/shared_take = rand(25, min(35, shared_shuffled.len))
+	var/shared_take = rand(5, min(15, shared_shuffled.len))
 	for(var/i = 1 to shared_take)
 		var/entry = shared_shuffled[i]
 		shared_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], entry[4], entry[5])
@@ -262,7 +262,7 @@
 	// FLINGER POOL - Independent re-roll from the same master.
 	// =========================================================
 	var/list/flinger_shuffled = shuffle(general_master.Copy())
-	var/flinger_take = rand(25, min(35, flinger_shuffled.len))
+	var/flinger_take = rand(10, min(20, flinger_shuffled.len))
 	for(var/i = 1 to flinger_take)
 		var/entry = flinger_shuffled[i]
 		flinger_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], entry[4], entry[5])

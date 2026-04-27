@@ -3190,5 +3190,7 @@
 #include "modular_underbelly\code\modules\items\ripper_reagents.dm"
 #include "modular_underbelly\code\modules\items\smuggler_train.dm"
 #include "modular_underbelly\code\modules\items\suffocator.dm"
+#include "modular_underbelly\code\modules\mob\maurice.dm"
+#include "modular_underbelly\code\modules\jobs\gutterking_spells.dm"
 #include "modular_underbelly\code\modules\jobs\underbelly_jobs.dm"
 // END_INCLUDE

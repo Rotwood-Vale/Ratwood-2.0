@@ -85,7 +85,7 @@
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
-	cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	advclass_cat_rolls = list(CTAG_UNDERBELLY_GUTTERKING = 3)
 	job_traits = list(TRAIT_MEDIUMARMOR, TRAIT_SEEPRICES)
 	job_subclasses = list(
@@ -112,6 +112,11 @@
 	..()
 	if(H.mind)
 		scum_select_criminal_record(H)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/scum)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_word)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_laylow)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_mark)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_announce)
 
 // Kingpin - the brawler. Leads by force, not words.
 /datum/advclass/gutterking/kingpin
@@ -122,7 +127,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking/kingpin
 	category_tags = list(CTAG_UNDERBELLY_GUTTERKING)
-	cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
@@ -167,7 +172,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking/fixer
 	category_tags = list(CTAG_UNDERBELLY_GUTTERKING)
-	cmode_music = 'sound/music/combat_noble.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
@@ -230,7 +235,7 @@
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
-	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	advclass_cat_rolls = list(CTAG_UNDERBELLY_SCUM = 3)
 	job_traits = list(TRAIT_MEDIUMARMOR)
 	job_subclasses = list(
@@ -267,7 +272,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/scum/enforcer
 	category_tags = list(CTAG_UNDERBELLY_SCUM)
-	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
@@ -305,7 +310,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/scum/kidnapper
 	category_tags = list(CTAG_UNDERBELLY_SCUM)
-	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
@@ -346,7 +351,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/scum/guttersnipe
 	category_tags = list(CTAG_UNDERBELLY_SCUM)
-	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_DODGEEXPERT)
@@ -407,7 +412,7 @@
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
-	cmode_music = 'sound/music/combat_physician.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	advclass_cat_rolls = list(CTAG_UNDERBELLY_FLESHTRADER = 3)
 	job_traits = list(TRAIT_KNOWNCRIMINAL)
 	job_subclasses = list(
@@ -429,7 +434,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/fleshtrader/harvester
 	category_tags = list(CTAG_UNDERBELLY_FLESHTRADER)
-	cmode_music = 'sound/music/combat_physician.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
@@ -475,7 +480,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/fleshtrader/corruptor
 	category_tags = list(CTAG_UNDERBELLY_FLESHTRADER)
-	cmode_music = 'sound/music/combat_physician.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
@@ -536,7 +541,7 @@
 	max_pq = null
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_SCUM
-	cmode_music = 'sound/music/combat_noble.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	advclass_cat_rolls = list(CTAG_UNDERBELLY_FLINGER = 3)
 	job_traits = list(TRAIT_SEEPRICES)
 	job_subclasses = list(
@@ -563,7 +568,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/flinger/fence
 	category_tags = list(CTAG_UNDERBELLY_FLINGER)
-	cmode_music = 'sound/music/combat_noble.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_SEEPRICES, TRAIT_CICERONE)
@@ -609,7 +614,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/flinger/dealer
 	category_tags = list(CTAG_UNDERBELLY_FLINGER)
-	cmode_music = 'sound/music/combat_noble.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_SEEPRICES)
@@ -672,7 +677,7 @@
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
-	cmode_music = 'sound/music/combat_physician.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	advclass_cat_rolls = list(CTAG_UNDERBELLY_RIPPER = 3)
 	job_traits = list(TRAIT_MEDICINE_EXPERT)
 	job_subclasses = list(
@@ -703,7 +708,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper/sawbones
 	category_tags = list(CTAG_UNDERBELLY_RIPPER)
-	cmode_music = 'sound/music/combat_physician.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
@@ -745,7 +750,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper/chirurgeon
 	category_tags = list(CTAG_UNDERBELLY_RIPPER)
-	cmode_music = 'sound/music/combat_physician.ogg'
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
