@@ -363,9 +363,14 @@
 		target.apply_status_effect(/datum/status_effect/buff/healing, 14)
 		consume_items(target)
 		return TRUE
-		ADD_TRAIT(target, TRAIT_DNR, "[type]")
+		addtimer(CALLBACK(src, PROC_REF(deathmark), target), 5 MINUTES)
 	revert_cast()
 	return FALSE
+
+/obj/effect/proc_holder/spell/invoked/evil_resurrect/proc/deathmark(mob/victim) // deathmark serves to give a grace period after revival before applying DNR
+	if(victim.stat != DEAD)
+		ADD_TRAIT(victim, TRAIT_DNR, TRAIT_GENERIC)
+		to_chat(victim, span_danger("My resurrection has taken a toll, should I fall again I will never be restored to lyfe"))
 
 /obj/effect/proc_holder/spell/invoked/evil_resurrect/cast_check(skipcharge = 0,mob/user = usr)
 	if(!..())
