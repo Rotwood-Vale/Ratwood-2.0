@@ -190,8 +190,13 @@
 
 		M.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
 		M.apply_status_effect(/datum/status_effect/debuff/revived)
-		ADD_TRAIT(M, TRAIT_DNR, "[type]") //you get one revival, value your lyfe.
 		M.remove_status_effect(src)
+		addtimer(CALLBACK(src, PROC_REF(deathmark), M), 5 MINUTES)
+
+/datum/status_effect/buff/eoran_balm_effect/proc/deathmark(mob/victim)
+	if(victim.stat != DEAD)
+		ADD_TRAIT(victim, TRAIT_DNR, TRAIT_GENERIC)
+		to_chat(victim, span_danger("My resurrection has taken a toll, should I fall again I will never be restored to lyfe"))
 
 #define POM_FILTER "pom_aura"
 
