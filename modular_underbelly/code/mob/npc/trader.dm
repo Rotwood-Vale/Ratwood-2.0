@@ -356,12 +356,61 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 			say("Not seeing anything you like, stranger?")
 			playsound(src, 'modular_underbelly/sound/trader/nag4.ogg', 65, FALSE)
 
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/_organ_payout(obj/item/I)
+	if(istype(I, /obj/item/reagent_containers/lux_impure))
+		return 5
+	if(istype(I, /obj/item/organ))
+		var/obj/item/organ/O = I
+		switch(O.slot)
+			if(ORGAN_SLOT_HEART)
+				return 6
+			if(ORGAN_SLOT_LUNGS)
+				return 4
+			if(ORGAN_SLOT_LIVER)
+				return 3
+			if(ORGAN_SLOT_EYES)
+				return 2
+			if(ORGAN_SLOT_STOMACH)
+				return 2
+			if(ORGAN_SLOT_APPENDIX)
+				return 1
+			else
+				return 1
+	if(istype(I, /obj/item/bodypart))
+		var/obj/item/bodypart/BP = I
+		if(BP.status != BODYPART_ORGANIC)
+			return 0
+		if(istype(BP, /obj/item/bodypart/l_arm) || istype(BP, /obj/item/bodypart/r_arm))
+			return 7
+		if(istype(BP, /obj/item/bodypart/l_leg) || istype(BP, /obj/item/bodypart/r_leg))
+			return 5
+		return 2
+	return 0
+
 /mob/living/carbon/human/species/human/northern/underbelly_trader/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(I, /obj/item/parcel/dead_drop))
+	if(!istype(I, /obj/item/parcel/dead_drop) && !istype(I, /obj/item/organ) && !istype(I, /obj/item/bodypart) && !istype(I, /obj/item/reagent_containers/lux_impure))
 		return ..()
 	if(!istype(user, /mob/living/carbon/human))
 		return ..()
 	var/mob/living/carbon/human/H = user
+	if(istype(I, /obj/item/organ) || istype(I, /obj/item/bodypart) || istype(I, /obj/item/reagent_containers/lux_impure))
+		if(H.job != "Flesh Trader")
+			to_chat(H, span_warning("[src] glances at [I.name] and waves [src.p_their()] hand. \"I don't deal in offal, friend. That's your department.\""))
+			return
+		if(stat != CONSCIOUS)
+			to_chat(H, span_warning("[src] is in no state to receive a delivery."))
+			return
+		var/gold_payout = _organ_payout(I)
+		if(!gold_payout)
+			to_chat(H, span_warning("[src] looks at [I.name] and shakes [src.p_their()] head. \"Can't move that.\""))
+			return
+		var/sold_name = I.name
+		qdel(I)
+		var/obj/item/roguecoin/gold/coins = new(get_turf(H), gold_payout)
+		H.put_in_hands(coins)
+		visible_message(span_notice("[src] pockets [sold_name] with a nod."))
+		on_purchase(H, null)
+		return
 	if(H.job != "Flinger" && H.job != "Gutter King")
 		to_chat(H, span_warning("[src] glances at the parcel and shakes [src.p_their()] head. \"That's not your job, friend.\""))
 		return

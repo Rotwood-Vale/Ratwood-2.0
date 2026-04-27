@@ -647,8 +647,7 @@
 /datum/outfit/job/roguetown/underbelly/flinger/fence/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	head = /obj/item/clothing/head/roguetown/chaperon/brown
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
+	head = /obj/item/clothing/head/roguetown/chaperon/flinger
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/clothing/neck/roguetown/horus
 	beltl = /obj/item/roguekey/underbelly/scum
@@ -696,8 +695,7 @@
 /datum/outfit/job/roguetown/underbelly/flinger/dealer/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	head = /obj/item/clothing/head/roguetown/chaperon/brown
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
+	head = /obj/item/clothing/head/roguetown/chaperon/flinger
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	beltl = /obj/item/roguekey/underbelly/scum
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid //less coin than fence

@@ -18,8 +18,15 @@
 */
 
 GLOBAL_LIST_EMPTY(doormen)
+GLOBAL_LIST_EMPTY(underbelly_speakers)
 
 #define DOORMAN_CLEARANCE_DURATION (30 SECONDS)
+#define SPEAKER_IDLE     0
+#define SPEAKER_BUZZING  1
+#define SPEAKER_ACTIVE   2
+#define SPEAKER_BUZZ_TIMEOUT  (45 SECONDS)
+#define SPEAKER_RELAY_RANGE   4
+#define SPEAKER_LISTEN_REFRESH (10 SECONDS)
 #define DOORMAN_BREACH_OPEN_DURATION (60 SECONDS)
 
 // ——————————————————————————————————
@@ -91,6 +98,32 @@ GLOBAL_LIST_EMPTY(doormen)
 		return
 
 	. = ..()
+
+/obj/structure/doorman/verb/buzz_up()
+	set name = "Buzz Up"
+	set category = null
+	set src in oview(1)
+
+	if(!isliving(usr))
+		return
+
+	if(!GLOB.underbelly_speakers.len)
+		to_chat(usr, span_warning("[src] gives a dead click. Nothing on the other end."))
+		return
+
+	for(var/obj/structure/underbelly_speaker/S in GLOB.underbelly_speakers)
+		if(S.speaker_state == SPEAKER_ACTIVE)
+			to_chat(usr, span_warning("[src] clicks coldly. The line is already in use."))
+			return
+		if(S.speaker_state == SPEAKER_BUZZING)
+			to_chat(usr, span_warning("[src] is still buzzing. No answer yet."))
+			return
+
+	to_chat(usr, span_notice("You press your palm against [src]. A pulse travels through the metal."))
+	playsound(loc, 'sound/foley/coinphy (1).ogg', 40, FALSE)
+
+	for(var/obj/structure/underbelly_speaker/S in GLOB.underbelly_speakers)
+		S.receive_buzz(WEAKREF(src))
 
 /obj/structure/doorman/proc/grant_clearance(mob/living/user)
 	cleared_ref = WEAKREF(user)
@@ -205,6 +238,10 @@ GLOBAL_LIST_EMPTY(doormen)
 	/// Must match the doorman_id of the paired doorman machine.
 	var/doorman_id = "REPLACETHIS"
 
+/obj/structure/fluff/traveltile/underbelly/pipe/Initialize(mapload)
+	. = ..()
+	transform = matrix() * 2
+
 /obj/structure/fluff/traveltile/underbelly/pipe/Crossed(atom/movable/AM)
 	return // no auto-transit; must click
 
@@ -289,6 +326,7 @@ GLOBAL_LIST_EMPTY(doormen)
 /obj/structure/fluff/traveltile/underbelly_pipe_exit/Initialize(mapload)
 	GLOB.traveltiles += src
 	. = ..()
+	transform = matrix() * 2
 
 /obj/structure/fluff/traveltile/underbelly_pipe_exit/Destroy()
 	GLOB.traveltiles -= src
@@ -346,5 +384,118 @@ GLOBAL_LIST_EMPTY(doormen)
 			return P
 	return null
 
+// ——————————————————————————————————
+// THE SPEAKER (intercom terminal)
+// Place one in the King's quarters and one in the common area.
+// Someone buzzes from the Doorman → Speakers ring → click to pick up → nearby speech relays to the gate.
+// ——————————————————————————————————
+
+/obj/structure/underbelly_speaker
+	name = "The Speaker"
+	desc = "A squat gold box studded with perforated with a hole, mounted flush to the wall. Still warm."
+	icon = 'icons/roguetown/misc/machines.dmi'
+	icon_state = "camera"
+	density = TRUE
+	anchored = TRUE
+	max_integrity = 300
+	var/speaker_state = SPEAKER_IDLE
+	var/datum/weakref/active_doorman_ref = null
+	var/list/registered_mobs = list()
+
+/obj/structure/underbelly_speaker/Initialize(mapload)
+	. = ..()  
+	GLOB.underbelly_speakers += src
+
+/obj/structure/underbelly_speaker/Destroy()
+	end_call()
+	GLOB.underbelly_speakers -= src
+	return ..()
+
+/obj/structure/underbelly_speaker/proc/receive_buzz(datum/weakref/doorman_ref)
+	speaker_state = SPEAKER_BUZZING
+	active_doorman_ref = doorman_ref
+	buzz_pulse()
+	addtimer(CALLBACK(src, PROC_REF(buzz_timeout)), SPEAKER_BUZZ_TIMEOUT, TIMER_DELETE_ME)
+
+/obj/structure/underbelly_speaker/proc/buzz_pulse()
+	if(speaker_state != SPEAKER_BUZZING || QDELETED(src))
+		return
+	playsound(loc, 'sound/foley/coinphy (1).ogg', 65, FALSE)
+	visible_message(span_italics("[src] emits a sharp buzz."))
+	addtimer(CALLBACK(src, PROC_REF(buzz_pulse)), 4 SECONDS, TIMER_DELETE_ME)
+
+/obj/structure/underbelly_speaker/proc/buzz_timeout()
+	if(speaker_state != SPEAKER_BUZZING)
+		return
+	end_call()
+	visible_message(span_italics("[src] goes silent. No answer."))
+
+/obj/structure/underbelly_speaker/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	switch(speaker_state)
+		if(SPEAKER_BUZZING)
+			// Cancel all other buzzing speakers, this one picks up
+			for(var/obj/structure/underbelly_speaker/S in GLOB.underbelly_speakers)
+				if(S != src)
+					S.end_call()
+			speaker_state = SPEAKER_ACTIVE
+			playsound(loc, 'sound/items/pickgood1.ogg', 45, FALSE)
+			visible_message(span_notice("[src] gives a short click. The line is open."))
+			var/obj/structure/doorman/D = active_doorman_ref?.resolve()
+			if(D && !QDELETED(D))
+				for(var/mob/M in range(5, D))
+					to_chat(M, span_italics("The gate panel emits a click. Someone is listening."))
+				playsound(D.loc, 'sound/items/pickgood1.ogg', 40, FALSE)
+			refresh_listeners()
+		if(SPEAKER_ACTIVE)
+			var/obj/structure/doorman/D = active_doorman_ref?.resolve()
+			if(D && !QDELETED(D))
+				for(var/mob/M in range(5, D))
+					to_chat(M, span_italics("The gate panel goes quiet."))
+			visible_message(span_notice("[src] clicks off."))
+			end_call()
+		else
+			to_chat(user, span_notice("[src] is silent."))
+
+/obj/structure/underbelly_speaker/proc/end_call()
+	speaker_state = SPEAKER_IDLE
+	active_doorman_ref = null
+	for(var/mob/M in registered_mobs)
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+	registered_mobs.Cut()
+
+/obj/structure/underbelly_speaker/proc/refresh_listeners()
+	if(speaker_state != SPEAKER_ACTIVE || QDELETED(src))
+		return
+	for(var/mob/M in registered_mobs)
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+	registered_mobs.Cut()
+	for(var/mob/living/M in range(SPEAKER_RELAY_RANGE, src))
+		if(M.client)
+			RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(on_nearby_say))
+			registered_mobs += M
+	addtimer(CALLBACK(src, PROC_REF(refresh_listeners)), SPEAKER_LISTEN_REFRESH, TIMER_DELETE_ME)
+
+/obj/structure/underbelly_speaker/proc/on_nearby_say(mob/living/source, list/speech_args)
+	SIGNAL_HANDLER
+	if(speaker_state != SPEAKER_ACTIVE)
+		return
+	var/obj/structure/doorman/D = active_doorman_ref?.resolve()
+	if(!D || QDELETED(D))
+		end_call()
+		return
+	var/msg = speech_args[SPEECH_MESSAGE]
+	playsound(D.loc, 'sound/foley/coinphy (1).ogg', 30, FALSE)
+	for(var/mob/M in range(5, D))
+		to_chat(M, span_italics("Through the gate panel: \"[msg]\""))
+
 #undef DOORMAN_CLEARANCE_DURATION
 #undef DOORMAN_BREACH_OPEN_DURATION
+#undef SPEAKER_IDLE
+#undef SPEAKER_BUZZING
+#undef SPEAKER_ACTIVE
+#undef SPEAKER_BUZZ_TIMEOUT
+#undef SPEAKER_RELAY_RANGE
+#undef SPEAKER_LISTEN_REFRESH
