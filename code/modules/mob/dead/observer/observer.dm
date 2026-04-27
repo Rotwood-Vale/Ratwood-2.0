@@ -582,18 +582,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, span_warning("Not when you're not dead!"))
 		return
 	var/list/filtered = list()
-	for(var/V in GLOB.sortedAreas)
-		var/area/A = V
+	for(var/area/A in world)
 		if(!A.hidden)
 			filtered += A
+	sortTim(filtered, GLOBAL_PROC_REF(cmp_name_asc))
 	var/area/thearea  = input("Area to jump to", "BOOYEA") as null|anything in filtered
 
 	if(!thearea)
 		return
 
 	var/list/L = list()
-	for(var/turf/T in get_area_turfs(thearea.type))
-		L+=T
+	for(var/turf/T in thearea)
+		L += T
 
 	if(!L || !L.len)
 		to_chat(usr, span_warning("No area available."))

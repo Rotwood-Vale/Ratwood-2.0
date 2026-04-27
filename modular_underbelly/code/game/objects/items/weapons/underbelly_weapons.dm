@@ -4,7 +4,7 @@
 	Gut Spiller - compact close-range firearm, the Gutter King's signature.
 	Venator      - medium-range reliable sidearm for the well-funded Scum.
 	Devastator   - heavy long-arm, devastating but ponderous.
-	Defacer      - spiked knuckle-knife, close and brutal.
+	Defacer      - spiked steel knuckles, hits harder but breaks faster.
 */
 
 // =====================================================
@@ -306,7 +306,7 @@
 /obj/item/gun/ballistic/firearm/devastator/shoot_live_shot(mob/living/user, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
-	playsound(user, 'modular_underbelly/sound/gun/fire_devastator.ogg', fire_sound_volume, vary_fire_sound)
+	playsound(user, 'modular_underbelly/sound/gun/fire_shotgun_01.ogg', fire_sound_volume, vary_fire_sound)
 	show_sensory_effect(user, 5, "gunfire", user.dir)
 	if(message)
 		user.visible_message(span_danger("[user] shoots [src]!"), span_danger("I shoot [src]!"), COMBAT_MESSAGE_RANGE)
@@ -329,13 +329,13 @@
 
 
 // =====================================================
-// DEFACER - spiked knuckle-knife
+// DEFACER - steel knuckles counterpart that deals more damage but is less durable.
 // purchase_sound_key = "spikedknucks"
 // =====================================================
-/obj/item/rogueweapon/katar/punchdagger/defacer
+/obj/item/rogueweapon/knuckles/defacer
 	name = "defacer"
-	desc = "A punchdagger with a very sharp steel tooth welded along the top of the grip. \
-	It'll open a face just as easily as a door."
-	force = 14
-	force_wielded = 18
-	icon_state = "punchdagger"
+	desc = "Knuckles that were hardened with a mixture of the ancient alloys used by Vampyres, and Steel. \
+	It's less durable than its steel knuckle counterpart, but hurts more."
+	force = 32
+	max_integrity = 100
+	color = "#C86820"

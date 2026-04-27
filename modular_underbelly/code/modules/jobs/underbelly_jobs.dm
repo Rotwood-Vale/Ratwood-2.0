@@ -81,7 +81,7 @@
 	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_GUTTER_KING
-	min_pq = 80
+	min_pq = 110
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
@@ -226,7 +226,7 @@
 	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_UB_SCUM
-	min_pq = 55
+	min_pq = 50
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
@@ -532,7 +532,7 @@
 	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_FLINGER_JOB
-	min_pq = 55
+	min_pq = 40
 	max_pq = null
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_SCUM
@@ -831,3 +831,36 @@
 			if("Speed")
 				H.change_stat(STATKEY_SPD, 1)
 	to_chat(H, span_bloody("I am known. The law has my name. I've survived it this far."))
+
+// Spawn landmarks for the underbelly other-z maps.
+// All are late-join (delete_after_roundstart = FALSE) so respawning players can still use them.
+/obj/effect/landmark/start/gutterkingleft
+	name = "Gutter King"
+	icon_state = "arrow"
+	jobspawn_override = list("Gutter King")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/scumlate
+	name = "Scum"
+	icon_state = "arrow"
+	jobspawn_override = list("Scum")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/fleshtraderlate
+	name = "Flesh Trader"
+	icon_state = "arrow"
+	jobspawn_override = list("Flesh Trader")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/flingerlate
+	name = "Flinger"
+	icon_state = "arrow"
+	jobspawn_override = list("Flinger")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/ripperlate
+	name = "Ripper"
+	icon_state = "arrow"
+	jobspawn_override = list("Ripper")
+	delete_after_roundstart = FALSE
+

@@ -356,6 +356,31 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 			say("Not seeing anything you like, stranger?")
 			playsound(src, 'modular_underbelly/sound/trader/nag4.ogg', 65, FALSE)
 
+/mob/living/carbon/human/species/human/northern/underbelly_trader/attackby(obj/item/I, mob/living/user, params)
+	if(!istype(I, /obj/item/parcel/dead_drop))
+		return ..()
+	if(!istype(user, /mob/living/carbon/human))
+		return ..()
+	var/mob/living/carbon/human/H = user
+	if(H.job != "Flinger" && H.job != "Gutter King")
+		to_chat(H, span_warning("[src] glances at the parcel and shakes [src.p_their()] head. \"That's not your job, friend.\""))
+		return
+	if(stat != CONSCIOUS)
+		to_chat(H, span_warning("[src] is in no state to receive a delivery."))
+		return
+	// Break links before qdel to prevent cross-qdel loops
+	var/obj/item/parcel/dead_drop/parcel = I
+	var/obj/item/paper/scroll/dead_drop_contract/C = parcel.contract_ref?.resolve()
+	parcel.contract_ref = null
+	qdel(parcel)
+	var/obj/item/roguecoin/gold/payout = new(get_turf(H), rand(11, 20))
+	H.put_in_hands(payout)
+	visible_message(span_notice("[src] tucks the parcel away and settles the debt."))
+	on_deaddrop_success(H)
+	if(C)
+		C.parcel_ref = null
+		qdel(C)
+
 /mob/living/carbon/human/species/human/northern/underbelly_trader/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)

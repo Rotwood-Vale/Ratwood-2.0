@@ -59,78 +59,129 @@
 	last_restock_time = world.time
 
 	// =========================================================
-	// GENERAL MERCHANDISE
-	// Shuffled pool — 20-30 slots drawn at random each cycle.
+	// MASTER MERCHANDISE POOL
+	// Both Main shop and Flinger tab draw from this independently each cycle.
 	// Format: name, desc, type, stock, cost
 	// =========================================================
 
 	// -- Drinks --
 	var/list/cat_drinks = list(
-		list("Ratkept Ale",      "A dark, musty ale from the cellars below.",        /obj/item/reagent_containers/glass/bottle/rogue/beer/ratkept,      2, 8),
-		list("Hagwood Bitter",   "Leaves a bitter finish. Medicinal, maybe.",         /obj/item/reagent_containers/glass/bottle/rogue/beer/hagwoodbitter, 2, 8),
-		list("Black Goat Stout", "Thick enough to chew.",                             /obj/item/reagent_containers/glass/bottle/rogue/beer/blackgoat,     2, 9),
-		list("Gronnmead",        "Sweet mead, a northern favourite.",                 /obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead,     2, 10),
-		list("Sourwine",         "It's wine. Mostly.",                                /obj/item/reagent_containers/glass/bottle/rogue/wine/sourwine,      2, 12),
-		list("Red Wine",         "You won't believe the story I have on how I got this. The maids were TERRIFIED.",                 /obj/item/reagent_containers/glass/bottle/rogue/redwine,            1, 18),
+		list("Ratkept Ale",           "A dark, musty ale from the cellars below.",                      /obj/item/reagent_containers/glass/bottle/rogue/beer/ratkept,      2, 8),
+		list("Hagwood Bitter",        "Leaves a bitter finish. Medicinal, maybe.",                      /obj/item/reagent_containers/glass/bottle/rogue/beer/hagwoodbitter, 2, 8),
+		list("Black Goat Stout",      "Thick enough to chew.",                                          /obj/item/reagent_containers/glass/bottle/rogue/beer/blackgoat,     2, 9),
+		list("Gronnmead",             "Sweet mead, a northern favourite.",                              /obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead,     2, 10),
+		list("Sourwine",              "It's wine. Mostly.",                                             /obj/item/reagent_containers/glass/bottle/rogue/wine/sourwine,      2, 12),
+		list("Red Wine",              "You won't believe the story I have on how I got this. The maids were TERRIFIED.", /obj/item/reagent_containers/glass/bottle/rogue/redwine, 1, 18),
 	)
 
 	// -- Food --
 	var/list/cat_food = list(
-		list("Salted Cracker",   "Won't fill you up but it'll quiet your gut.",       /obj/item/reagent_containers/food/snacks/rogue/crackerscooked,      3, 3),
-		list("Bread Loaf",       "Rough but honest.",                                 /obj/item/reagent_containers/food/snacks/rogue/bread,               2, 4),
-		list("Butter Slice",     "Something to put on the bread.",                    /obj/item/reagent_containers/food/snacks/butterslice,               2, 2),
-		list("Hard Boiled Egg",  "Filling. Smells.",                                  /obj/item/reagent_containers/food/snacks/egg,                       3, 2),
-		list("Steak",            "Cooked, barely. Good protein.",                     /obj/item/reagent_containers/food/snacks/rogue/meat/steak,          1, 12),
-		list("Sausage",          "What's in it? Don't ask.",                          /obj/item/reagent_containers/food/snacks/rogue/meat/sausage,        2, 6),
+		list("Salted Cracker",        "Won't fill you up but it'll quiet your gut.",                    /obj/item/reagent_containers/food/snacks/rogue/crackerscooked,  3, 3),
+		list("Bread Loaf",            "Rough but honest.",                                              /obj/item/reagent_containers/food/snacks/rogue/bread,           2, 4),
+		list("Butter Slice",          "Something to put on the bread.",                                 /obj/item/reagent_containers/food/snacks/butterslice,           2, 2),
+		list("Hard Boiled Egg",       "Filling. Smells.",                                               /obj/item/reagent_containers/food/snacks/egg,                   3, 2),
+		list("Steak",                 "Cooked, barely. Good protein.",                                  /obj/item/reagent_containers/food/snacks/rogue/meat/steak,      1, 12),
+		list("Sausage",               "What's in it? Don't ask.",                                       /obj/item/reagent_containers/food/snacks/rogue/meat/sausage,    2, 6),
 	)
 
 	// -- Supplies --
 	var/list/cat_supplies = list(
-		list("Satchel",          "Short carry bag. Fits on your belt!",             /obj/item/storage/backpack/rogue/satchel/short,                     1, 15),
-		list("Satchel (Large)",  "Everyone should have this.",                      /obj/item/storage/backpack/rogue/satchel,                           1, 20),
-		list("Rope Belt Pouch",  "Loops on your belt. Keeps your hands free.",        /obj/item/storage/belt/rogue/leather/rope,                          2, 8),
-		list("Bandage Bundle",   "Full cloth bandages. Stops the bleeding.",          /obj/item/natural/bundle/cloth/bandage/full,                        3, 5),
-		list("Water Flask",      "Sealed waterskin. Holds a litre.",                  /obj/item/reagent_containers/glass/bottle/waterskin,                2, 5),
-		list("Torch (Lantern)",  "Oil lantern on a stick. Burns steady.",             /obj/item/flashlight/flare/torch/lantern,                           2, 7),
-		list("Mess Kit",         "Pot, bowl, spoon. Everything you need out there.",  /obj/item/storage/gadget/messkit,                                   1, 8),
-		list("Bedroll",          "Enough to sleep on hard ground.",                   /obj/item/bedroll,                                                  1, 10),
-		list("Smoke Bomb",       "Throws up a thick screen. Useful for exits.",       /obj/item/bomb/smoke,                                               1, 20),
-		list("Lockpick Ring",    "A loop of slim iron used to keep your lockpicks.",             /obj/item/lockpickring/mundane,                                     1, 35),
+		list("Satchel",               "Short carry bag. Fits on your belt!",                            /obj/item/storage/backpack/rogue/satchel/short,                 1, 15),
+		list("Satchel (Large)",       "Everyone should have this.",                                     /obj/item/storage/backpack/rogue/satchel,                       1, 20),
+		list("Backpack",              "Carries more than it looks like it should.",                     /obj/item/storage/backpack/rogue/backpack,                      1, 30),
+		list("Rope Belt Pouch",       "Loops on your waist. Keeps your hands free.",                     /obj/item/storage/belt/rogue/leather/rope,                      2, 8),
+		list("Bandage Bundle",        "Full cloth bandages. Stops the bleeding.",                       /obj/item/natural/bundle/cloth/bandage/full,                    3, 5),
+		list("Water Flask",           "Sealed waterskin. Holds a litre.",                               /obj/item/reagent_containers/glass/bottle/waterskin,            2, 5),
+		list("Torch (Lamptern)",       "Oil lantern on a stick. Burns steady.",                          /obj/item/flashlight/flare/torch/lantern,                       2, 7),
+		list("Mess Kit",              "Pot, bowl, spoon. Everything you need out there.",               /obj/item/storage/gadget/messkit,                               1, 8),
+		list("Bedroll",               "Enough to sleep on hard ground.",                                /obj/item/bedroll,                                              1, 10),
+		list("Smoke Bomb",            "Throws up a thick screen. Useful for exits.",                    /obj/item/bomb/smoke,                                           1, 20),
+		list("Lockpick Ring",         "A loop of slim iron used to keep your lockpicks.",               /obj/item/lockpickring/mundane,                                 1, 35),
+		list("Keyring",               "Keeps your keys from getting lost.",                             /obj/item/storage/keyring,                                      1, 10),
+		list("Sewing Needle",         "Fine steel needle. Useful for more than sewing.",                /obj/item/needle,                                               2, 5),
 	)
 
-	// -- Light Weapons & Ammo for bows and crossies. --
+	// -- Light Weapons & Ammo --
 	var/list/cat_weapons = list(
-		list("Hunting Knife",    "Good steel. Good edge.",                            /obj/item/rogueweapon/huntingknife/idagger/steel,                   1, 25),
-		list("Navaja",           "A folding blade. Fits in your sleeve.",             /obj/item/rogueweapon/huntingknife/idagger/navaja,                  1, 22),
-		list("Katar",            "Punch dagger. Fits the knuckles.",                  /obj/item/rogueweapon/katar/punchdagger,                            1, 30),
-		list("Wood Staff",       "A solid walking stick. Also a weapon.",             /obj/item/rogueweapon/woodstaff,                                    1, 12),
-		list("Quarterstaff",     "Balanced length. Versatile fighter's tool.",        /obj/item/rogueweapon/woodstaff/quarterstaff,                       1, 18),
-		list("Quiver",           "Holds arrows or bolts.",                            /obj/item/quiver,                                                   1, 5),
-		list("Broadhead Arrows", "Bundle of five iron-headed arrows.",                /obj/item/ammo_casing/caseless/rogue/arrow/iron,                    5, 8),
-		list("Water Arrows",     "Bundle of five. Douses torches nicely.",            /obj/item/ammo_casing/caseless/rogue/arrow/water,                   5, 5),
-		list("Crossbow Bolts",   "Bundle of five standard bolts.",                    /obj/item/ammo_casing/caseless/rogue/bolt,                          5, 10),
+		list("Hunting Knife",         "Good steel. Good edge.",                                         /obj/item/rogueweapon/huntingknife/idagger/steel,               1, 25),
+		list("Navaja",                "A folding blade. Fits in your sleeve.",                          /obj/item/rogueweapon/huntingknife/idagger/navaja,              1, 22),
+		list("Katar",                 "Punch dagger. Fits the knuckles.",                               /obj/item/rogueweapon/katar/punchdagger,                        1, 30),
+		list("Wood Staff",            "A solid walking stick. Also a weapon.",                          /obj/item/rogueweapon/woodstaff,                                1, 12),
+		list("Quarterstaff",          "Balanced length. Versatile fighter's tool.",                     /obj/item/rogueweapon/woodstaff/quarterstaff,                   1, 18),
+		list("Quiver",                "Holds arrows or bolts.",                                         /obj/item/quiver,                                               1, 5),
+		list("Broadhead Arrows",      "Bundle of five iron-headed arrows.",                             /obj/item/ammo_casing/caseless/rogue/arrow/iron,                5, 8),
+		list("Water Arrows",          "Bundle of five. Douses torches nicely.",                         /obj/item/ammo_casing/caseless/rogue/arrow/water,               5, 5),
+		list("Crossbow Bolts",        "Bundle of five standard bolts.",                                 /obj/item/ammo_casing/caseless/rogue/bolt,                      5, 10),
 	)
 
-	var/list/general_master = cat_drinks + cat_food + cat_supplies + cat_weapons
-	var/list/general_shuffled = shuffle(general_master)
-	var/take = rand(20, min(30, general_shuffled.len))
-	for(var/i = 1 to take)
-		var/entry = general_shuffled[i]
+	// -- Heavy Weapons --
+	var/list/cat_heavy = list(
+		list("Arming Sword",          "Steel and well-balanced. Classic fighting blade.",               /obj/item/rogueweapon/sword,                                    1, 50),
+		list("Short Sword",           "Quicker in close quarters.",                                     /obj/item/rogueweapon/sword/short,                              1, 50),
+		list("Mace",                  "Simple iron head. Effective.",                                   /obj/item/rogueweapon/mace,                                     1, 30),
+		list("Warhammer",             "A mean hammer. Breaks bones through armor.",                     /obj/item/rogueweapon/mace/warhammer,                           1, 30),
+		list("Spear",                 "Iron-headed, long reach.",                                       /obj/item/rogueweapon/spear,                                    1, 30),
+		list("Axe",                   "Steel blade, broad cut.",                                        /obj/item/rogueweapon/stoneaxe/woodcut/steel,                   1, 75),
+		list("Flail",                 "Iron ball on a chain. Hurts knights like Hell.",                 /obj/item/rogueweapon/flail,                                    1, 40),
+		list("Heater Shield",         "Medium iron shield. Takes a beating.",                           /obj/item/rogueweapon/shield/heater,                            1, 30),
+		list("Knuckledusters",        "Iron-wrapped fists. No finesse required.",                       /obj/item/rogueweapon/knuckles,                                 1, 75),
+	)
+
+	// -- Ranged --
+	var/list/cat_ranged = list(
+		list("Regular Bow",           "Simple pull. Quiet and effective at range.",                     /obj/item/gun/ballistic/revolver/grenadelauncher/bow,            1, 10),
+		list("Recurving Bow",         "Better pull weight, more range.",                                /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,    1, 35),
+	)
+
+	// -- Potions --
+	var/list/cat_potions = list(
+		list("Red Elixir",            "Heals wounds. Tastes like lyfeblood.",                           /obj/item/reagent_containers/glass/bottle/rogue/healthpot,      1, 35),
+		list("Blue Elixir",           "Restores mana. Smells faintly of energy.",                       /obj/item/reagent_containers/glass/bottle/rogue/manapot,        1, 25),
+		list("Green Elixir",          "Boosts stamina. Worth every coin.",                              /obj/item/reagent_containers/glass/bottle/rogue/stampot,        1, 80),
+		list("Antitoxin",             "Clears poison from the blood. Fast. Hopefully",                  /obj/item/reagent_containers/glass/bottle/rogue/antidote,       2, 10),
+	)
+
+	// -- Drugs & Smokes --
+	var/list/cat_drugs = list(
+		list("Pipeweed Zigarette",    "Mild. Takes the edge off.",                                      /obj/item/clothing/mask/cigarette/rollie/nicotine,              2, 10),
+		list("Swampweed Zigarette",   "Stronger. Sourced from the Bog.",                                /obj/item/clothing/mask/cigarette/rollie/cannabis,              2, 15),
+		list("Moon Dust",             "Powder. Effects vary. Highly sought after.",                     /obj/item/reagent_containers/powder/moondust,                   1, 50),
+		list("Spice",                 "No questions. You know what this is for.",                       /obj/item/reagent_containers/powder/spice,                      1, 50),
+	)
+
+	// -- Utility --
+	var/list/cat_utility = list(
+		list("Prosthetic Arm (L)",    "Carved wood. Functional enough.",                                /obj/item/bodypart/l_arm/prosthetic/woodleft,                   1, 40),
+		list("Prosthetic Arm (R)",    "Carved wood. Functional enough.",                                /obj/item/bodypart/r_arm/prosthetic/woodright,                  1, 40),
+		list("Prosthetic Leg (L)",    "Peg leg. Gets you where you're going.",                          /obj/item/bodypart/l_leg/prosthetic,                            1, 15),
+		list("Prosthetic Leg (R)",    "Peg leg. Gets you where you're going.",                          /obj/item/bodypart/r_leg/prosthetic,                            1, 15),
+		list("Climbing Machine",      "Hooks, gears, cord. Goes up walls.",                             /obj/item/grapplinghook,                                        1, 250),
+	)
+
+	var/list/general_master = cat_drinks + cat_food + cat_supplies + cat_weapons + cat_heavy + cat_ranged + cat_potions + cat_drugs + cat_utility
+
+	// =========================================================
+	// GENERAL MERCHANDISE (Main Shop)
+	// 25-35 slots drawn at random from the full master pool.
+	// =========================================================
+	var/list/shared_shuffled = shuffle(general_master.Copy())
+	var/shared_take = rand(25, min(35, shared_shuffled.len))
+	for(var/i = 1 to shared_take)
+		var/entry = shared_shuffled[i]
 		shared_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], entry[4], entry[5])
 
 	// =========================================================
 	// TRADE GOODS: INGOTS
-	// "We managed to...procure those from a Kingsfield Trading caravan."
 	// Each rolls independently. Higher cost = lower prob.
 	// Format: name, desc, type, max_stock, cost, chance(%)
 	// =========================================================
 	var/list/ingot_pool = list(
-		list("Iron Ingot",          "Raw worked iron. The backbone of any smithy.",           /obj/item/ingot/iron,         6, 7,  85),
-		list("Steel Ingot",         "Refined and ready. Better edge, better everything.",     /obj/item/ingot/steel,        5, 10, 70),
-		list("Gold Ingot",          "Heavy. Warm. Makes things happen.",                      /obj/item/ingot/gold,         3, 35, 45),
-		list("Silver Ingot",        "Got a werewolf problem, friend? This should solve it.",  /obj/item/ingot/silver,       2, 45, 35),
-		list("Blacksteel Ingot",    "Dark alloy. Rare. Don't ask where it's from.",           /obj/item/ingot/blacksteel,   1, 80, 18),
-		list("Silver Bullion",      "Blessed and stamped. Kingsfield doesn't know it's gone.",/obj/item/ingot/silverblessed,2, 85, 15),
+		list("Iron Ingot",          "Raw worked iron. The backbone of any smithy.",           /obj/item/ingot/iron,          6, 7,  85),
+		list("Steel Ingot",         "Refined and ready. Better edge, better everything.",     /obj/item/ingot/steel,         5, 10, 70),
+		list("Gold Ingot",          "Heavy. Warm. Makes things happen.",                      /obj/item/ingot/gold,          3, 35, 45),
+		list("Silver Ingot",        "Got a werewolf problem, friend? This should solve it.",  /obj/item/ingot/silver,        2, 45, 35),
+		list("Blacksteel Ingot",    "Dark alloy. Rare. Don't ask where it's from.",           /obj/item/ingot/blacksteel,    1, 80, 18),
+		list("Silver Bullion",      "Blessed and stamped. Kingsfield doesn't know it's gone.",/obj/item/ingot/silverblessed, 2, 85, 15),
 	)
 	for(var/entry in ingot_pool)
 		if(prob(entry[6]))
@@ -138,12 +189,10 @@
 
 	// =========================================================
 	// STOLEN GEAR
-	// "Our neighbours upstairs have a lot of shipments going around.
-	//  They won't miss a few that suddenly go missing..."
 	// Each rolls independently. Format: name, desc, type, max_stock, cost, chance(%)
 	// =========================================================
 
-	// -- Warden Helmets (all variants, any may appear) --
+	// -- Warden Helmets --
 	var/list/stolen_helmets = list(
 		list("Warden's Helmet",           "Standard-issue sallet of the Wardens. Dented.",           /obj/item/clothing/head/roguetown/helmet/sallet/warden,          2, 35, 45),
 		list("Warden's Volfskull Helm",   "The skull of a white volf, mounted on iron. Imposing.",   /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf,     2, 35, 35),
@@ -172,7 +221,7 @@
 
 	// -- Firearm Accessories --
 	var/list/stolen_firearm = list(
-		list("Powder Flask",              "Holds a charge of black powder. Keep it away from sparks.", /obj/item/powderflask,                                          3, 40, 60),
+		list("Powder Flask",              "Holds a good charge of black powder. Keep it away from sparks.", /obj/item/powderflask,                                          3, 40, 60),
 		list("Lead Ball Pouch",           "Eight lead balls, ready to load.",                          /obj/item/quiver/bullet/lead,                                   2, 50, 50),
 		list("Extended Lead Ball Pouch",  "Sixteen lead balls packed into the same old pouch.",        /obj/item/quiver/bullet/lead/extended,                          1, 90, 20),
 		list("Grapeshot Pouch",           "Eight grapeshot charges. For the bigger guns.",             /obj/item/quiver/bullet/grapeshot,                              1, 90, 25),
@@ -185,44 +234,55 @@
 			shared_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], rand(1, entry[4]), entry[5])
 
 	// =========================================================
-	// EXCLUSIVES
-	// Up to 8 entries drawn at random. Role-restricted where noted.
+	// EXCLUSIVES - Role-locked only, 1 to 3 drawn per cycle.
 	// Format: name, desc, type, stock, cost, flinger, role
 	// =========================================================
 	var/list/excl_master = list(
-		list("Lockpick (Gold)",    "Picks even tricky locks.",                         /obj/item/lockpick/goldpin,                                         1, 60,  FALSE, "Scum"),
-		list("Lockpick",           "A thin iron pick.",                                /obj/item/lockpick,                                                 2, 12,  FALSE, "Scum"),
-		list("Scrap Pistol",       "Fires most of the time. A bargain at any price.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/scrap_pistol,       2, 30,  FALSE, "Scum"),
-		list("Scrap Blunderbuss",  "Wide spread. Might not fire. Terrifying anyway.",  /obj/item/gun/ballistic/firearm/blunderbuss/scrap_blunderbuss,      1, 45,  FALSE, "Scum"),
-		list("Scrap Musket",       "Inaccurate, slow, unreliable. Your only option.", /obj/item/gun/ballistic/firearm/arquebus/scrap_musket,              1, 40,  FALSE, "Scum"),
-		list("Collar & Chain",     "Heavy leash. Good for keeping someone close.",     /obj/item/leash/chain,                                              1, 40,  FALSE, "Bandit"),
-		list("Common Poison",      "Coat a blade or slip it in a drink.",              /obj/item/reagent_containers/glass/bottle/rogue/poison,             1, 45,  FALSE, null),
-		list("Strong Poison",      "Hits harder. Harder to source.",                   /obj/item/reagent_containers/glass/bottle/rogue/strongpoison,       1, 80,  FALSE, null),
-		list("Arquebus Pistol",    "Single shot. Loud. Effective.",                    /obj/item/gun/ballistic/firearm/arquebus_pistol,                    1, 120, FALSE, "Bandit"),
-		list("Recurving Bow",      "Better pull weight, quieter than a firearm.",      /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,        1, 55,  FALSE, null),
-		list("Crossbow",           "Slow to load but accurate at range.",              /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,           1, 85,  FALSE, null),
-		list("Bomb",               "Loud. Messy. Gets the job done.",                  /obj/item/bomb,                                                     1, 95,  FALSE, null),
+		list("Lockpick (Gold)",    "Picks even tricky locks.",                         /obj/item/lockpick/goldpin,                                        1, 60,  FALSE, "Scum"),
+		list("Lockpick",           "A thin iron pick.",                                /obj/item/lockpick,                                                2, 12,  FALSE, "Scum"),
+		list("The Gut Spillah",       "A Scum's favorite weapon. The backbone of a deal gone wrong. Modified and fabricated by my mates in Kingsfield.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,      1, 500,  FALSE, "Scum"),
+		list("The Venator",  "If you've got a message to send, this is the ticket. A bolt racked rifle capable of shooting thrice before needing a reload.",  /obj/item/gun/ballistic/firearm/flintgonne/venator,               1, 750,  FALSE, "Scum"),
+		list("The Devastator",       "What the hell are you planning on taking down with this? Zizo? BAHAHA!",  /obj/item/gun/ballistic/firearm/devastator,                      1, 1000,  FALSE, "Scum"),
+		list("Tipped Hat",         "Nobody's seeing that face. Nobody's knowing that name.",  /obj/item/clothing/head/roguetown/chaperon/flinger,            1, 120, FALSE, "Flinger"),
+		list("Defacer",            "Knuckles that were hardened with ancient alloys and Steel. Hits harder, breaks faster.", /obj/item/rogueweapon/knuckles/defacer, 1, 85, FALSE, "Scum"),
+		list("Suffocator",         "Load it with Zizo's bane, then press it onto an unguarded face. A moment's hesitation is all it needs.", /obj/item/clothing/mask/rogue/suffocator, 1, 200, FALSE, "Flesh Trader"),
+		list("Golden Cockroach",   "Drop it on the floor of a vault and walk away. Don't ask how it works.", /obj/item/golden_cockroach, 1, 280, FALSE, null),
+		list("Blood Red",          "Whatever's in this, it isn't wine. Don't let anyone drink it unless you want to watch them fold.", /obj/item/reagent_containers/glass/bottle/rogue/blood_red, 1, 150, FALSE, "Ripper"),
+		list("Voss Serum",         "A pale little bottle. Slips into a drink without a trace. The body does the rest.", /obj/item/reagent_containers/glass/bottle/rogue/voss_serum, 2, 80, FALSE, "Ripper"),
+		list("Mysterious Organ (II)",   "A pale graft sewn from something foreign. Heals well. You'll notice the shakes.", /obj/item/organ/mysterious/pale,      1, 160, FALSE, "Ripper"),
+		list("Mysterious Organ (I)",  "A dried-up fragment. Less than the others, but it asks less in return.",          /obj/item/organ/mysterious/withered,   1, 80,  FALSE, "Ripper"),
+		list("Mysterious Organ (III)", "A blackened mass. Heals everything. You'll sleep like the dead.",                 /obj/item/organ/mysterious/blackened,  1, 280, FALSE, "Ripper"),
 	)
 	var/list/excl_shuffled = shuffle(excl_master)
-	for(var/i = 1 to min(8, excl_shuffled.len))
+	for(var/i = 1 to min(rand(1, 3), excl_shuffled.len))
 		var/entry = excl_shuffled[i]
-		exclusive_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], entry[4], entry[5], FALSE, entry[7])
+		exclusive_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], 1, entry[5], FALSE, entry[7])
 
 	// =========================================================
-	// FLINGER POOL
-	// Copy of shared (double stock) + exclusive illegal extras.
+	// FLINGER POOL - Independent re-roll from the same master.
 	// =========================================================
-	for(var/datum/underbelly_shop_item/SI in shared_pool)
-		flinger_pool += new /datum/underbelly_shop_item(SI.name, SI.desc, SI.item_type, SI.stock * 2, SI.cost)
-	var/list/flinger_extra = list(
-		list("Strong Poison",      "Hits harder. Harder to source.",                  /obj/item/reagent_containers/glass/bottle/rogue/strongpoison,  2, 65,  TRUE),
-		list("Bomb",               "Loud. Messy. Very effective.",                    /obj/item/bomb,                                                2, 75,  TRUE),
-		list("Arquebus Pistol",    "Single shot firearm.",                            /obj/item/gun/ballistic/firearm/arquebus_pistol,               2, 95,  TRUE),
-		list("Smoke Bomb (Extra)", "Three in the pouch.",                             /obj/item/bomb/smoke,                                          3, 15,  TRUE),
-		list("Lockpick (Gold)",    "Picks even tricky locks.",                        /obj/item/lockpick/goldpin,                                    2, 50,  TRUE),
+	var/list/flinger_shuffled = shuffle(general_master.Copy())
+	var/flinger_take = rand(25, min(35, flinger_shuffled.len))
+	for(var/i = 1 to flinger_take)
+		var/entry = flinger_shuffled[i]
+		flinger_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], entry[4], entry[5])
+	for(var/entry in ingot_pool)
+		if(prob(entry[6]))
+			flinger_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], rand(1, entry[4]), entry[5])
+	for(var/entry in stolen_all)
+		if(prob(entry[6]))
+			flinger_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], rand(1, entry[4]), entry[5])
+
+	flinger_pool += new /datum/underbelly_shop_item( \
+		"Dead Drop Contract", \
+		"A written order for an off-the-books retrieval. Give it to someone outside the Scum; let them do the legwork. Bring the parcel back to The Trader and collect your cut.", \
+		/obj/item/paper/scroll/dead_drop_contract, \
+		1, \
+		100, \
+		TRUE, \
+		null, \
+		"deaddrop" \
 	)
-	for(var/entry in flinger_extra)
-		flinger_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], entry[4], entry[5], TRUE)
 
 /datum/underbelly_shop/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

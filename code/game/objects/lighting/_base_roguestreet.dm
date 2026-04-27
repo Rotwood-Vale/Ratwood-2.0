@@ -23,7 +23,7 @@
 	icon_state = "midlamp1"
 	base_state = "midlamp"
 	pixel_x = -16
-	density = TRUE
+	density = FALSE
 	resistance_flags = INDESTRUCTIBLE // This item is not craftable yet, setting for anti-grief
 
 /obj/machinery/light/roguestreet/walllamp
@@ -49,7 +49,7 @@
 	icon_state = "o_midlamp1"
 	base_state = "o_midlamp"
 	pixel_x = -16
-	density = TRUE
+	density = FALSE
 	resistance_flags = INDESTRUCTIBLE // This item is not craftable yet, setting for anti-grief
 
 /obj/machinery/light/roguestreet/orange/walllamp

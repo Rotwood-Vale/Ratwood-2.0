@@ -3,11 +3,11 @@
 /obj/item/roguekey/underbelly/scum
 	name = "rusted iron key"
 	desc = "Rusted and clearly not meant for just any door."
-	icon_state = "iron"
+	icon_state = "rustkey"
 	lockid = "underbelly_scum"
 
 /obj/item/roguekey/underbelly/boss
 	name = "blackened iron key"
 	desc = "Heavy and well-worn."
-	icon_state = "iron"
+	icon_state = "rustkey"
 	lockid = "underbelly_boss"

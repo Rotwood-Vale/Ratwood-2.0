@@ -16,6 +16,22 @@
 	if(!text)
 		return the_pq
 	else
+		if(the_pq >= 500)
+			return "<span style='color: #FFD700;'>ASCENDANT</span>"
+		if(the_pq >= 440)
+			return "<span style='color: #B0C4DE;'>UNDYING</span>"
+		if(the_pq >= 375)
+			return "<span style='color: #9B59B6;'>DIVINE</span>"
+		if(the_pq >= 310)
+			return "<span style='color: #E8D44D;'>EXALTED</span>"
+		if(the_pq >= 250)
+			return "<span style='color: #5DADE2;'>RENOWNED</span>"
+		if(the_pq >= 200)
+			return "<span style='color: #52BE80;'>FABLED</span>"
+		if(the_pq >= 160)
+			return "<span style='color: #45B39D;'>STORIED</span>"
+		if(the_pq >= 130)
+			return "<span style='color: #4CAF50;'>PROVEN</span>"
 		if(the_pq >= 100)
 			return "<span style='color: #617C46;'>VALE DWELLER</span>"
 		if(the_pq >= 70)
@@ -49,7 +65,7 @@
 	if(json[key])
 		curpq = json[key]
 	curpq += amt
-	curpq = CLAMP(curpq, -100, 100)
+	curpq = CLAMP(curpq, -100, PQ_CAP)
 	json[key] = curpq
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(json))
@@ -214,9 +230,13 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(json))
 
-	//add the pq, only on the first commend
-	if(curcomm == 1)
-//	if(get_playerquality(key) < 29)
+	var/cur_pq = get_playerquality(ckey(key))
+	if(cur_pq >= 100)
+		if(curcomm == 1)
+			adjust_playerquality(0.5, ckey(key))
+		else
+			adjust_playerquality(0.05, ckey(key))
+	else if(curcomm == 1)
 		adjust_playerquality(1, ckey(key))
 
 /proc/get_commends(key)
@@ -236,6 +256,8 @@
 
 /proc/add_roundpoints(amt, key) //Each round contributor point counts as 0.1 of a PQ.
 	if(!key)
+		return
+	if(get_playerquality(key) >= 100)
 		return
 	var/curcomm = 0
 	var/json_file = file("data/player_saves/[copytext(key,1,2)]/[key]/rcp.json")
