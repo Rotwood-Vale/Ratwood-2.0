@@ -207,3 +207,68 @@
   - balance: Nerfs natural armor combat tag to 30 seconds
   yupup123:
   - bugfix: Fixes Marked By Baotha Sprite Offsets for Small Races
+2026-04-22:
+  Charopos:
+  - rscadd: Knotted Equine Penises. They're back.
+  - rscadd: The Splurt Penis Sprites. They're also back, again. Hemis - both knotted
+      and non-knotted - should look better now. @ me on discord with specific dick
+      sprite examples if you notice any problems further, or want adjustments to consider.
+  EvenInDeathIStillServe:
+  - rscadd: Nymphomaniac is now also satisfied by individuals getting off using you.
+  Sniperjolly:
+  - rscadd: tailjob/tailpegging to lamia
+  Xander3359:
+  - balance: Templars, Martyrs and the Prelate now get stat buffs when on holy grounds.
+  coffeecoffeecoffee:
+  - balance: Rebalances pouch loot of common NPCs that carry mammon
+  john-pawson:
+  - rscadd: Temporary flavortext, now observable at the bottom of examine panels,
+      separated by a line.
+  - rscadd: Set temporary flavortext button, can be found on the Memory tab at the
+      top right.
+  - rscadd: Set temporary flavortext can now be bound to a keybind on the Game Preferences
+      menu.
+  ophaq:
+  - rscadd: Pop up windows on mouse over for armors and such when examining people.
+      Shows the description too. Custom items stay purple instead of blue to let you
+      know it's custom! You can mouse over those too to read their flavor texts at
+      a distance. You can check your exact durability on items too, but other players
+      won't the exact numbers or % if they examine you.
+  - qol: No more having to click every item on your person with the ? mark to check
+      durability when you can just examine yourself and check item durability states.
+  - rscadd: Archivist now gets the good writer trait.
+  - rscadd: New archivist spell ported over from other codebases. You can learn a
+      skill from others now! It's the reverse of your teach spell.
+  - rscadd: Reworks the refugee scholar class into a 'traveling scholar' that is basically
+      a copy of the archivist, but it's a worse version. They are poorer and can't
+      do alchemy too well.
+  - rscadd: Renamed archivist robes to scholar's robes.
+  - rscadd: Gives the scholar's robe to the modest scholar outfit for the homesteader
+      class outfit.
+  - bugfix: Hopefully fixed the student trait after you learn something not resetting
+      on sleep the next day.
+  zeroisthebiggay:
+  - rscadd: altgripping weapons will make them behave as if they are blunt, ignoring
+      their sharpness and using blunt damage modifiers
+  - rscadd: the eagle's beak is now actually considered a blunt weapon
+  - rscadd: adjudicators now only spawn with a shield if they're using a one handed
+      weapon
+  - rscadd: at the request of someone on discord, ordinators can now choose to equip
+      a psydonic grand mace with a silver dagger when picking their starting weapon
+      and skills
+  - balance: the psydonic poleaxe's blunt forces have had their damage penalty removed,
+      and in addition to the altgrip blunt modifiers, they should actually be pretty
+      good at cracking armor
+  - balance: the psydonic handmace no longer inexplicably has swift balance, and is
+      now heavy balanced like all other maces
+  - balance: grand maces have been given reach on their intents, making them actually
+      grand maces
+  - balance: the psydonic mace has been renamed to the psydonic grand mace, as it
+      is a subtype of the grand mace
+  - balance: the psydonic grand mace has had its stats normalized, no more inexplicable
+      thirty one handed force on a two handed weapon
+  - bugfix: grand maces only fit in greatweapon straps now rather than being able
+      to be belt slotted
+  - rscadd: lawless vice from SR
+  - spellcheck: fixes a possessive it in the description of the lesser cursed collar
+  - qol: knights recieve daily pay
