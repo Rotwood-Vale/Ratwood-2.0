@@ -354,8 +354,8 @@
 	var/purchases = session_purchases[H.ckey] || 0
 	var/open_time = session_open_time[H.ckey] || 0
 	session_purchases[H.ckey] = 0
-	if(purchases == 0 && world.time - open_time >= 30 SECONDS)
-		trader?.on_nopurchase_close(H)
+	if(purchases == 0 && world.time - open_time >= 30 SECONDS && trader)
+		INVOKE_ASYNC(trader, TYPE_PROC_REF(/mob/living/carbon/human/species/human/northern/underbelly_trader, on_nopurchase_close), H)
 
 /datum/underbelly_shop/ui_data(mob/user)
 	var/mob/living/carbon/human/H = user
