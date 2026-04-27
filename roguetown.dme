@@ -3188,6 +3188,7 @@
 #include "modular_underbelly\code\modules\underbelly_shop.dm"
 #include "modular_underbelly\code\modules\items\dead_drop_contract.dm"
 #include "modular_underbelly\code\modules\items\shipment.dm"
+#include "modular_underbelly\code\modules\items\gabagool.dm"
 #include "modular_underbelly\code\modules\items\smuggler_satchel.dm"
 #include "modular_underbelly\code\modules\items\golden_cockroach.dm"
 #include "modular_underbelly\code\modules\items\mysterious_organ.dm"

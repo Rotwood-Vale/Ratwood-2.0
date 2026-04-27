@@ -415,14 +415,14 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 	speaker_state = SPEAKER_BUZZING
 	active_doorman_ref = doorman_ref
 	buzz_pulse()
-	addtimer(CALLBACK(src, PROC_REF(buzz_timeout)), SPEAKER_BUZZ_TIMEOUT, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(buzz_timeout)), SPEAKER_BUZZ_TIMEOUT)
 
 /obj/structure/underbelly_speaker/proc/buzz_pulse()
 	if(speaker_state != SPEAKER_BUZZING || QDELETED(src))
 		return
 	playsound(loc, 'sound/foley/coinphy (1).ogg', 65, FALSE)
 	visible_message(span_italics("[src] emits a sharp buzz."))
-	addtimer(CALLBACK(src, PROC_REF(buzz_pulse)), 4 SECONDS, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(buzz_pulse)), 4 SECONDS)
 
 /obj/structure/underbelly_speaker/proc/buzz_timeout()
 	if(speaker_state != SPEAKER_BUZZING)
@@ -476,7 +476,7 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 		if(M.client)
 			RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(on_nearby_say))
 			registered_mobs += M
-	addtimer(CALLBACK(src, PROC_REF(refresh_listeners)), SPEAKER_LISTEN_REFRESH, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(refresh_listeners)), SPEAKER_LISTEN_REFRESH)
 
 /obj/structure/underbelly_speaker/proc/on_nearby_say(mob/living/source, list/speech_args)
 	SIGNAL_HANDLER

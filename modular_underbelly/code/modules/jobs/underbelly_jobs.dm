@@ -143,7 +143,7 @@
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/firearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/stealing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
@@ -166,6 +166,7 @@
 		/obj/item/roguekey/underbelly/boss = 1,
 		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/underbelly_upgrade/silencer = 1,
 	)
 
 // Fixer - the social predator. Leads by leverage, not force.
@@ -192,7 +193,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/firearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
@@ -216,6 +217,7 @@
 		/obj/item/roguekey/underbelly/boss = 1,
 		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/lockpickring/mundane = 1,
+		/obj/item/underbelly_upgrade/silencer = 1,
 	)
 
 // =====================================================

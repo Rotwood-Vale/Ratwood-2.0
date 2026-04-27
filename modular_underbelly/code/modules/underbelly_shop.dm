@@ -85,6 +85,7 @@
 		list("Hard Boiled Egg",       "Filling. Smells.",                                               /obj/item/reagent_containers/food/snacks/egg,                   3, 2),
 		list("Steak",                 "Cooked, barely. Good protein.",                                  /obj/item/reagent_containers/food/snacks/rogue/meat/steak,      1, 12),
 		list("Sausage",               "What's in it? Don't ask.",                                       /obj/item/reagent_containers/food/snacks/rogue/meat/sausage,    2, 6),
+		list("Gabagool",              "Etruscan, freshly off the caravan. We beat up like 5 wise guys for this.",               /obj/item/reagent_containers/food/snacks/rogue/meat/gabagool,   1, 60),
 	)
 
 	// -- Supplies --
@@ -159,6 +160,8 @@
 		list("Prosthetic Leg (L)",    "Peg leg. Gets you where you're going.",                          /obj/item/bodypart/l_leg/prosthetic,                            1, 15),
 		list("Prosthetic Leg (R)",    "Peg leg. Gets you where you're going.",                          /obj/item/bodypart/r_leg/prosthetic,                            1, 15),
 		list("Climbing Machine",      "Hooks, gears, cord. Goes up walls.",                             /obj/item/grapplinghook,                                        1, 250),
+		list("Lockpick",              "A thin iron pick.",                                              /obj/item/lockpick,                                             2, 12),
+		list("Lockpick (Gold)",       "Picks even tricky locks.",                                       /obj/item/lockpick/goldpin,                                     1, 60),
 	)
 
 	var/list/general_master = cat_drinks + cat_food + cat_supplies + cat_weapons + cat_heavy + cat_ranged + cat_potions + cat_drugs + cat_utility
@@ -241,8 +244,6 @@
 	// Format: name, desc, type, stock, cost, flinger, role
 	// =========================================================
 	var/list/excl_master = list(
-		list("Lockpick (Gold)",    "Picks even tricky locks.",                         /obj/item/lockpick/goldpin,                                        1, 60,  FALSE, "Scum"),
-		list("Lockpick",           "A thin iron pick.",                                /obj/item/lockpick,                                                2, 12,  FALSE, "Scum"),
 		list("The Gut Spillah",       "A Scum's favorite weapon. The backbone of a deal gone wrong. Modified and fabricated by my mates in Kingsfield.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,      1, 500,  FALSE, "Scum"),
 		list("The Venator",  "If you've got a message to send, this is the ticket. A bolt racked rifle capable of shooting thrice before needing a reload.",  /obj/item/gun/ballistic/firearm/flintgonne/venator,               1, 750,  FALSE, "Scum"),
 		list("The Devastator",       "What the hell are you planning on taking down with this? Zizo? BAHAHA!",  /obj/item/gun/ballistic/firearm/devastator,                      1, 1000,  FALSE, "Scum"),
@@ -255,6 +256,10 @@
 		list("Mysterious Organ (II)",   "A pale graft sewn from something foreign. Heals well. You'll notice the shakes.", /obj/item/organ/mysterious/pale,      1, 160, FALSE, "Ripper"),
 		list("Mysterious Organ (I)",  "A dried-up fragment. Less than the others, but it asks less in return.",          /obj/item/organ/mysterious/withered,   1, 80,  FALSE, "Ripper"),
 		list("Mysterious Organ (III)", "A blackened mass. Heals everything. You'll sleep like the dead.",                 /obj/item/organ/mysterious/blackened,  1, 280, FALSE, "Ripper"),
+		list("Reinforced Firing Pin",  "Hits harder. Fits any underbelly firearm. Apply it to the gun.", /obj/item/underbelly_upgrade/damage,    2, 120, FALSE, "Scum"),
+		list("Baffled Powder Sleeve",  "No more smoke cloud after you fire. Apply it to the gun.",       /obj/item/underbelly_upgrade/silencer,  2, 150, FALSE, "Scum"),
+		list("Extended Cylinder Plate","One more round in the chamber. Apply it to the gun.",            /obj/item/underbelly_upgrade/capacity,  2, 180, FALSE, "Scum"),
+		list("Filed Sights",           "Tighter spread. Easier to put the ball where you want it. Apply it to the gun.", /obj/item/underbelly_upgrade/aim, 2, 130, FALSE, "Scum"),
 	)
 	var/list/excl_shuffled = shuffle(excl_master)
 	for(var/i = 1 to min(rand(1, 3), excl_shuffled.len))
@@ -310,7 +315,8 @@
 		list("Lumber Shipment",      "A huge wrapped bundle of short-cut logs. Ready to work.",             /obj/item/underbelly_shipment/wood,       28),
 		list("Flour Shipment",       "A huge wrapped bundle of flour pouches. Bakers will pay well.",       /obj/item/underbelly_shipment/flour,      22),
 		list("Grain Shipment",       "A huge wrapped bundle of spelt grain. Someone's breadbasket.",        /obj/item/underbelly_shipment/grain,      18),
-		list("Seed Shipment",        "A huge wrapped bundle of wheat seeds. Plant a field's worth.",        /obj/item/underbelly_shipment/seeds,      18),
+		list("Seed Shipment",       "A huge wrapped bundle of wheat seeds. Plant a field's worth.",        /obj/item/underbelly_shipment/seeds,      18),
+		list("Gabagool Shipment",   "A very carefully wrapped parcel. 2 to 5 inside. You don't ask questions about gabagool, wiseguy.",   /obj/item/underbelly_shipment/gabagool,  220),
 	)
 	var/list/shipment_shuffled = shuffle(shipment_master.Copy())
 	for(var/i = 1 to min(rand(3, 5), shipment_shuffled.len))
@@ -370,6 +376,8 @@
 
 	var/list/excl_data = list()
 	for(var/datum/underbelly_shop_item/SI in exclusive_pool)
+		if(SI.exclusive_role && H.job != SI.exclusive_role && H.job != "Gutter King")
+			continue
 		var/buy_count = purchase_counts["[H.ckey]_[SI.name]"] || 0
 		excl_data += list(list(
 			"name" = SI.name,

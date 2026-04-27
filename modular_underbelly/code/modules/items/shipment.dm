@@ -67,3 +67,13 @@
 /obj/item/underbelly_shipment/seeds
 	content_type = /obj/item/seeds/wheat
 	content_name = "wheat seeds"
+
+/obj/item/underbelly_shipment/gabagool
+	content_type = /obj/item/reagent_containers/food/snacks/rogue/meat/gabagool
+	content_name = "gabagool"
+
+/obj/item/underbelly_shipment/gabagool/Initialize(mapload)
+	. = ..()  
+	sealed_amount = rand(2, 5)
+	name = "[content_name] shipment"
+	desc = "A very carefully wrapped parcel of [content_name]. Contains [sealed_amount]. Handle with care."

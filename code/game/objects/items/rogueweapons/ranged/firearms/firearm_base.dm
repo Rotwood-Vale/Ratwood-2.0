@@ -73,6 +73,10 @@ At least, it should. Fingers crossed.
 	var/reloaded = FALSE
 	var/load_time = 50
 	var/gunpowder = FALSE
+	/// Set by upgrade kits. Suppresses arquebus smoke spawns on fire.
+	var/suppress_smoke = FALSE
+	/// Set by upgrade kits. Reduces spread_num bonus on top of skill.
+	var/aim_upgrade = FALSE
 	var/obj/item/ramrod/myrod = null
 
 /obj/item/gun/ballistic/firearm/getonmobprop(tag)
@@ -256,6 +260,8 @@ At least, it should. Fingers crossed.
 	gunpowder = FALSE
 	reloaded = FALSE
 	spark_act()
+	if(aim_upgrade)
+		spread = max(0, spread - 3)
 
 	..()
 
@@ -263,12 +269,13 @@ At least, it should. Fingers crossed.
 	for(var/obj/item/ammo_casing/MB in get_ammo_list(FALSE, TRUE))
 		qdel(MB)
 
-	spawn (5)
-		new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
-	spawn (10)
-		new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 2))
-	spawn (16)
-		new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
+	if(!suppress_smoke)
+		spawn (5)
+			new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
+		spawn (10)
+			new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 2))
+		spawn (16)
+			new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
 	for(var/mob/M in range(5, user))
 		if(!M.stat)
 			shake_camera(M, 3, 1)

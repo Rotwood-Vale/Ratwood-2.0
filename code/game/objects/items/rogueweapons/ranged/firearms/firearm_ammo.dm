@@ -86,6 +86,14 @@
 /obj/projectile/bullet/firearm/grapeshot/on_hit(atom/target)
 	. = ..()
 
+	if(istype(target, /mob/living/carbon/human) && def_zone)
+		var/mob/living/carbon/human/T = target
+		var/obj/item/bodypart/limb = T.get_bodypart(check_zone(def_zone))
+		if(limb && limb.dismemberable && limb.max_damage > 0)
+			var/ratio = (limb.brute_dam + limb.burn_dam) / limb.max_damage
+			if(ratio >= 0.75)
+				limb.dismember(BRUTE)
+
 	var/mob/living/L = firer
 	if(!L || !L.mind)
 		return

@@ -237,7 +237,10 @@
 	force = 22
 	spread = 15
 	var/rounds_remaining = 0
-	var/pending_grapeshots = 0
+	/// Max grapeshots the barrel can hold. Raised to 3 by the capacity upgrade kit.
+	var/max_capacity = 2
+	/// Set when the firing mechanism jams. Cleared by right-clicking to fix it.
+	var/jammed = FALSE
 
 /obj/item/gun/ballistic/firearm/devastator/getonmobprop(tag)
 	. = ..()
@@ -255,7 +258,7 @@
 		if(!length(Q.arrows))
 			to_chat(user, span_warning("There is no grapeshot left in [Q]."))
 			return
-		if(pending_grapeshots + rounds_remaining + (chambered ? 1 : 0) >= 2)
+		if(pending_grapeshots + rounds_remaining + (chambered ? 1 : 0) >= max_capacity)
 			to_chat(user, span_warning("The [src] is already fully loaded!"))
 			return
 		var/obj/item/ammo_casing/caseless/bullet/grapeshot/shot = Q.arrows[Q.arrows.len]
@@ -264,7 +267,11 @@
 		Q.update_icon()
 		playsound(src, "modular_helmsguard/sound/arquebus/insert.ogg", 100)
 		user.visible_message(span_notice("[user] forces a grapeshot down the barrel of the [src]."))
-		pending_grapeshots++
+		if(chambered)
+			rounds_remaining++
+		else
+			chambered = new /obj/item/ammo_casing/caseless/bullet/grapeshot(src)
+			reloaded = TRUE
 		return
 	if(istype(A, /obj/item/ammo_casing))
 		if(!istype(A, /obj/item/ammo_casing/caseless/bullet/grapeshot))
@@ -273,43 +280,55 @@
 		if(!gunpowder)
 			to_chat(user, span_warning("You must fill the [src] with smokepowder first!"))
 			return
-		if(pending_grapeshots + rounds_remaining + (chambered ? 1 : 0) >= 2)
+		if(rounds_remaining + (chambered ? 1 : 0) >= max_capacity)
 			to_chat(user, span_warning("The [src] is already fully loaded!"))
 			return
 		playsound(src, "modular_helmsguard/sound/arquebus/insert.ogg", 100)
 		user.visible_message(span_notice("[user] forces a [A] down the barrel of the [src]."))
-		pending_grapeshots++
-		qdel(A)
-		return
-	if(istype(A, /obj/item/ramrod) && pending_grapeshots > 0)
-		var/obj/item/ramrod/R = A
-		var/firearm_skill = user.get_skill_level(/datum/skill/combat/firearms)
-		user.visible_message(span_notice("[user] begins ramming the [R.name] down the barrel of the [src]."))
-		playsound(src, "modular_helmsguard/sound/arquebus/ramrod.ogg", 100)
-		if(do_after(user, load_time - (firearm_skill * 2), src))
-			user.visible_message(span_notice("[user] has finished loading the [src]."))
-			if(chambered)
-				rounds_remaining += pending_grapeshots
-			else
-				rounds_remaining = pending_grapeshots - 1
-				chambered = new /obj/item/ammo_casing/caseless/bullet/grapeshot(src)
-			pending_grapeshots = 0
+		if(chambered)
+			rounds_remaining++
+		else
+			chambered = new /obj/item/ammo_casing/caseless/bullet/grapeshot(src)
 			reloaded = TRUE
+		qdel(A)
 		return
 	return ..()
 
 /obj/item/gun/ballistic/firearm/devastator/can_shoot()
 	if(!chambered)
 		return FALSE
+	if(jammed)
+		return FALSE
 	return TRUE
 
 /obj/item/gun/ballistic/firearm/devastator/shoot_live_shot(mob/living/user, pointblank = 0, mob/pbtarget = null, message = 1)
+	// Misfire chance: base 20%, reduced by 2% per luck point above 10, floored at 5%.
+	var/misfire_chance = clamp(40 - (user.STALUC - 10) * 2, 5, 40)
+	if(prob(misfire_chance))
+		jammed = TRUE
+		playsound(user, 'modular_helmsguard/sound/arquebus/musketcock.ogg', 80, FALSE)
+		user.visible_message(span_warning("[user]'s [src] clicks — it's jammed!"), span_warning("The [src] jams! Right-click it to clear the mechanism."))
+		return
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
 	playsound(user, 'modular_underbelly/sound/gun/fire_shotgun_01.ogg', fire_sound_volume, vary_fire_sound)
 	show_sensory_effect(user, 5, "gunfire", user.dir)
 	if(message)
 		user.visible_message(span_danger("[user] shoots [src]!"), span_danger("I shoot [src]!"), COMBAT_MESSAGE_RANGE)
+
+// Right-click to clear a jam. Takes longer with low firearms skill.
+/obj/item/gun/ballistic/firearm/devastator/attack_right(mob/user)
+	if(!jammed)
+		to_chat(user, span_notice("The [src] is fine."))
+		return
+	var/firearm_skill = user.get_skill_level(/datum/skill/combat/firearms)
+	var/fix_time = clamp(60 - firearm_skill * 8, 20, 60) // 60 at skill 0, 20 at skill 5+
+	user.visible_message(span_notice("[user] works at clearing the jam in [src]..."))
+	playsound(src, "modular_helmsguard/sound/arquebus/ramrod.ogg", 80, TRUE)
+	if(do_after(user, fix_time, src))
+		jammed = FALSE
+		user.visible_message(span_notice("[user] clears the jam in [src]."))
+		to_chat(user, span_notice("The mechanism is clear."))
 
 /obj/item/gun/ballistic/firearm/devastator/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	. = ..()
@@ -339,3 +358,114 @@
 	force = 32
 	max_integrity = 100
 	color = "#C86820"
+
+// =====================================================
+// GUN UPGRADE KITS - Scum exclusives, apply to any underbelly firearm
+// Use on the gun in-hand to install. One-time each.
+// =====================================================
+
+/// Upgrade kit base type. Apply to a gut_spiller, venator, or devastator.
+/obj/item/underbelly_upgrade
+	icon = 'modular_helmsguard/icons/obj/items/arquebus_items.dmi'
+	icon_state = "ramrod"
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_HIP
+
+/obj/item/underbelly_upgrade/damage
+	name = "reinforced firing pin"
+	desc = "A hardened pin assembly machined to hit powder charges harder. Improves damage output of any Scum firearm."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "wcog"
+
+/obj/item/underbelly_upgrade/damage/afterattack(atom/target, mob/living/user, flag, params)
+	if(!flag)
+		return
+	var/obj/item/gun/ballistic/firearm/G = target
+	if(!istype(G) || !(istype(G, /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller) || istype(G, /obj/item/gun/ballistic/firearm/flintgonne/venator) || istype(G, /obj/item/gun/ballistic/firearm/devastator)))
+		to_chat(user, span_warning("[src] can only be fitted to underbelly firearms."))
+		return
+	if(G.force >= initial(G.force) + 5)
+		to_chat(user, span_warning("[G] already has a damage upgrade fitted."))
+		return
+	G.force += 5
+	G.force_wielded += 5
+	to_chat(user, span_notice("You fit the [src] into [G]. It'll hit harder now."))
+	qdel(src)
+
+/obj/item/underbelly_upgrade/silencer
+	name = "baffled powder sleeve"
+	desc = "A sleeve of treated wool packed inside the barrel assembly. Absorbs most of the powder smoke on discharge. The mark won't see it coming."
+	icon_state = "powderflask"
+
+/obj/item/underbelly_upgrade/silencer/afterattack(atom/target, mob/living/user, flag, params)
+	if(!flag)
+		return
+	var/obj/item/gun/ballistic/firearm/G = target
+	if(!istype(G) || !(istype(G, /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller) || istype(G, /obj/item/gun/ballistic/firearm/flintgonne/venator) || istype(G, /obj/item/gun/ballistic/firearm/devastator)))
+		to_chat(user, span_warning("[src] can only be fitted to underbelly firearms."))
+		return
+	if(G.suppress_smoke)
+		to_chat(user, span_warning("[G] already has a smoke suppressor fitted."))
+		return
+	G.suppress_smoke = TRUE
+	to_chat(user, span_notice("You pack the [src] into [G]. No more cloud every time you pull the trigger."))
+	qdel(src)
+
+/obj/item/underbelly_upgrade/capacity
+	name = "extended cylinder plate"
+	desc = "A machined insert that opens up one more chamber in the cylinder — or squeezes one more round into the bolt housing. Whoever made this had steady hands."
+	icon = 'icons/roguetown/items/anvil_casting.dmi'
+	icon_state = "base_plate"
+
+/obj/item/underbelly_upgrade/capacity/afterattack(atom/target, mob/living/user, flag, params)
+	if(!flag)
+		return
+	if(istype(target, /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller))
+		var/obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/G = target
+		if(G.rounds_remaining >= 7)
+			to_chat(user, span_warning("[G] already has a capacity upgrade fitted."))
+			return
+		G.rounds_remaining++
+		to_chat(user, span_notice("You fit the [src] into [G]. One more round in the cylinder."))
+		qdel(src)
+		return
+	if(istype(target, /obj/item/gun/ballistic/firearm/flintgonne/venator))
+		var/obj/item/gun/ballistic/firearm/flintgonne/venator/G = target
+		if(G.rounds_remaining >= 3)
+			to_chat(user, span_warning("[G] already has a capacity upgrade fitted."))
+			return
+		G.rounds_remaining++
+		to_chat(user, span_notice("You fit the [src] into [G]. One more ball in the bolt housing."))
+		qdel(src)
+		return
+	if(istype(target, /obj/item/gun/ballistic/firearm/devastator))
+		var/obj/item/gun/ballistic/firearm/devastator/G = target
+		if(G.max_capacity >= 3)
+			to_chat(user, span_warning("[G] already has a capacity upgrade fitted."))
+			return
+		G.max_capacity = 3
+		to_chat(user, span_notice("You fit the [src] into [G]. One more grapeshot loaded."))
+		qdel(src)
+		return
+	to_chat(user, span_warning("[src] can only be fitted to underbelly firearms."))
+
+/obj/item/underbelly_upgrade/aim
+	name = "filed sights"
+	desc = "Carefully filed iron sights, realigned to account for drift. Drops the effective spread on any underbelly firearm."
+	icon = 'icons/roguetown/items/keys.dmi'
+	icon_state = "lockpick"
+
+/obj/item/underbelly_upgrade/aim/afterattack(atom/target, mob/living/user, flag, params)
+	if(!flag)
+		return
+	var/obj/item/gun/ballistic/firearm/G = target
+	if(!istype(G) || !(istype(G, /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller) || istype(G, /obj/item/gun/ballistic/firearm/flintgonne/venator) || istype(G, /obj/item/gun/ballistic/firearm/devastator)))
+		to_chat(user, span_warning("[src] can only be fitted to underbelly firearms."))
+		return
+	if(G.aim_upgrade)
+		to_chat(user, span_warning("[G] already has filed sights fitted."))
+		return
+	G.aim_upgrade = TRUE
+	G.spread_num = max(0, G.spread_num - 3)
+	to_chat(user, span_notice("You fit the [src] onto [G]. The sights are sharper now."))
+	qdel(src)
