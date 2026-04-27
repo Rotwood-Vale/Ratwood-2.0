@@ -320,4 +320,4 @@
 /obj/structure/chair/frankenstein/proc/deathmark(mob/victim)
 	if(victim.stat != DEAD)
 		ADD_TRAIT(victim, TRAIT_DNR, TRAIT_GENERIC)
-		to_chat(victim, span_green("My resurrection has taken a toll, should I fall again I will never be restored to lyfe"))
+		to_chat(victim, span_danger("My resurrection has taken a toll, should I fall again I will never be restored to lyfe"))
