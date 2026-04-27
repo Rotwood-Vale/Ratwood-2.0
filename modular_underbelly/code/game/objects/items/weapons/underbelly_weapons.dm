@@ -258,7 +258,7 @@
 		if(!length(Q.arrows))
 			to_chat(user, span_warning("There is no grapeshot left in [Q]."))
 			return
-		if(pending_grapeshots + rounds_remaining + (chambered ? 1 : 0) >= max_capacity)
+		if(rounds_remaining + (chambered ? 1 : 0) >= max_capacity)
 			to_chat(user, span_warning("The [src] is already fully loaded!"))
 			return
 		var/obj/item/ammo_casing/caseless/bullet/grapeshot/shot = Q.arrows[Q.arrows.len]

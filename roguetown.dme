@@ -3176,7 +3176,6 @@
 #include "modular_rmh\code\modules\mob\dead\body_markings\body_markings.dm"
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
 #include "modular_underbelly\code\game\area\underbelly_areas.dm"
-#include "modular_underbelly\code\game\area\underbelly_areas.dm"
 #include "modular_underbelly\code\game\objects\items\underbelly_keys.dm"
 #include "modular_underbelly\code\game\objects\items\weapons\underbelly_scrap_guns.dm"
 #include "modular_underbelly\code\game\objects\items\weapons\underbelly_weapons.dm"
