@@ -1157,7 +1157,7 @@
 				var/list/active_bandits = list()
 				for(var/datum/antagonist/bandit/bandit_player in GLOB.antagonists)
 					active_bandits += bandit_player
-				var/share = donatedamnt / max(length(active_bandits) / 2, 1)
+				var/share = round(donatedamnt / max(length(active_bandits) / 2, 1))
 				for(var/datum/antagonist/bandit/bandit_player in active_bandits)
 					record_round_statistic(STATS_SHRINE_VALUE, share)
 					bandit_player.favor += share
