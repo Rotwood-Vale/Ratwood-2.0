@@ -98,8 +98,13 @@
 			ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
 	target.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
 	target.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
-	ADD_TRAIT(target, TRAIT_DNR, "[type]") //you get one revival, value your lyfe.	
+	addtimer(CALLBACK(src, PROC_REF(deathmark), target), 5 MINUTES)
 	return TRUE
+
+/datum/surgery_step/infuse_lux/proc/deathmark(mob/victim)
+	if(victim.stat != DEAD)
+		ADD_TRAIT(victim, TRAIT_DNR, TRAIT_GENERIC)
+		to_chat(victim, span_danger("My resurrection has taken a toll, should I fall again I will never be restored to lyfe"))
 
 /datum/surgery_step/infuse_lux/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent, success_prob)
 	display_results(user, target, span_warning("I screwed up!"),
