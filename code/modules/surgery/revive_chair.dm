@@ -314,5 +314,10 @@
 
 		// Apply debuffs
 		occupant.apply_status_effect(/atom/movable/screen/alert/status_effect/debuff/revived)
-		ADD_TRAIT(occupant, TRAIT_DNR, "[type]") //you get one revival, value your lyfe.
+		addtimer(CALLBACK(src, PROC_REF(deathmark), occupant), 5 MINUTES)
 	return TRUE
+
+/obj/structure/chair/frankenstein/proc/deathmark(mob/victim)
+	if(victim.stat != DEAD)
+		ADD_TRAIT(victim, TRAIT_DNR, TRAIT_GENERIC)
+		to_chat(victim, span_green("My resurrection has taken a toll, should I fall again I will never be restored to lyfe"))
