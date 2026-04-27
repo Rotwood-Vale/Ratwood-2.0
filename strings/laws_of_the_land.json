@@ -3,66 +3,66 @@
 		"tennite_decalogue": {
 			"name": "The Decalogue",
 			"laws": [
-				"Honor the Ten and no other gods before them.",
-				"Keep holy the sacred days of each deity, and offer proper sacrifice and prayer.",
-				"Speak no blasphemy against the gods, nor take their names in vain, nor invoke the names of demons or other dark powers.",
-				"Honor thy father and mother, for through them Astrata gave thee lyfe",
-				"Give tithes and offerings to the temples, and respect the clergy of the gods, for they are the gods' servants.",
-				"Thou shalt not murder",
-				"Thou shalt not commit adultery.",
-				"Thou shalt not steal.",
-				"Thou shalt not bear false witness against thy neighbor.",
-				"Thou shalt not covet thy neighbour's house, thou shalt not covet thy neighbour's wife, nor his manservant, nor his maidservant, nor his ox, nor his ass, nor any thing that is thy neighbors."
+				"崇敬十神，不可在他们面前祭拜他神。",
+				"恪守每位神灵的圣日，奉上合宜的祭品与祷告。",
+				"不可亵渎神灵，不可妄称神名，亦不可召唤恶魔或其他黑暗力量之名。",
+				"孝敬父母，因阿斯特拉塔（Astrata）借由他们赐予你生命。",
+				"向神庙缴纳什一税与供奉，尊重神职人员，因其乃神之仆役。",
+				"不可谋杀。",
+				"不可奸淫。",
+				"不可偷盗。",
+				"不可做假证陷害邻人。",
+				"不可贪图邻人的房屋；不可贪图邻人的妻子、仆婢、牛驴，并他一切所有的。"
 			],
 			"weight": 3
 		},
 		"code of hammurabi": {
 			"name": "Code of Hamurabi",
 			"laws": [
-				"If a man put out the eye of another man, his eye shall be put out.",
-				"If any one is committing a robbery and is caught, then he shall be put to death.",
-				"If a man has betrothed a bride to his son and his son has known her, and if afterwards he (the father) lies in her bosom, and they seize him, this man shall be put to death; the woman shall go free.",
-				"If a builder builds a house for a man and does not make its construction firm, and the house which he has built collapses and causes the death of the owner of the house, that builder shall be put to death.",
-				"If any one take over a field to till it as a renter, he shall pay the corn rent of the field to its owner.",
-				"If any one place his property with another for safekeeping, and there at the place of safekeeping the property be lost, the owner of the house shall make restitution to the owner for the property that was lost.",
-				"If any one take a male or female slave of the court, or a male or female slave of a freed man, outside the city gates, he shall be put to death.",
-				"If a son strike his father, his hands shall be hewn off.",
-				"If any one be too lazy to maintain his dam and does not strengthen it, and a break be made in his dam and the water flood the plantation, the man in whose dam the break has been made shall replace the grain which he has caused to be ruined.",
-				"If any one steal cattle or sheep, or an ass, or a pig or a goat, if it belong to a god or to the court, the thief shall pay thirtyfold; if they belonged to a freed man of the king he shall pay tenfold; if the thief has nothing with which to pay he shall be put to death."
+				"若人损毁他人之眼，则必毁其眼。",
+				"若人行劫被捕，则必处死。",
+				"若父为子定亲，子已与聘妻同房，其后父又与该女同寝并被抓获，则父处死，女无罪。",
+				"若建筑师筑屋不精致，导致房屋倒塌并致屋主死亡，则该建筑师处死。",
+				"若人租赁田地耕种，应向地主缴纳田地所产之谷物作为租金。",
+				"若人将财物寄存于他人处，其财物在寄存处丢失，则屋主应向原主赔偿损失。",
+				"若人擅自将宫廷或自由民之男女奴隶带出城门，则必处死。",
+				"若子殴其父，则断其手。",
+				"若人怠于修缮堤坝导致溃堤，淹没他人农田，则其人应赔偿他人所损失之谷物。",
+				"若人盗取属于神庙或宫廷之牛、羊、驴、猪、羊，须赔偿三十倍；若属于国王之自由民，赔偿十倍；无力赔偿者，处死。"
 			],
 			"weight": 1
 		},
 		"asimov": {
 			"name": "The Three Laws of Aasimar",
 			"laws": [
-				"A peasant may not injure a noble or, through inaction, allow a noble to come to harm.",
-				"A peasant must obey the orders given it by nobles except where such orders would conflict with the First Law.",
-				"A peasant must protect their own existence as long as such protection does not conflict with the First or Second Law."
+				"平民不得伤害贵族，亦不可因不作为而使贵族受到伤害。",
+				"平民必须服从贵族下达的命令，除非该命令与第一法则冲突。",
+				"在不违背第一及第二法则的情况下，平民必须保护自己的生存。"
 			],
 			"weight": 0
 		},
 		"the_great_charter": {
 			"name": "The Great Charter",
 			"laws": [
-				"The Church shall be free from interference by the Crown, its rights undiminished and protected. The Crown shalt not interfere with the elections or appointments of bishops, administration of church property nor the discipline of the clergy and heretics.",
-				"The Inquisition may only investigate and try commoners for crimes of heresy. Yeomen and nobles shall be tried only under the Bishop's supervision and by a jury of their peers and clergy.",
-				"No yeomen or nobleman shall be seized or imprisoned, or stripped of his rights or possessions, or outlawed or exiled, or deprived of his standing in any other way, nor will we proceed with force against him, or send others to do so, except by the lawful judgement of his equals or by the law of the land.",
-				"To no one will we sell, to no one will we refuse or delay, right or justice.",
-				"All merchants shall have safe and secure exit from, and entry to the Realm, with the freedom to conduct their trade unhindered, except in time of war, when it shall be with the special license of the Crown.",
-				"No tax or levy shall be imposed upon the Realm without the consent of a Council of Knights and Nobles, save for ransom of the Crown's person.",
-				"No sheriff or baliff of ours, or other person, shall take the properties of any yeoman, against the will of said yeoman, without due compensation.",
-				"Common lands and waters shall be held and used in common by all yeomen of the Realm.",
-				"No man shall be compelled to perform greater service than is due from his tenure.",
-				"Yeomen and Nobles retain the right to bear arms, save when such right is revoked for crimes against the Crown."
+				"教会应独立于皇权之外，其权利不容侵犯并受保护。皇权不得干涉主教的选举与任命、教会财产的管理，以及对教士与异端的惩戒。",
+				"审判所仅有权调查并审理平民的异端罪行。自耕农与贵族应在主教监督下，由其同僚及教士组成的陪审团进行审理。",
+				"除非经由同级人员的合法裁决或领地法律判定，任何自耕农或贵族不得被逮捕、监禁、剥夺权利或财产、宣布为法外之徒、流放或以任何其他方式剥夺其地位；朕亦不会对其诉诸武力或派人行之。",
+				"朕不得向任何人出卖、拒绝或延迟公正与权力。",
+				"除战争时期外，所有商人皆应拥有安全进出王国的权利，并有权在不受干扰的情况下进行贸易；战时需持皇室特许证。",
+				"除为赎回国王本人外，未经骑士与贵族会议同意，不得在王国内征收任何税款或征课。",
+				"朕之治安官、法警或其他任何人，未经自耕农本人同意，不得违背其意愿没收其财产，且必须给予相应补偿。",
+				"公共土地与水域应由王国内所有自耕农共同持有并使用。",
+				"任何人不得被强迫履行超过其土地保有权所规定的义务。",
+				"自耕农与贵族保留携带武器的权利，除非因危害皇权的罪行而被剥夺该权利。"
 			],
 			"weight": 5
 		},
 		"human_supremacy": {
 			"name": "Divine Supremacy",
 			"laws": [
-				"Thou shalt not worship the inhumen. All that that is inhumen is lesser.",
-				"Thou shalt not associate with inhumen worshipers, those who do that do so forsake their faith.",
-				"Those who worship the inhumen must be eradicated."
+				"不可崇拜非人之神。凡非人者皆为卑下。",
+				"不可与非人崇拜者交往，凡与之交往者即为背弃信仰。",
+				"凡崇拜非人者，必须被彻底铲除。"
 			],
 			"weight": 1
 		}
