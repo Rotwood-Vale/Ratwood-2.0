@@ -31,6 +31,7 @@
 	var/list/shared_pool = list()
 	var/list/exclusive_pool = list()
 	var/list/flinger_pool = list()
+	var/list/shipment_pool = list()
 	/// Track how many of each item a customer has bought this cycle, keyed "ckey_itemname"
 	var/list/purchase_counts = list()
 	/// world.time when the last restock happened
@@ -49,12 +50,14 @@
 	QDEL_LIST(shared_pool)
 	QDEL_LIST(exclusive_pool)
 	QDEL_LIST(flinger_pool)
+	QDEL_LIST(shipment_pool)
 	return ..()
 
 /datum/underbelly_shop/proc/do_restock()
 	QDEL_LIST(shared_pool)
 	QDEL_LIST(exclusive_pool)
 	QDEL_LIST(flinger_pool)
+	QDEL_LIST(shipment_pool)
 	purchase_counts = list()
 	last_restock_time = world.time
 
@@ -284,6 +287,36 @@
 		"deaddrop" \
 	)
 
+	flinger_pool += new /datum/underbelly_shop_item( \
+		"Smuggler's Satchel", \
+		"A dead drop container. Fill it, plant it anywhere with a code, and leave it for someone who knows where to look.", \
+		/obj/item/storage/backpack/rogue/satchel/smuggler, \
+		2, \
+		75, \
+		TRUE \
+	)
+
+	// =========================================================
+	// SHIPMENTS - Bulk trade goods. 3-5 drawn per cycle.
+	// Format: name, desc, type, stock, cost
+	// Priced below Stockpile withdraw_price * 12 (minimum count).
+	// =========================================================
+	var/list/shipment_master = list(
+		list("Iron Ore Shipment",    "A huge wrapped bundle of iron ore chunks. Cheaper in bulk.",         /obj/item/underbelly_shipment/iron_ore,   50),
+		list("Coal Shipment",        "A huge wrapped bundle of coal. Fuel and alloying sorted.",            /obj/item/underbelly_shipment/coal,       40),
+		list("Copper Ore Shipment",  "A huge wrapped bundle of copper ore chunks.",                         /obj/item/underbelly_shipment/copper_ore, 28),
+		list("Tin Ore Shipment",     "A huge wrapped bundle of tin ore chunks.",                            /obj/item/underbelly_shipment/tin_ore,    40),
+		list("Stone Shipment",       "A huge wrapped bundle of raw stones. Free rocks? Nearly.",            /obj/item/underbelly_shipment/stone,      8),
+		list("Lumber Shipment",      "A huge wrapped bundle of short-cut logs. Ready to work.",             /obj/item/underbelly_shipment/wood,       28),
+		list("Flour Shipment",       "A huge wrapped bundle of flour pouches. Bakers will pay well.",       /obj/item/underbelly_shipment/flour,      22),
+		list("Grain Shipment",       "A huge wrapped bundle of spelt grain. Someone's breadbasket.",        /obj/item/underbelly_shipment/grain,      18),
+		list("Seed Shipment",        "A huge wrapped bundle of wheat seeds. Plant a field's worth.",        /obj/item/underbelly_shipment/seeds,      18),
+	)
+	var/list/shipment_shuffled = shuffle(shipment_master.Copy())
+	for(var/i = 1 to min(rand(3, 5), shipment_shuffled.len))
+		var/entry = shipment_shuffled[i]
+		shipment_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], rand(1, 3), entry[4])
+
 /datum/underbelly_shop/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -359,6 +392,17 @@
 			"buy_limit" = buy_limit,
 		))
 
+	var/list/shipment_data = list()
+	for(var/datum/underbelly_shop_item/SI in shipment_pool)
+		var/buy_count = purchase_counts["[H.ckey]_shipment_[SI.name]"] || 0
+		shipment_data += list(list(
+			"name" = SI.name,
+			"desc" = SI.desc,
+			"cost" = SI.cost,
+			"stock" = SI.stock,
+			"bought" = buy_count,
+		))
+
 	var/ticks_left = trader ? max(0, trader.next_restock - world.time) : 0
 	return list(
 		"budget" = user_budget,
@@ -368,6 +412,7 @@
 		"shared" = shared_data,
 		"exclusive" = excl_data,
 		"flinger" = flinger_data,
+		"shipments" = shipment_data,
 	)
 
 /datum/underbelly_shop/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -406,6 +451,16 @@
 				return FALSE
 			var/buy_limit = SI.flinger_only ? 2 : 1
 			return do_purchase(H, SI, "[H.ckey]_flinger_[SI.name]", buy_limit)
+
+		if("buy_shipment")
+			if(H.job != "Flinger")
+				to_chat(H, span_warning("That's not for you."))
+				return FALSE
+			var/item_name = params["name"]
+			var/datum/underbelly_shop_item/SI = locate_item(shipment_pool, item_name)
+			if(!SI)
+				return FALSE
+			return do_purchase(H, SI, "[H.ckey]_shipment_[SI.name]", 99)
 
 /datum/underbelly_shop/proc/locate_item(list/pool, item_name)
 	for(var/datum/underbelly_shop_item/SI in pool)

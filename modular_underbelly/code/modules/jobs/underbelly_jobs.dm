@@ -3,7 +3,7 @@
 	Criminal faction lurking beneath Rotwood's legitimate society.
 	All five jobs share TRAIT_UNDERBELLY_SCUM and the Thieves' Cant language.
 	Scum, Flesh Trader, Flinger, and Ripper can opt into the excidium for a stat buff.
-	Gutter King is the faction head — max 1, 80 PQ floor, bypasses all shop role restrictions.
+	Gutter King is the faction head - max 1, 110 PQ floor, bypasses all shop role restrictions.
 */
 
 // =====================================================
@@ -147,6 +147,10 @@
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/stealing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/gutterking/kingpin/pre_equip(mob/living/carbon/human/H)
@@ -158,7 +162,9 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/powderflask = 1,
-		/obj/item/quiver/bullet/lead = 1,
+		/obj/item/quiver/bullet/lead/extended = 1,
+		/obj/item/roguekey/underbelly/boss = 1,
+		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/flashlight/flare/torch = 1,
 	)
 
@@ -190,6 +196,10 @@
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/gutterking/fixer/pre_equip(mob/living/carbon/human/H)
@@ -202,7 +212,9 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/powderflask = 1,
-		/obj/item/quiver/bullet/lead = 1,
+		/obj/item/quiver/bullet/lead/extended = 1,
+		/obj/item/roguekey/underbelly/boss = 1,
+		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/lockpickring/mundane = 1,
 	)
 
@@ -223,8 +235,8 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
-	tutorial = "Work for the Underbelly. Break legs, move cargo, disappear people, or keep the locals in line. \
-	It doesn't pay well but it pays, and it beats starving above ground. The Gutter King expects results. \
+	tutorial = "Work for the Underbelly. Break legs, move cargo, disappear people, or keep the Flingers safe. \
+	It doesn't pay well but it pays, and it beats starving Flipside. The Gutter King expects results. \
 	The kind that don't require explaining."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/scum
@@ -288,12 +300,17 @@
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/firearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/scum/enforcer/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
 	shoes = /obj/item/clothing/shoes/roguetown/boots
+	beltl = /obj/item/roguekey/underbelly/scum
 	beltr = /obj/item/rogueweapon/mace/cudgel
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
@@ -328,6 +345,10 @@
 		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/scum/kidnapper/pre_equip(mob/living/carbon/human/H)
@@ -335,6 +356,7 @@
 	H.adjust_blindness(-3)
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
+	beltr = /obj/item/roguekey/underbelly/scum
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/rope/chain = 2,
@@ -357,7 +379,7 @@
 	traits_applied = list(TRAIT_DODGEEXPERT)
 	subclass_stats = list(
 		STATKEY_SPD = 3,
-		STATKEY_PER = 1,
+		STATKEY_PER = 2,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
@@ -369,6 +391,10 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/scum/guttersnipe/pre_equip(mob/living/carbon/human/H)
@@ -381,6 +407,7 @@
 	backpack_contents = list(
 		/obj/item/bomb/smoke = 1,
 		/obj/item/natural/bundle/cloth/bandage/full = 1,
+		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/flashlight/flare/torch = 1,
 	)
 
@@ -425,6 +452,16 @@
 
 /datum/outfit/job/roguetown/underbelly/fleshtrader
 
+/datum/outfit/job/roguetown/underbelly/fleshtrader/pre_equip(mob/living/carbon/human/H)
+	..()  
+	mask = /obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum
+	head = /obj/item/clothing/head/roguetown/puritan/scum
+	armor = null
+	cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	belt = /obj/item/storage/belt/rogue/leather/double
+	gloves = /obj/item/clothing/gloves/roguetown/leather/black
+
 // Harvester - the hunter. High medicine, predatory approach.
 /datum/advclass/fleshtrader/harvester
 	name = "Harvester"
@@ -453,6 +490,9 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/fleshtrader/harvester/pre_equip(mob/living/carbon/human/H)
@@ -460,14 +500,13 @@
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/physician
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
-	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/natural/bundle/cloth/bandage/full = 2,
+		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/flashlight/flare/torch = 1,
 	)
 
@@ -495,6 +534,10 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/fleshtrader/corruptor/pre_equip(mob/living/carbon/human/H)
@@ -502,7 +545,6 @@
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/physician
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
-	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
@@ -510,6 +552,7 @@
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,
 		/obj/item/natural/bundle/cloth/bandage/full = 1,
+		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/flashlight/flare/torch = 1,
 	)
 
@@ -529,7 +572,7 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
-	tutorial = "Coin is the only God worth worshipping, and you've devoted your life to it. \
+	tutorial = "Coin is the only God worth worshipping, and you've devoted your lyfe to it. \
 	You have access to goods nobody Flipside can acquire legally, or easily - and a list of clients who will pay \
 	anything not to have their name associated with acquiring them. Keep it quiet. Keep it profitable."
 
@@ -537,7 +580,7 @@
 	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_FLINGER_JOB
-	min_pq = 40
+	min_pq = 55
 	max_pq = null
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_SCUM
@@ -552,6 +595,15 @@
 	announce_latejoin = FALSE
 
 /datum/outfit/job/roguetown/underbelly/flinger
+
+/datum/outfit/job/roguetown/underbelly/flinger/pre_equip(mob/living/carbon/human/H)
+	..()  
+	mask = null
+	armor = null
+	cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	belt = /obj/item/storage/belt/rogue/leather/double
+	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 
 /datum/outfit/job/roguetown/underbelly/flinger/post_equip(mob/living/carbon/human/H)
 	..()
@@ -584,8 +636,12 @@
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/firearms = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/flinger/fence/pre_equip(mob/living/carbon/human/H)
@@ -593,9 +649,9 @@
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/chaperon/brown
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
-	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/clothing/neck/roguetown/horus
+	beltl = /obj/item/roguekey/underbelly/scum
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich //fence starts rich
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
@@ -629,8 +685,12 @@
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/stealing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/firearms = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/flinger/dealer/pre_equip(mob/living/carbon/human/H)
@@ -638,8 +698,8 @@
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/chaperon/brown
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
-	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
+	beltl = /obj/item/roguekey/underbelly/scum
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid //less coin than fence
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list( //more merchandise to start moving
@@ -691,8 +751,13 @@
 
 /datum/outfit/job/roguetown/underbelly/ripper/pre_equip(mob/living/carbon/human/H)
 	..()
+	mask = null
+	head = /obj/item/clothing/head/roguetown/puritan/scum
 	armor = null
 	cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	belt = /obj/item/storage/belt/rogue/leather/double
+	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 
 /datum/outfit/job/roguetown/underbelly/ripper/post_equip(mob/living/carbon/human/H)
 	..()
@@ -724,19 +789,22 @@
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/ripper/sawbones/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/physician
-	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/natural/bundle/cloth/bandage/full = 3,
+		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/flashlight/flare/torch = 1,
 	)
 
@@ -766,13 +834,15 @@
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/underbelly/ripper/chirurgeon/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/physician
-	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich //precision costs more
@@ -780,6 +850,7 @@
 	backpack_contents = list(
 		/obj/item/natural/bundle/cloth/bandage/full = 2,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
+		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/flashlight/flare/torch = 1,
 	)
 

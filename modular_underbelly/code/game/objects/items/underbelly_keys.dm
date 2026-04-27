@@ -11,3 +11,15 @@
 	desc = "Heavy and well-worn."
 	icon_state = "rustkey"
 	lockid = "underbelly_boss"
+
+// Single-use pass coin for the Doorman. Dark-stained silver, consumed on use.
+/obj/item/roguecoin/scum_pass
+	name = "marked coin"
+	desc = "A ziliqua with a small notch cut into its edge and a dark stain pressed into the face. It means nothing to most."
+	icon_state = "s1"
+	color = "#222222"
+	sellprice = 0
+	base_type = "s"
+	plural_name = "marked coins"
+	static_price = TRUE
+	simpleton_price = TRUE

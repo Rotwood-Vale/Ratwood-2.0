@@ -30,9 +30,10 @@ type Data = {
   shared: ShopItem[];
   exclusive: ShopItem[];
   flinger: ShopItem[];
+  shipments: ShopItem[];
 };
 
-type TabName = 'shared' | 'exclusive' | 'flinger';
+type TabName = 'shared' | 'exclusive' | 'flinger' | 'shipments';
 
 export const UnderbellyShop = () => {
   const { act, data } = useBackend<Data>();
@@ -44,6 +45,7 @@ export const UnderbellyShop = () => {
     shared,
     exclusive,
     flinger,
+    shipments,
   } = data;
 
   const [tab, setTab] = useState<TabName>('shared');
@@ -97,6 +99,14 @@ export const UnderbellyShop = () => {
                 A Flinger, ey?
               </Tabs.Tab>
             )}
+            {!!is_flinger && (
+              <Tabs.Tab
+                selected={tab === 'shipments'}
+                onClick={() => setTab('shipments')}
+              >
+                Shipments.
+              </Tabs.Tab>
+            )}
           </Tabs>
           <Divider />
           {tab === 'shared' && (
@@ -111,6 +121,13 @@ export const UnderbellyShop = () => {
           )}
           {tab === 'flinger' && !!is_flinger && (
             <ItemList items={flinger} act_name="buy_flinger" budget={budget} />
+          )}
+          {tab === 'shipments' && !!is_flinger && (
+            <ItemList
+              items={shipments}
+              act_name="buy_shipment"
+              budget={budget}
+            />
           )}
         </Section>
       </Window.Content>
