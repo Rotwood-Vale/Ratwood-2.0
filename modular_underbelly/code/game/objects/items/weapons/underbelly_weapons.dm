@@ -226,11 +226,11 @@
 	desc = "A blunderbuss with a reinforced barrel and an ugly extended magazine. \
 	It fires a spread wide enough to catch everyone in the room. \
 	Nobody who sees it pointed at them tries their luck."
-	icon = 'icons/roguetown/weapons/guns32.dmi'
-	icon_state = "blunderbuss"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	item_state = "blunderbuss"
+	icon = 'modular_underbelly/sprites/lungpuncher.dmi'
+	icon_state = "lungpuncher"
+	lefthand_file = 'modular_underbelly/sprites/lungpuncher.dmi'
+	righthand_file = 'modular_underbelly/sprites/lungpuncher.dmi'
+	item_state = "lungpuncher1"
 	bigboy = FALSE
 	gripsprite = FALSE
 	cartridge_wording = "grapeshot"
@@ -246,8 +246,10 @@
 	. = ..()
 	if(tag)
 		switch(tag)
-			if("onback")
-				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -9,"sy" = 5,"nx" = 9,"ny" = 6,"wx" = -4,"wy" = 8,"ex" = 3,"ey" = 4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -22,"sturn" = 208,"wturn" = 208,"eturn" = -15,"nflip" = 0,"sflip" = 1,"wflip" = 1,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = -2,"ny" = 6,"wx" = 3,"wy" = 1,"ex" = 4,"ey" = 4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 1,"nturn" = 187,"sturn" = -8,"wturn" = 17,"eturn" = -13,"nflip" = 1,"sflip" = 0,"wflip" = 0,"eflip" = 0)
 
 /obj/item/gun/ballistic/firearm/devastator/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/quiver/bullet/grapeshot))

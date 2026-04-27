@@ -26,6 +26,12 @@
 /obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum
 	name = "Mask of Scum"
 	desc = "A mask made out of heartstone, often used by Scum."
+	icon = 'modular_underbelly/sprites/blackguardhelm.dmi'
+	icon_state = "blackguard"
+	mob_overlay_icon = 'modular_underbelly/sprites/blackguardhelm.dmi'
+
+/obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum/build_worn_icon(default_layer, default_icon_file, isinhands, femaleuniform, override_state, female, customi, sleeveindex, boobed_overlay, clip_mask)
+	return ..(default_layer, default_icon_file, isinhands, femaleuniform, override_state || "blackguard_", female, customi, sleeveindex, boobed_overlay, clip_mask)
 
 /obj/item/clothing/head/roguetown/puritan/scum
 	name = "shoddy hat"
