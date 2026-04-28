@@ -221,33 +221,30 @@
 //		testing("Can't find parameters for that mouseover.")
 		return
 
-	//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
-	var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
-
-	//Split X+Pixel_X up into list(X, Pixel_X)
-	var/list/screen_loc_X = splittext(screen_loc_params[1],":")
-
-	//Split Y+Pixel_Y up into list(Y, Pixel_Y)
-	var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+	// Decompose the screen-loc string into its actual position using a regex
+	// This is more complex but faster than multiple splittext operations
+	var/static/regex/decompose_screen_loc = new(@"^(\d+):(\d+),(\d+):(\d+)$")
+	decompose_screen_loc.Find(PM["screen-loc"])
+	var/screen_x = text2num(decompose_screen_loc.group[1])
+	var/pix_x = text2num(decompose_screen_loc.group[2])
+	var/screen_y = text2num(decompose_screen_loc.group[3])
+	var/pix_y = text2num(decompose_screen_loc.group[4])
 
 	//Normalise Pixel Values (So the object drops at the center of the mouse, not 16 pixels off)
-	var/pix_X = text2num(screen_loc_X[2])
-	var/pix_Y = text2num(screen_loc_Y[2])
-
 	if(hudobj)
 		maptext_y = 28
 		maptext_x = -48
-		pix_Y = 0
+		pix_y = 0
 	else
 		maptext_y = 28
 		maptext_x = -32
 
-	if(text2num(screen_loc_X[1]) <= -3)
-		screen_loc_X[1] = -3
-	if(text2num(screen_loc_Y[1]) <= 0)
-		screen_loc_Y[1] = 1
+	if(text2num(screen_x) <= -3)
+		screen_x = -3
+	if(text2num(screen_y) <= 0)
+		screen_y = 1
 
-	screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
+	screen_loc = "[screen_x]:[pix_x],[screen_y]:[pix_y]"
 
 	moved = screen_loc
 
