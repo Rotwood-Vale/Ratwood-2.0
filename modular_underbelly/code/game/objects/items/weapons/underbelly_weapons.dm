@@ -238,7 +238,7 @@
 	spread = 15
 	var/rounds_remaining = 0
 	/// Max grapeshots the barrel can hold. Raised to 3 by the capacity upgrade kit.
-	var/max_capacity = 4
+	var/max_capacity = 2
 	/// Set when the firing mechanism jams. Cleared by right-clicking to fix it.
 	var/jammed = FALSE
 
