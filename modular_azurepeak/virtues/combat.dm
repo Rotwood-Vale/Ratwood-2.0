@@ -6,16 +6,16 @@
 	added_skills = list(list(/datum/skill/magic/arcane, 1, 6))
 
 /datum/virtue/combat/magical_potential/apply_to_human(mob/living/carbon/human/recipient)
-	if (!recipient.get_skill_level(/datum/skill/magic/arcane)) // we can do this because apply_to is always called first
-		if (!recipient.mind?.has_spell(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation))
-			recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		ADD_TRAIT(recipient, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
-		if (!HAS_TRAIT(recipient, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(recipient, TRAIT_HEAVYARMOR) && !HAS_TRAIT(recipient, TRAIT_DODGEEXPERT) && !HAS_TRAIT(recipient, TRAIT_CRITICAL_RESISTANCE))
-			recipient.mind?.adjust_spellpoints(3) // non-combatants get 3
-		else
-			recipient.mind?.adjust_spellpoints(2) // combatants get 2
-	else
-		recipient.mind?.adjust_spellpoints(3) // everyone else that already has arcane gets their full 3, behavior unchanged
+	if(recipient.get_skill_level(/datum/skill/magic/arcane))
+		recipient.mind?.adjust_spellpoints(3)
+		return
+	if(!recipient.mind?.has_spell(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation))
+		recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	ADD_TRAIT(recipient, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
+	if(HAS_TRAIT(recipient, TRAIT_MEDIUMARMOR) || HAS_TRAIT(recipient, TRAIT_HEAVYARMOR) || HAS_TRAIT(recipient, TRAIT_DODGEEXPERT) || HAS_TRAIT(recipient, TRAIT_CRITICAL_RESISTANCE))
+		recipient.mind?.adjust_spellpoints(2) // combatants get 2
+		return
+	recipient.mind?.adjust_spellpoints(3) // non-combatants get 3
 	
 /datum/virtue/combat/devotee
 	name = "Devotee"
