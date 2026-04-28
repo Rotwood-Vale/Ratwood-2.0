@@ -7,7 +7,8 @@
 		"_maps/map_files/otherz/advspawnrockhill.json",
 		"_maps/map_files/otherz/banditmountain.json",
 		"_maps/map_files/otherz/vl_manor.json",
-		"_maps/map_files/otherz/wretchfort.json"
+		"_maps/map_files/otherz/wretchfort.json",
+		"_maps/map_files/otherz/scum.json"
 	],
 	"space_empty_levels": 0,
 	"space_ruin_levels": 0,

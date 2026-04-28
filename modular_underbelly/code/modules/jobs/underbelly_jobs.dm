@@ -127,7 +127,7 @@
 /datum/outfit/job/roguetown/underbelly/gutterking/post_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		scum_select_criminal_record(H)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /datum/job/roguetown/gutterking/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	..()
@@ -296,7 +296,7 @@
 /datum/outfit/job/roguetown/underbelly/scum/post_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		scum_select_criminal_record(H)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_APPRENTICE, TRUE)
 
@@ -631,7 +631,7 @@
 /datum/outfit/job/roguetown/underbelly/flinger/post_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		scum_select_criminal_record(H)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 // Fence - moves stolen goods. Starts rich, keeps the margin.
 /datum/advclass/flinger/fence
@@ -781,7 +781,7 @@
 /datum/outfit/job/roguetown/underbelly/ripper/post_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		scum_select_criminal_record(H)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 // Sawbones — rough, fast, pragmatic.
 /datum/advclass/ripper/sawbones
