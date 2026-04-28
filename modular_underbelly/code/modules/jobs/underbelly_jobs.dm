@@ -22,15 +22,26 @@
 		H << sound('modular_underbelly/sound/scummy.ogg', volume = 35)
 		ADD_TRAIT(H, TRAIT_UNDERBELLY_SCUM, "underbelly_job")
 		H.grant_language(/datum/language/thievescant)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_send_warning), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+
+/proc/scum_send_warning(mob/living/carbon/human/H)
+	if(!H?.client)
+		return
+	to_chat(H, "<span class='userdanger'>I am Scum. The Gods forsake me, and society has rebuked me to these depths. If I wish to survive until the end of the week, I should follow <a href=\"https://wiki.ratwood.rip/index.php/Underbelly#THE_LAWS_OF_THE_SCUM\">The laws of The Scum</a> if I wish to keep my position within this organization - and not find myself dead in the sewers.</span>")
+	to_chat(H, "<span class='warning'>This role is held to a higher roleplay standard by the staff team. Failing to meet role expectations can be met with harsher punishments than others. AHelp if you need assistance!</span>")
 
 /obj/item/clothing/head/roguetown/helmet/blackguard
 	name = "SCUM"
-	desc = "A grim, full-faced helm of carved hard-stone. Favoured by the Scum. Wear it with pridew, for you know what you are."
+	desc = "A grim, full-faced helm of carved iron, reinforced with other alloys. Favoured by the Scum. Wear it with pride, for you know what you are."
 	icon = 'modular_underbelly/sprites/blackguard.dmi'
 	icon_state = "blackguard"
 	mob_overlay_icon = 'modular_underbelly/sprites/blackguard_onmob.dmi'
-	body_parts_covered = HEAD|HAIR|NOSE|FACE
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	body_parts_covered = HEAD|HAIR|NOSE|FACE|EARS|EYES|NECK
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEARS|HIDENECK
+	flags_cover = HEADCOVERSEYES
+	armor = list("blunt" = 10, "slash" = 90, "stab" = 70, "piercing" = 35, "fire" = 0, "acid" = 0)
+	max_integrity = 260
+	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/head/roguetown/puritan/scum
 	name = "shoddy hat"

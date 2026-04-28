@@ -148,9 +148,15 @@
 	// -- Drugs & Smokes --
 	var/list/cat_drugs = list(
 		list("Pipeweed Zigarette",    "Mild. Takes the edge off.",                                      /obj/item/clothing/mask/cigarette/rollie/nicotine,              2, 10),
+		list("Mentha Zigarette",      "Smooth westleach with a cooling bite.",                          /obj/item/clothing/mask/cigarette/rollie/mentha,                2, 14),
+		list("Cheroot",               "Self-rolled cigarillo. Stronger leaf, longer burn.",             /obj/item/clothing/mask/cigarette/rollie/nicotine/cheroot,      1, 20),
 		list("Swampweed Zigarette",   "Stronger. Sourced from the Bog.",                                /obj/item/clothing/mask/cigarette/rollie/cannabis,              2, 15),
+		list("Swampleaf Cheroot",     "Sweetleaf in westleach wrap. Hits both ways.",                   /obj/item/clothing/mask/cigarette/rollie/cannabis/cheroot,      1, 28),
+		list("Trippy Zig",            "Wrapped cartridge of something else. Lit and ready.",            /obj/item/clothing/mask/cigarette/rollie/trippy,                1, 40),
+		list("Ozium",                 "Bitter, numbing powder. Goes through the nose.",                 /obj/item/reagent_containers/powder/ozium,                      1, 30),
 		list("Moon Dust",             "Powder. Effects vary. Highly sought after.",                     /obj/item/reagent_containers/powder/moondust,                   1, 50),
 		list("Spice",                 "No questions. You know what this is for.",                       /obj/item/reagent_containers/powder/spice,                      1, 50),
+		list("Purest Moondust",       "Glittering, flake-fine. Don't waste it.",                        /obj/item/reagent_containers/powder/moondust_purest,            1, 150),
 	)
 
 	// -- Utility --
@@ -168,7 +174,7 @@
 
 	// =========================================================
 	// GENERAL MERCHANDISE (Main Shop)
-	// 25-35 slots drawn at random from the full master pool.
+	// 5-15 slots total drawn at random from master + ingots + stolen.
 	// =========================================================
 	var/list/shared_shuffled = shuffle(general_master.Copy())
 	var/shared_take = rand(5, min(15, shared_shuffled.len))
@@ -190,6 +196,8 @@
 		list("Silver Bullion",      "Blessed and stamped. Kingsfield doesn't know it's gone.",/obj/item/ingot/silverblessed, 2, 85, 15),
 	)
 	for(var/entry in ingot_pool)
+		if(shared_pool.len >= 15)
+			break
 		if(prob(entry[6]))
 			shared_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], rand(1, entry[4]), entry[5])
 
@@ -235,18 +243,23 @@
 	)
 
 	var/list/stolen_all = stolen_helmets + stolen_armor + stolen_weapons + stolen_firearm
-	for(var/entry in stolen_all)
+	for(var/entry in shuffle(stolen_all))
+		if(shared_pool.len >= 15)
+			break
 		if(prob(entry[6]))
 			shared_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], rand(1, entry[4]), entry[5])
 
 	// =========================================================
 	// EXCLUSIVES - Role-locked only, 1 to 3 drawn per cycle.
 	// Format: name, desc, type, stock, cost, flinger, role
+	// Scum guns are rolled in separately at low chance to keep them rare.
 	// =========================================================
+	var/list/scum_guns = list(
+		list("The Gut Spillah",       "A Scum's favorite weapon. The backbone of a deal gone wrong. Modified and fabricated by my mates in Kingsfield.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,      1, 750,  FALSE, "Scum"),
+		list("The Venator",  "If you've got a message to send, this is the ticket. A bolt racked rifle capable of shooting thrice before needing a reload.",  /obj/item/gun/ballistic/firearm/flintgonne/venator,               1, 1100, FALSE, "Scum"),
+		list("The Devastator",       "What the hell are you planning on taking down with this? Zizo? BAHAHA!",  /obj/item/gun/ballistic/firearm/devastator,                      1, 1500, FALSE, "Scum"),
+	)
 	var/list/excl_master = list(
-		list("The Gut Spillah",       "A Scum's favorite weapon. The backbone of a deal gone wrong. Modified and fabricated by my mates in Kingsfield.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,      1, 500,  FALSE, "Scum"),
-		list("The Venator",  "If you've got a message to send, this is the ticket. A bolt racked rifle capable of shooting thrice before needing a reload.",  /obj/item/gun/ballistic/firearm/flintgonne/venator,               1, 750,  FALSE, "Scum"),
-		list("The Devastator",       "What the hell are you planning on taking down with this? Zizo? BAHAHA!",  /obj/item/gun/ballistic/firearm/devastator,                      1, 1000,  FALSE, "Scum"),
 		list("Tipped Hat",         "Nobody's seeing that face. Nobody's knowing that name.",  /obj/item/clothing/head/roguetown/chaperon/flinger,            1, 120, FALSE, "Flinger"),
 		list("Defacer",            "Knuckles that were hardened with ancient alloys and Steel. Hits harder, breaks faster.", /obj/item/rogueweapon/knuckles/defacer, 1, 85, FALSE, "Scum"),
 		list("Suffocator",         "Load it with Zizo's bane, then press it onto an unguarded face. A moment's hesitation is all it needs.", /obj/item/clothing/mask/rogue/suffocator, 1, 200, FALSE, "Flesh Trader"),
@@ -261,23 +274,30 @@
 		list("Extended Cylinder Plate","One more round in the chamber. Apply it to the gun.",            /obj/item/underbelly_upgrade/capacity,  2, 180, FALSE, "Scum"),
 		list("Filed Sights",           "Tighter spread. Easier to put the ball where you want it. Apply it to the gun.", /obj/item/underbelly_upgrade/aim, 2, 130, FALSE, "Scum"),
 	)
+	for(var/entry in scum_guns)
+		if(prob(12))
+			excl_master += list(entry)
 	var/list/excl_shuffled = shuffle(excl_master)
 	for(var/i = 1 to min(rand(1, 3), excl_shuffled.len))
 		var/entry = excl_shuffled[i]
 		exclusive_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], 1, entry[5], FALSE, entry[7])
 
 	// =========================================================
-	// FLINGER POOL - Independent re-roll from the same master.
+	// FLINGER POOL - Independent re-roll. 5-15 slots total.
 	// =========================================================
 	var/list/flinger_shuffled = shuffle(general_master.Copy())
-	var/flinger_take = rand(10, min(20, flinger_shuffled.len))
+	var/flinger_take = rand(5, min(15, flinger_shuffled.len))
 	for(var/i = 1 to flinger_take)
 		var/entry = flinger_shuffled[i]
 		flinger_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], entry[4], entry[5])
 	for(var/entry in ingot_pool)
+		if(flinger_pool.len >= 15)
+			break
 		if(prob(entry[6]))
 			flinger_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], rand(1, entry[4]), entry[5])
-	for(var/entry in stolen_all)
+	for(var/entry in shuffle(stolen_all))
+		if(flinger_pool.len >= 15)
+			break
 		if(prob(entry[6]))
 			flinger_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], rand(1, entry[4]), entry[5])
 
