@@ -1042,6 +1042,12 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/scum/boss)
+"zL" = (
+/obj/structure/roguemachine/mail/l{
+	mailtag = "The Underbelly"
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "zR" = (
 /obj/effect/landmark/start/scumlate,
 /turf/open/floor/carpet/inn,
@@ -8050,7 +8056,7 @@ LR
 VD
 YK
 lh
-LR
+zL
 BY
 vn
 vn
