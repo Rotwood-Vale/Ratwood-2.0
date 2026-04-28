@@ -22,11 +22,14 @@
 
 /datum/outfit/job/roguetown/underbelly/post_equip(mob/living/carbon/human/H)
 	..()
-	if(H.mind)
-		H << sound('modular_underbelly/sound/scummy.ogg', volume = 35)
-		ADD_TRAIT(H, TRAIT_UNDERBELLY_SCUM, "underbelly_job")
-		H.grant_language(/datum/language/thievescant)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_send_warning), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+	if(!H.mind)
+		return
+	if(HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
+		return
+	H << sound('modular_underbelly/sound/scummy.ogg', volume = 35)
+	ADD_TRAIT(H, TRAIT_UNDERBELLY_SCUM, "underbelly_job")
+	H.grant_language(/datum/language/thievescant)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_send_warning), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /proc/scum_send_warning(mob/living/carbon/human/H)
 	if(!H?.client)
@@ -889,7 +892,9 @@
 // known criminals for a stat buff, like bandits.
 // =====================================================
 /proc/scum_select_criminal_record(mob/living/carbon/human/H)
-	if(!H?.client || !H.mind)
+	if(!H?.client || !H.mind || !H.dna?.species)
+		return
+	if(H.islatejoin)
 		return
 	if(H.mind.scum_record_prompted)
 		return
