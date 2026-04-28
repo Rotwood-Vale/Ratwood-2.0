@@ -60,6 +60,8 @@
 	var/cansnout = FALSE //for masks - can we MMB this to change it into a snouty sprite?
 	var/snouting = FALSE //do we have the snout-snug sprite toggled?
 
+	var/throw_on_break = FALSE//does it fall off your body when broken?
+
 /obj/item
 	var/blocking_behavior
 	var/wetness = 0
@@ -345,6 +347,22 @@
 		if(armorlist[x] > 0)
 			armorlist[x] = 0
 	..()
+	if(throw_on_break)
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			var/throwprob = 80 + ((10 - H.STALUC) * 20)	// More FOR we have the less likely it is to happen.
+			if(!prob(throwprob))
+				return
+			H.dropItemToGround(src, silent = TRUE)
+			H.update_fov_angles()
+			if(material_category == ARMOR_MAT_PLATE || material_category == ARMOR_MAT_CHAINMAIL)
+				do_sparks(2, TRUE, get_turf(H))
+			var/turnangle = (prob(10) ? 180 : prob(50) ? 270 : 90)
+			var/turndir = turn(H.dir, turnangle)
+			var/dist = rand(1, 3)
+			var/current_turf = get_turf(H)
+			var/target_turf = get_ranged_target_turf(current_turf, turndir, dist)
+			throw_at(target_turf, dist, 6, H, FALSE)
 
 /obj/item/clothing/obj_fix(mob/user, full_repair = TRUE)
 	..()
