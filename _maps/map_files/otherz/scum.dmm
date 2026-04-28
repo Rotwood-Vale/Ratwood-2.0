@@ -56,7 +56,7 @@
 "gM" = (/obj/item/roguecoin/gold/pile,/obj/item/roguecoin/gold/pile,/obj/machinery/light/rogue/candle/green/r,/turf/open/floor/carpet/purple,/area/rogue/under/scum/boss)
 "hg" = (/obj/structure/fluff/walldeco/church/line,/obj/effect/landmark/smuggler_drop,/obj/structure/fluff/walldeco/church/line{dir = 8},/obj/structure/fluff/walldeco/church/line{dir = 1},/turf/open/floor/carpet/red,/area/rogue/under/scum/landing)
 "hh" = (/obj/structure/chair/wood/rogue/fancy{dir = 4; pixel_x = 5},/obj/effect/landmark/start/flingerlate,/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/common)
-"hj" = (/obj/structure/bars/grille/rusty,/obj/structure/fluff/traveltile/underbelly/pipe{pixel_y = -5; pixel_x = -1; doorman_id = "BOG_BRIDGE"; aportalid = "BOG_BRIDGE_EXIT"; aportalgoesto = "BOG_BRIDGE"},/turf/open/water/sewer,/area/rogue/under/scum)
+"hj" = (/obj/structure/bars/grille/rusty,/obj/structure/fluff/traveltile/underbelly/pipe{pixel_y = -5; pixel_x = -1; doorman_id = "BOG_BRIDGE"; aportalid = "BOG_BRIDGE_EXIT"; aportalgoesto = "BOG_BRIDGE"},/turf/open/floor/rogue/cobblerock,/area/rogue/under/scum)
 "hn" = (/obj/machinery/light/rogue/campfire/fireplace{pixel_x = -32; pixel_y = 0},/turf/closed/wall/mineral/rogue/stone/moss,/area/rogue/under/scum/common)
 "ht" = (/obj/structure/bars/grille/rusty,/obj/machinery/light/roguestreet/midlamp{pixel_x = -4; pixel_y = 25},/turf/open/floor/rogue/metal/barograte,/area/rogue/under/scum)
 "hD" = (/obj/structure/fluff/railing/border{dir = 8},/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue/under/scum/lounge)
@@ -112,7 +112,7 @@
 "pK" = (/obj/effect/decal/carpet/kover_black{pixel_x = 17; pixel_y = -3},/obj/structure/chair/bench/couchablack{pixel_y = 10},/turf/open/floor/carpet/inn,/area/rogue/under/scum/lounge)
 "pO" = (/obj/structure/table/vtable/v2,/obj/item/flashlight/flare/light{pixel_y = 7; pixel_x = -13},/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/shop)
 "pQ" = (/turf/closed/wall/mineral/rogue/pipe{desc = "Solid steel made into an impenetrable obstacle. This stretch of wall however seems to have thin hairline cracks in it's bronzed coating."; icon_state = "iron_line"; max_integrity = 2000; name = "suspicious metal wall"; density = 0},/area/rogue/under/scum/lounge)
-"pS" = (/obj/structure/bars/grille/rusty,/obj/structure/fluff/traveltile/underbelly_pipe_exit{doorman_id = "KEEP_BASEMENT_NORTH"; aportalid = "KEEP_BASEMENT_NORTH_EXIT"; aportalgoesto = "KEEP_BASEMENT_NORTH"},/turf/open/water/sewer,/area/rogue/under/scum)
+"pS" = (/obj/structure/bars/grille/rusty,/obj/structure/fluff/traveltile/underbelly_pipe_exit{doorman_id = "KEEP_BASEMENT_NORTH"; aportalid = "KEEP_BASEMENT_NORTH_EXIT"; aportalgoesto = "KEEP_BASEMENT_NORTH"},/turf/open/floor/rogue/cobblerock,/area/rogue/under/scum)
 "pZ" = (/obj/item/roguebin/water/gross,/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/workshop)
 "qp" = (/obj/effect/decal/carpet/square{pixel_x = 14; pixel_y = -4},/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/common)
 "qF" = (/obj/structure/fluff/walldeco/church/line{dir = 8},/obj/structure/fluff/walldeco/church/line,/turf/open/floor/rogue/carpet,/area/rogue/under/scum/common)
@@ -127,7 +127,7 @@
 "sq" = (/obj/structure/fluff/walldeco/med5{pixel_y = 32},/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/apothecary)
 "sA" = (/obj/structure/bed/rogue/inn,/obj/structure/fluff/railing/border{dir = 8},/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/apothecary)
 "sC" = (/obj/structure/shisha/hookah{pixel_x = 9},/turf/open/floor/rogue/carpet/lord/center,/area/rogue/under/scum/boss)
-"sY" = (/obj/structure/rack/rogue/shelf/biggest,/obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum,/obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum,/obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum,/obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum,/obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum,/obj/item/clothing/head/roguetown/puritan/scum,/obj/item/clothing/head/roguetown/puritan/scum,/obj/item/clothing/head/roguetown/puritan/scum,/obj/item/clothing/head/roguetown/puritan/scum,/obj/item/clothing/head/roguetown/puritan/scum,/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/shop)
+"sY" = (/obj/structure/rack/rogue/shelf/biggest,/obj/item/clothing/head/roguetown/helmet/blackguard,/obj/item/clothing/head/roguetown/helmet/blackguard,/obj/item/clothing/head/roguetown/helmet/blackguard,/obj/item/clothing/head/roguetown/helmet/blackguard,/obj/item/clothing/head/roguetown/helmet/blackguard,/obj/item/clothing/head/roguetown/puritan/scum,/obj/item/clothing/head/roguetown/puritan/scum,/obj/item/clothing/head/roguetown/puritan/scum,/obj/item/clothing/head/roguetown/puritan/scum,/obj/item/clothing/head/roguetown/puritan/scum,/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/shop)
 "tB" = (/obj/structure/fluff/walldeco/church/line,/turf/open/floor/rogue/carpet,/area/rogue/under/scum/common)
 "tT" = (/obj/structure/mineral_door/wood/bath/bathmaid{name = "PERSONAL DORMS"; desc = "A place to call your own. Pick a room, and claim it as yours. Decorate it as you see fit."; lockid = "underbelly_scum"},/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/landing)
 "uo" = (/turf/open/floor/carpet/inn,/area/rogue/under/scum/lounge)
@@ -141,7 +141,7 @@
 "we" = (/obj/item/soap/bath,/obj/item/reagent_containers/glass/bucket{pixel_x = -5},/obj/item/natural/cloth{pixel_x = -5},/obj/structure/fluff/railing/border{dir = 9},/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue/under/scum/lounge)
 "wf" = (/obj/structure/bars/grille/rusty,/obj/structure/fluff/walldeco/sign/merchantsign{name = "THE SMUGGLER TRAIN"},/turf/open/floor/rogue/metal/barograte,/area/rogue/under/scum)
 "wg" = (/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/apothecary)
-"ww" = (/obj/structure/bars/grille/rusty,/obj/machinery/light/roguestreet/midlamp{pixel_x = -29; pixel_y = 24},/turf/open/water/sewer,/area/rogue/under/scum)
+"ww" = (/obj/structure/bars/grille/rusty,/obj/machinery/light/roguestreet/midlamp{pixel_x = -29; pixel_y = 24},/turf/open/floor/rogue/cobblerock,/area/rogue/under/scum)
 "wE" = (/obj/structure/fluff/statue/small{name = "conviniently placed statue"},/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/common)
 "wO" = (/obj/machinery/light/roguestreet/midlamp{pixel_x = -4; pixel_y = 25},/turf/open/transparent/openspace,/area/rogue/under/scum)
 "wW" = (/turf/closed/wall/mineral/rogue/pipe,/area/rogue/under/scum/common)
@@ -171,7 +171,7 @@
 "Av" = (/turf/closed/wall/mineral/rogue/pipe/line,/area/rogue/under/scum)
 "Ay" = (/obj/structure/table/wood,/obj/machinery/light/rogue/candle,/obj/structure/underbelly_speaker{pixel_x = 1; pixel_y = 6},/turf/open/floor/rogue/carpet/lord/center,/area/rogue/under/scum/boss)
 "AC" = (/turf/open/floor/rogue/metal,/area/rogue/under/scum)
-"AM" = (/obj/structure/bars/grille/rusty,/obj/machinery/light/roguestreet/midlamp{pixel_x = -4; pixel_y = 25},/turf/open/water/sewer,/area/rogue/under/scum)
+"AM" = (/obj/structure/bars/grille/rusty,/obj/machinery/light/roguestreet/midlamp{pixel_x = -4; pixel_y = 25},/turf/open/floor/rogue/cobblerock,/area/rogue/under/scum)
 "AQ" = (/obj/structure/bars/grille/rusty,/turf/open/floor/rogue/metal/barograte,/area/rogue/under/scum)
 "Bj" = (/obj/structure/bars/grille/rusty,/obj/machinery/light/roguestreet/midlamp{pixel_x = -15},/turf/open/floor/rogue/metal/barograte,/area/rogue/under/scum)
 "Bl" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/obj/structure/fluff/walldeco/church/line{dir = 8},/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals{pixel_x = -5; pixel_y = 8},/turf/open/floor/rogue/tile/harem2,/area/rogue/under/scum/lounge)
@@ -185,10 +185,8 @@
 "Ck" = (/obj/structure/fluff/walldeco/flower,/turf/open/transparent/openspace,/area/rogue/under/scum)
 "Cx" = (/obj/effect/decal/cleanable/debris/stony,/obj/item/roguebin/trash,/obj/machinery/light/rogue/candle/green/r,/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/common)
 "Cz" = (/turf/open/floor/carpet/purple,/area/rogue/under/scum/boss)
-"CE" = (/obj/effect/landmark/start/flingerlate,/turf/open/transparent/openspace,/area/rogue/under/scum)
 "CQ" = (/obj/machinery/light/rogue/forge,/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/workshop)
 "CR" = (/obj/structure/bars/grille/rusty,/obj/effect/landmark/start/flingerlate,/turf/open/floor/rogue/metal/barograte,/area/rogue/under/scum)
-"CU" = (/obj/effect/landmark/start/scumlate,/turf/open/transparent/openspace,/area/rogue/under/scum)
 "CW" = (/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{pixel_x = 5; pixel_y = 12},/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{pixel_x = -3; pixel_y = 12},/turf/closed/wall/mineral/rogue/craftstone,/area/rogue/under/scum/common)
 "Da" = (/obj/machinery/light/roguestreet/midlamp{pixel_x = -4; pixel_y = 25},/turf/open/water/sewer,/area/rogue/under/scum)
 "De" = (/turf/closed/wall/mineral/rogue/craftstone,/area/rogue/under/scum/dorms)
@@ -237,7 +235,7 @@
 "JD" = (/obj/structure/rack/rogue/shelf/biggest{pixel_x = -4},/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/common)
 "JX" = (/obj/machinery/light/rogue/candle/green/r,/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/landing)
 "Kb" = (/obj/structure/bed/rogue/inn,/turf/open/floor/rogue/herringbone,/area/rogue/under/scum/apothecary)
-"KE" = (/obj/structure/bars/grille/rusty,/turf/open/water/sewer,/area/rogue/under/scum)
+"KE" = (/obj/structure/bars/grille/rusty,/turf/open/floor/rogue/cobblerock,/area/rogue/under/scum)
 "KG" = (/obj/structure/fluff/walldeco/church/line{dir = 1},/turf/open/floor/carpet/inn,/area/rogue/under/scum/landing)
 "KH" = (/obj/structure/fluff/walldeco/church/line,/obj/structure/fluff/walldeco/church/line{dir = 1},/turf/open/floor/carpet/red,/area/rogue/under/scum/landing)
 "KL" = (/obj/structure/fluff/traveltile/underbelly_pipe_exit{pixel_x = 4; pixel_y = 22; doorman_id = "NEAR_SOILSON"; aportalid = "UNDER_CHURCH_EXIT"; aportalgoesto = "UNDER_CHURCH"},/turf/open/floor/rogue/metal,/area/rogue/under/scum)
@@ -251,7 +249,7 @@
 "LY" = (/obj/structure/vampthrone{name = "The Gutter Throne"; desc = "A big, likely stolen throne."},/obj/effect/landmark/start/gutterkingleft,/turf/open/floor/rogue/carpet/lord/center,/area/rogue/under/scum/boss)
 "Mn" = (/obj/effect/decal/cleanable/greenglow,/turf/open/floor/rogue/metal/barograte,/area/rogue/under/scum/landing)
 "MD" = (/obj/structure/table/wood/poker{pixel_x = 2},/turf/open/floor/rogue/carpet/lord/left,/area/rogue/under/scum/boss)
-"MN" = (/obj/structure/bars/grille/rusty,/obj/structure/mineral_door/wood/bath/bathmaid{name = "THE BACKDOOR"; desc = "Has a sign on it: \"AUTHORISED PERSONNEL ONLY.\""; lockid = "underbelly_scum"},/turf/open/water/sewer,/area/rogue/under/scum)
+"MN" = (/obj/structure/bars/grille/rusty,/obj/structure/mineral_door/wood/bath/bathmaid{name = "THE BACKDOOR"; desc = "Has a sign on it: \"AUTHORISED PERSONNEL ONLY.\""; lockid = "underbelly_scum"},/turf/open/floor/rogue/cobblerock,/area/rogue/under/scum)
 "MR" = (/obj/structure/fluff/railing/border{dir = 10},/turf/open/floor/carpet/inn,/area/rogue/under/scum/lounge)
 "Na" = (/obj/structure/fluff/pillow/purple{dir = 1},/turf/open/floor/rogue/tile/bath{icon_state = "bathtileratwood"},/area/rogue/under/scum/lounge)
 "NN" = (/obj/structure/fluff/walldeco/church/line{dir = 8},/obj/effect/landmark/start/scumlate,/turf/open/floor/rogue/carpet,/area/rogue/under/scum/common)
@@ -443,8 +441,8 @@ JbACACACACACACACAQAQjRAQAQAQAQAQjRAQAQAQAQjRAQAQAQAQAQAQAQjRAQAQAQAQAQAQAQAQBjjR
 JbWbFFPqPqPqPqFFAQAQRpfSfSfSfSfSfScRyPDoEoEoEoEoEoEoEoEoEoDsEoEoEoDsEoEotTEoSGAQAQWaVcVcVcVcOSEjGYEjVcVcVcWaCkvnvnvnvnvnAQzkWbJb
 cDWbWbvnvnvnvnAvAQhtBziuBBiuiuxLBBiuiuiudXiuiuVwvfWuvfchvfvfdXvfchvfvfnuvfchrXAQAQjiXjUaUauouombuofbpKaUXjjivnvnvnvnvnvnAQAQAQJb
 JbvnvnvnvnvnvnAvAQAQBzOaiuvfiudhiudXiuvfiudhvfVwvfvfvfvfvfvfvfvfvfvfvfvfvfvfDsAQAQjiXjuououozRuououououoXjjivnvnvnvnvnvnAQAQAQcD
-JbvnvnvnvnvnvnAvjRAQBziuiueniuiuiuiuiuiuiuVwJXVwvfvfvfvfVwvfvfMnvfvfVwvfnuvfrXAQAQjiGruououououououououoAsjivnvnvnvnvnCEAQAQAQJb
-cDvnvnvnvnvnvnAvAQAQBziuiuiuiuvfiuiuVwVwVwVwiuVwvfVwVwVwVwcPatatatfuvfvfvflJrXAQAQjiXXysMRuououoXXysysysMRjivnvnvnvnvnCUAQAQAQcD
+JbvnvnvnvnvnvnAvjRAQBziuiueniuiuiuiuiuiuiuVwJXVwvfvfvfvfVwvfvfMnvfvfVwvfnuvfrXAQAQjiGruououououououououoAsjivnvnvnvnvnvnCRAQAQJb
+cDvnvnvnvnvnvnAvAQAQBziuiuiuiuvfiuiuVwVwVwVwiuVwvfVwVwVwVwcPatatatfuvfvfvflJrXAQAQjiXXysMRuououoXXysysysMRjivnvnvnvnvnvnjRAQAQcD
 cDvnvnvnvnvnvnAvAQhtBzOavfPFvfRbabRbwXwXwXVwiuVwGGVwvfvfaQyVnmKGhWyVvfvfnuvfrXAQAQjioLLphDLDRTRTfALpLpLpoLjivnvnvnvnvnvnAQAQhtJb
 JbvnvnvnvnvnvnFFAQAQBziuiuiuiuTUwXFKRATUFKVwiuVwvfVwvfvfaQyVPQQmmXyVvfvfvfvfDsAQAQjiLpLpwegsazUCNaLpLpLpLpjivnvnvnvnvnvnAQAQAQcD
 JbvnvnvnvnvnvnaSAQAQBziuiuiuiugphgvPKHdvdvVwiuVwvfVwvfvfaQyVDlzWkCyVvfvfvfvfrXAQAQjiLpLpLpvwXjnjVHLpLpLpLpjivnvnvnvnvnvnAQAQAQJb

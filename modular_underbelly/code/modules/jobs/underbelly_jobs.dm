@@ -23,15 +23,14 @@
 		ADD_TRAIT(H, TRAIT_UNDERBELLY_SCUM, "underbelly_job")
 		H.grant_language(/datum/language/thievescant)
 
-/obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum
-	name = "Mask of Scum"
-	desc = "A mask made out of heartstone, often used by Scum."
-	icon = 'modular_underbelly/sprites/blackguardhelm.dmi'
+/obj/item/clothing/head/roguetown/helmet/blackguard
+	name = "SCUM"
+	desc = "A grim, full-faced helm of carved hard-stone. Favoured by the Scum. Wear it with pridew, for you know what you are."
+	icon = 'modular_underbelly/sprites/blackguard.dmi'
 	icon_state = "blackguard"
-	mob_overlay_icon = 'modular_underbelly/sprites/blackguardhelm.dmi'
-
-/obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum/build_worn_icon(default_layer, default_icon_file, isinhands, femaleuniform, override_state, female, customi, sleeveindex, boobed_overlay, clip_mask)
-	return ..(default_layer, default_icon_file, isinhands, femaleuniform, override_state || "blackguard_", female, customi, sleeveindex, boobed_overlay, clip_mask)
+	mob_overlay_icon = 'modular_underbelly/sprites/blackguard_onmob.dmi'
+	body_parts_covered = HEAD|HAIR|NOSE|FACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/roguetown/puritan/scum
 	name = "shoddy hat"
@@ -118,11 +117,16 @@
 	..()
 	if(H.mind)
 		scum_select_criminal_record(H)
-		H.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/scum)
-		H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_word)
-		H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_laylow)
-		H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_mark)
-		H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_announce)
+
+/datum/job/roguetown/gutterking/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	..()
+	if(!ishuman(H))
+		return
+	H.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/scum)
+	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_word)
+	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_laylow)
+	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_mark)
+	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_announce)
 
 // Kingpin - the brawler. Leads by force, not words.
 /datum/advclass/gutterking/kingpin
@@ -237,8 +241,8 @@
 	flag = UB_SCUM
 	department_flag = UNDERBELLY
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = 6
+	spawn_positions = 6
 	selection_color = JCOLOR_UNDERBELLY
 
 	allowed_races = RACES_ALL_KINDS
@@ -271,8 +275,7 @@
 
 /datum/outfit/job/roguetown/underbelly/scum/pre_equip(mob/living/carbon/human/H)
 	..()
-	mask = /obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum
-	head = /obj/item/clothing/head/roguetown/puritan/scum
+	head = /obj/item/clothing/head/roguetown/helmet/blackguard
 	armor = null
 	cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
@@ -462,8 +465,7 @@
 
 /datum/outfit/job/roguetown/underbelly/fleshtrader/pre_equip(mob/living/carbon/human/H)
 	..()  
-	mask = /obj/item/clothing/mask/rogue/facemask/carved/coralmask/scum
-	head = /obj/item/clothing/head/roguetown/puritan/scum
+	head = /obj/item/clothing/head/roguetown/helmet/blackguard
 	armor = null
 	cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
@@ -655,7 +657,6 @@
 /datum/outfit/job/roguetown/underbelly/flinger/fence/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	head = /obj/item/clothing/head/roguetown/chaperon/flinger
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/clothing/neck/roguetown/horus
 	beltl = /obj/item/roguekey/underbelly/scum
@@ -703,7 +704,6 @@
 /datum/outfit/job/roguetown/underbelly/flinger/dealer/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	head = /obj/item/clothing/head/roguetown/chaperon/flinger
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	beltl = /obj/item/roguekey/underbelly/scum
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid //less coin than fence

@@ -232,24 +232,38 @@
 	righthand_file = 'modular_underbelly/sprites/lungpuncher.dmi'
 	item_state = "lungpuncher1"
 	bigboy = FALSE
-	gripsprite = FALSE
+	gripsprite = TRUE
 	cartridge_wording = "grapeshot"
 	force = 22
 	spread = 15
 	var/rounds_remaining = 0
 	/// Max grapeshots the barrel can hold. Raised to 3 by the capacity upgrade kit.
-	var/max_capacity = 2
+	var/max_capacity = 4
 	/// Set when the firing mechanism jams. Cleared by right-clicking to fix it.
 	var/jammed = FALSE
 
-/obj/item/gun/ballistic/firearm/devastator/getonmobprop(tag)
+/obj/item/gun/ballistic/firearm/devastator/Initialize(mapload)
 	. = ..()
-	if(tag)
-		switch(tag)
-			if("gen")
-				return list("shrink" = 0.6,"sx" = -9,"sy" = 5,"nx" = 9,"ny" = 6,"wx" = -4,"wy" = 8,"ex" = 3,"ey" = 4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -22,"sturn" = 208,"wturn" = 208,"eturn" = -15,"nflip" = 0,"sflip" = 1,"wflip" = 1,"eflip" = 0)
-			if("wielded")
-				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = -2,"ny" = 6,"wx" = 3,"wy" = 1,"ex" = 4,"ey" = 4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 1,"nturn" = 187,"sturn" = -8,"wturn" = 17,"eturn" = -13,"nflip" = 1,"sflip" = 0,"wflip" = 0,"eflip" = 0)
+	RegisterSignal(src, COMSIG_COMPONENT_ADDED, PROC_REF(block_blood_decal))
+
+/obj/item/gun/ballistic/firearm/devastator/proc/block_blood_decal(datum/source, datum/component/C)
+	SIGNAL_HANDLER
+	if(istype(C, /datum/component/decal/blood))
+		qdel(C)
+
+// the reason why im doing this is because the sprite gets super buggy if it gets blood on it and i cba fixing it.
+
+/obj/item/gun/ballistic/firearm/devastator/getonmobprop(tag)
+	switch(tag)
+		if("gen")
+			return list("shrink" = 0.6,"sx" = -12,"sy" = 6,"nx" = 9,"ny" = 7,"wx" = -6,"wy" = 6,"ex" = 4,"ey" = 6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -20,"sturn" = 10,"wturn" = 19,"eturn" = -17,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+		if("wielded")
+			return list("shrink" = 0.6,"sx" = 2,"sy" = -3,"nx" = -3,"ny" = 5,"wx" = -6,"wy" = -4,"ex" = 3,"ey" = -1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 1,"nturn" = 8,"sturn" = 49,"wturn" = -43,"eturn" = 39,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+		if("altgrip")
+			return null
+		if("onback")
+			return null
+	return ..()
 
 /obj/item/gun/ballistic/firearm/devastator/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/quiver/bullet/grapeshot))
