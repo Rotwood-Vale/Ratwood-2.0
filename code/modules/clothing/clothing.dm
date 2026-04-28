@@ -60,7 +60,7 @@
 	var/cansnout = FALSE //for masks - can we MMB this to change it into a snouty sprite?
 	var/snouting = FALSE //do we have the snout-snug sprite toggled?
 
-	var/throw_on_break = FALSE//does it fall off your body when broken?
+	var/throw_on_break = TRUE//does it fall off your body when broken?
 
 /obj/item
 	var/blocking_behavior
