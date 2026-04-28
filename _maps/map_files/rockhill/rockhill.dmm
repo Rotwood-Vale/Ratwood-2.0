@@ -43881,6 +43881,10 @@
 /obj/item/grown/log/tree,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woodsrat/north)
+"kEq" = (
+/obj/structure/lever/wall/rat_alarm,
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/indoors/town/warden)
 "kEs" = (
 /obj/structure/mineral_door/wood/donjon{
 	locked = 1;
@@ -78038,6 +78042,12 @@
 "sYi" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement/keep)
+"sYj" = (
+/obj/item/signal_flare,
+/obj/item/signal_flare,
+/obj/item/signal_flare,
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/indoors/town/warden)
 "sYo" = (
 /obj/machinery/light/rogue/oven/south,
 /obj/machinery/light/rogue/hearth,
@@ -270228,7 +270238,7 @@ qvR
 moN
 wMB
 cSY
-wMB
+kEq
 wrw
 rBJ
 efu
@@ -273233,7 +273243,7 @@ vRu
 kCQ
 kCQ
 wMB
-wMB
+sYj
 egn
 ukF
 scj
