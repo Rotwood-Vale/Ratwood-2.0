@@ -68,7 +68,7 @@
 			new lumber(get_turf(src))
 				// Scaling is less steep than tanning as lumberjacking is easier to level and get
 			if(prob(skill_level + user.goodluck(2)))
-				new /obj/item/natural/cured/essence(get_turf(user))
+				new /obj/item/grown/log/tree/small/essence(get_turf(user))
 				if(!sound_played)
 					sound_played = TRUE
 					to_chat(user, span_warning("Dendor weeps..."))
