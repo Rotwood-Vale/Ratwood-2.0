@@ -355,8 +355,8 @@
 				return
 			H.dropItemToGround(src, silent = TRUE)
 			H.update_fov_angles()
-			if(material_category == ARMOR_MAT_PLATE || material_category == ARMOR_MAT_CHAINMAIL)
-				do_sparks(2, TRUE, get_turf(H))
+			// if(material_category == ARMOR_MAT_PLATE || material_category == ARMOR_MAT_CHAINMAIL)//we don't have these variables yet, but it looks like it's just a visual spark effect
+			// 	do_sparks(2, TRUE, get_turf(H))
 			var/turnangle = (prob(10) ? 180 : prob(50) ? 270 : 90)
 			var/turndir = turn(H.dir, turnangle)
 			var/dist = rand(1, 3)
