@@ -1339,59 +1339,55 @@
 	if(!hud?.mymob)
 		return
 
-	icon_state = "[hud.mymob.gender == "male" ? "m" : "f"]-zone_sel"
+	var/gender_tag = hud.mymob.gender == "male" ? "m" : "f"
+	icon_state = "[gender_tag]-zone_sel"
 
 	if(hud.mymob.stat != DEAD && ishuman(hud.mymob))
 		var/mob/living/carbon/human/H = hud.mymob
 		var/list/missing_bodyparts_zones = H.get_missing_limbs()
-		// if we have a taur bodypart, treat it as covering both legs
-		if(H.get_bodypart(BODY_ZONE_TAUR))
+		for(var/obj/item/bodypart/BP as anything in H.bodyparts)
+			if(BP.body_zone == BODY_ZONE_TAUR)
+				continue // handled elsewhere
+			if(HAS_TRAIT(H, TRAIT_NOPAIN))
+				var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]-[BP.body_zone]")
+				limby.color = "#78a8ba"
+				. += limby
+				continue
+			var/damage_ratio = clamp((BP.burn_dam + BP.brute_dam)/BP.max_damage, 0, 1)
+			. += mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]-[BP.body_zone]") //apply healthy limb
+			. += mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]w-[BP.body_zone]", alpha = (damage_ratio * 2) * 255) //apply wounded overlay
+			if(BP.get_bleed_rate())
+				. += mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]-[BP.body_zone]-bleed") //apply bleed overlay
+		// now do taur parts, which are handled special
+		var/obj/item/bodypart/taur_part = H.get_bodypart_shallow(BODY_ZONE_TAUR)
+		if(taur_part)
+			// don't treat the legs as missing if we have a taur part
 			missing_bodyparts_zones -= BODY_ZONE_L_LEG
 			missing_bodyparts_zones -= BODY_ZONE_R_LEG
-		for(var/X in H.bodyparts)
-			var/obj/item/bodypart/BP = X
-			if(BP.body_zone in missing_bodyparts_zones)
-				continue
 			if(HAS_TRAIT(H, TRAIT_NOPAIN))
 				// for taur, show the nopain overlay over both legs as well
-				if(BP.body_zone == BODY_ZONE_TAUR)
-					var/list/_legs = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-					for(var/_z in _legs)
-						var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[_z]")
-						limby.color = "#78a8ba"
-						. += limby
-				else
-					var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]")
-					limby.color = "#78a8ba"
-					. += limby
-				continue
-			var/damage = BP.burn_dam + BP.brute_dam
-			if(damage > BP.max_damage)
-				damage = BP.max_damage
-			var/comparison = (damage/BP.max_damage)
-			// if taur bodypart, render the healthy/wounded/bleed overlays for both legs
-			if(BP.body_zone == BODY_ZONE_TAUR)
-				var/list/_legs = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-				for(var/_z in _legs)
-					. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[_z]") //healthy limb
-					var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]w-[_z]") //wounded overlay
-					limby.alpha = (comparison*255)*2
-					. += limby
-					if(BP.get_bleed_rate())
-						. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[_z]-bleed") //bleed overlay
+				var/mutable_appearance/limb_left = mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]-[BODY_ZONE_L_LEG]")
+				limb_left.color = "#78a8ba"
+				. += limb_left
+				var/mutable_appearance/limb_right = mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]-[BODY_ZONE_R_LEG]")
+				limb_right.color = "#78a8ba"
+				. += limb_right
 			else
-				. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]") //apply healthy limb
-				var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]w-[BP.body_zone]") //apply wounded overlay
-				limby.alpha = (comparison*255)*2
-				. += limby
-				if(BP.get_bleed_rate())
-					. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]-bleed") //apply bleed overlay
+				var/damage_ratio = clamp((taur_part.burn_dam + taur_part.brute_dam)/taur_part.max_damage, 0, 1)
+				. += mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]-[BODY_ZONE_L_LEG]") //healthy limb
+				. += mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]w-[BODY_ZONE_L_LEG]", alpha = (damage_ratio * 2) * 255) //wounded overlay
+				. += mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]-[BODY_ZONE_R_LEG]") //ditto
+				. += mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]w-[BODY_ZONE_R_LEG]", alpha = (damage_ratio * 2) * 255)
+				if(taur_part.get_bleed_rate())
+					. += mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]-[BODY_ZONE_L_LEG]-bleed") //bleed overlay
+					. += mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]-[BODY_ZONE_R_LEG]-bleed")
+		// now draw our missing limbs
 		for(var/X in missing_bodyparts_zones)
-			var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[X]") //missing limb
+			var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[gender_tag]-[X]") //missing limb
 			limby.color = "#2f002f"
 			. += limby
 
-	. += mutable_appearance(overlay_icon, "[hud.mymob.gender == "male" ? "m" : "f"]_[hud.mymob.zone_selected]")
+	. += mutable_appearance(overlay_icon, "[gender_tag]_[hud.mymob.zone_selected]")
 //	. += mutable_appearance(overlay_icon, "height_arrow[hud.mymob.aimheight]")
 
 /atom/movable/screen/zone_sel/proc/flash_limb(zone, limb_color="#FF0000") //Flashes when an attack hits a limb
