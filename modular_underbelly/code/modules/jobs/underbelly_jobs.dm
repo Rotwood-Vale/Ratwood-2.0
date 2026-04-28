@@ -85,7 +85,7 @@
 // =====================================================
 // GUTTER KING
 // 80 PQ, max 1. Faction head. Medium armour trained.
-// Starts with a Gut Spiller. Bypasses all shop role locks.
+// Starts with a crossbow and bolt quiver. Bypasses all shop role locks.
 // =====================================================
 /datum/job/roguetown/gutterking
 	title = "Gutter King"
@@ -176,6 +176,7 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/firearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/stealing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
@@ -189,12 +190,11 @@
 	..()
 	H.adjust_blindness(-3)
 	shoes = /obj/item/clothing/shoes/roguetown/boots
-	beltl = /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller
+	beltl = /obj/item/quiver/bolts
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
+	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/powderflask = 1,
-		/obj/item/quiver/bullet/lead/extended = 1,
 		/obj/item/roguekey/underbelly/boss = 1,
 		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/flashlight/flare/torch = 1,
@@ -226,6 +226,7 @@
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/firearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
@@ -240,12 +241,11 @@
 	H.adjust_blindness(-3)
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/clothing/neck/roguetown/horus
-	beltl = /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller
+	beltl = /obj/item/quiver/bolts
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
+	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/powderflask = 1,
-		/obj/item/quiver/bullet/lead/extended = 1,
 		/obj/item/roguekey/underbelly/boss = 1,
 		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/lockpickring/mundane = 1,
