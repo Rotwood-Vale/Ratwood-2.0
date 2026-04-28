@@ -10,6 +10,7 @@
 	experimental_inhand = FALSE
 	grid_width = 32
 	grid_height = 64
+	throw_on_break = TRUE
 	var/overarmor
 
 /obj/item/clothing/wrists/roguetown/MiddleClick(mob/user, params)

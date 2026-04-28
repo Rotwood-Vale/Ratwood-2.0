@@ -10,5 +10,6 @@
 	siemens_coefficient = 1
 	max_heat_protection_temperature = 361
 	experimental_inhand = FALSE
+	throw_on_break = TRUE
 	/// Unarmed damage multiplier (for pure fists / wrestling only)
 	var/unarmed_bonus = 1

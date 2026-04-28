@@ -14,6 +14,7 @@
 	experimental_inhand = FALSE
 	var/hidesnoutADJ = FALSE
 	var/overarmor = TRUE
+	throw_on_break = TRUE
 
 /obj/item/clothing/head/roguetown/equipped(mob/user, slot)
 	. = ..()
