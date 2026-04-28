@@ -128,6 +128,10 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 /obj/structure/doorman/proc/grant_clearance(mob/living/user)
 	cleared_ref = WEAKREF(user)
 	cleared_until = world.time + DOORMAN_CLEARANCE_DURATION
+	for(var/obj/structure/fluff/traveltile/underbelly/pipe/P in range(1, src))
+		if(P.doorman_id == doorman_id)
+			P.try_travel(user)
+			return
 
 /obj/structure/doorman/proc/has_clearance(mob/living/user)
 	if(!cleared_ref || world.time > cleared_until)
@@ -238,6 +242,10 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 	/// Must match the doorman_id of the paired doorman machine.
 	var/doorman_id = "REPLACETHIS"
 
+/obj/structure/fluff/traveltile/underbelly/pipe/perform_travel(obj/structure/fluff/traveltile/T, mob/living/L)
+	L.recent_travel = world.time
+	L.forceMove(T.loc)
+
 /obj/structure/fluff/traveltile/underbelly/pipe/Initialize(mapload)
 	. = ..()
 	transform = matrix() * 2
@@ -248,8 +256,11 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 /obj/structure/fluff/traveltile/underbelly/pipe/attack_hand(mob/user)
 	if(!isliving(user))
 		return
-	var/mob/living/L = user
+	try_travel(user)
 
+/obj/structure/fluff/traveltile/underbelly/pipe/proc/try_travel(mob/living/L)
+	if(!L)
+		return
 	if(L.recent_travel && world.time < L.recent_travel + 15 SECONDS)
 		return
 
@@ -322,6 +333,10 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 	max_integrity = 0
 	/// Must match the doorman_id of the paired surface pipe.
 	var/doorman_id = "REPLACETHIS"
+
+/obj/structure/fluff/traveltile/underbelly_pipe_exit/perform_travel(obj/structure/fluff/traveltile/T, mob/living/L)
+	L.recent_travel = world.time
+	L.forceMove(T.loc)
 
 /obj/structure/fluff/traveltile/underbelly_pipe_exit/Initialize(mapload)
 	GLOB.traveltiles += src

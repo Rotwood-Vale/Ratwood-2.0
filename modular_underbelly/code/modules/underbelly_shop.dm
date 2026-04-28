@@ -135,6 +135,8 @@
 	var/list/cat_ranged = list(
 		list("Regular Bow",           "Simple pull. Quiet and effective at range.",                     /obj/item/gun/ballistic/revolver/grenadelauncher/bow,            1, 10),
 		list("Recurving Bow",         "Better pull weight, more range.",                                /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,    1, 35),
+		list("Crossbow",              "Slow to wind, mean on impact. Punches through armor.",           /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,       1, 60),
+		list("Bolt Quiver",           "A bundle of crossbow bolts.",                                    /obj/item/quiver/bolts,                                          2, 18),
 	)
 
 	// -- Potions --
@@ -170,6 +172,7 @@
 		list("Climbing Machine",      "Hooks, gears, cord. Goes up walls.",                             /obj/item/grapplinghook,                                        1, 250),
 		list("Lockpick",              "A thin iron pick.",                                              /obj/item/lockpick,                                             2, 12),
 		list("Lockpick (Gold)",       "Picks even tricky locks.",                                       /obj/item/lockpick/goldpin,                                     1, 60),
+		list("Scum Pass",             "A stamped coin. Slot it into a Doorman to be let through, once.",/obj/item/roguecoin/scum_pass,                                  5, 20),
 	)
 
 	var/list/general_master = cat_drinks + cat_food + cat_supplies + cat_weapons + cat_heavy + cat_ranged + cat_potions + cat_drugs + cat_utility

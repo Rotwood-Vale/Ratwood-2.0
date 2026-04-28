@@ -38809,6 +38809,10 @@
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
+"jcP" = (
+/obj/machinery/light/rogue/torchholder/c,
+/turf/open/floor/rogue/AzureSand,
+/area/rogue/under/cavewet)
 "jcR" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/glass/cup/steel{
@@ -54143,6 +54147,10 @@
 /obj/item/natural/cloth,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
+"mIj" = (
+/obj/machinery/light/rogue/torchholder/c,
+/turf/open/floor/rogue/grass,
+/area/rogue/under/cave)
 "mIk" = (
 /obj/structure/ladder{
 	pixel_x = 0;
@@ -97397,6 +97405,10 @@
 "xdj" = (
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
 /area/rogue/indoors/town)
+"xdl" = (
+/obj/machinery/light/rogue/torchholder/c,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/under/town/sewer)
 "xdm" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/cobblerock,
@@ -158654,7 +158666,7 @@ pUA
 whb
 whb
 aaf
-aaf
+jvi
 aaf
 keL
 whb
@@ -198267,7 +198279,7 @@ gQh
 gQh
 gQh
 whb
-hYO
+jcP
 hYO
 whb
 whb
@@ -230743,7 +230755,7 @@ bpD
 bpD
 bpD
 bpD
-ujF
+mIj
 ujF
 bpD
 bpD
@@ -263082,7 +263094,7 @@ jQS
 vRu
 vRu
 vRu
-bGI
+fVl
 bGI
 gpx
 vRu
@@ -290721,7 +290733,7 @@ fIL
 rSC
 rSC
 rRb
-gLf
+xdl
 gLf
 gLf
 rSC

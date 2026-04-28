@@ -6,6 +6,10 @@
 	Gutter King is the faction head - max 1, 110 PQ floor, bypasses all shop role restrictions.
 */
 
+/datum/mind
+	var/scum_warning_shown = FALSE
+	var/scum_record_prompted = FALSE
+
 // =====================================================
 // BASE OUTFIT — grants faction membership to all jobs
 // =====================================================
@@ -27,6 +31,10 @@
 /proc/scum_send_warning(mob/living/carbon/human/H)
 	if(!H?.client)
 		return
+	if(H.mind?.scum_warning_shown)
+		return
+	if(H.mind)
+		H.mind.scum_warning_shown = TRUE
 	to_chat(H, "<span class='userdanger'>I am Scum. The Gods forsake me, and society has rebuked me to these depths. If I wish to survive until the end of the week, I should follow <a href=\"https://wiki.ratwood.rip/index.php/Underbelly#THE_LAWS_OF_THE_SCUM\">The laws of The Scum</a> if I wish to keep my position within this organization - and not find myself dead in the sewers.</span>")
 	to_chat(H, "<span class='warning'>This role is held to a higher roleplay standard by the staff team. Failing to meet role expectations can be met with harsher punishments than others. AHelp if you need assistance!</span>")
 
@@ -297,8 +305,10 @@
 	..()
 	if(H.mind)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+	H.faction |= "bums"
 	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_APPRENTICE, TRUE)
 
 // Enforcer — the brawler. Hits things until they stop moving.
 /datum/advclass/scum/enforcer
@@ -879,8 +889,11 @@
 // known criminals for a stat buff, like bandits.
 // =====================================================
 /proc/scum_select_criminal_record(mob/living/carbon/human/H)
-	if(!H.mind)
+	if(!H?.client || !H.mind)
 		return
+	if(H.mind.scum_record_prompted)
+		return
+	H.mind.scum_record_prompted = TRUE
 	var/wanted = input(H, "Are you known to the law?", "EXCIDIUM") as anything in list("Yes, I have a record", "No, I stay in the shadows")
 	if(wanted == "No, I stay in the shadows")
 		to_chat(H, span_notice("My work has gone unnoticed. I intend to keep it that way."))
