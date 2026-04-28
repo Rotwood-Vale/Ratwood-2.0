@@ -297,6 +297,8 @@
 	..()
 	if(H.mind)
 		scum_select_criminal_record(H)
+	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_APPRENTICE, TRUE)
 
 // Enforcer — the brawler. Hits things until they stop moving.
 /datum/advclass/scum/enforcer

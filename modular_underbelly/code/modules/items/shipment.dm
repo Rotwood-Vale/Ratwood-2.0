@@ -77,3 +77,53 @@
 	sealed_amount = rand(2, 5)
 	name = "[content_name] shipment"
 	desc = "A very carefully wrapped parcel of [content_name]. Contains [sealed_amount]. Handle with care."
+
+/obj/item/underbelly_shipment/ozium
+	content_type = /obj/item/reagent_containers/powder/ozium
+	content_name = "ozium"
+
+/obj/item/underbelly_shipment/ozium/Initialize(mapload)
+	. = ..()
+	sealed_amount = rand(4, 8)
+	name = "[content_name] shipment"
+	desc = "A heavily wrapped parcel of [content_name]. Contains [sealed_amount]. Don't get caught."
+
+/obj/item/underbelly_shipment/moondust
+	content_type = /obj/item/reagent_containers/powder/moondust
+	content_name = "moondust"
+
+/obj/item/underbelly_shipment/moondust/Initialize(mapload)
+	. = ..()
+	sealed_amount = rand(3, 6)
+	name = "[content_name] shipment"
+	desc = "A heavily wrapped parcel of [content_name]. Contains [sealed_amount]. Don't get caught."
+
+/obj/item/underbelly_shipment/spice
+	content_type = /obj/item/reagent_containers/powder/spice
+	content_name = "spice"
+
+/obj/item/underbelly_shipment/spice/Initialize(mapload)
+	. = ..()
+	sealed_amount = rand(3, 6)
+	name = "[content_name] shipment"
+	desc = "A heavily wrapped parcel of [content_name]. Contains [sealed_amount]. Don't get caught."
+
+/obj/item/underbelly_shipment/herozium
+	content_type = /obj/item/reagent_containers/powder/herozium
+	content_name = "herozium"
+
+/obj/item/underbelly_shipment/herozium/Initialize(mapload)
+	. = ..()
+	sealed_amount = rand(3, 6)
+	name = "[content_name] shipment"
+	desc = "A heavily wrapped parcel of [content_name]. Contains [sealed_amount]. Don't get caught."
+
+/obj/item/underbelly_shipment/starsugar
+	content_type = /obj/item/reagent_containers/powder/starsugar
+	content_name = "starsugar"
+
+/obj/item/underbelly_shipment/starsugar/Initialize(mapload)
+	. = ..()
+	sealed_amount = rand(2, 4)
+	name = "[content_name] shipment"
+	desc = "A meticulously wrapped parcel of [content_name]. Contains [sealed_amount]. Worth a fortune."

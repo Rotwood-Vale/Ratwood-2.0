@@ -156,6 +156,8 @@
 		list("Ozium",                 "Bitter, numbing powder. Goes through the nose.",                 /obj/item/reagent_containers/powder/ozium,                      1, 30),
 		list("Moon Dust",             "Powder. Effects vary. Highly sought after.",                     /obj/item/reagent_containers/powder/moondust,                   1, 50),
 		list("Spice",                 "No questions. You know what this is for.",                       /obj/item/reagent_containers/powder/spice,                      1, 50),
+		list("Herozium",              "Numbing brown powder. Hooks deep, lets go slow.",                /obj/item/reagent_containers/powder/herozium,                   1, 90),
+		list("Starsugar",             "Crystalline. Tastes like the sky. Burns through coin.",          /obj/item/reagent_containers/powder/starsugar,                  1, 120),
 		list("Purest Moondust",       "Glittering, flake-fine. Don't waste it.",                        /obj/item/reagent_containers/powder/moondust_purest,            1, 150),
 	)
 
@@ -337,6 +339,11 @@
 		list("Grain Shipment",       "A huge wrapped bundle of spelt grain. Someone's breadbasket.",        /obj/item/underbelly_shipment/grain,      18),
 		list("Seed Shipment",       "A huge wrapped bundle of wheat seeds. Plant a field's worth.",        /obj/item/underbelly_shipment/seeds,      18),
 		list("Gabagool Shipment",   "A very carefully wrapped parcel. 2 to 5 inside. You don't ask questions about gabagool, wiseguy.",   /obj/item/underbelly_shipment/gabagool,  220),
+		list("Ozium Shipment",      "A discreet bundle of ozium. 4 to 8 doses inside. The town-bridge guards cannot know.",                     /obj/item/underbelly_shipment/ozium,    180),
+		list("Moondust Shipment",   "A discreet bundle of moondust. 3 to 6 doses inside. Move it quietly.",                              /obj/item/underbelly_shipment/moondust, 240),
+		list("Spice Shipment",      "A discreet bundle of spice. 3 to 6 doses inside. Don't get curious.",                                /obj/item/underbelly_shipment/spice,    260),
+		list("Herozium Shipment",   "A discreet bundle of herozium. 3 to 6 doses inside. Move it quietly.",                              /obj/item/underbelly_shipment/herozium, 320),
+		list("Starsugar Shipment", "A meticulously wrapped parcel. 2 to 4 doses of starsugar. Worth its weight and then some.",            /obj/item/underbelly_shipment/starsugar, 380),
 	)
 	var/list/shipment_shuffled = shuffle(shipment_master.Copy())
 	for(var/i = 1 to min(rand(3, 5), shipment_shuffled.len))
