@@ -82,7 +82,7 @@
 		prefix = "LOOC (WP)"
 
 
-	var/list/hearable = wp ? get_hearers_in_range(7, src) : get_hearers_in_view(7, src)
+	var/list/hearable = wp ? get_hearers_in_range(7, mob) : get_hearers_in_view(7, mob)
 	var/muted = prefs.muted
 	for(var/mob/M in GLOB.player_list)
 		var/client/C = M.client
