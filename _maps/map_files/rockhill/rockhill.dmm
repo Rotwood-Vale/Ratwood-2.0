@@ -50745,6 +50745,12 @@
 /obj/item/candle/gold/lit,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/mountains)
+"lVz" = (
+/obj/item/signal_flare,
+/obj/item/signal_flare,
+/obj/item/signal_flare,
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/indoors/town/warden)
 "lVD" = (
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/bograt/sunken)
@@ -51588,6 +51594,10 @@
 /obj/machinery/light/rogue/torchholder/r,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement)
+"mec" = (
+/obj/structure/lever/wall/rat_alarm,
+/turf/closed/wall/mineral/rogue/stone,
+/area/rogue/indoors/town/warden)
 "mel" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/roguegrass/bush/wall,
@@ -273125,7 +273135,7 @@ qvR
 moN
 wMB
 cSY
-wMB
+mec
 wrw
 rBJ
 efu
@@ -276130,7 +276140,7 @@ vRu
 kCQ
 kCQ
 wMB
-wMB
+lVz
 egn
 ukF
 scj
