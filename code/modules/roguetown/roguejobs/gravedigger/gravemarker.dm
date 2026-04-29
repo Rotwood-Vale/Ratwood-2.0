@@ -33,46 +33,42 @@
 	anchored = TRUE
 	layer = 2.91
 	obj_flags = UNIQUE_RENAME
+	/// Adds to the description the marker, can be etched with a knife
 	var/wrotesign
 
 /obj/structure/gravemarker/examine(mob/user)
 	. = ..()
-	if(wrotesign)
-		if(!user.is_literate())
-			. += "I do not know how to read. Not like this one's name matters much anymore."
-		else
-			. += span_notice("A grave marker. It says... \"[wrotesign]\".")
-
+	if(!wrotesign)
+		return
+	if(!user.is_literate())
+		. += "I do not know how to read. Not like this one's name matters much anymore."
+	else
+		. += span_notice("A grave marker. It says... \"[wrotesign]\".")
 
 /obj/structure/gravemarker/attackby(obj/item/W, mob/user, params)
-	if(!user.cmode)
-		if(!user.is_literate())
-			to_chat(user, span_warning("I do not know how to write. It shall remain unmarked."))
-			return
-		if((user.used_intent.blade_class == BCLASS_STAB) && (W.wlength == WLENGTH_SHORT))
-			if(wrotesign)
-				to_chat(user, span_warning("Something is already carved here."))
-				return
-			else
-				var/inputty = stripped_input(user, "Someone rests here. Perhaps I should carve a name?", "", null, 200)
-				if(inputty && !wrotesign)
-					wrotesign = inputty
-					name = "[inputty]"
-		else
-			to_chat(user, span_warning("Alas, this will not work. I could carve words, if I stabbed at this with something posessing a short, sharp point. A knife comes to mind."))
-			return
+	if(user.cmode)
+		return ..()
+
+	if(!user.is_literate())
+		to_chat(user, span_warning("I do not know how to write. It shall remain unmarked."))
+		return
+
+	if(wrotesign)
+		to_chat(user, span_warning("Something is already carved here."))
+		return
+
+	if(user.used_intent.blade_class != BCLASS_STAB || W.wlength != WLENGTH_SHORT)
+		to_chat(user, span_warning("Alas, this will not work. I could carve words, if I stabbed at this with something posessing a short, sharp point. A knife comes to mind."))
+		return
+
+	var/inputty = stripped_input(user, "Someone rests here. Perhaps I should carve a name?", "", null, 200)
+	if(inputty && !wrotesign)
+		wrotesign = inputty
+		name = "[inputty]"
 
 /obj/structure/gravemarker/Destroy()
-	var/turf/T = get_turf(src)
-	if(T)
-		new /obj/item/grown/log/tree/stick(T)
-	..()
-
-/mob/dead/new_player/proc/reducespawntime(amt)
-	if(ckey)
-		if(amt)
-			if(GLOB.respawntimes[ckey])
-				GLOB.respawntimes[ckey] = GLOB.respawntimes[ckey] + amt
+	new /obj/item/grown/log/tree/stick(get_turf(src))
+	return ..()
 
 /obj/structure/gravemarker/OnCrafted(dir, mob/user)
 	icon_state = "gravemarker[rand(1,3)]"

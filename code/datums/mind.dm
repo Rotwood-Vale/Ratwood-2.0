@@ -241,10 +241,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(M.known_people && istype(H))
 		M.known_people -= H.real_name
 
-
 /datum/mind/proc/unknow_all_people()
 	known_people = list()
-
 
 /datum/mind/proc/display_known_people(mob/user)
 	if(!user)

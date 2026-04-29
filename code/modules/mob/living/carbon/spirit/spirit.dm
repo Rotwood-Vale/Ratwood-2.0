@@ -230,6 +230,29 @@
 					qdel(human_corpse.mouth)
 					human_corpse.update_inv_mouth()
 					break
+
+	var/datum/job/mob_job
+	mob_job = SSjob.GetJob(corpse.mind.assigned_role)
+	if(mob_job)
+		mob_job.current_positions = max(0, mob_job.current_positions - 1)
+		var/target_job = SSrole_class_handler.get_advclass_by_name(user.advjob)
+		if(target_job)
+			SSrole_class_handler.adjust_class_amount(target_job, -1)
+	corpse.mind.unknow_all_people()
+	for(var/datum/mind/MF in get_minds())
+		corpse.mind.become_unknown_to(MF)
+	for(var/datum/bounty/removing_bounty in GLOB.head_bounties)
+		if(removing_bounty.target == corpse.real_name)
+			GLOB.head_bounties -= removing_bounty
+	GLOB.chosen_names -= corpse.real_name
+	LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(mob_job.department_flag, mob_job.obsfuscated_job)], corpse.mobid)
+	LAZYREMOVE(GLOB.roleplay_ads, corpse.mobid)
+	// If burial is a lord, remove them from found_lords to prevent false omen triggers
+	if(corpse.mind && corpse.ckey)
+		if(corpse.mind.assigned_role == "Grand Duke" || corpse.mind.assigned_role == "Grand Duchess")
+			if(GLOB.found_lords[corpse.ckey])
+				GLOB.found_lords -= corpse.ckey
+
 	corpse.mind.remove_antag_datum(/datum/antagonist/zombie)
 	var/mob/dead/observer/ghost
 	//Try to find a lost ghost if there is no client
