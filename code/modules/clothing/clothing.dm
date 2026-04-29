@@ -74,6 +74,7 @@
 	var/ducal_primary = FALSE // Uses duchy primary color for base color
 	var/ducal_detail = FALSE // Uses duchy secondary color for detail_color
 	var/ducal_altdetail = FALSE // Uses duchy secondary color for altdetail_color
+	var/shoddy_repair = FALSE // if we've been field repaired by an unskilled person, set this to true
 
 /obj/item/clothing/New()
 	..()

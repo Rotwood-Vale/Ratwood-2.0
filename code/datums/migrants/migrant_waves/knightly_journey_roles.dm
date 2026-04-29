@@ -55,7 +55,10 @@
 		/datum/skill/misc/climbing= SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading= SKILL_LEVEL_JOURNEYMAN,
 	)
-	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled
+
+	subclass_virtues = list(
+		/datum/virtue/utility/riding
+	)
 
 /datum/outfit/job/roguetown/adventurer/knighte_expert/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -97,7 +100,9 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 3,
+		/obj/item/needle = 1,
 		/obj/item/recipe_book/survival = 1,
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
@@ -169,6 +174,9 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+	)
+	subclass_virtues = list(
+		/datum/virtue/utility/riding
 	)
 #undef CTAG_KJ_KNIGHT
 #undef CTAG_KG_SQUIRE

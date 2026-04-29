@@ -340,3 +340,6 @@
 
 /obj/item/storage/keyring/wardenmaster
 	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/warden)
+
+/obj/item/storage/keyring/tribalchief
+	keys = list(/obj/item/roguekey/tribal, /obj/item/roguekey/tribalchief)

@@ -118,6 +118,11 @@
 	stressadd = -5
 	desc = span_boldgreen("Down with the tyranny!")
 
+/datum/stressevent/fresh_haircut
+	timer = 60 MINUTES
+	stressadd = -2
+	desc = span_green("My hair has been freshly cut and tended to.")
+
 /datum/stressevent/music
 	timer = 1 MINUTES
 	stressadd = -1

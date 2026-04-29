@@ -15,12 +15,16 @@
 	EA-Hasir has entrusted you with some of his highest quality gold products- Make him proud, \
 	Rob 'em all blind."
 	outfit = /datum/outfit/job/roguetown/merchant/ea_hasir
-	traits_applied = list(TRAIT_NOBLE, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_EA_MERCHANT)
 	subclass_stats = list(
 		STATKEY_PER = 3,
 		STATKEY_INT = 2,
 		STATKEY_STR = -1
+	)
+
+	subclass_virtues = list(
+		/datum/virtue/utility/riding
 	)
 /datum/outfit/job/roguetown/merchant/ea_hasir/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -45,7 +49,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/puritan
 	pants = /obj/item/clothing/under/roguetown/trou/leathertights
 	belt = /obj/item/storage/belt/rogue/leather/rope
-	beltl = /obj/item/storage/belt/rogue/pouch/coins/rich
+	beltl = /obj/item/storage/belt/rogue/pouch/coins/veryrich
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 	id = /obj/item/clothing/ring/gold
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -72,7 +76,7 @@
 	EA-Hasir is a reliable employer, and you're guarding a rather high value merchant\
 	Keep them alive, and you may get paid enough to take a much needed break."
 	outfit = /datum/outfit/job/roguetown/ea_guard
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_BREADY, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_EA_GUARD)
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -83,11 +87,11 @@
 /datum/outfit/job/roguetown/ea_guard/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)

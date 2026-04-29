@@ -16,7 +16,7 @@
 		"hell.ttf" = 'interface/fonts/languages/hell.ttf',
 		"orc.ttf" = 'interface/fonts/languages/orc.ttf',
 		"sand.ttf" = 'interface/fonts/languages/sand.ttf',
-		"algaib.ttf" = 'interface/fonts/languages/algaib.otf',
+		"algaib.otf" = 'interface/fonts/languages/algaib.otf',
 		"undead.ttf" = 'interface/fonts/languages/undead.ttf',
 		"draconic.ttf" = 'interface/fonts/languages/draconic.ttf',
 		"canilunzt.ttf" = 'interface/fonts/languages/canilunzt.ttf',

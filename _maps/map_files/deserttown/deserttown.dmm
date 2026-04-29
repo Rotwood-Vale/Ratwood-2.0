@@ -21141,7 +21141,7 @@
 /area/rogue/indoors/town/shop/desert)
 "itp" = (
 /obj/structure/roguemachine/scomm/r{
-	scom_tag = "Manor - Kitchen Captain's Quarters"
+	scom_tag = "Manor - Knight Captain's Quarters"
 	},
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/manor/desert)

@@ -10,6 +10,14 @@
 	sellprice = 100
 	allowed_race = list(/datum/species/goblinp)
 
+/obj/item/clothing/head/roguetown/crown/byos
+	name = "ancient crown"
+	desc = "ooga chacka..."
+	color = "#ffe6db"
+	icon_state = "serpcrowno"
+	sellprice = 100
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+
 /obj/item/clothing/head/roguetown/crown/sparrowcrown
 	name = "champion's circlet"
 	desc = ""

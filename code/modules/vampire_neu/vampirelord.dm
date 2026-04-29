@@ -248,5 +248,6 @@
 /obj/structure/vampire/necromanticbook // Used to summon undead to attack town/defend manor.
 	name = "Tome of Souls"
 	icon_state = "tome"
+	pixel_x = -16
 	var/list/useoptions = list("Create Death Knight", "Steal the Sun")
 	var/sunstolen = FALSE

@@ -125,6 +125,7 @@
 		"Apparel",
 		"Wardrobe",
 		"Armor (Light)",
+		"Imported Armor (Light)",
 	)
 	categories_gamer = list()
 

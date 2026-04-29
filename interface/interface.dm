@@ -92,10 +92,14 @@
 /client/verb/recent_changelog()
 	set name = "Recent Changes"
 	set category = "OOC"
-	if(GLOB.changelog.len)
-		to_chat(src, "Recent Changes:")
-		for(var/change in GLOB.changelog)
-			to_chat(src, span_info("- [change]"))
+	to_chat(src, "<a href='byond://?command=open-changelog' style='display:inline-block;padding:4px 10px;border:1px solid #6f8f5f;border-radius:4px;background:#22331d;color:#d8f0c8;text-decoration:none;'><b>Open Changelog</b></a>")
+
+/client/verb/open_changelog()
+	set name = "open-changelog"
+	set category = "OOC"
+	set hidden = 1
+	if(mob)
+		GLOB.changelog_tgui.ui_interact(mob)
 
 /client/verb/hotkeys_help()
 	set name = "_Help-Controls"

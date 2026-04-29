@@ -20,6 +20,10 @@ GLOBAL_LIST_INIT(threat_region_templates, list(
 	//Desertmap
 	THREAT_REGION_DESERT_NEAR = /datum/threat_region/desert_near,
 	THREAT_REGION_DESERT_DEEP = /datum/threat_region/desert_deep,
+
+	//BYOS
+	THREAT_REGION_JUNGLE = /datum/threat_region/byos_jungle,
+	THREAT_REGION_ISLAND = /datum/threat_region/byos_island,
 ))
 
 

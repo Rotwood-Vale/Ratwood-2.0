@@ -7,6 +7,8 @@ GLOBAL_PROTECT(admin_verbs_default)
 	return list(
 	/client/proc/check_pq,
 	/client/proc/adjust_pq,
+	/client/proc/recalc_pq_bulk,
+	/client/proc/recalc_pq_single,
 	/client/proc/hearallasghost,
 	/client/proc/hearglobalLOOC,
 	/client/proc/togglespawnmessages,

@@ -3,6 +3,8 @@
 	domain = "Conquest, Cruelty, Kinslaying, Slaughter, Cannibalism, Rape"
 	desc = "The Gorebound Star was a half-orc warlord who sought to strike Ravox down in rage at the cruel fate of His lover. He was decapitated, and His head revived as a mutilated aberration of blue flesh and sickening tendrils. Gazing upon the Star will drive anyone mad."
 	worshippers = "Fallen Warriors, Cannibals, Serial Killers, The Cruel"
+	virtues = "Martial Prowess, Dominance, Violence"
+	sins = "Weakness, Servility, Cowardice"
 	mob_traits = list(TRAIT_HORDE, TRAIT_ORGAN_EATER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/graggar_bloodrage				= CLERIC_T0,

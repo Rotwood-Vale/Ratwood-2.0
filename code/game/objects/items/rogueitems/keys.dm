@@ -331,6 +331,12 @@
 	icon_state = "brownkey"
 	lockid = "roomix"
 
+/obj/item/roguekey/roomx
+	name = "room X key"
+	desc = "The key to the tenth room."
+	icon_state = "brownkey"
+	lockid = "roomx"
+
 /obj/item/roguekey/roomhunt
 	name = "HUNT room key"
 	desc = "The key to the HUNT room, the penthouse suite of the local inn."
@@ -657,6 +663,57 @@
 	name = "stablemaster key"
 	icon_state = "brownkey"
 	lockid = "stablemaster"
+
+//bathhouse lockers
+
+/obj/item/roguekey/locker1
+	name = "locker I key"
+	desc = "The key to the first locker."
+	icon_state = "brownkey"
+	lockid = "locker1"
+
+/obj/item/roguekey/locker2
+	name = "locker II key"
+	desc = "The key to the second locker."
+	icon_state = "brownkey"
+	lockid = "locker2"
+
+/obj/item/roguekey/locker3
+	name = "locker III key"
+	desc = "The key to the third locker."
+	icon_state = "brownkey"
+	lockid = "locker3"
+
+/obj/item/roguekey/locker4
+	name = "locker IV key"
+	desc = "The key to the fourth locker."
+	icon_state = "brownkey"
+	lockid = "locker4"
+
+/obj/item/roguekey/locker5
+	name = "locker V key"
+	desc = "The key to the fifth locker."
+	icon_state = "brownkey"
+	lockid = "locker5"
+
+/obj/item/roguekey/locker6
+	name = "locker VI key"
+	desc = "The key to the sixth locker."
+	icon_state = "brownkey"
+	lockid = "locker6"
+
+//BYOS keys
+/obj/item/roguekey/tribal
+	name = "tribal key"
+	desc = "A ancient, rusty key, well-worn but well-preserved."
+	icon_state = "rustkey"
+	lockid = "tribal"
+
+/obj/item/roguekey/tribalchief
+	name = "chieftain's key"
+	desc = "A ancient, rusty key, well-worn but well-preserved. Fancier than the others"
+	icon_state = "bosskey"
+	lockid = "tribal"
 
 //custom key
 /obj/item/roguekey/custom

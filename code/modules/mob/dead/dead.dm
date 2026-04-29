@@ -127,6 +127,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		"Peasants" = list(), // Pheasants (the birb)
 		"Sidefolk" = list(), // Side strugglers
 		"Wanderers" = list(), // Nobodies.
+		"Tribe" = list(), // Nobodies.
 	)
 	for(var/job_name in ready_players_by_job)
 		var/datum/job/J = SSjob.GetJob(job_name)

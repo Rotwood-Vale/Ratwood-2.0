@@ -33,6 +33,11 @@
 		if(L.mobility_flags & MOBILITY_MOVE)
 			wallpress(L)
 			return
+	else if(user != O && ishuman(user) && ishuman(O)) // check to see if user is dragging another mob onto the wall
+		var/mob/living/carbon/human/us = user
+		var/mob/living/carbon/human/them = O
+		if((us.mobility_flags & MOBILITY_MOVE) && (them.mobility_flags & MOBILITY_MOVE) && us.get_highest_grab_state_on(them) > GRAB_PASSIVE)
+			wallpress(them, us)
 
 /turf/closed/proc/feel_turf(mob/living/user)
 	to_chat(user, span_notice("I start feeling around [src]"))
@@ -42,7 +47,7 @@
 	for(var/obj/structure/lever/hidden/lever in contents)
 		lever.feel_button(user)
 
-/turf/closed/proc/wallpress(mob/living/user)
+/turf/closed/proc/wallpress(mob/living/user, mob/living/pressing_mob = null)
 	if(user.wallpressed)
 		return
 	if(user.is_shifted)
@@ -50,11 +55,15 @@
 	if(!(user.mobility_flags & MOBILITY_STAND))
 		return
 	var/dir2wall = get_dir(user,src)
+	if(pressing_mob) // step up to the wall
+		user.Move(get_step(pressing_mob, user))
+		user.setDir(turn(get_dir(pressing_mob, src),180))
+		dir2wall = get_dir(user,src)
 	if(!(dir2wall in GLOB.cardinals))
 		return
 	user.wallpressed = dir2wall
 	user.update_wallpress_slowdown()
-	user.visible_message(span_info("[user] leans against [src]."))
+	user.visible_message(pressing_mob ? span_info("[user] is pushed against [src] by [pressing_mob].") : span_info("[user] leans against [src]."))
 	switch(dir2wall)
 		if(NORTH)
 			user.setDir(SOUTH)

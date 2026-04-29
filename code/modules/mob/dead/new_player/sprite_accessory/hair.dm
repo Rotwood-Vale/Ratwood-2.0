@@ -962,6 +962,10 @@
 	name = "Fluffy"
 	icon_state = "fluffy"
 
+/datum/sprite_accessory/hair/head/fluffyovereye
+	name = "Fluffy (Over Eye)"
+	icon_state = "fluffy_overeye"
+
 /datum/sprite_accessory/hair/head/fluffyshort
 	name = "Fluffy (Short)"
 	icon_state = "fluffyshort"
