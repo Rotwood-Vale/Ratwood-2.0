@@ -35,11 +35,7 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 
 /obj/structure/doorman
 	name = "The Doorman"
-<<<<<<< Updated upstream
-	desc = "A heavy golden panel machine set flush into the wall. Cold to the touch, slick with condensation."
-=======
 	desc = "A heavy golden panel machine set flush into the wall. Cold to the touch, slick with condensation. Right-click to buzz the other side."
->>>>>>> Stashed changes
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "camera"
 	density = TRUE
@@ -47,6 +43,8 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 	max_integrity = 999
 	/// Paired to the pipe with the same doorman_id. Set this in the map editor.
 	var/doorman_id = "REPLACETHIS"
+	/// Human-readable spot description used in alerts (e.g. "the alley behind the tavern"). Falls back to area name if blank.
+	var/location_name = null
 	/// The one mob currently cleared for single entry
 	var/datum/weakref/cleared_ref = null
 	var/cleared_until = 0
@@ -76,11 +74,7 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 		grant_clearance(L)
 		return
 
-<<<<<<< Updated upstream
-	to_chat(L, span_warning("The panel is cold and unresponsive."))
-=======
 	to_chat(L, span_warning("The panel is cold. Right-click to buzz the other side - if you wish to speak, that is."))
->>>>>>> Stashed changes
 	. = ..()
 
 /obj/structure/doorman/attackby(obj/item/I, mob/user, params)
@@ -107,38 +101,16 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 
 	. = ..()
 
-<<<<<<< Updated upstream
-/obj/structure/doorman/verb/buzz_up()
-	set name = "Buzz Up"
-	set category = null
-	set src in oview(1)
-
-	if(!isliving(usr))
-		return
-
-	if(!GLOB.underbelly_speakers.len)
-		to_chat(usr, span_warning("[src] gives a dead click. Nothing on the other end."))
-=======
 /obj/structure/doorman/attack_right(mob/user)
 	if(!isliving(user))
 		return
 
 	if(!GLOB.underbelly_speakers.len)
 		to_chat(user, span_warning("[src] gives a dead click. Nothing on the other end."))
->>>>>>> Stashed changes
 		return
 
 	for(var/obj/structure/underbelly_speaker/S in GLOB.underbelly_speakers)
 		if(S.speaker_state == SPEAKER_ACTIVE)
-<<<<<<< Updated upstream
-			to_chat(usr, span_warning("[src] clicks coldly. The line is already in use."))
-			return
-		if(S.speaker_state == SPEAKER_BUZZING)
-			to_chat(usr, span_warning("[src] is still buzzing. No answer yet."))
-			return
-
-	to_chat(usr, span_notice("You press your palm against [src]. A pulse travels through the metal."))
-=======
 			to_chat(user, span_warning("[src] clicks coldly. The line is already in use. Try again in a bit..."))
 			return
 		if(S.speaker_state == SPEAKER_BUZZING)
@@ -146,7 +118,6 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 			return
 
 	to_chat(user, span_notice("You press your palm against [src]. A pulse travels through the metal."))
->>>>>>> Stashed changes
 	playsound(loc, 'sound/foley/coinphy (1).ogg', 40, FALSE)
 
 	for(var/obj/structure/underbelly_speaker/S in GLOB.underbelly_speakers)
@@ -207,13 +178,16 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 /obj/structure/doorman/proc/attempt_force_breach(obj/item/weapon, mob/living/user)
 	being_breached = TRUE
 
-	var/area/A = get_area(src)
+	var/where = location_name
+	if(!where)
+		var/area/A = get_area(src)
+		where = A?.name
 	for(var/mob/living/carbon/human/M in GLOB.player_list)
 		if(!HAS_TRAIT(M, TRAIT_UNDERBELLY_SCUM))
 			continue
 		if(!M.client)
 			continue
-		to_chat(M, span_danger("<b>The Doorman at [A] is being assailed!</b>"))
+		to_chat(M, span_danger("<b>The Doorman at [where] is being assailed!</b>"))
 
 	playsound(loc, pick('sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, TRUE)
 	user.visible_message(

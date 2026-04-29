@@ -1,5 +1,3 @@
-GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"))
-
 /mob/living/carbon/human/species/human/northern/underbelly_trader
 	name = "The Trader"
 	real_name = "The Trader"
@@ -55,12 +53,12 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 /mob/living/carbon/human/species/human/northern/underbelly_trader/proc/idle_voice_tick()
 	if(!shopping && !QDELETED(src) && stat == CONSCIOUS)
 		var/mood_roll = rand(1, 10)
-		if(mood_roll == 1)
+		if(mood_roll <= 2)
 			visible_message(span_notice("[src] hums gently."))
 			playsound(src, 'modular_underbelly/sound/trader/humming.ogg', 55, FALSE)
 			addtimer(CALLBACK(src, PROC_REF(idle_voice_tick)), rand(25, 50) SECONDS)
 			return
-		if(mood_roll <= 3)
+		if(mood_roll <= 4)
 			var/chatter = rand(1, 3)
 			switch(chatter)
 				if(1)
@@ -74,8 +72,16 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 					playsound(src, 'modular_underbelly/sound/trader/idlechatter3.ogg', 60, FALSE)
 			addtimer(CALLBACK(src, PROC_REF(idle_voice_tick)), rand(30, 60) SECONDS)
 			return
-		var/mob/living/carbon/human/nearby = locate(/mob/living/carbon/human) in view(4, src)
-		if(nearby && nearby != src && nearby.dna?.species)
+		if(mood_roll > 6)
+			addtimer(CALLBACK(src, PROC_REF(idle_voice_tick)), rand(20, 45) SECONDS)
+			return
+		var/mob/living/carbon/human/nearby
+		for(var/mob/living/carbon/human/H in view(4, src))
+			if(H == src || !H.client)
+				continue
+			nearby = H
+			break
+		if(nearby && nearby.dna?.species)
 			var/quip
 			// Special cases first
 			if(nearby.mind?.has_antag_datum(/datum/antagonist/vampire))
@@ -241,7 +247,6 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 				say(quip)
 				addtimer(CALLBACK(src, PROC_REF(idle_voice_tick)), rand(30, 60) SECONDS)
 				return
-		say(pick(GLOB.trader_idle_lines))
 	addtimer(CALLBACK(src, PROC_REF(idle_voice_tick)), rand(20, 45) SECONDS)
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/proc/restock_tick()
@@ -388,15 +393,11 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 	return 0
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/attackby(obj/item/I, mob/living/user, params)
-<<<<<<< Updated upstream
-	if(!istype(I, /obj/item/parcel/dead_drop) && !istype(I, /obj/item/organ) && !istype(I, /obj/item/bodypart) && !istype(I, /obj/item/reagent_containers/lux_impure))
-=======
 	if(!istype(I, /obj/item/parcel/dead_drop) \
 		&& !istype(I, /obj/item/paper/scroll/dead_drop_contract) \
 		&& !istype(I, /obj/item/organ) \
 		&& !istype(I, /obj/item/bodypart) \
 		&& !istype(I, /obj/item/reagent_containers/lux_impure))
->>>>>>> Stashed changes
 		return ..()
 	if(!istype(user, /mob/living/carbon/human))
 		return ..()
@@ -419,26 +420,6 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 		visible_message(span_notice("[src] pockets [sold_name] with a nod."))
 		on_purchase(H, null)
 		return
-<<<<<<< Updated upstream
-	if(H.job != "Flinger" && H.job != "Gutter King")
-		to_chat(H, span_warning("[src] glances at the parcel and shakes [src.p_their()] head. \"That's not your job, friend.\""))
-		return
-	if(stat != CONSCIOUS)
-		to_chat(H, span_warning("[src] is in no state to receive a delivery."))
-		return
-	// Break links before qdel to prevent cross-qdel loops
-	var/obj/item/parcel/dead_drop/parcel = I
-	var/obj/item/paper/scroll/dead_drop_contract/C = parcel.contract_ref?.resolve()
-	parcel.contract_ref = null
-	qdel(parcel)
-	var/obj/item/roguecoin/gold/payout = new(get_turf(H), rand(11, 20))
-	H.put_in_hands(payout)
-	visible_message(span_notice("[src] tucks the parcel away and settles the debt."))
-	on_deaddrop_success(H)
-	if(C)
-		C.parcel_ref = null
-		qdel(C)
-=======
 	if(stat != CONSCIOUS)
 		to_chat(H, span_warning("[src] is in no state to receive a delivery."))
 		return
@@ -475,7 +456,6 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 	H.put_in_hands(payout)
 	visible_message(span_notice("[src] tears the contract in half and settles the debt with [H]."))
 	on_deaddrop_success(H)
->>>>>>> Stashed changes
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

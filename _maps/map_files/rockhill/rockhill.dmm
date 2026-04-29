@@ -1012,12 +1012,6 @@
 	icon_state = "wooden_floor2"
 	},
 /area/rogue/outdoors/beach/harbor)
-"aku" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "somewhere, in a tent"
-	},
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/indoors/shelter/bog)
 "akC" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -2404,6 +2398,13 @@
 	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/shop)
+"aBX" = (
+/obj/structure/rack/rogue,
+/obj/effect/landmark/dead_drop_spot{
+	clue = "underneath the garrison's fort, on one of the racks"
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/under/town/basement)
 "aCa" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/machinery/light/rogue/candle/floorcandle{
@@ -5299,6 +5300,13 @@
 /obj/machinery/light/rogue/torchholder/r,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
+"blj" = (
+/obj/structure/fluff/statue/knight/r,
+/obj/effect/landmark/dead_drop_spot{
+	clue = "in Church, behind one of the statues"
+	},
+/turf/open/floor/rogue/woodturned,
+/area/rogue/indoors/town/church/chapel)
 "bll" = (
 /obj/structure/flora/newleaf,
 /obj/structure/fluff/railing/wood{
@@ -6429,13 +6437,6 @@
 "bzm" = (
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors)
-"bzs" = (
-/obj/structure/flora/roguegrass,
-/obj/effect/landmark/dead_drop_spot{
-	clue = "at one of the water fountains in Town"
-	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/outdoors/town/rockhill)
 "bzy" = (
 /obj/structure/mineral_door/wood/red{
 	locked = 1;
@@ -7403,6 +7404,12 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
+"bKP" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "at the top of the lighthouse."
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/beach/harbor)
 "bKQ" = (
 /obj/structure/closet/crate/roguecloset/dark,
 /obj/item/chastity/chastity_cage/spiked_anal,
@@ -7955,6 +7962,12 @@
 	},
 /turf/open/floor/rogue/woodturned,
 /area/rogue/outdoors/beach/harbor)
+"bQU" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "a place with a lot of salt"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cavewet)
 "bQV" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -10714,12 +10727,6 @@
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/beach/harbor)
-"cxQ" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "deep under the inquisition's manor, in the sewers, near a scarecrow"
-	},
-/turf/open/floor/rogue/cobblerock,
-/area/rogue/under/town/sewer)
 "cxS" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
@@ -12189,6 +12196,16 @@
 /obj/structure/bars/grille/rusty,
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/bograt/above)
+"cNw" = (
+/obj/structure/fluff/railing/wood{
+	dir = 1;
+	pixel_y = 6
+	},
+/obj/effect/landmark/dead_drop_spot{
+	clue = "behind a sign that says Mines"
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield/rockhill)
 "cNx" = (
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/cavewet)
@@ -13255,6 +13272,13 @@
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church/chapel)
+"dbd" = (
+/obj/item/reagent_containers/food/snacks/smallrat,
+/obj/effect/landmark/dead_drop_spot{
+	clue = "under the Inquisition's nose"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave)
 "dbg" = (
 /obj/structure/fluff/railing/border{
 	dir = 1;
@@ -13552,6 +13576,12 @@
 "ddv" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors)
+"ddB" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "under the keep's bridge"
+	},
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/town/sewer)
 "ddG" = (
 /obj/structure/fluff/walldeco/chains,
 /obj/effect/decal/remains/human{
@@ -13931,12 +13961,6 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woodsrat/south)
-"dhJ" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "behind the altar of Noc"
-	},
-/turf/open/floor/rogue/churchmarble,
-/area/rogue/indoors/town/church/chapel)
 "dhK" = (
 /obj/structure/flora/roguetree,
 /turf/open/water/swamp,
@@ -16329,6 +16353,12 @@
 /obj/structure/bookcase/random/archive,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/Academy)
+"dKe" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "near Abyssor's altar, next to a tree"
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/beach/harbor)
 "dKg" = (
 /turf/closed/mineral/random/rogue,
 /turf/closed/mineral/random/rogue,
@@ -17057,6 +17087,12 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cavewet)
+"dSF" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "next to the chicken coop, near a tree"
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield/rockhill)
 "dSI" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4;
@@ -18312,12 +18348,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
-"egL" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "under the garisson's fort, near a mannequin"
-	},
-/turf/open/floor/rogue/cobble,
-/area/rogue/under/town/basement)
 "egP" = (
 /obj/item/seeds/wheat,
 /obj/structure/table/wood/poor,
@@ -18340,12 +18370,6 @@
 	layer = 1.9
 	},
 /area/rogue/outdoors/woodsrat/south)
-"ehb" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "at the top of the lighthouse."
-	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/outdoors/beach/harbor)
 "ehe" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/roofs)
@@ -21283,12 +21307,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
-"eRy" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "under a bridge, near remains"
-	},
-/turf/open/floor/rogue/dirt,
-/area/rogue/under/cavewet/river)
 "eRR" = (
 /obj/machinery/light/rogue/candle/blue/r,
 /obj/structure/chair/wood{
@@ -24205,6 +24223,12 @@
 /obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement)
+"fCJ" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "next to a sign that says Eastern Mines"
+	},
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/under/cavewet)
 "fCM" = (
 /obj/structure/spider/stickyweb{
 	color = "#aba6a2"
@@ -24558,6 +24582,13 @@
 /obj/structure/bed/rogue/inn/wool,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/warden)
+"fGW" = (
+/obj/effect/decal/cleanable/vomit,
+/obj/effect/landmark/dead_drop_spot{
+	clue = "in the alleyway near Church"
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/town/rockhill)
 "fGY" = (
 /turf/open/floor/rogue/tile/masonic/spiral,
 /area/rogue/indoors/town/church/basement)
@@ -26167,6 +26198,12 @@
 /obj/machinery/light/rogue/hearth,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/inq)
+"fXZ" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "under the garisson's fort, near a mannequin"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/town/basement)
 "fYb" = (
 /obj/structure/chair/bench/church/mid{
 	dir = 4
@@ -26867,6 +26904,12 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
+"giJ" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "under a bridge, near remains"
+	},
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cavewet/river)
 "giK" = (
 /obj/item/storage/roguebag,
 /obj/structure/fluff/railing/border{
@@ -30588,12 +30631,6 @@
 /obj/item/ingot/steel,
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/dwarfin/rockhill)
-"hbW" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "between two closets, near where people like fighting"
-	},
-/turf/open/floor/rogue/cobble,
-/area/rogue/under/town/basement)
 "hbZ" = (
 /obj/structure/closet/crate/chest/gold,
 /turf/open/floor/rogue/tile,
@@ -30997,6 +31034,12 @@
 	},
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/bath)
+"hhu" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "near the well in lowtown"
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/rtfield/rockhill)
 "hhz" = (
 /obj/machinery/light/rogue/torchholder,
 /turf/closed/wall/mineral/rogue/decostone/end{
@@ -31860,6 +31903,12 @@
 /obj/item/roguebin/water/gross,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
+"hrI" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "at Abyssor's altar"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue/under/cavewet)
 "hrJ" = (
 /obj/structure/flora/ausbushes/reedbush{
 	pixel_x = 6
@@ -32815,15 +32864,6 @@
 /obj/structure/bars/cemetery,
 /turf/open/water/swamp,
 /area/rogue/outdoors/bograt/sunken)
-"hEa" = (
-/obj/effect/decal/cleanable/debris/woody{
-	dir = 1
-	},
-/obj/effect/landmark/dead_drop_spot{
-	clue = "in the rogue's den, behind the bar"
-	},
-/turf/open/floor/rogue/tile,
-/area/rogue/under/town/sewer)
 "hEd" = (
 /obj/structure/bearpelt{
 	pixel_x = -13;
@@ -43181,6 +43221,12 @@
 /obj/item/rogueweapon/pick,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
+"kew" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "near a tree, behind the old church"
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/rtfield/rockhill)
 "kez" = (
 /mob/living/simple_animal/hostile/rogue/deepone/spit,
 /turf/open/floor/rogue/naturalstone,
@@ -46413,12 +46459,6 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/town)
-"kQU" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "a place with a lot of salt"
-	},
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cavewet)
 "kQW" = (
 /obj/structure/roguethrone{
 	name = "throne of Rockhill"
@@ -48061,12 +48101,6 @@
 /obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grassred,
 /area/rogue/indoors/town/grove)
-"lml" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "next to the chicken coop, near a tree"
-	},
-/turf/open/floor/rogue/grass,
-/area/rogue/outdoors/rtfield/rockhill)
 "lmm" = (
 /turf/closed/wall/mineral/rogue/pipe,
 /area/rogue/indoors/inq)
@@ -48411,12 +48445,6 @@
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/cleanshallow,
 /area/rogue/under/town/sewer)
-"lqA" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "near the well in lowtown"
-	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/outdoors/rtfield/rockhill)
 "lqB" = (
 /turf/closed/wall/mineral/rogue/wooddark/end{
 	dir = 1
@@ -53239,6 +53267,12 @@
 "mvO" = (
 /turf/closed/wall/mineral/rogue/decostone/end,
 /area/rogue/indoors/town/manor/rockhill)
+"mwc" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "somewhere, in a tent"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors/shelter/bog)
 "mwh" = (
 /obj/item/restraints/legcuffs/beartrap/armed,
 /turf/open/floor/rogue/church{
@@ -57141,6 +57175,12 @@
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/tavern)
+"nsK" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "in a graveyard, in the northern terrorbog"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woodsrat/north)
 "nsO" = (
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/churchrough,
@@ -59389,12 +59429,6 @@
 	color = "#d4ffcf"
 	},
 /area/rogue/under/cave/skeletoncrypt)
-"nVA" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "near an underground waterfall, next to a blue flame"
-	},
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cavewet)
 "nVC" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -62534,6 +62568,12 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/grove)
+"oJf" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "behind the altar of Noc"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue/indoors/town/church/chapel)
 "oJg" = (
 /obj/item/grown/log/tree/small,
 /turf/open/floor/rogue/dirt,
@@ -64138,12 +64178,6 @@
 	color = "#d4ffcf"
 	},
 /area/rogue/under/cave/skeletoncrypt)
-"pby" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "at Abyssor's altar"
-	},
-/turf/open/floor/rogue/churchmarble,
-/area/rogue/under/cavewet)
 "pbC" = (
 /mob/living/carbon/human/species/goblin/npc/moon,
 /turf/open/floor/rogue/dirt,
@@ -64490,6 +64524,10 @@
 	color = "#d4ffcf"
 	},
 /area/rogue/under/cave)
+"pgb" = (
+/obj/effect/decal/remains/saiga,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/cavewet/river)
 "pgc" = (
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/magician{
@@ -64718,13 +64756,6 @@
 /obj/item/clothing/neck/roguetown/psicross/noc,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/indoors/town/church/chapel)
-"piU" = (
-/obj/effect/decal/cleanable/vomit,
-/obj/effect/landmark/dead_drop_spot{
-	clue = "in the alleyway near Church"
-	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/outdoors/town/rockhill)
 "pjf" = (
 /obj/item/grown/log/tree,
 /turf/open/floor/rogue/dirt,
@@ -66302,6 +66333,12 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors)
+"pCb" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "behind the soilson's shitter"
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield/rockhill)
 "pCo" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -67619,6 +67656,12 @@
 	name = "damaged metal wall"
 	},
 /area/rogue/under/town/sewer)
+"pRL" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "somewhere on the coast line, near a bonfire, and boulder"
+	},
+/turf/open/floor/rogue/AzureSand,
+/area/rogue/outdoors/beach/harbor)
 "pRV" = (
 /obj/item/natural/cloth{
 	pixel_x = -5
@@ -68166,6 +68209,12 @@
 	color = "#d4ffcf"
 	},
 /area/rogue/under/cave/skeletoncrypt)
+"pYN" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "between two closets, near where people like fighting"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/town/basement)
 "pYO" = (
 /obj/structure/fluff/psycross,
 /turf/open/floor/rogue/tile/harem,
@@ -72133,12 +72182,6 @@
 	},
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/bath)
-"qYs" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "in a graveyard, in the northern terrorbog"
-	},
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/outdoors/woodsrat/north)
 "qYw" = (
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/dirt,
@@ -72906,6 +72949,15 @@
 /area/rogue/indoors/town/cell{
 	warden_area = 1
 	})
+"riV" = (
+/obj/effect/decal/cleanable/debris/woody{
+	dir = 1
+	},
+/obj/effect/landmark/dead_drop_spot{
+	clue = "in the rogue's den, behind the bar"
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/under/town/sewer)
 "rja" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -74239,12 +74291,6 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/beach/harbor)
-"rzE" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "next to a sign that says Eastern Mines"
-	},
-/turf/open/floor/rogue/ruinedwood,
-/area/rogue/under/cavewet)
 "rzI" = (
 /obj/structure/closet/crate/chest{
 	locked = 1;
@@ -76503,12 +76549,6 @@
 	dir = 8
 	},
 /turf/open/transparent/openspace,
-/area/rogue/outdoors/beach/harbor)
-"sdi" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "near Abyssor's altar, next to a tree"
-	},
-/turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/beach/harbor)
 "sdj" = (
 /obj/structure/fluff/railing/border{
@@ -79594,24 +79634,12 @@
 	icon_state = "vertw"
 	},
 /area/rogue/indoors)
-"sQf" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "behind the soilson's shitter"
-	},
-/turf/open/floor/rogue/grass,
-/area/rogue/outdoors/rtfield/rockhill)
 "sQk" = (
 /obj/structure/chair/wood/rogue{
 	dir = 1
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/bath)
-"sQm" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "near a tree, behind the old church"
-	},
-/turf/open/floor/rogue/cobblerock,
-/area/rogue/outdoors/rtfield/rockhill)
 "sQr" = (
 /obj/machinery/light/rogue/firebowl{
 	status = 1
@@ -84825,6 +84853,12 @@
 /area/rogue/indoors/town/cell{
 	warden_area = 1
 	})
+"ubO" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "deep under the inquisition's manor, in the sewers, near a scarecrow"
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/under/town/sewer)
 "ubQ" = (
 /obj/structure/rogue/trophy/deer,
 /obj/structure/fluff/pillow/blue{
@@ -86421,6 +86455,13 @@
 /obj/item/natural/bundle/stick,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/shelter/woodsrat)
+"uuZ" = (
+/obj/structure/flora/roguegrass,
+/obj/effect/landmark/dead_drop_spot{
+	clue = "at one of the water fountains in Town"
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/town/rockhill)
 "uve" = (
 /obj/item/roguebin/water/gross,
 /turf/open/floor/rogue/hexstone,
@@ -86543,12 +86584,6 @@
 	color = "#d4ffcf"
 	},
 /area/rogue/under/cave/skeletoncrypt)
-"uwk" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "smells of cow shite"
-	},
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/outdoors/rtfield/rockhill)
 "uwr" = (
 /obj/structure/stairs{
 	dir = 1
@@ -87492,13 +87527,6 @@
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/rogue/decostone/mossy/end,
 /area/rogue/under/cave/skeletoncrypt)
-"uIF" = (
-/obj/structure/fluff/statue/knight/r,
-/obj/effect/landmark/dead_drop_spot{
-	clue = "in Church, behind one of the statues"
-	},
-/turf/open/floor/rogue/woodturned,
-/area/rogue/indoors/town/church/chapel)
 "uIK" = (
 /obj/effect/decal/cleanable/debris/woody,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -88379,6 +88407,12 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors)
+"uSZ" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "to the right of an Eoran statue, in a gloomy cave, in Town"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/under/town/sewer)
 "uTa" = (
 /obj/item/storage/roguebag,
 /turf/open/floor/rogue/twig,
@@ -89388,12 +89422,6 @@
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/exposed/town/keep)
-"vgj" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "behind a water fountain, in front of a notice board, and a lot of skeletons"
-	},
-/turf/open/floor/rogue/cobblerock,
-/area/rogue/outdoors/bograt/south)
 "vgn" = (
 /obj/structure/flora/roguegrass,
 /obj/structure/flora/roguegrass/bush/wall,
@@ -90634,10 +90662,6 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/beach/harbor)
-"vvP" = (
-/obj/effect/decal/remains/saiga,
-/turf/open/floor/rogue/dirt,
-/area/rogue/under/cavewet/river)
 "vvS" = (
 /obj/structure/rack/rogue,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
@@ -90976,6 +91000,12 @@
 /obj/structure/handcart,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/rockhill)
+"vzY" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "behind a water fountain, in front of a notice board, and a lot of skeletons"
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/bograt/south)
 "vzZ" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -91398,16 +91428,6 @@
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/bograt/sunken)
-"vFB" = (
-/obj/structure/fluff/railing/wood{
-	dir = 1;
-	pixel_y = 6
-	},
-/obj/effect/landmark/dead_drop_spot{
-	clue = "behind a sign that says Mines"
-	},
-/turf/open/floor/rogue/grass,
-/area/rogue/outdoors/rtfield/rockhill)
 "vFF" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -98142,12 +98162,6 @@
 /obj/structure/closet/crate/roguecloset/inn,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/bath)
-"xkO" = (
-/obj/effect/landmark/dead_drop_spot{
-	clue = "in front of Dendor's altar"
-	},
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/outdoors/town/grove)
 "xkX" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -99240,13 +99254,6 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/rtfield/rockhill/above)
-"xyl" = (
-/obj/structure/rack/rogue,
-/obj/effect/landmark/dead_drop_spot{
-	clue = "underneath the garrison's fort, on one of the racks"
-	},
-/turf/open/floor/rogue/concrete,
-/area/rogue/under/town/basement)
 "xyn" = (
 /obj/structure/chair/wood/rogue,
 /turf/open/floor/rogue/ruinedwood,
@@ -99770,6 +99777,12 @@
 /obj/structure/hotspring/border/twelve,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/town/grove)
+"xEg" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "smells of cow shite"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/rtfield/rockhill)
 "xEk" = (
 /obj/structure/fluff/nest,
 /turf/open/floor/rogue/hay,
@@ -101339,6 +101352,12 @@
 /obj/structure/fluff/railing/fence,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
+"xXR" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "near an underground waterfall, next to a blue flame"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cavewet)
 "xXX" = (
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/grass,
@@ -102070,6 +102089,12 @@
 /obj/item/natural/bundle/cloth,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors)
+"ygE" = (
+/obj/effect/landmark/dead_drop_spot{
+	clue = "in front of Dendor's altar"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/town/grove)
 "ygF" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -102298,13 +102323,6 @@
 /area/rogue/indoors/town/church/basement)
 "yjq" = (
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave)
-"yjs" = (
-/obj/item/reagent_containers/food/snacks/smallrat,
-/obj/effect/landmark/dead_drop_spot{
-	clue = "under the Inquisition's nose"
-	},
-/turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "yjx" = (
 /obj/machinery/light/rogue/torchholder/c,
@@ -146807,7 +146825,7 @@ whb
 dpP
 aaf
 oyM
-kQU
+bQU
 hOF
 whb
 whb
@@ -165331,7 +165349,7 @@ swJ
 pus
 cOn
 swJ
-vvP
+pgb
 cOn
 swJ
 aaf
@@ -165763,7 +165781,7 @@ swJ
 lLc
 lLc
 odG
-eRy
+giJ
 lLc
 swJ
 iad
@@ -193238,7 +193256,7 @@ qmr
 qmr
 byt
 byt
-byt
+pRL
 byt
 byt
 byt
@@ -199442,7 +199460,7 @@ aaf
 aaf
 xaf
 xaf
-nVA
+xXR
 aaf
 aaf
 aaf
@@ -205721,7 +205739,7 @@ aad
 rdk
 vGj
 phK
-pby
+hrI
 kZA
 teD
 teD
@@ -254720,7 +254738,7 @@ qvR
 uaL
 uaL
 qvR
-sQf
+pCb
 qvR
 qvR
 qvR
@@ -258590,7 +258608,7 @@ vKb
 wSn
 uaL
 iNT
-lml
+dSF
 wSn
 wSn
 uaL
@@ -259447,7 +259465,7 @@ pAt
 qvR
 uaL
 qvR
-uwk
+xEg
 qvR
 nzJ
 qvR
@@ -259606,7 +259624,7 @@ vEc
 vEc
 fAB
 qrc
-vgj
+vzY
 dux
 dux
 uWK
@@ -267270,7 +267288,7 @@ gNu
 xPB
 lYl
 xrY
-sQm
+kew
 fxx
 udj
 fxx
@@ -268163,7 +268181,7 @@ fcx
 fPd
 dGW
 aLs
-aku
+mwc
 exa
 fPd
 sYx
@@ -269760,7 +269778,7 @@ jfg
 lrs
 lrs
 rHO
-cxQ
+ubO
 lrs
 lrs
 gLf
@@ -273675,7 +273693,7 @@ qbG
 qbG
 qbG
 qbG
-vFB
+cNw
 bBg
 sjP
 fxx
@@ -274170,7 +274188,7 @@ crB
 sjP
 uaL
 sjP
-lqA
+hhu
 sjP
 nrs
 fxx
@@ -279703,7 +279721,7 @@ wwz
 wHU
 wHU
 cTA
-egL
+fXZ
 iTw
 iTw
 fNe
@@ -280115,7 +280133,7 @@ cEK
 pDh
 ffE
 iTw
-hbW
+pYN
 gPY
 lrs
 rSC
@@ -282677,7 +282695,7 @@ fPR
 tQZ
 gMO
 uEX
-ocN
+ddB
 ocN
 gMO
 gMO
@@ -285281,7 +285299,7 @@ squ
 rSC
 uEX
 rSC
-squ
+uSZ
 lrs
 rRb
 gLf
@@ -286616,7 +286634,7 @@ nvb
 nvb
 fjx
 nvb
-xyl
+aBX
 skc
 nvb
 yfk
@@ -297390,7 +297408,7 @@ ebr
 rRb
 jnz
 rme
-hEa
+riV
 emE
 lRr
 bTH
@@ -305207,7 +305225,7 @@ ryn
 qYb
 lXp
 prK
-xkO
+ygE
 qeG
 ydF
 qeG
@@ -309590,7 +309608,7 @@ whb
 xaf
 whb
 whb
-rzE
+fCJ
 cNx
 aaf
 aaf
@@ -379060,7 +379078,7 @@ czk
 czk
 czk
 vIa
-yjs
+dbd
 vIa
 tmH
 fZe
@@ -388307,7 +388325,7 @@ oqx
 lkU
 oqx
 oqx
-qYs
+nsK
 oqx
 lkU
 lkU
@@ -395888,7 +395906,7 @@ qJa
 xFN
 uJm
 aOv
-bzs
+uuZ
 aOv
 aOv
 fnA
@@ -405825,7 +405843,7 @@ lZz
 pZg
 vvr
 evo
-piU
+fGW
 nDa
 cVJ
 lYR
@@ -428202,7 +428220,7 @@ euP
 euP
 euP
 ekG
-sdi
+dKe
 sqt
 sqt
 sqt
@@ -514839,7 +514857,7 @@ urb
 urb
 aMX
 bBH
-dhJ
+oJf
 xnb
 swm
 swm
@@ -522901,7 +522919,7 @@ dmE
 wou
 wou
 wou
-uIF
+blj
 lZg
 moU
 xzF
@@ -631295,7 +631313,7 @@ euP
 cZS
 wfI
 kCe
-ehb
+bKP
 kCe
 kCe
 tGW
