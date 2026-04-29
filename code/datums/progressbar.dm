@@ -30,14 +30,20 @@
 	bar.alpha = 0
 	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
-/datum/progressbar/proc/update(progress)
-	if(!tracked_clients)
-		tracked_clients = list()
-	for(var/mob/M in viewers(user, null))
-		if(M.client)
-			M.client.images |= bar
-			tracked_clients |= M.client
+	tracked_clients = list()
+	refresh_viewers()
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(refresh_viewers))
 
+/datum/progressbar/proc/refresh_viewers()
+	SIGNAL_HANDLER
+	for(var/mob/M in viewers(user, null))
+		var/client/C = M.client
+		if(!C || (C in tracked_clients))
+			continue
+		C.images |= bar
+		tracked_clients += C
+
+/datum/progressbar/proc/update(progress)
 	progress = CLAMP(progress, 0, goal)
 	last_progress = progress
 	bar.icon_state = "prog_bar_[round(((progress / goal) * 100), 5)]"
@@ -51,6 +57,8 @@
 	animate(bar, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 /datum/progressbar/Destroy()
+	if(user)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	if(last_progress != goal)
 		bar.icon_state = "[bar.icon_state]_fail"
 	for(var/I in user.progressbars[bar.loc])
