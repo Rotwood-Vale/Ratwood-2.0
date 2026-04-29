@@ -35,7 +35,11 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 
 /obj/structure/doorman
 	name = "The Doorman"
+<<<<<<< Updated upstream
 	desc = "A heavy golden panel machine set flush into the wall. Cold to the touch, slick with condensation."
+=======
+	desc = "A heavy golden panel machine set flush into the wall. Cold to the touch, slick with condensation. Right-click to buzz the other side."
+>>>>>>> Stashed changes
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "camera"
 	density = TRUE
@@ -72,7 +76,11 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 		grant_clearance(L)
 		return
 
+<<<<<<< Updated upstream
 	to_chat(L, span_warning("The panel is cold and unresponsive."))
+=======
+	to_chat(L, span_warning("The panel is cold. Right-click to buzz the other side - if you wish to speak, that is."))
+>>>>>>> Stashed changes
 	. = ..()
 
 /obj/structure/doorman/attackby(obj/item/I, mob/user, params)
@@ -99,6 +107,7 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 
 	. = ..()
 
+<<<<<<< Updated upstream
 /obj/structure/doorman/verb/buzz_up()
 	set name = "Buzz Up"
 	set category = null
@@ -109,10 +118,19 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 
 	if(!GLOB.underbelly_speakers.len)
 		to_chat(usr, span_warning("[src] gives a dead click. Nothing on the other end."))
+=======
+/obj/structure/doorman/attack_right(mob/user)
+	if(!isliving(user))
+		return
+
+	if(!GLOB.underbelly_speakers.len)
+		to_chat(user, span_warning("[src] gives a dead click. Nothing on the other end."))
+>>>>>>> Stashed changes
 		return
 
 	for(var/obj/structure/underbelly_speaker/S in GLOB.underbelly_speakers)
 		if(S.speaker_state == SPEAKER_ACTIVE)
+<<<<<<< Updated upstream
 			to_chat(usr, span_warning("[src] clicks coldly. The line is already in use."))
 			return
 		if(S.speaker_state == SPEAKER_BUZZING)
@@ -120,6 +138,15 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 			return
 
 	to_chat(usr, span_notice("You press your palm against [src]. A pulse travels through the metal."))
+=======
+			to_chat(user, span_warning("[src] clicks coldly. The line is already in use. Try again in a bit..."))
+			return
+		if(S.speaker_state == SPEAKER_BUZZING)
+			to_chat(user, span_warning("[src] is still buzzing. No answer yet."))
+			return
+
+	to_chat(user, span_notice("You press your palm against [src]. A pulse travels through the metal."))
+>>>>>>> Stashed changes
 	playsound(loc, 'sound/foley/coinphy (1).ogg', 40, FALSE)
 
 	for(var/obj/structure/underbelly_speaker/S in GLOB.underbelly_speakers)

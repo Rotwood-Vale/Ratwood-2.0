@@ -388,7 +388,15 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 	return 0
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/attackby(obj/item/I, mob/living/user, params)
+<<<<<<< Updated upstream
 	if(!istype(I, /obj/item/parcel/dead_drop) && !istype(I, /obj/item/organ) && !istype(I, /obj/item/bodypart) && !istype(I, /obj/item/reagent_containers/lux_impure))
+=======
+	if(!istype(I, /obj/item/parcel/dead_drop) \
+		&& !istype(I, /obj/item/paper/scroll/dead_drop_contract) \
+		&& !istype(I, /obj/item/organ) \
+		&& !istype(I, /obj/item/bodypart) \
+		&& !istype(I, /obj/item/reagent_containers/lux_impure))
+>>>>>>> Stashed changes
 		return ..()
 	if(!istype(user, /mob/living/carbon/human))
 		return ..()
@@ -411,6 +419,7 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 		visible_message(span_notice("[src] pockets [sold_name] with a nod."))
 		on_purchase(H, null)
 		return
+<<<<<<< Updated upstream
 	if(H.job != "Flinger" && H.job != "Gutter King")
 		to_chat(H, span_warning("[src] glances at the parcel and shakes [src.p_their()] head. \"That's not your job, friend.\""))
 		return
@@ -429,6 +438,44 @@ GLOBAL_LIST_INIT(trader_idle_lines, world.file2list("strings/rt/trader_idle.txt"
 	if(C)
 		C.parcel_ref = null
 		qdel(C)
+=======
+	if(stat != CONSCIOUS)
+		to_chat(H, span_warning("[src] is in no state to receive a delivery."))
+		return
+	if(istype(I, /obj/item/parcel/dead_drop))
+		var/obj/item/parcel/dead_drop/parcel = I
+		if(HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
+			to_chat(H, span_warning("[src] eyes the parcel and shakes [src.p_their()] head. \"Not from one of your own. Send a clean pair of hands.\""))
+			return
+		if(!parcel.bound_ckey || parcel.bound_ckey != H.ckey)
+			to_chat(H, span_warning("[src] glances at the parcel and waves [src.p_their()] hand. \"That ain't your delivery, friend.\""))
+			return
+		var/obj/item/paper/scroll/dead_drop_contract/C = parcel.contract_ref?.resolve()
+		parcel.contract_ref = null
+		qdel(parcel)
+		var/obj/item/roguecoin/gold/payout = new(get_turf(H), rand(5, 10))
+		H.put_in_hands(payout)
+		if(C)
+			C.parcel_ref = null
+			C.ready_to_redeem = TRUE
+		visible_message(span_notice("[src] takes the parcel, slips a few coins to [H], and makes a small mark on a scrap of paper."))
+		say("Tell whoever sent you the deal's stamped. They know where to find me.")
+		return
+	// Contract redemption (Flinger/Gutter King cashing in after the parcel was delivered).
+	var/obj/item/paper/scroll/dead_drop_contract/C = I
+	if(H.job != "Flinger" && H.job != "Gutter King")
+		to_chat(H, span_warning("[src] eyes the contract. \"That's not yours to cash, friend.\""))
+		return
+	if(!C.ready_to_redeem)
+		to_chat(H, span_warning("[src] glances at the contract. \"Parcel ain't been delivered yet. Get a runner on it.\""))
+		return
+	C.parcel_ref = null
+	qdel(C)
+	var/obj/item/roguecoin/gold/payout = new(get_turf(H), rand(15, 25))
+	H.put_in_hands(payout)
+	visible_message(span_notice("[src] tears the contract in half and settles the debt with [H]."))
+	on_deaddrop_success(H)
+>>>>>>> Stashed changes
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

@@ -99,10 +99,17 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
+<<<<<<< Updated upstream
 	tutorial = "You built something down here. Not a kingdom - nobody'd call it that. \
 	But it runs, it pays, and when you say 'do it', people do it. The Keep above \
 	think they own this town. You own what's underneath it. \
 	Keep the Scum in line, keep the Flipside from burning you down, and don't get careless."
+=======
+	tutorial = "Lemme tell ya somethin' about down here. It ain't a kingdom, alright? Don't let nobody call it that. \
+	But it runs, it pays, and when you's say 'do it', it gets done. Ya got it? The Keep upstairs, \
+	they think they own this town. You's own what's underneath. \
+	Keep the Scum in line, keep the Flipside off ya neck, and don't get sloppy."
+>>>>>>> Stashed changes
 
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking
 	obsfuscated_job = TRUE
@@ -153,8 +160,13 @@
 // Kingpin - the brawler. Leads by force, not words.
 /datum/advclass/gutterking/kingpin
 	name = "Kingpin"
+<<<<<<< Updated upstream
 	tutorial = "You run the Underbelly the old-fashioned way - you're the biggest, meanest thing in it. \
 	Your word is law because your fist is the law. Nobody questions you twice."
+=======
+	tutorial = "You's run the Underbelly the old way. Ya the biggest, ya the meanest, end of story. \
+	Ya word's law on accounta ya fist's the law. Nobody asks twice. Nobody."
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking/kingpin
@@ -204,9 +216,15 @@
 // Fixer - the social predator. Leads by leverage, not force.
 /datum/advclass/gutterking/fixer
 	name = "Fixer"
+<<<<<<< Updated upstream
 	tutorial = "You run the Underbelly through compromise, blackmail, and charm in equal measure. \
 	The Keep drinks your wine. The merchants owe you favours. \
 	Nobody needs to know you own them until you need them to know."
+=======
+	tutorial = "You's run things with charm, leverage, and a smile, capisce? \
+	The Keep drinks ya wine. Half the merchants owe ya favors. \
+	Nobody's gotta know ya own 'em 'til the day ya need 'em to know."
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking/fixer
@@ -269,9 +287,15 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
+<<<<<<< Updated upstream
 	tutorial = "Work for the Underbelly. Break legs, move cargo, disappear people, or keep the Flingers safe. \
 	It doesn't pay well but it pays, and it beats starving Flipside. The Gutter King expects results. \
 	The kind that don't require explaining."
+=======
+	tutorial = "Ya work for the Underbelly. Break legs, move cargo, make a guy disappear, watch the Flingers' backs. \
+	Don't pay great, but it pays, and that beats starvin' Flipside. The Gutter King wants results. \
+	The kind ya don't gotta explain after, capisce?"
+>>>>>>> Stashed changes
 
 	outfit = /datum/outfit/job/roguetown/underbelly/scum
 	obsfuscated_job = TRUE
@@ -316,7 +340,11 @@
 // Enforcer — the brawler. Hits things until they stop moving.
 /datum/advclass/scum/enforcer
 	name = "Enforcer"
+<<<<<<< Updated upstream
 	tutorial = "Debt collectors don't need to be subtle. They need to be persuasive. You are very persuasive."
+=======
+	tutorial = "Debt collectors don't gotta be subtle. They gotta be persuasive. Lucky for the boss, you's very persuasive."
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/scum/enforcer
@@ -358,8 +386,13 @@
 // Kidnapper - fast, quiet, rope in hand.
 /datum/advclass/scum/kidnapper
 	name = "Kidnapper"
+<<<<<<< Updated upstream
 	tutorial = "You don't fight people. You take them somewhere quiet and let the problem sort itself out. \
 	Always works."
+=======
+	tutorial = "You's don't fight nobody. Ya take 'em somewhere quiet and let the situation sort itself out. \
+	Works every time."
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/scum/kidnapper
@@ -404,8 +437,13 @@
 // Guttersnipe - knife fighter, opportunist, nasty in a corner.
 /datum/advclass/scum/guttersnipe
 	name = "Guttersnipe"
+<<<<<<< Updated upstream
 	tutorial = "No armour, no plan, no problem. You're fast, you hit once and you disappear. \
 	Born in the gutter. Comfortable there."
+=======
+	tutorial = "No armor, no plan, no problem, capisce? You's fast, ya hit once, and ya gone. \
+	Born in the gutter, raised in the gutter. Comfortable there."
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/scum/guttersnipe
@@ -464,9 +502,14 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
+<<<<<<< Updated upstream
 	tutorial = "Organs fetch a good price if you know who to sell to. Kidneys, spleens, an appendix - nobody misses \
 	the small things. Arms and legs pay better, but the paperwork gets complicated. \
 	The Trader takes what you bring. The Excidium already wants you. Try not to make it worse."
+=======
+	tutorial = "Lux go for good coin if ya know the right guy. Precious, small stuff.\
+	You's expected to patch up the guy's, though. The Excidium's already lookin' at ya funny. Try not to make it worse."
+>>>>>>> Stashed changes
 
 	outfit = /datum/outfit/job/roguetown/underbelly/fleshtrader
 	obsfuscated_job = TRUE
@@ -501,8 +544,13 @@
 // Harvester - the hunter. High medicine, predatory approach.
 /datum/advclass/fleshtrader/harvester
 	name = "Harvester"
+<<<<<<< Updated upstream
 	tutorial = "You hunt efficiently. You know exactly which organs to take and how quickly. \
 	The mark is down before they know it happened, and you're gone before anyone asks questions."
+=======
+	tutorial = "You's hunt clean. Ya know exactly how to extract lux, and how fast. \
+	Mark's down before he knows what hit 'em, and you's ghost before anybody's askin' questions."
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/fleshtrader/harvester
@@ -549,8 +597,13 @@
 // Corruptor — the alchemist. Higher alchemy than medicine.
 /datum/advclass/fleshtrader/corruptor
 	name = "Corruptor"
+<<<<<<< Updated upstream
 	tutorial = "You found that Zizo's Bane makes the harvest considerably easier, and that alchemy \
 	opens doors medicine doesn't. Not a surgeon — more of an extractor."
+=======
+	tutorial = "Turns out Zizo's Bane makes the harvest a whole lotta easier, and alchemy opens doors \
+	regular medicine don't. Ya not a surgeon, capisce? More like an extractor."
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/fleshtrader/corruptor
@@ -608,9 +661,15 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
+<<<<<<< Updated upstream
 	tutorial = "Coin is the only God worth worshipping, and you've devoted your lyfe to it. \
 	You have access to goods nobody Flipside can acquire legally, or easily - and a list of clients who will pay \
 	anything not to have their name associated with acquiring them. Keep it quiet. Keep it profitable."
+=======
+	tutorial = "Coin's the only god worth prayin' to, and you's devoted ya whole lyfe to it. \
+	Ya got goods nobody Flipside can buy legal, and ya got a list of clients who'll pay through the nose \
+	to keep their name off the receipt. Keep it quiet. Keep it profitable, capisce?"
+>>>>>>> Stashed changes
 
 	outfit = /datum/outfit/job/roguetown/underbelly/flinger
 	obsfuscated_job = TRUE
@@ -649,9 +708,15 @@
 // Fence - moves stolen goods. Starts rich, keeps the margin.
 /datum/advclass/flinger/fence
 	name = "Fence"
+<<<<<<< Updated upstream
 	tutorial = "You buy low, sell high, and never ask where it came from. \
 	Half the peasantry in this town have bought something from you. That makes them your clients. \
 	Careful with the Watch, however. They might want a piece of you."
+=======
+	tutorial = "Buy low, sell high, never ask where it came from. That's the whole racket. \
+	Half the peasants in this town bought somethin' off ya, and that makes 'em ya clients. \
+	Watch out for the Watch, though. They might want their own taste."
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/flinger/fence
@@ -697,9 +762,15 @@
 // Dealer - pushes contraband. More goods, less coin.
 /datum/advclass/flinger/dealer
 	name = "Dealer"
+<<<<<<< Updated upstream
 	tutorial = "You move the things polite society pretends don't exist - \
 	poisons, powders, and things with no safe use. \
 	The coin is good. The risk is also good. You've made peace with that."
+=======
+	tutorial = "You's move the stuff polite society pretends ain't real. \
+	Poisons, powders, things with no safe use. \
+	Coin's good. Risk's worse. You's made peace with that a long time ago, capisce?"
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/flinger/dealer
@@ -756,10 +827,17 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
+<<<<<<< Updated upstream
 	tutorial = "Medicine for coin. Surgery for more coin. You'll do what the clinic won't - \
 	pull a crossbow bolt without asking how it got there, stitch a face closed that shouldn't be \
 	walking around, and charge accordingly. \
 	The Pestran relics you carry are not strictly legal. That suits everyone just fine."
+=======
+	tutorial = "Medicine for coin. Surgery for more coin. You's the guy people come to when the clinic says no. \
+	Pull a crossbow bolt without askin' how it got there, stitch a face that shouldn't be \
+	walkin' around, and charge for it. \
+	Them Pestran relics ya carry ain't exactly legal, though."
+>>>>>>> Stashed changes
 
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper
 	obsfuscated_job = TRUE
@@ -799,8 +877,13 @@
 // Sawbones — rough, fast, pragmatic.
 /datum/advclass/ripper/sawbones
 	name = "Sawbones"
+<<<<<<< Updated upstream
 	tutorial = "You operate quickly, in poor light, with whatever's available. \
 	You keep people alive because dead patients don't tip. Usually."
+=======
+	tutorial = "You's work fast, in bad light, with whatever's on the table. \
+	Ya keep 'em alive 'cause dead patients don't tip. Usually."
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper/sawbones
@@ -843,9 +926,15 @@
 // Chirurgeon - the precise one. Master medicine, expert knives.
 /datum/advclass/ripper/chirurgeon
 	name = "Chirurgeon"
+<<<<<<< Updated upstream
 	tutorial = "Other Rippers cut fast. You cut right. \
 	The Pestran relics that end up in your patients' bodies were placed there on purpose, \
 	and to exactly the right depth. Your fee reflects the precision."
+=======
+	tutorial = "Other Rippers cut fast. You's cut right, capisce? \
+	Them Pestran relics that wind up in ya patients' guts? Put there on purpose, exact right depth. \
+	Fee reflects the precision."
+>>>>>>> Stashed changes
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper/chirurgeon
