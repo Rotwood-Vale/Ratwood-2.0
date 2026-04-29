@@ -1159,7 +1159,7 @@
 					if(bandit_player.owner?.current?.stat != DEAD)
 						active_bandits += bandit_player
 				var/bandit_count = length(active_bandits)
-				var/divisor = max(floor((bandit_count - 1) / 5) + 1, 1)
+				var/divisor = floor(max(bandit_count - 1, 0) / 5) + 1
 				var/share = floor(donatedamnt / divisor)
 				for(var/datum/antagonist/bandit/bandit_player in active_bandits)
 					record_round_statistic(STATS_SHRINE_VALUE, share)
