@@ -54,11 +54,12 @@
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
 	/obj/item/reagent_containers/food/snacks/rogue/meat/salami = 2,
-	/obj/item/reagent_containers/food/snacks/rogue/meat/coppiette = 2,
-	/obj/item/reagent_containers/food/snacks/rogue/crackerscooked = 2,
+	/obj/item/reagent_containers/food/snacks/rogue/handpie/fish = 2,
+	/obj/item/reagent_containers/food/snacks/rogue/handpie/meat = 2,
 	/obj/item/reagent_containers/glass/bottle/waterskin = 1,
 	/obj/item/reagent_containers/glass/cup/silver = 2,
 	/obj/item/reagent_containers/glass/bottle/rogue/wine = 1,
+	/obj/item/soap/bath = 1,
 	/obj/item/flint = 1,
 	/obj/item/rogueweapon/scabbard/sheath = 1,
 	)

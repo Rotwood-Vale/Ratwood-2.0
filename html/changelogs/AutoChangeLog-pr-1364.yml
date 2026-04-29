@@ -1,4 +1,0 @@
-author: "MickDick1"
-delete-after: True
-changes:
-  - rscadd: "Added forced wall-leaning (use aggro grab on chest and drag sprite to the adjacent wall)"

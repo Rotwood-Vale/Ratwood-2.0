@@ -507,6 +507,10 @@
 /obj/item/roguekey/vampire,
 /obj/item/roguekey/vampire,
 /obj/item/roguekey/vampire,
+/obj/structure/fluff/walldeco/mona,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
@@ -569,6 +573,7 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
 /obj/item/clothing/gloves/roguetown/plate/aalloy,
 /obj/structure/fluff/railing/border,
+/obj/item/clothing/suit/roguetown/armor/plate/aalloy,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/vampire_manor)
 "jc" = (
@@ -788,6 +793,11 @@
 	pixel_y = 4
 	},
 /obj/structure/fluff/wallclock/vampire,
+/obj/machinery/light/rogue/candle/floorcandle/pink{
+	pixel_x = -1;
+	pixel_y = 3;
+	plane = -6
+	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/vampire_manor)
 "nr" = (
@@ -1003,12 +1013,8 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/vampire_manor)
 "rk" = (
-/obj/structure/closet/crate/roguecloset,
-/obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
-/obj/item/clothing/suit/roguetown/shirt/dress/silkydress,
-/obj/item/clothing/shoes/roguetown/boots/nobleboot,
-/turf/open/floor/rogue/ruinedwood{
-	icon_state = "weird1"
+/turf/open/floor/rogue/tile/bath{
+	icon_state = "bathtileratwood"
 	},
 /area/rogue/indoors/vampire_manor)
 "rq" = (
@@ -1609,6 +1615,15 @@
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/vampire_manor)
+"CC" = (
+/obj/structure/closet/crate/roguecloset,
+/obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
+/obj/item/clothing/shoes/roguetown/boots/nobleboot,
+/obj/item/clothing/suit/roguetown/shirt/vampire,
+/turf/open/floor/rogue/ruinedwood{
+	icon_state = "weird1"
+	},
+/area/rogue/indoors/vampire_manor)
 "CK" = (
 /obj/structure/fluff/statue/gargoyle,
 /turf/open/floor/rogue/blocks,
@@ -1883,12 +1898,12 @@
 /area/rogue/indoors/vampire_manor)
 "Ho" = (
 /obj/structure/closet/crate/roguecloset,
-/obj/item/clothing/suit/roguetown/shirt/vampire,
-/obj/item/clothing/suit/roguetown/shirt/dress/gown/wintergown,
-/obj/item/clothing/suit/roguetown/shirt/dress/gown/summergown,
-/obj/item/clothing/suit/roguetown/shirt/dress/gown/fallgown,
-/obj/item/clothing/suit/roguetown/shirt/dress/gown,
 /obj/item/clothing/suit/roguetown/shirt/dress/royal,
+/obj/item/clothing/suit/roguetown/shirt/dress/gown,
+/obj/item/clothing/suit/roguetown/shirt/dress/gown/fallgown,
+/obj/item/clothing/suit/roguetown/shirt/dress/gown/summergown,
+/obj/item/clothing/suit/roguetown/shirt/dress/gown/wintergown,
+/obj/item/clothing/suit/roguetown/shirt/dress/silkydress,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
@@ -2103,8 +2118,12 @@
 /area/rogue/indoors/vampire_manor)
 "Lv" = (
 /obj/structure/table/vtable/v2,
-/obj/structure/fluff/walldeco/mona,
 /obj/item/candle/skull/lit,
+/obj/machinery/light/rogue/candle/floorcandle/alt/pink{
+	pixel_x = 0;
+	pixel_y = 4;
+	plane = -6
+	},
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
@@ -2399,11 +2418,10 @@
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/vampire_manor)
 "Rq" = (
-/obj/machinery/gear_painter,
-/obj/machinery/light/rogue/candle/blue/r,
-/turf/open/floor/rogue/ruinedwood{
-	icon_state = "weird1"
+/obj/structure/stairs{
+	dir = 8
 	},
+/turf/open/water/bath,
 /area/rogue/indoors/vampire_manor)
 "Rw" = (
 /obj/structure/rack/rogue/shelf,
@@ -2698,11 +2716,20 @@
 /area/rogue/outdoors/woods/vampire_lair)
 "UO" = (
 /obj/structure/table/vtable,
-/obj/item/paper,
-/obj/item/paper,
-/obj/item/paper,
-/obj/item/paper,
 /obj/item/natural/feather,
+/obj/structure/vampire/necromanticbook{
+	pixel_x = 0;
+	pixel_y = 12
+	},
+/obj/item/paper/scroll{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/machinery/light/rogue/candle/floorcandle/pink{
+	pixel_x = -2;
+	pixel_y = 7;
+	plane = -6
+	},
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
@@ -2904,8 +2931,9 @@
 /area/rogue/indoors/vampire_manor)
 "Zb" = (
 /obj/structure/mirror/fancy,
-/turf/open/floor/rogue/ruinedwood{
-	icon_state = "weird1"
+/obj/machinery/gear_painter,
+/turf/open/floor/rogue/tile/bath{
+	icon_state = "bathtileratwood"
 	},
 /area/rogue/indoors/vampire_manor)
 "Zc" = (
@@ -8594,9 +8622,9 @@ Ff
 Ff
 Ep
 uL
-uL
 Qh
-uL
+Ho
+CC
 Qh
 Ib
 NE
@@ -8647,8 +8675,8 @@ Ff
 VE
 Qh
 Qh
-Qh
-Qh
+VC
+VC
 Qh
 Qh
 Qh
@@ -8698,9 +8726,9 @@ Ff
 Ff
 Ff
 tj
-VC
 cf
-Ho
+VC
+VC
 Qh
 Ib
 NE
@@ -8803,8 +8831,8 @@ ph
 gz
 RN
 Qh
+fX
 Rq
-Qh
 Qh
 uL
 uL
@@ -8855,9 +8883,9 @@ WY
 Mf
 Qh
 Qh
+fX
+fX
 Qh
-Qh
-VC
 uL
 uL
 Qh

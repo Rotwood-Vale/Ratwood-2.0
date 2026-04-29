@@ -358,6 +358,12 @@
 	icon_state = "barsbent"
 	layer = BELOW_OBJ_LAYER
 
+/obj/structure/bars/rusty
+	name = "rusty bars"
+	desc = "these look fragile"
+	color ="#ffcd9f"
+	max_integrity = 200
+
 /obj/structure/bars/shop/bronze
 	color = "#ff9c1a"
 
@@ -1571,3 +1577,4 @@
 	desc = "Blasphemy... unless...?"
 	icon_state = "zaelorian_crynsaris"
 	icon = 'icons/roguetown/misc/statues/statue_zizo.dmi'
+	pixel_x = -16

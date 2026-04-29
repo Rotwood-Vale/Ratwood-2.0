@@ -454,11 +454,11 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/cmode/nobility/combat_spymaster.ogg')
 
 /datum/combat_music/sorcerer
-    name = "Sorcerer (Evil)"
-    desc = "Defund the retinue."
-    shortname = "Sorcerer"
-    credits = "burialgoods - APAB (All Paladins Are Bastards) (https://www.youtube.com/watch?v=CMyvIDLAub8)"
-    musicpath = list('sound/music/cmode/antag/combat_sorcerer.ogg')
+	name = "Sorcerer (Evil)"
+	desc = "Defund the retinue."
+	shortname = "Sorcerer"
+	credits = "burialgoods - APAB (All Paladins Are Bastards) (https://www.youtube.com/watch?v=CMyvIDLAub8)"
+	musicpath = list('sound/music/cmode/antag/combat_sorcerer.ogg')
 
 /datum/combat_music/squire
 	name = "Squire"

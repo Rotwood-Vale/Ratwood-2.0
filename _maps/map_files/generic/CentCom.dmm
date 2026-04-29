@@ -720,7 +720,7 @@
 "cG" = (
 /obj/structure/wonder,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "cK" = (
 /obj/structure/fluff/statue/knight/r,
 /obj/effect/wisp/prestidigitation{
@@ -796,7 +796,7 @@
 "es" = (
 /obj/item/natural/bone,
 /turf/open/water/bloody,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "eR" = (
 /obj/item/reagent_containers/glass/bucket/pot/aalloy,
 /turf/open/floor/rogue/naturalstone,
@@ -818,7 +818,7 @@
 "fu" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "fx" = (
 /obj/structure/handcart,
 /turf/open/floor/rogue/naturalstone,
@@ -836,7 +836,7 @@
 "fQ" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "fV" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/dietroyt)
@@ -953,7 +953,7 @@
 "hX" = (
 /obj/effect/decal/remains/bigrat,
 /turf/open/water/bloody,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "id" = (
 /obj/machinery/light/rogue/torchholder/l,
 /turf/open/floor/rogue/blocks,
@@ -971,7 +971,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "iv" = (
 /obj/structure/mineral_door/wood/donjon{
 	locked = 1;
@@ -1018,7 +1018,7 @@
 "jr" = (
 /obj/structure/wonder,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "jz" = (
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/cobblerock,
@@ -1069,7 +1069,7 @@
 "ki" = (
 /obj/structure/fluff/walldeco/vinez/red,
 /turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "kk" = (
 /obj/effect/decal/edge{
 	color = "#3f3f3f";
@@ -1080,7 +1080,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "ko" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/dietroyt)
@@ -1112,7 +1112,7 @@
 	icon_state = "graggar_active_mortosasye_author"
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "ks" = (
 /obj/effect/decal/edge{
 	color = "#3f3f3f";
@@ -1132,7 +1132,7 @@
 	icon_state = "gibbl5"
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "kF" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -1166,7 +1166,7 @@
 	},
 /obj/structure/bars/grille,
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "lK" = (
 /obj/structure/bed/rogue/inn/hay,
 /turf/open/floor/rogue/concrete,
@@ -1200,7 +1200,7 @@
 	},
 /obj/structure/bars/grille,
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "mL" = (
 /obj/structure/fluff/walldeco/vinez/blue,
 /turf/closed/wall/mineral/rogue/decostone,
@@ -1299,7 +1299,7 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "pb" = (
 /obj/effect/decal/cleanable/food/salt,
 /turf/open/floor/rogue/naturalstone,
@@ -1314,10 +1314,10 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "pl" = (
 /turf/open/water/bloody,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "pr" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors)
@@ -1341,7 +1341,7 @@
 "pN" = (
 /obj/effect/decal/cleanable/blood/splatter/walls,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "pZ" = (
 /obj/machinery/light/rogue/firebowl/standing,
 /turf/open/floor/rogue/naturalstone,
@@ -1359,11 +1359,11 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "qx" = (
 /obj/structure/bars/tough,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "qB" = (
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/dietroyt)
@@ -1376,7 +1376,7 @@
 	icon_state = "floor3"
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "qG" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -1443,7 +1443,7 @@
 	color = "#3f3f3f"
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "rQ" = (
 /turf/closed,
 /area/rogue)
@@ -1458,7 +1458,7 @@
 	icon_state = "gibbl3"
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "rZ" = (
 /turf/open/floor/rogue/dark_ice,
 /area/rogue/underworld/dream)
@@ -1517,7 +1517,7 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/remains/cabbit,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "sW" = (
 /obj/effect/decal/cleanable/debris,
 /turf/open/floor/rogue/naturalstone,
@@ -1554,7 +1554,7 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter/walls,
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "ux" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -1595,7 +1595,7 @@
 /area/rogue/indoors/ravoxarena)
 "vo" = (
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "vq" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -1655,7 +1655,7 @@
 "wZ" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "xa" = (
 /obj/effect/landmark/underworldstrands,
 /turf/open/floor/rogue/underworld/road,
@@ -1663,7 +1663,7 @@
 "xg" = (
 /obj/structure/mineral_door/bars,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "xi" = (
 /obj/effect/proc_holder/spell/invoked/heal,
 /turf/open/floor/rogue/blocks,
@@ -1710,11 +1710,11 @@
 "yd" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "yB" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "yI" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/rogue/decostone,
@@ -1755,7 +1755,7 @@
 "zm" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "zr" = (
 /obj/structure/fluff/statue/knight,
 /obj/effect/wisp/prestidigitation{
@@ -1790,7 +1790,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "zT" = (
 /obj/structure/deaths_door_shrine{
 	pixel_x = -18
@@ -1800,7 +1800,7 @@
 "zV" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "AQ" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -1818,7 +1818,7 @@
 	color = "#3f3f3f"
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "AY" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/glass/cup/skull,
@@ -1842,7 +1842,7 @@
 "By" = (
 /obj/item/natural/bone,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "BE" = (
 /obj/effect/decal/edge{
 	color = "#3f3f3f";
@@ -1858,7 +1858,7 @@
 	icon_state = "gibup1"
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "BV" = (
 /obj/machinery/light/rogue/torchholder/r,
 /turf/open/floor/rogue/blocks,
@@ -1981,7 +1981,7 @@
 "DL" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "DS" = (
 /obj/machinery/light/rogue/torchholder/l,
 /obj/structure/stairs/stone{
@@ -1991,7 +1991,7 @@
 /area/rogue/dietroyt)
 "DT" = (
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "DU" = (
 /obj/machinery/light/rogue/candle/floorcandle/alt,
 /turf/open/floor/rogue/underworld/road,
@@ -2051,7 +2051,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "Fz" = (
 /obj/item/reagent_containers/glass/bowl/aalloy,
 /turf/open/floor/rogue/naturalstone,
@@ -2088,7 +2088,7 @@
 "Gx" = (
 /obj/structure/spike_pit,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "GD" = (
 /obj/structure/fluff/walldeco/vinez/blue,
 /obj/structure/fluff/walldeco/vinez/blue,
@@ -2121,11 +2121,11 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "Hy" = (
 /obj/item/natural/bone,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "HA" = (
 /obj/effect/landmark/deaths_door/entry/br,
 /turf/open/floor/rogue/underworld/road,
@@ -2140,7 +2140,7 @@
 /area/rogue/dietroyt)
 "HP" = (
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "HT" = (
 /obj/machinery/light/rogue/torchholder/l,
 /turf/open/floor/rogue/blocks,
@@ -2152,7 +2152,7 @@
 "IE" = (
 /obj/effect/decal/cleanable/blood/splatter/walls,
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "IF" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated,
 /obj/structure/spider/stickyweb{
@@ -2324,11 +2324,11 @@
 	pixel_y = -8
 	},
 /turf/open/water/bloody,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "Mo" = (
 /obj/structure/spike_pit,
 /turf/open/water/bloody,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "MA" = (
 /obj/machinery/light/rogue/campfire/longlived,
 /turf/open/floor/rogue/naturalstone,
@@ -2365,7 +2365,7 @@
 "Nh" = (
 /obj/effect/decal/remains/human,
 /turf/open/water/bloody,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "No" = (
 /obj/effect/decal/edge{
 	color = "#3f3f3f"
@@ -2443,7 +2443,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "Qb" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	icon_state = "gibdown1"
@@ -2486,10 +2486,10 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "QE" = (
 /turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "QF" = (
 /obj/structure/underworld/carriageman{
 	pixel_x = -15;
@@ -2504,7 +2504,7 @@
 /area/rogue/dietroyt)
 "QP" = (
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "QX" = (
 /turf/closed/wall/mineral/rogue/stone/window,
 /area/rogue/dietroyt)
@@ -2518,7 +2518,7 @@
 	},
 /obj/item/skull,
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "RC" = (
 /obj/effect/landmark/deaths_door/entry/tl,
 /turf/open/floor/rogue/underworld/road,
@@ -2569,11 +2569,11 @@
 	icon_state = "gibbl1"
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "Sv" = (
 /obj/structure/mineral_door/bars,
 /turf/open/floor/rogue/cobblerock,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "SH" = (
 /obj/structure/table/wood/long_table/mid/alt,
 /obj/structure/roguemachine/mail{
@@ -2587,7 +2587,7 @@
 /area/rogue/dietroyt)
 "Tt" = (
 /turf/open/floor/rogue/cobblerock,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "Tv" = (
 /obj/structure/closet/crate/chest,
 /obj/item/toy/cards/deck,
@@ -2628,7 +2628,7 @@
 "Ui" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/cobblerock,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "Up" = (
 /obj/structure/vine,
 /turf/open/floor/rogue/dirt,
@@ -2696,7 +2696,7 @@
 /obj/structure/spike_pit,
 /obj/structure/spike_pit,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "VS" = (
 /turf/open/floor/rogue/metal,
 /area/rogue/indoors/ravoxarena)
@@ -2721,7 +2721,7 @@
 "Wr" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "WN" = (
 /obj/effect/decal/edge{
 	color = "#3f3f3f";
@@ -2782,7 +2782,7 @@
 "Yn" = (
 /obj/structure/spike_pit,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "Yr" = (
 /obj/item/paper,
 /obj/item/paper,
@@ -2819,7 +2819,7 @@
 	icon_state = "gibbl2"
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "Zt" = (
 /obj/item/clothing/suit/roguetown/armor/leather/hide/goblin,
 /turf/open/floor/rogue/naturalstone,
@@ -2831,7 +2831,7 @@
 "ZK" = (
 /obj/item/natural/bundle/bone,
 /turf/open/water/bloody,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 "ZP" = (
 /obj/effect/decal/edge{
 	color = "#3f3f3f";
@@ -2872,7 +2872,7 @@
 	color = "#3f3f3f"
 	},
 /turf/open/floor/rogue/sand,
-/area/rogue/under/cave/inhumen/wretch/graggarena)
+/area/rogue/under/wretch/graggarena)
 
 (1,1,1) = {"
 rQ
@@ -11784,7 +11784,7 @@ dB
 HT
 mN
 mN
-ON
+QE
 QE
 Sv
 QE

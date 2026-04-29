@@ -54,7 +54,7 @@
 	category_tags = list(CTAG_HFT_KNIGHT)
 	class_select_category = CLASS_CAT_HFT_COURT
 	subclass_social_rank = SOCIAL_RANK_NOBLE
-	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_HEARTFELT, TRAIT_EQUESTRIAN)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_HEARTFELT)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_PER = 2,
@@ -71,15 +71,19 @@
 	/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
 	/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
-	/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+	/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 	/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
-	/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+	/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
+	)
+
+	subclass_virtues = list(
+		/datum/virtue/utility/riding
 	)
 
 /datum/outfit/job/heartfelt/knight/pre_equip(mob/living/carbon/human/H)
@@ -100,9 +104,6 @@
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/knight
-	var/turf/TU = get_turf(H)
-	if(TU)
-		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,

@@ -201,22 +201,24 @@
 	var/outline_colour ="#42001f"
 	var/datum/weakref/source_ref
 
-/datum/status_effect/debuff/pomegranate_aura/on_creation(mob/living/owner, tree)
-	source_ref = WEAKREF(tree)
-	var/str_change = 0
-	var/perc_change = 0
+/datum/status_effect/debuff/pomegranate_aura/on_creation(mob/living/carbon/owner, tree)
+	if(!owner)
+		return ..()
 
-	if(owner.patron.type != /datum/patron/divine/eora)
-		str_change = -8
-		perc_change = -8
-	else if (!(owner.get_skill_level(/datum/skill/magic/holy) >= 1))
-		//Eorans get a slight edge.
-		str_change = -6
-		perc_change = -6
-	else
-		//Devotees to Eora get a strong edge.
-		str_change = -4
-		perc_change = -2
+	source_ref = WEAKREF(tree)
+	var/str_change = -8
+	var/perc_change = -8
+
+	if(owner?.head?.type == /obj/item/clothing/head/peaceflower)
+		str_change += 1
+		perc_change += 1
+
+	if(owner.patron.type == /datum/patron/divine/eora)
+		str_change += 2
+		perc_change += 2
+		if(owner.get_skill_level(/datum/skill/magic/holy) >= 1)
+			str_change += 2
+			perc_change += 4
 
 	effectedstats = list(
 		STATKEY_STR = str_change,

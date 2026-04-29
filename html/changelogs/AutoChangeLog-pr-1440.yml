@@ -1,0 +1,5 @@
+author: "yupup123"
+delete-after: True
+changes:
+  - rscadd: "Accent Preview Text when Selecting Accents"
+  - bugfix: "Fixes Saut-Al-Atash Accent"

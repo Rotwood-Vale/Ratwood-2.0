@@ -616,27 +616,18 @@
 	var/list/data = list()
 
 	var/list/crafting_recipes = list()
-	for(var/rec in GLOB.crafting_recipes)
-		var/datum/crafting_recipe/R = rec
-
-		if(R.name == "") //This is one of the invalid parents that sneaks in
+	for(var/datum/crafting_recipe/R as anything in GLOB.crafting_recipes)
+		if(!R.name)
 			continue
 		if(R.hides_from_crafting_menu)
 			continue
-
 		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 		if(R.required_tech_node && !R.tech_unlocked)
 			continue
-		var/category
-		if(R.skillcraft)
-			var/datum/skill/S = R.skillcraft
-			category = initial(S.name)
-		else
-			category = "Other"
-		if(isnull(crafting_recipes[category]))
-			crafting_recipes[category] = list()
-		crafting_recipes[category] += list(build_recipe_data(R))
+		if(isnull(crafting_recipes[R.cached_category]))
+			crafting_recipes[R.cached_category] = list()
+		crafting_recipes[R.cached_category] += list(R.cached_display_data)
 
 	data["crafting_recipes"] = crafting_recipes
 	return data
@@ -672,46 +663,6 @@
 			usr.mind.lastrecipe = recipe
 		if("checkboxonlycraftable")
 			showonlycraftable = params["state"]
-
-
-
-/datum/component/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
-	var/list/data = list()
-	data["name"] = R.name
-	data["ref"] = "[REF(R)]"
-	data["path"] = R.type
-	data["sellprice"] = R.sellprice
-	var/req_text = ""
-	var/tool_text = ""
-	var/catalyst_text = ""
-
-	for(var/a in R.reqs)
-		//We just need the name, so cheat-typecast to /atom for speed (even tho Reagents are /datum they DO have a "name" var)
-		//Also these are typepaths so sadly we can't just do "[a]"
-		var/atom/A = a
-		req_text += " [R.reqs[A]] [initial(A.name)],"
-	req_text = replacetext(req_text,",","",-1)
-	data["req_text"] = req_text
-
-	for(var/a in R.chem_catalysts)
-		var/atom/A = a //cheat-typecast
-		catalyst_text += " [R.chem_catalysts[A]] [initial(A.name)],"
-	catalyst_text = replacetext(catalyst_text,",","",-1)
-	data["catalyst_text"] = catalyst_text
-
-	for(var/a in R.tools)
-		if(ispath(a, /obj/item))
-			var/obj/item/b = a
-			tool_text += " [initial(b.name)],"
-		else
-			tool_text += " [a],"
-	tool_text = replacetext(tool_text,",","",-1)
-	data["tool_text"] = tool_text
-
-	data["craftingdifficulty"] = skill_to_string(R.craftdiff)
-
-
-	return data
 
 //Mind helpers
 

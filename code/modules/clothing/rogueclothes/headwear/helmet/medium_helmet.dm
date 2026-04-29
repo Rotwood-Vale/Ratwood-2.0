@@ -620,7 +620,6 @@
 	body_parts_covered = HEAD|HAIR|EARS|NOSE|NECK
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_STAB)
 	max_integrity = 250
-	anvilrepair = TRUE
 	smeltresult = /obj/item/ingot/iron
 
 

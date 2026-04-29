@@ -1,0 +1,4 @@
+author: "RandomGooberCoder"
+delete-after: True
+changes:
+  - bugfix: "EXCIDIUM browser popup will now autoclose when the user is not adjacent to the machine."

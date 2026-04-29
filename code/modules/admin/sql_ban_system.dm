@@ -241,6 +241,7 @@
 							"Inquisition" = GLOB.inquisition_positions,
 							"Mercenaries" = GLOB.mercenary_positions,
 							"WANDERERS" = GLOB.wanderer_positions,
+							"Tribe" = GLOB.tribal_positions,
 							"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC", "LOOC"))
 		for(var/department in headless_job_lists)
 			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"

@@ -109,6 +109,7 @@
 	subclass_languages = list(
 		/datum/language/grenzelhoftian,
 	)
+
 /datum/outfit/job/roguetown/grenzel/doppel/pre_equip(mob/living/carbon/human/H)
 	..()
 

@@ -1,9 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - sound: "Added a new sound for recorking glass bottles."
-  - qol: "You can now right-click to toggle a glass bottle's cork as long as you're adjacent, and it's not in a bag. Left-clicking it in your hand, and pressing the hotkey for your active hand, also work."
-  - bugfix: "Bottles now tell you when one or both of them in a transfer interaction is closed. This includes FEED, FILL, and SPLASH intents."
-  - qol: "A small warning in gray text is shown when you put an uncorked bottle in your bag."
-  - bugfix: "You are now warned in chat when an open container in your inventory (in a bag) is spilling due to movement."
-  - code_imp: "Standardized the anti-spilling behavior of trays, using a new \"does_not_spill\" variable for storage components."

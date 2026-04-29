@@ -1,7 +1,0 @@
-author: "IronDragoon"
-delete-after: True
-changes:
-  - rscadd: "Wedding dress, artificer cap and artificer jacket to loadout items (arti items to tailor silverface also)"
-  - rscadd: "Crafting for pestran tabard (the robes)"
-  - rscadd: "basic dobo robe and conical mentor hat now craftable in round with appropriate skills/materials"
-  - rscadd: "several kazengun weapons to the exotic weapon section of the merchant's silverface, balanced around other racial weapons already present\n<!-- Both :cl:'s are required for the changelog to work! You can put your name to the right of the first :cl: if you want to overwrite your GitHub username as author ingame. -->\n<!-- You can use multiple of the same prefix (they're only used for the icon ingame) and delete the unneeded ones. Despite some of the tags, changelogs should generally represent how a player might be affected by the changes rather than a summary of the PR's contents. -->\n<!-- By contributing to this codebase, you confirm that any code and sprites you provide are legal to share and will be licensed under the terms specified in README.md — AGPLv3 for code and CC-BY-SA 3.0 for assets, unless otherwise stated. You acknowledge that the project maintainers are under no obligation to remove any materials that do not violate these licenses. -->"
