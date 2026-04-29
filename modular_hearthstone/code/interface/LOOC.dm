@@ -90,6 +90,7 @@
 		var/client/C = M.client
 		if(!M.client)
 			continue
+<<<<<<< Updated upstream
 		if((C in GLOB.admins) && (C.prefs.admin_chat_toggles & CHAT_ADMINLOOC))
 			added_text += " ([mob.ckey]) [ADMIN_FLW(mob)] <A href='?_src_=holder;[HrefToken()];mute=[ckey];mute_type=[MUTE_LOOC]'><font color='[(muted & MUTE_LOOC)?"red":"blue"]'>\[MUTE\]</font></a>"
 			is_admin = 1
@@ -103,3 +104,9 @@
 				to_chat(C, "<font color='["#6699CC"]'><b><span class='prefix'>[prefix]:</span> <EM>[src.mob.name][added_text]:</EM> <span class='message'>[msg]</span></b></font>")
 			else if(is_admin == 1)
 				to_chat(C, "<font color='["#003458"]'><b>(R) <span class='prefix'>[prefix]:</span> <EM>[src.mob.name][added_text]:</EM> <span class='message'>[msg]</span></b></font>")
+=======
+		if(M in hearable)
+			to_chat(C, "<font color='#6699CC'><b><span class='prefix'>[prefix]:</span> <EM>[src.mob.name][added_text]:</EM> <span class='message'>[msg]</span></b></font>")
+		else if(is_admin)
+			to_chat(C, "<font color='#003458'><b>(R) <span class='prefix'>[prefix]:</span> <EM>[src.mob.name][added_text]:</EM> <span class='message'>[msg]</span></b></font>")
+>>>>>>> Stashed changes
