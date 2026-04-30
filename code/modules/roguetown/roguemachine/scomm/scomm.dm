@@ -330,8 +330,14 @@
 		to_chat(speaker, span_warning("The rats seems to be busy nibbling on something!"))
 		return
 	if(world.time < last_message + NORMAL_SCOM_PER_MESSAGE_DELAY)
-		var/time_remaining = round((last_message + NORMAL_SCOM_PER_MESSAGE_DELAY - world.time) / 10)
-		to_chat(speaker, span_warning("The SCOM's rats are still recovering. Wait [time_remaining] more second[time_remaining != 1 ? "s" : ""]."))
+		// Below is the original message and such. Leaving it here in case we want to change things in the future.
+		// var/time_remaining = round((last_message + NORMAL_SCOM_PER_MESSAGE_DELAY - world.time) / 10)
+		// to_chat(speaker, span_warning("The SCOM's rats are still recovering. Wait [time_remaining] more second[time_remaining != 1 ? "s" : ""]."))
+		if(calling)
+			var/time_remaining = round((last_message + NORMAL_SCOM_PER_MESSAGE_DELAY - world.time) / 10)
+			to_chat(speaker, span_warning("The SCOM's rats are still recovering. Wait [time_remaining] more second[time_remaining != 1 ? "s" : ""]."))
+		else
+			to_chat(speaker, span_warning("You speak into it, but the rats do not stir or move. You feel only silence, and you deliver only silence."))
 		return
 	var/mob/living/carbon/human/H = speaker
 	var/usedcolor = H.voice_color
@@ -364,6 +370,8 @@
 			// This is for Garrison SCOM messages.
 			playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
 			raw_message = "<span style='color: [GARRISON_SCOM_COLOR]'>[raw_message]</span>" //Prettying up for Garrison line
+
+			// Side note, this can be optimized better if we decide SCOM good.
 			for(var/obj/item/scomstone/garrison/S in SSroguemachine.scomm_machines)
 				S.repeat_message(raw_message, src, usedcolor, message_language)
 			for(var/obj/item/scomstone/bad/garrison/S in SSroguemachine.scomm_machines)

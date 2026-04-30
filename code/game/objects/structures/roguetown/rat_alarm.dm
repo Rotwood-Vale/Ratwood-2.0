@@ -70,35 +70,35 @@
 /obj/structure/lever/wall/rat_alarm/proc/start_soundloop()
 	soundloop = new(src, TRUE)
 	for(var/mob/living/M in get_hearers_in_range(world.view + 7, src))
-		if(M.client)
+		if(M.client && get_dist(src, M) > world.view)
 			to_chat(M, span_warning("You hear a horrible mechanical screeching nearby. An alarm perhaps?"))
 
 /obj/structure/lever/wall/rat_alarm/proc/broadcast_alarm(area_name)
 	var/msg = "<big><span style='color: [GARRISON_SCOM_COLOR]'>Alarm at [area_name]. Someone please come.</span></big>"
-	for(var/obj/item/scomstone/bad/garrison/S in SSroguemachine.scomm_machines)
-		S.repeat_message(msg, src, null)
-	for(var/obj/item/scomstone/garrison/S in SSroguemachine.scomm_machines)
-		S.repeat_message(msg, src, null)
-	for(var/obj/structure/roguemachine/scomm/S in SSroguemachine.scomm_machines)
-		if(S.garrisonline)
+	for(var/atom/A in SSroguemachine.scomm_machines)
+		if(istype(A, /obj/item/scomstone/bad/garrison) || istype(A, /obj/item/scomstone/garrison))
+			var/obj/item/scomstone/S = A
 			S.repeat_message(msg, src, null)
+		else if(istype(A, /obj/structure/roguemachine/scomm))
+			var/obj/structure/roguemachine/scomm/S = A
+			if(S.garrisonline)
+				S.repeat_message(msg, src, null)
 	SSroguemachine.crown?.repeat_message(msg, src, null)
 
 /obj/structure/lever/wall/rat_alarm/proc/cancel_alarm()
 	QDEL_NULL(soundloop)
-	toggled = FALSE
-	icon_state = "leverwall[toggled]"
-	active = FALSE
-	addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), 1 MINUTES)
 	playsound(src, 'sound/foley/lever.ogg', 100, extrarange = 3)
-	addtimer(CALLBACK(src, PROC_REF(play_end_sequence)), 5)
+	end_alarm(1 MINUTES)
 
 /obj/structure/lever/wall/rat_alarm/proc/alarm_ended()
+	end_alarm(5 MINUTES)
+
+/obj/structure/lever/wall/rat_alarm/proc/end_alarm(cooldown)
 	active = FALSE
 	toggled = FALSE
 	icon_state = "leverwall[toggled]"
 	addtimer(CALLBACK(src, PROC_REF(play_end_sequence)), 5)
-	addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), 5 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), cooldown)
 
 /obj/structure/lever/wall/rat_alarm/proc/play_end_sequence()
 	playsound(src, 'sound/items/pickbreak.ogg', 80, extrarange = 7)

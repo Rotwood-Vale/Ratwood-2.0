@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 			continue
 
 		var/distance = get_dist(player, origin)
-		if(distance > 200)
+		if(distance <= 7 || distance > 200)
 			continue
 
 		var/can_interpret_flare = (player.job in can_interpret)
