@@ -1207,6 +1207,8 @@
 	var/three_quarter_delta = (base_delta * 0.75)
 	if(protection > 0)
 		(final_delta -= (three_quarter_delta * protection))
+	if(final_delta > 0)
+		final_delta *= dna?.species?.get_heat_gain_multiplier(src) || 1
 
 	adjust_bodytemperature(final_delta)
 

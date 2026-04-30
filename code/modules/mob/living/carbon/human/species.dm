@@ -2107,7 +2107,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(BP.receive_damage(0, damage_amount))
 					H.update_damage_overlays()
 			else
-				H.adjustFireLoss(damage_amount)
+				H.adjustFireLoss(damage_amount, burn_flag = burn_flag)
 		if(TOX)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.tox_mod
 			H.adjustToxLoss(damage_amount)
@@ -2220,8 +2220,10 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 				H.cut_overlay(GLOB.cold_breath_overlay)
 
 		if(env_adjust)
+			if(env_adjust > 0)
+				env_adjust *= get_heat_gain_multiplier(H)
 			H.adjust_bodytemperature(env_adjust)
-	if(H.on_fire && !HAS_TRAIT(H, TRAIT_RESISTHEAT))	//fire damage
+	if(H.on_fire && (!HAS_TRAIT(H, TRAIT_RESISTHEAT) || is_vampire_fire_resistance_suppressed(H)))	//fire damage
 		var/burn_damage = 0
 
 		var/datum/status_effect/fire_handler/fire_stacks/pure_stacks = H.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
@@ -2246,14 +2248,14 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 				else
 					H.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 
-			burn_damage *= heatmod * H.physiology.heat_mod
+			burn_damage *= H.physiology.heat_mod
 
 			if(H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4)
 				H.emote("pain")
 
 			H.apply_damage(burn_damage, BURN, spread_damage = TRUE, burn_flag = BURN_FLAG_FIRE)
 
-	if(H.bodytemperature > BODYTEMP_NORMAL_MAX && !HAS_TRAIT(H, TRAIT_RESISTHEAT))	//either level one or level two heat
+	if(H.bodytemperature > BODYTEMP_NORMAL_MAX && (!HAS_TRAIT(H, TRAIT_RESISTHEAT) || is_vampire_fire_resistance_suppressed(H)))	//either level one or level two heat
 		if(H.hypothermia_timer_id)
 			deltimer(H.hypothermia_timer_id)
 			H.hypothermia_timer_id = null
@@ -2322,21 +2324,37 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 
 	var/thermal_protection = H.get_thermal_protection()
 	var/fire_damage_multiplier = max(get_fire_damage_multiplier(H), 0)
+	var/heat_gain_multiplier = min(fire_damage_multiplier, get_heat_gain_multiplier(H))
 
 	if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
 		return
 
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-		H.adjust_bodytemperature(11 * fire_damage_multiplier)
+		H.adjust_bodytemperature(11 * heat_gain_multiplier)
 	else
-		H.adjust_bodytemperature(20 * fire_damage_multiplier)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes
+		H.adjust_bodytemperature(20 * heat_gain_multiplier)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes
 
 /datum/species/proc/get_fire_damage_multiplier(mob/living/carbon/human/H = null)
-	if(H && HAS_TRAIT(H, TRAIT_HELLSPAWN))
+	if(is_vampire_fire_resistance_suppressed(H))
+		return 1
+	if(H && HAS_TRAIT(H, TRAIT_FIRERESISTANCE))
 		return 0.5
 	return 1
 
+/datum/species/proc/get_heat_gain_multiplier(mob/living/carbon/human/H = null)
+	var/heat_gain_multiplier = heatmod
+	if(is_vampire_fire_resistance_suppressed(H))
+		return heat_gain_multiplier
+	if(H && HAS_TRAIT(H, TRAIT_FIRERESISTANCE))
+		heat_gain_multiplier = min(heat_gain_multiplier, 0.5)
+	return heat_gain_multiplier
+
+/datum/species/proc/is_vampire_fire_resistance_suppressed(mob/living/carbon/human/H = null)
+	return H?.mind?.has_antag_datum(/datum/antagonist/vampire)
+
 /datum/species/proc/Canignite_mob(mob/living/carbon/human/H)
+	if(is_vampire_fire_resistance_suppressed(H))
+		return TRUE
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))
 		return FALSE
 	return TRUE

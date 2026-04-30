@@ -13,7 +13,7 @@
 	The taint of their very being going back generations, and no amount of cleansing can be rid of it. \
 	As over a millennium a simple handful of Tieflings have created extended bloodlines linking back to their infernal progenitors. Some Tieflings embrace their demonic origin, while other shun it. \
 	No matter if they embrace their demonic ancestors or not, Tieflings have formed an importance upon their bloodline and family due to often being shunned and hunted through out time in which only those of their blood and kin they could truly trust. <br>\
-	(+1 Constitution, +1 Intelligence, Hellspawn Trait)"
+	(+1 Constitution, +1 Intelligence, Fire Resistance Trait)"
 
 	skin_tone_wording = "Progenitor"
 
@@ -42,7 +42,7 @@
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
 		)
-	inherent_traits = list(TRAIT_HELLSPAWN)
+	inherent_traits = list(TRAIT_FIRERESISTANCE)
 	race_bonus = list(STAT_INTELLIGENCE = 1, STAT_CONSTITUTION = 1)
 	enflamed_icon = "widefire"
 	organs = list(
