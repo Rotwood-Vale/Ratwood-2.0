@@ -25,6 +25,8 @@
 	slot_flags = ITEM_SLOT_HIP
 	var/rounds_remaining = 5
 	var/pending_rounds = 0
+	/// Set when the firing mechanism jams. Cleared by right-clicking to fix it.
+	var/jammed = FALSE
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/Initialize(mapload)
 	. = ..()
@@ -109,7 +111,31 @@
 /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/can_shoot()
 	if(!chambered)
 		return FALSE
+	if(jammed)
+		return FALSE
 	return TRUE
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/shoot_live_shot(mob/living/user, pointblank = 0, mob/pbtarget = null, message = 1)
+	// Misfire chance: base 15%, reduced by 1% per luck point above 10, floored at 3%.
+	var/misfire_chance = clamp(15 - (user.STALUC - 10), 3, 15)
+	if(prob(misfire_chance))
+		jammed = TRUE
+		playsound(user, 'modular_helmsguard/sound/arquebus/musketcock.ogg', 60, FALSE)
+		user.visible_message(span_warning("[user]'s [src] clicks - it's jammed!"), span_warning("The [src] jams! Right-click it to clear the mechanism."))
+		return
+	return ..()
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/attack_right(mob/user)
+	if(!jammed)
+		return ..()
+	var/firearm_skill = user.get_skill_level(/datum/skill/combat/firearms)
+	var/fix_time = clamp(40 - firearm_skill * 6, 15, 40)
+	user.visible_message(span_notice("[user] works at clearing the jam in [src]..."))
+	playsound(src, "modular_helmsguard/sound/arquebus/ramrod.ogg", 60, TRUE)
+	if(do_after(user, fix_time, src))
+		jammed = FALSE
+		user.visible_message(span_notice("[user] clears the jam in [src]."))
+		to_chat(user, span_notice("The mechanism is clear."))
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	. = ..()
