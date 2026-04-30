@@ -16,8 +16,11 @@
 	name = "gut spiller"
 	desc = "A squat, scrappy six-shooter with a modified internal body to hold more lead, with a cost. Close range only - past ten paces it's just noise. \
 	Inside ten paces, it lives up to its name."
-	icon_state = "pistol3"
-	item_state = "pistol3"
+	icon = 'modular_underbelly/sprites/scumguns.dmi'
+	icon_state = "repeating_pistol"
+	lefthand_file = 'modular_underbelly/sprites/scumguns.dmi'
+	righthand_file = 'modular_underbelly/sprites/scumguns.dmi'
+	item_state = "repeating_pistol"
 	force = 14
 	spread = 6
 	wlength = WLENGTH_SHORT
@@ -33,6 +36,7 @@
 	chambered = new /obj/item/ammo_casing/caseless/bullet/lead(src)
 	reloaded = TRUE
 	gunpowder = TRUE
+	transform = matrix().Scale(0.5, 0.5)
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/quiver/bullet/lead))
@@ -154,6 +158,102 @@
 		gunpowder = TRUE
 
 // =====================================================
+// IRONSHOT MARK 1 - single-shot, ram and powder, the cheap workman's pistol.
+// Same handling as a stock arquebus pistol, just a Scum-fab reskin.
+// =====================================================
+/obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot
+	name = "Ironshot Mark 1"
+	desc = "A sophisticated descendant of the arquebus pistol, made by Ser Ironshot, royal engineer. \
+	Functionally the same as an arquebus pistol, this is clearly coming from Kingsfield."
+	icon = 'modular_underbelly/sprites/scumguns.dmi'
+	icon_state = "hunter_pistol_loading"
+	lefthand_file = 'modular_underbelly/sprites/scumguns.dmi'
+	righthand_file = 'modular_underbelly/sprites/scumguns.dmi'
+	item_state = "hunter_pistol_loading"
+	force = 12
+	spread = 8
+	/// TRUE while the breech is open. Required for loading powder/ball; closed by ramming, opened by use-in-hand.
+	var/breech_open = TRUE
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot/Initialize(mapload)
+	. = ..()
+	transform = matrix().Scale(0.5, 0.5)
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot/update_icon()
+	. = ..()
+	if(breech_open)
+		icon_state = "hunter_pistol_loading"
+		item_state = "hunter_pistol_loading"
+	else
+		icon_state = "hunter_pistol"
+		item_state = "hunter_pistol"
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot/shoot_live_shot(mob/living/user, pointblank = 0, mob/pbtarget = null, message = 1)
+	if(recoil)
+		shake_camera(user, recoil + 1, recoil)
+	playsound(user, 'modular_underbelly/sound/gun/fire_ironshot.ogg', fire_sound_volume, vary_fire_sound)
+	show_sensory_effect(user, 5, "gunfire", user.dir)
+	if(message)
+		user.visible_message(span_danger("[user] shoots [src]!"), span_danger("I shoot [src]!"), COMBAT_MESSAGE_RANGE)
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot/attack_self(mob/living/user)
+	if(twohands_required || altgripped || wielded || alt_intents || gripped_intents)
+		return ..()
+	if(breech_open)
+		if(!chambered || !gunpowder)
+			to_chat(user, span_warning("Powder and ball go in before you shut it."))
+			return
+		breech_open = FALSE
+		reloaded = TRUE
+		playsound(src, 'modular_underbelly/sound/gun/load_ironshot.ogg', 90, FALSE)
+		user.visible_message(span_notice("[user] snaps [src] shut. Ready."))
+		update_icon()
+		return
+	breech_open = TRUE
+	playsound(src, 'modular_underbelly/sound/gun/open_ironshot.ogg', 70, FALSE)
+	user.visible_message(span_notice("[user] cracks [src] open."))
+	update_icon()
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot/attackby(obj/item/A, mob/user, params)
+	var/firearm_skill = user.get_skill_level(/datum/skill/combat/firearms)
+	var/load_time_skill = load_time - (firearm_skill * 2)
+
+	if(istype(A, /obj/item/ammo_casing))
+		if(!breech_open)
+			to_chat(user, span_warning("[src] is shut. Crack it open first."))
+			return
+		if(chambered)
+			to_chat(user, span_warning("There is already a [chambered] in [src]!"))
+			return
+		if(!gunpowder)
+			to_chat(user, span_warning("I must pour smokepowder into [src] first!"))
+			return
+		if((loc == user) && (user.get_inactive_held_item() != src))
+			return
+		playsound(src, 'modular_underbelly/sound/gun/load_bullet.ogg', 90, FALSE)
+		user.visible_message(span_notice("[user] seats a [A] into the open breech of [src]."))
+		if(!user.transferItemToLoc(A, src))
+			return
+		chambered = A
+		update_icon()
+		return
+
+	if(istype(A, /obj/item/powderflask))
+		if(!breech_open)
+			to_chat(user, span_warning("[src] is shut. Crack it open first."))
+			return
+		if(gunpowder)
+			to_chat(user, span_warning("[src] is already primed!"))
+			return
+		playsound(src, "modular_helmsguard/sound/arquebus/pour_powder.ogg", 100)
+		if(do_after(user, load_time_skill, src))
+			user.visible_message(span_notice("[user] tips powder into [src]'s pan."))
+			gunpowder = TRUE
+			update_icon()
+		return
+	return ..()
+
+// =====================================================
 // VENATOR - three-shot bolt-action rifle
 // purchase_sound_key = "mediumgun"
 // Holds 3 lead spheres. Rack the bolt (right-click) between shots.
@@ -241,6 +341,128 @@
 		if(chambered)
 			reloaded = TRUE
 			gunpowder = TRUE
+
+// =====================================================
+// HAND CANNON - one-shot, point-blank, gibs the dumb.
+// Slow as hell to load. Drops the strong, gibs the unminded.
+// =====================================================
+/obj/item/ammo_casing/caseless/bullet/cannonball
+	name = "cannonball"
+	desc = "An iron sphere the size of a fist. Or a kobold's head, if you really want to go there."
+	projectile_type = /obj/projectile/bullet/firearm/lead
+	caliber = "cannonball"
+	icon_state = "grapeshot"
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon
+	name = "hand cannon"
+	desc = "A stubby barrel of black iron, which could, within theory shoot kobolds. \
+	A relic from a foundry of a very creative dwarf. Loading it is a chore. This could probably blow something up real good."
+	icon = 'modular_underbelly/sprites/scumguns.dmi'
+	icon_state = "cannon_alt4"
+	item_state = "cannon"
+	lefthand_file = 'modular_underbelly/sprites/scumguns.dmi'
+	righthand_file = 'modular_underbelly/sprites/scumguns.dmi'
+	force = 24
+	spread = 0
+	w_class = WEIGHT_CLASS_BULKY
+	wlength = WLENGTH_SHORT
+	slot_flags = ITEM_SLOT_BACK
+	cartridge_wording = "cannonball"
+	load_time = 80
+	minstr = 13
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon/Initialize(mapload)
+	. = ..()
+	transform = matrix().Scale(0.5, 0.5)
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon/attackby(obj/item/A, mob/user, params)
+	if(istype(A, /obj/item/ammo_casing) && !istype(A, /obj/item/ammo_casing/caseless/bullet/cannonball))
+		to_chat(user, span_warning("Only a cannonball fits down this barrel."))
+		return
+	return ..()
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon/can_shoot()
+	if(!chambered || !reloaded)
+		return FALSE
+	return TRUE
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(!user)
+		return
+	if(user.STASTR < minstr)
+		to_chat(user, span_danger("[src] wrenches free of my grip - too damn heavy!"))
+		user.visible_message(span_warning("[src] kicks out of [user]'s hands!"))
+		user.dropItemToGround(src, TRUE)
+		user.Knockdown(40)
+		gunpowder = FALSE
+		reloaded = FALSE
+		if(chambered)
+			qdel(chambered)
+			chambered = null
+		return
+	var/turf/impact = get_step(user, user.dir)
+	if(!impact)
+		return
+	playsound(user, 'modular_underbelly/sound/gun/cannon_fire.ogg', 100, TRUE, extrarange = 14)
+	show_sensory_effect(user, 7, "gunfire", user.dir)
+	shake_camera(user, 4, 3)
+	user.visible_message(span_danger("[user] fires [src] - the air ITSELF cracks!"), span_danger("I fire [src]!"))
+	cannon_blast(user, impact)
+	user.Stun(rand(30, 50))
+	gunpowder = FALSE
+	reloaded = FALSE
+	if(chambered)
+		qdel(chambered)
+		chambered = null
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon/proc/cannon_blast(mob/living/firer, turf/epicenter)
+	new /obj/effect/temp_visual/explosion(epicenter)
+	var/list/turf/blast_line = list(epicenter)
+	var/perp_dir = turn(firer.dir, 90)
+	var/turf/left_t = get_step(epicenter, perp_dir)
+	var/turf/right_t = get_step(epicenter, turn(perp_dir, 180))
+	if(left_t)
+		blast_line += left_t
+	if(right_t)
+		blast_line += right_t
+	for(var/turf/T in blast_line)
+		new /obj/effect/temp_visual/fireball(T)
+		for(var/obj/structure/S in T)
+			S.ex_act(EXPLODE_DEVASTATE, null, epicenter, 3, 0, 0, 0)
+		for(var/obj/machinery/M in T)
+			M.ex_act(EXPLODE_DEVASTATE, null, epicenter, 3, 0, 0, 0)
+	for(var/turf/T in range(1, epicenter))
+		if(T in blast_line)
+			continue
+		if(prob(60))
+			new /obj/effect/temp_visual/fireball(T)
+	for(var/mob/living/L in range(1, epicenter))
+		if(L == firer)
+			continue
+		if(!L.mind && !L.client)
+			L.visible_message(span_danger("[L] is torn apart by the blast!"))
+			L.gib()
+			continue
+		for(var/zone in list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+			L.apply_damage(18, BRUTE, zone)
+		L.Knockdown(60)
+		shake_camera(L, 5, 4)
+		var/throw_dir = get_dir(epicenter, L)
+		if(!throw_dir)
+			throw_dir = firer.dir
+		var/turf/throw_target = get_edge_target_turf(epicenter, throw_dir)
+		L.safe_throw_at(throw_target, 4, 1, firer, force = MOVE_FORCE_EXTREMELY_STRONG)
+	for(var/obj/O in range(1, epicenter))
+		if(O.anchored || O == firer)
+			continue
+		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
+			continue
+		var/throw_dir = get_dir(epicenter, O)
+		if(!throw_dir)
+			continue
+		var/turf/throw_target = get_edge_target_turf(epicenter, throw_dir)
+		O.safe_throw_at(throw_target, 3, 1, firer)
 
 // =====================================================
 // DEVASTATOR - heavy double-shot blunderbuss

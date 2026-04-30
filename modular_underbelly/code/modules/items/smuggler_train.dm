@@ -69,6 +69,8 @@ GLOBAL_VAR(smuggler_train)
 					5;  /obj/item/rogueweapon/stoneaxe/woodcut/steel,
 					3;  /obj/item/rogueweapon/knuckles/defacer,
 					1;  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,
+					1;  /obj/item/gun/ballistic/firearm/arquebus_pistol/cannon,
+					1;  /obj/item/ammo_casing/caseless/bullet/cannonball,
 				)
 				new T(C)
 		if(2) // valuables
