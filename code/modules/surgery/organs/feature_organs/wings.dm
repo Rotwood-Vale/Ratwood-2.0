@@ -98,6 +98,12 @@
 
 /obj/effect/proc_holder/spell/self/harpy_flight/cast(mob/living/carbon/human/user)
 	var/harpy_AC = user.highest_ac_worn()
+	// Natural/innate skin armor (e.g. Natural Armor virtue) occupies the shirt slot but is part of the body - don't let it block flight
+	if(harpy_AC != ARMOR_CLASS_NONE && istype(user.wear_shirt, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))
+		harpy_AC = ARMOR_CLASS_NONE
+		for(var/obj/item/clothing/C in list(user.wear_armor, user.wear_pants, user.wear_wrists, user.gloves, user.head, user.shoes, user.wear_neck, user.wear_mask, user.wear_ring))
+			if(C.armor_class > harpy_AC)
+				harpy_AC = C.armor_class
 	if(harpy_AC == ARMOR_CLASS_NONE)
 		if(!user.buckled)
 			if(!user.pulledby)
