@@ -283,7 +283,7 @@
 				qdel(src)
 				if(prob(det_chance))//Woe... - TODO: Expand this. Properly. An explosion and dusting.
 					M.adjust_fire_stacks(100)//You will burn. Horribly.
-					M.adjustFireLoss(250)//If you somehow put it out immediately, you still contend with this.
+					M.adjustFireLoss(250, burn_flag = BURN_FLAG_FIRE)//If you somehow put it out immediately, you still contend with this.
 					M.Paralyze(12 SECONDS, ignore_canstun = TRUE)//You lost the coin toss. Suffer the loss.
 					M.ignite_mob()
 					M.visible_message(span_deadsay("[src] explodes in a shower of arcyne fire and energy, violently engulfing [M]!"))

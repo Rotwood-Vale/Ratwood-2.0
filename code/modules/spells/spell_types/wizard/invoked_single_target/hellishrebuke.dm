@@ -29,7 +29,7 @@
 /obj/effect/proc_holder/spell/invoked/rebuke/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
 		var/mob/living/carbon/target = targets[1]
-		target.adjustFireLoss(30) //damage
+		target.adjustFireLoss(30, burn_flag = BURN_FLAG_FIRE) //damage
 		target.adjust_fire_stacks(4)
 		target.ignite_mob()
 		target.visible_message(span_warning("[user] makes a rude gesture at [target] and causes them to burst into flames!"), \

@@ -169,7 +169,7 @@
 		return
 	if(isliving(target))
 		var/mob/living/L = target
-		L.adjustFireLoss(10)
+		L.adjustFireLoss(10, burn_flag = BURN_FLAG_FIRE)
 		L.adjust_fire_stacks(3)
 		L.ignite_mob()
 	return ..()
@@ -245,7 +245,7 @@
 	if(isliving(lastattacker))
 		lastattacker.adjustStaminaLoss(80)
 		lastattacker.adjust_fire_stacks(6)
-		lastattacker.adjustFireLoss(10)
+		lastattacker.adjustFireLoss(10, burn_flag = BURN_FLAG_FIRE)
 		to_chat(owner, "You send your curse on [lastattacker], the last creature you attacked.")
 	else
 		to_chat(owner, "You don't seem to have last attacked soul earlier...")

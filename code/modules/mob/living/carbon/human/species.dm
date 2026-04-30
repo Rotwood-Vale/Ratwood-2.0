@@ -2030,7 +2030,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, burn_flag = BURN_FLAG_NONE)
 	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = 1
 	damage = max(damage-blocked+armor,0)
@@ -2091,6 +2091,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(BURN)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
+			if(burn_flag == BURN_FLAG_FIRE)
+				damage_amount *= get_fire_damage_multiplier(H)
 			if(damage_amount > 10 && prob(damage_amount))
 				H.emote("pain")
 			if(damage_amount < 10)
@@ -2249,7 +2251,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 			if(H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4)
 				H.emote("pain")
 
-			H.apply_damage(burn_damage, BURN, spread_damage = TRUE)
+			H.apply_damage(burn_damage, BURN, spread_damage = TRUE, burn_flag = BURN_FLAG_FIRE)
 
 	if(H.bodytemperature > BODYTEMP_NORMAL_MAX && !HAS_TRAIT(H, TRAIT_RESISTHEAT))	//either level one or level two heat
 		if(H.hypothermia_timer_id)
@@ -2319,14 +2321,20 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 		return TRUE
 
 	var/thermal_protection = H.get_thermal_protection()
+	var/fire_damage_multiplier = max(get_fire_damage_multiplier(H), 0)
 
 	if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
 		return
 
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-		H.adjust_bodytemperature(11)
+		H.adjust_bodytemperature(11 * fire_damage_multiplier)
 	else
-		H.adjust_bodytemperature(20)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes
+		H.adjust_bodytemperature(20 * fire_damage_multiplier)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes
+
+/datum/species/proc/get_fire_damage_multiplier(mob/living/carbon/human/H = null)
+	if(H && HAS_TRAIT(H, TRAIT_HELLSPAWN))
+		return 0.5
+	return 1
 
 /datum/species/proc/Canignite_mob(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))

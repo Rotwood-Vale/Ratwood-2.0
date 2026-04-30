@@ -11,6 +11,10 @@
 #define STAMINA 	"stamina"
 #define BRAIN		"brain"
 
+// Burn damage source flags
+#define BURN_FLAG_NONE "none"
+#define BURN_FLAG_FIRE "fire"
+
 //Omnibus'ing melee attack types
 #define MELEE_TYPES list("blunt", "slash", "stab")
 

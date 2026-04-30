@@ -54,7 +54,7 @@
 		user.visible_message(span_warning("[user] tries to grab the heated glass but quickly pulls back from the heat!"), \
 							span_warning("I try to grab the heated glass, but it's too hot!"))
 		to_chat(user, span_danger("The searing heat burns my hands!"))
-		user.apply_damage(15, BURN, pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
+		user.apply_damage(15, BURN, pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND), burn_flag = BURN_FLAG_FIRE)
 		return TRUE
 	
 	return ..()

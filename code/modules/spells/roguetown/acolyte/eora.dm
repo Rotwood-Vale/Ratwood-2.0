@@ -643,7 +643,7 @@
 					c.apply_status_effect(/datum/status_effect/debuff/eoran_wilting)
 				else
 					to_chat(c, span_warning("A divine curse strikes you for destroying the sacred tree!"))
-					c.adjustFireLoss(100)
+					c.adjustFireLoss(100, burn_flag = BURN_FLAG_FIRE)
 					c.ignite_mob()
 					c.add_stress(/datum/stressevent/psycurse)
 			SEND_SIGNAL(user, COMSIG_MOB_FELL_TREE)

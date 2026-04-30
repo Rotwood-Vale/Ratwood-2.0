@@ -147,7 +147,7 @@
 				continue
 
 			if(L)
-				L.adjustFireLoss(100)
+				L.adjustFireLoss(100, burn_flag = BURN_FLAG_FIRE)
 				L.adjust_fire_stacks(100)
 				L.ignite_mob()
 
@@ -169,7 +169,7 @@
 			C.emote("agony", forced = TRUE)
 			C.adjust_fire_stacks(500) //you deserve this.
 			C.ignite_mob()
-			C.adjustFireLoss(1000) //you, literally, deserve this.
+			C.adjustFireLoss(1000, burn_flag = BURN_FLAG_FIRE) //you, literally, deserve this.
 
 /turf/open/lava/smooth
 	name = "lava"

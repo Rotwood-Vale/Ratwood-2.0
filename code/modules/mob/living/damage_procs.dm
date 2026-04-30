@@ -8,7 +8,7 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE)
+/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE, burn_flag = BURN_FLAG_NONE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = 1
 	damage = max(damage-blocked,0)
@@ -30,7 +30,7 @@
 //							return 1
 			adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
-			adjustFireLoss(damage_amount, forced = forced)
+			adjustFireLoss(damage_amount, forced = forced, burn_flag = burn_flag)
 		if(TOX)
 			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
@@ -42,12 +42,12 @@
 	update_damage_overlays()
 	return 1
 
-/mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
+/mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE, burn_flag = BURN_FLAG_NONE) //like apply damage except it always uses the damage procs
 	switch(damagetype)
 		if(BRUTE)
 			return adjustBruteLoss(damage)
 		if(BURN)
-			return adjustFireLoss(damage)
+			return adjustFireLoss(damage, burn_flag = burn_flag)
 		if(TOX)
 			return adjustToxLoss(damage)
 		if(OXY)
@@ -73,13 +73,13 @@
 			return getStaminaLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0, burn_flag = BURN_FLAG_NONE)
 	if(blocked >= 100)
 		return 0
 	if(brute)
 		apply_damage(brute, BRUTE, def_zone, blocked)
 	if(burn)
-		apply_damage(burn, BURN, def_zone, blocked)
+		apply_damage(burn, BURN, def_zone, blocked, burn_flag = burn_flag)
 	if(tox)
 		apply_damage(tox, TOX, def_zone, blocked)
 	if(oxy)
@@ -231,7 +231,7 @@
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, burn_flag = BURN_FLAG_NONE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 

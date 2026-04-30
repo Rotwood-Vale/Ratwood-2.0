@@ -194,7 +194,7 @@
 		beam_parts += new_obeliskbeam
 		new_obeliskbeam.assign_creator(src)
 		for(var/mob/living/hit_mob in affected_turf.contents)
-			hit_mob.apply_damage(damage = 25, damagetype = BURN)
+			hit_mob.apply_damage(damage = 25, damagetype = BURN, burn_flag = BURN_FLAG_FIRE)
 			to_chat(hit_mob, span_userdanger("You're blasted by [src]'s aberrant beam!"))
 //		RegisterSignal(new_obeliskbeam, COMSIG_QDELETING, PROC_REF(extinguish_laser)) // In case idk a singularity eats it or something
 	if(!length(beam_parts))
@@ -245,7 +245,7 @@
 
 /// Hurt the passed mob
 /obj/effect/obeliskbeam/proc/damage(mob/living/hit_mob)
-	hit_mob.apply_damage(damage = 15, damagetype = BURN)
+	hit_mob.apply_damage(damage = 15, damagetype = BURN, burn_flag = BURN_FLAG_FIRE)
 	to_chat(hit_mob, span_danger("You're damaged by [src]!"))
 
 /// Ignore damage dealt to this mob

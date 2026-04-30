@@ -43,6 +43,7 @@
 	exp_fire = 1
 	damage = 50 // 10 less damage than actual fireball on direct fire
 	damage_type = BURN
+	burn_flag = BURN_FLAG_FIRE
 	npc_simple_damage_mult = 2 // HAHAHA
 	accuracy = 40 // Base accuracy is lower for burn projectiles because they bypass armor
 	nodamage = FALSE

@@ -52,7 +52,7 @@
 
 		if(prob(accident_chance))
 			user.flash_fullscreen("whiteflash")
-			user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
+			user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND), burn_flag = BURN_FLAG_FIRE)
 			user.visible_message(span_danger("[user] accidentally burnt themselves while firing the [src]."))
 			user.emote("painscream")
 			if(prob(60))
@@ -124,7 +124,7 @@
 
 		if(prob(accident_chance))
 			user.flash_fullscreen("whiteflash")
-			user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
+			user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND), burn_flag = BURN_FLAG_FIRE)
 			user.visible_message(span_danger("[user] accidentally burnt themselves while firing the [src]."))
 			user.emote("painscream")
 			if(prob(60))

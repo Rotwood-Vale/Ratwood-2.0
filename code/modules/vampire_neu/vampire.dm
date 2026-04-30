@@ -74,6 +74,8 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	owner.current.adjust_bloodpool()
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/vampdude = owner.current
+		if(istype(vampdude.dna?.species, /datum/species/tieberian))
+			REMOVE_TRAIT(vampdude, TRAIT_HELLSPAWN, SPECIES_TRAIT)
 		vampdude.hud_used?.shutdown_bloodpool()
 		vampdude.hud_used?.initialize_bloodpool()
 		vampdude.hud_used?.bloodpool.set_fill_color("#510000")
@@ -155,6 +157,8 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		var/mob/living/carbon/human/vampdude = owner.current
 		// Remove the clan when losing antagonist status
 		vampdude.set_clan(null)
+		if(istype(vampdude.dna?.species, /datum/species/tieberian) && !HAS_TRAIT(vampdude, TRAIT_HELLSPAWN))
+			ADD_TRAIT(vampdude, TRAIT_HELLSPAWN, SPECIES_TRAIT)
 	owner.current?.hud_used?.shutdown_bloodpool()
 	if(!silent && owner.current)
 		to_chat(owner.current, span_danger("I am no longer a [job_rank]!"))
