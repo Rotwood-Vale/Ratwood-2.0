@@ -8,7 +8,7 @@
 	maximum_possible_slots = 2 //Too many plate armoured fellas is scawy ...
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg' // big chungus gets the wall too
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_DISGRACED_NOBLE, TRAIT_TEMPO)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_DISGRACED_NOBLE)
 	subclass_stats = list(
 		STATKEY_CON = 2,
 		STATKEY_STR = 2,

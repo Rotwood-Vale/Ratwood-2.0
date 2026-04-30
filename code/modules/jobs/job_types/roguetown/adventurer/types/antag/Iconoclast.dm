@@ -11,7 +11,6 @@
 		TRAIT_HEAVYARMOR,// We are going to be the lord's first heavy armor unarmed class
 		TRAIT_CIVILIZEDBARBARIAN,// To be up to date with other unarmed classes.
 		TRAIT_RITUALIST,
-		TRAIT_TEMPO,
 		)
 	subclass_stats = list(
 		STATKEY_STR = 2,// LETS WRASSLE
