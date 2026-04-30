@@ -44377,6 +44377,8 @@
 /area/rogue/under/town/basement/desert)
 "rPo" = (
 /obj/item/signal_flare,
+/obj/item/signal_flare,
+/obj/item/signal_flare,
 /turf/closed/wall/mineral/rogue/sandstone,
 /area/rogue/indoors/town/desert/warden)
 "rPt" = (
