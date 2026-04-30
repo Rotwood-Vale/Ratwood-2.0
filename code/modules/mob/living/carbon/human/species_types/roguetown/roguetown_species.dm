@@ -55,7 +55,7 @@
 			return strings("axian_replacement.json", type, convert_HTML = TRUE)
 		if("Low-Town accent")
 			return strings("poor_replacement.json", type, convert_HTML = TRUE)
-		if("Jersey accent")
+		if("Scum accent")
 			return strings("jersey_replacement.json", type, convert_HTML = TRUE)
 
 /datum/species/proc/get_accent(mob/living/carbon/human/H)
