@@ -60,6 +60,11 @@
 	head = /obj/item/clothing/head/roguetown/helmet/sallet/visored
 	id = /obj/item/scomstone/garrison
 
+/datum/outfit/job/roguetown/azebagha/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	if(istype(H.belt, /obj/item/storage/belt/rogue/leather))
+		new /obj/item/signal_flare(H.belt)
+
 /datum/advclass/azebagha/azebagha
 	name = "Sergeant-at-Arms"
 	tutorial = "An experienced soldier of the Sultan's Azeb Corp you have been tasked with overseeing the newly constructed border. \
