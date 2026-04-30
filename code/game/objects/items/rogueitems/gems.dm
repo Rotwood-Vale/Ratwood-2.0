@@ -3,14 +3,14 @@
 	name = "mother of all gems"
 	icon_state = "ruby_cut"
 	icon = 'icons/roguetown/items/gems.dmi'
-	desc = "A debug tool to help us later"
+	desc = "An ancient gem that shines with brilliant colors, said to be one of the first gems ever formed."
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_MOUTH
 	dropshrink = 0.4
 	drop_sound = 'sound/items/gem.ogg'
-	sellprice = 1
+	sellprice = 199
 	static_price = FALSE
 	resistance_flags = FIRE_PROOF
 

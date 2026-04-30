@@ -177,3 +177,11 @@
 
 /datum/intent/simple/bite/volf
 	clickcd = WOLF_ATTACK_SPEED
+
+/mob/living/simple_animal/hostile/retaliate/rogue/wolf/deadly_cabbit
+	name = "deadly cabbit"
+	desc = "It looks like a cabbit. It is not a cabbit."
+	icon = 'icons/roguetown/mob/cabbit.dmi'
+	icon_state = "cabbit"
+	icon_living = "cabbit"
+	icon_dead = "cabbit_dead"
