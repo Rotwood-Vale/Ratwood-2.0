@@ -23,3 +23,14 @@
 	plural_name = "marked coins"
 	static_price = TRUE
 	simpleton_price = TRUE
+
+// Reusable variant. Persists between uses but enforces a cooldown so it can't be spammed.
+/obj/item/roguecoin/scum_pass/etched
+	name = "etched coin"
+	desc = "An older, heavier ziliqua. Engraved on the face is a sigil too deliberate to be decorative. Worn smooth at the rim. Whoever holds it is known."
+	color = "#5a4a2a"
+	plural_name = "etched coins"
+	/// world.time we last opened a Doorman with this. Cooldown enforced inside the Doorman attackby.
+	var/pass_last_used = 0
+	/// Time between uses. The coin stays put, but it won't take you through twice in five minutes.
+	var/pass_cooldown = 5 MINUTES

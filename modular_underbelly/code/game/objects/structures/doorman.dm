@@ -78,6 +78,18 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 	. = ..()
 
 /obj/structure/doorman/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/roguecoin/scum_pass/etched))
+		var/obj/item/roguecoin/scum_pass/etched/pass = I
+		if(world.time < pass.pass_last_used + pass.pass_cooldown)
+			var/seconds_left = CEILING((pass.pass_last_used + pass.pass_cooldown - world.time) / 10, 1)
+			to_chat(user, span_warning("[pass] is still warm. The mark hasn't settled yet. (~[seconds_left]s)"))
+			return
+		pass.pass_last_used = world.time
+		playsound(loc, 'sound/foley/coinphy (1).ogg', 50, TRUE)
+		to_chat(user, span_notice("You press [pass] into the panel. The metal hums for a moment, then settles."))
+		grant_clearance(user)
+		return
+
 	if(istype(I, /obj/item/roguecoin/scum_pass))
 		qdel(I)
 		playsound(loc, 'sound/foley/coinphy (1).ogg', 50, TRUE)
@@ -226,7 +238,7 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 			continue
 		if(!M.client)
 			continue
-		to_chat(M, span_danger("<b>The Doorman at [A] has been breached! It will reseal in [DOORMAN_BREACH_OPEN_DURATION / 10] seconds!</b>"))
+		to_chat(M, span_danger("<b>The Doorman at [get_area(src)] has been breached! It will reseal in [DOORMAN_BREACH_OPEN_DURATION / 10] seconds!</b>"))
 
 // ——————————————————————————————————
 // UNDERBELLY PIPE (transit tile)

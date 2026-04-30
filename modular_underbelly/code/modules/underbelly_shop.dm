@@ -173,6 +173,7 @@
 		list("Lockpick",              "A thin iron pick.",                                              /obj/item/lockpick,                                             2, 12),
 		list("Lockpick (Gold)",       "Picks even tricky locks.",                                       /obj/item/lockpick/goldpin,                                     1, 60),
 		list("Scum Pass",             "A stamped coin. Slot it into a Doorman to be let through, once.",/obj/item/roguecoin/scum_pass,                                  5, 20),
+		list("Etched Pass",           "A heavier coin, engraved with a deliberate mark. Reusable, but the metal needs time between uses.",/obj/item/roguecoin/scum_pass/etched,           1, 100),
 	)
 
 	var/list/general_master = cat_drinks + cat_food + cat_supplies + cat_weapons + cat_heavy + cat_ranged + cat_potions + cat_drugs + cat_utility
