@@ -263,7 +263,6 @@
 	var/list/scum_guns = list(
 		list("The Gut Spillah",       "A Scum's favorite weapon. The backbone of a deal gone wrong. Modified and fabricated by my mates in Kingsfield.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,      1, 750,  FALSE, "Scum"),
 		list("The Venator",  "If you've got a message to send, this is the ticket. A bolt racked rifle capable of shooting thrice before needing a reload.",  /obj/item/gun/ballistic/firearm/flintgonne/venator,               1, 1100, FALSE, "Scum"),
-		list("The Devastator",       "What the hell are you planning on taking down with this? Zizo? BAHAHA!",  /obj/item/gun/ballistic/firearm/devastator,                      1, 1500, FALSE, "Scum"),
 	)
 	var/list/excl_master = list(
 		list("Tipped Hat",         "Nobody's seeing that face. Nobody's knowing that name.",  /obj/item/clothing/head/roguetown/chaperon/flinger,            1, 120, FALSE, "Flinger"),
@@ -283,6 +282,9 @@
 	for(var/entry in scum_guns)
 		if(prob(12))
 			excl_master += list(entry)
+	//1 in 100,000. don't ever expect to see this considering it's a joke gun.
+	if(prob(0.001))
+		excl_master += list(list("The Devastator", "What the hell are you planning on taking down with this? Zizo? BAHAHA!", /obj/item/gun/ballistic/firearm/devastator, 1, 1500, FALSE, "Scum"))
 	var/list/excl_shuffled = shuffle(excl_master)
 	for(var/i = 1 to min(rand(1, 3), excl_shuffled.len))
 		var/entry = excl_shuffled[i]
