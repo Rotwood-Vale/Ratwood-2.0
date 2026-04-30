@@ -494,7 +494,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon))
 			continue
-		L.adjustFireLoss(10, burn_flag = BURN_FLAG_FIRE)
+		L.adjustFireLoss(10)
 		to_chat(L, "<span class='userdanger'>You fall directly into the pool of lava!</span>")
 
 	// changes turf to lava temporarily

@@ -56,7 +56,7 @@
 		return FALSE
 	..()
 
-/mob/living/simple_animal/hostile/retaliate/rogue/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, burn_flag = BURN_FLAG_NONE)
+/mob/living/simple_animal/hostile/retaliate/rogue/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
 	..()
 	if(damagetype == BRUTE)
 		if(damage > 5 && prob(damage * 3))

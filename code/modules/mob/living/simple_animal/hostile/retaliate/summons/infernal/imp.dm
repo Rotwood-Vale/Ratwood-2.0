@@ -58,7 +58,6 @@
 	icon_state = "fireball"
 	damage = 20
 	damage_type = BURN
-	burn_flag = BURN_FLAG_FIRE
 	nodamage = FALSE
 	armor_penetration = 0
 	flag = "magic"

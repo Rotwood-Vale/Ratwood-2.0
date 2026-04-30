@@ -110,7 +110,7 @@
 				if(/datum/patron/divine/ravox)
 					H.Slowdown(2)
 				if(/datum/patron/divine/malum)
-					H.adjustFireLoss(10, burn_flag = BURN_FLAG_FIRE)
+					H.adjustFireLoss(10)
 					H.visible_message(span_warning("Singing flames lick at [H]!"), span_warning("Malum's forge broils me!"))
 	else
 		return

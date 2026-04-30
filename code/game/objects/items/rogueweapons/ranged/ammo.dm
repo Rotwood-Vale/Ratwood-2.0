@@ -327,7 +327,7 @@
 		return
 	var/mob/living/M = target
 	M.adjust_fire_stacks(6)
-	M.adjustFireLoss(15, burn_flag = BURN_FLAG_FIRE)
+	M.adjustFireLoss(15)
 	M.ignite_mob()
 
 
@@ -409,7 +409,7 @@
 		return
 	var/mob/living/M = target
 	M.adjust_fire_stacks(4)
-	M.adjustFireLoss(10, burn_flag = BURN_FLAG_FIRE)
+	M.adjustFireLoss(10)
 	M.ignite_mob()
 
 /obj/item/ammo_casing/caseless/rogue/arrow/water

@@ -317,7 +317,6 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	name = "lux projectile"
 	damage = 10//We handle this by way of the on hit below.
 	damage_type = BURN//Maybe
-	burn_flag = BURN_FLAG_FIRE
 	armor_penetration = 100//+20 over standard. Doesn't really matter, though.
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/lux
 	hitsound = 'sound/combat/hits/hi_bolt (1).ogg'
@@ -337,13 +336,13 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 			M.ignite_mob()
 			visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
 			M.apply_damage(50, BRUTE, spread_damage = TRUE)
-			M.apply_damage(50, BURN, spread_damage = TRUE, burn_flag = BURN_FLAG_FIRE)//Yeah, yeah, I know...
+			M.apply_damage(50, BURN, spread_damage = TRUE)//Yeah, yeah, I know...
 		else
 			M.adjust_fire_stacks(12)
 			M.ignite_mob()
 			visible_message(span_warning("[target] is engulfed in flames upon being struck by [src]!"))
 			M.apply_damage(75, BRUTE, spread_damage = TRUE)
-			M.apply_damage(25, BURN, spread_damage = TRUE, burn_flag = BURN_FLAG_FIRE)//Again, I KNOW.
+			M.apply_damage(25, BURN, spread_damage = TRUE)//Again, I KNOW.
 	//Now, the rest. About 1:1 with artillery fireball.
 	var/turf/fallzone = get_turf(target)
 	if(!fallzone)

@@ -268,7 +268,7 @@
 /datum/status_effect/fire_handler/fire_stacks/divine/harm_human(seconds_per_tick, no_protection = FALSE)
 	var/mob/living/carbon/human/victim = owner
 	victim?.dna?.species?.handle_fire(victim, no_protection)
-	victim.adjustFireLoss(10, burn_flag = BURN_FLAG_FIRE)
+	victim.adjustFireLoss(10)
 
 /datum/status_effect/fire_handler/fire_stacks/sunder
 	id = "fire_stacks_sunder"
@@ -278,7 +278,7 @@
 	var/mob/living/carbon/human/victim = owner
 	if(istype(victim))
 		victim?.dna?.species?.handle_fire(victim, no_protection)
-	victim.adjustFireLoss((owner.getFireLoss() >= 100) ? 4 : 2, burn_flag = BURN_FLAG_FIRE)
+	victim.adjustFireLoss((owner.getFireLoss() >= 100) ? 4 : 2)
 
 /datum/status_effect/fire_handler/fire_stacks/sunder/blessed
 	id = "fire_stacks_sunder_blessed"
@@ -288,7 +288,7 @@
 	var/mob/living/carbon/human/victim = owner
 	if(istype(victim))
 		victim?.dna?.species?.handle_fire(victim, no_protection)
-	victim.adjustFireLoss(8, burn_flag = BURN_FLAG_FIRE)
+	victim.adjustFireLoss(8)
 
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"

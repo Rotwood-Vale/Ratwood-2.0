@@ -138,7 +138,7 @@
 			for(var/mob/living/L in T.contents)
 				if(L.clan == owner.clan)
 					continue
-				L.adjustFireLoss(20, burn_flag = BURN_FLAG_FIRE)
+				L.adjustFireLoss(20)
 				L.adjust_fire_stacks(4)
 				L.ignite_mob()
 			burnt_turfs |= T

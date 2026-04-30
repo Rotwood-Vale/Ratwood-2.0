@@ -138,7 +138,7 @@
 			for(var/mob/living/M in T)
 				if(M == src)
 					continue
-				M.adjustFireLoss(15, burn_flag = BURN_FLAG_FIRE)
+				M.adjustFireLoss(15)
 
 	src.next_ability_use = world.time + src.ability_cooldown
 	return TRUE

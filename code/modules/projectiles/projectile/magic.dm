@@ -428,7 +428,6 @@
 	icon_state = "fireball"
 	damage = 10
 	damage_type = BRUTE
-	burn_flag = BURN_FLAG_FIRE
 	nodamage = FALSE
 	light_color = "#f8af07"
 	light_outer_range =  2

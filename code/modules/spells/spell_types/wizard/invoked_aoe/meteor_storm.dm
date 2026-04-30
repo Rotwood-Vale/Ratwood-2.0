@@ -80,26 +80,26 @@
 
 		for(var/mob/living/L in nearby.contents)
 			if(islist(flame_hit) && flame_hit[L]) // already hit by this meteor
-				L.adjustFireLoss(5, burn_flag = BURN_FLAG_FIRE)
+				L.adjustFireLoss(5)
 				continue
 
 			switch(dist)
 				if(0) // Direct impact
-					L.adjustFireLoss(40, burn_flag = BURN_FLAG_FIRE)
+					L.adjustFireLoss(40)
 					L.adjust_fire_stacks(8)
 					L.ignite_mob()
 					to_chat(L, span_userdanger("You're hit by a meteor!"))
 				if(1) // Very close
-					L.adjustFireLoss(20, burn_flag = BURN_FLAG_FIRE)
+					L.adjustFireLoss(20)
 					L.adjust_fire_stacks(4)
 					L.ignite_mob()
 					to_chat(L, span_danger("Heat from the meteor sears you!"))
 				if(2) // Nearby
-					L.adjustFireLoss(10, burn_flag = BURN_FLAG_FIRE)
+					L.adjustFireLoss(10)
 					L.adjust_fire_stacks(2)
 					to_chat(L, span_warning("You feel the scorching blast!"))
 				if(3) // Edge of the blast
-					L.adjustFireLoss(5, burn_flag = BURN_FLAG_FIRE)
+					L.adjustFireLoss(5)
 					L.adjust_fire_stacks(1)
 
 			if(islist(flame_hit))

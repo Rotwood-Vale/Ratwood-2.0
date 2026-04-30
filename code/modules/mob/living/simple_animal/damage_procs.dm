@@ -13,7 +13,7 @@
 	else if(damage_coeff[BRUTE])
 		. = adjustHealth(amount * damage_coeff[BRUTE] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/simple_animal/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, burn_flag = BURN_FLAG_NONE)
+/mob/living/simple_animal/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(forced)
 		. = adjustHealth(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[BURN])

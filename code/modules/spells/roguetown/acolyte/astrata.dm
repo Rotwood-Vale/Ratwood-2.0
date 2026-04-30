@@ -18,7 +18,6 @@
 	name = "lance of holy fire"
 	nodamage = FALSE
 	damage_type = BURN
-	burn_flag = BURN_FLAG_FIRE
 	speed = 0.3
 	muzzle_type = null
 	impact_type = null

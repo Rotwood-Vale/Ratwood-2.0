@@ -1,6 +1,6 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, burn_flag = BURN_FLAG_NONE)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = 1
 	damage = max(damage-blocked,0)
@@ -29,14 +29,10 @@
 				adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			if(BP)
-				var/burn_damage = damage_amount
-				if(burn_flag == BURN_FLAG_FIRE && ishuman(src))
-					var/mob/living/carbon/human/H = src
-					burn_damage *= H.dna?.species?.get_fire_damage_multiplier(H) || 1
-				if(BP.receive_damage(0, burn_damage))
+				if(BP.receive_damage(0, damage_amount))
 					update_damage_overlays()
 			else
-				adjustFireLoss(damage_amount, forced = forced, burn_flag = burn_flag)
+				adjustFireLoss(damage_amount, forced = forced)
 		if(TOX)
 			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
@@ -77,12 +73,9 @@
 		heal_overall_damage(abs(amount), 0, 0, required_status ? required_status : BODYPART_ORGANIC, updating_health)
 	return amount
 
-/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status, burn_flag = BURN_FLAG_NONE)
+/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(amount > 0 && burn_flag == BURN_FLAG_FIRE && ishuman(src))
-		var/mob/living/carbon/human/H = src
-		amount *= H.dna?.species?.get_fire_damage_multiplier(H) || 1
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health, required_status)
 	else

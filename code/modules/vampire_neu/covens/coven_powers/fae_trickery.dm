@@ -457,7 +457,7 @@
 					span_danger("THE RIDDLE PUNISHES YOU FOR LYING."))
 				answerer.adjust_fire_stacks(6)
 				answerer.ignite_mob()
-				answerer.adjustFireLoss(45, burn_flag = BURN_FLAG_FIRE)
+				answerer.adjustFireLoss(45)
 				answerer.Knockdown(10)
 			answerer.remove_movespeed_modifier("riddle")
 			alert.bad_answers = 0
