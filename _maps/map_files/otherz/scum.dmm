@@ -34,6 +34,21 @@
 /obj/effect/decal/cleanable/debris/stony,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum/shop)
+"aD" = (
+/obj/structure/closet/crate/chest/wicker,
+/obj/item/seeds/wheat,
+/obj/item/seeds/wheat,
+/obj/item/seeds/wheat,
+/obj/item/seeds/wheat,
+/obj/item/seeds/wheat,
+/obj/item/seeds/wheat,
+/obj/item/seeds/rice,
+/obj/item/seeds/rice,
+/obj/item/seeds/rice,
+/obj/item/seeds/rice,
+/obj/item/seeds/rice,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "aH" = (
 /obj/structure/closet/crate/drawer{
 	lockid = "royal";
@@ -86,6 +101,12 @@
 /obj/effect/landmark/start/flingerlate,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum)
+"bN" = (
+/obj/structure/curtain/directional/orange{
+	dir = 1
+	},
+/turf/closed/wall/mineral/rogue/wooddark/window,
+/area/rogue/under/scum/common)
 "bR" = (
 /obj/machinery/gear_painter{
 	pixel_x = 8;
@@ -97,6 +118,10 @@
 /obj/machinery/light/rogue/candle/green,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum/landing)
+"cr" = (
+/obj/structure/curtain/directional/orange,
+/turf/closed/wall/mineral/rogue/wooddark/window,
+/area/rogue/under/scum/common)
 "cD" = (
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue)
@@ -120,12 +145,6 @@
 "cR" = (
 /turf/closed/wall/mineral/rogue/pipe,
 /area/rogue/under/scum/landing)
-"cZ" = (
-/obj/machinery/light/rogue/candle/green{
-	pixel_y = -31
-	},
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/workshop)
 "dd" = (
 /obj/structure/fluff/walldeco/painting,
 /turf/closed/wall/mineral/rogue/stone/moss,
@@ -198,7 +217,8 @@
 /obj/structure/fluff/traveltile/underbelly_pipe_exit{
 	pixel_y = 10;
 	aportalid = "MIDDLE_OF_TOWN_EXIT";
-	aportalgoesto = "MIDDLE_OF_TOWN"
+	aportalgoesto = "MIDDLE_OF_TOWN";
+	desc = "A heavy gate fitted to the pipe mouth. Leads back to the surface. This one leads TO THE MIDDLE OF TOWN"
 	},
 /turf/open/floor/rogue/metal,
 /area/rogue/under/scum)
@@ -299,7 +319,8 @@
 	pixel_y = 22;
 	doorman_id = "NEAR_SOILSON";
 	aportalid = "NEAR_SOILSON_EXIT";
-	aportalgoesto = "NEAR_SOILSON"
+	aportalgoesto = "NEAR_SOILSON";
+	desc = "A heavy gate fitted to the pipe mouth. Leads back to the surface. This one leads to NEAR SOILSON"
 	},
 /turf/open/floor/rogue/metal,
 /area/rogue/under/scum)
@@ -317,6 +338,15 @@
 	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/scum/landing)
+"gd" = (
+/obj/machinery/light/rogue/candle/green,
+/obj/structure/rack/rogue,
+/obj/item/fishingrod,
+/obj/item/fishingrod,
+/obj/item/fishingrod,
+/obj/item/book/rogue/fishing,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "gg" = (
 /obj/machinery/light/rogue/candle/green/l,
 /turf/open/floor/rogue/metal/barograte,
@@ -335,15 +365,9 @@
 	},
 /area/rogue/under/scum/lounge)
 "gw" = (
-/obj/machinery/light/rogue/candle/green{
-	pixel_y = -31
-	},
+/obj/structure/closet/crate/chest/crate,
+/obj/machinery/light/rogue/candle/green,
 /turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/landing)
-"gK" = (
-/obj/structure/fluff/railing/border,
-/obj/structure/fluff/railing/border/east,
-/turf/open/floor/rogue/grass,
 /area/rogue/under/scum/common)
 "gM" = (
 /obj/item/roguecoin/gold/pile,
@@ -371,16 +395,11 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
 "hj" = (
-/obj/structure/bars/grille/rusty,
-/obj/structure/fluff/traveltile/underbelly/pipe{
-	pixel_y = -5;
-	pixel_x = -1;
-	doorman_id = "BOG_BRIDGE";
-	aportalid = "BOG_BRIDGE_EXIT";
-	aportalgoesto = "BOG_BRIDGE"
+/obj/machinery/light/rogue/candle/green{
+	pixel_y = -31
 	},
-/turf/open/floor/rogue/cobblerock,
-/area/rogue/under/scum)
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/workshop)
 "hn" = (
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_x = -32;
@@ -396,6 +415,11 @@
 	},
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum)
+"hw" = (
+/obj/structure/fluff/railing/border,
+/obj/structure/fluff/railing/border/east,
+/turf/open/floor/rogue/grass,
+/area/rogue/under/scum/common)
 "hC" = (
 /obj/structure/rack/rogue,
 /obj/item/reagent_containers/glass/bucket,
@@ -517,7 +541,8 @@
 	dir = 8;
 	aportalgoesto = "THE_COAST";
 	aportalid = "THE_COAST_EXIT";
-	doorman_id = "THE_COAST"
+	doorman_id = "THE_COAST";
+	desc = "A heavy gate fitted to the pipe mouth. Leads back to the surface. This one leads TO THE COAST"
 	},
 /turf/open/floor/rogue/metal,
 /area/rogue/under/scum)
@@ -550,15 +575,13 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/landmark/start/fleshtraderlate,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
 "kS" = (
-/obj/machinery/light/rogue/candle/green{
-	pixel_y = -31
-	},
-/turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/scum/shop)
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/murkwine,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "kU" = (
 /obj/item/natural/worms/leech,
 /obj/item/natural/worms/leech,
@@ -578,6 +601,12 @@
 	},
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/scum/boss)
+"ls" = (
+/obj/machinery/light/rogue/candle/green{
+	pixel_y = -31
+	},
+/turf/open/water/bath,
+/area/rogue/under/scum/lounge)
 "ly" = (
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/scum/boss)
@@ -609,6 +638,15 @@
 /obj/item/roguecoin/gold/pile,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
+"lX" = (
+/obj/structure/rack/rogue,
+/obj/item/seeds/random,
+/obj/item/seeds/random,
+/obj/item/seeds/random,
+/obj/item/seeds/random,
+/obj/item/seeds/random,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "mb" = (
 /obj/machinery/light/rogue/candle/floorcandle{
 	pixel_x = -17;
@@ -634,6 +672,12 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/dorms)
+"my" = (
+/obj/machinery/light/rogue/candle/green{
+	pixel_y = -31
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/landing)
 "mz" = (
 /obj/structure/chair/wood/rogue{
 	dir = 8;
@@ -651,6 +695,14 @@
 "nc" = (
 /obj/structure/fluff/walldeco/xavo,
 /turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/under/scum/common)
+"nh" = (
+/obj/structure/bed/rogue/inn{
+	dir = 8
+	},
+/obj/effect/landmark/start/scumlate,
+/obj/machinery/light/rogue/candle/green,
+/turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
 "nj" = (
 /obj/structure/shisha/hookah,
@@ -677,7 +729,6 @@
 /area/rogue/under/scum/workshop)
 "nV" = (
 /obj/structure/fluff/railing/border,
-/obj/effect/landmark/start/fleshtraderlate,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
 "nZ" = (
@@ -700,20 +751,9 @@
 	},
 /turf/open/water/bath,
 /area/rogue/under/scum/lounge)
-"pa" = (
-/obj/machinery/light/rogue/candle/green{
-	pixel_y = -31
-	},
-/turf/open/water/bath,
-/area/rogue/under/scum/lounge)
 "pv" = (
 /turf/open/transparent/openspace,
 /area/rogue/under/scum/dorms)
-"px" = (
-/obj/structure/closet/crate/chest/crate,
-/obj/machinery/light/rogue/candle/green,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/common)
 "py" = (
 /obj/structure/table/vtable,
 /turf/open/floor/rogue/herringbone,
@@ -756,7 +796,8 @@
 /obj/structure/fluff/traveltile/underbelly_pipe_exit{
 	doorman_id = "KEEP_BASEMENT_NORTH";
 	aportalid = "KEEP_BASEMENT_NORTH_EXIT";
-	aportalgoesto = "KEEP_BASEMENT_NORTH"
+	aportalgoesto = "KEEP_BASEMENT_NORTH";
+	desc = "A heavy gate fitted to the pipe mouth. Leads back to the surface. This one leads to THEIR BACKSIDE"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/scum)
@@ -764,21 +805,6 @@
 /obj/item/roguebin/water/gross,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/workshop)
-"qa" = (
-/obj/structure/closet/crate/chest/wicker,
-/obj/item/seeds/wheat,
-/obj/item/seeds/wheat,
-/obj/item/seeds/wheat,
-/obj/item/seeds/wheat,
-/obj/item/seeds/wheat,
-/obj/item/seeds/wheat,
-/obj/item/seeds/rice,
-/obj/item/seeds/rice,
-/obj/item/seeds/rice,
-/obj/item/seeds/rice,
-/obj/item/seeds/rice,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/common)
 "qp" = (
 /obj/effect/decal/carpet/square{
 	pixel_x = 14;
@@ -797,6 +823,12 @@
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/scum/common)
+"qW" = (
+/obj/machinery/light/rogue/candle/green{
+	pixel_y = -31
+	},
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/under/scum/landing)
 "qY" = (
 /obj/machinery/light/rogue/candle/green/l,
 /turf/open/floor/rogue/herringbone,
@@ -872,15 +904,6 @@
 	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/scum/landing)
-"sc" = (
-/obj/machinery/light/rogue/candle/green,
-/obj/structure/rack/rogue,
-/obj/item/fishingrod,
-/obj/item/fishingrod,
-/obj/item/fishingrod,
-/obj/item/book/rogue/fishing,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/common)
 "sq" = (
 /obj/structure/fluff/walldeco/med5{
 	pixel_y = 32
@@ -900,6 +923,11 @@
 	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/scum/boss)
+"sQ" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "sY" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/clothing/head/roguetown/helmet/blackguard,
@@ -914,6 +942,15 @@
 /obj/item/clothing/head/roguetown/puritan/scum,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/shop)
+"te" = (
+/obj/structure/fluff/traveltile/underbelly_pipe_exit{
+	pixel_y = 7;
+	aportalgoesto = "THIEF_BAR";
+	aportalid = "THIEF_BAR_EXIT";
+	desc = "A heavy gate fitted to the pipe mouth. Leads back to the surface. This pipe leads to THE ROGUE'S DEN"
+	},
+/turf/open/floor/rogue/metal,
+/area/rogue/under/scum)
 "tf" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/rogue/grass,
@@ -947,12 +984,6 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
-"uS" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/tongs,
-/obj/item/rogueweapon/hammer/iron,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/workshop)
 "vf" = (
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum/landing)
@@ -965,10 +996,36 @@
 	},
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum/lounge)
+"vD" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/butterhairs{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/beer/butterhairs{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/beer/butterhairs{
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/beer/butterhairs{
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/beer/butterhairs{
+	pixel_x = 10
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "vJ" = (
 /obj/machinery/light/rogue/candle/green/r,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum/dorms)
+"vN" = (
+/obj/structure/rack/rogue,
+/obj/item/fishingcage,
+/obj/item/fishingcage,
+/obj/item/fishingcage,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "vP" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/structure/fluff/walldeco/church/line{
@@ -1113,21 +1170,19 @@
 	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/scum/landing)
-"yQ" = (
-/obj/machinery/light/rogue/candle/green,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/common)
 "yV" = (
 /turf/open/floor/rogue/citybrick/citybrick2,
 /area/rogue/under/scum/landing)
+"yZ" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/rogueweapon/tongs,
+/obj/item/rogueweapon/hammer/iron,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/workshop)
 "zc" = (
 /obj/effect/landmark/start/flingerlate,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/scum)
-"zi" = (
-/obj/machinery/light/rogue/candle/green/r,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/workshop)
 "zk" = (
 /obj/structure/bars/grille/rusty,
 /obj/machinery/light/roguestreet/midlamp{
@@ -1218,14 +1273,16 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/scum)
-"AN" = (
-/obj/structure/curtain/directional/orange,
-/turf/closed/wall/mineral/rogue/wooddark/window,
-/area/rogue/under/scum/common)
 "AQ" = (
 /obj/structure/bars/grille/rusty,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum)
+"AZ" = (
+/obj/machinery/light/rogue/candle/green{
+	pixel_y = -31
+	},
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/under/scum/shop)
 "Bj" = (
 /obj/structure/bars/grille/rusty,
 /obj/machinery/light/roguestreet/midlamp{
@@ -1280,20 +1337,23 @@
 /obj/effect/decal/cleanable/debris/stony,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum/landing)
-"BX" = (
-/obj/structure/curtain/directional/orange{
-	dir = 1
-	},
-/turf/closed/wall/mineral/rogue/wooddark/window,
-/area/rogue/under/scum/common)
 "BY" = (
 /obj/structure/underbelly_speaker,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/scum/common)
+"Cc" = (
+/obj/machinery/light/rogue/candle/green/r,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/workshop)
 "Ck" = (
 /obj/structure/fluff/walldeco/flower,
 /turf/open/transparent/openspace,
 /area/rogue/under/scum)
+"Cn" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/kgunshochu,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "Cx" = (
 /obj/effect/decal/cleanable/debris/stony,
 /obj/item/roguebin/trash,
@@ -1356,15 +1416,6 @@
 	},
 /turf/open/floor/carpet/inn,
 /area/rogue/under/scum/landing)
-"Dn" = (
-/obj/structure/rack/rogue,
-/obj/item/seeds/random,
-/obj/item/seeds/random,
-/obj/item/seeds/random,
-/obj/item/seeds/random,
-/obj/item/seeds/random,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/common)
 "Do" = (
 /obj/structure/mineral_door/wood/bath/bathmaid{
 	name = "THE SMUGGLER'S TRAIN - GOODS ARRIVAL";
@@ -1414,12 +1465,6 @@
 	},
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/under/scum/lounge)
-"EC" = (
-/obj/machinery/light/rogue/candle/green{
-	pixel_y = -31
-	},
-/turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/scum/landing)
 "EG" = (
 /obj/effect/decal/carpet/kover_darkred{
 	dir = 4;
@@ -1457,7 +1502,8 @@
 	pixel_x = -4;
 	pixel_y = -20;
 	aportalid = "INQUISSEWERSEXIT";
-	aportalgoesto = "INQUISSEWERS"
+	aportalgoesto = "INQUISSEWERS";
+	desc = "A heavy gate fitted to the pipe mouth. Leads back to the surface. This one leads to INQUISITION MANOR"
 	},
 /turf/open/floor/rogue/metal,
 /area/rogue/under/scum)
@@ -1599,13 +1645,6 @@
 "Ip" = (
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/under/scum)
-"Iz" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/machinery/light/rogue/candle/green{
-	pixel_y = -31
-	},
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/common)
 "IA" = (
 /obj/machinery/light/rogue/candle/green/r,
 /turf/open/floor/rogue/herringbone,
@@ -1638,12 +1677,6 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/shop)
-"IL" = (
-/obj/machinery/light/rogue/candle/green{
-	pixel_y = -31
-	},
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/common)
 "IO" = (
 /obj/effect/landmark/start/flingerlate,
 /turf/open/floor/rogue/carpet/lord/center,
@@ -1684,12 +1717,6 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
-"JH" = (
-/obj/structure/curtain/directional/orange{
-	dir = 8
-	},
-/turf/closed/wall/mineral/rogue/wooddark/window,
-/area/rogue/under/scum/common)
 "JX" = (
 /obj/machinery/light/rogue/candle/green/r,
 /turf/open/floor/rogue/herringbone,
@@ -1722,9 +1749,10 @@
 /obj/structure/fluff/traveltile/underbelly_pipe_exit{
 	pixel_x = 4;
 	pixel_y = 22;
-	doorman_id = "NEAR_SOILSON";
+	doorman_id = "UNDER_CHURCH";
 	aportalid = "UNDER_CHURCH_EXIT";
-	aportalgoesto = "UNDER_CHURCH"
+	aportalgoesto = "UNDER_CHURCH";
+	desc = "A heavy gate fitted to the pipe mouth. Leads back to the surface. This one leads to UNDER THE CHURCH"
 	},
 /turf/open/floor/rogue/metal,
 /area/rogue/under/scum)
@@ -1735,6 +1763,11 @@
 /obj/item/clothing/suit/roguetown/armor/leather/studded,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/shop)
+"Ld" = (
+/obj/structure/bars/grille/rusty,
+/obj/structure/far_travel,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/under/scum)
 "Lh" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/rogueweapon/sword/rapier,
@@ -1760,13 +1793,6 @@
 "LO" = (
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/shop)
-"LP" = (
-/obj/structure/rack/rogue,
-/obj/item/fishingcage,
-/obj/item/fishingcage,
-/obj/item/fishingcage,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/common)
 "LR" = (
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
@@ -1775,20 +1801,23 @@
 /obj/structure/chair/wood/rogue/throne/zybantine,
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/scum/boss)
+"Mc" = (
+/obj/machinery/light/rogue/candle/green,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "Mk" = (
-/obj/structure/far_travel,
-/turf/open/transparent/openspace,
-/area/rogue/under/scum)
+/obj/machinery/light/rogue/candle/green{
+	pixel_y = -31
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "Mn" = (
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum/landing)
-"Ms" = (
-/obj/structure/bed/rogue/inn{
-	dir = 8
-	},
-/obj/effect/landmark/start/scumlate,
-/obj/machinery/light/rogue/candle/green,
+"Mr" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/butterhairs,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
 "MD" = (
@@ -1820,6 +1849,12 @@
 	icon_state = "bathtileratwood"
 	},
 /area/rogue/under/scum/lounge)
+"NM" = (
+/obj/structure/curtain/directional/orange{
+	dir = 8
+	},
+/turf/closed/wall/mineral/rogue/wooddark/window,
+/area/rogue/under/scum/common)
 "NN" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
@@ -1866,6 +1901,11 @@
 /obj/structure/fluff/walldeco/med,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/scum/apothecary)
+"OW" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/machinery/light/rogue/candle/green,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/workshop)
 "Pe" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/rogueweapon/sword/long/shotel,
@@ -1883,11 +1923,6 @@
 "Pq" = (
 /turf/closed/wall/mineral/rogue/pipe/line/four,
 /area/rogue/under/scum)
-"PA" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/machinery/light/rogue/candle/green,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/workshop)
 "PF" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/herringbone,
@@ -1997,7 +2032,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/scum/common)
 "Rz" = (
-/obj/effect/landmark/start/fleshtraderlate,
+/obj/effect/landmark/start/ripperlate,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
 "RA" = (
@@ -2010,6 +2045,13 @@
 	},
 /turf/open/floor/carpet/red,
 /area/rogue/under/scum/landing)
+"RF" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/light/rogue/candle/green{
+	pixel_y = -31
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "RK" = (
 /obj/structure/closet/crate/chest/gold,
 /obj/machinery/light/rogue/candle/green/l,
@@ -2033,10 +2075,6 @@
 "RU" = (
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/scum/boss)
-"RZ" = (
-/obj/machinery/light/rogue/candle/green,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/workshop)
 "Sf" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/herringbone,
@@ -2078,7 +2116,6 @@
 "Tg" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood/xtracks,
-/obj/effect/landmark/start/ripperlate,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
 "Ts" = (
@@ -2171,6 +2208,16 @@
 	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/scum/boss)
+"Vb" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/fireleaf{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{
+	pixel_x = 8
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/common)
 "Vc" = (
 /obj/structure/bars/pipe{
 	pixel_y = 7
@@ -2301,6 +2348,13 @@
 /obj/machinery/light/rogue/candle/green/r,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
+"WZ" = (
+/obj/structure/fluff/traveltile/underbelly_pipe_exit{
+	aportalgoesto = "DRUIDS_GROVE";
+	aportalid = "DRUIDS_GROVE_EXIT"
+	},
+/turf/open/floor/rogue/metal,
+/area/rogue/under/scum)
 "Xd" = (
 /obj/machinery/gear_painter{
 	pixel_x = 8;
@@ -2376,6 +2430,11 @@
 	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/scum/landing)
+"XS" = (
+/obj/structure/fluff/railing/border,
+/obj/structure/fluff/railing/border/west,
+/turf/open/floor/rogue/grass,
+/area/rogue/under/scum/common)
 "XT" = (
 /obj/structure/bars/pipe{
 	dir = 5;
@@ -2406,11 +2465,6 @@
 	},
 /turf/open/floor/carpet/inn,
 /area/rogue/under/scum/lounge)
-"Ym" = (
-/obj/structure/fluff/railing/border,
-/obj/structure/fluff/railing/border/west,
-/turf/open/floor/rogue/grass,
-/area/rogue/under/scum/common)
 "Yo" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -2418,10 +2472,14 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/scum/common)
 "Yp" = (
-/obj/effect/landmark/start/ripperlate,
-/obj/machinery/light/rogue/candle/green/r,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/scum/apothecary)
+/obj/structure/bars/grille/rusty,
+/obj/structure/fluff/traveltile/underbelly_pipe_exit{
+	pixel_y = 16;
+	aportalgoesto = "BOG_BRIDGE";
+	aportalid = "BOG_BRIDGE_EXIT"
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/under/scum)
 "YC" = (
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/workshop)
@@ -2463,6 +2521,10 @@
 /obj/effect/decal/cleanable/blood/xtracks,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
+"ZX" = (
+/obj/machinery/light/rogue/candle/green,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/workshop)
 
 (1,1,1) = {"
 cD
@@ -2572,8 +2634,8 @@ Wh
 Wh
 Wh
 Pq
-hj
 KE
+Yp
 Wh
 Wh
 Wh
@@ -4903,7 +4965,7 @@ KE
 KE
 KE
 KE
-KE
+Ld
 Jb
 "}
 (38,1,1) = {"
@@ -4969,7 +5031,7 @@ KE
 KE
 KE
 KE
-KE
+Ld
 cD
 "}
 (39,1,1) = {"
@@ -6400,8 +6462,8 @@ Wh
 Wh
 Wh
 Wh
-AM
-KE
+Gk
+AC
 iO
 Wh
 Wh
@@ -6466,8 +6528,8 @@ Wh
 Wh
 Wh
 Wh
-KE
-KE
+AC
+AC
 Wh
 Wh
 Wh
@@ -6532,8 +6594,8 @@ Wh
 Wh
 Wh
 Wh
-KE
-KE
+AC
+AC
 Wh
 Wh
 Wh
@@ -6579,7 +6641,7 @@ Wh
 Wh
 Wh
 AC
-AC
+te
 Wh
 Wh
 Wh
@@ -6598,8 +6660,8 @@ Wh
 Wh
 Wh
 Wh
-KE
-KE
+AC
+WZ
 Wh
 Wh
 Wh
@@ -7499,7 +7561,7 @@ AQ
 AQ
 OV
 Zr
-Rz
+wg
 kN
 sA
 aO
@@ -7719,7 +7781,7 @@ TU
 gp
 iu
 iu
-EC
+qW
 fS
 AQ
 AQ
@@ -7763,7 +7825,7 @@ AQ
 jR
 aO
 ml
-Yp
+oF
 Tg
 WX
 aO
@@ -7983,7 +8045,7 @@ TU
 dv
 Vw
 iu
-gw
+my
 fS
 AQ
 AQ
@@ -8511,7 +8573,7 @@ vf
 vf
 Vw
 vf
-EC
+qW
 cR
 AQ
 AQ
@@ -8554,7 +8616,7 @@ vn
 ht
 AQ
 TA
-Ms
+nh
 BN
 UE
 BN
@@ -8563,7 +8625,7 @@ NZ
 ye
 iW
 LR
-IL
+Mk
 wW
 dA
 AQ
@@ -8745,9 +8807,9 @@ vn
 AQ
 AQ
 Ut
-RZ
+ZX
 YC
-cZ
+hj
 Ut
 AQ
 AQ
@@ -8893,7 +8955,7 @@ rI
 Bx
 rL
 tB
-Iz
+RF
 Ty
 dA
 AQ
@@ -8973,7 +9035,7 @@ vf
 vf
 vf
 Vw
-EC
+qW
 cR
 AQ
 AQ
@@ -9009,7 +9071,7 @@ vn
 AQ
 AQ
 Ut
-uS
+yZ
 YC
 YC
 Ut
@@ -9075,14 +9137,14 @@ vn
 AQ
 AQ
 Ut
-PA
+OW
 YC
-cZ
+hj
 Ut
 AQ
 AQ
 TA
-px
+gw
 LR
 FL
 LR
@@ -9128,7 +9190,7 @@ vn
 vn
 vn
 vn
-Mk
+vn
 Jb
 "}
 (38,1,2) = {"
@@ -9142,7 +9204,7 @@ AQ
 AQ
 Ut
 nP
-zi
+Cc
 YC
 Ut
 AQ
@@ -9194,7 +9256,7 @@ vn
 vn
 vn
 vn
-Mk
+vn
 cD
 "}
 (39,1,2) = {"
@@ -9501,7 +9563,7 @@ Lp
 Lp
 FZ
 Lp
-pa
+ls
 Vc
 AQ
 AQ
@@ -9553,7 +9615,7 @@ dH
 LO
 dH
 LO
-kS
+AZ
 Ob
 AQ
 AQ
@@ -10095,7 +10157,7 @@ Lp
 Lp
 yk
 Lp
-pa
+ls
 Vc
 AQ
 AQ
@@ -10147,7 +10209,7 @@ Gc
 dH
 LO
 IA
-kS
+AZ
 Ob
 AQ
 AQ
@@ -12580,7 +12642,7 @@ vn
 vn
 vn
 vn
-AN
+cr
 LR
 LR
 LR
@@ -12653,7 +12715,7 @@ LR
 xc
 IF
 IF
-Ym
+XS
 LR
 BN
 LR
@@ -12722,7 +12784,7 @@ ju
 Ry
 LR
 LR
-IL
+Mk
 TA
 vn
 vn
@@ -12779,7 +12841,7 @@ vn
 vn
 vn
 TA
-qa
+aD
 LR
 LR
 tf
@@ -12789,7 +12851,7 @@ Ry
 LR
 LR
 LR
-BX
+bN
 vn
 vn
 aS
@@ -12845,7 +12907,7 @@ vn
 vn
 vn
 TA
-Dn
+lX
 LR
 LR
 tf
@@ -12911,13 +12973,13 @@ vn
 vn
 vn
 TA
-yQ
+Mc
 LR
 LR
 yK
 Hn
 Hn
-gK
+hw
 LR
 LR
 LR
@@ -12976,7 +13038,7 @@ vn
 vn
 vn
 vn
-AN
+cr
 LR
 LR
 LR
@@ -12986,7 +13048,7 @@ LR
 LR
 LR
 LR
-IL
+Mk
 TA
 vn
 vn
@@ -13043,7 +13105,7 @@ vn
 vn
 vn
 TA
-LP
+vN
 LR
 LR
 LR
@@ -13109,16 +13171,16 @@ vn
 vn
 vn
 TA
-sc
+gd
 LR
 LR
 Dz
 LR
+Mr
 LR
+Mr
 LR
-LR
-LR
-LR
+kS
 TA
 vn
 vn
@@ -13174,7 +13236,7 @@ vn
 vn
 vn
 vn
-AN
+cr
 LR
 LR
 LR
@@ -13185,7 +13247,7 @@ LR
 LR
 LR
 LR
-BX
+bN
 vn
 vn
 aS
@@ -13242,15 +13304,15 @@ vn
 vn
 TA
 LR
+vD
 LR
+Vb
 LR
+sQ
 LR
+Cn
 LR
-LR
-LR
-LR
-LR
-LR
+kS
 TA
 vn
 vn
@@ -13307,7 +13369,7 @@ vn
 vn
 vn
 TA
-yQ
+Mc
 LR
 LR
 LR
@@ -13316,7 +13378,7 @@ LR
 LR
 LR
 LR
-IL
+Mk
 TA
 vn
 vn
@@ -13441,12 +13503,12 @@ vn
 TA
 TA
 TA
-JH
+NM
 TA
 TA
 TA
 TA
-JH
+NM
 TA
 TA
 TA

@@ -17,7 +17,7 @@ GLOBAL_VAR(smuggler_train)
 		GLOB.smuggler_train = new /datum/smuggler_train()
 
 // The crates that appear at each drop point
-/obj/structure/closet/crate/roguecloset/dark/smuggler
+/obj/structure/closet/crate/chest/crate/smuggler
 	name = "cargo crate"
 	desc = "A battered wooden crate. Whoever packed this wasn't planning to get caught."
 
@@ -37,7 +37,7 @@ GLOBAL_VAR(smuggler_train)
 	for(var/obj/effect/landmark/smuggler_drop/L in GLOB.landmarks_list)
 		if(!target_z)
 			target_z = L.z
-		var/obj/structure/closet/crate/roguecloset/dark/smuggler/crate = new(L.loc)
+		var/obj/structure/closet/crate/chest/crate/smuggler/crate = new(L.loc)
 		fill_crate(crate)
 		active_crates += crate
 
@@ -49,7 +49,7 @@ GLOBAL_VAR(smuggler_train)
 
 	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(30 MINUTES, 60 MINUTES))
 
-/datum/smuggler_train/proc/fill_crate(obj/structure/closet/crate/roguecloset/dark/smuggler/C)
+/datum/smuggler_train/proc/fill_crate(obj/structure/closet/crate/chest/crate/smuggler/C)
 	var/T
 	switch(rand(1, 4))
 		if(1) // weapons & tools

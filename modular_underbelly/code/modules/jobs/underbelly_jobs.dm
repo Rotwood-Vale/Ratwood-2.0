@@ -54,6 +54,17 @@
 	max_integrity = 260
 	smeltresult = /obj/item/ingot/iron
 
+/// Tiny wearers get the helmet shoved down further so it sits closer to their head.
+/// The sprite stays oversized on purpose. It's funny.
+/obj/item/clothing/head/roguetown/helmet/blackguard/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	var/mutable_appearance/standing = ..()
+	if(standing && ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		var/datum/species/S = H.dna?.species
+		if(istype(S, /datum/species/kobold) || istype(S, /datum/species/dwarf) || istype(S, /datum/species/anthromorphsmall) || istype(S, /datum/species/goblinp))
+			standing.pixel_y -= 4
+	return standing
+
 /obj/item/clothing/head/roguetown/puritan/scum
 	name = "shoddy hat"
 	desc = "Likely stolen from some poor puritan."

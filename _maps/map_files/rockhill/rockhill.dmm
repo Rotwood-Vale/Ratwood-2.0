@@ -1060,7 +1060,8 @@
 /area/rogue/under/cave/dungeon1)
 "alu" = (
 /obj/structure/doorman{
-	doorman_id = "UNDER_CHURCH"
+	doorman_id = "UNDER_CHURCH";
+	location_name = "UNDER THE CHURCH"
 	},
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/under/cavewet)
@@ -16734,7 +16735,8 @@
 /area/rogue/outdoors/beach/harbor)
 "dPa" = (
 /obj/structure/doorman{
-	doorman_id = "NEAR_SOILSON"
+	doorman_id = "NEAR_SOILSON";
+	location_name = "NEAR THE SOILSON"
 	},
 /turf/closed/mineral/random/rogue,
 /area/rogue/under/cave)
@@ -43686,7 +43688,8 @@
 /area/rogue/under/underdarker/rockhill)
 "kiW" = (
 /obj/structure/doorman{
-	doorman_id = "MIDDLE_OF_TOWN"
+	doorman_id = "MIDDLE_OF_TOWN";
+	location_name = "UNDER THE TOWN CENTER"
 	},
 /turf/closed/mineral/rogue,
 /area/rogue/under/town/sewer)
@@ -53753,7 +53756,8 @@
 /area/rogue/indoors/town/tavern)
 "mBH" = (
 /obj/structure/doorman{
-	doorman_id = "THIEF_BAR"
+	doorman_id = "THIEF_BAR";
+	location_name = "THE ROGUE'S DEN"
 	},
 /turf/closed/mineral/rogue,
 /area/rogue/under/town/sewer)
@@ -56554,7 +56558,8 @@
 /area/rogue/outdoors/woodsrat/above)
 "nlb" = (
 /obj/structure/doorman{
-	doorman_id = "THE_COAST"
+	doorman_id = "THE_COAST";
+	location_name = "THE COAST"
 	},
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/under/cavewet)
@@ -60030,7 +60035,8 @@
 /area/rogue/indoors/town/manor/rockhill)
 "ocx" = (
 /obj/structure/doorman{
-	doorman_id = "BOG_BRIDGE"
+	doorman_id = "BOG_BRIDGE";
+	location_name = "BOG BRIDGE"
 	},
 /turf/closed/mineral/random/rogue,
 /area/rogue/under/cavewet)
@@ -62128,7 +62134,8 @@
 /area/rogue/under/cavewet)
 "oCE" = (
 /obj/structure/doorman{
-	doorman_id = "KEEP_BASEMENT_NORTH"
+	doorman_id = "KEEP_BASEMENT_NORTH";
+	location_name = "THE BACKDOOR"
 	},
 /turf/closed/mineral/rogue,
 /area/rogue/under/cavewet)
@@ -67790,7 +67797,8 @@
 /area/rogue/outdoors/beach/harbor)
 "pTk" = (
 /obj/structure/doorman{
-	doorman_id = "INQUISSEWERS"
+	doorman_id = "INQUISSEWERS";
+	location_name = "THE INQUISITOR'S SEWERS"
 	},
 /turf/closed/mineral/rogue,
 /area/rogue/under/cave)
@@ -95177,6 +95185,15 @@
 /obj/item/roguekey/roomx,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/tavern)
+"wAX" = (
+/obj/structure/fluff/traveltile/underbelly/pipe{
+	pixel_y = 6;
+	doorman_id = "DRUIDS_GROVE";
+	aportalgoesto = "DRUIDS_GROVE_EXIT";
+	aportalid = "DRUIDS_GROVE"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/indoors/shelter/mountains)
 "wBa" = (
 /obj/structure/table/wood/large_table,
 /obj/item/hair_dye_cream,
@@ -100470,6 +100487,13 @@
 /obj/structure/bars/cemetery,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/exposed/town/keep)
+"xMA" = (
+/obj/structure/doorman{
+	doorman_id = "DRUIDS_GROVE";
+	location_name = "DRUID'S GROVE"
+	},
+/turf/closed/mineral/rogue,
+/area/rogue/indoors/shelter/mountains)
 "xMB" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -319476,10 +319500,10 @@ vIa
 vIa
 vIa
 vIa
-vIa
-vIa
-vIa
-vIa
+wAX
+qov
+fwi
+fwi
 qov
 fZe
 fZe
@@ -319907,7 +319931,7 @@ soj
 eGZ
 dYr
 vIa
-vIa
+xMA
 fwi
 tbq
 fwi
@@ -320340,8 +320364,8 @@ soj
 vIa
 vIa
 vIa
-vIa
-vIa
+fwi
+fwi
 tbq
 tbq
 qov
@@ -320772,9 +320796,9 @@ vIa
 vIa
 tUS
 vIa
-tUS
-vIa
-tUS
+fwi
+fwi
+fwi
 vIa
 tUS
 vIa

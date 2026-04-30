@@ -3,6 +3,30 @@
 // The finest cured meat the Underbelly can source. Likely stolen from some Etruscan wise-guy.
 // ——————————————————————————————————
 
+/datum/status_effect/buff/stellarfood
+	id = "stellarfood"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/stellarfood
+	effectedstats = list(STATKEY_LCK = 1, STATKEY_SPD = 1)
+	duration = 20 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/stellarfood
+	name = "Stellar Food!"
+	desc = "A bite of something truly special. Xylix smiles, and my step feels lighter."
+	icon_state = "foodbuff"
+
+/datum/status_effect/buff/stellarfood/on_apply()
+	. = ..()
+	owner.add_stress(/datum/stressevent/stellarfood)
+	if(owner.has_status_effect(/datum/status_effect/buff/mealbuff))
+		owner.remove_status_effect(/datum/status_effect/buff/mealbuff)
+	if(owner.has_status_effect(/datum/status_effect/buff/greatmealbuff))
+		owner.remove_status_effect(/datum/status_effect/buff/greatmealbuff)
+
+/datum/stressevent/stellarfood
+	timer = 20 MINUTES
+	stressadd = -3
+	desc = list(span_green("That was a meal fit for kings"), span_green("Gabagool, baby. Nothing better."))
+
 /obj/item/reagent_containers/food/snacks/rogue/meat/gabagool
 	name = "capocollo"
 	desc = "A dense, fragrant cured meat of Etruscan origin. Its smell alone is worth a fat stack of gold coins. The finest, most delicately cured meat available around Grimoria. Wise guys in the Underbelly call it Gabagool, for some reason."
@@ -18,7 +42,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/gabagool/slice
 	rotprocess = SHELFLIFE_LONG
 	slice_sound = TRUE
-	eat_effect = /datum/status_effect/buff/mealbuff
+	eat_effect = /datum/status_effect/buff/stellarfood
 	warming = 15 MINUTES
 	drop_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	become_rot_type = /obj/item/reagent_containers/food/snacks/rogue/meat/gabaghoul
@@ -53,7 +77,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD)
 	bitesize = 4
 	faretype = FARE_LAVISH
-	eat_effect = /datum/status_effect/buff/mealbuff
+	eat_effect = /datum/status_effect/buff/stellarfood
 
 // ——————————————————————————————————
 // GABAGHOUL - if i ever see one of you motherfuckers with this item im gonna ban you.
