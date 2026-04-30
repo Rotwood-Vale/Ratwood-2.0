@@ -268,7 +268,7 @@
 	var/list/excl_master = list(
 		list("Tipped Hat",         "Nobody's seeing that face. Nobody's knowing that name.",  /obj/item/clothing/head/roguetown/chaperon/flinger,            1, 120, FALSE, "Flinger"),
 		list("Defacer",            "Knuckles that were hardened with ancient alloys and Steel. Hits harder, breaks faster.", /obj/item/rogueweapon/knuckles/defacer, 1, 85, FALSE, "Scum"),
-		list("Suffocator",         "Load it with Zizo's bane, then press it onto an unguarded face. A moment's hesitation is all it needs.", /obj/item/clothing/mask/rogue/suffocator, 1, 200, FALSE, "Flesh Trader"),
+		list("Suffocator",         "Load it with Zizo's bane, then press it onto an unguarded face. A moment's hesitation is all it needs.", /obj/item/clothing/mask/rogue/suffocator, 1, 200, FALSE, "Ripper"),
 		list("Golden Cockroach",   "Drop it on the floor of a vault and walk away. Don't ask how it works.", /obj/item/golden_cockroach, 1, 280, FALSE, null),
 		list("Blood Red",          "Whatever's in this, it isn't wine. Don't let anyone drink it unless you want to watch them fold.", /obj/item/reagent_containers/glass/bottle/rogue/blood_red, 1, 150, FALSE, "Ripper"),
 		list("Voss Serum",         "A pale little bottle. Slips into a drink without a trace. The body does the rest.", /obj/item/reagent_containers/glass/bottle/rogue/voss_serum, 2, 80, FALSE, "Ripper"),

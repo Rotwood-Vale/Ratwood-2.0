@@ -204,7 +204,6 @@ GLOBAL_LIST_INIT(foreign_positions, list(
 	"Migrant",
 	"Gutter King",
 	"Scum",
-	"Flesh Trader",
 	"Flinger",
 	"Ripper",
 ))
@@ -216,7 +215,6 @@ GLOBAL_LIST_INIT(test_positions, list(
 GLOBAL_LIST_INIT(underbelly_positions, list(
 	"Gutter King",
 	"Scum",
-	"Flesh Trader",
 	"Flinger",
 	"Ripper",
 ))

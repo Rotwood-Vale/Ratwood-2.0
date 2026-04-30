@@ -2,7 +2,7 @@
 	UNDERBELLY JOBS
 	Criminal faction lurking beneath Rotwood's legitimate society.
 	All five jobs share TRAIT_UNDERBELLY_SCUM and the Thieves' Cant language.
-	Scum, Flesh Trader, Flinger, and Ripper can opt into the excidium for a stat buff.
+	Scum, Flinger, and Ripper can opt into the excidium for a stat buff.
 	Gutter King is the faction head - max 1, 110 PQ floor, bypasses all shop role restrictions.
 */
 
@@ -449,149 +449,6 @@
 	)
 
 // =====================================================
-// FLESH TRADER
-// 65 PQ, max 3. Organ harvesters. Wanted by default.
-// Sleep mask and surgery bag. Stub - full mechanic TBD.
-// =====================================================
-/datum/job/roguetown/fleshtrader
-	title = "Flesh Trader"
-	flag = UB_FLESH_TRADER
-	department_flag = UNDERBELLY
-	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
-	selection_color = JCOLOR_UNDERBELLY
-
-	allowed_races = RACES_ALL_KINDS
-	allowed_sexes = list(MALE, FEMALE)
-	tutorial = "Lux go for good coin if ya know the right guy. Precious, small stuff.\
-	You's expected to patch up the guy's, though. The Excidium's already lookin' at ya funny. Try not to make it worse."
-
-	outfit = /datum/outfit/job/roguetown/underbelly/fleshtrader
-	obsfuscated_job = TRUE
-	antag_job = FALSE
-	display_order = JDO_FLESH_TRADER_JOB
-	min_pq = 65
-	max_pq = null
-	round_contrib_points = 5
-	social_rank = SOCIAL_RANK_SCUM
-	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
-	advclass_cat_rolls = list(CTAG_UNDERBELLY_FLESHTRADER = 3)
-	job_traits = list(TRAIT_KNOWNCRIMINAL)
-	job_subclasses = list(
-		/datum/advclass/fleshtrader/harvester,
-		/datum/advclass/fleshtrader/corruptor,
-	)
-	advjob_examine = TRUE
-	announce_latejoin = FALSE
-	same_job_respawn_delay = 2 MINUTES
-
-/datum/outfit/job/roguetown/underbelly/fleshtrader
-
-/datum/outfit/job/roguetown/underbelly/fleshtrader/pre_equip(mob/living/carbon/human/H)
-	..()  
-	head = /obj/item/clothing/head/roguetown/helmet/blackguard
-	armor = null
-	cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-	belt = /obj/item/storage/belt/rogue/leather/double
-	gloves = /obj/item/clothing/gloves/roguetown/leather/black
-
-// Harvester - the hunter. High medicine, predatory approach.
-/datum/advclass/fleshtrader/harvester
-	name = "Harvester"
-	tutorial = "You's hunt clean. Ya know exactly how to extract lux, and how fast. \
-	Mark's down before he knows what hit 'em, and you's ghost before anybody's askin' questions."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/underbelly/fleshtrader/harvester
-	category_tags = list(CTAG_UNDERBELLY_FLESHTRADER)
-	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
-	subclass_social_rank = SOCIAL_RANK_SCUM
-	subclass_languages = list(/datum/language/thievescant)
-	subclass_stats = list(
-		STATKEY_PER = 2,
-		STATKEY_SPD = 2,
-		STATKEY_INT = 1,
-	)
-	subclass_skills = list(
-		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
-	)
-
-/datum/outfit/job/roguetown/underbelly/fleshtrader/harvester/pre_equip(mob/living/carbon/human/H)
-	..()
-	H.adjust_blindness(-3)
-	head = /obj/item/clothing/head/roguetown/physician
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
-	backr = /obj/item/storage/backpack/rogue/satchel
-	backpack_contents = list(
-		/obj/item/natural/bundle/cloth/bandage/full = 2,
-		/obj/item/roguekey/underbelly/scum = 1,
-		/obj/item/flashlight/flare/torch = 1,
-	)
-
-// Corruptor — the alchemist. Higher alchemy than medicine.
-/datum/advclass/fleshtrader/corruptor
-	name = "Corruptor"
-	tutorial = "Turns out Zizo's Bane makes the harvest a whole lotta easier, and alchemy opens doors \
-	regular medicine don't. Ya not a surgeon, capisce? More like an extractor."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/underbelly/fleshtrader/corruptor
-	category_tags = list(CTAG_UNDERBELLY_FLESHTRADER)
-	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
-	subclass_social_rank = SOCIAL_RANK_SCUM
-	subclass_languages = list(/datum/language/thievescant)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_PER = 2,
-	)
-	subclass_skills = list(
-		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
-	)
-
-/datum/outfit/job/roguetown/underbelly/fleshtrader/corruptor/pre_equip(mob/living/carbon/human/H)
-	..()
-	H.adjust_blindness(-3)
-	head = /obj/item/clothing/head/roguetown/physician
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
-	backr = /obj/item/storage/backpack/rogue/satchel
-	backpack_contents = list(
-		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,
-		/obj/item/natural/bundle/cloth/bandage/full = 1,
-		/obj/item/roguekey/underbelly/scum = 1,
-		/obj/item/flashlight/flare/torch = 1,
-	)
-
-// =====================================================
 // FLINGER
 // 55 PQ, max 2. Businessmen. Special shop access.
 // Fence starts richer. Dealer starts with more goods.
@@ -758,6 +615,7 @@
 	tutorial = "Medicine for coin. Surgery for more coin. You's the guy people come to when the clinic says no. \
 	Pull a crossbow bolt without askin' how it got there, stitch a face that shouldn't be \
 	walkin' around, and charge for it. \
+	When coin runs short, lux pays well. Crack a chest, scrape the heart, sell what ya draw. \
 	Them Pestran relics ya carry ain't exactly legal, though."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper
@@ -887,8 +745,8 @@
 
 // =====================================================
 // EXCIDIUM OPT-IN
-// All non-Flesh-Trader underbelly jobs can choose to be
-// known criminals for a stat buff, like bandits.
+// All underbelly jobs can choose to be known criminals
+// for a stat buff, like bandits.
 // =====================================================
 /proc/scum_select_criminal_record(mob/living/carbon/human/H)
 	if(!H?.client || !H.mind || !H.dna?.species)
@@ -959,9 +817,9 @@
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/fleshtraderlate
-	name = "Flesh Trader"
+	name = "Ripper"
 	icon_state = "arrow"
-	jobspawn_override = list("Flesh Trader")
+	jobspawn_override = list("Ripper")
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/flingerlate
