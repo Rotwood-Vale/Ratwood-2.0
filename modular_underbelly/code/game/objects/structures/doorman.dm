@@ -257,7 +257,11 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 
 /obj/structure/fluff/traveltile/underbelly/pipe/perform_travel(obj/structure/fluff/traveltile/T, mob/living/L)
 	L.recent_travel = world.time
+	var/mob/living/dragged = ismob(L.pulling) ? L.pulling : null
 	L.forceMove(T.loc)
+	if(dragged)
+		dragged.forceMove(T.loc)
+		L.start_pulling(dragged, state = 1, supress_message = TRUE)
 
 /obj/structure/fluff/traveltile/underbelly/pipe/Initialize(mapload)
 	. = ..()
@@ -349,7 +353,11 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 
 /obj/structure/fluff/traveltile/underbelly_pipe_exit/perform_travel(obj/structure/fluff/traveltile/T, mob/living/L)
 	L.recent_travel = world.time
+	var/mob/living/dragged = ismob(L.pulling) ? L.pulling : null
 	L.forceMove(T.loc)
+	if(dragged)
+		dragged.forceMove(T.loc)
+		L.start_pulling(dragged, state = 1, supress_message = TRUE)
 
 /obj/structure/fluff/traveltile/underbelly_pipe_exit/Initialize(mapload)
 	GLOB.traveltiles += src
