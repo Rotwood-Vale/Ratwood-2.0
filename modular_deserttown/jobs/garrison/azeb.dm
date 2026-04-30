@@ -51,6 +51,11 @@
 	id = /obj/item/scomstone/bad/garrison
 	job_bitflag = BITFLAG_GARRISON
 
+/datum/outfit/job/roguetown/azeb/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	if(istype(H.belt, /obj/item/storage/belt/rogue/leather))
+		new /obj/item/signal_flare(H.belt)
+
 /datum/advclass/azeb/ranger
 	name = "Ranger"
 	tutorial = "You are well versed in the ways of handling a bow. \

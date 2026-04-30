@@ -5134,6 +5134,10 @@
 /obj/item/rogueweapon/sword/short/iron/chipped,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desertdeep)
+"bXJ" = (
+/obj/structure/lever/wall/rat_alarm,
+/turf/closed/wall/mineral/rogue/sandstone,
+/area/rogue/indoors/town/desert/warden)
 "bXT" = (
 /obj/item/cushion/desert1,
 /obj/structure/roguemachine/lottery_roguetown{
@@ -44371,6 +44375,10 @@
 	},
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/under/town/basement/desert)
+"rPo" = (
+/obj/item/signal_flare,
+/turf/closed/wall/mineral/rogue/sandstone,
+/area/rogue/indoors/town/desert/warden)
 "rPt" = (
 /turf/open/floor/rogue/citybrick/citybrick1,
 /area/rogue/indoors/inq/basement)
@@ -368609,7 +368617,7 @@ ubn
 ubn
 tud
 tud
-tud
+bXJ
 eoS
 tud
 tud
@@ -492471,7 +492479,7 @@ kFh
 cwN
 els
 cCI
-tud
+rPo
 nUv
 vPu
 vPu
