@@ -1018,7 +1018,7 @@
 		/datum/skill/labor/lumberjacking,
 	)
 	for(var/datum/skill/S as anything in survival_pool)
-		H.adjust_skillrank_up_to(S, rand(SKILL_LEVEL_NOVICE, SKILL_LEVEL_JOURNEYMAN), TRUE)
+		H.adjust_skillrank_up_to(S, rand(SKILL_LEVEL_NOVICE, SKILL_LEVEL_MASTER), TRUE)
 	H.faction |= "bums"
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(proletarius_laugh_tick), H), rand(1, 3) MINUTES, TIMER_STOPPABLE|TIMER_OVERRIDE)
 
