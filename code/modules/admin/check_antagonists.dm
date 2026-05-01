@@ -88,10 +88,10 @@
 	if(!category)
 		return 0
 
-	var/category_key = lowertext("[category]")
+	var/category_key = LOWER_TEXT(category)
 	var/list/alive_minds = list()
 	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(lowertext("[A.roundend_category]") != category_key)
+		if(LOWER_TEXT(A.roundend_category) != category_key)
 			continue
 		if(!A.owner?.current)
 			continue
@@ -106,7 +106,7 @@
 		return ""
 
 	var/display_name = capitalize(category)
-	var/category_key = lowertext("[category]")
+	var/category_key = LOWER_TEXT(category)
 	var/list/category_to_job = list(
 		"bandits" = "Bandit",
 		"wretches" = "Wretch",
