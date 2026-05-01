@@ -850,30 +850,9 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/storage/belt/rogue/leather/cloth
 
 /datum/loadout_item/tri_kazengun_scabbard
-	name = "Kazengun Cerimonial Scabbard"
+	name = "Kazengun Ceremonial Scabbard"
 	path = /obj/item/rogueweapon/scabbard/sword/kazengun/noparry/loadout
 	triumph_cost = 3
-
-/datum/loadout_item/tri_kazengun_scabbard/nobility_check(client/C)
-	var/datum/preferences/P = C.prefs
-	if(!P)
-		return FALSE
-	// Check if user selected Nobility virtue
-	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
-		return TRUE
-	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
-		return TRUE
-	// Check if user has high priority for any noble, courtier, or yeoman job
-	for(var/job_title in GLOB.noble_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.courtier_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.yeoman_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	return FALSE
 
 /datum/loadout_item/tri_shalal_belt
 	name = "Shalal Belt"
@@ -1377,130 +1356,25 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/steward
 	triumph_cost = 3
 
-/datum/loadout_item/tri_princess_dress/nobility_check(client/C)
-	var/datum/preferences/P = C.prefs
-	if(!P)
-		return FALSE
-	// Check if user selected Nobility virtue
-	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
-		return TRUE
-	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
-		return TRUE
-	// Check if user has high priority for any noble, courtier, or yeoman job
-	for(var/job_title in GLOB.noble_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.courtier_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.yeoman_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	return FALSE
-
 /datum/loadout_item/tri_ornate_tunic
 	name = "Ornate Tunic"
 	path = /obj/item/clothing/suit/roguetown/shirt/tunic/silktunic
 	triumph_cost = 3
-
-/datum/loadout_item/tri_princess_dress/nobility_check(client/C)
-	var/datum/preferences/P = C.prefs
-	if(!P)
-		return FALSE
-	// Check if user selected Nobility virtue
-	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
-		return TRUE
-	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
-		return TRUE
-	// Check if user has high priority for any noble, courtier, or yeoman job
-	for(var/job_title in GLOB.noble_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.courtier_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.yeoman_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	return FALSE
 
 /datum/loadout_item/tri_princess_dress
 	name = "Princess Dress"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
 	triumph_cost = 3
 
-/datum/loadout_item/tri_princess_dress/nobility_check(client/C)
-	var/datum/preferences/P = C.prefs
-	if(!P)
-		return FALSE
-	// Check if user selected Nobility virtue
-	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
-		return TRUE
-	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
-		return TRUE
-	// Check if user has high priority for any noble, courtier, or yeoman job
-	for(var/job_title in GLOB.noble_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.courtier_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.yeoman_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	return FALSE
-
 /datum/loadout_item/tri_royal_dress
 	name = "Royal Dress"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/royal
 	triumph_cost = 3
 
-/datum/loadout_item/tri_royal_dress/nobility_check(client/C)
-	var/datum/preferences/P = C.prefs
-	if(!P)
-		return FALSE
-	// Check if user selected Nobility virtue
-	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
-		return TRUE
-	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
-		return TRUE
-	// Check if user has high priority for any noble, courtier, or yeoman job
-	for(var/job_title in GLOB.noble_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.courtier_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.yeoman_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	return FALSE
-
 /datum/loadout_item/tri_royal_sleeves
 	name = "Royal Sleeves"
 	path = /obj/item/clothing/wrists/roguetown/royalsleeves
 	triumph_cost = 3
-
-/datum/loadout_item/tri_royal_sleeves/nobility_check(client/C)
-	var/datum/preferences/P = C.prefs
-	if(!P)
-		return FALSE
-	// Check if user selected Nobility virtue
-	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
-		return TRUE
-	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
-		return TRUE
-	// Check if user has high priority for any noble, courtier, or yeoman job
-	for(var/job_title in GLOB.noble_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.courtier_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.yeoman_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	return FALSE
 
 /datum/loadout_item/tri_lady_cloak
 	name = "Lady's Cloak"
@@ -1510,27 +1384,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/wedding_dress
 	name = "Wedding Silk Dress"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/weddingdress
-
-/datum/loadout_item/tri_lady_cloak/nobility_check(client/C)
-	var/datum/preferences/P = C.prefs
-	if(!P)
-		return FALSE
-	// Check if user selected Nobility virtue
-	if(P.virtue && istype(P.virtue, /datum/virtue/utility/noble))
-		return TRUE
-	if(P.virtuetwo && istype(P.virtuetwo, /datum/virtue/utility/noble))
-		return TRUE
-	// Check if user has high priority for any noble, courtier, or yeoman job
-	for(var/job_title in GLOB.noble_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.courtier_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	for(var/job_title in GLOB.yeoman_positions)
-		if(P.job_preferences[job_title] == JP_HIGH)
-			return TRUE
-	return FALSE
 
 // CLOTHING - HEADWEAR
 /datum/loadout_item/tri_circlet
