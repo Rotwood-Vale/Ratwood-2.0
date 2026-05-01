@@ -32,10 +32,16 @@
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_COMPONENT_ADDED, PROC_REF(block_blood_decal))
 	chambered = new /obj/item/ammo_casing/caseless/bullet/lead(src)
 	reloaded = TRUE
 	gunpowder = TRUE
 	transform = matrix().Scale(0.5, 0.5)
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/proc/block_blood_decal(datum/source, datum/component/C)
+	SIGNAL_HANDLER
+	if(istype(C, /datum/component/decal/blood))
+		qdel(C)
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/quiver/bullet/lead))
@@ -176,7 +182,13 @@
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_COMPONENT_ADDED, PROC_REF(block_blood_decal))
 	transform = matrix().Scale(0.5, 0.5)
+
+/obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot/proc/block_blood_decal(datum/source, datum/component/C)
+	SIGNAL_HANDLER
+	if(istype(C, /datum/component/decal/blood))
+		qdel(C)
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot/update_icon()
 	. = ..()
@@ -288,9 +300,15 @@
 
 /obj/item/gun/ballistic/firearm/abomination/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_COMPONENT_ADDED, PROC_REF(block_blood_decal))
 	if(myrod)
 		qdel(myrod)
 		myrod = null
+
+/obj/item/gun/ballistic/firearm/abomination/proc/block_blood_decal(datum/source, datum/component/C)
+	SIGNAL_HANDLER
+	if(istype(C, /datum/component/decal/blood))
+		qdel(C)
 
 /obj/item/gun/ballistic/firearm/abomination/update_icon()
 	. = ..()
@@ -599,7 +617,13 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 
 /obj/item/gun/ballistic/firearm/cannon/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_COMPONENT_ADDED, PROC_REF(block_blood_decal))
 	gunpowder = TRUE
+
+/obj/item/gun/ballistic/firearm/cannon/proc/block_blood_decal(datum/source, datum/component/C)
+	SIGNAL_HANDLER
+	if(istype(C, /datum/component/decal/blood))
+		qdel(C)
 
 /obj/item/gun/ballistic/firearm/cannon/update_icon()
 	if(QDELETED(src))
