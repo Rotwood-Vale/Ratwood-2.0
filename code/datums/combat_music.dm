@@ -460,6 +460,13 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = "burialgoods - APAB (All Paladins Are Bastards) (https://www.youtube.com/watch?v=CMyvIDLAub8)"
 	musicpath = list('sound/music/cmode/antag/combat_sorcerer.ogg')
 
+/datum/combat_music/klub003
+	name = "SCUM"
+	desc = "Even at your lowest, you must fight. (SCUM - XIX)"
+	shortname = "KLUB003"
+	credits = "XIX - KLUB003"
+	musicpath = list('modular_underbelly/sound/combat_scum.ogg')
+
 /datum/combat_music/squire
 	name = "Squire"
 	desc = ""
@@ -587,10 +594,3 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Czwarteki"
 	credits = " Andrius Klimka & Andrey Kulik - World of Tanks Original Soundtrack: Studzianki "
 	musicpath = list('sound/music/combat_czwarteki.ogg')
-
-/datum/combat_music/klub003
-	name = "KLUB003"
-	desc = "Even at your lowest, you must fight. (KLUB003 - XIX)"
-	shortname = "KLUB003"
-	credits = "XIX - KLUB003"
-	musicpath = list('modular_underbelly/sound/combat_scum.ogg')
