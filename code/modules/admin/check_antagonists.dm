@@ -126,7 +126,7 @@
 			var/cap_slots = category_hard_caps[category_key]
 			if(isnull(cap_slots))
 				cap_slots = max(antag_job.total_positions, 0)
-			display_name = "[display_name] [open_slots] ([cap_slots]) Alive: [alive_count]"
+			display_name = "[display_name] Current Slots(Cap): [open_slots] ([cap_slots]) Alive: [alive_count]"
 
 	return display_name
 
