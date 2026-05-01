@@ -192,6 +192,77 @@
 	dat += "</body></html>"
 	usr << browse(dat.Join(), "window=roundstatus;size=500x500")
 
+/datum/admins/proc/build_important_item_listing()
+	var/list/rows = list()
+	var/list/important_items = GLOB.important_items.Copy()
+
+	if(length(important_items))
+		sortTim(important_items, GLOBAL_PROC_REF(cmp_name_asc))
+		rows += "<b>Existing Important Items</b><br>"
+		rows += "<table cellspacing=5>"
+		rows += "<tr><th>Item</th><th>Status</th><th>FLW</th></tr>"
+		for(var/obj/item/I in important_items)
+			if(QDELETED(I) || !I.is_important)
+				continue
+			rows += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(I)]'>[I.name]</a> ([I.type])</td><td>[important_item_status(I)]</td><td>[important_item_follow_link(I)]</td></tr>"
+		rows += "</table>"
+	else
+		rows += "<b>No existing important items were found.</b><br>"
+
+	if(length(GLOB.important_item_destroyed_log))
+		rows += "<br><b>Destroyed Important Items</b><br>"
+		rows += "<table cellspacing=5>"
+		for(var/entry in GLOB.important_item_destroyed_log)
+			rows += "<tr><td><font color='red'>[entry]</font></td></tr>"
+		rows += "</table>"
+
+	return rows.Join()
+
+/datum/admins/proc/important_item_status(obj/item/I)
+	if(QDELETED(I))
+		return "<font color='red'>(Destroyed)</font>"
+
+	if(ismob(I.loc))
+		var/mob/M = I.loc
+		var/mob_link = "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>"
+		if(M.is_holding(I))
+			return "In hand of [mob_link]"
+		if(isliving(M))
+			var/mob/living/L = M
+			if(I in L.get_equipped_items(TRUE))
+				return "Equipped by [mob_link]"
+		return "In inventory of [mob_link]"
+
+	var/atom/outermost = get_atom_on_turf(I, /mob)
+	if(ismob(outermost))
+		var/mob/M = outermost
+		var/list/containers = list()
+		var/atom/current = I.loc
+		while(current && !ismob(current) && !isturf(current))
+			containers += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(current)]'>[current]</a>"
+			current = current.loc
+		var/container_text = length(containers) ? " (inside [containers.Join(" -> ")])" : ""
+		return "In inventory of <a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[container_text]"
+
+	if(isturf(I.loc))
+		return "On ground at [AREACOORD(I)]"
+
+	if(isnull(I.loc))
+		return "<font color='red'>(No location)</font>"
+
+	return "Inside <a href='?_src_=vars;[HrefToken()];Vars=[REF(I.loc)]'>[I.loc]</a>"
+
+/datum/admins/proc/important_item_follow_link(obj/item/I)
+	if(QDELETED(I) || isnull(I.loc))
+		return "N/A"
+	return "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(I)]'>FLW</a>"
+
+/datum/admins/proc/check_important_items()
+	var/list/dat = list("<html><head><title>Important Items</title></head><body><h1><B>Important Items</B></h1>")
+	dat += build_important_item_listing()
+	dat += "</body></html>"
+	usr << browse(dat.Join(), "window=importantitems;size=600x500")
+
 /datum/admins/proc/check_hunted_targets()
 	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")

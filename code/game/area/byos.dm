@@ -157,9 +157,11 @@
 	name = "Island Coast"
 	icon_state = "beach"
 	warden_area = TRUE
-	ambientsounds = AMB_BEACH
-	ambientnight = AMB_BEACH
-	droning_sound = 'sound/music/area/harbor.ogg'
+	ambientsounds = AMB_ABISLAND
+	ambientnight = AMB_ABISLAND
+	droning_sound = 'sound/music/area/morosewaters.ogg'
+	droning_sound_dusk = 'sound/music/area/morosewaters.ogg'
+	droning_sound_night = 'sound/music/area/peace.ogg'
 	converted_type = /area/rogue/under/lake
 	first_time_text = null
 	deathsight_message = "a brackish shore"

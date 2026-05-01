@@ -31,6 +31,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/returntolobby,
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/check_antagonists,
+	/client/proc/check_important_items,
 	/client/proc/admin_force_next_migrant_wave,
 	/client/proc/cmd_admin_say,
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
@@ -89,6 +90,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/client/proc/check_antagonists,		/*shows all antags*/
+	/client/proc/check_important_items,	/*shows tracked important items*/
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
@@ -491,6 +493,16 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		if(!isobserver(usr) && SSticker.HasRoundStarted())
 			message_admins("[key_name_admin(usr)] checked antagonists.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Antagonists") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/check_important_items()
+	set name = "Check Important Items"
+	set category = "-GameMaster-"
+	if(holder)
+		holder.check_important_items()
+		log_admin("[key_name(usr)] checked important items.")
+		if(!isobserver(usr) && SSticker.HasRoundStarted())
+			message_admins("[key_name_admin(usr)] checked important items.")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Important Items")
 
 /client/proc/set_tod_override()
 	set category = "Debug"

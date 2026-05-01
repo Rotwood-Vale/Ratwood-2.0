@@ -37,6 +37,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	var/stop_automated_movement = 0
 	///Does the mob wander around when idle?
 	var/wander = 1
+	///If TRUE, this mob will not perform idle movement until it has an aggro target (hostile simplemobs only).
+	var/stationary_until_aggro = FALSE
 	///When set to 1 this stops the animal from moving when someone is pulling it.
 	var/stop_automated_movement_when_pulled = 1
 	///Next time we can perform a grid update (throttled to avoid excessive updates)
@@ -337,6 +339,10 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
+	if(stationary_until_aggro && istype(src, /mob/living/simple_animal/hostile))
+		var/mob/living/simple_animal/hostile/H = src
+		if(!H.target)
+			return 0
 	if(!stop_automated_movement && wander && !doing)
 		if(ssaddle)
 			return 0

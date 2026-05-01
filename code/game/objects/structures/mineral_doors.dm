@@ -40,6 +40,8 @@
 	var/unlocksound = 'sound/foley/doors/woodlock.ogg'
 	var/rattlesound = 'sound/foley/doors/lockrattle.ogg'
 	var/masterkey = TRUE //if masterkey can open this regardless
+	// Legacy map compatibility: old map instances preload can_be_picked.
+	var/can_be_picked = TRUE
 	var/kickthresh = 15
 	var/swing_closed = TRUE
 	var/lock_strength = 100
@@ -639,6 +641,9 @@
 /obj/structure/mineral_door/proc/trypicklock(obj/item/I, mob/user)
 	if(door_opened || isSwitchingStates)
 		to_chat(user, "<span class='warning'>This cannot be picked while it is open.</span>")
+		return
+	if(!can_be_picked)
+		to_chat(user, "<span class='warning'>This lock cannot be picked.</span>")
 		return
 	if(!keylock)
 		return
