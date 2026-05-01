@@ -226,7 +226,10 @@
 						/turf/open/floor/rogue/grasspurple,
 						/turf/open/floor/rogue/snowpatchy,
 						/turf/open/floor/rogue/snow,
-						/turf/open/floor/rogue/snowrough,)
+						/turf/open/floor/rogue/snowrough,
+						/turf/open/floor/rogue/cobble,
+						/turf/open/floor/rogue/cobblerock,
+						/turf/open/floor/rogue/cobble/mossy,)
 	neighborlay = "desertgrassedge"
 	spread_chance = 15
 	burn_power = 6
@@ -243,8 +246,12 @@
 	. = ..()
 	src.ChangeTurf(/turf/open/floor/rogue/dirt/desert, flags = CHANGETURF_INHERIT_AIR)
 
+/turf/open/floor/rogue/desert_grass/nospawn
+
 /turf/open/floor/rogue/dirt/desert
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
+	
+/turf/open/floor/rogue/dirt/desert/nospawn
 
 /turf/open/floor/rogue/dirt/road/desert
 	icon = 'modular_deserttown/icons/desertfloor.dmi'

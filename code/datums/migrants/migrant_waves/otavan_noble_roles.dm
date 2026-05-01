@@ -15,7 +15,6 @@
 /datum/advclass/otavan_envoy
 	name = "Émissaire"
 	outfit = /datum/outfit/job/roguetown/otavan/envoy
-	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled		//look at my horse, my horse is amazing
 	traits_applied = list(TRAIT_NOBLE, TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_OTAVAN_ENVOY)
 	subclass_stats = list(
@@ -42,6 +41,14 @@
 		/datum/skill/misc/riding= SKILL_LEVEL_JOURNEYMAN,
 	)
 
+	subclass_virtues = list(
+		/datum/virtue/utility/riding,
+	)
+
+	subclass_languages = list(
+		/datum/language/otavan,
+	)
+
 /datum/outfit/job/roguetown/otavan/envoy/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/circlet
@@ -60,6 +67,8 @@
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
+		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/paper/scroll/writ_of_esteem/otavan = 1,
@@ -67,7 +76,6 @@
 		/obj/item/paper/scroll = 2,
 		)
 	H.cmode_music = 'sound/music/combat_routier.ogg'
-	H.grant_language(/datum/language/otavan)
 
 /datum/migrant_role/otavan/knight
 	name = "Gendarme"
@@ -79,7 +87,6 @@
 	name = "Gendarme"
 	tutorial = "Whether through merit, blood or renown, you became a knight in service of the Otavan court. Now, tasked with escorting the Émissaire and protecting them at all cost, you ride into the Vale."
 	outfit = /datum/outfit/job/roguetown/otavan/knight
-	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled		//look at my horse, my horse is amazing
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_OTAVAN_KNIGHT)
 	subclass_stats = list(
@@ -104,6 +111,14 @@
 		/datum/skill/misc/riding= SKILL_LEVEL_JOURNEYMAN,
 	)
 
+	subclass_virtues = list(
+		/datum/virtue/utility/riding,
+	)
+
+	subclass_languages = list(
+		/datum/language/otavan,
+	)
+
 /datum/outfit/job/roguetown/otavan/knight/pre_equip(mob/living/carbon/human/H)
 	..()
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
@@ -122,12 +137,12 @@
 	r_hand = /obj/item/rogueweapon/spear/otava
 	l_hand = /obj/item/rogueweapon/sword/short/falchion
 	backpack_contents = list(
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		)
 	H.cmode_music = 'sound/music/combat_routier.ogg'
-	H.grant_language(/datum/language/otavan)
 
 /datum/migrant_role/otavan/guard
 	name = "Otavan Arbalétrier"
@@ -164,6 +179,10 @@
 		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 	)
 
+	subclass_languages = list(
+		/datum/language/otavan,
+	)
+
 /datum/outfit/job/roguetown/otavan/guard/pre_equip(mob/living/carbon/human/H)
 	..()
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
@@ -184,6 +203,8 @@
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 	)
 	H.cmode_music = 'sound/music/combat_routier.ogg'
 	H.grant_language(/datum/language/otavan)
@@ -205,7 +226,6 @@
 		STATKEY_PER = 1,
 		STATKEY_CON = 2,
 		STATKEY_WIL = 2,
-		STATKEY_SPD = -2,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,		//everybody was kung-fu fighting. Jman bc you're defending yourself, punk. Roleplay.
@@ -218,6 +238,10 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+	)
+
+	subclass_languages = list(
+		/datum/language/otavan,
 	)
 
 /datum/outfit/job/roguetown/otavan/preacher/pre_equip(mob/living/carbon/human/H)
@@ -242,6 +266,7 @@
 	cloak = /obj/item/clothing/cloak/psydontabard/alt
 	backpack_contents = list(
 		/obj/item/needle = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 		/obj/item/reagent_containers/food/snacks/rogue/meat/salami = 1,
 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/redwine = 1,	//share some of psydon's body and psydon's blood with your crew. Ask for a knife though.
@@ -279,7 +304,15 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/stealing= SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/riding= SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/riding= SKILL_LEVEL_EXPERT,
+	)
+
+	subclass_virtues = list(
+		/datum/virtue/utility/riding,
+	)
+
+	subclass_languages = list(
+		/datum/language/otavan,
 	)
 
 /datum/outfit/job/roguetown/otavan/scribe/pre_equip(mob/living/carbon/human/H)
@@ -290,6 +323,7 @@
 	armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/puritan
 	id = /obj/item/clothing/ring/gold
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
+	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
@@ -300,8 +334,8 @@
 	backpack_contents = list(
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 4,
-		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,		//you are the piggybank and the dude taking notes.
-		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 1,		//you are the piggybank and the dude taking notes.
+		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		)
 	H.cmode_music = 'sound/music/combat_routier.ogg'
 	H.grant_language(/datum/language/otavan)

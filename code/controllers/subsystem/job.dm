@@ -312,6 +312,8 @@ SUBSYSTEM_DEF(job)
 			key = "Underbelly"
 		if(WANDERERS)
 			key = "Wanderers"
+		if(TRIBAL)
+			key = "Tribe"
 		else
 			key = "Wanderers"
 	return key

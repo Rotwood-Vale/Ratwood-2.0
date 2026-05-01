@@ -45,16 +45,11 @@
 /obj/item/clothing/wrists/roguetown/bracers/psythorns
 	name = "psydonic thorns"
 	desc = "Thorns fashioned from pliable yet durable blacksteel - woven and interlinked, fashioned to be wrapped around the wrists."
-	body_parts_covered = ARMS
 	icon_state = "psybarbs"
 	item_state = "psybarbs"
 	armor = ARMOR_PLATE_BSTEEL
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
-	blocksound = PLATEHIT
-	resistance_flags = FIRE_PROOF
 	max_integrity = ARMOR_INT_SIDE_BLACKSTEEL
-	anvilrepair = /datum/skill/craft/armorsmithing
-	sewrepair = FALSE
 	alternate_worn_layer = WRISTS_LAYER
 
 /obj/item/clothing/wrists/roguetown/bracers/psythorns/equipped(mob/user, slot)
@@ -142,7 +137,6 @@
 	slot_flags = ITEM_SLOT_WRISTS
 	icon_state = "wrappings"
 	item_state = "wrappings"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/wrists/roguetown/nocwrappings
@@ -150,7 +144,6 @@
 	slot_flags = ITEM_SLOT_WRISTS
 	icon_state = "nocwrappings"
 	item_state = "nocwrappings"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/wrists/roguetown/allwrappings
@@ -159,7 +152,6 @@
 	slot_flags = ITEM_SLOT_WRISTS
 	icon_state = "nocwrappings" //Greyscale. Accessable in the loadout.
 	item_state = "nocwrappings"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/wrists/roguetown/bracers/cloth
@@ -247,14 +239,8 @@
 	icon_state = "ironsplintarms"
 	item_state = "ironsplintarms"
 	armor = ARMOR_LEATHER_STUDDED //not plate armor, is leather + iron bits
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
-	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_LEATHER
-	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
-	w_class = WEIGHT_CLASS_NORMAL
-	resistance_flags = FIRE_PROOF
-	sewrepair = FALSE
 
 /obj/item/clothing/wrists/roguetown/bracers/iron
 	name = "iron bracers"
@@ -276,6 +262,7 @@
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	smeltresult = null
+
 /obj/item/clothing/wrists/roguetown/gem
 	name = "gem bracelet base"
 	desc = "You shouldn't be seeing this."

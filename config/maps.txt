@@ -25,5 +25,9 @@ map rockhill
 	votable
 endmap
 
+map byos
+	maxplayers 100
+endmap
+
 map deserttown
 endmap

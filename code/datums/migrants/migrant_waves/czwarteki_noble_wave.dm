@@ -8,7 +8,7 @@
 		/datum/migrant_role/czwarteki/lord = 1,
 		/datum/migrant_role/czwarteki/heir = 1,
 		/datum/migrant_role/czwarteki/hussar = 2,
-		/datum/migrant_role/czwarteki/journeyman = 4,
+		/datum/migrant_role/czwarteki/retainer = 4,
 		/datum/migrant_role/czwarteki/servant = 2,
 	)
 	greet_text = "You are a Retinue under a Czwarteki Lord, be it diplomacy, war, or simple passing through the Vale to see or assist an old alliance."
@@ -22,7 +22,7 @@
 		/datum/migrant_role/czwarteki/lord = 1,
 		/datum/migrant_role/czwarteki/heir = 1,
 		/datum/migrant_role/czwarteki/hussar = 2,
-		/datum/migrant_role/czwarteki/journeyman = 3,
+		/datum/migrant_role/czwarteki/retainer = 3,
 		/datum/migrant_role/czwarteki/servant = 2,
 	)
 	greet_text = "You are a Retinue under a Czwarteki Lord, be it diplomacy, war, or simple passing through the Vale to see or assist an old alliance."
@@ -36,7 +36,7 @@
 		/datum/migrant_role/czwarteki/lord = 1,
 		/datum/migrant_role/czwarteki/heir = 1,
 		/datum/migrant_role/czwarteki/hussar = 2,
-		/datum/migrant_role/czwarteki/journeyman = 2,
+		/datum/migrant_role/czwarteki/retainer = 2,
 		/datum/migrant_role/czwarteki/servant = 2,
 	)
 	greet_text = "You are a Retinue under a Czwarteki Lord, be it diplomacy, war, or simple passing through the Vale to see or assist an old alliance."
@@ -50,7 +50,7 @@
 		/datum/migrant_role/czwarteki/lord = 1,
 		/datum/migrant_role/czwarteki/heir = 1,
 		/datum/migrant_role/czwarteki/hussar = 2,
-		/datum/migrant_role/czwarteki/journeyman = 2,
+		/datum/migrant_role/czwarteki/retainer = 2,
 		/datum/migrant_role/czwarteki/servant = 1,
 	)
 	greet_text = "You are a Retinue under a Czwarteki Lord, be it diplomacy, war, or simple passing through the Vale to see or assist an old alliance."
@@ -64,7 +64,7 @@
 		/datum/migrant_role/czwarteki/lord = 1,
 		/datum/migrant_role/czwarteki/heir = 1,
 		/datum/migrant_role/czwarteki/hussar = 2,
-		/datum/migrant_role/czwarteki/journeyman = 2,
+		/datum/migrant_role/czwarteki/retainer = 2,
 		/datum/migrant_role/czwarteki/servant = 1,
 	)
 	greet_text = "You are a Retinue under a Czwarteki Lord, be it diplomacy, war, or simple passing through the Vale to see or assist an old alliance."
@@ -78,7 +78,7 @@
 		/datum/migrant_role/czwarteki/lord = 1,
 		/datum/migrant_role/czwarteki/heir = 1,
 		/datum/migrant_role/czwarteki/hussar = 1,
-		/datum/migrant_role/czwarteki/journeyman = 1,
+		/datum/migrant_role/czwarteki/retainer = 1,
 		/datum/migrant_role/czwarteki/servant = 1,
 	)
 	greet_text = "You are a Retinue under a Czwarteki Lord, be it diplomacy, war, or simple passing through the Vale to see or assist an old alliance."
@@ -92,7 +92,7 @@
 		/datum/migrant_role/czwarteki/lord = 1,
 		/datum/migrant_role/czwarteki/heir = 1,
 		/datum/migrant_role/czwarteki/hussar = 1,
-		/datum/migrant_role/czwarteki/journeyman = 1,
+		/datum/migrant_role/czwarteki/retainer = 1,
 	)
 	greet_text = "You are a Retinue under a Czwarteki Lord, be it diplomacy, war, or simple passing through the Vale to see or assist an old alliance."
 

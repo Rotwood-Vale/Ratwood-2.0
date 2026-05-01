@@ -193,6 +193,7 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .love_mid					{color: #e9a8d1;	font-size: 75%;}
 .love_high					{color: #f05ee1;	font-size: 75%;}
 .love_extreme					{color: #d146f5;	font-size: 75%;}
+.love_ludicrous					{color: #d61a43;	font-size: 75%;}
 
 .patreontalk			{color: #ff7a05;} /* TODO - CHANGE THIS TO THE DESIRED COLOR!!!! */
 </style>"}

@@ -128,6 +128,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		"Sidefolk" = list(), // Side strugglers
 		"Underbelly" = list(), // Criminal faction.
 		"Wanderers" = list(), // Nobodies.
+		"Tribe" = list(), // Nobodies.
 	)
 	for(var/job_name in ready_players_by_job)
 		var/datum/job/J = SSjob.GetJob(job_name)

@@ -1,0 +1,23 @@
+2026-05-01:
+  EvenInDeathIStillServe:
+  - rscadd: Cow and catbells are now attachable to all neckwear items.
+  - rscadd: Cow and catbells are now available in the loadout.
+  IronDragoon:
+  - rscadd: Added ability for bottoms to force themselves onto a top's knot
+  - rscadd: Ability for bottoms to grind a knot in themselves if they are the one
+      forcing it
+  - rscadd: Subtle knot grinding
+  - rscadd: Some gooner local visible messages about people taking loads on their
+      body/face
+  - rscadd: Can now 'clean' a partner who is actively 'dripping' through rimming/cunnilingus
+      actions.
+  - rscadd: Can now consume cum/femcum to gain a small amount of nutrition through
+      oral sex. This should also be implemented in all the other areas I thought of
+      including cleaning mentioned above, as well as cleaning floor stuff
+  - rscadd: More detailed examine text around active cum dripping
+  - rscadd: Baotha round end influence now tracks non-lupians knotted as well as impregnations
+  - refactor: refactored sexcon a little to respect the bottom/top as opposed to just
+      the 'instigator'
+  john-pawson:
+  - bugfix: fixed being able to far travel dead corpses, opening up a slot twice or
+      opening a slot of a role that you shouldn't be able to.

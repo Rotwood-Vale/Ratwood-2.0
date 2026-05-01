@@ -32,4 +32,7 @@
 //Deserttown versions
 #define THREAT_REGION_DESERT_NEAR "Al-Ashur Dunes"
 #define THREAT_REGION_DESERT_DEEP "The Deep Dunes"
+//BYOS versions
+#define THREAT_REGION_JUNGLE "The Dread Jungle"
+#define THREAT_REGION_ISLAND "New Kingsfield outskirts"
 #define LOWPOP_THRESHOLD 30 // When do we give highpop tick?

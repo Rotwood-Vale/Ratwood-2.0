@@ -17571,7 +17571,9 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains)
 "dGW" = (
-/obj/structure/chair/bench/couch,
+/obj/structure/chair/bench/couch{
+	layer = 2
+	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/shop)
 "dGX" = (
@@ -107147,7 +107149,9 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bog/south)
 "wcz" = (
-/obj/structure/chair/bench/couch/r,
+/obj/structure/chair/bench/couch/r{
+	layer = 2
+	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/shop)
 "wcF" = (

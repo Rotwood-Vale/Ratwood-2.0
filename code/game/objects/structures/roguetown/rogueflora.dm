@@ -1046,7 +1046,7 @@
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	max_integrity = 100
 	debris = list(/obj/item/natural/fibers = 2, /obj/item/grown/log/tree/stick = 1, /obj/item/grown/log/tree/small = 1)
-	static_debris = list(/obj/item/grown/log/tree = 1)
+	static_debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/flora/roguegrass/bush/jungle/large/Initialize(mapload)
 	. = ..()

@@ -1,0 +1,4 @@
+author: "Lir"
+delete-after: True
+changes:
+  - bugfix: "Fixed a small mapping oversight"

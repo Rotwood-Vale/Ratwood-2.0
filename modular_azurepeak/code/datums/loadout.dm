@@ -1761,6 +1761,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/head/roguetown/roguehood/hierophant
 	triumph_cost = 2
 
+/datum/loadout_item/tri_armorhood_hood
+	name = "Studded Leather Hood"
+	path = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
+	triumph_cost = 2
+
 /datum/loadout_item/tri_pontifex_hood
 	name = "Pontifex Hood"
 	path = /obj/item/clothing/head/roguetown/roguehood/pontifex
@@ -2030,6 +2035,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Catbell Collar"
 	path = /obj/item/clothing/neck/roguetown/collar/catbell
 
+/datum/loadout_item/catbell
+	name = "Catbell"
+	path = /obj/item/catbell
+
+/datum/loadout_item/cowbell
+	name = "Cowbell"
+	path = /obj/item/catbell/cow
+
 /datum/loadout_item/rope_leash
 	name = "Rope Leash"
 	path = /obj/item/leash
@@ -2234,6 +2247,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/rogue/instrument/bagpipe
 	triumph_cost = 1
 
+/datum/loadout_item/banjo
+	name = "Banjo"
+	path = /obj/item/rogue/instrument/banjo
+	triumph_cost = 1
+
 /datum/loadout_item/drum
 	name = "Drum"
 	path = /obj/item/rogue/instrument/drum
@@ -2247,6 +2265,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/guitar
 	name = "Guitar"
 	path = /obj/item/rogue/instrument/guitar
+	triumph_cost = 1
+
+/datum/loadout_item/harmonica
+	name = "Harmonica"
+	path = /obj/item/rogue/instrument/harmonica
 	triumph_cost = 1
 
 /datum/loadout_item/harp

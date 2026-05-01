@@ -161,7 +161,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|VITALS
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	sewrepair = TRUE
 
 /obj/item/clothing/suit/roguetown/shirt/robe/bisht/grey
 	color = "#989898"
@@ -739,6 +738,7 @@
 	desc = "Sturdy boots stitched together from cured leather. Stylish, firm, and sport a satisfying 'squeek' with each step."
 	icon_state = "shalal"//change when I get around to it
 	item_state = "shalal"
+	color = "#d4c7bf"
 	armor = ARMOR_LEATHER_GOOD
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)	//Same as gloves
 	max_integrity = 100			//Half that of iron boots

@@ -702,6 +702,19 @@
 	icon_state = "brownkey"
 	lockid = "locker6"
 
+//BYOS keys
+/obj/item/roguekey/tribal
+	name = "tribal key"
+	desc = "A ancient, rusty key, well-worn but well-preserved."
+	icon_state = "rustkey"
+	lockid = "tribal"
+
+/obj/item/roguekey/tribalchief
+	name = "chieftain's key"
+	desc = "A ancient, rusty key, well-worn but well-preserved. Fancier than the others"
+	icon_state = "bosskey"
+	lockid = "tribalchief"
+
 //custom key
 /obj/item/roguekey/custom
 	name = "custom key"

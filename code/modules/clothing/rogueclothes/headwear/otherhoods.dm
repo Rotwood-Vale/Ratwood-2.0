@@ -13,7 +13,6 @@
 	armor = ARMOR_CLOTHING
 	prevent_crits = list(BCLASS_TWIST)
 	anvilrepair = null
-	sewrepair = TRUE
 	blocksound = SOFTHIT
 	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/hide
@@ -39,7 +38,6 @@
 	adjustable = CANT_CADJUST
 	toggle_icon_state = FALSE
 	max_integrity = 100
-	sewrepair = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
@@ -51,7 +49,6 @@
 	item_state = "nochood"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -64,7 +61,6 @@
 	item_state = "necrahood"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -81,7 +77,6 @@
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEEARS|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
 	dynamic_hair_suffix = ""
-	sewrepair = TRUE
 	mask_override = TRUE
 	nudist_approved = TRUE
 	cold_protection = HEAD
@@ -99,7 +94,6 @@
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
-	sewrepair = TRUE
 	mask_override = TRUE
 	nudist_approved = TRUE
 	cold_protection = HEAD
@@ -113,7 +107,6 @@
 	body_parts_covered = NECK
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
-	sewrepair = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
@@ -124,7 +117,6 @@
 	item_state = "menacing"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	color = "#999999"
 	//dropshrink = 0.75
@@ -146,7 +138,6 @@
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"
 	dynamic_hair_suffix = "+generic"
-	sewrepair = TRUE
 	flags_inv = HIDEEARS
 	detail_color = CLOTHING_WHITE
 	color = CLOTHING_AZURE

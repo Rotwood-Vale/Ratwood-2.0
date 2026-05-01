@@ -984,8 +984,8 @@
 	max_integrity = 155
 
 /obj/item/rogueweapon/greatsword
-	force = 12
-	force_wielded = 30
+	force = 14
+	force_wielded = 35
 	possible_item_intents = list(/datum/intent/sword/chop,/datum/intent/sword/strike) //bash is for nonlethal takedowns, only targets limbs
 	// Design Intent: I have a big fucking sword and I want to rend people in half.
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/zwei, /datum/intent/sword/strike/bad)
@@ -1066,8 +1066,8 @@
 	smelt_bar_num = 3
 	max_blade_int = 220
 	wdefense = 4
-	force = 14
-	force_wielded = 35
+	force = 12
+	force_wielded = 30
 
 /obj/item/rogueweapon/greatsword/grenz
 	name = "steel zweihander"
@@ -1086,6 +1086,8 @@
 	max_blade_int = 200
 	max_integrity = 180
 	wdefense = 6
+	force = 14
+	force_wielded = 35
 
 /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox
 	name = "Censure"

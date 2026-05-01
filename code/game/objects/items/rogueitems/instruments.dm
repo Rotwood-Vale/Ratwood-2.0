@@ -791,10 +791,9 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 /obj/item/rogue/instrument/bagpipe
 	name = "bagpipe"
 	desc = "A commonly used woodwind instrument using enclosed reeds fed from a constant reservoir of air in the form of a bag."
-	dropshrink = 0.6
-	grid_width = 32
+	grid_width = 64
 	grid_height = 32
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "bagpipe"
 	song_list = list("Dainty Man" = 'sound/music/instruments/bagpipe (1).ogg',
 	"Harpy in the Morning" = 'sound/music/instruments/bagpipe (2).ogg',
@@ -803,6 +802,36 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"On the Sea Shore" = 'sound/music/instruments/bagpipe (5).ogg',
 	"Soldier's Rest" = 'sound/music/instruments/bagpipe (6).ogg',
 	"Otavan Madame" = 'sound/music/instruments/bagpipe (7).ogg')
+
+/obj/item/rogue/instrument/banjo
+	name = "banjo"
+	desc = "A stringed instrument with a thin membrane stretched over a circular-bodied frame, typically played by plucking or strumming. It has a certain twangy sound commonly heard in folk music."
+	grid_width = 64
+	grid_height = 32
+	w_class = WEIGHT_CLASS_NORMAL
+	icon_state = "banjo"
+	song_list = list("Bog Man's Jig" = 'sound/music/instruments/banjo (1).ogg',
+	"Pockets Full o' Mammon" = 'sound/music/instruments/banjo (2).ogg',
+	"Kickin' the Muck Off" = 'sound/music/instruments/banjo (3).ogg',
+	"Soggy Shoes n' Bilgewater Boots" = 'sound/music/instruments/banjo (4).ogg',
+	"Nothin' but Fog" = 'sound/music/instruments/banjo (5).ogg',
+	"The Tipsy Toad" = 'sound/music/instruments/banjo (6).ogg',
+	"Tangled in th' Reeds" = 'sound/music/instruments/banjo (7).ogg')
+
+/obj/item/rogue/instrument/harmonica
+	name = "harmonica"
+	desc = "A small, rectangular wind instrument played by blowing air through reeds."
+	grid_width = 32
+	grid_height = 32
+	w_class = WEIGHT_CLASS_SMALL
+	icon_state = "harmonica"
+	song_list = list("Deep in the Peat" = 'sound/music/instruments/harmonica (1).ogg',
+	"Militia Man's Woes" = 'sound/music/instruments/harmonica (2).ogg',
+	"My Chilly Bones" = 'sound/music/instruments/harmonica (3).ogg',
+	"Lonesome by the Campfire" = 'sound/music/instruments/harmonica (4).ogg',
+	"Herding in the Heat" = 'sound/music/instruments/harmonica (5).ogg',
+	"Soaked to the Bone" = 'sound/music/instruments/harmonica (6).ogg',
+	"To Our Friends Felled" = 'sound/music/instruments/harmonica (7).ogg')
 
 /obj/item/rogue/instrument/jawharp
 	name = "jaw harp"
