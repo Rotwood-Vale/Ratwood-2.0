@@ -351,43 +351,151 @@
 	desc = "An iron sphere the size of a fist. Or a kobold's head, if you really want to go there."
 	projectile_type = /obj/projectile/bullet/firearm/lead
 	caliber = "cannonball"
-	icon_state = "grapeshot"
+	icon = 'modular_underbelly/sprites/cannonballs.dmi'
+	icon_state = "ball"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon
+GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
+	/datum/species/kobold,
+	/datum/species/goblin,
+	/datum/species/goblinp,
+	/datum/species/dwarf,
+	/datum/species/anthromorphsmall,
+)))
+
+/obj/effect/cannonshot
+	name = "cannonball"
+	desc = "Get out of the way."
+	icon = 'modular_underbelly/sprites/cannonballs.dmi'
+	icon_state = "ball_VFX"
+	anchored = FALSE
+	density = FALSE
+	move_resist = MOVE_FORCE_NORMAL
+	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
+	var/mob/living/firer
+
+/obj/effect/cannonshot/Initialize(mapload, mob/living/source, travel_dir)
+	. = ..()
+	firer = source
+	switch(travel_dir)
+		if(WEST)
+			transform = matrix(-1, 0, 0, 0, 1, 0)
+		if(NORTH)
+			transform = turn(matrix(), -90)
+		if(SOUTH)
+			transform = turn(matrix(), 90)
+
+/obj/effect/cannonshot/proc/detonate()
+	var/turf/T = get_turf(src)
+	if(T && firer)
+		new /obj/effect/temp_visual/explosion(T)
+		for(var/turf/blast_turf in range(1, T))
+			new /obj/effect/temp_visual/fireball(blast_turf)
+		for(var/mob/living/L in range(1, T))
+			if(L == firer)
+				continue
+			if(!L.mind && !L.client)
+				L.visible_message(span_danger("[L] is torn apart by the blast!"))
+				L.gib()
+				continue
+			for(var/zone in list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+				L.apply_damage(8, BRUTE, zone)
+			L.Knockdown(60)
+			shake_camera(L, 5, 4)
+			var/throw_dir = get_dir(T, L) || firer.dir
+			L.safe_throw_at(get_edge_target_turf(T, throw_dir), 4, 1, firer, force = MOVE_FORCE_EXTREMELY_STRONG)
+	qdel(src)
+
+/obj/effect/cannonshot/Bump(atom/A)
+	if(A && !isturf(A) && !ismob(A))
+		detonate()
+		return
+	..()
+
+/obj/item/gun/ballistic/firearm/cannon
 	name = "hand cannon"
 	desc = "A stubby barrel of black iron, which could, within theory shoot kobolds. \
 	A relic from a foundry of a very creative dwarf. Loading it is a chore. This could probably blow something up real good."
 	icon = 'modular_underbelly/sprites/scumguns.dmi'
-	icon_state = "cannon_alt4"
+	icon_state = "cannon"
 	item_state = "cannon"
-	lefthand_file = 'modular_underbelly/sprites/scumguns.dmi'
-	righthand_file = 'modular_underbelly/sprites/scumguns.dmi'
 	force = 24
 	spread = 0
 	w_class = WEIGHT_CLASS_BULKY
 	wlength = WLENGTH_SHORT
+	walking_stick = FALSE
+	bigboy = FALSE
+	gripsprite = FALSE
+	possible_item_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, /datum/intent/mace/strike/wood)
+	gripped_intents = null
 	slot_flags = ITEM_SLOT_BACK
 	cartridge_wording = "cannonball"
 	load_time = 80
 	minstr = 13
+	var/mob/living/loaded_passenger
 
-/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon/Initialize(mapload)
-	. = ..()
-	transform = matrix().Scale(0.5, 0.5)
-
-/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon/attackby(obj/item/A, mob/user, params)
-	if(istype(A, /obj/item/ammo_casing) && !istype(A, /obj/item/ammo_casing/caseless/bullet/cannonball))
-		to_chat(user, span_warning("Only a cannonball fits down this barrel."))
+/obj/item/gun/ballistic/firearm/cannon/attackby(obj/item/A, mob/user, params)
+	if(istype(A, /obj/item/ammo_casing))
+		if(!istype(A, /obj/item/ammo_casing/caseless/bullet/cannonball))
+			to_chat(user, span_warning("Only a cannonball fits down this barrel."))
+			return
+		if(chambered)
+			to_chat(user, span_warning("The barrel is already loaded!"))
+			return
+		playsound(src, 'modular_helmsguard/sound/arquebus/insert.ogg', 100)
+		user.visible_message(span_notice("[user] forces a cannonball down the barrel of [src]."))
+		if(!user.transferItemToLoc(A, src))
+			return
+		chambered = A
+		gunpowder = TRUE
+		reloaded = TRUE
+		return
+	if(istype(A, /obj/item/powderflask))
+		to_chat(user, span_warning("The cannonball is its own charge - just shove it down."))
+		return
+	if(istype(A, /obj/item/ramrod))
+		to_chat(user, span_warning("The barrel is too wide for a ramrod."))
 		return
 	return ..()
 
-/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon/can_shoot()
+/obj/item/gun/ballistic/firearm/cannon/Initialize(mapload)
+	. = ..()
+	gunpowder = TRUE
+
+/obj/item/gun/ballistic/firearm/cannon/update_icon()
+	if(QDELETED(src))
+		return
+	cut_overlays()
+	icon_state = initial(icon_state)
+
+/obj/item/gun/ballistic/firearm/cannon/getmoboverlay(tag, prop, behind = FALSE, mirrored = FALSE)
+	var/static/list/cannon_onmob = list()
+	var/used_index = "cannon"
+	var/key = "[tag][behind][mirrored][used_index]"
+	var/icon/onmob = cannon_onmob[key]
+	if(!onmob || force_reupdate_inhand)
+		if(force_reupdate_inhand)
+			has_behind_state = null
+		onmob = fcopy_rsc(generateonmob(tag, prop, behind, mirrored, used_index))
+		cannon_onmob[key] = onmob
+	return onmob
+
+/obj/item/gun/ballistic/firearm/cannon/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.7,"sx" = -8,"sy" = -6,"nx" = 5,"ny" = -2,"wx" = -10,"wy" = -3,"ex" = 7,"ey" = -4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -13,"sturn" = -14,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.7,"sx" = -8,"sy" = -6,"nx" = 5,"ny" = -2,"wx" = -7,"wy" = -4,"ex" = 7,"ey" = -4,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0,"nturn" = -13,"sturn" = -14,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+
+/obj/item/gun/ballistic/firearm/cannon/can_shoot()
 	if(!chambered || !reloaded)
 		return FALSE
 	return TRUE
 
-/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/firearm/cannon/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(!user)
 		return
 	if(user.STASTR < minstr)
@@ -397,72 +505,139 @@
 		user.Knockdown(40)
 		gunpowder = FALSE
 		reloaded = FALSE
-		if(chambered)
+		if(loaded_passenger)
+			eject_passenger()
+		else if(chambered)
 			qdel(chambered)
 			chambered = null
 		return
-	var/turf/impact = get_step(user, user.dir)
-	if(!impact)
+	user.visible_message(span_warning("[user] braces [src] - the fuse hisses!"), span_warning("I touch the fuse to [src]..."))
+	playsound(user, 'modular_helmsguard/sound/arquebus/insert.ogg', 60, TRUE)
+	var/turf/origin = get_step(user, user.dir)
+	if(!origin)
+		return
+	var/fire_dir = user.dir
+	var/turf/edge = get_edge_target_turf(user, fire_dir)
+	if(!do_after(user, 5, src))
 		return
 	playsound(user, 'modular_underbelly/sound/gun/cannon_fire.ogg', 100, TRUE, extrarange = 14)
 	show_sensory_effect(user, 7, "gunfire", user.dir)
+	show_sensory_effect(user, 7, "gunfire", fire_dir)
 	shake_camera(user, 4, 3)
 	user.visible_message(span_danger("[user] fires [src] - the air ITSELF cracks!"), span_danger("I fire [src]!"))
-	cannon_blast(user, impact)
-	user.Stun(rand(30, 50))
+	user.adjustStaminaLoss(40)
+	if(loaded_passenger)
+		launch_passenger(user, edge)
+	else
+		launch_shot(user, origin, edge, fire_dir)
 	gunpowder = FALSE
 	reloaded = FALSE
 	if(chambered)
 		qdel(chambered)
 		chambered = null
 
-/obj/item/gun/ballistic/firearm/arquebus_pistol/cannon/proc/cannon_blast(mob/living/firer, turf/epicenter)
-	new /obj/effect/temp_visual/explosion(epicenter)
-	var/list/turf/blast_line = list(epicenter)
-	var/perp_dir = turn(firer.dir, 90)
-	var/turf/left_t = get_step(epicenter, perp_dir)
-	var/turf/right_t = get_step(epicenter, turn(perp_dir, 180))
-	if(left_t)
-		blast_line += left_t
-	if(right_t)
-		blast_line += right_t
-	for(var/turf/T in blast_line)
-		new /obj/effect/temp_visual/fireball(T)
-		for(var/obj/structure/S in T)
-			S.ex_act(EXPLODE_DEVASTATE, null, epicenter, 3, 0, 0, 0)
-		for(var/obj/machinery/M in T)
-			M.ex_act(EXPLODE_DEVASTATE, null, epicenter, 3, 0, 0, 0)
-	for(var/turf/T in range(1, epicenter))
-		if(T in blast_line)
-			continue
-		if(prob(60))
-			new /obj/effect/temp_visual/fireball(T)
-	for(var/mob/living/L in range(1, epicenter))
-		if(L == firer)
-			continue
-		if(!L.mind && !L.client)
-			L.visible_message(span_danger("[L] is torn apart by the blast!"))
-			L.gib()
-			continue
-		for(var/zone in list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-			L.apply_damage(18, BRUTE, zone)
-		L.Knockdown(60)
-		shake_camera(L, 5, 4)
-		var/throw_dir = get_dir(epicenter, L)
-		if(!throw_dir)
-			throw_dir = firer.dir
-		var/turf/throw_target = get_edge_target_turf(epicenter, throw_dir)
-		L.safe_throw_at(throw_target, 4, 1, firer, force = MOVE_FORCE_EXTREMELY_STRONG)
-	for(var/obj/O in range(1, epicenter))
-		if(O.anchored || O == firer)
-			continue
-		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
-			continue
-		var/throw_dir = get_dir(epicenter, O)
-		if(!throw_dir)
-			continue
-		var/turf/throw_target = get_edge_target_turf(epicenter, throw_dir)
-		O.safe_throw_at(throw_target, 3, 1, firer)
+/obj/item/gun/ballistic/firearm/cannon/proc/launch_shot(mob/living/firer, turf/origin, turf/edge, fire_dir)
+	var/obj/effect/cannonshot/shot = new(origin, firer, fire_dir)
+	shot.throw_at(edge, 30, 2, firer, FALSE, callback = CALLBACK(shot, TYPE_PROC_REF(/obj/effect/cannonshot, detonate)))
+
+/obj/item/gun/ballistic/firearm/cannon/proc/launch_passenger(mob/living/firer, turf/edge)
+	var/mob/living/M = loaded_passenger
+	loaded_passenger = null
+	M.forceMove(get_step(firer, firer.dir) || get_turf(firer))
+	M.visible_message(span_danger("[M] is launched out of [src]!"))
+	M.safe_throw_at(edge, 12, 2, firer, force = MOVE_FORCE_EXTREMELY_STRONG)
+
+/obj/item/gun/ballistic/firearm/cannon/proc/eject_passenger()
+	if(!loaded_passenger)
+		return
+	loaded_passenger.forceMove(get_turf(src))
+	loaded_passenger = null
+
+/obj/item/gun/ballistic/firearm/cannon/attack(mob/living/M, mob/living/user)
+	if(try_load_passenger(M, user))
+		return TRUE
+	return ..()
+
+/obj/item/gun/ballistic/firearm/cannon/afterattack(atom/target, mob/living/user, flag, params)
+	if(ishuman(target) && !chambered && !loaded_passenger)
+		if(try_load_passenger(target, user))
+			return
+	return ..()
+
+/obj/item/gun/ballistic/firearm/cannon/proc/try_load_passenger(mob/living/M, mob/living/user)
+	if(!ishuman(M) || M == user || !user.Adjacent(M))
+		return FALSE
+	if(loaded_passenger || chambered)
+		return FALSE
+	var/mob/living/carbon/human/H = M
+	if(!is_type_in_typecache(H.dna?.species, GLOB.cannon_loadable_species))
+		return FALSE
+	load_passenger(H, user)
+	return TRUE
+
+/obj/item/gun/ballistic/firearm/cannon/proc/load_passenger(mob/living/carbon/human/H, mob/living/user)
+	user.visible_message(span_danger("[user] starts shoving [H] head-first into [src]!"), span_danger("I start cramming [H] down the barrel of [src]..."))
+	playsound(src, 'modular_helmsguard/sound/arquebus/insert.ogg', 80, TRUE)
+	if(!do_after(user, 30, H))
+		return
+	if(loaded_passenger || chambered || !H.Adjacent(user))
+		return
+	H.forceMove(src)
+	loaded_passenger = H
+	gunpowder = TRUE
+	reloaded = TRUE
+	user.visible_message(span_danger("[user] crams [H] into [src]!"))
+
+/obj/item/gun/ballistic/firearm/cannon/MouseDrop_T(mob/living/dropping, mob/living/user)
+	if(!istype(dropping) || !istype(user))
+		return
+	if(loaded_passenger || chambered)
+		to_chat(user, span_warning("[src] is already loaded."))
+		return
+	if(!Adjacent(user) || !dropping.Adjacent(user))
+		return
+	if(!ishuman(dropping))
+		to_chat(user, span_warning("[dropping] won't fit."))
+		return
+	var/mob/living/carbon/human/H = dropping
+	if(!is_type_in_typecache(H.dna?.species, GLOB.cannon_loadable_species))
+		to_chat(user, span_warning("[dropping] is too big to stuff down the barrel."))
+		return
+	user.visible_message(span_danger("[user] starts shoving [dropping] head-first into [src]!"), span_danger("I start cramming [dropping] down the barrel of [src]..."))
+	playsound(src, 'modular_helmsguard/sound/arquebus/insert.ogg', 80, TRUE)
+	if(!do_after(user, 30, dropping))
+		return
+	if(loaded_passenger || chambered || !dropping.Adjacent(user))
+		return
+	dropping.forceMove(src)
+	loaded_passenger = dropping
+	gunpowder = TRUE
+	reloaded = TRUE
+	user.visible_message(span_danger("[user] crams [dropping] into [src]!"))
+
+/obj/item/gun/ballistic/firearm/cannon/can_shoot()
+	if(loaded_passenger)
+		return TRUE
+	if(!chambered || !reloaded)
+		return FALSE
+	return TRUE
+
+/obj/item/gun/ballistic/firearm/cannon/attack_hand(mob/user)
+	if(loaded_passenger && loc != user)
+		user.visible_message(span_notice("[user] hauls [loaded_passenger] back out of [src]."))
+		eject_passenger()
+		return
+	return ..()
+
+/obj/item/gun/ballistic/firearm/cannon/Destroy()
+	if(loaded_passenger)
+		eject_passenger()
+	return ..()
+
+/obj/item/gun/ballistic/firearm/cannon/handle_atom_del(atom/A)
+	if(A == loaded_passenger)
+		loaded_passenger = null
+	return ..()
 
 // =====================================================
 // DEVASTATOR - heavy double-shot blunderbuss

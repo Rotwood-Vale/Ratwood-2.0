@@ -263,7 +263,7 @@
 	var/list/scum_guns = list(
 		list("The Gut Spillah",       "A Scum's favorite weapon. The backbone of a deal gone wrong. Modified and fabricated by my mates in Kingsfield.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,      1, 750,  FALSE, "Scum"),
 		list("The Venator",  "If you've got a message to send, this is the ticket. A bolt racked rifle capable of shooting thrice before needing a reload.",  /obj/item/gun/ballistic/firearm/flintgonne/venator,               1, 1100, FALSE, "Scum"),
-		list("Hand Cannon",  "Heavy as sin and twice as loud. Plant your feet, point it at trouble, watch trouble disappear. Only the strong handle this one.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/cannon,           1, 1150, FALSE, "Scum"),
+		list("Hand Cannon",  "Heavy as sin and twice as loud. Plant your feet, point it at trouble, watch trouble disappear. Only the strong handle this one.",  /obj/item/gun/ballistic/firearm/cannon,           1, 1150, FALSE, "Scum"),
 	)
 	var/list/excl_master = list(
 		list("Tipped Hat",         "Nobody's seeing that face. Nobody's knowing that name.",  /obj/item/clothing/head/roguetown/chaperon/flinger,            1, 120, FALSE, "Flinger"),
