@@ -15,9 +15,9 @@
 
 /datum/round_event/migrant_wave/bandits/start()
 	var/datum/job/bandit_job = SSjob.GetJob("Bandit")
-	bandit_job.total_positions = min(bandit_job.total_positions + 5, 10)
-	bandit_job.spawn_positions = min(bandit_job.spawn_positions + 5, 10)
-	if(bandit_job.total_positions < 6) // Not at max capacity, increasing goal.
+	bandit_job.total_positions = min(bandit_job.total_positions + 3, 8)
+	bandit_job.spawn_positions = min(bandit_job.spawn_positions + 3, 8)
+	if(bandit_job.total_positions < 8) // Not at max capacity, increasing goal.
 		SSmapping.retainer.bandit_goal += 3 * rand(200, 400)
 		SSrole_class_handler.bandits_in_round = TRUE
 		for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)

@@ -117,15 +117,14 @@
 		return
 
 	var/player_count = length(GLOB.joined_player_list)
-	var/slots = 5
+	var/slots = 3
 
-	//Add 1 slot for every 12 players over 30.
-	if(player_count > 42)
-		var/extra = floor((player_count - 42) / 12)
-		slots += extra
-
-	//5 slots minimum, 7 maximum.
-	slots = min(slots, 9)
+	if(player_count > 100)
+		if(player_count <= 110)
+			slots = 4
+		else
+			// 111-120: 5 slots, then +1 per 10 players, capped at 8.
+			slots = min(8, 5 + floor((player_count - 111) / 10))
 
 	bandit_job.total_positions = slots
 	bandit_job.spawn_positions = slots

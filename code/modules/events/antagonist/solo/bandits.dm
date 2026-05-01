@@ -12,7 +12,7 @@
 
 	restricted_roles = DEFAULT_ANTAG_BLACKLISTED_ROLES
 	base_antags = 5
-	maximum_antags = 10
+	maximum_antags = 8
 
 	earliest_start = 0 SECONDS
 
@@ -26,8 +26,8 @@
 
 /datum/round_event/antagonist/solo/bandits/start()
 	var/datum/job/bandit_job = SSjob.GetJob("Bandit")
-	bandit_job.total_positions = length(setup_minds)
-	bandit_job.spawn_positions = length(setup_minds)
+	bandit_job.total_positions = min(length(setup_minds), 8)
+	bandit_job.spawn_positions = min(length(setup_minds), 8)
 	SSmapping.retainer.bandit_goal = rand(200,400) + (length(setup_minds) * rand(200,400))
 	for(var/datum/mind/antag_mind as anything in setup_minds)
 		var/datum/job/J = SSjob.GetJob(antag_mind.current?.job)

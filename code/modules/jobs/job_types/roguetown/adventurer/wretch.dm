@@ -102,15 +102,14 @@
 		return
 
 	var/player_count = length(GLOB.joined_player_list)
-	var/slots = 5
+	var/slots = 3
 
-	//Add 1 slot for every 10 players over 30. Less than 40 players, 5 slots. 40 or more players, 6 slots. 50 or more players, 7 slots - etc.
-	if(player_count > 40)
-		var/extra = floor((player_count - 40) / 10)
-		slots += extra
-
-	//5 slots minimum, 10 maximum.
-	slots = min(slots, 10)
+	if(player_count > 100)
+		if(player_count <= 110)
+			slots = 4
+		else
+			// 111-120: 5 slots, then +1 per 10 players, capped at 10.
+			slots = min(10, 5 + floor((player_count - 111) / 10))
 
 	wretch_job.total_positions = slots
 	wretch_job.spawn_positions = slots
