@@ -84,6 +84,52 @@
 /datum/team/proc/is_gamemode_hero()
 	return FALSE
 
+/datum/admins/proc/get_alive_antag_count_for_category(category)
+	if(!category)
+		return 0
+
+	var/category_key = lowertext("[category]")
+	var/list/alive_minds = list()
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(lowertext("[A.roundend_category]") != category_key)
+			continue
+		if(!A.owner?.current)
+			continue
+		if(A.owner.current.stat == DEAD)
+			continue
+		alive_minds[A.owner] = TRUE
+
+	return length(alive_minds)
+
+/datum/admins/proc/get_antag_category_display_name(category)
+	if(!category)
+		return ""
+
+	var/display_name = capitalize(category)
+	var/category_key = lowertext("[category]")
+	var/list/category_to_job = list(
+		"bandits" = "Bandit",
+		"wretches" = "Wretch",
+		"gnolls" = "Gnoll",
+		"assassins" = "Assassin",
+	)
+	var/list/category_hard_caps = list(
+		"bandits" = 8,
+		"wretches" = 10,
+	)
+
+	if(category_key in category_to_job)
+		var/datum/job/antag_job = SSjob.GetJob(category_to_job[category_key])
+		if(antag_job)
+			var/open_slots = max(antag_job.total_positions - antag_job.current_positions, 0)
+			var/alive_count = get_alive_antag_count_for_category(category)
+			var/cap_slots = category_hard_caps[category_key]
+			if(isnull(cap_slots))
+				cap_slots = max(antag_job.total_positions, 0)
+			display_name = "[display_name] [open_slots] ([cap_slots]) Alive: [alive_count]"
+
+	return display_name
+
 /datum/admins/proc/build_antag_listing()
 	var/list/sections = list()
 	var/list/priority_sections = list()
@@ -117,7 +163,7 @@
 			next_antag = all_antagonists[i+1]
 		if(!current_category)
 			current_category = current_antag.roundend_category
-			current_section += "<b>[capitalize(current_category)]</b><br>"
+			current_section += "<b>[get_antag_category_display_name(current_category)]</b><br>"
 			current_section += "<table cellspacing=5>"
 		current_section += current_antag.antag_listing_entry() // Name - (Traitor) - FLW | PM | TP
 
