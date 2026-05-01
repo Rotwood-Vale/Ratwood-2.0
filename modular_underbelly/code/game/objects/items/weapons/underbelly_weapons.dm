@@ -2,7 +2,7 @@
 	UNDERBELLY EXCLUSIVE WEAPONS
 	Four weapons unique to the Criminal Underbelly. Not sold anywhere else.
 	Gut Spiller - compact close-range firearm, the Gutter King's signature.
-	Venator      - medium-range reliable sidearm for the well-funded Scum.
+	Abomination  - double-shot volleygun with mordhau grip and axe slot.
 	Devastator   - heavy long-arm, devastating but ponderous.
 	Defacer      - spiked steel knuckles, hits harder but breaks faster.
 */
@@ -254,97 +254,238 @@
 	return ..()
 
 // =====================================================
-// VENATOR - three-shot bolt-action rifle
-// purchase_sound_key = "mediumgun"
-// Holds 3 lead spheres. Rack the bolt (right-click) between shots.
+// ABOMINATION - double-shot volleygun, mordhau hybrid
+// Breech-loaded: smokepowder then up to two lead spheres. Fires one at a time.
+// Use-in-hand to flip between gun grip and mordhau grip.
+// Axe slot: attach any stoneaxe subtype. Remove with a hammer.
+// Scum-only: the runes on the frame refuse to cooperate for outsiders.
 // =====================================================
-/obj/item/gun/ballistic/firearm/flintgonne/venator
-	name = "venator"
-	desc = "A modified Otavan flintgonne with a hexagonal barrel, it has a bolt racking mechanism. Unreliable, but accurate for its class, and markedly difficult to find. \
-	Someone clearly had it stolen from the Inquisition, and modified it."
-	icon_state = "flintgonne"
-	item_state = "flintgonne"
-	force = 12
-	spread = 2
-	wlength = WLENGTH_SHORT
-	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = ITEM_SLOT_HIP
-	var/rounds_remaining = 2
-	var/pending_rounds = 0
+/obj/item/gun/ballistic/firearm/abomination
+	name = "abomination"
+	desc = "Vile, putrid, disgusting... two flingonnes stuck together with leather reinforced old rope, a butt-end reinforced with steel... \
+	There's a slot that could fit an axe... There's some weird runes itched on the weapon, clearly of arcyne origin."
+	icon = 'modular_underbelly/sprites/vollygun.dmi'
+	icon_state = "volley"
+	item_state = "volley"
+	bigboy = FALSE
+	gripsprite = FALSE
+	force = 22
+	force_wielded = 28
+	w_class = WEIGHT_CLASS_BULKY
+	wlength = WLENGTH_NORMAL
+	slot_flags = ITEM_SLOT_BACK
+	possible_item_intents = list(/datum/intent/mace/strike/wood)
+	gripped_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, /datum/intent/mace/strike/wood)
+	alt_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+	cartridge_wording = "lead ball"
+	load_time = 60
+	minstr = 8
+	/// Number of lead balls currently loaded.
+	var/balls_loaded = 0
+	/// Maximum balls the weapon can hold. Raised to 3 by the capacity upgrade.
+	var/max_balls = 2
+	/// Axe strapped into the frame slot. Any stoneaxe subtype.
+	var/obj/item/rogueweapon/stoneaxe/attached_axe = null
 
-/obj/item/gun/ballistic/firearm/flintgonne/venator/Initialize(mapload)
+/obj/item/gun/ballistic/firearm/abomination/Initialize(mapload)
 	. = ..()
-	chambered = new /obj/item/ammo_casing/caseless/bullet/lead(src)
-	reloaded = TRUE
-	gunpowder = TRUE
+	if(myrod)
+		qdel(myrod)
+		myrod = null
 
-/obj/item/gun/ballistic/firearm/flintgonne/venator/attackby(obj/item/A, mob/user, params)
-	if(istype(A, /obj/item/ammo_casing))
-		if(!istype(A, /obj/item/ammo_casing/caseless/bullet/lead))
-			to_chat(user, span_warning("The [src] only fires lead balls."))
-			return
-		if(!gunpowder)
-			to_chat(user, span_warning("You must fill the [src] with smokepowder first!"))
-			return
-		if(pending_rounds + rounds_remaining + (chambered ? 1 : 0) >= 3)
-			to_chat(user, span_warning("The [src]'s bolt is already packed to capacity!"))
-			return
-		playsound(src, "modular_helmsguard/sound/arquebus/insert.ogg", 100)
-		user.visible_message(span_notice("[user] slides a lead ball into the [src]."))
-		pending_rounds++
-		qdel(A)
+/obj/item/gun/ballistic/firearm/abomination/update_icon()
+	. = ..()
+	if(altgripped)
+		icon_state = attached_axe ? "volly_axe_alt" : "volley_alt"
+	else
+		icon_state = attached_axe ? "volley_axe" : "volley"
+	item_state = icon_state
+
+/obj/item/gun/ballistic/firearm/abomination/getmoboverlay(tag, prop, behind = FALSE, mirrored = FALSE)
+	var/static/list/abom_onmob = list()
+	var/used_index = icon_state
+	var/key = "[tag][behind][mirrored][used_index]"
+	var/icon/onmob = abom_onmob[key]
+	if(!onmob || force_reupdate_inhand)
+		if(force_reupdate_inhand)
+			has_behind_state = null
+		onmob = fcopy_rsc(generateonmob(tag, prop, behind, mirrored, used_index))
+		abom_onmob[key] = onmob
+	return onmob
+
+/obj/item/gun/ballistic/firearm/abomination/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.5,"sx" = -2,"sy" = -1,"nx" = 1,"ny" = 4,"wx" = -5,"wy" = 2,"ex" = 3,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -6,"sturn" = -3,"wturn" = 0,"eturn" = -6,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.5,"sx" = 5,"sy" = -2,"nx" = -5,"ny" = -1,"wx" = -7,"wy" = 0,"ex" = 6,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 1,"nturn" = -45,"sturn" = 45,"wturn" = -35,"eturn" = 35,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+
+/obj/item/gun/ballistic/firearm/abomination/attack_right(mob/user)
+	flip_grip(user)
+
+/obj/item/gun/ballistic/firearm/abomination/attack_self(mob/living/user)
+	if(wielded || altgripped)
+		ungrip(user)
+		update_icon()
 		return
-	if(istype(A, /obj/item/ramrod) && pending_rounds > 0)
-		var/obj/item/ramrod/R = A
-		var/firearm_skill = user.get_skill_level(/datum/skill/combat/firearms)
-		user.visible_message(span_notice("[user] begins loading the [R.name] into [src]."))
-		playsound(src, "modular_helmsguard/sound/arquebus/ramrod.ogg", 100)
+	wield(user)
+	update_icon()
+
+/obj/item/gun/ballistic/firearm/abomination/proc/flip_grip(mob/living/carbon/user)
+	if(!istype(user) || user.incapacitated())
+		return
+	if(!(src in user.held_items))
+		to_chat(user, span_warning("I need to be holding [src]."))
+		return
+	if(user.get_active_held_item() != src)
+		user.swap_hand(user.get_held_index_of_item(src))
+	if(user.get_active_held_item() != src)
+		return
+	if(user.get_num_arms() < 2 || user.get_inactive_held_item())
+		to_chat(user, span_warning("I need both hands free to flip [src]."))
+		return
+	if(altgripped)
+		altgripped = FALSE
+		wielded = TRUE
+		user.visible_message(span_notice("[user] flips [src] back to firing position."))
+	else
+		altgripped = TRUE
+		wielded = TRUE
+		user.visible_message(span_notice("[user] flips [src] around, gripping the barrels as a club."))
+	if(force_wielded)
+		update_force_dynamic()
+	wdefense_dynamic = (wdefense + wdefense_wbonus)
+	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 100, TRUE)
+	update_transform()
+	update_icon()
+	user.update_inv_hands()
+	user.update_a_intents()
+
+/obj/item/gun/ballistic/firearm/abomination/attackby(obj/item/A, mob/user, params)
+	var/firearm_skill = user.get_skill_level(/datum/skill/combat/firearms)
+	if(istype(A, /obj/item/powderflask))
+		if(gunpowder)
+			to_chat(user, span_warning("[src] is already primed!"))
+			return
+		if(balls_loaded > 0)
+			to_chat(user, span_warning("Empty the barrels before reloading powder."))
+			return
+		playsound(src, "modular_helmsguard/sound/arquebus/pour_powder.ogg", 100)
 		if(do_after(user, load_time - (firearm_skill * 2), src))
-			user.visible_message(span_notice("[user] finishes loading the [src]."))
-			if(chambered)
-				rounds_remaining += pending_rounds
-			else
-				rounds_remaining = pending_rounds - 1
-				chambered = new /obj/item/ammo_casing/caseless/bullet/lead(src)
-			pending_rounds = 0
-			reloaded = TRUE
+			user.visible_message(span_notice("[user] tips powder into [src]."))
+			gunpowder = TRUE
+		return
+	if(istype(A, /obj/item/ammo_casing/caseless/bullet/lead))
+		if(!gunpowder)
+			to_chat(user, span_warning("Pour smokepowder in first."))
+			return
+		if(balls_loaded >= max_balls)
+			to_chat(user, span_warning("Both barrels are already loaded."))
+			return
+		playsound(src, 'modular_underbelly/sound/gun/load_bullet.ogg', 90, FALSE)
+		user.visible_message(span_notice("[user] drops a ball into [src]."))
+		qdel(A)
+		balls_loaded++
+		reloaded = TRUE
+		return
+	if(istype(A, /obj/item/ammo_casing))
+		to_chat(user, span_warning("[src] only fires lead balls."))
+		return
+	if(istype(A, /obj/item/rogueweapon/stoneaxe))
+		if(attached_axe)
+			to_chat(user, span_warning("There's already an axe fitted."))
+			return
+		var/obj/item/rogueweapon/stoneaxe/AX = A
+		user.visible_message(span_notice("[user] begins lashing [AX] to [src]..."))
+		if(do_after(user, 20, src))
+			if(attached_axe || QDELETED(AX))
+				return
+			if(!user.transferItemToLoc(AX, src))
+				return
+			attached_axe = AX
+			force = 24
+			force_wielded = 27
+			alt_intents = list(/datum/intent/axe/chop/stone)
+			if(altgripped && user.get_active_held_item() == src)
+				user.update_a_intents()
+			update_icon()
+			user.visible_message(span_notice("[user] straps [AX] to [src]."))
+		return
+	if(istype(A, /obj/item/rogueweapon/hammer))
+		if(!attached_axe)
+			to_chat(user, span_warning("Nothing to pry loose."))
+			return
+		user.visible_message(span_notice("[user] works the hammer against the bindings on [src]..."))
+		if(do_after(user, 30, src))
+			if(!attached_axe)
+				return
+			var/obj/item/rogueweapon/stoneaxe/AX = attached_axe
+			attached_axe = null
+			force = initial(force)
+			force_wielded = initial(force_wielded)
+			AX.forceMove(get_turf(user))
+			alt_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+			if(altgripped && user.get_active_held_item() == src)
+				user.update_a_intents()
+			update_icon()
+			user.visible_message(span_notice("[user] knocks [AX] free of [src]."))
+		return
+	if(istype(A, /obj/item/ramrod))
+		to_chat(user, span_warning("A ramrod won't help here."))
 		return
 	return ..()
 
-// Right-click to cycle the bolt and ready the next round.
-/obj/item/gun/ballistic/firearm/flintgonne/venator/attack_right(mob/user)
-	if(user.get_active_held_item())
-		return
-	if(reloaded)
-		to_chat(user, span_notice("The [src] is already cocked."))
-		return
-	if(!rounds_remaining && (!magazine || !magazine.ammo_count()))
-		to_chat(user, span_warning("The [src]'s cylinder is empty."))
-		return
-	playsound(src, 'modular_helmsguard/sound/arquebus/musketcock.ogg', 80, TRUE)
-	user.visible_message(span_notice("[user] racks the bolt on [src]."))
-	addtimer(CALLBACK(src, PROC_REF(cycle_bolt)), 1 SECONDS)
+/obj/item/gun/ballistic/firearm/abomination/can_shoot()
+	if(altgripped)
+		return FALSE
+	return gunpowder && balls_loaded >= 1
 
-/obj/item/gun/ballistic/firearm/flintgonne/venator/proc/cycle_bolt()
-	if(QDELETED(src))
+/obj/item/gun/ballistic/firearm/abomination/shoot_live_shot(mob/living/user, pointblank = 0, mob/pbtarget = null, message = 1)
+	playsound(user, 'modular_underbelly/sound/gun/abomination_shoot.ogg', 100, TRUE, extrarange = 10)
+	show_sensory_effect(user, 6, "gunfire", user.dir)
+	if(message)
+		user.visible_message(span_danger("[user] fires [src]!"), span_danger("I fire [src]!"), COMBAT_MESSAGE_RANGE)
+
+/obj/item/gun/ballistic/firearm/abomination/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(!HAS_TRAIT(user, TRAIT_UNDERBELLY_SCUM))
+		to_chat(user, span_warning("You don't know how to use this...thing."))
 		return
-	if(!QDELETED(chambered))
-		qdel(chambered)
-	chambered = null
-	if(rounds_remaining > 0)
-		rounds_remaining--
+	if(!chambered)
 		chambered = new /obj/item/ammo_casing/caseless/bullet/lead(src)
-		reloaded = TRUE
+	reloaded = TRUE
+	. = ..()
+	chambered = null
+	balls_loaded = max(0, balls_loaded - 1)
+	if(balls_loaded > 0)
 		gunpowder = TRUE
-	else
-		chamber_round()
-		if(chambered)
-			reloaded = TRUE
-			gunpowder = TRUE
+		reloaded = TRUE
+
+/obj/item/gun/ballistic/firearm/abomination/attack(mob/living/M, mob/living/user)
+	if(!HAS_TRAIT(user, TRAIT_UNDERBELLY_SCUM))
+		to_chat(user, span_warning("You don't know how to use this...thing."))
+		return
+	return ..()
+
+/obj/item/gun/ballistic/firearm/abomination/Destroy()
+	if(attached_axe)
+		attached_axe.forceMove(get_turf(src))
+		attached_axe = null
+	return ..()
+
+/obj/item/gun/ballistic/firearm/abomination/handle_atom_del(atom/A)
+	if(A == attached_axe)
+		attached_axe = null
+		force = initial(force)
+		force_wielded = initial(force_wielded)
+		alt_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+		update_icon()
+	return ..()
 
 // =====================================================
-// HAND CANNON - one-shot, point-blank, gibs the dumb.
-// Slow as hell to load. Drops the strong, gibs the unminded.
+// HAND CANNON - one-shot, quite long range, gibs the dumb.
+// Quite fast to load. Deals less damage than a fireball.
 // =====================================================
 /obj/item/ammo_casing/caseless/bullet/cannonball
 	name = "cannonball"
@@ -390,8 +531,6 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 	var/turf/T = get_turf(src)
 	if(T && firer)
 		new /obj/effect/temp_visual/explosion(T)
-		for(var/turf/blast_turf in range(1, T))
-			new /obj/effect/temp_visual/fireball(blast_turf)
 		for(var/mob/living/L in range(1, T))
 			if(L == firer)
 				continue
@@ -538,7 +677,7 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 
 /obj/item/gun/ballistic/firearm/cannon/proc/launch_shot(mob/living/firer, turf/origin, turf/edge, fire_dir)
 	var/obj/effect/cannonshot/shot = new(origin, firer, fire_dir)
-	shot.throw_at(edge, 30, 2, firer, FALSE, callback = CALLBACK(shot, TYPE_PROC_REF(/obj/effect/cannonshot, detonate)))
+	shot.throw_at(edge, 30, 0.6, firer, FALSE, callback = CALLBACK(shot, TYPE_PROC_REF(/obj/effect/cannonshot, detonate)))
 
 /obj/item/gun/ballistic/firearm/cannon/proc/launch_passenger(mob/living/firer, turf/edge)
 	var/mob/living/M = loaded_passenger
@@ -820,7 +959,7 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 	if(!flag)
 		return
 	var/obj/item/gun/ballistic/firearm/G = target
-	if(!istype(G) || !(istype(G, /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller) || istype(G, /obj/item/gun/ballistic/firearm/flintgonne/venator) || istype(G, /obj/item/gun/ballistic/firearm/devastator)))
+	if(!istype(G) || !(istype(G, /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller) || istype(G, /obj/item/gun/ballistic/firearm/abomination) || istype(G, /obj/item/gun/ballistic/firearm/devastator)))
 		to_chat(user, span_warning("[src] can only be fitted to underbelly firearms."))
 		return
 	if(G.force >= initial(G.force) + 5)
@@ -840,7 +979,7 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 	if(!flag)
 		return
 	var/obj/item/gun/ballistic/firearm/G = target
-	if(!istype(G) || !(istype(G, /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller) || istype(G, /obj/item/gun/ballistic/firearm/flintgonne/venator) || istype(G, /obj/item/gun/ballistic/firearm/devastator)))
+	if(!istype(G) || !(istype(G, /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller) || istype(G, /obj/item/gun/ballistic/firearm/abomination) || istype(G, /obj/item/gun/ballistic/firearm/devastator)))
 		to_chat(user, span_warning("[src] can only be fitted to underbelly firearms."))
 		return
 	if(G.suppress_smoke)
@@ -868,13 +1007,13 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 		to_chat(user, span_notice("You fit the [src] into [G]. One more round in the cylinder."))
 		qdel(src)
 		return
-	if(istype(target, /obj/item/gun/ballistic/firearm/flintgonne/venator))
-		var/obj/item/gun/ballistic/firearm/flintgonne/venator/G = target
-		if(G.rounds_remaining >= 3)
+	if(istype(target, /obj/item/gun/ballistic/firearm/abomination))
+		var/obj/item/gun/ballistic/firearm/abomination/G = target
+		if(G.max_balls >= 3)
 			to_chat(user, span_warning("[G] already has a capacity upgrade fitted."))
 			return
-		G.rounds_remaining++
-		to_chat(user, span_notice("You fit the [src] into [G]. One more ball in the bolt housing."))
+		G.max_balls = 3
+		to_chat(user, span_notice("You fit the [src] into [G]. One more ball fits down those barrels."))
 		qdel(src)
 		return
 	if(istype(target, /obj/item/gun/ballistic/firearm/devastator))
@@ -898,7 +1037,7 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 	if(!flag)
 		return
 	var/obj/item/gun/ballistic/firearm/G = target
-	if(!istype(G) || !(istype(G, /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller) || istype(G, /obj/item/gun/ballistic/firearm/flintgonne/venator) || istype(G, /obj/item/gun/ballistic/firearm/devastator)))
+	if(!istype(G) || !(istype(G, /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller) || istype(G, /obj/item/gun/ballistic/firearm/abomination) || istype(G, /obj/item/gun/ballistic/firearm/devastator)))
 		to_chat(user, span_warning("[src] can only be fitted to underbelly firearms."))
 		return
 	if(G.aim_upgrade)
