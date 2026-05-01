@@ -278,10 +278,7 @@ GLOBAL_VAR(last_connection)
 	GLOB.stickbanadminexemptiontimerid = null
 
 /client/proc/is_new_player()
-#ifdef ALLOWPLAY
-	return FALSE
-#endif
-#ifdef TESTSERVER
+#if defined(ALLOWPLAY) || defined(TESTSERVER)
 	return FALSE
 #endif
 

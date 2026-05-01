@@ -94,13 +94,14 @@
 #ifdef TESTSERVER
 		mob.ghostize()
 		return FALSE
-#endif
+#else
 		if(world.time > mob.mob_timers["lastdied"] + 60 SECONDS)
 			mob.ghostize()
 		else
 			if(!world.time%5)
 				to_chat(src, span_warning("My spirit hasn't manifested yet."))
 		return FALSE
+#endif
 	if(mob.force_moving)
 		return FALSE
 

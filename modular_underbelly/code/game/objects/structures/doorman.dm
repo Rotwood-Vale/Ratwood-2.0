@@ -524,8 +524,7 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 		return
 	var/msg = speech_args[SPEECH_MESSAGE]
 	playsound(D.loc, 'sound/foley/coinphy (1).ogg', 30, FALSE)
-	for(var/mob/M in range(5, D))
-		to_chat(M, span_italics("Through the gate panel: \"[msg]\""))
+	D.audible_message(span_italics("[D] transmits, \"[msg]\""), hearing_distance = 5)
 
 #undef DOORMAN_CLEARANCE_DURATION
 #undef DOORMAN_BREACH_OPEN_DURATION

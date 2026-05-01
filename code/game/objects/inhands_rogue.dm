@@ -498,7 +498,7 @@ GLOBAL_LIST_EMPTY(icon_state_cache)
 			if(X == used_cat)
 				var/list/L = I.onprop[X]
 				if(L.len)
-					if(!needtofind in L)
+					if(!(needtofind in L))
 						L += needtofind
 					for(var/P in L)
 						if(P == needtofind)
@@ -562,7 +562,7 @@ GLOBAL_LIST_EMPTY(icon_state_cache)
 			if(X == used_cat)
 				var/list/L = I.onprop[X]
 				if(L.len)
-					if(!needtofind in L)
+					if(!(needtofind in L))
 						L += needtofind
 					for(var/P in L)
 						if(P == needtofind)
@@ -615,7 +615,7 @@ GLOBAL_LIST_EMPTY(icon_state_cache)
 			if(X == used_cat)
 				var/list/L = I.onprop[X]
 				if(L.len)
-					if(!needtofind in L)
+					if(!(needtofind in L))
 						L += needtofind
 					for(var/P in L)
 						if(P == needtofind)

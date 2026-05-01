@@ -44,10 +44,10 @@
 		return
 	if(HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
 		return
-	H << sound('modular_underbelly/sound/scummy.ogg', volume = 35)
 	ADD_TRAIT(H, TRAIT_UNDERBELLY_SCUM, "underbelly_job")
 	H.grant_language(/datum/language/thievescant)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_send_warning), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+	var/warning_delay = H.islatejoin ? 5 SECONDS : 2 MINUTES
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_send_warning), H), warning_delay, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /proc/scum_send_warning(mob/living/carbon/human/H)
 	if(!H?.client)
@@ -56,6 +56,7 @@
 		return
 	if(H.mind)
 		H.mind.scum_warning_shown = TRUE
+	H << sound('modular_underbelly/sound/scummy.ogg', volume = 35)
 	to_chat(H, "<span class='userdanger'>I am Scum. The Gods forsake me, and society has rebuked me to these depths. If I wish to survive until the end of the week, I should follow <a href=\"https://wiki.ratwood.rip/index.php/Underbelly#THE_LAWS_OF_THE_SCUM\">The laws of The Scum</a> if I wish to keep my position within this organization - and not find myself dead in the sewers.</span>")
 	to_chat(H, "<span class='warning'>This role is held to a higher roleplay standard by the staff team. Failing to meet role expectations can be met with harsher punishments than others. AHelp if you need assistance!</span>")
 
@@ -223,22 +224,23 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/longcoat
 	cloak = /obj/item/clothing/cloak/darkcloak/minotaur/red
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather/double
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 	beltl = /obj/item/storage/backpack/rogue/satchel/short
 	beltr = /obj/item/roguekey/underbelly/scum
 	backr = /obj/item/storage/backpack/rogue/satchel
-
+	backpack_contents = list(
+		/obj/item/roguekey/underbelly/boss = 1,
+	)
 /datum/outfit/job/roguetown/underbelly/consigliere/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/storage/backpack/rogue/satchel/short/satchel = locate(/obj/item/storage/backpack/rogue/satchel/short) in H
 	if(satchel)
-		for(var/i = 1 to 10)
-			if(prob(80))
-				new /obj/item/roguecoin/scum_pass(satchel)
-			else
-				new /obj/item/roguecoin/scum_pass/etched(satchel)
-	new /obj/item/roguekey/underbelly/boss(H.belt)
+		for(var/i = 1 to 6)
+			new /obj/item/roguecoin/scum_pass(satchel)
+		for(var/i = 1 to 4)
+			new /obj/item/roguecoin/scum_pass/etched(satchel)
 	if(H.mind)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
@@ -875,6 +877,7 @@
 	var/wanted = input(H, "Are you known to the law?", "EXCIDIUM") as anything in list("Yes, I have a record", "No, I stay in the shadows")
 	if(wanted == "No, I stay in the shadows")
 		to_chat(H, span_notice("My work has gone unnoticed. I intend to keep it that way."))
+		scum_send_warning(H)
 		return
 	var/bounty_poster = input(H, "Who wants your head?", "Bounty Poster") as anything in list("The Justiciary of Rotwood", "The Grenzelhoftian Holy See")
 	var/bounty_severity = input(H, "How severe are your crimes?", "Bounty Amount") as anything in list("Small Game", "Highwayman", "Vale Boogeyman")
@@ -917,6 +920,7 @@
 			if("Speed")
 				H.change_stat(STATKEY_SPD, 1)
 	to_chat(H, span_bloody("I am known. The law has my name. I've survived it this far."))
+	scum_send_warning(H)
 
 // =====================================================
 // PROLETARIUS
