@@ -10,6 +10,7 @@
 
 GLOBAL_VAR_INIT(underbelly_debt_paid, 0)
 GLOBAL_VAR_INIT(underbelly_roundend_registered, FALSE)
+GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 
 ///Returns total mammon owed based on faction headcount. Tiers escalate faster than headcount.
 /proc/_underbelly_get_debt(scum_count)
@@ -35,6 +36,7 @@ GLOBAL_VAR_INIT(underbelly_roundend_registered, FALSE)
 /obj/structure/roguemachine/taxman/Initialize(mapload)
 	. = ..()
 	GLOB.underbelly_debt_paid = 0
+	GLOB.underbelly_debt_contributions = list()
 	if(!GLOB.underbelly_roundend_registered)
 		GLOB.underbelly_roundend_registered = TRUE
 		SSticker.OnRoundend(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_underbelly_debt_roundend)))
@@ -60,6 +62,10 @@ GLOBAL_VAR_INIT(underbelly_roundend_registered, FALSE)
 		to_chat(user, span_warning("The slot rejects it."))
 		return
 	GLOB.underbelly_debt_paid += value
+	if(isliving(user))
+		var/mob/living/carbon/human/H = user
+		var/contributor = H.real_name
+		GLOB.underbelly_debt_contributions[contributor] = (GLOB.underbelly_debt_contributions[contributor] || 0) + value
 	playsound(loc, 'sound/misc/coininsert.ogg', 80, FALSE, -1)
 	var/scum_count = _underbelly_count_scum()
 	var/remaining = max(0, _underbelly_get_debt(scum_count) - GLOB.underbelly_debt_paid)
@@ -105,39 +111,63 @@ GLOBAL_VAR_INIT(underbelly_roundend_registered, FALSE)
 	else
 		effective_tier = 0
 
+	// Build top-3 contributor list sorted by amount
+	var/list/sorted_names = list()
+	for(var/name in GLOB.underbelly_debt_contributions)
+		sorted_names += name
+	// Bubble sort descending (at most a handful of names, perf is fine)
+	for(var/i = 1 to sorted_names.len - 1)
+		for(var/j = 1 to sorted_names.len - i)
+			if(GLOB.underbelly_debt_contributions[sorted_names[j]] < GLOB.underbelly_debt_contributions[sorted_names[j+1]])
+				var/tmp = sorted_names[j]
+				sorted_names[j] = sorted_names[j+1]
+				sorted_names[j+1] = tmp
+	var/leaderboard = ""
+	var/medals = list("1st", "2nd", "3rd")
+	for(var/i = 1 to min(3, sorted_names.len))
+		var/n = sorted_names[i]
+		leaderboard += "\n  [medals[i]]: [n] — [GLOB.underbelly_debt_contributions[n]] mammon"
+
 	if(effective_tier)
 		var/triumphs
 		var/pq
 		switch(effective_tier)
 			if(1)
 				triumphs = 10
-				pq = 0.1
+				pq = 0.5
 			if(2)
 				triumphs = 15
-				pq = 0.3
+				pq = 1
 			if(3)
 				triumphs = 20
-				pq = 0.5
+				pq = 2
 			if(4)
-				triumphs = 25
-				pq = 1.0
+				triumphs = 30
+				pq = 3.5
 		if(pay_ratio >= 1.0)
-			to_chat(world, span_greentext("The Underbelly has paid off their debt to Kingsfield's Crime Syndicate!"))
+			to_chat(world, span_greentext("The Underbelly has paid off their [owed] mammon debt to Kingsfield's Crime Syndicate!"))
 		else
-			to_chat(world, span_greentext("The Underbelly paid [round(pay_ratio * 100)]% of their debt to Kingsfield. The Syndicate is somewhat satisfied."))
+			to_chat(world, span_greentext("The Underbelly paid [round(pay_ratio * 100)]% of their [owed] mammon debt to Kingsfield ([paid]/[owed]). The Syndicate is somewhat satisfied."))
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(!HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
 				continue
 			H.adjust_triumphs(triumphs)
 			if(H.ckey)
 				adjust_playerquality(pq, H.ckey)
-			to_chat(H, span_greentext("The Syndicate is satisfied. +[triumphs] Triumph\s awarded."))
+			if(pay_ratio >= 1.0)
+				to_chat(H, span_greentext("The Syndicate is satisfied. The [owed] mammon debt was paid in full. +[triumphs] Triumph\s awarded."))
+			else
+				to_chat(H, span_greentext("The Syndicate is somewhat satisfied. [round(pay_ratio * 100)]% of the [owed] mammon debt was paid ([paid]/[owed])."))
+			if(leaderboard)
+				to_chat(H, span_greentext("Top contributors:[leaderboard]"))
 	else
-		var/shortfall = owed - paid
+		var/pct_paid = owed > 0 ? round((paid / owed) * 100) : 0
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(!HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
 				continue
-			to_chat(H, span_redtext("The Kingsfield Syndicate notes your failure. [shortfall] mammon unpaid of [owed] owed. They will remember."))
+			to_chat(H, span_redtext("The Kingsfield Syndicate notes your failure. [owed] mammon was owed; only [pct_paid]% was paid ([paid]/[owed]). They will remember."))
+			if(leaderboard)
+				to_chat(H, span_redtext("What little was paid came from:[leaderboard]"))
 
 	// GK bonus — +1 Triumph per 2 living Scum (rounded up), fires if at least 50% was paid
 	if(pay_ratio >= 0.5)
