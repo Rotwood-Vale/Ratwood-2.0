@@ -67,6 +67,65 @@
 	pixel_y = 0
 	pixel_x = -32
 
+/obj/structure/roguemachine/scomm/garrison
+	name = "Garrison SCOM"
+	desc = "This SCOM uniquely allows broadcasting over the garrison line, but it is utterly the same otherwise."
+	garrisonline = TRUE
+	color = "#ccffcc"
+
+/obj/structure/roguemachine/scomm/garrison/r
+	pixel_y = 0
+	pixel_x = 32
+
+/obj/structure/roguemachine/scomm/garrison/l
+	pixel_y = 0
+	pixel_x = -32
+
+/obj/structure/roguemachine/scomm/garrison/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
+	if(speaker.loc != loc)
+		return
+	if(!ishuman(speaker))
+		return
+	if(!listening)
+		return
+	if(last_cheese && (last_cheese + CHEESE_QUIET_TIME >= world.time))
+		to_chat(speaker, span_warning("The rats seems to be busy nibbling on something!"))
+		return
+	if(!raw_message)
+		return
+	var/mob/living/carbon/human/H = speaker
+	var/usedcolor = H.voice_color
+	if(H.voicecolor_override)
+		usedcolor = H.voicecolor_override
+	if(calling)
+		if(calling.calling == src)
+			playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
+			calling.repeat_message(raw_message, src, usedcolor, message_language)
+		return
+	if(!garrisonline)
+		to_chat(speaker, span_warning("You speak into it, but the rats do not stir or move. You feel only silence, and you deliver only silence."))
+		return
+	if(world.time < last_message + NORMAL_SCOM_PER_MESSAGE_DELAY)
+		var/time_remaining = round((last_message + NORMAL_SCOM_PER_MESSAGE_DELAY - world.time) / 10)
+		to_chat(speaker, span_warning("The SCOM's rats are still recovering. Wait [time_remaining] more second[time_remaining != 1 ? "s" : ""]."))
+		return
+	last_message = world.time
+	if(length(raw_message) > 100)
+		raw_message = "<small>[raw_message]</small>"
+	playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
+	raw_message = "<span style='color: [GARRISON_SCOM_COLOR]'>[raw_message]</span>"
+	addtimer(CALLBACK(src, PROC_REF(broadcast_garrison_line), raw_message, usedcolor, message_language), NORMAL_SCOM_TRANSMISSION_DELAY)
+
+/obj/structure/roguemachine/scomm/garrison/proc/broadcast_garrison_line(raw_message, usedcolor, datum/language/message_language)
+	for(var/obj/item/scomstone/garrison/S in SSroguemachine.scomm_machines)
+		S.repeat_message(raw_message, src, usedcolor, message_language)
+	for(var/obj/item/scomstone/bad/garrison/S in SSroguemachine.scomm_machines)
+		S.repeat_message(raw_message, src, usedcolor, message_language)
+	for(var/obj/structure/roguemachine/scomm/S in SSroguemachine.scomm_machines)
+		if(S.garrisonline && S != src)
+			S.repeat_message(raw_message, src, usedcolor, message_language)
+	SSroguemachine.crown?.repeat_message(raw_message, src, usedcolor, message_language)
+
 /obj/structure/roguemachine/scomm/examine(mob/user)
 	. = ..()
 	. += span_small("The normal line has a delay of [NORMAL_SCOM_TRANSMISSION_DELAY / 10] seconds. The premium garrison line does not suffer from this limitation.")

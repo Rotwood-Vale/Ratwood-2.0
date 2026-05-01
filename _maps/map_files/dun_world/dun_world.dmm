@@ -23230,7 +23230,7 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/mountains)
 "eQo" = (
-/obj/structure/roguemachine/scomm,
+/obj/structure/roguemachine/scomm/garrison,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/garrison)
 "eQp" = (
@@ -72947,10 +72947,6 @@
 	},
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/exposed/town/keep)
-"pav" = (
-/obj/structure/roguemachine/scomm/l,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/town/garrison)
 "paz" = (
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/underdark/north)
@@ -77762,9 +77758,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains)
 "qbq" = (
-/obj/structure/roguemachine/scomm{
-	scom_tag = "Manor - Throne Room"
-	},
+/obj/structure/roguemachine/scomm/garrison,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "qbr" = (
@@ -314636,7 +314630,7 @@ kSN
 eiH
 wHE
 gEB
-pav
+wHE
 jzU
 wpD
 xjB
@@ -317795,7 +317789,7 @@ jWw
 jWw
 jWw
 jWw
-eQo
+kSN
 kSN
 eOG
 okz

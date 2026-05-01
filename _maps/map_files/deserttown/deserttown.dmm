@@ -22896,12 +22896,12 @@
 /turf/open/water/bath,
 /area/rogue/outdoors/town/manor/desert)
 "jkG" = (
-/obj/structure/roguemachine/scomm,
 /obj/structure/roguemachine/atm{
 	pixel_x = 32;
 	pixel_y = 0;
 	location_tag = "South Gate (interior)"
 	},
+/obj/structure/roguemachine/scomm/garrison,
 /turf/open/floor/rogue/tile/brownbrick{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
@@ -51936,10 +51936,10 @@
 	},
 /area/rogue/outdoors/desert)
 "uIx" = (
-/obj/structure/roguemachine/scomm,
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 8
 	},
+/obj/structure/roguemachine/scomm/garrison,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors/town/desert/manor)
 "uID" = (

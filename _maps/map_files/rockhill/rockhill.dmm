@@ -84123,9 +84123,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/mountains/decap/rockhill)
 "tTX" = (
-/obj/structure/roguemachine/scomm{
-	scom_tag = "Manor - Throne Room"
-	},
+/obj/structure/roguemachine/scomm/garrison,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/manor/rockhill)
 "tTY" = (
@@ -94684,9 +94682,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/beach/harbor)
 "wxf" = (
-/obj/structure/roguemachine/scomm{
-	scom_tag = "South Gate - Gatehouse"
-	},
+/obj/structure/roguemachine/scomm/garrison,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/garrison)
 "wxn" = (
