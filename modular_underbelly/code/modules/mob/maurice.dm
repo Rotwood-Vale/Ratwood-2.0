@@ -102,6 +102,20 @@
 		visible_message(span_notice("Maurice sniffs the air once, then disappears back into the earth."))
 		qdel(src)
 
+/// Greet Maurice and he'll acknowledge you.
+/mob/living/simple_animal/pet/maurice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
+	. = ..()
+	if(stat != CONSCIOUS || radio_freq || !speaker)
+		return
+	var/lower = lowertext(raw_message)
+	if(!findtext(lower, "maurice"))
+		return
+	var/static/list/greetings = list("hey", "hello", "heya", "howdy", "greetings", "hiya", "mornin", "evenin", "good morning", "good evening", "good day", "ey,", "ey ", "ey!", "hi,", "hi ", "hi!", "yo,", "yo ", "yo!")
+	for(var/g in greetings)
+		if(findtext(lower, g))
+			visible_message(span_notice("Maurice glances over at [speaker] and lifts a small paw."))
+			return
+
 // Place this subtype on the map. He lives here.
 /mob/living/simple_animal/pet/maurice/resident
 	permanent = TRUE
