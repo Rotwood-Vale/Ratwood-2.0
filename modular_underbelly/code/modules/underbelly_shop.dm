@@ -261,7 +261,7 @@
 	// Scum guns are rolled in separately at low chance to keep them rare.
 	// =========================================================
 	var/list/scum_guns = list(
-		list("The Gut Spillah",       "A Scum's favorite weapon. The backbone of a deal gone wrong. Modified and fabricated by my mates in Kingsfield.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,      1, 750,  FALSE, "Scum"),
+		list("Ironshot Repeater mark 1",       "A fancy weapon of one of them Kingsfield Nobles. Quite a treat.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,      1, 750,  FALSE, "Scum"),
 		list("The Abomination",  "The work saiga of every Scum! Only you lot know how to use this...thing.",  /obj/item/gun/ballistic/firearm/abomination,               1, 450, FALSE, "Scum"),
 		list("Hand Cannon",  "Heavy as sin and twice as loud. Plant your feet, point it at trouble, watch trouble disappear. Only the strong handle this one.",  /obj/item/gun/ballistic/firearm/cannon,           1, 1150, FALSE, "Scum"),
 	)

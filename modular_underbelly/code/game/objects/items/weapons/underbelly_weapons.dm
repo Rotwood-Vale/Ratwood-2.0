@@ -13,9 +13,8 @@
 // Pepperbox-style: six pre-loaded chambers, no ramrod between shots.
 // =====================================================
 /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller
-	name = "gut spiller"
-	desc = "A squat, scrappy six-shooter with a modified internal body to hold more lead, with a cost. Close range only - past ten paces it's just noise. \
-	Inside ten paces, it lives up to its name."
+	name = "Ironshot Repeater mark 1"
+	desc = "A sophisticated and upgraded repeating arquebus pistol designed by Ser Ironshot, with a modified internal body to hold three lead spheres. <br> This is clearly a cheaper copy, which likes to jam."
 	icon = 'modular_underbelly/sprites/scumguns.dmi'
 	icon_state = "repeating_pistol"
 	lefthand_file = 'modular_underbelly/sprites/scumguns.dmi'
@@ -26,7 +25,7 @@
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_HIP
-	var/rounds_remaining = 5
+	var/rounds_remaining = 2
 	var/pending_rounds = 0
 	/// Set when the firing mechanism jams. Cleared by right-clicking to fix it.
 	var/jammed = FALSE
@@ -48,7 +47,7 @@
 		if(!gunpowder)
 			to_chat(user, span_warning("You must fill the [src] with smokepowder first!"))
 			return
-		var/free_rounds = 6 - (pending_rounds + rounds_remaining + (chambered ? 1 : 0))
+		var/free_rounds = 3 - (pending_rounds + rounds_remaining + (chambered ? 1 : 0))
 		if(free_rounds <= 0)
 			to_chat(user, span_warning("The [src]'s cylinder is already full!"))
 			return
@@ -87,7 +86,7 @@
 		if(!gunpowder)
 			to_chat(user, span_warning("You must fill the [src] with smokepowder first!"))
 			return
-		if(pending_rounds + rounds_remaining + (chambered ? 1 : 0) >= 6)
+		if(pending_rounds + rounds_remaining + (chambered ? 1 : 0) >= 3)
 			to_chat(user, span_warning("The [src]'s cylinder is already full!"))
 			return
 		playsound(src, "modular_helmsguard/sound/arquebus/insert.ogg", 100)
