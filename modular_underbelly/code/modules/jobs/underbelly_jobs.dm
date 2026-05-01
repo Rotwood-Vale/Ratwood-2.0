@@ -6,6 +6,24 @@
 	Gutter King is the faction head - max 1, 110 PQ floor, bypasses all shop role restrictions.
 */
 
+/// Every patron except Zizo. Underbelly takes anyone who isn't openly courting the archenemy.
+#define UNDERBELLY_ALLOWED_PATRONS list(\
+	/datum/patron/divine/astrata,\
+	/datum/patron/divine/noc,\
+	/datum/patron/divine/dendor,\
+	/datum/patron/divine/abyssor,\
+	/datum/patron/divine/ravox,\
+	/datum/patron/divine/necra,\
+	/datum/patron/divine/xylix,\
+	/datum/patron/divine/pestra,\
+	/datum/patron/divine/malum,\
+	/datum/patron/divine/eora,\
+	/datum/patron/old_god,\
+	/datum/patron/inhumen/graggar,\
+	/datum/patron/inhumen/matthios,\
+	/datum/patron/inhumen/baotha,\
+)
+
 /datum/mind
 	var/scum_warning_shown = FALSE
 	var/scum_record_prompted = FALSE
@@ -110,10 +128,10 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
-	tutorial = "Lemme tell ya somethin' about down here. It ain't a kingdom, alright? Don't let nobody call it that. \
-	But it runs, it pays, and when you's say 'do it', it gets done. Ya got it? The Keep upstairs, \
-	they think they own this town. You's own what's underneath. \
-	Keep the Scum in line, keep the Flipside off ya neck, and don't get sloppy."
+	allowed_patrons = UNDERBELLY_ALLOWED_PATRONS
+	tutorial = "This place is no kingdom, no matter what anyone calls it. It runs, it pays, and when an order is given it gets done. \
+	The Keep upstairs thinks they own this town. You own what's underneath. \
+	Keep the Scum in line, keep the Flipside off your back, and don't get sloppy."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking
 	obsfuscated_job = TRUE
@@ -161,11 +179,85 @@
 	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_mark)
 	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_announce)
 
-// Kingpin - the brawler. Leads by force, not words.
+// =====================================================
+// CONSIGLIERE
+// The Gutter King's right hand. PQ 90. Sends Maurice,
+// carries marked and etched pass coins for diplomacy.
+// =====================================================
+/datum/job/roguetown/consigliere
+	title = "Consigliere"
+	flag = UB_CONSIGLIERE
+	department_flag = UNDERBELLY
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	selection_color = JCOLOR_UNDERBELLY
+
+	allowed_races = RACES_ALL_KINDS
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_patrons = UNDERBELLY_ALLOWED_PATRONS
+	tutorial = "A Consigliere in the Underbelly is what a Councillor is in the Keep. You are the Gutter King's right hand. \
+	You help them organize the Scum, carry words when the King cannot, and grease the right palms with the right coins. \
+	You are no fighter. You have never needed to be."
+
+	outfit = /datum/outfit/job/roguetown/underbelly/consigliere
+	obsfuscated_job = TRUE
+	antag_job = FALSE
+	display_order = JDO_CONSIGLIERE
+	min_pq = 90
+	max_pq = null
+	round_contrib_points = 5
+	social_rank = SOCIAL_RANK_SCUM
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
+	job_traits = list(TRAIT_SEEPRICES)
+	advjob_examine = TRUE
+	announce_latejoin = FALSE
+	same_job_respawn_delay = 3 MINUTES
+
+/datum/outfit/job/roguetown/underbelly/consigliere
+
+/datum/outfit/job/roguetown/underbelly/consigliere/pre_equip(mob/living/carbon/human/H)
+	..()
+	mask = null
+	head = /obj/item/clothing/head/roguetown/puritan/scum
+	armor = /obj/item/clothing/suit/roguetown/armor/longcoat
+	cloak = /obj/item/clothing/cloak/darkcloak/minotaur/red
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	belt = /obj/item/storage/belt/rogue/leather/double
+	gloves = /obj/item/clothing/gloves/roguetown/leather/black
+	beltl = /obj/item/storage/backpack/rogue/satchel/short
+	beltr = /obj/item/roguekey/underbelly/scum
+	backr = /obj/item/storage/backpack/rogue/satchel
+
+/datum/outfit/job/roguetown/underbelly/consigliere/post_equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/storage/backpack/rogue/satchel/short/satchel = locate(/obj/item/storage/backpack/rogue/satchel/short) in H
+	if(satchel)
+		for(var/i = 1 to 10)
+			if(prob(80))
+				new /obj/item/roguecoin/scum_pass(satchel)
+			else
+				new /obj/item/roguecoin/scum_pass/etched(satchel)
+	new /obj/item/roguekey/underbelly/boss(H.belt)
+	if(H.mind)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+
+/datum/job/roguetown/consigliere/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	..()
+	if(!ishuman(H))
+		return
+	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_word)
+
+/obj/effect/landmark/start/consiglierelate
+	name = "Consigliere"
+	icon_state = "arrow"
+	jobspawn_override = list("Consigliere")
+	delete_after_roundstart = FALSE
+
 /datum/advclass/gutterking/kingpin
 	name = "Kingpin"
-	tutorial = "You's run the Underbelly the old way. Ya the biggest, ya the meanest, end of story. \
-	Ya word's law on accounta ya fist's the law. Nobody asks twice. Nobody."
+	tutorial = "You run the Underbelly the old way. The biggest, the meanest, end of story. \
+	Your word is law because your fist is the law. Nobody asks twice."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking/kingpin
@@ -215,9 +307,9 @@
 // Fixer - the social predator. Leads by leverage, not force.
 /datum/advclass/gutterking/fixer
 	name = "Fixer"
-	tutorial = "You's run things with charm, leverage, and a smile, capisce? \
-	The Keep drinks ya wine. Half the merchants owe ya favors. \
-	Nobody's gotta know ya own 'em 'til the day ya need 'em to know."
+	tutorial = "You run things with charm, leverage, and a smile. \
+	The Keep drinks your wine. Half the merchants owe you favors. \
+	Nobody needs to know you own them until the day you need them to know."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking/fixer
@@ -280,9 +372,10 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
-	tutorial = "Ya work for the Underbelly. Break legs, move cargo, make a guy disappear, watch the Flingers' backs. \
-	Don't pay great, but it pays, and that beats starvin' Flipside. The Gutter King wants results. \
-	The kind ya don't gotta explain after, capisce?"
+	allowed_patrons = UNDERBELLY_ALLOWED_PATRONS
+	tutorial = "You work for the Underbelly. Break legs, move cargo, make a man disappear, watch the Flingers' backs. \
+	The pay is poor, but it beats starving Flipside. The Gutter King wants results. \
+	The kind that don't need explaining afterward."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/scum
 	obsfuscated_job = TRUE
@@ -327,7 +420,7 @@
 // Enforcer — the brawler. Hits things until they stop moving.
 /datum/advclass/scum/enforcer
 	name = "Enforcer"
-	tutorial = "Debt collectors don't gotta be subtle. They gotta be persuasive. Lucky for the boss, you's very persuasive."
+	tutorial = "Debt collectors don't need to be subtle. They need to be persuasive. Lucky for the boss, you are very persuasive."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/scum/enforcer
@@ -369,7 +462,7 @@
 // Kidnapper - fast, quiet, rope in hand.
 /datum/advclass/scum/kidnapper
 	name = "Kidnapper"
-	tutorial = "You's don't fight nobody. Ya take 'em somewhere quiet and let the situation sort itself out. \
+	tutorial = "You don't fight anyone. You take them somewhere quiet and let the situation sort itself out. \
 	Works every time."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
@@ -415,7 +508,7 @@
 // Guttersnipe - knife fighter, opportunist, nasty in a corner.
 /datum/advclass/scum/guttersnipe
 	name = "Guttersnipe"
-	tutorial = "No armor, no plan, no problem, capisce? You's fast, ya hit once, and ya gone. \
+	tutorial = "No armor, no plan, no problem. You are fast, you hit once, and you are gone. \
 	Born in the gutter, raised in the gutter. Comfortable there."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
@@ -475,9 +568,10 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
-	tutorial = "Coin's the only god worth prayin' to, and you's devoted ya whole lyfe to it. \
-	Ya got goods nobody Flipside can buy legal, and ya got a list of clients who'll pay through the nose \
-	to keep their name off the receipt. Keep it quiet. Keep it profitable, capisce?"
+	allowed_patrons = UNDERBELLY_ALLOWED_PATRONS
+	tutorial = "Coin is the only god worth praying to, and you have devoted your whole life to it. \
+	You move goods nobody Flipside can buy legally, and you keep a list of clients who pay through the nose \
+	to keep their name off the receipt. Keep it quiet. Keep it profitable."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/flinger
 	obsfuscated_job = TRUE
@@ -516,8 +610,8 @@
 // Fence - moves stolen goods. Starts rich, keeps the margin.
 /datum/advclass/flinger/fence
 	name = "Fence"
-	tutorial = "Buy low, sell high, never ask where it came from. That's the whole racket. \
-	Half the peasants in this town bought somethin' off ya, and that makes 'em ya clients. \
+	tutorial = "Buy low, sell high, never ask where it came from. That is the whole racket. \
+	Half the peasants in this town have bought something off you, and that makes them your clients. \
 	Watch out for the Watch, though. They might want their own taste."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
@@ -564,9 +658,9 @@
 // Dealer - pushes contraband. More goods, less coin.
 /datum/advclass/flinger/dealer
 	name = "Dealer"
-	tutorial = "You's move the stuff polite society pretends ain't real. \
+	tutorial = "You move the wares polite society pretends are not real. \
 	Poisons, powders, things with no safe use. \
-	Coin's good. Risk's worse. You's made peace with that a long time ago, capisce?"
+	The coin is good. The risk is worse. You made peace with that a long time ago."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/flinger/dealer
@@ -623,11 +717,12 @@
 
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
-	tutorial = "Medicine for coin. Surgery for more coin. You's the guy people come to when the clinic says no. \
-	Pull a crossbow bolt without askin' how it got there, stitch a face that shouldn't be \
-	walkin' around, and charge for it. \
-	When coin runs short, lux pays well. Crack a chest, scrape the heart, sell what ya draw. \
-	Them Pestran relics ya carry ain't exactly legal, though."
+	allowed_patrons = UNDERBELLY_ALLOWED_PATRONS
+	tutorial = "Medicine for coin. Surgery for more coin. You are the one people come to when the clinic says no. \
+	You pull a crossbow bolt without asking how it got there, stitch a face that shouldn't be \
+	walking around, and charge for it. \
+	When coin runs short, lux pays well. Crack a chest, scrape the heart, sell what you draw. \
+	The Pestran relics you carry are not exactly legal, though."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper
 	obsfuscated_job = TRUE
@@ -641,7 +736,7 @@
 	advclass_cat_rolls = list(CTAG_UNDERBELLY_RIPPER = 3)
 	job_traits = list(TRAIT_MEDICINE_EXPERT)
 	job_subclasses = list(
-		/datum/advclass/ripper/sawbones,
+		/datum/advclass/ripper/scorned,
 		/datum/advclass/ripper/chirurgeon,
 	)
 	advjob_examine = TRUE
@@ -664,56 +759,66 @@
 	if(H.mind)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
-// Sawbones — rough, fast, pragmatic.
-/datum/advclass/ripper/sawbones
-	name = "Sawbones"
-	tutorial = "You's work fast, in bad light, with whatever's on the table. \
-	Ya keep 'em alive 'cause dead patients don't tip. Usually."
+// Scorned - cast-out cleric. Sells faith and stitches when nobody else will.
+/datum/advclass/ripper/scorned
+	name = "Scorned"
+	tutorial = "The temple turned its back on you. The Underbelly didn't. \
+	Down here, prayers still answer, even from someone the priests would call lapsed. \
+	You patch the wounds the clinic refuses, and you ask your patron for the rest."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/underbelly/ripper/sawbones
+	outfit = /datum/outfit/job/roguetown/underbelly/ripper/scorned
 	category_tags = list(CTAG_UNDERBELLY_RIPPER)
 	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
 		STATKEY_INT = 2,
-		STATKEY_SPD = 2,
-		STATKEY_STR = 1,
+		STATKEY_WIL = 2,
+		STATKEY_CON = 1,
 	)
 	subclass_skills = list(
-		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
 	)
 
-/datum/outfit/job/roguetown/underbelly/ripper/sawbones/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/underbelly/ripper/scorned/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	head = /obj/item/clothing/head/roguetown/physician
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
+	head = null
+	cloak = null
+	armor = /obj/item/clothing/suit/roguetown/shirt/robe
+	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+	pants = /obj/item/clothing/under/roguetown/tights
+	shoes = /obj/item/clothing/shoes/roguetown/sandals
+	gloves = null
+	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
+	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/natural/bundle/cloth/bandage/full = 3,
+		/obj/item/natural/bundle/cloth/bandage/full = 2,
 		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/flashlight/flare/torch = 1,
 	)
 
+/datum/outfit/job/roguetown/underbelly/ripper/scorned/post_equip(mob/living/carbon/human/H)
+	..()
+	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_2)
+
 // Chirurgeon - the precise one. Master medicine, expert knives.
 /datum/advclass/ripper/chirurgeon
 	name = "Chirurgeon"
-	tutorial = "Other Rippers cut fast. You's cut right, capisce? \
-	Them Pestran relics that wind up in ya patients' guts? Put there on purpose, exact right depth. \
-	Fee reflects the precision."
+	tutorial = "Other Rippers cut fast. You cut right. \
+	The Pestran relics that wind up in your patients' guts are placed on purpose, at exact depth. \
+	The fee reflects the precision."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper/chirurgeon
@@ -813,6 +918,105 @@
 				H.change_stat(STATKEY_SPD, 1)
 	to_chat(H, span_bloody("I am known. The law has my name. I've survived it this far."))
 
+// =====================================================
+// PROLETARIUS
+// 10 PQ. Escaped Otavan slave-worker. Welded helm, broken stats.
+// Random survival skills, novice unarmed/reading, journeyman swimming.
+// =====================================================
+/obj/item/clothing/head/roguetown/helmet/scumbucket
+	name = "welded helm"
+	desc = "A crude iron bucket, hammered shut and welded to the wearer's skin. The Otavan Inquisition's mark of ownership. There is no removing it."
+	icon = 'modular_underbelly/sprites/scumbucket.dmi'
+	icon_state = "scumbucket"
+	mob_overlay_icon = 'modular_underbelly/sprites/scumbucket.dmi'
+	body_parts_covered = HEAD|HAIR|NOSE|FACE|EARS|EYES|NECK
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEARS|HIDENECK
+	flags_cover = HEADCOVERSEYES
+	armor = list("blunt" = 5, "slash" = 30, "stab" = 20, "piercing" = 10, "fire" = 0, "acid" = 0)
+	max_integrity = 200
+	smeltresult = /obj/item/ingot/iron
+
+/obj/item/clothing/head/roguetown/helmet/scumbucket/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, "welded_helm")
+
+/obj/item/clothing/head/roguetown/helmet/scumbucket/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	return ..(default_layer, default_icon_file, isinhands, femaleuniform, override_state || "scumbucket_onmob", female, customi, sleeveindex, boobed_overlay, clip_mask)
+
+/datum/job/roguetown/proletarius
+	title = "Proletarius"
+	flag = UB_PROLETARIUS
+	department_flag = UNDERBELLY
+	faction = "Station"
+	total_positions = 4
+	spawn_positions = 4
+	selection_color = JCOLOR_UNDERBELLY
+
+	allowed_races = RACES_ALL_KINDS
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_patrons = UNDERBELLY_ALLOWED_PATRONS
+	tutorial = "An escaped, or freed slave-worker from the depths of the Otavan Inquisition. These poor, restless souls have had their minds torn asunder, hearing the laughter of their torturers every so often. \
+	Their bodies raped, abused and starved, their heads encased in a helm welded to skin, they serve no purpose other than working meat, waiting for Necra's sweet embrace."
+
+	outfit = /datum/outfit/job/roguetown/underbelly/proletarius
+	obsfuscated_job = TRUE
+	antag_job = FALSE
+	display_order = JDO_PROLETARIUS
+	min_pq = 10
+	max_pq = null
+	round_contrib_points = 5
+	social_rank = SOCIAL_RANK_SCUM
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
+	advjob_examine = TRUE
+	announce_latejoin = FALSE
+	same_job_respawn_delay = 2 MINUTES
+
+/datum/outfit/job/roguetown/underbelly/proletarius
+
+/datum/outfit/job/roguetown/underbelly/proletarius/pre_equip(mob/living/carbon/human/H)
+	..()
+	head = /obj/item/clothing/head/roguetown/helmet/scumbucket
+	armor = null
+	cloak = null
+	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant
+	pants = /obj/item/clothing/under/roguetown/tights/vagrant
+	gloves = /obj/item/clothing/gloves/roguetown/fingerless
+	beltl = null
+	beltr = null
+
+/datum/outfit/job/roguetown/underbelly/proletarius/post_equip(mob/living/carbon/human/H)
+	..()
+	H.STASTR = 3
+	H.STAPER = 3
+	H.STAINT = 3
+	H.STACON = 3
+	H.STAWIL = 3
+	H.STASPD = 3
+	H.STALUC = 3
+	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_NOVICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	var/list/survival_pool = list(
+		/datum/skill/craft/cooking,
+		/datum/skill/craft/blacksmithing,
+		/datum/skill/craft/weaponsmithing,
+		/datum/skill/craft/armorsmithing,
+		/datum/skill/craft/smelting,
+		/datum/skill/craft/carpentry,
+		/datum/skill/craft/masonry,
+		/datum/skill/craft/sewing,
+		/datum/skill/craft/tanning,
+		/datum/skill/craft/ceramics,
+		/datum/skill/labor/farming,
+		/datum/skill/labor/mining,
+		/datum/skill/labor/fishing,
+		/datum/skill/labor/butchering,
+		/datum/skill/labor/lumberjacking,
+	)
+	for(var/datum/skill/S as anything in survival_pool)
+		H.adjust_skillrank_up_to(S, rand(SKILL_LEVEL_NOVICE, SKILL_LEVEL_JOURNEYMAN), TRUE)
+	H.faction |= "bums"
+
 // Spawn landmarks for the underbelly other-z maps.
 // All are late-join (delete_after_roundstart = FALSE) so respawning players can still use them.
 /obj/effect/landmark/start/gutterkingleft
@@ -844,4 +1048,12 @@
 	icon_state = "arrow"
 	jobspawn_override = list("Ripper")
 	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/proletariuslate
+	name = "Proletarius"
+	icon_state = "arrow"
+	jobspawn_override = list("Proletarius")
+	delete_after_roundstart = FALSE
+
+
 

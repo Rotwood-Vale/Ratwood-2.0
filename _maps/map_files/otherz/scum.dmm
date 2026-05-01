@@ -775,6 +775,13 @@
 "nZ" = (
 /turf/open/floor/rogue/carpet/lord/left,
 /area/rogue/under/scum/boss)
+"oz" = (
+/obj/structure/stairs/fancy/c{
+	dir = 4
+	},
+/obj/machinery/light/rogue/candle/green/l,
+/turf/open/floor/rogue/carpet,
+/area/rogue/under/scum/boss)
 "oD" = (
 /obj/structure/chair/bench/coucha/r,
 /turf/open/floor/rogue/carpet/lord/center,
@@ -1183,6 +1190,7 @@
 "xt" = (
 /obj/structure/bed/rogue/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
+/obj/machinery/light/rogue/candle/green/r,
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/under/scum/boss)
 "xJ" = (
@@ -1195,7 +1203,8 @@
 "yd" = (
 /obj/structure/mineral_door/wood{
 	lockid = "underbelly_room2";
-	name = "Room #2"
+	name = "Room #2";
+	door_opened = 1
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/dorms)
@@ -1328,6 +1337,10 @@
 /obj/machinery/light/rogue/candle/green,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
+"Ak" = (
+/obj/machinery/light/rogue/candle/green/l,
+/turf/open/floor/rogue/carpet,
+/area/rogue/under/scum/boss)
 "Ao" = (
 /obj/effect/decal/carpet/square{
 	pixel_x = 14;
@@ -2006,7 +2019,8 @@
 "Ol" = (
 /obj/structure/mineral_door/wood{
 	lockid = "underbelly_room5";
-	name = "Room #5"
+	name = "Room #5";
+	door_opened = 1
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/dorms)
@@ -2514,7 +2528,8 @@
 "WY" = (
 /obj/structure/mineral_door/wood{
 	lockid = "underbelly_room1";
-	name = "Room #1"
+	name = "Room #1";
+	door_opened = 1
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/dorms)
@@ -2651,7 +2666,8 @@
 /obj/machinery/light/rogue/candle/green/l,
 /obj/structure/mineral_door/wood{
 	lockid = "underbelly_room3";
-	name = "Room #3"
+	name = "Room #3";
+	door_opened = 1
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/dorms)
@@ -9742,9 +9758,9 @@ Vc
 AQ
 AQ
 ly
-oI
+Ak
 li
-li
+oz
 ly
 zw
 Ts

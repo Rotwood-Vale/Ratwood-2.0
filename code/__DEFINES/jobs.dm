@@ -224,6 +224,8 @@
 #define UB_FLESH_TRADER	(1<<2)
 #define UB_FLINGER		(1<<3)
 #define UB_RIPPER		(1<<4)
+#define UB_PROLETARIUS	(1<<5)
+#define UB_CONSIGLIERE	(1<<6)
 
 #define JCOLOR_NOBLE "#aa83b9"
 #define JCOLOR_COURTIER "#81adc8"
@@ -325,10 +327,12 @@
 #define JDO_ASSASSIN 30.6
 #define JDO_TRADER 30.7
 #define JDO_GUTTER_KING 31.5
+#define JDO_CONSIGLIERE 31.55
 #define JDO_UB_SCUM 31.6
 #define JDO_FLESH_TRADER_JOB 31.7
 #define JDO_FLINGER_JOB 31.8
 #define JDO_RIPPER_JOB 31.9
+#define JDO_PROLETARIUS 31.95
 
 #define JDO_MERCENARY 31
 #define JDO_GRENZELHOFT 31.1
