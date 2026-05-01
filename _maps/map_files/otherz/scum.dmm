@@ -355,6 +355,10 @@
 /obj/machinery/light/rogue/candle/green/l,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/scum/shop)
+"gl" = (
+/obj/effect/landmark/start/proletariuslate,
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/under/scum)
 "gp" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
@@ -675,6 +679,10 @@
 "mi" = (
 /obj/structure/table/wood/long_table,
 /obj/structure/rack/rogue/shelf,
+/obj/item/reagent_containers/glass/cup/tin/small{
+	pixel_x = -7;
+	pixel_y = 43
+	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
 "ml" = (
@@ -1001,7 +1009,7 @@
 /area/rogue/under/scum/common)
 "tT" = (
 /obj/structure/mineral_door/wood/bath/bathmaid{
-	name = "PERSONAL DORMS";
+	name = "THE PEDDLER";
 	desc = "A place to call your own. Pick a room, and claim it as yours. Decorate it as you see fit.";
 	lockid = "underbelly_scum"
 	},
@@ -1488,16 +1496,10 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
 "CW" = (
-/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{
-	pixel_x = 5;
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{
-	pixel_x = -3;
-	pixel_y = 12
-	},
-/turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/under/scum/common)
+/obj/structure/bars/grille/rusty,
+/obj/effect/landmark/start/proletariuslate,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/under/scum)
 "Da" = (
 /obj/machinery/light/roguestreet/midlamp{
 	pixel_x = -4;
@@ -1521,7 +1523,8 @@
 "Do" = (
 /obj/structure/mineral_door/wood/bath/bathmaid{
 	name = "THE SMUGGLER'S TRAIN - GOODS ARRIVAL";
-	desc = "The Smuggler's Train always has goods for us. What will it bring us this time?"
+	desc = "The Smuggler's Train always has goods for us. What will it bring us this time?";
+	lockid = "underbelly_scum"
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/landing)
@@ -1800,12 +1803,10 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/landing)
 "IT" = (
-/obj/item/reagent_containers/glass/cup/tin/small{
-	pixel_x = -7;
-	pixel_y = 12
-	},
-/turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/under/scum/common)
+/obj/structure/bars/grille/rusty,
+/obj/effect/landmark/start/proletariuslate,
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/under/scum)
 "Jb" = (
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue)
@@ -1822,6 +1823,10 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/dorms)
+"Jy" = (
+/obj/effect/landmark/start/consiglierelate,
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue/under/scum/boss)
 "JB" = (
 /obj/structure/bars/grille/rusty,
 /obj/machinery/light/rogue/candle/green/r,
@@ -2254,6 +2259,14 @@
 	},
 /obj/item/storage/roguebag,
 /obj/item/storage/roguebag,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{
+	pixel_x = -3;
+	pixel_y = 46
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead{
+	pixel_x = 5;
+	pixel_y = 47
+	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
 "Sw" = (
@@ -3663,7 +3676,7 @@ Wh
 Wh
 Wh
 aS
-aS
+gl
 aS
 aS
 ZE
@@ -3861,7 +3874,7 @@ Wh
 Wh
 iO
 aS
-aS
+gl
 aS
 aS
 Wh
@@ -3937,7 +3950,7 @@ KE
 KE
 KE
 KE
-KE
+CW
 KE
 KE
 KE
@@ -3995,7 +4008,7 @@ Wh
 aS
 aS
 aS
-aS
+gl
 KE
 KE
 KE
@@ -4580,14 +4593,14 @@ KE
 KE
 AM
 KE
-KE
+CW
 KE
 KE
 KE
 KE
 KE
 AM
-KE
+CW
 Wh
 Wh
 Wh
@@ -5122,7 +5135,7 @@ KE
 KE
 KE
 KE
-KE
+CW
 KE
 KE
 KE
@@ -8541,7 +8554,7 @@ vn
 vn
 AQ
 AQ
-CW
+TA
 Sk
 lh
 LR
@@ -8607,7 +8620,7 @@ vn
 vn
 AQ
 AQ
-IT
+TA
 mi
 LR
 Ao
@@ -9148,7 +9161,7 @@ tB
 df
 Ty
 dA
-AQ
+IT
 Ds
 vf
 vf
@@ -10222,7 +10235,7 @@ AQ
 ly
 ly
 Pp
-RU
+Jy
 RR
 RU
 RU

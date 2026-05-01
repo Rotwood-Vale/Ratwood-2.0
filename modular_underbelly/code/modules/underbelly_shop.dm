@@ -279,6 +279,7 @@
 		list("Baffled Powder Sleeve",  "No more smoke cloud after you fire. Apply it to the gun.",       /obj/item/underbelly_upgrade/silencer,  2, 150, FALSE, "Scum"),
 		list("Extended Cylinder Plate","One more round in the chamber. Apply it to the gun.",            /obj/item/underbelly_upgrade/capacity,  2, 180, FALSE, "Scum"),
 		list("Filed Sights",           "Tighter spread. Easier to put the ball where you want it. Apply it to the gun.", /obj/item/underbelly_upgrade/aim, 2, 130, FALSE, "Scum"),
+		list("Cannonball",             "An iron sphere the size of a fist. Fits the hand cannon.",                       /obj/item/ammo_casing/caseless/bullet/cannonball, 3, 600, FALSE, "Scum"),
 	)
 	for(var/entry in scum_guns)
 		if(prob(12))

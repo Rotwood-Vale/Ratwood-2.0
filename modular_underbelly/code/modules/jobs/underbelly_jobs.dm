@@ -40,6 +40,8 @@
 
 /datum/outfit/job/roguetown/underbelly/post_equip(mob/living/carbon/human/H)
 	..()
+	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_NOVICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	if(!H.mind)
 		return
 	if(HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
@@ -138,7 +140,7 @@
 	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_GUTTER_KING
-	min_pq = 110
+	min_pq = 100
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
@@ -205,7 +207,7 @@
 	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_CONSIGLIERE
-	min_pq = 90
+	min_pq = 85
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
@@ -249,12 +251,6 @@
 	if(!ishuman(H))
 		return
 	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_word)
-
-/obj/effect/landmark/start/consiglierelate
-	name = "Consigliere"
-	icon_state = "arrow"
-	jobspawn_override = list("Consigliere")
-	delete_after_roundstart = FALSE
 
 /datum/advclass/gutterking/kingpin
 	name = "Kingpin"
@@ -368,8 +364,8 @@
 	flag = UB_SCUM
 	department_flag = UNDERBELLY
 	faction = "Station"
-	total_positions = 6
-	spawn_positions = 6
+	total_positions = 8
+	spawn_positions = 8
 	selection_color = JCOLOR_UNDERBELLY
 
 	allowed_races = RACES_ALL_KINDS
@@ -383,7 +379,7 @@
 	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_UB_SCUM
-	min_pq = 50
+	min_pq = 35
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
@@ -418,6 +414,8 @@
 	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
 // Enforcer — the brawler. Hits things until they stop moving.
 /datum/advclass/scum/enforcer
@@ -579,7 +577,7 @@
 	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_FLINGER_JOB
-	min_pq = 55
+	min_pq = 40
 	max_pq = null
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_SCUM
@@ -730,7 +728,7 @@
 	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_RIPPER_JOB
-	min_pq = 70
+	min_pq = 50
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
@@ -788,6 +786,7 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/farming = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/underbelly/ripper/scorned/pre_equip(mob/living/carbon/human/H)
@@ -844,6 +843,7 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/farming = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/underbelly/ripper/chirurgeon/pre_equip(mob/living/carbon/human/H)
@@ -952,8 +952,8 @@
 	flag = UB_PROLETARIUS
 	department_flag = UNDERBELLY
 	faction = "Station"
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 3
+	spawn_positions = 3
 	selection_color = JCOLOR_UNDERBELLY
 
 	allowed_races = RACES_ALL_KINDS
@@ -1020,6 +1020,22 @@
 	for(var/datum/skill/S as anything in survival_pool)
 		H.adjust_skillrank_up_to(S, rand(SKILL_LEVEL_NOVICE, SKILL_LEVEL_JOURNEYMAN), TRUE)
 	H.faction |= "bums"
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(proletarius_laugh_tick), H), rand(1, 3) MINUTES, TIMER_STOPPABLE|TIMER_OVERRIDE)
+
+/proc/proletarius_laugh_tick(mob/living/carbon/human/H)
+	if(!H || H.stat == DEAD || H.job != "Proletarius")
+		return
+	if(H.client)
+		var/static/list/laughs = list(
+			'modular_underbelly/sound/hallucinations/laugh_center.ogg',
+			'modular_underbelly/sound/hallucinations/laugh_left1.ogg',
+			'modular_underbelly/sound/hallucinations/laugh_left2.ogg',
+			'modular_underbelly/sound/hallucinations/laugh_left3.ogg',
+			'modular_underbelly/sound/hallucinations/laugh_right1.ogg',
+			'modular_underbelly/sound/hallucinations/laugh_right2.ogg',
+		)
+		H.playsound_local(H, pick(laughs), 40, 0)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(proletarius_laugh_tick), H), rand(1, 4) MINUTES, TIMER_STOPPABLE|TIMER_OVERRIDE)
 
 // Spawn landmarks for the underbelly other-z maps.
 // All are late-join (delete_after_roundstart = FALSE) so respawning players can still use them.
@@ -1051,6 +1067,12 @@
 	name = "Ripper"
 	icon_state = "arrow"
 	jobspawn_override = list("Ripper")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/consiglierelate
+	name = "Consigliere"
+	icon_state = "arrow"
+	jobspawn_override = list("Consigliere")
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/proletariuslate

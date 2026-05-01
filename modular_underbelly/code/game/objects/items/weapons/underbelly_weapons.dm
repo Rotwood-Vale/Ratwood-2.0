@@ -563,7 +563,7 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 	w_class = WEIGHT_CLASS_BULKY
 	wlength = WLENGTH_SHORT
 	walking_stick = FALSE
-	bigboy = FALSE
+	bigboy = TRUE
 	gripsprite = FALSE
 	possible_item_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, /datum/intent/mace/strike/wood)
 	gripped_intents = null
