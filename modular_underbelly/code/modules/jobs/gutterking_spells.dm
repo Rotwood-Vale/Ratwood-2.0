@@ -223,7 +223,7 @@
 	desc = "Your voice carries from the gutters to every ear in the vale."
 	overlay_state = "recruit_bog"
 	antimagic_allowed = TRUE
-	recharge_time = 20 MINUTES
+	recharge_time = 3 MINUTES
 
 /obj/effect/proc_holder/spell/self/gutterking_announce/cast(list/targets, mob/user)
 	if(user.stat)
