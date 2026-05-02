@@ -38738,6 +38738,13 @@
 	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/manor/rockhill)
+"jbn" = (
+/obj/structure/doorman{
+	doorman_id = "KEEP_BASEMENT_NORTH";
+	location_name = "THE FRONTDOOR"
+	},
+/turf/closed/wall/mineral/rogue/stonebrick,
+/area/rogue/indoors/town/bath)
 "jbr" = (
 /obj/item/storage/roguebag,
 /obj/item/storage/roguebag,
@@ -46740,13 +46747,14 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue)
 "kTa" = (
-/obj/structure/closet/crate/chest/old_crate,
-/obj/item/rope,
-/obj/item/natural/bundle/stick,
-/obj/item/natural/bundle/stick,
-/obj/item/rogue/instrument/accord,
-/obj/item/rogue/instrument/harp,
-/obj/item/rogue/instrument/lute,
+/obj/structure/fluff/traveltile/underbelly/pipe{
+	dir = 8;
+	pixel_y = 1;
+	pixel_x = 9;
+	aportalid = "KEEP_BASEMENT_NORTH";
+	aportalgoesto = "KEEP_BASEMENT_NORTH_EXIT";
+	doorman_id = "KEEP_BASEMENT_NORTH"
+	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/bath)
 "kTc" = (
@@ -62251,12 +62259,16 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cavewet)
 "oCE" = (
-/obj/structure/doorman{
-	doorman_id = "KEEP_BASEMENT_NORTH";
-	location_name = "THE BACKDOOR"
-	},
-/turf/closed/mineral/rogue,
-/area/rogue/under/cavewet)
+/obj/item/reagent_containers/food/snacks/smallrat,
+/obj/item/rogue/instrument/lute,
+/obj/item/rogue/instrument/harp,
+/obj/item/rogue/instrument/accord,
+/obj/item/natural/bundle/stick,
+/obj/item/natural/bundle/stick,
+/obj/item/rope,
+/obj/structure/closet/crate/chest/old_crate,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/indoors/town/bath)
 "oCI" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -77905,14 +77917,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
 "sth" = (
-/obj/structure/fluff/traveltile/underbelly/pipe{
-	dir = 8;
-	pixel_y = 1;
-	pixel_x = 9;
-	aportalid = "KEEP_BASEMENT_NORTH";
-	aportalgoesto = "KEEP_BASEMENT_NORTH_EXIT";
-	doorman_id = "KEEP_BASEMENT_NORTH"
-	},
+/obj/item/natural/poo/cow,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cavewet)
 "stk" = (
@@ -159238,7 +159243,7 @@ aad
 aad
 aad
 aad
-oCE
+aad
 aad
 aad
 aad
@@ -160100,9 +160105,9 @@ aad
 aad
 aad
 aad
+eQK
+eQK
 sth
-eQK
-eQK
 eQK
 eQK
 eQK
@@ -163624,7 +163629,7 @@ kJh
 xeg
 grO
 kto
-otP
+oCE
 vXL
 kjD
 nvH
@@ -164922,7 +164927,7 @@ grO
 fwH
 dgC
 xLu
-scK
+jbn
 scK
 cQX
 xrC

@@ -577,6 +577,11 @@
 	desc = "These grounds are where I feel the most connection to my patron. Their blessing is strongest here!"
 	icon_state = "guardsman"
 
+/atom/movable/screen/alert/status_effect/home_turf_advantage
+	name = "Home Turf Advantage"
+	desc = "This dump might be a dump, but it's our dump. I ain't gonna let some chumps take it from"
+	icon_state = "guardsman"
+
 /datum/status_effect/debuff/holy_blessing
 	id = "holyblessing"
 	alert_type = /atom/movable/screen/alert/status_effect/holy_empowerement
@@ -590,11 +595,26 @@
 		STATKEY_LCK = 2,
 	)
 
+/datum/status_effect/buff/home_turf_advantage
+	id = "hometurfadvantage"
+	alert_type = /atom/movable/screen/alert/status_effect/home_turf_advantage
+	effectedstats = list(
+		STATKEY_STR = 3,
+		STATKEY_PER = 2,
+		STATKEY_INT = 1,
+		STATKEY_CON = 2,
+	)
+
 /datum/status_effect/debuff/holy_blessing/process()
 	.=..()
 	var/area/rogue/our_area = get_area(owner)
 	if(!(our_area.holy_area))
 		owner.remove_status_effect(/datum/status_effect/debuff/holy_blessing)
+
+/datum/status_effect/buff/home_turf_advantage/process()
+	.=..()
+	if(!istype(get_area(owner), /area/rogue/under/scum))
+		owner.remove_status_effect(/datum/status_effect/buff/home_turf_advantage)
 
 // Lesser Miracle effect
 /atom/movable/screen/alert/status_effect/buff/healing

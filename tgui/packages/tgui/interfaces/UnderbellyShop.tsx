@@ -277,15 +277,23 @@ const JOB_HINTS: Record<string, HelpEntry[]> = {
   Ripper: [
     {
       header: 'Lux trade',
-      body: 'Hand lux or impure lux containers directly to the Trader for mammon. Only Rippers can sell lux - the Trader refuses it from anyone else.',
+      body: 'Hand lux or impure lux containers directly to the Trader for mammon. Only Rippers can sell lux.',
     },
     {
-      header: 'Shop access',
-      body: 'You have access to the shared and exclusive tabs. Fund the chute to keep the shop budget healthy.',
+      header: 'Medical supply sales',
+      body: 'Hand crafted potions and bandages to the Trader for coin - healthpots, manapots, antitoxin, Blood Red, Voss Serum, and bandage bundles all have a buy price. Capped at 300 mammon per 10 minutes.',
+    },
+    {
+      header: 'Supply board',
+      body: 'Check the supply board near your area. It posts 3 rotating requests every 25 minutes - hand matching items to the board for per-unit coin. New requests are announced when the board refreshes.',
+    },
+    {
+      header: 'Sick patients',
+      body: "When word comes through that someone's bleeding out, find them fast. Apply bandages, healthpots, or surgical tools to treat their wounds. Once they're stable they pay you and leave. You have 15 minutes before they go cold.",
     },
     {
       header: 'Faction debt',
-      body: 'Same as any Scum - pitch in at the chute and keep an eye on the Taxman. Lux income is your primary contribution loop.',
+      body: 'Same as any Scum - pitch in at the chute and keep an eye on the Taxman.',
     },
   ],
   Proletarius: [

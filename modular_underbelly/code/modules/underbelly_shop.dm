@@ -450,7 +450,7 @@
 	var/ticks_left = trader ? max(0, trader.next_restock - world.time) : 0
 	var/list/demand_names = list()
 	if(trader)
-		for(var/path in trader.demand_types)
+		for(var/obj/item/path as anything in trader.demand_types)
 			demand_names += initial(path.name)
 	return list(
 		"budget" = user_budget,

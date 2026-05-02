@@ -80,7 +80,7 @@
 		say("Anything that ain't nailed down, mate. I'll take whatever you've got.")
 		return
 	var/list/names = list()
-	for(var/path in demand_types)
+	for(var/obj/item/path as anything in demand_types)
 		names += initial(path.name)
 	say("Payin' top coin today for: [english_list(names)]. Don't keep me waiting.")
 
@@ -403,6 +403,36 @@
 		return rand(70, 100)
 	return 0
 
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/_ripper_supply_payout(obj/item/I)
+	if(istype(I, /obj/item/reagent_containers/glass/bottle/rogue/blood_red))
+		return 90
+	if(istype(I, /obj/item/reagent_containers/glass/bottle/rogue/voss_serum))
+		return 50
+	if(istype(I, /obj/item/reagent_containers/glass/bottle/rogue/healthpot))
+		return 20
+	if(istype(I, /obj/item/reagent_containers/glass/bottle/rogue/stampot))
+		return 50
+	if(istype(I, /obj/item/reagent_containers/glass/bottle/rogue/manapot))
+		return 14
+	if(istype(I, /obj/item/reagent_containers/glass/bottle/rogue/antidote))
+		return 6
+	if(istype(I, /obj/item/natural/bundle/cloth/bandage/full))
+		return 3
+	return 0
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/_spawn_coin_payout(atom/where, payout_mammon)
+	if(payout_mammon <= 0 || !where)
+		return
+	var/gold = FLOOR(payout_mammon / 10, 1)
+	var/silver = FLOOR((payout_mammon % 10) / 5, 1)
+	var/copper = payout_mammon % 5
+	if(gold)
+		new /obj/item/roguecoin/gold(where, gold)
+	if(silver)
+		new /obj/item/roguecoin/silver(where, silver)
+	if(copper)
+		new /obj/item/roguecoin/copper(where, copper)
+
 /mob/living/carbon/human/species/human/northern/underbelly_trader/proc/roll_trade_demands()
 	var/list/pool = list(
 		/obj/item/roguegem/random,
@@ -499,11 +529,31 @@
 			return
 		var/sold_name = I.name
 		qdel(I)
-		var/obj/item/roguecoin/gold/coins = new(get_turf(H), gold_payout)
-		H.put_in_hands(coins)
+		_spawn_coin_payout(get_turf(H), gold_payout)
 		visible_message(span_notice("[src] pockets [sold_name] with a nod."))
 		on_purchase(H, null)
 		return
+
+	if(H.job == "Ripper")
+		var/supply_payout = _ripper_supply_payout(I)
+		if(supply_payout)
+			var/cap_key = "ripper_supply_[H.ckey]"
+			var/window_start = sale_window_start[cap_key] || 0
+			if(!window_start || world.time > window_start + (10 MINUTES))
+				sale_window_start[cap_key] = world.time
+				sale_window_value[cap_key] = 0
+			var/window_total = sale_window_value[cap_key] || 0
+			if(window_total >= 300)
+				to_chat(H, span_warning("[src] shakes [src.p_their()] head. \"Enough for now, mate.\""))
+				return
+			supply_payout = min(supply_payout, 300 - window_total)
+			sale_window_value[cap_key] = window_total + supply_payout
+			var/sold_name = I.name
+			qdel(I)
+			_spawn_coin_payout(get_turf(H), supply_payout)
+			visible_message(span_notice("[src] takes [sold_name] and settles with [H]."))
+			on_purchase(H, null)
+			return
 
 	if(istype(I, /obj/item/parcel/dead_drop))
 		var/obj/item/parcel/dead_drop/parcel = I
@@ -516,8 +566,7 @@
 		var/obj/item/paper/scroll/dead_drop_contract/C = parcel.contract_ref?.resolve()
 		parcel.contract_ref = null
 		qdel(parcel)
-		var/obj/item/roguecoin/gold/payout = new(get_turf(H), rand(12, 20))
-		H.put_in_hands(payout)
+		_spawn_coin_payout(get_turf(H), rand(12, 20))
 		if(C)
 			C.parcel_ref = null
 			C.ready_to_redeem = TRUE
@@ -538,8 +587,7 @@
 		qdel(C)
 		var/base_payout = rand(450, 750)
 		var/streak_bonus = get_deaddrop_streak_bonus(H)
-		var/obj/item/roguecoin/gold/payout = new(get_turf(H), base_payout + streak_bonus)
-		H.put_in_hands(payout)
+		_spawn_coin_payout(get_turf(H), base_payout + streak_bonus)
 		visible_message(span_notice("[src] tears the contract in half and settles the debt with [H]."))
 		if(streak_bonus)
 			to_chat(H, span_notice("Streak bonus: +[streak_bonus] mammon."))
@@ -583,8 +631,7 @@
 
 	var/sold_name = I.name
 	qdel(I)
-	var/obj/item/roguecoin/gold/sale_payout = new(get_turf(H), payout_value)
-	H.put_in_hands(sale_payout)
+	_spawn_coin_payout(get_turf(H), payout_value)
 	visible_message(span_notice("[src] appraises [sold_name], nods, and settles with [H]."))
 	if(demanded)
 		say("Lucky day. I was looking for exactly that.")

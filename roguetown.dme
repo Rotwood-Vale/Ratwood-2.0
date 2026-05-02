@@ -3209,6 +3209,7 @@
 #include "modular_underbelly\code\modules\items\gabagool.dm"
 #include "modular_underbelly\code\modules\items\golden_cockroach.dm"
 #include "modular_underbelly\code\modules\items\mysterious_organ.dm"
+#include "modular_underbelly\code\modules\items\ripper_jobs.dm"
 #include "modular_underbelly\code\modules\items\ripper_reagents.dm"
 #include "modular_underbelly\code\modules\items\shipment.dm"
 #include "modular_underbelly\code\modules\items\smuggler_satchel.dm"

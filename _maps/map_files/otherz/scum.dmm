@@ -198,6 +198,7 @@
 /area/rogue/under/scum)
 "dE" = (
 /obj/structure/chair/frankenstein/zizo,
+/obj/machinery/light/rogue/candle/green,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
 "dH" = (
@@ -296,6 +297,9 @@
 	},
 /turf/open/water/bath,
 /area/rogue/under/scum/lounge)
+"fi" = (
+/turf/closed/wall/mineral/rogue/pipe/line/four,
+/area/rogue/under/scum/apothecary)
 "ft" = (
 /obj/structure/chair/wood/rogue/fancy{
 	dir = 4;
@@ -490,6 +494,9 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/dorms)
+"id" = (
+/turf/closed/wall/mineral/rogue/pipe/joint/four,
+/area/rogue/under/scum/apothecary)
 "ig" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/rogueweapon/greatsword/bsword,
@@ -811,6 +818,29 @@
 	},
 /turf/open/water/bath,
 /area/rogue/under/scum/lounge)
+"pc" = (
+/turf/closed/wall/mineral/rogue/pipe/corners/four,
+/area/rogue/under/scum/apothecary)
+"pf" = (
+/obj/structure/bars/grille/rusty,
+/obj/machinery/light/roguestreet/midlamp{
+	pixel_x = -4;
+	pixel_y = 25
+	},
+/obj/item/roguekey/nightmaiden,
+/obj/item/roguekey/nightmaiden,
+/obj/item/roguekey/nightmaiden,
+/obj/item/roguekey/nightmaiden,
+/obj/item/roguekey/nightmaiden,
+/obj/item/roguekey/nightmaiden,
+/obj/item/roguekey/nightmaiden,
+/obj/item/roguekey/nightmaiden,
+/obj/item/roguekey/nightmaiden,
+/obj/item/roguekey/nightmaiden,
+/obj/item/roguekey/nightmaiden,
+/obj/structure/table/wood,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/under/scum)
 "pv" = (
 /turf/open/transparent/openspace,
 /area/rogue/under/scum/dorms)
@@ -857,7 +887,7 @@
 	doorman_id = "KEEP_BASEMENT_NORTH";
 	aportalid = "KEEP_BASEMENT_NORTH_EXIT";
 	aportalgoesto = "KEEP_BASEMENT_NORTH";
-	desc = "A heavy gate fitted to the pipe mouth. Leads back to the surface. This one leads to THEIR BACKSIDE"
+	desc = "A heavy gate fitted to the pipe mouth. Leads back to the surface. This one leads to THE WHITEVEIN"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/scum)
@@ -879,8 +909,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
 "qq" = (
-/obj/machinery/light/rogue/candle/green,
-/turf/open/floor/rogue/herringbone,
+/turf/closed/wall/mineral/rogue/pipe/corners,
 /area/rogue/under/scum/apothecary)
 "qF" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -975,6 +1004,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 8
 	},
+/obj/effect/landmark/patient_spot,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
 "sC" = (
@@ -1849,6 +1879,7 @@
 /obj/machinery/light/rogue/candle/green{
 	pixel_y = -31
 	},
+/obj/effect/landmark/patient_spot,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
 "Kw" = (
@@ -1917,6 +1948,10 @@
 	icon_state = "bathtileratwood"
 	},
 /area/rogue/under/scum/lounge)
+"LJ" = (
+/obj/structure/underbelly_supply_board,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/scum/apothecary)
 "LL" = (
 /obj/machinery/light/rogue/candle/green/r,
 /turf/open/water/bath,
@@ -1956,7 +1991,7 @@
 "MN" = (
 /obj/structure/bars/grille/rusty,
 /obj/structure/mineral_door/wood/bath/bathmaid{
-	name = "THE BACKDOOR";
+	name = "THE FRONTDOOR";
 	desc = "Has a sign on it: \"AUTHORISED PERSONNEL ONLY.\"";
 	lockid = "underbelly_scum"
 	},
@@ -2538,6 +2573,7 @@
 "WX" = (
 /obj/structure/bed/rogue/inn,
 /obj/machinery/light/rogue/candle/green/r,
+/obj/effect/landmark/patient_spot,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/apothecary)
 "WY" = (
@@ -3017,7 +3053,7 @@ Wh
 Wh
 Pq
 Wh
-AM
+pf
 KE
 FF
 Wh
@@ -3478,7 +3514,7 @@ Wh
 Wh
 Wh
 Wh
-Wh
+FF
 KE
 KE
 Wh
@@ -3544,7 +3580,7 @@ Wh
 Wh
 Wh
 Wh
-Wh
+FF
 aS
 aS
 aS
@@ -3610,7 +3646,7 @@ Wh
 Wh
 Wh
 Wh
-Wh
+FF
 aS
 aS
 aS
@@ -3676,7 +3712,7 @@ Wh
 Wh
 Wh
 Wh
-Wh
+FF
 aS
 gl
 aS
@@ -3742,7 +3778,7 @@ Wh
 Wh
 Wh
 Wh
-Wh
+FF
 aS
 aS
 aS
@@ -3808,7 +3844,7 @@ Wh
 Wh
 Wh
 Wh
-Wh
+FF
 Ft
 aS
 aS
@@ -7769,7 +7805,7 @@ Zr
 wg
 kN
 sA
-aO
+qq
 vn
 vn
 vn
@@ -7835,7 +7871,7 @@ QA
 Rz
 Rz
 wg
-aO
+fi
 vn
 vn
 vn
@@ -7901,7 +7937,7 @@ uD
 wg
 Ib
 Kb
-aO
+id
 vn
 vn
 vn
@@ -7967,7 +8003,7 @@ Xv
 ZQ
 OH
 wg
-aO
+fi
 vn
 vn
 vn
@@ -8033,7 +8069,7 @@ ml
 oF
 Tg
 WX
-aO
+pc
 vn
 vn
 vn
@@ -8359,7 +8395,7 @@ vn
 AQ
 AQ
 aO
-wg
+LJ
 wg
 wg
 En
@@ -8425,7 +8461,7 @@ vn
 AQ
 AQ
 aO
-qq
+wg
 oF
 wg
 oF

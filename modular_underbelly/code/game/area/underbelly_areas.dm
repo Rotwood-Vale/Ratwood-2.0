@@ -9,6 +9,13 @@
 	plane = INDOOR_PLANE
 	converted_type = /area/rogue/outdoors/exposed
 
+/area/rogue/under/scum/Entered(mob/living/carbon/human/guy)
+	. = ..()
+	if(!ishuman(guy))
+		return
+	if(HAS_TRAIT(guy, TRAIT_UNDERBELLY_SCUM) && !guy.has_status_effect(/datum/status_effect/buff/home_turf_advantage))
+		guy.apply_status_effect(/datum/status_effect/buff/home_turf_advantage)
+
 /area/rogue/under/scum/common
 	name = "UNDERBELLY COMMON"
 	droning_sound = 'modular_underbelly/sound/scum_day.ogg'
