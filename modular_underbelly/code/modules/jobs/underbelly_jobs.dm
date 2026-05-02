@@ -214,7 +214,7 @@
 	social_rank = SOCIAL_RANK_SCUM
 	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	job_traits = list(TRAIT_SEEPRICES)
-	job_stats = list(STATKEY_INT = 3, STATKEY_PER = 2)
+	job_stats = list(STATKEY_INT = 3, STATKEY_PER = 2, STATKEY_SPD = 3)
 	advjob_examine = TRUE
 	announce_latejoin = FALSE
 	same_job_respawn_delay = 3 MINUTES
