@@ -131,18 +131,23 @@ GLOBAL_VAR(underbelly_patient_ward)
 	patient_alias = pick("a wounded Scum", "a bloodied vagrant", "a gutted figure", "a clutching wretch")
 	real_name = patient_alias
 	name = patient_alias
-	set_resting(TRUE, TRUE)
 	SetKnockdown(100000, TRUE, TRUE)
 	ADD_TRAIT(src, TRAIT_NODEATH, "underbelly_patient")
 	ADD_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE, "underbelly_patient")
 	expire_at = world.time + (3 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(_apply_patient_state)), 0)
 	addtimer(CALLBACK(src, PROC_REF(_seed_wounds)), 0)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(idle_groan)), rand(10, 25) SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(treatment_tick)), 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(check_despawn)), 3 MINUTES)
 
-/mob/living/carbon/human/species/human/northern/underbelly_patient/after_creation()
+/mob/living/carbon/human/species/human/northern/underbelly_patient/proc/_apply_patient_state()
+	if(QDELETED(src))
+		return
+	set_resting(TRUE, TRUE)
+
+underbelly_patient/after_creation()
 	..()
 	if(!patient_alias)
 		patient_alias = pick("a wounded Scum", "a bloodied vagrant", "a gutted figure", "a clutching wretch")
