@@ -50,6 +50,7 @@
 	if(HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
 		return
 	ADD_TRAIT(H, TRAIT_UNDERBELLY_SCUM, "underbelly_job")
+	GLOB.underbelly_peak_scum = max(GLOB.underbelly_peak_scum, _underbelly_count_scum())
 	H.grant_language(/datum/language/thievescant)
 	var/warning_delay = H.islatejoin ? 5 SECONDS : 2 MINUTES
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_send_warning), H), warning_delay, TIMER_OVERRIDE|TIMER_UNIQUE)

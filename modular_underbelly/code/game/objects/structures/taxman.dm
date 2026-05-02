@@ -2,7 +2,8 @@
 	THE TAXMAN
 	The Gutter King's crew owes a debt to the Kingsfield Syndicate each round.
 	Each Scum member adds underbelly_debt_per_head mammon to the collective tab.
-	The tab scales up and down as Scum join and leave.
+	Debt is based on the peak Scum headcount reached during the round - it never drops
+	when people leave, but latejoins still push it up.
 	Insert coin to pay it down before the round ends.
 
 	Mapper: place one in the Underbelly base. The debt is faction-wide.
@@ -10,6 +11,7 @@
 
 GLOBAL_VAR_INIT(underbelly_debt_paid, 0)
 GLOBAL_VAR_INIT(underbelly_roundend_registered, FALSE)
+GLOBAL_VAR_INIT(underbelly_peak_scum, 0)
 GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 
 ///Returns total mammon owed based on faction headcount. Tiers escalate faster than headcount.
@@ -22,7 +24,7 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 		return 650 * scum_count        // 2600 / 3250 / 3900
 	if(scum_count <= 10)
 		return 700 * scum_count        // 4900 → 7000
-	return 1000 * scum_count           // 11000+
+	return min(1000 * scum_count, 10050) // capped
 
 /obj/structure/roguemachine/taxman
 	name = "The Taxman"
@@ -36,6 +38,7 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 /obj/structure/roguemachine/taxman/Initialize(mapload)
 	. = ..()
 	GLOB.underbelly_debt_paid = 0
+	GLOB.underbelly_peak_scum = 0
 	GLOB.underbelly_debt_contributions = list()
 	if(!GLOB.underbelly_roundend_registered)
 		GLOB.underbelly_roundend_registered = TRUE
@@ -45,7 +48,7 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 	if(!isliving(user) || !HAS_TRAIT(user, TRAIT_UNDERBELLY_SCUM))
 		to_chat(user, span_warning("This means nothing to you."))
 		return
-	var/scum_count = _underbelly_count_scum()
+	var/scum_count = max(_underbelly_count_scum(), GLOB.underbelly_peak_scum)
 	var/owed = _underbelly_get_debt(scum_count)
 	var/remaining = max(0, owed - GLOB.underbelly_debt_paid)
 	if(remaining <= 0)
@@ -67,7 +70,7 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 		var/contributor = H.real_name
 		GLOB.underbelly_debt_contributions[contributor] = (GLOB.underbelly_debt_contributions[contributor] || 0) + value
 	playsound(loc, 'sound/misc/coininsert.ogg', 80, FALSE, -1)
-	var/scum_count = _underbelly_count_scum()
+	var/scum_count = max(_underbelly_count_scum(), GLOB.underbelly_peak_scum)
 	var/remaining = max(0, _underbelly_get_debt(scum_count) - GLOB.underbelly_debt_paid)
 	if(remaining <= 0)
 		to_chat(user, span_notice("[value] mammon accepted. The debt is paid."))
@@ -84,7 +87,7 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 
 /proc/_underbelly_debt_roundend()
 	GLOB.underbelly_roundend_registered = FALSE
-	var/scum_count = _underbelly_count_scum()
+	var/scum_count = max(_underbelly_count_scum(), GLOB.underbelly_peak_scum)
 	if(!scum_count)
 		return
 	var/owed = _underbelly_get_debt(scum_count)

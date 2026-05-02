@@ -283,7 +283,7 @@
 		list("Cannonball",             "An iron sphere the size of a fist. Fits the hand cannon.",                       /obj/item/ammo_casing/caseless/bullet/cannonball, 3, 600, FALSE, "Scum"),
 	)
 	for(var/entry in scum_guns)
-		if(prob(12))
+		if(prob(35))
 			excl_master += list(entry)
 	//1 in 100,000. don't ever expect to see this considering it's a joke gun.
 	if(prob(0.001))
