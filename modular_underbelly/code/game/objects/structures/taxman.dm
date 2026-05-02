@@ -12,6 +12,7 @@
 GLOBAL_VAR_INIT(underbelly_debt_paid, 0)
 GLOBAL_VAR_INIT(underbelly_roundend_registered, FALSE)
 GLOBAL_VAR_INIT(underbelly_peak_scum, 0)
+GLOBAL_VAR_INIT(underbelly_debt_rebate_tier, 0)
 GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 
 ///Returns total mammon owed based on faction headcount. Tiers escalate faster than headcount.
@@ -26,6 +27,35 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 		return 700 * scum_count        // 4900 → 7000
 	return min(1000 * scum_count, 10050) // capped
 
+/proc/_underbelly_try_rebate(owed, paid_before, paid_after, turf/drop_turf)
+	if(!owed || owed < 2000 || !isturf(drop_turf))
+		return
+	var/old_ratio = paid_before / owed
+	var/new_ratio = paid_after / owed
+	var/new_tier = 0
+	if(GLOB.underbelly_debt_rebate_tier < 1 && old_ratio < 0.25 && new_ratio >= 0.25)
+		new_tier = 1
+	else if(GLOB.underbelly_debt_rebate_tier < 2 && old_ratio < 0.5 && new_ratio >= 0.5)
+		new_tier = 2
+	else if(GLOB.underbelly_debt_rebate_tier < 3 && old_ratio < 0.75 && new_ratio >= 0.75)
+		new_tier = 3
+	if(!new_tier)
+		return
+	GLOB.underbelly_debt_rebate_tier = new_tier
+	var/rebate = 0
+	switch(new_tier)
+		if(1)
+			rebate = 250
+		if(2)
+			rebate = 500
+		if(3)
+			rebate = 900
+	new /obj/item/roguecoin/gold(drop_turf, rebate)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		if(!HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
+			continue
+		to_chat(H, span_notice("The Syndicate sends a rebate drop for hitting [new_tier * 25]% debt paid."))
+
 /obj/structure/roguemachine/taxman
 	name = "The Taxman"
 	desc = "A squat gold machine box fitted with a coin slot and a tally window. The number on the window is never enough."
@@ -39,6 +69,7 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 	. = ..()
 	GLOB.underbelly_debt_paid = 0
 	GLOB.underbelly_peak_scum = 0
+	GLOB.underbelly_debt_rebate_tier = 0
 	GLOB.underbelly_debt_contributions = list()
 	if(!GLOB.underbelly_roundend_registered)
 		GLOB.underbelly_roundend_registered = TRUE
@@ -64,13 +95,16 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 	if(!value)
 		to_chat(user, span_warning("The slot rejects it."))
 		return
+	var/scum_count = max(_underbelly_count_scum(), GLOB.underbelly_peak_scum)
+	var/owed = _underbelly_get_debt(scum_count)
+	var/paid_before = GLOB.underbelly_debt_paid
 	GLOB.underbelly_debt_paid += value
+	_underbelly_try_rebate(owed, paid_before, GLOB.underbelly_debt_paid, get_turf(src))
 	if(isliving(user))
 		var/mob/living/carbon/human/H = user
 		var/contributor = H.real_name
 		GLOB.underbelly_debt_contributions[contributor] = (GLOB.underbelly_debt_contributions[contributor] || 0) + value
 	playsound(loc, 'sound/misc/coininsert.ogg', 80, FALSE, -1)
-	var/scum_count = max(_underbelly_count_scum(), GLOB.underbelly_peak_scum)
 	var/remaining = max(0, _underbelly_get_debt(scum_count) - GLOB.underbelly_debt_paid)
 	if(remaining <= 0)
 		to_chat(user, span_notice("[value] mammon accepted. The debt is paid."))

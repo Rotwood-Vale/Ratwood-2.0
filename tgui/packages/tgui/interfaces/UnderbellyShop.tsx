@@ -31,9 +31,11 @@ type Data = {
   exclusive: ShopItem[];
   flinger: ShopItem[];
   shipments: ShopItem[];
+  demand_items: string[];
+  job: string;
 };
 
-type TabName = 'shared' | 'exclusive' | 'flinger' | 'shipments';
+type TabName = 'shared' | 'exclusive' | 'flinger' | 'shipments' | 'help';
 
 export const UnderbellyShop = () => {
   const { act, data } = useBackend<Data>();
@@ -46,6 +48,8 @@ export const UnderbellyShop = () => {
     exclusive,
     flinger,
     shipments,
+    demand_items,
+    job,
   } = data;
 
   const [tab, setTab] = useState<TabName>('shared');
@@ -72,6 +76,11 @@ export const UnderbellyShop = () => {
           <Box color="average" mb={1}>
             {restockLabel}
           </Box>
+          {demand_items && demand_items.length > 0 && (
+            <NoticeBox mb={1}>
+              <b>Paying top coin for:</b> {demand_items.join(', ')}
+            </NoticeBox>
+          )}
           <Tabs>
             <Tabs.Tab
               selected={tab === 'shared'}
@@ -107,6 +116,12 @@ export const UnderbellyShop = () => {
                 Shipments.
               </Tabs.Tab>
             )}
+            <Tabs.Tab
+              selected={tab === 'help'}
+              onClick={() => setTab('help')}
+            >
+              Need help?
+            </Tabs.Tab>
           </Tabs>
           <Divider />
           {tab === 'shared' && (
@@ -129,6 +144,7 @@ export const UnderbellyShop = () => {
               budget={budget}
             />
           )}
+          {tab === 'help' && <HelpTab job={job} />}
         </Section>
       </Window.Content>
     </Window>
@@ -183,6 +199,123 @@ const ItemList = ({ items, act_name, budget }: ItemListProps) => {
           </Stack.Item>
         );
       })}
+    </Stack>
+  );
+};
+
+type HelpEntry = { header: string; body: string };
+
+const JOB_HINTS: Record<string, HelpEntry[]> = {
+  Scum: [
+    {
+      header: 'Your role',
+      body: "You're an enforcer and protector of the Underbelly. Keep the faction's turf secure, deal with threats, and make sure the operation keeps running.",
+    },
+    {
+      header: 'Funding your arsenal',
+      body: 'Deposit mammon into the chute near the Taxman. That coin goes into your personal budget to buy from this shop.',
+    },
+    {
+      header: 'Faction debt',
+      body: "The Syndicate is owed a debt each week. Everyone pitches in - check the Taxman to see how much is left. Paying it off unlocks rebate drops at 25%, 50%, and 75%.",
+    },
+    {
+      header: 'Smuggler train',
+      body: 'A train drops contraband crates at landmarks on a timer. Some have weapons or coin - worth keeping an eye on.',
+    },
+  ],
+  Flinger: [
+    {
+      header: 'Dead drop contracts',
+      body: 'Buy contracts from the Flinger tab. Hand one to a non-Scum outsider. They read it to memorize the route, hand it back to you, then go retrieve the parcel. Once delivered to the Trader, you cash the contract for 450-750 mammon.',
+    },
+    {
+      header: 'Memorizing the route',
+      body: "The runner - not you - uses the contract on themselves to lock the route into their memory. After that they don't need to carry it. Hand it back once they've read it.",
+    },
+    {
+      header: 'Streak bonus',
+      body: 'Cash 3 contracts within 35 minutes of each other for a streak bonus on each. If 35 minutes pass between any two, the streak resets.',
+    },
+    {
+      header: 'Selling to the Trader',
+      body: 'Hand valuable items (50+ mammon base value) directly to the Trader for a 2.5x payout. Check "Paying top coin for" at the top - demanded items get an extra boost on top of that.',
+    },
+    {
+      header: 'Sale cap',
+      body: 'The Trader cuts you off at 2200 mammon per 10-minute window. Flood the market and you wait.',
+    },
+  ],
+  Consigliere: [
+    {
+      header: 'Dead drop income',
+      body: 'You can cash dead drop contracts and sell high-value items (2.2x multiplier) to the Trader - same as a Flinger but slightly lower cut. Buy contracts from the Flinger tab.',
+    },
+    {
+      header: 'Shop access',
+      body: 'You have access to the Flinger tab. Exclusives and role-specific items are open to you.',
+    },
+    {
+      header: 'Debt management',
+      body: 'Help the Gutter King keep an eye on faction debt. Rebate drops at 25/50/75% paid land at the Taxman - first one there gets it.',
+    },
+  ],
+  'Gutter King': [
+    {
+      header: 'Full shop access',
+      body: 'You have access to every tab including Flinger exclusives. You can also cash dead drop contracts at a 1.9x resale rate.',
+    },
+    {
+      header: 'Managing debt',
+      body: 'Faction debt is calculated from peak Scum count this week - it does not drop when Scum leave. Use the Taxman to track total owed vs paid.',
+    },
+    {
+      header: 'Rebate drops',
+      body: 'At 25%, 50%, and 75% of debt paid, a coin pile drops at the Taxman: 250, 500, and 900 mammon respectively. Each tier triggers once per week.',
+    },
+  ],
+  Ripper: [
+    {
+      header: 'Lux trade',
+      body: 'Hand lux or impure lux containers directly to the Trader for mammon. Only Rippers can sell lux - the Trader refuses it from anyone else.',
+    },
+    {
+      header: 'Shop access',
+      body: 'You have access to the shared and exclusive tabs. Fund the chute to keep the shop budget healthy.',
+    },
+    {
+      header: 'Faction debt',
+      body: 'Same as any Scum - pitch in at the chute and keep an eye on the Taxman. Lux income is your primary contribution loop.',
+    },
+  ],
+  Proletarius: [
+    {
+      header: 'Suffer',
+      body: 'Suffer.',
+    },
+  ],
+};
+
+const HelpTab = ({ job }: { job: string }) => {
+  const hints = JOB_HINTS[job];
+  if (!hints) {
+    return (
+      <NoticeBox>No hints available for your role.</NoticeBox>
+    );
+  }
+  return (
+    <Stack vertical>
+      {hints.map((hint) => (
+        <Stack.Item key={hint.header}>
+          <Box bold mb={0.5}>
+            {hint.header}
+          </Box>
+          <Box color="label" mb={1}>
+            {hint.body}
+          </Box>
+          <Divider />
+        </Stack.Item>
+      ))}
     </Stack>
   );
 };

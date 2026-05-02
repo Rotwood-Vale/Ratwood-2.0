@@ -243,6 +243,7 @@
 "en" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/effect/spawner/lootdrop/general_loot_low/x3,
+/obj/effect/spawner/lootdrop/general_loot_mid/x3,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/landing)
 "ep" = (
@@ -250,6 +251,9 @@
 	pixel_x = -8
 	},
 /obj/machinery/light/rogue/candle/green,
+/obj/effect/spawner/lootdrop/general_loot_mid/x3{
+	pixel_x = -6
+	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
 "ex" = (
@@ -1650,9 +1654,6 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/workshop)
-"FK" = (
-/turf/open/floor/carpet/red,
-/area/rogue/under/scum/landing)
 "FL" = (
 /obj/structure/closet/crate/chest/crate,
 /turf/open/floor/rogue/herringbone,
@@ -1836,6 +1837,7 @@
 /obj/structure/rack/rogue/shelf/biggest{
 	pixel_x = -4
 	},
+/obj/effect/spawner/lootdrop/general_loot_mid/x3,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/scum/common)
 "JX" = (
@@ -8310,8 +8312,8 @@ iu
 iu
 Vw
 wX
-FK
-dv
+RA
+KH
 Vw
 iu
 iu

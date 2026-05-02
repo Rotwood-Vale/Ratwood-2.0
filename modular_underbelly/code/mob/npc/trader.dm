@@ -21,6 +21,20 @@
 	var/last_browse_nag = 0
 	/// When the shop stock next refreshes
 	var/next_restock = 0
+	/// Types currently in demand for elevated payout.
+	var/list/demand_types = list()
+	/// Per-ckey dead drop streak count.
+	var/list/deaddrop_streak = list()
+	/// Per-ckey world.time of last dead drop success.
+	var/list/deaddrop_last_success = list()
+	/// Per-ckey+type chain count for repeated sales.
+	var/list/sale_chain_counts = list()
+	/// Per-ckey+type last sale timestamp.
+	var/list/sale_chain_last = list()
+	/// Per-ckey sum of payout in current anti-farm window.
+	var/list/sale_window_value = list()
+	/// Per-ckey window start timestamp for anti-farm cap.
+	var/list/sale_window_start = list()
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/Initialize(mapload)
 	. = ..()
@@ -43,12 +57,32 @@
 		dna.real_name = "The Trader"
 	next_restock = world.time + (25 MINUTES)
 	shop.do_restock()
+	roll_trade_demands()
 	addtimer(CALLBACK(src, PROC_REF(idle_voice_tick)), rand(20, 45) SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(restock_tick)), 25 MINUTES)
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/Destroy()
 	QDEL_NULL(shop)
 	return ..()
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/verb/ask_demands()
+	set name = "I need some merchandise..."
+	set src in oview(1)
+	if(!istype(usr, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = usr
+	if(!Adjacent(H) || stat != CONSCIOUS)
+		return
+	if(!HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
+		to_chat(H, span_warning("[src] eyes you up. \"I don't think we do business, friend.\""))
+		return
+	if(!demand_types.len)
+		say("Anything that ain't nailed down, mate. I'll take whatever you've got.")
+		return
+	var/list/names = list()
+	for(var/path in demand_types)
+		names += initial(path.name)
+	say("Payin' top coin today for: [english_list(names)]. Don't keep me waiting.")
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/proc/idle_voice_tick()
 	if(!shopping && !QDELETED(src) && stat == CONSCIOUS)
@@ -253,6 +287,7 @@
 	if(QDELETED(src))
 		return
 	shop.do_restock()
+	roll_trade_demands()
 	next_restock = world.time + (25 MINUTES)
 	addtimer(CALLBACK(src, PROC_REF(restock_tick)), 25 MINUTES)
 
@@ -368,21 +403,95 @@
 		return rand(70, 100)
 	return 0
 
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/roll_trade_demands()
+	var/list/pool = list(
+		/obj/item/roguegem/random,
+		/obj/item/roguegem/diamond,
+		/obj/item/roguegem/ruby,
+		/obj/item/ingot/gold,
+		/obj/item/ingot/silverblessed,
+		/obj/item/ingot/blacksteel,
+		/obj/item/clothing/ring/diamond,
+		/obj/item/clothing/ring/ruby,
+		/obj/item/reagent_containers/powder/starsugar,
+		/obj/item/reagent_containers/powder/herozium,
+		/obj/item/reagent_containers/powder/spice,
+		/obj/item/reagent_containers/powder/moondust,
+	)
+	demand_types = list()
+	var/list/shuffled = shuffle(pool.Copy())
+	for(var/i = 1 to min(3, shuffled.len))
+		demand_types += shuffled[i]
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/can_cash_dead_drop(mob/living/carbon/human/H)
+	return H.job in list("Flinger", "Consigliere", "Gutter King")
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/is_demanded_item(obj/item/I)
+	for(var/path in demand_types)
+		if(istype(I, path))
+			return TRUE
+	return FALSE
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/get_deaddrop_streak_bonus(mob/living/carbon/human/H)
+	if(!H.ckey)
+		return 0
+	var/last_success = deaddrop_last_success[H.ckey] || 0
+	if(last_success && world.time > last_success + (35 MINUTES))
+		deaddrop_streak[H.ckey] = 0
+		to_chat(H, span_warning("Your dead drop streak went cold."))
+	var/new_streak = (deaddrop_streak[H.ckey] || 0) + 1
+	deaddrop_streak[H.ckey] = new_streak
+	deaddrop_last_success[H.ckey] = world.time
+	if(new_streak % 3)
+		return 0
+	var/tier = min(4, round(new_streak / 3))
+	return 25 * tier
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/get_sale_chain_penalty(mob/living/carbon/human/H, obj/item/I)
+	if(!H.ckey)
+		return 1
+	var/key = "[H.ckey]|[I.type]"
+	var/last_time = sale_chain_last[key] || 0
+	if(last_time && world.time > last_time + (20 MINUTES))
+		sale_chain_counts[key] = 0
+	var/new_count = (sale_chain_counts[key] || 0) + 1
+	sale_chain_counts[key] = new_count
+	sale_chain_last[key] = world.time
+	if(new_count <= 3)
+		return 1
+	return max(0.4, 1 - ((new_count - 3) * 0.15))
+
+/mob/living/carbon/human/species/human/northern/underbelly_trader/proc/get_role_sale_multiplier(mob/living/carbon/human/H, obj/item/I, base_value)
+	if(base_value < 50)
+		return 0
+	var/mult = 0
+	if(H.job == "Flinger")
+		mult = 2.5
+	else if(H.job == "Consigliere")
+		mult = 2.2
+	else if(H.job == "Gutter King")
+		mult = 1.9
+	else
+		return 0
+	if(base_value > 150)
+		mult -= min(0.9, ((base_value - 150) / 300))
+	mult = max(1.2, mult)
+	if(is_demanded_item(I))
+		mult += 0.35
+	mult *= get_sale_chain_penalty(H, I)
+	return mult
+
 /mob/living/carbon/human/species/human/northern/underbelly_trader/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(I, /obj/item/parcel/dead_drop) \
-		&& !istype(I, /obj/item/paper/scroll/dead_drop_contract) \
-		&& !istype(I, /obj/item/reagent_containers/lux) \
-		&& !istype(I, /obj/item/reagent_containers/lux_impure))
-		return ..()
 	if(!istype(user, /mob/living/carbon/human))
 		return ..()
 	var/mob/living/carbon/human/H = user
+	if(stat != CONSCIOUS)
+		to_chat(H, span_warning("[src] is in no state to receive a delivery."))
+		return
+
 	if(istype(I, /obj/item/reagent_containers/lux) || istype(I, /obj/item/reagent_containers/lux_impure))
 		if(H.job != "Ripper")
 			to_chat(H, span_warning("[src] glances at [I.name] and waves [src.p_their()] hand. \"I don't deal in this, friend. That's the Ripper's department.\""))
-			return
-		if(stat != CONSCIOUS)
-			to_chat(H, span_warning("[src] is in no state to receive a delivery."))
 			return
 		var/gold_payout = _lux_payout(I)
 		if(!gold_payout)
@@ -395,9 +504,7 @@
 		visible_message(span_notice("[src] pockets [sold_name] with a nod."))
 		on_purchase(H, null)
 		return
-	if(stat != CONSCIOUS)
-		to_chat(H, span_warning("[src] is in no state to receive a delivery."))
-		return
+
 	if(istype(I, /obj/item/parcel/dead_drop))
 		var/obj/item/parcel/dead_drop/parcel = I
 		if(HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
@@ -409,7 +516,7 @@
 		var/obj/item/paper/scroll/dead_drop_contract/C = parcel.contract_ref?.resolve()
 		parcel.contract_ref = null
 		qdel(parcel)
-		var/obj/item/roguecoin/gold/payout = new(get_turf(H), rand(5, 10))
+		var/obj/item/roguecoin/gold/payout = new(get_turf(H), rand(12, 20))
 		H.put_in_hands(payout)
 		if(C)
 			C.parcel_ref = null
@@ -417,20 +524,72 @@
 		visible_message(span_notice("[src] takes the parcel, slips a few coins to [H], and makes a small mark on a scrap of paper."))
 		say("Tell whoever sent you the deal's stamped. They know where to find me.")
 		return
-	// Contract redemption (Flinger/Gutter King cashing in after the parcel was delivered).
-	var/obj/item/paper/scroll/dead_drop_contract/C = I
-	if(H.job != "Flinger" && H.job != "Gutter King")
-		to_chat(H, span_warning("[src] eyes the contract. \"That's not yours to cash, friend.\""))
+
+	if(istype(I, /obj/item/paper/scroll/dead_drop_contract))
+		// Contract redemption (crew cashing in after the parcel was delivered).
+		var/obj/item/paper/scroll/dead_drop_contract/C = I
+		if(!can_cash_dead_drop(H))
+			to_chat(H, span_warning("[src] eyes the contract. \"That's not yours to cash, friend.\""))
+			return
+		if(!C.ready_to_redeem)
+			to_chat(H, span_warning("[src] glances at the contract. \"Parcel ain't been delivered yet. Get a runner on it.\""))
+			return
+		C.parcel_ref = null
+		qdel(C)
+		var/base_payout = rand(450, 750)
+		var/streak_bonus = get_deaddrop_streak_bonus(H)
+		var/obj/item/roguecoin/gold/payout = new(get_turf(H), base_payout + streak_bonus)
+		H.put_in_hands(payout)
+		visible_message(span_notice("[src] tears the contract in half and settles the debt with [H]."))
+		if(streak_bonus)
+			to_chat(H, span_notice("Streak bonus: +[streak_bonus] mammon."))
+		on_deaddrop_success(H)
 		return
-	if(!C.ready_to_redeem)
-		to_chat(H, span_warning("[src] glances at the contract. \"Parcel ain't been delivered yet. Get a runner on it.\""))
+
+	if(!HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
+		return ..()
+	if(H.job != "Flinger" && H.job != "Consigliere" && H.job != "Gutter King")
+		return ..()
+	if(istype(I, /obj/item/roguecoin) || istype(I, /obj/item/storage))
+		return ..()
+
+	var/base_value = I.get_real_price()
+	if(base_value < 50)
+		to_chat(H, span_warning("[src] glances at [I.name]. \"Not worth the paperwork, friend.\""))
 		return
-	C.parcel_ref = null
-	qdel(C)
-	var/obj/item/roguecoin/gold/payout = new(get_turf(H), rand(15, 25))
-	H.put_in_hands(payout)
-	visible_message(span_notice("[src] tears the contract in half and settles the debt with [H]."))
-	on_deaddrop_success(H)
+
+	var/mult = get_role_sale_multiplier(H, I, base_value)
+	if(mult <= 0)
+		to_chat(H, span_warning("[src] glances at [I.name]. \"Can't move that.\""))
+		return
+
+	var/demanded = is_demanded_item(I)
+	var/payout_value = max(1, round(base_value * mult))
+	if(H.ckey)
+		var/window_start = sale_window_start[H.ckey] || 0
+		if(!window_start || world.time > window_start + (10 MINUTES))
+			sale_window_start[H.ckey] = world.time
+			sale_window_value[H.ckey] = 0
+		var/window_value = sale_window_value[H.ckey] || 0
+		var/window_cap = 2200
+		if(window_value >= window_cap)
+			to_chat(H, span_warning("[src] folds [src.p_their()] arms. \"You're flooding the market. Come back later.\""))
+			return
+		payout_value = min(payout_value, window_cap - window_value)
+		sale_window_value[H.ckey] = window_value + payout_value
+	if(payout_value <= 0)
+		to_chat(H, span_warning("[src] folds [src.p_their()] arms. \"You're flooding the market. Come back later.\""))
+		return
+
+	var/sold_name = I.name
+	qdel(I)
+	var/obj/item/roguecoin/gold/sale_payout = new(get_turf(H), payout_value)
+	H.put_in_hands(sale_payout)
+	visible_message(span_notice("[src] appraises [sold_name], nods, and settles with [H]."))
+	if(demanded)
+		say("Lucky day. I was looking for exactly that.")
+	on_purchase(H, null)
+	return
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

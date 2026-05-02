@@ -316,7 +316,7 @@
 		"Dead Drop Contract", \
 		"A written order for an off-the-books retrieval. Give it to someone outside the Scum; let them do the legwork. Bring the parcel back to The Trader and collect your cut.", \
 		/obj/item/paper/scroll/dead_drop_contract, \
-		1, \
+		4, \
 		100, \
 		TRUE, \
 		null, \
@@ -425,7 +425,7 @@
 
 	var/list/flinger_data = list()
 	for(var/datum/underbelly_shop_item/SI in flinger_pool)
-		var/buy_limit = SI.flinger_only ? 2 : 1
+		var/buy_limit = (SI.item_type == /obj/item/paper/scroll/dead_drop_contract) ? 99 : (SI.flinger_only ? 2 : 1)
 		var/buy_count = purchase_counts["[H.ckey]_flinger_[SI.name]"] || 0
 		flinger_data += list(list(
 			"name" = SI.name,
@@ -448,6 +448,10 @@
 		))
 
 	var/ticks_left = trader ? max(0, trader.next_restock - world.time) : 0
+	var/list/demand_names = list()
+	if(trader)
+		for(var/path in trader.demand_types)
+			demand_names += initial(path.name)
 	return list(
 		"budget" = user_budget,
 		"is_flinger" = is_flinger,
@@ -457,6 +461,8 @@
 		"exclusive" = excl_data,
 		"flinger" = flinger_data,
 		"shipments" = shipment_data,
+		"demand_items" = demand_names,
+		"job" = H.job,
 	)
 
 /datum/underbelly_shop/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -486,13 +492,18 @@
 			return do_purchase(H, SI, "[H.ckey]_[SI.name]", 1)
 
 		if("buy_flinger")
-			if(H.job != "Flinger")
-				to_chat(H, span_warning("That's not for you."))
-				return FALSE
 			var/item_name = params["name"]
 			var/datum/underbelly_shop_item/SI = locate_item(flinger_pool, item_name)
 			if(!SI)
 				return FALSE
+				if(SI.item_type == /obj/item/paper/scroll/dead_drop_contract)
+					if(!can_buy_dead_drop_contracts(H))
+						to_chat(H, span_warning("That's not for you."))
+						return FALSE
+					return do_purchase(H, SI, "[H.ckey]_flinger_[SI.name]", 99)
+				if(H.job != "Flinger")
+					to_chat(H, span_warning("That's not for you."))
+					return FALSE
 			var/buy_limit = SI.flinger_only ? 2 : 1
 			return do_purchase(H, SI, "[H.ckey]_flinger_[SI.name]", buy_limit)
 
@@ -511,6 +522,9 @@
 		if(SI.name == item_name)
 			return SI
 	return null
+
+/datum/underbelly_shop/proc/can_buy_dead_drop_contracts(mob/living/carbon/human/H)
+	return H.job in list("Flinger", "Consigliere", "Gutter King")
 
 /datum/underbelly_shop/proc/do_purchase(mob/living/carbon/human/H, datum/underbelly_shop_item/SI, count_key, max_buys)
 	var/obj/structure/roguemachine/underbelly_chute/chute = GLOB.underbelly_chute

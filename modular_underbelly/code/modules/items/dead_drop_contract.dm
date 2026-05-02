@@ -53,7 +53,10 @@ GLOBAL_LIST_EMPTY(dead_drop_spots)
 	if(!istype(nearby))
 		return
 	var/obj/item/paper/scroll/dead_drop_contract/C = contract_ref?.resolve()
-	if(!C || get_turf(C) != get_turf(nearby))
+	if(bound_ckey)
+		if(!nearby.ckey || nearby.ckey != bound_ckey)
+			return
+	else if(!C || get_turf(C) != get_turf(nearby))
 		return
 	var/image/I = image(icon = 'icons/effects/effects.dmi', loc = get_turf(src), icon_state = "hidden", layer = 18)
 	I.plane = 18
@@ -96,6 +99,8 @@ GLOBAL_LIST_EMPTY(dead_drop_spots)
 	var/datum/weakref/parcel_ref
 	/// TRUE once The Trader has received the parcel; the Flinger can now cash this in.
 	var/ready_to_redeem = FALSE
+	/// ckey of the non-Scum runner who used this contract to memorize the dead drop.
+	var/runner_ckey
 
 /obj/item/paper/scroll/dead_drop_contract/Initialize(mapload)
 	. = ..()
@@ -132,6 +137,7 @@ GLOBAL_LIST_EMPTY(dead_drop_spots)
 	info += "<hr/>"
 	info += "There's a parcel stashed somewhere out there. Bring it back to The Trader and you'll be paid a finder's fee on the spot. The one who hired you pockets the rest of the deal in their own time.<br><br>"
 	info += "<b>The drop:</b> <i>[clue_text]</i><br><br>"
+	info += "If you're a clean runner, activate this contract while holding it to memorize the route. Once marked, the parcel only answers to you.<br><br>"
 	info += "Don't open it. Don't talk about it. Don't lose it.<br><br>"
 	info += "<i>Non-delivery will be remembered.</i>"
 
@@ -152,8 +158,32 @@ GLOBAL_LIST_EMPTY(dead_drop_spots)
 		icon_state = "scroll_closed"
 		name = "scroll"
 
+/obj/item/paper/scroll/dead_drop_contract/attack_self(mob/user)
+	. = ..()
+	if(!istype(user, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = user
+	if(!H.ckey || ready_to_redeem)
+		return
+	if(HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
+		to_chat(H, span_notice("This one needs a clean runner. Hand it off and let them mark the route."))
+		return
+	if(runner_ckey && runner_ckey != H.ckey)
+		to_chat(H, span_warning("The route's already burned into someone else's head."))
+		return
+	if(runner_ckey == H.ckey)
+		to_chat(H, span_notice("You already know this route by heart."))
+		return
+	runner_ckey = H.ckey
+	var/obj/item/parcel/dead_drop/P = parcel_ref?.resolve()
+	if(P)
+		P.bound_ckey = runner_ckey
+	to_chat(H, span_notice("You read the contract twice, memorize the route, and won't forget where to look."))
+
 /obj/item/paper/scroll/dead_drop_contract/examine(mob/user)
 	. = ..()
 	if(ready_to_redeem)
 		. += span_notice("The Trader's mark magically appeared, and is fresh on the bottom. This one's good for turning in.")
+	if(runner_ckey)
+		. += span_notice("The route's already memorized by a runner.")
 	. += span_warning("This is clearly contraband. Anyone who finds you with it will know exactly what you're involved in.")
