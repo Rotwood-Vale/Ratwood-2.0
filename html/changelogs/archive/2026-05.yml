@@ -21,3 +21,6 @@
   john-pawson:
   - bugfix: fixed being able to far travel dead corpses, opening up a slot twice or
       opening a slot of a role that you shouldn't be able to.
+2026-05-02:
+  Lir:
+  - bugfix: Fixed a small mapping oversight
