@@ -1109,3 +1109,18 @@
 	name = "overheating"
 	desc = "My frame is overheating!"
 	icon_state = "fire"
+
+/datum/status_effect/debuff/bogborn_discomfort
+	id = "bogborn_discomfort"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/bogborn_discomfort
+	effectedstats = list(STATKEY_STR = -4, STATKEY_PER = -4, STATKEY_INT = -4, STATKEY_WIL = -4, STATKEY_CON = -4, STATKEY_SPD = -4, STATKEY_LCK = -4)
+
+/datum/status_effect/debuff/bogborn_discomfort/on_apply()
+	. = ..()
+	to_chat(owner, span_warning("The dry roads and ordered walls press upon me. I must return to the bog."))
+
+/atom/movable/screen/alert/status_effect/debuff/bogborn_discomfort
+	name = "Far from the Bog"
+	desc = "The air is too dry, the roads too clean, and the walls too still. I must return to the bog."
+	icon_state = "debuff"
+	color = "#6b453a"

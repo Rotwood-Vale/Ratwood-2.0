@@ -240,3 +240,62 @@
 	if(vanished_hide) //failsafe
 		to_chat(recipient, span_warning("My natural armor vanished! Perhaps some divine intervention might sort things out..."))
 
+
+//BOG BORN
+
+/datum/virtue/combat/ex_bog_guard
+	name = "Ex-Bog Guard"
+	desc = "I once wore the green tabard of Rockhill, standing watch over its wet roads, sunken fields, and reed-choked borders."
+	custom_text = "Gain +1 Strength, +1 Speed, +1 Intelligence,  +1 Willpower and +1 Constitution."
+	added_traits = list(TRAIT_BOG_BORN)
+
+/datum/virtue/combat/ex_bog_guard/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.change_stat(STATKEY_STR, 1)
+	recipient.change_stat(STATKEY_SPD, 1)
+	recipient.change_stat(STATKEY_INT, 1)
+	recipient.change_stat(STATKEY_CON, 1)
+	recipient.change_stat(STATKEY_WIL, 1)
+
+/datum/virtue/combat/bog_born_mage
+	name = "Bog Mage"
+	desc = "I was once a scholar of Noc, chasing pale truths through ink, candlelight, and forbidden margins. Yet it was in the bogs, beneath dead mist and watching reeds, that I learned what no boor dared to teach."
+	custom_text = "Bog-Born. Gain +2 Speed, +2 Willpower, +2 Intelligence, and 6 spellpoints."
+	added_traits = list(TRAIT_BOG_BORN)
+	triumph_cost = 15
+
+/datum/virtue/combat/bog_born_mage/apply_to_human(mob/living/carbon/human/recipient)
+	if(!recipient.mind)
+		return
+
+	recipient.change_stat(STATKEY_SPD, 2)
+	recipient.change_stat(STATKEY_WIL, 2)
+	recipient.change_stat(STATKEY_INT, 2)
+	recipient.mind?.adjust_spellpoints(6)
+
+
+/datum/virtue/combat/bog_born_warrior
+	name = "Bog Raider"
+	desc = "I was a crusader once, sworn to return when the war was done. But the bog drank the roads, the years, and the memory of my wife, leaving only rusted steel and a man too stubborn to sink."
+	custom_text = "Bog-Born. Gain +2 Strength, +1 Speed, +2 Willpower, +1 Constitution."
+	added_traits = list(TRAIT_BOG_BORN)
+	triumph_cost = 15
+
+/datum/virtue/combat/bog_born_warrior/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.change_stat(STATKEY_STR, 2)
+	recipient.change_stat(STATKEY_SPD, 1)
+	recipient.change_stat(STATKEY_WIL, 2)
+	recipient.change_stat(STATKEY_CON, 1)
+
+
+/datum/virtue/combat/bog_born_archer
+	name = "Bog Stalker"
+	desc = "I learned the hunt where fog smothers the eye and every pool may hide a grave. So devoted was I to Dendor that civilization became a distant rot, and I remained in the reeds, hunting beneath the gaze of leaf, mud, and silence."
+	custom_text = "Bog-Born. Gain +4 Perception, +2 Speed, +1 Strength, and +1 Willpower."
+	added_traits = list(TRAIT_BOG_BORN)
+	triumph_cost = 15
+
+/datum/virtue/combat/bog_born_archer/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.change_stat(STATKEY_PER, 4)
+	recipient.change_stat(STATKEY_SPD, 2)
+	recipient.change_stat(STATKEY_STR, 1)
+	recipient.change_stat(STATKEY_WIL, 1)

@@ -40,6 +40,8 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 		guy.apply_status_effect(/datum/status_effect/buff/dungeoneerbuff)
 	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_VOTARY))//Top Church guys get a buff. Opposite to overt heretics.
 		guy.add_stress(/datum/stressevent/seeblessed)
+	if(((src.town_area == TRUE) || (src.warden_area == TRUE)) && HAS_TRAIT(guy, TRAIT_BOG_BORN) && guy.has_status_effect(/datum/status_effect/debuff/bogborn_discomfort))
+		guy.remove_status_effect(/datum/status_effect/debuff/bogborn_discomfort)
 	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_HOLYWARRIOR))
 		guy.apply_status_effect(/datum/status_effect/debuff/holy_blessing)
 	if((src.necra_area == TRUE) && !(guy.has_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)||(guy.has_status_effect(/datum/status_effect/debuff/deathdoorwilloss)))) //Necra saps at wil
