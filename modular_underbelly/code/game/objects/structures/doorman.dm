@@ -512,6 +512,12 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 		if(M.client)
 			RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(on_nearby_say))
 			registered_mobs += M
+	var/obj/structure/doorman/D = active_doorman_ref?.resolve()
+	if(D && !QDELETED(D))
+		for(var/mob/living/M in range(SPEAKER_RELAY_RANGE, D))
+			if(M.client && !(M in registered_mobs))
+				RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(on_doorman_say))
+				registered_mobs += M
 	addtimer(CALLBACK(src, PROC_REF(refresh_listeners)), SPEAKER_LISTEN_REFRESH)
 
 /obj/structure/underbelly_speaker/proc/on_nearby_say(mob/living/source, list/speech_args)
@@ -525,6 +531,14 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 	var/msg = speech_args[SPEECH_MESSAGE]
 	playsound(D.loc, 'sound/foley/coinphy (1).ogg', 30, FALSE)
 	D.audible_message(span_italics("[D] transmits, \"[msg]\""), hearing_distance = 5)
+
+/obj/structure/underbelly_speaker/proc/on_doorman_say(mob/living/source, list/speech_args)
+	SIGNAL_HANDLER
+	if(speaker_state != SPEAKER_ACTIVE)
+		return
+	var/msg = speech_args[SPEECH_MESSAGE]
+	playsound(loc, 'sound/foley/coinphy (1).ogg', 30, FALSE)
+	audible_message(span_italics("[src] transmits, \"[msg]\""), hearing_distance = 5)
 
 #undef DOORMAN_CLEARANCE_DURATION
 #undef DOORMAN_BREACH_OPEN_DURATION
