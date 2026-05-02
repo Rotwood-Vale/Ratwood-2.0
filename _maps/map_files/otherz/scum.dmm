@@ -517,7 +517,7 @@
 	icon_state = "wcv";
 	locked = 1;
 	lockid = "underbelly_boss";
-	name = "Treasury";
+	name = "Bedroom";
 	desc = "Oh boy, riches!"
 	},
 /turf/open/floor/rogue/carpet/lord/left,
