@@ -967,7 +967,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_patrons = UNDERBELLY_ALLOWED_PATRONS
 	tutorial = "An escaped, or freed slave-worker from the depths of the Otavan Inquisition. These poor, restless souls have had their minds torn asunder, hearing the laughter of their torturers every so often. \
-	Their bodies raped, abused and starved, their heads encased in a helm welded to skin, they serve no purpose other than working meat, waiting for Necra's sweet embrace."
+	Their bodies ravaged, abused and starved, their heads encased in a helm welded to skin, they serve no purpose other than working meat, waiting for Necra's sweet embrace."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/proletarius
 	antag_job = FALSE
