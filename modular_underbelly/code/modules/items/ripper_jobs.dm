@@ -147,7 +147,7 @@ GLOBAL_VAR(underbelly_patient_ward)
 		return
 	set_resting(TRUE, TRUE)
 
-underbelly_patient/after_creation()
+/mob/living/carbon/human/species/human/northern/underbelly_patient/after_creation()
 	..()
 	if(!patient_alias)
 		patient_alias = pick("a wounded Scum", "a bloodied vagrant", "a gutted figure", "a clutching wretch")
