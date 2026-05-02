@@ -27,6 +27,7 @@
 	icon_state = "astrata_chalky" // the icon state, so, the sprite the runes use on the floor. As of making, we have 6, each needs an active/inactive state.
 	desc = "A Holy Rune of Astrata. Warmth irradiates from the rune." // description on examine
 	var/solarrites = list("Guiding Light") // This is important - This is the var which stores every ritual option available to a ritualist - Ideally, we'd have like, 3 for each God. Right now, just 1.
+	var/prelaterites = list("Ennoblement", "Abasement")
 
 /obj/structure/ritualcircle/astrata/attack_hand(mob/living/user)
 	if(!..())
@@ -40,7 +41,17 @@
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
 		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more.")) // If you have already done a ritual in the last 30 minutes, you cannot do another.
 		return
-	var/riteselection = input(user, "Rituals of the Sun", src) as null|anything in solarrites // When you use a open hand on a rune, It'll give you a selection of all the rites available from that rune
+
+	var/list/available_rites = list()
+
+	if(user.patron?.type == /datum/patron/divine/astrata)
+		available_rites += solarrites
+
+	if(HAS_TRAIT(user, TRAIT_CHOSEN))
+		available_rites += prelaterites
+
+
+	var/riteselection = input(user, "Rituals of the Sun", src) as null|anything in available_rites // When you use a open hand on a rune, It'll give you a selection of all the rites available from that rune
 	switch(riteselection) // rite selection goes in this section, try to do something fluffy. Presentation is most important here, truthfully.
 		if("Guiding Light") // User selects Guiding Light, begins the stuff for it
 			if(do_after(user, 50)) // just flavor stuff before activation
@@ -62,6 +73,96 @@
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 						spawn(120)
 							icon_state = "astrata_chalky"
+		if("Ennoblement")
+			if(!Adjacent(user))
+				to_chat(user, span_smallred("I need to be closer to the rune to perform this ritual."))
+				return
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				if(HAS_TRAIT(peep, TRAIT_NOBLE))
+					continue
+				valids_on_rune += peep
+			if(!valids_on_rune.len)
+				to_chat(user, span_smallred("There are no valid targets on the rune."))
+				return
+			var/mob/living/carbon/human/target = input(user, "Choose a host")
+			if(!target || QDELETED(target) || target.loc != loc)
+				return
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("ASTRATA, SOVEREIGN OF THE WORLD!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("GAZE DOWN UPON THIS MORTAL!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("MISTRESS OF ORDER! ARBITRATOR OF RIGHT!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("GAZE DOWN UPON THIS ONE!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("AND GRANT THEM YOUR HIGHEST HONOR!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			icon_state = "astrata_active"
+			astratanobling(target)
+			spawn(120)
+				icon_state = "astrata_chalky"
+
+/obj/structure/ritualcircle/astrata/proc/astratanobling(mob/living/carbon/human/target)
+	if(!target || QDELETED(target) || target.loc != loc)
+		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Matthios' blessing.")
+		return
+	if(HAS_TRAIT(target, TRAIT_NOBLE))
+		loc.visible_message(span_cult("This one is already of noble blood!"))
+		return
+	if(target.mind?.assigned_role in GLOB.church_positions)
+		loc.visible_message(span_cult("This one has already sworn themselves to the Church!"))
+		return
+	if(HAS_TRAIT(target, TRAIT_INQUISITION))
+		loc.visible_message(span_cult("This one's fervent and unshakable faith in The One prevents them from receiving Astrata's gift."))
+		return
+	if(target.name in GLOB.excommunicated_players || HAS_TRAIT(target, TRAIT_EXCOMMUNICATED))
+		loc.visible_message(span_cult("This one has been excommunicated from the Church!"))
+		return
+	if(target.name in GLOB.outlawed_players)
+		loc.visible_message(span_cult("Astrata shall not grant nobility to one who defies her decrees!"))
+	var/prompt = alert(target, "Do you accept Astrata's gift?", "I accept.", "I refuse.")
+	if(prompt == "I accept.")
+		ADD_TRAIT(target, TRAIT_NOBLE, "astrata_enoblement")
+		target.Stun(60)
+		target.Knockdown(60)
+		playsound(loc, 'sound/magic/astrata_choir.ogg', 85, FALSE, -1)
+		loc.visible_message(span_cult("The Light of Astrata shines down bright upon [target]! His blood runs blue!"))
+		if(target.patron?.type == /datum/patron/inhumen/matthios)
+			to_chat(target, span_cult("I can feel the smile of Matthios upon me..."))
+			target.apply_status_effect(/datum/status_effect/buff/matthios_smile)
+			target.add_stress(/datum/stressevent/matthios_noblement)
+		else if(target.patron?.type == /datum/patron/divine/astrata)
+			to_chat(target, span_cult("I can feel the warmth of Astrata upon me..."))
+			target.add_stress(/datum/stressevent/astrata_noblement)
+		else
+			to_chat(target, span_cult("I can feel the light of Astrata upon me..."))
+			target.add_stress(/datum/stressevent/neutral_noblement)
+		switch(target.social_rank)
+			if(1)
+				target.adjust_triumphs(5)
+				to_chat(target, span_cult("I have risen exponentially into the ranks of the Nobility! This is a true TRIUMPH!"))
+			if(2)
+				target.adjust_triumphs(3)
+				to_chat(target, span_cult("I have risen into the ranks of the Nobility! This is a TRIUMPH!"))
+			if(3)
+				target.adjust_triumphs(1)
+				to_chat(target, span_cult("I have entered the ranks of the Nobility! This is a TRIUMPH!"))
+		if(prompt == "I refuse.")
+			loc.visible_message(span_cult("[target] refuses Astrata's gift. The light grows malignant...!"))
+			target.Stun(30)
+			target.Knockdown(30)
+			to_chat(target, span_warning("YOU DARE REJECT MY GIFT!? YOU SHALL BURN FOR YOUR INSOLENCE!"))
+			target.adjustFireLoss(25)
+			target.fire_act(1,10)
+			to_chat(loc, span_warning("[target] is set ablaze by Astrata's wrath!"))
 
 /obj/structure/ritualcircle/astrata/proc/guidinglight(src)
 	var/ritualtargets = view(7, loc) // Range of 7 from the source, which is the rune
@@ -70,7 +171,6 @@
 		to_chat(target,span_cultsmall("Astrata's light guides me forward, drawn to me by the Ritualist's pyre!"))
 		playsound(target, 'sound/magic/holyshield.ogg', 80, FALSE, -1) // Cool sound!
 // If you want to review a more complicated one, Undermaiden's Bargain is probs the most complicated of the starting set. - Have fun! - Onutsio 🏳️‍⚧️
-
 
 /obj/structure/ritualcircle/noc
 	name = "Rune of the Moon"

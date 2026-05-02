@@ -469,3 +469,18 @@
 	timer = 10 MINUTES
 	stressadd = -2
 	desc = span_green("Xylix spun the thread of fate in my favour! Truly, I am blessed!")
+
+/datum/stressevent/astrata_noblement
+	timer = 5 MINUTES
+	stressadd = -6
+	desc = span_green("The Sun-Tyrant has deemed me worthy! I am truly blessed!")
+
+/datum/stressevent/neutral_noblement
+	timer = 5 MINUTES
+	stressadd = -3
+	desc = span_green("I have been granted nobility! My blood runs blue!")
+
+/datum/stressevent/matthios_noblement
+	timer = 15 MINUTES
+	stressadd = -6
+	desc = span_green("I've fooled the Sun-Tyrant and her lackeys! I've stolen her gift, just as The Gilded God once did!")	
