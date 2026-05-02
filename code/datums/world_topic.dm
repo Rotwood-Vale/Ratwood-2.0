@@ -23,7 +23,7 @@
 	var/keyword
 	var/log = TRUE
 	var/key_valid
-	var/require_comms_key = FALSE
+	var/require_comms_key = TRUE
 
 /datum/world_topic/proc/TryRun(list/input)
 	if(!config)
