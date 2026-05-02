@@ -222,9 +222,11 @@ GLOBAL_LIST_INIT(test_positions, list(
 
 GLOBAL_LIST_INIT(underbelly_positions, list(
 	"Gutter King",
+	"Consigliere",
 	"Scum",
 	"Flinger",
 	"Ripper",
+	"Proletarius",
 ))
 
 GLOBAL_LIST_INIT(job_assignment_order, get_job_assignment_order())

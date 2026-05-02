@@ -42,6 +42,9 @@
 	..()
 	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_NOVICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	if(!H.mind)
 		return
 	if(HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
@@ -137,7 +140,6 @@
 	Keep the Scum in line, keep the Flipside off your back, and don't get sloppy."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking
-	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_GUTTER_KING
 	min_pq = 100
@@ -204,7 +206,6 @@
 	You are no fighter. You have never needed to be."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/consigliere
-	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_CONSIGLIERE
 	min_pq = 85
@@ -213,6 +214,7 @@
 	social_rank = SOCIAL_RANK_SCUM
 	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	job_traits = list(TRAIT_SEEPRICES)
+	job_stats = list(STATKEY_INT = 3, STATKEY_PER = 2)
 	advjob_examine = TRUE
 	announce_latejoin = FALSE
 	same_job_respawn_delay = 3 MINUTES
@@ -237,6 +239,14 @@
 	)
 /datum/outfit/job/roguetown/underbelly/consigliere/post_equip(mob/living/carbon/human/H)
 	..()
+	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
 	var/obj/item/storage/backpack/rogue/satchel/short/satchel = locate(/obj/item/storage/backpack/rogue/satchel/short) in H
 	if(satchel)
 		for(var/i = 1 to 6)
@@ -376,7 +386,6 @@
 	The kind that don't need explaining afterward."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/scum
-	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_UB_SCUM
 	min_pq = 35
@@ -412,7 +421,7 @@
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 	H.faction |= "bums"
 	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -574,7 +583,6 @@
 	to keep their name off the receipt. Keep it quiet. Keep it profitable."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/flinger
-	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_FLINGER_JOB
 	min_pq = 40
@@ -725,7 +733,6 @@
 	The Pestran relics you carry are not exactly legal, though."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/ripper
-	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_RIPPER_JOB
 	min_pq = 50
@@ -963,7 +970,6 @@
 	Their bodies raped, abused and starved, their heads encased in a helm welded to skin, they serve no purpose other than working meat, waiting for Necra's sweet embrace."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/proletarius
-	obsfuscated_job = TRUE
 	antag_job = FALSE
 	display_order = JDO_PROLETARIUS
 	min_pq = 10
