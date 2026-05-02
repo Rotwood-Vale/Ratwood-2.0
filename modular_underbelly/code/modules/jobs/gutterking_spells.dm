@@ -40,7 +40,14 @@
 		return
 	ADD_TRAIT(recruit, TRAIT_UNDERBELLY_SCUM, "converted_scum")
 	recruit.social_rank = SOCIAL_RANK_SCUM
-	SSjob.EquipRank(recruit, "Scum", joined_late = TRUE)
+	recruit.faction |= "bums"
+	if(recruit.mind)
+		recruit.mind.assigned_role = "Scum"
+	recruit.grant_language(/datum/language/thievescant)
+	recruit.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	recruit.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	recruit.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	recruit.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
 // -------------------------------------------------------------------------
 // The Word - sends Maurice to each Underbelly member with the boss' message
