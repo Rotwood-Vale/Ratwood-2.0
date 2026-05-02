@@ -496,14 +496,14 @@
 			var/datum/underbelly_shop_item/SI = locate_item(flinger_pool, item_name)
 			if(!SI)
 				return FALSE
-				if(SI.item_type == /obj/item/paper/scroll/dead_drop_contract)
-					if(!can_buy_dead_drop_contracts(H))
-						to_chat(H, span_warning("That's not for you."))
-						return FALSE
-					return do_purchase(H, SI, "[H.ckey]_flinger_[SI.name]", 99)
-				if(H.job != "Flinger")
+			if(SI.item_type == /obj/item/paper/scroll/dead_drop_contract)
+				if(!can_buy_dead_drop_contracts(H))
 					to_chat(H, span_warning("That's not for you."))
 					return FALSE
+				return do_purchase(H, SI, "[H.ckey]_flinger_[SI.name]", 99)
+			if(H.job != "Flinger")
+				to_chat(H, span_warning("That's not for you."))
+				return FALSE
 			var/buy_limit = SI.flinger_only ? 2 : 1
 			return do_purchase(H, SI, "[H.ckey]_flinger_[SI.name]", buy_limit)
 
