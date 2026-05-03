@@ -1839,6 +1839,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/list/peeledpart = body_parts_covered2organ_names(coveragezone, precise = TRUE)
 
 		if(peel_count < peel_goal)
+			if(last_peel_stack_time == world.time)
+				return
+			last_peel_stack_time = world.time
 			peel_count++
 
 		if(peel_count >= peel_goal)

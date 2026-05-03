@@ -89,10 +89,11 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 /obj/item/reagent_containers/glass/bottle/proc/toggle_cork(mob/user)
 	closed = !closed
 	user.changeNext_move(CLICK_CD_RAPID, override = TRUE)
+	var/sneaking = user.m_intent == MOVE_INTENT_SNEAK	
 	if(closed)
-		do_close(user)
+		do_close(user, FALSE, sneaking)
 	else
-		do_open(user)
+		do_open(user, FALSE, sneaking)
 
 /obj/item/reagent_containers/glass/bottle/proc/do_close(mob/user, no_msg = FALSE, no_snd = FALSE)
 	if(user)

@@ -1,5 +1,0 @@
-author: "john-pawson"
-delete-after: True
-changes:
-  - rscadd: "Certain foods will now give you a slice of it when almost finished, for example, the last bite of a loaf of bread will be a bread slice, or the last bite of a salumoi will be a salumoi slice."
-  - bugfix: "You can no longer duplicate food by biting and slicing it"

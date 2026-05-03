@@ -1,4 +1,0 @@
-author: "Jamdrawers"
-delete-after: True
-changes:
-  - rscadd: "Roguetest_OtherZ option when changing the map to load roguetest without loading the bandit camp/wretch fort/etc."

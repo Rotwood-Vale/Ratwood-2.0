@@ -80,6 +80,23 @@
 	user.update_inv_cloak()
 	user.update_inv_armor()
 
+/obj/item/clothing/cloak/reformtabard
+	name = "reformist tabard"
+	desc = "A white psycross on black background. A tabard worn by the mourning, daring to live on despite their endless grief. May our memory of HIM mend our bleeding hearts."
+	icon_state = "reformtabard"
+	item_state = "reformtabard"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	alternate_worn_layer = TABARD_LAYER
+	body_parts_covered = CHEST|GROIN
+	boobed = TRUE
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
+	flags_inv = HIDECROTCH|HIDEBOOB
+	var/overarmor = TRUE
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
+
 /obj/item/clothing/cloak/psydontabard
 	name = "psydonian tabard"
 	desc = "A tabard worn by Psydon's disciples. Delicate stitchwork professes the psycross with pride."

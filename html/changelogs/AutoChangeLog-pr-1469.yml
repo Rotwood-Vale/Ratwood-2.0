@@ -1,0 +1,5 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - rscadd: "Added new \"Zealot\" specialization to the inhumen-exclusive Gronnic Itinerant adventurer subclass. Grants T2 miracles and Dodge Expert, as well as an additional hatchet. Does NOT get Maille Training, gets light armor instead."
+  - balance: "\"Archer\" specialization now gets the same medium armor as \"Bruiser\"."

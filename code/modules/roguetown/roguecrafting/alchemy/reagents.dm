@@ -33,7 +33,7 @@
 /datum/reagent/medicine/stronghealth
 	name = "Strong Health Potion"
 	description = "Quickly regenerates all types of damage."
-	color = "#820000be"
+	color = "#820000"
 	taste_description = "rich lifeblood"
 	metabolization_rate = REAGENTS_METABOLISM * 3
 
@@ -374,9 +374,9 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 
 /datum/reagent/toxin/killersice
 	name = "Killer's Ice"
-	description = "c8c9e9"
+	description = ""
 	reagent_state = LIQUID
-	color = "#FFFFFF"
+	color = "#c8c9e9"
 	metabolization_rate = 0.1
 	toxpwr = 0
 	harmful = TRUE

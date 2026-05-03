@@ -53,7 +53,6 @@
 
 	/datum/skill/craft/tanning,
 	/datum/skill/misc/tracking,
-	/datum/skill/craft/traps,
 
 	/datum/skill/misc/reading,
 	/datum/skill/misc/riding,

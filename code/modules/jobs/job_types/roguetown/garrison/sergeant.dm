@@ -424,9 +424,6 @@
 		if(target == user)
 			to_chat(user, span_alert("I cannot order myself to be killed!"))
 			return
-		if(HAS_TRAIT(target, TRAIT_CRITICAL_WEAKNESS))
-			to_chat(user, span_alert("They are already vulnerable!"))
-			return
 		user.say("[msg]")
 		target.apply_status_effect(/datum/status_effect/debuff/order/focustarget)
 		return TRUE
@@ -436,7 +433,7 @@
 /datum/status_effect/debuff/order/focustarget
 	id = "focustarget"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/order/focustarget
-	effectedstats = list(STATKEY_LCK = -2)
+	effectedstats = list(STATKEY_CON = -2)
 	duration = 1 MINUTES
 	var/outline_colour = "#69050a"
 
@@ -449,14 +446,12 @@
 	. = ..()
 	var/filter = owner.get_filter(TARGET_FILTER)
 	to_chat(owner, span_alert("I have been marked for death by a officer!"))
-	ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
 	if (!filter)
 		owner.add_filter(TARGET_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
 	return TRUE
 
 /datum/status_effect/debuff/order/focustarget/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
 	owner.remove_filter(TARGET_FILTER)
 
 

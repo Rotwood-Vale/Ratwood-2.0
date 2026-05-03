@@ -126,17 +126,6 @@
 	//flipping knives has a cooldown on to_chat to reduce chatspam
 	COOLDOWN_DECLARE(flip_cooldown)
 
-/obj/item/rogueweapon/huntingknife/Initialize(mapload)
-	..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/survival/peasantry/maciejowski_knife,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
-
 /obj/item/rogueweapon/huntingknife/getonmobprop(tag)
 	. = ..()
 	if(tag)

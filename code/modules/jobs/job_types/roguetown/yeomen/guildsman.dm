@@ -91,6 +91,7 @@
 			/obj/item/rogueweapon/hammer/iron = 1,
 			/obj/item/rogueweapon/tongs = 1,
 			/obj/item/recipe_book/blacksmithing = 1,
+			/obj/item/mini_flagpole/blacksmith = 1
 			)
 		belt = /obj/item/storage/belt/rogue/leather
 		beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
@@ -133,7 +134,7 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
+
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,	//Just for basic pottery/glass stuff.
 	)
@@ -161,6 +162,7 @@
 						/obj/item/recipe_book/survival = 1,
 						/obj/item/clothing/mask/rogue/spectacles/golden = 1, //putting them in the bag because bad eye sight virtue strips these
 						/obj/item/contraption/linker = 1,
+						/obj/item/mini_flagpole/artificer = 1
 						)
 	if(SSmapping.config.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
@@ -198,7 +200,6 @@
 		/datum/skill/craft/engineering = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT,
 	)
@@ -231,7 +232,9 @@
 						/obj/item/recipe_book/builder = 1,
 						/obj/item/recipe_book/survival = 1,
 						/obj/item/roguekey/crafterguild = 1,
-						/obj/item/rogueweapon/blowrod = 1
+						/obj/item/rogueweapon/blowrod = 1,
+						/obj/item/mini_flagpole/blacksmith = 1,
+						/obj/item/mini_flagpole/artificer = 1,
 						)
 	if(SSmapping.config.map_name == "Desert Town")
 		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom

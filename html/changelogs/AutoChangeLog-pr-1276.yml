@@ -1,0 +1,4 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - bugfix: "Adventurer / Court Agents / Mercenaries with the resident virtue now actually spawn in town, and get their known list populated by others that are locals too. It works just like how towners spawn. Also stops players from being force buckled on chairs when spawning in."
