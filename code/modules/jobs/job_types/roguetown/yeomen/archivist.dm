@@ -24,6 +24,7 @@
 		TRAIT_MAGEARMOR,
 		TRAIT_INTELLECTUAL,
 		TRAIT_SEEPRICES_SHITTY,
+		TRAIT_GOODWRITER,
 		TRAIT_MEDICINE_EXPERT,
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_SMITHING_EXPERT,
@@ -67,11 +68,11 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
-		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/archivist/basic/pre_equip(mob/living/carbon/human/H)
@@ -85,12 +86,16 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor/nightman
 		pants = /obj/item/clothing/under/roguetown/tights/black
 		head = /obj/item/clothing/head/roguetown/nightman
-	backr = /obj/item/storage/backpack/rogue/satchel
+	backl = /obj/item/storage/backpack/rogue/satchel
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
+	wrists = /obj/item/storage/keyring/archivist
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
-	beltl = /obj/item/storage/keyring/archivist
+	beltl = /obj/item/rogueweapon/huntingknife
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	mask = /obj/item/clothing/mask/rogue/spectacles
+	if(SSmapping.config.map_name == "Desert Town")
+		head = /obj/item/clothing/head/roguetown/tagelmust
+		shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	id = /obj/item/scomstone/bad
 	backpack_contents = list(
 		/obj/item/recipe_book/alchemy,
@@ -98,12 +103,13 @@
 		/obj/item/natural/feather,
 		/obj/item/paper,
 		/obj/item/paper,
-		/obj/item/paper
-
+		/obj/item/paper,
+		/obj/item/rogueweapon/scabbard/sheath = 1
 	)
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/teach)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/learn)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/refocusstudies)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice)
 	if(H.age == AGE_OLD)

@@ -22,6 +22,8 @@
 		/datum/job/roguetown/villager = list(display_title = "Villager"),
 		/datum/job/roguetown/magician = list(display_title = "Palace Magician"),
 		/datum/job/roguetown/pilgrim = list(display_title = "Nomad"),
+		/datum/job/roguetown/councillor = list(display_title = "Sheikh"),
+		/datum/job/roguetown/hand = list(display_title = "Vizier"),
 	)
 	tutorial_adjust = list(
 		// /datum/job/roguetown/marshal = "CHANGE THIS LATER. Manage the town outside of the palace. Hang out in the mayor building!!!",
@@ -33,6 +35,14 @@
 		You owe your life to the Sultan, for it was his coin that allowed you to continue your studies in these dark times. \
 		In return, you have proven time and time again as justicar and trusted advisor to their reign.",
 		/datum/job/roguetown/shophand = "You work the largest store in Al-Ashur by grace of the Merchant who has shackled you to this drudgery. The work of stocking shelves and taking inventory for your employer is mind-numbing and repetitive--but at least you have a roof over your head and comfortable surroundings. With time, perhaps you will one day be more than a glorified servant.",
+		/datum/job/roguetown/councillor = "You may have inherited this role, bought your way into it, or were appointed by the Royal Family themselves; \
+			Regardless of origin, you now serve as an assistant, planner, and juror for the Vizier. \
+			You help him oversee the taxation, construction, and planning of new laws. \
+			Your main focus is to assist the Vizier with their duties, answering only to them and the Sultan.",
+		/datum/job/roguetown/hand = "You are one of the most important men within the realm itself. \
+			You have played spymaster and confidant to the Noble-Family for so long that you are a vault of intrigue, something you exploit with potent conviction.\
+			Let no man ever forget whose ear you whisper into. You've killed more men with those lips than any blademaster could ever claim to.\
+			ALSO (rewrite this) YOU MANAGE FINANCES TOO!!",
 	)
 	/// Jobs that this map won't use
 	blacklist = list(
@@ -45,7 +55,7 @@
 
 		// /datum/job/roguetown/lord,// sultan//moved to an if-map-then-outfit
 		/datum/job/roguetown/knight,// cataphract
-		/datum/job/roguetown/hand,// vizier
+		// /datum/job/roguetown/hand,// vizier
 		// /datum/job/roguetown/suitor,
 		// /datum/job/roguetown/steward, //gonna try merging this role with Vizier EDIT: with the higher pop we can afford to keep em separate now
 		// /datum/job/roguetown/consort,
@@ -55,7 +65,7 @@
 		//church. Fine as is
 
 		/datum/job/roguetown/butler,// headslave
-		/datum/job/roguetown/councillor,// sheikh
+		// /datum/job/roguetown/councillor,// sheikh
 		// /datum/job/roguetown/magician,// moved to an if-map-then-outfit statement in the baseblock
 		/datum/job/roguetown/jester, //are jesters really a desert thing? Maybe ought to push people into playing slaves instead..?
 		// /datum/job/roguetown/physician,
@@ -107,6 +117,12 @@
 		// /datum/job/roguetown/orphan,
 		// /datum/job/roguetown/prince,//dtprince
 		// /datum/job/roguetown/shophand,
+		
+		/datum/job/roguetown/tribalchieftain,
+		/datum/job/roguetown/tribalshaman,
+		/datum/job/roguetown/tribalguard,
+		/datum/job/roguetown/tribalrabble,
+		/datum/job/roguetown/tribalvillager,
 		
 	)
 

@@ -59,6 +59,11 @@ GLOBAL_VAR_INIT(mobids, 1)
 	..()
 	return QDEL_HINT_QUEUE
 
+/mob/New()
+	// This needs to happen IMMEDIATELY. I'm sorry :(
+	GenerateTag()
+	return ..()
+
 /**
  * Intialize a mob
  *
@@ -107,6 +112,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  * This is simply "mob_"+ a global incrementing counter that goes up for every mob
  */
 /mob/GenerateTag()
+	. = ..()
 	tag = "mob_[next_mob_id++]"
 
 /**

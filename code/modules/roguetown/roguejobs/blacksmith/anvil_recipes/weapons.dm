@@ -1168,10 +1168,10 @@
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/mace
-	name = "Psydonic Mace (+1 Blessed Silver, +1 Stick)"
+	name = "Psydonic Grand Mace (+1 Blessed Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/mace/goden/psymace
-	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/stick)
+	created_item = /obj/item/rogueweapon/mace/goden/psy
+	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/spear
@@ -1256,10 +1256,10 @@
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/mace/inq
-	name = "Psydonic Mace (+1 Blessed Silver, +1 Stick)"
+	name = "Psydonic Grand Mace (+1 Blessed Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/mace/goden/psymace
-	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/stick)
+	created_item = /obj/item/rogueweapon/mace/goden/psy
+	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/small)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/spear/inq

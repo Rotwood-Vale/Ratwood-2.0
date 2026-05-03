@@ -315,7 +315,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/underworld/adventurespawn)
 "Lh" = (
-/obj/machinery/light/rogue/wallfire/candle/blue/l,
+/obj/machinery/light/rogue/candle/blue/l,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/underworld/adventurespawn)
 "LF" = (
@@ -336,7 +336,7 @@
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/underworld/adventurespawn)
 "MW" = (
-/obj/machinery/light/rogue/wallfire,
+/obj/machinery/light/rogue/campfire/fireplace,
 /obj/structure/underworld/barrier,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/underworld/adventurespawn)
@@ -470,7 +470,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/underworld/adventurespawn)
 "ZD" = (
-/obj/machinery/light/rogue/wallfire/candle/blue/r,
+/obj/machinery/light/rogue/candle/blue/r,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/underworld/adventurespawn)
 

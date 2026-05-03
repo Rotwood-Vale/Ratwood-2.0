@@ -28,7 +28,7 @@
 	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
 
 /datum/advclass/headslave
-	traits_applied = list(TRAIT_CICERONE, TRAIT_HOMESTEAD_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_ROYALSERVANT) // They have Expert Sewing
+	traits_applied = list(TRAIT_CICERONE, TRAIT_HOMESTEAD_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND) // They have Expert Sewing
 	category_tags = list(CTAG_HEADSLAVE)
 	name = "Head Slave"
 	tutorial = "While still expected to fill in for the duties of the household slaves as needed, you have styled yourself as a figure beyond them."

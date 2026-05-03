@@ -1,0 +1,37 @@
+2026-05-01:
+  EvenInDeathIStillServe:
+  - rscadd: Cow and catbells are now attachable to all neckwear items.
+  - rscadd: Cow and catbells are now available in the loadout.
+  IronDragoon:
+  - rscadd: Added ability for bottoms to force themselves onto a top's knot
+  - rscadd: Ability for bottoms to grind a knot in themselves if they are the one
+      forcing it
+  - rscadd: Subtle knot grinding
+  - rscadd: Some gooner local visible messages about people taking loads on their
+      body/face
+  - rscadd: Can now 'clean' a partner who is actively 'dripping' through rimming/cunnilingus
+      actions.
+  - rscadd: Can now consume cum/femcum to gain a small amount of nutrition through
+      oral sex. This should also be implemented in all the other areas I thought of
+      including cleaning mentioned above, as well as cleaning floor stuff
+  - rscadd: More detailed examine text around active cum dripping
+  - rscadd: Baotha round end influence now tracks non-lupians knotted as well as impregnations
+  - refactor: refactored sexcon a little to respect the bottom/top as opposed to just
+      the 'instigator'
+  john-pawson:
+  - bugfix: fixed being able to far travel dead corpses, opening up a slot twice or
+      opening a slot of a role that you shouldn't be able to.
+2026-05-02:
+  Lir:
+  - bugfix: Fixed a small mapping oversight
+2026-05-03:
+  Jamdrawers:
+  - rscadd: Roguetest_OtherZ option when changing the map to load roguetest without
+      loading the bandit camp/wretch fort/etc.
+  john-pawson:
+  - rscadd: Certain foods will now give you a slice of it when almost finished, for
+      example, the last bite of a loaf of bread will be a bread slice, or the last
+      bite of a salumoi will be a salumoi slice.
+  - bugfix: You can no longer duplicate food by biting and slicing it
+  kimesik:
+  - rscadd: You can tell if somebody's soul is still in with Expert Medicine

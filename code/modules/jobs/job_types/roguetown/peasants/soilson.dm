@@ -89,3 +89,8 @@
 		pants = /obj/item/clothing/under/roguetown/tights/random
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
+	if(SSmapping.config.map_name == "Desert Town")
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
+		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
+		shoes = /obj/item/clothing/shoes/roguetown/sandals
+		head = /obj/item/clothing/head/roguetown/roguehood/shalal/nomad

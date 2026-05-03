@@ -68,6 +68,11 @@
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress
 	else if(should_wear_masc_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/random
+	if(SSmapping.config.map_name == "Desert Town")
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/gold
+		armor = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/purple
+		head = /obj/item/clothing/head/roguetown/turban/fancypurple
+		shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fittedclothing)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice)

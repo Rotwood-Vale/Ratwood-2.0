@@ -24,17 +24,19 @@ GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 #define SEX_SPEED_MID 2
 #define SEX_SPEED_HIGH 3
 #define SEX_SPEED_EXTREME 4
+#define SEX_SPEED_LUDICROUS 5
 
 #define SEX_SPEED_MIN 1
-#define SEX_SPEED_MAX 4
+#define SEX_SPEED_MAX 5
 
 #define SEX_FORCE_LOW 1
 #define SEX_FORCE_MID 2
 #define SEX_FORCE_HIGH 3
 #define SEX_FORCE_EXTREME 4
+#define SEX_FORCE_LUDICROUS 5
 
 #define SEX_FORCE_MIN 1
-#define SEX_FORCE_MAX 4
+#define SEX_FORCE_MAX 5
 
 #define SEX_MANUAL_AROUSAL_DEFAULT 1
 #define SEX_MANUAL_AROUSAL_UNAROUSED 2

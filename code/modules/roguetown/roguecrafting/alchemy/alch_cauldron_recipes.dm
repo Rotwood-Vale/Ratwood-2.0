@@ -42,18 +42,18 @@
 /datum/alch_cauldron_recipe/big_health_potion
 	name = "Elixir of Health (Strong)"
 	smells_like = "berry pie"
-	skill_required = SKILL_LEVEL_JOURNEYMAN // If it has "Strong", lock it roundstart for Apothecary or above
-	output_reagents = list(/datum/reagent/medicine/healthpot = 100,/datum/reagent/additive = 100)
+	skill_required = SKILL_LEVEL_EXPERT // If it has "Strong", lock it roundstart for Apothecary or above
+	output_reagents = list(/datum/reagent/medicine/healthpot = 50,/datum/reagent/additive = 50)//it has an extremely easy recipe compared to regular red
 
 /datum/alch_cauldron_recipe/mana_potion
 	name = "Elixir of Mana"
 	smells_like = "power"
-	output_reagents = list(/datum/reagent/medicine/manapot = 100)
+	output_reagents = list(/datum/reagent/medicine/manapot = 100)//recipe is harder to make than regular blue
 
 /datum/alch_cauldron_recipe/big_mana_potion
 	name = "Elixir of Mana (Strong)"
 	smells_like = "fear"
-	skill_required = SKILL_LEVEL_JOURNEYMAN
+	skill_required = SKILL_LEVEL_EXPERT
 	output_reagents = list(/datum/reagent/medicine/manapot = 100,/datum/reagent/additive = 100)
 
 /datum/alch_cauldron_recipe/stamina_potion

@@ -54,6 +54,7 @@
 	slice_batch = FALSE
 	bitesize = 6
 	slice_sound = TRUE
+	eating_slice = TRUE
 
 /obj/item/reagent_containers/food/snacks/butter/attackby(obj/item/I, mob/living/user, params)
 	update_cooktime(user)
@@ -73,20 +74,6 @@
 		icon_state = "butter[slices_num]"
 	else
 		icon_state = "butter_slice"
-
-/obj/item/reagent_containers/food/snacks/butter/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 1)
-			slices_num = 5
-		if(bitecount == 2)
-			slices_num = 4
-		if(bitecount == 3)
-			slices_num = 3
-		if(bitecount == 4)
-			slices_num = 2
-		if(bitecount == 5)
-			changefood(slice_path, eater)
 
 /obj/item/reagent_containers/food/snacks/butterslice
 	icon = 'modular/Neu_Food/icons/others/dairy.dmi'
@@ -223,6 +210,7 @@
 	slices_num = 6
 	slice_batch = TRUE
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/cheddarwedge
+	eating_slice = TRUE
 	become_rot_type = /obj/item/reagent_containers/food/snacks/rogue/cheddar/aged
 	slice_sound = TRUE
 
@@ -249,6 +237,7 @@
 	slices_num = 3
 	slice_batch = TRUE
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/cheddarslice
+	eating_slice = TRUE
 	become_rot_type = /obj/item/reagent_containers/food/snacks/rogue/cheddarwedge/aged
 
 /obj/item/reagent_containers/food/snacks/rogue/cheddarwedge/aged

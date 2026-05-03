@@ -118,7 +118,6 @@
 /obj/item/clothing/head/roguetown/menacing/mad_touched_treasure_hunter //its here so it doesnt wind up on some class' loadout.
 	name = "sack hood"
 	desc = "A ragged hood of thick jute fibres. The itchiness is unbearable."
-	sewrepair = TRUE
 	color = "#999999"
 	armor = ARMOR_LEATHER
 

@@ -15,12 +15,12 @@
 /obj/effect/landmark/start/dt/janissarysergeant
 	name = "Janissary Sergeant"
 /obj/effect/landmark/start/dt/slavemaster
-	name = "Slave master"
+	name = "Slave Master"
 
-/obj/effect/landmark/start/dt/sheikh
-	name = "Sheikh"
-/obj/effect/landmark/start/dt/vizier
-	name = "Vizier"
+// /obj/effect/landmark/start/dt/sheikh
+// 	name = "Sheikh"
+// /obj/effect/landmark/start/dt/vizier
+// 	name = "Vizier"
 // /obj/effect/landmark/start/dt/prince
 // 	name = "prince"
 // /obj/effect/landmark/start/dt/sultan

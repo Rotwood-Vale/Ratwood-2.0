@@ -59,6 +59,7 @@
 		/datum/customizer_choice/organ/penis/human_anthro,
 		/datum/customizer_choice/organ/penis/knotted,
 		/datum/customizer_choice/organ/penis/equine,
+		/datum/customizer_choice/organ/penis/equine_knotted,
 		/datum/customizer_choice/organ/penis/tapered_mammal,
 		/datum/customizer_choice/organ/penis/tapered_double_mammal,
 		/datum/customizer_choice/organ/penis/tapered,
@@ -108,6 +109,7 @@
 	customizer_choices = list(
 		/datum/customizer_choice/organ/penis/human_anthro,
 		/datum/customizer_choice/organ/penis/equine,
+		/datum/customizer_choice/organ/penis/equine_knotted,
 		)
 
 /datum/customizer_choice/organ/penis/human
@@ -134,6 +136,13 @@
 	organ_type = /obj/item/organ/penis/equine
 	sprite_accessories = list(
 		/datum/sprite_accessory/penis/flared,
+		)
+
+/datum/customizer_choice/organ/penis/equine_knotted
+	name = "Equine Knotted Penis"
+	organ_type = /obj/item/organ/penis/equine_knotted
+	sprite_accessories = list(
+		/datum/sprite_accessory/penis/flared_knotted,
 		)
 
 /datum/customizer_choice/organ/penis/tapered_mammal

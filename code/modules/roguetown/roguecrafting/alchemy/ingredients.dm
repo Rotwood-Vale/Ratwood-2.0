@@ -433,14 +433,6 @@
 	med_pot = /datum/alch_cauldron_recipe/int_potion
 	minor_pot = /datum/alch_cauldron_recipe/big_mana_potion
 
-/obj/item/alch/manabloompowder
-	name = "manabloom powder"
-	icon_state = "bluepowder"
-
-	major_pot = /datum/alch_cauldron_recipe/mana_potion
-	med_pot = /datum/alch_cauldron_recipe/int_potion
-	minor_pot = /datum/alch_cauldron_recipe/big_mana_potion
-
 /obj/item/alch/rosa
 	name = "rosa"
 	icon_state = "rosa"

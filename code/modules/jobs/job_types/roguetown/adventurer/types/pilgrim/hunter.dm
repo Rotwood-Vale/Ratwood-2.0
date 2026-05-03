@@ -56,7 +56,6 @@
 				/obj/item/flint = 1,
 				/obj/item/bait = 1,
 				/obj/item/rogueweapon/huntingknife = 1,
-				/obj/item/flashlight/flare/torch = 1,
 				/obj/item/flashlight/flare/torch/lantern = 1,
 				/obj/item/rogueweapon/scabbard/sheath = 1
 				)

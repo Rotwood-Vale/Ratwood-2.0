@@ -9,8 +9,27 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	landsound = 'sound/foley/jumpland/dirtland.wav'
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/turf/open/floor/rogue, /turf/closed/mineral, /turf/closed/wall/mineral)
+	canSmoothWith = list(
+						/turf/open/floor/rogue/grass,
+						/turf/open/floor/rogue/desert_grass,
+						/turf/open/floor/rogue/dirt,
+						/turf/open/floor/rogue/dirt/road,
+						/turf/open/floor/rogue/dirt/desert,
+						/turf/open/floor/rogue/dirt/road/desert,
+						/turf/open/floor/rogue/citybrick,
+						/turf/open/floor/rogue/cobble,
+						/turf/open/floor/rogue/cobblerock,
+						/turf/open/floor/rogue/cobble/mossy,
+						/turf/open/floor/rogue/grassred,
+						/turf/open/floor/rogue/grassyel,
+						/turf/open/floor/rogue/grasscold,
+						/turf/open/floor/rogue/grassgrey,
+						/turf/open/floor/rogue/grasspurple,
+						/turf/open/floor/rogue/snowpatchy,
+						/turf/open/floor/rogue/snow,
+						/turf/open/floor/rogue/snowrough,)
 	// slowdown = 1
+	// neighborlay = "duneedge"
 
 /turf/open/floor/rogue/dunes/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
@@ -19,6 +38,13 @@
 	. = ..()
 	dir = pick(GLOB.cardinals)
 	icon_state = "dune[rand(1,16)]"
+
+/obj/effect/decal/duneedge
+	name = ""
+	desc = ""
+	icon = 'modular_deserttown/icons/duneedge.dmi'
+	icon_state = "duneedge"
+	mouse_opacity = 0
 
 /turf/open/floor/rogue/sandbrick
 	icon_state = "sand-brick1"
@@ -37,6 +63,15 @@
 
 /turf/open/floor/rogue/sandbrick/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
+
+/datum/crafting_recipe/roguetown/turfs/desert/sandbrickfloor
+	name = "sandbrick floor"
+	result = /turf/open/floor/rogue/sandbrick
+	reqs = list(/obj/item/natural/stone = 1)
+	skillcraft = /datum/skill/craft/masonry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 1
 
 /turf/open/floor/rogue/sandbrick/Initialize()
 	. = ..()
@@ -108,7 +143,6 @@
 	. = ..()
 	icon_state = "city-brick6-[rand(1,2)]"
 
-
 /turf/open/floor/rogue/lightpath
 	icon_state = "light-path1"
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
@@ -148,15 +182,21 @@
 	dir = pick(GLOB.cardinals)
 	icon_state = "dark-path[rand(1,8)]"
 
-
+/datum/crafting_recipe/roguetown/turfs/desert/darksandbrickfloor
+	name = "dark sandbrick floor"
+	result = /turf/open/floor/rogue/darkpath
+	reqs = list(/obj/item/natural/stone = 1)
+	skillcraft = /datum/skill/craft/masonry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 1
 
 /obj/effect/decal/desertgrassedge
 	name = ""
 	desc = ""
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
-	icon_state = "desertgrass_edges"
+	icon_state = "desertgrassedge"
 	mouse_opacity = 0
-
 
 /turf/open/floor/rogue/desert_grass
 	name = "desert grass"
@@ -174,27 +214,50 @@
 	canSmoothWith = list(
 						/turf/open/floor/rogue/grass,
 						/turf/open/floor/rogue/dunes,
-						/turf/open/floor/rogue/citybrick,)
-	max_integrity = 1200
+						/turf/open/floor/rogue/dirt,
+						/turf/open/floor/rogue/dirt/road,
+						/turf/open/floor/rogue/dirt/desert,
+						/turf/open/floor/rogue/dirt/road/desert,
+						/turf/open/floor/rogue/citybrick,
+						/turf/open/floor/rogue/grassred,
+						/turf/open/floor/rogue/grassyel,
+						/turf/open/floor/rogue/grasscold,
+						/turf/open/floor/rogue/grassgrey,
+						/turf/open/floor/rogue/grasspurple,
+						/turf/open/floor/rogue/snowpatchy,
+						/turf/open/floor/rogue/snow,
+						/turf/open/floor/rogue/snowrough,
+						/turf/open/floor/rogue/cobble,
+						/turf/open/floor/rogue/cobblerock,
+						/turf/open/floor/rogue/cobble/mossy,)
+	neighborlay = "desertgrassedge"
+	spread_chance = 15
+	burn_power = 6
 
 /turf/open/floor/rogue/desert_grass/Initialize()
 	. = ..()
 	dir = pick(GLOB.cardinals)
 	icon_state = "desertgrass[rand(1,16)]"
 
-
 /turf/open/floor/rogue/desert_grass/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/desert_grass/turf_destruction(damage_flag)
 	. = ..()
-	src.ChangeTurf(/turf/open/floor/rogue/dirt, flags = CHANGETURF_INHERIT_AIR)
+	src.ChangeTurf(/turf/open/floor/rogue/dirt/desert, flags = CHANGETURF_INHERIT_AIR)
+
+/turf/open/floor/rogue/desert_grass/nospawn
 
 /turf/open/floor/rogue/dirt/desert
-	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
-/turf/open/floor/rogue/dirt/road/desert
-	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	icon = 'modular_deserttown/icons/desertfloor.dmi'
+	
+/turf/open/floor/rogue/dirt/desert/nospawn
 
+/turf/open/floor/rogue/dirt/road/desert
+	icon = 'modular_deserttown/icons/desertfloor.dmi'
+
+/turf/open/floor/rogue/grass/desert
+	icon = 'modular_deserttown/icons/desertfloor.dmi'
 
 ///.
 

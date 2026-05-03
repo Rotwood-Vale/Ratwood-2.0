@@ -130,13 +130,15 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 	belt = /obj/item/storage/belt/rogue/leather/black
 	if(prob(5))
 		beltl = /obj/item/storage/belt/rogue/pouch/medicine
-	if(prob(50))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	else
-		if(prob(20))
-			beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
-		else
+	switch(rand(1, 100))
+		if(1 to 50)
+			beltr = null
+		if(51 to 85)
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if(86 to 95)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		if(96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
 	if(prob(60))
 		id = /obj/item/clothing/ring/silver
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron

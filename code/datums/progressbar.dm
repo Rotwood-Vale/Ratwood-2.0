@@ -65,12 +65,12 @@
 
 	animate(bar, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
 	addtimer(CALLBACK(src, PROC_REF(remove_from_client)), PROGRESSBAR_ANIMATION_TIME, TIMER_CLIENT_TIME)
-	QDEL_IN(bar, PROGRESSBAR_ANIMATION_TIME * 2) //for garbage collection safety
-	. = ..()
+	return ..()
 
 /datum/progressbar/proc/remove_from_client()
 	for(var/client/C in tracked_clients)
 		C.images -= bar
+	bar = null
 	tracked_clients = null
 
 #undef PROGRESSBAR_ANIMATION_TIME

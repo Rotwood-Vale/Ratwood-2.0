@@ -1,4 +1,4 @@
-//intent datums ฅ^•ﻌ•^ฅ
+//intent datums :3
 
 /datum/intent/dagger
 	clickcd = 8
@@ -952,7 +952,7 @@
 		var/mob/living/carbon/human/H = M
 		// Check if targeting the head or skull zone
 		if(user.zone_selected == BODY_ZONE_HEAD || user.zone_selected == BODY_ZONE_PRECISE_SKULL)
-			var/list/options = list("hairstyle", "facial hairstyle")
+			var/list/options = list("hairstyle", "facial hairstyle", "maintain haircut")
 			var/chosen = input(user, "What would you like to style?", "Hair Styling") as null|anything in options
 			if(!chosen)
 				return
@@ -1001,6 +1001,7 @@
 								H.update_hair()
 								playsound(src, 'sound/items/flint.ogg', 50, TRUE)
 								user.visible_message(span_notice("[user] finishes styling [H]'s hair."), span_notice("You finish styling [H == user ? "your" : "[H]'s"] hair."))
+								H.add_stress(/datum/stressevent/fresh_haircut)
 
 				if("facial hairstyle")
 					var/datum/customizer_choice/bodypart_feature/hair/facial/humanoid/facial_choice = CUSTOMIZER_CHOICE(/datum/customizer_choice/bodypart_feature/hair/facial/humanoid)
@@ -1037,12 +1038,22 @@
 								H.update_hair()
 								playsound(src, 'sound/items/flint.ogg', 50, TRUE)
 								user.visible_message(span_notice("[user] finishes styling [H]'s facial hair."), span_notice("You finish styling [H == user ? "your" : "[H]'s"] facial hair."))
+								H.add_stress(/datum/stressevent/fresh_haircut)
+
+				if("maintain haircut")
+					user.visible_message(span_notice("[user] begins tidying up [H]'s hair..."), span_notice("You begin tidying up [H == user ? "your" : "[H]'s"] hair..."))
+					if(!do_after(user, 15 SECONDS, target = H))
+						to_chat(user, span_warning("The tidying was interrupted!"))
+						return
+					playsound(src, 'sound/items/flint.ogg', 50, TRUE)
+					user.visible_message(span_notice("[user] finishes tidying up [H]'s hair."), span_notice("You finish tidying up [H == user ? "your" : "[H]'s"] hair."))
+					H.add_stress(/datum/stressevent/fresh_haircut)
 			return TRUE
 	// If not using snip intent on head/skull or not a human, proceed with normal attack
 	if(user.used_intent.type == /datum/intent/snip)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/list/options = list("hairstyle", "facial hairstyle")
+			var/list/options = list("hairstyle", "facial hairstyle", "maintain haircut")
 			var/chosen = input(user, "What would you like to style?", "Hair Styling") as null|anything in options
 			if(!chosen)
 				return
@@ -1091,6 +1102,7 @@
 								H.update_hair()
 								playsound(src, 'sound/items/flint.ogg', 50, TRUE)
 								user.visible_message(span_notice("[user] finishes styling [H]'s hair."), span_notice("You finish styling [H == user ? "your" : "[H]'s"] hair."))
+								H.add_stress(/datum/stressevent/fresh_haircut)
 
 				if("facial hairstyle")
 					var/datum/customizer_choice/bodypart_feature/hair/facial/humanoid/facial_choice = CUSTOMIZER_CHOICE(/datum/customizer_choice/bodypart_feature/hair/facial/humanoid)
@@ -1127,6 +1139,16 @@
 								H.update_hair()
 								playsound(src, 'sound/items/flint.ogg', 50, TRUE)
 								user.visible_message(span_notice("[user] finishes styling [H]'s facial hair."), span_notice("You finish styling [H == user ? "your" : "[H]'s"] facial hair."))
+								H.add_stress(/datum/stressevent/fresh_haircut)
+
+				if("maintain haircut")
+					user.visible_message(span_notice("[user] begins tidying up [H]'s hair..."), span_notice("You begin tidying up [H == user ? "your" : "[H]'s"] hair..."))
+					if(!do_after(user, 15 SECONDS, target = H))
+						to_chat(user, span_warning("The tidying was interrupted!"))
+						return
+					playsound(src, 'sound/items/flint.ogg', 50, TRUE)
+					user.visible_message(span_notice("[user] finishes tidying up [H]'s hair."), span_notice("You finish tidying up [H == user ? "your" : "[H]'s"] hair."))
+					H.add_stress(/datum/stressevent/fresh_haircut)
 			return
 	return ..()
 

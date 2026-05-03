@@ -69,7 +69,10 @@
 				if(D.holie && D.holie.stage < 4)
 					D.holie.attackby(src, user)
 				else
-					if(istype(T, /turf/open/floor/rogue/dirt/road))
+					if(istype(T, /turf/open/floor/rogue/dirt/road/desert))
+						qdel(heldclod)
+						T.ChangeTurf(/turf/open/floor/rogue/dirt/desert, flags = CHANGETURF_INHERIT_AIR)
+					else if(istype(T, /turf/open/floor/rogue/dirt/road))
 						qdel(heldclod)
 						T.ChangeTurf(/turf/open/floor/rogue/dirt, flags = CHANGETURF_INHERIT_AIR)
 					else
@@ -90,7 +93,7 @@
 					playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)
 					update_icon()
 			return
-		if(istype(T, /turf/open/floor/rogue/sand) || istype(T, /turf/open/floor/rogue/AzureSand))
+		if(istype(T, /turf/open/floor/rogue/sand) || istype(T, /turf/open/floor/rogue/AzureSand) || istype(T, /turf/open/floor/rogue/dunes))
 			if(heldclod)
 				heldclod.forceMove(T)
 				heldclod = null
@@ -109,10 +112,10 @@
 			playsound(T,'sound/items/empty_shovel.ogg', 100, TRUE)
 			update_icon()
 			return
-		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold))
+		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/grasspurple) || istype(T, /turf/open/floor/rogue/grassgrey))
 			to_chat(user, span_warning("There is grass in the way."))
 			return
-		if(istype(T, /turf/open/floor/rogue/snow))
+		if(istype(T, /turf/open/floor/rogue/snow) || istype(T, /turf/open/floor/rogue/snowrough) || istype(T, /turf/open/floor/rogue/snowpatchy))
 			T.ChangeTurf(/turf/open/floor/rogue/dirt, flags = CHANGETURF_INHERIT_AIR)
 			to_chat(user, span_warning("You scoop away the snow!"))
 		return
@@ -186,7 +189,7 @@
 	if(istype(T, /turf/open/floor/rogue/sand))
 		var/turf/open/floor/rogue/sand/S = T
 		return S.sand_amt > 0
-	if(istype(T, /turf/open/floor/rogue/AzureSand))
+	if(istype(T, /turf/open/floor/rogue/AzureSand) || istype(T, /turf/open/floor/rogue/dunes))
 		return TRUE
 	return FALSE
 

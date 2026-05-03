@@ -8,7 +8,7 @@
 		return FALSE
 	if(!target.getorganslot(ORGAN_SLOT_PENIS))
 		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_TAIL))
+	if(!user.getorganslot(ORGAN_SLOT_TAIL) && !islamia(user))
 		return FALSE
 	return TRUE
 
@@ -19,7 +19,7 @@
 		return FALSE
 	if(!target.getorganslot(ORGAN_SLOT_PENIS))
 		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_TAIL))
+	if(!user.getorganslot(ORGAN_SLOT_TAIL) && !islamia(user))
 		return FALSE
 	return TRUE
 

@@ -31,7 +31,7 @@
 	movement_type = FLYING
 	speak_emote = list("squeaks")
 	base_intents = list(/datum/intent/bite)
-	sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS|SEE_SELF)
+	sight = SEE_SELF
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 

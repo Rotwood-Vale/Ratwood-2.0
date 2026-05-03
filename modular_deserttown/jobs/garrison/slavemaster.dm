@@ -99,7 +99,7 @@
 	beltl = /obj/item/storage/keyring/dungeoneer
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone/bad/garrison
-	backpack_contents = list(/obj/item/flashlight/flare/torch/lantern, /obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2, /obj/item/rope/chain = 1, /obj/item/flint = 1, /obj/item/clothing/neck/roguetown/collar/leather = 2)
+	backpack_contents = list(/obj/item/flashlight/flare/torch/lantern, /obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2, /obj/item/rope/chain = 1, /obj/item/flint = 1, /obj/item/clothing/neck/roguetown/collar/leather = 2, /obj/item/clothing/neck/roguetown/psicross/silver = 1, /obj/item/rogueweapon/surgery/cautery/branding = 1,)
 
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	//Torture victim is for inquisition - doesn't even work without a psicross anymore so maybe come up with a variant for him specifically?

@@ -131,7 +131,13 @@
 	src.attack_hand(user, params)
 
 /mob/living/ongive(mob/living/carbon/human/user, params)
-	if(!ishuman(user) || src == user)
+	if(!ishuman(user))
+		return
+
+	if(src == user)
+		var/obj/item/melee/touch_attack/parlor_trick/P = user.get_active_held_item()
+		if(istype(P))
+			P.toggle(user)
 		return
 
 	var/obj/item/item_to_offer = user.get_active_held_item()

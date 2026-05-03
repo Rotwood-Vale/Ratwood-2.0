@@ -108,7 +108,7 @@
 /obj/structure/kitchenspike/Destroy()
 	if(has_buckled_mobs())
 		for(var/mob/living/L in buckled_mobs)
-			release_mob(L)
+			INVOKE_ASYNC(src, PROC_REF(release_mob), L)
 	return ..()
 
 #undef VIABLE_MOB_CHECK
