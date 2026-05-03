@@ -29,7 +29,6 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN, // Keeping this as it is, they got climb stuff to build. And fall eventually as they get a moment of 'fog'. Hah.
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN, // Once more, if they wish to be as good as the ones we have, got practice.
 		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN, // Same as above. Do I need to repeat it? Eh.
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,	// I.. really won't even touch this, change it at all. Rarely anyone does pottery. Even normal artificers.
 	)

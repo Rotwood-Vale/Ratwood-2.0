@@ -98,7 +98,6 @@
 		if(ingredients.len)
 			if(brewing < 20)
 				if(src.reagents.has_reagent(/datum/reagent/water, 90) || src.reagents.has_reagent(/datum/reagent/blood, 120))
-				if(src.reagents.has_reagent(/datum/reagent/water,waterneed))
 					brewing++
 					if(prob(10))
 						playsound(src, "bubbles", 100, FALSE)
@@ -256,7 +255,7 @@
 
 /obj/machinery/light/rogue/cauldron/folding
 	name = "folding cauldron"
-	desc = "Bubble, Bubble, toil and trouble. A great protable bronze cauldron for brewing potions."
+	desc = "Bubble, Bubble, toil and trouble. A great protable bronze cauldron for brewing potions. Kick to spill the contents, or add ingredients to brew potions! Can be folded up and stored when not in use."
 	icon = 'icons/roguetown/misc/gadgets.dmi'
 	icon_state = "FoldingCauldronDeployed1"
 	base_state = "FoldingCauldronDeployed"
@@ -279,5 +278,5 @@
 /obj/machinery/light/rogue/cauldron/folding/Initialize(mapload)
 	. = ..()
 	burn_out()
-	create_reagents(60, DRAINABLE | AMOUNT_VISIBLE | REFILLABLE) //small
+	create_reagents(120, DRAINABLE | AMOUNT_VISIBLE | REFILLABLE)
 	update_icon()

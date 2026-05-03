@@ -178,8 +178,8 @@
 							span_notice("I pour [src] into [target]."))
 			if(poursounds)
 				playsound(user.loc,pick(poursounds), 100, TRUE)
-		// Large containers (instant_fill = FALSE) pour twice the amount per step when not sneaking
-		var/transfer_amount = (!instant_fill && user.m_intent != MOVE_INTENT_SNEAK) ? amount_per_transfer_from_this * 2 : amount_per_transfer_from_this
+		// Large containers (instant_fill = FALSE) pour twice the amount per step when not sneaking; sneaking always transfers 1
+		var/transfer_amount = sneaking ? 1 : ((!instant_fill) ? amount_per_transfer_from_this * 2 : amount_per_transfer_from_this)
 		if(to_spike)
 			if(do_after(user, 8, target = target))
 				if(!reagents.total_volume)
@@ -190,37 +190,18 @@
 				target:spiked = TRUE
 				return
 		for(var/i in 1 to 11)
+			if(!reagents.total_volume)
+				break
+			if(target.reagents.holder_full())
+				break
 			if(do_after(user, 8, target = target))
-				if(!reagents.total_volume)
-					break
-				if(target.reagents.holder_full())
-					break
 				if(!reagents.trans_to(target, transfer_amount, transfered_by = user))
 					reagents.reaction(target, TOUCH, transfer_amount)
-				if(!reagents.trans_to(target, to_transfer, transfered_by = user))
-					reagents.reaction(target, TOUCH, to_transfer)
 			else
 				break
 		return
 
 	if(target.is_drainable() && (user.used_intent.type == /datum/intent/fill)) //A dispenser. Transfer FROM it TO us.
-		if(reagents.holder_full())
-			to_chat(user, span_warning("[src] is full."))
-			return
-		if(fillsounds)
-			playsound(user.loc, pick(fillsounds), 100, TRUE)
-		user.visible_message(span_notice("[user] fills [src] with [target]."), \
-							span_notice("I fill [src] with [target]."))
-		if(user.m_intent != MOVE_INTENT_SNEAK)
-			if(instant_fill)
-				// Quick fill when not sneaking (brief half-second action)
-				if(!do_after(user, 5, target = target))
-					return
-				if(!target.reagents.total_volume)
-					to_chat(user, span_warning("[target] is empty!"))
-					return
-				var/fill_amount = reagents.maximum_volume - reagents.total_volume
-				target.reagents.trans_to(src, fill_amount, transfered_by = user)
 		var/sneaking = FALSE
 		var/to_transfer = amount_per_transfer_from_this
 		if(user.m_intent == MOVE_INTENT_SNEAK)
@@ -236,7 +217,7 @@
 				return
 		if(!sneaking)
 			user.visible_message(span_notice("[user] fills [src] with [target]."), \
-								span_notice("I fill [src] with [target]."))
+							span_notice("I fill [src] with [target]."))
 			if(fillsounds)
 				playsound(user.loc,pick(fillsounds), 100, TRUE)
 		if(to_spike)
@@ -248,40 +229,26 @@
 					target.reagents.reaction(src, TOUCH, to_transfer)
 				spiked = TRUE
 				return
+		if(!sneaking)
+			if(!do_after(user, 5, target = target))
+				return
+			if(!target.reagents.total_volume)
+				to_chat(user, span_warning("[target] is empty!"))
+				return
+			var/fill_amount = reagents.maximum_volume - reagents.total_volume
+			target.reagents.trans_to(src, fill_amount, transfered_by = user)
+			onfill(target, user, silent = TRUE)
+			return
 		for(var/i in 1 to 11)
+			if(reagents.holder_full())
+				break
+			if(!target.reagents.total_volume)
+				break
 			if(do_after(user, 8, target = target))
-				if(reagents.holder_full())
-					break
-				if(!target.reagents.total_volume)
-					break
 				target.reagents.trans_to(src, to_transfer, transfered_by = user)
 				onfill(target, user, silent = TRUE)
 			else
-				// Large containers fill at 2x the sneak speed
-				for(var/i in 1 to 11)
-					if(do_after(user, 4, target = target))
-						if(reagents.holder_full())
-							break
-						if(!target.reagents.total_volume)
-							break
-						target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
-						onfill(target, user, silent = TRUE)
-					else
-						break
-		else
-			for(var/i in 1 to 11)
-				if(do_after(user, 8, target = target))
-					if(reagents.holder_full())
-						break
-					if(!target.reagents.total_volume)
-						break
-					target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
-					onfill(target, user, silent = TRUE)
-				else
-					break
-
-
-		return
+				break
 
 	if(!isnull(reagents))
 		if(reagents.total_volume && user.used_intent.type == INTENT_SPLASH)

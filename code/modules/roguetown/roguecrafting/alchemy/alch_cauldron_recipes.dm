@@ -37,8 +37,6 @@
 /datum/alch_cauldron_recipe/health_potion
 	name = "Elixir of Health"
 	smells_like = "sweet berries"
-	required_base_reagent = /datum/reagent/blood
-	required_base_amount = 120
 	output_reagents = list(/datum/reagent/medicine/healthpot = 100)
 
 /datum/alch_cauldron_recipe/big_health_potion
