@@ -83,3 +83,72 @@
 		else if(!has_blood && stat != DEAD)
 			// Can continue burning essence if not dead yet
 			try_blood_milking(user, container)
+
+// Collect blood from open, non-fracture bleeding wounds on the targeted bodypart
+/mob/living/carbon/human/proc/try_wound_bloodcollect(mob/living/user, obj/item/reagent_containers/glass/container)
+	if(stat == DEAD)
+		to_chat(user, span_warning("[src] is dead!"))
+		return
+
+	if(container.reagents.holder_full())
+		to_chat(user, span_warning("[container] is already full."))
+		return
+
+	var/obj/item/bodypart/targeted_bp = get_bodypart(user.zone_selected)
+	if(!targeted_bp)
+		to_chat(user, span_warning("I can't reach that."))
+		return
+
+	// Gather all open, non-fracture bleeding wounds
+	var/list/bleeding_wounds = list()
+	for(var/datum/wound/W in targeted_bp.wounds)
+		if(!istype(W, /datum/wound/fracture) && W.bleed_rate > 0)
+			bleeding_wounds += W
+
+	if(!bleeding_wounds.len)
+		to_chat(user, span_warning("There is no open bleeding wound there to collect from."))
+		return
+
+	// Calculate how much blood to draw this tick
+	// Artery wounds at normal bleed_rate; other wounds at 1.5x
+	var/transfer_amount = 0
+	for(var/datum/wound/W in bleeding_wounds)
+		if(istype(W, /datum/wound/artery))
+			transfer_amount += W.bleed_rate
+		else
+			transfer_amount += W.bleed_rate * 1.5
+	transfer_amount = round(transfer_amount, 0.1)
+
+	if(!do_after(user, 1 SECONDS, target = src))
+		return
+
+	// Re-verify after the delay
+	if(stat == DEAD || !targeted_bp || !targeted_bp.wounds.len)
+		return
+
+	var/still_bleeding = FALSE
+	for(var/datum/wound/W in targeted_bp.wounds)
+		if(!istype(W, /datum/wound/fracture) && W.bleed_rate > 0)
+			still_bleeding = TRUE
+			break
+	if(!still_bleeding)
+		to_chat(user, span_warning("The wound has stopped bleeding."))
+		return
+
+	if(container.reagents.holder_full())
+		to_chat(user, span_warning("[container] is now full."))
+		return
+
+	var/space_left = container.reagents.maximum_volume - container.reagents.total_volume
+	var/actual_transfer = min(transfer_amount, space_left)
+
+	transfer_blood_to(container, actual_transfer)
+
+	user.visible_message(
+		span_notice("[user] collects blood from [src]'s [targeted_bp.name] into \the [container]."),
+		span_notice("I collect blood from [(src == user) ? "my" : "[src]'s"] [targeted_bp.name] into \the [container].")
+	)
+
+	// Continue collecting if there is still space and still bleeding
+	if(container.reagents.total_volume < container.reagents.maximum_volume)
+		try_wound_bloodcollect(user, container)

@@ -1,6 +1,6 @@
 /obj/machinery/light/rogue/cauldron
 	name = "cauldron"
-	desc = "Bubble, Bubble, toil and trouble. A great iron cauldron for brewing potions."
+	desc = "Bubble, Bubble, toil and trouble. A great iron cauldron for brewing potions. Kick it to spill the contents, or add ingredients to brew potions!"
 	icon = 'icons/roguetown/misc/alchemy.dmi'
 	icon_state = "cauldron1"
 	base_state = "cauldron"
@@ -53,13 +53,50 @@
 	. = ..()
 */
 
+/obj/machinery/light/rogue/cauldron/examine(mob/user)
+	. = ..()
+	if(!reagents || !reagents.total_volume)
+		return
+	if(!user.mind)
+		return
+	var/alch_skill = user.get_skill_level(/datum/skill/craft/alchemy)
+	if(alch_skill < SKILL_LEVEL_APPRENTICE)
+		return
+	if(alch_skill >= SKILL_LEVEL_EXPERT || HAS_TRAIT(user, TRAIT_LEGENDARY_ALCHEMIST))
+		. += span_notice("My trained eye reads the cauldron's contents precisely:")
+		var/list/rlist = reagents.reagent_list
+		for(var/r_entry in rlist)
+			var/datum/reagent/R = r_entry
+			. += span_notice(" - [R.name]: [R.volume] units")
+		if(ingredients.len)
+			. += span_notice("Ingredients inside:")
+			for(var/obj/item/ing in ingredients)
+				. += span_notice(" - [ing.name]")
+		return
+	if(alch_skill >= SKILL_LEVEL_JOURNEYMAN)
+		. += span_notice("I can smell the cauldron's contents:")
+		var/list/rlist2 = reagents.reagent_list
+		for(var/r_entry in rlist2)
+			var/datum/reagent/R = r_entry
+			. += span_notice(" - [R.name]")
+		return
+	if(alch_skill >= SKILL_LEVEL_APPRENTICE)
+		var/datum/reagent/dominant
+		var/list/rlist3 = reagents.reagent_list
+		for(var/r_entry in rlist3)
+			var/datum/reagent/R = r_entry
+			if(!dominant || R.volume > dominant.volume)
+				dominant = R
+		if(dominant)
+			. += span_notice("I can faintly smell [dominant.name] above all else in the cauldron.")
+
 /obj/machinery/light/rogue/cauldron/process()
 	..()
 	update_icon()
 	if(on)
 		if(ingredients.len)
 			if(brewing < 20)
-				if(src.reagents.has_reagent(/datum/reagent/water,90))
+				if(src.reagents.has_reagent(/datum/reagent/water, 90) || src.reagents.has_reagent(/datum/reagent/blood, 120))
 					brewing++
 					if(prob(10))
 						playsound(src, "bubbles", 100, FALSE)
@@ -89,17 +126,42 @@
 					var/result_path = outcomes[1]
 					var/datum/alch_cauldron_recipe/found_recipe = new result_path
 					var/amt2raise = lastuser?.STAINT*2
-					var/in_cauldron = src?.reagents?.get_reagent_amount(/datum/reagent/water)
+					var/required_base = found_recipe.required_base_reagent
+					// Sum all reagents matching required_base type (including subtypes like blood/shitty)
+					var/in_cauldron = 0
+					for(var/datum/reagent/R in src.reagents.reagent_list)
+						if(istype(R, required_base))
+							in_cauldron += R.volume
+					in_cauldron = round(in_cauldron, 0.01)
 					// Handle skillgating
 					if(!lastuser)
 						brewing = 0
 						src.visible_message(span_info("The cauldron can't brew anything without an alchemist to guide it."))
 						return
+					// Ensure the correct base liquid is present in sufficient quantity
+					if(in_cauldron < found_recipe.required_base_amount)
+						brewing = 0
+						src.visible_message(span_warning("The mixture demands a different base liquid — the ingredients refuse to combine!"))
+						// Remove whatever wrong liquid is in the cauldron and replace with yuck
+						var/wrong_amt = 0
+						for(var/datum/reagent/R in src.reagents.reagent_list)
+							if(istype(R, /datum/reagent/water) || istype(R, /datum/reagent/blood))
+								wrong_amt += R.volume
+						wrong_amt = round(wrong_amt, 0.01)
+						if(reagents && wrong_amt > 0)
+							src.reagents.remove_all_type(/datum/reagent/water, wrong_amt, strict=0)
+							src.reagents.remove_all_type(/datum/reagent/blood, wrong_amt, strict=0)
+						for(var/obj/item/ing in src.ingredients)
+							qdel(ing)
+						src.reagents.add_reagent(/datum/reagent/yuck, max(wrong_amt, 1))
+						lastuser?.adjust_experience(/datum/skill/craft/alchemy, amt2raise, FALSE)
+						qdel(found_recipe)
+						return
 					if(found_recipe.skill_required > lastuser?.get_skill_level(/datum/skill/craft/alchemy))
 						brewing = 0
 						src.visible_message(span_warning("The ingredients in the cauldron melds together into a disgusting mess! Perhaps a more skilled alchemist is needed for this recipe."))
 						if(reagents)
-							src.reagents.remove_reagent(/datum/reagent/water, in_cauldron)
+							src.reagents.remove_all_type(required_base, in_cauldron, strict=0)
 						for(var/obj/item/ing in src.ingredients)
 							qdel(ing)
 						src.reagents.add_reagent(/datum/reagent/yuck, in_cauldron) // 1 to 1 transmutation of yuck
@@ -109,7 +171,7 @@
 					for(var/obj/item/ing in src.ingredients)
 						qdel(ing)
 					if(reagents)
-						src.reagents.remove_reagent(/datum/reagent/water, in_cauldron)
+						src.reagents.remove_all_type(required_base, in_cauldron, strict=0)
 					if(found_recipe.output_reagents.len)
 						src.reagents.add_reagent_list(found_recipe.output_reagents)
 					if(found_recipe.output_items.len)

@@ -16,7 +16,9 @@
 	icon = 'icons/roguetown/misc/alchemy.dmi'
 	icon_state = "mortar"
 	dropshrink = 0.75
-	amount_per_transfer_from_this = 9
+	instant_fill = FALSE
+	fillsounds = list('sound/items/fillcup.ogg')
+	amount_per_transfer_from_this = 30
 	volume = 100
 	experimental_inhand = FALSE
 	reagent_flags = OPENCONTAINER|REFILLABLE|DRAINABLE

@@ -37,13 +37,17 @@
 /datum/alch_cauldron_recipe/health_potion
 	name = "Elixir of Health"
 	smells_like = "sweet berries"
+	required_base_reagent = /datum/reagent/blood
+	required_base_amount = 120
 	output_reagents = list(/datum/reagent/medicine/healthpot = 100)
 
 /datum/alch_cauldron_recipe/big_health_potion
 	name = "Elixir of Health (Strong)"
 	smells_like = "berry pie"
 	skill_required = SKILL_LEVEL_EXPERT // If it has "Strong", lock it roundstart for Apothecary or above
-	output_reagents = list(/datum/reagent/medicine/healthpot = 50,/datum/reagent/additive = 50)//it has an extremely easy recipe compared to regular red
+	required_base_reagent = /datum/reagent/blood // Requires blood as the base liquid instead of water
+	required_base_amount = 120
+	output_reagents = list(/datum/reagent/medicine/healthpot = 50, /datum/reagent/additive = 50) // Half as much from its old recipe. Uses blood as a base now.
 
 /datum/alch_cauldron_recipe/mana_potion
 	name = "Elixir of Mana"

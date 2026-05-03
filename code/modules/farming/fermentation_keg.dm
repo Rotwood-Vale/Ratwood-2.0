@@ -479,8 +479,9 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if(!tapped)
 		return
 	visible_message("[user] starts pouring from [src].", "You start pouring from [src].")
-	if(!do_after(user, 1 SECONDS, src))
-		return
+	if(user.m_intent == MOVE_INTENT_SNEAK)
+		if(!do_after(user, 1 SECONDS, src))
+			return
 	var/beer_taken = min((container.reagents.maximum_volume - container.reagents.total_volume), beer_left)
 
 	beer_left -= beer_taken

@@ -10,6 +10,7 @@
 	possible_item_intents = list(INTENT_POUR, INTENT_FILL, INTENT_SPLASH, INTENT_GENERIC)
 	resistance_flags = ACID_PROOF
 	var/closed = FALSE // DO NOT rely on this, use reagent_flags/spillable instead. Originally from /bottle, moved here to reduce istype() checks.
+	var/instant_fill = TRUE // If TRUE, non-sneak fill transfers the full volume instantly. Set FALSE for large containers like buckets and mortars.
 
 /datum/intent/fill
 	name = "fill"
@@ -39,6 +40,17 @@
 	if(user.used_intent.type == INTENT_FILL)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
+			// Check if the targeted bodypart has any open, non-fracture bleeding wounds
+			var/obj/item/bodypart/targeted_bp = H.get_bodypart(user.zone_selected)
+			if(targeted_bp)
+				var/has_bleeding_wound = FALSE
+				for(var/datum/wound/W in targeted_bp.wounds)
+					if(!istype(W, /datum/wound/fracture) && W.bleed_rate > 0)
+						has_bleeding_wound = TRUE
+						break
+				if(has_bleeding_wound)
+					H.try_wound_bloodcollect(user, src)
+					return
 			H.try_milking(user, src)
 			return
 	if(!reagents || !reagents.total_volume)
@@ -149,42 +161,62 @@
 		if(user.m_intent != MOVE_INTENT_SNEAK)
 			if(poursounds)
 				playsound(user.loc,pick(poursounds), 100, TRUE)
+		// Large containers (instant_fill = FALSE) pour twice the amount per step when not sneaking
+		var/transfer_amount = (!instant_fill && user.m_intent != MOVE_INTENT_SNEAK) ? amount_per_transfer_from_this * 2 : amount_per_transfer_from_this
 		for(var/i in 1 to 11)
 			if(do_after(user, 8, target = target))
 				if(!reagents.total_volume)
 					break
 				if(target.reagents.holder_full())
 					break
-				if(!reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user))
-					reagents.reaction(target, TOUCH, amount_per_transfer_from_this)
+				if(!reagents.trans_to(target, transfer_amount, transfered_by = user))
+					reagents.reaction(target, TOUCH, transfer_amount)
 			else
 				break
 		return
 
 	if(target.is_drainable() && (user.used_intent.type == /datum/intent/fill)) //A dispenser. Transfer FROM it TO us.
-		testing("attackobj3")
-		if(!target.reagents.total_volume)
-			to_chat(user, span_warning("[target] is empty!"))
-			return
-
 		if(reagents.holder_full())
 			to_chat(user, span_warning("[src] is full."))
 			return
-		if(user.m_intent != MOVE_INTENT_SNEAK)
-			if(fillsounds)
-				playsound(user.loc,pick(fillsounds), 100, TRUE)
+		if(fillsounds)
+			playsound(user.loc, pick(fillsounds), 100, TRUE)
 		user.visible_message(span_notice("[user] fills [src] with [target]."), \
 							span_notice("I fill [src] with [target]."))
-		for(var/i in 1 to 11)
-			if(do_after(user, 8, target = target))
-				if(reagents.holder_full())
-					break
+		if(user.m_intent != MOVE_INTENT_SNEAK)
+			if(instant_fill)
+				// Quick fill when not sneaking (brief half-second action)
+				if(!do_after(user, 5, target = target))
+					return
 				if(!target.reagents.total_volume)
-					break
-				target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+					to_chat(user, span_warning("[target] is empty!"))
+					return
+				var/fill_amount = reagents.maximum_volume - reagents.total_volume
+				target.reagents.trans_to(src, fill_amount, transfered_by = user)
 				onfill(target, user, silent = TRUE)
 			else
-				break
+				// Large containers fill at 2x the sneak speed
+				for(var/i in 1 to 11)
+					if(do_after(user, 4, target = target))
+						if(reagents.holder_full())
+							break
+						if(!target.reagents.total_volume)
+							break
+						target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+						onfill(target, user, silent = TRUE)
+					else
+						break
+		else
+			for(var/i in 1 to 11)
+				if(do_after(user, 8, target = target))
+					if(reagents.holder_full())
+						break
+					if(!target.reagents.total_volume)
+						break
+					target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+					onfill(target, user, silent = TRUE)
+				else
+					break
 
 
 		return
@@ -261,6 +293,8 @@
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"
+	instant_fill = FALSE
+	fillsounds = list('sound/items/fillcup.ogg')
 	desc = ""
 	icon = 'icons/roguetown/items/misc.dmi'
 	lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
@@ -273,7 +307,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 5
 	throwforce = 10
-	amount_per_transfer_from_this = 25
+	amount_per_transfer_from_this = 30
 	possible_transfer_amounts = list(25)
 	volume = 120
 	flags_inv = HIDEHAIR
