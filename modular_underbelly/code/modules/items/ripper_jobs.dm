@@ -62,41 +62,6 @@ GLOBAL_VAR(underbelly_patient_ward)
 	if(schedule_next)
 		addtimer(CALLBACK(src, PROC_REF(spawn_wave)), rand(20 MINUTES, 40 MINUTES))
 
-/datum/underbelly_patient_ward/proc/debug_spawn_now()
-	for(var/mob/M in active_patients)
-		if(!QDELETED(M))
-			qdel(M)
-	active_patients.Cut()
-
-	var/list/spots = list()
-	for(var/obj/effect/landmark/patient_spot/L in GLOB.landmarks_list)
-		spots += L
-	if(!spots.len)
-		return
-
-	var/obj/effect/landmark/patient_spot/chosen = pick(spots)
-	var/mob/living/carbon/human/species/human/northern/underbelly_patient/P = new(chosen.loc)
-	active_patients += P
-
-	for(var/client/C in GLOB.clients)
-		if(!C.mob || !istype(C.mob, /mob/living/carbon/human))
-			continue
-		var/mob/living/carbon/human/H = C.mob
-		if(H.job == "Ripper" && H.stat == CONSCIOUS)
-			to_chat(H, span_warning("Word comes through the pipes: someone's bleeding out in the Underbelly. Find them before they go cold."))
-
-/client/verb/spawn_underbelly_test_patient()
-	set name = "Spawn Underbelly Test Patient"
-	set category = "Debug"
-	if(!holder)
-		return
-	if(!GLOB.underbelly_patient_ward)
-		GLOB.underbelly_patient_ward = new /datum/underbelly_patient_ward()
-	var/datum/underbelly_patient_ward/W = GLOB.underbelly_patient_ward
-	if(W)
-		W.debug_spawn_now()
-	to_chat(src, span_notice("Spawned an underbelly test patient."))
-
 // =====================================================
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient
