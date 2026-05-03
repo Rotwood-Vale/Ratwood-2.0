@@ -566,11 +566,11 @@
 		var/obj/item/paper/scroll/dead_drop_contract/C = parcel.contract_ref?.resolve()
 		parcel.contract_ref = null
 		qdel(parcel)
-		_spawn_coin_payout(get_turf(H), rand(12, 20))
+		_spawn_coin_payout(get_turf(H), rand(100, 180))
 		if(C)
 			C.parcel_ref = null
 			C.ready_to_redeem = TRUE
-		visible_message(span_notice("[src] takes the parcel, slips a few coins to [H], and makes a small mark on a scrap of paper."))
+		visible_message(span_notice("[src] takes the parcel, pays [H] a runner's fee, and makes a small mark on a scrap of paper."))
 		say("Tell whoever sent you the deal's stamped. They know where to find me.")
 		return
 
@@ -585,7 +585,7 @@
 			return
 		C.parcel_ref = null
 		qdel(C)
-		var/base_payout = rand(450, 750)
+		var/base_payout = rand(320, 560)
 		var/streak_bonus = get_deaddrop_streak_bonus(H)
 		_spawn_coin_payout(get_turf(H), base_payout + streak_bonus)
 		visible_message(span_notice("[src] tears the contract in half and settles the debt with [H]."))
