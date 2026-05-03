@@ -221,7 +221,6 @@
 	REMOVE_TRAIT(target, TRAIT_NOBLE, JOB_TRAIT)
 	REMOVE_TRAIT(target, TRAIT_DEFILED_NOBLE, TRAIT_GENERIC)
 	REMOVE_TRAIT(target, TRAIT_DISGRACED_NOBLE, TRAIT_GENERIC) // Total TRAIT_NOBLE Death.
-	SET_SOCIAL_RANK(target, 1) // To dirt you go!
 	sleep(5)
 	to_chat(target, span_danger("YOU ARE UNWORTHY OF MY GRACE!"))
 	loc.visible_message(span_warning("[target] is set aflame by Astrata's wrath!"))
