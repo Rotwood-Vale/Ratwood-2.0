@@ -473,14 +473,14 @@
 /datum/stressevent/astrata_noblement
 	timer = 5 MINUTES
 	stressadd = -6
-	desc = span_green("The Sun-Tyrant has deemed me worthy! I am truly blessed!")
+	desc = span_boldgreen("The Sun-Tyrant has deemed me worthy! I am truly blessed!")
 
 /datum/stressevent/neutral_noblement
 	timer = 5 MINUTES
-	stressadd = -3
-	desc = span_green("I have been granted noble status! My blood runs blue!")
+	stressadd = -4
+	desc = span_boldgreen("I have been granted noble status! My blood runs blue!")
 
 /datum/stressevent/matthios_noblement
 	timer = 15 MINUTES
 	stressadd = -6
-	desc = span_green("I've fooled the Sun-Tyrant and her lackeys! I've stolen her gift, just as Matthios once did!")	
+	desc = span_boldgreen("I've fooled the Sun-Tyrant and her lackeys! I've stolen her gift, just as Matthios once did!")	

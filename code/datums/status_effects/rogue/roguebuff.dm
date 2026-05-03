@@ -2181,14 +2181,3 @@
 /atom/movable/screen/alert/status_effect/buff/oath_ring
 	name = "Oathmarked"
 	desc = "The oath drives me forward, so long as the reminder is kept near."
-
-/atom/movable/screen/alert/status_effect/buff/matthios_smile
-	name = "Matthios' Grin"
-	desc = "I can feel The Gilded God's smile upon me! It bends the very strings of fate to my favor!"
-	icon_state = "stressvg"
-
-/datum/status_effect/buff/matthios_smile
-	id = "matthios_smile"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/matthios_smile
-	effectedstats = list(STATKEY_LCK = 2)
-	duration = 40 MINUTES

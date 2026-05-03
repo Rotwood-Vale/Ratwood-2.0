@@ -113,9 +113,7 @@
 				to_chat(target, span_cultsmall("I can feel someone's eyes upon me.."))
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("MISTRESS OF ORDER! ARBITRATOR OF RIGHT!")
-			if(target.patron?.type == /datum/patron/inhumen/matthios)
-				to_chat(target, span_cultsmall("boring into the back of my head.."))			
+			user.say("MISTRESS OF ORDER! ARBITRATOR OF RIGHT!")		
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("GAZE DOWN UPON THIS WORTHY ONE!")
@@ -178,8 +176,6 @@
 		sleep(5)
 		priority_announce("[user.real_name] has elevated [target.real_name] into the blessed ranks of the Nobility! Their blood runs blue!", title = "BLESSED DAE!", sound = 'sound/misc/bell.ogg')
 		if(target.patron?.type == /datum/patron/inhumen/matthios)
-			to_chat(target, span_cult("I can feel the smile of Matthios upon me..."))
-			target.apply_status_effect(/datum/status_effect/buff/matthios_smile)
 			target.add_stress(/datum/stressevent/matthios_noblement)
 		else if(target.patron?.type == /datum/patron/divine/astrata)
 			to_chat(target, span_cult("I can feel the warmth of Astrata upon me..."))
