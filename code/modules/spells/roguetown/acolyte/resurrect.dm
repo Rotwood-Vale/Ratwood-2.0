@@ -575,6 +575,8 @@
 	alt_required_items = list(
 		/obj/item/ingot/copper = 1
 	)
+	debuff_type = /datum/status_effect/debuff/malum_revival
+	sound = 'sound/magic/clang.ogg'
 
 /obj/effect/proc_holder/spell/invoked/resurrect/malum/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
@@ -584,10 +586,6 @@
 			revert_cast()
 			return FALSE
 	return ..(targets, user)
-	
-	debuff_type = /datum/status_effect/debuff/ravox_revival
-	debuff_type = /datum/status_effect/debuff/malum_revival
-	sound = 'sound/magic/clang.ogg'
 
 /obj/effect/proc_holder/spell/invoked/resurrect/ravox
 	name = "Just Revival"
@@ -600,6 +598,7 @@
 	alt_required_items = list(
 		/obj/item/natural/bone = 7
 	)
+	debuff_type = /datum/status_effect/debuff/ravox_revival
 
 /obj/effect/proc_holder/spell/invoked/resurrect/ravox/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
@@ -623,6 +622,9 @@
 		/obj/item/reagent_containers/food/snacks/grown/manabloom = 3,
 		/obj/item/reagent_containers/food/snacks/grown/rogue/swampweed = 1
 	)
+	debuff_type = /datum/status_effect/debuff/dendor_revival
+	required_structure = /obj/structure/flora/roguetree/wise
+	sound = 'sound/magic/birdsong.ogg'
 
 /obj/effect/proc_holder/spell/invoked/resurrect/dendor/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
@@ -633,11 +635,6 @@
 			return FALSE
 	return ..(targets, user)
 
-	debuff_type = /datum/status_effect/debuff/ravox_revival
-	debuff_type = /datum/status_effect/debuff/dendor_revival
-	required_structure = /obj/structure/flora/roguetree/wise
-	sound = 'sound/magic/birdsong.ogg'
-
 /obj/effect/proc_holder/spell/invoked/resurrect/noc
 	name = "Moonlit Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets intelligence will be sapped for a time, in addition they will be burned by moonlight."
@@ -647,6 +644,10 @@
 	alt_required_items = list(
 		/obj/item/paper = 15
 	)
+	debuff_type = /datum/status_effect/debuff/noc_revival
+	overlay_state = "noc_revive"
+	sound = 'sound/magic/owlhoot.ogg'
+
 /obj/effect/proc_holder/spell/invoked/resurrect/noc/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
@@ -655,8 +656,3 @@
 			revert_cast()
 			return FALSE
 	return ..(targets, user)
-
-	debuff_type = /datum/status_effect/debuff/ravox_revival
-	debuff_type = /datum/status_effect/debuff/noc_revival
-	overlay_state = "noc_revive"
-	sound = 'sound/magic/owlhoot.ogg'

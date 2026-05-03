@@ -470,11 +470,11 @@
 
 /obj/effect/proc_holder/spell/invoked/pestra_leech/cast(list/targets, mob/living/user)
 	if(iscarbon(targets[1]))
-		if(HAS_TRAIT(targets[1], TRAIT_GODLESS))
+		var/mob/living/carbon/C = targets[1]
+		if(HAS_TRAIT(C, TRAIT_GODLESS))
 			to_chat(user, span_warning("Pestra abhors them! She shall grant this one no reprieve."))
 			revert_cast()
 			return FALSE
-		var/mob/living/carbon/C = targets[1]
 		if(C.cmode)
 			to_chat(user, span_warning("They're too tense for the delicate arts!"))
 			revert_cast()
@@ -602,16 +602,21 @@
 // You can't resist Pestra's most divine gift.
 /obj/effect/proc_holder/spell/invoked/divine_rebirth/cast(list/targets, mob/living/user)
 	. = ..()
-	if(HAS_TRAIT(targets[1], TRAIT_GODLESS)) // What if Pestra herself hates them? 
-		to_chat(user, span_warning("Pestra abhors them! She shall grant this one no reprieve."))
+	if(!targets || !targets.len)
 		revert_cast()
 		return FALSE
+	
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("Pestra abhors them! She shall grant this one no reprieve."))
+			revert_cast()
+			return FALSE
 		target.visible_message(span_info("An ethereal, mushroom infested arm carresses [target]!"), span_notice("I feel a caring touch!"))
 		target.apply_status_effect(/datum/status_effect/buff/divine_rebirth_healing)
 		SEND_SIGNAL(user, COMSIG_DIVINE_REBIRTH_CAST, target)
 		return TRUE
+	
 	revert_cast()
 	return FALSE
 
