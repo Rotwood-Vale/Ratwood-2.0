@@ -162,7 +162,7 @@
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(user, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Astrata's gift.")
 		return
-	var/prompt = alert(target, "Do you accept Astrata's gift?","Astrata demands an answer.", "I accept.", "I refuse.")
+	var/prompt = alert(target, "Do you accept Astrata's gift?","ASTRATA DEMANDS YOUR ANSWER!", "I accept.", "I refuse.")
 	if(prompt == "I accept.")
 		playsound(loc, 'sound/magic/astrata_choir.ogg', 85, FALSE, -1)
 		to_chat(target, span_userdanger("I can feel the white-hot LUX make its way into my veins! My blood burnt out to be blue!"))
