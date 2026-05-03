@@ -848,6 +848,20 @@
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list("sound/combat/hits/onmetal/metalimpact (1).ogg", "sound/combat/hits/onmetal/metalimpact (2).ogg")
 
+/obj/structure/fluff/alch/folding
+
+/obj/structure/fluff/alch/folding/examine()
+	. = ..()
+	. += span_blue("Right-Click to pack up the alchemical station.")
+
+/obj/structure/fluff/alch/folding/attack_right(mob/user)
+	if(do_after(user, 5 SECONDS, target = src))
+		user.visible_message(span_notice("[user] packs up [src]."), span_notice("You pack up [src]."))
+		new /obj/item/folding_table_stored/alchstation(drop_location())
+		qdel(src)
+		return ..()
+	return
+
 
 /obj/structure/fluff/statue
 	name = "statue"
