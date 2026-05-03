@@ -30,7 +30,7 @@
 	icon_state = "astrata_chalky" // the icon state, so, the sprite the runes use on the floor. As of making, we have 6, each needs an active/inactive state.
 	desc = "A Holy Rune of Astrata. Warmth irradiates from the rune." // description on examine
 	var/solarrites = list("Guiding Light") // This is important - This is the var which stores every ritual option available to a ritualist - Ideally, we'd have like, 3 for each God. Right now, just 1.
-	var/prelaterites = list("Ennoblement", "Abasement")
+	var/prelaterites = list("Elevation", "Abasement")
 
 /obj/structure/ritualcircle/astrata/attack_hand(mob/living/user)
 	if(!..())
@@ -76,7 +76,7 @@
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 						spawn(120)
 							icon_state = "astrata_chalky"
-		if("Ennoblement")
+		if("Elevation")
 			if(!Adjacent(user))
 				to_chat(user, span_smallred("I need to be closer to the rune to perform this ritual."))
 				return
@@ -123,7 +123,7 @@
 				return
 			user.say("AND GRANT THEM YOUR HIGHEST HONOR!")
 			icon_state = "astrata_active"
-			ennoblement(target, user)
+			elevation(target, user)
 			spawn(120)
 				icon_state = "astrata_chalky"
 		if("Abasement")
@@ -132,7 +132,7 @@
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
-				if(!HAS_TRAIT(peep, TRAIT_NOBLE || TRAIT_DEFILED_NOBLE || TRAIT_DISGRACED_NOBLE))
+				if(!(HAS_TRAIT(peep, TRAIT_NOBLE) || HAS_TRAIT(peep, TRAIT_DEFILED_NOBLE) || HAS_TRAIT(peep, TRAIT_DISGRACED_NOBLE)))
 					continue
 				if(peep.changed_noble_status)
 					continue
@@ -160,23 +160,23 @@
 			spawn(120)
 				icon_state = "astrata_chalky"			
 
-/obj/structure/ritualcircle/astrata/proc/ennoblement(mob/living/carbon/human/target, mob/living/carbon/human/user)
+/obj/structure/ritualcircle/astrata/proc/elevation(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(!target || QDELETED(target) || target.loc != loc)
-		to_chat(user, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Matthios' blessing.")
+		to_chat(user, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Astrata's gift.")
 		return
 	var/prompt = alert(target, "Do you accept Astrata's gift?","Astrata demands an answer.", "I accept.", "I refuse.")
 	if(prompt == "I accept.")
 		playsound(loc, 'sound/magic/astrata_choir.ogg', 85, FALSE, -1)
 		to_chat(target, span_userdanger("I can feel the white-hot LUX make its way into my veins! My blood burnt out to be blue!"))
 		ADD_TRAIT(target, TRAIT_NOBLE, TRAIT_GENERIC)
-		loc.visible_message(span_cult("The LUX turns white-hot and enters their veins!"))
+		loc.visible_message(span_cult("The LUX turns white-hot and enters [target]'s veins!"))
 		target.Stun(60)
 		target.Knockdown(60)
 		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
 		target.apply_damage(15, BURN, BODY_ZONE_HEAD) // 'Unimaginable Pain'? Nae! Tis' but 15 burn.
 		target.flash_fullscreen("whiteflash")
-		sleep(20) // we don't want to nukespam the target's chat. Well we do it either way but like, I mean, this gives them breathing room.
-		priority_announce("[user.real_name] has elevated [target.real_name] into the blessed ranks of the Nobility! Their blood runs blue!", title = "Blessed Dae!", sound = 'sound/misc/bell.ogg')
+		sleep(5)
+		priority_announce("[user.real_name] has elevated [target.real_name] into the blessed ranks of the Nobility! Their blood runs blue!", title = "BLESSED DAE!", sound = 'sound/misc/bell.ogg')
 		if(target.patron?.type == /datum/patron/inhumen/matthios)
 			to_chat(target, span_cult("I can feel the smile of Matthios upon me..."))
 			target.apply_status_effect(/datum/status_effect/buff/matthios_smile)
@@ -187,16 +187,15 @@
 		else
 			to_chat(target, span_cult("I can feel the light of Astrata upon me..."))
 			target.add_stress(/datum/stressevent/neutral_noblement)
-		sleep(1 SECONDS)
 		switch(target.social_rank)
 			if(1)
-				to_chat(target, span_warning("I hav-e risen exponentially into the ranks of the Nobility! This is a grand TRIUMPH!"))
+				to_chat(target, span_boldnotice("I have risen exponentially into the ranks of the Nobility! This is a grand TRIUMPH!"))
 				target.adjust_triumphs(5)
 			if(2)
-				to_chat(target, span_warning("I have risen greatly into the ranks of the Nobility! This is a great TRIUMPH!"))
+				to_chat(target, span_boldnotice("I have risen greatly into the ranks of the Nobility! This is a great TRIUMPH!"))
 				target.adjust_triumphs(3)
 			if(3)
-				to_chat(target, span_warning("I have entered the ranks of the Nobility! This is a TRIUMPH!"))
+				to_chat(target, span_boldnotice("I have entered the ranks of the Nobility! This is a TRIUMPH!"))
 				target.adjust_triumphs(1)
 		user.apply_status_effect(/datum/status_effect/debuff/ritesexpended) // Rites expended only if the guy accepts, I feel it's only fair.
 		message_admins("PROMOTION: [user.real_name] ([user.ckey]) has granted nobility to [target.real_name] ([target.ckey])") 
@@ -204,14 +203,14 @@
 		target.changed_noble_status = TRUE // what if... you had ONE CHANCE, ONE OPPORTUNITY...
 
 	else if(prompt == "I refuse.")
-		loc.visible_message(span_cult("[target] refuses Astrata's gift. The light grows malignant...!"))
+		loc.visible_message(span_boldred("[target] refuses Astrata's gift. The light grows malignant...!"))
 		target.Stun(30)
 		target.Knockdown(30)
-		sleep(20)
-		to_chat(target, span_redtextbig("YOU DARE REJECT MY GIFT!? YOU SHALL BURN FOR YOUR INSOLENCE!"))
+		sleep(5)
+		to_chat(target, span_danger("YOU DARE REJECT MY GIFT!? YOU SHALL BURN FOR YOUR INSOLENCE!"))
 		target.adjustFireLoss(25)
 		target.fire_act(1,10)
-		to_chat(loc, span_warning("[target] is set ablaze by Astrata's wrath!"))
+		loc.visible_message(span_boldred("[target] is set aflame by Astrata's wrath!"))
 
 /obj/structure/ritualcircle/astrata/proc/abasement(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -219,18 +218,23 @@
 		return
 	target.Stun(50)
 	target.Knockdown(50)
+	target.Jitter(50)
+	loc.visible_message(span_boldred("[target] shakes and thrashes around violently as yellow flames begin licking away at [target.p_their(TRUE)] skin!"))
 	REMOVE_TRAIT(target, TRAIT_NOBLE, TRAIT_GENERIC)
 	REMOVE_TRAIT(target, TRAIT_NOBLE, TRAIT_VIRTUE)
-	to_chat(target, span_warning("YOU ARE UNWORTHY OF MY GRACE!"))
+	REMOVE_TRAIT(target, TRAIT_NOBLE, JOB_TRAIT)
+	REMOVE_TRAIT(target, TRAIT_DEFILED_NOBLE, TRAIT_GENERIC)
+	REMOVE_TRAIT(target, TRAIT_DISGRACED_NOBLE, TRAIT_GENERIC) // Total TRAIT_NOBLE Death.
+	SET_SOCIAL_RANK(target, 1) // To dirt you go!
+	sleep(5)
+	to_chat(target, span_danger("YOU ARE UNWORTHY OF MY GRACE!"))
 	loc.visible_message(span_warning("[target] is set aflame by Astrata's wrath!"))
 	to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
 	target.adjustFireLoss(25)
 	target.fire_act(1,10)
-	target.flash_fullscreen("whiteflash")
-	sleep(1 SECONDS)
-	priority_announce("[user.real_name] has stripped [target.real_name] of their nobility! They have fallen from Astrata's grace!", title = "Shameful Dae!", sound = 'sound/misc/excomm.ogg')
+	priority_announce("[user.real_name] has stripped [target.real_name] of their nobility! They have fallen from Astrata's grace!", title = "SHAMEFUL DAE!", sound = 'sound/misc/excomm.ogg')
 	message_admins("DEMOTION: [user.real_name] ([user.ckey]) has stripped nobility from [target.real_name] ([target.ckey])") // is it reeeally needed? unsure, but eh, worth it for the logs
-	log_game("DEMOTION: [user.real_name] ([user.ckey]) has stripped nobility from  [target.real_name] ([target.ckey])")	
+	log_game("DEMOTION: [user.real_name] ([user.ckey]) has stripped nobility from [target.real_name] ([target.ckey])")	
 	user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 	target.changed_noble_status = TRUE // what if... you had ONE CHANCE, ONE OPPORTUNITY...
 

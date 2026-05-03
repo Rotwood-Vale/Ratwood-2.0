@@ -120,7 +120,6 @@
 		/obj/effect/proc_holder/spell/self/convertrole/azeb,
 		/obj/effect/proc_holder/spell/self/grant_title,
 		/obj/effect/proc_holder/spell/self/convertrole/guard,
-		/obj/effect/proc_holder/spell/self/grant_nobility,
 		)
 		cmode_music = 'sound/music/combat_desert2.ogg'
 	..()
