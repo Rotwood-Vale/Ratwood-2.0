@@ -1,0 +1,7 @@
+author: "john-pawson"
+delete-after: True
+changes:
+  - rscadd: "Added portable alchemy stations and cauldrons! The cauldron can only hold 60 drams, so you won't be able to make full potion batches with it."
+  - rscadd: "The portable alchemy station and the portable cauldron can be bought at the merchant or made by an artificer."
+  - code_imp: "Folding table code slightly changed so subtypes can be made of it more easily."
+  - code_imp: "Strong cauldron recipes no longer use half normal potion half addittive when being made, now they simply give the full amount of strong potion."

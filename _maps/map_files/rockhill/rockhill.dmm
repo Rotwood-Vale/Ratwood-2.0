@@ -1057,7 +1057,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "alx" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -1068,7 +1068,7 @@
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/thresher/aalloy,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "alB" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -1828,6 +1828,11 @@
 	},
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave/rhgoblinencampment)
+"avm" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/remains/human,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave/sunkenchurch)
 "avp" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/stairs/stone{
@@ -2379,7 +2384,7 @@
 	pixel_x = 0
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "aCg" = (
 /obj/structure/roguewindow,
 /obj/structure/curtain/directional/blue{
@@ -2749,7 +2754,7 @@
 "aGf" = (
 /obj/structure/bookcase/random/archive,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "aGh" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle{
 	dir = 8
@@ -3372,7 +3377,7 @@
 	pixel_y = 13
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "aMV" = (
 /obj/structure/chair/wood/rogue{
 	dir = 4;
@@ -4435,7 +4440,7 @@
 	},
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "baS" = (
 /obj/structure/fluff/clock,
 /turf/open/floor/rogue/wood,
@@ -4754,13 +4759,13 @@
 "bev" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "bey" = (
 /obj/structure/closet/dirthole/grave,
 /obj/structure/fluff/walldeco/church/line,
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "beC" = (
 /obj/structure/well/fountain,
 /turf/open/floor/rogue/cobblerock,
@@ -5125,7 +5130,7 @@
 	pixel_y = -32
 	},
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "bjz" = (
 /turf/closed/wall/mineral/rogue/pipe,
 /area/rogue/indoors/town/bath)
@@ -5182,7 +5187,7 @@
 	icon_state = "borderfall"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "bkq" = (
 /obj/structure/meathook,
 /turf/open/floor/rogue/cobble,
@@ -5563,7 +5568,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "boN" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -5851,7 +5856,7 @@
 /obj/structure/fluff/walldeco/church/line,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "bsX" = (
 /obj/structure/roguemachine/scomm/l{
 	scom_tag = "Inn - Fancy Room No.1"
@@ -6864,7 +6869,7 @@
 "bEK" = (
 /obj/structure/ritualcircle/zizo,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "bEO" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
 /turf/open/floor/rogue/cobble/mossy,
@@ -7686,7 +7691,7 @@
 	pixel_y = -7
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "bOt" = (
 /obj/structure/spider/stickyweb,
 /obj/effect/spawner/lootdrop/roguetown/sewers,
@@ -8564,7 +8569,7 @@
 /area/rogue/indoors/town/church/chapel)
 "bXC" = (
 /turf/open/water/swamp,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "bXI" = (
 /obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/dirt,
@@ -8976,7 +8981,7 @@
 	pixel_y = -7
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cdS" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -9018,7 +9023,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ceh" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/rogue/ruinedwood,
@@ -9705,7 +9710,7 @@
 	icon_state = "floor2-old"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "clS" = (
 /obj/structure/mineral_door/bars{
 	locked = 1;
@@ -10090,7 +10095,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cpS" = (
 /obj/item/roguebin/water/gross,
 /turf/open/floor/rogue/dirt/road,
@@ -10284,7 +10289,7 @@
 /area/rogue/indoors/town/bath)
 "csT" = (
 /turf/closed/wall/mineral/rogue/stone/red_moss,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "csW" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -10427,7 +10432,7 @@
 "cvi" = (
 /obj/structure/fluff/statue/knight/interior/r,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cvj" = (
 /obj/item/natural/rock/coal,
 /turf/open/floor/rogue/cobble/mossy,
@@ -10654,6 +10659,10 @@
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/beach/harbor)
+"cxP" = (
+/obj/structure/flagpole,
+/turf/open/transparent/openspace,
+/area/rogue/outdoors/bograt/above)
 "cxS" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
@@ -10949,7 +10958,7 @@
 	},
 /mob/living/carbon/human/species/skeleton/npc/cultist,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cBP" = (
 /obj/structure/fluff/statue/gargoyle,
 /turf/open/floor/rogue/hexstone,
@@ -11357,7 +11366,7 @@
 /obj/machinery/light/rogue/candle/floorcandle,
 /obj/item/rogueweapon/sword/rapier/lord,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cFY" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
@@ -11623,7 +11632,7 @@
 	},
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cIr" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/roguegrass/bush/wall,
@@ -11699,6 +11708,8 @@
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/flashlight/flare/torch/lantern,
+/obj/item/mini_flagpole/church,
+/obj/item/mini_flagpole/church,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/church)
 "cJb" = (
@@ -11830,7 +11841,7 @@
 "cKD" = (
 /obj/machinery/light/rogue/firebowl/church/off,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cKF" = (
 /obj/structure/stairs{
 	dir = 8
@@ -11882,13 +11893,13 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cLe" = (
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "floor5-old"
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cLg" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -12610,7 +12621,7 @@
 	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cTD" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/rogue/grassred,
@@ -12819,7 +12830,7 @@
 /obj/structure/fluff/walldeco/church/line,
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "cVW" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/border{
@@ -13772,7 +13783,7 @@
 /obj/machinery/light/rogue/candle/red,
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /turf/open/water/swamp,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "dgy" = (
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/carpet/stellar,
@@ -15041,7 +15052,7 @@
 "dvv" = (
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "dvE" = (
 /obj/structure/rack/rogue,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
@@ -15287,7 +15298,7 @@
 /area/rogue/indoors/town/bath)
 "dzq" = (
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "dzr" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/ruinedwood{
@@ -15603,6 +15614,10 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/grove)
+"dBY" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/beach/harbor)
 "dCm" = (
 /obj/structure/roguemachine/scomm/r{
 	scom_tag = "Guild - 2nd Floor"
@@ -15916,6 +15931,7 @@
 	pixel_x = 0;
 	pixel_y = -32
 	},
+/obj/item/quiver/bullet/lead,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/shop)
 "dGz" = (
@@ -16197,7 +16213,7 @@
 "dJg" = (
 /obj/item/reagent_containers/glass/bowl/aalloy,
 /turf/open/water/swamp,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "dJl" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1;
@@ -17050,7 +17066,7 @@
 	redstone_id = "cryptdungeon3"
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "dTK" = (
 /obj/item/natural/rock/silver,
 /turf/open/floor/rogue/naturalstone,
@@ -17241,6 +17257,15 @@
 /obj/structure/bookcase/random/archive,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement/keep)
+"dWe" = (
+/obj/structure/flagpole,
+/obj/structure/fluff/railing/wood{
+	dir = 1;
+	layer = 2.7;
+	pixel_y = 7
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/outdoors/town/rockhill)
 "dWf" = (
 /obj/structure/bars/passage/shutter{
 	redstone_id = "goblinfort2"
@@ -17250,7 +17275,7 @@
 "dWh" = (
 /obj/structure/bondage/x_pillory,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "dWk" = (
 /obj/structure/fluff/railing/border/east,
 /obj/structure/fluff/railing/border/north,
@@ -17275,7 +17300,7 @@
 /mob/living/carbon/human/species/skeleton/npc/cultist,
 /obj/machinery/light/rogue/candle/red/r,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "dWp" = (
 /obj/structure/chair/smallbench,
 /obj/machinery/light/rogue/candle/blue,
@@ -17321,7 +17346,7 @@
 "dWS" = (
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /turf/open/water/swamp,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "dWY" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -17883,7 +17908,7 @@
 "ecF" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ecI" = (
 /obj/structure/table/church/m,
 /obj/item/reagent_containers/glass/bowl/gold,
@@ -18002,7 +18027,7 @@
 "edO" = (
 /obj/item/paper,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "edP" = (
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement/keep)
@@ -18398,6 +18423,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 8
 	},
+/obj/structure/flagpole,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/rockhill)
 "eiM" = (
@@ -19185,7 +19211,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "etA" = (
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/churchmarble,
@@ -19339,7 +19365,7 @@
 "evK" = (
 /obj/machinery/light/rogue/candle/red/l,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "evS" = (
 /obj/machinery/light/rogue/firebowl,
 /turf/open/floor/rogue/wood,
@@ -19749,7 +19775,7 @@
 "ezx" = (
 /obj/machinery/light/rogue/candle/red,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ezy" = (
 /obj/structure/fluff/railing/border{
 	dir = 6;
@@ -20073,7 +20099,7 @@
 "eDs" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "eDv" = (
 /obj/item/fishingcage,
 /turf/open/water/swamp,
@@ -20270,7 +20296,7 @@
 /obj/effect/decal/remains/human,
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "eFG" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grassyel,
@@ -21540,7 +21566,7 @@
 "eVm" = (
 /obj/machinery/light/rogue/candle/red,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "eVn" = (
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/ruinedwood/chevron,
@@ -22248,7 +22274,7 @@
 "feu" = (
 /obj/structure/bondage/torture_table/lever,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "feF" = (
 /obj/structure/table/wood/long_table/right,
 /obj/effect/spawner/lootdrop/valuable_candle_spawner,
@@ -22734,7 +22760,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "fkc" = (
 /obj/structure/stairs/stone{
 	dir = 8
@@ -22906,7 +22932,7 @@
 /obj/structure/fluff/statue/gargoyle/candles,
 /obj/machinery/light/rogue/candle/red/l,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "fmm" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -23209,6 +23235,13 @@
 "fqM" = (
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/bath)
+"fqR" = (
+/obj/item/restraints/legcuffs/beartrap/armed/camouflage,
+/obj/structure/fluff/railing/fence{
+	dir = 8
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave/sunkenchurch)
 "fqU" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -24167,9 +24200,7 @@
 	},
 /area/rogue/under/cave/skeletoncrypt)
 "fDs" = (
-/obj/structure/chair/wood/rogue{
-	dir = 4
-	},
+/obj/structure/flagpole,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/church/chapel)
 "fDA" = (
@@ -25168,7 +25199,7 @@
 "fOn" = (
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "fOp" = (
 /obj/effect/decal/cobbleedge{
 	dir = 9
@@ -26514,7 +26545,7 @@
 	pixel_y = -2
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "gez" = (
 /obj/structure/roguewindow,
 /obj/structure/curtain/directional/yellow{
@@ -26654,12 +26685,12 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ggB" = (
 /obj/effect/spawner/lootdrop/general_loot_mid/x3,
 /obj/structure/closet/crate/chest/neu_fancy,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ggD" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 8
@@ -26949,7 +26980,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "gkS" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/newbranch/connector{
@@ -27289,7 +27320,7 @@
 "goJ" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "goQ" = (
 /obj/structure/fluff/railing/border,
 /turf/closed/wall/mineral/rogue/stone,
@@ -28622,7 +28653,7 @@
 	dir = 8
 	},
 /turf/open/water/swamp,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "gGq" = (
 /obj/structure/flora/roguetree/burnt{
 	max_integrity = 1000;
@@ -28645,7 +28676,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "gGK" = (
 /obj/structure/roguemachine/steward{
 	pixel_x = 1
@@ -28699,7 +28730,7 @@
 "gHg" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "gHi" = (
 /obj/structure/bed/rogue/inn/wool,
 /obj/item/bedsheet/rogue/cloth,
@@ -29096,7 +29127,7 @@
 "gLY" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "gMd" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/roguegrass/herb/rosa,
@@ -29486,7 +29517,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "gRe" = (
 /obj/structure/closet/crate/drawer,
 /obj/machinery/light/rogue/candle/blue,
@@ -29865,7 +29896,7 @@
 /obj/structure/fluff/clodpile,
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "gVy" = (
 /obj/structure/fluff/customsign{
 	desc = "DANGER";
@@ -30007,7 +30038,7 @@
 /obj/machinery/light/rogue/candle/red/l,
 /obj/effect/spawner/lootdrop/ancient_equipment_spawner,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "gXC" = (
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/rtfield/eora)
@@ -30560,7 +30591,7 @@
 /obj/structure/closet/dirthole/grave,
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "hcW" = (
 /obj/structure/bars/grille{
 	dir = 1
@@ -30700,7 +30731,7 @@
 	pixel_y = -2
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "hef" = (
 /obj/structure/chair/bench/couchablack,
 /obj/machinery/light/roguestreet/orange/walllamp{
@@ -31220,7 +31251,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "hlm" = (
 /obj/structure/table/wood,
 /obj/item/candle/candlestick/gold/lit{
@@ -32260,6 +32291,9 @@
 	},
 /obj/item/perfume/random,
 /obj/item/clothing/ring/signet,
+/obj/item/mini_flagpole/steward,
+/obj/item/mini_flagpole,
+/obj/item/mini_flagpole/freeform2,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
 "hyu" = (
@@ -32565,7 +32599,7 @@
 "hBS" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "hBW" = (
 /obj/structure/bars{
 	icon_state = "barsbent";
@@ -35357,7 +35391,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ijD" = (
 /obj/machinery/tanningrack,
 /turf/open/floor/rogue/tile,
@@ -35682,7 +35716,7 @@
 "ipi" = (
 /obj/item/restraints/legcuffs/beartrap/armed/camouflage,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ipq" = (
 /obj/structure/table/wood{
 	dir = 6;
@@ -37652,7 +37686,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "iPe" = (
 /turf/closed/wall/mineral/rogue/stone/window/moss{
 	icon_state = "stonewindow"
@@ -39123,7 +39157,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "jhh" = (
 /obj/structure/closet/crate/chest/wicker,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/food,
@@ -39322,7 +39356,7 @@
 /obj/structure/table/finestone,
 /obj/machinery/light/rogue/candle/floorcandle,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "jjw" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/ruinedwood,
@@ -39528,7 +39562,7 @@
 "jlU" = (
 /obj/structure/fluff/psycross/zizocross/stone,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "jlY" = (
 /obj/structure/closet/crate/chest{
 	lockid = "crafterguild"
@@ -40508,7 +40542,7 @@
 /obj/structure/closet/crate/drawer,
 /obj/item/natural/feather,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "jyo" = (
 /obj/item/bedsheet/rogue/fabric_double{
 	dir = 1
@@ -42004,6 +42038,10 @@
 	},
 /turf/open/water/swamp,
 /area/rogue/under/cave/skeletoncrypt)
+"jQd" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/under/cave)
 "jQk" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
@@ -42485,7 +42523,7 @@
 	icon_state = "borderfall"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "jWC" = (
 /obj/structure/fluff/railing/border{
 	dir = 8;
@@ -42777,7 +42815,7 @@
 /obj/machinery/light/rogue/candle/blue,
 /obj/item/roguebin/water/gross,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "kaH" = (
 /obj/item/candle/skull{
 	pixel_x = -5;
@@ -43315,7 +43353,7 @@
 "kgT" = (
 /obj/structure/bed/rogue/inn/hay,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "kgV" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite,
 /turf/open/floor/rogue/greenstone,
@@ -43842,7 +43880,7 @@
 "kmi" = (
 /obj/machinery/light/rogue/firebowl/church/off,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "kmn" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -44039,7 +44077,7 @@
 "koi" = (
 /obj/effect/spawner/roguemap/hauntpile,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "koo" = (
 /obj/structure/flora/roguegrass,
 /obj/structure/flora/ausbushes/ywflowers,
@@ -44160,7 +44198,7 @@
 	},
 /obj/machinery/light/rogue/firebowl/church/off,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "kqo" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 8
@@ -45250,7 +45288,7 @@
 "kDJ" = (
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "kDO" = (
 /obj/machinery/light/rogue/torchholder{
 	dir = 8
@@ -45560,7 +45598,7 @@
 	},
 /obj/machinery/light/rogue/candle/red,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "kHO" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -46193,7 +46231,7 @@
 /obj/structure/fluff/walldeco/church/line,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "kOJ" = (
 /obj/effect/landmark/start/prisonerb,
 /obj/structure/bed/rogue/shit,
@@ -47834,7 +47872,7 @@
 /obj/item/paper,
 /obj/item/natural/feather,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ljV" = (
 /obj/structure/fermentation_keg/water,
 /turf/open/floor/rogue/dirt/road,
@@ -47859,7 +47897,7 @@
 /obj/structure/fluff/clodpile,
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "lkg" = (
 /obj/structure/fluff/statue/aasimar{
 	color = "aaa0a0";
@@ -48113,7 +48151,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "lnF" = (
 /obj/structure/bed/rogue/inn/double{
 	dir = 1
@@ -48181,7 +48219,7 @@
 	pixel_y = -14
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "loK" = (
 /obj/structure/boatbell,
 /turf/closed/wall/mineral/rogue/wooddark,
@@ -48452,7 +48490,7 @@
 "lsw" = (
 /obj/machinery/light/rogue/candle/red/r,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "lsD" = (
 /obj/structure/closet/crate/roguecloset/dark,
 /turf/open/floor/rogue/tile/brownbrick{
@@ -48600,7 +48638,7 @@
 /obj/effect/decal/remains/human,
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "luv" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/rogue/grass,
@@ -49318,7 +49356,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/rogue/candle/red,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "lES" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/grassgrey,
@@ -49370,7 +49408,7 @@
 	pixel_y = -9
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "lFC" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -50251,7 +50289,7 @@
 	redstone_id = "cryptdungeon4"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "lPw" = (
 /obj/effect/decal/mossy{
 	dir = 1
@@ -50308,6 +50346,7 @@
 /obj/item/perfume/random{
 	pixel_y = 12
 	},
+/obj/item/mini_flagpole/merchant,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/shop)
 "lQy" = (
@@ -50928,6 +50967,7 @@
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/cup/wooden,
 /obj/item/reagent_containers/glass/cup/wooden,
+/obj/item/mini_flagpole/apothecary,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/physician)
 "lYf" = (
@@ -51119,7 +51159,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "lZO" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -51167,7 +51207,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "lZY" = (
 /obj/structure/closet/crate/roguecloset/dark,
 /obj/structure/fluff/walldeco/church/line,
@@ -51510,7 +51550,7 @@
 "mdo" = (
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "mdr" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -51898,7 +51938,7 @@
 /obj/structure/fluff/statue/gargoyle/candles,
 /obj/machinery/light/rogue/candle/red/r,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "mii" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/hexstone,
@@ -53199,7 +53239,7 @@
 	pixel_y = -1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "mwo" = (
 /obj/structure/fluff/railing/border{
 	dir = 5;
@@ -54147,7 +54187,7 @@
 "mHP" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/water/swamp,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "mHU" = (
 /obj/machinery/light/rogue/hearth,
 /obj/item/cooking/pan,
@@ -54259,7 +54299,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "mJk" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/dirt,
@@ -54535,6 +54575,17 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/town/grove)
+"mMg" = (
+/obj/structure/fluff/railing/fence{
+	dir = 8
+	},
+/obj/item/paper{
+	icon_state = "paperwrite";
+	info = "DONT OPEN, DEAD INSIDE."
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave/sunkenchurch)
 "mMh" = (
 /obj/structure/flora/newleaf,
 /obj/structure/vine,
@@ -54682,7 +54733,7 @@
 	pixel_y = -5
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "mOA" = (
 /obj/structure/table/vtable/v2{
 	name = "Dissection Table"
@@ -55468,7 +55519,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "mZo" = (
 /obj/structure/chair/bench/couch{
 	icon_state = "redcouch2"
@@ -56714,7 +56765,7 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "noK" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -56764,7 +56815,7 @@
 	pixel_y = 12
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "noU" = (
 /obj/structure/flora/newleaf/corner{
 	dir = 10
@@ -57571,7 +57622,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "nzy" = (
 /obj/structure/bars/pipe{
 	dir = 10;
@@ -57691,7 +57742,7 @@
 "nAF" = (
 /obj/structure/fluff/statue/knight/interior,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "nAI" = (
 /obj/structure/fluff/pillow/blue{
 	color = "#2762cf"
@@ -58701,10 +58752,6 @@
 /area/rogue/indoors/town)
 "nNZ" = (
 /obj/structure/closet/crate/chest,
-/obj/item/paper{
-	icon_state = "paperwrite";
-	info = "If you were seeking the hidden treasure, you are too late, for I have already swiped it! Better luck next time comrade. Yours, a fellow thief."
-	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/skeletoncrypt)
 "nOq" = (
@@ -58850,7 +58897,7 @@
 /obj/item/paper,
 /obj/item/paper,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "nPN" = (
 /obj/structure/fermentation_keg,
 /turf/open/floor/rogue/cobble/mossy,
@@ -58956,7 +59003,7 @@
 "nRf" = (
 /obj/structure/fluff/statue/gargoyle/candles,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "nRk" = (
 /obj/item/grown/log/tree/stake{
 	pixel_x = 9;
@@ -58966,8 +59013,11 @@
 	pixel_x = 3;
 	pixel_y = 0
 	},
+/obj/structure/fluff/railing/fence{
+	dir = 8
+	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "nRs" = (
 /obj/item/grown/log/tree/small,
 /obj/structure/bed/rogue,
@@ -59028,7 +59078,7 @@
 "nRZ" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "nSb" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -59193,7 +59243,7 @@
 /area/rogue/indoors)
 "nTH" = (
 /turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "nTI" = (
 /obj/structure/vine,
 /turf/open/floor/rogue/grass,
@@ -59507,7 +59557,7 @@
 "nWS" = (
 /obj/structure/flora/tinymushrooms/unhappy,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "nWW" = (
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 8
@@ -60652,7 +60702,7 @@
 "olD" = (
 /obj/structure/closet/dirthole/grave,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "olH" = (
 /obj/structure/stairs,
 /turf/open/floor/rogue/dirt/road,
@@ -61431,7 +61481,7 @@
 	redstone_id = "cryptdungeon4"
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "otZ" = (
 /turf/closed/mineral/rogue/salt,
 /area/rogue/outdoors/bograt/above)
@@ -61616,7 +61666,7 @@
 "ows" = (
 /obj/structure/fluff/statue/knight/interior,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "oww" = (
 /obj/structure/curtain/brown{
 	icon_state = "curtain-closed";
@@ -61869,7 +61919,7 @@
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
 	},
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ozI" = (
 /obj/structure/bars/grille,
 /obj/structure/fluff/railing/border{
@@ -62921,7 +62971,7 @@
 /obj/machinery/light/rogue/candle/blue,
 /obj/structure/fluff/statue,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "oOx" = (
 /obj/item/rope,
 /turf/open/floor/rogue/blocks,
@@ -63418,7 +63468,7 @@
 	name = "rusty old church key"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "oUy" = (
 /mob/living/carbon/human/species/skeleton/npc/bogguard,
 /turf/open/floor/rogue/grassgrey,
@@ -64100,7 +64150,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "pbL" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/border{
@@ -64342,7 +64392,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "pfb" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
@@ -64360,7 +64410,7 @@
 /obj/effect/decal/cleanable/debris/woody,
 /obj/effect/landmark/chest_or_mimic/loot_chest,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "pfl" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -64700,7 +64750,7 @@
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
 	},
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "pjH" = (
 /obj/item/natural/poo/horse,
 /turf/open/floor/rogue/dirt,
@@ -65047,7 +65097,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "pnC" = (
 /obj/structure/fluff/railing/wood,
 /obj/structure/fluff/railing/wood{
@@ -65178,7 +65228,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /obj/effect/spawner/lootdrop/ancient_equipment_spawner,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ppw" = (
 /obj/structure/table/wood{
 	icon_state = "longtable"
@@ -65588,7 +65638,7 @@
 /area/rogue/indoors/town/dwarfin/rockhill)
 "ptQ" = (
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ptS" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -65931,7 +65981,7 @@
 /obj/structure/table/finestone,
 /obj/machinery/light/rogue/candle/floorcandle/alt,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "pyH" = (
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/twig,
@@ -66029,6 +66079,7 @@
 /obj/item/clothing/suit/roguetown/shirt/tunic,
 /obj/item/clothing/suit/roguetown/shirt/robe/archivist,
 /obj/item/clothing/suit/roguetown/shirt/robe/hierophant,
+/obj/item/mini_flagpole/university,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/Academy)
 "pzO" = (
@@ -66044,7 +66095,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "pAa" = (
 /turf/closed/wall/mineral/rogue/tent,
 /area/rogue/indoors)
@@ -66738,7 +66789,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "pHP" = (
 /turf/closed/mineral/random/rogue,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "pHQ" = (
 /obj/structure/closet/crate/chest/crafted,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
@@ -66989,7 +67040,7 @@
 "pLr" = (
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "pLs" = (
 /obj/item/roguekey/armory,
 /obj/item/storage/keyring,
@@ -67881,7 +67932,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /mob/living/carbon/human/species/skeleton/npc/cultist,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "pWm" = (
 /obj/structure/fluff/statue/knightalt/r,
 /turf/closed/wall/mineral/rogue/decostone/long{
@@ -68179,6 +68230,10 @@
 /obj/structure/curtain/magenta,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/outdoors/rtfield/eora)
+"qaE" = (
+/obj/machinery/light/roguestreet/orange,
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/town/rockhill)
 "qaG" = (
 /obj/effect/decal/remains/saiga,
 /turf/open/floor/rogue/dirt/road,
@@ -68886,7 +68941,7 @@
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
 	},
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "qlc" = (
 /obj/structure/fluff/psycross,
 /obj/machinery/light/rogue/candle/red/l,
@@ -69551,7 +69606,7 @@
 	},
 /obj/machinery/light/rogue/candle/red,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "qrC" = (
 /obj/structure/roguewindow/openclose{
 	dir = 1
@@ -69817,7 +69872,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "qvj" = (
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/wood,
@@ -69944,7 +69999,7 @@
 	},
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "qxb" = (
 /obj/structure/rack/rogue/shelf,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -70001,7 +70056,7 @@
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
 	},
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "qxA" = (
 /obj/structure/table/wood/poor{
 	pixel_x = -1
@@ -70019,7 +70074,7 @@
 "qxI" = (
 /mob/living/carbon/human/species/skeleton/npc/cultist,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "qxN" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue,
 /area/rogue/indoors/town/manor/rockhill)
@@ -70201,7 +70256,7 @@
 	pixel_y = -9
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "qzU" = (
 /obj/structure/roguewindow,
 /obj/structure/curtain/directional/brown{
@@ -71009,7 +71064,7 @@
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /obj/machinery/light/rogue/candle/red/l,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "qJN" = (
 /obj/structure/chair/bench,
 /obj/structure/fluff/walldeco/psybanner{
@@ -71419,7 +71474,7 @@
 "qOY" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "qPs" = (
 /obj/machinery/light/rogue/firebowl/standing/red,
 /turf/open/floor/rogue/naturalstone,
@@ -72175,7 +72230,7 @@
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
 	},
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "rad" = (
 /obj/structure/fluff/railing/border{
 	dir = 6;
@@ -73208,7 +73263,7 @@
 "roG" = (
 /mob/living/carbon/human/species/skeleton/npc/cultist,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "roJ" = (
 /obj/effect/decal/cobbleedge,
 /turf/open/floor/rogue/wood/herringbone,
@@ -73703,7 +73758,7 @@
 /obj/item/roguecoin/gold,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "rtP" = (
 /obj/structure/mineral_door/wood/donjon{
 	dir = 4;
@@ -76122,7 +76177,7 @@
 "rZq" = (
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "rZs" = (
 /obj/structure/roguewindow/openclose/reinforced{
 	dir = 8
@@ -78346,7 +78401,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "sDi" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -78497,7 +78552,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "sEw" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
@@ -78661,7 +78716,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "sGq" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1;
@@ -78874,7 +78929,7 @@
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
 	},
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "sHU" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -79626,7 +79681,7 @@
 	icon_state = "borderfall"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "sSS" = (
 /turf/closed/mineral/random/rogue/med,
 /area/rogue/under/cave)
@@ -79930,7 +79985,7 @@
 /obj/structure/closet/crate/chest/neu_iron,
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "sWu" = (
 /obj/structure/table/wood/long_table,
 /turf/open/floor/rogue/greenstone,
@@ -79989,7 +80044,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "sXa" = (
 /obj/effect/landmark/start/hand{
 	dir = 8
@@ -80272,6 +80327,7 @@
 /obj/item/roguekey/manor,
 /obj/item/roguekey/manor,
 /obj/item/roguekey/manor,
+/obj/item/mini_flagpole/duke,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/manor/rockhill)
 "sZK" = (
@@ -80681,7 +80737,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/rogue/candle/red/r,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "teR" = (
 /obj/structure/fluff/walldeco/stone{
 	pixel_x = -32
@@ -81044,7 +81100,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "tjp" = (
 /obj/structure/roguemachine/scomm/l{
 	scom_tag = "Manor - Hound Pit"
@@ -82914,7 +82970,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "tGp" = (
 /obj/effect/landmark/start/villager{
 	dir = 1
@@ -83203,7 +83259,7 @@
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
 	},
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "tJU" = (
 /obj/structure/table/wood{
 	dir = 6;
@@ -83534,7 +83590,7 @@
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /obj/machinery/light/rogue/candle/red,
 /turf/open/water/swamp,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "tOm" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -83993,7 +84049,7 @@
 	},
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "tTn" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 8;
@@ -84122,7 +84178,7 @@
 	pixel_y = -7
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "tUx" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/dirt/road,
@@ -84151,7 +84207,7 @@
 /obj/structure/closet/crate/drawer,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "tUW" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue,
 /area/rogue/indoors/town/church/chapel)
@@ -84526,7 +84582,7 @@
 	gid = "ducalcrypt"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "tYY" = (
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/rogue/ruinedwood,
@@ -84719,6 +84775,10 @@
 /mob/living/carbon/human/species/orc/npc/marauder,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woodsrat/south)
+"ucf" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/closed/wall/mineral/rogue/stone/moss,
+/area/rogue/under/cave/sunkenchurch)
 "uch" = (
 /turf/open/water/river/muddy{
 	dir = 4
@@ -84880,12 +84940,18 @@
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/town/grove)
+"uew" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave/sunkenchurch)
 "uez" = (
 /obj/structure/ritualcircle/zizo,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
 	},
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ueA" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
 /turf/open/floor/rogue/greenstone,
@@ -85013,7 +85079,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ufJ" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -85651,7 +85717,7 @@
 	pixel_y = -32
 	},
 /turf/open/water/swamp,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "uob" = (
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/carpet/purple,
@@ -85694,11 +85760,8 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/town/roofs/keep)
 "uov" = (
-/obj/machinery/light/roguestreet/orange{
-	pixel_x = 18;
-	pixel_y = -1
-	},
-/turf/open/floor/rogue/cobble,
+/obj/structure/flagpole,
+/turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town/rockhill)
 "uox" = (
 /obj/structure/curtain/brown,
@@ -85950,7 +86013,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "uqR" = (
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors)
@@ -86107,7 +86170,7 @@
 "usY" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "uta" = (
 /obj/structure/fluff/railing/border/north,
 /obj/structure/fermentation_keg/random/water,
@@ -87080,7 +87143,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "uEV" = (
 /obj/structure/flora/roguegrass,
 /turf/closed/mineral/rogue,
@@ -87131,7 +87194,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
 /obj/effect/spawner/lootdrop/ancient_equipment_spawner,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "uFM" = (
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_x = 0;
@@ -87149,7 +87212,7 @@
 	},
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "uFS" = (
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_y = 32;
@@ -87249,11 +87312,8 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern)
 "uGN" = (
-/obj/effect/decal/cobbleedge{
-	dir = 10;
-	plane = -6
-	},
-/turf/open/floor/rogue/cobble,
+/obj/structure/flagpole,
+/turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill)
 "uGS" = (
 /obj/effect/wisp/prestidigitation{
@@ -87751,7 +87811,7 @@
 /obj/structure/closet/dirthole/grave,
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "uNy" = (
 /obj/structure/stairs{
 	dir = 1
@@ -87871,7 +87931,7 @@
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
 	},
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "uPf" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/effect/wisp/prestidigitation{
@@ -88122,7 +88182,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "uSd" = (
 /obj/structure/fluff/railing/fence{
 	dir = 1;
@@ -88609,6 +88669,10 @@
 /obj/structure/hotspring/border/six,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/town/grove)
+"uYt" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/outdoors/town/rockhill)
 "uYv" = (
 /obj/structure/rack/rogue/shelf,
 /obj/item/rogueweapon/mace/woodclub{
@@ -89274,6 +89338,10 @@
 "vhB" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/under/underdarker/rockhill)
+"vhD" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/grassgrey,
+/area/rogue/outdoors/bograt/sunken)
 "vhF" = (
 /obj/structure/bed/rogue/inn/wool,
 /obj/item/bedsheet/rogue/fabric,
@@ -89456,7 +89524,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "vjX" = (
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_y = -32
@@ -89647,7 +89715,7 @@
 "vnb" = (
 /obj/effect/decal/cleanable/debris/stony,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "vng" = (
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /obj/machinery/light/rogue/candle/l,
@@ -89847,7 +89915,7 @@
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
 	},
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "vpr" = (
 /obj/structure/bars/passage{
 	redstone_id = "wizdunjail"
@@ -91316,7 +91384,7 @@
 "vGL" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "vGX" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -92466,7 +92534,7 @@
 	pixel_y = 11
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "vVo" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/reagent_containers/glass/cup/steel,
@@ -92691,7 +92759,7 @@
 	pixel_y = 12
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "vYG" = (
 /obj/structure/table/wood,
 /obj/structure/bars{
@@ -93157,6 +93225,10 @@
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
+"wes" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/bograt/south)
 "weG" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -95124,9 +95196,7 @@
 /turf/open/floor/rogue/grassgrey,
 /area/rogue/outdoors/bograt/south)
 "wCM" = (
-/obj/structure/chair/bench{
-	pixel_y = 6
-	},
+/obj/structure/flagpole,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/exposed/town/keep)
 "wCP" = (
@@ -95406,7 +95476,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "wFu" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "wcr";
@@ -98049,6 +98119,8 @@
 	})
 "xlN" = (
 /obj/structure/closet/crate/roguecloset,
+/obj/item/mini_flagpole/university,
+/obj/item/mini_flagpole/university,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/indoors/town/magician{
 	first_time_text = "Tower of the Magos";
@@ -99240,7 +99312,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xAA" = (
 /obj/effect/wisp/prestidigitation,
 /turf/open/floor/rogue/cobble,
@@ -99458,7 +99530,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xCP" = (
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/church)
@@ -99504,7 +99576,7 @@
 /obj/item/rope/chain,
 /obj/item/rope/chain,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xDE" = (
 /obj/effect/decal/mossy,
 /turf/open/floor/rogue/grass,
@@ -100138,7 +100210,7 @@
 "xLg" = (
 /obj/machinery/light/rogue/candle/red/l,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xLi" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/structure/fluff/walldeco/church/line{
@@ -100154,7 +100226,7 @@
 	},
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xLs" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/rogue/rooftop/green{
@@ -100212,7 +100284,7 @@
 	},
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /turf/open/water/swamp,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xMf" = (
 /obj/structure/leyline,
 /turf/open/floor/rogue/grasscold,
@@ -100532,7 +100604,7 @@
 /obj/structure/closet/crate/drawer,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xQk" = (
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/water/swamp/deep,
@@ -100596,7 +100668,7 @@
 /area/rogue/under/cave/skeletoncrypt)
 "xQO" = (
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xQQ" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/rogue/cobble,
@@ -100896,7 +100968,7 @@
 "xUX" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xUY" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/dirt,
@@ -101019,7 +101091,7 @@
 	icon_state = "floor3-old"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xWr" = (
 /obj/structure/stairs{
 	dir = 8
@@ -101117,7 +101189,7 @@
 	icon_state = "floor2-old"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "xXF" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/stairs{
@@ -101286,7 +101358,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "yar" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/naturalstone,
@@ -101381,7 +101453,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ybq" = (
 /obj/item/natural/rock,
 /turf/open/floor/rogue/cobble,
@@ -101604,7 +101676,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/paper,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ydr" = (
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
 /area/rogue/outdoors/beach/harbor)
@@ -101613,7 +101685,7 @@
 	faction = list("undead")
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/dungeon1)
+/area/rogue/under/cave/sunkenchurch)
 "ydx" = (
 /turf/open/floor/rogue/rooftop/green/corner1{
 	dir = 5
@@ -129883,7 +129955,7 @@ csT
 pyF
 vVe
 baE
-ipi
+fqR
 nRk
 sWW
 uSc
@@ -131612,7 +131684,7 @@ ePJ
 nTH
 fOn
 mJh
-mJh
+mMg
 uEU
 nTH
 pHP
@@ -132044,7 +132116,7 @@ ePJ
 nTH
 dzq
 dzq
-dzq
+uew
 dzq
 nTH
 pHP
@@ -132476,8 +132548,8 @@ tdR
 nTH
 nTH
 qxI
-dzq
-nTH
+avm
+ucf
 nTH
 pHP
 whb
@@ -259826,7 +259898,7 @@ qrc
 kFY
 lGy
 lGy
-wfu
+wes
 qrc
 qrc
 gDP
@@ -262051,8 +262123,8 @@ wwX
 bca
 bca
 bca
-bca
-hMX
+wwX
+vhD
 lVD
 lVD
 hMX
@@ -274819,7 +274891,7 @@ fxx
 fxx
 fxx
 tGy
-uGN
+jXZ
 sjP
 sjP
 uaL
@@ -275251,7 +275323,7 @@ qvR
 uaL
 oEW
 eiD
-lcH
+qvI
 fxx
 sjP
 lYf
@@ -281673,7 +281745,7 @@ qvR
 fxx
 fxx
 fuk
-qvR
+uGN
 fxx
 fxx
 fxx
@@ -295997,7 +296069,7 @@ qbG
 uaL
 uaL
 qvR
-qvR
+uGN
 fxx
 sjP
 wSn
@@ -306249,7 +306321,7 @@ euP
 aBv
 euP
 idK
-vKd
+dBY
 foV
 vKd
 idK
@@ -353479,8 +353551,8 @@ bMj
 czk
 czk
 czk
-tUx
 fjw
+jQd
 epQ
 fjw
 fjw
@@ -372213,7 +372285,7 @@ kKp
 kKp
 kKp
 kKp
-kKp
+cxP
 kKp
 kKp
 kKp
@@ -389630,7 +389702,7 @@ wbg
 wbg
 wVI
 aOv
-wbg
+qaE
 fnA
 fnA
 fnA
@@ -394789,7 +394861,7 @@ xAt
 xAt
 xAt
 xAt
-eoy
+dWe
 wbg
 hNJ
 lwD
@@ -396084,7 +396156,7 @@ wrj
 xAt
 xAt
 fTE
-yht
+hdB
 hdB
 fnA
 iAy
@@ -490305,7 +490377,7 @@ auT
 blP
 bTI
 bTI
-blP
+uYt
 mwE
 auT
 vIa

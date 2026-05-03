@@ -62,7 +62,8 @@
 		/obj/item/dye_brush,
 		/obj/item/recipe_book/sewing,
 		/obj/item/book/rogue/swatchbook,
-		/obj/item/recipe_book/leatherworking
+		/obj/item/recipe_book/leatherworking,
+		/obj/item/mini_flagpole/tailor,
 		)
 	if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress

@@ -39,6 +39,30 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Gaming Dice Container"
 	path = /obj/item/storage/pill_bottle/dice
 
+/datum/loadout_item/dwarven_dice
+	name = "Dwarven Dice Container"
+	path = /obj/item/storage/pill_bottle/dice/dwarven
+
+/datum/loadout_item/bakers_dozen_dice
+	name = "Baker's Dozen Dice Container"
+	path = /obj/item/storage/pill_bottle/dice/bakers_dozen
+
+/datum/loadout_item/threes_away_dice
+	name = "Three's Away Dice Container"
+	path = /obj/item/storage/pill_bottle/dice/threes_away
+
+/datum/loadout_item/dice_war_dice
+	name = "Dice War Container"
+	path = /obj/item/storage/pill_bottle/dice/dice_war
+
+/datum/loadout_item/liars_dice
+	name = "Liar's Dice Container"
+	path = /obj/item/storage/pill_bottle/dice/liars_dice
+
+/datum/loadout_item/dice_poker
+	name = "Dice Poker Container"
+	path = /obj/item/storage/pill_bottle/dice/dice_poker
+
 /datum/loadout_item/tarot_deck
 	name = "Tarot Deck"
 	path = /obj/item/toy/cards/deck/tarot
@@ -1352,6 +1376,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/tri_psydon_tabard
 	name = "Psydonian Tabard"
 	path = /obj/item/clothing/cloak/psydontabard
+
+/datum/loadout_item/tri_reform_tabard
+	name = "Reformist Tabard"
+	path = /obj/item/clothing/cloak/reformtabard
 
 /datum/loadout_item/tri_abyssor_tabard
 	name = "Abyssorite Tabard"

@@ -89,13 +89,13 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 			H.mind.current.faction += "[H.name]_faction"
 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
-	mask = /obj/item/clothing/mask/rogue/facemask/steel
-	neck = /obj/item/clothing/neck/roguetown/gorget
-	pants = /obj/item/clothing/under/roguetown/chainlegs
-	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/shield/tower/metal
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/rogueweapon/huntingknife
+	if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+		backl = /obj/item/storage/backpack/rogue/satchel/otavan
+	else
+		backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/ritechalk = 1,
@@ -175,29 +175,52 @@
 			H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 		if(/datum/patron/old_god)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_RING, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate, SLOT_ARMOR, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq, SLOT_SHIRT, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/chain/psydon, SLOT_GLOVES, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/psydonboots, SLOT_SHOES, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/psydontabard, SLOT_CLOAK, TRUE)
-			var/helmets = list("Barbute", "Sallet", "Armet", "Bucket Helm")
-			var/helmet_choice = input(H,"Choose your PSYDONIAN helmet.", "TAKE UP PSYDON'S HELMS") as anything in helmets
-			switch(helmet_choice)
-				if("Barbute")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute, SLOT_HEAD, TRUE)
-				if("Sallet")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psysallet, SLOT_HEAD, TRUE)
-				if("Armet")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm, SLOT_HEAD, TRUE)
-				if("Bucket Helm")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psybucket, SLOT_HEAD, TRUE)
-			H.change_stat(STATKEY_WIL, 2) //ENDVRE
+			H.change_stat(STATKEY_WIL, 2) //ENDVRE. You give up useful miracles, rites and miracle-healing from other Heretics, so you'll need this.
+			var/heavypsyfashion = list("Traditionalist", "Orthodoxist", "Reformist") //Only outfits differ.
+			var/heavypsyfashion_choice = input(H, "What is your faith in HIM like?", "HE LYVES, HE ENDURES, HE DIES") as anything in heavypsyfashion
+			switch(heavypsyfashion_choice)
+				if("Traditionalist") //You look like any other Heretic.
+					to_chat(H, span_warning("PSYDON LYVES, but HE sacrificed HIMSELF for us. We do not hear HIM, nor does HE hear us, but all roads lead to HIM, and back to us. One day, PSYDON will return and Creation will be at peace again, turning it into true PARADYSE. The Orthodoxy and the Holy See have twisted the scriptures, the tales. The Ten wish to turn the world to their own image, unwilling to help wake our LORD. Meanwhile, the Orthodoxists lie in HIS name, straying from the path of peace and filling the world with pain that HE, through all of Creation, feels, delaying HIS awakening. "))
+					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_RING, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket, SLOT_HEAD, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/cloak/templar/psydon, SLOT_CLOAK, TRUE)
+				if("Orthodoxist") //You look like an Orthodoxist-Adjudicator. The best set mechanically, but a high risk of getting attacked by your fellow Wretches or Bandits.
+					to_chat(H, span_warning("Once you were a part of the feared and loathed Otavan Inquisition, now you hide from them, still clad in their armour. Nostalgia, spite, desperation?... You just can't let go of this uniform."))
+					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_RING, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate, SLOT_ARMOR, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/chain/psydon, SLOT_GLOVES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/psydonboots, SLOT_SHOES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/cloak/psydontabard, SLOT_CLOAK, TRUE)
+					var/helmets = list("Barbute", "Sallet", "Armet", "Bucket Helm")
+					var/helmet_choice = input(H,"Choose your PSYDONIAN helmet.", "TAKE UP PSYDON'S HELMS") as anything in helmets
+					switch(helmet_choice)
+						if("Barbute")
+							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute, SLOT_HEAD, TRUE)
+						if("Sallet")
+							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psysallet, SLOT_HEAD, TRUE)
+						if("Armet")
+							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm, SLOT_HEAD, TRUE)
+						if("Bucket Helm")
+							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psybucket, SLOT_HEAD, TRUE)
+				if("Reformist") //You look like as if somebody dressed Freifechter into a lot of armour. Better chestpiece, but worse gloves and boots, and worse padded gambeson.
+					to_chat(H, span_warning ("PSYDON fell after his battle against the great evil. But HE LYVES through us, in our memory and our bleeding hearts. As long as we LYVE, so shall HE, through us. All shall be as HE deemed, in HIS name, as HE did."))
+					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/reform, SLOT_RING, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet, SLOT_HEAD, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/fluted, SLOT_ARMOR, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic, SLOT_PANTS, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/angle, SLOT_GLOVES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short, SLOT_SHOES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/cloak/reformtabard, SLOT_CLOAK, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half, SLOT_ARMOR, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk, SLOT_SHIRT, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/chain, SLOT_GLOVES, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/wrists/roguetown/bracers, SLOT_WRISTS, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/armor, SLOT_SHOES, TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel, SLOT_WEAR_MASK, TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/gorget, SLOT_NECK, TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs, SLOT_PANTS, TRUE)
 
 /datum/advclass/wretch/heretic/spy
 	name = "Heretic Spy"
@@ -227,7 +250,6 @@
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
 	)
 	extra_context = "This subclass gain the Wound Heal miracle and the Convert Heretic spell."
 
@@ -352,9 +374,9 @@
 			H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
 		if(/datum/patron/old_god)
 			H.change_stat(STATKEY_WIL, 2) //ENDVRE. You give up useful miracles, rites and miracle-healing from other Heretics, so you'll need this.
-			var/psyfashion = list("Traditionalist", "Orthodoxist", "Reformist")
-			var/psyfashion_choice = input(H, "What is your faith in HIM like?", "HE LIVES, HE ENDURES, HE DIES") as anything in psyfashion
-			switch(psyfashion_choice)
+			var/lightpsyfashion = list("Traditionalist", "Orthodoxist", "Reformist")
+			var/lightpsyfashion_choice = input(H, "What is your faith in HIM like?", "HE LYVES, HE ENDURES, HE DIES") as anything in lightpsyfashion
+			switch(lightpsyfashion_choice)
 				if("Traditionalist") //You look like any other Heretic Spy.
 					to_chat(H, span_warning("The Otavan Orthodoxy has distorted the faith beyond recognition, they worship not HIM, but mere eidolons and idols of TRUE DIVINITY. Return to tradition, return to form."))
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants, SLOT_PANTS, TRUE)

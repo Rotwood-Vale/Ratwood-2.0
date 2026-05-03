@@ -45,51 +45,35 @@
 	added_traits = list(TRAIT_RESIDENT)
 
 /datum/virtue/utility/resident/apply_to_human(mob/living/carbon/human/recipient)
-	var/mapswitch = 0
-	if(SSmapping.config.map_name == "Dun Manor")
-		mapswitch = 1
-	else if(SSmapping.config.map_name == "Dun World")
-		mapswitch = 2
-
-	if(mapswitch == 0)
+	if(!recipient?.mind)
 		return
-	if(recipient.mind?.assigned_role == "Adventurer" || recipient.mind?.assigned_role == "Mercenary" || recipient.mind?.assigned_role == "Court Agent")
-		// Find tavern area for spawning
-		var/area/spawn_area
-		for(var/area/A in world)
-			if(istype(A, /area/rogue/indoors/town/tavern))
-				spawn_area = A
-				break
 
-		if(spawn_area)
-			var/target_z = 3 //ground floor of tavern for dun manor / world
-			var/target_y = 70 //dun manor
-			var/list/possible_chairs = list()
+	var/assigned_role = recipient.mind.assigned_role
+	if(!(assigned_role in list("Adventurer", "Mercenary", "Court Agent")))
+		return
 
-			if(mapswitch == 2)
-				target_y = 234 //dun world huge
+	sync_towner_knowledge(recipient)
+	SSjob.sync_resident_wanderer_knowledge(recipient, TRUE)
 
-			for(var/obj/structure/chair/C in spawn_area)
-				//z-level 3, wooden chair, and Y > north of tavern backrooms
-				var/turf/T = get_turf(C)
-				if(T && T.z == target_z && T.y > target_y && istype(C, /obj/structure/chair/wood/rogue) && !T.density && !T.is_blocked_turf(FALSE))
-					possible_chairs += C
+/datum/virtue/utility/resident/proc/sync_towner_knowledge(mob/living/carbon/human/recipient)
+	if(!recipient?.mind)
+		return
 
-			if(length(possible_chairs))
-				var/obj/structure/chair/chosen_chair = pick(possible_chairs)
-				recipient.forceMove(get_turf(chosen_chair))
-				chosen_chair.buckle_mob(recipient)
-				to_chat(recipient, span_notice("As a resident of the vale, you find yourself seated at a chair in the local tavern."))
-			else
-				var/list/possible_spawns = list()
-				for(var/turf/T in spawn_area)
-					if(T.z == target_z && T.y > (target_y + 4) && !T.density && !T.is_blocked_turf(FALSE))
-						possible_spawns += T
+	var/datum/job/roguetown/villager/towner_job = SSjob.GetJob("Towner")
+	if(!towner_job)
+		return
 
-				if(length(possible_spawns))
-					var/turf/spawn_loc = pick(possible_spawns)
-					recipient.forceMove(spawn_loc)
-					to_chat(recipient, span_notice("As a resident of the vale, you find yourself in the local tavern."))
+	for(var/X in towner_job.peopleknowme)
+		for(var/datum/mind/MF in get_minds(X))
+			if(isnull(recipient.mind?.special_role) && (MF?.special_role in list(ROLE_VAMPIRE, ROLE_NBEAST, ROLE_BANDIT, ROLE_LICH, ROLE_WRETCH, ROLE_UNBOUND_DEATHKNIGHT)))
+				continue
+			recipient.mind.person_knows_me(MF)
+
+	for(var/X in towner_job.peopleiknow)
+		for(var/datum/mind/MF in get_minds(X))
+			if(isnull(recipient.mind?.special_role) && (MF?.special_role in list(ROLE_VAMPIRE, ROLE_NBEAST, ROLE_BANDIT, ROLE_LICH, ROLE_WRETCH, ROLE_UNBOUND_DEATHKNIGHT)))
+				continue
+			recipient.mind.i_know_person(MF)
 
 /datum/virtue/utility/failed_squire
 	name = "Failed Squire"
@@ -367,7 +351,6 @@
 		list(/datum/skill/misc/tracking, 1, 2),
 		list(/datum/skill/labor/butchering, 1, 2),
 		list(/datum/skill/craft/tanning, 1, 2),
-		list(/datum/skill/craft/traps, 1, 2),
 		list(/datum/skill/combat/staves, 1, 2),
 		list(/datum/skill/combat/slings, 1, 2),
 		list(/datum/skill/craft/crafting, 1, 2),

@@ -19,7 +19,7 @@
 	name = "Poison (Doom)"
 	smells_like = "doom"
 	skill_required = SKILL_LEVEL_EXPERT // Strong poison should be more difficult to make
-	output_reagents = list(/datum/reagent/berrypoison = 100,/datum/reagent/additive = 100)
+	output_reagents = list(/datum/reagent/strongpoison = 100)
 
 /datum/alch_cauldron_recipe/stam_poison
 	name = "Stamina Poison"
@@ -31,7 +31,7 @@
 	name = "Stamina Poison (Strong)"
 	smells_like = "stagnant air"
 	skill_required = SKILL_LEVEL_EXPERT // Strong poison should be more difficult to make
-	output_reagents = list(/datum/reagent/stampoison = 100,/datum/reagent/additive = 100)
+	output_reagents = list(/datum/reagent/strongstampoison = 100)
 
 //Healing potions
 /datum/alch_cauldron_recipe/health_potion
@@ -58,7 +58,7 @@
 	name = "Elixir of Mana (Strong)"
 	smells_like = "fear"
 	skill_required = SKILL_LEVEL_EXPERT
-	output_reagents = list(/datum/reagent/medicine/manapot = 100,/datum/reagent/additive = 100)
+	output_reagents = list(/datum/reagent/medicine/strongmana = 100)
 
 /datum/alch_cauldron_recipe/stamina_potion
 	name = "Elixir of Stamina"
@@ -69,7 +69,7 @@
 	name = "Elixir of Stamina (Strong)"
 	smells_like = "clean winds"
 	skill_required = SKILL_LEVEL_JOURNEYMAN
-	output_reagents = list(/datum/reagent/medicine/stampot = 100,/datum/reagent/additive = 100)
+	output_reagents = list(/datum/reagent/medicine/strongstam = 100)
 
 //S.P.E.C.I.A.L. potions - Expert or above (roundstart Witch etc.)
 /datum/alch_cauldron_recipe/temp_potion

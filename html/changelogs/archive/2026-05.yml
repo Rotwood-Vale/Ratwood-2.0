@@ -24,3 +24,14 @@
 2026-05-02:
   Lir:
   - bugfix: Fixed a small mapping oversight
+2026-05-03:
+  Jamdrawers:
+  - rscadd: Roguetest_OtherZ option when changing the map to load roguetest without
+      loading the bandit camp/wretch fort/etc.
+  john-pawson:
+  - rscadd: Certain foods will now give you a slice of it when almost finished, for
+      example, the last bite of a loaf of bread will be a bread slice, or the last
+      bite of a salumoi will be a salumoi slice.
+  - bugfix: You can no longer duplicate food by biting and slicing it
+  kimesik:
+  - rscadd: You can tell if somebody's soul is still in with Expert Medicine

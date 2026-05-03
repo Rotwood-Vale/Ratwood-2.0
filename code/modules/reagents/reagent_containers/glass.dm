@@ -11,6 +11,7 @@
 	resistance_flags = ACID_PROOF
 	var/closed = FALSE // DO NOT rely on this, use reagent_flags/spillable instead. Originally from /bottle, moved here to reduce istype() checks.
 	var/instant_fill = TRUE // If TRUE, non-sneak fill transfers the full volume instantly. Set FALSE for large containers like buckets and mortars.
+	var/spiked = FALSE // a singular unit floating at the top that will always be consumed first
 
 /datum/intent/fill
 	name = "fill"
@@ -74,6 +75,9 @@
 	else if(user.used_intent.type == INTENT_POUR)
 		if(!canconsume(M, user) || !is_drainable())
 			return
+		var/sneaking = FALSE
+		if(user.m_intent == MOVE_INTENT_SNEAK)
+			sneaking = TRUE
 		if(M != user)
 			M.visible_message(span_danger("[user] attempts to feed [M] something."), \
 						span_danger("[user] attempts to feed you something."))
@@ -92,9 +96,13 @@
 					human_user.add_stress(/datum/stressevent/noble_bad_manners)
 					if (prob(25))
 						to_chat(human_user, span_red("I've got better manners than this..."))
-			to_chat(user, span_notice("I swallow a gulp of [src]."))
-		addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, amount_per_gulp, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
-		playsound(M.loc,pick(drinksounds), 100, TRUE)
+			if(sneaking)
+				to_chat(user, span_notice("I carefully sip [src]."))
+			else
+				to_chat(user, span_notice("I swallow a gulp of [src]."))
+		addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, sneaking ? 1 : amount_per_gulp, TRUE, TRUE, FALSE, user, FALSE, INGEST, TRUE, spiked ? TRUE : FALSE), 5)
+		spiked = FALSE
+		playsound(M.loc,pick(drinksounds), sneaking ? 50 : 100, TRUE)
 		if(user.client?.prefs.autoconsume)
 			if(M == user && do_after(user, CLICK_CD_MELEE))
 				INVOKE_ASYNC(src, PROC_REF(attack), M, user, target)
@@ -152,17 +160,35 @@
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("[src] is empty!"))
 			return
-
+		var/sneaking = FALSE
+		var/to_transfer = amount_per_transfer_from_this
+		if(user.m_intent == MOVE_INTENT_SNEAK)
+			sneaking = TRUE
+			to_transfer = 1
+		var/to_spike = FALSE
 		if(target.reagents.holder_full())
-			to_chat(user, span_warning("[target] is full."))
-			return
-		user.visible_message(span_notice("[user] pours [src] into [target]."), \
-						span_notice("I pour [src] into [target]."))
-		if(user.m_intent != MOVE_INTENT_SNEAK)
+			if(sneaking && istype(target, /obj/item/reagent_containers/glass))
+				to_spike = TRUE
+				to_chat(user, span_warning("I start sprinkling [src] on the rim of [target]."))
+			else
+				to_chat(user, span_warning("[target] is full."))
+				return
+		if(!sneaking)
+			user.visible_message(span_notice("[user] pours [src] into [target]."), \
+							span_notice("I pour [src] into [target]."))
 			if(poursounds)
 				playsound(user.loc,pick(poursounds), 100, TRUE)
 		// Large containers (instant_fill = FALSE) pour twice the amount per step when not sneaking
 		var/transfer_amount = (!instant_fill && user.m_intent != MOVE_INTENT_SNEAK) ? amount_per_transfer_from_this * 2 : amount_per_transfer_from_this
+		if(to_spike)
+			if(do_after(user, 8, target = target))
+				if(!reagents.total_volume)
+					return
+				target.reagents.remove_reagent(target.reagents.get_master_reagent_id(), 1)
+				if(!reagents.trans_to(target, 1, transfered_by = user, prepend = TRUE))
+					reagents.reaction(target, TOUCH, to_transfer)
+				target:spiked = TRUE
+				return
 		for(var/i in 1 to 11)
 			if(do_after(user, 8, target = target))
 				if(!reagents.total_volume)
@@ -171,6 +197,8 @@
 					break
 				if(!reagents.trans_to(target, transfer_amount, transfered_by = user))
 					reagents.reaction(target, TOUCH, transfer_amount)
+				if(!reagents.trans_to(target, to_transfer, transfered_by = user))
+					reagents.reaction(target, TOUCH, to_transfer)
 			else
 				break
 		return
@@ -193,6 +221,40 @@
 					return
 				var/fill_amount = reagents.maximum_volume - reagents.total_volume
 				target.reagents.trans_to(src, fill_amount, transfered_by = user)
+		var/sneaking = FALSE
+		var/to_transfer = amount_per_transfer_from_this
+		if(user.m_intent == MOVE_INTENT_SNEAK)
+			sneaking = TRUE
+			to_transfer = 1
+		var/to_spike = FALSE
+		if(reagents.holder_full())
+			if(sneaking && istype(src, /obj/item/reagent_containers/glass))
+				to_spike = TRUE
+				to_chat(user, span_warning("I start sprinkling [target] on the rim of [src]."))
+			else
+				to_chat(user, span_warning("[src] is full."))
+				return
+		if(!sneaking)
+			user.visible_message(span_notice("[user] fills [src] with [target]."), \
+								span_notice("I fill [src] with [target]."))
+			if(fillsounds)
+				playsound(user.loc,pick(fillsounds), 100, TRUE)
+		if(to_spike)
+			if(do_after(user, 8, target = target))
+				if(!target.reagents.total_volume)
+					return
+				reagents.remove_reagent(reagents.get_master_reagent_id(), 1)
+				if(!target.reagents.trans_to(src, 1, transfered_by = user, prepend = TRUE))
+					target.reagents.reaction(src, TOUCH, to_transfer)
+				spiked = TRUE
+				return
+		for(var/i in 1 to 11)
+			if(do_after(user, 8, target = target))
+				if(reagents.holder_full())
+					break
+				if(!target.reagents.total_volume)
+					break
+				target.reagents.trans_to(src, to_transfer, transfered_by = user)
 				onfill(target, user, silent = TRUE)
 			else
 				// Large containers fill at 2x the sneak speed

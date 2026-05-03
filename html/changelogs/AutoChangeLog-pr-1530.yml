@@ -1,0 +1,4 @@
+author: "Jamdrawers"
+delete-after: True
+changes:
+  - refactor: "removes 'traps' skill and folds it in to 'crafting'"

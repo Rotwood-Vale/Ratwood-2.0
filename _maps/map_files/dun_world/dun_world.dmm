@@ -9787,6 +9787,9 @@
 	},
 /obj/machinery/light/rogue/candle/l,
 /obj/item/roguekey/armory,
+/obj/item/mini_flagpole/steward,
+/obj/item/mini_flagpole,
+/obj/item/mini_flagpole/freeform2,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "bZe" = (
@@ -12816,6 +12819,10 @@
 /obj/structure/flora/roguegrass,
 /turf/open/water/swamp,
 /area/rogue/outdoors/bog/south)
+"cHb" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/rtfield)
 "cHe" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/mazedungeon)
@@ -15265,6 +15272,7 @@
 	},
 /obj/item/natural/bundle/cloth/bandage/full,
 /obj/item/natural/bundle/cloth/bandage/full,
+/obj/item/mini_flagpole/apothecary,
 /turf/open/floor/rogue/tile/bath{
 	name = "small tile floor"
 	},
@@ -23926,6 +23934,10 @@
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
+"eXJ" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/town)
 "eXQ" = (
 /obj/structure/table/wood/long_table/right,
 /obj/item/paper,
@@ -37644,6 +37656,10 @@
 "hML" = (
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/mazedungeon)
+"hMO" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/town)
 "hMT" = (
 /obj/structure/bars/passage/steel{
 	redstone_id = "duke"
@@ -57381,6 +57397,10 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/orcdungeon)
+"lRk" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/exposed/town/keep)
 "lRp" = (
 /obj/effect/decal/wood/herringbone{
 	dir = 8
@@ -65719,6 +65739,10 @@
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/magician)
+"nEv" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/town)
 "nED" = (
 /obj/machinery/light/rogue/candle/blue/r,
 /turf/open/transparent/openspace,
@@ -66130,6 +66154,7 @@
 	},
 /obj/item/clothing/mask/cigarette/pipe/westman,
 /obj/item/reagent_containers/powder/ozium,
+/obj/item/mini_flagpole/university,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/magician)
 "nIx" = (
@@ -86827,6 +86852,7 @@
 /obj/structure/fluff/walldeco/bigpainting{
 	pixel_x = 2
 	},
+/obj/item/mini_flagpole/duke,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "rUC" = (
@@ -88063,6 +88089,8 @@
 	pixel_x = 16;
 	pixel_y = -15
 	},
+/obj/item/mini_flagpole/bathhouse,
+/obj/item/mini_flagpole/bathhouse,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "sjC" = (
@@ -111559,6 +111587,10 @@
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/physician)
+"wWk" = (
+/obj/structure/flagpole,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/woods/northeast)
 "wWm" = (
 /obj/machinery/light/rogue/candle/l{
 	light_power = 0;
@@ -111747,6 +111779,7 @@
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/natural/bundle/cloth/bandage/full,
+/obj/item/mini_flagpole/church,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/church/chapel)
 "wYC" = (
@@ -111942,6 +111975,7 @@
 /obj/machinery/light/rogue/candle,
 /obj/item/roguekey/archive,
 /obj/item/roguekey/archive,
+/obj/item/mini_flagpole/university,
 /turf/open/floor/rogue/ruinedwood/herringbone{
 	color = "#a1c0ff"
 	},
@@ -112532,6 +112566,7 @@
 /obj/effect/decal/edge_corner{
 	color = "#3f3f3f"
 	},
+/obj/structure/flagpole,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/exposed/town/keep)
 "xhk" = (
@@ -296755,7 +296790,7 @@ lVz
 sSa
 sSa
 lVz
-lVz
+wWk
 lVz
 sSa
 lVz
@@ -299425,7 +299460,7 @@ ibp
 asY
 asY
 asY
-rZO
+cHb
 rZO
 ibp
 ibp
@@ -305681,7 +305716,7 @@ oTk
 bsw
 qfA
 qyg
-fpx
+hMO
 sns
 sns
 qfA
@@ -308436,7 +308471,7 @@ gld
 exD
 exD
 exD
-qfA
+nEv
 fpx
 pWT
 pWT
@@ -323796,7 +323831,7 @@ njB
 cne
 njB
 cne
-pWT
+eXJ
 exD
 exD
 exD
@@ -333229,7 +333264,7 @@ afY
 bJn
 sSb
 vAw
-rMf
+lRk
 rMf
 rMf
 kAx

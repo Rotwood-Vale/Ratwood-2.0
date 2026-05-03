@@ -85,6 +85,7 @@
 		/obj/item/natural/worms/leech/cheele = 1, //little buddy
 		/obj/item/reagent_containers/glass/bottle/waterskin = 1,
 		/obj/item/recipe_book/alchemy = 1,
+		/obj/item/mini_flagpole/apothecary = 1,
 	)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
