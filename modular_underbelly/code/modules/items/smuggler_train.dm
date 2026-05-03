@@ -133,7 +133,7 @@ GLOBAL_VAR(smuggler_train)
 			for(var/i in 1 to rand(3, 6))
 				T = pick(
 					35; /obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot,
-					20; /obj/item/gun/ballistic/firearm/abomination,
+					35; /obj/item/gun/ballistic/firearm/abomination,
 					15; /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,
 					35; /obj/item/quiver/bullet/lead/extended,
 					25; /obj/item/powderflask,
