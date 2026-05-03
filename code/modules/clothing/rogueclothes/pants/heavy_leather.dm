@@ -17,6 +17,8 @@
 	resistance_flags = FIRE_PROOF
 	armor_class = ARMOR_CLASS_LIGHT
 	salvage_result = /obj/item/natural/hide/cured
+	cold_protection = LEG_RIGHT | LEG_LEFT | GROIN
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
 	name = "hardened leather shorts"
@@ -28,6 +30,7 @@
 	body_parts_covered = GROIN
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	cold_protection = GROIN
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	name = "otavan leather trousers"
@@ -44,8 +47,6 @@
 	color = "#FFFFFF"
 	detail_color = "#5E4440"
 	allowed_race = NON_DWARVEN_RACE_TYPES
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = 600
 
@@ -149,3 +150,5 @@
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/bronze //Reskinned version of the Barbarian's heavy leather trousers. 1:1 functionality, but without the ability to sew-repair.
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN

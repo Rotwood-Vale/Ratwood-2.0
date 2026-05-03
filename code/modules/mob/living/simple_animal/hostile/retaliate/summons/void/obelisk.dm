@@ -102,9 +102,7 @@
 	new /obj/item/magic/voidstone(deathspot)
 	spill_embedded_objects()
 	update_icon()
-	sleep(1)
-	qdel(src)
-
+	QDEL_IN(src, 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/MoveToTarget(list/possible_targets)
 	stop_automated_movement = 1

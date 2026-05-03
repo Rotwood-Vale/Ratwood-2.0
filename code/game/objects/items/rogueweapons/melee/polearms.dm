@@ -1040,7 +1040,7 @@
 	force = 15
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh)
-	gripped_intents = list(/datum/intent/spear/thrust/eaglebeak, /datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak)
+	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/eaglebeak)
 	name = "eagle's beak"
 	desc = "A reinforced pole affixed with an ornate steel eagle's head, of which its beak is intended to pierce with great harm."
 	icon_state = "eaglebeak"
@@ -1056,7 +1056,8 @@
 	minstr = 11
 	smeltresult = /obj/item/ingot/steel
 	associated_skill = /datum/skill/combat/polearms
-	max_blade_int = 180
+	sharpness = IS_BLUNT
+	max_blade_int = 0
 	walking_stick = TRUE
 	wdefense = 5
 	wbalance = WBALANCE_HEAVY
@@ -1122,8 +1123,8 @@
 	max_integrity = 155
 
 /obj/item/rogueweapon/greatsword
-	force = 12
-	force_wielded = 30
+	force = 14
+	force_wielded = 35
 	possible_item_intents = list(/datum/intent/sword/chop,/datum/intent/sword/strike) //bash is for nonlethal takedowns, only targets limbs
 	// Design Intent: I have a big fucking sword and I want to rend people in half.
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/zwei, /datum/intent/sword/strike/bad)
@@ -1204,8 +1205,8 @@
 	smelt_bar_num = 3
 	max_blade_int = 220
 	wdefense = 4
-	force = 14
-	force_wielded = 35
+	force = 12
+	force_wielded = 30
 
 /obj/item/rogueweapon/greatsword/grenz
 	name = "steel zweihander"
@@ -1224,6 +1225,8 @@
 	max_blade_int = 200
 	max_integrity = 180
 	wdefense = 6
+	force = 14
+	force_wielded = 35
 
 /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox
 	name = "Censure"

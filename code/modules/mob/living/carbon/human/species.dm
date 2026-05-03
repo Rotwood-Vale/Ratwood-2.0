@@ -3,19 +3,25 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species
-	var/id	// if the game needs to manually check my race to do something not included in a proc here, it will use this
-	var/limbs_id		//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
-	var/clothes_id //id for clothes
-	var/name	// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
+	/// if the game needs to manually check my race to do something not included in a proc here, it will use this
+	var/id
+	///this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
+	var/limbs_id
+	///id for clothes
+	var/clothes_id
+	/// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
+	var/name
 	var/desc
-	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
+	/// if alien colors are disabled, this is the color that will be used by that race
+	var/default_color = "#FFF"
 	var/limbs_icon_m
 	var/limbs_icon_f
 	var/icon_override
 	var/icon_override_m
 	var/icon_override_f
 	var/list/possible_ages = ALL_AGES_LIST
-	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
+	/// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
+	var/sexes = 1
 	var/patreon_req = 0
 	var/max_age = 75
 	var/list/offset_features = list(OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0),\
@@ -39,56 +45,90 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/use_titles = FALSE
 	var/list/race_titles = list()
 
-	var/custom_clothes = FALSE //append species id to clothing sprite name
-	var/use_f = FALSE //males use female clothes. for elves DO NOT TURN BOTH ON EVER
-	var/use_m = FALSE //females use male clothes. for half orcs DO NOT TURN BOTH ON
+	///append species id to clothing sprite name
+	var/custom_clothes = FALSE
+	///males use female clothes. for elves DO NOT TURN BOTH ON EVER
+	var/use_f = FALSE
+	///females use male clothes. for half orcs DO NOT TURN BOTH ON
+	var/use_m = FALSE
 
 	var/datum/voicepack/soundpack_m = /datum/voicepack/male
 	var/datum/voicepack/soundpack_f = /datum/voicepack/female
 
-	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
-	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
+	/// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
+	var/hair_color
+	/// the alpha used by the hair. 255 is completely solid, 0 is transparent.
+	var/hair_alpha = 255
 
-	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
-	var/exotic_blood = ""	// If my race wants to bleed something other than bog standard blood, change this to reagent id.
-	var/exotic_bloodtype = "" //If my race uses a non standard bloodtype (A+, O-, AB-, etc)
-	var/meat = /obj/item/reagent_containers/food/snacks/rogue/meat/steak //What the species drops on gibbing
+	/// does it use skintones or not? (spoiler alert this is only used by humans)
+	var/use_skintones = 0
+	/// If my race wants to bleed something other than bog standard blood, change this to reagent id.
+	var/exotic_blood = ""
+	///If my race uses a non standard bloodtype (A+, O-, AB-, etc)
+	var/exotic_bloodtype = ""
+	///What the species drops on gibbing
+	var/meat = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	var/skinned_type
 	var/liked_food = NONE
 	var/disliked_food = GROSS
 	var/toxic_food = TOXIC
-	var/list/no_equip = list()	// slots the race can't equip stuff to
-	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
-	var/say_mod = "says"	// affects the speech message
-	var/list/default_features = MANDATORY_FEATURE_LIST // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
-	var/list/mutant_bodyparts = list() 	// Visible CURRENT bodyparts that are unique to a species. DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK SHIT UP! Changes to this list for non-species specific bodyparts (ie cat ears and tails) should be assigned at organ level if possible. Layer hiding is handled by handle_mutant_bodyparts() below.
-	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
-	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
-	var/brutemod = 1	// multiplier for brute damage
-	var/burnmod = 1		// multiplier for burn damage
-	var/coldmod = 1		// multiplier for cold damage
-	var/heatmod = 1		// multiplier for heat damage
-	var/stunmod = 1		// multiplier for stun duration
-	var/attack_type = BRUTE //Type of damage attack does
-	var/punchdamagelow = 10      //lowest possible punch damage. if this is set to 0, punches will always miss
-	var/punchdamagehigh = 10      //highest possible punch damage
-	var/punchstunthreshold = 0//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
-	var/siemens_coeff = 1 //base electrocution coefficient
-	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
-	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
-	var/deathsound //used to set the mobs deathsound on species change
-	var/grab_sound //Special sound for grabbing
-	var/datum/outfit/outfit_important_for_life /// A path to an outfit that is important for species life e.g. plasmaman outfit
+	/// slots the race can't equip stuff to
+	var/list/no_equip = list()
+	/// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
+	var/nojumpsuit = 0
+	/// affects the speech message
+	var/say_mod = "says"
+	// Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
+	var/list/default_features = MANDATORY_FEATURE_LIST
+	// Visible CURRENT bodyparts that are unique to a species. DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK SHIT UP! Changes to this list for non-species specific bodyparts (ie cat ears and tails) should be assigned at organ level if possible. Layer hiding is handled by handle_mutant_bodyparts() below.
+	var/list/mutant_bodyparts = list()
+	/// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
+	var/speedmod = 0
+	/// overall defense for the race... or less defense, if it's negative.
+	var/armor = 0
+	/// multiplier for brute damage
+	var/brutemod = 1
+	/// multiplier for burn damage
+	var/burnmod = 1
+	/// multiplier for cold damage
+	var/coldmod = 1
+	/// multiplier for heat damage
+	var/heatmod = 1
+	/// multiplier for stun duration
+	var/stunmod = 1
+	///Type of damage attack does
+	var/attack_type = BRUTE
+	///lowest possible punch damage. if this is set to 0, punches will always miss
+	var/punchdamagelow = 10
+	///highest possible punch damage
+	var/punchdamagehigh = 10
+	///damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
+	var/punchstunthreshold = 0
+	///base electrocution coefficient
+	var/siemens_coeff = 1 
+	///what kind of damage overlays (if any) appear on our species when wounded?
+	var/damage_overlay_type = "human"
+	///to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/fixed_mut_color = ""
+	///used to set the mobs deathsound on species change
+	var/deathsound
+	///Special sound for grabbing
+	var/grab_sound
+	/// A path to an outfit that is important for species life e.g. plasmaman outfit
+	var/datum/outfit/outfit_important_for_life
 
-	var/flying_species = FALSE //is a flying species, just a check for some things
-	var/datum/action/innate/flight/fly //the actual flying ability given to flying species
-	var/wings_icon = "Angel" //the icon used for the wings
+	///is a flying species, just a check for some things
+	var/flying_species = FALSE
+	///the actual flying ability given to flying species
+	var/datum/action/innate/flight/fly
+	///the icon used for the wings
+	var/wings_icon = "Angel" 
 
-	// species-only traits. Can be found in DNA.dm
+	///species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
-	// generic traits tied to having the species
+	///generic traits tied to having the species
 	var/list/inherent_traits = list()
-	/// Associative list of skills to adjustments
+	///Associative list of skills to adjustments
 	var/list/inherent_skills = list()
 	///traits a species can't get given by jobs
 	var/list/banned_traits = list()
@@ -176,8 +216,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/gender_swapping = FALSE
 	var/stress_examine = FALSE
 	var/stress_desc = null
+	var/examine_stress_event = /datum/stressevent/shunned_race
+	var/examine_stress_event_xenophobic = /datum/stressevent/shunned_race_xenophobic
+	var/examine_stress_always = FALSE
+	var/examine_stress_ignores_tolerant = FALSE
+	var/examine_relief_patron = null
+	var/examine_relief_event = null
 
 	var/punch_damage
+	/// WARNING - This is a very simple implementation. Not meant for carbons composed of limbs!
+	var/custom_rotation_icon = null
+	var/custom_base_icon = null
 
 //Used for expanded lore blurbs on species.
 	var/expanded_desc
@@ -1286,7 +1335,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!target.lying_attack_check(user))
 			return 0
 
-		var/armor_block = target.run_armor_check(selzone, "blunt", armor_penetration = BLUNT_DEFAULT_PENFACTOR, blade_dulling = user.used_intent.blade_class, damage = damage)
+		var/armor_block = target.run_armor_check(selzone, "blunt", armor_penetration = BLUNT_DEFAULT_PENFACTOR, blade_dulling = user.used_intent.blade_class, damage = damage, intdamfactor = user.used_intent?.intent_intdamage_factor)
 
 		target.lastattacker = user.real_name
 		if(target.mind)
@@ -1781,6 +1830,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						span_danger("I block [I]!"))
 		return 0
 
+	SEND_SIGNAL(H, COMSIG_SPECIES_ATTACKED_BY)
+
 	var/hit_area
 
 	selzone = accuracy_check(user.zone_selected, user, H, I.associated_skill, user.used_intent, I)
@@ -2231,7 +2282,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 				H.update_health_hud()
 			return
 		if(H.bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX && !HAS_TRAIT(H, TRAIT_EXTREME_TEMPERATURE_IMMUNE))	//Level 2 cold - con punishment, frostbite, speed reduction
-			if(prob(15) && !(H.m_intent == MOVE_INTENT_SNEAK))
+			if(prob(15) && !(H.m_intent == MOVE_INTENT_SNEAK || H.alpha <= 120)) //if we're sneaking or invisible, no shivering
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, emote), "shiver"), (rand(2,6)SECONDS),TIMER_UNIQUE | TIMER_STOPPABLE)
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, cold_warn)),20 SECONDS,TIMER_UNIQUE)
 			if(!H.hypothermia_timer_id)
@@ -2241,7 +2292,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 			H.relieve_heatstroke_from_cold()	//if you somehow bypass level 1, straight to level 2, still fix heatstroke
 		else	//level 1 cold
 			H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
-			if(prob(5) && !(H.m_intent == MOVE_INTENT_SNEAK))
+			if(prob(5) && !(H.m_intent == MOVE_INTENT_SNEAK || H.alpha <= 120)) //if we're sneaking or invisible, no shivering
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, emote), "shiver"), (rand(2,6)SECONDS),TIMER_UNIQUE | TIMER_STOPPABLE)
 			H.relieve_heatstroke_from_cold()	//if has heatstroke, body chill fixes it
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, cold_warn)),20 SECONDS,TIMER_UNIQUE)
@@ -2254,7 +2305,6 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 			H.heatstroke_timer_id = null
 		H.clear_alert("temp")
 		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
-	H.update_health_hud()
 // A general-purpose proc used to centralise checks to skip turf, movement, step, etc.
 // For if a mob is floating, flying, intangible, etc.
 /datum/species/proc/is_floor_hazard_immune(mob/living/carbon/human/owner)

@@ -32,6 +32,8 @@ SUBSYSTEM_DEF(nightshift)
 		can_fire = FALSE
 	if(SSmapping?.config?.map_name == "Desert Town")
 		apply_desert_times()
+	if(SSmapping?.config?.map_name == "Build Your Own Settlement")
+		apply_desert_times()
 	current_tod = settod()
 	return ..()
 

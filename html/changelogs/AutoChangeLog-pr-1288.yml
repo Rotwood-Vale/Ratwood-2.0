@@ -1,4 +1,0 @@
-author: "john-pawson"
-delete-after: True
-changes:
-  - bugfix: "rivers now give 300 drams of water when filling"

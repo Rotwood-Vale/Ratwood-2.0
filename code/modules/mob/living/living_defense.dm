@@ -1,5 +1,6 @@
 
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration, penetrated_text, damage, blade_dulling, peeldivisor, intdamfactor, used_weapon = null)
+	SEND_SIGNAL(src, COMSIG_LIVING_ARMOR_CHECKED)
 	var/armor = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
 
 	//the if "armor" check is because this is used for everything on /living, including humans

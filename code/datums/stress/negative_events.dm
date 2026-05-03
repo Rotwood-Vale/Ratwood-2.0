@@ -223,6 +223,11 @@
 	stressadd = 5
 	desc = span_red("Better stay away.")
 
+/datum/stressevent/gnoll_examine
+	timer = 1 MINUTES
+	stressadd = 2
+	desc = span_red("Gods above... a Gnoll!!")
+
 /datum/stressevent/paracrowd
 	timer = 15 SECONDS
 	stressadd = 2
@@ -505,3 +510,9 @@
 	stressadd = 2
 	desc = span_boldred("The proof of my oath! It's been stolen!")
 	timer = INFINITY
+
+// this generally only happens if you're below 10 FOR, this is a little nudge to work on your luck stat
+/datum/stressevent/xylixian_pity
+	timer = 5 MINUTES
+	stressadd = 1
+	desc = span_red("Xylix took pity upon me and saved me from the consequences of bad luck. I must do better!")

@@ -93,7 +93,7 @@
 										M = GLOB.animal_to_undead[M]
 							new M(T)
 							if(prob(66))
-								new /obj/item/storage/roguebag/crafted(T)
+								new /obj/item/storage/roguebag(T)
 							else
 								new /obj/item/natural/cloth(T)
 							qdel(src)

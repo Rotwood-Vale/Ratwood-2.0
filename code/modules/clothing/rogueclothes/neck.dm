@@ -8,6 +8,47 @@
 	alternate_worn_layer = NECK_LAYER
 	var/overarmor
 
+/obj/item/clothing/neck/roguetown/examine()
+	. = ..()
+	if(bell)
+		. += span_info("It has a <a href='?src=[REF(src)];removebell=1'>bell</a> attached.")
+
+/obj/item/clothing/neck/roguetown/Topic(href, href_list)
+	..()
+
+	if(!usr)
+		return
+
+	if(href_list["removebell"])
+		remove_bell(usr)
+
+/obj/item/clothing/neck/roguetown/proc/remove_bell(mob/user)
+	if(!bell)
+		return
+	if(!Adjacent(user))
+		to_chat(user, span_warning("As much as I'd love to snatch that bell, I'm not close enough."))
+		return
+	for(var/obj/item/catbell/bell in src)
+		user.put_in_hands(bell)
+		break
+	bell = FALSE
+	bellsound = FALSE
+	qdel(src.GetComponent(/datum/component/squeak))
+	to_chat(user, span_info("I remove the bell from [src]."))
+
+/obj/item/clothing/neck/roguetown/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/catbell))
+		var/obj/item/catbell/bell = I
+		if(src.bellsound || src.bell) //Already has a bell, can't attach another one.
+			to_chat(user, span_info("[src] already has a bell attached!"))
+			return
+		to_chat(user, span_info("I attach \the [bell] to [src]."))
+		src.bell = TRUE
+		src.bellsound = TRUE
+		src.AddComponent(/datum/component/squeak, bell.jingle_sounds, 50, 100, 1)
+		I.forceMove(src)
+	..()
+
 /obj/item/clothing/neck/roguetown/MiddleClick(mob/user, params)
 	. = ..()
 	if((user.zone_selected == BODY_ZONE_PRECISE_NOSE) && (cansnout == TRUE))
@@ -49,6 +90,8 @@
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	sewrepair = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/neck/roguetown/coif/padded
 	name = "padded coif"
@@ -56,15 +99,9 @@
 	icon_state = "ccoif"
 	item_state = "ccoif"
 	color = "#ad977d"
-	flags_inv = HIDEHAIR
-	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HEAD
-	blocksound = SOFTHIT
 	body_parts_covered = NECK|HAIR|EARS|HEAD
 	armor = ARMOR_PADDED //gambeson for head
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
-	adjustable = CAN_CADJUST
-	toggle_icon_state = TRUE
-	sewrepair = TRUE
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding
 	name = "heavy padded coif"
@@ -74,13 +111,8 @@
 	color = "#976E6B"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HEAD
-	blocksound = SOFTHIT
 	body_parts_covered = NECK|HAIR|EARS|HEAD|MOUTH
 	armor = ARMOR_PADDED_GOOD //full padded gambeson basically
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
-	adjustable = CAN_CADJUST
-	toggle_icon_state = TRUE
-	sewrepair = TRUE
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding/ComponentInitialize()
 	return
@@ -189,7 +221,6 @@
 	name = "iron chain coif"
 	desc = "A coif of meticulously crafted iron rings. It isn't steel, but metal is metal, and it might just save your life."
 	icon_state = "ichaincoif"
-	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_SIDE_IRON
 
@@ -265,7 +296,6 @@
 	icon_state = "ibevor"
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_SIDE_IRON
-	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/neck/roguetown/gorget
 	name = "gorget"
@@ -371,7 +401,7 @@
 
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar // minor flavor swap so people know it's a scam shitty knockoff.
 	name = "lesser cursed collar"
-	desc = "A metal collar that seems to radiate an ominous aura. A pale imitation of it's artificed counterpart."
+	desc = "A metal collar that seems to radiate an ominous aura. A pale imitation of its artificed counterpart. \nLooks like you'd need someone else's help to take it off."
 	icon_state = "cursed_collar"
 	item_state = "cursed_collar"
 	armor = ARMOR_CLOTHING
@@ -387,7 +417,6 @@
 
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar/Initialize(mapload)
 	. = ..()
-	name = "cursed collar"
 	ADD_TRAIT(src, TRAIT_NO_SELF_UNEQUIP, CURSED_ITEM_TRAIT)
 /*
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar/dropped(mob/living/carbon/human/user)
@@ -798,7 +827,6 @@
 	resistance_flags = FIRE_PROOF
 	sellprice = 222
 	smeltresult = /obj/item/roguegem/green
-	anvilrepair = /datum/skill/craft/armorsmithing
 
 //
 

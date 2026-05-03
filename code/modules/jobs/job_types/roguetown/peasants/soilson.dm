@@ -39,7 +39,8 @@
 		STATKEY_WIL = 2,
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
-		STATKEY_SPD = 1
+		STATKEY_SPD = 1,
+		STATKEY_INT = -1,//simple and honest
 	)
 	subclass_skills = list(
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_NOVICE,
@@ -72,7 +73,6 @@
 	beltr = /obj/item/storage/keyring/soilson
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/flint = 1,
@@ -89,3 +89,8 @@
 		pants = /obj/item/clothing/under/roguetown/tights/random
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
+	if(SSmapping.config.map_name == "Desert Town")
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
+		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
+		shoes = /obj/item/clothing/shoes/roguetown/sandals
+		head = /obj/item/clothing/head/roguetown/roguehood/shalal/nomad

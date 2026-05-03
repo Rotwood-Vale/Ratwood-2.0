@@ -1,0 +1,5 @@
+author: "kimesik"
+delete-after: True
+changes:
+  - rscadd: "Reformist Tabard (available in Loadout)"
+  - rscadd: "Psydonic Heretics (Wretch class) can choose between three denominations, which changes their outfit."

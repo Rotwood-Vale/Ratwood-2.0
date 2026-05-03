@@ -65,8 +65,10 @@
 		/obj/item/rogueweapon/huntingknife/idagger/navaja,
 		/obj/item/quiver/bullet/lead,
 		/obj/item/powderflask,
+		/obj/item/mini_flagpole/merchant = 1,
 	)
 	neck = /obj/item/clothing/neck/roguetown/horus
+	head = /obj/item/clothing/head/roguetown/chaperon/brown
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
@@ -81,6 +83,15 @@
 		H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	else if(should_wear_femme_clothes(H))
 		shoes = /obj/item/clothing/shoes/roguetown/gladiator
+	if(SSmapping.config.map_name == "Desert Town")
+		head = /obj/item/clothing/head/roguetown/sultan/merchant
+		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/open
+		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/merchantbisht
+		if(should_wear_masc_clothes(H))
+			shoes = /obj/item/clothing/shoes/roguetown/shalal
+			H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
+		else if(should_wear_femme_clothes(H))
+			shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice)

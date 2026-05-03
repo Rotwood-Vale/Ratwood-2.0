@@ -134,6 +134,13 @@
 		arrows += A
 	update_icon()
 
+/obj/item/quiver/heavybluntbolts/Initialize(mapload)
+	..()
+	for(var/i in  1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt/A = new()
+		arrows += A
+	update_icon()
+	
 /obj/item/quiver/holybolts/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)

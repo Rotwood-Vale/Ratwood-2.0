@@ -80,6 +80,23 @@
 	user.update_inv_cloak()
 	user.update_inv_armor()
 
+/obj/item/clothing/cloak/reformtabard
+	name = "reformist tabard"
+	desc = "A white psycross on black background. A tabard worn by the mourning, daring to live on despite their endless grief. May our memory of HIM mend our bleeding hearts."
+	icon_state = "reformtabard"
+	item_state = "reformtabard"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	alternate_worn_layer = TABARD_LAYER
+	body_parts_covered = CHEST|GROIN
+	boobed = TRUE
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
+	flags_inv = HIDECROTCH|HIDEBOOB
+	var/overarmor = TRUE
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	heat_protection = null
+	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
+
 /obj/item/clothing/cloak/psydontabard
 	name = "psydonian tabard"
 	desc = "A tabard worn by Psydon's disciples. Delicate stitchwork professes the psycross with pride."
@@ -440,7 +457,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 	var/picked
@@ -737,7 +753,6 @@
 	boobed = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 //	allowed_sex = list(MALE)
 	detail_tag = "_det"
@@ -783,7 +798,6 @@
 	boobed = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	salvage_result = /obj/item/natural/fur
@@ -923,7 +937,6 @@
 	boobed = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	hoodtype = /obj/item/clothing/head/hooded/rainhood
 	toggle_icon_state = FALSE
@@ -948,6 +961,11 @@
 
 /obj/item/clothing/cloak/raincloak/purple
 	color = CLOTHING_PURPLE
+
+/obj/item/clothing/cloak/raincloak/drab
+	color = CLOTHING_DRAB
+/obj/item/clothing/cloak/raincloak/darkdrab
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/head/hooded/rainhood
 	name = "hood"
@@ -1020,7 +1038,6 @@
 	boobed = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = FALSE
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	cold_protection = null
@@ -1093,7 +1110,6 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_race = NON_DWARVEN_RACE_TYPES
-	nodismemsleeves = TRUE
 
 
 /obj/item/clothing/cloak/stole
@@ -1127,7 +1143,6 @@
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	sellprice = 50
-	nodismemsleeves = TRUE
 	salvage_result = /obj/item/natural/fur
 
 /obj/item/clothing/cloak/heartfelt
@@ -1140,7 +1155,6 @@
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	sellprice = 50
-	nodismemsleeves = TRUE
 	cold_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
 	min_cold_protection_temperature = 50
 	heat_protection = null
@@ -1165,7 +1179,6 @@
 	boobed = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	hoodtype = null
 	toggle_icon_state = FALSE
@@ -1232,7 +1245,6 @@
 	boobed = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	hoodtype = null
 	toggle_icon_state = FALSE
@@ -1264,7 +1276,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1278,7 +1289,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1292,7 +1302,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1306,7 +1315,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1320,7 +1328,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1334,7 +1341,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1348,7 +1354,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1359,7 +1364,6 @@
 	item_state = "volfpelt"
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = FALSE
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
@@ -1379,7 +1383,6 @@
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	salvage_result = /obj/item/natural/fibers
 	salvage_amount = 2
@@ -1396,7 +1399,6 @@
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	body_parts_covered = CHEST|GROIN|VITALS
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
-	nodismemsleeves = TRUE
 	boobed = FALSE
 	sellprice = 10
 	cold_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
@@ -1409,18 +1411,9 @@
 	desc = "Ermine trimmed, handed down."
 	icon_state = "shortcloak"
 	item_state = "shortcloak"
-	alternate_worn_layer = CLOAK_BEHIND_LAYER
-	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
-	boobed = TRUE
-	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
-	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	detail_tag = "_detail"
 	detail_color = CLOTHING_BLACK
 	cold_protection = ARM_LEFT | ARM_RIGHT
-	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
-	heat_protection = null
-	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/matron
 	name = "matron cloak"
@@ -1432,7 +1425,6 @@
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
-	nodismemsleeves = TRUE
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	cold_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
@@ -1469,7 +1461,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1483,7 +1474,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1497,7 +1487,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1510,7 +1499,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK|ITEM_SLOT_MASK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1524,7 +1512,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 
@@ -1718,7 +1705,6 @@
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	cold_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
 	min_cold_protection_temperature = 50
@@ -1733,7 +1719,6 @@
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 
 /obj/item/clothing/cloak/graggar
@@ -1744,7 +1729,6 @@
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	cold_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
 	min_cold_protection_temperature = 50
@@ -1763,7 +1747,6 @@
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	cold_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
 	min_cold_protection_temperature = 50
@@ -1786,7 +1769,6 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 	slot_flags = ITEM_SLOT_CLOAK|ITEM_SLOT_ARMOR
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
-	nodismemsleeves = TRUE
 	color = CLOTHING_WHITE
 	detail_tag = "_detail"
 	detail_color = CLOTHING_WHITE
@@ -1801,7 +1783,6 @@
 	item_state = "eastcloak1"
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = FALSE
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -1814,7 +1795,6 @@
 	item_state = "eastcloak2"
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = FALSE
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -1826,7 +1806,6 @@
 	icon_state = "psaltertabard"
 	item_state = "psaltertabard"
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
@@ -1841,7 +1820,6 @@
 	icon_state = "ordinatorcape"
 	item_state = "ordinatorcape"
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	cold_protection = CHEST
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -1856,7 +1834,6 @@
 	icon_state = "absolutionistrobe"
 	item_state = "absolutionistrobe"
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	cold_protection = CHEST | GROIN
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -1879,6 +1856,7 @@
 	detail_color = "#36241f"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_cloaks.dmi'
 	sleevetype = "cotehardie"
+	nodismemsleeves = FALSE
 	var/overarmor = TRUE
 
 /obj/item/clothing/cloak/cotehardie/Initialize(mapload)
@@ -1958,7 +1936,6 @@
 	boobed = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	hoodtype = null
 	toggle_icon_state = FALSE
@@ -1986,7 +1963,6 @@
 	boobed = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
-	nodismemsleeves = TRUE
 	inhand_mod = TRUE
 	detail_tag = "_detail"
 	detail_color = CLOTHING_BLACK

@@ -60,7 +60,7 @@
 			msg = "[user] [user.sexcon.get_generic_force_adjective()] hammers [user.p_their()] foot into [target]'s [device] again and again, the rhythm relentless, each kick louder and harder than the last..."
 			arousal_amt = 0.25
 			pain_amt = 7.5
-		if(SEX_FORCE_EXTREME)
+		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
 			msg = "[user] [user.sexcon.get_generic_force_adjective()] brings [user.p_their()] full weight down on [target]'s [device] in a grinding heel-stomp, steel screaming against steel..."
 			arousal_amt = 0.0
 			pain_amt = 11

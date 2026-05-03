@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "Fixes active quests not going down if someone else turns in your quest."

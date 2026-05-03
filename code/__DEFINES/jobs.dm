@@ -189,10 +189,11 @@
 
 #define TRIBAL		(1<<8)
 
-#define CHIEFTAIN	(1<<0)
-#define TRIBALCOOK	(1<<1)
-#define TRIBALGUARD	(1<<2)
-#define TRIBALSMITH	(1<<3)
+#define TRIBALCHIEFTAIN	(1<<0)
+#define TRIBALSHAMAN	(1<<1)
+#define TRIBALGUARD 	(1<<2)
+#define TRIBALRABBLE 	(1<<3)
+#define TRIBALVILLAGER 	(1<<4)
 
 #define SLOP		(1<<9)
 
@@ -203,6 +204,7 @@
 #define VAMPIRE_SERVANT (1<<4)
 #define VAMPIRE_GUARD (1<<5)
 #define VAMPIRE_SPAWN (1<<6)
+#define GNOLL		  (1<<7)
 
 #define INQUISITION (1<<10)
 
@@ -225,6 +227,7 @@
 #define JCOLOR_PEASANT "#b09262"
 #define JCOLOR_WANDERER  "#c86e3a"
 #define JCOLOR_INQUISITION "#FF0000"
+#define JCOLOR_TRIBAL "#0bac2e"
 
 /// Key value for taking the department's string and getting a color back
 #define JCOLOR_BY_DEPARTMENT list(\
@@ -238,6 +241,7 @@
 	"Peasants" = JCOLOR_PEASANT,\
 	"Sidefolk" = "grey",\
 	"Wanderers" = JCOLOR_WANDERER,\
+	"Tribe" = JCOLOR_TRIBAL,\
 )
 
 // job display orders //
@@ -310,8 +314,9 @@
 #define JDO_BANDIT 31.3
 #define JDO_COURTAGENT 30.3
 #define JDO_WRETCH 30.4
-#define JDO_ASSASSIN 30.5
-#define JDO_TRADER 30.5
+#define JDO_GNOLL 30.5
+#define JDO_ASSASSIN 30.6
+#define JDO_TRADER 30.7
 
 #define JDO_MERCENARY 31
 #define JDO_GRENZELHOFT 31.1
@@ -325,10 +330,12 @@
 #define JDO_HOSTAGE 35.2
 #define JDO_LUNATIC 35.3
 
-#define JDO_CHIEFTAIN 36
-#define JDO_TRIBALCOOK 37
-#define JDO_TRIBALGUARD 38
-#define JDO_TRIBALSMITH 39
+#define JDO_TRIBALCHIEFTAIN 36
+#define JDO_TRIBALSHAMAN 36.5
+#define JDO_TRIBALGUARD 37
+#define JDO_TRIBALVILLAGER 38
+#define JDO_TRIBALRABBLE 39
+
 #define JDO_PURITAN 40
 #define JDO_ORTHODOXIST 40.1
 #define JDO_ABSOLVER 40.2
@@ -345,7 +352,9 @@
 	/datum/job/roguetown/servant,\
 	/datum/job/roguetown/butler,\
 	/datum/job/roguetown/apothecary,\
-	/datum/job/roguetown/magician
+	/datum/job/roguetown/magician,\
+	/datum/job/roguetown/headslave,\
+	/datum/job/roguetown/slave,\
 
 #define NOBLE_ROLES \
 	/datum/job/roguetown/prince,\
@@ -357,7 +366,9 @@
 	/datum/job/roguetown/knight,\
 	/datum/job/roguetown/lady,\
 	/datum/job/roguetown/lord,\
-	/datum/job/roguetown/steward
+	/datum/job/roguetown/steward,\
+	/datum/job/roguetown/dtprince,\
+	/datum/job/roguetown/cataphract,\
 
 #define KING_QUEEN_ROLES \
 	/datum/job/roguetown/lady,\
@@ -416,9 +427,21 @@
 	/datum/job/roguetown/gatemaster,\
 	/datum/job/roguetown/manorguard,\
 	/datum/job/roguetown/squire,\
+	/datum/job/roguetown/guardsman,\
+	/datum/job/roguetown/janissary,\
+	/datum/job/roguetown/janissarysergeant,\
+	/datum/job/roguetown/azeb,\
+	/datum/job/roguetown/slavemaster,\
 	/datum/job/roguetown/rookie,\
 	/datum/job/roguetown/guardsman
 
 #define INQUISITION_ROLES \
 	/datum/job/roguetown/puritan,\
 	/datum/job/roguetown/orthodoxist
+
+#define TRIBAL_ROLES \
+	/datum/job/roguetown/tribalchieftain,\
+	/datum/job/roguetown/tribalshaman,\
+	/datum/job/roguetown/tribalguard,\
+	/datum/job/roguetown/tribalvillager,\
+	/datum/job/roguetown/tribalrabble

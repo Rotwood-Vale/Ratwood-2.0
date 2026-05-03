@@ -1,7 +1,7 @@
 /obj/item/clothing/neck/roguetown/cursed_collar
 	name = "cursed collar"
 	always_show_examine_link = TRUE
-	desc = "A sinister looking collar with ruby studs. It seems to radiate a dark energy."
+	desc = "A sinister looking collar with ruby studs. It seems to radiate a dark energy. \nLooks like you'd need someone else's help to take it off."
 	// Credit regarding sprites to Necbro
 	// https://github.com/StoneHedgeSS13/StoneHedge/commit/9ddc09d4cb91903beff6d523c91aef75312d5163
 	icon = 'modular_stonehedge/icons/clothing/armor/neck.dmi'

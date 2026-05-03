@@ -15,7 +15,7 @@
 
 /datum/supply_pack/rogue/blackmarket_potions/stamina
 	name = "Green Elixir"
-	cost = 80
+	cost = 40
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/stampot)
 
 /datum/supply_pack/rogue/blackmarket_potions/antidote

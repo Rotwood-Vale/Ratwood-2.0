@@ -1168,11 +1168,10 @@
 	name = "shamshir"
 	desc = "A curved one-handed longsword. This type of scimitar is the quintessential armament of Zybantine horsemen, its name derived from Sama'glos for \"Tiger's claw\"."
 	force = 24
-	wdefense = 6	//Has chop mode, so slightly less defense. Slightly.
+	wdefense = 6 // two more force than sabre so let's consider this a fair tradeoff for the damage buff
 	icon_state = "tabi"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/chop)
-	alt_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike, /datum/intent/sword/chop)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike) // whoever gave this chop as a supposed upside is tripping because it's weaker than sabre cut
 	bigboy = TRUE
 	pixel_y = -16
 	pixel_x = -16

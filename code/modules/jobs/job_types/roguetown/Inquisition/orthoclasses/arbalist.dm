@@ -84,7 +84,6 @@
 	strip_delay = 20
 	var/max_storage = 5
 	var/list/stakes = list()
-	sewrepair = TRUE
 	component_type = /datum/component/storage/concrete/roguetown/belt/knife_belt
 
 /obj/item/storage/belt/rogue/leather/stakebelt/attackby(obj/A, loc, params)

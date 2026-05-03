@@ -1,5 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - balance: "Cabbit form now has actual 20 speed instead of pretend 20 speed"
-  - balance: "Cabbit form is no longer blocked by mobs, it is tiny and can slip through people's legs"

@@ -1113,7 +1113,7 @@
 	set name = "Yield"
 	set category = "IC"
 	set hidden = 1
-	if(surrendering || stat)
+	if(surrendering || stat == DEAD)
 		return
 	if(!instant)
 		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
@@ -2100,21 +2100,12 @@
 		visible_message(span_info("[src] looks up."))
 	var/turf/ceiling = get_step_multiz(src, UP)
 	var/turf/T = get_turf(src)
+	var/datum/controller/subsystem/ParticleWeather/PW = SSParticleWeather //used so we can see what's the weather outside
 	if(!ceiling) //We are at the highest z-level.
 		if(T.can_see_sky())
-			switch(GLOB.forecast)
-				if("prerain")
-					to_chat(src, span_warning("Dark clouds gather..."))
-					return
-				if("rain")
-					to_chat(src, span_warning("A wet wind blows."))
-					return
-				if("rainbow")
-					to_chat(src, span_notice("A beautiful rainbow!"))
-					return
-				if("fog")
-					to_chat(src, span_warning("I can't see anything, the fog has set in."))
-					return
+			if(PW.runningWeather)
+				to_chat(src, span_warning("[PW.runningWeather.warning_message]"))
+				return
 			to_chat(src, span_warning("There is nothing special to say about this weather."))
 			do_time_change()
 		return
@@ -2123,6 +2114,8 @@
 		return
 
 	if(T.can_see_sky())
+		if(PW.runningWeather)
+			to_chat(src, span_warning("[PW.runningWeather.warning_message]"))
 		do_time_change()
 
 	var/ttime = 10
@@ -2287,10 +2280,24 @@
 	offered_item_ref = WEAKREF(offered_item)
 
 	var/stealthy = (m_intent == MOVE_INTENT_SNEAK)
+	var/obj/item/reagent_containers/glass/offered_item_other = null
+	if(istype(offered_item, /obj/item/reagent_containers/glass) && offered_item?.reagents?.maximum_volume > 0) // we have a drink in our hand
+		offered_item_other = offered_to.offered_item_ref?.resolve()
 
 	if(stealthy)
 		to_chat(src, span_notice("I secretly offer [offered_item] to [offered_to]."))
 		to_chat(offered_to, span_notice("[offered_to] secretly offers [offered_item] to me..."))
+	else if(!isnull(offered_item_other) && istype(offered_item_other) && offered_item_other?.reagents?.maximum_volume > 0) // clink drinks
+		playsound(src,offered_item_other.reagents.maximum_volume > 50 ? 'sound/misc/clink_drink_big.ogg' : 'sound/misc/clink_drink.ogg', 100, TRUE)
+		addtimer(CALLBACK(src, PROC_REF(stop_offering_item)), 0.6 SECONDS)
+		addtimer(CALLBACK(offered_to, PROC_REF(stop_offering_item)), 0.6 SECONDS)
+		visible_message(
+			span_notice("[src] clinks [offered_item] with [offered_to]!"), \
+			span_notice("I clink [offered_item] with [offered_to]!"), \
+			vision_distance = COMBAT_MESSAGE_RANGE, \
+			ignored_mobs = list(offered_to)
+		)
+		to_chat(offered_to, span_notice("[src] clinks [offered_item] with me!"))
 	else
 		visible_message(
 			span_notice("[src] offers [offered_item] to [offered_to] with an outstretched hand."), \

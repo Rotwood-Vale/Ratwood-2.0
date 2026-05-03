@@ -128,16 +128,22 @@
 	if(prob(50))
 		l_hand = /obj/item/rogueweapon/huntingknife/copper
 	belt = /obj/item/storage/belt/rogue/leather/
-	if(prob(50))
-		beltl = /obj/item/lockpick
-	if(prob(10))
-		beltl = /obj/item/lockpickring/mundane
-	if(prob(80))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	if(prob(30))
-		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
-	if(prob(20))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
+	switch(rand(1, 100))
+		if(1 to 50)
+			beltl = /obj/item/lockpick
+		if(51 to 60)
+			beltl = /obj/item/lockpickring/mundane
+		if(61 to 100)
+			beltl = null
+	switch(rand(1, 100))
+		if(1 to 40)
+			beltr = null
+		if(41 to 85)
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if(86 to 95)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		if(96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
 	if(prob(5))
 		id = /obj/item/clothing/ring/gold
 	H.STASTR = 11

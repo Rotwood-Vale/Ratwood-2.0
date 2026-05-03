@@ -127,13 +127,17 @@
 		to_chat(current, span_warning("My [S.name] has weakened to [SSskills.level_names[known_skills[S]]]!"))
 
 /datum/skill_holder/proc/adjust_skillrank_up_to(skill, amt, silent = FALSE)
-	var/proper_amt = amt - get_skill_level(skill)
+	var/datum/skill/S = GetSkillRef(skill)
+	var/current_level = known_skills[S] || SKILL_LEVEL_NONE
+	var/proper_amt = amt - current_level
 	if(proper_amt <= 0)
 		return
 	adjust_skillrank(skill, proper_amt, silent)
 
 /datum/skill_holder/proc/adjust_skillrank_down_to(skill, amt, silent = FALSE)
-	var/proper_amt = get_skill_level(skill) - amt
+	var/datum/skill/S = GetSkillRef(skill)
+	var/current_level = known_skills[S] || SKILL_LEVEL_NONE
+	var/proper_amt = current_level - amt
 	if(proper_amt >= 0)
 		return
 	adjust_skillrank(skill, -proper_amt, silent)
@@ -245,16 +249,21 @@
 
 /datum/skill_holder/proc/get_skill_speed_modifier(skill)
 	var/datum/skill/S = GetSkillRef(skill)
-	return S.get_skill_speed_modifier(known_skills[S] || SKILL_LEVEL_NONE)
+	return S.get_skill_speed_modifier(get_skill_level(skill))
 
 /datum/skill_holder/proc/get_skill_level(skill)
 	var/datum/skill/S = GetSkillRef(skill)
-	var/modifier = 0
+	var/level = known_skills[S] || SKILL_LEVEL_NONE
 	if(S?.abstract_type in list(/datum/skill/labor, /datum/skill/craft))
-		modifier = current?.get_inspirational_bonus()
-	if(!(S in known_skills))
-		return SKILL_LEVEL_NONE
-	return known_skills[S] + modifier || SKILL_LEVEL_NONE
+		level += current?.get_inspirational_bonus() || 0
+	// Fallback patron bonuses for paths where rank adjustment timing is missed.
+	if(current)
+		if(istype(S, /datum/skill/misc/lockpicking) && HAS_TRAIT(current, TRAIT_COMMIE))
+			level += 1
+		if(istype(S, /datum/skill/misc/music) && HAS_TRAIT(current, TRAIT_XYLIX))
+			level += 1
+	level = clamp(level, SKILL_LEVEL_NONE, SKILL_LEVEL_LEGENDARY)
+	return level
 
 /datum/skill_holder/proc/get_effective_skill_cap(datum/skill/skill_ref)
 	var/cap = skill_ref.max_untraited_level
@@ -305,6 +314,12 @@
 	for(var/i in known_skills)
 		if(known_skills[i]) //Do we actually have a level in this?
 			shown_skills += i
+	var/datum/skill/lockpick_skill = GetSkillRef(/datum/skill/misc/lockpicking)
+	if(get_skill_level(/datum/skill/misc/lockpicking) > SKILL_LEVEL_NONE)
+		shown_skills |= lockpick_skill
+	var/datum/skill/music_skill = GetSkillRef(/datum/skill/misc/music)
+	if(get_skill_level(/datum/skill/misc/music) > SKILL_LEVEL_NONE)
+		shown_skills |= music_skill
 	if(!length(shown_skills))
 		to_chat(user, span_warning("I don't have any skills."))
 		return
@@ -318,7 +333,8 @@
 	msg += {"<td style='padding: 1px 2px;'></td>"}
 	msg += "</tr>"
 	for(var/datum/skill/i in sorted_skills)
-		var/skill_level = known_skills[i]
+		var/skill_level = get_skill_level(i.type)
+		var/raw_skill_level = known_skills[i]
 		var/effective_cap = get_effective_skill_cap(i)
 		var/is_legendary = (skill_level >= SKILL_LEVEL_LEGENDARY)
 		var/is_capped = !is_legendary && (skill_level >= effective_cap)
@@ -334,7 +350,7 @@
 			progress_col = "<span style='color: #555555;'>---</span>"
 		else
 			var/percent = 0
-			if(skill_level >= SKILL_LEVEL_APPRENTICE)
+			if(raw_skill_level >= SKILL_LEVEL_APPRENTICE)
 				// Apprentice+ uses sleep XP system for progression
 				var/datum/sleep_adv/sadv = current?.mind?.sleep_adv
 				if(sadv)
@@ -344,7 +360,7 @@
 						percent = clamp(round(sleep_xp * 100 / needed_xp), 0, 200)
 			else
 				// Below Apprentice, XP is tracked directly on skill_experience
-				var/list/brackets = get_xp_brackets(skill_level)
+				var/list/brackets = get_xp_brackets(raw_skill_level)
 				var/current_xp = skill_experience[i]
 				var/bracket_start = brackets[1]
 				var/bracket_end = brackets[2]

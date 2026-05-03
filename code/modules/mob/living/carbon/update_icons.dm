@@ -5,17 +5,28 @@
 	var/final_dir = dir
 	var/changed = 0
 	if(lying != lying_prev && rotate_on_lying)
+		var/old_lying_prev = lying_prev
 		changed++
-		ntransform.TurnTo(lying_prev , lying)
+		if(src.dna?.species?.custom_rotation_icon)
+			var/mob/living/carbon/human/H = src
+			if(!(src.mobility_flags & MOBILITY_STAND))
+				src.icon_state = "[src.dna?.species?.custom_base_icon]_down"
+				H.update_inv_armor_special()
+			else
+				src.icon_state = src.dna?.species?.custom_base_icon
+				H.update_inv_armor_special()
+		else
+			ntransform.TurnTo(old_lying_prev , lying)
 		if(!lying) //Lying to standing
 			final_pixel_y = get_standard_pixel_y_offset()
 		else //if(lying != 0)
-			if(lying_prev == 0) //Standing to lying
+			if(old_lying_prev == 0) //Standing to lying
 				pixel_y = get_standard_pixel_y_offset()
 				final_pixel_y = get_standard_pixel_y_offset(lying)
 				if(dir & (EAST|WEST)) //Facing east or west
 //					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 					final_dir = SOUTH
+		lying_prev = lying
 	if(resize != RESIZE_DEFAULT_SIZE)
 		changed++
 		ntransform.Scale(resize)

@@ -111,8 +111,78 @@
 
 /obj/structure/ritualcircle/xylix
 	name = "Rune of Trickery"
+	desc = "A Holy Rune of Xylix. The air feels untrustworthy."
 	icon_state = "xylix_chalky"
-	desc = "A Holy Rune of Xylix. You can hear the wind, and distant bells, in the distance."
+	var/trickeryrites = list("Rite of the Pratfall", "Stagehand's Silence")
+
+/obj/structure/ritualcircle/xylix/attack_hand(mob/living/user)
+	if(!istype(user.patron, /datum/patron/divine/xylix))
+		to_chat(user, span_smallred("I don't know the proper rites for this..."))
+		return
+
+	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
+		to_chat(user, span_smallred("I don't know the proper rites for this..."))
+		return
+
+	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
+		to_chat(user, span_smallred("I have performed enough rituals for the day..."))
+		return
+
+	var/riteselection = input(user, "Rituals of Trickery", src) as null|anything in trickeryrites
+	switch(riteselection)
+		if("Rite of the Pratfall")
+			if(!do_after(user, 40))
+				return
+			user.say("Hehe! Tippy toes and tumbling woes...")
+			playsound(loc, 'sound/misc/clownedhehe.ogg', 90, FALSE)
+
+			if(!do_after(user, 40))
+				return
+			user.say("Hoohoo! Step with care, or embrace the air!")
+			playsound(loc, 'sound/misc/clownedhohoho.ogg', 90, FALSE)
+
+			if(!do_after(user, 30))
+				return
+			user.say("Hahaha! Your slippery fate awaits every move! A pratfall a day keeps the dignity away!")
+			playsound(loc, 'sound/magic/decoylaugh.ogg', 90, FALSE)
+
+			icon_state = "xylix_active"
+			loc.visible_message(span_warning("[user] traces a mocking sigil upon the rune."))
+
+			for(var/mob/living/M in range(1, src))
+				M.apply_status_effect(/datum/status_effect/buff/xylix_pratfall)
+
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			addtimer(CALLBACK(src, PROC_REF(reset_rune)), 120)
+
+		if("Stagehand's Silence")
+			if(!do_after(user, 50))
+				return
+			user.say("I CALL UPON THE MANY-FACED TRAGEDIAN!!")
+			playsound(loc, 'sound/misc/clownedhehe.ogg', 90, FALSE)
+
+			if(!do_after(user, 50))
+				return
+			user.say("PLAY YOUR HARP- LET EACH STRING DEAFEN MY FOES!!")
+			playsound(loc, 'sound/misc/clownedhohoho.ogg', 90, FALSE)
+
+			if(!do_after(user, 50))
+				return
+			user.say("--ON WITH THE SHOW!!")
+			to_chat(user, span_cultsmall("Every play needs its stagehands. Xylix will quicken the slow, speed your sneaking, and quiet your footsteps... for a time."))
+			playsound(loc, 'sound/magic/mockery.ogg', 90, FALSE, -1)
+			icon_state = "xylix_active"
+			stagehands_silence()
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			addtimer(CALLBACK(src, PROC_REF(reset_rune)), 120)
+
+/obj/structure/ritualcircle/xylix/proc/stagehands_silence()
+	var/list/ritualtargets = view(1, loc)
+	for(var/mob/living/carbon/human/target in ritualtargets)
+		target.apply_status_effect(/datum/status_effect/buff/stagehands_silence)
+
+/obj/structure/ritualcircle/xylix/proc/reset_rune()
+	icon_state = "xylix_chalky"
 
 /obj/structure/ritualcircle/ravox
 	name = "Rune of Justice"
@@ -219,7 +289,7 @@
 	name = "Rune of Forge"
 	desc = "A Holy Rune of Malum. A hammer and heat, to fix any imperfections with."
 	icon_state = "malum_chalky"
-var/forgerites = list("Ritual of Blessed Reforgance")
+	var/forgerites = list("Ritual of Blessed Reforgance")
 
 /obj/structure/ritualcircle/malum/attack_hand(mob/living/user)
 	if(!..())
@@ -1024,7 +1094,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	desc = "A Holy Rune of Eora. A gentle warmth and joy spreads across your soul."
 	icon_state = "eora_chalky"
 
-	var/peacerites = list("Rite of Pacification")
+	var/peacerites = list("Rite of Pacification", "Rite of the Open Hearth")
 
 /obj/structure/ritualcircle/eora/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/divine/eora)
@@ -1051,6 +1121,35 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 							spawn(120)
 								icon_state = "eora_chalky"
+		if("Rite of the Open Hearth")
+			var/onrune = view(1, loc)
+			var/list/folksonrune = list()
+			for(var/mob/living/carbon/human/persononrune in onrune)
+				if(HAS_TRAIT(persononrune, TRAIT_EXTEROCEPTION))//Only works on Eorans
+					folksonrune += persononrune
+			if(!folksonrune.len)
+				to_chat(user, span_warning("There are no Eorans on the rune to perform this rite on."))
+				return
+			var/target = input(user, "Choose a host") as null|anything in folksonrune
+			if(!target)
+				return
+			user.say("I stand before you Mother to beg your ear and swear an oath!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("To stoke no anguish! To cause no pain!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("To mend what is frayed and redeem what has strayed!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("To shelter the lost and warm the forgotten!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			icon_state = "eora_active"
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			eoranaura(target)
+			spawn(120)
+				icon_state = "eora_chalky"
 
 /obj/structure/ritualcircle/eora/proc/pacify(src)
 	var/ritualtargets = view(0, loc)
@@ -1058,6 +1157,14 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		loc.visible_message(span_warning("[target] sways like windchimes in the wind..."))
 		target.visible_message(span_green("I feel the burdens of my heart lifting. Something feels very wrong... I don't mind at all..."))
 		target.apply_status_effect(/datum/status_effect/buff/pacify)
+
+/obj/structure/ritualcircle/eora/proc/eoranaura(mob/living/carbon/human/target)
+	loc.visible_message(span_good("[target]'s form becomes enveloped in calming aura."))
+	spawn(20)
+		target.apply_status_effect(/datum/status_effect/eoranaura)
+		playsound(target, 'sound/magic/eora_bless.ogg', 90, FALSE, -1)
+		to_chat(target, span_boldred("I can do no HARM."))
+		ADD_TRAIT(target, TRAIT_PACIFISM, TRAIT_MIRACLE)
 
 
 
@@ -1881,6 +1988,11 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		loc.visible_message(span_cult("[target] moans and shivers on top of the rune. Lashes of purple flame dance across their lower abdomen as a new marking appears against their form."))
 		spawn(20)
 			var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+			if(isdwarf(target) || isgoblinp(target) || iskobold(target) || iscritter(target))
+				if(target.gender == MALE)
+					marking_overlay.pixel_y -= 6
+				else
+					marking_overlay.pixel_y -= 4
 			target.add_overlay(marking_overlay)
 			target.update_body_parts()
 			playsound(target, 'sound/health/fastbeat.ogg', 60)

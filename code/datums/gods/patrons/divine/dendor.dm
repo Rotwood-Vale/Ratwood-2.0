@@ -3,6 +3,8 @@
 	domain = "Plants, Animals, Nature, Agriculture"
 	desc = "The Treefather was the First Druid, driven mad by the abuse of His realm. Even still, He stands vigil over the woods and the plains, blessing our harvests and our livelihoods. His beasts show us no quarter, but we can learn to avoid their jaws."
 	worshippers = "Druids, Beasts, Madmen, Farmers, Elves, Wildkin"
+	virtues = "Harmony, Primitivism, Hunting"
+	sins = "Civilization, Overhunting, Disrespecting Nature"
 	mob_traits = list(TRAIT_KNEESTINGER_IMMUNITY, TRAIT_LEECHIMMUNE)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/spiderspeak 			= CLERIC_T0,

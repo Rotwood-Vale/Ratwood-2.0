@@ -1,0 +1,6 @@
+author: "EvenInDeathIStillServe"
+delete-after: True
+changes:
+  - rscadd: "Pouring and drinking from containers on sneak intent will do so in 1 unit increments."
+  - rscadd: "Sneaking will cork and uncork containers quietly."
+  - rscadd: "You can now sprinkle 1 unit of liquid on the rim of FILLED containers when pouring with sneak intent. Anyone drinking from it will absorb that full dose along with the rest of the liquid in it."

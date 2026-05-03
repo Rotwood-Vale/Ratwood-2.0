@@ -660,8 +660,6 @@
 					hud_used.temperature.icon_state = "temphot"
 				else if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
 					hud_used.temperature.icon_state = "tempveryhot"
-		if(hud_used.zone_select)
-			hud_used.zone_select.update_icon()
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	dna?.species.spec_fully_heal(src)
@@ -795,7 +793,14 @@
 			return
 		if(!client || !client.prefs)
 			return
-		client.prefs.copy_to(src, TRUE, FALSE)
+		//make reapply prefs work for gnolls
+		if(dna?.species?.id == "gnoll")
+			if(!apply_gnoll_preferences(FALSE))
+				reapply_live_preferences()
+			set_blindness(0)
+			regenerate_icons()
+		else
+			reapply_live_preferences()
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
@@ -1216,6 +1221,46 @@
 		verbs -= /mob/living/carbon/human/verb/commune
 		verbs -= /mob/living/carbon/human/verb/show_heretics
 		verbs -= /mob/living/carbon/human/verb/bad_omen*/
+
+/mob/living/carbon/human/proc/reapply_live_preferences()
+	if(!client?.prefs)
+		return FALSE
+
+	var/datum/language_holder/language_holder = get_language_holder()
+	var/list/preserved_languages = language_holder?.languages?.Copy()
+	var/selected_default_language = language_holder?.selected_default_language
+
+	client.prefs.copy_to(src, TRUE, FALSE)
+	refresh_live_vocal_preferences()
+
+	if(language_holder && length(preserved_languages))
+		for(var/language_type in preserved_languages)
+			grant_language(language_type)
+		language_holder.selected_default_language = selected_default_language
+
+	return TRUE
+
+/mob/living/carbon/human/proc/refresh_live_vocal_preferences()
+	if(!client?.prefs)
+		return FALSE
+
+	if(dna?.species)
+		var/default_soundpack_m = initial(dna.species.soundpack_m)
+		var/default_soundpack_f = initial(dna.species.soundpack_f)
+		if(default_soundpack_m)
+			dna.species.soundpack_m = new default_soundpack_m()
+		if(default_soundpack_f)
+			dna.species.soundpack_f = new default_soundpack_f()
+
+	voice_color = client.prefs.voice_color
+	voice_pitch = client.prefs.voice_pitch
+	voice_type = client.prefs.voice_type
+	set_bark(client.prefs.bark_id)
+	vocal_speed = client.prefs.bark_speed
+	vocal_pitch = client.prefs.bark_pitch
+	vocal_pitch_range = client.prefs.bark_variance
+	apply_voicepacks(src, client)
+	return TRUE
 
 /mob/living/carbon/human/Topic(href, href_list)
 	..()

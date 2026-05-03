@@ -44,9 +44,10 @@ SUBSYSTEM_DEF(ParticleWeather)
 			selected_forecast = new /datum/forecast/rockhill()
 		if("Dun World")
 			selected_forecast = new /datum/forecast/dunworld()
-
-		if("Desert Town")//placeholder, update with desertmap
+		if("Desert Town")
 			selected_forecast = new /datum/forecast/alashur()
+		if("Build Your Own Settlement")
+			selected_forecast = new /datum/forecast/byos()
 		else
 			selected_forecast = new /datum/forecast/rockhill()	//Default to rockhill if no configs match so we have some weather
 	return ..()

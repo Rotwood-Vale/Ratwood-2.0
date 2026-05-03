@@ -37,7 +37,15 @@ GLOBAL_LIST_EMPTY(heretical_players)
 	social_rank = SOCIAL_RANK_ROYAL
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
 	virtue_restrictions = list(/datum/virtue/utility/noble)
-	job_traits = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_GRAVEROBBER,TRAIT_RESONANCE, TRAIT_VOTARY, TRAIT_HOMESTEAD_EXPERT)
+	job_traits = list(
+		TRAIT_CHOSEN,
+		TRAIT_RITUALIST,
+		TRAIT_GRAVEROBBER,
+		TRAIT_RESONANCE,
+		TRAIT_VOTARY,
+		TRAIT_HOMESTEAD_EXPERT,
+		TRAIT_HOLYWARRIOR,
+	)
 	advclass_cat_rolls = list(CTAG_BISHOP = 2)
 	job_subclasses = list(
 		/datum/advclass/bishop
@@ -113,7 +121,8 @@ GLOBAL_LIST_EMPTY(heretical_players)
 		/obj/item/natural/worms/leech/cheele = 1, //little buddy
 		/obj/item/ritechalk = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/holysee = 1,	//Unique knife from the Holy See
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/mini_flagpole/church,
 	)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 6, TRUE)

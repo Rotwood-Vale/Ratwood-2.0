@@ -58,6 +58,7 @@
 	icon_state = "cake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/cakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1)
@@ -67,7 +68,7 @@
 	slice_sound = TRUE
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/cake/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -123,6 +124,7 @@
 	icon_state = "frostedcake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/frostedcakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1)
@@ -133,7 +135,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/frostedcake/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -321,6 +323,7 @@
 	icon_state = "applecake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/applecakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"apple"=1)
@@ -331,7 +334,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/applecake/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -376,6 +379,7 @@
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/applenutcakeslice
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48, /datum/reagent/consumable/acorn_powder = 4, /datum/reagent/drug/nicotine = 1)
+	eating_slice = TRUE
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"apple"=1,"nutty"=1)
 	foodtype = GRAIN | DAIRY | SUGAR | FRUIT
@@ -385,7 +389,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/applenutcakeslice
 	name = "applenut cake slice"
@@ -413,6 +417,7 @@
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/berrycakeslice
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48, /datum/reagent/water = 5)
+	eating_slice = TRUE
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"berry"=1)
 	foodtype = GRAIN | DAIRY | SUGAR | FRUIT
@@ -422,7 +427,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/berrycake/poison
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/berrycakeslice/poison
@@ -456,6 +461,7 @@
 	icon_state = "blackberrycake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/blackberrycakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"blackberry"=1)
@@ -466,7 +472,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/blackberrycakeslice
 	name = "blackberry cake slice"
@@ -494,6 +500,7 @@
 	icon_state = "carrotcake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/carrotcakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"carrot"=1)
@@ -504,7 +511,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/carrotcakeslice
 	name = "carrot cake slice"
@@ -531,6 +538,7 @@
 	icon_state = "lemoncake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/lemoncakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"lemon"=1)
@@ -541,7 +549,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/lemoncakeslice
 	name = "lemon cake slice"
@@ -568,6 +576,7 @@
 	icon_state = "limecake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/limecakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"lime"=1)
@@ -578,7 +587,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/limecakeslice
 	name = "lime cake slice"
@@ -609,6 +618,7 @@
 	icon_state = "manacake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/manacakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/medicine/manapot = 32, /datum/reagent/consumable/nutriment = 24)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("hollow sweetness"=1)
@@ -647,6 +657,7 @@
 	icon_state = "menthacake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/menthacakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"fresh herbaceousness"=1)
@@ -657,7 +668,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/menthacakeslice
 	name = "mentha cake slice"
@@ -685,6 +696,7 @@
 	icon_state = "peacecake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/peacecakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"peace"=1)
@@ -695,7 +707,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/peacecake/On_Consume(mob/living/eater)
 	if(iscarbon(eater))
@@ -732,6 +744,7 @@
 	icon_state = "raspberrycake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/raspberrycakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"raspberry"=1)
@@ -742,7 +755,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/raspberrycakeslice
 	name = "raspberry cake slice"
@@ -769,6 +782,7 @@
 	icon_state = "rocknutcake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/rocknutcakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48, /datum/reagent/consumable/acorn_powder = 4, /datum/reagent/drug/nicotine = 1)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"nutty"=1)
@@ -779,7 +793,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/rocknutcake/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -823,6 +837,7 @@
 	icon_state = "strawberrycake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/strawberrycakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"strawberry"=1)
@@ -833,7 +848,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/strawberrycakeslice
 	name = "strawberry cake slice"
@@ -860,6 +875,7 @@
 	icon_state = "tangerinecake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/tangerinecakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"sugary frosting"=1,"tangerine"=1)
@@ -870,7 +886,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/tangerinecakeslice
 	name = "tangerine cake slice"
@@ -911,6 +927,7 @@
 	icon_state = "honeycake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/hcakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cake"=1,"delicious honeyfrosting"=1)
@@ -921,7 +938,7 @@
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
 	extra_eat_effect = /datum/status_effect/buff/sweet
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/hcakeslice
 	name = "zybantine cake slice"
@@ -962,6 +979,7 @@
 	icon_state = "cheesecake"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/ccakeslice
+	eating_slice = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = 48)
 	faretype = FARE_FINE
 	w_class = WEIGHT_CLASS_NORMAL
@@ -971,7 +989,7 @@
 	slice_sound = TRUE
 	rotprocess = SHELFLIFE_LONG
 	eat_effect = /datum/status_effect/buff/snackbuff
-	bitesize = 16
+	bitesize = 8
 
 /obj/item/reagent_containers/food/snacks/rogue/ccakeslice
 	name = "cheesecake slice"
